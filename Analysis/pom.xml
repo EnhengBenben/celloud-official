@@ -1,0 +1,114 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.celloud.analysis</groupId>
+  <artifactId>Analysis</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>Analysis Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+  
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+	<!-- Struts 2 Core -->
+	<dependency>
+		<groupId>org.apache.struts</groupId>
+		<artifactId>struts2-core</artifactId>
+		<version>2.3.20</version>
+	</dependency>
+	<!-- Struts 2 Convention Plugin -->
+	<dependency>
+		<groupId>org.apache.struts</groupId>
+		<artifactId>struts2-convention-plugin</artifactId>
+		<version>2.3.20</version>
+	</dependency>
+	<!-- Struts 2 JSON Plugin -->
+	<dependency>
+		<groupId>org.apache.struts</groupId>
+		<artifactId>struts2-json-plugin</artifactId>
+		<version>2.3.20</version>
+	</dependency>
+	<!-- Java Servlet API -->
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>javax.servlet-api</artifactId>
+		<version>3.0.1</version>
+		<scope>provided</scope>
+	</dependency>
+	<!-- Google Guice Core Library -->
+	<dependency>
+		<groupId>com.google.inject</groupId>
+		<artifactId>guice</artifactId>
+		<version>3.0</version>
+	</dependency>
+	<!-- Google Guice Extensions Servlet -->
+	<dependency>
+		<groupId>com.google.inject.extensions</groupId>
+		<artifactId>guice-servlet</artifactId>
+		<version>3.0</version>
+	</dependency>
+	<!-- Google Guice Extensions Struts2 -->
+	<dependency>
+		<groupId>com.google.inject.extensions</groupId>
+		<artifactId>guice-struts2</artifactId>
+		<version>3.0</version>
+	</dependency>
+	<!--  -->
+	<dependency>
+       	<groupId>com.google.code</groupId>
+       	<artifactId>kaptcha</artifactId>
+       	<version>2.3.2</version>
+    </dependency>
+    <dependency>
+		<groupId>org.bouncycastle</groupId>
+		<artifactId>bcprov-jdk15on</artifactId>
+		<version>1.52</version>
+	</dependency>
+	<dependency>
+		<groupId>commons-codec</groupId>
+		<artifactId>commons-codec</artifactId>
+		<version>1.6</version>
+	</dependency>
+	<!-- JDBC -->
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>5.1.34</version>
+	</dependency>
+	<!-- Apache Commons DbUtils（若版本为1.6则报错） -->
+	<dependency>
+		<groupId>commons-dbutils</groupId>
+		<artifactId>commons-dbutils</artifactId>
+		<version>1.5</version>
+	</dependency>
+	<!-- Tomcat Dbcp -->
+	<dependency>
+		<groupId>org.apache.tomcat</groupId>
+		<artifactId>tomcat-dbcp</artifactId>
+		<version>7.0.54</version>
+	</dependency>
+	<!-- Apache Log4j -->
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>1.2.17</version>
+	</dependency>
+	<dependency>
+		<groupId>jstl</groupId>
+		<artifactId>jstl</artifactId>
+		<version>1.2</version>
+	</dependency>
+  </dependencies>
+  <build>
+    <finalName>Analysis</finalName>
+  </build>
+</project>
