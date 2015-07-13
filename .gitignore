@@ -22,3 +22,10 @@ Analysis/.project
 Analysis/target/
 Analysis/.settings/
 Analysis/.codepro/
+
+#celloud
+celloud/.DS_Store
+celloud/.classpath
+celloud/.project
+celloud/target/
+celloud/.settings/

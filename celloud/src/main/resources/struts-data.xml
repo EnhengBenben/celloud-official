@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="data" extends="celloud-default">
+		<!-- 数据管理begin -->
+		<action name="data_*" class="com.nova.action.DataAction"
+			method="{1}">
+			<result name="privateData">/pages/data/privateDataList.jsp</result>
+			<result name="sharedData">/pages/data/sharedToMeDataList.jsp</result>
+		</action>
+		<!-- 数据管理end -->
+		<!-- 用户管理begin -->
+		<action name="getUserLogInfo" class="com.nova.action.UserAction"
+			method="getUserLogInfo">
+			<result name="getUserLogInfo">/content/logInfoList.jsp</result>
+		</action>
+		<action name="openPersonalInfo" class="com.nova.action.UserAction"
+			method="openPersonalInfo">
+			<result name="openPersonalInfo">/content/baseInfo.jsp</result>
+		</action>
+		
+		<!-- 用户管理end -->
+		<!-- 报告管理begin -->
+		<action name="report_*" class="com.nova.action.ReportAction"
+			method="{1}">
+			<result name="addProReport"></result>
+			<result name="prosoftwareList">/pages/data/projectReportList.jsp</result>
+		</action>
+		<!-- 直接打开邮箱链接查看报告 -->
+		<action name="viewReportFromEmail" class="com.nova.action.ReportAction"
+			method="viewReportFromEmail">
+			<result name="viewReportFromEmail">/pages/data/ReportForEmail.jsp</result>
+		</action>
+		<action name="updateReportReadByDataKeySoftId" class="com.nova.action.DataAction"
+			method="updateReportReadByDataKeySoftId">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="updateReportReadStateByPro" class="com.nova.action.ProjectAction"
+			method="updateReportReadStateByPro">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		<!-- 报告管理end -->
+	</package>
+
+	<package name="data-ajax" extends="celloud-default">
+		<!-- 数据统计begin -->
+		<action name="dataJson_*" class="com.nova.action.DataAction" method="{1}">
+			<result name="outPutData" type="json">
+				<param name="root">fileName</param>
+			</result>
+			<result name="getDataNumSucc" type="json">
+				<param name="root">dataNum</param>
+			</result>
+			<result name="delDatas" type="json">
+				<param name="root">flag</param>
+			</result>
+			<result name="strainList" type="json">
+				<param name="root">strainMap</param>
+			</result>
+			<result name="getDataListByProjectId" type="json">
+				<param name="root">fileList</param>
+			</result>
+			<result name="strainMapList" type="json">
+				<param name="root">strainMapList</param>
+			</result>
+			<result name="getFileFormatById" type="json">
+				<param name="root">fileFormat</param>
+			</result>
+			<result name="importDataToPro" type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="reportJson_*" class="com.nova.action.ReportAction" method="{1}">
+			<result name="totalReportNum" type="json">
+				<param name="root">myReportNum</param>
+			</result>
+			<result name="checkProHasReport" type="json">
+				<param name="root">result</param>
+			</result>
+			<result name="deleteProReport" type="json">
+				<param name="root">result</param>
+			</result>
+			<result name="addProReport" type="json">
+				<param name="root">flag</param>
+			</result>
+			<result name="addManyDataReport" type="json">
+				<param name="root">flag</param>
+			</result>
+			<result name="deleteReport" type="json">
+				<param name="root">result</param>
+			</result>
+			<result name="deleteReportByProSoftId" type="json">
+				<param name="root">result</param>
+			</result>
+			<result name="prosoftwareList" type="json">
+				<param name="root">proReportList</param>
+			</result>
+			<result name="checkProjectHasReport" type="json">
+				<param name="root">proNames</param>
+			</result>
+		</action>
+		<!-- 报告管理begin-->
+		<action name="getProjectSoftList" class="com.nova.action.ReportAction"
+			method="getProjectSoftList">
+			<result type="json">
+				<param name="root">softList</param>
+			</result>
+		</action>
+		<action name="checkDatasInProReportState" class="com.nova.action.ReportAction"
+			method="checkDatasInProReportState">
+			<result type="json">
+				<param name="root">fileNames</param>
+			</result>
+		</action>
+		<action name="addDatasReport" class="com.nova.action.ReportAction"
+			method="addDatasReport">
+			<result type="json">
+				<param name="root">state</param>
+			</result>
+		</action>
+		<action name="checkDatasReportState" class="com.nova.action.ReportAction"
+			method="checkDatasReportState">
+			<result type="json">
+				<param name="root">fileNames</param>
+			</result>
+		</action>
+		<action name="checkPromiRNAReportState" class="com.nova.action.ReportAction"
+			method="checkPromiRNAReportState">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		<action name="checkDatamiRNAReportState" class="com.nova.action.ReportAction"
+			method="checkDatamiRNAReportState">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		<action name="checkProReport" class="com.nova.action.ReportAction"
+			method="checkProReport">
+			<result type="json">
+				<param name="root">proNames</param>
+			</result>
+		</action>
+		<action name="updateReportByDataKeyProjectId" class="com.nova.action.ReportAction"
+			method="updateReportByDataKeyProjectId">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="updateReportByDataKey" class="com.nova.action.ReportAction"
+			method="updateReportByDataKey">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="updateReportByDataKeySoftId" class="com.nova.action.ReportAction"
+			method="updateReportByDataKeySoftId">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="updateReportByProSoftId" class="com.nova.action.ReportAction"
+			method="updateReportByProSoftId">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="saveSnpReport" class="com.nova.action.ReportAction"
+			method="saveSnpReport">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="delReportByProjectId" class="com.nova.action.ReportAction"
+			method="delReportByProjectId">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="addProDataReport" class="com.nova.action.ReportAction"
+			method="addProDataReport">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="updateReportStateByReportId" class="com.nova.action.ReportAction"
+			method="updateReportStateByReportId">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="updateReportState" class="com.nova.action.ReportAction"
+			method="updateReportState">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="existsReport" class="com.nova.action.ReportAction"
+			method="existsReport">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		
+		<action name="saveProjectDataListReport" class="com.nova.action.ReportAction"
+			method="saveProjectDataListReport">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="getUserIdBySoftIdDataKey" class="com.nova.action.ReportAction"
+			method="getUserIdBySoftIdDataKey">
+			<result type="json">
+				<param name="root">userId</param>
+			</result>
+		</action>
+		<!-- 报告管理end -->
+		<!-- 软件管理begin -->
+		<action name="getOneSoftwareXML" class="com.nova.action.SoftwareAction"
+			method="getOneSoftwareXML">
+			<result type="json">
+				<param name="root">xml</param>
+			</result>
+		</action>
+		<action name="softwareJson_*" class="com.nova.action.SoftwareAction" method="{1}">
+			<result name="getAllSoft" type="json">
+				<param name="root">list</param>
+			</result>
+			<result name="softwareRunNum" type="json">
+				<param name="root">softRunNum</param>
+			</result>
+			<result name="getSoftStatistic" type="json">
+				<param name="root">softwareRunList</param>
+			</result>
+			<result name="getAllSoftwareNotInPro" type="json">
+				<param name="root">softwareNotInPro</param>
+			</result>
+			<result name="getAllSoftwareNotInDate" type="json">
+				<param name="root">softwareNotInData</param>
+			</result>
+			<result name="createSoftware" type="json">
+				<param name="root">changeNum</param>
+			</result>
+			<result name="editSoft" type="json">
+				<param name="root">changeNum</param>
+			</result>
+			<result name="deleteSoftWare" type="json">
+				<param name="root">changeNum</param>
+			</result>
+			<result name="getSoftIdByName" type="json">
+				<param name="root">softwareId</param>
+			</result>
+			<result name="getOneSoftwareById" type="json">
+				<param name="root">soft</param>
+			</result>
+		</action>
+		<action name="addSoftwareToDeskTop" class="com.nova.action.SoftwareAction"
+			method="addSoftwareToDeskTop">
+			<result type="json">
+				<param name="root">isAdd</param>
+			</result>
+		</action>
+		<!-- 报告管理end -->
+		<!-- 上传文件管理begin -->
+		<action name="manyAjaxUploadFile_*" class="com.nova.action.ManyFileUploadAction" method="{1}">
+			<result type="json" name="uploadMSuc">
+			    <param name="root">resultData</param>
+			</result>
+           	<result type="json" name="input">
+				<param name="root">uploadImagesFileName</param>
+           	</result> 
+		</action>
+		<!-- 上传文件管理end -->
+		<!-- 数据管理 begin-->
+		<!-- 邮件发送 -->
+		<action name="getDataListByUserIdFileFormats" class="com.nova.action.DataAction"
+			method="getDataListByUserIdFileFormats">
+			<result type="json">
+				<param name="root">fileList</param>
+			</result>
+		</action>
+		<action name="sendEmail" class="com.nova.action.DataAction"
+			method="sendEmail">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="getProjectNameByDataKey" class="com.nova.action.DataAction"
+			method="getProjectNameByDataKey">
+			<result type="json">
+				<param name="root">projectName</param>
+			</result>
+		</action>
+		<action name="getFileNameByDataKey" class="com.nova.action.DataAction"
+			method="getFileNameByDataKey">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		<action name="getFileNameById" class="com.nova.action.DataAction"
+			method="getDataNameById">
+			<result type="json">
+				<param name="root">fileName</param>
+			</result>
+		</action>
+		<action name="saveDataTag" class="com.nova.action.DataAction"
+			method="saveDataTag">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="saveDataStrain" class="com.nova.action.DataAction"
+			method="saveDataStrain">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		
+		<action name="shareData" class="com.nova.action.DataAction"
+			method="shareData">
+			<result type="json">
+				<param name="root">report</param>
+			</result>
+		</action>
+		<action name="goToRunApp" class="com.nova.action.ReportAction"
+			method="goToRunApp">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="allocateDataToPro" class="com.nova.action.DataAction"
+			method="allocateDataToPro">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="createDataProjectRel" class="com.nova.action.DataAction"
+			method="createDataProjectRel">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="getDataReport" class="com.nova.action.ReportAction"
+			method="getDataReport">
+			<result type="json">
+				<param name="root">reportResult</param>
+			</result>
+		</action>
+		<action name="getProjectIdByDataId" class="com.nova.action.DataAction"
+			method="getProjectIdByDataId">
+			<result type="json">
+				<param name="root">projectId</param>
+			</result>
+		</action>
+		
+		<!-- 根据用户编号、数据类型获取数据列表 -->
+		<action name="getDataInfoListByProjectId" class="com.nova.action.DataAction"
+			method="getDataInfoListByProjectId">
+			<result type="json">
+				<param name="root">fileList</param>
+			</result>
+		</action>
+		<action name="updateDataInfoByFileId" class="com.nova.action.DataAction"
+			method="updateDataInfoByFileId">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="updateAllDataInfoByFileId" class="com.nova.action.DataAction"
+			method="updateAllDataInfoByFileId">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="updateDataInfoListByFileId" class="com.nova.action.DataAction"
+			method="updateDataInfoListByFileId">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="getDataKeyListByDataIds" class="com.nova.action.DataAction"
+			method="getDataKeyListByDataIds">
+			<result type="json">
+				<param name="root">dataKey</param>
+			</result>
+		</action>
+		<action name="getStrainDataKeySampleById" class="com.nova.action.DataAction"
+			method="getStrainDataKeySampleById">
+			<result type="json">
+				<param name="root">fileList</param>
+			</result>
+		</action>
+		<!-- 数据管理 end-->
+		
+		<!-- 后台文件上传 -->
+		<action name="getRadomDataKey" class="com.nova.action.DataAction"
+			method="getRadomDataKey">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		
+		<!-- 用户管理 begin-->
+		<action name="getUsersMap" class="com.nova.action.UserAction"
+			method="getUsersMap">
+			<result type="json">
+				<param name="root">userMap</param>
+			</result>
+		</action>
+		<action name="getEmailBySessionUserId" class="com.nova.action.UserAction"
+			method="getEmailBySessionUserId">
+			<result type="json">
+				<param name="root">email</param>
+			</result>
+		</action>
+		<action name="getUsersMapByFileId" class="com.nova.action.DataAction"
+			method="getUsersMapByFileId">
+			<result type="json">
+				<param name="root">sharedUserMapList</param>
+			</result>
+		</action>
+		
+		<!-- 用户管理 end-->
+		
+		<!-- 项目管理begin -->
+		<action name="getProjectById" class="com.nova.action.ProjectAction"
+			method="getProjectById">
+			<result type="json">
+				<param name="root">project</param>
+			</result>
+		</action>
+		<action name="getAllProMapListByUserId" class="com.nova.action.ProjectAction"
+			method="getAllProMapListByUserId">
+			<result type="json">
+				<param name="root">proMapList</param>
+			</result>
+		</action>
+		<action name="addProFromTemplate" class="com.nova.action.ProjectAction"
+			method="addProFromTemplate">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		<action name="checkProAppParams" class="com.nova.action.ProjectAction"
+			method="checkProAppParams">
+			<result type="json">
+				<param name="root">proParams</param>
+			</result>
+		</action>
+		<action name="saveProParams" class="com.nova.action.ProjectAction"
+			method="saveProParams">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		<action name="getProjectIdByName" class="com.nova.action.ProjectAction"
+			method="getProjectIdByName">
+			<result type="json">
+				<param name="root">projectId</param>
+			</result>
+		</action>
+		<action name="getUserIdByProjectId" class="com.nova.action.ProjectAction"
+			method="getUserIdByProjectId">
+			<result type="json">
+				<param name="root">shareUserId</param>
+			</result>
+		</action>
+		<action name="saveProject" class="com.nova.action.ProjectAction"
+			method="addProject">
+			<result type="json">
+				<param name="root">proManageInfo</param>
+			</result>
+		</action>
+		<action name="getProjectNameById" class="com.nova.action.ProjectAction"
+			method="getProjectNameById">
+			<result type="json">
+				<param name="root">projectName</param>
+			</result>
+		</action>
+		<action name="getDataSize" class="com.nova.action.ProjectAction"
+			method="getDataSizeInPro">
+			<result type="json">
+				<param name="root">dataSize</param>
+			</result>
+		</action>
+		<action name="getProListForSel" class="com.nova.action.ProjectAction"
+			method="getProListForSel">
+			<result type="json">
+				<param name="root">dataTypeMap</param>
+			</result>
+		</action>
+		<action name="getProListByFileId" class="com.nova.action.ProjectAction"
+			method="getProListByFileId">
+			<result type="json">
+				<param name="root">dataTypeMap</param>
+			</result>
+		</action>
+		<action name="removeDataFromProject" class="com.nova.action.ProjectAction"
+			method="removeData">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="projectJson_*" class="com.nova.action.ProjectAction" method="{1}">
+			<result name="strainMapList" type="json">
+				<param name="root">strainMapList</param>
+			</result>
+			<result name="addProStrain" type="json">
+				<param name="root">flag</param>
+			</result>
+			<result name="addProDataType" type="json">
+				<param name="root">flag</param>
+			</result>
+			<result type="json" name="addProStrain">
+				<param name="root">flag</param>
+			</result>
+			<result type="json" name="addProDataType">
+				<param name="root">flag</param>
+			</result>
+			<result type="json" name="getStrainByProId">
+				<param name="root">strain</param>
+			</result>
+			<result type="json" name="goToRunAppPro">
+				<param name="root">flag</param>
+			</result>
+			<result type="json" name="dataTypeList">
+				<param name="root">dataTypeMap</param>
+			</result>
+			<result type="json" name="privateProject">
+				<param name="root">privaProPageList</param>
+			</result>
+			<result type="json" name="sharedProject">
+				<param name="root">shareProPageList</param>
+			</result>
+			<result type="json" name="updateProjectNameById">
+				<param name="root">flag</param>
+			</result>
+			<result type="json" name="getProListForData">
+				<param name="root">dataTypeMap</param>
+			</result>
+			<result type="json" name="saveProjectShare">
+				<param name="root">errorMessage</param>
+			</result>
+			<result type="json" name="addDataForPro">
+				<param name="root">result</param>
+			</result>
+			<result type="json" name="sendProShareEmail">
+				<param name="root">result</param>
+			</result>
+			<result type="json" name="getProListForUpload">
+				<param name="root">proNameList</param>
+			</result>
+			<result type="json" name="getDataTypeById">
+				<param name="root">project</param>
+			</result>
+			<result type="json" name="checkProjectName">
+				<param name="root">flag</param>
+			</result>
+			<result type="json" name="getDataSizeInProject">
+				<param name="root">dataSize</param>
+			</result>
+			<result type="json" name="updateProDataFormat">
+				<param name="root">result</param>
+			</result>
+			<result type="json" name="deleteProject">
+				<param name="root">result</param>
+			</result>
+		</action>
+		<!-- 项目管理end -->
+		<!-- 获取tools项目路径 -->
+		<action name="getToolsPath" class="com.nova.action.PathAction" method="getToolPath">
+			<result type="json">
+				<param name="root">toolsPath</param>
+			</result>
+		</action>
+		<!-- 获取文件下载路径 -->
+		<action name="getDownloadPath" class="com.nova.action.PathAction" method="getDownloadFilePath">
+			<result type="json">
+				<param name="root">downloadPath</param>
+			</result>
+		</action>
+		<!-- 获取文件下载路径 -->
+		<action name="getPath" class="com.nova.action.PathAction" method="getPath">
+			<result type="json">
+				<param name="root">totalPath</param>
+			</result>
+		</action>
+		<!-- 验证数据类型是否一致 -->
+		<action name="validateDataType" class="com.nova.action.DataAction" method="validateDataType">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<!-- 验证数据的数据类型与app的数据类型是否一致 -->
+		<action name="validateDataAppType" class="com.nova.action.DataAction" method="validateDataAppType">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<!-- 项目参数设置中物种信息列表初始化 -->
+		<action name="getStrainListBySoftwareId" class="com.nova.action.SoftwareAction" method="getStrainListBySoftwareId">
+			<result type="json">
+				<param name="root">strainList</param>
+			</result>
+		</action>
+		<!-- 获取所有文件格式 -->
+		<action name="getAllDataType" class="com.nova.action.DataFormatAction" method="getAllDataType">
+			<result type="json">
+				<param name="root">typeList</param>
+			</result>
+		</action>
+		<!-- 数据运行app -->
+		<action name="runAppForData" class="com.nova.action.DataAction" method="runAppForData">
+		</action>
+	</package>
+</struts>

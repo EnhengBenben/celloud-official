@@ -1,0 +1,56 @@
+body, div, p, ul, li{
+	margin:0;
+	padding:0;
+	
+}
+ul{
+	list-style:none;
+	display: inline-block;
+}
+.left{
+	text-align:left;
+}
+.center{
+	text-align:center;
+}
+.right{
+	text-align:right;
+}
+img{
+	border:0;
+}
+/* 新增样式 2013-10-30 by wangxinyan*/
+/*数据库*/
+.fl{ float:left;}
+.fr{ float:right;}
+a{text-decoration:none;margin:0;}
+.header{ height:61px; background:url(../../images/database/DB_header_bg.png) repeat-x; border-bottom:0; width:auto;}
+.header .fl{ padding:20px 0 0 32px;}
+.header .fr{ line-height:61px;}
+.header .fr input{ border:2px solid #a1def2; padding:4px 5px 2px 5px; margin:0 10px;}
+.header .fr input:focus{ outline:none;}
+.header .fr a{ display:inline-block; *display:inline;*zoom:1; width:18px; height:18px; background:url(../../images/database/DB_icon_search.png) no-repeat; border:0; color:transparent; font-size:1px; vertical-align: middle; margin-right:20px;}
+.main-new{}
+.main-new .leftside{ display: block; width:203px; height:550px; border-right:1px solid #8eb2cf;background: url(../../images/database/DB_leftside_bg.png) top left repeat; float:left; padding-top:16px;}
+.main-new .leftside1{ display: block; height:550px; border-right:1px solid #8eb2cf;background: url(../../images/database/DB_leftside_bg.png) top left repeat; float:left; }
+.main-new .leftside ul{}
+.main-new .leftside ul li{ padding:5px 0;font-family:"华文细黑";font-size:16px;}
+.main-new .leftside ul li:hover,.main-new .leftside ul li.active{ background-color:#7abd27; cursor:pointer;}
+.main-new .leftside ul li:hover a,.main-new .leftside ul li.active a{ color:#ffffff;}
+.main-new .leftside ul li a{ display: block; color:#59595c; padding-left:32px;}
+.main-new .leftside ul li a:active{ background-color:transparent;}
+.main-new .leftside ul li a i{ display:inline-block; *display:inline; *zoom:1; width:18px; height:18px; vertical-align:-2px; margin-right:10px;}
+.main-new .leftside ul li a .celloud{background:url(../../images/database/DB_icon_celloud.png) no-repeat;}
+.main-new .leftside ul li:hover a .celloud,.main-new .leftside ul li.active a .celloud{ background:url(../../images/database/DB_icon_celloud_white.png) no-repeat;}
+.main-new .leftside ul li a .public{background:url(../../images/database/DB_icon_public.png) no-repeat;}
+.main-new .leftside ul li:hover a .public,.main-new .leftside ul li.active a .public{ background:url(../../images/database/DB_icon_public_white.png) no-repeat;}
+.main-new .mainContent{ margin-left:203px; background:#ffffff url(../../images/database/DB_main_bg.png) top left repeat-x;}
+/*Celloud DB*/
+.main-new .mainContent .tip{ width:50%; height:50%; text-align:center; padding:160px 0; margin:0 auto; color:#545454; font-size:18px; font-family:"微软雅黑";}
+.main-new .mainContent .tip img{ vertical-align:-5px; margin-right:10px;}
+/*Public DB*/
+.main-new .mainContent ul{ padding:50px 20px 20px 78px;}
+.main-new .mainContent ul li{ padding-bottom:28px;}
+.main-new .mainContent ul li a{ font-family:Arial,"黑体"; font-size:16px; color:#333;}
+.main-new .mainContent ul li a:hover{}
+.main-new .mainContent ul li a img{ vertical-align:middle; margin-right:20px}

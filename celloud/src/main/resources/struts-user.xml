@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="admin" extends="celloud-default">
+		<action name="user_*" class="com.nova.action.UserAction" method="{1}">
+			<result name="getUserPageList">/pages/admin/userList.jsp</result>
+			<result name="getUserById">/pages/admin/editUser.jsp</result>
+			<!-- 重置密码，由用户点击邮箱链接触发 -->
+			<result name="resetPassword">/content/resetPassword.jsp</result>
+			<result name="goToForgetPwd">/content/forgetPwd.jsp</result>
+			<result name="register">/pages/admin/addUser.jsp</result>
+		</action>
+	</package>
+
+	<package name="admin-ajax" extends="celloud-default">
+		<!-- 获取用户角色 -->
+		<action name="getAdminRole" class="com.nova.action.UserAction" method="getAdminiRole">
+			<result type="json">
+				<param name="root">adminRole</param>
+			</result>
+		</action>
+		<action name="userJson_*" class="com.nova.action.UserAction" method="{1}">
+			<result type="json" name="updateNotify">
+				<param name="root">flag</param>
+			</result>
+			<!-- 管理员登录 -->
+			<result type="json" name="getAllUserList">
+				<param name="root">userList</param>
+			</result>
+			<result type="json" name="adminLogin">
+				<param name="root">flag</param>
+			</result>
+			<result type="json" name="usersMapSharedPro">
+				<param name="root">userMapList</param>
+			</result>
+			<result name="getUserRole" type="json">
+				<param name="root">role</param>
+			</result>
+			<result name="getAllUser" type="json">
+				<param name="root">userMapList</param>
+			</result>
+			<result name="addUser" type="json">
+				<param name="root">flag</param>
+			</result>
+			<result name="updateUser" type="json">
+				<param name="root">flag</param>
+			</result>
+			<result name="getUserById" type="json">
+				<param name="root">user</param>
+			</result>
+			<result name="userResetPwd" type="json">
+				<param name="root">flag</param>
+			</result>
+			<result name="getUserIdByName" type="json">
+				<param name="root">userId</param>
+			</result>
+			<result name="deleteUserByUserId" type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		<action name="checkAdminSessionTimeOut" class="com.nova.action.UserAction" method="checkAdminSessionTimeOut">
+			<result type="json">
+				<param name="root">username</param>
+			</result>
+		</action>
+		<!-- 退出 -->
+		
+		<action name="logout" class="com.nova.action.UserAction" method="logout">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<!-- 密码重置 -->
+		<action name="checkPwd" class="com.nova.action.UserAction" method="checkPwd">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<!-- 修改密码 -->
+		<action name="updatePwd" class="com.nova.action.UserAction" method="updatePwd">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		
+		
+		<!-- 忘记密码 -->
+		<action name="validateUserEmail" class="com.nova.action.UserAction" method="validateUserEmail">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		<!-- 重置密码 -->
+		<action name="updatePwdByUserName" class="com.nova.action.UserAction" method="updatePwdByUserName">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		<!-- 用户登录成功后修改密码，验证旧密码是否输入正确 -->
+		<action name="validatePwd" class="com.nova.action.UserAction" method="validatePwd">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="updateUserPwd" class="com.nova.action.UserAction" method="updateUserPwd">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<action name="getUserInfo" class="com.nova.action.UserAction" method="getUserInfo">
+			<result type="json">
+				<param name="root">user</param>
+			</result>
+		</action>
+		<!-- 个人信息维护 -->
+		<action name="updateUserBaseInfo" class="com.nova.action.UserAction" method="updateUserBaseInfo">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+		<!-- 用户名验重 -->
+		<action name="checkUsername" class="com.nova.action.UserAction" method="checkUsername">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		
+		<!-- 邮箱验重-->
+		<action name="checkUserEmail" class="com.nova.action.UserAction" method="checkUserEmail">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<!-- 验证码验证 -->
+		<!-- 验证码验证 -->
+		<action name="checkKapcha" class="com.nova.action.UserAction" method="checkKapcha">
+			<result type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<!-- 用户注册 -->
+		<action name="registUser" class="com.nova.action.UserAction" method="registUser">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+	</package>
+</struts>
