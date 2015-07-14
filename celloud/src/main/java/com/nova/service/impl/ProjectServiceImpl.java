@@ -1,24 +1,9 @@
 package com.nova.service.impl;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import com.google.inject.Inject;
 import com.nova.dao.IProjectDao;
@@ -59,43 +44,6 @@ public class ProjectServiceImpl implements IProjectService {
 	@Override
 	public String getProjectNameById(int projectId) {
 		return projectDao.getProjectNameById(projectId);
-	}
-
-	@Override
-	public List<Map<String, String>> getDataTypeItem() {
-		DocumentBuilderFactory domFactory = DocumentBuilderFactory
-				.newInstance();
-		List<Map<String, String>> dataTypeList = new ArrayList<Map<String, String>>();
-		try {
-			DocumentBuilder domBuilder = domFactory.newDocumentBuilder();
-			String path = ProjectServiceImpl.class.getResource(
-					"/dataTypeItems.xml").getPath();
-			InputStream in = new FileInputStream(path);
-			Document doc = domBuilder.parse(in);
-			Element root = doc.getDocumentElement();
-			NodeList strains = root.getElementsByTagName("value");
-			if (strains != null) {
-				for (int i = 0; i < strains.getLength(); i++) {
-					Node strain = strains.item(i);
-					Map<String, String> map = new HashMap<String, String>();
-					map.put("dataType", strain.getTextContent());
-					dataTypeList.add(map);
-				}
-			}
-		} catch (ParserConfigurationException e) {
-			log.error("创建Dom对象失败" + e);
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			log.error("没有找到配置文件" + e);
-			e.printStackTrace();
-		} catch (SAXException e) {
-			log.error("文件转换失败" + e);
-			e.printStackTrace();
-		} catch (IOException e) {
-			log.error("文件读取错误" + e);
-			e.printStackTrace();
-		}
-		return dataTypeList;
 	}
 
 	@Override

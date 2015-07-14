@@ -77,13 +77,6 @@ public interface IProjectService {
 	public int getProjectIdByName(String projectName);
 
 	/**
-	 * 读取数据类型信息列表
-	 * 
-	 * @return
-	 */
-	public List<Map<String, String>> getDataTypeItem();
-
-	/**
 	 * 获取数据库中的所有项目名称
 	 * 
 	 * @return
