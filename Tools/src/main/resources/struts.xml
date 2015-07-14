@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.multipart.saveDir" value="temp" />
+	<!-- 配置convention插件自动加载映射 -->
+	<constant name="struts.convention.classes.reload" value="true" />
+	
+		<package name="struts2" extends="struts-default">
+			<action name="commonMatch" class="com.nova.tools.action.MatchAction" method="commonMatch">
+				<result name="success">/pages/16s/result.jsp</result>
+			</action>
+			<action name="resultSearch" class="com.nova.tools.action.MatchAction" method="resultSearch">
+				<result name="success">/pages/16s/svgAjax.jsp</result>
+			</action>
+		</package>
+</struts>
