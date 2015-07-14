@@ -1,0 +1,32 @@
+.header {
+	background-color:#ECF8FD;
+	height:75px;
+	overflow:hidden;
+}
+.header img {
+	margin:0px 20px;
+}
+.subnav {
+	width: 100%;
+	height: 37px;
+	margin-bottom:10px;
+	background:url(../img/subnav-bg.png) repeat-x;
+	-webkit-box-shadow:  0 3px 5px rgba(0, 0, 0, .05);
+	-moz-box-shadow:  0 3px 5px rgba(0, 0, 0, .05);
+	box-shadow:  0 3px 5px rgba(0, 0, 0, .05);
+}
+.subnav .nav {
+	margin-bottom: 0;
+}
+.subnav .nav > li > a {
+	text-align:center;
+	color:#08c;
+	font-size:18px;
+	font-family:"华文细黑";
+	width:100px;
+	margin:0;
+	padding-top:11px;
+	padding-bottom:11px;
+	border-left: 1px solid #f5f5f5;
+	border-right: 1px solid #e5e5e5;
+}

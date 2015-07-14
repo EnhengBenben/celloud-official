@@ -29,3 +29,10 @@ celloud/.classpath
 celloud/.project
 celloud/target/
 celloud/.settings/
+
+#Tools
+Tools/.DS_Store
+Tools/.classpath
+Tools/.project
+Tools/target/
+Tools/.settings/
