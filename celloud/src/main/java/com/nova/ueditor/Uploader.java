@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -26,10 +27,13 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
 import org.apache.log4j.Logger;
 
+import sun.misc.BASE64Decoder;
+
 /**
  * UEditor文件上传辅助类
  *
  */
+@SuppressWarnings("restriction")
 public class Uploader {
 	private static Logger log = Logger.getLogger(Uploader.class);
 	// 输出文件地址
@@ -155,29 +159,29 @@ public class Uploader {
 	 * 接受并保存以base64格式上传的文件
 	 * @param fieldName
 	 */
-//	public void uploadBase64(String fieldName){
-//		String savePath = this.getFolder(this.savePath);
-//		String base64Data = this.request.getParameter(fieldName);
-//		this.fileName = this.getName("test.png");
-//		this.url = savePath + "/" + this.fileName;
-//		BASE64Decoder decoder = new BASE64Decoder();
-//		try {
-//			File outFile = new File(this.getPhysicalPath(this.url));
-//			OutputStream ro = new FileOutputStream(outFile);
-//			byte[] b = decoder.decodeBuffer(base64Data);
-//			for (int i = 0; i < b.length; ++i) {
-//				if (b[i] < 0) {
-//					b[i] += 256;
-//				}
-//			}
-//			ro.write(b);
-//			ro.flush();
-//			ro.close();
-//			this.state=this.errorInfo.get("SUCCESS");
-//		} catch (Exception e) {
-//			this.state = this.errorInfo.get("IO");
-//		}
-//	}
+	public void uploadBase64(String fieldName){
+		String savePath = this.getFolder(this.savePath);
+		String base64Data = this.request.getParameter(fieldName);
+		this.fileName = this.getName("test.png");
+		this.url = savePath + "/" + this.fileName;
+		BASE64Decoder decoder = new BASE64Decoder();
+		try {
+			File outFile = new File(this.getPhysicalPath(this.url));
+			OutputStream ro = new FileOutputStream(outFile);
+			byte[] b = decoder.decodeBuffer(base64Data);
+			for (int i = 0; i < b.length; ++i) {
+				if (b[i] < 0) {
+					b[i] += 256;
+				}
+			}
+			ro.write(b);
+			ro.flush();
+			ro.close();
+			this.state=this.errorInfo.get("SUCCESS");
+		} catch (Exception e) {
+			this.state = this.errorInfo.get("IO");
+		}
+	}
 
 	/**
 	 * 文件类型判断
