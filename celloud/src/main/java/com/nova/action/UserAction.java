@@ -12,8 +12,8 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
-import com.email.service.EmailService;
 import com.google.inject.Inject;
+import com.nova.email.EmailService;
 import com.nova.pager.Page;
 import com.nova.pager.PageList;
 import com.nova.sdo.Behavior;
