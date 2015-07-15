@@ -32,6 +32,8 @@ public class GuiceInjectorContext extends GuiceServletContextListener {
 						protected void configureServlets() {
 							// 数据源初始化
 							ConnectManager.initSystem();
+							// Mongo初始化
+							// SystemContext.initContext();
 							// 初始化struts2配置,这里MyStrutsFilter已经继承StrutsPrepareAndExecuteFilter
 							bind(MyStrutsFilter.class).in(Singleton.class);
 							filter("/*").through(MyStrutsFilter.class);
