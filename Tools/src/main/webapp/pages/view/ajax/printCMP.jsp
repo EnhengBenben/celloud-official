@@ -1,15 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>肿瘤报告打印</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resource/css/print.css?version=20150630">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resource/css/print.css?version=20150707">
 </head>
 <body>
 <a href="javascript:void(0)" onclick="preview(this)" class="btn btn-default" id="change" style="float:right;margin-top:10px;margin-right:-80px;"><i class="i-print"></i>打印</a>
+<form id="form">
+<input type="hidden" name="cmpFill.id" value="${map.cmpFilling.id }">
+<input type="hidden" name="cmpFill.dataKey" value="${resultMap.dataKey }">
+<input type="hidden" name="cmpFill.userId" value="${resultMap.userId }">
 <section class="section0 border1 w3cbbs">
 	<div class="header">
 		<img src="<%=request.getContextPath()%>/resource/img/yanda_print.png">
@@ -17,16 +22,16 @@
 	</div>
 	<div class="titletype">
 		<div>
-			<span>肿瘤类型：</span><span><input type="text" class="input200"></span>
+			<span>肿瘤类型：</span><span><input type="text" class="input200" id="tumorType" name="cmpFill.tumorType" value="${map.cmpFilling.tumorType }"></span>
 		</div>
 		<div>
-			<span>姓</span><span style="margin-left:40px">名：</span><span><input type="text" class="input200"></span>
+			<span>姓</span><span style="margin-left:40px">名：</span><span><input type="text" class="input200" value="${map.cmpFilling.patientBasic.name }"></span>
 		</div>
 		<div>
-			<span>取样日期：</span><span><input type="text" class="input50"></span>年<span><input type="text" class="input50"></span>月<span><input type="text" class="input50"></span>日
+			<span>取样日期：</span><span><input type="text" class="Wdate input input200" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;" value="${map.cmpFilling.samplingDate }"></span>
 		</div>
 		<div>
-			<span>报告日期：</span><span><input type="text" class="input50"></span>年<span><input type="text" class="input50"></span>月<span><input type="text" class="input50"></span>日
+			<span>报告日期：</span><span><input type="text" class="Wdate input input200" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;" id="reportDate" name="cmpFill.reportDate" value="${map.cmpFilling.reportDate }"></span>
 		</div>
 	</div>
 	<footer>
@@ -37,18 +42,18 @@
 	<h3>一、基本信息</h3>
 	<h4>1、送检基本信息</h4>
 	<ul class="info">
-        <li>姓名：<span><input type="text"></span></li>
-        <li>取样日期：<span><input type="text"></span></li>
-        <li>性别：<span id="_sex"><input type="radio" name="sex" value="男" checked="checked">男<input type="radio" name="sex" value="女">女</span></li>
-        <li>样本来源：<span><input type="text"></span></li>
-        <li>年龄：<span><input type="text"></span>岁</li>
-        <li>临床诊断：<span><input type="text"></span></li>
-        <li>病理诊断：<span><input type="text"></span></li>
-        <li>分析日期：<span><input type="text"></span></li>
-        <li>病理位置：<span><input type="text"></span></li>
-        <li>分子生物实验操作：<span><input type="text" class="input100"></span></li>
-        <li>病理类型：<span><input type="text"></span></li>
-        <li>基因分析：<span><input type="text"></span></li>
+        <li>姓名：<span><input type="text" id="patientName" name="cmpFill.patientBasic.name" value="${map.cmpFilling.patientBasic.name }"></span></li>
+        <li>取样日期：<span><input type="text" id="samplingDate" name="cmpFill.samplingDate" value="${map.cmpFilling.samplingDate }"></span></li>
+        <li>性别： <span id="_sex"><input type="radio" name="cmpFill.patientBasic.sex" value="男" <c:if test="${map.cmpFilling.patientBasic.sex eq '男' }">checked="checked"</c:if>>男<input type="radio" name="cmpFill.patientBasic.sex" value="女" <c:if test="${map.cmpFilling.patientBasic.sex eq '女' }">checked="checked"</c:if>>女</span></li>
+        <li>样本来源：<span><input type="text" id="sampleSource" name="cmpFill.sampleSource" value="${map.cmpFilling.sampleSource }"></span></li>
+        <li>年龄：<span><input type="text" id="patientAge" name="cmpFill.patientBasic.age" value="${map.cmpFilling.patientBasic.age }"></span>岁</li>
+        <li>临床诊断：<span><input type="text" id="clinicalDiagnosis" name="cmpFill.clinicalDiagnosis" value="${map.cmpFilling.clinicalDiagnosis }"></span></li>
+        <li>病理诊断：<span><input type="text" id="pathologicDiagnosis" name="cmpFill.pathologicDiagnosis" value="${map.cmpFilling.pathologicDiagnosis }"></span></li>
+        <li>分析日期：<span><input type="text" id="analysisDate" name="cmpFill.analysisDate" class="Wdate input" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;" value="${map.cmpFilling.analysisDate }"></span></li>
+        <li>病理位置：<span><input type="text" id="pathologicalPosition" name="cmpFill.pathologicalPosition" value="${map.cmpFilling.pathologicalPosition }"></span></li>
+        <li>分子生物实验操作：<span><input type="text" class="input100" id="molecularBioExperOper" name="cmpFill.molecularBioExperOper" value="${map.cmpFilling.molecularBioExperOper }"></span></li>
+        <li>病理类型：<span><input type="text" id="pathologicalType" name="cmpFill.pathologicalType" value="${map.cmpFilling.pathologicalType }"></span></li>
+        <li>基因分析：<span><input type="text" id="geneAnalysis" name="cmpFill.geneAnalysis" value="${map.cmpFilling.geneAnalysis }"></span></li>
     </ul>
     <h4>2、送检要求</h4>
     <div class="info">
@@ -87,19 +92,33 @@
     	</table>
     </div>
 </section>
+</form>
 <section class="section2 border1 w3cbbs">
-    <h3>二、基因检测结果简述</h3>
-    <h4>1、检测结果</h4>
-    <div class="info w3cbbs">
-    	<p>按照临床及/或病理诊断，结合患者诊疗病史进行针对肿瘤基因测序分析报告如下：</p>
-    	<table style="width:100%;height:100px;">
-    		<tr>
-    		<s:if test="resultMap.snp_tbody1=='' || resultMap.snp_tbody1==null || resultMap.snp_tbody1=='null'">
-				<td>未检测到相关突变位点</td>
-			</s:if>
-			<s:else>
+  <h3>二、基因检测结果简述</h3>
+  <h4>1、检测结果</h4>
+  <p class="info">按照临床及/或病理诊断，结合患者诊疗病史进行针对肿瘤基因测序分析报告如下：</p>
+  <div id="secion2_info1" class="info">
+   	<table style="width:100%;height:100px;">
+   		<tr>
+   		<s:if test="resultMap.snp_tbody1=='' || resultMap.snp_tbody1==null || resultMap.snp_tbody1=='null'">
+			<td>未检测到相关突变位点</td>
+		</s:if>
+		<s:else>
+			<td width="49%" valign="top" height="100%">
+				<table class="table table-striped-green table-text-center table-padding0" id="snp_table1">
+					<thead>
+						<tr>
+							<th class="mwidth_Gene">基因</th>
+							<th>已知突变位点数</th>
+							<th>测序深度</th>
+						</tr>	
+					</thead>
+					${resultMap.snp_tbody1 }
+				</table>
+			</td>
+			<s:if test="resultMap.snp_tbody2!=null && resultMap.snp_tbody2!='null'">
 				<td width="49%" valign="top" height="100%">
-					<table class="table table-striped-green table-text-center table-padding0">
+					<table class="table table-striped-green table-text-center table-padding0" id="snp_table2">
 						<thead>
 							<tr>
 								<th class="mwidth_Gene">基因</th>
@@ -107,35 +126,23 @@
 								<th>测序深度</th>
 							</tr>	
 						</thead>
-						${resultMap.snp_tbody1 }
+						${resultMap.snp_tbody2 }
 					</table>
 				</td>
-				<s:if test="resultMap.snp_tbody2!=null && resultMap.snp_tbody2!='null'">
-					<td width="49%" valign="top" height="100%">
-						<table class="table table-striped-green table-text-center table-padding0">
-							<thead>
-								<tr>
-									<th class="mwidth_Gene">基因</th>
-									<th>已知突变位点数</th>
-									<th>测序深度</th>
-								</tr>	
-							</thead>
-							${resultMap.snp_tbody2 }
-						</table>
-					</td>
-				</s:if>
-			</s:else>
-    		</tr>
-		</table>
-    	<p class="font10" style="width:100%;display:block">
-	    	注：<br>
-			1.&nbsp;&nbsp;该检测结果仅对本次送检样本负责，由于存在异质性的现象，不能反映全部病变的性质。<br>
-			2.&nbsp;&nbsp;由于检测样本不能长期保存，对检测结果有任何异议，需要检测复核请与24小时内提出。<br>
-			3.&nbsp;&nbsp;该检测结果仅供科研参考。<br>
-			4.&nbsp;&nbsp;已知突变位点:在样本中发现且有文献支持的突变位点。<br>
-			5.&nbsp;&nbsp;橘色阴影标记的基因：测序深度低于50，分析结果的可信度比较低。
-    	</p>
-    </div>
+			</s:if>
+		</s:else>
+   		</tr>
+	</table>
+   	<p class="font10" style="width:100%;display:block">
+    	注：<br>
+		1.&nbsp;&nbsp;该检测结果仅对本次送检样本负责，由于存在异质性的现象，不能反映全部病变的性质。<br>
+		2.&nbsp;&nbsp;由于检测样本不能长期保存，对检测结果有任何异议，需要检测复核请与24小时内提出。<br>
+		3.&nbsp;&nbsp;该检测结果仅供科研参考。<br>
+		4.&nbsp;&nbsp;已知突变位点:在样本中发现且有文献支持的突变位点。<br>
+		5.&nbsp;&nbsp;橘色阴影标记的基因：测序深度低于50，分析结果的可信度比较低。
+   	</p>
+  </div>
+  <div id="secion2_info2">
     <h4>2、检测结果详细描述</h4>
     <div class="info">
     	<p>按照测序数据质量分析报告如下：（分析日期：${resultMap.runDate }）</p>
@@ -178,6 +185,7 @@
 			</tbody>
 		</table>
     </div>
+  </div>
 </section>
 <section class="section3 border1 w3cbbs">
     <h3>三、耐药位点汇总</h3>
@@ -194,20 +202,44 @@
 			</tr>	
 		</thead>
 		<tbody id="drugTbody_3">
-			<tr id="drugTbody_3_tr0">
-				<td><input type="text" class="form-control"></td>
-				<td><input type="text" class="form-control"></td>
-				<td><input type="text" class="form-control"></td>
-			</tr>
+			<c:choose>
+				<c:when test="${map.cmpFilling.resistanceSiteSum.size()>0}">
+					<c:forEach items="${map.cmpFilling.resistanceSiteSum}" var="li" varStatus="size">
+						<tr id="drugTbody_3_tr<c:out value="${size.index}"/>" name="drugTbody_3_tr">
+							<td><input type="text" class="form-control" value="${li.geneName }"></td>
+							<td><input type="text" class="form-control" value="${li.mutationSite }"></td>
+							<td><input type="text" class="form-control" value="${li.drug }"></td>
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr id="drugTbody_3_tr0" name="drugTbody_3_tr">
+						<td><input type="text" class="form-control"></td>
+						<td><input type="text" class="form-control"></td>
+						<td><input type="text" class="form-control"></td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
 		</tbody>
 	</table>
 	<table class="table-del" id="del_drugTbody_3">
 		<tr><th>&nbsp;</th></tr>
-		<tr id="drugTbody_3_deltr0"><td><a href="javascript:removeThisTr('drugTbody_3',0)" title="删除所有"/></td></tr>
+		<c:choose>
+			<c:when test="${map.cmpFilling.resistanceSiteSum.size()>0}">
+				<c:forEach items="${map.cmpFilling.resistanceSiteSum}" var="li" varStatus="size">
+					<tr id="drugTbody_3_deltr<c:out value="${size.index}"/>"><td><a href="javascript:removeThisTr('drugTbody_3',<c:out value="${size.index}"/>)" title="删除所有"/></td></tr>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				<tr id="drugTbody_3_deltr0"><td><a href="javascript:removeThisTr('drugTbody_3',0)" title="删除所有"/></td></tr>
+			</c:otherwise>
+		</c:choose>
 	</table>
-	<a href="javascript:void()" onclick="removeTableTr('drugTbody_3')">删除行</a>&nbsp;&nbsp;
-	<a href="javascript:void()" onclick="addTableTr('drugTbody_3')">添加行</a>
+	<a href="javascript:void(0)" onclick="removeTableTr('drugTbody_3')">删除行</a>&nbsp;&nbsp;
+	<a href="javascript:void(0)" onclick="addTableTr('drugTbody_3')">添加行</a>
 </section>
+<input type="hidden" id="drugTbody_3_tr_length" value="${map.cmpFilling.resistanceSiteSum.size()}">
+<input type="hidden" id="drugTbody_4_tr_length" value="${map.cmpFilling.personalizedMedicine.size()}">
 <section class="section4 border1 w3cbbs" id="section4">
     <h3>四、个体化用药提示</h3>
    	<table class="table table-striped-orange table-text-center" name="cmpDrugTable">
@@ -216,30 +248,72 @@
 				<th width="120">基因</th>
 				<th style="min-width:105px">突变位点</th>
 				<th style="min-width:105px">药物</th>
-			</tr>	
+			</tr>
 		</thead>
 		<tbody id="drugTbody_4">
-			<tr id="drugTbody_4_tr0">
-				<td><input type="text" class="form-control"></td>
-				<td><input type="text" class="form-control"></td>
-				<td><input type="text" class="form-control"></td>
-			</tr>
+			<c:choose>
+				<c:when test="${map.cmpFilling.personalizedMedicine.size()>0}">
+					<c:forEach items="${map.cmpFilling.personalizedMedicine}" var="li" varStatus="size">
+						<tr id="drugTbody_4_tr<c:out value="${size.index}"/>" name="drugTbody_4_tr">
+							<td><input type="text" class="form-control" value="${li.geneName }"></td>
+							<td><input type="text" class="form-control" value="${li.mutationSite }"></td>
+							<td><input type="text" class="form-control" value="${li.drug }"></td>
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr id="drugTbody_4_tr0" name="drugTbody_4_tr">
+						<td><input type="text" class="form-control"></td>
+						<td><input type="text" class="form-control"></td>
+						<td><input type="text" class="form-control"></td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
 		</tbody>
 	</table>
 	<table class="table-del" id="del_drugTbody_4">
 		<tr><th>&nbsp;</th></tr>
 		<tr id="drugTbody_4_deltr0"><td><a href="javascript:removeThisTr('drugTbody_4',0)" title="删除所有"/></td></tr>
+		<c:choose>
+			<c:when test="${map.cmpFilling.personalizedMedicine.size()>0}">
+				<c:forEach items="${map.cmpFilling.personalizedMedicine}" var="li" varStatus="size">
+					<tr id="drugTbody_4_deltr<c:out value="${size.index}"/>"><td><a href="javascript:removeThisTr('drugTbody_4',<c:out value="${size.index}"/>)" title="删除所有"/></td></tr>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				<tr id="drugTbody_4_deltr0"><td><a href="javascript:removeThisTr('drugTbody_4',0)" title="删除所有"/></td></tr>
+			</c:otherwise>
+		</c:choose>
 	</table>
-	<a href="javascript:void()" onclick="removeTableTr('drugTbody_4')">删除行</a>&nbsp;&nbsp;
-	<a href="javascript:void()" onclick="addTableTr('drugTbody_4')">添加行</a>
+	<a href="javascript:void(0)" onclick="removeTableTr('drugTbody_4')">删除行</a>&nbsp;&nbsp;
+	<a href="javascript:void(0)" onclick="addTableTr('drugTbody_4')">添加行</a>
 	<h4>推荐药物：</h4>
 	<div id="drugDescipDiv">
-		<div class="h2">
-	    	<input type="text" class="form-control col-sm-10">
-	    </div>
-	    <div name="section4Text">
-	    	<textarea class="form-control" rows="15" cols="100"></textarea>
-    	</div>
+		<c:choose>
+			<c:when test="${map.cmpFilling.recommendDrug.size()>0}">
+				<c:forEach items="${map.cmpFilling.recommendDrug}" var="li" varStatus="size">
+				  <div name="drugContent">
+					<div class="h2">
+				    	<input type="text" class="form-control col-sm-10" value="${li.drugName }">
+				    </div>
+				    <div name="section4Text">
+				    	<textarea class="form-control" rows="15" cols="100">${li.drugDescrip }</textarea>
+			    	</div>
+					<c:if test="size.index>0"><br></c:if>
+				  </div>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+			  <div name="drugContent">
+				<div class="h2">
+			    	<input type="text" class="form-control col-sm-10">
+			    </div>
+			    <div name="section4Text">
+			    	<textarea class="form-control" rows="15" cols="100"></textarea>
+		    	</div>
+		      </div>
+			</c:otherwise>
+		</c:choose>
     </div>
     <a href="javascript:void();" onclick="removeDrugInput('drugDescipDiv')">删除药物</a>&nbsp;&nbsp;
     <a href="javascript:void();" onclick="addDrugInput('drugDescipDiv')">添加药物</a>
@@ -1059,7 +1133,8 @@
 			    	</tbody>
 			    </table>
 	    	</ul>
-	    </div></div>
+	    </div>
+	</div>
 <%--     </s:if> --%>
 <%--     <s:if test="resultMap.FLT3Coverage!=''&&resultMap.FLT3Coverage!=null"> --%>
     <div class="w3cbbs">
@@ -2549,10 +2624,10 @@
 	   </div>
 <%--     </s:if> --%>
 </section>
-<section class="section6 border1 w3cbbs">
+<section class="section6 border1 w3cbbs" id="section6">
     <h3>六、附件：检测结果详细信息</h3>
     <table class="table table-green table-striped-green table-text-center table-padding0">
-   		<thead>
+   		<thead style="display:table-header-group;">
    		  <tr>
    			<th class="mwidth_Gene">Gene</th>
    			<th class="mwidth_Ref_Base">Ref_Base</th>
@@ -3670,14 +3745,15 @@
       </tr>
     </table>
 </section>
+<script src="<%=request.getContextPath() %>/plugins/calendar/WdatePicker.js"></script>
 <script language="javascript" src="/celloud/plugins/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/celloud/js/browser.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	var ntemp = 0;
+	//第五部分内容表格样式三色循环
 	$("#section5 table").each(function(index,element){
 		ntemp++;
-		var num = index+1;
 		if(ntemp==1){
 			$(this).attr("class","table table-striped-green table-text-center");
 		}else if(ntemp==2){
@@ -3695,7 +3771,9 @@ $(document).ready(function(){
 		}
 	});
 });
+//加载完全部内容后执行
 window.onload=function(){
+	printSection2Table();
 	$("#section5").find("div[name='geneDescriptDiv']").each(function(index,element){
 		var height1 = $(this).height();
 		var height2 = $(this).parent().find("table").find("tr").length;
@@ -3703,32 +3781,36 @@ window.onload=function(){
  			$(this).addClass("w3cbbs");
  		}
 	});
+	$("#section5").find("ul[class='list']").each(function(){
+		printTable($(this),980);	
+	});
+	printSection6Table();
 };
 var num = 1;
+if($("#drugTbody_3_tr_length").val()>1){
+	num = $("#drugTbody_3_tr_length").val();
+}else if($("#drugTbody_4_tr_length").val()>1&&$("#drugTbody_4_tr_length").val()>$("#drugTbody_3_tr_length").val()){
+	num = $("#drugTbody_4_tr_length").val();
+}
 function addTableTr(tbody){
-	alert("1");
-	var v1="<tr id=\""+tbody+"_tr"+num+"\"><td><input type=\"text\" class=\"form-control\"></td><td><input type=\"text\" class=\"form-control\"></td><td><input type=\"text\" class=\"form-control\"></td></tr>";
-	alert("2");
+	var v1="<tr name=\""+tbody+"_tr\" id=\""+tbody+"_tr"+num+"\"><td><input type=\"text\" class=\"form-control\"></td><td><input type=\"text\" class=\"form-control\"></td><td><input type=\"text\" class=\"form-control\"></td></tr>";
 	$("#"+tbody).append(v1);
-	alert("3");
 	$("#del_"+tbody).append("<tr id='"+tbody+"_deltr"+num+"'><td><a href='javascript:removeThisTr(\""+tbody+"\","+num+")' title='删除此行'/></td></tr>");
-	alert("4");
 	num++;
 }
 function addDrugInput(div){
-	$("#"+div).append("<br><div class=\"h2\"><input type=\"text\" class=\"form-control col-sm-10\"></div><div name=\"section4Text\"><textarea class=\"form-control\" rows=\"15\" cols=\"100\"></textarea></div>");
+	$("#"+div).append("<br><div name=\"drugContent\"><div class=\"h2\"><input type=\"text\" class=\"form-control col-sm-10\"></div><div name=\"section4Text\"><textarea class=\"form-control\" rows=\"15\" cols=\"100\"></textarea></div></div>");
 }
 function removeTableTr(tbody){
 	$("#"+tbody).children("tr:last-child").remove();
+	$("#del_"+tbody).children("tr:last-child").remove();
 }
 function removeThisTr(tbody,num){
-	alert(num);
 	$("#"+tbody+"_tr"+num).remove();
 	$("#"+tbody+"_deltr"+num).remove();
 }
 function removeDrugInput(div){
-	$("#"+div).children("div[name='section4Text']:last-child").remove();
-	$("#"+div).children("div[class='h2']:last-child").remove();
+	$("#"+div).children("div[name='drugContent']:last-child").remove();
 	$("#"+div).children("br:last-child").remove();
 }
 function preview(obj){
@@ -3750,8 +3832,7 @@ function preview(obj){
 		});
 		cmpDrug += "@";
 	});
-	$.get("report!addCmpDrug",{"context":cmpDrug},function(flag){
-	});
+	$.get("report!addCmpDrug",{"context":cmpDrug},function(flag){});
 	$("#section4 textarea").each(function(){
 		textareaVal = $(this).val();
 		$(this).parent().html("<p name='section4p'>"+textareaVal+"</p>");
@@ -3783,6 +3864,151 @@ function preview(obj){
 	$("#noDrug").css("display","none");
 	$("#checkboxdiv").css("display","");
 	$("a").css("display","");
+}
+//表格是否超过一页，超过一页自动换页,下页加表头——目前只用于第五部分
+function printTable($parentDiv_,height){
+	var $table_ = $parentDiv_.find("table");
+	var total_h = $parentDiv_.height();
+	var table_h = $table_.height();
+	var text_h = total_h-table_h;
+	var tmp_h =  height- text_h;
+	var totaltrnum = $table_.find("tr").length;
+	var page_tr_num = Math.floor(height/37);
+	var trnum1 = 0;
+	var trnum2 = Math.floor((totaltrnum-trnum1-1)/page_tr_num);
+	var thead = "";
+	var newTables = "";
+	if($parentDiv_.find("div[name='geneDescriptDiv']").hasClass("w3cbbs")){
+		trnum1 = 25;
+	}else{
+		trnum1 = Math.floor(tmp_h/37);
+	}
+	if(table_h>0 && total_h>height && text_h<height && totaltrnum>trnum1){
+		thead = $table_.find("thead").html();
+		newTables = "<table class='table table-green table-striped-green table-text-center'><thead>"+thead+"</thead><tbody>";
+		for(var i=1; i<trnum1-1; i++){
+			newTables+="<tr>"+$table_.find("tbody").find("tr:eq("+i+")").html()+"</tr>";
+		}
+		newTables+="</tbody></table><div class='w3cbbs'></div>";
+		if(trnum2>0){
+			for(var i=1;i<trnum2;i++){
+				newTables+="<table class='table table-green table-striped-green table-text-center'><thead>"+thead+"</thead><tbody>";
+				for(var j=trnum1-1;j<trnum1+page_tr_num-1;j++){
+					newTables+="<tr>"+$table_.find("tbody").find("tr:eq("+j+")").html()+"</tr>";
+				}
+				newTables+="</tbody></table><div class='w3cbbs'></div>";
+				trnum1 = trnum1+page_tr_num-1;
+			}
+		}
+		if((totaltrnum-trnum1-1)%page_tr_num>0){
+			newTables+="<table class='table table-green table-striped-green table-text-center'><thead>"+thead+"</thead><tbody>";
+			for(var i=trnum1;i<trnum1+(totaltrnum-trnum1-1)%page_tr_num;i++){
+				newTables+="<tr>"+$table_.find("tbody").find("tr:eq("+i+")").html()+"</tr>";
+			}
+			newTables+="</tbody></table>";
+		}
+		$parentDiv_.find("table").remove();
+		$parentDiv_.append(newTables);
+	}
+}
+//第六部分表格是否超过一页，超过一页自动换页第二页加表头
+function printSection6Table(){
+	var trLength = $("#section6").find("table").find("tr").length;
+	if(trLength>25){
+		var pageNum = Math.floor((trLength-25)/26);	
+		var lastNum = (trLength-25)%26;
+		var $table_ = $("#section6").find("table");
+		var thead = "<table class='table table-green table-striped-green table-text-center'><thead>" +$table_.find("thead").html()+"</thead>";
+		var newTables = thead+"<tbody>";
+		for(var i=1; i<25; i++){
+			newTables+="<tr>"+$table_.find("tbody").find("tr:eq("+i+")").html()+"</tr>";
+		}
+		newTables+="</tbody></table><div class='w3cbbs'></div>";
+		if(pageNum>1){
+			var begin = 25;
+			for(var i=1;i<=pageNum;i++){
+				newTables += thead+"<tbody>";
+				for(var j=begin;j<begin+25+1;j++){
+					newTables+="<tr>"+$table_.find("tbody").find("tr:eq("+j+")").html()+"</tr>";
+				}
+				newTables+="</tbody></table><div class='w3cbbs'></div>";
+				begin = begin+25+1;
+			}
+		}
+		if(lastNum>0){
+			newTables += thead+"<tbody>";
+			for(var j=begin;j<begin+lastNum-1;j++){
+				newTables+="<tr>"+$table_.find("tbody").find("tr:eq("+j+")").html()+"</tr>";
+			}
+			newTables+="</tbody></table>";
+		}
+		$("#section6").find("table").remove();
+		$("#section6").append(newTables);
+	}
+}
+//第二部分表格是否超过一页，超过一页自动换页第二页加表头
+function printSection2Table(){
+	var trLength = $("#snp_table1").find("tr").length;
+	if(trLength>23){
+		var thead = "<table class='table table-striped-green table-text-center table-padding0'><thead>"+$("#snp_table1").find("thead").html()+"</thead>";
+		var newTables = "<table style='width:100%;height:100px;'><tr><td>";
+		var tbody1 = thead+"<tbody>";
+		var tbody2 = thead+"<tbody>";
+		for(var i=1;i<23;i++){
+			tbody1+="<tr>"+$("#snp_table1").find("tr:eq("+i+")").html()+"</tr>";
+			tbody2+="<tr>"+$("#snp_table2").find("tr:eq("+i+")").html()+"</tr>";
+		}
+		tbody1+="</tbody></table>";
+		tbody2+="</tbody></table>";
+		newTables+=tbody1+"</td><td>"+tbody2+"</td></tr></table><div class='w3cbbs'></div>";
+		tbody1 = thead+"<tbody>";
+		tbody2 = thead+"<tbody>";
+		for(var i=23;i<trLength;i++){
+			tbody1+="<tr>"+$("#snp_table1").find("tr:eq("+i+")").html()+"</tr>";
+			tbody2+="<tr>"+$("#snp_table2").find("tr:eq("+i+")").html()+"</tr>";
+		}
+		tbody1+="</tbody></table>";
+		tbody2+="</tbody></table>";
+		newTables += "<table style='width:100%;height:100px;'><tr><td>";
+		newTables+=tbody1+"</td><td>"+tbody2+"</td></tr></table>";
+		$("#secion2_info1").find("table").remove();
+		$("#secion2_info1").prepend(newTables);
+	}else{
+		$("#secion2_info1").addclass("w3cbbs");
+	}
+}
+function saveFillCmp(){
+	var resistanceSiteSum = "";
+	var personalizedMedicine = "";
+	var recommendDrug = "";
+	$("#drugTbody_3").find("tr").each(function(index,element){
+		getTbodyDrug($(this),resistanceSiteSum);
+	});
+	$("#drugTbody_4").find("tr").each(function(index,element){
+		getTbodyDrug($(this),personalizedMedicine);
+	});
+	$("#drugDescipDiv").find("div[name='drugContent']").each(){
+		var drugName = $(this).find("input").val();
+		var drugDescrip = $(this).find("textarea").val();
+		recommendDrug +=drugName+","+drugDescrip+";"
+	}
+	var infos = resistanceSiteSum+"----"+personalizedMedicine+"----"+recommendDrug;
+	$.get("cmpReport!addFill",{$("#form").serialize(),"infos":infos})
+}
+function getTbodyDrug(obj,result){
+	var geneName = "";
+	var mutationSite = "";
+	var drug = "";
+	obj.find("input").each(function(index){
+		if(index == 0){
+			geneName = $(this).val();
+		}else if(index == 1){
+			mutationSite = $(this).val();
+		}else if(index == 2){
+			drug = $(this).val();
+		}
+	});
+	result+=geneName+","+mutationSite +","+drug+";";
 }
 </script>
 </body>

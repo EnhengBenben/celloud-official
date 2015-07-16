@@ -40,4 +40,9 @@ public class ReportServiceImpl implements ReportService {
 		return map;
 	}
 
+	@Override
+	public void deleteCmpFilling(Object id) {
+		reportDao.deleteCmpFilling(id);
+	}
+
 }

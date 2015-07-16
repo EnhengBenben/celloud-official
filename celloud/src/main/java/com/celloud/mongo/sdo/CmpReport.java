@@ -15,9 +15,13 @@ import com.google.code.morphia.annotations.Entity;
 @Entity(noClassnameStored = true)
 public class CmpReport extends Base {
 	/**
-	 * Mysql中的reportId
+	 * Mysql中的数据编号
 	 */
-	private Integer reportId;
+	private String dataKey;
+	/**
+	 * 报告所属用户id
+	 */
+	private String userId;
 	/**
 	 * 基因检测结果
 	 */
@@ -63,12 +67,20 @@ public class CmpReport extends Base {
 	 */
 	private Map<String, String> basicStatistics2;
 
-	public Integer getReportId() {
-		return reportId;
+	public String getDataKey() {
+		return dataKey;
 	}
 
-	public void setReportId(Integer reportId) {
-		this.reportId = reportId;
+	public void setDataKey(String dataKey) {
+		this.dataKey = dataKey;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public List<GeneDetectionResult> getCmpGeneResult() {
