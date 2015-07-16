@@ -20,6 +20,10 @@ public class CmpFilling extends Base {
 	 */
 	private String dataKey;
 	/**
+	 * 报告所属用户id
+	 */
+	private String userId;
+	/**
 	 * 肿瘤类型
 	 */
 	private String tumorType;
@@ -86,6 +90,14 @@ public class CmpFilling extends Base {
 
 	public void setDataKey(String dataKey) {
 		this.dataKey = dataKey;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getTumorType() {

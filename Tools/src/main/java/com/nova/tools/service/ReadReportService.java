@@ -43,7 +43,8 @@ public class ReadReportService {
 		// CMP
 		if (AppNameIDConstant.CMP.equals(appId)
 				|| AppNameIDConstant.CMP_199.equals(appId)) {
-			reportMap = readReport.printCMPReport(path,outPath, dataKey);
+			reportMap = readReport.printCMPReport(path, outPath, dataKey,
+					userId, appId);
 		}
 		return reportMap;
 	}

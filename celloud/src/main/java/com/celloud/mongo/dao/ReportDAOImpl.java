@@ -39,4 +39,9 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 		return ds.createQuery(CmpFilling.class).filter("_id", id).get();
 	}
 
+	@Override
+	public void deleteCmpFilling(Object id) {
+		ds.delete(ds.find(CmpFilling.class).filter("_id", id));
+	}
+
 }

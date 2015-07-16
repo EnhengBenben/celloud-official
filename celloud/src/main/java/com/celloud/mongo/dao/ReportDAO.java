@@ -42,4 +42,11 @@ public interface ReportDAO {
 	 * @return
 	 */
 	public CmpFilling getOneCmpFilling(Object id);
+
+	/**
+	 * 删除已有的CMP
+	 * 
+	 * @param id
+	 */
+	public void deleteCmpFilling(Object id);
 }

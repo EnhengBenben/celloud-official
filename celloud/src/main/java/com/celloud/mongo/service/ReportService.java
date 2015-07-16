@@ -37,4 +37,11 @@ public interface ReportService {
 	 */
 	public Map<String, Object> getOneWholeCmpReport(Object reportId,
 			Object fillId);
+
+	/**
+	 * 删除已有的CMP
+	 * 
+	 * @param id
+	 */
+	public void deleteCmpFilling(Object id);
 }
