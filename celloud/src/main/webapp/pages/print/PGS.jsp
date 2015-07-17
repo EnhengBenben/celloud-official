@@ -132,7 +132,9 @@ hr {
 			<a href="javascript:void(0)" onclick="reset()" class="print-blue">重置</a>
 			<a href="javascript:void(0)" onclick="preview(this)" class="print-blue">打印</a>
 		</div>
-		<div class="jzk" style="margin:0px auto;width: 800px;">就诊卡号：<span><input type="text" class="input-mini" id="jzkh"/></span></div>
+		<s:if test="%{company.companyId!=10}">
+			<div class="jzk" style="margin:0px auto;width: 800px;">就诊卡号：<span><input type="text" class="input-mini" id="jzkh"/></span></div>
+		</s:if>
 		<div class="row" style="margin:0px auto;width: 800px;" id="mainDiv">
 			<s:if test="%{company.companyIcon!=null&&!company.companyIcon.equals('')}">
 				<div align="center" class="clearfix">
@@ -149,13 +151,15 @@ hr {
 				<hr>
 			</s:if>
 			<div align="center">
-				<h3>染色体拷贝数变异检测报告</h3>
+				<h3>
+					<s:if test="%{company.companyId==10}">流产组织</s:if>染色体拷贝数变异检测报告
+				</h3>
 			</div>
 			<div>
 				<h4>基本信息：</h4>
 				<table class="table table-bordered table-condensed">
 					<tr>
-						<th>编号</th>
+						<th><s:if test="%{company.companyId==10}">实验室</s:if>编号</th>
 						<td><span><input type="text" class="input-mini onlybotton" /></span></td>
 						<th>姓名</th>
 						<td><span><input type="text" class="input-mini onlybotton" /></span></td>
@@ -174,6 +178,18 @@ hr {
 						<th>样本状态</th>
 						<td><span><input type="text" class="input-mini onlybotton" /></span></td>
 					</tr>
+					<s:if test="%{company.companyId==10}">
+						<tr>
+							<th>临床诊断</th>
+							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+							<th>送检医生</th>
+							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+							<th>送检科室</th>
+							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+							<th></th>
+							<td></td>
+						</tr>
+					</s:if>
 				</table>
 			</div>
 			<div>
@@ -186,10 +202,22 @@ hr {
 				<h4>检测结果:</h4>
 				<img src='<s:property value="outPath"/>/<s:property value="pagePath"/>/<s:property value="miniPng"/>' width="100%">
 			</div>
-			<h4>结果解释：</h4>
-			<div id="des">
-				<textarea rows="3"><s:property value="txt.replace('@','+')"/></textarea>
-			</div>
+			<s:if test="%{company.companyId==10}">
+				<br/>
+				<div id="des">
+					<textarea rows="3"><s:property value="txt.replace('@','+')"/></textarea>
+				</div>
+				<h4>结果解释：</h4>
+				<div id="des2">
+					<textarea rows="3"></textarea>
+				</div>
+			</s:if>
+			<s:else>
+				<h4>结果解释：</h4>
+				<div id="des">
+					<textarea rows="3"><s:property value="txt.replace('@','+')"/></textarea>
+				</div>
+			</s:else>
 			<div class="notes">注：该检测对于&lt;
 			<s:if test="%{appId==92||appId==93}">
 			15Mb
@@ -207,7 +235,9 @@ hr {
 		</div>
 		<ul class="footer">
 			<li class="left">检测人：<span><input type="text" class="input-mini" /></span></li>
-			<li class="left">复核人：<span><input type="text" class="input-mini" /></span></li>
+			<s:if test="%{company.companyId!=10}">
+				<li class="left">复核人：<span><input type="text" class="input-mini" /></span></li>
+			</s:if>
 			<li class="left">审核人：<span><input type="text" class="input-mini" /></span></li>
 			<li class="right"><span><input type="text" class="input-mini" /></span>年</li>
 			<li class="right"><span><input type="text" class="input-mini" /></span>月</li>
@@ -248,6 +278,8 @@ hr {
 		});
 		inputVal = $("#des").children().val().replace(/\n/g,"<br>");
 		$("#des").html(inputVal);
+		inputVal = $("#des2").children().val().replace(/\n/g,"<br>");
+		$("#des2").html(inputVal);
 		window.print();
 		$("body").find("span[name='print']").each(function(){
 			inputVal = $(this).html();
@@ -255,6 +287,8 @@ hr {
 		});
 		inputVal = $("#des").html().replace(/<br>/g,"\n");
 		$("#des").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
+		inputVal = $("#des2").html().replace(/<br>/g,"\n");
+		$("#des2").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
 	}
 	function savePage(){
 		$("body").find("input").each(function(){

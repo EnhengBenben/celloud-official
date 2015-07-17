@@ -18,24 +18,18 @@
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-core</artifactId>
-			<version>2.3.16.3</version>
+			<version>2.3.15.1</version>
 		</dependency>
 		<!-- 配置struts2 注解模式 -->
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-convention-plugin</artifactId>
-			<version>2.3.16.3</version>
-		</dependency>
-		<!-- 配置struts2 restful支持 -->
-		<dependency>
-			<groupId>org.apache.struts</groupId>
-			<artifactId>struts2-rest-plugin</artifactId>
-			<version>2.3.16.3</version>
+			<version>2.3.15.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-json-plugin</artifactId>
-			<version>2.3.16.3</version>
+			<version>2.3.15.1</version>
 		</dependency>
 		<!-- 配置guice -->
 		<dependency>
@@ -61,19 +55,29 @@
 			<version>2.2.8</version>
 		</dependency>
 		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
 			<groupId>taglibs</groupId>
 			<artifactId>standard</artifactId>
 			<version>1.1.2</version>
 		</dependency>
 		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-compress</artifactId>
+			<version>1.9</version>
+		</dependency>
+		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 			<version>1.10</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
 		</dependency>
 		<!-- 配置mysql -->
 		<dependency>
@@ -98,21 +102,10 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
-		<!-- servlet -->
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
-		</dependency>
 		<dependency>
 			<groupId>dom4j</groupId>
 			<artifactId>dom4j</artifactId>
 			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-compress</artifactId>
-			<version>1.9</version>
 		</dependency>
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
@@ -135,11 +128,15 @@
 			<version>1.4.3</version>
 		</dependency>
 		<dependency>
-		  <groupId>com.github.jarod</groupId>
-		  <artifactId>qqwry-java</artifactId>
-		  <version>0.6.1</version>
+			<groupId>com.github.jarod</groupId>
+			<artifactId>qqwry-java</artifactId>
+			<version>0.6.1</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.tuckey</groupId>
+			<artifactId>urlrewritefilter</artifactId>
+			<version>4.0.3</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>celloud</finalName>
