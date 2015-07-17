@@ -38,15 +38,15 @@
 <script src="./js/sea.js"></script>
 <script src="./plugin/echarts-2.2.3/build/dist/echarts-all.js"></script>
 <script src="./plugin/echarts-2.2.3/build/dist/chart/bar.js"></script>
-<script src="./plugin/echarts-2.2.3/src/theme/infographic.js"></script>
+<!-- <script src="./plugin/echarts-2.2.3/src/theme/infographic.js"></script> -->
 <script type="text/javascript">
     function chars() {
-	    var theme=require('./plugin/echarts-2.2.3/src/theme/infographic.js')
+// 	    var theme=require('./plugin/echarts-2.2.3/src/theme/infographic.js')
    		$.get("company!getCompanyNumEveryMonth",{},function(result){
        		var xAxis = eval("["+result.timeLine+"]");
        		var yAxis = eval("["+result.data+"]");
 	        // 基于准备好的dom，初始化echarts图表
-	        var myChart = echarts.init(document.getElementById('newHospitalEvyMonth'),theme); 
+	        var myChart = echarts.init(document.getElementById('newHospitalEvyMonth')); 
 	        option = {
 	       	    tooltip : {
 	       	        trigger: 'axis'
