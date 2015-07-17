@@ -3,6 +3,7 @@ package com.nova.core;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.celloud.mongo.core.SystemContext;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
@@ -33,7 +34,7 @@ public class GuiceInjectorContext extends GuiceServletContextListener {
 							// 数据源初始化
 							ConnectManager.initSystem();
 							// Mongo初始化
-							// SystemContext.initContext();
+							SystemContext.initContext();
 							// 初始化struts2配置,这里MyStrutsFilter已经继承StrutsPrepareAndExecuteFilter
 							bind(MyStrutsFilter.class).in(Singleton.class);
 							filter("/*").through(MyStrutsFilter.class);

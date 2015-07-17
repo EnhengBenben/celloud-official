@@ -1,4 +1,3 @@
-/**  */
 package com.celloud.mongo.core;
 
 import java.io.IOException;
