@@ -1,8 +1,11 @@
 /**  */
 package com.celloud.mongo.dao;
 
+import java.util.List;
+
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
+import com.google.inject.ImplementedBy;
 
 /**
  * 操作Report接口
@@ -11,6 +14,7 @@ import com.celloud.mongo.sdo.CmpReport;
  * @date 2015-7-9下午4:23:35
  * @version Revision: 1.0
  */
+@ImplementedBy(ReportDAOImpl.class)
 public interface ReportDAO {
 	/**
 	 * 新增CMP运行报告内容
@@ -49,4 +53,6 @@ public interface ReportDAO {
 	 * @param id
 	 */
 	public void deleteCmpFilling(Object id);
+
+	public List<CmpFilling> getAll();
 }

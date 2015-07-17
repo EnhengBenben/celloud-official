@@ -1,13 +1,12 @@
-/**  */
 package com.celloud.mongo.service;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import com.celloud.mongo.core.SystemContext;
 import com.celloud.mongo.dao.ReportDAO;
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
-import com.google.inject.Inject;
 
 /**
  * 
@@ -16,8 +15,7 @@ import com.google.inject.Inject;
  * @version Revision: 1.0
  */
 public class ReportServiceImpl implements ReportService {
-	@Inject
-	private ReportDAO reportDao;
+	ReportDAO reportDao = SystemContext.getReportDAO();
 
 	@Override
 	public void saveCmpReport(CmpReport cmpReport) {

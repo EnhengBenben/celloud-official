@@ -1,5 +1,7 @@
 package com.celloud.mongo.utils;
 
+import java.net.UnknownHostException;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -18,7 +20,6 @@ import com.mongodb.MongoException;
 public class MongoDBUtils {
 	private static final Logger logger = LogManager
 			.getLogger(MongoDBUtils.class);
-
 	private static Mongo mongo_report = null;
 	private static Morphia morphia = null;
 
@@ -26,6 +27,8 @@ public class MongoDBUtils {
 		if (mongo_report == null) {
 			try {
 				mongo_report = new Mongo(SystemContext.getReportDBUrl());
+			} catch (UnknownHostException e) {
+				logger.error("不能连接数据库!", e);
 			} catch (MongoException e) {
 				logger.error("数据库连接错误!", e);
 			}
@@ -38,6 +41,8 @@ public class MongoDBUtils {
 				|| !mongo_report.getAddress().toString().equals(dburl)) {
 			try {
 				mongo_report = new Mongo(dburl);
+			} catch (UnknownHostException e) {
+				logger.error("不能连接数据库!", e);
 			} catch (MongoException e) {
 				logger.error("数据库连接错误!", e);
 			}

@@ -27,7 +27,7 @@ import com.nova.action.BaseAction;
  * @date 2015-7-13下午4:47:25
  * @version Revision: 1.0
  */
-@ParentPackage("json-default")
+@ParentPackage("celloud-default")
 @Action("cmpReport")
 @Results({ @Result(name = "success", type = "json", params = { "root", "map" }) })
 public class CmpReportAction extends BaseAction {

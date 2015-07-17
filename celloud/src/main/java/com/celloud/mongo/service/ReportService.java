@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
+import com.google.inject.ImplementedBy;
 
 /**
  * 报告服务接口
@@ -13,6 +14,7 @@ import com.celloud.mongo.sdo.CmpReport;
  * @date 2015-7-13下午4:33:19
  * @version Revision: 1.0
  */
+@ImplementedBy(ReportServiceImpl.class)
 public interface ReportService {
 	/**
 	 * 新增CMP运行报告内容
