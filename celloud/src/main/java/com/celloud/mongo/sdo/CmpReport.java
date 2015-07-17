@@ -27,9 +27,13 @@ public class CmpReport extends Base {
 	 */
 	private List<GeneDetectionResult> cmpGeneResult;
 	/**
+	 * 分析日期
+	 */
+	private String runDate;
+	/**
 	 * 共获得有效片段
 	 */
-	private String totalEffectFragments;
+	private String allFragment;
 	/**
 	 * 平均质量
 	 */
@@ -53,7 +57,7 @@ public class CmpReport extends Base {
 	/**
 	 * 平均测序深度
 	 */
-	private String avgSequencingDepth;
+	private String avgCoverage;
 	/**
 	 * 检测详细信息
 	 */
@@ -62,10 +66,14 @@ public class CmpReport extends Base {
 	 * QC序列质量,数据1
 	 */
 	private Map<String, String> basicStatistics1;
+	private String qualityPath1;
+	private String seqContentPath1;
 	/**
 	 * QC序列质量,数据2
 	 */
 	private Map<String, String> basicStatistics2;
+	private String qualityPath2;
+	private String seqContentPath2;
 
 	public String getDataKey() {
 		return dataKey;
@@ -83,6 +91,14 @@ public class CmpReport extends Base {
 		this.userId = userId;
 	}
 
+	public String getRunDate() {
+		return runDate;
+	}
+
+	public void setRunDate(String runDate) {
+		this.runDate = runDate;
+	}
+
 	public List<GeneDetectionResult> getCmpGeneResult() {
 		return cmpGeneResult;
 	}
@@ -91,12 +107,12 @@ public class CmpReport extends Base {
 		this.cmpGeneResult = cmpGeneResult;
 	}
 
-	public String getTotalEffectFragments() {
-		return totalEffectFragments;
+	public String getAllFragment() {
+		return allFragment;
 	}
 
-	public void setTotalEffectFragments(String totalEffectFragments) {
-		this.totalEffectFragments = totalEffectFragments;
+	public void setAllFragment(String allFragment) {
+		this.allFragment = allFragment;
 	}
 
 	public String getAvgQuality() {
@@ -139,12 +155,12 @@ public class CmpReport extends Base {
 		this.detectedGene = detectedGene;
 	}
 
-	public String getAvgSequencingDepth() {
-		return avgSequencingDepth;
+	public String getAvgCoverage() {
+		return avgCoverage;
 	}
 
-	public void setAvgSequencingDepth(String avgSequencingDepth) {
-		this.avgSequencingDepth = avgSequencingDepth;
+	public void setAvgCoverage(String avgCoverage) {
+		this.avgCoverage = avgCoverage;
 	}
 
 	public List<CmpGeneDetectionDetail> getGeneDetectionDetail() {
@@ -170,5 +186,37 @@ public class CmpReport extends Base {
 
 	public void setBasicStatistics2(Map<String, String> basicStatistics2) {
 		this.basicStatistics2 = basicStatistics2;
+	}
+
+	public String getQualityPath1() {
+		return qualityPath1;
+	}
+
+	public void setQualityPath1(String qualityPath1) {
+		this.qualityPath1 = qualityPath1;
+	}
+
+	public String getSeqContentPath1() {
+		return seqContentPath1;
+	}
+
+	public void setSeqContentPath1(String seqContentPath1) {
+		this.seqContentPath1 = seqContentPath1;
+	}
+
+	public String getQualityPath2() {
+		return qualityPath2;
+	}
+
+	public void setQualityPath2(String qualityPath2) {
+		this.qualityPath2 = qualityPath2;
+	}
+
+	public String getSeqContentPath2() {
+		return seqContentPath2;
+	}
+
+	public void setSeqContentPath2(String seqContentPath2) {
+		this.seqContentPath2 = seqContentPath2;
 	}
 }

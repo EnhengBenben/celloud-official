@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -107,5 +108,15 @@ public class ChangeStateServiceImpl {
 					log.error("remoteRequest:url=" + url + ",error:" + e);
 				}
 		}
+	}
+
+	/**
+	 * 保存CMP运行报告
+	 * 
+	 * @param map
+	 */
+	public static void saveCmpReport(Map<String, Object> map) {
+		String url = celloud + "cmpReport!addReport?map=" + map;
+		remoteRequest(url);
 	}
 }

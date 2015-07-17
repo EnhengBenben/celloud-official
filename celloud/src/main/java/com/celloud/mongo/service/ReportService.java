@@ -33,12 +33,12 @@ public interface ReportService {
 	/**
 	 * 获取CMP报告内容
 	 * 
-	 * @param reportId
-	 *            mysql中的报告id
+	 * @param dataKey
+	 * @param userId
 	 * @return
 	 */
-	public Map<String, Object> getOneWholeCmpReport(Object reportId,
-			Object fillId);
+	public Map<String, Object> getOneWholeCmpReport(String dataKey,
+			String userId);
 
 	/**
 	 * 删除已有的CMP

@@ -10,11 +10,12 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resource/css/print.css?version=20150707">
 </head>
 <body>
-<a href="javascript:void(0)" onclick="preview(this)" class="btn btn-default" id="change" style="float:right;margin-top:10px;margin-right:-80px;"><i class="i-print"></i>打印</a>
+<a href="javascript:void(0)" onclick="preview(this)" class="btn btn-default" id="change" style="float:right;margin-top:10px;margin-right:-80px;">打印</a>
 <form id="form">
 <input type="hidden" name="cmpFill.id" value="${map.cmpFilling.id }">
 <input type="hidden" name="cmpFill.dataKey" value="${resultMap.dataKey }">
 <input type="hidden" name="cmpFill.userId" value="${resultMap.userId }">
+<input type="hidden" name="infos" id="infos">
 <section class="section0 border1 w3cbbs">
 	<div class="header">
 		<img src="<%=request.getContextPath()%>/resource/img/yanda_print.png">
@@ -3745,13 +3746,18 @@
       </tr>
     </table>
 </section>
-<script src="<%=request.getContextPath() %>/plugins/calendar/WdatePicker.js"></script>
+<script language="javascript" src="/celloud/plugins/calendar/WdatePicker.js"></script>
 <script language="javascript" src="/celloud/plugins/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/celloud/js/browser.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	var ntemp = 0;
-	//第五部分内容表格样式三色循环
+	var num = 1;
+	if($("#drugTbody_3_tr_length").val()>1){
+		num = $("#drugTbody_3_tr_length").val();
+	}else if($("#drugTbody_4_tr_length").val()>1&&$("#drugTbody_4_tr_length").val()>$("#drugTbody_3_tr_length").val()){
+		num = $("#drugTbody_4_tr_length").val();
+	}
 	$("#section5 table").each(function(index,element){
 		ntemp++;
 		if(ntemp==1){
@@ -3771,7 +3777,6 @@ $(document).ready(function(){
 		}
 	});
 });
-//加载完全部内容后执行
 window.onload=function(){
 	printSection2Table();
 	$("#section5").find("div[name='geneDescriptDiv']").each(function(index,element){
@@ -3786,12 +3791,7 @@ window.onload=function(){
 	});
 	printSection6Table();
 };
-var num = 1;
-if($("#drugTbody_3_tr_length").val()>1){
-	num = $("#drugTbody_3_tr_length").val();
-}else if($("#drugTbody_4_tr_length").val()>1&&$("#drugTbody_4_tr_length").val()>$("#drugTbody_3_tr_length").val()){
-	num = $("#drugTbody_4_tr_length").val();
-}
+
 function addTableTr(tbody){
 	var v1="<tr name=\""+tbody+"_tr\" id=\""+tbody+"_tr"+num+"\"><td><input type=\"text\" class=\"form-control\"></td><td><input type=\"text\" class=\"form-control\"></td><td><input type=\"text\" class=\"form-control\"></td></tr>";
 	$("#"+tbody).append(v1);
@@ -3818,6 +3818,7 @@ function preview(obj){
 	var textareaVal;
 	var classname;
 	var cmpDrug = "";
+	saveFillCmp();
 	$("body").find("section").each(function(){
 		$(this).removeClass("border1");
 	});
@@ -3865,7 +3866,6 @@ function preview(obj){
 	$("#checkboxdiv").css("display","");
 	$("a").css("display","");
 }
-//表格是否超过一页，超过一页自动换页,下页加表头——目前只用于第五部分
 function printTable($parentDiv_,height){
 	var $table_ = $parentDiv_.find("table");
 	var total_h = $parentDiv_.height();
@@ -3911,7 +3911,6 @@ function printTable($parentDiv_,height){
 		$parentDiv_.append(newTables);
 	}
 }
-//第六部分表格是否超过一页，超过一页自动换页第二页加表头
 function printSection6Table(){
 	var trLength = $("#section6").find("table").find("tr").length;
 	if(trLength>25){
@@ -3946,7 +3945,6 @@ function printSection6Table(){
 		$("#section6").append(newTables);
 	}
 }
-//第二部分表格是否超过一页，超过一页自动换页第二页加表头
 function printSection2Table(){
 	var trLength = $("#snp_table1").find("tr").length;
 	if(trLength>23){
@@ -3981,21 +3979,21 @@ function saveFillCmp(){
 	var resistanceSiteSum = "";
 	var personalizedMedicine = "";
 	var recommendDrug = "";
-	$("#drugTbody_3").find("tr").each(function(index,element){
-		getTbodyDrug($(this),resistanceSiteSum);
+	$("#drugTbody_3").find("tr").each(function(){
+		resistanceSiteSum = getTbodyDrug($(this),resistanceSiteSum);
 	});
-	$("#drugTbody_4").find("tr").each(function(index,element){
-		getTbodyDrug($(this),personalizedMedicine);
+	$("#drugTbody_4").find("tr").each(function(){
+		personalizedMedicine = getTbodyDrug($(this),personalizedMedicine);
 	});
-	$("#drugDescipDiv").find("div[name='drugContent']").each(){
-		var drugName = $(this).find("input").val();
-		var drugDescrip = $(this).find("textarea").val();
-		recommendDrug +=drugName+","+drugDescrip+";"
-	}
-	var infos = resistanceSiteSum+"----"+personalizedMedicine+"----"+recommendDrug;
-	$.get("cmpReport!addFill",{$("#form").serialize(),"infos":infos})
+	$("#drugDescipDiv").find("div[name='drugContent']").each(function(){
+		recommendDrug += $(this).find("input[type='text']").val()+","+$(this).find("textarea").val()+";";
+	});
+	var infos = ""+resistanceSiteSum+"----"+personalizedMedicine+"----"+recommendDrug;
+	$("#infos").val(infos);
+	$.get("cmpReport!addFill",$("#form").serialize());
 }
 function getTbodyDrug(obj,result){
+	result = "";
 	var geneName = "";
 	var mutationSite = "";
 	var drug = "";
@@ -4009,6 +4007,7 @@ function getTbodyDrug(obj,result){
 		}
 	});
 	result+=geneName+","+mutationSite +","+drug+";";
+	return result;
 }
 </script>
 </body>
