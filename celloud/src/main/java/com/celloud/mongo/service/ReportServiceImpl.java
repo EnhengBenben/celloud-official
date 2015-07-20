@@ -28,10 +28,10 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
-	public Map<String, Object> getOneWholeCmpReport(Object reportId,
-			Object fillId) {
-		CmpReport report = reportDao.getOneCmpReport(reportId);
-		CmpFilling fill = reportDao.getOneCmpFilling(fillId);
+	public Map<String, Object> getOneWholeCmpReport(String dataKey,
+			String userId) {
+		CmpReport report = reportDao.getOneCmpReport(dataKey, userId);
+		CmpFilling fill = reportDao.getOneCmpFilling(dataKey, userId);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("CmpReport", report);
 		map.put("CmpFilling", fill);

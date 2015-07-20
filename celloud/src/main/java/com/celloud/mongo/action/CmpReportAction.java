@@ -13,8 +13,11 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
 import com.celloud.mongo.sdo.CmpFilling;
+import com.celloud.mongo.sdo.CmpGeneDetectionDetail;
+import com.celloud.mongo.sdo.CmpGeneSnpResult;
 import com.celloud.mongo.sdo.CmpReport;
 import com.celloud.mongo.sdo.DrugResistanceSite;
+import com.celloud.mongo.sdo.GeneDetectionResult;
 import com.celloud.mongo.sdo.RecommendDrug;
 import com.celloud.mongo.service.ReportService;
 import com.google.inject.Inject;
@@ -29,7 +32,7 @@ import com.nova.action.BaseAction;
  */
 @ParentPackage("celloud-default")
 @Action("cmpReport")
-@Results({ @Result(name = "success", type = "json", params = { "root", "map" }) })
+@Results({ @Result(name = "success", location = "../../pages/print/printDetailCMP.jsp") })
 public class CmpReportAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
 	Logger log = Logger.getLogger(CmpReportAction.class);
@@ -91,12 +94,73 @@ public class CmpReportAction extends BaseAction {
 	}
 
 	public void addReport() {
+		cmpReport = new CmpReport();
+		cmpReport.setDataKey((String) map.get("dataKey"));
+		cmpReport.setUserId((String) map.get("userId"));
+		List<GeneDetectionResult> cmpGeneResult = new ArrayList<GeneDetectionResult>();
+		List<Map<String, Object>> grmap = (List<Map<String, Object>>) map
+				.get("cmpGeneResult");
+		if (grmap != null && grmap.size() > 0) {
+			for (Map<String, Object> m : grmap) {
+				GeneDetectionResult gdr = new GeneDetectionResult();
+				gdr.setGeneName((String) m.get("geneName"));
+				gdr.setKnownMSNum((String) m.get("knownMSNum"));
+				gdr.setSequencingDepth((Integer) m.get("SequencingDepth"));
+				cmpGeneResult.add(gdr);
+			}
+		}
+		cmpReport.setCmpGeneResult(cmpGeneResult);
+		cmpReport.setRunDate((String) map.get("runDate"));
+		cmpReport.setAllFragment((String) map.get("allFragment"));
+		cmpReport.setAvgQuality((String) map.get("avgQuality"));
+		cmpReport.setAvgGCContent((String) map.get("avgGCContent"));
+		cmpReport.setUsableFragment((String) map.get("usableFragment"));
+		cmpReport.setNoDetectedGene((String) map.get("noDetectedGene"));
+		cmpReport.setDetectedGene((String) map.get("detectedGene"));
+		cmpReport.setAvgCoverage((String) map.get("avgCoverage"));
+
+		List<CmpGeneDetectionDetail> geneDetectionDetail = new ArrayList<CmpGeneDetectionDetail>();
+		List<Map<String, Object>> gddmap = (List<Map<String, Object>>) map
+				.get("geneDetectionDetail");
+		if (gddmap != null && gddmap.size() > 0) {
+			for (Map<String, Object> m : gddmap) {
+				CmpGeneDetectionDetail gdd = new CmpGeneDetectionDetail();
+				gdd.setGeneName((String) m.get("geneName"));
+				gdd.setAvgCoverage((String) m.get("avgCoverage"));
+				List<Map<String, String>> r = (List<Map<String, String>>) m
+						.get("result");
+				List<CmpGeneSnpResult> result = new ArrayList<CmpGeneSnpResult>();
+				for (Map<String, String> m_ : r) {
+					CmpGeneSnpResult gsr = new CmpGeneSnpResult();
+					gsr.setAaMutSyntax(m_.get("aaMutSyntax"));
+					gsr.setCdsMutSyntax(m_.get("cdsMutSyntax"));
+					gsr.setDepth(m_.get("depth"));
+					gsr.setGene(m_.get("gene"));
+					gsr.setMutationType(m_.get("mutationType"));
+					gsr.setMutBase(m_.get("mutBase"));
+					gsr.setRefBase(m_.get("refBase"));
+					result.add(gsr);
+				}
+				gdd.setResult(result);
+				geneDetectionDetail.add(gdd);
+			}
+		}
+		cmpReport.setGeneDetectionDetail(geneDetectionDetail);
+		cmpReport.setBasicStatistics1((Map<String, String>) map
+				.get("basicStatistics1"));
+		cmpReport.setQualityPath1((String) map.get("qualityPath1"));
+		cmpReport.setSeqContentPath1((String) map.get("seqContentPath1"));
+		cmpReport.setBasicStatistics2((Map<String, String>) map
+				.get("basicStatistics2"));
+		cmpReport.setQualityPath2((String) map.get("qualityPath2"));
+		cmpReport.setSeqContentPath2((String) map.get("seqContentPath2"));
+
 		reportService.saveCmpReport(cmpReport);
 	}
 
 	public String getWhole() {
-		map = reportService.getOneWholeCmpReport(cmpReport.getId(),
-				cmpFill.getId());
+		map = reportService.getOneWholeCmpReport(cmpReport.getDataKey(),
+				cmpReport.getUserId());
 		return "success";
 	}
 

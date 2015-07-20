@@ -32,13 +32,15 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 	}
 
 	@Override
-	public CmpReport getOneCmpReport(Object id) {
-		return ds.createQuery(CmpReport.class).filter("_id", id).get();
+	public CmpReport getOneCmpReport(String dataKey, String userId) {
+		return ds.createQuery(CmpReport.class).filter("dataKey", dataKey)
+				.filter("userId", userId).get();
 	}
 
 	@Override
-	public CmpFilling getOneCmpFilling(Object id) {
-		return ds.createQuery(CmpFilling.class).filter("_id", id).get();
+	public CmpFilling getOneCmpFilling(String dataKey, String userId) {
+		return ds.createQuery(CmpFilling.class).filter("dataKey", dataKey)
+				.filter("userId", userId).get();
 	}
 
 	@Override

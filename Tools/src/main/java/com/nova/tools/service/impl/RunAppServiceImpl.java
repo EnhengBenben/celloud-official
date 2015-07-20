@@ -2,9 +2,14 @@ package com.nova.tools.service.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 
@@ -107,7 +112,7 @@ public class RunAppServiceImpl {
 	}
 
 	public void runCMP(String outPath, String projectId, String dataKeyList,
-			String appId) {
+			String appId, String userId) {
 		String dataListFile = formatDataKeyList(dataKeyList);
 		String command = CMP_perl + " " + dataListFile + " " + outPath+ " ProjectID" + projectId;
 		if (AppNameIDConstant.CMP_199.equals(appId)) {
@@ -146,6 +151,150 @@ public class RunAppServiceImpl {
 									+ getArray(dataDetail1, 2) + "\t" + result
 									+ "\n");
 				}
+
+				// -----读取报告内容并保存到mongoDB------
+				Map<String, Object> cmpReport = new HashMap<String, Object>();
+				cmpReport.put("dataKey", getArray(dataDetail, 0));
+				String logPath = finalPath + "/LOG.txt";
+				String statisPath = finalPath + "/result/statistic.xls";
+				String avgPath = finalPath + "/result/average.info";
+				String snpPath = finalPath + "/result/snp_num.info";
+				String[] snpArr = { "ABL1", "EGFR", "GNAQ", "KRAS", "PTPN11",
+						"AKT1", "ERBB2", "GNAS", "MET", "RB1", "ALK", "ERBB4",
+						"HNF1A", "MLH1", "RET", "APC", "EZH2", "HRAS", "MPL",
+						"SMAD4", "ATM", "FBXW7", "IDH1", "NOTCH1", "SMARCB1",
+						"BRAF", "FGFR1", "IDH2", "NPM1", "SMO", "CDH1",
+						"FGFR2", "JAK2", "NRAS", "SRC", "CDKN2A", "FGFR3",
+						"JAK3", "PDGFRA", "STK11", "CSF1R", "FLT3", "KDR",
+						"PIK3CA", "TP53", "CTNNB1", "GNA11", "KIT", "PTEN",
+						"VHL" };
+				// 二、1 基因检测结果
+				List<Map<String, Object>> cmpGeneResult = new ArrayList<Map<String, Object>>();
+				if (new File(snpPath).exists()) {
+					List<String> list_ = FileTools.readLinestoString(snpPath);
+					if (list_ != null) {
+						for (int z = 0; z <= list_.size(); z++) {
+							String[] line_i = list_.get(z).split("\t");
+							Map<String, Object> GeneDetectionResult = new HashMap<String, Object>();
+							GeneDetectionResult.put("geneName",
+									getArray(line_i, 0));
+							GeneDetectionResult.put("knownMSNum",
+									getArray(line_i, 1));
+							GeneDetectionResult.put("SequencingDepth",
+									getArray(line_i, 2));
+							cmpGeneResult.add(GeneDetectionResult);
+						}
+					}
+				}
+				cmpReport.put("cmpGeneResult", cmpGeneResult);
+				// 二、2
+				if (new File(logPath).exists()) {
+					cmpReport.put("runDate", FileTools.getFirstLine(logPath)
+							.substring(1, 11));
+				}
+				if (new File(statisPath).exists()) {
+					List<String> list_ = FileTools
+							.readLinestoString(statisPath);
+					cmpReport
+							.put("allFragment", FileTools.listIsNull(list_, 0));
+					cmpReport.put("avgQuality", FileTools.listIsNull(list_, 1));
+					cmpReport.put("avgGCContent",
+							FileTools.listIsNull(list_, 2));
+					cmpReport.put("usableFragment",
+							FileTools.listIsNull(list_, 3));
+					cmpReport.put("noDetectedGene",
+							FileTools.listIsNull(list_, 4));
+					cmpReport.put("detectedGene",
+							FileTools.listIsNull(list_, 5));
+				}
+				if (new File(avgPath).exists()) {
+					cmpReport.put("avgCoverage",
+							FileTools.getFirstLine(avgPath));
+				}
+				// 五
+				List<Map<String, Object>> geneDetectionDetail = new ArrayList<Map<String, Object>>();
+				for (String snpName : snpArr) {
+					List<String> list_ = FileTools.readLinestoString(snpPath);
+					Map<String, Object> CmpGeneDetectionDetail = new HashMap<String, Object>();
+					String avgSeqDepth = "";
+					List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+
+					for (int z = 0; z < list_.size(); z++) {
+						Map<String, String> CmpGeneSnpResult = new HashMap<String, String>();
+						if (z == 0) {
+							avgSeqDepth = list_.get(z);
+						} else {
+							String[] line_z = list_.get(z).split("\t");
+							CmpGeneSnpResult.put("gene", getArray(line_z, 0));
+							CmpGeneSnpResult
+									.put("refBase", getArray(line_z, 1));
+							CmpGeneSnpResult
+									.put("mutBase", getArray(line_z, 2));
+							CmpGeneSnpResult.put("depth", getArray(line_z, 3));
+							CmpGeneSnpResult.put("cdsMutSyntax",
+									getArray(line_z, 4));
+							CmpGeneSnpResult.put("aaMutSyntax",
+									getArray(line_z, 5));
+							CmpGeneSnpResult.put("mutationType",
+									getArray(line_z, 6));
+						}
+						result.add(CmpGeneSnpResult);
+					}
+					CmpGeneDetectionDetail.put("geneName", snpName);
+					CmpGeneDetectionDetail.put("avgCoverage", avgSeqDepth);
+					CmpGeneDetectionDetail.put("result", result);
+					geneDetectionDetail.add(CmpGeneDetectionDetail);
+				}
+				cmpReport.put("geneDetectionDetail", geneDetectionDetail);
+
+				String qualityPath1 = PropertiesUtils.outProject + "/upload/"
+						+ outPath + "/QC/" + getArray(dataDetail, 0)
+						+ "_fastqc/Images/per_base_quality.png";
+				String seqContentPath1 = PropertiesUtils.outProject
+						+ "/upload/" + outPath + "/QC/"
+						+ getArray(dataDetail, 0)
+						+ "_fastqc/Images/per_base_sequence_content.png";
+				String fastqcDataPath = finalPath + "/QC/"
+						+ getArray(dataDetail, 0) + "_fastqc/fastqc_data.txt";
+				Map<String, String> basicStatistics1 = new HashMap<String, String>();
+				List<String> list_ = FileTools.getLineByNum(fastqcDataPath, 3,
+						10);
+				for (int z = 0; z < list_.size(); z++) {
+					String[] line_z = list_.get(z).split("\t");
+					basicStatistics1.put(getArray(line_z, 0),
+							getArray(line_z, 1));
+				}
+				cmpReport.put("qualityPath1", qualityPath1);
+				cmpReport.put("seqContentPath1", seqContentPath1);
+				cmpReport.put("basicStatistics1", basicStatistics1);
+				String qualityPath2 = "";
+				String seqContentPath2 = "";
+				Map<String, String> basicStatistics2 = new HashMap<String, String>();
+				HashSet<String> folder = FileTools
+						.getFolders(finalPath + "/QC");
+				Iterator<String> fol = folder.iterator();
+				while (fol.hasNext()) {
+					String f = fol.next();
+					if (!f.startsWith(getArray(dataDetail, 0))) {
+						qualityPath2 = PropertiesUtils.outProject + "/upload/"
+								+ outPath + "/QC/" + f
+								+ "/Images/per_base_quality.png";
+						seqContentPath2 = PropertiesUtils.outProject
+								+ "/upload/" + outPath + "/QC/" + f
+								+ "/Images/per_base_sequence_content.png";
+						String f2 = finalPath + "/QC/" + f + "/fastqc_data.txt";
+						List<String> list_2 = FileTools.getLineByNum(f2, 3, 10);
+						for (int z = 0; z < list_2.size(); z++) {
+							String[] line_z = list_2.get(z).split("\t");
+							basicStatistics2.put(getArray(line_z, 0),
+									getArray(line_z, 1));
+						}
+					}
+				}
+				cmpReport.put("qualityPath2", qualityPath2);
+				cmpReport.put("seqContentPath2", seqContentPath2);
+				cmpReport.put("basicStatistics2", basicStatistics2);
+				ChangeStateServiceImpl.saveCmpReport(cmpReport);
 			}
 		}
 

@@ -15,6 +15,7 @@ public class CmpGeneSnpResult {
 	private String depth;
 	private String cdsMutSyntax;
 	private String aaMutSyntax;
+	private String mutationType;
 
 	public String getGene() {
 		return gene;
@@ -62,6 +63,14 @@ public class CmpGeneSnpResult {
 
 	public void setAaMutSyntax(String aaMutSyntax) {
 		this.aaMutSyntax = aaMutSyntax;
+	}
+
+	public String getMutationType() {
+		return mutationType;
+	}
+
+	public void setMutationType(String mutationType) {
+		this.mutationType = mutationType;
 	}
 
 }

@@ -55,7 +55,7 @@ public class RunAppService {
 		// CMP
 		if (AppNameIDConstant.CMP.equals(appId)
 				|| AppNameIDConstant.CMP_199.equals(appId)) {
-			runApp.runCMP(appPath, projectId, dataKeyList, appId);
+			runApp.runCMP(appPath, projectId, dataKeyList, appId, userId);
 		}
 
 		// VSP

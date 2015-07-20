@@ -17,7 +17,7 @@ public class CmpGeneDetectionDetail {
 	/**
 	 * 平均测序深度
 	 */
-	private String avgSeqDepth;
+	private String avgCoverage;
 	/**
 	 * 检测结果详细列表
 	 */
@@ -31,12 +31,12 @@ public class CmpGeneDetectionDetail {
 		this.geneName = geneName;
 	}
 
-	public String getAvgSeqDepth() {
-		return avgSeqDepth;
+	public String getAvgCoverage() {
+		return avgCoverage;
 	}
 
-	public void setAvgSeqDepth(String avgSeqDepth) {
-		this.avgSeqDepth = avgSeqDepth;
+	public void setAvgCoverage(String avgCoverage) {
+		this.avgCoverage = avgCoverage;
 	}
 
 	public List<CmpGeneSnpResult> getResult() {
