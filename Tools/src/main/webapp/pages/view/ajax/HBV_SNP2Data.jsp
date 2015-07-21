@@ -169,7 +169,7 @@
 			
 			<!--位点突变-->
 			<div class="m-box">
-			 	  <h2>7.其他检测结果</h2>
+			 	  <h2>7.其他突变位点（该位点目前没有已发表文献支持，无明确临床意义）</h2>
 			    <div class="m-boxCon">
 					<s:generator separator="," val="resultMap.other">
 						<s:iterator status="st">
@@ -181,7 +181,7 @@
 		</s:else>
 		<!--结论-->
 		<div class="m-box">
-		 	  <h2>结论</h2>
+		 	  <h2>参考结论（根据已发表文献得出以下参考结论）</h2>
 		    <div class="m-boxCon" id="resultDiv">
 		    	<s:property value="resultMap.result" escape="false"/>
 		    </div>
