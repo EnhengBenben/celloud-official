@@ -87,7 +87,9 @@
 			 	<h2>1.替诺福韦酯TDF突变检测</h2>
 			    <div class="m-boxCon">
 				    <s:if test="%{!''.equals(resultMap.svg194)}">
-						<img style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg194"/>" height="150px;" width="150px;">
+				    	<a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10194"/>');" >
+							<img style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg194"/>" height="150px;" width="150px;">
+						</a>
 					</s:if>
 			    </div>
 			</div>
@@ -96,7 +98,9 @@
 			 	<h2>2.替比夫定 LDT 突变检测</h2>
 			    <div class="m-boxCon">
 				    <s:if test="%{!''.equals(resultMap.svg204)}">
-						<img style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg204"/>" height="150px;" width="150px;">
+				    	<a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10204"/>');" >
+							<img style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg204"/>" height="150px;" width="150px;">
+						</a>
 					</s:if>
 			    </div>
 			</div>
@@ -105,10 +109,14 @@
 			 	<h2>3.阿德福韦 ADV 突变检测</h2>
 			    <div class="m-boxCon">
 				    <s:if test="%{!''.equals(resultMap.svg181)}">
-						<img style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg181"/>" height="150px;" width="150px;">
+				    	<a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10181"/>');" >
+							<img style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg181"/>" height="150px;" width="150px;">
+						</a>
 					</s:if>
 					<s:if test="%{!''.equals(resultMap.svg236)}">
+						<a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10236"/>');" >
 							<img style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg236"/>" height="150px;" width="150px;">
+						</a>
 					</s:if>
 			    </div>
 			</div>
@@ -117,13 +125,19 @@
 			 	<h2>4.拉米夫定 LAM 突变检测</h2>
 			    <div class="m-boxCon">
 				    <s:if test="%{!''.equals(resultMap.svg173)}">
-						<img style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg173"/>" height="150px;" width="150px;">
+				    	<a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10173"/>');" >
+							<img style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg173"/>" height="150px;" width="150px;">
+						</a>
 					</s:if>
 					<s:if test="%{!''.equals(resultMap.svg180)}">
+						<a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10180"/>');" >
 							<img style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg180"/>" height="150px;" width="150px;">
+						</a>
 					</s:if>
 					<s:if test="%{!''.equals(resultMap.svg204)}">
+						<a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10204"/>');" >
 							<img style="padding-left: 30px;" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg204"/>" height="150px;" width="150px;">
+						</a>
 					</s:if>
 			    </div>
 			</div>
@@ -132,13 +146,19 @@
 			 	<h2>5.恩曲他滨 FTC 突变检测</h2>
 			    <div class="m-boxCon">
 				    <s:if test="%{!''.equals(resultMap.svg173)}">
-						<img style="padding-left: 30px;" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg173"/>" height="150px;" width="150px;">
+				    	<a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10173"/>');" >
+							<img style="padding-left: 30px;" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg173"/>" height="150px;" width="150px;">
+						</a>
 					</s:if>
 					<s:if test="%{!''.equals(resultMap.svg180)}">
+						<a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10180"/>');" >
 							<img style="padding-left: 30px;" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg180"/>" height="150px;" width="150px;">
+						</a>
 					</s:if>
 					<s:if test="%{!''.equals(resultMap.svg204)}">
+						<a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10204"/>');" >
 							<img style="padding-left: 30px;" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg204"/>" height="150px;" width="150px;">
+						</a>
 					</s:if>
 			    </div>
 			</div>
@@ -147,22 +167,34 @@
 			 	<h2>6.恩替卡韦 ETV 突变检测</h2>
 			    <div class="m-boxCon">
 				    <s:if test="%{!''.equals(resultMap.svg169)}">
-						<img style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg169"/>" height="150px;" width="150px;">
+					    <a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10169"/>');" >
+							<img style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg169"/>" height="150px;" width="150px;">
+						</a>
 					</s:if>
 					<s:if test="%{!''.equals(resultMap.svg180)}">
+						<a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10180"/>');" >
 							<img style="padding-left: 30px;" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg180"/>" height="150px;" width="150px;">
+						</a>
 					</s:if>
 					<s:if test="%{!''.equals(resultMap.svg184)}">
+						<a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10184"/>');" >
 							<img style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg184"/>" height="150px;" width="150px;">
+						</a>
 					</s:if>
 					<s:if test="%{!''.equals(resultMap.svg202)}">
+						<a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10202"/>');" >
 							<img style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg202"/>" height="150px;" width="150px;">
+						</a>
 					</s:if>
 					<s:if test="%{!''.equals(resultMap.svg204)}">
+						<a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10204"/>');" >
 							<img style="padding-left: 30px;" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg204"/>" height="150px;" width="150px;">
+						</a>
 					</s:if>
 					<s:if test="%{!''.equals(resultMap.svg250)}">
+						<a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10250"/>');" >
 							<img style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg250"/>" height="150px;" width="150px;">
+						</a>
 					</s:if>
 			    </div>
 			</div>
@@ -173,7 +205,9 @@
 			    <div class="m-boxCon">
 					<s:generator separator="," val="resultMap.other">
 						<s:iterator status="st">
-							<img title="<s:property/>" name="imgSrc" style="padding-left: 30px;" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property/>" height="150px;" width="150px;">
+							<a href="javascript:showBgTwo('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property/>');" >
+								<img title="<s:property/>" name="imgSrc" style="padding-left: 30px;" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property/>" height="150px;" width="150px;">
+							</a>
 						</s:iterator>
 					</s:generator>
 			    </div>
@@ -237,6 +271,16 @@ $(function() {
                 speed : 1000
         });
 });
+function showBgTwo(src){
+	$(window.parent.document).find("img[id='imageFullScreen']").css("width",1260);
+	$(window.parent.document).find("img[id='imageFullScreen']").css("height",156);
+	window.parent.showZoom(src.replace("png","10.png"));
+}
+function showBgOne(src){
+	$(window.parent.document).find("img[id='imageFullScreen']").css("width",1260);
+	$(window.parent.document).find("img[id='imageFullScreen']").css("height",156);
+	window.parent.showZoom(src);
+}
 function showBg(src,id) { 
 	var width = $("#" + id).width();
 	var height = $("#" + id).height();
