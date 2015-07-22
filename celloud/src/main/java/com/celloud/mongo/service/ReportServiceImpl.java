@@ -1,8 +1,5 @@
 package com.celloud.mongo.service;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.celloud.mongo.core.SystemContext;
 import com.celloud.mongo.dao.ReportDAO;
 import com.celloud.mongo.sdo.CmpFilling;
@@ -23,24 +20,14 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
-	public void saveCmpFilling(CmpFilling cmpFill) {
-		reportDao.saveCmpFilling(cmpFill);
+	public void editCmpFilling(Object id, CmpFilling cmpFill) {
+		reportDao.editCmpFilling(id, cmpFill);
 	}
 
 	@Override
-	public Map<String, Object> getOneWholeCmpReport(String dataKey,
+	public CmpReport getCmpReport(String dataKey,
 			String userId) {
-		CmpReport report = reportDao.getOneCmpReport(dataKey, userId);
-		CmpFilling fill = reportDao.getOneCmpFilling(dataKey, userId);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("CmpReport", report);
-		map.put("CmpFilling", fill);
-		return map;
-	}
-
-	@Override
-	public void deleteCmpFilling(Object id) {
-		reportDao.deleteCmpFilling(id);
+		return reportDao.getCmpReport(dataKey, userId);
 	}
 
 }

@@ -11,9 +11,9 @@
 <body>
 <a href="javascript:void(0)" onclick="preview(this)" class="btn btn-default" id="change" style="float:right;margin-top:10px;margin-right:-80px;">打印</a>
 <form id="form">
-<input type="hidden" name="cmpFill.id" value="${map.cmpFilling.id }">
-<input type="hidden" name="cmpFill.dataKey" value="${map.cmpFilling.dataKey }">
-<input type="hidden" name="cmpFill.userId" value="${map.cmpFilling.userId }">
+<input type="hidden" name="cmpReport.id" value="${cmpReport.cmpFilling.id }">
+<input type="hidden" name="cmpReport.dataKey" value="${cmpReport.cmpFilling.dataKey }">
+<input type="hidden" name="cmpReport.userId" value="${cmpReport.cmpFilling.userId }">
 <input type="hidden" name="infos" id="infos">
 <section class="section0 border1 w3cbbs">
 	<div class="header">
@@ -22,16 +22,16 @@
 	</div>
 	<div class="titletype">
 		<div>
-			<span>肿瘤类型：</span><span><input type="text" class="input200" id="tumorType" name="cmpFill.tumorType" value="${map.cmpFilling.tumorType }"></span>
+			<span>肿瘤类型：</span><span><input type="text" class="input200" id="tumorType" name="cmpFill.tumorType" value="${cmpReport.cmpFilling.tumorType }"></span>
 		</div>
 		<div>
-			<span>姓</span><span style="margin-left:40px">名：</span><span><input type="text" class="input200" value="${map.cmpFilling.patientBasic.name }"></span>
+			<span>姓</span><span style="margin-left:40px">名：</span><span><input type="text" class="input200" value="${cmpReport.cmpFilling.patientBasic.name }"></span>
 		</div>
 		<div>
-			<span>取样日期：</span><span><input type="text" class="Wdate input input200" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;" value="${map.cmpFilling.samplingDate }"></span>
+			<span>取样日期：</span><span><input type="text" class="Wdate input input200" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;" value="${cmpReport.cmpFilling.samplingDate }"></span>
 		</div>
 		<div>
-			<span>报告日期：</span><span><input type="text" class="Wdate input input200" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;" id="reportDate" name="cmpFill.reportDate" value="${map.cmpFilling.reportDate }"></span>
+			<span>报告日期：</span><span><input type="text" class="Wdate input input200" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;" id="reportDate" name="cmpFill.reportDate" value="${cmpReport.cmpFilling.reportDate }"></span>
 		</div>
 	</div>
 	<footer>
@@ -42,18 +42,18 @@
 	<h3>一、基本信息</h3>
 	<h4>1、送检基本信息</h4>
 	<ul class="info">
-        <li>姓名：<span><input type="text" id="patientName" name="cmpFill.patientBasic.name" value="${map.cmpFilling.patientBasic.name }"></span></li>
-        <li>取样日期：<span><input type="text" id="samplingDate" name="cmpFill.samplingDate" value="${map.cmpFilling.samplingDate }"></span></li>
-        <li>性别： <span id="_sex"><input type="radio" name="cmpFill.patientBasic.sex" value="男" <c:if test="${map.cmpFilling.patientBasic.sex eq '男' }">checked="checked"</c:if>>男<input type="radio" name="cmpFill.patientBasic.sex" value="女" <c:if test="${map.cmpFilling.patientBasic.sex eq '女' }">checked="checked"</c:if>>女</span></li>
-        <li>样本来源：<span><input type="text" id="sampleSource" name="cmpFill.sampleSource" value="${map.cmpFilling.sampleSource }"></span></li>
-        <li>年龄：<span><input type="text" id="patientAge" name="cmpFill.patientBasic.age" value="${map.cmpFilling.patientBasic.age }"></span>岁</li>
-        <li>临床诊断：<span><input type="text" id="clinicalDiagnosis" name="cmpFill.clinicalDiagnosis" value="${map.cmpFilling.clinicalDiagnosis }"></span></li>
-        <li>病理诊断：<span><input type="text" id="pathologicDiagnosis" name="cmpFill.pathologicDiagnosis" value="${map.cmpFilling.pathologicDiagnosis }"></span></li>
-        <li>分析日期：<span><input type="text" id="analysisDate" name="cmpFill.analysisDate" class="Wdate input" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;" value="${map.cmpFilling.analysisDate }"></span></li>
-        <li>病理位置：<span><input type="text" id="pathologicalPosition" name="cmpFill.pathologicalPosition" value="${map.cmpFilling.pathologicalPosition }"></span></li>
-        <li>分子生物实验操作：<span><input type="text" class="input100" id="molecularBioExperOper" name="cmpFill.molecularBioExperOper" value="${map.cmpFilling.molecularBioExperOper }"></span></li>
-        <li>病理类型：<span><input type="text" id="pathologicalType" name="cmpFill.pathologicalType" value="${map.cmpFilling.pathologicalType }"></span></li>
-        <li>基因分析：<span><input type="text" id="geneAnalysis" name="cmpFill.geneAnalysis" value="${map.cmpFilling.geneAnalysis }"></span></li>
+        <li>姓名：<span><input type="text" id="patientName" name="cmpFill.patientBasic.name" value="${cmpReport.cmpFilling.patientBasic.name }"></span></li>
+        <li>取样日期：<span><input type="text" id="samplingDate" name="cmpFill.samplingDate" value="${cmpReport.cmpFilling.samplingDate }"></span></li>
+        <li>性别： <span id="_sex"><input type="radio" name="cmpFill.patientBasic.sex" value="男" <c:if test="${cmpReport.cmpFilling.patientBasic.sex eq '男' }">checked="checked"</c:if>>男<input type="radio" name="cmpFill.patientBasic.sex" value="女" <c:if test="${cmpReport.cmpFilling.patientBasic.sex eq '女' }">checked="checked"</c:if>>女</span></li>
+        <li>样本来源：<span><input type="text" id="sampleSource" name="cmpFill.sampleSource" value="${cmpReport.cmpFilling.sampleSource }"></span></li>
+        <li>年龄：<span><input type="text" id="patientAge" name="cmpFill.patientBasic.age" value="${cmpReport.cmpFilling.patientBasic.age }"></span>岁</li>
+        <li>临床诊断：<span><input type="text" id="clinicalDiagnosis" name="cmpFill.clinicalDiagnosis" value="${cmpReport.cmpFilling.clinicalDiagnosis }"></span></li>
+        <li>病理诊断：<span><input type="text" id="pathologicDiagnosis" name="cmpFill.pathologicDiagnosis" value="${cmpReport.cmpFilling.pathologicDiagnosis }"></span></li>
+        <li>分析日期：<span><input type="text" id="analysisDate" name="cmpFill.analysisDate" class="Wdate input" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;" value="${cmpReport.cmpFilling.analysisDate }"></span></li>
+        <li>病理位置：<span><input type="text" id="pathologicalPosition" name="cmpFill.pathologicalPosition" value="${cmpReport.cmpFilling.pathologicalPosition }"></span></li>
+        <li>分子生物实验操作：<span><input type="text" class="input100" id="molecularBioExperOper" name="cmpFill.molecularBioExperOper" value="${cmpReport.cmpFilling.molecularBioExperOper }"></span></li>
+        <li>病理类型：<span><input type="text" id="pathologicalType" name="cmpFill.pathologicalType" value="${cmpReport.cmpFilling.pathologicalType }"></span></li>
+        <li>基因分析：<span><input type="text" id="geneAnalysis" name="cmpFill.geneAnalysis" value="${cmpReport.cmpFilling.geneAnalysis }"></span></li>
     </ul>
     <h4>2、送检要求</h4>
     <div class="info">
@@ -101,7 +101,7 @@
    	<table style="width:100%;height:100px;">
    		<tr>
    		  <c:choose>
-   			<c:when test="map.cmpFilling.cmpGeneResult=='' || map.cmpFilling.cmpGeneResult==null || map.cmpFilling.cmpGeneResult=='null'">
+   			<c:when test="cmpReport.cmpGeneResult=='' || cmpReport.cmpGeneResult==null || cmpReport.cmpGeneResult=='null'">
    				<td>未检测到相关突变位点</td>
    			</c:when>
    			<c:otherwise>
@@ -115,17 +115,17 @@
 							</tr>	
 						</thead>
 						<tbody>
-							<c:forEach items="${map.cmpFilling.cmpGeneResult}" var="gene" begin="0" end="${map.cmpFilling.cmpGeneResult.length/2 }">
-								<tr>>
-									<td><span <c:if test="${geng.SequencingDepth<50 }">style='background-color:#feaa20'</c:if>>${geng.geneName }</span></td>
-									<td>${geng.knownMSNum }</td>
-									<td>${geng.SequencingDepth }</td>
+							<c:forEach items="${cmpReport.cmpGeneResult}" var="gene" begin="0" end="${cmpReport.cmpGeneResult.length/2 }">
+								<tr>
+									<td><span <c:if test="${gene.SequencingDepth<50 }">style='background-color:#feaa20'</c:if>>${gene.geneName }</span></td>
+									<td>${gene.knownMSNum }</td>
+									<td>${gene.SequencingDepth }</td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 				</td>
-				<c:if test="${map.cmpFilling.cmpGeneResult>2}">
+				<c:if test="${cmpReport.cmpGeneResult>2}">
 					<td width="49%" valign="top" height="100%">
 						<table class="table table-striped-green table-text-center table-padding0" id="snp_table2">
 							<thead>
@@ -136,11 +136,11 @@
 								</tr>	
 							</thead>
 							<tbody>
-								<c:forEach items="${map.cmpFilling.cmpGeneResult}" var="gene" begin="${map.cmpFilling.cmpGeneResult.length/2+1 }" end="${map.cmpFilling.cmpGeneResult.length }">
+								<c:forEach items="${cmpReport.cmpGeneResult}" var="gene" begin="${cmpReport.cmpGeneResult.length/2+1 }" end="${map.cmpFilling.cmpGeneResult.length }">
 									<tr>
-										<td><span <c:if test="${geng.SequencingDepth<50 }">style='background-color:#feaa20'</c:if>>${geng.geneName }</span></td>
-										<td>${geng.knownMSNum }</td>
-										<td>${geng.SequencingDepth }</td>
+										<td><span <c:if test="${gene.SequencingDepth<50 }">style='background-color:#feaa20'</c:if>>${gene.geneName }</span></td>
+										<td>${gene.knownMSNum }</td>
+										<td>${gene.SequencingDepth }</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -163,7 +163,7 @@
   <div id="secion2_info2">
     <h4>2、检测结果详细描述</h4>
     <div class="info">
-    	<p>按照测序数据质量分析报告如下：（分析日期：${map.cmpFilling.runDate }）</p>
+    	<p>按照测序数据质量分析报告如下：（分析日期：${cmpReport.runDate }）</p>
     	<table class="table table-striped-green">
 			<thead>
 				<tr>
@@ -173,31 +173,31 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>共获得有效片段：${map.cmpFilling.allFragment }</td>
+					<td>共获得有效片段：${cmpReport.allFragment }</td>
 					<td>10000&nbsp;条以上序列认为合格</td>
 				</tr>
 				<tr>
-					<td>平均质量：${map.cmpFilling.avgQuality }</td>
+					<td>平均质量：${cmpReport.avgQuality }</td>
 					<td>质量值30以上为可用数据</td>
 				</tr>
 				<tr>
-					<td>平均GC含量：${map.cmpFilling.avgGCContent }</td>
+					<td>平均GC含量：${cmpReport.avgGCContent }</td>
 					<td>40%~50%&nbsp;均属正常</td>
 				</tr>
 				<tr>
-					<td>可用片段：${map.cmpFilling.usableFragment }</td>
+					<td>可用片段：${cmpReport.usableFragment }</td>
 					<td>高质量数据，碱基质量大于30</td>
 				</tr>
 				<tr>
-					<td>待检基因：${map.cmpFilling.noDetectedGene }</td>
+					<td>待检基因：${cmpReport.noDetectedGene }</td>
 					<td>待检基因数目</td>
 				</tr>
 				<tr>
-					<td>检测基因数：${map.cmpFilling.detectedGene }</td>
+					<td>检测基因数：${cmpReport.detectedGene }</td>
 					<td>检测到的基因数目</td>
 				</tr>
 				<tr>
-					<td>平均测序深度：${map.cmpFilling.avgCoverage }</td>
+					<td>平均测序深度：${cmpReport.avgCoverage }</td>
 					<td>100&nbsp;倍以上数据</td>
 				</tr>
 			</tbody>
@@ -221,8 +221,8 @@
 		</thead>
 		<tbody id="drugTbody_3">
 			<c:choose>
-				<c:when test="${map.cmpFilling.resistanceSiteSum.size()>0}">
-					<c:forEach items="${map.cmpFilling.resistanceSiteSum}" var="li" varStatus="size">
+				<c:when test="${cmpReport.cmpFilling.resistanceSiteSum.size()>0}">
+					<c:forEach items="${cmpReport.cmpFilling.resistanceSiteSum}" var="li" varStatus="size">
 						<tr id="drugTbody_3_tr<c:out value="${size.index}"/>" name="drugTbody_3_tr">
 							<td><input type="text" class="form-control" value="${li.geneName }"></td>
 							<td><input type="text" class="form-control" value="${li.mutationSite }"></td>
@@ -243,8 +243,8 @@
 	<table class="table-del" id="del_drugTbody_3">
 		<tr><th>&nbsp;</th></tr>
 		<c:choose>
-			<c:when test="${map.cmpFilling.resistanceSiteSum.size()>0}">
-				<c:forEach items="${map.cmpFilling.resistanceSiteSum}" var="li" varStatus="size">
+			<c:when test="${cmpReport.cmpFilling.resistanceSiteSum.size()>0}">
+				<c:forEach items="${cmpReport.cmpFilling.resistanceSiteSum}" var="li" varStatus="size">
 					<tr id="drugTbody_3_deltr<c:out value="${size.index}"/>"><td><a href="javascript:removeThisTr('drugTbody_3',<c:out value="${size.index}"/>)" title="删除所有"/></td></tr>
 				</c:forEach>
 			</c:when>
@@ -270,8 +270,8 @@
 		</thead>
 		<tbody id="drugTbody_4">
 			<c:choose>
-				<c:when test="${map.cmpFilling.personalizedMedicine.size()>0}">
-					<c:forEach items="${map.cmpFilling.personalizedMedicine}" var="li" varStatus="size">
+				<c:when test="${cmpReport.cmpFilling.personalizedMedicine.size()>0}">
+					<c:forEach items="${cmpReport.cmpFilling.personalizedMedicine}" var="li" varStatus="size">
 						<tr id="drugTbody_4_tr<c:out value="${size.index}"/>" name="drugTbody_4_tr">
 							<td><input type="text" class="form-control" value="${li.geneName }"></td>
 							<td><input type="text" class="form-control" value="${li.mutationSite }"></td>
@@ -293,8 +293,8 @@
 		<tr><th>&nbsp;</th></tr>
 		<tr id="drugTbody_4_deltr0"><td><a href="javascript:removeThisTr('drugTbody_4',0)" title="删除所有"/></td></tr>
 		<c:choose>
-			<c:when test="${map.cmpFilling.personalizedMedicine.size()>0}">
-				<c:forEach items="${map.cmpFilling.personalizedMedicine}" var="li" varStatus="size">
+			<c:when test="${cmpReport.cmpFilling.personalizedMedicine.size()>0}">
+				<c:forEach items="${cmpReport.cmpFilling.personalizedMedicine}" var="li" varStatus="size">
 					<tr id="drugTbody_4_deltr<c:out value="${size.index}"/>"><td><a href="javascript:removeThisTr('drugTbody_4',<c:out value="${size.index}"/>)" title="删除所有"/></td></tr>
 				</c:forEach>
 			</c:when>
@@ -308,8 +308,8 @@
 	<h4>推荐药物：</h4>
 	<div id="drugDescipDiv">
 		<c:choose>
-			<c:when test="${map.cmpFilling.recommendDrug.size()>0}">
-				<c:forEach items="${map.cmpFilling.recommendDrug}" var="li" varStatus="size">
+			<c:when test="${cmpReport.cmpFilling.recommendDrug.size()>0}">
+				<c:forEach items="${cmpReport.cmpFilling.recommendDrug}" var="li" varStatus="size">
 				  <div name="drugContent">
 					<div class="h2">
 				    	<input type="text" class="form-control col-sm-10" value="${li.drugName }">
@@ -359,7 +359,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/ABL1.png?date=20150629">
 	    	  </div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ABL1基因平均测序深度${resultMap.ABL1Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ABL1基因平均测序深度${cmpReport.geneDetectionDetail.ABL1.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -372,12 +372,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.ABL1Table.contains('没有发现突变位点')||resultMap.ABL1Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.ABL1Table }
-					    </s:else>
+		    			<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.ABL1.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.ABL1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -407,7 +418,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/AKT1.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;AKT1基因平均测序深度${resultMap.AKT1Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;AKT1基因平均测序深度${cmpReport.geneDetectionDetail.AKT1.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -420,12 +431,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.AKT1Table.contains('没有发现突变位点')||resultMap.AKT1Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.AKT1Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.AKT1.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.AKT1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -455,7 +477,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/ALK.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ALK基因平均测序深度${resultMap.ALKCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ALK基因平均测序深度${cmpReport.geneDetectionDetail.ALK.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -468,12 +490,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.ALKTable.contains('没有发现突变位点')||resultMap.ALKTable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.ALKTable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.ALK.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.ALK.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -502,7 +535,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/APC.png?date=20150629">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;APC基因平均测序深度${resultMap.APCCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;APC基因平均测序深度${cmpReport.geneDetectionDetail.APC.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -515,12 +548,24 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.APCTable.contains('没有发现突变位点')||resultMap.APCTable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.APCTable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.APC.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.APC.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
+			    	</tbody>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -550,7 +595,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/ATM.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ATM基因平均测序深度${resultMap.ATMCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ATM基因平均测序深度${cmpReport.geneDetectionDetail.ATM.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -563,12 +608,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.ATMTable.contains('没有发现突变位点')||resultMap.ATMTable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.ATMTable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.ATM.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.ATM.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -598,7 +654,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/BRAF.png?date=20150629">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;BRAF基因平均测序深度${resultMap.BRAFCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;BRAF基因平均测序深度${cmpReport.geneDetectionDetail.BRAF.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -611,12 +667,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.BRAFTable.contains('没有发现突变位点')||resultMap.BRAFTable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.BRAFTable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.BRAF.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.BRAF.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -639,7 +706,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/CDH1.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CDH1基因平均测序深度${resultMap.CDH1Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CDH1基因平均测序深度${cmpReport.geneDetectionDetail.CDH1.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -652,12 +719,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.CDH1Table.contains('没有发现突变位点')||resultMap.CDH1Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.CDH1Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.CDH1.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.CDH1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -680,7 +758,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/CDKN2A.png?date=20150629">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CDKN2A基因平均测序深度${resultMap.CDKN2ACoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CDKN2A基因平均测序深度${{cmpReport.geneDetectionDetail.CDKN2A.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -693,12 +771,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.CDKN2ATable.contains('没有发现突变位点')||resultMap.CDKN2ATable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.CDKN2ATable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.CDKN2A.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.CDKN2A.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -724,7 +813,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/CSF1R.png?date=20150629" style="width:385px;height:137px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CSF1R基因平均测序深度${resultMap.CSF1RCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CSF1R基因平均测序深度${cmpReport.geneDetectionDetail.CSF1R.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -737,12 +826,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.CSF1RTable.contains('没有发现突变位点')||resultMap.CSF1RTable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.CSF1RTable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.CSF1R.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.CSF1R.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -769,7 +869,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/CTNNB1.png?date=20150629" style="width:450px;">
 	    	  </div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CTNNB1基因平均测序深度${resultMap.CTNNB1Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CTNNB1基因平均测序深度${cmpReport.geneDetectionDetail.CTNNB1.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -782,12 +882,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.CTNNB1Table.contains('没有发现突变位点')||resultMap.CTNNB1Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.CTNNB1Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.CTNNB1.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.CTNNB1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -823,7 +934,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/EGFR.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;EGFR基因平均测序深度${resultMap.EGFRCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;EGFR基因平均测序深度${cmpReport.geneDetectionDetail.EGFR.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -836,12 +947,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.EGFRTable.contains('没有发现突变位点')||resultMap.EGFRTable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.EGFRTable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.EGFR.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.EGFR.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -871,7 +993,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/ERBB2.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">ERBB2基因平均测序深度${resultMap.ERBB2Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ERBB2基因平均测序深度${cmpReport.geneDetectionDetail.ERBB2.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -884,12 +1006,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.ERBB2Table.contains('没有发现突变位点')||resultMap.ERBB2Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.ERBB2Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.ERBB2.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.ERBB2.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -915,7 +1048,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/ERBB4.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ERBB4基因平均测序深度${resultMap.ERBB4Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ERBB4基因平均测序深度${cmpReport.geneDetectionDetail.ERBB4.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -928,12 +1061,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.ERBB4Table.contains('没有发现突变位点')||resultMap.ERBB4Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.ERBB4Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.ERBB4.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.ERBB4.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -959,7 +1103,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/EZH2.png?date=20150629">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;EZH2基因平均测序深度${resultMap.EZH2Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;EZH2基因平均测序深度${cmpReport.geneDetectionDetail.EZH2.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -972,12 +1116,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.EZH2Table.contains('没有发现突变位点')||resultMap.EZH2Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.EZH2Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.EZH2.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.EZH2.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1002,7 +1157,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/FBXW7.png?date=20150629" style="width:400px">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FBXW7基因平均测序深度${resultMap.FBXW7Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FBXW7基因平均测序深度${cmpReport.geneDetectionDetail.FBXW7.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1015,12 +1170,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.FBXW7Table.contains('没有发现突变位点')||resultMap.FBXW7Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.FBXW7Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.FBXW7.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.FBXW7.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1045,7 +1211,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/FGFR1.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">FGFR1基因平均测序深度${resultMap.FGFR1Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FGFR1基因平均测序深度${cmpReport.geneDetectionDetail.FGFR1.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1058,12 +1224,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.FGFR1Table.contains('没有发现突变位点')||resultMap.FGFR1Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.FGFR1Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.FGFR1.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.FGFR1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1088,7 +1265,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/FGFR2.png?date=20150629" style="width:417px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FGFR2基因平均测序深度${resultMap.FGFR2Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FGFR2基因平均测序深度${cmpReport.geneDetectionDetail.FGFR2.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1101,12 +1278,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.FGFR2Table.contains('没有发现突变位点')||resultMap.FGFR2Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.FGFR2Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.FGFR2.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.FGFR2.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1129,7 +1317,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/FGFR3.png?date=20150629" style="width:417px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FGFR3基因平均测序深度${resultMap.FGFR3Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FGFR3基因平均测序深度${cmpReport.geneDetectionDetail.FGFR3.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1142,12 +1330,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.FGFR3Table.contains('没有发现突变位点')||resultMap.FGFR3Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.FGFR3Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.FGFR3.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.FGFR3.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1177,7 +1376,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/FLT3.png?date=20150629" style="width:454px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FLT3基因平均测序深度${resultMap.FLT3Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FLT3基因平均测序深度${cmpReport.geneDetectionDetail.FLT3.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1190,12 +1389,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.FLT3Table.contains('没有发现突变位点')||resultMap.FLT3Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.FLT3Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.FLT3.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.FLT3.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1220,7 +1430,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/GNA11.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;GNA11基因平均测序深度${resultMap.GNA11Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;GNA11基因平均测序深度${cmpReport.geneDetectionDetail.GNA11.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1233,12 +1443,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.GNA11Table.contains('没有发现突变位点')||resultMap.GNA11Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.GNA11Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.GNA11.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.GNA11.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1267,7 +1488,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/GNAQ.png?date=20150629" style="width:179px;height:158px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;GNAQ基因平均测序深度${resultMap.GNAQCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;GNAQ基因平均测序深度${cmpReport.geneDetectionDetail.GNAQ.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1280,12 +1501,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.GNAQTable.contains('没有发现突变位点')||resultMap.GNAQTable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.GNAQTable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.GNAQ.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.GNAQ.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1310,7 +1542,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/GNAS.png?date=20150629" style="width:285px;height:162px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;GNAS基因平均测序深度${resultMap.GNASCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;GNAS基因平均测序深度${cmpReport.geneDetectionDetail.GNAS.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1323,12 +1555,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.GNASTable.contains('没有发现突变位点')||resultMap.GNASTable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.GNASTable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.GNAS.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.GNAS.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1353,7 +1596,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/HNF1A.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;HNF1A基因平均测序深度${resultMap.HNF1ACoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;HNF1A基因平均测序深度${cmpReport.geneDetectionDetail.HNF1A.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1366,12 +1609,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.HNF1ATable.contains('没有发现突变位点')||resultMap.HNF1ATable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.HNF1ATable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.HNF1A.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.HNF1A.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1396,7 +1650,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/HRAS.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;HRAS基因平均测序深度${resultMap.HRASCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;HRAS基因平均测序深度${cmpReport.geneDetectionDetail.HRAS.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1409,12 +1663,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.HRASTable.contains('没有发现突变位点')||resultMap.HRASTable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.HRASTable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.HRAS.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.HRAS.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1439,7 +1704,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/IDH1.png?date=20150629" style="width:321px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">IDH1基因平均测序深度${resultMap.IDH1Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;IDH1基因平均测序深度${cmpReport.geneDetectionDetail.IDH1.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1452,12 +1717,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.IDH1Table.contains('没有发现突变位点')||resultMap.IDH1Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.IDH1Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.IDH1.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.IDH1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1487,7 +1763,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/IDH2.png?date=20150629" style="width:350px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">IDH2基因平均测序深度${resultMap.IDH2Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;IDH2基因平均测序深度${cmpReport.geneDetectionDetail.IDH2.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1500,12 +1776,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.IDH2Table.contains('没有发现突变位点')||resultMap.IDH2Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.IDH2Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.IDH2.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.IDH2.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1527,7 +1814,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/JAK2.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;JAK2基因平均测序深度${resultMap.JAK2Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;JAK2基因平均测序深度${cmpReport.geneDetectionDetail.JAK2.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1540,12 +1827,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.JAK2Table.contains('没有发现突变位点')||resultMap.JAK2Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.JAK2Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.JAK2.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.JAK2.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1574,7 +1872,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/JAK3.png?date=20150629">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;JAK3基因平均测序深度${resultMap.JAK3Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;JAK3基因平均测序深度${cmpReport.geneDetectionDetail.JAK3.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1587,12 +1885,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.JAK3Table.contains('没有发现突变位点')||resultMap.JAK3Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.JAK3Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.JAK3.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.JAK3.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1627,7 +1936,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/KDR.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;KDR基因平均测序深度${resultMap.KDRCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;KDR基因平均测序深度${cmpReport.geneDetectionDetail.KDR.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1640,12 +1949,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.KDRTable.contains('没有发现突变位点')||resultMap.KDRTable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.KDRTable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.KDR.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.KDR.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1677,7 +1997,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/KIT.png?date=20150629" style="width:500px">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;KIT基因平均测序深度${resultMap.KITCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;KIT基因平均测序深度${cmpReport.geneDetectionDetail.KIT.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1690,12 +2010,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.KITTable.contains('没有发现突变位点')||resultMap.KITTable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.KITTable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.KIT.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.KIT.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1724,7 +2055,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/KRAS.png?date=20150629" style="width:465px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;KRAS基因平均测序深度${resultMap.KRASCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;KRAS基因平均测序深度${cmpReport.geneDetectionDetail.KRAS.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1737,12 +2068,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.KRASTable.contains('没有发现突变位点')||resultMap.KRASTable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.KRASTable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.KRAS.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.KRAS.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1784,7 +2126,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/MET.png?date=20150629" style="width:450px">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;MET基因平均测序深度${resultMap.METCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;MET基因平均测序深度${cmpReport.geneDetectionDetail.MET.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1797,12 +2139,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.METTable.contains('没有发现突变位点')||resultMap.METTable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.METTable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.MET.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.MET.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1828,7 +2181,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/MLH1.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;MLH1基因平均测序深度${resultMap.MLH1Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;MLH1基因平均测序深度${cmpReport.geneDetectionDetail.MLH1.avgCoverage }。</p>
     			<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1841,12 +2194,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.MLH1Table.contains('没有发现突变位点')||resultMap.MLH1Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.MLH1Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.MLH1.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.MLH1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1872,7 +2236,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/MPL.png?date=20150629" style="width:350px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;MPL基因平均测序深度${resultMap.MPLCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;MPL基因平均测序深度${cmpReport.geneDetectionDetail.MPL.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1885,12 +2249,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.MPLTable.contains('没有发现突变位点')||resultMap.MPLTable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.MPLTable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.MPL.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.MPL.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    </div>
@@ -1915,7 +2290,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/NOTCH1.png?date=20150629" style="width:603px;height:312px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">NOTCH1基因平均测序深度${resultMap.NOTCH1Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;NOTCH1基因平均测序深度${cmpReport.geneDetectionDetail.NOTCH1.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1928,12 +2303,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.NOTCH1Table.contains('没有发现突变位点')||resultMap.NOTCH1Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.NOTCH1Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.NOTCH1.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.NOTCH1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1959,7 +2345,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/NPM1.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;NPM1基因平均测序深度${resultMap.NPM1Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;NPM1基因平均测序深度${cmpReport.geneDetectionDetail.NPM1.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1972,12 +2358,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.NPM1Table.contains('没有发现突变位点')||resultMap.NPM1Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.NPM1Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.NPM1.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.NPM1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2002,7 +2399,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/NRAS.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;NRAS基因平均测序深度${resultMap.NRASCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;NRAS基因平均测序深度${cmpReport.geneDetectionDetail.NRAS.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2015,12 +2412,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.NRASTable.contains('没有发现突变位点')||resultMap.NRASTable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.NRASTable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.NRAS.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.NRAS.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2053,7 +2461,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/PDGFRA.png?date=20150629" style="width:500px">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PDGFRA基因平均测序深度${resultMap.PDGFRACoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PDGFRA基因平均测序深度${cmpReport.geneDetectionDetail.PDGFRA.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2066,12 +2474,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.PDGFRATable.contains('没有发现突变位点')||resultMap.PDGFRATable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.PDGFRATable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.PDGFRA.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.PDGFRA.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2107,7 +2526,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/PIK3CA.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PIK3CA基因平均测序深度${resultMap.PIK3CACoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PIK3CA基因平均测序深度${cmpReport.geneDetectionDetail.PIK3CA.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2120,12 +2539,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.PIK3CATable.contains('没有发现突变位点')||resultMap.PIK3CATable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.PIK3CATable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.PIK3CA.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.PIK3CA.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2158,7 +2588,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/PTEN.png?date=20150629" style="width:550px">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PTEN基因平均测序深度${resultMap.PTENCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PTEN基因平均测序深度${cmpReport.geneDetectionDetail.PTEN.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2171,12 +2601,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.PTENTable.contains('没有发现突变位点')||resultMap.PTENTable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.PTENTable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.PTEN.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.PTEN.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2202,7 +2643,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/PTPN11.png?date=20150629">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PTPN11基因平均测序深度${resultMap.PTPN11Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PTPN11基因平均测序深度${cmpReport.geneDetectionDetail.PTPN11.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2215,12 +2656,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.PTPN11Table.contains('没有发现突变位点')||resultMap.PTPN11Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.PTPN11Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.PTPN11.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.PTPN11.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2246,7 +2698,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/RB1.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;RB1基因平均测序深度${resultMap.RB1Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;RB1基因平均测序深度${cmpReport.geneDetectionDetail.RB1.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2259,12 +2711,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.RB1Table.contains('没有发现突变位点')||resultMap.RB1Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.RB1Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.RB1.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.RB1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2297,7 +2760,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/RET.png?date=20150629" style="width:380px">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;RET基因平均测序深度${resultMap.RETCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;RET基因平均测序深度${cmpReport.geneDetectionDetail.RET.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2310,12 +2773,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.RETTable.contains('没有发现突变位点')||resultMap.RETTable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.RETTable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.RET.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.RET.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2341,7 +2815,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/SMAD4.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SMAD4基因平均测序深度${resultMap.SMAD4Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SMAD4基因平均测序深度${cmpReport.geneDetectionDetail.SMAD4.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2354,12 +2828,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.SMAD4Table.contains('没有发现突变位点')||resultMap.SMAD4Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.SMAD4Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.SMAD4.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.SMAD4.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    </div>
@@ -2384,7 +2869,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/SMARCB1.png?date=20150629" style="width:550px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SMARCB1基因平均测序深度${resultMap.SMARCB1Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SMARCB1基因平均测序深度${cmpReport.geneDetectionDetail.SMARCB1.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2397,12 +2882,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.SMARCB1Table.contains('没有发现突变位点')||resultMap.SMARCB1Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.SMARCB1Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.SMARCB1.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.SMARCB1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2432,7 +2928,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/SMO.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SMO基因平均测序深度${resultMap.SMOCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SMO基因平均测序深度${cmpReport.geneDetectionDetail.SMO.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2445,12 +2941,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.SMOTable.contains('没有发现突变位点')||resultMap.SMOTable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.SMOTable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.SMO.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.SMO.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2480,7 +2987,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/SRC.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SRC基因平均测序深度${resultMap.SRCCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SRC基因平均测序深度${cmpReport.geneDetectionDetail.SRC.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2493,12 +3000,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.SRCTable.contains('没有发现突变位点')||resultMap.SRCTable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.SRCTable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.SRC.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.SRC.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2524,7 +3042,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/STK11.png?date=20150629" style="width:347px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;STK11基因平均测序深度${resultMap.STK11Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;STK11基因平均测序深度${cmpReport.geneDetectionDetail.STK11.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2537,12 +3055,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.STK11Table.contains('没有发现突变位点')||resultMap.STK11Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.STK11Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.STK11.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.STK11.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2568,7 +3097,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/TP53.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;TP53基因平均测序深度${resultMap.TP53Coverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;TP53基因平均测序深度${cmpReport.geneDetectionDetail.TP53.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2581,12 +3110,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.TP53Table.contains('没有发现突变位点')||resultMap.TP53Table=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.TP53Table }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.TP53.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.TP53.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2616,7 +3156,7 @@
 	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/VHL.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;VHL基因平均测序深度${resultMap.VHLCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;VHL基因平均测序深度${cmpReport.geneDetectionDetail.VHL.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2629,12 +3169,23 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-			    		<s:if test="%{resultMap.VHLTable.contains('没有发现突变位点')||resultMap.VHLTable=='<tr></tr>' }">
-			    			<tr><td colspan="6">没有发现突变位点</td></tr>
-			    		</s:if>
-			    		<s:else>
-			    			${resultMap.VHLTable }
-					    </s:else>
+			    		<c:choose>
+		    				<c:when test="%{cmpReport.geneDetectionDetail.VHL.result.contains('没有发现突变位点')}">
+		    					<tr><td colspan="6">没有发现突变位点</td></tr>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.VHL.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:otherwise>
+		    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2656,12 +3207,622 @@
    		  </tr>
    		</thead>
    		<tbody>
-    		<s:if test="%{resultMap.allSnp.contains('没有发现突变位点')||resultMap.allSnp=='<tr></tr>' }">
-    			<tr><td colspan="6">没有发现突变位点</td></tr>
-    		</s:if>
-    		<s:else>
-    			${resultMap.allSnp }
-		    </s:else>
+    		<c:choose>
+   				<c:when test="%{cmpReport.geneDetectionDetail.ABL1.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.AKT1.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.ALK.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.APC.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.ATM.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.BRAF.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.CDH1.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.CDKN2A.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.CSF1R.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.CTNNB1.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.ERBB2.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.ERBB4.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.EZH2.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.FBXW7.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.FGFR1.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.FGFR2.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.FGFR3.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.FLT3.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.GNA11.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.GNAQ.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.GNAS.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.HNF1A.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.HRAS.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.IDH1.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.IDH2.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.IDH2.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.JAK2.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.JAK3.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.KDR.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.KIT.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.KRAS.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.MET.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.MLH1.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.MPL.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.NOTCH1.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.NPM1.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.NRAS.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.PDGFRA.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.PIK3CA.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.PTEN.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.PTPN11.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.RB1.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.RET.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.SMAD4.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.SMARCB1.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.SMO.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.SRC.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.STK11.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.TP53.result.contains('没有发现突变位点')&&cmpReport.geneDetectionDetail.VHL.result.contains('没有发现突变位点')}">
+   					<tr><td colspan="6">没有发现突变位点</td></tr>
+   				</c:when>
+   				<c:otherwise>
+   					{ "ABL1", "EGFR", "GNAQ", "KRAS", "PTPN11",
+						"AKT1", "ERBB2", "GNAS", "MET", "RB1", "ALK", "ERBB4",
+						"HNF1A", "MLH1", "RET", "APC", "EZH2", "HRAS", "MPL",
+						"SMAD4", "ATM", "FBXW7", "IDH1", "NOTCH1", "SMARCB1",
+						"BRAF", "FGFR1", "IDH2", "NPM1", "SMO", "CDH1",
+						"FGFR2", "JAK2", "NRAS", "SRC", "CDKN2A", "FGFR3",
+						"JAK3", "PDGFRA", "STK11", "CSF1R", "FLT3", "KDR",
+						"PIK3CA", "TP53", "CTNNB1", "GNA11", "KIT", "PTEN",
+						"VHL" }
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.ABL1.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.ABL1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.AKT1.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.AKT1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.ALK.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.ALK.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.APC.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.APC.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.ATM.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.ATM.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.BRAF.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.BRAF.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.CDH1.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.CDH1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.CDKN2A.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.CDKN2A.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.CSF1R.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.CSF1R.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.CTNNB1.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.CTNNB1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.EGFR.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.EGFR.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.ERBB2.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.ERBB2.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.ERBB4.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.ERBB4.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.EZH2.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.EZH2.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.FBXW7.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.FBXW7.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.FGFR1.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.FGFR1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.FGFR2.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.FGFR2.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.FGFR3.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.FGFR3.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.FLT3.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.FLT3.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.GNA11.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.GNA11.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.GNAQ.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.GNAQ.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.GNAS.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.GNAS.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.HNF1A.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.HNF1A.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.HRAS.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.HRAS.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.IDH1.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.IDH1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.IDH2.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.IDH2.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.JAK2.result.contains('没有发现突变位点')}">\
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.JAK2.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.JAK3.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.JAK3.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.KDR.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.KDR.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.KIT.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.KIT.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.KRAS.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.KRAS.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.MET.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.MET.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.MLH1.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.MLH1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.MPL.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.MPL.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.NOTCH1.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.NOTCH1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.NPM1.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.NPM1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.NRAS.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.NRAS.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.PDGFRA.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.PDGFRA.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.PIK3CA.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.PIK3CA.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				<</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.PTEN.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.PTEN.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.PTPN11.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.PTPN11.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.RB1.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.RB1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.RET.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.RET.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.SMAD4.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.SMAD4.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.SMARCB1.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.SMARCB1.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.SMO.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.SMO.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.SRC.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.SRC.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.STK11.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.STK11.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.TP53.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.TP53.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+		    				<c:if test="%{!cmpReport.geneDetectionDetail.VHL.result.contains('没有发现突变位点')}">
+		    					<c:forEach items="${cmpReport.geneDetectionDetail.VHL.result}" var="r" varStatus="size">
+		    						<tr>
+		    							<td>${r.gene }</td>
+		    							<td>${r.refBase }</td>
+		    							<td>${r.mutBase }</td>
+		    							<td>${r.depth }</td>
+		    							<td>${r.cdsMutSyntax }</td>
+		    							<td>${r.aaMutSyntax }</td>
+		    						</tr>
+		    					</c:forEach>
+		    				</c:if>
+   				</c:otherwise>
+   			</c:choose>
     	</tbody>
     </table>
 </section>
@@ -3746,20 +4907,90 @@
 	<h4>3.&nbsp;&nbsp;序列质量分析（见QC结果）</h4>
 	<div class="h2">Basic Statistics</div>
 	<table class="table table-green table-striped-blue table-text-center">
-		${resultMap.fastqc_data }
+		<thead>
+			<tr>
+				<th>#Measure</th>
+				<th>Value</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Filename</td>
+				<td>${cmpReport.basicStatistics1.Filename }</td>
+			</tr>
+			<tr>
+				<td>File type</td>
+				<td>${cmpReport.basicStatistics1.FileType }</td>
+			</tr>
+			<tr>
+				<td>Encoding</td>
+				<td>${cmpReport.basicStatistics1.Encoding }</td>
+			</tr>
+			<tr>
+				<td>Total Sequences</td>
+				<td>${cmpReport.basicStatistics1.TotalSeq }</td>
+			</tr>
+			<tr>
+				<td>Filtered Sequences</td>
+				<td>${cmpReport.basicStatistics1.FilteredSeq }</td>
+			</tr>
+			<tr>
+				<td>Sequence length</td>
+				<td>${cmpReport.basicStatistics1.SeqLength }</td>
+			</tr>
+			<tr>
+				<td>%GC</td>
+				<td>${cmpReport.basicStatistics1.gc }</td>
+			</tr>
+		</tbody>
 	</table>
 	<div class="h2">Basic Statistics</div>
 	<table class="table table-green table-striped-orange table-text-center">
-		${resultMap.f2 }
+		<thead>
+			<tr>
+				<th>#Measure</th>
+				<th>Value</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Filename</td>
+				<td>${cmpReport.basicStatistics2.Filename }</td>
+			</tr>
+			<tr>
+				<td>File type</td>
+				<td>${cmpReport.basicStatistics2.FileType }</td>
+			</tr>
+			<tr>
+				<td>Encoding</td>
+				<td>${cmpReport.basicStatistics2.Encoding }</td>
+			</tr>
+			<tr>
+				<td>Total Sequences</td>
+				<td>${cmpReport.basicStatistics2.TotalSeq }</td>
+			</tr>
+			<tr>
+				<td>Filtered Sequences</td>
+				<td>${cmpReport.basicStatistics2.FilteredSeq }</td>
+			</tr>
+			<tr>
+				<td>Sequence length</td>
+				<td>${cmpReport.basicStatistics2.SeqLength }</td>
+			</tr>
+			<tr>
+				<td>%GC</td>
+				<td>${cmpReport.basicStatistics2.gc }</td>
+			</tr>
+		</tbody>
 	</table>
 	<table style="width:100%;">
       <tr>
-    	<td style="width:50%;"><img src="${resultMap.per_base_quality }"></td>
-    	<td><img src="${resultMap.q2 }"></td>
+    	<td style="width:50%;"><img src="${cmpReport.basicStatistics2.qualityPath1 }"></td>
+    	<td><img src="${cmpReport.basicStatistics2.qualityPath2 }"></td>
       </tr>
       <tr>
-    	<td><img alt="" src="${resultMap.per_base_seq_content }"></td>
-    	<td><img alt="" src="${resultMap.s2 }"></td>
+    	<td><img alt="" src="${cmpReport.basicStatistics2.seqContentPath1 }"></td>
+    	<td><img alt="" src="${cmpReport.basicStatistics2.seqContentPath2 }"></td>
       </tr>
     </table>
 </section>

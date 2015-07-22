@@ -212,7 +212,7 @@ public class RunAppServiceImpl {
 							FileTools.getFirstLine(avgPath));
 				}
 				// 五
-				List<Map<String, Object>> geneDetectionDetail = new ArrayList<Map<String, Object>>();
+				Map<String, Object> geneDetail = new HashMap<String, Object>();
 				for (String snpName : snpArr) {
 					List<String> list_ = FileTools.readLinestoString(snpPath);
 					Map<String, Object> CmpGeneDetectionDetail = new HashMap<String, Object>();
@@ -240,12 +240,11 @@ public class RunAppServiceImpl {
 						}
 						result.add(CmpGeneSnpResult);
 					}
-					CmpGeneDetectionDetail.put("geneName", snpName);
 					CmpGeneDetectionDetail.put("avgCoverage", avgSeqDepth);
 					CmpGeneDetectionDetail.put("result", result);
-					geneDetectionDetail.add(CmpGeneDetectionDetail);
+					geneDetail.put(snpName, CmpGeneDetectionDetail);
 				}
-				cmpReport.put("geneDetectionDetail", geneDetectionDetail);
+				cmpReport.put("geneDetectionDetail", geneDetail);
 
 				String qualityPath1 = PropertiesUtils.outProject + "/upload/"
 						+ outPath + "/QC/" + getArray(dataDetail, 0)
@@ -259,10 +258,21 @@ public class RunAppServiceImpl {
 				Map<String, String> basicStatistics1 = new HashMap<String, String>();
 				List<String> list_ = FileTools.getLineByNum(fastqcDataPath, 3,
 						10);
-				for (int z = 0; z < list_.size(); z++) {
-					String[] line_z = list_.get(z).split("\t");
-					basicStatistics1.put(getArray(line_z, 0),
-							getArray(line_z, 1));
+				if (list_.size() >= 7) {
+					String[] line_1 = list_.get(0).split("\t");
+					basicStatistics1.put("Filename", getArray(line_1, 1));
+					String[] line_2 = list_.get(1).split("\t");
+					basicStatistics1.put("FileType", getArray(line_2, 1));
+					String[] line_3 = list_.get(2).split("\t");
+					basicStatistics1.put("Encoding", getArray(line_3, 1));
+					String[] line_4 = list_.get(3).split("\t");
+					basicStatistics1.put("TotalSeq", getArray(line_4, 1));
+					String[] line_5 = list_.get(4).split("\t");
+					basicStatistics1.put("FilteredSeq", getArray(line_5, 1));
+					String[] line_6 = list_.get(5).split("\t");
+					basicStatistics1.put("SeqLength", getArray(line_6, 1));
+					String[] line_7 = list_.get(6).split("\t");
+					basicStatistics1.put("gc", getArray(line_7, 1));
 				}
 				cmpReport.put("qualityPath1", qualityPath1);
 				cmpReport.put("seqContentPath1", seqContentPath1);
@@ -283,11 +293,28 @@ public class RunAppServiceImpl {
 								+ "/upload/" + outPath + "/QC/" + f
 								+ "/Images/per_base_sequence_content.png";
 						String f2 = finalPath + "/QC/" + f + "/fastqc_data.txt";
-						List<String> list_2 = FileTools.getLineByNum(f2, 3, 10);
-						for (int z = 0; z < list_2.size(); z++) {
-							String[] line_z = list_2.get(z).split("\t");
-							basicStatistics2.put(getArray(line_z, 0),
-									getArray(line_z, 1));
+						List<String> list_2 = FileTools.getLineByNum(f2, 4, 10);
+						if (list_2.size() >= 7) {
+							String[] line_1 = list_2.get(0).split("\t");
+							basicStatistics2.put("Filename",
+									getArray(line_1, 1));
+							String[] line_2 = list_2.get(1).split("\t");
+							basicStatistics2.put("FileType",
+									getArray(line_2, 1));
+							String[] line_3 = list_2.get(2).split("\t");
+							basicStatistics2.put("Encoding",
+									getArray(line_3, 1));
+							String[] line_4 = list_2.get(3).split("\t");
+							basicStatistics2.put("TotalSeq",
+									getArray(line_4, 1));
+							String[] line_5 = list_2.get(4).split("\t");
+							basicStatistics2.put("FilteredSeq",
+									getArray(line_5, 1));
+							String[] line_6 = list_2.get(5).split("\t");
+							basicStatistics2.put("SeqLength",
+									getArray(line_6, 1));
+							String[] line_7 = list_2.get(6).split("\t");
+							basicStatistics2.put("gc", getArray(line_7, 1));
 						}
 					}
 				}

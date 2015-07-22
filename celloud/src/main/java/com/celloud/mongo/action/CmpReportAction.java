@@ -2,8 +2,10 @@
 package com.celloud.mongo.action;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -43,13 +45,9 @@ public class CmpReportAction extends BaseAction {
 	private Map<String, Object> map;
 	private String infos;
 
-	public void addFill() {
-		if (cmpFill.getId() != null) {
-			log.info("删除用户填写信息的CMP报告，id"+cmpFill.getId());
-			reportService.deleteCmpFilling(cmpFill.getId());
-		}
+	public void updateFill() {
 		if (infos != null) {
-			log.info("新增用户填写CMP报告部分" + cmpFill.getId());
+			log.info("新增用户填写CMP报告部分");
 			String[] r = infos.split("----");
 			String[] s1 = StringUtils.splitByWholeSeparatorPreserveAllTokens(
 					r[0], ";");
@@ -89,7 +87,7 @@ public class CmpReportAction extends BaseAction {
 				rdli.add(rd);
 			}
 			cmpFill.setRecommendDrug(rdli);
-			reportService.saveCmpFilling(cmpFill);
+			reportService.editCmpFilling(cmpReport.getId(), cmpFill);
 		}
 	}
 
@@ -119,13 +117,13 @@ public class CmpReportAction extends BaseAction {
 		cmpReport.setDetectedGene((String) map.get("detectedGene"));
 		cmpReport.setAvgCoverage((String) map.get("avgCoverage"));
 
-		List<CmpGeneDetectionDetail> geneDetectionDetail = new ArrayList<CmpGeneDetectionDetail>();
-		List<Map<String, Object>> gddmap = (List<Map<String, Object>>) map
+		Map<String, CmpGeneDetectionDetail> geneDetectionDetail = new HashMap<String, CmpGeneDetectionDetail>();
+		Map<String, Object> gddmap = (Map<String, Object>) map
 				.get("geneDetectionDetail");
-		if (gddmap != null && gddmap.size() > 0) {
-			for (Map<String, Object> m : gddmap) {
+		if (gddmap != null) {
+			for (Entry<String, Object> entry : gddmap.entrySet()) {
 				CmpGeneDetectionDetail gdd = new CmpGeneDetectionDetail();
-				gdd.setGeneName((String) m.get("geneName"));
+				Map<String, Object> m = (Map<String, Object>) entry.getValue();
 				gdd.setAvgCoverage((String) m.get("avgCoverage"));
 				List<Map<String, String>> r = (List<Map<String, String>>) m
 						.get("result");
@@ -142,7 +140,7 @@ public class CmpReportAction extends BaseAction {
 					result.add(gsr);
 				}
 				gdd.setResult(result);
-				geneDetectionDetail.add(gdd);
+				geneDetectionDetail.put(entry.getKey(), gdd);
 			}
 		}
 		cmpReport.setGeneDetectionDetail(geneDetectionDetail);
@@ -158,8 +156,8 @@ public class CmpReportAction extends BaseAction {
 		reportService.saveCmpReport(cmpReport);
 	}
 
-	public String getWhole() {
-		map = reportService.getOneWholeCmpReport(cmpReport.getDataKey(),
+	public String getCmpReportAll() {
+		cmpReport = reportService.getCmpReport(cmpReport.getDataKey(),
 				cmpReport.getUserId());
 		return "success";
 	}
