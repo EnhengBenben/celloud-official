@@ -753,6 +753,10 @@ public class ReadReportServiceImpl {
 			resultMap.put("svg" + num,
 					FileTools.fileExist(snpPath, num + ".png", "endsWith"));
 		}
+		for (String num : number) {
+			resultMap.put("svg10" + num,
+					FileTools.fileExist(snpPath, num + ".10.png", "endsWith"));
+		}
 		// 其他
 		String other = FileTools.fileSearch(snpPath, "new.png", "endWith")
 				.toString();

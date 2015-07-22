@@ -92,30 +92,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="javascript:toHospitalAll()" class="dropdown-toggle">
-						<i class="icon-list"></i>
-						<span class="menu-text">医院统计 </span>
-						<b class="arrow icon-angle-down"></b>
-					</a>
-
-					<ul class="submenu">
-						<li>
-							<a href="javascript:toActivity()">
-								<i class="icon-double-angle-right"></i>
-								活跃度统计
-							</a>
-						</li>
-
-						<li>
-							<a href="javascript:toHospitalList()">
-								<i class="icon-double-angle-right"></i>
-								医院详细信息
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a href="#" class="dropdown-toggle">
+					<a href="javascript:void(0)" class="dropdown-toggle">
 						<i class="icon-list"></i>
 						<span class="menu-text">数据统计 </span>
 
@@ -145,6 +122,43 @@
 						</li>
 					</ul>
 				</li>
+				<li>
+					<a href="javascript:void(0)" class="dropdown-toggle">
+						<i class="icon-list"></i>
+						<span class="menu-text">医院统计 </span>
+						<b class="arrow icon-angle-down"></b>
+					</a>
+					<ul class="submenu">
+						<li>
+							<a href="javascript:toHospitalList()">
+								<i class="icon-double-angle-right"></i>
+								医院详细信息
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:void(0)" class="dropdown-toggle">
+						<i class="icon-list"></i>
+						<span class="menu-text">活跃度统计 </span>
+						<b class="arrow icon-angle-down"></b>
+					</a>
+					<ul class="submenu">
+						<li>
+							<a href="javascript:void()">
+								<i class="icon-double-angle-right"></i>
+								用户活跃度统计
+							</a>
+						</li>
+						<li>
+							<a href="javascript:toActivity()">
+								<i class="icon-double-angle-right"></i>
+								医院活跃度统计
+							</a>
+						</li>
+					</ul>
+				</li>
+				
 
 			</ul><!-- /.nav-list -->
 

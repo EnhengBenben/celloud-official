@@ -295,6 +295,7 @@ hr {
 			$(this).attr("value",$(this).val());
 		});
 		$("#des").children().html($("#des").children().val());
+		$("#des2").children().html($("#des2").children().val());
 		var url = window.location.href.split("printPGS")[0];
 		$.post(url+"updateContext",{"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":$("body").html()},function(result){
 			if(result==1){
