@@ -106,11 +106,21 @@
 .plupload_file_name {float: left; overflow: hidden}
 .plupload_file_status {color: #777;}
 .plupload_file_status span {color: #42454A;}
-.plupload_file_speed,.plupload_file_surplus,.plupload_file_start,.plupload_file_size, .plupload_file_status, .plupload_progress {
+.plupload_file_surplus{
+	float: right;
+	width: 120px;
+}
+.plupload_file_status{
+	float: right;
+	width: 50px;
+}
+.plupload_file_speed,.plupload_file_start,.plupload_file_size, .plupload_progress {
 	float: right;
 	width: 80px;
 }
-.plupload_file_speed,.plupload_file_surplus,.plupload_file_start,.plupload_file_size, .plupload_file_status, .plupload_file_action {text-align: right;}
+.plupload_file_speed,.plupload_file_surplus,.plupload_file_start,.plupload_file_size, .plupload_file_status, .plupload_file_action {
+	text-align: right;
+}
 
 .plupload_filelist .plupload_file_name {
 	width: 205px;

@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Access-Control-Allow-Origin" content="*">
 <title>数据管理</title>
-<link href="<%=request.getContextPath() %>/plugins/plupload-2.1.2/jquery.plupload.queue/css/jquery.plupload.queue.css?version=1.1" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath() %>/plugins/plupload-2.1.2/jquery.plupload.queue/css/jquery.plupload.queue.css?version=1.2" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath() %>/css/upload.css" rel="stylesheet" type="text/css">
 <style type="text/css">
 </style>
