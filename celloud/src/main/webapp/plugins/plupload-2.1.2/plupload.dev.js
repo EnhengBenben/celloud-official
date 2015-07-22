@@ -958,7 +958,6 @@ plupload.Uploader = function(options) {
 
 
 	function calcFile(file) {
-		file.speedDetail = speedDetail;
 		file.percent = file.size > 0 ? Math.ceil(file.loaded / file.size * 100) : 100;
 		calc();
 	}
@@ -973,7 +972,6 @@ plupload.Uploader = function(options) {
 		// Check status, size, loaded etc on all files
 		for (i = 0; i < files.length; i++) {
 			file = files[i];
-
 			if (file.size !== undef) {
 				// We calculate totals based on original file size
 				total.size += file.origSize;
@@ -984,8 +982,9 @@ plupload.Uploader = function(options) {
 			} else {
 				total.size = undef;
 			}
-
-			if (file.status == plupload.DONE) {
+			if(file.status==plupload.UPLOADING){
+				file.speedDetail = Math.ceil(file.loaded / ((+new Date() - file.startTime || 1) / 1000.0));
+			}else if (file.status == plupload.DONE) {
 				total.uploaded++;
 			} else if (file.status == plupload.FAILED) {
 				total.failed++;
@@ -998,9 +997,7 @@ plupload.Uploader = function(options) {
 		if (total.size === undef) {
 			total.percent = files.length > 0 ? Math.ceil(total.uploaded / files.length * 100) : 0;
 		} else {
-			var _speed = Math.ceil(total.loaded / ((+new Date() - startTime || 1) / 1000.0));
-			total.bytesPerSec = _speed;
-			speedDetail = _speed;
+			total.bytesPerSec = Math.ceil(total.loaded / ((+new Date() - startTime || 1) / 1000.0));
 			total.percent = total.size > 0 ? Math.ceil(total.loaded / total.size * 100) : 0;
 		}
 	}
@@ -2228,9 +2225,10 @@ plupload.File = (function() {
 			 */
 			percent: 0,
 			
-			//开始时间
+			//开始时间，已经格式化完毕，可以直接显示
 			showStartTime:0,
-			
+			//未格式化的开始时间
+			startTime:0,
 			//上传速度详情（用于计算剩余时间）
 			speedDetail:0,
 

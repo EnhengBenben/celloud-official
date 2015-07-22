@@ -281,6 +281,7 @@ used as it is.
 				// TODO 文件刚刚开始上传时需要进行的操作，比如显示上传开始时间
 				uploader.bind("UploadFile", function(up, file) {
 					$('#' + file.id).addClass('plupload_current_file');
+					file.startTime = (+new Date());
 //					file.showStartTime = new Date().format("hh:mm:ss");
 //					$('#' + file.id + ' div.plupload_file_start', target).html(file.showStartTime);
 				});

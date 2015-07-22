@@ -22,8 +22,8 @@
 <script src="<%=request.getContextPath() %>/plugins/bootstrap-tab.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/bootstrap-modal.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/plupload.full.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/jquery.plupload.queue/jquery.plupload.queue.js?version=1.2"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/plupload.dev.js?version=1.6"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/jquery.plupload.queue/jquery.plupload.queue.js?version=1.3"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/plupload.dev.js?version=1.7"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/i18n/zh_CN.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/baidu.js"></script>
 <!-- spin:loading效果 begin-->
