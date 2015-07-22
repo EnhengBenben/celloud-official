@@ -1,8 +1,6 @@
 /**  */
 package com.celloud.mongo.service;
 
-import java.util.Map;
-
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
 import com.google.inject.ImplementedBy;
@@ -24,11 +22,11 @@ public interface ReportService {
 	public void saveCmpReport(CmpReport cmpReport);
 
 	/**
-	 * 新增cmp用户填写部分内容
+	 * 修改cmp用户填写部分内容
 	 * 
 	 * @param cmpFill
 	 */
-	public void saveCmpFilling(CmpFilling cmpFill);
+	public void editCmpFilling(Object id, CmpFilling cmpFill);
 
 	/**
 	 * 获取CMP报告内容
@@ -37,13 +35,6 @@ public interface ReportService {
 	 * @param userId
 	 * @return
 	 */
-	public Map<String, Object> getOneWholeCmpReport(String dataKey,
+	public CmpReport getCmpReport(String dataKey,
 			String userId);
-
-	/**
-	 * 删除已有的CMP
-	 * 
-	 * @param id
-	 */
-	public void deleteCmpFilling(Object id);
 }

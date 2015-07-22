@@ -24,11 +24,11 @@ public interface ReportDAO {
 	public void saveCmpReport(CmpReport cmpReport);
 	
 	/**
-	 * 新增cmp用户填写部分内容
+	 * 修改cmp用户填写部分内容
 	 * 
 	 * @param cmpFill
 	 */
-	public void saveCmpFilling(CmpFilling cmpFill);
+	public void editCmpFilling(Object id, CmpFilling cmpFill);
 
 	/**
 	 * 获取CMP报告内容
@@ -37,22 +37,7 @@ public interface ReportDAO {
 	 *            mysql中的报告id
 	 * @return
 	 */
-	public CmpReport getOneCmpReport(String dataKey, String userId);
-
-	/**
-	 * 获取CMP用户填写内容
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public CmpFilling getOneCmpFilling(String dataKey, String userId);
-
-	/**
-	 * 删除已有的CMP
-	 * 
-	 * @param id
-	 */
-	public void deleteCmpFilling(Object id);
+	public CmpReport getCmpReport(String dataKey, String userId);
 
 	public List<CmpFilling> getAll();
 }

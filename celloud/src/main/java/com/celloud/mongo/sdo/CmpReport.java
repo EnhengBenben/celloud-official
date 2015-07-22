@@ -61,7 +61,7 @@ public class CmpReport extends Base {
 	/**
 	 * 检测详细信息
 	 */
-	private List<CmpGeneDetectionDetail> geneDetectionDetail;
+	private Map<String, CmpGeneDetectionDetail> geneDetectionDetail;
 	/**
 	 * QC序列质量,数据1
 	 */
@@ -74,6 +74,10 @@ public class CmpReport extends Base {
 	private Map<String, String> basicStatistics2;
 	private String qualityPath2;
 	private String seqContentPath2;
+	/**
+	 * 用户填写部分
+	 */
+	private CmpFilling cmpFilling;
 
 	public String getDataKey() {
 		return dataKey;
@@ -163,12 +167,12 @@ public class CmpReport extends Base {
 		this.avgCoverage = avgCoverage;
 	}
 
-	public List<CmpGeneDetectionDetail> getGeneDetectionDetail() {
+	public Map<String, CmpGeneDetectionDetail> getGeneDetectionDetail() {
 		return geneDetectionDetail;
 	}
 
 	public void setGeneDetectionDetail(
-			List<CmpGeneDetectionDetail> geneDetectionDetail) {
+			Map<String, CmpGeneDetectionDetail> geneDetectionDetail) {
 		this.geneDetectionDetail = geneDetectionDetail;
 	}
 
@@ -218,5 +222,13 @@ public class CmpReport extends Base {
 
 	public void setSeqContentPath2(String seqContentPath2) {
 		this.seqContentPath2 = seqContentPath2;
+	}
+
+	public CmpFilling getCmpFilling() {
+		return cmpFilling;
+	}
+
+	public void setCmpFilling(CmpFilling cmpFilling) {
+		this.cmpFilling = cmpFilling;
 	}
 }

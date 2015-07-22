@@ -11,10 +11,6 @@ import java.util.List;
  */
 public class CmpGeneDetectionDetail {
 	/**
-	 * 基因名称
-	 */
-	private String geneName;
-	/**
 	 * 平均测序深度
 	 */
 	private String avgCoverage;
@@ -22,14 +18,6 @@ public class CmpGeneDetectionDetail {
 	 * 检测结果详细列表
 	 */
 	private List<CmpGeneSnpResult> result;
-
-	public String getGeneName() {
-		return geneName;
-	}
-
-	public void setGeneName(String geneName) {
-		this.geneName = geneName;
-	}
 
 	public String getAvgCoverage() {
 		return avgCoverage;

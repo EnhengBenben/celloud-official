@@ -4,8 +4,6 @@ package com.celloud.mongo.sdo;
 import java.util.Date;
 import java.util.List;
 
-import com.google.code.morphia.annotations.Entity;
-
 /**
  * CMP报告——用户填写部分
  * 
@@ -13,16 +11,7 @@ import com.google.code.morphia.annotations.Entity;
  * @date 2015-7-13下午1:37:58
  * @version Revision: 1.0
  */
-@Entity(noClassnameStored = true)
-public class CmpFilling extends Base {
-	/**
-	 * Mysql中的数据编号
-	 */
-	private String dataKey;
-	/**
-	 * 报告所属用户id
-	 */
-	private String userId;
+public class CmpFilling {
 	/**
 	 * 肿瘤类型
 	 */
@@ -83,22 +72,6 @@ public class CmpFilling extends Base {
 	 * 推荐用药
 	 */
 	private List<RecommendDrug> recommendDrug;
-
-	public String getDataKey() {
-		return dataKey;
-	}
-
-	public void setDataKey(String dataKey) {
-		this.dataKey = dataKey;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
 
 	public String getTumorType() {
 		return tumorType;
