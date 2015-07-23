@@ -206,7 +206,12 @@
 <script src="js/user.js"></script>
 <script type="text/javascript" src="js/date-time/moment.min.js"></script>
 <script type="text/javascript" src="js/date-time/daterangepicker.min.js"></script>
-
+<!-- ECharts单文件引入 -->
+<script src="./js/sea.js"></script>
+<script src="./plugin/echarts-2.2.3/build/dist/echarts-all.js"></script>
+<script src="./plugin/echarts-2.2.3/build/dist/chart/bar.js"></script>
+<script src="./plugin/echarts-2.2.3/build/dist/chart/map.js"></script>
+<!-- <script src="./plugin/echarts-2.2.3/src/theme/infographic.js"></script> -->
 <script type="text/javascript">
 	jQuery(function($) {
 		toHome();
