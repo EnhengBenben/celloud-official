@@ -52,7 +52,9 @@ public class PrintAction extends BaseAction {
 	private int userId;
 	private int appId;
 	private int fileId;
+	private String dataKey;
 	private int flag;
+	private String pageTxt;
 	// 打印
 	private String snpType;
 	private String sensitive;
@@ -90,6 +92,15 @@ public class PrintAction extends BaseAction {
 	}
 
 	public String printHBV() {
+		// TODO 写死的appId
+		if (appId == 82) {// HBV_SNP2
+			fileId = dataService.getDataByKey(dataKey).getFileId();
+			pageTxt = reportService.getPrintContext(userId, appId, fileId, 0);
+			// 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
+			if (!StringUtils.isEmpty(pageTxt)) {
+				return "hbv";
+			}
+		}
 		txt = iss.getSoftware(appId).getSoftwareName();
 		if (imgHtml != null) {
 			String[] imgArr = imgHtml.split(",");
@@ -260,4 +271,20 @@ public class PrintAction extends BaseAction {
 	public void setResultMap(Map<String, Object> resultMap) {
 		this.resultMap = resultMap;
 	}
+
+	public String getDataKey() {
+		return dataKey;
+	}
+
+	public void setDataKey(String dataKey) {
+		this.dataKey = dataKey;
+	}
+
+	public String getPageTxt() {
+		return pageTxt;
+	}
+
+	public void setPageTxt(String pageTxt) {
+		this.pageTxt = pageTxt;
+	}	
 }
