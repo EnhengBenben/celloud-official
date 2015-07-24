@@ -13,6 +13,12 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 
+import com.celloud.mongo.sdo.CmpGeneDetectionDetail;
+import com.celloud.mongo.sdo.CmpGeneSnpResult;
+import com.celloud.mongo.sdo.CmpReport;
+import com.celloud.mongo.sdo.GeneDetectionResult;
+import com.celloud.mongo.service.ReportService;
+import com.celloud.mongo.service.ReportServiceImpl;
 import com.itextpdf.text.DocumentException;
 import com.nova.tools.constant.AppNameIDConstant;
 import com.nova.tools.itext.AB1_PDF;
@@ -111,15 +117,18 @@ public class RunAppServiceImpl {
 		}
 	}
 
+	// TODO 测试
 	public void runCMP(String outPath, String projectId, String dataKeyList,
 			String appId, String userId) {
 		String dataListFile = formatDataKeyList(dataKeyList);
-		String command = CMP_perl + " " + dataListFile + " " + outPath+ " ProjectID" + projectId;
+		String command = CMP_perl + " " + dataListFile + " " + outPath
+				+ " ProjectID" + projectId;
 		if (AppNameIDConstant.CMP_199.equals(appId)) {
-			command = CMP199_perl + " " + dataListFile + " " + outPath+ " ProjectID" + projectId;
+			command = CMP199_perl + " " + dataListFile + " " + outPath
+					+ " ProjectID" + projectId;
 		}
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
 			// 创建项目结果文件
@@ -131,7 +140,7 @@ public class RunAppServiceImpl {
 					"dataKey\t文件名称\t共获得有效片段\t平均质量\t平均GC含量\t平均覆盖度\n");
 			for (int i = 0; i < dataArray.length; i = i + 2) {
 				String[] dataDetail = dataArray[i].split(",");
-				String[] dataDetail1 = dataArray[i+1].split(",");
+				String[] dataDetail1 = dataArray[i + 1].split(",");
 				String finalPath = outPath + "/" + getArray(dataDetail, 0);
 				List<String> list = FileTools.readLinestoString(finalPath
 						+ "/result/statistic.xls");
@@ -153,8 +162,9 @@ public class RunAppServiceImpl {
 				}
 
 				// -----读取报告内容并保存到mongoDB------
-				Map<String, Object> cmpReport = new HashMap<String, Object>();
-				cmpReport.put("dataKey", getArray(dataDetail, 0));
+				CmpReport cmpReport = new CmpReport();
+				cmpReport.setDataKey(getArray(dataDetail, 0));
+				cmpReport.setUserId(userId);
 				String logPath = finalPath + "/LOG.txt";
 				String statisPath = finalPath + "/result/statistic.xls";
 				String avgPath = finalPath + "/result/average.info";
@@ -169,94 +179,85 @@ public class RunAppServiceImpl {
 						"PIK3CA", "TP53", "CTNNB1", "GNA11", "KIT", "PTEN",
 						"VHL" };
 				// 二、1 基因检测结果
-				List<Map<String, Object>> cmpGeneResult = new ArrayList<Map<String, Object>>();
+				List<GeneDetectionResult> cmpGeneResult = new ArrayList<GeneDetectionResult>();
 				if (new File(snpPath).exists()) {
+					System.out.println(snpPath);
 					List<String> list_ = FileTools.readLinestoString(snpPath);
 					if (list_ != null) {
-						for (int z = 0; z <= list_.size(); z++) {
+					for (int z = 0; z < list_.size(); z++) {
 							String[] line_i = list_.get(z).split("\t");
-							Map<String, Object> GeneDetectionResult = new HashMap<String, Object>();
-							GeneDetectionResult.put("geneName",
-									getArray(line_i, 0));
-							GeneDetectionResult.put("knownMSNum",
-									getArray(line_i, 1));
-							GeneDetectionResult.put("SequencingDepth",
-									getArray(line_i, 2));
-							cmpGeneResult.add(GeneDetectionResult);
+							GeneDetectionResult gdr = new GeneDetectionResult();
+							gdr.setGeneName(getArray(line_i, 0));
+							gdr.setKnownMSNum(getArray(line_i, 1));
+							gdr.setSequencingDepth(Integer.parseInt(getArray(
+									line_i, 2)));
+							cmpGeneResult.add(gdr);
 						}
 					}
 				}
-				cmpReport.put("cmpGeneResult", cmpGeneResult);
+				cmpReport.setCmpGeneResult(cmpGeneResult);
 				// 二、2
 				if (new File(logPath).exists()) {
-					cmpReport.put("runDate", FileTools.getFirstLine(logPath)
+					cmpReport.setRunDate(FileTools.getFirstLine(logPath)
 							.substring(1, 11));
 				}
 				if (new File(statisPath).exists()) {
 					List<String> list_ = FileTools
 							.readLinestoString(statisPath);
-					cmpReport
-							.put("allFragment", FileTools.listIsNull(list_, 0));
-					cmpReport.put("avgQuality", FileTools.listIsNull(list_, 1));
-					cmpReport.put("avgGCContent",
-							FileTools.listIsNull(list_, 2));
-					cmpReport.put("usableFragment",
-							FileTools.listIsNull(list_, 3));
-					cmpReport.put("noDetectedGene",
-							FileTools.listIsNull(list_, 4));
-					cmpReport.put("detectedGene",
-							FileTools.listIsNull(list_, 5));
+					cmpReport.setAllFragment(FileTools.listIsNull(list_, 0));
+					cmpReport.setAvgQuality(FileTools.listIsNull(list_, 1));
+					cmpReport.setAvgGCContent(FileTools.listIsNull(list_, 2));
+					cmpReport.setUsableFragment(FileTools.listIsNull(list_, 3));
+					cmpReport.setNoDetectedGene(FileTools.listIsNull(list_, 4));
+					cmpReport.setDetectedGene(FileTools.listIsNull(list_, 5));
 				}
 				if (new File(avgPath).exists()) {
-					cmpReport.put("avgCoverage",
-							FileTools.getFirstLine(avgPath));
+					cmpReport.setAvgCoverage(FileTools.getFirstLine(avgPath));
 				}
 				// 五
-				Map<String, Object> geneDetail = new HashMap<String, Object>();
+				Map<String, CmpGeneDetectionDetail> geneDetectionDetail = new HashMap<String, CmpGeneDetectionDetail>();
 				for (String snpName : snpArr) {
-					List<String> list_ = FileTools.readLinestoString(snpPath);
-					Map<String, Object> CmpGeneDetectionDetail = new HashMap<String, Object>();
+					String spath = finalPath + "/result/" + snpName + ".snp";
+					List<String> list_ = FileTools.readLinestoString(spath);
+					CmpGeneDetectionDetail gdd = new CmpGeneDetectionDetail();
 					String avgSeqDepth = "";
-					List<Map<String, String>> result = new ArrayList<Map<String, String>>();
-
+					List<CmpGeneSnpResult> result = new ArrayList<CmpGeneSnpResult>();
 					for (int z = 0; z < list_.size(); z++) {
 						Map<String, String> CmpGeneSnpResult = new HashMap<String, String>();
 						if (z == 0) {
 							avgSeqDepth = list_.get(z);
 						} else {
 							String[] line_z = list_.get(z).split("\t");
-							CmpGeneSnpResult.put("gene", getArray(line_z, 0));
-							CmpGeneSnpResult
-									.put("refBase", getArray(line_z, 1));
-							CmpGeneSnpResult
-									.put("mutBase", getArray(line_z, 2));
-							CmpGeneSnpResult.put("depth", getArray(line_z, 3));
-							CmpGeneSnpResult.put("cdsMutSyntax",
-									getArray(line_z, 4));
-							CmpGeneSnpResult.put("aaMutSyntax",
-									getArray(line_z, 5));
-							CmpGeneSnpResult.put("mutationType",
-									getArray(line_z, 6));
+							CmpGeneSnpResult gsr = new CmpGeneSnpResult();
+							gsr.setGene(getArray(line_z, 0));
+							gsr.setRefBase(getArray(line_z, 1));
+							gsr.setMutBase(getArray(line_z, 2));
+							gsr.setDepth(getArray(line_z, 3));
+							gsr.setCdsMutSyntax(getArray(line_z, 4));
+							gsr.setAaMutSyntax(getArray(line_z, 5));
+							gsr.setMutationType(getArray(line_z, 6));
+							result.add(gsr);
 						}
-						result.add(CmpGeneSnpResult);
 					}
-					CmpGeneDetectionDetail.put("avgCoverage", avgSeqDepth);
-					CmpGeneDetectionDetail.put("result", result);
-					geneDetail.put(snpName, CmpGeneDetectionDetail);
+
+					gdd.setAvgCoverage(avgSeqDepth);
+					gdd.setResult(result);
 				}
-				cmpReport.put("geneDetectionDetail", geneDetail);
+				cmpReport.setGeneDetectionDetail(geneDetectionDetail);
 
 				String qualityPath1 = PropertiesUtils.outProject + "/upload/"
 						+ outPath + "/QC/" + getArray(dataDetail, 0)
 						+ "_fastqc/Images/per_base_quality.png";
+				cmpReport.setQualityPath1(qualityPath1);
 				String seqContentPath1 = PropertiesUtils.outProject
 						+ "/upload/" + outPath + "/QC/"
 						+ getArray(dataDetail, 0)
 						+ "_fastqc/Images/per_base_sequence_content.png";
+				cmpReport.setSeqContentPath1(seqContentPath1);
 				String fastqcDataPath = finalPath + "/QC/"
 						+ getArray(dataDetail, 0) + "_fastqc/fastqc_data.txt";
 				Map<String, String> basicStatistics1 = new HashMap<String, String>();
-				List<String> list_ = FileTools.getLineByNum(fastqcDataPath, 3,
+				List<String> list_ = FileTools.getLineByNum(fastqcDataPath, 4,
 						10);
 				if (list_.size() >= 7) {
 					String[] line_1 = list_.get(0).split("\t");
@@ -274,9 +275,7 @@ public class RunAppServiceImpl {
 					String[] line_7 = list_.get(6).split("\t");
 					basicStatistics1.put("gc", getArray(line_7, 1));
 				}
-				cmpReport.put("qualityPath1", qualityPath1);
-				cmpReport.put("seqContentPath1", seqContentPath1);
-				cmpReport.put("basicStatistics1", basicStatistics1);
+				cmpReport.setBasicStatistics1(basicStatistics1);
 				String qualityPath2 = "";
 				String seqContentPath2 = "";
 				Map<String, String> basicStatistics2 = new HashMap<String, String>();
@@ -318,10 +317,11 @@ public class RunAppServiceImpl {
 						}
 					}
 				}
-				cmpReport.put("qualityPath2", qualityPath2);
-				cmpReport.put("seqContentPath2", seqContentPath2);
-				cmpReport.put("basicStatistics2", basicStatistics2);
-				ChangeStateServiceImpl.saveCmpReport(cmpReport);
+				cmpReport.setQualityPath2(qualityPath2);
+				cmpReport.setSeqContentPath2(seqContentPath2);
+				cmpReport.setBasicStatistics2(basicStatistics2);
+				ReportService reportService = new ReportServiceImpl();
+				reportService.saveCmpReport(cmpReport);
 			}
 		}
 
@@ -334,7 +334,7 @@ public class RunAppServiceImpl {
 		String command = _16S_perl + " --input " + dataPath + getArray(data, 1)
 				+ "  --outdir " + dataKeyPath;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		if (state) {
 			String projectFile = appPath + "/" + projectId + "/" + projectId
 					+ ".txt";
@@ -362,7 +362,7 @@ public class RunAppServiceImpl {
 		String command = translate_perl + " " + dataPath + getArray(data, 1)
 				+ " --output " + resultPath;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		if (state) {
 			// 创建项目结果文件
 			String projectFile = appPath + "/" + projectId + "/" + projectId
@@ -406,7 +406,7 @@ public class RunAppServiceImpl {
 		String command = HCV + " " + dataListFile + " " + appPath + "/ 2>"
 				+ appPath + "/" + projectId + "/log";
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		if (state) {
 			// 创建项目结果文件
 			String projectFile = appPath + "/" + projectId + "/" + projectId
@@ -453,7 +453,7 @@ public class RunAppServiceImpl {
 		String command = treePerl + " " + dataListFile + " " + projectId + " "
 				+ basePath + "/" + userId + "/" + appId + "/" + projectId + "/";
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		ssh.sshSubmit();
+		ssh.sshSubmit(true);
 	}
 
 	/**
@@ -470,7 +470,7 @@ public class RunAppServiceImpl {
 		String command = PGS + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -525,7 +525,7 @@ public class RunAppServiceImpl {
 		String command = NIPT_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -580,7 +580,7 @@ public class RunAppServiceImpl {
 		String command = gDNA_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -627,7 +627,7 @@ public class RunAppServiceImpl {
 		String command = gDNA_Chimeric_perl + " " + dataListFile + " "
 				+ basePath + " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -695,7 +695,7 @@ public class RunAppServiceImpl {
 		String command = MDA_Chimeric_perl + " " + dataListFile + " "
 				+ basePath + " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -764,7 +764,7 @@ public class RunAppServiceImpl {
 		String command = MDA_HR_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -822,7 +822,7 @@ public class RunAppServiceImpl {
 		String command = SurePlex_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -890,7 +890,7 @@ public class RunAppServiceImpl {
 		String command = SurePlex_HR_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -947,7 +947,7 @@ public class RunAppServiceImpl {
 		String command = gDNA_MR_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1015,7 +1015,7 @@ public class RunAppServiceImpl {
 		String command = gDNA_MR_v1 + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1073,7 +1073,7 @@ public class RunAppServiceImpl {
 		String command = MDA_MR_v1 + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1132,7 +1132,7 @@ public class RunAppServiceImpl {
 		String command = MDA_HR_v1 + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1190,7 +1190,7 @@ public class RunAppServiceImpl {
 		String command = gDNA_HR_v1 + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1248,7 +1248,7 @@ public class RunAppServiceImpl {
 		String command = MDA_Chimeric_v1 + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1307,7 +1307,7 @@ public class RunAppServiceImpl {
 		String command = gDNA_Chimeric_v1 + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1365,7 +1365,7 @@ public class RunAppServiceImpl {
 		String command = SurePlex_v1 + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1412,7 +1412,7 @@ public class RunAppServiceImpl {
 		String command = MalBac_v1 + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1459,7 +1459,7 @@ public class RunAppServiceImpl {
 		String command = MDA_MR_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1528,7 +1528,7 @@ public class RunAppServiceImpl {
 		String command = MalBac_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1585,7 +1585,7 @@ public class RunAppServiceImpl {
 		String command = gDNA_HR_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1652,7 +1652,7 @@ public class RunAppServiceImpl {
 		String command = EGFR_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1704,7 +1704,7 @@ public class RunAppServiceImpl {
 		String command = TB_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1752,7 +1752,7 @@ public class RunAppServiceImpl {
 		String dataListFile = dealDataKeyList(dataKeyList);
 		String command = TBINH_perl + " " + dataListFile + " " + basePath+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1823,7 +1823,7 @@ public class RunAppServiceImpl {
 		String command = KRAS_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1875,7 +1875,7 @@ public class RunAppServiceImpl {
 		String command = "perl " + SNP_multiple + " " + dataListFile + " "
 				+ basePath + "  ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1962,7 +1962,7 @@ public class RunAppServiceImpl {
 		String dataListFile = dealDataKeyList(dataKeyList);
 		String command = DPD_perl + " " + dataListFile + " " + basePath+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
 			String projectFile = basePath + projectId + "/" + projectId
@@ -1997,7 +1997,7 @@ public class RunAppServiceImpl {
 		String dataListFile = dealDataKeyList(dataKeyList);
 		String command = BRAF_perl + " " + dataListFile + " " + basePath+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
 			String projectFile = basePath + projectId + "/" + projectId
@@ -2030,7 +2030,7 @@ public class RunAppServiceImpl {
 		String dataListFile = dealDataKeyList(dataKeyList);
 		String command = UGT_perl + " " + dataListFile + " " + basePath+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
 			String projectFile = basePath + projectId + "/" + projectId
@@ -2072,7 +2072,7 @@ public class RunAppServiceImpl {
 		String command = HBV_SNP2_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");

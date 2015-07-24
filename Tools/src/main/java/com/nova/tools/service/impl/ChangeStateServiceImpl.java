@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -98,8 +97,10 @@ public class ChangeStateServiceImpl {
 			log.info("result from celloud:" + returnValue);
 		} catch (MalformedURLException e) {
 			log.error("remoteRequest:url=" + url + ",error:" + e);
+			e.printStackTrace();
 		} catch (IOException e) {
 			log.error("remoteRequest:url=" + url + ",error:" + e);
+			e.printStackTrace();
 		} finally {
 			if (br != null)
 				try {
@@ -115,8 +116,8 @@ public class ChangeStateServiceImpl {
 	 * 
 	 * @param map
 	 */
-	public static void saveCmpReport(Map<String, Object> map) {
-		String url = celloud + "cmpReport!addReport?map=" + map;
+	public static void saveCmpReport(String params) {
+		String url = celloud + "cmpReport!addReport?" + params;
 		remoteRequest(url);
 	}
 }

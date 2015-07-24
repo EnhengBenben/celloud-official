@@ -16,6 +16,9 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
+import com.celloud.mongo.sdo.CmpReport;
+import com.celloud.mongo.service.ReportService;
+import com.celloud.mongo.service.ReportServiceImpl;
 import com.nova.tools.constant.AppNameIDConstant;
 import com.nova.tools.itext.utils.MergePdf;
 import com.nova.tools.service.ReadReportService;
@@ -138,6 +141,8 @@ public class ProcedureAction extends ActionSupport {
 	private Map<String, String> resultMap;
 	private String flag;
 	private String anotherName;
+	private CmpReport cmpReport;
+	private ReportService reportService = new ReportServiceImpl();
 
 	private final String basePath = ServletActionContext.getServletContext()
 			.getRealPath("/upload");
@@ -179,11 +184,16 @@ public class ProcedureAction extends ActionSupport {
 		long start = new Date().getTime();
 		ReadReportService report = new ReadReportService();
 		if (projectId == null || "".equals(projectId)) {
-			// 查看数据报告
-			resultMap = report.readDataReport(basePath, userId, appId, dataKey,
-					fileName, anotherName);
-			if (resultMap != null) {
-				resultMap.put("outProject", PropertiesUtils.outProject);
+			if (appId.equals("110")) {
+				cmpReport = reportService.getCmpReport(cmpReport.getDataKey(),
+						cmpReport.getUserId());
+			} else {
+				// 查看数据报告
+				resultMap = report.readDataReport(basePath, userId, appId,
+						dataKey, fileName, anotherName);
+				if (resultMap != null) {
+					resultMap.put("outProject", PropertiesUtils.outProject);
+				}
 			}
 			long end = new Date().getTime();
 			log.info("用户" + userId + "访问app：" + appId + "下DataKey=" + dataKey
