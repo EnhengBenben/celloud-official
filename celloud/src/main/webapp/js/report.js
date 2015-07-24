@@ -1244,7 +1244,9 @@ $.ajaxSetup ({
 		
 function toPrintHBV(pagePath){
 	var param = {};
+	var userId = pagePath.split("/")[0];
 	var appId = pagePath.split("/")[1];
+	var dataKey = pagePath.split("/")[2];
 	if(appId == 82){
 		var sensitive="";
 		var rType="";
@@ -1298,7 +1300,9 @@ function toPrintHBV(pagePath){
 		        "sensitive" : sensitive,
 		        "context" : rType,
 		        "imgHtml" : imgHtml,
-		        "appId" : appId
+		        "appId" : appId,
+		        "userId":userId,
+		        "dataKey":dataKey
 		    };
 	}else if(appId == 80){
 		param = {
