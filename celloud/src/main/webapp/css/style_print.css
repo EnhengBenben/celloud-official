@@ -353,3 +353,10 @@ table [class*=span],
 .table-hover tbody tr.info:hover td {
   background-color: #c4e3f3;
 }
+.new{
+	position: absolute;
+	width: 32px;
+	height: 20px;
+	background: url(../images/publicIcon/delete.png) no-repeat;
+	background-size:20px 20px;
+}
