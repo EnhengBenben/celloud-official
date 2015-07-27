@@ -125,6 +125,8 @@ public class PropertiesUtils {
 	public static String UGT;
 	public static String CMP;
 	public static String CMP199;
+	public static String report_dburl;
+	public static String report_dbname;
 	static {
 		getPath();
 	}
@@ -196,5 +198,7 @@ public class PropertiesUtils {
 		UGT = pro.getProperty("UGT");
 		CMP = pro.getProperty("CMP");
 		CMP199 = pro.getProperty("CMP199");
+		report_dburl = pro.getProperty("report_dburl");
+		report_dbname = pro.getProperty("report_dbname");
 	}
 }

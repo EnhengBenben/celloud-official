@@ -20,7 +20,6 @@ import com.celloud.mongo.sdo.GeneDetectionResult;
 import com.celloud.mongo.service.ReportService;
 import com.celloud.mongo.service.ReportServiceImpl;
 import com.itextpdf.text.DocumentException;
-import com.nova.tools.constant.AppNameIDConstant;
 import com.nova.tools.itext.AB1_PDF;
 import com.nova.tools.itext.HBV_SNP_PDF;
 import com.nova.tools.itext.NIPTPDF;
@@ -121,14 +120,15 @@ public class RunAppServiceImpl {
 	public void runCMP(String outPath, String projectId, String dataKeyList,
 			String appId, String userId) {
 		String dataListFile = formatDataKeyList(dataKeyList);
-		String command = CMP_perl + " " + dataListFile + " " + outPath
-				+ " ProjectID" + projectId;
-		if (AppNameIDConstant.CMP_199.equals(appId)) {
-			command = CMP199_perl + " " + dataListFile + " " + outPath
-					+ " ProjectID" + projectId;
-		}
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit();
+		// String command = CMP_perl + " " + dataListFile + " " + outPath
+		// + " ProjectID" + projectId;
+		// if (AppNameIDConstant.CMP_199.equals(appId)) {
+		// command = CMP199_perl + " " + dataListFile + " " + outPath
+		// + " ProjectID" + projectId;
+		// }
+		// GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
+		// boolean state = ssh.sshSubmit();
+		boolean state = true;
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
 			// 创建项目结果文件
@@ -223,7 +223,6 @@ public class RunAppServiceImpl {
 					String avgSeqDepth = "";
 					List<CmpGeneSnpResult> result = new ArrayList<CmpGeneSnpResult>();
 					for (int z = 0; z < list_.size(); z++) {
-						Map<String, String> CmpGeneSnpResult = new HashMap<String, String>();
 						if (z == 0) {
 							avgSeqDepth = list_.get(z);
 						} else {
@@ -242,6 +241,7 @@ public class RunAppServiceImpl {
 
 					gdd.setAvgCoverage(avgSeqDepth);
 					gdd.setResult(result);
+					geneDetectionDetail.put(snpName, gdd);
 				}
 				cmpReport.setGeneDetectionDetail(geneDetectionDetail);
 

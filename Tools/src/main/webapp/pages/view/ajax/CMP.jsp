@@ -1,14 +1,15 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="row">
 	<div class="m-file">
 		文件名称：
-		<span class="file-name"><input type="hidden" id="cmp_fileName" value="${ resultMap.dataKey}(${ resultMap.fileName})">
-			${ resultMap.dataKey}(${ resultMap.fileName})
+		<span class="file-name"><input type="hidden" id="cmp_fileName" value="${ cmpReport.dataKey}(${ resultMap.fileName})">
+			${ cmpReport.dataKey}(${ resultMap.fileName})
 		</span>
 		<div class="toolbar">
 			<a href="javascript:printSimpCMP()" class="btn btn-default"><i class="i-print"></i>打印临床报告</a>
-			<a href="javascript:printCMP(${resultMap.userId },${resultMap.appId },${resultMap.dataKey })" class="btn btn-default"><i class="i-print"></i>打印科研报告</a>
+			<a href="javascript:printCMP(${cmpReport.userId },${resultMap.appId },${cmpReport.dataKey })" class="btn btn-default"><i class="i-print"></i>打印科研报告</a>
 		</div>
 	</div>
 	<div id="printCMPContext">
@@ -16,7 +17,8 @@
 		<div class="m-box">
 			<h2><i class="i-report1"></i>数据统计</h2>
 			<div class="m-boxCon" id="_table">
-				<table class="table table-bordered table-condensed">
+				<p>按照测序数据质量分析报告如下：（分析日期：${cmpReport.runDate }）</p>
+		    	<table class="table table-bordered table-condensed">
 					<thead>
 						<tr>
 							<th>基本信息</th>
@@ -25,36 +27,32 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>分析日期：<span id="cmp_RunDate">${resultMap.runDate }</span></td>
-							<td></td>
+							<td>共获得有效片段：${cmpReport.allFragment }</td>
+							<td>10000&nbsp;条以上序列认为合格</td>
 						</tr>
 						<tr>
-							<td>共获得有效片段：<span id="cmp_allFragment">${resultMap.allFragment }</span></td>
-							<td>10000条以上序列认为合格</td>
-						</tr>
-						<tr>
-							<td>平均质量：<span id="cmp_avgQuality">${resultMap.avgQuality }</span></td>
+							<td>平均质量：${cmpReport.avgQuality }</td>
 							<td>质量值30以上为可用数据</td>
 						</tr>
 						<tr>
-							<td>平均GC含量：<span id="cmp_avgGC">${resultMap.avgGC }</span></td>
-							<td>40%~50%均属正常</td>
+							<td>平均GC含量：${cmpReport.avgGCContent }</td>
+							<td>40%~50%&nbsp;均属正常</td>
 						</tr>
 						<tr>
-							<td>可用片段：<span id="cmp_useFragment">${resultMap.useFragment }</span></td>
+							<td>可用片段：${cmpReport.usableFragment }</td>
 							<td>高质量数据，碱基质量大于30</td>
 						</tr>
 						<tr>
-							<td>待检基因：<span id="cmp_undetectGene">${resultMap.undetectGene }</span></td>
+							<td>待检基因：${cmpReport.noDetectedGene }</td>
 							<td>待检基因数目</td>
 						</tr>
 						<tr>
-							<td>检测基因数：<span id="cmp_detectGene">${resultMap.detectGene }</span></td>
+							<td>检测基因数：${cmpReport.detectedGene }</td>
 							<td>检测到的基因数目</td>
 						</tr>
 						<tr>
-							<td>平均测序深度：<span id="cmp_avgCoverage">${resultMap.avgCoverage }</span></td>
-							<td>100倍以上数据</td>
+							<td>平均测序深度：${cmpReport.avgCoverage }</td>
+							<td>100&nbsp;倍以上数据</td>
 						</tr>
 					</tbody>
 				</table>
@@ -66,45 +64,83 @@
 			<div class="m-boxCon" id="_report" style="display: inline-block;width: 100%">
 				<input type="hidden" id="cmp_snp_tbody1" value="${resultMap.snp_tbody1 }">
 				<input type="hidden" id="cmp_snp_tbody2" value="${resultMap.snp_tbody2 }">
-				<s:if test="%{resultMap.snp_tbody1==''||resultMap.snp_tbody1==null||resultMap.snp_tbody1=='null' }">
-					未检测到相关突变位点
-				</s:if>
-				<s:else>
-					<table class="table table-bordered table-condensed" style="width:45%;float:left;margin-right:10px;">
-						<thead>
-							<tr>
-								<th>基因</th>
-								<th>已知突变位点数</th>
-								<th>测序深度</th>
-							</tr>	
-						</thead>
-						${resultMap.snp_tbody1 }
-					</table>
-					<s:if test="resultMap.snp_tbody2!=null && resultMap.snp_tbody2!='null'">
-						<table class="table table-bordered table-condensed" style="width:45%;float:left;">
-							<thead>
-								<tr>
-									<th>基因</th>
-									<th>已知突变位点数</th>
-									<th>测序深度</th>
-								</tr>	
-							</thead>
-							${resultMap.snp_tbody2 }
-						</table>
-					</s:if>
-				</s:else>
-			</div>
-			<div id="cmpGeneInfo" style="display:none;padding:10px 20px;">
-				<h4><span id="cmpGeneName"></span>突变检测</h4>
-				<ul class="list">
-	    		<li>指标说明</li>
-	    		<p class="context" id="cmpGeneDesc">
-	    		</p>
-	    		<li style="displey:none;">治疗药物：<span id="cmpGeneTreat"></span></li>
-	    		<p class="context" id="cmpGeneTreatDesc" style="displey:none;">
-	    		</p>
-	    		</ul>
-	    		<img style="displey:none;" id="cmpImg" src="">
+				<table style="width:100%;height:100px;">
+			   		<tr>
+			   		  <c:choose>
+			   			<c:when test="cmpReport.cmpGeneResult=='' || cmpReport.cmpGeneResult==null || cmpReport.cmpGeneResult=='null'">
+			   				<td>未检测到相关突变位点</td>
+			   			</c:when>
+			   			<c:otherwise>
+			   				 <c:choose>
+					   			<c:when test="%{fn:length(cmpReport.cmpGeneResult)<2}">
+					   				<td width="49%" valign="top" height="100%">
+										<table class="table table-striped-green table-text-center table-padding0" id="snp_table1">
+											<thead>
+												<tr>
+													<th class="mwidth_Gene">基因</th>
+													<th>已知突变位点数<c:out value="%{fn:length(cmpReport.cmpGeneResult)}"></c:out> </th>
+													<th>测序深度</th>
+												</tr>	
+											</thead>
+											<tbody>
+												<c:forEach items="${cmpReport.cmpGeneResult}" var="gene">
+													<tr>
+														<td><span <c:if test="${gene.sequencingDepth<50 }">style='background-color:#feaa20'</c:if>>${gene.geneName }</span></td>
+														<td>${gene.knownMSNum }</td>
+														<td>${gene.sequencingDepth }</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</td>
+					   			</c:when>
+					   			<c:otherwise>
+					   				<td width="49%" valign="top" height="100%">
+										<table class="table table-striped-green table-text-center table-padding0" id="snp_table1">
+											<thead>
+												<tr>
+													<th class="mwidth_Gene">基因</th>
+													<th>已知突变位点数</th>
+													<th>测序深度</th>
+												</tr>	
+											</thead>
+											<tbody>
+												<c:forEach items="${cmpReport.cmpGeneResult}" var="gene" begin="0" end="${cmpReport.cmpGeneResult.size()/2-1 }">
+													<tr>
+														<td><span <c:if test="${gene.sequencingDepth<50 }">style='background-color:#feaa20'</c:if>>${gene.geneName }</span></td>
+														<td>${gene.knownMSNum }</td>
+														<td>${gene.sequencingDepth }</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</td>
+									<td width="49%" valign="top" height="100%">
+										<table class="table table-striped-green table-text-center table-padding0" id="snp_table2">
+											<thead>
+												<tr>
+													<th class="mwidth_Gene">基因</th>
+													<th>已知突变位点数</th>
+													<th>测序深度</th>
+												</tr>	
+											</thead>
+											<tbody>
+												<c:forEach items="${cmpReport.cmpGeneResult}" var="gene" begin="${cmpReport.cmpGeneResult.size()/2 }" end="${cmpReport.cmpGeneResult.size() }">
+													<tr>
+														<td><span <c:if test="${gene.sequencingDepth<50 }">style='background-color:#feaa20'</c:if>>${gene.geneName }</span></td>
+														<td>${gene.knownMSNum }</td>
+														<td>${gene.sequencingDepth }</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</td>
+								</c:otherwise>
+							</c:choose>
+			   			</c:otherwise>
+			   		  </c:choose>
+			   		</tr>
+				</table>
 			</div>
 			<div class="m-tips">
 				<i class="i-tips"></i>注释： 已知突变位点，在样本中发现且有文献支持的突变位点。
@@ -113,30 +149,94 @@
 		<!--报告图示一-->
 		<div class="m-box">
 			<h2><i class="i-report1"></i>序列质量分析（见QC结果）</h2>
-			<input type="hidden" id="cmp_fastqc_data" value="${resultMap.fastqc_data }">
-			<input type="hidden" id="cmp_per_base_quality" value="${resultMap.per_base_quality }">
-			<input type="hidden" id="cmp_per_base_seq_content" value="${resultMap.per_base_seq_content }">
-			<input type="hidden" id="cmp_f2" value="${resultMap.f2 }">
-			<input type="hidden" id="cmp_q2" value="${resultMap.q2 }">
-			<input type="hidden" id="cmp_s2" value="${resultMap.s2 }">
-			<div class="m-boxCon" id="_table" style="overflow:auto;zoom:1;">
-				<div style="width:48%;float:left;left:10px;">
-					<div class="title">Basic Statistics</div>
-					<table class="table table-bordered table-condensed">
-						${resultMap.fastqc_data }
-					</table>
-					<img style="width:100%;" src="${resultMap.per_base_quality }">
-					<img style="width:100%;" src="${resultMap.per_base_seq_content }">
-				</div>
-				<div style="width:48%;float:left;margin-right:10px;">
-					<div class="title">Basic Statistics</div>
-					<table class="table table-bordered table-condensed">
-						${resultMap.f2 }
-					</table>
-					<img style="width:100%;" src="${resultMap.q2 }">
-					<img style="width:100%;" src="${resultMap.s2 }">
-				</div>
-			</div>
+			<div class="h2">Basic Statistics</div>
+				<table class="table table-green table-striped-blue table-text-center">
+					<thead>
+						<tr>
+							<th>#Measure</th>
+							<th>Value</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Filename</td>
+							<td>${cmpReport.basicStatistics1.Filename }</td>
+						</tr>
+						<tr>
+							<td>File type</td>
+							<td>${cmpReport.basicStatistics1.FileType }</td>
+						</tr>
+						<tr>
+							<td>Encoding</td>
+							<td>${cmpReport.basicStatistics1.Encoding }</td>
+						</tr>
+						<tr>
+							<td>Total Sequences</td>
+							<td>${cmpReport.basicStatistics1.TotalSeq }</td>
+						</tr>
+						<tr>
+							<td>Filtered Sequences</td>
+							<td>${cmpReport.basicStatistics1.FilteredSeq }</td>
+						</tr>
+						<tr>
+							<td>Sequence length</td>
+							<td>${cmpReport.basicStatistics1.SeqLength }</td>
+						</tr>
+						<tr>
+							<td>%GC</td>
+							<td>${cmpReport.basicStatistics1.gc }</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="h2">Basic Statistics</div>
+				<table class="table table-green table-striped-orange table-text-center">
+					<thead>
+						<tr>
+							<th>#Measure</th>
+							<th>Value</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Filename</td>
+							<td>${cmpReport.basicStatistics2.Filename }</td>
+						</tr>
+						<tr>
+							<td>File type</td>
+							<td>${cmpReport.basicStatistics2.FileType }</td>
+						</tr>
+						<tr>
+							<td>Encoding</td>
+							<td>${cmpReport.basicStatistics2.Encoding }</td>
+						</tr>
+						<tr>
+							<td>Total Sequences</td>
+							<td>${cmpReport.basicStatistics2.TotalSeq }</td>
+						</tr>
+						<tr>
+							<td>Filtered Sequences</td>
+							<td>${cmpReport.basicStatistics2.FilteredSeq }</td>
+						</tr>
+						<tr>
+							<td>Sequence length</td>
+							<td>${cmpReport.basicStatistics2.SeqLength }</td>
+						</tr>
+						<tr>
+							<td>%GC</td>
+							<td>${cmpReport.basicStatistics2.gc }</td>
+						</tr>
+					</tbody>
+				</table>
+				<table style="width:100%;">
+			      <tr>
+			    	<td style="width:50%;"><img src="${cmpReport.basicStatistics2.qualityPath1 }"></td>
+			    	<td><img src="${cmpReport.basicStatistics2.qualityPath2 }"></td>
+			      </tr>
+			      <tr>
+			    	<td><img alt="" src="${cmpReport.basicStatistics2.seqContentPath1 }"></td>
+			    	<td><img alt="" src="${cmpReport.basicStatistics2.seqContentPath2 }"></td>
+			      </tr>
+			    </table>
 		</div>
 	</div>
 </div>

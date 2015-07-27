@@ -31,7 +31,7 @@ import com.celloud.mongo.service.ReportServiceImpl;
  * @date 2015-7-13下午4:47:25
  * @version Revision: 1.0
  */
-@ParentPackage("celloud-default")
+@ParentPackage("json-default")
 @Action("cmpReport")
 @Results({ @Result(name = "success", location = "../../pages/print/printDetailCMP.jsp") })
 public class CmpReportAction extends BaseAction {

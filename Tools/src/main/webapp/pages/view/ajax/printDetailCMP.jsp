@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>肿瘤报告打印</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/print.css?version=20150707">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resource/css/print.css?version=20150707">
 </head>
 <body>
 <a href="javascript:void(0)" onclick="preview(this)" class="btn btn-default" id="change" style="float:right;margin-top:10px;margin-right:-80px;">打印</a>
@@ -17,7 +17,7 @@
 <input type="hidden" name="infos" id="infos">
 <section class="section0 border1 w3cbbs">
 	<div class="header">
-		<img src="<%=request.getContextPath()%>/images/report/yanda_print.png">
+		<img src="<%=request.getContextPath()%>/resource/img/yanda_print.png">
 		<h1>肿瘤样本基因检测与个体化治疗分析报告</h1>
 	</div>
 	<div class="titletype">
@@ -105,48 +105,72 @@
    				<td>未检测到相关突变位点</td>
    			</c:when>
    			<c:otherwise>
-   				<td width="49%" valign="top" height="100%">
-					<table class="table table-striped-green table-text-center table-padding0" id="snp_table1">
-						<thead>
-							<tr>
-								<th class="mwidth_Gene">基因</th>
-								<th>已知突变位点数</th>
-								<th>测序深度</th>
-							</tr>	
-						</thead>
-						<tbody>
-							<c:forEach items="${cmpReport.cmpGeneResult}" var="gene" begin="0" end="${cmpReport.cmpGeneResult.length/2 }">
-								<tr>
-									<td><span <c:if test="${gene.SequencingDepth<50 }">style='background-color:#feaa20'</c:if>>${gene.geneName }</span></td>
-									<td>${gene.knownMSNum }</td>
-									<td>${gene.SequencingDepth }</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</td>
-				<c:if test="${cmpReport.cmpGeneResult>2}">
-					<td width="49%" valign="top" height="100%">
-						<table class="table table-striped-green table-text-center table-padding0" id="snp_table2">
-							<thead>
-								<tr>
-									<th class="mwidth_Gene">基因</th>
-									<th>已知突变位点数</th>
-									<th>测序深度</th>
-								</tr>	
-							</thead>
-							<tbody>
-								<c:forEach items="${cmpReport.cmpGeneResult}" var="gene" begin="${cmpReport.cmpGeneResult.length/2+1 }" end="${map.cmpFilling.cmpGeneResult.length }">
+   				 <c:choose>
+		   			<c:when test="%{fn:length(cmpReport.cmpGeneResult)<2}">
+		   				<td width="49%" valign="top" height="100%">
+							<table class="table table-striped-green table-text-center table-padding0" id="snp_table1">
+								<thead>
 									<tr>
-										<td><span <c:if test="${gene.SequencingDepth<50 }">style='background-color:#feaa20'</c:if>>${gene.geneName }</span></td>
-										<td>${gene.knownMSNum }</td>
-										<td>${gene.SequencingDepth }</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-					</td>
-				</c:if>
+										<th class="mwidth_Gene">基因</th>
+										<th>已知突变位点数</th>
+										<th>测序深度</th>
+									</tr>	
+								</thead>
+								<tbody>
+									<c:forEach items="${cmpReport.cmpGeneResult}" var="gene">
+										<tr>
+											<td><span <c:if test="${gene.sequencingDepth<50 }">style='background-color:#feaa20'</c:if>>${gene.geneName }</span></td>
+											<td>${gene.knownMSNum }</td>
+											<td>${gene.sequencingDepth }</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</td>
+		   			</c:when>
+		   			<c:otherwise>
+		   				<td width="49%" valign="top" height="100%">
+							<table class="table table-striped-green table-text-center table-padding0" id="snp_table1">
+								<thead>
+									<tr>
+										<th class="mwidth_Gene">基因</th>
+										<th>已知突变位点数</th>
+										<th>测序深度</th>
+									</tr>	
+								</thead>
+								<tbody>
+									<c:forEach items="${cmpReport.cmpGeneResult}" var="gene" begin="0" end="${cmpReport.cmpGeneResult.size()/2-1 }">
+										<tr>
+											<td><span <c:if test="${gene.sequencingDepth<50 }">style='background-color:#feaa20'</c:if>>${gene.geneName }</span></td>
+											<td>${gene.knownMSNum }</td>
+											<td>${gene.sequencingDepth }</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</td>
+						<td width="49%" valign="top" height="100%">
+							<table class="table table-striped-green table-text-center table-padding0" id="snp_table2">
+								<thead>
+									<tr>
+										<th class="mwidth_Gene">基因</th>
+										<th>已知突变位点数</th>
+										<th>测序深度</th>
+									</tr>	
+								</thead>
+								<tbody>
+									<c:forEach items="${cmpReport.cmpGeneResult}" var="gene" begin="${cmpReport.cmpGeneResult.size()/2 }" end="${cmpReport.cmpGeneResult.size() }">
+										<tr>
+											<td><span <c:if test="${gene.sequencingDepth<50 }">style='background-color:#feaa20'</c:if>>${gene.geneName }</span></td>
+											<td>${gene.knownMSNum }</td>
+											<td>${gene.sequencingDepth }</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</td>
+					</c:otherwise>
+				</c:choose>
    			</c:otherwise>
    		  </c:choose>
    		</tr>
@@ -221,7 +245,7 @@
 		</thead>
 		<tbody id="drugTbody_3">
 			<c:choose>
-				<c:when test="${cmpReport.cmpFilling.resistanceSiteSum.size()>0}">
+				<c:when test="%{fn:length(cmpReport.cmpFilling.resistanceSiteSum)>0}">
 					<c:forEach items="${cmpReport.cmpFilling.resistanceSiteSum}" var="li" varStatus="size">
 						<tr id="drugTbody_3_tr<c:out value="${size.index}"/>" name="drugTbody_3_tr">
 							<td><input type="text" class="form-control" value="${li.geneName }"></td>
@@ -243,7 +267,7 @@
 	<table class="table-del" id="del_drugTbody_3">
 		<tr><th>&nbsp;</th></tr>
 		<c:choose>
-			<c:when test="${cmpReport.cmpFilling.resistanceSiteSum.size()>0}">
+			<c:when test="%{fn:length(cmpReport.cmpFilling.resistanceSiteSum)>0}">
 				<c:forEach items="${cmpReport.cmpFilling.resistanceSiteSum}" var="li" varStatus="size">
 					<tr id="drugTbody_3_deltr<c:out value="${size.index}"/>"><td><a href="javascript:removeThisTr('drugTbody_3',<c:out value="${size.index}"/>)" title="删除所有"/></td></tr>
 				</c:forEach>
@@ -270,7 +294,7 @@
 		</thead>
 		<tbody id="drugTbody_4">
 			<c:choose>
-				<c:when test="${cmpReport.cmpFilling.personalizedMedicine.size()>0}">
+				<c:when test="%{fn:length(cmpReport.cmpFilling.personalizedMedicine)>0}">
 					<c:forEach items="${cmpReport.cmpFilling.personalizedMedicine}" var="li" varStatus="size">
 						<tr id="drugTbody_4_tr<c:out value="${size.index}"/>" name="drugTbody_4_tr">
 							<td><input type="text" class="form-control" value="${li.geneName }"></td>
@@ -293,7 +317,7 @@
 		<tr><th>&nbsp;</th></tr>
 		<tr id="drugTbody_4_deltr0"><td><a href="javascript:removeThisTr('drugTbody_4',0)" title="删除所有"/></td></tr>
 		<c:choose>
-			<c:when test="${cmpReport.cmpFilling.personalizedMedicine.size()>0}">
+			<c:when test="%{fn:length(cmpReport.cmpFilling.personalizedMedicine)>0}">
 				<c:forEach items="${cmpReport.cmpFilling.personalizedMedicine}" var="li" varStatus="size">
 					<tr id="drugTbody_4_deltr<c:out value="${size.index}"/>"><td><a href="javascript:removeThisTr('drugTbody_4',<c:out value="${size.index}"/>)" title="删除所有"/></td></tr>
 				</c:forEach>
@@ -308,7 +332,7 @@
 	<h4>推荐药物：</h4>
 	<div id="drugDescipDiv">
 		<c:choose>
-			<c:when test="${cmpReport.cmpFilling.recommendDrug.size()>0}">
+			<c:when test="%{fn:length(cmpReport.cmpFilling.recommendDrug)>0}">
 				<c:forEach items="${cmpReport.cmpFilling.recommendDrug}" var="li" varStatus="size">
 				  <div name="drugContent">
 					<div class="h2">
@@ -356,7 +380,7 @@
 	    		<p class="context">
 	    			&nbsp;&nbsp;&nbsp;&nbsp;依马替尼（Imatinib mesylate）是针对BRA-ABL1融合基因的抑制剂，也是治疗此种癌症的靶向治疗药物。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/ABL1.png?date=20150629">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/ABL1.png?date=20150629">
 	    	  </div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ABL1基因平均测序深度${cmpReport.geneDetectionDetail.ABL1.avgCoverage }。</p>
@@ -415,7 +439,7 @@
 	    		<p class="context">
 	    			&nbsp;&nbsp;&nbsp;&nbsp;Selleck公司出品的“MK-2206 2HCl”是一种高度选择性的Akt1/2/3抑制剂。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/AKT1.png?date=20150629" style="width:450px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/AKT1.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;AKT1基因平均测序深度${cmpReport.geneDetectionDetail.AKT1.avgCoverage }。</p>
@@ -474,7 +498,7 @@
 	    		<p class="context">
 	    			&nbsp;&nbsp;&nbsp;&nbsp;克唑替尼（crizotinib）是针对ALK的抑制剂，对ALK融合基因导致的肺癌有良好疗效
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/ALK.png?date=20150629" style="width:400px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/ALK.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ALK基因平均测序深度${cmpReport.geneDetectionDetail.ALK.avgCoverage }。</p>
@@ -532,7 +556,7 @@
 	    		<p class="context">
 	    			4.&nbsp;&nbsp;APC的失活突变（缺失、截断、无义点突变）会导致细胞分裂的失控，APC 蛋白与 β连环蛋白 （ beta-catenin ） ( 一种转录transcription 因子 ) 形成复合物，导致β连环蛋白降解。如果缺乏 APC 蛋白，过多的β连环蛋白就会在 细胞核 （nucleus） 内的聚集。β连环蛋白与细胞核内的另一种蛋白结合， 形成一种复合物；这种复合物又与 DNA结合，启动了几种 基因 （genes） 的转录。这种复合物中的一个靶基因叫做 c-myc 一种已知的癌基因。 C-myc 本身就是几种基因的转录因子 （transcription factor）， 它控制着细胞的生长和分裂。因此，APC 基因的突变导致了一系列的连锁反应，最终导致细胞分裂的加速。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/APC.png?date=20150629">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/APC.png?date=20150629">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;APC基因平均测序深度${cmpReport.geneDetectionDetail.APC.avgCoverage }。</p>
@@ -592,7 +616,7 @@
 	    		<p class="context">
 	    			&nbsp;&nbsp;&nbsp;&nbsp;依马替尼（Imatinib mesylate）是针对BRA-ABL1融合基因的抑制剂，也是治疗此种癌症的靶向治疗药物。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/ATM.png?date=20150629" style="width:400px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/ATM.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ATM基因平均测序深度${cmpReport.geneDetectionDetail.ATM.avgCoverage }。</p>
@@ -651,7 +675,7 @@
 	    		<p class="context">
 	    			&nbsp;&nbsp;&nbsp;&nbsp;维罗非尼（Vemurafenib）、和索拉菲尼（Sorafenib）是获FDA批准的BRAF V600E突变肿瘤的靶向药物。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/BRAF.png?date=20150629">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/BRAF.png?date=20150629">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;BRAF基因平均测序深度${cmpReport.geneDetectionDetail.BRAF.avgCoverage }。</p>
@@ -703,7 +727,7 @@
 	    		<p class="context">
 	    			2.&nbsp;&nbsp;功能：CDH1是一种依赖于钙离子的细胞粘合蛋白，是一种抑癌基因。CDH1与癌细胞的浸润、癌细胞转移相关，当CDH1基因发生突变失活时，细胞更容易突破基底膜、侵入到周围的组织中去。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/CDH1.png?date=20150629" style="width:400px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/CDH1.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CDH1基因平均测序深度${cmpReport.geneDetectionDetail.CDH1.avgCoverage }。</p>
@@ -755,10 +779,10 @@
 	    		<p class="context">
 	    			2.&nbsp;&nbsp;功能：CDKN2A是一种抑癌基因，其蛋白可以抑制或延缓细胞从G1期转到S期，DKN2A的突变与缺失与多种癌症的发生相关。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/CDKN2A.png?date=20150629">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/CDKN2A.png?date=20150629">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CDKN2A基因平均测序深度${{cmpReport.geneDetectionDetail.CDKN2A.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CDKN2A基因平均测序深度${cmpReport.geneDetectionDetail.CDKN2A.avgCoverage }。</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -810,7 +834,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：CSF1R和慢性骨髓单核细胞性白血病、以及M4急性成髓细胞白血病相关。CSF1R和CSF1都和乳腺癌相关。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/CSF1R.png?date=20150629" style="width:385px;height:137px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/CSF1R.png?date=20150629" style="width:385px;height:137px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CSF1R基因平均测序深度${cmpReport.geneDetectionDetail.CSF1R.avgCoverage }。</p>
@@ -866,7 +890,7 @@
 	    		<p class="context">
 	    			&nbsp;&nbsp;&nbsp;&nbsp;与APC基因编码的蛋白相结合，APC突变常见于结肠腺瘤性息肉病。已在结直肠癌（CRC）、毛母质瘤（PTR）、髓母细胞瘤（MDB）、卵巢癌病变组织中中发现CTNNB1基因突变。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/CTNNB1.png?date=20150629" style="width:450px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/CTNNB1.png?date=20150629" style="width:450px;">
 	    	  </div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CTNNB1基因平均测序深度${cmpReport.geneDetectionDetail.CTNNB1.avgCoverage }。</p>
@@ -931,7 +955,7 @@
 	    		<p class="context">
 	    		<br>经临床实践证明，上述药物都对多种肿瘤有明显的抑制作用。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/EGFR.png?date=20150629" style="width:450px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/EGFR.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;EGFR基因平均测序深度${cmpReport.geneDetectionDetail.EGFR.avgCoverage }。</p>
@@ -990,7 +1014,7 @@
 	    		<p class="context">
 	    			&nbsp;&nbsp;&nbsp;&nbsp;赫赛汀（Herceptin，曲妥珠单抗）是对针对ERBB2的靶向药物，赫赛汀十分昂贵，而且有心脏毒性，所以用赫赛汀之前应做ERBB2的基因检测，ERBB2基因表达升高的、拷贝数增加的病人，赫赛汀的治疗效果会更好。另外帕妥珠单抗（Pertuzumab）也是针对ERBB2的药物。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/ERBB2.png?date=20150629" style="width:500px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/ERBB2.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ERBB2基因平均测序深度${cmpReport.geneDetectionDetail.ERBB2.avgCoverage }。</p>
@@ -1045,7 +1069,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：erbB4与多种肿瘤相关，尤其与乳腺癌相关。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/ERBB4.png?date=20150629" style="width:400px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/ERBB4.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ERBB4基因平均测序深度${cmpReport.geneDetectionDetail.ERBB4.avgCoverage }。</p>
@@ -1100,7 +1124,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：EZH2的过量表达会导致多种原发的癌症，原因是它过量表达后，会抑制多种抑癌基因的表达。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/EZH2.png?date=20150629">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/EZH2.png?date=20150629">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;EZH2基因平均测序深度${cmpReport.geneDetectionDetail.EZH2.avgCoverage }。</p>
@@ -1154,7 +1178,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：在卵巢癌、乳腺癌和结直肠癌发现有FBXW7的突变。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/FBXW7.png?date=20150629" style="width:400px">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/FBXW7.png?date=20150629" style="width:400px">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FBXW7基因平均测序深度${cmpReport.geneDetectionDetail.FBXW7.avgCoverage }。</p>
@@ -1208,7 +1232,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：与肺鳞癌相关。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/FGFR1.png?date=20150629" style="width:500px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/FGFR1.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FGFR1基因平均测序深度${cmpReport.geneDetectionDetail.FGFR1.avgCoverage }。</p>
@@ -1262,7 +1286,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：一个第2内含子的点突变与一种高乳腺癌风险相关。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/FGFR2.png?date=20150629" style="width:417px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/FGFR2.png?date=20150629" style="width:417px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FGFR2基因平均测序深度${cmpReport.geneDetectionDetail.FGFR2.avgCoverage }。</p>
@@ -1314,7 +1338,7 @@
 	    			2.&nbsp;&nbsp;与肿瘤的关系：缺少FGFR3与膀胱癌相关，EGFR的mRNA表达水平高低，对EGFR靶向治疗效果，会有显著差异。mRNA表达水平高的非小细胞肺癌患者，往往经针对EGFR的靶向治疗后有良好效果。而mRNA表达水平低的非小细胞肺癌患者，经EGFR的靶向治疗往往没有太好的效果。
 	    		</p>
 	    		<li>治疗药物：DOVTINIB</li>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/FGFR3.png?date=20150629" style="width:417px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/FGFR3.png?date=20150629" style="width:417px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FGFR3基因平均测序深度${cmpReport.geneDetectionDetail.FGFR3.avgCoverage }。</p>
@@ -1373,7 +1397,7 @@
 	    		<p class="context">
 	    		&nbsp;&nbsp;&nbsp;&nbsp;有发现索拉非尼对FLT3阳性的急性髓性白血病有良好的疗效。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/FLT3.png?date=20150629" style="width:454px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/FLT3.png?date=20150629" style="width:454px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FLT3基因平均测序深度${cmpReport.geneDetectionDetail.FLT3.avgCoverage }。</p>
@@ -1427,7 +1451,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：编码G蛋白，后者通常用作分子的通断开关，调节外部信息到细胞内部的通道。G蛋白成为永久“开”或激活状态，从而导致Yes-associated protein (YAP)过度激活。YAP蛋白的活化诱导细胞生长失控，抑制细胞死亡，引起恶性肿瘤。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/GNA11.png?date=20150629" style="width:400px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/GNA11.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;GNA11基因平均测序深度${cmpReport.geneDetectionDetail.GNA11.avgCoverage }。</p>
@@ -1485,7 +1509,7 @@
 	    		<p class="context">
 	    		&nbsp;&nbsp;&nbsp;&nbsp;抑制剂司美替尼可抑制丝裂原活化蛋白激酶(MEK)通路。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/GNAQ.png?date=20150629" style="width:179px;height:158px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/GNAQ.png?date=20150629" style="width:179px;height:158px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;GNAQ基因平均测序深度${cmpReport.geneDetectionDetail.GNAQ.avgCoverage }。</p>
@@ -1539,7 +1563,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：与脑垂体瘤相关。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/GNAS.png?date=20150629" style="width:285px;height:162px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/GNAS.png?date=20150629" style="width:285px;height:162px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;GNAS基因平均测序深度${cmpReport.geneDetectionDetail.GNAS.avgCoverage }。</p>
@@ -1593,7 +1617,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：HNF1A 基因突变是青年发病的成年型糖尿病3（MODY3）的病因，糖尿病人群中此基因突变的几率是非糖尿病对照组人群的5倍之多。HNF1a双等位基因失活突变在不同个体的肝细胞腺瘤中被检测到。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/HNF1A.png?date=20150629" style="width:500px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/HNF1A.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;HNF1A基因平均测序深度${cmpReport.geneDetectionDetail.HNF1A.avgCoverage }。</p>
@@ -1647,7 +1671,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：HRAS与膀胱癌有密切的关系；HRAS若发生G12V、G12S突变，则其活性就永久激活；HRAS的突变与甲状腺癌、肾癌也有关系。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/HRAS.png?date=20150629" style="width:500px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/HRAS.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;HRAS基因平均测序深度${cmpReport.geneDetectionDetail.HRAS.avgCoverage }。</p>
@@ -1701,7 +1725,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：胶质母细胞瘤与IDH1有关系。 IDH1突变往往是在低级别胶质瘤发展的第一步，IDH1基因突变在这些脑肿瘤形成的关键事件。IDH1突变与生存期延长相关。胶质母细胞瘤与野生型IDH1基因有只有1年的中位总生存期，而IDH1突变的胶质母细胞瘤患者有2年以上的中位总生存期。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/IDH1.png?date=20150629" style="width:321px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/IDH1.png?date=20150629" style="width:321px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;IDH1基因平均测序深度${cmpReport.geneDetectionDetail.IDH1.avgCoverage }。</p>
@@ -1760,7 +1784,7 @@
 	    		<p class="context">
 	    		   &nbsp;&nbsp;&nbsp;&nbsp;当用一种小分子化合物AGI-6780治疗IDH2突变的小鼠白血病AML细胞时，AML细胞停止了增生和分化。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/IDH2.png?date=20150629" style="width:350px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/IDH2.png?date=20150629" style="width:350px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;IDH2基因平均测序深度${cmpReport.geneDetectionDetail.IDH2.avgCoverage }。</p>
@@ -1811,7 +1835,7 @@
 	    		<p class="context">
 	    			2.&nbsp;&nbsp;功能：这是一种不依赖于受体的酪氨酸激酶。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/JAK2.png?date=20150629" style="width:450px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/JAK2.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;JAK2基因平均测序深度${cmpReport.geneDetectionDetail.JAK2.avgCoverage }。</p>
@@ -1869,7 +1893,7 @@
 	    		<p class="context">
 	    			&nbsp;&nbsp;&nbsp;&nbsp;有一种编号为CP-690550（Tofacitinib，星熠艾克）的JAK3抑制剂，已经在临床验证中显示出很明确的疗效。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/JAK3.png?date=20150629">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/JAK3.png?date=20150629">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;JAK3基因平均测序深度${cmpReport.geneDetectionDetail.JAK3.avgCoverage }。</p>
@@ -1933,7 +1957,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;lenvatinib， motesanib， Pazopanib等也是KDR的抑制剂。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/KDR.png?date=20150629" style="width:400px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/KDR.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;KDR基因平均测序深度${cmpReport.geneDetectionDetail.KDR.avgCoverage }。</p>
@@ -1994,7 +2018,7 @@
 	    		<p class="context">
 	    			2.&nbsp;&nbsp;dasatinib和nilotinib也有应用
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/KIT.png?date=20150629" style="width:500px">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/KIT.png?date=20150629" style="width:500px">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;KIT基因平均测序深度${cmpReport.geneDetectionDetail.KIT.avgCoverage }。</p>
@@ -2052,7 +2076,7 @@
 	    		<p class="context">
 	    			&nbsp;&nbsp;&nbsp;&nbsp;KRAS是EGFR信号通路的下游结点。如果KRAS发生持续活化突变，则针对EGFR的抑制剂药物，如：易瑞沙（Iressa,gefitinb）和特罗凯（erlotinib,Tarceva），往往无效。所以，用针对EGFR的靶向药物治疗前，建议检测KRAS的突变状态。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/KRAS.png?date=20150629" style="width:465px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/KRAS.png?date=20150629" style="width:465px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;KRAS基因平均测序深度${cmpReport.geneDetectionDetail.KRAS.avgCoverage }。</p>
@@ -2123,7 +2147,7 @@
 	    		<p class="context">
 	    			4.&nbsp;&nbsp;主动免疫治疗：白介素2（IL-2）被FDA批准用于肾细胞癌、和转移的黑色素瘤，这两种瘤都常常有MET活性失控的情况。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/MET.png?date=20150629" style="width:450px">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/MET.png?date=20150629" style="width:450px">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;MET基因平均测序深度${cmpReport.geneDetectionDetail.MET.avgCoverage }。</p>
@@ -2178,7 +2202,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：MLH1基因的突变与遗传性非息肉结直肠癌有密切关系。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/MLH1.png?date=20150629" style="width:450px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/MLH1.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;MLH1基因平均测序深度${cmpReport.geneDetectionDetail.MLH1.avgCoverage }。</p>
@@ -2233,7 +2257,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：MPL与骨髓增生白血病有关系。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/MPL.png?date=20150629" style="width:350px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/MPL.png?date=20150629" style="width:350px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;MPL基因平均测序深度${cmpReport.geneDetectionDetail.MPL.avgCoverage }。</p>
@@ -2287,7 +2311,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：Notch1与白血病相关。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/NOTCH1.png?date=20150629" style="width:603px;height:312px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/NOTCH1.png?date=20150629" style="width:603px;height:312px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;NOTCH1基因平均测序深度${cmpReport.geneDetectionDetail.NOTCH1.avgCoverage }。</p>
@@ -2342,7 +2366,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：在多种肿瘤中都发现NPM1的上调、突变、或者染色体易位。当NPM1高表达时，会抑制P53/ARF通路。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/NPM1.png?date=20150629" style="width:400px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/NPM1.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;NPM1基因平均测序深度${cmpReport.geneDetectionDetail.NPM1.avgCoverage }。</p>
@@ -2396,7 +2420,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：与多种肿瘤相关。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/NRAS.png?date=20150629" style="width:500px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/NRAS.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;NRAS基因平均测序深度${cmpReport.geneDetectionDetail.NRAS.avgCoverage }。</p>
@@ -2458,7 +2482,7 @@
 	    		<p class="context">
 	    			2.&nbsp;&nbsp;酪氨酸激酶抑制剂甲磺酸伊马替尼（格列卫）可选择性抑制ablAbl-Berc-kit及PDGFR的激酶活性。近年来，格列卫成为治疗GIST有效的分子靶向药物（尤其是手术不能切除或转移、复发病例）。PDGFRA基因突变位点对预测药物疗效有积极作用。研究结果表明，对于KIT基因无突变的GIST患者，还需要检测有无PDGFRA基因是否存在激活性突变，因为PDGFR的突变主要发生在没有KIT突变的肿瘤中，目前检测有三种突变类型外显子12（3%），外显子14（<1%），外显子18（9.7%），其中PDGFRA第18外显子D842V发生突变的GIST病例对格列卫、舒尼替尼治疗原发耐药。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/PDGFRA.png?date=20150629" style="width:500px">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/PDGFRA.png?date=20150629" style="width:500px">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PDGFRA基因平均测序深度${cmpReport.geneDetectionDetail.PDGFRA.avgCoverage }。</p>
@@ -2523,7 +2547,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;GDC-0032
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/PIK3CA.png?date=20150629" style="width:400px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/PIK3CA.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PIK3CA基因平均测序深度${cmpReport.geneDetectionDetail.PIK3CA.avgCoverage }。</p>
@@ -2585,7 +2609,7 @@
 	    		<p class="context">
 	    			2.&nbsp;&nbsp;TRIHYDRATE
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/PTEN.png?date=20150629" style="width:550px">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/PTEN.png?date=20150629" style="width:550px">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PTEN基因平均测序深度${cmpReport.geneDetectionDetail.PTEN.avgCoverage }。</p>
@@ -2640,7 +2664,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：带有PTPN11突变的患者，很容易得少年单核细胞白血病。在神经母细胞瘤，黑色素瘤，急性髓细胞性白血病，乳腺癌，肺癌，结肠直肠癌中有发现PTPN11的活化突变。有报道：PTPN11既有促癌的作用，也有抑癌的作用。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/PTPN11.png?date=20150629">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/PTPN11.png?date=20150629">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PTPN11基因平均测序深度${cmpReport.geneDetectionDetail.PTPN11.avgCoverage }。</p>
@@ -2695,7 +2719,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：如果两个RB1等位基因都突变了，这人就会视网膜母细胞瘤，并因此失明。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/RB1.png?date=20150629" style="width:450px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/RB1.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;RB1基因平均测序深度${cmpReport.geneDetectionDetail.RB1.avgCoverage }。</p>
@@ -2757,7 +2781,7 @@
 	    		<p class="context">
 	    			2.&nbsp;&nbsp;卡博替尼（Cabozantinib）是VEGFR2, Met, FLT3, Tie2, Kit和 Ret的强效抑制剂。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/RET.png?date=20150629" style="width:380px">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/RET.png?date=20150629" style="width:380px">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;RET基因平均测序深度${cmpReport.geneDetectionDetail.RET.avgCoverage }。</p>
@@ -2812,7 +2836,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：在结直肠癌和胰腺癌中经常发现有SMAD4的突变。它也在常染色体显性遗传病幼年性息肉综合症中被发现有突变，这些息肉很可以发展成结肠癌。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/SMAD4.png?date=20150629" style="width:500px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/SMAD4.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SMAD4基因平均测序深度${cmpReport.geneDetectionDetail.SMAD4.avgCoverage }。</p>
@@ -2866,7 +2890,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：这是一个肿瘤抑制基因，与恶性横纹肌样瘤有关。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/SMARCB1.png?date=20150629" style="width:550px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/SMARCB1.png?date=20150629" style="width:550px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SMARCB1基因平均测序深度${cmpReport.geneDetectionDetail.SMARCB1.avgCoverage }。</p>
@@ -2925,7 +2949,7 @@
 	    		<p class="context">
 	    			2.&nbsp;&nbsp;LY2940680
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/SMO.png?date=20150629" style="width:500px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/SMO.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SMO基因平均测序深度${cmpReport.geneDetectionDetail.SMO.avgCoverage }。</p>
@@ -2984,7 +3008,7 @@
 	    		<p class="context">
 	    			&nbsp;&nbsp;&nbsp;&nbsp;达沙替尼（dasatinib）是Src的针对性抑制剂。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/SRC.png?date=20150629" style="width:500px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/SRC.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SRC基因平均测序深度${cmpReport.geneDetectionDetail.SRC.avgCoverage }。</p>
@@ -3039,7 +3063,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：最近的研究发现在宫颈、乳腺、肠、睾丸、胰腺和皮肤癌中大量存在STK11的体细胞突变。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/STK11.png?date=20150629" style="width:347px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/STK11.png?date=20150629" style="width:347px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;STK11基因平均测序深度${cmpReport.geneDetectionDetail.STK11.avgCoverage }。</p>
@@ -3094,7 +3118,7 @@
 	    		<p class="context">
 	    			3.&nbsp;&nbsp;与肿瘤的关系：50%以上的肿瘤带有TP53的突变。TP53是最著名的抑癌基因。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/TP53.png?date=20150629" style="width:450px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/TP53.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;TP53基因平均测序深度${cmpReport.geneDetectionDetail.TP53.avgCoverage }。</p>
@@ -3153,7 +3177,7 @@
 	    		<p class="context">
 	    			&nbsp;&nbsp;&nbsp;&nbsp;针对VEGF（血管内皮生长因子）的靶向药物可以治疗VHL突变引起的肿瘤。血管内皮生长因子受体的抑制剂：索拉非尼、舒尼替尼、帕唑帕尼、阿西替尼已被美国FDA批准。mTOR抑制剂雷帕霉素类似物依维莫司和西罗莫司脂化或VEGF单克隆抗体贝伐单抗也可能是一种选择。
 	    		</p>
-	    		<img src="<%=request.getContextPath()%>/images/report/cmp/VHL.png?date=20150629" style="width:450px;">
+	    		<img src="<%=request.getContextPath()%>/resource/img/cmp/VHL.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
 	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;VHL基因平均测序深度${cmpReport.geneDetectionDetail.VHL.avgCoverage }。</p>
@@ -3212,615 +3236,606 @@
    					<tr><td colspan="6">没有发现突变位点</td></tr>
    				</c:when>
    				<c:otherwise>
-   					{ "ABL1", "EGFR", "GNAQ", "KRAS", "PTPN11",
-						"AKT1", "ERBB2", "GNAS", "MET", "RB1", "ALK", "ERBB4",
-						"HNF1A", "MLH1", "RET", "APC", "EZH2", "HRAS", "MPL",
-						"SMAD4", "ATM", "FBXW7", "IDH1", "NOTCH1", "SMARCB1",
-						"BRAF", "FGFR1", "IDH2", "NPM1", "SMO", "CDH1",
-						"FGFR2", "JAK2", "NRAS", "SRC", "CDKN2A", "FGFR3",
-						"JAK3", "PDGFRA", "STK11", "CSF1R", "FLT3", "KDR",
-						"PIK3CA", "TP53", "CTNNB1", "GNA11", "KIT", "PTEN",
-						"VHL" }
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.ABL1.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.ABL1.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.AKT1.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.AKT1.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.ALK.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.ALK.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.APC.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.APC.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.ATM.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.ATM.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.BRAF.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.BRAF.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.CDH1.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.CDH1.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.CDKN2A.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.CDKN2A.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.CSF1R.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.CSF1R.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.CTNNB1.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.CTNNB1.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.EGFR.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.EGFR.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.ERBB2.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.ERBB2.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.ERBB4.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.ERBB4.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.EZH2.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.EZH2.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.FBXW7.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.FBXW7.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.FGFR1.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.FGFR1.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.FGFR2.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.FGFR2.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.FGFR3.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.FGFR3.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.FLT3.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.FLT3.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.GNA11.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.GNA11.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.GNAQ.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.GNAQ.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.GNAS.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.GNAS.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.HNF1A.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.HNF1A.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.HRAS.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.HRAS.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.IDH1.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.IDH1.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.IDH2.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.IDH2.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.JAK2.result.contains('没有发现突变位点')}">\
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.JAK2.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.JAK3.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.JAK3.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.KDR.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.KDR.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.KIT.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.KIT.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.KRAS.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.KRAS.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.MET.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.MET.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.MLH1.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.MLH1.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.MPL.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.MPL.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.NOTCH1.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.NOTCH1.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.NPM1.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.NPM1.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.NRAS.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.NRAS.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.PDGFRA.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.PDGFRA.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.PIK3CA.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.PIK3CA.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				<</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.PTEN.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.PTEN.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.PTPN11.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.PTPN11.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.RB1.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.RB1.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.RET.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.RET.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.SMAD4.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.SMAD4.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.SMARCB1.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.SMARCB1.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.SMO.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.SMO.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.SRC.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.SRC.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.STK11.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.STK11.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.TP53.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.TP53.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
-		    				<c:if test="%{!cmpReport.geneDetectionDetail.VHL.result.contains('没有发现突变位点')}">
-		    					<c:forEach items="${cmpReport.geneDetectionDetail.VHL.result}" var="r" varStatus="size">
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td>${r.cdsMutSyntax }</td>
-		    							<td>${r.aaMutSyntax }</td>
-		    						</tr>
-		    					</c:forEach>
-		    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.ABL1.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.ABL1.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.AKT1.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.AKT1.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.ALK.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.ALK.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.APC.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.APC.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.ATM.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.ATM.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.BRAF.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.BRAF.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.CDH1.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.CDH1.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.CDKN2A.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.CDKN2A.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.CSF1R.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.CSF1R.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.CTNNB1.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.CTNNB1.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.EGFR.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.EGFR.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.ERBB2.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.ERBB2.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.ERBB4.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.ERBB4.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.EZH2.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.EZH2.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.FBXW7.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.FBXW7.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.FGFR1.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.FGFR1.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.FGFR2.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.FGFR2.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.FGFR3.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.FGFR3.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.FLT3.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.FLT3.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.GNA11.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.GNA11.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.GNAQ.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.GNAQ.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.GNAS.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.GNAS.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.HNF1A.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.HNF1A.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.HRAS.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.HRAS.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.IDH1.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.IDH1.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.IDH2.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.IDH2.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.JAK2.result.contains('没有发现突变位点')}">\
+    					<c:forEach items="${cmpReport.geneDetectionDetail.JAK2.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.JAK3.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.JAK3.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.KDR.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.KDR.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.KIT.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.KIT.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.KRAS.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.KRAS.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.MET.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.MET.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.MLH1.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.MLH1.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.MPL.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.MPL.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.NOTCH1.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.NOTCH1.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.NPM1.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.NPM1.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.NRAS.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.NRAS.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.PDGFRA.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.PDGFRA.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.PIK3CA.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.PIK3CA.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				<</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.PTEN.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.PTEN.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.PTPN11.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.PTPN11.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.RB1.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.RB1.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.RET.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.RET.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.SMAD4.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.SMAD4.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.SMARCB1.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.SMARCB1.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.SMO.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.SMO.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.SRC.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.SRC.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.STK11.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.STK11.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.TP53.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.TP53.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
+    				<c:if test="%{!cmpReport.geneDetectionDetail.VHL.result.contains('没有发现突变位点')}">
+    					<c:forEach items="${cmpReport.geneDetectionDetail.VHL.result}" var="r" varStatus="size">
+    						<tr>
+    							<td>${r.gene }</td>
+    							<td>${r.refBase }</td>
+    							<td>${r.mutBase }</td>
+    							<td>${r.depth }</td>
+    							<td>${r.cdsMutSyntax }</td>
+    							<td>${r.aaMutSyntax }</td>
+    						</tr>
+    					</c:forEach>
+    				</c:if>
    				</c:otherwise>
    			</c:choose>
     	</tbody>

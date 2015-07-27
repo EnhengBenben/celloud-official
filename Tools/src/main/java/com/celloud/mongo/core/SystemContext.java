@@ -12,6 +12,7 @@ import com.celloud.mongo.dao.ReportDAO;
 import com.celloud.mongo.utils.MongoDBUtils;
 import com.google.code.morphia.Morphia;
 import com.mongodb.Mongo;
+import com.nova.tools.utils.PropertiesUtils;
 
 /**
  * 系统配置
@@ -45,6 +46,7 @@ public class SystemContext {
 			System.setProperty("org.apache.commons.logging.Log",
 					"org.apache.commons.logging.impl.NoOpLog");
 		} catch (IOException e) {
+			e.printStackTrace();
 			throw new RuntimeException(PROPERTIES_FILE + " file load error");
 
 		}
@@ -63,31 +65,18 @@ public class SystemContext {
 	public synchronized static ReportDAO getReportDAO() {
 		if (reportDAO == null) {
 			try {
-				Class<?> clazz = Class.forName(sysProperties
-						.getProperty(PROP_REPORTDAO));
+				Class<?> clazz = Class
+						.forName("com.celloud.mongo.dao.ReportDAOImpl");
 				Constructor<?> constructor = clazz.getConstructor(Mongo.class,
 						Morphia.class, String.class);
 				reportDAO = (ReportDAO) constructor.newInstance(
 						MongoDBUtils.getReportMongo(),
 						MongoDBUtils.getMorphia(),
-						SystemContext.getReportDBName());
+						PropertiesUtils.report_dbname);
 			} catch (Exception e) {
 				logger.error(" class load error", e);
 			}
 		}
 		return reportDAO;
 	}
-
-	public static String getReportDBUrl() {
-		return sysProperties.getProperty("report_dburl");
-	}
-
-	public static String getReportDBName() {
-		return sysProperties.getProperty("report_dbname");
-	}
-
-	public static String getTime() {
-		return sysProperties.getProperty("time");
-	}
-
 }
