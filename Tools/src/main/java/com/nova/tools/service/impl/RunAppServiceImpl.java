@@ -128,7 +128,7 @@ public class RunAppServiceImpl {
 					+ " ProjectID" + projectId;
 		}
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
 			// 创建项目结果文件
@@ -334,7 +334,7 @@ public class RunAppServiceImpl {
 		String command = _16S_perl + " --input " + dataPath + getArray(data, 1)
 				+ "  --outdir " + dataKeyPath;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		if (state) {
 			String projectFile = appPath + "/" + projectId + "/" + projectId
 					+ ".txt";
@@ -362,7 +362,7 @@ public class RunAppServiceImpl {
 		String command = translate_perl + " " + dataPath + getArray(data, 1)
 				+ " --output " + resultPath;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		if (state) {
 			// 创建项目结果文件
 			String projectFile = appPath + "/" + projectId + "/" + projectId
@@ -406,7 +406,7 @@ public class RunAppServiceImpl {
 		String command = HCV + " " + dataListFile + " " + appPath + "/ 2>"
 				+ appPath + "/" + projectId + "/log";
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		if (state) {
 			// 创建项目结果文件
 			String projectFile = appPath + "/" + projectId + "/" + projectId
@@ -453,7 +453,7 @@ public class RunAppServiceImpl {
 		String command = treePerl + " " + dataListFile + " " + projectId + " "
 				+ basePath + "/" + userId + "/" + appId + "/" + projectId + "/";
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		ssh.sshSubmit(true);
+		ssh.sshSubmit();
 	}
 
 	/**
@@ -470,7 +470,7 @@ public class RunAppServiceImpl {
 		String command = PGS + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -525,7 +525,7 @@ public class RunAppServiceImpl {
 		String command = NIPT_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -580,7 +580,7 @@ public class RunAppServiceImpl {
 		String command = gDNA_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -627,7 +627,7 @@ public class RunAppServiceImpl {
 		String command = gDNA_Chimeric_perl + " " + dataListFile + " "
 				+ basePath + " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -695,7 +695,7 @@ public class RunAppServiceImpl {
 		String command = MDA_Chimeric_perl + " " + dataListFile + " "
 				+ basePath + " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -764,7 +764,7 @@ public class RunAppServiceImpl {
 		String command = MDA_HR_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -822,7 +822,7 @@ public class RunAppServiceImpl {
 		String command = SurePlex_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -890,7 +890,7 @@ public class RunAppServiceImpl {
 		String command = SurePlex_HR_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -947,7 +947,7 @@ public class RunAppServiceImpl {
 		String command = gDNA_MR_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1015,7 +1015,7 @@ public class RunAppServiceImpl {
 		String command = gDNA_MR_v1 + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1073,7 +1073,7 @@ public class RunAppServiceImpl {
 		String command = MDA_MR_v1 + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1132,7 +1132,7 @@ public class RunAppServiceImpl {
 		String command = MDA_HR_v1 + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1190,7 +1190,7 @@ public class RunAppServiceImpl {
 		String command = gDNA_HR_v1 + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1248,7 +1248,7 @@ public class RunAppServiceImpl {
 		String command = MDA_Chimeric_v1 + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1307,7 +1307,7 @@ public class RunAppServiceImpl {
 		String command = gDNA_Chimeric_v1 + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1365,7 +1365,7 @@ public class RunAppServiceImpl {
 		String command = SurePlex_v1 + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1412,7 +1412,7 @@ public class RunAppServiceImpl {
 		String command = MalBac_v1 + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1459,7 +1459,7 @@ public class RunAppServiceImpl {
 		String command = MDA_MR_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1528,7 +1528,7 @@ public class RunAppServiceImpl {
 		String command = MalBac_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1585,7 +1585,7 @@ public class RunAppServiceImpl {
 		String command = gDNA_HR_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1652,7 +1652,7 @@ public class RunAppServiceImpl {
 		String command = EGFR_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1704,7 +1704,7 @@ public class RunAppServiceImpl {
 		String command = TB_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1752,7 +1752,7 @@ public class RunAppServiceImpl {
 		String dataListFile = dealDataKeyList(dataKeyList);
 		String command = TBINH_perl + " " + dataListFile + " " + basePath+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1823,7 +1823,7 @@ public class RunAppServiceImpl {
 		String command = KRAS_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1875,7 +1875,7 @@ public class RunAppServiceImpl {
 		String command = "perl " + SNP_multiple + " " + dataListFile + " "
 				+ basePath + "  ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
@@ -1962,7 +1962,7 @@ public class RunAppServiceImpl {
 		String dataListFile = dealDataKeyList(dataKeyList);
 		String command = DPD_perl + " " + dataListFile + " " + basePath+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
 			String projectFile = basePath + projectId + "/" + projectId
@@ -1997,7 +1997,7 @@ public class RunAppServiceImpl {
 		String dataListFile = dealDataKeyList(dataKeyList);
 		String command = BRAF_perl + " " + dataListFile + " " + basePath+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
 			String projectFile = basePath + projectId + "/" + projectId
@@ -2030,7 +2030,7 @@ public class RunAppServiceImpl {
 		String dataListFile = dealDataKeyList(dataKeyList);
 		String command = UGT_perl + " " + dataListFile + " " + basePath+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
 			String projectFile = basePath + projectId + "/" + projectId
@@ -2072,7 +2072,7 @@ public class RunAppServiceImpl {
 		String command = HBV_SNP2_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId;
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
+		boolean state = ssh.sshSubmit();
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
