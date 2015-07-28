@@ -45,4 +45,10 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 		return ds.find(CmpFilling.class).asList();
 	}
 
+	@Override
+	public void deleteCmpReport(String dataKey, String userId) {
+		ds.delete(ds.find(CmpReport.class).filter("dataKey", dataKey)
+				.filter("userId", userId));
+	}
+
 }

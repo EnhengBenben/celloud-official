@@ -20,6 +20,7 @@ import com.celloud.mongo.sdo.GeneDetectionResult;
 import com.celloud.mongo.service.ReportService;
 import com.celloud.mongo.service.ReportServiceImpl;
 import com.itextpdf.text.DocumentException;
+import com.nova.tools.constant.AppNameIDConstant;
 import com.nova.tools.itext.AB1_PDF;
 import com.nova.tools.itext.HBV_SNP_PDF;
 import com.nova.tools.itext.NIPTPDF;
@@ -120,15 +121,14 @@ public class RunAppServiceImpl {
 	public void runCMP(String outPath, String projectId, String dataKeyList,
 			String appId, String userId) {
 		String dataListFile = formatDataKeyList(dataKeyList);
-		// String command = CMP_perl + " " + dataListFile + " " + outPath
-		// + " ProjectID" + projectId;
-		// if (AppNameIDConstant.CMP_199.equals(appId)) {
-		// command = CMP199_perl + " " + dataListFile + " " + outPath
-		// + " ProjectID" + projectId;
-		// }
-		// GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		// boolean state = ssh.sshSubmit();
-		boolean state = true;
+		String command = CMP_perl + " " + dataListFile + " " + outPath
+				+ " ProjectID" + projectId;
+		if (AppNameIDConstant.CMP_199.equals(appId)) {
+			command = CMP199_perl + " " + dataListFile + " " + outPath
+					+ " ProjectID" + projectId;
+		}
+		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
+		boolean state = ssh.sshSubmit();
 		if (state) {
 			String dataArray[] = dataKeyList.split(";");
 			// 创建项目结果文件
@@ -321,6 +321,7 @@ public class RunAppServiceImpl {
 				cmpReport.setSeqContentPath2(seqContentPath2);
 				cmpReport.setBasicStatistics2(basicStatistics2);
 				ReportService reportService = new ReportServiceImpl();
+				reportService.deleteCmpReport(getArray(dataDetail, 0), userId);
 				reportService.saveCmpReport(cmpReport);
 			}
 		}

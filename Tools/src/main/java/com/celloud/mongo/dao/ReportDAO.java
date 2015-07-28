@@ -37,5 +37,13 @@ public interface ReportDAO {
 	 */
 	public CmpReport getCmpReport(String dataKey, String userId);
 
+	/**
+	 * 删除CMP报告内容
+	 * 
+	 * @param dataKey
+	 * @param userId
+	 */
+	public void deleteCmpReport(String dataKey, String userId);
+
 	public List<CmpFilling> getAll();
 }
