@@ -1,7 +1,6 @@
 /**  */
 package com.celloud.mongo.sdo;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,11 +22,11 @@ public class CmpFilling {
 	/**
 	 * 取样日期
 	 */
-	private Date samplingDate;
+	private String samplingDate;
 	/**
 	 * 报告日期
 	 */
-	private Date reportDate;
+	private String reportDate;
 	/**
 	 * 病理诊断
 	 */
@@ -51,7 +50,7 @@ public class CmpFilling {
 	/**
 	 * 分析日期
 	 */
-	private Date analysisDate;
+	private String analysisDate;
 	/**
 	 * 分子生物实验操作（简写）
 	 */
@@ -89,19 +88,19 @@ public class CmpFilling {
 		this.patientBasic = patientBasic;
 	}
 
-	public Date getSamplingDate() {
+	public String getSamplingDate() {
 		return samplingDate;
 	}
 
-	public void setSamplingDate(Date samplingDate) {
+	public void setSamplingDate(String samplingDate) {
 		this.samplingDate = samplingDate;
 	}
 
-	public Date getReportDate() {
+	public String getReportDate() {
 		return reportDate;
 	}
 
-	public void setReportDate(Date reportDate) {
+	public void setReportDate(String reportDate) {
 		this.reportDate = reportDate;
 	}
 
@@ -145,11 +144,11 @@ public class CmpFilling {
 		this.clinicalDiagnosis = clinicalDiagnosis;
 	}
 
-	public Date getAnalysisDate() {
+	public String getAnalysisDate() {
 		return analysisDate;
 	}
 
-	public void setAnalysisDate(Date analysisDate) {
+	public void setAnalysisDate(String analysisDate) {
 		this.analysisDate = analysisDate;
 	}
 
