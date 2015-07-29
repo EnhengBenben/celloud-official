@@ -224,6 +224,9 @@ public class FileTools {
 		File dir = new File(folderPath);
 		File file[] = dir.listFiles();
 		List<String> list = new ArrayList<String>();
+		if(file==null){
+			return list;
+		}
 		for (int i = 0; i < file.length; i++) {
 			if ("endWith".equals(mate)) {
 				if (file[i].getName().endsWith(regulation)) {
