@@ -181,7 +181,6 @@ public class RunAppServiceImpl {
 				// 二、1 基因检测结果
 				List<GeneDetectionResult> cmpGeneResult = new ArrayList<GeneDetectionResult>();
 				if (new File(snpPath).exists()) {
-					System.out.println(snpPath);
 					List<String> list_ = FileTools.readLinestoString(snpPath);
 					if (list_ != null) {
 					for (int z = 0; z < list_.size(); z++) {
@@ -245,12 +244,13 @@ public class RunAppServiceImpl {
 				}
 				cmpReport.setGeneDetectionDetail(geneDetectionDetail);
 
-				String qualityPath1 = PropertiesUtils.outProject + "/upload/"
+				String qualityPath1 = PropertiesUtils.outProject + "upload/"
 						+ outPath + "/QC/" + getArray(dataDetail, 0)
 						+ "_fastqc/Images/per_base_quality.png";
 				cmpReport.setQualityPath1(qualityPath1);
 				String seqContentPath1 = PropertiesUtils.outProject
-						+ "/upload/" + outPath + "/QC/"
+ + "upload/"
+						+ outPath + "/QC/"
 						+ getArray(dataDetail, 0)
 						+ "_fastqc/Images/per_base_sequence_content.png";
 				cmpReport.setSeqContentPath1(seqContentPath1);
@@ -285,11 +285,11 @@ public class RunAppServiceImpl {
 				while (fol.hasNext()) {
 					String f = fol.next();
 					if (!f.startsWith(getArray(dataDetail, 0))) {
-						qualityPath2 = PropertiesUtils.outProject + "/upload/"
+						qualityPath2 = PropertiesUtils.outProject + "upload/"
 								+ outPath + "/QC/" + f
 								+ "/Images/per_base_quality.png";
 						seqContentPath2 = PropertiesUtils.outProject
-								+ "/upload/" + outPath + "/QC/" + f
+								+ "upload/" + outPath + "/QC/" + f
 								+ "/Images/per_base_sequence_content.png";
 						String f2 = finalPath + "/QC/" + f + "/fastqc_data.txt";
 						List<String> list_2 = FileTools.getLineByNum(f2, 4, 10);
