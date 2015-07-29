@@ -14,7 +14,7 @@ body{ font-family:"宋体"; font-size:20px; color:#353535}
 .wrapper{ width:960px; margin:0 auto; padding-left:80px; padding-right:60px;}
 hr{ border:solid 2px #d7d7d7; background-color:#d7d7d7; width:1000px;}
 .hr-bold{border:solid 3px #d7d7d7;}
-h1{ text-align:center; font-family: "华文新魏"; font-size:48px; padding:60px 0 20px 0;}
+h1{ text-align:center; font-family: "华文新魏"; font-size:48px; padding:40px 0 5px 0;}
 h2{ font-weight:bold; line-height:1.5em}
 .info li{ display:inline-block;*display: inline-block; width:24%; line-height:2.5em}
 

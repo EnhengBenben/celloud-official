@@ -725,6 +725,11 @@ public class ReadReportServiceImpl {
 		Map<String, String> resultMap = new HashMap<String, String>();
 		String r204 = snpPath + "/Report.txt.204";
 		if (new File(r204).exists()) {
+			String clinicalPath = snpPath.replace("SVG", "") + "clinical.txt";
+			if (new File(clinicalPath).exists()) {
+				String clinical = TableUtil.SNPTable(clinicalPath);
+				resultMap.put("clinical", clinical);
+			}
 			String[] info = FileUtils.readFileToString(new File(r204)).split(
 					"\n");
 			resultMap.put("title", info[0]);
@@ -767,10 +772,12 @@ public class ReadReportServiceImpl {
 		String all2 = FileTools.fileExist(snpPath, "2_all.png", "endsWith");
 		String all3 = FileTools.fileExist(snpPath, "3_all.png", "endsWith");
 		String all4 = FileTools.fileExist(snpPath, "4_all.png", "endsWith");
+		String all5 = FileTools.fileExist(snpPath, "5_all.png", "endsWith");
 		resultMap.put("listAll1", all1);
 		resultMap.put("listAll2", all2);
 		resultMap.put("listAll3", all3);
 		resultMap.put("listAll4", all4);
+		resultMap.put("listAll5", all5);
 
 		String result = FileTools.readAppoint(snpPath + "/Report.txt");
 		result = result.split("Other")[0];

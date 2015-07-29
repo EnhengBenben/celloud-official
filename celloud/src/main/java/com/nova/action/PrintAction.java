@@ -62,6 +62,11 @@ public class PrintAction extends BaseAction {
 	private List<String> imgList;
 	private String fileName;
 	private Map<String, Object> resultMap;
+	private String peakFigure;
+	private String allPic;
+	private String seq;
+	private String result;
+	private String table;
 
 	public String printCMP() {
 		String[] temp = StringUtils.splitByWholeSeparatorPreserveAllTokens(
@@ -286,5 +291,46 @@ public class PrintAction extends BaseAction {
 
 	public void setPageTxt(String pageTxt) {
 		this.pageTxt = pageTxt;
+	}
+
+	public String getPeakFigure() {
+		return peakFigure;
+	}
+
+	public void setPeakFigure(String peakFigure) {
+		this.peakFigure = peakFigure;
+	}
+
+	public String getAllPic() {
+		return allPic;
+	}
+
+	public void setAllPic(String allPic) {
+		this.allPic = allPic;
+	}
+
+	public String getSeq() {
+		return seq;
+	}
+
+	public void setSeq(String seq) {
+		this.seq = seq;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	public String getTable() {
+		return table;
+	}
+
+	public void setTable(String table) {
+		this.table = table;
 	}	
+	
 }

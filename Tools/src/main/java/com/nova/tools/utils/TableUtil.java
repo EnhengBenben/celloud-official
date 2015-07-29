@@ -5,7 +5,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -246,5 +249,122 @@ public class TableUtil {
 			}
 		}
 		return sb.toString();
+	}
+	
+	public static String SNPTable(String path) {
+		if (!new File(path).exists()) {
+			return null;
+		}
+		StringBuffer sb = new StringBuffer(tableHead);
+		String context = null;
+		String result = null;
+		try {
+			context = FileUtils.readFileToString(new File(path), "GBK");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//横向
+//		String lines[] = context.split("\n");
+//		Map<Integer,Integer> m = new HashMap<>();
+//		m.put(1, 4);
+//		m.put(2, 12);
+//		m.put(3, 6);
+//		m.put(4, 6);
+//		m.put(5, 2);
+//		m.put(6, 2);
+//		StringBuffer sb1 = new StringBuffer("<tr>");
+//		int i = 0;
+//		StringBuffer sb2 = new StringBuffer("<tr>");
+//		StringBuffer sb3 = new StringBuffer("<tr>");
+//		for (int j = 0; j < lines.length; j++) {
+//			String l = lines[j].trim();
+//			if (l.startsWith("*")) {
+//				i++;
+//				sb1.append("<td colspan=" + m.get(i) + ">").append(l.replace("*", "")) .append("</td>");
+//			} else {
+//				int remainder = (j - i) % 3; 
+//				if (remainder == 1||remainder ==2) {
+//					if (l.startsWith("1")) {
+//						l = l.substring(1,l.length());
+//						sb3.append("<td class='_hard'>");
+//					} else if (l.startsWith("2")) {
+//						l = l.substring(1,l.length());
+//						sb3.append("<td class='_light'>");
+//					} else if (l.startsWith("3")) {
+//						l = l.substring(1,l.length());
+//						sb3.append("<td class='_red'>");
+//					} else {
+//						sb3.append("<td>");
+//					}
+//					sb3.append(l).append("</td>");
+//				}else{
+//					sb2.append("<td colspan=2>").append(l) .append("</td>");
+//				}
+//			}
+//		}
+//		sb1.append("</tr>");
+//		sb2.append("</tr>");
+//		sb3.append("</tr>");
+//		sb.append(sb1).append(sb2).append(sb3).append("</table>");
+//		result = sb.toString();
+//		System.out.println(result);
+		//竖向
+		String lines[] = context.split("\n");
+		int i = 0;// 记录上一个*所在的行
+		int i_num = 0;// 第几个*
+		boolean isFirst = true;//是否*后第一个tr
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		for (int j = 0; j < lines.length; j++) {
+			String l = lines[j].trim();
+			if (l.startsWith("*")) {
+				map.put("_" + i_num, (j - i - 1) / 3 * 2);
+				i_num++;
+				i = j;
+				isFirst = true;
+				sb.append("<tr><td rowspan='_" + i_num + "' class='snpLeft'>").append(l.replace("*", "")) .append("</td>");
+			} else {
+				int remainder = (j - i_num) % 3; 
+				if (remainder == 0) {
+					if (isFirst) {
+						isFirst = false;
+					} else {
+						sb.append("<tr>");
+					}
+					if (l.startsWith("3")) {
+						l = l.substring(1,l.length());
+						sb.append("<td rowspan=2 class='_red'>");
+					} else {
+						sb.append("<td rowspan=2>");
+					}
+					sb.append(l) .append("</td>");
+				}
+				if (remainder == 2) {
+					sb.append("<tr>");
+				}
+				if (remainder == 1||remainder ==2) {
+					if (l.startsWith("1")) {
+						l = l.substring(1,l.length());
+						sb.append("<td class='_hard'>");
+					} else if (l.startsWith("2")) {
+						l = l.substring(1,l.length());
+						sb.append("<td class='_light'>");
+					} else if (l.startsWith("3")) {
+						l = l.substring(1,l.length());
+						sb.append("<td class='_red'>");
+					} else {
+						sb.append("<td>");
+					}
+					sb.append(l).append("</td></tr>");
+				}
+			}
+		}
+		map.put("_" + i_num, (lines.length - i - 1) / 3 * 2);
+		sb.append("</table>");
+		result = sb.toString();
+		for (Entry<String, Integer> entry : map.entrySet()) {
+			result = result.replaceAll(entry.getKey(), entry.getValue()
+					+ "");
+		}
+		return result;
 	}
 }

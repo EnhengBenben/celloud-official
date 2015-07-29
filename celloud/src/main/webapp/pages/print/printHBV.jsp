@@ -6,10 +6,57 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>报告打印</title>
-<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.1">
+<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.2">
 <style type="text/css">
 textarea {
 	width: 800px;	
+}
+.m-box h2{
+	font-size: 16px;
+}
+.m-box{
+	padding-top: 15px;
+}
+img{
+	padding-top: 10px;
+}
+._hard{
+	background-color: #49F3BA;
+}
+._light{
+	background-color: #C6FBD6;
+}
+._red{
+	color:red;
+}
+.small,.table{
+	font-size: 15px;
+}
+.table{
+	margin-top:15px;
+	width: 600px;
+}
+.left{
+	margin-left: 70px;
+}
+.totop{
+	padding-top: 20px;
+}
+p,table,.m-box{
+	margin-left: 40px;
+}
+.w3cbbs { page-break-after:always;}
+.imgmiss{
+	font-size: 12px;
+    width: 130px;
+    border: 1px solid;
+    padding: 30px 10px 10px 10px;
+    margin-top: 29px;
+    margin-left: 30px;
+    height: 90px;
+    float: left;
+    border-color: black;
+    color: #CC0000;
 }
 </style>
 </head>
@@ -19,10 +66,12 @@ textarea {
 			<div style="display: none;" id="_userId">${userId }</div>
 			<div style="display: none;" id="_appId">${appId }</div>
 			<div style="display: none;" id="_fileId">${fileId }</div>
-			<div class="container">
-				<a href="javascript:void(0)" onclick="preview(this)" class="button btn-info" name="change" style="float:right;margin-top:20px;margin-right:30px;"><i class=""></i>打印</a>
-				<a href="javascript:void(0)" onclick="reset()" class="button btn-info" name="change" style="float:right;margin-top:20px;"><i class=""></i>重置</a>
-				<a href="javascript:void(0)" onclick="savePage()" class="button btn-info" name="change" style="float:right;margin-top:20px;"><i class=""></i>保存</a>
+			<div style="display: none;" id="_flag">${flag }</div>
+			<div>
+				<a href="javascript:void(0)" onclick="preview(this)" class="button btn-info" name="change" style="float:right;margin-top:10px;margin-right:30px;"><i class=""></i>打印</a>
+				<a href="javascript:void(0)" onclick="reset()" class="button btn-info" name="change" style="float:right;margin-top:10px;"><i class=""></i>重置</a>
+				<a href="javascript:void(0)" onclick="savePage()" class="button btn-info" name="change" style="float:right;margin-top:10px;"><i class=""></i>保存</a>
+				<div class="container" style="display: none;"></div>
 				<h1>${txt }报告单</h1>
 			    <hr />
 			    <div class="wrapper">
@@ -40,8 +89,8 @@ textarea {
 			            <li>送检日期：<span><input type="text"></span></li>
 			        </ul>
 			        <c:if test="${appId==82 }">
-						<p class=" gray mt20">送检目的：HBV基因分型，拉米夫定LAM，阿德福韦ADV，恩替卡韦ETV，替比夫定LDT，替诺福韦酯TDF，恩曲他滨FTC</p>
-				        <p class="gray">相关位点：rt169，rt173，rt180，rt181，rt184，rt194，rt202，rt204，rt215，rt233，rt236，rt250</p>
+						<div class=" gray mt20">送检目的：HBV基因分型，拉米夫定LAM，阿德福韦ADV，恩替卡韦ETV，替比夫定LDT，替诺福韦酯TDF，恩曲他滨FTC</div>
+				        <div class="gray">相关位点：rt169，rt173，rt180，rt181，rt184，rt194，rt202，rt204，rt215，rt233，rt236，rt250</div>
 					</c:if>
 			    </div>
 			    <hr class="hr-bold mt20" />
@@ -82,35 +131,36 @@ textarea {
 			    	   </div>
 					   </c:when>
 					   <c:when test="${appId==82 }">
-					   	<h2 class="mt20">耐药位点突变检测结果：</h2>
-				        <ul class="result mt20">
-				        	<c:if test="${imgList.size()>0}">
-					   			<c:forEach items="${imgList}" var="imgHtml">
-					   				<li onmouseover="showDelete(this)" onmouseout="hideDelete(this)">
-						   				<img src="${imgHtml }"/>
-						   				<em onclick="deleteLi(this)"></em>
-					   				</li>
-					   			</c:forEach>
-				   			</c:if>
-				        </ul>
-				        <h2 class="mt20">基因分型结果：</h2>
+				        <h2 class="mt20">一、基因分型结果：</h2>
 				        <p>${snpType }</p>
-				        <h2 class="mt20">耐药结论：</h2>
-				        <div id="des">
-<textarea rows="3">
-耐药：${context }
-敏感：${sensitive }
-</textarea>
-				        </div>
-				        <p>&nbsp; </p>
-				        <h2 class="mt20">备注：</h2>
-				        <p>拉米夫定LAM突变检测：V173L、L180M、M204I/V</p>
-				        <p>阿德福韦ADV突变检测：A181V/T、N236T</p>
-				        <p>恩替卡韦ETV突变检测：I169T、L180M、T184A/G/S/I/L/F、S202G/I、M204V、M250V/L/I</p>
-				        <p>替比夫定LDT突变检测：M204I</p>
-				        <p>替诺福韦酯TDF突变检测：A194T</p>
-				        <p>恩曲他滨FTC突变检测：V173L、L180M、M204I/V</p>
-				        <p>&nbsp; </p>
+				        <h2 class="mt20">二、耐药突变位点检测结果：</h2>
+				        ${table }
+				        <p class="small" >注：</p>
+				        <p class="small left" >深颜色表示发生了耐药突变</p>
+				        <p class="small left" >浅颜色表示发生了突变，但是暂无文献支持其和耐药相关</p>
+				        <p class="small left" >红色字体表示在样本中未找到该位点</p>
+				        <c:if test="${flag==0 }">
+				        	<div class="w3cbbs" style="display: none;"></div>
+							<div class="container" style="display: none;"></div>
+						   	<h2 class="mt20">三、耐药位点突变检测结果：</h2>
+						   	<p>${peakFigure }</p>
+						   	<p class="small totop">注：</p>
+						   	<p class="small left">1.突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V， {A-G}：碱基由A变为G</p>
+						   	<p class="small left">2.*Wild Type: GCT;表示该位点的野生型为GCT</p>
+						   	<p class="small left">3.峰图中的*号，表示该位置发生了突变</p>
+					        <h2 class="mt20">四、耐药结论：</h2>
+					        <p class="small totop">${result }</p>
+						   	<h2 class="mt20">五、测序序列结果：</h2>
+						   	<p style="word-break: break-all;" class="small totop">${seq }</p>
+						   	<div class="w3cbbs" style="display: none;"></div>
+							<div class="container" style="display: none;"></div>
+							<div id="SNPEND">
+							   	<h2 class="mt20">六、测序峰图结果：</h2>
+							   	<p>${allPic }</p>
+							   	<p class="small totop">注：</p>
+							   	<p class="small left" >峰图中的*号表示该位点发生了突变</p>
+							</div>
+				        </c:if>
 					   </c:when>
 					</c:choose>	
 			    </div>
@@ -142,9 +192,11 @@ function preview(obj){
 	var sex = $("input[type='radio']:checked").val();
 	$("#_sex").html(sex);
 	$("a[name='change']").hide();
-	inputVal = $("#des").children().val().replace(/\n/g,"<br>");
-	$("#des").html(inputVal);
+	$(".w3cbbs").css("display","");
+	$(".container").css("display","");
 	window.print();
+	$(".w3cbbs").css("display","none");
+	$(".container").css("display","none");
 	$("a[name='change']").show();
 	$("body").find("span[name='print']").each(function(){
 		inputVal = $(this).html();
@@ -152,8 +204,6 @@ function preview(obj){
 	});
 	$("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
 	$("input[type='radio'][value="+sex+"]").attr("checked",true); 
-	inputVal = $("#des").html().replace(/<br>/g,"\n");
-	$("#des").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
 }
 function hideDelete(obj){
 	$(obj).find("em").removeClass("new");
@@ -172,15 +222,28 @@ $(document).ready(function(){
 	}else if(browser=='chrome'){
 		height = 2500;
 	}
-	if($("#mainDIv").height()>1000){
+	var appId = $("#_appId").html();
+	var _flag = $("#_flag").html();
+	if(appId==82&&_flag==0){
+		$("#mainDIv").css("min-height",5700+"px");
+	}else if($("#mainDIv").height()>1000){
 		$("#mainDIv").css("min-height",height+"px");
 	}
+	$(".m-boxCon").find("a").each(function(){
+		$(this).parent().append($(this).html());
+		$(this).remove();
+	});
+	$(".table").find("td").each(function(){
+		$(this).css("vertical-align","middle");
+	});
+	$(".snpLeft").each(function(){
+		$(this).css("text-align","center");
+	});
 });
 function savePage(){
 	$("body").find("input").each(function(){
 		$(this).attr("value",$(this).val());
 	});
-	$("#des").children().html($("#des").children().val());
 	var url = "http://localhost:8080/celloud/";
 	$.post(url+"updateContext",{"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":$("#printMain").html()},function(result){
 		if(result==1){

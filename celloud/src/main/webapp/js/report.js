@@ -1242,7 +1242,7 @@ $.ajaxSetup ({
 		    }
 		}
 		
-function toPrintHBV(pagePath){
+function toPrintHBV(pagePath,flag){
 	var param = {};
 	var userId = pagePath.split("/")[0];
 	var appId = pagePath.split("/")[1];
@@ -1295,6 +1295,14 @@ function toPrintHBV(pagePath){
 		if(imgHtml!=""){
 			imgHtml = imgHtml.substring(0,imgHtml.length-1);
 		}
+		var printDiv0 = $("#resultDiv").html();
+		var printDiv1 = $("#printDiv1").html();
+		var printDiv2 = $("#printDiv2").html();
+		var printDiv3 = "";
+		$("#printDiv3").find("a").each(function(){
+			printDiv3+=$(this).html();
+		});
+		var printDiv4 = $("#printDiv4").html();
 		param = {
 		        "snpType" : $("#snpType").html(),
 		        "sensitive" : sensitive,
@@ -1302,7 +1310,13 @@ function toPrintHBV(pagePath){
 		        "imgHtml" : imgHtml,
 		        "appId" : appId,
 		        "userId":userId,
-		        "dataKey":dataKey
+		        "dataKey":dataKey,
+		        "peakFigure":printDiv1,
+		        "seq":printDiv2,
+		        "allPic":printDiv3,
+		        "result":printDiv0,
+		        "table":printDiv4,
+		        "flag":flag
 		    };
 	}else if(appId == 80){
 		param = {
