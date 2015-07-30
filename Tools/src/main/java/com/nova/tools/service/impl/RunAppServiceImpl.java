@@ -651,6 +651,9 @@ public class RunAppServiceImpl {
 				}
 				String fileName = FileTools.fileExist(finalPath, getArray(dataDetail, 0)+".xls",
 						"endsWith");
+				if (fileName.equals("")) {
+					fileName = FileTools.fileExist(finalPath, "no_enough_reads.xls", "endsWith");
+				}
 				String result[] = null;
 				try {
 					String r[] = FileUtils.readFileToString(
@@ -719,6 +722,9 @@ public class RunAppServiceImpl {
 				}
 				String fileName = FileTools.fileExist(finalPath, getArray(dataDetail, 0)+".xls",
 						"endsWith");
+				if (fileName.equals("")) {
+					fileName = FileTools.fileExist(finalPath, "no_enough_reads.xls", "endsWith");
+				}
 				String result[] = null;
 				try {
 					String r[] = FileUtils.readFileToString(
@@ -788,6 +794,9 @@ public class RunAppServiceImpl {
 				}
 				String fileName = FileTools.fileExist(finalPath, getArray(dataDetail, 0)+".xls",
 						"endsWith");
+				if (fileName.equals("")) {
+					fileName = FileTools.fileExist(finalPath, "no_enough_reads.xls", "endsWith");
+				}
 				String result[] = FileTools.getLastLine(
 						finalPath + "/" + fileName).split("\t");
 				if (result.length == 1) {
@@ -846,6 +855,9 @@ public class RunAppServiceImpl {
 				}
 				String fileName = FileTools.fileExist(finalPath, getArray(dataDetail, 0)+".xls",
 						"endsWith");
+				if (fileName.equals("")) {
+					fileName = FileTools.fileExist(finalPath, "no_enough_reads.xls", "endsWith");
+				}
 				String result[] = null;
 				try {
 					String r[] = FileUtils.readFileToString(
@@ -914,6 +926,9 @@ public class RunAppServiceImpl {
 				}
 				String fileName = FileTools.fileExist(finalPath, getArray(dataDetail, 0)+".xls",
 						"endsWith");
+				if (fileName.equals("")) {
+					fileName = FileTools.fileExist(finalPath, "no_enough_reads.xls", "endsWith");
+				}
 				String result[] = FileTools.getLastLine(
 						finalPath + "/" + fileName).split("\t");
 				if (result.length == 1) {
@@ -971,6 +986,9 @@ public class RunAppServiceImpl {
 				}
 				String fileName = FileTools.fileExist(finalPath, getArray(dataDetail, 0)+".xls",
 						"endsWith");
+				if (fileName.equals("")) {
+					fileName = FileTools.fileExist(finalPath, "no_enough_reads.xls", "endsWith");
+				}
 				String result[] = null;
 				try {
 					String r[] = FileUtils.readFileToString(
@@ -1483,6 +1501,9 @@ public class RunAppServiceImpl {
 				}
 				String fileName = FileTools.fileExist(finalPath, getArray(dataDetail, 0)+".xls",
 						"endsWith");
+				if (fileName.equals("")) {
+					fileName = FileTools.fileExist(finalPath, "no_enough_reads.xls", "endsWith");
+				}
 				String result[] = null;
 				try {
 					String r[] = FileUtils.readFileToString(
@@ -1550,8 +1571,11 @@ public class RunAppServiceImpl {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				String fileName = FileTools.fileExist(finalPath, ".xls",
+				String fileName = FileTools.fileExist(finalPath,getArray(dataDetail, 0)+ ".xls",
 						"endsWith");
+				if (fileName.equals("")) {
+					fileName = FileTools.fileExist(finalPath, "no_enough_reads.xls", "endsWith");
+				}
 				String result[] = FileTools.getLastLine(
 						finalPath + "/" + fileName).split("\t");
 				if (result.length == 1) {
@@ -1609,6 +1633,9 @@ public class RunAppServiceImpl {
 				}
 				String fileName = FileTools.fileExist(finalPath,getArray(dataDetail, 0)+ ".xls",
 						"endsWith");
+				if (fileName.equals("")) {
+					fileName = FileTools.fileExist(finalPath, "no_enough_reads.xls", "endsWith");
+				}
 				String result[] = FileTools.getLastLine(
 						finalPath + "/" + fileName).split("\t");
 				if (result.length == 1) {
