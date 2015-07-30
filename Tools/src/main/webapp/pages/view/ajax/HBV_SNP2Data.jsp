@@ -233,7 +233,7 @@
 				    <div class="m-boxCon">
 					    <s:if test="%{!''.equals(resultMap.svg169)}">
 						    <a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10169"/>');" >
-								<img style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg169"/>" height="170px;" width="150px;">
+								<img class="imgtop" style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg169"/>" height="170px;" width="150px;">
 							</a>
 						</s:if>
 						<s:else>
@@ -243,7 +243,7 @@
 						</s:else>
 						<s:if test="%{!''.equals(resultMap.svg180)}">
 							<a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10180"/>');" >
-								<img style="padding-left: 30px;" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg180"/>" height="170px;" width="150px;">
+								<img class="imgtop" style="padding-left: 30px;" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg180"/>" height="170px;" width="150px;">
 							</a>
 						</s:if>
 						<s:else>
@@ -253,7 +253,7 @@
 						</s:else>
 						<s:if test="%{!''.equals(resultMap.svg184)}">
 							<a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10184"/>');" >
-								<img style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg184"/>" height="170px;" width="150px;">
+								<img class="imgtop" style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg184"/>" height="170px;" width="150px;">
 							</a>
 						</s:if>
 						<s:else>
@@ -263,7 +263,7 @@
 						</s:else>
 						<s:if test="%{!''.equals(resultMap.svg202)}">
 							<a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10202"/>');" >
-								<img style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg202"/>" height="170px;" width="150px;">
+								<img class="imgtop" style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg202"/>" height="170px;" width="150px;">
 							</a>
 						</s:if>
 						<s:else>
@@ -275,7 +275,7 @@
 						</s:else>
 						<s:if test="%{!''.equals(resultMap.svg204)}">
 							<a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10204"/>');" >
-								<img style="padding-left: 30px;" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg204"/>" height="170px;" width="150px;">
+								<img class="imgtop" style="padding-left: 30px;" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg204"/>" height="170px;" width="150px;">
 							</a>
 						</s:if>
 						<s:else>
@@ -285,7 +285,7 @@
 						</s:else>
 						<s:if test="%{!''.equals(resultMap.svg250)}">
 							<a href="javascript:showBgOne('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg10250"/>');" >
-								<img style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg250"/>" height="170px;" width="150px;">
+								<img class="imgtop" style="padding-left: 30px;" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg250"/>" height="170px;" width="150px;">
 							</a>
 						</s:if>
 						<s:else>
@@ -306,7 +306,7 @@
 						<s:generator separator="," val="resultMap.other">
 							<s:iterator status="st">
 								<a href="javascript:showBgTwo('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property/>');" >
-									<img title="<s:property/>" name="imgSrc" style="padding-left: 30px;" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property/>" height="170px;" width="150px;">
+									<img class="imgtop" title="<s:property/>" name="imgSrc" style="padding-left: 30px;" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property/>" height="170px;" width="150px;">
 								</a>
 							</s:iterator>
 						</s:generator>
@@ -338,27 +338,27 @@
 			</h2>
 		    <div class="m-boxCon">
 				<a href="javascript:showBg('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll1"/>','listAll1Img');" >
-					<img src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll1"/>" style="width: 750px;height: 150px;" id="listAll1Img">
+					<img class="imgtop" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll1"/>" style="width: 750px;height: 150px;" id="listAll1Img">
 				</a>
 		    </div>
 		     <div class="m-boxCon">
 				<a href="javascript:showBg('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll2"/>','listAll2Img');" >
-					<img src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll2"/>" style="width: 750px;height: 150px;" id="listAll2Img">
+					<img class="imgtop" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll2"/>" style="width: 750px;height: 150px;" id="listAll2Img">
 				</a>
 		    </div>
 		     <div class="m-boxCon">
 				<a href="javascript:showBg('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll3"/>','listAll3Img');" >
-					<img src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll3"/>" style="width: 750px;height: 150px;" id="listAll3Img">
+					<img class="imgtop" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll3"/>" style="width: 750px;height: 150px;" id="listAll3Img">
 				</a>
 		    </div>
 		     <div class="m-boxCon">
 				<a href="javascript:showBg('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll4"/>','listAll4Img');" >
-					<img src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll4"/>" style="width: 750px;height: 150px;" id="listAll4Img">
+					<img class="imgtop" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll4"/>" style="width: 750px;height: 150px;" id="listAll4Img">
 				</a>
 		    </div>
 		    <div class="m-boxCon">
 				<a href="javascript:showBg('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll5"/>','listAll5Img');" >
-					<img src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll5"/>" style="width: 750px;height: 150px;" id="listAll5Img">
+					<img class="imgtop" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll5"/>" style="width: 750px;height: 150px;" id="listAll5Img">
 				</a>
 		    </div>
 		</div>

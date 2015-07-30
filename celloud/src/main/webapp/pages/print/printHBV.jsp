@@ -17,7 +17,7 @@ textarea {
 .m-box{
 	padding-top: 15px;
 }
-img{
+.imgtop{
 	padding-top: 10px;
 }
 ._hard{
@@ -145,10 +145,10 @@ p,table,.m-box{
 						   	<h2 class="mt20">三、耐药位点突变检测结果：</h2>
 						   	<p>${peakFigure }</p>
 						   	<p class="small totop">注：</p>
-						   	<p class="small left">1.突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V， {A-G}：碱基由A变为G</p>
+						   	<p class="small left">1.突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V，<br/>&nbsp;&nbsp;&nbsp;{A-G}：碱基由A变为G</p>
 						   	<p class="small left">2.*Wild Type: GCT;表示该位点的野生型为GCT</p>
 						   	<p class="small left">3.峰图中的*号，表示该位置发生了突变</p>
-					        <h2 class="mt20">四、耐药结论：</h2>
+					        <h2 class="mt20">四、参考结论（根据已发表文献得出以下参考结论）：</h2>
 					        <p class="small totop">${result }</p>
 						   	<h2 class="mt20">五、测序序列结果：</h2>
 						   	<p style="word-break: break-all;" class="small totop">${seq }</p>
