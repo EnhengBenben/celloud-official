@@ -208,4 +208,38 @@ public class CompanyDaoImpl implements ICompanyDao {
 		}
 		return flag;
 	}
+
+	@Override
+	public Company getCompanyByUserId(int userId) {
+		String sql = "select c.* from tb_company c,tb_user u,tb_dept d where u.dept_id=d.dept_id and d.company_id=c.company_id and u.user_id=?";
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Company com = null;
+		try {
+			conn = ConnectManager.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, userId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				com = new Company();
+				com.setCompanyId(rs.getInt("company_id"));
+				com.setCompanyName(rs.getString("company_name"));
+				com.setEnglishName(rs.getString("english_name"));
+				com.setCompanyIcon(rs.getString("company_icon"));
+				com.setAddress(rs.getString("address"));
+				com.setAddressEn(rs.getString("address_en"));
+				com.setZipCode(rs.getString("zip_code"));
+				com.setTel(rs.getString("tel"));
+				com.setState(rs.getInt("state"));
+			}
+			log.info("查询单个公司信息成功");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			log.error("查询单个公司信息失败：" + e);
+		} finally {
+			ConnectManager.free(conn, ps, rs);
+		}
+		return com;
+	}
 }

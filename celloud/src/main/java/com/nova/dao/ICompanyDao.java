@@ -57,4 +57,12 @@ public interface ICompanyDao {
 	 * @return
 	 */
 	int updateCompany(int companyId, int state);
+
+	/**
+	 * 获取用户所属医院
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	Company getCompanyByUserId(int userId);
 }

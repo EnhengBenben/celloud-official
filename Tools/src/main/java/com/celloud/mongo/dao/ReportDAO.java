@@ -1,8 +1,6 @@
 /**  */
 package com.celloud.mongo.dao;
 
-import java.util.List;
-
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
 
@@ -45,5 +43,12 @@ public interface ReportDAO {
 	 */
 	public void deleteCmpReport(String dataKey, String userId);
 
-	public List<CmpFilling> getAll();
+	/**
+	 * 获取CMP简要信息内容
+	 * 
+	 * @param dataKey
+	 * @param userId
+	 * @return
+	 */
+	public CmpReport getSimpleCmp(String dataKey, String userId);
 }

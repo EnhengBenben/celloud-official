@@ -44,4 +44,9 @@ public class CompanyServiceImpl implements ICompanyService{
 		return companyDao.updateCompany(companyId, state);
 	}
 
+	@Override
+	public Company getCompanyByUserId(int userId) {
+		return companyDao.getCompanyByUserId(userId);
+	}
+
 }

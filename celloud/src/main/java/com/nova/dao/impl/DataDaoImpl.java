@@ -1501,4 +1501,41 @@ public class DataDaoImpl extends BaseDao implements IDataDao {
 		}
 		return flag;
 	}
+
+	@Override
+	public List<Data> getDataByDataKeys(String dataKeys, Integer userId) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<Data> list = new ArrayList<Data>();
+		String sql = "select * from tb_file where user_id=? and state=0 and data_key in ("
+				+ dataKeys
+				+ ")";
+		try {
+			conn = ConnectManager.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, userId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Data data = new Data();
+				data.setFileId(rs.getInt("file_id"));
+				data.setUserId(rs.getInt("user_id"));
+				data.setDataKey(rs.getString("data_key"));
+				data.setFileName(rs.getString("file_name"));
+				data.setStrain(rs.getString("strain"));
+				data.setDataTags(rs.getString("data_tags"));
+				data.setSize(rs.getLong("size"));
+				data.setCreateDate(rs.getDate("create_date"));
+				data.setFileFormat(rs.getInt("file_format"));
+				data.setSample(rs.getString("sample"));
+				data.setAnotherName(rs.getString("another_name"));
+				list.add(data);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectManager.free(conn, ps, rs);
+		}
+		return list;
+	}
 }

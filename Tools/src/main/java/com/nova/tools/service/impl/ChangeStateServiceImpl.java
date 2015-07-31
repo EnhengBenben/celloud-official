@@ -110,14 +110,4 @@ public class ChangeStateServiceImpl {
 				}
 		}
 	}
-
-	/**
-	 * 保存CMP运行报告
-	 * 
-	 * @param map
-	 */
-	public static void saveCmpReport(String params) {
-		String url = celloud + "cmpReport!addReport?" + params;
-		remoteRequest(url);
-	}
 }

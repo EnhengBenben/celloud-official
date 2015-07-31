@@ -248,4 +248,9 @@ public class DataServiceImpl implements IDataService {
 	public Data getDataById(String dataId) {
 		return dataDao.getDataById(dataId);
 	}
+
+	@Override
+	public List<Data> getDataByDataKeys(String dataKeys, Integer userId) {
+		return dataDao.getDataByDataKeys(dataKeys, userId);
+	}
 }

@@ -1,7 +1,5 @@
 package com.celloud.mongo.dao;
 
-import java.util.List;
-
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
 import com.google.code.morphia.Morphia;
@@ -41,14 +39,14 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 	}
 
 	@Override
-	public List<CmpFilling> getAll() {
-		return ds.find(CmpFilling.class).asList();
-	}
-
-	@Override
 	public void deleteCmpReport(String dataKey, String userId) {
 		ds.delete(ds.find(CmpReport.class).filter("dataKey", dataKey)
 				.filter("userId", userId));
+	}
+
+	@Override
+	public CmpReport getSimpleCmp(String dataKey, String userId) {
+		return null;
 	}
 
 }

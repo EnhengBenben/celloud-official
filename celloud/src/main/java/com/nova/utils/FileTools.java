@@ -14,7 +14,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +28,30 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2013-7-29 下午7:36:51
  */
 public class FileTools {
+
+	/**
+	 * 对datakeylist进行排序
+	 * 
+	 * @param dataKeyList
+	 * @return
+	 */
+	public static String dataListSort(String dataKeyList) {
+		String[] dataKey = dataKeyList.split(";");
+		Map<String, String> map = new HashMap<String, String>();
+		String[] array = new String[dataKey.length];
+		for (int i = 0; i < dataKey.length; i++) {
+			String data = dataKey[i];
+			String d[] = data.split(",");
+			map.put(d[2] + d[0], data);
+			array[i] = d[2] + d[0];
+		}
+		Arrays.sort(array);
+		dataKeyList = "";
+		for (String s : array) {
+			dataKeyList += map.get(s) + ";";
+		}
+		return dataKeyList;
+	}
 
 	/**
 	 * 向文件内追加内容
@@ -336,5 +363,9 @@ public class FileTools {
 			}
 		}
 		return sb.toString();
+	}
+
+	public static String getArray(String[] n, int num) {
+		return n == null ? null : (n.length > num ? n[num] : null);
 	}
 }
