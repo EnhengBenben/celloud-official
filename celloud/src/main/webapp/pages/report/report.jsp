@@ -10,6 +10,8 @@
 		<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 		<meta http-equiv="description" content="This is my page">
 		<link href="<%=request.getContextPath() %>/css/report.css?version=20150526" rel="stylesheet">
+		<link href="<%=request.getContextPath() %>/css/buttons.css?version=20150730" rel="stylesheet">
+		<link href="<%=request.getContextPath() %>/plugins/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.css" rel="stylesheet">
 		<link href="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />

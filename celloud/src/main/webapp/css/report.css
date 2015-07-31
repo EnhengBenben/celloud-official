@@ -213,3 +213,4 @@ only screen and (min-device-pixel-ratio: 2) {
 .title{ font-weight: bold; font-size: 18px;margin:10px;}
 .m-boxCon p{ padding-left: 20px; }
 .table-text-left tr td,.table-text-left tr th{text-align: left;padding-left:30px;}
+.clear{ clear: both;}
