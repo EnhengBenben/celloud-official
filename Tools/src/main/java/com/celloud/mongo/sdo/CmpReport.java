@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.google.code.morphia.annotations.Embedded;
 import com.google.code.morphia.annotations.Entity;
 
 /**
@@ -22,14 +23,23 @@ public class CmpReport extends Base {
 	/**
 	 * 报告所属用户id
 	 */
-	private String userId;
+	private Integer userId;
 	/**
 	 * 创建时间
 	 */
 	private Date createDate;
 	/**
+	 * Mysql 软件id
+	 */
+	private Integer appId;
+	/**
+	 * 软件名称
+	 */
+	private String appName;
+	/**
 	 * 所运行文件名称
 	 */
+	@Embedded
 	private List<Data> data;
 	/**
 	 * 所属公司/医院信息
@@ -96,11 +106,11 @@ public class CmpReport extends Base {
 	 */
 	private CmpFilling cmpFilling;
 
-	public String getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
@@ -279,5 +289,21 @@ public class CmpReport extends Base {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	public Integer getAppId() {
+		return appId;
+	}
+
+	public void setAppId(Integer appId) {
+		this.appId = appId;
+	}
+
+	public String getAppName() {
+		return appName;
+	}
+
+	public void setAppName(String appName) {
+		this.appName = appName;
 	}
 }

@@ -26,13 +26,18 @@ public class ReportServiceImpl implements ReportService {
 
 	@Override
 	public CmpReport getCmpReport(String dataKey,
-			String userId) {
+ Integer userId) {
 		return reportDao.getCmpReport(dataKey, userId);
 	}
 
 	@Override
-	public void deleteCmpReport(String dataKey, String userId) {
+	public void deleteCmpReport(String dataKey, Integer userId) {
 		reportDao.deleteCmpReport(dataKey, userId);
+	}
+
+	@Override
+	public CmpReport getSimpleCmp(String dataKey, Integer userId) {
+		return reportDao.getCmpReport(dataKey, userId);
 	}
 
 }

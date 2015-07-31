@@ -1,8 +1,6 @@
 /**  */
 package com.celloud.mongo.dao;
 
-import java.util.List;
-
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
 import com.google.inject.ImplementedBy;
@@ -17,13 +15,6 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(ReportDAOImpl.class)
 public interface ReportDAO {
 	/**
-	 * 新增CMP运行报告内容
-	 * 
-	 * @param cmpReport
-	 */
-	public void saveCmpReport(CmpReport cmpReport);
-	
-	/**
 	 * 修改cmp用户填写部分内容
 	 * 
 	 * @param cmpFill
@@ -37,7 +28,14 @@ public interface ReportDAO {
 	 *            mysql中的报告id
 	 * @return
 	 */
-	public CmpReport getCmpReport(String dataKey, String userId);
+	public CmpReport getCmpReport(String dataKey, Integer userId);
 
-	public List<CmpFilling> getAll();
+	/**
+	 * 获取CMP简要信息内容
+	 * 
+	 * @param dataKey
+	 * @param userId
+	 * @return
+	 */
+	public CmpReport getSimpleCmp(String dataKey, Integer userId);
 }

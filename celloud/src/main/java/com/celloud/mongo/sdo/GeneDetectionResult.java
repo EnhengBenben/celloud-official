@@ -19,7 +19,7 @@ public class GeneDetectionResult {
 	/**
 	 * 测序深度
 	 */
-	private Integer SequencingDepth;
+	private Integer sequencingDepth;
 
 	public String getGeneName() {
 		return geneName;
@@ -38,10 +38,10 @@ public class GeneDetectionResult {
 	}
 
 	public Integer getSequencingDepth() {
-		return SequencingDepth;
+		return sequencingDepth;
 	}
 
 	public void setSequencingDepth(Integer sequencingDepth) {
-		SequencingDepth = sequencingDepth;
+		this.sequencingDepth = sequencingDepth;
 	}
 }

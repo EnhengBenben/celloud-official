@@ -4,12 +4,16 @@
 <div class="row">
 	<div class="m-file">
 		文件名称：
-		<span class="file-name"><input type="hidden" id="cmp_fileName" value="${ cmpReport.dataKey}(${ resultMap.fileName})">
-			${ cmpReport.dataKey}(${ resultMap.fileName})
+		<span class="file-name">
+		${ cmpReport.dataKey}(
+		<c:forEach items="${cmpReport.data}" var="data">
+			${data.fileName}&nbsp;&nbsp;
+		</c:forEach>
+		)
 		</span>
 		<div class="toolbar">
-			<a href="javascript:printSimpCMP()" class="btn btn-default"><i class="i-print"></i>打印临床报告</a>
-			<a href="javascript:printCMP(${cmpReport.userId },${resultMap.appId },${cmpReport.dataKey })" class="btn btn-default"><i class="i-print"></i>打印科研报告</a>
+			<a href="javascript:printSimpCMP(${cmpReport.userId },${cmpReport.dataKey })" class="btn btn-default"><i class="i-print"></i>打印临床报告</a>
+			<a href="javascript:printCMP(${cmpReport.userId },${cmpReport.dataKey })" class="btn btn-default"><i class="i-print"></i>打印科研报告</a>
 		</div>
 	</div>
 	<div id="printCMPContext">
@@ -17,7 +21,7 @@
 		<div class="m-box">
 			<h2><i class="i-report1"></i>数据统计</h2>
 			<div class="m-boxCon" id="_table">
-				<p>按照测序数据质量分析报告如下：（分析日期：${cmpReport.runDate }）</p>
+				<p>按照测序数据质量分析报告如下：（分析日期：<span id="cmp_RunDate">${cmpReport.runDate }</span>）</p>
 		    	<table class="table table-bordered table-condensed">
 					<thead>
 						<tr>
@@ -27,31 +31,31 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>共获得有效片段：${cmpReport.allFragment }</td>
+							<td>共获得有效片段：<span id="cmp_allFragment">${cmpReport.allFragment }</span></td>
 							<td>10000&nbsp;条以上序列认为合格</td>
 						</tr>
 						<tr>
-							<td>平均质量：${cmpReport.avgQuality }</td>
+							<td>平均质量：<span id="cmp_avgQuality">${cmpReport.avgQuality }</span></td>
 							<td>质量值30以上为可用数据</td>
 						</tr>
 						<tr>
-							<td>平均GC含量：${cmpReport.avgGCContent }</td>
+							<td>平均GC含量：<span id="cmp_avgGC">${cmpReport.avgGCContent }</span></td>
 							<td>40%~50%&nbsp;均属正常</td>
 						</tr>
 						<tr>
-							<td>可用片段：${cmpReport.usableFragment }</td>
+							<td>可用片段：<span id="cmp_useFragment">${cmpReport.usableFragment }</span></td>
 							<td>高质量数据，碱基质量大于30</td>
 						</tr>
 						<tr>
-							<td>待检基因：${cmpReport.noDetectedGene }</td>
+							<td>待检基因：<span id="cmp_undetectGene">${cmpReport.noDetectedGene }</span></td>
 							<td>待检基因数目</td>
 						</tr>
 						<tr>
-							<td>检测基因数：${cmpReport.detectedGene }</td>
+							<td>检测基因数：<span id="cmp_detectGene">${cmpReport.detectedGene }</span></td>
 							<td>检测到的基因数目</td>
 						</tr>
 						<tr>
-							<td>平均测序深度：${cmpReport.avgCoverage }</td>
+							<td>平均测序深度：<span id="cmp_avgCoverage">${cmpReport.avgCoverage }</span></td>
 							<td>100&nbsp;倍以上数据</td>
 						</tr>
 					</tbody>
@@ -62,8 +66,6 @@
 		<div class="m-box m-box-yc">
 			<h2><i class="i-edit"></i>报告</h2>
 			<div class="m-boxCon" id="_report" style="display: inline-block;width: 100%">
-				<input type="hidden" id="cmp_snp_tbody1" value="${resultMap.snp_tbody1 }">
-				<input type="hidden" id="cmp_snp_tbody2" value="${resultMap.snp_tbody2 }">
 				<table style="width:100%;height:100px;">
 			   		<tr>
 			   		  <c:choose>
@@ -229,12 +231,12 @@
 				</table>
 				<table style="width:100%;">
 			      <tr>
-			    	<td style="width:50%;"><img src="${cmpReport.basicStatistics2.qualityPath1 }"></td>
-			    	<td><img src="${cmpReport.basicStatistics2.qualityPath2 }"></td>
+			    	<td style="width:50%;"><img src="${cmpReport.qualityPath1 }"></td>
+			    	<td><img src="${cmpReport.qualityPath2 }"></td>
 			      </tr>
 			      <tr>
-			    	<td><img alt="" src="${cmpReport.basicStatistics2.seqContentPath1 }"></td>
-			    	<td><img alt="" src="${cmpReport.basicStatistics2.seqContentPath2 }"></td>
+			    	<td><img alt="" src="${cmpReport.seqContentPath1 }"></td>
+			    	<td><img alt="" src="${cmpReport.seqContentPath2 }"></td>
 			      </tr>
 			    </table>
 		</div>

@@ -1,7 +1,5 @@
 package com.celloud.mongo.dao;
 
-import java.util.List;
-
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
 import com.google.code.morphia.Morphia;
@@ -22,11 +20,6 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 	}
 
 	@Override
-	public void saveCmpReport(CmpReport cmpReport) {
-		ds.save(cmpReport);
-	}
-
-	@Override
 	public void editCmpFilling(Object id, CmpFilling cmpFill) {
 		ds.update(
 				ds.createQuery(CmpReport.class).filter("_id", id),
@@ -35,14 +28,18 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 	}
 
 	@Override
-	public CmpReport getCmpReport(String dataKey, String userId) {
+	public CmpReport getCmpReport(String dataKey, Integer userId) {
 		return ds.createQuery(CmpReport.class).filter("dataKey", dataKey)
 				.filter("userId", userId).get();
 	}
 
 	@Override
-	public List<CmpFilling> getAll() {
-		return ds.find(CmpFilling.class).asList();
+	public CmpReport getSimpleCmp(String dataKey, Integer userId) {
+		return ds
+				.createQuery(CmpReport.class)
+				.retrievedFields(false, "createDate", "company", "user",
+						"geneDetectionDetail", "cmpFilling")
+				.filter("dataKey", dataKey).filter("userId", userId).get();
 	}
 
 }

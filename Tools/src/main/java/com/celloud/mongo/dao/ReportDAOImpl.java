@@ -33,20 +33,23 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 	}
 
 	@Override
-	public CmpReport getCmpReport(String dataKey, String userId) {
+	public CmpReport getCmpReport(String dataKey, Integer userId) {
 		return ds.createQuery(CmpReport.class).filter("dataKey", dataKey)
 				.filter("userId", userId).get();
 	}
 
 	@Override
-	public void deleteCmpReport(String dataKey, String userId) {
+	public void deleteCmpReport(String dataKey, Integer userId) {
 		ds.delete(ds.find(CmpReport.class).filter("dataKey", dataKey)
 				.filter("userId", userId));
 	}
 
 	@Override
-	public CmpReport getSimpleCmp(String dataKey, String userId) {
-		return null;
+	public CmpReport getSimpleCmp(String dataKey, Integer userId) {
+		return ds
+				.createQuery(CmpReport.class)
+				.retrievedFields(false, "createDate", "company", "user",
+						"geneDetectionDetail", "cmpFilling").get();
 	}
 
 }

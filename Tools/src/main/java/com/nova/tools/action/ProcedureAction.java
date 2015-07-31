@@ -190,10 +190,8 @@ public class ProcedureAction extends ActionSupport {
 		ReadReportService report = new ReadReportService();
 		if (projectId == null || "".equals(projectId)) {
 			if (appId.equals("110")) {
-				cmpReport = reportService.getCmpReport(dataKey, userId);
-				resultMap = new HashMap<String, String>();
-				resultMap.put("appId", appId);
-				resultMap.put("fileName", fileName);
+				cmpReport = reportService.getSimpleCmp(dataKey,
+						Integer.parseInt(userId));
 			} else {
 				// 查看数据报告
 				resultMap = report.readDataReport(basePath, userId, appId,
@@ -224,7 +222,8 @@ public class ProcedureAction extends ActionSupport {
 				+ "的数据报告，用时" + (end - start) + "ms");
 		if (appId.equals(AppNameIDConstant.CMP)
 				|| appId.equals(AppNameIDConstant.CMP_199)) {
-			cmpReport = reportService.getCmpReport(dataKey, userId);
+			cmpReport = reportService.getCmpReport(dataKey,
+					Integer.parseInt(userId));
 			Map<String, CmpGeneDetectionDetail> gdd = cmpReport
 					.getGeneDetectionDetail();
 			System.out.println(gdd);

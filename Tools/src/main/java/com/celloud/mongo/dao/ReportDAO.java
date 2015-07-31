@@ -33,7 +33,7 @@ public interface ReportDAO {
 	 *            mysql中的报告id
 	 * @return
 	 */
-	public CmpReport getCmpReport(String dataKey, String userId);
+	public CmpReport getCmpReport(String dataKey, Integer userId);
 
 	/**
 	 * 删除CMP报告内容
@@ -41,7 +41,7 @@ public interface ReportDAO {
 	 * @param dataKey
 	 * @param userId
 	 */
-	public void deleteCmpReport(String dataKey, String userId);
+	public void deleteCmpReport(String dataKey, Integer userId);
 
 	/**
 	 * 获取CMP简要信息内容
@@ -50,5 +50,5 @@ public interface ReportDAO {
 	 * @param userId
 	 * @return
 	 */
-	public CmpReport getSimpleCmp(String dataKey, String userId);
+	public CmpReport getSimpleCmp(String dataKey, Integer userId);
 }

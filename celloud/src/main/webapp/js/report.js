@@ -663,20 +663,26 @@ $.ajaxSetup ({
 				$("#fileListUl").find(".active").removeClass("active");
 				$("#fileA"+proId+fileId).parent().addClass("active");
 			}
-			$.get("data!getDataByKey",{"dataKey":dataKey},function(data){
-				var anotherName = data.anotherName;
-				$.get("getPath.action",{},function(responseText){
-					var toolsPath = responseText.split(",")[0];
-					var newPath = toolsPath + "Procedure!readReport" + "?fileName="+fileName+"&userId=" + userId + "&appId=" + softwareId + "&dataKey=" + dataKey + "&projectId=&anotherName=" + anotherName;
-					spinner.stop();
-					$.get("getDataReport.action",{"url":newPath},function(responseText){
-						toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-						if(softwareId==73){
-							$("#translateDataKey").html(dataKey);
-						}
+			if(softwareId == 110 || softwareId ==111){
+				$.get("cmpReport!toCmpReport",{"cmpReport.userId":userId,"cmpReport.dataKey":dataKey},function(responseText){
+					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+				});
+			}else{
+				$.get("data!getDataByKey",{"dataKey":dataKey},function(data){
+					var anotherName = data.anotherName;
+					$.get("getPath.action",{},function(responseText){
+						var toolsPath = responseText.split(",")[0];
+						var newPath = toolsPath + "Procedure!readReport" + "?fileName="+fileName+"&userId=" + userId + "&appId=" + softwareId + "&dataKey=" + dataKey + "&projectId=&anotherName=" + anotherName;
+						spinner.stop();
+						$.get("getDataReport.action",{"url":newPath},function(responseText){
+							toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+							if(softwareId==73){
+								$("#translateDataKey").html(dataKey);
+							}
+						});
 					});
 				});
-			});
+			}
 		}
 		
 		function toDataReport(responseText,appId,columns,DATAPATH){
@@ -1363,39 +1369,16 @@ function toPrintVSP(){
 		obj.document.close();
 	});
 }
-function printCMP(userId,appId,dataKey){
-	$.get("getPath.action",{},function(responseText){
-		var toolsPath = responseText.split(",")[0];
-		var newPath = toolsPath + "Procedure!printReport" + "?userId="+userId+"&appId=" + appId + "&dataKey=" + dataKey;
-		spinner.stop();
-		$.get("getDataReport.action",{"url":newPath},function(responseText){
-			var obj = window.open("");
-			obj.document.write(responseText);
-			obj.document.close();
-		});
+function printCMP(userId,dataKey){
+	$.get("cmpReport!toPrintDetailCmp",{"cmpReport.userId":userId,"cmpReport.dataKey":dataKey},function(responseText){
+		var obj = window.open("");
+		obj.document.write(responseText);
+		obj.document.close();
 	});
 }
 
-function printSimpCMP(){
-	var runDate = $("#cmp_RunDate").html();
-	var allFragment = $("#cmp_allFragment").html();
-	var avgQuality = $("#cmp_avgQuality").html();
-	var avgGC = $("#cmp_avgGC").html();
-	var useFragment = $("#cmp_useFragment").html();
-	var undetectGene = $("#cmp_undetectGene").html();
-	var detectGene = $("#cmp_detectGene").html();
-	var avgCoverage = $("#cmp_avgCoverage").html();
-	var snp_tbody1 = $("#cmp_snp_tbody1").val();
-	var snp_tbody2 = $("#cmp_snp_tbody2").val();
-	var fastqc_data = $("#cmp_fastqc_data").val();
-	var per_base_quality = $("#cmp_per_base_quality").val();
-	var per_base_seq_content = $("#cmp_per_base_seq_content").val();
-	var f2 = $("#cmp_f2").val();
-	var q2 = $("#cmp_q2").val();
-	var s2 = $("#cmp_s2").val();
-	var fileName=$("#cmp_fileName").val();
-	var context = runDate+","+allFragment+","+avgQuality+","+avgGC+","+useFragment+","+undetectGene+","+detectGene+","+avgCoverage+","+snp_tbody1+","+snp_tbody2+","+fastqc_data+","+per_base_quality+","+per_base_seq_content+","+f2+","+q2+","+s2+","+fileName;
-	$.get("print!printCMP",{"context":context},function(responseText){
+function printSimpCMP(userId,dataKey){
+	$.get("cmpReport!toPrintSimpleCmp",{"cmpReport.userId":userId,"cmpReport.dataKey":dataKey},function(responseText){
 		var obj = window.open("");
 		obj.document.write(responseText);
 		obj.document.close();

@@ -29,7 +29,10 @@ import com.nova.action.BaseAction;
  */
 @ParentPackage("celloud-default")
 @Action("cmpReport")
-@Results({ @Result(name = "success", location = "../../pages/print/printDetailCMP.jsp") })
+@Results({
+		@Result(name = "toCmpReport", location = "../../pages/report/CMP.jsp"),
+		@Result(name = "toPrintDetailCmp", location = "../../pages/print/printDetailCMP.jsp"),
+		@Result(name = "toPrintSimpleCmp", location = "../../pages/print/printCMP.jsp") })
 public class CmpReportAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
 	Logger log = Logger.getLogger(CmpReportAction.class);
@@ -85,6 +88,28 @@ public class CmpReportAction extends BaseAction {
 			cmpReport.setId(new ObjectId(cmpId));
 			reportService.editCmpFilling(cmpReport.getId(), cmpFill);
 		}
+	}
+
+	public String toCmpReport() {
+		log.info("celloud-用户" + cmpReport.getUserId() + "查看CMP报告");
+		cmpReport = reportService.getSimpleCmp(cmpReport.getDataKey(),
+				cmpReport.getUserId());
+		System.out.println(cmpReport.getRunDate());
+		return "toCmpReport";
+	}
+
+	public String toPrintDetailCmp() {
+		log.info("celloud-用户" + cmpReport.getUserId() + "查看CMP详细报告");
+		cmpReport = reportService.getCmpReport(cmpReport.getDataKey(),
+				cmpReport.getUserId());
+		return "toPrintDetailCmp";
+	}
+
+	public String toPrintSimpleCmp() {
+		log.info("celloud-用户" + cmpReport.getUserId() + "查看CMP临床报告");
+		cmpReport = reportService.getSimpleCmp(cmpReport.getDataKey(),
+				cmpReport.getUserId());
+		return "toPrintSimpleCmp";
 	}
 
 	public CmpFilling getCmpFill() {

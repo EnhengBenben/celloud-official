@@ -122,9 +122,21 @@ public class RunAppServiceImpl {
 		}
 	}
 
-	// TODO 测试
+	/**
+	 * 运行CMP
+	 * 
+	 * @param outPath
+	 * @param projectId
+	 * @param dataKeyList
+	 * @param appId
+	 * @param appName
+	 * @param userId
+	 * @param dataInfos
+	 * @param company
+	 * @param user
+	 */
 	public void runCMP(String outPath, String projectId, String dataKeyList,
-			String appId, String userId, String dataInfos, String company,
+			String appId,String appName, String userId, String dataInfos, String company,
 			String user) {
 		String dataListFile = formatDataKeyList(dataKeyList);
 		String command = CMP_perl + " " + dataListFile + " " + outPath
@@ -174,7 +186,9 @@ public class RunAppServiceImpl {
 				List<Data> dataList = map.get(getArray(dataDetail, 0));
 				CmpReport cmpReport = new CmpReport();
 				cmpReport.setDataKey(getArray(dataDetail, 0));
-				cmpReport.setUserId(userId);
+				cmpReport.setUserId(Integer.parseInt(userId));
+				cmpReport.setAppId(Integer.parseInt(appId));
+				cmpReport.setAppName(appName);
 				cmpReport.setData(dataList);
 				cmpReport.setCompany(com);
 				cmpReport.setUser(use);
@@ -258,13 +272,15 @@ public class RunAppServiceImpl {
 				}
 				cmpReport.setGeneDetectionDetail(geneDetectionDetail);
 
-				String qualityPath1 = PropertiesUtils.outProject + "upload/"
-						+ outPath + "/QC/" + getArray(dataDetail, 0)
+				String qualityPath1 = PropertiesUtils.outProject + "/upload/"
+						+ userId + "/" + appId + "/" + getArray(dataDetail, 0)
+						+ "/QC/"
+						+ getArray(dataDetail, 0)
 						+ "_fastqc/Images/per_base_quality.png";
 				cmpReport.setQualityPath1(qualityPath1);
 				String seqContentPath1 = PropertiesUtils.outProject
- + "upload/"
-						+ outPath + "/QC/"
+						+ "/upload/" + userId + "/" + appId + "/"
+						+ getArray(dataDetail, 0) + "/QC/"
 						+ getArray(dataDetail, 0)
 						+ "_fastqc/Images/per_base_sequence_content.png";
 				cmpReport.setSeqContentPath1(seqContentPath1);
@@ -299,11 +315,14 @@ public class RunAppServiceImpl {
 				while (fol.hasNext()) {
 					String f = fol.next();
 					if (!f.startsWith(getArray(dataDetail, 0))) {
-						qualityPath2 = PropertiesUtils.outProject + "upload/"
-								+ outPath + "/QC/" + f
+						qualityPath2 = PropertiesUtils.outProject + "/upload/"
+								+ userId + "/" + appId + "/"
+								+ getArray(dataDetail, 0) + "/QC/" + f
 								+ "/Images/per_base_quality.png";
 						seqContentPath2 = PropertiesUtils.outProject
-								+ "upload/" + outPath + "/QC/" + f
+								+ "/upload/" + userId + "/" + appId + "/"
+								+ getArray(dataDetail, 0) + "/QC/"
+								+ f
 								+ "/Images/per_base_sequence_content.png";
 						String f2 = finalPath + "/QC/" + f + "/fastqc_data.txt";
 						List<String> list_2 = FileTools.getLineByNum(f2, 4, 10);
@@ -335,7 +354,8 @@ public class RunAppServiceImpl {
 				cmpReport.setSeqContentPath2(seqContentPath2);
 				cmpReport.setBasicStatistics2(basicStatistics2);
 				ReportService reportService = new ReportServiceImpl();
-				reportService.deleteCmpReport(getArray(dataDetail, 0), userId);
+				reportService.deleteCmpReport(getArray(dataDetail, 0),
+						Integer.parseInt(userId));
 				reportService.saveCmpReport(cmpReport);
 			}
 		}
