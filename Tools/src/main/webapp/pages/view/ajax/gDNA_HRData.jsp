@@ -172,17 +172,28 @@ $(function() {
 		$(this).css("padding-left","20px");
 		$(this).css("text-align","left");
 	});
+	var num = 0;
 	$("#reportDiv").find("td").each(function(){
 		var result = $(this).text();
-		if(result.length>50){
-			$(this).html(result.substring(0,50)+"...");
-			$(this).attr("title",result);
+		if(num%4==2){
+			if(result.length>85){
+				$(this).html(result.substring(0,84)+"...");
+				$(this).attr("title",result);
+			}
+		}
+		if(num%4==3){
+			if(result.length>39){
+				$(this).html(result.substring(0,38)+"...");
+				$(this).attr("title",result);
+			}
+			$(this).css("width","300px");
 		}
 		$(this).css("padding-left","20px");
 		$(this).css("text-align","left");
+		num ++;
 	});
 });
-function showBg(src,id) { 
+function showBg(src,id) {
 	var width = $("#" + id).width();
 	var height = $("#" + id).height();
 	$(window.parent.document).find("img[id='imageFullScreen']").css("width",width*1.5);
