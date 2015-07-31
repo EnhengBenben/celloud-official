@@ -19,11 +19,13 @@
 			<h2>位点突变</h2>
 			<h5 id="snpType"><s:property value="resultMap.snpType.replace('Type','基因型')" escape="false"/></h5>
 			<div class="m-boxCon">
-				<s:if test="%{resultMap.snpType.equals('no match<br />')}">
-					可能不是HBV样本或者是样本质量太低
+				<s:if test="%{''.equals(resultMap.svg204)}">
+					<div class="imgmiss">
+						可能因为测序质量差 , <br/>样本中未找到204位点。
+					</div>
 				</s:if>
 				<s:else>
-					<img src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg204"/>" height="420px" width="420px"/>
+					<img src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.svg204"/>" height="476px" width="420px"/>
 				</s:else>
 			</div>
 			<div class="m-tips">
@@ -268,9 +270,7 @@
 						</s:if>
 						<s:else>
 							<div class="imgmiss">
-								<div class="imgmiss">
 								可能因为测序质量差 , <br/>样本中未找到202位点。
-							</div>
 							</div>
 						</s:else>
 						<s:if test="%{!''.equals(resultMap.svg204)}">
@@ -334,7 +334,7 @@
 		<!--染色体序列点图-->
 		<div class="m-box" id="printDiv3">
 			<h2><i class="i-dna"></i>原始峰图
-				<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal',1)"><i class="i-tips"></i></div>
+				<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal',1)"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
 			</h2>
 		    <div class="m-boxCon">
 				<a href="javascript:showBg('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll1"/>','listAll1Img');" >
@@ -466,7 +466,7 @@ function showModal(id,flag){
     margin-top: 19px;
     margin-left: 30px;
     height: 90px;
-    float: left;
+    display:inline-block;
     border-color: black;
     color: #CC0000;
 }

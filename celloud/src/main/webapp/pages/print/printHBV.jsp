@@ -225,6 +225,7 @@ $(document).ready(function(){
 	var appId = $("#_appId").html();
 	var _flag = $("#_flag").html();
 	if(appId==82&&_flag==0){
+		$("button").remove();
 		$("#mainDIv").css("min-height",5700+"px");
 	}else if($("#mainDIv").height()>1000){
 		$("#mainDIv").css("min-height",height+"px");
