@@ -142,6 +142,9 @@ public class ProcedureAction extends ActionSupport {
 	private Map<String, String> resultMap;
 	private String flag;
 	private String anotherName;
+	private String dataInfos;
+	private String company;
+	private String user;
 	private CmpReport cmpReport;
 	private ReportService reportService = new ReportServiceImpl();
 
@@ -167,7 +170,8 @@ public class ProcedureAction extends ActionSupport {
 			public void run() {
 				app.runProject(basePath, userId, appId, appName, projectId,
 						dataKeyList, email, projectName, sampleList, ada3,
-						ada5, sp, cpu, diffList, fileName);
+						ada5, sp, cpu, diffList, fileName, dataInfos, company,
+						user);
 			}
 		}).start();
 		return SUCCESS;
@@ -517,5 +521,29 @@ public class ProcedureAction extends ActionSupport {
 
 	public void setCmpReport(CmpReport cmpReport) {
 		this.cmpReport = cmpReport;
+	}
+
+	public String getDataInfos() {
+		return dataInfos;
+	}
+
+	public void setDataInfos(String dataInfos) {
+		this.dataInfos = dataInfos;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
 	}
 }

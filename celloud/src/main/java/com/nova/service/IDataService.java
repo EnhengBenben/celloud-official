@@ -361,4 +361,12 @@ public interface IDataService {
      * @return
      */
     public int updateAnotherNameById(Data data);
+
+	/**
+	 * 根据多个dataKey获取数据列表
+	 * 
+	 * @param dataKeys
+	 * @return
+	 */
+	public List<Data> getDataByDataKeys(String dataKeys, Integer userId);
 }

@@ -58,4 +58,12 @@ public interface ICompanyService {
      * @return
      */
     Company getCompany(int companyId);
+
+	/**
+	 * 获取用户所属医院
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	Company getCompanyByUserId(int userId);
 }

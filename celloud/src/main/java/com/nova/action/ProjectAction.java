@@ -15,15 +15,19 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.inject.Inject;
 import com.nova.email.EmailService;
 import com.nova.pager.PageList;
+import com.nova.sdo.Company;
 import com.nova.sdo.Data;
 import com.nova.sdo.DataType;
 import com.nova.sdo.Project;
 import com.nova.sdo.ProjectParam;
 import com.nova.sdo.Report;
 import com.nova.sdo.Software;
+import com.nova.sdo.User;
+import com.nova.service.ICompanyService;
 import com.nova.service.IDataService;
 import com.nova.service.IDataTypeService;
 import com.nova.service.IProjectService;
@@ -65,6 +69,8 @@ public class ProjectAction extends BaseAction {
 	private IDataTypeService dataTypeService;
 	@Inject
 	private ISoftwareService softwareService;
+	@Inject
+	private ICompanyService companyService;
 	private Integer userId;
 	private int userid;
 	private String userNames;
@@ -190,6 +196,27 @@ public class ProjectAction extends BaseAction {
 				}
 			}
 		}
+		Map<String, List<Data>> map = new HashMap<String, List<Data>>();
+		if (Integer.parseInt(softwareId) == 110
+				|| Integer.parseInt(softwareId) == 111) {
+			String dataDetails = FileTools.dataListSort(dataResult.toString());
+			String dataArray[] = dataDetails.split(";");
+			for (int i = 0; i < dataArray.length; i = i + 2) {
+				String[] dataDetail = dataArray[i].split(",");
+				String[] dataDetail1 = dataArray[i + 1].split(",");
+				System.out.println(FileTools.getArray(dataDetail, 0) + ","
+						+ FileTools.getArray(dataDetail1, 0));
+				List<Data> dataList = dataService.getDataByDataKeys(
+						FileTools.getArray(dataDetail, 0) + ","
+								+ FileTools.getArray(dataDetail1, 0), userId);
+				System.out.println("------------dataArray length---------"
+						+ dataList.size());
+				map.put(FileTools.getArray(dataDetail, 0), dataList);
+			}
+		}
+		Company com = companyService.getCompanyByUserId(userId);
+		User user = userService.getUserById(userId);
+
 		// 6.根据用户ID获取用户邮箱
 		String email = userService.getEmailBySessionUserId(userId);
 		// 7.根据软件id获取软件名称
@@ -199,7 +226,10 @@ public class ProjectAction extends BaseAction {
 				+ "Procedure!runApp?userId=" + userId + "&appId=" + softwareId
 				+ "&appName=" + soft.getSoftwareName() + "&projectName="
 				+ projectName + "&email=" + email + "&dataKeyList="
-				+ dataResult.toString() + "&projectId=" + proId;
+				+ dataResult.toString() + "&projectId=" + proId + "&dataInfos="
+				+ JSONObject.toJSONString(map) + "&company="
+				+ JSONObject.toJSONString(com) + "&user="
+				+ JSONObject.toJSONString(user);
 		RemoteRequests rr = new RemoteRequests();
 		rr.run(newPath);
 		error = 0;

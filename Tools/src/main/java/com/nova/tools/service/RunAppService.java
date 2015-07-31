@@ -41,7 +41,8 @@ public class RunAppService {
 	public void runProject(String basePath, String userId, String appId,
 			String appName, String projectId, String dataKeyList, String email,
 			String projectName, String sampleList, String ada3, String ada5,
-			String sp, String cpu, String diffList, String fileName) {
+			String sp, String cpu, String diffList, String fileName,
+			String dataInfos, String company, String user) {
 		// 创建项目文件夹
 		String projectPath = basePath + "/" + userId + "/" + appId + "/"
 				+ projectId;
@@ -55,7 +56,8 @@ public class RunAppService {
 		// CMP
 		if (AppNameIDConstant.CMP.equals(appId)
 				|| AppNameIDConstant.CMP_199.equals(appId)) {
-			runApp.runCMP(appPath, projectId, dataKeyList, appId, userId);
+			runApp.runCMP(appPath, projectId, dataKeyList, appId, userId,
+					dataInfos, company, user);
 		}
 
 		// VSP

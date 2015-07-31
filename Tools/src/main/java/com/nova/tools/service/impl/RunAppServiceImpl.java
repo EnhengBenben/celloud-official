@@ -13,10 +13,14 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 
+import com.alibaba.fastjson.JSON;
 import com.celloud.mongo.sdo.CmpGeneDetectionDetail;
 import com.celloud.mongo.sdo.CmpGeneSnpResult;
 import com.celloud.mongo.sdo.CmpReport;
+import com.celloud.mongo.sdo.Company;
+import com.celloud.mongo.sdo.Data;
 import com.celloud.mongo.sdo.GeneDetectionResult;
+import com.celloud.mongo.sdo.User;
 import com.celloud.mongo.service.ReportService;
 import com.celloud.mongo.service.ReportServiceImpl;
 import com.itextpdf.text.DocumentException;
@@ -29,6 +33,7 @@ import com.nova.tools.itext.PGSProjectPDF;
 import com.nova.tools.itext.PGS_PDF;
 import com.nova.tools.utils.FileTools;
 import com.nova.tools.utils.GanymedSSH;
+import com.nova.tools.utils.JsonUtil;
 import com.nova.tools.utils.PropertiesUtils;
 import com.nova.tools.utils.ScreeningUtil;
 
@@ -119,7 +124,8 @@ public class RunAppServiceImpl {
 
 	// TODO 测试
 	public void runCMP(String outPath, String projectId, String dataKeyList,
-			String appId, String userId) {
+			String appId, String userId, String dataInfos, String company,
+			String user) {
 		String dataListFile = formatDataKeyList(dataKeyList);
 		String command = CMP_perl + " " + dataListFile + " " + outPath
 				+ " ProjectID" + projectId;
@@ -138,6 +144,9 @@ public class RunAppServiceImpl {
 			// 追加表头
 			FileTools.appendWrite(projectFile,
 					"dataKey\t文件名称\t共获得有效片段\t平均质量\t平均GC含量\t平均覆盖度\n");
+			Map<String, List<Data>> map = JsonUtil.parseDataMap(dataInfos);
+			Company com = JSON.parseObject(company, Company.class);
+			User use = JSON.parseObject(user, User.class);
 			for (int i = 0; i < dataArray.length; i = i + 2) {
 				String[] dataDetail = dataArray[i].split(",");
 				String[] dataDetail1 = dataArray[i + 1].split(",");
@@ -162,9 +171,14 @@ public class RunAppServiceImpl {
 				}
 
 				// -----读取报告内容并保存到mongoDB------
+				List<Data> dataList = map.get(getArray(dataDetail, 0));
 				CmpReport cmpReport = new CmpReport();
 				cmpReport.setDataKey(getArray(dataDetail, 0));
 				cmpReport.setUserId(userId);
+				cmpReport.setData(dataList);
+				cmpReport.setCompany(com);
+				cmpReport.setUser(use);
+				cmpReport.setCreateDate(new Date());
 				String logPath = finalPath + "/LOG.txt";
 				String statisPath = finalPath + "/result/statistic.xls";
 				String avgPath = finalPath + "/result/average.info";
