@@ -21,7 +21,7 @@
 		</c:forEach>
 	</div>
     <h4>2、检测结果</h4>
-    <div class="info w3cbbs">
+    <div class="info">
     	<p>按照临床及/或病理诊断，结合患者诊疗病史进行针对肿瘤基因测序分析报告如下：</p>
 	   	<table style="width:100%;height:100px;">
 	   		<tr>
@@ -255,5 +255,22 @@
       </tr>
     </table>
 </section>
+<script language="javascript" src="<%=request.getContextPath()%>/plugins/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+function preview(obj){
+	var inputVal;
+	var textareaVal;
+	var classname;
+	var cmpDrug = "";
+	$("body").find("section").each(function(){
+		$(this).removeClass("border1");
+	});
+	window.print();
+	$("#change").show();
+	$("body").find("section").each(function(){
+		$(this).addClass("border1");
+	});
+}
+</script>
 </body>
 </html>

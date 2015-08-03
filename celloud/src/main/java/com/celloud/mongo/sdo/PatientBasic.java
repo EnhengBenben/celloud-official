@@ -19,7 +19,7 @@ public class PatientBasic {
 	/**
 	 * 年龄
 	 */
-	private Integer age;
+	private String age;
 
 	public String getName() {
 		return name;
@@ -37,11 +37,11 @@ public class PatientBasic {
 		this.sex = sex;
 	}
 
-	public Integer getAge() {
+	public String getAge() {
 		return age;
 	}
 
-	public void setAge(Integer age) {
+	public void setAge(String age) {
 		this.age = age;
 	}
 }

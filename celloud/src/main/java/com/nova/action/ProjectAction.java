@@ -131,6 +131,7 @@ public class ProjectAction extends BaseAction {
 	 * @return
 	 */
 	public String run() {
+		log.info("----------------运行APP Begin----------");
 		// 1.新建项目
 		userId = (Integer) super.session.get("userId");
 		projectName = new Date().getTime() + "";

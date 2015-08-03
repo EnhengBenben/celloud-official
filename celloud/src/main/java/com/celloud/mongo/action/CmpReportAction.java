@@ -59,7 +59,9 @@ public class CmpReportAction extends BaseAction {
 				drs.setDrug(drsStr[2]);
 				rssli.add(drs);
 			}
-			cmpFill.setResistanceSiteSum(rssli);
+			if (rssli != null) {
+				cmpFill.setResistanceSiteSum(rssli);
+			}
 			String[] s2 = StringUtils.splitByWholeSeparatorPreserveAllTokens(
 					r[1], ";");
 			List<DrugResistanceSite> pmli = new ArrayList<DrugResistanceSite>();

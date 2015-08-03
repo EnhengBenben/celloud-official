@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>肿瘤报告打印</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/print.css?version=20150707">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/print.css?version=20150803">
 </head>
 <body>
 <a href="javascript:void(0)" onclick="preview(this)" class="btn btn-default" id="change" style="float:right;margin-top:10px;margin-right:-80px;">打印</a>
@@ -4099,7 +4099,7 @@
 		</p>
 	</div>
 	<div class="h1">BRAF</div>
-	<div class="h2">1.&nbsp;&nbsp;1. Dabrafenib Mesylate</div>
+	<div class="h2">1.&nbsp;&nbsp;Dabrafenib Mesylate</div>
 	<ul>
 		<li><span class="font-bold">Description:</span>Dabrafenib Mesylate(GSK-2118436 Mesylate) is a novel, potent, and selective Raf kinase inhibitor that is capableof inhibiting the kinase activity of wild-type B-Raf, B-RafV600Eand c-Raf with IC50 values of 3.2, 0.8, and 5.0 nM, respectively.</li>
 		<li><span class="font-bold">IC50 value:</span> 3.2/0.8/5.0 nM (B-Raf/B-RafV600E/ c-Raf) [1]</li>
@@ -4599,7 +4599,7 @@
 	</div>
 	<div class="h1">KIT</div>
 	<p>c-Kit (Mast/stem cell growth factor receptor, SCFR or CD117) is a proteinthat in humans is encoded by the KIT gene. c-Kit (CD117) is an important cell surface marker used to identify certain types of hematopoietic(blood) progenitors in the bone marrow. c-Kit is a cytokine receptor expressed on the surface of hematopoietic stem cells as well as other cell types. Altered forms of this receptor may be associated with some types of cancer. c-Kit is a receptor tyrosine kinase type III, which binds to stem cell factor. When c-Kit binds to stem cell factor (SCF) it forms adimer that activates its intrinsic tyrosine kinase activity, that in turn phosphorylates and activates signal transduction molecules that propagate the signal in the cell. Signalling through c-Kit plays a role in cell survival, proliferation, and differentiation.</p>
-	<div class="h2">1.&nbsp;&nbsp;1. Imatinib</div>
+	<div class="h2">1.&nbsp;&nbsp;Imatinib</div>
 	<ul>
 		<li><span class="font-bold">Description:</span></li>
 		<li><span class="font-bold">IC50 value:</span> 100 nM (PDGFR) [1]; 100 nM (c-Kit) [2]</li>
@@ -5028,8 +5028,12 @@ $(document).ready(function(){
 	$("#noMutation").change(function(){
 		if($("#noMutation").attr("checked")=="checked"){
 			$("#drugTable").css("display","none");
+			$("#del_drugTbody_3").css("display","none");
+			$("#drugTable").parent().find("a").css("display","none");
 		}else{
 			$("#drugTable").css("display","");
+			$("#del_drugTbody_3").css("display","");
+			$("#drugTable").parent().find("a").css("display","");
 		}
 	});
 });
@@ -5059,7 +5063,7 @@ function addDrugInput(div){
 }
 function removeTableTr(tbody){
 	$("#"+tbody).children("tr:last-child").remove();
-	$("#del_"+tbody).children("tr:last-child").remove();
+	$("#del_"+tbody).find("tbody").children("tr:last-child").remove();
 }
 function removeThisTr(tbody,num){
 	$("#"+tbody+"_tr"+num).remove();
@@ -5208,7 +5212,7 @@ function printSection2Table(){
 		var newTables = "<table style='width:100%;height:100px;'><tr><td>";
 		var tbody1 = thead+"<tbody>";
 		var tbody2 = thead+"<tbody>";
-		for(var i=1;i<23;i++){
+		for(var i=1;i<22;i++){
 			tbody1+="<tr>"+$("#snp_table1").find("tr:eq("+i+")").html()+"</tr>";
 			tbody2+="<tr>"+$("#snp_table2").find("tr:eq("+i+")").html()+"</tr>";
 		}
@@ -5217,7 +5221,7 @@ function printSection2Table(){
 		newTables+=tbody1+"</td><td>"+tbody2+"</td></tr></table><div class='w3cbbs'></div>";
 		tbody1 = thead+"<tbody>";
 		tbody2 = thead+"<tbody>";
-		for(var i=23;i<trLength;i++){
+		for(var i=22;i<trLength;i++){
 			tbody1+="<tr>"+$("#snp_table1").find("tr:eq("+i+")").html()+"</tr>";
 			tbody2+="<tr>"+$("#snp_table2").find("tr:eq("+i+")").html()+"</tr>";
 		}
