@@ -123,7 +123,7 @@
 }
 
 .plupload_filelist .plupload_file_name {
-	width: 605px;
+	width: 600px;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
