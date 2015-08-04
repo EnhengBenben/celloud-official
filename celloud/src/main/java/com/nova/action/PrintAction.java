@@ -97,6 +97,9 @@ public class PrintAction extends BaseAction {
 	}
 
 	public String printHBV() {
+		Integer deptId = (Integer) super.session.get("deptId");
+		dept = deptService.getDept(deptId);
+		company = companyService.getCompany(dept.getCompanyId());
 		// TODO 写死的appId
 		if (appId == 82) {// HBV_SNP2
 			fileId = dataService.getDataByKey(dataKey).getFileId();

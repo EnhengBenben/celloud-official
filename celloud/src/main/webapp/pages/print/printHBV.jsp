@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>报告打印</title>
-<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.2">
+<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.3">
 <style type="text/css">
 textarea {
 	width: 800px;	
@@ -72,7 +72,7 @@ p,table,.m-box{
 				<a href="javascript:void(0)" onclick="reset()" class="button btn-info" name="change" style="float:right;margin-top:10px;"><i class=""></i>重置</a>
 				<a href="javascript:void(0)" onclick="savePage()" class="button btn-info" name="change" style="float:right;margin-top:10px;"><i class=""></i>保存</a>
 				<div class="container" style="display: none;"></div>
-				<h1>${txt }报告单</h1>
+				<h1>${company.companyName }${txt }报告单</h1>
 			    <hr />
 			    <div class="wrapper">
 			        <ul class="info mt20">
