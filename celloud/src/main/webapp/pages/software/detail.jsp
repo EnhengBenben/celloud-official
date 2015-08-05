@@ -2,19 +2,14 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <style>
 .detailBtn{
-	width:68px;
-    height: 25px;
     margin-top: 10px;
     margin-right: 15px;
-    text-align: center;
-	border: solid 1px;
     float: right;
-    background-color: #EAEAEA;
 }
 </style>
-<a href="javascript:goToSoftListPage();" class="close"></a>
-<s:if test="%{soft.appDoc!=null&&!soft.appDoc.equals('')}">
-	<a href="javascript:showMore();" class="detailBtn">详细</a>
+<a href="javascript:goToSoftListPage();" class="button button-rounded button-small" style="float:right;margin-top: 10px;">关闭</a>
+<s:if test="%{soft.appDoc!=null&&!soft.appDoc.equals('')}"> 
+	<a href="javascript:showMore();" class="button button-primary button-rounded button-small detailBtn">详细</a>
 </s:if>
 <div class="nomal">
 	<div class="appGroup">
@@ -126,7 +121,7 @@
 		暂时没有评论<br/>
 	</s:else>
 </div>
-<div class="moreInfo" style="display: none;">
+<div class="moreInfo" style="display: none; padding-top: 40px;">
 	<s:property value="soft.appDoc" escape="false"/>
 </div>
 <script type="text/javascript">

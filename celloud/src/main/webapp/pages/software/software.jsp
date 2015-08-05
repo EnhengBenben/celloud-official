@@ -6,6 +6,7 @@
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/pages/css/style.css">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/software.css">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/pages/css/database.css">
+	<link href="<%=request.getContextPath() %>/css/buttons.css?version=20150730" rel="stylesheet">
 	</head>
 	<body>
 		<div class="container app">
