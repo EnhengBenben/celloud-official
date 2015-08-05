@@ -1,3 +1,6 @@
+#使用python操作mongo数据库
+
+```
 #encoding=utf-8
 #coding=utf-8
 
@@ -55,3 +58,5 @@ posts.find({"author": "Mike"}).count()
 #排序
 d = datetime.datetime(2015, 8, 3, 8)
 posts.find({"date": {"$lt": d}}).sort("author")
+
+```

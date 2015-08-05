@@ -764,8 +764,11 @@ public class ReadReportServiceImpl {
 		// 其他
 		String other = FileTools.fileSearch(snpPath, "new.png", "endWith")
 				.toString();
-		resultMap.put("other",
-				other.substring(other.indexOf("[") + 1, other.indexOf("]")));
+		other = other.substring(other.indexOf("[") + 1, other.indexOf("]"));
+		System.out.println(other);
+		other = FileTools.imgSort(other);
+		System.out.println(other);
+		resultMap.put("other",other);
 		// 所有检索结果（大图）
 		String all1 = FileTools.fileExist(snpPath, "1_all.png", "endsWith");
 		String all2 = FileTools.fileExist(snpPath, "2_all.png", "endsWith");
