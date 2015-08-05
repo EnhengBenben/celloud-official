@@ -51,6 +51,28 @@ public class FileTools {
 		}
 		return dataKeyList;
 	}
+	
+	/**
+	 * HBVSNP图片排序
+	 * @param imgList
+	 * @return
+	 */
+	public static String imgSort(String imgList) {
+		String[] img = imgList.split(",");
+		Map<String, String> map = new HashMap<String, String>();
+		String[] array = new String[img.length];
+		for (int i = 0; i < img.length; i++) {
+			String data = img[i];
+			map.put(data, data);
+			array[i] = data;
+		}
+		Arrays.sort(array);
+		imgList = "";
+		for (String s : array) {
+			imgList += map.get(s) + ",";
+		}
+		return imgList;
+	}
 
 	/**
 	 * 为NIPT流程而写的处理方法
