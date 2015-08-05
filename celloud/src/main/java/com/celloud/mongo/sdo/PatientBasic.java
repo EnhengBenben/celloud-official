@@ -44,4 +44,5 @@ public class PatientBasic {
 	public void setAge(String age) {
 		this.age = age;
 	}
+
 }

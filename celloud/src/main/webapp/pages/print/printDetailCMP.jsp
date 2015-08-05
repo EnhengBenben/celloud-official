@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>肿瘤报告打印</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/print.css?version=20150803">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/print.css?version=20150804">
 </head>
 <body>
 <a href="javascript:void(0)" onclick="preview(this)" class="btn btn-default" id="change" style="float:right;margin-top:10px;margin-right:-80px;">打印</a>
@@ -3962,7 +3962,7 @@
 	</div>
 	<div class="h1">ALK：</div>
 	<p>ALK (Anaplastic lymphoma kinase) is an enzyme that in humans is encoded by the ALK gene. ALK is a membrane associated tyrosine kinase receptor of the insulin receptor superfamily. The function of the full-length ALK receptor is poorly understood. It has a probable role in the central and peripheral nervous system development and maintenance. ALK is a dependence receptor, which may exert antagonist functions, proapoptotic or antiapoptotic, depending on the absence or presence of a ligand. Dependence receptors have a potential role in cancer and development. Ligands available for this demonstration were agonist anti-ALK antibodies. ALK is still an orphan receptor, given the high level of controversy about pleiotrophin and midkine, which have been proposed as ligands by Stoica et al.</p>
-	<div class="h2">1.&nbsp;&nbsp;. LDK378 dihydrochloride</div>
+	<div class="h2">1.&nbsp;&nbsp;LDK378 dihydrochloride</div>
 	<ul>
 		<li><span class="font-bold">Description:</span>LDK378 2Hcl (Ceritinib) is potent inhibitor against ALK with IC50 of 0.2 nM, shows 40- and 35-fold selectivity against IGF-1R and InsR, respectively.</li>
 		<li><span class="font-bold">IC50 value:</span> 0.2 nM [1]</li>
@@ -5040,9 +5040,10 @@ $(document).ready(function(){
 window.onload=function(){
 	printSection2Table();
 	$("#section5").find("div[name='geneDescriptDiv']").each(function(index,element){
-		var height1 = $(this).height();
+		var height1 = $(this).height()+36;
 		var height2 = $(this).parent().find("table").find("tr").length;
- 		if((height1>670 && height2>1) || (height1>570 && height2>5)|| (height1>550 && height2>6)){
+		var height_t = $(this).parent().parent().parent().height();
+ 		if(height_t>980 &&((height1>670 && height2>1) || (height1>570 && height2>5)|| (height1>550 && height2>6))){
  			$(this).addClass("w3cbbs");
  		}
 	});

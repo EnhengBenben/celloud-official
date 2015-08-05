@@ -14,13 +14,13 @@
 <a href="javascript:void(0)" onclick="preview(this)" class="btn btn-default" id="change" style="float:right;margin-top:10px;margin-right:-80px;"><i class="i-print"></i>打印</a>
 <section class="section2 border1 w3cbbs">
     <h3>基因检测结果简述</h3>
-    <h4>1、检测文件</h4>
+    <h4>1.&nbsp;&nbsp; 检测文件</h4>
     <div class="info">
 		<c:forEach items="${cmpReport.data}" var="data">
 			${data.fileName}&nbsp;&nbsp;
 		</c:forEach>
 	</div>
-    <h4>2、检测结果</h4>
+    <h4>2.&nbsp;&nbsp;检测结果</h4>
     <div class="info">
     	<p>按照临床及/或病理诊断，结合患者诊疗病史进行针对肿瘤基因测序分析报告如下：</p>
 	   	<table style="width:100%;height:100px;">
@@ -109,7 +109,7 @@
 			5.&nbsp;&nbsp;橘色阴影标记的基因：测序深度低于50，分析结果的可信度比较低。
 	   	</p>
     </div>
-    <h4>3、检测结果详细描述</h4>
+    <h4>3.&nbsp;&nbsp;检测结果详细描述</h4>
     <div class="info">
     	<p>按照测序数据质量分析报告如下：（分析日期：${cmpReport.runDate }）</p>
     	<table class="table table-striped-green">
