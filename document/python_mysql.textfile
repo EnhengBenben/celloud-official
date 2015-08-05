@@ -1,7 +1,11 @@
-#encoding=utf-8
-#coding=utf-8
+#使用python操作mysql数据库
 
-#导入MySQLdb模块，注意大小写（如果是没有安装，ubuntu->sudo apt-install python-mysqldb）
+```
+
+ #encoding=utf-8
+ #coding=utf-8
+
+ #导入MySQLdb模块，注意大小写（如果是没有安装，ubuntu->sudo apt-install python-mysqldb）
 import sys
 import MySQLdb
 
@@ -45,3 +49,5 @@ try:
 	conn.close()
 except MySQLdb.Error,e:
      print "Mysql Error %d: %s" % (e.args[0], e.args[1])
+
+```
