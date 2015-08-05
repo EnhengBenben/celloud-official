@@ -21,10 +21,9 @@ import com.nova.tools.utils.TableUtil;
 public class ReadReportServiceImpl {
 
 	public Map<String, String> printCMPReport(String path, String outPath,
-			String dataKey, String userId, String appId) {
+			String dataKey) {
 		Map<String, String> resultMap = new HashMap<String, String>();
 		resultMap.put("dataKey", dataKey);
-		resultMap.put("userId", userId);
 		String logPath = path + "/LOG.txt";
 		String statisPath = path + "/result/statistic.xls";
 		String avgPath = path + "/result/average.info";
