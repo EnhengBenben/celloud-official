@@ -1,5 +1,6 @@
 package com.nova.action;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -53,6 +54,8 @@ import com.nova.utils.XmlUtil;
 		@Result(name = "RunProject", type = "json", params = { "root", "error" }),
 		@Result(name = "success", type = "json", params = { "root", "userNames" }),
 		@Result(name = "returnBoolean", type = "json", params = { "root",
+				"flag" }),
+		@Result(name = "toSaveRunedCmp", type = "json", params = { "root",
 				"flag" }) })
 public class ProjectAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
@@ -104,6 +107,48 @@ public class ProjectAction extends BaseAction {
 	private List<Project> proNameList;// 用户的项目名称列表
 	private int sortByType;// 排序类型 1：按项目名称排序，2：按启动时间排序
 
+	public String toSaveRunedCmp() {
+		String source = "/share/data/webapps/Tools/upload/88/110/";
+		File upload = new File(source);
+		File[] files = upload.listFiles();
+		Map<String, List<Data>> map = new HashMap<String, List<Data>>();
+		for (File f : files) {
+			String data1 = f.getName();
+			if (data1.length() > 7) {
+				String data2 = "";
+				if (data1.equals("20150609090539")) {
+					data2 = "20150609309453";
+				} else if (data1.equals("20150609648660")) {
+					data2 = "20150609886427";
+				} else if (data1.equals("20150609918308")) {
+					data2 = "20150609127108";
+				} else if (data1.equals("20150610114501")) {
+					data2 = "20150610888196";
+				} else if (data1.equals("20150626658029")) {
+					data2 = "20150626745382";
+				} else if (data1.equals("20150717570992")) {
+					data2 = "20150717944085";
+				} else if (data1.equals("20150720053040")) {
+					data2 = "20150720461290";
+				}
+				List<Data> dataList = dataService.getDataByDataKeys(data1 + ","
+						+ data2, 88);
+				map.put(data1, dataList);
+				Company c = companyService.getCompanyByUserId(88);
+				User user = userService.getUserById(88);
+
+				String newPath = PropertiesUtil.toolsOutPath
+						+ "Procedure!runApp?userId=" + 88 + "&appId=" + 110
+						+ "&appName=CMP&dataKey=" + data1 + "&dataInfos="
+						+ JSONObject.toJSONString(map) + "&company="
+						+ JSONObject.toJSONString(c) + "&user="
+						+ JSONObject.toJSONString(user);
+				RemoteRequests rr = new RemoteRequests();
+				rr.run(newPath);
+			}
+		}
+		return "toSaveRunedCmp";
+	}
 	/**
 	 * 下载项目pdf
 	 */
