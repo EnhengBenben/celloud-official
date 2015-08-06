@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>报告打印</title>
-<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.3">
+<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.5">
 <style type="text/css">
 textarea {
 	width: 800px;	
@@ -71,7 +71,9 @@ p,table,.m-box{
 				<a href="javascript:void(0)" onclick="preview(this)" class="button btn-info" name="change" style="float:right;margin-top:10px;margin-right:30px;"><i class=""></i>打印</a>
 				<a href="javascript:void(0)" onclick="reset()" class="button btn-info" name="change" style="float:right;margin-top:10px;"><i class=""></i>重置</a>
 				<a href="javascript:void(0)" onclick="savePage()" class="button btn-info" name="change" style="float:right;margin-top:10px;"><i class=""></i>保存</a>
-				<div class="container" style="display: none;"></div>
+				<c:if test="${flag==0 }">
+					<div class="container" style="display: none;"></div>
+				</c:if>
 				<h1>${company.companyName }${txt }报告单</h1>
 			    <hr />
 			    <div class="wrapper">
@@ -90,7 +92,7 @@ p,table,.m-box{
 			        </ul>
 			        <c:if test="${appId==82 }">
 						<div class=" gray mt20">送检目的：HBV基因分型，拉米夫定LAM，阿德福韦ADV，恩替卡韦ETV，替比夫定LDT，替诺福韦酯TDF，恩曲他滨FTC</div>
-				        <div class="gray">相关位点：rt169，rt173，rt180，rt181，rt184，rt194，rt202，rt204，rt215，rt233，rt236，rt250</div>
+				        <div class="gray mt20">相关位点：rt169，rt173，rt180，rt181，rt184，rt194，rt202，rt204，rt215，rt233，rt236，rt250</div>
 					</c:if>
 			    </div>
 			    <hr class="hr-bold mt20" />
@@ -135,8 +137,7 @@ p,table,.m-box{
 				        <p>${snpType }</p>
 				        <h2 class="mt20">二、耐药突变位点检测结果：</h2>
 				        ${table }
-				        <p class="small" >注：</p>
-				        <p class="small left" >深颜色表示发生了耐药突变</p>
+				        <p class="small" >注：深颜色表示发生了耐药突变</p>
 				        <p class="small left" >浅颜色表示发生了突变，但是暂无文献支持其和耐药相关</p>
 				        <p class="small left" >红色字体表示在样本中未找到该位点</p>
 				        <c:if test="${flag==0 }">
@@ -194,7 +195,14 @@ function preview(obj){
 	$("a[name='change']").hide();
 	$(".w3cbbs").css("display","");
 	$(".container").css("display","");
+	var _flag = $("#_flag").html();
+	if(_flag==1){
+		$("h1").css("padding","0 0 5px 0");
+	}
 	window.print();
+	if(_flag==1){
+		$("h1").css("padding","40px 0 5px 0");
+	}
 	$(".w3cbbs").css("display","none");
 	$(".container").css("display","none");
 	$("a[name='change']").show();
@@ -227,6 +235,8 @@ $(document).ready(function(){
 	if(appId==82&&_flag==0){
 		$("button").remove();
 		$("#mainDIv").css("min-height",5700+"px");
+	}else if(_flag==1){
+		
 	}else if($("#mainDIv").height()>1000){
 		$("#mainDIv").css("min-height",height+"px");
 	}
