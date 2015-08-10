@@ -32,6 +32,7 @@ import com.nova.tools.constant.AppNameIDConstant;
 import com.nova.tools.itext.utils.MergePdf;
 import com.nova.tools.service.ReadReportService;
 import com.nova.tools.service.RunAppService;
+import com.nova.tools.utils.Encrypt;
 import com.nova.tools.utils.FileTools;
 import com.nova.tools.utils.JsonUtil;
 import com.nova.tools.utils.PropertiesUtils;
@@ -169,8 +170,6 @@ public class ProcedureAction extends ActionSupport {
 	public String saveCmpToMongo() throws IOException {
 		ServletActionContext.getResponse().setHeader(
 				"Access-Control-Allow-Origin", "*");
-		log.info("用户" + userId + "使用appId=" + appId + "运行projectId="
-				+ projectId);
 		final RunAppService app = new RunAppService();
 		// 需要对datakeylist进行排序
 		dataKeyList = FileTools.dataListSort(dataKeyList);
@@ -374,8 +373,9 @@ public class ProcedureAction extends ActionSupport {
 			public void run() {
 				app.runProject(basePath, userId, appId, appName, projectId,
 						dataKeyList, email, projectName, sampleList, ada3,
-						ada5, sp, cpu, diffList, fileName, dataInfos, company,
-						user);
+						ada5, sp, cpu, diffList, fileName,
+						Encrypt.decrypt(dataInfos), Encrypt.decrypt(company),
+						Encrypt.decrypt(user));
 			}
 		}).start();
 		return SUCCESS;
