@@ -136,11 +136,6 @@ public class FileTools {
 		return lines;
 	}
 
-	public static void main(String[] args) {
-		System.out
-				.println(countLines("/home/lin/new_test/AhpC/result/2_B10_04/report.txt"));
-	}
-
 	public static int countLines(String filePath) {
 		File f = new File(filePath);
 		if (f.exists()) {
