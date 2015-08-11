@@ -51,7 +51,6 @@ class PGS:
 				no_enough_reads = readAll(noxlspath)
 		else:
 			no_enough_reads = False
-			png = {}
 			if(not os.path.exists(path)):
 				print  path + ' is not exists'
 				return result
@@ -62,19 +61,17 @@ class PGS:
 				elif(x == datakey+".xls"):
 					datakeyxls = os.path.join(path,datakey+".xls")
 					with open(datakeyxls, 'r') as f:
-						count = {}
 						fileName = f.readline().strip("\n")
 						key = f.readline().strip("\n").split("\t")
 						val = f.readline().strip("\n").split("\t")
 						for i,k in enumerate(key):
-							count[k] = val[i]
+							result[k] = val[i]
 						lines = countLines(datakeyxls)
 						#此处判断文件行数决定是否需要读取note
 						if(lines == 4):
 							note = f.readline().strip("\n")
 							result['note'] = note
 						result['fileName'] = fileName
-						result['count'] = count
 				elif(x == 'report.xls'):
 					detail = []
 					f = open(os.path.join(path,"report.xls"),'r')
