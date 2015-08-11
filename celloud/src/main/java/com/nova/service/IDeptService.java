@@ -47,4 +47,12 @@ public interface IDeptService {
 	 * @return
 	 */
 	Integer updateDept(Dept dept);
+
+	/**
+	 * 查询用户所属部门信息
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	Dept getDeptByUser(Integer userId);
 }

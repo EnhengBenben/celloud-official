@@ -49,7 +49,7 @@ public class CmpReportAction extends BaseAction {
 			String[] r = infos.split("----");
 			String[] s1 = StringUtils.splitByWholeSeparatorPreserveAllTokens(
 					r[0], ";");
-			List<DrugResistanceSite> rssli = new ArrayList<DrugResistanceSite>();
+			List<DrugResistanceSite> rssli = null;
 			for (int i = 0; i < s1.length - 1; i++) {
 				String[] drsStr = StringUtils
 						.splitByWholeSeparatorPreserveAllTokens(s1[i], ",");
@@ -57,9 +57,10 @@ public class CmpReportAction extends BaseAction {
 				drs.setGeneName(drsStr[0]);
 				drs.setMutationSite(drsStr[1]);
 				drs.setDrug(drsStr[2]);
+				rssli = new ArrayList<DrugResistanceSite>();
 				rssli.add(drs);
 			}
-			if (rssli != null) {
+			if (rssli != null && rssli.size() > 0) {
 				cmpFill.setResistanceSiteSum(rssli);
 			}
 			String[] s2 = StringUtils.splitByWholeSeparatorPreserveAllTokens(
@@ -77,16 +78,19 @@ public class CmpReportAction extends BaseAction {
 			cmpFill.setPersonalizedMedicine(pmli);
 			String[] s3 = StringUtils.splitByWholeSeparatorPreserveAllTokens(
 					r[2], ";");
-			List<RecommendDrug> rdli = new ArrayList<RecommendDrug>();
+			List<RecommendDrug> rdli = null;
 			for (int i = 0; i < s3.length - 1; i++) {
 				String[] drsStr = StringUtils
 						.splitByWholeSeparatorPreserveAllTokens(s3[i], ",");
 				RecommendDrug rd = new RecommendDrug();
 				rd.setDrugName(drsStr[0]);
 				rd.setDrugDescrip(drsStr[1]);
+				rdli = new ArrayList<RecommendDrug>();
 				rdli.add(rd);
 			}
-			cmpFill.setRecommendDrug(rdli);
+			if (rdli != null && rdli.size() > 0) {
+				cmpFill.setRecommendDrug(rdli);
+			}
 			cmpReport.setId(new ObjectId(cmpId));
 			reportService.editCmpFilling(cmpReport.getId(), cmpFill);
 		}
@@ -95,22 +99,21 @@ public class CmpReportAction extends BaseAction {
 	public String toCmpReport() {
 		log.info("celloud-用户" + cmpReport.getUserId() + "查看CMP报告");
 		cmpReport = reportService.getSimpleCmp(cmpReport.getDataKey(),
-				cmpReport.getUserId());
-		System.out.println(cmpReport.getRunDate());
+				cmpReport.getProjectId());
 		return "toCmpReport";
 	}
 
 	public String toPrintDetailCmp() {
 		log.info("celloud-用户" + cmpReport.getUserId() + "查看CMP详细报告");
 		cmpReport = reportService.getCmpReport(cmpReport.getDataKey(),
-				cmpReport.getUserId());
+				cmpReport.getProjectId());
 		return "toPrintDetailCmp";
 	}
 
 	public String toPrintSimpleCmp() {
 		log.info("celloud-用户" + cmpReport.getUserId() + "查看CMP临床报告");
 		cmpReport = reportService.getSimpleCmp(cmpReport.getDataKey(),
-				cmpReport.getUserId());
+				cmpReport.getProjectId());
 		return "toPrintSimpleCmp";
 	}
 

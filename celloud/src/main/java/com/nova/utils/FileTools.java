@@ -22,6 +22,8 @@ import java.util.Map;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
+
 /**
  * @Description:文件操作工具类
  * @author lin
@@ -320,6 +322,50 @@ public class FileTools {
 		}
 		return line;
 	}
+	
+	/**
+	 * 获取文件内指定行的内容
+	 * 
+	 * @param filePath
+	 * @param num
+	 * @return
+	 */
+	public static List<String> getLineByNum(String filePath, int start, int end) {
+		if (!new File(filePath).exists()) {
+			return null;
+		}
+		FileReader in = null;
+		try {
+			in = new FileReader(filePath);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		LineNumberReader reader = new LineNumberReader(in);
+		String line = null;
+		List<String> list = new ArrayList<String>();
+		int i = 0;
+		try {
+			while ((line = reader.readLine()) != null) {
+				i++;
+				if (i >= start && i <= end) {
+					list.add(line);
+					if (i == end) {
+						break;
+					}
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			reader.close();
+			in.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	/**
 	 * 取特定的行，从第 from 行到第 to 行
 	 * 
@@ -365,7 +411,29 @@ public class FileTools {
 		return sb.toString();
 	}
 
+	/**
+	 * 按行读取文件
+	 */
+	public static List<String> readLinestoString(String path) {
+		List<String> list = new ArrayList<String>();
+		try {
+			list = FileUtils.readLines(new File(path), "GBK");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	public static String getArray(String[] n, int num) {
 		return n == null ? null : (n.length > num ? n[num] : null);
 	}
+
+	public static String listIsNull(List<String> list, int num) {
+		String list_num = "";
+		if (list != null && list.size() > num) {
+			list_num = list.get(num);
+		}
+		return list_num;
+	}
+
 }

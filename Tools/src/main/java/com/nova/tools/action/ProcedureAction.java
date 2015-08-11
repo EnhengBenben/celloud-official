@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,14 +16,8 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
-import com.alibaba.fastjson.JSON;
 import com.celloud.mongo.sdo.CmpGeneDetectionDetail;
-import com.celloud.mongo.sdo.CmpGeneSnpResult;
 import com.celloud.mongo.sdo.CmpReport;
-import com.celloud.mongo.sdo.Company;
-import com.celloud.mongo.sdo.Data;
-import com.celloud.mongo.sdo.GeneDetectionResult;
-import com.celloud.mongo.sdo.User;
 import com.celloud.mongo.service.ReportService;
 import com.celloud.mongo.service.ReportServiceImpl;
 import com.nova.tools.constant.AppNameIDConstant;
@@ -34,7 +26,6 @@ import com.nova.tools.service.ReadReportService;
 import com.nova.tools.service.RunAppService;
 import com.nova.tools.utils.Encrypt;
 import com.nova.tools.utils.FileTools;
-import com.nova.tools.utils.JsonUtil;
 import com.nova.tools.utils.PropertiesUtils;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -155,204 +146,12 @@ public class ProcedureAction extends ActionSupport {
 	private String dataInfos;
 	private String company;
 	private String user;
+	private String dept;
 	private CmpReport cmpReport;
 	private ReportService reportService = new ReportServiceImpl();
 
 	private final String basePath = ServletActionContext.getServletContext()
 			.getRealPath("/upload");
-
-	// TODO 要删除
-	private static String getArray(String[] n, int num) {
-		return n == null ? null : (n.length > num ? n[num] : null);
-	}
-
-	// TODO 要删除
-	public String saveCmpToMongo() throws IOException {
-		ServletActionContext.getResponse().setHeader(
-				"Access-Control-Allow-Origin", "*");
-		final RunAppService app = new RunAppService();
-		// 需要对datakeylist进行排序
-		dataKeyList = FileTools.dataListSort(dataKeyList);
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				String outPath = basePath + "/" + userId + "/" + appId;
-				String finalPath = outPath + "/" + dataKey;
-				Map<String, List<Data>> map = JsonUtil.parseDataMap(dataInfos);
-				Company com = JSON.parseObject(company, Company.class);
-				User use = JSON.parseObject(user, User.class);
-
-				// -----读取报告内容并保存到mongoDB------
-				List<Data> dataList = map.get(dataKey);
-				CmpReport cmpReport = new CmpReport();
-				cmpReport.setDataKey(dataKey);
-				cmpReport.setUserId(Integer.parseInt(userId));
-				cmpReport.setAppId(Integer.parseInt(appId));
-				cmpReport.setAppName(appName);
-				cmpReport.setData(dataList);
-				cmpReport.setCompany(com);
-				cmpReport.setUser(use);
-				cmpReport.setCreateDate(new Date());
-				String logPath = finalPath + "/LOG.txt";
-				String statisPath = finalPath + "/result/statistic.xls";
-				String avgPath = finalPath + "/result/average.info";
-				String snpPath = finalPath + "/result/snp_num.info";
-				String[] snpArr = { "ABL1", "EGFR", "GNAQ", "KRAS", "PTPN11",
-						"AKT1", "ERBB2", "GNAS", "MET", "RB1", "ALK", "ERBB4",
-						"HNF1A", "MLH1", "RET", "APC", "EZH2", "HRAS", "MPL",
-						"SMAD4", "ATM", "FBXW7", "IDH1", "NOTCH1", "SMARCB1",
-						"BRAF", "FGFR1", "IDH2", "NPM1", "SMO", "CDH1",
-						"FGFR2", "JAK2", "NRAS", "SRC", "CDKN2A", "FGFR3",
-						"JAK3", "PDGFRA", "STK11", "CSF1R", "FLT3", "KDR",
-						"PIK3CA", "TP53", "CTNNB1", "GNA11", "KIT", "PTEN",
-						"VHL" };
-				// 二、1 基因检测结果
-				List<GeneDetectionResult> cmpGeneResult = new ArrayList<GeneDetectionResult>();
-				if (new File(snpPath).exists()) {
-					List<String> list_ = FileTools.readLinestoString(snpPath);
-					if (list_ != null) {
-						for (int z = 0; z < list_.size(); z++) {
-							String[] line_i = list_.get(z).split("\t");
-							GeneDetectionResult gdr = new GeneDetectionResult();
-							gdr.setGeneName(getArray(line_i, 0));
-							gdr.setKnownMSNum(getArray(line_i, 1));
-							gdr.setSequencingDepth(Integer.parseInt(getArray(
-									line_i, 2)));
-							cmpGeneResult.add(gdr);
-						}
-					}
-				}
-				cmpReport.setCmpGeneResult(cmpGeneResult);
-				// 二、2
-				if (new File(logPath).exists()) {
-					cmpReport.setRunDate(FileTools.getFirstLine(logPath)
-							.substring(1, 11));
-				}
-				if (new File(statisPath).exists()) {
-					List<String> list_ = FileTools
-							.readLinestoString(statisPath);
-					cmpReport.setAllFragment(FileTools.listIsNull(list_, 0));
-					cmpReport.setAvgQuality(FileTools.listIsNull(list_, 1));
-					cmpReport.setAvgGCContent(FileTools.listIsNull(list_, 2));
-					cmpReport.setUsableFragment(FileTools.listIsNull(list_, 3));
-					cmpReport.setNoDetectedGene(FileTools.listIsNull(list_, 4));
-					cmpReport.setDetectedGene(FileTools.listIsNull(list_, 5));
-				}
-				if (new File(avgPath).exists()) {
-					cmpReport.setAvgCoverage(FileTools.getFirstLine(avgPath));
-				}
-				// 五
-				Map<String, CmpGeneDetectionDetail> geneDetectionDetail = new HashMap<String, CmpGeneDetectionDetail>();
-				for (String snpName : snpArr) {
-					String spath = finalPath + "/result/" + snpName + ".snp";
-					List<String> list_ = FileTools.readLinestoString(spath);
-					CmpGeneDetectionDetail gdd = new CmpGeneDetectionDetail();
-					String avgSeqDepth = "";
-					List<CmpGeneSnpResult> result = new ArrayList<CmpGeneSnpResult>();
-					for (int z = 0; z < list_.size(); z++) {
-						if (z == 0) {
-							avgSeqDepth = list_.get(z);
-						} else {
-							String[] line_z = list_.get(z).split("\t");
-							CmpGeneSnpResult gsr = new CmpGeneSnpResult();
-							gsr.setGene(getArray(line_z, 0));
-							gsr.setRefBase(getArray(line_z, 1));
-							gsr.setMutBase(getArray(line_z, 2));
-							gsr.setDepth(getArray(line_z, 3));
-							gsr.setCdsMutSyntax(getArray(line_z, 4));
-							gsr.setAaMutSyntax(getArray(line_z, 5));
-							gsr.setMutationType(getArray(line_z, 6));
-							result.add(gsr);
-						}
-					}
-
-					gdd.setAvgCoverage(avgSeqDepth);
-					gdd.setResult(result);
-					geneDetectionDetail.put(snpName, gdd);
-				}
-				cmpReport.setGeneDetectionDetail(geneDetectionDetail);
-
-				String qualityPath1 = PropertiesUtils.outProject
-						+ "/upload/88/110" + dataKey + "/QC/" + dataKey
-						+ "_fastqc/Images/per_base_quality.png";
-				cmpReport.setQualityPath1(qualityPath1);
-				String seqContentPath1 = PropertiesUtils.outProject
-						+ "/upload/88/110" + dataKey + "/QC/" + dataKey
-						+ "_fastqc/Images/per_base_sequence_content.png";
-				cmpReport.setSeqContentPath1(seqContentPath1);
-				String fastqcDataPath = finalPath + "/QC/" + dataKey
-						+ "_fastqc/fastqc_data.txt";
-				Map<String, String> basicStatistics1 = new HashMap<String, String>();
-				List<String> list_ = FileTools.getLineByNum(fastqcDataPath, 4,
-						10);
-				if (list_.size() >= 7) {
-					String[] line_1 = list_.get(0).split("\t");
-					basicStatistics1.put("Filename", getArray(line_1, 1));
-					String[] line_2 = list_.get(1).split("\t");
-					basicStatistics1.put("FileType", getArray(line_2, 1));
-					String[] line_3 = list_.get(2).split("\t");
-					basicStatistics1.put("Encoding", getArray(line_3, 1));
-					String[] line_4 = list_.get(3).split("\t");
-					basicStatistics1.put("TotalSeq", getArray(line_4, 1));
-					String[] line_5 = list_.get(4).split("\t");
-					basicStatistics1.put("FilteredSeq", getArray(line_5, 1));
-					String[] line_6 = list_.get(5).split("\t");
-					basicStatistics1.put("SeqLength", getArray(line_6, 1));
-					String[] line_7 = list_.get(6).split("\t");
-					basicStatistics1.put("gc", getArray(line_7, 1));
-				}
-				cmpReport.setBasicStatistics1(basicStatistics1);
-				String qualityPath2 = "";
-				String seqContentPath2 = "";
-				Map<String, String> basicStatistics2 = new HashMap<String, String>();
-				HashSet<String> folder = FileTools
-						.getFolders(finalPath + "/QC");
-				Iterator<String> fol = folder.iterator();
-				while (fol.hasNext()) {
-					String f = fol.next();
-					if (!f.startsWith(dataKey)) {
-						qualityPath2 = PropertiesUtils.outProject
-								+ "/upload/88/110" + dataKey + "/QC/" + f
-								+ "/Images/per_base_quality.png";
-						seqContentPath2 = PropertiesUtils.outProject
-								+ "/upload/88/110" + dataKey + "/QC/" + f
-								+ "/Images/per_base_sequence_content.png";
-						String f2 = finalPath + "/QC/" + f + "/fastqc_data.txt";
-						List<String> list_2 = FileTools.getLineByNum(f2, 4, 10);
-						if (list_2.size() >= 7) {
-							String[] line_1 = list_2.get(0).split("\t");
-							basicStatistics2.put("Filename",
-									getArray(line_1, 1));
-							String[] line_2 = list_2.get(1).split("\t");
-							basicStatistics2.put("FileType",
-									getArray(line_2, 1));
-							String[] line_3 = list_2.get(2).split("\t");
-							basicStatistics2.put("Encoding",
-									getArray(line_3, 1));
-							String[] line_4 = list_2.get(3).split("\t");
-							basicStatistics2.put("TotalSeq",
-									getArray(line_4, 1));
-							String[] line_5 = list_2.get(4).split("\t");
-							basicStatistics2.put("FilteredSeq",
-									getArray(line_5, 1));
-							String[] line_6 = list_2.get(5).split("\t");
-							basicStatistics2.put("SeqLength",
-									getArray(line_6, 1));
-							String[] line_7 = list_2.get(6).split("\t");
-							basicStatistics2.put("gc", getArray(line_7, 1));
-						}
-					}
-				}
-				cmpReport.setQualityPath2(qualityPath2);
-				cmpReport.setSeqContentPath2(seqContentPath2);
-				cmpReport.setBasicStatistics2(basicStatistics2);
-				ReportService reportService = new ReportServiceImpl();
-				reportService.deleteCmpReport(dataKey, Integer.parseInt(userId));
-				reportService.saveCmpReport(cmpReport);
-			}
-		}).start();
-		return SUCCESS;
-	}
 
 	/**
 	 * 运行App
@@ -371,11 +170,26 @@ public class ProcedureAction extends ActionSupport {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				app.runProject(basePath, userId, appId, appName, projectId,
-						dataKeyList, email, projectName, sampleList, ada3,
-						ada5, sp, cpu, diffList, fileName,
-						Encrypt.decrypt(dataInfos), Encrypt.decrypt(company),
-						Encrypt.decrypt(user));
+				app.runProject(
+						basePath,
+						userId,
+						appId,
+						appName,
+						projectId,
+						dataKeyList,
+						email,
+						projectName,
+						sampleList,
+						ada3,
+						ada5,
+						sp,
+						cpu,
+						diffList,
+						fileName,
+						Encrypt.decrypt(dataInfos),
+						Encrypt.decrypt(company.replace(" ", "+").replace("\n",
+								"")), Encrypt.decrypt(user),
+						Encrypt.decrypt(dept));
 			}
 		}).start();
 		return SUCCESS;
@@ -748,5 +562,13 @@ public class ProcedureAction extends ActionSupport {
 
 	public void setUser(String user) {
 		this.user = user;
+	}
+
+	public String getDept() {
+		return dept;
+	}
+
+	public void setDept(String dept) {
+		this.dept = dept;
 	}
 }

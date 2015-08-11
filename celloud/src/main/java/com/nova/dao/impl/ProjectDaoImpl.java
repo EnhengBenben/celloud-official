@@ -784,4 +784,29 @@ public class ProjectDaoImpl extends BaseDao implements IProjectDao {
 		}
 		return pro;
 	}
+
+	@Override
+	public List<Integer> getProIdsByFileId(int fileId) {
+		List<Integer> proIds = null;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "select dp.project_id from tb_data_project_relat dp,tb_project p where dp.project_id=p.project_id and p.state=0 and dp.file_id=?;";
+		try {
+			conn = ConnectManager.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, fileId);
+			rs = ps.executeQuery();
+			proIds = new ArrayList<Integer>();
+			if (rs.next()) {
+				proIds.add(rs.getInt("project_id"));
+			}
+		} catch (SQLException e) {
+			log.info("获取数据的所属的项目编号失败");
+			e.printStackTrace();
+		} finally {
+			ConnectManager.free(conn, ps, rs);
+		}
+		return proIds;
+	}
 }

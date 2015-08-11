@@ -36,4 +36,9 @@ public class DeptServiceImpl implements IDeptService {
 		return dd.updateDept(dept);
 	}
 
+	@Override
+	public Dept getDeptByUser(Integer userId) {
+		return dd.getDeptByUser(userId);
+	}
+
 }

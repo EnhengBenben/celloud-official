@@ -15,6 +15,11 @@ public class ReportServiceImpl implements ReportService {
 	ReportDAO reportDao = SystemContext.getReportDAO();
 
 	@Override
+	public void saveCmpReport(CmpReport cmpReport) {
+		reportDao.saveCmpReport(cmpReport);
+	}
+
+	@Override
 	public void editCmpFilling(Object id, CmpFilling cmpFill) {
 		reportDao.editCmpFilling(id, cmpFill);
 	}
