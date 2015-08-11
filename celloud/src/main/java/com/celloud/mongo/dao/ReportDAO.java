@@ -15,6 +15,13 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(ReportDAOImpl.class)
 public interface ReportDAO {
 	/**
+	 * 新增CMP运行报告内容
+	 * 
+	 * @param cmpReport
+	 */
+	public void saveCmpReport(CmpReport cmpReport);
+
+	/**
 	 * 修改cmp用户填写部分内容
 	 * 
 	 * @param cmpFill
@@ -28,7 +35,7 @@ public interface ReportDAO {
 	 *            mysql中的报告id
 	 * @return
 	 */
-	public CmpReport getCmpReport(String dataKey, Integer userId);
+	public CmpReport getCmpReport(String dataKey, Integer proId);
 
 	/**
 	 * 获取CMP简要信息内容
@@ -37,5 +44,5 @@ public interface ReportDAO {
 	 * @param userId
 	 * @return
 	 */
-	public CmpReport getSimpleCmp(String dataKey, Integer userId);
+	public CmpReport getSimpleCmp(String dataKey, Integer proId);
 }

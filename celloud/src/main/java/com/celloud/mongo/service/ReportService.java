@@ -14,6 +14,12 @@ import com.google.inject.ImplementedBy;
  */
 @ImplementedBy(ReportServiceImpl.class)
 public interface ReportService {
+	/**
+	 * 新增CMP运行报告内容
+	 * 
+	 * @param cmpReport
+	 */
+	public void saveCmpReport(CmpReport cmpReport);
 
 	/**
 	 * 修改cmp用户填写部分内容

@@ -232,4 +232,12 @@ public interface IProjectDao {
 	 * @return
 	 */
 	public Project getProjectById(int projectId);
+
+	/**
+	 * 获取数据的所属的项目编号
+	 * 
+	 * @param fileId
+	 * @return
+	 */
+	public List<Integer> getProIdsByFileId(int fileId);
 }

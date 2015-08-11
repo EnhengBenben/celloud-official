@@ -1,6 +1,5 @@
 package com.celloud.mongo.sdo;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -17,38 +16,10 @@ import com.google.code.morphia.annotations.Entity;
 @Entity(noClassnameStored = true)
 public class CmpReport extends Base {
 	/**
-	 * mysql中的数据报告编号
-	 */
-	private String dataKey;
-	/**
-	 * 报告所属用户id
-	 */
-	private Integer userId;
-	/**
-	 * 创建时间
-	 */
-	private Date createDate;
-	/**
-	 * Mysql 软件id
-	 */
-	private Integer appId;
-	/**
-	 * 软件名称
-	 */
-	private String appName;
-	/**
-	 * 所运行文件名称
+	 * 所运行数据信息
 	 */
 	@Embedded
 	private List<Data> data;
-	/**
-	 * 所属公司/医院信息
-	 */
-	private Company company;
-	/**
-	 * 所属用户详细信息
-	 */
-	private User user;
 	/**
 	 * 基因检测结果
 	 */
@@ -106,36 +77,12 @@ public class CmpReport extends Base {
 	 */
 	private CmpFilling cmpFilling;
 
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
 	public String getRunDate() {
 		return runDate;
 	}
 
 	public void setRunDate(String runDate) {
 		this.runDate = runDate;
-	}
-
-	public String getDataKey() {
-		return dataKey;
-	}
-
-	public void setDataKey(String dataKey) {
-		this.dataKey = dataKey;
-	}
-
-	public Company getCompany() {
-		return company;
-	}
-
-	public void setCompany(Company company) {
-		this.company = company;
 	}
 
 	public List<Data> getData() {
@@ -273,37 +220,5 @@ public class CmpReport extends Base {
 
 	public void setCmpFilling(CmpFilling cmpFilling) {
 		this.cmpFilling = cmpFilling;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Date getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
-	public Integer getAppId() {
-		return appId;
-	}
-
-	public void setAppId(Integer appId) {
-		this.appId = appId;
-	}
-
-	public String getAppName() {
-		return appName;
-	}
-
-	public void setAppName(String appName) {
-		this.appName = appName;
 	}
 }

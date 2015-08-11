@@ -31,6 +31,7 @@ import com.nova.pager.PageList;
 import com.nova.sdo.Company;
 import com.nova.sdo.Data;
 import com.nova.sdo.DataType;
+import com.nova.sdo.Dept;
 import com.nova.sdo.Project;
 import com.nova.sdo.ProjectParam;
 import com.nova.sdo.Report;
@@ -39,6 +40,7 @@ import com.nova.sdo.User;
 import com.nova.service.ICompanyService;
 import com.nova.service.IDataService;
 import com.nova.service.IDataTypeService;
+import com.nova.service.IDeptService;
 import com.nova.service.IProjectService;
 import com.nova.service.IReportService;
 import com.nova.service.ISoftwareService;
@@ -75,6 +77,8 @@ public class ProjectAction extends BaseAction {
 	private IUserService userService;
 	@Inject
 	private IDataService dataService;
+	@Inject
+	private IDeptService deptService;
 	@Inject
 	private IReportService reportService;
 	@Inject
@@ -156,35 +160,31 @@ public class ProjectAction extends BaseAction {
 					d1.setStrain(d.getStrain());
 					d1.setUserId(88);
 					dList.add(d1);
+
 				}
-				Company c = companyService.getCompanyByUserId(88);
-				com.celloud.mongo.sdo.Company com = new com.celloud.mongo.sdo.Company();
-				com.setAddress(c.getAddress());
-				com.setAddressEn(c.getAddressEn());
-				com.setCompanyIcon(c.getCompanyIcon());
-				com.setCompanyId(c.getCompanyId());
-				com.setCompanyName(c.getCompanyName());
-				com.setEnglishName(c.getEnglishName());
-				com.setState(c.getState());
-				com.setTel(c.getTel());
-				com.setZipCode(c.getZipCode());
-				User user = userService.getUserById(88);
-				com.celloud.mongo.sdo.User u = new com.celloud.mongo.sdo.User();
-				u.setEmail(user.getEmail());
-				u.setUserId(88);
-				u.setUsername(user.getUsername());
 				String finalPath = "/share/data/webapps/Tools/upload/88/110/"
 						+ data1;
 
 				// -----读取报告内容并保存到mongoDB------
 				CmpReport cmpReport = new CmpReport();
 				cmpReport.setDataKey(data1);
-				cmpReport.setUserId(88);
 				cmpReport.setAppId(110);
 				cmpReport.setAppName("CMP");
 				cmpReport.setData(dList);
-				cmpReport.setCompany(com);
-				cmpReport.setUser(u);
+				Company c = companyService.getCompanyByUserId(88);
+				cmpReport.setCompanyId(c.getCompanyId());
+				cmpReport.setCompanyName(c.getCompanyName());
+				cmpReport.setCompanyEngName(c.getEnglishName());
+				cmpReport.setCompanyAddr(c.getAddress());
+				cmpReport.setCompanyEnAddr(c.getEnglishName());
+				cmpReport.setCompanyIcon(c.getCompanyIcon());
+				cmpReport.setCompanyTel(c.getTel());
+				cmpReport.setZipCode(c.getZipCode());
+				User user = userService.getUserById(88);
+				cmpReport.setUserId(user.getUserId());
+				cmpReport.setUsername(user.getUsername());
+				cmpReport.setEmail(user.getEmail());
+				cmpReport.setDeptName("默认部门");
 				cmpReport.setCreateDate(new Date());
 				String logPath = finalPath + "/LOG.txt";
 				String statisPath = finalPath + "/result/statistic.xls";
@@ -370,7 +370,13 @@ public class ProjectAction extends BaseAction {
 				cmpReport.setSeqContentPath2(seqContentPath2);
 				cmpReport.setBasicStatistics2(basicStatistics2);
 				ReportService reportService = new ReportServiceImpl();
-				reportService.saveCmpReport(cmpReport);
+				Data d = dataService.getDataByKey(data1);
+				List<Integer> proIds = projectService.getProIdsByFileId(d
+						.getFileId());
+				for (Integer proId : proIds) {
+					cmpReport.setProjectId(proId);
+					reportService.saveCmpReport(cmpReport);
+				}
 			}
 		}
 		return "toSaveRunedCmp";
@@ -476,19 +482,15 @@ public class ProjectAction extends BaseAction {
 			for (int i = 0; i < dataArray.length; i = i + 2) {
 				String[] dataDetail = dataArray[i].split(",");
 				String[] dataDetail1 = dataArray[i + 1].split(",");
-				System.out.println(FileTools.getArray(dataDetail, 0) + ","
-						+ FileTools.getArray(dataDetail1, 0));
 				List<Data> dataList = dataService.getDataByDataKeys(
 						FileTools.getArray(dataDetail, 0) + ","
 								+ FileTools.getArray(dataDetail1, 0), userId);
-				System.out.println("------------dataArray length---------"
-						+ dataList.size());
 				map.put(FileTools.getArray(dataDetail, 0), dataList);
 			}
 		}
 		Company com = companyService.getCompanyByUserId(userId);
 		User user = userService.getUserById(userId);
-
+		Dept dept = deptService.getDeptByUser(userId);
 		// 6.根据用户ID获取用户邮箱
 		String email = userService.getEmailBySessionUserId(userId);
 		// 7.根据软件id获取软件名称
@@ -502,7 +504,8 @@ public class ProjectAction extends BaseAction {
 				+ Base64Util.encrypt(JSONObject.toJSONString(map))
 				+ "&company="
 				+ Base64Util.encrypt(JSONObject.toJSONString(com)) + "&user="
-				+ Base64Util.encrypt(JSONObject.toJSONString(user));
+				+ Base64Util.encrypt(JSONObject.toJSONString(user)) + "&dept="
+				+ Base64Util.encrypt(JSONObject.toJSONString(dept));
 		RemoteRequests rr = new RemoteRequests();
 		rr.run(newPath);
 		error = 0;
