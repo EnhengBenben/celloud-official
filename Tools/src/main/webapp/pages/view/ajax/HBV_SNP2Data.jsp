@@ -302,7 +302,7 @@
 				 	  <h2>7.其他突变位点（该位点目前没有已发表文献支持，无明确临床意义）
 				 	  	<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal')"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
 				 	  </h2>
-				    <div class="m-boxCon">
+				    <div class="m-boxCon" id="otherPng">
 						<s:generator separator="," val="resultMap.other">
 							<s:iterator status="st">
 								<a href="javascript:showBgTwo('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property/>');" >

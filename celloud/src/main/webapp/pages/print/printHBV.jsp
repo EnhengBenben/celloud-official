@@ -149,12 +149,18 @@ p,table,.m-box{
 						   	<p class="small left" style="text-indent: -0.9em;padding-left: 13px;">1.突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V，{A-G}：碱基由A变为G</p>
 						   	<p class="small left">2.*Wild Type: GCT;表示该位点的野生型为GCT</p>
 						   	<p class="small left">3.峰图中的*号，表示该位置发生了突变</p>
+						   	<div id="lessDiv">
+								<div class="w3cbbs" style="display: none;"></div>
+								<div class="container" style="display: none;"></div>
+						   	</div>
 					        <h2 class="mt20">四、参考结论（根据已发表文献得出以下参考结论）：</h2>
 					        <p class="small totop">${result }</p>
+						   	<div id="moreDiv">
+								<div class="w3cbbs" style="display: none;"></div>
+								<div class="container" style="display: none;"></div>
+						   	</div>
 						   	<h2 class="mt20">五、测序序列结果：</h2>
 						   	<p style="word-break: break-all;" class="small totop">${seq }</p>
-						   	<div class="w3cbbs" style="display: none;"></div>
-							<div class="container" style="display: none;"></div>
 							<div id="SNPEND">
 							   	<h2 class="mt20">六、测序峰图结果：</h2>
 							   	<p>${allPic }</p>
@@ -223,6 +229,15 @@ function deleteLi(obj){
 	$(obj).parent().remove();
 }
 $(document).ready(function(){
+	var num = 0;
+	$("#otherPng").find("img").each(function(){
+		num++;
+	});
+	if(num>24){
+		$("#moreDiv").remove();
+	}else{
+		$("#lessDiv").remove();
+	}
 	var browser = $.NV('name');
 	var height;
 	if(browser=='firefox'){
