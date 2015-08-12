@@ -89,7 +89,7 @@ public class CompanyDaoImpl implements CompanyDao {
 	@Override
 	public List<Company> getCompanyDetailById(Integer companyId) {
 		log.info("获取医院详细信息");
-		String sql = "select a.company_id,a.company_name,a.address,a.tel,a.create_date,sum(a.fnum) fileNum,sum(a.fsize) fileSize,sum(a.rnum) reportNum from (select c.company_id,c.company_name,c.address,c.tel,c.create_date ,(select count(f.file_id) from tb_file f where f.user_id=u.user_id and f.state=0) fnum,(select ifnull(sum(f.size),0) from tb_file f where f.user_id=u.user_id and f.state=0) fsize,(select count(*) from tb_report r where r.user_id=u.user_id and r.isdel=0 and (r.flag=0 or r.report_id=11)) rnum from tb_company c,tb_dept d,tb_user u where c.company_id=d.company_id and d.dept_id=u.dept_id and c.state=0 and u.state=0 and u.company_id=? and u.user_id not in ("
+		String sql = "select a.company_id,a.company_name,a.address,a.tel,a.create_date,count(username) userNum,sum(a.fnum) fileNum,sum(a.fsize) fileSize,sum(a.rnum) reportNum from (select c.company_id,c.company_name,c.address,c.tel,c.create_date ,(select count(f.file_id) from tb_file f where f.user_id=u.user_id and f.state=0) fnum,(select ifnull(sum(f.size),0) from tb_file f where f.user_id=u.user_id and f.state=0) fsize,(select count(*) from tb_report r where r.user_id=u.user_id and r.isdel=0 and (r.flag=0 or r.report_id=11)) rnum,u.username from tb_company c,tb_dept d,tb_user u where c.company_id=d.company_id and d.dept_id=u.dept_id and c.state=0 and u.state=0 and u.company_id=? and u.user_id not in ("
 				+ noUserid
 				+ ") )a  group by a.company_id order by a.fsize desc; ";
 		List<Company> list = new ArrayList<Company>();

@@ -15,6 +15,8 @@ public class User implements Serializable {
 	private Integer role;
 	/** 真实姓名 */
 	private String truename;
+	/** 手机号码 */
+	private String cellphone;
 	/** 0 正常用户，1 已删除 */
 	private Integer state = 0;
 	/** 所属部门的ID */
@@ -24,16 +26,32 @@ public class User implements Serializable {
 	/** 提供app的公司id */
 	private Integer company_id;
 	/** 数据量（个数） */
-	private Integer fileNum;
+	private Long fileNum;
 	/** 验证码 **/
 	private String kaptchaCode;
+	/** 数据大小（b） */
+	private Double fileSize;
+	/** 报告数量 */
+	private Long reportNum;
+	/** 所属医院名称 */
+	private String companyName;
+	/** 所属部门名称 */
+	private String deptName;
 
-	public Integer getFileNum() {
+	public Long getFileNum() {
 		return fileNum;
 	}
 
-	public void setFileNum(Integer fileNum) {
+	public void setFileNum(Long fileNum) {
 		this.fileNum = fileNum;
+	}
+
+	public void setFileSize(Double fileSize) {
+		this.fileSize = fileSize;
+	}
+
+	public void setReportNum(Long reportNum) {
+		this.reportNum = reportNum;
 	}
 	public Integer getUserId() {
 		return userId;
@@ -54,6 +72,14 @@ public class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getCellphone() {
+		return cellphone;
+	}
+
+	public void setCellphone(String cellphone) {
+		this.cellphone = cellphone;
 	}
 
 	public String getEmail() {
@@ -113,6 +139,30 @@ public class User implements Serializable {
 
 	public void setKaptchaCode(String kaptchaCode) {
 		this.kaptchaCode = kaptchaCode;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
+	public Double getFileSize() {
+		return fileSize;
+	}
+
+	public Long getReportNum() {
+		return reportNum;
 	}
 
 }

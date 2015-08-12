@@ -21,6 +21,7 @@ import com.google.inject.Inject;
 @Action("user")
 @Results({ @Result(name = "success", location = "../../index.jsp"),
 		@Result(name = "input", location = "../../login.jsp"),
+		@Result(name = "userList", location = "../../pages/userList.jsp"),
 		@Result(name = "init", type = "json", params = { "root", "publicKey" }),
 		@Result(name = "output", type = "json", params = { "root", "list" })
 })
@@ -32,6 +33,7 @@ public class UserAction extends BaseAction {
 	private User user;
 	private PublicKey publicKey;
 	private List<Map<String, Object>> list;
+	private List<User> userList;
 
 	public String login() {
 		log.info("用户" + user.getUsername() + "准备登录");
@@ -104,13 +106,10 @@ public class UserAction extends BaseAction {
 		return "output";
 	}
 	
-	private Object getCid() {
-		Object cid = super.session.get("companyId");
-		log.info("获取companyId:" + cid);
-		if (cid == null) {
-			log.error("后台session超时或者非法访问");
-		}
-		return cid;
+	public String getUserListByBigUser() {
+		Integer companyId = (Integer) getCid();
+		userList = userService.getUserListByBigCom(companyId);
+		return "userList";
 	}
 
 	public User getUser() {
@@ -136,4 +135,13 @@ public class UserAction extends BaseAction {
 	public void setList(List<Map<String, Object>> list) {
 		this.list = list;
 	}
+
+	public List<User> getUserList() {
+		return userList;
+	}
+
+	public void setUserList(List<User> userList) {
+		this.userList = userList;
+	}
+
 }
