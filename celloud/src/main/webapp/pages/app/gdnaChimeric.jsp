@@ -2,7 +2,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<title>gDNA_Chimeric</title>
+<title>gDNA_mosaic</title>
 <link rel="stylesheet" type="text/css"	href="<%=request.getContextPath() %>/bootstrap/css/bootstrap.css">
 <link rel="stylesheet" type="text/css"	href="<%=request.getContextPath() %>/bootstrap/css/bootstrap-responsive.css">
 <link href="<%=request.getContextPath()%>/pages/app/css/style.css" rel="stylesheet" type="text/css" media="screen" />
@@ -24,7 +24,7 @@ if(!session_userId){
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="javascript:void(0)">gDNA_Chimeric</a>
+          <a class="brand" href="javascript:void(0)">gDNA_mosaic</a>
           <div class="">
             <ul class="nav pull-right">
               <li><a href="javascript:void(0)" class="openReport">查看报告</a></li>
@@ -36,7 +36,7 @@ if(!session_userId){
     <div class="container-fluid">
     	<div class="row-fluid">
 			<div class="alert alert-info">
-		    	<strong>介绍：</strong> gDNA-Chimeric流产组织染色体嵌合分析系统主要功能是针对人类基因组二代测序数据，检测染色体数目畸变。
+		    	<strong>介绍：</strong> gDNA-mosaic流产组织染色体嵌合分析系统主要功能是针对人类基因组二代测序数据，检测染色体数目畸变。
 软件主要基于隐马尔克夫模型（Hidden Markov Model，HMM）对二代测序数据进行分析，软件读取序列比对格式（bam）文件，
 通过基因组各染色体不同位置比对序列数量，计算得出染色体不同片段的拷贝数。为临床诊断提供一个参考依据，大大提高临床检验的效率。
 软件分析结果的分辨率为15Mb，并可以检测细胞染色体的嵌合状态。
