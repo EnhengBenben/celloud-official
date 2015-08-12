@@ -1,11 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<style>
-@-moz-document url-prefix() { #showDiv{ min-height: 400px } }
-@media screen and (-webkit-min-device-pixel-ratio:0) { #showDiv {min-height: 420px}} 
-</style>
 <s:if test="%{pageList.datas.size()>0}">
-	<ul class="content" id="showDiv" style="margin-left:60px;margin-top:60px;">
+	<ul class="content" id="showDiv" style="margin-left:60px;margin-top:60px;min-height: 440px">
 		<s:iterator id="db" value="pageList.datas" status="st">
 			<s:if test='#db.offLine==0'>
 			<li class="appGroup">
