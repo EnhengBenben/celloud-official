@@ -33,15 +33,6 @@ public class HomeAction extends BaseAction {
 	@Inject
 	private SoftwareService softwareService;
 	private Map<String, Object> resultMap;
-
-	private Object getCid() {
-		Object cid = super.session.get("companyId");
-		log.info("获取companyId:" + cid);
-		if (cid == null) {
-			log.error("后台session超时或者非法访问");
-		}
-		return cid;
-	}
 	
 	public String toHome() {
 		log.info("进入统计首页");

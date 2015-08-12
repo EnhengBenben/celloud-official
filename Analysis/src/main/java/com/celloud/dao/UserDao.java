@@ -73,10 +73,18 @@ public interface UserDao {
 	public Object getBigUsersUserNum(Integer companyId);
 	
 	/**
-	 * 获取大大客户的所有客户
+	 * 获取大客户的所有客户
 	 * 
 	 * @param companyId
 	 * @return
 	 */
 	public List<Map<String, Object>> getBigUsersUser(Integer companyId);
+
+	/**
+	 * 获取大客户的用户信息列表
+	 * 
+	 * @param companyId
+	 * @return
+	 */
+	public List<User> getUserListByBigCom(Integer companyId);
 }

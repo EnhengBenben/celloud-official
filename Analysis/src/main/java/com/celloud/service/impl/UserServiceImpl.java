@@ -53,4 +53,9 @@ public class UserServiceImpl implements UserService {
 		return userDao.getBigUsersUser(companyId);
 	}
 
+	@Override
+	public List<User> getUserListByBigCom(Integer companyId) {
+		return userDao.getUserListByBigCom(companyId);
+	}
+
 }

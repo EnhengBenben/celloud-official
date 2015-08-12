@@ -16173,6 +16173,9 @@ transform
 .min-w-100{
 	min-width:100px;
 }
+.min-w-80{
+	min-width:80px;
+}
 .min-w-70{
 	min-width:70px;
 }

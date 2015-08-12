@@ -78,4 +78,12 @@ public interface UserService {
 	 * @return
 	 */
 	public List<Map<String, Object>> getBigUsersUser(Integer companyId);
+
+	/**
+	 * 获取大客户的用户信息列表
+	 * 
+	 * @param companyId
+	 * @return
+	 */
+	public List<User> getUserListByBigCom(Integer companyId);
 }

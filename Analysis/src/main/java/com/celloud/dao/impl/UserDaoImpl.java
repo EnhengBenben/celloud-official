@@ -192,4 +192,21 @@ public class UserDaoImpl implements UserDao {
 		}
 		return list;
 	}
+
+	@Override
+	public List<User> getUserListByBigCom(Integer companyId) {
+		log.info("获取大客户的用户信息列表");
+		List<User> list = new ArrayList<User>();
+		String sql = "select u.username,u.email,u.cellphone,u.create_date createDate,d.dept_name deptName,c.company_name companyName,(select count(f.file_id) from tb_file f where f.user_id=u.user_id and f.state=0) fileNum,(select ifnull(sum(f.size),0) from tb_file f where f.user_id=u.user_id and f.state=0) fileSize,(select count(*) from tb_report r where r.user_id=u.user_id and r.isdel=0 and (r.flag=0 or r.report_id=11)) reportNum from tb_user u left join tb_dept d on u.dept_id=d.dept_id left join tb_company c on d.company_id=c.company_id where u.state=0 and u.user_id not in ("
+				+ noUserid + ") and u.company_id=?";
+		try {
+			ResultSetHandler<List<User>> rsh = new BeanListHandler<User>(
+					User.class);
+			list = qr.query(conn, sql, rsh, companyId);
+		} catch (SQLException e) {
+			log.error("获取大客户的用户信息列表:" + e);
+			e.printStackTrace();
+		}
+		return list;
+	}
 }

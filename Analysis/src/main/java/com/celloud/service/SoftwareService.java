@@ -1,5 +1,8 @@
 package com.celloud.service;
 
+import java.util.List;
+
+import com.celloud.sdo.Software;
 import com.celloud.service.impl.SoftwareServiceImpl;
 import com.google.inject.ImplementedBy;
 
@@ -12,4 +15,12 @@ public interface SoftwareService {
 	 * @return
 	 */
 	public Object getBigUserAPPNum(Integer companyId);
+
+	/**
+	 * 获取大客户的APP列表
+	 * 
+	 * @param company
+	 * @return
+	 */
+	public List<Software> getAppListByBigUser(Integer companyId);
 }
