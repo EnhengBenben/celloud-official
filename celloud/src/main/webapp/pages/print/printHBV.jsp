@@ -234,7 +234,11 @@ $(document).ready(function(){
 	var _flag = $("#_flag").html();
 	if(appId==82&&_flag==0){
 		$("button").remove();
-		$("#mainDIv").css("min-height",5700+"px");
+		if(browser=='firefox'){
+			$("#mainDIv").css("min-height",1500+"px");
+		}else if(browser=='chrome'){
+			$("#mainDIv").css("min-height",5800+"px");
+		}
 	}else if(_flag==1){
 		
 	}else if($("#mainDIv").height()>1000){
