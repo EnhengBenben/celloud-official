@@ -87,4 +87,12 @@ public interface UserDao {
 	 * @return
 	 */
 	public List<User> getUserListByBigCom(Integer companyId);
+
+	/**
+	 * 根据用户id获取用户信息
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public User getUserById(Integer userId);
 }

@@ -105,4 +105,9 @@ public class CompanyServiceImpl implements CompanyService {
 		}
 		return list1;
 	}
+
+	@Override
+	public Company getCompanyById(Integer compId) {
+		return companyDao.getCompanyById(compId);
+	}
 }

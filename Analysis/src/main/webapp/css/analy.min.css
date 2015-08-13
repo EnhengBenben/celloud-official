@@ -7259,6 +7259,9 @@ th,td,.table-bordered {
 th.center,td.center {
 	text-align: center
 }
+th.right,td.right {
+	text-align: right;
+}
 
 th .lbl,td .lbl {
 	margin-bottom: 0

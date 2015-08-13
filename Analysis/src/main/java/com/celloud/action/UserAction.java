@@ -22,6 +22,7 @@ import com.google.inject.Inject;
 @Results({ @Result(name = "success", location = "../../index.jsp"),
 		@Result(name = "input", location = "../../login.jsp"),
 		@Result(name = "userList", location = "../../pages/userList.jsp"),
+		@Result(name = "oneUser", location = "../../pages/userOne.jsp"),
 		@Result(name = "init", type = "json", params = { "root", "publicKey" }),
 		@Result(name = "output", type = "json", params = { "root", "list" })
 })
@@ -110,6 +111,11 @@ public class UserAction extends BaseAction {
 		Integer companyId = (Integer) getCid();
 		userList = userService.getUserListByBigCom(companyId);
 		return "userList";
+	}
+
+	public String getUserById() {
+		user = userService.getUserById(user.getUserId());
+		return "oneUser";
 	}
 
 	public User getUser() {

@@ -2,13 +2,12 @@ package com.celloud.dao.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
@@ -28,7 +27,7 @@ public class CompanyDaoImpl implements CompanyDao {
 	@Override
 	public Object getBigUserCompanyNum(Integer companyId) {
 		log.info("获取大客户的所有医院量");
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = null;
 		String sql = "select count(*) num from (select c.company_name from tb_user u,tb_dept d,tb_company c where u.dept_id=d.dept_id and c.state=0 and c.company_id=d.company_id and u.company_id=? and u.user_id not in ("
 				+ noUserid + ") group by c.company_id) t";
 		try {
@@ -43,7 +42,7 @@ public class CompanyDaoImpl implements CompanyDao {
 	public List<Map<String, Object>> getBigUserCompanyNumByAddr(
 			Integer companyId) {
 		log.info("根据医院地址获取大客户各省的医院数量");
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> list = null;
 		String sql = "select company_id,company_name,address,count(company_id) num from (select c.company_id,c.company_name,c.address from tb_user u,tb_dept d,tb_company c where u.dept_id=d.dept_id and c.state=0 and c.company_id=d.company_id and u.company_id=? and u.user_id not in ("
 				+ noUserid + ") group by c.company_id)t group by address;";
 		try {
@@ -74,7 +73,7 @@ public class CompanyDaoImpl implements CompanyDao {
 	@Override
 	public List<Map<String, Object>> getCompanyNumEveryMonth(Integer companyId) {
 		log.info("获取大客户的所有医院量");
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> list = null;
 		String sql = "select count(*) num,left(create_date,7) createDate from (select c.company_name,c.create_date from tb_user u,tb_dept d,tb_company c where u.dept_id=d.dept_id and c.state=0 and c.company_id=d.company_id and u.company_id=? and u.user_id not in ("
 				+ noUserid
 				+ ") group by c.company_id) t group by left(create_date,7);";
@@ -92,7 +91,7 @@ public class CompanyDaoImpl implements CompanyDao {
 		String sql = "select a.company_id,a.company_name,a.address,a.tel,a.create_date,count(username) userNum,sum(a.fnum) fileNum,sum(a.fsize) fileSize,sum(a.rnum) reportNum from (select c.company_id,c.company_name,c.address,c.tel,c.create_date ,(select count(f.file_id) from tb_file f where f.user_id=u.user_id and f.state=0) fnum,(select ifnull(sum(f.size),0) from tb_file f where f.user_id=u.user_id and f.state=0) fsize,(select count(*) from tb_report r where r.user_id=u.user_id and r.isdel=0 and (r.flag=0 or r.report_id=11)) rnum,u.username from tb_company c,tb_dept d,tb_user u where c.company_id=d.company_id and d.dept_id=u.dept_id and c.state=0 and u.state=0 and u.company_id=? and u.user_id not in ("
 				+ noUserid
 				+ ") )a  group by a.company_id order by a.fsize desc; ";
-		List<Company> list = new ArrayList<Company>();
+		List<Company> list = null;
 		try {
 			ResultSetHandler<List<Company>> rsh = new BeanListHandler<Company>(
 					Company.class);
@@ -101,6 +100,23 @@ public class CompanyDaoImpl implements CompanyDao {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	@Override
+	public Company getCompanyById(Integer compId) {
+		log.info("获取单个医院信息");
+		String sql = "select c.company_id,c.company_name,c.address,c.tel,c.create_date,group_concat(distinct d.dept_name) deptNames,count(username) userNum,group_concat(username) userNames,(select count(f.file_id) from tb_file f where f.user_id=u.user_id and f.state=0) fileNum,(select ifnull(sum(f.size),0) from tb_file f where f.user_id=u.user_id and f.state=0) fileSize,(select count(*) from tb_report r where r.user_id=u.user_id and r.isdel=0 and (r.flag=0 or r.report_id=11)) reportNum from tb_company c,tb_dept d,tb_user u where c.company_id=d.company_id and u.dept_id=d.dept_id and u.state=0 and u.user_id not in ("
+				+ noUserid + ") and c.company_id=?";
+		Company com = null;
+		try {
+			ResultSetHandler<Company> rsh = new BeanHandler<Company>(
+					Company.class);
+			com = qr.query(conn, sql, rsh, compId);
+		} catch (SQLException e) {
+			log.error("获取单个医院信息出错：" + e);
+			e.printStackTrace();
+		}
+		return com;
 	}
 
 }

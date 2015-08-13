@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.log4j.Logger;
@@ -52,6 +53,24 @@ public class SoftwareDaoImpl implements SoftwareDao {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	@Override
+	public Software getAppById(Integer appId) {
+		log.info("根据软件id获取软件信息");
+		Software soft = null;
+		String sql = "select s.software_id softwareId,s.software_name softwareName,s.create_date createDate,s.bhri,s.`type`,s.data_num dataNum,s.description,s.picture_name pictureName,s.intro,(select count(r.report_id) from tb_report r where r.flag=0 and r.software_id=s.software_id and r.user_id not in ("
+				+ noUserid
+				+ ")) runNum,(select GROUP_CONCAT(df.format_desc) from tb_data_format df,tb_software_format_relat sf where df.format_id=sf.format_id and sf.software_id=s.software_id group by sf.software_id) dataType from tb_software s where s.software_id=?";
+		try {
+			ResultSetHandler<Software> rsh = new BeanHandler<Software>(
+					Software.class);
+			soft = qr.query(conn, sql, rsh, appId);
+		} catch (SQLException e) {
+			log.error("根据软件id获取软件信息:" + e);
+			e.printStackTrace();
+		}
+		return soft;
 	}
 
 }

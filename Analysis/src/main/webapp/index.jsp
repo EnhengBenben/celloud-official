@@ -91,7 +91,7 @@
 				</li>
 				<li>
 					<a href="javascript:void(0)" class="dropdown-toggle">
-						<i class="icon-list"></i>
+						<i class="icon-tasks"></i>
 						<span class="menu-text">数据统计 </span>
 
 						<b class="arrow icon-angle-down"></b>
@@ -122,7 +122,7 @@
 				</li>
 				<li>
 					<a href="javascript:void(0)" class="dropdown-toggle">
-						<i class="icon-list"></i>
+						<i class="icon-hospital"></i>
 						<span class="menu-text">医院统计 </span>
 						<b class="arrow icon-angle-down"></b>
 					</a>
@@ -137,7 +137,7 @@
 				</li>
 				<li>
 					<a href="javascript:void(0)" class="dropdown-toggle">
-						<i class="icon-list"></i>
+						<i class="icon-user-md"></i>
 						<span class="menu-text">用户统计 </span>
 						<b class="arrow icon-angle-down"></b>
 					</a>
@@ -152,7 +152,7 @@
 				</li>
 				<li>
 					<a href="javascript:void(0)" class="dropdown-toggle">
-						<i class="icon-list"></i>
+						<i class="icon-cloud"></i>
 						<span class="menu-text">APP统计 </span>
 						<b class="arrow icon-angle-down"></b>
 					</a>
@@ -167,7 +167,7 @@
 				</li>
 				<li>
 					<a href="javascript:void(0)" class="dropdown-toggle">
-						<i class="icon-list"></i>
+						<i class="icon-bar-chart"></i>
 						<span class="menu-text">活跃度统计 </span>
 						<b class="arrow icon-angle-down"></b>
 					</a>
@@ -228,7 +228,7 @@
 
 <!-- analysis scripts -->
 <script src="js/analy-elements.min.js"></script>
-<script src="js/analy.min.js"></script>
+<script src="js/analy.min.js?version=20150813"></script>
 <!-- inline scripts related to this page -->
 
 <script src="js/user.js"></script>
@@ -266,16 +266,19 @@
 		});
 	}
 	function toHospitalList(){
+		$("#secondTitle").addClass("hide");
 		$.get("company!getCompanyDetail",{},function(responseText){
 			$("#content").html(responseText);
 		});
 	}
 	function toUserList(){
+		$("#secondTitle").addClass("hide");
 		$.get("user!getUserListByBigUser",{},function(responseText){
 			$("#content").html(responseText);
 		});
 	}
 	function toAPPList(){
+		$("#secondTitle").addClass("hide");
 		$.get("app!getAppListByBigUser",{},function(responseText){
 			$("#content").html(responseText);
 		});

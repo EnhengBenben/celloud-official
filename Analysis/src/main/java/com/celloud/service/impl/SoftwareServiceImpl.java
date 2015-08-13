@@ -20,4 +20,9 @@ public class SoftwareServiceImpl implements SoftwareService {
 		return softwareDao.getAppListByBigUser(companyId);
 	}
 
+	@Override
+	public Software getAppById(Integer appId) {
+		return softwareDao.getAppById(appId);
+	}
+
 }

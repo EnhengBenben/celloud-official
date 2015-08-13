@@ -23,4 +23,12 @@ public interface SoftwareDao {
 	 * @return
 	 */
 	public List<Software> getAppListByBigUser(Integer companyId);
+
+	/**
+	 * 根据软件id获取软件信息
+	 * 
+	 * @param appId
+	 * @return
+	 */
+	public Software getAppById(Integer appId);
 }

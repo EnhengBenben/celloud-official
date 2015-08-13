@@ -16,10 +16,11 @@ import com.google.inject.Inject;
 @ParentPackage("json-default")
 @Action("company")
 @Results({
-		@Result(name = "success", location = "../../pages/HospitalActivity.jsp"),
+		@Result(name = "success", location = "../../pages/hospitalActivity.jsp"),
+		@Result(name = "companyDetail", location = "../../pages/hospitalList.jsp"),
+		@Result(name = "oneCompany", location = "../../pages/hospitalOne.jsp"),
 		@Result(name = "resultMap", type = "json", params = { "root",
-				"resultMap" }),
-		@Result(name = "companyDetail", location = "../../pages/hospitalList.jsp") })
+				"resultMap" }) })
 public class CompanyAction extends BaseAction {
 	Logger log = Logger.getLogger(CompanyAction.class);
 	private static final long serialVersionUID = 1L;
@@ -27,6 +28,7 @@ public class CompanyAction extends BaseAction {
 	private CompanyService companyService;
 	private Map<String, Object> resultMap;
 	private List<Company> complist;
+	private Company company;
 
 	public String toActivity() {
 		return "success";
@@ -44,6 +46,11 @@ public class CompanyAction extends BaseAction {
 		return "companyDetail";
 	}
 
+	public String getOneCompany() {
+		company = companyService.getCompanyById(company.getCompany_id());
+		return "oneCompany";
+	}
+
 	public Map<String, Object> getResultMap() {
 		return resultMap;
 	}
@@ -58,6 +65,14 @@ public class CompanyAction extends BaseAction {
 
 	public void setComplist(List<Company> complist) {
 		this.complist = complist;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 }

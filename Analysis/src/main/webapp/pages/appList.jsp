@@ -20,7 +20,7 @@
 				<span onclick="getMonthDataList()">APP详细信息</span>
 				<small id="secondTitle" class="hide">
 					<i class="icon-double-angle-right"></i>
-					<span id="_month"></span>
+					<span id="_oneApp"></span>
 				</small>
 			</h3>
 			<div class="table-header hide" id="_appName">
@@ -45,7 +45,7 @@
 						<s:if test="%{appList.size()>0}">
 							<s:iterator id="data" value="appList">
 								<tr>
-									<td><a href="javascript:void()">${data.softwareName }</a></td>
+									<td><a href="javascript:getAppDetail(${data.softwareId },'${data.softwareName }')">${data.softwareName }</a></td>
 									<td>${data.runNum }</td>
 									<td>${data.bhri }</td>
 									<td>${data.type }</td>
@@ -70,4 +70,11 @@
 	      null,null,null,null,null,null,null,null
 		] } );
 	})
+	function getAppDetail(id,name){
+		$("#_oneApp").html(name);
+		$("#secondTitle").removeClass("hide");
+		$.get("app!getAppById",{"app.softwareId":id},function(responseText){
+			$("#appListDiv").html(responseText);
+		});
+	}
 </script>

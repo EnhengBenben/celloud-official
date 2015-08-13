@@ -17,10 +17,10 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<h3 class="header smaller lighter blue">
-				<span onclick="getMonthDataList()">用户详细信息</span>
+				<span onclick="toUserList()">用户详细信息</span>
 				<small id="secondTitle" class="hide">
 					<i class="icon-double-angle-right"></i>
-					<span id="_month"></span>用户上传数据量
+					<span id="_oneUser"></span>
 				</small>
 			</h3>
 			<div class="table-header hide" id="_userName">
@@ -46,7 +46,7 @@
 						<s:if test="%{userList.size()>0}">
 							<s:iterator id="data" value="userList">
 								<tr>
-									<td><a href="javascript:void()">${data.username }</a></td>
+									<td><a href="javascript:getUserDetail(${data.userId },'${data.username }')">${data.username }</a></td>
 									<td>${data.email }</td>
 									<td>${data.cellphone }</td>
 									<td>${data.companyName }</td>
@@ -72,7 +72,11 @@
 	      null,null,null,null,null,null,null,null,null
 		] } );
 	})
-	function getCompanyDetail(id,name,address,tel,userNum,fileNum,fileSize,reportNum,createDate){
-		
+	function getUserDetail(id,name){
+		$("#_oneUser").html(name);
+		$("#secondTitle").removeClass("hide");
+		$.get("user!getUserById",{"user.userId":id},function(responseText){
+			$("#userListDiv").html(responseText);
+		});
 	}
 </script>

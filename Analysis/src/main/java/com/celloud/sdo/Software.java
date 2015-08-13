@@ -14,6 +14,8 @@ public class Software implements Serializable {
 	/** 软件应用类型，0：CS软件，1：BS软件，2：数据库系统 */
 	private Integer type;
 	private String englishName;
+	/** 图片名称 */
+	private String pictureName;
 	/** 介绍 */
 	private String intro;
 	/** 是否添加 */
@@ -171,6 +173,14 @@ public class Software implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getPictureName() {
+		return pictureName;
+	}
+
+	public void setPictureName(String pictureName) {
+		this.pictureName = pictureName;
 	}
 
 }
