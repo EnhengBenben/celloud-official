@@ -21,10 +21,10 @@ textarea {
 	padding-top: 10px;
 }
 ._hard{
-	background-color: #49F3BA;
+	background-color: #99FF66;
 }
 ._light{
-	background-color: #C6FBD6;
+	background-color: #CCFFCC;
 }
 ._red{
 	color:red;
@@ -58,6 +58,7 @@ p,table,.m-box{
     border-color: black;
     color: #CC0000;
 }
+.colorspan{border:1px solid #ccc;display:inline-block;line-height: 0.9;}
 </style>
 </head>
 <body>
@@ -137,8 +138,8 @@ p,table,.m-box{
 				        <p>${snpType }</p>
 				        <h2 class="mt20">二、耐药突变位点检测结果：</h2>
 				        ${table }
-				        <p class="small" >注：深颜色表示发生了耐药突变</p>
-				        <p class="small left" >浅颜色表示发生了突变，但是暂无文献支持其和耐药相关</p>
+				        <p class="small" >注：深背景色<span class="_hard colorspan">&nbsp;</span>表示发生了耐药突变</p>
+				        <p class="small left" >浅背景色<span class="_light colorspan">&nbsp;</span>表示发生了突变，但是暂无文献支持其和耐药相关</p>
 				        <p class="small left" >红色字体表示在样本中未找到该位点</p>
 				        <c:if test="${flag==0 }">
 				        	<div class="w3cbbs" style="display: none;"></div>
