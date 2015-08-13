@@ -507,6 +507,7 @@ function showModal(id,flag,num){
 		$("#_showMore").css("display","");
 	}
 	$("#"+id).modal("show");
+	$("#"+id).find(".modal-body").scrollTop(0);
 }
 </script>
 <style>
