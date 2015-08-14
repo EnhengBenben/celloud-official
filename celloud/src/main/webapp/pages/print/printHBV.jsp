@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>报告打印</title>
-<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.3">
+<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.5">
 <style type="text/css">
 textarea {
 	width: 800px;	
@@ -21,10 +21,10 @@ textarea {
 	padding-top: 10px;
 }
 ._hard{
-	background-color: #49F3BA;
+	background-color: #99FF66;
 }
 ._light{
-	background-color: #C6FBD6;
+	background-color: #CCFFCC;
 }
 ._red{
 	color:red;
@@ -58,6 +58,7 @@ p,table,.m-box{
     border-color: black;
     color: #CC0000;
 }
+.colorspan{border:1px solid #ccc;display:inline-block;line-height: 0.9;}
 </style>
 </head>
 <body>
@@ -71,7 +72,9 @@ p,table,.m-box{
 				<a href="javascript:void(0)" onclick="preview(this)" class="button btn-info" name="change" style="float:right;margin-top:10px;margin-right:30px;"><i class=""></i>打印</a>
 				<a href="javascript:void(0)" onclick="reset()" class="button btn-info" name="change" style="float:right;margin-top:10px;"><i class=""></i>重置</a>
 				<a href="javascript:void(0)" onclick="savePage()" class="button btn-info" name="change" style="float:right;margin-top:10px;"><i class=""></i>保存</a>
-				<div class="container" style="display: none;"></div>
+				<c:if test="${flag==0 }">
+					<div class="container" style="display: none;"></div>
+				</c:if>
 				<h1>${company.companyName }${txt }报告单</h1>
 			    <hr />
 			    <div class="wrapper">
@@ -90,7 +93,7 @@ p,table,.m-box{
 			        </ul>
 			        <c:if test="${appId==82 }">
 						<div class=" gray mt20">送检目的：HBV基因分型，拉米夫定LAM，阿德福韦ADV，恩替卡韦ETV，替比夫定LDT，替诺福韦酯TDF，恩曲他滨FTC</div>
-				        <div class="gray">相关位点：rt169，rt173，rt180，rt181，rt184，rt194，rt202，rt204，rt215，rt233，rt236，rt250</div>
+				        <div class="gray mt20">相关位点：rt169，rt173，rt180，rt181，rt184，rt194，rt202，rt204，rt215，rt233，rt236，rt250</div>
 					</c:if>
 			    </div>
 			    <hr class="hr-bold mt20" />
@@ -135,9 +138,8 @@ p,table,.m-box{
 				        <p>${snpType }</p>
 				        <h2 class="mt20">二、耐药突变位点检测结果：</h2>
 				        ${table }
-				        <p class="small" >注：</p>
-				        <p class="small left" >深颜色表示发生了耐药突变</p>
-				        <p class="small left" >浅颜色表示发生了突变，但是暂无文献支持其和耐药相关</p>
+				        <p class="small" >注：深背景色<span class="_hard colorspan">&nbsp;</span>表示发生了耐药突变</p>
+				        <p class="small left" >浅背景色<span class="_light colorspan">&nbsp;</span>表示发生了突变，但是暂无文献支持其和耐药相关</p>
 				        <p class="small left" >红色字体表示在样本中未找到该位点</p>
 				        <c:if test="${flag==0 }">
 				        	<div class="w3cbbs" style="display: none;"></div>
@@ -145,15 +147,21 @@ p,table,.m-box{
 						   	<h2 class="mt20">三、耐药位点突变检测结果：</h2>
 						   	<p>${peakFigure }</p>
 						   	<p class="small totop">注：</p>
-						   	<p class="small left">1.突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V，<br/>&nbsp;&nbsp;&nbsp;{A-G}：碱基由A变为G</p>
+						   	<p class="small left" style="text-indent: -0.9em;padding-left: 13px;">1.突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V，{A-G}：碱基由A变为G</p>
 						   	<p class="small left">2.*Wild Type: GCT;表示该位点的野生型为GCT</p>
 						   	<p class="small left">3.峰图中的*号，表示该位置发生了突变</p>
+						   	<div id="lessDiv">
+								<div class="w3cbbs" style="display: none;"></div>
+								<div class="container" style="display: none;"></div>
+						   	</div>
 					        <h2 class="mt20">四、参考结论（根据已发表文献得出以下参考结论）：</h2>
 					        <p class="small totop">${result }</p>
+						   	<div id="moreDiv">
+								<div class="w3cbbs" style="display: none;"></div>
+								<div class="container" style="display: none;"></div>
+						   	</div>
 						   	<h2 class="mt20">五、测序序列结果：</h2>
 						   	<p style="word-break: break-all;" class="small totop">${seq }</p>
-						   	<div class="w3cbbs" style="display: none;"></div>
-							<div class="container" style="display: none;"></div>
 							<div id="SNPEND">
 							   	<h2 class="mt20">六、测序峰图结果：</h2>
 							   	<p>${allPic }</p>
@@ -194,7 +202,14 @@ function preview(obj){
 	$("a[name='change']").hide();
 	$(".w3cbbs").css("display","");
 	$(".container").css("display","");
+	var _flag = $("#_flag").html();
+	if(_flag==1){
+		$("h1").css("padding","0 0 5px 0");
+	}
 	window.print();
+	if(_flag==1){
+		$("h1").css("padding","40px 0 5px 0");
+	}
 	$(".w3cbbs").css("display","none");
 	$(".container").css("display","none");
 	$("a[name='change']").show();
@@ -215,6 +230,15 @@ function deleteLi(obj){
 	$(obj).parent().remove();
 }
 $(document).ready(function(){
+	var num = 0;
+	$("#otherPng").find("img").each(function(){
+		num++;
+	});
+	if(num>24){
+		$("#moreDiv").remove();
+	}else{
+		$("#lessDiv").remove();
+	}
 	var browser = $.NV('name');
 	var height;
 	if(browser=='firefox'){
@@ -226,7 +250,13 @@ $(document).ready(function(){
 	var _flag = $("#_flag").html();
 	if(appId==82&&_flag==0){
 		$("button").remove();
-		$("#mainDIv").css("min-height",5700+"px");
+		if(browser=='firefox'){
+			$("#mainDIv").css("min-height",1500+"px");
+		}else if(browser=='chrome'){
+			$("#mainDIv").css("min-height",5800+"px");
+		}
+	}else if(_flag==1){
+		
 	}else if($("#mainDIv").height()>1000){
 		$("#mainDIv").css("min-height",height+"px");
 	}
@@ -245,7 +275,7 @@ function savePage(){
 	$("body").find("input").each(function(){
 		$(this).attr("value",$(this).val());
 	});
-	var url = "http://localhost:8080/celloud/";
+	var url = "http://www.celloud.org/";
 	$.post(url+"updateContext",{"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":$("#printMain").html()},function(result){
 		if(result==1){
 			alert("信息保存成功！");
@@ -256,7 +286,7 @@ function savePage(){
 }
 function reset(){
 	if(confirm("确定要重置之前保存的报告吗？")){
-		var url = "http://localhost:8080/celloud/";
+		var url = "http://www.celloud.org/";
 		$.post(url+"updateContext",{"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":""},function(result){
 			if(result==1){
 				alert("请重新打开页面");

@@ -10,15 +10,11 @@ import java.util.List;
  * @date 2015-7-13下午1:37:58
  * @version Revision: 1.0
  */
-public class CmpFilling {
+public class CmpFilling extends PatientBasic {
 	/**
 	 * 肿瘤类型
 	 */
 	private String tumorType;
-	/**
-	 * 病人详细信息：姓名、性别、年龄
-	 */
-	private PatientBasic patientBasic;
 	/**
 	 * 取样日期
 	 */
@@ -78,14 +74,6 @@ public class CmpFilling {
 
 	public void setTumorType(String tumorType) {
 		this.tumorType = tumorType;
-	}
-
-	public PatientBasic getPatientBasic() {
-		return patientBasic;
-	}
-
-	public void setPatientBasic(PatientBasic patientBasic) {
-		this.patientBasic = patientBasic;
 	}
 
 	public String getSamplingDate() {

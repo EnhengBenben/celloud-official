@@ -24,6 +24,7 @@ import com.nova.tools.constant.AppNameIDConstant;
 import com.nova.tools.itext.utils.MergePdf;
 import com.nova.tools.service.ReadReportService;
 import com.nova.tools.service.RunAppService;
+import com.nova.tools.utils.Encrypt;
 import com.nova.tools.utils.FileTools;
 import com.nova.tools.utils.PropertiesUtils;
 import com.opensymphony.xwork2.ActionSupport;
@@ -145,6 +146,7 @@ public class ProcedureAction extends ActionSupport {
 	private String dataInfos;
 	private String company;
 	private String user;
+	private String dept;
 	private CmpReport cmpReport;
 	private ReportService reportService = new ReportServiceImpl();
 
@@ -168,10 +170,26 @@ public class ProcedureAction extends ActionSupport {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				app.runProject(basePath, userId, appId, appName, projectId,
-						dataKeyList, email, projectName, sampleList, ada3,
-						ada5, sp, cpu, diffList, fileName, dataInfos, company,
-						user);
+				app.runProject(
+						basePath,
+						userId,
+						appId,
+						appName,
+						projectId,
+						dataKeyList,
+						email,
+						projectName,
+						sampleList,
+						ada3,
+						ada5,
+						sp,
+						cpu,
+						diffList,
+						fileName,
+						Encrypt.decrypt(dataInfos),
+						Encrypt.decrypt(company.replace(" ", "+").replace("\n",
+								"")), Encrypt.decrypt(user),
+						Encrypt.decrypt(dept));
 			}
 		}).start();
 		return SUCCESS;
@@ -544,5 +562,13 @@ public class ProcedureAction extends ActionSupport {
 
 	public void setUser(String user) {
 		this.user = user;
+	}
+
+	public String getDept() {
+		return dept;
+	}
+
+	public void setDept(String dept) {
+		this.dept = dept;
 	}
 }

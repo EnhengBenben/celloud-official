@@ -127,6 +127,9 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#commentInfoDiv").html("");
+	$('.carousel').carousel({
+		interval: 2000
+	})
 });
 function showMore(){
 	$(".moreInfo").css("display","");

@@ -33,4 +33,12 @@ public interface CompanyService {
 	 * @return
 	 */
 	public List<Company> getCompanyDetailById(Integer companyId);
+
+	/**
+	 * 获取单个医院信息
+	 * 
+	 * @param compId
+	 * @return
+	 */
+	public Company getCompanyById(Integer compId);
 }

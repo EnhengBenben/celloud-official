@@ -26,9 +26,9 @@
           		<div class="mainContext" style="width: 635px;margin-left: 200px;margin-top: -557px;display: none;" id="softDetailDiv">
 				
 				</div>
-				<div class="main" style="width: 500px;margin-left: 400px;padding:0;margin-top: -557px" id="softListDiv">
-					<ul class="content" id="showDiv" style="margin-left:60px;margin-top:60px">
-					</ul>
+				<div class="main" style="width: 700px;margin-left: 400px;padding:0;margin-top: -557px" id="softListDiv">
+					
+					
 				</div>
 		   	</div>
 		   	
@@ -47,6 +47,6 @@
 			initSoftware();
 		});
 	</script>
-	<script type="text/javascript" src="<%=request.getContextPath() %>/js/software.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/js/software.js?v=0.2"></script>
 	</body>
 </html>

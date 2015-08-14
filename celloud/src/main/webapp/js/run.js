@@ -64,13 +64,17 @@ function getData(flag) {
 				html += "<li>"
 					+ "<input type='radio' onclick='javascript:chkOnChange(this);' name='data' value='"
 					+ list[i].fileId + "'> " + list[i].dataKey
-					+ "（" + fileName + "）" + "<img src='"+imgSrc+"'></li>";
-				
+					+ "（" + fileName + "）";
 			}else {
 				html += "<li>"
 					+ "<input type='checkbox' onclick='javascript:chkOnChange(this);' name='data' value='"
 					+ list[i].fileId + "'> " + list[i].dataKey
-					+ "（" + fileName + "）" + "<img src='"+imgSrc+"'></li>";
+					+ "（" + fileName + "）";
+			}
+			if(imgSrc==""){
+				html += "</li>";
+			}else{
+				html += "<img src='"+imgSrc+"'></li>";
 			}
 		}
 		

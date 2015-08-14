@@ -60,7 +60,7 @@ public class HBV_SNP_PDF {
 		List<String> other = FileTools
 				.fileSearch(snpPath, "new.png", "endWith");
 		// 所有检索结果（大图）
-		String big[] = { "1", "2", "3", "4" };
+		String big[] = { "1", "2", "3", "4","5" };
 		List<String> total = new ArrayList<String>();
 		for (String all : big) {
 			site = FileTools.fileExist(snpPath, all + "_all.png", "endsWith");

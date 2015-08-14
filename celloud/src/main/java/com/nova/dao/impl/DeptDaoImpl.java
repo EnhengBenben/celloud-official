@@ -151,4 +151,33 @@ public class DeptDaoImpl implements IDeptDao {
 		}
 		return flag;
 	}
+
+	@Override
+	public Dept getDeptByUser(Integer userId) {
+		String sql = "select d.* from tb_dept d,tb_user u where d.dept_id = u.dept_id and u.user_id=?";
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Dept dept = null;
+		try {
+			conn = ConnectManager.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, userId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				dept = new Dept();
+				dept.setDeptName(rs.getString("dept_name"));
+				dept.setEnglishName(rs.getString("english_name"));
+				dept.setTel(rs.getString("tel"));
+				dept.setDeptIcon(rs.getString("dept_icon"));
+			}
+			log.info("单查部门信息成功");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			log.error("单查部门信息失败：" + e);
+		} finally {
+			ConnectManager.free(conn, ps, rs);
+		}
+		return dept;
+	}
 }

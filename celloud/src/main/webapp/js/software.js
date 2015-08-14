@@ -169,19 +169,19 @@
 				var softName = $.trim($("#search_softName").val());
 				if(softName==""||softName==null){
 					$.post("getSoftwareList.action",{"soft.classifyId":classifyId,"page.currentPage":currentPage,"page.pageSize":pageSize},function(responseText){
-						$("#showDiv").html(responseText);
+						$("#softListDiv").html(responseText);
 					});
 				}else{
 					$.get("selectConditonSoft.action",{"soft.softwareName":softName,"page.currentPage":currentPage,"page.pageSize":pageSize},function(responseData){
-						$("#showDiv").html(responseData);
+						$("#softListDiv").html(responseData);
 					});
 				}
 			}else{
 				$.post("getSoftwareList.action",{"soft.classifyId":classifyId,"page.currentPage":currentPage,"page.pageSize":pageSize},function(responseText){
-					$("#showDiv").html(responseText);
+					$("#softListDiv").html(responseText);
 				});
 			}
-			$("#softListDiv").attr("style","width: 500px;margin-left: 200px;padding:0;margin-top: -557px");
+			$("#softListDiv").attr("style","width: 700px;margin-left: 200px;padding:0;margin-top: -557px");
 			$("#softDetailDiv").attr("style","display:none;");
 			$("#leftBarDiv").attr("style","height:500px;");
 		}

@@ -19,6 +19,7 @@ import com.celloud.mongo.sdo.CmpGeneSnpResult;
 import com.celloud.mongo.sdo.CmpReport;
 import com.celloud.mongo.sdo.Company;
 import com.celloud.mongo.sdo.Data;
+import com.celloud.mongo.sdo.Dept;
 import com.celloud.mongo.sdo.GeneDetectionResult;
 import com.celloud.mongo.sdo.User;
 import com.celloud.mongo.service.ReportService;
@@ -136,8 +137,8 @@ public class RunAppServiceImpl {
 	 * @param user
 	 */
 	public void runCMP(String outPath, String projectId, String dataKeyList,
-			String appId,String appName, String userId, String dataInfos, String company,
-			String user) {
+			String appId, String appName, String userId, String dataInfos,
+			String company, String user, String dept) {
 		String dataListFile = formatDataKeyList(dataKeyList);
 		String command = CMP_perl + " " + dataListFile + " " + outPath
 				+ " ProjectID" + projectId;
@@ -159,6 +160,7 @@ public class RunAppServiceImpl {
 			Map<String, List<Data>> map = JsonUtil.parseDataMap(dataInfos);
 			Company com = JSON.parseObject(company, Company.class);
 			User use = JSON.parseObject(user, User.class);
+			Dept dept1 = JSON.parseObject(dept, Dept.class);
 			for (int i = 0; i < dataArray.length; i = i + 2) {
 				String[] dataDetail = dataArray[i].split(",");
 				String[] dataDetail1 = dataArray[i + 1].split(",");
@@ -185,14 +187,29 @@ public class RunAppServiceImpl {
 				// -----读取报告内容并保存到mongoDB------
 				List<Data> dataList = map.get(getArray(dataDetail, 0));
 				CmpReport cmpReport = new CmpReport();
+				cmpReport.setProjectId(Integer.parseInt(projectId));
 				cmpReport.setDataKey(getArray(dataDetail, 0));
 				cmpReport.setUserId(Integer.parseInt(userId));
+				cmpReport.setUsername(use.getUsername());
+				cmpReport.setEmail(use.getEmail());
 				cmpReport.setAppId(Integer.parseInt(appId));
 				cmpReport.setAppName(appName);
 				cmpReport.setData(dataList);
-				cmpReport.setCompany(com);
-				cmpReport.setUser(use);
+				cmpReport.setCompanyId(com.getCompanyId());
+				cmpReport.setCompanyName(com.getCompanyName());
+				cmpReport.setCompanyEngName(com.getEnglishName());
+				cmpReport.setCompanyAddr(com.getAddress());
+				cmpReport.setCompanyEnAddr(com.getEnglishName());
+				cmpReport.setCompanyIcon(com.getCompanyIcon());
+				cmpReport.setCompanyTel(com.getTel());
+				cmpReport.setZipCode(com.getZipCode());
+				cmpReport.setDeptName(dept1.getDeptName());
+				cmpReport.setDeptEngName(dept1.getEnglishName());
+				cmpReport.setDeptIcon(dept1.getDeptIcon());
+				cmpReport.setDeptTel(dept1.getTel());
+
 				cmpReport.setCreateDate(new Date());
+
 				String logPath = finalPath + "/LOG.txt";
 				String statisPath = finalPath + "/result/statistic.xls";
 				String avgPath = finalPath + "/result/average.info";

@@ -17,6 +17,10 @@ public class Company implements Serializable {
 	private Double fileSize;
 	/** 报告量（个数） */
 	private Long reportNum;
+	/** 所包含用户 */
+	private String userNames;
+	/** 入驻部门 */
+	private String deptNames;
 	private Date create_date;
 
 	public Integer getCompany_id() {
@@ -91,4 +95,19 @@ public class Company implements Serializable {
 		this.create_date = create_date;
 	}
 
+	public String getUserNames() {
+		return userNames;
+	}
+
+	public void setUserNames(String userNames) {
+		this.userNames = userNames;
+	}
+
+	public String getDeptNames() {
+		return deptNames;
+	}
+
+	public void setDeptNames(String deptNames) {
+		this.deptNames = deptNames;
+	}
 }

@@ -150,4 +150,9 @@ public class ProjectServiceImpl implements IProjectService {
 	public Project getProjectById(int projectId) {
 		return projectDao.getProjectById(projectId);
 	}
+
+	@Override
+	public List<Integer> getProIdsByFileId(int fileId) {
+		return projectDao.getProIdsByFileId(fileId);
+	}
 }

@@ -21,10 +21,9 @@ import com.nova.tools.utils.TableUtil;
 public class ReadReportServiceImpl {
 
 	public Map<String, String> printCMPReport(String path, String outPath,
-			String dataKey, String userId, String appId) {
+			String dataKey) {
 		Map<String, String> resultMap = new HashMap<String, String>();
 		resultMap.put("dataKey", dataKey);
-		resultMap.put("userId", userId);
 		String logPath = path + "/LOG.txt";
 		String statisPath = path + "/result/statistic.xls";
 		String avgPath = path + "/result/average.info";
@@ -765,8 +764,9 @@ public class ReadReportServiceImpl {
 		// 其他
 		String other = FileTools.fileSearch(snpPath, "new.png", "endWith")
 				.toString();
-		resultMap.put("other",
-				other.substring(other.indexOf("[") + 1, other.indexOf("]")));
+		other = other.substring(other.indexOf("[") + 1, other.indexOf("]"));
+		other = FileTools.imgSort(other);
+		resultMap.put("other",other);
 		// 所有检索结果（大图）
 		String all1 = FileTools.fileExist(snpPath, "1_all.png", "endsWith");
 		String all2 = FileTools.fileExist(snpPath, "2_all.png", "endsWith");

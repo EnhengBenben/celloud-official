@@ -11,38 +11,37 @@ public class PatientBasic {
 	/**
 	 * 姓名
 	 */
-	private String name;
+	private String patientName;
 	/**
 	 * 性别
 	 */
-	private String sex;
+	private String patientSex;
 	/**
 	 * 年龄
 	 */
-	private String age;
+	private String patientAge;
 
-	public String getName() {
-		return name;
+	public String getPatientName() {
+		return patientName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
 	}
 
-	public String getSex() {
-		return sex;
+	public String getPatientSex() {
+		return patientSex;
 	}
 
-	public void setSex(String sex) {
-		this.sex = sex;
+	public void setPatientSex(String patientSex) {
+		this.patientSex = patientSex;
 	}
 
-	public String getAge() {
-		return age;
+	public String getPatientAge() {
+		return patientAge;
 	}
 
-	public void setAge(String age) {
-		this.age = age;
+	public void setPatientAge(String patientAge) {
+		this.patientAge = patientAge;
 	}
-
 }

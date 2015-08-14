@@ -7259,6 +7259,9 @@ th,td,.table-bordered {
 th.center,td.center {
 	text-align: center
 }
+th.right,td.right {
+	text-align: right;
+}
 
 th .lbl,td .lbl {
 	margin-bottom: 0
@@ -16172,6 +16175,9 @@ transform
 }
 .min-w-100{
 	min-width:100px;
+}
+.min-w-80{
+	min-width:80px;
 }
 .min-w-70{
 	min-width:70px;

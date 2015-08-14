@@ -90,7 +90,7 @@
 				<div class="m-box">
 				 	<h2>
 				 		1.替诺福韦酯TDF突变检测
-				 		<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal')"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
+				 		<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal',0,1)"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
 				 	</h2>
 				    <div class="m-boxCon">
 					    <s:if test="%{!''.equals(resultMap.svg194)}">
@@ -108,7 +108,7 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>2.替比夫定 LDT 突变检测
-				 		<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal')"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
+				 		<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal',0,2)"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
 				 	</h2>
 				    <div class="m-boxCon">
 					    <s:if test="%{!''.equals(resultMap.svg204)}">
@@ -126,7 +126,7 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>3.阿德福韦 ADV 突变检测
-				 		<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal')"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
+				 		<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal',0,3)"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
 				 	</h2>
 				    <div class="m-boxCon">
 					    <s:if test="%{!''.equals(resultMap.svg181)}">
@@ -154,7 +154,7 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>4.拉米夫定 LAM 突变检测
-				 		<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal')"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
+				 		<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal',0,4)"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
 				 	</h2>
 				    <div class="m-boxCon">
 					    <s:if test="%{!''.equals(resultMap.svg173)}">
@@ -192,7 +192,7 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>5.恩曲他滨 FTC 突变检测
-				 		<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal')"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
+				 		<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal',0,5)"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
 				 	</h2>
 				    <div class="m-boxCon">
 					    <s:if test="%{!''.equals(resultMap.svg173)}">
@@ -230,7 +230,7 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>6.恩替卡韦 ETV 突变检测
-				 		<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal')"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
+				 		<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal',0,6)"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
 				 	</h2>
 				    <div class="m-boxCon">
 					    <s:if test="%{!''.equals(resultMap.svg169)}">
@@ -300,9 +300,9 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	  <h2>7.其他突变位点（该位点目前没有已发表文献支持，无明确临床意义）
-				 	  	<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal')"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
+				 	  	<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal',0,7)"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
 				 	  </h2>
-				    <div class="m-boxCon">
+				    <div class="m-boxCon" id="otherPng">
 						<s:generator separator="," val="resultMap.other">
 							<s:iterator status="st">
 								<a href="javascript:showBgTwo('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property/>');" >
@@ -316,7 +316,9 @@
 		</s:else>
 		<!--结论-->
 		<div class="m-box">
-		 	  <h2>参考结论（根据已发表文献得出以下参考结论）</h2>
+		 	  <h2>参考结论（根据已发表文献得出以下参考结论）
+		 	  <div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal',2)"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
+		 	  </h2>
 		    <div class="m-boxCon" id="resultDiv">
 		    	<s:property value="resultMap.result" escape="false"/>
 		    </div>
@@ -385,18 +387,56 @@
 	</div>
 	<div class="modal-body well">
 		<div id="_showMore">
+			<div class="lineheight y y1">	1. 耐药相关的位点突变(替诺福韦酯TDF突变检测规则)：
+				<div style="line-height:1em;padding-top:10px" class="_leftShort">
+					<span style="color:#9966FF">A194T</span>
+				</div>
+			</div>
+			<div class="lineheight y y2">	1. 耐药相关的位点突变(替比夫定LDT突变检测规则)：
+				<div style="line-height:1em;padding-top:10px" class="_leftShort">
+					<span style="color:#9966FF">M204I</span>
+				</div>
+			</div>
+			<div class="lineheight y y3">	1. 耐药相关的位点突变(阿德福韦ADV突变检测规则)：
+				<div style="line-height:1em;padding-top:10px" class="_leftShort">
+					<span style="color:#9966FF">A181V/T、N236T</span>
+				</div>
+			</div>
+			<div class="lineheight y y4">	1. 耐药相关的位点突变(拉米夫定LAM突变检测规则)：
+				<div style="line-height:1em;padding-top:10px" class="_leftShort">
+					<span style="color:#9966FF">V173L、L180M、M204I/V</span>
+				</div>
+			</div>
+			<div class="lineheight y y5">	1. 耐药相关的位点突变(恩曲他滨FTC突变检测规则)：
+				<div style="line-height:1em;padding-top:10px" class="_leftShort">
+					<span style="color:#9966FF">V173L、L180M、M204I/V</span>
+				</div>
+			</div>
+			<div class="lineheight y y6">	1. 耐药相关的位点突变(恩替卡韦ETV突变检测规则)：
+				<div style="line-height:1em;padding-top:10px" class="_leftShort">
+					<span style="color:#9966FF">I169T、L180M、T184A/G/S/I/L/F、S202G/I、M204V、M250V/L/I</span>
+				</div>
+			</div>
+			<div class="lineheight y y7">	1. 耐药相关的位点突变：
+				<div style="line-height:1em;padding-top:10px" class="_leftShort">
+					<span style="color:#9966FF">该位点目前没有已发表文献支持，无明确临床意义</span>
+				</div>
+			</div>
 			<div class="lineheight">
-			1. 突变结果举例解释：“M204M|V {A-A|G(67|33,2.1);G-G|T(72|28,2.5)}” ：
-			<div class="_leftShort">（1）“M”表示野生型编码氨基酸为M；“204”表示氨基酸位点为204；“M|V”表示由原来的野生型M变为V；</div>
-			<div class="_leftShort">（2）“{A-A|G(67|33,2.1);G-G|T(72|28,2.5)} ” 表示碱基的变化，其中一个位点由原来的A变为A|G杂合，比例为67比33；另一个碱基由原来的G变为G|T杂合，比例为72比28。</div>
-    		<div class="_leftShort">（3）比例值说明：A-A|G(67|33,2.1)，2.1为67和33的比值，该比例并不代表样本中该位点A和G的真实数量比例，只是代表该位点是A的可能性为67%，是G的可能性 为33%。如果没有“(67|33,2.1）”出现，认为该位点100%发生突变。如果是A-A|G，说明该位点为A的可能性大；如果为A-G|A，说明该位点为G的 可能性大。当野生型的碱基（即A）的可能性大于突变碱基（即G）的可能性时，如果比值小于5我们认为该位点是突变；如果突变碱基（即G）的可能性大 于野生型的碱基（即A）的可能性时，不论比值多少都认为发生了突变。</div>
-        </div>
-			<div class="lineheight">2. “ *Wild Type: GCT ” 表示该位点的野生型为GCT</div>
-			<div class="lineheight">3. 峰图中的 “ * ” 表示该位置的碱基发生了突变</div>
-			<div class="lineheight">4. ” *Low quality " 表示该区域的碱基测序质量值太低</div>
+				2. 突变结果举例解释：“M204M|V {A-A|G(67|33,2.1);G-G|T(72|28,2.5)}” ：
+				<div class="_leftShort">（1）“M”表示野生型编码氨基酸为M；“204”表示氨基酸位点为204；“M|V”表示由原来的野生型M变为V；</div>
+				<div class="_leftShort">（2）“{A-A|G(67|33,2.1);G-G|T(72|28,2.5)} ” 表示碱基的变化，其中一个位点由原来的A变为A|G杂合，比例为67比33；另一个碱基由原来的G变为G|T杂合，比例为72比28。</div>
+	    		<div class="_leftShort">（3）比例值说明：A-A|G(67|33,2.1)，2.1为67和33的比值，该比例并不代表样本中该位点A和G的真实数量比例，只是代表该位点是A的可能性为67%，是G的可能性 为33%。如果没有“(67|33,2.1）”出现，认为该位点100%发生突变。如果是A-A|G，说明该位点为A的可能性大；如果为A-G|A，说明该位点为G的 可能性大。当野生型的碱基（即A）的可能性大于突变碱基（即G）的可能性时，如果比值小于5我们认为该位点是突变；如果突变碱基（即G）的可能性大于野生型的碱基（即A）的可能性时，不论比值多少都认为发生了突变。</div>
+	        </div>
+			<div class="lineheight">3. “ *Wild Type: GCT ” 表示该位点的野生型为GCT</div>
+			<div class="lineheight">4. 峰图中的 “ * ” 表示该位置的碱基发生了突变</div>
+			<div class="lineheight">5. ” *Low quality " 表示该区域的碱基测序质量值太低</div>
 		</div>
 		<div id="_showOne">
 			<div class="lineheight">峰图中的 “ * ” 表示该位置的碱基发生了突变</div>
+		</div>
+		<div id="_showImg">
+			<img class="imgtop" src="<s:property value="resultMap.outPath.replace('upload','')"/>resource/img/hbv.png" width="550px">
 		</div>
 	</div>
 	<div class="modal-footer">
@@ -439,15 +479,35 @@ function change2(){
 	$("#nomal").css("display","none");
 	$("#cfda").css("display","");
 }
-function showModal(id,flag){
-	if(flag == 1){
+function showModal(id,flag,num){
+	$("#_showOne").css("display","none");
+	$("#_showMore").css("display","none");
+	$("#_showImg").css("display","none");
+	if(flag == 2){
+		$("#_showImg").css("display","");
+	}else if(flag == 1){
 		$("#_showOne").css("display","");
-		$("#_showMore").css("display","none");
-	}else{
+	}else if(flag == 0){
+		$(".y").css("display","none");
+		if(num == 1){
+			$(".y1").css("display","");
+		}else if(num == 2){
+			$(".y2").css("display","");
+		}else if(num == 3){
+			$(".y3").css("display","");
+		}else if(num == 4){
+			$(".y4").css("display","");
+		}else if(num == 5){
+			$(".y5").css("display","");
+		}else if(num == 6){
+			$(".y6").css("display","");
+		}else if(num == 7){
+			$(".y7").css("display","");
+		}
 		$("#_showMore").css("display","");
-		$("#_showOne").css("display","none");
 	}
 	$("#"+id).modal("show");
+	$("#"+id).find(".modal-body").scrollTop(0);
 }
 </script>
 <style>
@@ -457,6 +517,7 @@ function showModal(id,flag){
 ._leftShort{
 	line-height:2;
 	padding-left: 14px;
+	text-align:justify;
 }
 .imgmiss{
 	font-size: 12px;

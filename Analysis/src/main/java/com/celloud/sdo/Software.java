@@ -14,6 +14,8 @@ public class Software implements Serializable {
 	/** 软件应用类型，0：CS软件，1：BS软件，2：数据库系统 */
 	private Integer type;
 	private String englishName;
+	/** 图片名称 */
+	private String pictureName;
 	/** 介绍 */
 	private String intro;
 	/** 是否添加 */
@@ -30,6 +32,12 @@ public class Software implements Serializable {
 	private Integer companyId;
 	/** 是否开放 0-所有人可见 1-所属公司旗下的用户可见 默认为0 */
 	private Integer attribute;
+	/** 最小运行的数据个数 */
+	private Integer dataNum;
+	/** 可运行的数据类型 */
+	private String dataType;
+	/** 软件描述 */
+	private String description;
 
 	public Integer getSoftwareId() {
 		return softwareId;
@@ -141,6 +149,38 @@ public class Software implements Serializable {
 
 	public void setAttribute(Integer attribute) {
 		this.attribute = attribute;
+	}
+
+	public Integer getDataNum() {
+		return dataNum;
+	}
+
+	public void setDataNum(Integer dataNum) {
+		this.dataNum = dataNum;
+	}
+
+	public String getDataType() {
+		return dataType;
+	}
+
+	public void setDataType(String dataType) {
+		this.dataType = dataType;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getPictureName() {
+		return pictureName;
+	}
+
+	public void setPictureName(String pictureName) {
+		this.pictureName = pictureName;
 	}
 
 }

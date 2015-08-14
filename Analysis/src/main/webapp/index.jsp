@@ -14,8 +14,6 @@
 <!--[if IE 7]>
 <link rel="stylesheet" href="css/font-awesome-ie7.min.css" />
 <![endif]-->
-<!-- fonts -->
-<!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" /> -->
 <link rel="stylesheet" href="css/analy.min.css" />
 <link rel="stylesheet" href="css/analy-rtl.min.css" />
 <link rel="stylesheet" href="css/analy-skins.min.css" />
@@ -93,7 +91,7 @@
 				</li>
 				<li>
 					<a href="javascript:void(0)" class="dropdown-toggle">
-						<i class="icon-list"></i>
+						<i class="icon-tasks"></i>
 						<span class="menu-text">数据统计 </span>
 
 						<b class="arrow icon-angle-down"></b>
@@ -124,7 +122,7 @@
 				</li>
 				<li>
 					<a href="javascript:void(0)" class="dropdown-toggle">
-						<i class="icon-list"></i>
+						<i class="icon-hospital"></i>
 						<span class="menu-text">医院统计 </span>
 						<b class="arrow icon-angle-down"></b>
 					</a>
@@ -139,7 +137,37 @@
 				</li>
 				<li>
 					<a href="javascript:void(0)" class="dropdown-toggle">
-						<i class="icon-list"></i>
+						<i class="icon-user-md"></i>
+						<span class="menu-text">用户统计 </span>
+						<b class="arrow icon-angle-down"></b>
+					</a>
+					<ul class="submenu">
+						<li>
+							<a href="javascript:toUserList()">
+								<i class="icon-double-angle-right"></i>
+								用户详细信息
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:void(0)" class="dropdown-toggle">
+						<i class="icon-cloud"></i>
+						<span class="menu-text">APP统计 </span>
+						<b class="arrow icon-angle-down"></b>
+					</a>
+					<ul class="submenu">
+						<li>
+							<a href="javascript:toAPPList()">
+								<i class="icon-double-angle-right"></i>
+								APP详细信息
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:void(0)" class="dropdown-toggle">
+						<i class="icon-bar-chart"></i>
 						<span class="menu-text">活跃度统计 </span>
 						<b class="arrow icon-angle-down"></b>
 					</a>
@@ -200,7 +228,7 @@
 
 <!-- analysis scripts -->
 <script src="js/analy-elements.min.js"></script>
-<script src="js/analy.min.js"></script>
+<script src="js/analy.min.js?version=20150813"></script>
 <!-- inline scripts related to this page -->
 
 <script src="js/user.js"></script>
@@ -238,7 +266,20 @@
 		});
 	}
 	function toHospitalList(){
+		$("#secondTitle").addClass("hide");
 		$.get("company!getCompanyDetail",{},function(responseText){
+			$("#content").html(responseText);
+		});
+	}
+	function toUserList(){
+		$("#secondTitle").addClass("hide");
+		$.get("user!getUserListByBigUser",{},function(responseText){
+			$("#content").html(responseText);
+		});
+	}
+	function toAPPList(){
+		$("#secondTitle").addClass("hide");
+		$.get("app!getAppListByBigUser",{},function(responseText){
 			$("#content").html(responseText);
 		});
 	}

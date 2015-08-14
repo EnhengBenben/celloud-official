@@ -2,7 +2,6 @@ package com.celloud.dao.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -167,7 +166,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public Object getBigUsersUserNum(Integer companyId) {
 		log.info("获取大客户的所有用户量");
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> list = null;
 		String sql = "select count(u.user_id) num from tb_user u,tb_dept d,tb_company c where u.state=0 and u.dept_id=d.dept_id and c.company_id=d.company_id and u.user_id not in ("
 				+ noUserid + ") and u.company_id=?";
 		try {
@@ -182,7 +181,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<Map<String, Object>> getBigUsersUser(Integer companyId) {
 		log.info("获取大客户的所有客户信息");
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> list = null;
 		String sql = "select * from tb_user where state=0 and user_id not in (" + noUserid + ") and company_id=?";
 		try {
 			list = qr.query(conn,sql, new MapListHandler(),companyId);
@@ -191,5 +190,37 @@ public class UserDaoImpl implements UserDao {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	@Override
+	public List<User> getUserListByBigCom(Integer companyId) {
+		log.info("获取大客户的用户信息列表");
+		List<User> list = null;
+		String sql = "select u.user_id userId,u.username,u.email,u.cellphone,u.create_date createDate,d.dept_name deptName,c.company_name companyName,(select count(f.file_id) from tb_file f where f.user_id=u.user_id and f.state=0) fileNum,(select ifnull(sum(f.size),0) from tb_file f where f.user_id=u.user_id and f.state=0) fileSize,(select count(*) from tb_report r where r.user_id=u.user_id and r.isdel=0 and (r.flag=0 or r.report_id=11)) reportNum from tb_user u left join tb_dept d on u.dept_id=d.dept_id left join tb_company c on d.company_id=c.company_id where u.state=0 and u.user_id not in ("
+				+ noUserid + ") and u.company_id=?";
+		try {
+			ResultSetHandler<List<User>> rsh = new BeanListHandler<User>(
+					User.class);
+			list = qr.query(conn, sql, rsh, companyId);
+		} catch (SQLException e) {
+			log.error("获取大客户的用户信息列表:" + e);
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public User getUserById(Integer userId) {
+		log.info("根据用户id获取用户信息");
+		User user = null;
+		String sql = "select u.user_id userId,u.username,u.email,u.cellphone,u.create_date createDate,d.dept_name deptName,c.company_name companyName,(select count(f.file_id) from tb_file f where f.user_id=u.user_id and f.state=0) fileNum,(select ifnull(sum(f.size),0) from tb_file f where f.user_id=u.user_id and f.state=0) fileSize,(select count(*) from tb_report r where r.user_id=u.user_id and r.isdel=0 and (r.flag=0 or r.report_id=11)) reportNum from tb_user u left join tb_dept d on u.dept_id=d.dept_id left join tb_company c on d.company_id=c.company_id where u.user_id=?";
+		try {
+			ResultSetHandler<User> rsh = new BeanHandler<User>(User.class);
+			user = qr.query(conn, sql, rsh, userId);
+		} catch (SQLException e) {
+			log.error("根据用户id获取用户信息失败:" + e);
+			e.printStackTrace();
+		}
+		return user;
 	}
 }

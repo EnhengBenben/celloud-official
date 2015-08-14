@@ -1,5 +1,7 @@
 package com.nova.action;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -7,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
@@ -16,12 +19,19 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
 import com.alibaba.fastjson.JSONObject;
+import com.celloud.mongo.sdo.CmpGeneDetectionDetail;
+import com.celloud.mongo.sdo.CmpGeneSnpResult;
+import com.celloud.mongo.sdo.CmpReport;
+import com.celloud.mongo.sdo.GeneDetectionResult;
+import com.celloud.mongo.service.ReportService;
+import com.celloud.mongo.service.ReportServiceImpl;
 import com.google.inject.Inject;
 import com.nova.email.EmailService;
 import com.nova.pager.PageList;
 import com.nova.sdo.Company;
 import com.nova.sdo.Data;
 import com.nova.sdo.DataType;
+import com.nova.sdo.Dept;
 import com.nova.sdo.Project;
 import com.nova.sdo.ProjectParam;
 import com.nova.sdo.Report;
@@ -30,10 +40,12 @@ import com.nova.sdo.User;
 import com.nova.service.ICompanyService;
 import com.nova.service.IDataService;
 import com.nova.service.IDataTypeService;
+import com.nova.service.IDeptService;
 import com.nova.service.IProjectService;
 import com.nova.service.IReportService;
 import com.nova.service.ISoftwareService;
 import com.nova.service.IUserService;
+import com.nova.utils.Base64Util;
 import com.nova.utils.FileTools;
 import com.nova.utils.PropertiesUtil;
 import com.nova.utils.RemoteRequests;
@@ -53,6 +65,8 @@ import com.nova.utils.XmlUtil;
 		@Result(name = "RunProject", type = "json", params = { "root", "error" }),
 		@Result(name = "success", type = "json", params = { "root", "userNames" }),
 		@Result(name = "returnBoolean", type = "json", params = { "root",
+				"flag" }),
+		@Result(name = "toSaveRunedCmp", type = "json", params = { "root",
 				"flag" }) })
 public class ProjectAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
@@ -63,6 +77,8 @@ public class ProjectAction extends BaseAction {
 	private IUserService userService;
 	@Inject
 	private IDataService dataService;
+	@Inject
+	private IDeptService deptService;
 	@Inject
 	private IReportService reportService;
 	@Inject
@@ -104,6 +120,267 @@ public class ProjectAction extends BaseAction {
 	private List<Project> proNameList;// 用户的项目名称列表
 	private int sortByType;// 排序类型 1：按项目名称排序，2：按启动时间排序
 
+	public String toSaveRunedCmp() {
+		String source = "/share/data/webapps/Tools/upload/88/110/";
+		File upload = new File(source);
+		File[] files = upload.listFiles();
+		for (File f : files) {
+			String data1 = f.getName();
+			if (f.isDirectory() && data1.length() > 7) {
+				System.out.println("--------------------" + data1
+						+ "----------");
+				String data2 = "";
+				if (data1.equals("20150609090539")) {
+					data2 = "20150609309453";
+				} else if (data1.equals("20150609648660")) {
+					data2 = "20150609886427";
+				} else if (data1.equals("20150609918308")) {
+					data2 = "20150609127108";
+				} else if (data1.equals("20150610114501")) {
+					data2 = "20150610888196";
+				} else if (data1.equals("20150626658029")) {
+					data2 = "20150626745382";
+				} else if (data1.equals("20150717570992")) {
+					data2 = "20150717944085";
+				} else if (data1.equals("20150720053040")) {
+					data2 = "20150720461290";
+				}
+				List<Data> dataList = dataService.getDataByDataKeys(data1 + ","
+						+ data2, 88);
+				List<com.celloud.mongo.sdo.Data> dList = new ArrayList<com.celloud.mongo.sdo.Data>();
+				for (Data d : dataList) {
+					com.celloud.mongo.sdo.Data d1 = new com.celloud.mongo.sdo.Data();
+					d1.setAnotherName(d.getAnotherName());
+					d1.setDataKey(d.getDataKey());
+					d1.setDataTags(d.getDataTags());
+					d1.setFileId(d.getFileId());
+					d1.setFileName(d.getFileName());
+					d1.setSample(d.getSample());
+					d1.setSize(d.getSize());
+					d1.setStrain(d.getStrain());
+					d1.setUserId(88);
+					dList.add(d1);
+
+				}
+				String finalPath = "/share/data/webapps/Tools/upload/88/110/"
+						+ data1;
+
+				// -----读取报告内容并保存到mongoDB------
+				CmpReport cmpReport = new CmpReport();
+				cmpReport.setDataKey(data1);
+				cmpReport.setAppId(110);
+				cmpReport.setAppName("CMP");
+				cmpReport.setData(dList);
+				Company c = companyService.getCompanyByUserId(88);
+				cmpReport.setCompanyId(c.getCompanyId());
+				cmpReport.setCompanyName(c.getCompanyName());
+				cmpReport.setCompanyEngName(c.getEnglishName());
+				cmpReport.setCompanyAddr(c.getAddress());
+				cmpReport.setCompanyEnAddr(c.getEnglishName());
+				cmpReport.setCompanyIcon(c.getCompanyIcon());
+				cmpReport.setCompanyTel(c.getTel());
+				cmpReport.setZipCode(c.getZipCode());
+				User user = userService.getUserById(88);
+				cmpReport.setUserId(user.getUserId());
+				cmpReport.setUsername(user.getUsername());
+				cmpReport.setEmail(user.getEmail());
+				cmpReport.setDeptName("默认部门");
+				cmpReport.setCreateDate(new Date());
+				String logPath = finalPath + "/LOG.txt";
+				String statisPath = finalPath + "/result/statistic.xls";
+				String avgPath = finalPath + "/result/average.info";
+				String snpPath = finalPath + "/result/snp_num.info";
+				String[] snpArr = { "ABL1", "EGFR", "GNAQ", "KRAS", "PTPN11",
+						"AKT1", "ERBB2", "GNAS", "MET", "RB1", "ALK", "ERBB4",
+						"HNF1A", "MLH1", "RET", "APC", "EZH2", "HRAS", "MPL",
+						"SMAD4", "ATM", "FBXW7", "IDH1", "NOTCH1", "SMARCB1",
+						"BRAF", "FGFR1", "IDH2", "NPM1", "SMO", "CDH1",
+						"FGFR2", "JAK2", "NRAS", "SRC", "CDKN2A", "FGFR3",
+						"JAK3", "PDGFRA", "STK11", "CSF1R", "FLT3", "KDR",
+						"PIK3CA", "TP53", "CTNNB1", "GNA11", "KIT", "PTEN",
+						"VHL" };
+				// 二、1 基因检测结果
+				List<GeneDetectionResult> cmpGeneResult = new ArrayList<GeneDetectionResult>();
+				if (new File(snpPath).exists()) {
+					List<String> list_ = new ArrayList<String>();
+					try {
+						list_ = FileUtils.readLines(new File(snpPath), "GBK");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					if (list_ != null) {
+						for (int z = 0; z < list_.size(); z++) {
+							String[] line_i = list_.get(z).split("\t");
+							GeneDetectionResult gdr = new GeneDetectionResult();
+							gdr.setGeneName(FileTools.getArray(line_i, 0));
+							gdr.setKnownMSNum(FileTools.getArray(line_i, 1));
+							gdr.setSequencingDepth(Integer.parseInt(FileTools
+									.getArray(
+									line_i, 2)));
+							cmpGeneResult.add(gdr);
+						}
+					}
+				}
+				cmpReport.setCmpGeneResult(cmpGeneResult);
+				// 二、2
+				if (new File(logPath).exists()) {
+					cmpReport.setRunDate(FileTools.getFirstLine(logPath)
+							.substring(1, 11));
+				}
+				if (new File(statisPath).exists()) {
+					List<String> list_ = new ArrayList<String>();
+					try {
+						list_ = FileUtils
+								.readLines(new File(statisPath), "GBK");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					cmpReport.setAllFragment(FileTools.listIsNull(list_, 0));
+					cmpReport.setAvgQuality(FileTools.listIsNull(list_, 1));
+					cmpReport.setAvgGCContent(FileTools.listIsNull(list_, 2));
+					cmpReport.setUsableFragment(FileTools.listIsNull(list_, 3));
+					cmpReport.setNoDetectedGene(FileTools.listIsNull(list_, 4));
+					cmpReport.setDetectedGene(FileTools.listIsNull(list_, 5));
+				}
+				if (new File(avgPath).exists()) {
+					cmpReport.setAvgCoverage(FileTools.getFirstLine(avgPath));
+				}
+				// 五
+				Map<String, CmpGeneDetectionDetail> geneDetectionDetail = new HashMap<String, CmpGeneDetectionDetail>();
+				for (String snpName : snpArr) {
+					String spath = finalPath + "/result/" + snpName + ".snp";
+					List<String> list_ = new ArrayList<String>();
+					try {
+						if (new File(spath).exists()) {
+							list_ = FileUtils.readLines(new File(spath), "GBK");
+							CmpGeneDetectionDetail gdd = new CmpGeneDetectionDetail();
+							String avgSeqDepth = "";
+							List<CmpGeneSnpResult> result = new ArrayList<CmpGeneSnpResult>();
+							for (int z = 0; z < list_.size(); z++) {
+								if (z == 0) {
+									avgSeqDepth = list_.get(z);
+								} else {
+									String[] line_z = list_.get(z).split("\t");
+									CmpGeneSnpResult gsr = new CmpGeneSnpResult();
+									gsr.setGene(FileTools.getArray(line_z, 0));
+									gsr.setRefBase(FileTools
+											.getArray(line_z, 1));
+									gsr.setMutBase(FileTools
+											.getArray(line_z, 2));
+									gsr.setDepth(FileTools.getArray(line_z, 3));
+									gsr.setCdsMutSyntax(FileTools.getArray(
+											line_z, 4));
+									gsr.setAaMutSyntax(FileTools.getArray(
+											line_z, 5));
+									gsr.setMutationType(FileTools.getArray(
+											line_z, 6));
+									result.add(gsr);
+								}
+							}
+
+							gdd.setAvgCoverage(avgSeqDepth);
+							gdd.setResult(result);
+							geneDetectionDetail.put(snpName, gdd);
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				cmpReport.setGeneDetectionDetail(geneDetectionDetail);
+
+				String qualityPath1 = "http://www.celloud.org/Tools/upload/88/110/"
+						+ data1 + "/QC/" + data1
+						+ "_fastqc/Images/per_base_quality.png";
+				cmpReport.setQualityPath1(qualityPath1);
+				String seqContentPath1 = "http://www.celloud.org/Tools/upload/88/110/"
+						+ data1
+						+ "/QC/"
+						+ data1
+						+ "_fastqc/Images/per_base_sequence_content.png";
+				cmpReport.setSeqContentPath1(seqContentPath1);
+				String fastqcDataPath = "/share/data/webapps/Tools/upload/88/110/"
+						+ data1 + "/QC/" + data1
+						+ "_fastqc/fastqc_data.txt";
+				Map<String, String> basicStatistics1 = new HashMap<String, String>();
+				if (new File(fastqcDataPath).exists()) {
+					List<String> list_ = FileTools.getLineByNum(fastqcDataPath,
+							4, 10);
+					System.out.println(fastqcDataPath);
+					if (list_.size() >= 7) {
+						String[] line_1 = list_.get(0).split("\t");
+						basicStatistics1.put("Filename",
+								FileTools.getArray(line_1, 1));
+						String[] line_2 = list_.get(1).split("\t");
+						basicStatistics1.put("FileType",
+								FileTools.getArray(line_2, 1));
+						String[] line_3 = list_.get(2).split("\t");
+						basicStatistics1.put("Encoding",
+								FileTools.getArray(line_3, 1));
+						String[] line_4 = list_.get(3).split("\t");
+						basicStatistics1.put("TotalSeq",
+								FileTools.getArray(line_4, 1));
+						String[] line_5 = list_.get(4).split("\t");
+						basicStatistics1.put("FilteredSeq",
+								FileTools.getArray(line_5, 1));
+						String[] line_6 = list_.get(5).split("\t");
+						basicStatistics1.put("SeqLength",
+								FileTools.getArray(line_6, 1));
+						String[] line_7 = list_.get(6).split("\t");
+						basicStatistics1.put("gc",
+								FileTools.getArray(line_7, 1));
+					}
+					cmpReport.setBasicStatistics1(basicStatistics1);
+				}
+				String qualityPath2 = "";
+				String seqContentPath2 = "";
+				Map<String, String> basicStatistics2 = new HashMap<String, String>();
+				qualityPath2 = "http://www.celloud.org/Tools/upload/88/110/"
+						+ data1 + "/QC/" + data2
+						+ "_fastqc/Images/per_base_quality.png";
+				seqContentPath2 = "http://www.celloud.org/Tools/upload/88/110/"
+						+ data1 + "/QC/" + data2
+						+ "_fastqc/Images/per_base_sequence_content.png";
+				String f2 = "/share/data/webapps/Tools/upload/88/110/" + data1
+						+ "/QC/" + data2 + "_fastqc/fastqc_data.txt";
+				System.out.println(f2);
+				List<String> list_2 = FileTools.getLineByNum(f2, 4, 10);
+				if (list_2.size() >= 7) {
+					String[] line_1 = list_2.get(0).split("\t");
+					basicStatistics2.put("Filename",
+							FileTools.getArray(line_1, 1));
+					String[] line_2 = list_2.get(1).split("\t");
+					basicStatistics2.put("FileType",
+							FileTools.getArray(line_2, 1));
+					String[] line_3 = list_2.get(2).split("\t");
+					basicStatistics2.put("Encoding",
+							FileTools.getArray(line_3, 1));
+					String[] line_4 = list_2.get(3).split("\t");
+					basicStatistics2.put("TotalSeq",
+							FileTools.getArray(line_4, 1));
+					String[] line_5 = list_2.get(4).split("\t");
+					basicStatistics2.put("FilteredSeq",
+							FileTools.getArray(line_5, 1));
+					String[] line_6 = list_2.get(5).split("\t");
+					basicStatistics2.put("SeqLength",
+							FileTools.getArray(line_6, 1));
+					String[] line_7 = list_2.get(6).split("\t");
+					basicStatistics2.put("gc", FileTools.getArray(line_7, 1));
+				}
+				cmpReport.setQualityPath2(qualityPath2);
+				cmpReport.setSeqContentPath2(seqContentPath2);
+				cmpReport.setBasicStatistics2(basicStatistics2);
+				ReportService reportService = new ReportServiceImpl();
+				Data d = dataService.getDataByKey(data1);
+				List<Integer> proIds = projectService.getProIdsByFileId(d
+						.getFileId());
+				for (Integer proId : proIds) {
+					cmpReport.setProjectId(proId);
+					reportService.saveCmpReport(cmpReport);
+				}
+			}
+		}
+		return "toSaveRunedCmp";
+	}
 	/**
 	 * 下载项目pdf
 	 */
@@ -205,19 +482,15 @@ public class ProjectAction extends BaseAction {
 			for (int i = 0; i < dataArray.length; i = i + 2) {
 				String[] dataDetail = dataArray[i].split(",");
 				String[] dataDetail1 = dataArray[i + 1].split(",");
-				System.out.println(FileTools.getArray(dataDetail, 0) + ","
-						+ FileTools.getArray(dataDetail1, 0));
 				List<Data> dataList = dataService.getDataByDataKeys(
 						FileTools.getArray(dataDetail, 0) + ","
 								+ FileTools.getArray(dataDetail1, 0), userId);
-				System.out.println("------------dataArray length---------"
-						+ dataList.size());
 				map.put(FileTools.getArray(dataDetail, 0), dataList);
 			}
 		}
 		Company com = companyService.getCompanyByUserId(userId);
 		User user = userService.getUserById(userId);
-
+		Dept dept = deptService.getDeptByUser(userId);
 		// 6.根据用户ID获取用户邮箱
 		String email = userService.getEmailBySessionUserId(userId);
 		// 7.根据软件id获取软件名称
@@ -228,9 +501,11 @@ public class ProjectAction extends BaseAction {
 				+ "&appName=" + soft.getSoftwareName() + "&projectName="
 				+ projectName + "&email=" + email + "&dataKeyList="
 				+ dataResult.toString() + "&projectId=" + proId + "&dataInfos="
-				+ JSONObject.toJSONString(map) + "&company="
-				+ JSONObject.toJSONString(com) + "&user="
-				+ JSONObject.toJSONString(user);
+				+ Base64Util.encrypt(JSONObject.toJSONString(map))
+				+ "&company="
+				+ Base64Util.encrypt(JSONObject.toJSONString(com)) + "&user="
+				+ Base64Util.encrypt(JSONObject.toJSONString(user)) + "&dept="
+				+ Base64Util.encrypt(JSONObject.toJSONString(dept));
 		RemoteRequests rr = new RemoteRequests();
 		rr.run(newPath);
 		error = 0;

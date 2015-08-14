@@ -20,6 +20,11 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 	}
 
 	@Override
+	public void saveCmpReport(CmpReport cmpReport) {
+		ds.save(cmpReport);
+	}
+
+	@Override
 	public void editCmpFilling(Object id, CmpFilling cmpFill) {
 		ds.update(
 				ds.createQuery(CmpReport.class).filter("_id", id),
@@ -28,18 +33,18 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 	}
 
 	@Override
-	public CmpReport getCmpReport(String dataKey, Integer userId) {
+	public CmpReport getCmpReport(String dataKey, Integer proId) {
 		return ds.createQuery(CmpReport.class).filter("dataKey", dataKey)
-				.filter("userId", userId).get();
+				.filter("projectId", proId).get();
 	}
 
 	@Override
-	public CmpReport getSimpleCmp(String dataKey, Integer userId) {
+	public CmpReport getSimpleCmp(String dataKey, Integer proId) {
 		return ds
 				.createQuery(CmpReport.class)
-				.retrievedFields(false, "createDate", "company", "user",
+				.retrievedFields(false, "createDate",
 						"geneDetectionDetail", "cmpFilling")
-				.filter("dataKey", dataKey).filter("userId", userId).get();
+				.filter("dataKey", dataKey).filter("projectId", proId).get();
 	}
 
 }

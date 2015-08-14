@@ -17,10 +17,10 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<h3 class="header smaller lighter blue">
-				<span onclick="getMonthDataList()">医院详细信息</span>
+				<span onclick="toHospitalList()">医院详细信息</span>
 				<small id="secondTitle" class="hide">
 					<i class="icon-double-angle-right"></i>
-					<span id="_month"></span>用户上传数据量
+					<span id="_oneHospital"></span>
 				</small>
 			</h3>
 			<div class="table-header hide" id="_companyName">
@@ -45,7 +45,7 @@
 						<s:if test="%{complist.size()>0}">
 							<s:iterator id="data" value="complist">
 								<tr>
-									<td><a href="javascript:getCompanyDetail(${data.company_id },'${data.company_name }','${data.address }','${data.tel }','${data.userNum }','${data.fileNum }','${data.fileSize }','${data.reportNum }','${data.create_date }')">${data.company_name }</a></td>
+									<td><a href="javascript:getCompanyDetail(${data.company_id },'${data.company_name }')">${data.company_name }</a></td>
 									<td>${data.address }</td>
 									<td>${data.tel }</td>
 									<td>${data.userNum }</td>
@@ -70,7 +70,11 @@
 	      null,null,null,null,null,null,null,null
 		] } );
 	})
-	function getCompanyDetail(id,name,address,tel,userNum,fileNum,fileSize,reportNum,createDate){
-		
+	function getCompanyDetail(id,name){
+		$("#_oneHospital").html(name);
+		$("#secondTitle").removeClass("hide");
+		$.get("company!getOneCompany",{"company.company_id":id},function(responseText){
+			$("#dataDiv").html(responseText);
+		})
 	}
 </script>

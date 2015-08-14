@@ -664,7 +664,7 @@ $.ajaxSetup ({
 				$("#fileA"+proId+fileId).parent().addClass("active");
 			}
 			if(softwareId == 110 || softwareId ==111){
-				$.get("cmpReport!toCmpReport",{"cmpReport.userId":userId,"cmpReport.dataKey":dataKey},function(responseText){
+				$.get("cmpReport!toCmpReport",{"cmpReport.projectId":proId,"cmpReport.dataKey":dataKey},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
 			}else{
@@ -1369,16 +1369,16 @@ function toPrintVSP(){
 		obj.document.close();
 	});
 }
-function printCMP(userId,dataKey){
-	$.get("cmpReport!toPrintDetailCmp",{"cmpReport.userId":userId,"cmpReport.dataKey":dataKey},function(responseText){
+function printCMP(projectId,dataKey,userId){
+	$.get("cmpReport!toPrintDetailCmp",{"cmpReport.projectId":projectId,"cmpReport.dataKey":dataKey,"cmpReport.userId":userId},function(responseText){
 		var obj = window.open("");
 		obj.document.write(responseText);
 		obj.document.close();
 	});
 }
 
-function printSimpCMP(userId,dataKey){
-	$.get("cmpReport!toPrintSimpleCmp",{"cmpReport.userId":userId,"cmpReport.dataKey":dataKey},function(responseText){
+function printSimpCMP(projectId,dataKey,userId){
+	$.get("cmpReport!toPrintSimpleCmp",{"cmpReport.projectId":projectId,"cmpReport.dataKey":dataKey,"cmpReport.userId":userId},function(responseText){
 		var obj = window.open("");
 		obj.document.write(responseText);
 		obj.document.close();
