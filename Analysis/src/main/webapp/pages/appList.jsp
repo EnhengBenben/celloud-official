@@ -17,7 +17,7 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<h3 class="header smaller lighter blue">
-				<span onclick="getMonthDataList()">APP详细信息</span>
+				<span onclick="toAPPList()">APP详细信息</span>
 				<small id="secondTitle" class="hide">
 					<i class="icon-double-angle-right"></i>
 					<span id="_oneApp"></span>
