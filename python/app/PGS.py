@@ -61,22 +61,22 @@ class PGS:
 				elif(x == datakey+".xls"):
 					datakeyxls = os.path.join(path,datakey+".xls")
 					with open(datakeyxls, 'r') as f:
-						fileName = f.readline().strip("\n")
-						key = f.readline().strip("\n").split("\t")
-						val = f.readline().strip("\n").split("\t")
+						fileName = f.readline().strip()
+						key = f.readline().strip().split()
+						val = f.readline().strip().split()
 						for i,k in enumerate(key):
 							result[k] = val[i]
 						lines = countLines(datakeyxls)
 						#此处判断文件行数决定是否需要读取note
 						if(lines == 4):
-							note = f.readline().strip("\n")
+							note = f.readline().strip()
 							result['note'] = note
 						result['fileName'] = fileName
 				elif(x == 'report.xls'):
 					detail = []
 					f = open(os.path.join(path,"report.xls"),'r')
 					for line in f.readlines():
-						detail.append(line.strip().split("\t"))
+						detail.append(line.strip().split())
 					f.close()
 					result['detail'] = detail
 				elif(x.endswith('.png')):
