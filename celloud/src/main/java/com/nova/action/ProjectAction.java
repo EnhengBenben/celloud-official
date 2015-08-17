@@ -144,7 +144,12 @@ public class ProjectAction extends BaseAction {
 					data2 = "20150717944085";
 				} else if (data1.equals("20150720053040")) {
 					data2 = "20150720461290";
+				} else if (data1.equals("20150817490068")) {
+					data2 = "20150817188431";
+				} else if (data1.equals("20150817593035")) {
+					data2 = "20150817496277";
 				}
+
 				List<Data> dataList = dataService.getDataByDataKeys(data1 + ","
 						+ data2, 88);
 				List<com.celloud.mongo.sdo.Data> dList = new ArrayList<com.celloud.mongo.sdo.Data>();
