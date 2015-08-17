@@ -172,12 +172,12 @@
 						<b class="arrow icon-angle-down"></b>
 					</a>
 					<ul class="submenu">
-						<li>
-							<a href="javascript:void()">
-								<i class="icon-double-angle-right"></i>
-								用户活跃度统计
-							</a>
-						</li>
+<!-- 						<li> -->
+<!-- 							<a href="javascript:void()"> -->
+<!-- 								<i class="icon-double-angle-right"></i> -->
+<!-- 								用户活跃度统计 -->
+<!-- 							</a> -->
+<!-- 						</li> -->
 						<li>
 							<a href="javascript:toActivity()">
 								<i class="icon-double-angle-right"></i>
