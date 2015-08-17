@@ -262,30 +262,31 @@ public class RunAppServiceImpl {
 				Map<String, CmpGeneDetectionDetail> geneDetectionDetail = new HashMap<String, CmpGeneDetectionDetail>();
 				for (String snpName : snpArr) {
 					String spath = finalPath + "/result/" + snpName + ".snp";
-					List<String> list_ = FileTools.readLinestoString(spath);
-					CmpGeneDetectionDetail gdd = new CmpGeneDetectionDetail();
-					String avgSeqDepth = "";
-					List<CmpGeneSnpResult> result = new ArrayList<CmpGeneSnpResult>();
-					for (int z = 0; z < list_.size(); z++) {
-						if (z == 0) {
-							avgSeqDepth = list_.get(z);
-						} else {
-							String[] line_z = list_.get(z).split("\t");
-							CmpGeneSnpResult gsr = new CmpGeneSnpResult();
-							gsr.setGene(getArray(line_z, 0));
-							gsr.setRefBase(getArray(line_z, 1));
-							gsr.setMutBase(getArray(line_z, 2));
-							gsr.setDepth(getArray(line_z, 3));
-							gsr.setCdsMutSyntax(getArray(line_z, 4));
-							gsr.setAaMutSyntax(getArray(line_z, 5));
-							gsr.setMutationType(getArray(line_z, 6));
-							result.add(gsr);
+					if (new File(spath).exists()) {
+						List<String> list_ = FileTools.readLinestoString(spath);
+						CmpGeneDetectionDetail gdd = new CmpGeneDetectionDetail();
+						String avgSeqDepth = "";
+						List<CmpGeneSnpResult> result = new ArrayList<CmpGeneSnpResult>();
+						for (int z = 0; z < list_.size(); z++) {
+							if (z == 0) {
+								avgSeqDepth = list_.get(z);
+							} else {
+								String[] line_z = list_.get(z).split("\t");
+								CmpGeneSnpResult gsr = new CmpGeneSnpResult();
+								gsr.setGene(getArray(line_z, 0));
+								gsr.setRefBase(getArray(line_z, 1));
+								gsr.setMutBase(getArray(line_z, 2));
+								gsr.setDepth(getArray(line_z, 3));
+								gsr.setCdsMutSyntax(getArray(line_z, 4));
+								gsr.setAaMutSyntax(getArray(line_z, 5));
+								gsr.setMutationType(getArray(line_z, 6));
+								result.add(gsr);
+							}
 						}
+						gdd.setAvgCoverage(avgSeqDepth);
+						gdd.setResult(result);
+						geneDetectionDetail.put(snpName, gdd);
 					}
-
-					gdd.setAvgCoverage(avgSeqDepth);
-					gdd.setResult(result);
-					geneDetectionDetail.put(snpName, gdd);
 				}
 				cmpReport.setGeneDetectionDetail(geneDetectionDetail);
 
