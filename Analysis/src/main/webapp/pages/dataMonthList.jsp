@@ -53,10 +53,6 @@
 		</div><!-- /.col -->
 	</div><!-- /.row -->
 </div><!-- /.page-content -->
-<script src="./js/jquery.dataTables.min.js"></script>
-<script src="./js/jquery.dataTables.bootstrap.js"></script>
-<!-- inline scripts related to this page -->
-
 <script type="text/javascript">
 	jQuery(function($) {
 		var oTable1 = $('#MonthDataList').dataTable( {
