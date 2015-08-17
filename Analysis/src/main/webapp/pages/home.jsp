@@ -134,8 +134,8 @@ function chars() {
 	        x: 'right',
 	        y: 'center',
 	        feature : {
-	            mark : {show: true},
-	            dataView : {show: true, readOnly: false},
+// 	            mark : {show: true},
+// 	            dataView : {show: true, readOnly: false},
 	            restore : {show: true},
 	            saveAsImage : {show: true}
 	        }
