@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
@@ -44,7 +44,7 @@
 								<fieldset>
 									<label class="block clearfix">
 										<span class="block input-icon input-icon-right">
-											<input type="text" class="form-control" placeholder="用户名或邮箱" id="username" name="user.username"/>
+											<input type="text" class="form-control" placeholder="用户名或邮箱" id="username" name="user.username" value="${username }"/>
 											<i class="icon-user"></i>
 										</span>
 									</label>
@@ -64,8 +64,9 @@
 						                	<img style="margin-left:-30px;" title="看不清，换一张" src="kaptcha.jpg" id="kaptchaImage" alt="验证码" class="validateCode" style="cursor: pointer;"/>
 					                	</div>
 					                </div>
-									<div class="space"></div>
-
+					                <div style="height:25px;">
+					                	<div class="text-warning bigger-110 orange hide" id="loginInfoDiv"><i class="icon-warning-sign"></i><span id="loginInfo">${info }</span></div>
+					                </div>
 									<div class="clearfix" style="text-align:center;">
 										<a href="javascript:void();" class="width-35 btn btn-sm btn-primary" id="submit"><i class="icon-key"></i>登录</a>
 									</div>
@@ -90,7 +91,7 @@
 </div>
 <!--#E bgContainer-->
 <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
-<script type="text/javascript" src="js/tologin.js?version=1.0"></script>
+<script type="text/javascript" src="js/tologin.js?version=2.0"></script>
 <script type="text/javascript" src="js/md5.js"></script>
 <script type="text/javascript" src="js/security.js"></script>
 <script type="text/javascript">
