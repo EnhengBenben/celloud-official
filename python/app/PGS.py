@@ -62,8 +62,8 @@ class PGS:
 					datakeyxls = os.path.join(path,datakey+".xls")
 					with open(datakeyxls, 'r') as f:
 						fileName = f.readline().strip()
-						key = f.readline().strip().split()
-						val = f.readline().strip().split()
+						key = f.readline().strip().split("\t")
+						val = f.readline().strip().split("\t")
 						for i,k in enumerate(key):
 							result[k] = val[i]
 						lines = countLines(datakeyxls)
@@ -76,7 +76,7 @@ class PGS:
 					detail = []
 					f = open(os.path.join(path,"report.xls"),'r')
 					for line in f.readlines():
-						detail.append(line.strip().split())
+						detail.append(line.strip().split("\t"))
 					f.close()
 					result['detail'] = detail
 				elif(x.endswith('.png')):
