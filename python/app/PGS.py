@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 # python version 2.7.6
 
-__des__='PGS的操作类'
-__author__='lin'
+__des__ = 'PGS的操作类'
+__author__ = 'lin'
 
 import os
 import threading
 from utils.FileUtils import *
+import model
 
 class PGS:
 	path = None
@@ -65,7 +66,7 @@ class PGS:
 						key = f.readline().strip().split("\t")
 						val = f.readline().strip().split("\t")
 						for i,k in enumerate(key):
-							result[k] = val[i]
+							result[pgs[k]] = val[i]
 						lines = countLines(datakeyxls)
 						#此处判断文件行数决定是否需要读取note
 						if(lines == 4):
@@ -81,6 +82,6 @@ class PGS:
 					result['detail'] = detail
 				elif(x.endswith('.png')):
 					##此处处理所有png
-					result[x.split('.')[-2] + x.split('.')[-1]] = x
-			result['no_enough_reads'] = no_enough_reads
+					result[pgs[x.split('.')[-2] + 'Png']] = x
+			result[pgs['no_enough_reads']] = no_enough_reads
 		return result
