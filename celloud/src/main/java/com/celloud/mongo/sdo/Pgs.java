@@ -2,6 +2,7 @@
 package com.celloud.mongo.sdo;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,7 +49,7 @@ public class Pgs extends Base {
 	private String miniPng;
 	private String finalPng;
 	private String note;
-	private String detail;
+	private List<List<String>> detail;
 	private String report;
 	/** 报告填写部分 */
 	private Map<String, String> fill;
@@ -253,14 +254,6 @@ public class Pgs extends Base {
 		this.note = note;
 	}
 
-	public String getDetail() {
-		return detail;
-	}
-
-	public void setDetail(String detail) {
-		this.detail = detail;
-	}
-
 	public String getReport() {
 		return report;
 	}
@@ -283,5 +276,13 @@ public class Pgs extends Base {
 
 	public void setFileCreateDate(Date fileCreateDate) {
 		this.fileCreateDate = fileCreateDate;
+	}
+
+	public List<List<String>> getDetail() {
+		return detail;
+	}
+
+	public void setDetail(List<List<String>> detail) {
+		this.detail = detail;
 	}
 }
