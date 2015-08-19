@@ -14,24 +14,16 @@ import java.util.Map;
 public class Pgs extends Base {
 	/** 文件编号 */
 	private Integer fileId;
-	/** 用户编号 提交者 */
-	private Integer userId;
 	/** 数据编号 */
 	private String dataKey;
 	/** 文件名字 */
 	private String fileName;
-	/** 物种 */
-	private String strain;
-	/** 数据标签 */
-	private String dataTags;
 	/** 大小 单位：b */
 	private Long size;
-	/** 样本 */
-	private String sample;
 	/** 文件别名 */
 	private String anotherName;
 	/** 提交时间 */
-	private Date fileCreateDate;
+	private Date uploadDate;
 	/** 报告创建时间 */
 	private Date createDate;
 	private String sd;
@@ -62,14 +54,6 @@ public class Pgs extends Base {
 		this.fileId = fileId;
 	}
 
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
 	public String getDataKey() {
 		return dataKey;
 	}
@@ -86,36 +70,12 @@ public class Pgs extends Base {
 		this.fileName = fileName;
 	}
 
-	public String getStrain() {
-		return strain;
-	}
-
-	public void setStrain(String strain) {
-		this.strain = strain;
-	}
-
-	public String getDataTags() {
-		return dataTags;
-	}
-
-	public void setDataTags(String dataTags) {
-		this.dataTags = dataTags;
-	}
-
 	public Long getSize() {
 		return size;
 	}
 
 	public void setSize(Long size) {
 		this.size = size;
-	}
-
-	public String getSample() {
-		return sample;
-	}
-
-	public void setSample(String sample) {
-		this.sample = sample;
 	}
 
 	public String getAnotherName() {
@@ -270,12 +230,12 @@ public class Pgs extends Base {
 		this.fill = fill;
 	}
 
-	public Date getFileCreateDate() {
-		return fileCreateDate;
+	public Date getUploadDate() {
+		return uploadDate;
 	}
 
-	public void setFileCreateDate(Date fileCreateDate) {
-		this.fileCreateDate = fileCreateDate;
+	public void setUploadDate(Date uploadDate) {
+		this.uploadDate = uploadDate;
 	}
 
 	public List<List<String>> getDetail() {
