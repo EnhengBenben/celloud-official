@@ -45,6 +45,7 @@ public class Pgs extends Base {
 	private String report;
 	/** 报告填写部分 */
 	private Map<String, String> fill;
+	private String pdf;
 
 	public Integer getFileId() {
 		return fileId;
@@ -245,4 +246,14 @@ public class Pgs extends Base {
 	public void setDetail(List<List<String>> detail) {
 		this.detail = detail;
 	}
+
+	public String getPdf() {
+		return pdf;
+	}
+
+	public void setPdf(String pdf) {
+		this.pdf = pdf;
+	}
+	
+	
 }
