@@ -65,6 +65,11 @@
 				<img src="images/content/qq.png" alt="数据库" title="数据库"
 					width="48" height="48" />
 			</div>
+			<div class="leftApp" _appId="tj" _appName="统计"
+				_appImg="images/content/qq.png" _iframeSrc="pages/count/exportReport.jsp">
+				<img src="images/content/qq.png" alt="统计" title="统计"
+					width="48" height="48" />
+			</div>
 			<div class="leftToolWrapper">
 				<div class="leftTool">
 		          <a href="content/feedBack.html" target="_blank" title="意见反馈" class="toolIcon toolIcon-theme"></a>

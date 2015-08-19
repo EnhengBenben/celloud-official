@@ -667,6 +667,10 @@ $.ajaxSetup ({
 				$.get("cmpReport!toCmpReport",{"cmpReport.projectId":proId,"cmpReport.dataKey":dataKey},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
+			}else if(softwareId == 88){
+				$.get("pgsReport!toPgsReport",{"pgs.projectId":proId,"pgs.dataKey":dataKey,"pgs.appId":softwareId},function(responseText){
+					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+				});
 			}else{
 				$.get("data!getDataByKey",{"dataKey":dataKey},function(data){
 					var anotherName = data.anotherName;

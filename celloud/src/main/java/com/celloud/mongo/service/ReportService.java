@@ -3,6 +3,7 @@ package com.celloud.mongo.service;
 
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
+import com.celloud.mongo.sdo.Pgs;
 import com.google.inject.ImplementedBy;
 
 /**
@@ -35,8 +36,7 @@ public interface ReportService {
 	 * @param userId
 	 * @return
 	 */
-	public CmpReport getCmpReport(String dataKey,
- Integer userId);
+	public CmpReport getCmpReport(String dataKey, Integer userId);
 
 	/**
 	 * 获取CMP简要信息内容
@@ -46,4 +46,13 @@ public interface ReportService {
 	 * @return
 	 */
 	public CmpReport getSimpleCmp(String dataKey, Integer userId);
+
+	/**
+	 * 获取pgs报告内容
+	 * 
+	 * @param dataKey
+	 * @param proId
+	 * @return
+	 */
+	public Pgs getPgsReport(String dataKey, Integer proId, Integer appId);
 }

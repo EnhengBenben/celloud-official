@@ -2,6 +2,7 @@ package com.celloud.mongo.dao;
 
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
+import com.celloud.mongo.sdo.Pgs;
 import com.google.code.morphia.Morphia;
 import com.google.code.morphia.dao.BasicDAO;
 import com.mongodb.Mongo;
@@ -45,6 +46,12 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 				.retrievedFields(false, "createDate",
 						"geneDetectionDetail", "cmpFilling")
 				.filter("dataKey", dataKey).filter("projectId", proId).get();
+	}
+
+	@Override
+	public Pgs getPgsReport(String dataKey, Integer proId, Integer appId) {
+		return ds.createQuery(Pgs.class).filter("dataKey", dataKey)
+				.filter("projectId", proId).filter("appId", appId).get();
 	}
 
 }

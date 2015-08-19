@@ -4,6 +4,7 @@ import com.celloud.mongo.core.SystemContext;
 import com.celloud.mongo.dao.ReportDAO;
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
+import com.celloud.mongo.sdo.Pgs;
 
 /**
  * 
@@ -32,6 +33,11 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public CmpReport getSimpleCmp(String dataKey, Integer userId) {
 		return reportDao.getSimpleCmp(dataKey, userId);
+	}
+
+	@Override
+	public Pgs getPgsReport(String dataKey, Integer proId, Integer appId) {
+		return reportDao.getPgsReport(dataKey, proId, appId);
 	}
 
 }

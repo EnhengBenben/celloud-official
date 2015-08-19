@@ -3,6 +3,7 @@ package com.celloud.mongo.dao;
 
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
+import com.celloud.mongo.sdo.Pgs;
 import com.google.inject.ImplementedBy;
 
 /**
@@ -45,4 +46,13 @@ public interface ReportDAO {
 	 * @return
 	 */
 	public CmpReport getSimpleCmp(String dataKey, Integer proId);
+
+	/**
+	 * 获取pgs报告内容
+	 * 
+	 * @param dataKey
+	 * @param proId
+	 * @return
+	 */
+	public Pgs getPgsReport(String dataKey, Integer proId, Integer appId);
 }
