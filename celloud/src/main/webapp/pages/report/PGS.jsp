@@ -1,30 +1,30 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="row">
-	<s:if test="%{pgs.noEnoughReads}">
+	<c:if test="${pgs.noEnoughReads.equals('false') }">
 		<div class="m-file">
 			文件名称：
 			<span class="file-name">
 				${pgs.dataKey }(${pgs.fileName } )
 			</span>
 			<div class="toolbar">
-				<a href="<s:property value="resultMap.down"/>" class="btn btn-default"><i class="i-download"></i>报告下载</a>
-				<s:if test="%{!resultMap.pdf.equals('false')}">
-					<a href="<s:property value="resultMap.pdf"/>" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
-				</s:if>
-				<a target="_blank" href='../../printPGS/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.miniPng"/>/<s:property value="resultMap.txt.replace('+','@')" escape="false"/>' class="btn btn-default"><i class="i-print"></i>打印报告</a>
-				<s:if test="%{!resultMap.split.equals('')}">
-					<a target="_blank" href='../../printPGS/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.split"/>/<s:property value="resultMap.txt.replace('+','@')" escape="false"/>' class="btn btn-default"><i class="i-print"></i>点图报告</a>
-				</s:if>
+				<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" class="btn btn-default"><i class="i-download"></i>报告下载</a>
+				<c:if test="${pgs.pdf!=null }">
+					<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.pdf }" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
+				</c:if>
+				<a target="_blank" href="../../printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }/${pgs.report.replace('+','@') }" class="btn btn-default"><i class="i-print"></i>打印报告</a>
+				<c:if test="${pgs.splitPng!=null }">
+					<a target="_blank" href="../../printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.splitPng }/${pgs.report.replace('+','@') }" class="btn btn-default"><i class="i-print"></i>点图报告</a>					
+				</c:if>
 			</div>
 		</div>
 		<!--报告图示一-->
 		<div class="m-box">
 			<h2>
 				<i class="i-report1"></i>数据统计
-				<s:if test="%{pgs.appId!=85}">
+				<c:if test="${pgs.appId!=85 }">
 					<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('countModal')"><i class="i-tips"></i></div>
-				</s:if>
+				</c:if>
 			</h2>
 			<div class="m-boxCon" id="_table">
 				<table class="table table-bordered table-condensed">
@@ -50,11 +50,11 @@
 				  </tbody>
 				</table>
 			</div>
-			<s:if test="%{pgs.note!=null&&!pgs.note.equals('')&&pgs.appId==85}">
+			<c:if test="${pgs.note!=null&&!pgs.note.equals('')&&pgs.appId==85 }">
 				<div class="m-tips">
 					<i class="i-tips"></i>${pgs.note }
 				</div>
-			</s:if>
+			</c:if>
 		</div>
 		<!--检测结果-->
 		<div class="m-box m-box-yc">
@@ -62,17 +62,29 @@
 				<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('reportModal')"><i class="i-tips"></i></div>
 			</h2>
 			<div class="m-boxCon result" id="reportDiv">
-				<s:if test="%{pgs.appId==85}">
-					<s:property value="resultMap.txt" escape="false"/>
-				</s:if>
-				<s:else>
-					<s:if test="%{resultMap.xls.equals('')}">
-						<s:property value="resultMap.txt" escape="false"/>
-					</s:if>
-					<s:else>
-						<s:property value="resultMap.xls" escape="false"/>
-					</s:else>
-				</s:else>
+				<c:if test="${pgs.appId==85}">
+					${pgs.report }
+				</c:if>
+				<c:if test="${pgs.appId!=85}">
+					<c:if test="${pgs.detail==null || pgs.detail.size() == 0}">
+						${pgs.report }
+					</c:if>
+					<c:if test="${pgs.detail!=null && pgs.detail.size()>0 }">
+						<table class='table table-bordered table-condensed'>
+							<c:forEach items="${pgs.detail }" var="info">
+								<tr>
+									<c:forEach var="ss" items="${info}" varStatus="st">  
+									    <td>${ss }</td>
+									    <c:if test="${st.isLast()&&st.getCount()==2 }">
+									    	<td></td>
+									    	<td></td>
+									    </c:if>
+									</c:forEach>
+								</tr>
+							</c:forEach>
+						</table>
+					</c:if>
+				</c:if>
 			</div>
 		</div>
         <!--染色体图示一-->
@@ -102,18 +114,6 @@
 				</a>
             </div>
         </div>
-		<!--序列GC校正图-->
-<!-- 		<div class="m-box"> -->
-<!-- 			<h2><i class="i-dna"></i>序列GC校正图</h2> -->
-<!-- 		    <div class="m-boxCon"> -->
-<%-- 				<a href="javascript:showBg('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.rawPng"/>','rawPngImg');" > --%>
-<%-- 					<img src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.rawPng"/>" style="width: 340px;" id="rawPngImg"> --%>
-<!-- 				</a> -->
-<%-- 				<a href="javascript:showBg('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.normalPng"/>','normalPngImg');" > --%>
-<%-- 					<img src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.normalPng"/>" style="width: 340px;" id="normalPngImg"> --%>
-<!-- 				</a> -->
-<!-- 		    </div> -->
-<!-- 		</div> -->
 		<!--Celloud数据参数同比分析-->
 		<div class="bg-analysis">
 		    <div class="m-box">
@@ -126,11 +126,11 @@
 		        </div>
 		    </div>
 		</div>
-	</s:if>
-	<s:else>
-		<h3>name</h3>
-		<p>运行出错</p>
-	</s:else>
+	</c:if>
+	<c:if test="${!pgs.noEnoughReads.equals('false') }">
+		<h3>运行出错</h3>
+		<p>${pgs.noEnoughReads }</p>
+	</c:if>
 </div>
 
 <div class="modal fade" id="countModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -147,12 +147,12 @@
 		<div class="lineheight">Duplicate：样本测序过程中冗余序列比例，冗余序列产生于同一序列片段，为消除冗余的对分析染色体拷贝数的影响，分析过程中去除冗余序列。</div>
 		<div class="lineheight">GC_Count：样本测序序列的GC含量，围绕人类基因组GC平均含量41%波动。</div>
 		<div class="lineheight">SD：样本拷贝数分析中染色体的平均偏差，SD越小假阳率越低，SD小于3.5可检测4Mb以上染色体异常。</div>
-		<s:if test="%{pgs.appId==81||pgs.appId==88||pgs.appId==91||pgs.appId==93}">
+		<c:if test="${pgs.appId==81||pgs.appId==88||pgs.appId==91||pgs.appId==93 }">
 			<div class="lineheight">MT_Ratio：样本测序序列中线粒体序列百分比。数据统计表明染色体拷贝数异常胚胎线粒体比例高。</div>
 			<div>
-				<img alt="" src="<s:property value="path.replace('upload','')"/>/resource/img/pgs.png" width="100%">
+				<img alt="" src="${path.replace('upload','') }/resource/img/pgs.png" width="100%">
 			</div>
-		</s:if>
+		</c:if>
 	</div>
 	<div class="modal-footer">
 		<a class="btn close" href="javascript:void(0)" data-dismiss="modal"><i class="icon-ban-circle"></i> 取消</a>

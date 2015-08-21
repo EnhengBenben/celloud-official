@@ -9,4 +9,4 @@ class MongoPro:
 	host='localhost'
 	port=27017
 	db='celloud'
-	collection='pgs'
+	collection='Pgs'

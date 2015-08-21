@@ -8,7 +8,7 @@ __author__ = 'lin'
 import os
 import threading
 from utils.FileUtils import *
-import model
+from model import *
 
 class PGS:
 	path = None
@@ -83,5 +83,7 @@ class PGS:
 				elif(x.endswith('.png')):
 					##此处处理所有png
 					result[pgs[x.split('.')[-2] + 'Png']] = x
+				elif(x.endswith('.pdf')):
+					result['pdf'] = x
 			result[pgs['no_enough_reads']] = no_enough_reads
 		return result
