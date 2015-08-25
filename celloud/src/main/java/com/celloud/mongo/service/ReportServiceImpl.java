@@ -1,5 +1,7 @@
 package com.celloud.mongo.service;
 
+import java.util.List;
+
 import com.celloud.mongo.core.SystemContext;
 import com.celloud.mongo.dao.ReportDAO;
 import com.celloud.mongo.sdo.CmpFilling;
@@ -38,6 +40,11 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public Pgs getPgsReport(String dataKey, Integer proId, Integer appId) {
 		return reportDao.getPgsReport(dataKey, proId, appId);
+	}
+
+	@Override
+	public List<Pgs> getPgsList(Integer userId) {
+		return this.reportDao.getPgsList(userId);
 	}
 
 }

@@ -1,6 +1,8 @@
 /**  */
 package com.celloud.mongo.dao;
 
+import java.util.List;
+
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
 import com.celloud.mongo.sdo.Pgs;
@@ -55,4 +57,12 @@ public interface ReportDAO {
 	 * @return
 	 */
 	public Pgs getPgsReport(String dataKey, Integer proId, Integer appId);
+
+	/**
+	 * 获取pgs统计报告内容
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public List<Pgs> getPgsList(Integer userId);
 }

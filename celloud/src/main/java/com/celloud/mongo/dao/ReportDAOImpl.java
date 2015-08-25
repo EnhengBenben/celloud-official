@@ -1,5 +1,7 @@
 package com.celloud.mongo.dao;
 
+import java.util.List;
+
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
 import com.celloud.mongo.sdo.Pgs;
@@ -54,4 +56,9 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 				.filter("projectId", proId).filter("appId", appId).get();
 	}
 
+	@Override
+	public List<Pgs> getPgsList(Integer userId) {
+		return this.ds.createQuery(Pgs.class).filter("userId", userId)
+				.order("-uploadDate").asList();
+	}
 }
