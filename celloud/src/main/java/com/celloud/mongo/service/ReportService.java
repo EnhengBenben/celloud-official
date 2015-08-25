@@ -1,6 +1,8 @@
 /**  */
 package com.celloud.mongo.service;
 
+import java.util.List;
+
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
 import com.celloud.mongo.sdo.Pgs;
@@ -55,4 +57,12 @@ public interface ReportService {
 	 * @return
 	 */
 	public Pgs getPgsReport(String dataKey, Integer proId, Integer appId);
+
+	/**
+	 * 获取pgs统计报告内容
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public abstract List<Pgs> getPgsList(Integer userId);
 }

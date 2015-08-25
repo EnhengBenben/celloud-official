@@ -1,6 +1,8 @@
 /**  */
 package com.celloud.mongo.action;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -22,7 +24,9 @@ import com.nova.utils.PropertiesUtil;
  */
 @ParentPackage("celloud-default")
 @Action("pgsReport")
-@Results({ @Result(name = "toPgsReport", location = "../../pages/report/PGS.jsp") })
+@Results({
+		@Result(name = "toPgsReport", location = "../../pages/report/PGS.jsp"),
+		@Result(name = "toPgsCount", location = "../../pages/count/pgsReport.jsp") })
 public class PgsReportAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
 	Logger log = Logger.getLogger(CmpReportAction.class);
@@ -30,6 +34,7 @@ public class PgsReportAction extends BaseAction {
 	private ReportService reportService;
 	private Pgs pgs;
 	private String path;
+	private List<Pgs> pgsList;
 
 	/**
 	 * 查看PGS报告
@@ -41,6 +46,12 @@ public class PgsReportAction extends BaseAction {
 		pgs = reportService.getPgsReport(pgs.getDataKey(), pgs.getProjectId(),
 				pgs.getAppId());
 		return "toPgsReport";
+	}
+
+	public String toPgsCount() {
+		this.log.info("查看用户" + this.pgs.getUsername() + "的数据报告统计");
+		this.pgsList = this.reportService.getPgsList(this.pgs.getUserId());
+		return "toPgsCount";
 	}
 
 	public Pgs getPgs() {

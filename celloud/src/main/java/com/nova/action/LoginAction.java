@@ -66,6 +66,7 @@ public class LoginAction extends BaseAction implements ModelDriven<User> {
 			super.session.put("userNav", user.getNavigation());
 			super.session.put("deptId", user.getDeptId());
 			super.session.put("email", user.getEmail());
+			super.session.put("companyId", user.getCompanyId());
 
 			// 记录登录信息
 			new Runnable() {
@@ -153,7 +154,7 @@ public class LoginAction extends BaseAction implements ModelDriven<User> {
 			super.session.put("userNav", user.getNavigation());
 			super.session.put("deptId", user.getDeptId());
 			super.session.put("email", user.getEmail());
-
+			super.session.put("companyId", user.getCompanyId());
 			// 记录登录信息
 			new Runnable() {
 				public void run() {
