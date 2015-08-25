@@ -51,7 +51,7 @@
 			<s:else>
 				<div class="main_f clearfix">
 	             	<span style="font-size:50px">对不起，您的链接已超时，请重新申请！</span>
-	            	<a href="home.html" class="error_return">返回首页</a>
+	            	<a href="../home.html" class="error_return">返回首页</a>
 	            </div>
 			</s:else>
             <div class="view-tips">最佳浏览体验：Chrome / Firefox 8.0+ / IE 9.0+</div>
