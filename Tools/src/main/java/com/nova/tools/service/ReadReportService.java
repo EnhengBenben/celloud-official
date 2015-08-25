@@ -21,32 +21,6 @@ import com.nova.tools.utils.TableUtil;
  * @date 2013-7-29 下午8:51:49
  */
 public class ReadReportService {
-
-	/**
-	 * 获取打印报告所需内容
-	 * 
-	 * @param basePath
-	 * @param userId
-	 * @param appId
-	 * @param dataKey
-	 * @param fileName
-	 * @param anotherName
-	 * @return
-	 */
-	public Map<String, String> printReport(String basePath, String userId,
-			String appId,
-			String dataKey) {
-		Map<String, String> reportMap = new HashMap<String, String>();
-		ReadReportServiceImpl readReport = new ReadReportServiceImpl();
-		String path = basePath + "/" + userId + "/" + appId + "/" + dataKey;
-		String outPath = userId + "/" + appId + "/" + dataKey;
-		// CMP
-		if (AppNameIDConstant.CMP.equals(appId)
-				|| AppNameIDConstant.CMP_199.equals(appId)) {
-			reportMap = readReport.printCMPReport(path, outPath, dataKey);
-		}
-		return reportMap;
-	}
 	/**
 	 * 读取数据报告
 	 * 
@@ -61,21 +35,6 @@ public class ReadReportService {
 			throws IOException {
 		Map<String, String> reportMap = new HashMap<String, String>();
 		ReadReportServiceImpl readReport = new ReadReportServiceImpl();
-		// CMP
-		if (AppNameIDConstant.CMP.equals(appId)
-				|| AppNameIDConstant.CMP_199.equals(appId)) {
-			String path = basePath + "/" + userId + "/" + appId + "/" + dataKey;
-			String outPath = userId + "/" + appId + "/" + dataKey;
-			reportMap = readReport.CMPReport(path, outPath, dataKey);
-			reportMap.put("userId", userId);
-			reportMap.put("appId", appId);
-			reportMap.put("dataKey", dataKey);
-			reportMap.put("fileName",
-					("null".equals(anotherName) || anotherName == null || ""
-							.equals(anotherName)) ? fileName : anotherName);
-			reportMap.put("pagePath", userId + "/" + appId + "/" + dataKey);
-			return reportMap;
-		}
 		
 		if (AppNameIDConstant.VSP.equals(appId)) {
 			reportMap.put("datakey", dataKey);
