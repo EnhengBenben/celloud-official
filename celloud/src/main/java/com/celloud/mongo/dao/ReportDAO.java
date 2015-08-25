@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
+import com.celloud.mongo.sdo.PGSFilling;
 import com.celloud.mongo.sdo.Pgs;
 import com.google.inject.ImplementedBy;
 
@@ -65,4 +66,7 @@ public interface ReportDAO {
 	 * @return
 	 */
 	public List<Pgs> getPgsList(Integer userId);
+
+	public void editPGSFilling(int userId, int appId, int dataKey,
+			PGSFilling pgs);
 }

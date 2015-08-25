@@ -6,6 +6,7 @@ import com.celloud.mongo.core.SystemContext;
 import com.celloud.mongo.dao.ReportDAO;
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
+import com.celloud.mongo.sdo.PGSFilling;
 import com.celloud.mongo.sdo.Pgs;
 
 /**
@@ -45,6 +46,12 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public List<Pgs> getPgsList(Integer userId) {
 		return this.reportDao.getPgsList(userId);
+	}
+
+	@Override
+	public void editPGSFilling(int userId, int appId, int dataKey,
+			PGSFilling pgs) {
+		reportDao.editPGSFilling(userId, appId, dataKey, pgs);
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
+import com.celloud.mongo.sdo.PGSFilling;
 import com.celloud.mongo.sdo.Pgs;
 import com.google.code.morphia.Morphia;
 import com.google.code.morphia.dao.BasicDAO;
@@ -60,5 +61,13 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 	public List<Pgs> getPgsList(Integer userId) {
 		return this.ds.createQuery(Pgs.class).filter("userId", userId)
 				.order("-uploadDate").asList();
+	}
+
+	@Override
+	public void editPGSFilling(int userId, int appId, int dataKey,
+			PGSFilling pgs) {
+		ds.update(
+				ds.createQuery(Pgs.class).filter("userId", userId).filter("appId", appId).filter("dataKey", dataKey),
+				ds.createUpdateOperations(Pgs.class).set("fill", pgs));
 	}
 }
