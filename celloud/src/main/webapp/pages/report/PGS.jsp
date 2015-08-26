@@ -12,7 +12,13 @@
 			<div class="toolbar">
 				<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" class="btn btn-default"><i class="i-download"></i>报告下载</a>
 				<c:if test="${pgs.pdf!=null }">
+					
 					<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.pdf }" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
+				</c:if>
+				<c:if test="${pgs.pdf ==null }">
+					<c:if test="${pgs.createDate.time>1440432000000  }">
+						<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.dataKey }.pdf" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
+					</c:if>
 				</c:if>
 				<a target="_blank" href="../../printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }" class="btn btn-default"><i class="i-print"></i>打印报告</a>
 				<c:if test="${pgs.splitPng!=null }">
