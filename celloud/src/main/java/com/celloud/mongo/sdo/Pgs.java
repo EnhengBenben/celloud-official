@@ -46,7 +46,9 @@ public class Pgs extends Base {
 	/** 报告填写部分 */
 	private Map<String, String> fill;
 	private String pdf;
-
+	private String mapReads;
+	private String winSize;
+	
 	public Integer getFileId() {
 		return fileId;
 	}
@@ -254,6 +256,21 @@ public class Pgs extends Base {
 	public void setPdf(String pdf) {
 		this.pdf = pdf;
 	}
-	
+
+	public String getMapReads() {
+		return mapReads;
+	}
+
+	public void setMapReads(String mapReads) {
+		this.mapReads = mapReads;
+	}
+
+	public String getWinSize() {
+		return winSize;
+	}
+
+	public void setWinSize(String winSize) {
+		this.winSize = winSize;
+	}
 	
 }
