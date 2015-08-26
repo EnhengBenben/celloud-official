@@ -75,6 +75,7 @@ public class CmpReport extends Base {
 	/**
 	 * 用户填写部分
 	 */
+	@Embedded
 	private CmpFilling cmpFilling;
 
 	public String getRunDate() {

@@ -13,14 +13,12 @@ $(document).ready(function(){
 	$('#kaptchaImage').click(function() {
 		$(this).hide().attr('src','kaptcha.jpg?' + Math.floor(Math.random() * 100)).fadeIn();
 	});
-	$(".error").hide();
-	error = $("#info").val();
-	if(error!=""){
-		$(".error").html(error);
-		$(".error").show();
+	$("#loginInfoDiv").addClass("hide");
+	error = $("#loginInfo").html();
+	if(error==""){
+		$("#loginInfoDiv").addClass("hide");
 	}else{
-		$(".error").html("");
-		$(".error").hide();
+		$("#loginInfoDiv").removeClass("hide");
 	}
 	var tmpRem=0;
 	$("#submit").click(function(){
@@ -44,14 +42,14 @@ $(document).ready(function(){
 		var password = $.trim($("#password").val());
 		var captcha = $.trim($("#captcha").val());
 		if(username==""){
-			$(".error").html("请输入用户名！");
-			$(".error").show();
+			$("#loginInfo").html("请输入用户名！");
+			$("#loginInfoDiv").removeClass("hide");
 		}else if(password==""){
-			$(".error").html("请输入密码！");
-			$(".error").show();
+			$("#loginInfo").html("请输入密码！");
+			$("#loginInfoDiv").removeClass("hide");
 		}else if(captcha==""){
-			$(".error").html("请输入验证码！");
-			$(".error").show();
+			$("#loginInfo").html("请输入验证码！");
+			$("#loginInfoDiv").removeClass("hide");
 		}else{
 			flag = true;
 			$("input[name='user.password']").val(secPWD(password));

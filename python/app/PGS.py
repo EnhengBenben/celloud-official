@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 # python version 2.7.6
 
-__des__='PGS的操作类'
-__author__='lin'
+__des__ = 'PGS的操作类'
+__author__ = 'lin'
 
 import os
 import threading
 from utils.FileUtils import *
+from model import *
 
 class PGS:
 	path = None
@@ -61,15 +62,22 @@ class PGS:
 				elif(x == datakey+".xls"):
 					datakeyxls = os.path.join(path,datakey+".xls")
 					with open(datakeyxls, 'r') as f:
-						fileName = f.readline().strip("\n")
-						key = f.readline().strip("\n").split("\t")
-						val = f.readline().strip("\n").split("\t")
+						fileName = f.readline().strip()
+						key = f.readline().strip().split("\t")
+						val = f.readline().strip().split("\t")
 						for i,k in enumerate(key):
-							result[k] = val[i]
+							v = ''
+							if ( i > len(val)-1 ):
+								v = '.'
+							else:
+								v = val[i]
+							if(v.strip()=='\'\''):
+								v = '.'
+							result[pgs[k]] = v
 						lines = countLines(datakeyxls)
 						#此处判断文件行数决定是否需要读取note
 						if(lines == 4):
-							note = f.readline().strip("\n")
+							note = f.readline().strip()
 							result['note'] = note
 						result['fileName'] = fileName
 				elif(x == 'report.xls'):
@@ -81,6 +89,8 @@ class PGS:
 					result['detail'] = detail
 				elif(x.endswith('.png')):
 					##此处处理所有png
-					result[x.split('.')[-2] + x.split('.')[-1]] = x
-			result['no_enough_reads'] = no_enough_reads
+					result[pgs[x.split('.')[-2] + 'Png']] = x
+				elif(x.endswith('.pdf')):
+					result['pdf'] = x
+			result[pgs['no_enough_reads']] = no_enough_reads
 		return result

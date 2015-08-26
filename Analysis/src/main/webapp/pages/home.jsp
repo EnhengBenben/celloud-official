@@ -110,10 +110,6 @@
 		</div><!-- /.col -->
 	</div><!-- /.row -->
 </div><!-- /.page-content -->
-<script src="./js/jquery.dataTables.min.js"></script>
-<script src="./js/jquery.dataTables.bootstrap.js"></script>
-<!-- inline scripts related to this page -->
-<script src="./js/d3.min.js"></script>
 <script>
 function chars() {
 	var myChart = echarts.init(document.getElementById('map')); 
@@ -138,8 +134,8 @@ function chars() {
 	        x: 'right',
 	        y: 'center',
 	        feature : {
-	            mark : {show: true},
-	            dataView : {show: true, readOnly: false},
+// 	            mark : {show: true},
+// 	            dataView : {show: true, readOnly: false},
 	            restore : {show: true},
 	            saveAsImage : {show: true}
 	        }

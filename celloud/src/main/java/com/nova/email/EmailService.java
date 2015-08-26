@@ -72,6 +72,21 @@ public class EmailService {
 			props.put("mail.smtp.auth", "true");
 			// 设置session,和邮件服务器进行通讯
 			session = Session.getDefaultInstance(props, auth);
+		}
+	}
+
+	//TODO 要优化
+	
+	/**
+	 * 文本邮件发送工具类(默认标题)
+	 * 
+	 * @param emailTo
+	 *            ：目标地址
+	 * @param msg
+	 *            ：邮件内容
+	 */
+	public static void send(String emailTo, String msg) {
+		if (isChecked) {
 			message = new MimeMessage(session);
 
 			try {
@@ -97,19 +112,6 @@ public class EmailService {
 			} catch (MessagingException e) {
 				System.err.println("设置默认主题失败！" + e);
 			}
-		}
-	}
-
-	/**
-	 * 文本邮件发送工具类(默认标题)
-	 * 
-	 * @param emailTo
-	 *            ：目标地址
-	 * @param msg
-	 *            ：邮件内容
-	 */
-	public static void send(String emailTo, String msg) {
-		if (isChecked) {
 			try {
 				message.setText(msg);// 设置邮件内容
 				message.addRecipient(Message.RecipientType.TO,
@@ -139,6 +141,31 @@ public class EmailService {
 	 */
 	public static void send(String emailTo, String msg, String title) {
 		if (isChecked) {
+			message = new MimeMessage(session);
+
+			try {
+				// 设置邮件发送者的地址
+				InternetAddress from = new InternetAddress(username);
+				if (emailName != null) {
+					from.setPersonal(MimeUtility.encodeText(emailName));
+				}
+				message.setFrom(from);
+			} catch (AddressException e) {
+				System.err.println("设置发信地址失败！" + e);
+			} catch (UnsupportedEncodingException e) {
+				System.err.println("不支持编码异常" + e);
+			} catch (MessagingException e) {
+				System.err.println("设置发信地址失败！" + e);
+			}
+
+			try {
+				// 设置默认邮件主题
+				if (defaultTitle != null) {
+					message.setSubject(defaultTitle);
+				}
+			} catch (MessagingException e) {
+				System.err.println("设置默认主题失败！" + e);
+			}
 			try {
 				message.setSubject(title);// 设置邮件主题
 				message.setText(msg);// 设置邮件内容
@@ -172,6 +199,31 @@ public class EmailService {
 	public static void send(String emailTo, String msg, String title,
 			boolean flag) {
 		if (isChecked) {
+			message = new MimeMessage(session);
+
+			try {
+				// 设置邮件发送者的地址
+				InternetAddress from = new InternetAddress(username);
+				if (emailName != null) {
+					from.setPersonal(MimeUtility.encodeText(emailName));
+				}
+				message.setFrom(from);
+			} catch (AddressException e) {
+				System.err.println("设置发信地址失败！" + e);
+			} catch (UnsupportedEncodingException e) {
+				System.err.println("不支持编码异常" + e);
+			} catch (MessagingException e) {
+				System.err.println("设置发信地址失败！" + e);
+			}
+
+			try {
+				// 设置默认邮件主题
+				if (defaultTitle != null) {
+					message.setSubject(defaultTitle);
+				}
+			} catch (MessagingException e) {
+				System.err.println("设置默认主题失败！" + e);
+			}
 			if (flag) {
 				try {
 					message.setRecipient(Message.RecipientType.TO,
@@ -215,6 +267,31 @@ public class EmailService {
 	 */
 	public static void send(String emailTo, String msg, boolean flag) {
 		if (isChecked) {
+			message = new MimeMessage(session);
+
+			try {
+				// 设置邮件发送者的地址
+				InternetAddress from = new InternetAddress(username);
+				if (emailName != null) {
+					from.setPersonal(MimeUtility.encodeText(emailName));
+				}
+				message.setFrom(from);
+			} catch (AddressException e) {
+				System.err.println("设置发信地址失败！" + e);
+			} catch (UnsupportedEncodingException e) {
+				System.err.println("不支持编码异常" + e);
+			} catch (MessagingException e) {
+				System.err.println("设置发信地址失败！" + e);
+			}
+
+			try {
+				// 设置默认邮件主题
+				if (defaultTitle != null) {
+					message.setSubject(defaultTitle);
+				}
+			} catch (MessagingException e) {
+				System.err.println("设置默认主题失败！" + e);
+			}
 			if (flag) {
 				try {
 					message.setRecipient(Message.RecipientType.TO,
@@ -255,6 +332,31 @@ public class EmailService {
 	 */
 	public static void send(String emailTo, String msg, Vector<String> file) {
 		if (isChecked) {
+			message = new MimeMessage(session);
+
+			try {
+				// 设置邮件发送者的地址
+				InternetAddress from = new InternetAddress(username);
+				if (emailName != null) {
+					from.setPersonal(MimeUtility.encodeText(emailName));
+				}
+				message.setFrom(from);
+			} catch (AddressException e) {
+				System.err.println("设置发信地址失败！" + e);
+			} catch (UnsupportedEncodingException e) {
+				System.err.println("不支持编码异常" + e);
+			} catch (MessagingException e) {
+				System.err.println("设置发信地址失败！" + e);
+			}
+
+			try {
+				// 设置默认邮件主题
+				if (defaultTitle != null) {
+					message.setSubject(defaultTitle);
+				}
+			} catch (MessagingException e) {
+				System.err.println("设置默认主题失败！" + e);
+			}
 			try {
 				// 设置邮件接收的地址
 				message.addRecipient(Message.RecipientType.TO,

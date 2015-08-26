@@ -1,5 +1,6 @@
 package com.celloud.mongo.sdo;
 
+import java.util.Date;
 
 /**
  * 所运行文件信息
@@ -45,7 +46,10 @@ public class Data {
 	 * 文件别名
 	 */
 	private String anotherName;
-
+	/**
+	 * 提交时间
+	 */
+	private Date createDate;
 	public String getFileName() {
 		return fileName;
 	}
@@ -116,5 +120,13 @@ public class Data {
 
 	public void setAnotherName(String anotherName) {
 		this.anotherName = anotherName;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 }

@@ -14,7 +14,6 @@ class mongo:
 	client = None
 	db = None
 	collection = None
-	posts = None
 
 	instance = None
 
@@ -26,7 +25,6 @@ class mongo:
 			mongo.client = MongoClient(MongoPro.host, MongoPro.port) # 建立mongodb的连接
 			mongo.db = mongo.client[MongoPro.db]  #连接到指定的数据库中
 			mongo.collection = mongo.db[MongoPro.collection] #连接到具体的collection中
-			mongo.posts = mongo.db.posts
 
 	#初始化
 	def __init__(self):
@@ -46,7 +44,7 @@ class mongo:
 	#写入
 	def put(self, result):
 		try:
-			objId = self.posts.insert_one(result).inserted_id
+			objId = self.collection.insert_one(result).inserted_id
 			return objId
 		except Exception as e:
 			print "mongo insert Exception ==>> %s " % e

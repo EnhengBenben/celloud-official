@@ -21,7 +21,7 @@ import com.google.inject.Inject;
 import com.nova.action.BaseAction;
 
 /**
- * 操作CMP报告接口
+ * 操作CMP MongoDB报告工具
  * 
  * @author <a href="mailto:liuqingxiao@celloud.cn">liuqx</a>
  * @date 2015-7-13下午4:47:25

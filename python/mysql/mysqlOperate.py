@@ -69,4 +69,4 @@ class mysql:
 		finally:
 			#关闭连接
 			cur.close()
-			self.conn.close()
+			#self.conn.close()

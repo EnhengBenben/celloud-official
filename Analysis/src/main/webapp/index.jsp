@@ -172,12 +172,12 @@
 						<b class="arrow icon-angle-down"></b>
 					</a>
 					<ul class="submenu">
-						<li>
-							<a href="javascript:void()">
-								<i class="icon-double-angle-right"></i>
-								用户活跃度统计
-							</a>
-						</li>
+<!-- 						<li> -->
+<!-- 							<a href="javascript:void()"> -->
+<!-- 								<i class="icon-double-angle-right"></i> -->
+<!-- 								用户活跃度统计 -->
+<!-- 							</a> -->
+<!-- 						</li> -->
 						<li>
 							<a href="javascript:toActivity()">
 								<i class="icon-double-angle-right"></i>
@@ -239,6 +239,8 @@
 <script src="./plugin/echarts-2.2.3/build/dist/echarts-all.js"></script>
 <script src="./plugin/echarts-2.2.3/build/dist/chart/bar.js"></script>
 <script src="./plugin/echarts-2.2.3/build/dist/chart/map.js"></script>
+<script src="./js/jquery.dataTables.min.js"></script>
+<script src="./js/jquery.dataTables.bootstrap.js"></script>
 <!-- <script src="./plugin/echarts-2.2.3/src/theme/infographic.js"></script> -->
 <script type="text/javascript">
 	jQuery(function($) {
