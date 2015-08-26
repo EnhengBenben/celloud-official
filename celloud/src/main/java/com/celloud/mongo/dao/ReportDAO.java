@@ -18,55 +18,55 @@ import com.google.inject.ImplementedBy;
  */
 @ImplementedBy(ReportDAOImpl.class)
 public interface ReportDAO {
-	/**
-	 * 新增CMP运行报告内容
-	 * 
-	 * @param cmpReport
-	 */
-	public void saveCmpReport(CmpReport cmpReport);
+    /**
+     * 新增CMP运行报告内容
+     * 
+     * @param cmpReport
+     */
+    public void saveCmpReport(CmpReport cmpReport);
 
-	/**
-	 * 修改cmp用户填写部分内容
-	 * 
-	 * @param cmpFill
-	 */
-	public void editCmpFilling(Object id, CmpFilling cmpFill);
+    /**
+     * 修改cmp用户填写部分内容
+     * 
+     * @param cmpFill
+     */
+    public void editCmpFilling(Object id, CmpFilling cmpFill);
 
-	/**
-	 * 获取CMP报告内容
-	 * 
-	 * @param reportId
-	 *            mysql中的报告id
-	 * @return
-	 */
-	public CmpReport getCmpReport(String dataKey, Integer proId);
+    /**
+     * 获取CMP报告内容
+     * 
+     * @param reportId
+     *            mysql中的报告id
+     * @return
+     */
+    public CmpReport getCmpReport(String dataKey, Integer proId);
 
-	/**
-	 * 获取CMP简要信息内容
-	 * 
-	 * @param dataKey
-	 * @param userId
-	 * @return
-	 */
-	public CmpReport getSimpleCmp(String dataKey, Integer proId);
+    /**
+     * 获取CMP简要信息内容
+     * 
+     * @param dataKey
+     * @param userId
+     * @return
+     */
+    public CmpReport getSimpleCmp(String dataKey, Integer proId);
 
-	/**
-	 * 获取pgs报告内容
-	 * 
-	 * @param dataKey
-	 * @param proId
-	 * @return
-	 */
-	public Pgs getPgsReport(String dataKey, Integer proId, Integer appId);
+    /**
+     * 获取pgs报告内容
+     * 
+     * @param dataKey
+     * @param proId
+     * @return
+     */
+    public Pgs getPgsReport(String dataKey, Integer proId, Integer appId);
 
-	/**
-	 * 获取pgs统计报告内容
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	public List<Pgs> getPgsList(Integer userId);
+    /**
+     * 获取pgs统计报告内容
+     * 
+     * @param userId
+     * @return
+     */
+    public List<Pgs> getPgsList(Integer userId);
 
-	public void editPGSFilling(int userId, int appId, String dataKey,
-			PGSFilling pgs);
+    public void editPGSFilling(int userId, int appId, String dataKey,
+	    PGSFilling pgs);
 }
