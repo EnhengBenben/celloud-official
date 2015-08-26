@@ -49,8 +49,8 @@ public class PgsReportAction extends BaseAction {
 	}
 
 	public String toPgsCount() {
-		this.log.info("查看用户" + this.pgs.getUsername() + "的数据报告统计");
-		this.pgsList = this.reportService.getPgsList(this.pgs.getUserId());
+		log.info("查看用户" + pgs.getUsername() + "的数据报告统计");
+		pgsList = reportService.getPgsList(pgs.getUserId());
 		return "toPgsCount";
 	}
 
@@ -68,6 +68,14 @@ public class PgsReportAction extends BaseAction {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public List<Pgs> getPgsList() {
+		return pgsList;
+	}
+
+	public void setPgsList(List<Pgs> pgsList) {
+		this.pgsList = pgsList;
 	}
 
 }
