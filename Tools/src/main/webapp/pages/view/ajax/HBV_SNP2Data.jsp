@@ -21,7 +21,7 @@
 			<div class="m-boxCon">
 				<s:if test="%{''.equals(resultMap.svg204)}">
 					<div class="imgmiss">
-						该区段测序质量差 , 样本中无法准确找到204位点。
+						该位点测序失败，建议重测。
 					</div>
 				</s:if>
 				<s:else>
@@ -100,7 +100,7 @@
 						</s:if>
 						<s:else>
 							<div class="imgmiss">
-								该区段测序质量差 , 样本中无法准确找到194位点。
+								该位点测序失败，建议重测。
 							</div>
 						</s:else>
 				    </div>
@@ -118,7 +118,7 @@
 						</s:if>
 						<s:else>
 							<div class="imgmiss">
-								该区段测序质量差 , 样本中无法准确找到204位点。
+								该位点测序失败，建议重测。
 							</div>
 						</s:else>
 				    </div>
@@ -136,7 +136,7 @@
 						</s:if>
 						<s:else>
 							<div class="imgmiss">
-								该区段测序质量差 , 样本中无法准确找到181位点。
+								该位点测序失败，建议重测。
 							</div>
 						</s:else>
 						<s:if test="%{!''.equals(resultMap.svg236)}">
@@ -146,7 +146,7 @@
 						</s:if>
 						<s:else>
 							<div class="imgmiss">
-								该区段测序质量差 , 样本中无法准确找到236位点。
+								该位点测序失败，建议重测。
 							</div>
 						</s:else>
 				    </div>
@@ -164,7 +164,7 @@
 						</s:if>
 						<s:else>
 							<div class="imgmiss">
-								该区段测序质量差 , 样本中无法准确找到173位点。
+								该位点测序失败，建议重测。
 							</div>
 						</s:else>
 						<s:if test="%{!''.equals(resultMap.svg180)}">
@@ -174,7 +174,7 @@
 						</s:if>
 						<s:else>
 							<div class="imgmiss">
-								该区段测序质量差 , 样本中无法准确找到180位点。
+								该位点测序失败，建议重测。
 							</div>
 						</s:else>
 						<s:if test="%{!''.equals(resultMap.svg204)}">
@@ -184,7 +184,7 @@
 						</s:if>
 						<s:else>
 							<div class="imgmiss">
-								该区段测序质量差 , 样本中无法准确找到204位点。
+								该位点测序失败，建议重测。
 							</div>
 						</s:else>
 				    </div>
@@ -202,7 +202,7 @@
 						</s:if>
 						<s:else>
 							<div class="imgmiss">
-								该区段测序质量差 , 样本中无法准确找到173位点。
+								该位点测序失败，建议重测。
 							</div>
 						</s:else>
 						<s:if test="%{!''.equals(resultMap.svg180)}">
@@ -212,7 +212,7 @@
 						</s:if>
 						<s:else>
 							<div class="imgmiss">
-								该区段测序质量差 , 样本中无法准确找到180位点。
+								该位点测序失败，建议重测。
 							</div>
 						</s:else>
 						<s:if test="%{!''.equals(resultMap.svg204)}">
@@ -222,7 +222,7 @@
 						</s:if>
 						<s:else>
 							<div class="imgmiss">
-								该区段测序质量差 , 样本中无法准确找到204位点。
+								该位点测序失败，建议重测。
 							</div>
 						</s:else>
 				    </div>
@@ -240,7 +240,7 @@
 						</s:if>
 						<s:else>
 							<div class="imgmiss">
-								该区段测序质量差 , 样本中无法准确找到169位点。
+								该位点测序失败，建议重测。
 							</div>
 						</s:else>
 						<s:if test="%{!''.equals(resultMap.svg180)}">
@@ -250,7 +250,7 @@
 						</s:if>
 						<s:else>
 							<div class="imgmiss">
-								该区段测序质量差 , 样本中无法准确找到180位点。
+								该位点测序失败，建议重测。
 							</div>
 						</s:else>
 						<s:if test="%{!''.equals(resultMap.svg184)}">
@@ -260,7 +260,7 @@
 						</s:if>
 						<s:else>
 							<div class="imgmiss">
-								该区段测序质量差 , 样本中无法准确找到184位点。
+								该位点测序失败，建议重测。
 							</div>
 						</s:else>
 						<s:if test="%{!''.equals(resultMap.svg202)}">
@@ -270,7 +270,7 @@
 						</s:if>
 						<s:else>
 							<div class="imgmiss">
-								该区段测序质量差 , 样本中无法准确找到202位点。
+								该位点测序失败，建议重测。
 							</div>
 						</s:else>
 						<s:if test="%{!''.equals(resultMap.svg204)}">
@@ -280,7 +280,7 @@
 						</s:if>
 						<s:else>
 							<div class="imgmiss">
-								该区段测序质量差 , 样本中无法准确找到204位点。
+								该位点测序失败，建议重测。
 							</div>
 						</s:else>
 						<s:if test="%{!''.equals(resultMap.svg250)}">
@@ -290,7 +290,7 @@
 						</s:if>
 						<s:else>
 							<div class="imgmiss">
-								该区段测序质量差 , 样本中无法准确找到250位点。
+								该位点测序失败，建议重测。
 							</div>
 						</s:else>
 				    </div>
@@ -530,5 +530,6 @@ function showModal(id,flag,num){
     display:inline-block;
     border-color: black;
     color: #CC0000;
+    vertical-align: top;
 }
 </style>
