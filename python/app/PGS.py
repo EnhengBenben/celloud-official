@@ -66,7 +66,14 @@ class PGS:
 						key = f.readline().strip().split("\t")
 						val = f.readline().strip().split("\t")
 						for i,k in enumerate(key):
-							result[pgs[k]] = val[i]
+							v = ''
+							if ( i > len(val)-1 ):
+								v = '.'
+							else:
+								v = val[i]
+							if(v.strip()=='\'\''):
+								v = '.'
+							result[pgs[k]] = v
 						lines = countLines(datakeyxls)
 						#此处判断文件行数决定是否需要读取note
 						if(lines == 4):
