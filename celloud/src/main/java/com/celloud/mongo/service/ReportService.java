@@ -1,8 +1,12 @@
 /**  */
 package com.celloud.mongo.service;
 
+import java.util.List;
+
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
+import com.celloud.mongo.sdo.PGSFilling;
+import com.celloud.mongo.sdo.Pgs;
 import com.google.inject.ImplementedBy;
 
 /**
@@ -35,8 +39,7 @@ public interface ReportService {
 	 * @param userId
 	 * @return
 	 */
-	public CmpReport getCmpReport(String dataKey,
- Integer userId);
+	public CmpReport getCmpReport(String dataKey, Integer userId);
 
 	/**
 	 * 获取CMP简要信息内容
@@ -46,4 +49,33 @@ public interface ReportService {
 	 * @return
 	 */
 	public CmpReport getSimpleCmp(String dataKey, Integer userId);
+
+	/**
+	 * 获取pgs报告内容
+	 * 
+	 * @param dataKey
+	 * @param proId
+	 * @return
+	 */
+	public Pgs getPgsReport(String dataKey, Integer proId, Integer appId);
+
+	/**
+	 * 获取pgs统计报告内容
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public abstract List<Pgs> getPgsList(Integer userId);
+
+	/**
+	 * 
+	 * 修改PGS用户填写部分内容
+	 * 
+	 * @param userId
+	 * @param appId
+	 * @param dataKey
+	 * @param pgs
+	 */
+	public void editPGSFilling(int userId, int appId, String dataKey,
+			PGSFilling pgs);
 }

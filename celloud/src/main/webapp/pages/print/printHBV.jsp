@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>报告打印</title>
-<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.8">
+<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.9">
 </head>
 <body>
 	<div id="printMain">
@@ -95,8 +95,8 @@
 							<div class="container" style="display: none;"></div>
 						   	<h2 class="mt10">三、耐药位点突变检测结果：</h2>
 					   		<div class="clearCss_3">${peakFigure }</div>
-						   	<p class="annotation m-box_1">注：1.突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V，{A-G}：碱基由A变为G<br>
-						   		2.*Wild Type: GCT;表示该位点的野生型为GCT<br>3.峰图中的*号，表示该位置发生了突变
+						   	<p class="annotation m-box_1">注：1. 突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V，{A-G}：碱基由A变为G<br>
+						   		2. Wild Type: GCT;表示该位点的野生型为GCT<br>3. 峰图中的*号，表示该位置发生了突变
 						   	</p>
 						   	<div id="lessDiv">
 								<div class="w3cbbs" style="display: none;"></div>
@@ -194,6 +194,9 @@ $(document).ready(function(){
 	var _flag = $("#_flag").html();
 	if(appId==82&&_flag==0){
 		$("button").remove();
+		$(".imgtop").each(function(){
+			$(this).removeClass("imgtop");
+		});
 	}else if(_flag==1){
 
 	}else if($("#mainDIv").height()>1000){

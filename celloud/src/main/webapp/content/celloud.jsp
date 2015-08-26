@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
@@ -65,6 +66,13 @@
 				<img src="images/content/qq.png" alt="数据库" title="数据库"
 					width="48" height="48" />
 			</div>
+			<c:if test="${session.companyId==6}">
+				<div class="leftApp" _appId="tj" _appName="统计"
+					_appImg="images/content/count_.png" _iframeSrc="pages/count/count.jsp">
+					<img src="images/content/count_.png" alt="统计" title="统计"
+						width="48" height="48" />
+				</div>
+			</c:if>
 			<div class="leftToolWrapper">
 				<div class="leftTool">
 		          <a href="content/feedBack.html" target="_blank" title="意见反馈" class="toolIcon toolIcon-theme"></a>

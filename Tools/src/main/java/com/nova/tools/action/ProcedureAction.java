@@ -16,10 +16,6 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
-import com.celloud.mongo.sdo.CmpGeneDetectionDetail;
-import com.celloud.mongo.sdo.CmpReport;
-import com.celloud.mongo.service.ReportService;
-import com.celloud.mongo.service.ReportServiceImpl;
 import com.nova.tools.constant.AppNameIDConstant;
 import com.nova.tools.itext.utils.MergePdf;
 import com.nova.tools.service.ReadReportService;
@@ -40,9 +36,6 @@ import com.opensymphony.xwork2.ActionSupport;
 		@Result(name = "success", type = "json", params = { "root", "flag" }),
 		@Result(name = "resultMap", type = "json", params = { "root",
 				"resultMap" }),
-		@Result(name = "CMP_199", location = "../../pages/view/ajax/CMP.jsp"),
-		@Result(name = "CMP", location = "../../pages/view/ajax/CMP.jsp"),
-		@Result(name = "printCMP", location = "../../pages/view/ajax/printDetailCMP.jsp"),
 		@Result(name = "percent", location = "../../pages/view/ajax/ProcessPercent.jsp"),
 		@Result(name = "step", location = "../../pages/view/ajax/ProcessStep.jsp"),
 		@Result(name = "SNPData", location = "../../pages/view/ajax/snpResult.jsp"),
@@ -147,8 +140,6 @@ public class ProcedureAction extends ActionSupport {
 	private String company;
 	private String user;
 	private String dept;
-	private CmpReport cmpReport;
-	private ReportService reportService = new ReportServiceImpl();
 
 	private final String basePath = ServletActionContext.getServletContext()
 			.getRealPath("/upload");
@@ -207,16 +198,11 @@ public class ProcedureAction extends ActionSupport {
 		long start = new Date().getTime();
 		ReadReportService report = new ReadReportService();
 		if (projectId == null || "".equals(projectId)) {
-			if (appId.equals("110")) {
-				cmpReport = reportService.getSimpleCmp(dataKey,
-						Integer.parseInt(userId));
-			} else {
-				// 查看数据报告
-				resultMap = report.readDataReport(basePath, userId, appId,
-						dataKey, fileName, anotherName);
-				if (resultMap != null) {
-					resultMap.put("outProject", PropertiesUtils.outProject);
-				}
+			// 查看数据报告
+			resultMap = report.readDataReport(basePath, userId, appId, dataKey,
+					fileName, anotherName);
+			if (resultMap != null) {
+				resultMap.put("outProject", PropertiesUtils.outProject);
 			}
 			long end = new Date().getTime();
 			log.info("用户" + userId + "访问app：" + appId + "下DataKey=" + dataKey
@@ -228,28 +214,6 @@ public class ProcedureAction extends ActionSupport {
 					projectId, sampleList);
 			resultMap.put("outProject", PropertiesUtils.outProject);
 			return projectMap.get(appId);
-		}
-	}
-
-	public String printReport() {
-		ServletActionContext.getResponse().setHeader(
-				"Access-Control-Allow-Origin", "*");
-		long start = new Date().getTime();
-		long end = new Date().getTime();
-		log.info("用户" + userId + "打印app：" + appId + "下DataKey=" + dataKey
-				+ "的数据报告，用时" + (end - start) + "ms");
-		if (appId.equals(AppNameIDConstant.CMP)
-				|| appId.equals(AppNameIDConstant.CMP_199)) {
-			cmpReport = reportService.getCmpReport(dataKey,
-					Integer.parseInt(userId));
-			Map<String, CmpGeneDetectionDetail> gdd = cmpReport
-					.getGeneDetectionDetail();
-			System.out.println(gdd);
-			return "printCMP";
-		} else {
-			ReadReportService report = new ReadReportService();
-			resultMap = report.printReport(basePath, userId, appId, dataKey);
-			return "";
 		}
 	}
 
@@ -530,14 +494,6 @@ public class ProcedureAction extends ActionSupport {
 
 	public void setAnotherName(String anotherName) {
 		this.anotherName = anotherName;
-	}
-
-	public CmpReport getCmpReport() {
-		return cmpReport;
-	}
-
-	public void setCmpReport(CmpReport cmpReport) {
-		this.cmpReport = cmpReport;
 	}
 
 	public String getDataInfos() {

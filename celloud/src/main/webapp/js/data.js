@@ -90,7 +90,7 @@ function getPrivateDataList(){
 		$("#selfDataDiv").attr("style","");
 		$("#selfDataDiv").html(responseText);
 		privateIcon();
-		getDataSharedToMeList();
+//		getDataSharedToMeList();
 	});
 }
 //获取共享给我的数据
@@ -261,7 +261,7 @@ function runMultiDataNew(){
     }
     dataIds = dataIds.substring(0, dataIds.length-1);
 	$.get("getSoftwareIdByName.action",{"softwareName":runText},function(softId){
-		if(softId == 110||softId == 111){
+		if(softId == 110||softId == 111||softId == 112){
 			var cmp_temp = "";
 			var length = fileNames.length;
 			for (i=0;i < length; i++) {

@@ -19,7 +19,7 @@
 							<dd>${app.softwareName }</dd>
 							<dt>运行次数：</dt>
 							<dd>${app.runNum }</dd>
-							<dt>最少数据个数：</dt>
+							<dt>最小数据个数：</dt>
 							<dd>${app.dataNum }</dd>
 							<dt>可运行数据格式：</dt>
 							<dd>${app.dataType }</dd>
