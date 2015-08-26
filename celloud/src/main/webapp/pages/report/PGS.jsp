@@ -3,18 +3,20 @@
 <div class="row">
 	<c:if test="${pgs.noEnoughReads.equals('false') }">
 		<div class="m-file">
-			文件名称：
-			<span class="file-name">
-				${pgs.dataKey }(${pgs.fileName } )
-			</span>
+			<div style="width: 800px">
+				文件名称：
+				<span class="file-name">
+					${pgs.dataKey }(${pgs.fileName } )
+				</span>
+			</div>
 			<div class="toolbar">
 				<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" class="btn btn-default"><i class="i-download"></i>报告下载</a>
 				<c:if test="${pgs.pdf!=null }">
 					<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.pdf }" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
 				</c:if>
-				<a target="_blank" href="../../printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }/${pgs.report.replace('+','@') }" class="btn btn-default"><i class="i-print"></i>打印报告</a>
+				<a target="_blank" href="../../printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }" class="btn btn-default"><i class="i-print"></i>打印报告</a>
 				<c:if test="${pgs.splitPng!=null }">
-					<a target="_blank" href="../../printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.splitPng }/${pgs.report.replace('+','@') }" class="btn btn-default"><i class="i-print"></i>点图报告</a>					
+					<a target="_blank" href="../../printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.splitPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }" class="btn btn-default"><i class="i-print"></i>点图报告</a>					
 				</c:if>
 			</div>
 		</div>
@@ -30,22 +32,58 @@
 				<table class="table table-bordered table-condensed">
 				  <thead>
 					<tr>
-						<th>Total_Reads</th>
-						<th>MT_ratio(%)</th>
-						<th>Map_Ratio(%)</th>
-						<th>Duplicate(%)</th>
-						<th>GC_Count(%)</th>
-						<th>*SD</th>
+						<c:if test="${pgs.totalReads!=null}">
+							<th>Total_Reads</th>
+						</c:if>
+						<c:if test="${pgs.mapReads!=null}">
+							<td>Map_Reads</td>
+						</c:if>
+						<c:if test="${pgs.mtRatio!=null}">
+							<th>MT_ratio(%)</th>
+						</c:if>
+						<c:if test="${pgs.mapRatio!=null}">
+							<th>Map_Ratio(%)</th>
+						</c:if>
+						<c:if test="${pgs.duplicate!=null}">
+							<th>Duplicate(%)</th>
+						</c:if>
+						<c:if test="${pgs.gcCount!=null}">
+							<th>GC_Count(%)</th>
+						</c:if>
+						<c:if test="${pgs.sd!=null}">
+							<th>*SD</th>
+						</c:if>
+						<c:if test="${pgs.winSize!=null}">
+							<td>Win_size(kb)</td>
+						</c:if>
 					</tr>
 				  </thead>
 				  <tbody>
 					<tr>
-						<td>${pgs.totalReads }</td>
-						<td>${pgs.mtRatio }</td>
-						<td>${pgs.mapRatio }</td>
-						<td>${pgs.duplicate }</td>
-						<td>${pgs.gcCount }</td>
-						<td>${pgs.sd }</td>
+						<c:if test="${pgs.totalReads!=null}">
+							<td>${pgs.totalReads }</td>
+						</c:if>
+						<c:if test="${pgs.mapReads!=null}">
+							<td>${pgs.mapReads }</td>
+						</c:if>
+						<c:if test="${pgs.mtRatio!=null}">
+							<td>${pgs.mtRatio }</td>
+						</c:if>
+						<c:if test="${pgs.mapRatio!=null}">
+							<td>${pgs.mapRatio }</td>
+						</c:if>
+						<c:if test="${pgs.duplicate!=null}">
+							<td>${pgs.duplicate }</td>
+						</c:if>
+						<c:if test="${pgs.gcCount!=null}">
+							<td>${pgs.gcCount }</td>
+						</c:if>
+						<c:if test="${pgs.sd!=null}">
+							<td>${pgs.sd }</td>
+						</c:if>
+						<c:if test="${pgs.winSize!=null}">
+							<td>${pgs.winSize }</td>
+						</c:if>
 					</tr>
 				  </tbody>
 				</table>
@@ -75,6 +113,11 @@
 								<tr>
 									<c:forEach var="ss" items="${info}" varStatus="st">  
 									    <td>${ss }</td>
+									    <c:if test="${st.isLast()&&st.getCount()==1 }">
+									    	<td></td>
+									    	<td></td>
+									    	<td></td>
+									    </c:if>
 									    <c:if test="${st.isLast()&&st.getCount()==2 }">
 									    	<td></td>
 									    	<td></td>
@@ -199,6 +242,12 @@ $(function() {
 	var num = 0;
 	$("#reportDiv").find("td").each(function(){
 		var result = $(this).text();
+		if(num%4==0){
+			$(this).css("min-width","90px");
+		}
+		if(num%4==1){
+			$(this).css("min-width","55px");
+		}
 		if(num%4==2){
 			if(result.length>85){
 				$(this).html(result.substring(0,84)+"...");

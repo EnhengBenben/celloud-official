@@ -278,8 +278,11 @@ hr {
 		});
 		inputVal = $("#des").children().val().replace(/\n/g,"<br>");
 		$("#des").html(inputVal);
-		inputVal = $("#des2").children().val().replace(/\n/g,"<br>");
-		$("#des2").html(inputVal);
+		var des2 = $("#des2").children().val();
+		if (des2){
+			inputVal = des2.replace(/\n/g,"<br>");
+			$("#des2").html(inputVal);
+		}
 		window.print();
 		$("body").find("span[name='print']").each(function(){
 			inputVal = $(this).html();
