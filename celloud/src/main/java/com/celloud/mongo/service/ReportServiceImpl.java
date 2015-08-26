@@ -16,42 +16,42 @@ import com.celloud.mongo.sdo.Pgs;
  * @version Revision: 1.0
  */
 public class ReportServiceImpl implements ReportService {
-	ReportDAO reportDao = SystemContext.getReportDAO();
+    ReportDAO reportDao = SystemContext.getReportDAO();
 
-	@Override
-	public void saveCmpReport(CmpReport cmpReport) {
-		reportDao.saveCmpReport(cmpReport);
-	}
+    @Override
+    public void saveCmpReport(CmpReport cmpReport) {
+	reportDao.saveCmpReport(cmpReport);
+    }
 
-	@Override
-	public void editCmpFilling(Object id, CmpFilling cmpFill) {
-		reportDao.editCmpFilling(id, cmpFill);
-	}
+    @Override
+    public void editCmpFilling(Object id, CmpFilling cmpFill) {
+	reportDao.editCmpFilling(id, cmpFill);
+    }
 
-	@Override
-	public CmpReport getCmpReport(String dataKey, Integer userId) {
-		return reportDao.getCmpReport(dataKey, userId);
-	}
+    @Override
+    public CmpReport getCmpReport(String dataKey, Integer userId) {
+	return reportDao.getCmpReport(dataKey, userId);
+    }
 
-	@Override
-	public CmpReport getSimpleCmp(String dataKey, Integer userId) {
-		return reportDao.getSimpleCmp(dataKey, userId);
-	}
+    @Override
+    public CmpReport getSimpleCmp(String dataKey, Integer userId) {
+	return reportDao.getSimpleCmp(dataKey, userId);
+    }
 
-	@Override
-	public Pgs getPgsReport(String dataKey, Integer proId, Integer appId) {
-		return reportDao.getPgsReport(dataKey, proId, appId);
-	}
+    @Override
+    public Pgs getPgsReport(String dataKey, Integer proId, Integer appId) {
+	return reportDao.getPgsReport(dataKey, proId, appId);
+    }
 
-	@Override
-	public List<Pgs> getPgsList(Integer userId) {
-		return this.reportDao.getPgsList(userId);
-	}
+    @Override
+    public List<Pgs> getPgsList(Integer userId) {
+	return this.reportDao.getPgsList(userId);
+    }
 
-	@Override
-	public void editPGSFilling(int userId, int appId, String dataKey,
-			PGSFilling pgs) {
-		reportDao.editPGSFilling(userId, appId, dataKey, pgs);
-	}
+    @Override
+    public void editPGSFilling(int userId, int appId, String dataKey,
+	    PGSFilling pgs) {
+	reportDao.editPGSFilling(userId, appId, dataKey, pgs);
+    }
 
 }

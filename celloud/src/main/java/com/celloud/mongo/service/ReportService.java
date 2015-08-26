@@ -18,20 +18,39 @@ import com.google.inject.ImplementedBy;
  */
 @ImplementedBy(ReportServiceImpl.class)
 public interface ReportService {
-	/**
-	 * 新增CMP运行报告内容
-	 * 
-	 * @param cmpReport
-	 */
-	public void saveCmpReport(CmpReport cmpReport);
+    /**
+     * 新增CMP运行报告内容
+     * 
+     * @param cmpReport
+     */
+    public void saveCmpReport(CmpReport cmpReport);
 
-	/**
-	 * 修改cmp用户填写部分内容
-	 * 
-	 * @param cmpFill
-	 */
-	public void editCmpFilling(Object id, CmpFilling cmpFill);
+    /**
+     * 修改cmp用户填写部分内容
+     * 
+     * @param cmpFill
+     */
+    public void editCmpFilling(Object id, CmpFilling cmpFill);
 
+<<<<<<< Updated upstream
+    /**
+     * 获取CMP报告内容
+     * 
+     * @param dataKey
+     * @param userId
+     * @return
+     */
+    public CmpReport getCmpReport(String dataKey, Integer userId);
+
+    /**
+     * 获取CMP简要信息内容
+     * 
+     * @param dataKey
+     * @param userId
+     * @return
+     */
+    public CmpReport getSimpleCmp(String dataKey, Integer userId);
+=======
 	/**
 	 * 获取CMP报告内容
 	 * 
@@ -39,7 +58,7 @@ public interface ReportService {
 	 * @param userId
 	 * @return
 	 */
-	public CmpReport getCmpReport(String dataKey, Integer userId);
+    public CmpReport getCmpReport(String dataKey, Integer userId, Integer appId);
 
 	/**
 	 * 获取CMP简要信息内容
@@ -48,34 +67,35 @@ public interface ReportService {
 	 * @param userId
 	 * @return
 	 */
-	public CmpReport getSimpleCmp(String dataKey, Integer userId);
+    public CmpReport getSimpleCmp(String dataKey, Integer userId, Integer appId);
+>>>>>>> Stashed changes
 
-	/**
-	 * 获取pgs报告内容
-	 * 
-	 * @param dataKey
-	 * @param proId
-	 * @return
-	 */
-	public Pgs getPgsReport(String dataKey, Integer proId, Integer appId);
+    /**
+     * 获取pgs报告内容
+     * 
+     * @param dataKey
+     * @param proId
+     * @return
+     */
+    public Pgs getPgsReport(String dataKey, Integer proId, Integer appId);
 
-	/**
-	 * 获取pgs统计报告内容
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	public abstract List<Pgs> getPgsList(Integer userId);
+    /**
+     * 获取pgs统计报告内容
+     * 
+     * @param userId
+     * @return
+     */
+    public abstract List<Pgs> getPgsList(Integer userId);
 
-	/**
-	 * 
-	 * 修改PGS用户填写部分内容
-	 * 
-	 * @param userId
-	 * @param appId
-	 * @param dataKey
-	 * @param pgs
-	 */
-	public void editPGSFilling(int userId, int appId, String dataKey,
-			PGSFilling pgs);
+    /**
+     * 
+     * 修改PGS用户填写部分内容
+     * 
+     * @param userId
+     * @param appId
+     * @param dataKey
+     * @param pgs
+     */
+    public void editPGSFilling(int userId, int appId, String dataKey,
+	    PGSFilling pgs);
 }
