@@ -3,7 +3,8 @@ package com.celloud.mongo.sdo;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
+import com.google.code.morphia.annotations.Embedded;
 
 /**
  * 
@@ -44,7 +45,8 @@ public class Pgs extends Base {
 	private List<List<String>> detail;
 	private String report;
 	/** 报告填写部分 */
-	private Map<String, String> fill;
+	@Embedded
+	private PGSFilling fill;
 	private String pdf;
 	private String mapReads;
 	private String winSize;
@@ -225,11 +227,11 @@ public class Pgs extends Base {
 		this.report = report;
 	}
 
-	public Map<String, String> getFill() {
+	public PGSFilling getFill() {
 		return fill;
 	}
 
-	public void setFill(Map<String, String> fill) {
+	public void setFill(PGSFilling fill) {
 		this.fill = fill;
 	}
 

@@ -49,7 +49,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
-	public void editPGSFilling(int userId, int appId, int dataKey,
+	public void editPGSFilling(int userId, int appId, String dataKey,
 			PGSFilling pgs) {
 		reportDao.editPGSFilling(userId, appId, dataKey, pgs);
 	}

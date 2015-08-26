@@ -37,7 +37,7 @@ public class PGSPrintAction  extends BaseAction{
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		List<Map<String, String>> list = new ArrayList<Map<String,String>>();
-		String sql = "select r.*,f.data_key from tb_report r,tb_file f where print_context is not null and print_context!='' and f.file_id = r.file_id and r.user_id = 15";
+		String sql = "select r.*,f.data_key from tb_report r,tb_file f where print_context is not null and print_context!='' and f.file_id = r.file_id";
 		try {
 			conn = ConnectManager.getConnection();
 			ps = conn.prepareStatement(sql);
@@ -57,11 +57,16 @@ public class PGSPrintAction  extends BaseAction{
 		} finally {
 			ConnectManager.free(conn, ps, rs);
 		}
-//		for (int i = 0; i < list.size(); i++) {
-			Map<String, String> m = list.get(list.size()-1);
+		System.out.println(list.size());
+		for (int j = 0; j < list.size(); j++) {
+			Map<String, String> m = list.get(j);
 			int userId = Integer.parseInt(m.get("userId"));
 			int appId = Integer.parseInt(m.get("appId"));
-			int dataKey = Integer.parseInt(m.get("datakey"));
+			String dataKey = m.get("datakey");
+			System.out.println(userId);
+			System.out.println(appId);
+			System.out.println(dataKey);
+			System.out.println("-----------------");
 			Document doc = Jsoup.parse(m.get("context"));
 			Elements divs = doc.getElementsByTag("div");
 			PGSFilling  pgs = new PGSFilling();
@@ -122,7 +127,7 @@ public class PGSPrintAction  extends BaseAction{
 //			System.out.println(pgs.getYear());
 //			System.out.println(pgs.getMonth());
 //			System.out.println(pgs.getDay());
-//		}
+		}
 	}
 
 }

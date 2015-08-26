@@ -64,7 +64,7 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 	}
 
 	@Override
-	public void editPGSFilling(int userId, int appId, int dataKey,
+	public void editPGSFilling(int userId, int appId, String dataKey,
 			PGSFilling pgs) {
 		ds.update(
 				ds.createQuery(Pgs.class).filter("userId", userId).filter("appId", appId).filter("dataKey", dataKey),

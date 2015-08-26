@@ -76,6 +76,6 @@ public interface ReportService {
 	 * @param dataKey
 	 * @param pgs
 	 */
-	public void editPGSFilling(int userId, int appId, int dataKey,
+	public void editPGSFilling(int userId, int appId, String dataKey,
 			PGSFilling pgs);
 }

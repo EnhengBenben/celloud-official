@@ -67,6 +67,6 @@ public interface ReportDAO {
 	 */
 	public List<Pgs> getPgsList(Integer userId);
 
-	public void editPGSFilling(int userId, int appId, int dataKey,
+	public void editPGSFilling(int userId, int appId, String dataKey,
 			PGSFilling pgs);
 }
