@@ -13,266 +13,266 @@ import com.google.code.morphia.annotations.Embedded;
  * @version Revision: 1.0
  */
 public class Pgs extends Base {
-	/** 文件编号 */
-	private Integer fileId;
-	/** 数据编号 */
-	private String dataKey;
-	/** 文件名字 */
-	private String fileName;
-	/** 大小 单位：b */
-	private Long size;
-	/** 文件别名 */
-	private String anotherName;
-	/** 提交时间 */
-	private Date uploadDate;
-	/** 报告创建时间 */
-	private Date createDate;
-	private String sd;
-	private String mapRatio;
-	private String mtRatio;
-	private String noEnoughReads;
-	private String totalReads;
-	private String gcChromosomeDensityPng;
-	private String duplicate;
-	private String gcCountsNormalizedPng;
-	private String gcCount;
-	private String gcCountsRawPng;
-	private String splitPng;
-	private String testPng;
-	private String miniPng;
-	private String finalPng;
-	private String note;
-	private List<List<String>> detail;
-	private String report;
-	/** 报告填写部分 */
-	@Embedded
-	private PGSFilling fill;
-	private String pdf;
-	private String mapReads;
-	private String winSize;
-	
-	public Integer getFileId() {
-		return fileId;
-	}
+    /** 文件编号 */
+    private Integer fileId;
+    /** 数据编号 */
+    private String dataKey;
+    /** 文件名字 */
+    private String fileName;
+    /** 大小 单位：b */
+    private Long size;
+    /** 文件别名 */
+    private String anotherName;
+    /** 提交时间 */
+    private Date uploadDate;
+    /** 报告创建时间 */
+    private Date createDate;
+    private String sd;
+    private String mapRatio;
+    private String mtRatio;
+    private String noEnoughReads;
+    private String totalReads;
+    private String gcChromosomeDensityPng;
+    private String duplicate;
+    private String gcCountsNormalizedPng;
+    private String gcCount;
+    private String gcCountsRawPng;
+    private String splitPng;
+    private String testPng;
+    private String miniPng;
+    private String finalPng;
+    private String note;
+    private List<List<String>> detail;
+    private String report;
+    /** 报告填写部分 */
+    @Embedded
+    private PGSFilling fill;
+    private String pdf;
+    private String mapReads;
+    private String winSize;
 
-	public void setFileId(Integer fileId) {
-		this.fileId = fileId;
-	}
+    public Integer getFileId() {
+	return fileId;
+    }
 
-	public String getDataKey() {
-		return dataKey;
-	}
+    public void setFileId(Integer fileId) {
+	this.fileId = fileId;
+    }
 
-	public void setDataKey(String dataKey) {
-		this.dataKey = dataKey;
-	}
+    public String getDataKey() {
+	return dataKey;
+    }
 
-	public String getFileName() {
-		return fileName;
-	}
+    public void setDataKey(String dataKey) {
+	this.dataKey = dataKey;
+    }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    public String getFileName() {
+	return fileName;
+    }
 
-	public Long getSize() {
-		return size;
-	}
+    public void setFileName(String fileName) {
+	this.fileName = fileName;
+    }
 
-	public void setSize(Long size) {
-		this.size = size;
-	}
+    public Long getSize() {
+	return size;
+    }
 
-	public String getAnotherName() {
-		return anotherName;
-	}
+    public void setSize(Long size) {
+	this.size = size;
+    }
 
-	public void setAnotherName(String anotherName) {
-		this.anotherName = anotherName;
-	}
+    public String getAnotherName() {
+	return anotherName;
+    }
 
-	public Date getCreateDate() {
-		return createDate;
-	}
+    public void setAnotherName(String anotherName) {
+	this.anotherName = anotherName;
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+    public Date getCreateDate() {
+	return createDate;
+    }
 
-	public String getSd() {
-		return sd;
-	}
+    public void setCreateDate(Date createDate) {
+	this.createDate = createDate;
+    }
 
-	public void setSd(String sd) {
-		this.sd = sd;
-	}
+    public String getSd() {
+	return sd;
+    }
 
-	public String getMapRatio() {
-		return mapRatio;
-	}
+    public void setSd(String sd) {
+	this.sd = sd;
+    }
 
-	public void setMapRatio(String mapRatio) {
-		this.mapRatio = mapRatio;
-	}
+    public String getMapRatio() {
+	return mapRatio;
+    }
 
-	public String getMtRatio() {
-		return mtRatio;
-	}
+    public void setMapRatio(String mapRatio) {
+	this.mapRatio = mapRatio;
+    }
 
-	public void setMtRatio(String mtRatio) {
-		this.mtRatio = mtRatio;
-	}
+    public String getMtRatio() {
+	return mtRatio;
+    }
 
-	public String getNoEnoughReads() {
-		return noEnoughReads;
-	}
+    public void setMtRatio(String mtRatio) {
+	this.mtRatio = mtRatio;
+    }
 
-	public void setNoEnoughReads(String noEnoughReads) {
-		this.noEnoughReads = noEnoughReads;
-	}
+    public String getNoEnoughReads() {
+	return noEnoughReads;
+    }
 
-	public String getTotalReads() {
-		return totalReads;
-	}
+    public void setNoEnoughReads(String noEnoughReads) {
+	this.noEnoughReads = noEnoughReads;
+    }
 
-	public void setTotalReads(String totalReads) {
-		this.totalReads = totalReads;
-	}
+    public String getTotalReads() {
+	return totalReads;
+    }
 
-	public String getGcChromosomeDensityPng() {
-		return gcChromosomeDensityPng;
-	}
+    public void setTotalReads(String totalReads) {
+	this.totalReads = totalReads;
+    }
 
-	public void setGcChromosomeDensityPng(String gcChromosomeDensityPng) {
-		this.gcChromosomeDensityPng = gcChromosomeDensityPng;
-	}
+    public String getGcChromosomeDensityPng() {
+	return gcChromosomeDensityPng;
+    }
 
-	public String getDuplicate() {
-		return duplicate;
-	}
+    public void setGcChromosomeDensityPng(String gcChromosomeDensityPng) {
+	this.gcChromosomeDensityPng = gcChromosomeDensityPng;
+    }
 
-	public void setDuplicate(String duplicate) {
-		this.duplicate = duplicate;
-	}
+    public String getDuplicate() {
+	return duplicate;
+    }
 
-	public String getGcCountsNormalizedPng() {
-		return gcCountsNormalizedPng;
-	}
+    public void setDuplicate(String duplicate) {
+	this.duplicate = duplicate;
+    }
 
-	public void setGcCountsNormalizedPng(String gcCountsNormalizedPng) {
-		this.gcCountsNormalizedPng = gcCountsNormalizedPng;
-	}
+    public String getGcCountsNormalizedPng() {
+	return gcCountsNormalizedPng;
+    }
 
-	public String getGcCount() {
-		return gcCount;
-	}
+    public void setGcCountsNormalizedPng(String gcCountsNormalizedPng) {
+	this.gcCountsNormalizedPng = gcCountsNormalizedPng;
+    }
 
-	public void setGcCount(String gcCount) {
-		this.gcCount = gcCount;
-	}
+    public String getGcCount() {
+	return gcCount;
+    }
 
-	public String getGcCountsRawPng() {
-		return gcCountsRawPng;
-	}
+    public void setGcCount(String gcCount) {
+	this.gcCount = gcCount;
+    }
 
-	public void setGcCountsRawPng(String gcCountsRawPng) {
-		this.gcCountsRawPng = gcCountsRawPng;
-	}
+    public String getGcCountsRawPng() {
+	return gcCountsRawPng;
+    }
 
-	public String getSplitPng() {
-		return splitPng;
-	}
+    public void setGcCountsRawPng(String gcCountsRawPng) {
+	this.gcCountsRawPng = gcCountsRawPng;
+    }
 
-	public void setSplitPng(String splitPng) {
-		this.splitPng = splitPng;
-	}
+    public String getSplitPng() {
+	return splitPng;
+    }
 
-	public String getTestPng() {
-		return testPng;
-	}
+    public void setSplitPng(String splitPng) {
+	this.splitPng = splitPng;
+    }
 
-	public void setTestPng(String testPng) {
-		this.testPng = testPng;
-	}
+    public String getTestPng() {
+	return testPng;
+    }
 
-	public String getMiniPng() {
-		return miniPng;
-	}
+    public void setTestPng(String testPng) {
+	this.testPng = testPng;
+    }
 
-	public void setMiniPng(String miniPng) {
-		this.miniPng = miniPng;
-	}
+    public String getMiniPng() {
+	return miniPng;
+    }
 
-	public String getFinalPng() {
-		return finalPng;
-	}
+    public void setMiniPng(String miniPng) {
+	this.miniPng = miniPng;
+    }
 
-	public void setFinalPng(String finalPng) {
-		this.finalPng = finalPng;
-	}
+    public String getFinalPng() {
+	return finalPng;
+    }
 
-	public String getNote() {
-		return note;
-	}
+    public void setFinalPng(String finalPng) {
+	this.finalPng = finalPng;
+    }
 
-	public void setNote(String note) {
-		this.note = note;
-	}
+    public String getNote() {
+	return note;
+    }
 
-	public String getReport() {
-		return report;
-	}
+    public void setNote(String note) {
+	this.note = note;
+    }
 
-	public void setReport(String report) {
-		this.report = report;
-	}
+    public String getReport() {
+	return report;
+    }
 
-	public PGSFilling getFill() {
-		return fill;
-	}
+    public void setReport(String report) {
+	this.report = report;
+    }
 
-	public void setFill(PGSFilling fill) {
-		this.fill = fill;
-	}
+    public PGSFilling getFill() {
+	return fill;
+    }
 
-	public Date getUploadDate() {
-		return uploadDate;
-	}
+    public void setFill(PGSFilling fill) {
+	this.fill = fill;
+    }
 
-	public void setUploadDate(Date uploadDate) {
-		this.uploadDate = uploadDate;
-	}
+    public Date getUploadDate() {
+	return uploadDate;
+    }
 
-	public List<List<String>> getDetail() {
-		return detail;
-	}
+    public void setUploadDate(Date uploadDate) {
+	this.uploadDate = uploadDate;
+    }
 
-	public void setDetail(List<List<String>> detail) {
-		this.detail = detail;
-	}
+    public List<List<String>> getDetail() {
+	return detail;
+    }
 
-	public String getPdf() {
-		return pdf;
-	}
+    public void setDetail(List<List<String>> detail) {
+	this.detail = detail;
+    }
 
-	public void setPdf(String pdf) {
-		this.pdf = pdf;
-	}
+    public String getPdf() {
+	return pdf;
+    }
 
-	public String getMapReads() {
-		return mapReads;
-	}
+    public void setPdf(String pdf) {
+	this.pdf = pdf;
+    }
 
-	public void setMapReads(String mapReads) {
-		this.mapReads = mapReads;
-	}
+    public String getMapReads() {
+	return mapReads;
+    }
 
-	public String getWinSize() {
-		return winSize;
-	}
+    public void setMapReads(String mapReads) {
+	this.mapReads = mapReads;
+    }
 
-	public void setWinSize(String winSize) {
-		this.winSize = winSize;
-	}
-	
+    public String getWinSize() {
+	return winSize;
+    }
+
+    public void setWinSize(String winSize) {
+	this.winSize = winSize;
+    }
+
 }

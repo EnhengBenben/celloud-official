@@ -18,49 +18,49 @@ import com.mongodb.MongoException;
  * @version Revision: 1.3
  */
 public class MongoDBUtils {
-	private static final Logger logger = LogManager
-			.getLogger(MongoDBUtils.class);
-	private static Mongo mongo_report = null;
-	private static Morphia morphia = null;
+    private static final Logger logger = LogManager
+	    .getLogger(MongoDBUtils.class);
+    private static Mongo mongo_report = null;
+    private static Morphia morphia = null;
 
-	public static synchronized Mongo getReportMongo() {
-		if (mongo_report == null) {
-			try {
-				mongo_report = new Mongo(SystemContext.getReportDBUrl());
-			} catch (UnknownHostException e) {
-				logger.error("不能连接数据库!", e);
-			} catch (MongoException e) {
-				logger.error("数据库连接错误!", e);
-			}
-		}
-		return mongo_report;
+    public static synchronized Mongo getReportMongo() {
+	if (mongo_report == null) {
+	    try {
+		mongo_report = new Mongo(SystemContext.getReportDBUrl());
+	    } catch (UnknownHostException e) {
+		logger.error("不能连接数据库!", e);
+	    } catch (MongoException e) {
+		logger.error("数据库连接错误!", e);
+	    }
 	}
+	return mongo_report;
+    }
 
-	public static synchronized Mongo getReportMongo(String dburl) {
-		if (mongo_report == null
-				|| !mongo_report.getAddress().toString().equals(dburl)) {
-			try {
-				mongo_report = new Mongo(dburl);
-			} catch (UnknownHostException e) {
-				logger.error("不能连接数据库!", e);
-			} catch (MongoException e) {
-				logger.error("数据库连接错误!", e);
-			}
-		}
-		return mongo_report;
+    public static synchronized Mongo getReportMongo(String dburl) {
+	if (mongo_report == null
+		|| !mongo_report.getAddress().toString().equals(dburl)) {
+	    try {
+		mongo_report = new Mongo(dburl);
+	    } catch (UnknownHostException e) {
+		logger.error("不能连接数据库!", e);
+	    } catch (MongoException e) {
+		logger.error("数据库连接错误!", e);
+	    }
 	}
+	return mongo_report;
+    }
 
-	public static synchronized Morphia getMorphia() {
-		if (morphia == null) {
-			morphia = new Morphia();
-		}
-		return morphia;
+    public static synchronized Morphia getMorphia() {
+	if (morphia == null) {
+	    morphia = new Morphia();
 	}
+	return morphia;
+    }
 
-	public static synchronized void closeReportMongo() {
-		if (mongo_report != null) {
-			mongo_report.close();
-		}
+    public static synchronized void closeReportMongo() {
+	if (mongo_report != null) {
+	    mongo_report.close();
 	}
+    }
 
 }

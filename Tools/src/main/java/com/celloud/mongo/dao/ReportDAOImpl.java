@@ -2,6 +2,7 @@ package com.celloud.mongo.dao;
 
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
+import com.celloud.mongo.sdo.GddDiseaseDict;
 import com.google.code.morphia.Morphia;
 import com.google.code.morphia.dao.BasicDAO;
 import com.mongodb.Mongo;
@@ -50,6 +51,17 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 		.createQuery(CmpReport.class)
 		.retrievedFields(false, "createDate", "company", "user",
 			"geneDetectionDetail", "cmpFilling").get();
+    }
+
+    @Override
+    public void saveGddDiseaseDict(GddDiseaseDict gddDisease) {
+	ds.save(gddDisease);
+    }
+
+    @Override
+    public GddDiseaseDict getGddDiseaseDict(String name) {
+	return ds.createQuery(GddDiseaseDict.class).filter("engName", name)
+		.get();
     }
 
 }

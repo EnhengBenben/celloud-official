@@ -21,73 +21,73 @@ import com.mongodb.Mongo;
  * @version Revision: 1.0
  */
 public class SystemContext {
-	private static final Logger logger = LogManager
-			.getLogger(SystemContext.class.getName());
-	private static boolean isInited = false;
-	public static final String PROPERTIES_FILE = "system.properties";
+    private static final Logger logger = LogManager
+	    .getLogger(SystemContext.class.getName());
+    private static boolean isInited = false;
+    public static final String PROPERTIES_FILE = "system.properties";
 
-	public static final String PROP_REPORTDAO = "ReportDAO";
+    public static final String PROP_REPORTDAO = "ReportDAO";
 
-	private static ReportDAO reportDAO = null;
+    private static ReportDAO reportDAO = null;
 
-	private static Properties sysProperties = new Properties();
+    private static Properties sysProperties = new Properties();
 
-	public synchronized static boolean initContext() {
-		if (isInited) {
-			return true;
-		}
-		logger.info("init  SystemContext...");
-		InputStream is = SystemContext.class.getClassLoader()
-				.getResourceAsStream(PROPERTIES_FILE);
-		try {
-			sysProperties.load(is);
-			// 设置commons日志不输出
-			System.setProperty("org.apache.commons.logging.Log",
-					"org.apache.commons.logging.impl.NoOpLog");
-		} catch (IOException e) {
-			throw new RuntimeException(PROPERTIES_FILE + " file load error");
-
-		}
-		isInited = true;
-		return true;
+    public synchronized static boolean initContext() {
+	if (isInited) {
+	    return true;
 	}
+	logger.info("init  SystemContext...");
+	InputStream is = SystemContext.class.getClassLoader()
+		.getResourceAsStream(PROPERTIES_FILE);
+	try {
+	    sysProperties.load(is);
+	    // 设置commons日志不输出
+	    System.setProperty("org.apache.commons.logging.Log",
+		    "org.apache.commons.logging.impl.NoOpLog");
+	} catch (IOException e) {
+	    throw new RuntimeException(PROPERTIES_FILE + " file load error");
 
-	public static Properties getSysProperties() {
-		return sysProperties;
 	}
+	isInited = true;
+	return true;
+    }
 
-	public static void setSysProperties(Properties sysProperties) {
-		SystemContext.sysProperties = sysProperties;
-	}
+    public static Properties getSysProperties() {
+	return sysProperties;
+    }
 
-	public synchronized static ReportDAO getReportDAO() {
-		if (reportDAO == null) {
-			try {
-				Class<?> clazz = Class.forName(sysProperties
-						.getProperty(PROP_REPORTDAO));
-				Constructor<?> constructor = clazz.getConstructor(Mongo.class,
-						Morphia.class, String.class);
-				reportDAO = (ReportDAO) constructor.newInstance(
-						MongoDBUtils.getReportMongo(),
-						MongoDBUtils.getMorphia(),
-						SystemContext.getReportDBName());
-			} catch (Exception e) {
-				logger.error(" class load error", e);
-			}
-		}
-		return reportDAO;
-	}
+    public static void setSysProperties(Properties sysProperties) {
+	SystemContext.sysProperties = sysProperties;
+    }
 
-	public static String getReportDBUrl() {
-		return sysProperties.getProperty("report_dburl");
+    public synchronized static ReportDAO getReportDAO() {
+	if (reportDAO == null) {
+	    try {
+		Class<?> clazz = Class.forName(sysProperties
+			.getProperty(PROP_REPORTDAO));
+		Constructor<?> constructor = clazz.getConstructor(Mongo.class,
+			Morphia.class, String.class);
+		reportDAO = (ReportDAO) constructor.newInstance(
+			MongoDBUtils.getReportMongo(),
+			MongoDBUtils.getMorphia(),
+			SystemContext.getReportDBName());
+	    } catch (Exception e) {
+		logger.error(" class load error", e);
+	    }
 	}
+	return reportDAO;
+    }
 
-	public static String getReportDBName() {
-		return sysProperties.getProperty("report_dbname");
-	}
+    public static String getReportDBUrl() {
+	return sysProperties.getProperty("report_dburl");
+    }
 
-	public static String getTime() {
-		return sysProperties.getProperty("time");
-	}
+    public static String getReportDBName() {
+	return sysProperties.getProperty("report_dbname");
+    }
+
+    public static String getTime() {
+	return sysProperties.getProperty("time");
+    }
 
 }

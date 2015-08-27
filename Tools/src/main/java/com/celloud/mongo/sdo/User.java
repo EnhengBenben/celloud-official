@@ -6,27 +6,27 @@ public class User {
     private String email;// 邮箱
 
     public int getUserId() {
-        return userId;
+	return userId;
     }
 
     public void setUserId(int userId) {
-        this.userId = userId;
+	this.userId = userId;
     }
 
     public String getUsername() {
-        return username;
+	return username;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+	this.username = username;
     }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+	return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+	this.email = email;
+    }
 
 }

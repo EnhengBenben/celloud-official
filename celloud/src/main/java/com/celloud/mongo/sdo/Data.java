@@ -10,123 +10,124 @@ import java.util.Date;
  * @version Revision: 1.0
  */
 public class Data {
-	/**
-	 * 文件编号
-	 */
-	private Integer fileId;
-	/**
-	 * 用户编号 提交者
-	 */
-	private Integer userId;
-	/**
-	 * 数据编号
-	 */
-	private String dataKey;
-	/**
-	 * 文件名字
-	 */
-	private String fileName;
-	/**
-	 * 物种
-	 */
-	private String strain;
-	/**
-	 * 数据标签
-	 */
-	private String dataTags;
-	/**
-	 * 大小 单位：b
-	 */
-	private Long size;
-	/**
-	 * 样本
-	 */
-	private String sample;
-	/**
-	 * 文件别名
-	 */
-	private String anotherName;
-	/**
-	 * 提交时间
-	 */
-	private Date createDate;
-	public String getFileName() {
-		return fileName;
-	}
+    /**
+     * 文件编号
+     */
+    private Integer fileId;
+    /**
+     * 用户编号 提交者
+     */
+    private Integer userId;
+    /**
+     * 数据编号
+     */
+    private String dataKey;
+    /**
+     * 文件名字
+     */
+    private String fileName;
+    /**
+     * 物种
+     */
+    private String strain;
+    /**
+     * 数据标签
+     */
+    private String dataTags;
+    /**
+     * 大小 单位：b
+     */
+    private Long size;
+    /**
+     * 样本
+     */
+    private String sample;
+    /**
+     * 文件别名
+     */
+    private String anotherName;
+    /**
+     * 提交时间
+     */
+    private Date createDate;
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    public String getFileName() {
+	return fileName;
+    }
 
-	public String getDataKey() {
-		return dataKey;
-	}
+    public void setFileName(String fileName) {
+	this.fileName = fileName;
+    }
 
-	public void setDataKey(String dataKey) {
-		this.dataKey = dataKey;
-	}
+    public String getDataKey() {
+	return dataKey;
+    }
 
-	public Integer getFileId() {
-		return fileId;
-	}
+    public void setDataKey(String dataKey) {
+	this.dataKey = dataKey;
+    }
 
-	public void setFileId(Integer fileId) {
-		this.fileId = fileId;
-	}
+    public Integer getFileId() {
+	return fileId;
+    }
 
-	public Integer getUserId() {
-		return userId;
-	}
+    public void setFileId(Integer fileId) {
+	this.fileId = fileId;
+    }
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
+    public Integer getUserId() {
+	return userId;
+    }
 
-	public String getStrain() {
-		return strain;
-	}
+    public void setUserId(Integer userId) {
+	this.userId = userId;
+    }
 
-	public void setStrain(String strain) {
-		this.strain = strain;
-	}
+    public String getStrain() {
+	return strain;
+    }
 
-	public String getDataTags() {
-		return dataTags;
-	}
+    public void setStrain(String strain) {
+	this.strain = strain;
+    }
 
-	public void setDataTags(String dataTags) {
-		this.dataTags = dataTags;
-	}
+    public String getDataTags() {
+	return dataTags;
+    }
 
-	public Long getSize() {
-		return size;
-	}
+    public void setDataTags(String dataTags) {
+	this.dataTags = dataTags;
+    }
 
-	public void setSize(Long size) {
-		this.size = size;
-	}
+    public Long getSize() {
+	return size;
+    }
 
-	public String getSample() {
-		return sample;
-	}
+    public void setSize(Long size) {
+	this.size = size;
+    }
 
-	public void setSample(String sample) {
-		this.sample = sample;
-	}
+    public String getSample() {
+	return sample;
+    }
 
-	public String getAnotherName() {
-		return anotherName;
-	}
+    public void setSample(String sample) {
+	this.sample = sample;
+    }
 
-	public void setAnotherName(String anotherName) {
-		this.anotherName = anotherName;
-	}
+    public String getAnotherName() {
+	return anotherName;
+    }
 
-	public Date getCreateDate() {
-		return createDate;
-	}
+    public void setAnotherName(String anotherName) {
+	this.anotherName = anotherName;
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+    public Date getCreateDate() {
+	return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+	this.createDate = createDate;
+    }
 }

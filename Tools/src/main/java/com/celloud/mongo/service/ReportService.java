@@ -3,6 +3,7 @@ package com.celloud.mongo.service;
 
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
+import com.celloud.mongo.sdo.GddDiseaseDict;
 
 /**
  * 报告服务接口
@@ -51,4 +52,19 @@ public interface ReportService {
      * @return
      */
     public CmpReport getSimpleCmp(String dataKey, Integer userId);
+
+    /**
+     * 保存GDD疾病信息字典库
+     * 
+     * @param gddDisease
+     */
+    public void saveGddDiseaseDict(GddDiseaseDict gddDisease);
+
+    /**
+     * 获取GDD疾病信息字典库
+     * 
+     * @param name
+     * @return
+     */
+    public GddDiseaseDict getGddDiseaseDict(String name);
 }

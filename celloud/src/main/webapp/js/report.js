@@ -341,7 +341,7 @@ $.ajaxSetup ({
 			                    }
 			                }
 			            }
-			            if(appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
+			            if(appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
 			                param = {"fileName":$.trim($(this).html()),"dataKey":$.trim($(this).prev().html()),"softwareId":appId,"softwareName":appName,"userId":userId,"obj":$(this),"proId":proId,"proName":proName};
 			                if(j>0&&i==1){
 			                    $(this).addClass("sub");
@@ -519,7 +519,7 @@ $.ajaxSetup ({
 			dataReportParam = event;
 			var softwareId = event.data.softwareId;
 			var fileName = "";
-			if(softwareId == "110"||softwareId == "111"){
+			if(softwareId == "110"||softwareId == "111"||softwareId == "112"){
 				fileName = event.data.fileName.split(" ")[0];
 			}else{
 				fileName = event.data.fileName;
@@ -549,7 +549,7 @@ $.ajaxSetup ({
 				$("#fileListUl").append("<li id='prevLi'><a href='javascript:void(0)' id='prevA' class='forward'>prev</a></li>");
 				var fileNames = new Array();
 				var newList = "";
-				if(softwareId == 110||softwareId == 111){
+				if(softwareId == 110||softwareId == 111||softwareId == 112){
 					$.each(fileList,function(index,item){
 						fileNames.push(item.fileName);
 					});
@@ -663,8 +663,8 @@ $.ajaxSetup ({
 				$("#fileListUl").find(".active").removeClass("active");
 				$("#fileA"+proId+fileId).parent().addClass("active");
 			}
-			if(softwareId == 110 || softwareId ==111){
-				$.get("cmpReport!toCmpReport",{"cmpReport.projectId":proId,"cmpReport.dataKey":dataKey},function(responseText){
+			if(softwareId == 110 || softwareId ==111 || softwareId ==112){
+				$.get("cmpReport!toCmpReport",{"cmpReport.projectId":proId,"cmpReport.dataKey":dataKey,"cmpReport.appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
 			}else if(softwareId == 85 || softwareId == 86 || softwareId == 87 || softwareId == 88 || softwareId == 91 || softwareId == 92 || softwareId == 93 || softwareId == 94 || softwareId == 104){

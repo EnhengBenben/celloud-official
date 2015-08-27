@@ -3,7 +3,7 @@ package com.celloud.mongo.sdo;
 import java.io.Serializable;
 
 public class Company implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     private Integer companyId;// 自增主键
     private String companyName;// 公司名称
     private String englishName;// 公司英语名称
@@ -15,74 +15,74 @@ public class Company implements Serializable {
     private Integer state;// '是否删除：0-未删除，1-已删除'
 
     public Integer getCompanyId() {
-        return companyId;
+	return companyId;
     }
 
     public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
+	this.companyId = companyId;
     }
 
     public String getCompanyName() {
-        return companyName;
+	return companyName;
     }
 
     public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+	this.companyName = companyName;
     }
 
     public String getEnglishName() {
-        return englishName;
+	return englishName;
     }
 
     public void setEnglishName(String englishName) {
-        this.englishName = englishName;
+	this.englishName = englishName;
     }
 
     public String getCompanyIcon() {
-        return companyIcon;
+	return companyIcon;
     }
 
     public void setCompanyIcon(String companyIcon) {
-        this.companyIcon = companyIcon;
+	this.companyIcon = companyIcon;
     }
 
     public String getAddress() {
-        return address;
+	return address;
     }
 
     public void setAddress(String address) {
-        this.address = address;
+	this.address = address;
     }
 
     public String getAddressEn() {
-        return addressEn;
+	return addressEn;
     }
 
     public void setAddressEn(String addressEn) {
-        this.addressEn = addressEn;
+	this.addressEn = addressEn;
     }
 
     public String getZipCode() {
-        return zipCode;
+	return zipCode;
     }
 
     public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+	this.zipCode = zipCode;
     }
 
     public String getTel() {
-        return tel;
+	return tel;
     }
 
     public void setTel(String tel) {
-        this.tel = tel;
+	this.tel = tel;
     }
 
     public Integer getState() {
-        return state;
+	return state;
     }
 
     public void setState(Integer state) {
-        this.state = state;
+	this.state = state;
     }
 }

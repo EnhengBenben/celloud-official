@@ -10,28 +10,28 @@ import java.util.List;
  * @version Revision: 1.0
  */
 public class CmpGeneDetectionDetail {
-	/**
-	 * 平均测序深度
-	 */
-	private String avgCoverage;
-	/**
-	 * 检测结果详细列表
-	 */
-	private List<CmpGeneSnpResult> result;
+    /**
+     * 平均测序深度
+     */
+    private String avgCoverage;
+    /**
+     * 检测结果详细列表
+     */
+    private List<CmpGeneSnpResult> result;
 
-	public String getAvgCoverage() {
-		return avgCoverage;
-	}
+    public String getAvgCoverage() {
+	return avgCoverage;
+    }
 
-	public void setAvgCoverage(String avgCoverage) {
-		this.avgCoverage = avgCoverage;
-	}
+    public void setAvgCoverage(String avgCoverage) {
+	this.avgCoverage = avgCoverage;
+    }
 
-	public List<CmpGeneSnpResult> getResult() {
-		return result;
-	}
+    public List<CmpGeneSnpResult> getResult() {
+	return result;
+    }
 
-	public void setResult(List<CmpGeneSnpResult> result) {
-		this.result = result;
-	}
+    public void setResult(List<CmpGeneSnpResult> result) {
+	this.result = result;
+    }
 }
