@@ -39,7 +39,7 @@ public interface ReportService {
      * @param userId
      * @return
      */
-    public CmpReport getCmpReport(String dataKey, Integer userId);
+    public CmpReport getCmpReport(String dataKey, Integer userId, Integer appId);
 
     /**
      * 获取CMP简要信息内容
@@ -48,7 +48,7 @@ public interface ReportService {
      * @param userId
      * @return
      */
-    public CmpReport getSimpleCmp(String dataKey, Integer userId);
+    public CmpReport getSimpleCmp(String dataKey, Integer userId, Integer appId);
 
     /**
      * 获取pgs报告内容

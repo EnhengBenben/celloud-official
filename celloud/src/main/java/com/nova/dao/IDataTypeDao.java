@@ -8,10 +8,10 @@ import com.nova.sdo.DataType;
 
 @ImplementedBy(DataTypeDaoImpl.class)
 public interface IDataTypeDao {
-	/**
-	 * 获取数据类型列表
-	 * 
-	 * @return
-	 */
-	public List<DataType> getDataTypeList();
+    /**
+     * 获取数据类型列表
+     * 
+     * @return
+     */
+    public List<DataType> getDataTypeList();
 }

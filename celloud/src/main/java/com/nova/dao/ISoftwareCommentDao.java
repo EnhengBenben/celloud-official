@@ -18,51 +18,51 @@ import com.nova.sdo.SoftwareComment;
  */
 @ImplementedBy(SoftwareCommentImpl.class)
 public interface ISoftwareCommentDao {
-	/**
-	 * 获取软件评论列表,不包括回复
-	 * 
-	 * @param softwareId
-	 * @return
-	 */
-	public List<SoftwareComment> getCommentList(int softwareId, Page page);
+    /**
+     * 获取软件评论列表,不包括回复
+     * 
+     * @param softwareId
+     * @return
+     */
+    public List<SoftwareComment> getCommentList(int softwareId, Page page);
 
-	/**
-	 * 获取软件评论（包括回复）列表
-	 * 
-	 * @param softwareId
-	 * @return
-	 */
-	public List<SoftwareComment> getCommentList(int softwareId);
+    /**
+     * 获取软件评论（包括回复）列表
+     * 
+     * @param softwareId
+     * @return
+     */
+    public List<SoftwareComment> getCommentList(int softwareId);
 
-	/**
-	 * 获取软件评论回复列表
-	 * 
-	 * @param softwareId
-	 * @return
-	 */
-	public List<SoftwareComment> getReplyList(int commentId);
+    /**
+     * 获取软件评论回复列表
+     * 
+     * @param softwareId
+     * @return
+     */
+    public List<SoftwareComment> getReplyList(int commentId);
 
-	/**
-	 * 保存评论信息，根据评论类型判断保存的是评论信息还是回复信息
-	 * 
-	 * @param comment
-	 * @return
-	 */
-	public int addComment(SoftwareComment comment);
+    /**
+     * 保存评论信息，根据评论类型判断保存的是评论信息还是回复信息
+     * 
+     * @param comment
+     * @return
+     */
+    public int addComment(SoftwareComment comment);
 
-	/**
-	 * 根据编号删除评论
-	 * 
-	 * @param commentId
-	 * @return
-	 */
-	public int delComment(int commentId, int delType);
+    /**
+     * 根据编号删除评论
+     * 
+     * @param commentId
+     * @return
+     */
+    public int delComment(int commentId, int delType);
 
-	/**
-	 * 根据编号获取评论信息
-	 * 
-	 * @param commentId
-	 * @return
-	 */
-	public SoftwareComment getCommentById(int commentId);
+    /**
+     * 根据编号获取评论信息
+     * 
+     * @param commentId
+     * @return
+     */
+    public SoftwareComment getCommentById(int commentId);
 }

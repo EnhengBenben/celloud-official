@@ -10,32 +10,32 @@ import java.io.Serializable;
  * @version Revision: 1.0
  */
 public class Screen implements Serializable {
-	private static final long serialVersionUID = 1L;
-	private int screenId;// 编号
-	private String screenName;// 截图名称
-	private int softwareId;// 软件编号
+    private static final long serialVersionUID = 1L;
+    private int screenId;// 编号
+    private String screenName;// 截图名称
+    private int softwareId;// 软件编号
 
-	public int getScreenId() {
-		return screenId;
-	}
+    public int getScreenId() {
+	return screenId;
+    }
 
-	public void setScreenId(int screenId) {
-		this.screenId = screenId;
-	}
+    public void setScreenId(int screenId) {
+	this.screenId = screenId;
+    }
 
-	public String getScreenName() {
-		return screenName;
-	}
+    public String getScreenName() {
+	return screenName;
+    }
 
-	public void setScreenName(String screenName) {
-		this.screenName = screenName;
-	}
+    public void setScreenName(String screenName) {
+	this.screenName = screenName;
+    }
 
-	public int getSoftwareId() {
-		return softwareId;
-	}
+    public int getSoftwareId() {
+	return softwareId;
+    }
 
-	public void setSoftwareId(int softwareId) {
-		this.softwareId = softwareId;
-	}
+    public void setSoftwareId(int softwareId) {
+	this.softwareId = softwareId;
+    }
 }

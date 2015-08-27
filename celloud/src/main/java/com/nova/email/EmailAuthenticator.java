@@ -9,20 +9,20 @@ import javax.mail.PasswordAuthentication;
  * @date 2013-7-16 上午9:06:50
  */
 public class EmailAuthenticator extends Authenticator {
-	private String username;
-	private String password;
+    private String username;
+    private String password;
 
-	public EmailAuthenticator() {
-		super();
-	}
+    public EmailAuthenticator() {
+	super();
+    }
 
-	public EmailAuthenticator(String username, String pwd) {
-		super();
-		this.username = username;
-		this.password = pwd;
-	}
+    public EmailAuthenticator(String username, String pwd) {
+	super();
+	this.username = username;
+	this.password = pwd;
+    }
 
-	public PasswordAuthentication getPasswordAuthentication() {
-		return new PasswordAuthentication(username, password);
-	}
+    public PasswordAuthentication getPasswordAuthentication() {
+	return new PasswordAuthentication(username, password);
+    }
 }

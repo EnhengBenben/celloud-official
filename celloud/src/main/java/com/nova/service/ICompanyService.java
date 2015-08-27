@@ -42,14 +42,14 @@ public interface ICompanyService {
      */
     int updateCompany(Company company);
 
-	/**
-	 * 修改公司是否删除的状态
-	 * 
-	 * @param companyId
-	 * @param state
-	 * @return
-	 */
-	int updateCompany(int companyId, int state);
+    /**
+     * 修改公司是否删除的状态
+     * 
+     * @param companyId
+     * @param state
+     * @return
+     */
+    int updateCompany(int companyId, int state);
 
     /**
      * 根据companyId查询公司信息
@@ -59,11 +59,11 @@ public interface ICompanyService {
      */
     Company getCompany(int companyId);
 
-	/**
-	 * 获取用户所属医院
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	Company getCompanyByUserId(int userId);
+    /**
+     * 获取用户所属医院
+     * 
+     * @param userId
+     * @return
+     */
+    Company getCompanyByUserId(int userId);
 }

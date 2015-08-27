@@ -1,4 +1,3 @@
-/**  */
 package com.celloud.mongo.sdo;
 
 /**
@@ -16,6 +15,9 @@ public class CmpGeneSnpResult {
     private String cdsMutSyntax;
     private String aaMutSyntax;
     private String mutationType;
+    private String diseaseEngName;
+    private String diseaseName;
+    private String diseaseType;
 
     public String getGene() {
 	return gene;
@@ -73,4 +75,27 @@ public class CmpGeneSnpResult {
 	this.mutationType = mutationType;
     }
 
+    public String getDiseaseEngName() {
+	return diseaseEngName;
+    }
+
+    public void setDiseaseEngName(String diseaseEngName) {
+	this.diseaseEngName = diseaseEngName;
+    }
+
+    public String getDiseaseName() {
+	return diseaseName;
+    }
+
+    public void setDiseaseName(String diseaseName) {
+	this.diseaseName = diseaseName;
+    }
+
+    public String getDiseaseType() {
+	return diseaseType;
+    }
+
+    public void setDiseaseType(String diseaseType) {
+	this.diseaseType = diseaseType;
+    }
 }

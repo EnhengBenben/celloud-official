@@ -2,6 +2,7 @@
 package com.celloud.mongo.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
@@ -39,7 +40,7 @@ public interface ReportDAO {
      *            mysql中的报告id
      * @return
      */
-    public CmpReport getCmpReport(String dataKey, Integer proId);
+    public CmpReport getCmpReport(String dataKey, Integer proId, Integer appId);
 
     /**
      * 获取CMP简要信息内容
@@ -48,7 +49,17 @@ public interface ReportDAO {
      * @param userId
      * @return
      */
-    public CmpReport getSimpleCmp(String dataKey, Integer proId);
+    public CmpReport getSimpleCmp(String dataKey, Integer proId, Integer appId);
+
+    /**
+     * 
+     * @param dataKey
+     * @param proId
+     * @param appId
+     * @return
+     */
+    public Map<String, String> getGddResult(String dataKey, Integer proId,
+	    Integer appId);
 
     /**
      * 获取pgs报告内容

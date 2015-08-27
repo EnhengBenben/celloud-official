@@ -32,7 +32,9 @@ import com.nova.action.BaseAction;
 @Results({
 	@Result(name = "toCmpReport", location = "../../pages/report/CMP.jsp"),
 	@Result(name = "toPrintDetailCmp", location = "../../pages/print/printDetailCMP.jsp"),
-	@Result(name = "toPrintSimpleCmp", location = "../../pages/print/printCMP.jsp") })
+	@Result(name = "toPrintSimpleCmp", location = "../../pages/print/printCMP.jsp"),
+	@Result(name = "toGddReport", location = "../../pages/report/GDD.jsp"),
+	@Result(name = "toPrintGddReport", location = "../../pages/print/printGDD.jsp"), })
 public class CmpReportAction extends BaseAction {
     private static final long serialVersionUID = 1L;
     Logger log = Logger.getLogger(CmpReportAction.class);
@@ -97,23 +99,33 @@ public class CmpReportAction extends BaseAction {
     }
 
     public String toCmpReport() {
-	log.info("celloud-用户" + cmpReport.getUserId() + "查看CMP报告");
 	cmpReport = reportService.getSimpleCmp(cmpReport.getDataKey(),
-		cmpReport.getProjectId());
+		cmpReport.getProjectId(), cmpReport.getAppId());
+	log.info("celloud-用户" + super.session.get("userId") + "查看"
+		+ cmpReport.getAppName() + "报告");
+	if (cmpReport.getAppId() == 112) {
+	    return "toGddReport";
+	}
 	return "toCmpReport";
     }
 
     public String toPrintDetailCmp() {
-	log.info("celloud-用户" + cmpReport.getUserId() + "查看CMP详细报告");
 	cmpReport = reportService.getCmpReport(cmpReport.getDataKey(),
-		cmpReport.getProjectId());
+		cmpReport.getProjectId(), cmpReport.getAppId());
+	if (cmpReport.getAppId() == 112) {
+	    log.info("celloud-用户" + super.session.get("userId") + "准备打印"
+		    + cmpReport.getAppName() + "总表报告");
+	    return "toPrintGddReport";
+	}
+	log.info("celloud-用户" + super.session.get("userId") + "准备打印"
+		+ cmpReport.getAppName() + "详细报告");
 	return "toPrintDetailCmp";
     }
 
     public String toPrintSimpleCmp() {
-	log.info("celloud-用户" + cmpReport.getUserId() + "查看CMP临床报告");
+	log.info("celloud-用户" + super.session.get("userId") + "查看CMP临床报告");
 	cmpReport = reportService.getSimpleCmp(cmpReport.getDataKey(),
-		cmpReport.getProjectId());
+		cmpReport.getProjectId(), cmpReport.getAppId());
 	return "toPrintSimpleCmp";
     }
 

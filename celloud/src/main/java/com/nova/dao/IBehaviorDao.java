@@ -10,26 +10,28 @@ import com.nova.sdo.Behavior;
 
 @ImplementedBy(BehaviorDaoImpl.class)
 public interface IBehaviorDao {
-	/**
-	 * 记录用户登录信息
-	 * @param behavior
-	 * @return
-	 */
-	public int logLoginInfo(Behavior behavior);
-	
-	/**
-	 * 获取日志信息列表
-	 * @param page
-	 * @return
-	 */
-	public PageList<Behavior> getUserLogInfo(Page page);
+    /**
+     * 记录用户登录信息
+     * 
+     * @param behavior
+     * @return
+     */
+    public int logLoginInfo(Behavior behavior);
 
-	/**
-	 * 查询日志记录，参数不为空则检索该日登录信息，否则全查
-	 * 
-	 * @param date
-	 *            ：日期，格式 yyyy-MM-dd
-	 * @return
-	 */
-	public List<Behavior> getBehaviorList(String date);
+    /**
+     * 获取日志信息列表
+     * 
+     * @param page
+     * @return
+     */
+    public PageList<Behavior> getUserLogInfo(Page page);
+
+    /**
+     * 查询日志记录，参数不为空则检索该日登录信息，否则全查
+     * 
+     * @param date
+     *            ：日期，格式 yyyy-MM-dd
+     * @return
+     */
+    public List<Behavior> getBehaviorList(String date);
 }

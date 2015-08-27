@@ -15,28 +15,28 @@ import com.nova.service.impl.ScreenServiceImpl;
  */
 @ImplementedBy(ScreenServiceImpl.class)
 public interface IScreenService {
-	/**
-	 * 新增关系
-	 * 
-	 * @param screenName
-	 * @param softwareId
-	 * @return
-	 */
-	int createScreen(String screenName, int softwareId);
+    /**
+     * 新增关系
+     * 
+     * @param screenName
+     * @param softwareId
+     * @return
+     */
+    int createScreen(String screenName, int softwareId);
 
-	/**
-	 * 删除关系
-	 * 
-	 * @param softwareId
-	 * @return
-	 */
-	int deleteScreen(int softwareId);
+    /**
+     * 删除关系
+     * 
+     * @param softwareId
+     * @return
+     */
+    int deleteScreen(int softwareId);
 
-	/**
-	 * 根据软件id获取所有的截图
-	 * 
-	 * @param softId
-	 * @return
-	 */
-	List<Screen> getAllScreen(int softId);
+    /**
+     * 根据软件id获取所有的截图
+     * 
+     * @param softId
+     * @return
+     */
+    List<Screen> getAllScreen(int softId);
 }

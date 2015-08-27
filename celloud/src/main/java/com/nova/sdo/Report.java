@@ -10,187 +10,187 @@ import java.util.Date;
  * @version      
  */
 public class Report implements Serializable {
-	private static final long serialVersionUID = 1L;
-	// 报告编号
-	private int reportId;
-	// 文件编号
-	private int fileId;
-	// 项目编号
-	private int projectId;
-	// 软件编号
-	private int softwareId;
-	// 软件名称
-	private String softwareName;
-	// 软件图标
-	private String pictureName;
-	// 报告运行状态
-	private int state;
-	// 标志位 0:数据报告；1项目报告
-	private int flag;
-	// 用户编号
-	private int userId;
+    private static final long serialVersionUID = 1L;
+    // 报告编号
+    private int reportId;
+    // 文件编号
+    private int fileId;
+    // 项目编号
+    private int projectId;
+    // 软件编号
+    private int softwareId;
+    // 软件名称
+    private String softwareName;
+    // 软件图标
+    private String pictureName;
+    // 报告运行状态
+    private int state;
+    // 标志位 0:数据报告；1项目报告
+    private int flag;
+    // 用户编号
+    private int userId;
 
-	private String dataKey;
+    private String dataKey;
 
-	private String projectName;
+    private String projectName;
 
-	private String fileName;
+    private String fileName;
 
-	private int readed;
+    private int readed;
 
-	private Date createDate;
+    private Date createDate;
 
-	private int shareState;
-	// 打印时填写相关信息后的打印页面所有信息
-	private String printContext;
-	
-	/** 是否删除： 0-未删除， 1-已删除*/
-	private int isdel;
-	
-	private Date endDate;
-	
-	public int getReportId() {
-		return reportId;
-	}
+    private int shareState;
+    // 打印时填写相关信息后的打印页面所有信息
+    private String printContext;
 
-	public void setReportId(int reportId) {
-		this.reportId = reportId;
-	}
+    /** 是否删除： 0-未删除， 1-已删除 */
+    private int isdel;
 
-	public int getUserId() {
-		return userId;
-	}
+    private Date endDate;
 
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
+    public int getReportId() {
+	return reportId;
+    }
 
-	public int getFileId() {
-		return fileId;
-	}
+    public void setReportId(int reportId) {
+	this.reportId = reportId;
+    }
 
-	public void setFileId(int fileId) {
-		this.fileId = fileId;
-	}
+    public int getUserId() {
+	return userId;
+    }
 
-	public int getProjectId() {
-		return projectId;
-	}
+    public void setUserId(int userId) {
+	this.userId = userId;
+    }
 
-	public void setProjectId(int projectId) {
-		this.projectId = projectId;
-	}
+    public int getFileId() {
+	return fileId;
+    }
 
-	public int getSoftwareId() {
-		return softwareId;
-	}
+    public void setFileId(int fileId) {
+	this.fileId = fileId;
+    }
 
-	public void setSoftwareId(int softwareId) {
-		this.softwareId = softwareId;
-	}
+    public int getProjectId() {
+	return projectId;
+    }
 
-	public String getSoftwareName() {
-		return softwareName;
-	}
+    public void setProjectId(int projectId) {
+	this.projectId = projectId;
+    }
 
-	public void setSoftwareName(String softwareName) {
-		this.softwareName = softwareName;
-	}
+    public int getSoftwareId() {
+	return softwareId;
+    }
 
-	public String getPictureName() {
-		return pictureName;
-	}
+    public void setSoftwareId(int softwareId) {
+	this.softwareId = softwareId;
+    }
 
-	public void setPictureName(String pictureName) {
-		this.pictureName = pictureName;
-	}
+    public String getSoftwareName() {
+	return softwareName;
+    }
 
-	public int getState() {
-		return state;
-	}
+    public void setSoftwareName(String softwareName) {
+	this.softwareName = softwareName;
+    }
 
-	public void setState(int state) {
-		this.state = state;
-	}
+    public String getPictureName() {
+	return pictureName;
+    }
 
-	public int getFlag() {
-		return flag;
-	}
+    public void setPictureName(String pictureName) {
+	this.pictureName = pictureName;
+    }
 
-	public void setFlag(int flag) {
-		this.flag = flag;
-	}
+    public int getState() {
+	return state;
+    }
 
-	public String getDataKey() {
-		return dataKey;
-	}
+    public void setState(int state) {
+	this.state = state;
+    }
 
-	public void setDataKey(String dataKey) {
-		this.dataKey = dataKey;
-	}
+    public int getFlag() {
+	return flag;
+    }
 
-	public String getProjectName() {
-		return projectName;
-	}
+    public void setFlag(int flag) {
+	this.flag = flag;
+    }
 
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
-	}
+    public String getDataKey() {
+	return dataKey;
+    }
 
-	public String getFileName() {
-		return fileName;
-	}
+    public void setDataKey(String dataKey) {
+	this.dataKey = dataKey;
+    }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    public String getProjectName() {
+	return projectName;
+    }
 
-	public int getReaded() {
-		return readed;
-	}
+    public void setProjectName(String projectName) {
+	this.projectName = projectName;
+    }
 
-	public void setReaded(int readed) {
-		this.readed = readed;
-	}
+    public String getFileName() {
+	return fileName;
+    }
 
-	public Date getCreateDate() {
-		return createDate;
-	}
+    public void setFileName(String fileName) {
+	this.fileName = fileName;
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+    public int getReaded() {
+	return readed;
+    }
 
-	public int getShareState() {
-		return shareState;
-	}
+    public void setReaded(int readed) {
+	this.readed = readed;
+    }
 
-	public void setShareState(int shareState) {
-		this.shareState = shareState;
-	}
+    public Date getCreateDate() {
+	return createDate;
+    }
 
-	public String getPrintContext() {
-		return printContext;
-	}
+    public void setCreateDate(Date createDate) {
+	this.createDate = createDate;
+    }
 
-	public void setPrintContext(String printContext) {
-		this.printContext = printContext;
-	}
+    public int getShareState() {
+	return shareState;
+    }
 
-	public int getIsdel() {
-		return isdel;
-	}
+    public void setShareState(int shareState) {
+	this.shareState = shareState;
+    }
 
-	public void setIsdel(int isdel) {
-		this.isdel = isdel;
-	}
+    public String getPrintContext() {
+	return printContext;
+    }
 
-	public Date getEndDate() {
-		return endDate;
-	}
+    public void setPrintContext(String printContext) {
+	this.printContext = printContext;
+    }
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
+    public int getIsdel() {
+	return isdel;
+    }
+
+    public void setIsdel(int isdel) {
+	this.isdel = isdel;
+    }
+
+    public Date getEndDate() {
+	return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+	this.endDate = endDate;
+    }
 
 }

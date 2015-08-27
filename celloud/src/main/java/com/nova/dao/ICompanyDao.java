@@ -49,20 +49,20 @@ public interface ICompanyDao {
      */
     Company getCompany(int companyId);
 
-	/**
-	 * 修改公司是否删除的状态
-	 * 
-	 * @param companyId
-	 * @param state
-	 * @return
-	 */
-	int updateCompany(int companyId, int state);
+    /**
+     * 修改公司是否删除的状态
+     * 
+     * @param companyId
+     * @param state
+     * @return
+     */
+    int updateCompany(int companyId, int state);
 
-	/**
-	 * 获取用户所属医院
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	Company getCompanyByUserId(int userId);
+    /**
+     * 获取用户所属医院
+     * 
+     * @param userId
+     * @return
+     */
+    Company getCompanyByUserId(int userId);
 }

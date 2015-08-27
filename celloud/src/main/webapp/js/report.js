@@ -1373,16 +1373,16 @@ function toPrintVSP(){
 		obj.document.close();
 	});
 }
-function printCMP(projectId,dataKey,userId){
-	$.get("cmpReport!toPrintDetailCmp",{"cmpReport.projectId":projectId,"cmpReport.dataKey":dataKey,"cmpReport.userId":userId},function(responseText){
+function printCMP(projectId,dataKey,userId,appId){
+	$.get("cmpReport!toPrintDetailCmp",{"cmpReport.projectId":projectId,"cmpReport.dataKey":dataKey,"cmpReport.userId":userId,"cmpReport.appId":appId},function(responseText){
 		var obj = window.open("");
 		obj.document.write(responseText);
 		obj.document.close();
 	});
 }
 
-function printSimpCMP(projectId,dataKey,userId){
-	$.get("cmpReport!toPrintSimpleCmp",{"cmpReport.projectId":projectId,"cmpReport.dataKey":dataKey,"cmpReport.userId":userId},function(responseText){
+function printSimpCMP(projectId,dataKey,userId,appId){
+	$.get("cmpReport!toPrintSimpleCmp",{"cmpReport.projectId":projectId,"cmpReport.dataKey":dataKey,"cmpReport.userId":userId,"cmpReport.appId":appId},function(responseText){
 		var obj = window.open("");
 		obj.document.write(responseText);
 		obj.document.close();

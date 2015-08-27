@@ -1,13 +1,18 @@
 package com.celloud.mongo.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.celloud.mongo.sdo.CmpFilling;
+import com.celloud.mongo.sdo.CmpGeneDetectionDetail;
+import com.celloud.mongo.sdo.CmpGeneSnpResult;
 import com.celloud.mongo.sdo.CmpReport;
 import com.celloud.mongo.sdo.PGSFilling;
 import com.celloud.mongo.sdo.Pgs;
 import com.google.code.morphia.Morphia;
 import com.google.code.morphia.dao.BasicDAO;
+import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
 
 /**
@@ -37,18 +42,40 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
     }
 
     @Override
-    public CmpReport getCmpReport(String dataKey, Integer proId) {
+    public CmpReport getCmpReport(String dataKey, Integer proId, Integer appId) {
 	return ds.createQuery(CmpReport.class).filter("dataKey", dataKey)
-		.filter("projectId", proId).get();
+		.filter("projectId", proId).filter("appId", appId).get();
     }
 
     @Override
-    public CmpReport getSimpleCmp(String dataKey, Integer proId) {
+    public CmpReport getSimpleCmp(String dataKey, Integer proId, Integer appId) {
 	return ds
 		.createQuery(CmpReport.class)
 		.retrievedFields(false, "createDate", "geneDetectionDetail",
 			"cmpFilling").filter("dataKey", dataKey)
-		.filter("projectId", proId).get();
+		.filter("projectId", proId).filter("appId", appId).get();
+    }
+
+    @Override
+    public Map<String, String> getGddResult(String dataKey, Integer proId,
+	    Integer appId) {
+	Map<String, String> map = new HashMap<String, String>();
+	CmpReport cr = ds.createQuery(CmpReport.class)
+		.retrievedFields(true, "geneDetectionDetail")
+		.filter("dataKey", dataKey).filter("projectId", proId)
+		.filter("appId", appId).get();
+	Map<String, CmpGeneDetectionDetail> map_gene = cr
+		.getGeneDetectionDetail();
+	if (map_gene != null) {
+	    CmpGeneDetectionDetail gdd = map_gene.get("all");
+	    if (gdd != null) {
+		List<CmpGeneSnpResult> list = gdd.getResult();
+	    }
+	}
+	DBCollection collection = ds.getCollection(CmpReport.class);
+	// collection.aggregate(firstOp, additionalOps)
+
+	return map;
     }
 
     @Override
