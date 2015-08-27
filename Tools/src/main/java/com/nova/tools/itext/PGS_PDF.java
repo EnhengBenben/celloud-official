@@ -124,7 +124,7 @@ public class PGS_PDF {
 			title = new Paragraph("Data:", contextFont);
 			doc.add(title);
 			float widths[] = null;// 设置表格的列宽和列数
-			if ("SurePlex".equals(appName) || "MDA_HR".equals(appName)
+			if ("Sureplex_HR".equals(appName) || "MDA_HR".equals(appName)
 					|| "gDNA_HR".equals(appName) || "MalBac".equals(appName)) {
 				widths = new float[] { 100f, 100f, 100f, 100f, 100f };
 			} else {
