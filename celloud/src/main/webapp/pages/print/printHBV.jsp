@@ -103,7 +103,9 @@
 								<div class="container" style="display: none;"></div>
 						   	</div>
 					        <h2 class="mt10">四、参考结论（根据已发表文献得出以下参考结论）：</h2>
-					        <div class="m-box_1">${result }</div>
+					        <div class="m-box_1" id="des">
+								<textarea rows="6">${result }</textarea>
+					        </div>
 						   	<h2 class="mt10">五、测序序列结果：</h2>
 						   	<p style="word-break: break-all;" class="m-box_1">${seq }</p>
 						   	<div id="moreDiv">
@@ -144,7 +146,12 @@ function preview(obj){
 	var inputVal;
 	$("body").find("input[type='text']").each(function(){
 		inputVal = $(this).val();
-		$(this).parent().html("<span name='print'>"+inputVal+"</span>");
+		var cl = $(this).attr("class"); 
+		if(cl){
+			$(this).parent().html("突变型:<span name='print' class='"+cl+"'>"+inputVal+"</span>");
+		}else{
+			$(this).parent().html("<span name='print'>"+inputVal+"</span>");
+		}
 	});
 	var sex = $("input[type='radio']:checked").val();
 	$("#_sex").html(sex);
@@ -155,7 +162,11 @@ function preview(obj){
 	if(_flag==1){
 		$("h1").css("padding","0 0 5px 0");
 	}
+	inputVal = $("#des").children().val().replace(/\n/g,"<br>");
+	$("#des").html(inputVal);
 	window.print();
+	inputVal = $("#des").html().replace(/<br>/g,"\n");
+	$("#des").html("<textarea rows=\"6\">"+inputVal+"</textarea>");
 	if(_flag==1){
 		$("h1").css("padding","40px 0 5px 0");
 	}
@@ -164,7 +175,12 @@ function preview(obj){
 	$("a[name='change']").show();
 	$("body").find("span[name='print']").each(function(){
 		inputVal = $(this).html();
-		$(this).parent().html("<input type='text' value='"+inputVal+"'>");
+		var cl = $(this).attr("class");
+		if(cl){
+			$(this).parent().html("突变型:<input type='text' class='"+cl+"' value='"+inputVal+"'>");
+		}else{
+			$(this).parent().html("<input type='text' value='"+inputVal+"'>");
+		}
 	});
 	$("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
 	$("input[type='radio'][value="+sex+"]").attr("checked",true); 
@@ -207,6 +223,15 @@ $(document).ready(function(){
 	});
 	$(".table").find("td").each(function(){
 		$(this).css("vertical-align","middle");
+		var text= $(this).text();
+		if(text.indexOf('突变型:')>=0){
+			var cl = $(this).attr("class");
+			if(cl){
+				$(this).html("突变型:<input type='text' class='"+cl+" havebefore' value='"+text.replace('突变型:','')+"'/>");
+			}else{
+				$(this).html("突变型:<input type='text' class='havebefore' value='"+text.replace('突变型:','')+"'/>");
+			}
+		}
 	});
 	$(".snpLeft").each(function(){
 		$(this).css("text-align","center");
