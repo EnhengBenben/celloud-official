@@ -6,9 +6,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>报告打印</title>
-<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.10">
+<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.11">
 </head>
 <body>
+	<div>
+		<c:if test="${empty pageTxt}">
+			<input type="hidden" value="1" id="isSaved"/>
+		</c:if>
+		<c:if test="${not empty pageTxt}">
+			<input type="hidden" value="0" id="isSaved"/>
+		</c:if>
+	</div>
 	<div id="printMain">
 		<c:if test="${empty pageTxt}">
 			<div style="display: none;" id="_userId">${userId }</div>
@@ -231,13 +239,16 @@ $(document).ready(function(){
 	});
 	$(".table").find("td").each(function(){
 		$(this).css("vertical-align","middle");
-		var text= $(this).text();
-		if(text.indexOf('突变型:')>=0){
-			var cl = $(this).attr("class");
-			if(cl){
-				$(this).html("突变型:<input type='text' class='"+cl+" havebefore' value='"+text.replace('突变型:','')+"'/>");
-			}else{
-				$(this).html("突变型:<input type='text' class='havebefore' value='"+text.replace('突变型:','')+"'/>");
+		var isSaved = $("#isSaved").val();
+		if(isSaved==1){
+			var text= $(this).text();
+			if(text.indexOf('突变型:')>=0){
+				var cl = $(this).attr("class");
+				if(cl){
+					$(this).html("突变型:<input type='text' class='"+cl+" havebefore' value='"+text.replace('突变型:','')+"'/>");
+				}else{
+					$(this).html("突变型:<input type='text' class='havebefore' value='"+text.replace('突变型:','')+"'/>");
+				}
 			}
 		}
 	});
