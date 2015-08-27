@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>报告打印</title>
-<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.9">
+<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.10">
 </head>
 <body>
 	<div id="printMain">
@@ -164,7 +164,9 @@ function preview(obj){
 	}
 	inputVal = $("#des").children().val().replace(/\n/g,"<br>");
 	$("#des").html(inputVal);
+	$(".imgmiss").addClass("imgmissprint");
 	window.print();
+	$(".imgmiss").removeClass("imgmissprint");
 	inputVal = $("#des").html().replace(/<br>/g,"\n");
 	$("#des").html("<textarea rows=\"6\">"+inputVal+"</textarea>");
 	if(_flag==1){
