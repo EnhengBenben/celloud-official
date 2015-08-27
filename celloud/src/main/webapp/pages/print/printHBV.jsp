@@ -162,13 +162,19 @@ function preview(obj){
 	if(_flag==1){
 		$("h1").css("padding","0 0 5px 0");
 	}
-	inputVal = $("#des").children().val().replace(/\n/g,"<br>");
-	$("#des").html(inputVal);
+	inputVal = $("#des").children().val();
+	if(inputVal){
+		inputVal = inputVal.replace(/\n/g,"<br>");
+		$("#des").html(inputVal);
+	}
 	$(".imgmiss").addClass("imgmissprint");
 	window.print();
 	$(".imgmiss").removeClass("imgmissprint");
-	inputVal = $("#des").html().replace(/<br>/g,"\n");
-	$("#des").html("<textarea rows=\"6\">"+inputVal+"</textarea>");
+	inputVal = $("#des").html();
+	if(inputVal){
+		inputVal = inputVal.replace(/<br>/g,"\n");
+		$("#des").html("<textarea rows=\"6\">"+inputVal+"</textarea>");
+	}
 	if(_flag==1){
 		$("h1").css("padding","40px 0 5px 0");
 	}
