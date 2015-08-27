@@ -33,498 +33,498 @@ import com.opensymphony.xwork2.ActionSupport;
 @ParentPackage("json-default")
 @Action("Procedure")
 @Results({
-		@Result(name = "success", type = "json", params = { "root", "flag" }),
-		@Result(name = "resultMap", type = "json", params = { "root",
-				"resultMap" }),
-		@Result(name = "percent", location = "../../pages/view/ajax/ProcessPercent.jsp"),
-		@Result(name = "step", location = "../../pages/view/ajax/ProcessStep.jsp"),
-		@Result(name = "SNPData", location = "../../pages/view/ajax/snpResult.jsp"),
-		@Result(name = "HBV_SNP2Data", location = "../../pages/view/ajax/HBV_SNP2Data.jsp"),
-		@Result(name = "ExomeSNVReport", location = "../../pages/view/ajax/hsnvReport.jsp"),
-		@Result(name = "EST", location = "../../pages/view/ajax/estReport.jsp"),
-		@Result(name = "miRNAData", location = "../../pages/view/ajax/microRNAReport.jsp"),
-		@Result(name = "HBVTree", location = "../../pages/view/ajax/treeResult.jsp"),
-		@Result(name = "miRNADiff", location = "../../pages/view/ajax/miRNADiffResult.jsp"),
-		@Result(name = "DGE", location = "../../pages/view/ajax/DGEResult.jsp"),
-		@Result(name = "RNADeNovo", location = "../../pages/view/ajax/RNADeNovoResult.jsp"),
-		@Result(name = "DeNovoDiff", location = "../../pages/view/ajax/DeNovoDiff.jsp"),
-		@Result(name = "RNAseq", location = "../../pages/view/ajax/RNAseq.jsp"),
-		@Result(name = "HCV", location = "../../pages/view/ajax/HCV.jsp"),
-		@Result(name = "egfr", location = "../../pages/view/ajax/EGFR.jsp"),
-		@Result(name = "DPD", location = "../../pages/view/ajax/DPD.jsp"),
-		@Result(name = "BRAF", location = "../../pages/view/ajax/BRAF.jsp"),
-		@Result(name = "UGT", location = "../../pages/view/ajax/UGT.jsp"),
-		@Result(name = "TBINH", location = "../../pages/view/ajax/TBINH.jsp"),
-		@Result(name = "TB", location = "../../pages/view/ajax/TB.jsp"),
-		@Result(name = "gDNA_HRData", location = "../../pages/view/ajax/gDNA_HRData.jsp"),
-		@Result(name = "translate", location = "../../pages/view/ajax/gadgets.jsp"),
-		@Result(name = "projectTable", location = "../../pages/view/ajax/projectTable.jsp"),
-		@Result(name = "NIPT", location = "../../pages/view/ajax/NIPT.jsp"),
-		@Result(name = "VSP", location = "../../pages/view/ajax/VSP.jsp"),
-		@Result(name = "_16S", location = "../../pages/view/ajax/16S.jsp") })
+	@Result(name = "success", type = "json", params = { "root", "flag" }),
+	@Result(name = "resultMap", type = "json", params = { "root",
+		"resultMap" }),
+	@Result(name = "percent", location = "../../pages/view/ajax/ProcessPercent.jsp"),
+	@Result(name = "step", location = "../../pages/view/ajax/ProcessStep.jsp"),
+	@Result(name = "SNPData", location = "../../pages/view/ajax/snpResult.jsp"),
+	@Result(name = "HBV_SNP2Data", location = "../../pages/view/ajax/HBV_SNP2Data.jsp"),
+	@Result(name = "ExomeSNVReport", location = "../../pages/view/ajax/hsnvReport.jsp"),
+	@Result(name = "EST", location = "../../pages/view/ajax/estReport.jsp"),
+	@Result(name = "miRNAData", location = "../../pages/view/ajax/microRNAReport.jsp"),
+	@Result(name = "HBVTree", location = "../../pages/view/ajax/treeResult.jsp"),
+	@Result(name = "miRNADiff", location = "../../pages/view/ajax/miRNADiffResult.jsp"),
+	@Result(name = "DGE", location = "../../pages/view/ajax/DGEResult.jsp"),
+	@Result(name = "RNADeNovo", location = "../../pages/view/ajax/RNADeNovoResult.jsp"),
+	@Result(name = "DeNovoDiff", location = "../../pages/view/ajax/DeNovoDiff.jsp"),
+	@Result(name = "RNAseq", location = "../../pages/view/ajax/RNAseq.jsp"),
+	@Result(name = "HCV", location = "../../pages/view/ajax/HCV.jsp"),
+	@Result(name = "egfr", location = "../../pages/view/ajax/EGFR.jsp"),
+	@Result(name = "DPD", location = "../../pages/view/ajax/DPD.jsp"),
+	@Result(name = "BRAF", location = "../../pages/view/ajax/BRAF.jsp"),
+	@Result(name = "UGT", location = "../../pages/view/ajax/UGT.jsp"),
+	@Result(name = "TBINH", location = "../../pages/view/ajax/TBINH.jsp"),
+	@Result(name = "TB", location = "../../pages/view/ajax/TB.jsp"),
+	@Result(name = "gDNA_HRData", location = "../../pages/view/ajax/gDNA_HRData.jsp"),
+	@Result(name = "translate", location = "../../pages/view/ajax/gadgets.jsp"),
+	@Result(name = "projectTable", location = "../../pages/view/ajax/projectTable.jsp"),
+	@Result(name = "NIPT", location = "../../pages/view/ajax/NIPT.jsp"),
+	@Result(name = "VSP", location = "../../pages/view/ajax/VSP.jsp"),
+	@Result(name = "_16S", location = "../../pages/view/ajax/16S.jsp") })
 public class ProcedureAction extends ActionSupport {
-	Logger log = Logger.getLogger(ProcedureAction.class);
+    Logger log = Logger.getLogger(ProcedureAction.class);
 
-	private static Map<String, String> dataMap = new HashMap<String, String>();
-	private static Map<String, String> projectMap = new HashMap<String, String>();
+    private static Map<String, String> dataMap = new HashMap<String, String>();
+    private static Map<String, String> projectMap = new HashMap<String, String>();
 
-	static {
-		dataMap.put(AppNameIDConstant.SNP, "SNPData");
-		dataMap.put(AppNameIDConstant.HBV_SNP2, "HBV_SNP2Data");
-		dataMap.put(AppNameIDConstant.PGS, "gDNA_HRData");
-		dataMap.put(AppNameIDConstant.gDNA, "gDNA_HRData");
-		dataMap.put(AppNameIDConstant.gDNA_Chimeric, "gDNA_HRData");
-		dataMap.put(AppNameIDConstant.MDA_Chimeric, "gDNA_HRData");
-		dataMap.put(AppNameIDConstant.MDA_HR, "gDNA_HRData");
-		dataMap.put(AppNameIDConstant.gDNA_MR, "gDNA_HRData");
-		dataMap.put(AppNameIDConstant.gDNA_HR, "gDNA_HRData");
-		dataMap.put(AppNameIDConstant.MalBac, "gDNA_HRData");
-		dataMap.put(AppNameIDConstant.MDA_MR, "gDNA_HRData");
-		dataMap.put(AppNameIDConstant.SurePlex, "gDNA_HRData");
-		dataMap.put(AppNameIDConstant.miRNA, "miRNAData");
-		dataMap.put(AppNameIDConstant.Tree, "HBVTree");
-		dataMap.put(AppNameIDConstant.EST, "EST");
-		dataMap.put(AppNameIDConstant.QC, "projectTable");
-		dataMap.put(AppNameIDConstant.ExomeSNV, "ExomeSNVReport");
-		dataMap.put(AppNameIDConstant.HCV, "HCV");
-		dataMap.put(AppNameIDConstant.EGFR, "egfr");
-		dataMap.put(AppNameIDConstant.KRAS, "egfr");
-		dataMap.put(AppNameIDConstant.TB, "TB");
-		dataMap.put(AppNameIDConstant.TRANSLATE, "translate");
-		dataMap.put(AppNameIDConstant._16S, "_16S");
-		dataMap.put(AppNameIDConstant.NIPT, "NIPT");
-		dataMap.put(AppNameIDConstant.gDNA_MR_v1, "gDNA_HRData");
-		dataMap.put(AppNameIDConstant.gDNA_Chimeric_v1, "gDNA_HRData");
-		dataMap.put(AppNameIDConstant.gDNA_HR_v1, "gDNA_HRData");
-		dataMap.put(AppNameIDConstant.MDA_Chimeric_v1, "gDNA_HRData");
-		dataMap.put(AppNameIDConstant.MDA_HR_v1, "gDNA_HRData");
-		dataMap.put(AppNameIDConstant.MDA_MR_v1, "gDNA_HRData");
-		dataMap.put(AppNameIDConstant.SurePlex_v1, "gDNA_HRData");
-		dataMap.put(AppNameIDConstant.Sureplex_HR, "gDNA_HRData");
-		dataMap.put(AppNameIDConstant.MalBac_v1, "gDNA_HRData");
-		dataMap.put(AppNameIDConstant.TB_INH, "TBINH");
-		dataMap.put(AppNameIDConstant.DPD, "DPD");
-		dataMap.put(AppNameIDConstant.BRAF, "BRAF");
-		dataMap.put(AppNameIDConstant.UGT, "UGT");
-		dataMap.put(AppNameIDConstant.CMP, "CMP");
-		dataMap.put(AppNameIDConstant.VSP, "VSP");
-		dataMap.put(AppNameIDConstant.CMP_199, "CMP_199");
+    static {
+	dataMap.put(AppNameIDConstant.SNP, "SNPData");
+	dataMap.put(AppNameIDConstant.HBV_SNP2, "HBV_SNP2Data");
+	dataMap.put(AppNameIDConstant.PGS, "gDNA_HRData");
+	dataMap.put(AppNameIDConstant.gDNA, "gDNA_HRData");
+	dataMap.put(AppNameIDConstant.gDNA_Chimeric, "gDNA_HRData");
+	dataMap.put(AppNameIDConstant.MDA_Chimeric, "gDNA_HRData");
+	dataMap.put(AppNameIDConstant.MDA_HR, "gDNA_HRData");
+	dataMap.put(AppNameIDConstant.gDNA_MR, "gDNA_HRData");
+	dataMap.put(AppNameIDConstant.gDNA_HR, "gDNA_HRData");
+	dataMap.put(AppNameIDConstant.MalBac, "gDNA_HRData");
+	dataMap.put(AppNameIDConstant.MDA_MR, "gDNA_HRData");
+	dataMap.put(AppNameIDConstant.SurePlex, "gDNA_HRData");
+	dataMap.put(AppNameIDConstant.miRNA, "miRNAData");
+	dataMap.put(AppNameIDConstant.Tree, "HBVTree");
+	dataMap.put(AppNameIDConstant.EST, "EST");
+	dataMap.put(AppNameIDConstant.QC, "projectTable");
+	dataMap.put(AppNameIDConstant.ExomeSNV, "ExomeSNVReport");
+	dataMap.put(AppNameIDConstant.HCV, "HCV");
+	dataMap.put(AppNameIDConstant.EGFR, "egfr");
+	dataMap.put(AppNameIDConstant.KRAS, "egfr");
+	dataMap.put(AppNameIDConstant.TB, "TB");
+	dataMap.put(AppNameIDConstant.TRANSLATE, "translate");
+	dataMap.put(AppNameIDConstant._16S, "_16S");
+	dataMap.put(AppNameIDConstant.NIPT, "NIPT");
+	dataMap.put(AppNameIDConstant.gDNA_MR_v1, "gDNA_HRData");
+	dataMap.put(AppNameIDConstant.gDNA_Chimeric_v1, "gDNA_HRData");
+	dataMap.put(AppNameIDConstant.gDNA_HR_v1, "gDNA_HRData");
+	dataMap.put(AppNameIDConstant.MDA_Chimeric_v1, "gDNA_HRData");
+	dataMap.put(AppNameIDConstant.MDA_HR_v1, "gDNA_HRData");
+	dataMap.put(AppNameIDConstant.MDA_MR_v1, "gDNA_HRData");
+	dataMap.put(AppNameIDConstant.SurePlex_v1, "gDNA_HRData");
+	dataMap.put(AppNameIDConstant.Sureplex_HR, "gDNA_HRData");
+	dataMap.put(AppNameIDConstant.MalBac_v1, "gDNA_HRData");
+	dataMap.put(AppNameIDConstant.TB_INH, "TBINH");
+	dataMap.put(AppNameIDConstant.DPD, "DPD");
+	dataMap.put(AppNameIDConstant.BRAF, "BRAF");
+	dataMap.put(AppNameIDConstant.UGT, "UGT");
+	dataMap.put(AppNameIDConstant.CMP, "CMP");
+	dataMap.put(AppNameIDConstant.VSP, "VSP");
+	dataMap.put(AppNameIDConstant.CMP_199, "CMP_199");
 
-		projectMap.put(AppNameIDConstant.Tree, "HBVTree");
+	projectMap.put(AppNameIDConstant.Tree, "HBVTree");
+    }
+
+    private static final long serialVersionUID = 1L;
+    private String userId;
+    private String appId;
+    private String appName;
+    // 格式为 Celloud ， Celloud.ab1 ， X351.ab1 , anotherName ；...
+    private String dataKeyList;
+    private String sampleList;// 格式为 样本名称:数据名称1,数据名称2; ...
+    private String diffList;// DIFF1:treatment1[sample1,sample1...]#control1[s1,s2...];DIFF2:...
+    private String projectId;// 项目ID
+    private String sampleName;// 样本名称
+    private String projectName;
+    private String email;
+    private String dataKey;// 用于传递 dataKey
+    private String fileName;//
+
+    private String ada3;// adaptor，接头
+    private String ada5;// adaptor，接头
+    private String sp;// 物种
+    private String cpu;// cpu 数量
+
+    private Map<String, String> resultMap;
+    private String flag;
+    private String anotherName;
+    private String dataInfos;
+    private String company;
+    private String user;
+    private String dept;
+
+    private final String basePath = ServletActionContext.getServletContext()
+	    .getRealPath("/upload");
+
+    /**
+     * 运行App
+     * 
+     * @return
+     * @throws IOException
+     */
+    public String runApp() throws IOException {
+	ServletActionContext.getResponse().setHeader(
+		"Access-Control-Allow-Origin", "*");
+	log.info("用户" + userId + "使用appId=" + appId + "运行projectId="
+		+ projectId);
+	final RunAppService app = new RunAppService();
+	// 需要对datakeylist进行排序
+	dataKeyList = FileTools.dataListSort(dataKeyList);
+	new Thread(new Runnable() {
+	    @Override
+	    public void run() {
+		app.runProject(
+			basePath,
+			userId,
+			appId,
+			appName,
+			projectId,
+			dataKeyList,
+			email,
+			projectName,
+			sampleList,
+			ada3,
+			ada5,
+			sp,
+			cpu,
+			diffList,
+			fileName,
+			Encrypt.decrypt(dataInfos),
+			Encrypt.decrypt(company.replace(" ", "+").replace("\n",
+				"")), Encrypt.decrypt(user),
+			Encrypt.decrypt(dept));
+	    }
+	}).start();
+	return SUCCESS;
+    }
+
+    /**
+     * 阅读报告
+     * 
+     * @return
+     * @throws IOException
+     */
+    public String readReport() throws IOException {
+	ServletActionContext.getResponse().setHeader(
+		"Access-Control-Allow-Origin", "*");
+	long start = new Date().getTime();
+	ReadReportService report = new ReadReportService();
+	if (projectId == null || "".equals(projectId)) {
+	    // 查看数据报告
+	    resultMap = report.readDataReport(basePath, userId, appId, dataKey,
+		    fileName, anotherName);
+	    if (resultMap != null) {
+		resultMap.put("outProject", PropertiesUtils.outProject);
+	    }
+	    long end = new Date().getTime();
+	    log.info("用户" + userId + "访问app：" + appId + "下DataKey=" + dataKey
+		    + "的数据报告，用时" + (end - start) + "ms");
+	    return dataMap.get(appId);
+	} else {
+	    // 查看项目报告
+	    resultMap = report.readProjectReport(basePath, userId, appId,
+		    projectId, sampleList);
+	    resultMap.put("outProject", PropertiesUtils.outProject);
+	    return projectMap.get(appId);
 	}
+    }
 
-	private static final long serialVersionUID = 1L;
-	private String userId;
-	private String appId;
-	private String appName;
-	// 格式为 Celloud ， Celloud.ab1 ， X351.ab1 , anotherName ；...
-	private String dataKeyList;
-	private String sampleList;// 格式为 样本名称:数据名称1,数据名称2; ...
-	private String diffList;// DIFF1:treatment1[sample1,sample1...]#control1[s1,s2...];DIFF2:...
-	private String projectId;// 项目ID
-	private String sampleName;// 样本名称
-	private String projectName;
-	private String email;
-	private String dataKey;// 用于传递 dataKey
-	private String fileName;//
+    public String downPDF() throws IOException {
+	ServletActionContext.getResponse().setHeader(
+		"Access-Control-Allow-Origin", "*");
+	String data[] = dataKeyList.split(";");
+	String downPath = basePath + "/" + data[0] + "/" + data[1] + "/";
+	String projectFolder = downPath + data[2];
+	String proPDF = FileTools.fileExist(projectFolder, ".pdf", "endsWith");
+	if (!proPDF.equals("")) {
+	    flag = data[0] + "/" + data[1] + "/" + data[2] + "/" + proPDF;
+	    return SUCCESS;
+	}
+	String projectPath = downPath + data[2] + "/project.pdf";
+	String keys[] = data[3].split(",");
+	List<String> list = new ArrayList<String>();
+	String dk = null;
+	for (int i = 0; i < keys.length; i++) {
+	    if (data[1].equals("95")) {
+		dk = downPath + keys[i] + "/Result";
+	    } else {
+		dk = downPath + keys[i];
+	    }
+	    String pdf = FileTools.fileExist(dk, ".pdf", "endWith");
+	    if (!pdf.equals("")) {
+		list.add(dk + "/" + pdf);
+	    }
+	}
+	flag = "";
+	if (list.size() > 0) {
+	    FileTools.createFile(projectPath);
+	    MergePdf.merge(list.toArray(new String[list.size()]), projectPath);
+	    flag = data[0] + "/" + data[1] + "/" + data[2] + "/project.pdf";
+	}
+	return SUCCESS;
+    }
 
-	private String ada3;// adaptor，接头
-	private String ada5;// adaptor，接头
-	private String sp;// 物种
-	private String cpu;// cpu 数量
+    /**
+     * 下载通用方法
+     * 
+     * @throws IOException
+     */
+    public void download() throws IOException {
+	ServletActionContext.getResponse().setHeader(
+		"Access-Control-Allow-Origin", "*");
+	String downPath = "";
+	String fileName = "";
+	if (dataKey == null || "".equals(dataKey)) {
+	    downPath = basePath + "/" + userId + "/" + appId + "/" + projectId;
+	    fileName = FileTools.fileExist(downPath, ".zip", "endsWith");
+	} else if ("T".equals(dataKey)) {
+	    downPath = basePath + "/" + userId;
+	    fileName = FileTools.fileExist(downPath, flag, "startsWith");
+	} else {
+	    downPath = basePath + "/" + userId + "/" + appId + "/" + dataKey;
+	    fileName = FileTools.fileExist(downPath, ".zip", "endsWith");
+	}
+	FileTools.fileDownLoad(ServletActionContext.getResponse(), downPath
+		+ "/" + fileName);
+    }
 
-	private Map<String, String> resultMap;
-	private String flag;
-	private String anotherName;
-	private String dataInfos;
-	private String company;
-	private String user;
-	private String dept;
+    /**
+     * miRNA 下载方法
+     * 
+     * @throws IOException
+     */
+    public void miRNADownload() throws IOException {
+	ServletActionContext.getResponse().setHeader(
+		"Access-Control-Allow-Origin", "*");
+	FileTools.fileDownLoad(ServletActionContext.getResponse(), basePath
+		+ "/" + userId);
+    }
 
-	private final String basePath = ServletActionContext.getServletContext()
-			.getRealPath("/upload");
+    public String getRNADeNovo() {
+	ServletActionContext.getResponse().setHeader(
+		"Access-Control-Allow-Origin", "*");
 
-	/**
-	 * 运行App
-	 * 
-	 * @return
-	 * @throws IOException
-	 */
-	public String runApp() throws IOException {
-		ServletActionContext.getResponse().setHeader(
-				"Access-Control-Allow-Origin", "*");
-		log.info("用户" + userId + "使用appId=" + appId + "运行projectId="
-				+ projectId);
-		final RunAppService app = new RunAppService();
-		// 需要对datakeylist进行排序
-		dataKeyList = FileTools.dataListSort(dataKeyList);
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				app.runProject(
-						basePath,
-						userId,
-						appId,
-						appName,
-						projectId,
-						dataKeyList,
-						email,
-						projectName,
-						sampleList,
-						ada3,
-						ada5,
-						sp,
-						cpu,
-						diffList,
-						fileName,
-						Encrypt.decrypt(dataInfos),
-						Encrypt.decrypt(company.replace(" ", "+").replace("\n",
-								"")), Encrypt.decrypt(user),
-						Encrypt.decrypt(dept));
+	String projectPath = basePath + "/" + userId + "/"
+		+ AppNameIDConstant.RNA_DeNovo + "/" + projectId + "/";
+	String downFile = projectPath
+		+ FileTools.fileExist(projectPath, "Assembly_Sta.txt",
+			"endsWith");
+	String total = "";
+	try {
+	    total = FileUtils.readFileToString(new File(downFile));
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
+	String detail[] = total.split("\n");
+	StringBuffer sb = new StringBuffer();
+	for (int i = 1; i < detail.length; i++) {
+	    String line = detail[i];
+	    if (!line.startsWith("*")) {
+		sb.append(line).append("\n");
+	    }
+	}
+	flag = sb.toString().replace("\n", ";").replace("\t", ",");
+	return SUCCESS;
+    }
+
+    /**
+     * 删除报告接口
+     */
+    public void rmReport() {
+	ServletActionContext.getResponse().setHeader(
+		"Access-Control-Allow-Origin", "*");
+	log.info("删除报告：" + userId + "/" + projectId + "|" + dataKey);
+	String folder = (projectId == null || "".equals(projectId)) ? dataKey
+		: projectId;
+	String[] detail = folder.split(";");
+	File rmUser = new File(basePath + "/" + userId);
+	if (rmUser.exists()) {
+	    File[] list = rmUser.listFiles();
+	    for (int i = 0; i < list.length; i++) {
+		for (int j = 0; j < detail.length; j++) {
+		    File rmPath = new File(list[i] + "/" + detail[j]);
+		    if (rmPath.exists()) {
+			try {
+			    FileUtils.deleteDirectory(rmPath);
+			    log.info("删除报告:" + rmPath + "成功");
+			} catch (IOException e) {
+			    log.info("删除报告:" + rmPath + "失败，错误" + e);
 			}
-		}).start();
-		return SUCCESS;
-	}
-
-	/**
-	 * 阅读报告
-	 * 
-	 * @return
-	 * @throws IOException
-	 */
-	public String readReport() throws IOException {
-		ServletActionContext.getResponse().setHeader(
-				"Access-Control-Allow-Origin", "*");
-		long start = new Date().getTime();
-		ReadReportService report = new ReadReportService();
-		if (projectId == null || "".equals(projectId)) {
-			// 查看数据报告
-			resultMap = report.readDataReport(basePath, userId, appId, dataKey,
-					fileName, anotherName);
-			if (resultMap != null) {
-				resultMap.put("outProject", PropertiesUtils.outProject);
-			}
-			long end = new Date().getTime();
-			log.info("用户" + userId + "访问app：" + appId + "下DataKey=" + dataKey
-					+ "的数据报告，用时" + (end - start) + "ms");
-			return dataMap.get(appId);
-		} else {
-			// 查看项目报告
-			resultMap = report.readProjectReport(basePath, userId, appId,
-					projectId, sampleList);
-			resultMap.put("outProject", PropertiesUtils.outProject);
-			return projectMap.get(appId);
+		    }
 		}
+	    }
 	}
+    }
 
-	public String downPDF() throws IOException {
-		ServletActionContext.getResponse().setHeader(
-				"Access-Control-Allow-Origin", "*");
-		String data[] = dataKeyList.split(";");
-		String downPath = basePath + "/" + data[0] + "/" + data[1] + "/";
-		String projectFolder = downPath+data[2];
-		String proPDF = FileTools.fileExist(projectFolder, ".pdf", "endsWith");
-		if(!proPDF.equals("")){
-			flag = data[0] + "/" + data[1] + "/" + data[2] + "/"+proPDF;
-			return SUCCESS;
-		}
-		String projectPath = downPath + data[2] + "/project.pdf";
-		String keys[] = data[3].split(",");
-		List<String> list = new ArrayList<String>();
-		String dk = null;
-		for (int i = 0; i < keys.length; i++) {
-			if (data[1].equals("95")) {
-				dk = downPath + keys[i] + "/Result";
-			} else {
-				dk = downPath + keys[i];
-			}
-			String pdf = FileTools.fileExist(dk, ".pdf", "endWith");
-			if (!pdf.equals("")) {
-				list.add(dk + "/" + pdf);
-			}
-		}
-		flag = "";
-		if (list.size() > 0) {
-			FileTools.createFile(projectPath);
-			MergePdf.merge(list.toArray(new String[list.size()]), projectPath);
-			flag = data[0] + "/" + data[1] + "/" + data[2] + "/project.pdf";
-		}
-		return SUCCESS;
-	}
+    public String getUserId() {
+	return userId;
+    }
 
-	/**
-	 * 下载通用方法
-	 * 
-	 * @throws IOException
-	 */
-	public void download() throws IOException {
-		ServletActionContext.getResponse().setHeader(
-				"Access-Control-Allow-Origin", "*");
-		String downPath = "";
-		String fileName = "";
-		if (dataKey == null || "".equals(dataKey)) {
-			downPath = basePath + "/" + userId + "/" + appId + "/" + projectId;
-			fileName = FileTools.fileExist(downPath, ".zip", "endsWith");
-		} else if ("T".equals(dataKey)) {
-			downPath = basePath + "/" + userId;
-			fileName = FileTools.fileExist(downPath, flag, "startsWith");
-		} else {
-			downPath = basePath + "/" + userId + "/" + appId + "/" + dataKey;
-			fileName = FileTools.fileExist(downPath, ".zip", "endsWith");
-		}
-		FileTools.fileDownLoad(ServletActionContext.getResponse(), downPath
-				+ "/" + fileName);
-	}
+    public void setUserId(String userId) {
+	this.userId = userId;
+    }
 
-	/**
-	 * miRNA 下载方法
-	 * 
-	 * @throws IOException
-	 */
-	public void miRNADownload() throws IOException {
-		ServletActionContext.getResponse().setHeader(
-				"Access-Control-Allow-Origin", "*");
-		FileTools.fileDownLoad(ServletActionContext.getResponse(), basePath
-				+ "/" + userId);
-	}
+    public String getAppId() {
+	return appId;
+    }
 
-	public String getRNADeNovo() {
-		ServletActionContext.getResponse().setHeader(
-				"Access-Control-Allow-Origin", "*");
+    public void setAppId(String appId) {
+	this.appId = appId;
+    }
 
-		String projectPath = basePath + "/" + userId + "/"
-				+ AppNameIDConstant.RNA_DeNovo + "/" + projectId + "/";
-		String downFile = projectPath
-				+ FileTools.fileExist(projectPath, "Assembly_Sta.txt",
-						"endsWith");
-		String total = "";
-		try {
-			total = FileUtils.readFileToString(new File(downFile));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		String detail[] = total.split("\n");
-		StringBuffer sb = new StringBuffer();
-		for (int i = 1; i < detail.length; i++) {
-			String line = detail[i];
-			if (!line.startsWith("*")) {
-				sb.append(line).append("\n");
-			}
-		}
-		flag = sb.toString().replace("\n", ";").replace("\t", ",");
-		return SUCCESS;
-	}
+    public String getDataKeyList() {
+	return dataKeyList;
+    }
 
-	/**
-	 * 删除报告接口
-	 */
-	public void rmReport() {
-		ServletActionContext.getResponse().setHeader(
-				"Access-Control-Allow-Origin", "*");
-		log.info("删除报告：" + userId + "/" + projectId + "|" + dataKey);
-		String folder = (projectId == null || "".equals(projectId)) ? dataKey
-				: projectId;
-		String[] detail = folder.split(";");
-		File rmUser = new File(basePath + "/" + userId);
-		if (rmUser.exists()) {
-			File[] list = rmUser.listFiles();
-			for (int i = 0; i < list.length; i++) {
-				for (int j = 0; j < detail.length; j++) {
-					File rmPath = new File(list[i] + "/" + detail[j]);
-					if (rmPath.exists()) {
-						try {
-							FileUtils.deleteDirectory(rmPath);
-							log.info("删除报告:" + rmPath + "成功");
-						} catch (IOException e) {
-							log.info("删除报告:" + rmPath + "失败，错误" + e);
-						}
-					}
-				}
-			}
-		}
-	}
+    public void setDataKeyList(String dataKeyList) {
+	this.dataKeyList = dataKeyList;
+    }
 
-	public String getUserId() {
-		return userId;
-	}
+    public String getProjectId() {
+	return projectId;
+    }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    public void setProjectId(String projectId) {
+	this.projectId = projectId;
+    }
 
-	public String getAppId() {
-		return appId;
-	}
+    public String getAppName() {
+	return appName;
+    }
 
-	public void setAppId(String appId) {
-		this.appId = appId;
-	}
+    public void setAppName(String appName) {
+	this.appName = appName;
+    }
 
-	public String getDataKeyList() {
-		return dataKeyList;
-	}
+    public Map<String, String> getResultMap() {
+	return resultMap;
+    }
 
-	public void setDataKeyList(String dataKeyList) {
-		this.dataKeyList = dataKeyList;
-	}
+    public void setResultMap(Map<String, String> resultMap) {
+	this.resultMap = resultMap;
+    }
 
-	public String getProjectId() {
-		return projectId;
-	}
+    public String getDataKey() {
+	return dataKey;
+    }
 
-	public void setProjectId(String projectId) {
-		this.projectId = projectId;
-	}
+    public void setDataKey(String dataKey) {
+	this.dataKey = dataKey;
+    }
 
-	public String getAppName() {
-		return appName;
-	}
+    public String getEmail() {
+	return email;
+    }
 
-	public void setAppName(String appName) {
-		this.appName = appName;
-	}
+    public void setEmail(String email) {
+	this.email = email;
+    }
 
-	public Map<String, String> getResultMap() {
-		return resultMap;
-	}
+    public String getFlag() {
+	return flag;
+    }
 
-	public void setResultMap(Map<String, String> resultMap) {
-		this.resultMap = resultMap;
-	}
+    public void setFlag(String flag) {
+	this.flag = flag;
+    }
 
-	public String getDataKey() {
-		return dataKey;
-	}
+    public String getProjectName() {
+	return projectName;
+    }
 
-	public void setDataKey(String dataKey) {
-		this.dataKey = dataKey;
-	}
+    public void setProjectName(String projectName) {
+	this.projectName = projectName;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getSampleList() {
+	return sampleList;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setSampleList(String sampleList) {
+	this.sampleList = sampleList;
+    }
 
-	public String getFlag() {
-		return flag;
-	}
+    public String getAda3() {
+	return ada3;
+    }
 
-	public void setFlag(String flag) {
-		this.flag = flag;
-	}
+    public void setAda3(String ada3) {
+	this.ada3 = ada3;
+    }
 
-	public String getProjectName() {
-		return projectName;
-	}
+    public String getAda5() {
+	return ada5;
+    }
 
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
-	}
+    public void setAda5(String ada5) {
+	this.ada5 = ada5;
+    }
 
-	public String getSampleList() {
-		return sampleList;
-	}
+    public String getSp() {
+	return sp;
+    }
 
-	public void setSampleList(String sampleList) {
-		this.sampleList = sampleList;
-	}
+    public void setSp(String sp) {
+	this.sp = sp;
+    }
 
-	public String getAda3() {
-		return ada3;
-	}
+    public String getCpu() {
+	return cpu;
+    }
 
-	public void setAda3(String ada3) {
-		this.ada3 = ada3;
-	}
+    public void setCpu(String cpu) {
+	this.cpu = cpu;
+    }
 
-	public String getAda5() {
-		return ada5;
-	}
+    public String getSampleName() {
+	return sampleName;
+    }
 
-	public void setAda5(String ada5) {
-		this.ada5 = ada5;
-	}
+    public void setSampleName(String sampleName) {
+	this.sampleName = sampleName;
+    }
 
-	public String getSp() {
-		return sp;
-	}
+    public String getDiffList() {
+	return diffList;
+    }
 
-	public void setSp(String sp) {
-		this.sp = sp;
-	}
+    public void setDiffList(String diffList) {
+	this.diffList = diffList;
+    }
 
-	public String getCpu() {
-		return cpu;
-	}
+    public String getFileName() {
+	return fileName;
+    }
 
-	public void setCpu(String cpu) {
-		this.cpu = cpu;
-	}
+    public void setFileName(String fileName) {
+	this.fileName = fileName;
+    }
 
-	public String getSampleName() {
-		return sampleName;
-	}
+    public String getAnotherName() {
+	return anotherName;
+    }
 
-	public void setSampleName(String sampleName) {
-		this.sampleName = sampleName;
-	}
+    public void setAnotherName(String anotherName) {
+	this.anotherName = anotherName;
+    }
 
-	public String getDiffList() {
-		return diffList;
-	}
+    public String getDataInfos() {
+	return dataInfos;
+    }
 
-	public void setDiffList(String diffList) {
-		this.diffList = diffList;
-	}
+    public void setDataInfos(String dataInfos) {
+	this.dataInfos = dataInfos;
+    }
 
-	public String getFileName() {
-		return fileName;
-	}
+    public String getCompany() {
+	return company;
+    }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    public void setCompany(String company) {
+	this.company = company;
+    }
 
-	public String getAnotherName() {
-		return anotherName;
-	}
+    public String getUser() {
+	return user;
+    }
 
-	public void setAnotherName(String anotherName) {
-		this.anotherName = anotherName;
-	}
+    public void setUser(String user) {
+	this.user = user;
+    }
 
-	public String getDataInfos() {
-		return dataInfos;
-	}
+    public String getDept() {
+	return dept;
+    }
 
-	public void setDataInfos(String dataInfos) {
-		this.dataInfos = dataInfos;
-	}
-
-	public String getCompany() {
-		return company;
-	}
-
-	public void setCompany(String company) {
-		this.company = company;
-	}
-
-	public String getUser() {
-		return user;
-	}
-
-	public void setUser(String user) {
-		this.user = user;
-	}
-
-	public String getDept() {
-		return dept;
-	}
-
-	public void setDept(String dept) {
-		this.dept = dept;
-	}
+    public void setDept(String dept) {
+	this.dept = dept;
+    }
 }

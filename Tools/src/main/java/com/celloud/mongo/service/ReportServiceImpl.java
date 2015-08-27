@@ -12,32 +12,31 @@ import com.celloud.mongo.sdo.CmpReport;
  * @version Revision: 1.0
  */
 public class ReportServiceImpl implements ReportService {
-	ReportDAO reportDao = SystemContext.getReportDAO();
+    ReportDAO reportDao = SystemContext.getReportDAO();
 
-	@Override
-	public void saveCmpReport(CmpReport cmpReport) {
-		reportDao.saveCmpReport(cmpReport);
-	}
+    @Override
+    public void saveCmpReport(CmpReport cmpReport) {
+	reportDao.saveCmpReport(cmpReport);
+    }
 
-	@Override
-	public void editCmpFilling(Object id, CmpFilling cmpFill) {
-		reportDao.editCmpFilling(id, cmpFill);
-	}
+    @Override
+    public void editCmpFilling(Object id, CmpFilling cmpFill) {
+	reportDao.editCmpFilling(id, cmpFill);
+    }
 
-	@Override
-	public CmpReport getCmpReport(String dataKey,
- Integer userId) {
-		return reportDao.getCmpReport(dataKey, userId);
-	}
+    @Override
+    public CmpReport getCmpReport(String dataKey, Integer userId) {
+	return reportDao.getCmpReport(dataKey, userId);
+    }
 
-	@Override
-	public void deleteCmpReport(String dataKey, Integer userId) {
-		reportDao.deleteCmpReport(dataKey, userId);
-	}
+    @Override
+    public void deleteCmpReport(String dataKey, Integer userId) {
+	reportDao.deleteCmpReport(dataKey, userId);
+    }
 
-	@Override
-	public CmpReport getSimpleCmp(String dataKey, Integer userId) {
-		return reportDao.getCmpReport(dataKey, userId);
-	}
+    @Override
+    public CmpReport getSimpleCmp(String dataKey, Integer userId) {
+	return reportDao.getCmpReport(dataKey, userId);
+    }
 
 }

@@ -14,42 +14,42 @@ import com.mongodb.Mongo;
  * @version Revision: 1.0
  */
 public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
-		ReportDAO {
-	public ReportDAOImpl(Mongo mongo, Morphia morphia, String dbName) {
-		super(mongo, morphia, dbName);
-	}
+	ReportDAO {
+    public ReportDAOImpl(Mongo mongo, Morphia morphia, String dbName) {
+	super(mongo, morphia, dbName);
+    }
 
-	@Override
-	public void saveCmpReport(CmpReport cmpReport) {
-		ds.save(cmpReport);
-	}
+    @Override
+    public void saveCmpReport(CmpReport cmpReport) {
+	ds.save(cmpReport);
+    }
 
-	@Override
-	public void editCmpFilling(Object id, CmpFilling cmpFill) {
-		ds.update(
-				ds.createQuery(CmpReport.class).filter("_id", id),
-				ds.createUpdateOperations(CmpReport.class).set("cmpFilling",
-						cmpFill));
-	}
+    @Override
+    public void editCmpFilling(Object id, CmpFilling cmpFill) {
+	ds.update(
+		ds.createQuery(CmpReport.class).filter("_id", id),
+		ds.createUpdateOperations(CmpReport.class).set("cmpFilling",
+			cmpFill));
+    }
 
-	@Override
-	public CmpReport getCmpReport(String dataKey, Integer userId) {
-		return ds.createQuery(CmpReport.class).filter("dataKey", dataKey)
-				.filter("userId", userId).get();
-	}
+    @Override
+    public CmpReport getCmpReport(String dataKey, Integer userId) {
+	return ds.createQuery(CmpReport.class).filter("dataKey", dataKey)
+		.filter("userId", userId).get();
+    }
 
-	@Override
-	public void deleteCmpReport(String dataKey, Integer userId) {
-		ds.delete(ds.find(CmpReport.class).filter("dataKey", dataKey)
-				.filter("userId", userId));
-	}
+    @Override
+    public void deleteCmpReport(String dataKey, Integer userId) {
+	ds.delete(ds.find(CmpReport.class).filter("dataKey", dataKey)
+		.filter("userId", userId));
+    }
 
-	@Override
-	public CmpReport getSimpleCmp(String dataKey, Integer userId) {
-		return ds
-				.createQuery(CmpReport.class)
-				.retrievedFields(false, "createDate", "company", "user",
-						"geneDetectionDetail", "cmpFilling").get();
-	}
+    @Override
+    public CmpReport getSimpleCmp(String dataKey, Integer userId) {
+	return ds
+		.createQuery(CmpReport.class)
+		.retrievedFields(false, "createDate", "company", "user",
+			"geneDetectionDetail", "cmpFilling").get();
+    }
 
 }

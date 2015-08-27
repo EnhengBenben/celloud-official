@@ -32,7 +32,6 @@ public interface ReportDAO {
      */
     public void editCmpFilling(Object id, CmpFilling cmpFill);
 
-<<<<<<< Updated upstream
     /**
      * 获取CMP报告内容
      * 
@@ -49,24 +48,6 @@ public interface ReportDAO {
      * @param userId
      * @return
      */
-=======
-	/**
-	 * 获取CMP报告内容
-	 * 
-	 * @param reportId
-	 *            mysql中的报告id
-	 * @return
-	 */
-    public CmpReport getCmpReport(String dataKey, Integer proId);
-
-	/**
-	 * 获取CMP简要信息内容
-	 * 
-	 * @param dataKey
-	 * @param userId
-	 * @return
-	 */
->>>>>>> Stashed changes
     public CmpReport getSimpleCmp(String dataKey, Integer proId);
 
     /**

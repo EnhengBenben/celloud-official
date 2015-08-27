@@ -32,7 +32,6 @@ public interface ReportService {
      */
     public void editCmpFilling(Object id, CmpFilling cmpFill);
 
-<<<<<<< Updated upstream
     /**
      * 获取CMP报告内容
      * 
@@ -50,25 +49,6 @@ public interface ReportService {
      * @return
      */
     public CmpReport getSimpleCmp(String dataKey, Integer userId);
-=======
-	/**
-	 * 获取CMP报告内容
-	 * 
-	 * @param dataKey
-	 * @param userId
-	 * @return
-	 */
-    public CmpReport getCmpReport(String dataKey, Integer userId, Integer appId);
-
-	/**
-	 * 获取CMP简要信息内容
-	 * 
-	 * @param dataKey
-	 * @param userId
-	 * @return
-	 */
-    public CmpReport getSimpleCmp(String dataKey, Integer userId, Integer appId);
->>>>>>> Stashed changes
 
     /**
      * 获取pgs报告内容
