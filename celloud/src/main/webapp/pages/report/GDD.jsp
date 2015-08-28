@@ -12,7 +12,6 @@
 		)
 		</span>
 		<div class="toolbar">
-			<a href="javascript:printSimpCMP(${cmpReport.projectId },${cmpReport.dataKey },${cmpReport.userId },${cmpReport.appId })" class="btn btn-default"><i class="i-print"></i>打印临床报告</a>
 			<a href="javascript:printCMP(${cmpReport.projectId },${cmpReport.dataKey },${cmpReport.userId },${cmpReport.appId })" class="btn btn-default"><i class="i-print"></i>打印GDD报告</a>
 		</div>
 	</div>

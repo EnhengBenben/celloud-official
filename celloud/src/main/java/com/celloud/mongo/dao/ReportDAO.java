@@ -2,9 +2,9 @@
 package com.celloud.mongo.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import com.celloud.mongo.sdo.CmpFilling;
+import com.celloud.mongo.sdo.CmpGeneSnpResult;
 import com.celloud.mongo.sdo.CmpReport;
 import com.celloud.mongo.sdo.PGSFilling;
 import com.celloud.mongo.sdo.Pgs;
@@ -52,13 +52,14 @@ public interface ReportDAO {
     public CmpReport getSimpleCmp(String dataKey, Integer proId, Integer appId);
 
     /**
+     * 获取GDD总表检测突变数统计
      * 
      * @param dataKey
      * @param proId
      * @param appId
      * @return
      */
-    public Map<String, String> getGddResult(String dataKey, Integer proId,
+    public List<CmpGeneSnpResult> getGddResult(String dataKey, Integer proId,
 	    Integer appId);
 
     /**

@@ -4,6 +4,7 @@ package com.celloud.mongo.service;
 import java.util.List;
 
 import com.celloud.mongo.sdo.CmpFilling;
+import com.celloud.mongo.sdo.CmpGeneSnpResult;
 import com.celloud.mongo.sdo.CmpReport;
 import com.celloud.mongo.sdo.PGSFilling;
 import com.celloud.mongo.sdo.Pgs;
@@ -49,6 +50,17 @@ public interface ReportService {
      * @return
      */
     public CmpReport getSimpleCmp(String dataKey, Integer userId, Integer appId);
+
+    /**
+     * 获取GDD总表检测突变数统计
+     * 
+     * @param dataKey
+     * @param proId
+     * @param appId
+     * @return
+     */
+    public List<CmpGeneSnpResult> getGddResult(String dataKey, Integer proId,
+	    Integer appId);
 
     /**
      * 获取pgs报告内容

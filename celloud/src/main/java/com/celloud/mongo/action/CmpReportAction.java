@@ -13,6 +13,7 @@ import org.apache.struts2.convention.annotation.Results;
 import org.bson.types.ObjectId;
 
 import com.celloud.mongo.sdo.CmpFilling;
+import com.celloud.mongo.sdo.CmpGeneSnpResult;
 import com.celloud.mongo.sdo.CmpReport;
 import com.celloud.mongo.sdo.DrugResistanceSite;
 import com.celloud.mongo.sdo.RecommendDrug;
@@ -44,6 +45,7 @@ public class CmpReportAction extends BaseAction {
     private CmpReport cmpReport;
     private String infos;
     private String cmpId;
+    private List<CmpGeneSnpResult> gsrList;
 
     public void updateFill() {
 	if (infos != null) {
@@ -115,6 +117,8 @@ public class CmpReportAction extends BaseAction {
 	if (cmpReport.getAppId() == 112) {
 	    log.info("celloud-用户" + super.session.get("userId") + "准备打印"
 		    + cmpReport.getAppName() + "总表报告");
+	    gsrList = reportService.getGddResult(cmpReport.getDataKey(),
+		    cmpReport.getProjectId(), cmpReport.getAppId());
 	    return "toPrintGddReport";
 	}
 	log.info("celloud-用户" + super.session.get("userId") + "准备打印"
@@ -159,6 +163,14 @@ public class CmpReportAction extends BaseAction {
 
     public void setCmpId(String cmpId) {
 	this.cmpId = cmpId;
+    }
+
+    public List<CmpGeneSnpResult> getGsrList() {
+	return gsrList;
+    }
+
+    public void setGsrList(List<CmpGeneSnpResult> gsrList) {
+	this.gsrList = gsrList;
     }
 
 }

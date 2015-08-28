@@ -1,6 +1,8 @@
 package com.celloud.mongo.dao;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +14,6 @@ import com.celloud.mongo.sdo.PGSFilling;
 import com.celloud.mongo.sdo.Pgs;
 import com.google.code.morphia.Morphia;
 import com.google.code.morphia.dao.BasicDAO;
-import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
 
 /**
@@ -57,9 +58,9 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
     }
 
     @Override
-    public Map<String, String> getGddResult(String dataKey, Integer proId,
+    public List<CmpGeneSnpResult> getGddResult(String dataKey, Integer proId,
 	    Integer appId) {
-	Map<String, String> map = new HashMap<String, String>();
+	List<CmpGeneSnpResult> resultList = new ArrayList<CmpGeneSnpResult>();
 	CmpReport cr = ds.createQuery(CmpReport.class)
 		.retrievedFields(true, "geneDetectionDetail")
 		.filter("dataKey", dataKey).filter("projectId", proId)
@@ -70,12 +71,48 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 	    CmpGeneDetectionDetail gdd = map_gene.get("all");
 	    if (gdd != null) {
 		List<CmpGeneSnpResult> list = gdd.getResult();
+		List<CmpGeneSnpResult> list_tmp = new ArrayList<CmpGeneSnpResult>();
+		for (CmpGeneSnpResult gsr : list) {
+		    CmpGeneSnpResult gsr_tmp = new CmpGeneSnpResult();
+		    gsr_tmp.setDiseaseType(gsr.getDiseaseType());
+		    gsr_tmp.setDiseaseName(gsr.getDiseaseName());
+		    gsr_tmp.setDiseaseEngName(gsr.getDiseaseEngName());
+		    gsr_tmp.setGene(gsr.getGene());
+		    list_tmp.add(gsr_tmp);
+		}
+		for (int i = 0; i < list_tmp.size() - 1; i++) {
+		    int num = 1;
+		    for (int j = list_tmp.size() - 1; j > i; j--) {
+			if (list_tmp.get(j).getDiseaseEngName()
+				.equals(list_tmp.get(i).getDiseaseEngName())
+				&& list_tmp.get(j).getGene()
+					.equals(list_tmp.get(i).getGene())) {
+			    list_tmp.remove(j);
+			    num++;
+			}
+		    }
+		    CmpGeneSnpResult gsr_tmp = new CmpGeneSnpResult();
+		    gsr_tmp.setDiseaseType(list_tmp.get(i).getDiseaseType());
+		    gsr_tmp.setDiseaseName(list_tmp.get(i).getDiseaseName());
+		    gsr_tmp.setDiseaseEngName(list_tmp.get(i)
+			    .getDiseaseEngName());
+		    gsr_tmp.setGene(list_tmp.get(i).getGene());
+		    gsr_tmp.setMutNum(num);
+		    resultList.add(gsr_tmp);
+		}
+		// 将结果根据疾病类型排序
+		Collections.sort(resultList,
+			new Comparator<CmpGeneSnpResult>() {
+			    @Override
+			    public int compare(CmpGeneSnpResult gsr1,
+				    CmpGeneSnpResult gsr2) {
+				return gsr1.getDiseaseType().compareTo(
+					gsr2.getDiseaseType());
+			    }
+			});
 	    }
 	}
-	DBCollection collection = ds.getCollection(CmpReport.class);
-	// collection.aggregate(firstOp, additionalOps)
-
-	return map;
+	return resultList;
     }
 
     @Override
@@ -98,4 +135,5 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 			.filter("appId", appId).filter("dataKey", dataKey), ds
 			.createUpdateOperations(Pgs.class).set("fill", pgs));
     }
+
 }

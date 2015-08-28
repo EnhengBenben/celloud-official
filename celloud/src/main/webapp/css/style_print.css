@@ -374,7 +374,8 @@ textarea {width: 800px;	}
 .left{margin-left: 70px;}
 .totop{	padding-top: 20px;}
 .w3cbbs { page-break-after:always;}
-.imgmiss{font-size: 12px; width: 100px; border: 1px solid; padding: 20px 10px 20px 10px; margin-top: 13px; margin-right: 15px; height: 70px; float: left; border-color: black; color: #CC0000;}
+.imgmiss{font-size: 12px; width: 98px; border: 1px solid; padding: 20px 10px 20px 10px; margin-top: 13px; margin-right: 15px; height: 70px; border-color: black; color: #CC0000;display: inline-block;vertical-align: top;}
+.imgmissprint{width: 90px;padding: 20px 0px 0px 10px;height: 65px;}
 .annotation{text-indent: -2em; padding-left: 1.9em;font-size:12px;line-height:1.3em;padding-top:3px}
 .clearCss_3 h2{font-weight: normal;font-size:12px;}
 .clearCss_3{}

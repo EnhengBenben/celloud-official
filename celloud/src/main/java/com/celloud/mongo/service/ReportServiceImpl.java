@@ -5,6 +5,7 @@ import java.util.List;
 import com.celloud.mongo.core.SystemContext;
 import com.celloud.mongo.dao.ReportDAO;
 import com.celloud.mongo.sdo.CmpFilling;
+import com.celloud.mongo.sdo.CmpGeneSnpResult;
 import com.celloud.mongo.sdo.CmpReport;
 import com.celloud.mongo.sdo.PGSFilling;
 import com.celloud.mongo.sdo.Pgs;
@@ -52,6 +53,12 @@ public class ReportServiceImpl implements ReportService {
     public void editPGSFilling(int userId, int appId, String dataKey,
 	    PGSFilling pgs) {
 	reportDao.editPGSFilling(userId, appId, dataKey, pgs);
+    }
+
+    @Override
+    public List<CmpGeneSnpResult> getGddResult(String dataKey, Integer proId,
+	    Integer appId) {
+	return reportDao.getGddResult(dataKey, proId, appId);
     }
 
 }

@@ -1305,7 +1305,8 @@ function toPrintHBV(pagePath,flag){
 		if(imgHtml!=""){
 			imgHtml = imgHtml.substring(0,imgHtml.length-1);
 		}
-		var printDiv0 = $("#resultDiv").html();
+		var printDiv0 = $("#resultDiv").html().trim();
+		printDiv0 = printDiv0.replace(/<br>/g,"\n").trim();
 		var printDiv1 = $("#printDiv1").html().replace(new RegExp('style="padding-left: 30px;"',"gm"),'').replace(' height="170px;" width="150px;"',"").replace(new RegExp('<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal(\'helpModal\',0,1)"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>',"gm"),'');
 		var printDiv2 = $("#printDiv2").html();
 		var printDiv3 = "";

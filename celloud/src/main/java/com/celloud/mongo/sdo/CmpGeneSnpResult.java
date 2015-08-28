@@ -1,5 +1,7 @@
 package com.celloud.mongo.sdo;
 
+import com.google.code.morphia.annotations.NotSaved;
+
 /**
  * 基因snp检测详细结果（对应CMP报告第五部分中表格内容）
  * 
@@ -18,6 +20,8 @@ public class CmpGeneSnpResult {
     private String diseaseEngName;
     private String diseaseName;
     private String diseaseType;
+    @NotSaved
+    private Integer mutNum;
 
     public String getGene() {
 	return gene;
@@ -97,5 +101,13 @@ public class CmpGeneSnpResult {
 
     public void setDiseaseType(String diseaseType) {
 	this.diseaseType = diseaseType;
+    }
+
+    public Integer getMutNum() {
+	return mutNum;
+    }
+
+    public void setMutNum(Integer mutNum) {
+	this.mutNum = mutNum;
     }
 }

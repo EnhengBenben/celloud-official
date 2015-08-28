@@ -6,9 +6,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>报告打印</title>
-<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.9">
+<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.11">
 </head>
 <body>
+	<div>
+		<c:if test="${empty pageTxt}">
+			<input type="hidden" value="1" id="isSaved"/>
+		</c:if>
+		<c:if test="${not empty pageTxt}">
+			<input type="hidden" value="0" id="isSaved"/>
+		</c:if>
+	</div>
 	<div id="printMain">
 		<c:if test="${empty pageTxt}">
 			<div style="display: none;" id="_userId">${userId }</div>
@@ -103,7 +111,9 @@
 								<div class="container" style="display: none;"></div>
 						   	</div>
 					        <h2 class="mt10">四、参考结论（根据已发表文献得出以下参考结论）：</h2>
-					        <div class="m-box_1">${result }</div>
+					        <div class="m-box_1" id="des">
+								<textarea rows="6">${result }</textarea>
+					        </div>
 						   	<h2 class="mt10">五、测序序列结果：</h2>
 						   	<p style="word-break: break-all;" class="m-box_1">${seq }</p>
 						   	<div id="moreDiv">
@@ -144,7 +154,12 @@ function preview(obj){
 	var inputVal;
 	$("body").find("input[type='text']").each(function(){
 		inputVal = $(this).val();
-		$(this).parent().html("<span name='print'>"+inputVal+"</span>");
+		var cl = $(this).attr("class"); 
+		if(cl){
+			$(this).parent().html("突变型:<span name='print' class='"+cl+"'>"+inputVal+"</span>");
+		}else{
+			$(this).parent().html("<span name='print'>"+inputVal+"</span>");
+		}
 	});
 	var sex = $("input[type='radio']:checked").val();
 	$("#_sex").html(sex);
@@ -155,7 +170,19 @@ function preview(obj){
 	if(_flag==1){
 		$("h1").css("padding","0 0 5px 0");
 	}
+	inputVal = $("#des").children().val();
+	if(inputVal){
+		inputVal = inputVal.replace(/\n/g,"<br>");
+		$("#des").html(inputVal);
+	}
+	$(".imgmiss").addClass("imgmissprint");
 	window.print();
+	$(".imgmiss").removeClass("imgmissprint");
+	inputVal = $("#des").html();
+	if(inputVal){
+		inputVal = inputVal.replace(/<br>/g,"\n");
+		$("#des").html("<textarea rows=\"6\">"+inputVal+"</textarea>");
+	}
 	if(_flag==1){
 		$("h1").css("padding","40px 0 5px 0");
 	}
@@ -164,7 +191,12 @@ function preview(obj){
 	$("a[name='change']").show();
 	$("body").find("span[name='print']").each(function(){
 		inputVal = $(this).html();
-		$(this).parent().html("<input type='text' value='"+inputVal+"'>");
+		var cl = $(this).attr("class");
+		if(cl){
+			$(this).parent().html("突变型:<input type='text' class='"+cl+"' value='"+inputVal+"'>");
+		}else{
+			$(this).parent().html("<input type='text' value='"+inputVal+"'>");
+		}
 	});
 	$("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
 	$("input[type='radio'][value="+sex+"]").attr("checked",true); 
@@ -179,6 +211,7 @@ function deleteLi(obj){
 	$(obj).parent().remove();
 }
 $(document).ready(function(){
+	$("div[title='帮助']").remove();
 	var num = 0;
 	$("#otherPng").find("img").each(function(){
 		num++;
@@ -207,6 +240,18 @@ $(document).ready(function(){
 	});
 	$(".table").find("td").each(function(){
 		$(this).css("vertical-align","middle");
+		var isSaved = $("#isSaved").val();
+		if(isSaved==1){
+			var text= $(this).text();
+			if(text.indexOf('突变型:')>=0){
+				var cl = $(this).attr("class");
+				if(cl){
+					$(this).html("突变型:<input type='text' class='"+cl+" havebefore' value='"+text.replace('突变型:','')+"'/>");
+				}else{
+					$(this).html("突变型:<input type='text' class='havebefore' value='"+text.replace('突变型:','')+"'/>");
+				}
+			}
+		}
 	});
 	$(".snpLeft").each(function(){
 		$(this).css("text-align","center");
@@ -219,6 +264,8 @@ function savePage(){
 	$("body").find("input").each(function(){
 		$(this).attr("value",$(this).val());
 	});
+	inputVal = $("#des").children().val();
+	$("#des").children().html(inputVal);
 	var url = "http://www.celloud.org/";
 	$.post(url+"updateContext",{"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":$("#printMain").html()},function(result){
 		if(result==1){

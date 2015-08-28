@@ -16,6 +16,7 @@
 <input type="hidden" name="cmpId" id="cmpId" value="${cmpReport.id }">
 <input type="hidden" name="cmpReport.dataKey" value="${cmpReport.dataKey }">
 <input type="hidden" name="cmpReport.userId" value="${cmpReport.userId }">
+<input type="hidden" name="cmpReport.projectId" value="${cmpReport.projectId" }">
 <input type="hidden" name="infos" id="infos">
   <section class="section0 border1 w3cbbs">
 	<div class="header">
@@ -69,21 +70,35 @@
         </tr>	
       </thead>
       <tbody>
-     	  <c:forEach items="${cmpReport.geneDetectionDetail.all.result}" var="r" varStatus="size">
-  			<c:choose>
-  				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-  					<tr><td colspan="5">没有发现突变位点</td></tr>
-  				</c:when>
-  				<c:otherwise>
-  				  <tr>
-		        	<td>${r.diseaseType }</td>
-		        	<td>${r.diseaseEngName }</td>
-		        	<td>${r.diseaseName }</td>
-		        	<td>${r.gene }</td>
-		        	<td>${r.depth }</td>
-		          </tr>
-        		</c:otherwise>
-        	</c:choose>
+          <c:set var="tempCount" value="0"></c:set><%--临时变量 --%>  
+          <c:set var="rowspanCount" value="0"></c:set><%--记录合并列数 --%>  
+          <c:set var="tempFrist" value="0"></c:set><%--记录合并开始位置 --%>  
+          <c:set var="tempEnd" value="-1"></c:set><%--记录合并结束位置 --%>  
+          <c:forEach items="${gsrList}" var="accountConfig" varStatus="status" >  
+             <tr>  
+                 <%--利用一个结果集List<Bean>来生成，数据过多会加重客户断负担 --%>  
+                 <c:if test="${status.index>=tempEnd}">  
+                     <c:set var="rowspanCount" value="0"></c:set><%--清楚历史数据 --%>  
+                     <c:forEach var="item2" items="${gsrList}" varStatus="status2">  
+                             <%-- tablename指要合并的属性 --%>  
+                         <c:if test="${accountConfig.diseaseType==item2.diseaseType}">  
+                             <c:set var="tempFrist" value="${status.index }"></c:set>  
+                             <c:set var="rowspanCount" value="${rowspanCount+1 }"></c:set>  
+                             <c:set var="tempEnd" value="${tempFrist+rowspanCount }"></c:set>  
+                         </c:if>  
+                     </c:forEach>  
+                 </c:if>  
+                 <c:if test="${status.index==tempFrist}">  
+                 	<td rowspan="${rowspanCount}" style="text-align:center;vertical-align: middle;">  
+                         <%-- tablename指要合并的属性 --%>  
+                         ${accountConfig.diseaseType}   
+                 	</td>
+                 </c:if>
+                 <td>${accountConfig.diseaseEngName }</td>
+	        	 <td>${accountConfig.diseaseName }</td>
+	        	 <td>${accountConfig.gene }</td>
+	        	 <td>${accountConfig.mutNum }</td>    
+             </tr>
           </c:forEach>
       </tbody>
     </table>
@@ -1074,6 +1089,7 @@
   			$("#noDrug").css("display","");
   		}
   		$("a").css("display","none");
+  		saveFillCmp();
   		window.print();
   		$("#change").show();
   		$("body").find("section").each(function(){
@@ -1087,6 +1103,14 @@
   		$("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
   		$("input[type='radio'][value="+sex+"]").attr("checked",true); 
   		$("a").css("display","");
+  	}
+  	function saveFillCmp(){
+  		var resistanceSiteSum = "";
+  		var personalizedMedicine = "";
+  		var recommendDrug = "";
+  		var age = parseInt($("#patientAge").val());
+  		$("#patientAge").val(age);
+  		$.get("cmpReport!updateFill",$("#form").serialize());
   	}
   </script>
 </body>
