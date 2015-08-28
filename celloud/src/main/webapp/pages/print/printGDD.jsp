@@ -16,8 +16,6 @@
 <input type="hidden" name="cmpId" id="cmpId" value="${cmpReport.id }">
 <input type="hidden" name="cmpReport.dataKey" value="${cmpReport.dataKey }">
 <input type="hidden" name="cmpReport.userId" value="${cmpReport.userId }">
-<input type="hidden" name="cmpReport.projectId" value="${cmpReport.projectId" }">
-<input type="hidden" name="infos" id="infos">
   <section class="section0 border1 w3cbbs">
 	<div class="header">
 		<img src="<%=request.getContextPath()%>/images/report/yanda_print.png">
@@ -100,6 +98,22 @@
 	        	 <td>${accountConfig.mutNum }</td>    
              </tr>
           </c:forEach>
+<%--           <c:forEach items="${cmpReport.geneDetectionDetail.all.result}" var="r" varStatus="size"> --%>
+<%--   			<c:choose> --%>
+<%--   				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}"> --%>
+<!--   					<tr><td colspan="5">没有发现突变位点</td></tr> -->
+<%--   				</c:when> --%>
+<%--   				<c:otherwise> --%>
+<!--   				  <tr> -->
+<%-- 		        	<td>${r.diseaseType }</td> --%>
+<%-- 		        	<td>${r.diseaseEngName }</td> --%>
+<%-- 		        	<td>${r.diseaseName }</td> --%>
+<%-- 		        	<td>${r.gene }</td> --%>
+<%-- 		        	<td>${r.depth }</td> --%>
+<!-- 		          </tr> -->
+<%--         		</c:otherwise> --%>
+<%--         	</c:choose> --%>
+<%--           </c:forEach> --%>
       </tbody>
     </table>
   </section>
@@ -378,7 +392,7 @@
       </thead>
       <tbody>
     	<tr>
-			<td>Carnitine uptake defect </td><td>肉毒碱摄取缺陷</td><td>CUD </td><td>&nbsp;</td>
+			<td>Carnitine uptake defect </td><td>肉毒碱摄取缺陷</td><td>CUD </td><td>SLC22A5</td>
 		</tr>	
 		<tr>
 			<td>Long-chain 3-hydroxyacyl-CoA dehydrogenase deficiency</td><td>长链3-羟基酰基辅酶A缺乏</td><td>LCHAD </td><td>HADHA</td>
@@ -414,7 +428,7 @@
 			<td>Methylmalonic acidaemia</td><td>甲基丙酸血症</td><td>MUT </td><td>MMAA</td>
 		</tr>	
 		<tr>
-			<td>Propionic acidemia </td><td>丙酸血症</td><td>PROP </td><td></td>
+			<td>Propionic acidemia </td><td>丙酸血症</td><td>PROP </td><td>PCCA/B</td>
 		</tr>	
 		<tr>
 			<td>Holocarboxylase synthetase deficiency</td><td>全羟化酶合成酶缺乏症</td><td>MCD </td><td>HLCS</td>
@@ -432,46 +446,46 @@
 			<td>Maple syrup urine disease</td><td>枫糖尿病</td><td>MSUD </td><td>DBT</td>
 		</tr>	
 		<tr>
-			<td>Classic phenylketonuria </td><td></td><td>PKU </td><td></td>
+			<td>Classic phenylketonuria </td><td></td><td>PKU </td><td>PAH</td>
 		</tr>	
 		<tr>
 			<td>Tyrosinaemia 1</td><td>高酪氨酸血症1型</td><td>TYR I </td><td>FAH</td>
 		</tr>	
 		<tr>
-			<td>Primary congenital hypothyroidism </td><td></td><td>CH </td><td></td>
+			<td>Primary congenital hypothyroidism </td><td></td><td>CH </td><td>7 genes</td>
 		</tr>	
 		<tr>
-			<td>Congenital adrenal hyperplasia </td><td></td><td>CAH </td><td></td>
+			<td>Congenital adrenal hyperplasia </td><td></td><td>CAH </td><td>CYP21A2</td>
 		</tr>	
 		<tr>
-			<td>Sickle cell anemia </td><td></td><td>Hb SS </td><td></td>
+			<td>Sickle cell anemia </td><td></td><td>Hb SS </td><td>HBB</td>
 		</tr>	
 		<tr>
-			<td>S, Beta-thalassemia </td><td></td><td>Hb S/ßTh </td><td></td>
+			<td>S, Beta-thalassemia </td><td></td><td>Hb S/ßTh </td><td>HBB</td>
 		</tr>	
 		<tr>
-			<td>S, C disease </td><td></td><td>Hb S/C </td><td></td>
+			<td>S, C disease </td><td></td><td>Hb S/C </td><td>HBB</td>
 		</tr>	
 		<tr>
 			<td>Biotinidase deficiency</td><td>生物素酶缺乏症</td><td>BIOT </td><td>BTD</td>
 		</tr>	
 		<tr>
-			<td>Classic galactosemia </td><td></td><td>GALT </td><td></td>
+			<td>Classic galactosemia </td><td></td><td>GALT </td><td>GALT</td>
 		</tr>	
 		<tr>
-			<td>Cystic fibrosis </td><td></td><td>CF </td><td></td>
+			<td>Cystic fibrosis </td><td></td><td>CF </td><td>CFTR</td>
 		</tr>	
 		<tr>
-			<td>Critical congenital heart disease</td><td></td><td>CCHD</td><td></td>
+			<td>Critical congenital heart disease</td><td></td><td>CCHD</td><td>13 genes</td>
 		</tr>	
 		<tr>
-			<td>Severe combined immunodeficiency</td><td></td><td>SCID</td><td></td>
+			<td>Severe combined immunodeficiency</td><td></td><td>SCID</td><td>IL2RG</td>
 		</tr>	
 		<tr>
-			<td>Hearing loss </td><td></td><td>HEAR </td><td></td>
+			<td>Hearing loss </td><td></td><td>HEAR </td><td>34 genes</td>
 		</tr>	
 		<tr>
-			<td>Carnitine acylcarnitine translocase deficiency </td><td></td><td>CACT </td><td></td>
+			<td>Carnitine acylcarnitine translocase deficiency </td><td></td><td>CACT </td><td>CAC</td>
 		</tr>	
 		<tr>
 			<td>Carnitine palmitoyltransferase 1 deficiency</td><td>肉碱棕榈酰转移酶1缺乏</td><td>CPT-IA</td><td>CPT1A</td>
@@ -480,7 +494,7 @@
 			<td>Carnitine palmitoyltransferase 2 deficiency</td><td>肉碱棕榈酰转移酶Ⅱ缺乏症</td><td>CPT-II </td><td>CPT2</td>
 		</tr>	
 		<tr>
-			<td>2,4 Dienoyl-CoA reductase deficiency </td><td></td><td>DE RED </td><td></td>
+			<td>2,4 Dienoyl-CoA reductase deficiency </td><td></td><td>DE RED </td><td>DECR1</td>
 		</tr>	
 		<tr>
 			<td>Glutaricacidaemia 2</td><td>Ⅱ型戊二酸血症</td><td>GA-2 </td><td>ETFDH</td>
@@ -495,10 +509,10 @@
 			<td>Short-chain 3-hydroxyacyl-CoA dehydrogenase deficiency</td><td>短链3-羟基乙酰辅酶A脱氢酶缺乏</td><td>SCAD </td><td>HADH</td>
 		</tr>	
 		<tr>
-			<td>2-Methyl-3-hydroxybutyric acidemia </td><td></td><td>2M3HBA </td><td></td>
+			<td>2-Methyl-3-hydroxybutyric acidemia </td><td></td><td>2M3HBA </td><td>HSD17B10</td>
 		</tr>	
 		<tr>
-			<td>2-Methylbutyrylglycinuria </td><td></td><td>2MBG </td><td></td>
+			<td>2-Methylbutyrylglycinuria </td><td></td><td>2MBG </td><td>SBCAD</td>
 		</tr>	
 		<tr>
 			<td>3-Methylglutaconic aciduria </td><td>3-甲基戊烯二酸尿症1型</td><td>3MGA </td><td>AUH</td>
@@ -507,10 +521,10 @@
 			<td>Methylmalonic aciduria & homocystinuria, cblC type</td><td>甲基丙酸血症，高胱氨酸尿</td><td>Cbl-C, D</td><td>MMACHC</td>
 		</tr>	
 		<tr>
-			<td>Isobutyrylglycinuria </td><td></td><td>IBG </td><td></td>
+			<td>Isobutyrylglycinuria </td><td></td><td>IBG </td><td>IBD</td>
 		</tr>	
 		<tr>
-			<td>Malonic acidemia </td><td></td><td>MAL </td><td></td>
+			<td>Malonic acidemia </td><td></td><td>MAL </td><td>MLYCD</td>
 		</tr>	
 		<tr>
 			<td>Argininaemia</td><td>先天性精氨酸代谢失常</td><td>ARG </td><td>ARG1</td>
@@ -525,19 +539,19 @@
 			<td>Citrullinaemia</td><td>瓜氨酸血症</td><td>CIT II </td><td>ASS1</td>
 		</tr>	
 		<tr>
-			<td>Benign hyperphenylalaninemia </td><td></td><td>H-PHE </td><td></td>
+			<td>Benign hyperphenylalaninemia </td><td></td><td>H-PHE </td><td>PAH</td>
 		</tr>	
 		<tr>
 			<td>Hypermethioninaemia</td><td>高甲硫氨酸尿症</td><td>MET </td><td>ADK</td>
 		</tr>	
 		<tr>
-			<td>Tyrosinemia, type II </td><td></td><td>TYR II </td><td></td>
+			<td>Tyrosinemia, type II </td><td></td><td>TYR II </td><td>TAT</td>
 		</tr>	
 		<tr>
 			<td>Tyrosinaemia 3</td><td>高酪氨酸血症3型</td><td>TYR III </td><td>HPD</td>
 		</tr>	
 		<tr>
-			<td>Galactoepimerase deficiency </td><td></td><td>GALE </td><td></td>
+			<td>Galactoepimerase deficiency </td><td></td><td>GALE </td><td>GALE</td>
 		</tr>	
 		<tr>
 			<td>Galactokinase deficiency</td><td>半乳糖血症，半乳糖酶缺乏症</td><td>GALK </td><td>GALK1</td>
@@ -1071,6 +1085,7 @@
   <script language="javascript" src="<%=request.getContextPath()%>/plugins/jquery-1.8.3.min.js"></script>
   <script>
   	function preview(obj){
+  		saveFillCmp();
   		var inputVal;
   		var textareaVal;
   		var classname;
@@ -1089,7 +1104,6 @@
   			$("#noDrug").css("display","");
   		}
   		$("a").css("display","none");
-  		saveFillCmp();
   		window.print();
   		$("#change").show();
   		$("body").find("section").each(function(){
@@ -1105,9 +1119,6 @@
   		$("a").css("display","");
   	}
   	function saveFillCmp(){
-  		var resistanceSiteSum = "";
-  		var personalizedMedicine = "";
-  		var recommendDrug = "";
   		var age = parseInt($("#patientAge").val());
   		$("#patientAge").val(age);
   		$.get("cmpReport!updateFill",$("#form").serialize());

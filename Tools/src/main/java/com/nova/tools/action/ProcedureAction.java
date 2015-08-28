@@ -1,7 +1,11 @@
 package com.nova.tools.action;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -16,6 +20,9 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
+import com.celloud.mongo.sdo.GddDiseaseDict;
+import com.celloud.mongo.service.ReportService;
+import com.celloud.mongo.service.ReportServiceImpl;
 import com.nova.tools.constant.AppNameIDConstant;
 import com.nova.tools.itext.utils.MergePdf;
 import com.nova.tools.service.ReadReportService;
@@ -144,6 +151,36 @@ public class ProcedureAction extends ActionSupport {
     private final String basePath = ServletActionContext.getServletContext()
 	    .getRealPath("/upload");
 
+    public String saveGddDisease() {
+	File file = new File("/share/data/spark-15824.txt");
+	BufferedReader reader;
+	try {
+	    reader = new BufferedReader(new InputStreamReader(
+		    new FileInputStream(file), "gbk"));
+	    String tmpStr = null;
+	    ReportService rService = new ReportServiceImpl();
+	    int i = 0;
+	    while ((tmpStr = reader.readLine()) != null) {
+		String[] tmpArry = tmpStr.split("=");
+		for (String s : tmpArry) {
+		    System.out.print(s + "---");
+		}
+		System.out.println(tmpArry.length);
+		GddDiseaseDict gddDisease = new GddDiseaseDict();
+		gddDisease.setType(tmpArry[0]);
+		gddDisease.setEngName(tmpArry[1]);
+		gddDisease.setName(tmpArry[2]);
+		gddDisease.setGene(tmpArry[3]);
+		rService.saveGddDiseaseDict(gddDisease);
+		System.out.println(i++);
+	    }
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace();
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
+	return "success";
+    }
     /**
      * 运行App
      * 

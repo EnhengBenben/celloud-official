@@ -16,7 +16,6 @@
 <input type="hidden" name="cmpId" id="cmpId" value="${cmpReport.id }">
 <input type="hidden" name="cmpReport.dataKey" value="${cmpReport.dataKey }">
 <input type="hidden" name="cmpReport.userId" value="${cmpReport.userId }">
-<input type="hidden" name="cmpReport.projectId" value="${cmpReport.projectId" }">
 <input type="hidden" name="infos" id="infos">
 <section class="section0 border1 w3cbbs">
 	<div class="header">

@@ -145,20 +145,19 @@ public class RunAppServiceImpl {
 	    String appId, String appName, String userId, String dataInfos,
 	    String company, String user, String dept) {
 	String dataListFile = formatDataKeyList(dataKeyList);
-	// String command = null;
-	// if (AppNameIDConstant.CMP.equals(appId)) {
-	// command = CMP_perl + " " + dataListFile + " " + outPath
-	// + " ProjectID" + projectId;
-	// } else if (AppNameIDConstant.CMP_199.equals(appId)) {
-	// command = CMP199_perl + " " + dataListFile + " " + outPath
-	// + " ProjectID" + projectId;
-	// } else if (AppNameIDConstant.GDD.equals(appId)) {
-	// command = GDD_perl + " " + dataListFile + " " + outPath
-	// + " ProjectID" + projectId;
-	// }
-	// GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-	// boolean state = ssh.sshSubmit();
-	boolean state = true;
+	String command = null;
+	if (AppNameIDConstant.CMP.equals(appId)) {
+	    command = CMP_perl + " " + dataListFile + " " + outPath
+		    + " ProjectID" + projectId;
+	} else if (AppNameIDConstant.CMP_199.equals(appId)) {
+	    command = CMP199_perl + " " + dataListFile + " " + outPath
+		    + " ProjectID" + projectId;
+	} else if (AppNameIDConstant.GDD.equals(appId)) {
+	    command = GDD_perl + " " + dataListFile + " " + outPath
+		    + " ProjectID" + projectId;
+	}
+	GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
+	boolean state = ssh.sshSubmit();
 	if (state) {
 	    String dataArray[] = dataKeyList.split(";");
 	    // 创建项目结果文件

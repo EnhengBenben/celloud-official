@@ -49,7 +49,6 @@ public class CmpReportAction extends BaseAction {
 
     public void updateFill() {
 	if (infos != null) {
-	    log.info("新增用户填写CMP报告部分");
 	    String[] r = infos.split("----");
 	    String[] s1 = StringUtils.splitByWholeSeparatorPreserveAllTokens(
 		    r[0], ";");
@@ -95,6 +94,9 @@ public class CmpReportAction extends BaseAction {
 	    if (rdli != null && rdli.size() > 0) {
 		cmpFill.setRecommendDrug(rdli);
 	    }
+	}
+	if (cmpFill != null) {
+	    log.info("新增用户填写报告部分");
 	    cmpReport.setId(new ObjectId(cmpId));
 	    reportService.editCmpFilling(cmpReport.getId(), cmpFill);
 	}
@@ -103,8 +105,7 @@ public class CmpReportAction extends BaseAction {
     public String toCmpReport() {
 	cmpReport = reportService.getSimpleCmp(cmpReport.getDataKey(),
 		cmpReport.getProjectId(), cmpReport.getAppId());
-	log.info("celloud-用户" + super.session.get("userId") + "查看"
-		+ cmpReport.getAppName() + "报告");
+	log.info("celloud-用户" + super.session.get("userId") + "查看CMP报告");
 	if (cmpReport.getAppId() == 112) {
 	    return "toGddReport";
 	}
@@ -115,14 +116,12 @@ public class CmpReportAction extends BaseAction {
 	cmpReport = reportService.getCmpReport(cmpReport.getDataKey(),
 		cmpReport.getProjectId(), cmpReport.getAppId());
 	if (cmpReport.getAppId() == 112) {
-	    log.info("celloud-用户" + super.session.get("userId") + "准备打印"
-		    + cmpReport.getAppName() + "总表报告");
+	    log.info("celloud-用户" + super.session.get("userId") + "准备打印GDD总表报告");
 	    gsrList = reportService.getGddResult(cmpReport.getDataKey(),
 		    cmpReport.getProjectId(), cmpReport.getAppId());
 	    return "toPrintGddReport";
 	}
-	log.info("celloud-用户" + super.session.get("userId") + "准备打印"
-		+ cmpReport.getAppName() + "详细报告");
+	log.info("celloud-用户" + super.session.get("userId") + "准备打印CMP详细报告");
 	return "toPrintDetailCmp";
     }
 
