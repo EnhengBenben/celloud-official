@@ -264,6 +264,8 @@ function savePage(){
 	$("body").find("input").each(function(){
 		$(this).attr("value",$(this).val());
 	});
+	inputVal = $("#des").children().val();
+	$("#des").children().html(inputVal);
 	var url = "http://www.celloud.org/";
 	$.post(url+"updateContext",{"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":$("#printMain").html()},function(result){
 		if(result==1){
