@@ -211,6 +211,7 @@ function deleteLi(obj){
 	$(obj).parent().remove();
 }
 $(document).ready(function(){
+	$("div[title='帮助']").remove();
 	var num = 0;
 	$("#otherPng").find("img").each(function(){
 		num++;
