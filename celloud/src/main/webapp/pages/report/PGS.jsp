@@ -103,7 +103,11 @@
 		<!--检测结果-->
 		<div class="m-box m-box-yc">
 			<h2><i class="i-edit"></i>报告
-				<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('reportModal')"><i class="i-tips"></i></div>
+				<c:if test="${pgs.appId!=85}">
+					<c:if test="${pgs.detail!=null && pgs.detail.size()>0 }">
+						<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('reportModal')"><i class="i-tips"></i></div>
+					</c:if>
+				</c:if>
 			</h2>
 			<div class="m-boxCon result" id="reportDiv">
 				<c:if test="${pgs.appId==85}">
