@@ -299,7 +299,6 @@ public class RunAppServiceImpl {
 			}
 			gdd.setAvgCoverage(avgSeqDepth);
 			gdd.setResult(result);
-			System.out.println(fstr);
 			if (fstr.equals("all.snp")) {
 			    geneDetectionDetail.put("all", gdd);
 			} else {
@@ -400,7 +399,6 @@ public class RunAppServiceImpl {
 		    cmpReport.setBasicStatistics2(basicStatistics2);
 			}
 		reportService.saveCmpReport(cmpReport);
-		System.out.println(cmpReport.getId());
 		}
 	}
     }
