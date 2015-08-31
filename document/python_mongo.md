@@ -59,4 +59,8 @@ posts.find({"author": "Mike"}).count()
 d = datetime.datetime(2015, 8, 3, 8)
 posts.find({"date": {"$lt": d}}).sort("author")
 
+#综合运用
+#仅查询projectId字段并且降序排序然后取前40条记录
+posts.find({'appId':87},{projectId:1,_id:0}).sort({'projectId':-1}).limit(40)
+
 ```
