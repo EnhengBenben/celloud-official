@@ -47,7 +47,7 @@ public class DataAction extends BaseAction {
 	public String outputData() {
 		log.info("导出" + userIds + "从" + start + "到" + end + "的数据运行状态");
 		list = dataService.getUserFileRunState(userIds, start, end);
-		fileName = new Date().getTime() + ".txt";
+		fileName = new Date().getTime() + ".xls";
 		String path = PropertiesUtil.outputPath + fileName;
 		FileTools.createFile(path);
 		StringBuffer sb = new StringBuffer( "user_id\tusername\tdata_key\tfile_name\tcreate_date\tpath\tsoft\n");
