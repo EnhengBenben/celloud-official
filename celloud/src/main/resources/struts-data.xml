@@ -616,8 +616,5 @@
 				<param name="root">typeList</param>
 			</result>
 		</action>
-		<!-- 数据运行app -->
-		<action name="runAppForData" class="com.nova.action.DataAction" method="runAppForData">
-		</action>
 	</package>
 </struts>

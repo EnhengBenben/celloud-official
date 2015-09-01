@@ -195,18 +195,6 @@ public class DataAction extends BaseAction {
     }
 
     /**
-     * 运行数据或者项目的流程APP
-     * 
-     * @return
-     */
-    public void runAppForData() {
-	RemoteRequests rr = new RemoteRequests();
-	requestUrl = PropertiesUtil.toolsPath + "Procedure!runApp" + requestUrl;
-	log.info("requestUrl:" + requestUrl);
-	rr.run(requestUrl);
-    }
-
-    /**
      * 后台文件上传获取dataKey
      * 
      * @return

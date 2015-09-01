@@ -120,35 +120,6 @@ function copyProStrainToSel(){
 	}
 }
 
-//数据运行app
-function goToRunAppForData(softwareId,dataKey,reportId,userId,softwareName){
-	//将运行按钮禁用
-	$("#a"+reportId).attr("disabled",true);
-	$("#a"+reportId).html("正在运行中，请耐心等待...");
-	$.get("updateReportStateByReportId.action",{"reportId":reportId,"state":1},function(flag){
-		if(flag==0){
-			jAlert("修改报告状态失败");
-			return;
-		}else{
-			//刷新App列表
-			var fileId = $("#dataReportHidden").val();
-			$.get("data_getSoftwareList.action",{"fileId":fileId},function(responseText){
-				$("#dataReportBody").html(responseText);
-			});
-			//获取App对应的管理员邮箱
-			$.get("getEmailBySessionUserId.action",{},function(email){
-				//获取dataKeyList
-				$.get("getFileNameByDataKey.action",{"dataKey":dataKey},function(fileName){
-					var ext = fileName.substring(fileName.lastIndexOf("."));
-					var dataList = dataKey + "," + dataKey + ext + "," + fileName + ";";
-					var newPath = "?userId=" + userId + "&appId=" + softwareId + "&projectId=" + "&appName=" + softwareName +"&email=" + email + "&dataKeyList=" + dataList;
-					$.get("runAppForData.action",{"requestUrl":newPath});
-				});
-			});
-		}
-	});
-}
-
 //数据管理-搜索框活得焦点时提示内容消失
 function hideSearchInputInfo(){
 	$("#dataTagSearch").attr("placeholder","");
