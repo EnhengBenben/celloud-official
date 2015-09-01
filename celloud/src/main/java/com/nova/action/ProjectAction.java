@@ -3,6 +3,7 @@ package com.nova.action;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,6 +29,7 @@ import com.celloud.mongo.service.ReportServiceImpl;
 import com.google.inject.Inject;
 import com.nova.email.EmailService;
 import com.nova.pager.PageList;
+import com.nova.queue.GlobalQueue;
 import com.nova.sdo.Company;
 import com.nova.sdo.Data;
 import com.nova.sdo.DataType;
@@ -119,6 +121,9 @@ public class ProjectAction extends BaseAction {
     private PageList<Project> shareProPageList;// 共享给用户的项目列表
     private List<Project> proNameList;// 用户的项目名称列表
     private int sortByType;// 排序类型 1：按项目名称排序，2：按启动时间排序
+    //TODO
+    private static final List<String> apps= Arrays.asList("85","86","87","88","91","92","93","94","95","104");
+    private static final int nodes = 20;
 
     public String toSaveRunedCmp() {
 	String source = "/share/data/webapps/Tools/upload/88/110/";
@@ -412,111 +417,150 @@ public class ProjectAction extends BaseAction {
      * 
      * @return
      */
-    public String run() {
-	log.info("----------------运行APP Begin----------");
-	// 1.新建项目
-	userId = (Integer) super.session.get("userId");
-	projectName = new Date().getTime() + "";
-	proList = projectService.getAllProNameList(userId);
-	while (existsProName(projectName)) {
-	    projectName = new Date().getTime() + "";
-	}
-	project = new Project();
-	project.setUserId(userId);
-	project.setProjectName(projectName);
-	// 根据softwareName获取对应的数据类型
-	int dataFormat = dataService.getDataById(dataIds.split(",")[0])
-		.getFileFormat();
-	project.setDataFormat(dataFormat);
-	flag = projectService.insertProject(project);
-	if (!flag) {
-	    error = 1;
-	    log.error("创建项目失败");
-	    return "RunProject";
-	}
-	// 2.根据项目名称获取项目ID
-	int proId = projectService.getProjectIdByName(projectName);
-	// 3.新增数据项目关系
-	int isError = dataService.allocateDatasToProject(dataIds, proId);
-	if (isError == 0) {
-	    error = 2;
-	    log.error("创建项目数据关系失败");
-	    return "RunProject";
-	}
-	// 4.为该项目和app添加项目报告
-	boolean hasReport = reportService.hasProReport(proId,
-		Integer.parseInt(softwareId));
-	if (!hasReport) {
-	    Report report = new Report();
-	    report.setProjectId(proId);
-	    report.setUserId(userId);
-	    report.setSoftwareId(Integer.parseInt(softwareId));
-	    report.setState(1);// 1：正在运行
-	    report.setFlag(1);// 1:项目报告
-	    reportService.addReportInfo(report);
-	}
-	// 5.根据 appIds 获取 datakeys
-	StringBuffer dataResult = new StringBuffer();
-	String[] dataIdArr = dataIds.split(",");
-	if (dataIdArr.length > 0) {
-	    for (String dataId : dataIdArr) {
-		if (StringUtils.isNotEmpty(dataId)) {
-		    Data data = dataService.getDataById(dataId);
-		    String filename = data.getFileName();
-		    String datakey = data.getDataKey();
-		    // int index = filename.lastIndexOf(".");
-		    String ext = FileTools.getExtName(filename);
-		    dataResult
-			    .append(datakey)
-			    .append(",")
-			    .append(datakey)
-			    .append(ext)
-			    .append(",")
-			    .append(filename)
-			    .append(",")
-			    .append(StringUtils.isEmpty(data.getAnotherName()) ? null
-				    : data.getAnotherName()).append(";");
+	public String run() {
+		log.info("----------------运行APP Begin----------");
+		// 1.新建项目
+		userId = (Integer) super.session.get("userId");
+		projectName = new Date().getTime() + "";
+		proList = projectService.getAllProNameList(userId);
+		while (existsProName(projectName)) {
+			projectName = new Date().getTime() + "";
 		}
-	    }
+		project = new Project();
+		project.setUserId(userId);
+		project.setProjectName(projectName);
+		// 根据softwareName获取对应的数据类型
+		int dataFormat = dataService.getDataById(dataIds.split(",")[0])
+				.getFileFormat();
+		project.setDataFormat(dataFormat);
+		flag = projectService.insertProject(project);
+		if (!flag) {
+			error = 1;
+			log.error("创建项目失败");
+			return "RunProject";
+		}
+		// 2.根据项目名称获取项目ID
+		int proId = projectService.getProjectIdByName(projectName);
+		// 3.新增数据项目关系
+		int isError = dataService.allocateDatasToProject(dataIds, proId);
+		if (isError == 0) {
+			error = 2;
+			log.error("创建项目数据关系失败");
+			return "RunProject";
+		}
+		// 4.为该项目和app添加项目报告
+		boolean hasReport = reportService.hasProReport(proId,
+				Integer.parseInt(softwareId));
+		if (!hasReport) {
+			Report report = new Report();
+			report.setProjectId(proId);
+			report.setUserId(userId);
+			report.setSoftwareId(Integer.parseInt(softwareId));
+			report.setState(1);// 1：正在运行
+			report.setFlag(1);// 1:项目报告
+			reportService.addReportInfo(report);
+		}
+		// 5.根据 appIds 获取 datakeys
+		StringBuffer dataResult = new StringBuffer();
+		String[] dataIdArr = dataIds.split(",");
+		if (dataIdArr.length > 0) {
+			for (String dataId : dataIdArr) {
+				if (StringUtils.isNotEmpty(dataId)) {
+					Data data = dataService.getDataById(dataId);
+					String filename = data.getFileName();
+					String datakey = data.getDataKey();
+					// int index = filename.lastIndexOf(".");
+					String ext = FileTools.getExtName(filename);
+					dataResult
+							.append(datakey)
+							.append(",")
+							.append(datakey)
+							.append(ext)
+							.append(",")
+							.append(filename)
+							.append(",")
+							.append(StringUtils.isEmpty(data.getAnotherName()) ? null
+									: data.getAnotherName()).append(";");
+				}
+			}
+		}
+		Map<String, List<Data>> map = new HashMap<String, List<Data>>();
+		if (Integer.parseInt(softwareId) == 110
+				|| Integer.parseInt(softwareId) == 111
+				|| Integer.parseInt(softwareId) == 112) {
+			String dataDetails = FileTools.dataListSort(dataResult.toString());
+			String dataArray[] = dataDetails.split(";");
+			for (int i = 0; i < dataArray.length; i = i + 2) {
+				String[] dataDetail = dataArray[i].split(",");
+				String[] dataDetail1 = dataArray[i + 1].split(",");
+				List<Data> dataList = dataService.getDataByDataKeys(
+						FileTools.getArray(dataDetail, 0) + ","
+								+ FileTools.getArray(dataDetail1, 0), userId);
+				map.put(FileTools.getArray(dataDetail, 0), dataList);
+			}
+		}
+		Company com = companyService.getCompanyByUserId(userId);
+		User user = userService.getUserById(userId);
+		Dept dept = deptService.getDeptByUser(userId);
+		// 6.根据用户ID获取用户邮箱
+		String email = userService.getEmailBySessionUserId(userId);
+		// 7.根据软件id获取软件名称
+		Software soft = softwareService.getSoftware(Integer
+				.parseInt(softwareId));
+		String newPath = PropertiesUtil.toolsOutPath
+				+ "Procedure!runApp?userId=" + userId + "&appId=" + softwareId
+				+ "&appName=" + soft.getSoftwareName() + "&projectName="
+				+ projectName + "&email=" + email + "&dataKeyList="
+				+ dataResult.toString() + "&projectId=" + proId + "&dataInfos="
+				+ Base64Util.encrypt(JSONObject.toJSONString(map))
+				+ "&company="
+				+ Base64Util.encrypt(JSONObject.toJSONString(com)) + "&user="
+				+ Base64Util.encrypt(JSONObject.toJSONString(user)) + "&dept="
+				+ Base64Util.encrypt(JSONObject.toJSONString(dept));
+		RemoteRequests rr = new RemoteRequests();
+		// TODO
+		if (apps.contains(softwareId)) {// 判断是否需要进队列
+			int running = dataService.dataRunning();
+			System.out.println("running:" + running);
+			if (nodes - running >= 0) {
+				// rr.run(newPath);
+				System.out.println("send");
+			} else {
+				System.out.println("queue");
+				GlobalQueue.offer(newPath);
+			}
+		} else {
+			rr.run(newPath);
+		}
+		error = 0;
+		return "RunProject";
 	}
-	Map<String, List<Data>> map = new HashMap<String, List<Data>>();
-	if (Integer.parseInt(softwareId) == 110
-		|| Integer.parseInt(softwareId) == 111
-		|| Integer.parseInt(softwareId) == 112) {
-	    String dataDetails = FileTools.dataListSort(dataResult.toString());
-	    String dataArray[] = dataDetails.split(";");
-	    for (int i = 0; i < dataArray.length; i = i + 2) {
-		String[] dataDetail = dataArray[i].split(",");
-		String[] dataDetail1 = dataArray[i + 1].split(",");
-		List<Data> dataList = dataService.getDataByDataKeys(
-			FileTools.getArray(dataDetail, 0) + ","
-				+ FileTools.getArray(dataDetail1, 0), userId);
-		map.put(FileTools.getArray(dataDetail, 0), dataList);
-	    }
+    
+	/**
+	 * 运行队列里的命令
+	 */
+	public void runQueue() {
+		System.out.println("----");
+		if (!GlobalQueue.isEmpty()) {
+			int running = dataService.dataRunning();
+			System.out.println("running:" + running);
+			String command = GlobalQueue.peek();
+			if(command!=null){
+				String datakeys = command.split("dataKeyList=")[1]
+						.split("&projectId=")[0];
+				System.out.println("datakeys:" + datakeys);
+				int need = datakeys.split(";").length;
+				System.out.println(need);
+				System.out.println(nodes >= running + need);
+				if (nodes >= running + need) {
+					RemoteRequests rr = new RemoteRequests();
+					System.out.println("send");
+//					rr.run(command);
+					GlobalQueue.poll();
+				}
+			}
+		}
 	}
-	Company com = companyService.getCompanyByUserId(userId);
-	User user = userService.getUserById(userId);
-	Dept dept = deptService.getDeptByUser(userId);
-	// 6.根据用户ID获取用户邮箱
-	String email = userService.getEmailBySessionUserId(userId);
-	// 7.根据软件id获取软件名称
-	Software soft = softwareService.getSoftware(Integer
-		.parseInt(softwareId));
-	String newPath = PropertiesUtil.toolsOutPath
-		+ "Procedure!runApp?userId=" + userId + "&appId=" + softwareId
-		+ "&appName=" + soft.getSoftwareName() + "&projectName="
-		+ projectName + "&email=" + email + "&dataKeyList="
-		+ dataResult.toString() + "&projectId=" + proId + "&dataInfos="
-		+ Base64Util.encrypt(JSONObject.toJSONString(map))
-		+ "&company="
-		+ Base64Util.encrypt(JSONObject.toJSONString(com)) + "&user="
-		+ Base64Util.encrypt(JSONObject.toJSONString(user)) + "&dept="
-		+ Base64Util.encrypt(JSONObject.toJSONString(dept));
-	RemoteRequests rr = new RemoteRequests();
-	rr.run(newPath);
-	error = 0;
-	return "RunProject";
-    }
 
     public String updateReportReadStateByPro() {
 	result = reportService.updateReportReadStateByPro(
