@@ -17,7 +17,7 @@ h1, h2, h3, h4, h5, h6 {font-size:100%;font-weight:normal;}
 body{ font-family:"黑体","宋体"; font-size:14px; color:#353535;max-width: 900px;margin:auto;}
 .container{ border-top:4px solid #00a88c;}
 .wrapper{margin:auto 10px;}
-hr{ border:solid 2px #d7d7d7; background-color:#d7d7d7; width:100%;}
+hr{ border:solid 2px #d7d7d7; background-color:#d7d7d7; width:100%;margin:0px}
 .hr-bold{border:solid 3px #d7d7d7;}
 h1{ text-align:center; font-family: "华文新魏"; font-size:28px; padding:10px 0 5px 0;}
 h2{ font-weight:bold; line-height:1.5em}

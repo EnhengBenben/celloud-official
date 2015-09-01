@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>报告打印</title>
-<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.11">
+<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.13">
 </head>
 <body>
 	<div>
@@ -131,7 +131,7 @@
 					   </c:when>
 					</c:choose>	
 			    </div>
-			    <hr class="mt5" />
+			    <hr/>
 			    <div class="wrapper">
 			        <ul class="footer">
 			            <li>检验日期：<span><input type="text"></span></li>

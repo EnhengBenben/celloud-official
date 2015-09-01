@@ -11,7 +11,6 @@
 <script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
 <link href="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
-<%-- <link rel="stylesheet" href="<%=request.getContextPath() %>/css/style_print.css"> --%>
 <title>PGS Report</title>
 <style type="text/css">
 body { 
