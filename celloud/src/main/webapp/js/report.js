@@ -717,6 +717,7 @@ $.ajaxSetup ({
 				});
 				$.get("count!getData",{"appId":appId,"columns":columns,"path":DATAPATH},function(data){
 					var sp = data.split(";");
+					$("#charResult").html("");
 					for ( var i = 1; i < sp.length; i++) {
 						var big = 0;
 						var div = $("<div id='char"+i+"' style='width:380px;display: inline-block;margin-right:10px;'></div>");
