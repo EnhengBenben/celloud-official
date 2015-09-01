@@ -21,8 +21,6 @@ public class TemplateUtils {
 	template.put(2, "ProjectTemplate.txt");
 	template.put(3, "ProjectEnd.txt");
 	template.put(4, "DataEnd.txt");
-	template.put(5, "Exome_SNV.html");
-	template.put(6, "sample.html");
 	template.put(7, "SNP.html");
     }
 

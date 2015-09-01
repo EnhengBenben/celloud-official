@@ -70,13 +70,12 @@ public class ZipUtil {
 	fis.close();
     }
 
-    @SuppressWarnings("unchecked")
     public static void UnZIP(String sourceFileName, String desDir)
 	    throws IOException {
 	// 创建压缩文件对象
 	ZipFile zf = new ZipFile(new File(sourceFileName), "GB2312");
 	// 获取压缩文件中的文件枚举
-	Enumeration en = zf.getEntries();
+	Enumeration<ZipEntry> en = zf.getEntries();
 	int length = 0;
 	byte[] b = new byte[1024];
 	// 提取压缩文件夹中的所有压缩实例对象
