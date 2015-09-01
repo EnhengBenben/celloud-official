@@ -448,18 +448,6 @@
 				<param name="root">result</param>
 			</result>
 		</action>
-		<action name="checkProAppParams" class="com.nova.action.ProjectAction"
-			method="checkProAppParams">
-			<result type="json">
-				<param name="root">proParams</param>
-			</result>
-		</action>
-		<action name="saveProParams" class="com.nova.action.ProjectAction"
-			method="saveProParams">
-			<result type="json">
-				<param name="root">result</param>
-			</result>
-		</action>
 		<action name="getProjectIdByName" class="com.nova.action.ProjectAction"
 			method="getProjectIdByName">
 			<result type="json">

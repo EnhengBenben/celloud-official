@@ -598,31 +598,6 @@ public class ProjectAction extends BaseAction {
     }
 
     /**
-     * 检查项目下某个app的参数
-     * 
-     * @return
-     */
-    public String checkProAppParams() {
-	String projectFileDir = ServletActionContext.getServletContext()
-		.getRealPath("/pages/proParams/");
-	proParams = XmlUtil.getProjectParams(Integer.parseInt(projectId),
-		projectFileDir);
-	return SUCCESS;
-    }
-
-    /**
-     * 项目参数保存,需要的参数信息projectId，strain,adaptor3,adaptor5,sampleList,diffList
-     * 
-     * @return
-     */
-    public String saveProParams() {
-	String projectFileDir = ServletActionContext.getServletContext()
-		.getRealPath("/pages/proParams/");
-	result = XmlUtil.createDocument(proParam, projectFileDir);
-	return SUCCESS;
-    }
-
-    /**
      * 项目删除
      * 
      * @return
