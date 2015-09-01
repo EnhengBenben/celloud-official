@@ -6,7 +6,7 @@
 			<div style="width: 800px">
 				文件名称：
 				<span class="file-name">
-					${pgs.dataKey }(${pgs.fileName } )
+					${pgs.dataKey }(<c:if test="${!empty pgs.anotherName }">${pgs.anotherName }</c:if><c:if test="${empty pgs.anotherName }">${pgs.fileName }</c:if> )
 				</span>
 			</div>
 			<div class="toolbar">
