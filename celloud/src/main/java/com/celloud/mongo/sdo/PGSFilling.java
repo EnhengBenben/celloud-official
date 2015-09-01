@@ -56,19 +56,9 @@ public class PGSFilling extends PatientBasic {
     private String auditor;
 
     /**
-     * 年
+     * 日期
      */
-    private String year;
-
-    /**
-     * 月
-     */
-    private String month;
-
-    /**
-     * 日
-     */
-    private String day;
+    private String fillDate;
 
     public String getMedicalNumber() {
 	return medicalNumber;
@@ -150,27 +140,12 @@ public class PGSFilling extends PatientBasic {
 	this.auditor = auditor;
     }
 
-    public String getYear() {
-	return year;
+    public String getFillDate() {
+	return fillDate;
     }
 
-    public void setYear(String year) {
-	this.year = year;
+    public void setFillDate(String fillDate) {
+	this.fillDate = fillDate;
     }
 
-    public String getMonth() {
-	return month;
-    }
-
-    public void setMonth(String month) {
-	this.month = month;
-    }
-
-    public String getDay() {
-	return day;
-    }
-
-    public void setDay(String day) {
-	this.day = day;
-    }
 }

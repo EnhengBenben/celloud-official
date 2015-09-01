@@ -104,11 +104,7 @@ public class PGSPrintAction extends BaseAction {
 		if (i == 11)
 		    pgs.setAuditor(val);
 		if (i == 12)
-		    pgs.setYear(val);
-		if (i == 13)
-		    pgs.setMonth(val);
-		if (i == 14)
-		    pgs.setDay(val);
+		    pgs.setFillDate(val);
 	    }
 	    reportService.editPGSFilling(userId, appId, dataKey, pgs);
 	    // System.out.println(pgs.getMedicalNumber());

@@ -11,14 +11,18 @@
 <script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
 <link href="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
+<%-- <link rel="stylesheet" href="<%=request.getContextPath() %>/css/style_print.css"> --%>
 <title>PGS Report</title>
 <style type="text/css">
-body {
-	font-size: 16px;
-}
+body { 
+  	font-family:"Times New Roman","微软雅黑";
+  	font-size: 14px;
+  	max-width:800px;
+  	margin:auto;
+} 
 
 textarea{
-	width: 800px;
+	width: 100%;
 }
 
 td,th {
@@ -29,23 +33,33 @@ td,th {
 	.Noprn {
 		display: none
 	}
+	body{
+	    font-size:12px;
+	}
 }
 
 .shotH3 {
-	font-family:SimSun, "宋体";
-	width: 530px;
-	float: left;
+    font-family: "Times New Roman","微软雅黑";
+    width: 360px;
+    font-size: 24px;
+    display: inline-block;
+    margin: 0 auto;
+    margin-top: -10px;
+    vertical-align: middle;
+}
+.secTitle{
+	font-weight: lighter;
+	line-height:1em;
 }
 
 .jzk {
-	font-size: 18px;
+	font-size: 14px;
 	line-height: 20px;
 	text-align: right;
 }
 
 .footer {
-	margin: 0px auto 45px auto;
-	width: 800px;
+	margin: 0px auto 3px auto;
 }
 
 .footer span input {
@@ -54,6 +68,7 @@ td,th {
 
 hr {
 	border: solid 2px #000;
+	margin-top:5px;
 }
 
 .end {
@@ -110,42 +125,54 @@ hr {
 }
 .footer li{
   display: inline-block;
-  padding-bottom: 10px;
-  font-size: 16px;
+  padding-bottom: 5px;
+  font-size: 14px;
 }
 .right{
 	text-align: right;
-	width: 12%;
+/* 	width: 12%; */
 }
 .left{
-	width: 18%;
+/* 	width: 18%; */
 }
 </style>
+<!--[if IE]>
+<style>
+@media Print {
+	body{
+	    font-size:12px;
+	}
+	.shotH3{
+		font-size:20px;
+	}
+}
+</style>
+<![endif]-->
 </head>
 <body>
 	<s:if test="context==null||context.equals('')">
 		<div style="display: none;" id="_userId"><s:property value="userId"/></div>
 		<div style="display: none;" id="_appId"><s:property value="appId"/></div>
 		<div style="display: none;" id="_fileId"><s:property value="fileId"/></div>
-		<div class="row Noprn" style="margin:20px auto;width: 800px;">
+		<div class="row Noprn" style="margin:20px auto;">
 			<a href="javascript:void(0)" onclick="savePage()" class="print-blue">保存</a>
 			<a href="javascript:void(0)" onclick="reset()" class="print-blue">重置</a>
 			<a href="javascript:void(0)" onclick="preview(this)" class="print-blue">打印</a>
 		</div>
 		<s:if test="%{company.companyId!=10}">
-			<div class="jzk" style="margin:0px auto;width: 800px;">就诊卡号：<span><input type="text" class="input-mini" id="jzkh"/></span></div>
+			<div class="jzk" style="margin:0px auto;">就诊卡号：<span><input type="text" class="input-mini" id="jzkh"/></span></div>
 		</s:if>
-		<div class="row" style="margin:0px auto;width: 800px;" id="mainDiv">
+		<div class="row" style="margin:0px auto;" id="mainDiv">
 			<s:if test="%{company.companyIcon!=null&&!company.companyIcon.equals('')}">
 				<div align="center" class="clearfix">
-					<img class="pull-left" src="<%=request.getContextPath() %>/images/hospitalIcon/<s:property value="company.companyIcon"/>" width="125" height="125">
+					<img src="<%=request.getContextPath() %>/images/hospitalIcon/<s:property value="company.companyIcon"/>" width="90" height="90">
 					<h2 class="shotH3">
 						<s:property value="company.companyName" escape="false"/>
 						<br />
-						<s:property value="company.englishName" escape="false"/>
+						<span class="secTitle"><s:property value="company.englishName" escape="false"/></span>
 					</h2>
 					<s:if test="%{company.companyId!=12&&company.companyId!=10&&company.companyId!=22}">
-						<img id="_imgShow" class="pull-right" src="<%=request.getContextPath() %>/images/deptIcon/<s:property value="dept.deptIcon"/>" width="140" height="130">
+						<img id="_imgShow" src="<%=request.getContextPath() %>/images/deptIcon/<s:property value="dept.deptIcon"/>" width="95" height="90">
 					</s:if>
 				</div>
 				<hr>
@@ -239,12 +266,10 @@ hr {
 				<li class="left">复核人：<span><input type="text" class="input-mini" /></span></li>
 			</s:if>
 			<li class="left">审核人：<span><input type="text" class="input-mini" /></span></li>
-			<li class="right"><span><input type="text" class="input-mini" /></span>年</li>
-			<li class="right"><span><input type="text" class="input-mini" /></span>月</li>
-			<li class="right"><span><input type="text" class="input-mini" /></span>日</li>
+			<li class="right pull-right">日期：<span><input type="text" class="input-small" /></span></li>
 		</ul>
 		<s:if test="%{company.companyIcon!=null&&!company.companyIcon.equals('')&&company.companyId!=12&&company.companyId!=10&&company.companyId!=22}">
-			<div style="margin:0px auto;width: 800px;">
+			<div style="margin:0px auto;">
 				<hr>
 				<div class="end">
 					地址：<s:property value="company.address"/>
@@ -262,7 +287,7 @@ hr {
 <script type="text/javascript">
 	//1145为打印页面允许的最大值
 	if($(".end").html()){
-		$("#mainDiv").css("min-height",(1145-64-38-38-20)+"px");
+		$("#mainDiv").css("min-height",(1000-64-38-38-20)+"px");
 	}else{
 		$("#mainDiv").css("min-height",(1145-38-38-20)+"px");
 	}
