@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import time , socket , threading , os
+import httplib
 from data_pgs import *
 
 def tcplink(sock, addr):
@@ -15,6 +16,23 @@ def tcplink(sock, addr):
         projectId = os.path.split(data)[1]
         print data
         pgsdata(path,projectId)
+
+        httpClient = None
+
+        try:
+            httpClient = httplib.HTTPConnection('localhost',8080,timeout=30)
+            httpClient.request('GET','/celloud/project!runQueue')
+
+            response = httpClient.getresponse()
+            print response.status
+            print response.reason
+            print response.read()
+        except Exception, e:
+            print e
+        finally:
+            if httpClient:
+                httpClient.close()
+
         sock.send('over')
     sock.close()
     print 'Connection from %s:%s closed.' % addr

@@ -13,7 +13,6 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -52,7 +51,6 @@ import com.nova.utils.FileTools;
 import com.nova.utils.PropertiesUtil;
 import com.nova.utils.RemoteRequests;
 import com.nova.utils.TemplateUtil;
-import com.nova.utils.XmlUtil;
 
 /**
  * 项目管理
@@ -523,7 +521,7 @@ public class ProjectAction extends BaseAction {
 			int running = dataService.dataRunning();
 			System.out.println("running:" + running);
 			if (nodes - running >= 0) {
-				// rr.run(newPath);
+				rr.run(newPath);
 				System.out.println("send");
 			} else {
 				System.out.println("queue");
@@ -555,7 +553,7 @@ public class ProjectAction extends BaseAction {
 				if (nodes >= running + need) {
 					RemoteRequests rr = new RemoteRequests();
 					System.out.println("send");
-//					rr.run(command);
+					rr.run(command);
 					GlobalQueue.poll();
 				}
 			}
