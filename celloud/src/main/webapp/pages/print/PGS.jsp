@@ -58,7 +58,7 @@ td,th {
 }
 
 .footer {
-	margin: 0px auto 3px auto;
+	margin: 0px auto 30px auto;
 }
 
 .footer span input {
@@ -159,7 +159,7 @@ hr {
 			<a href="javascript:void(0)" onclick="preview(this)" class="print-blue">打印</a>
 		</div>
 		<s:if test="%{company.companyId!=10}">
-			<div class="jzk" style="margin:0px auto;">就诊卡号：<span><input type="text" class="input-mini" id="jzkh"/></span></div>
+			<div class="jzk" style="margin:0px auto;">就诊卡号：<span id="jzkp"><input type="text" class="input-mini" id="jzkh"/></span></div>
 		</s:if>
 		<div class="row" style="margin:0px auto;" id="mainDiv">
 			<s:if test="%{company.companyIcon!=null&&!company.companyIcon.equals('')}">
@@ -284,17 +284,16 @@ hr {
 	</s:else>
 </body>
 <script type="text/javascript">
-	//1145为打印页面允许的最大值
 	if($(".end").html()){
-		$("#mainDiv").css("min-height",(1000-64-38-38-20)+"px");
+		$("#mainDiv").css("min-height",(960-64-38-38-20)+"px");
 	}else{
-		$("#mainDiv").css("min-height",(1145-38-38-20)+"px");
+		$("#mainDiv").css("min-height",(1100-38-38-20)+"px");
 	}
 	function preview(obj){
 		var inputVal;
 		inputVal = $("#jzkh").val();
 		if(!inputVal){
-			$("#jzkh").parent().html("<span name='print' style='padding-right:100px;'>"+inputVal+"</span>");
+			$("#jzkp").html("<span name='print' style='padding-right:100px;'>"+inputVal+"</span>");
 		}
 		$("#mainDiv").find("input").each(function(){
 			inputVal = $(this).val();
@@ -310,7 +309,11 @@ hr {
 		window.print();
 		$("body").find("span[name='print']").each(function(){
 			inputVal = $(this).html();
-			$(this).parent().html("<input type=\"text\" class=\"input-mini\" value=\""+inputVal+"\" />");
+			if($(this).parent().attr("id")=="jzkp"){
+				$(this).parent().html("<input type=\"text\"  class=\"input-mini\" value=\""+inputVal+"\" id=\"jzkh\" />");
+			}else{
+				$(this).parent().html("<input type=\"text\" class=\"input-mini\" value=\""+inputVal+"\" />");
+			}
 		});
 		inputVal = $("#des").html().replace(/<br>/g,"\n");
 		$("#des").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
