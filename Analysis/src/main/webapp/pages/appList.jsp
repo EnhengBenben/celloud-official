@@ -46,6 +46,7 @@
 							<s:iterator id="data" value="appList">
 								<tr>
 									<td><a href="javascript:getAppDetail(${data.softwareId },'${data.softwareName }')">${data.softwareName }</a></td>
+<%-- 									<td>${data.softwareName }</td> --%>
 									<td>${data.runNum }</td>
 									<td>${data.bhri }</td>
 									<td>${data.type }</td>
@@ -66,9 +67,20 @@
 <script type="text/javascript">
 	jQuery(function($) {
 		var oTable1 = $('#appList').dataTable( {
-		"aoColumns": [
-	      null,null,null,null,null,null,null,null
-		] } );
+// 			bFilter:false,
+			"aoColumns": [
+		      {"bSearchable": true,"aTargets": [0]},
+		      {"bSearchable": false,"aTargets": [0]},
+		      {"bSearchable": false,"aTargets": [0]},
+		      {"bSearchable": false,"aTargets": [0]},
+		      {"bSearchable": false,"aTargets": [0]},
+		      {"bSearchable": false,"aTargets": [0]},
+		      {"bSearchable": false,"aTargets": [0]},
+		      {"bSearchable": false,"aTargets": [0]}
+			],
+			iDisplayLength: 100
+		
+		} );
 	})
 	function getAppDetail(id,name){
 		$("#_oneApp").html(name);

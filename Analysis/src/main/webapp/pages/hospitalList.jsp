@@ -68,7 +68,9 @@
 		var oTable1 = $('#hospitalList').dataTable( {
 		"aoColumns": [
 	      null,null,null,null,null,null,null,null
-		] } );
+		],
+		iDisplayLength: 100
+		} );
 	})
 	function getCompanyDetail(id,name){
 		$("#_oneHospital").html(name);

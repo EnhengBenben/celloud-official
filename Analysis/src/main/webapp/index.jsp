@@ -101,7 +101,7 @@
 						<li>
 							<a href="javascript:getUserDataList()">
 								<i class="icon-double-angle-right"></i>
-								全部用户数据量
+								总用户数据量
 							</a>
 						</li>
 

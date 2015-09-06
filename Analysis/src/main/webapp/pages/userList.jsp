@@ -70,7 +70,9 @@
 		var oTable1 = $('#userList').dataTable( {
 		"aoColumns": [
 	      null,null,null,null,null,null,null,null,null
-		] } );
+		],
+		iDisplayLength: 100
+		} );
 	})
 	function getUserDetail(id,name){
 		$("#_oneUser").html(name);

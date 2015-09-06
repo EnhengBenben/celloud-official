@@ -58,7 +58,9 @@
 		var oTable1 = $('#MonthDataList').dataTable( {
 		"aoColumns": [
 	      null,null
-		] } );
+		],
+		iDisplayLength: 100
+		} );
 		
 		
 		$('table th input:checkbox').on('click' , function(){
