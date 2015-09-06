@@ -8,9 +8,10 @@
 	</script>
 	<ul class="breadcrumb">
 		<li>
-			<i class="icon-home home-icon"></i>
+			<i class="icon-user-md"></i>
 			<a href="#">用户统计</a>
 		</li>
+		<li class="active">用户详细信息</li>
 	</ul><!-- .breadcrumb -->
 </div>
 <div class="page-content">

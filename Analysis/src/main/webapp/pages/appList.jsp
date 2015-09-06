@@ -8,9 +8,10 @@
 	</script>
 	<ul class="breadcrumb">
 		<li>
-			<i class="icon-home home-icon"></i>
+			<i class="icon-cloud"></i>
 			<a href="#">APP统计</a>
 		</li>
+		<li class="active">APP详细信息</li>
 	</ul><!-- .breadcrumb -->
 </div>
 <div class="page-content">

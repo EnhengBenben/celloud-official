@@ -7,8 +7,8 @@
 	</script>
 	<ul class="breadcrumb">
 		<li>
-			<i class="icon-home home-icon"></i>
-			<a href="#">首页</a>
+			<i class="icon-dashboard"></i>
+			<a href="#">控制台</a>
 		</li>
 	</ul><!-- .breadcrumb -->
 </div>
