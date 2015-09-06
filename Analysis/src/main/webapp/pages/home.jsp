@@ -33,7 +33,7 @@
 
 					<div class="widget-body">
 						<div class="widget-main padding-4">
-							<div class="col-sm-7 infobox-container">
+						  <div class="col-sm-7 infobox-container" style="min-width:600px">
 							<div class="infobox infobox-green  ">
 								<div class="infobox-icon">
 									医院总量：
