@@ -184,26 +184,40 @@ hr {
 			<div>
 				<h4>基本信息：</h4>
 				<table class="table table-bordered table-condensed">
-					<tr>
-						<th><s:if test="%{company.companyId==10}">实验室</s:if>编号</th>
-						<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-						<th>姓名</th>
-						<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-						<th>性别</th>
-						<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-						<th>年龄</th>
-						<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-					</tr>
-					<tr>
-						<th>样本类型</th>
-						<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-						<th>申请日期</th>
-						<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-						<th>接收日期</th>
-						<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-						<th>样本状态</th>
-						<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-					</tr>
+					<s:if test="%{company.companyId!=9}">
+						<tr>
+							<th><s:if test="%{company.companyId==10}">实验室</s:if>编号</th>
+							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+							<th>姓名</th>
+							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+							<th>性别</th>
+							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+							<th>年龄</th>
+							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+						</tr>
+						<tr>
+							<th>样本类型</th>
+							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+							<th>申请日期</th>
+							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+							<th>接收日期</th>
+							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+							<th>样本状态</th>
+							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+						</tr>
+					</s:if>
+					<s:if test="%{company.companyId==9}">
+						<tr>
+							<th>胚胎编号</th>
+							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+							<th>女方姓名</th>
+							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+							<th>年龄</th>
+							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+							<th>取卵日期</th>
+							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+						</tr>
+					</s:if>
 					<s:if test="%{company.companyId==10}">
 						<tr>
 							<th>临床诊断</th>
@@ -264,7 +278,9 @@ hr {
 			<s:if test="%{company.companyId!=10}">
 				<li class="left">复核人：<span><input type="text" class="input-mini" /></span></li>
 			</s:if>
-			<li class="left">审核人：<span><input type="text" class="input-mini" /></span></li>
+			<s:if test="%{company.companyId!=9}">
+				<li class="left">审核人：<span><input type="text" class="input-mini" /></span></li>
+			</s:if>
 			<li class="right pull-right">日期：<span><input type="text" class="input-small" /></span></li>
 		</ul>
 		<s:if test="%{company.companyIcon!=null&&!company.companyIcon.equals('')&&company.companyId!=12&&company.companyId!=10&&company.companyId!=22}">
@@ -287,7 +303,7 @@ hr {
 	if($(".end").html()){
 		$("#mainDiv").css("min-height",(960-64-38-38-20)+"px");
 	}else{
-		$("#mainDiv").css("min-height",(1100-38-38-20)+"px");
+		$("#mainDiv").css("min-height",(980-38-38-20)+"px");
 	}
 	function preview(obj){
 		var inputVal;
