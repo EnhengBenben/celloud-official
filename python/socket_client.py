@@ -20,7 +20,7 @@ path = os.path.join(path , projectId)
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # 建立连接:
-s.connect(('121.201.7.200', 9999))
+s.connect(('112.64.18.107', 8088))
 print s.recv(1024)
 s.send(path)
 print s.recv(1024)

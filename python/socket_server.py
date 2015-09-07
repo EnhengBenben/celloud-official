@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import time , socket , threading , os
-from data_pgs import *
+from runover import *
 
 def tcplink(sock, addr):
     print 'Accept new connection from %s:%s...' % addr
@@ -13,14 +13,14 @@ def tcplink(sock, addr):
             break
         path = os.path.split(data)[0]
         projectId = os.path.split(data)[1]
-        print data
-        pgsdata(path,projectId)
+        appId = os.path.split(path)[1]
+        runover(path,appId,projectId)
         sock.send('over')
     sock.close()
     print 'Connection from %s:%s closed.' % addr
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind(('127.0.0.1', 8088))
+s.bind(('192.168.253.51', 8088))
 s.listen(5)
 print 'Waiting for connection...'
 while True:

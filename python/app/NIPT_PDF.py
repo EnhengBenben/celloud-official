@@ -14,6 +14,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import Image , Paragraph , SimpleDocTemplate , Spacer , Table , TableStyle
 from utils.TableUtils import *
+from PDFPro import PDFPro
 
 pdfmetrics.registerFont(TTFont('hei', 'app/ttc/simhei.ttf'))
 
@@ -40,8 +41,7 @@ def createPDF(path):
 	tatal = []
 
 	# logo and pdf title
-	logo = '/home/lin/work/png/portrait.png'
-	im = Image(logo, 15, 17)
+	im = Image(PDFPro.logo, 15, 17)
 	pdftitle = '<font size=14 name="hei">NIPT 报告</font>'
 	data= [[im, Paragraph(pdftitle, styleContext)]]
 	table = Table(data, colWidths=[0.9 * cm, 3.5 * cm])
