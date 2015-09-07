@@ -27,7 +27,9 @@
 		var oTable1 = $('#userMonthDataList').dataTable( {
 		"aoColumns": [
 	      null,null,null
-		] } );
+		],
+		iDisplayLength: 100
+		} );
 	})
 	function monthDataList(userId,month){
 		$("#thirdTitle").removeClass("hide");

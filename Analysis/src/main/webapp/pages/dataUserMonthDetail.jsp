@@ -26,6 +26,8 @@
 		var oTable1 = $('#monthDataDetail').dataTable( {
 		"aoColumns": [
 	      null,null,null
-		] } );
+		],
+		iDisplayLength: 100
+		} );
 	})
 </script>

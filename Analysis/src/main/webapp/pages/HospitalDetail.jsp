@@ -7,9 +7,10 @@
 	</script>
 	<ul class="breadcrumb">
 		<li>
-			<i class="icon-home home-icon"></i>
+			<i class="icon-hospital"></i>
 			<a href="#">医院统计</a>
 		</li>
+		<li class="active">医院详细信息</li>
 	</ul><!-- .breadcrumb -->
 </div>
 

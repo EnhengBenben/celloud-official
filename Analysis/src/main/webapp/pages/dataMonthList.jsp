@@ -8,7 +8,7 @@
 
 	<ul class="breadcrumb">
 		<li>
-			<i class="icon-home home-icon"></i>
+			<i class="icon-tasks"></i>
 			<a href="#">数据统计</a>
 		</li>
 		<li class="active">数据量月统计</li>
@@ -58,7 +58,9 @@
 		var oTable1 = $('#MonthDataList').dataTable( {
 		"aoColumns": [
 	      null,null
-		] } );
+		],
+		iDisplayLength: 100
+		} );
 		
 		
 		$('table th input:checkbox').on('click' , function(){

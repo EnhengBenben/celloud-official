@@ -164,14 +164,14 @@ hr {
 		<div class="row" style="margin:0px auto;" id="mainDiv">
 			<s:if test="%{company.companyIcon!=null&&!company.companyIcon.equals('')}">
 				<div align="center" class="clearfix">
-					<img src="<%=request.getContextPath() %>/images/hospitalIcon/<s:property value="company.companyIcon"/>" width="90" height="90">
+					<img src="<%=request.getContextPath() %>/images/hospitalIcon/<s:property value="company.companyIcon"/>" style="width:90px">
 					<h2 class="shotH3">
 						<s:property value="company.companyName" escape="false"/>
 						<br />
 						<span class="secTitle"><s:property value="company.englishName" escape="false"/></span>
 					</h2>
 					<s:if test="%{company.companyId!=12&&company.companyId!=10&&company.companyId!=22}">
-						<img id="_imgShow" src="<%=request.getContextPath() %>/images/deptIcon/<s:property value="dept.deptIcon"/>" width="95" height="90">
+						<img id="_imgShow" src="<%=request.getContextPath() %>/images/deptIcon/<s:property value="dept.deptIcon"/>" style="width:95px">
 					</s:if>
 				</div>
 				<hr>

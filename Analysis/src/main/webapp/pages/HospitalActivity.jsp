@@ -6,10 +6,10 @@
 	</script>
 	<ul class="breadcrumb">
 		<li>
-			<i class="icon-home home-icon"></i>
-			<a href="#">医院统计</a>
+			<i class="icon-bar-chart"></i>
+			<a href="#">活跃度统计</a>
 		</li>
-		<li class="active">活跃度统计</li>
+		<li class="active">医院活跃度统计</li>
 	</ul><!-- .breadcrumb -->
 </div>
 

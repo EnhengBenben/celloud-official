@@ -8,9 +8,10 @@
 	</script>
 	<ul class="breadcrumb">
 		<li>
-			<i class="icon-home home-icon"></i>
+			<i class="icon-user-md"></i>
 			<a href="#">用户统计</a>
 		</li>
+		<li class="active">用户详细信息</li>
 	</ul><!-- .breadcrumb -->
 </div>
 <div class="page-content">
@@ -70,7 +71,9 @@
 		var oTable1 = $('#userList').dataTable( {
 		"aoColumns": [
 	      null,null,null,null,null,null,null,null,null
-		] } );
+		],
+		iDisplayLength: 100
+		} );
 	})
 	function getUserDetail(id,name){
 		$("#_oneUser").html(name);

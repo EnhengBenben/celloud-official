@@ -8,9 +8,10 @@
 	</script>
 	<ul class="breadcrumb">
 		<li>
-			<i class="icon-home home-icon"></i>
+			<i class="icon-cloud"></i>
 			<a href="#">APP统计</a>
 		</li>
+		<li class="active">APP详细信息</li>
 	</ul><!-- .breadcrumb -->
 </div>
 <div class="page-content">
@@ -46,6 +47,7 @@
 							<s:iterator id="data" value="appList">
 								<tr>
 									<td><a href="javascript:getAppDetail(${data.softwareId },'${data.softwareName }')">${data.softwareName }</a></td>
+<%-- 									<td>${data.softwareName }</td> --%>
 									<td>${data.runNum }</td>
 									<td>${data.bhri }</td>
 									<td>${data.type }</td>
@@ -66,9 +68,20 @@
 <script type="text/javascript">
 	jQuery(function($) {
 		var oTable1 = $('#appList').dataTable( {
-		"aoColumns": [
-	      null,null,null,null,null,null,null,null
-		] } );
+// 			bFilter:false,
+			"aoColumns": [
+		      {"bSearchable": true,"aTargets": [0]},
+		      {"bSearchable": false,"aTargets": [0]},
+		      {"bSearchable": false,"aTargets": [0]},
+		      {"bSearchable": false,"aTargets": [0]},
+		      {"bSearchable": false,"aTargets": [0]},
+		      {"bSearchable": false,"aTargets": [0]},
+		      {"bSearchable": false,"aTargets": [0]},
+		      {"bSearchable": false,"aTargets": [0]}
+			],
+			iDisplayLength: 100
+		
+		} );
 	})
 	function getAppDetail(id,name){
 		$("#_oneApp").html(name);
