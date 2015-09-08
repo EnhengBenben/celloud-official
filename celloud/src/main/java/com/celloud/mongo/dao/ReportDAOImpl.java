@@ -10,6 +10,7 @@ import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpGeneDetectionDetail;
 import com.celloud.mongo.sdo.CmpGeneSnpResult;
 import com.celloud.mongo.sdo.CmpReport;
+import com.celloud.mongo.sdo.NIPT;
 import com.celloud.mongo.sdo.PGSFilling;
 import com.celloud.mongo.sdo.Pgs;
 import com.google.code.morphia.Morphia;
@@ -135,5 +136,11 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 			.filter("appId", appId).filter("dataKey", dataKey), ds
 			.createUpdateOperations(Pgs.class).set("fill", pgs));
     }
+
+	@Override
+	public NIPT getNIPTReport(String dataKey, Integer proId, Integer appId) {
+		return ds.createQuery(NIPT.class).filter("dataKey", dataKey)
+				.filter("projectId", proId).filter("appId", appId).get();
+	}
 
 }

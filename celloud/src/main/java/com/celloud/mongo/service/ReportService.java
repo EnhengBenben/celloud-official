@@ -6,6 +6,7 @@ import java.util.List;
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpGeneSnpResult;
 import com.celloud.mongo.sdo.CmpReport;
+import com.celloud.mongo.sdo.NIPT;
 import com.celloud.mongo.sdo.PGSFilling;
 import com.celloud.mongo.sdo.Pgs;
 import com.google.inject.ImplementedBy;
@@ -90,4 +91,14 @@ public interface ReportService {
      */
     public void editPGSFilling(int userId, int appId, String dataKey,
 	    PGSFilling pgs);
+    
+	/**
+	 * 获取NIPT数据报告
+	 * 
+	 * @param dataKey
+	 * @param proId
+	 * @param appId
+	 * @return
+	 */
+	public NIPT getNIPTReport(String dataKey, Integer proId, Integer appId);
 }

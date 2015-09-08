@@ -138,7 +138,8 @@ hr {
 		$("body").find("input").each(function(){
 			$(this).attr("value",$(this).val());
 		});
-		$.post("http://www.celloud.org/updateContext",{"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":$("body").html()},function(result){
+		var url = window.location.href.split("printNIPT")[0];
+		$.post(url+"updateContext",{"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":$("body").html()},function(result){
 			if(result==1){
 				jAlert("信息保存成功！");
 			}else{
