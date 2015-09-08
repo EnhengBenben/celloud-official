@@ -33,7 +33,7 @@ class NIPT:
 			NIPT.locker.release()
 
 	#执行
-	def getResult(self,path):
+	def getResult(self,path,appName,fileName,anotherName):
 		result = {}
 		if(not path.endswith(os.sep)):
 			path = path+os.sep

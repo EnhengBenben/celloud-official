@@ -46,12 +46,15 @@ def runover(path,appId,projectId):
 		result = my.query(sql)
 		if result is not None:
 			for i in range(len(result)):
-				re = result[i] 
+				re = result[i]
 				myfun = method_dic[int(appId)]
 				fun = myfun.getInstance()
 				if fun:
-					final = fun.getResult(os.path.join(path,re['dataKey']))
+					final = fun.getResult(os.path.join(path,re['dataKey']),re['appName'],re['fileName'],re['anotherName'])
 					merge = dict(final, **re)
 					mo = mongo.getInstance()
 					objId = mo.put(merge,collection_dic[int(appId)])
 					print objId
+
+if __name__ == '__main__':
+	runover('/home/lin/work/9/88','88','3546')
