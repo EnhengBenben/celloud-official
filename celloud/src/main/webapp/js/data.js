@@ -52,7 +52,8 @@ function initData(){
 	$("#windowMark").hide();
 	
 	$("#dataTagSearch").val("");
-	getPrivateDataList();
+//	getPrivateDataList();
+	getMyDataList();
 	
 	//数据搜索绑定回车事件
 	$("#dataTagSearch").bind('keyup', function(event){
@@ -68,6 +69,79 @@ function keyDownToSearch(){
 	var event = event || window.event;
 	if(event.keyCode==13){return false;}
 }
+
+//-------v 3.0版本
+//获取我的数据
+function getMyDataList(){
+	//设置遮罩
+	spinner = new Spinner(opts);
+	var target = document.getElementById('selfDataDiv');
+	spinner.spin(target);
+	
+	$("#pageRecordSel").val(dataPageDataNum);
+	var dataTag = $.trim($("#dataTagSearch").val());
+	var sortOrder = "asc";
+	if(sortType==1){//当前按照文件名进行排序
+		sortOrder = fileNameSort;
+	}else if(sortType==2){//当前按照上传时间进行排序
+		sortOrder = createDateSort;
+	}
+	$.get("data!getMyOwnData",{"page.pageSize":dataPageDataNum,"page.currentPage":1,"type":sortType,"sort":sortOrder,"dataTag":dataTag},function(responseText){
+		spinner.stop();
+		$("#pageRecordSel").val(dataPageDataNum);
+		$("#selfDataDiv").html(responseText);
+		privateIcon();
+	});
+}
+function showRunApp(){
+	$("#appsForDataUl").html("");
+	var dataIds = "";
+	if(checkedDataIds.length==0){
+		$("#warningText").html("请选择至少一条数据！");
+		$("#warningModal").modal('show');
+		return;
+	}
+    //遍历得到每个checkbox的value值
+    for (var i=0;i<checkedDataIds.length;i++){
+         dataIds += checkedDataIds[i] + ",";
+    }
+    dataIds = dataIds.substring(0, dataIds.length-1);
+    $.get("data!getSoftListByFormat",{"dataIds":dataIds},function(result){
+    	alert(JSON.stringify(result.softwareList));
+    	if(result == "所选数据格式不统一！"){
+    		$("#warningText").html(result);
+			$("#warningModal").modal("show");
+    	}else{
+    		var li = "";
+    		for(var i=0;i<result.length;i++){
+    			var appId = result[i].softwareId;
+	    		var appName = result[i].softwareName;
+	    		var dataNum = result[i].dataNum;
+	    		var offLine = result[i].offLine;
+	    		if(dataNum<=checkedDataIds.length){
+					li += "<li value='"+appName+"' id='li"+appName+"' onclick='addRunApp("+appId+",'"+appName+"')'><a style='cursor:pointer;'>"+appName+"</a></li>";
+	    		}
+	    	}
+    		$("#appsForDataUl").append(li);
+    		$("#runApp").modal("show");
+    	}
+    });
+}
+var addedApps = new Array();
+function addRunApp(appId,appName){
+	var li = "<li value='"+appName+"' id='li"+appName+"' onclick='removeRunApp("+appId+",'"+appName+"')'><a style='cursor:pointer;'>"+appName+"</a></li>";
+	$("#toRunApp").append(li);
+	addedApps.push(appId);
+}
+function removeRunApp(appId,appName){
+	addedApps.splice(appId,1);
+	$("#addedli"+appName).remove();
+}
+function toRunApp(){
+	
+}
+//----------
+
 
 //获取我的数据
 function getPrivateDataList(){
@@ -93,6 +167,7 @@ function getPrivateDataList(){
 //		getDataSharedToMeList();
 	});
 }
+
 //获取共享给我的数据
 function getDataSharedToMeList(){
 	//设置遮罩
@@ -169,7 +244,8 @@ function deleteDatas(){
 		    dataIds = dataIds.substring(0, dataIds.length-1);
 		    $.get("dataJson_delDatas.action",{"dataIds":dataIds},function(flag){
 	    		if(flag>0){
-	    			getPrivateDataList();
+//	    			getPrivateDataList();
+	    			getMyDataList();
 	    			checkedDataIds = [];
 	    			toNoUse();
 	    		}else{
@@ -236,7 +312,7 @@ function showAppsForData(){
 }
 //关闭数据选择App下拉框
 function hideDataAppUl(){
-	$("#appsForDataUl").hide();
+//	$("#appsForDataUl").hide();
 	$("body").unbind("click");
 }
 //多条数据运行
@@ -472,18 +548,20 @@ function toUse(){
 	if(checkedDataIds.length>0){
 		$("#delDataBtn").attr("disabled",false);
 		$("#batchManage").attr("disabled",false);
+		$("#delDataBtn").removeAttr("disabled");
+		$("#batchManage").removeAttr("disabled");
 		$("#delDataBtn").removeClass("disabled");
 		$("#batchManage").removeClass("disabled");
-		$("#delDataBtn").addClass("btn-blue");
-		$("#batchManage").addClass("btn-blue");
+//		$("#delDataBtn").addClass("btn-blue");
+//		$("#batchManage").addClass("btn-blue");
 	}else{
 		toNoUse();
 	}
 }
 
 function initDataList(){
-	$("#appTextBtn").text("选择App");
-	$("#appsForDataUl").hide();
+//	$("#appTextBtn").text("选择App");
+//	$("#appsForDataUl").hide();
 	//全选
 	$("#selAll").click(function(){
 		toNoUse();
@@ -779,9 +857,9 @@ function dataCopyStrainToSel(){
 }
 //复选框点击事件
 function chkOnChange(obj){
-	$("#appTextBtn").text("选择App");
-	$("#appsForDataUl").hide();
-	var checked = $(obj).attr("checked");
+//	$("#appTextBtn").text("选择App");
+//	$("#appsForDataUl").hide();
+	var checked = $(obj).prop("checked");//jquery1.11获取属性
 	if(checked){
 		if($.inArray($(obj).val(),checkedDataIds)==-1){
 			checkedDataIds.push($(obj).val());

@@ -47,7 +47,7 @@
 					width="48" height="48" />
 			</div>
 			<div class="leftApp" _appId="sjgl" _appName="数据管理"
-                _appImg="images/content/datamanag.png" _iframeSrc="pages/data/fileData.jsp">
+                _appImg="images/content/datamanag.png" _iframeSrc="pages/data/data.jsp">
                 <img src="images/content/datamanag.png" alt="数据管理" title="数据管理"
                     width="48" height="48" />
             </div>
