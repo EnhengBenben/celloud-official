@@ -134,6 +134,16 @@ hr {
 .left{
 /* 	width: 18%; */
 }
+.subtitle{
+	font-size: 10px;
+}
+.smallTitle{
+	font-size: 18px;
+}
+.smallh4{
+	font-size: 14px;
+}
+.w3cbbs { page-break-after:always;}
 </style>
 <!--[if IE]>
 <style>
@@ -158,142 +168,235 @@ hr {
 			<a href="javascript:void(0)" onclick="reset()" class="print-blue">重置</a>
 			<a href="javascript:void(0)" onclick="preview(this)" class="print-blue">打印</a>
 		</div>
-		<s:if test="%{company.companyId!=10}">
-			<div class="jzk" style="margin:0px auto;">就诊卡号：<span id="jzkp"><input type="text" class="input-mini" id="jzkh"/></span></div>
-		</s:if>
-		<div class="row" style="margin:0px auto;" id="mainDiv">
-			<s:if test="%{company.companyIcon!=null&&!company.companyIcon.equals('')}">
-				<div align="center" class="clearfix">
-					<img src="<%=request.getContextPath() %>/images/hospitalIcon/<s:property value="company.companyIcon"/>" style="width:90px">
-					<h2 class="shotH3">
-						<s:property value="company.companyName" escape="false"/>
-						<br />
-						<span class="secTitle"><s:property value="company.englishName" escape="false"/></span>
-					</h2>
-					<s:if test="%{company.companyId!=12&&company.companyId!=10&&company.companyId!=22}">
-						<img id="_imgShow" src="<%=request.getContextPath() %>/images/deptIcon/<s:property value="dept.deptIcon"/>" style="width:95px">
-					</s:if>
-				</div>
-				<hr>
-			</s:if>
-			<div align="center">
-				<h3>
-					<s:if test="%{company.companyId==10}">流产组织</s:if>染色体拷贝数变异检测报告
-				</h3>
-			</div>
-			<div>
-				<h4>基本信息：</h4>
-				<table class="table table-bordered table-condensed">
-					<s:if test="%{company.companyId!=9}">
-						<tr>
-							<th><s:if test="%{company.companyId==10}">实验室</s:if>编号</th>
-							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-							<th>姓名</th>
-							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-							<th>性别</th>
-							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-							<th>年龄</th>
-							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-						</tr>
-						<tr>
-							<th>样本类型</th>
-							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-							<th>申请日期</th>
-							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-							<th>接收日期</th>
-							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-							<th>样本状态</th>
-							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-						</tr>
-					</s:if>
-					<s:if test="%{company.companyId==9}">
-						<tr>
-							<th>胚胎编号</th>
-							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-							<th>女方姓名</th>
-							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-							<th>年龄</th>
-							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-							<th>取卵日期</th>
-							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-						</tr>
-					</s:if>
-					<s:if test="%{company.companyId==10}">
-						<tr>
-							<th>临床诊断</th>
-							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-							<th>送检医生</th>
-							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-							<th>送检科室</th>
-							<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-							<th></th>
-							<td></td>
-						</tr>
-					</s:if>
-				</table>
-			</div>
-			<div>
-				<h4>检测方法:</h4>
+		<s:if test="%{company.companyId==14}">
+			<div class="row" style="margin:0px auto;" id="mainDiv">
+				<s:if test="%{company.companyIcon!=null&&!company.companyIcon.equals('')}">
+					<div align="center" class="clearfix">
+						<img src="<%=request.getContextPath() %>/images/hospitalIcon/<s:property value="company.companyIcon"/>" style="width:70px">
+						<h2 class="shotH3 smallTitle">
+							<s:property value="company.companyName" escape="false"/>
+							<br />
+							<span class="subtitle"><s:property value="company.address"/>，
+							电话：<s:property value="company.tel"/></span>
+						</h2>
+					</div>
+					<hr>
+				</s:if>
 				<div>
-					NGS
+					<table class="table table-bordered table-condensed">
+							<tr>
+								<th>姓名</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<th>门诊号</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<th>检验编号</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+							</tr>
+							<tr>
+								<th>性别</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<th>送检医师</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<th>采样日期</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+							</tr>
+							<tr>
+								<th>年龄</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<th>送检材料</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<th>接收日期</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+							</tr>
+							<tr>
+								<th>孕周</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<th>临床诊断</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<th></th>
+								<td></td>
+							</tr>
+					</table>
 				</div>
-			</div>
-			<div>
-				<h4>检测结果:</h4>
-				<img src='<s:property value="outPath"/>/<s:property value="pagePath"/>/<s:property value="miniPng"/>' width="100%">
-			</div>
-			<s:if test="%{company.companyId==10}">
+				<div>
+					<h4 class="smallh4">检测方法:<span class="subtitle"> NGS </span></h4>
+					<h4 class="smallh4">检测项目:<span class="subtitle"> 23对染色体拷贝数变异 </span></h4>
+				</div>
+				<div>
+					<h4 class="smallh4">检测结果:</h4>
+					<img src='<s:property value="outPath"/>/<s:property value="pagePath"/>/<s:property value="miniPng"/>' width="100%">
+				</div>
 				<br/>
 				<div id="des">
 					<textarea rows="3"><s:property value="txt.replace('@','+')"/></textarea>
 				</div>
-				<h4>结果解释：</h4>
+				<h4 class="smallh4">结果解释：</h4>
+				<div id="des1">
+					<textarea rows="3"></textarea>
+				</div>
+				<h4 class="smallh4">备注：</h4>
 				<div id="des2">
 					<textarea rows="3"></textarea>
 				</div>
-			</s:if>
-			<s:else>
-				<h4>结果解释：</h4>
-				<div id="des">
-					<textarea rows="3"><s:property value="txt.replace('@','+')"/></textarea>
-				</div>
-			</s:else>
-			<div class="notes">注：该检测对于&lt;
-			<s:if test="%{appId==92||appId==93}">
-			15Mb
-			</s:if>
-			<s:elseif test="%{appId==85}">
-			12Mb
-			</s:elseif>
-			<s:elseif test="%{appId==87||appId==88||appId==94}">
-			4Mb
-			</s:elseif>
-			<s:elseif test="%{appId==86||appId==91||appId==104}">
-			1Mb
-			</s:elseif>
-			的微小畸变可能不能检出。</div>
-		</div>
-		<ul class="footer">
-			<li class="left">检测人：<span><input type="text" class="input-mini" /></span></li>
-			<s:if test="%{company.companyId!=10}">
-				<li class="left">复核人：<span><input type="text" class="input-mini" /></span></li>
-			</s:if>
-			<s:if test="%{company.companyId!=9}">
-				<li class="left">审核人：<span><input type="text" class="input-mini" /></span></li>
-			</s:if>
-			<li class="right pull-right">日期：<span><input type="text" class="input-small" /></span></li>
-		</ul>
-		<s:if test="%{company.companyIcon!=null&&!company.companyIcon.equals('')&&company.companyId!=12&&company.companyId!=10&&company.companyId!=22}">
-			<div style="margin:0px auto;">
-				<hr>
-				<div class="end">
-					地址：<s:property value="company.address"/>
-					邮编：<s:property value="company.zipCode"/>
-					电话：<s:property value="company.tel"/>
-					<br/><s:property value="company.addressEn"/>
+				<div class="w3cbbs"></div>
+				<div id="page2">
+					<h4 class="smallh4">局限性：</h4>
+					<div id="des3">
+<textarea rows="8">
+1. 该检测对于染色体拷贝数变异（CNVs）&lt; 4Mb 的微小畸变导致的染色体异常，可能不能检出。
+2. 本检验无法检查到由以下因素引起的染色体变异：单亲二倍体（UPD）；染色体平衡易位、倒位、环状等结构异常；多倍体如：69，XXX、92，XXXX、92，XXYY。
+3. 本检验无法检查到由以下因素引起的疾病：单基因病、多基因病；感染、药物、辐射等环境诱因。
+4. 染色体疾病中极少数是由嵌合体，即由两种或两种以上的细胞系引起的。因正常与异常细胞系比例不定，本技术对于低比例嵌合体检测存在难度。
+</textarea>
+					</div>
 				</div>
 			</div>
+			<ul class="footer" style="margin-bottom: 0px;margin-top: 450px;" id="p2footer">
+				<li class="left">报告者：<span><input type="text" class="input-mini" /></span></li>
+				<li class="left">审核者：<span><input type="text" class="input-mini" /></span></li>
+				<li class="right pull-right opinion">报告日期：<span id="jzkp"><input type="text" class="input-mini" id="jzkh"/></span></li>
+			</ul>
+			<hr>
+			<h4 class="smallh4">临床意见：<span class="opinion"><span><input type="text" class="input-mini onlybotton" /></span></span></h4>
 		</s:if>
+		<s:else>
+			<s:if test="%{company.companyId!=10}">
+				<div class="jzk" style="margin:0px auto;">就诊卡号：<span id="jzkp"><input type="text" class="input-mini" id="jzkh"/></span></div>
+			</s:if>
+			<div class="row" style="margin:0px auto;" id="mainDiv">
+				<s:if test="%{company.companyIcon!=null&&!company.companyIcon.equals('')}">
+					<div align="center" class="clearfix">
+						<img src="<%=request.getContextPath() %>/images/hospitalIcon/<s:property value="company.companyIcon"/>" style="width:90px">
+						<h2 class="shotH3">
+							<s:property value="company.companyName" escape="false"/>
+							<br />
+							<span class="secTitle"><s:property value="company.englishName" escape="false"/></span>
+						</h2>
+						<s:if test="%{company.companyId!=12&&company.companyId!=10&&company.companyId!=22}">
+							<img id="_imgShow" src="<%=request.getContextPath() %>/images/deptIcon/<s:property value="dept.deptIcon"/>" style="width:95px">
+						</s:if>
+					</div>
+					<hr>
+				</s:if>
+				<div align="center">
+					<h3>
+						<s:if test="%{company.companyId==10}">流产组织</s:if>染色体拷贝数变异检测报告
+					</h3>
+				</div>
+				<div>
+					<h4>基本信息：</h4>
+					<table class="table table-bordered table-condensed">
+						<s:if test="%{company.companyId!=9}">
+							<tr>
+								<th><s:if test="%{company.companyId==10}">实验室</s:if>编号</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<th>姓名</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<th>性别</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<th>年龄</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+							</tr>
+							<tr>
+								<th>样本类型</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<th>申请日期</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<th>接收日期</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<th>样本状态</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+							</tr>
+						</s:if>
+						<s:if test="%{company.companyId==9}">
+							<tr>
+								<th>胚胎编号</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<th>女方姓名</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<th>年龄</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<th>取卵日期</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+							</tr>
+						</s:if>
+						<s:if test="%{company.companyId==10}">
+							<tr>
+								<th>临床诊断</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<th>送检医生</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<th>送检科室</th>
+								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<th></th>
+								<td></td>
+							</tr>
+						</s:if>
+					</table>
+				</div>
+				<div>
+					<h4>检测方法:</h4>
+					<div>
+						NGS
+					</div>
+				</div>
+				<div>
+					<h4>检测结果:</h4>
+					<img src='<s:property value="outPath"/>/<s:property value="pagePath"/>/<s:property value="miniPng"/>' width="100%">
+				</div>
+				<s:if test="%{company.companyId==10}">
+					<br/>
+					<div id="des">
+						<textarea rows="3"><s:property value="txt.replace('@','+')"/></textarea>
+					</div>
+					<h4>结果解释：</h4>
+					<div id="des2">
+						<textarea rows="3"></textarea>
+					</div>
+				</s:if>
+				<s:else>
+					<h4>结果解释：</h4>
+					<div id="des">
+						<textarea rows="3"><s:property value="txt.replace('@','+')"/></textarea>
+					</div>
+				</s:else>
+				<div class="notes">注：该检测对于&lt;
+				<s:if test="%{appId==92||appId==93}">
+				15Mb
+				</s:if>
+				<s:elseif test="%{appId==85}">
+				12Mb
+				</s:elseif>
+				<s:elseif test="%{appId==87||appId==88||appId==94}">
+				4Mb
+				</s:elseif>
+				<s:elseif test="%{appId==86||appId==91||appId==104}">
+				1Mb
+				</s:elseif>
+				的微小畸变可能不能检出。</div>
+			</div>
+			<ul class="footer">
+				<li class="left">检测人：<span><input type="text" class="input-mini" /></span></li>
+				<s:if test="%{company.companyId!=10}">
+					<li class="left">复核人：<span><input type="text" class="input-mini" /></span></li>
+				</s:if>
+				<s:if test="%{company.companyId!=9}">
+					<li class="left">审核人：<span><input type="text" class="input-mini" /></span></li>
+				</s:if>
+				<li class="right pull-right">日期：<span><input type="text" class="input-small" /></span></li>
+			</ul>
+			<s:if test="%{company.companyIcon!=null&&!company.companyIcon.equals('')&&company.companyId!=12&&company.companyId!=10&&company.companyId!=22}">
+				<div style="margin:0px auto;">
+					<hr>
+					<div class="end">
+						地址：<s:property value="company.address"/>
+						邮编：<s:property value="company.zipCode"/>
+						电话：<s:property value="company.tel"/>
+						<br/><s:property value="company.addressEn"/>
+					</div>
+				</div>
+			</s:if>
+		</s:else>
 	</s:if>
 	<s:else>
 		<s:property value="context" escape="false"/>
@@ -315,13 +418,28 @@ hr {
 			inputVal = $(this).val();
 			$(this).parent().html("<span name='print'>"+inputVal+"</span>");
 		});
+		$(".opinion").find("input").each(function(){
+			inputVal = $(this).val();
+			$(this).parent().html("<span name='print'>"+inputVal+"</span>");
+		});
 		inputVal = $("#des").children().val().replace(/\n/g,"<br>");
 		$("#des").html(inputVal);
+		var des1 = $("#des1").children().val();
+		if (des1){
+			inputVal = des1.replace(/\n/g,"<br>");
+			$("#des1").html(inputVal);
+		}
 		var des2 = $("#des2").children().val();
 		if (des2){
 			inputVal = des2.replace(/\n/g,"<br>");
 			$("#des2").html(inputVal);
 		}
+		var des3 = $("#des3").children().val();
+		if (des3){
+			inputVal = des3.replace(/\n/g,"<br>");
+			$("#des3").html(inputVal);
+		}
+		$("#p2footer").css("margin-top",(620-$("#page2").height())+"px");
 		window.print();
 		$("body").find("span[name='print']").each(function(){
 			inputVal = $(this).html();
@@ -333,8 +451,18 @@ hr {
 		});
 		inputVal = $("#des").html().replace(/<br>/g,"\n");
 		$("#des").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
-		inputVal = $("#des2").html().replace(/<br>/g,"\n");
-		$("#des2").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
+		if (des1){
+			inputVal = $("#des1").html().replace(/<br>/g,"\n");
+			$("#des1").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
+		}
+		if (des2){
+			inputVal = $("#des2").html().replace(/<br>/g,"\n");
+			$("#des2").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
+		}
+		if (des3){
+			inputVal = $("#des3").html().replace(/<br>/g,"\n");
+			$("#des3").html("<textarea rows=\"8\">"+inputVal+"</textarea>");
+		}
 	}
 	function savePage(){
 		$("body").find("input").each(function(){
