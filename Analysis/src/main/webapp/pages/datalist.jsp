@@ -8,10 +8,10 @@
 
 	<ul class="breadcrumb">
 		<li>
-			<i class="icon-home home-icon"></i>
+			<i class="icon-tasks"></i>
 			<a href="#">数据统计</a>
 		</li>
-		<li class="active">全部用户数据量</li>
+		<li class="active">总用户数据量</li>
 	</ul><!-- .breadcrumb -->
 </div>
 
@@ -19,7 +19,7 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<h3 class="header smaller lighter blue">
-				<span onclick="getUserDataList()">全部用户的数据量统计</span>
+				<span onclick="getUserDataList()">总用户数据量</span>
 				<input type="hidden" id="hideUserId">
 				<small id="secondTitle" class="hide">
 					<i class="icon-double-angle-right"></i>
@@ -65,7 +65,9 @@
 		var oTable1 = $('#allUserDataList').dataTable( {
 		"aoColumns": [
 	      null,null,null
-		] } );
+		],
+		iDisplayLength: 100
+		} );
 		
 		
 		$('table th input:checkbox').on('click' , function(){

@@ -5,7 +5,9 @@ import java.util.List;
 import com.celloud.mongo.core.SystemContext;
 import com.celloud.mongo.dao.ReportDAO;
 import com.celloud.mongo.sdo.CmpFilling;
+import com.celloud.mongo.sdo.CmpGeneSnpResult;
 import com.celloud.mongo.sdo.CmpReport;
+import com.celloud.mongo.sdo.NIPT;
 import com.celloud.mongo.sdo.PGSFilling;
 import com.celloud.mongo.sdo.Pgs;
 
@@ -16,42 +18,53 @@ import com.celloud.mongo.sdo.Pgs;
  * @version Revision: 1.0
  */
 public class ReportServiceImpl implements ReportService {
-	ReportDAO reportDao = SystemContext.getReportDAO();
+    ReportDAO reportDao = SystemContext.getReportDAO();
+
+    @Override
+    public void saveCmpReport(CmpReport cmpReport) {
+	reportDao.saveCmpReport(cmpReport);
+    }
+
+    @Override
+    public void editCmpFilling(Object id, CmpFilling cmpFill) {
+	reportDao.editCmpFilling(id, cmpFill);
+    }
+
+    @Override
+    public CmpReport getCmpReport(String dataKey, Integer userId, Integer appId) {
+	return reportDao.getCmpReport(dataKey, userId, appId);
+    }
+
+    @Override
+    public CmpReport getSimpleCmp(String dataKey, Integer userId, Integer appId) {
+	return reportDao.getSimpleCmp(dataKey, userId, appId);
+    }
+
+    @Override
+    public Pgs getPgsReport(String dataKey, Integer proId, Integer appId) {
+	return reportDao.getPgsReport(dataKey, proId, appId);
+    }
+
+    @Override
+    public List<Pgs> getPgsList(Integer userId) {
+	return this.reportDao.getPgsList(userId);
+    }
+
+    @Override
+    public void editPGSFilling(int userId, int appId, String dataKey,
+	    PGSFilling pgs) {
+	reportDao.editPGSFilling(userId, appId, dataKey, pgs);
+    }
+
+    @Override
+    public List<CmpGeneSnpResult> getGddResult(String dataKey, Integer proId,
+	    Integer appId) {
+	return reportDao.getGddResult(dataKey, proId, appId);
+    }
 
 	@Override
-	public void saveCmpReport(CmpReport cmpReport) {
-		reportDao.saveCmpReport(cmpReport);
-	}
-
-	@Override
-	public void editCmpFilling(Object id, CmpFilling cmpFill) {
-		reportDao.editCmpFilling(id, cmpFill);
-	}
-
-	@Override
-	public CmpReport getCmpReport(String dataKey, Integer userId) {
-		return reportDao.getCmpReport(dataKey, userId);
-	}
-
-	@Override
-	public CmpReport getSimpleCmp(String dataKey, Integer userId) {
-		return reportDao.getSimpleCmp(dataKey, userId);
-	}
-
-	@Override
-	public Pgs getPgsReport(String dataKey, Integer proId, Integer appId) {
-		return reportDao.getPgsReport(dataKey, proId, appId);
-	}
-
-	@Override
-	public List<Pgs> getPgsList(Integer userId) {
-		return this.reportDao.getPgsList(userId);
-	}
-
-	@Override
-	public void editPGSFilling(int userId, int appId, String dataKey,
-			PGSFilling pgs) {
-		reportDao.editPGSFilling(userId, appId, dataKey, pgs);
+	public NIPT getNIPTReport(String dataKey, Integer proId, Integer appId) {
+		return reportDao.getNIPTReport(dataKey, proId, appId);
 	}
 
 }

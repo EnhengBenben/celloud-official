@@ -8,40 +8,40 @@ package com.celloud.mongo.sdo;
  * @version Revision: 1.0
  */
 public class DrugResistanceSite {
-	/**
-	 * 基因名
-	 */
-	private String geneName;
-	/**
-	 * 突变位点
-	 */
-	private String mutationSite;
-	/**
-	 * 药物
-	 */
-	private String drug;
+    /**
+     * 基因名
+     */
+    private String geneName;
+    /**
+     * 突变位点
+     */
+    private String mutationSite;
+    /**
+     * 药物
+     */
+    private String drug;
 
-	public String getGeneName() {
-		return geneName;
-	}
+    public String getGeneName() {
+	return geneName;
+    }
 
-	public void setGeneName(String geneName) {
-		this.geneName = geneName;
-	}
+    public void setGeneName(String geneName) {
+	this.geneName = geneName;
+    }
 
-	public String getMutationSite() {
-		return mutationSite;
-	}
+    public String getMutationSite() {
+	return mutationSite;
+    }
 
-	public void setMutationSite(String mutationSite) {
-		this.mutationSite = mutationSite;
-	}
+    public void setMutationSite(String mutationSite) {
+	this.mutationSite = mutationSite;
+    }
 
-	public String getDrug() {
-		return drug;
-	}
+    public String getDrug() {
+	return drug;
+    }
 
-	public void setDrug(String drug) {
-		this.drug = drug;
-	}
+    public void setDrug(String drug) {
+	this.drug = drug;
+    }
 }

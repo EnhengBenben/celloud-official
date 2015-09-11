@@ -8,6 +8,7 @@ __author__ = 'lin'
 import os
 import threading
 from utils.FileUtils import *
+from PGS_PDF import *
 from model import *
 
 class PGS:
@@ -32,7 +33,7 @@ class PGS:
 			PGS.locker.release()
 
 	#执行
-	def getResult(self,path):
+	def getResult(self,path,appName,fileName,anotherName):
 		result = {}
 		if(path.endswith(os.sep)):
 			datakey = str(os.path.split(path[:-1])[1])
@@ -55,6 +56,7 @@ class PGS:
 			if(not os.path.exists(path)):
 				print  path + ' is not exists'
 				return result
+			createPDF(path,appName,fileName,anotherName)
 			for x in os.listdir(path):
 				if(x == 'report.txt'):
 					report = readAll(os.path.join(path,'report.txt'))

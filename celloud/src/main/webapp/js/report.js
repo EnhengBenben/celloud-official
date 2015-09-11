@@ -341,7 +341,7 @@ $.ajaxSetup ({
 			                    }
 			                }
 			            }
-			            if(appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
+			            if(appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
 			                param = {"fileName":$.trim($(this).html()),"dataKey":$.trim($(this).prev().html()),"softwareId":appId,"softwareName":appName,"userId":userId,"obj":$(this),"proId":proId,"proName":proName};
 			                if(j>0&&i==1){
 			                    $(this).addClass("sub");
@@ -519,7 +519,7 @@ $.ajaxSetup ({
 			dataReportParam = event;
 			var softwareId = event.data.softwareId;
 			var fileName = "";
-			if(softwareId == "110"||softwareId == "111"){
+			if(softwareId == "110"||softwareId == "111"||softwareId == "112"){
 				fileName = event.data.fileName.split(" ")[0];
 			}else{
 				fileName = event.data.fileName;
@@ -549,7 +549,7 @@ $.ajaxSetup ({
 				$("#fileListUl").append("<li id='prevLi'><a href='javascript:void(0)' id='prevA' class='forward'>prev</a></li>");
 				var fileNames = new Array();
 				var newList = "";
-				if(softwareId == 110||softwareId == 111){
+				if(softwareId == 110||softwareId == 111||softwareId == 112){
 					$.each(fileList,function(index,item){
 						fileNames.push(item.fileName);
 					});
@@ -663,12 +663,16 @@ $.ajaxSetup ({
 				$("#fileListUl").find(".active").removeClass("active");
 				$("#fileA"+proId+fileId).parent().addClass("active");
 			}
-			if(softwareId == 110 || softwareId ==111){
-				$.get("cmpReport!toCmpReport",{"cmpReport.projectId":proId,"cmpReport.dataKey":dataKey},function(responseText){
+			if(softwareId == 110 || softwareId ==111 || softwareId ==112){
+				$.get("cmpReport!toCmpReport",{"cmpReport.projectId":proId,"cmpReport.dataKey":dataKey,"cmpReport.appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
 			}else if(softwareId == 85 || softwareId == 86 || softwareId == 87 || softwareId == 88 || softwareId == 91 || softwareId == 92 || softwareId == 93 || softwareId == 94 || softwareId == 104){
 				$.get("pgsReport!toPgsReport",{"pgs.projectId":proId,"pgs.dataKey":dataKey,"pgs.appId":softwareId},function(responseText){
+					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+				});
+			}else if(softwareId == 95){
+				$.get("niptReport!toNIPTReport",{"nipt.projectId":proId,"nipt.dataKey":dataKey,"nipt.appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
 			}else{
@@ -717,6 +721,7 @@ $.ajaxSetup ({
 				});
 				$.get("count!getData",{"appId":appId,"columns":columns,"path":DATAPATH},function(data){
 					var sp = data.split(";");
+					$("#charResult").html("");
 					for ( var i = 1; i < sp.length; i++) {
 						var big = 0;
 						var div = $("<div id='char"+i+"' style='width:380px;display: inline-block;margin-right:10px;'></div>");
@@ -1305,7 +1310,8 @@ function toPrintHBV(pagePath,flag){
 		if(imgHtml!=""){
 			imgHtml = imgHtml.substring(0,imgHtml.length-1);
 		}
-		var printDiv0 = $("#resultDiv").html();
+		var printDiv0 = $("#resultDiv").html().trim();
+		printDiv0 = printDiv0.replace(/<br>/g,"\n").trim();
 		var printDiv1 = $("#printDiv1").html().replace(new RegExp('style="padding-left: 30px;"',"gm"),'').replace(' height="170px;" width="150px;"',"").replace(new RegExp('<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal(\'helpModal\',0,1)"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>',"gm"),'');
 		var printDiv2 = $("#printDiv2").html();
 		var printDiv3 = "";
@@ -1373,16 +1379,16 @@ function toPrintVSP(){
 		obj.document.close();
 	});
 }
-function printCMP(projectId,dataKey,userId){
-	$.get("cmpReport!toPrintDetailCmp",{"cmpReport.projectId":projectId,"cmpReport.dataKey":dataKey,"cmpReport.userId":userId},function(responseText){
+function printCMP(projectId,dataKey,userId,appId){
+	$.get("cmpReport!toPrintDetailCmp",{"cmpReport.projectId":projectId,"cmpReport.dataKey":dataKey,"cmpReport.userId":userId,"cmpReport.appId":appId},function(responseText){
 		var obj = window.open("");
 		obj.document.write(responseText);
 		obj.document.close();
 	});
 }
 
-function printSimpCMP(projectId,dataKey,userId){
-	$.get("cmpReport!toPrintSimpleCmp",{"cmpReport.projectId":projectId,"cmpReport.dataKey":dataKey,"cmpReport.userId":userId},function(responseText){
+function printSimpCMP(projectId,dataKey,userId,appId){
+	$.get("cmpReport!toPrintSimpleCmp",{"cmpReport.projectId":projectId,"cmpReport.dataKey":dataKey,"cmpReport.userId":userId,"cmpReport.appId":appId},function(responseText){
 		var obj = window.open("");
 		obj.document.write(responseText);
 		obj.document.close();

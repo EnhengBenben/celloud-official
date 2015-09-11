@@ -19,27 +19,28 @@ import org.apache.log4j.Logger;
  * @date 2013-12-3 下午2:26:37
  */
 public class VisitFilter implements Filter {
-	private static Logger log = Logger.getLogger(VisitFilter.class);
-	@Override
-	public void destroy() {
-	}
+    private static Logger log = Logger.getLogger(VisitFilter.class);
 
-	@Override
-	public void doFilter(ServletRequest req, ServletResponse resp,
-			FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest request = (HttpServletRequest) req;
-		HttpServletResponse response = (HttpServletResponse) resp;
-		String referer = request.getHeader("referer");
-		boolean isAllow = referer == null ? true : !referer.contains("celloud");
-		// isAllow 为空，说明是地址栏直接输入的地址
-		if (isAllow) {
-			log.error("非法访问！试图访问：" + request.getRequestURI());
-			response.sendRedirect(request.getContextPath() + "/error.html");
-		}
-		chain.doFilter(request, response);
-	}
+    @Override
+    public void destroy() {
+    }
 
-	@Override
-	public void init(FilterConfig config) throws ServletException {
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse resp,
+	    FilterChain chain) throws IOException, ServletException {
+	HttpServletRequest request = (HttpServletRequest) req;
+	HttpServletResponse response = (HttpServletResponse) resp;
+	String referer = request.getHeader("referer");
+	boolean isAllow = referer == null ? true : !referer.contains("celloud");
+	// isAllow 为空，说明是地址栏直接输入的地址
+	if (isAllow) {
+	    log.error("非法访问！试图访问：" + request.getRequestURI());
+	    response.sendRedirect(request.getContextPath() + "/error.html");
 	}
+	chain.doFilter(request, response);
+    }
+
+    @Override
+    public void init(FilterConfig config) throws ServletException {
+    }
 }

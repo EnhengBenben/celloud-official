@@ -11,173 +11,173 @@ import java.util.List;
  * @version Revision: 1.0
  */
 public class CmpFilling extends PatientBasic {
-	/**
-	 * 肿瘤类型
-	 */
-	private String tumorType;
-	/**
-	 * 取样日期
-	 */
-	private String samplingDate;
-	/**
-	 * 报告日期
-	 */
-	private String reportDate;
-	/**
-	 * 病理诊断
-	 */
-	private String pathologicDiagnosis;
-	/**
-	 * 病理位置
-	 */
-	private String pathologicalPosition;
-	/**
-	 * 病理类型
-	 */
-	private String pathologicalType;
-	/**
-	 * 样本来源
-	 */
-	private String sampleSource;
-	/**
-	 * 临床诊断
-	 */
-	private String clinicalDiagnosis;
-	/**
-	 * 分析日期
-	 */
-	private String analysisDate;
-	/**
-	 * 分子生物实验操作（简写）
-	 */
-	private String molecularBioExperOper;
-	/**
-	 * 基因分析
-	 */
-	private String geneAnalysis;
-	/**
-	 * 耐药位点汇总
-	 */
-	private List<DrugResistanceSite> resistanceSiteSum;
-	/**
-	 * 个性化用药——耐药位点
-	 */
-	private List<DrugResistanceSite> personalizedMedicine;
-	/**
-	 * 推荐用药
-	 */
-	private List<RecommendDrug> recommendDrug;
+    /**
+     * 肿瘤类型
+     */
+    private String tumorType;
+    /**
+     * 取样日期
+     */
+    private String samplingDate;
+    /**
+     * 报告日期
+     */
+    private String reportDate;
+    /**
+     * 病理诊断
+     */
+    private String pathologicDiagnosis;
+    /**
+     * 病理位置
+     */
+    private String pathologicalPosition;
+    /**
+     * 病理类型
+     */
+    private String pathologicalType;
+    /**
+     * 样本来源
+     */
+    private String sampleSource;
+    /**
+     * 临床诊断
+     */
+    private String clinicalDiagnosis;
+    /**
+     * 分析日期
+     */
+    private String analysisDate;
+    /**
+     * 分子生物实验操作（简写）
+     */
+    private String molecularBioExperOper;
+    /**
+     * 基因分析
+     */
+    private String geneAnalysis;
+    /**
+     * 耐药位点汇总
+     */
+    private List<DrugResistanceSite> resistanceSiteSum;
+    /**
+     * 个性化用药——耐药位点
+     */
+    private List<DrugResistanceSite> personalizedMedicine;
+    /**
+     * 推荐用药
+     */
+    private List<RecommendDrug> recommendDrug;
 
-	public String getTumorType() {
-		return tumorType;
-	}
+    public String getTumorType() {
+	return tumorType;
+    }
 
-	public void setTumorType(String tumorType) {
-		this.tumorType = tumorType;
-	}
+    public void setTumorType(String tumorType) {
+	this.tumorType = tumorType;
+    }
 
-	public String getSamplingDate() {
-		return samplingDate;
-	}
+    public String getSamplingDate() {
+	return samplingDate;
+    }
 
-	public void setSamplingDate(String samplingDate) {
-		this.samplingDate = samplingDate;
-	}
+    public void setSamplingDate(String samplingDate) {
+	this.samplingDate = samplingDate;
+    }
 
-	public String getReportDate() {
-		return reportDate;
-	}
+    public String getReportDate() {
+	return reportDate;
+    }
 
-	public void setReportDate(String reportDate) {
-		this.reportDate = reportDate;
-	}
+    public void setReportDate(String reportDate) {
+	this.reportDate = reportDate;
+    }
 
-	public String getPathologicDiagnosis() {
-		return pathologicDiagnosis;
-	}
+    public String getPathologicDiagnosis() {
+	return pathologicDiagnosis;
+    }
 
-	public void setPathologicDiagnosis(String pathologicDiagnosis) {
-		this.pathologicDiagnosis = pathologicDiagnosis;
-	}
+    public void setPathologicDiagnosis(String pathologicDiagnosis) {
+	this.pathologicDiagnosis = pathologicDiagnosis;
+    }
 
-	public String getPathologicalPosition() {
-		return pathologicalPosition;
-	}
+    public String getPathologicalPosition() {
+	return pathologicalPosition;
+    }
 
-	public void setPathologicalPosition(String pathologicalPosition) {
-		this.pathologicalPosition = pathologicalPosition;
-	}
+    public void setPathologicalPosition(String pathologicalPosition) {
+	this.pathologicalPosition = pathologicalPosition;
+    }
 
-	public String getPathologicalType() {
-		return pathologicalType;
-	}
+    public String getPathologicalType() {
+	return pathologicalType;
+    }
 
-	public void setPathologicalType(String pathologicalType) {
-		this.pathologicalType = pathologicalType;
-	}
+    public void setPathologicalType(String pathologicalType) {
+	this.pathologicalType = pathologicalType;
+    }
 
-	public String getSampleSource() {
-		return sampleSource;
-	}
+    public String getSampleSource() {
+	return sampleSource;
+    }
 
-	public void setSampleSource(String sampleSource) {
-		this.sampleSource = sampleSource;
-	}
+    public void setSampleSource(String sampleSource) {
+	this.sampleSource = sampleSource;
+    }
 
-	public String getClinicalDiagnosis() {
-		return clinicalDiagnosis;
-	}
+    public String getClinicalDiagnosis() {
+	return clinicalDiagnosis;
+    }
 
-	public void setClinicalDiagnosis(String clinicalDiagnosis) {
-		this.clinicalDiagnosis = clinicalDiagnosis;
-	}
+    public void setClinicalDiagnosis(String clinicalDiagnosis) {
+	this.clinicalDiagnosis = clinicalDiagnosis;
+    }
 
-	public String getAnalysisDate() {
-		return analysisDate;
-	}
+    public String getAnalysisDate() {
+	return analysisDate;
+    }
 
-	public void setAnalysisDate(String analysisDate) {
-		this.analysisDate = analysisDate;
-	}
+    public void setAnalysisDate(String analysisDate) {
+	this.analysisDate = analysisDate;
+    }
 
-	public String getMolecularBioExperOper() {
-		return molecularBioExperOper;
-	}
+    public String getMolecularBioExperOper() {
+	return molecularBioExperOper;
+    }
 
-	public void setMolecularBioExperOper(String molecularBioExperOper) {
-		this.molecularBioExperOper = molecularBioExperOper;
-	}
+    public void setMolecularBioExperOper(String molecularBioExperOper) {
+	this.molecularBioExperOper = molecularBioExperOper;
+    }
 
-	public String getGeneAnalysis() {
-		return geneAnalysis;
-	}
+    public String getGeneAnalysis() {
+	return geneAnalysis;
+    }
 
-	public void setGeneAnalysis(String geneAnalysis) {
-		this.geneAnalysis = geneAnalysis;
-	}
+    public void setGeneAnalysis(String geneAnalysis) {
+	this.geneAnalysis = geneAnalysis;
+    }
 
-	public List<DrugResistanceSite> getResistanceSiteSum() {
-		return resistanceSiteSum;
-	}
+    public List<DrugResistanceSite> getResistanceSiteSum() {
+	return resistanceSiteSum;
+    }
 
-	public void setResistanceSiteSum(List<DrugResistanceSite> resistanceSiteSum) {
-		this.resistanceSiteSum = resistanceSiteSum;
-	}
+    public void setResistanceSiteSum(List<DrugResistanceSite> resistanceSiteSum) {
+	this.resistanceSiteSum = resistanceSiteSum;
+    }
 
-	public List<DrugResistanceSite> getPersonalizedMedicine() {
-		return personalizedMedicine;
-	}
+    public List<DrugResistanceSite> getPersonalizedMedicine() {
+	return personalizedMedicine;
+    }
 
-	public void setPersonalizedMedicine(
-			List<DrugResistanceSite> personalizedMedicine) {
-		this.personalizedMedicine = personalizedMedicine;
-	}
+    public void setPersonalizedMedicine(
+	    List<DrugResistanceSite> personalizedMedicine) {
+	this.personalizedMedicine = personalizedMedicine;
+    }
 
-	public List<RecommendDrug> getRecommendDrug() {
-		return recommendDrug;
-	}
+    public List<RecommendDrug> getRecommendDrug() {
+	return recommendDrug;
+    }
 
-	public void setRecommendDrug(List<RecommendDrug> recommendDrug) {
-		this.recommendDrug = recommendDrug;
-	}
+    public void setRecommendDrug(List<RecommendDrug> recommendDrug) {
+	this.recommendDrug = recommendDrug;
+    }
 }

@@ -8,9 +8,10 @@
 	</script>
 	<ul class="breadcrumb">
 		<li>
-			<i class="icon-home home-icon"></i>
+			<i class="icon-hospital"></i>
 			<a href="#">医院统计</a>
 		</li>
+		<li class="active">医院详细信息</li>
 	</ul><!-- .breadcrumb -->
 </div>
 <div class="page-content">
@@ -68,7 +69,9 @@
 		var oTable1 = $('#hospitalList').dataTable( {
 		"aoColumns": [
 	      null,null,null,null,null,null,null,null
-		] } );
+		],
+		iDisplayLength: 100
+		} );
 	})
 	function getCompanyDetail(id,name){
 		$("#_oneHospital").html(name);

@@ -6,6 +6,6 @@ import com.google.inject.Singleton;
 @Singleton
 public class Kaptcha extends KaptchaServlet {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
 }

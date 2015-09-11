@@ -8,13 +8,13 @@ package com.nova.constants;
  * @version Revision: 1.0
  */
 public class SoftRecommend {
-	/**
-	 * 推荐
-	 */
-	public static final int YES = 1;
-	/**
-	 * 不推荐
-	 */
-	public static final int NO = 0;
+    /**
+     * 推荐
+     */
+    public static final int YES = 1;
+    /**
+     * 不推荐
+     */
+    public static final int NO = 0;
 
 }

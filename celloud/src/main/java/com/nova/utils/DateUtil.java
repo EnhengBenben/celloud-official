@@ -11,50 +11,50 @@ import java.util.Date;
  * @date 2012-5-2 上午12:02:55
  */
 public class DateUtil {
-	/**
-	 * @Title:nowTimeToString
-	 * @Description:将当前时间格式化成"yyyy-MM-dd HH:mm:ss"格式的字符串
-	 * @Author: lin
-	 * @return: String
-	 */
-	public static String nowCarefulTimeToString() {
-		Date date = new Date();// 得到当前时间
-		SimpleDateFormat simpleFormat = new SimpleDateFormat(
-				"yyyy-MM-dd HH:mm:ss");
-		return simpleFormat.format(date);// 将当前时间格式化成String并返回
-	}
+    /**
+     * @Title:nowTimeToString
+     * @Description:将当前时间格式化成"yyyy-MM-dd HH:mm:ss"格式的字符串
+     * @Author: lin
+     * @return: String
+     */
+    public static String nowCarefulTimeToString() {
+	Date date = new Date();// 得到当前时间
+	SimpleDateFormat simpleFormat = new SimpleDateFormat(
+		"yyyy-MM-dd HH:mm:ss");
+	return simpleFormat.format(date);// 将当前时间格式化成String并返回
+    }
 
-	/**
-	 * @Title:nowTimeToString
-	 * @Description:将当前时间格式化成"yyyy-MM-dd"格式的字符串
-	 * @Author: lin
-	 * @return: String
-	 */
-	public static String nowTimeToString() {
-		Date date = new Date();// 得到当前时间
-		SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd");
-		return simpleFormat.format(date);// 将当前时间格式化成String并返回
-	}
+    /**
+     * @Title:nowTimeToString
+     * @Description:将当前时间格式化成"yyyy-MM-dd"格式的字符串
+     * @Author: lin
+     * @return: String
+     */
+    public static String nowTimeToString() {
+	Date date = new Date();// 得到当前时间
+	SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd");
+	return simpleFormat.format(date);// 将当前时间格式化成String并返回
+    }
 
-	/**
-	 * 将当前时间格式化为“yyyyMMdd”格式的字符串
-	 * 
-	 * @return
-	 */
-	public static String getDateToString() {
-		Date date = new Date();
-		SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyyMMdd");
-		return simpleFormat.format(date);
-	}
+    /**
+     * 将当前时间格式化为“yyyyMMdd”格式的字符串
+     * 
+     * @return
+     */
+    public static String getDateToString() {
+	Date date = new Date();
+	SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyyMMdd");
+	return simpleFormat.format(date);
+    }
 
-	public static String getTimestamp() {
-		return System.currentTimeMillis() + "";
-	}
+    public static String getTimestamp() {
+	return System.currentTimeMillis() + "";
+    }
 
-	public static void main(String[] args) {
-		SecureRandom s = new SecureRandom();
-		String timeStamp = DateUtil.getDateToString()
-				+ String.format("%06d", s.nextInt(1000000));
-		System.out.println(timeStamp);
-	}
+    public static void main(String[] args) {
+	SecureRandom s = new SecureRandom();
+	String timeStamp = DateUtil.getDateToString()
+		+ String.format("%06d", s.nextInt(1000000));
+	System.out.println(timeStamp);
+    }
 }

@@ -10,42 +10,42 @@ import java.io.Serializable;
  * @version Revision: 1.0
  */
 public class Classify implements Serializable {
-	private static final long serialVersionUID = 1L;
-	private int classifyId;// 分类编号
-	private String classifyName;// 分类名称
-	private int classifyPid;// 分类父节点
-	private String notes;// 描述
+    private static final long serialVersionUID = 1L;
+    private int classifyId;// 分类编号
+    private String classifyName;// 分类名称
+    private int classifyPid;// 分类父节点
+    private String notes;// 描述
 
-	public int getClassifyId() {
-		return classifyId;
-	}
+    public int getClassifyId() {
+	return classifyId;
+    }
 
-	public void setClassifyId(int classifyId) {
-		this.classifyId = classifyId;
-	}
+    public void setClassifyId(int classifyId) {
+	this.classifyId = classifyId;
+    }
 
-	public String getClassifyName() {
-		return classifyName;
-	}
+    public String getClassifyName() {
+	return classifyName;
+    }
 
-	public void setClassifyName(String classifyName) {
-		this.classifyName = classifyName;
-	}
+    public void setClassifyName(String classifyName) {
+	this.classifyName = classifyName;
+    }
 
-	public int getClassifyPid() {
-		return classifyPid;
-	}
+    public int getClassifyPid() {
+	return classifyPid;
+    }
 
-	public void setClassifyPid(int classifyPid) {
-		this.classifyPid = classifyPid;
-	}
+    public void setClassifyPid(int classifyPid) {
+	this.classifyPid = classifyPid;
+    }
 
-	public String getNotes() {
-		return notes;
-	}
+    public String getNotes() {
+	return notes;
+    }
 
-	public void setNotes(String notes) {
-		this.notes = notes;
-	}
+    public void setNotes(String notes) {
+	this.notes = notes;
+    }
 
 }

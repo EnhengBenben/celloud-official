@@ -11,187 +11,187 @@ import java.util.Date;
  * @version Revision: 1.0
  */
 public class Project implements Serializable {
-	private static final long serialVersionUID = 1L;
-	/**
-	 * 项目编号
-	 */
-	private int projectId;
-	/**
-	 * 项目名称
-	 */
-	private String projectName;
-	/**
-	 * 物种
-	 */
-	private String strain;
+    private static final long serialVersionUID = 1L;
+    /**
+     * 项目编号
+     */
+    private int projectId;
+    /**
+     * 项目名称
+     */
+    private String projectName;
+    /**
+     * 物种
+     */
+    private String strain;
 
-	/**
-	 * 文件格式
-	 */
-	private int dataFormat;
+    /**
+     * 文件格式
+     */
+    private int dataFormat;
 
-	/**
-	 * 数据类型
-	 */
-	private int proDataType;
+    /**
+     * 数据类型
+     */
+    private int proDataType;
 
-	private String dataTypeShow;
-	/**
-	 * 创建时间
-	 */
-	private Date createDate;
-	/**
-	 * 更新时间
-	 */
-	private String updateDate;
-	/**
-	 * 状态 删除标志位，默认为0，删除为1
-	 */
-	private int state;
-	/**
-	 * 项目所属人
-	 */
-	private int userId;
+    private String dataTypeShow;
+    /**
+     * 创建时间
+     */
+    private Date createDate;
+    /**
+     * 更新时间
+     */
+    private String updateDate;
+    /**
+     * 状态 删除标志位，默认为0，删除为1
+     */
+    private int state;
+    /**
+     * 项目所属人
+     */
+    private int userId;
 
-	/**
-	 * 文件个数
-	 */
-	private int fileNum;
-	/**
-	 * 文件大小
-	 */
-	private String fileSize;
+    /**
+     * 文件个数
+     */
+    private int fileNum;
+    /**
+     * 文件大小
+     */
+    private String fileSize;
 
-	/**
-	 * 所有人
-	 */
-	private String userName;
+    /**
+     * 所有人
+     */
+    private String userName;
 
-	/**
-	 * 项目是否被共享
-	 */
-	private int share;
-	
-	private int reportNum;
+    /**
+     * 项目是否被共享
+     */
+    private int share;
 
-	public String getDataTypeShow() {
-		return dataTypeShow;
-	}
+    private int reportNum;
 
-	public void setDataTypeShow(String dataTypeShow) {
-		this.dataTypeShow = dataTypeShow;
-	}
+    public String getDataTypeShow() {
+	return dataTypeShow;
+    }
 
-	public int getProjectId() {
-		return projectId;
-	}
+    public void setDataTypeShow(String dataTypeShow) {
+	this.dataTypeShow = dataTypeShow;
+    }
 
-	public void setProjectId(int projectId) {
-		this.projectId = projectId;
-	}
+    public int getProjectId() {
+	return projectId;
+    }
 
-	public String getProjectName() {
-		return projectName;
-	}
+    public void setProjectId(int projectId) {
+	this.projectId = projectId;
+    }
 
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
-	}
+    public String getProjectName() {
+	return projectName;
+    }
 
-	public String getStrain() {
-		return strain;
-	}
+    public void setProjectName(String projectName) {
+	this.projectName = projectName;
+    }
 
-	public void setStrain(String strain) {
-		this.strain = strain;
-	}
+    public String getStrain() {
+	return strain;
+    }
 
-	public int getDataFormat() {
-		return dataFormat;
-	}
+    public void setStrain(String strain) {
+	this.strain = strain;
+    }
 
-	public void setDataFormat(int dataFormat) {
-		this.dataFormat = dataFormat;
-	}
+    public int getDataFormat() {
+	return dataFormat;
+    }
 
-	public int getProDataType() {
-		return proDataType;
-	}
+    public void setDataFormat(int dataFormat) {
+	this.dataFormat = dataFormat;
+    }
 
-	public void setProDataType(int proDataType) {
-		this.proDataType = proDataType;
-	}
+    public int getProDataType() {
+	return proDataType;
+    }
 
-	public Date getCreateDate() {
-		return createDate;
-	}
+    public void setProDataType(int proDataType) {
+	this.proDataType = proDataType;
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+    public Date getCreateDate() {
+	return createDate;
+    }
 
-	public String getUpdateDate() {
-		return updateDate;
-	}
+    public void setCreateDate(Date createDate) {
+	this.createDate = createDate;
+    }
 
-	public void setUpdateDate(String updateDate) {
-		this.updateDate = updateDate;
-	}
+    public String getUpdateDate() {
+	return updateDate;
+    }
 
-	public int getState() {
-		return state;
-	}
+    public void setUpdateDate(String updateDate) {
+	this.updateDate = updateDate;
+    }
 
-	public void setState(int state) {
-		this.state = state;
-	}
+    public int getState() {
+	return state;
+    }
 
-	public int getUserId() {
-		return userId;
-	}
+    public void setState(int state) {
+	this.state = state;
+    }
 
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
+    public int getUserId() {
+	return userId;
+    }
 
-	public int getFileNum() {
-		return fileNum;
-	}
+    public void setUserId(int userId) {
+	this.userId = userId;
+    }
 
-	public void setFileNum(int fileNum) {
-		this.fileNum = fileNum;
-	}
+    public int getFileNum() {
+	return fileNum;
+    }
 
-	public String getFileSize() {
-		return fileSize;
-	}
+    public void setFileNum(int fileNum) {
+	this.fileNum = fileNum;
+    }
 
-	public void setFileSize(String fileSize) {
-		this.fileSize = fileSize;
-	}
+    public String getFileSize() {
+	return fileSize;
+    }
 
-	public String getUserName() {
-		return userName;
-	}
+    public void setFileSize(String fileSize) {
+	this.fileSize = fileSize;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public String getUserName() {
+	return userName;
+    }
 
-	public int getShare() {
-		return share;
-	}
+    public void setUserName(String userName) {
+	this.userName = userName;
+    }
 
-	public void setShare(int share) {
-		this.share = share;
-	}
+    public int getShare() {
+	return share;
+    }
 
-	public int getReportNum() {
-		return reportNum;
-	}
+    public void setShare(int share) {
+	this.share = share;
+    }
 
-	public void setReportNum(int reportNum) {
-		this.reportNum = reportNum;
-	}
-	
+    public int getReportNum() {
+	return reportNum;
+    }
+
+    public void setReportNum(int reportNum) {
+	this.reportNum = reportNum;
+    }
+
 }

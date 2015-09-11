@@ -9,6 +9,6 @@ package com.nova.constants;
  * @version      
  */
 public class CommentState {
-	public static final int COMMENT = 0;
-	public static final int REPLY = 1;
+    public static final int COMMENT = 0;
+    public static final int REPLY = 1;
 }

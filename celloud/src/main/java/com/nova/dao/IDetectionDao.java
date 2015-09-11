@@ -21,13 +21,13 @@ import com.nova.dao.impl.DetectionDaoImpl;
  */
 @ImplementedBy(DetectionDaoImpl.class)
 public interface IDetectionDao {
-	/**
-	 * @Title: getSoftwareMaxLink
-	 * @Description: (获取每台机器的最大链接数)
-	 * @return
-	 * @param Map
-	 *            <String,Integer>
-	 * @throws
-	 */
-	Map<String, Integer> getSoftwareMaxLink();
+    /**
+     * @Title: getSoftwareMaxLink
+     * @Description: (获取每台机器的最大链接数)
+     * @return
+     * @param Map
+     *            <String,Integer>
+     * @throws
+     */
+    Map<String, Integer> getSoftwareMaxLink();
 }

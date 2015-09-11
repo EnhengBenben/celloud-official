@@ -18,7 +18,6 @@ class mysql:
 
 	locker = threading.Lock()
 
-	@staticmethod
 	def _connect():
 		if not mysql.conn:
 			#获取数据库连接
@@ -32,7 +31,7 @@ class mysql:
 	def __init__(self):
 		reload(sys)
 		sys.setdefaultencoding('utf-8')
-		mysql._connect()
+		#mysql._connect()
 
 	#获取单例对象
 	@staticmethod
@@ -48,6 +47,12 @@ class mysql:
 	#执行sql
 	def execute(self,sql):
 		try:
+			#获取数据库连接
+			self.conn=MySQLdb.connect(host=MySQLPro.host,user=MySQLPro.user,passwd=MySQLPro.password,charset='utf8')
+			#选择数据库
+			self.db=self.conn.select_db(MySQLPro.db)
+			#获取操作游标
+			self.cur=self.conn.cursor()
 			#执行
 			self.cur.execute(sql)
 			#提交事物
@@ -61,12 +66,17 @@ class mysql:
 	#执行sql
 	def query(self,sql):
 		try:
-			cur = self.conn.cursor(cursorclass = MySQLdb.cursors.DictCursor)
-			cur.execute(sql)
-			return cur.fetchall()
+			#获取数据库连接
+			self.conn=MySQLdb.connect(host=MySQLPro.host,user=MySQLPro.user,passwd=MySQLPro.password,charset='utf8')
+			#选择数据库
+			self.db=self.conn.select_db(MySQLPro.db)
+			#获取操作游标
+			self.cur=self.conn.cursor(cursorclass = MySQLdb.cursors.DictCursor)
+			self.cur.execute(sql)
+			return self.cur.fetchall()
 		except MySQLdb.Error,e:
 			print "Mysql Error %d: %s" % (e.args[0], e.args[1])
 		finally:
 			#关闭连接
-			cur.close()
-			#self.conn.close()
+			self.cur.close()
+			self.conn.close()

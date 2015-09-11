@@ -11,59 +11,59 @@ import java.io.Serializable;
  * @version Revision: 1.0
  */
 public class SoftCMPGene implements Serializable {
-	private static final long serialVersionUID = 1L;
-	private Integer cmpId;
-	private String cmpName;
-	private String cmpDescription;
-	private String cmpTreatment;
-	private String cmpTreatmentDesc;
-	private String cmpImage;
+    private static final long serialVersionUID = 1L;
+    private Integer cmpId;
+    private String cmpName;
+    private String cmpDescription;
+    private String cmpTreatment;
+    private String cmpTreatmentDesc;
+    private String cmpImage;
 
-	public Integer getCmpId() {
-		return cmpId;
-	}
+    public Integer getCmpId() {
+	return cmpId;
+    }
 
-	public void setCmpId(Integer cmpId) {
-		this.cmpId = cmpId;
-	}
+    public void setCmpId(Integer cmpId) {
+	this.cmpId = cmpId;
+    }
 
-	public String getCmpName() {
-		return cmpName;
-	}
+    public String getCmpName() {
+	return cmpName;
+    }
 
-	public void setCmpName(String cmpName) {
-		this.cmpName = cmpName;
-	}
+    public void setCmpName(String cmpName) {
+	this.cmpName = cmpName;
+    }
 
-	public String getCmpDescription() {
-		return cmpDescription;
-	}
+    public String getCmpDescription() {
+	return cmpDescription;
+    }
 
-	public void setCmpDescription(String cmpDescription) {
-		this.cmpDescription = cmpDescription;
-	}
+    public void setCmpDescription(String cmpDescription) {
+	this.cmpDescription = cmpDescription;
+    }
 
-	public String getCmpTreatment() {
-		return cmpTreatment;
-	}
+    public String getCmpTreatment() {
+	return cmpTreatment;
+    }
 
-	public void setCmpTreatment(String cmpTreatment) {
-		this.cmpTreatment = cmpTreatment;
-	}
+    public void setCmpTreatment(String cmpTreatment) {
+	this.cmpTreatment = cmpTreatment;
+    }
 
-	public String getCmpTreatmentDesc() {
-		return cmpTreatmentDesc;
-	}
+    public String getCmpTreatmentDesc() {
+	return cmpTreatmentDesc;
+    }
 
-	public void setCmpTreatmentDesc(String cmpTreatmentDesc) {
-		this.cmpTreatmentDesc = cmpTreatmentDesc;
-	}
+    public void setCmpTreatmentDesc(String cmpTreatmentDesc) {
+	this.cmpTreatmentDesc = cmpTreatmentDesc;
+    }
 
-	public String getCmpImage() {
-		return cmpImage;
-	}
+    public String getCmpImage() {
+	return cmpImage;
+    }
 
-	public void setCmpImage(String cmpImage) {
-		this.cmpImage = cmpImage;
-	}
+    public void setCmpImage(String cmpImage) {
+	this.cmpImage = cmpImage;
+    }
 }

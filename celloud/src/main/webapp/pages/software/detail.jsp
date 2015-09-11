@@ -20,7 +20,7 @@
 	            		<img src="<%=request.getContextPath()%>/images/software/added.png" />
 	           	</s:if>
 	           	<s:elseif test='soft.isAdd=="no"'>
-	           		<s:if test='soft.softwareId==6||soft.softwareId==9||soft.softwareId==10||soft.softwareId==12||soft.softwareId==74||soft.softwareId==75||soft.softwareId==76||soft.softwareId==77||soft.softwareId==78||soft.softwareId==79||soft.softwareId==81||soft.softwareId==83||soft.softwareId==109||soft.softwareId==110||soft.softwareId==111'>
+	           		<s:if test='soft.softwareId==6||soft.softwareId==9||soft.softwareId==10||soft.softwareId==12||soft.softwareId==74||soft.softwareId==75||soft.softwareId==76||soft.softwareId==77||soft.softwareId==78||soft.softwareId==79||soft.softwareId==81||soft.softwareId==83||soft.softwareId==109||soft.softwareId==110||soft.softwareId==111||soft.softwareId==112'>
 	            		<img src="<%=request.getContextPath()%>/images/software/developing.png" />
 	            	</s:if>
 	            	<s:else>

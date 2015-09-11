@@ -7,8 +7,8 @@
 	</script>
 	<ul class="breadcrumb">
 		<li>
-			<i class="icon-home home-icon"></i>
-			<a href="#">首页</a>
+			<i class="icon-dashboard"></i>
+			<a href="#">控制台</a>
 		</li>
 	</ul><!-- .breadcrumb -->
 </div>
@@ -33,7 +33,7 @@
 
 					<div class="widget-body">
 						<div class="widget-main padding-4">
-							<div class="col-sm-7 infobox-container">
+						  <div class="col-sm-7 infobox-container" style="min-width:600px">
 							<div class="infobox infobox-green  ">
 								<div class="infobox-icon">
 									医院总量：

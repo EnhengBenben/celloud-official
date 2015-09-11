@@ -16,44 +16,45 @@ import java.util.Map;
  * @date 2013-10-30 上午11:44:19
  */
 public class StepMapUtil {
-	public static Map<String, String> getStep() {
-		Map<String, String> map = new HashMap<String, String>();
-		String path = StepMapUtil.class.getResource("/Step.txt").getPath();
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(
-					new File(path)));
-			String line = "";
-			String id = "";
-			List<String> list = null;
-			int count = 0;
-			while ((line = br.readLine()) != null) {
-				count++;
-				if ("".equals(line.trim())) {
-					continue;
-				} else if (line.startsWith("##")) {
-					if (count > 1) {
-						map.put(id,
-								list.toString().replace("[", "")
-										.replace("]", ""));
-					}
-					id = br.readLine();
-					list = new ArrayList<String>();
-					continue;
-				} else {
-					list.add(line);
-				}
-			}
-			map.put(id, list.toString().replace("[", "").replace("]", ""));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+    public static Map<String, String> getStep() {
+	Map<String, String> map = new HashMap<String, String>();
+	String path = StepMapUtil.class.getResource("/Step.txt").getPath();
+	try {
+	    BufferedReader br = new BufferedReader(new FileReader(
+		    new File(path)));
+	    String line = "";
+	    String id = "";
+	    List<String> list = null;
+	    int count = 0;
+	    while ((line = br.readLine()) != null) {
+		count++;
+		if ("".equals(line.trim())) {
+		    continue;
+		} else if (line.startsWith("##")) {
+		    if (count > 1) {
+			map.put(id,
+				list.toString().replace("[", "")
+					.replace("]", ""));
+		    }
+		    id = br.readLine();
+		    list = new ArrayList<String>();
+		    continue;
+		} else {
+		    list.add(line);
 		}
-		return map;
+	    }
+	    map.put(id, list.toString().replace("[", "").replace("]", ""));
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace();
+	} catch (IOException e) {
+	    e.printStackTrace();
 	}
-	public static void main(String[] args) {
-		Map<String, String> map = getStep();
-		String l1 = map.get("9");
-		System.out.println(l1);
-	}
+	return map;
+    }
+
+    public static void main(String[] args) {
+	Map<String, String> map = getStep();
+	String l1 = map.get("9");
+	System.out.println(l1);
+    }
 }

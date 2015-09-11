@@ -8,18 +8,18 @@ import com.nova.sdo.FeedBack;
 
 @ImplementedBy(FeedDaoImpl.class)
 public interface IFeedBackDao {
-	/**
-	 * 查询所有用户反馈信息
-	 * 
-	 * @return
-	 */
-	public PageList<FeedBack> selectAllFeedBack(Page page);
+    /**
+     * 查询所有用户反馈信息
+     * 
+     * @return
+     */
+    public PageList<FeedBack> selectAllFeedBack(Page page);
 
-	/**
-	 * 保存反馈信息
-	 * 
-	 * @param fb
-	 * @return
-	 */
-	public boolean saveFeedBack(FeedBack fb);
+    /**
+     * 保存反馈信息
+     * 
+     * @param fb
+     * @return
+     */
+    public boolean saveFeedBack(FeedBack fb);
 }

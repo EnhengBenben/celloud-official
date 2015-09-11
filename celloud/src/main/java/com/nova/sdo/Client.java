@@ -9,42 +9,42 @@ import java.util.Date;
  * @date 2014-10-13 上午10:55:07
  */
 public class Client implements Serializable {
-	private static final long serialVersionUID = 1L;
-	private int id;
-	private String version;
-	private String name;
-	private Date createDate;
+    private static final long serialVersionUID = 1L;
+    private int id;
+    private String version;
+    private String name;
+    private Date createDate;
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+	return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+	this.id = id;
+    }
 
-	public String getVersion() {
-		return version;
-	}
+    public String getVersion() {
+	return version;
+    }
 
-	public void setVersion(String version) {
-		this.version = version;
-	}
+    public void setVersion(String version) {
+	this.version = version;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+	return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+	this.name = name;
+    }
 
-	public Date getCreateDate() {
-		return createDate;
-	}
+    public Date getCreateDate() {
+	return createDate;
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+    public void setCreateDate(Date createDate) {
+	this.createDate = createDate;
+    }
 
 }

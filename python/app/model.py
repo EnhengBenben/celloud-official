@@ -19,3 +19,9 @@ pgs = {"*SD": "sd",
        "detail": "detail",
        "report": "report"
        }
+nipt = {"Total_Reads": "totalReads",
+       "Reads_Length>50bp": "readsLength",
+       "Mapping_Reads": "mappingReads",
+       "readsPercent": "readsPercent",
+       "mappingPercent": "mappingPercent"
+       }

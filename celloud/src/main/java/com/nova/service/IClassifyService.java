@@ -17,87 +17,88 @@ import com.nova.utils.Page;
  */
 @ImplementedBy(ClassifyServiceImpl.class)
 public interface IClassifyService {
-	/**
-	 * 创建软件分类
-	 * 
-	 * @param classify
-	 * @return
-	 */
-	int createClassify(Classify classify);
+    /**
+     * 创建软件分类
+     * 
+     * @param classify
+     * @return
+     */
+    int createClassify(Classify classify);
 
-	/**
-	 * 删除软件分类
-	 * 
-	 * @param classifyId
-	 * @return
-	 */
-	int deleteClassify(int classifyId);
+    /**
+     * 删除软件分类
+     * 
+     * @param classifyId
+     * @return
+     */
+    int deleteClassify(int classifyId);
 
-	/**
-	 * 修改软件分类
-	 * 
-	 * @param classify
-	 * @return
-	 */
-	int updateClassify(Classify classify);
+    /**
+     * 修改软件分类
+     * 
+     * @param classify
+     * @return
+     */
+    int updateClassify(Classify classify);
 
-	/**
-	 * 查询单个软件分类
-	 * 
-	 * @param classifyId
-	 * @return
-	 */
-	Classify getClassify(int classifyId);
+    /**
+     * 查询单个软件分类
+     * 
+     * @param classifyId
+     * @return
+     */
+    Classify getClassify(int classifyId);
 
-	/**
-	 * 查询所有的软件分类
-	 * 
-	 * @return
-	 */
-	List<Classify> getAllClassifyList();
+    /**
+     * 查询所有的软件分类
+     * 
+     * @return
+     */
+    List<Classify> getAllClassifyList();
 
-	/**
-	 * 分页查询软件分类
-	 * 
-	 * @param page
-	 * @return
-	 */
-	List<Classify> getPageClassify(Page page);
+    /**
+     * 分页查询软件分类
+     * 
+     * @param page
+     * @return
+     */
+    List<Classify> getPageClassify(Page page);
 
-	/**
-	 * 统计所有软件分类数量
-	 * 
-	 * @return
-	 */
-	int getTotalClassify();
+    /**
+     * 统计所有软件分类数量
+     * 
+     * @return
+     */
+    int getTotalClassify();
 
-	/**
-	 * 查看其是否有子节点,无子节点返回true
-	 * 
-	 * @param classifyId
-	 * @return
-	 */
-	List<Classify> selectChildNode(int classifyId);
+    /**
+     * 查看其是否有子节点,无子节点返回true
+     * 
+     * @param classifyId
+     * @return
+     */
+    List<Classify> selectChildNode(int classifyId);
 
-	/**
-	 * 检验软件分类名称是否重复，重复返回false,不重复返回true
-	 * 
-	 * @param ClassifyName
-	 * @return
-	 */
-	String selectClassifyName(String ClassifyName);
+    /**
+     * 检验软件分类名称是否重复，重复返回false,不重复返回true
+     * 
+     * @param ClassifyName
+     * @return
+     */
+    String selectClassifyName(String ClassifyName);
 
-	/**
-	 * 查看属于该分类的软件
-	 * 
-	 * @param classifyId
-	 * @return
-	 */
-	List<Software> selectChildSoft(int classifyId);
-	
-	/**
-	 * 查询所有二级分类
-	 * @return
-	 */
-	List<Classify> getAllSubClassifyList();
+    /**
+     * 查看属于该分类的软件
+     * 
+     * @param classifyId
+     * @return
+     */
+    List<Software> selectChildSoft(int classifyId);
+
+    /**
+     * 查询所有二级分类
+     * 
+     * @return
+     */
+    List<Classify> getAllSubClassifyList();
 }

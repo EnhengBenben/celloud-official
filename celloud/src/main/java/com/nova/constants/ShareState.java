@@ -8,6 +8,6 @@ package com.nova.constants;
  * @version      
  */
 public class ShareState {
-	public static final int SELF = 0;// 所有人
-	public static final int SHARE = 1;// 共享
+    public static final int SELF = 0;// 所有人
+    public static final int SHARE = 1;// 共享
 }

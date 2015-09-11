@@ -25,57 +25,57 @@ import com.nova.utils.PropertiesUtil;
 @ParentPackage("celloud-default")
 @Action("pgsReport")
 @Results({
-		@Result(name = "toPgsReport", location = "../../pages/report/PGS.jsp"),
-		@Result(name = "toPgsCount", location = "../../pages/count/pgsReport.jsp") })
+	@Result(name = "toPgsReport", location = "../../pages/report/PGS.jsp"),
+	@Result(name = "toPgsCount", location = "../../pages/count/pgsReport.jsp") })
 public class PgsReportAction extends BaseAction {
-	private static final long serialVersionUID = 1L;
-	Logger log = Logger.getLogger(CmpReportAction.class);
-	@Inject
-	private ReportService reportService;
-	private Pgs pgs;
-	private String path;
-	private List<Pgs> pgsList;
+    private static final long serialVersionUID = 1L;
+    Logger log = Logger.getLogger(CmpReportAction.class);
+    @Inject
+    private ReportService reportService;
+    private Pgs pgs;
+    private String path;
+    private List<Pgs> pgsList;
 
-	/**
-	 * 查看PGS报告
-	 * 
-	 * @return
-	 */
-	public String toPgsReport() {
-		path = PropertiesUtil.toolsOutPath + "upload";
-		pgs = reportService.getPgsReport(pgs.getDataKey(), pgs.getProjectId(),
-				pgs.getAppId());
-		return "toPgsReport";
-	}
+    /**
+     * 查看PGS报告
+     * 
+     * @return
+     */
+    public String toPgsReport() {
+	path = PropertiesUtil.toolsOutPath + "upload";
+	pgs = reportService.getPgsReport(pgs.getDataKey(), pgs.getProjectId(),
+		pgs.getAppId());
+	return "toPgsReport";
+    }
 
-	public String toPgsCount() {
-		log.info("查看用户" + pgs.getUsername() + "的数据报告统计");
-		pgsList = reportService.getPgsList(pgs.getUserId());
-		return "toPgsCount";
-	}
+    public String toPgsCount() {
+	log.info("查看用户" + pgs.getUsername() + "的数据报告统计");
+	pgsList = reportService.getPgsList(pgs.getUserId());
+	return "toPgsCount";
+    }
 
-	public Pgs getPgs() {
-		return pgs;
-	}
+    public Pgs getPgs() {
+	return pgs;
+    }
 
-	public void setPgs(Pgs pgs) {
-		this.pgs = pgs;
-	}
+    public void setPgs(Pgs pgs) {
+	this.pgs = pgs;
+    }
 
-	public String getPath() {
-		return path;
-	}
+    public String getPath() {
+	return path;
+    }
 
-	public void setPath(String path) {
-		this.path = path;
-	}
+    public void setPath(String path) {
+	this.path = path;
+    }
 
-	public List<Pgs> getPgsList() {
-		return pgsList;
-	}
+    public List<Pgs> getPgsList() {
+	return pgsList;
+    }
 
-	public void setPgsList(List<Pgs> pgsList) {
-		this.pgsList = pgsList;
-	}
+    public void setPgsList(List<Pgs> pgsList) {
+	this.pgsList = pgsList;
+    }
 
 }

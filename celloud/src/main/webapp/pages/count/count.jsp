@@ -21,7 +21,7 @@
 <!--             	<a type="submit" class="text-yellow" style="font-size:12px;margin-left:10px">信息导出</a> -->
             </h3>
             <p style="font-family:黑体;color:#FFFFFF">本页提供所有数据报告总览。</p>
-            <button class="btn btn-success bg-green-active btn-flat" style="width:150px;height:70px;margin-right:0px">报告</button>
+<!--             <button class="btn btn-success bg-green-active btn-flat" style="width:150px;height:70px;margin-right:0px">报告</button> -->
           </div><!-- /.box-body -->
         </div><!-- /.box -->
         <div id="countDiv">
