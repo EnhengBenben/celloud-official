@@ -49,7 +49,7 @@ import com.nova.utils.TemplateUtil;
 	@Result(name = "privateData", location = "../../pages/data/myData.jsp"),
 	@Result(name = "info", type = "json", params = { "root", "result" }),
 	@Result(name = "getSoftList", type = "json", params = { "root",
-		"softwareList", "dataList", "fileList" }),
+		"softwareList" }),
 	@Result(name = "success", type = "json", params = { "root", "flag" }),
 	@Result(name = "userData", location = "../../pages/admin/dataList.jsp"),
 	@Result(name = "getDataByKey", type = "json", params = { "root", "data" }) })

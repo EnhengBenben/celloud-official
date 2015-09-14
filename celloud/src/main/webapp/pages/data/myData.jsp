@@ -7,7 +7,7 @@
 select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 28px;padding: 4px;font-size: 13px;line-height: 18px;color: #555555;border: 1px solid #a0d1e3;font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;font-weight: normal;margin: 0;vertical-align: middle;-webkit-appearance: menulist;box-sizing: border-box;align-items: center;white-space: pre;-webkit-rtl-ordering: logical;cursor: default;font: -webkit-small-control;letter-spacing: normal;word-spacing: normal;text-transform: none;text-indent: 0px;text-shadow: none;text-align: start;-webkit-writing-mode: horizontal-tb;}
 </style>
 <input type="hidden" id="pageRecordNumHidden" value='<s:property value="pageRecordNum"/>'/>
-<input type="hidden" id="currentPageRecordNum" value='<s:property value="%{privateDataPageList.datas.size()}" />'>
+<input type="hidden" id="currentPageRecordNum" value='<s:property value="%{dataPageList.datas.size()}" />'>
 <table class="table">
 	<thead>
     	<tr>
@@ -24,8 +24,8 @@ select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 
         </tr>
     </thead>
 	<tbody>
-		<s:if test="%{privateDataPageList.datas.size()>0}">
-			<s:iterator value="privateDataPageList.datas" status="st" id="data">
+		<s:if test="%{dataPageList.datas.size()>0}">
+			<s:iterator value="dataPageList.datas" status="st" id="data">
 				<tr>
 					<td class="center">
 		        		<input name="datachk" type="checkbox" id='chk<s:property value="#data.fileId" />' value='<s:property value="#data.fileId" />' onclick="javascript:chkOnChange(this);" style="border:none;"/>
@@ -83,15 +83,6 @@ select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 
 					</td>
 					<td class="center"><s:date name="#data.createDate" format="yyyy/MM/dd" /></td>
 					<td class="center">
-						<a href="javascript:showShareDataModal('<s:property value="#data.fileId"/>','');">
-							<s:if test="#data.shareFileId==0">
-								<img title="数据共享" alt="数据共享" src="<%=request.getContextPath()%>/images/publicIcon/share_ct.png"/>
-							</s:if>
-							<s:else>
-								<img title="数据共享" alt="数据共享" src="<%=request.getContextPath()%>/images/publicIcon/shared.png"/>
-							</s:else>
-						</a>
-        				/
         				<a href="javascript:showDataMoreInfoModal('<s:property value="#data.fileId"/>','<s:property value="#data.fileName"/>','<s:property value="#data.strain"/>','<s:property value="#data.dataTags"/>','<s:property value="#data.sample"/>','<s:property value="#data.anotherName"/>',<s:property value="#data.fileFormat"/>);"><img  title="更多" alt="更多" class="more" src="<%=request.getContextPath()%>/images/publicIcon/more.png"/></a>
         			</td>
 				</tr>
@@ -105,7 +96,7 @@ select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 
    	</tfoot>
 </table>
 <div class="pagination-new center">
-	<s:if test="%{privateDataPageList.datas.size()>0}">
+	<s:if test="%{dataPageList.datas.size()>0}">
 		<ul class="pages">
 	    	<!-- 显示prev -->
 	    	<li>
@@ -119,77 +110,77 @@ select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 
 		   		</select>
 				条
 	    	</li>
-	        <s:if test="%{privateDataPageList.page.hasPrev}">
-				<li><a href="javascript:searchData('<s:property value="privateDataPageList.page.currentPage-1" />')">&lt;</a></li>
+	        <s:if test="%{dataPageList.page.hasPrev}">
+				<li><a href="javascript:searchData('<s:property value="dataPageList.page.currentPage-1" />')">&lt;</a></li>
 			</s:if>
 			<!-- 显示第一页 -->
-			<s:if test="%{privateDataPageList.page.currentPage==1}">
+			<s:if test="%{dataPageList.page.currentPage==1}">
 				<li class="active"><a href="#">1</a></li>
 			</s:if>
 			<s:else>
 				<li><a href="javascript:searchData(1)">1</a></li>
 			</s:else>
 			
-			<s:if test="%{privateDataPageList.page.currentPage>4&&privateDataPageList.page.totalPage>10}">
+			<s:if test="%{dataPageList.page.currentPage>4&&dataPageList.page.totalPage>10}">
 				<li>...</li>
 			</s:if>
 			
-			<s:if test="%{privateDataPageList.page.totalPage-privateDataPageList.page.currentPage>=7}">
-				<s:if test="%{privateDataPageList.page.currentPage==3}">
-					<li><a href="javascript:searchData(<s:property value="privateDataPageList.page.currentPage-1"/>)"><s:property value="privateDataPageList.page.currentPage-1"/></a></li>
+			<s:if test="%{dataPageList.page.totalPage-dataPageList.page.currentPage>=7}">
+				<s:if test="%{dataPageList.page.currentPage==3}">
+					<li><a href="javascript:searchData(<s:property value="dataPageList.page.currentPage-1"/>)"><s:property value="dataPageList.page.currentPage-1"/></a></li>
 				</s:if>
-				<s:if test="%{privateDataPageList.page.currentPage==4}">
-					<li><a href="javascript:searchData(<s:property value="privateDataPageList.page.currentPage-2"/>)"><s:property value="privateDataPageList.page.currentPage-2"/></a></li>
+				<s:if test="%{dataPageList.page.currentPage==4}">
+					<li><a href="javascript:searchData(<s:property value="dataPageList.page.currentPage-2"/>)"><s:property value="dataPageList.page.currentPage-2"/></a></li>
 				</s:if>
-				<s:if test="%{privateDataPageList.page.currentPage>3}">
-					<li><a href="javascript:searchData(<s:property value="privateDataPageList.page.currentPage-1"/>)"><s:property value="privateDataPageList.page.currentPage-1"/></a></li>
+				<s:if test="%{dataPageList.page.currentPage>3}">
+					<li><a href="javascript:searchData(<s:property value="dataPageList.page.currentPage-1"/>)"><s:property value="dataPageList.page.currentPage-1"/></a></li>
 				</s:if>
-				<s:if test="%{privateDataPageList.page.currentPage>1&&privateDataPageList.page.currentPage<privateDataPageList.page.totalPage}">
-					<li class="active"><a href="#"><s:property value="privateDataPageList.page.currentPage"/></a></li>
+				<s:if test="%{dataPageList.page.currentPage>1&&dataPageList.page.currentPage<dataPageList.page.totalPage}">
+					<li class="active"><a href="#"><s:property value="dataPageList.page.currentPage"/></a></li>
 				</s:if>
-				<s:if test="%{privateDataPageList.page.totalPage-privateDataPageList.page.currentPage>1}">
-					<li><a href="javascript:searchData(<s:property value="privateDataPageList.page.currentPage+1"/>)"><s:property value="privateDataPageList.page.currentPage+1"/></a></li>
+				<s:if test="%{dataPageList.page.totalPage-dataPageList.page.currentPage>1}">
+					<li><a href="javascript:searchData(<s:property value="dataPageList.page.currentPage+1"/>)"><s:property value="dataPageList.page.currentPage+1"/></a></li>
 				</s:if>
-				<s:if test="%{privateDataPageList.page.totalPage-privateDataPageList.page.currentPage>2}">
-					<li><a href="javascript:searchData(<s:property value="privateDataPageList.page.currentPage+2"/>)"><s:property value="privateDataPageList.page.currentPage+2"/></a></li>
+				<s:if test="%{dataPageList.page.totalPage-dataPageList.page.currentPage>2}">
+					<li><a href="javascript:searchData(<s:property value="dataPageList.page.currentPage+2"/>)"><s:property value="dataPageList.page.currentPage+2"/></a></li>
 				</s:if>
-				<s:if test="%{privateDataPageList.page.totalPage-privateDataPageList.page.currentPage>3}">
-					<li><a href="javascript:searchData(<s:property value="privateDataPageList.page.currentPage+3"/>)"><s:property value="privateDataPageList.page.currentPage+3"/></a></li>
+				<s:if test="%{dataPageList.page.totalPage-dataPageList.page.currentPage>3}">
+					<li><a href="javascript:searchData(<s:property value="dataPageList.page.currentPage+3"/>)"><s:property value="dataPageList.page.currentPage+3"/></a></li>
 				</s:if>
-				<s:if test="%{privateDataPageList.page.totalPage-privateDataPageList.page.currentPage>4}">
-					<li><a href="javascript:searchData(<s:property value="privateDataPageList.page.currentPage+4"/>)"><s:property value="privateDataPageList.page.currentPage+4"/></a></li>
+				<s:if test="%{dataPageList.page.totalPage-dataPageList.page.currentPage>4}">
+					<li><a href="javascript:searchData(<s:property value="dataPageList.page.currentPage+4"/>)"><s:property value="dataPageList.page.currentPage+4"/></a></li>
 				</s:if>
-				<s:if test="%{privateDataPageList.page.totalPage-privateDataPageList.page.currentPage>5}">
-					<li><a href="javascript:searchData(<s:property value="privateDataPageList.page.currentPage+5"/>)"><s:property value="privateDataPageList.page.currentPage+5"/></a></li>
+				<s:if test="%{dataPageList.page.totalPage-dataPageList.page.currentPage>5}">
+					<li><a href="javascript:searchData(<s:property value="dataPageList.page.currentPage+5"/>)"><s:property value="dataPageList.page.currentPage+5"/></a></li>
 				</s:if>
-				<s:if test="%{privateDataPageList.page.currentPage<4}">
-					<s:if test="%{privateDataPageList.page.totalPage-privateDataPageList.page.currentPage>6}">
-						<li><a href="javascript:searchData(<s:property value="privateDataPageList.page.currentPage+6"/>)"><s:property value="privateDataPageList.page.currentPage+6"/></a></li>
+				<s:if test="%{dataPageList.page.currentPage<4}">
+					<s:if test="%{dataPageList.page.totalPage-dataPageList.page.currentPage>6}">
+						<li><a href="javascript:searchData(<s:property value="dataPageList.page.currentPage+6"/>)"><s:property value="dataPageList.page.currentPage+6"/></a></li>
 					</s:if>
 				</s:if>
-				<s:if test="%{privateDataPageList.page.currentPage==1}">
-					<s:if test="%{privateDataPageList.page.totalPage-privateDataPageList.page.currentPage>7}">
-						<li><a href="javascript:searchData(<s:property value="privateDataPageList.page.currentPage+7"/>)"><s:property value="privateDataPageList.page.currentPage+7"/></a></li>
+				<s:if test="%{dataPageList.page.currentPage==1}">
+					<s:if test="%{dataPageList.page.totalPage-dataPageList.page.currentPage>7}">
+						<li><a href="javascript:searchData(<s:property value="dataPageList.page.currentPage+7"/>)"><s:property value="dataPageList.page.currentPage+7"/></a></li>
 					</s:if>
-					<s:if test="%{privateDataPageList.page.totalPage-privateDataPageList.page.currentPage>8}">
-						<li><a href="javascript:searchData(<s:property value="privateDataPageList.page.currentPage+8"/>)"><s:property value="privateDataPageList.page.currentPage+8"/></a></li>
+					<s:if test="%{dataPageList.page.totalPage-dataPageList.page.currentPage>8}">
+						<li><a href="javascript:searchData(<s:property value="dataPageList.page.currentPage+8"/>)"><s:property value="dataPageList.page.currentPage+8"/></a></li>
 					</s:if>
 				</s:if>
-				<s:elseif test="%{privateDataPageList.page.currentPage==2}">
-					<s:if test="%{privateDataPageList.page.totalPage-privateDataPageList.page.currentPage>7}">
-						<li><a href="javascript:searchData(<s:property value="privateDataPageList.page.currentPage+7"/>)"><s:property value="privateDataPageList.page.currentPage+7"/></a></li>
+				<s:elseif test="%{dataPageList.page.currentPage==2}">
+					<s:if test="%{dataPageList.page.totalPage-dataPageList.page.currentPage>7}">
+						<li><a href="javascript:searchData(<s:property value="dataPageList.page.currentPage+7"/>)"><s:property value="dataPageList.page.currentPage+7"/></a></li>
 					</s:if>
 				</s:elseif>
-				<s:elseif test="%{privateDataPageList.page.currentPage>4}">
-					<s:if test="%{privateDataPageList.page.totalPage-privateDataPageList.page.currentPage>6}">
-						<li><a href="javascript:searchData(<s:property value="privateDataPageList.page.currentPage+6"/>)"><s:property value="privateDataPageList.page.currentPage+6"/></a></li>
+				<s:elseif test="%{dataPageList.page.currentPage>4}">
+					<s:if test="%{dataPageList.page.totalPage-dataPageList.page.currentPage>6}">
+						<li><a href="javascript:searchData(<s:property value="dataPageList.page.currentPage+6"/>)"><s:property value="dataPageList.page.currentPage+6"/></a></li>
 					</s:if>
 				</s:elseif>
 			</s:if>
 			<s:else>
-				<s:if test="%{privateDataPageList.page.totalPage-8>0}">
-					<s:iterator begin="%{privateDataPageList.page.totalPage-8}" step="1" end="%{privateDataPageList.page.totalPage-1}" var="step">
-						<s:if test="#step==privateDataPageList.page.currentPage">
+				<s:if test="%{dataPageList.page.totalPage-8>0}">
+					<s:iterator begin="%{dataPageList.page.totalPage-8}" step="1" end="%{dataPageList.page.totalPage-1}" var="step">
+						<s:if test="#step==dataPageList.page.currentPage">
 							<li class="active"><a href="#"><s:property value="#step"/></a></li>
 						</s:if>
 						<s:else>
@@ -198,8 +189,8 @@ select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 
 					</s:iterator>
 				</s:if>
 				<s:else>
-					<s:iterator begin="2" step="1" end="%{privateDataPageList.page.totalPage-1}" var="step">
-						<s:if test="#step==privateDataPageList.page.currentPage">
+					<s:iterator begin="2" step="1" end="%{dataPageList.page.totalPage-1}" var="step">
+						<s:if test="#step==dataPageList.page.currentPage">
 							<li class="active"><a href="#"><s:property value="#step"/></a></li>
 						</s:if>
 						<s:else>
@@ -209,21 +200,21 @@ select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 
 				</s:else>
 			</s:else>
 			
-			<s:if test="%{privateDataPageList.page.totalPage-privateDataPageList.page.currentPage>=8&&privateDataPageList.page.totalPage>10}">
+			<s:if test="%{dataPageList.page.totalPage-dataPageList.page.currentPage>=8&&dataPageList.page.totalPage>10}">
 				<li>...</li>
 			</s:if>
 			
-			<s:if test="%{privateDataPageList.page.currentPage==privateDataPageList.page.totalPage&&privateDataPageList.page.totalPage>1}">
-				<li class="active"><a href="#"><s:property value="privateDataPageList.page.totalPage"/></a></li>
+			<s:if test="%{dataPageList.page.currentPage==dataPageList.page.totalPage&&dataPageList.page.totalPage>1}">
+				<li class="active"><a href="#"><s:property value="dataPageList.page.totalPage"/></a></li>
 			</s:if>
-			<s:elseif test="%{privateDataPageList.page.totalPage>1}">
-				<li><a href="javascript:searchData(<s:property value="privateDataPageList.page.totalPage"/>)"><s:property value="privateDataPageList.page.totalPage"/></a></li>
+			<s:elseif test="%{dataPageList.page.totalPage>1}">
+				<li><a href="javascript:searchData(<s:property value="dataPageList.page.totalPage"/>)"><s:property value="dataPageList.page.totalPage"/></a></li>
 			</s:elseif>
-			<s:if test="%{privateDataPageList.page.hasNext}">
-				<li><a href="javascript:searchData(<s:property value="privateDataPageList.page.currentPage+1"/>)">&gt;</a></li>
+			<s:if test="%{dataPageList.page.hasNext}">
+				<li><a href="javascript:searchData(<s:property value="dataPageList.page.currentPage+1"/>)">&gt;</a></li>
 			</s:if>
 			<li>
-				共<s:property value="privateDataPageList.page.totalPage"/>页&nbsp;|&nbsp;合计<s:property value="privateDataPageList.page.rowCount"/>条
+				共<s:property value="dataPageList.page.totalPage"/>页&nbsp;|&nbsp;合计<s:property value="dataPageList.page.rowCount"/>条
 			</li>
 	</ul>
     </s:if>

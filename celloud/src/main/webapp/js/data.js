@@ -23,74 +23,66 @@ var opts = {
 var spinner;
 //---------------------------------------------------------------------
 
-//记录数据管理页面每页显示记录个数,默认是10
-var dataPageDataNum = 10;
+//记录数据管理页面每页显示记录个数,默认是50
+var dataPageDataNum = 50;
 //记录数据列表当前页
 var dataCurrentPageNumber = 1;
 //保存用户已经选择的数据
 var checkedDataIds = new Array();
 
 //privateData排序
-var sortType = 2;//默认按照时间进行排序
+var sortType = 0;//默认按照时间进行排序
 var fileNameSort = "asc";
 var createDateSort = "desc";
-//sharedData排序
-var ssortType = 2;//默认按照时间进行排序
-var sfileNameSort = "asc";
-var screateDateSort = "desc";
 var onclick = "";
 function initData(){
-	$(".table tr:odd").addClass("intro1");
-	$(".table tr").mouseover(function(){
-		$(this).addClass("change");
-		});
-	$(".table tr").mouseout(function(){
-		$(this).removeClass("change");
-		});
-	$(".table tr:even").addClass("intro2");
-	onclick = $("#proParamTab").attr("onclick");
-	$("#windowMark").hide();
-	
 	$("#dataTagSearch").val("");
 //	getPrivateDataList();
-	getMyDataList();
+	getAllDataList();
 	
 	//数据搜索绑定回车事件
 	$("#dataTagSearch").bind('keyup', function(event){
 	   var event = event || window.event;
 	   if (event.keyCode=="13"){
-		   searchData(1);
+		   getDataByCondition(1);
 		   return;
 	   }
 	});
 }	
 
-function keyDownToSearch(){
-	var event = event || window.event;
-	if(event.keyCode==13){return false;}
-}
-
 //-------v 3.0版本
 //获取我的数据
-function getMyDataList(){
+function getAllDataList(){
 	//设置遮罩
 	spinner = new Spinner(opts);
 	var target = document.getElementById('selfDataDiv');
 	spinner.spin(target);
-	
-	$("#pageRecordSel").val(dataPageDataNum);
-	var dataTag = $.trim($("#dataTagSearch").val());
+	$.get("data3!getAllData",{},function(responseText){
+		spinner.stop();
+		$("#selfDataDiv").html(responseText);
+		$("#pageRecordSel").val(dataPageDataNum);
+	});
+}
+function getDataByCondition(pageNum){
+	//设置遮罩
+	spinner = new Spinner(opts);
+	var target = document.getElementById('selfDataDiv');
+	spinner.spin(target);
+	dataCurrentPageNumber = pageNum;
 	var sortOrder = "asc";
 	if(sortType==1){//当前按照文件名进行排序
 		sortOrder = fileNameSort;
-	}else if(sortType==2){//当前按照上传时间进行排序
+	}else{//当前按照上传时间进行排序
 		sortOrder = createDateSort;
 	}
-	$.get("data!getMyOwnData",{"page.pageSize":dataPageDataNum,"page.currentPage":1,"type":sortType,"sort":sortOrder,"dataTag":dataTag},function(responseText){
-		spinner.stop();
-		$("#pageRecordSel").val(dataPageDataNum);
+	alert(sortOrder);
+	var condition = $.trim($("#dataTagSearch").val());
+	$.get("data3!getDataByCondition",{"condition":condition,"page.pageSize":dataPageDataNum,"page.currentPage":pageNum,"sortType":sortType,"sort":sortOrder},function(responseText){
 		$("#selfDataDiv").html(responseText);
-		privateIcon();
+		$("#pageRecordSel").val(dataPageDataNum);
+		toUse();
+		$("#fileDataBody").scrollTop(0);
+		spinner.stop();
 	});
 }
 function showRunApp(){

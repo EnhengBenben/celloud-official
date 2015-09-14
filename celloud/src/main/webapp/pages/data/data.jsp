@@ -65,9 +65,9 @@
                   </h3>
                   <div class="box-tools col-xs-4">
                     <div class="input-group">
-                      <input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search"/>
+                      <input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" id="dataTagSearch" onkeyup="javascript:getDataByCondition(1);"/>
                       <div class="input-group-btn">
-                        <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                        <button class="btn btn-sm btn-default" onclick="getDataByCondition(1)"><i class="fa fa-search"></i></button>
                       </div>
                     </div>
                   </div>
@@ -182,7 +182,7 @@
 	<!-- jquery_alert_dialogs end -->
     <script src="<%=request.getContextPath() %>/dist/js/celloud.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/plugins/spin.min.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/data.js?version=1.02" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/data.js?version=1.04" type="text/javascript"></script>
 	<!-- spin:loading效果 end-->
 	<script type="text/javascript">
 		var session_userId = <%=session.getAttribute("userId")%>;
