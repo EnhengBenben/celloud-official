@@ -671,10 +671,10 @@ $.ajaxSetup ({
 				$.get("pgsReport!toPgsReport",{"pgs.projectId":proId,"pgs.dataKey":dataKey,"pgs.appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
-			}else if(softwareId == 95){
-				$.get("niptReport!toNIPTReport",{"nipt.projectId":proId,"nipt.dataKey":dataKey,"nipt.appId":softwareId},function(responseText){
-					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-				});
+//			}else if(softwareId == 95){
+//				$.get("niptReport!toNIPTReport",{"nipt.projectId":proId,"nipt.dataKey":dataKey,"nipt.appId":softwareId},function(responseText){
+//					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+//				});
 			}else{
 				$.get("data!getDataByKey",{"dataKey":dataKey},function(data){
 					var anotherName = data.anotherName;
