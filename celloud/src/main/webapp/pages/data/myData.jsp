@@ -1,5 +1,8 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <style>
 .dataautocomplete{list-style-type:none;margin-left:30px;border:1px solid #ccc;width:281px;position:absolute;left:170px;top:83px; background:#fff}
 .dataautocomplete li{font-size:12px; font-family:"Lucida Console", Monaco, monospace; cursor:pointer; height:21px; line-height:20px}
@@ -20,80 +23,72 @@ select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 
         	<th>文件别名</th>
         	<th>数据大小</th>
         	<th>上传时间<a href="javascript:sortByCreateDate();"> <img id="sortCreateDate" src="<%=request.getContextPath()%>/images/publicIcon/descending_b.png"/></a></th>
+        	<th>运行状态</th>
 			<th>操作</th>
         </tr>
     </thead>
 	<tbody>
-		<s:if test="%{dataPageList.datas.size()>0}">
-			<s:iterator value="dataPageList.datas" status="st" id="data">
-				<tr>
-					<td class="center">
-		        		<input name="datachk" type="checkbox" id='chk<s:property value="#data.fileId" />' value='<s:property value="#data.fileId" />' onclick="javascript:chkOnChange(this);" style="border:none;"/>
-		        		<input type="hidden" value="<s:property value="#data.fileName" />" id="fileName<s:property value="#data.fileId" />">
-		        	</td>
-					<td title="<s:property value="#data.fileName"/>">
-						<s:if test="#data.fileName.length()>40">
-							<s:property value="#data.fileName.substring(0,40)"/>...
-						</s:if>
-						<s:else>
-							<s:property value="#data.fileName" />
-						</s:else>
-						<s:date name="#data.createDate" format="yyyy/MM/dd" var="createDate"/>
-						<s:date name="lastDate" format="yyyy/MM/dd" var="lastDate"/>
-						<s:if test="#createDate==#lastDate">
-							<img src="<%=request.getContextPath()%>/images/publicIcon/icon_new.png"/>
-						</s:if>
-						<s:if test="%{#data.isRunning>0}">
-							<img src="<%=request.getContextPath()%>/images/publicIcon/icon-running.png" title="running" style="position: absolute;margin-top: 1px;"/>
-						</s:if>
-					</td>
-					<td class="center">
-						<div id="popover">
-				            <a href="javascript:void(0);">
-								<s:property value="#data.dataKey"/>
-								<div>
+		<c:choose>
+			<c:when test="${dataPageList.datas.size()>0}">
+				<c:forEach items="${dataPageList.datas }" var="data">
+					<tr>
+						<td class="center">
+			        		<input name="datachk" type="checkbox" id='chk${data.fileId }' value='${data.fileId }' onclick="javascript:chkOnChange(this);" style="border:none;"/>
+			        		<input type="hidden" value="${data.fileName }" id="fileName${data.fileId }">
+			        	</td>
+						<td title="${data.fileName }">
+							<c:choose><c:when test="${fn:length(data.fileName)>40 }"><c:out value="${fn:substring(data.fileName, 0, 40) }"/></c:when><c:otherwise>${data.fileName }</c:otherwise></c:choose>
+							<c:if test="${data.isRunning>0}">
+								<img src="<%=request.getContextPath()%>/images/publicIcon/icon-running.png" title="running" style="position: absolute;margin-top: 1px;"/>
+							</c:if>
+						</td>
+						<td class="center">
+							<div id="popover">
+					            <a href="javascript:void(0);">
+					            	${data.dataKey }
 									<div>
-									  <table>
-										<tr>
-											<td align="right" width="100px;">样本类型/物种：</td>
-											<td align="left"><s:property value="#data.strain"/></td>
-										</tr>
-										<tr>
-											<td align="right">数据标签：</td>
-											<td align="left"><s:property value="#data.dataTags"/></td>
-										</tr>
-										<tr>
-											<td align="right">样本：</td>
-											<td align="left"><s:property value="#data.sample"/></td>
-										</tr>
-									  </table>
+										<div>
+										  <table>
+											<tr>
+												<td align="right" width="100px;">样本类型/物种：</td>
+												<td align="left">${data.strain }<s:property value="#data.strain"/></td>
+											</tr>
+											<tr>
+												<td align="right">数据标签：</td>
+												<td align="left">${data.dataTags }</td>
+											</tr>
+											<tr>
+												<td align="right">样本：</td>
+												<td align="left">${data.sample }</td>
+											</tr>
+										  </table>
+										</div>
 									</div>
-								</div>
-							</a>
-						</div>
-					</td>
-					<td class="center"><s:property value="#data.anotherName"/></td>
-					<td class="center">
-						<s:if test="%{#data.size>1048576}">
-							<s:property value="#data.size/1048576" /> MB
-						</s:if>
-						<s:else>
-							<s:property value="#data.size/1024" /> KB
-						</s:else>
-					</td>
-					<td class="center"><s:date name="#data.createDate" format="yyyy/MM/dd" /></td>
-					<td class="center">
-        				<a href="javascript:showDataMoreInfoModal('<s:property value="#data.fileId"/>','<s:property value="#data.fileName"/>','<s:property value="#data.strain"/>','<s:property value="#data.dataTags"/>','<s:property value="#data.sample"/>','<s:property value="#data.anotherName"/>',<s:property value="#data.fileFormat"/>);"><img  title="更多" alt="更多" class="more" src="<%=request.getContextPath()%>/images/publicIcon/more.png"/></a>
-        			</td>
-				</tr>
-			</s:iterator>
-		</s:if>
-		<s:else>
-			<tr><td colspan="7">数据记录为空</td></tr>
-		</s:else>
+								</a>
+							</div>
+						</td>
+						<td class="center">${data.anotherName }</td>
+						<td class="center">
+							<c:choose><c:when test="${data.size>1048576 }"><c:out value="${data.size/1048576 }"/>MB</c:when><c:otherwise><c:out value="${data.size/1024 }"/>KB</c:otherwise></c:choose>
+						</td>
+						<td class="center"><fmt:formatDate type="date" value="${data.createDate }"/></td>
+						<td class="center">
+							<c:choose>
+								<c:when test="${data.reportNum>0}"><span class="label label-success">已运行</span></c:when>
+								<c:otherwise><span class="label label-warning">未运行</span></c:otherwise>
+							</c:choose>
+						</td>
+						<td class="center">
+	        				<a href="javascript:showDataMoreInfoModal('${data.fileId }','${data.fileName }','${data.strain }','${data.dataTags }','${data.sample }','${data.anotherName }',${data.fileFormat });"><img  title="更多" alt="更多" class="more" src="<%=request.getContextPath()%>/images/publicIcon/more.png"/></a>
+	        			</td>
+					</tr>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				<tr><td colspan="8">数据记录为空</td></tr>
+			</c:otherwise>
+		</c:choose>
    	</tbody>
-	<tfoot>
-   	</tfoot>
 </table>
 <div class="pagination-new center">
 	<s:if test="%{dataPageList.datas.size()>0}">

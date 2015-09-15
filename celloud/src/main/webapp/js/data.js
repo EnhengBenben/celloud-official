@@ -75,7 +75,6 @@ function getDataByCondition(pageNum){
 	}else{//当前按照上传时间进行排序
 		sortOrder = createDateSort;
 	}
-	alert(sortOrder);
 	var condition = $.trim($("#dataTagSearch").val());
 	$.get("data3!getDataByCondition",{"condition":condition,"page.pageSize":dataPageDataNum,"page.currentPage":pageNum,"sortType":sortType,"sort":sortOrder},function(responseText){
 		$("#selfDataDiv").html(responseText);
@@ -83,7 +82,51 @@ function getDataByCondition(pageNum){
 		toUse();
 		$("#fileDataBody").scrollTop(0);
 		spinner.stop();
+		privateIcon();
 	});
+}
+function sortByFileName(){//按文件名进行排序
+	sortType = 1;
+	if(fileNameSort=="asc"){
+		fileNameSort = "desc";
+	}else if(fileNameSort=="desc"){
+		fileNameSort = "asc";
+	}
+	getDataByCondition(1);
+}
+function sortByCreateDate(){//按照上传时间进行排序
+	sortType = 2;
+	if(createDateSort=="asc"){
+		createDateSort = "desc";
+	}else if(createDateSort=="desc"){
+		createDateSort = "asc";
+	}
+	getDataByCondition(1);
+}
+function privateIcon(){
+	if(sortType==1){
+		if(fileNameSort=="asc"){
+			$("#sortFileName").attr("src","../../images/publicIcon/ascending_b.png");
+		}else if(fileNameSort=="desc"){
+			$("#sortFileName").attr("src","../../images/publicIcon/descending_b.png");
+		}
+		if(createDateSort=="asc"){
+			$("#sortCreateDate").attr("src","../../images/publicIcon/ascending.png");
+		}else if(createDateSort=="desc"){
+			$("#sortCreateDate").attr("src","../../images/publicIcon/descending.png");
+		}
+	}else if(sortType==2){
+		if(createDateSort=="asc"){
+			$("#sortCreateDate").attr("src","../../images/publicIcon/ascending_b.png");
+		}else if(createDateSort=="desc"){
+			$("#sortCreateDate").attr("src","../../images/publicIcon/descending_b.png");
+		}
+		if(fileNameSort=="asc"){
+			$("#sortFileName").attr("src","../../images/publicIcon/ascending.png");
+		}else if(fileNameSort=="desc"){
+			$("#sortFileName").attr("src","../../images/publicIcon/descending.png");
+		}
+	}
 }
 function showRunApp(){
 	$("#appsForDataUl").html("");
@@ -99,7 +142,6 @@ function showRunApp(){
     }
     dataIds = dataIds.substring(0, dataIds.length-1);
     $.get("data!getSoftListByFormat",{"dataIds":dataIds},function(result){
-    	alert(JSON.stringify(result.softwareList));
     	if(result == "所选数据格式不统一！"){
     		$("#warningText").html(result);
 			$("#warningModal").modal("show");
@@ -617,51 +659,6 @@ function searchData(page){
 		spinner.stop();
 	});
 }
-function privateIcon(){
-	if(sortType==1){
-		if(fileNameSort=="asc"){
-			$("#sortFileName").attr("src","../../images/publicIcon/ascending_b.png");
-		}else if(fileNameSort=="desc"){
-			$("#sortFileName").attr("src","../../images/publicIcon/descending_b.png");
-		}
-		if(createDateSort=="asc"){
-			$("#sortCreateDate").attr("src","../../images/publicIcon/ascending.png");
-		}else if(createDateSort=="desc"){
-			$("#sortCreateDate").attr("src","../../images/publicIcon/descending.png");
-		}
-	}else if(sortType==2){
-		if(createDateSort=="asc"){
-			$("#sortCreateDate").attr("src","../../images/publicIcon/ascending_b.png");
-		}else if(createDateSort=="desc"){
-			$("#sortCreateDate").attr("src","../../images/publicIcon/descending_b.png");
-		}
-		if(fileNameSort=="asc"){
-			$("#sortFileName").attr("src","../../images/publicIcon/ascending.png");
-		}else if(fileNameSort=="desc"){
-			$("#sortFileName").attr("src","../../images/publicIcon/descending.png");
-		}
-	}
-}
-//按文件名进行排序
-function sortByFileName(){
-	sortType = 1;
-	if(fileNameSort=="asc"){
-		fileNameSort = "desc";
-	}else if(fileNameSort=="desc"){
-		fileNameSort = "asc";
-	}
-	searchData(1);
-}
-//按照上传时间进行排序
-function sortByCreateDate(){
-	sortType = 2;
-	if(createDateSort=="asc"){
-		createDateSort = "desc";
-	}else if(createDateSort=="desc"){
-		createDateSort = "asc";
-	}
-	searchData(1);
-}
 
 //添加数据标签
 function showAddDataTagModal(fileId,dataTags){
@@ -691,104 +688,6 @@ function saveDataTag(){
 			$("#dataTagInfo").html("保存失败！");
 		}
 	});
-}
-//数据共享
-function showShareDataModal(fileId,owner){
-	$("#dataShareOwnerHidden").val(owner);
-	//获取共享人getUsersMapByFileId
-	$.get("getUsersMap.action",{},function(data){
-		//获取以前的共享用户
-		var newShareArr = new Array();
-		$.get("getUsersMapByFileId.action",{"fileId":fileId},function(data){
-			$.each(data,function(index,item){
-				if(item.text!=sessionUserName){
-					newShareArr.push(item);
-				}
-			});
-			if(newShareArr.length>0){
-				$("#userSel").select2("data", newShareArr);
-			}
-		});
-		$("#userSel").select2({
-			minimumInputLength: 1,
-			data:data.tags,
-			query: function (query) {
-				var data = {results: [{id: query.term, text: query.term}]};
-				query.callback(data);
-		 	},
-			multiple: true
-		});
-	});
-	
-	$("#dataShareHidden").val(fileId);
-	$.get("getFileNameById.action",{"fileId":fileId},function(responseText){
-		var ext = responseText.substring(responseText.lastIndexOf(".")-1);
-		if(responseText.length-ext.length>20){
-			var newFileName = responseText.substring(0,20)+"..." + ext;
-			$("#shareDataSpan").html("文件名称："+newFileName);
-		}else{
-			$("#shareDataSpan").html("文件名称："+responseText);
-		}
-	});
-	$("#userSel").val('');
-	$("#dataShareSpanInfo").html("");
-	$("#shareDataModal").modal("show");
-}
-
-//保存共享数据
-function saveShareData(){
-	var owner = $("#dataShareOwnerHidden").val();
-	var fileId = $("#dataShareHidden").val();
-	var userNames = "";
-	var data = $("#userSel").select2("data");
-	var empty = false;
-	$.each(data,function(index,item){
-		var id = $.trim(item.id);
-		if(id==""){
-			empty = true;
-		}
-	});
-	if(empty){
-		$("#dataShareSpanInfo").html("用户名不能有空值！");
-		return;
-	}
-	$.each(data, function(index, item) {
-		userNames += item.text + ",";
-	});
-	//在共享类表里进行共享，不能共享给数据或项目的所有人
-	if(owner!=""){
-		if(userNames.indexOf(owner, 0)!=-1){
-			$("#dataShareSpanInfo").html("数据不能共享给数据的所有人！");
-			return;
-		}
-	}
-	if(userNames!=""&&(userNames.substring(0, userNames.length-1)==sessionUserName||userNames.indexOf(sessionUserName, 0)!=-1)){
-		$("#dataShareSpanInfo").html("数据不能共享给自己！");
-		return;
-	}else{
-		if(userNames!=""){
-			userNames = userNames.substring(0, userNames.length-1);
-		}
-		$.get("shareData.action",{"fileId":fileId,"userNames":userNames},function(responseText){
-			if(responseText=="1"){//保存成功
-				$("#shareDataModal").modal("hide");
-				//发送邮件
-				$.get("sendEmail.action",{"userNames":userNames,"fileId":fileId},function(flag){
-					if(flag==0){
-						jAlert("邮件发送失败！");
-					}else{
-						checkedDataIds = [];
-						searchData(dataCurrentPageNumber);
-					}
-				});
-			}else if(responseText=="0"){
-				$("#shareDataModal").modal("hide");
-				searchData(dataCurrentPageNumber);
-			}else{
-				$("#dataShareSpanInfo").html(responseText);
-			}
-		});
-	}
 }
 
 //修改数据物种
@@ -964,72 +863,6 @@ function saveDataMoreInfo(){
 	}else{
 		$("#dataMoreInfoModal").modal("hide");
 	}
-}
-//分页
-function searchSharedData(page){
-	spinner = new Spinner(opts);
-	var target = document.getElementById('dataSharedToMeDiv');
-	spinner.spin(target);
-	var sortOrder = "asc";
-	if(ssortType==1){//当前按照文件名进行排序
-		sortOrder = sfileNameSort;
-	}else if(ssortType==2){//当前按照上传时间进行排序
-		sortOrder = screateDateSort;
-	}
-	$.get("data_getDataSharedToMe.action",{"page.pageSize":10,"page.currentPage":page,"type":ssortType,"sort":sortOrder},function(responseText){
-		$("#dataSharedToMeDiv").html(responseText);
-		spinner.stop();
-		if(ssortType==1){
-			if(sfileNameSort=="asc"){
-				$("#sFileNameSortType").attr("src","../../images/publicIcon/ascending_b.png");
-			}else if(sfileNameSort=="desc"){
-				$("#sFileNameSortType").attr("src","../../images/publicIcon/descending_b.png");
-			}
-			if(screateDateSort=="asc"){
-				$("#sCreateDateSortType").attr("src","../../images/publicIcon/ascending.png");
-			}else if(screateDateSort=="desc"){
-				$("#sCreateDateSortType").attr("src","../../images/publicIcon/descending.png");
-			}
-		}else if(ssortType==2){
-			if(screateDateSort=="asc"){
-				$("#sCreateDateSortType").attr("src","../../images/publicIcon/ascending_b.png");
-			}else if(screateDateSort=="desc"){
-				$("#sCreateDateSortType").attr("src","../../images/publicIcon/descending_b.png");
-			}
-			if(sfileNameSort=="asc"){
-				$("#sFileNameSortType").attr("src","../../images/publicIcon/ascending.png");
-			}else if(sfileNameSort=="desc"){
-				$("#sFileNameSortType").attr("src","../../images/publicIcon/descending.png");
-			}
-		}
-	});
-}
-//根据文件名进行排序
-function ssortByFileName(){
-	ssortType = 1;
-	if(sfileNameSort=="asc"){
-		sfileNameSort = "desc";
-	}else if(sfileNameSort=="desc"){
-		sfileNameSort = "asc";
-	}
-	searchSharedData(1);
-}
-//根据上传时间进行排序
-function ssortByCreateDate(){
-	ssortType = 2;
-	if(screateDateSort=="asc"){
-		screateDateSort = "desc";
-	}else if(screateDateSort=="desc"){
-		screateDateSort = "asc";
-	}
-	searchSharedData(1);
-}
-
-//显示更多信息
-function showSharedDataMoreInfoModal(strain,dataTag){
-	$("#sharedDataStrainSpan").html(strain);
-	$("#sharedDataDataTagSpan").html(dataTag);
-	$("#sharedDataMoreInfoModal").modal("show");
 }
 
 function removeAllSpace(str) {
