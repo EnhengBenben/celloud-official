@@ -10,9 +10,9 @@
 	</machine>
 	<machine>
 		<name>spark</name>
-		<host>1</host>
-		<port>2</port>
-		<username>3</username>
-		<pwd>4</pwd>
+		<host>192.168.255.249</host>
+		<port>22</port>
+		<username>root</username>
+		<pwd>CelLoud_Hadoop</pwd>
 	</machine>
 </machines>
