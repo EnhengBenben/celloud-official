@@ -24,6 +24,7 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
 }
+input,button,select,textarea{outline:none}/*取消chrome下input和textarea的聚焦边框：*/
 /* Layout */
 .wrapper {
   min-height: 100%;
@@ -135,21 +136,6 @@ body {
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
-}
-/* H1 - H6 font */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.h1,
-.h2,
-.h3,
-.h4,
-.h5,
-.h6 {
-  font-family: 'Source Sans Pro', sans-serif;
 }
 /* General Links */
 a {
@@ -1223,7 +1209,7 @@ a:focus {
   border-color: #d2d6de;
 }
 .form-control:focus {
-  border-color: #3c8dbc !important;
+/*   border-color: #3c8dbc !important; */
   box-shadow: none;
 }
 .form-control::-moz-placeholder {
@@ -2156,6 +2142,28 @@ a:focus {
 .btn-success.hover {
   background-color: #008d4c;
 }
+.btn-celloud-success{
+  background-color: #4cba42;
+  border-color: #4cba42;
+  color: #fff;
+}
+.btn-celloud-success:hover,
+.btn-celloud-success:active,
+.btn-celloud-success.hover {
+  color: #fbfcfe;
+  background-color: #20a938;
+}
+.btn-celloud-close{
+  background-color: #fff;
+  border-color: #4cba42;
+  color: #4cba42;
+}
+.btn-celloud-close:hover,
+.btn-celloud-close:active,
+.btn-celloud-close.hover {
+  border-color: #20a938;
+  color: #20a938;
+}
 .btn-info {
   background-color: #00c0ef;
   border-color: #00acd6;
@@ -2239,6 +2247,66 @@ a:focus {
   font-size: 10px;
   font-weight: 400;
 }
+.btn-app > .fa,
+.btn-app > .glyphicon,
+.btn-app > .ion {
+  font-size: 20px;
+  display: block;
+}
+.btn-app:hover {
+  background: #f4f4f4;
+  color: #444;
+  border-color: #aaa;
+}
+.btn-app:active,
+.btn-app:focus {
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.btn-app > .badge {
+  position: absolute;
+  top: -3px;
+  right: -10px;
+  font-size: 10px;
+  font-weight: 400;
+}
+/*--for celloud-*/
+.types-options {
+	padding: 16px 0;
+	background: #fff;
+	color: #78bc28;
+	border: 1px solid #bede68;
+	font-size: 16px;
+	margin: 0 1px 3px 1px;
+	cursor: pointer;
+	display: inline-block;
+	text-align: center;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px
+}
+.types-options.selected {
+	border: 1px solid #58c23f;
+	background: #58c23f;
+	color: #fff
+}
+.types-options:hover {
+	border: 1px solid #cfeaf8;
+	background: #d0edb5;
+	color: #76bc28
+}
+
+.types-options.selected:hover {
+	border: 1px solid #4cba42;
+	background: #4cba42;
+	color: #fff
+}
+.data-select {
+  padding: 6px 15px;
+  font-size: 12px
+}
+
 /*
  * Component: Callout
  * ------------------
@@ -2317,6 +2385,25 @@ a:focus {
 }
 .alert-info {
   border-color: #00acd6;
+}
+/* for celloud*/
+.alert-warning-cel{
+  border-color: #f384a;
+  color: #ffaa20 !important;
+  background-color: #ffefdf !important;
+  padding-top:3px;
+  padding-bottom:3px;
+}
+.alert-warning-cel .close {
+  color: #ff7e15;
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+  font-size:18px;
+  padding:5px;
+}
+.alert-warning-cel .close:hover {
+  opacity: 1;
+  filter: alpha(opacity=100);
 }
 /*
  * Component: Nav
@@ -3968,7 +4055,11 @@ fieldset[disabled] .btn-vk.active {
 .modal-success .modal-footer,
 .modal-danger .modal-body,
 .modal-danger .modal-header,
-.modal-danger .modal-footer {
+.modal-danger .modal-footer,
+.modal-celloud-green .modal-body,
+.modal-celloud-green .modal-header,
+.modal-celloud-green .modal-footer,
+.modal-green-header .modal-header{
   color: #fff !important;
 }
 .bg-gray {
@@ -4014,6 +4105,9 @@ fieldset[disabled] .btn-vk.active {
 .label-success,
 .modal-success .modal-body {
   background-color: #00a65a !important;
+}
+.modal-celloud-green .modal-body{
+  background-color: #97d967 !important;
 }
 .bg-navy {
   background-color: #001f3f !important;
@@ -4073,6 +4167,18 @@ fieldset[disabled] .btn-vk.active {
 .modal-success .modal-header,
 .modal-success .modal-footer {
   background-color: #008d4c !important;
+}
+/*自定义celloud modal样式*/
+.modal-celloud-green .modal-header,
+.modal-celloud-green .modal-footer {
+  background-color: #58c23f !important;
+}
+.modal-green-header .modal-header{
+  background-color: #4cba42 !important;
+}
+.modal-green-header .modal-header> h4 >span{
+  font-size:12px;
+  font-weight:normal
 }
 .bg-navy-active {
   background-color: #001a35 !important;
@@ -4312,6 +4418,7 @@ fieldset[disabled] .btn-vk.active {
 .chart canvas {
   width: 100%!important;
 }
+.tipModal{width:300px;margin:auto}
 /*
  * Misc: print
  * -----------
@@ -4377,3 +4484,46 @@ fieldset[disabled] .btn-vk.active {
 .pagination-new ul>.disabled>span, .pagination-new ul>.disabled>a, .pagination-new ul>.disabled>a:hover {color:#fff;cursor:default;background-color:#999}
 .pagination-new ul>li:first-child>a, .pagination-new ul>li:first-child>span {border-left-width:1px;-webkit-border-radius:3px 0 0 3px;-moz-border-radius:3px 0 0 3px;border-radius:3px 0 0 3px}
 .pagination-new ul>li:last-child>a, .pagination-new ul>li:last-child>span {-webkit-border-radius:0 3px 3px 0;-moz-border-radius:0 3px 3px 0;border-radius:0 3px 3px 0}
+
+.form-cel .form-group{
+  margin-bottom: 5px;
+}
+.form-cel .form-label {
+  padding-top:10px;
+  text-align: right;
+  font-weight: normal;
+}
+.form-cel input[type="text"]{
+	padding: 9px;
+	border: 2px solid #c0e06a;
+	width: 270px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	vertical-align: middle
+}
+.a-white{ 
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+  color: #fff !important;
+  font-size: 14px;
+  font-weight: normal;
+}
+.a-white:hover{
+  color: #fff !important;
+  font-size: 16px;
+}
+.a-green{ 
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+  color: #4cba42 !important;
+  font-size: 15px;
+  font-weight: normal;
+}
+.a-green:hover{
+  color: #4cba42 !important;
+  font-size: 16px;
+}
+
