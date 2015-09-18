@@ -21,8 +21,7 @@ def tcplink(sock, addr):
 
         try:
             httpClient = httplib.HTTPConnection('localhost',8080,timeout=30)
-            httpClient.request('GET','/celloud/project!runQueue')
-
+            httpClient.request('GET','/celloud/project!runQueue?projectId='+projectId)
             response = httpClient.getresponse()
             print response.status
             print response.reason
@@ -38,7 +37,7 @@ def tcplink(sock, addr):
     print 'Connection from %s:%s closed.' % addr
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind(('127.0.0.1', 8088))
+s.bind(('192.168.255.245', 9999))
 s.listen(5)
 print 'Waiting for connection...'
 while True:

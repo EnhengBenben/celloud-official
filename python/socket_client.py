@@ -7,7 +7,6 @@ __author__='lin'
 #调用方式:python socket_client.py '/share/data/webapps/Tools/upload/9/110' 'ProjectID3466'
 
 import socket , time , os , sys
-from mysql.mysqlOperate import mysql
 
 if len(sys.argv) != 3:
 	print 'Usage: *.py path projectId'
@@ -20,7 +19,7 @@ path = os.path.join(path , projectId)
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # 建立连接:
-s.connect(('121.201.7.200', 9999))
+s.connect(('192.168.255.245', 9999))
 print s.recv(1024)
 s.send(path)
 print s.recv(1024)

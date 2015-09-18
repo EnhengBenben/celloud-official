@@ -18,12 +18,20 @@ def pgsdata(path,projectId):
 	if my:
 		result = my.query(sql)
 		if result is not None:
+			proReport = "<table><tr><td>dataName</td><td>dataKey</td></tr>";
 			for i in range(len(result)):
 				re = result[i] 
 				pgs = PGS.getInstance()
 				if pgs:
 					final = pgs.getResult(os.path.join(path,re['dataKey']))
+					proReport = proReport + "<tr><td>" + re['fileName'] + "</td><td>" + re['dataKey'] + "</td></tr>"
 					merge = dict(final, **re)
 					mo = mongo.getInstance()
 					objId = mo.put(merge)
 					#print objId
+			proReport =proReport + "</table>"
+			proSql = "update tb_report set state=3,context='" + proReport + "',end_date=now()  where project_id=" + projectId
+			print proSql
+			my.execute(proSql)
+if __name__=='__main__':
+    pgsdata("/home/lin/work/9/88","2246")

@@ -17,7 +17,7 @@ public class GlobalQueue {
 	 * @param e
 	 * @return
 	 */
-	public static boolean offer(String e) {
+	public synchronized static boolean offer(String e) {
 		return queue.offer(e);
 	}
 
@@ -26,7 +26,7 @@ public class GlobalQueue {
 	 * 
 	 * @return
 	 */
-	public static String poll() {
+	public synchronized static String poll() {
 		return queue.poll();
 	}
 
@@ -35,18 +35,8 @@ public class GlobalQueue {
 	 * 
 	 * @return
 	 */
-	public static String peek() {
+	public synchronized static String peek() {
 		return queue.peek();
-	}
-
-	/**
-	 * 从队列中移除指定元素的单个实例（如果存在）。
-	 * 
-	 * @param o
-	 * @return
-	 */
-	public static boolean remove(String o) {
-		return queue.remove(o);
 	}
 
 	/**
@@ -54,7 +44,7 @@ public class GlobalQueue {
 	 * 
 	 * @return
 	 */
-	public static int getSize() {
+	public synchronized static int getSize() {
 		return queue.size();
 	}
 
@@ -63,7 +53,7 @@ public class GlobalQueue {
 	 * 
 	 * @return
 	 */
-	public static boolean isEmpty() {
+	public synchronized static boolean isEmpty() {
 		return queue.isEmpty();
 	}
 }
