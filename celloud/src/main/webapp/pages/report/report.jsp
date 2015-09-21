@@ -9,7 +9,7 @@
 		<meta http-equiv="expires" content="0">
 		<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 		<meta http-equiv="description" content="This is my page">
-		<link href="<%=request.getContextPath() %>/css/report.css?version=20150526" rel="stylesheet">
+		<link href="<%=request.getContextPath() %>/css/report.css?version=20150918" rel="stylesheet">
 		<link href="<%=request.getContextPath() %>/css/buttons.css?version=20150730" rel="stylesheet">
 		<link href="<%=request.getContextPath() %>/plugins/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
 		<link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
@@ -35,7 +35,7 @@
 <%-- 	<script src="<%=request.getContextPath() %>/plugins/highcharts/highcharts-theme.js"></script> --%>
 	<script src="<%=request.getContextPath() %>/plugins/highcharts/exporting.js"></script>
 	<script src="<%=request.getContextPath() %>/plugins/highcharts/char.js?version=20150526"></script>
-	<script src="<%=request.getContextPath() %>/js/report.js?version=20150908"></script>
+	<script src="<%=request.getContextPath() %>/js/report.js?version=201509185"></script>
 	<script src="<%=request.getContextPath() %>/js/dataformat.js"></script>
 	<script src="<%=request.getContextPath() %>/js/codon.js"></script>
 	<script type="text/javascript">
