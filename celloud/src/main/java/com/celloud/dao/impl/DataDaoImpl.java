@@ -229,6 +229,7 @@ public class DataDaoImpl extends BaseDao implements DataDao {
 	Integer num = null;
 	try {
 	    qps = conn.prepareStatement(sql.toString());
+	    qps.setInt(1, DataState.DEELTED);
 	    num = qps.executeUpdate();
 	} catch (SQLException e) {
 	    log.error("用户" + super.userName + "删除数据" + dataIds + "失败");
