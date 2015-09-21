@@ -119,4 +119,17 @@ public class CompanyDaoImpl implements CompanyDao {
 		return com;
 	}
 
+	@Override
+	public List<Map<String, Object>> getProvince() {
+		log.info("获取平台医院分布");
+		List<Map<String, Object>> list = null;
+		String sql = "select province,count(company_id) as num from tb_company group by province;";
+		try {
+			list = qr.query(conn, sql, new MapListHandler());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 }
