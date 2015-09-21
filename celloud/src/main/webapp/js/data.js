@@ -153,7 +153,7 @@ function showRunApp(){
 }
 function addRunApp(appId,appName,dataIds){
 	if($("#runAppli"+appId).hasClass("selected")){
-		addedApps.splice(appId,1);
+		addedApps.splice($.inArray(appId,addedApps),1);
 		$("#runAppli"+appId).removeClass("selected");
 	}else{
 		//判断为包含CMP/CMP_199/GDD则提示检查所选数据
@@ -205,12 +205,13 @@ function toRunApp(){
 				$("#runErrorTitle").html("以下APP运行失败：");
 				$("#runError").append($("#runAppli" +softId).html() + "nbsp;nbsp;");
 				$("#runErrorDiv").removeClass("hide");
-			}
-			if(i==addedApps.length-1){
-				checkedDataIds = [];
-				$("input[type='checkbox']").prop("checked",false);
-				$("#runApp").modal("hide");
-				$("#runErrorDiv").addClass("hide");
+			}else{
+				if(i==addedApps.length-1){
+					checkedDataIds = [];
+					$("input[type='checkbox']").prop("checked",false);
+					$("#runApp").modal("hide");
+					$("#runErrorDiv").addClass("hide");
+				}
 			}
 		});
 	}
