@@ -127,7 +127,7 @@ function showRunApp(){
     }
     dataIds = dataIds.substring(0, dataIds.length-1);
     var dataLength = checkedDataIds.length;
-    $.get("data3!getSoftListByFormat",{"condition":dataIds},function(result){
+    $.get("data3!getSoftListByFormat",{"dataIds":dataIds},function(result){
     	if(result == "所选数据格式不统一！"){
     		$("#warningText").html(result);
 			$("#warningModal").modal("show");
@@ -141,7 +141,7 @@ function showRunApp(){
 	    		if(dataNum<=dataLength){
 	    			if((appName=="VSP" ||appName=="CMP"||appName=="CMP_199"||appName=="GDD")&&dataNum<dataLength){
 	    			}else{
-	    				li += "<li class='types-options' id='li"+appName+"' title='点击选中' onclick=\"addRunApp("+appId+",'"+appName+"','"+dataIds+"')\">"+appName+"</li>";
+	    				li += "<li class='types-options' id='runAppli"+appId+"' title='点击选中' onclick=\"addRunApp("+appId+",'"+appName+"','"+dataIds+"')\">"+appName+"</li>";
 	    			}
 	    		}
 	    	}
@@ -152,17 +152,17 @@ function showRunApp(){
     });
 }
 function addRunApp(appId,appName,dataIds){
-	if($("#li"+appName).hasClass("selected")){
+	if($("#runAppli"+appId).hasClass("selected")){
 		addedApps.splice(appId,1);
-		$("#li"+appName).removeClass("selected");
+		$("#runAppli"+appId).removeClass("selected");
 	}else{
 		//判断为包含CMP/CMP_199/GDD则提示检查所选数据
 		if(appId==110 ||appId==111|| appId==112){
-			$("#runErrorTitle").html("请确定以上数据为配对数据！<input type='hidden' id='appNameHide' value='"+appName+"'><input type='hidden' id='appIdHide' value='"+appId+"'>");
+			$("#runErrorTitle").html("请确定以上数据为配对数据！<input type='hidden' id='appIdHide' value='"+appId+"'>");
 			$("#runError").html("(配对格式:aaa<span class='text-red'>1</span>.fastq&nbsp;&nbsp;&nbsp;aaa<span class='text-red'>2</span>.fastq)");
 			$("#runErrorDiv").removeClass("hide");
 		}else{
-			$.get("data3!checkDataRunningSoft",{"condition":dataIds,"conditionInt":appId},function(intList){
+			$.get("data3!checkDataRunningSoft",{"dataIds":dataIds,"conditionInt":appId},function(intList){
 				if(intList.length>0){
 					var dataName = "";
 					for(var i=0;i<intList.length;i++){
@@ -173,18 +173,12 @@ function addRunApp(appId,appName,dataIds){
 					$("#runError").html(dataName+"<br>请选择其他APP或删除选中数据");
 					$("#runErrorDiv").removeClass("hide");
 				}else{
-					$("#li"+appName).addClass("selected");
+					$("#runAppli"+appId).addClass("selected");
 					addedApps.push(appId);
 				}
 			})
 		}
 	}
-}
-function removeRunApp(appId,appName){
-	addedApps.splice(appId,1);
-	$("#addedAppLi"+appName).remove();
-	var li = "<li id='li"+appName+"' onclick=\"addRunApp("+appId+",'"+appName+"')\"><a style='cursor:pointer;'>"+appName+"</a></li>";
-	$("#appsForDataUl").append(li);
 }
 function removetoRunData(id){
 	checkedDataIds.splice($.inArray(id,checkedDataIds),1);
@@ -193,25 +187,23 @@ function removetoRunData(id){
 }
 function okToRun(type){
 	if(type == 1){
-		var appName = $("#appNameHide").val();
-		$("#li" +appName).addClass("selected");
-		addedApps.push($("#appIdHide").val());
+		var appId = $("#appIdHide").val();
+		$("#runAppli" +appId).addClass("selected");
+		addedApps.push(appId);
 	}
 	$("#runErrorDiv").addClass("hide");
 }
 function toRunApp(){
+	var dataIds = "";
+	for (var i=0;i<checkedDataIds.length;i++){
+		dataIds += checkedDataIds[i] + ",";
+	}
 	for (var i=0;i<addedApps.length;i++){
 		softId = addedApps[i];
-		var dataIds = "";
-		for (var i=0;i<checkedDataIds.length;i++){
-	         dataIds += checkedDataIds[i] + ",";
-	    }
 		$.get("project!run", {"dataIds":dataIds,"softwareId" : softId}, function(error) {
-			if (error == 1) {
-				$("#runErrorTitle").html("创建项目失败");
-				$("#runErrorDiv").removeClass("hide");
-			} else if (error == 2) {
-				$("#runErrorTitle").html("创建项目数据关系失败");
+			if (error > 0) {
+				$("#runErrorTitle").html("以下APP运行失败：");
+				$("#runError").append($("#runAppli" +softId).html() + "nbsp;nbsp;");
 				$("#runErrorDiv").removeClass("hide");
 			}
 			if(i==addedApps.length-1){
@@ -232,7 +224,7 @@ function deleteData(){
 	         dataIds += checkedDataIds[i] + ",";
 	    }
 	    dataIds = dataIds.substring(0, dataIds.length-1);
-	    $.get("data3!deleteData",{"condition":dataIds},function(result){
+	    $.get("data3!deleteData",{"dataIds":dataIds},function(result){
     		if(result>0){
     			getDataByCondition(dataCurrentPageNumber);
     			checkedDataIds = [];
