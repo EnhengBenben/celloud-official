@@ -158,7 +158,7 @@ function addRunApp(appId,appName,dataIds){
 	}else{
 		//判断为包含CMP/CMP_199/GDD则提示检查所选数据
 		if(appId==110 ||appId==111|| appId==112){
-			$("#runErrorTitle").html("请确定以上数据为配对数据！<input type='hidden' id='appNameHide' value='"+appName+"'>");
+			$("#runErrorTitle").html("请确定以上数据为配对数据！<input type='hidden' id='appNameHide' value='"+appName+"'><input type='hidden' id='appIdHide' value='"+appId+"'>");
 			$("#runError").html("(配对格式:aaa<span class='text-red'>1</span>.fastq&nbsp;&nbsp;&nbsp;aaa<span class='text-red'>2</span>.fastq)");
 			$("#runErrorDiv").removeClass("hide");
 		}else{
@@ -191,6 +191,14 @@ function removetoRunData(id){
 	$("#chk"+id).attr("checked",false);
 	$("#dataLi"+id).remove();
 }
+function okToRun(type){
+	if(type == 1){
+		var appName = $("#appNameHide").val();
+		$("#li" +appName).addClass("selected");
+		addedApps.push($("#appIdHide").val());
+	}
+	$("#runErrorDiv").addClass("hide");
+}
 function toRunApp(){
 	for (var i=0;i<addedApps.length;i++){
 		softId = addedApps[i];
@@ -200,22 +208,20 @@ function toRunApp(){
 	    }
 		$.get("project!run", {"dataIds":dataIds,"softwareId" : softId}, function(error) {
 			if (error == 1) {
-				$("#runError").html("创建项目失败");
+				$("#runErrorTitle").html("创建项目失败");
+				$("#runErrorDiv").removeClass("hide");
 			} else if (error == 2) {
-				$("#runError").html("创建项目数据关系失败");
+				$("#runErrorTitle").html("创建项目数据关系失败");
+				$("#runErrorDiv").removeClass("hide");
 			}
-			checkedDataIds = [];
-			$("#runApp").modal("hide");
+			if(i==addedApps.length-1){
+				checkedDataIds = [];
+				$("input[type='checkbox']").prop("checked",false);
+				$("#runApp").modal("hide");
+				$("#runErrorDiv").addClass("hide");
+			}
 		});
 	}
-	getDataByCondition(dataCurrentPageNumber);
-}
-function okToRun(type){
-	if(type == 1){
-		var appName = $("#appNameHide").val();
-		$("#li" +appName).addClass("selected");
-	}
-	$("#runErrorDiv").addClass("hide");
 }
 function deleteData(){
 	$("#warningText").html("确定要删除选中数据吗？");
@@ -262,7 +268,6 @@ function setSelect2Info(objId,data){
 //打开批量管理数据页面
 function toManageDatasModel(){
 	$.get("dataJson_getAllDataStrainList.action",{},function(data){
-		alert(JSON.stringify(data));
 		$("#manageDatasStrainSel").select2({
 			placeholder: "请选择样本类型/物种",
 		    allowClear: true, //必须与placeholder同时出现才有效
