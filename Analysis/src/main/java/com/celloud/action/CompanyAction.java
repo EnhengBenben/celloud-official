@@ -19,6 +19,7 @@ import com.google.inject.Inject;
 		@Result(name = "success", location = "../../pages/hospitalActivity.jsp"),
 		@Result(name = "companyDetail", location = "../../pages/hospitalList.jsp"),
 		@Result(name = "oneCompany", location = "../../pages/hospitalOne.jsp"),
+		@Result(name = "list", type = "json", params = { "root", "list" }),
 		@Result(name = "resultMap", type = "json", params = { "root",
 				"resultMap" }) })
 public class CompanyAction extends BaseAction {
@@ -27,11 +28,25 @@ public class CompanyAction extends BaseAction {
 	@Inject
 	private CompanyService companyService;
 	private Map<String, Object> resultMap;
+	private List<Map<String, Object>> list;
 	private List<Company> complist;
 	private Company company;
 
 	public String toActivity() {
 		return "success";
+	}
+
+	public String getProvince() {
+		list = companyService.getProvince();
+		return "list";
+	}
+
+	public List<Map<String, Object>> getList() {
+		return list;
+	}
+
+	public void setList(List<Map<String, Object>> list) {
+		this.list = list;
 	}
 
 	public String getCompanyNumEveryMonth() {

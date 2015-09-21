@@ -110,4 +110,9 @@ public class CompanyServiceImpl implements CompanyService {
 	public Company getCompanyById(Integer compId) {
 		return companyDao.getCompanyById(compId);
 	}
+
+	@Override
+	public List<Map<String, Object>> getProvince() {
+		return companyDao.getProvince();
+	}
 }
