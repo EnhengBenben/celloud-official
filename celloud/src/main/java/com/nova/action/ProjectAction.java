@@ -131,8 +131,38 @@ public class ProjectAction extends BaseAction {
 	private static String dataPath = PropertiesUtil.bigFilePath;
 	private static String datalist = PropertiesUtil.datalist;
 
+	// TODO 需要存入数据库，然后从数据库取
+	private static Map<String, String> perlMap = new HashMap<>();
+
 	static {
 		XmlUtil.getMachines();
+		// MalBac
+		perlMap.put("85",
+				"/share/biosoft/perl/wangzhen/PGS/bin/qsub_MDA_MR_split_spark_luohui_port.pl");
+		perlMap.put("86",
+				"/share/biosoft/perl/wangzhen/PGS/bin/qsub_gDNA_HR_split_park_luohui_port.pl ");
+		perlMap.put("87",
+				"/share/biosoft/perl/wangzhen/PGS/bin/qsub_gDNA_MR_split_spark_luohui_port.pl ");
+		perlMap.put("88",
+				"/share/biosoft/perl/wangzhen/PGS/bin/qsub_MDA_MR_split_spark_luohui_port.pl");
+		// MDA_HR
+		perlMap.put("91",
+				"/share/biosoft/perl/wangzhen/PGS/bin/qsub_MDA_MR_split_spark_luohui_port.pl");
+		perlMap.put(
+				"92",
+				" /share/biosoft/perl/wangzhen/PGS/bin/qsub_gDNA_Chimeric_split_spark_luohui_port.pl ");
+		perlMap.put(
+				"93",
+				"/share/biosoft/perl/wangzhen/PGS/bin/qsub_MDA_Chimeric_split_spark_luohui_port.pl ");
+		// SurePlex
+		perlMap.put("94",
+				"/share/biosoft/perl/wangzhen/PGS/bin/qsub_MDA_MR_split_spark_luohui_port.pl");
+		// NIPT
+		perlMap.put("95",
+				"/share/biosoft/perl/wangzhen/PGS/bin/qsub_MDA_MR_split_spark_luohui_port.pl");
+		// Sureplex_HR
+		perlMap.put("104",
+				"/share/biosoft/perl/wangzhen/PGS/bin/qsub_MDA_MR_split_spark_luohui_port.pl");
 	}
 	private static Map<String, Map<String, String>> machines = XmlUtil.machines;
 	private static String sparkhost = machines.get("spark").get(Mod.HOST);
@@ -531,11 +561,12 @@ public class ProjectAction extends BaseAction {
 					+ "/";
 			if (SparkPro.NODES >= running) {
 				log.info("资源满足需求，投递任务");
-				submit(basePath, proId + "", dataKeyList, appName);
+				submit(basePath, proId + "", dataKeyList, appName,
+						perlMap.get(softwareId));
 			} else {
 				log.info("资源不满足需求，进入队列等待");
 				GlobalQueue.offer(basePath + "--" + proId + "--" + dataKeyList
-						+ "--" + appName);
+						+ "--" + appName + "--" + softwareId);
 			}
 		} else {
 			String newPath = PropertiesUtil.toolsOutPath
@@ -573,7 +604,8 @@ public class ProjectAction extends BaseAction {
 						+ PortPool.getSize() + " 个");
 				if (PortPool.getSize() >= need) {
 					log.info("满足需要，投递任务");
-					submit(infos[0], infos[1], infos[2], infos[3]);
+					submit(infos[0], infos[1], infos[2], infos[3],
+							perlMap.get(infos[4]));
 					GlobalQueue.poll();
 				} else {
 					log.info("不满足需要，暂缓投递任务");
@@ -583,19 +615,20 @@ public class ProjectAction extends BaseAction {
 	}
 
 	private void submit(String basePath, String projectId, String dataKeyList,
-			String appName) {
+			String appName, String perl) {
 		// 创建要运行的文件列表文件
 		String dataListFile = dealDataKeyListContainFileName(projectId,
 				dataKeyList);
 		// TODO
-		String command = "perl  /share/biosoft/perl/wangzhen/PGS/bin/moniter_qsub_python_monogo.pl perl /share/biosoft/perl/wangzhen/PGS/bin/qsub_MDA_MR_split_spark_luohui_port.pl"
+		String command = "perl  /share/biosoft/perl/wangzhen/PGS/bin/moniter_qsub_python_monogo.pl perl "
+				+ " "
+				+ perl
 				+ " "
 				+ dataListFile
 				+ " "
 				+ basePath
-				+ " ProjectID"
-				+ projectId;
-		System.out.println(command);
+				+ " ProjectID" + projectId;
+		log.info("运行命令：" + command);
 		SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
 		ssh.sshSubmit(command);
 	}

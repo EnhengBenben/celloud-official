@@ -226,6 +226,10 @@ function runMultiDataNew(){
 		return;
 	}
     //遍历得到每个checkbox的value值
+	if(checkedDataIds.length>25){
+		jAlert("同时勾选的数据不能超过25条");
+		return;
+	}
     for (var i=0;i<checkedDataIds.length;i++){
          dataIds += checkedDataIds[i] + ",";
          fileNames.push($("#fileName"+checkedDataIds[i]).val());
