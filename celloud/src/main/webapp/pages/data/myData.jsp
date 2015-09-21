@@ -37,7 +37,7 @@ select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 
 			        		<input type="hidden" value="${data.fileName }" id="fileName${data.fileId }">
 			        	</td>
 						<td title="${data.fileName }">
-							<c:choose><c:when test="${fn:length(data.fileName)>40 }"><c:out value="${fn:substring(data.fileName, 0, 40) }"/></c:when><c:otherwise>${data.fileName }</c:otherwise></c:choose>
+							<c:choose><c:when test="${fn:length(data.fileName)>60 }"><c:out value="${fn:substring(data.fileName, 0, 60) }"/>...</c:when><c:otherwise>${data.fileName }</c:otherwise></c:choose>
 							<c:if test="${data.isRunning>0}">
 								<img src="<%=request.getContextPath()%>/images/publicIcon/icon-running.png" title="running" style="position: absolute;margin-top: 1px;"/>
 							</c:if>
