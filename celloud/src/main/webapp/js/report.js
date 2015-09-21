@@ -671,10 +671,10 @@ $.ajaxSetup ({
 				$.get("pgsReport!toPgsReport",{"pgs.projectId":proId,"pgs.dataKey":dataKey,"pgs.appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
-			}else if(softwareId == 95){
-				$.get("niptReport!toNIPTReport",{"nipt.projectId":proId,"nipt.dataKey":dataKey,"nipt.appId":softwareId},function(responseText){
-					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-				});
+//			}else if(softwareId == 95){
+//				$.get("niptReport!toNIPTReport",{"nipt.projectId":proId,"nipt.dataKey":dataKey,"nipt.appId":softwareId},function(responseText){
+//					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+//				});
 			}else{
 				$.get("data!getDataByKey",{"dataKey":dataKey},function(data){
 					var anotherName = data.anotherName;
@@ -910,7 +910,7 @@ $.ajaxSetup ({
 			}
 			if(appId==84||appId==89){
 				var length = $("#seq_length").val();
-				if(length==0){
+				if(length==0 || isNaN(length)){
 					$("#charDiv").html("<p style=\"color: red;\">数据异常，没有同比结果</p>");
 				}else{  
 					$.get("count!getEGFR",{"appId":appId,"path":DATAPATH,"length":length},function(data){
@@ -1352,7 +1352,7 @@ function toPrintHBV(pagePath,flag){
 				"context":$("#report_tb").html(),
 				"imgHtml":imgHtml
 		};
-	}else if(appId == 84||appId == 89){
+	}else if(appId == 89){
 		var imgHtml="";
 		$("img[name='imgSrc']").each(function(){ 
 			imgHtml+=$(this).attr("src")+",";
@@ -1364,6 +1364,26 @@ function toPrintHBV(pagePath,flag){
 				"appId" : appId,
 				"context":$("#report_tb").html(),
 				"imgHtml":imgHtml
+		};
+	}else if(appId == 84){
+		var imgHtml="";
+		$("img[name='imgSrc']").each(function(){ 
+			imgHtml+=$(this).attr("src")+",";
+		});
+		if(imgHtml!=""){
+			imgHtml = imgHtml.substring(0,imgHtml.length-1);
+		}
+		var _result = $("#_result").html().trim();
+		var table = $("#knowResult").html().trim();
+		var knowPic = $("img[name='know']").attr("src"); 
+		param = {
+				"appId" : appId,
+				"context":$("#report_tb").html(),
+				"imgHtml":imgHtml,
+				"seq":$("#_seq").html(),
+				"result":_result,
+				"allPic":knowPic,
+		        "table":table,
 		};
 	}
 	$.post("print!printHBV",param,function(responseText){

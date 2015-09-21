@@ -138,12 +138,14 @@ hr {
 	font-size: 10px;
 }
 .smallTitle{
-	font-size: 18px;
+	font-size: 16px;
 }
 .smallh4{
-	font-size: 14px;
+	font-size: 12px;
+	line-height:8px;
 }
 .w3cbbs { page-break-after:always;}
+.miniTable_ tr td,.miniTable_ tr th{line-height:14px;}
 </style>
 <!--[if IE]>
 <style>
@@ -168,54 +170,96 @@ hr {
 			<a href="javascript:void(0)" onclick="reset()" class="print-blue">重置</a>
 			<a href="javascript:void(0)" onclick="preview(this)" class="print-blue">打印</a>
 		</div>
-		<s:if test="%{company.companyId==14}">
-			<div class="row" style="margin:0px auto;" id="mainDiv">
+		<s:if test="%{company.companyId==14||company.companyId==42}">
+			<div class="row" style="margin:0px auto;font-size:12px;">
 				<s:if test="%{company.companyIcon!=null&&!company.companyIcon.equals('')}">
 					<div align="center" class="clearfix">
-						<img src="<%=request.getContextPath() %>/images/hospitalIcon/<s:property value="company.companyIcon"/>" style="width:70px">
-						<h2 class="shotH3 smallTitle">
+					  <s:if test="%{company.companyId==14}">
+						<img src="<%=request.getContextPath() %>/images/hospitalIcon/<s:property value="company.companyIcon"/>" style="width:45px">
+						<h2 class="shotH3 smallTitle" style="line-height: 20px;margin-top:0px">
 							<s:property value="company.companyName" escape="false"/>
 							<br />
 							<span class="subtitle"><s:property value="company.address"/>，
 							电话：<s:property value="company.tel"/></span>
 						</h2>
+					  </s:if>
+					  <s:else>
+					    <img src="<%=request.getContextPath() %>/images/hospitalIcon/<s:property value="company.companyIcon"/>" style="width:60px">
+						<h2 class="shotH3 smallTitle" style="line-height: 20px;margin-top:0px">
+							<s:property value="company.companyName" escape="false"/>
+							<br />染色体拷贝数变异检测报告
+							<br />
+							<span class="subtitle"><s:property value="company.address"/>，
+							电话：<s:property value="company.tel"/></span>
+						</h2>
+					  </s:else>
 					</div>
-					<hr>
+					<hr style="margin:0px">
 				</s:if>
 				<div>
-					<table class="table table-bordered table-condensed">
-							<tr>
-								<th>姓名</th>
-								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-								<th>门诊号</th>
-								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-								<th>检验编号</th>
-								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-							</tr>
-							<tr>
-								<th>性别</th>
-								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-								<th>送检医师</th>
-								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-								<th>采样日期</th>
-								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-							</tr>
-							<tr>
-								<th>年龄</th>
-								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-								<th>送检材料</th>
-								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-								<th>接收日期</th>
-								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-							</tr>
-							<tr>
-								<th>孕周</th>
-								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-								<th>临床诊断</th>
-								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-								<th></th>
-								<td></td>
-							</tr>
+				  <s:if test="%{company.companyId==14}">
+					<table class="table table-bordered table-condensed miniTable_" style="margin:0px">
+						<tr>
+							<th>姓名</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th>门诊号</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th>检验编号</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+						</tr>
+						<tr>
+							<th>性别</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th>送检医师</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th>采样日期</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+						</tr>
+						<tr>
+							<th>年龄</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th>送检材料</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th>接收日期</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+						</tr>
+						<tr>
+							<th>孕周</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th>临床诊断</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th></th>
+							<td></td>
+						</tr>
+					 </table>
+				  </s:if>
+				  <s:else>
+				    <table class="table table-bordered table-condensed miniTable_" style="margin:10px 0px">
+					  <tr>
+							<th>姓名</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th>性别</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th>年龄</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+						</tr>
+						<tr>
+							<th>科别</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th>病历号</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th>送检材料</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+						</tr>
+						<tr>
+							<th>采样日期</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th>送检医师</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th></th>
+							<td></td>
+						</tr>
+					  </s:else>
 					</table>
 				</div>
 				<div>
@@ -224,25 +268,27 @@ hr {
 				</div>
 				<div>
 					<h4 class="smallh4">检测结果:</h4>
-					<img src='<s:property value="outPath"/>/<s:property value="pagePath"/>/<s:property value="miniPng"/>' width="100%">
+					<img src='<s:property value="outPath"/>/<s:property value="pagePath"/>/<s:property value="miniPng"/>' style="width:90%;max-height:245px;">
 				</div>
 				<br/>
-				<div id="des">
-					<textarea rows="3"><s:property value="txt.replace('@','+')"/></textarea>
+				<div id="des" style="margin:0px">
+					<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px"><s:property value="txt.replace('@','+')"/></textarea>
 				</div>
 				<h4 class="smallh4">结果解释：</h4>
 				<div id="des1">
-					<textarea rows="3"></textarea>
+					<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px"></textarea>
 				</div>
-				<h4 class="smallh4">备注：</h4>
-				<div id="des2">
-					<textarea rows="3"></textarea>
-				</div>
-				<div class="w3cbbs"></div>
+				<s:if test="%{company.companyId==14}">
+					<h4 class="smallh4">备注：</h4>
+					<div id="des2">
+						<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px"></textarea>
+					</div>
+				</s:if>
+<!-- 				<div class="w3cbbs"></div> -->
 				<div id="page2">
 					<h4 class="smallh4">局限性：</h4>
 					<div id="des3">
-<textarea rows="8">
+<textarea rows="8" style="margin:0px;font-size:10px;line-height:12px">
 1. 该检测对于染色体拷贝数变异（CNVs）&lt; 4Mb 的微小畸变导致的染色体异常，可能不能检出。
 2. 本检验无法检查到由以下因素引起的染色体变异：单亲二倍体（UPD）；染色体平衡易位、倒位、环状等结构异常；多倍体如：69，XXX、92，XXXX、92，XXYY。
 3. 本检验无法检查到由以下因素引起的疾病：单基因病、多基因病；感染、药物、辐射等环境诱因。
@@ -251,13 +297,22 @@ hr {
 					</div>
 				</div>
 			</div>
-			<ul class="footer" style="margin-bottom: 0px;margin-top: 450px;" id="p2footer">
-				<li class="left">报告者：<span><input type="text" class="input-mini" /></span></li>
-				<li class="left">审核者：<span><input type="text" class="input-mini" /></span></li>
-				<li class="right pull-right opinion">报告日期：<span id="jzkp"><input type="text" class="input-mini" id="jzkh"/></span></li>
-			</ul>
-			<hr>
-			<h4 class="smallh4">临床意见：<span class="opinion"><span><input type="text" class="input-mini onlybotton" /></span></span></h4>
+			<s:if test="%{company.companyId==14}">
+				<ul class="footer" style="margin-bottom: 0px;font-size:12px;/* margin-top: 450px; */">
+					<li class="left" style="font-size:12px;">报告者：<span><input type="text" class="input-mini" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>
+					<li class="left" style="font-size:12px;">审核者：<span><input type="text" class="input-mini" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>
+					<li class="right pull-right opinion" style="font-size:12px;">报告日期：<span id="jzkp"><input type="text" class="input-mini" id="jzkh" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>
+				</ul>
+				<hr style="margin:0px">
+				<h4 class="smallh4" style="font-size:12px;">临床意见：<span class="opinion"><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></span></h4>
+			</s:if>
+			<s:else>
+				<ul class="footer" style="margin-bottom: 0px;font-size:12px;margin-top:150px;" id="p2footer">
+					<li class="left" style="font-size:12px;">报告者：<span><input type="text" class="input-mini" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>
+					<li class="left" style="font-size:12px;">审核者：<span><input type="text" class="input-mini" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>
+					<li class="right pull-right opinion" style="font-size:12px;">报告日期：<span id="jzkp"><input type="text" class="input-mini" id="jzkh" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>
+				</ul>
+			</s:else>
 		</s:if>
 		<s:else>
 			<s:if test="%{company.companyId!=10}">
@@ -439,7 +494,7 @@ hr {
 			inputVal = des3.replace(/\n/g,"<br>");
 			$("#des3").html(inputVal);
 		}
-		$("#p2footer").css("margin-top",(620-$("#page2").height())+"px");
+		$("#p2footer").css("margin-top",(300-$("#page2").height())+"px");
 		window.print();
 		$("body").find("span[name='print']").each(function(){
 			inputVal = $(this).html();
