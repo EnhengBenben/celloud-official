@@ -198,12 +198,14 @@ function toRunApp(){
 	for (var i=0;i<checkedDataIds.length;i++){
 		dataIds += checkedDataIds[i] + ",";
 	}
+	$("#runError").html("");
 	for (var i=0;i<addedApps.length;i++){
 		softId = addedApps[i];
 		$.get("project!run", {"dataIds":dataIds,"softwareId" : softId}, function(error) {
 			if (error > 0) {
 				$("#runErrorTitle").html("以下APP运行失败：");
-				$("#runError").append($("#runAppli" +softId).html() + "nbsp;nbsp;");
+				
+				$("#runError").append($("#runAppli" +softId).html() + "  ");
 				$("#runErrorDiv").removeClass("hide");
 			}else{
 				if(i==addedApps.length-1){
@@ -219,7 +221,7 @@ function toRunApp(){
 function deleteData(){
 	$("#warningText").html("确定要删除选中数据吗？");
 	$("#warningModal").modal("show");
-	$("#checkTrue").bind("click",function(){
+	$("#checkTrue").one("click",function(){
 		var dataIds = "";
 	    for (var i=0;i<checkedDataIds.length;i++){
 	         dataIds += checkedDataIds[i] + ",";
@@ -231,7 +233,6 @@ function deleteData(){
     			checkedDataIds = [];
     			toNoUse();
     		}
-    		$("#checkTrue").bind("click",function(){});
     	});
 	});
 }
