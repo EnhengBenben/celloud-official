@@ -14,17 +14,17 @@ select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 
 <table class="table">
 	<thead>
     	<tr>
-        	<th>
+        	<th class="center">
         		<!-- 全选 -->
         		<input type="checkbox" id="selAll" class="selAll" style="border:none;"/>
         	</th>
         	<th>文件名称  <a href="javascript:sortByFileName();"><i class="fa fa-sort-amount-asc" id="sortFileName"></i></a></th>
-        	<th>数据编号</th>
-        	<th>文件别名</th>
-        	<th>数据大小</th>
-        	<th>上传时间  <a href="javascript:sortByCreateDate();"><i class="fa fa-sort-amount-desc" id="sortCreateDate"></i></th>
-        	<th>运行状态</th>
-			<th>操作</th>
+        	<th class="center">数据编号</th>
+        	<th class="center">文件别名</th>
+        	<th class="center">数据大小</th>
+        	<th class="center">上传时间  <a href="javascript:sortByCreateDate();"><i class="fa fa-sort-amount-desc" id="sortCreateDate"></i></th>
+        	<th class="center">运行状态</th>
+			<th class="center">操作</th>
         </tr>
     </thead>
 	<tbody>
@@ -79,7 +79,7 @@ select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 
 							</c:choose>
 						</td>
 						<td class="center">
-	        				<a href="javascript:toMoreDataInfoModel(${data.fileId });"><img  title="更多" alt="更多" class="more" src="<%=request.getContextPath()%>/images/publicIcon/more.png"/></a>
+	        				<a href="javascript:toMoreDataInfoModel(${data.fileId },'${data.fileName }');"><img  title="更多" alt="更多" class="more" src="<%=request.getContextPath()%>/images/publicIcon/more.png"/></a>
 	        			</td>
 					</tr>
 				</c:forEach>

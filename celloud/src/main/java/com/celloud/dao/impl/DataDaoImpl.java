@@ -235,7 +235,7 @@ public class DataDaoImpl extends BaseDao implements DataDao {
 	    log.error("用户" + super.userName + "删除数据" + dataIds + "失败");
 	    e.printStackTrace();
 	} finally {
-	    ConnectManager.free(conn, qps, qrs);
+	    ConnectManager.free(conn, qps, null);
 	}
 	return num;
     }
@@ -262,7 +262,7 @@ public class DataDaoImpl extends BaseDao implements DataDao {
 
     @Override
     public Data getDataAndStrain(Integer userId,Integer fileId) {
-	String sql = "select f.another_name,f.strain,f.sample,f.data_tags,f1.strain strains from tb_file f join (select distinct strain,user_id from tb_file where user_id=? and strain is not null and strain !='') f1 on f.user_id=f1.user_id where f.file_id=?;";
+	String sql = "select f.another_name,f.another_name,f.strain,f.sample,f.data_tags,f1.strain strains from tb_file f join (select distinct strain,user_id from tb_file where user_id=? and strain is not null and strain !='') f1 on f.user_id=f1.user_id where f.file_id=?;";
 	Data data = new Data();
 	try {
 	    qps = conn.prepareStatement(sql);
@@ -272,6 +272,7 @@ public class DataDaoImpl extends BaseDao implements DataDao {
 	    List<String> list = new ArrayList<>();
 	    StringBuffer strains = null;
 	    if(qrs.next()){
+		data.setFileId(fileId);
 		data.setAnotherName(qrs.getString("another_name"));
 		data.setStrain(qrs.getString("strain"));
 		data.setSample(qrs.getString("sample"));
@@ -304,6 +305,98 @@ public class DataDaoImpl extends BaseDao implements DataDao {
 	map.put("id", strain);
 	map.put("text", strain);
 	return map;
+    }
+
+    @Override
+    public List<Data> getDatasByIds(String dataIds) {
+	StringBuffer sql = new StringBuffer();
+	sql.append(
+		"select file_id,data_key,file_name,another_name,strain,sample,data_tags from tb_file where file_id in (")
+		.append(dataIds).append(")");
+	List<Data> list = new ArrayList<>();
+	try {
+	    qps = conn.prepareStatement(sql.toString());
+	    qrs = qps.executeQuery();
+	    while (qrs.next()) {
+		Data data = new Data();
+		data.setFileId(qrs.getInt("file_id"));
+		data.setDataKey(qrs.getString("data_key"));
+		data.setFileName(qrs.getString("file_name"));
+		data.setAnotherName(qrs.getString("another_name"));
+		data.setStrain(qrs.getString("strain"));
+		data.setSample(qrs.getString("sample"));
+		data.setDataTags(qrs.getString("data_tags"));
+		list.add(data);
+	    }
+	} catch (SQLException e) {
+	    log.error("用户" + super.userName + "查询数据" + dataIds + "修改信息列表失败");
+	    e.printStackTrace();
+	} finally {
+	    ConnectManager.free(conn, qps, qrs);
+	}
+	return list;
+    }
+
+    @Override
+    public Integer updateData(String dataIds, Data data) {
+	Integer num = 0;
+	StringBuffer sql = new StringBuffer();
+	sql.append(
+		"update tb_file set strain=?,data_tags=?,sample=?,another_name=? where file_id in (")
+		.append(dataIds).append(")");
+	try {
+	    qps = conn.prepareStatement(sql.toString());
+	    qps.setString(1, data.getStrain());
+	    qps.setString(2, data.getDataTags());
+	    qps.setString(3, data.getSample());
+	    qps.setString(4, data.getAnotherName());
+	    num = qps.executeUpdate();
+	} catch (SQLException e) {
+	    log.error("用户" + super.userName + "修改数据" + dataIds + "信息失败");
+	    e.printStackTrace();
+	} finally {
+	    ConnectManager.free(conn, qps, null);
+	}
+	return num;
+    }
+
+    @Override
+    public Integer updateDatas(List<Data> list) {
+	Integer num = 0;
+	try {
+	    StringBuffer sql = new StringBuffer();
+	    StringBuffer strain = new StringBuffer();
+	    StringBuffer tags = new StringBuffer();
+	    StringBuffer sample = new StringBuffer();
+	    StringBuffer aname = new StringBuffer();
+	    StringBuffer ids = new StringBuffer();
+	    for (Data d : list) {
+		strain.append("WHEN ").append(d.getFileId()).append(" THEN '")
+			.append(d.getStrain()).append("' ");
+		tags.append("WHEN ").append(d.getFileId()).append(" THEN '")
+			.append(d.getDataTags()).append("' ");
+		sample.append("WHEN ").append(d.getFileId()).append(" THEN '")
+			.append(d.getSample()).append("' ");
+		aname.append("WHEN ").append(d.getFileId()).append(" THEN '")
+			.append(d.getAnotherName()).append("' ");
+		ids.append(d.getFileId()).append(",");
+	    }
+	    ids.deleteCharAt(ids.length() - 1);
+	    sql.append("UPDATE tb_file set strain = CASE file_id ")
+		    .append(strain).append(" END,data_tags = CASE file_id ")
+		    .append(tags).append(" END,sample = CASE file_id ")
+		    .append(sample).append(" END,another_name = CASE file_id ")
+		    .append(aname).append(" END WHERE file_id in (")
+		    .append(ids).append(")");
+	    qps = conn.prepareStatement(sql.toString());
+	    num = qps.executeUpdate();
+	} catch (SQLException e) {
+	    log.error("用户" + super.userName + "批量修改数据信息失败");
+	    e.printStackTrace();
+	} finally {
+	    ConnectManager.free(conn, qps, null);
+	}
+	return num;
     }
 
 }

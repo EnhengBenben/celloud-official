@@ -28,28 +28,32 @@ import com.nova.pager.PageList;
 @Results({
 	@Result(name = "success", type = "json", params = { "root",
 		"conditionInt" }),
-	@Result(name = "toDataManage", location = "../../pages/data/myData.jsp"),
 	@Result(name = "info", type = "json", params = { "root", "result" }),
 	@Result(name = "getSoftList", type = "redirect", location = "software!getSoftByFormat", params = {
 		"condition", "${condition}" }),
 	@Result(name = "checkDataRunningSoft", type = "json", params = {
 		"root", "intList" }),
-	@Result(name = "toMoreInfo", location = "../../pages/data/moreDataInfo.jsp") })
+	@Result(name = "mapList", type = "json", params = { "root", "mapList" }),
+	@Result(name = "toDataManage", location = "../../pages/data/myData.jsp"),
+	@Result(name = "toMoreInfo", location = "../../pages/data/moreDataInfo.jsp"),
+	@Result(name = "toUpdateDatas", location = "../../pages/data/updateDatas.jsp") })
 public class DataAction extends BaseAction {
     private static final long serialVersionUID = 1L;
     Logger log = Logger.getLogger(DataAction.class);
     @Inject
     private DataService dataService;
     private PageList<Data> dataPageList;
-    private Data data;
     private List<Integer> intList;
+    private List<Data> dataList;
     private List<Map<String, String>> mapList;
+    private Data data;
     private Integer userId;
     private Page page = new Page(50, 0);
     private String sortByName;
     private String sortByDate;
     private String condition;
     private Integer conditionInt;
+    private String dataIds;
     private String result;
 
     public String getAllData() {
@@ -69,8 +73,7 @@ public class DataAction extends BaseAction {
 
     public String getSoftListByFormat() {
 	log.info("用户" + super.session.get("userName") + "获取数据可运行的APP");
-	Map<String, Integer> formatMap = dataService
-		.getFormatNumByIds(condition);
+	Map<String, Integer> formatMap = dataService.getFormatNumByIds(dataIds);
 	if (formatMap.get("formatNum") != null
 		&& formatMap.get("formatNum") > 1) {
 	    result = "所选数据格式不统一！";
@@ -84,13 +87,13 @@ public class DataAction extends BaseAction {
     public String checkDataRunningSoft() {
 	log.info("验证用户" + super.session.get("userName") + "为数据" + condition
 		+ "选择APP" + conditionInt);
-	intList = dataService.getRunningDataBySoft(condition, conditionInt);
+	intList = dataService.getRunningDataBySoft(dataIds, conditionInt);
 	return "checkDataRunningSoft";
     }
 
     public String deleteData() {
 	log.info("用户" + super.session.get("userName") + "删除数据" + condition);
-	conditionInt = dataService.deleteDataByIds(condition);
+	conditionInt = dataService.deleteDataByIds(dataIds);
 	return "success";
     }
 
@@ -100,6 +103,32 @@ public class DataAction extends BaseAction {
 	userId = (Integer) super.session.get("userId");
 	data = dataService.getDataAndStrain(userId, conditionInt);
 	return "toMoreInfo";
+    }
+
+    public String getStrainList() {
+	log.info("用户" + super.session.get("userName") + "获取物种信息列表");
+	userId = (Integer) super.session.get("userId");
+	mapList = dataService.getStrainList(userId);
+	return "mapList";
+    }
+
+    public String toUpdateDatas() {
+	log.info("用户" + super.session.get("userName") + "打开批量逐个编辑多个数据页面");
+	dataList = dataService.getDatasByIds(dataIds);
+	return "toUpdateDatas";
+    }
+
+    public String updateDataByIds() {
+	conditionInt = dataService.updateData(dataIds, data);
+	return "success";
+    }
+    public String updateManyDatas() {
+	conditionInt = dataService.updateDatas(dataList);
+	return "success";
+    }
+
+    public String run(){
+	return "";
     }
 
     public PageList<Data> getDataPageList() {
@@ -188,6 +217,22 @@ public class DataAction extends BaseAction {
 
     public void setMapList(List<Map<String, String>> mapList) {
 	this.mapList = mapList;
+    }
+
+    public String getDataIds() {
+	return dataIds;
+    }
+
+    public void setDataIds(String dataIds) {
+	this.dataIds = dataIds;
+    }
+
+    public List<Data> getDataList() {
+	return dataList;
+    }
+
+    public void setDataList(List<Data> dataList) {
+	this.dataList = dataList;
     }
 
 }

@@ -4,6 +4,7 @@
 <div class="hide" id="strainListHide">
 ${data.strainList }
 </div>
+<input type="hidden" name="dataIds" value="${data.fileId}" />
 <div class="form-group">
 	<div class="control-label form-label col-xs-3">文件别名</div>
 	<div class="col-xs-9">
@@ -29,4 +30,8 @@ ${data.strainList }
 			<input type="hidden" id="dataStrainHide" name="data.strain" value="${data.strain}" style="width: 270px;"/>
 		</span>
  	</div>
+</div>
+<div class="alert alert-warning-cel alert-dismissable hide" id="updateDataErrorDiv">
+   <button type="button" class="close"><i class="fa fa-close"></i></button>
+   <h5><i class="icon fa fa-warning"></i>保存失败！</h5>
 </div>

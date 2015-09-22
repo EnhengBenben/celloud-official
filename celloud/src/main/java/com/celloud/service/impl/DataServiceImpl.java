@@ -59,4 +59,19 @@ public class DataServiceImpl implements DataService {
 	return dataDao.getDataAndStrain(userId, fileId);
     }
 
+    @Override
+    public List<Data> getDatasByIds(String dataIds) {
+	return dataDao.getDatasByIds(dataIds);
+    }
+
+    @Override
+    public Integer updateData(String dataIds, Data data) {
+	return dataDao.updateData(dataIds, data);
+    }
+
+    @Override
+    public Integer updateDatas(List<Data> list) {
+	return dataDao.updateDatas(list);
+    }
+
 }

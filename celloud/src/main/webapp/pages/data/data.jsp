@@ -41,13 +41,13 @@
               <div class="box">
                 <div class="box-header">
                   <h3 class="box-title">
-                  	<a href="javascript:void()" onclick="showRunApp()" class="btn btn-success btn-flat" style="margin-right:15px;width:100px" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-play"></i>Run</a>
-                    <a href="javascript:void()" onclick="javascript:deleteData();" id="delDataBtn" class="btn btn-warning btn-flat disabled" disabled="disabled">删除</a>
-				  	<a href="javascript:void()" onclick="javascript:toManageDatasModel();" id="batchManage" class="btn btn-info btn-flat disabled" disabled="disabled">批量管理</a>
+                  	<a onclick="showRunApp()" class="btn btn-success btn-flat" style="margin-right:15px;width:100px" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-play"></i>Run</a>
+                    <a onclick="deleteData()" id="delDataBtn" class="btn btn-warning btn-flat disabled" disabled="disabled">删除</a>
+				  	<a onclick="toManageDatasModel()" id="batchManage" class="btn btn-info btn-flat disabled" disabled="disabled">批量管理</a>
                   </h3>
                   <div class="box-tools col-xs-4">
                     <div class="input-group">
-                      <input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" id="dataTagSearch" onkeyup="javascript:getDataByCondition(1);"/>
+                      <input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 200px;" placeholder="搜索文件名/数据标签/文件别名" id="dataTagSearch" onkeyup="javascript:getDataByCondition(1);"/>
                       <div class="input-group-btn">
                         <button class="btn btn-sm btn-default" onclick="getDataByCondition(1)"><i class="fa fa-search"></i></button>
                       </div>
@@ -116,50 +116,6 @@
        </div><!-- /.modal-dialog -->
      </div><!-- /.modal -->
      
-	<div class="modal modal-green-header" id="manageDatasModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">统一编辑数据 <a href="javascript:showOnetoOneManageModel();" class="a-white" style="margin-left:30px">编辑单个数据</a></h4>
-          </div>
-          <div class="modal-body row">
-            <form class="form-horizontal form-cel" id="manageDatasForm">
-	            <div class="form-group">
-	            	<div class="control-label form-label col-xs-3">文件别名</div>
-	            	<div class="col-xs-9">
-	            		<input type="text" id="manageAnotherName" onkeyup="value=value.replace(/[^\u4E00-\u9FA5\w]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5\w]/g,''))" placeholder="请输入字母\数字\下划线\汉字"/>
-	            	</div>
-	            </div>
-	            <div class="form-group">
-	            	<div class="control-label form-label col-xs-3">数据标签</div>
-	            	<div class="col-xs-9">
-	            		<input type="text" id="manageDatasTarg"/>
-	            	</div>
-	            </div>
-	            <div class="form-group">
-	            	<div class="control-label form-label col-xs-3">样本</div>
-	            	<div class="col-xs-9">
-	            		<input type="text" id="manageDatasSample" maxlength="45"/>
-	            	</div>
-	            </div>
-	            <div class="form-group">
-	            	<div class="control-label form-label col-xs-3">样本类型/物种</div>
-	            	<div class="col-xs-9">
-	            		<span id="dataMoreInfoStrainSpan">
-	        				<input type="hidden" id="manageDatasStrainSel" style="width: 270px;" value=""/>
-	        			</span>
-	            	</div>
-	            </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-celloud-close btn-flat pull-left" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-celloud-success btn-flat" onclick="saveManageDatas()">保存</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
     <div class="modal modal-green-header" id="dataMoreInfoModal">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -174,57 +130,77 @@
 	 			<a href="javascript:cancelEditMoreInfo();" class="a-green"><i class="fa fa-close"></i></a>
 	 		</div>
             <form class="form-horizontal form-cel" id="moreDatasForm">
-	 			<div class="form-group">
+	 		</form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-celloud-close btn-flat pull-left" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-celloud-success btn-flat" onclick="saveMoreDataInfo()">确 定</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="modal modal-green-header" id="manageDatasModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">统一编辑数据 <a href="javascript:toManageEachDataModel();" class="a-white" style="margin-left:30px">编辑单个数据</a></h4>
+          	<input type="hidden" id="strainDataHide">
+          </div>
+          <div class="modal-body row">
+            <form class="form-horizontal form-cel" id="manageDatasForm">
+            	<input type="hidden" name="dataIds" id="dataIdsHide">
+	            <div class="form-group">
 	            	<div class="control-label form-label col-xs-3">文件别名</div>
 	            	<div class="col-xs-9">
-	            		<input type="text" readonly="readonly" id="anotherNameHidden" onkeyup="value=value.replace(/[^\u4E00-\u9FA5\w]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5\w]/g,''))" placeholder="请输入字母\数字\下划线\汉字"/>
-	                    <input type="hidden" id="fileFormatHidden" />
+	            		<input type="text" name="data.anotherName" onkeyup="value=value.replace(/[^\u4E00-\u9FA5\w]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5\w]/g,''))" placeholder="请输入字母\数字\下划线\汉字"/>
 	            	</div>
 	            </div>
 	            <div class="form-group">
 	            	<div class="control-label form-label col-xs-3">数据标签</div>
 	            	<div class="col-xs-9">
-	            		<input type="text" id="dataMoreInfoStrainHidden"/>
+	            		<input type="text" name="data.dataTags"/>
 	            	</div>
 	            </div>
 	            <div class="form-group">
 	            	<div class="control-label form-label col-xs-3">样本</div>
 	            	<div class="col-xs-9">
-	            		<input type="text" id="dataMoreInfoSampleHidden" maxlength="45"/>
+	            		<input type="text" name="data.sample" maxlength="45"/>
 	            	</div>
 	            </div>
 	            <div class="form-group">
 	            	<div class="control-label form-label col-xs-3">样本类型/物种</div>
-	            	<div class="col-xs-9" id="dataTag">
+	            	<div class="col-xs-9">
 	            		<span id="dataMoreInfoStrainSpan">
-	        				<input type="hidden" id="dataMoreInfoStrainSel" style="width: 270px;" value="" disabled="disabled"/>
+	        				<input type="hidden" name="data.strain" id="manageDatasStrainSel" style="width: 270px;" value=""/>
 	        			</span>
 	            	</div>
 	            </div>
-	 		</form>
+            </form>
+            <div class="alert alert-warning-cel alert-dismissable hide" id="manageDataErrorDiv">
+			   <button type="button" class="close"><i class="fa fa-close"></i></button>
+			   <h5><i class="icon fa fa-warning"></i>保存失败！</h5>
+			</div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-celloud-close btn-flat pull-left" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-celloud-success btn-flat" onclick="saveDataMoreInfo()">确 定</button>
+            <button type="button" class="btn btn-celloud-success btn-flat" onclick="saveManageDatas()">保存</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-	<div class="modal modal-green-header" id="oneToOneManageDatasModal">
+	<div class="modal modal-green-header" id="manageEachDataModal">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title"><img src="<%=request.getContextPath()%>/images/publicIcon/icon-modal-03.png"/>编辑单个数据
-	   	  		<a href="javascript:toManageDatasModel();"style="font-size: 14px; font-weight: normal;padding-left:30px">统一编辑数据</a></h4>
+	   	  	<h4 class="modal-title">编辑单个数据<a href="javascript:toManageDatasModel();" class="a-white" style="margin-left:30px">统一编辑数据</a></h4>
           </div>
-          <div class="modal-body">
-            <table class="table table-tab table-bordered" id="onetoOneManageList">
-	 		</table>
+          <div class="modal-body" id="eachDatasDiv">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-celloud-close btn-flat pull-left" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-celloud-success btn-flat" onclick="saveOneToOneManageDatas()">确 定</button>
+            <button type="button" class="btn btn-celloud-success btn-flat" onclick="saveEachData()">确 定</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -243,7 +219,7 @@
 	<script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
     <script src="<%=request.getContextPath() %>/dist/js/celloud.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/plugins/spin.min.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/data.js?version=1.02" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/data.js?version=1.4" type="text/javascript"></script>
 	<!-- spin:loading效果 end-->
 	<script type="text/javascript">
 		var session_userId = <%=session.getAttribute("userId")%>;

@@ -64,4 +64,28 @@ public interface DataService {
      * @return
      */
     public Data getDataAndStrain(Integer userId, Integer fileId);
+
+    /**
+     * 根据id获取数据列表
+     * 
+     * @param dataIds
+     * @return
+     */
+    public List<Data> getDatasByIds(String dataIds);
+
+    /**
+     * 修改数据
+     * 
+     * @param data
+     * @return
+     */
+    public Integer updateData(String dataIds, Data data);
+
+    /**
+     * 批量修改数据
+     * 
+     * @param list
+     * @return
+     */
+    public Integer updateDatas(List<Data> list);
 }

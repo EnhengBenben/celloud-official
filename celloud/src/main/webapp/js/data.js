@@ -47,6 +47,32 @@ function initData(){
 		   return;
 	   }
 	});
+	//全选
+	$("#selAll").click(function(){
+		//清空checkedDataIds
+		var checked = $(this).prop("checked");
+		var arrChk;
+		if(checked){
+			$("input[name='datachk']").prop("checked",true);
+			arrChk=$("input[name='datachk']:checked");
+			for(var i = 0;i<arrChk.length;i++){
+				var start = $.inArray(arrChk[i].value,checkedDataIds);
+				if(start==-1){
+					checkedDataIds.push(arrChk[i].value);
+				}
+			}
+		}else{
+			$("input[name='datachk']").prop("checked",false);
+			arrChk=$("input[name='datachk']");
+			for(var i = 0;i<arrChk.length;i++){
+				var start = $.inArray(arrChk[i].value,checkedDataIds);
+				if(start!=-1){
+					checkedDataIds.splice(start,1);
+				}
+			}
+		}
+		toUse();
+	});
 }	
 
 //-------v 3.0版本
@@ -236,17 +262,34 @@ function deleteData(){
     	});
 	});
 }
-function toMoreDataInfoModel(id){
+function toMoreDataInfoModel(id,name){
 	$.get("data3!getMoreData",{"conditionInt":id},function(responseText){
 		$("#moreDatasForm").html(responseText);
 		var strain = $("#strainListHide").html();
-		setSelect2Info("dataStrainHide",eval(strain));
+		setSelect2Info("#dataStrainHide",eval(strain));
+		if(name.length>63){
+			$("#dataMoreNameInfoSpan").html("文件名称："+name.substring(0,63));
+		}else{
+			$("#dataMoreNameInfoSpan").html("文件名称："+name);
+		}
 		$("#dataMoreInfoModal").modal("show");
 	});
 }
+function saveMoreDataInfo(){
+    $.get("data3!updateDataByIds",$("#moreDatasForm").serialize(),function(flag){
+    	if(flag>0){
+    		getDataByCondition(dataCurrentPageNumber);
+    		checkedDataIds = [];
+    		$("#dataMoreInfoModal").modal("hide");
+    	}else {
+    		$("#updateDataErrorDiv").removeClass("hide");;
+    	}
+    });
+}
+
 //给select2添加下拉选项
 function setSelect2Info(objId,data){
-	$("#"+objId).select2({
+	$(objId).select2({
 		placeholder: "请选择样本类型/物种",
 	    allowClear: true, //必须与placeholder同时出现才有效
 		createSearchChoice:function(term, data) {
@@ -261,25 +304,13 @@ function setSelect2Info(objId,data){
 }
 //打开批量管理数据页面
 function toManageDatasModel(){
-	$.get("dataJson_getAllDataStrainList.action",{},function(data){
-		$("#manageDatasStrainSel").select2({
-			placeholder: "请选择样本类型/物种",
-		    allowClear: true, //必须与placeholder同时出现才有效
-			createSearchChoice:function(term, data) {
-				if ($(data).filter(function() {
-					return this.text.localeCompare(term)===0; 
-					}).length===0) {
-					return {id:term, text:term};
-					}
-				},
-			data:data
-		});
+	$.get("data3!getStrainList",{},function(data){
+		setSelect2Info("#manageDatasStrainSel",data);
+		$("#strainDataHide").val(JSON.stringify(data));
 	});
-	$("#manageAnotherName").val("");
-	$("#manageDatasTarg").val("");
-	$("#manageDatasSample").val("");
-	$("#manageDatasStrainSel").val("");
-	$("#oneToOneManageDatasModal").modal("hide");
+	$("#manageEachDataModal").modal("hide");
+	$("#manageDatasForm")[0].reset();
+	$("#manageDataErrorDiv").addClass("hide");
 	$("#manageDatasModal").modal("show");
 }
 function saveManageDatas(){
@@ -288,35 +319,42 @@ function saveManageDatas(){
          dataIds += checkedDataIds[i] + ",";
     }
     dataIds = dataIds.substring(0, dataIds.length-1);
-    var strain = $("#manageDatasStrainSel").val();
-	var dataTag = $("#manageDatasTarg").val();
-	var sample = $("#manageDatasSample").val();
-	var anotherName = $("#manageAnotherName").val();
-    $.get("updateDataInfoListByFileId.action",{"data.strain":strain,"data.dataTags":dataTag,"data.sample":sample,"data.anotherName":anotherName,"dataIds":dataIds},function(flag){
+	$("#dataIdsHide").val(dataIds);
+    $.get("data3!updateDataByIds",$("#manageDatasForm").serialize(),function(flag){
     	if(flag>0){
     		getDataByCondition(dataCurrentPageNumber);
     		checkedDataIds = [];
+    		$("#manageDatasModal").modal("hide");
     	}else {
-    		$("#runErrorTitle").html("修改失败");
-			$("#runErrorDiv").removeClass("hide");
+    		$("#manageDataErrorDiv").removeClass("hide");;
     	}
-    	$("#manageDatasModal").modal("hide");
     });
 }
+function toManageEachDataModel(){
+	var dataIds = "";
+    for (var i=0;i<checkedDataIds.length;i++){
+         dataIds += checkedDataIds[i] + ",";
+    }
+    dataIds = dataIds.substring(0, dataIds.length-1);
+	$.get("data3!toUpdateDatas",{"dataIds":dataIds},function(response){
+		$("#eachDatasDiv").html(response);
+		$("#manageDatasModal").modal("hide");
+		setSelect2Info("input[class='strain']",eval("("+$("#strainDataHide").val()+")"));
+		$("#manageEachDataModal").modal("show");
+	});
+}
+function saveEachData(){
+	$.get("data3!updateManyDatas",$("#eachDataForm").serialize(),function(result){
+		if(result>0){
+			getDataByCondition(dataCurrentPageNumber);
+			checkedDataIds = [];
+			$("#manageEachDataModal").modal("hide");
+		}else{
+			$("#eachDataErrorDiv").removeClass("hide");
+		}
+	});
+}
 //----------
-//实现物种可输入可选择
-function copyAddProStrainToInput(){
-	var strain = $("#strainTxt").val();
-	$("#addProInputStrainTxt").val(strain);
-	
-}
-function copyProStrainToSel(){
-	$("#strainTxt").focus();
-	var strain = $.trim($("#addProInputStrainTxt" + n).val());
-	if(strain != ""){
-		$("#strainTxt").append("<option value='"+strain+"' selected>"+strain+"</option>");
-	}
-}
 
 //数据管理-搜索框活得焦点时提示内容消失
 function hideSearchInputInfo(){
@@ -327,72 +365,6 @@ function showSearchInputInfo(){
 	$("#dataTagSearch").attr("placeholder","搜索文件名/数据标签/文件别名");
 }
 
-function showOnetoOneManageModel(){
-	$("#manageDatasModal").modal("hide");
-	var dataIds = "";
-    for (var i=0;i<checkedDataIds.length;i++){
-         dataIds += checkedDataIds[i] + ",";
-    }
-    dataIds = dataIds.substring(0, dataIds.length-1);
-    var oneManageHtml = "";
-    $.get("getStrainDataKeySampleById.action",{"dataIds":dataIds},function(fileList){
-    	if(fileList.length>0){
-			for(var i=0; i<fileList.length; i++){
-				oneManageHtml += "<tr style='line-height: 40px;'>";
-				var fileName = fileList[i].fileName.length>10?fileList[i].fileName.substring(0,9)+"...":fileList[i].fileName;
-    			oneManageHtml += "<td style='border:1px solid #ccc;padding:0px 0px 0px 5px' class='text-right'><table><tr style='border-width:0px;'><td align='right' style='border-width:0px; padding:0px 0px 5px 5px'>文件：</td><td align='left' style='border-width:0px; padding:0px 0px 5px 5px'>"+fileName+"</td></tr>";
-    			oneManageHtml += "<tr style='border-width:0px'><td align='right' style='border-width:0px; height:20px; padding:0px 0px 5px 5px'>文件别名：</td><td align='left' style='border-width:0px; padding:0px 0px 5px 5px'><span id='oneManageStrainSpan"+fileList[i].fileId+"'><input type='text' id='oneManageAnotherName"+fileList[i].fileId+"' style='width:153px;' onkeyup=\"value=value.replace(/[^\\u4E00-\\u9FA5\\w]/g,'')\" onbeforepaste=\"clipboardData.setData('text',clipboardData.getData('text').replace(/[^\\u4E00-\\u9FA5\\w]/g,\'\'))\" placeholder='请输入字母\\数字\\下划线\\汉字' title='请输入字母\\数字\\下划线\\汉字'/></span></td></tr>";
-    			oneManageHtml += "<tr style='border-width:0px'><td align='right' style='border-width:0px; height:20px; padding:0px 0px 5px 5px'>样本类型/物种：</td><td align='left' style='border-width:0px; padding:0px 0px 5px 5px'><span id='oneManageStrainSpan"+fileList[i].fileId+"'><input name='selectForStrain' type='hidden' id='oneManageStrain"+fileList[i].fileId+"' style='width:164px;'/></span></td></tr>";
-    			oneManageHtml += "<tr style='border-width:0px'><td align='right' style='border-width:0px; height:20px; padding:0px 0px 5px 5px'>数据标签：</td><td align='left' style='border-width:0px; padding:0px 0px 5px 5px'><input type='text' id='oneManageTarg"+fileList[i].fileId+"' style='width:153px;' value=''/></td></tr>";
-    			oneManageHtml += "<tr style='border-width:0px'><td align='right' style='border-width:0px; height:20px; padding:0px 0px 5px 5px'>样本：</td><td align='left' style='border-width:0px; padding:0px 0px 5px 5px'><input type='text' id='oneManageSample"+fileList[i].fileId+"' style='width:153px;' maxlength='45' value=''</td></tr></table></td>";
-    			i++;
-    			if(i<fileList.length){
-    				var fileName = fileList[i].fileName.length>10?fileList[i].fileName.substring(0,9)+"...":fileList[i].fileName;
-	    			oneManageHtml += "<td style='border:1px solid #ccc;padding:0px 0px 0px 5px' class='text-right'><table><tr style='border-width:0px;'><td align='right' style='border-width:0px; padding:0px 0px 5px 5px'>文件：</td><td align='left' style='border-width:0px; padding:0px 0px 5px 5px'>"+fileName+"</td></tr>";
-	    			oneManageHtml += "<tr style='border-width:0px'><td align='right' style='border-width:0px; height:20px; padding:0px 0px 5px 5px'>文件别名：</td><td align='left' style='border-width:0px; padding:0px 0px 5px 5px'><span id='oneManageStrainSpan"+fileList[i].fileId+"'><input type='text' id='oneManageAnotherName"+fileList[i].fileId+"' style='width:153px;' onkeyup=\"value=value.replace(/[^\\u4E00-\\u9FA5\\w]/g,'')\" onbeforepaste=\"clipboardData.setData('text',clipboardData.getData('text').replace(/[^\\u4E00-\\u9FA5\\w]/g,\'\'))\" placeholder='请输入字母\\数字\\下划线\\汉字' title='请输入字母\\数字\\下划线\\汉字'/></span></td></tr>";
-	    			oneManageHtml += "<tr style='border-width:0px'><td align='right' style='border-width:0px; height:20px; padding:0px 0px 5px 5px'>样本类型/物种：</td><td align='left' style='border-width:0px; padding:0px 0px 5px 5px'><span id='oneManageStrainSpan"+fileList[i].fileId+"'><input name='selectForStrain' type='hidden' id='oneManageStrain"+fileList[i].fileId+"' style='width:164px;'/></span></td></tr>";
-	    			oneManageHtml += "<tr style='border-width:0px'><td align='right' style='border-width:0px; height:20px; padding:0px 0px 5px 5px'>数据标签：</td><td align='left' style='border-width:0px; padding:0px 0px 5px 5px'><input type='text' id='oneManageTarg"+fileList[i].fileId+"' style='width:153px;' value=''/></td></tr>";
-	    			oneManageHtml += "<tr style='border-width:0px'><td align='right' style='border-width:0px; height:20px; padding:0px 0px 5px 5px'>样本：</td><td align='left' style='border-width:0px; padding:0px 0px 5px 5px'><input type='text' id='oneManageSample"+fileList[i].fileId+"' style='width:153px;' maxlength='45' value=''</td></tr></table></td>";
-    			}
-    			oneManageHtml += "</tr>";
-	    		$("#onetoOneManageList").html(oneManageHtml);
-			}
-			$.get("dataJson_getAllDataStrainList.action",{},function(data){
-    			$("input[name='selectForStrain']").select2({
-					placeholder: "请选择样本类型/物种",
-				    allowClear: true, //必须与placeholder同时出现才有效
-					createSearchChoice:function(term, data) {
-						if ($(data).filter(function() {
-							return this.text.localeCompare(term)===0; 
-							}).length===0) {
-							return {id:term, text:term};
-							}
-						},
-					data:data
-				});
-			});
-    	}
-    });
-	$("#oneToOneManageDatasModal").modal("show");
-}
-
-function saveOneToOneManageDatas(){
-	var dataIds = "";
-    for (var i=0;i<checkedDataIds.length;i++){
-         dataIds += checkedDataIds[i] + "," + $("#oneManageStrain" + checkedDataIds[i]).val() + ","+$("#oneManageTarg" + checkedDataIds[i]).val() + ","+$("#oneManageSample" + checkedDataIds[i]).val() + "," + removeAllSpace($("#oneManageAnotherName" + checkedDataIds[i]).val()) +";";
-    }
-    dataIds = dataIds.substring(0, dataIds.length-1);
-    $.get("updateAllDataInfoByFileId.action",{"dataIds":dataIds},function(flag){
-    	if(flag>0){
-    		getDataByCondition(dataCurrentPageNumber);
-    		checkedDataIds = [];
-    		$("#oneToOneManageDatasModal").modal("hide");
-    	}else {
-    		jAlert("修改失败");
-    	}
-    });
-}
-
 /**
  * 禁用删除和批量操作
  */
@@ -401,8 +373,6 @@ function toNoUse(){
 	$("#batchManage").attr("disabled",true);
 	$("#delDataBtn").addClass("disabled");
 	$("#batchManage").addClass("disabled");
-	$("#delDataBtn").removeClass("btn-blue");
-	$("#batchManage").removeClass("btn-blue");
 }
 /**
  * 启用删除和批量操作
@@ -411,8 +381,6 @@ function toUse(){
 	if(checkedDataIds.length>0){
 		$("#delDataBtn").attr("disabled",false);
 		$("#batchManage").attr("disabled",false);
-		$("#delDataBtn").removeAttr("disabled");
-		$("#batchManage").removeAttr("disabled");
 		$("#delDataBtn").removeClass("disabled");
 		$("#batchManage").removeClass("disabled");
 	}else{
@@ -421,30 +389,6 @@ function toUse(){
 }
 
 function initDataList(){
-	//全选
-	$("#selAll").click(function(){
-		toNoUse();
-		//清空checkedDataIds
-		var checked = $(this).prop("checked");
-		if(checked){
-			$("input[name='datachk']").prop("checked",true);
-			var arrChk=$("input[name='datachk']:checked");
-			for(var i = 0;i<arrChk.length;i++){
-				if($.inArray(arrChk[i].value,checkedDataIds)==-1){
-					checkedDataIds.push(arrChk[i].value);
-				}
-			}
-		}else{
-			$("input[name='datachk']").prop("checked",false);
-			var arrChk=$("input[name='datachk']");
-			for(var i = 0;i<arrChk.length;i++){
-				if($.inArray(arrChk[i].value,checkedDataIds)!=-1){
-					checkedDataIds.splice($.inArray(arrChk[i].value,checkedDataIds),1);
-				}
-			}
-		}
-		toUse();
-	});
 	// 设置之前选过的数据为选中状态
 	for(var j=0;j<checkedDataIds.length;j++){
 		var fileId = checkedDataIds[j];
@@ -464,118 +408,25 @@ function initDataList(){
 //复选框点击事件
 function chkOnChange(obj){
 	var checked = $(obj).prop("checked");//jquery1.11获取属性
+	var dataId_ = $(obj).val();
+	var start = $.inArray(dataId_,checkedDataIds);
 	if(checked){
-		if($.inArray($(obj).val(),checkedDataIds)==-1){
-			checkedDataIds.push($(obj).val());
+		if(start==-1){
+			checkedDataIds.push(dataId_);
 		}
 	}else{
 		$("#selAll").prop("checked",false);			
-		if($.inArray($(obj).val(),checkedDataIds)!=-1){
-			checkedDataIds.splice($.inArray($(obj).val(),checkedDataIds),1);
+		if(start!=-1){
+			checkedDataIds.splice(start,1);
 		}
 	}
 	toUse();
-}
-
-//判断某个数据id是否已经选择过
-function ifExistsInArray(value){
-	if($.inArray(value,checkedDataIds)!=-1){
-		return true;
-	}
-	return false;
 }
 
 //选择页面显示记录个数
 function changePageRecordNum(){
 	dataPageDataNum = $("#pageRecordSel").val();
 	getDataByCondition(1);
-}
-var editFlag = 0;
-//显示数据更多信息
-function showDataMoreInfoModal(fileId,fileName,strain,dataTags,sample,anotherName,fileFormat){
-	$("#saveMoreInfoDiv").html("");
-	editFlag = 0;
-	$("#dataMoreInfoHidden").val(fileId);
-	
-	var ext = fileName.substring(fileName.lastIndexOf(".")-1);
-	if(fileName.length-ext.length>20){
-		var newFileName = fileName.substring(0,20)+"..." + ext;
-		$("#dataMoreNameInfoSpan").html("文件名称："+newFileName);
-	}else{
-		$("#dataMoreNameInfoSpan").html("文件名称："+fileName);
-	}
-	
-	$.get("dataJson_getAllDataStrainList.action",{},function(data){
-		$("#dataMoreInfoStrainSel").select2({
-			placeholder: "请选择样本类型/物种",
-		    allowClear: true, //必须与placeholder同时出现才有效
-			createSearchChoice:function(term, data) {
-				if ($(data).filter(function() {
-					return this.text.localeCompare(term)===0; 
-					}).length===0) {
-					return {id:term, text:term};
-					}
-				},
-			data:data
-		});
-	});
-	$("#dataMoreInfoStrainSel").val(strain);
-	$("#dataMoreInfoStrainHidden").val(dataTags);
-	$("#dataMoreInfoSampleHidden").val(sample);
-	$("#anotherNameHidden").val(anotherName);
-	$("#fileFormatHidden").val(fileFormat);
-	cancelEditMoreInfo();
-	$("#dataMoreInfoModal").modal("show");
-}
-//编辑更多信息
-function showDataMoreInfoEdit(){
-	$("#saveMoreInfoDiv").html("");
-	editFlag = 1;
-//	$("#dataMoreInfoStrainHidden").attr("style","width:353px;background-color: #fff;");
-//	$("#dataMoreInfoSampleHidden").attr("style","width:353px;background-color: #fff;");
-//	$("#anotherNameHidden").attr("style","width:353px;background-color: #fff;");
-	$("#anotherNameHidden").removeAttr("readonly");
-	$("#dataMoreInfoStrainHidden").removeAttr("readonly");
-	$("#dataMoreInfoSampleHidden").removeAttr("readonly");
-	$("#dataMoreInfoStrainSel").removeAttr("disabled");
-	$("#dataTag").children(".popWindow-overlap").remove(); 
-	$(".select2-container").removeClass("select2-container-disabled");
-}
-//取消编辑更多信息
-function cancelEditMoreInfo(){
-	$("#saveMoreInfoDiv").html("");
-	editFlag = 0;
-	$("#dataMoreInfoStrainSel").attr("disabled","disabled");
-	$("#anotherNameHidden").attr("readonly","readonly");
-//	$("#anotherNameHidden").attr("style","width:353px;background-color: #eee;");
-	$("#dataMoreInfoStrainHidden").attr("readonly","readonly");
-//	$("#dataMoreInfoStrainHidden").attr("style","width:353px;background-color: #eee;");
-	$("#dataMoreInfoSampleHidden").attr("readonly","readonly");
-//	$("#dataMoreInfoSampleHidden").attr("style","width:353px;background-color: #eee;");
-	
-	$(".select2-focusser").attr("disabled","disabled");
-	$(".select2-container").addClass("select2-container-disabled");
-	$("#dataTag").append("<div class=\"popWindow-overlap\"></div>");
-}
-//保存更多信息编辑
-function saveDataMoreInfo(){
-	if(editFlag==1){
-		var fileId = $("#dataMoreInfoHidden").val();
-		var strain = $("#dataMoreInfoStrainSel").val();
-		var dataTag = $("#dataMoreInfoStrainHidden").val();
-		var sample = $("#dataMoreInfoSampleHidden").val();
-		var anotherName = $("#anotherNameHidden").val();
-		$.get("updateDataInfoByFileId.action",{"data.fileId":fileId,"data.strain":strain,"data.dataTags":dataTag,"data.sample":sample,"data.anotherName":removeAllSpace(anotherName)},function(flag){
-			if(flag>0){
-				$("#dataMoreInfoModal").modal("hide");
-				getDataByCondition(dataCurrentPageNumber);
-			}else{
-				$("#saveMoreInfoDiv").html("保存失败！");
-			}
-		});
-	}else{
-		$("#dataMoreInfoModal").modal("hide");
-	}
 }
 
 function removeAllSpace(str) {
