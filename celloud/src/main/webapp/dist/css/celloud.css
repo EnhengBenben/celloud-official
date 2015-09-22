@@ -4484,7 +4484,7 @@ fieldset[disabled] .btn-vk.active {
 .pagination-new ul>.disabled>span, .pagination-new ul>.disabled>a, .pagination-new ul>.disabled>a:hover {color:#fff;cursor:default;background-color:#999}
 .pagination-new ul>li:first-child>a, .pagination-new ul>li:first-child>span {border-left-width:1px;-webkit-border-radius:3px 0 0 3px;-moz-border-radius:3px 0 0 3px;border-radius:3px 0 0 3px}
 .pagination-new ul>li:last-child>a, .pagination-new ul>li:last-child>span {-webkit-border-radius:0 3px 3px 0;-moz-border-radius:0 3px 3px 0;border-radius:0 3px 3px 0}
-
+.center{text-align:center}
 .form-cel .form-group{
   margin-bottom: 5px;
 }
