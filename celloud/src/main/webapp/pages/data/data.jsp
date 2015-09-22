@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
     <link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">    
   	<link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
-    <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.05" rel="stylesheet" type="text/css" />
+    <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.1" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <div class="wrapper">
@@ -41,9 +41,9 @@
               <div class="box">
                 <div class="box-header">
                   <h3 class="box-title">
-                  	<button onclick="showRunApp()" class="btn btn-success btn-flat" style="margin-right:15px;width:100px" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-play"></i>Run</button>
-                    <button onclick="javascript:deleteData();" id="delDataBtn" class="btn btn-warning btn-flat disabled" disabled="disabled">删除</button>
-				  	<button onclick="javascript:toManageDatasModel();" id="batchManage" class="btn btn-info btn-flat disabled" disabled="disabled">批量管理</button>
+                  	<a href="javascript:void()" onclick="showRunApp()" class="btn btn-success btn-flat" style="margin-right:15px;width:100px" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-play"></i>Run</a>
+                    <a href="javascript:void()" onclick="javascript:deleteData();" id="delDataBtn" class="btn btn-warning btn-flat disabled" disabled="disabled">删除</a>
+				  	<a href="javascript:void()" onclick="javascript:toManageDatasModel();" id="batchManage" class="btn btn-info btn-flat disabled" disabled="disabled">批量管理</a>
                   </h3>
                   <div class="box-tools col-xs-4">
                     <div class="input-group">
@@ -243,7 +243,7 @@
 	<script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
     <script src="<%=request.getContextPath() %>/dist/js/celloud.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/plugins/spin.min.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/data.js?version=1.08" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/data.js?version=1.02" type="text/javascript"></script>
 	<!-- spin:loading效果 end-->
 	<script type="text/javascript">
 		var session_userId = <%=session.getAttribute("userId")%>;
