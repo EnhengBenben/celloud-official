@@ -184,7 +184,7 @@
 		</div>
 	</c:if>
 	<c:if test="${!pgs.noEnoughReads.equals('false') }">
-		<h3>运行出错</h3>
+		<h3>测序量不足，无法分析，建议重测。</h3>
 		<p>${pgs.noEnoughReads }</p>
 	</c:if>
 </div>
