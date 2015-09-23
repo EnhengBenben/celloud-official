@@ -56,13 +56,14 @@ public class SSHUtil {
 	}
 
 	/**
-	 * SSH 方式提交命令
-	 * 
 	 * @param command
 	 *            ：要执行的命令
-	 * @return：是否运行成功
+	 * @param isWait
+	 *            ：是否等待执行完毕
+	 * @return
 	 */
-	public boolean sshSubmit(String command) {
+	public boolean sshSubmit(String command, boolean isWait) {
+		System.err.println("xxxxxxx");
 		boolean state = true;
 		Connection conn = null;
 		Session sess = null;
@@ -78,18 +79,22 @@ public class SSHUtil {
 			sess = conn.openSession();
 			sess.execCommand(command);
 			log.info("开始执行：" + command);
-			// 循环结果
-			InputStream stdout = new StreamGobbler(sess.getStdout());
-			BufferedReader br = new BufferedReader(
-					new InputStreamReader(stdout));
-			String line = "";
-			while (line != null) {
-				line = br.readLine();
-				log.info(line);
+			if (isWait) {
+				// 循环结果
+				InputStream stdout = new StreamGobbler(sess.getStdout());
+				BufferedReader br = new BufferedReader(new InputStreamReader(
+						stdout));
+				String line = "";
+				while (line != null) {
+					line = br.readLine();
+					log.info(line);
+				}
+				// 获取命令执行结果
+				state = sess.getExitStatus() == 0 ? true : false;
+				log.info("命令执行" + state);
+			} else {
+				log.info("命令投递成功");
 			}
-			// 获取命令执行结果
-			state = sess.getExitStatus() == 0 ? true : false;
-			log.info("命令执行" + state);
 		} catch (IOException e) {
 			log.error("命令执行失败", new IOException(e));
 		} finally {

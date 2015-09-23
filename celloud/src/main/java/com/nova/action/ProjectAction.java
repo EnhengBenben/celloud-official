@@ -595,21 +595,24 @@ public class ProjectAction extends BaseAction {
 	public void runQueue() {
 		log.info(projectId + "运行结束，释放端口");
 		PortPool.setPort(projectId);
-		if (!GlobalQueue.isEmpty()) {
+		while (true) {
+			if (GlobalQueue.isEmpty()) {
+				log.info("任务队列为空");
+				break;
+			}
 			String command = GlobalQueue.peek();
 			if (command != null) {
 				String[] infos = command.split("--");
 				int need = infos[2].split(";").length;
-				log.info("队列中任务需要节点 " + need + " 个，可使用节点有 "
-						+ PortPool.getSize() + " 个");
-				if (PortPool.getSize() >= need) {
-					log.info("满足需要，投递任务");
-					submit(infos[0], infos[1], infos[2], infos[3],
-							perlMap.get(infos[4]));
-					GlobalQueue.poll();
-				} else {
-					log.info("不满足需要，暂缓投递任务");
+				log.info("需要节点 " + need + "，可使用节点 " + PortPool.getSize());
+				if (PortPool.getSize() < need) {
+					log.info("节点不满足需要，暂缓投递任务");
+					break;
 				}
+				log.info("满足需要，投递任务");
+				submit(infos[0], infos[1], infos[2], infos[3],
+						perlMap.get(infos[4]));
+				GlobalQueue.poll();
 			}
 		}
 	}
@@ -620,17 +623,18 @@ public class ProjectAction extends BaseAction {
 		String dataListFile = dealDataKeyListContainFileName(projectId,
 				dataKeyList);
 		// TODO
-		String command = "perl  /share/biosoft/perl/wangzhen/PGS/bin/moniter_qsub_python_monogo.pl perl "
+		String command = "nohup perl  /share/biosoft/perl/wangzhen/PGS/bin/moniter_qsub_python_monogo.pl perl "
 				+ " "
 				+ perl
 				+ " "
 				+ dataListFile
 				+ " "
 				+ basePath
-				+ " ProjectID" + projectId;
+				+ " ProjectID" + projectId+" >"+basePath+"ProjectID"+projectId+".log &";
 		log.info("运行命令：" + command);
 		SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
-		ssh.sshSubmit(command);
+		System.out.println("-------");
+		ssh.sshSubmit(command,false);
 	}
 
 	/**
