@@ -30,15 +30,12 @@ var dataCurrentPageNumber = 1;
 //保存用户已经选择的数据
 var checkedDataIds = new Array();
 
-//privateData排序
 var sortType = 0;//默认按照时间进行排序
 var fileNameSort = "asc";
 var createDateSort = "desc";
-var onclick = "";
 function initData(){
 	$("#dataTagSearch").val("");
 	getAllDataList();
-	
 	//数据搜索绑定回车事件
 	$("#dataTagSearch").bind('keyup', function(event){
 	   var event = event || window.event;
@@ -115,7 +112,7 @@ function sortByFileName(){//按文件名进行排序
 	getDataByCondition(1);
 }
 function sortByCreateDate(){//按照上传时间进行排序
-	sortType = 2;
+	sortType = 0;
 	if(createDateSort=="asc"){
 		createDateSort = "desc";
 	}else if(createDateSort=="desc"){
@@ -133,6 +130,13 @@ function privateIcon(){
 		$("#sortCreateDate").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
 	}else if(createDateSort=="desc"){
 		$("#sortCreateDate").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+	}
+	if(sortType==1){
+		$("#sortDateA").removeClass("a-green-normal");
+		$("#sortNameA").addClass("a-green-normal");
+	}else{
+		$("#sortNameA").removeClass("a-green-normal");
+		$("#sortDateA").addClass("a-green-normal");
 	}
 }
 function showRunApp(){
@@ -355,16 +359,6 @@ function saveEachData(){
 	});
 }
 //----------
-
-//数据管理-搜索框活得焦点时提示内容消失
-function hideSearchInputInfo(){
-	$("#dataTagSearch").attr("placeholder","");
-}
-//数据管理-搜索框失去焦点时显示提示内容
-function showSearchInputInfo(){
-	$("#dataTagSearch").attr("placeholder","搜索文件名/数据标签/文件别名");
-}
-
 /**
  * 禁用删除和批量操作
  */
@@ -411,14 +405,12 @@ function chkOnChange(obj){
 	var dataId_ = $(obj).val();
 	var start = $.inArray(dataId_,checkedDataIds);
 	if(checked){
-		if(start==-1){
+		if(start==-1)
 			checkedDataIds.push(dataId_);
-		}
 	}else{
 		$("#selAll").prop("checked",false);			
-		if(start!=-1){
+		if(start!=-1)
 			checkedDataIds.splice(start,1);
-		}
 	}
 	toUse();
 }
