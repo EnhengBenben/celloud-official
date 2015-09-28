@@ -44,32 +44,6 @@ function initData(){
 		   return;
 	   }
 	});
-	//全选
-	$("#selAll").click(function(){
-		//清空checkedDataIds
-		var checked = $(this).prop("checked");
-		var arrChk;
-		if(checked){
-			$("input[name='datachk']").prop("checked",true);
-			arrChk=$("input[name='datachk']:checked");
-			for(var i = 0;i<arrChk.length;i++){
-				var start = $.inArray(arrChk[i].value,checkedDataIds);
-				if(start==-1){
-					checkedDataIds.push(arrChk[i].value);
-				}
-			}
-		}else{
-			$("input[name='datachk']").prop("checked",false);
-			arrChk=$("input[name='datachk']");
-			for(var i = 0;i<arrChk.length;i++){
-				var start = $.inArray(arrChk[i].value,checkedDataIds);
-				if(start!=-1){
-					checkedDataIds.splice(start,1);
-				}
-			}
-		}
-		toUse();
-	});
 }	
 
 //-------v 3.0版本
@@ -228,6 +202,7 @@ function toRunApp(){
 	for (var i=0;i<checkedDataIds.length;i++){
 		dataIds += checkedDataIds[i] + ",";
 	}
+	dataIds = dataIds.substring(0, dataIds.length-1);
 	$("#runError").html("");
 	for (var i=0;i<addedApps.length;i++){
 		softId = addedApps[i];
@@ -267,7 +242,7 @@ function deleteData(){
 	});
 }
 function toMoreDataInfoModel(id,name){
-	$.get("data3!getMoreData",{"conditionInt":id},function(responseText){
+	$.get("data3!getMoreData",{"fileId":id},function(responseText){
 		$("#moreDatasForm").html(responseText);
 		var strain = $("#strainListHide").html();
 		setSelect2Info("#dataStrainHide",eval(strain));
@@ -383,6 +358,32 @@ function toUse(){
 }
 
 function initDataList(){
+	//全选
+	$("#selAll").click(function(){
+		//清空checkedDataIds
+		var checked = $(this).prop("checked");
+		var arrChk;
+		if(checked){
+			$("input[name='datachk']").prop("checked",true);
+			arrChk=$("input[name='datachk']:checked");
+			for(var i = 0;i<arrChk.length;i++){
+				var start = $.inArray(arrChk[i].value,checkedDataIds);
+				if(start==-1){
+					checkedDataIds.push(arrChk[i].value);
+				}
+			}
+		}else{
+			$("input[name='datachk']").prop("checked",false);
+			arrChk=$("input[name='datachk']");
+			for(var i = 0;i<arrChk.length;i++){
+				var start = $.inArray(arrChk[i].value,checkedDataIds);
+				if(start!=-1){
+					checkedDataIds.splice(start,1);
+				}
+			}
+		}
+		toUse();
+	});
 	// 设置之前选过的数据为选中状态
 	for(var j=0;j<checkedDataIds.length;j++){
 		var fileId = checkedDataIds[j];
