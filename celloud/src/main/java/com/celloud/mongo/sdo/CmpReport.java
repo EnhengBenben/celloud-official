@@ -15,6 +15,7 @@ import com.google.code.morphia.annotations.Entity;
  */
 @Entity(noClassnameStored = true)
 public class CmpReport extends Base {
+    private static final long serialVersionUID = 1L;
     /**
      * 所运行数据信息
      */

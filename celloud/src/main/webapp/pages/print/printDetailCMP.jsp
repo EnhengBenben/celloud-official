@@ -5136,34 +5136,34 @@ function printTable($parentDiv_,height){
 	var totaltrnum = $table_.find("tr").length;
 	var page_tr_num = Math.floor(height/37);
 	var trnum1 = 0;
-	var trnum2 = Math.floor((totaltrnum-trnum1-1)/page_tr_num);
 	var thead = "";
 	var newTables = "";
 	if($parentDiv_.find("div[name='geneDescriptDiv']").hasClass("w3cbbs")){
-		trnum1 = 25;
+		trnum1 = 24;
 	}else{
 		trnum1 = Math.floor(tmp_h/37);
 	}
+	var trnum2 = Math.floor((totaltrnum-trnum1-1)/page_tr_num);
 	if(table_h>0 && total_h>height && text_h<height && totaltrnum>trnum1){
 		thead = $table_.find("thead").html();
 		newTables = "<table class='table table-green table-striped-green table-text-center'><thead>"+thead+"</thead><tbody>";
-		for(var i=1; i<trnum1-1; i++){
+		for(var i=0; i<trnum1-1; i++){
 			newTables+="<tr>"+$table_.find("tbody").find("tr:eq("+i+")").html()+"</tr>";
 		}
 		newTables+="</tbody></table><div class='w3cbbs'></div>";
 		if(trnum2>0){
-			for(var i=1;i<trnum2;i++){
+			for(var i=1;i<=trnum2;i++){
 				newTables+="<table class='table table-green table-striped-green table-text-center'><thead>"+thead+"</thead><tbody>";
 				for(var j=trnum1-1;j<trnum1+page_tr_num-1;j++){
 					newTables+="<tr>"+$table_.find("tbody").find("tr:eq("+j+")").html()+"</tr>";
 				}
 				newTables+="</tbody></table><div class='w3cbbs'></div>";
-				trnum1 = trnum1+page_tr_num-1;
+				trnum1 = trnum1+page_tr_num;
 			}
 		}
 		if((totaltrnum-trnum1-1)%page_tr_num>0){
 			newTables+="<table class='table table-green table-striped-green table-text-center'><thead>"+thead+"</thead><tbody>";
-			for(var i=trnum1;i<trnum1+(totaltrnum-trnum1-1)%page_tr_num;i++){
+			for(var i=trnum1-1;i<trnum1+(totaltrnum-trnum1-1)%page_tr_num;i++){
 				newTables+="<tr>"+$table_.find("tbody").find("tr:eq("+i+")").html()+"</tr>";
 			}
 			newTables+="</tbody></table>";
@@ -5180,7 +5180,7 @@ function printSection6Table(){
 		var $table_ = $("#section6").find("table");
 		var thead = "<table class='table table-green table-striped-green table-text-center'><thead>" +$table_.find("thead").html()+"</thead>";
 		var newTables = thead+"<tbody>";
-		for(var i=1; i<25; i++){
+		for(var i=0; i<25; i++){
 			newTables+="<tr>"+$table_.find("tbody").find("tr:eq("+i+")").html()+"</tr>";
 		}
 		newTables+="</tbody></table><div class='w3cbbs'></div>";

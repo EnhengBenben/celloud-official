@@ -13,6 +13,7 @@ import com.google.code.morphia.annotations.Embedded;
  * @version Revision: 1.0
  */
 public class Pgs extends Base {
+    private static final long serialVersionUID = 1L;
     /** 文件编号 */
     private Integer fileId;
     /** 数据编号 */
