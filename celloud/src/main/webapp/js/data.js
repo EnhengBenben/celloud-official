@@ -106,11 +106,11 @@ function privateIcon(){
 		$("#sortCreateDate").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
 	}
 	if(sortType==1){
-		$("#sortDateA").removeClass("a-green-normal");
-		$("#sortNameA").addClass("a-green-normal");
+		$("#sortDateA").removeClass("a-green-normal").addClass("a-gray");
+		$("#sortNameA").removeClass("a-gray").addClass("a-green-normal");
 	}else{
-		$("#sortNameA").removeClass("a-green-normal");
-		$("#sortDateA").addClass("a-green-normal");
+		$("#sortNameA").removeClass("a-green-normal").addClass("a-gray");
+		$("#sortDateA").removeClass("a-gray").addClass("a-green-normal");
 	}
 }
 function showRunApp(){

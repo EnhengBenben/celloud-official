@@ -4527,9 +4527,11 @@ fieldset[disabled] .btn-vk.active {
   font-size: 16px;
 }
 .a-green-normal{
-  color: #4cba42 !important;
+  color: #00a65a !important;
 }
 .a-green-normal:hover{
-  color: #91F188 !important;
+  color: #4cba42 !important;
 }
+.a-gray{color: #ccc !important;}
+.a-gray:hover{color: #ddd !important;}
 .readonly{background-color: #f4f4f4}
