@@ -55,7 +55,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public Data getDataAndStrain(Integer userId, Integer fileId) {
+    public Data getDataAndStrain(Integer userId, Long fileId) {
 	return dataDao.getDataAndStrain(userId, fileId);
     }
 
@@ -72,6 +72,21 @@ public class DataServiceImpl implements DataService {
     @Override
     public Integer updateDatas(List<Data> list) {
 	return dataDao.updateDatas(list);
+    }
+
+    @Override
+    public String getDataSize(String dataIds) {
+	return dataDao.getDataSize(dataIds);
+    }
+
+    @Override
+    public Integer addDataToPro(String[] dataIdArr, Long proId) {
+	return dataDao.addDataToPro(dataIdArr, proId);
+    }
+
+    @Override
+    public List<Data> getDataByDataKeys(String dataKeys) {
+	return dataDao.getDataByDataKeys(dataKeys);
     }
 
 }

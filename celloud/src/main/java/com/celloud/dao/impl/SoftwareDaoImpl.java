@@ -22,8 +22,8 @@ import com.nova.utils.ConnectManager;
  * @version Revision: 1.0
  */
 public class SoftwareDaoImpl extends BaseDao implements SoftwareDao {
-    Logger log = Logger.getLogger(DataDaoImpl.class);
-    private Connection conn = ConnectManager.getConnection();
+    Logger log = Logger.getLogger(SoftwareDaoImpl.class);
+    private Connection conn = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     @Override
@@ -31,6 +31,7 @@ public class SoftwareDaoImpl extends BaseDao implements SoftwareDao {
 	List<Software> list = new ArrayList<>();
 	String sql = "select s.software_id,s.software_name,s.data_num from tb_software s left join tb_software_format_relat sf on s.software_id = sf.software_id where sf.format_id = ? and s.off_line = ? and ((attribute = ? and company_id = ?) or attribute= ?) order by s.create_date;";
 	try {
+	    conn = ConnectManager.getConnection();
 	    ps = conn.prepareStatement(sql);
 	    ps.setInt(1, formatId);
 	    ps.setInt(2, SoftWareOffLineState.ON);
@@ -41,7 +42,7 @@ public class SoftwareDaoImpl extends BaseDao implements SoftwareDao {
 	    Software soft = null;
 	    while (rs.next()) {
 		soft = new Software();
-		soft.setSoftwareId(rs.getInt("software_id"));
+		soft.setSoftwareId(rs.getLong("software_id"));
 		soft.setSoftwareName(rs.getString("software_name"));
 		soft.setDataNum(rs.getInt("data_num"));
 		list.add(soft);
@@ -53,6 +54,27 @@ public class SoftwareDaoImpl extends BaseDao implements SoftwareDao {
 	    ConnectManager.free(conn, ps, rs);
 	}
 	return list;
+    }
+
+    @Override
+    public String getAppNameById(Long softwareId) {
+	String sql = "select software_name from tb_software where software_id = ?";
+	String appName = null;
+	try {
+	    conn = ConnectManager.getConnection();
+	    ps = conn.prepareStatement(sql);
+	    ps.setLong(1, softwareId);
+	    rs = ps.executeQuery();
+	    while (rs.next()) {
+		appName = rs.getString("software_name");
+	    }
+	} catch (SQLException e) {
+	    log.error("用户" + super.userName + "查询软件" + softwareId + "软件名称失败");
+	    e.printStackTrace();
+	} finally {
+	    ConnectManager.free(conn, ps, rs);
+	}
+	return appName;
     }
 
 }

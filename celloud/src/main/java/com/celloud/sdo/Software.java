@@ -18,7 +18,7 @@ import com.nova.sdo.Screen;
 @Entity
 public class Software implements Serializable {
     private static final long serialVersionUID = 1L;
-    private Integer softwareId;
+    private Long softwareId;
     private String softwareName;
     private String englishName;
     /** 软件访问地址 */
@@ -54,11 +54,11 @@ public class Software implements Serializable {
     /** 截图 */
     private Screen screen;
 
-    public Integer getSoftwareId() {
+    public Long getSoftwareId() {
 	return softwareId;
     }
 
-    public void setSoftwareId(Integer softwareId) {
+    public void setSoftwareId(Long softwareId) {
 	this.softwareId = softwareId;
     }
 

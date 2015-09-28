@@ -14,7 +14,7 @@ import java.util.List;
 public class Data implements Serializable {
     private static final long serialVersionUID = 1L;
     /** 文件编号 */
-    private Integer fileId;
+    private Long fileId;
     /** 用户编号 提交者 */
     private Integer userId;
     /** 数据编号 */
@@ -47,7 +47,7 @@ public class Data implements Serializable {
     private Integer blocks;
     // 以下字段仅供查询
     /** 报告数量 */
-    private int reportNum;
+    private Integer reportNum;
     /** 是否正在运行，0 否，>0 是 */
     private Integer isRunning;
     /** 是否已分配项目 */
@@ -57,17 +57,18 @@ public class Data implements Serializable {
     /** 用户输入过的数据物种信息列表--用于select2显示 */
     private List<String> strainList;
 
-    public Integer getFileId() {
+    public Long getFileId() {
 	return fileId;
     }
 
-    public void setFileId(Integer fileId) {
+    public void setFileId(Long fileId) {
 	this.fileId = fileId;
     }
 
     public Integer getUserId() {
 	return userId;
     }
+
     public void setUserId(Integer userId) {
 	this.userId = userId;
     }
@@ -174,10 +175,12 @@ public class Data implements Serializable {
     public void setBlocks(Integer blocks) {
 	this.blocks = blocks;
     }
-    public int getReportNum() {
+
+    public Integer getReportNum() {
 	return reportNum;
     }
-    public void setReportNum(int reportNum) {
+
+    public void setReportNum(Integer reportNum) {
 	this.reportNum = reportNum;
     }
 

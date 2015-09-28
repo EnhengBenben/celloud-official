@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
     <link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">    
   	<link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
-    <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.2" rel="stylesheet" type="text/css" />
+    <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.3" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <div class="wrapper">
@@ -219,7 +219,7 @@
 	<script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
     <script src="<%=request.getContextPath() %>/dist/js/celloud.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/plugins/spin.min.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/data.js?version=1.1" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/data.js?version=1.3" type="text/javascript"></script>
 	<!-- spin:loading效果 end-->
 	<script type="text/javascript">
 		var session_userId = <%=session.getAttribute("userId")%>;

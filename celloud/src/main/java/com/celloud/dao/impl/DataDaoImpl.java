@@ -28,7 +28,7 @@ import com.nova.utils.ConnectManager;
  */
 public class DataDaoImpl extends BaseDao implements DataDao {
     Logger log = Logger.getLogger(DataDaoImpl.class);
-    private Connection conn = ConnectManager.getConnection();
+    private Connection conn = null;
     private PreparedStatement qps = null;
     private PreparedStatement cps = null;
     private ResultSet qrs = null;
@@ -47,6 +47,7 @@ public class DataDaoImpl extends BaseDao implements DataDao {
 		.append("select count(file_name) data_count from tb_file f where f.user_id=? and f.state=?");
 	List<Data> datas = new ArrayList<Data>();
 	try {
+	    conn = ConnectManager.getConnection();
 	    qps = conn.prepareStatement(queryBuff.toString());
 	    qps.setInt(1, ReportType.DATA);
 	    qps.setInt(2, DataState.ACTIVE);
@@ -61,7 +62,7 @@ public class DataDaoImpl extends BaseDao implements DataDao {
 	    crs = cps.executeQuery();
 	    while (qrs.next()) {
 		Data data = new Data();
-		data.setFileId(qrs.getInt("file_id"));
+		data.setFileId(qrs.getLong("file_id"));
 		data.setDataKey(qrs.getString("data_key"));
 		data.setFileName(qrs.getString("file_name"));
 		data.setAnotherName(qrs.getString("another_name"));
@@ -126,6 +127,7 @@ public class DataDaoImpl extends BaseDao implements DataDao {
 		.append(page.getPageSize());
 	List<Data> datas = new ArrayList<Data>();
 	try {
+	    conn = ConnectManager.getConnection();
 	    qps = conn.prepareStatement(queryBuff.toString());
 	    qps.setInt(1, ReportType.DATA);
 	    qps.setInt(2, DataState.ACTIVE);
@@ -140,7 +142,7 @@ public class DataDaoImpl extends BaseDao implements DataDao {
 	    crs = cps.executeQuery();
 	    while (qrs.next()) {
 		Data data = new Data();
-		data.setFileId(qrs.getInt("file_id"));
+		data.setFileId(qrs.getLong("file_id"));
 		data.setDataKey(qrs.getString("data_key"));
 		data.setFileName(qrs.getString("file_name"));
 		data.setAnotherName(qrs.getString("another_name"));
@@ -179,6 +181,7 @@ public class DataDaoImpl extends BaseDao implements DataDao {
 		"select count(*) num,file_format from(select file_format from tb_file where file_id in (")
 		.append(dataIds).append(") group by file_format) t");
 	try {
+	    conn = ConnectManager.getConnection();
 	    qps = conn.prepareStatement(sql.toString());
 	    qrs = qps.executeQuery();
 	    if (qrs.next()) {
@@ -203,6 +206,7 @@ public class DataDaoImpl extends BaseDao implements DataDao {
 		.append(dataIds)
 		.append(") and r.software_id=? and r.state!=? and r.isdel=? group by dp.file_id;");
 	try {
+	    conn = ConnectManager.getConnection();
 	    qps = conn.prepareStatement(sql.toString());
 	    qps.setInt(1, appId);
 	    qps.setInt(2, ReportState.COMPLETE);
@@ -228,6 +232,7 @@ public class DataDaoImpl extends BaseDao implements DataDao {
 		.append(dataIds).append(")");
 	Integer num = null;
 	try {
+	    conn = ConnectManager.getConnection();
 	    qps = conn.prepareStatement(sql.toString());
 	    qps.setInt(1, DataState.DEELTED);
 	    num = qps.executeUpdate();
@@ -245,6 +250,7 @@ public class DataDaoImpl extends BaseDao implements DataDao {
 	String sql = "select distinct strain from tb_file where user_id=? and strain is not null and strain !='';";
 	List<Map<String, String>> list = new ArrayList<>();
 	try {
+	    conn = ConnectManager.getConnection();
 	    qps = conn.prepareStatement(sql);
 	    qps.setInt(1, userId);
 	    qrs = qps.executeQuery();
@@ -261,13 +267,14 @@ public class DataDaoImpl extends BaseDao implements DataDao {
     }
 
     @Override
-    public Data getDataAndStrain(Integer userId,Integer fileId) {
-	String sql = "select f.another_name,f.another_name,f.strain,f.sample,f.data_tags,f1.strain strains from tb_file f join (select distinct strain,user_id from tb_file where user_id=? and strain is not null and strain !='') f1 on f.user_id=f1.user_id where f.file_id=?;";
+    public Data getDataAndStrain(Integer userId, Long fileId) {
+	String sql = "select f.another_name,f.strain,f.sample,f.data_tags,f1.strain strains from tb_file f join (select distinct strain,user_id from tb_file where user_id=? and strain is not null and strain !='') f1 on f.user_id=f1.user_id where f.file_id=?;";
 	Data data = new Data();
 	try {
+	    conn = ConnectManager.getConnection();
 	    qps = conn.prepareStatement(sql);
 	    qps.setInt(1, userId);
-	    qps.setInt(2, fileId);
+	    qps.setLong(2, fileId);
 	    qrs = qps.executeQuery();
 	    List<String> list = new ArrayList<>();
 	    StringBuffer strains = null;
@@ -315,11 +322,12 @@ public class DataDaoImpl extends BaseDao implements DataDao {
 		.append(dataIds).append(")");
 	List<Data> list = new ArrayList<>();
 	try {
+	    conn = ConnectManager.getConnection();
 	    qps = conn.prepareStatement(sql.toString());
 	    qrs = qps.executeQuery();
 	    while (qrs.next()) {
 		Data data = new Data();
-		data.setFileId(qrs.getInt("file_id"));
+		data.setFileId(qrs.getLong("file_id"));
 		data.setDataKey(qrs.getString("data_key"));
 		data.setFileName(qrs.getString("file_name"));
 		data.setAnotherName(qrs.getString("another_name"));
@@ -329,7 +337,40 @@ public class DataDaoImpl extends BaseDao implements DataDao {
 		list.add(data);
 	    }
 	} catch (SQLException e) {
-	    log.error("用户" + super.userName + "查询数据" + dataIds + "修改信息列表失败");
+	    log.error("用户" + super.userName + "查询数据" + dataIds + "信息列表失败");
+	    e.printStackTrace();
+	} finally {
+	    ConnectManager.free(conn, qps, qrs);
+	}
+	return list;
+    }
+
+    @Override
+    public List<Data> getDataByDataKeys(String dataKeys) {
+	List<Data> list = new ArrayList<Data>();
+	StringBuffer sql = new StringBuffer();
+	sql.append(
+		"select file_id,data_key,file_name,another_name,user_id,strain,sample,data_tags,size from tb_file where data_key in (")
+		.append(dataKeys).append(")");
+	try {
+	    conn = ConnectManager.getConnection();
+	    qps = conn.prepareStatement(sql.toString());
+	    qrs = qps.executeQuery();
+	    while (qrs.next()) {
+		Data data = new Data();
+		data.setFileId(qrs.getLong("file_id"));
+		data.setDataKey(qrs.getString("data_key"));
+		data.setFileName(qrs.getString("file_name"));
+		data.setAnotherName(qrs.getString("another_name"));
+		data.setUserId(qrs.getInt("user_id"));
+		data.setStrain(qrs.getString("strain"));
+		data.setSample(qrs.getString("sample"));
+		data.setDataTags(qrs.getString("data_tags"));
+		data.setSize(qrs.getLong("size"));
+		list.add(data);
+	    }
+	} catch (SQLException e) {
+	    log.error("用户" + super.userName + "根据数据编号" + dataKeys + "查询数据列表失败");
 	    e.printStackTrace();
 	} finally {
 	    ConnectManager.free(conn, qps, qrs);
@@ -345,6 +386,7 @@ public class DataDaoImpl extends BaseDao implements DataDao {
 		"update tb_file set strain=?,data_tags=?,sample=?,another_name=? where file_id in (")
 		.append(dataIds).append(")");
 	try {
+	    conn = ConnectManager.getConnection();
 	    qps = conn.prepareStatement(sql.toString());
 	    qps.setString(1, data.getStrain());
 	    qps.setString(2, data.getDataTags());
@@ -355,7 +397,7 @@ public class DataDaoImpl extends BaseDao implements DataDao {
 	    log.error("用户" + super.userName + "修改数据" + dataIds + "信息失败");
 	    e.printStackTrace();
 	} finally {
-	    ConnectManager.free(conn, qps, null);
+	    ConnectManager.free(conn, qps, qrs);
 	}
 	return num;
     }
@@ -388,13 +430,60 @@ public class DataDaoImpl extends BaseDao implements DataDao {
 		    .append(sample).append(" END,another_name = CASE file_id ")
 		    .append(aname).append(" END WHERE file_id in (")
 		    .append(ids).append(")");
+	    conn = ConnectManager.getConnection();
 	    qps = conn.prepareStatement(sql.toString());
 	    num = qps.executeUpdate();
 	} catch (SQLException e) {
 	    log.error("用户" + super.userName + "批量修改数据信息失败");
 	    e.printStackTrace();
 	} finally {
-	    ConnectManager.free(conn, qps, null);
+	    ConnectManager.free(conn, qps, qrs);
+	}
+	return num;
+    }
+
+    @Override
+    public String getDataSize(String dataIds) {
+	StringBuffer sql = new StringBuffer();
+	sql.append("select sum(size) size from tb_file where file_id in (")
+		.append(dataIds).append(")");
+	String size = null;
+	try {
+	    conn = ConnectManager.getConnection();
+	    qps = conn.prepareStatement(sql.toString());
+	    qrs = qps.executeQuery();
+	    if (qrs.next()) {
+		size = qrs.getString("size");
+	    }
+	} catch (SQLException e) {
+	    log.error("用户" + super.userName + "查询数据" + dataIds + "总大小失败");
+	    e.printStackTrace();
+	} finally {
+	    ConnectManager.free(conn, qps, qrs);
+	}
+	return size;
+    }
+
+    @Override
+    public Integer addDataToPro(String[] dataIdArr, Long proId) {
+	Integer num = null;
+	try {
+	    StringBuffer sql = new StringBuffer();
+	    sql.append("insert into tb_data_project_relat(file_id,project_id) values");
+	    for (String dataId : dataIdArr) {
+		sql.append("(").append(dataId).append(",").append(proId)
+			.append("),");
+	    }
+	    sql.deleteCharAt(sql.length() - 1);
+	    conn = ConnectManager.getConnection();
+	    qps = conn.prepareStatement(sql.toString());
+	    num = qps.executeUpdate();
+	} catch (SQLException e) {
+	    log.error("用户" + super.userName + "给数据" + dataIdArr + "分配项目"
+		    + proId + "失败");
+	    e.printStackTrace();
+	} finally {
+	    ConnectManager.free(conn, qps, qrs);
 	}
 	return num;
     }

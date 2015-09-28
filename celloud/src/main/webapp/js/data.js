@@ -199,29 +199,47 @@ function okToRun(type){
 }
 function toRunApp(){
 	var dataIds = "";
+	var appIds = "";
 	for (var i=0;i<checkedDataIds.length;i++){
 		dataIds += checkedDataIds[i] + ",";
 	}
 	dataIds = dataIds.substring(0, dataIds.length-1);
 	$("#runError").html("");
 	for (var i=0;i<addedApps.length;i++){
-		softId = addedApps[i];
-		$.get("project!run", {"dataIds":dataIds,"softwareId" : softId}, function(error) {
-			if (error > 0) {
-				$("#runErrorTitle").html("以下APP运行失败：");
-				
-				$("#runError").append($("#runAppli" +softId).html() + "  ");
-				$("#runErrorDiv").removeClass("hide");
-			}else{
-				if(i==addedApps.length-1){
-					checkedDataIds = [];
-					$("input[type='checkbox']").prop("checked",false);
-					$("#runApp").modal("hide");
-					$("#runErrorDiv").addClass("hide");
-				}
-			}
-		});
+		appIds += addedApps[i] + ",";
 	}
+	appIds = appIds.substring(0, appIds.length-1);
+	$.get("data3!run",{"dataIds":dataIds,"condition":appIds},function(result){
+		if(result != ""){
+			$("#runErrorTitle").html("以下APP运行失败：");
+			$("#runError").html(result);
+			$("#runErrorDiv").removeClass("hide");
+		}else{
+			checkedDataIds = [];
+			getDataByCondition(dataCurrentPageNumber);
+			$("input[type='checkbox']").prop("checked",false);
+			$("#runApp").modal("hide");
+			$("#runErrorDiv").addClass("hide");
+		}
+	});
+//	for (var i=0;i<addedApps.length;i++){
+//		softId = addedApps[i];
+//		$.get("project!run", {"dataIds":dataIds,"softwareId" : softId}, function(error) {
+//			if (error > 0) {
+//				$("#runErrorTitle").html("以下APP运行失败：");
+//				
+//				$("#runError").append($("#runAppli" +softId).html() + "  ");
+//				$("#runErrorDiv").removeClass("hide");
+//			}else{
+//				if(i==addedApps.length-1){
+//					checkedDataIds = [];
+//					$("input[type='checkbox']").prop("checked",false);
+//					$("#runApp").modal("hide");
+//					$("#runErrorDiv").addClass("hide");
+//				}
+//			}
+//		});
+//	}
 }
 function deleteData(){
 	$("#warningText").html("确定要删除选中数据吗？");

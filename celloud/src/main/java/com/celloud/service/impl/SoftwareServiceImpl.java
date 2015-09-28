@@ -21,4 +21,9 @@ public class SoftwareServiceImpl implements SoftwareService {
 	return appDao.getAppsByFormat(formatId);
     }
 
+    @Override
+    public String getAppNameById(Long softwareId) {
+	return appDao.getAppNameById(softwareId);
+    }
+
 }

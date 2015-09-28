@@ -21,4 +21,12 @@ public interface SoftwareDao {
      * @return
      */
     public List<Software> getAppsByFormat(Integer formatId);
+
+    /**
+     * 根据编号获取软件信息
+     * 
+     * @param softwareId
+     * @return
+     */
+    public String getAppNameById(Long softwareId);
 }

@@ -63,7 +63,7 @@ public interface DataDao {
      * @param fileId
      * @return
      */
-    public Data getDataAndStrain(Integer userId, Integer fileId);
+    public Data getDataAndStrain(Integer userId, Long fileId);
 
     /**
      * 根据id获取数据列表
@@ -72,6 +72,14 @@ public interface DataDao {
      * @return
      */
     public List<Data> getDatasByIds(String dataIds);
+
+    /**
+     * 根据多个dataKey获取数据列表
+     * 
+     * @param dataKeys
+     * @return
+     */
+    public List<Data> getDataByDataKeys(String dataKeys);
 
     /**
      * 修改数据
@@ -88,4 +96,21 @@ public interface DataDao {
      * @return
      */
     public Integer updateDatas(List<Data> list);
+
+    /**
+     * 获取数据总大小
+     * 
+     * @param dataIds
+     * @return
+     */
+    public String getDataSize(String dataIds);
+
+    /**
+     * 给数据分配项目
+     * 
+     * @param dataIds
+     * @param proId
+     * @return
+     */
+    public Integer addDataToPro(String[] dataIdArr, Long proId);
 }
