@@ -254,6 +254,20 @@ function toMoreDataInfoModel(id,name){
 		$("#dataMoreInfoModal").modal("show");
 	});
 }
+function showDataMoreInfoEdit(){
+	$("#moreDatasForm").find("input").removeAttr("readonly");
+	$("#moreDatasForm").find("input").removeClass("readonly");
+	$("#dataTag").children(".popWindow-overlap").remove(); 
+	$("#dataStrainHide").removeAttr("disabled");
+	$(".select2-container").removeClass("select2-container-disabled");
+}
+function cancelEditMoreInfo(){
+	$("#moreDatasForm").find("input").prop("readonly",true);
+	$("#moreDatasForm").find("input").addClass("readonly");
+	$("#dataStrainHide").removeAttr("disabled");
+	$(".select2-container").addClass("select2-container-disabled");
+	$("#dataTag").append("<div class=\"popWindow-overlap\"></div>");
+}
 function saveMoreDataInfo(){
     $.get("data3!updateDataByIds",$("#moreDatasForm").serialize(),function(flag){
     	if(flag>0){

@@ -8,26 +8,26 @@ ${data.strainList }
 <div class="form-group">
 	<div class="control-label form-label col-xs-3">文件别名</div>
 	<div class="col-xs-9">
-		<input type="text" name="data.anotherName" value="${data.anotherName}" onkeyup="value=value.replace(/[^\u4E00-\u9FA5\w]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5\w]/g,''))" placeholder="请输入字母\数字\下划线\汉字"/>
+		<input type="text" class="readonly" name="data.anotherName" value="${data.anotherName}" readonly="readonly" onkeyup="value=value.replace(/[^\u4E00-\u9FA5\w]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5\w]/g,''))" placeholder="请输入字母\数字\下划线\汉字"/>
 	</div>
 </div>
 <div class="form-group">
 	<div class="control-label form-label col-xs-3">数据标签</div>
 	<div class="col-xs-9">
-		<input type="text" name="data.dataTags" value="${data.dataTags}" />
+		<input type="text" class="readonly" name="data.dataTags" value="${data.dataTags}" readonly="readonly"/>
 	</div>
 </div>
 <div class="form-group">
 	<div class="control-label form-label col-xs-3">样本</div>
 	<div class="col-xs-9">
-		<input type="text" name="data.sample" value="${data.sample}" maxlength="45"/>
+		<input type="text" class="readonly" name="data.sample" value="${data.sample}" maxlength="45" readonly="readonly"/>
 	</div>
 </div>
 <div class="form-group">
 	<div class="control-label form-label col-xs-3">样本类型/物种</div>
 	<div class="col-xs-9" id="dataTag">
 		<span id="dataMoreInfoStrainSpan">
-			<input type="hidden" id="dataStrainHide" name="data.strain" value="${data.strain}" style="width: 270px;"/>
+			<input type="hidden" id="dataStrainHide" name="data.strain" value="${data.strain}" style="width: 270px;" readonly="readonly"/>
 		</span>
  	</div>
 </div>

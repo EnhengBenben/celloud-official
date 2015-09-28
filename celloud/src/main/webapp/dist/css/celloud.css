@@ -4532,3 +4532,4 @@ fieldset[disabled] .btn-vk.active {
 .a-green-normal:hover{
   color: #91F188 !important;
 }
+.readonly{background-color: #f4f4f4}
