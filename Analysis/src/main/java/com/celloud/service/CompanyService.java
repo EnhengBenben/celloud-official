@@ -41,4 +41,11 @@ public interface CompanyService {
 	 * @return
 	 */
 	public Company getCompanyById(Integer compId);
+
+	/**
+	 * 获取平台医院分布
+	 * 
+	 * @return
+	 */
+	public List<Map<String, Object>> getProvince();
 }

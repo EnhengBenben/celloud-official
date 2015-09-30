@@ -111,12 +111,12 @@
 	</div><!-- /.row -->
 </div><!-- /.page-content -->
 <script>
-function chars() {
+function chars(data) {
 	var myChart = echarts.init(document.getElementById('map')); 
 	option = {
 	    title : {
 	        text: '医院用户所分布区域',
-	        subtext: 'data from PM25.in',
+	        //subtext: 'data from PM25.in',
 	        x:'center'
 	    },
 	    tooltip : {
@@ -204,17 +204,23 @@ function chars() {
 	                        label:{show:false}
 	                    }
 	                },
-	                data : [
-	                    {name: "河北", value: 13},
-	                    {name: "河南", value: 194},
-	                    {name: "江苏", value: 229},
-	                ]
+	                data : data
 	            }
 	        }
 	    ]
 	};
 	myChart.setOption(option); 
 }
-chars();
+$(document).ready(function(){
+	$.get("company!getProvince",function(result){
+		var data = "[";
+		for(var i in result){
+			var map = result[i];
+			data +="{name: '"+map['province']+"', value: "+map['num']+"},";
+		}
+		data +="]";
+		chars(eval(data));
+	});
+});
 
 </script>
