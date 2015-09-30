@@ -400,3 +400,11 @@ textarea {width: 800px;	}
 	.clearCss_6 img{width:550px;}
 	.container{ margin-bottom:10px;}
 }
+.a-green-normal{
+  text-decoration:none;
+  color: #00a65a !important;
+}
+.a-green-normal:hover{
+  color: #4cba42 !important;
+}
+.hide{display:none;}
