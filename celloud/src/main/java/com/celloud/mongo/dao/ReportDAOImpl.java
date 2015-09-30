@@ -5,11 +5,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpGeneDetectionDetail;
 import com.celloud.mongo.sdo.CmpGeneSnpResult;
 import com.celloud.mongo.sdo.CmpReport;
+import com.celloud.mongo.sdo.GddDiseaseDict;
 import com.celloud.mongo.sdo.NIPT;
 import com.celloud.mongo.sdo.PGSFilling;
 import com.celloud.mongo.sdo.Pgs;
@@ -73,11 +75,15 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 	    if (gdd != null) {
 		List<CmpGeneSnpResult> list = gdd.getResult();
 		List<CmpGeneSnpResult> list_tmp = new ArrayList<CmpGeneSnpResult>();
+		// 只允许字母和数字
+		String regEx = "[^\\w\\.\\_\\-\u4e00-\u9fa5]";
+		Pattern p = Pattern.compile(regEx);
 		for (CmpGeneSnpResult gsr : list) {
 		    CmpGeneSnpResult gsr_tmp = new CmpGeneSnpResult();
-		    gsr_tmp.setDiseaseType(gsr.getDiseaseType());
 		    gsr_tmp.setDiseaseName(gsr.getDiseaseName());
-		    gsr_tmp.setDiseaseEngName(gsr.getDiseaseEngName());
+		    gsr_tmp.setDiseaseEngName(p
+			    .matcher(gsr.getDiseaseEngName()).replaceAll("")
+			    .trim());
 		    gsr_tmp.setGene(gsr.getGene());
 		    list_tmp.add(gsr_tmp);
 		}
@@ -93,7 +99,6 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 			}
 		    }
 		    CmpGeneSnpResult gsr_tmp = new CmpGeneSnpResult();
-		    gsr_tmp.setDiseaseType(list_tmp.get(i).getDiseaseType());
 		    gsr_tmp.setDiseaseName(list_tmp.get(i).getDiseaseName());
 		    gsr_tmp.setDiseaseEngName(list_tmp.get(i)
 			    .getDiseaseEngName());
@@ -107,8 +112,8 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 			    @Override
 			    public int compare(CmpGeneSnpResult gsr1,
 				    CmpGeneSnpResult gsr2) {
-				return gsr1.getDiseaseType().compareTo(
-					gsr2.getDiseaseType());
+				return gsr1.getDiseaseName().compareTo(
+					gsr2.getDiseaseName());
 			    }
 			});
 	    }
@@ -137,10 +142,16 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 			.createUpdateOperations(Pgs.class).set("fill", pgs));
     }
 
-	@Override
-	public NIPT getNIPTReport(String dataKey, Integer proId, Integer appId) {
-		return ds.createQuery(NIPT.class).filter("dataKey", dataKey)
-				.filter("projectId", proId).filter("appId", appId).get();
-	}
+    @Override
+    public NIPT getNIPTReport(String dataKey, Integer proId, Integer appId) {
+	return ds.createQuery(NIPT.class).filter("dataKey", dataKey)
+		.filter("projectId", proId).filter("appId", appId).get();
+    }
+
+    @Override
+    public List<GddDiseaseDict> getGddDiseaseDictNormal(List<String> normalGene) {
+	return ds.createQuery(GddDiseaseDict.class)
+		.filter("gene nin", normalGene).order("gene").asList();
+    }
 
 }

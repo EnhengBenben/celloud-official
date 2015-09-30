@@ -1,4 +1,3 @@
-/**  */
 package com.celloud.mongo.sdo;
 
 import java.io.Serializable;
@@ -9,23 +8,21 @@ import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
 
 /**
- * GDD疾病名称及类型表
+ * GDD遗传方式
  * 
  * @author <a href="mailto:liuqingxiao@celloud.cn">liuqx</a>
- * @date 2015-8-25下午5:36:00
+ * @date 2015-9-29下午6:26:23
  * @version Revision: 1.0
  */
 @Entity(noClassnameStored = true)
-public class GddDiseaseDict implements Serializable {
+public class GddGeneticMethod implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private ObjectId id;
-    /** 疾病名称 */
-    private String name;
-    /** 疾病英文名称 */
-    private String engName;
-    /** 基因 */
+    /** 基因名称 */
     private String gene;
+    /** 遗传方式 */
+    private String method;
 
     public ObjectId getId() {
 	return id;
@@ -35,27 +32,19 @@ public class GddDiseaseDict implements Serializable {
 	this.id = id;
     }
 
-    public String getName() {
-	return name;
-    }
-
-    public void setName(String name) {
-	this.name = name;
-    }
-
-    public String getEngName() {
-	return engName;
-    }
-
-    public void setEngName(String engName) {
-	this.engName = engName;
-    }
-
     public String getGene() {
 	return gene;
     }
 
     public void setGene(String gene) {
 	this.gene = gene;
+    }
+
+    public String getMethod() {
+	return method;
+    }
+
+    public void setMethod(String method) {
+	this.method = method;
     }
 }

@@ -18,6 +18,7 @@ public class CmpGeneSnpResult {
     private String diseaseEngName;
     private String diseaseName;
     private String diseaseType;
+    private String geneticMethod;
 
     public String getGene() {
 	return gene;
@@ -97,6 +98,14 @@ public class CmpGeneSnpResult {
 
     public void setDiseaseType(String diseaseType) {
 	this.diseaseType = diseaseType;
+    }
+
+    public String getGeneticMethod() {
+	return geneticMethod;
+    }
+
+    public void setGeneticMethod(String geneticMethod) {
+	this.geneticMethod = geneticMethod;
     }
 
 }

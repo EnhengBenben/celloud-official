@@ -4,6 +4,7 @@ package com.celloud.mongo.dao;
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
 import com.celloud.mongo.sdo.GddDiseaseDict;
+import com.celloud.mongo.sdo.GddGeneticMethod;
 
 /**
  * 操作Report接口
@@ -67,4 +68,19 @@ public interface ReportDAO {
      * @return
      */
     public GddDiseaseDict getGddDiseaseDict(String name);
+
+    /**
+     * 保存GDD遗传方式字典库
+     * 
+     * @param geneticMethod
+     */
+    public void saveGddGeneticMethod(GddGeneticMethod geneticMethod);
+
+    /**
+     * 获取GDD遗传方式
+     * 
+     * @param gene
+     * @return
+     */
+    public GddGeneticMethod getGddGeneticMethod(String gene);
 }

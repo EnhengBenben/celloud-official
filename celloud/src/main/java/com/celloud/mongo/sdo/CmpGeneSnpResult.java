@@ -20,6 +20,8 @@ public class CmpGeneSnpResult {
     private String diseaseEngName;
     private String diseaseName;
     private String diseaseType;
+    /** 遗传方式 */
+    private String geneticMethod;
     @NotSaved
     private Integer mutNum;
 
@@ -109,5 +111,13 @@ public class CmpGeneSnpResult {
 
     public void setMutNum(Integer mutNum) {
 	this.mutNum = mutNum;
+    }
+
+    public String getGeneticMethod() {
+	return geneticMethod;
+    }
+
+    public void setGeneticMethod(String geneticMethod) {
+	this.geneticMethod = geneticMethod;
     }
 }

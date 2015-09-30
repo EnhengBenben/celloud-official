@@ -21,6 +21,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
 import com.celloud.mongo.sdo.GddDiseaseDict;
+import com.celloud.mongo.sdo.GddGeneticMethod;
 import com.celloud.mongo.service.ReportService;
 import com.celloud.mongo.service.ReportServiceImpl;
 import com.nova.tools.constant.AppNameIDConstant;
@@ -152,11 +153,11 @@ public class ProcedureAction extends ActionSupport {
 	    .getRealPath("/upload");
 
     public String saveGddDisease() {
-	File file = new File("/share/data/spark-15824.txt");
+	File file = new File("/share/data/GddDiseaseDict.txt");
 	BufferedReader reader;
 	try {
 	    reader = new BufferedReader(new InputStreamReader(
-		    new FileInputStream(file), "gbk"));
+		    new FileInputStream(file), "utf8"));
 	    String tmpStr = null;
 	    ReportService rService = new ReportServiceImpl();
 	    int i = 0;
@@ -167,11 +168,39 @@ public class ProcedureAction extends ActionSupport {
 		}
 		System.out.println(tmpArry.length);
 		GddDiseaseDict gddDisease = new GddDiseaseDict();
-		gddDisease.setType(tmpArry[0]);
-		gddDisease.setEngName(tmpArry[1]);
-		gddDisease.setName(tmpArry[2]);
-		gddDisease.setGene(tmpArry[3]);
+		gddDisease.setEngName(tmpArry[0]);
+		gddDisease.setName(tmpArry[1]);
+		gddDisease.setGene(tmpArry[2]);
 		rService.saveGddDiseaseDict(gddDisease);
+		System.out.println(i++);
+	    }
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace();
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
+	return "success";
+    }
+
+    public String saveGddGeneticMethod() {
+	File file = new File("/share/data/GddGeneticMethod.txt");
+	BufferedReader reader;
+	try {
+	    reader = new BufferedReader(new InputStreamReader(
+		    new FileInputStream(file), "utf8"));
+	    String tmpStr = null;
+	    ReportService rService = new ReportServiceImpl();
+	    int i = 0;
+	    while ((tmpStr = reader.readLine()) != null) {
+		String[] tmpArry = tmpStr.split(",");
+		for (String s : tmpArry) {
+		    System.out.print(s + "---");
+		}
+		System.out.println(tmpArry.length);
+		GddGeneticMethod method = new GddGeneticMethod();
+		method.setGene(tmpArry[0]);
+		method.setMethod(tmpArry[1]);
+		rService.saveGddGeneticMethod(method);
 		System.out.println(i++);
 	    }
 	} catch (FileNotFoundException e) {

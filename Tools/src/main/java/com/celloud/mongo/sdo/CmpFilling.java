@@ -2,6 +2,7 @@
 package com.celloud.mongo.sdo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * CMP报告——用户填写部分
@@ -67,6 +68,25 @@ public class CmpFilling extends PatientBasic {
      * 推荐用药
      */
     private List<RecommendDrug> recommendDrug;
+    /** --------GDD填写------------- */
+    /** 母亲姓名 */
+    private String motherName;
+    /** 病历号 */
+    private String medicalRecord;
+    /** 项目编号 */
+    private String projectNo;
+    /** 出生日期 */
+    private String birthday;
+    /** 指导医生 */
+    private String doctorName;
+    /** 送检单位 */
+    private String inspectionUnit;
+    /** 样本状态 */
+    private String sampleStatus;
+    /** 疾病判定结果 <key= 疾病名称，value=判定结果> */
+    private Map<String, String> decisionResult;
+    /** 疾病简介 */
+    private Map<String, String> diseaseProfile;
 
     public String getTumorType() {
 	return tumorType;
@@ -180,4 +200,77 @@ public class CmpFilling extends PatientBasic {
     public void setRecommendDrug(List<RecommendDrug> recommendDrug) {
 	this.recommendDrug = recommendDrug;
     }
+
+    public String getMotherName() {
+	return motherName;
+    }
+
+    public void setMotherName(String motherName) {
+	this.motherName = motherName;
+    }
+
+    public String getMedicalRecord() {
+	return medicalRecord;
+    }
+
+    public void setMedicalRecord(String medicalRecord) {
+	this.medicalRecord = medicalRecord;
+    }
+
+    public String getProjectNo() {
+	return projectNo;
+    }
+
+    public void setProjectNo(String projectNo) {
+	this.projectNo = projectNo;
+    }
+
+    public String getDoctorName() {
+	return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+	this.doctorName = doctorName;
+    }
+
+    public String getInspectionUnit() {
+	return inspectionUnit;
+    }
+
+    public void setInspectionUnit(String inspectionUnit) {
+	this.inspectionUnit = inspectionUnit;
+    }
+
+    public String getSampleStatus() {
+	return sampleStatus;
+    }
+
+    public void setSampleStatus(String sampleStatus) {
+	this.sampleStatus = sampleStatus;
+    }
+
+    public String getBirthday() {
+	return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+	this.birthday = birthday;
+    }
+
+    public Map<String, String> getDecisionResult() {
+	return decisionResult;
+    }
+
+    public void setDecisionResult(Map<String, String> decisionResult) {
+	this.decisionResult = decisionResult;
+    }
+
+    public Map<String, String> getDiseaseProfile() {
+	return diseaseProfile;
+    }
+
+    public void setDiseaseProfile(Map<String, String> diseaseProfile) {
+	this.diseaseProfile = diseaseProfile;
+    }
+
 }
