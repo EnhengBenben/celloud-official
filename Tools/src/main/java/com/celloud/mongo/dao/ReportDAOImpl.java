@@ -3,6 +3,7 @@ package com.celloud.mongo.dao;
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
 import com.celloud.mongo.sdo.GddDiseaseDict;
+import com.celloud.mongo.sdo.GddGeneticMethod;
 import com.google.code.morphia.Morphia;
 import com.google.code.morphia.dao.BasicDAO;
 import com.mongodb.Mongo;
@@ -61,6 +62,17 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
     @Override
     public GddDiseaseDict getGddDiseaseDict(String name) {
 	return ds.createQuery(GddDiseaseDict.class).filter("engName", name)
+		.get();
+    }
+
+    @Override
+    public void saveGddGeneticMethod(GddGeneticMethod geneticMethod) {
+	ds.save(geneticMethod);
+    }
+
+    @Override
+    public GddGeneticMethod getGddGeneticMethod(String gene) {
+	return ds.createQuery(GddGeneticMethod.class).filter("gene", gene)
 		.get();
     }
 

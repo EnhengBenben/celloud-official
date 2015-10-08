@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>报告打印</title>
-<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.13">
+<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.16">
 </head>
 <body>
 	<div>
@@ -27,10 +27,20 @@
 				<a href="javascript:void(0)" onclick="preview(this)" class="button btn-info" name="change" style="float:right;margin-top:10px;margin-right:-100px;"><i class=""></i>打印</a>
 				<a href="javascript:void(0)" onclick="reset()" class="button btn-info" name="change" style="float:right;margin-top:45px;margin-right:-100px;"><i class=""></i>重置</a>
 				<a href="javascript:void(0)" onclick="savePage()" class="button btn-info" name="change" style="float:right;margin-top:80px;margin-right:-100px;"><i class=""></i>保存</a>
+				<c:if test="${company.companyId==41 }">
+					<hr name="change" style="float:right;margin-top: 115px; margin-right: -150px;width: 130px;border: solid 1px #d7d7d7;">
+					<a href="javascript:void(0)" onclick="showGeneType()" class="a-green-normal" name="change" style="float:right;margin-top:125px;margin-right:-145px;"><i class=""></i>基因分型检测报告单</a>
+					<a href="javascript:void(0)" onclick="showResistance()" class="a-green-normal" name="change" style="float:right;margin-top:150px;margin-right:-145px;"><i class=""></i>耐药突变检测报告单</a>
+				</c:if>
 				<c:if test="${flag==0 }">
 					<div class="container" style="display: none;"></div>
 				</c:if>
-				<h1>${company.companyName }${txt }报告单</h1>
+				<h1>${company.companyName }${txt }
+					<c:if test="${company.companyId==41 }">
+						<span name="geneType">基因分型检测</span>
+						<span name="resistanceType" class="hide">耐药突变检测</span><br>
+					</c:if>报告单
+				</h1>
 			    <hr />
 			    <div class="wrapper">
 			        <ul class="info mt5">
@@ -47,8 +57,16 @@
 			            <li>住院号：<span><input type="text"></span></li>
 			        </ul>
 			        <c:if test="${appId==82 }">
-						<div class="gray">送检目的：HBV基因分型，拉米夫定LAM，阿德福韦ADV，恩替卡韦ETV，替比夫定LDT，替诺福韦酯TDF，恩曲他滨FTC</div>
-				        <div class="gray">相关位点：rt169，rt173，rt180，rt181，rt184，rt194，rt202，rt204，rt215，rt233，rt236，rt250</div>
+			        	<c:choose>
+			        		<c:when test="${company.companyId==41 }">
+			        			<div class="gray">送检目的：<span name="geneType">HBV基因分型</span><span name="resistanceType" class="hide">拉米夫定LAM，阿德福韦ADV，恩替卡韦ETV，替比夫定LDT，替诺福韦酯TDF，恩曲他滨FTC</span></div>
+					        	<div name="resistanceType" class="gray hide">相关位点：rt169，rt173，rt180，rt181，rt184，rt194，rt202，rt204，rt215，rt233，rt236，rt250</div>
+			        		</c:when>
+			        		<c:otherwise>
+			        		<div class="gray">送检目的：HBV基因分型，拉米夫定LAM，阿德福韦ADV，恩替卡韦ETV，替比夫定LDT，替诺福韦酯TDF，恩曲他滨FTC</div>
+					        <div class="gray">相关位点：rt169，rt173，rt180，rt181，rt184，rt194，rt202，rt204，rt215，rt233，rt236，rt250</div>
+			        		</c:otherwise>
+			        	</c:choose>
 					</c:if>
 			    </div>
 			    <hr class="hr-bold mt5" />
@@ -107,45 +125,96 @@
 			    	   </div>
 					   </c:when>
 					   <c:when test="${appId==82 }">
-				        <h2 class="mt10">一、基因分型结果：<span style="font-size:12px;font-weight: normal">${snpType }</span></h2>
-				        <h2 class="mt10">二、耐药突变位点检测结果：</h2>
-				        <div class="m-box_1">
-				        	${table }
-					        <p class="annotation">注：深背景色<span class="_hard colorspan">&nbsp;</span>表示发生了耐药突变<br>
-					        	浅背景色<span class="_light colorspan">&nbsp;</span>表示发生了突变，但是暂无文献支持其和耐药相关<br>
-					       		 红色字体表示在样本中未找到该位点
-					        </p>
-				        </div>
-				        <c:if test="${flag==0 }">
-				        	<div class="w3cbbs" style="display: none;"></div>
-							<div class="container" style="display: none;"></div>
-						   	<h2 class="mt10">三、耐药位点突变检测结果：</h2>
-					   		<div class="clearCss_3">${peakFigure }</div>
-						   	<p class="annotation m-box_1">注：1. 突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V，{A-G}：碱基由A变为G<br>
-						   		2. Wild Type: GCT;表示该位点的野生型为GCT<br>3. 峰图中的*号，表示该位置发生了突变
-						   	</p>
-						   	<div id="lessDiv">
-								<div class="w3cbbs" style="display: none;"></div>
-								<div class="container" style="display: none;"></div>
-						   	</div>
-					        <h2 class="mt10">四、参考结论（根据已发表文献得出以下参考结论）：</h2>
-					        <div class="m-box_1" id="des">
-								<textarea rows="6">${result }</textarea>
-					        </div>
-						   	<h2 class="mt10">五、测序序列结果：</h2>
-						   	<p style="word-break: break-all;" class="m-box_1">${seq }</p>
-						   	<div id="moreDiv">
-								<div class="w3cbbs" style="display: none;"></div>
-								<div class="container" style="display: none;"></div>
-						   	</div>
-							<div id="SNPEND">
-							   	<h2 class="mt10">六、测序峰图结果：</h2>
-							   	<div class="m-box_1 clearCss_6" id="picture_6">
-								   	<p>${allPic }</p>
-								   	<p class="annotation">注：峰图中的*号表示该位点发生了突变</p>
-							   	</div>
-							</div>
-				        </c:if>
+			   			<c:choose>
+			        		<c:when test="${company.companyId==41 }">
+			        			<h2 name="geneType" class="mt10">基因分型结果：</h2>
+			        			<div name="geneType" class="m-box_1">
+			        				${snpType }
+			        			</div>
+			        			<h2 name="resistanceType" class="mt10 hide">一、耐药突变位点检测结果：</h2>
+			        			<div name="resistanceType" class="m-box_1 hide">
+						        	${table }
+							        <p class="annotation">注：深背景色<span class="_hard colorspan">&nbsp;</span>表示发生了耐药突变<br>
+							        	浅背景色<span class="_light colorspan">&nbsp;</span>表示发生了突变，但是暂无文献支持其和耐药相关<br>
+							       		 红色字体表示在样本中未找到该位点
+							        </p>
+						        </div>
+						        <c:if test="${flag==0 }">
+						          <div name="resistanceType" class="hide">
+						        	<div class="w3cbbs" style="display: none;"></div>
+									<div class="container" style="display: none;"></div>
+								   	<h2 class="mt10">二、耐药位点突变检测结果：</h2>
+							   		<div class="clearCss_3">${peakFigure }</div>
+								   	<p class="annotation m-box_1">注：1. 突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V，{A-G}：碱基由A变为G<br>
+								   		2. Wild Type: GCT;表示该位点的野生型为GCT<br>3. 峰图中的*号，表示该位置发生了突变
+								   	</p>
+								   	<div id="lessDiv">
+										<div class="w3cbbs" style="display: none;"></div>
+										<div class="container" style="display: none;"></div>
+								   	</div>
+							        <h2 class="mt10">三、参考结论（根据已发表文献得出以下参考结论）：</h2>
+							        <div class="m-box_1" id="des">
+										<textarea rows="6">${result }</textarea>
+							        </div>
+								   	<h2 class="mt10">四、测序序列结果：</h2>
+								   	<p style="word-break: break-all;" class="m-box_1">${seq }</p>
+								   	<div id="moreDiv">
+										<div class="w3cbbs" style="display: none;"></div>
+										<div class="container" style="display: none;"></div>
+								   	</div>
+									<div id="SNPEND">
+									   	<h2 class="mt10">五、测序峰图结果：</h2>
+									   	<div class="m-box_1 clearCss_6" id="picture_6">
+										   	<p>${allPic }</p>
+										   	<p class="annotation">注：峰图中的*号表示该位点发生了突变</p>
+									   	</div>
+									</div>
+								  </div>
+						        </c:if>
+			        		</c:when>
+			        		<c:otherwise>
+			        			<h2 class="mt10">一、基因分型结果：<span style="font-size:12px;font-weight: normal">${snpType }</span></h2>
+			        			<h2 class="mt10">二、耐药突变位点检测结果：</h2>
+			        			<div class="m-box_1">
+						        	${table }
+							        <p class="annotation">注：深背景色<span class="_hard colorspan">&nbsp;</span>表示发生了耐药突变<br>
+							        	浅背景色<span class="_light colorspan">&nbsp;</span>表示发生了突变，但是暂无文献支持其和耐药相关<br>
+							       		 红色字体表示在样本中未找到该位点
+							        </p>
+						        </div>
+						        <c:if test="${flag==0 }">
+						        	<div class="w3cbbs" style="display: none;"></div>
+									<div class="container" style="display: none;"></div>
+								   	<h2 class="mt10">三、耐药位点突变检测结果：</h2>
+							   		<div class="clearCss_3">${peakFigure }</div>
+								   	<p class="annotation m-box_1">注：1. 突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V，{A-G}：碱基由A变为G<br>
+								   		2. Wild Type: GCT;表示该位点的野生型为GCT<br>3. 峰图中的*号，表示该位置发生了突变
+								   	</p>
+								   	<div id="lessDiv">
+										<div class="w3cbbs" style="display: none;"></div>
+										<div class="container" style="display: none;"></div>
+								   	</div>
+							        <h2 class="mt10">四、参考结论（根据已发表文献得出以下参考结论）：</h2>
+							        <div class="m-box_1" id="des">
+										<textarea rows="6">${result }</textarea>
+							        </div>
+								   	<h2 class="mt10">五、测序序列结果：</h2>
+								   	<p style="word-break: break-all;" class="m-box_1">${seq }</p>
+								   	<div id="moreDiv">
+										<div class="w3cbbs" style="display: none;"></div>
+										<div class="container" style="display: none;"></div>
+								   	</div>
+									<div id="SNPEND">
+									   	<h2 class="mt10">六、测序峰图结果：</h2>
+									   	<div class="m-box_1 clearCss_6" id="picture_6">
+										   	<p>${allPic }</p>
+										   	<p class="annotation">注：峰图中的*号表示该位点发生了突变</p>
+									   	</div>
+									</div>
+						        </c:if>
+			        		</c:otherwise>
+			        	</c:choose>     
+				       
 					   </c:when>
 					</c:choose>	
 			    </div>
@@ -182,6 +251,7 @@ function preview(obj){
 	var sex = $("input[type='radio']:checked").val();
 	$("#_sex").html(sex);
 	$("a[name='change']").hide();
+	$("hr[name='change']").hide();
 	$(".w3cbbs").css("display","");
 	$(".container").css("display","");
 	var _flag = $("#_flag").html();
@@ -207,6 +277,7 @@ function preview(obj){
 	$(".w3cbbs").css("display","none");
 	$(".container").css("display","none");
 	$("a[name='change']").show();
+	$("hr[name='change']").show();
 	$("body").find("span[name='print']").each(function(){
 		inputVal = $(this).html();
 		var cl = $(this).attr("class");
@@ -314,6 +385,23 @@ function radioClick(num){
 		$("#women").attr("checked","checked");
 		$("#men").removeAttr("checked");
 	}
+}
+
+function showResistance(){
+	$("div[name='resistanceType']").removeClass("hide");
+	$("span[name='resistanceType']").removeClass("hide");
+	$("h2[name='resistanceType']").removeClass("hide");
+	$("div[name='geneType']").addClass("hide");
+	$("span[name='geneType']").addClass("hide");
+	$("h2[name='geneType']").addClass("hide");
+}
+function showGeneType(){
+	$("div[name='geneType']").removeClass("hide");
+	$("span[name='geneType']").removeClass("hide");
+	$("h2[name='geneType']").removeClass("hide");
+	$("div[name='resistanceType']").addClass("hide");
+	$("span[name='resistanceType']").addClass("hide");
+	$("h2[name='resistanceType']").addClass("hide");
 }
 </script>
 </html>

@@ -29,6 +29,7 @@ import com.nova.pager.PageList;
 import com.nova.sdo.Data;
 import com.nova.sdo.Project;
 import com.nova.sdo.Report;
+import com.nova.sdo.Software;
 import com.nova.sdo.User;
 import com.nova.service.IDataService;
 import com.nova.service.IProjectService;
@@ -43,8 +44,12 @@ import com.nova.utils.TemplateUtil;
 @ParentPackage("celloud-default")
 @Action("data")
 @Results({
-	@Result(name = "getAppDatas", type = "json", params = { "root",
-		"privateDataPageList" }),
+	// @Result(name = "getAppDatas", type = "json", params = { "root",
+	// "privateDataPageList" }),
+	@Result(name = "privateData", location = "../../pages/data/myData.jsp"),
+	@Result(name = "info", type = "json", params = { "root", "result" }),
+	@Result(name = "getSoftList", type = "json", params = { "root",
+		"softwareList" }),
 	@Result(name = "success", type = "json", params = { "root", "flag" }),
 	@Result(name = "userData", location = "../../pages/admin/dataList.jsp"),
 	@Result(name = "getDataByKey", type = "json", params = { "root", "data" }) })
@@ -117,6 +122,7 @@ public class DataAction extends BaseAction {
     private Integer softwareId;
     // app端传过来的文本内容
     private String sequence;
+    private List<Software> softwareList;
 
     /**
      * 后台数据清理用的方法，根据用户名获取其数据列表
@@ -480,6 +486,39 @@ public class DataAction extends BaseAction {
 	return "strainMapList";
     }
 
+    /**
+     * 获取数据可运行的APP列表
+     * 
+     * @return
+     */
+    public String getSoftListByFormat() {
+	userId = (Integer) super.session.get("userId");
+	flag = 1;
+	int dataType = 0;
+	String[] newDataIds = dataIds.split(",");
+	for (int i = 0; i < newDataIds.length; i++) {
+	    int newDataType = dataService.getDataById(newDataIds[i])
+		    .getFileFormat();
+	    if (i == 0) {
+		dataType = newDataType;
+	    } else {
+		if (newDataType != dataType) {
+		    flag = 0;
+		}
+	    }
+	}
+	if (flag == 0) {
+	    result = "所选数据格式不统一！";
+	    return "info";
+	} else {
+	    fileFormat = dataService.getDataById(dataIds.split(",")[0])
+		    .getFileFormat();
+	    softwareList = softwareService.getSoftListByFormat(fileFormat,
+		    userId);
+	    fileList = dataService.getStrainDataKeySampleById(dataIds);
+	}
+	return "getSoftList";
+    }
     /**
      * 验证数据类型是否一致
      * 
@@ -1195,6 +1234,14 @@ public class DataAction extends BaseAction {
 
     public void setSequence(String sequence) {
 	this.sequence = sequence;
+    }
+
+    public List<Software> getSoftwareList() {
+	return softwareList;
+    }
+
+    public void setSoftwareList(List<Software> softwareList) {
+	this.softwareList = softwareList;
     }
 
 }

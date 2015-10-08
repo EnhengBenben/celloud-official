@@ -21,6 +21,7 @@ import com.celloud.mongo.sdo.Company;
 import com.celloud.mongo.sdo.Data;
 import com.celloud.mongo.sdo.Dept;
 import com.celloud.mongo.sdo.GddDiseaseDict;
+import com.celloud.mongo.sdo.GddGeneticMethod;
 import com.celloud.mongo.sdo.GeneDetectionResult;
 import com.celloud.mongo.sdo.User;
 import com.celloud.mongo.service.ReportService;
@@ -290,8 +291,12 @@ public class RunAppServiceImpl {
 				    if (gddDiseaseDict != null) {
 					gsr.setDiseaseName(gddDiseaseDict
 						.getName());
-					gsr.setDiseaseType(gddDiseaseDict
-						.getType());
+				    }
+				    GddGeneticMethod gddGm = reportService
+					    .getGddGeneticMethod(getArray(
+						    line_z, 0));
+				    if (gddGm != null) {
+					gsr.setGeneticMethod(gddGm.getMethod());
 				    }
 				}
 				result.add(gsr);
@@ -944,7 +949,7 @@ public class RunAppServiceImpl {
 	    FileTools.createFile(projectFile);
 	    // 追加表头
 	    resultArray
-		    .append("dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
+		    .append("dataName\tdataKey\tAnotherName\tTotal_Reads\tMT_ratio\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
 	    StringBuffer sb = new StringBuffer();
 	    for (int i = 0; i < dataArray.length; i++) {
 		String[] dataDetail = dataArray[i].split(",");

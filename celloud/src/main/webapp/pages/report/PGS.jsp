@@ -171,20 +171,22 @@
             </div>
         </div>
 		<!--Celloud数据参数同比分析-->
-		<div class="bg-analysis">
-		    <div class="m-box">
-		        <h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
-		        <div class="m-boxCon" id="charDiv">
-		        </div>
-		        <div class="m-tips">
-		        	<i class="i-tips"></i>
-		        	<span id="charResult"></span>
-		        </div>
-		    </div>
-		</div>
+		<c:if test="${pgs.appId!=104}">
+			<div class="bg-analysis">
+			    <div class="m-box">
+			        <h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
+			        <div class="m-boxCon" id="charDiv">
+			        </div>
+			        <div class="m-tips">
+			        	<i class="i-tips"></i>
+			        	<span id="charResult"></span>
+			        </div>
+			    </div>
+			</div>
+		</c:if>
 	</c:if>
 	<c:if test="${!pgs.noEnoughReads.equals('false') }">
-		<h3>运行出错</h3>
+		<h3>测序量不足，无法分析，建议重测。</h3>
 		<p>${pgs.noEnoughReads }</p>
 	</c:if>
 </div>

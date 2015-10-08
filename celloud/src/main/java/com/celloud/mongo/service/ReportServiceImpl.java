@@ -7,6 +7,7 @@ import com.celloud.mongo.dao.ReportDAO;
 import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpGeneSnpResult;
 import com.celloud.mongo.sdo.CmpReport;
+import com.celloud.mongo.sdo.GddDiseaseDict;
 import com.celloud.mongo.sdo.NIPT;
 import com.celloud.mongo.sdo.PGSFilling;
 import com.celloud.mongo.sdo.Pgs;
@@ -62,9 +63,13 @@ public class ReportServiceImpl implements ReportService {
 	return reportDao.getGddResult(dataKey, proId, appId);
     }
 
-	@Override
-	public NIPT getNIPTReport(String dataKey, Integer proId, Integer appId) {
-		return reportDao.getNIPTReport(dataKey, proId, appId);
-	}
+    @Override
+    public NIPT getNIPTReport(String dataKey, Integer proId, Integer appId) {
+	return reportDao.getNIPTReport(dataKey, proId, appId);
+    }
 
+    @Override
+    public List<GddDiseaseDict> getGddDiseaseDictNormal(List<String> normalGene) {
+	return reportDao.getGddDiseaseDictNormal(normalGene);
+    }
 }

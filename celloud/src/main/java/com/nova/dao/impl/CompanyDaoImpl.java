@@ -23,7 +23,7 @@ public class CompanyDaoImpl implements ICompanyDao {
         Connection conn = null;
         PreparedStatement ps = null;
         int flag = 0;
-		String sql = "insert into tb_company (company_name,english_name,company_icon,address,address_en,zip_code,tel,create_date) values (?,?,?,?,?,?,?,now())";
+		String sql = "insert into tb_company (company_name,english_name,company_icon,address,address_en,zip_code,tel,create_date,province) values (?,?,?,?,?,?,?,now(),?)";
         try {
             conn = ConnectManager.getConnection();
             ps = conn.prepareStatement(sql);
@@ -34,6 +34,7 @@ public class CompanyDaoImpl implements ICompanyDao {
             ps.setString(5, company.getAddressEn());
             ps.setString(6, company.getZipCode());
             ps.setString(7, company.getTel());
+            ps.setString(8, company.getProvince());
             flag = ps.executeUpdate();
             log.info("新增公司信息成功");
         } catch (SQLException e) {
