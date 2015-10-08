@@ -21,6 +21,7 @@ import com.celloud.mongo.sdo.Company;
 import com.celloud.mongo.sdo.Data;
 import com.celloud.mongo.sdo.Dept;
 import com.celloud.mongo.sdo.GddDiseaseDict;
+import com.celloud.mongo.sdo.GddGeneticMethod;
 import com.celloud.mongo.sdo.GeneDetectionResult;
 import com.celloud.mongo.sdo.User;
 import com.celloud.mongo.service.ReportService;
@@ -290,8 +291,12 @@ public class RunAppServiceImpl {
 				    if (gddDiseaseDict != null) {
 					gsr.setDiseaseName(gddDiseaseDict
 						.getName());
-					gsr.setDiseaseType(gddDiseaseDict
-						.getType());
+				    }
+				    GddGeneticMethod gddGm = reportService
+					    .getGddGeneticMethod(getArray(
+						    line_z, 0));
+				    if (gddGm != null) {
+					gsr.setGeneticMethod(gddGm.getMethod());
 				    }
 				}
 				result.add(gsr);

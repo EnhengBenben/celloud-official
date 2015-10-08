@@ -3,6 +3,9 @@ package com.celloud.mongo.action;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -13,9 +16,11 @@ import org.apache.struts2.convention.annotation.Results;
 import org.bson.types.ObjectId;
 
 import com.celloud.mongo.sdo.CmpFilling;
+import com.celloud.mongo.sdo.CmpGeneDetectionDetail;
 import com.celloud.mongo.sdo.CmpGeneSnpResult;
 import com.celloud.mongo.sdo.CmpReport;
 import com.celloud.mongo.sdo.DrugResistanceSite;
+import com.celloud.mongo.sdo.GddDiseaseDict;
 import com.celloud.mongo.sdo.RecommendDrug;
 import com.celloud.mongo.service.ReportService;
 import com.google.inject.Inject;
@@ -46,6 +51,8 @@ public class CmpReportAction extends BaseAction {
     private String infos;
     private String cmpId;
     private List<CmpGeneSnpResult> gsrList;
+    private List<GddDiseaseDict> gddDiseaseList;
+    private List<CmpGeneSnpResult> allGsr;
 
     public void updateFill() {
 	if (infos != null) {
@@ -117,6 +124,37 @@ public class CmpReportAction extends BaseAction {
 		cmpReport.getProjectId(), cmpReport.getAppId());
 	if (cmpReport.getAppId() == 112) {
 	    log.info("celloud-用户" + super.session.get("userId") + "准备打印GDD总表报告");
+	    Map<String, CmpGeneDetectionDetail> geneMap = cmpReport
+		    .getGeneDetectionDetail();
+	    Map<String, CmpGeneDetectionDetail> treeMap = new TreeMap<>();
+	    List<String> unnormalGene = new ArrayList<>();
+	    for (String dataKey : geneMap.keySet()) {
+		if (geneMap.get(dataKey).getResult().get(0).getGene()
+			.contains("没有发现突变位点")
+			|| dataKey.equals("all")) {
+		} else {
+		    CmpGeneDetectionDetail gdd = geneMap.get(dataKey);
+		    List<CmpGeneSnpResult> gsrli = gdd.getResult();
+		    List<CmpGeneSnpResult> gsrli_ = new ArrayList<>();
+		    for (CmpGeneSnpResult gsr : gsrli) {
+			CmpGeneSnpResult gsr_ = gsr;
+			// 只允许字母和数字
+			String regEx = "[^\\w\\.\\_\\-\u4e00-\u9fa5]";
+			Pattern p = Pattern.compile(regEx);
+			gsr_.setDiseaseEngName(p
+				.matcher(gsr.getDiseaseEngName())
+				.replaceAll("").trim());
+			gsrli_.add(gsr_);
+		    }
+		    gdd.setResult(gsrli_);
+		    treeMap.put(dataKey, gdd);
+		    unnormalGene.add(dataKey);
+		}
+	    }
+	    gddDiseaseList = reportService
+		    .getGddDiseaseDictNormal(unnormalGene);
+	    allGsr = geneMap.get("all").getResult();
+	    cmpReport.setGeneDetectionDetail(treeMap);
 	    gsrList = reportService.getGddResult(cmpReport.getDataKey(),
 		    cmpReport.getProjectId(), cmpReport.getAppId());
 	    return "toPrintGddReport";
@@ -130,6 +168,19 @@ public class CmpReportAction extends BaseAction {
 	cmpReport = reportService.getSimpleCmp(cmpReport.getDataKey(),
 		cmpReport.getProjectId(), cmpReport.getAppId());
 	return "toPrintSimpleCmp";
+    }
+
+    public void saveGddFile() {
+	if (cmpFill != null) {
+	    log.info("新增用户填写报告部分");
+	    cmpReport.setId(new ObjectId(cmpId));
+	    Map<String, String> map = cmpFill.getDecisionResult();
+	    System.out.println(map.size() + "-----");
+	    for (String key : map.keySet()) {
+		System.out.println(key + "-----" + map.get(key));
+	    }
+	    reportService.editCmpFilling(cmpReport.getId(), cmpFill);
+	}
     }
 
     public CmpFilling getCmpFill() {
@@ -170,6 +221,22 @@ public class CmpReportAction extends BaseAction {
 
     public void setGsrList(List<CmpGeneSnpResult> gsrList) {
 	this.gsrList = gsrList;
+    }
+
+    public List<GddDiseaseDict> getGddDiseaseList() {
+	return gddDiseaseList;
+    }
+
+    public void setGddDiseaseList(List<GddDiseaseDict> gddDiseaseList) {
+	this.gddDiseaseList = gddDiseaseList;
+    }
+
+    public List<CmpGeneSnpResult> getAllGsr() {
+	return allGsr;
+    }
+
+    public void setAllGsr(List<CmpGeneSnpResult> allGsr) {
+	this.allGsr = allGsr;
     }
 
 }
