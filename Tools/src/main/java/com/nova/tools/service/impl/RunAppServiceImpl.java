@@ -944,7 +944,7 @@ public class RunAppServiceImpl {
 	    FileTools.createFile(projectFile);
 	    // 追加表头
 	    resultArray
-		    .append("dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
+		    .append("dataName\tdataKey\tAnotherName\tTotal_Reads\tMT_ratio\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
 	    StringBuffer sb = new StringBuffer();
 	    for (int i = 0; i < dataArray.length; i++) {
 		String[] dataDetail = dataArray[i].split(",");
