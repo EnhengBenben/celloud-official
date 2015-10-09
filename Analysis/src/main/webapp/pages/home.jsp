@@ -124,7 +124,7 @@ function chars(data) {
 	    },
 	    dataRange: {
 	        min : 0,
-	        max : 500,
+	        max : 10,
 	        calculable : true,
 	        color: ['maroon','purple','red','orange','yellow','lightgreen']
 	    },
@@ -198,11 +198,6 @@ function chars(data) {
 	                effect : {
 	                    show: true,
 	                    shadowBlur : 0
-	                },
-	                itemStyle:{
-	                    normal:{
-	                        label:{show:false}
-	                    }
 	                },
 	                data : data
 	            }
