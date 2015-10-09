@@ -29,7 +29,7 @@ var dataPageDataNum = 50;
 var dataCurrentPageNumber = 1;
 //保存用户已经选择的数据
 var checkedDataIds = new Array();
-
+var addedDataNames = new Array();
 var sortType = 0;//默认按照时间进行排序
 var fileNameSort = "asc";
 var createDateSort = "desc";
@@ -127,7 +127,7 @@ function showRunApp(){
 	var dataLi = "";
     for (var i=0;i<checkedDataIds.length;i++){
          dataIds += checkedDataIds[i] + ",";
-         dataLi += "<li class='types-options data-select' id='dataLi"+checkedDataIds[i]+"' title='点击删除' onclick=\"removetoRunData("+checkedDataIds[i]+")\">"+$("#fileName"+checkedDataIds[i]).val()+"</li>";
+         dataLi += "<li class='types-options data-select' id='dataLi"+checkedDataIds[i]+"' title='点击删除' onclick=\"removetoRunData("+checkedDataIds[i]+")\">"+addedDataNames[i]+"</li>";
     }
     dataIds = dataIds.substring(0, dataIds.length-1);
     var dataLength = checkedDataIds.length;
@@ -186,6 +186,7 @@ function addRunApp(appId,appName,dataIds){
 }
 function removetoRunData(id){
 	checkedDataIds.splice($.inArray(id,checkedDataIds),1);
+	addedDataNames.splice($.inArray(id,addedDataNames),1);
 	$("#chk"+id).attr("checked",false);
 	$("#dataLi"+id).remove();
 }
@@ -254,6 +255,7 @@ function deleteData(){
     		if(result>0){
     			getDataByCondition(dataCurrentPageNumber);
     			checkedDataIds = [];
+    			addedDataNames = [];
     			toNoUse();
     		}
     	});
@@ -291,6 +293,7 @@ function saveMoreDataInfo(){
     	if(flag>0){
     		getDataByCondition(dataCurrentPageNumber);
     		checkedDataIds = [];
+    		addedDataNames = [];
     		$("#dataMoreInfoModal").modal("hide");
     	}else {
     		$("#updateDataErrorDiv").removeClass("hide");;
@@ -402,6 +405,7 @@ function initDataList(){
 				var start = $.inArray(arrChk[i].value,checkedDataIds);
 				if(start==-1){
 					checkedDataIds.push(arrChk[i].value);
+					addedDataNames.push($("#fileName"+arrChk[i].value).val());
 				}
 			}
 		}else{
@@ -411,6 +415,7 @@ function initDataList(){
 				var start = $.inArray(arrChk[i].value,checkedDataIds);
 				if(start!=-1){
 					checkedDataIds.splice(start,1);
+					addedDataNames.splice(start,1);
 				}
 			}
 		}
@@ -440,10 +445,12 @@ function chkOnChange(obj){
 	if(checked){
 		if(start==-1)
 			checkedDataIds.push(dataId_);
+			addedDataNames.push($("#fileName"+dataId_).val());
 	}else{
 		$("#selAll").prop("checked",false);			
 		if(start!=-1)
 			checkedDataIds.splice(start,1);
+			addedDataNames.splice(start,1);
 	}
 	toUse();
 }
