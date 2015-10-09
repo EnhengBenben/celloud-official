@@ -26,6 +26,7 @@ public class PythonAction extends BaseAction {
 	private String fileName;
 	private String dataKey;
 	private String flag;
+	private String md5;
 	private long num;
 
 	/**
@@ -64,7 +65,7 @@ public class PythonAction extends BaseAction {
 	 * @return
 	 */
 	public String initDataKey() {
-		flag = pythonService.getDataKey(id, fileName);
+		flag = pythonService.getDataKey(id, fileName, md5);
 		return SUCCESS;
 	}
 
@@ -76,6 +77,36 @@ public class PythonAction extends BaseAction {
 	public String uploaded() {
 		flag = pythonService.uploaded(dataKey);
 		return SUCCESS;
+	}
+
+	/**
+	 * 获取客户端版本
+	 * 
+	 * @return
+	 */
+	public String getClientVersion() {
+		flag = pythonService.getClientVersion();
+		return SUCCESS;
+	}
+
+	/**
+	 * 断点续传时获取文件大小
+	 * 
+	 * @return
+	 */
+	public String getDataSize() {
+		num = pythonService.getDataSize(id, dataKey.split("\\.")[0]);
+		return "num";
+	}
+
+	/**
+	 * 保存已上传的文件大小
+	 * 
+	 * @return
+	 */
+	public String saveDataSize() {
+		num = pythonService.saveDataSize(dataKey.split("\\.")[0], num);
+		return "num";
 	}
 
 	public long getNum() {
@@ -133,4 +164,13 @@ public class PythonAction extends BaseAction {
 	public void setDataKey(String dataKey) {
 		this.dataKey = dataKey;
 	}
+
+	public String getMd5() {
+		return md5;
+	}
+
+	public void setMd5(String md5) {
+		this.md5 = md5;
+	}
+
 }

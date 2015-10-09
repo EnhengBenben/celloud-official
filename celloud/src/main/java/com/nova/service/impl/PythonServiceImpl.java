@@ -45,7 +45,7 @@ public class PythonServiceImpl implements IPythonService {
 
 	@Override
 	public long getSize(int id) {
-		return sql.getDataSize(id);
+		return sql.getSize(id);
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class PythonServiceImpl implements IPythonService {
 	}
 
 	@Override
-	public String getDataKey(Integer id, String fileName) {
+	public String getDataKey(Integer id, String fileName,String md5) {
 		List<String> dataKeyList = sql.getAllDataKey();
 		String dataKey = DataUtil.getNewDataKey();
 		while (dataKeyList.contains(dataKey)) {
@@ -70,6 +70,7 @@ public class PythonServiceImpl implements IPythonService {
 		String newName = dataKey + FileTools.getExtName(fileName);
 		data.setDataKey(dataKey);
 		data.setPath(path + newName);
+		data.setMd5(md5);
 		sql.addDataInfo(data);
 		log.info("为用户：" + id + "返回" + newName);
 		return newName;
@@ -105,5 +106,20 @@ public class PythonServiceImpl implements IPythonService {
 		sql.updateData(data);
 		log.info("文件：" + dataKey + "上传成功");
 		return "true";
+	}
+
+	@Override
+	public String getClientVersion() {
+		return sql.getClient().getVersion();
+	}
+
+	@Override
+	public long getDataSize(int id, String dataKey) {
+		return sql.getDataSize(id,dataKey);
+	}
+
+	@Override
+	public long saveDataSize(String dataKey, long size) {
+		return sql.updateData(dataKey, size);
 	}
 }

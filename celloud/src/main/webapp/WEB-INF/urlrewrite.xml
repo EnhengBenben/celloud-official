@@ -76,18 +76,33 @@
 	</rule>
 	<rule>
 		<note>python</note>
+		<from>^/getDataSize/([\w\W]+)/([\w\W]+)$</from>
+		<to>/python!getDataSize?id=$1&amp;dataKey=$2</to>
+	</rule>
+	<rule>
+		<note>python</note>
 		<from>^/getNumber/([\w\W]+)$</from>
 		<to>/python!getNumber?id=$1</to>
 	</rule>
 	<rule>
 		<note>python</note>
-		<from>^/initDataKey/([\w\W]+)/([\w\W]+)$</from>
-		<to>/python!initDataKey?id=$1&amp;fileName=$2</to>
+		<from>^/initDataKey/([\w\W]+)/([\w\W]+)/([\w\W]+)$</from>
+		<to>/python!initDataKey?id=$1&amp;fileName=$2&amp;md5=$3</to>
+	</rule>
+	<rule>
+		<note>python</note>
+		<from>^/saveDataSize/([\w\W]+)/([\w\W]+)$</from>
+		<to>/python!saveDataSize?dataKey=$1&amp;num=$2</to>
 	</rule>
 	<rule>
 		<note>python</note>
 		<from>^/uploaded/([\w\W]+)$</from>
 		<to>/python!uploaded?dataKey=$1</to>
+	</rule>
+	<rule>
+		<note>python</note>
+		<from>^/getClientVersion$</from>
+		<to>/python!getClientVersion</to>
 	</rule>
 
 	<rule>
