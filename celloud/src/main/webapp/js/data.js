@@ -29,7 +29,7 @@ var dataPageDataNum = 50;
 var dataCurrentPageNumber = 1;
 //保存用户已经选择的数据
 var checkedDataIds = new Array();
-
+var addedDataNames = new Array();
 var sortType = 0;//默认按照时间进行排序
 var fileNameSort = "asc";
 var createDateSort = "desc";
@@ -127,7 +127,7 @@ function showRunApp(){
 	var dataLi = "";
     for (var i=0;i<checkedDataIds.length;i++){
          dataIds += checkedDataIds[i] + ",";
-         dataLi += "<li class='types-options data-select' id='dataLi"+checkedDataIds[i]+"' title='点击删除' onclick=\"removetoRunData("+checkedDataIds[i]+")\">"+$("#fileName"+checkedDataIds[i]).val()+"</li>";
+         dataLi += "<li class='types-options data-select' id='dataLi"+checkedDataIds[i]+"' title='点击删除' onclick=\"removetoRunData("+checkedDataIds[i]+")\">"+addedDataNames[i]+"</li>";
     }
     dataIds = dataIds.substring(0, dataIds.length-1);
     var dataLength = checkedDataIds.length;
@@ -186,6 +186,7 @@ function addRunApp(appId,appName,dataIds){
 }
 function removetoRunData(id){
 	checkedDataIds.splice($.inArray(id,checkedDataIds),1);
+	addedDataNames.splice($.inArray(id,addedDataNames),1);
 	$("#chk"+id).attr("checked",false);
 	$("#dataLi"+id).remove();
 }
@@ -222,24 +223,6 @@ function toRunApp(){
 			$("#runErrorDiv").addClass("hide");
 		}
 	});
-//	for (var i=0;i<addedApps.length;i++){
-//		softId = addedApps[i];
-//		$.get("project!run", {"dataIds":dataIds,"softwareId" : softId}, function(error) {
-//			if (error > 0) {
-//				$("#runErrorTitle").html("以下APP运行失败：");
-//				
-//				$("#runError").append($("#runAppli" +softId).html() + "  ");
-//				$("#runErrorDiv").removeClass("hide");
-//			}else{
-//				if(i==addedApps.length-1){
-//					checkedDataIds = [];
-//					$("input[type='checkbox']").prop("checked",false);
-//					$("#runApp").modal("hide");
-//					$("#runErrorDiv").addClass("hide");
-//				}
-//			}
-//		});
-//	}
 }
 function deleteData(){
 	$("#warningText").html("确定要删除选中数据吗？");
@@ -254,6 +237,7 @@ function deleteData(){
     		if(result>0){
     			getDataByCondition(dataCurrentPageNumber);
     			checkedDataIds = [];
+    			addedDataNames = [];
     			toNoUse();
     		}
     	});
@@ -287,10 +271,11 @@ function cancelEditMoreInfo(){
 	$("#dataTag").append("<div class=\"popWindow-overlap\"></div>");
 }
 function saveMoreDataInfo(){
-    $.get("data3!updateDataByIds",$("#moreDatasForm").serialize(),function(flag){
+    $.post("data3!updateDataByIds",$("#moreDatasForm").serialize(),function(flag){
     	if(flag>0){
     		getDataByCondition(dataCurrentPageNumber);
     		checkedDataIds = [];
+    		addedDataNames = [];
     		$("#dataMoreInfoModal").modal("hide");
     	}else {
     		$("#updateDataErrorDiv").removeClass("hide");;
@@ -331,7 +316,7 @@ function saveManageDatas(){
     }
     dataIds = dataIds.substring(0, dataIds.length-1);
 	$("#dataIdsHide").val(dataIds);
-    $.get("data3!updateDataByIds",$("#manageDatasForm").serialize(),function(flag){
+    $.post("data3!updateDataByIds",$("#manageDatasForm").serialize(),function(flag){
     	if(flag>0){
     		getDataByCondition(dataCurrentPageNumber);
     		checkedDataIds = [];
@@ -355,7 +340,7 @@ function toManageEachDataModel(){
 	});
 }
 function saveEachData(){
-	$.get("data3!updateManyDatas",$("#eachDataForm").serialize(),function(result){
+	$.post("data3!updateManyDatas",$("#eachDataForm").serialize(),function(result){
 		if(result>0){
 			getDataByCondition(dataCurrentPageNumber);
 			checkedDataIds = [];
@@ -402,6 +387,7 @@ function initDataList(){
 				var start = $.inArray(arrChk[i].value,checkedDataIds);
 				if(start==-1){
 					checkedDataIds.push(arrChk[i].value);
+					addedDataNames.push($("#fileName"+arrChk[i].value).val());
 				}
 			}
 		}else{
@@ -411,6 +397,7 @@ function initDataList(){
 				var start = $.inArray(arrChk[i].value,checkedDataIds);
 				if(start!=-1){
 					checkedDataIds.splice(start,1);
+					addedDataNames.splice(start,1);
 				}
 			}
 		}
@@ -440,10 +427,12 @@ function chkOnChange(obj){
 	if(checked){
 		if(start==-1)
 			checkedDataIds.push(dataId_);
+			addedDataNames.push($("#fileName"+dataId_).val());
 	}else{
 		$("#selAll").prop("checked",false);			
 		if(start!=-1)
 			checkedDataIds.splice(start,1);
+			addedDataNames.splice(start,1);
 	}
 	toUse();
 }
