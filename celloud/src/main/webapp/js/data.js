@@ -271,7 +271,7 @@ function cancelEditMoreInfo(){
 	$("#dataTag").append("<div class=\"popWindow-overlap\"></div>");
 }
 function saveMoreDataInfo(){
-    $.get("data3!updateDataByIds",$("#moreDatasForm").serialize(),function(flag){
+    $.post("data3!updateDataByIds",$("#moreDatasForm").serialize(),function(flag){
     	if(flag>0){
     		getDataByCondition(dataCurrentPageNumber);
     		checkedDataIds = [];
@@ -316,7 +316,7 @@ function saveManageDatas(){
     }
     dataIds = dataIds.substring(0, dataIds.length-1);
 	$("#dataIdsHide").val(dataIds);
-    $.get("data3!updateDataByIds",$("#manageDatasForm").serialize(),function(flag){
+    $.post("data3!updateDataByIds",$("#manageDatasForm").serialize(),function(flag){
     	if(flag>0){
     		getDataByCondition(dataCurrentPageNumber);
     		checkedDataIds = [];
