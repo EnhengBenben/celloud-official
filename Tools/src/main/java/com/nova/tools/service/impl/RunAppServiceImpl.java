@@ -1628,7 +1628,7 @@ public class RunAppServiceImpl {
 	// 创建要运行的文件列表文件
 	String dataListFile = dealDataKeyListContainFileName(dataKeyList);
 	String command = MDA_MR_perl + " " + dataListFile + " " + basePath
-		+ " ProjectID" + projectId;
+		+ " ProjectID" + projectId+" &>"+basePath+"ProjectID"+projectId+".log";
 	GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
 	boolean state = ssh.sshSubmit();
 	StringBuffer resultArray = new StringBuffer();
