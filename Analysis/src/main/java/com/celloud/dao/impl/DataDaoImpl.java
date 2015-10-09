@@ -63,7 +63,7 @@ public class DataDaoImpl implements DataDao {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		String sql = "select left(f.create_date,7) as month,count(f.file_id) as num from tb_file f,tb_user u,tb_dept d,tb_company c where f.state = 0 and f.user_id = u.user_id and u.user_id not in ("
 				+ noUserid
-				+ ") and u.dept_id = d.dept_id and d.company_id = c.company_id and u.company_id = ? group by month order by month;";
+				+ ") and u.dept_id = d.dept_id and d.company_id = c.company_id and u.company_id = ? group by month order by month desc;";
 		try {
 			list = qr.query(conn, sql, new MapListHandler(),
 					companyId);
