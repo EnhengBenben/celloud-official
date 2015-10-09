@@ -223,24 +223,6 @@ function toRunApp(){
 			$("#runErrorDiv").addClass("hide");
 		}
 	});
-//	for (var i=0;i<addedApps.length;i++){
-//		softId = addedApps[i];
-//		$.get("project!run", {"dataIds":dataIds,"softwareId" : softId}, function(error) {
-//			if (error > 0) {
-//				$("#runErrorTitle").html("以下APP运行失败：");
-//				
-//				$("#runError").append($("#runAppli" +softId).html() + "  ");
-//				$("#runErrorDiv").removeClass("hide");
-//			}else{
-//				if(i==addedApps.length-1){
-//					checkedDataIds = [];
-//					$("input[type='checkbox']").prop("checked",false);
-//					$("#runApp").modal("hide");
-//					$("#runErrorDiv").addClass("hide");
-//				}
-//			}
-//		});
-//	}
 }
 function deleteData(){
 	$("#warningText").html("确定要删除选中数据吗？");
@@ -358,7 +340,7 @@ function toManageEachDataModel(){
 	});
 }
 function saveEachData(){
-	$.get("data3!updateManyDatas",$("#eachDataForm").serialize(),function(result){
+	$.post("data3!updateManyDatas",$("#eachDataForm").serialize(),function(result){
 		if(result>0){
 			getDataByCondition(dataCurrentPageNumber);
 			checkedDataIds = [];
