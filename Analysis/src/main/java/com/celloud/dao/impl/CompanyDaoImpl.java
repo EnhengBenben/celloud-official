@@ -105,8 +105,9 @@ public class CompanyDaoImpl implements CompanyDao {
 	@Override
 	public Company getCompanyById(Integer compId) {
 		log.info("获取单个医院信息");
-		String sql = "select c.company_id,c.company_name,c.address,c.tel,c.create_date,group_concat(distinct d.dept_name) deptNames,count(username) userNum,group_concat(username) userNames,(select count(f.file_id) from tb_file f where f.user_id=u.user_id and f.state=0) fileNum,(select ifnull(sum(f.size),0) from tb_file f where f.user_id=u.user_id and f.state=0) fileSize,(select count(*) from tb_report r where r.user_id=u.user_id and r.isdel=0 and (r.flag=0 or r.report_id=11)) reportNum from tb_company c,tb_dept d,tb_user u where c.company_id=d.company_id and u.dept_id=d.dept_id and u.state=0 and u.user_id not in ("
-				+ noUserid + ") and c.company_id=?";
+		String sql = "select  company_id,company_name,address,tel,create_date, count(id.user_id) userNum,group_concat(username) userNames,group_concat(distinct dept_name) deptNames,sum(fileNum) fileNum,sum(fileSize) fileSize,sum(reportNum) reportNum    from (select a.user_id,a.username,d.dept_name,c.company_id,c.company_name,c.address,c.tel,c.create_date from tb_company c,tb_dept d,tb_user a  where c.company_id=d.company_id and a.dept_id=d.dept_id and a.state=0 and a.user_id not in ("
+				+ noUserid
+				+ ") and c.company_id=?) id left join  (select user_id,count(file_id) fileNum,ifnull(sum(size),0) fileSize from tb_file where state = 0 group by user_id) f on f.user_id=id.user_id left join  (select user_id,count(report_id) reportNum from tb_report where isdel = 0 and (flag = 0 or software_id = 11) group by user_id) r on r.user_id=id.user_id";
 		Company com = null;
 		try {
 			ResultSetHandler<Company> rsh = new BeanHandler<Company>(
