@@ -24,7 +24,7 @@ var spinner;
 //---------------------------------------------------------------------
 
 //记录数据管理页面每页显示记录个数,默认是50
-var dataPageDataNum = 50;
+var dataPageDataNum = 20;
 //记录数据列表当前页
 var dataCurrentPageNumber = 1;
 //保存用户已经选择的数据
@@ -54,10 +54,13 @@ function getAllDataList(){
 	spinner = new Spinner(opts);
 	var target = document.getElementById('selfDataDiv');
 	spinner.spin(target);
-	$.get("data3!getAllData",{},function(responseText){
-		spinner.stop();
+	$.get("data3!getAllData",{"page.pageSize":dataPageDataNum,"page.currentPage":1},function(responseText){
 		$("#selfDataDiv").html(responseText);
 		$("#pageRecordSel").val(dataPageDataNum);
+		toUse();
+		$("#fileDataBody").scrollTop(0);
+		spinner.stop();
+		privateIcon();
 	});
 }
 function getDataByCondition(pageNum){
