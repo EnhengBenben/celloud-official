@@ -45,6 +45,7 @@ def runover(path,appId,projectId):
 	if my:
 		result = my.query(sql)
 		if result is not None:
+			proReport = "<table><tr><td>dataName</td><td>dataKey</td></tr>";
 			for i in range(len(result)):
 				re = result[i]
 				myfun = method_dic[int(appId)]
@@ -56,5 +57,9 @@ def runover(path,appId,projectId):
 					objId = mo.put(merge,collection_dic[int(appId)])
 					print objId
 
+			proReport =proReport + "</table>"
+			proSql = "update tb_report set state=3,context='" + proReport + "',end_date=now()  where project_id=" + projectId
+			print proSql
+			my.execute(proSql)
 if __name__ == '__main__':
 	runover('/home/lin/work/9/88','88','3546')

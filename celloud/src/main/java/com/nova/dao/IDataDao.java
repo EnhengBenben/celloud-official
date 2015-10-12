@@ -18,6 +18,12 @@ import com.nova.sdo.User;
  */
 @ImplementedBy(DataDaoImpl.class)
 public interface IDataDao {
+	
+	/**
+	 * 有多少个数据当前正在运行
+	 * @return
+	 */
+	int dataRunning();
 
     /**
      * 客户端用的增加方法

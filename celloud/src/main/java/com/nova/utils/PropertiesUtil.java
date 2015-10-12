@@ -14,6 +14,7 @@ public class PropertiesUtil {
     public static String bigFileCompressPath;
     public static String rsainfo;
     public static String fileFinal;
+    public static String datalist;
     /**
      * 文件断点续传时，临时文件存放处
      */
@@ -31,6 +32,7 @@ public class PropertiesUtil {
 	    rsainfo = prop.getProperty("rsainfo");
 	    tmp = prop.getProperty("tmp");
 	    fileFinal = prop.getProperty("fileFinal");
+	    datalist = prop.getProperty("datalist");
 	} catch (IOException e) {
 	    logger.info("读取jdbc配置文件失败");
 	}

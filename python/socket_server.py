@@ -2,7 +2,12 @@
 # -*- coding: utf-8 -*-
 
 import time , socket , threading , os
+<<<<<<< HEAD
 from runover import *
+=======
+import httplib
+from data_pgs import *
+>>>>>>> spark
 
 def tcplink(sock, addr):
     print 'Accept new connection from %s:%s...' % addr
@@ -15,6 +20,24 @@ def tcplink(sock, addr):
         projectId = os.path.split(data)[1]
         appId = os.path.split(path)[1]
         runover(path,appId,projectId)
+        print data
+        pgsdata(path,projectId)
+
+        httpClient = None
+
+        try:
+            httpClient = httplib.HTTPConnection('localhost',8080,timeout=30)
+            httpClient.request('GET','/celloud/project!runQueue?projectId='+projectId)
+            response = httpClient.getresponse()
+            print response.status
+            print response.reason
+            print response.read()
+        except Exception, e:
+            print e
+        finally:
+            if httpClient:
+                httpClient.close()
+
         sock.send('over')
     sock.close()
     print 'Connection from %s:%s closed.' % addr

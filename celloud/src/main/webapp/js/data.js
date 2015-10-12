@@ -94,6 +94,37 @@ function sortByCreateDate(){//按照上传时间进行排序
 	}
 	getDataByCondition(1);
 }
+
+//数据管理-搜索框活得焦点时提示内容消失
+function hideSearchInputInfo(){
+	$("#dataTagSearch").attr("placeholder","");
+}
+//数据管理-搜索框失去焦点时显示提示内容
+function showSearchInputInfo(){
+	$("#dataTagSearch").attr("placeholder","搜索文件名/数据标签/文件别名");
+}
+//批量删除数据
+function deleteDatas(){
+	jConfirm("确定删除选中的数据吗？", '确认提示框', function(r) {
+		if(r){
+			var dataIds = "";
+		    //遍历得到每个checkbox的value值
+		    for (var i=0;i<checkedDataIds.length;i++){
+		         dataIds += checkedDataIds[i] + ",";
+		    }
+		    dataIds = dataIds.substring(0, dataIds.length-1);
+		    $.get("dataJson_delDatas.action",{"dataIds":dataIds},function(flag){
+	    		if(flag>0){
+	    			getPrivateDataList();
+	    			checkedDataIds = [];
+	    			toNoUse();
+	    		}else{
+	    			jAlert("删除失败！");
+	    		}
+	    	});
+		}
+	});
+}
 function privateIcon(){
 	if(fileNameSort=="asc"){
 		$("#sortFileName").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
@@ -225,24 +256,122 @@ function toRunApp(){
 	});
 }
 function deleteData(){
-	$("#warningText").html("确定要删除选中数据吗？");
-	$("#warningModal").modal("show");
-	$("#checkTrue").one("click",function(){
-		var dataIds = "";
-	    for (var i=0;i<checkedDataIds.length;i++){
-	         dataIds += checkedDataIds[i] + ",";
+		$("#warningText").html("确定要删除选中数据吗？");
+		$("#warningModal").modal("show");
+		$("#checkTrue").one("click",function(){
+			var dataIds = "";
+			for (var i=0;i<checkedDataIds.length;i++){
+				dataIds += checkedDataIds[i] + ",";
+			}
+			dataIds = dataIds.substring(0, dataIds.length-1);
+			$.get("data3!deleteData",{"dataIds":dataIds},function(result){
+				if(result>0){
+					getDataByCondition(dataCurrentPageNumber);
+					checkedDataIds = [];
+					addedDataNames = [];
+					toNoUse();
+				}
+			});
+		});
+	}
+//多条数据运行
+function runMultiDataNew(){
+	var runText = $("#appTextBtn").text();
+	if(runText=="选择App"){
+		showAppsForData();
+		return;
+	}else if(runText=="已经开始运行"){
+		return;
+	}
+	var dataIds = "";
+	var fileNames = new Array();
+	if(checkedDataIds.length==0){
+		jAlert("请选择至少一条数据！");
+		return;
+	}
+    //遍历得到每个checkbox的value值
+	if(checkedDataIds.length>25){
+		jAlert("同时勾选的数据不能超过25条");
+		return;
+	}
+    for (var i=0;i<checkedDataIds.length;i++){
+         dataIds += checkedDataIds[i] + ",";
+         fileNames.push($("#fileName"+checkedDataIds[i]).val());
+    }
+    dataIds = dataIds.substring(0, dataIds.length-1);
+	$.get("getSoftwareIdByName.action",{"softwareName":runText},function(softId){
+		if(softId == 110||softId == 111||softId == 112){
+			var cmp_temp = "";
+			var length = fileNames.length;
+			for (i=0;i < length; i++) {
+				cmp_temp +=fileNames[i];
+				if(fileNames[i].length<30 && i<length-1 && fileNames[i+1].length<30){
+					cmp_temp+="&nbsp;&nbsp;"
+				}else{
+					cmp_temp+="<br>"
+				}
+				if((i+1)%2==0){
+					cmp_temp+="<br>";
+				}
+			}
+			jConfirm("<html><body>请确定以下数据都存在配对数据！<br><span style='font-size:10px;color:#ccc'>(配对格式:aaa<span style='font-weight:bolder;color:red'>1</span>.fastq&nbsp;&nbsp;&nbsp;aaa<span style='font-weight:bolder;color:red'>2</span>.fastq)</span><br><span style='font-size:9px;'>"+cmp_temp+"</span></body></html>", "判断CMP所选数据", function(r) { 
+				if(r) { 
+					$.get("checkDatasInProReportState.action",{"dataIds":dataIds,"softwareId":softId},function(fileNames){
+			    		if(fileNames.length>0){
+			    			jAlert("所勾选的数据中有的正在运行，请取消勾选后再次尝试，或者等待其运行完成后再尝试");
+			    			return;
+			    		}else{
+			    			jAlert(runText+"已经开始运行");
+			    			$("#appTextBtn").html("已经开始运行");
+			    			setInterval(resetAppBtnText,10000);
+			    			$("input[name='datachk']").attr("checked",false);
+			    			$("#selAll").attr("checked",false);
+			    			
+			    			$.get("project!run", {"dataIds" : dataIds,"softwareId" : softId}, function(error) {
+			    				if (error == 1) {
+			    					jAlert("创建项目失败");
+			    				} else if (error == 2) {
+			    					jAlert("创建项目数据关系失败");
+			    				}
+			    				checkedDataIds = [];
+			    				searchData(dataCurrentPageNumber);
+			    				$("#appTextBtn").attr("disabled",false);
+			    			});
+			    		}
+			    	});
+                }else{
+                	return;
+                }
+            }); 
+            event.stopPropagation(); 
+            event.preventDefault();
+	    }else{
+	    	$.get("checkDatasInProReportState.action",{"dataIds":dataIds,"softwareId":softId},function(fileNames){
+	    		if(fileNames.length>0){
+	    			jAlert("所勾选的数据中有的正在运行，请取消勾选后再次尝试，或者等待其运行完成后再尝试");
+	    			return;
+	    		}else{
+	    			jAlert(runText+"已经开始运行");
+	    			$("#appTextBtn").html("已经开始运行");
+	    			setInterval(resetAppBtnText,10000);
+	    			$("input[name='datachk']").attr("checked",false);
+	    			$("#selAll").attr("checked",false);
+	    			
+	    			$.get("project!run", {"dataIds" : dataIds,"softwareId" : softId}, function(error) {
+	    				if (error == 1) {
+	    					jAlert("创建项目失败");
+	    				} else if (error == 2) {
+	    					jAlert("创建项目数据关系失败");
+	    				}
+	    				checkedDataIds = [];
+	    				searchData(dataCurrentPageNumber);
+	    				$("#appTextBtn").attr("disabled",false);
+	    			});
+	    		}
+	    	});
 	    }
-	    dataIds = dataIds.substring(0, dataIds.length-1);
-	    $.get("data3!deleteData",{"dataIds":dataIds},function(result){
-    		if(result>0){
-    			getDataByCondition(dataCurrentPageNumber);
-    			checkedDataIds = [];
-    			addedDataNames = [];
-    			toNoUse();
-    		}
-    	});
 	});
-}
+}	
 function toMoreDataInfoModel(id,name){
 	$.get("data3!getMoreData",{"fileId":id},function(responseText){
 		$("#moreDatasForm").html(responseText);

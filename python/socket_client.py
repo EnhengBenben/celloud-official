@@ -7,7 +7,6 @@ __author__='lin'
 #调用方式:python socket_client.py '/share/data/webapps/Tools/upload/9/110' 'ProjectID3466'
 
 import socket , time , os , sys
-from mysql.mysqlOperate import mysql
 
 if len(sys.argv) != 3:
 	print 'Usage: *.py path projectId'

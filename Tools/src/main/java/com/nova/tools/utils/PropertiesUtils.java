@@ -76,19 +76,6 @@ public class PropertiesUtils {
      * data.list 文件的存放位置
      */
     public static String datalist;
-    /**
-     * 计算节点IP(158)
-     */
-    public static String host;
-
-    /**
-     * 计算节点用户名
-     */
-    public static String userName;
-    /**
-     * 计算节点密码
-     */
-    public static String pwd;
 
     /**
      * 内网Celloud地址
@@ -152,9 +139,6 @@ public class PropertiesUtils {
 	outProject = pro.getProperty("outProject");
 	SNP_multiple = pro.getProperty("SNP_multiple");
 	datalist = pro.getProperty("datalist");
-	host = pro.getProperty("host");
-	userName = pro.getProperty("userName");
-	pwd = pro.getProperty("pwd");
 	QC = pro.getProperty("QC");
 	celloud = pro.getProperty("celloud");
 	miRNA = pro.getProperty("miRNA");

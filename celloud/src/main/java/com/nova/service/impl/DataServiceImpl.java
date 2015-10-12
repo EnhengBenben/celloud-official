@@ -253,4 +253,9 @@ public class DataServiceImpl implements IDataService {
 	public List<Data> getDataByDataKeys(String dataKeys, Integer userId) {
 		return dataDao.getDataByDataKeys(dataKeys, userId);
 	}
+
+	@Override
+	public int dataRunning() {
+		return dataDao.dataRunning();
+	}
 }

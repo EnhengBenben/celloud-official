@@ -18,6 +18,13 @@ import com.nova.service.impl.DataServiceImpl;
  */
 @ImplementedBy(DataServiceImpl.class)
 public interface IDataService {
+	
+	/**
+	 * 有多少个数据当前正在运行
+	 * @return
+	 */
+	int dataRunning();
+	
     /**
      * 客户端用的增加方法
      * 

@@ -65,7 +65,7 @@
 <!-- jquery_alert_dialogs end -->
 <!-- spin:loading效果 begin-->
 <script src="<%=request.getContextPath()%>/plugins/spin.min.js" type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/js/data.js?version=201507025" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/data.js?version=20150921" type="text/javascript"></script>
 <!-- spin:loading效果 end-->
 <script type="text/javascript">
 	var session_userId = <%=session.getAttribute("userId")%>;

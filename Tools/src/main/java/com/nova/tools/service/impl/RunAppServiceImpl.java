@@ -28,6 +28,7 @@ import com.celloud.mongo.service.ReportService;
 import com.celloud.mongo.service.ReportServiceImpl;
 import com.itextpdf.text.DocumentException;
 import com.nova.tools.constant.AppNameIDConstant;
+import com.nova.tools.constant.Mod;
 import com.nova.tools.itext.AB1_PDF;
 import com.nova.tools.itext.HBV_SNP_PDF;
 import com.nova.tools.itext.NIPTPDF;
@@ -39,6 +40,7 @@ import com.nova.tools.utils.GanymedSSH;
 import com.nova.tools.utils.JsonUtil;
 import com.nova.tools.utils.PropertiesUtils;
 import com.nova.tools.utils.ScreeningUtil;
+import com.nova.tools.utils.XMLUtil;
 
 /**
  * @Description:运行App的具体实现
@@ -59,9 +61,13 @@ public class RunAppServiceImpl {
     private static String EGFR_perl = PropertiesUtils.EGFR;
     private static String TB_perl = PropertiesUtils.TB;
 
-    private static String host158 = PropertiesUtils.host;
-    private static String pwd = PropertiesUtils.pwd;
-    private static String userName = PropertiesUtils.userName;
+    private static String host158 = XMLUtil.machines.get("158").get(Mod.HOST);
+    private static String pwd = XMLUtil.machines.get("158").get(Mod.PWD);
+    private static String userName = XMLUtil.machines.get("158").get(Mod.USERNAME);
+    
+    private static String sparkhost = XMLUtil.machines.get("spark").get(Mod.HOST);
+    private static String sparkpwd = XMLUtil.machines.get("spark").get(Mod.PWD);
+    private static String sparkuserName = XMLUtil.machines.get("spark").get(Mod.USERNAME);
 
     private static String MalBac_perl = PropertiesUtils.MalBac;
     private static String gDNA_HR_perl = PropertiesUtils.gDNA_HR;
