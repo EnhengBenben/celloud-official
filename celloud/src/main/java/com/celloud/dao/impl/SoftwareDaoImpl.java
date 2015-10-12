@@ -77,4 +77,29 @@ public class SoftwareDaoImpl extends BaseDao implements SoftwareDao {
 	return appName;
     }
 
+	@Override
+	public List<Software> getAllSoftware() {
+		List<Software> list = new ArrayList<>();
+		String sql = "select * from tb_software where off_line = ?;";
+		try {
+			conn = ConnectManager.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, SoftWareOffLineState.ON);
+			rs = ps.executeQuery();
+			Software soft = null;
+			while (rs.next()) {
+				soft = new Software();
+				soft.setSoftwareId(rs.getLong("software_id"));
+				soft.setSoftwareName(rs.getString("software_name"));
+				soft.setCommand(rs.getString("command"));
+				list.add(soft);
+			}
+		} catch (SQLException e) {
+			log.error("用户" + super.userName + "全查APP列表失败");
+			e.printStackTrace();
+		} finally {
+			ConnectManager.free(conn, ps, rs);
+		}
+		return list;
+	}
 }

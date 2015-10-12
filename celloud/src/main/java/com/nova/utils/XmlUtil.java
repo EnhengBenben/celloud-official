@@ -21,6 +21,10 @@ import com.nova.constants.Mod;
 public class XmlUtil {
 
 	public static Map<String, Map<String, String>> machines = new HashMap<String, Map<String, String>>();
+	
+	static{
+		getMachines();
+	}
 
 	public static void getMachines() {
 		InputStream is = PropertiesUtil.class.getClassLoader()

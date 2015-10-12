@@ -7,7 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.celloud.sdo.Software;
 import com.nova.constants.DataState;
+import com.nova.constants.SoftWareOffLineState;
 import com.nova.sdo.Client;
 import com.nova.sdo.Data;
 import com.nova.sdo.User;
@@ -18,6 +20,32 @@ import com.nova.sdo.User;
  * @date 2014-10-13 上午10:40:43
  */
 public class SQLUtils {
+	public List<Software> getAllSoftware() {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<Software> list = new ArrayList<>();
+		String sql = "select * from tb_software where off_line = ?;";
+		try {
+			conn = ConnectManager.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, SoftWareOffLineState.ON);
+			rs = ps.executeQuery();
+			Software soft = null;
+			while (rs.next()) {
+				soft = new Software();
+				soft.setSoftwareId(rs.getLong("software_id"));
+				soft.setSoftwareName(rs.getString("software_name"));
+				soft.setCommand(rs.getString("command"));
+				list.add(soft);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectManager.free(conn, ps, rs);
+		}
+		return list;
+	}
 
 	/**
 	 * 客户端登陆成功后向tb_log表增加记录

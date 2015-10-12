@@ -26,4 +26,9 @@ public class SoftwareServiceImpl implements SoftwareService {
 	return appDao.getAppNameById(softwareId);
     }
 
+	@Override
+	public List<Software> getAllSoftware() {
+		return appDao.getAllSoftware();
+	}
+
 }
