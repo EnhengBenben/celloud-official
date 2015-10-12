@@ -389,7 +389,7 @@ function toMoreDataInfoModel(id,name){
 	});
 }
 function showDataMoreInfoEdit(){
-	$("#moreDatasForm").find("input").removeAttr("readonly");
+	$("#moreDatasForm").find("input").removeAttr("disabled");
 	$("#moreDatasForm").find("input").removeClass("readonly");
 	$("#dataTag").children(".popWindow-overlap").remove(); 
 	$("#dataStrainHide").removeAttr("disabled");
