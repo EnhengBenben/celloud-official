@@ -24,7 +24,7 @@ var spinner;
 //---------------------------------------------------------------------
 
 //记录数据管理页面每页显示记录个数,默认是50
-var dataPageDataNum = 50;
+var dataPageDataNum = 20;
 //记录数据列表当前页
 var dataCurrentPageNumber = 1;
 //保存用户已经选择的数据
@@ -54,10 +54,13 @@ function getAllDataList(){
 	spinner = new Spinner(opts);
 	var target = document.getElementById('selfDataDiv');
 	spinner.spin(target);
-	$.get("data3!getAllData",{},function(responseText){
-		spinner.stop();
+	$.get("data3!getAllData",{"page.pageSize":dataPageDataNum,"page.currentPage":1},function(responseText){
 		$("#selfDataDiv").html(responseText);
 		$("#pageRecordSel").val(dataPageDataNum);
+		toUse();
+		$("#fileDataBody").scrollTop(0);
+		spinner.stop();
+		privateIcon();
 	});
 }
 function getDataByCondition(pageNum){
@@ -117,6 +120,7 @@ function deleteDatas(){
 	    		if(flag>0){
 	    			getPrivateDataList();
 	    			checkedDataIds = [];
+	    			addedDataNames = [];
 	    			toNoUse();
 	    		}else{
 	    			jAlert("删除失败！");
@@ -247,8 +251,9 @@ function toRunApp(){
 			$("#runError").html(result);
 			$("#runErrorDiv").removeClass("hide");
 		}else{
-			checkedDataIds = [];
 			getDataByCondition(dataCurrentPageNumber);
+			checkedDataIds = [];
+			addedDataNames = [];
 			$("input[type='checkbox']").prop("checked",false);
 			$("#runApp").modal("hide");
 			$("#runErrorDiv").addClass("hide");
@@ -386,7 +391,7 @@ function toMoreDataInfoModel(id,name){
 	});
 }
 function showDataMoreInfoEdit(){
-	$("#moreDatasForm").find("input").removeAttr("readonly");
+	$("#moreDatasForm").find("input").removeAttr("disabled");
 	$("#moreDatasForm").find("input").removeClass("readonly");
 	$("#dataTag").children(".popWindow-overlap").remove(); 
 	$("#dataStrainHide").removeAttr("disabled");
@@ -449,6 +454,7 @@ function saveManageDatas(){
     	if(flag>0){
     		getDataByCondition(dataCurrentPageNumber);
     		checkedDataIds = [];
+    		addedDataNames = [];
     		$("#manageDatasModal").modal("hide");
     	}else {
     		$("#manageDataErrorDiv").removeClass("hide");;
@@ -473,6 +479,7 @@ function saveEachData(){
 		if(result>0){
 			getDataByCondition(dataCurrentPageNumber);
 			checkedDataIds = [];
+			addedDataNames = [];
 			$("#manageEachDataModal").modal("hide");
 		}else{
 			$("#eachDataErrorDiv").removeClass("hide");
