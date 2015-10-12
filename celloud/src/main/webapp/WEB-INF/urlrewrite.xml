@@ -91,6 +91,11 @@
 	</rule>
 	<rule>
 		<note>python</note>
+		<from>^/initDataKey/([\w\W]+)/([\w\W]+)$</from>
+		<to>/python!initDataKey?id=$1&amp;fileName=$2</to>
+	</rule>
+	<rule>
+		<note>python</note>
 		<from>^/saveDataSize/([\w\W]+)/([\w\W]+)$</from>
 		<to>/python!saveDataSize?dataKey=$1&amp;num=$2</to>
 	</rule>
