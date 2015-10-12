@@ -28,6 +28,7 @@ import com.celloud.mongo.service.ReportServiceImpl;
 import com.google.inject.Inject;
 import com.nova.constants.Mod;
 import com.nova.constants.SparkPro;
+import com.nova.email.EmailProjectEnd;
 import com.nova.email.EmailService;
 import com.nova.pager.PageList;
 import com.nova.portpool.PortPool;
@@ -49,7 +50,10 @@ import com.nova.service.IProjectService;
 import com.nova.service.IReportService;
 import com.nova.service.ISoftwareService;
 import com.nova.service.IUserService;
+import com.nova.itext.PGSProjectPDF;
+import com.nova.itext.PGS_PDF;
 import com.nova.utils.Base64Util;
+import com.nova.utils.DateUtil;
 import com.nova.utils.FileTools;
 import com.nova.utils.PropertiesUtil;
 import com.nova.utils.RemoteRequests;
@@ -169,6 +173,7 @@ public class ProjectAction extends BaseAction {
 	private static String sparkpwd = machines.get("spark").get(Mod.PWD);
 	private static String sparkuserName = machines.get("spark").get(
 			Mod.USERNAME);
+	private static String basePath = SparkPro.TOOLSPATH;
 
 	public String toSaveRunedCmp() {
 		String source = "/share/data/webapps/Tools/upload/88/110/";
@@ -557,15 +562,14 @@ public class ProjectAction extends BaseAction {
 			int running = dataService.dataRunning();
 			log.info("页面运行任务，此时正在运行的任务数：" + running);
 			// TODO
-			String basePath = SparkPro.TOOLSPATH + userId + "/" + softwareId
-					+ "/";
+			String appPath = basePath + userId + "/" + softwareId + "/";
 			if (SparkPro.NODES >= running) {
 				log.info("资源满足需求，投递任务");
-				submit(basePath, proId + "", dataKeyList, appName,
+				submit(appPath, proId + "", dataKeyList, appName,
 						perlMap.get(softwareId));
 			} else {
 				log.info("资源不满足需求，进入队列等待");
-				GlobalQueue.offer(basePath + "--" + proId + "--" + dataKeyList
+				GlobalQueue.offer(appPath + "--" + proId + "--" + dataKeyList
 						+ "--" + appName + "--" + softwareId);
 			}
 		} else {
@@ -630,11 +634,121 @@ public class ProjectAction extends BaseAction {
 				+ dataListFile
 				+ " "
 				+ basePath
-				+ " ProjectID" + projectId+" >"+basePath+"ProjectID"+projectId+".log &";
+				+ " ProjectID"
+				+ projectId
+				+ " >"
+				+ basePath
+				+ "ProjectID"
+				+ projectId + ".log &";
 		log.info("运行命令：" + command);
 		SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
 		System.out.println("-------");
-		ssh.sshSubmit(command,false);
+		ssh.sshSubmit(command, false);
+	}
+
+	/**
+	 * 项目运行结束之后
+	 */
+	public void projectRunOver() {
+		// TODO
+		int proId = Integer.parseInt(projectId);
+		project = projectService.getProjectById(proId);
+		userId = project.getUserId();
+		String email = userService.getEmailByUserId(userId);
+		int appId = reportService.getSoftwareIdByProjectId(proId);
+		proDataList = projectService.getAllFileInProject(proId);
+		appName = softwareService.getSoftware(appId).getSoftwareName();
+		System.out.println(projectId);
+		String appPath = basePath + userId + "/" + appId + "/";
+		// 创建项目结果文件
+		String projectFile =  appPath+ projectId+ "/" + projectId + ".txt";
+		FileTools.createFile(projectFile);
+		// 追加表头
+		StringBuffer resultArray = new StringBuffer();
+		resultArray
+				.append("dataName\tdataKey\tAnotherName\tTotal_Reads\tMT_ratio\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
+		StringBuffer sb = new StringBuffer();
+		for (Data d : proDataList) {
+			String filename = d.getFileName();
+			String datakey = d.getDataKey();
+			String anotherName = StringUtils.isEmpty(d.getAnotherName()) ? null
+					: d.getAnotherName();
+			String finalPath = appPath + datakey;
+			sb.append(datakey).append(",").append(getBarcode(filename))
+					.append(",").append(anotherName).append(";");
+			try {
+				PGS_PDF.createPDF(finalPath, appName, getBarcode(filename),
+						anotherName, datakey, 220, 800);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			String fileName = FileTools.fileExist(finalPath, datakey + ".xls",
+					"endsWith");
+			if (fileName.equals("")) {
+				fileName = FileTools.fileExist(finalPath,
+						"no_enough_reads.xls", "endsWith");
+			}
+			String result[] = null;
+			try {
+				String r[] = FileUtils.readFileToString(
+						new File(finalPath + "/" + fileName)).split("\n");
+				if (r.length > 2) {
+					result = getArray(r, 2).split("\t");
+				} else {
+					result = FileTools.getLastLine(finalPath + "/" + fileName)
+							.split("\t");
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			if (result.length == 1) {
+				resultArray.append(filename + "\t" + datakey + "\t"
+						+ anotherName + "\t" + getArray(result, 0) + "\n");
+			} else {
+				resultArray.append(filename + "\t" + datakey + "\t"
+						+ anotherName + "\t" + getArray(result, 0) + "\t"
+						+ getArray(result, 1) + "\t" + getArray(result, 2)
+						+ "\t" + getArray(result, 3) + "\t"
+						+ getArray(result, 4) + "\t" + getArray(result, 5)
+						+ "\n");
+			}
+		}
+		try {
+			PGSProjectPDF.createPDF(appPath, appName, 220, 800, sb.toString(),
+					projectId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		FileTools.appendWrite(projectFile, resultArray.toString());
+		String xml = null;
+		if (new File(projectFile).exists()) {
+			xml = XmlUtil.writeXML(projectFile);
+		}
+		// 修改项目报告状态
+		reportService
+				.updateReportStateByProSoftId(userId, proId, appId, 3, xml);
+
+		// TODO 发送邮件
+		String param = "fileName=" + null + "&userId=" + userId + "&appId="
+				+ appId + "&dataKey=" + null + "&projectId=" + projectId
+				+ "&sampleList=" + null;
+		projectName = projectService.getProjectNameById(proId);
+		EmailProjectEnd.sendEndEmail(projectName, "" + appId,
+				DateUtil.nowCarefulTimeToString(project.getCreateDate()), email, param, true);
+	}
+
+	/**
+	 * 通过文件名称获取Barcode
+	 * 
+	 * @param fileName
+	 * @return
+	 */
+	private static String getBarcode(String fileName) {
+		String[] s = fileName.split("_");
+		if (s.length > 2) {
+			fileName = s[0] + "_" + s[1];
+		}
+		return fileName;
 	}
 
 	/**

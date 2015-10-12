@@ -105,7 +105,7 @@ public class ProjectDaoImpl extends BaseDao implements IProjectDao {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			String sql = "select f.file_id as file_id,file_name,data_key,size,create_date from tb_file f "
+			String sql = "select f.file_id as file_id,file_name,another_name,data_key,size,create_date from tb_file f "
 					+ "join tb_data_project_relat dpr on f.file_id=dpr.file_id where dpr.project_id=?";
 			conn = ConnectManager.getConnection();
 			ps = conn.prepareStatement(sql);
@@ -117,6 +117,7 @@ public class ProjectDaoImpl extends BaseDao implements IProjectDao {
 				data.setFileName(rs.getString("file_name"));
 				data.setDataKey(rs.getString("data_key"));
 				data.setSize(rs.getLong("size"));
+				data.setAnotherName(rs.getString("another_name"));
 				fileList.add(data);
 			}
 		} catch (SQLException e) {
@@ -763,7 +764,7 @@ public class ProjectDaoImpl extends BaseDao implements IProjectDao {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String sql = "select * from(select project_name,strain,pro_data_type from tb_project where project_id=?) t left join tb_data_type p on t.pro_data_type=p.type_id";
+		String sql = "select * from(select project_name,strain,pro_data_type,create_date,user_id from tb_project where project_id=?) t left join tb_data_type p on t.pro_data_type=p.type_id";
 		try {
 			conn = ConnectManager.getConnection();
 			ps = conn.prepareStatement(sql);
@@ -775,6 +776,8 @@ public class ProjectDaoImpl extends BaseDao implements IProjectDao {
 				pro.setStrain(rs.getString("strain"));
 				pro.setProDataType(rs.getInt("pro_data_type"));
 				pro.setDataTypeShow(rs.getString("type_desc"));
+				pro.setCreateDate(rs.getTimestamp("create_date"));
+				pro.setUserId(rs.getInt("user_id"));
 			}
 		} catch (SQLException e) {
 			log.info("查询项目信息失败");

@@ -21,5 +21,5 @@ public class SparkPro {
 	/**
 	 * 配置 Tools 路径
 	 */
-	public static final String TOOLSPATH = "/share/data1/webapps/Tools/upload/";
+	public static final String TOOLSPATH = "/share/data/webapps/Tools/upload/";
 }

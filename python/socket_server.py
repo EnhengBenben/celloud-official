@@ -2,12 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import time , socket , threading , os
-<<<<<<< HEAD
 from runover import *
-=======
 import httplib
-from data_pgs import *
->>>>>>> spark
 
 def tcplink(sock, addr):
     print 'Accept new connection from %s:%s...' % addr
