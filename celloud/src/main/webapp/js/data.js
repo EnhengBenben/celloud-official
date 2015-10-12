@@ -120,6 +120,7 @@ function deleteDatas(){
 	    		if(flag>0){
 	    			getPrivateDataList();
 	    			checkedDataIds = [];
+	    			addedDataNames = [];
 	    			toNoUse();
 	    		}else{
 	    			jAlert("删除失败！");
@@ -250,8 +251,9 @@ function toRunApp(){
 			$("#runError").html(result);
 			$("#runErrorDiv").removeClass("hide");
 		}else{
-			checkedDataIds = [];
 			getDataByCondition(dataCurrentPageNumber);
+			checkedDataIds = [];
+			addedDataNames = [];
 			$("input[type='checkbox']").prop("checked",false);
 			$("#runApp").modal("hide");
 			$("#runErrorDiv").addClass("hide");
@@ -452,6 +454,7 @@ function saveManageDatas(){
     	if(flag>0){
     		getDataByCondition(dataCurrentPageNumber);
     		checkedDataIds = [];
+    		addedDataNames = [];
     		$("#manageDatasModal").modal("hide");
     	}else {
     		$("#manageDataErrorDiv").removeClass("hide");;
@@ -476,6 +479,7 @@ function saveEachData(){
 		if(result>0){
 			getDataByCondition(dataCurrentPageNumber);
 			checkedDataIds = [];
+			addedDataNames = [];
 			$("#manageEachDataModal").modal("hide");
 		}else{
 			$("#eachDataErrorDiv").removeClass("hide");
