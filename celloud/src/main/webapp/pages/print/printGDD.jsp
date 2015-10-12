@@ -8,7 +8,7 @@
 <head>
 <meta charset="utf-8">
 <title>遗传疾病检测报告打印</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/print_gdd.css?version=150823">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/print_gdd.css?version=1.2">
 </head>
 <body>
 <a href="javascript:void(0)" onclick="preview(this)" class="btn btn-default" id="change" style="float:right;margin-top:10px;margin-right:-80px;">打印</a>
@@ -23,13 +23,13 @@
 		<h1>新生儿遗传代谢疾病检测分析报告</h1>
 	</div>
 	<div class="titletype">
-		<div>
+		<div class="titleinfo">
 			<span>姓</span><span style="margin-left:40px">名：</span><span><input type="text" class="input200" value="${cmpReport.cmpFilling.patientName }"></span>
 		</div>
-		<div>
+		<div class="titleinfo">
 			<span>取样日期：</span><span><input type="text" class="input200" value="${cmpReport.cmpFilling.samplingDate }" ></span>
 		</div>
-		<div>
+		<div class="titleinfo">
 			<span>报告日期：</span><span><input type="text" class="input200" value="${cmpReport.cmpFilling.reportDate }"></span>
 		</div>
 	</div>
@@ -40,31 +40,31 @@
 <section class="section1 border1 w3cbbs">
 	<h3>受检者信息</h3>
     <ul class="info">
-    	<li>母亲姓名：<span><input type="text" id="motherName" name="cmpFill.motherName" value="${cmpReport.cmpFilling.motherName }"></span></li>
-    	<li>病历号：<span><input type="text" id="medicalRecord" name="cmpFill.medicalRecord" value="${cmpReport.cmpFilling.medicalRecord }"></span></li>
-    	<li style="width:90%">项目编号：<span><input type="text" id="projectNo" name="cmpFill.projectNo" value="${cmpReport.cmpFilling.projectNo }"></span></li>
-        <li>新生儿姓名：<span><input type="text" id="patientName" name="cmpFill.patientName" value="${cmpReport.cmpFilling.patientName }"></span></li>
-        <li>出生日期：<span><input type="text" id="birthday" name="cmpFill.birthday" value="${cmpReport.cmpFilling.birthday }"></span></li>
+    	<li>母亲姓名：<span><input type="text" name="cmpFill.motherName" value="${cmpReport.cmpFilling.motherName }"></span></li>
+    	<li>病历号：<span><input type="text" name="cmpFill.medicalRecord" value="${cmpReport.cmpFilling.medicalRecord }"></span></li>
+    	<li style="width:90%">项目编号：<span><input type="text" name="cmpFill.projectNo" value="${cmpReport.cmpFilling.projectNo }"></span></li>
+        <li>新生儿姓名：<span><input type="text" name="cmpFill.patientName" value="${cmpReport.cmpFilling.patientName }"></span></li>
+        <li>出生日期：<span><input type="text" name="cmpFill.birthday" value="${cmpReport.cmpFilling.birthday }"></span></li>
         <li>受检者性别： <span id="_sex"><input type="radio" name="cmpFill.patientSex" value="男" <c:if test="${cmpReport.cmpFilling.patientSex eq '男' }">checked="checked"</c:if>>男<input type="radio" name="cmpFill.patientSex" value="女" <c:if test="${cmpReport.cmpFilling.patientSex eq '女' }">checked="checked"</c:if>>女</span></li>
-        <li>指导医生：<span><input type="text" id="doctorName" name="cmpFill.doctorName" value="${cmpReport.cmpFilling.doctorName }"></span></li>
-        <li>送检单位：<span><input type="text" id="inspectionUnit" name="cmpFill.inspectionUnit" value="${cmpReport.cmpFilling.inspectionUnit }"></span></li>
-        <li>样本状态：<span><input type="text" id="sampleStatus" name="cmpFill.sampleStatus" value="${cmpReport.cmpFilling.sampleStatus }"></span></li>
+        <li>指导医生：<span><input type="text" name="cmpFill.doctorName" value="${cmpReport.cmpFilling.doctorName }"></span></li>
+        <li>送检单位：<span><input type="text" name="cmpFill.inspectionUnit" value="${cmpReport.cmpFilling.inspectionUnit }"></span></li>
+        <li>样本状态：<span><input type="text" name="cmpFill.sampleStatus" value="${cmpReport.cmpFilling.sampleStatus }"></span></li>
         <li style="width:90%">检测项目：<span>新生儿遗传代谢病相关基因检测</span></li>
         <li style="width:90%">检测方法：<span>外显子捕获，illumina高通量测序平台，SNPs/微插入/微缺失检测</span></li>
-        <li>分子生物实验操作：<span><input type="text" class="input100" id="molecularBioExperOper" name="cmpFill.molecularBioExperOper" value="${cmpReport.cmpFilling.molecularBioExperOper }"></span></li>
-        <li>基因分析：<span><input type="text" id="geneAnalysis" name="cmpFill.geneAnalysis" value="${cmpReport.cmpFilling.geneAnalysis }"></span></li>
-        <li>送检日期：<span><input type="text" id="samplingDate" name="cmpFill.samplingDate" value="${cmpReport.cmpFilling.samplingDate }"></span></li>
-        <li>分析日期：<span><input type="text" id="analysisDate" name="cmpFill.analysisDate" value="${cmpReport.cmpFilling.analysisDate }"></span></li>
-        <li>报告日期：<span><input type="text" id="reportSource" name="cmpFill.reportDate" value="${cmpReport.cmpFilling.reportDate }"></span></li>
+        <li>分子生物实验操作：<span><input type="text" class="input100" name="cmpFill.molecularBioExperOper" value="${cmpReport.cmpFilling.molecularBioExperOper }"></span></li>
+        <li>基因分析：<span><input type="text" name="cmpFill.geneAnalysis" value="${cmpReport.cmpFilling.geneAnalysis }"></span></li>
+        <li>送检日期：<span><input type="text" name="cmpFill.samplingDate" value="${cmpReport.cmpFilling.samplingDate }"></span></li>
+        <li>分析日期：<span><input type="text" name="cmpFill.analysisDate" value="${cmpReport.cmpFilling.analysisDate }"></span></li>
+        <li>报告日期：<span><input type="text" name="cmpFill.reportDate" value="${cmpReport.cmpFilling.reportDate }"></span></li>
     </ul>
-  </section>
-  <section class="section5 border1 w3cbbs">
+<!--   </section> -->
+<!--   <section class="section5 border1 w3cbbs"> -->
 	<h3>检测结果</h3>
 	<h4>一. 致病性明确的基因检测结果</h4>
-	<p class="font10" style="width:100%;display:block">
+	<p class="font10">
 	（注：本栏结果有明确研究和文献支持；或者是明确致病基因会引起相关蛋白功能改变）
 	</p>
-	<table class="table table-striped-green table-text-center">
+	<table class="table table-text-center">
       <thead>
         <tr>
             <th style="text-align:center">疾病名称</th>
@@ -79,14 +79,13 @@
 	        	 <td>${accountConfig.diseaseName }</td>
 	        	 <td>${accountConfig.gene }</td>
 	        	 <td>${accountConfig.mutNum }</td>
-	        	 <td><input type="text" class="form-control col-sm-10" name="cmpFill.decisionResult.${accountConfig.diseaseEngName }" value="${cmpFill.decisionResult[accountConfig.diseaseEngName] }"></td>  
+	        	 <td><input type="text" name="cmpFill.decisionResult.${accountConfig.diseaseEngName }" value="${cmpReport.cmpFilling.decisionResult[accountConfig.diseaseEngName] }"></td>  
              </tr>
           </c:forEach>
       </tbody>
     </table>
     <p class="font10" style="width:100%;display:block">
-    	注：<br>
-		检测结果判定为疾病携带者的受检者，需追查其父亲和母亲的相关遗传病基因是否突变，综合分析才能够最后确定检测者是否会患病。我们免费提供携带者父亲和母亲的基因检测和分析服务。
+    	注：检测结果判定为疾病携带者的受检者，需追查其父亲和母亲的相关遗传病基因是否突变，综合分析才能够最后确定检测者是否会患病。我们免费提供携带者父亲和母亲的基因检测和分析服务。
    	</p>
   </section>
   <section class="section5 border1 w3cbbs" id="section5">
@@ -137,7 +136,7 @@
 		      <li>疾病简介:</li>
 		      <div>
 		      <textarea class="form-control" rows="15" cols="100" name="cmpFill.diseaseProfile.${geneDetection.value.result[0].diseaseEngName }">
-		      	${cmpFill.diseaseProfile[r.diseaseEngName] }
+		      	${cmpReport.cmpFilling.diseaseProfile[geneDetection.value.result[0].diseaseEngName] }
 		      </textarea>
 		      </div>
 		    </div>
@@ -210,15 +209,15 @@
  					<tr><td colspan="6">没有发现突变位点</td></tr>
  				</c:when>
  				<c:otherwise>
-						<tr>
-							<td>${r.gene }</td>
-							<td>${r.mutBase }</td>
-							<td>${r.depth }</td>
-							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-							<td>杂合突变</td>
-							<td>${r.diseaseName }</td>
-						</tr>
+					<tr>
+						<td>${r.gene }</td>
+						<td>${r.mutBase }</td>
+						<td>${r.depth }</td>
+						<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+						<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+						<td>杂合突变</td>
+						<td>${r.diseaseName }</td>
+					</tr>
  				</c:otherwise>
  			</c:choose>
 			</c:forEach>
@@ -372,8 +371,6 @@
   		$("a").css("display","");
   	}
   	function save(){
-//   		alert($("#form").serialize());
-		alert("")
   		$.get("cmpReport!saveGddFile",$("#form").serialize());
   	}
   </script>
