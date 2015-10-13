@@ -74,7 +74,7 @@
           </div>
           <div class="modal-body row">
             <div class="col-xs-12">
-	            <h5>已选数据(点击删除)</h5>
+	            <h5>已选数据(点击文件名称取消选择)</h5>
 	            <ul class="list-inline" id="addedDataUl"></ul>
             </div>
             <div class="col-xs-12">
@@ -99,8 +99,8 @@
     </div><!-- /.modal -->
     <div class="modal modal-celloud-green" id="runErrorModal">
        <div class="modal-dialog">
-         <div class="modal-content tipModal">
-           <div class="modal-header">
+         <div class="modal-content tipModal" id="runErrorContent">
+           <div class="modal-header" id="runErrorHead">
              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
              <h4 class="modal-title"><i class="icon fa fa-warning"></i>提示</h4>
            </div>

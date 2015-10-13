@@ -49,6 +49,15 @@ function initData(){
 	$("#tipModalHead").mouseover(function() {
 	  $("#tipModal").draggable();
 	});
+	$("#tipModalHead").mouseout(function() {
+	  $("#tipModal").draggable("destroy");
+	});
+	$("#runErrorHead").mouseover(function() {
+	  $("#runErrorContent").draggable();
+	});
+	$("#runErrorHead").mouseover(function() {
+	  $("#runErrorContent").draggable("destroy");
+	});
 }	
 
 //-------v 3.0版本
@@ -200,26 +209,26 @@ function addRunApp(appId,appName,dataIds){
 		addedApps.splice($.inArray(appId,addedApps),1);
 		$("#runAppli"+appId).removeClass("selected");
 	}else{
-		//判断为包含CMP/CMP_199/GDD则提示检查所选数据
-		if(appId==110 ||appId==111|| appId==112){
-			$("#runErrorText").html("运行"+appName+"需确定所选数据为配对数据！<input type='hidden' id='appIdHide' value='"+appId+"'><br>(配对格式:aaa<span class='text-red'>1</span>.fastq&nbsp;&nbsp;&nbsp;aaa<span class='text-red'>2</span>.fastq)");
-			$("#runErrorModal").modal("show");
-		}else{
-			$.get("data3!checkDataRunningSoft",{"dataIds":dataIds,"conditionInt":appId},function(intList){
-				if(intList.length>0){
-					var dataName = "";
-					for(var i=0;i<intList.length;i++){
-						var dataId = intList[i];
-						dataName+=$("#fileName"+dataId).val() + "<br>";
-					}
-					$("#warningText").html("以下数据正在运行APP："+appName+"'><br>"+dataName+"<br>请选择其他APP或删除选中数据");
-					$("#warningModal").modal("show");
+		$.get("data3!checkDataRunningSoft",{"dataIds":dataIds,"conditionInt":appId},function(intList){
+			if(intList.length>0){
+				var dataName = "";
+				for(var i=0;i<intList.length;i++){
+					var dataId = intList[i];
+					dataName+=$("#fileName"+dataId).val() + "<br>";
+				}
+				$("#warningText").html("以下数据正在运行APP："+appName+"<br>"+dataName+"<br>请选择其他APP或删除选中数据");
+				$("#warningModal").modal("show");
+			}else{
+				//判断为包含CMP/CMP_199/GDD则提示检查所选数据
+				if(appId==110 ||appId==111|| appId==112){
+					$("#runErrorText").html("运行"+appName+"需确定所选数据为配对数据！<input type='hidden' id='appIdHide' value='"+appId+"'><br>(配对格式:aaa<span class='text-red'>1</span>.fastq&nbsp;&nbsp;&nbsp;aaa<span class='text-red'>2</span>.fastq)");
+					$("#runErrorModal").modal("show");
 				}else{
 					$("#runAppli"+appId).addClass("selected");
 					addedApps.push(appId);
 				}
-			})
-		}
+			}
+		});
 	}
 }
 function removetoRunData(id){
