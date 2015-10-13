@@ -65,10 +65,6 @@ public class RunAppServiceImpl {
     private static String pwd = XMLUtil.machines.get("158").get(Mod.PWD);
     private static String userName = XMLUtil.machines.get("158").get(Mod.USERNAME);
     
-    private static String sparkhost = XMLUtil.machines.get("spark").get(Mod.HOST);
-    private static String sparkpwd = XMLUtil.machines.get("spark").get(Mod.PWD);
-    private static String sparkuserName = XMLUtil.machines.get("spark").get(Mod.USERNAME);
-
     private static String MalBac_perl = PropertiesUtils.MalBac;
     private static String gDNA_HR_perl = PropertiesUtils.gDNA_HR;
     private static String gDNA_MR_perl = PropertiesUtils.gDNA_MR;

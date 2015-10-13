@@ -255,7 +255,7 @@ public class DataServiceImpl implements IDataService {
 	}
 
 	@Override
-	public int dataRunning() {
-		return dataDao.dataRunning();
+	public int dataRunning(String appIds) {
+		return dataDao.dataRunning(appIds);
 	}
 }

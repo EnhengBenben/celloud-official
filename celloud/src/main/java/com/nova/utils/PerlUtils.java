@@ -25,33 +25,33 @@ public class PerlUtils {
      * @return
      */
     public static String getResult(String path) {
-	StringBuffer msg = new StringBuffer();
-	String command = "perl /share/biosoft/perl/16s_local/bin/16s_analysis_step1_for250.pl  --input "
-		+ path;
-	log.info("command=" + command);
-	BufferedReader reader = null;
-	try {
-	    Process proc = Runtime.getRuntime().exec(command);
-	    InputStream ins = proc.getInputStream();
-	    reader = new BufferedReader(new InputStreamReader(ins));
-	    String str = "";
-	    String separator = System.getProperty("line.separator");
-	    while ((str = reader.readLine()) != null) {
-		msg.append(str + separator);
-	    }
-	    log.info("msg=" + msg);
-	} catch (IOException e) {
-	    e.printStackTrace();
-	} finally {
-	    if (reader != null) {
-		try {
-		    reader.close();
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
-	    }
-	}
-	return msg.toString();
+        StringBuffer msg = new StringBuffer();
+        String command = "perl /share/biosoft/perl/16s_local/bin/16s_analysis_step1_for250.pl  --input "
+                + path;
+        log.info("command=" + command);
+        BufferedReader reader = null;
+        try {
+            Process proc = Runtime.getRuntime().exec(command);
+            InputStream ins = proc.getInputStream();
+            reader = new BufferedReader(new InputStreamReader(ins));
+            String str = "";
+            String separator = System.getProperty("line.separator");
+            while ((str = reader.readLine()) != null) {
+                msg.append(str + separator);
+            }
+            log.info("msg=" + msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return msg.toString();
     }
 
     /**
@@ -63,55 +63,55 @@ public class PerlUtils {
      * @return
      */
     public static String getSvgAndData(String path, String fileName, String name) {
-	String msg = "";
-	String command = "perl /share/biosoft/perl/16s_local/bin/16s_analysis_step2_for250.pl  --input "
-		+ path + " --blast " + path + ".fa.blast.out --name " + name;
-	log.info("command=" + command);
-	BufferedReader reader = null;
-	try {
-	    Process proc = Runtime.getRuntime().exec(command);
-	    InputStream ins = proc.getInputStream();
-	    reader = new BufferedReader(new InputStreamReader(ins));
-	    String str = "";
-	    String separator = System.getProperty("line.separator");
-	    while ((str = reader.readLine()) != null) {
-		msg += str + separator;
-	    }
-	    log.info("msg=" + msg);
-	} catch (IOException e) {
-	    e.printStackTrace();
-	} finally {
-	    if (reader != null) {
-		try {
-		    reader.close();
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
-	    }
-	}
-	return msg;
+        String msg = "";
+        String command = "perl /share/biosoft/perl/16s_local/bin/16s_analysis_step2_for250.pl  --input "
+                + path + " --blast " + path + ".fa.blast.out --name " + name;
+        log.info("command=" + command);
+        BufferedReader reader = null;
+        try {
+            Process proc = Runtime.getRuntime().exec(command);
+            InputStream ins = proc.getInputStream();
+            reader = new BufferedReader(new InputStreamReader(ins));
+            String str = "";
+            String separator = System.getProperty("line.separator");
+            while ((str = reader.readLine()) != null) {
+                msg += str + separator;
+            }
+            log.info("msg=" + msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return msg;
     }
 
     public static String getResult() {
-	String str = "";
-	try {
-	    str = FileUtils.readFileToString(new File(ServletActionContext
-		    .getServletContext().getRealPath("/file") + "/test1.txt"));
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
-	return str;
+        String str = "";
+        try {
+            str = FileUtils.readFileToString(new File(ServletActionContext
+                    .getServletContext().getRealPath("/file") + "/test1.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return str;
     }
 
     public static String getSvgAndData() {
-	String str = "";
-	try {
-	    str = FileUtils.readFileToString(new File(ServletActionContext
-		    .getServletContext().getRealPath("/file") + "/test2.txt"));
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
-	return str;
+        String str = "";
+        try {
+            str = FileUtils.readFileToString(new File(ServletActionContext
+                    .getServletContext().getRealPath("/file") + "/test2.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return str;
     }
 
     /**
@@ -122,53 +122,53 @@ public class PerlUtils {
      * @return
      */
     public static String executeGadgetsPerl(String command) {
-	log.info("执行命令：command=" + command);
-	Runtime r = Runtime.getRuntime();
-	StringBuffer result = new StringBuffer();
-	BufferedReader reader = null;
-	try {
-	    Process p = r.exec(command);
-	    reader = new BufferedReader(new InputStreamReader(
-		    p.getInputStream()));
-	    String line = null;
-	    String separator = System.getProperty("line.separator");
-	    while ((line = reader.readLine()) != null) {
-		result.append(line + separator);
-	    }
-	    reader.close();
-	    p.waitFor();
-	} catch (IOException e) {
-	    log.error("命令command=" + command + " 执行失败，错误：" + e);
-	    return "error";
-	} catch (InterruptedException e) {
-	    log.error("命令command=" + command + " 执行失败，错误：" + e);
-	    return "error";
-	} finally {
-	    if (reader != null) {
-		try {
-		    reader.close();
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
-	    }
-	}
-	return result.toString();
+        log.info("执行命令：command=" + command);
+        Runtime r = Runtime.getRuntime();
+        StringBuffer result = new StringBuffer();
+        BufferedReader reader = null;
+        try {
+            Process p = r.exec(command);
+            reader = new BufferedReader(new InputStreamReader(
+                    p.getInputStream()));
+            String line = null;
+            String separator = System.getProperty("line.separator");
+            while ((line = reader.readLine()) != null) {
+                result.append(line + separator);
+            }
+            reader.close();
+            p.waitFor();
+        } catch (IOException e) {
+            log.error("命令command=" + command + " 执行失败，错误：" + e);
+            return "error";
+        } catch (InterruptedException e) {
+            log.error("命令command=" + command + " 执行失败，错误：" + e);
+            return "error";
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result.toString();
     }
 
     public static String excutePerl(String command) {
-	log.info("执行命令：command=" + command);
-	Runtime runtime = Runtime.getRuntime();
-	try {
-	    Process proc = runtime.exec(command);
-	    InputStream ins = proc.getInputStream();
-	    BufferedReader reader = new BufferedReader(new InputStreamReader(
-		    ins));
-	    while (reader.readLine() != null) {
-	    }
-	} catch (IOException e) {
-	    log.error("命令command=" + command + " 执行失败，错误：" + e);
-	    return "error";
-	}
-	return "success";
+        log.info("执行命令：command=" + command);
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            Process proc = runtime.exec(command);
+            InputStream ins = proc.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    ins));
+            while (reader.readLine() != null) {
+            }
+        } catch (IOException e) {
+            log.error("命令command=" + command + " 执行失败，错误：" + e);
+            return "error";
+        }
+        return "success";
     }
 }

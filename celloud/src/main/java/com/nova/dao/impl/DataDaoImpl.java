@@ -1540,12 +1540,12 @@ public class DataDaoImpl extends BaseDao implements IDataDao {
 	}
 
 	@Override
-	public int dataRunning() {
+	public int dataRunning(String appIds) {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int num = 0;
-		String sql = "select count(*) from tb_report r,tb_data_project_relat d where d.project_id = r.project_id and r.flag = 1 and r.isdel = 0 and r.state = 1 and r.software_id in (select software_id from tb_software where company_id = 6);";
+		String sql = "select count(*) from tb_report r,tb_data_project_relat d where d.project_id = r.project_id and r.flag = 1 and r.isdel = 0 and r.state = 1 and r.software_id in ("+appIds+");";
 		try {
 			conn = ConnectManager.getConnection();
 			ps = conn.prepareStatement(sql);

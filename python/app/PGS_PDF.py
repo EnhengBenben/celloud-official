@@ -17,7 +17,7 @@ from utils.TableUtils import *
 from utils.StringUtils import *
 from PDFPro import PDFPro
 
-pdfmetrics.registerFont(TTFont('hei', 'app/ttc/simhei.ttf'))
+pdfmetrics.registerFont(TTFont('hei', os.path.join(PDFPro.ttc,'simhei.ttf')))
 
 # create pdf
 def createPDF(path,appName,fileName,anotherName):

@@ -6,4 +6,5 @@ __des__='PDF配置文件'
 __author__='lin'
 
 class PDFPro:
-	logo='/home/lin/work/png/portrait.png'
+	logo='/share/data/webapps/Tools/resource/img/portrait.png'
+	ttc='/share/biosoft/perl/PGS_MG/python/app/ttc'

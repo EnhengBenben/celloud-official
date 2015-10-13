@@ -16,7 +16,7 @@ from reportlab.platypus import Image , Paragraph , SimpleDocTemplate , Spacer , 
 from utils.TableUtils import *
 from PDFPro import PDFPro
 
-pdfmetrics.registerFont(TTFont('hei', 'app/ttc/simhei.ttf'))
+pdfmetrics.registerFont(TTFont('hei', os.path.join(PDFPro.ttc,'simhei.ttf')))
 
 # create pdf
 def createPDF(path):

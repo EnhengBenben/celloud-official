@@ -104,8 +104,7 @@ public class DataAction extends BaseAction {
 			Mod.USERNAME);
 
 	// TODO 需要投递到spark集群的app
-	private static final List<String> apps = Arrays.asList("85", "86", "87",
-			"88", "91", "92", "93", "94", "95", "104");
+	private static final List<String> apps = Arrays.asList("92");
 	// 初始化perl命令路径
 	private static Map<String, String> perlMap = new HashMap<>();
 	static {
@@ -280,7 +279,8 @@ public class DataAction extends BaseAction {
 			log.info("用户" + super.session.get("userName") + "开始运行" + appName);
 			String dataKeyList = dataResult.toString();
 			if (apps.contains(appId)) {// 判断是否需要进队列
-				int running = idataService.dataRunning();
+                String select = apps.toString().substring(1, apps.toString().length() - 1);
+				int running = idataService.dataRunning(select);
 				log.info("页面运行任务，此时正在运行的任务数：" + running);
 				// TODO
 				String appPath = basePath + userId + "/" + appId + "/";
