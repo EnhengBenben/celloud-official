@@ -109,7 +109,7 @@
            </div>
            <div class="modal-footer">
              <button type="button" class="btn btn-outline pull-left" data-dismiss="modal" >返回重选</button>
-             <button type="button" class="btn btn-outline" data-dismiss="modal" id="checkTrue" onclick="okToRun()">确定选中</button>
+             <button type="button" class="btn btn-outline" data-dismiss="modal" onclick="okToRun()">确定选中</button>
            </div>
          </div><!-- /.modal-content -->
        </div><!-- /.modal-dialog -->
@@ -235,7 +235,7 @@
 	<script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
     <script src="<%=request.getContextPath() %>/dist/js/celloud.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/plugins/spin.min.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/data.js?version=1.75" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/data.js?version=1.77" type="text/javascript"></script>
 	<!-- spin:loading效果 end-->
 	<script type="text/javascript">
 		var session_userId = <%=session.getAttribute("userId")%>;

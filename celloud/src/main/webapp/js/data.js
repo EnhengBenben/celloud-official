@@ -256,9 +256,6 @@ function toRunApp(){
 	appIds = appIds.substring(0, appIds.length-1);
 	$.get("data3!run",{"dataIds":dataIds,"condition":appIds},function(result){
 		if(result != ""){
-//			$("#runErrorTitle").html("以下APP运行失败：");
-//			$("#runError").html(result);
-//			$("#runErrorDiv").removeClass("hide");
 			$("#warningText").html("以下APP运行失败：<br>"+result);
 			$("#warningModal").modal("show");
 		}else{
@@ -267,7 +264,6 @@ function toRunApp(){
 			addedDataNames = [];
 			$("input[type='checkbox']").prop("checked",false);
 			$("#runApp").modal("hide");
-//			$("#runErrorDiv").addClass("hide");
 		}
 	});
 }
@@ -454,11 +450,11 @@ function setSelect2Info(objId,data){
 function toManageDatasModel(){
 	$.get("data3!getStrainList",{},function(data){
 		setSelect2Info("#manageDatasStrainSel",data);
-		$("#strainDataHide").val(JSON.stringify(data));
 	});
 	$("#manageEachDataModal").modal("hide");
 	$("#manageDatasForm")[0].reset();
 	$("#manageDataErrorDiv").addClass("hide");
+	$("#manageDatasStrainSel").val("");
 	$("#manageDatasModal").modal("show");
 }
 function saveManageDatas(){
