@@ -4536,3 +4536,4 @@ fieldset[disabled] .btn-vk.active {
 .a-gray{color: #ccc !important;}
 .a-gray:hover{color: #ddd !important;}
 .readonly{background-color: #f4f4f4}
+.table td{word-break:break-all;word-wrap:break-word;}
