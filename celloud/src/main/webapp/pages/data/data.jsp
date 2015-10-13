@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
     <link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">    
   	<link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
-    <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.1" rel="stylesheet" type="text/css" />
+    <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.3" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <div class="wrapper">
@@ -74,11 +74,11 @@
           </div>
           <div class="modal-body row">
             <div class="col-xs-12">
-	            <h5>已选数据</h5>
+	            <h5>已选数据(点击删除)</h5>
 	            <ul class="list-inline" id="addedDataUl"></ul>
             </div>
             <div class="col-xs-12">
-	            <h5>可选App</h5>
+	            <h5>可选App(点击选中)</h5>
 	            <ul class="list-inline" id="appsForDataUl"></ul>
             </div>
             <div class="col-xs-12">
@@ -97,11 +97,27 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    
-     <div class="modal modal-celloud-green" id="warningModal">
+    <div class="modal modal-celloud-green" id="runErrorModal">
        <div class="modal-dialog">
          <div class="modal-content tipModal">
            <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+             <h4 class="modal-title"><i class="icon fa fa-warning"></i>提示</h4>
+           </div>
+           <div class="modal-body">
+             <p id="runErrorText">&hellip;</p>
+           </div>
+           <div class="modal-footer">
+             <button type="button" class="btn btn-outline pull-left" data-dismiss="modal" >返回重选</button>
+             <button type="button" class="btn btn-outline" data-dismiss="modal" id="checkTrue" onclick="okToRun()">确定选中</button>
+           </div>
+         </div><!-- /.modal-content -->
+       </div><!-- /.modal-dialog -->
+     </div><!-- /.modal -->
+     <div class="modal modal-celloud-green" id="warningModal">
+       <div class="modal-dialog">
+         <div class="modal-content tipModal" id="tipModal">
+           <div class="modal-header" id="tipModalHead">
              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
              <h4 class="modal-title"><i class="icon fa fa-warning"></i>提示</h4>
            </div>
@@ -212,14 +228,14 @@
     <!-- FastClick -->
     <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
     <!-- jquery_alert_dialogs begin -->
-	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
+<%-- 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script> --%>
+<%-- 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script> --%>
 	<!-- jquery_alert_dialogs end -->
     <script src="<%=request.getContextPath() %>/plugins/select/select2.min.js"></script>
 	<script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
     <script src="<%=request.getContextPath() %>/dist/js/celloud.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/plugins/spin.min.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/data.js?version=1.72" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/data.js?version=1.75" type="text/javascript"></script>
 	<!-- spin:loading效果 end-->
 	<script type="text/javascript">
 		var session_userId = <%=session.getAttribute("userId")%>;

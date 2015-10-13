@@ -33,6 +33,7 @@ var addedDataNames = new Array();
 var sortType = 0;//默认按照时间进行排序
 var fileNameSort = "asc";
 var createDateSort = "desc";
+var toEdit = false;
 function initData(){
 	$("#dataTagSearch").val("");
 	getAllDataList();
@@ -43,6 +44,10 @@ function initData(){
 		   getDataByCondition(1);
 		   return;
 	   }
+	});
+	//提示框添加可移动功能
+	$("#tipModalHead").mouseover(function() {
+	  $("#tipModal").draggable();
 	});
 }	
 
@@ -197,9 +202,8 @@ function addRunApp(appId,appName,dataIds){
 	}else{
 		//判断为包含CMP/CMP_199/GDD则提示检查所选数据
 		if(appId==110 ||appId==111|| appId==112){
-			$("#runErrorTitle").html("请确定以上数据为配对数据！<input type='hidden' id='appIdHide' value='"+appId+"'>");
-			$("#runError").html("(配对格式:aaa<span class='text-red'>1</span>.fastq&nbsp;&nbsp;&nbsp;aaa<span class='text-red'>2</span>.fastq)");
-			$("#runErrorDiv").removeClass("hide");
+			$("#runErrorText").html("运行"+appName+"需确定所选数据为配对数据！<input type='hidden' id='appIdHide' value='"+appId+"'><br>(配对格式:aaa<span class='text-red'>1</span>.fastq&nbsp;&nbsp;&nbsp;aaa<span class='text-red'>2</span>.fastq)");
+			$("#runErrorModal").modal("show");
 		}else{
 			$.get("data3!checkDataRunningSoft",{"dataIds":dataIds,"conditionInt":appId},function(intList){
 				if(intList.length>0){
@@ -208,9 +212,8 @@ function addRunApp(appId,appName,dataIds){
 						var dataId = intList[i];
 						dataName+=$("#fileName"+dataId).val() + "<br>";
 					}
-					$("#runErrorTitle").html("以下数据正在运行APP："+appName);
-					$("#runError").html(dataName+"<br>请选择其他APP或删除选中数据");
-					$("#runErrorDiv").removeClass("hide");
+					$("#warningText").html("以下数据正在运行APP："+appName+"'><br>"+dataName+"<br>请选择其他APP或删除选中数据");
+					$("#warningModal").modal("show");
 				}else{
 					$("#runAppli"+appId).addClass("selected");
 					addedApps.push(appId);
@@ -225,13 +228,10 @@ function removetoRunData(id){
 	$("#chk"+id).attr("checked",false);
 	$("#dataLi"+id).remove();
 }
-function okToRun(type){
-	if(type == 1){
-		var appId = $("#appIdHide").val();
-		$("#runAppli" +appId).addClass("selected");
-		addedApps.push(appId);
-	}
-	$("#runErrorDiv").addClass("hide");
+function okToRun(){
+	var appId = $("#appIdHide").val();
+	$("#runAppli" +appId).addClass("selected");
+	addedApps.push(appId);
 }
 function toRunApp(){
 	var dataIds = "";
@@ -247,38 +247,40 @@ function toRunApp(){
 	appIds = appIds.substring(0, appIds.length-1);
 	$.get("data3!run",{"dataIds":dataIds,"condition":appIds},function(result){
 		if(result != ""){
-			$("#runErrorTitle").html("以下APP运行失败：");
-			$("#runError").html(result);
-			$("#runErrorDiv").removeClass("hide");
+//			$("#runErrorTitle").html("以下APP运行失败：");
+//			$("#runError").html(result);
+//			$("#runErrorDiv").removeClass("hide");
+			$("#warningText").html("以下APP运行失败：<br>"+result);
+			$("#warningModal").modal("show");
 		}else{
 			getDataByCondition(dataCurrentPageNumber);
 			checkedDataIds = [];
 			addedDataNames = [];
 			$("input[type='checkbox']").prop("checked",false);
 			$("#runApp").modal("hide");
-			$("#runErrorDiv").addClass("hide");
+//			$("#runErrorDiv").addClass("hide");
 		}
 	});
 }
 function deleteData(){
-		$("#warningText").html("确定要删除选中数据吗？");
-		$("#warningModal").modal("show");
-		$("#checkTrue").one("click",function(){
-			var dataIds = "";
-			for (var i=0;i<checkedDataIds.length;i++){
-				dataIds += checkedDataIds[i] + ",";
+	$("#warningText").html("确定要删除选中数据吗？");
+	$("#warningModal").modal("show");
+	$("#checkTrue").one("click",function(){
+		var dataIds = "";
+		for (var i=0;i<checkedDataIds.length;i++){
+			dataIds += checkedDataIds[i] + ",";
+		}
+		dataIds = dataIds.substring(0, dataIds.length-1);
+		$.get("data3!deleteData",{"dataIds":dataIds},function(result){
+			if(result>0){
+				getDataByCondition(dataCurrentPageNumber);
+				checkedDataIds = [];
+				addedDataNames = [];
+				toNoUse();
 			}
-			dataIds = dataIds.substring(0, dataIds.length-1);
-			$.get("data3!deleteData",{"dataIds":dataIds},function(result){
-				if(result>0){
-					getDataByCondition(dataCurrentPageNumber);
-					checkedDataIds = [];
-					addedDataNames = [];
-					toNoUse();
-				}
-			});
 		});
-	}
+	});
+}
 //多条数据运行
 function runMultiDataNew(){
 	var runText = $("#appTextBtn").text();
@@ -378,6 +380,7 @@ function runMultiDataNew(){
 	});
 }	
 function toMoreDataInfoModel(id,name){
+	toEdit = false;
 	$.get("data3!getMoreData",{"fileId":id},function(responseText){
 		$("#moreDatasForm").html(responseText);
 		var strain = $("#strainListHide").html();
@@ -391,6 +394,7 @@ function toMoreDataInfoModel(id,name){
 	});
 }
 function showDataMoreInfoEdit(){
+	toEdit = true;
 	$("#moreDatasForm").find("input").removeAttr("disabled");
 	$("#moreDatasForm").find("input").removeClass("readonly");
 	$("#dataTag").children(".popWindow-overlap").remove(); 
@@ -405,16 +409,21 @@ function cancelEditMoreInfo(){
 	$("#dataTag").append("<div class=\"popWindow-overlap\"></div>");
 }
 function saveMoreDataInfo(){
-    $.post("data3!updateDataByIds",$("#moreDatasForm").serialize(),function(flag){
-    	if(flag>0){
-    		getDataByCondition(dataCurrentPageNumber);
-    		checkedDataIds = [];
-    		addedDataNames = [];
-    		$("#dataMoreInfoModal").modal("hide");
-    	}else {
-    		$("#updateDataErrorDiv").removeClass("hide");;
-    	}
-    });
+	if(toEdit){
+		$.post("data3!updateDataByIds",$("#moreDatasForm").serialize(),function(flag){
+			if(flag>0){
+				getDataByCondition(dataCurrentPageNumber);
+				checkedDataIds = [];
+				addedDataNames = [];
+				$("#dataMoreInfoModal").modal("hide");
+				toEdit = false;
+			}else {
+				$("#updateDataErrorDiv").removeClass("hide");;
+			}
+		});
+	}else{
+		$("#dataMoreInfoModal").modal("hide");
+	}
 }
 
 //给select2添加下拉选项

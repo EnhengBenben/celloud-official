@@ -4418,7 +4418,8 @@ fieldset[disabled] .btn-vk.active {
 .chart canvas {
   width: 100%!important;
 }
-.tipModal{width:300px;margin:auto}
+.tipModal{width:300px;margin:30% auto}
+.tipModal .modal-header{cursor: move;}
 /*
  * Misc: print
  * -----------
