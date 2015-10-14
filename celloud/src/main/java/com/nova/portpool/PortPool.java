@@ -46,13 +46,15 @@ public class PortPool {
 	 * 
 	 * @param projectId
 	 */
-	public synchronized static void setPort(String projectId) {
-		Integer[] ps = pro_ports.get(projectId);
-		for (Integer p : ps) {
-			ports.add(p);
-		}
-		pro_ports.remove(projectId);
-	}
+    public synchronized static void setPort(String projectId) {
+        if (pro_ports.containsKey(projectId)) {
+            Integer[] ps = pro_ports.get(projectId);
+            for (Integer p : ps) {
+                ports.add(p);
+            }
+            pro_ports.remove(projectId);
+        }
+    }
 
 	/**
 	 * 端口池是否为空
