@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import time , socket , threading , os
-from runover import *
+#from runover import *
 import httplib
 
 def tcplink(sock, addr):
@@ -15,15 +15,13 @@ def tcplink(sock, addr):
         path = os.path.split(data)[0]
         projectId = os.path.split(data)[1]
         appId = os.path.split(path)[1]
-        runover(path,appId,projectId)
-        print data
-        pgsdata(path,projectId)
+        #runover(path,appId,projectId)
 
         httpClient = None
 
         try:
             httpClient = httplib.HTTPConnection('localhost',8080,timeout=30)
-            httpClient.request('GET','/celloud/project!runQueue?projectId='+projectId)
+            httpClient.request('GET','/celloud/project!projectRunOver?projectId='+projectId)
             response = httpClient.getresponse()
             print response.status
             print response.reason
