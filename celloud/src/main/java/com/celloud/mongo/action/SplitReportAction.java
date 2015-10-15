@@ -20,7 +20,7 @@ import com.nova.utils.PropertiesUtil;
  * @version Revision: 1.0
  */
 @ParentPackage("celloud-default")
-@Action("split")
+@Action("splitReport")
 @Results({
  @Result(name = "toSplit", location = "../../pages/report/split.jsp") })
 public class SplitReportAction extends BaseAction {
@@ -31,7 +31,7 @@ public class SplitReportAction extends BaseAction {
     private Split split;
     private String path;
 
-    public String toCmpReport() {
+    public String toSplitReport() {
         path = PropertiesUtil.toolsOutPath + "upload";
         split = reportService.getSplit(split.getDataKey(),
                 split.getProjectId(), split.getAppId());

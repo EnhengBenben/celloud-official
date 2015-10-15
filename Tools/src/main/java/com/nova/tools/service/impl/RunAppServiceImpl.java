@@ -150,8 +150,7 @@ public class RunAppServiceImpl {
             String appId, String appName, String userId, String dataInfos,
             String company, String user, String dept) {
         String dataListFile = formatDataKeyListToSplit(dataKeyList);
-        String command = split_perl + " " + dataListFile + " " + outPath
-                    + " ProjectID" + projectId;
+        String command = split_perl + " " + dataListFile + " " + outPath;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         boolean state = ssh.sshSubmit(true);
         if (state) {
@@ -1928,11 +1927,28 @@ public class RunAppServiceImpl {
         FileTools.createFile(dataListFile);
         String dataArray[] = dataKeyList.split(";");
         for (int i = 0; i < dataArray.length; i = i + 3) {
-            String[] detail1 = dataArray[i].split(",");
-            String[] detail2 = dataArray[i + 1].split(",");
-            String[] detail3 = dataArray[i + 2].split(",");
-            sb.append(dataPath + detail1[1] + "\t" + dataPath + detail2[1]
-                    + "\t" + dataPath + detail3[1] + "\n");
+            String detail1 = dataArray[i].split(",")[1];
+            String detail2 = dataArray[i + 1].split(",")[1];
+            String detail3 = dataArray[i + 2].split(",")[1];
+            String endData = "";
+            String d1 = "";
+            String d2 = "";
+            if (FileTools.getExt(detail1).equals(".lis")) {
+                endData = detail1;
+                d1 = detail2;
+                d2 = detail3;
+            } else if (FileTools.getExt(detail2).equals(".lis")) {
+                endData = detail2;
+                d1 = detail1;
+                d2 = detail3;
+            } else if (FileTools.getExt(detail3).equals(".lis")) {
+                endData = detail3;
+                d1 = detail1;
+                d2 = detail2;
+            }
+            sb.append(dataPath).append(d1).append("\t").append(dataPath)
+                    .append(d2).append("\t").append(dataPath).append(endData)
+                    .append("\n");
         }
         FileTools.appendWrite(dataListFile, sb.toString());
         return dataListFile;
