@@ -527,4 +527,38 @@ public class FileTools {
 		return list_num;
 	}
 
+    public static String getExt(String fileName) {
+        String extName = fileName.substring(fileName.lastIndexOf("."));
+        return extName;
+    }
+
+    /**
+     * 应用于split
+     * 
+     * @param dataKeyList
+     * @return
+     */
+    public static String dataListSortNoEnd(String dataKeyList) {
+        String[] dataKey = dataKeyList.split(";");
+        Map<String, String> map = new HashMap<String, String>();
+        String[] array = new String[dataKey.length];
+        String endData = "";
+        for (int i = 0; i < dataKey.length; i++) {
+            String data = dataKey[i];
+            String d[] = data.split(",");
+            if (FileTools.getExt(d[2]).equals(".lis")) {
+                endData = data;
+            } else {
+                map.put(d[2] + d[0], data);
+                array[i] = d[2] + d[0];
+            }
+        }
+        Arrays.sort(array);
+        dataKeyList = "";
+        for (String s : array) {
+            dataKeyList += map.get(s) + ";";
+        }
+        dataKeyList += endData + ";";
+        return dataKeyList;
+    }
 }
