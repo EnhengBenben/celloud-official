@@ -407,6 +407,7 @@ public class RunAppServiceImpl {
                                     if (gddGm != null) {
                                         gsr.setGeneticMethod(gddGm.getMethod());
                                     }
+                                    gsr.setHetOrHom(getArray(line_z, 8));
                                 }
                                 result.add(gsr);
                             }
