@@ -5,11 +5,11 @@
 	<div class="m-file">
 		数据编号：<span class="file-name">${ split.dataKey}</span><br>
 		文件名称：
-		<div class="file-name">
+		<span class="file-name">
 		<c:forEach items="${split.data}" var="data">
-			${split.fileName}<br>
+			${data.fileName}&nbsp;&nbsp;&nbsp;
 		</c:forEach>
-		</div>
+		</span>
 		<div class="toolbar">
 			<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${split.userId }/${split.appId }/${split.dataKey }/result/split_reads.tar.gz" class="btn btn-default"><i class="i-download"></i>下载全部</a>
 		</div>
@@ -21,18 +21,12 @@
 			<div class="m-boxCon" id="_table">
 		    	<table class="table table-bordered table-condensed">
 					<thead>
-						<tr><th>序列总数</th></tr>
-						<tr><th>平均质量</th></tr>
-						<tr><th>平均GC含量</th></tr>
+						<tr><th>序列总数</th><th>平均质量</th><th>平均GC含量</th></tr>
 				    </thead>
 					<tbody>
 						<tr>
 							<td>${split.totalReads }</td>
-						</tr>
-						<tr>
 							<td>${split.avgQuality }</td>
-						</tr>
-						<tr>
 							<td>${split.avgGCContent }</td>
 						</tr>
 					</tbody>
@@ -54,10 +48,10 @@
 					  <c:choose>
 					  	<c:when test="${split.resultList==null}"><tr><td colspan="3">未分析出结果</td></tr></c:when>
 					  	<c:otherwise>
-							<c:forEach items="${split.resultList}" var="split">
+							<c:forEach items="${split.resultList}" var="data">
 								<tr>
-									<td><a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/result/split/${split.name }.tar.gz">${split.name }</a></td>
-									<td>${split.number }</td>
+									<td><a class="link" href="${path.replace('upload','') }Procedure!miRNADownload?userId=${split.userId }/${split.appId }/${split.dataKey }/result/split/${data.name }.tar.gz">${data.name }</a></td>
+									<td>${data.number }</td>
 								</tr>
 							</c:forEach>
 					  	</c:otherwise>

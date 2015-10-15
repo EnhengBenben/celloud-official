@@ -346,7 +346,7 @@ $.ajaxSetup ({
 			                if(j>0&&i==1){
 			                    $(this).addClass("sub");
 			                    var fileName = $(this).html();
-		                        if(fileName.length>30){
+		                        if(fileName.length>30&&appId!="113"&&appId!="112"&&appId!="111"&&appId!="110"){
 		                        	fileName = fileName.substring(0,30) + "...";
 		                        }
 			                    $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
@@ -469,7 +469,11 @@ $.ajaxSetup ({
 			            
 			        });
 			    });
-			    if(tr_size<5){
+			    var minTdNum = 5;
+			    if(appId=="113"||appId=="112"||appId=="111"||appId=="110"){
+			    	minTdNum = 4;
+			    }
+			    if(tr_size<minTdNum){
 			    	var num = 5-tr_size;
 			    	for(i=0;i<num;i++){
 			    		var adHtml = "<tr>";
