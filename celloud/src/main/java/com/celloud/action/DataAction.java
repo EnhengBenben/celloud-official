@@ -352,7 +352,6 @@ public class DataAction extends BaseAction {
 				+ projectId + ".log &";
 		log.info("运行命令：" + command);
 		SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
-		System.out.println("-------");
 		ssh.sshSubmit(command, false);
 	}
 
@@ -365,7 +364,8 @@ public class DataAction extends BaseAction {
 	private String dealDataKeyListContainFileName(String projectId,
 			String dataKeyList) {
 		StringBuffer sb = new StringBuffer();
-		String dataListFile = datalist + new Date().getTime() + ".txt";
+        String dataListFile = datalist + new Date().getTime() + "_"
+                + new Double(Math.random() * 1000).intValue() + ".txt";
 		FileTools.createFile(dataListFile);
 		String dataArray[] = dataKeyList.split(";");
 		Integer[] ports = new Integer[dataArray.length];
