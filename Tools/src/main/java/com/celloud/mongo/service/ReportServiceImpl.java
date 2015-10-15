@@ -6,6 +6,7 @@ import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
 import com.celloud.mongo.sdo.GddDiseaseDict;
 import com.celloud.mongo.sdo.GddGeneticMethod;
+import com.celloud.mongo.sdo.Split;
 
 /**
  * 
@@ -59,6 +60,11 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public GddGeneticMethod getGddGeneticMethod(String gene) {
 	return reportDao.getGddGeneticMethod(gene);
+    }
+
+    @Override
+    public void saveSplit(Split split) {
+        reportDao.saveSplit(split);
     }
 
 }

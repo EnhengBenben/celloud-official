@@ -1,6 +1,7 @@
 /**  */
 package com.celloud.mongo.sdo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.bson.types.ObjectId;
@@ -14,7 +15,8 @@ import com.google.code.morphia.annotations.Id;
  * @date 2015-7-9下午3:40:14
  * @version Revision: 1.0
  */
-public class Base {
+public class Base implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     private ObjectId id;
     // --------------以下均为mysql表中信息-----------------

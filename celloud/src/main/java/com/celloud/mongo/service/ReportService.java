@@ -10,6 +10,7 @@ import com.celloud.mongo.sdo.GddDiseaseDict;
 import com.celloud.mongo.sdo.NIPT;
 import com.celloud.mongo.sdo.PGSFilling;
 import com.celloud.mongo.sdo.Pgs;
+import com.celloud.mongo.sdo.Split;
 import com.google.inject.ImplementedBy;
 
 /**
@@ -110,4 +111,14 @@ public interface ReportService {
      * @return
      */
     public List<GddDiseaseDict> getGddDiseaseDictNormal(List<String> normalGene);
+
+    /**
+     * 获取Split报告内容
+     * 
+     * @param dataKey
+     * @param proId
+     * @param appId
+     * @return
+     */
+    public Split getSplit(String dataKey, Integer proId, Integer appId);
 }

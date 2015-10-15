@@ -275,6 +275,20 @@ public class DataAction extends BaseAction {
 									+ FileTools.getArray(dataDetail1, 0));
 					map.put(FileTools.getArray(dataDetail, 0), dataList);
 				}
+            } else if (Integer.parseInt(appId) == 113) {
+                String dataDetails = FileTools.dataListSort(dataResult
+                        .toString());
+                String dataArray[] = dataDetails.split(";");
+                for (int i = 0; i < dataArray.length; i = i + 3) {
+                    String[] dataDetail = dataArray[i].split(",");
+                    String[] dataDetail1 = dataArray[i + 1].split(",");
+                    List<Data> dataList = dataService
+                            .getDataByDataKeys(FileTools
+                                    .getArray(dataDetail, 0)
+                                    + ","
+                                    + FileTools.getArray(dataDetail1, 0));
+                    map.put(FileTools.getArray(dataDetail, 0), dataList);
+                }
 			}
 			log.info("用户" + super.session.get("userName") + "开始运行" + appName);
 			String dataKeyList = dataResult.toString();

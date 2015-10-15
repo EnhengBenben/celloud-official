@@ -78,7 +78,8 @@ $(function() {
 				{title : "fasta", extensions : "fasta"},
 				{title : "fastq", extensions : "fastq"},
 				{title : "tsv", extensions : "tsv"},
-				{title : "gz", extensions : "gz"}
+				{title : "gz", extensions : "gz"},
+				{title : "list", extensions : "list"}
 			]
 		},
 		// Flash settings

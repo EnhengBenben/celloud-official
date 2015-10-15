@@ -162,6 +162,11 @@ function privateIcon(){
 		$("#sortDateA").removeClass("a-gray").addClass("a-green-normal");
 	}
 }
+//截取文件后缀
+function getExt(file_name){
+	var result =/\.[^\.]+/.exec(file_name);
+	return result;
+}
 function showRunApp(){
 	$("#appsForDataUl").html("");
 	$("#addedDataUl").html("");
@@ -175,8 +180,10 @@ function showRunApp(){
     //遍历得到每个checkbox的value值
 	var dataLi = "";
     for (var i=0;i<checkedDataIds.length;i++){
-         dataIds += checkedDataIds[i] + ",";
-         dataLi += "<li class='types-options data-select' id='dataLi"+checkedDataIds[i]+"' title='点击删除' onclick=\"removetoRunData("+checkedDataIds[i]+")\">"+addedDataNames[i]+"</li>";
+    	if(getExt(addedDataNames[i])!=".list"){
+    		dataIds += checkedDataIds[i] + ",";
+    	}
+    	dataLi += "<li class='types-options data-select' id='dataLi"+checkedDataIds[i]+"' title='点击删除' onclick=\"removetoRunData("+checkedDataIds[i]+")\">"+addedDataNames[i]+"</li>";
     }
     dataIds = dataIds.substring(0, dataIds.length-1);
     var dataLength = checkedDataIds.length;
@@ -192,7 +199,7 @@ function showRunApp(){
 	    		var dataNum = result[i].dataNum;
 	    		var offLine = result[i].offLine;
 	    		if(dataNum<=dataLength){
-	    			if((appName=="VSP" ||appName=="CMP"||appName=="CMP_199"||appName=="GDD")&&dataNum<dataLength){
+	    			if((appId==109||appId==110||appId==111||appId==112||appId==113)&&dataNum<dataLength){
 	    			}else{
 	    				li += "<li class='types-options' id='runAppli"+appId+"' title='点击选中' onclick=\"addRunApp("+appId+",'"+appName+"','"+dataIds+"')\">"+appName+"</li>";
 	    			}
@@ -222,6 +229,9 @@ function addRunApp(appId,appName,dataIds){
 				//判断为包含CMP/CMP_199/GDD则提示检查所选数据
 				if(appId==110 ||appId==111|| appId==112){
 					$("#runErrorText").html("运行"+appName+"需确定所选数据为配对数据！<input type='hidden' id='appIdHide' value='"+appId+"'><br>(配对格式:aaa<span class='text-red'>1</span>.fastq&nbsp;&nbsp;&nbsp;aaa<span class='text-red'>2</span>.fastq)");
+					$("#runErrorModal").modal("show");
+				}else if(appId==113){
+					$("#runErrorText").html("运行"+appName+"需注意以下文件格式:<input type='hidden' id='appIdHide' value='"+appId+"'><br>配对数据格式：<br><div style='padding-left:83px'>aaa<span class='text-red'>1</span>.fastq</div><div style='padding-left:83px'>aaa<span class='text-red'>2</span>.fastq</div><br>参数文件格式：index.<span class='text-red'>list</span>");
 					$("#runErrorModal").modal("show");
 				}else{
 					$("#runAppli"+appId).addClass("selected");
