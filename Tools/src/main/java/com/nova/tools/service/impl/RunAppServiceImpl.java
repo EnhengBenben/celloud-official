@@ -1864,7 +1864,8 @@ public class RunAppServiceImpl {
      */
     private String dealDataKeyListContainFileName(String dataKeyList) {
         StringBuffer sb = new StringBuffer();
-        String dataListFile = datalist + new Date().getTime() + ".txt";
+        String dataListFile = datalist + new Date().getTime() + "_"
+                + new Double(Math.random() * 1000).intValue() + ".txt";
         FileTools.createFile(dataListFile);
         String dataArray[] = dataKeyList.split(";");
         for (int i = 0; i < dataArray.length; i++) {
@@ -1884,7 +1885,8 @@ public class RunAppServiceImpl {
      */
     private String dealDataKeyList(String dataKeyList) {
         StringBuffer sb = new StringBuffer();
-        String dataListFile = datalist + new Date().getTime() + ".txt";
+        String dataListFile = datalist + new Date().getTime() + "_"
+                + new Double(Math.random() * 1000).intValue() + ".txt";
         FileTools.createFile(dataListFile);
         String dataArray[] = dataKeyList.split(";");
         for (int i = 0; i < dataArray.length; i++) {
@@ -1903,7 +1905,8 @@ public class RunAppServiceImpl {
      */
     private String formatDataKeyList(String dataKeyList) {
         StringBuffer sb = new StringBuffer();
-        String dataListFile = datalist + new Date().getTime() + ".txt";
+        String dataListFile = datalist + new Date().getTime() + "_"
+                + new Double(Math.random() * 1000).intValue() + ".txt";
         FileTools.createFile(dataListFile);
         String dataArray[] = dataKeyList.split(";");
         for (int i = 0; i < dataArray.length; i = i + 2) {
@@ -1924,7 +1927,8 @@ public class RunAppServiceImpl {
      */
     private String formatDataKeyListToSplit(String dataKeyList) {
         StringBuffer sb = new StringBuffer();
-        String dataListFile = datalist + new Date().getTime() + ".txt";
+        String dataListFile = datalist + new Date().getTime() + "_"
+                + new Double(Math.random() * 1000).intValue() + ".txt";
         FileTools.createFile(dataListFile);
         String dataArray[] = dataKeyList.split(";");
         for (int i = 0; i < dataArray.length; i = i + 3) {
