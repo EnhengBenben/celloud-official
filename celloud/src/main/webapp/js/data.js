@@ -180,7 +180,7 @@ function showRunApp(){
     //遍历得到每个checkbox的value值
 	var dataLi = "";
     for (var i=0;i<checkedDataIds.length;i++){
-    	if(getExt(addedDataNames[i])!=".list"){
+    	if(getExt(addedDataNames[i])!=".lis"){
     		dataIds += checkedDataIds[i] + ",";
     	}
     	dataLi += "<li class='types-options data-select' id='dataLi"+checkedDataIds[i]+"' title='点击删除' onclick=\"removetoRunData("+checkedDataIds[i]+")\">"+addedDataNames[i]+"</li>";
