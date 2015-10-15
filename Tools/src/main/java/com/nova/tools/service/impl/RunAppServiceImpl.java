@@ -150,7 +150,7 @@ public class RunAppServiceImpl {
     public void split(String outPath, String projectId, String dataKeyList,
             String appId, String appName, String userId, String dataInfos,
             String company, String user, String dept) {
-        String dataListFile = formatDataKeyList(dataKeyList);
+        String dataListFile = formatDataKeyListToSplit(dataKeyList);
         String command = split_perl + " " + dataListFile + " " + outPath
                     + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
@@ -2553,6 +2553,28 @@ public class RunAppServiceImpl {
             String[] detail2 = dataArray[i + 1].split(",");
             sb.append(dataPath + detail1[1] + "\t" + dataPath + detail2[1]
                     + "\n");
+        }
+        FileTools.appendWrite(dataListFile, sb.toString());
+        return dataListFile;
+    }
+
+    /**
+     * 将dataKeyList格式化成split需要的文件
+     * 
+     * @param dataKeyList
+     * @return
+     */
+    private String formatDataKeyListToSplit(String dataKeyList) {
+        StringBuffer sb = new StringBuffer();
+        String dataListFile = datalist + new Date().getTime() + ".txt";
+        FileTools.createFile(dataListFile);
+        String dataArray[] = dataKeyList.split(";");
+        for (int i = 0; i < dataArray.length; i = i + 3) {
+            String[] detail1 = dataArray[i].split(",");
+            String[] detail2 = dataArray[i + 1].split(",");
+            String[] detail3 = dataArray[i + 2].split(",");
+            sb.append(dataPath + detail1[1] + "\t" + dataPath + detail2[1]
+                    + "\t" + dataPath + detail3[1] + "\n");
         }
         FileTools.appendWrite(dataListFile, sb.toString());
         return dataListFile;

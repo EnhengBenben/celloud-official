@@ -79,7 +79,7 @@ $(function() {
 				{title : "fastq", extensions : "fastq"},
 				{title : "tsv", extensions : "tsv"},
 				{title : "gz", extensions : "gz"},
-				{title : "list", extensions : "list"}
+				{title : "lis", extensions : "lis"}
 			]
 		},
 		// Flash settings
