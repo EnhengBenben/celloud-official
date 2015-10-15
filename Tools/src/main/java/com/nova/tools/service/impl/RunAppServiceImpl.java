@@ -34,7 +34,6 @@ import com.nova.tools.itext.AB1_PDF;
 import com.nova.tools.itext.HBV_SNP_PDF;
 import com.nova.tools.itext.NIPTPDF;
 import com.nova.tools.itext.NIPTProjectPDF;
-import com.nova.tools.itext.PGSProjectPDF;
 import com.nova.tools.itext.PGS_PDF;
 import com.nova.tools.utils.FileTools;
 import com.nova.tools.utils.GanymedSSH;
@@ -154,7 +153,7 @@ public class RunAppServiceImpl {
         String command = split_perl + " " + dataListFile + " " + outPath
                     + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         if (state) {
             String dataArray[] = dataKeyList.split(";");
             // 创建项目结果文件
@@ -268,7 +267,7 @@ public class RunAppServiceImpl {
                     + " ProjectID" + projectId;
         }
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         if (state) {
             String dataArray[] = dataKeyList.split(";");
             // 创建项目结果文件
@@ -525,7 +524,7 @@ public class RunAppServiceImpl {
         String command = _16S_perl + " --input " + dataPath + getArray(data, 1)
                 + "  --outdir " + dataKeyPath;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         if (state) {
             String projectFile = appPath + "/" + projectId + "/" + projectId
                     + ".txt";
@@ -553,7 +552,7 @@ public class RunAppServiceImpl {
         String command = translate_perl + " " + dataPath + getArray(data, 1)
                 + " --output " + resultPath;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         if (state) {
             // 创建项目结果文件
             String projectFile = appPath + "/" + projectId + "/" + projectId
@@ -597,7 +596,7 @@ public class RunAppServiceImpl {
         String command = HCV + " " + dataListFile + " " + appPath + "/ 2>"
                 + appPath + "/" + projectId + "/log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         if (state) {
             // 创建项目结果文件
             String projectFile = appPath + "/" + projectId + "/" + projectId
@@ -644,7 +643,7 @@ public class RunAppServiceImpl {
         String command = treePerl + " " + dataListFile + " " + projectId + " "
                 + basePath + "/" + userId + "/" + appId + "/" + projectId + "/";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        ssh.sshSubmit();
+        ssh.sshSubmit(true);
     }
 
     /**
@@ -659,49 +658,10 @@ public class RunAppServiceImpl {
         // 创建要运行的文件列表文件
         String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = PGS + " " + dataListFile + " " + basePath
-                + " ProjectID" + projectId;
+                + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
+                        + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
-        StringBuffer resultArray = new StringBuffer();
-        if (state) {
-            String dataArray[] = dataKeyList.split(";");
-            // 创建项目结果文件
-            String projectFile = basePath + projectId + "/" + projectId
-                    + ".txt";
-            FileTools.createFile(projectFile);
-            // 追加表头
-            resultArray
-                    .append("dataName\tdataKey\tTotal_Reads\tDuplicate\tMap_Reads\tMap_Ratio(%)\twin_size\t\n");
-            for (int i = 0; i < dataArray.length; i++) {
-                String[] dataDetail = dataArray[i].split(",");
-                String finalPath = basePath + getArray(dataDetail, 0);
-                try {
-                    PGS_PDF.createPDF(finalPath, appName,
-                            getBarcode(getArray(dataDetail, 2)),
-                            getArray(dataDetail, 3), getArray(dataDetail, 0),
-                            230, 800);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                String fileName = FileTools.fileExist(finalPath, ".xls",
-                        "endsWith");
-                String result[] = FileTools.getLastLine(
-                        finalPath + "/" + fileName).split("\t");
-                if (result.length == 1) {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(result, 0) + "\n");
-                } else {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(result, 0) + "\t" + getArray(result, 1)
-                            + "\t" + getArray(result, 2) + "\t"
-                            + getArray(result, 3) + "\t" + getArray(result, 4)
-                            + "\n");
-                }
-            }
-            FileTools.appendWrite(projectFile, resultArray.toString());
-        }
+        ssh.sshSubmit(false);
     }
 
     /**
@@ -719,7 +679,7 @@ public class RunAppServiceImpl {
         String command = NIPT_perl + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         StringBuffer resultArray = new StringBuffer();
         if (state) {
             String dataArray[] = dataKeyList.split(";");
@@ -772,49 +732,10 @@ public class RunAppServiceImpl {
         // 创建要运行的文件列表文件
         String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = gDNA_perl + " " + dataListFile + " " + basePath
-                + " ProjectID" + projectId;
+                + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
+                        + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
-        StringBuffer resultArray = new StringBuffer();
-        if (state) {
-            String dataArray[] = dataKeyList.split(";");
-            // 创建项目结果文件
-            String projectFile = basePath + projectId + "/" + projectId
-                    + ".txt";
-            FileTools.createFile(projectFile);
-            // 追加表头
-            resultArray
-                    .append("dataName\tdataKey\tTotal_Reads\tDuplicate\tMap_Reads\tMap_Ratio(%)\twin_size\t\n");
-            for (int i = 0; i < dataArray.length; i++) {
-                String[] dataDetail = dataArray[i].split(",");
-                String finalPath = basePath + getArray(dataDetail, 0);
-                try {
-                    PGS_PDF.createPDF(finalPath, appName,
-                            getBarcode(getArray(dataDetail, 2)),
-                            getArray(dataDetail, 3), getArray(dataDetail, 0),
-                            230, 800);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                String fileName = FileTools.fileExist(finalPath, ".xls",
-                        "endsWith");
-                String result[] = FileTools.getLastLine(
-                        finalPath + "/" + fileName).split("\t");
-                if (result.length == 1) {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(result, 0) + "\n");
-                } else {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(result, 0) + "\t" + getArray(result, 1)
-                            + "\t" + getArray(result, 2) + "\t"
-                            + getArray(result, 3) + "\t" + getArray(result, 4)
-                            + "\n");
-                }
-            }
-            FileTools.appendWrite(projectFile, resultArray.toString());
-        }
+        ssh.sshSubmit(false);
     }
 
     public void rungDNA_ChimericProject(String basePath, String projectId,
@@ -822,77 +743,10 @@ public class RunAppServiceImpl {
         // 创建要运行的文件列表文件
         String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = gDNA_Chimeric_perl + " " + dataListFile + " "
-                + basePath + " ProjectID" + projectId;
+                + basePath + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
+                        + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
-        StringBuffer resultArray = new StringBuffer();
-        if (state) {
-            String dataArray[] = dataKeyList.split(";");
-            // 创建项目结果文件
-            String projectFile = basePath + projectId + "/" + projectId
-                    + ".txt";
-            FileTools.createFile(projectFile);
-            // 追加表头
-            resultArray
-                    .append("dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < dataArray.length; i++) {
-                String[] dataDetail = dataArray[i].split(",");
-                sb.append(getArray(dataDetail, 0)).append(",")
-                        .append(getBarcode(getArray(dataDetail, 2)))
-                        .append(",").append(getArray(dataDetail, 3))
-                        .append(";");
-                String finalPath = basePath + getArray(dataDetail, 0);
-                try {
-                    PGS_PDF.createPDF(finalPath, appName,
-                            getBarcode(getArray(dataDetail, 2)),
-                            getArray(dataDetail, 3), getArray(dataDetail, 0),
-                            200, 800);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                String fileName = FileTools.fileExist(finalPath,
-                        getArray(dataDetail, 0) + ".xls", "endsWith");
-                if (fileName.equals("")) {
-                    fileName = FileTools.fileExist(finalPath,
-                            "no_enough_reads.xls", "endsWith");
-                }
-                String result[] = null;
-                try {
-                    String r[] = FileUtils.readFileToString(
-                            new File(finalPath + "/" + fileName)).split("\n");
-                    if (r.length > 2) {
-                        result = getArray(r, 2).split("\t");
-                    } else {
-                        result = FileTools.getLastLine(
-                                finalPath + "/" + fileName).split("\t");
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (result.length == 1) {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(dataDetail, 3) + "\t"
-                            + getArray(result, 0) + "\n");
-                } else {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(dataDetail, 3) + "\t"
-                            + getArray(result, 0) + "\t" + getArray(result, 1)
-                            + "\t" + getArray(result, 2) + "\t"
-                            + getArray(result, 3) + "\t" + getArray(result, 4)
-                            + "\t" + getArray(result, 5) + "\n");
-                }
-            }
-            try {
-                PGSProjectPDF.createPDF(basePath, appName, 200, 800,
-                        sb.toString(), projectId);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            FileTools.appendWrite(projectFile, resultArray.toString());
-        }
+        ssh.sshSubmit(false);
     }
 
     public void runMDA_ChimericProject(String basePath, String projectId,
@@ -900,78 +754,10 @@ public class RunAppServiceImpl {
         // 创建要运行的文件列表文件
         String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = MDA_Chimeric_perl + " " + dataListFile + " "
-                + basePath + " ProjectID" + projectId;
+                + basePath + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
+                        + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
-        StringBuffer resultArray = new StringBuffer();
-        if (state) {
-            String dataArray[] = dataKeyList.split(";");
-            // 创建项目结果文件
-            String projectFile = basePath + projectId + "/" + projectId
-                    + ".txt";
-            FileTools.createFile(projectFile);
-            // 追加表头
-            resultArray
-                    .append("dataName\tdataKey\tAnotherName\tTotal_Reads\tMT_ratio\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < dataArray.length; i++) {
-                String[] dataDetail = dataArray[i].split(",");
-                String finalPath = basePath + getArray(dataDetail, 0);
-                sb.append(getArray(dataDetail, 0)).append(",")
-                        .append(getBarcode(getArray(dataDetail, 2)))
-                        .append(",").append(getArray(dataDetail, 3))
-                        .append(";");
-                try {
-                    PGS_PDF.createPDF(finalPath, appName,
-                            getBarcode(getArray(dataDetail, 2)),
-                            getArray(dataDetail, 3), getArray(dataDetail, 0),
-                            200, 800);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                String fileName = FileTools.fileExist(finalPath,
-                        getArray(dataDetail, 0) + ".xls", "endsWith");
-                if (fileName.equals("")) {
-                    fileName = FileTools.fileExist(finalPath,
-                            "no_enough_reads.xls", "endsWith");
-                }
-                String result[] = null;
-                try {
-                    String r[] = FileUtils.readFileToString(
-                            new File(finalPath + "/" + fileName)).split("\n");
-                    if (r.length > 2) {
-                        result = getArray(r, 2).split("\t");
-                    } else {
-                        result = FileTools.getLastLine(
-                                finalPath + "/" + fileName).split("\t");
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                if (result.length == 1) {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(dataDetail, 3) + "\t"
-                            + getArray(result, 0) + "\n");
-                } else {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(dataDetail, 3) + "\t"
-                            + getArray(result, 0) + "\t" + getArray(result, 1)
-                            + "\t" + getArray(result, 2) + "\t"
-                            + getArray(result, 3) + "\t" + getArray(result, 4)
-                            + "\t" + getArray(result, 5) + "\n");
-                }
-            }
-            try {
-                PGSProjectPDF.createPDF(basePath, appName, 200, 800,
-                        sb.toString(), projectId);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            FileTools.appendWrite(projectFile, resultArray.toString());
-        }
+        ssh.sshSubmit(false);
     }
 
     public void runMDA_HRProject(String basePath, String projectId,
@@ -979,67 +765,10 @@ public class RunAppServiceImpl {
         // 创建要运行的文件列表文件
         String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = MDA_HR_perl + " " + dataListFile + " " + basePath
-                + " ProjectID" + projectId;
+                + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
+                        + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
-        StringBuffer resultArray = new StringBuffer();
-        if (state) {
-            String dataArray[] = dataKeyList.split(";");
-            // 创建项目结果文件
-            String projectFile = basePath + projectId + "/" + projectId
-                    + ".txt";
-            FileTools.createFile(projectFile);
-            // 追加表头
-            resultArray
-                    .append("dataName\tdataKey\tAnotherName\tTotal_Reads\tMT_ratio\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\n");
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < dataArray.length; i++) {
-                String[] dataDetail = dataArray[i].split(",");
-                String finalPath = basePath + getArray(dataDetail, 0);
-                sb.append(getArray(dataDetail, 0)).append(",")
-                        .append(getBarcode(getArray(dataDetail, 2)))
-                        .append(",").append(getArray(dataDetail, 3))
-                        .append(";");
-                try {
-                    PGS_PDF.createPDF(finalPath, appName,
-                            getBarcode(getArray(dataDetail, 2)),
-                            getArray(dataDetail, 3), getArray(dataDetail, 0),
-                            210, 800);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                String fileName = FileTools.fileExist(finalPath,
-                        getArray(dataDetail, 0) + ".xls", "endsWith");
-                if (fileName.equals("")) {
-                    fileName = FileTools.fileExist(finalPath,
-                            "no_enough_reads.xls", "endsWith");
-                }
-                String result[] = FileTools.getLastLine(
-                        finalPath + "/" + fileName).split("\t");
-                if (result.length == 1) {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(dataDetail, 3) + "\t"
-                            + getArray(result, 0) + "\n");
-                } else {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(dataDetail, 3) + "\t"
-                            + getArray(result, 0) + "\t" + getArray(result, 1)
-                            + "\t" + getArray(result, 2) + "\t"
-                            + getArray(result, 3) + "\t" + getArray(result, 4)
-                            + "\n");
-                }
-            }
-
-            try {
-                PGSProjectPDF.createPDF(basePath, appName, 210, 800,
-                        sb.toString(), projectId);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            FileTools.appendWrite(projectFile, resultArray.toString());
-        }
+        ssh.sshSubmit(false);
     }
 
     public void runSurePlexProject(String basePath, String projectId,
@@ -1047,77 +776,10 @@ public class RunAppServiceImpl {
         // 创建要运行的文件列表文件
         String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = SurePlex_perl + " " + dataListFile + " " + basePath
-                + " ProjectID" + projectId;
+                + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
+                        + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
-        StringBuffer resultArray = new StringBuffer();
-        if (state) {
-            String dataArray[] = dataKeyList.split(";");
-            // 创建项目结果文件
-            String projectFile = basePath + projectId + "/" + projectId
-                    + ".txt";
-            FileTools.createFile(projectFile);
-            // 追加表头
-            resultArray
-                    .append("dataName\tdataKey\tAnotherName\tTotal_Reads\tMT_ratio\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < dataArray.length; i++) {
-                String[] dataDetail = dataArray[i].split(",");
-                String finalPath = basePath + getArray(dataDetail, 0);
-                sb.append(getArray(dataDetail, 0)).append(",")
-                        .append(getBarcode(getArray(dataDetail, 2)))
-                        .append(",").append(getArray(dataDetail, 3))
-                        .append(";");
-                try {
-                    PGS_PDF.createPDF(finalPath, appName,
-                            getBarcode(getArray(dataDetail, 2)),
-                            getArray(dataDetail, 3), getArray(dataDetail, 0),
-                            220, 800);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                String fileName = FileTools.fileExist(finalPath,
-                        getArray(dataDetail, 0) + ".xls", "endsWith");
-                if (fileName.equals("")) {
-                    fileName = FileTools.fileExist(finalPath,
-                            "no_enough_reads.xls", "endsWith");
-                }
-                String result[] = null;
-                try {
-                    String r[] = FileUtils.readFileToString(
-                            new File(finalPath + "/" + fileName)).split("\n");
-                    if (r.length > 2) {
-                        result = getArray(r, 2).split("\t");
-                    } else {
-                        result = FileTools.getLastLine(
-                                finalPath + "/" + fileName).split("\t");
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (result.length == 1) {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(dataDetail, 3) + "\t"
-                            + getArray(result, 0) + "\n");
-                } else {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(dataDetail, 3) + "\t"
-                            + getArray(result, 0) + "\t" + getArray(result, 1)
-                            + "\t" + getArray(result, 2) + "\t"
-                            + getArray(result, 3) + "\t" + getArray(result, 4)
-                            + "\t" + getArray(result, 5) + "\n");
-                }
-            }
-            try {
-                PGSProjectPDF.createPDF(basePath, appName, 220, 800,
-                        sb.toString(), projectId);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            FileTools.appendWrite(projectFile, resultArray.toString());
-        }
+        ssh.sshSubmit(false);
     }
 
     public void runSurePlex_HRProject(String basePath, String projectId,
@@ -1125,66 +787,10 @@ public class RunAppServiceImpl {
         // 创建要运行的文件列表文件
         String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = SurePlex_HR_perl + " " + dataListFile + " " + basePath
-                + " ProjectID" + projectId;
+                + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
+                        + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
-        StringBuffer resultArray = new StringBuffer();
-        if (state) {
-            String dataArray[] = dataKeyList.split(";");
-            // 创建项目结果文件
-            String projectFile = basePath + projectId + "/" + projectId
-                    + ".txt";
-            FileTools.createFile(projectFile);
-            // 追加表头
-            resultArray
-                    .append("dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\n");
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < dataArray.length; i++) {
-                String[] dataDetail = dataArray[i].split(",");
-                String finalPath = basePath + getArray(dataDetail, 0);
-                sb.append(getArray(dataDetail, 0)).append(",")
-                        .append(getBarcode(getArray(dataDetail, 2)))
-                        .append(",").append(getArray(dataDetail, 3))
-                        .append(";");
-                try {
-                    PGS_PDF.createPDF(finalPath, appName,
-                            getBarcode(getArray(dataDetail, 2)),
-                            getArray(dataDetail, 3), getArray(dataDetail, 0),
-                            205, 800);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                String fileName = FileTools.fileExist(finalPath,
-                        getArray(dataDetail, 0) + ".xls", "endsWith");
-                if (fileName.equals("")) {
-                    fileName = FileTools.fileExist(finalPath,
-                            "no_enough_reads.xls", "endsWith");
-                }
-                String result[] = FileTools.getLastLine(
-                        finalPath + "/" + fileName).split("\t");
-                if (result.length == 1) {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(dataDetail, 3) + "\t"
-                            + getArray(result, 0) + "\n");
-                } else {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(dataDetail, 3) + "\t"
-                            + getArray(result, 0) + "\t" + getArray(result, 1)
-                            + "\t" + getArray(result, 2) + "\t"
-                            + getArray(result, 3) + "\t" + getArray(result, 4)
-                            + "\n");
-                }
-            }
-            try {
-                PGSProjectPDF.createPDF(basePath, appName, 205, 800,
-                        sb.toString(), projectId);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            FileTools.appendWrite(projectFile, resultArray.toString());
-        }
+        ssh.sshSubmit(false);
     }
 
     public void rungDNA_MRProject(String basePath, String projectId,
@@ -1192,77 +798,10 @@ public class RunAppServiceImpl {
         // 创建要运行的文件列表文件
         String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = gDNA_MR_perl + " " + dataListFile + " " + basePath
-                + " ProjectID" + projectId;
+                + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
+                        + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
-        StringBuffer resultArray = new StringBuffer();
-        if (state) {
-            String dataArray[] = dataKeyList.split(";");
-            // 创建项目结果文件
-            String projectFile = basePath + projectId + "/" + projectId
-                    + ".txt";
-            FileTools.createFile(projectFile);
-            // 追加表头
-            resultArray
-                    .append("dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\t\n");
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < dataArray.length; i++) {
-                String[] dataDetail = dataArray[i].split(",");
-                String finalPath = basePath + getArray(dataDetail, 0);
-                sb.append(getArray(dataDetail, 0)).append(",")
-                        .append(getBarcode(getArray(dataDetail, 2)))
-                        .append(",").append(getArray(dataDetail, 3))
-                        .append(";");
-                try {
-                    PGS_PDF.createPDF(finalPath, appName,
-                            getBarcode(getArray(dataDetail, 2)),
-                            getArray(dataDetail, 3), getArray(dataDetail, 0),
-                            210, 800);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                String fileName = FileTools.fileExist(finalPath,
-                        getArray(dataDetail, 0) + ".xls", "endsWith");
-                if (fileName.equals("")) {
-                    fileName = FileTools.fileExist(finalPath,
-                            "no_enough_reads.xls", "endsWith");
-                }
-                String result[] = null;
-                try {
-                    String r[] = FileUtils.readFileToString(
-                            new File(finalPath + "/" + fileName)).split("\n");
-                    if (r.length > 2) {
-                        result = getArray(r, 2).split("\t");
-                    } else {
-                        result = FileTools.getLastLine(
-                                finalPath + "/" + fileName).split("\t");
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (result.length == 1) {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(dataDetail, 3) + "\t"
-                            + getArray(result, 0) + "\n");
-                } else {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(dataDetail, 3) + "\t"
-                            + getArray(result, 0) + "\t" + getArray(result, 1)
-                            + "\t" + getArray(result, 2) + "\t"
-                            + getArray(result, 3) + "\t" + getArray(result, 4)
-                            + "\t" + getArray(result, 5) + "\n");
-                }
-            }
-            try {
-                PGSProjectPDF.createPDF(basePath, appName, 210, 800,
-                        sb.toString(), projectId);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            FileTools.appendWrite(projectFile, resultArray.toString());
-        }
+        ssh.sshSubmit(false);
     }
 
     public void rungDNA_MR_v1Project(String basePath, String projectId,
@@ -1272,7 +811,7 @@ public class RunAppServiceImpl {
         String command = gDNA_MR_v1 + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         StringBuffer resultArray = new StringBuffer();
         if (state) {
             String dataArray[] = dataKeyList.split(";");
@@ -1333,7 +872,7 @@ public class RunAppServiceImpl {
         String command = MDA_MR_v1 + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         StringBuffer resultArray = new StringBuffer();
         if (state) {
             String dataArray[] = dataKeyList.split(";");
@@ -1395,7 +934,7 @@ public class RunAppServiceImpl {
         String command = MDA_HR_v1 + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         StringBuffer resultArray = new StringBuffer();
         if (state) {
             String dataArray[] = dataKeyList.split(";");
@@ -1456,7 +995,7 @@ public class RunAppServiceImpl {
         String command = gDNA_HR_v1 + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         StringBuffer resultArray = new StringBuffer();
         if (state) {
             String dataArray[] = dataKeyList.split(";");
@@ -1517,7 +1056,7 @@ public class RunAppServiceImpl {
         String command = MDA_Chimeric_v1 + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         StringBuffer resultArray = new StringBuffer();
         if (state) {
             String dataArray[] = dataKeyList.split(";");
@@ -1579,7 +1118,7 @@ public class RunAppServiceImpl {
         String command = gDNA_Chimeric_v1 + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         StringBuffer resultArray = new StringBuffer();
         if (state) {
             String dataArray[] = dataKeyList.split(";");
@@ -1640,7 +1179,7 @@ public class RunAppServiceImpl {
         String command = SurePlex_v1 + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         StringBuffer resultArray = new StringBuffer();
         if (state) {
             String dataArray[] = dataKeyList.split(";");
@@ -1690,7 +1229,7 @@ public class RunAppServiceImpl {
         String command = MalBac_v1 + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         StringBuffer resultArray = new StringBuffer();
         if (state) {
             String dataArray[] = dataKeyList.split(";");
@@ -1741,76 +1280,7 @@ public class RunAppServiceImpl {
                 + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
                 + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
-        StringBuffer resultArray = new StringBuffer();
-        if (state) {
-            String dataArray[] = dataKeyList.split(";");
-            // 创建项目结果文件
-            String projectFile = basePath + projectId + "/" + projectId
-                    + ".txt";
-            FileTools.createFile(projectFile);
-            // 追加表头
-            resultArray
-                    .append("dataName\tdataKey\tAnotherName\tTotal_Reads\tMT_ratio\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < dataArray.length; i++) {
-                String[] dataDetail = dataArray[i].split(",");
-                String finalPath = basePath + getArray(dataDetail, 0);
-                sb.append(getArray(dataDetail, 0)).append(",")
-                        .append(getBarcode(getArray(dataDetail, 2)))
-                        .append(",").append(getArray(dataDetail, 3))
-                        .append(";");
-                try {
-                    PGS_PDF.createPDF(finalPath, appName,
-                            getBarcode(getArray(dataDetail, 2)),
-                            getArray(dataDetail, 3), getArray(dataDetail, 0),
-                            220, 800);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                String fileName = FileTools.fileExist(finalPath,
-                        getArray(dataDetail, 0) + ".xls", "endsWith");
-                if (fileName.equals("")) {
-                    fileName = FileTools.fileExist(finalPath,
-                            "no_enough_reads.xls", "endsWith");
-                }
-                String result[] = null;
-                try {
-                    String r[] = FileUtils.readFileToString(
-                            new File(finalPath + "/" + fileName)).split("\n");
-                    if (r.length > 2) {
-                        result = getArray(r, 2).split("\t");
-                    } else {
-                        result = FileTools.getLastLine(
-                                finalPath + "/" + fileName).split("\t");
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                if (result.length == 1) {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(dataDetail, 3) + "\t"
-                            + getArray(result, 0) + "\n");
-                } else {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(dataDetail, 3) + "\t"
-                            + getArray(result, 0) + "\t" + getArray(result, 1)
-                            + "\t" + getArray(result, 2) + "\t"
-                            + getArray(result, 3) + "\t" + getArray(result, 4)
-                            + "\t" + getArray(result, 5) + "\n");
-                }
-            }
-            try {
-                PGSProjectPDF.createPDF(basePath, appName, 220, 800,
-                        sb.toString(), projectId);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            FileTools.appendWrite(projectFile, resultArray.toString());
-        }
+        ssh.sshSubmit(false);
     }
 
     public void runMalBacProject(String basePath, String projectId,
@@ -1818,66 +1288,10 @@ public class RunAppServiceImpl {
         // 创建要运行的文件列表文件
         String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = MalBac_perl + " " + dataListFile + " " + basePath
-                + " ProjectID" + projectId;
+                + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
+                        + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
-        StringBuffer resultArray = new StringBuffer();
-        if (state) {
-            String dataArray[] = dataKeyList.split(";");
-            // 创建项目结果文件
-            String projectFile = basePath + projectId + "/" + projectId
-                    + ".txt";
-            FileTools.createFile(projectFile);
-            // 追加表头
-            resultArray
-                    .append("dataName\tdataKey\tAnotherName\tTotal_Reads\tDuplicate\tMap_Reads\tMap_Ratio(%)\tGC_Count(%)\n");
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < dataArray.length; i++) {
-                String[] dataDetail = dataArray[i].split(",");
-                String finalPath = basePath + getArray(dataDetail, 0);
-                sb.append(getArray(dataDetail, 0)).append(",")
-                        .append(getBarcode(getArray(dataDetail, 2)))
-                        .append(",").append(getArray(dataDetail, 3))
-                        .append(";");
-                try {
-                    PGS_PDF.createPDF(finalPath, appName,
-                            getBarcode(getArray(dataDetail, 2)),
-                            getArray(dataDetail, 3), getArray(dataDetail, 0),
-                            230, 800);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                String fileName = FileTools.fileExist(finalPath,
-                        getArray(dataDetail, 0) + ".xls", "endsWith");
-                if (fileName.equals("")) {
-                    fileName = FileTools.fileExist(finalPath,
-                            "no_enough_reads.xls", "endsWith");
-                }
-                String result[] = FileTools.getLastLine(
-                        finalPath + "/" + fileName).split("\t");
-                if (result.length == 1) {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(dataDetail, 3) + "\t"
-                            + getArray(result, 0) + "\n");
-                } else {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(dataDetail, 3) + "\t"
-                            + getArray(result, 0) + "\t" + getArray(result, 1)
-                            + "\t" + getArray(result, 2) + "\t"
-                            + getArray(result, 3) + "\t" + getArray(result, 4)
-                            + "\n");
-                }
-            }
-            try {
-                PGSProjectPDF.createPDF(basePath, appName, 230, 800,
-                        sb.toString(), projectId);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            FileTools.appendWrite(projectFile, resultArray.toString());
-        }
+        ssh.sshSubmit(false);
     }
 
     public void rungDNA_HRProject(String basePath, String projectId,
@@ -1885,66 +1299,10 @@ public class RunAppServiceImpl {
         // 创建要运行的文件列表文件
         String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = gDNA_HR_perl + " " + dataListFile + " " + basePath
-                + " ProjectID" + projectId;
+                + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
+                        + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
-        StringBuffer resultArray = new StringBuffer();
-        if (state) {
-            String dataArray[] = dataKeyList.split(";");
-            // 创建项目结果文件
-            String projectFile = basePath + projectId + "/" + projectId
-                    + ".txt";
-            FileTools.createFile(projectFile);
-            // 追加表头
-            resultArray
-                    .append("dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\n");
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < dataArray.length; i++) {
-                String[] dataDetail = dataArray[i].split(",");
-                String finalPath = basePath + getArray(dataDetail, 0);
-                sb.append(getArray(dataDetail, 0)).append(",")
-                        .append(getBarcode(getArray(dataDetail, 2)))
-                        .append(",").append(getArray(dataDetail, 3))
-                        .append(";");
-                try {
-                    PGS_PDF.createPDF(finalPath, appName,
-                            getBarcode(getArray(dataDetail, 2)),
-                            getArray(dataDetail, 3), getArray(dataDetail, 0),
-                            210, 800);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                String fileName = FileTools.fileExist(finalPath,
-                        getArray(dataDetail, 0) + ".xls", "endsWith");
-                if (fileName.equals("")) {
-                    fileName = FileTools.fileExist(finalPath,
-                            "no_enough_reads.xls", "endsWith");
-                }
-                String result[] = FileTools.getLastLine(
-                        finalPath + "/" + fileName).split("\t");
-                if (result.length == 1) {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(dataDetail, 3) + "\t"
-                            + getArray(result, 0) + "\n");
-                } else {
-                    resultArray.append(getArray(dataDetail, 2) + "\t"
-                            + getArray(dataDetail, 0) + "\t"
-                            + getArray(dataDetail, 3) + "\t"
-                            + getArray(result, 0) + "\t" + getArray(result, 1)
-                            + "\t" + getArray(result, 2) + "\t"
-                            + getArray(result, 3) + "\t" + getArray(result, 4)
-                            + "\n");
-                }
-            }
-            try {
-                PGSProjectPDF.createPDF(basePath, appName, 210, 800,
-                        sb.toString(), projectId);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            FileTools.appendWrite(projectFile, resultArray.toString());
-        }
+        ssh.sshSubmit(false);
     }
 
     /**
@@ -1964,7 +1322,7 @@ public class RunAppServiceImpl {
         String command = EGFR_perl + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         StringBuffer resultArray = new StringBuffer();
         if (state) {
             String dataArray[] = dataKeyList.split(";");
@@ -2018,7 +1376,7 @@ public class RunAppServiceImpl {
         String command = TB_perl + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         StringBuffer resultArray = new StringBuffer();
         if (state) {
             String dataArray[] = dataKeyList.split(";");
@@ -2067,7 +1425,7 @@ public class RunAppServiceImpl {
         String command = TBINH_perl + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         StringBuffer resultArray = new StringBuffer();
         if (state) {
             String dataArray[] = dataKeyList.split(";");
@@ -2138,7 +1496,7 @@ public class RunAppServiceImpl {
         String command = KRAS_perl + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         StringBuffer resultArray = new StringBuffer();
         if (state) {
             String dataArray[] = dataKeyList.split(";");
@@ -2190,7 +1548,7 @@ public class RunAppServiceImpl {
         String command = "perl " + SNP_multiple + " " + dataListFile + " "
                 + basePath + "  ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         StringBuffer resultArray = new StringBuffer();
         if (state) {
             String dataArray[] = dataKeyList.split(";");
@@ -2278,7 +1636,7 @@ public class RunAppServiceImpl {
         String command = DPD_perl + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         if (state) {
             String dataArray[] = dataKeyList.split(";");
             String projectFile = basePath + projectId + "/" + projectId
@@ -2314,7 +1672,7 @@ public class RunAppServiceImpl {
         String command = BRAF_perl + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         if (state) {
             String dataArray[] = dataKeyList.split(";");
             String projectFile = basePath + projectId + "/" + projectId
@@ -2348,7 +1706,7 @@ public class RunAppServiceImpl {
         String command = UGT_perl + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         if (state) {
             String dataArray[] = dataKeyList.split(";");
             String projectFile = basePath + projectId + "/" + projectId
@@ -2390,7 +1748,7 @@ public class RunAppServiceImpl {
         String command = HBV_SNP2_perl + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        boolean state = ssh.sshSubmit();
+        boolean state = ssh.sshSubmit(true);
         StringBuffer resultArray = new StringBuffer();
         if (state) {
             String dataArray[] = dataKeyList.split(";");
