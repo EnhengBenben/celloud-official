@@ -134,15 +134,41 @@ public class ProjectAction extends BaseAction {
     private static String datalist = PropertiesUtil.datalist;
 
     // TODO 需要投递到spark集群的app
-    private static final List<String> apps = Arrays.asList("92");
+    private static final List<String> apps = Arrays.asList("");
     // 初始化perl命令路径
     private static Map<String, String> perlMap = new HashMap<>();
+    // 初始化 APP 项目报告的 Title
+    private static Map<Integer, String> titleMap = new HashMap<>();
     static {
         SQLUtils sql = new SQLUtils();
         List<com.celloud.sdo.Software> list = sql.getAllSoftware();
         for (com.celloud.sdo.Software software : list) {
             perlMap.put("" + software.getSoftwareId(), software.getCommand());
         }
+        // 81 | MDA |
+         titleMap.put( 81, "dataName\tdataKey\tTotal_Reads\tDuplicate\tMap_Reads\tMap_Ratio(%)\twin_size\t\n");
+         // 95 | NIPT |
+         titleMap.put(95, "dataName\tdataKey\tAnotherName\tChr13\tChr18\tChr21\n");
+         // 83 | gDNA |
+         titleMap.put(83, "dataName\tdataKey\tTotal_Reads\tDuplicate\tMap_Reads\tMap_Ratio(%)\twin_size\t\n");
+         // 92 | gDNA_mosaic |
+         titleMap.put( 92, "dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
+         // 93 | MDA_mosaic |
+         titleMap.put( 93, "dataName\tdataKey\tAnotherName\tTotal_Reads\tMT_ratio\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
+         // 91 | MDA_HR |
+         titleMap.put( 91, "dataName\tdataKey\tAnotherName\tTotal_Reads\tMT_ratio\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\n");
+         // 94 | SurePlex |
+         titleMap.put( 94, "dataName\tdataKey\tAnotherName\tTotal_Reads\tMT_ratio\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
+         // 104 | Sureplex_HR |
+         titleMap.put( 104, "dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\n");
+         // 87 | gDNA_MR |
+         titleMap.put( 87, "dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\t\n");
+         // 88 | MDA_MR |
+         titleMap.put( 88, "dataName\tdataKey\tAnotherName\tTotal_Reads\tMT_ratio\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
+         // 85 | MalBac |
+         titleMap.put( 85, "dataName\tdataKey\tAnotherName\tTotal_Reads\tDuplicate\tMap_Reads\tMap_Ratio(%)\tGC_Count(%)\n");
+         // 86 | gDNA_HR |
+         titleMap.put( 86, "dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\n");
     }
 
     private static Map<String, Map<String, String>> machines = XmlUtil.machines;
@@ -655,8 +681,7 @@ public class ProjectAction extends BaseAction {
         // 追加表头
         StringBuffer resultArray = new StringBuffer();
         // boolean isFirst = true;
-        resultArray
-                .append("dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
+        resultArray.append(titleMap.get(appId));
         StringBuffer sb = new StringBuffer();
         for (Data d : proDataList) {
             String filename = d.getFileName();
