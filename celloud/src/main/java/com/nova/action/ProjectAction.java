@@ -571,6 +571,13 @@ public class ProjectAction extends BaseAction {
         return "RunProject";
     }
 
+    public String runQueue() {
+        log.info("手动释放项目所占用的端口，ProjectId:" + projectId);
+        runQueue(projectId);
+        flag = true;
+        return "returnBoolean";
+    }
+
     /**
      * 运行队列里的命令
      */
@@ -626,7 +633,7 @@ public class ProjectAction extends BaseAction {
     /**
      * 项目运行结束之后
      */
-    public void projectRunOver() {
+    public String projectRunOver() {
         log.info("项目运行结束，id:" + projectId);
         // 1.利用 python 生成数据 pdf，并将数据报告插入 mongodb
         String command = "python " + SparkPro.PYTHONPATH + " "
@@ -730,6 +737,8 @@ public class ProjectAction extends BaseAction {
                 DateUtil.nowCarefulTimeToString(project.getCreateDate()),
                 email, param, true);
         runQueue(projectId);
+        flag = true;
+        return "returnBoolean";
     }
 
     /**
