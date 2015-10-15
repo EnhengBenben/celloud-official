@@ -541,8 +541,9 @@ public class FileTools {
     public static String dataListSortNoEnd(String dataKeyList) {
         String[] dataKey = dataKeyList.split(";");
         Map<String, String> map = new HashMap<String, String>();
-        String[] array = new String[dataKey.length];
+        String[] array = new String[dataKey.length - 1];
         String endData = "";
+        int number = 0;
         for (int i = 0; i < dataKey.length; i++) {
             String data = dataKey[i];
             String d[] = data.split(",");
@@ -550,7 +551,8 @@ public class FileTools {
                 endData = data;
             } else {
                 map.put(d[2] + d[0], data);
-                array[i] = d[2] + d[0];
+                array[number] = d[2] + d[0];
+                number++;
             }
         }
         Arrays.sort(array);
@@ -560,5 +562,9 @@ public class FileTools {
         }
         dataKeyList += endData + ";";
         return dataKeyList;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(FileTools.getExt("a.lis"));
     }
 }

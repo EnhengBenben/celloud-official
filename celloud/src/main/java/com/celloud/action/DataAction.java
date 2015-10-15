@@ -279,6 +279,8 @@ public class DataAction extends BaseAction {
                 String dataDetails = FileTools.dataListSortNoEnd(dataResult
                         .toString());
                 String dataArray[] = dataDetails.split(";");
+                dataResult = new StringBuffer();
+                dataResult.append(dataDetails);
                 for (int i = 0; i < dataArray.length; i = i + 3) {
                     String[] dataDetail = dataArray[i].split(",");
                     String[] dataDetail1 = dataArray[i + 1].split(",");

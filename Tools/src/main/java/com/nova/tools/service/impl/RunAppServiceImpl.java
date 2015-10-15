@@ -150,7 +150,8 @@ public class RunAppServiceImpl {
             String appId, String appName, String userId, String dataInfos,
             String company, String user, String dept) {
         String dataListFile = formatDataKeyListToSplit(dataKeyList);
-        String command = split_perl + " " + dataListFile + " " + outPath;
+        String command = split_perl + " " + dataListFile + " " + outPath
+                + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         boolean state = ssh.sshSubmit(true);
         if (state) {
@@ -188,7 +189,7 @@ public class RunAppServiceImpl {
                             projectFile,
                             getArray(dataDetail, 0) + "\t"
                                     + getArray(dataDetail, 2) + "&"
-                                    + getArray(dataDetail1, 2)
+                                    + getArray(dataDetail1, 2) + "&"
                                     + getArray(dataDetail2, 2) + "\t" + result
                                     + "\n");
                 }
@@ -406,6 +407,7 @@ public class RunAppServiceImpl {
                                     if (gddGm != null) {
                                         gsr.setGeneticMethod(gddGm.getMethod());
                                     }
+                                    gsr.setHetOrHom(getArray(line_z, 8));
                                 }
                                 result.add(gsr);
                             }
