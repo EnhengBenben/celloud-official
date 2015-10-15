@@ -35,21 +35,21 @@ public class FileTools {
      * @return
      */
     public static String dataListSort(String dataKeyList) {
-	String[] dataKey = dataKeyList.split(";");
-	Map<String, String> map = new HashMap<String, String>();
-	String[] array = new String[dataKey.length];
-	for (int i = 0; i < dataKey.length; i++) {
-	    String data = dataKey[i];
-	    String d[] = data.split(",");
-	    map.put(d[2] + d[0], data);
-	    array[i] = d[2] + d[0];
-	}
-	Arrays.sort(array);
-	dataKeyList = "";
-	for (String s : array) {
-	    dataKeyList += map.get(s) + ";";
-	}
-	return dataKeyList;
+        String[] dataKey = dataKeyList.split(";");
+        Map<String, String> map = new HashMap<String, String>();
+        String[] array = new String[dataKey.length];
+        for (int i = 0; i < dataKey.length; i++) {
+            String data = dataKey[i];
+            String d[] = data.split(",");
+            map.put(d[2] + d[0], data);
+            array[i] = d[2] + d[0];
+        }
+        Arrays.sort(array);
+        dataKeyList = "";
+        for (String s : array) {
+            dataKeyList += map.get(s) + ";";
+        }
+        return dataKeyList;
     }
 
     /**
@@ -59,20 +59,20 @@ public class FileTools {
      * @return
      */
     public static String imgSort(String imgList) {
-	String[] img = imgList.split(",");
-	Map<String, String> map = new HashMap<String, String>();
-	String[] array = new String[img.length];
-	for (int i = 0; i < img.length; i++) {
-	    String data = img[i];
-	    map.put(data, data);
-	    array[i] = data;
-	}
-	Arrays.sort(array);
-	imgList = "";
-	for (String s : array) {
-	    imgList += map.get(s) + ",";
-	}
-	return imgList;
+        String[] img = imgList.split(",");
+        Map<String, String> map = new HashMap<String, String>();
+        String[] array = new String[img.length];
+        for (int i = 0; i < img.length; i++) {
+            String data = img[i];
+            map.put(data, data);
+            array[i] = data;
+        }
+        Arrays.sort(array);
+        imgList = "";
+        for (String s : array) {
+            imgList += map.get(s) + ",";
+        }
+        return imgList;
     }
 
     /**
@@ -83,96 +83,96 @@ public class FileTools {
      */
     // TODO 可扩展
     public static String getColumns(String path) {
-	StringBuffer four = new StringBuffer();
-	FileReader in = null;
-	try {
-	    in = new FileReader(path);
-	} catch (FileNotFoundException e) {
-	    e.printStackTrace();
-	}
-	LineNumberReader reader = new LineNumberReader(in);
-	String line = null;
-	int i = 0;
-	try {
-	    while ((line = reader.readLine()) != null) {
-		i++;
-		if (i > 1) {
-		    String val[] = line.split("\t");
-		    four.append(val[3]).append("(").append(val[1]).append(")")
-			    .append("\t");
-		}
-	    }
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
-	try {
-	    reader.close();
-	    in.close();
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
-	return four.toString();
+        StringBuffer four = new StringBuffer();
+        FileReader in = null;
+        try {
+            in = new FileReader(path);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        LineNumberReader reader = new LineNumberReader(in);
+        String line = null;
+        int i = 0;
+        try {
+            while ((line = reader.readLine()) != null) {
+                i++;
+                if (i > 1) {
+                    String val[] = line.split("\t");
+                    four.append(val[3]).append("(").append(val[1]).append(")")
+                            .append("\t");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            reader.close();
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return four.toString();
     }
 
     public static int countFileLines(String path) {
-	File test = new File(path);
-	long fileLength = test.length();
-	LineNumberReader rf = null;
-	int lines = 0;
-	try {
-	    rf = new LineNumberReader(new FileReader(test));
-	    if (rf != null) {
-		rf.skip(fileLength);
-		lines = rf.getLineNumber();
-		rf.close();
-	    }
-	} catch (IOException e) {
-	    if (rf != null) {
-		try {
-		    rf.close();
-		} catch (IOException ee) {
-		}
-	    }
-	}
-	return lines;
+        File test = new File(path);
+        long fileLength = test.length();
+        LineNumberReader rf = null;
+        int lines = 0;
+        try {
+            rf = new LineNumberReader(new FileReader(test));
+            if (rf != null) {
+                rf.skip(fileLength);
+                lines = rf.getLineNumber();
+                rf.close();
+            }
+        } catch (IOException e) {
+            if (rf != null) {
+                try {
+                    rf.close();
+                } catch (IOException ee) {
+                }
+            }
+        }
+        return lines;
     }
 
     public static int countLines(String filePath) {
-	File f = new File(filePath);
-	if (f.exists()) {
-	    return countLines(f);
-	} else {
-	    return 0;
-	}
+        File f = new File(filePath);
+        if (f.exists()) {
+            return countLines(f);
+        } else {
+            return 0;
+        }
     }
 
     public static int countLines(File file) {
-	if (!file.exists()) {
-	    return 0;
-	}
-	BufferedReader br = null;
-	int count = 0;
-	try {
-	    br = new BufferedReader(new FileReader(file));
-	} catch (FileNotFoundException e) {
-	    e.printStackTrace();
-	}
-	try {
-	    while (br.readLine() != null) {
-		count++;
-	    }
-	} catch (IOException e) {
-	    e.printStackTrace();
-	} finally {
-	    try {
-		if (br != null) {
-		    br.close();
-		}
-	    } catch (IOException e) {
-		e.printStackTrace();
-	    }
-	}
-	return count;
+        if (!file.exists()) {
+            return 0;
+        }
+        BufferedReader br = null;
+        int count = 0;
+        try {
+            br = new BufferedReader(new FileReader(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            while (br.readLine() != null) {
+                count++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return count;
     }
 
     /**
@@ -183,31 +183,31 @@ public class FileTools {
      * @return
      */
     public static String getLastLine(String filePath) {
-	FileReader in = null;
-	try {
-	    in = new FileReader(filePath);
-	} catch (FileNotFoundException e) {
-	    e.printStackTrace();
-	}
-	LineNumberReader reader = new LineNumberReader(in);
-	String s = null;
-	String line = null;
-	try {
-	    while ((line = reader.readLine()) != null) {
-		if (!"".equals(line.trim())) {
-		    s = line;
-		}
-	    }
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
-	try {
-	    reader.close();
-	    in.close();
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
-	return s;
+        FileReader in = null;
+        try {
+            in = new FileReader(filePath);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        LineNumberReader reader = new LineNumberReader(in);
+        String s = null;
+        String line = null;
+        try {
+            while ((line = reader.readLine()) != null) {
+                if (!"".equals(line.trim())) {
+                    s = line;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            reader.close();
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return s;
     }
 
     /**
@@ -217,7 +217,7 @@ public class FileTools {
      * @return
      */
     public static String getFirstLine(String filePath) {
-	return getLineByNum(filePath, 1);
+        return getLineByNum(filePath, 1);
     }
 
     /**
@@ -228,35 +228,35 @@ public class FileTools {
      * @return
      */
     public static String getLineByNum(String filePath, int num) {
-	if (!new File(filePath).exists()) {
-	    return null;
-	}
-	FileReader in = null;
-	try {
-	    in = new FileReader(filePath);
-	} catch (FileNotFoundException e) {
-	    e.printStackTrace();
-	}
-	LineNumberReader reader = new LineNumberReader(in);
-	String line = null;
-	int i = 0;
-	try {
-	    while ((line = reader.readLine()) != null) {
-		i++;
-		if (i == num) {
-		    break;
-		}
-	    }
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
-	try {
-	    reader.close();
-	    in.close();
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
-	return line;
+        if (!new File(filePath).exists()) {
+            return null;
+        }
+        FileReader in = null;
+        try {
+            in = new FileReader(filePath);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        LineNumberReader reader = new LineNumberReader(in);
+        String line = null;
+        int i = 0;
+        try {
+            while ((line = reader.readLine()) != null) {
+                i++;
+                if (i == num) {
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            reader.close();
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return line;
     }
 
     /**
@@ -267,39 +267,39 @@ public class FileTools {
      * @return
      */
     public static List<String> getLineByNum(String filePath, int start, int end) {
-	if (!new File(filePath).exists()) {
-	    return null;
-	}
-	FileReader in = null;
-	try {
-	    in = new FileReader(filePath);
-	} catch (FileNotFoundException e) {
-	    e.printStackTrace();
-	}
-	LineNumberReader reader = new LineNumberReader(in);
-	String line = null;
-	List<String> list = new ArrayList<String>();
-	int i = 0;
-	try {
-	    while ((line = reader.readLine()) != null) {
-		i++;
-		if (i >= start && i <= end) {
-		    list.add(line);
-		    if (i == end) {
-			break;
-		    }
-		}
-	    }
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
-	try {
-	    reader.close();
-	    in.close();
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
-	return list;
+        if (!new File(filePath).exists()) {
+            return null;
+        }
+        FileReader in = null;
+        try {
+            in = new FileReader(filePath);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        LineNumberReader reader = new LineNumberReader(in);
+        String line = null;
+        List<String> list = new ArrayList<String>();
+        int i = 0;
+        try {
+            while ((line = reader.readLine()) != null) {
+                i++;
+                if (i >= start && i <= end) {
+                    list.add(line);
+                    if (i == end) {
+                        break;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            reader.close();
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     /**
@@ -309,12 +309,12 @@ public class FileTools {
      * @return ：HashSet<String>
      */
     public static HashSet<String> delRepeat(String sampleList) {
-	String dataArray[] = sampleList.split(";");
-	HashSet<String> set = new HashSet<String>();
-	for (int i = 0; i < dataArray.length; i++) {
-	    set.add(dataArray[i].split(":")[0]);
-	}
-	return set;
+        String dataArray[] = sampleList.split(";");
+        HashSet<String> set = new HashSet<String>();
+        for (int i = 0; i < dataArray.length; i++) {
+            set.add(dataArray[i].split(":")[0]);
+        }
+        return set;
     }
 
     /**
@@ -325,13 +325,13 @@ public class FileTools {
      * @throws IOException
      */
     public static String readAppoint(String sourceFile) {
-	String context = null;
-	try {
-	    context = FileUtils.readFileToString(new File(sourceFile), "GBK");
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
-	return context == null ? "" : context.replaceAll("\n", "<br />");
+        String context = null;
+        try {
+            context = FileUtils.readFileToString(new File(sourceFile), "GBK");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return context == null ? "" : context.replaceAll("\n", "<br />");
     }
 
     /**
@@ -345,29 +345,29 @@ public class FileTools {
      */
     @SuppressWarnings("static-access")
     public static void fileDownLoad(HttpServletResponse response,
-	    String filePath) throws IOException {
-	int endIndex = 0;
-	if (filePath.indexOf("/") != -1) {
-	    endIndex = filePath.lastIndexOf("/");
-	} else {
-	    endIndex = filePath.lastIndexOf("\\");
-	}
-	String newFileName = filePath.substring(endIndex + 1);
-	File file = new File(filePath);
-	response.addHeader("Content-Disposition", "attachment;filename="
-		+ newFileName);
-	response.setContentType("application/octet-stream");
-	FileInputStream is = new FileInputStream(file);
-	int length = is.available();
-	byte[] content = new byte[length];
-	is.read(content);
-	ServletOutputStream out = response.getOutputStream();
-	out.write(content);
-	is.close();
-	out.flush();
-	out.close();
-	response.setStatus(response.SC_OK);
-	response.flushBuffer();
+            String filePath) throws IOException {
+        int endIndex = 0;
+        if (filePath.indexOf("/") != -1) {
+            endIndex = filePath.lastIndexOf("/");
+        } else {
+            endIndex = filePath.lastIndexOf("\\");
+        }
+        String newFileName = filePath.substring(endIndex + 1);
+        File file = new File(filePath);
+        response.addHeader("Content-Disposition", "attachment;filename="
+                + newFileName);
+        response.setContentType("application/octet-stream");
+        FileInputStream is = new FileInputStream(file);
+        int length = is.available();
+        byte[] content = new byte[length];
+        is.read(content);
+        ServletOutputStream out = response.getOutputStream();
+        out.write(content);
+        is.close();
+        out.flush();
+        out.close();
+        response.setStatus(response.SC_OK);
+        response.flushBuffer();
     }
 
     /**
@@ -377,15 +377,15 @@ public class FileTools {
      *            ：要创建的目录路径
      */
     public static void createDir(String path) {
-	File file = new File(path);
-	if (file.exists()) {
-	    String[] fileName = file.list();
-	    for (int i = 0; i < fileName.length; i++) {
-		String name = path + "/" + fileName[i];
-		new File(name).delete();
-	    }
-	}
-	file.mkdirs();
+        File file = new File(path);
+        if (file.exists()) {
+            String[] fileName = file.list();
+            for (int i = 0; i < fileName.length; i++) {
+                String name = path + "/" + fileName[i];
+                new File(name).delete();
+            }
+        }
+        file.mkdirs();
     }
 
     /**
@@ -396,16 +396,16 @@ public class FileTools {
      *            若路径不存在，则生成home/down文件夹后生成test.txt文件
      */
     public static void createFile(String path) {
-	File file = new File(path);
-	File parent = file.getParentFile();
-	if (parent != null && !parent.exists()) {
-	    parent.mkdirs();
-	}
-	try {
-	    file.createNewFile();
-	} catch (IOException e) {
-	    System.out.println("文件创建异常：" + e);
-	}
+        File file = new File(path);
+        File parent = file.getParentFile();
+        if (parent != null && !parent.exists()) {
+            parent.mkdirs();
+        }
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            System.out.println("文件创建异常：" + e);
+        }
     }
 
     /**
@@ -418,14 +418,14 @@ public class FileTools {
      * @throws IOException
      */
     public static void appendWrite(String filePath, String writeContext) {
-	FileWriter fw = null;
-	try {
-	    fw = new FileWriter(filePath, true);
-	    fw.write(writeContext);
-	    fw.close();
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
+        FileWriter fw = null;
+        try {
+            fw = new FileWriter(filePath, true);
+            fw.write(writeContext);
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -440,30 +440,30 @@ public class FileTools {
      * @return
      */
     public static String fileExist(String folderPath, String regulation,
-	    String mate) {
-	File dir = new File(folderPath);
-	File file[] = dir.listFiles();
-	if (file != null) {
-	    for (int i = 0; i < file.length; i++) {
-		if ("endsWith".equals(mate)) {
-		    if (file[i].getName().toLowerCase()
-			    .endsWith(regulation.toLowerCase())) {
-			return file[i].getName();
-		    }
-		} else if ("startsWith".equals(mate)) {
-		    if (file[i].getName().toLowerCase()
-			    .startsWith(regulation.toLowerCase())) {
-			return file[i].getName();
-		    }
-		} else {
-		    if (file[i].getName().toLowerCase()
-			    .contains(regulation.toLowerCase())) {
-			return file[i].getName();
-		    }
-		}
-	    }
-	}
-	return "";
+            String mate) {
+        File dir = new File(folderPath);
+        File file[] = dir.listFiles();
+        if (file != null) {
+            for (int i = 0; i < file.length; i++) {
+                if ("endsWith".equals(mate)) {
+                    if (file[i].getName().toLowerCase()
+                            .endsWith(regulation.toLowerCase())) {
+                        return file[i].getName();
+                    }
+                } else if ("startsWith".equals(mate)) {
+                    if (file[i].getName().toLowerCase()
+                            .startsWith(regulation.toLowerCase())) {
+                        return file[i].getName();
+                    }
+                } else {
+                    if (file[i].getName().toLowerCase()
+                            .contains(regulation.toLowerCase())) {
+                        return file[i].getName();
+                    }
+                }
+            }
+        }
+        return "";
     }
 
     /**
@@ -478,26 +478,26 @@ public class FileTools {
      * @return
      */
     public static List<String> fileSearch(String folderPath, String regulation,
-	    String mate) {
-	File dir = new File(folderPath);
-	File file[] = dir.listFiles();
-	List<String> list = new ArrayList<String>();
-	for (int i = 0; i < file.length; i++) {
-	    if ("endWith".equals(mate)) {
-		if (file[i].getName().endsWith(regulation)) {
-		    list.add(file[i].getName());
-		}
-	    } else if ("startWith".equals(mate)) {
-		if (file[i].getName().startsWith(regulation)) {
-		    list.add(file[i].getName());
-		}
-	    } else {
-		if (file[i].getName().contains(regulation)) {
-		    list.add(file[i].getName());
-		}
-	    }
-	}
-	return list;
+            String mate) {
+        File dir = new File(folderPath);
+        File file[] = dir.listFiles();
+        List<String> list = new ArrayList<String>();
+        for (int i = 0; i < file.length; i++) {
+            if ("endWith".equals(mate)) {
+                if (file[i].getName().endsWith(regulation)) {
+                    list.add(file[i].getName());
+                }
+            } else if ("startWith".equals(mate)) {
+                if (file[i].getName().startsWith(regulation)) {
+                    list.add(file[i].getName());
+                }
+            } else {
+                if (file[i].getName().contains(regulation)) {
+                    list.add(file[i].getName());
+                }
+            }
+        }
+        return list;
     }
 
     /**
@@ -507,18 +507,18 @@ public class FileTools {
      * @return
      */
     public static HashSet<String> getFiles(String folderPath) {
-	if (!folderPath.endsWith("/")) {
-	    folderPath = folderPath + "/";
-	}
-	File dir = new File(folderPath);
-	File file[] = dir.listFiles();
-	HashSet<String> set = new HashSet<String>();
-	for (int i = 0; i < file.length; i++) {
-	    if (new File(folderPath + file[i].getName()).isFile()) {
-		set.add(file[i].getName());
-	    }
-	}
-	return set;
+        if (!folderPath.endsWith("/")) {
+            folderPath = folderPath + "/";
+        }
+        File dir = new File(folderPath);
+        File file[] = dir.listFiles();
+        HashSet<String> set = new HashSet<String>();
+        for (int i = 0; i < file.length; i++) {
+            if (new File(folderPath + file[i].getName()).isFile()) {
+                set.add(file[i].getName());
+            }
+        }
+        return set;
     }
 
     /**
@@ -528,18 +528,18 @@ public class FileTools {
      * @return
      */
     public static HashSet<String> getFolders(String folderPath) {
-	if (!folderPath.endsWith("/")) {
-	    folderPath = folderPath + "/";
-	}
-	File dir = new File(folderPath);
-	File file[] = dir.listFiles();
-	HashSet<String> set = new HashSet<String>();
-	for (int i = 0; i < file.length; i++) {
-	    if (new File(folderPath + file[i].getName()).isDirectory()) {
-		set.add(file[i].getName());
-	    }
-	}
-	return set;
+        if (!folderPath.endsWith("/")) {
+            folderPath = folderPath + "/";
+        }
+        File dir = new File(folderPath);
+        File file[] = dir.listFiles();
+        HashSet<String> set = new HashSet<String>();
+        for (int i = 0; i < file.length; i++) {
+            if (new File(folderPath + file[i].getName()).isDirectory()) {
+                set.add(file[i].getName());
+            }
+        }
+        return set;
     }
 
     /**
@@ -549,7 +549,7 @@ public class FileTools {
      * @return： true，存在；false，不存在
      */
     public static boolean checkPath(String path) {
-	return new File(path).exists();
+        return new File(path).exists();
     }
 
     /**
@@ -559,42 +559,47 @@ public class FileTools {
      * @param context
      */
     public static void coverWrite(String path, String context) {
-	FileOutputStream fos = null;
-	try {
-	    fos = new FileOutputStream(path);
-	    fos.write(context.getBytes());
-	} catch (Exception ex) {
-	    ex.printStackTrace();
-	} finally {
-	    if (fos != null) {
-		try {
-		    fos.close();
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
-		fos = null;
-	    }
-	}
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(path);
+            fos.write(context.getBytes());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                fos = null;
+            }
+        }
     }
 
     /**
      * 按行读取文件
      */
     public static List<String> readLinestoString(String path) {
-	List<String> list = new ArrayList<String>();
-	try {
-	    list = FileUtils.readLines(new File(path), "GBK");
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
-	return list;
+        List<String> list = new ArrayList<String>();
+        try {
+            list = FileUtils.readLines(new File(path), "GBK");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     public static String listIsNull(List<String> list, int num) {
-	String list_num = "";
-	if (list != null && list.size() > num) {
-	    list_num = list.get(num);
-	}
-	return list_num;
+        String list_num = "";
+        if (list != null && list.size() > num) {
+            list_num = list.get(num);
+        }
+        return list_num;
+    }
+
+    public static String getExt(String fileName) {
+        String extName = fileName.substring(fileName.lastIndexOf("."));
+        return extName;
     }
 }
