@@ -44,7 +44,7 @@ def createPDF(path,appName,fileName,anotherName):
 	im = Image(PDFPro.logo, 15, 17)
 	pdftitle = '<font size=14 name="hei">'+appName+' 报告</font>'
 	data= [[im, Paragraph(pdftitle, styleContext)]]
-	table = Table(data, colWidths=[0.9 * cm, 3.5 * cm])
+	table = Table(data, colWidths=[0.9 * cm, 5.5 * cm])
 	table.setStyle(TableStyle([('VALIGN',(-1,-1),(-1,-1),'TOP')]))
 	total.append(table)
 	total.append(Spacer(1, 12))
@@ -87,7 +87,17 @@ def createPDF(path,appName,fileName,anotherName):
 		total.append(Spacer(1, 5))
 
 	# Pic
-	im = Image(os.path.join(path,datakey+".gc.cnt.each.txt.hmm.final.png"), 440, 586)
-	total.append(im)
+	finalPng1 = os.path.join(path,datakey+".gc.cnt.each.txt.hmm.final.png")
+	finalPng2 = os.path.join(path,datakey+".gc.cnt.avg.txt.final.png")
+	finalPng3 = os.path.join(path,datakey+".gc.cnt.each.txt.kde.gcheck.final.png")
+	if os.path.exists(finalPng1):
+		im = Image(finalPng1, 440, 586)
+		total.append(im)
+	elif os.path.exists(finalPng2):
+		im = Image(finalPng2, 440, 586)
+		total.append(im)
+	elif os.path.exists(finalPng3):
+		im = Image(finalPng3, 440, 586)
+		total.append(im)
 
 	doc.build(total)
