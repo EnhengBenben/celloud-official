@@ -77,7 +77,7 @@ public class GanymedSSH {
                 state = sess.getExitStatus() == 0 ? true : false;
                 log.info("命令执行" + state);
             } else {
-                log.info("命令投递成功");
+                log.info("命令投递成功，断开SSH连接");
             }
         } catch (IOException e) {
             log.error("命令执行失败", new IOException(e));
