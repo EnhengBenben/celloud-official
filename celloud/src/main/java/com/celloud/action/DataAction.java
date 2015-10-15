@@ -276,17 +276,20 @@ public class DataAction extends BaseAction {
 					map.put(FileTools.getArray(dataDetail, 0), dataList);
 				}
             } else if (Integer.parseInt(appId) == 113) {
-                String dataDetails = FileTools.dataListSort(dataResult
+                String dataDetails = FileTools.dataListSortNoEnd(dataResult
                         .toString());
                 String dataArray[] = dataDetails.split(";");
                 for (int i = 0; i < dataArray.length; i = i + 3) {
                     String[] dataDetail = dataArray[i].split(",");
                     String[] dataDetail1 = dataArray[i + 1].split(",");
+                    String[] dataDetail2 = dataArray[i + 2].split(",");
                     List<Data> dataList = dataService
                             .getDataByDataKeys(FileTools
                                     .getArray(dataDetail, 0)
                                     + ","
-                                    + FileTools.getArray(dataDetail1, 0));
+                                    + FileTools.getArray(dataDetail1, 0)
+                                    + ","
+                                    + FileTools.getArray(dataDetail2, 0));
                     map.put(FileTools.getArray(dataDetail, 0), dataList);
                 }
 			}
