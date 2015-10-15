@@ -574,7 +574,7 @@ public class ProjectAction extends BaseAction {
     /**
      * 运行队列里的命令
      */
-    public void runQueue() {
+    private void runQueue(String projectId) {
         log.info(projectId + "运行结束，释放端口");
         PortPool.setPort(projectId);
         while (true) {
@@ -729,6 +729,7 @@ public class ProjectAction extends BaseAction {
         EmailProjectEnd.sendEndEmail(projectName, "" + appId,
                 DateUtil.nowCarefulTimeToString(project.getCreateDate()),
                 email, param, true);
+        runQueue(projectId);
     }
 
     /**

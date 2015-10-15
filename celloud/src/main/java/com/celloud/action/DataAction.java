@@ -334,7 +334,7 @@ public class DataAction extends BaseAction {
 		String dataListFile = dealDataKeyListContainFileName(projectId,
 				dataKeyList);
 		// TODO
-		String command = "nohup perl  /share/biosoft/perl/wangzhen/PGS/bin/moniter_qsub_python_monogo.pl perl "
+		String command = "nohup perl  /share/biosoft/perl/wangzhen/PGS/bin/moniter_qsub_url.pl perl "
 				+ " "
 				+ perl
 				+ " "

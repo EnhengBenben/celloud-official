@@ -17,6 +17,10 @@ import com.nova.tools.constant.Mod;
 
 public class XMLUtil {
 	public static Map<String, Map<String, String>> machines = new HashMap<String, Map<String, String>>();
+	
+	static{
+	    getMachines();
+	}
 
 	public static String writeXML(String path) {
 		StringBuffer sb = new StringBuffer("<table>");
