@@ -234,6 +234,10 @@ function removetoRunData(id){
 	addedDataNames.splice($.inArray(id,addedDataNames),1);
 	$("#chk"+id).attr("checked",false);
 	$("#dataLi"+id).remove();
+	if(checkedDataIds.length==0){
+		$("#toRunApp").attr("disabled",true);
+		toNoUse();
+	}
 }
 function okToRun(){
 	var appId = $("#appIdHide").val();
