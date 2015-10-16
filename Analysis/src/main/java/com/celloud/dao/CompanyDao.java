@@ -64,5 +64,5 @@ public interface CompanyDao {
 	 * 
 	 * @return
 	 */
-	public List<Map<String, Object>> getProvince();
+	public List<Map<String, Object>> getProvince(Integer companyId);
 }

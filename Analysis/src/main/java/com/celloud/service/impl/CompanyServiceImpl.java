@@ -112,7 +112,7 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getProvince() {
-		return companyDao.getProvince();
+	public List<Map<String, Object>> getProvince(Integer companyId) {
+		return companyDao.getProvince(companyId);
 	}
 }

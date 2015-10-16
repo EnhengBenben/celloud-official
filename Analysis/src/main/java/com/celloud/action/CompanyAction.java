@@ -37,7 +37,8 @@ public class CompanyAction extends BaseAction {
 	}
 
 	public String getProvince() {
-		list = companyService.getProvince();
+	    Integer companyId = (Integer) getCid();
+		list = companyService.getProvince(companyId);
 		return "list";
 	}
 
