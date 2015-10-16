@@ -121,7 +121,16 @@
 	   							<td>${r.depth }</td>
 	   							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
 	   							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-	   							<td>杂合突变</td>
+	   							<td>
+	   								<c:choose>
+						 				<c:when test="${r.hetOrHom=='het'}">
+						 					杂合
+						 				</c:when>
+						 				<c:otherwise>
+						 					纯合
+						 				</c:otherwise>
+		 							</c:choose>
+	   							</td>
 	   							<td>${r.geneticMethod }</td>
 	   							<td>${r.diseaseName }</td>
 	   						</tr>
