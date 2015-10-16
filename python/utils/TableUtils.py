@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # python version 2.7.6
 
-__des__='表格操作工具类'
+__des__='PDF 表格操作工具类'
 __author__='lin'
 
 from reportlab.platypus import Paragraph

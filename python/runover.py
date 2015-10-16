@@ -52,21 +52,14 @@ my=mysql.getInstance()
 if my:
 	result = my.query(sql)
 	if result is not None:
-		#proReport = "<table><tr><td>dataName</td><td>dataKey</td></tr>";
 		for i in range(len(result)):
 			re = result[i]
 			myfun = method_dic[int(re['appId'])]
 			fun = myfun.getInstance()
 			if fun:
 				p = os.path.join(path,str(re['userId']),str(re['appId']),str(re['dataKey']))
-				#print p
 				final = fun.getResult(p,re['appName'],re['fileName'],re['anotherName'])
 				merge = dict(final, **re)
 				mo = mongo.getInstance()
 				objId = mo.put(merge,collection_dic[int(re['appId'])])
 				print objId
-
-		#proReport =proReport + "</table>"
-		#proSql = "update tb_report set state=3,context='" + proReport + "',end_date=now()  where project_id=" + projectId
-		#print proSql
-		#my.execute(proSql)

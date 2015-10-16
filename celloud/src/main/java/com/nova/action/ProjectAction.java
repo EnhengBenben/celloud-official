@@ -162,15 +162,15 @@ public class ProjectAction extends BaseAction {
          // 104 | Sureplex_HR |
          titleMap.put( 104, "dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\n");
          // 87 | gDNA_MR |
-         titleMap.put( 87, "dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\t\n");
+         titleMap.put( 87, "dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
          // 88 | MDA_MR |
          titleMap.put( 88, "dataName\tdataKey\tAnotherName\tTotal_Reads\tMT_ratio\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
          // 85 | MalBac |
-         titleMap.put( 85, "dataName\tdataKey\tAnotherName\tTotal_Reads\tDuplicate\tMap_Reads\tMap_Ratio(%)\tGC_Count(%)\n");
+         titleMap.put( 85, "dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate(%)\tGC_Count(%)\n");
          // 86 | gDNA_HR |
          titleMap.put( 86, "dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\n");
     }
-
+    
     private static Map<String, Map<String, String>> machines = XmlUtil.machines;
     private static String sparkhost = machines.get("spark").get(Mod.HOST);
     private static String sparkpwd = machines.get("spark").get(Mod.PWD);
@@ -729,12 +729,20 @@ public class ProjectAction extends BaseAction {
                 resultArray.append(filename + "\t" + datakey + "\t"
                         + anotherName + "\t" + getArray(result, 0) + "\n");
             } else {
-                resultArray.append(filename + "\t" + datakey + "\t"
-                        + anotherName + "\t" + getArray(result, 0) + "\t"
-                        + getArray(result, 1) + "\t" + getArray(result, 2)
-                        + "\t" + getArray(result, 3) + "\t"
-                        + getArray(result, 4) + "\t" + getArray(result, 5)
-                        + "\n");
+                if(titleMap.get(appId).split("\t").length==9){
+                    resultArray.append(filename + "\t" + datakey + "\t"
+                            + anotherName + "\t" + getArray(result, 0) + "\t"
+                            + getArray(result, 1) + "\t" + getArray(result, 2)
+                            + "\t" + getArray(result, 3) + "\t"
+                            + getArray(result, 4) + "\t" + getArray(result, 5)
+                            + "\n");
+                }else if (titleMap.get(appId).split("\t").length==8){
+                    resultArray.append(filename + "\t" + datakey + "\t"
+                            + anotherName + "\t" + getArray(result, 0) + "\t"
+                            + getArray(result, 1) + "\t" + getArray(result, 2)
+                            + "\t" + getArray(result, 3) + "\t"
+                            + getArray(result, 4)+ "\n");
+                }
             }
         }
         // 2.生成项目pdf
