@@ -173,6 +173,7 @@ function showRunApp(){
 			$("#warningModal").modal("show");
     	}else{
     		var li = "";
+    		var noAPP = 0;
     		for(var i=0;i<result.length;i++){
     			var appId = result[i].softwareId;
 	    		var appName = result[i].softwareName;
@@ -182,10 +183,11 @@ function showRunApp(){
 	    			if((appId==109||appId==110||appId==111||appId==112||appId==113)&&dataNum<dataLength){
 	    			}else{
 	    				li += "<li class='types-options' id='runAppli"+appId+"' title='点击选中' onclick=\"addRunApp("+appId+",'"+appName+"','"+dataIds+"')\">"+appName+"</li>";
+	    				noAPP++;
 	    			}
 	    		}
 	    	}
-    		if(result.length==0){
+    		if(result.length==0 || noAPP==0){
     			li += "<li class='types-options'>没有可运行的APP</li>"
     			$("#toRunApp").attr("disabled",true);
     		}else{
@@ -232,6 +234,10 @@ function removetoRunData(id){
 	addedDataNames.splice($.inArray(id,addedDataNames),1);
 	$("#chk"+id).attr("checked",false);
 	$("#dataLi"+id).remove();
+	if(checkedDataIds.length==0){
+		$("#toRunApp").attr("disabled",true);
+		toNoUse();
+	}
 }
 function okToRun(){
 	var appId = $("#appIdHide").val();
@@ -348,6 +354,7 @@ function setSelect2Info(objId,data){
 function toManageDatasModel(){
 	$.get("data3!getStrainList",{},function(data){
 		setSelect2Info("#manageDatasStrainSel",data);
+		$("#strainDataHide").val(JSON.stringify(data));
 	});
 	$("#manageEachDataModal").modal("hide");
 	$("#manageDatasForm")[0].reset();
