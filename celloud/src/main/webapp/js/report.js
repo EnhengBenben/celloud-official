@@ -671,7 +671,7 @@ $.ajaxSetup ({
 				$.get("cmpReport!toCmpReport",{"cmpReport.projectId":proId,"cmpReport.dataKey":dataKey,"cmpReport.appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
-			}if(softwareId ==113){
+			}else if(softwareId == 113){
 				$.get("splitReport!toSplitReport",{"split.projectId":proId,"split.dataKey":dataKey,"split.appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
