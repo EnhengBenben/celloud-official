@@ -1757,7 +1757,7 @@ public class ReportDaoImpl extends BaseDao implements IReportDao {
 		PageList<Map<String, String>> pageList = new PageList<Map<String, String>>();
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		String sqlC = "select p.*,r.end_date,r.context,r.state,s.software_id,s.software_name from ( select project_id,project_name,create_date,num,size,share,user_id,'no_one' as userName from tb_project where user_id = ? and state = 0 union all select p.project_id,project_name,p.create_date,num,size,0 as share,s.sharer_id as user_id,u.username as userName from tb_project p,tb_file_share s,tb_user u where p.state=0 and p.project_id=s.project_id and s.user_id = ? and s.state = 1 and u.user_id = s.sharer_id ) as p,tb_report as r,tb_software s where r.project_id = p.project_id and r.software_id = s.software_id";
-		String sqlQ = sqlC + " order by p.create_date desc limit ?,?";
+		String sqlQ = sqlC + " order by p.create_date desc,project_id asc limit ?,?";
 		try {
 			ps = conn.prepareStatement(sqlQ);
 			ps.setInt(1, userId);
