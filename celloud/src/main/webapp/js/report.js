@@ -341,12 +341,12 @@ $.ajaxSetup ({
 			                    }
 			                }
 			            }
-			            if(appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
+			            if(appId=="113"||appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
 			                param = {"fileName":$.trim($(this).html()),"dataKey":$.trim($(this).prev().html()),"softwareId":appId,"softwareName":appName,"userId":userId,"obj":$(this),"proId":proId,"proName":proName};
 			                if(j>0&&i==1){
 			                    $(this).addClass("sub");
 			                    var fileName = $(this).html();
-		                        if(fileName.length>30){
+		                        if(fileName.length>30&&appId!="113"&&appId!="112"&&appId!="111"&&appId!="110"){
 		                        	fileName = fileName.substring(0,30) + "...";
 		                        }
 			                    $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
@@ -469,7 +469,11 @@ $.ajaxSetup ({
 			            
 			        });
 			    });
-			    if(tr_size<5){
+			    var minTdNum = 5;
+			    if(appId=="113"||appId=="112"||appId=="111"||appId=="110"){
+			    	minTdNum = 4;
+			    }
+			    if(tr_size<minTdNum){
 			    	var num = 5-tr_size;
 			    	for(i=0;i<num;i++){
 			    		var adHtml = "<tr>";
@@ -519,7 +523,7 @@ $.ajaxSetup ({
 			dataReportParam = event;
 			var softwareId = event.data.softwareId;
 			var fileName = "";
-			if(softwareId == "110"||softwareId == "111"||softwareId == "112"){
+			if(softwareId == "110"||softwareId == "111"||softwareId == "112"||softwareId == "113"){
 				fileName = event.data.fileName.split(" ")[0];
 			}else{
 				fileName = event.data.fileName;
@@ -549,7 +553,7 @@ $.ajaxSetup ({
 				$("#fileListUl").append("<li id='prevLi'><a href='javascript:void(0)' id='prevA' class='forward'>prev</a></li>");
 				var fileNames = new Array();
 				var newList = "";
-				if(softwareId == 110||softwareId == 111||softwareId == 112){
+				if(softwareId == 110||softwareId == 111||softwareId == 112||softwareId == 113){
 					$.each(fileList,function(index,item){
 						fileNames.push(item.fileName);
 					});
@@ -665,6 +669,10 @@ $.ajaxSetup ({
 			}
 			if(softwareId == 110 || softwareId ==111 || softwareId ==112){
 				$.get("cmpReport!toCmpReport",{"cmpReport.projectId":proId,"cmpReport.dataKey":dataKey,"cmpReport.appId":softwareId},function(responseText){
+					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+				});
+			}else if(softwareId == 113){
+				$.get("splitReport!toSplitReport",{"split.projectId":proId,"split.dataKey":dataKey,"split.appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
 			}else if(softwareId == 85 || softwareId == 86 || softwareId == 87 || softwareId == 88 || softwareId == 91 || softwareId == 92 || softwareId == 93 || softwareId == 94 || softwareId == 104){

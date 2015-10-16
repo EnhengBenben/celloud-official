@@ -53,8 +53,17 @@ public class Software implements Serializable {
     private DataFormat dataFormat;
     /** 截图 */
     private Screen screen;
+    private String command;
 
-    public Long getSoftwareId() {
+    public String getCommand() {
+		return command;
+	}
+
+	public void setCommand(String command) {
+		this.command = command;
+	}
+
+	public Long getSoftwareId() {
 	return softwareId;
     }
 

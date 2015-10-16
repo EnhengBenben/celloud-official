@@ -14,19 +14,26 @@ import com.google.inject.ImplementedBy;
  */
 @ImplementedBy(SoftwareDaoImpl.class)
 public interface SoftwareDao {
-    /**
-     * 根据数据类型查询APP列表
-     * 
-     * @param formatId
-     * @return
-     */
-    public List<Software> getAppsByFormat(Integer formatId);
+	/**
+	 * 根据数据类型查询APP列表
+	 * 
+	 * @param formatId
+	 * @return
+	 */
+	public List<Software> getAppsByFormat(Integer formatId);
 
-    /**
-     * 根据编号获取软件信息
-     * 
-     * @param softwareId
-     * @return
-     */
-    public String getAppNameById(Long softwareId);
+	/**
+	 * 根据编号获取软件信息
+	 * 
+	 * @param softwareId
+	 * @return
+	 */
+	public String getAppNameById(Long softwareId);
+
+	/**
+	 * 查询所有的APP信息
+	 * 
+	 * @return
+	 */
+	public List<Software> getAllSoftware();
 }

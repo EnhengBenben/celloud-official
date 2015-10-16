@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
+<machines>
+	<machine>
+		<name>158</name>
+		<host>140.206.208.50</host>
+		<port>22</port>
+		<username>celloud</username>
+		<pwd>CelLoud@nova</pwd>
+	</machine>
+	<machine>
+		<name>spark</name>
+		<host>10.1.0.9</host>
+		<port>22</port>
+		<username>root</username>
+		<pwd>root@CelLoud_Hadoop</pwd>
+	</machine>
+</machines>

@@ -59,6 +59,7 @@
 		"aoColumns": [
 	      null,null
 		],
+		"bSort": false,
 		iDisplayLength: 100
 		} );
 		

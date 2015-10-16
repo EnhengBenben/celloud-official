@@ -5,6 +5,7 @@ import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
 import com.celloud.mongo.sdo.GddDiseaseDict;
 import com.celloud.mongo.sdo.GddGeneticMethod;
+import com.celloud.mongo.sdo.Split;
 
 /**
  * 操作Report接口
@@ -83,4 +84,12 @@ public interface ReportDAO {
      * @return
      */
     public GddGeneticMethod getGddGeneticMethod(String gene);
+
+    /**
+     * 新增split运行报告内容
+     * 
+     * @param cmpReport
+     */
+    public void saveSplit(Split split);
+
 }

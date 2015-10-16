@@ -17,13 +17,13 @@ select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 
         	<th class="center">
         		<input type="checkbox" id="selAll" class="selAll" style="border:none;"/>
         	</th>
-        	<th>文件名称  <a href="javascript:sortByFileName();" id="sortNameA" class="a-gray"><i class="fa fa-sort-amount-asc" id="sortFileName"></i></a></th>
-        	<th class="center">数据编号</th>
+        	<th style="min-width: 418px;">文件名称  <a href="javascript:sortByFileName();" id="sortNameA" class="a-gray"><i class="fa fa-sort-amount-asc" id="sortFileName"></i></a></th>
+        	<th class="center" style="min-width: 115px;">数据编号</th>
         	<th class="center">文件别名</th>
-        	<th class="center">数据大小</th>
-        	<th class="center">上传时间  <a href="javascript:sortByCreateDate();" id="sortDateA" class="a-green-normal"><i class="fa fa-sort-amount-desc" id="sortCreateDate"></i></th>
+        	<th class="center" style="min-width:80px">数据大小</th>
+        	<th class="center" style="min-width:80px">上传时间  <a href="javascript:sortByCreateDate();" id="sortDateA" class="a-green-normal"><i class="fa fa-sort-amount-desc" id="sortCreateDate"></i></th>
         	<th class="center">运行状态</th>
-			<th class="center">操作</th>
+			<th class="center" style="min-width:40px">操作</th>
         </tr>
     </thead>
 	<tbody>

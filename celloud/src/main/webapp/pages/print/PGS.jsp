@@ -372,7 +372,7 @@ hr {
 								<th>年龄</th>
 								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
 								<th>取卵日期</th>
-								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+								<td><span><input type="text" class="input-small onlybotton" /></span></td>
 							</tr>
 						</s:if>
 						<s:if test="%{company.companyId==10}">

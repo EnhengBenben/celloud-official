@@ -24,15 +24,16 @@ var spinner;
 //---------------------------------------------------------------------
 
 //记录数据管理页面每页显示记录个数,默认是50
-var dataPageDataNum = 50;
+var dataPageDataNum = 20;
 //记录数据列表当前页
 var dataCurrentPageNumber = 1;
 //保存用户已经选择的数据
 var checkedDataIds = new Array();
-
+var addedDataNames = new Array();
 var sortType = 0;//默认按照时间进行排序
 var fileNameSort = "asc";
 var createDateSort = "desc";
+var toEdit = false;
 function initData(){
 	$("#dataTagSearch").val("");
 	getAllDataList();
@@ -44,6 +45,19 @@ function initData(){
 		   return;
 	   }
 	});
+	//提示框添加可移动功能
+	$("#tipModalHead").mouseover(function() {
+	  $("#tipModal").draggable();
+	});
+	$("#tipModalHead").mouseout(function() {
+	  $("#tipModal").draggable("destroy");
+	});
+	$("#runErrorHead").mouseover(function() {
+	  $("#runErrorContent").draggable();
+	});
+	$("#runErrorHead").mouseover(function() {
+	  $("#runErrorContent").draggable("destroy");
+	});
 }	
 
 //-------v 3.0版本
@@ -54,10 +68,13 @@ function getAllDataList(){
 	spinner = new Spinner(opts);
 	var target = document.getElementById('selfDataDiv');
 	spinner.spin(target);
-	$.get("data3!getAllData",{},function(responseText){
-		spinner.stop();
+	$.get("data3!getAllData",{"page.pageSize":dataPageDataNum,"page.currentPage":1},function(responseText){
 		$("#selfDataDiv").html(responseText);
 		$("#pageRecordSel").val(dataPageDataNum);
+		toUse();
+		$("#fileDataBody").scrollTop(0);
+		spinner.stop();
+		privateIcon();
 	});
 }
 function getDataByCondition(pageNum){
@@ -94,6 +111,15 @@ function sortByCreateDate(){//按照上传时间进行排序
 	}
 	getDataByCondition(1);
 }
+
+//数据管理-搜索框活得焦点时提示内容消失
+function hideSearchInputInfo(){
+	$("#dataTagSearch").attr("placeholder","");
+}
+//数据管理-搜索框失去焦点时显示提示内容
+function showSearchInputInfo(){
+	$("#dataTagSearch").attr("placeholder","搜索文件名/数据标签/文件别名");
+}
 function privateIcon(){
 	if(fileNameSort=="asc"){
 		$("#sortFileName").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
@@ -113,6 +139,11 @@ function privateIcon(){
 		$("#sortDateA").removeClass("a-gray").addClass("a-green-normal");
 	}
 }
+//截取文件后缀
+function getExt(file_name){
+	var result =/\.[^\.]+/.exec(file_name);
+	return result;
+}
 function showRunApp(){
 	$("#appsForDataUl").html("");
 	$("#addedDataUl").html("");
@@ -126,10 +157,15 @@ function showRunApp(){
     //遍历得到每个checkbox的value值
 	var dataLi = "";
     for (var i=0;i<checkedDataIds.length;i++){
-         dataIds += checkedDataIds[i] + ",";
-         dataLi += "<li class='types-options data-select' id='dataLi"+checkedDataIds[i]+"' title='点击删除' onclick=\"removetoRunData("+checkedDataIds[i]+")\">"+$("#fileName"+checkedDataIds[i]).val()+"</li>";
+    	if(getExt(addedDataNames[i])!=".lis"){
+    		dataIds += checkedDataIds[i] + ",";
+    	}
+    	dataLi += "<li class='types-options data-select' id='dataLi"+checkedDataIds[i]+"' title='点击删除' onclick=\"removetoRunData("+checkedDataIds[i]+")\">"+addedDataNames[i]+"</li>";
     }
     dataIds = dataIds.substring(0, dataIds.length-1);
+    if(checkedDataIds.length==1 && getExt(addedDataNames[0])==".lis"){
+    	dataIds += checkedDataIds[0];
+    }
     var dataLength = checkedDataIds.length;
     $.get("data3!getSoftListByFormat",{"dataIds":dataIds},function(result){
     	if(result == "所选数据格式不统一！"){
@@ -137,18 +173,26 @@ function showRunApp(){
 			$("#warningModal").modal("show");
     	}else{
     		var li = "";
+    		var noAPP = 0;
     		for(var i=0;i<result.length;i++){
     			var appId = result[i].softwareId;
 	    		var appName = result[i].softwareName;
 	    		var dataNum = result[i].dataNum;
 	    		var offLine = result[i].offLine;
 	    		if(dataNum<=dataLength){
-	    			if((appName=="VSP" ||appName=="CMP"||appName=="CMP_199"||appName=="GDD")&&dataNum<dataLength){
+	    			if((appId==109||appId==110||appId==111||appId==112||appId==113)&&dataNum<dataLength){
 	    			}else{
 	    				li += "<li class='types-options' id='runAppli"+appId+"' title='点击选中' onclick=\"addRunApp("+appId+",'"+appName+"','"+dataIds+"')\">"+appName+"</li>";
+	    				noAPP++;
 	    			}
 	    		}
 	    	}
+    		if(result.length==0 || noAPP==0){
+    			li += "<li class='types-options'>没有可运行的APP</li>"
+    			$("#toRunApp").attr("disabled",true);
+    		}else{
+    			$("#toRunApp").removeAttr("disabled");
+    		}
     		$("#appsForDataUl").append(li);
     		$("#addedDataUl").append(dataLi);
     		$("#runApp").modal("show");
@@ -160,42 +204,45 @@ function addRunApp(appId,appName,dataIds){
 		addedApps.splice($.inArray(appId,addedApps),1);
 		$("#runAppli"+appId).removeClass("selected");
 	}else{
-		//判断为包含CMP/CMP_199/GDD则提示检查所选数据
-		if(appId==110 ||appId==111|| appId==112){
-			$("#runErrorTitle").html("请确定以上数据为配对数据！<input type='hidden' id='appIdHide' value='"+appId+"'>");
-			$("#runError").html("(配对格式:aaa<span class='text-red'>1</span>.fastq&nbsp;&nbsp;&nbsp;aaa<span class='text-red'>2</span>.fastq)");
-			$("#runErrorDiv").removeClass("hide");
-		}else{
-			$.get("data3!checkDataRunningSoft",{"dataIds":dataIds,"conditionInt":appId},function(intList){
-				if(intList.length>0){
-					var dataName = "";
-					for(var i=0;i<intList.length;i++){
-						var dataId = intList[i];
-						dataName+=$("#fileName"+dataId).val() + "<br>";
-					}
-					$("#runErrorTitle").html("以下数据正在运行APP："+appName);
-					$("#runError").html(dataName+"<br>请选择其他APP或删除选中数据");
-					$("#runErrorDiv").removeClass("hide");
+		$.get("data3!checkDataRunningSoft",{"dataIds":dataIds,"conditionInt":appId},function(intList){
+			if(intList.length>0){
+				var dataName = "";
+				for(var i=0;i<intList.length;i++){
+					var dataId = intList[i];
+					dataName+=$("#fileName"+dataId).val() + "<br>";
+				}
+				$("#warningText").html("以下数据正在运行APP："+appName+"<br>"+dataName+"<br>请选择其他APP或删除选中数据");
+				$("#warningModal").modal("show");
+			}else{
+				//判断为包含CMP/CMP_199/GDD则提示检查所选数据
+				if(appId==110 ||appId==111|| appId==112){
+					$("#runErrorText").html("运行"+appName+"需确定所选数据为配对数据！<input type='hidden' id='appIdHide' value='"+appId+"'><br>(配对格式:aaa<span class='text-red'>1</span>.fastq&nbsp;&nbsp;&nbsp;aaa<span class='text-red'>2</span>.fastq)");
+					$("#runErrorModal").modal("show");
+				}else if(appId==113){
+					$("#runErrorText").html("运行"+appName+"需注意以下文件格式:<input type='hidden' id='appIdHide' value='"+appId+"'><br>配对数据格式：<br><div style='padding-left:83px'>aaa<span class='text-red'>1</span>.fastq</div><div style='padding-left:83px'>aaa<span class='text-red'>2</span>.fastq</div><br>参数文件格式：index.<span class='text-red'>list</span>");
+					$("#runErrorModal").modal("show");
 				}else{
 					$("#runAppli"+appId).addClass("selected");
 					addedApps.push(appId);
 				}
-			})
-		}
+			}
+		});
 	}
 }
 function removetoRunData(id){
 	checkedDataIds.splice($.inArray(id,checkedDataIds),1);
+	addedDataNames.splice($.inArray(id,addedDataNames),1);
 	$("#chk"+id).attr("checked",false);
 	$("#dataLi"+id).remove();
-}
-function okToRun(type){
-	if(type == 1){
-		var appId = $("#appIdHide").val();
-		$("#runAppli" +appId).addClass("selected");
-		addedApps.push(appId);
+	if(checkedDataIds.length==0){
+		$("#toRunApp").attr("disabled",true);
+		toNoUse();
 	}
-	$("#runErrorDiv").addClass("hide");
+}
+function okToRun(){
+	var appId = $("#appIdHide").val();
+	$("#runAppli" +appId).addClass("selected");
+	addedApps.push(appId);
 }
 function toRunApp(){
 	var dataIds = "";
@@ -211,55 +258,38 @@ function toRunApp(){
 	appIds = appIds.substring(0, appIds.length-1);
 	$.get("data3!run",{"dataIds":dataIds,"condition":appIds},function(result){
 		if(result != ""){
-			$("#runErrorTitle").html("以下APP运行失败：");
-			$("#runError").html(result);
-			$("#runErrorDiv").removeClass("hide");
+			$("#warningText").html("以下APP运行失败：<br>"+result);
+			$("#warningModal").modal("show");
 		}else{
-			checkedDataIds = [];
 			getDataByCondition(dataCurrentPageNumber);
+			checkedDataIds = [];
+			addedDataNames = [];
 			$("input[type='checkbox']").prop("checked",false);
 			$("#runApp").modal("hide");
-			$("#runErrorDiv").addClass("hide");
 		}
 	});
-//	for (var i=0;i<addedApps.length;i++){
-//		softId = addedApps[i];
-//		$.get("project!run", {"dataIds":dataIds,"softwareId" : softId}, function(error) {
-//			if (error > 0) {
-//				$("#runErrorTitle").html("以下APP运行失败：");
-//				
-//				$("#runError").append($("#runAppli" +softId).html() + "  ");
-//				$("#runErrorDiv").removeClass("hide");
-//			}else{
-//				if(i==addedApps.length-1){
-//					checkedDataIds = [];
-//					$("input[type='checkbox']").prop("checked",false);
-//					$("#runApp").modal("hide");
-//					$("#runErrorDiv").addClass("hide");
-//				}
-//			}
-//		});
-//	}
 }
 function deleteData(){
 	$("#warningText").html("确定要删除选中数据吗？");
 	$("#warningModal").modal("show");
 	$("#checkTrue").one("click",function(){
 		var dataIds = "";
-	    for (var i=0;i<checkedDataIds.length;i++){
-	         dataIds += checkedDataIds[i] + ",";
-	    }
-	    dataIds = dataIds.substring(0, dataIds.length-1);
-	    $.get("data3!deleteData",{"dataIds":dataIds},function(result){
-    		if(result>0){
-    			getDataByCondition(dataCurrentPageNumber);
-    			checkedDataIds = [];
-    			toNoUse();
-    		}
-    	});
+		for (var i=0;i<checkedDataIds.length;i++){
+			dataIds += checkedDataIds[i] + ",";
+		}
+		dataIds = dataIds.substring(0, dataIds.length-1);
+		$.get("data3!deleteData",{"dataIds":dataIds},function(result){
+			if(result>0){
+				getDataByCondition(dataCurrentPageNumber);
+				checkedDataIds = [];
+				addedDataNames = [];
+				toNoUse();
+			}
+		});
 	});
 }
 function toMoreDataInfoModel(id,name){
+	toEdit = false;
 	$.get("data3!getMoreData",{"fileId":id},function(responseText){
 		$("#moreDatasForm").html(responseText);
 		var strain = $("#strainListHide").html();
@@ -273,29 +303,36 @@ function toMoreDataInfoModel(id,name){
 	});
 }
 function showDataMoreInfoEdit(){
-	$("#moreDatasForm").find("input").removeAttr("readonly");
+	toEdit = true;
+	$("#moreDatasForm").find("input").removeAttr("disabled");
 	$("#moreDatasForm").find("input").removeClass("readonly");
 	$("#dataTag").children(".popWindow-overlap").remove(); 
-	$("#dataStrainHide").removeAttr("disabled");
+	$("#dataStrainHide").removeAttr("readonly");
 	$(".select2-container").removeClass("select2-container-disabled");
 }
 function cancelEditMoreInfo(){
-	$("#moreDatasForm").find("input").prop("readonly",true);
+	$("#moreDatasForm").find("input").prop("disabled",true);
 	$("#moreDatasForm").find("input").addClass("readonly");
-	$("#dataStrainHide").removeAttr("disabled");
+	$("#dataStrainHide").prop("readonly",true);
 	$(".select2-container").addClass("select2-container-disabled");
 	$("#dataTag").append("<div class=\"popWindow-overlap\"></div>");
 }
 function saveMoreDataInfo(){
-    $.get("data3!updateDataByIds",$("#moreDatasForm").serialize(),function(flag){
-    	if(flag>0){
-    		getDataByCondition(dataCurrentPageNumber);
-    		checkedDataIds = [];
-    		$("#dataMoreInfoModal").modal("hide");
-    	}else {
-    		$("#updateDataErrorDiv").removeClass("hide");;
-    	}
-    });
+	if(toEdit){
+		$.post("data3!updateDataByIds",$("#moreDatasForm").serialize(),function(flag){
+			if(flag>0){
+				getDataByCondition(dataCurrentPageNumber);
+				checkedDataIds = [];
+				addedDataNames = [];
+				$("#dataMoreInfoModal").modal("hide");
+				toEdit = false;
+			}else {
+				$("#updateDataErrorDiv").removeClass("hide");;
+			}
+		});
+	}else{
+		$("#dataMoreInfoModal").modal("hide");
+	}
 }
 
 //给select2添加下拉选项
@@ -322,6 +359,7 @@ function toManageDatasModel(){
 	$("#manageEachDataModal").modal("hide");
 	$("#manageDatasForm")[0].reset();
 	$("#manageDataErrorDiv").addClass("hide");
+	$("#manageDatasStrainSel").val("");
 	$("#manageDatasModal").modal("show");
 }
 function saveManageDatas(){
@@ -331,10 +369,11 @@ function saveManageDatas(){
     }
     dataIds = dataIds.substring(0, dataIds.length-1);
 	$("#dataIdsHide").val(dataIds);
-    $.get("data3!updateDataByIds",$("#manageDatasForm").serialize(),function(flag){
+    $.post("data3!updateDataByIds",$("#manageDatasForm").serialize(),function(flag){
     	if(flag>0){
     		getDataByCondition(dataCurrentPageNumber);
     		checkedDataIds = [];
+    		addedDataNames = [];
     		$("#manageDatasModal").modal("hide");
     	}else {
     		$("#manageDataErrorDiv").removeClass("hide");;
@@ -349,16 +388,18 @@ function toManageEachDataModel(){
     dataIds = dataIds.substring(0, dataIds.length-1);
 	$.get("data3!toUpdateDatas",{"dataIds":dataIds},function(response){
 		$("#eachDatasDiv").html(response);
-		$("#manageDatasModal").modal("hide");
-		setSelect2Info("input[class='strain']",eval("("+$("#strainDataHide").val()+")"));
+		var strainData = $("#strainDataHide").val();
+		setSelect2Info("input[class='strain']",eval("("+strainData+")"));
 		$("#manageEachDataModal").modal("show");
+		$("#manageDatasModal").modal("hide");
 	});
 }
 function saveEachData(){
-	$.get("data3!updateManyDatas",$("#eachDataForm").serialize(),function(result){
+	$.post("data3!updateManyDatas",$("#eachDataForm").serialize(),function(result){
 		if(result>0){
 			getDataByCondition(dataCurrentPageNumber);
 			checkedDataIds = [];
+			addedDataNames = [];
 			$("#manageEachDataModal").modal("hide");
 		}else{
 			$("#eachDataErrorDiv").removeClass("hide");
@@ -402,6 +443,7 @@ function initDataList(){
 				var start = $.inArray(arrChk[i].value,checkedDataIds);
 				if(start==-1){
 					checkedDataIds.push(arrChk[i].value);
+					addedDataNames.push($("#fileName"+arrChk[i].value).val());
 				}
 			}
 		}else{
@@ -411,6 +453,7 @@ function initDataList(){
 				var start = $.inArray(arrChk[i].value,checkedDataIds);
 				if(start!=-1){
 					checkedDataIds.splice(start,1);
+					addedDataNames.splice(start,1);
 				}
 			}
 		}
@@ -440,10 +483,12 @@ function chkOnChange(obj){
 	if(checked){
 		if(start==-1)
 			checkedDataIds.push(dataId_);
+			addedDataNames.push($("#fileName"+dataId_).val());
 	}else{
 		$("#selAll").prop("checked",false);			
 		if(start!=-1)
 			checkedDataIds.splice(start,1);
+			addedDataNames.splice(start,1);
 	}
 	toUse();
 }

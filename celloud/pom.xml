@@ -147,6 +147,21 @@
 		  <artifactId>jsoup</artifactId>
 		  <version>1.8.3</version>
 		</dependency>
+		<dependency>
+			<groupId>ch.ethz.ganymed</groupId>
+			<artifactId>ganymed-ssh2</artifactId>
+			<version>build210</version>
+		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.4.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itext-asian</artifactId>
+			<version>5.2.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>celloud</finalName>

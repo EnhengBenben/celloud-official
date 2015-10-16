@@ -9,55 +9,55 @@
 		<from>^/login$</from>
 		<to>/login!login</to>
 	</rule>
-	
+
 	<rule>
 		<note>toLogin</note>
 		<from>^/toLogin$</from>
 		<to>/login!toLogin</to>
 	</rule>
-	
+
 	<rule>
 		<note>Logout</note>
 		<from>^/logout$</from>
 		<to>/login!logout</to>
 	</rule>
-	
+
 	<rule>
 		<note>enter user forget password page</note>
 		<from>^/forgetPwd$</from>
 		<to>/user_goToForgetPwd.action</to>
 	</rule>
-	
+
 	<rule>
 		<note>enter modify password</note>
 		<from>^/addUser/([\w\W]+)$</from>
 		<to>/user_register.action?email=$1</to>
 	</rule>
-	
+
 	<rule>
 		<note>enter modify password</note>
 		<from>^/resetPwd/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)$</from>
 		<to>/user_resetPassword.action?username=$1&amp;code=$2</to>
 	</rule>
-	
+
 	<rule>
 		<note>Print</note>
 		<from>^/printPGS/([\w\W]+)/([\w\W]+)/([\w\W]+)$</from>
 		<to>/print!printPGS?pagePath=$1&amp;miniPng=$2&amp;txt=$3</to>
 	</rule>
-	
+
 	<rule>
 		<note>Print</note>
 		<from>^/printNIPT/([\w\W]+)/([\w\W]+)/([\w\W]+)$</from>
 		<to>/print!printNIPT?pagePath=$1&amp;miniPng=$2&amp;txt=$3</to>
 	</rule>
-	
+
 	<rule>
 		<note>Print</note>
 		<from>^/updateContext$</from>
 		<to>/report!updateContext</to>
 	</rule>
-	
+
 	<rule>
 		<note>jsp extension change to html</note>
 		<from>^(.*).html$</from>
@@ -65,8 +65,55 @@
 	</rule>
 
 	<rule>
+		<note>python</note>
+		<from>^/login/([\w\W]+)/([\w\W]+)$</from>
+		<to>/python!login?username=$1&amp;pwd=$2</to>
+	</rule>
+	<rule>
+		<note>python</note>
+		<from>^/getSize/([\w\W]+)$</from>
+		<to>/python!getSize?id=$1</to>
+	</rule>
+	<rule>
+		<note>python</note>
+		<from>^/getDataSize/([\w\W]+)/([\w\W]+)$</from>
+		<to>/python!getDataSize?id=$1&amp;dataKey=$2</to>
+	</rule>
+	<rule>
+		<note>python</note>
+		<from>^/getNumber/([\w\W]+)$</from>
+		<to>/python!getNumber?id=$1</to>
+	</rule>
+	<rule>
+		<note>python</note>
+		<from>^/initDataKey/([\w\W]+)/([\w\W]+)/([\w\W]+)$</from>
+		<to>/python!initDataKey?id=$1&amp;fileName=$2&amp;md5=$3</to>
+	</rule>
+	<rule>
+		<note>python</note>
+		<from>^/initDataKey/([\w\W]+)/([\w\W]+)$</from>
+		<to>/python!initDataKey?id=$1&amp;fileName=$2</to>
+	</rule>
+	<rule>
+		<note>python</note>
+		<from>^/saveDataSize/([\w\W]+)/([\w\W]+)$</from>
+		<to>/python!saveDataSize?dataKey=$1&amp;num=$2</to>
+	</rule>
+	<rule>
+		<note>python</note>
+		<from>^/uploaded/([\w\W]+)$</from>
+		<to>/python!uploaded?dataKey=$1</to>
+	</rule>
+	<rule>
+		<note>python</note>
+		<from>^/getClientVersion$</from>
+		<to>/python!getClientVersion</to>
+	</rule>
+
+	<rule>
 		<note>
-			The rule means that requests to /test/status/ will be redirected to
+			The rule means that requests to /test/status/ will be redirected
+			to
 			/rewrite-status
 			the url will be rewritten.
 		</note>
@@ -77,15 +124,20 @@
 
 	<outbound-rule>
 		<note>
-			The outbound-rule specifies that when response.encodeURL is called (if
+			The outbound-rule specifies that when response.encodeURL is
+			called (if
 			you are using JSTL c:url)
-			the url /rewrite-status will be rewritten to /test/status/.
+			the url /rewrite-status will be
+			rewritten to /test/status/.
 
-			The above rule and this outbound-rule means that end users should never
+			The above rule and this outbound-rule
+			means that end users should never
 			see the
-			url /rewrite-status only /test/status/ both in thier location bar and in
+			url /rewrite-status only
+			/test/status/ both in thier location bar and in
 			hyperlinks
-			in your pages.
+			in your
+			pages.
 		</note>
 		<from>/rewrite-status</from>
 		<to>/test/status/</to>

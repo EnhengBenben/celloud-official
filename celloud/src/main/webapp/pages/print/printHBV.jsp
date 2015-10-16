@@ -139,38 +139,46 @@
 							       		 红色字体表示在样本中未找到该位点
 							        </p>
 						        </div>
-						        <c:if test="${flag==0 }">
-						          <div name="resistanceType" class="hide">
-						        	<div class="w3cbbs" style="display: none;"></div>
-									<div class="container" style="display: none;"></div>
-								   	<h2 class="mt10">二、耐药位点突变检测结果：</h2>
-							   		<div class="clearCss_3">${peakFigure }</div>
-								   	<p class="annotation m-box_1">注：1. 突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V，{A-G}：碱基由A变为G<br>
-								   		2. Wild Type: GCT;表示该位点的野生型为GCT<br>3. 峰图中的*号，表示该位置发生了突变
-								   	</p>
-								   	<div id="lessDiv">
-										<div class="w3cbbs" style="display: none;"></div>
+						        <c:choose>
+			        				<c:when test="${flag==0 }">
+							          <div name="resistanceType" class="hide">
+							        	<div class="w3cbbs" style="display: none;"></div>
 										<div class="container" style="display: none;"></div>
-								   	</div>
-							        <h2 class="mt10">三、参考结论（根据已发表文献得出以下参考结论）：</h2>
-							        <div class="m-box_1" id="des">
-										<textarea rows="6">${result }</textarea>
-							        </div>
-								   	<h2 class="mt10">四、测序序列结果：</h2>
-								   	<p style="word-break: break-all;" class="m-box_1">${seq }</p>
-								   	<div id="moreDiv">
-										<div class="w3cbbs" style="display: none;"></div>
-										<div class="container" style="display: none;"></div>
-								   	</div>
-									<div id="SNPEND">
-									   	<h2 class="mt10">五、测序峰图结果：</h2>
-									   	<div class="m-box_1 clearCss_6" id="picture_6">
-										   	<p>${allPic }</p>
-										   	<p class="annotation">注：峰图中的*号表示该位点发生了突变</p>
+									   	<h2 class="mt10">二、耐药位点突变检测结果：</h2>
+								   		<div class="clearCss_3">${peakFigure }</div>
+									   	<p class="annotation m-box_1">注：1. 突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V，{A-G}：碱基由A变为G<br>
+									   		2. Wild Type: GCT;表示该位点的野生型为GCT<br>3. 峰图中的*号，表示该位置发生了突变
+									   	</p>
+									   	<div id="lessDiv">
+											<div class="w3cbbs" style="display: none;"></div>
+											<div class="container" style="display: none;"></div>
 									   	</div>
-									</div>
-								  </div>
-						        </c:if>
+								        <h2 class="mt10">三、参考结论（根据已发表文献得出以下参考结论）：</h2>
+								        <div class="m-box_1" id="des">
+											<textarea rows="6">${result }</textarea>
+								        </div>
+									   	<h2 class="mt10">四、测序序列结果：</h2>
+									   	<p style="word-break: break-all;" class="m-box_1">${seq }</p>
+									   	<div id="moreDiv">
+											<div class="w3cbbs" style="display: none;"></div>
+											<div class="container" style="display: none;"></div>
+									   	</div>
+										<div id="SNPEND">
+										   	<h2 class="mt10">五、测序峰图结果：</h2>
+										   	<div class="m-box_1 clearCss_6" id="picture_6">
+											   	<p>${allPic }</p>
+											   	<p class="annotation">注：峰图中的*号表示该位点发生了突变</p>
+										   	</div>
+										</div>
+									  </div>
+						        	</c:when>
+						        	<c:otherwise>
+						        		<h2 class="mt10">二、参考结论（根据已发表文献得出以下参考结论）：</h2>
+								        <div class="m-box_1" id="des">
+											<textarea rows="6">${result }</textarea>
+								        </div>
+						        	</c:otherwise>
+						        </c:choose>
 			        		</c:when>
 			        		<c:otherwise>
 			        			<h2 class="mt10">一、基因分型结果：<span style="font-size:12px;font-weight: normal">${snpType }</span></h2>

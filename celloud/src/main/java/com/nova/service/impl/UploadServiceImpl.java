@@ -68,7 +68,7 @@ public class UploadServiceImpl implements IUploadService {
 
 	@Override
 	public long getSize(int id) {
-		return sql.getDataSize(id);
+		return sql.getSize(id);
 	}
 
 	@Override

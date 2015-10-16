@@ -76,19 +76,6 @@ public class PropertiesUtils {
      * data.list 文件的存放位置
      */
     public static String datalist;
-    /**
-     * 计算节点IP(158)
-     */
-    public static String host;
-
-    /**
-     * 计算节点用户名
-     */
-    public static String userName;
-    /**
-     * 计算节点密码
-     */
-    public static String pwd;
 
     /**
      * 内网Celloud地址
@@ -126,10 +113,11 @@ public class PropertiesUtils {
     public static String CMP;
     public static String CMP199;
     public static String GDD;
+    public static String split;
     public static String report_dburl;
     public static String report_dbname;
     static {
-	getPath();
+        getPath();
     }
 
     /**
@@ -138,69 +126,67 @@ public class PropertiesUtils {
      * @return
      */
     private static void getPath() {
-	Properties pro = new Properties();
-	InputStream is = PropertiesUtils.class.getClassLoader()
-		.getResourceAsStream("system.properties");
-	try {
-	    pro.load(is);
-	} catch (IOException e) {
-	    System.err.println("获取资源文件信息失败" + e);
-	}
-	tree = pro.getProperty("tree");
-	dataPath = pro.getProperty("dataPath");
-	estFileName = pro.getProperty("estFileName");
-	outProject = pro.getProperty("outProject");
-	SNP_multiple = pro.getProperty("SNP_multiple");
-	datalist = pro.getProperty("datalist");
-	host = pro.getProperty("host");
-	userName = pro.getProperty("userName");
-	pwd = pro.getProperty("pwd");
-	QC = pro.getProperty("QC");
-	celloud = pro.getProperty("celloud");
-	miRNA = pro.getProperty("miRNA");
-	miRNA_diff = pro.getProperty("miRNA_diff");
-	ExomeSNV = pro.getProperty("ExomeSNV");
-	miRNA_MG = pro.getProperty("miRNA_MG");
-	DGE = pro.getProperty("DGE");
-	RNA_seq = pro.getProperty("RNA_seq");
-	RNA_DeNovo = pro.getProperty("RNA_DeNovo");
-	DeNovo_Diff = pro.getProperty("DeNovo_Diff");
-	HCV = pro.getProperty("HCV");
-	PGS = pro.getProperty("MDA");
-	HBV_SNP2 = pro.getProperty("HBV_SNP2");
-	gDNA = pro.getProperty("gDNA");
-	img = pro.getProperty("img");
-	EGFR = pro.getProperty("EGFR");
-	MalBac = pro.getProperty("MalBac");
-	gDNA_HR = pro.getProperty("gDNA_HR");
-	gDNA_MR = pro.getProperty("gDNA_MR");
-	MDA_MR = pro.getProperty("MDA_MR");
-	KRAS = pro.getProperty("KRAS");
-	TB = pro.getProperty("TB");
-	gDNA_Chimeric_perl = pro.getProperty("gDNA_Chimeric");
-	MDA_Chimeric_perl = pro.getProperty("MDA_Chimeric");
-	MDA_HR_perl = pro.getProperty("MDA_HR");
-	Translate = pro.getProperty("Translate");
-	_16S = pro.getProperty("_16S");
-	SurePlex = pro.getProperty("SurePlex");
-	NIPT = pro.getProperty("NIPT");
-	gDNA_MR_v1 = pro.getProperty("gDNA_MR_v1");
-	MDA_MR_v1 = pro.getProperty("MDA_MR_v1");
-	MDA_HR_v1 = pro.getProperty("MDA_HR_v1");
-	gDNA_HR_v1 = pro.getProperty("gDNA_HR_v1");
-	MDA_Chimeric_v1 = pro.getProperty("MDA_Chimeric_v1");
-	gDNA_Chimeric_v1 = pro.getProperty("gDNA_Chimeric_v1");
-	SurePlex_v1 = pro.getProperty("SurePlex_v1");
-	MalBac_v1 = pro.getProperty("MalBac_v1");
-	Sureplex_HR = pro.getProperty("Sureplex_HR");
-	tbinh = pro.getProperty("TBINH");
-	DPD = pro.getProperty("DPD");
-	BRAF = pro.getProperty("BRAF");
-	UGT = pro.getProperty("UGT");
-	CMP = pro.getProperty("CMP");
-	CMP199 = pro.getProperty("CMP199");
-	GDD = pro.getProperty("GDD");
-	report_dburl = pro.getProperty("report_dburl");
-	report_dbname = pro.getProperty("report_dbname");
+        Properties pro = new Properties();
+        InputStream is = PropertiesUtils.class.getClassLoader()
+                .getResourceAsStream("system.properties");
+        try {
+            pro.load(is);
+        } catch (IOException e) {
+            System.err.println("获取资源文件信息失败" + e);
+        }
+        tree = pro.getProperty("tree");
+        dataPath = pro.getProperty("dataPath");
+        estFileName = pro.getProperty("estFileName");
+        outProject = pro.getProperty("outProject");
+        SNP_multiple = pro.getProperty("SNP_multiple");
+        datalist = pro.getProperty("datalist");
+        QC = pro.getProperty("QC");
+        celloud = pro.getProperty("celloud");
+        miRNA = pro.getProperty("miRNA");
+        miRNA_diff = pro.getProperty("miRNA_diff");
+        ExomeSNV = pro.getProperty("ExomeSNV");
+        miRNA_MG = pro.getProperty("miRNA_MG");
+        DGE = pro.getProperty("DGE");
+        RNA_seq = pro.getProperty("RNA_seq");
+        RNA_DeNovo = pro.getProperty("RNA_DeNovo");
+        DeNovo_Diff = pro.getProperty("DeNovo_Diff");
+        HCV = pro.getProperty("HCV");
+        PGS = pro.getProperty("MDA");
+        HBV_SNP2 = pro.getProperty("HBV_SNP2");
+        gDNA = pro.getProperty("gDNA");
+        img = pro.getProperty("img");
+        EGFR = pro.getProperty("EGFR");
+        MalBac = pro.getProperty("MalBac");
+        gDNA_HR = pro.getProperty("gDNA_HR");
+        gDNA_MR = pro.getProperty("gDNA_MR");
+        MDA_MR = pro.getProperty("MDA_MR");
+        KRAS = pro.getProperty("KRAS");
+        TB = pro.getProperty("TB");
+        gDNA_Chimeric_perl = pro.getProperty("gDNA_Chimeric");
+        MDA_Chimeric_perl = pro.getProperty("MDA_Chimeric");
+        MDA_HR_perl = pro.getProperty("MDA_HR");
+        Translate = pro.getProperty("Translate");
+        _16S = pro.getProperty("_16S");
+        SurePlex = pro.getProperty("SurePlex");
+        NIPT = pro.getProperty("NIPT");
+        gDNA_MR_v1 = pro.getProperty("gDNA_MR_v1");
+        MDA_MR_v1 = pro.getProperty("MDA_MR_v1");
+        MDA_HR_v1 = pro.getProperty("MDA_HR_v1");
+        gDNA_HR_v1 = pro.getProperty("gDNA_HR_v1");
+        MDA_Chimeric_v1 = pro.getProperty("MDA_Chimeric_v1");
+        gDNA_Chimeric_v1 = pro.getProperty("gDNA_Chimeric_v1");
+        SurePlex_v1 = pro.getProperty("SurePlex_v1");
+        MalBac_v1 = pro.getProperty("MalBac_v1");
+        Sureplex_HR = pro.getProperty("Sureplex_HR");
+        tbinh = pro.getProperty("TBINH");
+        DPD = pro.getProperty("DPD");
+        BRAF = pro.getProperty("BRAF");
+        UGT = pro.getProperty("UGT");
+        CMP = pro.getProperty("CMP");
+        CMP199 = pro.getProperty("CMP199");
+        GDD = pro.getProperty("GDD");
+        split = pro.getProperty("split");
+        report_dburl = pro.getProperty("report_dburl");
+        report_dbname = pro.getProperty("report_dbname");
     }
 }

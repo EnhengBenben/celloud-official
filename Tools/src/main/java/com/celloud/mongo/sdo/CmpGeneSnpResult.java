@@ -19,93 +19,103 @@ public class CmpGeneSnpResult {
     private String diseaseName;
     private String diseaseType;
     private String geneticMethod;
+    /** het:杂合 Hom:纯合 */
+    private String hetOrHom;
 
     public String getGene() {
-	return gene;
+        return gene;
     }
 
     public void setGene(String gene) {
-	this.gene = gene;
+        this.gene = gene;
     }
 
     public String getRefBase() {
-	return refBase;
+        return refBase;
     }
 
     public void setRefBase(String refBase) {
-	this.refBase = refBase;
+        this.refBase = refBase;
     }
 
     public String getMutBase() {
-	return mutBase;
+        return mutBase;
     }
 
     public void setMutBase(String mutBase) {
-	this.mutBase = mutBase;
+        this.mutBase = mutBase;
     }
 
     public String getDepth() {
-	return depth;
+        return depth;
     }
 
     public void setDepth(String depth) {
-	this.depth = depth;
+        this.depth = depth;
     }
 
     public String getCdsMutSyntax() {
-	return cdsMutSyntax;
+        return cdsMutSyntax;
     }
 
     public void setCdsMutSyntax(String cdsMutSyntax) {
-	this.cdsMutSyntax = cdsMutSyntax;
+        this.cdsMutSyntax = cdsMutSyntax;
     }
 
     public String getAaMutSyntax() {
-	return aaMutSyntax;
+        return aaMutSyntax;
     }
 
     public void setAaMutSyntax(String aaMutSyntax) {
-	this.aaMutSyntax = aaMutSyntax;
+        this.aaMutSyntax = aaMutSyntax;
     }
 
     public String getMutationType() {
-	return mutationType;
+        return mutationType;
     }
 
     public void setMutationType(String mutationType) {
-	this.mutationType = mutationType;
+        this.mutationType = mutationType;
     }
 
     public String getDiseaseEngName() {
-	return diseaseEngName;
+        return diseaseEngName;
     }
 
     public void setDiseaseEngName(String diseaseEngName) {
-	this.diseaseEngName = diseaseEngName;
+        this.diseaseEngName = diseaseEngName;
     }
 
     public String getDiseaseName() {
-	return diseaseName;
+        return diseaseName;
     }
 
     public void setDiseaseName(String diseaseName) {
-	this.diseaseName = diseaseName;
+        this.diseaseName = diseaseName;
     }
 
     public String getDiseaseType() {
-	return diseaseType;
+        return diseaseType;
     }
 
     public void setDiseaseType(String diseaseType) {
-	this.diseaseType = diseaseType;
+        this.diseaseType = diseaseType;
     }
 
     public String getGeneticMethod() {
-	return geneticMethod;
+        return geneticMethod;
     }
 
     public void setGeneticMethod(String geneticMethod) {
-	this.geneticMethod = geneticMethod;
+        this.geneticMethod = geneticMethod;
+    }
+
+    public String getHetOrHom() {
+        return hetOrHom;
+    }
+
+    public void setHetOrHom(String hetOrHom) {
+        this.hetOrHom = hetOrHom;
     }
 
 }
