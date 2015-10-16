@@ -301,13 +301,13 @@ function showDataMoreInfoEdit(){
 	$("#moreDatasForm").find("input").removeAttr("disabled");
 	$("#moreDatasForm").find("input").removeClass("readonly");
 	$("#dataTag").children(".popWindow-overlap").remove(); 
-	$("#dataStrainHide").removeAttr("disabled");
+	$("#dataStrainHide").removeAttr("readonly");
 	$(".select2-container").removeClass("select2-container-disabled");
 }
 function cancelEditMoreInfo(){
-	$("#moreDatasForm").find("input").prop("readonly",true);
+	$("#moreDatasForm").find("input").prop("disabled",true);
 	$("#moreDatasForm").find("input").addClass("readonly");
-	$("#dataStrainHide").removeAttr("disabled");
+	$("#dataStrainHide").prop("readonly",true);
 	$(".select2-container").addClass("select2-container-disabled");
 	$("#dataTag").append("<div class=\"popWindow-overlap\"></div>");
 }

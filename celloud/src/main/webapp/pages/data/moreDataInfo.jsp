@@ -27,7 +27,7 @@ ${data.strainList }
 	<div class="control-label form-label col-xs-3">样本类型/物种</div>
 	<div class="col-xs-9" id="dataTag">
 		<span id="dataMoreInfoStrainSpan">
-			<input type="hidden" id="dataStrainHide" name="data.strain" value="${data.strain}" style="width: 270px;" disabled="disabled"/>
+			<input type="hidden" id="dataStrainHide" name="data.strain" value="${data.strain}" style="width: 270px;" readonly="readonly"/>
 		</span>
  	</div>
 </div>
