@@ -2304,7 +2304,10 @@ a:focus {
 }
 .data-select {
   padding: 6px 15px;
-  font-size: 12px
+  font-size: 12px;
+  max-width: 570px;
+  word-break:break-all;
+  word-wrap:break-word;
 }
 
 /*

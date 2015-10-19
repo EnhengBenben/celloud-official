@@ -88,7 +88,7 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
                     gsr_tmp.setGene(gsr.getGene());
                     list_tmp.add(gsr_tmp);
                 }
-                for (int i = 0; i < list_tmp.size() - 1; i++) {
+                for (int i = 0; i < list_tmp.size(); i++) {
                     int num = 1;
                     for (int j = list_tmp.size() - 1; j > i; j--) {
                         if (list_tmp.get(j).getDiseaseEngName()
