@@ -269,7 +269,7 @@ public class DataDaoImpl extends BaseDao implements DataDao {
 
     @Override
     public Data getDataAndStrain(Integer userId, Long fileId) {
-        String sql = "select f.another_name,f.strain,f.sample,f.data_tags,f1.strain strains from tb_file f join (select distinct strain,user_id from tb_file where user_id=? and strain is not null and strain !='') f1 on f.user_id=f1.user_id where f.file_id=?;";
+        String sql = "select f.another_name,f.strain,f.sample,f.data_tags,f1.strain strains from tb_file f left join (select distinct strain,user_id from tb_file where user_id=? and strain is not null and strain !='') f1 on f.user_id=f1.user_id where f.file_id=?;";
         Data data = new Data();
         try {
             conn = ConnectManager.getConnection();
@@ -279,8 +279,8 @@ public class DataDaoImpl extends BaseDao implements DataDao {
             qrs = qps.executeQuery();
             List<String> list = new ArrayList<>();
             StringBuffer strains = null;
+            data.setFileId(fileId);
             if (qrs.next()) {
-                data.setFileId(fileId);
                 data.setAnotherName(qrs.getString("another_name"));
                 data.setStrain(qrs.getString("strain"));
                 data.setSample(qrs.getString("sample"));
