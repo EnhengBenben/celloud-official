@@ -29,7 +29,7 @@
     	<div class="wrapper">
         	<h2>生物信息云平台客户端上传工具</h2>
             <p class="fs16">提供高速、稳定的基因传输通道<br />针对基因序列数据的传输而打造<br />数据上传从哪里跌倒从哪里开始<br />多个数据同时传输，可以暂停、取消<br />目前仅支持xp、win7、win8操作系统</p>
-            <a href="http://client.celloud.org/CelloudClientSetUp_0.92.msi" class="downloadApp"><img src="images/home/downloadApp.png" />下载客户端</a>
+            <a href="http://client.celloud.org/CelLoudClient_x86_0.0.3.rar" class="downloadApp"><img src="images/home/downloadApp.png" />下载客户端</a>
             <h3>客户端安装使用过程中可能出现的问题及解答</h3>
             <p>A.安装时提示：尚未安装.net framework 4.0<br />
             请到官网<a target="_blank" href="http://www.microsoft.com/zh-cn/download/details.aspx?id=17718">.net4.0</a>下载安装。如果网络速度不好也可以在我们提供地址进行下载，下载地址为：http://client.celloud.org/Microsoft.NET.exe</p>
