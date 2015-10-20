@@ -1,59 +1,67 @@
 package com.nova.queue;
 
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import org.apache.commons.io.FileUtils;
+
+import com.nova.utils.FileTools;
 
 /**
- * 全局队列
+ * spark命令排队文件
  * 
  * @author lin
  */
 public class GlobalQueue {
-	private static Queue<String> queue = new ConcurrentLinkedQueue<String>();
+    /**
+     * 定义排队文件路径
+     */
+    private static String filePath = "/share/data/command/command.txt";
 
-	/**
-	 * 将指定元素插入此队列的尾部。
-	 * 
-	 * @param e
-	 * @return
-	 */
-	public synchronized static boolean offer(String e) {
-		return queue.offer(e);
-	}
+    /**
+     * 将命令追加到文件尾部
+     * 
+     * @param e
+     */
+    public synchronized static void offer(String e) {
+        FileTools.appendWrite(filePath, e + "\n");
+    }
 
-	/**
-	 * 获取并移除此队列的头，如果此队列为空，则返回 null。
-	 * 
-	 * @return
-	 */
-	public synchronized static String poll() {
-		return queue.poll();
-	}
+    /**
+     * 移除排队文件的第一个命令
+     * 
+     * @return
+     */
+    public synchronized static void poll() {
+        List<String> lines = null;
+        try {
+            lines = FileUtils.readLines(new File(filePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        new File(filePath).delete();
+        FileTools.createFile(filePath);
+        for (int i = 1; i < lines.size(); i++) {
+            offer(lines.get(i));
+        }
+    }
 
-	/**
-	 * 获取但不移除此队列的头；如果此队列为空，则返回 null。
-	 * 
-	 * @return
-	 */
-	public synchronized static String peek() {
-		return queue.peek();
-	}
+    /**
+     * 获取排队文件的第一个命令；如果此文件为空，则返回 null。
+     * 
+     * @return
+     */
+    public synchronized static String peek() {
+        return FileTools.getFirstLine(filePath);
+    }
 
-	/**
-	 * 获取队列长度
-	 * 
-	 * @return
-	 */
-	public synchronized static int getSize() {
-		return queue.size();
-	}
-
-	/**
-	 * 队列是否为空
-	 * 
-	 * @return
-	 */
-	public synchronized static boolean isEmpty() {
-		return queue.isEmpty();
-	}
+    /**
+     * 判断排队文件是否为空
+     * 
+     * @return
+     */
+    public synchronized static boolean isEmpty() {
+        return FileTools.countLines(filePath) == 0 ? true : false;
+    }
 }
