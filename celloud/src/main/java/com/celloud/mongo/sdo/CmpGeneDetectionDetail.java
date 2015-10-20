@@ -20,18 +20,18 @@ public class CmpGeneDetectionDetail {
     private List<CmpGeneSnpResult> result;
 
     public String getAvgCoverage() {
-	return avgCoverage;
+        return avgCoverage;
     }
 
     public void setAvgCoverage(String avgCoverage) {
-	this.avgCoverage = avgCoverage;
+        this.avgCoverage = avgCoverage;
     }
 
     public List<CmpGeneSnpResult> getResult() {
-	return result;
+        return result;
     }
 
     public void setResult(List<CmpGeneSnpResult> result) {
-	this.result = result;
+        this.result = result;
     }
 }

@@ -122,43 +122,6 @@ public class CmpReportAction extends BaseAction {
     public String toPrintDetailCmp() {
         cmpReport = reportService.getCmpReport(cmpReport.getDataKey(),
                 cmpReport.getProjectId(), cmpReport.getAppId());
-        if (cmpReport.getAppId() == 112) {
-            log.info("celloud-用户" + super.session.get("userId") + "准备打印GDD总表报告");
-            Map<String, CmpGeneDetectionDetail> geneMap = cmpReport
-                    .getGeneDetectionDetail();
-            Map<String, CmpGeneDetectionDetail> treeMap = new TreeMap<>();
-            List<String> unnormalGene = new ArrayList<>();
-            for (String dataKey : geneMap.keySet()) {
-                if (geneMap.get(dataKey).getResult().get(0).getGene()
-                        .contains("没有发现突变位点")
-                        || dataKey.equals("all")) {
-                } else {
-                    CmpGeneDetectionDetail gdd = geneMap.get(dataKey);
-                    List<CmpGeneSnpResult> gsrli = gdd.getResult();
-                    List<CmpGeneSnpResult> gsrli_ = new ArrayList<>();
-                    for (CmpGeneSnpResult gsr : gsrli) {
-                        CmpGeneSnpResult gsr_ = gsr;
-                        // 只允许字母和数字
-                        String regEx = "[^\\w\\.\\_\\-\u4e00-\u9fa5]";
-                        Pattern p = Pattern.compile(regEx);
-                        gsr_.setDiseaseEngName(p
-                                .matcher(gsr.getDiseaseEngName())
-                                .replaceAll("").trim());
-                        gsrli_.add(gsr_);
-                    }
-                    gdd.setResult(gsrli_);
-                    treeMap.put(dataKey, gdd);
-                    unnormalGene.add(dataKey);
-                }
-            }
-            gddDiseaseList = reportService
-                    .getGddDiseaseDictNormal(unnormalGene);
-            allGsr = geneMap.get("all").getResult();
-            cmpReport.setGeneDetectionDetail(treeMap);
-            gsrList = reportService.getGddResult(cmpReport.getDataKey(),
-                    cmpReport.getProjectId(), cmpReport.getAppId());
-            return "toPrintGddReport";
-        }
         log.info("celloud-用户" + super.session.get("userId") + "准备打印CMP详细报告");
         return "toPrintDetailCmp";
     }
@@ -176,6 +139,54 @@ public class CmpReportAction extends BaseAction {
             cmpReport.setId(new ObjectId(cmpId));
             reportService.editCmpFilling(cmpReport.getId(), cmpFill);
         }
+    }
+
+    public String toPrintGdd() {
+        log.info("celloud-用户" + super.session.get("userId") + "准备打印GDD总表报告");
+        cmpReport = reportService.getCmpReport(cmpReport.getDataKey(),
+                cmpReport.getProjectId(), cmpReport.getAppId());
+        Map<String, CmpGeneDetectionDetail> geneMap = cmpReport
+                .getGeneDetectionDetail();
+        Map<String, CmpGeneDetectionDetail> treeMap = new TreeMap<>();
+        List<String> unnormalGene = new ArrayList<>();
+        for (String dataKey : geneMap.keySet()) {
+            if (geneMap.get(dataKey).getResult().get(0).getGene()
+                    .contains("没有发现突变位点")
+                    || dataKey.equals("all")) {
+            } else {
+                CmpGeneDetectionDetail gdd = geneMap.get(dataKey);
+                List<CmpGeneSnpResult> gsrli = gdd.getResult();
+                List<CmpGeneSnpResult> gsrli_ = new ArrayList<>();
+                for (CmpGeneSnpResult gsr : gsrli) {
+                    if (gsr.getDiseaseName().trim().equals("")
+                            || gsr.getDiseaseName().trim().equals("改变一碳代谢")
+                            || gsr.getDiseaseName().trim().equals("活力减少")
+                            || gsr.getDiseaseName().trim().equals("降低表达")) {
+
+                    } else {
+                        CmpGeneSnpResult gsr_ = gsr;
+                        // 只允许字母和数字
+                        String regEx = "[^\\w\\.\\_\\-\u4e00-\u9fa5]";
+                        Pattern p = Pattern.compile(regEx);
+                        gsr_.setDiseaseEngName(p
+                                .matcher(gsr.getDiseaseEngName())
+                                .replaceAll("").trim());
+                        gsrli_.add(gsr_);
+                    }
+                }
+                if (gsrli_.size() > 0) {
+                    gdd.setResult(gsrli_);
+                    treeMap.put(dataKey, gdd);
+                }
+                unnormalGene.add(dataKey);
+            }
+        }
+        gddDiseaseList = reportService.getGddDiseaseDictNormal(unnormalGene);
+        allGsr = geneMap.get("all").getResult();
+        cmpReport.setGeneDetectionDetail(treeMap);
+        gsrList = reportService.getGddResult(cmpReport.getDataKey(),
+                cmpReport.getProjectId(), cmpReport.getAppId());
+        return "toPrintGddReport";
     }
 
     public CmpFilling getCmpFill() {

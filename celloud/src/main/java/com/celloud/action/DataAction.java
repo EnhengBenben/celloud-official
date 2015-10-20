@@ -104,7 +104,7 @@ public class DataAction extends BaseAction {
 			Mod.USERNAME);
 
 	// TODO 需要投递到spark集群的app
-	private static final List<String> apps = Arrays.asList("");
+    private static final List<String> apps = Arrays.asList("92");
 	// 初始化perl命令路径
 	private static Map<String, String> perlMap = new HashMap<>();
 	static {

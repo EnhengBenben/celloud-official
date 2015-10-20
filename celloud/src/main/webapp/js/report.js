@@ -1422,3 +1422,10 @@ function printSimpCMP(projectId,dataKey,userId,appId){
 		obj.document.close();
 	});
 }
+function printGDD(projectId,dataKey,userId,appId){
+	$.get("cmpReport!toPrintGdd",{"cmpReport.projectId":projectId,"cmpReport.dataKey":dataKey,"cmpReport.userId":userId,"cmpReport.appId":appId},function(responseText){
+		var obj = window.open("");
+		obj.document.write(responseText);
+		obj.document.close();
+	});
+}

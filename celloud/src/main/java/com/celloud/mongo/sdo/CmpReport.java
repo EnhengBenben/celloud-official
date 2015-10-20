@@ -80,147 +80,147 @@ public class CmpReport extends Base {
     private CmpFilling cmpFilling;
 
     public String getRunDate() {
-	return runDate;
+        return runDate;
     }
 
     public void setRunDate(String runDate) {
-	this.runDate = runDate;
+        this.runDate = runDate;
     }
 
     public List<Data> getData() {
-	return data;
+        return data;
     }
 
     public void setData(List<Data> data) {
-	this.data = data;
+        this.data = data;
     }
 
     public List<GeneDetectionResult> getCmpGeneResult() {
-	return cmpGeneResult;
+        return cmpGeneResult;
     }
 
     public void setCmpGeneResult(List<GeneDetectionResult> cmpGeneResult) {
-	this.cmpGeneResult = cmpGeneResult;
+        this.cmpGeneResult = cmpGeneResult;
     }
 
     public String getAllFragment() {
-	return allFragment;
+        return allFragment;
     }
 
     public void setAllFragment(String allFragment) {
-	this.allFragment = allFragment;
+        this.allFragment = allFragment;
     }
 
     public String getAvgQuality() {
-	return avgQuality;
+        return avgQuality;
     }
 
     public void setAvgQuality(String avgQuality) {
-	this.avgQuality = avgQuality;
+        this.avgQuality = avgQuality;
     }
 
     public String getAvgGCContent() {
-	return avgGCContent;
+        return avgGCContent;
     }
 
     public void setAvgGCContent(String avgGCContent) {
-	this.avgGCContent = avgGCContent;
+        this.avgGCContent = avgGCContent;
     }
 
     public String getUsableFragment() {
-	return usableFragment;
+        return usableFragment;
     }
 
     public void setUsableFragment(String usableFragment) {
-	this.usableFragment = usableFragment;
+        this.usableFragment = usableFragment;
     }
 
     public String getNoDetectedGene() {
-	return noDetectedGene;
+        return noDetectedGene;
     }
 
     public void setNoDetectedGene(String noDetectedGene) {
-	this.noDetectedGene = noDetectedGene;
+        this.noDetectedGene = noDetectedGene;
     }
 
     public String getDetectedGene() {
-	return detectedGene;
+        return detectedGene;
     }
 
     public void setDetectedGene(String detectedGene) {
-	this.detectedGene = detectedGene;
+        this.detectedGene = detectedGene;
     }
 
     public String getAvgCoverage() {
-	return avgCoverage;
+        return avgCoverage;
     }
 
     public void setAvgCoverage(String avgCoverage) {
-	this.avgCoverage = avgCoverage;
+        this.avgCoverage = avgCoverage;
     }
 
     public Map<String, CmpGeneDetectionDetail> getGeneDetectionDetail() {
-	return geneDetectionDetail;
+        return geneDetectionDetail;
     }
 
     public void setGeneDetectionDetail(
-	    Map<String, CmpGeneDetectionDetail> geneDetectionDetail) {
-	this.geneDetectionDetail = geneDetectionDetail;
+            Map<String, CmpGeneDetectionDetail> geneDetectionDetail) {
+        this.geneDetectionDetail = geneDetectionDetail;
     }
 
     public Map<String, String> getBasicStatistics1() {
-	return basicStatistics1;
+        return basicStatistics1;
     }
 
     public void setBasicStatistics1(Map<String, String> basicStatistics1) {
-	this.basicStatistics1 = basicStatistics1;
+        this.basicStatistics1 = basicStatistics1;
     }
 
     public Map<String, String> getBasicStatistics2() {
-	return basicStatistics2;
+        return basicStatistics2;
     }
 
     public void setBasicStatistics2(Map<String, String> basicStatistics2) {
-	this.basicStatistics2 = basicStatistics2;
+        this.basicStatistics2 = basicStatistics2;
     }
 
     public String getQualityPath1() {
-	return qualityPath1;
+        return qualityPath1;
     }
 
     public void setQualityPath1(String qualityPath1) {
-	this.qualityPath1 = qualityPath1;
+        this.qualityPath1 = qualityPath1;
     }
 
     public String getSeqContentPath1() {
-	return seqContentPath1;
+        return seqContentPath1;
     }
 
     public void setSeqContentPath1(String seqContentPath1) {
-	this.seqContentPath1 = seqContentPath1;
+        this.seqContentPath1 = seqContentPath1;
     }
 
     public String getQualityPath2() {
-	return qualityPath2;
+        return qualityPath2;
     }
 
     public void setQualityPath2(String qualityPath2) {
-	this.qualityPath2 = qualityPath2;
+        this.qualityPath2 = qualityPath2;
     }
 
     public String getSeqContentPath2() {
-	return seqContentPath2;
+        return seqContentPath2;
     }
 
     public void setSeqContentPath2(String seqContentPath2) {
-	this.seqContentPath2 = seqContentPath2;
+        this.seqContentPath2 = seqContentPath2;
     }
 
     public CmpFilling getCmpFilling() {
-	return cmpFilling;
+        return cmpFilling;
     }
 
     public void setCmpFilling(CmpFilling cmpFilling) {
-	this.cmpFilling = cmpFilling;
+        this.cmpFilling = cmpFilling;
     }
 }

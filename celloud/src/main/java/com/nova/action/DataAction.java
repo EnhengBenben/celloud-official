@@ -156,7 +156,6 @@ public class DataAction extends BaseAction {
 	 */
 	public String deleteData() {
 		flag = dataService.delDatas(dataIds);
-		System.out.println(dataIds + "-------------------" + fileName);
 		if (flag == 1) {
 			new File(PropertiesUtil.bigFilePath + fileName).delete();
 		}
