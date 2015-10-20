@@ -440,10 +440,16 @@ function initDataList(){
 			$("input[name='datachk']").prop("checked",true);
 			arrChk=$("input[name='datachk']:checked");
 			for(var i = 0;i<arrChk.length;i++){
-				var start = $.inArray(arrChk[i].value,checkedDataIds);
-				if(start==-1){
-					checkedDataIds.push(arrChk[i].value);
-					addedDataNames.push($("#fileName"+arrChk[i].value).val());
+				if(checkedDataIds.length>=25){
+					$("#warningText").html("最多允许同时操作25条数据！");
+					$("#warningModal").modal('show');
+					break;
+				}else{
+					var start = $.inArray(arrChk[i].value,checkedDataIds);
+					if(start==-1){
+						checkedDataIds.push(arrChk[i].value);
+						addedDataNames.push($("#fileName"+arrChk[i].value).val());
+					}
 				}
 			}
 		}else{
@@ -481,14 +487,19 @@ function chkOnChange(obj){
 	var dataId_ = $(obj).val();
 	var start = $.inArray(dataId_,checkedDataIds);
 	if(checked){
+		if(checkedDataIds.length>=25){
+			$("#warningText").html("最多允许同时操作25条数据！");
+			$("#warningModal").modal('show');
+		}else{
 		if(start==-1)
 			checkedDataIds.push(dataId_);
-			addedDataNames.push($("#fileName"+dataId_).val());
+		addedDataNames.push($("#fileName"+dataId_).val());
+		}
 	}else{
 		$("#selAll").prop("checked",false);			
 		if(start!=-1)
 			checkedDataIds.splice(start,1);
-			addedDataNames.splice(start,1);
+		addedDataNames.splice(start,1);
 	}
 	toUse();
 }
