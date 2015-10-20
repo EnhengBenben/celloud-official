@@ -246,10 +246,12 @@ public class ProcedureAction extends ActionSupport {
                         cpu,
                         diffList,
                         fileName,
-                        Encrypt.decrypt(dataInfos),
-                        Encrypt.decrypt(company.replace(" ", "+").replace("\n",
-                                "")), Encrypt.decrypt(user),
-                        Encrypt.decrypt(dept));
+                        dataInfos == null ? dataInfos : Encrypt
+                                .decrypt(dataInfos),
+                        company == null ? company : Encrypt.decrypt(company
+                                .replace(" ", "+").replace("\n", "")),
+                        user == null ? user : Encrypt.decrypt(user),
+                        dept == null ? dataInfos : Encrypt.decrypt(dept));
             }
         }).start();
         return SUCCESS;
