@@ -227,10 +227,6 @@
     <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- FastClick -->
     <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
-    <!-- jquery_alert_dialogs begin -->
-<%-- 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script> --%>
-<%-- 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script> --%>
-	<!-- jquery_alert_dialogs end -->
     <script src="<%=request.getContextPath() %>/plugins/select/select2.min.js"></script>
 	<script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
     <script src="<%=request.getContextPath() %>/dist/js/celloud.js" type="text/javascript"></script>
@@ -240,6 +236,10 @@
 	<script type="text/javascript">
 		var session_userId = <%=session.getAttribute("userId")%>;
 		var sessionUserName = "<%=session.getAttribute("userName")%>";
+		//检验session是否超时
+		if(!session_userId){
+			window.top.location = "<%=request.getContextPath() %>/toLogin";
+		}
 		$.ajaxSetup ({
 			cache: false //关闭AJAX相应的缓存
 		});
