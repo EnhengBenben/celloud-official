@@ -190,8 +190,6 @@ function showRunApp(){
     		if(result.length==0 || noAPP==0){
     			li += "<li class='types-options'>没有可运行的APP</li>"
     			$("#toRunApp").attr("disabled",true);
-    		}else{
-    			$("#toRunApp").removeAttr("disabled");
     		}
     		$("#appsForDataUl").append(li);
     		$("#addedDataUl").append(dataLi);
@@ -203,6 +201,9 @@ function addRunApp(appId,appName,dataIds){
 	if($("#runAppli"+appId).hasClass("selected")){
 		addedApps.splice($.inArray(appId,addedApps),1);
 		$("#runAppli"+appId).removeClass("selected");
+		if(addedApps.length==0){
+			$("#toRunApp").attr("disabled","true");
+		}
 	}else{
 		$.get("data3!checkDataRunningSoft",{"dataIds":dataIds,"conditionInt":appId},function(intList){
 			if(intList.length>0){
@@ -223,6 +224,7 @@ function addRunApp(appId,appName,dataIds){
 					$("#runErrorModal").modal("show");
 				}else{
 					$("#runAppli"+appId).addClass("selected");
+					$("#toRunApp").removeAttr("disabled");
 					addedApps.push(appId);
 				}
 			}
