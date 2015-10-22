@@ -2,11 +2,10 @@ package com.celloud.sdo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import com.google.code.morphia.annotations.Entity;
-import com.nova.sdo.Classify;
 import com.nova.sdo.DataFormat;
-import com.nova.sdo.Screen;
 
 /**
  * APP数据模型
@@ -47,171 +46,162 @@ public class Software implements Serializable {
     private Integer companyId;
     /** 是否开放 0-所有人可见 1-所属公司旗下的用户可见 默认为0 */
     private Integer attribute;
-    /** 应用市场的所属分类 */
-    private Classify classify;// 分类
     /** 支持数据类型 */
-    private DataFormat dataFormat;
-    /** 截图 */
-    private Screen screen;
+    private List<DataFormat> dataFormat;
     private String command;
+    /** APP的所属分类 */
+    private Classify classify;
 
     public String getCommand() {
-		return command;
-	}
+        return command;
+    }
 
-	public void setCommand(String command) {
-		this.command = command;
-	}
+    public void setCommand(String command) {
+        this.command = command;
+    }
 
-	public Long getSoftwareId() {
-	return softwareId;
+    public Long getSoftwareId() {
+        return softwareId;
     }
 
     public void setSoftwareId(Long softwareId) {
-	this.softwareId = softwareId;
+        this.softwareId = softwareId;
     }
 
     public String getSoftwareName() {
-	return softwareName;
+        return softwareName;
     }
 
     public void setSoftwareName(String softwareName) {
-	this.softwareName = softwareName;
+        this.softwareName = softwareName;
     }
 
     public String getEnglishName() {
-	return englishName;
+        return englishName;
     }
 
     public void setEnglishName(String englishName) {
-	this.englishName = englishName;
+        this.englishName = englishName;
     }
 
     public String getHost() {
-	return host;
+        return host;
     }
 
     public void setHost(String host) {
-	this.host = host;
+        this.host = host;
     }
 
     public String getPictureName() {
-	return pictureName;
+        return pictureName;
     }
 
     public void setPictureName(String pictureName) {
-	this.pictureName = pictureName;
+        this.pictureName = pictureName;
     }
 
     public Integer getBhri() {
-	return bhri;
+        return bhri;
     }
 
     public void setBhri(Integer bhri) {
-	this.bhri = bhri;
+        this.bhri = bhri;
     }
 
     public Date getCreateDate() {
-	return createDate;
+        return createDate;
     }
 
     public void setCreateDate(Date createDate) {
-	this.createDate = createDate;
+        this.createDate = createDate;
     }
 
     public String getIntro() {
-	return intro;
+        return intro;
     }
 
     public void setIntro(String intro) {
-	this.intro = intro;
+        this.intro = intro;
     }
 
     public String getDescription() {
-	return description;
+        return description;
     }
 
     public void setDescription(String description) {
-	this.description = description;
+        this.description = description;
     }
 
     public String getAppDoc() {
-	return appDoc;
+        return appDoc;
     }
 
     public void setAppDoc(String appDoc) {
-	this.appDoc = appDoc;
+        this.appDoc = appDoc;
     }
 
     public Integer getType() {
-	return type;
+        return type;
     }
 
     public void setType(Integer type) {
-	this.type = type;
+        this.type = type;
     }
 
     public Integer getFlag() {
-	return flag;
+        return flag;
     }
 
     public void setFlag(Integer flag) {
-	this.flag = flag;
+        this.flag = flag;
     }
 
     public Integer getDataNum() {
-	return dataNum;
+        return dataNum;
     }
 
     public void setDataNum(Integer dataNum) {
-	this.dataNum = dataNum;
+        this.dataNum = dataNum;
     }
 
     public Integer getOffLine() {
-	return offLine;
+        return offLine;
     }
 
     public void setOffLine(Integer offLine) {
-	this.offLine = offLine;
+        this.offLine = offLine;
     }
 
     public Integer getCompanyId() {
-	return companyId;
+        return companyId;
     }
 
     public void setCompanyId(Integer companyId) {
-	this.companyId = companyId;
+        this.companyId = companyId;
     }
 
     public Integer getAttribute() {
-	return attribute;
+        return attribute;
     }
 
     public void setAttribute(Integer attribute) {
-	this.attribute = attribute;
+        this.attribute = attribute;
     }
 
     public Classify getClassify() {
-	return classify;
+        return classify;
     }
 
     public void setClassify(Classify classify) {
-	this.classify = classify;
+        this.classify = classify;
     }
 
-    public DataFormat getDataFormat() {
-	return dataFormat;
+    public List<DataFormat> getDataFormat() {
+        return dataFormat;
     }
 
-    public void setDataFormat(DataFormat dataFormat) {
-	this.dataFormat = dataFormat;
+    public void setDataFormat(List<DataFormat> dataFormat) {
+        this.dataFormat = dataFormat;
     }
 
-    public Screen getScreen() {
-	return screen;
-    }
-
-    public void setScreen(Screen screen) {
-	this.screen = screen;
-    }
 }
