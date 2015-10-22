@@ -33,7 +33,7 @@
 					<td class="center"><s:property value="#data.anotherName"/></td>
 					<td class="center"><s:date name="#data.createDate" format="yyyy/MM/dd" /></td>
 					<td class="center">
-        				<a href="javascript:deleteData(<s:property value="#data.fileId"/>,'<s:property value="#data.dataKey"/><s:property value="#data.fileName.substring(#data.fileName.lastIndexOf('.'), #data.fileName.length())" />');">删除</a>
+        				<a href="javascript:deleteData(<s:property value="#data.fileId"/>,'<s:property value="#data.dataKey"/><s:property value="#data.fileName.substring(#data.fileName.indexOf('.'), #data.fileName.length())" />');">删除</a>
         			</td>
 				</tr>
 			</s:iterator>
