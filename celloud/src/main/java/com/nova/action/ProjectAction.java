@@ -153,6 +153,8 @@ public class ProjectAction extends BaseAction {
          titleMap.put(83, "dataName\tdataKey\tTotal_Reads\tDuplicate\tMap_Reads\tMap_Ratio(%)\twin_size\t\n");
          // 92 | gDNA_mosaic |
          titleMap.put( 92, "dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
+         //101 | gDNA_mosaic_1 |
+         titleMap.put( 101, "dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
          // 93 | MDA_mosaic |
          titleMap.put( 93, "dataName\tdataKey\tAnotherName\tTotal_Reads\tMT_ratio\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
          // 91 | MDA_HR |
@@ -638,7 +640,7 @@ public class ProjectAction extends BaseAction {
         String dataListFile = dealDataKeyListContainFileName(projectId,
                 dataKeyList);
         // TODO
-        String command = "nohup perl  /share/biosoft/perl/wangzhen/PGS/bin/moniter_qsub_python_monogo.pl perl "
+        String command = "nohup perl  /share/biosoft/perl/wangzhen/PGS/bin/moniter_qsub_url.pl perl "
                 + " "
                 + perl
                 + " "
@@ -800,15 +802,12 @@ public class ProjectAction extends BaseAction {
         String dataListFile = datalist + new Date().getTime() + ".txt";
         FileTools.createFile(dataListFile);
         String dataArray[] = dataKeyList.split(";");
-        Integer[] ports = new Integer[dataArray.length];
+        List<String> ports = PortPool.getPorts(dataArray.length, projectId);
         for (int i = 0; i < dataArray.length; i++) {
-            Integer port = PortPool.getPort();
             String[] dataDetail = dataArray[i].split(",");
             sb.append(dataPath + getArray(dataDetail, 1) + "\t"
-                    + getArray(dataDetail, 2) + "\t" + port + "\n");
-            ports[i] = port;
+                    + getArray(dataDetail, 2) + "\t" + ports.get(i) + "\n");
         }
-        PortPool.proBindPorts(projectId, ports);
         FileTools.appendWrite(dataListFile, sb.toString());
         return dataListFile;
     }

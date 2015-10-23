@@ -42,8 +42,10 @@ public class GlobalQueue {
         }
         new File(filePath).delete();
         FileTools.createFile(filePath);
-        for (int i = 1; i < lines.size(); i++) {
-            offer(lines.get(i));
+        if (lines.size() > 1) {
+            for (int i = 1; i < lines.size(); i++) {
+                offer(lines.get(i));
+            }
         }
     }
 

@@ -383,15 +383,12 @@ public class DataAction extends BaseAction {
                 + new Double(Math.random() * 1000).intValue() + ".txt";
         FileTools.createFile(dataListFile);
         String dataArray[] = dataKeyList.split(";");
-        Integer[] ports = new Integer[dataArray.length];
+        List<String> ports = PortPool.getPorts(dataArray.length, projectId);
         for (int i = 0; i < dataArray.length; i++) {
-            Integer port = PortPool.getPort();
             String[] dataDetail = dataArray[i].split(",");
             sb.append(dataPath + getArray(dataDetail, 1) + "\t"
-                    + getArray(dataDetail, 2) + "\t" + port + "\n");
-            ports[i] = port;
+                    + getArray(dataDetail, 2) + "\t" + ports.get(i) + "\n");
         }
-        PortPool.proBindPorts(projectId, ports);
         FileTools.appendWrite(dataListFile, sb.toString());
         return dataListFile;
     }

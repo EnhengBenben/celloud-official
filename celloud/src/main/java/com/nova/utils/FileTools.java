@@ -9,6 +9,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.LineNumberReader;
+import java.io.RandomAccessFile;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -31,6 +34,40 @@ import org.apache.commons.io.FileUtils;
  * @date 2013-7-29 下午7:36:51
  */
 public class FileTools {
+
+    /**
+     * 获取文件锁
+     * 
+     * @param file
+     * @return
+     */
+    public static FileLock getFileLock(File file) {
+        RandomAccessFile raf = null;
+        try {
+            raf = new RandomAccessFile(file, "rw");
+        } catch (FileNotFoundException e2) {
+            e2.printStackTrace();
+        }
+        FileChannel fc = raf.getChannel();
+        FileLock fl = null;
+        while (true) {
+            try {
+                fl = fc.tryLock();
+                if (fl != null) {
+                    break;
+                }
+                System.out.println("wait");
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return fl;
+    }
 
     /**
      * 读取报告
