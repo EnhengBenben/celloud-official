@@ -113,4 +113,19 @@ public interface DataDao {
      * @return
      */
     public Integer addDataToPro(String[] dataIdArr, Long proId);
+
+    /**
+     * 获取所有dataKey
+     * 
+     * @return
+     */
+    public List<String> getAllDataKey();
+
+    /**
+     * 添加数据
+     * 
+     * @param list
+     * @return
+     */
+    public Integer addData(Data data);
 }

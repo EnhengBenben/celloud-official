@@ -9,9 +9,9 @@ public class DataUtil {
      * @return
      */
     public static String getNewDataKey() {
-	SecureRandom s = new SecureRandom();
-	String timeStamp = DateUtil.getDateToString()
-		+ String.format("%06d", s.nextInt(1000000));
-	return timeStamp;
+        SecureRandom s = new SecureRandom();
+        String timeStamp = DateUtil.getDateToString()
+                + String.format("%06d", s.nextInt(1000000));
+        return timeStamp;
     }
 }

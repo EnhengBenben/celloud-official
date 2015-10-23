@@ -489,4 +489,56 @@ public class DataDaoImpl extends BaseDao implements DataDao {
         return num;
     }
 
+    @Override
+    public List<String> getAllDataKey() {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<String> dataKeyList = new ArrayList<String>();
+        String sql = "select data_key from tb_file";
+        try {
+            conn = ConnectManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                dataKeyList.add(rs.getString("data_key"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectManager.free(conn, ps, rs);
+        }
+        return dataKeyList;
+    }
+
+    @Override
+    public Integer addData(Data data) {
+        Integer num = 0;
+        try {
+            StringBuffer sql = new StringBuffer();
+            sql.append("insert into tb_file(user_id,data_key,file_name,size,path,file_format,another_name,create_date) values(?,?,?,?,?,?,?,now()");
+            conn = ConnectManager.getConnection();
+            qps = conn.prepareStatement(sql.toString());
+            qps.setInt(1, data.getUserId());
+            qps.setString(2, data.getDataKey());
+            qps.setString(3, data.getFileName());
+            qps.setLong(4, data.getSize());
+            qps.setString(5, data.getPath());
+            qps.setInt(6, data.getFileFormat());
+            qps.setString(7, data.getAnotherName());
+            num = qps.executeUpdate();
+            // 检索由于执行此 Statement 对象而创建的所有自动生成的键
+            qrs = qps.getGeneratedKeys();
+            if (qrs.next()) {
+                num = (int) qrs.getLong(1);
+            }
+        } catch (SQLException e) {
+            log.error("用户" + super.userName + "新增数据信息失败");
+            e.printStackTrace();
+        } finally {
+            ConnectManager.free(conn, qps, qrs);
+        }
+        return num;
+    }
+
 }

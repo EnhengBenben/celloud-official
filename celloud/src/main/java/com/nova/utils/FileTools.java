@@ -16,6 +16,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -612,5 +613,26 @@ public class FileTools {
             }
         }
         return count;
+    }
+
+    /**
+     * 遍历文件夹，返回其下所有文件列表（不包含子文件夹）
+     * 
+     * @param folderPath
+     * @return
+     */
+    public static HashSet<String> getFiles(String folderPath) {
+        if (!folderPath.endsWith("/")) {
+            folderPath = folderPath + "/";
+        }
+        File dir = new File(folderPath);
+        File file[] = dir.listFiles();
+        HashSet<String> set = new HashSet<String>();
+        for (int i = 0; i < file.length; i++) {
+            if (new File(folderPath + file[i].getName()).isFile()) {
+                set.add(file[i].getName());
+            }
+        }
+        return set;
     }
 }

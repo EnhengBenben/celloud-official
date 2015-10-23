@@ -8,6 +8,7 @@ import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpGeneSnpResult;
 import com.celloud.mongo.sdo.CmpReport;
 import com.celloud.mongo.sdo.GddDiseaseDict;
+import com.celloud.mongo.sdo.MIB;
 import com.celloud.mongo.sdo.NIPT;
 import com.celloud.mongo.sdo.PGSFilling;
 import com.celloud.mongo.sdo.Pgs;
@@ -78,4 +79,15 @@ public class ReportServiceImpl implements ReportService {
     public Split getSplit(String dataKey, Integer proId, Integer appId) {
         return reportDao.getSplit(dataKey, proId, appId);
     }
+
+    @Override
+    public void editSplit(Object id, Integer upload) {
+        reportDao.editSplit(id, upload);
+    }
+
+    @Override
+    public MIB getMIB(String dataKey, Integer proId, Integer appId) {
+        return reportDao.getMIB(dataKey, proId, appId);
+    }
+
 }

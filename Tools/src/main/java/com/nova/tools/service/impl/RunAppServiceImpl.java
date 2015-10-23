@@ -23,6 +23,7 @@ import com.celloud.mongo.sdo.Dept;
 import com.celloud.mongo.sdo.GddDiseaseDict;
 import com.celloud.mongo.sdo.GddGeneticMethod;
 import com.celloud.mongo.sdo.GeneDetectionResult;
+import com.celloud.mongo.sdo.MIB;
 import com.celloud.mongo.sdo.Split;
 import com.celloud.mongo.sdo.User;
 import com.celloud.mongo.service.ReportService;
@@ -95,6 +96,7 @@ public class RunAppServiceImpl {
     private static String CMP199_perl = PropertiesUtils.CMP199;
     private static String GDD_perl = PropertiesUtils.GDD;
     private static String split_perl = PropertiesUtils.split;
+    private static String MIB_perl = PropertiesUtils.MIB;
 
     private static String[] HCVType = { "1b", "2a", "3a", "3b", "6a" };
     private static List<String> typeList = Arrays.asList(HCVType);
@@ -130,6 +132,110 @@ public class RunAppServiceImpl {
             }
             FileTools.appendWrite(projectFile, getArray(dataDetail, 0) + "\t"
                     + getArray(dataDetail, 2) + "\n");
+        }
+    }
+
+    /**
+     * 运行MIB
+     * 
+     * @param outPath
+     * @param projectId
+     * @param dataKeyList
+     * @param appId
+     * @param appName
+     * @param userId
+     * @param dataInfos
+     * @param company
+     * @param user
+     */
+    // TODO
+    public void MIB(String outPath, String projectId, String dataKeyList,
+            String appId, String appName, String userId, String dataInfos,
+            String company, String user, String dept) {
+        String dataListFile = formatDataKeyListToSplit(dataKeyList);
+        String command = MIB_perl + " " + dataListFile + " " + outPath
+                + " ProjectID" + projectId;
+        GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
+        boolean state = ssh.sshSubmit(true);
+        if (state) {
+            String dataArray[] = dataKeyList.split(";");
+            // 创建项目结果文件
+            String projectFile = outPath + "/" + projectId + "/" + projectId
+                    + ".txt";
+            FileTools.createFile(projectFile);
+            // 追加表头
+            FileTools.appendWrite(projectFile,
+                    "dataKey\t文件名称\t序列总数\t平均质量\t平均GC含量\n");
+            Map<String, List<Data>> map = JsonUtil.parseDataMap(dataInfos);
+            Company com = JSON.parseObject(company, Company.class);
+            User use = JSON.parseObject(user, User.class);
+            Dept dept1 = JSON.parseObject(dept, Dept.class);
+            reportService = new ReportServiceImpl();
+            for (int i = 0; i < dataArray.length; i++) {
+                MIB mib = new MIB();
+                String[] dataDetail = dataArray[i].split(",");
+                String finalPath = outPath + "/" + getArray(dataDetail, 0)
+                        + "/";
+                // -----读取报告内容并保存到mongoDB------
+                List<Data> dataList = map.get(getArray(dataDetail, 0));
+                mib.setProjectId(Integer.parseInt(projectId));
+                mib.setDataKey(getArray(dataDetail, 0));
+                mib.setUserId(Integer.parseInt(userId));
+                mib.setUsername(use.getUsername());
+                mib.setEmail(use.getEmail());
+                mib.setAppId(Integer.parseInt(appId));
+                mib.setAppName(appName);
+                mib.setData(dataList);
+                mib.setCompanyId(com.getCompanyId());
+                mib.setCompanyName(com.getCompanyName());
+                mib.setCompanyEngName(com.getEnglishName());
+                mib.setCompanyAddr(com.getAddress());
+                mib.setCompanyEnAddr(com.getEnglishName());
+                mib.setCompanyIcon(com.getCompanyIcon());
+                mib.setCompanyTel(com.getTel());
+                mib.setZipCode(com.getZipCode());
+                mib.setDeptName(dept1.getDeptName());
+                mib.setDeptEngName(dept1.getEnglishName());
+                mib.setDeptIcon(dept1.getDeptIcon());
+                mib.setDeptTel(dept1.getTel());
+                mib.setCreateDate(new Date());
+                // 1. 读取各个属的详细情况
+                String tablePath = finalPath + "taxi.C1.fastq.table";
+                if (new File(tablePath).exists()) {
+                    List<String> list_ = FileTools.readLinestoString(tablePath);
+                    List<Map<String, String>> summaryTable = new ArrayList<>();
+                    for (int z = 1; z < list_.size(); z++) {
+                        Map<String, String> map_ = new HashMap<>();
+                        String[] line_z = list_.get(z).split("\t");
+                        map_.put("Species", getArray(line_z, 0));
+                        map_.put("Genus", getArray(line_z, 0));
+                        map_.put("GI", getArray(line_z, 0));
+                        map_.put("Coverage", getArray(line_z, 0));
+                        map_.put("Reads_hit", getArray(line_z, 0));
+                        map_.put("Reads_num", getArray(line_z, 0));
+                        map_.put("avgCoverage", getArray(line_z, 0));
+                        summaryTable.add(map_);
+                    }
+                    mib.setSummaryTable(summaryTable);
+                }
+                // 2. 保存各个图片
+                HashSet<String> resultFiles = FileTools.getFiles(finalPath);
+                Iterator<String> rFile = resultFiles.iterator();
+                String pngPath = PropertiesUtils.outProject + "/upload/"
+                        + userId + "/" + appId + "/" + getArray(dataDetail, 0)
+                        + "/";
+                // TODO
+                while (rFile.hasNext()) {
+                    String fstr = rFile.next();
+                    if (fstr.equals("1.png")) {
+                        mib.setAcetobacter(pngPath + fstr);
+                    } else if (fstr.equals("average.info")) {
+
+                    } else if (fstr.equals("snp_num.info")) {
+                    }
+                }
+                reportService.saveMIB(mib);
+            }
         }
     }
 
@@ -238,6 +344,7 @@ public class RunAppServiceImpl {
             }
         }
     }
+
     /**
      * 运行CMP
      * 
@@ -660,7 +767,7 @@ public class RunAppServiceImpl {
         String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = PGS + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
-                        + projectId + ".log";
+                + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         ssh.sshSubmit(false);
     }
@@ -734,7 +841,7 @@ public class RunAppServiceImpl {
         String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = gDNA_perl + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
-                        + projectId + ".log";
+                + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         ssh.sshSubmit(false);
     }
@@ -744,8 +851,8 @@ public class RunAppServiceImpl {
         // 创建要运行的文件列表文件
         String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = gDNA_Chimeric_perl + " " + dataListFile + " "
-                + basePath + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
-                        + projectId + ".log";
+                + basePath + " ProjectID" + projectId + " &>" + basePath
+                + "ProjectID" + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         ssh.sshSubmit(false);
     }
@@ -755,8 +862,8 @@ public class RunAppServiceImpl {
         // 创建要运行的文件列表文件
         String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = MDA_Chimeric_perl + " " + dataListFile + " "
-                + basePath + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
-                        + projectId + ".log";
+                + basePath + " ProjectID" + projectId + " &>" + basePath
+                + "ProjectID" + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         ssh.sshSubmit(false);
     }
@@ -767,7 +874,7 @@ public class RunAppServiceImpl {
         String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = MDA_HR_perl + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
-                        + projectId + ".log";
+                + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         ssh.sshSubmit(false);
     }
@@ -778,7 +885,7 @@ public class RunAppServiceImpl {
         String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = SurePlex_perl + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
-                        + projectId + ".log";
+                + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         ssh.sshSubmit(false);
     }
@@ -789,7 +896,7 @@ public class RunAppServiceImpl {
         String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = SurePlex_HR_perl + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
-                        + projectId + ".log";
+                + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         ssh.sshSubmit(false);
     }
@@ -800,7 +907,7 @@ public class RunAppServiceImpl {
         String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = gDNA_MR_perl + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
-                        + projectId + ".log";
+                + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         ssh.sshSubmit(false);
     }
@@ -1290,7 +1397,7 @@ public class RunAppServiceImpl {
         String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = MalBac_perl + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
-                        + projectId + ".log";
+                + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         ssh.sshSubmit(false);
     }
@@ -1301,7 +1408,7 @@ public class RunAppServiceImpl {
         String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = gDNA_HR_perl + " " + dataListFile + " " + basePath
                 + " ProjectID" + projectId + " &>" + basePath + "ProjectID"
-                        + projectId + ".log";
+                + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         ssh.sshSubmit(false);
     }

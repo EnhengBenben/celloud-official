@@ -4,6 +4,7 @@ import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
 import com.celloud.mongo.sdo.GddDiseaseDict;
 import com.celloud.mongo.sdo.GddGeneticMethod;
+import com.celloud.mongo.sdo.MIB;
 import com.celloud.mongo.sdo.Split;
 import com.google.code.morphia.Morphia;
 import com.google.code.morphia.dao.BasicDAO;
@@ -80,6 +81,11 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
     @Override
     public void saveSplit(Split split) {
         ds.save(split);
+    }
+
+    @Override
+    public void saveMIB(MIB mib) {
+        ds.save(mib);
     }
 
 }

@@ -247,11 +247,14 @@ public class ProcedureAction extends ActionSupport {
                         diffList,
                         fileName,
                         dataInfos == null ? dataInfos : Encrypt
-                                .decrypt(dataInfos),
+                                .decrypt(dataInfos.replace(" ", "+").replace(
+                                        "\n", "")),
                         company == null ? company : Encrypt.decrypt(company
                                 .replace(" ", "+").replace("\n", "")),
-                        user == null ? user : Encrypt.decrypt(user),
-                        dept == null ? dataInfos : Encrypt.decrypt(dept));
+                        user == null ? user : Encrypt.decrypt(user.replace(" ",
+                                "+").replace("\n", "")),
+                        dept == null ? dept : Encrypt.decrypt(dept.replace(" ",
+                                "+").replace("\n", "")));
             }
         }).start();
         return SUCCESS;
