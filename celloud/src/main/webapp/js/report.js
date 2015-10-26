@@ -1434,7 +1434,7 @@ function saveReportData(resourcePath,num,dataKey){
 	$("#toSaveDataA"+dataKey).html("（正在上传到数据管理...）");
 	$.get("data3!saveSplitReportData",{"condition":resourcePath,"conditionInt":num,"dataIds":$("#splitId").val()},function(result){
 		if(result.length>0){
-			$("#toSaveDataA"+dataKey).html("<a class='link' href='javascript:void()' onclick='toRunData("+result+")'>（已上传到数据管理）</a>");
+			$("#toSaveDataA"+dataKey).html("<a class='link' href='javascript:void()' onclick='toRunData('"+result+"')'>（已上传到数据管理）</a>");
 		}
 	})
 }
@@ -1442,5 +1442,5 @@ function saveReportData(resourcePath,num,dataKey){
 function toRunData(ids){
 	window.parent.document.getElementById("toFileData").click();
 	var idsArr = ids.split(",");
-	window.parent.globalDataIds = idsArr.substring(0,idsArr.length-1);
+	window.parent.globalDataIds = idsArr[0,idsArr.length-1];
 }

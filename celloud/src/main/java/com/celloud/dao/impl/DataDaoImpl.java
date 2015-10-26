@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import com.celloud.dao.DataDao;
 import com.celloud.sdo.Data;
+import com.mysql.jdbc.Statement;
 import com.nova.constants.DataState;
 import com.nova.constants.ReportState;
 import com.nova.constants.ReportType;
@@ -516,9 +517,10 @@ public class DataDaoImpl extends BaseDao implements DataDao {
         Integer num = 0;
         try {
             StringBuffer sql = new StringBuffer();
-            sql.append("insert into tb_file(user_id,data_key,file_name,size,path,file_format,another_name,create_date) values(?,?,?,?,?,?,?,now()");
+            sql.append("insert into tb_file(user_id,data_key,file_name,size,path,file_format,another_name,create_date) values(?,?,?,?,?,?,?,now());");
             conn = ConnectManager.getConnection();
-            qps = conn.prepareStatement(sql.toString());
+            qps = conn.prepareStatement(sql.toString(),
+                    Statement.RETURN_GENERATED_KEYS);
             qps.setInt(1, data.getUserId());
             qps.setString(2, data.getDataKey());
             qps.setString(3, data.getFileName());

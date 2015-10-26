@@ -19,6 +19,7 @@ import org.apache.struts2.convention.annotation.Results;
 import org.bson.types.ObjectId;
 
 import com.alibaba.fastjson.JSONObject;
+import com.celloud.mongo.sdo.Split;
 import com.celloud.sdo.Company;
 import com.celloud.sdo.Data;
 import com.celloud.sdo.Dept;
@@ -409,7 +410,12 @@ public class DataAction extends BaseAction {
         Long size = null;
         String dataKey = "";
         conditionInt = 0;
-        mReportService.editSplit(new ObjectId(dataIds), DataUpload.DOING);
+        result = "";
+        Split split = new Split();
+        split.setId(new ObjectId(dataIds));
+        split.setUpload(DataUpload.DOING);
+        split.setSplitDataIds(result);
+        mReportService.editSplit(split);
         while (rFile.hasNext()) {
             String fstr = rFile.next();
             if (!fstr.equals("...tar.gz") && !fstr.equals("..tar.gz")) {
@@ -431,9 +437,12 @@ public class DataAction extends BaseAction {
                     data.setFileFormat(FileFormat.FQ);
                     result += dataService.addData(data) + ",";
                 }
+                num++;
             }
         }
-        mReportService.editSplit(new ObjectId(dataIds), DataUpload.DONE);
+        split.setUpload(DataUpload.DONE);
+        split.setSplitDataIds(result);
+        mReportService.editSplit(split);
         return "info";
     }
 

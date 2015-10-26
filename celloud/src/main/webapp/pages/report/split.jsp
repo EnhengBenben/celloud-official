@@ -45,7 +45,9 @@
 							  <span id="toSaveDataA${ split.dataKey}">
 								  <c:if test="${fn:length(split.resultList)>3}">
 								  	<c:choose>
-									  	<c:when test="${split.upload==2}">（已上传到数据管理）</c:when>
+									  	<c:when test="${split.upload==2}">
+									  		<a class="link" href="javascript:toRunData('${split.splitDataIds}')">（已上传到数据管理）</a>
+									  	</c:when>
 									  	<c:otherwise>
 										  <c:choose>
 										  	<c:when test="${split.upload==1}">（正在上传到数据管理...）</c:when>
@@ -67,7 +69,16 @@
 					  	<c:otherwise>
 							<c:forEach items="${split.resultList}" var="data">
 								<tr>
-									<td><a class="link" href="${path.replace('upload','') }Procedure!miRNADownload?userId=${split.userId }/${split.appId }/${split.dataKey }/result/split/${data.name }.tar.gz">${data.name }</a></td>
+									<td>
+										<c:choose>
+										  <c:when test="${data.name=='total' ||data.name=='useful'||data.name=='unknow'}">
+										    ${data.name }
+										  </c:when>
+										  <c:otherwise>
+											<a class="link" href="${path.replace('upload','') }Procedure!miRNADownload?userId=${split.userId }/${split.appId }/${split.dataKey }/result/split/${data.name }.tar.gz">${data.name }</a>  
+										  </c:otherwise>
+										</c:choose>
+									</td>
 									<td>${data.number }</td>
 								</tr>
 							</c:forEach>

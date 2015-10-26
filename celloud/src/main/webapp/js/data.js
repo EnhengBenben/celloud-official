@@ -244,6 +244,7 @@ function removetoRunData(id){
 function okToRun(){
 	var appId = $("#appIdHide").val();
 	$("#runAppli" +appId).addClass("selected");
+	$("#toRunApp").removeAttr("disabled");
 	addedApps.push(appId);
 }
 function toRunApp(){
@@ -435,7 +436,6 @@ function toUse(){
 function initDataList(){
 	//全选
 	$("#selAll").click(function(){
-		window.parent.globalDataIds = new Array();
 		//清空checkedDataIds
 		var checked = $(this).prop("checked");
 		var arrChk;
@@ -467,9 +467,10 @@ function initDataList(){
 			}
 		}
 		toUse();
+		window.parent.globalDataIds = new Array();
 	});
 	if(window.parent.globalDataIds != null){
-		checkedDataIds = globalDataIds;
+		checkedDataIds = window.parent.globalDataIds;
 	}
 	// 设置之前选过的数据为选中状态
 	for(var j=0;j<checkedDataIds.length;j++){

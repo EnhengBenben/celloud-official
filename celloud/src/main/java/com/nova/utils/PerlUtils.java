@@ -187,9 +187,7 @@ public class PerlUtils {
             while ((line = reader.readLine()) != null) {
                 log.info(line);
             }
-            if (proc.exitValue() == 0) {
-                state = true;
-            }
+            state = true;
             log.info("拷贝命令执行" + state);
         } catch (IOException e) {
             log.error("命令command=" + command + " 执行失败，错误：" + e);

@@ -81,8 +81,8 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public void editSplit(Object id, Integer upload) {
-        reportDao.editSplit(id, upload);
+    public void editSplit(Split split) {
+        reportDao.editSplit(split);
     }
 
     @Override

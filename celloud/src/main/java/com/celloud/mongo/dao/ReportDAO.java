@@ -121,7 +121,7 @@ public interface ReportDAO {
      * @param upload
      *            1已上传
      */
-    public void editSplit(Object id, Integer upload);
+    public void editSplit(Split split);
 
     /**
      * 获取MIB报告内容

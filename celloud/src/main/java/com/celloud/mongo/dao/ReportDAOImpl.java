@@ -169,9 +169,14 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
     }
 
     @Override
-    public void editSplit(Object id, Integer upload) {
-        ds.update(ds.createQuery(Split.class).filter("_id", id), ds
-                .createUpdateOperations(Split.class).set("upload", upload));
+    public void editSplit(Split split) {
+        System.out.println(split.getUpload());
+        System.out.println(split.getSplitDataIds());
+        ds.update(
+                ds.createQuery(Split.class).filter("_id", split.getId()),
+                ds.createUpdateOperations(Split.class)
+                        .set("upload", split.getUpload())
+                        .set("splitDataIds", split.getSplitDataIds()));
     }
 
 }
