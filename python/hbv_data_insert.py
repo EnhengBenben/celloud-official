@@ -17,5 +17,4 @@ if my:
 	for i in range(len(result)):
 		re = result[i]
 		path = os.path.join(basePath , str(re['user_id']) , str(re['software_id']))
-		print path
 		datainsert(path,str(re['project_id']))

@@ -45,7 +45,6 @@ class HBV:
 		result['datakey'] = datakey
 
 		if(not os.path.exists(path)):
-			print 'no--------------'
 			return result
 
 		#clinical.txt
