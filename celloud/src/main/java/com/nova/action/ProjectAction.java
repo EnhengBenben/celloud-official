@@ -136,8 +136,8 @@ public class ProjectAction extends BaseAction {
     private static Map<Integer, String> titleMap = new HashMap<>();
     static {
         SQLUtils sql = new SQLUtils();
-        List<com.celloud.sdo.Software> list = sql.getAllSoftware();
-        for (com.celloud.sdo.Software software : list) {
+        List<com.celloud.sdo.App> list = sql.getAllSoftware();
+        for (com.celloud.sdo.App software : list) {
             perlMap.put("" + software.getSoftwareId(), software.getCommand());
         }
         // 81 | MDA |
