@@ -19,7 +19,6 @@ import org.apache.struts2.convention.annotation.Results;
 import org.bson.types.ObjectId;
 
 import com.alibaba.fastjson.JSONObject;
-import com.celloud.mongo.sdo.Split;
 import com.celloud.sdo.Company;
 import com.celloud.sdo.Data;
 import com.celloud.sdo.Dept;
@@ -33,6 +32,7 @@ import com.celloud.service.ReportService;
 import com.celloud.service.SoftwareService;
 import com.celloud.service.UserService;
 import com.google.inject.Inject;
+import com.mongo.sdo.Split;
 import com.nova.action.BaseAction;
 import com.nova.constants.DataUpload;
 import com.nova.constants.FileFormat;
@@ -90,7 +90,7 @@ public class DataAction extends BaseAction {
     @Inject
     private IDataService idataService;
     @Inject
-    private com.celloud.mongo.service.ReportService mReportService;
+    private com.mongo.service.ReportService mReportService;
     private PageList<Data> dataPageList;
     private List<Integer> intList;
     private List<Data> dataList;
