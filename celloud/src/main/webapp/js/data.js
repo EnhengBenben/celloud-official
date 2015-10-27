@@ -244,6 +244,7 @@ function removetoRunData(id){
 function okToRun(){
 	var appId = $("#appIdHide").val();
 	$("#runAppli" +appId).addClass("selected");
+	$("#toRunApp").removeAttr("disabled");
 	addedApps.push(appId);
 }
 function toRunApp(){
@@ -466,7 +467,11 @@ function initDataList(){
 			}
 		}
 		toUse();
+		window.parent.globalDataIds = new Array();
 	});
+	if(window.parent.globalDataIds != null){
+		checkedDataIds = window.parent.globalDataIds;
+	}
 	// 设置之前选过的数据为选中状态
 	for(var j=0;j<checkedDataIds.length;j++){
 		var fileId = checkedDataIds[j];
@@ -493,9 +498,9 @@ function chkOnChange(obj){
 			$("#warningText").html("最多允许同时操作25条数据！");
 			$("#warningModal").modal('show');
 		}else{
-		if(start==-1)
-			checkedDataIds.push(dataId_);
-		addedDataNames.push($("#fileName"+dataId_).val());
+			if(start==-1)
+				checkedDataIds.push(dataId_);
+			addedDataNames.push($("#fileName"+dataId_).val());
 		}
 	}else{
 		$("#selAll").prop("checked",false);			
@@ -504,6 +509,7 @@ function chkOnChange(obj){
 		addedDataNames.splice(start,1);
 	}
 	toUse();
+	window.parent.globalDataIds = new Array();
 }
 
 //选择页面显示记录个数

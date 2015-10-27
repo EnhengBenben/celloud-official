@@ -57,6 +57,13 @@ public class RunAppService {
         String appPath = basePath + "/" + userId + "/" + appId;
         RunAppServiceImpl runApp = new RunAppServiceImpl();
         String start = DateUtil.formatNowDate();
+
+        // MIB
+        if (AppNameIDConstant.MIB.equals(appId)) {
+            runApp.MIB(appPath, projectId, dataKeyList, appId, appName, userId,
+                    dataInfos, company, user, dept);
+        }
+
         // split
         if (AppNameIDConstant.split.equals(appId)) {
             runApp.split(appPath, projectId, dataKeyList, appId, appName,

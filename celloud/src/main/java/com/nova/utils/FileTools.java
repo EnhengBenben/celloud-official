@@ -9,6 +9,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.LineNumberReader;
+import java.io.RandomAccessFile;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,6 +19,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +34,40 @@ import org.apache.commons.io.FileUtils;
  * @date 2013-7-29 下午7:36:51
  */
 public class FileTools {
+
+    /**
+     * 获取文件锁
+     * 
+     * @param file
+     * @return
+     */
+    public static FileLock getFileLock(File file) {
+        RandomAccessFile raf = null;
+        try {
+            raf = new RandomAccessFile(file, "rw");
+        } catch (FileNotFoundException e2) {
+            e2.printStackTrace();
+        }
+        FileChannel fc = raf.getChannel();
+        FileLock fl = null;
+        while (true) {
+            try {
+                fl = fc.tryLock();
+                if (fl != null) {
+                    break;
+                }
+                System.out.println("wait");
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return fl;
+    }
 
     /**
      * 读取报告
@@ -612,5 +650,26 @@ public class FileTools {
             }
         }
         return count;
+    }
+
+    /**
+     * 遍历文件夹，返回其下所有文件列表（不包含子文件夹）
+     * 
+     * @param folderPath
+     * @return
+     */
+    public static HashSet<String> getFiles(String folderPath) {
+        if (!folderPath.endsWith("/")) {
+            folderPath = folderPath + "/";
+        }
+        File dir = new File(folderPath);
+        File file[] = dir.listFiles();
+        HashSet<String> set = new HashSet<String>();
+        for (int i = 0; i < file.length; i++) {
+            if (new File(folderPath + file[i].getName()).isFile()) {
+                set.add(file[i].getName());
+            }
+        }
+        return set;
     }
 }
