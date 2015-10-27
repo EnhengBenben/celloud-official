@@ -61,11 +61,6 @@
 				<img src="images/content/diskexplorer.png" alt="应用市场" title="应用市场"
 					width="48" height="48" />
 			</div> 
-			<div class="leftApp" _appId="sjk" _appName="数据库"
-				_appImg="images/content/qq.png" _iframeSrc="pages/database/database.jsp">
-				<img src="images/content/qq.png" alt="数据库" title="数据库"
-					width="48" height="48" />
-			</div>
 			<c:if test="${session.companyId==6}">
 				<div class="leftApp" _appId="tj" _appName="统计"
 					_appImg="images/content/count_.png" _iframeSrc="pages/count/count.jsp">
@@ -190,11 +185,6 @@
 			<div class="leftApp" _appId="yysc" _appName="应用市场"
 				_appImg="images/content/diskexplorer.png" _iframeSrc="pages/software/software.jsp">
 				<img src="images/content/diskexplorer.png" alt="应用市场" title="应用市场"
-					width="48" height="48" />
-			</div>
-			<div class="leftApp" _appId="sjk" _appName="数据库"
-				_appImg="images/content/qq.png" _iframeSrc="pages/database/database.jsp">
-				<img src="images/content/qq.png" alt="数据库" title="数据库"
 					width="48" height="48" />
 			</div>
 		</div>
