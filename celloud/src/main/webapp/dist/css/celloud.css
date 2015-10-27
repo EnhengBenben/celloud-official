@@ -4547,3 +4547,7 @@ fieldset[disabled] .btn-vk.active {
 .table_ thead th{ color:#333; text-align:center}
 .table_ tr td{height:30px;}
 .table_ .red,.table .red{ color:#ff9992;}
+/*---appStore---*/
+.appitem{list-style:none;}
+.big_item{width: 200px;font-weight: bolder;}
+.second_item{padding:10px 15px; width:150px; font-size:16px;}

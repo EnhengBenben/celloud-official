@@ -19,13 +19,13 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
 import com.alibaba.fastjson.JSONObject;
-import com.celloud.mongo.sdo.CmpGeneDetectionDetail;
-import com.celloud.mongo.sdo.CmpGeneSnpResult;
-import com.celloud.mongo.sdo.CmpReport;
-import com.celloud.mongo.sdo.GeneDetectionResult;
-import com.celloud.mongo.service.ReportService;
-import com.celloud.mongo.service.ReportServiceImpl;
 import com.google.inject.Inject;
+import com.mongo.sdo.CmpGeneDetectionDetail;
+import com.mongo.sdo.CmpGeneSnpResult;
+import com.mongo.sdo.CmpReport;
+import com.mongo.sdo.GeneDetectionResult;
+import com.mongo.service.ReportService;
+import com.mongo.service.ReportServiceImpl;
 import com.nova.constants.Mod;
 import com.nova.constants.SparkPro;
 import com.nova.email.EmailProjectEnd;
@@ -210,9 +210,9 @@ public class ProjectAction extends BaseAction {
 
                 List<Data> dataList = dataService.getDataByDataKeys(data1 + ","
                         + data2, 88);
-                List<com.celloud.mongo.sdo.Data> dList = new ArrayList<com.celloud.mongo.sdo.Data>();
+                List<com.mongo.sdo.Data> dList = new ArrayList<com.mongo.sdo.Data>();
                 for (Data d : dataList) {
-                    com.celloud.mongo.sdo.Data d1 = new com.celloud.mongo.sdo.Data();
+                    com.mongo.sdo.Data d1 = new com.mongo.sdo.Data();
                     d1.setAnotherName(d.getAnotherName());
                     d1.setDataKey(d.getDataKey());
                     d1.setDataTags(d.getDataTags());

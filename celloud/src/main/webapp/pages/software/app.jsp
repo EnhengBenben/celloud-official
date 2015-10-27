@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>数据管理</title>
+    <title>应用市场</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
     <link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">    
@@ -71,6 +71,17 @@
                   </div>
                 </div><!-- /.box-body -->
               </div>
+              <ul class="list-inline">
+              	<li class="types-options big_item selected">分析功能</li>
+              	<li class="types-options big_item">数据功能</li>
+              </ul>
+              <ul class="list-inline">
+              	<li class="types-options second_item selected">全部</li>
+              	<li class="types-options second_item">胚胎染色体检测</li>
+              	<li class="types-options second_item">癌症肿瘤相关</li>
+              	<li class="types-options second_item">新生儿遗传病</li>
+              	<li class="types-options second_item">病原检测</li>
+              </ul>
               <h4>App分类一<span class="text-green" style="margin-left:10px;"><a href="moreApp.html">more</a></span></h4>
               <div class="col-md-3" style="margin-left:-15px;">
                   <div class="info-box">
