@@ -6,16 +6,19 @@ __author__='lin'
 
 import os
 import sys
-from app.PGS import PGS
-from app.NIPT import NIPT
 from mysql.mysqlOperate import mysql
 from mongo.mongoOperate import mongo
+from app.PGS import PGS
+from app.NIPT import NIPT
+from app.HBV import HBV
 
 #command: python *.py basePath projectId
 #eg : python runover.py '/share/data/webapps/Tools/upload/' 4018
 #eg : python /home/lin/work/git/celloud/python/runover.py /home/lin/work/ 4018
 
+#对应class名
 method_dic = {
+82:HBV,
 85:PGS,
 86:PGS,
 87:PGS,
@@ -28,7 +31,9 @@ method_dic = {
 95:NIPT
 }
 
+#对应database名
 collection_dic = {
+82:"HBV",
 85:"Pgs",
 86:"Pgs",
 87:"Pgs",
