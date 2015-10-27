@@ -71,9 +71,28 @@
                   </div>
                 </div><!-- /.box-body -->
               </div>
-              <div id="appDetail">
-              
-              </div>
+              <ul class="list-inline">
+              	<li class="types-options big_item selected">分析功能</li>
+              	<li class="types-options big_item">数据功能</li>
+              </ul>
+              <ul class="list-inline">
+              	<li class="types-options second_item selected">全部</li>
+              	<li class="types-options second_item">胚胎染色体检测</li>
+              	<li class="types-options second_item">癌症肿瘤相关</li>
+              	<li class="types-options second_item">新生儿遗传病</li>
+              	<li class="types-options second_item">病原检测</li>
+              </ul>
+              <h4>App分类一<span class="text-green" style="margin-left:10px;"><a href="moreApp.html">more</a></span></h4>
+              <div class="col-md-3" style="margin-left:-15px;">
+                  <div class="info-box">
+                    <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
+                    <div class="info-box-content">
+                      <span class="info-box-text">序列识别</span>
+                      <span class="info-box-text">人气：410</span>
+                      <button class="btn btn-block btn-success btn-flat btn-xs" style="margin-top:18px;"><i class="fa fa-plus"></i>添加</button>
+                    </div><!-- /.info-box-content -->
+                  </div><!-- /.info-box -->
+              </div><!-- /.col -->
               <div class="col-md-3">
                   <div class="info-box">
                     <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
