@@ -3,13 +3,13 @@ package com.nova.core;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.celloud.mongo.core.SystemContext;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
 import com.google.inject.struts2.Struts2GuicePluginModule;
+import com.mongo.core.SystemContext;
 import com.nova.filter.MyStrutsFilter;
 import com.nova.kaptcha.Kaptcha;
 import com.nova.utils.ConnectManager;
