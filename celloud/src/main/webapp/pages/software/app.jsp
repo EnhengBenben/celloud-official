@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>数据管理</title>
+    <title>应用市场</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
     <link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">    
@@ -71,17 +71,9 @@
                   </div>
                 </div><!-- /.box-body -->
               </div>
-              <h4>App分类一<span class="text-green" style="margin-left:10px;"><a href="moreApp.html">more</a></span></h4>
-              <div class="col-md-3" style="margin-left:-15px;">
-                  <div class="info-box">
-                    <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">序列识别</span>
-                      <span class="info-box-text">人气：410</span>
-                      <button class="btn btn-block btn-success btn-flat btn-xs" style="margin-top:18px;"><i class="fa fa-plus"></i>添加</button>
-                    </div><!-- /.info-box-content -->
-                  </div><!-- /.info-box -->
-              </div><!-- /.col -->
+              <div id="appDetail">
+              
+              </div>
               <div class="col-md-3">
                   <div class="info-box">
                     <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
@@ -246,12 +238,6 @@
     <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- FastClick -->
     <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
-    <!-- jquery_alert_dialogs begin -->
-<%-- 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script> --%>
-<%-- 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script> --%>
-	<!-- jquery_alert_dialogs end -->
-    <script src="<%=request.getContextPath() %>/plugins/select/select2.min.js"></script>
-	<script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
     <script src="<%=request.getContextPath() %>/dist/js/celloud.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/plugins/spin.min.js" type="text/javascript"></script>
 	<!-- spin:loading效果 end-->
@@ -262,7 +248,7 @@
 			cache: false //关闭AJAX相应的缓存
 		});
 		$(document).ready(function(){
-			initData();
+				
 		});
 	</script>
   </body>
