@@ -19,6 +19,7 @@ public class PropertiesUtil {
 	 * pdf 的 logo
 	 */
 	public static String img;
+    public static String reportPath;
 	/**
 	 * 文件断点续传时，临时文件存放处
 	 */
@@ -38,6 +39,7 @@ public class PropertiesUtil {
 			fileFinal = prop.getProperty("fileFinal");
 			datalist = prop.getProperty("datalist");
 			img = prop.getProperty("img");
+            reportPath = prop.getProperty("reportPath");
 		} catch (IOException e) {
 			logger.info("读取jdbc配置文件失败");
 		}

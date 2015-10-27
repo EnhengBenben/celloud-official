@@ -10,6 +10,7 @@ import com.nova.pager.Page;
 import com.nova.pager.PageList;
 
 /**
+ * 数据管理服务接口
  * 
  * @author <a href="mailto:liuqingxiao@celloud.cn">liuqx</a>
  * @date 2015-9-14上午10:31:29
@@ -20,8 +21,8 @@ public interface DataService {
     public PageList<Data> getAllData(Page page, Integer userId);
 
     public PageList<Data> getDataByCondition(Page page, Integer userId,
-	    Integer sortType, String sortByName, String sortByDate,
-	    String condition);
+            Integer sortType, String sortByName, String sortByDate,
+            String condition);
 
     /**
      * 获取数据列表每种数据类型的个数
@@ -113,4 +114,19 @@ public interface DataService {
      * @return
      */
     public Integer addDataToPro(String[] dataIdArr, Long proId);
+
+    /**
+     * 获取所有dataKey
+     * 
+     * @return
+     */
+    public List<String> getAllDataKey();
+
+    /**
+     * 添加数据
+     * 
+     * @param list
+     * @return
+     */
+    public Integer addData(Data data);
 }

@@ -1,8 +1,12 @@
 package com.celloud.action;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,8 +16,10 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.bson.types.ObjectId;
 
 import com.alibaba.fastjson.JSONObject;
+import com.celloud.mongo.sdo.Split;
 import com.celloud.sdo.Company;
 import com.celloud.sdo.Data;
 import com.celloud.sdo.Dept;
@@ -28,6 +34,8 @@ import com.celloud.service.SoftwareService;
 import com.celloud.service.UserService;
 import com.google.inject.Inject;
 import com.nova.action.BaseAction;
+import com.nova.constants.DataUpload;
+import com.nova.constants.FileFormat;
 import com.nova.constants.Mod;
 import com.nova.constants.SparkPro;
 import com.nova.pager.Page;
@@ -36,7 +44,9 @@ import com.nova.portpool.PortPool;
 import com.nova.queue.GlobalQueue;
 import com.nova.service.IDataService;
 import com.nova.utils.Base64Util;
+import com.nova.utils.DataUtil;
 import com.nova.utils.FileTools;
+import com.nova.utils.PerlUtils;
 import com.nova.utils.PropertiesUtil;
 import com.nova.utils.RemoteRequests;
 import com.nova.utils.SQLUtils;
@@ -56,11 +66,11 @@ import com.nova.utils.XmlUtil;
         @Result(name = "success", type = "json", params = { "root",
                 "conditionInt" }),
         @Result(name = "info", type = "json", params = { "root", "result" }),
-        @Result(name = "getSoftList", type = "redirect", location = "software!getSoftByFormat", params = {
-                "condition", "${condition}" }),
         @Result(name = "checkDataRunningSoft", type = "json", params = {
                 "root", "intList" }),
         @Result(name = "mapList", type = "json", params = { "root", "mapList" }),
+        @Result(name = "getSoftList", type = "redirect", location = "software!getSoftByFormat", params = {
+                "condition", "${condition}" }),
         @Result(name = "toDataManage", location = "../../pages/data/myData.jsp"),
         @Result(name = "toMoreInfo", location = "../../pages/data/moreDataInfo.jsp"),
         @Result(name = "toUpdateDatas", location = "../../pages/data/updateDatas.jsp") })
@@ -79,6 +89,8 @@ public class DataAction extends BaseAction {
     private SoftwareService appService;
     @Inject
     private IDataService idataService;
+    @Inject
+    private com.celloud.mongo.service.ReportService mReportService;
     private PageList<Data> dataPageList;
     private List<Integer> intList;
     private List<Data> dataList;
@@ -380,6 +392,72 @@ public class DataAction extends BaseAction {
         }
         FileTools.appendWrite(dataListFile, sb.toString());
         return dataListFile;
+    }
+
+    /**
+     * 将数据报告分离出来的数据(split流程运行结果)拷贝到数据目录并保存
+     * 
+     * @return
+     */
+    public String saveSplitReportData() {
+        userId = (Integer) super.session.get("userId");
+        String inPath = PropertiesUtil.reportPath + condition;
+        String outPath = PropertiesUtil.fileFinal;
+        List<String> dataKeyList = getRadomDataKey(conditionInt);
+        HashSet<String> resultFiles = FileTools.getFiles(inPath);
+        Iterator<String> rFile = resultFiles.iterator();
+        int num = 0;
+        Long size = null;
+        String dataKey = "";
+        conditionInt = 0;
+        result = "";
+        Split split = new Split();
+        split.setId(new ObjectId(dataIds));
+        split.setUpload(DataUpload.DOING);
+        split.setSplitDataIds(result);
+        mReportService.editSplit(split);
+        while (rFile.hasNext()) {
+            String fstr = rFile.next();
+            if (!fstr.equals("...tar.gz") && !fstr.equals("..tar.gz")) {
+                String extName = fstr.substring(fstr.lastIndexOf(".tar.gz"));
+                String resourcePath = inPath + fstr;
+                size = new File(resourcePath).length();
+                dataKey = FileTools.listIsNull(dataKeyList, num);
+                String filePath = outPath + dataKey + extName;
+                boolean state = PerlUtils
+                        .excuteCopyPerl(resourcePath, filePath);
+                if (state) {
+                    data = new Data();
+                    data.setUserId(userId);
+                    data.setFileName(fstr);
+                    data.setDataKey(dataKey);
+                    data.setAnotherName("来自APP:split");
+                    data.setSize(size);
+                    data.setPath(filePath);
+                    data.setFileFormat(FileFormat.FQ);
+                    result += dataService.addData(data) + ",";
+                }
+                num++;
+            }
+        }
+        split.setUpload(DataUpload.DONE);
+        split.setSplitDataIds(result);
+        mReportService.editSplit(split);
+        return "info";
+    }
+
+    private List<String> getRadomDataKey(int num) {
+        List<String> resultList = new ArrayList<>();
+        List<String> dataKeyList = dataService.getAllDataKey();
+        for (int i = 0; i < num; i++) {
+            String dataKey = DataUtil.getNewDataKey();
+            while (dataKeyList.contains(dataKey)) {
+                dataKey = DataUtil.getNewDataKey();
+            }
+            dataKeyList.add(dataKey);
+            resultList.add(dataKey);
+        }
+        return resultList;
     }
 
     /**

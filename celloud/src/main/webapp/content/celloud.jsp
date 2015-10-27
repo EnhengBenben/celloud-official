@@ -46,7 +46,7 @@
 				<img src="images/content/appmarket.png" alt="数据上传" title="数据上传"
 					width="48" height="48" />
 			</div>
-			<div class="leftApp" _appId="sjgl" _appName="数据管理"
+			<div id="toFileData" class="leftApp" _appId="sjgl" _appName="数据管理"
                 _appImg="images/content/datamanag.png" _iframeSrc="pages/data/data.jsp">
                 <img src="images/content/datamanag.png" alt="数据管理" title="数据管理"
                     width="48" height="48" />
@@ -178,7 +178,7 @@
 					width="48" height="48" />
 			</div>
 			<div class="leftApp" _appId="sjgl" _appName="数据管理"
-				_appImg="images/content/datamanag.png" _iframeSrc="pages/data/fileData.jsp">
+				_appImg="images/content/datamanag.png" _iframeSrc="pages/data/data.jsp">
 				<img src="images/content/datamanag.png" alt="数据管理" title="数据管理"
 					width="48" height="48" />
 			</div>
@@ -245,6 +245,7 @@ var sessionUserNav = "<%=session.getAttribute("userNav") %>";
 	var userId = $.trim($("#userId").val());
 	//是否有文件正在上传
 	var isUploading = false;
+	var globalDataIds = new Array();
 	(function() {
 		initCelloud();
 	})();

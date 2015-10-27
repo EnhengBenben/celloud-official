@@ -12,6 +12,7 @@ import com.celloud.mongo.sdo.CmpGeneDetectionDetail;
 import com.celloud.mongo.sdo.CmpGeneSnpResult;
 import com.celloud.mongo.sdo.CmpReport;
 import com.celloud.mongo.sdo.GddDiseaseDict;
+import com.celloud.mongo.sdo.MIB;
 import com.celloud.mongo.sdo.NIPT;
 import com.celloud.mongo.sdo.PGSFilling;
 import com.celloud.mongo.sdo.Pgs;
@@ -159,6 +160,23 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
     public Split getSplit(String dataKey, Integer proId, Integer appId) {
         return ds.createQuery(Split.class).filter("dataKey", dataKey)
                 .filter("projectId", proId).filter("appId", appId).get();
+    }
+
+    @Override
+    public MIB getMIB(String dataKey, Integer proId, Integer appId) {
+        return ds.createQuery(MIB.class).filter("dataKey", dataKey)
+                .filter("projectId", proId).filter("appId", appId).get();
+    }
+
+    @Override
+    public void editSplit(Split split) {
+        System.out.println(split.getUpload());
+        System.out.println(split.getSplitDataIds());
+        ds.update(
+                ds.createQuery(Split.class).filter("_id", split.getId()),
+                ds.createUpdateOperations(Split.class)
+                        .set("upload", split.getUpload())
+                        .set("splitDataIds", split.getSplitDataIds()));
     }
 
 }

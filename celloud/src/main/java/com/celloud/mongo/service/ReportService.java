@@ -7,6 +7,7 @@ import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpGeneSnpResult;
 import com.celloud.mongo.sdo.CmpReport;
 import com.celloud.mongo.sdo.GddDiseaseDict;
+import com.celloud.mongo.sdo.MIB;
 import com.celloud.mongo.sdo.NIPT;
 import com.celloud.mongo.sdo.PGSFilling;
 import com.celloud.mongo.sdo.Pgs;
@@ -121,4 +122,23 @@ public interface ReportService {
      * @return
      */
     public Split getSplit(String dataKey, Integer proId, Integer appId);
+
+    /**
+     * 修改Split
+     * 
+     * @param id
+     * @param upload
+     *            1已上传
+     */
+    public void editSplit(Split split);
+
+    /**
+     * 获取MIB报告内容
+     * 
+     * @param dataKey
+     * @param proId
+     * @param appId
+     * @return
+     */
+    public MIB getMIB(String dataKey, Integer proId, Integer appId);
 }

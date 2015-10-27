@@ -33,7 +33,6 @@ public class SplitReportAction extends BaseAction {
 
     public String toSplitReport() {
         path = PropertiesUtil.toolsOutPath + "upload";
-        System.out.println(split.getDataKey());
         split = reportService.getSplit(split.getDataKey(),
                 split.getProjectId(), split.getAppId());
         log.info("celloud-用户" + super.session.get("userId") + "查看split报告");

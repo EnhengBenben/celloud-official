@@ -31,6 +31,10 @@ public class Split extends Base {
      * 分离后的结果文件 Key: name(数据名称) number(序列数量)
      */
     private List<Map<String, String>> resultList;
+    /** 1:分离的结果文件已上传 */
+    private Integer upload;
+    /** 分析数据在mysql tb_file表中的id号, 格式： id1,id2,id3,..., */
+    private String splitDataIds;
 
     public List<Data> getData() {
         return data;
@@ -71,4 +75,21 @@ public class Split extends Base {
     public void setResultList(List<Map<String, String>> resultList) {
         this.resultList = resultList;
     }
+
+    public Integer getUpload() {
+        return upload;
+    }
+
+    public void setUpload(Integer upload) {
+        this.upload = upload;
+    }
+
+    public String getSplitDataIds() {
+        return splitDataIds;
+    }
+
+    public void setSplitDataIds(String splitDataIds) {
+        this.splitDataIds = splitDataIds;
+    }
+
 }
