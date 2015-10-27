@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
     <link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">    
   	<link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
-    <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.4" rel="stylesheet" type="text/css" />
+    <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.0" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <div class="wrapper">
@@ -32,9 +32,6 @@
           <div class="row">
              <div class="col-xs-10">
               <div class="box box-solid">
-                <div class="box-header with-border">
-                  <h3 class="box-title">App使用介绍</h3>
-                </div><!-- /.box-header -->
                 <div class="box-body">
                   <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
@@ -71,140 +68,8 @@
                   </div>
                 </div><!-- /.box-body -->
               </div>
-              <ul class="list-inline">
-              	<li class="types-options big_item selected">分析功能</li>
-              	<li class="types-options big_item">数据功能</li>
-              </ul>
-              <ul class="list-inline">
-              	<li class="types-options second_item selected">全部</li>
-              	<li class="types-options second_item">胚胎染色体检测</li>
-              	<li class="types-options second_item">癌症肿瘤相关</li>
-              	<li class="types-options second_item">新生儿遗传病</li>
-              	<li class="types-options second_item">病原检测</li>
-              </ul>
-              <h4>App分类一<span class="text-green" style="margin-left:10px;"><a href="moreApp.html">more</a></span></h4>
-              <div class="col-md-3" style="margin-left:-15px;">
-                  <div class="info-box">
-                    <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">序列识别</span>
-                      <span class="info-box-text">人气：410</span>
-                      <button class="btn btn-block btn-success btn-flat btn-xs" style="margin-top:18px;"><i class="fa fa-plus"></i>添加</button>
-                    </div><!-- /.info-box-content -->
-                  </div><!-- /.info-box -->
-              </div><!-- /.col -->
-              <div class="col-md-3">
-                  <div class="info-box">
-                    <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">序列识别</span>
-                      <span class="info-box-text">人气：410</span>
-                      <button class="btn btn-block btn-success btn-flat btn-xs" style="margin-top:18px;"><i class="fa fa-plus"></i>添加</button>
-                    </div><!-- /.info-box-content -->
-                  </div><!-- /.info-box -->
-               </div><!-- /.col -->
-               <div class="col-md-3">
-                  <div class="info-box">
-                    <span class="info-box-icon bg-yellow"><i class="fa fa-calendar"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">序列识别</span>
-                      <span class="info-box-text">人气：410</span>
-                      <button class="btn btn-block btn-success btn-flat btn-xs" style="margin-top:18px;"><i class="fa fa-plus"></i>添加</button>
-                    </div><!-- /.info-box-content -->
-                  </div><!-- /.info-box -->
-                </div><!-- /.col -->
-                <div class="col-md-3">
-                  <div class="info-box">
-                    <span class="info-box-icon bg-aqua"><i class="fa fa-comments-o"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">序列识别</span>
-                      <span class="info-box-text">人气：410</span>
-                      <button class="btn btn-block btn-success btn-flat btn-xs" style="margin-top:18px;"><i class="fa fa-plus"></i>添加</button>
-                    </div><!-- /.info-box-content -->
-                  </div><!-- /.info-box -->
-                </div><!-- /.col -->
-                <h4>App分类二<span class="text-green" style="margin-left:10px;"><a href="moreApp.html">more</a></span></h4>
-              <div class="col-md-3" style="margin-left:-15px;">
-                  <div class="info-box">
-                    <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">序列识别</span>
-                      <span class="info-box-text">人气：410</span>
-                      <button class="btn btn-block btn-success btn-flat btn-xs" style="margin-top:18px;"><i class="fa fa-plus"></i>添加</button>
-                    </div><!-- /.info-box-content -->
-                  </div><!-- /.info-box -->
-              </div><!-- /.col -->
-              <div class="col-md-3">
-                  <div class="info-box">
-                    <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">序列识别</span>
-                      <span class="info-box-text">人气：410</span>
-                      <button class="btn btn-block btn-success btn-flat btn-xs" style="margin-top:18px;"><i class="fa fa-plus"></i>添加</button>
-                    </div><!-- /.info-box-content -->
-                  </div><!-- /.info-box -->
-               </div><!-- /.col -->
-               <div class="col-md-3">
-                  <div class="info-box">
-                    <span class="info-box-icon bg-yellow"><i class="fa fa-calendar"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">序列识别</span>
-                      <span class="info-box-text">人气：410</span>
-                      <button class="btn btn-block btn-success btn-flat btn-xs" style="margin-top:18px;"><i class="fa fa-plus"></i>添加</button>
-                    </div><!-- /.info-box-content -->
-                  </div><!-- /.info-box -->
-                </div><!-- /.col -->
-                <div class="col-md-3">
-                  <div class="info-box">
-                    <span class="info-box-icon bg-aqua"><i class="fa fa-comments-o"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">序列识别</span>
-                      <span class="info-box-text">人气：410</span>
-                      <button class="btn btn-block btn-success btn-flat btn-xs" style="margin-top:18px;"><i class="fa fa-plus"></i>添加</button>
-                    </div><!-- /.info-box-content -->
-                  </div><!-- /.info-box -->
-                </div><!-- /.col -->
-                <h4>App分类三<span class="text-green" style="margin-left:10px;"><a href="moreApp.html">more</a></span></h4>
-              <div class="col-md-3" style="margin-left:-15px;">
-                  <div class="info-box">
-                    <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">序列识别</span>
-                      <span class="info-box-text">人气：410</span>
-                      <button class="btn btn-block btn-success btn-flat btn-xs" style="margin-top:18px;"><i class="fa fa-plus"></i>添加</button>
-                    </div><!-- /.info-box-content -->
-                  </div><!-- /.info-box -->
-              </div><!-- /.col -->
-              <div class="col-md-3">
-                  <div class="info-box">
-                    <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">序列识别</span>
-                      <span class="info-box-text">人气：410</span>
-                      <button class="btn btn-block btn-success btn-flat btn-xs" style="margin-top:18px;"><i class="fa fa-plus"></i>添加</button>
-                    </div><!-- /.info-box-content -->
-                  </div><!-- /.info-box -->
-               </div><!-- /.col -->
-               <div class="col-md-3">
-                  <div class="info-box">
-                    <span class="info-box-icon bg-yellow"><i class="fa fa-calendar"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">序列识别</span>
-                      <span class="info-box-text">人气：410</span>
-                      <button class="btn btn-block btn-success btn-flat btn-xs" style="margin-top:18px;"><i class="fa fa-plus"></i>添加</button>
-                    </div><!-- /.info-box-content -->
-                  </div><!-- /.info-box -->
-                </div><!-- /.col -->
-                <div class="col-md-3">
-                  <div class="info-box">
-                    <span class="info-box-icon bg-aqua"><i class="fa fa-comments-o"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">序列识别</span>
-                      <span class="info-box-text">人气：410</span>
-                      <button class="btn btn-block btn-success btn-flat btn-xs" style="margin-top:18px;"><i class="fa fa-plus"></i>添加</button>
-                    </div><!-- /.info-box-content -->
-                  </div><!-- /.info-box -->
-                </div><!-- /.col -->
+              <div id="appDetail">
+              </div>
             </div>
             <div class="col-xs-2 pull-right">
               <button class="btn bg-olive btn-flat" style="width:100%">管理我的APP</button>
@@ -259,6 +124,7 @@
     <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
     <script src="<%=request.getContextPath() %>/dist/js/celloud.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/plugins/spin.min.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/js/app.js" type="text/javascript"></script>
 	<!-- spin:loading效果 end-->
 	<script type="text/javascript">
 		var session_userId = <%=session.getAttribute("userId")%>;
@@ -267,7 +133,7 @@
 			cache: false //关闭AJAX相应的缓存
 		});
 		$(document).ready(function(){
-				
+			initApp();
 		});
 	</script>
   </body>
