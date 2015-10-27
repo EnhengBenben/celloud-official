@@ -19,6 +19,12 @@ public class MIB extends Base {
     /** 所运行数据信息 */
     @Embedded
     private List<Data> data;
+    /** 序列总量 */
+    private String totalReads;
+    /** 平均质量 */
+    private String avgQuality;
+    /** 平均GC含量(%) */
+    private String avgGCContent;
     /** 低质量序列、宿主序列、16S序列以及未能比对上的reads比例分布图 */
     private String readsDistribution;
     /** 16s相关的序列在科层次上的比例分布图 */
@@ -27,34 +33,54 @@ public class MIB extends Base {
     private String genusDistribution;
     /**
      * 将以数字形式具体展示各个属的详细情况。 其中包括: Species——目标病原体在种水平上的鉴定(目前该结果属于推测)，
-     * Genus——目标病原体在属水平上的鉴定， GI——参考序列的编号，
-     * %Coverage(简称Coverage)——reads能覆盖参考序列的百分比， Reads_hit——reads比对上该参考序列的数目，
-     * Reads_num——reads分类在该属下的数目， Average depth of
-     * coverage(简称avgCoverage)——平均测序深度
+     * Genus——目标病原体在属水平上的鉴定， GI——参考序列的编号， %Coverage——reads能覆盖参考序列的百分比，
+     * Reads_hit——reads比对上该参考序列的数目， Reads_num——reads分类在该属下的数目， Average depth of
+     * coverage——平均测序深度
      */
     private List<Map<String, String>> summaryTable;
-    private String legionella;
-    private String acinetobacter;
-    private String fluoribacter;
-    private String acetobacter;
-    private String staphylococcus;
-    private String halothiobacillus;
-    private String bifidobacterium;
-    private String xanthomonas;
-    private String flavobacterium;
-    private String corynebacterium;
-    private String propionibacterium;
-    private String planomicrobium;
-    private String micrococcus;
-    private String hymenobacter;
-    private String silanimonas;
-
+    private Map<String, String> pngPath;
+    /**
+     * QC序列质量,数据1
+     */
+    private Map<String, String> basicStatistics1;
+    private String qualityPath1;
+    private String seqContentPath1;
+    /**
+     * QC序列质量,数据2
+     */
+    private Map<String, String> basicStatistics2;
+    private String qualityPath2;
+    private String seqContentPath2;
     public List<Data> getData() {
         return data;
     }
 
     public void setData(List<Data> data) {
         this.data = data;
+    }
+
+    public String getTotalReads() {
+        return totalReads;
+    }
+
+    public void setTotalReads(String totalReads) {
+        this.totalReads = totalReads;
+    }
+
+    public String getAvgQuality() {
+        return avgQuality;
+    }
+
+    public void setAvgQuality(String avgQuality) {
+        this.avgQuality = avgQuality;
+    }
+
+    public String getAvgGCContent() {
+        return avgGCContent;
+    }
+
+    public void setAvgGCContent(String avgGCContent) {
+        this.avgGCContent = avgGCContent;
     }
 
     public String getReadsDistribution() {
@@ -89,123 +115,60 @@ public class MIB extends Base {
         this.summaryTable = summaryTable;
     }
 
-    public String getLegionella() {
-        return legionella;
+    public Map<String, String> getPngPath() {
+        return pngPath;
     }
 
-    public void setLegionella(String legionella) {
-        this.legionella = legionella;
+    public void setPngPath(Map<String, String> pngPath) {
+        this.pngPath = pngPath;
     }
 
-    public String getAcinetobacter() {
-        return acinetobacter;
+    public Map<String, String> getBasicStatistics1() {
+        return basicStatistics1;
     }
 
-    public void setAcinetobacter(String acinetobacter) {
-        this.acinetobacter = acinetobacter;
+    public void setBasicStatistics1(Map<String, String> basicStatistics1) {
+        this.basicStatistics1 = basicStatistics1;
     }
 
-    public String getFluoribacter() {
-        return fluoribacter;
+    public String getQualityPath1() {
+        return qualityPath1;
     }
 
-    public void setFluoribacter(String fluoribacter) {
-        this.fluoribacter = fluoribacter;
+    public void setQualityPath1(String qualityPath1) {
+        this.qualityPath1 = qualityPath1;
     }
 
-    public String getAcetobacter() {
-        return acetobacter;
+    public String getSeqContentPath1() {
+        return seqContentPath1;
     }
 
-    public void setAcetobacter(String acetobacter) {
-        this.acetobacter = acetobacter;
+    public void setSeqContentPath1(String seqContentPath1) {
+        this.seqContentPath1 = seqContentPath1;
     }
 
-    public String getStaphylococcus() {
-        return staphylococcus;
+    public Map<String, String> getBasicStatistics2() {
+        return basicStatistics2;
     }
 
-    public void setStaphylococcus(String staphylococcus) {
-        this.staphylococcus = staphylococcus;
+    public void setBasicStatistics2(Map<String, String> basicStatistics2) {
+        this.basicStatistics2 = basicStatistics2;
     }
 
-    public String getHalothiobacillus() {
-        return halothiobacillus;
+    public String getQualityPath2() {
+        return qualityPath2;
     }
 
-    public void setHalothiobacillus(String halothiobacillus) {
-        this.halothiobacillus = halothiobacillus;
+    public void setQualityPath2(String qualityPath2) {
+        this.qualityPath2 = qualityPath2;
     }
 
-    public String getBifidobacterium() {
-        return bifidobacterium;
+    public String getSeqContentPath2() {
+        return seqContentPath2;
     }
 
-    public void setBifidobacterium(String bifidobacterium) {
-        this.bifidobacterium = bifidobacterium;
+    public void setSeqContentPath2(String seqContentPath2) {
+        this.seqContentPath2 = seqContentPath2;
     }
 
-    public String getXanthomonas() {
-        return xanthomonas;
-    }
-
-    public void setXanthomonas(String xanthomonas) {
-        this.xanthomonas = xanthomonas;
-    }
-
-    public String getFlavobacterium() {
-        return flavobacterium;
-    }
-
-    public void setFlavobacterium(String flavobacterium) {
-        this.flavobacterium = flavobacterium;
-    }
-
-    public String getCorynebacterium() {
-        return corynebacterium;
-    }
-
-    public void setCorynebacterium(String corynebacterium) {
-        this.corynebacterium = corynebacterium;
-    }
-
-    public String getPropionibacterium() {
-        return propionibacterium;
-    }
-
-    public void setPropionibacterium(String propionibacterium) {
-        this.propionibacterium = propionibacterium;
-    }
-
-    public String getPlanomicrobium() {
-        return planomicrobium;
-    }
-
-    public void setPlanomicrobium(String planomicrobium) {
-        this.planomicrobium = planomicrobium;
-    }
-
-    public String getMicrococcus() {
-        return micrococcus;
-    }
-
-    public void setMicrococcus(String micrococcus) {
-        this.micrococcus = micrococcus;
-    }
-
-    public String getHymenobacter() {
-        return hymenobacter;
-    }
-
-    public void setHymenobacter(String hymenobacter) {
-        this.hymenobacter = hymenobacter;
-    }
-
-    public String getSilanimonas() {
-        return silanimonas;
-    }
-
-    public void setSilanimonas(String silanimonas) {
-        this.silanimonas = silanimonas;
-    }
 }

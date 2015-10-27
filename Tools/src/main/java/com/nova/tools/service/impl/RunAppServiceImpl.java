@@ -174,8 +174,22 @@ public class RunAppServiceImpl {
             for (int i = 0; i < dataArray.length; i++) {
                 MIB mib = new MIB();
                 String[] dataDetail = dataArray[i].split(",");
-                String finalPath = outPath + "/" + getArray(dataDetail, 0)
-                        + "/";
+                String finalPath = outPath + "/" + getArray(dataDetail, 0);
+                List<String> list = FileTools.readLinestoString(finalPath
+                        + "/result/statistic.xls");
+                if (!(list == null || list.isEmpty())) {
+                    String totalReads = FileTools.listIsNull(list, 0);
+                    String avgQuality = FileTools.listIsNull(list, 1);
+                    String avgGCContent = FileTools.listIsNull(list, 2);
+                    mib.setTotalReads(totalReads);
+                    mib.setAvgQuality(avgQuality);
+                    mib.setAvgGCContent(avgGCContent);
+                    String result = totalReads + "\t" + avgQuality + "\t"
+                            + avgGCContent;
+                    FileTools.appendWrite(projectFile, getArray(dataDetail, 0)
+                            + "\t" + getArray(dataDetail, 2) + "\t" + result
+                            + "\n");
+                }
                 // -----读取报告内容并保存到mongoDB------
                 List<Data> dataList = map.get(getArray(dataDetail, 0));
                 mib.setProjectId(Integer.parseInt(projectId));
@@ -200,7 +214,7 @@ public class RunAppServiceImpl {
                 mib.setDeptTel(dept1.getTel());
                 mib.setCreateDate(new Date());
                 // 1. 读取各个属的详细情况
-                String tablePath = finalPath + "taxi.C1.fastq.table";
+                String tablePath = finalPath + "/result/taxi.all.fastq.table";
                 if (new File(tablePath).exists()) {
                     List<String> list_ = FileTools.readLinestoString(tablePath);
                     List<Map<String, String>> summaryTable = new ArrayList<>();
@@ -219,20 +233,138 @@ public class RunAppServiceImpl {
                     mib.setSummaryTable(summaryTable);
                 }
                 // 2. 保存各个图片
-                HashSet<String> resultFiles = FileTools.getFiles(finalPath);
+                String realPath = PropertiesUtils.outProject + "/upload/"
+                        + userId + "/" + appId + "/" + getArray(dataDetail, 0);
+                String familyPng = finalPath
+                        + "/result/family_distribution.all.fastq.png";
+                String genusPng = finalPath
+                        + "/result/genus_distribution.all.fastq.png";
+                String readsPng = finalPath
+                        + "/result/reads_distribution.all.fastq.png";
+                if (new File(familyPng).exists()) {
+                    mib.setFamilyDistribution(realPath
+                            + "/result/family_distribution.all.fastq.png");
+                }
+                if (new File(genusPng).exists()) {
+                    mib.setGenusDistribution(realPath
+                            + "/result/genus_distribution.all.fastq.png");
+                }
+                if (new File(readsPng).exists()) {
+                    mib.setReadsDistribution(realPath
+                            + "/result/reads_distribution.all.fastq.png");
+                }
+                HashSet<String> resultFiles = FileTools.getFiles(finalPath
+                        + "/result/coverage_map_top10/");
                 Iterator<String> rFile = resultFiles.iterator();
-                String pngPath = PropertiesUtils.outProject + "/upload/"
-                        + userId + "/" + appId + "/" + getArray(dataDetail, 0)
-                        + "/";
+                String pngPath = realPath + "/result/coverage_map_top10/";
+                Map<String, String> pmap = new HashMap<>();
                 // TODO
                 while (rFile.hasNext()) {
                     String fstr = rFile.next();
-                    if (fstr.equals("1.png")) {
-                        mib.setAcetobacter(pngPath + fstr);
-                    } else if (fstr.equals("average.info")) {
-
-                    } else if (fstr.equals("snp_num.info")) {
+                    String key = "";
+                    if (fstr.equals("top1.all.fastq.png")) {
+                        key = "top1png";
+                    } else if (fstr.equals("top2.all.fastq.png")) {
+                        key = "top2png";
+                    } else if (fstr.equals("top3.all.fastq.png")) {
+                        key = "top3png";
+                    } else if (fstr.equals("top4.all.fastq.png")) {
+                        key = "top4png";
+                    } else if (fstr.equals("top5.all.fastq.png")) {
+                        key = "top5png";
+                    } else if (fstr.equals("top6.all.fastq.png")) {
+                        key = "top6png";
+                    } else if (fstr.equals("top7.all.fastq.png")) {
+                        key = "top7png";
+                    } else if (fstr.equals("top8.all.fastq.png")) {
+                        key = "top8png";
+                    } else if (fstr.equals("top9.all.fastq.png")) {
+                        key = "top9png";
+                    } else if (fstr.equals("top10.all.fastq.png")) {
+                        key = "top10png";
                     }
+                    pmap.put(key, pngPath + fstr);
+                }
+                mib.setPngPath(pmap);
+                // QC
+                String qualityPath1 = realPath + "/QC/"
+                        + getArray(dataDetail, 0)
+                        + "_fastqc/Images/per_base_quality.png";
+                mib.setQualityPath1(qualityPath1);
+                String seqContentPath1 = realPath + "/QC/"
+                        + getArray(dataDetail, 0)
+                        + "_fastqc/Images/per_base_sequence_content.png";
+                mib.setSeqContentPath1(seqContentPath1);
+                String fastqcDataPath = finalPath + "/QC/"
+                        + getArray(dataDetail, 0) + "_fastqc/fastqc_data.txt";
+                if (new File(fastqcDataPath).exists()) {
+                    Map<String, String> basicStatistics1 = new HashMap<String, String>();
+                    List<String> list_ = FileTools.getLineByNum(fastqcDataPath,
+                            4, 10);
+                    if (list_.size() >= 7) {
+                        String[] line_1 = list_.get(0).split("\t");
+                        basicStatistics1.put("Filename", getArray(line_1, 1));
+                        String[] line_2 = list_.get(1).split("\t");
+                        basicStatistics1.put("FileType", getArray(line_2, 1));
+                        String[] line_3 = list_.get(2).split("\t");
+                        basicStatistics1.put("Encoding", getArray(line_3, 1));
+                        String[] line_4 = list_.get(3).split("\t");
+                        basicStatistics1.put("TotalSeq", getArray(line_4, 1));
+                        String[] line_5 = list_.get(4).split("\t");
+                        basicStatistics1
+                                .put("FilteredSeq", getArray(line_5, 1));
+                        String[] line_6 = list_.get(5).split("\t");
+                        basicStatistics1.put("SeqLength", getArray(line_6, 1));
+                        String[] line_7 = list_.get(6).split("\t");
+                        basicStatistics1.put("gc", getArray(line_7, 1));
+                    }
+                    mib.setBasicStatistics1(basicStatistics1);
+                }
+                String qualityPath2 = "";
+                String seqContentPath2 = "";
+                if (new File(finalPath + "/QC").exists()) {
+                    Map<String, String> basicStatistics2 = new HashMap<String, String>();
+                    HashSet<String> folder = FileTools.getFolders(finalPath
+                            + "/QC");
+                    Iterator<String> fol = folder.iterator();
+                    while (fol.hasNext()) {
+                        String f = fol.next();
+                        if (!f.startsWith(getArray(dataDetail, 0))) {
+                            qualityPath2 = realPath + "/QC/" + f
+                                    + "/Images/per_base_quality.png";
+                            seqContentPath2 = realPath + "/QC/" + f
+                                    + "/Images/per_base_sequence_content.png";
+                            String f2 = finalPath + "/QC/" + f
+                                    + "/fastqc_data.txt";
+                            List<String> list_2 = FileTools.getLineByNum(f2, 4,
+                                    10);
+                            if (list_2.size() >= 7) {
+                                String[] line_1 = list_2.get(0).split("\t");
+                                basicStatistics2.put("Filename",
+                                        getArray(line_1, 1));
+                                String[] line_2 = list_2.get(1).split("\t");
+                                basicStatistics2.put("FileType",
+                                        getArray(line_2, 1));
+                                String[] line_3 = list_2.get(2).split("\t");
+                                basicStatistics2.put("Encoding",
+                                        getArray(line_3, 1));
+                                String[] line_4 = list_2.get(3).split("\t");
+                                basicStatistics2.put("TotalSeq",
+                                        getArray(line_4, 1));
+                                String[] line_5 = list_2.get(4).split("\t");
+                                basicStatistics2.put("FilteredSeq",
+                                        getArray(line_5, 1));
+                                String[] line_6 = list_2.get(5).split("\t");
+                                basicStatistics2.put("SeqLength",
+                                        getArray(line_6, 1));
+                                String[] line_7 = list_2.get(6).split("\t");
+                                basicStatistics2.put("gc", getArray(line_7, 1));
+                            }
+                        }
+                    }
+                    mib.setQualityPath2(qualityPath2);
+                    mib.setSeqContentPath2(seqContentPath2);
+                    mib.setBasicStatistics2(basicStatistics2);
                 }
                 reportService.saveMIB(mib);
             }

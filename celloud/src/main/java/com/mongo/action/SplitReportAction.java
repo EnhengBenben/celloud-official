@@ -7,6 +7,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
 import com.google.inject.Inject;
+import com.mongo.sdo.MIB;
 import com.mongo.sdo.Split;
 import com.mongo.service.ReportService;
 import com.nova.action.BaseAction;
@@ -29,6 +30,7 @@ public class SplitReportAction extends BaseAction {
     @Inject
     private ReportService reportService;
     private Split split;
+    private MIB mib;
     private String path;
 
     public String toSplitReport() {
@@ -37,6 +39,13 @@ public class SplitReportAction extends BaseAction {
                 split.getProjectId(), split.getAppId());
         log.info("celloud-用户" + super.session.get("userId") + "查看split报告");
         return "toSplit";
+    }
+
+    public String getMibReport() {
+        mib = reportService.getMIB(mib.getDataKey(), mib.getProjectId(),
+                mib.getAppId());
+        log.info("celloud-用户" + super.session.get("userId") + "查看mib报告");
+        return "toMibReport";
     }
 
     public Split getSplit() {
@@ -53,6 +62,14 @@ public class SplitReportAction extends BaseAction {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public MIB getMib() {
+        return mib;
+    }
+
+    public void setMib(MIB mib) {
+        this.mib = mib;
     }
 
 }
