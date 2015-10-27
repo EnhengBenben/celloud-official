@@ -15,7 +15,7 @@ import com.nova.sdo.DataFormat;
  * @version Revision: 1.0
  */
 @Entity
-public class Software implements Serializable {
+public class App implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long softwareId;
     private String softwareName;

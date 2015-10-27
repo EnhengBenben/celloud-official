@@ -19,17 +19,17 @@ import org.apache.struts2.convention.annotation.Results;
 import org.bson.types.ObjectId;
 
 import com.alibaba.fastjson.JSONObject;
+import com.celloud.sdo.App;
 import com.celloud.sdo.Company;
 import com.celloud.sdo.Data;
 import com.celloud.sdo.Dept;
 import com.celloud.sdo.Project;
 import com.celloud.sdo.Report;
-import com.celloud.sdo.Software;
 import com.celloud.sdo.User;
+import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
-import com.celloud.service.SoftwareService;
 import com.celloud.service.UserService;
 import com.google.inject.Inject;
 import com.mongo.sdo.Split;
@@ -69,7 +69,7 @@ import com.nova.utils.XmlUtil;
         @Result(name = "checkDataRunningSoft", type = "json", params = {
                 "root", "intList" }),
         @Result(name = "mapList", type = "json", params = { "root", "mapList" }),
-        @Result(name = "getSoftList", type = "redirect", location = "software!getSoftByFormat", params = {
+        @Result(name = "getSoftList", type = "redirect", location = "app3!getAppByFormat", params = {
                 "condition", "${condition}" }),
         @Result(name = "toDataManage", location = "../../pages/data/myData.jsp"),
         @Result(name = "toMoreInfo", location = "../../pages/data/moreDataInfo.jsp"),
@@ -86,7 +86,7 @@ public class DataAction extends BaseAction {
     @Inject
     private UserService userService;
     @Inject
-    private SoftwareService appService;
+    private AppService appService;
     @Inject
     private IDataService idataService;
     @Inject
@@ -121,8 +121,8 @@ public class DataAction extends BaseAction {
     private static Map<String, String> perlMap = new HashMap<>();
     static {
         SQLUtils sql = new SQLUtils();
-        List<Software> list = sql.getAllSoftware();
-        for (Software software : list) {
+        List<App> list = sql.getAllSoftware();
+        for (App software : list) {
             perlMap.put("" + software.getSoftwareId(), software.getCommand());
         }
     }
@@ -142,7 +142,7 @@ public class DataAction extends BaseAction {
         return "toDataManage";
     }
 
-    public String getSoftListByFormat() {
+    public String getAppListByFormat() {
         log.info("用户" + super.session.get("userName") + "获取数据可运行的APP");
         Map<String, Integer> formatMap = dataService.getFormatNumByIds(dataIds);
         if (formatMap.get("formatNum") != null

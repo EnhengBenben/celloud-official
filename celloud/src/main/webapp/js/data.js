@@ -167,7 +167,7 @@ function showRunApp(){
     	dataIds += checkedDataIds[0];
     }
     var dataLength = checkedDataIds.length;
-    $.get("data3!getSoftListByFormat",{"dataIds":dataIds},function(result){
+    $.get("data3!getAppListByFormat",{"dataIds":dataIds},function(result){
     	if(result == "所选数据格式不统一！"){
     		$("#warningText").html(result);
 			$("#warningModal").modal("show");

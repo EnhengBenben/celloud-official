@@ -4540,3 +4540,14 @@ fieldset[disabled] .btn-vk.active {
 .a-gray:hover{color: #ddd !important;}
 .readonly{background-color: #f4f4f4}
 .table td{word-break:break-all;word-wrap:break-word;}
+
+.table_{border-collapse:collapse;border-spacing:0;width:100%;border:1px solid #d8e2f0;backgroud:#fff}
+.table_ thead{ height:53px; line-height:38px; color:#009BCA; padding-left:19px; position:relative;border-collapse:collapse;}
+.table_ th, .table_ td{border:1px solid #d8e2f0;border-left:none; height:30px; line-height:25px; word-break:break-all;word-wrap:break-word;}
+.table_ thead th{ color:#333; text-align:center}
+.table_ tr td{height:30px;}
+.table_ .red,.table .red{ color:#ff9992;}
+/*---appStore---*/
+.appitem{list-style:none;margin-bottom:3px;padding-left:0px;}
+.big_item{width: 200px;font-weight: bolder;}
+.second_item{padding:10px 15px; width:150px; font-size:16px;}
