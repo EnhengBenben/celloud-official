@@ -25,8 +25,6 @@
             <li class="active">概况</li>
           </ol>
         </section>
-
-        <!-- Main content -->
         <!-- Main content -->
         <section class="content">
           <div class="row">
@@ -68,7 +66,9 @@
                   </div>
                 </div><!-- /.box-body -->
               </div>
-              <div id="appDetail">
+              <div style="padding-bottom:20px;" id="appClassify">
+              </div>
+              <div id="appDetail" class="row">
               </div>
             </div>
             <div class="col-xs-2 pull-right">

@@ -51,6 +51,8 @@ public class App implements Serializable {
     private String command;
     /** APP的所属分类 */
     private Classify classify;
+    private String companyName;
+    private String formatDesc;
 
     public String getCommand() {
         return command;
@@ -202,6 +204,22 @@ public class App implements Serializable {
 
     public void setDataFormat(List<DataFormat> dataFormat) {
         this.dataFormat = dataFormat;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getFormatDesc() {
+        return formatDesc;
+    }
+
+    public void setFormatDesc(String formatDesc) {
+        this.formatDesc = formatDesc;
     }
 
 }

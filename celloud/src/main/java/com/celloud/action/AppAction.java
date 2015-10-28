@@ -23,9 +23,11 @@ import com.nova.action.BaseAction;
  */
 @ParentPackage("celloud-default")
 @Action("app3")
-@Results({ @Result(name = "toAppByFormat", type = "json", params = { "root",
+@Results({
+        @Result(name = "toAppByFormat", type = "json", params = { "root",
                 "appList" }),
-        @Result(name = "toAppHome", location = "../../pages/software/appList.jsp") })
+        @Result(name = "appClassify", location = "../../pages/software/appClassify.jsp"),
+        @Result(name = "appListPage", location = "../../pages/software/appList.jsp") })
 public class AppAction extends BaseAction {
     private static final long serialVersionUID = 1L;
     Logger log = Logger.getLogger(AppAction.class);
@@ -34,19 +36,32 @@ public class AppAction extends BaseAction {
     private List<App> appList;
     private String condition;
     private Integer conditionInt;
+    private Integer paramId;
     private Map<String, List<Classify>> classifyMap;
+    private App app;
 
     public String getAppByFormat() {
         appList = appService.getAppsByFormat(Integer.parseInt(condition));
         return "toAppByFormat";
     }
 
-    public String toAppHome() {
-        Integer companyId = (Integer) super.session.get("companyId");
+    public String getAppClassify() {
         log.info("用户" + super.session.get("userName") + "查看应用市场");
         classifyMap = appService.getDoubleClassify(conditionInt);
-        appList = appService.getAppByClassify(conditionInt, companyId);
-        return "toAppHome";
+        return "appClassify";
+    }
+
+    public String getAppListPage() {
+        Integer companyId = (Integer) super.session.get("companyId");
+        appList = appService.getAppByClassify(paramId, conditionInt, companyId);
+        return "appListPage";
+    }
+
+    public String getAppById() {
+        log.info("用户" + super.session.get("userName") + "查看APP" + paramId
+                + "详细信息");
+        app = appService.getAppById(paramId);
+        return "toAppPage";
     }
 
     public List<App> getAppList() {
@@ -79,6 +94,22 @@ public class AppAction extends BaseAction {
 
     public void setClassifyMap(Map<String, List<Classify>> classifyMap) {
         this.classifyMap = classifyMap;
+    }
+
+    public Integer getParamId() {
+        return paramId;
+    }
+
+    public void setParamId(Integer paramId) {
+        this.paramId = paramId;
+    }
+
+    public App getApp() {
+        return app;
+    }
+
+    public void setApp(App app) {
+        this.app = app;
     }
 
 }

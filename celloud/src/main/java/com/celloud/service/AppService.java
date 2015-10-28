@@ -3,8 +3,8 @@ package com.celloud.service;
 import java.util.List;
 import java.util.Map;
 
-import com.celloud.sdo.Classify;
 import com.celloud.sdo.App;
+import com.celloud.sdo.Classify;
 import com.celloud.service.impl.AppServiceImpl;
 import com.google.inject.ImplementedBy;
 
@@ -58,5 +58,14 @@ public interface AppService {
      *            软件提供方
      * @return
      */
-    public List<App> getAppByClassify(Integer classifyId, Integer companyId);
+    public List<App> getAppByClassify(Integer classifyId, Integer pid,
+            Integer companyId);
+
+    /**
+     * 根据id查询APP
+     * 
+     * @param id
+     * @return
+     */
+    public App getAppById(Integer id);
 }

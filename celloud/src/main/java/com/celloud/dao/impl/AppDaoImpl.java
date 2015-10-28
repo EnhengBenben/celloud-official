@@ -43,13 +43,13 @@ public class AppDaoImpl extends BaseDao implements AppDao {
             ps.setInt(4, super.companyId);
             ps.setInt(5, AppPermission.PUBLIC);
             rs = ps.executeQuery();
-            App soft = null;
+            App app = null;
             while (rs.next()) {
-                soft = new App();
-                soft.setSoftwareId(rs.getLong("software_id"));
-                soft.setSoftwareName(rs.getString("software_name"));
-                soft.setDataNum(rs.getInt("data_num"));
-                list.add(soft);
+                app = new App();
+                app.setSoftwareId(rs.getLong("software_id"));
+                app.setSoftwareName(rs.getString("software_name"));
+                app.setDataNum(rs.getInt("data_num"));
+                list.add(app);
             }
         } catch (SQLException e) {
             log.error("用户" + super.userName + "查询数据可运行的APP列表失败");
@@ -90,13 +90,13 @@ public class AppDaoImpl extends BaseDao implements AppDao {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, AppOffline.ON);
             rs = ps.executeQuery();
-            App soft = null;
+            App app = null;
             while (rs.next()) {
-                soft = new App();
-                soft.setSoftwareId(rs.getLong("software_id"));
-                soft.setSoftwareName(rs.getString("software_name"));
-                soft.setCommand(rs.getString("command"));
-                list.add(soft);
+                app = new App();
+                app.setSoftwareId(rs.getLong("software_id"));
+                app.setSoftwareName(rs.getString("software_name"));
+                app.setCommand(rs.getString("command"));
+                list.add(app);
             }
         } catch (SQLException e) {
             log.error("用户" + super.userName + "全查APP列表失败");
@@ -143,9 +143,15 @@ public class AppDaoImpl extends BaseDao implements AppDao {
     }
 
     @Override
-    public List<App> getAppByClassify(Integer classifyId, Integer companyId) {
+    public List<App> getAppByClassify(Integer classifyId, Integer pid,
+            Integer companyId) {
         List<App> list = new ArrayList<>();
-        String sql = "select s.software_id,s.software_name,s.picture_name,s.description,s.create_date,c.classify_id,c.classify_name from tb_software s left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_classify c on c.classify_id=sc.classify_id where c.classify_pid=? and s.off_line=? and ((s.company_id=? and s.attribute=?) or s.attribute=?) order by s.create_date desc;";
+        String sql = null;
+        if (pid == 0) {
+            sql = "select s.software_id,s.software_name,s.picture_name,s.intro,s.description,s.create_date from tb_software s left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_classify c on c.classify_id=sc.classify_id where c.classify_pid=? and s.off_line=? and ((s.company_id=? and s.attribute=?) or s.attribute=?) order by sc.classify_id;";
+        } else {
+            sql = "select s.software_id,s.software_name,s.picture_name,s.intro,s.description,s.create_date from tb_software s left join tb_software_classify_relat sc on s.software_id=sc.software_id where sc.classify_id=? and s.off_line=? and ((s.company_id=? and s.attribute=?) or s.attribute=?) order by sc.classify_id;";
+        }
         try {
             conn = ConnectManager.getConnection();
             ps = conn.prepareStatement(sql);
@@ -155,28 +161,56 @@ public class AppDaoImpl extends BaseDao implements AppDao {
             ps.setInt(4, AppPermission.PRIVATE);
             ps.setInt(5, AppPermission.PUBLIC);
             rs = ps.executeQuery();
-            App soft = null;
-            Classify clas = null;
+            App app = null;
             while (rs.next()) {
-                soft = new App();
-                soft.setSoftwareId(rs.getLong("software_id"));
-                soft.setSoftwareName(rs.getString("software_name"));
-                soft.setPictureName(rs.getString("picture_name"));
-                soft.setDescription(rs.getString("description"));
-                soft.setCreateDate(rs.getDate("create_date"));
-                clas = new Classify();
-                clas.setClassifyId(rs.getInt("classify_id"));
-                clas.setClassifyName(rs.getString("classify_name"));
-                soft.setClassify(clas);
-                list.add(soft);
+                app = new App();
+                app.setSoftwareId(rs.getLong("software_id"));
+                app.setSoftwareName(rs.getString("software_name"));
+                app.setPictureName(rs.getString("picture_name"));
+                app.setIntro(rs.getString("intro"));
+                app.setDescription(rs.getString("description"));
+                app.setCreateDate(rs.getDate("create_date"));
+                list.add(app);
             }
         } catch (SQLException e) {
-            log.error("用户" + super.userName + "全查APP列表失败");
+            log.error("用户" + super.userName + "查寻" + classifyId + "分类下的APP列表失败");
             e.printStackTrace();
         } finally {
             ConnectManager.free(conn, ps, rs);
         }
         return list;
+    }
+
+    @Override
+    public App getAppById(Integer id) {
+        App app = new App();
+        String sql = "select s.software_id,s.software_name,s.english_name,s.picture_name,s.create_date,s.intro,s.description,s.app_doc,s.data_num,c.company_name,GROUP_CONCAT(df.format_desc) format from tb_software s left join tb_company c on s.company_id=c.company_id left join tb_software_format_relat sf on s.software_id=sf.software_id left join tb_data_format df on sf.format_id=df.format_id where s.software_id=?;";
+        try {
+            conn = ConnectManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                app = new App();
+                app.setSoftwareId(rs.getLong("software_id"));
+                app.setSoftwareName(rs.getString("software_name"));
+                app.setEnglishName(rs.getString("english_name"));
+                app.setPictureName(rs.getString("picture_name"));
+                app.setDescription(rs.getString("description"));
+                app.setCreateDate(rs.getDate("create_date"));
+                app.setIntro(rs.getString("intro"));
+                app.setAppDoc(rs.getString("app_doc"));
+                app.setDataNum(rs.getInt("data_num"));
+                app.setCompanyName(rs.getString("company_name"));
+                app.setFormatDesc(rs.getString("format"));
+            }
+        } catch (SQLException e) {
+            log.error("用户" + super.userName + "查看APP" + id + "失败");
+            e.printStackTrace();
+        } finally {
+            ConnectManager.free(conn, ps, rs);
+        }
+        return app;
     }
 
 }

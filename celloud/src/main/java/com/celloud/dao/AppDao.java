@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.celloud.dao.impl.AppDaoImpl;
-import com.celloud.sdo.Classify;
 import com.celloud.sdo.App;
+import com.celloud.sdo.Classify;
 import com.google.inject.ImplementedBy;
 
 /**
@@ -40,22 +40,33 @@ public interface AppDao {
 	public List<App> getAllSoftware();
 
     /**
-     * 获取APP所有分类分类
+     * 获取APP所有父分类及某父分类下的子分类
      * 
      * @param classifyId
-     *            分类
+     *            父分类
      * @return
      */
     public Map<String, List<Classify>> getDoubleClassify(Integer classifyId);
 
     /**
-     * 大分类查询APP
+     * 分类查询APP
      * 
      * @param classifyId
      *            分类
+     * @param pid
+     *            0:-父分类 1：子分类
      * @param companyId
      *            软件提供方
      * @return
      */
-    public List<App> getAppByClassify(Integer classifyId, Integer companyId);
+    public List<App> getAppByClassify(Integer classifyId, Integer pid,
+            Integer companyId);
+
+    /**
+     * 根据id查询APP
+     * 
+     * @param id
+     * @return
+     */
+    public App getAppById(Integer id);
 }

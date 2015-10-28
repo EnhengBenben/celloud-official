@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.celloud.dao.AppDao;
-import com.celloud.sdo.Classify;
 import com.celloud.sdo.App;
+import com.celloud.sdo.Classify;
 import com.celloud.service.AppService;
 import com.google.inject.Inject;
 
@@ -40,8 +40,14 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public List<App> getAppByClassify(Integer classifyId, Integer companyId) {
-        return appDao.getAppByClassify(classifyId, companyId);
+    public List<App> getAppByClassify(Integer classifyId, Integer pid,
+            Integer companyId) {
+        return appDao.getAppByClassify(classifyId, pid, companyId);
+    }
+
+    @Override
+    public App getAppById(Integer id) {
+        return appDao.getAppById(id);
     }
 
 }
