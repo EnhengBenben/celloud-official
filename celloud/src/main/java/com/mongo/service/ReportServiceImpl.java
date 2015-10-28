@@ -8,6 +8,7 @@ import com.mongo.sdo.CmpFilling;
 import com.mongo.sdo.CmpGeneSnpResult;
 import com.mongo.sdo.CmpReport;
 import com.mongo.sdo.GddDiseaseDict;
+import com.mongo.sdo.HBV;
 import com.mongo.sdo.MIB;
 import com.mongo.sdo.NIPT;
 import com.mongo.sdo.PGSFilling;
@@ -88,6 +89,16 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public MIB getMIB(String dataKey, Integer proId, Integer appId) {
         return reportDao.getMIB(dataKey, proId, appId);
+    }
+
+    @Override
+    public HBV getHBVReport(String dataKey, Integer proId, Integer appId) {
+        return reportDao.getHBVReport(dataKey, proId, appId);
+    }
+
+    @Override
+    public List<HBV> getHBVList(Integer userId) {
+        return reportDao.getHBVList(userId);
     }
 
 }

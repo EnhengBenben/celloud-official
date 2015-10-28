@@ -8,6 +8,7 @@ import com.mongo.sdo.CmpFilling;
 import com.mongo.sdo.CmpGeneSnpResult;
 import com.mongo.sdo.CmpReport;
 import com.mongo.sdo.GddDiseaseDict;
+import com.mongo.sdo.HBV;
 import com.mongo.sdo.MIB;
 import com.mongo.sdo.NIPT;
 import com.mongo.sdo.PGSFilling;
@@ -23,6 +24,7 @@ import com.mongo.sdo.Split;
  */
 @ImplementedBy(ReportDAOImpl.class)
 public interface ReportDAO {
+    // TODO 单查和统计考虑用泛型
     /**
      * 新增CMP运行报告内容
      * 
@@ -64,7 +66,7 @@ public interface ReportDAO {
      * @return
      */
     public List<CmpGeneSnpResult> getGddResult(String dataKey, Integer proId,
-	    Integer appId);
+            Integer appId);
 
     /**
      * 获取pgs报告内容
@@ -84,7 +86,7 @@ public interface ReportDAO {
     public List<Pgs> getPgsList(Integer userId);
 
     public void editPGSFilling(int userId, int appId, String dataKey,
-	    PGSFilling pgs);
+            PGSFilling pgs);
 
     /**
      * 获取NIPT数据报告
@@ -132,4 +134,22 @@ public interface ReportDAO {
      * @return
      */
     public MIB getMIB(String dataKey, Integer proId, Integer appId);
+
+    /**
+     * 获取HBV报告内容
+     * 
+     * @param dataKey
+     * @param proId
+     * @param appId
+     * @return
+     */
+    public HBV getHBVReport(String dataKey, Integer proId, Integer appId);
+
+    /**
+     * 获取HBV统计报告内容
+     * 
+     * @param userId
+     * @return
+     */
+    public List<HBV> getHBVList(Integer userId);
 }

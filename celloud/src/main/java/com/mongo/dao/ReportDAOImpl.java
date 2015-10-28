@@ -14,6 +14,7 @@ import com.mongo.sdo.CmpGeneDetectionDetail;
 import com.mongo.sdo.CmpGeneSnpResult;
 import com.mongo.sdo.CmpReport;
 import com.mongo.sdo.GddDiseaseDict;
+import com.mongo.sdo.HBV;
 import com.mongo.sdo.MIB;
 import com.mongo.sdo.NIPT;
 import com.mongo.sdo.PGSFilling;
@@ -177,6 +178,18 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
                 ds.createUpdateOperations(Split.class)
                         .set("upload", split.getUpload())
                         .set("splitDataIds", split.getSplitDataIds()));
+    }
+
+    @Override
+    public HBV getHBVReport(String dataKey, Integer proId, Integer appId) {
+        return ds.createQuery(HBV.class).filter("dataKey", dataKey)
+                .filter("projectId", proId).filter("appId", appId).get();
+    }
+
+    @Override
+    public List<HBV> getHBVList(Integer userId) {
+        return this.ds.createQuery(HBV.class).filter("userId", userId)
+                .order("-uploadDate").asList();
     }
 
 }

@@ -61,7 +61,7 @@
 				<img src="images/content/diskexplorer.png" alt="应用市场" title="应用市场"
 					width="48" height="48" />
 			</div> 
-			<c:if test="${session.companyId==6}">
+			<c:if test="${session.companyId==6||session.companyId==3}">
 				<div class="leftApp" _appId="tj" _appName="统计"
 					_appImg="images/content/count_.png" _iframeSrc="pages/count/count.jsp">
 					<img src="images/content/count_.png" alt="统计" title="统计"
