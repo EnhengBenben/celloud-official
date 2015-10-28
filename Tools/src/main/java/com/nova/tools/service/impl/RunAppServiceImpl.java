@@ -152,7 +152,7 @@ public class RunAppServiceImpl {
     public void MIB(String outPath, String projectId, String dataKeyList,
             String appId, String appName, String userId, String dataInfos,
             String company, String user, String dept) {
-        String dataListFile = formatDataKeyListToSplit(dataKeyList);
+        String dataListFile = dealDataKeyListContainFileName(dataKeyList);
         String command = MIB_perl + " " + dataListFile + " " + outPath
                 + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
