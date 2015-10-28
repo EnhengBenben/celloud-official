@@ -57,7 +57,7 @@ def datainsert(path,projectId):
 				myfun = method_dic[int(re['appId'])]
 				fun = myfun.getInstance()
 				if fun:
-					p = os.path.join(path,str(re['userId']),str(re['appId']),str(re['dataKey']))
+					p = os.path.join(path,str(re['dataKey']))
 					final = fun.getResult(p,re['appName'],re['fileName'],re['anotherName'])
 					merge = dict(final, **re)
 					mo = mongo.getInstance()
