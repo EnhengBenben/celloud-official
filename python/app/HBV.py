@@ -42,7 +42,6 @@ class HBV:
 		else:
 			datakey = str(os.path.split(path)[1])
 			path = path+os.sep
-		result['datakey'] = datakey
 
 		if(not os.path.exists(path)):
 			return result
@@ -117,7 +116,7 @@ class HBV:
 		#zip
 		zip = os.path.join(path,'HBV_SNP.zip')
 		if(os.path.exists(zip)):
-			result['zip'] = zip
+			result['zip'] = 'HBV_SNP.zip'
 		#SVG
 		svgPath = os.path.join(path,'SVG')
 		if (os.path.exists(svgPath)):
