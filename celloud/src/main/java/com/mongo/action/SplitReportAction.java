@@ -23,7 +23,8 @@ import com.nova.utils.PropertiesUtil;
 @ParentPackage("celloud-default")
 @Action("splitReport")
 @Results({
- @Result(name = "toSplit", location = "../../pages/report/split.jsp") })
+        @Result(name = "toSplit", location = "../../pages/report/split.jsp"),
+        @Result(name = "toMibReport", location = "../../pages/report/MIB.jsp") })
 public class SplitReportAction extends BaseAction {
     private static final long serialVersionUID = 1L;
     Logger log = Logger.getLogger(SplitReportAction.class);
