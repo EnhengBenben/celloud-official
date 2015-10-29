@@ -51,6 +51,7 @@ public class App implements Serializable {
     private String command;
     /** APP的所属分类 */
     private Classify classify;
+    private String classifyNames;
     private String companyName;
     private String formatDesc;
 
@@ -220,6 +221,14 @@ public class App implements Serializable {
 
     public void setFormatDesc(String formatDesc) {
         this.formatDesc = formatDesc;
+    }
+
+    public String getClassifyNames() {
+        return classifyNames;
+    }
+
+    public void setClassifyNames(String classifyNames) {
+        this.classifyNames = classifyNames;
     }
 
 }

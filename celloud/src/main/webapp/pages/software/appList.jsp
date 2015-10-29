@@ -22,13 +22,13 @@
 <c:forEach items="${appList}" var="app">
   <div class="col-md-4">
     <div class="info-box">
-	  <div class="info-box-icon bg-green">
-		<img src="<%=request.getContextPath()%>/images/app/${app.pictureName}" style="width:90px;margin:0px">
+	  <div class="info-box-icon">
+		<img src="<%=request.getContextPath()%>/images/app/${app.pictureName}">
 	  </div>
 	  <div class="info-box-content">
 	      <span class="info-box-text">${app.softwareName }</span>
 	      <p class="info-box-artic">${app.intro }</p>
-<!-- 	      <button class="btn btn-block btn-success btn-flat btn-xs" style="margin-top:18px;"><i class="fa fa-plus"></i>添加</button> -->
+	      <a class="a-green-normal" style="position:absolute;bottom:20px;" href="javascript:void()" onclick="toAppDetail(${app.softwareId})">查看APP详细</a>
 	  </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
   </div><!-- /.col -->

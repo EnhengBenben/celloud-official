@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.celloud.sdo.App;
 import com.celloud.sdo.Classify;
+import com.celloud.sdo.Screen;
 import com.celloud.service.impl.AppServiceImpl;
 import com.google.inject.ImplementedBy;
 
@@ -68,4 +69,21 @@ public interface AppService {
      * @return
      */
     public App getAppById(Integer id);
+
+    /**
+     * 获取已添加的APP
+     * 
+     * @param userId
+     * @return
+     */
+    public List<App> getMyAppList(Integer userId);
+
+    /**
+     * 获取软件截图
+     * 
+     * @param id
+     *            APP编号
+     * @return
+     */
+    public List<Screen> getScreenByAppId(Integer id);
 }

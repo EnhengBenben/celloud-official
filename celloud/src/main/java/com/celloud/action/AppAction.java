@@ -11,6 +11,7 @@ import org.apache.struts2.convention.annotation.Results;
 
 import com.celloud.sdo.App;
 import com.celloud.sdo.Classify;
+import com.celloud.sdo.Screen;
 import com.celloud.service.AppService;
 import com.google.inject.Inject;
 import com.nova.action.BaseAction;
@@ -27,7 +28,9 @@ import com.nova.action.BaseAction;
         @Result(name = "toAppByFormat", type = "json", params = { "root",
                 "appList" }),
         @Result(name = "appClassify", location = "../../pages/software/appClassify.jsp"),
-        @Result(name = "appListPage", location = "../../pages/software/appList.jsp") })
+        @Result(name = "appListPage", location = "../../pages/software/appList.jsp"),
+        @Result(name = "toAppDetail", location = "../../pages/software/appDetail.jsp"),
+        @Result(name = "toMyAppPage", location = "../../pages/software/myApps.jsp") })
 public class AppAction extends BaseAction {
     private static final long serialVersionUID = 1L;
     Logger log = Logger.getLogger(AppAction.class);
@@ -39,6 +42,7 @@ public class AppAction extends BaseAction {
     private Integer paramId;
     private Map<String, List<Classify>> classifyMap;
     private App app;
+    private List<Screen> screenList;
 
     public String getAppByFormat() {
         appList = appService.getAppsByFormat(Integer.parseInt(condition));
@@ -61,7 +65,17 @@ public class AppAction extends BaseAction {
         log.info("用户" + super.session.get("userName") + "查看APP" + paramId
                 + "详细信息");
         app = appService.getAppById(paramId);
-        return "toAppPage";
+        screenList = appService.getScreenByAppId(paramId);
+        return "toAppDetail";
+    }
+
+    public String getMyApp() {
+        Integer userId = (Integer) super.session.get("userId");
+        log.info("用户" + super.session.get("userName") + "查看已添加的APP");
+        // TODO 测试
+        userId = 33;
+        appList = appService.getMyAppList(userId);
+        return "toMyAppPage";
     }
 
     public List<App> getAppList() {
@@ -110,6 +124,14 @@ public class AppAction extends BaseAction {
 
     public void setApp(App app) {
         this.app = app;
+    }
+
+    public List<Screen> getScreenList() {
+        return screenList;
+    }
+
+    public void setScreenList(List<Screen> screenList) {
+        this.screenList = screenList;
     }
 
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 import com.celloud.dao.AppDao;
 import com.celloud.sdo.App;
 import com.celloud.sdo.Classify;
+import com.celloud.sdo.Screen;
 import com.celloud.service.AppService;
 import com.google.inject.Inject;
 
@@ -48,6 +49,16 @@ public class AppServiceImpl implements AppService {
     @Override
     public App getAppById(Integer id) {
         return appDao.getAppById(id);
+    }
+
+    @Override
+    public List<App> getMyAppList(Integer userId) {
+        return appDao.getMyAppList(userId);
+    }
+
+    @Override
+    public List<Screen> getScreenByAppId(Integer id) {
+        return appDao.getScreenByAppId(id);
     }
 
 }

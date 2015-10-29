@@ -16,9 +16,11 @@ import com.celloud.constants.AppPermission;
 import com.celloud.dao.AppDao;
 import com.celloud.sdo.App;
 import com.celloud.sdo.Classify;
+import com.celloud.sdo.Screen;
 import com.nova.utils.ConnectManager;
 
 /**
+ * APP操作数据库实现
  * 
  * @author <a href="mailto:liuqingxiao@celloud.cn">liuqx</a>
  * @date 2015-9-15下午2:09:19
@@ -147,19 +149,26 @@ public class AppDaoImpl extends BaseDao implements AppDao {
             Integer companyId) {
         List<App> list = new ArrayList<>();
         String sql = null;
-        if (pid == 0) {
-            sql = "select s.software_id,s.software_name,s.picture_name,s.intro,s.description,s.create_date from tb_software s left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_classify c on c.classify_id=sc.classify_id where c.classify_pid=? and s.off_line=? and ((s.company_id=? and s.attribute=?) or s.attribute=?) order by sc.classify_id;";
-        } else {
-            sql = "select s.software_id,s.software_name,s.picture_name,s.intro,s.description,s.create_date from tb_software s left join tb_software_classify_relat sc on s.software_id=sc.software_id where sc.classify_id=? and s.off_line=? and ((s.company_id=? and s.attribute=?) or s.attribute=?) order by sc.classify_id;";
-        }
         try {
             conn = ConnectManager.getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, classifyId);
-            ps.setInt(2, AppOffline.ON);
-            ps.setInt(3, companyId);
-            ps.setInt(4, AppPermission.PRIVATE);
-            ps.setInt(5, AppPermission.PUBLIC);
+            if (pid == 0) {
+                sql = "select s.software_id,s.software_name,s.picture_name,s.intro,s.description,s.create_date from tb_software s left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_classify c on c.classify_id=sc.classify_id where (c.classify_pid=? or c.classify_id=?) and s.off_line=? and ((s.company_id=? and s.attribute=?) or s.attribute=?) order by sc.classify_id;";
+                ps = conn.prepareStatement(sql);
+                ps.setInt(1, classifyId);
+                ps.setInt(2, classifyId);
+                ps.setInt(3, AppOffline.ON);
+                ps.setInt(4, companyId);
+                ps.setInt(5, AppPermission.PRIVATE);
+                ps.setInt(6, AppPermission.PUBLIC);
+            } else {
+                sql = "select s.software_id,s.software_name,s.picture_name,s.intro,s.description,s.create_date from tb_software s left join tb_software_classify_relat sc on s.software_id=sc.software_id where sc.classify_id=? and s.off_line=? and ((s.company_id=? and s.attribute=?) or s.attribute=?) order by sc.classify_id;";
+                ps = conn.prepareStatement(sql);
+                ps.setInt(1, classifyId);
+                ps.setInt(2, AppOffline.ON);
+                ps.setInt(3, companyId);
+                ps.setInt(4, AppPermission.PRIVATE);
+                ps.setInt(5, AppPermission.PUBLIC);
+            }
             rs = ps.executeQuery();
             App app = null;
             while (rs.next()) {
@@ -184,7 +193,7 @@ public class AppDaoImpl extends BaseDao implements AppDao {
     @Override
     public App getAppById(Integer id) {
         App app = new App();
-        String sql = "select s.software_id,s.software_name,s.english_name,s.picture_name,s.create_date,s.intro,s.description,s.app_doc,s.data_num,c.company_name,GROUP_CONCAT(df.format_desc) format from tb_software s left join tb_company c on s.company_id=c.company_id left join tb_software_format_relat sf on s.software_id=sf.software_id left join tb_data_format df on sf.format_id=df.format_id where s.software_id=?;";
+        String sql = "select s.software_id,s.software_name,s.english_name,s.picture_name,s.create_date,s.intro,s.description,s.app_doc,s.data_num,c.company_name,GROUP_CONCAT(cls.classify_name) classify from tb_software s left join tb_company c on s.company_id=c.company_id left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_classify cls on sc.classify_id=cls.classify_id where s.software_id=?;";
         try {
             conn = ConnectManager.getConnection();
             ps = conn.prepareStatement(sql);
@@ -202,7 +211,7 @@ public class AppDaoImpl extends BaseDao implements AppDao {
                 app.setAppDoc(rs.getString("app_doc"));
                 app.setDataNum(rs.getInt("data_num"));
                 app.setCompanyName(rs.getString("company_name"));
-                app.setFormatDesc(rs.getString("format"));
+                app.setClassifyNames(rs.getString("classify"));
             }
         } catch (SQLException e) {
             log.error("用户" + super.userName + "查看APP" + id + "失败");
@@ -213,4 +222,61 @@ public class AppDaoImpl extends BaseDao implements AppDao {
         return app;
     }
 
+    @Override
+    public List<App> getMyAppList(Integer userId) {
+        List<App> list = new ArrayList<>();
+        String sql = "select us.user_id,s.software_id,s.software_name,s.picture_name,s.intro,s.description,s.create_date,GROUP_CONCAT(c.classify_name) classify,com.company_name from tb_user_software us left join tb_software s on us.software_id=s.software_id left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_classify c on c.classify_id=sc.classify_id left join tb_company com on s.company_id=com.company_id where us.user_id=? and s.off_line=? group by s.software_id order by create_date desc;";
+        try {
+            conn = ConnectManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ps.setInt(2, AppOffline.ON);
+            rs = ps.executeQuery();
+            App app = null;
+            while (rs.next()) {
+                app = new App();
+                app.setSoftwareId(rs.getLong("software_id"));
+                app.setSoftwareName(rs.getString("software_name"));
+                app.setPictureName(rs.getString("picture_name"));
+                app.setIntro(rs.getString("intro"));
+                app.setDescription(rs.getString("description"));
+                app.setCreateDate(rs.getDate("create_date"));
+                app.setClassifyNames(rs.getString("classify"));
+                app.setCompanyName(rs.getString("company_name"));
+                list.add(app);
+            }
+        } catch (SQLException e) {
+            log.error("用户" + super.userName + "查寻已添加的APP列表失败");
+            e.printStackTrace();
+        } finally {
+            ConnectManager.free(conn, ps, rs);
+        }
+        return list;
+    }
+
+    @Override
+    public List<Screen> getScreenByAppId(Integer id) {
+        List<Screen> list = new ArrayList<>();
+        String sql = "select screen_id,screen_name,software_id from tb_screen where software_id=?";
+        try {
+            conn = ConnectManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            Screen screen = null;
+            while (rs.next()) {
+                screen = new Screen();
+                screen.setScreenId(rs.getInt("screen_id"));
+                screen.setScreenName(rs.getString("screen_name"));
+                screen.setSoftwareId(rs.getInt("software_id"));
+                list.add(screen);
+            }
+        } catch (SQLException e) {
+            log.error("用户" + super.userName + "查寻APP" + id + "的截图列表失败");
+            e.printStackTrace();
+        } finally {
+            ConnectManager.free(conn, ps, rs);
+        }
+        return list;
+    }
 }

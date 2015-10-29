@@ -71,7 +71,7 @@
 								<tr>
 									<td>
 										<c:choose>
-										  <c:when test="${data.name=='total' ||data.name=='useful'||data.name=='unknow'}">
+										  <c:when test="${data.name=='total' ||data.name=='useful'||data.name=='unknown'}">
 										    ${data.name }
 										  </c:when>
 										  <c:otherwise>
