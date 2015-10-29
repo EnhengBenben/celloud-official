@@ -7,7 +7,7 @@
 <title>统计</title>
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
 <link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">    
-<link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.1" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.2" rel="stylesheet" type="text/css" />
 <%-- <link href="<%=request.getContextPath() %>/css/count.css?version=2015081806" rel="stylesheet"> --%>
 </head>
 <body>
@@ -28,8 +28,8 @@
 		<!--             	<a type="submit" class="text-yellow" style="font-size:12px;margin-left:10px">信息导出</a> -->
 		            </h3>
 		            <p style="font-family:黑体;color:#FFFFFF">本页提供所有数据报告总览。</p>
-		            <button class="btn btn-success btn-flat" style="width:150px;height:70px;margin-right:0px" id="toDataCount">数据</button>
-		            <button class="btn btn-success bg-green-active btn-flat" style="width:150px;height:70px;margin-right:0px">报告</button>
+<!-- 		            <button class="btn btn-success btn-flat" style="width:150px;height:70px;margin-right:0px" id="toDataCount">数据</button> -->
+<!-- 		            <button class="btn btn-success bg-green-active btn-flat" style="width:150px;height:70px;margin-right:0px">报告</button> -->
 		          </div>
 		        </div>
 		      </c:if>

@@ -39,6 +39,7 @@ import com.nova.tools.itext.PGS_PDF;
 import com.nova.tools.utils.FileTools;
 import com.nova.tools.utils.GanymedSSH;
 import com.nova.tools.utils.JsonUtil;
+import com.nova.tools.utils.PerlUtils;
 import com.nova.tools.utils.PropertiesUtils;
 import com.nova.tools.utils.ScreeningUtil;
 import com.nova.tools.utils.XMLUtil;
@@ -152,7 +153,7 @@ public class RunAppServiceImpl {
     public void MIB(String outPath, String projectId, String dataKeyList,
             String appId, String appName, String userId, String dataInfos,
             String company, String user, String dept) {
-        String dataListFile = dealDataKeyListContainFileName(dataKeyList);
+        String dataListFile = dealDataKeyList(dataKeyList);
         String command = MIB_perl + " " + dataListFile + " " + outPath
                 + " ProjectID" + projectId;
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
@@ -1991,6 +1992,9 @@ public class RunAppServiceImpl {
         boolean state = ssh.sshSubmit(true);
         StringBuffer resultArray = new StringBuffer();
         if (state) {
+            String python = "python /share/biosoft/perl/PGS_MG/python/runover.py /share/data/webapps/Tools/upload/ "
+                     + projectId;
+            PerlUtils.executeGadgetsPerl(python);
             String dataArray[] = dataKeyList.split(";");
             // 创建 SNP 项目结果文件
             String projectFile = basePath + projectId + "/" + projectId

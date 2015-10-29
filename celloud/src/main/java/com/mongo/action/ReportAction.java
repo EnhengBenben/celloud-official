@@ -71,7 +71,7 @@ public class ReportAction extends BaseAction {
         Long time[] = new Long[map.size()];
         int count = 0;
         for (Entry<String, HBV> hbv : map.entrySet()) {
-            long e = hbv.getValue().getCreateDate().getTime();
+            long e = hbv.getValue().getCreateDate().getTime()+Long.parseLong((Math.random()*1000+"").split("\\.")[0]);
             time[count] = e;
             count++;
             sort.put(e, hbv.getValue());
