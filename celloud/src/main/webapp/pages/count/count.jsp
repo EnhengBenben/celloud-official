@@ -40,7 +40,7 @@
 		            	运行统计
 		            	<a type="button" class="text-yellow" style="font-size:14px;margin-left:10px">目前只提供 HBV_SNP 流程的统计</a>
 		            </h3>
-		            <p style="font-family:黑体;color:#FFFFFF">为了可以较好的查看本页面，序列不直接展示在表格中，但会在下载的excel文件中直接展示。</p>
+		            <p style="font-family:黑体;color:#FFFFFF">查看页面中不提供序列详细信息的直接展示，用户可以通过“下载Excel”获得全部序列信息。</p>
 		            <a class="btn btn-success btn-flat" style="width:100px;height:35px;margin-right:0px" href="javascript:void(0)" id="_down">下载 Excel</a>
 		          </div>
 		        </div>

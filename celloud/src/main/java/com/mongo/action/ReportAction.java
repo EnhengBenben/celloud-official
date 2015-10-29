@@ -1,12 +1,12 @@
 package com.mongo.action;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
@@ -19,6 +19,7 @@ import com.google.inject.Inject;
 import com.mongo.sdo.HBV;
 import com.mongo.service.ReportService;
 import com.nova.action.BaseAction;
+import com.nova.utils.ExcelUtil;
 import com.nova.utils.FileTools;
 
 /**
@@ -48,7 +49,9 @@ public class ReportAction extends BaseAction {
         Integer userId = (Integer) super.session.get("userId");
         // TODO 不应该在结果中去重，应该在查询时候去重
         // 去重规则是，每个datakey只保留最近运行的那一次
+        // 1. 查询
         hbvList = reportService.getHBVList(userId);
+        // 2.筛选
         Map<String, HBV> map = new HashMap<String, HBV>();
         for (int i = 0; i < hbvList.size(); i++) {
             HBV hbv = hbvList.get(i);
@@ -63,25 +66,36 @@ public class ReportAction extends BaseAction {
                 map.put(dataKey, hbv);
             }
         }
+        //3. 排序
+        Map<Long, HBV> sort = new HashMap<>();
+        Long time[] = new Long[map.size()];
+        int count = 0;
+        for (Entry<String, HBV> hbv : map.entrySet()) {
+            long e = hbv.getValue().getCreateDate().getTime();
+            time[count] = e;
+            count++;
+            sort.put(e, hbv.getValue());
+        }
+        Arrays.sort(time);
+        //4.按照排好的序列倒序取值
         hbvList = new ArrayList<>();
-        Set<Entry<String, HBV>> entry = map.entrySet();
-        for (Entry<String, HBV> hbv : entry) {
-            hbvList.add(hbv.getValue());
+        for (int i = time.length-1; i >-1; i--) {
+            hbvList.add(sort.get(time[i]));
         }
         // TODO 写死的路径，考虑前台下载时 js导出excel
-        fileName = String.valueOf(new Date().getTime() + ".xls");
-        String path = "/share/data/output/" + fileName;
+        long l = new Date().getTime();
+        String txt = String.valueOf(l + ".txt");
+        fileName = String.valueOf(l + ".xls");
+        String path = "/share/data/output/" + txt;
+        String excelpath = "/share/data/output/" + fileName;
         FileTools.createFile(path);
-        FileTools
-                .appendWrite(
-                        path,
-                        "文件名\tI169T\tV173L\tL180M\tA181V/T\tT184A/G/S/I/L/F\tA194T\tS202G/I\tM204V\tN236T\tM250V/L/I\t序列\n");
+        FileTools .appendWrite( path, "文件名\tI169T\tV173L\tL180M\tA181V/T\tT184A/G/S/I/L/F\tA194T\tS202G/I\tM204V\tN236T\tM250V/L/I\t序列\n");
         for (HBV hbv : hbvList) {
             StringBuffer line = new StringBuffer(hbv.getFileName())
                     .append("\t");
             if (hbv.getSite() == null) {
                 line.append("由于分析流程的升级，八月一日之前的分析结果无法提取到该信息，若需要请重新运行。");
-                for (int i = 0; i < 9; i++) {
+                for (int i = 0; i < 10; i++) {
                     line.append("\t");
                 }
             } else {
@@ -100,6 +114,7 @@ public class ReportAction extends BaseAction {
             line.append(hbv.getSeq()).append("\n");
             FileTools.appendWrite(path, line.toString());
         }
+        ExcelUtil.simpleTxtToExcel(path, excelpath, "count");
         return "toCount";
     }
 
