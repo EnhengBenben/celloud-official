@@ -4666,13 +4666,13 @@ fieldset[disabled] .btn-vk.active {
 
 .app-detail-misc {
 	width: 100%;
-/* 	height: 399px; */
+	height: 399px;
 	float: left
 }
 
 .app-detail-desp {
 	width: 266px;
-/* 	height: 344px; */
+	height: 344px;
 	padding: 0 30px 0 10px;
 	margin: 45px 0 10px;
 	word-wrap: break-word;
@@ -4744,3 +4744,4 @@ ul.app-detail-tabs .app-detail-tab {
 ul.app-detail-tabs li.selected a {
 	background: #f8f8f8
 }
+.time{color:#777;font-style:italic;font-size:10.2px}

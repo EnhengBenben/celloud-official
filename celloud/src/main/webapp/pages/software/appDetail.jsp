@@ -10,12 +10,9 @@
 		<div class="app-detail-abs">
 			<h3 class="app-detail-name">${app.softwareName }</h3>
 			<p class="app-detail-author">
-				作者&nbsp;:&nbsp;${app.companyName }&nbsp;
-			</p>
-			<p class="app-detail-author">
-				提交于&nbsp;:&nbsp;<span
-					class="time">${app.createDate }</span>&nbsp; 	分类&nbsp;:&nbsp;<span
-					class="time">${app.classifyNames}</span>
+				提供者&nbsp;:&nbsp;<span class="time">${app.companyName }</span>&nbsp;
+				上线 &nbsp;:&nbsp;<span class="time">${app.createDate }</span>&nbsp; 	分类&nbsp;:&nbsp;
+				<span class="time">${app.classifyNames}</span>
 			</p>
 		</div>
 	</div>
@@ -35,7 +32,7 @@
 						${app.intro }</pre>
 					</p>
 					<p class="app-detail-desp-long">
-						【简介】	
+						【详细】	
 					${app.appDoc }
 					</p>
 				</div>
