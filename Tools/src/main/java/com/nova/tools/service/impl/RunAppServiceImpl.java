@@ -223,12 +223,12 @@ public class RunAppServiceImpl {
                         Map<String, String> map_ = new HashMap<>();
                         String[] line_z = list_.get(z).split("\t");
                         map_.put("Species", getArray(line_z, 0));
-                        map_.put("Genus", getArray(line_z, 0));
-                        map_.put("GI", getArray(line_z, 0));
-                        map_.put("Coverage", getArray(line_z, 0));
-                        map_.put("Reads_hit", getArray(line_z, 0));
-                        map_.put("Reads_num", getArray(line_z, 0));
-                        map_.put("avgCoverage", getArray(line_z, 0));
+                        map_.put("Genus", getArray(line_z, 1));
+                        map_.put("GI", getArray(line_z, 2));
+                        map_.put("Coverage", getArray(line_z, 3));
+                        map_.put("Reads_hit", getArray(line_z, 4));
+                        map_.put("Reads_num", getArray(line_z, 5));
+                        map_.put("avgCoverage", getArray(line_z, 6));
                         summaryTable.add(map_);
                     }
                     mib.setSummaryTable(summaryTable);
