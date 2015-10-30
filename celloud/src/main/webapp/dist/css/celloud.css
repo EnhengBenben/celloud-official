@@ -4579,6 +4579,7 @@ fieldset[disabled] .btn-vk.active {
 }
 
 .app-detail-button {
+	margin-top:10px;
 	float: right
 }
 
@@ -4592,7 +4593,6 @@ fieldset[disabled] .btn-vk.active {
 	width: 48px;
 	height: 48px
 }
-
 .app-detail-abs {
 	float: left;
 	padding-left: 10px
@@ -4601,7 +4601,7 @@ fieldset[disabled] .btn-vk.active {
 .app-detail-abs h3 {
 	margin: 0;
 	font-size: 18px;
-	line-height: 18px
+	line-height: 30px
 }
 
 .app-detail-abs p {
@@ -4635,8 +4635,10 @@ fieldset[disabled] .btn-vk.active {
 }
 
 .app-detail-imgs .app-detail-slider {
-	height: 30px;
-	text-align: center
+	height: 25px;
+	text-align: center;
+	position:relative;
+	bottom: 0px;
 }
 
 .app-detail-imgs .app-detail-slider .fa-circle {
@@ -4647,6 +4649,12 @@ fieldset[disabled] .btn-vk.active {
 
 .app-detail-imgs .app-detail-slider .fa-circle.cur {
 	color: #555
+}
+.app-detail-imgs .app-detail-slider li{
+	background: #ccc;
+}
+.app-detail-imgs .app-detail-slider .active{
+	background: #777;
 }
 
 .app-detail-imgs .app-detail-imgcontainer {
@@ -4665,7 +4673,7 @@ fieldset[disabled] .btn-vk.active {
 }
 
 .app-detail-misc {
-	width: 100%;
+	width: 266px;
 	height: 399px;
 	float: left
 }
