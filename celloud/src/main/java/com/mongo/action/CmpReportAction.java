@@ -149,41 +149,45 @@ public class CmpReportAction extends BaseAction {
                 .getGeneDetectionDetail();
         Map<String, CmpGeneDetectionDetail> treeMap = new TreeMap<>();
         List<String> unnormalGene = new ArrayList<>();
-        for (String dataKey : geneMap.keySet()) {
-            if (geneMap.get(dataKey).getResult().get(0).getGene()
-                    .contains("没有发现突变位点")
-                    || dataKey.equals("all")) {
-            } else {
-                CmpGeneDetectionDetail gdd = geneMap.get(dataKey);
-                List<CmpGeneSnpResult> gsrli = gdd.getResult();
-                List<CmpGeneSnpResult> gsrli_ = new ArrayList<>();
-                for (CmpGeneSnpResult gsr : gsrli) {
-                    if (gsr.getDiseaseName().trim().equals("")
-                            || gsr.getDiseaseName().trim().equals("改变一碳代谢")
-                            || gsr.getDiseaseName().trim().equals("活力减少")
-                            || gsr.getDiseaseName().trim().equals("降低表达")) {
+        if (geneMap != null) {
+            for (String dataKey : geneMap.keySet()) {
+                if (geneMap.get(dataKey).getResult().get(0).getGene()
+                        .contains("没有发现突变位点")
+                        || dataKey.equals("all")) {
+                } else {
+                    CmpGeneDetectionDetail gdd = geneMap.get(dataKey);
+                    List<CmpGeneSnpResult> gsrli = gdd.getResult();
+                    List<CmpGeneSnpResult> gsrli_ = new ArrayList<>();
+                    for (CmpGeneSnpResult gsr : gsrli) {
+                        if (gsr.getDiseaseName().trim().equals("")
+                                || gsr.getDiseaseName().trim().equals("改变一碳代谢")
+                                || gsr.getDiseaseName().trim().equals("活力减少")
+                                || gsr.getDiseaseName().trim().equals("降低表达")) {
 
-                    } else {
-                        CmpGeneSnpResult gsr_ = gsr;
-                        // 只允许字母和数字
-                        String regEx = "[^\\w\\.\\_\\-\u4e00-\u9fa5]";
-                        Pattern p = Pattern.compile(regEx);
-                        gsr_.setDiseaseEngName(p
-                                .matcher(gsr.getDiseaseEngName())
-                                .replaceAll("").trim());
-                        gsrli_.add(gsr_);
+                        } else {
+                            CmpGeneSnpResult gsr_ = gsr;
+                            // 只允许字母和数字
+                            String regEx = "[^\\w\\.\\_\\-\u4e00-\u9fa5]";
+                            Pattern p = Pattern.compile(regEx);
+                            gsr_.setDiseaseEngName(p
+                                    .matcher(gsr.getDiseaseEngName())
+                                    .replaceAll("").trim());
+                            gsrli_.add(gsr_);
+                        }
                     }
+                    if (gsrli_.size() > 0) {
+                        gdd.setResult(gsrli_);
+                        treeMap.put(dataKey, gdd);
+                    }
+                    unnormalGene.add(dataKey);
                 }
-                if (gsrli_.size() > 0) {
-                    gdd.setResult(gsrli_);
-                    treeMap.put(dataKey, gdd);
-                }
-                unnormalGene.add(dataKey);
             }
+            allGsr = geneMap.get("all").getResult();
+            cmpReport.setGeneDetectionDetail(treeMap);
+        } else {
+            unnormalGene.add("");
         }
         gddDiseaseList = reportService.getGddDiseaseDictNormal(unnormalGene);
-        allGsr = geneMap.get("all").getResult();
-        cmpReport.setGeneDetectionDetail(treeMap);
         gsrList = reportService.getGddResult(cmpReport.getDataKey(),
                 cmpReport.getProjectId(), cmpReport.getAppId());
         return "toPrintGddReport";
