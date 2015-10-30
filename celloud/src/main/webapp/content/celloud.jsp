@@ -46,7 +46,7 @@
 				<img src="images/content/appmarket.png" alt="数据上传" title="数据上传"
 					width="48" height="48" />
 			</div>
-			<div class="leftApp" _appId="sjgl" _appName="数据管理"
+			<div id="toFileData" class="leftApp" _appId="sjgl" _appName="数据管理"
                 _appImg="images/content/datamanag.png" _iframeSrc="pages/data/data.jsp">
                 <img src="images/content/datamanag.png" alt="数据管理" title="数据管理"
                     width="48" height="48" />
@@ -61,12 +61,7 @@
 				<img src="images/content/diskexplorer.png" alt="应用市场" title="应用市场"
 					width="48" height="48" />
 			</div> 
-			<div class="leftApp" _appId="sjk" _appName="数据库"
-				_appImg="images/content/qq.png" _iframeSrc="pages/database/database.jsp">
-				<img src="images/content/qq.png" alt="数据库" title="数据库"
-					width="48" height="48" />
-			</div>
-			<c:if test="${session.companyId==6}">
+			<c:if test="${session.companyId==6||session.companyId==3}">
 				<div class="leftApp" _appId="tj" _appName="统计"
 					_appImg="images/content/count_.png" _iframeSrc="pages/count/count.jsp">
 					<img src="images/content/count_.png" alt="统计" title="统计"
@@ -178,7 +173,7 @@
 					width="48" height="48" />
 			</div>
 			<div class="leftApp" _appId="sjgl" _appName="数据管理"
-				_appImg="images/content/datamanag.png" _iframeSrc="pages/data/fileData.jsp">
+				_appImg="images/content/datamanag.png" _iframeSrc="pages/data/data.jsp">
 				<img src="images/content/datamanag.png" alt="数据管理" title="数据管理"
 					width="48" height="48" />
 			</div>
@@ -190,11 +185,6 @@
 			<div class="leftApp" _appId="yysc" _appName="应用市场"
 				_appImg="images/content/diskexplorer.png" _iframeSrc="pages/software/software.jsp">
 				<img src="images/content/diskexplorer.png" alt="应用市场" title="应用市场"
-					width="48" height="48" />
-			</div>
-			<div class="leftApp" _appId="sjk" _appName="数据库"
-				_appImg="images/content/qq.png" _iframeSrc="pages/database/database.jsp">
-				<img src="images/content/qq.png" alt="数据库" title="数据库"
 					width="48" height="48" />
 			</div>
 		</div>
@@ -245,6 +235,7 @@ var sessionUserNav = "<%=session.getAttribute("userNav") %>";
 	var userId = $.trim($("#userId").val());
 	//是否有文件正在上传
 	var isUploading = false;
+	var globalDataIds = new Array();
 	(function() {
 		initCelloud();
 	})();

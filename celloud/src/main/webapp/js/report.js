@@ -341,7 +341,7 @@ $.ajaxSetup ({
 			                    }
 			                }
 			            }
-			            if(appId=="113"||appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
+			            if(appId=="114"||appId=="113"||appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
 			                param = {"fileName":$.trim($(this).html()),"dataKey":$.trim($(this).prev().html()),"softwareId":appId,"softwareName":appName,"userId":userId,"obj":$(this),"proId":proId,"proName":proName};
 			                if(j>0&&i==1){
 			                    $(this).addClass("sub");
@@ -673,6 +673,10 @@ $.ajaxSetup ({
 				});
 			}else if(softwareId == 113){
 				$.get("splitReport!toSplitReport",{"split.projectId":proId,"split.dataKey":dataKey,"split.appId":softwareId},function(responseText){
+					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+				});
+			}else if(softwareId == 114){
+				$.get("splitReport!getMibReport",{"mib.projectId":proId,"mib.dataKey":dataKey,"mib.appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
 			}else if(softwareId == 85 || softwareId == 86 || softwareId == 87 || softwareId == 88 || softwareId == 91 || softwareId == 92 || softwareId == 93 || softwareId == 94 || softwareId == 104){
@@ -1421,4 +1425,26 @@ function printSimpCMP(projectId,dataKey,userId,appId){
 		obj.document.write(responseText);
 		obj.document.close();
 	});
+}
+function printGDD(projectId,dataKey,userId,appId){
+	$.get("cmpReport!toPrintGdd",{"cmpReport.projectId":projectId,"cmpReport.dataKey":dataKey,"cmpReport.userId":userId,"cmpReport.appId":appId},function(responseText){
+		var obj = window.open("");
+		obj.document.write(responseText);
+		obj.document.close();
+	});
+}
+//将报告运行出来的数据保存到数据列表
+function saveReportData(resourcePath,num,dataKey){
+	$("#toSaveDataA"+dataKey).html("（正在上传到数据管理...）");
+	$.get("data3!saveSplitReportData",{"condition":resourcePath,"conditionInt":num,"dataIds":$("#splitId").val()},function(result){
+		if(result.length>0){
+			$("#toSaveDataA"+dataKey).html("<a class='link' href='javascript:void()' onclick='toRunData('"+result+"')'>（已上传到数据管理）</a>");
+		}
+	})
+}
+
+function toRunData(ids){
+	window.parent.document.getElementById("toFileData").click();
+	var idsArr = ids.split(",");
+	window.parent.globalDataIds = idsArr[0,idsArr.length-1];
 }

@@ -19,17 +19,18 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
 import com.alibaba.fastjson.JSONObject;
-import com.celloud.mongo.sdo.CmpGeneDetectionDetail;
-import com.celloud.mongo.sdo.CmpGeneSnpResult;
-import com.celloud.mongo.sdo.CmpReport;
-import com.celloud.mongo.sdo.GeneDetectionResult;
-import com.celloud.mongo.service.ReportService;
-import com.celloud.mongo.service.ReportServiceImpl;
 import com.google.inject.Inject;
+import com.mongo.sdo.CmpGeneDetectionDetail;
+import com.mongo.sdo.CmpGeneSnpResult;
+import com.mongo.sdo.CmpReport;
+import com.mongo.sdo.GeneDetectionResult;
+import com.mongo.service.ReportService;
+import com.mongo.service.ReportServiceImpl;
 import com.nova.constants.Mod;
 import com.nova.constants.SparkPro;
 import com.nova.email.EmailProjectEnd;
 import com.nova.email.EmailService;
+import com.nova.itext.PGSProjectPDF;
 import com.nova.pager.PageList;
 import com.nova.portpool.PortPool;
 import com.nova.queue.GlobalQueue;
@@ -50,7 +51,6 @@ import com.nova.service.IProjectService;
 import com.nova.service.IReportService;
 import com.nova.service.ISoftwareService;
 import com.nova.service.IUserService;
-import com.nova.itext.PGSProjectPDF;
 import com.nova.utils.Base64Util;
 import com.nova.utils.DateUtil;
 import com.nova.utils.FileTools;
@@ -141,8 +141,8 @@ public class ProjectAction extends BaseAction {
     private static Map<Integer, String> titleMap = new HashMap<>();
     static {
         SQLUtils sql = new SQLUtils();
-        List<com.celloud.sdo.Software> list = sql.getAllSoftware();
-        for (com.celloud.sdo.Software software : list) {
+        List<com.celloud.sdo.App> list = sql.getAllSoftware();
+        for (com.celloud.sdo.App software : list) {
             perlMap.put("" + software.getSoftwareId(), software.getCommand());
         }
         // 81 | MDA |
@@ -153,6 +153,8 @@ public class ProjectAction extends BaseAction {
          titleMap.put(83, "dataName\tdataKey\tTotal_Reads\tDuplicate\tMap_Reads\tMap_Ratio(%)\twin_size\t\n");
          // 92 | gDNA_mosaic |
          titleMap.put( 92, "dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
+         //101 | gDNA_mosaic_1 |
+         titleMap.put( 101, "dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
          // 93 | MDA_mosaic |
          titleMap.put( 93, "dataName\tdataKey\tAnotherName\tTotal_Reads\tMT_ratio\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
          // 91 | MDA_HR |
@@ -210,9 +212,9 @@ public class ProjectAction extends BaseAction {
 
                 List<Data> dataList = dataService.getDataByDataKeys(data1 + ","
                         + data2, 88);
-                List<com.celloud.mongo.sdo.Data> dList = new ArrayList<com.celloud.mongo.sdo.Data>();
+                List<com.mongo.sdo.Data> dList = new ArrayList<com.mongo.sdo.Data>();
                 for (Data d : dataList) {
-                    com.celloud.mongo.sdo.Data d1 = new com.celloud.mongo.sdo.Data();
+                    com.mongo.sdo.Data d1 = new com.mongo.sdo.Data();
                     d1.setAnotherName(d.getAnotherName());
                     d1.setDataKey(d.getDataKey());
                     d1.setDataTags(d.getDataTags());
@@ -638,7 +640,7 @@ public class ProjectAction extends BaseAction {
         String dataListFile = dealDataKeyListContainFileName(projectId,
                 dataKeyList);
         // TODO
-        String command = "nohup perl  /share/biosoft/perl/wangzhen/PGS/bin/moniter_qsub_python_monogo.pl perl "
+        String command = "nohup perl  /share/biosoft/perl/wangzhen/PGS/bin/moniter_qsub_url.pl perl "
                 + " "
                 + perl
                 + " "
@@ -800,15 +802,12 @@ public class ProjectAction extends BaseAction {
         String dataListFile = datalist + new Date().getTime() + ".txt";
         FileTools.createFile(dataListFile);
         String dataArray[] = dataKeyList.split(";");
-        Integer[] ports = new Integer[dataArray.length];
+        List<String> ports = PortPool.getPorts(dataArray.length, projectId);
         for (int i = 0; i < dataArray.length; i++) {
-            Integer port = PortPool.getPort();
             String[] dataDetail = dataArray[i].split(",");
             sb.append(dataPath + getArray(dataDetail, 1) + "\t"
-                    + getArray(dataDetail, 2) + "\t" + port + "\n");
-            ports[i] = port;
+                    + getArray(dataDetail, 2) + "\t" + ports.get(i) + "\n");
         }
-        PortPool.proBindPorts(projectId, ports);
         FileTools.appendWrite(dataListFile, sb.toString());
         return dataListFile;
     }
