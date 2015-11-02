@@ -224,7 +224,8 @@ public class ProcedureAction extends ActionSupport {
                 + projectId);
         final RunAppService app = new RunAppService();
         // 需要对datakeylist进行排序
-        if (!AppNameIDConstant.split.equals(appId)) {
+        if (!AppNameIDConstant.split.equals(appId)
+                && !AppNameIDConstant.MIB.equals(appId)) {
             dataKeyList = FileTools.dataListSort(dataKeyList);
         }
         new Thread(new Runnable() {
@@ -236,6 +237,7 @@ public class ProcedureAction extends ActionSupport {
                         appId,
                         appName,
                         projectId,
+                        dataKey,
                         dataKeyList,
                         email,
                         projectName,

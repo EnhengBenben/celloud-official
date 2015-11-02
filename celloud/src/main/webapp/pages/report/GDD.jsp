@@ -249,40 +249,5 @@ $(function() {
 		showHeight : 100,
 		speed : 1000
 	});
-	var pa = "";
-	$("#_report").find("td").each(function(){
-		pa += $(this).html()+"@";
-	});
-	var reg = new RegExp("&lt;","g");
-	pa = pa.replace(reg,"%3C");
-	var url = $("#_url").attr("href");
-	$("#_url").attr("href",url+pa);
 });
-function showBg(src,id) { 
-	var width = $("#" + id).width();
-	var height = $("#" + id).height();
-	$(window.parent.document).find("img[id='imageFullScreen']").css("width",width*1.5);
-	$(window.parent.document).find("img[id='imageFullScreen']").css("height",height*1.5);
-	window.parent.showZoom(src);
-} 
-function showGeneDetail(gname){
-	$.get("report!getCmpGeneInfo",{"gname":gname},function(cmpGene){
-		$("#cmpGeneName").html(cmpGene.cmpName);
-		$("#cmpGeneDesc").html(cmpGene.cmpDescription);
-		if(cmpGene.cmpImage != null &&cmpGene.cmpImage!=''){
-			$("#cmpImg").css("display","");
-			var imgPath = '<%=request.getContextPath()%>/resource/img/cmp/'+cmpGene.cmpImage;
-			$("#cmpImg").attr("src",imgPath);
-		}
-		if(cmpGene.cmpTreatment != null &&cmpGene.cmpTreatment!=''){
-			$("#cmpImg").css("display","");
-			$("#cmpGeneTreat").html(cmpGene.cmpTreatment);
-		}
-		if(cmpGene.cmpTreatment != null &&cmpGene.cmpTreatment!=''){
-			$("#cmpGeneTreatDesc").css("display","");
-			$("#cmpGeneTreatDesc").html(cmpGene.cmpTreatmentDesc);
-		}
-		$("#cmpGeneInfo").css("display","");
-	})
-}
 </script>

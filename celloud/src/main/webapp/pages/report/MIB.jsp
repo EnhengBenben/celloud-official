@@ -1,18 +1,17 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<input type="hidden" id="splitId" value="${mib.id}">
 <div class="row">
 	<div class="m-file">
 		数据编号：<span class="file-name">${mib.dataKey}</span><br>
 		文件名称：
 		<span class="file-name">
 		<c:forEach items="${mib.data}" var="data">
-			${mib.fileName}&nbsp;&nbsp;&nbsp;
+			${data.fileName}&nbsp;&nbsp;&nbsp;
 		</c:forEach>
 		</span>
 	</div>
-	<div id="printCMPContext">
+	<div>
 		<!--报告图示一-->
 		<div class="m-box">
 			<h2><i class="i-report1"></i>数据统计</h2>
@@ -51,7 +50,7 @@
 			</div>
 		</div>
 		<!--检测结果-->
-		<div class="m-box m-box-yc">
+		<div class="m-box">
 			<h2><i class="i-edit"></i>报告</h2>
 			<div class="m-boxCon" id="_report" style="display: inline-block;width: 100%">
 			  <table class="table table-striped-green table-text-center table-padding0" id="snp_table1">
@@ -82,13 +81,10 @@
 				   </c:if>
 			     </tbody>
 			  </table>
-			</div>
-			<div class="m-tips">
-				<i class="i-tips"></i>注：点击文件名即可下载；已保存的数据可到数据管理页面查看
 			</div>
 		</div>
 		<!--检测结果-->
-		<div class="m-box m-box-yc">
+		<div class="m-box">
 			<h2><i class="i-edit"></i>报告</h2>
 			<div class="m-boxCon" id="_report" style="display: inline-block;width: 100%">
 			  <table class="table table-striped-green table-text-center table-padding0" id="snp_table1">
@@ -119,9 +115,6 @@
 				   </c:if>
 			     </tbody>
 			  </table>
-			</div>
-			<div class="m-tips">
-				<i class="i-tips"></i>注：点击文件名即可下载；已保存的数据可到数据管理页面查看
 			</div>
 		</div>
 		<!--报告图示一-->
@@ -161,7 +154,7 @@
 			</div>
 		</div>
 		<!--检测结果-->
-		<div class="m-box m-box-yc">
+		<div class="m-box">
 			<h2><i class="i-edit"></i>序列质量分析（见QC结果）</h2>
 			<div class="m-boxCon" id="_report" style="display: inline-block;width: 90%">
 				<div class="h2">Basic Statistics</div>

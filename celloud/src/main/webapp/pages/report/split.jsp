@@ -93,23 +93,6 @@
 		</div>
 	</div>
 </div>
-<!--split上传结果数据-->
-<div class="modal hide fade" id="uploadModal" >
-	<div class="modal-header">
-		<input type="hidden" id="proIdHidden"/>
-		<input type="hidden" id="proOwnerHidden"/>
-		<a class="close" data-dismiss="modal">×</a>
-        <span id="proNameSpan">项目名称：</span>
-    	<h3><img src="<%=request.getContextPath()%>/images/publicIcon/icon-modal-03.png"/>上传结果数据</h3>
-  	</div>
-  	<div class="modal-body">
-		<p>共计<span id="dataCount"></span>个数据文件</p>
-        <span id="shareProPrompt"></span>
-  	</div>
-  	<div class="modal-footer">
-    	<a href="javascript:saveShareProject();" class="btn">确 定</a>
-  	</div>
-</div>
 <script>
 $(function() {
 	$(window).manhuatoTop({

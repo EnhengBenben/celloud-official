@@ -473,16 +473,22 @@ $.ajaxSetup ({
 			    if(appId=="113"||appId=="112"||appId=="111"||appId=="110"){
 			    	minTdNum = 4;
 			    }
-			    if(tr_size<minTdNum){
-			    	var num = 5-tr_size;
-			    	for(i=0;i<num;i++){
-			    		var adHtml = "<tr>";
-			    		for(j=0;j<th_size-1;j++){
-			    			adHtml+="<td></td>";
-			    		}
-			    		adHtml+="</tr>";
-			    		$(this).find("tbody").append(adHtml);
-			    	}
+			    var rdataNum = $("#rdataNum"+proId).html();
+			    if(appId=="114" && tr_size-1<rdataNum){
+			    	var num = Number(rdataNum)-tr_size+1;
+			    	var height = 30*(5-tr_size);
+		    		var adHtml = "<tr><td colspan='"+th_size+"' style='border-left-style: none;vertical-align: middle;height:"+height+"px' align='center'><img src='/celloud/images/report/running.png' title='正在运行...'/><br>"+num+"个数据正在运行...</td></tr>";
+		    		$(this).find("tbody").append(adHtml);
+			    }else if(tr_size<minTdNum){
+		    		var num = 5-tr_size;
+		    		for(i=0;i<num;i++){
+		    			var adHtml = "<tr>";
+		    			for(j=0;j<th_size-1;j++){
+		    				adHtml+="<td></td>";
+		    			}
+		    			adHtml+="</tr>";
+		    			$(this).find("tbody").append(adHtml);
+		    		}
 			    }
 			});
 		}

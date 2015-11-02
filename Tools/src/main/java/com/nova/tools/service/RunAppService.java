@@ -43,10 +43,11 @@ public class RunAppService {
      * @return
      */
     public void runProject(String basePath, String userId, String appId,
-            String appName, String projectId, String dataKeyList, String email,
-            String projectName, String sampleList, String ada3, String ada5,
-            String sp, String cpu, String diffList, String fileName,
-            String dataInfos, String company, String user, String dept) {
+            String appName, String projectId, String dataKey,
+            String dataKeyList, String email, String projectName,
+            String sampleList, String ada3, String ada5, String sp, String cpu,
+            String diffList, String fileName, String dataInfos, String company,
+            String user, String dept) {
         // 创建项目文件夹
         String projectPath = basePath + "/" + userId + "/" + appId + "/"
                 + projectId;
@@ -60,8 +61,8 @@ public class RunAppService {
 
         // MIB
         if (AppNameIDConstant.MIB.equals(appId)) {
-            runApp.MIB(appPath, projectId, dataKeyList, appId, appName, userId,
-                    dataInfos, company, user, dept);
+            runApp.MIB(appPath, projectId, dataKey, fileName, dataKeyList,
+                    appId, appName, userId, dataInfos, company, user, dept);
         }
 
         // split

@@ -3,6 +3,8 @@ package com.celloud.action;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -247,6 +249,7 @@ public class DataAction extends BaseAction {
             // 创建项目
             Long proId = proService.insertProject(project);
             log.info("用户" + super.session.get("userName") + "创建项目" + proId);
+
             if (proId == null) {
                 result += appName + "  ";
                 log.error("创建项目失败");
@@ -325,6 +328,70 @@ public class DataAction extends BaseAction {
                     String command = appPath + "--" + proId + "--"
                             + dataKeyList + "--" + appName + "--" + appId;
                     GlobalQueue.offer(command);
+                }
+            } else if (Integer.parseInt(appId) == 114) {
+                Collections.sort(dataList, new Comparator<Data>() {
+                    @Override
+                    public int compare(Data d1, Data d2) {
+                        return d1.getFileName().compareTo(d2.getFileName());
+                    }
+                });
+                Iterator<Data> chk_it = dataList.iterator();
+                while (chk_it.hasNext()) {
+                    dataResult = new StringBuffer();
+                    List<Data> _dlist = new ArrayList<>();
+                    String dataListFile = datalist + new Date().getTime() + "_"
+                            + new Double(Math.random() * 1000).intValue()
+                            + ".txt";
+                    FileTools.createFile(dataListFile);
+                    Data d = chk_it.next();
+                    String datakey = d.getDataKey();
+                    String _fname = d.getFileName();
+                    map = new HashMap<String, List<Data>>();
+                    if (_fname.contains("R1") || _fname.contains("R2")) {
+                        String s1 = _fname.substring(0,
+                                _fname.lastIndexOf("R1"));
+                        String s2 = _fname.substring(
+                                _fname.lastIndexOf("R1") + 2, _fname.length());
+                        Data d1 = chk_it.next();
+                        String _fname2 = d1.getFileName();
+                        if (_fname2.contains(s1 + "R2")
+                                && _fname2.substring(
+                                        _fname2.lastIndexOf("R2") + 2,
+                                        _fname2.length()).equals(s2)) {
+                            String ext = FileTools.getExtName(_fname);
+                            dataResult.append(dataPath).append(datakey)
+                                    .append(ext).append("\t").append(dataPath)
+                                    .append(d1.getDataKey()).append(ext)
+                                    .append("\t");
+                            _dlist.add(d);
+                            _dlist.add(d1);
+                            map.put(datakey, _dlist);
+                            _fname += "+" + d1.getFileName();
+                        }
+                    } else {
+                        String ext = FileTools.getExtName(_fname);
+                        dataResult.append(dataPath).append(datakey).append(ext);
+                        _dlist.add(d);
+                        map.put(datakey, _dlist);
+                    }
+                    FileTools.appendWrite(dataListFile, dataResult.toString());
+                    String newPath = PropertiesUtil.toolsOutPath
+                            + "Procedure!runApp?userId=" + userId + "&appId="
+                            + appId + "&appName=" + appName + "&projectName="
+                            + proName + "&email=" + email + "&dataKey="
+                            + datakey + "&fileName=" + _fname + "&dataKeyList="
+                            + dataListFile + "&projectId=" + proId
+                            + "&dataInfos="
+                            + Base64Util.encrypt(JSONObject.toJSONString(map))
+                            + "&company="
+                            + Base64Util.encrypt(JSONObject.toJSONString(com))
+                            + "&user="
+                            + Base64Util.encrypt(JSONObject.toJSONString(user))
+                            + "&dept="
+                            + Base64Util.encrypt(JSONObject.toJSONString(dept));
+                    RemoteRequests rr = new RemoteRequests();
+                    rr.run(newPath);
                 }
             } else {
                 String newPath = PropertiesUtil.toolsOutPath
