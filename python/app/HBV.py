@@ -138,13 +138,13 @@ class HBV:
 					result['reporttxt'] = reporttxt
 				elif(x.endswith('.png')):
 					##此处处理所有png
-					png[x.replace('.','_')] = x
+					png[x.replace('.','__')] = x
 					
 			result['png'] = png
 		return result
 if __name__ == '__main__':
 	hbv = HBV.getInstance()
-	re = hbv.getResult('/home/lin/work/9/82/CelLoud92B15GJL','HBV','a.ab1','test')
+	re = hbv.getResult('/Users/lin/9/82/20151029437617','HBV','a.ab1',None)
 	print re['site']
 	print re['png']
 	print re['pdf']

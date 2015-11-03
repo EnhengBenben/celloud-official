@@ -63,3 +63,6 @@ def datainsert(path,projectId):
 					mo = mongo.getInstance()
 					objId = mo.put(merge,collection_dic[int(re['appId'])])
 					print objId
+
+if __name__ == '__main__':
+	datainsert('/Users/lin/23/82','4434')
