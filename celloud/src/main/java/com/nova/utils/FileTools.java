@@ -672,4 +672,23 @@ public class FileTools {
         }
         return set;
     }
+    /**
+     * 调用了 FileUtils.readFileToString
+     * 消除了其抛出的异常
+     * @param path
+     * @return
+     */
+    public static String readFileToString(String path){
+    	File f = new File(path);
+    	if(!f.exists()){
+    		return null;
+    	}
+    	String context = null;
+    	try {
+			context = FileUtils.readFileToString(f);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	return context;
+    }
 }
