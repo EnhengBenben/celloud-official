@@ -12,6 +12,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 from utils.FileUtils import *
+from HBV_PDF import *
 
 class HBV:
 	path = None
@@ -110,9 +111,10 @@ class HBV:
 			result['clinical'] = sb
 			result['site'] = site
 		#pdf
-		pdf = os.path.join(path,'HBV.pdf')
+		createPDF(path,appName,fileName)
+		pdf = os.path.join(path,'HBV_SNP.pdf')
 		if(os.path.exists(pdf)):
-			result['pdf'] = 'HBV.pdf'
+			result['pdf'] = 'HBV_SNP.pdf'
 		#zip
 		zip = os.path.join(path,'HBV_SNP.zip')
 		if(os.path.exists(zip)):

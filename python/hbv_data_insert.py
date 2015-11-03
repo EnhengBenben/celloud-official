@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # python version 2.7.6
 
-__des__='将之前的 NIPT 数据报告插入mongodb'
+__des__='将之前的 HBV 数据报告插入mongodb'
 __author__='lin'
 
 import os
