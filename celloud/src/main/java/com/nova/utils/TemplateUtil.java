@@ -13,6 +13,7 @@ public class TemplateUtil {
 		template.put(0, "emailTemplate.txt");
 		template.put(3, "ProjectEnd.txt");
 		template.put(4, "DataEnd.txt");
+		template.put(7, "SNP.html");
 	}
 
 	/**
