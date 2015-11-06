@@ -5776,8 +5776,8 @@ function printTable($parentDiv_,height){
 function printSection6Table(){
 	var trLength = $("#section6").find("table").find("tr").length;
 	if(trLength>25){
-		var pageNum = Math.floor((trLength-25)/26);	
-		var lastNum = (trLength-25)%26;
+		var pageNum = Math.floor(trLength/26);	
+		var lastNum = trLength%26;
 		var $table_ = $("#section6").find("table");
 		var thead = "<table class='table table-green table-striped-green table-text-center'><thead>" +$table_.find("thead").html()+"</thead>";
 		var newTables = thead+"<tbody>";
@@ -5785,8 +5785,8 @@ function printSection6Table(){
 			newTables+="<tr>"+$table_.find("tbody").find("tr:eq("+i+")").html()+"</tr>";
 		}
 		newTables+="</tbody></table><div class='w3cbbs'></div>";
+		var begin = 25;
 		if(pageNum>1){
-			var begin = 25;
 			for(var i=1;i<=pageNum;i++){
 				newTables += thead+"<tbody>";
 				for(var j=begin;j<begin+25+1;j++){
@@ -5798,7 +5798,7 @@ function printSection6Table(){
 		}
 		if(lastNum>0){
 			newTables += thead+"<tbody>";
-			for(var j=begin;j<begin+lastNum-1;j++){
+			for(var j=begin;j<begin+lastNum;j++){
 				newTables+="<tr>"+$table_.find("tbody").find("tr:eq("+j+")").html()+"</tr>";
 			}
 			newTables+="</tbody></table>";
