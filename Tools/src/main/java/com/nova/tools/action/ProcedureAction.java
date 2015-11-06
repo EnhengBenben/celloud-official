@@ -148,6 +148,8 @@ public class ProcedureAction extends ActionSupport {
     private String company;
     private String user;
     private String dept;
+    private String command;
+    private String taskId;
 
     private final String basePath = ServletActionContext.getServletContext()
             .getRealPath("/upload");
@@ -232,6 +234,9 @@ public class ProcedureAction extends ActionSupport {
             @Override
             public void run() {
                 app.runProject(
+                        command == null ? command : Encrypt.decrypt(command
+                                .replace(" ", "+").replace("\n", "")),
+                        taskId,
                         basePath,
                         userId,
                         appId,
@@ -602,5 +607,21 @@ public class ProcedureAction extends ActionSupport {
 
     public void setDept(String dept) {
         this.dept = dept;
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 }

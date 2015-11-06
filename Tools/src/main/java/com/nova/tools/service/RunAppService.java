@@ -42,26 +42,23 @@ public class RunAppService {
      * @param fileName
      * @return
      */
-    public void runProject(String basePath, String userId, String appId,
-            String appName, String projectId, String dataKey,
-            String dataKeyList, String email, String projectName,
-            String sampleList, String ada3, String ada5, String sp, String cpu,
-            String diffList, String fileName, String dataInfos, String company,
-            String user, String dept) {
+    public void runProject(String command, String taskId, String basePath,
+            String userId, String appId, String appName, String projectId,
+            String dataKey, String dataKeyList, String email,
+            String projectName, String sampleList, String ada3, String ada5,
+            String sp, String cpu, String diffList, String fileName,
+            String dataInfos, String company, String user, String dept) {
         // 创建项目文件夹
         String projectPath = basePath + "/" + userId + "/" + appId + "/"
                 + projectId;
         FileTools.createDir(projectPath);
-        String param = "fileName=" + fileName + "&userId=" + userId + "&appId="
-                + appId + "&dataKey=" + dataKeyList.split(",")[0]
-                + "&projectId=" + projectId + "&sampleList=" + sampleList;
         String appPath = basePath + "/" + userId + "/" + appId;
         RunAppServiceImpl runApp = new RunAppServiceImpl();
         String start = DateUtil.formatNowDate();
 
         // MIB
         if (AppNameIDConstant.MIB.equals(appId)) {
-            runApp.MIB(appPath, projectId, dataKey, fileName, dataKeyList,
+            runApp.MIB(command, taskId, appPath, projectId, dataKey, fileName,
                     appId, appName, userId, dataInfos, company, user, dept);
         }
 
@@ -284,8 +281,20 @@ public class RunAppService {
             }
             ChangeStateServiceImpl.changeState(appId, appName, projectId, null,
                     ReportStateConstant.FINISH, userId, xml);
-            EmailUtil.sendEndEmail(projectName, appId, start, email, param,
-                    true);
+            String param = "fileName=" + fileName + "&userId=" + userId
+                    + "&appId=" + appId + "&projectId=" + projectId
+                    + "&sampleList=" + sampleList;
+            if (AppNameIDConstant.MIB.equals(appId)) {
+                ChangeStateServiceImpl.changeTaskState(Long.parseLong(taskId),
+                        Long.parseLong(appId));
+                param += "&dataKey=" + dataKey;
+                EmailUtil.sendEndEmail(fileName, appId, start, email, param,
+                        false);
+            } else {
+                param += "&dataKey=" + dataKeyList.split(",")[0];
+                EmailUtil.sendEndEmail(projectName, appId, start, email, param,
+                        true);
+            }
         }
     }
 }

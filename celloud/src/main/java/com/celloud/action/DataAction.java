@@ -27,11 +27,13 @@ import com.celloud.sdo.Data;
 import com.celloud.sdo.Dept;
 import com.celloud.sdo.Project;
 import com.celloud.sdo.Report;
+import com.celloud.sdo.Task;
 import com.celloud.sdo.User;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
+import com.celloud.service.TaskService;
 import com.celloud.service.UserService;
 import com.google.inject.Inject;
 import com.mongo.sdo.Split;
@@ -93,6 +95,8 @@ public class DataAction extends BaseAction {
     private IDataService idataService;
     @Inject
     private com.mongo.service.ReportService mReportService;
+    @Inject
+    private TaskService taskService;
     private PageList<Data> dataPageList;
     private List<Integer> intList;
     private List<Data> dataList;
@@ -312,13 +316,13 @@ public class DataAction extends BaseAction {
             }
             log.info("用户" + super.session.get("userName") + "开始运行" + appName);
             String dataKeyList = dataResult.toString();
+            // TODO
+            String appPath = basePath + userId + "/" + appId + "/";
             if (apps.contains(appId)) {// 判断是否需要进队列
                 String select = apps.toString().substring(1,
                         apps.toString().length() - 1);
                 int running = idataService.dataRunning(select);
                 log.info("页面运行任务，此时正在运行的任务数：" + running);
-                // TODO
-                String appPath = basePath + userId + "/" + appId + "/";
                 if (SparkPro.NODES >= running) {
                     log.info("资源满足需求，投递任务");
                     submit(appPath, proId + "", dataKeyList, appName,
@@ -376,22 +380,59 @@ public class DataAction extends BaseAction {
                         map.put(datakey, _dlist);
                     }
                     FileTools.appendWrite(dataListFile, dataResult.toString());
-                    String newPath = PropertiesUtil.toolsOutPath
-                            + "Procedure!runApp?userId=" + userId + "&appId="
-                            + appId + "&appName=" + appName + "&projectName="
-                            + proName + "&email=" + email + "&dataKey="
-                            + datakey + "&fileName=" + _fname + "&dataKeyList="
-                            + dataListFile + "&projectId=" + proId
-                            + "&dataInfos="
-                            + Base64Util.encrypt(JSONObject.toJSONString(map))
-                            + "&company="
-                            + Base64Util.encrypt(JSONObject.toJSONString(com))
-                            + "&user="
-                            + Base64Util.encrypt(JSONObject.toJSONString(user))
-                            + "&dept="
-                            + Base64Util.encrypt(JSONObject.toJSONString(dept));
-                    RemoteRequests rr = new RemoteRequests();
-                    rr.run(newPath);
+                    Long appId_l = Long.parseLong(appId);
+                    int runningNum = taskService.getRunningNumByAppId(appId_l);
+                    Task task = new Task();
+                    task.setUserId(Long.valueOf(userId));
+                    task.setAppId(appId_l);
+                    task.setDataKey(datakey);
+                    StringBuffer command = new StringBuffer(
+                            "perl /share/biosoft/perl/PGS_MG/bin/moniter_qsub.pl perl ");
+                    command.append(perlMap.get(appId)).append(" ")
+                            .append(dataListFile).append(" ").append(appPath)
+                            .append(" ProjectID").append(proId);
+                    task.setCommand(command.toString());
+                    StringBuffer params = new StringBuffer();
+                    params.append("appName=")
+                            .append(appName)
+                            .append("&projectName=")
+                            .append(proName)
+                            .append("&email=")
+                            .append(email)
+                            .append("&fileName=")
+                            .append(_fname)
+                            .append("&projectId=")
+                            .append(proId)
+                            .append("&dataInfos=")
+                            .append(Base64Util.encrypt(JSONObject
+                                    .toJSONString(map)))
+                            .append("&company=")
+                            .append(Base64Util.encrypt(JSONObject
+                                    .toJSONString(com)))
+                            .append("&user=")
+                            .append(Base64Util.encrypt(JSONObject
+                                    .toJSONString(user)))
+                            .append("&dept=")
+                            .append(Base64Util.encrypt(JSONObject
+                                    .toJSONString(dept)));
+                    task.setParams(params.toString());
+                    Long taskId = taskService.create(task);
+                    if (runningNum < 4) {
+                        StringBuffer remotePath = new StringBuffer();
+                        remotePath.append(PropertiesUtil.toolsOutPath)
+                                .append("Procedure!runApp?userId=")
+                                .append(userId).append("&appId=").append(appId)
+                                .append("&dataKey=").append(datakey)
+                                .append("&taskId=").append(taskId)
+                                .append("&command=")
+                                .append(Base64Util.encrypt(command.toString()))
+                                .append("&").append(params);
+                        RemoteRequests rr = new RemoteRequests();
+                        rr.run(remotePath.toString());
+                        taskService.updateToRunning(taskId);
+                    } else {
+                        log.info("数据" + datakey + "排队运行" + appName);
+                    }
                 }
             } else {
                 String newPath = PropertiesUtil.toolsOutPath
