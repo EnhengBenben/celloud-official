@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.celloud.sdo.App;
 import com.nova.constants.DataState;
@@ -20,12 +22,12 @@ import com.nova.sdo.User;
  * @date 2014-10-13 上午10:40:43
  */
 public class SQLUtils {
-	public List<App> getAllSoftware() {
+	public Map<Long, App> getAllSoftware() {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		List<App> list = new ArrayList<>();
-		String sql = "select * from tb_software where off_line = ?;";
+		Map<Long, App> map = new HashMap<>();
+		String sql = "select software_id,software_name,command,method,title from tb_software where off_line = ?;";
 		try {
 			conn = ConnectManager.getConnection();
 			ps = conn.prepareStatement(sql);
@@ -34,17 +36,20 @@ public class SQLUtils {
 			App soft = null;
 			while (rs.next()) {
 				soft = new App();
-				soft.setSoftwareId(rs.getLong("software_id"));
+				Long appId = rs.getLong("software_id");
+				soft.setSoftwareId(appId);
 				soft.setSoftwareName(rs.getString("software_name"));
 				soft.setCommand(rs.getString("command"));
-				list.add(soft);
+				soft.setMethod(rs.getString("method"));
+				soft.setTitle(rs.getString("title"));
+				map.put(appId, soft);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectManager.free(conn, ps, rs);
 		}
-		return list;
+		return map;
 	}
 
 	/**

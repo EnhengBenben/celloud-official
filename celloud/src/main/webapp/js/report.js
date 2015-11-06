@@ -1353,9 +1353,18 @@ function toPrintHBV(pagePath,flag){
 		        "flag":flag
 		    };
 	}else if(appId == 80){
+		var imgHtml="";
+		$("img[name='imgSrc']").each(function(){ 
+			imgHtml+=$(this).attr("src")+",";
+		});
+		if(imgHtml!=""){
+			imgHtml = imgHtml.substring(0,imgHtml.length-1);
+		}
 		param = {
 				"appId" : appId,
-				"context":$("#resultHcv2").html()
+				"context":$("#resultHcv2").html(),
+				"seq":$("#seq").html(),
+				"imgHtml" : imgHtml
 			};
 	}else if(appId == 90){
 		var imgHtml="";

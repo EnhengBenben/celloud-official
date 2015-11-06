@@ -19,6 +19,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
 import com.alibaba.fastjson.JSONObject;
+import com.celloud.sdo.App;
 import com.celloud.service.RunOverService;
 import com.google.inject.Inject;
 import com.mongo.sdo.CmpGeneDetectionDetail;
@@ -135,67 +136,11 @@ public class ProjectAction extends BaseAction {
 
 	// TODO 需要投递到spark集群的app
 	private static final List<String> apps = Arrays.asList("");
-	// 初始化perl命令路径
-	private static Map<String, String> perlMap = new HashMap<>();
-	// 初始化 APP 项目报告的 Title
-	private static Map<Integer, String> titleMap = new HashMap<>();
+	// 初始化app列表
+	private static Map<Long, App> appMap = null;
 	static {
 		SQLUtils sql = new SQLUtils();
-		List<com.celloud.sdo.App> list = sql.getAllSoftware();
-		for (com.celloud.sdo.App software : list) {
-			perlMap.put("" + software.getSoftwareId(), software.getCommand());
-		}
-		// 81 | MDA |
-		titleMap.put(
-				81,
-				"dataName\tdataKey\tTotal_Reads\tDuplicate\tMap_Reads\tMap_Ratio(%)\twin_size\t\n");
-		// 95 | NIPT |
-		titleMap.put(95,
-				"dataName\tdataKey\tAnotherName\tChr13\tChr18\tChr21\n");
-		// 83 | gDNA |
-		titleMap.put(
-				83,
-				"dataName\tdataKey\tTotal_Reads\tDuplicate\tMap_Reads\tMap_Ratio(%)\twin_size\t\n");
-		// 92 | gDNA_mosaic |
-		titleMap.put(
-				92,
-				"dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
-		// 101 | gDNA_mosaic_1 |
-		titleMap.put(
-				101,
-				"dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
-		// 93 | MDA_mosaic |
-		titleMap.put(
-				93,
-				"dataName\tdataKey\tAnotherName\tTotal_Reads\tMT_ratio\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
-		// 91 | MDA_HR |
-		titleMap.put(
-				91,
-				"dataName\tdataKey\tAnotherName\tTotal_Reads\tMT_ratio\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\n");
-		// 94 | SurePlex |
-		titleMap.put(
-				94,
-				"dataName\tdataKey\tAnotherName\tTotal_Reads\tMT_ratio\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
-		// 104 | Sureplex_HR |
-		titleMap.put(
-				104,
-				"dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\n");
-		// 87 | gDNA_MR |
-		titleMap.put(
-				87,
-				"dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
-		// 88 | MDA_MR |
-		titleMap.put(
-				88,
-				"dataName\tdataKey\tAnotherName\tTotal_Reads\tMT_ratio\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
-		// 85 | MalBac |
-		titleMap.put(
-				85,
-				"dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate(%)\tGC_Count(%)\n");
-		// 86 | gDNA_HR |
-		titleMap.put(
-				86,
-				"dataName\tdataKey\tAnotherName\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\n");
+		appMap = sql.getAllSoftware();
 	}
 
 	private static Map<String, Map<String, String>> machines = XmlUtil.machines;
@@ -597,7 +542,7 @@ public class ProjectAction extends BaseAction {
 			if (SparkPro.NODES >= running) {
 				log.info("资源满足需求，投递任务");
 				submit(appPath, proId + "", dataKeyList, appName,
-						perlMap.get(softwareId));
+						appMap.get(softwareId).getCommand());
 			} else {
 				log.info("资源不满足需求，进入队列等待");
 				GlobalQueue.offer(appPath + "--" + proId + "--" + dataKeyList
@@ -653,7 +598,7 @@ public class ProjectAction extends BaseAction {
 				}
 				log.info("满足需要，投递任务");
 				submit(infos[0], infos[1], infos[2], infos[3],
-						perlMap.get(infos[4]));
+						appMap.get(infos[4]).getCommand());
 				GlobalQueue.poll();
 			}
 		}
@@ -709,9 +654,10 @@ public class ProjectAction extends BaseAction {
 		// String appPath, String appName, String appTitle,String projectFile,String projectId, List<Data> proDataList
 		RunOverService ros = new RunOverService();
 		try {
+			//TODO 方法名称和title类型应该从数据库获取
 			ros.getClass().getMethod("",new Class[] { String.class, String.class,
 									String.class, String.class, String.class,List.class })
-					.invoke(ros, appPath, appName, perlMap.get(softwareId),
+					.invoke(ros, appPath, appName, appMap.get(appId).getTitle(),
 							projectFile, projectId, proDataList);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -51,6 +51,14 @@ public class App implements Serializable {
     private String command;
     /** APP的所属分类 */
     private Classify classify;
+    /**
+     * 运行完成后需要调用的方法名称
+     */
+    private String method;
+    /**
+     * 项目报告title
+     */
+    private String title;
 
     public String getCommand() {
         return command;
@@ -203,5 +211,21 @@ public class App implements Serializable {
     public void setDataFormat(List<DataFormat> dataFormat) {
         this.dataFormat = dataFormat;
     }
+
+	public String getMethod() {
+		return method;
+	}
+
+	public void setMethod(String method) {
+		this.method = method;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 }

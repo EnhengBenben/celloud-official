@@ -66,14 +66,23 @@ public class ReadReportServiceImpl {
 						sb.append("</thead><tbody>");
 					}
 				}
-				sb.append("</tbody></table><br/>");
+				sb.append("</tbody></table>");
 				String name = FileTools.fileExist(HCVPath + "/Fasta/", ".ab1",
-						"endWith");
+						"endsWith");
 				String filePath = HCVPath + "/Fasta/" + name;
 				if (new File(filePath).exists() && new File(filePath).isFile()) {
-					String context = FileTools.readAppoint(filePath);
-					sb.append("<div>" + context + "</div>");
+					String seq = FileTools.readAppoint(filePath);
+					resultMap.put("seq", seq);
 				}
+				boolean isAll = false;
+				for (int i = 1; i < 7; i++) {
+					String png = FileTools.fileExist(HCVPath+ "/SVG/", i+"_all.png", "endsWith");
+					if(!png.equals("")){
+						isAll = true;
+						resultMap.put("listAll"+i, png);
+					}
+				}
+				resultMap.put("isAll", ""+isAll);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -81,6 +90,7 @@ public class ReadReportServiceImpl {
 			}
 		}
 		resultMap.put("table", sb.toString());
+		resultMap.put("outPath", PropertiesUtils.outProject + "/upload");
 		return resultMap;
 	}
 

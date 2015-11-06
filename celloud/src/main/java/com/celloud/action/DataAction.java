@@ -115,22 +115,24 @@ public class DataAction extends BaseAction {
     private static String basePath = SparkPro.TOOLSPATH;
     private static String dataPath = PropertiesUtil.bigFilePath;
     private static String datalist = PropertiesUtil.datalist;
-    private static Map<String, Map<String, String>> machines = XmlUtil.machines;
-    private static String sparkhost = machines.get("spark").get(Mod.HOST);
-    private static String sparkpwd = machines.get("spark").get(Mod.PWD);
-    private static String sparkuserName = machines.get("spark").get(
-            Mod.USERNAME);
+    private static Map<String, Map<String, String>> machines = null;
+    private static String sparkhost = null;
+    private static String sparkpwd = null;
+    private static String sparkuserName = null;
 
     // TODO 需要投递到spark集群的app
     private static final List<String> apps = Arrays.asList("92");
     // 初始化perl命令路径
-    private static Map<String, String> perlMap = new HashMap<>();
+    private static Map<Long, App> appMap = null;
     static {
         SQLUtils sql = new SQLUtils();
-        List<App> list = sql.getAllSoftware();
-        for (App software : list) {
-            perlMap.put("" + software.getSoftwareId(), software.getCommand());
-        }
+        appMap = sql.getAllSoftware();
+        XmlUtil.getMachines();
+        machines = XmlUtil.machines;
+        sparkhost = machines.get("spark").get(Mod.HOST);
+        sparkpwd = machines.get("spark").get(Mod.PWD);
+        sparkuserName = machines.get("spark").get(
+                Mod.USERNAME);
     }
 
     public String getAllData() {
@@ -326,7 +328,7 @@ public class DataAction extends BaseAction {
                 if (SparkPro.NODES >= running) {
                     log.info("资源满足需求，投递任务");
                     submit(appPath, proId + "", dataKeyList, appName,
-                            perlMap.get(appId));
+                    		appMap.get(appId).getCommand());
                 } else {
                     log.info("资源不满足需求，进入队列等待");
                     String command = appPath + "--" + proId + "--"

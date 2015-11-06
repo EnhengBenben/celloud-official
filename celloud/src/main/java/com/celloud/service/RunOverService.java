@@ -77,7 +77,7 @@ public class RunOverService {
 				}
 			}
 		}
-		// 2.生成项目pdf
+		// 4.生成项目pdf
 		try {
 			PGSProjectPDF.createPDF(appPath, appName, 220, 800, sb.toString(),
 					projectId);
@@ -88,4 +88,96 @@ public class RunOverService {
 		return true;
 	}
 
+	/**
+	 * HBV_SNP流程项目运行结束后的处理
+	 * 
+	 * @param appPath
+	 * @param appName
+	 * @param appTitle
+	 * @param projectFile
+	 * @param projectId
+	 * @param proDataList
+	 * @return
+	 */
+	public boolean HBV(String appPath, String appName, String appTitle,
+			String projectFile, String projectId, List<Data> proDataList) {
+		// 1. 追加表头
+		StringBuffer resultArray = new StringBuffer();
+		resultArray.append(appTitle);
+		// 2. 遍历数据列表
+		for (Data data : proDataList) {
+			String finalPath = appPath + data.getDataKey();
+			// 3. 每个数据生成一份zip
+			HBV_SNP.createHtml(finalPath, data.getFileName(),
+					appPath.split("upload")[0] + "resource/html/HBV_SNP");
+
+			String result = FileTools.readAppoint(finalPath + "/SVG/type.txt");
+			result = result.replace("Type: ", "");
+			result = result.replace(" <br />", "");
+			String snpType = FileTools.readAppoint(finalPath
+					+ "/SVG/Report.txt");
+			String type[] = snpType.split("<br />");
+			String typeResult[] = new String[7];
+			for (int j = 0; j < type.length; j++) {
+				if (type[j].contains("TDF")) {
+					if (type[j].startsWith("检测到")) {
+						typeResult[0] = "不敏感\t";
+					} else {
+						typeResult[0] = "敏感\t";
+					}
+				}
+				if (type[j].contains("LDT")) {
+					if (type[j].startsWith("检测到")) {
+						typeResult[1] = "不敏感\t";
+					} else {
+						typeResult[1] = "敏感\t";
+					}
+				}
+				if (type[j].contains("ADV")) {
+					if (type[j].startsWith("检测到")) {
+						typeResult[2] = "不敏感\t";
+					} else {
+						typeResult[2] = "敏感\t";
+					}
+				}
+				if (type[j].contains("LAM")) {
+					if (type[j].startsWith("检测到")) {
+						typeResult[3] = "不敏感\t";
+					} else {
+						typeResult[3] = "敏感\t";
+					}
+				}
+				if (type[j].contains("FTC")) {
+					if (type[j].startsWith("检测到")) {
+						typeResult[4] = "不敏感\t";
+					} else {
+						typeResult[4] = "敏感\t";
+					}
+				}
+				if (type[j].contains("ETV")) {
+					if (type[j].startsWith("检测到")) {
+						typeResult[5] = "不敏感\t";
+					} else {
+						typeResult[5] = "敏感\t";
+					}
+				}
+				if (type[j].contains("Other")) {
+					if (type[j].contains("Y")) {
+						typeResult[6] = "有\t";
+					} else {
+						typeResult[6] = "无\t";
+					}
+				}
+			}
+			StringBuffer typeTotal = new StringBuffer();
+			for (int j = 0; j < typeResult.length; j++) {
+				typeTotal.append(typeResult[j]);
+			}
+			resultArray.append(data.getDataKey()).append("\t")
+					.append(data.getFileName()).append("\t").append(result)
+					.append("\t").append(typeTotal.toString()).append("\n");
+		}
+		FileTools.appendWrite(projectFile, resultArray.toString());
+		return true;
+	}
 }
