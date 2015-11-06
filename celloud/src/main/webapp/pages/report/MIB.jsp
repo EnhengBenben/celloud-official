@@ -83,40 +83,6 @@
 			  </table>
 			</div>
 		</div>
-		<!--检测结果-->
-		<div class="m-box">
-			<h2><i class="i-edit"></i>报告</h2>
-			<div class="m-boxCon" id="_report" style="display: inline-block;width: 100%">
-			  <table class="table table-striped-green table-text-center table-padding0" id="snp_table1">
-			     <thead>
-			       <tr>
-			         <th>Species</th>
-			         <th>Genus</th>
-			         <th>GI</th>
-			         <th>%Coverage</th>
-			         <th>Reads_hit</th>
-			         <th>Reads_num</th>
-			         <th>Average depth of coverage</th>
-			       </tr>
-			     </thead>
-			     <tbody>
-			       <c:if test="${fn:length(mib.summaryTable)>1}">
-			         <c:forEach items="${mib.summaryTable }" var="summary" varStatus="s" begin="1">
-					   <tr>
-					     <td>${summary.Species }</td>
-					     <td>${summary.Genus }</td>
-					     <td>${summary.GI }</td>
-					     <td>${summary.Coverage }</td>
-					     <td>${summary.Reads_hit }</td>
-					     <td>${summary.Reads_num }</td>
-					     <td>${summary.avgCoverage }</td>
-					   </tr>
-			         </c:forEach>
-				   </c:if>
-			     </tbody>
-			  </table>
-			</div>
-		</div>
 		<!--报告图示一-->
 		<div class="m-box">
 			<h2><i class="i-edit"></i>报告</h2>
