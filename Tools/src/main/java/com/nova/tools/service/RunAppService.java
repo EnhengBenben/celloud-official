@@ -52,15 +52,20 @@ public class RunAppService {
         // 创建项目文件夹
         String projectPath = basePath + "/" + userId + "/" + appId + "/"
                 + projectId;
-        FileTools.createDir(projectPath);
         String appPath = basePath + "/" + userId + "/" + appId;
         RunAppServiceImpl runApp = new RunAppServiceImpl();
         String start = DateUtil.formatNowDate();
 
         // MIB
         if (AppNameIDConstant.MIB.equals(appId)) {
+            File profile = new File(projectPath);
+            if (!profile.exists()) {
+                profile.mkdirs();
+            }
             runApp.MIB(command, taskId, appPath, projectId, dataKey, fileName,
                     appId, appName, userId, dataInfos, company, user, dept);
+        } else {
+            FileTools.createDir(projectPath);
         }
 
         // split

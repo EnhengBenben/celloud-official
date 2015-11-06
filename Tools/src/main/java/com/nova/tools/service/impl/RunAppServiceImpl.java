@@ -165,7 +165,7 @@ public class RunAppServiceImpl {
 				FileTools.appendWrite(projectFile,
 						"dataKey\t文件名称\t序列总数\t平均质量\t平均GC含量\n");
 			}
-			File proFile = new File(projectFile);
+            File proFile = new File(projectFile);
 			Map<String, List<Data>> map = JsonUtil.parseDataMap(dataInfos);
 			Company com = JSON.parseObject(company, Company.class);
 			User use = JSON.parseObject(user, User.class);
@@ -184,14 +184,14 @@ public class RunAppServiceImpl {
 				mib.setAvgGCContent(avgGCContent);
 				String result = totalReads + "\t" + avgQuality + "\t"
 						+ avgGCContent;
-				FileLock lock = FileTools.getFileLock(proFile);
-				FileTools.appendWrite(projectFile, dataKey + "\t" + fileName
+                FileLock lock = FileTools.getFileLock(proFile);
+                FileTools.appendWrite(projectFile, dataKey + "\t" + fileName
 						+ "\t" + result + "\n");
-				try {
-					lock.release();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+                try {
+                    lock.release();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 			}
 			// -----读取报告内容并保存到mongoDB------
 			List<Data> dataList = map.get(dataKey);
