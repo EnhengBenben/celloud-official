@@ -131,8 +131,7 @@ public class DataAction extends BaseAction {
         machines = XmlUtil.machines;
         sparkhost = machines.get("spark").get(Mod.HOST);
         sparkpwd = machines.get("spark").get(Mod.PWD);
-        sparkuserName = machines.get("spark").get(
-                Mod.USERNAME);
+        sparkuserName = machines.get("spark").get(Mod.USERNAME);
     }
 
     public String getAllData() {
@@ -251,6 +250,7 @@ public class DataAction extends BaseAction {
         String email = user.getEmail();
         result = "";
         for (String appId : appIds) {
+            Long appId_l = Long.parseLong(appId);
             String appName = appService.getAppNameById(Long.parseLong(appId));
             // 创建项目
             Long proId = proService.insertProject(project);
@@ -327,8 +327,8 @@ public class DataAction extends BaseAction {
                 log.info("页面运行任务，此时正在运行的任务数：" + running);
                 if (SparkPro.NODES >= running) {
                     log.info("资源满足需求，投递任务");
-                    submit(appPath, proId + "", dataKeyList, appName,
-                    		appMap.get(appId).getCommand());
+                    submit(appPath, proId + "", dataKeyList, appName, appMap
+                            .get(appId_l).getCommand());
                 } else {
                     log.info("资源不满足需求，进入队列等待");
                     String command = appPath + "--" + proId + "--"
@@ -354,6 +354,7 @@ public class DataAction extends BaseAction {
                     String datakey = d.getDataKey();
                     String _fname = d.getFileName();
                     map = new HashMap<String, List<Data>>();
+                    String ext = FileTools.getExtName(_fname);
                     if (_fname.contains("R1") || _fname.contains("R2")) {
                         String s1 = _fname.substring(0,
                                 _fname.lastIndexOf("R1"));
@@ -365,7 +366,6 @@ public class DataAction extends BaseAction {
                                 && _fname2.substring(
                                         _fname2.lastIndexOf("R2") + 2,
                                         _fname2.length()).equals(s2)) {
-                            String ext = FileTools.getExtName(_fname);
                             dataResult.append(dataPath).append(datakey)
                                     .append(ext).append("\t").append(dataPath)
                                     .append(d1.getDataKey()).append(ext)
@@ -376,13 +376,11 @@ public class DataAction extends BaseAction {
                             _fname += "+" + d1.getFileName();
                         }
                     } else {
-                        String ext = FileTools.getExtName(_fname);
                         dataResult.append(dataPath).append(datakey).append(ext);
                         _dlist.add(d);
                         map.put(datakey, _dlist);
                     }
                     FileTools.appendWrite(dataListFile, dataResult.toString());
-                    Long appId_l = Long.parseLong(appId);
                     int runningNum = taskService.getRunningNumByAppId(appId_l);
                     Task task = new Task();
                     task.setUserId(Long.valueOf(userId));
@@ -390,9 +388,9 @@ public class DataAction extends BaseAction {
                     task.setDataKey(datakey);
                     StringBuffer command = new StringBuffer(
                             "perl /share/biosoft/perl/PGS_MG/bin/moniter_qsub.pl perl ");
-                    command.append(appMap.get(appId).getCommand()).append(" ")
-                            .append(dataListFile).append(" ").append(appPath)
-                            .append(" ProjectID").append(proId);
+                    command.append(appMap.get(appId_l).getCommand())
+                            .append(" ").append(dataListFile).append(" ")
+                            .append(appPath).append(" ProjectID").append(proId);
                     task.setCommand(command.toString());
                     StringBuffer params = new StringBuffer();
                     params.append("appName=")
@@ -419,6 +417,7 @@ public class DataAction extends BaseAction {
                                     .toJSONString(dept)));
                     task.setParams(params.toString());
                     Long taskId = taskService.create(task);
+                    // TODO
                     if (runningNum < 4) {
                         StringBuffer remotePath = new StringBuffer();
                         remotePath.append(PropertiesUtil.toolsOutPath)

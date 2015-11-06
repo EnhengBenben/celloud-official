@@ -247,6 +247,8 @@ public class FileTools {
             if (fileName.toLowerCase().indexOf(".fastq.") > 0
                     || fileName.toLowerCase().indexOf(".fq.") > 0) {
                 extName = fileName.substring(fileName.lastIndexOf(".fastq."));
+            } else if (fileName.toLowerCase().endsWith(".tar.gz")) {
+                extName = fileName.substring(fileName.lastIndexOf(".tar.gz"));
             } else {
                 extName = fileName.substring(fileName.lastIndexOf("."));
             }
