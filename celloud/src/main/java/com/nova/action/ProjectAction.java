@@ -138,16 +138,21 @@ public class ProjectAction extends BaseAction {
 	private static final List<String> apps = Arrays.asList("");
 	// 初始化app列表
 	private static Map<Long, App> appMap = null;
+	private static Map<String, Map<String, String>> machines = null;
+	private static String sparkhost = null;
+	private static String sparkpwd = null;
+	private static String sparkuserName = null;
 	static {
+		XmlUtil.getMachines();
+		machines = XmlUtil.machines;
+		sparkhost = machines.get("spark").get(Mod.HOST);
+		sparkpwd = machines.get("spark").get(Mod.PWD);
+		sparkuserName = machines.get("spark").get(
+				Mod.USERNAME);
 		SQLUtils sql = new SQLUtils();
 		appMap = sql.getAllSoftware();
 	}
 
-	private static Map<String, Map<String, String>> machines = XmlUtil.machines;
-	private static String sparkhost = machines.get("spark").get(Mod.HOST);
-	private static String sparkpwd = machines.get("spark").get(Mod.PWD);
-	private static String sparkuserName = machines.get("spark").get(
-			Mod.USERNAME);
 	private static String basePath = SparkPro.TOOLSPATH;
 
 	public String toSaveRunedCmp() {
@@ -655,9 +660,9 @@ public class ProjectAction extends BaseAction {
 		RunOverService ros = new RunOverService();
 		try {
 			//TODO 方法名称和title类型应该从数据库获取
-			ros.getClass().getMethod("",new Class[] { String.class, String.class,
+			ros.getClass().getMethod(appMap.get((long)appId).getMethod(),new Class[] { String.class, String.class,
 									String.class, String.class, String.class,List.class })
-					.invoke(ros, appPath, appName, appMap.get(appId).getTitle(),
+					.invoke(ros, appPath, appName, appMap.get((long)appId).getTitle(),
 							projectFile, projectId, proDataList);
 		} catch (Exception e) {
 			e.printStackTrace();
