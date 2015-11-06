@@ -390,7 +390,7 @@ public class DataAction extends BaseAction {
                     task.setDataKey(datakey);
                     StringBuffer command = new StringBuffer(
                             "perl /share/biosoft/perl/PGS_MG/bin/moniter_qsub.pl perl ");
-                    command.append(perlMap.get(appId)).append(" ")
+                    command.append(appMap.get(appId).getCommand()).append(" ")
                             .append(dataListFile).append(" ").append(appPath)
                             .append(" ProjectID").append(proId);
                     task.setCommand(command.toString());
