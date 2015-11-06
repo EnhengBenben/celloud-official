@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
     <link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">    
   	<link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
-    <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.3" rel="stylesheet" type="text/css" />
+    <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.4" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <div class="wrapper">
@@ -92,7 +92,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-celloud-close btn-flat pull-left" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-celloud-success btn-flat" onclick="toRunApp()" id="toRunApp">运行</button>
+            <button type="button" class="btn btn-celloud-success btn-flat" onclick="toRunApp()" id="toRunApp" disabled="disabled">运行</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -227,19 +227,19 @@
     <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- FastClick -->
     <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
-    <!-- jquery_alert_dialogs begin -->
-<%-- 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script> --%>
-<%-- 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script> --%>
-	<!-- jquery_alert_dialogs end -->
     <script src="<%=request.getContextPath() %>/plugins/select/select2.min.js"></script>
 	<script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
     <script src="<%=request.getContextPath() %>/dist/js/celloud.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/plugins/spin.min.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/data.js?version=2.1" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/data.js?version=2.24" type="text/javascript"></script>
 	<!-- spin:loading效果 end-->
 	<script type="text/javascript">
 		var session_userId = <%=session.getAttribute("userId")%>;
 		var sessionUserName = "<%=session.getAttribute("userName")%>";
+		//检验session是否超时
+		if(!session_userId){
+			window.top.location = "<%=request.getContextPath() %>/toLogin";
+		}
 		$.ajaxSetup ({
 			cache: false //关闭AJAX相应的缓存
 		});

@@ -341,7 +341,7 @@ $.ajaxSetup ({
 			                    }
 			                }
 			            }
-			            if(appId=="113"||appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
+			            if(appId=="114"||appId=="113"||appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
 			                param = {"fileName":$.trim($(this).html()),"dataKey":$.trim($(this).prev().html()),"softwareId":appId,"softwareName":appName,"userId":userId,"obj":$(this),"proId":proId,"proName":proName};
 			                if(j>0&&i==1){
 			                    $(this).addClass("sub");
@@ -473,16 +473,22 @@ $.ajaxSetup ({
 			    if(appId=="113"||appId=="112"||appId=="111"||appId=="110"){
 			    	minTdNum = 4;
 			    }
-			    if(tr_size<minTdNum){
-			    	var num = 5-tr_size;
-			    	for(i=0;i<num;i++){
-			    		var adHtml = "<tr>";
-			    		for(j=0;j<th_size-1;j++){
-			    			adHtml+="<td></td>";
-			    		}
-			    		adHtml+="</tr>";
-			    		$(this).find("tbody").append(adHtml);
-			    	}
+			    var rdataNum = $("#rdataNum"+proId).html();
+			    if(appId=="114" && tr_size-1<rdataNum){
+			    	var num = Number(rdataNum)-tr_size+1;
+			    	var height = 30*(5-tr_size);
+		    		var adHtml = "<tr><td colspan='"+th_size+"' style='border-left-style: none;vertical-align: middle;height:"+height+"px' align='center'><img src='/celloud/images/report/running.png' title='正在运行...'/><br>"+num+"个数据正在运行...</td></tr>";
+		    		$(this).find("tbody").append(adHtml);
+			    }else if(tr_size<minTdNum){
+		    		var num = 5-tr_size;
+		    		for(i=0;i<num;i++){
+		    			var adHtml = "<tr>";
+		    			for(j=0;j<th_size-1;j++){
+		    				adHtml+="<td></td>";
+		    			}
+		    			adHtml+="</tr>";
+		    			$(this).find("tbody").append(adHtml);
+		    		}
 			    }
 			});
 		}
@@ -673,6 +679,10 @@ $.ajaxSetup ({
 				});
 			}else if(softwareId == 113){
 				$.get("splitReport!toSplitReport",{"split.projectId":proId,"split.dataKey":dataKey,"split.appId":softwareId},function(responseText){
+					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+				});
+			}else if(softwareId == 114){
+				$.get("splitReport!getMibReport",{"mib.projectId":proId,"mib.dataKey":dataKey,"mib.appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
 			}else if(softwareId == 85 || softwareId == 86 || softwareId == 87 || softwareId == 88 || softwareId == 91 || softwareId == 92 || softwareId == 93 || softwareId == 94 || softwareId == 104){
@@ -1343,9 +1353,18 @@ function toPrintHBV(pagePath,flag){
 		        "flag":flag
 		    };
 	}else if(appId == 80){
+		var imgHtml="";
+		$("img[name='imgSrc']").each(function(){ 
+			imgHtml+=$(this).attr("src")+",";
+		});
+		if(imgHtml!=""){
+			imgHtml = imgHtml.substring(0,imgHtml.length-1);
+		}
 		param = {
 				"appId" : appId,
-				"context":$("#resultHcv2").html()
+				"context":$("#resultHcv2").html(),
+				"seq":$("#seq").html(),
+				"imgHtml" : imgHtml
 			};
 	}else if(appId == 90){
 		var imgHtml="";
@@ -1421,4 +1440,26 @@ function printSimpCMP(projectId,dataKey,userId,appId){
 		obj.document.write(responseText);
 		obj.document.close();
 	});
+}
+function printGDD(projectId,dataKey,userId,appId){
+	$.get("cmpReport!toPrintGdd",{"cmpReport.projectId":projectId,"cmpReport.dataKey":dataKey,"cmpReport.userId":userId,"cmpReport.appId":appId},function(responseText){
+		var obj = window.open("");
+		obj.document.write(responseText);
+		obj.document.close();
+	});
+}
+//将报告运行出来的数据保存到数据列表
+function saveReportData(resourcePath,num,dataKey){
+	$("#toSaveDataA"+dataKey).html("（正在上传到数据管理...）");
+	$.get("data3!saveSplitReportData",{"condition":resourcePath,"conditionInt":num,"dataIds":$("#splitId").val()},function(result){
+		if(result.length>0){
+			$("#toSaveDataA"+dataKey).html("<a class='link' href='javascript:void()' onclick='toRunData('"+result+"')'>（已上传到数据管理）</a>");
+		}
+	})
+}
+
+function toRunData(ids){
+	window.parent.document.getElementById("toFileData").click();
+	var idsArr = ids.split(",");
+	window.parent.globalDataIds = idsArr[0,idsArr.length-1];
 }

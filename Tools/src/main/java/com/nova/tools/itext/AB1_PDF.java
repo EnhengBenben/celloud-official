@@ -74,7 +74,7 @@ public class AB1_PDF {
 
 	String result = FileUtils.readFileToString(new File(path
 		+ "/report.txt"), "GBK");
-	title = new Paragraph(result, contextFont);
+	title = new Paragraph(result.replace("\t", "    "), contextFont);
 	doc.add(title);
 
 	title = new Paragraph("检测结果：", contextFont);

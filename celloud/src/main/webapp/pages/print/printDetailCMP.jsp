@@ -383,7 +383,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/ABL1.png?date=20150629">
 	    	  </div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ABL1基因平均测序深度${cmpReport.geneDetectionDetail.ABL1.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ABL1基因平均测序深度
+	    			<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.ABL1.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.ABL1.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+	    		</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -396,23 +401,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-		    			<c:forEach items="${cmpReport.geneDetectionDetail.ABL1.result}" var="r" varStatus="size">
-			    			<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-		    			</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.ABL1.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.ABL1.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -442,7 +454,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/AKT1.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;AKT1基因平均测序深度${cmpReport.geneDetectionDetail.AKT1.avgCoverage }。</p>
+				<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;AKT1基因平均测序深度
+	    			<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.AKT1.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.AKT1.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+	    		</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -455,23 +472,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.AKT1.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.AKT1.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.AKT1.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -501,7 +525,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/ALK.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ALK基因平均测序深度${cmpReport.geneDetectionDetail.ALK.avgCoverage }。</p>
+			    <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ALK基因平均测序深度
+	    			<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.ALK.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.ALK.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+	    		</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -514,23 +543,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.ALK.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.ALK.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.ALK.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -559,7 +595,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/APC.png?date=20150629">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;APC基因平均测序深度${cmpReport.geneDetectionDetail.APC.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;APC基因平均测序深度
+	    			<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.APC.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.APC.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+	    		</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -572,24 +613,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.APC.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
-			    	</tbody>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.APC.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.APC.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -619,7 +666,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/ATM.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ATM基因平均测序深度${cmpReport.geneDetectionDetail.ATM.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ATM基因平均测序深度
+	    			<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.ATM.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.ATM.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+	    		</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -632,23 +684,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.ATM.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.ATM.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.ATM.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -660,7 +719,7 @@
 	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;BRAF基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
-	    		<div name="geneDescriptDiv">
+	    	  <div name="geneDescriptDiv">
 	    		<li>指标说明</li>
 	    		<p class="context">
 	    			1.&nbsp;&nbsp;全名：V-raf murine sarcoma viral oncogene homologB1（鼠类肉瘤滤过性毒素致癌同源体B1），又名：BRAF。位于第7号染色体上。
@@ -676,9 +735,14 @@
 	    			&nbsp;&nbsp;&nbsp;&nbsp;维罗非尼（Vemurafenib）、和索拉菲尼（Sorafenib）是获FDA批准的BRAF V600E突变肿瘤的靶向药物。
 	    		</p>
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/BRAF.png?date=20150629">
-	    		</div>
+	    	  </div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;BRAF基因平均测序深度${cmpReport.geneDetectionDetail.BRAF.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;BRAF基因平均测序深度
+	    			<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.BRAF.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.BRAF.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+	    		</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -691,23 +755,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.BRAF.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.BRAF.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.BRAF.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -730,7 +801,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/CDH1.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CDH1基因平均测序深度${cmpReport.geneDetectionDetail.CDH1.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CDH1基因平均测序深度
+	    			<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.CDH1.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.CDH1.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+	    		</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -743,23 +819,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.CDH1.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.CDH1.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.CDH1.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -782,7 +865,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/CDKN2A.png?date=20150629">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CDKN2A基因平均测序深度${cmpReport.geneDetectionDetail.CDKN2A.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CDKN2A基因平均测序深度
+	    			<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.CDKN2A.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.CDKN2A.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+	    		</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -795,23 +883,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.CDKN2A.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.CDKN2A.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.CDKN2A.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -837,7 +932,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/CSF1R.png?date=20150629" style="width:385px;height:137px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CSF1R基因平均测序深度${cmpReport.geneDetectionDetail.CSF1R.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CSF1R基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.CSF1R.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.CSF1R.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -850,23 +950,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.CSF1R.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.CSF1R.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.CSF1R.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -893,7 +1000,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/CTNNB1.png?date=20150629" style="width:450px;">
 	    	  </div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CTNNB1基因平均测序深度${cmpReport.geneDetectionDetail.CTNNB1.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CTNNB1基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.CTNNB1.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.CTNNB1.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -906,23 +1018,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-	   					<c:forEach items="${cmpReport.geneDetectionDetail.CTNNB1.result}" var="r" varStatus="size">
-	   						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-	   					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.CTNNB1.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.CTNNB1.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -958,7 +1077,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/EGFR.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;EGFR基因平均测序深度${cmpReport.geneDetectionDetail.EGFR.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;EGFR基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.EGFR.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.EGFR.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -971,23 +1095,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.EGFR.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.EGFR.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.EGFR.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1017,7 +1148,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/ERBB2.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ERBB2基因平均测序深度${cmpReport.geneDetectionDetail.ERBB2.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ERBB2基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.ERBB2.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.ERBB2.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1030,23 +1166,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.ERBB2.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.ERBB2.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.ERBB2.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1072,7 +1215,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/ERBB4.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ERBB4基因平均测序深度${cmpReport.geneDetectionDetail.ERBB4.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ERBB4基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.ERBB4.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.ERBB4.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1085,23 +1233,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.ERBB4.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.ERBB4.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.ERBB4.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1127,7 +1282,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/EZH2.png?date=20150629">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;EZH2基因平均测序深度${cmpReport.geneDetectionDetail.EZH2.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;EZH2基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.EZH2.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.EZH2.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1140,23 +1300,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.EZH2.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.EZH2.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.EZH2.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1181,7 +1348,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/FBXW7.png?date=20150629" style="width:400px">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FBXW7基因平均测序深度${cmpReport.geneDetectionDetail.FBXW7.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FBXW7基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.FBXW7.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.FBXW7.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1194,23 +1366,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.FBXW7.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.FBXW7.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.FBXW7.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1235,7 +1414,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/FGFR1.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FGFR1基因平均测序深度${cmpReport.geneDetectionDetail.FGFR1.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FGFR1基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.FGFR1.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.FGFR1.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1248,23 +1432,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.FGFR1.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.FGFR1.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.FGFR1.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1289,7 +1480,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/FGFR2.png?date=20150629" style="width:417px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FGFR2基因平均测序深度${cmpReport.geneDetectionDetail.FGFR2.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FGFR2基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.FGFR2.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.FGFR2.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1302,23 +1498,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.FGFR2.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.FGFR2.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.FGFR2.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1341,7 +1544,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/FGFR3.png?date=20150629" style="width:417px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FGFR3基因平均测序深度${cmpReport.geneDetectionDetail.FGFR3.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FGFR3基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.FGFR3.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.FGFR3.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1354,23 +1562,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.FGFR3.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.FGFR3.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.FGFR3.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1400,7 +1615,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/FLT3.png?date=20150629" style="width:454px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FLT3基因平均测序深度${cmpReport.geneDetectionDetail.FLT3.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FLT3基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.FLT3.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.FLT3.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1413,23 +1633,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-	   					<c:forEach items="${cmpReport.geneDetectionDetail.FLT3.result}" var="r" varStatus="size">
-	   						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-	   					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.FLT3.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.FLT3.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1454,7 +1681,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/GNA11.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;GNA11基因平均测序深度${cmpReport.geneDetectionDetail.GNA11.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;GNA11基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.GNA11.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.GNA11.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1467,23 +1699,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.GNA11.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.GNA11.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.GNA11.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1512,7 +1751,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/GNAQ.png?date=20150629" style="width:179px;height:158px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;GNAQ基因平均测序深度${cmpReport.geneDetectionDetail.GNAQ.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;GNAQ基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.GNAQ.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.GNAQ.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1525,23 +1769,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.GNAQ.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.GNAQ.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.GNAQ.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1566,7 +1817,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/GNAS.png?date=20150629" style="width:285px;height:162px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;GNAS基因平均测序深度${cmpReport.geneDetectionDetail.GNAS.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;GNAS基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.GNAS.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.GNAS.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1579,23 +1835,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.GNAS.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.GNAS.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.GNAS.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1620,7 +1883,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/HNF1A.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;HNF1A基因平均测序深度${cmpReport.geneDetectionDetail.HNF1A.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;HNF1A基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.HNF1A.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.HNF1A.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1633,23 +1901,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.HNF1A.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.HNF1A.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.HNF1A.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1674,7 +1949,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/HRAS.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;HRAS基因平均测序深度${cmpReport.geneDetectionDetail.HRAS.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;HRAS基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.HRAS.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.HRAS.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1687,23 +1967,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.HRAS.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.HRAS.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.HRAS.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1728,7 +2015,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/IDH1.png?date=20150629" style="width:321px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;IDH1基因平均测序深度${cmpReport.geneDetectionDetail.IDH1.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;IDH1基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.IDH1.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.IDH1.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1741,23 +2033,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.IDH1.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.IDH1.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.IDH1.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1787,7 +2086,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/IDH2.png?date=20150629" style="width:350px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;IDH2基因平均测序深度${cmpReport.geneDetectionDetail.IDH2.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;IDH2基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.IDH2.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.IDH2.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1800,23 +2104,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.IDH2.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.IDH2.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.IDH2.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1838,7 +2149,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/JAK2.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;JAK2基因平均测序深度${cmpReport.geneDetectionDetail.JAK2.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;JAK2基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.JAK2.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.JAK2.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1851,23 +2167,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.JAK2.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.JAK2.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.JAK2.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1896,7 +2219,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/JAK3.png?date=20150629">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;JAK3基因平均测序深度${cmpReport.geneDetectionDetail.JAK3.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;JAK3基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.JAK3.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.JAK3.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1909,23 +2237,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.JAK3.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.JAK3.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.JAK3.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -1960,7 +2295,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/KDR.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;KDR基因平均测序深度${cmpReport.geneDetectionDetail.KDR.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;KDR基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.KDR.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.KDR.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -1973,23 +2313,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.KDR.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.KDR.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.KDR.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2021,7 +2368,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/KIT.png?date=20150629" style="width:500px">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;KIT基因平均测序深度${cmpReport.geneDetectionDetail.KIT.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;KIT基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.KIT.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.KIT.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2034,23 +2386,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.KIT.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.KIT.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.KIT.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2079,7 +2438,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/KRAS.png?date=20150629" style="width:465px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;KRAS基因平均测序深度${cmpReport.geneDetectionDetail.KRAS.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;KRAS基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.KRAS.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.KRAS.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2092,23 +2456,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.KRAS.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.KRAS.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.KRAS.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2150,7 +2521,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/MET.png?date=20150629" style="width:450px">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;MET基因平均测序深度${cmpReport.geneDetectionDetail.MET.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;MET基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.MET.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.MET.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2163,23 +2539,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.MET.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.MET.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.MET.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2205,8 +2588,13 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/MLH1.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;MLH1基因平均测序深度${cmpReport.geneDetectionDetail.MLH1.avgCoverage }。</p>
-    			<table class="table table-green table-striped-green table-text-center">
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;MLH1基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.MLH1.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.MLH1.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
+	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
 		    			<th class="mwidth_Gene">Gene</th>
@@ -2218,23 +2606,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.MLH1.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.MLH1.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.MLH1.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2246,7 +2641,7 @@
 	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;MPL（CD110）基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
-	    		<div name="geneDescriptDiv">
+	    	<div name="geneDescriptDiv">
 	    		<li>指标说明</li>
 	    		<p class="context">
 	    			1.&nbsp;&nbsp;全名：Myeloproliferative leukemia virus oncogene，又名Thrombopoietin Receptor（促血小板生成素受体）、CD110。位于1号染色体上。
@@ -2260,7 +2655,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/MPL.png?date=20150629" style="width:350px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;MPL基因平均测序深度${cmpReport.geneDetectionDetail.MPL.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;MPL基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.MPL.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.MPL.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2273,25 +2673,33 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.MPL.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.MPL.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.MPL.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
+			 </ul>
 	    </div>
 	 </div>
 <%--     </s:if> --%>
@@ -2314,7 +2722,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/NOTCH1.png?date=20150629" style="width:603px;height:312px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;NOTCH1基因平均测序深度${cmpReport.geneDetectionDetail.NOTCH1.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;NOTCH1基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.NOTCH1.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.NOTCH1.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2327,23 +2740,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.NOTCH1.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.NOTCH1.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.NOTCH1.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2369,7 +2789,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/NPM1.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;NPM1基因平均测序深度${cmpReport.geneDetectionDetail.NPM1.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;NPM1基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.NPM1.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.NPM1.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2382,23 +2807,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.NPM1.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.NPM1.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.NPM1.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2423,7 +2855,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/NRAS.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;NRAS基因平均测序深度${cmpReport.geneDetectionDetail.NRAS.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;NRAS基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.NRAS.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.NRAS.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2436,23 +2873,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.NRAS.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.NRAS.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.NRAS.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2485,7 +2929,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/PDGFRA.png?date=20150629" style="width:500px">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PDGFRA基因平均测序深度${cmpReport.geneDetectionDetail.PDGFRA.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PDGFRA基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.PDGFRA.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.PDGFRA.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2498,23 +2947,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.PDGFRA.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.PDGFRA.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.PDGFRA.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2550,7 +3006,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/PIK3CA.png?date=20150629" style="width:400px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PIK3CA基因平均测序深度${cmpReport.geneDetectionDetail.PIK3CA.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PIK3CA基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.PIK3CA.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.PIK3CA.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2563,23 +3024,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.PIK3CA.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.PIK3CA.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.PIK3CA.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2612,7 +3080,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/PTEN.png?date=20150629" style="width:550px">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PTEN基因平均测序深度${cmpReport.geneDetectionDetail.PTEN.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PTEN基因平均测序深度
+	    			<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.PTEN.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.PTEN.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2625,23 +3098,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.PTEN.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.PTEN.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.PTEN.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2667,7 +3147,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/PTPN11.png?date=20150629">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PTPN11基因平均测序深度${cmpReport.geneDetectionDetail.PTPN11.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PTPN11基因平均测序深度
+	    			<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.PTPN11.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.PTPN11.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2680,23 +3165,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.PTPN11.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.PTPN11.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.PTPN11.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2722,7 +3214,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/RB1.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;RB1基因平均测序深度${cmpReport.geneDetectionDetail.RB1.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;RB1基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.RB1.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.RB1.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2735,23 +3232,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.RB1.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.RB1.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.RB1.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2784,7 +3288,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/RET.png?date=20150629" style="width:380px">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;RET基因平均测序深度${cmpReport.geneDetectionDetail.RET.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;RET基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.RET.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.RET.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2797,23 +3306,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.RET.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.RET.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.RET.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2839,7 +3355,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/SMAD4.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SMAD4基因平均测序深度${cmpReport.geneDetectionDetail.SMAD4.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SMAD4基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.SMAD4.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.SMAD4.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2852,25 +3373,33 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.SMAD4.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.SMAD4.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.SMAD4.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
+			</ul>
 	    </div>
 	    </div>
 <%--     </s:if> --%>
@@ -2893,7 +3422,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/SMARCB1.png?date=20150629" style="width:550px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SMARCB1基因平均测序深度${cmpReport.geneDetectionDetail.SMARCB1.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SMARCB1基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.SMARCB1.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.SMARCB1.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2906,23 +3440,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.SMARCB1.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.SMARCB1.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.SMARCB1.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -2952,7 +3493,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/SMO.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SMO基因平均测序深度${cmpReport.geneDetectionDetail.SMO.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SMO基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.SMO.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.SMO.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -2965,23 +3511,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.SMO.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.SMO.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.SMO.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -3011,7 +3564,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/SRC.png?date=20150629" style="width:500px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SRC基因平均测序深度${cmpReport.geneDetectionDetail.SRC.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SRC基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.SRC.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.SRC.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -3024,23 +3582,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.SRC.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.SRC.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.SRC.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -3066,7 +3631,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/STK11.png?date=20150629" style="width:347px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;STK11基因平均测序深度${cmpReport.geneDetectionDetail.STK11.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;STK11基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.STK11.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.STK11.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -3079,23 +3649,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.STK11.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.STK11.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.STK11.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -3121,7 +3698,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/TP53.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;TP53基因平均测序深度${cmpReport.geneDetectionDetail.TP53.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;TP53基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.TP53.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.TP53.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -3134,23 +3716,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.TP53.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.TP53.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.TP53.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -3180,7 +3769,12 @@
 	    		<img src="<%=request.getContextPath()%>/images/report/cmp/VHL.png?date=20150629" style="width:450px;">
 	    		</div>
 	    		<li>检测结果</li>
-	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;VHL基因平均测序深度${cmpReport.geneDetectionDetail.VHL.avgCoverage }。</p>
+	    		<p class="context">&nbsp;&nbsp;&nbsp;&nbsp;VHL基因平均测序深度
+					<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.VHL.avgCoverage}">0</c:when>
+	    				<c:otherwise>${cmpReport.geneDetectionDetail.VHL.avgCoverage }</c:otherwise>
+	    			</c:choose>。
+				</p>
 	    		<table class="table table-green table-striped-green table-text-center">
 		    		<thead>
 		    		  <tr>
@@ -3193,23 +3787,30 @@
 		    		  </tr>
 		    		</thead>
 		    		<tbody>
-    					<c:forEach items="${cmpReport.geneDetectionDetail.VHL.result}" var="r" varStatus="size">
-    						<c:choose>
-			    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
-			    					<tr><td colspan="6">没有发现突变位点</td></tr>
-			    				</c:when>
-			    				<c:otherwise>
-		    						<tr>
-		    							<td>${r.gene }</td>
-		    							<td>${r.refBase }</td>
-		    							<td>${r.mutBase }</td>
-		    							<td>${r.depth }</td>
-		    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-		    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-		    						</tr>
-			    				</c:otherwise>
-			    			</c:choose>
-    					</c:forEach>
+		    		<c:choose>
+	    				<c:when test="${empty cmpReport.geneDetectionDetail.VHL.result}">
+	    					<tr><td colspan="6">没有发现突变位点</td></tr>
+	    				</c:when>
+	    				<c:otherwise>
+    						<c:forEach items="${cmpReport.geneDetectionDetail.VHL.result}" var="r" varStatus="size">
+				    			<c:choose>
+				    				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
+				    					<tr><td colspan="6">没有发现突变位点</td></tr>
+				    				</c:when>
+				    				<c:otherwise>
+			    						<tr>
+			    							<td>${r.gene }</td>
+			    							<td>${r.refBase }</td>
+			    							<td>${r.mutBase }</td>
+			    							<td>${r.depth }</td>
+			    							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+			    							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+			    						</tr>
+				    				</c:otherwise>
+				    			</c:choose>
+			    			</c:forEach>
+	    				</c:otherwise>
+	    			</c:choose>
 			    	</tbody>
 			    </table>
 	    	</ul>
@@ -5175,8 +5776,8 @@ function printTable($parentDiv_,height){
 function printSection6Table(){
 	var trLength = $("#section6").find("table").find("tr").length;
 	if(trLength>25){
-		var pageNum = Math.floor((trLength-25)/26);	
-		var lastNum = (trLength-25)%26;
+		var pageNum = Math.floor(trLength/26);	
+		var lastNum = trLength%26;
 		var $table_ = $("#section6").find("table");
 		var thead = "<table class='table table-green table-striped-green table-text-center'><thead>" +$table_.find("thead").html()+"</thead>";
 		var newTables = thead+"<tbody>";
@@ -5184,8 +5785,8 @@ function printSection6Table(){
 			newTables+="<tr>"+$table_.find("tbody").find("tr:eq("+i+")").html()+"</tr>";
 		}
 		newTables+="</tbody></table><div class='w3cbbs'></div>";
+		var begin = 25;
 		if(pageNum>1){
-			var begin = 25;
 			for(var i=1;i<=pageNum;i++){
 				newTables += thead+"<tbody>";
 				for(var j=begin;j<begin+25+1;j++){
@@ -5197,7 +5798,7 @@ function printSection6Table(){
 		}
 		if(lastNum>0){
 			newTables += thead+"<tbody>";
-			for(var j=begin;j<begin+lastNum-1;j++){
+			for(var j=begin;j<begin+lastNum;j++){
 				newTables+="<tr>"+$table_.find("tbody").find("tr:eq("+j+")").html()+"</tr>";
 			}
 			newTables+="</tbody></table>";

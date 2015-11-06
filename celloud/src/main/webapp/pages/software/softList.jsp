@@ -11,7 +11,7 @@
 	             		<s:if test='#db.isAdd=="yes"'>
 	             			<img src="<%=request.getContextPath()%>/images/software/added.png" />
 		             	</s:if>
-		             	<s:elseif test='#db.softwareId==6||#db.softwareId==9||#db.softwareId==10||#db.softwareId==12||#db.softwareId==74||#db.softwareId==75||#db.softwareId==76||#db.softwareId==77||#db.softwareId==78||#db.softwareId==79||#db.softwareId==81||#db.softwareId==83||#db.softwareId==109||#db.softwareId==110||#db.softwareId==111||#db.softwareId==112'>
+		             	<s:elseif test='#db.softwareId==6||#db.softwareId==9||#db.softwareId==10||#db.softwareId==12||#db.softwareId==74||#db.softwareId==75||#db.softwareId==76||#db.softwareId==77||#db.softwareId==78||#db.softwareId==79||#db.softwareId==81||#db.softwareId==83||#db.softwareId==109||#db.softwareId==110||#db.softwareId==111||#db.softwareId==112||#db.softwareId==113||#db.softwareId==114'>
 		             		<img src="<%=request.getContextPath()%>/images/software/developing.png" />
 		             	</s:elseif>
 		             	<s:elseif test='#db.isAdd=="no"'>

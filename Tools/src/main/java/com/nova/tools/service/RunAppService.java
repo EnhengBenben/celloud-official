@@ -19,7 +19,8 @@ import com.nova.tools.utils.XMLUtil;
  * @date 2013-7-29 下午8:51:35
  */
 public class RunAppService {
-    private static final List<String> apps = Arrays.asList("81", "83", "85",
+	//TODO 不需要在Tools端进行后续处理的需要在这里配置下
+    private static final List<String> apps = Arrays.asList("81","82", "83", "85",
             "86", "87", "88", "91", "92", "93", "94", "104");
 
     /**
@@ -42,21 +43,31 @@ public class RunAppService {
      * @param fileName
      * @return
      */
-    public void runProject(String basePath, String userId, String appId,
-            String appName, String projectId, String dataKeyList, String email,
+    public void runProject(String command, String taskId, String basePath,
+            String userId, String appId, String appName, String projectId,
+            String dataKey, String dataKeyList, String email,
             String projectName, String sampleList, String ada3, String ada5,
             String sp, String cpu, String diffList, String fileName,
             String dataInfos, String company, String user, String dept) {
         // 创建项目文件夹
         String projectPath = basePath + "/" + userId + "/" + appId + "/"
                 + projectId;
-        FileTools.createDir(projectPath);
-        String param = "fileName=" + fileName + "&userId=" + userId + "&appId="
-                + appId + "&dataKey=" + dataKeyList.split(",")[0]
-                + "&projectId=" + projectId + "&sampleList=" + sampleList;
         String appPath = basePath + "/" + userId + "/" + appId;
         RunAppServiceImpl runApp = new RunAppServiceImpl();
         String start = DateUtil.formatNowDate();
+
+        // MIB
+        if (AppNameIDConstant.MIB.equals(appId)) {
+            File profile = new File(projectPath);
+            if (!profile.exists()) {
+                profile.mkdirs();
+            }
+            runApp.MIB(command, taskId, appPath, projectId, dataKey, fileName,
+                    appId, appName, userId, dataInfos, company, user, dept);
+        } else {
+            FileTools.createDir(projectPath);
+        }
+
         // split
         if (AppNameIDConstant.split.equals(appId)) {
             runApp.split(appPath, projectId, dataKeyList, appId, appName,
@@ -276,8 +287,20 @@ public class RunAppService {
             }
             ChangeStateServiceImpl.changeState(appId, appName, projectId, null,
                     ReportStateConstant.FINISH, userId, xml);
-            EmailUtil.sendEndEmail(projectName, appId, start, email, param,
-                    true);
+            String param = "fileName=" + fileName + "&userId=" + userId
+                    + "&appId=" + appId + "&projectId=" + projectId
+                    + "&sampleList=" + sampleList;
+            if (AppNameIDConstant.MIB.equals(appId)) {
+                ChangeStateServiceImpl.changeTaskState(Long.parseLong(taskId),
+                        Long.parseLong(appId));
+                param += "&dataKey=" + dataKey;
+                EmailUtil.sendEndEmail(fileName, appId, start, email, param,
+                        false);
+            } else {
+                param += "&dataKey=" + dataKeyList.split(",")[0];
+                EmailUtil.sendEndEmail(projectName, appId, start, email, param,
+                        true);
+            }
         }
     }
 }

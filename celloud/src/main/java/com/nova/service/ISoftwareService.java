@@ -92,7 +92,7 @@ public interface ISoftwareService {
      * @Description: (获取一个软件的详细信息)
      * @param softwareId
      * @return
-     * @param Software
+     * @param App
      * @throws
      */
     Software getSoftware(int softwareId);

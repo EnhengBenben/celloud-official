@@ -113,7 +113,7 @@ public class AppNameIDConstant {
     public static final String CMP_199 = "111";
     public static final String GDD = "112";
     public static final String split = "113";
-
+    public static final String MIB = "114";
     // 根据ID获取名称
     /**
      * appID--appName对应关系
@@ -169,5 +169,6 @@ public class AppNameIDConstant {
         map.put(CMP_199, "CMP_199");
         map.put(GDD, "GDD");
         map.put(split, "split");
+        map.put(MIB, "MIB");
     }
 }

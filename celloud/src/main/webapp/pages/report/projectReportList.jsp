@@ -39,8 +39,7 @@
                         </div>
                         <div>
                            	 文件数量：
-                            <s:if test="%{#report.num==0}">&nbsp; </s:if>
-                            <s:else><s:property value="#report.num"/></s:else>
+                            <span id="rdataNum<s:property value='#report.project_id'/>"><s:if test="%{#report.num==0}">&nbsp; </s:if><s:else><s:property value="#report.num"/></s:else></span>
                         </div>
                         <div>
                            	数据大小：

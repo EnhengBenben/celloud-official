@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="baidu-site-verification" content="IsldTuHqik" />
-<meta name="keywords" content="celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
+<meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
 <title>CelLoud 平台</title>
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico"/>
 <link rel="bookmark" href="<%=request.getContextPath()%>/favicon.ico"/>

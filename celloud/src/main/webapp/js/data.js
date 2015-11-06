@@ -167,7 +167,7 @@ function showRunApp(){
     	dataIds += checkedDataIds[0];
     }
     var dataLength = checkedDataIds.length;
-    $.get("data3!getSoftListByFormat",{"dataIds":dataIds},function(result){
+    $.get("data3!getAppListByFormat",{"dataIds":dataIds},function(result){
     	if(result == "所选数据格式不统一！"){
     		$("#warningText").html(result);
 			$("#warningModal").modal("show");
@@ -190,8 +190,6 @@ function showRunApp(){
     		if(result.length==0 || noAPP==0){
     			li += "<li class='types-options'>没有可运行的APP</li>"
     			$("#toRunApp").attr("disabled",true);
-    		}else{
-    			$("#toRunApp").removeAttr("disabled");
     		}
     		$("#appsForDataUl").append(li);
     		$("#addedDataUl").append(dataLi);
@@ -203,6 +201,9 @@ function addRunApp(appId,appName,dataIds){
 	if($("#runAppli"+appId).hasClass("selected")){
 		addedApps.splice($.inArray(appId,addedApps),1);
 		$("#runAppli"+appId).removeClass("selected");
+		if(addedApps.length==0){
+			$("#toRunApp").attr("disabled","true");
+		}
 	}else{
 		$.get("data3!checkDataRunningSoft",{"dataIds":dataIds,"conditionInt":appId},function(intList){
 			if(intList.length>0){
@@ -223,6 +224,7 @@ function addRunApp(appId,appName,dataIds){
 					$("#runErrorModal").modal("show");
 				}else{
 					$("#runAppli"+appId).addClass("selected");
+					$("#toRunApp").removeAttr("disabled");
 					addedApps.push(appId);
 				}
 			}
@@ -242,6 +244,7 @@ function removetoRunData(id){
 function okToRun(){
 	var appId = $("#appIdHide").val();
 	$("#runAppli" +appId).addClass("selected");
+	$("#toRunApp").removeAttr("disabled");
 	addedApps.push(appId);
 }
 function toRunApp(){
@@ -440,10 +443,16 @@ function initDataList(){
 			$("input[name='datachk']").prop("checked",true);
 			arrChk=$("input[name='datachk']:checked");
 			for(var i = 0;i<arrChk.length;i++){
-				var start = $.inArray(arrChk[i].value,checkedDataIds);
-				if(start==-1){
-					checkedDataIds.push(arrChk[i].value);
-					addedDataNames.push($("#fileName"+arrChk[i].value).val());
+				if(checkedDataIds.length>=25){
+					$("#warningText").html("最多允许同时操作25条数据！");
+					$("#warningModal").modal('show');
+					break;
+				}else{
+					var start = $.inArray(arrChk[i].value,checkedDataIds);
+					if(start==-1){
+						checkedDataIds.push(arrChk[i].value);
+						addedDataNames.push($("#fileName"+arrChk[i].value).val());
+					}
 				}
 			}
 		}else{
@@ -458,7 +467,11 @@ function initDataList(){
 			}
 		}
 		toUse();
+		window.parent.globalDataIds = new Array();
 	});
+	if(window.parent.globalDataIds != null){
+		checkedDataIds = window.parent.globalDataIds;
+	}
 	// 设置之前选过的数据为选中状态
 	for(var j=0;j<checkedDataIds.length;j++){
 		var fileId = checkedDataIds[j];
@@ -481,16 +494,22 @@ function chkOnChange(obj){
 	var dataId_ = $(obj).val();
 	var start = $.inArray(dataId_,checkedDataIds);
 	if(checked){
-		if(start==-1)
-			checkedDataIds.push(dataId_);
+		if(checkedDataIds.length>=25){
+			$("#warningText").html("最多允许同时操作25条数据！");
+			$("#warningModal").modal('show');
+		}else{
+			if(start==-1)
+				checkedDataIds.push(dataId_);
 			addedDataNames.push($("#fileName"+dataId_).val());
+		}
 	}else{
 		$("#selAll").prop("checked",false);			
 		if(start!=-1)
 			checkedDataIds.splice(start,1);
-			addedDataNames.splice(start,1);
+		addedDataNames.splice(start,1);
 	}
 	toUse();
+	window.parent.globalDataIds = new Array();
 }
 
 //选择页面显示记录个数

@@ -74,29 +74,7 @@
 			   			</c:when>
 			   			<c:otherwise>
 			   				 <c:choose>
-					   			<c:when test="%{fn:length(cmpReport.cmpGeneResult)<2}">
-					   				<td width="47%" valign="top" height="100%">
-										<table class="table table-striped-green table-text-center table-padding0" id="snp_table1">
-											<thead>
-												<tr>
-													<th class="mwidth_Gene">基因</th>
-													<th>已知突变位点数<c:out value="%{fn:length(cmpReport.cmpGeneResult)}"></c:out> </th>
-													<th>测序深度</th>
-												</tr>	
-											</thead>
-											<tbody>
-												<c:forEach items="${cmpReport.cmpGeneResult}" var="gene">
-													<tr>
-														<td><span <c:if test="${gene.sequencingDepth<50 }">style='background-color:#feaa20'</c:if>>${gene.geneName }</span></td>
-														<td>${gene.knownMSNum }</td>
-														<td>${gene.sequencingDepth }</td>
-													</tr>
-												</c:forEach>
-											</tbody>
-										</table>
-									</td>
-					   			</c:when>
-					   			<c:otherwise>
+					   			<c:when test="${cmpReport.cmpGeneResult.size()>=2}">
 					   				<td width="46%" valign="top" height="100%">
 										<table class="table table-striped-green table-text-center table-padding0" id="snp_table1">
 											<thead>
@@ -128,6 +106,28 @@
 											</thead>
 											<tbody>
 												<c:forEach items="${cmpReport.cmpGeneResult}" var="gene" begin="${cmpReport.cmpGeneResult.size()/2 }" end="${cmpReport.cmpGeneResult.size() }">
+													<tr>
+														<td><span <c:if test="${gene.sequencingDepth<50 }">style='background-color:#feaa20'</c:if>>${gene.geneName }</span></td>
+														<td>${gene.knownMSNum }</td>
+														<td>${gene.sequencingDepth }</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</td>
+					   			</c:when>
+					   			<c:otherwise>
+					   				<td width="47%" valign="top" height="100%">
+										<table class="table table-striped-green table-text-center table-padding0" id="snp_table1">
+											<thead>
+												<tr>
+													<th class="mwidth_Gene">基因</th>
+													<th>已知突变位点数<c:out value="%{fn:length(cmpReport.cmpGeneResult)}"></c:out> </th>
+													<th>测序深度</th>
+												</tr>	
+											</thead>
+											<tbody>
+												<c:forEach items="${cmpReport.cmpGeneResult}" var="gene">
 													<tr>
 														<td><span <c:if test="${gene.sequencingDepth<50 }">style='background-color:#feaa20'</c:if>>${gene.geneName }</span></td>
 														<td>${gene.knownMSNum }</td>

@@ -201,33 +201,33 @@ hr {
 					<table class="table table-bordered table-condensed miniTable_" style="margin:0px">
 						<tr>
 							<th>姓名</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
 							<th>门诊号</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
 							<th>检验编号</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
 						</tr>
 						<tr>
 							<th>性别</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
 							<th>送检医师</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
 							<th>采样日期</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
 						</tr>
 						<tr>
 							<th>年龄</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
 							<th>送检材料</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
 							<th>接收日期</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
 						</tr>
 						<tr>
 							<th>孕周</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
 							<th>临床诊断</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
 							<th></th>
 							<td></td>
 						</tr>
@@ -237,25 +237,25 @@ hr {
 				    <table class="table table-bordered table-condensed miniTable_" style="margin:10px 0px">
 					  <tr>
 							<th>姓名</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 							<th>性别</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 							<th>年龄</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 						</tr>
 						<tr>
 							<th>科别</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 							<th>病历号</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 							<th>送检材料</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 						</tr>
 						<tr>
 							<th>采样日期</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 							<th>送检医师</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 							<th></th>
 							<td></td>
 						</tr>
@@ -299,18 +299,18 @@ hr {
 			</div>
 			<s:if test="%{company.companyId==14}">
 				<ul class="footer" style="margin-bottom: 0px;font-size:12px;/* margin-top: 450px; */">
-					<li class="left" style="font-size:12px;">报告者：<span><input type="text" class="input-mini" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>
-					<li class="left" style="font-size:12px;">审核者：<span><input type="text" class="input-mini" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>
-					<li class="right pull-right opinion" style="font-size:12px;">报告日期：<span id="jzkp"><input type="text" class="input-mini" id="jzkh" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>
+					<li class="left" style="font-size:12px;">报告者：<span><input type="text" class="input-mini" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></li>
+					<li class="left" style="font-size:12px;">审核者：<span><input type="text" class="input-mini" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></li>
+					<li class="right pull-right opinion" style="font-size:12px;">报告日期：<span id="jzkp"><input type="text" class="input-mini" id="jzkh" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></li>
 				</ul>
 				<hr style="margin:0px">
-				<h4 class="smallh4" style="font-size:12px;">临床意见：<span class="opinion"><span><input type="text" class="input-mini onlybotton" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></span></h4>
+				<h4 class="smallh4" style="font-size:12px;">临床意见：<span class="opinion"><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></span></h4>
 			</s:if>
 			<s:else>
 				<ul class="footer" style="margin-bottom: 0px;font-size:12px;margin-top:150px;" id="p2footer">
-					<li class="left" style="font-size:12px;">报告者：<span><input type="text" class="input-mini" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>
-					<li class="left" style="font-size:12px;">审核者：<span><input type="text" class="input-mini" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>
-					<li class="right pull-right opinion" style="font-size:12px;">报告日期：<span id="jzkp"><input type="text" class="input-mini" id="jzkh" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>
+					<li class="left" style="font-size:12px;">报告者：<span><input type="text" class="input-mini" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>
+					<li class="left" style="font-size:12px;">审核者：<span><input type="text" class="input-mini" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>
+					<li class="right pull-right opinion" style="font-size:12px;">报告日期：<span id="jzkp"><input type="text" class="input-mini" id="jzkh" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>
 				</ul>
 			</s:else>
 		</s:if>
@@ -524,6 +524,7 @@ hr {
 			$(this).attr("value",$(this).val());
 		});
 		$("#des").children().html($("#des").children().val());
+		$("#des1").children().html($("#des1").children().val());
 		$("#des2").children().html($("#des2").children().val());
 		var url = window.location.href.split("printPGS")[0];
 		$.post(url+"updateContext",{"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":$("body").html()},function(result){

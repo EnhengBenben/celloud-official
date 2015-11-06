@@ -114,6 +114,7 @@ public class PropertiesUtils {
     public static String CMP199;
     public static String GDD;
     public static String split;
+    public static String MIB;
     public static String report_dburl;
     public static String report_dbname;
     static {
@@ -186,6 +187,7 @@ public class PropertiesUtils {
         CMP199 = pro.getProperty("CMP199");
         GDD = pro.getProperty("GDD");
         split = pro.getProperty("split");
+        MIB = pro.getProperty("MIB");
         report_dburl = pro.getProperty("report_dburl");
         report_dbname = pro.getProperty("report_dbname");
     }

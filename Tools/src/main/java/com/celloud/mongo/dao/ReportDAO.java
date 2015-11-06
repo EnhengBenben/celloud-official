@@ -5,6 +5,7 @@ import com.celloud.mongo.sdo.CmpFilling;
 import com.celloud.mongo.sdo.CmpReport;
 import com.celloud.mongo.sdo.GddDiseaseDict;
 import com.celloud.mongo.sdo.GddGeneticMethod;
+import com.celloud.mongo.sdo.MIB;
 import com.celloud.mongo.sdo.Split;
 
 /**
@@ -92,4 +93,10 @@ public interface ReportDAO {
      */
     public void saveSplit(Split split);
 
+    /**
+     * 新增MIB运行报告内容
+     * 
+     * @param cmpReport
+     */
+    public void saveMIB(MIB mib);
 }

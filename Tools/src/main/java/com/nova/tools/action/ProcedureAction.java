@@ -148,6 +148,8 @@ public class ProcedureAction extends ActionSupport {
     private String company;
     private String user;
     private String dept;
+    private String command;
+    private String taskId;
 
     private final String basePath = ServletActionContext.getServletContext()
             .getRealPath("/upload");
@@ -224,18 +226,23 @@ public class ProcedureAction extends ActionSupport {
                 + projectId);
         final RunAppService app = new RunAppService();
         // 需要对datakeylist进行排序
-        if (!AppNameIDConstant.split.equals(appId)) {
+        if (!AppNameIDConstant.split.equals(appId)
+                && !AppNameIDConstant.MIB.equals(appId)) {
             dataKeyList = FileTools.dataListSort(dataKeyList);
         }
         new Thread(new Runnable() {
             @Override
             public void run() {
                 app.runProject(
+                        command == null ? command : Encrypt.decrypt(command
+                                .replace(" ", "+").replace("\n", "")),
+                        taskId,
                         basePath,
                         userId,
                         appId,
                         appName,
                         projectId,
+                        dataKey,
                         dataKeyList,
                         email,
                         projectName,
@@ -246,10 +253,15 @@ public class ProcedureAction extends ActionSupport {
                         cpu,
                         diffList,
                         fileName,
-                        Encrypt.decrypt(dataInfos),
-                        Encrypt.decrypt(company.replace(" ", "+").replace("\n",
-                                "")), Encrypt.decrypt(user),
-                        Encrypt.decrypt(dept));
+                        dataInfos == null ? dataInfos : Encrypt
+                                .decrypt(dataInfos.replace(" ", "+").replace(
+                                        "\n", "")),
+                        company == null ? company : Encrypt.decrypt(company
+                                .replace(" ", "+").replace("\n", "")),
+                        user == null ? user : Encrypt.decrypt(user.replace(" ",
+                                "+").replace("\n", "")),
+                        dept == null ? dept : Encrypt.decrypt(dept.replace(" ",
+                                "+").replace("\n", "")));
             }
         }).start();
         return SUCCESS;
@@ -595,5 +607,21 @@ public class ProcedureAction extends ActionSupport {
 
     public void setDept(String dept) {
         this.dept = dept;
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 }

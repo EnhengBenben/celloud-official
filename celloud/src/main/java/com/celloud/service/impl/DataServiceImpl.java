@@ -11,6 +11,7 @@ import com.nova.pager.Page;
 import com.nova.pager.PageList;
 
 /**
+ * 数据管理服务类
  * 
  * @author <a href="mailto:liuqingxiao@celloud.cn">liuqx</a>
  * @date 2015-9-14下午1:39:40
@@ -22,71 +23,80 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public PageList<Data> getAllData(Page page, Integer userId) {
-	return dataDao.getAllData(page, userId);
+        return dataDao.getAllData(page, userId);
     }
 
     @Override
     public PageList<Data> getDataByCondition(Page page, Integer userId,
-	    Integer sortType,
-	    String sortByName, String sortByDate, String condition) {
-	return dataDao.getDataByCondition(page, userId, sortType, sortByName,
-		sortByDate,
-		condition);
+            Integer sortType, String sortByName, String sortByDate,
+            String condition) {
+        return dataDao.getDataByCondition(page, userId, sortType, sortByName,
+                sortByDate, condition);
     }
 
     @Override
     public Map<String, Integer> getFormatNumByIds(String dataIds) {
-	return dataDao.getFormatNumByIds(dataIds);
+        return dataDao.getFormatNumByIds(dataIds);
     }
 
     @Override
     public List<Integer> getRunningDataBySoft(String dataIds, Integer appId) {
-	return dataDao.getRunningDataBySoft(dataIds, appId);
+        return dataDao.getRunningDataBySoft(dataIds, appId);
     }
 
     @Override
     public Integer deleteDataByIds(String dataIds) {
-	return dataDao.deleteDataByIds(dataIds);
+        return dataDao.deleteDataByIds(dataIds);
     }
 
     @Override
     public List<Map<String, String>> getStrainList(Integer userId) {
-	return dataDao.getStrainList(userId);
+        return dataDao.getStrainList(userId);
     }
 
     @Override
     public Data getDataAndStrain(Integer userId, Long fileId) {
-	return dataDao.getDataAndStrain(userId, fileId);
+        return dataDao.getDataAndStrain(userId, fileId);
     }
 
     @Override
     public List<Data> getDatasByIds(String dataIds) {
-	return dataDao.getDatasByIds(dataIds);
+        return dataDao.getDatasByIds(dataIds);
     }
 
     @Override
     public Integer updateData(String dataIds, Data data) {
-	return dataDao.updateData(dataIds, data);
+        return dataDao.updateData(dataIds, data);
     }
 
     @Override
     public Integer updateDatas(List<Data> list) {
-	return dataDao.updateDatas(list);
+        return dataDao.updateDatas(list);
     }
 
     @Override
     public String getDataSize(String dataIds) {
-	return dataDao.getDataSize(dataIds);
+        return dataDao.getDataSize(dataIds);
     }
 
     @Override
     public Integer addDataToPro(String[] dataIdArr, Long proId) {
-	return dataDao.addDataToPro(dataIdArr, proId);
+        return dataDao.addDataToPro(dataIdArr, proId);
     }
 
     @Override
     public List<Data> getDataByDataKeys(String dataKeys) {
-	return dataDao.getDataByDataKeys(dataKeys);
+        return dataDao.getDataByDataKeys(dataKeys);
+    }
+
+    @Override
+    public List<String> getAllDataKey() {
+        return dataDao.getAllDataKey();
+    }
+
+    @Override
+    public Integer addData(Data data) {
+        return dataDao.addData(data);
     }
 
 }

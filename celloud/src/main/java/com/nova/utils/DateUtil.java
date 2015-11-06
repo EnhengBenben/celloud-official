@@ -48,7 +48,7 @@ public class DateUtil {
 	 */
 	public static String getDateToString() {
 		Date date = new Date();
-		SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyyMMdd");
 		return simpleFormat.format(date);
 	}
 
