@@ -22,6 +22,18 @@ public class ChangeStateServiceImpl {
     private static String celloud = PropertiesUtils.celloud;
 
     /**
+     * 修改任务运行状态并继续执行排队的任务
+     * 
+     * @param taskId
+     * @param appId
+     */
+    public static void changeTaskState(Long taskId, Long appId) {
+        String url = celloud + "task!updateTaskState?task.taskId=" + taskId
+                + "&task.appId=" + appId;
+        remoteRequest(url);
+    }
+
+    /**
      * 修改报告状态
      * 
      * @param appId
@@ -34,26 +46,26 @@ public class ChangeStateServiceImpl {
      * @return
      */
     public static void changeState(String appId, String appName,
-	    String projectId, String dataKey, int state, String userId,
-	    String context) {
-	String url = null;
-	// 数据报告
-	if (projectId == null) {
-	    url = celloud + "updateReportByDataKeySoftId.action?dataKeys="
-		    + dataKey + "&softwareId=" + appId + "&state=" + state
-		    + "&appResult=" + userId + "," + appId + "," + appName
-		    + "," + dataKey + ",0";
-	} else {
-	    if (context != null) {
-		context = Encrypt.encrypt(context);
-	    }
-	    url = celloud + "updateReportByProSoftId.action?projectId="
-		    + projectId + "&softwareIds=" + appId + "&state=" + state
-		    + "&userId=" + userId + "&appResult=" + userId + ","
-		    + appId + "," + appName + "," + projectId + ",1&context="
-		    + context;
-	}
-	remoteRequest(url);
+            String projectId, String dataKey, int state, String userId,
+            String context) {
+        String url = null;
+        // 数据报告
+        if (projectId == null) {
+            url = celloud + "updateReportByDataKeySoftId.action?dataKeys="
+                    + dataKey + "&softwareId=" + appId + "&state=" + state
+                    + "&appResult=" + userId + "," + appId + "," + appName
+                    + "," + dataKey + ",0";
+        } else {
+            if (context != null) {
+                context = Encrypt.encrypt(context);
+            }
+            url = celloud + "updateReportByProSoftId.action?projectId="
+                    + projectId + "&softwareIds=" + appId + "&state=" + state
+                    + "&userId=" + userId + "&appResult=" + userId + ","
+                    + appId + "," + appName + "," + projectId + ",1&context="
+                    + context;
+        }
+        remoteRequest(url);
     }
 
     /**
@@ -65,9 +77,9 @@ public class ChangeStateServiceImpl {
      * @return
      */
     public static void changeDataState(String appId, String dataKey, int state) {
-	String url = celloud + "addDatasReport.action?dataKeys=" + dataKey
-		+ "&softwareId=" + appId + "&state=" + state;
-	remoteRequest(url);
+        String url = celloud + "addDatasReport.action?dataKeys=" + dataKey
+                + "&softwareId=" + appId + "&state=" + state;
+        remoteRequest(url);
     }
 
     /**
@@ -76,38 +88,38 @@ public class ChangeStateServiceImpl {
      * @param url
      */
     private static void remoteRequest(String url) {
-	log.info("remoteRequest:url=" + url);
-	HttpURLConnection conn = null;
-	BufferedReader br = null;
-	try {
-	    conn = (HttpURLConnection) new URL(url).openConnection();
-	    conn.setRequestMethod("GET");
-	    conn.setDoOutput(true);
-	    conn.setConnectTimeout(120000);
-	    conn.setReadTimeout(240000);
-	    conn.connect();
-	    br = new BufferedReader(
-		    new InputStreamReader(conn.getInputStream()));
-	    StringBuffer buff = new StringBuffer();
-	    String lineStr = null;
-	    while ((lineStr = br.readLine()) != null) {
-		buff.append(lineStr);
-	    }
-	    String returnValue = buff.toString();
-	    log.info("result from celloud:" + returnValue);
-	} catch (MalformedURLException e) {
-	    log.error("remoteRequest:url=" + url + ",error:" + e);
-	    e.printStackTrace();
-	} catch (IOException e) {
-	    log.error("remoteRequest:url=" + url + ",error:" + e);
-	    e.printStackTrace();
-	} finally {
-	    if (br != null)
-		try {
-		    br.close();
-		} catch (IOException e) {
-		    log.error("remoteRequest:url=" + url + ",error:" + e);
-		}
-	}
+        log.info("remoteRequest:url=" + url);
+        HttpURLConnection conn = null;
+        BufferedReader br = null;
+        try {
+            conn = (HttpURLConnection) new URL(url).openConnection();
+            conn.setRequestMethod("GET");
+            conn.setDoOutput(true);
+            conn.setConnectTimeout(120000);
+            conn.setReadTimeout(240000);
+            conn.connect();
+            br = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream()));
+            StringBuffer buff = new StringBuffer();
+            String lineStr = null;
+            while ((lineStr = br.readLine()) != null) {
+                buff.append(lineStr);
+            }
+            String returnValue = buff.toString();
+            log.info("result from celloud:" + returnValue);
+        } catch (MalformedURLException e) {
+            log.error("remoteRequest:url=" + url + ",error:" + e);
+            e.printStackTrace();
+        } catch (IOException e) {
+            log.error("remoteRequest:url=" + url + ",error:" + e);
+            e.printStackTrace();
+        } finally {
+            if (br != null)
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    log.error("remoteRequest:url=" + url + ",error:" + e);
+                }
+        }
     }
 }
