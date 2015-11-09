@@ -92,13 +92,14 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public HBV getHBVReport(String dataKey, Integer proId, Integer appId) {
-        return reportDao.getHBVReport(dataKey, proId, appId);
+    public List<HBV> getHBVList(Integer userId) {
+        return reportDao.getHBVList(userId);
     }
 
     @Override
-    public List<HBV> getHBVList(Integer userId) {
-        return reportDao.getHBVList(userId);
+    public <T> T getDataReport(Class<T> T, String dataKey, Integer proId,
+            Integer appId) {
+        return reportDao.getDataReport(T, dataKey, proId, appId);
     }
 
 }
