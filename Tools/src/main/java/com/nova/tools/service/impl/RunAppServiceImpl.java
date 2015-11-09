@@ -159,13 +159,19 @@ public class RunAppServiceImpl {
 			// 创建项目结果文件
 			String projectFile = outPath + "/" + projectId + "/" + projectId
 					+ ".txt";
-			if (!new File(projectFile).exists()) {
-				FileTools.createFile(projectFile);
+            File proFile = new File(projectFile);
+            if (!proFile.exists()) {
+                FileLock lock = FileTools.getFileLock(proFile);
+                FileTools.createFile(projectFile);
 				// 追加表头
 				FileTools.appendWrite(projectFile,
-						"dataKey\t文件名称\t序列总数\t平均质量\t平均GC含量\n");
+                        "dataKey\t文件名称\t序列总数\t平均质量\t平均GC含量\n");
+                try {
+                    lock.release();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 			}
-            File proFile = new File(projectFile);
 			Map<String, List<Data>> map = JsonUtil.parseDataMap(dataInfos);
 			Company com = JSON.parseObject(company, Company.class);
 			User use = JSON.parseObject(user, User.class);
