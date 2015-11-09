@@ -86,4 +86,22 @@ public interface AppService {
      * @return
      */
     public List<Screen> getScreenByAppId(Integer id);
+
+    /**
+     * 用户添加APP到可运行列表
+     * 
+     * @param userId
+     * @param appId
+     * @return
+     */
+    public Integer userAddApp(Integer userId, Integer appId);
+
+    /**
+     * 用户取消APP在可运行列表
+     * 
+     * @param userId
+     * @param appId
+     * @return
+     */
+    public Integer userRemoveApp(Integer userId, Integer appId);
 }

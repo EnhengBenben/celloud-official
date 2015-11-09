@@ -61,4 +61,14 @@ public class AppServiceImpl implements AppService {
         return appDao.getScreenByAppId(id);
     }
 
+    @Override
+    public Integer userAddApp(Integer userId, Integer appId) {
+        return appDao.userAddApp(userId, appId);
+    }
+
+    @Override
+    public Integer userRemoveApp(Integer userId, Integer appId) {
+        return appDao.userRemoveApp(userId, appId);
+    }
+
 }

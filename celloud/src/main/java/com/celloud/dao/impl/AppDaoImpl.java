@@ -279,4 +279,42 @@ public class AppDaoImpl extends BaseDao implements AppDao {
         }
         return list;
     }
+
+    @Override
+    public Integer userAddApp(Integer userId, Integer appId) {
+        Integer result = null;
+        String sql = "insert into tb_user_software(user_id,software_id,create_date) values(?,?,now())";
+        try {
+            conn = ConnectManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ps.setInt(2, appId);
+            result = ps.executeUpdate();
+        } catch (SQLException e) {
+            log.error("用户添加APP到可运行列表失败" + e);
+            e.printStackTrace();
+        } finally {
+            ConnectManager.free(conn, ps, rs);
+        }
+        return result;
+    }
+
+    @Override
+    public Integer userRemoveApp(Integer userId, Integer appId) {
+        Integer result = null;
+        String sql = "delete from tb_user_software where user_id=? and software_id=?";
+        try {
+            conn = ConnectManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ps.setInt(2, appId);
+            result = ps.executeUpdate();
+        } catch (SQLException e) {
+            log.error("用户取消APP到可运行列表失败" + e);
+            e.printStackTrace();
+        } finally {
+            ConnectManager.free(conn, ps, rs);
+        }
+        return result;
+    }
 }
