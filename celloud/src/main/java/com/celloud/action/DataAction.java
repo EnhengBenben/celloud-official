@@ -121,7 +121,7 @@ public class DataAction extends BaseAction {
     private static String sparkuserName = null;
 
     // TODO 需要投递到spark集群的app
-    private static final List<String> apps = Arrays.asList("92");
+    private static final List<String> apps = Arrays.asList("92","99","100","101");
     // 初始化perl命令路径
     private static Map<Long, App> appMap = null;
     static {
