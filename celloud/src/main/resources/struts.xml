@@ -23,7 +23,7 @@
 			<interceptor-stack name="loginStack">
 				<interceptor-ref name="sessionStack">
 					<param name="includeMethods"></param>
-					<param name="excludeMethods">updateTaskState,getSize,getNumber,initDataKey,uploaded,runQueue,projectRunOver,clientLogin,login,toLogin,saveFeedBack,getAllFeedBack,downloadSafeControl,validateUserEmail,resetPassword,updatePwdByUserName,goToForgetPwd,register,getAdminRole,adminLogin,checkUsername,checkUserEmail,checkKapcha,registUser,updateReportByDataKeyProjectId,updateReportByDataKeySoftId,updateReportByProSoftId,addDatasReport,getFileNameByDataKey,getPath,getDataReport,addUser,checkEmailOne,downloadSafeControl</param>
+					<param name="excludeMethods">saveSplitReportData,updateTaskState,getSize,getNumber,initDataKey,uploaded,runQueue,projectRunOver,clientLogin,login,toLogin,saveFeedBack,getAllFeedBack,downloadSafeControl,validateUserEmail,resetPassword,updatePwdByUserName,goToForgetPwd,register,getAdminRole,adminLogin,checkUsername,checkUserEmail,checkKapcha,registUser,updateReportByDataKeyProjectId,updateReportByDataKeySoftId,updateReportByProSoftId,addDatasReport,getFileNameByDataKey,getPath,getDataReport,addUser,checkEmailOne,downloadSafeControl</param>
 				</interceptor-ref>
 				<interceptor-ref name="defaultStack"></interceptor-ref>
 			</interceptor-stack>
