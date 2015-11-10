@@ -547,7 +547,7 @@ public class ProjectAction extends BaseAction {
 			if (SparkPro.NODES >= running) {
 				log.info("资源满足需求，投递任务");
 				submit(appPath, proId + "", dataKeyList, appName,
-						appMap.get(softwareId).getCommand());
+						appMap.get(Long.parseLong(softwareId)).getCommand());
 			} else {
 				log.info("资源不满足需求，进入队列等待");
 				GlobalQueue.offer(appPath + "--" + proId + "--" + dataKeyList
@@ -603,7 +603,7 @@ public class ProjectAction extends BaseAction {
 				}
 				log.info("满足需要，投递任务");
 				submit(infos[0], infos[1], infos[2], infos[3],
-						appMap.get(infos[4]).getCommand());
+						appMap.get(Long.parseLong(infos[4])).getCommand());
 				GlobalQueue.poll();
 			}
 		}
