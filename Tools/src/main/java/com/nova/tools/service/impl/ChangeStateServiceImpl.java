@@ -21,6 +21,14 @@ public class ChangeStateServiceImpl {
     public static Logger log = Logger.getLogger(ChangeStateServiceImpl.class);
     private static String celloud = PropertiesUtils.celloud;
 
+    public static void saveSplitResultData(String dataKey, String path,
+            Integer num, Integer userId) {
+        String url = celloud + "data3!saveSplitReportData?condition=" + path
+                + "&conditionInt=" + num + "&dataIds=" + dataKey + "&userId="
+                + userId;
+        remoteRequest(url);
+    }
+
     /**
      * 修改任务运行状态并继续执行排队的任务
      * 

@@ -160,17 +160,12 @@ public class RunAppServiceImpl {
 			String projectFile = outPath + "/" + projectId + "/" + projectId
 					+ ".txt";
             File proFile = new File(projectFile);
+            FileLock lock = FileTools.getFileLock(proFile);
+            FileTools.createFile(projectFile);
             if (!proFile.exists()) {
-                FileLock lock = FileTools.getFileLock(proFile);
-                FileTools.createFile(projectFile);
 				// 追加表头
 				FileTools.appendWrite(projectFile,
                         "dataKey\t文件名称\t序列总数\t平均质量\t平均GC含量\n");
-                try {
-                    lock.release();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
 			}
 			Map<String, List<Data>> map = JsonUtil.parseDataMap(dataInfos);
 			Company com = JSON.parseObject(company, Company.class);
@@ -190,15 +185,14 @@ public class RunAppServiceImpl {
 				mib.setAvgGCContent(avgGCContent);
 				String result = totalReads + "\t" + avgQuality + "\t"
 						+ avgGCContent;
-                FileLock lock = FileTools.getFileLock(proFile);
                 FileTools.appendWrite(projectFile, dataKey + "\t" + fileName
 						+ "\t" + result + "\n");
-                try {
-                    lock.release();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
 			}
+            try {
+                lock.release();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 			// -----读取报告内容并保存到mongoDB------
 			List<Data> dataList = map.get(dataKey);
 			mib.setProjectId(Integer.parseInt(projectId));
@@ -375,7 +369,7 @@ public class RunAppServiceImpl {
 	 * @param company
 	 * @param user
 	 */
-	public void split(String outPath, String projectId, String dataKeyList,
+	public Integer split(String outPath, String projectId, String dataKeyList,
 			String appId, String appName, String userId, String dataInfos,
 			String company, String user, String dept) {
 		String dataListFile = formatDataKeyListToSplit(dataKeyList);
@@ -397,11 +391,11 @@ public class RunAppServiceImpl {
 			User use = JSON.parseObject(user, User.class);
 			Dept dept1 = JSON.parseObject(dept, Dept.class);
 			reportService = new ReportServiceImpl();
-			for (int i = 0; i < dataArray.length; i = i + 3) {
+            if (dataArray.length == 3) {
 				Split split = new Split();
-				String[] dataDetail = dataArray[i].split(",");
-				String[] dataDetail1 = dataArray[i + 1].split(",");
-				String[] dataDetail2 = dataArray[i + 2].split(",");
+                String[] dataDetail = dataArray[0].split(",");
+                String[] dataDetail1 = dataArray[1].split(",");
+                String[] dataDetail2 = dataArray[2].split(",");
 				String finalPath = outPath + "/" + getArray(dataDetail, 0);
 				List<String> list = FileTools.readLinestoString(finalPath
 						+ "/result/statistic.xls");
@@ -464,8 +458,10 @@ public class RunAppServiceImpl {
 					split.setResultList(resultList);
 				}
 				reportService.saveSplit(split);
+				return list_.size();
 			}
 		}
+		return null;
 	}
 
 	/**

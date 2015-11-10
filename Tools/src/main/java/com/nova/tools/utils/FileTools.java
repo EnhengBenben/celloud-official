@@ -31,6 +31,10 @@ import org.apache.commons.io.FileUtils;
  */
 public class FileTools {
 
+    public static String getArray(String[] n, int num) {
+        return n == null ? null : (n.length > num ? n[num] : null);
+    }
+
     /**
      * 获取文件锁
      * 

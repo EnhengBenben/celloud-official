@@ -70,8 +70,18 @@ public class RunAppService {
 
         // split
         if (AppNameIDConstant.split.equals(appId)) {
-            runApp.split(appPath, projectId, dataKeyList, appId, appName,
+            Integer num = runApp.split(appPath, projectId, dataKeyList, appId,
+                    appName,
                     userId, dataInfos, company, user, dept);
+            if (num != null && num > 0) {
+                String dataArray[] = dataKeyList.split(";");
+                String[] dataDetail = dataArray[0].split(",");
+                dataKey = FileTools.getArray(dataDetail, 0);
+                String resultPath = userId + "/" + appId + "/" + dataKey
+                        + "/result/split/";
+                ChangeStateServiceImpl.saveSplitResultData(dataKey, resultPath,
+                        num, Integer.parseInt(userId));
+            }
         }
 
         // CMP
