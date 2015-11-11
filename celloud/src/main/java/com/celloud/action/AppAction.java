@@ -11,6 +11,7 @@ import org.apache.struts2.convention.annotation.Results;
 
 import com.celloud.sdo.App;
 import com.celloud.sdo.Classify;
+import com.celloud.sdo.Screen;
 import com.celloud.service.AppService;
 import com.google.inject.Inject;
 import com.nova.action.BaseAction;
@@ -23,9 +24,14 @@ import com.nova.action.BaseAction;
  */
 @ParentPackage("celloud-default")
 @Action("app3")
-@Results({ @Result(name = "toAppByFormat", type = "json", params = { "root",
+@Results({
+        @Result(name = "success", type = "json", params = { "root", "resultInt" }),
+        @Result(name = "toAppByFormat", type = "json", params = { "root",
                 "appList" }),
-        @Result(name = "toAppHome", location = "../../pages/software/appList.jsp") })
+        @Result(name = "appClassify", location = "../../pages/software/appClassify.jsp"),
+        @Result(name = "appListPage", location = "../../pages/software/appList.jsp"),
+        @Result(name = "toAppDetail", location = "../../pages/software/appDetail.jsp"),
+        @Result(name = "toMyAppPage", location = "../../pages/software/myApps.jsp") })
 public class AppAction extends BaseAction {
     private static final long serialVersionUID = 1L;
     Logger log = Logger.getLogger(AppAction.class);
@@ -34,19 +40,59 @@ public class AppAction extends BaseAction {
     private List<App> appList;
     private String condition;
     private Integer conditionInt;
+    private Integer paramId;
     private Map<String, List<Classify>> classifyMap;
+    private App app;
+    private List<Screen> screenList;
+    private Integer resultInt;
 
     public String getAppByFormat() {
-        appList = appService.getAppsByFormat(Integer.parseInt(condition));
+        Integer userId = (Integer) super.session.get("userId");
+        appList = appService.getAppsByFormat(Integer.parseInt(condition),
+                userId);
         return "toAppByFormat";
     }
 
-    public String toAppHome() {
-        Integer companyId = (Integer) super.session.get("companyId");
+    public String getAppClassify() {
         log.info("用户" + super.session.get("userName") + "查看应用市场");
         classifyMap = appService.getDoubleClassify(conditionInt);
-        appList = appService.getAppByClassify(conditionInt, companyId);
-        return "toAppHome";
+        return "appClassify";
+    }
+
+    public String getAppListPage() {
+        Integer companyId = (Integer) super.session.get("companyId");
+        appList = appService.getAppByClassify(paramId, conditionInt, companyId);
+        return "appListPage";
+    }
+
+    public String getAppById() {
+        Integer userId = (Integer) super.session.get("userId");
+        log.info("用户" + super.session.get("userName") + "查看APP" + paramId
+                + "详细信息");
+        app = appService.getAppById(paramId, userId);
+        screenList = appService.getScreenByAppId(paramId);
+        return "toAppDetail";
+    }
+
+    public String getMyApp() {
+        Integer userId = (Integer) super.session.get("userId");
+        log.info("用户" + super.session.get("userName") + "查看已添加的APP");
+        appList = appService.getMyAppList(userId);
+        return "toMyAppPage";
+    }
+
+    public String userAddApp() {
+        Integer userId = (Integer) super.session.get("userId");
+        log.info("用户" + super.session.get("userName") + "添加APP" + paramId);
+        resultInt = appService.userAddApp(userId, paramId);
+        return SUCCESS;
+    }
+
+    public String userRemoveApp() {
+        Integer userId = (Integer) super.session.get("userId");
+        log.info("用户" + super.session.get("userName") + "取消添加APP" + paramId);
+        resultInt = appService.userRemoveApp(userId, paramId);
+        return SUCCESS;
     }
 
     public List<App> getAppList() {
@@ -79,6 +125,38 @@ public class AppAction extends BaseAction {
 
     public void setClassifyMap(Map<String, List<Classify>> classifyMap) {
         this.classifyMap = classifyMap;
+    }
+
+    public Integer getParamId() {
+        return paramId;
+    }
+
+    public void setParamId(Integer paramId) {
+        this.paramId = paramId;
+    }
+
+    public App getApp() {
+        return app;
+    }
+
+    public void setApp(App app) {
+        this.app = app;
+    }
+
+    public List<Screen> getScreenList() {
+        return screenList;
+    }
+
+    public void setScreenList(List<Screen> screenList) {
+        this.screenList = screenList;
+    }
+
+    public Integer getResultInt() {
+        return resultInt;
+    }
+
+    public void setResultInt(Integer resultInt) {
+        this.resultInt = resultInt;
     }
 
 }
