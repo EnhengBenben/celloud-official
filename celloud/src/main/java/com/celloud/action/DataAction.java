@@ -91,8 +91,6 @@ public class DataAction extends BaseAction {
     @Inject
     private IDataService idataService;
     @Inject
-    private com.mongo.service.ReportService mReportService;
-    @Inject
     private TaskService taskService;
     private PageList<Data> dataPageList;
     private List<Integer> intList;
