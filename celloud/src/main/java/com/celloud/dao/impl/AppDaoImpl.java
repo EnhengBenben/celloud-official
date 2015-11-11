@@ -192,7 +192,7 @@ public class AppDaoImpl extends BaseDao implements AppDao {
     public App getAppById(Integer id, Integer userId) {
         App app = new App();
         // TODO 去掉桌面之后可去掉条件“ and us.desk_no=0”
-        String sql = "select s.software_id,s.software_name,s.english_name,s.picture_name,s.create_date,s.intro,s.description,s.app_doc,s.data_num,c.company_name,GROUP_CONCAT(cls.classify_name) classify,(select count(us.id) from tb_user_software us where us.software_id=s.software_id and us.user_id=? and us.desk_no=0) isAdded from tb_software s left join tb_company c on s.company_id=c.company_id left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_classify cls on sc.classify_id=cls.classify_id where s.software_id=?;";
+        String sql = "select s.software_id,s.software_name,s.english_name,s.host,s.picture_name,s.create_date,s.intro,s.description,s.app_doc,s.data_num,c.company_name,GROUP_CONCAT(cls.classify_name) classify,(select count(us.id) from tb_user_software us where us.software_id=s.software_id and us.user_id=? and us.desk_no=0) isAdded from tb_software s left join tb_company c on s.company_id=c.company_id left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_classify cls on sc.classify_id=cls.classify_id where s.software_id=?;";
         try {
             conn = ConnectManager.getConnection();
             ps = conn.prepareStatement(sql);
@@ -204,6 +204,7 @@ public class AppDaoImpl extends BaseDao implements AppDao {
                 app.setSoftwareId(rs.getLong("software_id"));
                 app.setSoftwareName(rs.getString("software_name"));
                 app.setEnglishName(rs.getString("english_name"));
+                app.setHost(rs.getString("host"));
                 app.setPictureName(rs.getString("picture_name"));
                 app.setDescription(rs.getString("description"));
                 app.setCreateDate(rs.getDate("create_date"));

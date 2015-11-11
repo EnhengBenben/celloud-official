@@ -18,13 +18,21 @@
 		</div>
 		<div class="app-detail-button">
 		  <c:choose>
-		  	<c:when test="${app.isAdded==0 }">
-			  <a class="btn btn-celloud-success btn-flat" href="javascript:void()" onclick="addApp(${app.softwareId })" id="toAddApp"><i class="fa fa-plus"></i>&nbsp;添加</a>
+		    <c:when test="${app.classifyNames.contains('小软件') }">
+			  <a class="btn btn-celloud-success btn-flat" href="${app.host }" target="blank"><i class="fa fa-plus"></i>&nbsp;点击使用</a>
 		  	</c:when>
 		  	<c:otherwise>
-		  	  <a class="btn btn-celloud-close btn-flat" href="javascript:void()" onclick="removeApp(${app.softwareId })" id="toAddApp"><i class="fa fa-minus"></i>&nbsp;取消添加</a>
+		  	  <c:choose>
+			  	<c:when test="${app.isAdded==0 }">
+				  <a class="btn btn-celloud-success btn-flat" href="javascript:void()" onclick="addApp(${app.softwareId })" id="toAddApp"><i class="fa fa-plus"></i>&nbsp;添加</a>
+			  	</c:when>
+			  	<c:otherwise>
+			  	  <a class="btn btn-celloud-close btn-flat" href="javascript:void()" onclick="removeApp(${app.softwareId })" id="toAddApp"><i class="fa fa-minus"></i>&nbsp;取消添加</a>
+			  	</c:otherwise>
+			  </c:choose>
 		  	</c:otherwise>
 		  </c:choose>
+		  
 		</div>
 	</div>
 	<ul class="page-tabs app-detail-tabs">
