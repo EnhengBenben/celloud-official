@@ -23,7 +23,7 @@ public interface AppDao {
 	 * @param formatId
 	 * @return
 	 */
-	public List<App> getAppsByFormat(Integer formatId);
+    public List<App> getAppsByFormat(Integer formatId, Integer userId);
 
 	/**
 	 * 根据编号获取软件信息
@@ -69,7 +69,7 @@ public interface AppDao {
      * @param id
      * @return
      */
-    public App getAppById(Integer id);
+    public App getAppById(Integer id, Integer userId);
 
     /**
      * 获取已添加的APP

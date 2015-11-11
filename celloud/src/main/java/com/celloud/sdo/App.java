@@ -48,12 +48,16 @@ public class App implements Serializable {
     private Integer attribute;
     /** 支持数据类型 */
     private List<DataFormat> dataFormat;
+    /** 执行命令 */
     private String command;
     /** APP的所属分类 */
     private Classify classify;
+    /** 所属分类名称 */
     private String classifyNames;
     private String companyName;
     private String formatDesc;
+    /** 是否已被用户添加 =0——>未添加 >0——>已添加 */
+    private Integer isAdded;
 
     public String getCommand() {
         return command;
@@ -229,6 +233,14 @@ public class App implements Serializable {
 
     public void setClassifyNames(String classifyNames) {
         this.classifyNames = classifyNames;
+    }
+
+    public Integer getIsAdded() {
+        return isAdded;
+    }
+
+    public void setIsAdded(Integer isAdded) {
+        this.isAdded = isAdded;
     }
 
 }

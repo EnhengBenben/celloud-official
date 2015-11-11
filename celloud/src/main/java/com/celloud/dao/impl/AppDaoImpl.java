@@ -33,17 +33,15 @@ public class AppDaoImpl extends BaseDao implements AppDao {
     private ResultSet rs = null;
 
     @Override
-    public List<App> getAppsByFormat(Integer formatId) {
+    public List<App> getAppsByFormat(Integer formatId, Integer userId) {
         List<App> list = new ArrayList<>();
-        String sql = "select s.software_id,s.software_name,s.data_num from tb_software s left join tb_software_format_relat sf on s.software_id = sf.software_id where sf.format_id = ? and s.off_line = ? and ((attribute = ? and company_id = ?) or attribute= ?) order by s.create_date;";
+        String sql = "select s.software_id,s.software_name,s.data_num from tb_software s left join tb_software_format_relat sf on s.software_id = sf.software_id left join tb_user_software us on s.software_id=us.software_id where sf.format_id = ? and s.off_line = ? and us.user_id=? order by s.create_date;";
         try {
             conn = ConnectManager.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, formatId);
             ps.setInt(2, AppOffline.ON);
-            ps.setInt(3, AppPermission.PRIVATE);
-            ps.setInt(4, super.companyId);
-            ps.setInt(5, AppPermission.PUBLIC);
+            ps.setInt(3, userId);
             rs = ps.executeQuery();
             App app = null;
             while (rs.next()) {
@@ -191,13 +189,15 @@ public class AppDaoImpl extends BaseDao implements AppDao {
     }
 
     @Override
-    public App getAppById(Integer id) {
+    public App getAppById(Integer id, Integer userId) {
         App app = new App();
-        String sql = "select s.software_id,s.software_name,s.english_name,s.picture_name,s.create_date,s.intro,s.description,s.app_doc,s.data_num,c.company_name,GROUP_CONCAT(cls.classify_name) classify from tb_software s left join tb_company c on s.company_id=c.company_id left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_classify cls on sc.classify_id=cls.classify_id where s.software_id=?;";
+        // TODO 去掉桌面之后可去掉条件“ and us.desk_no=0”
+        String sql = "select s.software_id,s.software_name,s.english_name,s.picture_name,s.create_date,s.intro,s.description,s.app_doc,s.data_num,c.company_name,GROUP_CONCAT(cls.classify_name) classify,(select count(us.id) from tb_user_software us where us.software_id=s.software_id and us.user_id=? and us.desk_no=0) isAdded from tb_software s left join tb_company c on s.company_id=c.company_id left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_classify cls on sc.classify_id=cls.classify_id where s.software_id=?;";
         try {
             conn = ConnectManager.getConnection();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setInt(1, userId);
+            ps.setInt(2, id);
             rs = ps.executeQuery();
             if (rs.next()) {
                 app = new App();
@@ -212,6 +212,7 @@ public class AppDaoImpl extends BaseDao implements AppDao {
                 app.setDataNum(rs.getInt("data_num"));
                 app.setCompanyName(rs.getString("company_name"));
                 app.setClassifyNames(rs.getString("classify"));
+                app.setIsAdded(rs.getInt("isAdded"));
             }
         } catch (SQLException e) {
             log.error("用户" + super.userName + "查看APP" + id + "失败");
@@ -225,7 +226,8 @@ public class AppDaoImpl extends BaseDao implements AppDao {
     @Override
     public List<App> getMyAppList(Integer userId) {
         List<App> list = new ArrayList<>();
-        String sql = "select us.user_id,s.software_id,s.software_name,s.picture_name,s.intro,s.description,s.create_date,GROUP_CONCAT(c.classify_name) classify,com.company_name from tb_user_software us left join tb_software s on us.software_id=s.software_id left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_classify c on c.classify_id=sc.classify_id left join tb_company com on s.company_id=com.company_id where us.user_id=? and s.off_line=? group by s.software_id order by create_date desc;";
+        // TODO 去掉桌面之后可去掉条件“ and us.desk_no=0”
+        String sql = "select us.user_id,s.software_id,s.software_name,s.picture_name,s.intro,s.description,s.create_date,GROUP_CONCAT(c.classify_name) classify,com.company_name from tb_user_software us left join tb_software s on us.software_id=s.software_id left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_classify c on c.classify_id=sc.classify_id left join tb_company com on s.company_id=com.company_id where us.user_id=? and s.off_line=? and us.desk_no=0 group by s.software_id order by create_date desc;";
         try {
             conn = ConnectManager.getConnection();
             ps = conn.prepareStatement(sql);

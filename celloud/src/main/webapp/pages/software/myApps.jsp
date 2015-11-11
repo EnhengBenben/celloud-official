@@ -9,7 +9,7 @@
 	<c:otherwise>
 		<c:forEach items="${appList}" var="app">
 		  <div class="col-md-12">
-		    <div class="info-box">
+		    <div class="info-box my-app-box">
 			  <div class="app-info-icon">
 				<img src="<%=request.getContextPath()%>/images/app/${app.pictureName}" class="Absolute-Center" style="width:90px;margin:0px">
 			  </div>
@@ -21,7 +21,7 @@
 			      <p class="info-box-artic">${app.intro }</p>
 			  	  <p class="info-box-artic">发布机构：${app.companyName }</p>
 			  	  <a class="a-green-normal" style="position:absolute;bottom:20px;" href="javascript:void()" onclick="toAppDetail(${app.softwareId})">查看APP详细</a>
-			      <button class="btn btn-success btn-flat btn-xs info-btn"><i class="fa fa-minus"></i>取消</button>
+			      <button class="btn btn-celloud-close btn-flat info-btn" href="javascript:void()" onclick="removeApp(${app.softwareId })" ><i class="fa fa-minus"></i>&nbsp;取消添加</button>
 			  </div><!-- /.info-box-content -->
 		    </div><!-- /.info-box -->
 		  </div><!-- /.col -->

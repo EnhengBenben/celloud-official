@@ -25,6 +25,7 @@ import com.nova.action.BaseAction;
 @ParentPackage("celloud-default")
 @Action("app3")
 @Results({
+        @Result(name = "success", type = "json", params = { "root", "resultInt" }),
         @Result(name = "toAppByFormat", type = "json", params = { "root",
                 "appList" }),
         @Result(name = "appClassify", location = "../../pages/software/appClassify.jsp"),
@@ -43,9 +44,12 @@ public class AppAction extends BaseAction {
     private Map<String, List<Classify>> classifyMap;
     private App app;
     private List<Screen> screenList;
+    private Integer resultInt;
 
     public String getAppByFormat() {
-        appList = appService.getAppsByFormat(Integer.parseInt(condition));
+        Integer userId = (Integer) super.session.get("userId");
+        appList = appService.getAppsByFormat(Integer.parseInt(condition),
+                userId);
         return "toAppByFormat";
     }
 
@@ -62,9 +66,10 @@ public class AppAction extends BaseAction {
     }
 
     public String getAppById() {
+        Integer userId = (Integer) super.session.get("userId");
         log.info("用户" + super.session.get("userName") + "查看APP" + paramId
                 + "详细信息");
-        app = appService.getAppById(paramId);
+        app = appService.getAppById(paramId, userId);
         screenList = appService.getScreenByAppId(paramId);
         return "toAppDetail";
     }
@@ -72,10 +77,22 @@ public class AppAction extends BaseAction {
     public String getMyApp() {
         Integer userId = (Integer) super.session.get("userId");
         log.info("用户" + super.session.get("userName") + "查看已添加的APP");
-        // TODO 测试
-        userId = 33;
         appList = appService.getMyAppList(userId);
         return "toMyAppPage";
+    }
+
+    public String userAddApp() {
+        Integer userId = (Integer) super.session.get("userId");
+        log.info("用户" + super.session.get("userName") + "添加APP" + paramId);
+        resultInt = appService.userAddApp(userId, paramId);
+        return SUCCESS;
+    }
+
+    public String userRemoveApp() {
+        Integer userId = (Integer) super.session.get("userId");
+        log.info("用户" + super.session.get("userName") + "取消添加APP" + paramId);
+        resultInt = appService.userRemoveApp(userId, paramId);
+        return SUCCESS;
     }
 
     public List<App> getAppList() {
@@ -132,6 +149,14 @@ public class AppAction extends BaseAction {
 
     public void setScreenList(List<Screen> screenList) {
         this.screenList = screenList;
+    }
+
+    public Integer getResultInt() {
+        return resultInt;
+    }
+
+    public void setResultInt(Integer resultInt) {
+        this.resultInt = resultInt;
     }
 
 }

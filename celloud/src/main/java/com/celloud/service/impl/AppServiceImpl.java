@@ -21,8 +21,8 @@ public class AppServiceImpl implements AppService {
     private AppDao appDao;
 
     @Override
-    public List<App> getAppsByFormat(Integer formatId) {
-        return appDao.getAppsByFormat(formatId);
+    public List<App> getAppsByFormat(Integer formatId,Integer userId) {
+        return appDao.getAppsByFormat(formatId, userId);
     }
 
     @Override
@@ -47,8 +47,8 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public App getAppById(Integer id) {
-        return appDao.getAppById(id);
+    public App getAppById(Integer id, Integer userId) {
+        return appDao.getAppById(id, userId);
     }
 
     @Override

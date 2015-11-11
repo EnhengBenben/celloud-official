@@ -1970,7 +1970,7 @@ a:focus {
   text-overflow: ellipsis;
 }
 .info-box-text {
-  text-transform: uppercase;
+/*   text-transform: uppercase; */
 }
 .info-box-more {
   display: block;
@@ -4564,6 +4564,7 @@ fieldset[disabled] .btn-vk.active {
 .info-box-artic {font-size: 12px;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-line-clamp: 2;-webkit-box-orient: vertical;}
 
 /* appDetail*/
+.my-app-box{min-height: 130px;}
 .app-detail-form {
 	margin: 0
 }

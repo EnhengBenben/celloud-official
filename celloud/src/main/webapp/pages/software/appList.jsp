@@ -23,7 +23,7 @@
   <div class="col-md-4">
     <div class="info-box">
 	  <div class="info-box-icon">
-		<img src="<%=request.getContextPath()%>/images/app/${app.pictureName}">
+		<img style="width:100%	" src="<%=request.getContextPath()%>/images/app/${app.pictureName}">
 	  </div>
 	  <div class="info-box-content">
 	      <span class="info-box-text">${app.softwareName }</span>

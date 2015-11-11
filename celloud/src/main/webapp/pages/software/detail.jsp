@@ -40,7 +40,7 @@
 	</div>
 	<h3>简介</h3>
 	<p>
-		<s:property value="soft.intro" /><br/>
+		<s:property value="soft.intro" escape="false"/><br/>
 	</p>
 	<!-- HBV_Tree、Exome_SNV、HCV_Genotype、16S -->
 	<h3>截图</h3>

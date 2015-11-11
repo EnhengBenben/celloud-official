@@ -87,26 +87,8 @@
             <h4 class="modal-title">APP详情</h4>
           </div>
           <div class="modal-body row app-modal-body" id="modelAppDetail">
-            <div class="col-xs-12">
-	            <h5>已选数据(点击文件名称取消选择)</h5>
-	            <ul class="list-inline" id="addedDataUl"></ul>
-            </div>
-            <div class="col-xs-12">
-	            <h5>可选App(点击选中)</h5>
-	            <ul class="list-inline" id="appsForDataUl"></ul>
-            </div>
-            <div class="col-xs-12">
-	            <div class="alert alert-warning-cel alert-dismissable hide" id="runErrorDiv">
-	               <button type="button" class="close" onclick="okToRun(1)"><i class="fa fa-check"></i></button>
-	               <button type="button" class="close" onclick="okToRun(0)"><i class="fa fa-close"></i></button>
-	               <h5><i class="icon fa fa-warning"></i> <span id="runErrorTitle">Alert!</span></h5>
-	               <span id="runError"></span>
-	             </div>
-             </div>
           </div>
           <div class="modal-footer">
-<!--             <button type="button" class="btn btn-celloud-close btn-flat pull-left" data-dismiss="modal">关闭</button> -->
-<!--             <button type="button" class="btn btn-celloud-success btn-flat" onclick="toRunApp()" id="toRunApp" disabled="disabled">运行</button> -->
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
