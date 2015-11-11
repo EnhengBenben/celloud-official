@@ -32,16 +32,16 @@
 				<i class="i-tips"></i>
 					<s:if test="%{'true'.equals(resultMap.LDT)||'true'.equals(resultMap.LAM)||'true'.equals(resultMap.FTC)||'true'.equals(resultMap.ETV)}">
 						检测到
-						<s:if test="%{'true'.equals(resultMap.isLDT)}">
+						<s:if test="%{'true'.equals(resultMap.LDT)}">
 							替比夫定 LDT
 						</s:if>
-						<s:if test="%{'true'.equals(resultMap.isLAM)}">
+						<s:if test="%{'true'.equals(resultMap.LAM)}">
 							拉米夫定 LAM
 						</s:if>
-						<s:if test="%{'true'.equals(resultMap.isFTC)}">
+						<s:if test="%{'true'.equals(resultMap.FTC)}">
 							恩曲他滨 FTC
 						</s:if>
-						<s:if test="%{'true'.equals(resultMap.isETV)}">
+						<s:if test="%{'true'.equals(resultMap.ETV)}">
 							恩替卡韦 ETV
 						</s:if>
 						突变

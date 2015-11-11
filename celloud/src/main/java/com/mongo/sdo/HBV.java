@@ -26,7 +26,11 @@ public class HBV extends Base {
     /**
      * key : name.replace('.','_') eg : 原文件名：5_all.png 对应 key 为：5_all_png
      */
-    private Map<String, String> png;// 图片
+    private Map<String, String> known;//已知位点峰图
+    private Map<String, String> original;//原始峰图
+    private Map<String, String> other;//其它检测结果
+    private String imgString;//将其它检测结果排序后整合成字符串
+    private Map<String, String> out;//非上述三种图片的图片
     private Date uploadDate;// 提交时间
     private String fileName;// 文件名
 
@@ -94,14 +98,6 @@ public class HBV extends Base {
         this.reporttxt = reporttxt;
     }
 
-    public Map<String, String> getPng() {
-        return png;
-    }
-
-    public void setPng(Map<String, String> png) {
-        this.png = png;
-    }
-
     public Date getUploadDate() {
         return uploadDate;
     }
@@ -116,6 +112,46 @@ public class HBV extends Base {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public Map<String, String> getKnown() {
+        return known;
+    }
+
+    public void setKnown(Map<String, String> known) {
+        this.known = known;
+    }
+
+    public Map<String, String> getOriginal() {
+        return original;
+    }
+
+    public void setOriginal(Map<String, String> original) {
+        this.original = original;
+    }
+
+    public Map<String, String> getOther() {
+        return other;
+    }
+
+    public void setOther(Map<String, String> other) {
+        this.other = other;
+    }
+
+    public Map<String, String> getOut() {
+        return out;
+    }
+
+    public void setOut(Map<String, String> out) {
+        this.out = out;
+    }
+
+    public String getImgString() {
+        return imgString;
+    }
+
+    public void setImgString(String imgString) {
+        this.imgString = imgString;
     }
 
 }

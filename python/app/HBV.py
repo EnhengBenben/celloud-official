@@ -13,6 +13,7 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 from utils.FileUtils import *
 from HBV_PDF import *
+from mongo.mongoOperate import mongo
 
 class HBV:
 	path = None
@@ -122,7 +123,11 @@ class HBV:
 		#SVG
 		svgPath = os.path.join(path,'SVG')
 		if (os.path.exists(svgPath)):
-			png = {}
+			know = ['169.png','173.png','180.png','181.png','184.png','194.png','202.png','204.png','236.png','250.png','169.10.png','173.10.png','180.10.png','181.10.png','184.10.png','194.10.png','202.10.png','204.10.png','236.10.png','250.10.png']
+			known = {} # 已知位点峰图
+			original = {} # 原始峰图
+			other = {} # 其他位点峰图
+			out = {} # 除了以上三种外的其它图片
 			for x in os.listdir(svgPath):
 				if(x == 'Report.txt.seq.txt'):
 					seq = readAll(os.path.join(svgPath,x))
@@ -136,21 +141,47 @@ class HBV:
 				elif(x == 'Report.txt'):
 					reporttxt = readAllChinese(os.path.join(svgPath,x))
 					result['reporttxt'] = reporttxt
-				elif(x.endswith('.png')):
-					##此处处理所有png
-					png[x.replace('.','__')] = x
+				#以下处理所有png
+				elif(x.endswith('_all.png')):
+					original[x.replace('.','_')] = x
+				elif(x.endswith('_new.png')):
+					other[x.replace('.','_')] = x
+				elif(x in know):
+					known[x.replace('.','_')] = x
+				elif(x.endswith('png')):
+					out[x.replace('.','_')] = x
 					
-			result['png'] = png
+			result['known'] = known
+			result['original'] = original
+			result['other'] = other
+			result['out'] = out
 		return result
 if __name__ == '__main__':
 	hbv = HBV.getInstance()
-	re = hbv.getResult('/Users/lin/9/82/20151029437617','HBV','a.ab1',None)
+	re = hbv.getResult('/Users/lin/23/82/20150902235788','HBV','a.ab1',None)
+	mo = mongo.getInstance()
+	objId = mo.put(re,'HBV')
+	print objId
 	print re['site']
-	print re['png']
+	print '----'
+	print re['known']
+	print '----'
+	print re['original']
+	print '----'
+	print re['other']
+	print '----'
+	print re['out']
+	print '----'
 	print re['pdf']
+	print '----'
 	print re['clinical']
+	print '----'
 	print re['seq']
+	print '----'
 	print re['type']
+	print '----'
 	print re['txt204']
+	print '----'
 	print re['reporttxt']
+	print '----'
 	print re['zip']
