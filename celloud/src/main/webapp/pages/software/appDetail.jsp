@@ -11,7 +11,7 @@
 				<h3 class="app-detail-name">${app.softwareName }</h3>
 				<p class="app-detail-author">
 					提供者&nbsp;:&nbsp;<span class="time">${app.companyName }</span>&nbsp;
-					上线 &nbsp;:&nbsp;<span class="time">${app.createDate }</span>&nbsp; 	分类&nbsp;:&nbsp;
+					上线时间 &nbsp;:&nbsp;<span class="time">${app.createDate }</span>&nbsp; 	分类&nbsp;:&nbsp;
 					<span class="time">${app.classifyNames}</span>
 				</p>
 			</div>

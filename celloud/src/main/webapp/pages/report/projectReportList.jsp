@@ -70,7 +70,7 @@
                         </s:if>
                         <s:else>
                             <div class="operate">
-                            	<s:if test="#report.software_id>84&&#report.software_id!=89&&#report.software_id!=90&&#report.software_id!=105&&#report.software_id!=106&&#report.software_id!=107&&#report.software_id!=108&&#report.software_id!=109&&#report.software_id!=110">
+                            	<s:if test="#report.software_id>84&&#report.software_id!=89&&#report.software_id!=90&&#report.software_id!=105&&#report.software_id!=106&&#report.software_id!=107&&#report.software_id!=108&&#report.software_id!=109&&#report.software_id!=110&&#report.software_id!=111&&#report.software_id!=112&&#report.software_id!=113&&#report.software_id!=114">
                                 	<a class="pdfdown" title="PDF下载" onclick="downPDF(<s:property value="#report.user_id"/>,<s:property value="#report.software_id"/>,<s:property value="#report.project_id"/>)" href="javascript:void(0)"></a>
                             	</s:if>
                                 <s:if test="%{#report.share==0}">

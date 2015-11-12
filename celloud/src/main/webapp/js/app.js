@@ -5,8 +5,8 @@ function initApp(){
 	getAppClassify(classifyPid);
 }
 function getAppClassify(pid){
-	$("#toAllApp").removeClass("bg-green-active");
-	$("#toMyApp").addClass("bg-green-active");
+	$("#toAllApp").addClass("bg-green-active");
+	$("#toMyApp").removeClass("bg-green-active");
 	classifyPid = pid;
 	$.get("app3!getAppClassify",{"conditionInt":pid},function(responseText){
 		$("#appClassify").html(responseText);
@@ -36,8 +36,8 @@ function getAppList(pid,isparent){
 	});
 }
 function toMyAppList(){
-	$("#toMyApp").removeClass("bg-green-active");
-	$("#toAllApp").addClass("bg-green-active");
+	$("#toMyApp").addClass("bg-green-active");
+	$("#toAllApp").removeClass("bg-green-active");
 	getMyApp();
 }
 function getMyApp(){
@@ -58,7 +58,7 @@ function addApp(id){
 			$("#toAddApp").attr("onclick","removeApp("+id+")");
 			$("#toAddApp").html("<i class=\"fa fa-minus\"></i>&nbsp;取消添加");
 			$("#toAddApp").removeClass("btn-celloud-success").addClass("btn-celloud-close");
-			if(!$("#toMyApp").hasClass("bg-green-active")){
+			if($("#toMyApp").hasClass("bg-green-active")){
 				getMyApp();
 			}
 		}
@@ -67,7 +67,7 @@ function addApp(id){
 function removeApp(id){
 	$.get("app3!userRemoveApp",{"paramId":id},function(resultInt){
 		if(resultInt>0){
-			if(!$("#toMyApp").hasClass("bg-green-active")){
+			if($("#toMyApp").hasClass("bg-green-active")){
 				$("#appDetailModel").modal('hide');
 				getMyApp();
 			}else{
