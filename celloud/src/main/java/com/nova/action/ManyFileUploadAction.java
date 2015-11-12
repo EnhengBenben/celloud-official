@@ -21,6 +21,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
 import com.google.inject.Inject;
+import com.nova.constants.FileFormat;
 import com.nova.dao.IUploadDao;
 import com.nova.sdo.Client;
 import com.nova.sdo.Data;
@@ -32,6 +33,7 @@ import com.nova.service.ISoftwareService;
 import com.nova.utils.CheckFileTypeUtil;
 import com.nova.utils.DataUtil;
 import com.nova.utils.FileTools;
+import com.nova.utils.PerlUtils;
 import com.nova.utils.PropertiesUtil;
 
 /**
@@ -444,23 +446,25 @@ public class ManyFileUploadAction extends BaseAction {
         data.setPath(filePath);
         int fileFormat = checkFileType.checkFileType(newName);
         data.setFileFormat(fileFormat);
-        // if (fileFormat == FileFormat.BAM) {
-        // StringBuffer command = new StringBuffer();
-        // String outPath = ServletActionContext.getServletContext()
-        // .getRealPath("/temp") + "/" + fileDataKey;
-        // String perlPath = ServletActionContext.getServletContext()
-        // .getRealPath("/plugins") + "/getAliases.pl";
-        // command.append("perl ").append(perlPath).append(" ")
-        // .append(filePath).append(" ").append(outPath);
-        // PerlUtils.excutePerl(command.toString());
-        // String anothername = FileTools.getFirstLine(outPath);
-        // anothername = anothername.replace(" ", "_").replace("\t", "_");
-        // String regEx1 = "[^\\w+$]";
-        // Pattern p1 = Pattern.compile(regEx1);
-        // Matcher m1 = p1.matcher(anothername);
-        // data.setAnotherName(m1.replaceAll("").trim());
-        // new File(outPath).delete();
-        // }
+        if (fileFormat == FileFormat.BAM) {
+            StringBuffer command = new StringBuffer();
+            String outPath = ServletActionContext.getServletContext()
+                    .getRealPath("/temp") + "/" + fileDataKey;
+            String perlPath = ServletActionContext.getServletContext()
+                    .getRealPath("/plugins") + "/getAliases.pl";
+            command.append("perl ").append(perlPath).append(" ")
+                    .append(filePath).append(" ").append(outPath);
+            PerlUtils.excutePerl(command.toString());
+            String anothername = FileTools.getFirstLine(outPath);
+            if(anothername!=null){
+                anothername = anothername.replace(" ", "_").replace("\t", "_");
+                String regEx1 = "[^\\w+$]";
+                Pattern p1 = Pattern.compile(regEx1);
+                Matcher m1 = p1.matcher(anothername);
+                data.setAnotherName(m1.replaceAll("").trim());
+                new File(outPath).delete();
+            }
+        }
         return dataService.addDataInfo(data);
     }
 
