@@ -410,44 +410,69 @@ public class ReadReportServiceImpl {
 	 * @return
 	 */
 	public Map<String, String> KRASDataReport(String path) {
-		Map<String, String> resultMap = new HashMap<String, String>();
-		resultMap.put("listAll1", "1_all.png");
-		resultMap.put("listAll2", "2_all.png");
-		resultMap.put("listAll3", "3_all.png");
-		resultMap.put("listAll4", "4_all.png");
-		resultMap.put("listAll5", "5_all.png");
-		String result = null;
-		if (new File(path + "/report.txt").exists()) {
-			String first = FileTools.getFirstLine(path + "/report.txt");
-			String r = first == null ? "0" : first.replace(
-					"KRAS exon number is ", "");
-			resultMap.put("length", r);
-			try {
-				result = FileUtils.readFileToString(new File(path
-						+ "/report.txt"), "GBK");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		if (result != null) {
-			String context[] = result.split("\n");
-			StringBuffer sb = new StringBuffer("<table>");
-			for (String st : context) {
-				sb.append("<tr><td>" + st + "</td></tr>");
-			}
-			sb.append("</table>");
-			resultMap.put("result", sb.toString());
-		}
-		resultMap.put("outPath", PropertiesUtils.outProject + "/upload");
-		if (new File(path + "/SVG/Report.txt.seq.txt").exists()) {
-			try {
-				String seq = FileUtils.readFileToString(new File(path
-						+ "/SVG/Report.txt.seq.txt"));
-				resultMap.put("seq", seq);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+	    Map<String, String> resultMap = new HashMap<String, String>();
+        // 先处理根目录下的文件
+        String wz1 = path + "/report.txt.wz.1";
+        if (new File(wz1).exists()) {
+            resultMap.put("wz1", FileTools.readAppoint(wz1));
+        }
+        String wz2 = path + "/report.txt.wz.2";
+        if (new File(wz2).exists()) {
+            resultMap.put("wz2", FileTools.readAppoint(wz2));
+        }
+        String report = path + "/report.txt.Report";
+        if (new File(report).exists()) {
+            resultMap.put("report", FileTools.readAppoint(report));
+        }
+        // 再处理SVG目录下的文件
+        // 五张原始峰图
+        path = path + "/SVG";
+        String number[] = { "1", "2", "3", "4", "5" };
+        for (String num : number) {
+            resultMap.put("listAll" + num,
+                    FileTools.fileExist(path, num + "_all.png", "endsWith"));
+        }
+        // 已知位点图
+        String know[] = { "719.10.png", "768.10.png", "790.10.png",
+                "858.10.png", "861.10.png", "Indel.30.png" };
+        boolean isno = false;
+        for (String k : know) {
+            if (new File(path + "/" + k).exists()) {
+                isno = true;
+                resultMap.put("know", k);
+            }
+        }
+        if(!isno){
+            resultMap.put("know", "");
+        }
+        // 未知位点图
+        String all[] = { "1_all.png", "2_all.png", "3_all.png", "4_all.png",
+                "5_all.png", "719.png", "768.png", "790.png", "858.png",
+                "861.png" };
+        String both[] = (String[]) ArrayUtils.addAll(all, know);
+        List<String> out = Arrays.asList(both);
+        List<String> unknow = FileTools.fileSearch(path, ".png", "endWith");
+        List<String> unResult = new ArrayList<>();
+        for (String un : unknow) {
+            if (!out.contains(un) && !un.endsWith(".10.png")) {
+                unResult.add(un);
+            }
+        }
+        String u = unResult.toString();
+        resultMap.put("unknow", u.substring(1, u.length()-1));
+
+        // 原始序列
+        if (new File(path + "/Report.txt.seq.txt").exists()) {
+            try {
+                String seq = FileUtils.readFileToString(new File(path
+                        + "/Report.txt.seq.txt"));
+                resultMap.put("seq", seq);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        // 外网路径
+        resultMap.put("outPath", PropertiesUtils.outProject + "/upload");
 		return resultMap;
 	}
 
