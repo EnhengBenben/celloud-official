@@ -150,7 +150,7 @@ public class AppDaoImpl extends BaseDao implements AppDao {
         try {
             conn = ConnectManager.getConnection();
             if (pid == 0) {
-                sql = "select s.software_id,s.software_name,s.picture_name,s.intro,s.description,s.create_date from tb_software s left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_classify c on c.classify_id=sc.classify_id where (c.classify_pid=? or c.classify_id=?) and s.off_line=? and ((s.company_id=? and s.attribute=?) or s.attribute=?) order by sc.classify_id;";
+                sql = "select s.software_id,s.software_name,s.picture_name,s.intro,s.description,s.create_date from tb_software s left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_classify c on c.classify_id=sc.classify_id where (c.classify_pid=? or c.classify_id=?) and s.off_line=? and ((s.company_id=? and s.attribute=?) or s.attribute=?) group by s.software_id order by sc.classify_id;";
                 ps = conn.prepareStatement(sql);
                 ps.setInt(1, classifyId);
                 ps.setInt(2, classifyId);
