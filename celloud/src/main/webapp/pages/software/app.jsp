@@ -29,45 +29,18 @@
         <section class="content">
           <div class="row">
              <div class="col-xs-12">
-              <div class="app-box box-success color-palette-bo">
-                <div class="app-box-body bg-green">
-                  <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                      <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                      <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
-                      <li data-target="#carousel-example-generic" data-slide-to="2" class=""></li>
-                    </ol>
-                    <div class="carousel-inner">
-                      <div class="item active">
-                        <img style="height:200px;width:100%	" src="http://placehold.it/900x500/00a65a/text=I+Love+Bootstrap" alt="First slide">
-                        <div class="carousel-caption">
-                          First Slide
-                        </div>
-                      </div>
-                      <div class="item">
-                        <img style="height:200px;width:100%	" src="http://placehold.it/900x500/00a65a/ffffff&text=I+Love+Bootstrap" alt="Second slide">
-                        <div class="carousel-caption">
-                          Second Slide
-                        </div>
-                      </div>
-                      <div class="item">
-                        <img style="height:200px;width:100%	" src="http://placehold.it/900x500/00a65a/ffffff&text=I+Love+Bootstrap" alt="Third slide">
-                        <div class="carousel-caption">
-                          Third Slide
-                        </div>
-                      </div>
-                    </div>
-                    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                      <span class="fa fa-angle-left"></span>
-                    </a>
-                    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                      <span class="fa fa-angle-right"></span>
-                    </a>
-                  </div>
-                  <button class="btn btn-flat" id="toAllApp" onclick="getAppClassify(1)">全部APP</button>
-	              <button class="btn bg-green-active btn-flat" id="toMyApp" onclick="toMyAppList()">已添加APP</button>
-                </div><!-- /.box-body -->
-              </div>
+               <div class="box box-success color-palette-bo">
+		          <div class="box-body bg-green" style="padding-left:30px;padding-bottom: 0px;">
+		            <h3 style="font-family:黑体;color:#FFFFFF">
+		            	应用市场
+		            </h3>
+		            <p style="font-family:黑体;color:#FFFFFF">这里有所有您需要的APP，可以添加运行文件的，也有可以直接运行数据的小软件。
+		            	<span class="text-yellow" style="font-size:14px;margin-left:10px">默认按照APP分析功能分类，可以根据您的需要选择</span>
+		            </p>
+		            <button class="btn btn-success btn-flat bg-green-active" style="width:150px;height:70px;margin-right:0px" id="toAllApp" onclick="getAppClassify(1)">全部APP</button>
+	                <button class="btn btn-success btn-flat" style="width:150px;height:70px;margin-right:0px" id="toMyApp" onclick="toMyAppList()">已添加APP</button>
+		          </div>
+		      </div>
               <div style="padding-bottom:20px;" id="appClassify">
               </div>
               <div id="appDetail" class="row">
@@ -100,7 +73,7 @@
     <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
     <script src="<%=request.getContextPath() %>/dist/js/celloud.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/plugins/spin.min.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/js/app.js" type="text/javascript"></script>
+    <script src="<%=request.getContextPath()%>/js/app.js?version=1.0" type="text/javascript"></script>
 	<!-- spin:loading效果 end-->
 	<script type="text/javascript">
 		var session_userId = <%=session.getAttribute("userId")%>;

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!--[if lt IE 6]>
 .info-box-artic{
     position:relative;
@@ -27,7 +28,9 @@
 	  </div>
 	  <div class="info-box-content">
 	      <span class="info-box-text">${app.softwareName }</span>
-	      <p class="info-box-artic">${app.intro }</p>
+	      <p class="info-box-artic">
+	      	<c:choose><c:when test="${fn:length(app.intro)>30 }"><c:out value="${fn:substring(app.intro, 0, 30) }"/>...</c:when><c:otherwise>${app.intro }</c:otherwise></c:choose>
+	      </p>
 	      <a class="a-green-normal" style="position:absolute;bottom:20px;" href="javascript:void()" onclick="toAppDetail(${app.softwareId})">查看APP详细</a>
 	  </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
