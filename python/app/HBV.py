@@ -5,7 +5,7 @@
 __des__ = 'HBV的操作类'
 __author__ = 'lin'
 
-import os
+import os,shutil
 import codecs
 import threading
 import sys
@@ -13,6 +13,7 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 from utils.FileUtils import *
 from HBV_PDF import *
+from HBV_html import *
 from mongo.mongoOperate import mongo
 
 class HBV:
@@ -116,10 +117,6 @@ class HBV:
 		pdf = os.path.join(path,'HBV_SNP.pdf')
 		if(os.path.exists(pdf)):
 			result['pdf'] = 'HBV_SNP.pdf'
-		#zip
-		zip = os.path.join(path,'HBV_SNP.zip')
-		if(os.path.exists(zip)):
-			result['zip'] = 'HBV_SNP.zip'
 		#SVG
 		svgPath = os.path.join(path,'SVG')
 		if (os.path.exists(svgPath)):
@@ -150,38 +147,24 @@ class HBV:
 					known[x.replace('.','_')] = x
 				elif(x.endswith('png')):
 					out[x.replace('.','_')] = x
-					
 			result['known'] = known
 			result['original'] = original
 			result['other'] = other
 			result['out'] = out
+		#zip
+		zip = os.path.join(path,'HBV_SNP.zip')
+		if(os.path.exists(zip)):
+			os.remove(zip)
+		zipFolder = os.path.join(path,'HBV_SNP')
+		if(os.path.exists(zipFolder)):
+			shutil.rmtree(zipFolder)
+		createHTML(path,fileName,result['type'],result['other'],result['reporttxt'])
+		if(os.path.exists(zip)):
+			result['zip'] = 'HBV_SNP.zip'
 		return result
 if __name__ == '__main__':
 	hbv = HBV.getInstance()
-	re = hbv.getResult('/Users/lin/23/82/20150902235788','HBV','a.ab1',None)
-	mo = mongo.getInstance()
-	objId = mo.put(re,'HBV')
-	print objId
-	print re['site']
-	print '----'
-	print re['known']
-	print '----'
-	print re['original']
-	print '----'
-	print re['other']
-	print '----'
-	print re['out']
-	print '----'
-	print re['pdf']
-	print '----'
-	print re['clinical']
-	print '----'
-	print re['seq']
-	print '----'
-	print re['type']
-	print '----'
-	print re['txt204']
-	print '----'
-	print re['reporttxt']
-	print '----'
-	print re['zip']
+	re = hbv.getResult('/Users/lin/23/82/1','HBV','a.ab1',None)
+	#mo = mongo.getInstance()
+	#objId = mo.put(re,'HBV')
+	#createHTML('/Users/lin/23/82/1','aaaa.ab1',re['type'],re['other'],re['reporttxt'])
