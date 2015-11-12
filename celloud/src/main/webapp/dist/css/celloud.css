@@ -4694,7 +4694,9 @@ fieldset[disabled] .btn-vk.active {
 }
 
 .app-detail-desp pre {
-	margin-bottom: 0
+	margin-bottom: 0;
+	white-space: pre-wrap;
+	word-wrap: break-word;
 }
 
 .app-detail-others {
