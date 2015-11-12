@@ -75,12 +75,10 @@
 		  <div class="app-detail-misc">
 		    <div class="app-detail-desp">
 				<p class="app-detail-desp-long">
-					<pre>【简介】
-					${app.intro }</pre>
+					<pre>【简介】${app.intro }</pre>
 				</p>
 				<p class="app-detail-desp-long">
-					【详细】	
-				${app.appDoc }
+					【详细】${app.appDoc }
 				</p>
 			</div>
 		  </div>
