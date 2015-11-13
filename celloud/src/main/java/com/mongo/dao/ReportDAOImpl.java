@@ -181,15 +181,16 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
     }
 
     @Override
-    public HBV getHBVReport(String dataKey, Integer proId, Integer appId) {
-        return ds.createQuery(HBV.class).filter("dataKey", dataKey)
-                .filter("projectId", proId).filter("appId", appId).get();
-    }
-
-    @Override
     public List<HBV> getHBVList(Integer userId) {
         return this.ds.createQuery(HBV.class).filter("userId", userId)
                 .order("-uploadDate").asList();
+    }
+
+    @Override
+    public <T> T getDataReport(Class<T> T, String dataKey, Integer proId,
+            Integer appId) {
+        return ds.createQuery(T).filter("dataKey", dataKey)
+                .filter("projectId", proId).filter("appId", appId).get();
     }
 
 }

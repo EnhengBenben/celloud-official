@@ -8,3 +8,5 @@ __author__='lin'
 class PDFPro:
 	logo='/share/data/webapps/Tools/resource/img/portrait.png'
 	ttc='/share/biosoft/perl/PGS_MG/python/app/ttc'
+	html='/home/celloud/server/apache-tomcat-7.0.56/webapps/celloud/HBV_SNP'
+	

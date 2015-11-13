@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.celloud.dao.AppDao;
-import com.celloud.sdo.Classify;
 import com.celloud.sdo.App;
+import com.celloud.sdo.Classify;
+import com.celloud.sdo.Screen;
 import com.celloud.service.AppService;
 import com.google.inject.Inject;
 
@@ -20,8 +21,8 @@ public class AppServiceImpl implements AppService {
     private AppDao appDao;
 
     @Override
-    public List<App> getAppsByFormat(Integer formatId) {
-        return appDao.getAppsByFormat(formatId);
+    public List<App> getAppsByFormat(Integer formatId,Integer userId) {
+        return appDao.getAppsByFormat(formatId, userId);
     }
 
     @Override
@@ -40,8 +41,34 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public List<App> getAppByClassify(Integer classifyId, Integer companyId) {
-        return appDao.getAppByClassify(classifyId, companyId);
+    public List<App> getAppByClassify(Integer classifyId, Integer pid,
+            Integer companyId) {
+        return appDao.getAppByClassify(classifyId, pid, companyId);
+    }
+
+    @Override
+    public App getAppById(Integer id, Integer userId) {
+        return appDao.getAppById(id, userId);
+    }
+
+    @Override
+    public List<App> getMyAppList(Integer userId) {
+        return appDao.getMyAppList(userId);
+    }
+
+    @Override
+    public List<Screen> getScreenByAppId(Integer id) {
+        return appDao.getScreenByAppId(id);
+    }
+
+    @Override
+    public Integer userAddApp(Integer userId, Integer appId) {
+        return appDao.userAddApp(userId, appId);
+    }
+
+    @Override
+    public Integer userRemoveApp(Integer userId, Integer appId) {
+        return appDao.userRemoveApp(userId, appId);
     }
 
 }

@@ -456,12 +456,14 @@ public class ManyFileUploadAction extends BaseAction {
                     .append(filePath).append(" ").append(outPath);
             PerlUtils.excutePerl(command.toString());
             String anothername = FileTools.getFirstLine(outPath);
-            anothername = anothername.replace(" ", "_").replace("\t", "_");
-            String regEx1 = "[^\\w+$]";
-            Pattern p1 = Pattern.compile(regEx1);
-            Matcher m1 = p1.matcher(anothername);
-            data.setAnotherName(m1.replaceAll("").trim());
-            new File(outPath).delete();
+            if(anothername!=null){
+                anothername = anothername.replace(" ", "_").replace("\t", "_");
+                String regEx1 = "[^\\w+$]";
+                Pattern p1 = Pattern.compile(regEx1);
+                Matcher m1 = p1.matcher(anothername);
+                data.setAnotherName(m1.replaceAll("").trim());
+                new File(outPath).delete();
+            }
         }
         return dataService.addDataInfo(data);
     }

@@ -10,6 +10,9 @@
 			${data.fileName}&nbsp;&nbsp;&nbsp;
 		</c:forEach>
 		</span>
+		<div class="toolbar">
+			<a href="javascript:printMIB(${mib.projectId },${mib.dataKey },${mib.userId },${mib.appId })" class="btn btn-default"><i class="i-print"></i>打印报告</a>
+		</div>
 	</div>
 	<div>
 		<!--报告图示一-->

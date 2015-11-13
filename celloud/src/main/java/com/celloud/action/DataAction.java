@@ -18,7 +18,6 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-import org.bson.types.ObjectId;
 
 import com.alibaba.fastjson.JSONObject;
 import com.celloud.sdo.App;
@@ -36,9 +35,7 @@ import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
 import com.celloud.service.UserService;
 import com.google.inject.Inject;
-import com.mongo.sdo.Split;
 import com.nova.action.BaseAction;
-import com.nova.constants.DataUpload;
 import com.nova.constants.FileFormat;
 import com.nova.constants.Mod;
 import com.nova.constants.SparkPro;
@@ -94,8 +91,6 @@ public class DataAction extends BaseAction {
     @Inject
     private IDataService idataService;
     @Inject
-    private com.mongo.service.ReportService mReportService;
-    @Inject
     private TaskService taskService;
     private PageList<Data> dataPageList;
     private List<Integer> intList;
@@ -121,7 +116,7 @@ public class DataAction extends BaseAction {
     private static String sparkuserName = null;
 
     // TODO 需要投递到spark集群的app
-    private static final List<String> apps = Arrays.asList("92");
+    private static final List<String> apps = Arrays.asList("86","92","93","99","100","101");
     // 初始化perl命令路径
     private static Map<Long, App> appMap = null;
     static {
@@ -509,7 +504,6 @@ public class DataAction extends BaseAction {
      * @return
      */
     public String saveSplitReportData() {
-        userId = (Integer) super.session.get("userId");
         String inPath = PropertiesUtil.reportPath + condition;
         String outPath = PropertiesUtil.fileFinal;
         List<String> dataKeyList = getRadomDataKey(conditionInt);
@@ -520,11 +514,11 @@ public class DataAction extends BaseAction {
         String dataKey = "";
         conditionInt = 0;
         result = "";
-        Split split = new Split();
-        split.setId(new ObjectId(dataIds));
-        split.setUpload(DataUpload.DOING);
-        split.setSplitDataIds(result);
-        mReportService.editSplit(split);
+        // Split split = new Split();
+        // split.setId(new ObjectId(dataIds));
+        // split.setUpload(DataUpload.DOING);
+        // split.setSplitDataIds(result);
+        // mReportService.editSplit(split);
         while (rFile.hasNext()) {
             String fstr = rFile.next();
             if (!fstr.equals("...tar.gz") && !fstr.equals("..tar.gz")) {
@@ -540,7 +534,7 @@ public class DataAction extends BaseAction {
                     data.setUserId(userId);
                     data.setFileName(fstr);
                     data.setDataKey(dataKey);
-                    data.setAnotherName("来自APP:split");
+                    data.setAnotherName("split:" + dataIds);
                     data.setSize(size);
                     data.setPath(filePath);
                     data.setFileFormat(FileFormat.FQ);
@@ -549,9 +543,9 @@ public class DataAction extends BaseAction {
                 num++;
             }
         }
-        split.setUpload(DataUpload.DONE);
-        split.setSplitDataIds(result);
-        mReportService.editSplit(split);
+        // split.setUpload(DataUpload.DONE);
+        // split.setSplitDataIds(result);
+        // mReportService.editSplit(split);
         return "info";
     }
 

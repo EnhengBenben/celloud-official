@@ -60,6 +60,8 @@ def createPDF(path,appName,fileName,anotherName):
 	total.append(Spacer(1, 5))
 
 	# anotherName
+	if anotherName == None:
+		anotherName = ''
 	t1 = '<font size=10 name="hei">sample_name:</font><font size=8 name="hei">'+anotherName+'</font>'
 	total.append(Paragraph(t1, styleTitle))
 	total.append(Spacer(1, 5))

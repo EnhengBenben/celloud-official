@@ -48,17 +48,20 @@ public class App implements Serializable {
     private Integer attribute;
     /** 支持数据类型 */
     private List<DataFormat> dataFormat;
+    /** 执行命令 */
     private String command;
     /** APP的所属分类 */
     private Classify classify;
-    /**
-     * 运行完成后需要调用的方法名称
-     */
+    /** 运行完成后需要调用的方法名称 */
     private String method;
-    /**
-     * 项目报告title
-     */
+    /** 项目报告title */
     private String title;
+    /** 所属分类名称 */
+    private String classifyNames;
+    private String companyName;
+    private String formatDesc;
+    /** 是否已被用户添加 =0——>未添加 >0——>已添加 */
+    private Integer isAdded;
 
     public String getCommand() {
         return command;
@@ -212,20 +215,52 @@ public class App implements Serializable {
         this.dataFormat = dataFormat;
     }
 
-	public String getMethod() {
-		return method;
-	}
+    public String getMethod() {
+        return method;
+    }
 
-	public void setMethod(String method) {
-		this.method = method;
-	}
+    public void setMethod(String method) {
+        this.method = method;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getFormatDesc() {
+        return formatDesc;
+    }
+
+    public void setFormatDesc(String formatDesc) {
+        this.formatDesc = formatDesc;
+    }
+
+    public String getClassifyNames() {
+        return classifyNames;
+    }
+
+    public void setClassifyNames(String classifyNames) {
+        this.classifyNames = classifyNames;
+    }
+
+    public Integer getIsAdded() {
+        return isAdded;
+    }
+
+    public void setIsAdded(Integer isAdded) {
+        this.isAdded = isAdded;
+    }
 
 }

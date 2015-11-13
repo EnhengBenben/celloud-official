@@ -144,20 +144,21 @@ public interface ReportService {
     public MIB getMIB(String dataKey, Integer proId, Integer appId);
 
     /**
-     * 获取HBV报告内容
-     * 
-     * @param dataKey
-     * @param proId
-     * @param appId
-     * @return
-     */
-    public HBV getHBVReport(String dataKey, Integer proId, Integer appId);
-
-    /**
      * 获取HBV统计报告内容
      * 
      * @param userId
      * @return
      */
     public List<HBV> getHBVList(Integer userId);
+
+    /**
+     * 从mongodb中查询数据报告的通用方法
+     * 
+     * @param dataKey
+     * @param proId
+     * @param appId
+     * @return
+     */
+    public <T> T getDataReport(Class<T> T, String dataKey, Integer proId,
+            Integer appId);
 }

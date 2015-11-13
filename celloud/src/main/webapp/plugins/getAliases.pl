@@ -1,4 +1,8 @@
+use File::Basename;
+
 if (@ARGV!=2) {die"Usage: *.pl <bam> <out>\n";exit;}
+$dirname=dirname $ARGV[1];
+system "mkdir -p $dirname";
 open in,"samtools view -H $ARGV[0]|less -S |";
 open out,">$ARGV[1]";
 while (<in>) {

@@ -57,7 +57,7 @@
 					width="48" height="48" /><em class="new"></em>
 			</div>
 			<div class="leftApp" _appId="yysc" _appName="应用市场"
-				_appImg="images/content/diskexplorer.png" _iframeSrc="pages/software/software.jsp">
+				_appImg="images/content/diskexplorer.png" _iframeSrc="pages/software/app.jsp">
 				<img src="images/content/diskexplorer.png" alt="应用市场" title="应用市场"
 					width="48" height="48" />
 			</div> 

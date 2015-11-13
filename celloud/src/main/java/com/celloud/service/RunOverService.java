@@ -107,10 +107,6 @@ public class RunOverService {
 		// 2. 遍历数据列表
 		for (Data data : proDataList) {
 			String finalPath = appPath + data.getDataKey();
-			// 3. 每个数据生成一份zip
-			HBV_SNP.createHtml(finalPath, data.getFileName(),
-					appPath.split("upload")[0] + "resource/html/HBV_SNP");
-
 			String result = FileTools.readAppoint(finalPath + "/SVG/type.txt");
 			result = result.replace("Type: ", "");
 			result = result.replace(" <br />", "");

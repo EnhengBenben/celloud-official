@@ -689,10 +689,10 @@ $.ajaxSetup ({
 				$.get("pgsReport!toPgsReport",{"pgs.projectId":proId,"pgs.dataKey":dataKey,"pgs.appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
-//			}else if(softwareId == 95){
-//				$.get("niptReport!toNIPTReport",{"nipt.projectId":proId,"nipt.dataKey":dataKey,"nipt.appId":softwareId},function(responseText){
-//					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-//				});
+			}else if(softwareId == 82){
+				$.get("report3!getHBVReport",{"proId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
+					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+				});
 			}else{
 				$.get("data!getDataByKey",{"dataKey":dataKey},function(data){
 					var anotherName = data.anotherName;
@@ -1433,7 +1433,6 @@ function printCMP(projectId,dataKey,userId,appId){
 		obj.document.close();
 	});
 }
-
 function printSimpCMP(projectId,dataKey,userId,appId){
 	$.get("cmpReport!toPrintSimpleCmp",{"cmpReport.projectId":projectId,"cmpReport.dataKey":dataKey,"cmpReport.userId":userId,"cmpReport.appId":appId},function(responseText){
 		var obj = window.open("");
@@ -1448,18 +1447,10 @@ function printGDD(projectId,dataKey,userId,appId){
 		obj.document.close();
 	});
 }
-//将报告运行出来的数据保存到数据列表
-function saveReportData(resourcePath,num,dataKey){
-	$("#toSaveDataA"+dataKey).html("（正在上传到数据管理...）");
-	$.get("data3!saveSplitReportData",{"condition":resourcePath,"conditionInt":num,"dataIds":$("#splitId").val()},function(result){
-		if(result.length>0){
-			$("#toSaveDataA"+dataKey).html("<a class='link' href='javascript:void()' onclick='toRunData('"+result+"')'>（已上传到数据管理）</a>");
-		}
-	})
-}
-
-function toRunData(ids){
-	window.parent.document.getElementById("toFileData").click();
-	var idsArr = ids.split(",");
-	window.parent.globalDataIds = idsArr[0,idsArr.length-1];
+function printMIB(projectId,dataKey,userId,appId){
+	$.get("splitReport!toPrintMib",{"mib.projectId":projectId,"mib.dataKey":dataKey,"mib.userId":userId,"mib.appId":appId},function(responseText){
+		var obj = window.open("");
+		obj.document.write(responseText);
+		obj.document.close();
+	});
 }

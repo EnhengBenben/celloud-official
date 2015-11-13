@@ -5,7 +5,7 @@
 __des__ = 'HBV的操作类'
 __author__ = 'lin'
 
-import os
+import os,shutil
 import codecs
 import threading
 import sys
@@ -13,6 +13,8 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 from utils.FileUtils import *
 from HBV_PDF import *
+from HBV_html import *
+from mongo.mongoOperate import mongo
 
 class HBV:
 	path = None
@@ -115,14 +117,14 @@ class HBV:
 		pdf = os.path.join(path,'HBV_SNP.pdf')
 		if(os.path.exists(pdf)):
 			result['pdf'] = 'HBV_SNP.pdf'
-		#zip
-		zip = os.path.join(path,'HBV_SNP.zip')
-		if(os.path.exists(zip)):
-			result['zip'] = 'HBV_SNP.zip'
 		#SVG
 		svgPath = os.path.join(path,'SVG')
 		if (os.path.exists(svgPath)):
-			png = {}
+			know = ['169.png','173.png','180.png','181.png','184.png','194.png','202.png','204.png','236.png','250.png','169.10.png','173.10.png','180.10.png','181.10.png','184.10.png','194.10.png','202.10.png','204.10.png','236.10.png','250.10.png']
+			known = {} # 已知位点峰图
+			original = {} # 原始峰图
+			other = {} # 其他位点峰图
+			out = {} # 除了以上三种外的其它图片
 			for x in os.listdir(svgPath):
 				if(x == 'Report.txt.seq.txt'):
 					seq = readAll(os.path.join(svgPath,x))
@@ -136,21 +138,33 @@ class HBV:
 				elif(x == 'Report.txt'):
 					reporttxt = readAllChinese(os.path.join(svgPath,x))
 					result['reporttxt'] = reporttxt
-				elif(x.endswith('.png')):
-					##此处处理所有png
-					png[x.replace('.','__')] = x
-					
-			result['png'] = png
+				#以下处理所有png
+				elif(x.endswith('_all.png')):
+					original[x.replace('.','_')] = x
+				elif(x.endswith('_new.png')):
+					other[x.replace('.','_')] = x
+				elif(x in know):
+					known[x.replace('.','_')] = x
+				elif(x.endswith('png')):
+					out[x.replace('.','_')] = x
+			result['known'] = known
+			result['original'] = original
+			result['other'] = other
+			result['out'] = out
+		#zip
+		zip = os.path.join(path,'HBV_SNP.zip')
+		if(os.path.exists(zip)):
+			os.remove(zip)
+		zipFolder = os.path.join(path,'HBV_SNP')
+		if(os.path.exists(zipFolder)):
+			shutil.rmtree(zipFolder)
+		createHTML(path,fileName,result['type'],result['other'],result['reporttxt'])
+		if(os.path.exists(zip)):
+			result['zip'] = 'HBV_SNP.zip'
 		return result
 if __name__ == '__main__':
 	hbv = HBV.getInstance()
-	re = hbv.getResult('/Users/lin/9/82/20151029437617','HBV','a.ab1',None)
-	print re['site']
-	print re['png']
-	print re['pdf']
-	print re['clinical']
-	print re['seq']
-	print re['type']
-	print re['txt204']
-	print re['reporttxt']
-	print re['zip']
+	re = hbv.getResult('/Users/lin/23/82/1','HBV','a.ab1',None)
+	#mo = mongo.getInstance()
+	#objId = mo.put(re,'HBV')
+	#createHTML('/Users/lin/23/82/1','aaaa.ab1',re['type'],re['other'],re['reporttxt'])

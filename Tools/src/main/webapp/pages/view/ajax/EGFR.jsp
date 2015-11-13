@@ -17,16 +17,22 @@
 			<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal')"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
 		</h2>
 	    <div class="m-boxCon result">
-	    	<div id="knowResult"><s:property value="resultMap.wz1" escape="false"/></div>
+	    	<div id="knowResult">
+	    		<s:property value="resultMap.wz1" escape="false"/>
+	    	</div>
 	    	<s:if test="%{resultMap.know!=''}">
 	    		<br/>
 		    	<img name="know" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.know"/>" style="width: 1000px;height: 151px;">
 	    	</s:if>
 	    	<s:else>
-		    	<s:if test="%{resultMap.wz1!='新的突变型或者测序质量差<br />'}">
-		    		<br/>
-		    		数据正常，未找到已知突变。
-		    	</s:if>
+	    		<s:if test="%{resultMap.pagePath.substring(resultMap.pagePath.indexOf('/')+1,resultMap.pagePath.indexOf('/')+3)==89}">
+	    		</s:if>
+		    	<s:else>
+			    	<s:if test="%{resultMap.wz1!='新的突变型或者测序质量差<br />'}">
+			    		<br/>
+			    		数据正常，未找到已知突变。
+			    	</s:if>
+		    	</s:else>
 	    	</s:else>
 	    </div>
 	</div>
