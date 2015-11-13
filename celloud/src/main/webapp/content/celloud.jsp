@@ -61,7 +61,7 @@
 				<img src="images/content/diskexplorer.png" alt="应用市场" title="应用市场"
 					width="48" height="48" />
 			</div> 
-			<c:if test="${session.companyId==6||session.companyId==3}">
+			<c:if test="${session.companyId==6||session.companyId==3||session.companyId==33}">
 				<div class="leftApp" _appId="tj" _appName="统计"
 					_appImg="images/content/count_.png" _iframeSrc="pages/count/count.jsp">
 					<img src="images/content/count_.png" alt="统计" title="统计"
@@ -183,7 +183,7 @@
 					width="48" height="48" />
 			</div>
 			<div class="leftApp" _appId="yysc" _appName="应用市场"
-				_appImg="images/content/diskexplorer.png" _iframeSrc="pages/software/software.jsp">
+				_appImg="images/content/diskexplorer.png" _iframeSrc="pages/software/app.jsp">
 				<img src="images/content/diskexplorer.png" alt="应用市场" title="应用市场"
 					width="48" height="48" />
 			</div>
@@ -225,7 +225,7 @@ var password = <%=session.getAttribute("userPwd") %>;
 var sessionUserNav = "<%=session.getAttribute("userNav") %>";
 <%-- var sessionNoticeTitleFlag = "<%=session.getAttribute("noticeTitleFlag")%>"; --%>
 </script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/celloud.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/celloud.js?version=1.0"></script>
 <script type="text/javascript">
 	//记录当前数据模块打开的哪个数据标签页，默认是数据管理标签
 	var dataWindow = 1;
