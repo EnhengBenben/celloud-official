@@ -24,7 +24,8 @@ import com.nova.utils.PropertiesUtil;
 @Action("splitReport")
 @Results({
         @Result(name = "toSplit", location = "../../pages/report/split.jsp"),
-        @Result(name = "toMibReport", location = "../../pages/report/MIB.jsp") })
+        @Result(name = "toMibReport", location = "../../pages/report/MIB.jsp"),
+        @Result(name = "toPrintMib", location = "../../pages/print/MIB.jsp") })
 public class SplitReportAction extends BaseAction {
     private static final long serialVersionUID = 1L;
     Logger log = Logger.getLogger(SplitReportAction.class);
@@ -47,6 +48,13 @@ public class SplitReportAction extends BaseAction {
                 mib.getAppId());
         log.info("celloud-用户" + super.session.get("userId") + "查看mib报告");
         return "toMibReport";
+    }
+
+    public String toPrintMib() {
+        mib = reportService.getMIB(mib.getDataKey(), mib.getProjectId(),
+                mib.getAppId());
+        log.info("celloud-用户" + super.session.get("userId") + "准备打印mib报告");
+        return "toPrintMib";
     }
 
     public Split getSplit() {
