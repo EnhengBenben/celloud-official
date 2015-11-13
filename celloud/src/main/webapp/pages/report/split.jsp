@@ -41,25 +41,7 @@
 				<table class="table table-striped-green table-text-center table-padding0" id="snp_table1">
 					<thead>
 						<tr>
-							<th>数据名称
-<%-- 							  <span id="toSaveDataA${ split.dataKey}"> --%>
-<%-- 								  <c:if test="${fn:length(split.resultList)>3}"> --%>
-<%-- 								  	<c:choose> --%>
-<%-- 									  	<c:when test="${split.upload==2}"> --%>
-<%-- 									  		<a class="link" href="javascript:toRunData('${split.splitDataIds}')">（已上传到数据管理）</a> --%>
-<%-- 									  	</c:when> --%>
-<%-- 									  	<c:otherwise> --%>
-<%-- 										  <c:choose> --%>
-<%-- 										  	<c:when test="${split.upload==1}">（正在上传到数据管理...）</c:when> --%>
-<%-- 										  	<c:otherwise> --%>
-<%-- 												<a class="link" href="javascript:void()" onclick="saveReportData('${split.userId }/${split.appId }/${split.dataKey }/result/split/',${fn:length(split.resultList)-3 },'${ split.dataKey}')">保存数据</a> --%>
-<%-- 										  	</c:otherwise> --%>
-<%-- 										  </c:choose> --%>
-<%-- 									  	</c:otherwise> --%>
-<%-- 									  </c:choose> --%>
-<%-- 								  </c:if> --%>
-<!-- 							  </span> -->
-							</th>	
+							<th>数据名称</th>	
 							<th>序列数量</th>
 						</tr>	
 					</thead>

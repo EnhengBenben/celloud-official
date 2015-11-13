@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
     <link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">    
   	<link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
-    <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.0" rel="stylesheet" type="text/css" />
+    <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.1" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <div class="wrapper">
