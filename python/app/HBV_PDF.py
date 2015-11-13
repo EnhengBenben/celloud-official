@@ -84,21 +84,24 @@ def createPDF(path,appName,fileName):
 		p = pos[i]
 		images = []
 		r = []
+		hasPNG = False
 		for j in range(len(p)):
 			png = os.path.join(svgPath,p[j])
 			if os.path.exists(png):
+				hasPNG = True
 				im = Image(png, 100, 100,'bound')
 				images.append(im)
 				if j%4==3:
 					r.append(images)
 					images = []
 		r.append(images)
-		if len(p)>3:
-			col = colLen[4]
-		else:
-			col = colLen[len(p)]
-		table = Table(r, colWidths=col)
-		total.append(table)
+		if hasPNG:
+			if len(p)>3:
+				col = colLen[4]
+			else:
+				col = colLen[len(p)]
+			table = Table(r, colWidths=col)
+			total.append(table)
 	#结论
 	t = '<font size=12 name="hei">结论</font>'
 	total.append(Paragraph(t, styleTitle))

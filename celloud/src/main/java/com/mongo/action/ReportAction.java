@@ -157,7 +157,11 @@ public class ReportAction extends BaseAction {
             sb.append(map.get(s)).append(",");
         }
         String img = sb.toString();
-        hbv.setImgString(img.substring(0, img.length() - 1));
+        if (img.length()>1){
+            hbv.setImgString(img.substring(0, img.length() - 1));
+        }else{
+            hbv.setImgString("");
+        }
         // jstl 处理 \n 很困难，就在 java 端处理
         hbv.setReporttxt(hbv.getReporttxt().replace("\n", "<br/>"));
         return "hbvReport";

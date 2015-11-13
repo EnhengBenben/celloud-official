@@ -286,12 +286,14 @@
 				 	  	<span style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal',0,7)"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></span>
 				 	  </h2>
 				    <div class="m-boxCon" id="otherPng">
-				    	<c:set value="${fn:split(hbv.imgString, ',') }" var="imgs" />
-				    	<c:forEach var="img" items="${imgs }">
-				    		<a href="javascript:showBgTwo('${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${img.replace('png','10.png') }');" >
-								<img class="imgtop" title="${img }" name="imgSrc" style="padding-left: 30px;" src="${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${img }" height="170px;" width="150px;">
-							</a>
-				    	</c:forEach>
+					    <c:if test="${hbv.imgString!='' }">
+					    	<c:set value="${fn:split(hbv.imgString, ',') }" var="imgs" />
+					    	<c:forEach var="img" items="${imgs }">
+					    		<a href="javascript:showBgTwo('${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${img.replace('png','10.png') }');" >
+									<img class="imgtop" title="${img }" name="imgSrc" style="padding-left: 30px;" src="${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${img }" height="170px;" width="150px;">
+								</a>
+					    	</c:forEach>
+					    </c:if>
 				    </div>
 				</div>
 			</div>
@@ -302,7 +304,7 @@
 		 	  <span style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal',2)"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></span>
 		 	  </h2>
 		    <div class="m-boxCon result" id="resultDiv">
-		    	${hbv.reporttxt.replace('Other:	Y','') }
+		    	${hbv.reporttxt.split('Other:')[0] }
 		    </div>
 		</div>
 		<!--检测结果-->
@@ -320,31 +322,41 @@
 			<h2><i class="i-dna"></i>原始峰图
 				<span style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal',1)"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></span>
 			</h2>
-		    <div class="m-boxCon result">
-				<a href="javascript:showBg('${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['1_all_png'] }','listAll1Img');" >
-					<img class="imgtop" src="${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['1_all_png'] }" style="width: 750px;height: 150px;" id="listAll1Img">
-				</a>
-		    </div>
-		     <div class="m-boxCon result">
-				<a href="javascript:showBg('${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['2_all_png'] }','listAll2Img');" >
-					<img class="imgtop" src="${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['2_all_png'] }" style="width: 750px;height: 150px;" id="listAll2Img">
-				</a>
-		    </div>
-		     <div class="m-boxCon result">
-				<a href="javascript:showBg('${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['3_all_png'] }','listAll3Img');" >
-					<img class="imgtop" src="${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['3_all_png'] }" style="width: 750px;height: 150px;" id="listAll3Img">
-				</a>
-		    </div>
-		     <div class="m-boxCon result">
-				<a href="javascript:showBg('${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['4_all_png'] }','listAll4Img');" >
-					<img class="imgtop" src="${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['4_all_png'] }" style="width: 750px;height: 150px;" id="listAll4Img">
-				</a>
-		    </div>
-		    <div class="m-boxCon result">
-				<a href="javascript:showBg('${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['5_all_png'] }','listAll5Img');" >
-					<img class="imgtop" src="${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['5_all_png'] }" style="width: 750px;height: 150px;" id="listAll5Img">
-				</a>
-		    </div>
+			<c:if test="${hbv.original.containsKey('1_all_png') }">
+			    <div class="m-boxCon result">
+					<a href="javascript:showBg('${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['1_all_png'] }','listAll1Img');" >
+						<img class="imgtop" src="${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['1_all_png'] }" style="width: 750px;height: 150px;" id="listAll1Img">
+					</a>
+			    </div>
+		    </c:if>
+		    <c:if test="${hbv.original.containsKey('2_all_png') }">
+			    <div class="m-boxCon result">
+					<a href="javascript:showBg('${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['2_all_png'] }','listAll2Img');" >
+						<img class="imgtop" src="${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['2_all_png'] }" style="width: 750px;height: 150px;" id="listAll2Img">
+					</a>
+			    </div>
+		    </c:if>
+		    <c:if test="${hbv.original.containsKey('3_all_png') }">
+			    <div class="m-boxCon result">
+					<a href="javascript:showBg('${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['3_all_png'] }','listAll3Img');" >
+						<img class="imgtop" src="${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['3_all_png'] }" style="width: 750px;height: 150px;" id="listAll3Img">
+					</a>
+			    </div>
+		   	</c:if>
+		    <c:if test="${hbv.original.containsKey('4_all_png') }">
+			     <div class="m-boxCon result">
+					<a href="javascript:showBg('${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['4_all_png'] }','listAll4Img');" >
+						<img class="imgtop" src="${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['4_all_png'] }" style="width: 750px;height: 150px;" id="listAll4Img">
+					</a>
+			    </div>
+		    </c:if>
+		    <c:if test="${hbv.original.containsKey('5_all_png') }">
+			    <div class="m-boxCon result">
+					<a href="javascript:showBg('${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['5_all_png'] }','listAll5Img');" >
+						<img class="imgtop" src="${path }/${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['5_all_png'] }" style="width: 750px;height: 150px;" id="listAll5Img">
+					</a>
+			    </div>
+		    </c:if>
 		</div>
 		<!--Celloud数据参数同比分析-->
 		<div class="bg-analysis">
