@@ -34,6 +34,29 @@ import org.apache.commons.io.FileUtils;
  * @date 2013-7-29 下午7:36:51
  */
 public class FileTools {
+    /**
+     * 文件重命名
+     * 
+     * @param path
+     * @param oldname
+     * @param newname
+     */
+    public static void renameFile(String path, String oldname, String newname) {
+        if (!oldname.equals(newname)) {// 新的文件名和以前文件名不同时,才有必要进行重命名
+            File oldfile = new File(path + "/" + oldname);
+            File newfile = new File(path + "/" + newname);
+            if (!oldfile.exists()) {
+                return;// 重命名文件不存在
+            }
+            if (newfile.exists())// 若在该目录下已经有一个文件和新文件名相同，则不允许重命名
+                System.out.println(newname + "已经存在！");
+            else {
+                oldfile.renameTo(newfile);
+            }
+        } else {
+            System.out.println("新文件名和旧文件名相同...");
+        }
+    }
 
     /**
      * 获取文件锁
@@ -674,23 +697,24 @@ public class FileTools {
         }
         return set;
     }
+
     /**
-     * 调用了 FileUtils.readFileToString
-     * 消除了其抛出的异常
+     * 调用了 FileUtils.readFileToString 消除了其抛出的异常
+     * 
      * @param path
      * @return
      */
-    public static String readFileToString(String path){
-    	File f = new File(path);
-    	if(!f.exists()){
-    		return null;
-    	}
-    	String context = null;
-    	try {
-			context = FileUtils.readFileToString(f);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	return context;
+    public static String readFileToString(String path) {
+        File f = new File(path);
+        if (!f.exists()) {
+            return null;
+        }
+        String context = null;
+        try {
+            context = FileUtils.readFileToString(f);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return context;
     }
 }

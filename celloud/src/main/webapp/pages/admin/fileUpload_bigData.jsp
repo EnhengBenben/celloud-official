@@ -18,7 +18,7 @@
 <table class="table table-tab table-bordered" id="dataKeyTable" style="display: none;">
 	<thead>
     	<tr>
-        	<th colspan="6" class="green">第二步：将文件名字分别替换为：<div id="generatedDataKey" style="color: #006a92;word-break:break-all;overflow: auto;"></div>,并复制到/share/data/file/目录。</th>
+        	<th colspan="6" class="green">第二步：将文件复制到/share/data/file/目录。</th>
         </tr>
     </thead>
 </table>
@@ -30,11 +30,6 @@
         	</th>
         </tr>
         <tr>
-    		<td>dataKey:<font color="red">*</font></td>
-        	<td>
-        		<input type="text" id="dataKeyName1" placeholder="dataKey">
-        		<span id="dataKeyWarn1" style="color: red;"></span>
-        	</td>
     		<td>原文件名<font color="red">*</font></td>
         	<td>
         		<input type="text" id="bigFileName1" maxlength="100" placeholder="最长100个字符">

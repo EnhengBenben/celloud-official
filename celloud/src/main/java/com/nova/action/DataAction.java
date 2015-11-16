@@ -213,30 +213,6 @@ public class DataAction extends BaseAction {
 	}
 
 	/**
-	 * 后台文件上传获取dataKey
-	 * 
-	 * @return
-	 */
-	private int fileNumber;
-
-	public String getRadomDataKey() {
-		result = "";
-		List<String> dataKeyList = dataService.getAllDataKey();
-		for (int i = 0; i < fileNumber; i++) {
-			dataKey = DataUtil.getNewDataKey();
-			while (dataKeyList.contains(dataKey)) {
-				dataKey = DataUtil.getNewDataKey();
-			}
-			result += dataKey + ";";
-			dataKeyList.add(dataKey);
-		}
-		if (!result.equals("")) {
-			result = result.substring(0, result.length() - 1);
-		}
-		return SUCCESS;
-	}
-
-	/**
 	 * 小工具调用 App端保存上传的数据并且运行
 	 * 
 	 * @return
@@ -1184,14 +1160,6 @@ public class DataAction extends BaseAction {
 
 	public void setFormats(String formats) {
 		this.formats = formats;
-	}
-
-	public int getFileNumber() {
-		return fileNumber;
-	}
-
-	public void setFileNumber(int fileNumber) {
-		this.fileNumber = fileNumber;
 	}
 
 	public String getRequestUrl() {

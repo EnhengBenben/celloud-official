@@ -399,14 +399,6 @@
 		</action>
 		<!-- 数据管理 end-->
 		
-		<!-- 后台文件上传 -->
-		<action name="getRadomDataKey" class="com.nova.action.DataAction"
-			method="getRadomDataKey">
-			<result type="json">
-				<param name="root">result</param>
-			</result>
-		</action>
-		
 		<!-- 用户管理 begin-->
 		<action name="getUsersMap" class="com.nova.action.UserAction"
 			method="getUsersMap">

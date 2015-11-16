@@ -44,7 +44,7 @@
 	<!-- jquery_alert_dialogs end -->
 	<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/md5.js"></script>
 	<script src="<%=request.getContextPath() %>/plugins/calendar/WdatePicker.js"></script>
-	<script src="<%=request.getContextPath() %>/js/admin.js?version=1.0"></script>
+	<script src="<%=request.getContextPath() %>/js/admin.js?version=1.1"></script>
 	<script type="text/javascript">
 		$.ajaxSetup ({
 		    cache: false //关闭AJAX相应的缓存
