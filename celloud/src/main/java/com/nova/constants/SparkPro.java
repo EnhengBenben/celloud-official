@@ -1,5 +1,8 @@
 package com.nova.constants;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Spark 配置
  * 
@@ -27,4 +30,15 @@ public class SparkPro {
      * 配置python路径
      */
     public static final String PYTHONPATH = "/share/biosoft/perl/PGS_MG/python/runover.py";
+
+    /**
+     * 需要投递到spark集群的appId
+     */
+    public static final List<String> apps = Arrays.asList("86", "92", "93",
+            "99", "100", "101");
+
+    /**
+     * 杀任务命令
+     */
+    public static final String KILLTASK = "/share/biosoft/perl/PGS_MG/bin/to_qdel.pl";
 }
