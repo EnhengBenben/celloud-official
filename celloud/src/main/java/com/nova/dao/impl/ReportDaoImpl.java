@@ -164,7 +164,7 @@ public class ReportDaoImpl extends BaseDao implements IReportDao {
 	public List<Report> getReportListByProId(int projectId) {
 		List<Report> reportList = new ArrayList<Report>();
 		StringBuffer qBuff = new StringBuffer(
-				"select distinct * from(select r.report_id,r.software_id,r.state,s.picture_name,s.software_name,p.project_name,p.project_id from tb_report r,tb_software s,tb_project p where r.software_id=s.software_id and r.flag=1 and r.project_id="
+				"select distinct * from(select r.report_id,r.user_id,r.software_id,r.state,s.picture_name,s.software_name,p.project_name,p.project_id from tb_report r,tb_software s,tb_project p where r.software_id=s.software_id and r.flag=1 and r.project_id="
 						+ projectId + " and p.project_id=r.project_id) t");
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -176,6 +176,7 @@ public class ReportDaoImpl extends BaseDao implements IReportDao {
 			while (rs.next()) {
 				Report report = new Report();
 				report.setReportId(rs.getInt("report_id"));
+				report.setUserId(rs.getInt("user_id"));
 				report.setSoftwareId(rs.getInt("software_id"));
 				report.setSoftwareName(rs.getString("software_name"));
 				report.setPictureName(rs.getString("picture_name"));

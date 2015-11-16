@@ -2,7 +2,6 @@ package com.celloud.action;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -115,8 +114,6 @@ public class DataAction extends BaseAction {
     private static String sparkpwd = null;
     private static String sparkuserName = null;
 
-    // TODO 需要投递到spark集群的app
-    private static final List<String> apps = Arrays.asList("86","92","93","99","100","101");
     // 初始化perl命令路径
     private static Map<Long, App> appMap = null;
     static {
@@ -315,9 +312,9 @@ public class DataAction extends BaseAction {
             String dataKeyList = dataResult.toString();
             // TODO
             String appPath = basePath + userId + "/" + appId + "/";
-            if (apps.contains(appId)) {// 判断是否需要进队列
-                String select = apps.toString().substring(1,
-                        apps.toString().length() - 1);
+            if (SparkPro.apps.contains(appId)) {// 判断是否需要进队列
+                String select = SparkPro.apps.toString().substring(1,
+                        SparkPro.apps.toString().length() - 1);
                 int running = idataService.dataRunning(select);
                 log.info("页面运行任务，此时正在运行的任务数：" + running);
                 if (SparkPro.NODES >= running) {
