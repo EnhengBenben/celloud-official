@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 
 import com.nova.constants.FileFormat;
+import com.nova.email.EmailService;
 import com.nova.sdo.Data;
 import com.nova.sdo.User;
 import com.nova.service.IPythonService;
@@ -17,6 +18,7 @@ import com.nova.utils.FileTools;
 import com.nova.utils.PerlUtils;
 import com.nova.utils.PropertiesUtil;
 import com.nova.utils.SQLUtils;
+import com.nova.utils.TemplateUtil;
 
 public class PythonServiceImpl implements IPythonService {
 	Logger log = Logger.getLogger(PythonServiceImpl.class);
@@ -124,4 +126,13 @@ public class PythonServiceImpl implements IPythonService {
 	public long saveDataSize(String dataKey, long size) {
 		return sql.updateData(dataKey, size);
 	}
+
+    @Override
+    public void sendEmail(Integer userId, String fileName, String dataKey) {
+        log.info("Python客户端，用户：" + userId + "上传文件" + fileName + "完成，发送邮件。");
+        String email = sql.getEmail(userId);
+        String context = TemplateUtil.readTemplate(8);
+        context = context.replace("#dataName", fileName);
+        EmailService.send(email, context, true);
+    }
 }

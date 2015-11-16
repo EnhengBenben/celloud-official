@@ -22,6 +22,34 @@ import com.nova.sdo.User;
  * @date 2014-10-13 上午10:40:43
  */
 public class SQLUtils {
+    /**
+     * 通过 userId获取用户邮箱
+     * 
+     * @param userId
+     * @return
+     */
+    public String getEmail(Integer userId) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String email = null;
+        String sql = "select email from tb_user where user_id = ?;";
+        try {
+            conn = ConnectManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                email = rs.getString("email");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectManager.free(conn, ps, rs);
+        }
+        return email;
+    }
+    
 	public Map<Long, App> getAllSoftware() {
 		Connection conn = null;
 		PreparedStatement ps = null;

@@ -14,10 +14,11 @@ public class TemplateUtil {
 		template.put(3, "ProjectEnd.txt");
 		template.put(4, "DataEnd.txt");
 		template.put(7, "SNP.html");
+		template.put(8, "DataUploaded.txt");
 	}
 
 	/**
-	 * 读取邮件模板 :0：包含项目报告和数据报告；1：只有数据报告;2：只有项目报告；3:项目结束；4：数据结束;
+	 * 读取邮件模板 :0：包含项目报告和数据报告；1：只有数据报告;2：只有项目报告；3:项目结束；4：数据结束;8：数据上传完成
 	 */
 	public static String readTemplate(Integer emailType) {
 		String path = TemplateUtil.class.getResource(
