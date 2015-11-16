@@ -102,4 +102,9 @@ public class ReportServiceImpl implements ReportService {
         return reportDao.getDataReport(T, dataKey, proId, appId);
     }
 
+    @Override
+    public List<CmpReport> getCmpList(Integer userId) {
+        return reportDao.getCmpList(userId);
+    }
+
 }

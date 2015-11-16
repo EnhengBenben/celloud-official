@@ -171,8 +171,6 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
 
     @Override
     public void editSplit(Split split) {
-        System.out.println(split.getUpload());
-        System.out.println(split.getSplitDataIds());
         ds.update(
                 ds.createQuery(Split.class).filter("_id", split.getId()),
                 ds.createUpdateOperations(Split.class)
@@ -191,6 +189,12 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
             Integer appId) {
         return ds.createQuery(T).filter("dataKey", dataKey)
                 .filter("projectId", proId).filter("appId", appId).get();
+    }
+
+    @Override
+    public List<CmpReport> getCmpList(Integer userId) {
+        return ds.createQuery(CmpReport.class).filter("userId", userId)
+                .order("-createDate").asList();
     }
 
 }

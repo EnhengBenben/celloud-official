@@ -156,4 +156,12 @@ public interface ReportDAO {
      */
     public <T> T getDataReport(Class<T> T, String dataKey, Integer proId,
             Integer appId);
+
+    /**
+     * 获取CMP统计报告内容
+     * 
+     * @param userId
+     * @return
+     */
+    public List<CmpReport> getCmpList(Integer userId);
 }
