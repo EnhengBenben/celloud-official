@@ -11,7 +11,7 @@
 <title>CelLoud 客户端下载</title>
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico"/>
 <link rel="bookmark" href="<%=request.getContextPath()%>/favicon.ico"/>
-<link href="css/download.css" rel="stylesheet" type="text/css">
+<link href="css/download.css?version=1.0" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="container">
@@ -28,19 +28,33 @@
     <div class="main download">
     	<div class="wrapper">
         	<h2>生物信息云平台客户端上传工具</h2>
-            <p class="fs16">提供高速、稳定的基因传输通道<br />针对基因序列数据的传输而打造<br />数据上传从哪里跌倒从哪里开始<br />多个数据同时传输，可以暂停、取消<br />目前仅支持xp、win7、win8操作系统</p>
-            <a href="http://client.celloud.org/CelLoudClient_x86_0.0.3.rar" class="downloadApp"><img src="images/home/downloadApp.png" />下载客户端</a>
+            <p class="fs16">提供高速稳定的基因传输通道<br />数据上传支持断点续传，支持多文件同时传输<br />根据客户端机器的配置自动判别同时传输的文件数量<br />支持xp、win7、win8、win10操作系统，提供x86和x64位版本</p>
+            <a href="http://client.celloud.org/CelLoudClient_x86_0.0.4.rar" class="downloadApp"><img src="images/home/downloadApp.png" />下载客户端</a>
             <h3>客户端安装使用过程中可能出现的问题及解答</h3>
-            <p>A.安装时提示：尚未安装.net framework 4.0<br />
-            请到官网<a target="_blank" href="http://www.microsoft.com/zh-cn/download/details.aspx?id=17718">.net4.0</a>下载安装。如果网络速度不好也可以在我们提供地址进行下载，下载地址为：http://client.celloud.org/Microsoft.NET.exe</p>
-            <p>B.杀毒软件不信任问题<br />
-            软件在安装过程可能会被杀毒软件删除某些关机文件，如果安装不成功，请关闭杀毒软件后再次尝试安装。</p>
-            <p>C.安装成功后双击桌面图标不能启动客户端<br />
-            安装完成后，点击桌面的快捷方式不能正常启动，可以使用管理员权限进行启动。</p>
+            <p>A.杀毒软件不信任问题<br />
+            软件下载后直接解压缩即可使用，使用请把该软件加入杀毒软件可信列表中或者暂时关闭杀毒软件。</p>
+            <p>B.软件x86和x64位版本<br />
+            软件默认提供x86版本下载，如果您的操作系统是x64位操作系统，也可以<a target="_blank" href="http://client.celloud.org/CelLoudClient_x64_0.0.4.rar">【下载x64】</a>位软件。</p>
+            <p>C.目前软件处于测试版本中，如果遇到问题，可以直接发送邮件到：service@celloud.cn 给我们反馈</p>
+            <p>D.软件安装目录推荐解压缩英文目录中</p>
         </div>
     </div>
     <jsp:useBean id="_now" class="java.util.Date" />
-    <div class="footer">© <fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" /> CelLoud，Inc. All Rights reserved. <a  href="home.html">生物信息云平台</a> · <a  href="javascript:void();">沪ICP备14035977号</a> · <a href="service.html" target="_blank">服务与支持</a> · <a href="content/feedBack.html" target="_blank">意见反馈</a></div>
+    <div class="footer">© <fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" /> CelLoud，Inc. All Rights reserved. <a  href="home.html">生物信息云平台</a> · <a  href="javascript:void();">沪ICP备14035977号</a> · <a href="service.html" target="_blank">服务与支持</a> · <a href="content/feedBack.html" target="_blank">意见反馈</a>
+    <br><a id="toshgsA" href='https://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&entyId=1atr5hendjiu232trv8vb6qred7d9ymqx1ly1i9na5fa0e04ya' target="_blank"><img src='images/home/shgs.png' border=0></a>
+        	<a href='http://net.china.com.cn/' target="_blank"><img src='images/home/jbzx.png' border=0></a>
+    </div>
 </div>
+<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+	var url = window.location.href;
+	if(url.indexOf(".cn")!=-1){
+		$("#toshgsA").attr("href","https://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&entyId=1atr5hendjiu232trv8vb6qred7d9ymqx1ly1i9na5fa0e04ya");
+	} else if(url.indexOf(".net")!=-1){
+		$("#toshgsA").attr("href","https://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&entyId=1atr5hendjiu232trv8vb6qred7d9ymqx1ly1i9na5fa0e04yd");
+	}else if(url.indexOf(".org")!=-1){
+		$("#toshgsA").attr("href","https://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&entyId=1atr5hendjiu232trv8vb6qred7d9ymqx1ly1i9na5fa0e04yc");
+	}
+</script>
 </body>
 </html>
