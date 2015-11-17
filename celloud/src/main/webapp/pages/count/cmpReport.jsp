@@ -6,12 +6,13 @@
 <table class="table_">
   <thead>
     <tr>
-      <th style="min-width:90px;">数据编号</th>
-      <th style="min-width:60px">原始文件名</th>
-      <th style="min-width:60px">共获得有效片段</th>
-      <th style="min-width:70px">可用片段</th>
-      <th style="min-width:100px">平均测序深度</th>
-      <th style="min-width:60px">基因检测结果</th>
+      <th style="min-width:100px;">数据编号</th>
+      <th style="min-width:160px">原始文件名1</th>
+      <th style="min-width:160px">原始文件名2</th>
+      <th style="min-width:90px">共获得有效片段</th>
+      <th style="min-width:60px">可用片段</th>
+      <th style="min-width:80px">平均测序深度</th>
+      <th style="min-width:60px">基因检测</th>
     </tr>
   </thead>
   <tbody>
@@ -20,17 +21,17 @@
   	  <c:forEach items="${cmpList }" var="cmp" varStatus="cmpSta">
 	    <tr>
 	      <td align="center">${cmp.dataKey }</td>
-	      <td align="center">${cmp.data[0].fileName }<br>${cmp.data[1].fileName }</td>
-<!-- 	      <td align="center"></td> -->
+	      <td align="center">${cmp.data[0].fileName }(${cmp.data[0].dataKey })</td>
+	      <td align="center">${cmp.data[1].fileName }(${cmp.data[1].dataKey })</td>
 	      <td align="center">${cmp.allFragment }</td>
 	      <td align="center">${cmp.usableFragment }</td>
 	      <td align="center">${cmp.avgCoverage }</td>
 	      <td align="center">
-	        <c:forEach items="${cmp.cmpGeneResult}" var="gene">
+	        <a href="javascript:showGeneResult('<c:forEach items="${cmp.cmpGeneResult}" var="gene">
 	          <c:if test="${gene.knownMSNum>0}">
-	          	${gene.geneName }:${gene.knownMSNum };
+	          	${gene.geneName }:${gene.knownMSNum }&nbsp;&nbsp;&nbsp;
 	          </c:if>
-			</c:forEach>
+			</c:forEach>')">查看结果</a>
 	      </td>
 	    </tr>
   	  </c:forEach>
@@ -44,3 +45,21 @@
   </tbody>
 </table>
 <input type="hidden" value="report3!download?fileName=${infos }" id="downUrl"></input>
+<div class="modal modal-green-header" id="geneResultModal">
+ <div class="modal-dialog">
+  <div class="modal-content">
+  <div class="modal-header">
+		<a class="close" data-dismiss="modal">&times;</a>
+		<h4 class="modal-title">基因检测结果</h4>
+	</div>
+	<div class="modal-body row">
+		<div class="col-sm-12" id="showGeneResult" style="word-break:break-all;">
+			
+		</div>
+	</div>
+	<div class="modal-footer">
+         <button type="button" class="btn btn-celloud-close btn-flat pull-left" data-dismiss="modal">关闭</button>
+	</div>
+  </div>
+ </div>
+</div>

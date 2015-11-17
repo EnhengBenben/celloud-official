@@ -114,6 +114,10 @@
 	  $("#showSeq").html(seq);
 	  $("#seqModal").modal("show");
   }
+  function showGeneResult(result){
+	  $("#showGeneResult").html(result);
+	  $("#geneResultModal").modal("show");
+  }
   </script>
 </body>
 </html>

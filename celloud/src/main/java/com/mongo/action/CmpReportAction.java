@@ -251,7 +251,8 @@ public class CmpReportAction extends BaseAction {
                     .append("\t");
             List<Data> dataList = cmp.getData();
             for (Data d : dataList) {
-                line.append(d.getFileName()).append("\t");
+                line.append(d.getFileName()).append("(").append(d.getDataKey())
+                        .append(")").append("\t");
             }
             line.append(cmp.getAllFragment()).append("\t");
             line.append(cmp.getUsableFragment()).append("\t");
