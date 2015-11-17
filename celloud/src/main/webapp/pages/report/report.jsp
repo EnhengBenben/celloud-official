@@ -35,7 +35,7 @@
 <%-- 	<script src="<%=request.getContextPath() %>/plugins/highcharts/highcharts-theme.js"></script> --%>
 	<script src="<%=request.getContextPath() %>/plugins/highcharts/exporting.js"></script>
 	<script src="<%=request.getContextPath() %>/plugins/highcharts/char.js?version=20150526"></script>
-	<script src="<%=request.getContextPath() %>/js/report.js?version=201511091"></script>
+	<script src="<%=request.getContextPath() %>/js/report.js?version=1.0"></script>
 	<script src="<%=request.getContextPath() %>/js/dataformat.js"></script>
 	<script src="<%=request.getContextPath() %>/js/codon.js"></script>
 	<script type="text/javascript">

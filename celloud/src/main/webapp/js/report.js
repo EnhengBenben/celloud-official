@@ -949,8 +949,8 @@ $.ajaxSetup ({
 				}
 			}
 			//调整div的大小
-			var height = $("#reportResultDiv").children().height();
-			$("#reportResultDiv").css("height",height+20);
+//			var height = $("#reportResultDiv").children().height();
+//			$("#reportResultDiv").css("height",height+20);
 			//绑定resize事件，若大小变化，则再调整
 			$("#reportResultDiv").children().resize(function(){
 				var height = $("#reportResultDiv").children().height();

@@ -7,7 +7,7 @@
 		文件名称：
 		<span class="file-name">
 		<c:forEach items="${mib.data}" var="data">
-			${data.fileName}&nbsp;&nbsp;&nbsp;
+			${data.fileName}(${data.dataKey})&nbsp;&nbsp;&nbsp;
 		</c:forEach>
 		</span>
 		<div class="toolbar">
