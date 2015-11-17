@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.celloud.sdo.App;
+import com.mysql.jdbc.Statement;
 import com.nova.constants.DataState;
 import com.nova.constants.SoftWareOffLineState;
 import com.nova.sdo.Client;
@@ -305,18 +306,23 @@ public class SQLUtils {
 	public int addDataInfo(Data data) {
 		Connection conn = null;
 		PreparedStatement ps = null;
+        ResultSet rs = null;
 		int result = 0;
 		String sql = "insert into tb_file(user_id,data_key,file_name,create_date,path,md5,state) values(?,?,?,now(),?,?,?)";
 		try {
 			conn = ConnectManager.getConnection();
-			ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, data.getUserId());
 			ps.setString(2, data.getDataKey());
 			ps.setString(3, data.getFileName());
 			ps.setString(4, data.getPath());
 			ps.setString(5, data.getMd5());
 			ps.setInt(6, DataState.DEELTED);
-			result = ps.executeUpdate();
+            ps.executeUpdate();
+            rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                result = (int) rs.getLong(1);
+            }
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -468,4 +474,30 @@ public class SQLUtils {
 		}
 		return client;
 	}
+
+    public int updateDataInfoByFileId(Data data) {
+        int flag = 1;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "update tb_file set data_key=?,size=?,path=?,another_name=?,file_format=?,state=? where file_id=?";
+        try {
+            conn = ConnectManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, data.getDataKey());
+            ps.setLong(2, data.getSize());
+            ps.setString(3, data.getPath());
+            ps.setString(4, data.getAnotherName());
+            ps.setInt(5, data.getFileFormat());
+            ps.setInt(6, data.getState());
+            ps.setInt(7, data.getFileId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            flag = 0;
+            e.printStackTrace();
+        } finally {
+            ConnectManager.free(conn, ps, null);
+        }
+        return flag;
+    }
+
 }

@@ -1,7 +1,6 @@
 package com.nova.service.impl;
 
 import java.io.File;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -57,11 +56,6 @@ public class PythonServiceImpl implements IPythonService {
 
 	@Override
 	public String getDataKey(Integer id, String fileName,String md5) {
-		List<String> dataKeyList = sql.getAllDataKey();
-		String dataKey = DataUtil.getNewDataKey();
-		while (dataKeyList.contains(dataKey)) {
-			dataKey = DataUtil.getNewDataKey();
-		}
 		Data data = new Data();
 		data.setUserId(id);
 		// 只允许字母和数字
@@ -69,13 +63,16 @@ public class PythonServiceImpl implements IPythonService {
 		Pattern p = Pattern.compile(regEx);
 		Matcher m = p.matcher(fileName);
 		data.setFileName(m.replaceAll("").trim());
+        if (md5 != null) {
+            data.setMd5(md5);
+        }
+        int dataId = sql.addDataInfo(data);
+        data.setFileId(dataId);
+        String dataKey = DataUtil.getNewDataKey(dataId);
 		String newName = dataKey + FileTools.getExtName(fileName);
 		data.setDataKey(dataKey);
 		data.setPath(path + newName);
-		if (md5 != null) {
-			data.setMd5(md5);
-		}
-		sql.addDataInfo(data);
+        sql.updateDataInfoByFileId(data);
 		log.info("为用户：" + id + "返回" + newName);
 		return newName;
 	}

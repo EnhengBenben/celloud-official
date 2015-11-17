@@ -13,7 +13,6 @@ import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -78,11 +77,6 @@ public class UploadServiceImpl implements IUploadService {
 
 	@Override
 	public String init(Integer id, String fileName) {
-		List<String> dataKeyList = sql.getAllDataKey();
-		String dataKey = DataUtil.getNewDataKey();
-		while (dataKeyList.contains(dataKey)) {
-			dataKey = DataUtil.getNewDataKey();
-		}
 		Data data = new Data();
 		data.setUserId(id);
 		// 只允许字母和数字
@@ -90,10 +84,13 @@ public class UploadServiceImpl implements IUploadService {
 		Pattern p = Pattern.compile(regEx);
 		Matcher m = p.matcher(fileName);
 		data.setFileName(m.replaceAll("").trim());
+        int dataId = sql.addDataInfo(data);
+        data.setFileId(dataId);
+        String dataKey = DataUtil.getNewDataKey(dataId);
 		String newName = dataKey + FileTools.getExtName(fileName);
 		data.setDataKey(dataKey);
 		data.setPath(path + newName);
-		sql.addDataInfo(data);
+        sql.updateDataInfoByFileId(data);
 		log.info("为用户：" + id + "返回" + newName);
 		return newName;
 	}

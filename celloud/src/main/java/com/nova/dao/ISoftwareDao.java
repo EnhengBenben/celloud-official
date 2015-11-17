@@ -314,14 +314,6 @@ public interface ISoftwareDao {
      */
     public List<Integer> getTypeListBySoftwareId(int softwareId);
 
-    /**
-     * 根据数据格式获取app列表
-     * 
-     * @param format
-     * @return
-     */
-    public List<Software> getSoftListByFormat(Integer format, Integer userId);
-
     public int getAppRunDataNum(int softwareId);
 
     /**

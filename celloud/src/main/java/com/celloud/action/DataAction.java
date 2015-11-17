@@ -35,6 +35,7 @@ import com.celloud.service.TaskService;
 import com.celloud.service.UserService;
 import com.google.inject.Inject;
 import com.nova.action.BaseAction;
+import com.nova.constants.DataState;
 import com.nova.constants.FileFormat;
 import com.nova.constants.Mod;
 import com.nova.constants.SparkPro;
@@ -503,61 +504,40 @@ public class DataAction extends BaseAction {
     public String saveSplitReportData() {
         String inPath = PropertiesUtil.reportPath + condition;
         String outPath = PropertiesUtil.fileFinal;
-        List<String> dataKeyList = getRadomDataKey(conditionInt);
         HashSet<String> resultFiles = FileTools.getFiles(inPath);
         Iterator<String> rFile = resultFiles.iterator();
-        int num = 0;
         Long size = null;
         String dataKey = "";
         conditionInt = 0;
         result = "";
-        // Split split = new Split();
-        // split.setId(new ObjectId(dataIds));
-        // split.setUpload(DataUpload.DOING);
-        // split.setSplitDataIds(result);
-        // mReportService.editSplit(split);
         while (rFile.hasNext()) {
             String fstr = rFile.next();
             if (!fstr.equals("...tar.gz") && !fstr.equals("..tar.gz")) {
                 String extName = fstr.substring(fstr.lastIndexOf(".tar.gz"));
                 String resourcePath = inPath + fstr;
                 size = new File(resourcePath).length();
-                dataKey = FileTools.listIsNull(dataKeyList, num);
+                data = new Data();
+                data.setUserId(userId);
+                data.setFileName(fstr);
+                data.setState(DataState.DEELTED);
+                int dataId = dataService.addData(data);
+                dataKey = DataUtil.getNewDataKey(dataId);
                 String filePath = outPath + dataKey + extName;
                 boolean state = PerlUtils
                         .excuteCopyPerl(resourcePath, filePath);
                 if (state) {
-                    data = new Data();
-                    data.setUserId(userId);
-                    data.setFileName(fstr);
+                    data.setFileId((long) dataId);
                     data.setDataKey(dataKey);
                     data.setAnotherName("split:" + dataIds);
                     data.setSize(size);
                     data.setPath(filePath);
                     data.setFileFormat(FileFormat.FQ);
-                    result += dataService.addData(data) + ",";
+                    data.setState(DataState.ACTIVE);
+                    result += dataService.updateData(data) + ",";
                 }
-                num++;
             }
         }
-        // split.setUpload(DataUpload.DONE);
-        // split.setSplitDataIds(result);
-        // mReportService.editSplit(split);
         return "info";
-    }
-
-    private List<String> getRadomDataKey(int num) {
-        List<String> resultList = new ArrayList<>();
-        List<String> dataKeyList = dataService.getAllDataKey();
-        for (int i = 0; i < num; i++) {
-            String dataKey = DataUtil.getNewDataKey();
-            while (dataKeyList.contains(dataKey)) {
-                dataKey = DataUtil.getNewDataKey();
-            }
-            dataKeyList.add(dataKey);
-            resultList.add(dataKey);
-        }
-        return resultList;
     }
 
     /**

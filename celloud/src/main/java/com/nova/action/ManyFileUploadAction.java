@@ -21,6 +21,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
 import com.google.inject.Inject;
+import com.nova.constants.DataState;
 import com.nova.constants.FileFormat;
 import com.nova.dao.IUploadDao;
 import com.nova.sdo.Client;
@@ -116,12 +117,8 @@ public class ManyFileUploadAction extends BaseAction {
             userId = Integer.parseInt(fileItem.split(",")[1]);
             //获取后缀
             extName = FileTools.getExtName(uploadImageFileName);
-            //TODO 获取datakey
-            this.fileDataKey = DataUtil.getNewDataKey();
-            List<String> dataKeyList = dataService.getAllDataKey();
-            while (dataKeyList.contains(this.fileDataKey)) {
-                this.fileDataKey = DataUtil.getNewDataKey();
-            }
+            int dataId = this.addFileInfo(uploadImageFileName);
+            fileDataKey = DataUtil.getNewDataKey(dataId);
             //构造新文件名
             String newName = fileDataKey + extName;
             //构造新路径
@@ -132,7 +129,8 @@ public class ManyFileUploadAction extends BaseAction {
                 FileTools.renameFile(PropertiesUtil.bigFilePath, uploadImageFileName, newName);
                 fileSize = new File(path).length();
                 fileType = checkFileType.checkFileType(newName);
-                this.addFileInfo1(path);
+                this.updateFileInfo(dataId, fileDataKey, newName);
+                // this.addFileInfo1(path);
             } else {
                 sb.append(uploadImageFileName).append(",");
             }
@@ -270,85 +268,18 @@ public class ManyFileUploadAction extends BaseAction {
             copy(file, new File(realPath, name));
             // 分块上传时，html5使用前面的判断，flash使用后面的判断，因为flash不支持分块，其实就一块
             if ((chunk == chunks - 1) || chunk == chunks) {
-                this.setFileDataKey(fileDataKey);
+                int dataId = addFileInfo(originalName);
+                fileDataKey = DataUtil.getNewDataKey(dataId);
                 newName = fileDataKey + FileTools.getExtName(originalName);
                 FileTools.renameFile(realPath, name, newName);
-                this.addFileInfo(originalName, newName, file);
-                Data data = dataService.getDataByKey(fileDataKey);
-                resultData = data.getFileId() + "," + data.getFileName();
+                resultData = dataId + "," + originalName;
+                updateFileInfo(dataId, fileDataKey, newName);
             }
         } else {
             log.error("没有获取到文件");
         }
         return "uploadMSuc";
     }
-
-    // public String uploadManyFile() {
-    // File f = new File(realPath);
-    // if (!f.exists()) {
-    // boolean isTrue = f.mkdir();
-    // if (!isTrue) {
-    // log.error("路径创建失败：" + realPath);
-    // }
-    // }
-    //
-    // if (file != null) {
-    // File blok = new File(PropertiesUtil.tmp, chunk + onlyName);
-    // if (blok.exists()) {
-    // blok.delete();
-    // }
-    // copy(file, blok);
-    // iud.addInfo(onlyName, chunk, chunks, null);
-    // if (chunk == chunks - 1) {
-    // // 拼接文件
-    // File dst = new File(realPath, name);
-    // for (int i = 0; i < chunks; i++) {
-    // File tmp = new File(PropertiesUtil.tmp, i + onlyName);
-    // if (tmp.exists()) {
-    // copy(tmp, dst);
-    // tmp.delete();
-    // }
-    // }
-    // FileInputStream fis = null;
-    // try {
-    // // 校验md5
-    // fis = new FileInputStream(dst);
-    // String md52 = DigestUtils.md5Hex(fis);
-    // if (md5.equals(md52)) {
-    // // 校验通过，插入数据库
-    // this.setFileDataKey(fileDataKey);
-    // newName = fileDataKey + FileTools.getExtName(name);
-    // renameFile(realPath, name, newName);
-    // this.addFileInfo(originalName, newName, file);
-    // Data data = dataService.getDataByKey(fileDataKey);
-    // resultData = data.getFileId() + ","
-    // + data.getFileName();
-    // } else {
-    // // 校验不通过，返回500错误
-    // dst.delete();
-    // super.response.setStatus(500);
-    // }
-    // // 无论是否成功，都需要清空tb_upload表
-    // iud.deleteInfo(onlyName);
-    // } catch (FileNotFoundException e) {
-    // e.printStackTrace();
-    // } catch (IOException e) {
-    // e.printStackTrace();
-    // } finally {
-    // if (fis != null) {
-    // try {
-    // fis.close();
-    // } catch (IOException e) {
-    // e.printStackTrace();
-    // }
-    // }
-    // }
-    // }
-    // } else {
-    // log.error("没有获取到文件");
-    // }
-    // return "uploadMSuc";
-    // }
 
     public String initUpload() {
         flag = iud.getInfo(onlyName);
@@ -403,7 +334,7 @@ public class ManyFileUploadAction extends BaseAction {
      * 
      * @return
      */
-    public int addFileInfo(String fileName, String newName, File file) {
+    public int addFileInfo(String fileName) {
         userId = (Integer) super.session.get("userId");
         Data data = new Data();
         data.setUserId(userId);
@@ -411,9 +342,24 @@ public class ManyFileUploadAction extends BaseAction {
         String regEx = "[^\\w\\.\\_\\-\u4e00-\u9fa5]";
         Pattern p = Pattern.compile(regEx);
         Matcher m = p.matcher(fileName);
-        String filePath = realPath + newName;
         // replaceAll()将中文标号替换成英文标号
         data.setFileName(m.replaceAll("").trim());
+        data.setState(DataState.DEELTED);
+        return dataService.addDataInfo(data);
+    }
+
+    /**
+     * 修改文件信息
+     * 
+     * @param dataId
+     * @param dataKey
+     * @param newName
+     * @return
+     */
+    public int updateFileInfo(int dataId, String dataKey, String newName) {
+        Data data = new Data();
+        data.setFileId(dataId);
+        String filePath = realPath + newName;
         data.setSize(FileTools.getFileSize(filePath));
         data.setDataKey(fileDataKey);
         data.setPath(filePath);
@@ -423,7 +369,8 @@ public class ManyFileUploadAction extends BaseAction {
             String anotherName = getAnotherName(filePath, fileDataKey);
             data.setAnotherName(anotherName);
         }
-        return dataService.addDataInfo(data);
+        data.setState(DataState.ACTIVE);
+        return dataService.updateDataInfoByFileId(data);
     }
 
     public void addReportInfo() {
@@ -439,19 +386,6 @@ public class ManyFileUploadAction extends BaseAction {
             int softwareId = softwareService.getSoftIdByName("mRNA");
             report.setSoftwareId(softwareId);
             reportService.addReportInfo(report);
-        }
-    }
-
-    /**
-     * 设置文件datakey
-     * 
-     * @param fileDataKey
-     */
-    public void setFileDataKey(String fileDataKey) {
-        this.fileDataKey = DataUtil.getNewDataKey();
-        List<String> dataKeyList = dataService.getAllDataKey();
-        while (dataKeyList.contains(this.fileDataKey)) {
-            this.fileDataKey = DataUtil.getNewDataKey();
         }
     }
 
@@ -502,6 +436,10 @@ public class ManyFileUploadAction extends BaseAction {
 
     public String getFileDataKey() {
         return fileDataKey;
+    }
+
+    public void setFileDataKey(String fileDataKey) {
+        this.fileDataKey = fileDataKey;
     }
 
     public int getFileId() {

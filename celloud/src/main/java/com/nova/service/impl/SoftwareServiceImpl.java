@@ -307,11 +307,6 @@ public class SoftwareServiceImpl implements ISoftwareService {
 	}
 
 	@Override
-	public List<Software> getSoftListByFormat(Integer format, Integer userId) {
-		return softwareDao.getSoftListByFormat(format,userId);
-	}
-
-	@Override
 	public int getAppRunDataNum(int softwareId) {
 		return softwareDao.getAppRunDataNum(softwareId);
 	}

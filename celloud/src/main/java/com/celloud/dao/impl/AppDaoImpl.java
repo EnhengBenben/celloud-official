@@ -35,7 +35,7 @@ public class AppDaoImpl extends BaseDao implements AppDao {
     @Override
     public List<App> getAppsByFormat(Integer formatId, Integer userId) {
         List<App> list = new ArrayList<>();
-        String sql = "select s.software_id,s.software_name,s.data_num from tb_software s left join tb_software_format_relat sf on s.software_id = sf.software_id left join tb_user_software us on s.software_id=us.software_id where sf.format_id = ? and s.off_line = ? and us.user_id=? order by s.create_date;";
+        String sql = "select s.software_id,s.software_name,s.data_num from tb_software s left join tb_software_format_relat sf on s.software_id = sf.software_id left join tb_user_software us on s.software_id=us.software_id where sf.format_id = ? and s.off_line = ? and us.user_id=? and us.desk_no=0 order by s.create_date;";
         try {
             conn = ConnectManager.getConnection();
             ps = conn.prepareStatement(sql);

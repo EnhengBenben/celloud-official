@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -739,30 +738,6 @@ public class ProjectAction extends BaseAction {
         shareUserId = projectService.getUserIdByProjectId(Integer
                 .parseInt(projectId));
         return SUCCESS;
-    }
-
-    public String getAllProStrainList() {
-        userId = (Integer) super.session.get("userId");
-        List<Map<String, String>> proStrainList = projectService
-                .getProStrainItem(userId);
-        List<Map<String, String>> dataStrainList = dataService
-                .getStrainItem(userId);
-        strainMapList = new ArrayList<Map<String, String>>();
-        proStrainList.addAll(dataStrainList);
-        HashSet<Map<String, String>> h = new HashSet<Map<String, String>>(
-                proStrainList);
-        proStrainList.clear();
-        proStrainList.addAll(h);
-        // 添加数据的所有物种类型
-        for (Map<String, String> map : proStrainList) {
-            if (!"".equals(map.get("strain")) && map.get("strain") != null) {
-                Map<String, String> one = new HashMap<String, String>();
-                one.put("id", map.get("strain"));
-                one.put("text", map.get("strain"));
-                strainMapList.add(one);
-            }
-        }
-        return "strainMapList";
     }
 
     public String getAllDataTypeList() {

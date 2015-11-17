@@ -82,8 +82,9 @@ public interface DataDao {
     public List<Data> getDataByDataKeys(String dataKeys);
 
     /**
-     * 修改数据
+     * 批量修改数据
      * 
+     * @param dataIds
      * @param data
      * @return
      */
@@ -96,6 +97,14 @@ public interface DataDao {
      * @return
      */
     public Integer updateDatas(List<Data> list);
+
+    /**
+     * 修改数据
+     * 
+     * @param data
+     * @return
+     */
+    public Integer updateData(Data data);
 
     /**
      * 获取数据总大小
