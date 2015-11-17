@@ -47,7 +47,7 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
 <meta name="keywords" content="SMINT jQuery Plugin, SMINT, jQuery Plugin, One Page Website, Sticky Navigation" />
 <meta name="description" content="SMINT is a simple plugin for lovers of one page websites, which helps with sticky menus and page scrolling." />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, minimum-scale=1,user-scalable=yes">
-<link href="css/home.min.css?version=1.0" rel="stylesheet" type="text/css">
+<link href="css/home.min.css" rel="stylesheet" type="text/css">
 <link href="css/animate.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -295,10 +295,7 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
             <div class="wrapper content center"> <img src="images/home/ph03.jpg" /> </div>
         </div>
         <jsp:useBean id="_now" class="java.util.Date" />
-        <div class="footer">© <fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" /> CelLoud，Inc. All Rights reserved. <a  href="#">生物信息云平台</a> · <a  href="javascript:void();">沪ICP备14035977号</a> · <a href="<%=request.getContextPath() %>/service.html" target="_blank">服务与支持</a> · <a href="<%=request.getContextPath() %>/content/feedBack.html" target="_blank">意见反馈</a>
-        	<br><a id="toshgsA" href='https://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&entyId=1atr5hendjiu232trv8vb6qred7d9ymqx1ly1i9na5fa0e04ya' target="_blank"><img src='images/home/shgs.png' border=0></a>
-        	<a href='http://net.china.com.cn/' target="_blank"><img src='images/home/jbzx.png' border=0></a>
-        </div>
+        <div class="footer">© <fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" /> CelLoud，Inc. All Rights reserved. <a  href="#">生物信息云平台</a> · <a  href="javascript:void();">沪ICP备14035977号</a> · <a href="<%=request.getContextPath() %>/service.html" target="_blank">服务与支持</a> · <a href="<%=request.getContextPath() %>/content/feedBack.html" target="_blank">意见反馈</a> · <a id="toshgsA" href='https://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&entyId=1atr5hendjiu232trv8vb6qred7d9ymqx1ly1i9na5fa0e04ya' target="_blank"><img src='images/home/shgs.png' style="width: 20px; margin-bottom: -5px;" border=0></a><a href='http://net.china.com.cn/' target="_blank"><img src='images/home/jbzx.png' style="width: 20px; margin-bottom: -5px;" border=0></a></div>
     </div>
 </div>
 </section>
