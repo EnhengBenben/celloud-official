@@ -11,7 +11,7 @@
 <title>CelLoud 客户端下载</title>
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico"/>
 <link rel="bookmark" href="<%=request.getContextPath()%>/favicon.ico"/>
-<link href="css/download.css?version=1.0" rel="stylesheet" type="text/css">
+<link href="css/download.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="container">
@@ -40,10 +40,7 @@
         </div>
     </div>
     <jsp:useBean id="_now" class="java.util.Date" />
-    <div class="footer">© <fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" /> CelLoud，Inc. All Rights reserved. <a  href="home.html">生物信息云平台</a> · <a  href="javascript:void();">沪ICP备14035977号</a> · <a href="service.html" target="_blank">服务与支持</a> · <a href="content/feedBack.html" target="_blank">意见反馈</a>
-    <br><a id="toshgsA" href='https://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&entyId=1atr5hendjiu232trv8vb6qred7d9ymqx1ly1i9na5fa0e04ya' target="_blank"><img src='images/home/shgs.png' border=0></a>
-        	<a href='http://net.china.com.cn/' target="_blank"><img src='images/home/jbzx.png' border=0></a>
-    </div>
+    <div class="footer">© <fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" /> CelLoud，Inc. All Rights reserved. <a  href="#">生物信息云平台</a> · <a  href="javascript:void();">沪ICP备14035977号</a> · <a href="<%=request.getContextPath() %>/service.html" target="_blank">服务与支持</a> · <a href="<%=request.getContextPath() %>/content/feedBack.html" target="_blank">意见反馈</a> · <a id="toshgsA" href='https://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&entyId=1atr5hendjiu232trv8vb6qred7d9ymqx1ly1i9na5fa0e04ya' target="_blank"><img src='images/home/shgs.png' style="width: 20px; margin-bottom: -5px;" border=0></a><a href='http://net.china.com.cn/' target="_blank"><img src='images/home/jbzx.png' style="width: 20px; margin-bottom: -5px;" border=0></a></div>
 </div>
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jquery-1.8.3.min.js"></script>
 <script type="text/javascript">
