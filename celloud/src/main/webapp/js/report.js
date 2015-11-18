@@ -349,7 +349,11 @@ $.ajaxSetup ({
 		                        if(fileName.length>30&&appId!="113"&&appId!="112"&&appId!="111"&&appId!="110"){
 		                        	fileName = fileName.substring(0,30) + "...";
 		                        }
-			                    $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
+		                        if(appId!="114"){
+		                        	$(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
+		                        }else{
+		                        	$(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+fileName+"</span>");
+		                        }
 			                    $(this).find("span").bind("click",param,viewDataReport);
 			                    $(this).find("span").addClass("link");
 			                }

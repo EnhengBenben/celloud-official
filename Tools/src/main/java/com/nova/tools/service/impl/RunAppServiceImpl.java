@@ -162,11 +162,11 @@ public class RunAppServiceImpl {
             File proFile = new File(projectFile);
             FileLock lock = FileTools.getFileLock(proFile);
             FileTools.createFile(projectFile);
-            if (!proFile.exists()) {
-				// 追加表头
-				FileTools.appendWrite(projectFile,
-                        "dataKey\t文件名称\t序列总数\t平均质量\t平均GC含量\n");
-			}
+            if (FileTools.countLines(proFile) < 1) {
+                // 追加表头
+                FileTools.appendWrite(projectFile,
+                        "dataKey\t样品名称\t序列总数\t平均质量\t平均GC含量\n");
+            }
 			Map<String, List<Data>> map = JsonUtil.parseDataMap(dataInfos);
 			Company com = JSON.parseObject(company, Company.class);
 			User use = JSON.parseObject(user, User.class);
