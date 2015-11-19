@@ -54,27 +54,6 @@
 			<result name="outPutData" type="json">
 				<param name="root">fileName</param>
 			</result>
-			<result name="getDataNumSucc" type="json">
-				<param name="root">dataNum</param>
-			</result>
-			<result name="delDatas" type="json">
-				<param name="root">flag</param>
-			</result>
-			<result name="strainList" type="json">
-				<param name="root">strainMap</param>
-			</result>
-			<result name="getDataListByProjectId" type="json">
-				<param name="root">fileList</param>
-			</result>
-			<result name="strainMapList" type="json">
-				<param name="root">strainMapList</param>
-			</result>
-			<result name="getFileFormatById" type="json">
-				<param name="root">fileFormat</param>
-			</result>
-			<result name="importDataToPro" type="json">
-				<param name="root">flag</param>
-			</result>
 		</action>
 		<action name="reportJson_*" class="com.nova.action.ReportAction" method="{1}">
 			<result name="totalReportNum" type="json">
@@ -280,22 +259,10 @@
 		<!-- 上传文件管理end -->
 		<!-- 数据管理 begin-->
 		<!-- 邮件发送 -->
-		<action name="getDataListByUserIdFileFormats" class="com.nova.action.DataAction"
-			method="getDataListByUserIdFileFormats">
-			<result type="json">
-				<param name="root">fileList</param>
-			</result>
-		</action>
 		<action name="sendEmail" class="com.nova.action.DataAction"
 			method="sendEmail">
 			<result type="json">
 				<param name="root">flag</param>
-			</result>
-		</action>
-		<action name="getProjectNameByDataKey" class="com.nova.action.DataAction"
-			method="getProjectNameByDataKey">
-			<result type="json">
-				<param name="root">projectName</param>
 			</result>
 		</action>
 		<action name="getFileNameByDataKey" class="com.nova.action.DataAction"
@@ -310,39 +277,8 @@
 				<param name="root">fileName</param>
 			</result>
 		</action>
-		<action name="saveDataTag" class="com.nova.action.DataAction"
-			method="saveDataTag">
-			<result type="json">
-				<param name="root">flag</param>
-			</result>
-		</action>
-		<action name="saveDataStrain" class="com.nova.action.DataAction"
-			method="saveDataStrain">
-			<result type="json">
-				<param name="root">flag</param>
-			</result>
-		</action>
-		
-		<action name="shareData" class="com.nova.action.DataAction"
-			method="shareData">
-			<result type="json">
-				<param name="root">report</param>
-			</result>
-		</action>
 		<action name="goToRunApp" class="com.nova.action.ReportAction"
 			method="goToRunApp">
-			<result type="json">
-				<param name="root">flag</param>
-			</result>
-		</action>
-		<action name="allocateDataToPro" class="com.nova.action.DataAction"
-			method="allocateDataToPro">
-			<result type="json">
-				<param name="root">flag</param>
-			</result>
-		</action>
-		<action name="createDataProjectRel" class="com.nova.action.DataAction"
-			method="createDataProjectRel">
 			<result type="json">
 				<param name="root">flag</param>
 			</result>
@@ -353,46 +289,9 @@
 				<param name="root">reportResult</param>
 			</result>
 		</action>
-		<action name="getProjectIdByDataId" class="com.nova.action.DataAction"
-			method="getProjectIdByDataId">
-			<result type="json">
-				<param name="root">projectId</param>
-			</result>
-		</action>
-		
 		<!-- 根据用户编号、数据类型获取数据列表 -->
 		<action name="getDataInfoListByProjectId" class="com.nova.action.DataAction"
 			method="getDataInfoListByProjectId">
-			<result type="json">
-				<param name="root">fileList</param>
-			</result>
-		</action>
-		<action name="updateDataInfoByFileId" class="com.nova.action.DataAction"
-			method="updateDataInfoByFileId">
-			<result type="json">
-				<param name="root">flag</param>
-			</result>
-		</action>
-		<action name="updateAllDataInfoByFileId" class="com.nova.action.DataAction"
-			method="updateAllDataInfoByFileId">
-			<result type="json">
-				<param name="root">flag</param>
-			</result>
-		</action>
-		<action name="updateDataInfoListByFileId" class="com.nova.action.DataAction"
-			method="updateDataInfoListByFileId">
-			<result type="json">
-				<param name="root">flag</param>
-			</result>
-		</action>
-		<action name="getDataKeyListByDataIds" class="com.nova.action.DataAction"
-			method="getDataKeyListByDataIds">
-			<result type="json">
-				<param name="root">dataKey</param>
-			</result>
-		</action>
-		<action name="getStrainDataKeySampleById" class="com.nova.action.DataAction"
-			method="getStrainDataKeySampleById">
 			<result type="json">
 				<param name="root">fileList</param>
 			</result>
@@ -412,13 +311,6 @@
 				<param name="root">email</param>
 			</result>
 		</action>
-		<action name="getUsersMapByFileId" class="com.nova.action.DataAction"
-			method="getUsersMapByFileId">
-			<result type="json">
-				<param name="root">sharedUserMapList</param>
-			</result>
-		</action>
-		
 		<!-- 用户管理 end-->
 		
 		<!-- 项目管理begin -->

@@ -520,18 +520,14 @@ public class DataDaoImpl extends BaseDao implements DataDao {
         Integer num = 0;
         try {
             StringBuffer sql = new StringBuffer();
-            sql.append("insert into tb_file(user_id,data_key,file_name,size,path,file_format,another_name,create_date,state) values(?,?,?,?,?,?,?,now(),?);");
+            sql.append("insert into tb_file(user_id,file_name,another_name,create_date,state) values(?,?,?,now(),?);");
             conn = ConnectManager.getConnection();
             qps = conn.prepareStatement(sql.toString(),
                     Statement.RETURN_GENERATED_KEYS);
             qps.setInt(1, data.getUserId());
-            qps.setString(2, data.getDataKey());
-            qps.setString(3, data.getFileName());
-            qps.setLong(4, data.getSize());
-            qps.setString(5, data.getPath());
-            qps.setInt(6, data.getFileFormat());
-            qps.setString(7, data.getAnotherName());
-            qps.setInt(8, data.getState());
+            qps.setString(2, data.getFileName());
+            qps.setString(3, data.getAnotherName());
+            qps.setInt(4, data.getState());
             num = qps.executeUpdate();
             // 检索由于执行此 Statement 对象而创建的所有自动生成的键
             qrs = qps.getGeneratedKeys();
