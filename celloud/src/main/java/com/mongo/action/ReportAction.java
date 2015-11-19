@@ -17,6 +17,7 @@ import org.apache.struts2.convention.annotation.Results;
 
 import com.google.inject.Inject;
 import com.mongo.sdo.HBV;
+import com.mongo.sdo.HCV;
 import com.mongo.service.ReportService;
 import com.nova.action.BaseAction;
 import com.nova.utils.ExcelUtil;
@@ -31,6 +32,7 @@ import com.nova.utils.PropertiesUtil;
 @ParentPackage("celloud-default")
 @Action("report3")
 @Results({
+        @Result(name = "hcvReport", location = "../../pages/report/hcvReport.jsp"),
         @Result(name = "hbvReport", location = "../../pages/report/hbvReport.jsp"),
         @Result(name = "hbvCount", location = "../../pages/count/hbvCount.jsp") })
 public class ReportAction extends BaseAction {
@@ -41,6 +43,7 @@ public class ReportAction extends BaseAction {
     private List<HBV> hbvList;
     private String fileName;
     private HBV hbv;
+    private HCV hcv;
     private String dataKey;
     private Integer proId;
     private Integer appId;
@@ -145,26 +148,39 @@ public class ReportAction extends BaseAction {
         hbv = reportService.getDataReport(HBV.class, dataKey, proId, appId);
         // 其他突变位点排序
         Map<String, String> map = hbv.getOther();
-        String[] array = new String[map.size()];
-        int i = 0;
-        for (Map.Entry<String, String> m : map.entrySet()) {
-            array[i] = m.getKey();
-            i++;
-        }
-        Arrays.sort(array);
-        StringBuffer sb = new StringBuffer();
-        for (String s : array) {
-            sb.append(map.get(s)).append(",");
-        }
-        String img = sb.toString();
-        if (img.length()>1){
-            hbv.setImgString(img.substring(0, img.length() - 1));
-        }else{
-            hbv.setImgString("");
+        System.out.println(map == null);
+        if(map!=null){
+            String[] array = new String[map.size()];
+            int i = 0;
+            for (Map.Entry<String, String> m : map.entrySet()) {
+                array[i] = m.getKey();
+                i++;
+            }
+            Arrays.sort(array);
+            StringBuffer sb = new StringBuffer();
+            for (String s : array) {
+                sb.append(map.get(s)).append(",");
+            }
+            String img = sb.toString();
+            if (img.length() > 1) {
+                hbv.setImgString(img.substring(0, img.length() - 1));
+            } else {
+                hbv.setImgString("");
+            }
         }
         // jstl 处理 \n 很困难，就在 java 端处理
         hbv.setReporttxt(hbv.getReporttxt().replace("\n", "<br/>"));
         return "hbvReport";
+    }
+
+    /**
+     * 获取HCV报告
+     * 
+     * @return
+     */
+    public String getHCVReport() {
+        hcv = reportService.getDataReport(HCV.class, dataKey, proId, appId);
+        return "hcvReport";
     }
 
     public List<HBV> getHbvList() {
@@ -221,6 +237,14 @@ public class ReportAction extends BaseAction {
 
     public String getDown() {
         return down;
+    }
+
+    public HCV getHcv() {
+        return hcv;
+    }
+
+    public void setHcv(HCV hcv) {
+        this.hcv = hcv;
     }
 
 }

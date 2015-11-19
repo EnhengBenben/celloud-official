@@ -11,6 +11,7 @@ from mongo.mongoOperate import mongo
 from app.PGS import PGS
 from app.NIPT import NIPT
 from app.HBV import HBV
+from app.HCV import HCV
 
 #command: python *.py basePath projectId
 #eg : python runover.py '/share/data/webapps/Tools/upload/' 4018
@@ -18,6 +19,7 @@ from app.HBV import HBV
 
 #对应class名
 method_dic = {
+80:HCV,
 82:HBV,
 85:PGS,
 86:PGS,
@@ -33,6 +35,7 @@ method_dic = {
 
 #对应database名
 collection_dic = {
+80:"HCV",
 82:"HBV",
 85:"Pgs",
 86:"Pgs",
