@@ -205,7 +205,7 @@ public class DataDaoImpl extends BaseDao implements IDataDao {
 		PreparedStatement ps = null;
         ResultSet rs = null;
 		int result = 0;
-        String sql = "insert into tb_file(user_id,file_name,create_date,md5,state) values(?,?,now(),?,?,?)";
+        String sql = "insert into tb_file(user_id,file_name,create_date,md5,state) values(?,?,now(),?,?)";
 		try {
 			conn = ConnectManager.getConnection();
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

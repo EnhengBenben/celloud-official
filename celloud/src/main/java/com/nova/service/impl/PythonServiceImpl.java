@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
+import com.nova.constants.DataState;
 import com.nova.constants.FileFormat;
 import com.nova.email.EmailService;
 import com.nova.sdo.Data;
@@ -72,6 +73,7 @@ public class PythonServiceImpl implements IPythonService {
 		String newName = dataKey + FileTools.getExtName(fileName);
 		data.setDataKey(dataKey);
 		data.setPath(path + newName);
+        data.setState(DataState.ACTIVE);
         sql.updateDataInfoByFileId(data);
 		log.info("为用户：" + id + "返回" + newName);
 		return newName;

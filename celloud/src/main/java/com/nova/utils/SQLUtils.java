@@ -424,17 +424,14 @@ public class SQLUtils {
         int flag = 1;
         Connection conn = null;
         PreparedStatement ps = null;
-        String sql = "update tb_file set data_key=?,size=?,path=?,another_name=?,file_format=?,state=? where file_id=?";
+        String sql = "update tb_file set data_key=?,path=?,state=? where file_id=?";
         try {
             conn = ConnectManager.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, data.getDataKey());
-            ps.setLong(2, data.getSize());
-            ps.setString(3, data.getPath());
-            ps.setString(4, data.getAnotherName());
-            ps.setInt(5, data.getFileFormat());
-            ps.setInt(6, data.getState());
-            ps.setInt(7, data.getFileId());
+            ps.setString(2, data.getPath());
+            ps.setInt(3, data.getState());
+            ps.setInt(4, data.getFileId());
             ps.executeUpdate();
         } catch (SQLException e) {
             flag = 0;
