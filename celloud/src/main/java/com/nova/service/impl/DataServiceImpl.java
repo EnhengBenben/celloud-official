@@ -42,12 +42,7 @@ public class DataServiceImpl implements IDataService {
         return dataDao.getDataByKey(dataKey);
     }
 
-	@Override
-	public List<String> getAllDataKey() {
-		return dataDao.getAllDataKey();
-	}
-
-	@Override
+    @Override
 	public int allocateDatasToProject(String dataIds, int projectId) {
 		return dataDao.allocateDatasToProject(dataIds, projectId);
 	}

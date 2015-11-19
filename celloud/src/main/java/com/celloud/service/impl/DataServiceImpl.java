@@ -95,11 +95,6 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<String> getAllDataKey() {
-        return dataDao.getAllDataKey();
-    }
-
-    @Override
     public Integer addData(Data data) {
         return dataDao.addData(data);
     }

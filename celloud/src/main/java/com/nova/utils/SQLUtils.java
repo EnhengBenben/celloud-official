@@ -4,9 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.celloud.sdo.App;
@@ -282,42 +280,19 @@ public class SQLUtils {
 		return dataNum;
 	}
 
-	public List<String> getAllDataKey() {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		List<String> dataKeyList = new ArrayList<String>();
-		String sql = "select data_key from tb_file";
-		try {
-			conn = ConnectManager.getConnection();
-			ps = conn.prepareStatement(sql);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				dataKeyList.add(rs.getString("data_key"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			ConnectManager.free(conn, ps, rs);
-		}
-		return dataKeyList;
-	}
-
 	public int addDataInfo(Data data) {
 		Connection conn = null;
 		PreparedStatement ps = null;
         ResultSet rs = null;
 		int result = 0;
-		String sql = "insert into tb_file(user_id,data_key,file_name,create_date,path,md5,state) values(?,?,?,now(),?,?,?)";
+		String sql = "insert into tb_file(user_id,file_name,create_date,md5,state) values(?,?,now(),?,?)";
 		try {
 			conn = ConnectManager.getConnection();
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, data.getUserId());
-			ps.setString(2, data.getDataKey());
-			ps.setString(3, data.getFileName());
-			ps.setString(4, data.getPath());
-			ps.setString(5, data.getMd5());
-			ps.setInt(6, DataState.DEELTED);
+			ps.setString(2, data.getFileName());
+			ps.setString(3, data.getMd5());
+			ps.setInt(4, DataState.DEELTED);
             ps.executeUpdate();
             rs = ps.getGeneratedKeys();
             if (rs.next()) {
@@ -329,36 +304,6 @@ public class SQLUtils {
 			ConnectManager.free(conn, ps, null);
 		}
 		return result;
-	}
-
-	public Data saveDataInfo(Data data) {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		int result = 0;
-		String sql = "insert into tb_file(user_id,data_key,file_name,strain,size,create_date,path,file_format) values(?,?,?,?,?,now(),?,?)";
-		try {
-			conn = ConnectManager.getConnection();
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1, data.getUserId());
-			ps.setString(2, data.getDataKey());
-			ps.setString(3, data.getFileName());
-			ps.setString(4, data.getStrain());
-			ps.setDouble(5, data.getSize());
-			ps.setString(6, data.getPath());
-			ps.setInt(7, data.getFileFormat());
-			ps.executeUpdate();
-			rs = ps.getGeneratedKeys();
-			if (rs.next()) {
-				result = rs.getInt(1);
-			}
-			data.setFileId(result);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			ConnectManager.free(conn, ps, rs);
-		}
-		return data;
 	}
 
 	public Data getDataByKey(String dataKey) {

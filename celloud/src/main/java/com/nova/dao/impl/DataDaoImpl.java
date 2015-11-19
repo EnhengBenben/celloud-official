@@ -294,28 +294,6 @@ public class DataDaoImpl extends BaseDao implements IDataDao {
     }
 
 	@Override
-	public List<String> getAllDataKey() {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		List<String> dataKeyList = new ArrayList<String>();
-		String sql = "select data_key from tb_file";
-		try {
-			conn = ConnectManager.getConnection();
-			ps = conn.prepareStatement(sql);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				dataKeyList.add(rs.getString("data_key"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			ConnectManager.free(conn, ps, rs);
-		}
-		return dataKeyList;
-	}
-
-	@Override
 	public Data getDataById(String dataId) {
 		Connection conn = null;
 		PreparedStatement ps = null;

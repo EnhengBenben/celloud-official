@@ -75,13 +75,6 @@ public interface IDataService {
     public Data getDataByKey(String dataKey);
 
     /**
-     * 获取所有的数据编号
-     * 
-     * @return
-     */
-    public List<String> getAllDataKey();
-
-    /**
      * 根据项目编号获取项目下的文件列表
      * 
      * @param projectId
