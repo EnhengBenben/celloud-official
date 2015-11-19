@@ -697,6 +697,10 @@ $.ajaxSetup ({
 				$.get("report3!getHBVReport",{"proId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
+			}else if(softwareId == 80){
+				$.get("report3!getHCVReport",{"proId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
+					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+				});
 			}else{
 				$.get("data!getDataByKey",{"dataKey":dataKey},function(data){
 					var anotherName = data.anotherName;

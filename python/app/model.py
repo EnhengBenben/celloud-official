@@ -1,3 +1,10 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+# python version 2.7.6
+
+__des__='perl生成的title和mongodb的字段对应关系'
+__author__='lin'
+
 pgs = {"*SD": "sd",
        "Map_Ratio(%)": "mapRatio",
        "MT_ratio(%)": "mtRatio",
@@ -25,3 +32,18 @@ nipt = {"Total_Reads": "totalReads",
        "readsPercent": "readsPercent",
        "mappingPercent": "mappingPercent"
        }
+
+hcvmodel = {
+       'File_Name':'fileName',
+       'File Name':'fileName',
+       'Subtype':'subtype',
+       'Subject_Name':'subjectName',
+       'Subject Name':'subjectName',
+       'Identity':'identity',
+       'Overlap/total':'total',
+       'E_value':'evalue',
+       'Score':'score'
+       }
+
+if __name__ == '__main__':
+       print hcvmodel['File Name']
