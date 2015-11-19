@@ -18,6 +18,8 @@ import org.apache.struts2.convention.annotation.Results;
 import com.google.inject.Inject;
 import com.mongo.sdo.HBV;
 import com.mongo.sdo.HCV;
+import com.mongo.sdo.NIPT;
+import com.mongo.sdo.Pgs;
 import com.mongo.service.ReportService;
 import com.nova.action.BaseAction;
 import com.nova.utils.ExcelUtil;
@@ -32,18 +34,24 @@ import com.nova.utils.PropertiesUtil;
 @ParentPackage("celloud-default")
 @Action("report3")
 @Results({
+        @Result(name = "niptReport", location = "../../pages/report/niptReport.jsp"),
+        @Result(name = "pgsReport", location = "../../pages/report/pgsReport.jsp"),
         @Result(name = "hcvReport", location = "../../pages/report/hcvReport.jsp"),
         @Result(name = "hbvReport", location = "../../pages/report/hbvReport.jsp"),
-        @Result(name = "hbvCount", location = "../../pages/count/hbvCount.jsp") })
+        @Result(name = "toHBVCount", location = "../../pages/count/hbvCount.jsp"),
+        @Result(name = "toPgsCount", location = "../../pages/count/pgsCount.jsp")})
 public class ReportAction extends BaseAction {
     private static final long serialVersionUID = 1L;
     Logger log = Logger.getLogger(ReportAction.class);
     @Inject
     private ReportService reportService;
     private List<HBV> hbvList;
+    private List<Pgs> pgsList;
     private String fileName;
     private HBV hbv;
     private HCV hcv;
+    private Pgs pgs;
+    private NIPT nipt;
     private String dataKey;
     private Integer proId;
     private Integer appId;
@@ -61,8 +69,14 @@ public class ReportAction extends BaseAction {
                     "/share/data/output/" + fileName);
         }
     }
+    
+    public String toPgsCount() {
+        log.info("查看用户" + pgs.getUsername() + "的数据报告统计");
+        pgsList = reportService.getPgsList(pgs.getUserId());
+        return "toPgsCount";
+    }
 
-    public String toCount() {
+    public String toHBVCount() {
         Integer userId = (Integer) super.session.get("userId");
         // TODO 不应该在结果中去重，应该在查询时候去重
         // 去重规则是，每个datakey只保留最近运行的那一次
@@ -136,7 +150,7 @@ public class ReportAction extends BaseAction {
             FileTools.appendWrite(path, line.toString());
         }
         ExcelUtil.simpleTxtToExcel(path, excelpath, "count");
-        return "hbvCount";
+        return "toHBVCount";
     }
 
     /**
@@ -181,6 +195,26 @@ public class ReportAction extends BaseAction {
     public String getHCVReport() {
         hcv = reportService.getDataReport(HCV.class, dataKey, proId, appId);
         return "hcvReport";
+    }
+    
+    /**
+     * 获取PGS报告
+     * 
+     * @return
+     */
+    public String getPgsReport() {
+        pgs = reportService.getDataReport(Pgs.class, dataKey, proId, appId);
+        return "pgsReport";
+    }
+    
+    /**
+     * 获取NIPT报告
+     * 
+     * @return
+     */
+    public String getNIPTReport() {
+        nipt = reportService.getDataReport(NIPT.class, dataKey, proId, appId);
+        return "niptReport";
     }
 
     public List<HBV> getHbvList() {
@@ -245,6 +279,30 @@ public class ReportAction extends BaseAction {
 
     public void setHcv(HCV hcv) {
         this.hcv = hcv;
+    }
+
+    public Pgs getPgs() {
+        return pgs;
+    }
+
+    public void setPgs(Pgs pgs) {
+        this.pgs = pgs;
+    }
+
+    public List<Pgs> getPgsList() {
+        return pgsList;
+    }
+
+    public void setPgsList(List<Pgs> pgsList) {
+        this.pgsList = pgsList;
+    }
+
+    public NIPT getNipt() {
+        return nipt;
+    }
+
+    public void setNipt(NIPT nipt) {
+        this.nipt = nipt;
     }
 
 }

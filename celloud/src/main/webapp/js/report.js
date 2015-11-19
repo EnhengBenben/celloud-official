@@ -690,7 +690,7 @@ $.ajaxSetup ({
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
 			}else if(softwareId == 85 || softwareId == 86 || softwareId == 87 || softwareId == 88 || softwareId == 91 || softwareId == 92 || softwareId == 93 || softwareId == 94 || softwareId == 104){
-				$.get("pgsReport!toPgsReport",{"pgs.projectId":proId,"pgs.dataKey":dataKey,"pgs.appId":softwareId},function(responseText){
+				$.get("report3!getPgsReport",{"proId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
 			}else if(softwareId == 82){

@@ -10,7 +10,6 @@ import com.mongo.sdo.CmpReport;
 import com.mongo.sdo.GddDiseaseDict;
 import com.mongo.sdo.HBV;
 import com.mongo.sdo.MIB;
-import com.mongo.sdo.NIPT;
 import com.mongo.sdo.PGSFilling;
 import com.mongo.sdo.Pgs;
 import com.mongo.sdo.Split;
@@ -68,15 +67,6 @@ public interface ReportService {
             Integer appId);
 
     /**
-     * 获取pgs报告内容
-     * 
-     * @param dataKey
-     * @param proId
-     * @return
-     */
-    public Pgs getPgsReport(String dataKey, Integer proId, Integer appId);
-
-    /**
      * 获取pgs统计报告内容
      * 
      * @param userId
@@ -95,16 +85,6 @@ public interface ReportService {
      */
     public void editPGSFilling(int userId, int appId, String dataKey,
             PGSFilling pgs);
-
-    /**
-     * 获取NIPT数据报告
-     * 
-     * @param dataKey
-     * @param proId
-     * @param appId
-     * @return
-     */
-    public NIPT getNIPTReport(String dataKey, Integer proId, Integer appId);
 
     /**
      * 获取GDD未检测到的疾病

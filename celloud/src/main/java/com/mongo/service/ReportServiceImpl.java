@@ -10,7 +10,6 @@ import com.mongo.sdo.CmpReport;
 import com.mongo.sdo.GddDiseaseDict;
 import com.mongo.sdo.HBV;
 import com.mongo.sdo.MIB;
-import com.mongo.sdo.NIPT;
 import com.mongo.sdo.PGSFilling;
 import com.mongo.sdo.Pgs;
 import com.mongo.sdo.Split;
@@ -45,11 +44,6 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Pgs getPgsReport(String dataKey, Integer proId, Integer appId) {
-        return reportDao.getPgsReport(dataKey, proId, appId);
-    }
-
-    @Override
     public List<Pgs> getPgsList(Integer userId) {
         return this.reportDao.getPgsList(userId);
     }
@@ -64,11 +58,6 @@ public class ReportServiceImpl implements ReportService {
     public List<CmpGeneSnpResult> getGddResult(String dataKey, Integer proId,
             Integer appId) {
         return reportDao.getGddResult(dataKey, proId, appId);
-    }
-
-    @Override
-    public NIPT getNIPTReport(String dataKey, Integer proId, Integer appId) {
-        return reportDao.getNIPTReport(dataKey, proId, appId);
     }
 
     @Override

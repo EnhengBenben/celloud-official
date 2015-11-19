@@ -16,7 +16,6 @@ import com.mongo.sdo.CmpReport;
 import com.mongo.sdo.GddDiseaseDict;
 import com.mongo.sdo.HBV;
 import com.mongo.sdo.MIB;
-import com.mongo.sdo.NIPT;
 import com.mongo.sdo.PGSFilling;
 import com.mongo.sdo.Pgs;
 import com.mongo.sdo.Split;
@@ -125,12 +124,6 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
     }
 
     @Override
-    public Pgs getPgsReport(String dataKey, Integer proId, Integer appId) {
-        return ds.createQuery(Pgs.class).filter("dataKey", dataKey)
-                .filter("projectId", proId).filter("appId", appId).get();
-    }
-
-    @Override
     public List<Pgs> getPgsList(Integer userId) {
         return this.ds.createQuery(Pgs.class).filter("userId", userId)
                 .order("-uploadDate").asList();
@@ -143,12 +136,6 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
                 ds.createQuery(Pgs.class).filter("userId", userId)
                         .filter("appId", appId).filter("dataKey", dataKey), ds
                         .createUpdateOperations(Pgs.class).set("fill", pgs));
-    }
-
-    @Override
-    public NIPT getNIPTReport(String dataKey, Integer proId, Integer appId) {
-        return ds.createQuery(NIPT.class).filter("dataKey", dataKey)
-                .filter("projectId", proId).filter("appId", appId).get();
     }
 
     @Override
