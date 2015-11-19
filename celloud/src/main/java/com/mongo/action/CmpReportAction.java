@@ -257,9 +257,11 @@ public class CmpReportAction extends BaseAction {
             line.append(cmp.getAllFragment()).append("\t");
             line.append(cmp.getUsableFragment()).append("\t");
             line.append(cmp.getAvgCoverage()).append("\t");
-            for (GeneDetectionResult gene : cmp.getCmpGeneResult()) {
-                line.append(gene.getGeneName()).append(":")
-                        .append(gene.getSequencingDepth()).append(";");
+            if (cmp.getCmpGeneResult() != null) {
+                for (GeneDetectionResult gene : cmp.getCmpGeneResult()) {
+                    line.append(gene.getGeneName()).append(":")
+                            .append(gene.getSequencingDepth()).append(";");
+                }
             }
             line.append("\n");
             FileTools.appendWrite(path, line.toString());
