@@ -165,7 +165,7 @@ public class RunAppServiceImpl {
             if (FileTools.countLines(proFile) < 1) {
                 // 追加表头
                 FileTools.appendWrite(projectFile,
-                        "dataKey\t样品名称\t序列总数\t平均质量\t平均GC含量\n");
+                                "dataKey\tSamples\tSpecies\tReads_num\tAverage depth of coverage\n");
             }
 			Map<String, List<Data>> map = JsonUtil.parseDataMap(dataInfos);
 			Company com = JSON.parseObject(company, Company.class);
@@ -183,39 +183,7 @@ public class RunAppServiceImpl {
 				mib.setTotalReads(totalReads);
 				mib.setAvgQuality(avgQuality);
 				mib.setAvgGCContent(avgGCContent);
-				String result = totalReads + "\t" + avgQuality + "\t"
-						+ avgGCContent;
-                FileTools.appendWrite(projectFile, dataKey + "\t" + fileName
-						+ "\t" + result + "\n");
 			}
-            try {
-                lock.release();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-			// -----读取报告内容并保存到mongoDB------
-			List<Data> dataList = map.get(dataKey);
-			mib.setProjectId(Integer.parseInt(projectId));
-			mib.setDataKey(dataKey);
-			mib.setUserId(Integer.parseInt(userId));
-			mib.setUsername(use.getUsername());
-			mib.setEmail(use.getEmail());
-			mib.setAppId(Integer.parseInt(appId));
-			mib.setAppName(appName);
-			mib.setData(dataList);
-			mib.setCompanyId(com.getCompanyId());
-			mib.setCompanyName(com.getCompanyName());
-			mib.setCompanyEngName(com.getEnglishName());
-			mib.setCompanyAddr(com.getAddress());
-			mib.setCompanyEnAddr(com.getEnglishName());
-			mib.setCompanyIcon(com.getCompanyIcon());
-			mib.setCompanyTel(com.getTel());
-			mib.setZipCode(com.getZipCode());
-			mib.setDeptName(dept1.getDeptName());
-			mib.setDeptEngName(dept1.getEnglishName());
-			mib.setDeptIcon(dept1.getDeptIcon());
-			mib.setDeptTel(dept1.getTel());
-			mib.setCreateDate(new Date());
 			// 1. 读取各个属的详细情况
 			String tablePath = finalPath + "/result/taxi.all.fastq.table";
 			if (new File(tablePath).exists()) {
@@ -224,17 +192,54 @@ public class RunAppServiceImpl {
 				for (int z = 1; z < list_.size(); z++) {
 					Map<String, String> map_ = new HashMap<>();
 					String[] line_z = list_.get(z).split("\t");
-					map_.put("Species", getArray(line_z, 0));
+                    String species = getArray(line_z, 0);
+                    String reads_num = getArray(line_z, 5);
+                    String avgCoverage = getArray(line_z, 6);
+                    map_.put("Species", species);
 					map_.put("Genus", getArray(line_z, 1));
 					map_.put("GI", getArray(line_z, 2));
 					map_.put("Coverage", getArray(line_z, 3));
 					map_.put("Reads_hit", getArray(line_z, 4));
-					map_.put("Reads_num", getArray(line_z, 5));
-					map_.put("avgCoverage", getArray(line_z, 6));
+                    map_.put("Reads_num", reads_num);
+                    map_.put("avgCoverage", avgCoverage);
 					summaryTable.add(map_);
+                    if (z == 1) {
+                        String result = species + "\t" + reads_num + "\t"
+                                + avgCoverage;
+                        FileTools.appendWrite(projectFile, dataKey + "\t"
+                                + fileName + "\t" + result + "\n");
+                    }
 				}
-				mib.setSummaryTable(summaryTable);
+                mib.setSummaryTable(summaryTable);
 			}
+            try {
+                lock.release();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            // -----读取报告内容并保存到mongoDB------
+            List<Data> dataList = map.get(dataKey);
+            mib.setProjectId(Integer.parseInt(projectId));
+            mib.setDataKey(dataKey);
+            mib.setUserId(Integer.parseInt(userId));
+            mib.setUsername(use.getUsername());
+            mib.setEmail(use.getEmail());
+            mib.setAppId(Integer.parseInt(appId));
+            mib.setAppName(appName);
+            mib.setData(dataList);
+            mib.setCompanyId(com.getCompanyId());
+            mib.setCompanyName(com.getCompanyName());
+            mib.setCompanyEngName(com.getEnglishName());
+            mib.setCompanyAddr(com.getAddress());
+            mib.setCompanyEnAddr(com.getEnglishName());
+            mib.setCompanyIcon(com.getCompanyIcon());
+            mib.setCompanyTel(com.getTel());
+            mib.setZipCode(com.getZipCode());
+            mib.setDeptName(dept1.getDeptName());
+            mib.setDeptEngName(dept1.getEnglishName());
+            mib.setDeptIcon(dept1.getDeptIcon());
+            mib.setDeptTel(dept1.getTel());
+            mib.setCreateDate(new Date());
 			// 2. 保存各个图片
 			String realPath = PropertiesUtils.outProject + "/upload/" + userId
 					+ "/" + appId + "/" + dataKey;
