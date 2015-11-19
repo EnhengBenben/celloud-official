@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.channels.FileLock;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -810,6 +811,8 @@ public class RunAppServiceImpl {
 	 * @param dataKeyList
 	 * @return
 	 */
+	private static String[] HCVType = { "1b", "2a", "3a", "3b", "6a" };
+    private static List<String> typeList = Arrays.asList(HCVType);
 	public void runHCV(String appPath, String projectId, String dataKeyList) {
 		// 创建要运行的文件列表文件
 		String dataListFile = datalist + new Date().getTime() + ".txt";
@@ -825,7 +828,35 @@ public class RunAppServiceImpl {
 		String command = HCV + " " + dataListFile + " " + appPath + "/ 2>"
 				+ appPath + "/" + projectId + "/log";
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		ssh.sshSubmit(false);
+		boolean state = ssh.sshSubmit(true);
+        if (state) {
+            // 创建项目结果文件
+            String projectFile = appPath + "/" + projectId + "/" + projectId
+                    + ".txt";
+            FileTools.createFile(projectFile);
+            // 追加表头
+            FileTools.appendWrite(projectFile,
+                    "dataKey\tFile_Name\tSubtype\tSubject_Name\tIdentity\n");
+            for (int i = 0; i < dataArray.length; i++) {
+                String[] dataDetail = dataArray[i].split(",");
+                String finalPath = appPath + "/" + getArray(dataDetail, 0)
+                        + "/Result.txt";
+                String context = "";
+                if (FileTools.checkPath(finalPath)) {
+                    context = FileTools.getLastLine(finalPath);
+                    String c[] = context.split("\t");
+                    if (c.length > 4) {
+                        if (!typeList.contains(getArray(c, 1))) {
+                            c[1] = "其他";
+                        }
+                        context = getArray(c, 0) + "\t" + getArray(c, 1) + "\t"
+                                + getArray(c, 2) + "\t" + getArray(c, 3);
+                    }
+                }
+                FileTools.appendWrite(projectFile, getArray(dataDetail, 0)
+                        + "\t" + context + "\n");
+            }
+        }
 	}
 
 	/**
