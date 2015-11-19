@@ -37,7 +37,7 @@
 		<!--检测结果-->
 		<div class="m-box m-box-yc">
 			<h2><i class="i-edit"></i>报告</h2>
-			<div class="m-boxCon" id="_report" style="display: inline-block;width: 100%">
+			<div class="m-boxCon">
 				<table class="table table-striped-green table-text-center table-padding0" id="snp_table1">
 					<thead>
 						<tr>
