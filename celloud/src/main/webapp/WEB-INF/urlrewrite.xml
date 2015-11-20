@@ -109,6 +109,11 @@
 		<from>^/getClientVersion$</from>
 		<to>/python!getClientVersion</to>
 	</rule>
+	<rule>
+		<note>python</note>
+		<from>^/sendEmail/([\w\W]+)/([\w\W]+)/([\w\W]+)$</from>
+		<to>/python!sendEmail?id=$1&amp;fileName=$2&amp;dataKey=$3</to>
+	</rule>
 
 	<rule>
 		<note>

@@ -1381,30 +1381,22 @@ function searchUserByName(){
 			//验证是否为数字
 			if((/^(\+|-)?\d+$/.test(fileNum)) && fileNum>0){
 				$("#fileNumWarn").html("");
-				$.get("getRadomDataKey.action",{"fileNumber":fileNum},function(dataKey){
-					$("#generatedDataKey").html(dataKey);
-					$("#dataKeyTable").attr("style","");
-					$("#fileDetailTable").attr("style","");
-					if(fileNum>1){
-						for(var i=0;i<fileNum-1;i++){
-							globalFileNum++;
-							$("#fileDetailTbody").append("<tr id='tr"+globalFileNum+"'>");
-							$("#fileDetailTbody").append("</tr>");
-							$("#tr"+globalFileNum).append("<td>dataKey:<font color='red'>*</font></td>");
-							$("#tr"+globalFileNum).append("<td><input type='text' id='dataKeyName"+globalFileNum+"' placeholder='dataKey'><span id='dataKeyWarn"+globalFileNum+"' style='color: red;'></span></td>");
-							$("#tr"+globalFileNum).append("<td>原文件名<font color='red'>*</font></td>");
-							$("#tr"+globalFileNum).append("<td><input type='text' id='bigFileName"+globalFileNum+"' maxlength='100' placeholder='最长100个字符'><span id='fileNameWarn"+globalFileNum+"' style='color: red;'></span></td>");
-							$("#tr"+globalFileNum).append("<td>所属用户<font color='red'>*</font></td>");
-							$("#tr"+globalFileNum).append("<td><select id='userNameSel"+globalFileNum+"'></select><span id='userNameWarn"+globalFileNum+"' style='color: red;'></span></td>");
-							$("#userNameSel1 option").each(function(){ 
-								$("#userNameSel"+globalFileNum).append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option>");
-							});
-						}
-						$.each($("#generatedDataKey").html().split(";"),function(index,item){
-							$("#dataKeyName" + (index+1)).val(item);
+				$("#dataKeyTable").attr("style","");
+				$("#fileDetailTable").attr("style","");
+				if(fileNum>1){
+					for(var i=0;i<fileNum-1;i++){
+						globalFileNum++;
+						$("#fileDetailTbody").append("<tr id='tr"+globalFileNum+"'>");
+						$("#fileDetailTbody").append("</tr>");
+						$("#tr"+globalFileNum).append("<td>原文件名<font color='red'>*</font></td>");
+						$("#tr"+globalFileNum).append("<td><input type='text' id='bigFileName"+globalFileNum+"' maxlength='100' placeholder='最长100个字符'><span id='fileNameWarn"+globalFileNum+"' style='color: red;'></span></td>");
+						$("#tr"+globalFileNum).append("<td>所属用户<font color='red'>*</font></td>");
+						$("#tr"+globalFileNum).append("<td><select id='userNameSel"+globalFileNum+"'></select><span id='userNameWarn"+globalFileNum+"' style='color: red;'></span></td>");
+						$("#userNameSel1 option").each(function(){ 
+							$("#userNameSel"+globalFileNum).append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option>");
 						});
 					}
-				});
+				}
 			}else{
 				$("#fileNumWarn").html("请输入正整数！");
 			}
@@ -1415,22 +1407,16 @@ function searchUserByName(){
 	function addBigData(){
 		var dataList = "";
 		for(var i=1;i<=globalFileNum;i++){
-			var dataKey = $("#dataKeyName"+i).val();
 			var fileName = $("#bigFileName"+i).val();
 			var userId = $("#userNameSel"+i).val();
-			dataList += dataKey + "," + fileName + "," + userId + ";"
+			dataList += fileName + "," + userId + ";"
 		}
 		$.get("file!readBigFile",{"dataList":dataList},function(data){
-			alert(data);
 			$("#addBigDataPromptTr").attr("style","");
-			if(data=="success"){
-				$("#addBigDataPrompt").html("<font color='green'>保存成功！</font>");
-			}else if(data.split(",")[1]=="0"){//文件已存在
-				$("#addBigDataPrompt").html("<font color='green'>"+data.split(",")[0]+"文件已存在，其余文件上传成功！</font>");
-			}else if(data.split(",")[1]=="1"){
-				$("#addBigDataPrompt").html("<font color='green'>"+data.split(",")[0]+"文件不存在，其余文件上传成功！</font>");
+			if(data){
+				$("#addBigDataPrompt").html("<font color='green'>"+data+"文件不存在，其余文件上传成功！</font>");
 			}else{
-				$("#addBigDataPrompt").html("<font color='green'>"+data.split(",")[0].split(";")[0]+"文件已存在，"+data.split(",")[0].split(";")[1]+"文件不存在，其余文件上传成功！</font>");
+				$("#addBigDataPrompt").html("<font color='green'>保存成功！</font>");
 			}
 			setInterval(clearInfo,5000);
 		});

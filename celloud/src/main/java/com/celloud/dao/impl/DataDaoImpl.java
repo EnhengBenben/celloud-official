@@ -405,6 +405,31 @@ public class DataDaoImpl extends BaseDao implements DataDao {
     }
 
     @Override
+    public Integer updateData(Data data) {
+        Integer num = 0;
+        String sql = "update tb_file set data_key=?,size=?,path=?,another_name=?,file_format=?,state=? where file_id=?";
+        try {
+            conn = ConnectManager.getConnection();
+            qps = conn.prepareStatement(sql.toString());
+            qps.setString(1, data.getDataKey());
+            qps.setLong(2, data.getSize());
+            qps.setString(3, data.getPath());
+            qps.setString(4, data.getAnotherName());
+            qps.setInt(5, data.getFileFormat());
+            qps.setInt(6, data.getState());
+            qps.setLong(7, data.getFileId());
+            num = qps.executeUpdate();
+        } catch (SQLException e) {
+            log.error("用户" + super.userName + "修改数据" + data.getFileId()
+                    + "信息失败");
+            e.printStackTrace();
+        } finally {
+            ConnectManager.free(conn, qps, qrs);
+        }
+        return num;
+    }
+
+    @Override
     public Integer updateDatas(List<Data> list) {
         Integer num = 0;
         try {
@@ -491,43 +516,18 @@ public class DataDaoImpl extends BaseDao implements DataDao {
     }
 
     @Override
-    public List<String> getAllDataKey() {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        List<String> dataKeyList = new ArrayList<String>();
-        String sql = "select data_key from tb_file";
-        try {
-            conn = ConnectManager.getConnection();
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                dataKeyList.add(rs.getString("data_key"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            ConnectManager.free(conn, ps, rs);
-        }
-        return dataKeyList;
-    }
-
-    @Override
     public Integer addData(Data data) {
         Integer num = 0;
         try {
             StringBuffer sql = new StringBuffer();
-            sql.append("insert into tb_file(user_id,data_key,file_name,size,path,file_format,another_name,create_date) values(?,?,?,?,?,?,?,now());");
+            sql.append("insert into tb_file(user_id,file_name,another_name,create_date,state) values(?,?,?,now(),?);");
             conn = ConnectManager.getConnection();
             qps = conn.prepareStatement(sql.toString(),
                     Statement.RETURN_GENERATED_KEYS);
             qps.setInt(1, data.getUserId());
-            qps.setString(2, data.getDataKey());
-            qps.setString(3, data.getFileName());
-            qps.setLong(4, data.getSize());
-            qps.setString(5, data.getPath());
-            qps.setInt(6, data.getFileFormat());
-            qps.setString(7, data.getAnotherName());
+            qps.setString(2, data.getFileName());
+            qps.setString(3, data.getAnotherName());
+            qps.setInt(4, data.getState());
             num = qps.executeUpdate();
             // 检索由于执行此 Statement 对象而创建的所有自动生成的键
             qrs = qps.getGeneratedKeys();
@@ -542,5 +542,4 @@ public class DataDaoImpl extends BaseDao implements DataDao {
         }
         return num;
     }
-
 }

@@ -135,12 +135,6 @@ public class SoftwareAction extends BaseAction {
      */
     private int fileFormat;
 
-    public String getSoftListByFormat() {
-	userId = (Integer) super.session.get("userId");
-	list = softwareService.getSoftListByFormat(fileFormat, userId);
-	return SUCCESS;
-    }
-
     /**
      * 根据软件编号获取软件名称
      * 

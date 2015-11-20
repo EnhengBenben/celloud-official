@@ -132,12 +132,6 @@
 				<param name="root">result</param>
 			</result>
 		</action>
-		<action name="getSoftListByFormat" class="com.nova.action.SoftwareAction"
-			method="getSoftListByFormat">
-			<result type="json">
-				<param name="root">list</param>
-			</result>
-		</action>
 		<!-- 数据统计end -->
 		<action name="getDataTypeList" class="com.nova.action.DataFormatAction"
 			method="getAllDataType">

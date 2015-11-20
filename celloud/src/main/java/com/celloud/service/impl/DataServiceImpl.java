@@ -75,6 +75,11 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
+    public Integer updateData(Data data) {
+        return dataDao.updateData(data);
+    }
+
+    @Override
     public String getDataSize(String dataIds) {
         return dataDao.getDataSize(dataIds);
     }
@@ -90,13 +95,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<String> getAllDataKey() {
-        return dataDao.getAllDataKey();
-    }
-
-    @Override
     public Integer addData(Data data) {
         return dataDao.addData(data);
     }
-
 }

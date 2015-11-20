@@ -45,6 +45,18 @@
 		          </div>
 		        </div>
 		      </c:if>
+		      <c:if test="${session.companyId==33 }">
+		        <div class="box box-success color-palette-bo">
+		          <div class="box-body bg-green" style="padding-left:30px;padding-bottom: 0px;">
+		            <h3 style="font-family:黑体;color:#FFFFFF">
+		            	运行统计
+		            	<a type="button" class="text-yellow" style="font-size:14px;margin-left:10px">目前只提供 CMP 流程的统计</a>
+		            </h3>
+		            <p style="font-family:黑体;color:#FFFFFF">查看页面中不提供序列详细信息的直接展示，用户可以通过“下载Excel”获得全部序列信息。</p>
+		            <a class="btn btn-success btn-flat" style="width:100px;height:35px;margin-right:0px" href="javascript:void(0)" id="_down">下载 Excel</a>
+		          </div>
+		        </div>
+		      </c:if>
 	        <div id="countDiv">
 	        </div>
 	      </div>
@@ -78,15 +90,21 @@
   $(document).ready(function(){
 	  var companyId = $("#sessionCompanyId").val();
 	  if(companyId==6){
-	  	$.get("pgsReport!toPgsCount",{"pgs.userId":$("#sessionUserId").val(),"pgs.username":$("#sessionUserName").val()},function(responseText){
+	  	$.get("report3!toPgsCount",{"pgs.userId":$("#sessionUserId").val(),"pgs.username":$("#sessionUserName").val()},function(responseText){
 	  		$("#countDiv").html(responseText);
 	  	});
 	  }else if (companyId==3){
-		  $.get("report3!toCount",function(responseText){
-		  		$("#countDiv").html(responseText);
-		  		var url = $("#downUrl").val();
-		  		$("#_down").attr("href",url);
-		  	});
+		$.get("report3!toHBVCount",function(responseText){
+			$("#countDiv").html(responseText);
+			var url = $("#downUrl").val();
+			$("#_down").attr("href",url);
+		});
+	  }else if(companyId==33){
+		$.get("cmpReport!toCmpCount",function(responseText){
+			$("#countDiv").html(responseText);
+			var url = $("#downUrl").val();
+			$("#_down").attr("href",url);
+		});
 	  }
   	$("#toDataCount").click(function(){
   		
@@ -95,6 +113,10 @@
   function showSeq(seq){
 	  $("#showSeq").html(seq);
 	  $("#seqModal").modal("show");
+  }
+  function showGeneResult(result){
+	  $("#showGeneResult").html(result);
+	  $("#geneResultModal").modal("show");
   }
   </script>
 </body>

@@ -149,10 +149,7 @@ public class ReadReportService {
         }
 
         // gDNA_HR
-        if (AppNameIDConstant.gDNA_HR.equals(appId)
-                || AppNameIDConstant.MalBac.equals(appId)
-                || AppNameIDConstant.gDNA.equals(appId)
-                || AppNameIDConstant.gDNA_MR.equals(appId)
+        if (AppNameIDConstant.gDNA.equals(appId)
                 || AppNameIDConstant.gDNA_MR_v1.equals(appId)
                 || AppNameIDConstant.gDNA_Chimeric_v1.equals(appId)
                 || AppNameIDConstant.gDNA_HR_v1.equals(appId)
@@ -161,13 +158,7 @@ public class ReadReportService {
                 || AppNameIDConstant.MDA_MR_v1.equals(appId)
                 || AppNameIDConstant.MalBac_v1.equals(appId)
                 || AppNameIDConstant.SurePlex_v1.equals(appId)
-                || AppNameIDConstant.Sureplex_HR.equals(appId)
-                || AppNameIDConstant.PGS.equals(appId)
-                || AppNameIDConstant.MDA_MR.equals(appId)
-                || AppNameIDConstant.MDA_HR.equals(appId)
-                || AppNameIDConstant.MDA_Chimeric.equals(appId)
-                || AppNameIDConstant.gDNA_Chimeric.equals(appId)
-                || AppNameIDConstant.SurePlex.equals(appId)) {
+                || AppNameIDConstant.PGS.equals(appId)) {
             String snpPath = basePath + "/" + userId + "/" + appId + "/"
                     + dataKey;
             reportMap = readReport.gDNA_HRDataReport(snpPath, userId + "/"
@@ -295,22 +286,6 @@ public class ReadReportService {
             return reportMap;
         }
 
-        // HBV_SNP2 数据报告
-        if (AppNameIDConstant.HBV_SNP2.equals(appId)) {
-            String snpPath = basePath + "/" + userId + "/" + appId + "/"
-                    + dataKey + "/SVG";
-            reportMap = readReport.HBV_SNP2DataReport(snpPath);
-            reportMap.put("pagePath", userId + "/" + appId + "/" + dataKey
-                    + "/SVG");
-            reportMap.put("zip", userId + "/" + appId + "/" + dataKey
-                    + "/HBV_SNP.zip");
-            reportMap.put("pdf", userId + "/" + appId + "/" + dataKey
-                    + "/HBV_SNP.pdf");
-            reportMap.put("fileName",
-                    ("null".equals(anotherName) || anotherName == null || ""
-                            .equals(anotherName)) ? fileName : anotherName);
-            return reportMap;
-        }
         return null;
     };
 

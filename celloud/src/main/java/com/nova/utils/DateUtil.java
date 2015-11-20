@@ -41,14 +41,14 @@ public class DateUtil {
 		return simpleFormat.format(date);// 将当前时间格式化成String并返回
 	}
 
-	/**
-	 * 将当前时间格式化为“yyyyMMdd”格式的字符串
-	 * 
-	 * @return
-	 */
+	    /**
+     * 将当前时间格式化为“yyyyMMdd”格式的字符串
+     * 
+     * @return
+     */
 	public static String getDateToString() {
 		Date date = new Date();
-        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyMMdd");
 		return simpleFormat.format(date);
 	}
 

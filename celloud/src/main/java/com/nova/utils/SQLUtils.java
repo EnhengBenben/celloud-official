@@ -4,12 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.celloud.sdo.App;
+import com.mysql.jdbc.Statement;
 import com.nova.constants.DataState;
 import com.nova.constants.SoftWareOffLineState;
 import com.nova.sdo.Client;
@@ -22,6 +21,34 @@ import com.nova.sdo.User;
  * @date 2014-10-13 上午10:40:43
  */
 public class SQLUtils {
+    /**
+     * 通过 userId获取用户邮箱
+     * 
+     * @param userId
+     * @return
+     */
+    public String getEmail(Integer userId) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String email = null;
+        String sql = "select email from tb_user where user_id = ?;";
+        try {
+            conn = ConnectManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                email = rs.getString("email");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectManager.free(conn, ps, rs);
+        }
+        return email;
+    }
+    
 	public Map<Long, App> getAllSoftware() {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -253,78 +280,30 @@ public class SQLUtils {
 		return dataNum;
 	}
 
-	public List<String> getAllDataKey() {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		List<String> dataKeyList = new ArrayList<String>();
-		String sql = "select data_key from tb_file";
-		try {
-			conn = ConnectManager.getConnection();
-			ps = conn.prepareStatement(sql);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				dataKeyList.add(rs.getString("data_key"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			ConnectManager.free(conn, ps, rs);
-		}
-		return dataKeyList;
-	}
-
 	public int addDataInfo(Data data) {
 		Connection conn = null;
 		PreparedStatement ps = null;
+        ResultSet rs = null;
 		int result = 0;
-		String sql = "insert into tb_file(user_id,data_key,file_name,create_date,path,md5,state) values(?,?,?,now(),?,?,?)";
+		String sql = "insert into tb_file(user_id,file_name,create_date,md5,state) values(?,?,now(),?,?)";
 		try {
 			conn = ConnectManager.getConnection();
-			ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, data.getUserId());
-			ps.setString(2, data.getDataKey());
-			ps.setString(3, data.getFileName());
-			ps.setString(4, data.getPath());
-			ps.setString(5, data.getMd5());
-			ps.setInt(6, DataState.DEELTED);
-			result = ps.executeUpdate();
+			ps.setString(2, data.getFileName());
+			ps.setString(3, data.getMd5());
+			ps.setInt(4, DataState.DEELTED);
+            ps.executeUpdate();
+            rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                result = (int) rs.getLong(1);
+            }
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectManager.free(conn, ps, null);
 		}
 		return result;
-	}
-
-	public Data saveDataInfo(Data data) {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		int result = 0;
-		String sql = "insert into tb_file(user_id,data_key,file_name,strain,size,create_date,path,file_format) values(?,?,?,?,?,now(),?,?)";
-		try {
-			conn = ConnectManager.getConnection();
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1, data.getUserId());
-			ps.setString(2, data.getDataKey());
-			ps.setString(3, data.getFileName());
-			ps.setString(4, data.getStrain());
-			ps.setDouble(5, data.getSize());
-			ps.setString(6, data.getPath());
-			ps.setInt(7, data.getFileFormat());
-			ps.executeUpdate();
-			rs = ps.getGeneratedKeys();
-			if (rs.next()) {
-				result = rs.getInt(1);
-			}
-			data.setFileId(result);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			ConnectManager.free(conn, ps, rs);
-		}
-		return data;
 	}
 
 	public Data getDataByKey(String dataKey) {
@@ -440,4 +419,27 @@ public class SQLUtils {
 		}
 		return client;
 	}
+
+    public int updateDataInfoByFileId(Data data) {
+        int flag = 1;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "update tb_file set data_key=?,path=?,state=? where file_id=?";
+        try {
+            conn = ConnectManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, data.getDataKey());
+            ps.setString(2, data.getPath());
+            ps.setInt(3, data.getState());
+            ps.setInt(4, data.getFileId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            flag = 0;
+            e.printStackTrace();
+        } finally {
+            ConnectManager.free(conn, ps, null);
+        }
+        return flag;
+    }
+
 }

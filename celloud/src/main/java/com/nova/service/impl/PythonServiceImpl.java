@@ -1,13 +1,14 @@
 package com.nova.service.impl;
 
 import java.io.File;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
+import com.nova.constants.DataState;
 import com.nova.constants.FileFormat;
+import com.nova.email.EmailService;
 import com.nova.sdo.Data;
 import com.nova.sdo.User;
 import com.nova.service.IPythonService;
@@ -17,6 +18,7 @@ import com.nova.utils.FileTools;
 import com.nova.utils.PerlUtils;
 import com.nova.utils.PropertiesUtil;
 import com.nova.utils.SQLUtils;
+import com.nova.utils.TemplateUtil;
 
 public class PythonServiceImpl implements IPythonService {
 	Logger log = Logger.getLogger(PythonServiceImpl.class);
@@ -55,11 +57,6 @@ public class PythonServiceImpl implements IPythonService {
 
 	@Override
 	public String getDataKey(Integer id, String fileName,String md5) {
-		List<String> dataKeyList = sql.getAllDataKey();
-		String dataKey = DataUtil.getNewDataKey();
-		while (dataKeyList.contains(dataKey)) {
-			dataKey = DataUtil.getNewDataKey();
-		}
 		Data data = new Data();
 		data.setUserId(id);
 		// 只允许字母和数字
@@ -67,13 +64,17 @@ public class PythonServiceImpl implements IPythonService {
 		Pattern p = Pattern.compile(regEx);
 		Matcher m = p.matcher(fileName);
 		data.setFileName(m.replaceAll("").trim());
+        if (md5 != null) {
+            data.setMd5(md5);
+        }
+        int dataId = sql.addDataInfo(data);
+        data.setFileId(dataId);
+        String dataKey = DataUtil.getNewDataKey(dataId);
 		String newName = dataKey + FileTools.getExtName(fileName);
 		data.setDataKey(dataKey);
 		data.setPath(path + newName);
-		if (md5 != null) {
-			data.setMd5(md5);
-		}
-		sql.addDataInfo(data);
+        data.setState(DataState.ACTIVE);
+        sql.updateDataInfoByFileId(data);
 		log.info("为用户：" + id + "返回" + newName);
 		return newName;
 	}
@@ -124,4 +125,13 @@ public class PythonServiceImpl implements IPythonService {
 	public long saveDataSize(String dataKey, long size) {
 		return sql.updateData(dataKey, size);
 	}
+
+    @Override
+    public void sendEmail(Integer userId, String fileName, String dataKey) {
+        log.info("Python客户端，用户：" + userId + "上传文件" + fileName + "完成，发送邮件。");
+        String email = sql.getEmail(userId);
+        String context = TemplateUtil.readTemplate(8);
+        context = context.replace("#dataName", fileName);
+        EmailService.send(email, context, true);
+    }
 }
