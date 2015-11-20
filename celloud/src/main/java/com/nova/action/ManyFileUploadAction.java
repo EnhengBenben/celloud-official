@@ -112,25 +112,30 @@ public class ManyFileUploadAction extends BaseAction {
         String extName = null;
         StringBuffer sb = new StringBuffer();
         for (String fileItem : dataList.split(";")) {
-            //切割参数
+            // 切割参数
             uploadImageFileName = fileItem.split(",")[0];
             userId = Integer.parseInt(fileItem.split(",")[1]);
-            //获取后缀
-            extName = FileTools.getExtName(uploadImageFileName);
-            int dataId = this.addFileInfo(uploadImageFileName);
+            // 插入数据库
+            Data data = new Data();
+            data.setUserId(userId);
+            data.setFileName(uploadImageFileName);
+            data.setState(DataState.DEELTED);
+            int dataId = dataService.addDataInfo(data);
+            // 构造datakey
             fileDataKey = DataUtil.getNewDataKey(dataId);
-            //构造新文件名
+            // 获取后缀
+            extName = FileTools.getExtName(uploadImageFileName);
+            // 构造新文件名
             String newName = fileDataKey + extName;
-            //构造新路径
-            path = PropertiesUtil.bigFilePath + newName;
-            //旧路径
-            String old = PropertiesUtil.bigFilePath + uploadImageFileName;
+            // 构造新路径
+            path = realPath + newName;
+            // 旧路径
+            String old = realPath + uploadImageFileName;
             if (new File(old).exists()) {
-                FileTools.renameFile(PropertiesUtil.bigFilePath, uploadImageFileName, newName);
+                FileTools.renameFile(realPath, uploadImageFileName, newName);
                 fileSize = new File(path).length();
                 fileType = checkFileType.checkFileType(newName);
                 this.updateFileInfo(dataId, fileDataKey, newName);
-                // this.addFileInfo1(path);
             } else {
                 sb.append(uploadImageFileName).append(",");
             }
@@ -139,22 +144,6 @@ public class ManyFileUploadAction extends BaseAction {
         return "readBigFile";
     }
 
-    public String addFileInfo1(String filePath) {
-        Data data = new Data();
-        data.setUserId(userId);
-        data.setSize(fileSize);
-        data.setFileName(uploadImageFileName);
-        data.setDataKey(fileDataKey);
-        data.setFileFormat(fileType);
-        if (fileType == FileFormat.BAM) {
-            String anotherName = getAnotherName(filePath, fileDataKey);
-            data.setAnotherName(anotherName);
-        }
-        data.setPath(path);
-        dataService.addDataInfo(data);
-        return "addFileInfo1";
-    }
-    
     private static String getAnotherName(String filePath,String fileDataKey){
         String anotherName = null;
         StringBuffer command = new StringBuffer();
