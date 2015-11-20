@@ -13,7 +13,9 @@ public class DataUtil {
     public static String getNewDataKey(int id) {
         SecureRandom s = new SecureRandom();
         String timeStamp = DateUtil.getDateToString()
-                + String.format("%06d", id) + "" + s.nextInt(99);
+                + String.format("%06d", id) + ""
+                + String.format("%02d", s.nextInt(99));
         return timeStamp;
     }
+
 }
