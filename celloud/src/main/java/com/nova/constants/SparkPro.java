@@ -38,7 +38,12 @@ public class SparkPro {
             "99", "100", "101");
 
     /**
-     * 杀任务命令
+     * SGE 杀任务
      */
-    public static final String KILLTASK = "/share/biosoft/perl/PGS_MG/bin/to_qdel.pl";
+    public static final String SGEKILL = "perl /share/biosoft/perl/PGS_MG/bin/to_qdel.pl";
+
+    /**
+     * spark 杀任务
+     */
+    public static final String SPARKKILL = "perl /share/biosoft/perl/PGS_MG/bin/spark_kill.pl";
 }
