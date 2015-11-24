@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>肿瘤报告打印</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/print.css?version=20150804">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/print.css?version=1.0">
 </head>
 <body>
 <a href="javascript:void(0)" onclick="preview(this)" class="btn btn-default" id="change" style="float:right;margin-top:10px;margin-right:-80px;">打印</a>
@@ -5775,7 +5775,7 @@ function printTable($parentDiv_,height){
 }
 function printSection6Table(){
 	var trLength = $("#section6").find("table").find("tr").length;
-	if(trLength>25){
+	if(trLength>26){
 		var pageNum = Math.floor(trLength/26);	
 		var lastNum = trLength%26;
 		var $table_ = $("#section6").find("table");
@@ -5787,7 +5787,7 @@ function printSection6Table(){
 		newTables+="</tbody></table><div class='w3cbbs'></div>";
 		var begin = 25;
 		if(pageNum>1){
-			for(var i=1;i<=pageNum;i++){
+			for(var i=1;i<pageNum;i++){
 				newTables += thead+"<tbody>";
 				for(var j=begin;j<begin+25+1;j++){
 					newTables+="<tr>"+$table_.find("tbody").find("tr:eq("+j+")").html()+"</tr>";
