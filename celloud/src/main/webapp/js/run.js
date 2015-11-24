@@ -321,6 +321,8 @@ $(document).ready(function(){
 	
 	//运行 checkbox
 	$("#runCheckBox").click(function(){
+		alert("此功能即将取消，请进入数据管理页面运行流程。");
+		return ;
 	    var dataIds = "";
 	    if (checkedDataIds.length == 0) {
 	        changeCss("runAlert","run_success","run_error");
@@ -359,6 +361,8 @@ $(document).ready(function(){
 	});
 	//运行 checkbox
 	$("#runCheckBox1").click(function(){
+		alert("此功能即将取消，请进入数据管理页面运行流程。");
+		return ;
 	    var dataIds = "";
 	    var fileId;
 	    if (checkedDataIds.length != 1) {
