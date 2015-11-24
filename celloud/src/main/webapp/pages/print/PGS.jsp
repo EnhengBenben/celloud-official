@@ -174,16 +174,6 @@ hr {
 			<div class="row" style="margin:0px auto;font-size:12px;">
 				<s:if test="%{company.companyIcon!=null&&!company.companyIcon.equals('')}">
 					<div align="center" class="clearfix">
-					  <s:if test="%{company.companyId==14}">
-						<img src="<%=request.getContextPath() %>/images/hospitalIcon/<s:property value="company.companyIcon"/>" style="width:45px">
-						<h2 class="shotH3 smallTitle" style="line-height: 20px;margin-top:0px">
-							<s:property value="company.companyName" escape="false"/>
-							<br />
-							<span class="subtitle"><s:property value="company.address"/>，
-							电话：<s:property value="company.tel"/></span>
-						</h2>
-					  </s:if>
-					  <s:else>
 					    <img src="<%=request.getContextPath() %>/images/hospitalIcon/<s:property value="company.companyIcon"/>" style="width:60px">
 						<h2 class="shotH3 smallTitle" style="line-height: 20px;margin-top:0px">
 							<s:property value="company.companyName" escape="false"/>
@@ -192,7 +182,6 @@ hr {
 							<span class="subtitle"><s:property value="company.address"/>，
 							电话：<s:property value="company.tel"/></span>
 						</h2>
-					  </s:else>
 					</div>
 					<hr style="margin:0px">
 				</s:if>
@@ -271,20 +260,27 @@ hr {
 					<img src='<s:property value="outPath"/>/<s:property value="pagePath"/>/<s:property value="miniPng"/>' style="width:90%;max-height:245px;">
 				</div>
 				<br/>
-				<div id="des" style="margin:0px">
-					<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px"><s:property value="txt.replace('@','+')"/></textarea>
-				</div>
-				<h4 class="smallh4">结果解释：</h4>
-				<div id="des1">
-					<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px"></textarea>
-				</div>
 				<s:if test="%{company.companyId==14}">
+					<h4 class="smallh4">结果提示：</h4>
+					<div id="des1">
+						<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px"></textarea>
+					</div>
 					<h4 class="smallh4">备注：</h4>
 					<div id="des2">
 						<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px"></textarea>
 					</div>
+					<br/>
+					<hr style="margin:0px">
 				</s:if>
-<!-- 				<div class="w3cbbs"></div> -->
+				<s:if test="%{company.companyId!=14}">
+					<div id="des" style="margin:0px">
+						<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px"><s:property value="txt.replace('@','+')"/></textarea>
+					</div>
+					<h4 class="smallh4">结果解释：</h4>
+					<div id="des1">
+						<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px"></textarea>
+					</div>
+				</s:if>
 				<div id="page2">
 					<h4 class="smallh4">局限性：</h4>
 					<div id="des3">
@@ -477,8 +473,11 @@ hr {
 			inputVal = $(this).val();
 			$(this).parent().html("<span name='print'>"+inputVal+"</span>");
 		});
-		inputVal = $("#des").children().val().replace(/\n/g,"<br>");
-		$("#des").html(inputVal);
+		inputVal = $("#des").children().val();
+		if(inputVal){
+			inputVal = inputVal.replace(/\n/g,"<br>");
+			$("#des").html(inputVal);
+		}
 		var des1 = $("#des1").children().val();
 		if (des1){
 			inputVal = des1.replace(/\n/g,"<br>");
@@ -504,8 +503,11 @@ hr {
 				$(this).parent().html("<input type=\"text\" class=\"input-mini\" value=\""+inputVal+"\" />");
 			}
 		});
-		inputVal = $("#des").html().replace(/<br>/g,"\n");
-		$("#des").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
+		inputVal = $("#des").html();
+		if(inputVal){
+			inputVal = inputVal.replace(/<br>/g,"\n");
+			$("#des").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
+		}
 		if (des1){
 			inputVal = $("#des1").html().replace(/<br>/g,"\n");
 			$("#des1").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
@@ -526,6 +528,7 @@ hr {
 		$("#des").children().html($("#des").children().val());
 		$("#des1").children().html($("#des1").children().val());
 		$("#des2").children().html($("#des2").children().val());
+		$("#des3").children().html($("#des3").children().val());
 		var url = window.location.href.split("printPGS")[0];
 		$.post(url+"updateContext",{"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":$("body").html()},function(result){
 			if(result==1){
