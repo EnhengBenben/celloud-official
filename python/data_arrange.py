@@ -37,7 +37,7 @@ if my:
 		timeFolder = str(d['create_date'])[0:7]
 		if not os.path.exists(os.path.join(toPath,timeFolder+'.zip')):
 			app = name[d['software_id']]
-			p = os.path.join(toPath,timeFolder,d['company_name'],app)
+			p = os.path.join(toPath,timeFolder,app,d['company_name'])
 			if not os.path.exists(p):
 				os.makedirs(p)
 
