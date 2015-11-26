@@ -228,51 +228,38 @@
             <li class="header">产品和服务</li>
             <li class="active treeview">
               <a href="javascript:void(0)" onclick="showUserCount();">
-                <i class="fa fa-dashboard"></i> <span>总览</span>
+                <i class="fa fa-dashboard"></i>
+                <span>总览</span>
               </a>
             </li>
             <li class="treeview">
               <a href="javascript:void()" onclick="data.html">
                 <i class="fa fa-sellsy"></i>
-                <span>数据管理</span>
+                <span>数据上传</span>
               </a>
-              <ul class="treeview-menu">
-                <li><a href="data.html"><i class="fa fa-circle-o"></i>全部</a></li>
-                <li><a href="data.html"><i class="fa fa-circle-o"></i> 未运行<span title="最新上传" class="label label-primary pull-right">4</span></a></li>
-                <li><a href="data.html"><i class="fa fa-circle-o"></i> 已运行</a></li>
-                <li><a href="data.html"><i class="fa fa-circle-o"></i> 已归档</a></li>
-              </ul>
             </li>
             <li class="treeview">
               <a href="task.html">
                 <i class="fa fa-tasks"></i>
-                <span>任务</span>
-                <i class="fa fa-angle-left pull-right"></i>
+                <span>数据管理</span>
               </a>
-              <ul class="treeview-menu">
-                <li><a href="task.html"><i class="fa fa-circle-o"></i> 正在运行</a></li>
-                <li><a href="task.html"><i class="fa fa-circle-o"></i> 运行完成</a></li>
-              </ul>
             </li>
             <li class="treeview">
               <a href="report.html">
                 <i class="fa fa-files-o"></i>
                 <span>报告</span>
-                <i class="fa fa-angle-left pull-right"></i>
               </a>
-              <ul class="treeview-menu">
-                <li><a href="report.html"><i class="fa fa-circle-o"></i> 已读</a></li>
-                <li><a href="report.html"><i class="fa fa-circle-o"></i> 未读</a></li>
-              </ul>
             </li>
             <li class="treeview">
               <a href="javascript:void(0)" onclick="showAppStore()">
-                <i class="fa fa-cubes"></i> <span>应用市场</span>
+                <i class="fa fa-cubes"></i>
+                <span>应用市场</span>
               </a>
             </li>
             <li class="treeview">
               <a href="resourceMonitor.html">
-                <i class="fa fa-heartbeat"></i> <span>资源监控</span>
+                <i class="fa fa-heartbeat"></i>
+                <span>统计</span>
               </a>
             </li>
             <li class="header">用户中心</li>
