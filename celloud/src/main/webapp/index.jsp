@@ -50,7 +50,8 @@
 	<!--#E wrapper-->
 </div>
 <!--#E bgContainer-->
-<script type="text/javascript" src="plugins/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/browser.js"></script>
 <script type="text/javascript" src="js/metro.js"></script>
 <script type="text/javascript" src="js/tologin.js?version=1.0"></script>
 <script type="text/javascript" src="js/external.js"></script>

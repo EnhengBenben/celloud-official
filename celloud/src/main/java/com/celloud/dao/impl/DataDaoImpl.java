@@ -542,4 +542,73 @@ public class DataDaoImpl extends BaseDao implements DataDao {
         }
         return num;
     }
+
+    @Override
+    public Integer countData(Integer userId) {
+        String sql = "select count(*) size from tb_file where user_id = ? and state = ?";
+        Integer size = null;
+        try {
+            conn = ConnectManager.getConnection();
+            cps = conn.prepareStatement(sql.toString());
+            cps.setInt(1, userId);
+            cps.setInt(2, DataState.ACTIVE);
+            crs = cps.executeQuery();
+            if (crs.next()) {
+                size = crs.getInt("size");
+            }
+        } catch (SQLException e) {
+            log.error("用户" + super.userName + "查询数据总数量失败");
+            e.printStackTrace();
+        } finally {
+            ConnectManager.free(conn, qps, qrs);
+        }
+        return size;
+    }
+
+    @Override
+    public Long sumData(Integer userId) {
+        String sql = "select sum(size) size from tb_file where user_id = ? and state = ?";
+        Long size = null;
+        try {
+            conn = ConnectManager.getConnection();
+            cps = conn.prepareStatement(sql);
+            cps.setInt(1, userId);
+            cps.setInt(2, DataState.ACTIVE);
+            crs = cps.executeQuery();
+            if (crs.next()) {
+                size = crs.getLong("size");
+            }
+        } catch (SQLException e) {
+            log.error("用户" + super.userName + "查询数据总大小失败");
+            e.printStackTrace();
+        } finally {
+            ConnectManager.free(conn, qps, qrs);
+        }
+        return size;
+    }
+
+    @Override
+    public List<Map<String, String>> countData(Integer userId, Integer time) {
+        String sql = "select left(create_date,?) time,count(file_id) num from tb_file where user_id = ? and state = ? group by time";
+        List<Map<String, String>> list = new ArrayList<>();
+        try {
+            conn = ConnectManager.getConnection();
+            cps = conn.prepareStatement(sql);
+            cps.setInt(1, time);
+            cps.setInt(2, userId);
+            cps.setInt(3, DataState.ACTIVE);
+            crs = cps.executeQuery();
+            while (crs.next()) {
+                Map<String, String> map = new HashMap<>();
+                map.put(crs.getString("time"), crs.getString("num"));
+                list.add(map);
+            }
+        } catch (SQLException e) {
+            log.error("用户" + super.userName + "查询数据总大小失败");
+            e.printStackTrace();
+        } finally {
+            ConnectManager.free(conn, qps, qrs);
+        }
+        return list;
+    }
 }

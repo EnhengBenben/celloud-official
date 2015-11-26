@@ -98,4 +98,19 @@ public class DataServiceImpl implements DataService {
     public Integer addData(Data data) {
         return dataDao.addData(data);
     }
+
+    @Override
+    public Integer countData(Integer userId) {
+        return dataDao.countData(userId);
+    }
+
+    @Override
+    public Long sumData(Integer userId) {
+        return dataDao.sumData(userId);
+    }
+
+    @Override
+    public List<Map<String, String>> countData(Integer userId, Integer time) {
+        return dataDao.countData(userId, time);
+    }
 }

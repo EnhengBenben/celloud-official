@@ -1,6 +1,5 @@
 package com.celloud.service.impl;
 
-
 import com.celloud.dao.ReportDao;
 import com.celloud.sdo.Report;
 import com.celloud.service.ReportService;
@@ -15,8 +14,14 @@ import com.google.inject.Inject;
 public class ReportServiceImpl implements ReportService {
     @Inject
     ReportDao reportDao;
+
     @Override
     public Long insertProReport(Report report) {
-	return reportDao.insertProReport(report);
+        return reportDao.insertProReport(report);
+    }
+
+    @Override
+    public Integer countReport(Integer userId) {
+        return reportDao.countReport(userId);
     }
 }
