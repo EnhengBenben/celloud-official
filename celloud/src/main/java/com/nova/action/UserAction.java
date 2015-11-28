@@ -32,6 +32,7 @@ import com.nova.utils.ResetPwdUtils;
 @Action("user")
 @Results({
 	@Result(name = "checkEmail", type = "json", params = { "root", "email" }),
+	@Result(name = "getUserLogInfo", location = "../../pages/user/logInfoList.jsp"),
 	@Result(name = "success", type = "json", params = { "root", "flag" }) })
 public class UserAction extends BaseAction {
     Logger log = Logger.getLogger(UserAction.class);
@@ -219,13 +220,10 @@ public class UserAction extends BaseAction {
     }
 
     public String checkUserEmailByUserId() {
-	userId = user.getUserId();
-	if (userId == 0) {
-	    userId = (Integer) session.get("userId");
-	}
-	flag = userService.checkUserEmailByUserId(user.getUserId(),
-		user.getEmail());
-	return SUCCESS;
+        System.out.println("____ß");
+        flag = userService.checkUserEmailByUserId(
+                (Integer) super.session.get("userId"), user.getEmail());
+        return SUCCESS;
     }
 
     /**

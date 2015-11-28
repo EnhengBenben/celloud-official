@@ -1,19 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE HTML>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>统计</title>
-<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
-<link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">    
-<link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.2" rel="stylesheet" type="text/css" />
-<%-- <link href="<%=request.getContextPath() %>/css/count.css?version=2015081806" rel="stylesheet"> --%>
-</head>
-<body>
-  <div class="wrapper">
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+<section class="content-header">
+  <h1>
+    <small>&nbsp;</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>统计</a></li>
+    <li class="active">概况</li>
+  </ol>
+</section>
 	  <input type="hidden" id="sessionUserId" value="${session.userId }">
 	  <input type="hidden" id="sessionUserName" value="${session.userName }">
 	  <input type="hidden" id="sessionCompanyId" value="${session.companyId }">
@@ -62,8 +57,6 @@
 	      </div>
 	    </div><!--/.row-->
 	  </section><!-- /.content -->
-	</div><!-- /.content-wrapper -->
-  </div><!-- /.wrapper -->
   
 <div class="modal modal-green-header" id="seqModal">
  <div class="modal-dialog">
@@ -84,8 +77,6 @@
  </div>
 </div>
 
-  <script src="<%=request.getContextPath() %>/plugins/jquery-1.8.3.min.js"></script>
-  <script src="<%=request.getContextPath() %>/plugins/bootstrap-modal.js"></script>
   <script type="text/javascript">
   $(document).ready(function(){
 	  var companyId = $("#sessionCompanyId").val();
@@ -119,5 +110,3 @@
 	  $("#geneResultModal").modal("show");
   }
   </script>
-</body>
-</html>

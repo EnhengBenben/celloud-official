@@ -102,3 +102,37 @@ function lineModal(id,legend,xdata,ydata,yname){
 function showAppStore(){
 	$("#userCount").load("pages/software/app.jsp");
 }
+
+/**
+ * 数据管理
+ */
+
+function showData(){
+	$("#userCount").load("pages/data/data.jsp");
+}
+
+/**
+ * 统计页面
+ */
+function showCount(){
+	$("#userCount").load("pages/count/count.jsp");
+}
+/**
+ * 数据上传
+ */
+function showUpload(){
+	$("#userCount").load("pages/data/fileUpload.jsp");
+}
+
+/**
+ * 报告模块
+ */
+function showReport(){
+	$("#userCount").load("pages/report/reportDetail.jsp");
+}
+/**
+ * 帐号管理
+ */
+function showUser(){
+	$("#userCount").load("pages/user/user.jsp");
+}

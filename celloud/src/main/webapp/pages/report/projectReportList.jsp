@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <a href="" id="_downFile"></a>
-<table class="table_">
+<table class="table_" style="font-family:微软雅黑;font-size:12px;">
     <thead>
         <tr>
             <th width="215">项目信息</th>

@@ -1,20 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>数据管理</title>
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
-    <link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">    
-  	<link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
-    <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.4" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
-    <div class="wrapper">
-      <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
@@ -61,8 +45,6 @@
             </div>
           </div><!--/.row-->
         </section><!-- /.content -->
-      </div><!-- /.content-wrapper -->
-    </div><!-- ./wrapper -->
     
     <!-- All Modal -->
     <div class="modal modal-green-header" id="runApp">
@@ -222,15 +204,6 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
      <!-- /All Modal-->
-    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-    <script src="//cdn.bootcss.com/jqueryui/1.11.4/jquery-ui.min.js"></script>
-    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
-    <script src="<%=request.getContextPath() %>/plugins/select/select2.min.js"></script>
-	<script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
-    <script src="<%=request.getContextPath() %>/dist/js/celloud.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/plugins/spin.min.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/data.js?version=2.24" type="text/javascript"></script>
 	<!-- spin:loading效果 end-->
 	<script type="text/javascript">
@@ -247,5 +220,3 @@
 			initData();
 		});
 	</script>
-  </body>
-</html>

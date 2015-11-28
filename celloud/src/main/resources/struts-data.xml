@@ -12,10 +12,6 @@
 		</action>
 		<!-- 数据管理end -->
 		<!-- 用户管理begin -->
-		<action name="getUserLogInfo" class="com.nova.action.UserAction"
-			method="getUserLogInfo">
-			<result name="getUserLogInfo">/content/logInfoList.jsp</result>
-		</action>
 		<action name="openPersonalInfo" class="com.nova.action.UserAction"
 			method="openPersonalInfo">
 			<result name="openPersonalInfo">/content/baseInfo.jsp</result>

@@ -1,8 +1,8 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<div id="hcvdiv" class="row">
+<div>
 	<!--文件名称-->
-	<div class="m-file">文件名称：
+	<div class="box-header with-border">文件名称：
 		<span class="file-name"><s:property value="resultMap.datakey"/>（<s:property value="resultMap.fileName"/>）</span>
 		<div class="toolbar">
 			<a href='javascript:toPrintHBV("<s:property value="resultMap.pagePath"/>")' class="btn btn-default"><i class="i-print"></i>打印报告</a>

@@ -160,6 +160,8 @@ public class ReportAction extends BaseAction {
      */
     public String getHBVReport() {
         hbv = reportService.getDataReport(HBV.class, dataKey, proId, appId);
+        if (hbv==null)
+            return "hbvReport";
         // 其他突变位点排序
         Map<String, String> map = hbv.getOther();
         System.out.println(map == null);

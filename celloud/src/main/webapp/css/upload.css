@@ -1,5 +1,4 @@
 @CHARSET "UTF-8";
-html,body{margin:0px;height:100%;font-family: "微软雅黑"}
 .wholeheight{height:100%;}
 .download{ font-size:12px; color:#78BC28; float:left; display:inline; }
 .plupload_header_new{border-radius:5px ;background-color: #f2f5f9;margin-top:-5px;font-family: "微软雅黑";}

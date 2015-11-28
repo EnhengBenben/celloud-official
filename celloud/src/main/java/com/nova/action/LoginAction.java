@@ -26,7 +26,7 @@ import com.opensymphony.xwork2.ModelDriven;
 
 @ParentPackage("celloud-default")
 @Action("login")
-@Results({ @Result(name = "success", location = "/content/celloud.jsp"),
+@Results({ @Result(name = "success", location = "/pages/celloud.jsp"),
 	@Result(name = "input", location = "/index.jsp"),
 	@Result(name = "toLogin", location = "/index.jsp"),
 	@Result(name = "logout", type = "redirect", location = "toLogin"),

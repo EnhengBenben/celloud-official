@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<div id="hcvdiv" class="row">
+<div>
 	<!--文件名称-->
 	<div class="m-file">文件名称：
 		<span class="file-name">${hcv.dataKey }(${hcv.fileName })</span>

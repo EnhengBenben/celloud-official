@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.1" rel="stylesheet" type="text/css" />
 <section class="content-header">
   <h1>
     <small>&nbsp;</small>
@@ -46,7 +45,6 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<script src="<%=request.getContextPath()%>/plugins/spin.min.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/js/app.js?version=1.0" type="text/javascript"></script>
 <script type="text/javascript">
 	var session_userId = <%=session.getAttribute("userId")%>;
