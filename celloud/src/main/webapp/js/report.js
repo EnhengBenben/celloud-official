@@ -25,9 +25,9 @@ $.ajaxSetup ({
 		//---------------------------------------------------------------------
 		var param = null;
 		function initReport(){
-//			spinnerTotal = new Spinner(opts);
-//			var target = document.getElementById('refreshTotalDiv');
-//			spinnerTotal.spin(target);
+			spinnerTotal = new Spinner(opts);
+			var target = document.getElementById('refreshTotalDiv');
+			spinnerTotal.spin(target);
 			$("#reportBody").load("reportDetail.jsp");
 		}
 		function downPDF(userId,softwareId,projectId){
@@ -44,7 +44,7 @@ $.ajaxSetup ({
 		function initReportDetail(){
 			showTab(0);
 			$("#liReport").attr("style","display:none");
-//			APP = window.parent.document.getElementById("_hidAppId").value;
+			APP = window.parent.document.getElementById("_hidAppId").value;
 			APP = 0;
 			if(APP==0){
 				getReportList();
@@ -106,7 +106,7 @@ $.ajaxSetup ({
 					$("#appList").html(context);
 				}
 			});
-//			spinnerTotal.stop();
+			spinnerTotal.stop();
 		}
 		
 		//删除共享来的项目报告
@@ -237,13 +237,13 @@ $.ajaxSetup ({
 		}
 		//获取项目列表
 		function getReportList(){
-//			spinner = new Spinner(opts);
-//			var target = document.getElementById('selfReportDiv');
-//			spinner.spin(target);
+			spinner = new Spinner(opts);
+			var target = document.getElementById('selfReportDiv');
+			spinner.spin(target);
 			$.get("report!getReportPageList",{"page.pageSize":pageSize,"page.currentPage":currentPage},function(responseText){
 				$("#selfReportDiv").html(responseText);
 				loadReportList();
-//				spinner.stop();
+				spinner.stop();
 			});
 		}
 		//高级检索
@@ -268,13 +268,13 @@ $.ajaxSetup ({
 					END = END+" 23:59:59";
 				}
 			}
-//			spinner = new Spinner(opts);
-//			var target = document.getElementById('selfReportDiv');
-//			spinner.spin(target);
+			spinner = new Spinner(opts);
+			var target = document.getElementById('selfReportDiv');
+			spinner.spin(target);
 			$.get("report!getReportPageListByCondition",{"appId":APP,"start":START,"end":END,"fileName":FILENAME,"page.pageSize":pageSize,"page.currentPage":currentPage},function(responseText){
 				$("#selfReportDiv").html(responseText);
 				loadReportList();
-//				spinner.stop();
+				spinner.stop();
 				$("#reportBody").scrollTop(0);
 			});
 		}
@@ -529,9 +529,9 @@ $.ajaxSetup ({
 		//查看数据报告
 		function viewDataReport(event){
 			$("#userCount").load("pages/report/dataReport.jsp");
-//			if(typeof spinner != "undefined"){
-//				spinner.stop();
-//			}
+			if(typeof spinner != "undefined"){
+				spinner.stop();
+			}
 			dataReportParam = event;
 			var softwareId = event.data.softwareId;
 			var fileName = "";
@@ -557,9 +557,9 @@ $.ajaxSetup ({
 			$("#tab2").attr("style","");
 			$("#fileListUl").html("");
 			
-//			spinner = new Spinner(opts);
-//			var target = document.getElementById('tab2');
-//			spinner.spin(target);
+			spinner = new Spinner(opts);
+			var target = document.getElementById('tab2');
+			spinner.spin(target);
 			$.get("getDataInfoListByProjectId.action",{"projectId":proId},function(fileList){
 				//$("#fileListUl").append("<li id='prevLi'><a href='javascript:void(0)' id='prevA' class='forward'>prev</a></li>");
 				var fileNames = new Array();
@@ -710,7 +710,7 @@ $.ajaxSetup ({
 					$.get("getPath.action",{},function(responseText){
 						var toolsPath = responseText.split(",")[0];
 						var newPath = toolsPath + "Procedure!readReport" + "?fileName="+fileName+"&userId=" + userId + "&appId=" + softwareId + "&dataKey=" + dataKey + "&projectId=&anotherName=" + anotherName;
-//						spinner.stop();
+						spinner.stop();
 						$.get("getDataReport.action",{"url":newPath},function(responseText){
 							toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 							if(softwareId==73){
@@ -973,7 +973,7 @@ $.ajaxSetup ({
 				$("#reportResultDiv").css("height",height+20);
 			});
 			$("#reportBody").scrollTop(0);
-//			spinner.stop();
+			spinner.stop();
 		}
 		
 		function getCountValue(key,id){
@@ -1004,9 +1004,9 @@ $.ajaxSetup ({
 		
 		//查看项目报告（目前只有 ABI_NJ 流程用）
 		function viewProReport(event){
-//			if(typeof spinner != "undefined"){
-//				spinner.stop();
-//			}
+			if(typeof spinner != "undefined"){
+				spinner.stop();
+			}
 			dataReportParam = event;
 			var	fileName = event.data.fileName;
 			var projectId = event.data.projectId;
@@ -1029,9 +1029,9 @@ $.ajaxSetup ({
 			$("#tab2").attr("style","");
 			$("#fileListUl").html("");
 			
-//			spinner = new Spinner(opts);
-//			var target = document.getElementById('tab2');
-//			spinner.spin(target);
+			spinner = new Spinner(opts);
+			var target = document.getElementById('tab2');
+			spinner.spin(target);
 			$.get("getDataInfoListByProjectId.action",{"projectId":proId},function(fileList){
 				$("#fileListUl").append("<li id='prevLi'><a href='javascript:void(0)' id='prevA' class='forward'>prev</a></li>");
 				$.each(fileList,function(index,item){
@@ -1112,7 +1112,7 @@ $.ajaxSetup ({
 		
 		function toProReport(responseText){
 			$("#reportResultDiv").html(responseText);
-//			spinner.stop();
+			spinner.stop();
 			//动态调整div的大小
 			var height = $("#reportResultDiv").children().height();
 			if(height>380){

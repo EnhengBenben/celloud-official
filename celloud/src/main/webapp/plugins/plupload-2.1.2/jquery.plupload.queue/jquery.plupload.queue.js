@@ -98,8 +98,8 @@ used as it is.
 							'<div class="plupload_header_content">' +
 								'<div class="plupload_file_name">' +
 									'<div class="plupload_buttons">' +
-										'<a href="#" class="addfile" id="' + id + '_browse"></a>' +
-										'<a href="#" class="_start_custom startfile"></a>' +
+										'<a href="javascript:void(0)" class="addfile btn btn-success" id="' + id + '_browse">添加文件</a>' +
+										'<a href="javascript:void(0)" class="_start_custom startfile btn btn-warning">开始上传</a>' +
 										'<span class="_uploadAlert"></span>'+
 									'</div>' +
 								'</div>' +

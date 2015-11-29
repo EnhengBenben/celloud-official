@@ -65,23 +65,23 @@ function initData(){
 var addedApps = new Array();
 function getAllDataList(){
 	//设置遮罩
-//	spinner = new Spinner(opts);
-//	var target = document.getElementById('selfDataDiv');
-//	spinner.spin(target);
+	spinner = new Spinner(opts);
+	var target = document.getElementById('selfDataDiv');
+	spinner.spin(target);
 	$.get("data3!getAllData",{"page.pageSize":dataPageDataNum,"page.currentPage":1},function(responseText){
 		$("#selfDataDiv").html(responseText);
 		$("#pageRecordSel").val(dataPageDataNum);
 		toUse();
 		$("#fileDataBody").scrollTop(0);
-//		spinner.stop();
+		spinner.stop();
 		privateIcon();
 	});
 }
 function getDataByCondition(pageNum){
 	//设置遮罩
-//	spinner = new Spinner(opts);
-//	var target = document.getElementById('selfDataDiv');
-//	spinner.spin(target);
+	spinner = new Spinner(opts);
+	var target = document.getElementById('selfDataDiv');
+	spinner.spin(target);
 	dataCurrentPageNumber = pageNum;
 	var condition = $.trim($("#dataTagSearch").val());
 	$.get("data3!getDataByCondition",{"condition":condition,"page.pageSize":dataPageDataNum,"page.currentPage":pageNum,"conditionInt":sortType,"sortByName":fileNameSort,"sortByDate":createDateSort},function(responseText){
@@ -89,7 +89,7 @@ function getDataByCondition(pageNum){
 		$("#pageRecordSel").val(dataPageDataNum);
 		toUse();
 		$("#fileDataBody").scrollTop(0);
-//		spinner.stop();
+		spinner.stop();
 		privateIcon();
 	});
 }

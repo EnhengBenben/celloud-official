@@ -8,10 +8,6 @@
 .footer span{color:#6e88ac;}
 .footer a{padding-left:10px;padding-right:10px;text-decoration: none;}
 .new_content{padding:10px 15px 10px 15px;}
-.addfile{display:block;background:url("../images/upload/add_file_normal.png"); width: 137px;height:36px;float:left;margin-right:20px;margin-top:10px;margin-left:5px;}
-.addfile:hover{background:url("../images/upload/addfile_hover.png");}
-.addfile:active{background:url("../images/upload/addfile_click.png");}
-.startfile{display:block;background:url("../images/upload/start_file_normal.png"); width: 137px;height:36px;float:left;margin-top:10px}
-.startfile:hover{background:url("../images/upload/start_hover.png");}
-.startfile:active{background:url("../images/upload/start_file_click.png");}
+.addfile{display:block;width: 137px;float:left;margin-right:20px;margin-top:20px;margin-left:5px;}
+.startfile{display:block;width: 137px;float:left;margin-top:20px}
 ._uploadAlert{display: inline-block; color: #CC6600; padding-top: 18px; padding-left: 30px;}

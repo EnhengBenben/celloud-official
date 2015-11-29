@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <link href="<%=request.getContextPath() %>/plugins/plupload-2.1.2/jquery.plupload.queue/css/jquery.plupload.queue.css?version=1.4" rel="stylesheet" type="text/css">
-<link href="<%=request.getContextPath() %>/css/upload.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath() %>/css/upload.css?v=3.0" rel="stylesheet" type="text/css">
 <input type="hidden" id="fileDataSessionUserIdHidden" value='<s:property value="#session.userId"/>'>
 <div id="fileUploadDiv" class="wholeheight">
     
@@ -12,9 +12,7 @@
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/jquery.plupload.queue/jquery.plupload.queue.js?version=1.3"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/plupload.dev.js?version=1.7"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/i18n/zh_CN.js"></script>
-<!-- spin:loading效果 begin-->
-<script src="<%=request.getContextPath()%>/plugins/spin.min.js" type="text/javascript"></script>
-<!-- spin:loading效果 end-->
+<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/spin.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/upload.js"></script>
 <script type="text/javascript">
 var session_userId = <%=session.getAttribute("userId")%>;
@@ -72,9 +70,6 @@ $(function() {
  		multiple_queues : true,
 	});
 	var uploader = $('#fileUploadDiv').pluploadQueue();
-// 	uploader.bind('BeforeUpload', function() {
-// 		$("._uploadAlert").html("数据正准备上传...");
-// 	});
 	//绑定选择文件事件
 	uploader.bind('Browse', function() {
 		$.get("checkAdminSessionTimeOut",function(response){

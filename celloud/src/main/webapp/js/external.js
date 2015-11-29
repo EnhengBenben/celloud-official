@@ -9,18 +9,3 @@ function CreateScript(file){
  * 百度统计
  */
 CreateScript("plugins/baidu.js");
-
-/**
- * 检测浏览器版本号
- */
-$(document).ready(function(){
-	if($.browser.msie) { 
-		var version = $.browser.version;
-		if(version=="6.0"||version=="7.0"){
-			$(".alert").attr("style","");
-		}
-	}
-});
-function closeVserionDiv(){
-	$(".alert").attr("style","display:none;");
-}
