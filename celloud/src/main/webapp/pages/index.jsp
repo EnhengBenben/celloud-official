@@ -8,8 +8,7 @@
 		<meta http-equiv="expires" content="0">
 		<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 		<meta http-equiv="description" content="This is my page">
-		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/plugins/bootstrap-3.3.2-dist/css/bootstrap.min.css" />
-<%-- 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/bootstrap/css/bootstrap-responsive.min.css" /> --%>
+		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/plugins/bootstrap/css/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/css/admin.css" />
 		<link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
 		<link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico"/>
@@ -24,12 +23,8 @@
 		
 		</div>
 	  </div>
-	<script src="<%=request.getContextPath() %>/plugins/jquery-1.11.2.min.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath() %>/plugins/ajaxfileupload.js"></script> 
-	<script src="<%=request.getContextPath() %>/plugins/amcharts/amcharts.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath() %>/plugins/bootstrap-3.3.2-dist/js/bootstrap.js" type="text/javascript"></script>
-<%-- 	<script src="<%=request.getContextPath() %>/plugins/bootstrap.js" type="text/javascript"></script> --%>
-<%-- 	<script src="<%=request.getContextPath() %>/plugins/bootstrap-modal.js"></script> --%>
+	<script src="<%=request.getContextPath() %>/plugins/jQuery/jQuery-2.1.4.min.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath() %>/plugins/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 	<!-- ueditor -->
 	<script src="<%=request.getContextPath() %>/plugins/ueditor/ueditor.config.js"></script>
 	<script src="<%=request.getContextPath() %>/plugins/ueditor/ueditor.all.js"></script>

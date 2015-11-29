@@ -1,7 +1,6 @@
 /**
- * 首页
+ * 总览
  */
-
 // 路径配置
 require.config({
     paths: {
@@ -11,7 +10,7 @@ require.config({
 
 function showUserCount(){
 	$.get("count3!loginCount",function(response){
-		$("#userCount").html(response);
+		$("#mainDIV").html(response);
 		fileMonthCount();
 	});
 }
@@ -96,43 +95,43 @@ function lineModal(id,legend,xdata,ydata,yname){
 }
 
 /**
- * 应用市场
+ * 数据上传
  */
-
-function showAppStore(){
-	$("#userCount").load("pages/software/app.jsp");
+function showUpload(){
+	$("#mainDIV").load("pages/data/fileUpload.jsp");
 }
 
 /**
  * 数据管理
  */
-
 function showData(){
-	$("#userCount").load("pages/data/data.jsp");
+	$("#mainDIV").load("pages/data/data.jsp");
+}
+
+/**
+ * 报告
+ */
+function showReport(){
+	$("#mainDIV").load("pages/report/reportDetail.jsp");
+}
+
+/**
+ * 应用市场
+ */
+function showAppStore(){
+	$("#mainDIV").load("pages/software/app.jsp");
 }
 
 /**
  * 统计页面
  */
 function showCount(){
-	$("#userCount").load("pages/count/count.jsp");
-}
-/**
- * 数据上传
- */
-function showUpload(){
-	$("#userCount").load("pages/data/fileUpload.jsp");
+	$("#mainDIV").load("pages/count/count.jsp");
 }
 
-/**
- * 报告模块
- */
-function showReport(){
-	$("#userCount").load("pages/report/reportDetail.jsp");
-}
 /**
  * 帐号管理
  */
 function showUser(){
-	$("#userCount").load("pages/user/user.jsp");
+	$("#mainDIV").load("pages/user/user.jsp");
 }

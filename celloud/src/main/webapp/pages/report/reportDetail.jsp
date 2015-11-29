@@ -62,6 +62,7 @@
         </div><!-- /.box-body -->
       </div><!-- /.box -->
       <!-- COLOR PALETTE -->
+      <div id="reportLoading" style="padding-left: 500px;"></div>
       <div class="box color-palette-box">
         <div class="box-body" id="selfReportDiv">
         

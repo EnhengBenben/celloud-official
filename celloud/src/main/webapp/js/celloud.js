@@ -1460,12 +1460,6 @@ function checkAppManagerPanel(obj){
 		}
 	}
 }
-function setAPP(id){
-	$("#_hidAppId").val(id);
-}
-function resetAPP(){
-	$("#_hidAppId").val(0);
-}
 function showZoom(src,imgh,imgw) { 
 	var bh = $(window.parent.document).height();  
 	var bw = $(window.parent.document).width();

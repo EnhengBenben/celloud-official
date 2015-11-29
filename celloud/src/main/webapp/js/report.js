@@ -4,9 +4,9 @@ $.ajaxSetup ({
 //----------------------loading效果参数配置----------------------------
 		var opts = {
 		  lines: 13, // The number of lines to draw
-		  length: 20, // The length of each line
-		  width: 10, // The line thickness
-		  radius: 30, // The radius of the inner circle
+		  length: 28, // The length of each line
+		  width: 14, // The line thickness
+		  radius: 42, // The radius of the inner circle
 		  corners: 1, // Corner roundness (0..1)
 		  rotate: 0, // The rotation offset
 		  direction: 1, // 1: clockwise, -1: counterclockwise
@@ -24,12 +24,6 @@ $.ajaxSetup ({
 		var spinnerTotal;
 		//---------------------------------------------------------------------
 		var param = null;
-		function initReport(){
-			spinnerTotal = new Spinner(opts);
-			var target = document.getElementById('refreshTotalDiv');
-			spinnerTotal.spin(target);
-			$("#reportBody").load("reportDetail.jsp");
-		}
 		function downPDF(userId,softwareId,projectId){
 			$.get("project!downPdf",{"userId":userId,"softwareId":softwareId,"projectId":projectId},function(userNames){
 				userNames = userNames.replace(/"/g ,"").replace(/\\/g ,"");
@@ -42,17 +36,10 @@ $.ajaxSetup ({
 			});
 		}
 		function initReportDetail(){
-			showTab(0);
-			$("#liReport").attr("style","display:none");
-			APP = window.parent.document.getElementById("_hidAppId").value;
-			APP = 0;
-			if(APP==0){
-				getReportList();
-			}else{
-				submitSearch();
-				$(".capp").removeClass("_appred");
-				window.parent.resetAPP();
-			}
+			spinnerTotal = new Spinner(opts);
+			var target = document.getElementById('reportLoading');
+			spinnerTotal.spin(target);
+			getReportList();
 			// 初始化高级检索app列表
 			var _num = 0;
 			$.get("report!getAppListById",function(softList){
@@ -106,7 +93,6 @@ $.ajaxSetup ({
 					$("#appList").html(context);
 				}
 			});
-			spinnerTotal.stop();
 		}
 		
 		//删除共享来的项目报告
@@ -139,27 +125,6 @@ $.ajaxSetup ({
 					});
 				}
 			});
-		}
-		
-		//显示某个页签及其内容
-		function showTab(type){
-			if(type==0){
-				$("#liReportList").removeClass("active");
-				$("#liReportList").addClass("active");
-				$("#reListTab").attr("style","");
-				$("#liReport").removeClass("active");
-				$("#tab2").attr("style","display:none");
-			}else if(type==1){
-				if(close==0){
-					$("#liReportList").removeClass("active");
-					$("#reListTab").attr("style","display:none");
-					$("#liReport").removeClass("active");
-					$("#liReport").addClass("active");
-					$("#tab2").attr("style","");
-				}else{
-					close=0;
-				}
-			}
 		}
 		
 		var START = null;		//检索开始时间
@@ -237,13 +202,10 @@ $.ajaxSetup ({
 		}
 		//获取项目列表
 		function getReportList(){
-			spinner = new Spinner(opts);
-			var target = document.getElementById('selfReportDiv');
-			spinner.spin(target);
 			$.get("report!getReportPageList",{"page.pageSize":pageSize,"page.currentPage":currentPage},function(responseText){
 				$("#selfReportDiv").html(responseText);
 				loadReportList();
-				spinner.stop();
+				spinnerTotal.stop();
 			});
 		}
 		//高级检索
@@ -269,7 +231,7 @@ $.ajaxSetup ({
 				}
 			}
 			spinner = new Spinner(opts);
-			var target = document.getElementById('selfReportDiv');
+			var target = document.getElementById('reportLoading');
 			spinner.spin(target);
 			$.get("report!getReportPageListByCondition",{"appId":APP,"start":START,"end":END,"fileName":FILENAME,"page.pageSize":pageSize,"page.currentPage":currentPage},function(responseText){
 				$("#selfReportDiv").html(responseText);
@@ -549,15 +511,10 @@ $.ajaxSetup ({
 			obj.children(":first").addClass("link_visited");
 			$("#fileNameH4").html("APP：" + softwareName);
 			$("#proforReport").html(proName);
-			$("#liReportList").removeClass("active");
-			$("#reListTab").attr("style","display:none;");
-			$("#liReport").attr("style","");
-			$("#liReport").removeClass("active");
-			$("#liReport").addClass("active");
-			$("#tab2").attr("style","");
 			$("#fileListUl").html("");
 			
 			spinner = new Spinner(opts);
+			alert("id error");
 			var target = document.getElementById('tab2');
 			spinner.spin(target);
 			$.get("getDataInfoListByProjectId.action",{"projectId":proId},function(fileList){
@@ -1021,15 +978,10 @@ $.ajaxSetup ({
 			$("#reportResultDiv").html("");
 			$("#fileNameH4").html("APP：" + softwareName);
 			$("#proforReport").html(proName);
-			$("#liReportList").removeClass("active");
-			$("#reListTab").attr("style","display:none;");
-			$("#liReport").attr("style","");
-			$("#liReport").removeClass("active");
-			$("#liReport").addClass("active");
-			$("#tab2").attr("style","");
 			$("#fileListUl").html("");
 			
 			spinner = new Spinner(opts);
+			alert("id error");
 			var target = document.getElementById('tab2');
 			spinner.spin(target);
 			$.get("getDataInfoListByProjectId.action",{"projectId":proId},function(fileList){
@@ -1129,12 +1081,6 @@ $.ajaxSetup ({
 		function closeDataReport(e){
 			var click = $("#reportTab").attr("onclick");
 			$("#reportTab").attr("onclick","");
-			$("#liReport").removeClass("active");
-			$("#liReport").attr("style","display:none");
-			$("#tab2").attr("style","display:none");
-			$("#liReportList").removeClass("active");
-			$("#liReportList").addClass("active");
-			$("#reListTab").attr("style","");
 			$("#reportTab").attr("onclick",click);
 			close = 1;
 			var e=e||window.event;

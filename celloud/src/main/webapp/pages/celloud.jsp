@@ -105,7 +105,7 @@
       </aside>
 
       <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper" id="userCount">
+      <div class="content-wrapper" id="mainDIV">
         
       </div>
     </div>
