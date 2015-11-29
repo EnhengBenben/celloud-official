@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <div style="width: 800px;">
-<table class="table table-tab table-bordered table-bordered-new">
+<table class="table_" style="text-align: center;">
 	<thead>
     	<tr>
     		<th>时间</th>

@@ -5,7 +5,7 @@
             <small>&nbsp;</small>
           </h1>
           <ol class="breadcrumb">
-            <li><a href="#"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>数据管理</a></li>
+            <li><a href="javascript:void(0)"><i class="fa fa-tasks"></i> 数据管理</a></li>
             <li class="active">全部</li>
           </ol>
         </section>

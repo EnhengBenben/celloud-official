@@ -16,7 +16,7 @@
     <small>&nbsp;</small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> 报告</a></li>
+    <li><a href="javascript:void(0)"><i class="fa fa-files-o"></i> 报告</a></li>
     <li class="active">全部</li>
   </ol>
 </section>

@@ -6,6 +6,7 @@ function initApp(){
 }
 function getAppClassify(pid){
 	$("#toAllApp").addClass("bg-green-active");
+	$("#subtitle").html("全部APP");
 	$("#toMyApp").removeClass("bg-green-active");
 	classifyPid = pid;
 	$.get("app3!getAppClassify",{"conditionInt":pid},function(responseText){
@@ -37,6 +38,7 @@ function getAppList(pid,isparent){
 }
 function toMyAppList(){
 	$("#toMyApp").addClass("bg-green-active");
+	$("#subtitle").html("已添加APP");
 	$("#toAllApp").removeClass("bg-green-active");
 	getMyApp();
 }

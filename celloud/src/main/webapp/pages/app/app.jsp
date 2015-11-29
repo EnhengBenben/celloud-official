@@ -21,7 +21,7 @@
             <small>&nbsp;</small>
           </h1>
           <ol class="breadcrumb">
-            <li><a href="#"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>应用市场</a></li>
+            <li><a href="javascript:void(0)"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>应用市场</a></li>
             <li class="active">概况</li>
           </ol>
         </section>

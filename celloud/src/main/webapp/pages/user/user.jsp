@@ -5,8 +5,8 @@
     <small>	</small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="javascript:void(0)"><i class="fa fa-dashboard"></i>用户管理</a></li>
-    <li class="active">基本信息</li>
+    <li><a href="javascript:void(0)"><i class="fa fa-user"></i> 帐号管理</a></li>
+    <li class="active"><span id="subtitle">基本信息</span></li>
   </ol>
 </section>
 
@@ -17,9 +17,9 @@
         <div class="box-body bg-green" style="padding-left:30px;padding-bottom: 0px;">
           <h3 style="font-family:黑体;color:#FFFFFF">基本信息</h3>
           <p style="font-family:黑体;color:#FFFFFF">完善基本信息，通知邮箱及手机绑定</p>
-          <button onclick="showUserInfo()" class="btn btn-success bg-green-active btn-flat" style="width:150px;height:70px;margin-right:0px">基本信息</button>
-          <button onclick="showChangePwd()" class="btn btn-success btn-flat" style="width:150px;height:70px;margin-right:0px">修改密码</button>
-          <button onclick="showOperaLog()" class="btn btn-success btn-flat" style="width:150px;height:70px;margin-right:0px">操作日志</button>
+          <button onclick="showUserInfo()" id="userinfoTab" class="btn btn-success bg-green-active btn-flat" style="width:150px;height:70px;margin-right:0px">基本信息</button>
+          <button onclick="showChangePwd()" id="changePwdTab" class="btn btn-success btn-flat" style="width:150px;height:70px;margin-right:0px">修改密码</button>
+          <button onclick="showOperaLog()" id="operlogTab" class="btn btn-success btn-flat" style="width:150px;height:70px;margin-right:0px">操作日志</button>
         </div><!-- /.box-body -->
       </div><!-- /.box -->
       <div id="userinfo">
@@ -97,23 +97,34 @@
 
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/baseInfo.js"></script>
 <script type="text/javascript">
-	function showUserInfo(){
-		$("#userinfo").css("display","");
-		$("#changePwd").css("display","none");
-		$("#operlog").css("display","none");
-	}
-	function showChangePwd(){
-		$("#userinfo").css("display","none")
-		$("#changePwd").css("display","")
-		$("#operlog").css("display","none")
-	}
-	function showOperaLog(){
-		$("#userinfo").css("display","none")
-		$("#changePwd").css("display","none")
-		$("#operlog").css("display","")
-		//获取日志信息
-		$.get("user!getUserLogInfo",{},function(responseText){
-			$("#operlog").html(responseText);
-		});
-	}
+function clearActive(){
+	$("#userinfoTab").removeClass("bg-green-active");
+	$("#changePwdTab").removeClass("bg-green-active");
+	$("#operlogTab").removeClass("bg-green-active");
+	$("#userinfo").css("display","none");
+	$("#changePwd").css("display","none");
+	$("#operlog").css("display","none");
+}
+function showUserInfo(){
+	clearActive();
+	$("#userinfoTab").addClass("bg-green-active");
+	$("#userinfo").css("display","");
+	$("#subtitle").html("基本信息");
+}
+function showChangePwd(){
+	clearActive();
+	$("#changePwdTab").addClass("bg-green-active");
+	$("#changePwd").css("display","");
+	$("#subtitle").html("修改密码");
+}
+function showOperaLog(){
+	clearActive();
+	$("#operlogTab").addClass("bg-green-active");
+	$("#operlog").css("display","");
+	$("#subtitle").html("操作日志");
+	//获取日志信息
+	$.get("user!getUserLogInfo",{},function(responseText){
+		$("#operlog").html(responseText);
+	});
+}
 </script>

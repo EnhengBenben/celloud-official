@@ -3,6 +3,15 @@
 <link href="<%=request.getContextPath() %>/plugins/plupload-2.1.2/jquery.plupload.queue/css/jquery.plupload.queue.css?version=1.4" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath() %>/css/upload.css?v=3.0" rel="stylesheet" type="text/css">
 <input type="hidden" id="fileDataSessionUserIdHidden" value='<s:property value="#session.userId"/>'>
+<section class="content-header">
+  <h1>
+    <small>&nbsp;</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="javascript:void(0)"><i class="fa fa-sellsy"></i> 数据上传</a></li>
+    <li class="active">全部</li>
+  </ol>
+</section>
 <div id="fileUploadDiv" class="wholeheight">
     
 </div>

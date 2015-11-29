@@ -5,8 +5,8 @@
     <small>&nbsp;</small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>统计</a></li>
-    <li class="active">概况</li>
+    <li><a href="javascript:void(0)"><i class="fa fa-heartbeat"></i> 统计</a></li>
+    <li class="active">全部</li>
   </ol>
 </section>
 	  <input type="hidden" id="sessionUserId" value="${session.userId }">

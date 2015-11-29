@@ -98,7 +98,12 @@
               </a>
             </li>
             <li class="header">用户中心</li>
-            <li><a href="javascript:void(0)" onclick="showUser()"><i class="fa fa-user"></i> <span>账号管理</span></a></li>
+            <li>
+	            <a href="javascript:void(0)" onclick="showUser()">
+	            	<i class="fa fa-user"></i>
+	            	<span>账号管理</span>
+	            </a>
+            </li>
           </ul>
         </section>
         <!-- /.sidebar -->
