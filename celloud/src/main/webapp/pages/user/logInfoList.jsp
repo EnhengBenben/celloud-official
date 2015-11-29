@@ -1,7 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<div style="width: 800px;">
 <table class="table_" style="text-align: center;">
 	<thead>
     	<tr>
@@ -149,4 +147,3 @@
 	    </ul>
     </s:if>
 </div> 
-</div>
