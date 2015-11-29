@@ -29,6 +29,7 @@
                     <a onclick="deleteData()" id="delDataBtn" class="btn btn-warning btn-flat disabled" disabled="disabled">删除</a>
 				  	<a onclick="toManageDatasModel()" id="batchManage" class="btn btn-info btn-flat disabled" disabled="disabled">批量管理</a>
                   </h3>
+                  <div class="box-tools col-xs-7" id="dataSpinDiv"></div>
                   <div class="box-tools col-xs-4">
                     <div class="input-group">
                       <input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 200px;" placeholder="搜索文件名/数据标签/文件别名" id="dataTagSearch" onkeyup="javascript:getDataByCondition(1);"/>

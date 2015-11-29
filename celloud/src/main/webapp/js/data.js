@@ -3,10 +3,10 @@ $.ajaxSetup ({
 });
 //----------------------loading效果参数配置----------------------------
 var opts = {
-  lines: 7, // The number of lines to draw
-  length: 10, // The length of each line
-  width: 5, // The line thickness
-  radius: 10, // The radius of the inner circle
+  lines: 13, // The number of lines to draw
+  length: 28, // The length of each line
+  width: 14, // The line thickness
+  radius: 42, // The radius of the inner circle
   corners: 1, // Corner roundness (0..1)
   rotate: 0, // The rotation offset
   direction: 1, // 1: clockwise, -1: counterclockwise
@@ -66,7 +66,7 @@ var addedApps = new Array();
 function getAllDataList(){
 	//设置遮罩
 	spinner = new Spinner(opts);
-	var target = document.getElementById('selfDataDiv');
+	var target = document.getElementById('dataSpinDiv');
 	spinner.spin(target);
 	$.get("data3!getAllData",{"page.pageSize":dataPageDataNum,"page.currentPage":1},function(responseText){
 		$("#selfDataDiv").html(responseText);
@@ -80,7 +80,7 @@ function getAllDataList(){
 function getDataByCondition(pageNum){
 	//设置遮罩
 	spinner = new Spinner(opts);
-	var target = document.getElementById('selfDataDiv');
+	var target = document.getElementById('dataSpinDiv');
 	spinner.spin(target);
 	dataCurrentPageNumber = pageNum;
 	var condition = $.trim($("#dataTagSearch").val());

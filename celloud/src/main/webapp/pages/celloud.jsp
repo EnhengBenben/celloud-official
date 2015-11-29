@@ -109,7 +109,7 @@
         
       </div>
     </div>
-
+	<script src="http://fgnass.github.io/spin.js/spin.min.js" type="text/javascript"></script>
     <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <script src="plugins/jQueryUI/jquery-ui.min.js" type="text/javascript"></script>
    
@@ -130,7 +130,6 @@
     <script src="<%=request.getContextPath() %>/plugins/select/select2.min.js"></script>
 	<script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
     <script src="js/global_v3.js?v=3.0" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/plugins/spin.min.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath() %>/plugins/highcharts/highcharts.js"></script>
 	<script src="<%=request.getContextPath() %>/plugins/highcharts/exporting.js"></script>
 	<script src="<%=request.getContextPath() %>/plugins/highcharts/char.js?version=20150526"></script>

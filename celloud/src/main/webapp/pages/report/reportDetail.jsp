@@ -95,7 +95,6 @@
 <script src="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/select/select2.min.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
-<script src="<%=request.getContextPath()%>/plugins/spin.min.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath() %>/plugins/calendar/WdatePicker.js"></script>
 <script src="<%=request.getContextPath() %>/js/report.js?version=1.5"></script>
 <script src="<%=request.getContextPath() %>/js/dataformat.js"></script>
