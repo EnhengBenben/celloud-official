@@ -125,7 +125,7 @@ used as it is.
 					'</div>' +
 				'</div>' +
 				'<div class="footer">' +
-					'<a href="../../download.html" class="download" target="_blank">下载客户端</a><a href="../../content/feedBack.html" class="download" target="_blank">投诉建议</a>'+
+					'<a href="download.html" class="download" target="_blank">下载客户端</a><a href="feedBack.html" class="download" target="_blank">投诉建议</a>'+
 					'<div class="plupload_file_action"></div>' +
 					'<div class="plupload_file_status" style="padding-right:40px;"><span class="plupload_total_status">0%</span></div>' +
 					'<div class="plupload_file_size" style="padding-right:10px;"><span class="plupload_total_file_size">0 b</span></div>' +

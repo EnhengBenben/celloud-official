@@ -7,7 +7,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="javascript:void(0)"><i class="fa fa-dashboard"></i> 首页</a></li>
-    <li class="active">控制面板</li>
+    <li class="active">总览</li>
   </ol>
 </section>
 <section class="content">
