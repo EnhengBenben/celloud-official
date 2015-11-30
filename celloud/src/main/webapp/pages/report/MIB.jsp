@@ -69,8 +69,8 @@
 			       </tr>
 			     </thead>
 			     <tbody>
-			       <c:if test="${fn:length(mib.summaryTable)>1}">
-			         <c:forEach items="${mib.summaryTable }" var="summary" varStatus="s" begin="1">
+			       <c:if test="${fn:length(mib.summaryTable)>0}">
+			         <c:forEach items="${mib.summaryTable }" var="summary" varStatus="s">
 					   <tr>
 					     <td>${summary.Species }</td>
 					     <td>${summary.Genus }</td>
