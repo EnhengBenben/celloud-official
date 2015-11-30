@@ -72,4 +72,12 @@ public interface TaskDao {
      * @return
      */
     public Task getTaskDataAppPro(String dataKey, Long appId, Long proId);
+
+    /**
+     * 根据proId删除未运行或正在运行的任务
+     * 
+     * @param proId
+     * @return
+     */
+    public Integer deleteTask(Long proId);
 }

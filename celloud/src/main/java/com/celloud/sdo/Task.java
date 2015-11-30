@@ -25,6 +25,7 @@ public class Task implements Serializable {
     private Date createDate;// 创建时间
     private Date startDate;// 开始运行时间
     private Date endDate;// 运行完成时间
+    private Date deleteDate;// 删除时间
     private String params;
 
     public Long getTaskId() {
@@ -113,6 +114,14 @@ public class Task implements Serializable {
 
     public void setParams(String params) {
         this.params = params;
+    }
+
+    public Date getDeleteDate() {
+        return deleteDate;
+    }
+
+    public void setDeleteDate(Date deleteDate) {
+        this.deleteDate = deleteDate;
     }
 
 }

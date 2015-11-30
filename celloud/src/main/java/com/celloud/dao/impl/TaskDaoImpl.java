@@ -216,4 +216,24 @@ public class TaskDaoImpl extends BaseDao implements TaskDao {
         return task;
     }
 
+    @Override
+    public Integer deleteTask(Long proId) {
+        Integer num = 0;
+        String sql = "update tb_task set state=?,delete_date=now() where proId=? and state<?;";
+        try {
+            conn = ConnectManager.getConnection();
+            ps = conn.prepareStatement(sql.toString());
+            ps.setInt(1, TaskState.DELETE);
+            ps.setLong(2, proId);
+            ps.setInt(3, TaskState.DONE);
+            num = ps.executeUpdate();
+        } catch (SQLException e) {
+            log.error("根据proId" + proId + "删除未运行或正在运行的任务");
+            e.printStackTrace();
+        } finally {
+            ConnectManager.free(conn, ps, rs);
+        }
+        return num;
+    }
+
 }

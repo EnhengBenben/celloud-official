@@ -52,4 +52,9 @@ public class TaskServiceImpl implements TaskService {
         return taskDao.getTaskDataAppPro(dataKey, appId, proId);
     }
 
+    @Override
+    public Integer deleteTask(Long proId) {
+        return taskDao.deleteTask(proId);
+    }
+
 }
