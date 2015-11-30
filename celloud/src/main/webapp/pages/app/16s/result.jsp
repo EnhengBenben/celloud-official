@@ -76,7 +76,7 @@
 			</table>
 	    </div>
 	</div>
-	<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	<script src="<%=request.getContextPath() %>/pages/app/16s/js/svg.js" data-path="<%=request.getContextPath() %>/pages/app/16s/js"></script>
 	<script type="text/javascript">
 	var softwareId = window.parent.document.getElementById("softwareId").value;

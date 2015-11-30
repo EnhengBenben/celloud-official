@@ -33,7 +33,7 @@
 		   	</div>
 		   	
 		</div>
-	<script src="<%=request.getContextPath() %>/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	<script src="<%=request.getContextPath() %>/plugins/bootstrap.js" type="text/javascript" ></script>
 <%-- 	<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/baidu.js"></script> --%>
 	<!-- jquery_alert_dialogs begin -->

@@ -18,7 +18,7 @@
         ${context}
     </div>
 </div>
-<script type="text/javascript" src="/celloud/plugins/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script type="text/javascript" src="/celloud/js/browser.js"></script>
 <script type="text/javascript">
 function preview(obj){
