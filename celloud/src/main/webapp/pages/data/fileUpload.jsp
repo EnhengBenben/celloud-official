@@ -79,7 +79,8 @@ $(function() {
 				{title : "fastq", extensions : "fastq"},
 				{title : "tsv", extensions : "tsv"},
 				{title : "gz", extensions : "gz"},
-				{title : "lis", extensions : "lis"}
+				{title : "lis", extensions : "lis"},
+				{title : "txt", extensions : "txt"}
 			]
 		},
 		// Flash settings
