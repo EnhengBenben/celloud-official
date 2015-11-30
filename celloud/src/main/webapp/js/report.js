@@ -490,7 +490,7 @@ $.ajaxSetup ({
 		var obj0;
 		//查看数据报告
 		function viewDataReport(event){
-			$("#userCount").load("pages/report/dataReport.jsp");
+			$("#mainDIV").load("pages/report/dataReport.jsp");
 			if(typeof spinner != "undefined"){
 				spinner.stop();
 			}
@@ -514,8 +514,7 @@ $.ajaxSetup ({
 			$("#fileListUl").html("");
 			
 			spinner = new Spinner(opts);
-			alert("id error");
-			var target = document.getElementById('tab2');
+			var target = document.getElementById('reportLoading');
 			spinner.spin(target);
 			$.get("getDataInfoListByProjectId.action",{"projectId":proId},function(fileList){
 				//$("#fileListUl").append("<li id='prevLi'><a href='javascript:void(0)' id='prevA' class='forward'>prev</a></li>");
@@ -981,8 +980,7 @@ $.ajaxSetup ({
 			$("#fileListUl").html("");
 			
 			spinner = new Spinner(opts);
-			alert("id error");
-			var target = document.getElementById('tab2');
+			var target = document.getElementById('reportLoading');
 			spinner.spin(target);
 			$.get("getDataInfoListByProjectId.action",{"projectId":proId},function(fileList){
 				$("#fileListUl").append("<li id='prevLi'><a href='javascript:void(0)' id='prevA' class='forward'>prev</a></li>");
