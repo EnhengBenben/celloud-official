@@ -17,7 +17,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Long insertProject(Project pro) {
-	return proDao.insertProject(pro);
+        return proDao.insertProject(pro);
     }
-
 }

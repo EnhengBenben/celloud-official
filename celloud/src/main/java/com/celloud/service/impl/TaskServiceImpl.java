@@ -1,5 +1,7 @@
 package com.celloud.service.impl;
 
+import java.util.Map;
+
 import com.celloud.dao.TaskDao;
 import com.celloud.sdo.Task;
 import com.celloud.service.TaskService;
@@ -38,6 +40,16 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Integer getRunningNumByAppId(Long appId) {
         return taskDao.getRunningNumByAppId(appId);
+    }
+
+    @Override
+    public Map<String, Object> getTaskInfoByProId(Long proId) {
+        return taskDao.getTaskInfoByProId(proId);
+    }
+
+    @Override
+    public Task getTaskDataAppPro(String dataKey, Long appId, Long proId) {
+        return taskDao.getTaskDataAppPro(dataKey, appId, proId);
     }
 
 }

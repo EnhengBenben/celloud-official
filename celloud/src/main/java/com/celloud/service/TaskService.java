@@ -1,5 +1,7 @@
 package com.celloud.service;
 
+import java.util.Map;
+
 import com.celloud.sdo.Task;
 import com.celloud.service.impl.TaskServiceImpl;
 import com.google.inject.ImplementedBy;
@@ -52,4 +54,22 @@ public interface TaskService {
      * @return
      */
     public Integer getRunningNumByAppId(Long appId);
+
+    /**
+     * 根据proId获取报告信息、任务编号、app信息、数据个数
+     * 
+     * @param proId
+     * @return
+     */
+    public Map<String, Object> getTaskInfoByProId(Long proId);
+
+    /**
+     * 根据dataKey appId proId获取任务信息
+     * 
+     * @param proId
+     * @param appId
+     * @param dataKey
+     * @return
+     */
+    public Task getTaskDataAppPro(String dataKey, Long appId, Long proId);
 }

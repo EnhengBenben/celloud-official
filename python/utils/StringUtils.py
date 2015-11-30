@@ -13,6 +13,22 @@ def getBarcode(fileName):
 	else:
 		return fileName
 
+
+# list取值
+def list_value(list, index):
+    if len(list) > index:
+        return list[int(index)]
+    else:
+        return ''
+
+
+# dict取值
+def dict_value(dic, key):
+    if dict(dic).has_key(key):
+        return dic[str(key)]
+    else:
+        return ''
+
 if __name__ == '__main__':
 	print getBarcode('a.bam')
 	print getBarcode('a1_b.bam')

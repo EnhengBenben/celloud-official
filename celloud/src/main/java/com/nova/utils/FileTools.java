@@ -610,7 +610,7 @@ public class FileTools {
         for (int i = 0; i < dataKey.length; i++) {
             String data = dataKey[i];
             String d[] = data.split(",");
-            if (FileTools.getExt(d[2]).equals(".lis")) {
+            if (FileTools.getExt(d[2]).equals(".txt")) {
                 endData = data;
             } else {
                 map.put(d[2] + d[0], data);

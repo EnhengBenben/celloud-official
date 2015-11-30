@@ -18,6 +18,7 @@ public class Task implements Serializable {
     private Long taskId;
     private Long userId;// 用户编号
     private Long appId;// 应用编号
+    private Long projectId;// 项目编号
     private String dataKey;// 数据编号
     private String command;// 投递命令
     private Integer state;// 命令执行状态 0-等待 1-正在运行 2-运行完成
@@ -45,8 +46,17 @@ public class Task implements Serializable {
     public Long getAppId() {
         return appId;
     }
+
     public void setAppId(Long appId) {
         this.appId = appId;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 
     public String getDataKey() {
@@ -60,6 +70,7 @@ public class Task implements Serializable {
     public String getCommand() {
         return command;
     }
+
     public void setCommand(String command) {
         this.command = command;
     }
@@ -75,6 +86,7 @@ public class Task implements Serializable {
     public Date getCreateDate() {
         return createDate;
     }
+
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }

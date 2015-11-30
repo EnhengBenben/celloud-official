@@ -1,5 +1,6 @@
 package com.celloud.service;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,6 +18,134 @@ import com.nova.utils.FileTools;
  * @description :项目运行结束后的后续操作
  */
 public class RunOverService {
+    /**
+     * MIB流程运行结束后的处理
+     * 
+     * @param reportPath
+     * @param dataKey
+     * @param appTitle
+     * @param projectFile
+     * @param projectId
+     * @param dataList
+     * @return
+     */
+    public boolean MIB(String reportPath, String dataKey, String appTitle,
+            String projectFile, String projectId, List<Data> dataList) {
+        // 1. 追加表头
+        StringBuffer resultArray = new StringBuffer();
+        if (FileTools.countLines(projectFile) < 1) {
+            resultArray.append(appTitle).append("\n");
+        }
+        resultArray.append(dataKey).append("\t");
+        for (int i = 0; i < dataList.size(); i++) {
+            resultArray.append(dataList.get(i).getFileName());
+            if (i < dataList.size() - 1) {
+                resultArray.append("&");
+            }
+        }
+        String tablePath = reportPath + "/result/taxi.all.fastq.table";
+        resultArray.append("\t");
+        if (new File(tablePath).exists()) {
+            List<String> list = FileTools.readLinestoString(reportPath
+                    + "result/taxi.all.fastq.table");
+            if (!(list == null || list.isEmpty())) {
+                for (int z = 1; z < list.size(); z++) {
+                    if (z == 1) {
+                        String[] line_z = list.get(z).split("\t");
+                        resultArray.append(FileTools.getArray(line_z, 0)).append("\t")
+                        .append(FileTools.getArray(line_z, 5)).append("\t")
+                        .append(FileTools.getArray(line_z, 6));
+                    }
+                }
+            }else{
+                resultArray.append("运行结果异常").append("\t\t");
+            }
+        } else {
+            resultArray.append("运行结果异常").append("\t\t");
+        }
+        FileTools.appendWrite(projectFile, resultArray.toString() + "\n");
+        return true;
+    }
+
+    /**
+     * split流程运行结束后的处理
+     * 
+     * @param reportPath
+     * @param dataKey
+     * @param appTitle
+     * @param projectFile
+     * @param projectId
+     * @param dataList
+     * @return
+     */
+    public boolean split(String reportPath, String dataKey, String appTitle,
+            String projectFile, String projectId, List<Data> dataList) {
+        // 1. 追加表头
+        StringBuffer resultArray = new StringBuffer();
+        if (FileTools.countLines(projectFile) < 1) {
+            resultArray.append(appTitle).append("\n");
+        }
+        resultArray.append(dataKey).append("\t");
+        for (int i = 0; i < dataList.size(); i++) {
+            resultArray.append(dataList.get(i).getFileName());
+            if (i < dataList.size() - 1) {
+                resultArray.append("&");
+            }
+        }
+        resultArray.append("\t");
+        List<String> list = FileTools.readLinestoString(reportPath
+                + "result/statistic.xls");
+        if (!(list == null || list.isEmpty())) {
+            resultArray.append(FileTools.listIsNull(list, 0)).append("\t")
+                    .append(FileTools.listIsNull(list, 1)).append("\t")
+                    .append(FileTools.listIsNull(list, 2));
+        }
+        FileTools.appendWrite(projectFile, resultArray.toString() + "\n");
+        return true;
+    }
+
+    /**
+     * CMP/CMP_199/GDD流程运行结束后的处理
+     * 
+     * @param reportPath
+     * @param dataKey
+     * @param appTitle
+     * @param projectFile
+     * @param projectId
+     * @param dataList
+     * @return
+     */
+    public boolean CMP(String reportPath, String dataKey, String appTitle,
+            String projectFile, String projectId, List<Data> dataList) {
+        // 1. 追加表头
+        StringBuffer resultArray = new StringBuffer();
+        if (FileTools.countLines(projectFile) < 1) {
+            resultArray.append(appTitle).append("\n");
+        }
+        resultArray.append(dataKey).append("\t");
+        for (int i = 0; i < dataList.size(); i++) {
+            resultArray.append(dataList.get(i).getFileName());
+            if (i < dataList.size() - 1) {
+                resultArray.append("&");
+            }
+        }
+        resultArray.append("\t");
+        List<String> list = FileTools.readLinestoString(reportPath
+                + "result/statistic.xls");
+        if (!(list == null || list.isEmpty())) {
+            resultArray
+                    .append(FileTools.listIsNull(list, 0))
+                    .append("\t")
+                    .append(FileTools.listIsNull(list, 1))
+                    .append("\t")
+                    .append(FileTools.listIsNull(list, 2))
+                    .append("\t")
+                    .append(FileTools.getFirstLine(reportPath
+                            + "/result/average.info"));
+        }
+        FileTools.appendWrite(projectFile, resultArray.toString() + "\n");
+        return true;
+    }
 
     /**
      * PGS系列流程项目运行结束后的处理

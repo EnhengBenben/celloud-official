@@ -4,13 +4,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
 import com.celloud.constants.TaskState;
 import com.celloud.dao.TaskDao;
+import com.celloud.sdo.App;
+import com.celloud.sdo.Project;
 import com.celloud.sdo.Task;
+import com.celloud.sdo.User;
 import com.mysql.jdbc.Statement;
+import com.nova.constants.ReportType;
 import com.nova.utils.ConnectManager;
 
 /**
@@ -27,7 +33,7 @@ public class TaskDaoImpl extends BaseDao implements TaskDao {
     private ResultSet rs = null;
     @Override
     public Long create(Task task) {
-        String sql = "INSERT INTO tb_task (user_id, app_id, data_key, command, state, params, create_date) VALUES (?, ?, ?, ?, ?, ?, now());";
+        String sql = "INSERT INTO tb_task (user_id, app_id, data_key, command, state, params, project_id, create_date) VALUES (?, ?, ?, ?, ?, ?, ?, now());";
         Long id = null;
         try {
             conn = ConnectManager.getConnection();
@@ -38,6 +44,7 @@ public class TaskDaoImpl extends BaseDao implements TaskDao {
             ps.setString(4, task.getCommand());
             ps.setInt(5, TaskState.WAITTING);
             ps.setString(6, task.getParams());
+            ps.setLong(7, task.getProjectId());
             ps.executeUpdate();
             rs = ps.getGeneratedKeys();
             if (rs.next()) {
@@ -70,6 +77,7 @@ public class TaskDaoImpl extends BaseDao implements TaskDao {
                 task.setDataKey(rs.getString("data_key"));
                 task.setCommand(rs.getString("command"));
                 task.setParams(rs.getString("params"));
+                task.setProjectId(rs.getLong("project_id"));
             }
         } catch (SQLException e) {
             log.error("用户" + super.userName + "修改任务信息失败");
@@ -138,6 +146,74 @@ public class TaskDaoImpl extends BaseDao implements TaskDao {
             ConnectManager.free(conn, ps, rs);
         }
         return num;
+    }
+
+    @Override
+    public Map<String, Object> getTaskInfoByProId(Long proId) {
+        Map<String, Object> map = new HashMap<>();
+        String sql = "select p.project_id,p.project_name,p.create_date,u.user_id,u.username,u.email,s.software_id,s.software_name,s.title,s.method,count(dp.file_id) dataNum from tb_project p left join tb_user u on p.user_id=u.user_id left join tb_report r on p.project_id=r.project_id left join tb_software s on r.software_id=s.software_id left join tb_data_project_relat dp on p.project_id=dp.project_id where p.project_id=? and r.flag=? group by p.project_id";
+        try {
+            conn = ConnectManager.getConnection();
+            ps = conn.prepareStatement(sql.toString());
+            ps.setLong(1, proId);
+            ps.setInt(2, ReportType.PROJECT);
+            rs = ps.executeQuery();
+            Project pro = new Project();
+            App app = new App();
+            User user = new User();
+            if (rs.next()) {
+                pro.setProjectId(rs.getLong("project_id"));
+                pro.setProjectName(rs.getString("project_name"));
+                pro.setCreateDate(rs.getDate("create_date"));
+                pro.setFileNum(rs.getInt("dataNum"));
+                user.setUserId(rs.getInt("user_id"));
+                user.setUsername(rs.getString("username"));
+                user.setEmail(rs.getString("email"));
+                app.setSoftwareId(rs.getLong("software_id"));
+                app.setSoftwareName(rs.getString("software_name"));
+                app.setTitle(rs.getString("title"));
+                app.setMethod(rs.getString("method"));
+            }
+            map.put("project", pro);
+            map.put("app", app);
+            map.put("user", user);
+        } catch (SQLException e) {
+            log.error("根据proId" + proId + "获取报告信息、任务编号、app信息、数据个数失败");
+            e.printStackTrace();
+        } finally {
+            ConnectManager.free(conn, ps, rs);
+        }
+        return map;
+    }
+
+    @Override
+    public Task getTaskDataAppPro(String dataKey, Long appId, Long proId) {
+        Task task = null;
+        String sql = "select * from tb_task where data_key=? and app_id=? and project_id=?;";
+        try {
+            conn = ConnectManager.getConnection();
+            ps = conn.prepareStatement(sql.toString());
+            ps.setString(1, dataKey);
+            ps.setLong(2, appId);
+            ps.setLong(3, proId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                task = new Task();
+                task.setTaskId(rs.getLong("task_id"));
+                task.setAppId(rs.getLong("app_id"));
+                task.setUserId(rs.getLong("user_id"));
+                task.setDataKey(rs.getString("data_key"));
+                task.setCommand(rs.getString("command"));
+                task.setParams(rs.getString("params"));
+                task.setProjectId(rs.getLong("project_id"));
+            }
+        } catch (SQLException e) {
+            log.error("获取" + appId + "正在运行的任务数失败");
+            e.printStackTrace();
+        } finally {
+            ConnectManager.free(conn, ps, rs);
+        }
+        return task;
     }
 
 }
