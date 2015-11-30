@@ -330,18 +330,22 @@ public class RunOverService {
         for (Data data : proDataList) {
             String finalPath = appPath + "/" + data.getDataKey()
                     + "/Result.txt";
-            String context = "";
+            String context = null;
             if (FileTools.checkPath(finalPath)) {
                 context = FileTools.getLastLine(finalPath);
-                String c[] = context.split("\t");
-                if (c.length > 4) {
-                    if (!typeList.contains(FileTools.getArray(c, 1))) {
-                        c[1] = "其他";
+                if(context != null){
+                    String c[] = context.split("\t");
+                    if (c.length > 4) {
+                        if (!typeList.contains(FileTools.getArray(c, 1))) {
+                            c[1] = "其他";
+                        }
+                        context = FileTools.getArray(c, 0) + "\t"
+                                + FileTools.getArray(c, 1) + "\t"
+                                + FileTools.getArray(c, 2) + "\t"
+                                + FileTools.getArray(c, 3);
                     }
-                    context = FileTools.getArray(c, 0) + "\t"
-                            + FileTools.getArray(c, 1) + "\t"
-                            + FileTools.getArray(c, 2) + "\t"
-                            + FileTools.getArray(c, 3);
+                }else{
+                    context = " \t \t \t";
                 }
             }
             resultArray.append(data.getDataKey()).append("\t").append(context)

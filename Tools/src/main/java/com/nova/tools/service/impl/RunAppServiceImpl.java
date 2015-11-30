@@ -2,13 +2,10 @@ package com.nova.tools.service.impl;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
-import com.celloud.mongo.service.ReportService;
 import com.itextpdf.text.DocumentException;
 import com.nova.tools.constant.AppNameIDConstant;
 import com.nova.tools.constant.Mod;
@@ -75,8 +72,6 @@ public class RunAppServiceImpl {
 	private static String CMP199_perl = PropertiesUtils.CMP199;
 	private static String GDD_perl = PropertiesUtils.GDD;
 	private static String split_perl = PropertiesUtils.split;
-
-	private ReportService reportService = null;
 
 	public void VSP(String appPath, String projectId, String dataKeyList) {
 		String dataArray[] = dataKeyList.split(";");
@@ -257,25 +252,14 @@ public class RunAppServiceImpl {
 	 * @param dataKeyList
 	 * @return
 	 */
-	private static String[] HCVType = { "1b", "2a", "3a", "3b", "6a" };
-    private static List<String> typeList = Arrays.asList(HCVType);
-	public void runHCV(String appPath, String projectId, String dataKeyList) {
-		// 创建要运行的文件列表文件
-		String dataListFile = datalist + new Date().getTime() + ".txt";
-		FileTools.createFile(dataListFile);
-		String dataArray[] = dataKeyList.split(";");
-		for (int i = 0; i < dataArray.length; i++) {
-			String[] dataDetail = dataArray[i].split(",");
-			FileTools.appendWrite(
-					dataListFile,
-					dataPath + getArray(dataDetail, 1) + "\t"
-							+ getArray(dataDetail, 2) + "\n");
-		}
-		String command = HCV + " " + dataListFile + " " + appPath + "/ 2>"
-				+ appPath + "/" + projectId + "/log";
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
+    public void runHCV(String appPath, String projectId, String dataKeyList) {
+        // 创建要运行的文件列表文件
+        String dataListFile = dealDataKeyListContainFileName(dataKeyList);
+        String command = HCV + dataListFile + " " + appPath + "/ ProjectID"
+                + projectId + " &>" + appPath + "/" + projectId + "/log ";
+        GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         ssh.sshSubmit(false);
-	}
+    }
 
 	/**
 	 * 运行 HBV_Tree
