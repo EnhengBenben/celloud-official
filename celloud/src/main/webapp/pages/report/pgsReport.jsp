@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="row">
+<div>
 	<c:if test="${pgs.noEnoughReads.equals('false') }">
 		<div class="m-file">
 			<div style="width: 800px">
