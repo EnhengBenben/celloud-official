@@ -14,4 +14,6 @@ public class TaskState {
     public static final int RUNNING = 1;
     /** 运行完成 */
     public static final int DONE = 2;
+    /** 删除任务 */
+    public static final int DELETE = 3;
 }

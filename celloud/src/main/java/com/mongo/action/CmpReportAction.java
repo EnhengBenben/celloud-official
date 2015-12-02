@@ -160,6 +160,14 @@ public class CmpReportAction extends BaseAction {
         Map<String, CmpGeneDetectionDetail> treeMap = new TreeMap<>();
         List<String> unnormalGene = new ArrayList<>();
         if (geneMap != null) {
+            // 需要排除的疾病
+            List<String> noDiseaseName = new ArrayList<>();
+            noDiseaseName.add("");
+            noDiseaseName.add("改变一碳代谢");
+            noDiseaseName.add("活力减少");
+            noDiseaseName.add("降低表达");
+            noDiseaseName.add("表型改变相关");
+            noDiseaseName.add("改变高半胱氨酸水平");
             for (String dataKey : geneMap.keySet()) {
                 if (geneMap.get(dataKey).getResult().get(0).getGene()
                         .contains("没有发现突变位点")
@@ -169,10 +177,7 @@ public class CmpReportAction extends BaseAction {
                     List<CmpGeneSnpResult> gsrli = gdd.getResult();
                     List<CmpGeneSnpResult> gsrli_ = new ArrayList<>();
                     for (CmpGeneSnpResult gsr : gsrli) {
-                        if (gsr.getDiseaseName().trim().equals("")
-                                || gsr.getDiseaseName().trim().equals("改变一碳代谢")
-                                || gsr.getDiseaseName().trim().equals("活力减少")
-                                || gsr.getDiseaseName().trim().equals("降低表达")) {
+                        if (noDiseaseName.contains(gsr.getDiseaseName().trim())) {
 
                         } else {
                             CmpGeneSnpResult gsr_ = gsr;
@@ -242,13 +247,10 @@ public class CmpReportAction extends BaseAction {
         String path = "/share/data/output/" + txt;
         String excelpath = "/share/data/output/" + infos;
         FileTools.createFile(path);
-        FileTools
-                .appendWrite(
-                        path,
-                        "数据编号\t原始文件名1\t原始文件名2\t共获得有效片段\t可用片段\t平均测序深度\t基因检测结果\n");
+        FileTools.appendWrite(path,
+                "数据编号\t原始文件名1\t原始文件名2\t共获得有效片段\t可用片段\t平均测序深度\t基因检测结果\n");
         for (CmpReport cmp : cmpList) {
-            StringBuffer line = new StringBuffer(cmp.getDataKey())
-                    .append("\t");
+            StringBuffer line = new StringBuffer(cmp.getDataKey()).append("\t");
             List<Data> dataList = cmp.getData();
             for (Data d : dataList) {
                 line.append(d.getFileName()).append("(").append(d.getDataKey())

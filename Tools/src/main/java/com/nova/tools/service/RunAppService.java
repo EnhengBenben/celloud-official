@@ -19,9 +19,10 @@ import com.nova.tools.utils.XMLUtil;
  * @date 2013-7-29 下午8:51:35
  */
 public class RunAppService {
-	//TODO 不需要在Tools端进行后续处理的需要在这里配置下
-    private static final List<String> apps = Arrays.asList("80","82", "83", "85",
-            "86", "87", "88", "91", "92", "93", "94", "104");
+    // TODO 不需要在Tools端进行后续处理的需要在这里配置下
+    private static final List<String> apps = Arrays.asList("80", "82", "83",
+            "85", "86", "87", "88", "91", "92", "93", "94", "104", "110",
+            "111", "112", "113", "114");
 
     /**
      * 运行项目
@@ -71,8 +72,7 @@ public class RunAppService {
         // split
         if (AppNameIDConstant.split.equals(appId)) {
             Integer num = runApp.split(appPath, projectId, dataKeyList, appId,
-                    appName,
-                    userId, dataInfos, company, user, dept);
+                    appName, userId, dataInfos, company, user, dept);
             if (num != null && num > 0) {
                 String dataArray[] = dataKeyList.split(";");
                 String[] dataDetail = dataArray[0].split(",");

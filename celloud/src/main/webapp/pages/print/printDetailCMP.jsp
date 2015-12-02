@@ -48,7 +48,7 @@
         <li>取样日期：<span><input type="text" id="samplingDate" name="cmpFill.samplingDate" value="${cmpReport.cmpFilling.samplingDate }"></span></li>
         <li>性别： <span id="_sex"><input type="radio" name="cmpFill.patientSex" value="男" <c:if test="${cmpReport.cmpFilling.patientSex eq '男' }">checked="checked"</c:if>>男<input type="radio" name="cmpFill.patientSex" value="女" <c:if test="${cmpReport.cmpFilling.patientSex eq '女' }">checked="checked"</c:if>>女</span></li>
         <li>样本来源：<span><input type="text" id="sampleSource" name="cmpFill.sampleSource" value="${cmpReport.cmpFilling.sampleSource }"></span></li>
-        <li>年龄：<span><input type="text" id="patientAge" name="cmpFill.patientAge" value="${cmpReport.cmpFilling.patientAge }"></span>岁</li>
+        <li>年龄：<span><input type="text" id="patientAge" name="cmpFill.patientAge" value="<c:if test="${!empty cmpReport.cmpFilling.patientAge && !cmpReport.cmpFilling.patientAge eq 'NaN'}">${cmpReport.cmpFilling.patientAge }</c:if>"></span>岁</li>
         <li>临床诊断：<span><input type="text" id="clinicalDiagnosis" name="cmpFill.clinicalDiagnosis" value="${cmpReport.cmpFilling.clinicalDiagnosis }"></span></li>
         <li>病理诊断：<span><input type="text" id="pathologicDiagnosis" name="cmpFill.pathologicDiagnosis" value="${cmpReport.cmpFilling.pathologicDiagnosis }"></span></li>
         <li>分析日期：<span><input type="text" id="analysisDate" name="cmpFill.analysisDate" value="${cmpReport.cmpFilling.analysisDate }"></span></li>
