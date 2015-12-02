@@ -155,13 +155,13 @@ function showRunApp(){
     //遍历得到每个checkbox的value值
 	var dataLi = "";
     for (var i=0;i<checkedDataIds.length;i++){
-    	if(getExt(addedDataNames[i])!=".txt"){
+    	if(getExt(addedDataNames[i])!=".txt"&&getExt(addedDataNames[i])!=".lis"){
     		dataIds += checkedDataIds[i] + ",";
     	}
     	dataLi += "<li class='types-options data-select' id='dataLi"+checkedDataIds[i]+"' title='点击删除' onclick=\"removetoRunData("+checkedDataIds[i]+")\">"+addedDataNames[i]+"</li>";
     }
     dataIds = dataIds.substring(0, dataIds.length-1);
-    if(checkedDataIds.length==1 && getExt(addedDataNames[0])==".txt"){
+    if(checkedDataIds.length==1 && (getExt(addedDataNames[0])==".txt"||getExt(addedDataNames[0])==".lis")){
     	dataIds += checkedDataIds[0];
     }
     var dataLength = checkedDataIds.length;
@@ -234,11 +234,13 @@ function addRunApp(appId,appName,dataIds){
 function removetoRunData(id){
 	checkedDataIds.splice($.inArray(id,checkedDataIds),1);
 	addedDataNames.splice($.inArray(id,addedDataNames),1);
+	$("#selAll").prop("checked",false);	
 	$("#chk"+id).attr("checked",false);
 	$("#dataLi"+id).remove();
 	if(checkedDataIds.length==0){
 		$("#toRunApp").attr("disabled",true);
 		toNoUse();
+		$("#runApp").modal("hide");
 	}
 }
 function okToRun(){
