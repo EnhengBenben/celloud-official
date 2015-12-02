@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="row">
+<div>
 	<div class="m-file">
 		数据编号：<span class="file-name">${cmpReport.dataKey}</span><br>
 		文件名称：

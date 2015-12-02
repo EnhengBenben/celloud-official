@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<div class="row">
+<div>
 	<input type="hidden" value="<s:property value="resultMap.length"/>" id="seq_length"/>
 	<!--文件名称-->
 	<div class="m-file">文件名称：
@@ -14,7 +14,7 @@
 	<div class="m-box">
 		<h2>
 			<i class="i-edit"></i>一、 已知突变位点（依据已发表文献，该突变位点有明确临床意义）
-			<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal')"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
+			<span style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal')"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></span>
 		</h2>
 	    <div class="m-boxCon result">
 	    	<div id="knowResult">
@@ -22,7 +22,7 @@
 	    	</div>
 	    	<s:if test="%{resultMap.know!=''}">
 	    		<br/>
-		    	<img name="know" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.know"/>" style="width: 1000px;height: 151px;">
+		    	<img name="know" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.know"/>" style="width: 100%;">
 	    	</s:if>
 	    	<s:else>
 	    		<s:if test="%{resultMap.pagePath.substring(resultMap.pagePath.indexOf('/')+1,resultMap.pagePath.indexOf('/')+3)==89}">
@@ -78,44 +78,30 @@
 		<h2><i class="i-dna"></i>五、 测序峰图结果</h2>
 	    <div class="m-boxCon result">
 			<a href="javascript:showBg('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll1"/>','listAll1Img');" >
-				<img name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll1"/>" style="width: 750px;height: 150px;" id="listAll1Img">
+				<img name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll1"/>" style="width: 85%;" id="listAll1Img">
 			</a>
 	    </div>
 	    <div class="m-boxCon result">
 			<a href="javascript:showBg('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll2"/>','listAll2Img');" >
-				<img name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll2"/>" style="width: 750px;height: 150px;" id="listAll2Img">
+				<img name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll2"/>" style="width: 85%;" id="listAll2Img">
 			</a>
 	    </div>
 	     <div class="m-boxCon result">
 			<a href="javascript:showBg('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll3"/>','listAll3Img');" >
-				<img name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll3"/>" style="width: 750px;height: 150px;" id="listAll3Img">
+				<img name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll3"/>" style="width: 85%;" id="listAll3Img">
 			</a>
 	    </div>
 	     <div class="m-boxCon result">
 			<a href="javascript:showBg('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll4"/>','listAll4Img');" >
-				<img name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll4"/>" style="width: 750px;height: 150px;" id="listAll4Img">
+				<img name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll4"/>" style="width: 85%;" id="listAll4Img">
 			</a>
 	    </div>
 	     <div class="m-boxCon result">
 			<a href="javascript:showBg('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll5"/>','listAll5Img');" >
-				<img name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll5"/>" style="width: 750px;height: 150px;" id="listAll5Img">
+				<img name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/<s:property value="resultMap.listAll5"/>" style="width: 85%;" id="listAll5Img">
 			</a>
 	    </div>
 	</div>
-<!-- 	<div class="m-box"> -->
-<!-- 		<h2><i class="i-edit"></i>六、 注</h2> -->
-<!-- 	    <div class="m-boxCon result"> -->
-<!-- 			<div class="m-boxCon result _help" style="padding-top: 5px;padding-bottom: 5px;">1. Homozygous 为纯合突变，Heterozygous 为杂合突变。</div> -->
-<!-- 			<div class="m-boxCon result _help" style="padding-top: 5px;padding-bottom: 5px;">2. 图中的“*”表示在该位置发生突变。</div> -->
-<!-- 			<div class="m-boxCon result _help" style="padding-top: 5px;padding-bottom: 5px;">3. “Recombination: ttaagagaagcaa- &gt;c”:表示ttaagagaagcaa变为c；<br/> -->
-<!-- 			“Deletion: gaattaagagaagcaaca ：”表示gaattaagagaagcaaca缺失；<br/> -->
-<!-- 			“Insertion: gccagcgtg” ：表示gccagcgtg插入。</div> -->
-<!-- 			<div class="m-boxCon result _help" style="padding-top: 5px;padding-bottom: 5px;">4. “*Wild type: ACAACCCCCACGTGTGCCGCCTGCTGGGC ”：表示野生型序列为ACAACCCCCACGTGTGCCGCCTGCTGGGC</div> -->
-<!-- 			<div class="m-boxCon result _help" style="padding-top: 5px;padding-bottom: 5px;">5. “M204M|V {A-A|G(67|33,2.1);G-G|T(72|28,2.5)}”中：<br/> -->
-<!-- 			（1）“M”表示野生型编码氨基酸为M；“204”表示氨基酸位点为204；“M|V”表示由原来的野生型M变为V。<br/> -->
-<!-- 			（2）“A-A|G(67|33,2.1) ;G-G|T(72|28,2.5)”表示碱基的变化，一个碱基位点由原来的A变为A|G杂合，比例为67比33，比值为2.1；另一个碱基位点由原来的G变为G|T杂合，比例为72比28，比值为2.5。</div> -->
-<!-- 	    </div> -->
-<!-- 	</div> -->
 	<div class="bg-analysis">
 		<div class="m-box">
 			<h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
