@@ -142,15 +142,15 @@ public class RunAppServiceImpl {
 	 * @param company
 	 * @param user
 	 */
-	public Integer split(String outPath, String projectId, String dataKeyList,
+    public void split(String outPath, String projectId, String dataKeyList,
 			String appId, String appName, String userId, String dataInfos,
 			String company, String user, String dept) {
 		String dataListFile = formatDataKeyListToSplit(dataKeyList);
 		String command = split_perl + " " + dataListFile + " " + outPath
-				+ " ProjectID" + projectId;
+                + " ProjectID" + projectId + " &>" + outPath + "/" + projectId
+                + "/log ";
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         ssh.sshSubmit(false);
-		return null;
 	}
 
 	/**
@@ -172,18 +172,14 @@ public class RunAppServiceImpl {
 		String dataListFile = formatDataKeyList(dataKeyList);
 		String command = null;
 		if (AppNameIDConstant.CMP.equals(appId)) {
-			command = CMP_perl + " " + dataListFile + " " + outPath
-                    + " ProjectID" + projectId + " &>" + outPath + "ProjectID"
-                    + projectId + ".log";
+            command = CMP_perl;
 		} else if (AppNameIDConstant.CMP_199.equals(appId)) {
-			command = CMP199_perl + " " + dataListFile + " " + outPath
-                    + " ProjectID" + projectId + " &>" + outPath + "ProjectID"
-                    + projectId + ".log";
+            command = CMP199_perl;
 		} else if (AppNameIDConstant.GDD.equals(appId)) {
-			command = GDD_perl + " " + dataListFile + " " + outPath
-                    + " ProjectID" + projectId + " &>" + outPath + "ProjectID"
-                    + projectId + ".log";
+            command = GDD_perl;
 		}
+        command += " " + dataListFile + " " + outPath + " ProjectID"
+                + projectId + " &>" + outPath + "/" + projectId + "/log ";
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         ssh.sshSubmit(false);
 	}

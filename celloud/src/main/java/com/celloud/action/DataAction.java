@@ -384,7 +384,9 @@ public class DataAction extends BaseAction {
                             "perl /share/biosoft/perl/PGS_MG/bin/moniter_qsub.pl perl ");
                     command.append(appMap.get(appId_l).getCommand())
                             .append(" ").append(dataListFile).append(" ")
-                            .append(appPath).append(" ProjectID").append(proId);
+                            .append(appPath).append(" ProjectID").append(proId)
+                            .append(" &>").append(appPath).append("/")
+                            .append(proId).append("/log ");
                     task.setCommand(command.toString());
                     StringBuffer params = new StringBuffer();
                     params.append("appName=")
