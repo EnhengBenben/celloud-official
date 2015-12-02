@@ -18,7 +18,9 @@ import org.apache.struts2.convention.annotation.Results;
 
 import com.alibaba.fastjson.JSONObject;
 import com.celloud.sdo.App;
+import com.celloud.sdo.Task;
 import com.celloud.service.RunOverService;
+import com.celloud.service.TaskService;
 import com.google.inject.Inject;
 import com.mongo.sdo.CmpGeneDetectionDetail;
 import com.mongo.sdo.CmpGeneSnpResult;
@@ -96,6 +98,8 @@ public class ProjectAction extends BaseAction {
     private ICompanyService companyService;
     @Inject
     private IDeptService deptService;
+    @Inject
+    private TaskService taskService;
     private Integer userId;
     private int userid;
     private String userNames;
@@ -777,6 +781,30 @@ public class ProjectAction extends BaseAction {
                 String command = SparkPro.SGEKILL + " " + param;
                 SSHUtil ssh = new SSHUtil(sgehost, sgeuserName, sgepwd);
                 ssh.sshSubmit(command, true);
+            }
+            // TODO
+            if (appId == 114) {
+                taskService.deleteTask(Long.parseLong(projectId));
+                Long appId_l = (long) appId;
+                int runningNum = taskService.getRunningNumByAppId(appId_l);
+                Task task = taskService.getFirstTask(appId_l);
+                while (runningNum < 4 && task != null) {
+                    StringBuffer remotePath = new StringBuffer();
+                    Long taskId = task.getTaskId();
+                    remotePath.append(PropertiesUtil.toolsOutPath)
+                            .append("Procedure!runApp?userId=")
+                            .append(task.getUserId()).append("&appId=")
+                            .append(task.getAppId()).append("&dataKey=")
+                            .append(task.getDataKey()).append("&taskId=")
+                            .append(taskId).append("&command=")
+                            .append(Base64Util.encrypt(task.getCommand()))
+                            .append("&").append(task.getParams());
+                    RemoteRequests rr = new RemoteRequests();
+                    rr.run(remotePath.toString());
+                    log.info("任务" + task.getTaskId() + "开始投递");
+                    taskService.updateToRunning(taskId);
+                    runningNum = taskService.getRunningNumByAppId(appId_l);
+                }
             }
         }
         result = projectService.deleteProject(Integer.parseInt(projectId));

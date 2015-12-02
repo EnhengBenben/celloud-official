@@ -50,3 +50,14 @@ class mongo:
 			print "mongo insert Exception ==>> %s " % e
 		finally:
 			mongo.client = None
+
+	#查询
+	def get(self, condition , collection):
+		self.collection = self.db[collection] #连接到具体的collection中
+		try:
+			result = self.collection.find_one(condition)
+			return result
+		except Exception as e:
+			print "mongo find Exception ==>> %s " % e
+		finally:
+			mongo.client = None

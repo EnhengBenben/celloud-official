@@ -74,7 +74,7 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath() %>/js/run.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/js/run.js?v=0.1"></script>
 	<script type="text/javascript">
 	var softwareId = window.parent.document.getElementById("softwareId").value;
 	var softwareName = window.parent.document.getElementById("softwareName").value;
