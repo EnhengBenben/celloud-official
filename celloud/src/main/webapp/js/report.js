@@ -517,7 +517,7 @@ $.ajaxSetup ({
 			var target = document.getElementById('reportLoading');
 			spinner.spin(target);
 			$.get("getDataInfoListByProjectId.action",{"projectId":proId},function(fileList){
-				//$("#fileListUl").append("<li id='prevLi'><a href='javascript:void(0)' id='prevA' class='forward'>prev</a></li>");
+				$("#fileListUl").append("<div class='btn-group' id='prevA'><button type='button' class='btn btn-success dropdown-toggle' data-toggle='dropdown' aria-expanded='false'><span class='fa fa-sort-asc'></span></button></div>");
 				var fileNames = new Array();
 				var newList = "";
 				if(softwareId == 110||softwareId == 111||softwareId == 112||softwareId == 113){
@@ -554,53 +554,26 @@ $.ajaxSetup ({
 						dataItem0 = item;
 						obj1 = $("#dataSpan"+proId+dataItem0.dataKey);
 					}
+					var isActive = "";
 					if(item.dataKey == dataKey){
-						if(index>0){
-							var state = index-1;
-							if(state == 0){
-								$("#prevLi").after(inner);
-							}else {
-								$("#dataLi"+state).after($("#dataLi0"));
-							}
-							$("#dataLi0").find("span").html(seq);
-							$("#dataLi0").attr("id","dataLi" + index);
-							$("#dataLi"+index).find("a").bind("click", function() {
-								dataItemClick(fileList.length,index);
-								viewADataReport(dataItem0.dataKey,dataItem0.fileName,userId,softwareId,dataItem0.fileId,proId,obj1);
-								$.get("report!clickItemDataReport",{},function(state){});
-							});
-						}
-						inner += "<li class='active' id='dataLi0'>";
-						inner += "<a href='javascript:void(0)' id='fileA"+proId+item.fileId+"' title='"+item.fileName+"'><span>"+1+"</span>"+(item.fileName.length>15?(item.fileName.substring(0,15)+"..."):item.fileName)+"</a></li>";
-						$("#prevLi").after(inner);
-						$("#fileA"+proId+item.fileId).bind("click", function() {
-							dataItemClick(fileList.length,0);
-							viewADataReport(item.dataKey,item.fileName,userId,softwareId,item.fileId,proId,obj1);
-							$.get("report!clickItemDataReport",{},function(state){});
-						});
-					}else{
-//						inner +="<li id='dataLi"+index+"'>";
-						inner += "<button type='button' class='btn btn-success' style='font-size:12px;' id='fileA"+proId+item.fileId+"' title='"+item.fileName+"'>"+(item.fileName.length>15?(item.fileName.substring(0,15)+"..."):item.fileName)+"</button>";
-						$("#fileListUl").append(inner);
-						$("#fileA"+proId+item.fileId).bind("click", function() {
-							dataItemClick(fileList.length,index);
-							viewADataReport(item.dataKey,item.fileName,userId,softwareId,item.fileId,proId,obj1);
-							$.get("report!clickItemDataReport",{},function(state){});
-						});
+						isActive = "active";
 					}
-					if(index>5){
-						$("#dataLi"+index).attr("style","display:none;");
-					}
+					inner += "<button type='button' class='btn btn-success "+isActive+"' style='font-size:12px;' id='fileA"+proId+item.fileId+"' title='"+item.fileName+"'>"+(item.fileName.length>15?(item.fileName.substring(0,15)+"..."):item.fileName)+"</button>";
+					$("#fileListUl").append(inner);
+					$("#fileA"+proId+item.fileId).bind("click", function() {
+						dataItemClick(fileList.length,index);
+						viewADataReport(item.dataKey,item.fileName,userId,softwareId,item.fileId,proId,obj1);
+						$.get("report!clickItemDataReport",{},function(state){});
+					});
 				});
-				$("#fileListUl").append("<div class='btn-group'><button type='button' class='btn btn-success dropdown-toggle' data-toggle='dropdown' aria-expanded='false'><span class='caret'></span></button></div>");
+				$("#fileListUl").append("<div class='btn-group' id='nextA'><button type='button' class='btn btn-success dropdown-toggle' data-toggle='dropdown' aria-expanded='false'><span class='caret'></span></button></div>");
 				
-//				$("#fileListUl").append("<li><a href='javascript:void(0)' id='nextA' class='backward'>next</a></li>");
 				$("#prevA").bind("click",function(){
-					$("#fileListUl").find(".active").prev().find("a:first").trigger("click");
+					$("#fileListUl").find(".active").prev().trigger("click");
 					$.get("report!prevDataReport",{},function(state){});
 				});
 				$("#nextA").bind("click",function(){
-					$("#fileListUl").find(".active").next().find("a:first").trigger("click");
+					$("#fileListUl").find(".active").next().trigger("click");
 					$.get("report!nextDataReport",{},function(state){});
 				});
 			});
