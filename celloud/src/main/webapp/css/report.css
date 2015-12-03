@@ -111,7 +111,7 @@ a:active .i-print{ background-position:-120px -40px;}
 .m-tips{ background-color:#f9fafd; height:30px; line-height:30px; padding-left:19px; color:#6E88AC; font-size:12px;}
 .i-tips{ display:inline-block;*display:inline;*zoom:1; width:17px; height:16px; vertical-align:middle; margin-right:9px; background-position:-80px -86px;}
 .m-tips .green{ color:#79B826; font-weight:bold;}
-.bg-analysis{/* background-color:#edf6f0; padding:5px 0;*/}
+.bg-analysis{padding-bottom: 20px}
 .bg-analysis .m-box{ border:1px solid #B5D329; /* border-bottom:0 */}
 .bg-analysis .m-box h2{ background:#79BC27 none; border-top:1px solid #BCDE93; border-bottom:1px solid #B5D329; color:#fff; height:40px; line-height:40px; border-radius:4px 4px 0 0;}
 .bg-analysis .m-tips{ background-color:#F9FFE6; color:#666; height:40px; line-height:40px;border-bottom:1px solid #B5D329; border-radius:0 0 4px 4px;}

@@ -10,9 +10,10 @@
 				</span>
 			</div>
 			<div class="toolbar">
-				<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" class="btn btn-default"><i class="i-download"></i>报告下载</a>
+				<c:if test="${pgs.finalPng!=null && pgs.finalPng!='' }">
+					<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" class="btn btn-default"><i class="i-download"></i>报告下载</a>
+				</c:if>
 				<c:if test="${pgs.pdf!=null }">
-					
 					<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.pdf }" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
 				</c:if>
 				<c:if test="${pgs.pdf ==null }">
