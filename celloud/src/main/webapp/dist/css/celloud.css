@@ -4065,6 +4065,8 @@ fieldset[disabled] .btn-vk.active {
 .modal-celloud-green .modal-footer,
 .modal-green-header .modal-header{
   color: #fff !important;
+  word-break: break-all;
+  word-wrap:break-word;
 }
 .bg-gray {
   color: #000;
