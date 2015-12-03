@@ -150,10 +150,10 @@ public class TaskAction extends BaseAction {
                             app.getMethod(),
                             new Class[] { String.class, String.class,
                                     String.class, String.class, String.class,
-                                    List.class, Integer.class })
+                                    List.class })
                     .invoke(ros, reportPath.toString(), dataKey,
                             app.getTitle(), projectFile.toString(),
-                            projectId.toString(), dataList, userId);
+                            projectId.toString(), dataList);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -171,9 +171,6 @@ public class TaskAction extends BaseAction {
             HashSet<String> resultFiles = FileTools.getFiles(inPath);
             Iterator<String> rFile = resultFiles.iterator();
             Long size = null;
-            for (int i = 0; i < dataList.size(); i++) {
-                dataNames += dataList.get(i).getFileName();
-            }
             while (rFile.hasNext()) {
                 String fstr = rFile.next();
                 if (!fstr.equals("...tar.gz") && !fstr.equals("..tar.gz")) {
@@ -181,19 +178,19 @@ public class TaskAction extends BaseAction {
                             .substring(fstr.lastIndexOf(".tar.gz"));
                     String resourcePath = inPath + fstr;
                     size = new File(resourcePath).length();
-                    com.celloud.sdo.Data data = new com.celloud.sdo.Data();
+                    Data data = new Data();
                     data.setUserId(userId);
                     data.setFileName(fstr);
                     data.setState(DataState.DEELTED);
                     int dataId = dataService.addData(data);
-                    dataKey = DataUtil.getNewDataKey(dataId);
-                    String filePath = outPath + dataKey + extName;
+                    String new_dataKey = DataUtil.getNewDataKey(dataId);
+                    String filePath = outPath + new_dataKey + extName;
                     boolean state = PerlUtils.excuteCopyPerl(resourcePath,
                             filePath);
                     if (state) {
                         data.setFileId((long) dataId);
-                        data.setDataKey(dataKey);
-                        data.setAnotherName("split:" + dataNames);
+                        data.setDataKey(new_dataKey);
+                        data.setAnotherName("split:" + dataKey);
                         data.setSize(size);
                         data.setPath(filePath);
                         data.setFileFormat(FileFormat.FQ);

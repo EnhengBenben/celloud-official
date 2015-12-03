@@ -28,6 +28,7 @@ import com.mongo.sdo.CmpReport;
 import com.mongo.sdo.GeneDetectionResult;
 import com.mongo.service.ReportService;
 import com.mongo.service.ReportServiceImpl;
+import com.nova.constants.AppNameIDConstant;
 import com.nova.constants.Mod;
 import com.nova.constants.SparkPro;
 import com.nova.email.EmailProjectEnd;
@@ -783,7 +784,7 @@ public class ProjectAction extends BaseAction {
                 ssh.sshSubmit(command, true);
             }
             // TODO
-            if (appId == 114) {
+            if (AppNameIDConstant.MIB.equals(String.valueOf(appId))) {
                 taskService.deleteTask(Long.parseLong(projectId));
                 Long appId_l = (long) appId;
                 int runningNum = taskService.getRunningNumByAppId(appId_l);
@@ -804,6 +805,7 @@ public class ProjectAction extends BaseAction {
                     log.info("任务" + task.getTaskId() + "开始投递");
                     taskService.updateToRunning(taskId);
                     runningNum = taskService.getRunningNumByAppId(appId_l);
+                    task = taskService.getFirstTask(appId_l);
                 }
             }
         }

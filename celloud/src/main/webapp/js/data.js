@@ -316,6 +316,7 @@ function showDataMoreInfoEdit(){
 	$(".select2-container").removeClass("select2-container-disabled");
 }
 function cancelEditMoreInfo(){
+	toEdit = false;
 	$("#moreDatasForm").find("input").prop("disabled",true);
 	$("#moreDatasForm").find("input").addClass("readonly");
 	$("#dataStrainHide").prop("readonly",true);
