@@ -205,7 +205,7 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
      <!-- /All Modal-->
-	<script src="<%=request.getContextPath()%>/js/data.js?version=2.24" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/data.js?version=2.26" type="text/javascript"></script>
 	<!-- spin:loading效果 end-->
 	<script type="text/javascript">
 		var session_userId = <%=session.getAttribute("userId")%>;

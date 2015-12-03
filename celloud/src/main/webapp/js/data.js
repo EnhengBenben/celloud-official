@@ -21,6 +21,9 @@ var opts = {
   left: 'auto' // Left position relative to parent in px
 };
 var spinner;
+//设置遮罩
+spinner = new Spinner(opts);
+var target = document.getElementById('dataSpinDiv');
 //---------------------------------------------------------------------
 
 //记录数据管理页面每页显示记录个数,默认是50
@@ -64,32 +67,26 @@ function initData(){
 //获取我的数据
 var addedApps = new Array();
 function getAllDataList(){
-	//设置遮罩
-	spinner = new Spinner(opts);
-	var target = document.getElementById('dataSpinDiv');
 	spinner.spin(target);
 	$.get("data3!getAllData",{"page.pageSize":dataPageDataNum,"page.currentPage":1},function(responseText){
+		spinner.stop();
 		$("#selfDataDiv").html(responseText);
 		$("#pageRecordSel").val(dataPageDataNum);
 		toUse();
 		$("#fileDataBody").scrollTop(0);
-		spinner.stop();
 		privateIcon();
 	});
 }
 function getDataByCondition(pageNum){
-	//设置遮罩
-	spinner = new Spinner(opts);
-	var target = document.getElementById('dataSpinDiv');
 	spinner.spin(target);
 	dataCurrentPageNumber = pageNum;
 	var condition = $.trim($("#dataTagSearch").val());
 	$.get("data3!getDataByCondition",{"condition":condition,"page.pageSize":dataPageDataNum,"page.currentPage":pageNum,"conditionInt":sortType,"sortByName":fileNameSort,"sortByDate":createDateSort},function(responseText){
+		spinner.stop();
 		$("#selfDataDiv").html(responseText);
 		$("#pageRecordSel").val(dataPageDataNum);
 		toUse();
 		$("#fileDataBody").scrollTop(0);
-		spinner.stop();
 		privateIcon();
 	});
 }
