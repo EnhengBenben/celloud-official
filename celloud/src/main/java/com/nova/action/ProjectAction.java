@@ -30,6 +30,7 @@ import com.mongo.service.ReportService;
 import com.mongo.service.ReportServiceImpl;
 import com.nova.constants.AppNameIDConstant;
 import com.nova.constants.Mod;
+import com.nova.constants.ReportState;
 import com.nova.constants.SparkPro;
 import com.nova.email.EmailProjectEnd;
 import com.nova.email.EmailService;
@@ -771,17 +772,19 @@ public class ProjectAction extends BaseAction {
         for (Report report : list) {
             int appId = report.getSoftwareId();
             projectId = report.getProjectId()+"";
-            String param = SparkPro.TOOLSPATH + report.getUserId() + "/"
-                    + appId + " ProjectID" + projectId;
-            if (SparkPro.apps.contains(String.valueOf(appId))) {
-                String command = SparkPro.SPARKKILL + " " + param;
-                SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
-                ssh.sshSubmit(command, true);
-                runQueue(projectId);
-            } else {
-                String command = SparkPro.SGEKILL + " " + param;
-                SSHUtil ssh = new SSHUtil(sgehost, sgeuserName, sgepwd);
-                ssh.sshSubmit(command, true);
+            if (report.getState() != ReportState.COMPLETE) {
+                String param = SparkPro.TOOLSPATH + report.getUserId() + "/"
+                        + appId + " ProjectID" + projectId;
+                if (SparkPro.apps.contains(String.valueOf(appId))) {
+                    String command = SparkPro.SPARKKILL + " " + param;
+                    SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
+                    ssh.sshSubmit(command, true);
+                    runQueue(projectId);
+                } else {
+                    String command = SparkPro.SGEKILL + " " + param;
+                    SSHUtil ssh = new SSHUtil(sgehost, sgeuserName, sgepwd);
+                    ssh.sshSubmit(command, true);
+                }
             }
             // TODO
             if (AppNameIDConstant.MIB.equals(String.valueOf(appId))) {
