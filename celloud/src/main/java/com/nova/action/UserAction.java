@@ -31,7 +31,10 @@ import com.nova.utils.ResetPwdUtils;
 @ParentPackage("celloud-default")
 @Action("user")
 @Results({
+    @Result(name = "validateUserEmail", type = "json", params = { "root", "result" }),
 	@Result(name = "checkEmail", type = "json", params = { "root", "email" }),
+	@Result(name = "resetPassword", location = "../../pages/user/resetPassword.jsp"),
+	@Result(name = "goToForgetPwd", location = "../../pages/user/forgetPwd.jsp"),
 	@Result(name = "getUserLogInfo", location = "../../pages/user/logInfoList.jsp"),
 	@Result(name = "success", type = "json", params = { "root", "flag" }) })
 public class UserAction extends BaseAction {
@@ -356,7 +359,7 @@ public class UserAction extends BaseAction {
 						"resetpwduname", username)
 						.replaceAll("resetpwdcode",
 							randomCode)),
-			ResetPwdUtils.title);
+			ResetPwdUtils.title,true);
 	    } else {
 		result = 2;// 邮箱验证没通过
 	    }

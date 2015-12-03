@@ -7,9 +7,6 @@
 		<action name="user_*" class="com.nova.action.UserAction" method="{1}">
 			<result name="getUserPageList">/pages/admin/userList.jsp</result>
 			<result name="getUserById">/pages/admin/editUser.jsp</result>
-			<!-- 重置密码，由用户点击邮箱链接触发 -->
-			<result name="resetPassword">/content/resetPassword.jsp</result>
-			<result name="goToForgetPwd">/content/forgetPwd.jsp</result>
 			<result name="register">/pages/admin/addUser.jsp</result>
 		</action>
 	</package>
@@ -82,14 +79,6 @@
 		<action name="updatePwd" class="com.nova.action.UserAction" method="updatePwd">
 			<result type="json">
 				<param name="root">flag</param>
-			</result>
-		</action>
-		
-		
-		<!-- 忘记密码 -->
-		<action name="validateUserEmail" class="com.nova.action.UserAction" method="validateUserEmail">
-			<result type="json">
-				<param name="root">result</param>
 			</result>
 		</action>
 		<!-- 重置密码 -->

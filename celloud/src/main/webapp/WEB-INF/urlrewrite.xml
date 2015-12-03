@@ -25,7 +25,7 @@
 	<rule>
 		<note>enter user forget password page</note>
 		<from>^/forgetPwd$</from>
-		<to>/user_goToForgetPwd.action</to>
+		<to>/user!goToForgetPwd</to>
 	</rule>
 
 	<rule>
@@ -37,7 +37,7 @@
 	<rule>
 		<note>enter modify password</note>
 		<from>^/resetPwd/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)$</from>
-		<to>/user_resetPassword.action?username=$1&amp;code=$2</to>
+		<to>/user!resetPassword?username=$1&amp;code=$2</to>
 	</rule>
 
 	<rule>
