@@ -60,19 +60,19 @@
 			     <thead>
 			       <tr>
 			         <th>Species</th>
-			         <th>Genus</th>
-			         <th>GI</th>
-			         <th>%Coverage</th>
-			         <th>Reads_hit</th>
-			         <th>Reads_num</th>
-			         <th>Average depth of coverage</th>
+			         <th style="min-width:110px;">Genus</th>
+			         <th style="min-width:75px;">GI</th>
+			         <th style="min-width:76px;">%Coverage</th>
+			         <th style="min-width:65px;">Reads_hit</th>
+			         <th style="min-width:78px;">Reads_num</th>
+			         <th style="min-width:180px;">Average depth of coverage</th>
 			       </tr>
 			     </thead>
 			     <tbody>
 			       <c:if test="${fn:length(mib.summaryTable)>0}">
 			         <c:forEach items="${mib.summaryTable }" var="summary" varStatus="s">
 					   <tr>
-					     <td>${summary.Species }</td>
+					     <td style="text-align: left;line-height:1em">${summary.Species }</td>
 					     <td>${summary.Genus }</td>
 					     <td>${summary.GI }</td>
 					     <td>${summary.Coverage }</td>
