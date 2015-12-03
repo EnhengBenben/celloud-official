@@ -237,7 +237,6 @@ $.ajaxSetup ({
 				$("#selfReportDiv").html(responseText);
 				loadReportList();
 				spinner.stop();
-				$("#reportBody").scrollTop(0);
 			});
 		}
 		
@@ -893,15 +892,6 @@ $.ajaxSetup ({
 					});
 				}
 			}
-			//调整div的大小
-			var height = $("#reportResultDiv").children().height();
-			$("#reportResultDiv").css("height",height+20);
-			//绑定resize事件，若大小变化，则再调整
-			$("#reportResultDiv").children().resize(function(){
-				var height = $("#reportResultDiv").children().height();
-				$("#reportResultDiv").css("height",height+20);
-			});
-			$("#reportBody").scrollTop(0);
 			spinner.stop();
 		}
 		
@@ -1036,16 +1026,6 @@ $.ajaxSetup ({
 		function toProReport(responseText){
 			$("#reportResultDiv").html(responseText);
 			spinner.stop();
-			//动态调整div的大小
-			var height = $("#reportResultDiv").children().height();
-			if(height>380){
-				$("#reportResultDiv").css("height",height+20);
-				$("#reportResultDiv").children().resize(function(){
-					var height = $("#reportResultDiv").children().height();
-					$("#reportResultDiv").css("height",height+20);
-				});
-			}
-			$("#reportBody").scrollTop(0);
 		}
 		
 		//关闭报告视图

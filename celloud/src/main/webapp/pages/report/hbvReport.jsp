@@ -464,12 +464,10 @@ function showBg(src,id) {
 	window.parent.showZoom(src);
 }
 function change1(){
-	$("#reportBody").scrollTop(0);
 	$("#nomal").css("display","");
 	$("#cfda").css("display","none");
 }
 function change2(){
-	$("#reportBody").scrollTop(0);
 	$("#nomal").css("display","none");
 	$("#cfda").css("display","");
 }

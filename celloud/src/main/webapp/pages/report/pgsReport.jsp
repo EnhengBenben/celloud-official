@@ -3,7 +3,7 @@
 <div>
 	<c:if test="${pgs.noEnoughReads.equals('false') }">
 		<div class="m-file">
-			<div style="width: 800px">
+			<div style="max-width: 500px">
 				文件名称：
 				<span class="file-name">
 					${pgs.dataKey }(<c:if test="${!empty pgs.anotherName }">${pgs.anotherName }</c:if><c:if test="${empty pgs.anotherName }">${pgs.fileName }</c:if> )
@@ -20,9 +20,9 @@
 						<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.dataKey }.pdf" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
 					</c:if>
 				</c:if>
-				<a target="_blank" href="../../printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }" class="btn btn-default"><i class="i-print"></i>打印报告</a>
+				<a target="_blank" href="printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }" class="btn btn-default"><i class="i-print"></i>打印报告</a>
 				<c:if test="${pgs.splitPng!=null }">
-					<a target="_blank" href="../../printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.splitPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }" class="btn btn-default"><i class="i-print"></i>点图报告</a>					
+					<a target="_blank" href="printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.splitPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }" class="btn btn-default"><i class="i-print"></i>点图报告</a>					
 				</c:if>
 			</div>
 		</div>

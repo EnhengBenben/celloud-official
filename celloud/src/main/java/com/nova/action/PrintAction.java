@@ -23,7 +23,7 @@ import com.nova.utils.PropertiesUtil;
 
 @ParentPackage("celloud-default")
 @Action("print")
-@Results({ @Result(name = "pgs", location = "../../pages/print/PGS.jsp"),
+@Results({ @Result(name = "pgs", location = "../../pages/print/printPGS.jsp"),
 	@Result(name = "nipt", location = "../../pages/print/NIPT.jsp"),
 	@Result(name = "VSP", location = "../../pages/print/printVSP.jsp"),
 	@Result(name = "CMP", location = "../../pages/print/printCMP.jsp"),

@@ -223,9 +223,11 @@ public class UserAction extends BaseAction {
     }
 
     public String checkUserEmailByUserId() {
-        System.out.println("____ß");
-        flag = userService.checkUserEmailByUserId(
-                (Integer) super.session.get("userId"), user.getEmail());
+        userId = user.getUserId();
+        if (userId == 0) {
+            userId = (Integer) session.get("userId");
+        }
+        flag = userService.checkUserEmailByUserId(userId, user.getEmail());
         return SUCCESS;
     }
 

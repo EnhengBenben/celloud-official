@@ -4,8 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="<%=request.getContextPath() %>/bootstrap/css/bootstrap.css">
-<link rel="stylesheet" href="<%=request.getContextPath() %>/bootstrap/css/bootstrap-responsive.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/plugins/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/plugins/bootstrap/css/bootstrap-responsive.css">
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <!-- jquery_alert_dialogs begin -->
 <script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
@@ -146,6 +146,18 @@ hr {
 }
 .w3cbbs { page-break-after:always;}
 .miniTable_ tr td,.miniTable_ tr th{line-height:14px;}
+input[type="text"], .onlybotton{
+	border: 0;
+	border-bottom: 1px solid #ccc;
+	box-shadow: inset 0 0 0 rgba(0, 0, 0, 0.075);
+	border-radius: 0;
+}
+.input-mini {
+    width: 60px;
+}
+.input-small {
+    width: 90px;
+}
 </style>
 <!--[if IE]>
 <style>
