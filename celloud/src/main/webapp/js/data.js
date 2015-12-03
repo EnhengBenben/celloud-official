@@ -396,8 +396,8 @@ function toManageEachDataModel(){
 		$("#eachDatasDiv").html(response);
 		var strainData = $("#strainDataHide").val();
 		setSelect2Info("input[class='strain']",eval("("+strainData+")"));
-		$("#manageEachDataModal").modal("show");
 		$("#manageDatasModal").modal("hide");
+		$("#manageEachDataModal").modal("show");
 	});
 }
 function saveEachData(){
