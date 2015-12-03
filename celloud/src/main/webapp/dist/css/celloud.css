@@ -60,7 +60,7 @@ input,button,select,textarea{outline:none}/*取消chrome下input和textarea的�
   -moz-transition: -moz-transform 0.3s ease-in-out, margin 0.3s ease-in-out;
   -o-transition: -o-transform 0.3s ease-in-out, margin 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out, margin 0.3s ease-in-out;
-/*   margin-left: 230px; 左侧导航栏宽度*/
+  margin-left: 230px;
   z-index: 820;
 }
 .layout-top-nav .content-wrapper,
@@ -1731,6 +1731,7 @@ a:focus {
 }
 .box-body > .table {
   margin-bottom: 0;
+  font-size: 12px;
 }
 .box-body .fc {
   margin-top: 5px;

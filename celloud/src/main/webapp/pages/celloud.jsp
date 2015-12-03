@@ -10,14 +10,14 @@
     <link href="plugins/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />    
     <link href="plugins/ionicons-master/css/ionicons.min.css" rel="stylesheet" type="text/css" />   
     <!-- Theme style -->
-    <link href="dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <link href="dist/css/skins/skin-green.min.css" rel="stylesheet" type="text/css" />
     <!-- Date Picker -->
     <link href="plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
     <!-- Daterange picker -->
     <link href="plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
     <link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
-    <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.1" rel="stylesheet" type="text/css" />
+    <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.2" rel="stylesheet" type="text/css" />
+<!--     <link href="plugins/intro/introjs.css" rel="stylesheet" type="text/css" /> -->
   </head>
   <body class="skin-green sidebar-mini">
     <div class="wrapper">
@@ -61,31 +61,31 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">产品和服务</li>
-            <li class="active treeview">
+            <li class="active treeview" data-step="1" data-intro="This is a tooltip!">
               <a href="javascript:void(0)" onclick="showUserCount();">
                 <i class="fa fa-dashboard"></i>
                 <span>总览</span>
               </a>
             </li>
-            <li class="treeview">
+            <li class="treeview" data-step="2" data-position="left">
               <a href="javascript:void(0)" onclick="showUpload();">
                 <i class="fa fa-sellsy"></i>
                 <span>数据上传</span>
               </a>
             </li>
-            <li class="treeview">
+            <li class="treeview" data-step="3" data-position="right">
               <a href="javascript:void(0)" onclick="showData()">
                 <i class="fa fa-tasks"></i>
                 <span>数据管理</span>
               </a>
             </li>
-            <li class="treeview">
+            <li class="treeview" data-step="4" data-position="bottom">
               <a href="javascript:void(0)" onclick="showReport()">
                 <i class="fa fa-files-o"></i>
                 <span>报告</span>
               </a>
             </li>
-            <li class="treeview">
+            <li class="treeview" data-step="5" data-position="top">
               <a href="javascript:void(0)" onclick="showAppStore()">
                 <i class="fa fa-cubes"></i>
                 <span>应用市场</span>
@@ -114,6 +114,7 @@
         
       </div>
     </div>
+<%-- 	<script src="<%=request.getContextPath() %>/plugins/intro/intro.js?version=1.0"></script> --%>
 	<script src="http://fgnass.github.io/spin.js/spin.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <script src="plugins/jQueryUI/jquery-ui.min.js" type="text/javascript"></script>
@@ -142,6 +143,10 @@
     <script type="text/javascript">
     	$(document).ready(function(){
     		showUserCount();
+// 			var tour = introJs();
+// 			tour.setOption('tooltipPosition', 'auto');
+// 			tour.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top'])
+// 			tour.start();
     	});
     </script>
   </body>
