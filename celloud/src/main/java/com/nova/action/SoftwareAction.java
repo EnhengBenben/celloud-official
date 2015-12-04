@@ -1,6 +1,5 @@
 package com.nova.action;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +8,6 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import com.google.inject.Inject;
-import com.nova.constants.CommentState;
 import com.nova.pager.Page;
 import com.nova.pager.PageList;
 import com.nova.sdo.Company;
@@ -188,15 +186,6 @@ public class SoftwareAction extends BaseAction {
     }
 
     /**
-     * 根据userId、softName条件查询软件列表
-     */
-    public String selectConditonSoft() {
-	userId = (Integer) super.session.get("userId");
-	pageList = softwareService.getAll(userId, soft.getSoftwareName(), page);
-	return SUCCESS;
-    }
-
-    /**
      * @Title: getSoftwareList
      * @Description: (根据软件类型和用户获取用户添加列表)
      * @return
@@ -216,62 +205,6 @@ public class SoftwareAction extends BaseAction {
      * @return
      */
     private List<SoftwareComment> commentList;
-
-    public String getOneSoftware() {
-	log.info("获取一个软件的详细信息");
-	String isAdd = soft.getIsAdd();
-	soft = softwareService.getSoftware(soft.getSoftwareId());
-	soft.setIsAdd(isAdd);
-	// 获取软件截图列表
-	screenList = screenService.getAllScreen(soft.getSoftwareId());
-	// 获取软件评论及回复列表
-	List<SoftwareComment> softCommentList = commentService.getCommentList(
-		soft.getSoftwareId(), page);
-	if (null == page) {
-	    page = new Page(commentPageSize, 1);
-	} else {
-	    page = new Page(commentPageSize, page.getCurrentPage());
-	}
-
-	commentList = new ArrayList<SoftwareComment>();
-	for (SoftwareComment comment : softCommentList) {
-	    if (comment.getCommentType() == CommentState.COMMENT) {
-		List<SoftwareComment> replyList = commentService
-			.getReplyList(comment.getId());
-		comment.setReplyList(replyList);
-		commentList.add(comment);
-	    }
-	}
-	page.make(commentService.getCommentList(soft.getSoftwareId()).size());
-	return SUCCESS;
-    }
-
-    /**
-     * 获取软件评论列表
-     * 
-     * @return
-     */
-    public String selectCommentByPage() {
-	// 获取软件评论及回复列表
-	List<SoftwareComment> softCommentList = commentService.getCommentList(
-		soft.getSoftwareId(), page);
-	if (null == page) {
-	    page = new Page(commentPageSize, 1);
-	} else {
-	    page = new Page(commentPageSize, page.getCurrentPage());
-	}
-
-	commentList = new ArrayList<SoftwareComment>();
-	for (SoftwareComment comment : softCommentList) {
-	    if (comment.getCommentType() == CommentState.COMMENT) {
-		List<SoftwareComment> replyList = commentService
-			.getReplyList(comment.getId());
-		comment.setReplyList(replyList);
-		commentList.add(comment);
-	    }
-	}
-	return "selectCommentByPage";
-    }
 
     /**
      * 修改人气指数

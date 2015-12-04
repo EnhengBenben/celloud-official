@@ -10,22 +10,6 @@
 		</action>
 	
 		<!-- 软件管理begin -->
-		<action name="selectCommentByPage" class="com.nova.action.SoftwareAction" 
-			method="selectCommentByPage">
-			<result name="selectCommentByPage">/pages/software/commentList.jsp</result>
-		</action>
-		<action name="selectConditonSoft" class="com.nova.action.SoftwareAction" 
-			method="selectConditonSoft">
-			<result name="success">/pages/software/softList.jsp</result>
-		</action>
-		<action name="getSoftwareList" class="com.nova.action.SoftwareAction"
-			method="getSoftwareList">
-			<result name="success">/pages/software/softList.jsp</result>
-		</action>
-		<action name="getOneSoftware" class="com.nova.action.SoftwareAction"
-			method="getOneSoftware">
-			<result name="success">/pages/software/detail.jsp</result>
-		</action>
 		<action name="goToAddSoftPage" class="com.nova.action.SoftwareAction"
 			method="goToAddSoftPage">
 			<result name="goToAddSoftPage">/pages/admin/addSoft.jsp</result>

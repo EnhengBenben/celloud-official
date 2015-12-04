@@ -8,18 +8,19 @@
 <link href="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
 <section class="content-header">
   <h1>
-    <small><a href="javascript:void(0)" onclick="showReport()">返回</a></small>
+    <small>&nbsp;</small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="javascript:void(0)"><i class="fa fa-dashboard"></i> 报告</a></li>
+    <li><a href="javascript:void(0)"><i class="fa fa-files-o"></i> 报告</a></li>
     <li class="active">数据报告</li>
+    <li><a href="javascript:void(0)" onclick="showReport()">返回</a></li>
   </ol>
 </section>
 <section class="content">
   <div class="row">
     <div class="col-xs-10">
       <div class="box box-success color-palette-box" id="reportResultDiv">
-      
+      	
       </div>
     </div>
     <div class="col-xs-2">
