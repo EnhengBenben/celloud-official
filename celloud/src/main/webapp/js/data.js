@@ -235,7 +235,7 @@ function removetoRunData(id){
 	checkedDataIds.splice($.inArray(id,checkedDataIds),1);
 	addedDataNames.splice($.inArray(id,addedDataNames),1);
 	$("#selAll").prop("checked",false);	
-	$("#chk"+id).attr("checked",false);
+	$("#chk"+id).prop("checked",false);
 	$("#dataLi"+id).remove();
 	if(checkedDataIds.length==0){
 		$("#toRunApp").attr("disabled",true);

@@ -253,7 +253,7 @@ function preview(obj){
 		$(this).parent().html("<input type='text' class='"+classname+"' value='"+inputVal+"'>");
 	});
 	$("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
-	$("input[type='radio'][value="+sex+"]").attr("checked",true); 
+	$("input[type='radio'][value="+sex+"]").prop("checked",true); 
 }
 </script>
 </body>

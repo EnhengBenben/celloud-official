@@ -537,12 +537,12 @@ function toEditSoft(id){
 			$("#typeSel").val(soft.type);
 			//runData
 			var runData = soft.runData;
-			$("input[name='soft.runData'][value='"+runData+"']").attr("checked",true);
+			$("input[name='soft.runData'][value='"+runData+"']").prop("checked",true);
 			//dataNum
 			$("#dataNum").val(soft.dataNum);
 			//param
 			var param = soft.param;
-			$("input[name='soft.param'][value='"+param+"']").attr("checked",true);
+			$("input[name='soft.param'][value='"+param+"']").prop("checked",true);
 			//ScreenShot
 			var screenShot = soft.screenShot;
 			if(screenShot!=null&&screenShot!=""){

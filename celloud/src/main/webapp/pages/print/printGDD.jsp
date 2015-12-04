@@ -368,7 +368,7 @@
   		var sex = $("input[type='radio']:checked").val();
   		$("#_sex").html(sex);
   		$("#change").hide();
-  		if($("#noMutation").attr("checked")){
+  		if($("#noMutation").prop("checked")){
   			$("#noDrug").css("display","");
   		}
   		$("a").css("display","none");
@@ -387,7 +387,7 @@
   			$(this).parent().html("<textarea class='form-control' rows='15' cols='100'>"+inputVal+"</textarea>");
   		});
   		$("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
-  		$("input[type='radio'][value="+sex+"]").attr("checked",true); 
+  		$("input[type='radio'][value="+sex+"]").prop("checked",true); 
   		$("a").css("display","");
   	}
   	function save(){

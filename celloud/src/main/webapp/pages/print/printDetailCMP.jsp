@@ -5627,7 +5627,7 @@ $(document).ready(function(){
 		}
 	});
 	$("#noMutation").change(function(){
-		if($("#noMutation").attr("checked")=="checked"){
+		if($("#noMutation").prop("checked")){
 			$("#drugTable").css("display","none");
 			$("#del_drugTbody_3").css("display","none");
 			$("#drugTable").parent().find("a").css("display","none");
@@ -5703,7 +5703,7 @@ function preview(obj){
 	var sex = $("input[type='radio']:checked").val();
 	$("#_sex").html(sex);
 	$("#change").hide();
-	if($("#noMutation").attr("checked")){
+	if($("#noMutation").prop("checked")){
 		$("#noDrug").css("display","");
 	}
 	$("#checkboxdiv").css("display","none");
@@ -5723,7 +5723,7 @@ function preview(obj){
 		$(this).parent().html("<textarea class='form-control' rows='15' cols='100'>"+inputVal+"</textarea>");
 	});
 	$("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
-	$("input[type='radio'][value="+sex+"]").attr("checked",true); 
+	$("input[type='radio'][value="+sex+"]").prop("checked",true); 
 	$("#noDrug").css("display","none");
 	$("#checkboxdiv").css("display","");
 	$("a").css("display","");

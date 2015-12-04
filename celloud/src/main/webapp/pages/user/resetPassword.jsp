@@ -43,7 +43,7 @@
             <div class="view-tips">最佳浏览体验：Chrome / Firefox 8.0+ / IE 9.0+</div>
         </div>
         <jsp:useBean id="_now" class="java.util.Date" />
-        <div class="footer">© <fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" /> Celloud，Inc. All Rights reserved. <a  href="#">生物信息云平台</a> · <a  href="javascript:void();">沪ICP备14035977号</a> · <a href="../../service.html" target="_blank">服务与支持</a> · <a href="../../content/feedBack.html" target="_blank">意见反馈</a></div>
+        <div class="footer">© <fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" /> Celloud，Inc. All Rights reserved. <a  href="#">生物信息云平台</a> · <a  href="javascript:void();">沪ICP备14035977号</a> · <a href="../../service.html" target="_blank">服务与支持</a> · <a href="../../feedBack.html" target="_blank">意见反馈</a></div>
     </div>
 	<!--#E wrapper-->
 </div>

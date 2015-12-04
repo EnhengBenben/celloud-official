@@ -30,11 +30,11 @@ function clearForm(){
 	$("#titleSpanInfo").html("");
 	$("#contentSpanInfo").html("");
 	$("#submitSpanInfo").html("");
-	$("#chkUsername").attr("checked",false);
+	$("#chkUsername").prop("checked",false);
 	$("#userName").attr("disabled",false);
 }
 $("#chkUsername").click(function(){
-	var checked = $(this).attr("checked");
+	var checked = $(this).prop("checked");
 	if(checked){
 		$("#userName").val("匿名");
 		$("#userName").attr("disabled",true);
@@ -95,7 +95,7 @@ function submitFeedBack(){
 		return;
 	} 
 	var userName = $.trim($("#userName").val());
-	var checked = $("#chkUsername").attr("checked");
+	var checked = $("#chkUsername").prop("checked");
 	if(!checked){
 		$.get("checkUsername.action",{"username":userName},function(flag){
 			if(!flag){
