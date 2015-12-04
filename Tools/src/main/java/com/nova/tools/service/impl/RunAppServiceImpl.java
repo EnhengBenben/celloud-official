@@ -1733,7 +1733,7 @@ public class RunAppServiceImpl {
 			FileTools.createFile(projectFile);
 			// 追加表头
 			FileTools.appendWrite(projectFile,
-					"dataID\t文件名称\tKRAS exon number\tPosition\tamino acid\n");
+					"dataID\t文件名称\tKRAS exon number\t结论\n");
 			for (int i = 0; i < dataArray.length; i++) {
 				String[] dataDetail = dataArray[i].split(",");
 				String finalPath = basePath + getArray(dataDetail, 0);
@@ -1747,11 +1747,10 @@ public class RunAppServiceImpl {
 				}
 				String first = FileTools
 						.getFirstLine(finalPath + "/report.txt");
-				String result = first == null ? "no result" : first.replace(
-						"EGFR exon number is ", "");
+				String result = first == null ? "no result" : first;
 				FileTools.appendWrite(projectFile, getArray(dataDetail, 0)
 						+ "\t" + getArray(dataDetail, 2) + "\t" + result + "\t"
-						+ ScreeningUtil.screen(finalPath + "/report.txt")
+						+ FileTools.readAppoint(finalPath + "/report.txt.Report")
 						+ "\n");
 				resultArray.append(getArray(dataDetail, 0) + ",");
 			}
