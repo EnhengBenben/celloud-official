@@ -378,12 +378,12 @@ function _init() {
    */
   $.AdminLTE.tree = function (menu) {
     var _this = this;
-
     $("li a", $(menu)).on('click', function (e) {
       //Get the clicked link and the next element
       var $this = $(this);
       var checkElement = $this.next();
-
+      $('.treeview').removeClass("active");
+      $this.parent("li").addClass('active');
       //Check if the next element is a menu and is visible
       if ((checkElement.is('.treeview-menu')) && (checkElement.is(':visible'))) {
         //Close the menu

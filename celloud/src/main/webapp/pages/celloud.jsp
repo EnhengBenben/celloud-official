@@ -10,13 +10,13 @@
     <link href="plugins/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />    
     <link href="plugins/ionicons-master/css/ionicons.min.css" rel="stylesheet" type="text/css" />   
     <!-- Theme style -->
-    <link href="dist/css/skins/skin-green.min.css" rel="stylesheet" type="text/css" />
+    <link href="dist/css/skins/skin-green.min.css?v=1.0" rel="stylesheet" type="text/css" />
     <!-- Date Picker -->
     <link href="plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
     <!-- Daterange picker -->
     <link href="plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
     <link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
-    <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.2" rel="stylesheet" type="text/css" />
+    <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.4" rel="stylesheet" type="text/css" />
 <!--     <link href="plugins/intro/introjs.css" rel="stylesheet" type="text/css" /> -->
   </head>
   <body class="skin-green sidebar-mini">
@@ -130,8 +130,6 @@
     <script src="plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
     <!-- FastClick -->
     <script src="plugins/fastclick/fastclick.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="dist/js/app.min.js" type="text/javascript"></script>
     <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
     <script src="<%=request.getContextPath() %>/plugins/select/select2.min.js"></script>
 	<script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
@@ -139,6 +137,7 @@
     <script src="<%=request.getContextPath() %>/plugins/highcharts/highcharts.js"></script>
 	<script src="<%=request.getContextPath() %>/plugins/highcharts/exporting.js"></script>
 	<script src="<%=request.getContextPath() %>/plugins/highcharts/char.js?version=20150526"></script>
+    <script src="dist/js/app.js?v=2" type="text/javascript"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script type="text/javascript">
     	$(document).ready(function(){
