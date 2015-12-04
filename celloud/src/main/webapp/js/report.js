@@ -213,7 +213,7 @@ $.ajaxSetup ({
 			if(!isTIMETRUE){
 				START =$("#_searchDate").val();
 				END = $("#_endDate").val();
-				if(!START||!END){
+				if((!START && END)||(START && !END)){
 					$("#_alertSpan").css("display","");
 					$("#_alertSpan").html("请同时选择起始时间和结束时间");
 					return ;
@@ -223,10 +223,10 @@ $.ajaxSetup ({
 					$("#_alertSpan").html("起始日期不能大于结束日期");
 					return ;
 				}
-				if(START != null){
+				if(START != null && START != ""){
 					START = START+" 00:00:00";
 				}
-				if(END != null){
+				if(END != null && END != ""){
 					END = END+" 23:59:59";
 				}
 			}
