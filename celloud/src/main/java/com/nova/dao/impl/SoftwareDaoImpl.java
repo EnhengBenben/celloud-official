@@ -1512,42 +1512,6 @@ public class SoftwareDaoImpl extends BaseDao implements ISoftwareDao {
 	}
 
 	@Override
-	public List<Software> getSoftListByFormat(Integer format, Integer userId) {
-		List<Software> softList = new ArrayList<Software>();
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		try {
-			conn = ConnectManager.getConnection();
-			String sql = "select r.software_id,s.software_name,s.run_data,s.data_num,s.off_line,s.company_id,s.attribute from tb_software s,tb_software_format_relat r where s.software_id=r.software_id and r.format_id=? and off_line=? and ((attribute = ? and company_id = (select company_id from tb_user where user_id = ?)) or attribute= ?) order by s.create_date";
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1, format);
-			ps.setInt(2, SoftWareOffLineState.ON);
-			ps.setInt(3, Attribute.PRIVATE);
-			ps.setInt(4, userId);
-			ps.setInt(5, Attribute.PUBLIC);
-			rs = ps.executeQuery();
-			Software soft = null;
-			while (rs.next()) {
-				soft = new Software();
-				soft.setSoftwareId(rs.getInt("software_id"));
-				soft.setSoftwareName(rs.getString("software_name"));
-				soft.setRunData(rs.getInt("run_data"));
-				soft.setDataNum(rs.getInt("data_num"));
-				soft.setOffLine(rs.getInt("off_line"));
-                soft.setCompanyId(rs.getInt("company_id"));
-                soft.setAttribute(rs.getInt("attribute"));
-				softList.add(soft);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			ConnectManager.free(conn, ps, rs);
-		}
-		return softList;
-	}
-
-	@Override
 	public int getAppRunDataNum(int softwareId) {
 		int dataNum = 1;
 		Connection conn = null;

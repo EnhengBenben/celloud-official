@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -20,6 +18,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
 import com.google.inject.Inject;
+import com.nova.constants.DataState;
 import com.nova.constants.FileFormat;
 import com.nova.constants.ReportState;
 import com.nova.constants.ReportType;
@@ -167,21 +166,21 @@ public class DataAction extends BaseAction {
 		return "getDataByKey";
 	}
 
-	public String changeAnotherName() {
-		String[] result = dataIds.split(";");
-		if (result != null) {
-			for (int i = 0; i < result.length; i++) {
-				String[] result1 = StringUtils
-						.splitByWholeSeparatorPreserveAllTokens(result[i], ",");
-				int fileId = Integer.parseInt(result1[0]);
-				data = new Data();
-				data.setFileId(fileId);
-				data.setAnotherName(result1[1]);
-				flag = dataService.updateAnotherNameById(data);
-			}
-		}
-		return SUCCESS;
-	}
+    public String changeAnotherName() {
+        String[] result = dataIds.split(";");
+        if (result != null) {
+            for (int i = 0; i < result.length; i++) {
+                String[] result1 = StringUtils
+                        .splitByWholeSeparatorPreserveAllTokens(result[i], ",");
+                int fileId = Integer.parseInt(result1[0]);
+                data = new Data();
+                data.setFileId(fileId);
+                data.setAnotherName(result1[1]);
+                flag = dataService.updateAnotherNameById(data);
+            }
+        }
+        return SUCCESS;
+    }
 
 	/**
 	 * 后台导出数据
@@ -213,41 +212,19 @@ public class DataAction extends BaseAction {
 	}
 
 	/**
-	 * 后台文件上传获取dataKey
-	 * 
-	 * @return
-	 */
-	private int fileNumber;
-
-	public String getRadomDataKey() {
-		result = "";
-		List<String> dataKeyList = dataService.getAllDataKey();
-		for (int i = 0; i < fileNumber; i++) {
-			dataKey = DataUtil.getNewDataKey();
-			while (dataKeyList.contains(dataKey)) {
-				dataKey = DataUtil.getNewDataKey();
-			}
-			result += dataKey + ";";
-			dataKeyList.add(dataKey);
-		}
-		if (!result.equals("")) {
-			result = result.substring(0, result.length() - 1);
-		}
-		return SUCCESS;
-	}
-
-	/**
 	 * 小工具调用 App端保存上传的数据并且运行
 	 * 
 	 * @return
 	 */
 	public String saveTextToFileAndRun() {
-		List<String> dataKeyList = dataService.getAllDataKey();
-		dataKey = DataUtil.getNewDataKey();
-		while (dataKeyList.contains(dataKey)) {
-			dataKey = DataUtil.getNewDataKey();
-		}
 		int userId = (Integer) session.get("userId");
+        String fname = appName + softwareId + ".fasta";
+        Data data = new Data();
+        data.setUserId(userId);
+        data.setFileName(fname);
+        data.setState(DataState.DEELTED);
+        int dataId = dataService.addDataInfo(data);
+        dataKey = DataUtil.getNewDataKey(dataId);
 		File file = new File(PropertiesUtil.bigFilePath + dataKey + ".fasta");
 		StringBuffer newSeq = new StringBuffer();
 		try {
@@ -310,9 +287,6 @@ public class DataAction extends BaseAction {
 			}
 			// 写入文件并且保存文件信息
 			FileUtils.writeStringToFile(file, newSeq.toString());
-			Data data = new Data();
-			data.setUserId(userId);
-			data.setFileName(dataKey + ".fasta");
 			data.setSize((long) sequence.length());
 			data.setFileFormat(FileFormat.FA);
 			data.setDataKey(dataKey);
@@ -322,7 +296,7 @@ public class DataAction extends BaseAction {
 			// 创建一个项目
 			Project project = new Project();
 			project.setUserId(userId);
-			String projectName = DataUtil.getNewDataKey();
+            String projectName = dataKey;
 			project.setProjectName(projectName);
 			int projectId = projectService.createProject(project);
 
@@ -366,83 +340,6 @@ public class DataAction extends BaseAction {
 		return SUCCESS;
 	}
 
-	/**
-	 * 根据用户编号、数据格式获取文件列表
-	 * 
-	 * @return
-	 */
-	public String getDataListByUserIdFileFormats() {
-		userId = (Integer) super.session.get("userId");
-		fileList = dataService.getDataListByUserIdFileFormats(userId, formats);
-		return SUCCESS;
-	}
-
-	/**
-	 * 根据数据id获取数据编号
-	 * 
-	 * @return
-	 */
-	public String getDataKeyListByDataIds() {
-		dataKey = dataService.getDataKeyListByDataIds(dataIds);
-		return SUCCESS;
-	}
-
-	/**
-	 * 修改数据信息
-	 * 
-	 * @return
-	 */
-	public String updateDataInfoByFileId() {
-		flag = dataService.updateDataInfoByFileId(data);
-		return SUCCESS;
-	}
-
-	/**
-	 * 批量按id分布修改数据信息
-	 * 
-	 * @return
-	 */
-	public String updateAllDataInfoByFileId() {
-		String[] datas = dataIds.split(";");
-		for (String s : datas) {
-			String[] s1 = StringUtils.splitByWholeSeparatorPreserveAllTokens(s,
-					",");
-			data = new Data();
-			data.setFileId(Integer.valueOf(s1[0]));
-			data.setStrain(s1[1]);
-			data.setDataTags(s1[2]);
-			data.setSample(s1[3]);
-			data.setAnotherName(s1[4]);
-			flag += dataService.updateDataInfoByFileId(data);
-		}
-		return SUCCESS;
-	}
-
-	/**
-	 * 根据数据id批量修改数据信息
-	 * 
-	 * @return
-	 */
-	public String updateDataInfoListByFileId() {
-		flag = dataService.updateDataInfoListByFileId(dataIds, data);
-		return SUCCESS;
-	}
-
-	public String getStrainDataKeySampleById() {
-		fileList = dataService.getStrainDataKeySampleById(dataIds);
-		return SUCCESS;
-	}
-
-	/**
-	 * 数据导入项目
-	 * 
-	 * @return
-	 */
-	public String importDataToPro() {
-		flag = dataService.importDataToPro(dataIds, proIds);
-		return "importDataToPro";
-	}
-
 	private int fileFormat;
 
 	/**
@@ -462,28 +359,6 @@ public class DataAction extends BaseAction {
 	public String delDatas() {
 		flag = dataService.delDatas(dataIds);
 		return "delDatas";
-	}
-
-	/**
-	 * 获取所有用户输入过的物种信息
-	 * 
-	 * @return
-	 */
-	public String getAllDataStrainList() {
-		userId = (Integer) super.session.get("userId");
-		List<Map<String, String>> dataStrainList = dataService
-				.getDataStrainItem(userId);
-		strainMapList = new ArrayList<Map<String, String>>();
-		// 添加数据的所有物种类型
-		for (Map<String, String> map : dataStrainList) {
-			if (!"".equals(map.get("strain")) && map.get("strain") != null) {
-				Map<String, String> one = new HashMap<String, String>();
-				one.put("id", map.get("strain"));
-				one.put("text", map.get("strain"));
-				strainMapList.add(one);
-			}
-		}
-		return "strainMapList";
 	}
 
 	/**
@@ -507,40 +382,6 @@ public class DataAction extends BaseAction {
 			}
 		}
 		return SUCCESS;
-	}
-
-	/**
-	 * 获取数据可运行的APP列表
-	 * 
-	 * @return
-	 */
-	public String getSoftListByFormat() {
-		userId = (Integer) super.session.get("userId");
-		flag = 1;
-		int dataType = 0;
-		String[] newDataIds = dataIds.split(",");
-		for (int i = 0; i < newDataIds.length; i++) {
-			int newDataType = dataService.getDataById(newDataIds[i])
-					.getFileFormat();
-			if (i == 0) {
-				dataType = newDataType;
-			} else {
-				if (newDataType != dataType) {
-					flag = 0;
-				}
-			}
-		}
-		if (flag == 0) {
-			result = "所选数据格式不统一！";
-			return "info";
-		} else {
-			fileFormat = dataService.getDataById(dataIds.split(",")[0])
-					.getFileFormat();
-			softwareList = softwareService.getSoftListByFormat(fileFormat,
-					userId);
-			fileList = dataService.getStrainDataKeySampleById(dataIds);
-		}
-		return "getSoftList";
 	}
 
 	/**
@@ -638,40 +479,6 @@ public class DataAction extends BaseAction {
 		return SUCCESS;
 	}
 
-	public String getProjectIdByDataId() {
-		projectId = dataService.getProjectIdByDataId(dataService.getDataByKey(
-				dataKey).getFileId());
-		return SUCCESS;
-	}
-
-	public String getProjectNameByDataKey() {
-		int dataId = dataService.getDataByKey(dataKey).getFileId();
-		projectName = dataService.getProjectNameByDataId(dataId);
-		return SUCCESS;
-	}
-
-	public String getAllStrainList() {
-		userId = Integer.parseInt(super.session.get("userId").toString());
-		strainMap = new HashMap<String, List<Map<String, String>>>();
-		List<Map<String, String>> strainList = dataService
-				.getStrainItem(userId);
-		List<Map<String, String>> listMap = new ArrayList<Map<String, String>>();
-		HashSet<Map<String, String>> h = new HashSet<Map<String, String>>(
-				strainList);
-		strainList.clear();
-		strainList.addAll(h);
-		for (Map<String, String> map : strainList) {
-			if (!"".equals(map.get("strain")) && map.get("strain") != null) {
-				Map<String, String> one = new HashMap<String, String>();
-				one.put("id", map.get("strain"));
-				one.put("text", map.get("strain"));
-				listMap.add(one);
-			}
-		}
-		strainMap.put("tags", listMap);
-		return "strainList";
-	}
-
 	/**
 	 * 根据文件编号获取文件名
 	 * 
@@ -679,20 +486,6 @@ public class DataAction extends BaseAction {
 	 */
 	public String getFileNameByDataKey() {
 		result = dataService.getDataByKey(dataKey).getFileName();
-		return SUCCESS;
-	}
-
-	// 根据文件编号获取共享用户
-	public String getUsersMapByFileId() {
-		userId = Integer.parseInt(super.session.get("userId").toString());
-		userList = dataService.getSharedUserListByFileId(fileId, userId);
-		sharedUserMapList = new ArrayList<Map<String, String>>();
-		for (User user : userList) {
-			Map<String, String> userMap = new HashMap<String, String>();
-			userMap.put("id", user.getUserId() + "");
-			userMap.put("text", user.getUsername());
-			sharedUserMapList.add(userMap);
-		}
 		return SUCCESS;
 	}
 
@@ -705,23 +498,6 @@ public class DataAction extends BaseAction {
 
 	public String getDataInfoListByProjectId() {
 		fileList = dataService.getDataListByProjectId(projectId);
-		return SUCCESS;
-	}
-
-	/**
-	 * 为数据分配项目
-	 * 
-	 * @return
-	 */
-	public String allocateDataToPro() {
-		userId = (Integer) super.session.get("userId");
-		flag = dataService.allocateDataToProjects(fileId, proIds);
-		return SUCCESS;
-	}
-
-	public String createDataProjectRel() {
-		int proId = projectService.getProjectIdByName(projectName);
-		flag = dataService.allocateDatasToProject(dataIds, proId);
 		return SUCCESS;
 	}
 
@@ -774,18 +550,6 @@ public class DataAction extends BaseAction {
 	}
 
 	/**
-	 * 获取共享给我的数据
-	 * 
-	 * @return
-	 */
-	public String getDataSharedToMe() {
-		userId = Integer.parseInt(super.session.get("userId").toString());
-		sharedDataPageList = dataService.getDataListSharedToMe(dataTag, page,
-				userId, type, sort);
-		return "sharedData";
-	}
-
-	/**
 	 * 根据文件编号获取文件名
 	 * 
 	 * @return
@@ -793,88 +557,6 @@ public class DataAction extends BaseAction {
 	public String getDataNameById() {
 		fileName = dataService.getDataById(fileId + "").getFileName();
 		return SUCCESS;
-	}
-
-	/**
-	 * 保存数据标签
-	 * 
-	 * @return
-	 */
-	public String saveDataTag() {
-		flag = dataService.addDataTag(fileId, dataTag);
-		return SUCCESS;
-	}
-
-	/**
-	 * 保存数据物种
-	 * 
-	 * @return
-	 */
-	public String saveDataStrain() {
-		flag = dataService.addDataStrain(fileId, strain);
-		return SUCCESS;
-	}
-
-	/**
-	 * 数据共享
-	 * 
-	 * @return
-	 */
-	public String shareData() {
-		report = "";
-		userId = Integer.parseInt(super.session.get("userId").toString());
-		userIds = "";
-		if ((null != userNames) && (!userNames.equals(""))) {
-			for (String uName : userNames.split(",")) {
-				int userId = userService.getUserIdByName(uName);
-				if (userId == 0) {
-					flag = 2;
-					report += uName + ",";
-				} else {
-					userIds += userId + ",";
-				}
-			}
-		}
-		if (!report.equals("")) {
-			report = "用户" + report.substring(0, report.length() - 1) + "不存在！";
-			return SUCCESS;
-		}
-		if (!userIds.equals("")) {
-			userIds = userIds.substring(0, userIds.length() - 1);
-			dataService.deleteSharedData(userId, fileId);
-			report = dataService.shareData(fileId, userIds, userId) + "";
-			Map<String, Integer> map = dataService.getAllErrorSharedData(
-					userId, fileId);
-			if (map != null) {
-				for (Map.Entry<String, Integer> entry : map.entrySet()) {
-					dataService.deleteSharedDataById(entry.getValue());
-				}
-			}
-		} else {
-			dataService.deleteSharedData(userId, fileId);
-			Map<String, Integer> map = dataService.getAllErrorSharedData(
-					userId, fileId);
-			if (map != null) {
-				for (Map.Entry<String, Integer> entry : map.entrySet()) {
-					dataService.deleteSharedDataById(entry.getValue());
-				}
-			}
-			report = "0";
-		}
-		return SUCCESS;
-	}
-
-	/**
-	 * 获取我的数据的统计数量
-	 * 
-	 * @return
-	 */
-	public String getMyDataNum() {
-		userId = (Integer) super.session.get("userId");
-		Long totalDataNum = dataService.getAllDataNum(userId);
-		Long myOwnDataNum = dataService.getMyOwnDataNum(userId);
-		dataNum = totalDataNum + "," + myOwnDataNum;
-		return "getDataNumSucc";
 	}
 
 	/**
@@ -1184,14 +866,6 @@ public class DataAction extends BaseAction {
 
 	public void setFormats(String formats) {
 		this.formats = formats;
-	}
-
-	public int getFileNumber() {
-		return fileNumber;
-	}
-
-	public void setFileNumber(int fileNumber) {
-		this.fileNumber = fileNumber;
 	}
 
 	public String getRequestUrl() {

@@ -8,7 +8,7 @@
 		文件名称：
 		<span class="file-name">
 		<c:forEach items="${split.data}" var="data">
-			${data.fileName}&nbsp;&nbsp;&nbsp;
+			${data.fileName}(${data.dataKey})&nbsp;&nbsp;&nbsp;
 		</c:forEach>
 		</span>
 		<div class="toolbar">
@@ -19,7 +19,7 @@
 		<!--报告图示一-->
 		<div class="m-box">
 			<h2><i class="i-report1"></i>数据统计</h2>
-			<div class="m-boxCon" id="_table">
+			<div class="m-boxCon">
 		    	<table class="table table-bordered table-condensed">
 					<thead>
 						<tr><th>序列总数</th><th>平均质量</th><th>平均GC含量</th></tr>
@@ -37,7 +37,7 @@
 		<!--检测结果-->
 		<div class="m-box m-box-yc">
 			<h2><i class="i-edit"></i>报告</h2>
-			<div class="m-boxCon" id="_report" style="display: inline-block;width: 100%">
+			<div class="m-boxCon">
 				<table class="table table-striped-green table-text-center table-padding0" id="snp_table1">
 					<thead>
 						<tr>

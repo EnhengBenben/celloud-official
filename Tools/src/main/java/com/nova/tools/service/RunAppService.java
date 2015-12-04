@@ -20,7 +20,7 @@ import com.nova.tools.utils.XMLUtil;
  */
 public class RunAppService {
 	//TODO 不需要在Tools端进行后续处理的需要在这里配置下
-    private static final List<String> apps = Arrays.asList("81","82", "83", "85",
+    private static final List<String> apps = Arrays.asList("82", "83", "85",
             "86", "87", "88", "91", "92", "93", "94", "104");
 
     /**

@@ -86,4 +86,13 @@ public interface IPythonService {
 	 * @return
 	 */
 	public long saveDataSize(String dataKey, long size);
+	
+	 /**
+     * 文件上传成功后发送邮件
+     * 
+     * @param userId
+     * @param fileName
+     * @param dataKey
+     */
+    public void sendEmail(Integer userId, String fileName, String dataKey);
 }

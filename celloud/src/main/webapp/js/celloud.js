@@ -1497,7 +1497,7 @@ function loadApps() {
 	var $desktopContainer = $(".desktopContainer");
 	$desktopContainer.each(function(i, domElem) {
 		var $thisDesktopContainer = $(domElem);
-		var $addAppBtn = $("<div class='appBtn addAppBtn' _appId='addApp' _appName='应用市场' _appImg='images/content/appmarket.png' _iframeSrc='pages/software/software.jsp'><div class='appBtn-appIcon addQuickLinkButtonInner'></div><div class='appBtn-appName'>添加</div></div>");
+		var $addAppBtn = $("");
 		$thisDesktopContainer.html("");
 		$.each(apps[i], function(j, n) {
 			var $appBtn = loadAppBtn(n.appId, n.appName,

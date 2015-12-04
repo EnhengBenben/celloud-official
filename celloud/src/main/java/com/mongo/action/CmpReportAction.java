@@ -2,8 +2,12 @@
 package com.mongo.action;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
@@ -20,11 +24,15 @@ import com.mongo.sdo.CmpFilling;
 import com.mongo.sdo.CmpGeneDetectionDetail;
 import com.mongo.sdo.CmpGeneSnpResult;
 import com.mongo.sdo.CmpReport;
+import com.mongo.sdo.Data;
 import com.mongo.sdo.DrugResistanceSite;
 import com.mongo.sdo.GddDiseaseDict;
+import com.mongo.sdo.GeneDetectionResult;
 import com.mongo.sdo.RecommendDrug;
 import com.mongo.service.ReportService;
 import com.nova.action.BaseAction;
+import com.nova.utils.ExcelUtil;
+import com.nova.utils.FileTools;
 
 /**
  * 操作CMP MongoDB报告工具
@@ -40,7 +48,8 @@ import com.nova.action.BaseAction;
         @Result(name = "toPrintDetailCmp", location = "../../pages/print/printDetailCMP.jsp"),
         @Result(name = "toPrintSimpleCmp", location = "../../pages/print/printCMP.jsp"),
         @Result(name = "toGddReport", location = "../../pages/report/GDD.jsp"),
-        @Result(name = "toPrintGddReport", location = "../../pages/print/printGDD.jsp"), })
+        @Result(name = "toPrintGddReport", location = "../../pages/print/printGDD.jsp"),
+        @Result(name = "toCmpCount", location = "../../pages/count/cmpReport.jsp") })
 public class CmpReportAction extends BaseAction {
     private static final long serialVersionUID = 1L;
     Logger log = Logger.getLogger(CmpReportAction.class);
@@ -53,6 +62,7 @@ public class CmpReportAction extends BaseAction {
     private List<CmpGeneSnpResult> gsrList;
     private List<GddDiseaseDict> gddDiseaseList;
     private List<CmpGeneSnpResult> allGsr;
+    private List<CmpReport> cmpList;
 
     public void updateFill() {
         if (infos != null) {
@@ -193,6 +203,73 @@ public class CmpReportAction extends BaseAction {
         return "toPrintGddReport";
     }
 
+    public String toCmpCount() {
+        Integer userId = (Integer) super.session.get("userId");
+        cmpList = reportService.getCmpList(userId);
+        Map<String, CmpReport> map = new HashMap<>();
+        for (int i = 0; i < cmpList.size(); i++) {
+            CmpReport cmp = cmpList.get(i);
+            String dataKey = cmp.getDataKey();
+            if (map.containsKey(dataKey)) {
+                CmpReport before = map.get(dataKey);
+                if (before.getCreateDate().getTime() < cmp.getCreateDate()
+                        .getTime()) {
+                    map.put(dataKey, cmp);
+                }
+            } else {
+                map.put(dataKey, cmp);
+            }
+        }
+        Map<Long, CmpReport> sort = new HashMap<>();
+        Long time[] = new Long[map.size()];
+        int count = 0;
+        for (Entry<String, CmpReport> cmp : map.entrySet()) {
+            long e = cmp.getValue().getCreateDate().getTime()
+                    + Long.parseLong((Math.random() * 1000 + "").split("\\.")[0]);
+            time[count] = e;
+            count++;
+            sort.put(e, cmp.getValue());
+        }
+        Arrays.sort(time);
+        cmpList = new ArrayList<>();
+        for (int i = time.length - 1; i > -1; i--) {
+            cmpList.add(sort.get(time[i]));
+        }
+        // TODO 写死的路径，考虑前台下载时 js导出excel
+        long l = new Date().getTime();
+        String txt = String.valueOf(l + ".txt");
+        infos = String.valueOf(l + ".xls");
+        String path = "/share/data/output/" + txt;
+        String excelpath = "/share/data/output/" + infos;
+        FileTools.createFile(path);
+        FileTools
+                .appendWrite(
+                        path,
+                        "数据编号\t原始文件名1\t原始文件名2\t共获得有效片段\t可用片段\t平均测序深度\t基因检测结果\n");
+        for (CmpReport cmp : cmpList) {
+            StringBuffer line = new StringBuffer(cmp.getDataKey())
+                    .append("\t");
+            List<Data> dataList = cmp.getData();
+            for (Data d : dataList) {
+                line.append(d.getFileName()).append("(").append(d.getDataKey())
+                        .append(")").append("\t");
+            }
+            line.append(cmp.getAllFragment()).append("\t");
+            line.append(cmp.getUsableFragment()).append("\t");
+            line.append(cmp.getAvgCoverage()).append("\t");
+            if (cmp.getCmpGeneResult() != null) {
+                for (GeneDetectionResult gene : cmp.getCmpGeneResult()) {
+                    line.append(gene.getGeneName()).append(":")
+                            .append(gene.getSequencingDepth()).append(";");
+                }
+            }
+            line.append("\n");
+            FileTools.appendWrite(path, line.toString());
+        }
+        ExcelUtil.simpleTxtToExcel(path, excelpath, "count");
+        return "toCmpCount";
+    }
+
     public CmpFilling getCmpFill() {
         return cmpFill;
     }
@@ -247,6 +324,14 @@ public class CmpReportAction extends BaseAction {
 
     public void setAllGsr(List<CmpGeneSnpResult> allGsr) {
         this.allGsr = allGsr;
+    }
+
+    public List<CmpReport> getCmpList() {
+        return cmpList;
+    }
+
+    public void setCmpList(List<CmpReport> cmpList) {
+        this.cmpList = cmpList;
     }
 
 }

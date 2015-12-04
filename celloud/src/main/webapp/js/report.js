@@ -349,7 +349,11 @@ $.ajaxSetup ({
 		                        if(fileName.length>30&&appId!="113"&&appId!="112"&&appId!="111"&&appId!="110"){
 		                        	fileName = fileName.substring(0,30) + "...";
 		                        }
-			                    $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
+		                        if(appId!="114"){
+		                        	$(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
+		                        }else{
+		                        	$(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+fileName+"</span>");
+		                        }
 			                    $(this).find("span").bind("click",param,viewDataReport);
 			                    $(this).find("span").addClass("link");
 			                }
@@ -686,13 +690,17 @@ $.ajaxSetup ({
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
 			}else if(softwareId == 85 || softwareId == 86 || softwareId == 87 || softwareId == 88 || softwareId == 91 || softwareId == 92 || softwareId == 93 || softwareId == 94 || softwareId == 104){
-				$.get("pgsReport!toPgsReport",{"pgs.projectId":proId,"pgs.dataKey":dataKey,"pgs.appId":softwareId},function(responseText){
+				$.get("report3!getPgsReport",{"proId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
 			}else if(softwareId == 82){
 				$.get("report3!getHBVReport",{"proId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
+			//}else if(softwareId == 80){
+				//$.get("report3!getHCVReport",{"proId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
+				//	toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+				//});
 			}else{
 				$.get("data!getDataByKey",{"dataKey":dataKey},function(data){
 					var anotherName = data.anotherName;
@@ -949,8 +957,8 @@ $.ajaxSetup ({
 				}
 			}
 			//调整div的大小
-			var height = $("#reportResultDiv").children().height();
-			$("#reportResultDiv").css("height",height+20);
+//			var height = $("#reportResultDiv").children().height();
+//			$("#reportResultDiv").css("height",height+20);
 			//绑定resize事件，若大小变化，则再调整
 			$("#reportResultDiv").children().resize(function(){
 				var height = $("#reportResultDiv").children().height();
@@ -1361,6 +1369,8 @@ function toPrintHBV(pagePath,flag){
 			imgHtml = imgHtml.substring(0,imgHtml.length-1);
 		}
 		param = {
+				"userId":userId,
+		        "dataKey":dataKey,
 				"appId" : appId,
 				"context":$("#resultHcv2").html(),
 				"seq":$("#seq").html(),
@@ -1375,6 +1385,8 @@ function toPrintHBV(pagePath,flag){
 			imgHtml = imgHtml.substring(0,imgHtml.length-1);
 		}
 		param = {
+				"userId":userId,
+		        "dataKey":dataKey,
 				"appId" : appId,
 				"context":$("#report_tb").html(),
 				"imgHtml":imgHtml
@@ -1391,6 +1403,8 @@ function toPrintHBV(pagePath,flag){
 		var table = $("#knowResult").html().trim();
 		var knowPic = $("img[name='know']").attr("src"); 
 		param = {
+				"userId":userId,
+		        "dataKey":dataKey,
 				"appId" : appId,
 				"context":$("#report_tb").html(),
 				"imgHtml":imgHtml,

@@ -2,7 +2,6 @@ package com.celloud.action;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -36,6 +35,7 @@ import com.celloud.service.TaskService;
 import com.celloud.service.UserService;
 import com.google.inject.Inject;
 import com.nova.action.BaseAction;
+import com.nova.constants.DataState;
 import com.nova.constants.FileFormat;
 import com.nova.constants.Mod;
 import com.nova.constants.SparkPro;
@@ -115,8 +115,6 @@ public class DataAction extends BaseAction {
     private static String sparkpwd = null;
     private static String sparkuserName = null;
 
-    // TODO 需要投递到spark集群的app
-    private static final List<String> apps = Arrays.asList("86","92","93","99","100","101");
     // 初始化perl命令路径
     private static Map<Long, App> appMap = null;
     static {
@@ -315,9 +313,9 @@ public class DataAction extends BaseAction {
             String dataKeyList = dataResult.toString();
             // TODO
             String appPath = basePath + userId + "/" + appId + "/";
-            if (apps.contains(appId)) {// 判断是否需要进队列
-                String select = apps.toString().substring(1,
-                        apps.toString().length() - 1);
+            if (SparkPro.apps.contains(appId)) {// 判断是否需要进队列
+                String select = SparkPro.apps.toString().substring(1,
+                        SparkPro.apps.toString().length() - 1);
                 int running = idataService.dataRunning(select);
                 log.info("页面运行任务，此时正在运行的任务数：" + running);
                 if (SparkPro.NODES >= running) {
@@ -506,61 +504,40 @@ public class DataAction extends BaseAction {
     public String saveSplitReportData() {
         String inPath = PropertiesUtil.reportPath + condition;
         String outPath = PropertiesUtil.fileFinal;
-        List<String> dataKeyList = getRadomDataKey(conditionInt);
         HashSet<String> resultFiles = FileTools.getFiles(inPath);
         Iterator<String> rFile = resultFiles.iterator();
-        int num = 0;
         Long size = null;
         String dataKey = "";
         conditionInt = 0;
         result = "";
-        // Split split = new Split();
-        // split.setId(new ObjectId(dataIds));
-        // split.setUpload(DataUpload.DOING);
-        // split.setSplitDataIds(result);
-        // mReportService.editSplit(split);
         while (rFile.hasNext()) {
             String fstr = rFile.next();
             if (!fstr.equals("...tar.gz") && !fstr.equals("..tar.gz")) {
                 String extName = fstr.substring(fstr.lastIndexOf(".tar.gz"));
                 String resourcePath = inPath + fstr;
                 size = new File(resourcePath).length();
-                dataKey = FileTools.listIsNull(dataKeyList, num);
+                data = new Data();
+                data.setUserId(userId);
+                data.setFileName(fstr);
+                data.setState(DataState.DEELTED);
+                int dataId = dataService.addData(data);
+                dataKey = DataUtil.getNewDataKey(dataId);
                 String filePath = outPath + dataKey + extName;
                 boolean state = PerlUtils
                         .excuteCopyPerl(resourcePath, filePath);
                 if (state) {
-                    data = new Data();
-                    data.setUserId(userId);
-                    data.setFileName(fstr);
+                    data.setFileId((long) dataId);
                     data.setDataKey(dataKey);
                     data.setAnotherName("split:" + dataIds);
                     data.setSize(size);
                     data.setPath(filePath);
                     data.setFileFormat(FileFormat.FQ);
-                    result += dataService.addData(data) + ",";
+                    data.setState(DataState.ACTIVE);
+                    result += dataService.updateData(data) + ",";
                 }
-                num++;
             }
         }
-        // split.setUpload(DataUpload.DONE);
-        // split.setSplitDataIds(result);
-        // mReportService.editSplit(split);
         return "info";
-    }
-
-    private List<String> getRadomDataKey(int num) {
-        List<String> resultList = new ArrayList<>();
-        List<String> dataKeyList = dataService.getAllDataKey();
-        for (int i = 0; i < num; i++) {
-            String dataKey = DataUtil.getNewDataKey();
-            while (dataKeyList.contains(dataKey)) {
-                dataKey = DataUtil.getNewDataKey();
-            }
-            dataKeyList.add(dataKey);
-            resultList.add(dataKey);
-        }
-        return resultList;
     }
 
     /**

@@ -97,8 +97,6 @@ public class RunAppServiceImpl {
 	private static String GDD_perl = PropertiesUtils.GDD;
 	private static String split_perl = PropertiesUtils.split;
 
-	private static String[] HCVType = { "1b", "2a", "3a", "3b", "6a" };
-	private static List<String> typeList = Arrays.asList(HCVType);
 	private ReportService reportService = null;
 
 	public void VSP(String appPath, String projectId, String dataKeyList) {
@@ -162,11 +160,11 @@ public class RunAppServiceImpl {
             File proFile = new File(projectFile);
             FileLock lock = FileTools.getFileLock(proFile);
             FileTools.createFile(projectFile);
-            if (!proFile.exists()) {
-				// 追加表头
-				FileTools.appendWrite(projectFile,
-                        "dataKey\t文件名称\t序列总数\t平均质量\t平均GC含量\n");
-			}
+            if (FileTools.countLines(proFile) < 1) {
+                // 追加表头
+                FileTools.appendWrite(projectFile,
+                                "dataKey\tSamples\tSpecies\tReads_num\tAverage depth of coverage\n");
+            }
 			Map<String, List<Data>> map = JsonUtil.parseDataMap(dataInfos);
 			Company com = JSON.parseObject(company, Company.class);
 			User use = JSON.parseObject(user, User.class);
@@ -183,39 +181,7 @@ public class RunAppServiceImpl {
 				mib.setTotalReads(totalReads);
 				mib.setAvgQuality(avgQuality);
 				mib.setAvgGCContent(avgGCContent);
-				String result = totalReads + "\t" + avgQuality + "\t"
-						+ avgGCContent;
-                FileTools.appendWrite(projectFile, dataKey + "\t" + fileName
-						+ "\t" + result + "\n");
 			}
-            try {
-                lock.release();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-			// -----读取报告内容并保存到mongoDB------
-			List<Data> dataList = map.get(dataKey);
-			mib.setProjectId(Integer.parseInt(projectId));
-			mib.setDataKey(dataKey);
-			mib.setUserId(Integer.parseInt(userId));
-			mib.setUsername(use.getUsername());
-			mib.setEmail(use.getEmail());
-			mib.setAppId(Integer.parseInt(appId));
-			mib.setAppName(appName);
-			mib.setData(dataList);
-			mib.setCompanyId(com.getCompanyId());
-			mib.setCompanyName(com.getCompanyName());
-			mib.setCompanyEngName(com.getEnglishName());
-			mib.setCompanyAddr(com.getAddress());
-			mib.setCompanyEnAddr(com.getEnglishName());
-			mib.setCompanyIcon(com.getCompanyIcon());
-			mib.setCompanyTel(com.getTel());
-			mib.setZipCode(com.getZipCode());
-			mib.setDeptName(dept1.getDeptName());
-			mib.setDeptEngName(dept1.getEnglishName());
-			mib.setDeptIcon(dept1.getDeptIcon());
-			mib.setDeptTel(dept1.getTel());
-			mib.setCreateDate(new Date());
 			// 1. 读取各个属的详细情况
 			String tablePath = finalPath + "/result/taxi.all.fastq.table";
 			if (new File(tablePath).exists()) {
@@ -224,17 +190,54 @@ public class RunAppServiceImpl {
 				for (int z = 1; z < list_.size(); z++) {
 					Map<String, String> map_ = new HashMap<>();
 					String[] line_z = list_.get(z).split("\t");
-					map_.put("Species", getArray(line_z, 0));
+                    String species = getArray(line_z, 0);
+                    String reads_num = getArray(line_z, 5);
+                    String avgCoverage = getArray(line_z, 6);
+                    map_.put("Species", species);
 					map_.put("Genus", getArray(line_z, 1));
 					map_.put("GI", getArray(line_z, 2));
 					map_.put("Coverage", getArray(line_z, 3));
 					map_.put("Reads_hit", getArray(line_z, 4));
-					map_.put("Reads_num", getArray(line_z, 5));
-					map_.put("avgCoverage", getArray(line_z, 6));
+                    map_.put("Reads_num", reads_num);
+                    map_.put("avgCoverage", avgCoverage);
 					summaryTable.add(map_);
+                    if (z == 1) {
+                        String result = species + "\t" + reads_num + "\t"
+                                + avgCoverage;
+                        FileTools.appendWrite(projectFile, dataKey + "\t"
+                                + fileName + "\t" + result + "\n");
+                    }
 				}
-				mib.setSummaryTable(summaryTable);
+                mib.setSummaryTable(summaryTable);
 			}
+            try {
+                lock.release();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            // -----读取报告内容并保存到mongoDB------
+            List<Data> dataList = map.get(dataKey);
+            mib.setProjectId(Integer.parseInt(projectId));
+            mib.setDataKey(dataKey);
+            mib.setUserId(Integer.parseInt(userId));
+            mib.setUsername(use.getUsername());
+            mib.setEmail(use.getEmail());
+            mib.setAppId(Integer.parseInt(appId));
+            mib.setAppName(appName);
+            mib.setData(dataList);
+            mib.setCompanyId(com.getCompanyId());
+            mib.setCompanyName(com.getCompanyName());
+            mib.setCompanyEngName(com.getEnglishName());
+            mib.setCompanyAddr(com.getAddress());
+            mib.setCompanyEnAddr(com.getEnglishName());
+            mib.setCompanyIcon(com.getCompanyIcon());
+            mib.setCompanyTel(com.getTel());
+            mib.setZipCode(com.getZipCode());
+            mib.setDeptName(dept1.getDeptName());
+            mib.setDeptEngName(dept1.getEnglishName());
+            mib.setDeptIcon(dept1.getDeptIcon());
+            mib.setDeptTel(dept1.getTel());
+            mib.setCreateDate(new Date());
 			// 2. 保存各个图片
 			String realPath = PropertiesUtils.outProject + "/upload/" + userId
 					+ "/" + appId + "/" + dataKey;
@@ -808,6 +811,8 @@ public class RunAppServiceImpl {
 	 * @param dataKeyList
 	 * @return
 	 */
+	private static String[] HCVType = { "1b", "2a", "3a", "3b", "6a" };
+    private static List<String> typeList = Arrays.asList(HCVType);
 	public void runHCV(String appPath, String projectId, String dataKeyList) {
 		// 创建要运行的文件列表文件
 		String dataListFile = datalist + new Date().getTime() + ".txt";
@@ -824,34 +829,34 @@ public class RunAppServiceImpl {
 				+ appPath + "/" + projectId + "/log";
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
 		boolean state = ssh.sshSubmit(true);
-		if (state) {
-			// 创建项目结果文件
-			String projectFile = appPath + "/" + projectId + "/" + projectId
-					+ ".txt";
-			FileTools.createFile(projectFile);
-			// 追加表头
-			FileTools.appendWrite(projectFile,
-					"dataKey\tFile_Name\tSubtype\tSubject_Name\tIdentity\n");
-			for (int i = 0; i < dataArray.length; i++) {
-				String[] dataDetail = dataArray[i].split(",");
-				String finalPath = appPath + "/" + getArray(dataDetail, 0)
-						+ "/Result.txt";
-				String context = "";
-				if (FileTools.checkPath(finalPath)) {
-					context = FileTools.getLastLine(finalPath);
-					String c[] = context.split("\t");
-					if (c.length > 4) {
-						if (!typeList.contains(getArray(c, 1))) {
-							c[1] = "其他";
-						}
-						context = getArray(c, 0) + "\t" + getArray(c, 1) + "\t"
-								+ getArray(c, 2) + "\t" + getArray(c, 3);
-					}
-				}
-				FileTools.appendWrite(projectFile, getArray(dataDetail, 0)
-						+ "\t" + context + "\n");
-			}
-		}
+        if (state) {
+            // 创建项目结果文件
+            String projectFile = appPath + "/" + projectId + "/" + projectId
+                    + ".txt";
+            FileTools.createFile(projectFile);
+            // 追加表头
+            FileTools.appendWrite(projectFile,
+                    "dataKey\tFile_Name\tSubtype\tSubject_Name\tIdentity\n");
+            for (int i = 0; i < dataArray.length; i++) {
+                String[] dataDetail = dataArray[i].split(",");
+                String finalPath = appPath + "/" + getArray(dataDetail, 0)
+                        + "/Result.txt";
+                String context = "";
+                if (FileTools.checkPath(finalPath)) {
+                    context = FileTools.getLastLine(finalPath);
+                    String c[] = context.split("\t");
+                    if (c.length > 4) {
+                        if (!typeList.contains(getArray(c, 1))) {
+                            c[1] = "其他";
+                        }
+                        context = getArray(c, 0) + "\t" + getArray(c, 1) + "\t"
+                                + getArray(c, 2) + "\t" + getArray(c, 3);
+                    }
+                }
+                FileTools.appendWrite(projectFile, getArray(dataDetail, 0)
+                        + "\t" + context + "\n");
+            }
+        }
 	}
 
 	/**

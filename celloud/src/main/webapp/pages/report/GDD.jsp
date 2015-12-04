@@ -3,13 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="row">
 	<div class="m-file">
+		数据编号：<span class="file-name">${cmpReport.dataKey}</span><br>
 		文件名称：
 		<span class="file-name">
-		${ cmpReport.dataKey}(
 		<c:forEach items="${cmpReport.data}" var="data">
-			${data.fileName}&nbsp;&nbsp;
+			${data.fileName}(${data.dataKey})&nbsp;&nbsp;
 		</c:forEach>
-		)
 		</span>
 		<div class="toolbar">
 			<a href="javascript:printGDD(${cmpReport.projectId },${cmpReport.dataKey },${cmpReport.userId },${cmpReport.appId })" class="btn btn-default"><i class="i-print"></i>打印GDD报告</a>

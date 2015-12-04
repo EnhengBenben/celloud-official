@@ -96,27 +96,24 @@ public class PrintAction extends BaseAction {
     }
 
     public String printHBV() {
-	Integer deptId = (Integer) super.session.get("deptId");
-	dept = deptService.getDept(deptId);
-	company = companyService.getCompany(dept.getCompanyId());
-	// TODO 写死的appId
-	if (appId == 82) {// HBV_SNP2
-	    fileId = dataService.getDataByKey(dataKey).getFileId();
-	    pageTxt = reportService.getPrintContext(userId, appId, fileId, 0);
-	    // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
-	    if (!StringUtils.isEmpty(pageTxt)) {
-		return "hbv";
-	    }
-	}
-	txt = iss.getSoftware(appId).getSoftwareName();
-	if (imgHtml != null) {
-	    String[] imgArr = imgHtml.split(",");
-	    imgList = new ArrayList<String>();
-	    for (String s : imgArr) {
-		imgList.add(s);
-	    }
-	}
-	return "hbv";
+        Integer deptId = (Integer) super.session.get("deptId");
+        dept = deptService.getDept(deptId);
+        company = companyService.getCompany(dept.getCompanyId());
+        fileId = dataService.getDataByKey(dataKey).getFileId();
+        pageTxt = reportService.getPrintContext(userId, appId, fileId, 0);
+        // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
+        if (!StringUtils.isEmpty(pageTxt)) {
+            return "hbv";
+        }
+        txt = iss.getSoftware(appId).getSoftwareName();
+        if (imgHtml != null) {
+            String[] imgArr = imgHtml.split(",");
+            imgList = new ArrayList<String>();
+            for (String s : imgArr) {
+                imgList.add(s);
+            }
+        }
+        return "hbv";
     }
 
     public String printPGS() {

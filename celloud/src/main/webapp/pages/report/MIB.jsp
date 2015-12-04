@@ -3,11 +3,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="row">
 	<div class="m-file">
-		数据编号：<span class="file-name">${mib.dataKey}</span><br>
+		数据编号：<span class="file-name">${ mib.dataKey}</span><br>
 		文件名称：
 		<span class="file-name">
 		<c:forEach items="${mib.data}" var="data">
-			${data.fileName}&nbsp;&nbsp;&nbsp;
+			${data.fileName}(${data.dataKey})&nbsp;&nbsp;&nbsp;
 		</c:forEach>
 		</span>
 		<div class="toolbar">
@@ -55,7 +55,7 @@
 		<!--检测结果-->
 		<div class="m-box">
 			<h2><i class="i-edit"></i>报告</h2>
-			<div class="m-boxCon" id="_report" style="display: inline-block;width: 100%">
+			<div class="m-boxCon">
 			  <table class="table table-striped-green table-text-center table-padding0" id="snp_table1">
 			     <thead>
 			       <tr>

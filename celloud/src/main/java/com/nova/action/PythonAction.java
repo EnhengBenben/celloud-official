@@ -108,6 +108,15 @@ public class PythonAction extends BaseAction {
 		num = pythonService.saveDataSize(dataKey.split("\\.")[0], num);
 		return "num";
 	}
+	
+    /**
+     * 文件上传完成发送邮件
+     */
+    public String sendEmail() {
+        pythonService.sendEmail(id, fileName, dataKey);
+        num = 0l;
+        return "num";
+    }
 
 	public long getNum() {
 		return num;
