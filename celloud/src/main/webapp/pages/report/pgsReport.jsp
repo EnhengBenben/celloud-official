@@ -148,27 +148,42 @@
         <div class="m-box">
         	<h2><i class="i-dna"></i>染色体</h2>
             <div class="m-boxCon">
-				<a href="javascript:showBg('${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }','miniPngImg');" >
-					<img src="${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }" style="width: 700px;" id="miniPngImg">
-				</a>
+            	<c:if test="${pgs.miniPng!=null && pgs.miniPng!='' }">
+					<a href="javascript:showBg('${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }','miniPngImg');" >
+						<img src="${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }" style="width: 700px;" id="miniPngImg">
+					</a>
+				</c:if>
+				<c:if test="${pgs.miniPng==null || pgs.miniPng=='' }">
+					<span style="color: red;">运行异常，未产生图片！</span>
+				</c:if>
             </div>
         </div>
         <!--染色体图示一-->
         <div class="m-box">
         	<h2><i class="i-dna"></i>染色体点图</h2>
             <div class="m-boxCon">
-				<a href="javascript:showBg('${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.testPng }','testPngImg');" >
-					<img src="${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.testPng }" style="width: 700px;height: 220px" id="testPngImg">
-				</a>
+            	<c:if test="${pgs.testPng!=null && pgs.testPng!='' }">
+					<a href="javascript:showBg('${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.testPng }','testPngImg');" >
+						<img src="${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.testPng }" style="width: 700px;height: 220px" id="testPngImg">
+					</a>
+				</c:if>
+				<c:if test="${pgs.testPng==null || pgs.testPng=='' }">
+					<span style="color: red;">运行异常，未产生图片！</span>
+				</c:if>
             </div>
         </div>
 		<!--染色体图示一-->
         <div class="m-box">
         	<h2><i class="i-dna"></i>染色体位置图</h2>
             <div class="m-boxCon">
-				<a href="javascript:showBg('${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }','finalPngImg');" >
-					<img src="${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" style="height: 1000px;" id="finalPngImg">
-				</a>
+	            <c:if test="${pgs.finalPng!=null && pgs.finalPng!='' }">
+					<a href="javascript:showBg('${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }','finalPngImg');" >
+						<img src="${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" style="height: 1000px;" id="finalPngImg">
+					</a>
+				</c:if>
+				<c:if test="${pgs.finalPng==null || pgs.finalPng=='' }">
+					<span style="color: red;">运行异常，未产生图片！</span>
+				</c:if>
             </div>
         </div>
 		<!--Celloud数据参数同比分析-->
