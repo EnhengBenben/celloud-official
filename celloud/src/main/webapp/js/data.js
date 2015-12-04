@@ -81,6 +81,8 @@ function getDataByCondition(pageNum){
 	spinner.spin(target);
 	dataCurrentPageNumber = pageNum;
 	var condition = $.trim($("#dataTagSearch").val());
+	checkedDataIds = [];
+	addedDataNames = [];
 	$.get("data3!getDataByCondition",{"condition":condition,"page.pageSize":dataPageDataNum,"page.currentPage":pageNum,"conditionInt":sortType,"sortByName":fileNameSort,"sortByDate":createDateSort},function(responseText){
 		spinner.stop();
 		$("#selfDataDiv").html(responseText);
@@ -142,6 +144,7 @@ function getExt(file_name){
 	return result;
 }
 function showRunApp(){
+	$("#toRunApp").attr("disabled","true");
 	var dataIds = "";
 	addedApps=[];
 	if(checkedDataIds.length==0){
