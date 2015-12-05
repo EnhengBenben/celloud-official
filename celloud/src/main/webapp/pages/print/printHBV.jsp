@@ -129,15 +129,15 @@
 					        <h2 class="mt10">原始序列：</h2>
 							<div style="word-break: break-all;">${seq }</div>
 							<br/>
-				    	    <h2 class="mt20">原始峰图：</h2>
-				    	    <div style="width:750px;" id="_allDiv">
-						       	<c:if test="${imgList.size()>0}">
+							<c:if test="${imgList.size()>0}">
+					    	    <h2 class="mt20">原始峰图：</h2>
+					    	    <div style="width:750px;" id="_allDiv">
 						   			<c:forEach items="${imgList}" var="imgHtml">
 						   				<img src="${imgHtml }" style="width:100%"/>
 						   				<br/><br/>
 						   			</c:forEach>
-					   			</c:if>
-				    	    </div>
+					    	    </div>
+				    	    </c:if>
 			    	   </div>
 					   </c:when>
 					   <c:when test="${appId==82 }">
