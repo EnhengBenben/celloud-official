@@ -67,14 +67,6 @@ public class ProcedureAction extends ActionSupport {
         dataMap.put(AppNameIDConstant.HBV_SNP2, "HBV_SNP2Data");
         dataMap.put(AppNameIDConstant.PGS, "gDNA_HRData");
         dataMap.put(AppNameIDConstant.gDNA, "gDNA_HRData");
-        dataMap.put(AppNameIDConstant.gDNA_Chimeric, "gDNA_HRData");
-        dataMap.put(AppNameIDConstant.MDA_Chimeric, "gDNA_HRData");
-        dataMap.put(AppNameIDConstant.MDA_HR, "gDNA_HRData");
-        dataMap.put(AppNameIDConstant.gDNA_MR, "gDNA_HRData");
-        dataMap.put(AppNameIDConstant.gDNA_HR, "gDNA_HRData");
-        dataMap.put(AppNameIDConstant.MalBac, "gDNA_HRData");
-        dataMap.put(AppNameIDConstant.MDA_MR, "gDNA_HRData");
-        dataMap.put(AppNameIDConstant.SurePlex, "gDNA_HRData");
         dataMap.put(AppNameIDConstant.Tree, "HBVTree");
         dataMap.put(AppNameIDConstant.HCV, "HCV");
         dataMap.put(AppNameIDConstant.EGFR, "egfr");
@@ -90,7 +82,6 @@ public class ProcedureAction extends ActionSupport {
         dataMap.put(AppNameIDConstant.MDA_HR_v1, "gDNA_HRData");
         dataMap.put(AppNameIDConstant.MDA_MR_v1, "gDNA_HRData");
         dataMap.put(AppNameIDConstant.SurePlex_v1, "gDNA_HRData");
-        dataMap.put(AppNameIDConstant.Sureplex_HR, "gDNA_HRData");
         dataMap.put(AppNameIDConstant.MalBac_v1, "gDNA_HRData");
         dataMap.put(AppNameIDConstant.TB_INH, "TBINH");
         dataMap.put(AppNameIDConstant.DPD, "DPD");

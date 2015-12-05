@@ -86,12 +86,9 @@ public class PropertiesUtils {
     public static String EGFR;
     public static String TB;
     public static String MalBac;
-    public static String gDNA_HR;
     public static String gDNA_MR;
     public static String MDA_MR;
     public static String KRAS;
-    public static String gDNA_Chimeric_perl;
-    public static String MDA_Chimeric_perl;
     public static String MDA_HR_perl;
     public static String Translate;
     public static String _16S;
@@ -100,9 +97,6 @@ public class PropertiesUtils {
     public static String gDNA_MR_v1;
     public static String MDA_MR_v1;
     public static String MDA_HR_v1;
-    public static String gDNA_HR_v1;
-    public static String MDA_Chimeric_v1;
-    public static String gDNA_Chimeric_v1;
     public static String SurePlex_v1;
     public static String MalBac_v1;
     public static String Sureplex_HR;
@@ -158,13 +152,10 @@ public class PropertiesUtils {
         img = pro.getProperty("img");
         EGFR = pro.getProperty("EGFR");
         MalBac = pro.getProperty("MalBac");
-        gDNA_HR = pro.getProperty("gDNA_HR");
         gDNA_MR = pro.getProperty("gDNA_MR");
         MDA_MR = pro.getProperty("MDA_MR");
         KRAS = pro.getProperty("KRAS");
         TB = pro.getProperty("TB");
-        gDNA_Chimeric_perl = pro.getProperty("gDNA_Chimeric");
-        MDA_Chimeric_perl = pro.getProperty("MDA_Chimeric");
         MDA_HR_perl = pro.getProperty("MDA_HR");
         Translate = pro.getProperty("Translate");
         _16S = pro.getProperty("_16S");
@@ -173,9 +164,6 @@ public class PropertiesUtils {
         gDNA_MR_v1 = pro.getProperty("gDNA_MR_v1");
         MDA_MR_v1 = pro.getProperty("MDA_MR_v1");
         MDA_HR_v1 = pro.getProperty("MDA_HR_v1");
-        gDNA_HR_v1 = pro.getProperty("gDNA_HR_v1");
-        MDA_Chimeric_v1 = pro.getProperty("MDA_Chimeric_v1");
-        gDNA_Chimeric_v1 = pro.getProperty("gDNA_Chimeric_v1");
         SurePlex_v1 = pro.getProperty("SurePlex_v1");
         MalBac_v1 = pro.getProperty("MalBac_v1");
         Sureplex_HR = pro.getProperty("Sureplex_HR");
