@@ -9,10 +9,16 @@
 			${hbv.dataKey }(${hbv.fileName })
 		</span>
 		<div class="toolbar">
-			<a href="${down }${hbv.userId }/${hbv.appId }/${hbv.dataKey }/${hbv.pdf }" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
-			<a href='javascript:toPrintHBV("${hbv.userId }/${hbv.appId }/${hbv.dataKey }",0)' class="btn btn-default"><i class="i-print"></i>详细报告</a>
-			<a href='javascript:toPrintHBV("${hbv.userId }/${hbv.appId }/${hbv.dataKey }",1)' class="btn btn-default"><i class="i-print"></i>简要报告</a>
-			<a href="${down }${hbv.userId }/${hbv.appId }/${hbv.dataKey }/${hbv.zip }" class="btn btn-default"><i class="i-download"></i>报告下载</a>
+			<c:if test="${hbv.pdf!=null && hbv.pdf!='' }">
+				<a href="${down }${hbv.userId }/${hbv.appId }/${hbv.dataKey }/${hbv.pdf }" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
+			</c:if>
+			<c:if test="${hbv.dataKey!=null && hbv.dataKey!='' }">
+				<a href='javascript:toPrintHBV("${hbv.userId }/${hbv.appId }/${hbv.dataKey }",0)' class="btn btn-default"><i class="i-print"></i>详细报告</a>
+				<a href='javascript:toPrintHBV("${hbv.userId }/${hbv.appId }/${hbv.dataKey }",1)' class="btn btn-default"><i class="i-print"></i>简要报告</a>
+			</c:if>
+			<c:if test="${hbv.pdf!=zip && hbv.zip!='' }">
+				<a href="${down }${hbv.userId }/${hbv.appId }/${hbv.dataKey }/${hbv.zip }" class="btn btn-default"><i class="i-download"></i>报告下载</a>
+			</c:if>
 		</div>
 	</div>
 	<div class="m-file" id="cfda">
