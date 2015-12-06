@@ -94,7 +94,7 @@
 		  		</div>
 		  	</div>
 		  	<div class="modal-footer">
-		    	<a href="javascript:saveShareProject();" class="btn">确 定</a>
+		    	<a href="javascript:saveShareProject();" class="btn btn-celloud-success btn-flat">确 定</a>
 		  	</div>
 		</div>
 	</div>
