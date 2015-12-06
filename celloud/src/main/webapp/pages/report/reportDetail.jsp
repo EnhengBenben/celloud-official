@@ -10,6 +10,9 @@
 .tab-content>.tab-pane {
     display: block;
 }
+a:hover, a:active, a:focus{
+	color: #CC0000;
+}
 </style>
 <section class="content-header">
   <h1>
