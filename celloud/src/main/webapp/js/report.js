@@ -747,7 +747,7 @@ $.ajaxSetup ({
 			}
 			if(appId==82){
 				$.get("count!getHBV",{"appId":appId,"path":DATAPATH},function(data){
-					var div0 = $("<div id='char0' style='width:80%;display: inline-block;margin-right:10px;'></div>");
+					var div0 = $("<div id='char0' style='display: inline-block;margin-right:10px;'></div>");
 					$("#charDiv").append(div0);
 					var sType = $("#snpType").html();
 					if(!sType){
@@ -812,7 +812,7 @@ $.ajaxSetup ({
 						}
 					}
 					
-					var div1 = $("<div id='char1' style='width:80%;display: inline-block;margin-right:10px;'></div>");
+					var div1 = $("<div id='char1' style='display: inline-block;margin-right:10px;'></div>");
 					$("#charDiv").append(div1);
 					var one = getCountValue("Subtype","nomal");
 					var X = "[";
