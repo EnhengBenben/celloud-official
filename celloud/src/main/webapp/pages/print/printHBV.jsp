@@ -89,7 +89,7 @@
 					   <c:when test="${appId==84}">
 				    	    <h2 class="mt20">已知位点：</h2>
 				    	    <p>${table }</p>
-				    	    <p><img src="${allPic }" style="width: 900px;height: 136px;"></p>
+				    	    <p><img src="${allPic }" style="width: 100%;"></p>
 				    	    <h2 class="mt20">结论：</h2>
 				    	    <p>${result }</p>
 				    	    <h2 class="mt20">原始序列：</h2>
