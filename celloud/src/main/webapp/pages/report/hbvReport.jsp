@@ -55,7 +55,7 @@
 			</div>
 		</div>
 		<div class="center mb10 w500">
-			<a href="javascript:void(0)" onclick="change1()" class="btn btn-blue"><i class="i-view"></i>查看详情</a>
+			<a href="javascript:void(0)" onclick="change1()" class="btn btn-celloud-success btn-flat"><i class="i-view"></i>查看详情</a>
 		</div>
 	</div>
 	<div id="nomal" style="display: none;">
@@ -367,7 +367,7 @@
 		    </div>
 		</div>
 		<div class="center mt10 mb10">
-			<a href="javascript:void(0)" onclick="change2()" class="btn btn-blue"><i class="i-view"></i>返回</a>
+			<a href="javascript:void(0)" onclick="change2()" class="btn btn-celloud-success btn-flat"><i class="i-view"></i>返回</a>
 		</div>
 	</div>
 </div>
