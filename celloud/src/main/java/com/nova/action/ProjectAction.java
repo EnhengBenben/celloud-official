@@ -139,26 +139,14 @@ public class ProjectAction extends BaseAction {
     private static String datalist = PropertiesUtil.datalist;
 
     // 初始化app列表
-    private static Map<Long, App> appMap = null;
-    private static Map<String, Map<String, String>> machines = null;
-    private static String sparkhost = null;
-    private static String sparkpwd = null;
-    private static String sparkuserName = null;
-    private static String sgehost = null;
-    private static String sgepwd = null;
-    private static String sgeuserName = null;
-    static {
-        XmlUtil.getMachines();
-        machines = XmlUtil.machines;
-        sparkhost = machines.get("spark").get(Mod.HOST);
-        sparkpwd = machines.get("spark").get(Mod.PWD);
-        sparkuserName = machines.get("spark").get(Mod.USERNAME);
-        sgehost = machines.get("158").get(Mod.HOST);
-        sgepwd = machines.get("158").get(Mod.PWD);
-        sgeuserName = machines.get("158").get(Mod.USERNAME);
-        SQLUtils sql = new SQLUtils();
-        appMap = sql.getAllSoftware();
-    }
+    private static Map<Long, App> appMap = SQLUtils.appMap;
+    private static Map<String, Map<String, String>> machines = XmlUtil.machines;
+    private static String sparkhost = machines.get("spark").get(Mod.HOST);
+    private static String sparkpwd = machines.get("spark").get(Mod.PWD);
+    private static String sparkuserName = machines.get("spark").get(Mod.USERNAME);
+    private static String sgehost = machines.get("158").get(Mod.HOST);
+    private static String sgepwd = machines.get("158").get(Mod.PWD);
+    private static String sgeuserName = machines.get("158").get(Mod.USERNAME);
 
     private static String basePath = SparkPro.TOOLSPATH;
 

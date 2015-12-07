@@ -106,7 +106,7 @@ public class PrintAction extends BaseAction {
             return "hbv";
         }
         txt = iss.getSoftware(appId).getSoftwareName();
-        if (imgHtml != null) {
+        if (!StringUtils.isEmpty(imgHtml)) {
             String[] imgArr = imgHtml.split(",");
             imgList = new ArrayList<String>();
             for (String s : imgArr) {

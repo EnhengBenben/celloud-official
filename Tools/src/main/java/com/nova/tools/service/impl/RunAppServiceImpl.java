@@ -44,11 +44,8 @@ public class RunAppServiceImpl {
 			Mod.USERNAME);
 
 	private static String MalBac_perl = PropertiesUtils.MalBac;
-	private static String gDNA_HR_perl = PropertiesUtils.gDNA_HR;
 	private static String gDNA_MR_perl = PropertiesUtils.gDNA_MR;
 	private static String MDA_MR_perl = PropertiesUtils.MDA_MR;
-	private static String gDNA_Chimeric_perl = PropertiesUtils.gDNA_Chimeric_perl;
-	private static String MDA_Chimeric_perl = PropertiesUtils.MDA_Chimeric_perl;
 	private static String MDA_HR_perl = PropertiesUtils.MDA_HR_perl;
 	private static String SurePlex_perl = PropertiesUtils.SurePlex;
 	private static String SurePlex_HR_perl = PropertiesUtils.Sureplex_HR;
@@ -59,9 +56,6 @@ public class RunAppServiceImpl {
 	private static String gDNA_MR_v1 = PropertiesUtils.gDNA_MR_v1;
 	private static String MDA_MR_v1 = PropertiesUtils.MDA_MR_v1;
 	private static String MDA_HR_v1 = PropertiesUtils.MDA_HR_v1;
-	private static String gDNA_HR_v1 = PropertiesUtils.gDNA_HR_v1;
-	private static String MDA_Chimeric_v1 = PropertiesUtils.MDA_Chimeric_v1;
-	private static String gDNA_Chimeric_v1 = PropertiesUtils.gDNA_Chimeric_v1;
 	private static String SurePlex_v1 = PropertiesUtils.SurePlex_v1;
 	private static String MalBac_v1 = PropertiesUtils.MalBac_v1;
 	private static String TBINH_perl = PropertiesUtils.tbinh;
@@ -368,28 +362,6 @@ public class RunAppServiceImpl {
 		ssh.sshSubmit(false);
 	}
 
-	public void rungDNA_ChimericProject(String basePath, String projectId,
-			String dataKeyList, String appName) {
-		// 创建要运行的文件列表文件
-		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
-		String command = gDNA_Chimeric_perl + " " + dataListFile + " "
-				+ basePath + " ProjectID" + projectId + " &>" + basePath
-				+ "ProjectID" + projectId + ".log";
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		ssh.sshSubmit(false);
-	}
-
-	public void runMDA_ChimericProject(String basePath, String projectId,
-			String dataKeyList, String appName) {
-		// 创建要运行的文件列表文件
-		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
-		String command = MDA_Chimeric_perl + " " + dataListFile + " "
-				+ basePath + " ProjectID" + projectId + " &>" + basePath
-				+ "ProjectID" + projectId + ".log";
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		ssh.sshSubmit(false);
-	}
-
 	public void runMDA_HRProject(String basePath, String projectId,
 			String dataKeyList, String appName) {
 		// 创建要运行的文件列表文件
@@ -618,190 +590,6 @@ public class RunAppServiceImpl {
 		}
 	}
 
-	public void rungDNA_HR_v1Project(String basePath, String projectId,
-			String dataKeyList, String appName) {
-		// 创建要运行的文件列表文件
-		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
-		String command = gDNA_HR_v1 + " " + dataListFile + " " + basePath
-				+ " ProjectID" + projectId;
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
-		StringBuffer resultArray = new StringBuffer();
-		if (state) {
-			String dataArray[] = dataKeyList.split(";");
-			// 创建项目结果文件
-			String projectFile = basePath + projectId + "/" + projectId
-					+ ".txt";
-			FileTools.createFile(projectFile);
-			// 追加表头
-			resultArray
-					.append("dataName\tdataKey\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\n");
-			for (int i = 0; i < dataArray.length; i++) {
-				String[] dataDetail = dataArray[i].split(",");
-				String finalPath = basePath + getArray(dataDetail, 0);
-				try {
-					PGS_PDF.createPDF(finalPath, appName,
-							getBarcode(getArray(dataDetail, 2)),
-							getArray(dataDetail, 3), getArray(dataDetail, 0),
-							200, 800);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				String fileName = FileTools.fileExist(finalPath, ".xls",
-						"endsWith");
-				String result[] = null;
-				try {
-					String r[] = FileUtils.readFileToString(
-							new File(finalPath + "/" + fileName)).split("\n");
-					if (r.length > 2) {
-						result = getArray(r, 2).split("\t");
-					} else {
-						result = FileTools.getLastLine(
-								finalPath + "/" + fileName).split("\t");
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				if (result.length == 1) {
-					resultArray.append(getArray(dataDetail, 2) + "\t"
-							+ getArray(dataDetail, 0) + "\t"
-							+ getArray(result, 0) + "\n");
-				} else {
-					resultArray.append(getArray(dataDetail, 2) + "\t"
-							+ getArray(dataDetail, 0) + "\t"
-							+ getArray(result, 0) + "\t" + getArray(result, 1)
-							+ "\t" + getArray(result, 2) + "\t"
-							+ getArray(result, 3) + "\t" + getArray(result, 4)
-							+ "\n");
-				}
-			}
-			FileTools.appendWrite(projectFile, resultArray.toString());
-		}
-	}
-
-	public void runMDA_Chimeric_v1Project(String basePath, String projectId,
-			String dataKeyList, String appName) {
-		// 创建要运行的文件列表文件
-		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
-		String command = MDA_Chimeric_v1 + " " + dataListFile + " " + basePath
-				+ " ProjectID" + projectId;
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
-		StringBuffer resultArray = new StringBuffer();
-		if (state) {
-			String dataArray[] = dataKeyList.split(";");
-			// 创建项目结果文件
-			String projectFile = basePath + projectId + "/" + projectId
-					+ ".txt";
-			FileTools.createFile(projectFile);
-			// 追加表头
-			resultArray
-					.append("dataName\tdataKey\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
-			for (int i = 0; i < dataArray.length; i++) {
-				String[] dataDetail = dataArray[i].split(",");
-				String finalPath = basePath + getArray(dataDetail, 0);
-				try {
-					PGS_PDF.createPDF(finalPath, appName,
-							getBarcode(getArray(dataDetail, 2)),
-							getArray(dataDetail, 3), getArray(dataDetail, 0),
-							190, 800);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				String fileName = FileTools.fileExist(finalPath, ".xls",
-						"endsWith");
-				String result[] = null;
-				try {
-					String r[] = FileUtils.readFileToString(
-							new File(finalPath + "/" + fileName)).split("\n");
-					if (r.length > 2) {
-						result = getArray(r, 2).split("\t");
-					} else {
-						result = FileTools.getLastLine(
-								finalPath + "/" + fileName).split("\t");
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-				if (result.length == 1) {
-					resultArray.append(getArray(dataDetail, 2) + "\t"
-							+ getArray(dataDetail, 0) + "\t"
-							+ getArray(result, 0) + "\n");
-				} else {
-					resultArray.append(getArray(dataDetail, 2) + "\t"
-							+ getArray(dataDetail, 0) + "\t"
-							+ getArray(result, 0) + "\t" + getArray(result, 1)
-							+ "\t" + getArray(result, 2) + "\t"
-							+ getArray(result, 3) + "\t" + getArray(result, 4)
-							+ "\t" + getArray(result, 5) + "\n");
-				}
-			}
-			FileTools.appendWrite(projectFile, resultArray.toString());
-		}
-	}
-
-	public void rungDNA_Chimeric_v1Project(String basePath, String projectId,
-			String dataKeyList, String appName) {
-		// 创建要运行的文件列表文件
-		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
-		String command = gDNA_Chimeric_v1 + " " + dataListFile + " " + basePath
-				+ " ProjectID" + projectId;
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
-		StringBuffer resultArray = new StringBuffer();
-		if (state) {
-			String dataArray[] = dataKeyList.split(";");
-			// 创建项目结果文件
-			String projectFile = basePath + projectId + "/" + projectId
-					+ ".txt";
-			FileTools.createFile(projectFile);
-			// 追加表头
-			resultArray
-					.append("dataName\tdataKey\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
-			for (int i = 0; i < dataArray.length; i++) {
-				String[] dataDetail = dataArray[i].split(",");
-				String finalPath = basePath + getArray(dataDetail, 0);
-				try {
-					PGS_PDF.createPDF(finalPath, appName,
-							getBarcode(getArray(dataDetail, 2)),
-							getArray(dataDetail, 3), getArray(dataDetail, 0),
-							190, 800);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				String fileName = FileTools.fileExist(finalPath, ".xls",
-						"endsWith");
-				String result[] = null;
-				try {
-					String r[] = FileUtils.readFileToString(
-							new File(finalPath + "/" + fileName)).split("\n");
-					if (r.length > 2) {
-						result = getArray(r, 2).split("\t");
-					} else {
-						result = FileTools.getLastLine(
-								finalPath + "/" + fileName).split("\t");
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				if (result.length == 1) {
-					resultArray.append(getArray(dataDetail, 2) + "\t"
-							+ getArray(dataDetail, 0) + "\t"
-							+ getArray(result, 0) + "\n");
-				} else {
-					resultArray.append(getArray(dataDetail, 2) + "\t"
-							+ getArray(dataDetail, 0) + "\t"
-							+ getArray(result, 0) + "\t" + getArray(result, 1)
-							+ "\t" + getArray(result, 2) + "\t"
-							+ getArray(result, 3) + "\t" + getArray(result, 4)
-							+ "\t" + getArray(result, 5) + "\n");
-				}
-			}
-			FileTools.appendWrite(projectFile, resultArray.toString());
-		}
-	}
-
 	public void runSurePlex_v1Project(String basePath, String projectId,
 			String dataKeyList, String appName) {
 		// 创建要运行的文件列表文件
@@ -918,17 +706,6 @@ public class RunAppServiceImpl {
 		// 创建要运行的文件列表文件
 		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
 		String command = MalBac_perl + " " + dataListFile + " " + basePath
-				+ " ProjectID" + projectId + " &>" + basePath + "ProjectID"
-				+ projectId + ".log";
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		ssh.sshSubmit(false);
-	}
-
-	public void rungDNA_HRProject(String basePath, String projectId,
-			String dataKeyList, String appName) {
-		// 创建要运行的文件列表文件
-		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
-		String command = gDNA_HR_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId + " &>" + basePath + "ProjectID"
 				+ projectId + ".log";
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);

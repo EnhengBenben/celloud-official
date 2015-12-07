@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<link href="<%=request.getContextPath() %>/css/report.css?version=3,0" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/css/report.css?version=3.1" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/css/buttons.css?version=20150730" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/plugins/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
 <link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
@@ -9,6 +9,9 @@
 <style>
 .tab-content>.tab-pane {
     display: block;
+}
+a:hover, a:active, a:focus{
+	color: #CC0000;
 }
 </style>
 <section class="content-header">
@@ -72,22 +75,32 @@
   </div><!--/.row-->
 </section>
 <!--项目共享-->
-<div class="modal hide fade" id="shareProjectModal" >
-	<div class="modal-header">
-		<input type="hidden" id="proIdHidden"/>
-		<input type="hidden" id="proOwnerHidden"/>
-		<a class="close" data-dismiss="modal">×</a>
-        <span id="proNameSpan">项目名称：</span>
-    	<h3><img src="<%=request.getContextPath()%>/images/publicIcon/icon-modal-03.png"/>项目共享</h3>
-  	</div>
-  	<div class="modal-body">
-		<p>共计<span id="proDataCountSpan"></span>个数据文件</p>
-        <input type="hidden" id="proSel" style="width:564px;" value=""/>
-        <span id="shareProPrompt"></span>
-  	</div>
-  	<div class="modal-footer">
-    	<a href="javascript:saveShareProject();" class="btn">确 定</a>
-  	</div>
+<div class="modal modal-green-header in" id="shareProjectModal" >
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<input type="hidden" id="proIdHidden"/>
+				<input type="hidden" id="proOwnerHidden"/>
+				<a class="close" data-dismiss="modal">×</a>
+		    	<h4 class="modal-title">
+		    		<img src="<%=request.getContextPath()%>/images/publicIcon/icon-modal-03.png"/> 项目共享
+		    		<a href="javascript:void(0);" class="a-white" style="margin-left:30px"><span id="proNameSpan">项目名称：</span></a>
+		    	</h4>
+		  	</div>
+		  	<div class="modal-body row">
+		  		<div class="col-xs-1">
+		  		</div>
+		  		<div class="col-xs-10">
+					<p>共计<span id="proDataCountSpan"></span>个数据文件</p>
+			        <input type="hidden" id="proSel" style="width:470px;" value=""/>
+			        <span id="shareProPrompt"></span>
+		  		</div>
+		  	</div>
+		  	<div class="modal-footer">
+		    	<a href="javascript:saveShareProject();" class="btn btn-celloud-success btn-flat">确 定</a>
+		  	</div>
+		</div>
+	</div>
 </div>
 <!-- jquery_alert_dialogs begin -->
 <script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>

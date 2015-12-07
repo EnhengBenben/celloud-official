@@ -187,14 +187,6 @@ public class RunAppService {
             runApp.rungDNAProject(appPath + "/", projectId, dataKeyList,
                     appName);
         }
-        if (AppNameIDConstant.gDNA_Chimeric.equals(appId)) {
-            runApp.rungDNA_ChimericProject(appPath + "/", projectId,
-                    dataKeyList, appName);
-        }
-        if (AppNameIDConstant.MDA_Chimeric.equals(appId)) {
-            runApp.runMDA_ChimericProject(appPath + "/", projectId,
-                    dataKeyList, appName);
-        }
         if (AppNameIDConstant.MDA_HR.equals(appId)) {
             runApp.runMDA_HRProject(appPath + "/", projectId, dataKeyList,
                     appName);
@@ -220,21 +212,6 @@ public class RunAppService {
             runApp.runMDA_HR_v1Project(appPath + "/", projectId, dataKeyList,
                     appName);
         }
-        // gDNA_HR_v1
-        if (AppNameIDConstant.gDNA_HR_v1.equals(appId)) {
-            runApp.rungDNA_HR_v1Project(appPath + "/", projectId, dataKeyList,
-                    appName);
-        }
-        // MDA_Chimeric_v1
-        if (AppNameIDConstant.MDA_Chimeric_v1.equals(appId)) {
-            runApp.runMDA_Chimeric_v1Project(appPath + "/", projectId,
-                    dataKeyList, appName);
-        }
-        // gDNA_Chimeric_v1
-        if (AppNameIDConstant.gDNA_Chimeric_v1.equals(appId)) {
-            runApp.rungDNA_Chimeric_v1Project(appPath + "/", projectId,
-                    dataKeyList, appName);
-        }
         // SurePlex_v1
         if (AppNameIDConstant.SurePlex_v1.equals(appId)) {
             runApp.runSurePlex_v1Project(appPath + "/", projectId, dataKeyList,
@@ -258,11 +235,6 @@ public class RunAppService {
                     appName);
         }
 
-        // gDNA_HR
-        if (AppNameIDConstant.gDNA_HR.equals(appId)) {
-            runApp.rungDNA_HRProject(appPath + "/", projectId, dataKeyList,
-                    appName);
-        }
         if (!apps.contains(appId)) {
             String txt = projectPath + "/" + projectId + ".txt";
             String xml = null;

@@ -35,6 +35,7 @@
 	</div>
 	<div class="m-box" id="printDiv3" <s:if test="%{resultMap.isAll.equals('false')}">style="display: none;"</s:if>>
 		<h2><i class="i-dna"></i>原始峰图</h2>
+	 <s:if test="%{resultMap.isAll.equals('true')}">
 	    <div class="m-boxCon result">
 			<a href="javascript:showBg('<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/SVG/<s:property value="resultMap.listAll1"/>','listAll1Img');" >
 				<img class="imgtop" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/SVG/<s:property value="resultMap.listAll1"/>" style="width: 750px;height: 150px;" id="listAll1Img">
@@ -65,6 +66,7 @@
 				<img class="imgtop" name="imgSrc" src="<s:property value="resultMap.outPath"/>/<s:property value="resultMap.pagePath"/>/SVG/<s:property value="resultMap.listAll6"/>" style="width: 750px;height: 150px;" id="listAll6Img">
 			</a>
 	    </div>
+	</s:if>
 	</div>
 	<div class="bg-analysis">
 		<div class="m-box">

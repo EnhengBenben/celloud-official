@@ -164,7 +164,6 @@ public class ReportAction extends BaseAction {
             return "hbvReport";
         // 其他突变位点排序
         Map<String, String> map = hbv.getOther();
-        System.out.println(map == null);
         if(map!=null){
             String[] array = new String[map.size()];
             int i = 0;

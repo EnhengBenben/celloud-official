@@ -487,6 +487,7 @@ $.ajaxSetup ({
 		var dataReportParam;
 		var dataItem0;
 		var obj0;
+		var reportIdNow;//记录当前报告ID
 		//查看数据报告
 		function viewDataReport(event){
 			$("#mainDIV").load("pages/report/dataReport.jsp");
@@ -516,7 +517,7 @@ $.ajaxSetup ({
 			var target = document.getElementById('reportLoading');
 			spinner.spin(target);
 			$.get("getDataInfoListByProjectId.action",{"projectId":proId},function(fileList){
-				$("#fileListUl").append("<div class='btn-group' id='prevA'><button type='button' class='btn btn-success dropdown-toggle' data-toggle='dropdown' aria-expanded='false'><span class='fa fa-sort-asc'></span></button></div>");
+				$("#fileListUl").append("<button type='button' id='prevA' class='btn btn-success'><span class='fa fa-sort-asc'></span></button>");
 				var fileNames = new Array();
 				var newList = "";
 				if(softwareId == 110||softwareId == 111||softwareId == 112||softwareId == 113){
@@ -556,6 +557,7 @@ $.ajaxSetup ({
 					var isActive = "";
 					if(item.dataKey == dataKey){
 						isActive = "active";
+						reportIdNow = 'fileA'+proId+item.fileId;
 					}
 					inner += "<button type='button' class='btn btn-success "+isActive+"' style='font-size:12px;' id='fileA"+proId+item.fileId+"' title='"+item.fileName+"'>"+(item.fileName.length>15?(item.fileName.substring(0,15)+"..."):item.fileName)+"</button>";
 					$("#fileListUl").append(inner);
@@ -565,14 +567,28 @@ $.ajaxSetup ({
 						$.get("report!clickItemDataReport",{},function(state){});
 					});
 				});
-				$("#fileListUl").append("<div class='btn-group' id='nextA'><button type='button' class='btn btn-success dropdown-toggle' data-toggle='dropdown' aria-expanded='false'><span class='caret'></span></button></div>");
+				$("#fileListUl").append("<button type='button' id='nextA' class='btn btn-success'><span class='caret'></span></button>");
 				
 				$("#prevA").bind("click",function(){
-					$("#fileListUl").find(".active").prev().trigger("click");
+					var preId = $("#"+reportIdNow).prev().attr("id");
+					if(preId=='prevA'){
+						alert("已经是第一条数据");
+						return ;
+					}
+					$("#fileListUl").find("#"+preId).trigger("click");
+					$("#fileListUl").removeClass("active");
+					$("#"+preId).addClass("active");
 					$.get("report!prevDataReport",{},function(state){});
 				});
 				$("#nextA").bind("click",function(){
-					$("#fileListUl").find(".active").next().trigger("click");
+					var nextId = $("#"+reportIdNow).next().attr("id");
+					if(nextId=='nextA'){
+						alert("已经是最后一条数据");
+						return ;
+					}
+					$("#fileListUl").find("#"+nextId).trigger("click");
+					$("#fileListUl").removeClass("active");
+					$("#"+nextId).addClass("active");
 					$.get("report!nextDataReport",{},function(state){});
 				});
 			});
@@ -603,6 +619,7 @@ $.ajaxSetup ({
 			}
 		}
 		function viewADataReport(dataKey,fileName,userId,softwareId,fileId,proId,obj){
+			reportIdNow = 'fileA'+proId+fileId;
 			obj.addClass("link_visited");
 			if(fileId != 0){
 				$("#fileListUl").find(".active").removeClass("active");
@@ -730,7 +747,7 @@ $.ajaxSetup ({
 			}
 			if(appId==82){
 				$.get("count!getHBV",{"appId":appId,"path":DATAPATH},function(data){
-					var div0 = $("<div id='char0' style='width:80%;display: inline-block;margin-right:10px;'></div>");
+					var div0 = $("<div id='char0' style='display: inline-block;margin-right:10px;'></div>");
 					$("#charDiv").append(div0);
 					var sType = $("#snpType").html();
 					if(!sType){
@@ -778,24 +795,24 @@ $.ajaxSetup ({
 						if(temp[0].indexOf("未检测到")<0){
 							rType.push("ADV");
 						}
-						if(temp[1].indexOf("未检测到")<0){
+						if(temp.length>1 && temp[1].indexOf("未检测到")<0){
 							rType.push("TDF");
 						}
-						if(temp[2].indexOf("未检测到")<0){
+						if(temp.length>2 && temp[2].indexOf("未检测到")<0){
 							rType.push("LAM");
 						}
-						if(temp[3].indexOf("未检测到")<0){
+						if(temp.length>3 && temp[3].indexOf("未检测到")<0){
 							rType.push("LDT");
 						}
-						if(temp[4].indexOf("未检测到")<0){
+						if(temp.length>4 && temp[4].indexOf("未检测到")<0){
 							rType.push("FTC");
 						}
-						if(temp[5].indexOf("未检测到")<0){
+						if(temp.length>5 && temp[5].indexOf("未检测到")<0){
 							rType.push("ETV");
 						}
 					}
 					
-					var div1 = $("<div id='char1' style='width:80%;display: inline-block;margin-right:10px;'></div>");
+					var div1 = $("<div id='char1' style='display: inline-block;margin-right:10px;'></div>");
 					$("#charDiv").append(div1);
 					var one = getCountValue("Subtype","nomal");
 					var X = "[";

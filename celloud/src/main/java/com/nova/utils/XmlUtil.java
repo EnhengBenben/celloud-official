@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -19,10 +21,18 @@ import org.dom4j.io.SAXReader;
 import com.nova.constants.Mod;
 
 public class XmlUtil {
-
-	public static Map<String, Map<String, String>> machines = new HashMap<String, Map<String, String>>();
+    private static final Logger logger = LogManager.getLogger(XmlUtil.class.getName());
+	public static Map<String, Map<String, String>> machines = null;
 	
-	public static void getMachines() {
+	public static void initMachines(){
+	    logger.info("初始化集群配置");
+	    if(machines==null){
+	        machines = getMachines();
+	    }
+	}
+	
+	private static Map<String, Map<String, String>> getMachines() {
+	    Map<String, Map<String, String>> machines = new HashMap<String, Map<String, String>>();
 		InputStream is = PropertiesUtil.class.getClassLoader()
 				.getResourceAsStream("machine.xml");
 		SAXReader reader = new SAXReader();
@@ -55,6 +65,7 @@ public class XmlUtil {
 				}
 			}
 		}
+		return machines;
 	}
 
 	public static String writeXML(String path) {

@@ -89,7 +89,7 @@
 					   <c:when test="${appId==84}">
 				    	    <h2 class="mt20">已知位点：</h2>
 				    	    <p>${table }</p>
-				    	    <p><img src="${allPic }" style="width: 900px;height: 136px;"></p>
+				    	    <p><img src="${allPic }" style="width: 100%;"></p>
 				    	    <h2 class="mt20">结论：</h2>
 				    	    <p>${result }</p>
 				    	    <h2 class="mt20">原始序列：</h2>
@@ -129,15 +129,15 @@
 					        <h2 class="mt10">原始序列：</h2>
 							<div style="word-break: break-all;">${seq }</div>
 							<br/>
-				    	    <h2 class="mt20">原始峰图：</h2>
-				    	    <div style="width:750px;" id="_allDiv">
-						       	<c:if test="${imgList.size()>0}">
+							<c:if test="${imgList.size()>0}">
+					    	    <h2 class="mt20">原始峰图：</h2>
+					    	    <div style="width:750px;" id="_allDiv">
 						   			<c:forEach items="${imgList}" var="imgHtml">
 						   				<img src="${imgHtml }" style="width:100%"/>
 						   				<br/><br/>
 						   			</c:forEach>
-					   			</c:if>
-				    	    </div>
+					    	    </div>
+				    	    </c:if>
 			    	   </div>
 					   </c:when>
 					   <c:when test="${appId==82 }">

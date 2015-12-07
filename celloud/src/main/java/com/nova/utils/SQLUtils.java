@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import com.celloud.sdo.App;
 import com.mysql.jdbc.Statement;
 import com.nova.constants.DataState;
@@ -21,6 +24,16 @@ import com.nova.sdo.User;
  * @date 2014-10-13 上午10:40:43
  */
 public class SQLUtils {
+    private static final Logger logger = LogManager.getLogger(SQLUtils.class.getName());
+    public static Map<Long, App> appMap = null;
+    public static void initAppInfo(){
+        logger.info("初始化APP信息");
+        if(appMap==null){
+            SQLUtils sql = new SQLUtils();
+            appMap = sql.getAllSoftware();
+        }
+    }
+    
     /**
      * 通过 userId获取用户邮箱
      * 

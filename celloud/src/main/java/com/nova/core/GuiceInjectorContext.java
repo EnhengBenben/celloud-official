@@ -13,6 +13,8 @@ import com.mongo.core.SystemContext;
 import com.nova.filter.MyStrutsFilter;
 import com.nova.kaptcha.Kaptcha;
 import com.nova.utils.ConnectManager;
+import com.nova.utils.SQLUtils;
+import com.nova.utils.XmlUtil;
 
 /**
  * guice全局控制
@@ -35,6 +37,10 @@ public class GuiceInjectorContext extends GuiceServletContextListener {
 			    ConnectManager.initSystem();
 			    // Mongo初始化
 			    SystemContext.initContext();
+			    // 集群配置初始化
+			    XmlUtil.initMachines();
+			    // App Info 初始化
+			    SQLUtils.initAppInfo();
 			    // 初始化struts2配置,这里MyStrutsFilter已经继承StrutsPrepareAndExecuteFilter
 			    bind(MyStrutsFilter.class).in(Singleton.class);
 			    filter("/*").through(MyStrutsFilter.class);
