@@ -272,8 +272,18 @@ input[type="text"], .onlybotton{
 					<img src='<s:property value="outPath"/>/<s:property value="pagePath"/>/<s:property value="miniPng"/>' style="width:90%;max-height:245px;">
 				</div>
 				<br/>
-				<s:if test="%{company.companyId==14}">
-					<h4 class="smallh4">结果提示：</h4>
+				<s:if test="%{company.companyId==42}">
+				    <div id="des" style="margin:0px">
+						<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px"><s:property value="txt.replace('@','+')"/></textarea>
+					</div>
+					<h4 class="smallh4">结果解释：</h4>
+					<div id="des1">
+						报告名称：<span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span><br>
+						样本报告：<span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span>
+					</div>
+				</s:if>
+				<s:else>
+				    <h4 class="smallh4">结果提示：</h4>
 					<div id="des1">
 						<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px"></textarea>
 					</div>
@@ -283,27 +293,18 @@ input[type="text"], .onlybotton{
 					</div>
 					<br/>
 					<hr style="margin:0px">
-				</s:if>
-				<s:if test="%{company.companyId!=14}">
-					<div id="des" style="margin:0px">
-						<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px"><s:property value="txt.replace('@','+')"/></textarea>
+					<div id="page2">
+						<h4 class="smallh4">局限性：</h4>
+						<div id="des3">
+	<textarea rows="8" style="margin:0px;font-size:10px;line-height:12px">
+	1. 该检测对于染色体拷贝数变异（CNVs）&lt; 4Mb 的微小畸变导致的染色体异常，可能不能检出。
+	2. 本检验无法检查到由以下因素引起的染色体变异：单亲二倍体（UPD）；染色体平衡易位、倒位、环状等结构异常；多倍体如：69，XXX、92，XXXX、92，XXYY。
+	3. 本检验无法检查到由以下因素引起的疾病：单基因病、多基因病；感染、药物、辐射等环境诱因。
+	4. 染色体疾病中极少数是由嵌合体，即由两种或两种以上的细胞系引起的。因正常与异常细胞系比例不定，本技术对于低比例嵌合体检测存在难度。
+	</textarea>
+						</div>
 					</div>
-					<h4 class="smallh4">结果解释：</h4>
-					<div id="des1">
-						<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px"></textarea>
-					</div>
-				</s:if>
-				<div id="page2">
-					<h4 class="smallh4">局限性：</h4>
-					<div id="des3">
-<textarea rows="8" style="margin:0px;font-size:10px;line-height:12px">
-1. 该检测对于染色体拷贝数变异（CNVs）&lt; 4Mb 的微小畸变导致的染色体异常，可能不能检出。
-2. 本检验无法检查到由以下因素引起的染色体变异：单亲二倍体（UPD）；染色体平衡易位、倒位、环状等结构异常；多倍体如：69，XXX、92，XXXX、92，XXYY。
-3. 本检验无法检查到由以下因素引起的疾病：单基因病、多基因病；感染、药物、辐射等环境诱因。
-4. 染色体疾病中极少数是由嵌合体，即由两种或两种以上的细胞系引起的。因正常与异常细胞系比例不定，本技术对于低比例嵌合体检测存在难度。
-</textarea>
-					</div>
-				</div>
+				</s:else>
 			</div>
 			<s:if test="%{company.companyId==14}">
 				<ul class="footer" style="margin-bottom: 0px;font-size:12px;/* margin-top: 450px; */">
