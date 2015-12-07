@@ -20,10 +20,15 @@
 						<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.dataKey }.pdf" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
 					</c:if>
 				</c:if>
-				<a target="_blank" href="../../printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }" class="btn btn-default"><i class="i-print"></i>打印报告</a>
-				<c:if test="${pgs.splitPng!=null }">
-					<a target="_blank" href="../../printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.splitPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }" class="btn btn-default"><i class="i-print"></i>点图报告</a>					
-				</c:if>
+				<c:choose>
+					<c:when test="${pgs.splitPng!=null }">
+						<a target="_blank" href="../../printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }/${pgs.splitPng }" class="btn btn-default"><i class="i-print"></i>打印报告</a>
+						<a target="_blank" href="../../printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.splitPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }" class="btn btn-default"><i class="i-print"></i>点图报告</a>					
+					</c:when>
+					<c:otherwise>
+						<a target="_blank" href="../../printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }" class="btn btn-default"><i class="i-print"></i>打印报告</a>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 		<!--报告图示一-->

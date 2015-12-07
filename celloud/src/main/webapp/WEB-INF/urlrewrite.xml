@@ -42,8 +42,8 @@
 
 	<rule>
 		<note>Print</note>
-		<from>^/printPGS/([\w\W]+)/([\w\W]+)/([\w\W]+)$</from>
-		<to>/print!printPGS?pagePath=$1&amp;miniPng=$2&amp;txt=$3</to>
+		<from>^/printPGS/([\w\W]+)/([\w\W]+)/([\w\W]+)/([\w\W]+)$</from>
+		<to>/print!printPGS?pagePath=$1&amp;miniPng=$2&amp;txt=$3&amp;splitPng=$4</to>
 	</rule>
 
 	<rule>
