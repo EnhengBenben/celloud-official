@@ -110,22 +110,13 @@ public class DataAction extends BaseAction {
     private static String basePath = SparkPro.TOOLSPATH;
     private static String dataPath = PropertiesUtil.bigFilePath;
     private static String datalist = PropertiesUtil.datalist;
-    private static Map<String, Map<String, String>> machines = null;
-    private static String sparkhost = null;
-    private static String sparkpwd = null;
-    private static String sparkuserName = null;
+    private static Map<String, Map<String, String>> machines = XmlUtil.machines;
+    private static String sparkhost = machines.get("spark").get(Mod.HOST);
+    private static String sparkpwd = machines.get("spark").get(Mod.PWD);
+    private static String sparkuserName = machines.get("spark").get(Mod.USERNAME);
 
     // 初始化perl命令路径
-    private static Map<Long, App> appMap = null;
-    static {
-        SQLUtils sql = new SQLUtils();
-        appMap = sql.getAllSoftware();
-        XmlUtil.getMachines();
-        machines = XmlUtil.machines;
-        sparkhost = machines.get("spark").get(Mod.HOST);
-        sparkpwd = machines.get("spark").get(Mod.PWD);
-        sparkuserName = machines.get("spark").get(Mod.USERNAME);
-    }
+    private static Map<Long, App> appMap = SQLUtils.appMap;
 
     public String getAllData() {
         userId = (Integer) super.session.get("userId");
