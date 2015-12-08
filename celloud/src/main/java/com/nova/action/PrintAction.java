@@ -13,6 +13,7 @@ import org.apache.struts2.convention.annotation.Results;
 
 import com.google.inject.Inject;
 import com.nova.sdo.Company;
+import com.nova.sdo.Data;
 import com.nova.sdo.Dept;
 import com.nova.service.ICompanyService;
 import com.nova.service.IDataService;
@@ -67,6 +68,7 @@ public class PrintAction extends BaseAction {
     private String seq;
     private String result;
     private String table;
+    private Data data;
 
     public String printCMP() {
         String[] temp = StringUtils.splitByWholeSeparatorPreserveAllTokens(
@@ -122,6 +124,7 @@ public class PrintAction extends BaseAction {
         userId = Integer.parseInt(info[0]);
         appId = Integer.parseInt(info[1]);
         fileId = dataService.getDataByKey(info[2]).getFileId();
+        data = dataService.getDataById(String.valueOf(fileId));
         context = reportService.getPrintContext(userId, appId, fileId, 0);
         // 首先检索该报告是否保存过，若没有，则查询该用户所属的医院
         if (context == null || context.isEmpty()) {
@@ -338,6 +341,14 @@ public class PrintAction extends BaseAction {
 
     public void setSplitPng(String splitPng) {
         this.splitPng = splitPng;
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
     }
 
 }
