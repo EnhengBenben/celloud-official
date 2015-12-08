@@ -10,7 +10,7 @@
     <link href="plugins/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />    
     <link href="plugins/ionicons-master/css/ionicons.min.css" rel="stylesheet" type="text/css" />   
     <!-- Theme style -->
-    <link href="dist/css/skins/skin-green.min.css?v=1.0" rel="stylesheet" type="text/css" />
+    <link href="dist/css/skins/skin-green.css?v=1.0" rel="stylesheet" type="text/css" />
     <!-- Date Picker -->
     <link href="plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
     <!-- Daterange picker -->
@@ -23,8 +23,8 @@
     <div class="wrapper">
       <header class="main-header">
         <a href="javascript:void(0)" class="logo">
-          <span class="logo-mini"><b>C</b>el</span>
-          <span class="logo-lg"><b>Cel</b>Loud</span>
+          <span class="logo-mini"><img src="images/home/mini_logo.png"></span>
+          <span class="logo-lg"><img src="images/home/logo.png"></span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -60,7 +60,7 @@
         <section class="sidebar">
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
-            <li class="header">产品和服务</li>
+            <li class="header"><span>产品和服务</span></li>
             <li class="active treeview" data-step="1" data-intro="This is a tooltip!">
               <a href="javascript:void(0)" onclick="showUserCount();">
                 <i class="fa fa-dashboard"></i>
@@ -97,7 +97,7 @@
                 <span>统计</span>
               </a>
             </li>
-            <li class="header">用户中心</li>
+            <li class="header"><span>用户中心</span></li>
             <li class="treeview">
 	            <a href="javascript:void(0)" onclick="showUser()">
 	            	<i class="fa fa-user"></i>

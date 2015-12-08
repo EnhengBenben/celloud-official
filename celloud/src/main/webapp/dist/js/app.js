@@ -293,7 +293,15 @@ function _init() {
       }
     }
   };
-
+  
+  //控制左侧导航栏的缩进
+  $.AdminLTE.closeSidebar = function () {
+	var screenSizes = $.AdminLTE.options.screenSizes;
+    if ($(window).width() > (screenSizes.sm - 1)) {
+      $("body").addClass('sidebar-collapse');
+    }
+  }
+  
   /* PushMenu()
    * ==========
    * Adds the push menu functionality to the sidebar.

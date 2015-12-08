@@ -114,6 +114,7 @@ function showData(){
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
 	$("#mainDIV").load("pages/data/data.jsp");
+	$.AdminLTE.closeSidebar();
 }
 
 /**
@@ -123,6 +124,7 @@ function showReport(){
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
 	$("#mainDIV").load("pages/report/reportDetail.jsp");
+	$.AdminLTE.closeSidebar();
 }
 
 /**
@@ -132,6 +134,7 @@ function showAppStore(){
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
 	$("#mainDIV").load("pages/software/app.jsp");
+	$.AdminLTE.closeSidebar();
 }
 
 /**
@@ -141,6 +144,7 @@ function showCount(){
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
 	$("#mainDIV").load("pages/count/count.jsp");
+	$.AdminLTE.closeSidebar();
 }
 
 /**
