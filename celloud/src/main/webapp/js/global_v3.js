@@ -9,6 +9,8 @@ require.config({
 });
 
 function showUserCount(){
+	$("#uploadDIV").css("display","none");
+	$("#mainDIV").css("display","");
 	$.get("count3!loginCount",function(response){
 		$("#mainDIV").html(response);
 		fileMonthCount();
@@ -98,13 +100,19 @@ function lineModal(id,legend,xdata,ydata,yname){
  * 数据上传
  */
 function showUpload(){
-	$("#mainDIV").load("pages/data/fileUpload.jsp");
+	$("#uploadDIV").css("display","");
+	$("#mainDIV").css("display","none");
+	if($("#uploadDIV").html()==""){
+		$("#uploadDIV").load("pages/data/fileUpload.jsp");
+	}
 }
 
 /**
  * 数据管理
  */
 function showData(){
+	$("#uploadDIV").css("display","none");
+	$("#mainDIV").css("display","");
 	$("#mainDIV").load("pages/data/data.jsp");
 }
 
@@ -112,6 +120,8 @@ function showData(){
  * 报告
  */
 function showReport(){
+	$("#uploadDIV").css("display","none");
+	$("#mainDIV").css("display","");
 	$("#mainDIV").load("pages/report/reportDetail.jsp");
 }
 
@@ -119,6 +129,8 @@ function showReport(){
  * 应用市场
  */
 function showAppStore(){
+	$("#uploadDIV").css("display","none");
+	$("#mainDIV").css("display","");
 	$("#mainDIV").load("pages/software/app.jsp");
 }
 
@@ -126,6 +138,8 @@ function showAppStore(){
  * 统计页面
  */
 function showCount(){
+	$("#uploadDIV").css("display","none");
+	$("#mainDIV").css("display","");
 	$("#mainDIV").load("pages/count/count.jsp");
 }
 
@@ -133,5 +147,7 @@ function showCount(){
  * 帐号管理
  */
 function showUser(){
+	$("#uploadDIV").css("display","none");
+	$("#mainDIV").css("display","");
 	$("#mainDIV").load("pages/user/user.jsp");
 }

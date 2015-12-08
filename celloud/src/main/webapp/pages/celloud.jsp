@@ -110,6 +110,7 @@
       </aside>
 
       <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper" id="uploadDIV"></div>
       <div class="content-wrapper" id="mainDIV">
         
       </div>
@@ -133,7 +134,7 @@
     <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
     <script src="<%=request.getContextPath() %>/plugins/select/select2.min.js"></script>
 	<script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
-    <script src="js/global_v3.js?v=3.0" type="text/javascript"></script>
+    <script src="<%=request.getContextPath() %>/js/global_v3.js?v=3.2" type="text/javascript"></script>
     <script src="<%=request.getContextPath() %>/plugins/highcharts/highcharts.js"></script>
 	<script src="<%=request.getContextPath() %>/plugins/highcharts/exporting.js"></script>
 	<script src="<%=request.getContextPath() %>/plugins/highcharts/char.js?version=20150526"></script>
