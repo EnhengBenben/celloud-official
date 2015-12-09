@@ -906,36 +906,35 @@ public class RunAppServiceImpl {
 		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
-			String dataArray[] = dataKeyList.split(";");
-			// 创建项目结果文件
-			String projectFile = basePath + projectId + "/" + projectId
-					+ ".txt";
-			FileTools.createFile(projectFile);
-			// 追加表头
-			FileTools.appendWrite(projectFile,
-					"dataID\t文件名称\tKRAS exon number\tPosition\tamino acid\n");
-			for (int i = 0; i < dataArray.length; i++) {
-				String[] dataDetail = dataArray[i].split(",");
-				String finalPath = basePath + getArray(dataDetail, 0);
-				try {
-					AB1_PDF.createPDF(finalPath + "/", getArray(dataDetail, 2),
-							appName, 230, 800);
-				} catch (DocumentException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				String first = FileTools
-						.getFirstLine(finalPath + "/report.txt");
-				String result = first == null ? "no result" : first.replace(
-						"EGFR exon number is ", "");
-				FileTools.appendWrite(projectFile, getArray(dataDetail, 0)
-						+ "\t" + getArray(dataDetail, 2) + "\t" + result + "\t"
-						+ ScreeningUtil.screen(finalPath + "/report.txt")
-						+ "\n");
-				resultArray.append(getArray(dataDetail, 0) + ",");
-			}
-		}
+            String dataArray[] = dataKeyList.split(";");
+            // 创建项目结果文件
+            String projectFile = basePath + projectId + "/" + projectId
+                    + ".txt";
+            FileTools.createFile(projectFile);
+            // 追加表头
+            FileTools.appendWrite(projectFile,
+                    "dataID\t文件名称\tKRAS exon number\t结论\n");
+            for (int i = 0; i < dataArray.length; i++) {
+                String[] dataDetail = dataArray[i].split(",");
+                String finalPath = basePath + getArray(dataDetail, 0);
+                try {
+                    AB1_PDF.createPDF(finalPath + "/", getArray(dataDetail, 2),
+                            appName, 230, 800);
+                } catch (DocumentException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                String first = FileTools
+                        .getFirstLine(finalPath + "/report.txt");
+                String result = first == null ? "no result" : first;
+                FileTools.appendWrite(projectFile, getArray(dataDetail, 0)
+                        + "\t" + getArray(dataDetail, 2) + "\t" + result + "\t"
+                        + FileTools.readAppoint(finalPath + "/report.txt.Report")
+                        + "\n");
+                resultArray.append(getArray(dataDetail, 0) + ",");
+            }
+        }
 	}
 
 	/**
