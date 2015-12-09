@@ -212,14 +212,14 @@
 	</c:if>
 </div>
 
-<div class="modal fade" id="countModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal modal-green-header in" id="countModal">
   <div class="modal-dialog">
    <div class="modal-content">
-	<div class="modal-header well">
+	<div class="modal-header">
 		<a class="close" data-dismiss="modal">×</a>
 		<h4>数据统计说明</h4>
 	</div>
-	<div class="modal-body well">
+	<div class="modal-body">
 		<div class="lineheight">Total_Reads：样本测序序列总数据量，分析要求数据量大于15万。</div>
 		<div class="lineheight">Map_Reads：样本序列比对到人类基因组的数据量。</div>
 		<div class="lineheight">Map_Ratio：样本序列比对到人类基因组的数据量比例。</div>
@@ -234,25 +234,25 @@
 		</c:if>
 	</div>
 	<div class="modal-footer">
-		<a class="btn close" href="javascript:void(0)" data-dismiss="modal"><i class="icon-ban-circle"></i> 取消</a>
+		<a class="btn btn-celloud-success btn-flat" href="javascript:void(0)" data-dismiss="modal"><i class="icon-ban-circle"></i> 取消</a>
 	</div>
   </div>
  </div>
 </div>
-<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal modal-green-header in" id="reportModal">
   <div class="modal-dialog">
    <div class="modal-content">
-	<div class="modal-header well">
+	<div class="modal-header">
 		<a class="close" data-dismiss="modal">×</a>
 		<h4>报告说明</h4>
 	</div>
-	<div class="modal-body well">
+	<div class="modal-body">
 		<div class="lineheight">Aneuploidy：染色体异倍性及异常区域。</div>
 		<div class="lineheight">Position：染色体异常位置。</div>
 		<div class="lineheight">Average：染色体拷贝数分析中每个染色体的平均值。该值为染色体拷贝数据的参考值。数据统计表明大部分正常染色体平均值为15-23，染色体三体的平均值大于25，染色体单体的平均值小于13。</div>
 	</div>
 	<div class="modal-footer">
-		<a class="btn close" href="javascript:void(0)" data-dismiss="modal"><i class="icon-ban-circle"></i> 取消</a>
+		<a class="btn btn-celloud-success btn-flat" href="javascript:void(0)" data-dismiss="modal"><i class="icon-ban-circle"></i> 取消</a>
 	</div>
   </div>
  </div>
