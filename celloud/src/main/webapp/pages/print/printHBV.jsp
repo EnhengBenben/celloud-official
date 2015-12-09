@@ -72,24 +72,13 @@
 			    <hr class="hr-bold mt5" />
 			    <div class="wrapper" style="min-height:800px;" id="mainDIv">
 			    	<c:choose>
-			    	   <c:when test="${appId==89 }">
-				    	    <h2 class="mt20">报告：</h2>
-				    	    <p>${context }</p>
-				    	    <br>
-				    	    <h2 class="mt20">原始峰图：</h2>
-				    	    <p style="width:750px;">
-						       	<c:if test="${imgList.size()>0}">
-						   			<c:forEach items="${imgList}" var="imgHtml">
-						   				<img src="${imgHtml }" style="width:100%"/>
-						   				<br/><br/>
-						   			</c:forEach>
-					   			</c:if>
-				    	    </p>
-					   </c:when>
-					   <c:when test="${appId==84}">
+			    	   <c:when test="${appId==89 || appId==84 }">
+			    		<!-- KRAS || EGFR -->
 				    	    <h2 class="mt20">已知位点：</h2>
 				    	    <p>${table }</p>
-				    	    <p><img src="${allPic }" style="width: 100%;"></p>
+				    	    <c:if test="${allPic!=null }">
+					    	    <p><img src="${allPic }" style="width: 900px;height: 136px;"></p>
+				    	    </c:if>
 				    	    <h2 class="mt20">结论：</h2>
 				    	    <p>${result }</p>
 				    	    <h2 class="mt20">原始序列：</h2>
@@ -395,7 +384,7 @@ function savePage(){
 	});
 	inputVal = $("#des").children().val();
 	$("#des").children().html(inputVal);
-	var url = "http://www.celloud.org/";
+	var url = "http://121.201.7.200:8088/celloud/";
 	$.post(url+"updateContext",{"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":$("#printMain").html()},function(result){
 		if(result==1){
 			alert("信息保存成功！");
@@ -406,7 +395,7 @@ function savePage(){
 }
 function reset(){
 	if(confirm("确定要重置之前保存的报告吗？")){
-		var url = "http://www.celloud.org/";
+		var url = "http://121.201.7.200:8088/celloud/";
 		$.post(url+"updateContext",{"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":""},function(result){
 			if(result==1){
 				alert("请重新打开页面");
