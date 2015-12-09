@@ -54,7 +54,7 @@
     <jsp:useBean id="_now" class="java.util.Date" />
     <div class="footer">© <fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" /> CelLoud，Inc. All Rights reserved. <a  href="<%=request.getContextPath() %>/">生物信息云平台</a> · <a  href="javascript:void();">沪ICP备14035977号</a> · <a href="<%=request.getContextPath() %>/service.html" target="_blank">服务与支持</a> · <a href="<%=request.getContextPath() %>/feedBack.html" target="_blank">意见反馈</a></div>
 </div>
-<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/ueditor/ueditor.config.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/ueditor/ueditor.all.js"></script>
 <script type="text/javascript">

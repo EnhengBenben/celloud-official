@@ -300,7 +300,7 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
 </div>
 </section>
 </div>
-<script type="text/javascript" src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript" src="plugins/jQuery/jquery-1.11.3.min.js"></script>
 <script	src="<%=request.getContextPath() %>/plugins/jquery.smint.min.js" type="text/javascript" ></script>
 <script src="<%=request.getContextPath() %>/plugins/jquery.lazyload.min.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath() %>/plugins/jquery.easing.1.3.min.js"></script> 

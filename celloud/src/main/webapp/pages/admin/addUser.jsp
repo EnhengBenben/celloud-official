@@ -63,7 +63,7 @@
 </div>
 <!--#E bgContainer-->
 </body>
-<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/metro.js"></script>
 <script type="text/javascript">
 //判断浏览器是否支持 placeholder属性

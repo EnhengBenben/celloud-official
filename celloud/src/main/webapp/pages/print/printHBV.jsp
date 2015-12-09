@@ -258,7 +258,7 @@
 		</c:if>
 	</div>
 </body>
-<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="/celloud/js/browser.js"></script>
 <script type="text/javascript">
 function preview(obj){

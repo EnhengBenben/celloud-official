@@ -23,7 +23,7 @@
 		
 		</div>
 	  </div>
-	<script src="<%=request.getContextPath() %>/plugins/jQuery/jQuery-2.1.4.min.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath() %>/plugins/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 	<!-- ueditor -->
 	<script src="<%=request.getContextPath() %>/plugins/ueditor/ueditor.config.js"></script>

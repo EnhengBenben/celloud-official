@@ -117,10 +117,11 @@
     </div>
 <%-- 	<script src="<%=request.getContextPath() %>/plugins/intro/intro.js?version=1.0"></script> --%>
 	<script src="http://fgnass.github.io/spin.js/spin.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
     <script src="plugins/jQueryUI/jquery-ui.min.js" type="text/javascript"></script>
    
-    <script src="plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>    
+    <script src="plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="plugins/bootstrap/js/respond.js" type="text/javascript"></script>    
     <!-- Morris.js charts -->
     <script src="dist/js/raphael-min.js"></script>
     

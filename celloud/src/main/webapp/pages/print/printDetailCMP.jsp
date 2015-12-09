@@ -5604,7 +5604,7 @@
     </table>
 </section>
 <script language="javascript" src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/browser.js"></script>
 <script type="text/javascript">
 var num = 1;

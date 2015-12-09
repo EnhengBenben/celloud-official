@@ -244,6 +244,7 @@
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <script src="//cdn.bootcss.com/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="plugins/bootstrap/js/respond.js" type="text/javascript"></script>
     <!-- FastClick -->
     <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
     <!-- jquery_alert_dialogs begin -->
