@@ -146,6 +146,7 @@ hr {
 }
 .w3cbbs { page-break-after:always;}
 .miniTable_ tr td,.miniTable_ tr th{line-height:14px;}
+.noborder td,.noborder th{ border-top: 0px; }
 </style>
 <!--[if IE]>
 <style>
@@ -198,36 +199,36 @@ hr {
 				</s:if>
 				<div>
 				  <s:if test="%{company.companyId==14}">
-					<table class="table table-bordered table-condensed miniTable_" style="margin:0px">
+					<table class="table table-condensed miniTable_ noborder" style="margin:0px">
 						<tr>
-							<th>姓名</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
-							<th>门诊号</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
-							<th>检验编号</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
+							<th>姓名:</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th>门诊号:</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th>检验编号:</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 						</tr>
 						<tr>
-							<th>性别</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
-							<th>送检医师</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
-							<th>采样日期</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
+							<th>性别:</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th>送检医师:</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th>采样日期:</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 						</tr>
 						<tr>
-							<th>年龄</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
-							<th>送检材料</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
-							<th>接收日期</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
+							<th>年龄:</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th>送检材料:</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th>接收日期:</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 						</tr>
 						<tr>
-							<th>孕周</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
-							<th>临床诊断</th>
-							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;width:100%"/></span></td>
+							<th>孕周:</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+							<th>临床诊断:</th>
+							<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 							<th></th>
 							<td></td>
 						</tr>
@@ -496,6 +497,10 @@ hr {
 			inputVal = $(this).val();
 			$(this).parent().html("<span name='print'>"+inputVal+"</span>");
 		});
+		$(".miniTable_").find("input").each(function(){
+			inputVal = $(this).val();
+			$(this).parent().html("<span name='miniPrint'>"+inputVal+"</span>");
+		});
 		$(".opinion").find("input").each(function(){
 			inputVal = $(this).val();
 			$(this).parent().html("<span name='print'>"+inputVal+"</span>");
@@ -526,6 +531,10 @@ hr {
 			}else{
 				$(this).parent().html("<input type=\"text\" class=\"input-mini\" value=\""+inputVal+"\" />");
 			}
+		});
+		$("body").find("span[name='miniPrint']").each(function(){
+			inputVal = $(this).html();
+			$(this).parent().html("<input type=\"text\" class=\"input-mini onlybotton\" style=\"height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px\" value=\""+inputVal+"\"/>");
 		});
 		inputVal = $("#des").html().replace(/<br>/g,"\n");
 		$("#des").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
