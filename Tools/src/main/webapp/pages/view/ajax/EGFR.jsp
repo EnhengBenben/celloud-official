@@ -18,7 +18,12 @@
 		</h2>
 	    <div class="m-boxCon result">
 	    	<div id="knowResult">
-	    		<s:property value="resultMap.wz1" escape="false"/>
+		    	<s:if test="%{resultMap.wz1!=null && resultMap.wz1!=''}">
+		    		<s:property value="resultMap.wz1" escape="false"/>
+	    		</s:if>
+	    		<s:else>
+	    			未检测到突变
+	    		</s:else>
 	    	</div>
 	    	<s:if test="%{resultMap.know!=''}">
 	    		<br/>

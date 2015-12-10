@@ -91,56 +91,55 @@ used as it is.
 		});
 
 		target.prepend(
-			'<div class="plupload_wrapper plupload_scroll wholeheight">' +
+//			'<div class="plupload_wrapper plupload_scroll wholeheight">' +
 				'<div id="' + id + '_container" class="wholeheight">' +
-					'<div class="wholeheight">' +
-						'<div class="plupload_header_new">' +
+//					'<div class="wholeheight">' +
+						'<div class="box-header">' +
 							'<div class="plupload_header_content">' +
 								'<div class="plupload_file_name">' +
-									'<div class="plupload_buttons">' +
-										'<a href="javascript:void(0)" class="addfile btn btn-success" id="' + id + '_browse">添加文件</a>' +
-										'<a href="javascript:void(0)" class="_start_custom startfile btn btn-warning">开始上传</a>' +
+									'<div class="box-title plupload_buttons">' +
+										'<a href="javascript:void(0)" class="addfile btn btn-success btn-flat" id="' + id + '_browse"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;添加文件</a>' +
+										'<a href="javascript:void(0)" class="_start_custom startfile btn btn-warning btn-flat"><i class="fa fa-upload"></i>&nbsp;&nbsp;开始上传</a>' +
+										'<a href="download.html" class="btn btn-celloud-close btn-flat" target="_blank">下载客户端&nbsp;&nbsp;<i class="fa fa-external-link"></i></a>'+
 										'<span class="_uploadAlert"></span>'+
 									'</div>' +
 								'</div>' +
-//								'<div class="plupload_header_title">' + _('Select files') + '</div>' +
-//								'<div class="plupload_header_text">' + _('Add files to the upload queue and click the start button.') + '</div>' +
 							'</div>' +
 						'</div>' +
 
-						'<div class="plupload_content new_content">' +
+						'<div class="box-body plupload_content new_content">' +
 							'<div class="plupload_content_new_header">' +
 								'<div class="plupload_file_name">' + _('Filename') + '</div>' +
-								'<div class="plupload_file_action">&nbsp;</div>' +
-								'<div class="plupload_file_status" style="padding-right:25px;"><span>' + _('Status') + '</span></div>' +
+								'<div class="plupload_file_action"><a href="destroy()">清空</a></div>' +
+								'<div class="plupload_file_status"><span>' + _('Status') + '</span>&nbsp;<span class="plupload_total_status">0%</span></div>' +
 								'<div class="plupload_file_surplus"> 剩余时间 </div>' +
-								'<div class="plupload_file_speed"> 速度 </div>' +
+								'<div class="plupload_file_speed"> 速度</div>' +
 //								'<div class="plupload_file_start"> 开始时间 </div>' +
-								'<div class="plupload_file_size">' + _('Size') + '</div>' +
-								'<div class="plupload_clearer">&nbsp;</div>' +
+								'<div class="plupload_file_size">' + _('Size') + '&nbsp;<span class="plupload_total_file_size">0 b</span></div>' +
+								'<div class="plupload_clearer">操作</div>' +
 							'</div>' +
 
 							'<ul id="' + id + '_filelist" class="plupload_filelist plupload_filelist_new"></ul>' +
 						'</div>' +
-					'</div>' +
-				'</div>' +
-				'<div class="footer">' +
-					'<a href="download.html" class="download" target="_blank">下载客户端</a><a href="feedBack.html" class="download" target="_blank">投诉建议</a>'+
-					'<div class="plupload_file_action"></div>' +
-					'<div class="plupload_file_status" style="padding-right:40px;"><span class="plupload_total_status">0%</span></div>' +
-					'<div class="plupload_file_size" style="padding-right:10px;"><span class="plupload_total_file_size">0 b</span></div>' +
-					'<div class="plupload_file_name" style="position:relative;float:right;margin-right:100px">' +
-						'<span class="plupload_upload_status"></span>' +
-					'</div>' +
-//					'<div class="plupload_progress">' +
-//						'<div class="plupload_progress_container">' +
-//							'<div class="plupload_progress_bar"></div>' +
-//						'</div>' +
 //					'</div>' +
-					'<div class="plupload_clearer">&nbsp;</div>' +
 				'</div>' +
-				'<input type="hidden" id="' + id + '_count" name="' + id + '_count" value="0" />' +
-			'</div>'
+//				'<div class="footer">' +
+////					'<a href="download.html" class="download" target="_blank">下载客户端</a>'+
+//					'<div class="plupload_file_action"></div>' +
+//					'<div class="plupload_file_status" style="padding-right:40px;"><span class="plupload_total_status">0%</span></div>' +
+//					'<div class="plupload_file_size" style="padding-right:10px;"><span class="plupload_total_file_size">0 b</span></div>' +
+//					'<div class="plupload_file_name" style="position:relative;float:right;margin-right:100px">' +
+//						'<span class="plupload_upload_status"></span>' +
+//					'</div>' +
+////					'<div class="plupload_progress">' +
+////						'<div class="plupload_progress_container">' +
+////							'<div class="plupload_progress_bar"></div>' +
+////						'</div>' +
+////					'</div>' +
+//					'<div class="plupload_clearer">&nbsp;</div>' +
+//				'</div>' +
+				'<input type="hidden" id="' + id + '_count" name="' + id + '_count" value="0" />'
+//			'</div>'
 		);
 	}
 

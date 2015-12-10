@@ -12,9 +12,14 @@
     <li class="active">全部</li>
   </ol>
 </section>
-<div id="fileUploadDiv" class="wholeheight">
-    
-</div>
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box" id="fileUploadDiv">
+      </div><!-- /.box -->
+    </div>
+  </div><!--/.row-->
+</section><!-- /.content -->  
 <div style="display: none;" id="_sessionTimeOut">
 </div>
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/plupload.full.min.js"></script>

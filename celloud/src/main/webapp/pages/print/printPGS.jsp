@@ -279,7 +279,7 @@ input[type="text"], .onlybotton{
 				<br/>
 				<s:if test="%{company.companyId==42}">
 					<h4 class="smallh4">结果解释：</h4>
-					<div id="des1">
+					<div>
 						报告名称：<span><input type="text" value="${data.fileName }(${data.anotherName })" class="onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;width:400px"/></span><br>
 						样本报告：
 					    <div id="des" style="margin:0px">

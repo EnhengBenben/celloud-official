@@ -2164,7 +2164,8 @@ a:focus {
   background-color: #20a938;
 }
 .btn-celloud-close{
-  background-color: #fff;
+/*   background-color: #fff; */
+  background: transparent;
   border-color: #4cba42;
   color: #4cba42;
 }

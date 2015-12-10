@@ -1313,22 +1313,7 @@ function toPrintHBV(pagePath,flag){
 				"context":$("#report_tb").html(),
 				"imgHtml":imgHtml
 		};
-	}else if(appId == 89){
-		var imgHtml="";
-		$("img[name='imgSrc']").each(function(){ 
-			imgHtml+=$(this).attr("src")+",";
-		});
-		if(imgHtml!=""){
-			imgHtml = imgHtml.substring(0,imgHtml.length-1);
-		}
-		param = {
-				"userId":userId,
-		        "dataKey":dataKey,
-				"appId" : appId,
-				"context":$("#report_tb").html(),
-				"imgHtml":imgHtml
-		};
-	}else if(appId == 84){
+	}else if(appId == 89 || appId == 84){
 		var imgHtml="";
 		$("img[name='imgSrc']").each(function(){ 
 			imgHtml+=$(this).attr("src")+",";
