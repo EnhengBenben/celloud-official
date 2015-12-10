@@ -266,19 +266,19 @@ hr {
 					<h4 class="smallh4">检测方法:<span class="subtitle"> NGS </span></h4>
 					<h4 class="smallh4">检测项目:<span class="subtitle"> 23对染色体拷贝数变异 </span></h4>
 				</div>
-				<div>
-					<h4 class="smallh4">检测结果:</h4>
-					<s:if test="%{miniPng!='null'}">
-						<img src='<s:property value="outPath"/>/<s:property value="pagePath"/>/<s:property value="miniPng"/>' style="width:90%;max-height:245px;">
-					</s:if>
-					<s:if test="%{splitPng!='null'}">
-						<img src='<s:property value="outPath"/>/<s:property value="pagePath"/>/<s:property value="splitPng"/>' style="width:90%;max-height:245px;">
-					</s:if>
-				</div>
-				<br/>
 				<s:if test="%{company.companyId==42}">
+					<div>
+						<h4 class="smallh4">检测结果:</h4>
+						<s:if test="%{miniPng!='null'}">
+							<img src='<s:property value="outPath"/>/<s:property value="pagePath"/>/<s:property value="miniPng"/>' style="width:90%;max-height:245px;">
+						</s:if>
+						<s:if test="%{splitPng!='null'}">
+							<img src='<s:property value="outPath"/>/<s:property value="pagePath"/>/<s:property value="splitPng"/>' style="width:90%;max-height:245px;">
+						</s:if>
+					</div>
+					<br/>
 					<h4 class="smallh4">结果解释：</h4>
-					<div id="des1">
+					<div>
 						报告名称：<span><input type="text" value="${data.fileName }(${data.anotherName })" class="onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;width:400px"/></span><br>
 						样本报告：
 					    <div id="des" style="margin:0px">
@@ -287,6 +287,16 @@ hr {
 					</div>
 				</s:if>
 				<s:else>
+					<div>
+						<h4 class="smallh4">检测结果:</h4>
+						<s:if test="%{miniPng!='null'}">
+							<img src='<s:property value="outPath"/>/<s:property value="pagePath"/>/<s:property value="miniPng"/>' style="width:90%;max-height:245px;">
+						</s:if>
+					</div>
+					<br/>
+					<div id="des" style="margin:0px">
+						<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px"><s:property value="txt.replace('@','+')"/></textarea>
+					</div>
 				    <h4 class="smallh4">结果提示：</h4>
 					<div id="des1">
 						<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px"></textarea>
