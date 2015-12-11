@@ -176,7 +176,7 @@
             </div>
         </div>
 		<!--Celloud数据参数同比分析-->
-		<c:if test="${pgs.appId!=104}">
+		<c:if test="${pgs.appId!=104 && pgs.appId!=116}">
 			<div class="bg-analysis">
 			    <div class="m-box">
 			        <h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
