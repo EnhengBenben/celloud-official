@@ -110,7 +110,7 @@ used as it is.
 						'<div class="box-body plupload_content new_content">' +
 							'<div class="plupload_content_new_header">' +
 								'<div class="plupload_file_name">' + _('Filename') + '</div>' +
-								'<div class="plupload_file_action"><a href="destroy()">清空</a></div>' +
+								'<div class="plupload_file_action"><a href="javascript:void(0)" class="a-green-normal" id="cleanUploaded" title="清空数据"><i class="fa fa-university"></i></a></div>' +
 								'<div class="plupload_file_status"><span>' + _('Status') + '</span>&nbsp;<span class="plupload_total_status">0%</span></div>' +
 								'<div class="plupload_file_surplus"> 剩余时间 </div>' +
 								'<div class="plupload_file_speed"> 速度</div>' +
@@ -429,6 +429,14 @@ used as it is.
 				if (settings.setup) {
 					settings.setup(uploader);
 				}
+				uploader.bind("CancelUpload", function(){
+//					$("#cleanUploaded").removeClass("a-gray").addClass("a-green-normal");
+					$("#cleanUploaded").removeAttr("disabled");
+				});
+				
+				$("#cleanUploaded").click(function(){
+					uploader.splice();
+				})
 			});
 
 			return this;

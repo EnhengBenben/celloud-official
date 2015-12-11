@@ -127,13 +127,13 @@
 
 .plupload_file_action {
 	float: right;
-	width: 16px;
+	width: 26px;
 	height: 16px;
 	margin-left: 15px;
 }
 
 .plupload_file_action * {
-	display: none;
+/* 	display: none; */
 	width: 16px;
 	height: 16px;
 }
