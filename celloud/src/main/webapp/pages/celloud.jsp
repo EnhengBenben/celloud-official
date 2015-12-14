@@ -44,7 +44,7 @@
                     <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                     <p>
                       CelLoud
-                      <small>您身边的基因数据分析平台</small>
+                      <small>您身边的基因数据分析云平台</small>
                     </p>
                   </li>
                   <li class="user-footer">
