@@ -80,8 +80,7 @@ a:active .i-print{ background-position:-120px -40px;}
 .file-name{ color:#3D3F44; font-family: Arial;word-break:break-all}
 
 .table {border-collapse:collapse;border-spacing:0;width:100%;border:1px solid #d8e2f0;}
-.table_{width:100%;border:1px solid #d8e2f0; border-collapse: separate; border-spacing: 0px 10px; }
-.table_ thead{ height:53px; line-height:38px; background:url(../images/report/bg_mboxh2.png) 0 0 repeat-x; color:#009BCA; padding-left:19px; position:relative;border-collapse:collapse;}
+.table_{width:100%;border:1px solid #d8e2f0; border-collapse: separate; border-spacing: 0px 10px;font-family:微软雅黑;font-size:12px; }
 .table th, .table td{border:1px solid #d8e2f0; height:30px; line-height:30px; text-align:center}
 .table_ th, .table_ td{border:1px solid #d8e2f0;border-left:none; height:30px; line-height:25px; max-width:230px; word-break:break-all;word-wrap:break-word;}
 .table_ th, .table th{ color:#333; text-align:center}
@@ -146,7 +145,7 @@ only screen and (min-device-pixel-ratio: 2) {
 .clearfix:before,.clearfix:after { display: table;line-height: 0;content: "";}
 .clearfix:after {clear: both;}
 .tablebox{margin:10px;}
-._firstTd{min-width: 165px;padding:5px;min-height: 177px;padding-bottom:30px}
+._firstTd{width: 215px;padding:5px;min-height: 177px;padding-bottom:30px}
 .moreApp{line-height: 25px;}
 .capp{margin-right:15px;}
 ._datered,._appred{	color: #CC0000;}
