@@ -114,6 +114,21 @@
 		<from>^/sendEmail/([\w\W]+)/([\w\W]+)/([\w\W]+)$</from>
 		<to>/python!sendEmail?id=$1&amp;fileName=$2&amp;dataKey=$3</to>
 	</rule>
+	<rule>
+		<note>python</note>
+		<from>^/threadSave/([\w\W]+)/([\w\W]+)/([\w\W]+)/([\w\W]+)$</from>
+		<to>/python!threadSave?id=$1&amp;dataKey=$2&amp;num=$3&amp;position=$4</to>
+	</rule>
+	<rule>
+		<note>python</note>
+		<from>^/threadUpdate/([\w\W]+)/([\w\W]+)/([\w\W]+)/([\w\W]+)$</from>
+		<to>/python!threadUpdate?id=$1&amp;dataKey=$2&amp;num=$3&amp;position=$4</to>
+	</rule>
+	<rule>
+		<note>python</note>
+		<from>^/threadRead/([\w\W]+)/([\w\W]+)$</from>
+		<to>/python!threadRead?id=$1&amp;dataKey=$2&amp;</to>
+	</rule>
 
 	<rule>
 		<note>

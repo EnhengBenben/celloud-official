@@ -12,103 +12,104 @@ import com.nova.service.IPythonService;
 @ParentPackage("json-default")
 @Action("python")
 @Results({
-		@Result(name = "success", type = "json", params = { "root", "flag" }),
-		@Result(name = "num", type = "json", params = { "root", "num" }) })
+        @Result(name = "success", type = "json", params = { "root", "flag" }),
+        @Result(name = "num", type = "json", params = { "root", "num" }) })
 public class PythonAction extends BaseAction {
-	Logger log = Logger.getLogger(PythonAction.class);
-	private static final long serialVersionUID = 1L;
+    Logger log = Logger.getLogger(PythonAction.class);
+    private static final long serialVersionUID = 1L;
 
-	@Inject
-	private IPythonService pythonService;
-	private String username;
-	private String pwd;
-	private int id;
-	private String fileName;
-	private String dataKey;
-	private String flag;
-	private String md5;
-	private long num;
+    @Inject
+    private IPythonService pythonService;
+    private String username;
+    private String pwd;
+    private int id;
+    private String fileName;
+    private String dataKey;
+    private String flag;
+    private String md5;
+    private long num;
+    private long position;
 
-	/**
-	 * python 客户端登录
-	 * 
-	 * @return
-	 */
-	public String login() {
-		flag = pythonService.login(username, pwd);
-		return SUCCESS;
-	}
+    /**
+     * python 客户端登录
+     * 
+     * @return
+     */
+    public String login() {
+        flag = pythonService.login(username, pwd);
+        return SUCCESS;
+    }
 
-	/**
-	 * 获取用户上传文件的总大小
-	 * 
-	 * @return
-	 */
-	public String getSize() {
-		num = pythonService.getSize(id);
-		return "num";
-	}
+    /**
+     * 获取用户上传文件的总大小
+     * 
+     * @return
+     */
+    public String getSize() {
+        num = pythonService.getSize(id);
+        return "num";
+    }
 
-	/**
-	 * 获取用户上传文件的总个数
-	 * 
-	 * @return
-	 */
-	public String getNumber() {
-		num = pythonService.getNumber(id);
-		return "num";
-	}
+    /**
+     * 获取用户上传文件的总个数
+     * 
+     * @return
+     */
+    public String getNumber() {
+        num = pythonService.getNumber(id);
+        return "num";
+    }
 
-	/**
-	 * 文件上传前获取 DataKey
-	 * 
-	 * @return
-	 */
-	public String initDataKey() {
-		flag = pythonService.getDataKey(id, fileName, md5);
-		return SUCCESS;
-	}
+    /**
+     * 文件上传前获取 DataKey
+     * 
+     * @return
+     */
+    public String initDataKey() {
+        flag = pythonService.getDataKey(id, fileName, md5);
+        return SUCCESS;
+    }
 
-	/**
-	 * 文件上传结束后保存进数据库
-	 * 
-	 * @return
-	 */
-	public String uploaded() {
-		flag = pythonService.uploaded(dataKey);
-		return SUCCESS;
-	}
+    /**
+     * 文件上传结束后保存进数据库
+     * 
+     * @return
+     */
+    public String uploaded() {
+        flag = pythonService.uploaded(dataKey);
+        return SUCCESS;
+    }
 
-	/**
-	 * 获取客户端版本
-	 * 
-	 * @return
-	 */
-	public String getClientVersion() {
-		flag = pythonService.getClientVersion();
-		return SUCCESS;
-	}
+    /**
+     * 获取客户端版本
+     * 
+     * @return
+     */
+    public String getClientVersion() {
+        flag = pythonService.getClientVersion();
+        return SUCCESS;
+    }
 
-	/**
-	 * 断点续传时获取文件大小
-	 * 
-	 * @return
-	 */
-	public String getDataSize() {
-		num = pythonService.getDataSize(id, dataKey.split("\\.")[0]);
-		return "num";
-	}
+    /**
+     * 断点续传时获取文件大小
+     * 
+     * @return
+     */
+    public String getDataSize() {
+        num = pythonService.getDataSize(id, dataKey.split("\\.")[0]);
+        return "num";
+    }
 
-	/**
-	 * 保存已上传的文件大小
-	 * 
-	 * @return
-	 */
-	public String saveDataSize() {
-		num = pythonService.saveDataSize(dataKey.split("\\.")[0], num);
-		return "num";
-	}
-	
+    /**
+     * 保存已上传的文件大小
+     * 
+     * @return
+     */
+    public String saveDataSize() {
+        num = pythonService.saveDataSize(dataKey.split("\\.")[0], num);
+        return "num";
+    }
+
     /**
      * 文件上传完成发送邮件
      */
@@ -118,68 +119,91 @@ public class PythonAction extends BaseAction {
         return "num";
     }
 
-	public long getNum() {
-		return num;
-	}
+    public String threadSave() {
+        num = pythonService.threadSave(id, dataKey, num, position);
+        return "num";
+    }
 
-	public void setNum(long num) {
-		this.num = num;
-	}
+    public String threadUpdate() {
+        num = pythonService.threadUpdate(id, dataKey, num, position);
+        return "num";
+    }
 
-	public String getFlag() {
-		return flag;
-	}
+    public String threadRead() {
+        flag = pythonService.threadRead(id, dataKey);
+        return SUCCESS;
+    }
 
-	public void setFlag(String flag) {
-		this.flag = flag;
-	}
+    public long getNum() {
+        return num;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public void setNum(long num) {
+        this.num = num;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public String getFlag() {
+        return flag;
+    }
 
-	public String getPwd() {
-		return pwd;
-	}
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
 
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public String getPwd() {
+        return pwd;
+    }
 
-	public String getFileName() {
-		return fileName;
-	}
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getDataKey() {
-		return dataKey;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setDataKey(String dataKey) {
-		this.dataKey = dataKey;
-	}
+    public String getFileName() {
+        return fileName;
+    }
 
-	public String getMd5() {
-		return md5;
-	}
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
-	public void setMd5(String md5) {
-		this.md5 = md5;
-	}
+    public String getDataKey() {
+        return dataKey;
+    }
+
+    public void setDataKey(String dataKey) {
+        this.dataKey = dataKey;
+    }
+
+    public String getMd5() {
+        return md5;
+    }
+
+    public void setMd5(String md5) {
+        this.md5 = md5;
+    }
+
+    public long getPosition() {
+        return position;
+    }
+
+    public void setPosition(long position) {
+        this.position = position;
+    }
 
 }
