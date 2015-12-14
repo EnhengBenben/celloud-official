@@ -304,6 +304,7 @@ public class DataAction extends BaseAction {
             String dataKeyList = dataResult.toString();
             // TODO
             String appPath = basePath + userId + "/" + appId + "/";
+            FileTools.createFile(appPath);
             if (SparkPro.apps.contains(appId)) {// 判断是否需要进队列
                 String select = SparkPro.apps.toString().substring(1,
                         SparkPro.apps.toString().length() - 1);
