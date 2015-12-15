@@ -25,7 +25,7 @@
               <div class="box">
                 <div class="box-header">
                   <h3 class="box-title">
-                  	<a onclick="showRunApp()" class="btn btn-success btn-flat" style="margin-right:15px;width:100px" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-play"></i>Run</a>
+                    <a onclick="showRunApp()" class="btn btn-success btn-flat" style="margin-right:15px;width:100px" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-play"></i>运行</a>
                     <a onclick="deleteData()" id="delDataBtn" class="btn btn-warning btn-flat disabled" disabled="disabled">删除</a>
 				  	<a onclick="toManageDatasModel()" id="batchManage" class="btn btn-info btn-flat disabled" disabled="disabled">批量管理</a>
                   </h3>

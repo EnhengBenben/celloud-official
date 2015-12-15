@@ -17,14 +17,17 @@
     <link href="plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
     <link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
     <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.4" rel="stylesheet" type="text/css" />
-<!--     <link href="plugins/intro/introjs.css" rel="stylesheet" type="text/css" /> -->
+    <link href="plugins/intro/introjs.css" rel="stylesheet" type="text/css" />
+    <link href="<%=request.getContextPath() %>/dist/css/productDetail.css" rel="stylesheet" type="text/css" />
+  	<link href="<%=request.getContextPath() %>/dist/css/productList.css" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath() %>/dist/css/getNoResult.css" rel="stylesheet" type="text/css" />
   </head>
   <body class="skin-green sidebar-mini">
     <div class="wrapper">
       <header class="main-header">
         <a href="javascript:void(0)" class="logo">
           <span class="logo-mini"><img src="images/home/mini_logo.png"></span>
-          <span class="logo-lg"><img src="images/home/logo.png"></span>
+          <span class="logo-lg"><img src="dist/img/logo.png"></span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -61,25 +64,25 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header"><span>产品和服务</span></li>
-            <li class="active treeview" data-step="1" data-intro="This is a tooltip!">
+            <li class="active treeview" data-step="1" data-intro="总览页面!">
               <a href="javascript:void(0)" onclick="showUserCount();">
                 <i class="fa fa-dashboard"></i>
                 <span>总览</span>
               </a>
             </li>
-            <li class="treeview" data-step="2" data-position="left">
+            <li class="treeview" data-step="2" data-intro="数据上传">
               <a href="javascript:void(0)" onclick="showUpload();">
                 <i class="fa fa-sellsy"></i>
                 <span>数据上传</span>
               </a>
             </li>
-            <li class="treeview" data-step="3" data-position="right">
+            <li class="treeview" data-step="3" data-position="right" data-intro="数据管理">
               <a href="javascript:void(0)" onclick="showData()">
                 <i class="fa fa-tasks"></i>
                 <span>数据管理</span>
               </a>
             </li>
-            <li class="treeview" data-step="4" data-position="bottom">
+            <li class="treeview" data-step="4" data-position="bottom" data-intro="报告">
               <a href="javascript:void(0)" onclick="showReport()">
                 <i class="fa fa-files-o"></i>
                 <span>报告</span>
@@ -115,7 +118,7 @@
         
       </div>
     </div>
-<%-- 	<script src="<%=request.getContextPath() %>/plugins/intro/intro.js?version=1.0"></script> --%>
+	<script src="<%=request.getContextPath() %>/plugins/intro/intro.js?version=1.0"></script>
 	<script src="http://fgnass.github.io/spin.js/spin.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
     <script src="plugins/jQueryUI/jquery-ui.min.js" type="text/javascript"></script>
