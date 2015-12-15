@@ -48,7 +48,7 @@
 							<th>Total_Reads</th>
 						</c:if>
 						<c:if test="${pgs.mapReads!=null}">
-							<td>Map_Reads</td>
+							<th>Map_Reads</th>
 						</c:if>
 						<c:if test="${pgs.mtRatio!=null}">
 							<th>MT_ratio(%)</th>
@@ -66,7 +66,7 @@
 							<th>*SD</th>
 						</c:if>
 						<c:if test="${pgs.winSize!=null}">
-							<td>Win_size(kb)</td>
+							<th>Win_size(kb)</th>
 						</c:if>
 					</tr>
 				  </thead>
@@ -260,6 +260,10 @@
 <style>
 .lineheight{
 	line-height: 30px;
+}
+.table > tbody > tr > td,.table>thead:first-child>tr:first-child>th{
+	border:1px solid #d8e2f0;
+	border-top:1px solid #d8e2f0;
 }
 </style>
 <script>
