@@ -3,7 +3,7 @@
 <div>
 	<div class="m-file">
 		<div class="row">
-			<div class="col-lg-9">
+			<div class="col-lg-9 force-break">
 				文件名称：
 				<span class="file-name"><s:property value="resultMap.datakey"/>（<s:property value="resultMap.fileName"/>）</span>
 			</div>

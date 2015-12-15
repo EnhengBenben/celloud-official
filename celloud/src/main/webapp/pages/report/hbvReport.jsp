@@ -5,7 +5,7 @@
 	<!--文件名称-->
 	<div class="m-file">
 		<div class="row">
-			<div class="col-lg-7">
+			<div class="col-lg-7 force-break">
 				文件名称：
 				<span class="file-name">
 					${hbv.dataKey }(${hbv.fileName })

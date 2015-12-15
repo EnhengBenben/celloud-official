@@ -3,33 +3,37 @@
 <div>
 	<c:if test="${pgs.noEnoughReads.equals('false') }">
 		<div class="m-file">
-			<div style="max-width: 500px">
-				文件名称：
-				<span class="file-name">
-					${pgs.dataKey }(<c:if test="${!empty pgs.anotherName }">${pgs.anotherName }</c:if><c:if test="${empty pgs.anotherName }">${pgs.fileName }</c:if> )
-				</span>
-			</div>
-			<div class="toolbar">
-				<c:if test="${pgs.finalPng!=null && pgs.finalPng!='' }">
-					<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" class="btn btn-default"><i class="i-download"></i>报告下载</a>
-				</c:if>
-				<c:if test="${pgs.pdf!=null }">
-					<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.pdf }" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
-				</c:if>
-				<c:if test="${pgs.pdf ==null }">
-					<c:if test="${pgs.createDate.time>1440432000000  }">
-						<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.dataKey }.pdf" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
-					</c:if>
-				</c:if>
-				<c:choose>
-					<c:when test="${pgs.splitPng!=null }">
-						<a target="_blank" href="printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }/${pgs.splitPng }" class="btn btn-default"><i class="i-print"></i>打印报告</a>
-						<a target="_blank" href="printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.splitPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }/null" class="btn btn-default"><i class="i-print"></i>点图报告</a>					
-					</c:when>
-					<c:otherwise>
-						<a target="_blank" href="printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }/null" class="btn btn-default"><i class="i-print"></i>打印报告</a>
-					</c:otherwise>
-				</c:choose>
+			<div class="row">
+				<div class="col-lg-7 force-break">
+					文件名称：
+					<span class="file-name">
+						${pgs.dataKey }(<c:if test="${!empty pgs.anotherName }">${pgs.anotherName }</c:if><c:if test="${empty pgs.anotherName }">${pgs.fileName }</c:if> )
+					</span>
+				</div>
+				<div class="col-lg-5">
+					<div class="toolbar" style="position: inherit;right: auto;">
+						<c:if test="${pgs.finalPng!=null && pgs.finalPng!='' }">
+							<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" class="btn btn-default"><i class="i-download"></i>报告下载</a>
+						</c:if>
+						<c:if test="${pgs.pdf!=null }">
+							<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.pdf }" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
+						</c:if>
+						<c:if test="${pgs.pdf ==null }">
+							<c:if test="${pgs.createDate.time>1440432000000  }">
+								<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.dataKey }.pdf" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
+							</c:if>
+						</c:if>
+						<c:choose>
+							<c:when test="${pgs.splitPng!=null }">
+								<a target="_blank" href="printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }/${pgs.splitPng }" class="btn btn-default"><i class="i-print"></i>打印报告</a>
+								<a target="_blank" href="printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.splitPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }/null" class="btn btn-default"><i class="i-print"></i>点图报告</a>					
+							</c:when>
+							<c:otherwise>
+								<a target="_blank" href="printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }/null" class="btn btn-default"><i class="i-print"></i>打印报告</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
 			</div>
 		</div>
 		<!--报告图示一-->

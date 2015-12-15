@@ -6,7 +6,7 @@
 	<!--文件名称-->
 	<div class="m-file">
 		<div class="row">
-			<div class="col-lg-9">
+			<div class="col-lg-9 force-break">
 				文件名称：
 				<span class="file-name"><s:property value="%{resultMap.pagePath.replace('/SVG','').substring(resultMap.pagePath.replace('/SVG','').lastIndexOf('/')+1,resultMap.pagePath.replace('/SVG','').length())}"/>(<s:property value="resultMap.fileName"/>)</span>
 			</div>
