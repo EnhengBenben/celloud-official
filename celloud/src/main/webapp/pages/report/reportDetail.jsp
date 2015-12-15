@@ -34,9 +34,10 @@ a:hover, a:active, a:focus{
           <div class="form-inline">
               <label class="form-inline" style="font-family:黑体;font-size:14px;font-weight: lighter;">时间：</label>
               <a href="javascript:void(0)" onclick="changeDate('allTime',this)" class="cdate _datered">全部</a>&nbsp;&nbsp;&nbsp;&nbsp;
-      		  <a href="javascript:void(0)" onclick="changeDate(-1,this)" class="cdate">一天以内</a>&nbsp;&nbsp;&nbsp;&nbsp;
-      		  <a href="javascript:void(0)" onclick="changeDate(-7,this)" class="cdate">七天以内</a>&nbsp;&nbsp;&nbsp;&nbsp;
-      		  <a href="javascript:void(0)" onclick="changeDate(-30,this)" class="cdate">三十天以内</a>&nbsp;&nbsp;&nbsp;&nbsp;
+      		  <a href="javascript:void(0)" onclick="changeDate(-1,this)" class="cdate">24小时</a>&nbsp;&nbsp;&nbsp;&nbsp;
+      		  <a href="javascript:void(0)" onclick="changeDate(-3,this)" class="cdate">3天</a>&nbsp;&nbsp;&nbsp;&nbsp;
+      		  <a href="javascript:void(0)" onclick="changeDate(-7,this)" class="cdate">7天</a>&nbsp;&nbsp;&nbsp;&nbsp;
+      		  <a href="javascript:void(0)" onclick="changeDate(-30,this)" class="cdate">30天</a>&nbsp;&nbsp;&nbsp;&nbsp;
        		  <label>From：</label><input type="text" onchange="changeDate(0,obj)" id="_searchDate" class="Wdate input" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;width: 90px;"/>
        		  <label>To：</label><input type="text" onchange="changeDate(0,obj)" id="_endDate" class="input Wdate" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;width: 90px;"/>
        		  <span id="_alertSpan" style="color:red;display:none;"></span>

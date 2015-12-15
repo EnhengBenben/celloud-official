@@ -20,9 +20,9 @@ select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 
         	<th style="min-width: 418px;">文件名称  <a href="javascript:sortByFileName();" id="sortNameA" class="a-gray"><i class="fa fa-sort-amount-asc" id="sortFileName"></i></a></th>
         	<th class="center" style="min-width:115px;">数据编号</th>
         	<th class="center" style="min-width:70px;">文件别名</th>
-        	<th align="center" style="min-width:100px;">样本类型/物种</th>
-        	<th align="center" style="min-width:70px;">数据标签</th>
-        	<th align="center" style="min-width:50px;">样本</th>
+        	<th class="center" style="min-width:100px;">样本类型/物种</th>
+        	<th class="center" style="min-width:70px;">数据标签</th>
+        	<th class="center" style="min-width:50px;">样本</th>
         	<th class="center" style="min-width:80px">数据大小</th>
         	<th class="center" style="min-width:80px">上传时间  <a href="javascript:sortByCreateDate();" id="sortDateA" class="a-green-normal"><i class="fa fa-sort-amount-desc" id="sortCreateDate"></i></th>
         	<th class="center">运行状态</th>
