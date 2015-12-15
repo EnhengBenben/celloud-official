@@ -133,7 +133,9 @@ function showReport(){
 function showAppStore(){
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
-	$("#mainDIV").load("pages/software/app.jsp");
+	$.get("app3!toAppStore",{},function(responseText){
+		$("#mainDIV").html(responseText);
+	});
 	$.AdminLTE.closeSidebar();
 }
 

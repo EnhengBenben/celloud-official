@@ -105,81 +105,6 @@ public class SoftwareDaoImpl extends BaseDao implements ISoftwareDao {
 	}
 
 	/**
-	 * @Title: getAll
-	 * @Description: (根据用户id获取该用户已经添加的软件和未添加的软件)
-	 * @param userId
-	 * @return
-	 * @throws
-	 */
-	@Override
-	public List<Software> getAll(int userId) {
-		log.info("获取软件列表中的软件并标明添加状态");
-		List<Software> list = new ArrayList<Software>();
-        String sql = "select * from tb_software as a where off_line=0 and a.software_id in(select b.software_id from tb_user_software as b where b.user_id=?)";
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		try {
-			conn = ConnectManager.getConnection();
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1, userId);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				Software sf = new Software();
-				sf.setSoftwareId(rs.getInt("software_id"));
-				sf.setSoftwareName(rs.getString("software_name"));
-				sf.setSoftwareEntry(rs.getString("software_entry"));
-				sf.setHost(rs.getString("host"));
-				sf.setPictureName(rs.getString("picture_name"));
-				sf.setBhri(rs.getInt("bhri"));
-				sf.setClassify(rs.getString("classify"));
-				sf.setClassifyId(rs.getInt("classify_id"));
-				sf.setCreateDate(rs.getDate("create_date"));
-				sf.setDescription(rs.getString("description"));
-				sf.setType(rs.getInt("type"));
-				sf.setProcessName(rs.getString("process_name"));
-                sf.setCompanyId(rs.getInt("company_id"));
-                sf.setAttribute(rs.getInt("attribute"));
-
-				sf.setIsAdd("yes");
-				list.add(sf);
-			}
-            sql = "select * from tb_software as a where off_line=0 and a.software_id not in(select b.software_id from tb_user_software as b where b.user_id=?)";
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1, userId);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				Software sf = new Software();
-
-				sf.setSoftwareId(rs.getInt("software_id"));
-				sf.setSoftwareName(rs.getString("software_name"));
-				sf.setSoftwareEntry(rs.getString("software_entry"));
-				sf.setHost(rs.getString("host"));
-				sf.setPictureName(rs.getString("picture_name"));
-				sf.setBhri(rs.getInt("bhri"));
-				sf.setClassify(rs.getString("classify"));
-				sf.setClassifyId(rs.getInt("classify_id"));
-				sf.setCreateDate(new java.util.Date(rs.getDate("create_date")
-						.getTime()));
-				sf.setDescription(rs.getString("description"));
-				sf.setType(rs.getInt("type"));
-				sf.setProcessName(rs.getString("process_name"));
-                sf.setCompanyId(rs.getInt("company_id"));
-                sf.setAttribute(rs.getInt("attribute"));
-
-				sf.setIsAdd("no");
-				list.add(sf);
-			}
-		} catch (SQLException e) {
-			log.error("获取软件列表中的软件并标明添加状态" + e);
-			e.printStackTrace();
-		} finally {
-			ConnectManager.free(conn, ps, rs);
-		}
-		return list;
-	}
-
-	/**
 	 * @Title: updateBhri
 	 * @Description: (更新人气指数)
 	 * @param softwareId
@@ -1189,34 +1114,6 @@ public class SoftwareDaoImpl extends BaseDao implements ISoftwareDao {
 	/*************
 	 * 软件
 	 */
-	/**
-	 * 获取所有的应用数量
-	 */
-	@Override
-	public int getAllSoftwareNum(Integer userId) {
-		int softNum = 0;
-		String sql = "select count(software_id) as num from tb_software s,tb_user u where s.off_line=? and (attribute=? or (attribute=? and s.company_id = u.company_id)) and u.user_id = ?;";
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		try {
-			conn = ConnectManager.getConnection();
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1, SoftWareOffLineState.ON);
-			ps.setInt(2, Attribute.PUBLIC);
-			ps.setInt(3, Attribute.PRIVATE);
-			ps.setInt(4, userId);
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				softNum = rs.getInt("num");
-			}
-		} catch (SQLException e) {
-			log.error("获取所有的应用数量出错" + e);
-		} finally {
-			ConnectManager.free(conn, ps, rs);
-		}
-		return softNum;
-	}
 
 	@Override
 	public List<Software> getAll(int userId, String softName) {

@@ -1,13 +1,14 @@
 package com.celloud.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.celloud.sdo.App;
 import com.celloud.sdo.Classify;
 import com.celloud.sdo.Screen;
 import com.celloud.service.impl.AppServiceImpl;
 import com.google.inject.ImplementedBy;
+import com.nova.pager.Page;
+import com.nova.pager.PageList;
 
 /**
  * 
@@ -35,32 +36,30 @@ public interface AppService {
     public String getAppNameById(Long softwareId);
 
     /**
-     * 查询所有的APP信息
+     * 获取分类信息
      * 
+     * @param id
      * @return
      */
-    public List<App> getAllSoftware();
+    public Classify getClassifyById(Integer id);
 
     /**
-     * 获取APP所有分类分类
+     * 查询分类列表
      * 
-     * @param classifyId
-     *            分类
+     * @param pid
+     *            父级分类id,0-查询父分类列表
      * @return
      */
-    public Map<String, List<Classify>> getDoubleClassify(Integer classifyId);
+    public List<Classify> getClassify(Integer pid);
 
     /**
-     * 大分类查询APP
+     * 根据app分类查询app列表
      * 
      * @param classifyId
-     *            分类
      * @param companyId
-     *            软件提供方
      * @return
      */
-    public List<App> getAppByClassify(Integer classifyId, Integer pid,
-            Integer companyId);
+    public List<App> getAppByClassify(Integer classifyId, Integer companyId);
 
     /**
      * 根据id查询APP
@@ -69,6 +68,21 @@ public interface AppService {
      * @return
      */
     public App getAppById(Integer id, Integer userId);
+
+    /**
+     * 获取APP分页列表
+     * 
+     * @param classifyId
+     * @param isPid
+     * @param companyId
+     * @param sortField
+     * @param sortType
+     * @param page
+     * @return
+     */
+    public PageList<App> getAppPageListByClassify(Integer classifyId,
+            Integer classifyPId, Integer companyId, String sortField,
+            String sortType, Page page);
 
     /**
      * 获取已添加的APP
@@ -104,4 +118,5 @@ public interface AppService {
      * @return
      */
     public Integer userRemoveApp(Integer userId, Integer appId);
+
 }

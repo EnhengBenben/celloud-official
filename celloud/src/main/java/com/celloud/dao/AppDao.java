@@ -1,13 +1,14 @@
 package com.celloud.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import com.celloud.dao.impl.AppDaoImpl;
 import com.celloud.sdo.App;
 import com.celloud.sdo.Classify;
 import com.celloud.sdo.Screen;
 import com.google.inject.ImplementedBy;
+import com.nova.pager.Page;
+import com.nova.pager.PageList;
 
 /**
  * 
@@ -17,59 +18,70 @@ import com.google.inject.ImplementedBy;
  */
 @ImplementedBy(AppDaoImpl.class)
 public interface AppDao {
-	/**
-	 * 根据数据类型查询APP列表
-	 * 
-	 * @param formatId
-	 * @return
-	 */
+    /**
+     * 根据数据类型查询APP列表
+     * 
+     * @param formatId
+     * @return
+     */
     public List<App> getAppsByFormat(Integer formatId, Integer userId);
 
-	/**
-	 * 根据编号获取软件信息
-	 * 
-	 * @param softwareId
-	 * @return
-	 */
-	public String getAppNameById(Long softwareId);
-
-	/**
-	 * 查询所有的APP信息
-	 * 
-	 * @return
-	 */
-	public List<App> getAllSoftware();
-
     /**
-     * 获取APP所有父分类及某父分类下的子分类
+     * 根据编号获取软件信息
      * 
-     * @param classifyId
-     *            父分类
+     * @param softwareId
      * @return
      */
-    public Map<String, List<Classify>> getDoubleClassify(Integer classifyId);
+    public String getAppNameById(Long softwareId);
 
     /**
-     * 分类查询APP
+     * 获取分类信息
      * 
-     * @param classifyId
-     *            分类
+     * @param id
+     * @return
+     */
+    public Classify getClassifyById(Integer id);
+
+    /**
+     * 查询分类列表
+     * 
      * @param pid
-     *            0:-父分类 1：子分类
-     * @param companyId
-     *            软件提供方
+     *            父级分类id,0-查询父分类列表
      * @return
      */
-    public List<App> getAppByClassify(Integer classifyId, Integer pid,
-            Integer companyId);
+    public List<Classify> getClassify(Integer pid);
 
     /**
-     * 根据id查询APP
+     * 根据app分类查询app列表
+     * 
+     * @param classifyId
+     * @param companyId
+     * @return
+     */
+    public List<App> getAppByClassify(Integer classifyId, Integer companyId);
+
+    /**
+     * 根据APPid查询APP
      * 
      * @param id
      * @return
      */
     public App getAppById(Integer id, Integer userId);
+
+    /**
+     * 获取APP分页列表
+     * 
+     * @param classifyId
+     * @param isPid
+     * @param companyId
+     * @param sortField
+     * @param sortType
+     * @param page
+     * @return
+     */
+    public PageList<App> getAppPageListByClassify(Integer classifyId,
+            Integer classifyPId, Integer companyId, String sortField,
+            String sortType, Page page);
 
     /**
      * 获取已添加的APP

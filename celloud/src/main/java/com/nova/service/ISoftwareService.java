@@ -36,18 +36,6 @@ public interface ISoftwareService {
     List<Software> getAllDb(int classifyId, int userId, int type);
 
     /**
-     * @Title: getAll
-     * @Description: (获取某个用户下面的未添加和已添加的软件)
-     * @param @param userId
-     * @param @return
-     * @return String
-     * @throws
-     */
-    String getAll(int userId);
-
-    List<Software> getAllSoft(int userId);
-
-    /**
      * @Title: saveSoftwareOnDesk
      * @Description: (添加软件)
      * @param @param userId
@@ -251,38 +239,6 @@ public interface ISoftwareService {
     /**********************************************************************************************
      * 以下为software最新方法列表
      */
-    /**
-     * 根据用户id统计软件数量
-     * 
-     * @param userId
-     * @return
-     */
-    int getAllSoftwareNum(Integer userId);
-
-    /**
-     * 根据软件类型分页查询软件
-     * 
-     * @param userId
-     *            ：当前登录用户编号
-     * @param softName
-     *            ：根据软件名模糊查询
-     * @param page
-     *            ：分页类
-     * @return
-     */
-    PageList<Software> getAll(int userId, String softName, Page page);
-
-    /**
-     * 根据软件类型分页查询软件
-     * 
-     * @param userId
-     *            ：当前登录用户编号
-     * @param softName
-     *            ：根据软件名模糊查询
-     * @return
-     */
-    List<Software> getAll(int userId, String softName);
-
     /**
      * @Title: updateBhri
      * @Description: (更新人气指数,同时保存app到用户桌面)

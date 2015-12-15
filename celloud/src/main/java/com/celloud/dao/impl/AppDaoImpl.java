@@ -5,9 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -17,6 +15,8 @@ import com.celloud.dao.AppDao;
 import com.celloud.sdo.App;
 import com.celloud.sdo.Classify;
 import com.celloud.sdo.Screen;
+import com.nova.pager.Page;
+import com.nova.pager.PageList;
 import com.nova.utils.ConnectManager;
 
 /**
@@ -35,7 +35,7 @@ public class AppDaoImpl extends BaseDao implements AppDao {
     @Override
     public List<App> getAppsByFormat(Integer formatId, Integer userId) {
         List<App> list = new ArrayList<>();
-        String sql = "select s.software_id,s.software_name,s.data_num from tb_software s left join tb_software_format_relat sf on s.software_id = sf.software_id left join tb_user_software us on s.software_id=us.software_id where sf.format_id = ? and s.off_line = ? and us.user_id=? and us.desk_no=0 order by s.create_date;";
+        String sql = "select s.software_id,s.software_name,s.data_num from tb_software s left join tb_software_format_relat sf on s.software_id = sf.software_id left join tb_user_software us on s.software_id=us.software_id where sf.format_id = ? and s.off_line = ? and us.user_id=? order by s.create_date;";
         try {
             conn = ConnectManager.getConnection();
             ps = conn.prepareStatement(sql);
@@ -69,7 +69,7 @@ public class AppDaoImpl extends BaseDao implements AppDao {
             ps = conn.prepareStatement(sql);
             ps.setLong(1, softwareId);
             rs = ps.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 appName = rs.getString("software_name");
             }
         } catch (SQLException e) {
@@ -82,24 +82,48 @@ public class AppDaoImpl extends BaseDao implements AppDao {
     }
 
     @Override
-    public List<App> getAllSoftware() {
-        List<App> list = new ArrayList<>();
-        String sql = "select * from tb_software where off_line = ?;";
+    public Classify getClassifyById(Integer id) {
+        Classify c = null;
+        String sql = "select classify_id,classify_pid,classify_name from tb_classify where classify_id=?;";
         try {
             conn = ConnectManager.getConnection();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, AppOffline.ON);
+            ps.setLong(1, id);
             rs = ps.executeQuery();
-            App app = null;
-            while (rs.next()) {
-                app = new App();
-                app.setSoftwareId(rs.getLong("software_id"));
-                app.setSoftwareName(rs.getString("software_name"));
-                app.setCommand(rs.getString("command"));
-                list.add(app);
+            if (rs.next()) {
+                c = new Classify();
+                c.setClassifyId(rs.getInt("classify_id"));
+                c.setClassifyName(rs.getString("classify_name"));
+                c.setClassifyPid(rs.getInt("classify_pid"));
             }
         } catch (SQLException e) {
-            log.error("用户" + super.userName + "全查APP列表失败");
+            log.error("用户" + super.userName + "APP分类" + id + "失败");
+            e.printStackTrace();
+        } finally {
+            ConnectManager.free(conn, ps, rs);
+        }
+        return c;
+    }
+
+    @Override
+    public List<Classify> getClassify(Integer pid) {
+        List<Classify> list = new ArrayList<>();
+        String sql = "select classify_id,classify_pid,classify_name from tb_classify where classify_pid=?;";
+        try {
+            conn = ConnectManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, pid);
+            rs = ps.executeQuery();
+            Classify c = null;
+            while (rs.next()) {
+                c = new Classify();
+                c.setClassifyId(rs.getInt("classify_id"));
+                c.setClassifyName(rs.getString("classify_name"));
+                c.setClassifyPid(pid);
+                list.add(c);
+            }
+        } catch (SQLException e) {
+            log.error("用户" + super.userName + "app分类列表失败");
             e.printStackTrace();
         } finally {
             ConnectManager.free(conn, ps, rs);
@@ -108,65 +132,17 @@ public class AppDaoImpl extends BaseDao implements AppDao {
     }
 
     @Override
-    public Map<String, List<Classify>> getDoubleClassify(Integer classifyId) {
-        Map<String, List<Classify>> map = new HashMap<>();
-        List<Classify> plist = new ArrayList<>();
-        List<Classify> slist = new ArrayList<>();
-        String sql = "select classify_id,classify_pid,classify_name from tb_classify where classify_pid=0 or classify_pid=?;";
+    public List<App> getAppByClassify(Integer classifyId, Integer companyId) {
+        List<App> list = new ArrayList<>();
+        String sql = "select s.software_id,s.software_name,s.picture_name,s.intro,s.description,s.create_date,c.company_name from tb_software s left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_company c on s.company_id = c.company_id where sc.classify_id=? and s.off_line=? and ((s.company_id=? and s.attribute=?) or s.attribute=?);";
         try {
             conn = ConnectManager.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, classifyId);
-            rs = ps.executeQuery();
-            Classify clas = null;
-            while (rs.next()) {
-                clas= new Classify();
-                clas.setClassifyId(rs.getInt("classify_id"));
-                clas.setClassifyName(rs.getString("classify_name"));
-                int pid = rs.getInt("classify_pid");
-                clas.setClassifyPid(pid);
-                if (pid == 0) {
-                    plist.add(clas);
-                } else {
-                    slist.add(clas);
-                }
-            }
-            map.put("pclassify", plist);
-            map.put("sclassify", slist);
-        } catch (SQLException e) {
-            log.error("用户" + super.userName + "全查APP列表失败");
-            e.printStackTrace();
-        } finally {
-            ConnectManager.free(conn, ps, rs);
-        }
-        return map;
-    }
-
-    @Override
-    public List<App> getAppByClassify(Integer classifyId, Integer pid,
-            Integer companyId) {
-        List<App> list = new ArrayList<>();
-        String sql = null;
-        try {
-            conn = ConnectManager.getConnection();
-            if (pid == 0) {
-                sql = "select s.software_id,s.software_name,s.picture_name,s.intro,s.description,s.create_date from tb_software s left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_classify c on c.classify_id=sc.classify_id where (c.classify_pid=? or c.classify_id=?) and s.off_line=? and ((s.company_id=? and s.attribute=?) or s.attribute=?) group by s.software_id order by sc.classify_id;";
-                ps = conn.prepareStatement(sql);
-                ps.setInt(1, classifyId);
-                ps.setInt(2, classifyId);
-                ps.setInt(3, AppOffline.ON);
-                ps.setInt(4, companyId);
-                ps.setInt(5, AppPermission.PRIVATE);
-                ps.setInt(6, AppPermission.PUBLIC);
-            } else {
-                sql = "select s.software_id,s.software_name,s.picture_name,s.intro,s.description,s.create_date from tb_software s left join tb_software_classify_relat sc on s.software_id=sc.software_id where sc.classify_id=? and s.off_line=? and ((s.company_id=? and s.attribute=?) or s.attribute=?) order by sc.classify_id;";
-                ps = conn.prepareStatement(sql);
-                ps.setInt(1, classifyId);
-                ps.setInt(2, AppOffline.ON);
-                ps.setInt(3, companyId);
-                ps.setInt(4, AppPermission.PRIVATE);
-                ps.setInt(5, AppPermission.PUBLIC);
-            }
+            ps.setInt(2, AppOffline.ON);
+            ps.setInt(3, companyId);
+            ps.setInt(4, AppPermission.PRIVATE);
+            ps.setInt(5, AppPermission.PUBLIC);
             rs = ps.executeQuery();
             App app = null;
             while (rs.next()) {
@@ -177,6 +153,7 @@ public class AppDaoImpl extends BaseDao implements AppDao {
                 app.setIntro(rs.getString("intro"));
                 app.setDescription(rs.getString("description"));
                 app.setCreateDate(rs.getDate("create_date"));
+                app.setCompanyName(rs.getString("company_name"));
                 list.add(app);
             }
         } catch (SQLException e) {
@@ -191,8 +168,7 @@ public class AppDaoImpl extends BaseDao implements AppDao {
     @Override
     public App getAppById(Integer id, Integer userId) {
         App app = new App();
-        // TODO 去掉桌面之后可去掉条件“ and us.desk_no=0”
-        String sql = "select s.software_id,s.software_name,s.english_name,s.host,s.picture_name,s.create_date,s.intro,s.description,s.app_doc,s.data_num,c.company_name,GROUP_CONCAT(cls.classify_name) classify,(select count(us.id) from tb_user_software us where us.software_id=s.software_id and us.user_id=? and us.desk_no=0) isAdded from tb_software s left join tb_company c on s.company_id=c.company_id left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_classify cls on sc.classify_id=cls.classify_id where s.software_id=?;";
+        String sql = "select s.software_id,s.software_name,s.english_name,s.host,s.picture_name,s.create_date,s.intro,s.description,s.app_doc,s.data_num,c.company_name,GROUP_CONCAT(cls.classify_name) classify,(select count(us.id) from tb_user_software us where us.software_id=s.software_id and us.user_id=?) isAdded from tb_software s left join tb_company c on s.company_id=c.company_id left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_classify cls on sc.classify_id=cls.classify_id where s.software_id=?;";
         try {
             conn = ConnectManager.getConnection();
             ps = conn.prepareStatement(sql);
@@ -225,10 +201,81 @@ public class AppDaoImpl extends BaseDao implements AppDao {
     }
 
     @Override
+    public PageList<App> getAppPageListByClassify(Integer classifyId,
+            Integer classifyPId, Integer companyId, String sortField,
+            String sortType, Page page) {
+        PageList<App> pageList = new PageList<>();
+        StringBuffer queryBuff = new StringBuffer();
+        StringBuffer countBuff = new StringBuffer();
+        queryBuff
+                .append("select s.software_id,s.software_name,s.picture_name,s.intro,s.description,s.create_date,c.company_name from tb_software s left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_company c on s.company_id = c.company_id where s.off_line=? and ((s.company_id=? and s.attribute=?) or s.attribute=?)");
+        countBuff
+                .append("select count(s.software_name) scount from tb_software s left join tb_software_classify_relat sc on s.software_id=sc.software_id where s.off_line=? and ((s.company_id=? and s.attribute=?) or s.attribute=?)");
+        String classyCondition = "";
+        if (classifyPId == 0) {
+            classyCondition = " and sc.classify_id in (select classify_id from tb_classify c where classify_pid = ?)";
+        } else {
+            classyCondition = " and sc.classify_id=?";
+        }
+        queryBuff.append(classyCondition);
+        countBuff.append(classyCondition);
+        if (!sortField.equals("")) {
+            queryBuff.append(" order by ").append(sortField).append(" ")
+                    .append(sortType);
+        }
+        int start = (page.getCurrentPage() - 1) * page.getPageSize();
+        queryBuff.append(" limit ").append(start).append(",")
+                .append(page.getPageSize());
+        List<App> list = new ArrayList<>();
+        System.out.println(queryBuff.toString());
+        try {
+            conn = ConnectManager.getConnection();
+            ps = conn.prepareStatement(queryBuff.toString());
+            ps.setInt(1, AppOffline.ON);
+            ps.setInt(2, companyId);
+            ps.setInt(3, AppPermission.PRIVATE);
+            ps.setInt(4, AppPermission.PUBLIC);
+            ps.setInt(5, classifyId);
+            rs = ps.executeQuery();
+            App app = null;
+            while (rs.next()) {
+                app = new App();
+                app.setSoftwareId(rs.getLong("software_id"));
+                app.setSoftwareName(rs.getString("software_name"));
+                app.setPictureName(rs.getString("picture_name"));
+                app.setIntro(rs.getString("intro"));
+                app.setDescription(rs.getString("description"));
+                app.setCreateDate(rs.getDate("create_date"));
+                app.setCompanyName(rs.getString("company_name"));
+                list.add(app);
+            }
+            ps = conn.prepareStatement(countBuff.toString());
+            ps.setInt(1, AppOffline.ON);
+            ps.setInt(2, companyId);
+            ps.setInt(3, AppPermission.PRIVATE);
+            ps.setInt(4, AppPermission.PUBLIC);
+            ps.setInt(5, classifyId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                page.make(rs.getInt("scount"));
+            } else {
+                page.make(0);
+            }
+        } catch (SQLException e) {
+            log.error("用户" + super.userName + "的APP分类列表失败");
+            e.printStackTrace();
+        } finally {
+            ConnectManager.free(conn, ps, rs);
+        }
+        pageList.setDatas(list);
+        pageList.setPage(page);
+        return pageList;
+    }
+
+    @Override
     public List<App> getMyAppList(Integer userId) {
         List<App> list = new ArrayList<>();
-        // TODO 去掉桌面之后可去掉条件“ and us.desk_no=0”
-        String sql = "select us.user_id,s.software_id,s.software_name,s.picture_name,s.intro,s.description,s.create_date,GROUP_CONCAT(c.classify_name) classify,com.company_name from tb_user_software us left join tb_software s on us.software_id=s.software_id left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_classify c on c.classify_id=sc.classify_id left join tb_company com on s.company_id=com.company_id where us.user_id=? and s.off_line=? and us.desk_no=0 group by s.software_id order by create_date desc;";
+        String sql = "select us.user_id,s.software_id,s.software_name,s.picture_name,s.intro,s.description,s.create_date,GROUP_CONCAT(c.classify_name) classify,com.company_name from tb_user_software us left join tb_software s on us.software_id=s.software_id left join tb_software_classify_relat sc on s.software_id=sc.software_id left join tb_classify c on c.classify_id=sc.classify_id left join tb_company com on s.company_id=com.company_id where us.user_id=? and s.off_line=? group by s.software_id order by create_date desc;";
         try {
             conn = ConnectManager.getConnection();
             ps = conn.prepareStatement(sql);

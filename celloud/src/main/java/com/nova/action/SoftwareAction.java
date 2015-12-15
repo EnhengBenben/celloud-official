@@ -175,17 +175,6 @@ public class SoftwareAction extends BaseAction {
     }
 
     /**
-     * 获取所有software数目
-     * 
-     * @return
-     */
-    public String getAllSoftwareNum() {
-	userId = (Integer) super.session.get("userId");
-	softNum = softwareService.getAllSoftwareNum(userId);
-	return SUCCESS;
-    }
-
-    /**
      * @Title: getSoftwareList
      * @Description: (根据软件类型和用户获取用户添加列表)
      * @return
