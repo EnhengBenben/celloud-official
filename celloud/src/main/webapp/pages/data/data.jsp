@@ -25,9 +25,9 @@
               <div class="box">
                 <div class="box-header">
                   <h3 class="box-title">
-                    <a onclick="showRunApp()" class="btn btn-success btn-flat" style="margin-right:15px;width:100px" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-play"></i>运行</a>
-                    <a onclick="deleteData()" id="delDataBtn" class="btn btn-warning btn-flat disabled" disabled="disabled">删除</a>
-				  	<a onclick="toManageDatasModel()" id="batchManage" class="btn btn-info btn-flat disabled" disabled="disabled">批量管理</a>
+                  	<a onclick="showRunApp()" class="btn btn-success btn-flat" style="margin-right:15px;width:100px" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-play"></i> 运行</a>
+                    <a onclick="deleteData()" id="delDataBtn" class="btn btn-warning btn-flat disabled" style="margin-right:15px;width:100px" disabled="disabled"><i class="fa fa-university"></i> 删除</a>
+				  	<a onclick="toManageDatasModel()" id="batchManage" class="btn btn-info btn-flat disabled" style="margin-right:15px;width:100px" disabled="disabled"><i class="fa fa-pencil-square-o"></i> 编辑</a>
                   </h3>
                   <div class="box-tools col-xs-7" id="dataSpinDiv"></div>
                   <div class="box-tools col-xs-4">
@@ -53,7 +53,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">运行APP</h4>
+            <h4 class="modal-title">运行</h4>
           </div>
           <div class="modal-body row">
             <div class="col-xs-12">
@@ -143,7 +143,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">统一编辑数据 <a href="javascript:toManageEachDataModel();" class="a-white" style="margin-left:30px">编辑单个数据</a></h4>
+            <h4 class="modal-title">批量编辑 <a href="javascript:toManageEachDataModel();" class="a-white" style="margin-left:30px">单独编辑</a></h4>
           	<input type="hidden" id="strainDataHide">
           </div>
           <div class="modal-body row">
@@ -193,7 +193,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	   	  	<h4 class="modal-title">编辑单个数据<a href="javascript:toManageDatasModel();" class="a-white" style="margin-left:30px">统一编辑数据</a></h4>
+	   	  	<h4 class="modal-title">单独编辑<a href="javascript:toManageDatasModel();" class="a-white" style="margin-left:30px">批量编辑</a></h4>
           </div>
           <div class="modal-body" id="eachDatasDiv">
           </div>

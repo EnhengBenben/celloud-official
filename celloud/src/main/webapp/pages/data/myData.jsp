@@ -18,12 +18,15 @@ select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 
         		<input type="checkbox" id="selAll" class="selAll" style="border:none;"/>
         	</th>
         	<th style="min-width: 418px;">文件名称  <a href="javascript:sortByFileName();" id="sortNameA" class="a-gray"><i class="fa fa-sort-amount-asc" id="sortFileName"></i></a></th>
-        	<th class="center" style="min-width: 115px;">数据编号</th>
-        	<th class="center" style="min-width: 139px;">文件别名</th>
+        	<th class="center" style="min-width:115px;">数据编号</th>
+        	<th class="center" style="min-width:70px;">文件别名</th>
+        	<th class="center" style="min-width:100px;">样本类型/物种</th>
+        	<th class="center" style="min-width:70px;">数据标签</th>
+        	<th class="center" style="min-width:50px;">样本</th>
         	<th class="center" style="min-width:80px">数据大小</th>
         	<th class="center" style="min-width:80px">上传时间  <a href="javascript:sortByCreateDate();" id="sortDateA" class="a-green-normal"><i class="fa fa-sort-amount-desc" id="sortCreateDate"></i></th>
         	<th class="center">运行状态</th>
-			<th class="center" style="min-width:40px">操作</th>
+<!-- 			<th class="center" style="min-width:40px">操作</th> -->
         </tr>
     </thead>
 	<tbody>
@@ -41,32 +44,11 @@ select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 
 								<img src="<%=request.getContextPath()%>/images/publicIcon/icon-running.png" title="running" style="position: absolute;margin-top: 1px;"/>
 							</c:if>
 						</td>
-						<td class="center">
-							<div id="popover">
-					            <a href="javascript:void(0);">
-					            	${data.dataKey }
-									<div>
-										<div>
-										  <table>
-											<tr>
-												<td align="right" width="100px;">样本类型/物种：</td>
-												<td align="left">${data.strain }<s:property value="#data.strain"/></td>
-											</tr>
-											<tr>
-												<td align="right">数据标签：</td>
-												<td align="left">${data.dataTags }</td>
-											</tr>
-											<tr>
-												<td align="right">样本：</td>
-												<td align="left">${data.sample }</td>
-											</tr>
-										  </table>
-										</div>
-									</div>
-								</a>
-							</div>
-						</td>
+						<td class="center">${data.dataKey }</td>
 						<td class="center">${data.anotherName }</td>
+						<td align="center">${data.strain }<s:property value="#data.strain"/></td>
+						<td align="center">${data.dataTags }</td>
+						<td align="center">${data.sample }</td>
 						<td class="center">
 							<c:choose><c:when test="${data.size>1048576 }"><fmt:formatNumber pattern="0.00" value="${data.size/1048576 }"/>MB</c:when><c:otherwise><fmt:formatNumber pattern="0.00" value="${data.size/1024 }"/>KB</c:otherwise></c:choose>
 						</td>
@@ -77,9 +59,9 @@ select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 
 								<c:otherwise><span class="label label-warning">未运行</span></c:otherwise>
 							</c:choose>
 						</td>
-						<td class="center">
-	        				<a href="javascript:toMoreDataInfoModel(${data.fileId },'${data.fileName }');"><img  title="更多" alt="更多" class="more" src="<%=request.getContextPath()%>/images/publicIcon/more.png"/></a>
-	        			</td>
+<!-- 						<td class="center"> -->
+<%-- 	        				<a href="javascript:toMoreDataInfoModel(${data.fileId },'${data.fileName }');"><img  title="更多" alt="更多" class="more" src="<%=request.getContextPath()%>/images/publicIcon/more.png"/></a> --%>
+<!-- 	        			</td> -->
 					</tr>
 				</c:forEach>
 			</c:when>

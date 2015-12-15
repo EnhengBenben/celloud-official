@@ -1,12 +1,18 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div>
-	<!--文件名称-->
-	<div class="box-header with-border">文件名称：
-		<span class="file-name"><s:property value="resultMap.datakey"/>（<s:property value="resultMap.fileName"/>）</span>
-		<div class="toolbar">
-			<a href='javascript:toPrintHBV("<s:property value="resultMap.pagePath"/>")' class="btn btn-default"><i class="i-print"></i>打印报告</a>
-			<a href="javascript:void(0)" class="btn btn-default" onclick="change()" id="change" style="display: none;">显示更多</a>
+	<div class="m-file">
+		<div class="row">
+			<div class="col-lg-9 force-break">
+				文件名称：
+				<span class="file-name"><s:property value="resultMap.datakey"/>（<s:property value="resultMap.fileName"/>）</span>
+			</div>
+			<div class="col-lg-3">
+				<div class="toolbar" style="position: inherit;right: auto;">
+					<a href='javascript:toPrintHBV("<s:property value="resultMap.pagePath"/>")' class="btn btn-default"><i class="i-print"></i>打印报告</a>
+					<a href="javascript:void(0)" class="btn btn-default" onclick="change()" id="change" style="display: none;">显示更多</a>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div id="cfda">

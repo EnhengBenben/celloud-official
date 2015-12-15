@@ -21,7 +21,7 @@
           <p>数据总量</p>
         </div>
         <div class="icon">
-          <i class="ion ion-stats-bars"></i>
+          <i class="fa fa-list"></i>
         </div>
 <!--         <a href="javascript:void(0)" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
       </div>
@@ -30,11 +30,11 @@
       <!-- small box -->
       <div class="small-box bg-aqua">
         <div class="inner">
-          <h3>${countReport }</h3>
-          <p>报告总量</p>
+          <h3><c:choose><c:when test="${sumData>1073741824 }"><fmt:formatNumber pattern="0.00" value="${sumData/1073741824 }"/><sup style="font-size: 16px">GB</sup></c:when><c:when test="${sumData>1048576 }"><fmt:formatNumber pattern="0.00" value="${sumData/1048576 }"/><sup style="font-size: 16px">MB</sup></c:when><c:otherwise><fmt:formatNumber pattern="0.00" value="${sumData/1024 }"/><sup style="font-size: 16px">KB</sup></c:otherwise></c:choose></h3>
+          <p>总资源占用</p>
         </div>
         <div class="icon">
-          <i class="ion ion-bag"></i>
+          <i class="fa fa-pie-chart"></i>
         </div>
         <!-- <a href="javascript:void(0)" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
       </div>
@@ -43,11 +43,11 @@
       <!-- small box -->
       <div class="small-box bg-yellow">
         <div class="inner">
-          <h3>${countApp }</h3>
-          <p>已添加APP</p>
+          <h3>${countReport }<sup style="font-size: 16px">个</sup></h3>
+          <p>报告总量</p>
         </div>
         <div class="icon">
-          <i class="ion ion-person-add"></i>
+          <i class="fa fa-file-text-o"></i>
         </div>
         <!-- <a href="javascript:void(0)" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
       </div>
@@ -56,11 +56,11 @@
       <!-- small box -->
       <div class="small-box bg-red">
         <div class="inner">
-          <h3><c:choose><c:when test="${sumData>1073741824 }"><fmt:formatNumber pattern="0.00" value="${sumData/1073741824 }"/>GB</c:when><c:when test="${sumData>1048576 }"><fmt:formatNumber pattern="0.00" value="${sumData/1048576 }"/>MB</c:when><c:otherwise><fmt:formatNumber pattern="0.00" value="${sumData/1024 }"/>KB</c:otherwise></c:choose></h3>
-          <p>总资源占用</p>
+          <h3>${countApp }<sup style="font-size: 16px">个</sup></h3>
+          <p>已添加APP</p>
         </div>
         <div class="icon">
-          <i class="ion ion-pie-graph"></i>
+          <i class="fa fa-cube"></i>
         </div>
         <!-- <a href="javascript:void(0)" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
       </div>

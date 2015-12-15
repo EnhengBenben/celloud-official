@@ -42,7 +42,14 @@
                   <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
                   <span class="hidden-xs">${sessionScope.userName }</span>
                 </a>
-                <ul class="dropdown-menu" style="width:180px;">
+                <ul class="dropdown-menu">
+                  <li class="user-header">
+                    <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    <p>
+                      CelLoud
+                      <small>您身边的基因数据分析云平台</small>
+                    </p>
+                  </li>
                   <li class="user-footer">
                     <div class="pull-left">
                       <a href="javascript:void(0)" onclick="showUser()" class="btn btn-default btn-flat">个人信息</a>

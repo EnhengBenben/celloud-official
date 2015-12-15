@@ -366,7 +366,7 @@ public class UserAction extends BaseAction {
 		result = 2;// 邮箱验证没通过
 	    }
 	}
-	return SUCCESS;
+	return "validateUserEmail";
     }
 
     /**

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<link href="<%=request.getContextPath() %>/css/report.css?version=3.1" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/css/report.css?version=3.6" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/css/buttons.css?version=20150730" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/plugins/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
 <link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
@@ -34,9 +34,10 @@ a:hover, a:active, a:focus{
           <div class="form-inline">
               <label class="form-inline" style="font-family:黑体;font-size:14px;font-weight: lighter;">时间：</label>
               <a href="javascript:void(0)" onclick="changeDate('allTime',this)" class="cdate _datered">全部</a>&nbsp;&nbsp;&nbsp;&nbsp;
-      		  <a href="javascript:void(0)" onclick="changeDate(-1,this)" class="cdate">一天以内</a>&nbsp;&nbsp;&nbsp;&nbsp;
-      		  <a href="javascript:void(0)" onclick="changeDate(-7,this)" class="cdate">七天以内</a>&nbsp;&nbsp;&nbsp;&nbsp;
-      		  <a href="javascript:void(0)" onclick="changeDate(-30,this)" class="cdate">三十天以内</a>&nbsp;&nbsp;&nbsp;&nbsp;
+      		  <a href="javascript:void(0)" onclick="changeDate(-1,this)" class="cdate">24小时</a>&nbsp;&nbsp;&nbsp;&nbsp;
+      		  <a href="javascript:void(0)" onclick="changeDate(-3,this)" class="cdate">3天</a>&nbsp;&nbsp;&nbsp;&nbsp;
+      		  <a href="javascript:void(0)" onclick="changeDate(-7,this)" class="cdate">7天</a>&nbsp;&nbsp;&nbsp;&nbsp;
+      		  <a href="javascript:void(0)" onclick="changeDate(-30,this)" class="cdate">30天</a>&nbsp;&nbsp;&nbsp;&nbsp;
        		  <label>From：</label><input type="text" onchange="changeDate(0,obj)" id="_searchDate" class="Wdate input" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;width: 90px;"/>
        		  <label>To：</label><input type="text" onchange="changeDate(0,obj)" id="_endDate" class="input Wdate" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;width: 90px;"/>
        		  <span id="_alertSpan" style="color:red;display:none;"></span>
@@ -56,7 +57,7 @@ a:hover, a:active, a:focus{
 			<div class="form-inline" style="margin-bottom:10px">
 				<label class="form-inline" style="font-family:黑体;font-size:14px;font-weight: lighter;">数据：</label>
 				<div class="input-group" style="margin-left:10px;width:330px;height:20px;">
-					<input type="text" class="form-control" style="height:20px;" id="_fileName" onchange="changeFileName()">
+					<input type="text" class="form-control" style="height:20px;" id="_fileName" onchange="changeFileName()" placeholder="检索文件名/别名/数据编号">
 					<span class="input-group-btn">
 						<button class="btn btn-info btn-flat" type="button" onclick="submitSearch()" style="height:20px;font-size:14px;padding-top:0px">Go!</button>
 					</span>
