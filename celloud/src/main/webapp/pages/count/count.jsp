@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<link href="<%=request.getContextPath() %>/dist/css/productDetail.css" rel="stylesheet" type="text/css" />
 <section class="content-header">
   <h1>
     <small>&nbsp;</small>
@@ -9,54 +10,44 @@
     <li class="active">全部</li>
   </ol>
 </section>
-	  <input type="hidden" id="sessionUserId" value="${session.userId }">
-	  <input type="hidden" id="sessionUserName" value="${session.userName }">
-	  <input type="hidden" id="sessionCompanyId" value="${session.companyId }">
-	  <section class="content">
-	    <div class="row">
-	      <div class="col-xs-12">
-		      <c:if test="${session.companyId==6 }">
-		        <div class="box box-success color-palette-bo">
-		          <div class="box-body bg-green" style="padding-left:30px;padding-bottom: 0px;">
-		            <h3 style="font-family:黑体;color:#FFFFFF">
-		            	资源监控
-		<!--             	<a type="submit" class="text-yellow" style="font-size:12px;margin-left:10px">信息导出</a> -->
-		            </h3>
-		            <p style="font-family:黑体;color:#FFFFFF">本页提供所有数据报告总览。</p>
-<!-- 		            <button class="btn btn-success btn-flat" style="width:150px;height:70px;margin-right:0px" id="toDataCount">数据</button> -->
-<!-- 		            <button class="btn btn-success bg-green-active btn-flat" style="width:150px;height:70px;margin-right:0px">报告</button> -->
-		          </div>
-		        </div>
-		      </c:if>
-		      <c:if test="${session.companyId==3 }">
-		        <div class="box box-success color-palette-bo">
-		          <div class="box-body bg-green" style="padding-left:30px;padding-bottom: 0px;">
-		            <h3 style="font-family:黑体;color:#FFFFFF">
-		            	运行统计
-		            	<a type="button" class="text-yellow" style="font-size:14px;margin-left:10px">目前只提供 HBV_SNP 流程的统计</a>
-		            </h3>
-		            <p style="font-family:黑体;color:#FFFFFF">查看页面中不提供序列详细信息的直接展示，用户可以通过“下载Excel”获得全部序列信息。</p>
-		            <a class="btn btn-success btn-flat" style="width:100px;height:35px;margin-right:0px" href="javascript:void(0)" id="_down">下载 Excel</a>
-		          </div>
-		        </div>
-		      </c:if>
-		      <c:if test="${session.companyId==33 }">
-		        <div class="box box-success color-palette-bo">
-		          <div class="box-body bg-green" style="padding-left:30px;padding-bottom: 0px;">
-		            <h3 style="font-family:黑体;color:#FFFFFF">
-		            	运行统计
-		            	<a type="button" class="text-yellow" style="font-size:14px;margin-left:10px">目前只提供 CMP 流程的统计</a>
-		            </h3>
-		            <p style="font-family:黑体;color:#FFFFFF">查看页面中不提供序列详细信息的直接展示，用户可以通过“下载Excel”获得全部序列信息。</p>
-		            <a class="btn btn-success btn-flat" style="width:100px;height:35px;margin-right:0px" href="javascript:void(0)" id="_down">下载 Excel</a>
-		          </div>
-		        </div>
-		      </c:if>
-	        <div id="countDiv">
-	        </div>
-	      </div>
-	    </div><!--/.row-->
-	  </section><!-- /.content -->
+<input type="hidden" id="sessionUserId" value="${session.userId }">
+<input type="hidden" id="sessionUserName" value="${session.userName }">
+<input type="hidden" id="sessionCompanyId" value="${session.companyId }">
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+     <div class="mainpage" id="appMain">
+       <div class="y-row operation-serve"  data-spm="16">
+		  <c:if test="${session.companyId==6 }">
+		    <div class="info">
+	    	  <p>本页提供所有数据报告总览。</p>
+	  		</div>
+     	  </c:if>
+     	  <c:if test="${session.companyId==3 }">
+     	    <div class="info">
+	    	  <p>目前只提供 HBV_SNP流程的报告统计；查看页面中不提供序列详细信息的直接展示，用户可以通过“下载Excel”获得全部序列信息。</p>
+	  		</div>
+	  		<ul>
+		      <li><a href="javascript:void(0)" id="_down">下载 Excel</a></li>
+	  		</ul>
+     	  </c:if>
+    	  <c:if test="${session.companyId==33 }">
+    	    <div class="info">
+	    	  <p>目前只提供 CMP流程的统计；查看页面中不提供序列详细信息的直接展示，用户可以通过“下载Excel”获得全部序列信息。</p>
+	  		</div>
+	  		<ul>
+		      <li><a href="javascript:void(0)" id="_down">下载 Excel</a></li>
+	  		</ul>
+	       </c:if>
+	  	</div>
+	    <div class="y-row" style="padding: 20px 10px;background-color: #fff;"  data-spm="17">
+	       <div class="common-normal common-slide common-normals" id="countDiv">
+	       </div>
+	     </div>
+	  </div>
+    </div>
+  </div><!--/.row-->
+</section><!-- /.content -->
   
 <div class="modal modal-green-header" id="seqModal">
  <div class="modal-dialog">
