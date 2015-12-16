@@ -376,6 +376,7 @@ public class DataAction extends BaseAction {
                     FileTools.appendWrite(dataListFile, dataResult.toString());
                     int runningNum = taskService.getRunningNumByAppId(appId_l);
                     Task task = new Task();
+                    task.setProjectId(proId);
                     task.setUserId(Long.valueOf(userId));
                     task.setAppId(appId_l);
                     task.setDataKey(datakey);
