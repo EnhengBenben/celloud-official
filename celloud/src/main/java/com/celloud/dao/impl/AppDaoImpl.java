@@ -227,7 +227,6 @@ public class AppDaoImpl extends BaseDao implements AppDao {
         queryBuff.append(" limit ").append(start).append(",")
                 .append(page.getPageSize());
         List<App> list = new ArrayList<>();
-        System.out.println(queryBuff.toString());
         try {
             conn = ConnectManager.getConnection();
             ps = conn.prepareStatement(queryBuff.toString());
