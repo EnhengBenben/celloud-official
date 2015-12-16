@@ -461,21 +461,21 @@ $(function() {
         });
 });
 function showBgTwo(src){
-	$(window.parent.document).find("img[id='imageFullScreen']").css("width",1260);
-	$(window.parent.document).find("img[id='imageFullScreen']").css("height",156);
-	window.parent.showZoom(src);
+	$("img[id='imageFullScreen']").css("width",1260);
+	$("img[id='imageFullScreen']").css("height",156);
+	showZoom(src);
 }
 function showBgOne(src){
-	$(window.parent.document).find("img[id='imageFullScreen']").css("width",1260);
-	$(window.parent.document).find("img[id='imageFullScreen']").css("height",156);
-	window.parent.showZoom(src);
+	$("img[id='imageFullScreen']").css("width",1260);
+	$("img[id='imageFullScreen']").css("height",156);
+	showZoom(src);
 }
 function showBg(src,id) { 
 	var width = $("#" + id).width();
 	var height = $("#" + id).height();
-	$(window.parent.document).find("img[id='imageFullScreen']").css("width",width*1.5);
-	$(window.parent.document).find("img[id='imageFullScreen']").css("height",height*1.5);
-	window.parent.showZoom(src);
+	$("img[id='imageFullScreen']").css("width",width*1.5);
+	$("img[id='imageFullScreen']").css("height",height*1.5);
+	showZoom(src);
 }
 function change1(){
 	$("#nomal").css("display","");

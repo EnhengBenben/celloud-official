@@ -178,15 +178,15 @@ $(function() {
     });
 });
 function showBgTwo(src){
-	$(window.parent.document).find("img[id='imageFullScreen']").css("width",1050);
-	$(window.parent.document).find("img[id='imageFullScreen']").css("height",157.5);
+	$("img[id='imageFullScreen']").css("width",1050);
+	$("img[id='imageFullScreen']").css("height",157.5);
 	window.parent.showZoom(src.replace("png","10.png"));
 }
 function showBg(src,id) { 
 	var width = $("#" + id).width();
 	var height = $("#" + id).height();
-	$(window.parent.document).find("img[id='imageFullScreen']").css("width",width*1.5);
-	$(window.parent.document).find("img[id='imageFullScreen']").css("height",height*1.5);
+	$("img[id='imageFullScreen']").css("width",width*1.5);
+	$("img[id='imageFullScreen']").css("height",height*1.5);
 	window.parent.showZoom(src);
 }
 function showModal(id){
