@@ -116,7 +116,7 @@ tr.introjs-showElement > th {
 }
 
 .introjs-arrow {
-  border: 5px solid white;
+/*   border: 5px solid white; */
   content:'';
   position: absolute;
 }
@@ -187,12 +187,14 @@ tr.introjs-showElement > th {
 .introjs-tooltip {
   position: absolute;
   visibility: visible;
-  padding: 10px;
-  background-color: white;
-  min-width: 200px;
-  max-width: 300px;
-  border-radius: 3px;
-  box-shadow: 0 1px 10px rgba(0,0,0,.4);
+/*   margin-top: -10px; */
+/*   padding: 10px; */
+/*   background-image:url("scyd.png"); */
+/*   background-color: white; */
+/*   min-width: 480px; */
+/*   max-width: 300px; */
+/*   border-radius: 3px; */
+/*   box-shadow: 0 1px 10px rgba(0,0,0,.4); */
   -webkit-transition: opacity 0.1s ease-out;
      -moz-transition: opacity 0.1s ease-out;
       -ms-transition: opacity 0.1s ease-out;
@@ -213,21 +215,21 @@ tr.introjs-showElement > th {
   position: relative;
   overflow: visible;
   display: inline-block;
-  padding: 0.3em 0.8em;
-  border: 1px solid #d4d4d4;
+/*   padding: 0.3em 0.8em; */
+/*   border: 1px solid #d4d4d4; */
   margin: 0;
-  text-decoration: none;
-  text-shadow: 1px 1px 0 #fff;
-  font: 11px/normal sans-serif;
-  color: #333;
+/*   text-decoration: none; */
+/*   text-shadow: 1px 1px 0 #fff; */
+/*   font: 11px/normal sans-serif; */
+/*   color: #333; */
   white-space: nowrap;
   cursor: pointer;
   outline: none;
-  background-color: #ececec;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f4f4f4), to(#ececec));
-  background-image: -moz-linear-gradient(#f4f4f4, #ececec);
-  background-image: -o-linear-gradient(#f4f4f4, #ececec);
-  background-image: linear-gradient(#f4f4f4, #ececec);
+/*   background-color: #ececec; */
+/*   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f4f4f4), to(#ececec)); */
+/*   background-image: -moz-linear-gradient(#f4f4f4, #ececec); */
+/*   background-image: -o-linear-gradient(#f4f4f4, #ececec); */
+/*   background-image: linear-gradient(#f4f4f4, #ececec); */
   -webkit-background-clip: padding;
   -moz-background-clip: padding;
   -o-background-clip: padding-box;
@@ -242,17 +244,17 @@ tr.introjs-showElement > th {
 }
 
 .introjs-button:hover {
-  border-color: #bcbcbc;
-  text-decoration: none;
-  box-shadow: 0px 1px 1px #e3e3e3;
+/*   border-color: #bcbcbc; */
+/*   text-decoration: none; */
+/*   box-shadow: 0px 1px 1px #e3e3e3; */
 }
 
 .introjs-button:focus,
 .introjs-button:active {
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ececec), to(#f4f4f4));
-  background-image: -moz-linear-gradient(#ececec, #f4f4f4);
-  background-image: -o-linear-gradient(#ececec, #f4f4f4);
-  background-image: linear-gradient(#ececec, #f4f4f4);
+/*   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ececec), to(#f4f4f4)); */
+/*   background-image: -moz-linear-gradient(#ececec, #f4f4f4); */
+/*   background-image: -o-linear-gradient(#ececec, #f4f4f4); */
+/*   background-image: linear-gradient(#ececec, #f4f4f4); */
 }
 
 /* overrides extra padding on button elements in Firefox */
@@ -264,6 +266,9 @@ tr.introjs-showElement > th {
 .introjs-skipbutton {
   margin-right: 5px;
   color: #7a7a7a;
+  background-image: url("close.png");
+  width:134px;
+  height:84px
 }
 
 .introjs-prevbutton {
@@ -290,6 +295,7 @@ tr.introjs-showElement > th {
 }
 
 .introjs-bullets {
+  display: none;
   text-align: center;
 }
 .introjs-bullets ul {
@@ -344,3 +350,4 @@ tr.introjs-showElement > th {
   left: 50%;
   top: 50%;
 }
+.introjs-tooltipimg{}

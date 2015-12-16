@@ -68,31 +68,31 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header"><span>产品和服务</span></li>
-            <li class="active treeview" data-step="1" data-intro="总览页面!">
+            <li class="active treeview">
               <a href="javascript:void(0)" onclick="showUserCount();">
                 <i class="fa fa-dashboard"></i>
                 <span>总览</span>
               </a>
             </li>
-            <li class="treeview" data-step="2" data-intro="数据上传">
+            <li class="treeview" id="toUploadMenu">
               <a href="javascript:void(0)" onclick="showUpload();">
                 <i class="fa fa-sellsy"></i>
                 <span>数据上传</span>
               </a>
             </li>
-            <li class="treeview" data-step="3" data-position="right" data-intro="数据管理">
+            <li class="treeview" id="toDataMenu">
               <a href="javascript:void(0)" onclick="showData()">
                 <i class="fa fa-tasks"></i>
                 <span>数据管理</span>
               </a>
             </li>
-            <li class="treeview" data-step="4" data-position="bottom" data-intro="报告">
+            <li class="treeview" id="toReportMenu">
               <a href="javascript:void(0)" onclick="showReport()">
                 <i class="fa fa-files-o"></i>
                 <span>报告</span>
               </a>
             </li>
-            <li class="treeview" data-step="5" data-position="top">
+            <li class="treeview" data-step="1" data-intro="" data-img="yysc.png">
               <a href="javascript:void(0)" onclick="showAppStore()">
                 <i class="fa fa-cubes"></i>
                 <span>应用市场</span>
@@ -149,12 +149,18 @@
     <script src="dist/js/app.js?v=2" type="text/javascript"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script type="text/javascript">
+    	var hasNavi = <%=session.getAttribute("userNav")%>;
+    	var intro = null;
     	$(document).ready(function(){
     		showUserCount();
-// 			var tour = introJs();
-// 			tour.setOption('tooltipPosition', 'auto');
-// 			tour.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top'])
-// 			tour.start();
+    		if(hasNavi=1){
+    			intro = introJs();
+    			intro.setOption('tooltipPosition', 'auto');
+    			intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+// 				tour.setOption('',);
+				intro.start();
+// 				intro.exit();
+    		}
     	});
     </script>
   </body>

@@ -133,6 +133,9 @@ function showReport(){
 function showAppStore(){
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
+	if(intro != null){
+		intro.exit();
+	}
 	$.get("app3!toAppStore",{},function(responseText){
 		$("#mainDIV").html(responseText);
 	});

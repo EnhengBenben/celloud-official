@@ -1,16 +1,34 @@
 //默认打开按功能分类
 var classifyPid = 1;
 var classifySid = 0;
+var introNext = 0;
 function initApp(){
+	if(intro != null){
+		intro.exit();
+	}
 	getMyApp();
 	var pid = $("#defaultPid").val();
 	var pname = $("#defaultPname").val();
 	toSclassifyApp(pid,pname);
+	if(hasNavi = 1){
+		intro = introJs();
+		intro.setOption('tooltipPosition', 'auto');
+		intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+		intro.start();
+		introNext = 1;
+	}
 	$("#appSubtitle").bind("click",function(){
 		toSclassifyApp($("#defaultPid").val(),$("#defaultPname").val());
 	});
 }
 function toSclassifyApp(pid,pname){
+	if(intro != null && introNext==1){
+		intro.exit();
+		intro = introJs();
+		intro.setOption('tooltipPosition', 'auto');
+		intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+		intro.goToStep(2);
+	}
 	$("#secondClassifyName").parent().addClass("hide");
 	$.get("app3!toSclassifyApp",{"paramId":pid},function(responseText){
 		$("#sclassify").html(responseText);

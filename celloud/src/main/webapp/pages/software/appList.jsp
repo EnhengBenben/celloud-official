@@ -60,7 +60,7 @@
 		            <a class="xq" href="javascript:toAppDetail(${app.softwareId })" style="display: none;">查看详情</a>
 		          </div>
 		          <div class="box-star">
-		            <div class="user-num">使用人数：<span>27116</span></div>
+<!-- 		            <div class="user-num">使用人数：<span>27116</span></div> -->
 		            <div class="score-con"> 上线时间：
 <!-- 		               <div class="bc-icon-star"> -->
 <!-- 		                  <span style="width:84.0%;" class="bc-iocn-span"></span> -->

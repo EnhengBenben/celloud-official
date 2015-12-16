@@ -130,6 +130,7 @@
           introItems[step - 1] = {
             element: currentElement,
             intro: currentElement.getAttribute('data-intro'),
+            img: currentElement.getAttribute('data-img'),
             step: parseInt(currentElement.getAttribute('data-step'), 10),
             tooltipClass: currentElement.getAttribute('data-tooltipClass'),
             highlightClass: currentElement.getAttribute('data-highlightClass'),
@@ -157,6 +158,7 @@
           introItems[nextStep] = {
             element: currentElement,
             intro: currentElement.getAttribute('data-intro'),
+            img: currentElement.getAttribute('data-img'),
             step: nextStep + 1,
             tooltipClass: currentElement.getAttribute('data-tooltipClass'),
             highlightClass: currentElement.getAttribute('data-highlightClass'),
@@ -736,6 +738,7 @@
     if (oldHelperLayer != null) {
       var oldHelperNumberLayer = oldReferenceLayer.querySelector('.introjs-helperNumberLayer'),
           oldtooltipLayer      = oldReferenceLayer.querySelector('.introjs-tooltiptext'),
+          oldtooltipImg      = oldReferenceLayer.querySelector('.introjs-tooltipimg'),
           oldArrowLayer        = oldReferenceLayer.querySelector('.introjs-arrow'),
           oldtooltipContainer  = oldReferenceLayer.querySelector('.introjs-tooltip'),
           skipTooltipButton    = oldReferenceLayer.querySelector('.introjs-skipbutton'),
@@ -783,6 +786,7 @@
         }
         //set current tooltip text
         oldtooltipLayer.innerHTML = targetElement.intro;
+        oldtooltipImg.innerHTML = "<img src='plugins/intro/" + targetElement.img + "'>";
         //set the tooltip position
         oldtooltipContainer.style.display = "block";
         _placeTooltip.call(self, targetElement.element, oldtooltipContainer, oldArrowLayer, oldHelperNumberLayer);
@@ -813,6 +817,7 @@
           arrowLayer        = document.createElement('div'),
           tooltipLayer      = document.createElement('div'),
           tooltipTextLayer  = document.createElement('div'),
+          tooltipImgLayer  = document.createElement('div'),
           bulletsLayer      = document.createElement('div'),
           progressLayer     = document.createElement('div'),
           buttonsLayer      = document.createElement('div');
@@ -832,6 +837,9 @@
 
       tooltipTextLayer.className = 'introjs-tooltiptext';
       tooltipTextLayer.innerHTML = targetElement.intro;
+      
+      tooltipImgLayer.className = 'introjs-tooltiptext';
+      tooltipImgLayer.innerHTML = '<img src="plugins/intro/' + targetElement.img + '">';
 
       bulletsLayer.className = 'introjs-bullets';
 
@@ -879,6 +887,7 @@
 
       tooltipLayer.className = 'introjs-tooltip';
       tooltipLayer.appendChild(tooltipTextLayer);
+      tooltipLayer.appendChild(tooltipImgLayer);
       tooltipLayer.appendChild(bulletsLayer);
       tooltipLayer.appendChild(progressLayer);
 

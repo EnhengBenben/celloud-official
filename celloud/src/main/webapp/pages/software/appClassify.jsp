@@ -8,7 +8,7 @@
   	    	  <div class="y-row" style="padding-bottom: 20px;"  data-spm="17">
 	      		<div class="common-normal common-slide common-normals">
 	        	  <div class="normal-tit normal-title">
-	         		<p class="link"><a class="bc-a-tit" target="_blank" href="javascript:toMoreApp(${sc.classifyPid },${sc.classifyId },1,1)" title="">获取更多&gt;</a></p>
+	         		<p class="link"><a class="bc-a-tit" target="_blank" href="javascript:toMoreApp(${sc.classifyPid },${sc.classifyId },1,1)" title="" data-step="2" data-intro="" data-img="checkapp.png">获取更多&gt;</a></p>
 	         		<h4>${sc.classifyName }</h4>
 	        	  </div>
 	        	  <div class="normal-slide">
