@@ -698,7 +698,7 @@ $.ajaxSetup ({
 					$("#charResult").html("");
 					for ( var i = 1; i < sp.length; i++) {
 						var big = 0;
-						var div = $("<div id='char"+i+"' style='width:380px;display: inline-block;margin-right:10px;'></div>");
+						var div = $("<div id='char"+i+"' class='col-lg-6'></div>");
 						$("#charDiv").append(div);
 						var ev = sp[i].split(":");
 						var one = getCountValue(ev[0],"_table");
@@ -725,7 +725,7 @@ $.ajaxSetup ({
 			}
 			if(appId==80){
 				$.get("count!getHCV",{"appId":appId,"path":DATAPATH},function(data){
-						var div = $("<div id='char0' style='width:380px;display: inline-block;margin-right:10px;'></div>");
+						var div = $("<div id='char0' class='col-lg-6'></div>");
 						$("#charDiv").append(div);
 						var one = getCountValue("Subtype","nomal");
 						var X = "[";
@@ -742,12 +742,12 @@ $.ajaxSetup ({
 						}
 						X = X.substring(0,X.length-1)+"]";
 						Y = Y.substring(0,Y.length-1)+"]";
-//						showCharHCV("char0", "Subtype", eval(X),eval(Y),0);
+						showCharHCV("char0", "Subtype", eval(X),eval(Y),0);
 				});
 			}
 			if(appId==82){
 				$.get("count!getHBV",{"appId":appId,"path":DATAPATH},function(data){
-					var div0 = $("<div id='char0' style='display: inline-block;margin-right:10px;'></div>");
+					var div0 = $("<div id='char0' class='col-lg-12'></div>");
 					$("#charDiv").append(div0);
 					var sType = $("#snpType").html();
 					if(!sType){
@@ -812,7 +812,7 @@ $.ajaxSetup ({
 						}
 					}
 					
-					var div1 = $("<div id='char1' style='display: inline-block;margin-right:10px;'></div>");
+					var div1 = $("<div id='char1' class='col-lg-12'></div>");
 					$("#charDiv").append(div1);
 					var one = getCountValue("Subtype","nomal");
 					var X = "[";
@@ -834,13 +834,13 @@ $.ajaxSetup ({
 								}
 							}
 							if(isOne){
-//								Y+="{ dataLabels: { enabled: true, y: -5, crop: false },color:'rgba(0, 204, 204, .5)', y:"+ n[1]+"},";
+								Y+="{ dataLabels: { enabled: true, y: -5, crop: false },color:'rgba(0, 204, 204, .5)', y:"+ n[1]+"},";
 								ay.push([k,n[1]/2]);
 							}else{
 							}
 							Y+=n[1]+",";
 						}else if(rType.length==0&&n[0]=="none"){
-//							Y+="{ dataLabels: { enabled: true, y: -5, crop: false },color:'rgba(0, 204, 204, .5)', y:"+ n[1]+"},";
+							Y+="{ dataLabels: { enabled: true, y: -5, crop: false },color:'rgba(0, 204, 204, .5)', y:"+ n[1]+"},";
 							ay.push([0,n[1]/2]);
 						}else{
 						}
@@ -866,13 +866,13 @@ $.ajaxSetup ({
 						$("#char0").css({"width":300+"px"});
 						$("#char1").css({"width":880+"px"});
 					}
-//					showHBVny("char1",eval(Y),ay,eval(X));
-//					showCharHCV("char1", "耐药类型", eval(X),eval(Y),-45);
+					showHBVny("char1",eval(Y),ay,eval(X));
+					showCharHCV("char1", "耐药类型", eval(X),eval(Y),-45);
 				});
 			}
 			if(appId==90){
 				$.get("count!getTB",{"appId":appId,"path":DATAPATH},function(data){
-						var div = $("<div id='char0' style='width:380px;display: inline-block;margin-right:10px;'></div>");
+						var div = $("<div id='char0' class='col-lg-6'></div>");
 						$("#charDiv").append(div);
 						var X = "[";
 						var Y = "[";
@@ -893,7 +893,7 @@ $.ajaxSetup ({
 					$("#charDiv").html("<p style=\"color: red;\">数据异常，没有同比结果</p>");
 				}else{  
 					$.get("count!getEGFR",{"appId":appId,"path":DATAPATH,"length":length},function(data){
-							var div = $("<div id='char0' style='width:380px;display: inline-block;margin-right:10px;'></div>");
+							var div = $("<div id='char0' class='col-lg-6'></div>");
 							$("#charDiv").append(div);
 							var X = "[";
 							var Y = "[";

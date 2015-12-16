@@ -374,7 +374,9 @@
 		<div class="bg-analysis">
 		    <div class="m-box">
 		        <h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
-		        <div class="m-boxCon" id="charDiv">
+		        <div class="m-boxCon">
+		        	<div class="row" id="charDiv">
+			        </div>
 		        </div>
 		    </div>
 		</div>
