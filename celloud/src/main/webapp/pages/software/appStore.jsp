@@ -28,7 +28,7 @@
   		<ul>
   		  <c:if test="${pclassifys.size()>0}">
 	  	 	<c:forEach items="${pclassifys}" var="pc" varStatus="status">
-		      <li <c:if test="${status.index==1}"> data-step="1" data-intro="" data-position="bottom" data-img="checkapp.png" </c:if>><a href="javascript:toSclassifyApp(${pc.classifyId },'${pc.classifyName }')">${pc.classifyName }</a></li>
+		      <li <c:if test="${status.index==1}"> data-step="2" data-intro="" data-position="bottom" data-img="checkapp.png" </c:if>><a href="javascript:toSclassifyApp(${pc.classifyId },'${pc.classifyName }')">${pc.classifyName }</a></li>
 	  	 	</c:forEach>
   		  </c:if>
   		</ul>

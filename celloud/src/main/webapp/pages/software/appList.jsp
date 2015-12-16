@@ -49,7 +49,7 @@
     <ul class="act-list">
       <c:choose>
         <c:when test="${appPageList.datas.size()>0 }">
-          <c:forEach items="${appPageList.datas }" var="app">
+          <c:forEach items="${appPageList.datas }" var="app" varStatus="status">
 	        <li class="list-item show">
 		      <div class="item-box">
 		          <div class="box-btn">
@@ -75,8 +75,8 @@
 		            </div>
 		          </div>
 		          <div class="box-info-wrap">
-		            <div class="box-pic">
-		              <a target="_blank" href="#">
+		            <div class="box-pic" <c:if test="${status.index==0}"> data-step="2" data-intro="" data-position="right" data-img="appDetail.png" </c:if>>
+		              <a target="_blank" href="javascript:toAppDetail(${app.softwareId })">
 		                <img alt="产品logo" src="<%=request.getContextPath()%>/images/app/${app.pictureName}">
 		              </a>
 		            </div>

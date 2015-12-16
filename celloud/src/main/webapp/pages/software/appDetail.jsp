@@ -18,15 +18,15 @@
                 <span>
                 <c:choose>
 			      <c:when test="${app.classifyNames.contains('小软件') }">
-				    <a class="btn btn-celloud-success btn-flat" href="${app.host }" target="blank"><i class="fa fa-plus"></i>&nbsp;点击使用</a>
+				    <a class="btn btn-celloud-success btn-flat" href="${app.host }" target="blank" data-step="2" data-intro="" data-position="bottom" data-img="useApp.png"><i class="fa fa-plus"></i>&nbsp;点击使用</a>
 			  	  </c:when>
 			  	  <c:otherwise>
 			  	    <c:choose>
 				  	  <c:when test="${app.isAdded==0 }">
-					    <a class="btn btn-celloud-success btn-flat" href="javascript:void()" onclick="addApp(${app.softwareId })" id="toAddApp"><i class="fa fa-plus"></i>&nbsp;添加</a>
+					    <a class="btn btn-celloud-success btn-flat" href="javascript:void()" onclick="addApp(${app.softwareId })" id="toAddApp" data-step="2" data-intro="" data-position="bottom" data-img="changedApp.png"><i class="fa fa-plus"></i>&nbsp;添加</a>
 				  	  </c:when>
 				  	  <c:otherwise>
-				  	    <a class="btn btn-celloud-close btn-flat" href="javascript:void()" onclick="removeApp(${app.softwareId })" id="toAddApp"><i class="fa fa-minus"></i>&nbsp;取消添加</a>
+				  	    <a class="btn btn-celloud-close btn-flat" href="javascript:void()" onclick="removeApp(${app.softwareId })" id="toAddApp" data-step="2" data-intro="" data-position="bottom" data-img="changedApp.png" ><i class="fa fa-minus"></i>&nbsp;取消添加</a>
 				  	  </c:otherwise>
 				    </c:choose>
 			  	  </c:otherwise>

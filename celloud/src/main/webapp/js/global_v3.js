@@ -102,6 +102,15 @@ function lineModal(id,legend,xdata,ydata,yname){
 function showUpload(){
 	$("#uploadDIV").css("display","");
 	$("#mainDIV").css("display","none");
+	if(intro != null){
+		intro.exit();
+		intro = null;
+		intro = introJs();
+		intro.setOption('tooltipPosition', 'auto');
+		intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+		intro.setOption('showStepNumbers', false);
+		intro.setOption('showButtons', false);
+	}
 	if($("#uploadDIV").html()==""){
 		$("#uploadDIV").load("pages/data/fileUpload.jsp");
 	}
@@ -111,26 +120,45 @@ function showUpload(){
  * 数据管理
  */
 function showData(){
+	$.AdminLTE.closeSidebar();
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
 	$("#mainDIV").load("pages/data/data.jsp");
-	$.AdminLTE.closeSidebar();
 }
 
 /**
  * 报告
  */
 function showReport(){
+	$.AdminLTE.closeSidebar();
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
 	$("#mainDIV").load("pages/report/reportDetail.jsp");
-	$.AdminLTE.closeSidebar();
+	if(intro != null){
+		intro.exit();
+		intro = null;
+		intro = introJs();
+		intro.setOption('tooltipPosition', 'auto');
+		intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+		intro.setOption('showStepNumbers', false);
+		intro.setOption('showButtons', true);
+		intro.setOptions({
+			steps: [
+              { 
+            	step: 9,
+            	img: "endintro.png"
+              }
+            ]
+		});
+		intro.start(9);
+	}
 }
 
 /**
  * 应用市场
  */
 function showAppStore(){
+	$.AdminLTE.closeSidebar();
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
 	if(intro != null){
@@ -139,17 +167,16 @@ function showAppStore(){
 	$.get("app3!toAppStore",{},function(responseText){
 		$("#mainDIV").html(responseText);
 	});
-	$.AdminLTE.closeSidebar();
 }
 
 /**
  * 统计页面
  */
 function showCount(){
+	$.AdminLTE.closeSidebar();
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
 	$("#mainDIV").load("pages/count/count.jsp");
-	$.AdminLTE.closeSidebar();
 }
 
 /**

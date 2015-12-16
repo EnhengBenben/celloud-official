@@ -5,33 +5,38 @@ var introNext = 0;
 function initApp(){
 	if(intro != null){
 		intro.exit();
+		intro = null;
 	}
 	getMyApp();
 	var pid = $("#defaultPid").val();
 	var pname = $("#defaultPname").val();
-	toSclassifyApp(pid,pname);
 	if(hasNavi = 1){
 		intro = introJs();
 		intro.setOption('tooltipPosition', 'auto');
 		intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+		intro.setOption('showStepNumbers', false);
+		intro.setOption('showButtons', false);
 		intro.start();
-		introNext = 1;
-	}
-	$("#appSubtitle").bind("click",function(){
-		toSclassifyApp($("#defaultPid").val(),$("#defaultPname").val());
-	});
-}
-function toSclassifyApp(pid,pname){
-	if(intro != null && introNext==1){
-		intro.exit();
-		intro = introJs();
-		intro.setOption('tooltipPosition', 'auto');
-		intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
 		intro.goToStep(2);
 	}
+	toSclassifyApp(pid,pname);
+}
+function toSclassifyApp(pid,pname){
 	$("#secondClassifyName").parent().addClass("hide");
 	$.get("app3!toSclassifyApp",{"paramId":pid},function(responseText){
 		$("#sclassify").html(responseText);
+		if(intro != null && introNext==1){
+			intro.exit();
+			intro = null;
+			intro = introJs();
+			intro.setOption('tooltipPosition', 'auto');
+			intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+			intro.setOption('showStepNumbers', false);
+			intro.setOption('showButtons', false);
+			intro.start();
+			intro.goToStep(3);
+		}
+		introNext = 1;
 	});
 	$("#defaultPid").val(pid);
 	$("#defaultPname").val(pname);
@@ -51,6 +56,17 @@ function toMoreApp(pid,sid,pageNum,isParent){
 		});
 		sortApp();
 		sortFiled = "";
+		if(intro != null){
+			intro.exit();
+			intro = null;
+			intro = introJs();
+			intro.setOption('tooltipPosition', 'auto');
+			intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+			intro.setOption('showStepNumbers', false);
+			intro.setOption('showButtons', false);
+			intro.start();
+			intro.goToStep(2);
+		}
 	});
 }
 function sortApp(){
@@ -71,6 +87,17 @@ function sortApp(){
 function toAppDetail(id){
 	$.get("app3!getAppById",{"paramId":id},function(responseText){
 		$("#appMain").html(responseText);
+		if(intro != null){
+			intro.exit();
+			intro = null;
+			intro = introJs();
+			intro.setOption('tooltipPosition', 'auto');
+			intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+			intro.setOption('showStepNumbers', false);
+			intro.setOption('showButtons', false);
+			intro.start();
+			intro.goToStep(2);
+		}
 	});
 }
 function getMyApp(){
@@ -85,6 +112,18 @@ function addApp(id){
 			$("#toAddApp").html("<i class=\"fa fa-minus\"></i>&nbsp;取消添加");
 			$("#toAddApp").removeClass("btn-celloud-success").addClass("btn-celloud-close");
 			$("#myAppDiv").html(responseText);
+			if(intro != null){
+				$("#toUploadMenu").attr("data-step",3);
+				intro.exit();
+				intro = null;
+				intro = introJs();
+				intro.setOption('tooltipPosition', 'auto');
+				intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+				intro.setOption('showStepNumbers', false);
+				intro.setOption('showButtons', false);
+				intro.start();
+				intro.goToStep(3);
+			}
 		}
 	});
 }
@@ -95,6 +134,18 @@ function removeApp(id){
 			$("#toAddApp").html("<i class=\"fa fa-minus\"></i>&nbsp;取消添加");
 			$("#toAddApp").removeClass("btn-celloud-success").addClass("btn-celloud-close");
 			$("#myAppDiv").html(responseText);
+			if(intro != null){
+				$("#toUploadMenu").attr("data-step",3);
+				intro.exit();
+				intro = null;
+				intro = introJs();
+				intro.setOption('tooltipPosition', 'auto');
+				intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+				intro.setOption('showStepNumbers', false);
+				intro.setOption('showButtons', false);
+				intro.start();
+				intro.goToStep(3);
+			}
 		}
 	});
 }

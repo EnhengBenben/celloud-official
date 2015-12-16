@@ -74,25 +74,25 @@
                 <span>总览</span>
               </a>
             </li>
-            <li class="treeview" id="toUploadMenu">
+            <li class="treeview" id="toUploadMenu" data-step="4" data-position="right" data-intro="" data-img="toupload.png">
               <a href="javascript:void(0)" onclick="showUpload();">
                 <i class="fa fa-sellsy"></i>
                 <span>数据上传</span>
               </a>
             </li>
-            <li class="treeview" id="toDataMenu">
+            <li class="treeview" id="toDataMenu" data-step="7" data-position="right" data-intro="" data-img="todata.png">
               <a href="javascript:void(0)" onclick="showData()">
                 <i class="fa fa-tasks"></i>
                 <span>数据管理</span>
               </a>
             </li>
-            <li class="treeview" id="toReportMenu">
+            <li class="treeview" id="toReportMenu" data-step="8" data-position="right" data-intro="" data-img="toreport.png">
               <a href="javascript:void(0)" onclick="showReport()">
                 <i class="fa fa-files-o"></i>
                 <span>报告</span>
               </a>
             </li>
-            <li class="treeview" data-step="1" data-intro="" data-img="yysc.png">
+            <li class="treeview" data-step="1" data-position="right" data-intro="" data-img="yysc.png">
               <a href="javascript:void(0)" onclick="showAppStore()">
                 <i class="fa fa-cubes"></i>
                 <span>应用市场</span>
@@ -160,6 +160,8 @@
     			intro = introJs();
     			intro.setOption('tooltipPosition', 'auto');
     			intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+    			intro.setOption('showStepNumbers', false);
+    			intro.setOption('showButtons', false);
 				intro.start();
     		}
     	});

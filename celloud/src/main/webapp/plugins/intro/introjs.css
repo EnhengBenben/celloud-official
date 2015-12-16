@@ -265,23 +265,31 @@ tr.introjs-showElement > th {
 
 .introjs-skipbutton {
   margin-right: 5px;
-  color: #7a7a7a;
-  background-image: url("close.png");
-  width:134px;
-  height:84px
+  background-image: url("yes.png");
+  width:106px;
+  height:84px;
+  float: left
 }
 
 .introjs-prevbutton {
-  -webkit-border-radius: 0.2em 0 0 0.2em;
-  -moz-border-radius: 0.2em 0 0 0.2em;
-  border-radius: 0.2em 0 0 0.2em;
-  border-right: none;
+  margin-right: 5px;
+  background-image: url("no.png");
+  width: 159px;;
+  height:74px
+/*   -webkit-border-radius: 0.2em 0 0 0.2em; */
+/*   -moz-border-radius: 0.2em 0 0 0.2em; */
+/*   border-radius: 0.2em 0 0 0.2em; */
+/*   border-right: none; */
 }
 
 .introjs-nextbutton {
-  -webkit-border-radius: 0 0.2em 0.2em 0;
-  -moz-border-radius: 0 0.2em 0.2em 0;
-  border-radius: 0 0.2em 0.2em 0;
+  margin-right: 5px;
+  background-image: url("close.png");
+  width:169px;
+  height:74px
+/*   -webkit-border-radius: 0 0.2em 0.2em 0; */
+/*   -moz-border-radius: 0 0.2em 0.2em 0; */
+/*   border-radius: 0 0.2em 0.2em 0; */
 }
 
 .introjs-disabled, .introjs-disabled:hover, .introjs-disabled:focus {

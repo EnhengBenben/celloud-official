@@ -84,6 +84,10 @@ $(function() {
  		multiple_queues : true,
 	});
 	var uploader = $('#fileUploadDiv').pluploadQueue();
+	if(intro != null){
+		intro.start();
+		intro.goToStep(4);
+	}
 	//绑定选择文件事件
 	uploader.bind('Browse', function() {
 		$.get("checkAdminSessionTimeOut",function(response){
@@ -92,6 +96,9 @@ $(function() {
 				uploader.destroy();
 				//跳转登陆页面
 				$("#_sessionTimeOut").html(response);
+			}
+			if(intro != null){
+				intro.goToStep(5);
 			}
 		});
 	});
@@ -105,6 +112,9 @@ $(function() {
 		}else if(uploader.state === plupload.STOPPED){//文件队列全部上传结束
 			window.parent.isUploading = false;
 			clearInterval(refresh);
+		}
+		if(intro != null){
+			intro.goToStep(6);
 		}
 	});
 	//自定义上传按钮，先进行session超时校验，再决定是执行上传还是跳转登陆页面操作

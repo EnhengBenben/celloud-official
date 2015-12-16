@@ -98,8 +98,8 @@ used as it is.
 							'<div class="plupload_header_content">' +
 								'<div class="plupload_file_name">' +
 									'<div class="box-title plupload_buttons">' +
-										'<a href="javascript:void(0)" class="addfile btn btn-success btn-flat" id="' + id + '_browse"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;添加文件</a>' +
-										'<a href="javascript:void(0)" class="_start_custom startfile btn btn-warning btn-flat"><i class="fa fa-upload"></i>&nbsp;&nbsp;开始上传</a>' +
+										'<a href="javascript:void(0)" class="addfile btn btn-success btn-flat" data-step="4" data-intro="" data-position="bottom" data-img="selectdata.png" id="' + id + '_browse"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;添加文件</a>' +
+										'<a href="javascript:void(0)" class="_start_custom startfile btn btn-warning btn-flat" data-step="5" data-intro="" data-position="bottom" data-img="beginupload.png"><i class="fa fa-upload"></i>&nbsp;&nbsp;开始上传</a>' +
 										'<a href="download.html" class="btn btn-celloud-close btn-flat" target="_blank">下载客户端&nbsp;&nbsp;<i class="fa fa-external-link"></i></a>'+
 										'<span class="_uploadAlert"></span>'+
 									'</div>' +
@@ -110,7 +110,7 @@ used as it is.
 						'<div class="box-body plupload_content new_content">' +
 							'<div class="plupload_content_new_header">' +
 								'<div class="plupload_file_name">' + _('Filename') + '</div>' +
-								'<div class="plupload_file_action"><a href="javascript:void(0)" class="a-green-normal" id="cleanUploaded" title="清空数据"><i class="fa fa-university"></i></a></div>' +
+								'<div class="plupload_file_action"><a href="javascript:void(0)" class="a-green-normal" id="cleanUploaded" title="清空数据" data-step="6" data-intro="" data-position="left" data-img="deleteupload.png"><i class="fa fa-university"></i></a></div>' +
 								'<div class="plupload_file_status"><span>' + _('Status') + '</span>&nbsp;<span class="plupload_total_status">0%</span></div>' +
 								'<div class="plupload_file_surplus"> 剩余时间 </div>' +
 								'<div class="plupload_file_speed"> 速度</div>' +
@@ -436,6 +436,9 @@ used as it is.
 				
 				$("#cleanUploaded").click(function(){
 					uploader.splice();
+					if(intro != null){
+						intro.goToStep(7);
+					}
 				})
 			});
 

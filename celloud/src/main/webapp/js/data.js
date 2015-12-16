@@ -439,6 +439,9 @@ function toUse(){
 function initDataList(){
 	//全选
 	$("#selAll").click(function(){
+		if(intro != null){
+			intro.goToStep(8);
+		}
 		//清空checkedDataIds
 		var checked = $(this).prop("checked");
 		var arrChk;
@@ -488,6 +491,17 @@ function initDataList(){
 	var currentPageRecordNum = $("#currentPageRecordNum").val();
 	if((arrChk.length==currentPageRecordNum)&&(arrChk.length!=0)){//若所有数据为选中状态，则全选复选框应设为选中状态
 		$("#selAll").prop("checked",true);
+	}
+	if(intro != null){
+		intro.exit();
+		intro = null;
+		intro = introJs();
+		intro.setOption('tooltipPosition', 'auto');
+		intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+		intro.setOption('showStepNumbers', false);
+		intro.setOption('showButtons', false);
+		intro.start();
+		intro.goToStep(2);
 	}
 }
 

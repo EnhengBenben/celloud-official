@@ -47,11 +47,11 @@
       /* Close introduction when pressing Escape button? */
       exitOnEsc: true,
       /* Close introduction when clicking on overlay layer? */
-      exitOnOverlayClick: true,
+      exitOnOverlayClick: false,
       /* Show step numbers in introduction? */
       showStepNumbers: true,
       /* Let user use keyboard to navigate the tour? */
-      keyboardNavigation: true,
+      keyboardNavigation: false,
       /* Show tour control buttons? */
       showButtons: true,
       /* Show tour bullets? */
@@ -512,8 +512,8 @@
         //we have to adjust the top and left of layer manually for intro items without element
         tooltipLayer.style.left   = '50%';
         tooltipLayer.style.top    = '50%';
-        tooltipLayer.style.marginLeft = '-' + (tooltipOffset.width / 2)  + 'px';
-        tooltipLayer.style.marginTop  = '-' + (tooltipOffset.height / 2) + 'px';
+        tooltipLayer.style.marginLeft = '-' + (tooltipOffset.width / 2+160)  + 'px';
+        tooltipLayer.style.marginTop  = '-' + (tooltipOffset.height / 2+30) + 'px';
 
         if (typeof(helperNumberLayer) != 'undefined' && helperNumberLayer != null) {
           helperNumberLayer.style.left = '-' + ((tooltipOffset.width / 2) + 18) + 'px';
@@ -738,7 +738,7 @@
     if (oldHelperLayer != null) {
       var oldHelperNumberLayer = oldReferenceLayer.querySelector('.introjs-helperNumberLayer'),
           oldtooltipLayer      = oldReferenceLayer.querySelector('.introjs-tooltiptext'),
-          oldtooltipImg      = oldReferenceLayer.querySelector('.introjs-tooltipimg'),
+          oldtooltipImg        = oldReferenceLayer.querySelector('.introjs-tooltipimg'),
           oldArrowLayer        = oldReferenceLayer.querySelector('.introjs-arrow'),
           oldtooltipContainer  = oldReferenceLayer.querySelector('.introjs-tooltip'),
           skipTooltipButton    = oldReferenceLayer.querySelector('.introjs-skipbutton'),
@@ -837,8 +837,7 @@
 
       tooltipTextLayer.className = 'introjs-tooltiptext';
       tooltipTextLayer.innerHTML = targetElement.intro;
-      
-      tooltipImgLayer.className = 'introjs-tooltiptext';
+      tooltipImgLayer.className = 'introjs-tooltipimg';
       tooltipImgLayer.innerHTML = '<img src="plugins/intro/' + targetElement.img + '">';
 
       bulletsLayer.className = 'introjs-bullets';
@@ -918,19 +917,29 @@
       var prevTooltipButton = document.createElement('a');
 
       prevTooltipButton.onclick = function() {
-        if (self._currentStep != 0) {
-          _previousStep.call(self);
-        }
+    	  $.get("user!updateNotify",{"notify":0},function(){});
+    	  if (self._introItems.length - 1 == self._currentStep && typeof (self._introCompleteCallback) === 'function') {
+              self._introCompleteCallback.call(self);
+            }
+
+            if (self._introItems.length - 1 != self._currentStep && typeof (self._introExitCallback) === 'function') {
+              self._introExitCallback.call(self);
+            }
+
+            _exitIntro.call(self, self._targetElement);
+//        if (self._currentStep != 0) {
+//          _previousStep.call(self);
+//        }
       };
 
       prevTooltipButton.href = 'javascript:void(0);';
-      prevTooltipButton.innerHTML = this._options.prevLabel;
+//      prevTooltipButton.innerHTML = this._options.prevLabel;
 
       //skip button
       var skipTooltipButton = document.createElement('a');
       skipTooltipButton.className = 'introjs-button introjs-skipbutton';
       skipTooltipButton.href = 'javascript:void(0);';
-      skipTooltipButton.innerHTML = this._options.skipLabel;
+//      skipTooltipButton.innerHTML = this._options.skipLabel;
 
       skipTooltipButton.onclick = function() {
         if (self._introItems.length - 1 == self._currentStep && typeof (self._introCompleteCallback) === 'function') {
@@ -945,6 +954,7 @@
       };
 
       buttonsLayer.appendChild(skipTooltipButton);
+      buttonsLayer.appendChild(prevTooltipButton);
 
       //in order to prevent displaying next/previous button always
       if (this._introItems.length > 1) {
