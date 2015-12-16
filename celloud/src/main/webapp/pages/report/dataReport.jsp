@@ -6,6 +6,13 @@
 <link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
 <link href="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="<%=request.getContextPath()%>/plugins/smartJqueryZoom/zoom-styles.css" rel="stylesheet" type="text/css"/>
+<!-- 放大图片所需的div -->
+<div id="fullbg"></div> 
+<div id="pageContent" class="pageContent">
+	<a class="zoomClose" id="closeZoom" href="javascript:closeZoom();" style="margin-right: 75px;"></a>
+	<img id="imageFullScreen" src="">
+</div>
 <section class="content-header">
   <h1>
     <small>&nbsp;</small>
@@ -30,3 +37,26 @@
   </div>
 </section>
 <script src="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.js"></script>
+<script src="<%=request.getContextPath() %>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#imageFullScreen').smartZoom({'containerClass':'zoomableContainer'});
+});
+function showZoom(src,imgh,imgw) {
+	var bh = $(document).height();  
+	var bw = $(document).width();
+	$("#imageFullScreen").smartZoom({'containerClass':'zoomableContainer'});
+	$("#imageFullScreen").attr("src",src);
+	$("#fullbg").css({  
+		height:bh,  
+		width:bw,  
+		display:"block"  
+	});
+	$("#closeZoom").css({display:"block"});
+	$("#pageContent").show();
+}
+function closeZoom(){
+	$('#imageFullScreen').smartZoom('destroy');
+	$("#fullbg,#pageContent,#closeZoom").hide(); 
+}
+</script>

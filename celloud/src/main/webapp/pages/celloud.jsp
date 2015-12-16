@@ -105,7 +105,7 @@
               </a>
             </li>
             <li class="header"><span>用户中心</span></li>
-            <li class="treeview">
+            <li class="treeview" id="accountManage">
 	            <a href="javascript:void(0)" onclick="showUser()">
 	            	<i class="fa fa-user"></i>
 	            	<span>账号管理</span>
@@ -151,15 +151,16 @@
     <script type="text/javascript">
     	var hasNavi = <%=session.getAttribute("userNav")%>;
     	var intro = null;
+	    $.ajaxSetup ({
+		    cache: false //关闭AJAX相应的缓存
+		});
     	$(document).ready(function(){
     		showUserCount();
     		if(hasNavi=1){
     			intro = introJs();
     			intro.setOption('tooltipPosition', 'auto');
     			intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
-// 				tour.setOption('',);
 				intro.start();
-// 				intro.exit();
     		}
     	});
     </script>
