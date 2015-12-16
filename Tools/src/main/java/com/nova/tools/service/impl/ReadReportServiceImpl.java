@@ -268,6 +268,11 @@ public class ReadReportServiceImpl {
 	public Map<String, String> EGFRDataReport(String path) {
 		Map<String, String> resultMap = new HashMap<String, String>();
 		// 先处理根目录下的文件
+        if (new File(path + "/report.txt").exists()) {
+            String first = FileTools.getFirstLine(path + "/report.txt");
+            String r = first == null ? "0" : first.replace("Exon", "").trim();
+            resultMap.put("length", r);
+        }
 		String wz1 = path + "/report.txt.wz.1";
 		if (new File(wz1).exists()) {
 			resultMap.put("wz1", FileTools.readAppoint(wz1));
@@ -412,6 +417,12 @@ public class ReadReportServiceImpl {
 	public Map<String, String> KRASDataReport(String path) {
 	    Map<String, String> resultMap = new HashMap<String, String>();
         // 先处理根目录下的文件
+        if (new File(path + "/report.txt").exists()) {
+            String first = FileTools.getFirstLine(path + "/report.txt");
+            String r = first == null ? "0" : first.replace(
+                    "KRAS exon number is ", "");
+            resultMap.put("length", r);
+        }
         String wz1 = path + "/report.txt.wz.1";
         if (new File(wz1).exists()) {
             resultMap.put("wz1", FileTools.readAppoint(wz1));
