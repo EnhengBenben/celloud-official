@@ -16,11 +16,8 @@
     <!-- Daterange picker -->
     <link href="plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
     <link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
-    <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.4" rel="stylesheet" type="text/css" />
+    <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.5" rel="stylesheet" type="text/css" />
     <link href="plugins/intro/introjs.css" rel="stylesheet" type="text/css" />
-    <link href="<%=request.getContextPath() %>/dist/css/productDetail.css" rel="stylesheet" type="text/css" />
-  	<link href="<%=request.getContextPath() %>/dist/css/productList.css" rel="stylesheet" type="text/css" />
-<link href="<%=request.getContextPath() %>/dist/css/getNoResult.css" rel="stylesheet" type="text/css" />
   </head>
   <body class="skin-green sidebar-mini">
     <div class="wrapper">

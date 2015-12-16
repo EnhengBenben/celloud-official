@@ -1458,10 +1458,10 @@ a:focus {
   -o-transition: all 0.3s linear;
   transition: all 0.3s linear;
   position: absolute;
-  top: -10px;
+  top: 5px;
   right: 10px;
   z-index: 0;
-  font-size: 90px;
+  font-size: 85px;
   color: rgba(0, 0, 0, 0.15);
 }
 .small-box:hover {
@@ -4774,81 +4774,3 @@ ul.app-detail-tabs li.selected a {
 }
 .time{color:#777;font-style:italic;font-size:10.2px}
 .appIcon{vertical-align: top;}
-div,h1,h2,h3,h4,h5,h6,hr,p,dl,dt,dd,ul,ol,li,pre,form,button,input,textarea,th,td,i,span{margin:0;padding:0}
-h1,h2,h3,h4,h5,h6{font-size:100%;font-style:normal;font-weight:normal}
-ul,ol{list-style:none}
-a{text-decoration:none;color:inherit;outline:none;cursor:pointer}
-a:hover{text-decoration:none}
-img{border:0;display:block}
-textarea{overflow:auto;vertical-align:top}
-table{border-collapse:collapse;border-spacing:0}
-input,button,select,textarea{font-family:inherit;font-size:inherit;line-height:inherit}
-button,input,select,textarea{background-image:none}a,img{outline:none}.hide{display:none}
-.hidden {
-  display: none;
-}
-/*更多市场*/
-.common-normal { }
-.common-normal .normal-title { height: 40px; border-bottom: 1px #eeeeee solid; background: #fff; }
-.common-normal .normal-title h4 { height: 40px; line-height: 40px; color: #000; font-size: 18px; padding-left: 30px; float: left; }
-.common-normal .normal-title span.links{ width: 52px; height: 18px; display: block; margin-right: 20px; margin-top:22px; float: right; background: url(//img.alicdn.com/tps/i1/TB1gtHjHVXXXXb4XpXXj0ZUHXXX-52-18.jpg) no-repeat;}
-.common-normals .normal-title{border-bottom: 1px #f9c28f solid;}
-.common-normals .normal-title h4{ color: #f9c28f;}
-.common-normal .normal-title .list-title { float: right; position: relative; height: 59px; }
-.common-normal .normal-title .list-title a { text-decoration: none; color: #000; }
-.common-normal .normal-title .list-title li { float: left; line-height: 58px; padding-right: 28px; }
-.common-normal .normal-title .under-line { position: absolute; bottom: -1px; height: 2px; background: #45aeff; -webkit-transition: all 0.5s; -moz-transition: all 0.5s; -ms-transition: all 0.5s; -o-transition: all 0.5s; }
-.common-normal .normal-slide { height: 172px; overflow: hidden; position: relative; background-color: #fff; }
-.common-normal .normal-slide .tab-content { height: 172px; overflow: hidden; position: relative; width: 100%; }
-.common-normal .normal-slide .tab-content .tab-pannel { float: left; width: 100%; height: 172px; overflow: hidden;}
-.common-normal .normal-slide .slide-con { overflow: hidden;margin-left: -1px; }
-.common-normal .normal-slide .slide-con li { width: 20%; height: 172px; float: left;position: relative; }
-.common-normal .normal-slide .slide-con li .app_mark{position: absolute;width: 1px;height: 100%;background: #eeeeee;top: 0;;left: 0px;z-index: 2;}
-.common-normal .slide-con li .detail { height: 148px; margin: 0 auto; }
-.common-normal .slide-con li .picbox { height: 100px; padding-top: 22px; }
-.common-normal .slide-con li .picbox img { max-height: 80px; }
-.common-normal .slide-con li .picbox .pic { height: 100%; line-height: 100%; width: 100%; }
-.common-normal .slide-con li .picbox img { border: 0; vertical-align: middle; display: block; margin: 0 auto; max-width: 110px; }
-.common-normal .slide-con li .picbox .pic { position: relative; z-index: 1; display: table; text-align: center; font-size: 0; *display: block; *layout-grid-line:100%; }
-.common-normal .slide-con li .picbox .pic p { display: table-cell; vertical-align: middle; *display: inline; *writing-mode: tb-rl; *text-align: center; *height: 100%; }
-.common-normal .slide-con li .picbox .pic img { vertical-align: middle; }
-.common-normal .slide-con li .version { height: 26px; line-height: 26px; font-size: 14px; color: #333333; overflow: hidden; text-align: center;margin:0 20px; }
-.common-normal .slide-con li .company { height: 26px; line-height: 26px; font-size: 12px; color: #000; overflow: hidden; text-align: center; margin:0 20px; }
-.common-normal .slide-con li .button { height: 24px; -webkit-transition: all .5s; -moz-transition: all .5s; -ms-transition: all .5s; -o-transition: all .5s; opacity: 0; filter: alpha(opacity=0);position: relative;z-index: 3 }
-.common-normal .slide-con li:hover .button { opacity: 1; filter: alpha(opacity=100); }
-.common-normal .slide-con li .button a { font-size: 12px; color: #fff; height: 24px; line-height: 24px; background-color: #1291be; display: block; text-align: center; }
-.common-normal .slide-con li .button a i { background: url(//img.alicdn.com/tps/i2/TB1uGKdHVXXXXbWXXXXMs3..VXX-14-14.png); width: 14px; height: 14px; vertical-align: middle; margin-top: -3px; margin-left: 2px; display: inline-block; *zoom:1; *display: inline; }
-
-.guess-like { width: 240px; height: 440px; float: left; background: #fff; position: absolute; top: 0; right: 0px; }
-.guess-like h4 { height: 40px; padding: 0 18px; background: #b4ebfe; line-height: 40px; color: #333333; font-size: 16px; }
-.guess-like ul { overflow: hidden; }
-.guess-like ul li { height: 99px; border-top: 1px solid #eeeeee; margin-top: -1px; padding: 0 18px; }
-.guess-like ul li:hover { background: #f2fbfe; }
-.guess-like ul .pic { width: 62px; height: 58px; padding-top: 19px; float: left; }
-.guess-like ul .pic img { width: 62px; height: 58px; display: block; }
-.guess-like ul .info { padding-left: 10px; margin-left: 62px; padding-top: 19px; line-height: 24px; }
-.guess-like ul a { color: #1291be; }
-.guess-like ul a h5 { font-size: 14px; color: #333333; line-height: 16px; padding-bottom: 4px; height: 16px; }
-.guess-like ul a p { height: 24px; }
-.guess-like ul a h5,
-.guess-like ul a p { overflow: hidden; }
-.guess-like ul a .price { color: #333333; }
-.guess-like ul a span { color: #ff6600; font-size: 16px; }
-/*服务市场 楼层*/
-.operation-serve { background: #fff; margin-bottom: 20px; overflow: hidden;}
-.operation-serve .info { border-bottom: 1px solid #eeeeee; padding: 19px 14px 15px 14px; }
-.operation-serve .info h4 { line-height: 28px; color: #000000; font-size: 16px; display: none;}
-.operation-serve .info p { line-height: 26px; color: #666; font-size: 12px; text-indent: 2em;}
-.operation-serve ul{ margin-left: -1px;}
-.operation-serve ul li { width: 14.28%; float: left; height: 40px; position: relative; line-height: 40px; text-align: center; font-size: 14px;}
-.operation-serve ul li a{ border-left: 1px solid #eeeeee; display: block; height: 40px;}
-.operation-serve ul li a:hover{  background: #1291BE;color: #E5F4F7;}
-.operation-serve ul p { line-height: 18px; color: #666666; text-align: center; }
-.operation-serve ul .app_mark { position: absolute; display: block; background: url(//img.alicdn.com/tps/i3/TB1B9GrHVXXXXadaXXX2BeMFFXX-24-20.png); width: 24px; height: 20px; top: 28px; left: -10px; }
-.normal-tit { font-size: 20px; color: #000000; height: 59px; line-height: 58px; background: #fff; padding: 0 18px;}
-.normal-tit span { font-size: 12px; color: #666666; padding-left: 14px;}
-.normal-tit p { float: right;}
-.normal-tit .link2{ height: 26px;line-height: 26px;padding-top: 18px;}
-.normal-tit .link { float: right; line-height: 37px; padding-left: 22px;}
-.normal-tit .link a { color: #00a2ca; text-decoration: none; font-size: 12px;}
-.normal-tit .link a:hover { text-decoration: underline;}
