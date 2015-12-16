@@ -28,6 +28,7 @@ method_dic = {
 93:PGS,
 94:PGS,
 104:PGS,
+116:PGS,
 95:NIPT
 }
 
@@ -43,6 +44,7 @@ collection_dic = {
 93:"Pgs",
 94:"Pgs",
 104:"Pgs",
+116:"Pgs",
 95:"NIPT"
 }
 

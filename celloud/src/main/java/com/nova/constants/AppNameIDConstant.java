@@ -112,6 +112,7 @@ public class AppNameIDConstant {
     public static final String CMP = "110";
     public static final String CMP_199 = "111";
     public static final String GDD = "112";
+    public static final String SureplexMosaic = "116";
 
     // 根据ID获取名称
     /**
@@ -167,5 +168,6 @@ public class AppNameIDConstant {
 	map.put(VSP, "VSP");
 	map.put(CMP_199, "CMP_199");
 	map.put(GDD, "GDD");
+	map.put(SureplexMosaic, "SureplexMosaic");
     }
 }
