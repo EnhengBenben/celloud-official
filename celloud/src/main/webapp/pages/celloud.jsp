@@ -149,6 +149,9 @@
     <script src="dist/js/app.js?v=2" type="text/javascript"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script type="text/javascript">
+	    $.ajaxSetup ({
+		    cache: false //关闭AJAX相应的缓存
+		});
     	$(document).ready(function(){
     		showUserCount();
 // 			var tour = introJs();
