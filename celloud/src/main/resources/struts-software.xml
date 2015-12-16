@@ -26,16 +26,6 @@
 
 	<package name="software-ajax" extends="celloud-default">
 		<!-- 软件分类管理 begin-->
-		<action name="getAllClassifyJson" class="com.nova.action.ClassifyAction" method="getAllClassify">
-			<result type="json">
-				<param name="root">list</param>
-			</result>
-		</action>
-		<action name="getSubClassifyById" class="com.nova.action.ClassifyAction" method="getSubClassifyById">
-			<result type="json">
-				<param name="root">list</param>
-			</result>
-		</action>
 		<action name="getAllSubClassifyList" class="com.nova.action.ClassifyAction" method="getAllSubClassifyList">
 			<result type="json">
 				<param name="root">list</param>
@@ -47,12 +37,6 @@
 			method="offLineSoft">
 			<result type="json">
 				<param name="root">dataNum</param>
-			</result>
-		</action>
-		<action name="getAllSoftwareNum" class="com.nova.action.SoftwareAction"
-			method="getAllSoftwareNum">
-			<result type="json">
-				<param name="root">softNum</param>
 			</result>
 		</action>
 		<action name="updateBhri" class="com.nova.action.SoftwareAction"
