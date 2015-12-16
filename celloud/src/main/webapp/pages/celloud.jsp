@@ -105,7 +105,7 @@
               </a>
             </li>
             <li class="header"><span>用户中心</span></li>
-            <li class="treeview">
+            <li class="treeview" id="accountManage">
 	            <a href="javascript:void(0)" onclick="showUser()">
 	            	<i class="fa fa-user"></i>
 	            	<span>账号管理</span>
