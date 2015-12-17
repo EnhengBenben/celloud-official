@@ -164,7 +164,7 @@ function submitBaseInfo(){
   }else{
 	  var email = $("#inputEmail").val();
 	  var telphone = $("#inputPhone").val();
-	  $.get("user!checkUserEmailByUserId",{"user.userId":$.trim($("#baseInfoUserIdHidden").val()),"user.email":email},function(flag){
+	  $.get("user!checkUserEmailByUserId",{"user.email":email},function(flag){
 		  if(flag){
 			  $("#emailSpanInfo").html("该邮箱已存在");
 			  return flag;
