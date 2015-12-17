@@ -44,9 +44,9 @@
 <div class="item-intro">
   <div class="link">
     <div class="inner-link">
-      <ul>
-        <li class="select" style="border-left:0;"><a href="#1">产品介绍</a></li>
-        <li style="border-right: 0;" class=""><a href="#2">报告截图</a></li>
+      <ul id="toAppMoreDetailUl">
+        <li class="select" style="border-left:0;" id="toAppIntro" onclick="toAppMoreDetail('toAppIntro')"><a href="#1">产品介绍</a></li>
+        <li style="border-right: 0;" class="" id="toAppScreeen" onclick="toAppMoreDetail('toAppScreeen')"><a href="#2">报告截图</a></li>
       </ul>
     </div>
   </div>

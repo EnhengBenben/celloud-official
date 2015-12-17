@@ -104,6 +104,10 @@ function toAppDetail(id){
 		}
 	});
 }
+function toAppMoreDetail(id){
+	$("#toAppMoreDetailUl li").removeClass("select");
+	$("#"+id).addClass("select");
+}
 function getMyApp(){
 	$.get("app3!getMyAppList",{},function(responseText){
 		$("#myAppDiv").html(responseText);
