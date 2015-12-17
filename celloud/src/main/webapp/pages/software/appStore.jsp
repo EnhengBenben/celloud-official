@@ -12,7 +12,7 @@
     <li><a href="javascript:showAppStore()"><i class="fa fa-cubes"></i> 应用市场</a></li>
     <li class="active"><a href="javascript:void()" id="rootClassifyName">首页</a></li>
     <li class="hide"><a href="javascript:void()" id="secondClassifyName">二级分类</a></li>
-    <li class="hide"><a href="javascript:void()" id="appNameTitle">应用名称</a></li>
+    <li class="hide"><span href="javascript:void()" id="appNameTitle">应用名称</span></li>
   </ol>
 </section>
 <section class="content">
@@ -23,7 +23,7 @@
 	<div class="mainpage" id="appMain">
 	  <div class="y-row operation-serve"  data-spm="16">
   		<div class="info">
-    	  <p>应用市场是CelLoud的一个开放平台，为用户提供科学精致的服务。</p>
+    	  <p>应用市场是CelLoud的一个开放平台，为用户提供专业、精准的生物信息分析服务。</p>
   		</div>
   		<ul>
   		  <c:if test="${pclassifys.size()>0}">

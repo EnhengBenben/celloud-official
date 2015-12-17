@@ -14,7 +14,7 @@
           <div class="intro">
             <ul>
               <li>分类：<span>${app.classifyNames}</span></li>
-              <li>交付方式：
+              <li>
                 <span>
                 <c:choose>
 			      <c:when test="${app.classifyNames.contains('小软件') }">
