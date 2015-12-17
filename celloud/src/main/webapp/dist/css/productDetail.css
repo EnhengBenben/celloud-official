@@ -141,6 +141,13 @@ button,input,select,textarea{background-image:none}a,img{outline:none}.hide{disp
 	color: #1291be
 }
 
+.item-list .item-left .itemInfo .intro li .btn-celloud-success {
+	color: #fff
+}
+.item-list .item-left .itemInfo .intro li .btn-celloud-close {
+	color: #4cba42
+}
+
 .item-list .item-left .select-one {
 	margin-top: 0
 }

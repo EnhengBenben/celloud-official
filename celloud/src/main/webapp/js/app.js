@@ -138,16 +138,16 @@ function addApp(id){
 function removeApp(id){
 	$.get("app3!userRemoveApp",{"paramId":id},function(responseText){
 		if(responseText.length>0){
-			$("#toAddApp").attr("onclick","removeApp("+id+")");
-			$("#toAddApp").html("<i class=\"fa fa-minus\"></i>&nbsp;取消添加");
-			$("#toAddApp").removeClass("btn-celloud-success").addClass("btn-celloud-close");
+			$("#toAddApp").attr("onclick","addApp("+id+")");
+			$("#toAddApp").html("<i class=\"fa fa-plus\"></i>&nbsp;添加");
+			$("#toAddApp").removeClass("btn-celloud-close").addClass("btn-celloud-success");
 			$("#myAppDiv").html(responseText);
 			if(hasNavi == 1 && intro != null){
 				$("#toUploadMenu").attr("data-step",3);
 				intro.exit();
 				intro = null;
 				intro = introJs();
-				intro.setOption('tooltipPosition', 'auto');
+				intro.setOption('tooltipPosition', 'bottom');
 				intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
 				intro.setOption('showStepNumbers', false);
 				intro.setOption('showButtons', false);
