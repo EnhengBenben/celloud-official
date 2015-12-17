@@ -144,9 +144,6 @@ function getExt(file_name){
 	return result;
 }
 function showRunApp(){
-	if(intro != null){
-		continue;
-	}
 	$("#toRunApp").attr("disabled","true");
 	var dataIds = "";
 	addedApps=[];
@@ -501,7 +498,8 @@ function initDataList(){
 		intro.setOption('showButtons', false);
 		intro.start();
 		intro.goToStep(2);
-		$("#manageDataH3").bind('click',function(e){
+		$("#toRunDataA").attr("disabled",true);
+		$("#manageDataH3").bind('click',function(){
 			if(intro != null){
 				intro.exit();
 				intro = null;

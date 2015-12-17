@@ -45,10 +45,10 @@ function toMoreApp(pid,sid,pageNum,isParent){
 	$("#secondClassifyName").unbind("click");
 	$.get("app3!toMoreAppList",{"classifyId":sid,"classifyPid":pid,"classifyFloor":isParent,"page.pageSize":pageAppNum,"page.currentPage":currentPage,"condition":sortFiled,"type":sortType},function(responseText){
 		$("#appMain").html(responseText);
-		$("#rootClassifyName").html($("#applistpid"+pid).html());
-		$("#secondClassifyName").html($("#applistsid"+sid).html());
+		$("#rootClassifyName").html($("#pid"+pid).html());
+		$("#secondClassifyName").html($("#sid"+sid).html());
 		$("#rootClassifyName").bind("click",function(){toMoreApp(pid,0,1,0);});
-		if($("#applistsid"+sid).html()=="全部"){
+		if($("#sid"+sid).html()=="全部"){
 			$("#secondClassifyName").bind("click",function(){toMoreApp(pid,0,1,0);});
 		}else{
 			$("#secondClassifyName").bind("click",function(){toMoreApp(pid,sid,pageNum,isParent);});

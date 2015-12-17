@@ -179,15 +179,20 @@ function showUser(){
     $("#accountManage").addClass('active');
 	$("#mainDIV").load("pages/user/user.jsp");
 }
-/*---------------------------
-功能:停止事件冒泡
----------------------------*/
-function stopBubble(e) {
-    //如果提供了事件对象，则这是一个非IE浏览器
-    if ( e )
-        //因此它支持W3C的stopPropagation()方法
-        e.stopPropagation();
-    else
-        //否则，我们需要使用IE的方式来取消事件冒泡
-        window.event.cancelBubble = true;
-}
+
+var EventUtil = {
+   addHandler: function(element,type,handler){
+        if(element.addEventListener){
+               element.addEventListener(type, handler, false);
+         }else if(element.attachEvent){
+               element.attachEvent("on" + type, handler);
+          }
+      },
+      removeHandler: function(element,type,handler){
+           if(element.removeEventListener){
+                 element.removeEventListener(type, handler, false);
+           }else if(element.detachEvent){
+                  element.detachEvent("on" + type, handler);
+                }            
+           }
+ };    
