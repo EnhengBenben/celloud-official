@@ -69,7 +69,7 @@ function lineModal(id,legend,xdata,ydata,yname){
 	                show: true
 	            },
 	            legend: {
-	                data:[legend]
+	                data:[yname]
 	            },
 	            xAxis : [
 	                {

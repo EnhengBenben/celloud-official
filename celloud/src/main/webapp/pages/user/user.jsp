@@ -27,7 +27,7 @@
 		  </div>
 	      <div class="y-row" style="padding: 20px 10px;background-color: #fff;"  data-spm="17">
 	        <div class="common-normal common-slide common-normals" id="userinfo">
-	          <form class="form-horizontal form-cel" style="width:600px">
+	          <form class="form-horizontal form-cel">
 		          <!-- <div class="form-group" style="vertical-align:middle">
 		            <label for="photo" class="col-sm-2 control-label">头像</label>
 		            <div class="col-sm-7">
@@ -63,7 +63,7 @@
 		      </form>
 	        </div>
 	        <div class="common-normal common-slide common-normals hide" id="changePwd">
-	           <form class="form-horizontal form-cel" style="width:600px">
+	           <form class="form-horizontal form-cel">
 		          <!-- <div class="form-group" style="vertical-align:middle">
 		            <label for="photo" class="col-sm-2 control-label">头像</label>
 		            <div class="col-sm-7">
