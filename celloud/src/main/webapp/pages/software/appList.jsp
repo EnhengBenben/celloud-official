@@ -75,7 +75,7 @@
 		            </div>
 		          </div>
 		          <div class="box-info-wrap">
-		            <div class="box-pic" <c:if test="${status.index==0}"> data-step="2" data-intro="" data-position="right" data-img="appDetail.png" </c:if>>
+		            <div class="box-pic" <c:if test="${status.first}"> data-step="2" data-intro="" data-position="right" data-img="appDetail.png" </c:if>>
 		              <a target="_blank" href="javascript:toAppDetail(${app.softwareId })">
 		                <img alt="产品logo" src="<%=request.getContextPath()%>/images/app/${app.pictureName}">
 		              </a>

@@ -3,12 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
       <c:choose>
   		<c:when test="${sclassifys.size()>0 }">
-    	  <c:forEach items="${sclassifys}" var="sc" varStatus="status">
+  		  <c:set var="scindex" value="0"></c:set>
+    	  <c:forEach items="${sclassifys}" var="sc" varStatus="scstatus">
 	  		<c:if test="${classifyAppMap[sc.classifyId].size()>0}">
+	          <c:set var="scindex" value="${scindex+1}"></c:set>
   	    	  <div class="y-row" style="padding-bottom: 20px;"  data-spm="17">
 	      		<div class="common-normal common-slide common-normals">
 	        	  <div class="normal-tit normal-title">
-	         		<p class="link"><a class="bc-a-tit" href="javascript:toMoreApp(${sc.classifyPid },${sc.classifyId },1,1)" title="" <c:if test="${status.index==0}"> data-step="3" data-intro="" data-position="left" data-img="moreApp.png" </c:if> >获取更多&gt;</a></p>
+	         		<p class="link"><a class="bc-a-tit" href="javascript:toMoreApp(${sc.classifyPid },${sc.classifyId },1,1)" title="" <c:if test="${scindex == 1}"> data-step="3" data-intro="" data-position="left" data-img="moreApp.png" </c:if> >获取更多&gt;</a></p>
 	         		<h4>${sc.classifyName }</h4>
 	        	  </div>
 	        	  <div class="normal-slide">
@@ -16,8 +18,8 @@
 	            	  <div class="tab-content">
 	              		<div class="tab-pannel">
 				    	  <ul class="slide-con guess-like-box">
-				  	 	    <c:forEach items="${classifyAppMap[sc.classifyId]}" var="app" varStatus="status">
-					    	  <c:if test="${status.index<5}">
+				  	 	    <c:forEach items="${classifyAppMap[sc.classifyId]}" var="app" varStatus="appstatus">
+					    	  <c:if test="${appstatus.index<5}">
 			              		<li>
 		                    	  <div class="detail">
 		                      		<div class="picbox">

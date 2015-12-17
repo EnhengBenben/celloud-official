@@ -27,8 +27,8 @@
   		</div>
   		<ul id="appClassifyUl" data-step="2" data-intro="" data-position="bottom" data-img="checkapp.png">
   		  <c:if test="${pclassifys.size()>0}">
-	  	 	<c:forEach items="${pclassifys}" var="pc" varStatus="status">
-		      <li id="classifypidLi${pc.classifyId }" <c:if test="${status.index==1}"> class="active"</c:if>><a href="javascript:toSclassifyApp(${pc.classifyId },'${pc.classifyName }')">${pc.classifyName }</a></li>
+	  	 	<c:forEach items="${pclassifys}" var="pc" varStatus="pcstatus">
+		      <li id="classifypidLi${pc.classifyId }" <c:if test="${pcstatus.first}"> class="active"</c:if>><a href="javascript:toSclassifyApp(${pc.classifyId },'${pc.classifyName }')">${pc.classifyName }</a></li>
 	  	 	</c:forEach>
   		  </c:if>
   		</ul>
