@@ -393,7 +393,7 @@ function savePage(){
 	});
 	inputVal = $("#des").children().val();
 	$("#des").children().html(inputVal);
-	var url = "http://121.201.7.200:8088/celloud/";
+	var url = "http://www.celloud.org/";
 	$.post(url+"updateContext",{"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":$("#printMain").html()},function(result){
 		if(result==1){
 			alert("信息保存成功！");
@@ -404,7 +404,7 @@ function savePage(){
 }
 function reset(){
 	if(confirm("确定要重置之前保存的报告吗？")){
-		var url = "http://121.201.7.200:8088/celloud/";
+		var url = "http://www.celloud.org/";
 		$.post(url+"updateContext",{"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":""},function(result){
 			if(result==1){
 				alert("请重新打开页面");
