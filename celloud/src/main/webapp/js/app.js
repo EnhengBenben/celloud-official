@@ -39,12 +39,18 @@ function toSclassifyApp(pid,pname){
 }
 function toMoreApp(pid,sid,pageNum,isParent){
 	currentPage = pageNum;
+	$("#rootClassifyName").unbind("click");
+	$("#secondClassifyName").unbind("click");
 	$.get("app3!toMoreAppList",{"classifyId":sid,"classifyPid":pid,"classifyFloor":isParent,"page.pageSize":pageAppNum,"page.currentPage":currentPage,"condition":sortFiled,"type":sortType},function(responseText){
-		$("#appMain").html(responseText);
 		$("#rootClassifyName").html($("#pid"+pid).html());
-		$("#rootClassifyName").bind("click",function(){ toMoreApp(pid,0,1,0);});
 		$("#secondClassifyName").html($("#sid"+sid).html());
-		$("#secondClassifyName").bind("click",function(){ toMoreApp(pid,sid,pageNum,isParent);});
+		$("#appMain").html(responseText);
+		$("#rootClassifyName").bind("click",function(){toMoreApp(pid,0,1,0);});
+		if($("#sid"+sid).html()=="全部"){
+			$("#secondClassifyName").bind("click",function(){alert("--1--"); toMoreApp(pid,0,1,0);});
+		}else{
+			$("#secondClassifyName").bind("click",function(){alert("--2--"); toMoreApp(pid,sid,pageNum,isParent);});
+		}
 		$("#secondClassifyName").parent().removeClass("hide");
 		$("#sortByCreateDate").bind("click",function(){
             sortFiled = "s.create_date";
