@@ -134,7 +134,7 @@ function showReport(){
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
 	$("#mainDIV").load("pages/report/reportDetail.jsp");
-	if(intro != null){
+	if(intro != null && hasNavi == 1){
 		intro.exit();
 		intro = null;
 		intro = introJs();
@@ -158,12 +158,9 @@ function showReport(){
  * 应用市场
  */
 function showAppStore(){
-	$.AdminLTE.closeSidebar();
+//	$.AdminLTE.closeSidebar();
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
-	if(intro != null){
-		intro.exit();
-	}
 	$.get("app3!toAppStore",{},function(responseText){
 		$("#mainDIV").html(responseText);
 	});

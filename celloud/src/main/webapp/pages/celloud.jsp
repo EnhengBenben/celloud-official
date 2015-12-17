@@ -156,7 +156,7 @@
 		});
     	$(document).ready(function(){
     		showUserCount();
-    		if(hasNavi=1){
+    		if(hasNavi==1){
     			intro = introJs();
     			intro.setOption('tooltipPosition', 'auto');
     			intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);

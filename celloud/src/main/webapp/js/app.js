@@ -3,17 +3,14 @@ var classifyPid = 1;
 var classifySid = 0;
 var introNext = 0;
 function initApp(){
-	if(intro != null){
-		intro.exit();
-		intro = null;
-	}
 	getMyApp();
 	var pid = $("#defaultPid").val();
 	var pname = $("#defaultPname").val();
-	if(hasNavi = 1){
+	if(hasNavi == 1 && intro != null){
+		intro.exit();
+		intro = null;
 		intro = introJs();
-		intro.setOption('tooltipPosition', 'auto');
-		intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+		intro.setOption('tooltipPosition', 'bottom');
 		intro.setOption('showStepNumbers', false);
 		intro.setOption('showButtons', false);
 		intro.start();
@@ -25,12 +22,11 @@ function toSclassifyApp(pid,pname){
 	$("#secondClassifyName").parent().addClass("hide");
 	$.get("app3!toSclassifyApp",{"paramId":pid},function(responseText){
 		$("#sclassify").html(responseText);
-		if(intro != null && introNext==1){
+		if(hasNavi == 1 && intro != null && introNext==1){
 			intro.exit();
 			intro = null;
 			intro = introJs();
-			intro.setOption('tooltipPosition', 'auto');
-			intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+			intro.setOption('tooltipPosition', 'left');
 			intro.setOption('showStepNumbers', false);
 			intro.setOption('showButtons', false);
 			intro.start();
@@ -56,7 +52,7 @@ function toMoreApp(pid,sid,pageNum,isParent){
 		});
 		sortApp();
 		sortFiled = "";
-		if(intro != null){
+		if(hasNavi == 1 && intro != null){
 			intro.exit();
 			intro = null;
 			intro = introJs();
@@ -87,7 +83,7 @@ function sortApp(){
 function toAppDetail(id){
 	$.get("app3!getAppById",{"paramId":id},function(responseText){
 		$("#appMain").html(responseText);
-		if(intro != null){
+		if(hasNavi == 1 && intro != null){
 			intro.exit();
 			intro = null;
 			intro = introJs();
@@ -112,7 +108,7 @@ function addApp(id){
 			$("#toAddApp").html("<i class=\"fa fa-minus\"></i>&nbsp;取消添加");
 			$("#toAddApp").removeClass("btn-celloud-success").addClass("btn-celloud-close");
 			$("#myAppDiv").html(responseText);
-			if(intro != null){
+			if(hasNavi == 1 && intro != null){
 				$("#toUploadMenu").attr("data-step",3);
 				intro.exit();
 				intro = null;
@@ -134,7 +130,7 @@ function removeApp(id){
 			$("#toAddApp").html("<i class=\"fa fa-minus\"></i>&nbsp;取消添加");
 			$("#toAddApp").removeClass("btn-celloud-success").addClass("btn-celloud-close");
 			$("#myAppDiv").html(responseText);
-			if(intro != null){
+			if(hasNavi == 1 && intro != null){
 				$("#toUploadMenu").attr("data-step",3);
 				intro.exit();
 				intro = null;

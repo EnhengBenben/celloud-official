@@ -917,7 +917,12 @@
       var prevTooltipButton = document.createElement('a');
 
       prevTooltipButton.onclick = function() {
-    	  $.get("user!updateNotify",{"notify":0},function(){});
+    	  $.get("user!updateNotify",{"notify":0},function(){
+    	  });
+    	  if(intro != null){
+    		  intro.exit();
+    		  intro = null;
+    	  }
     	  if (self._introItems.length - 1 == self._currentStep && typeof (self._introCompleteCallback) === 'function') {
               self._introCompleteCallback.call(self);
             }
@@ -951,6 +956,11 @@
         }
 
         _exitIntro.call(self, self._targetElement);
+	  	  if(intro != null){
+			  intro.exit();
+			  intro = null;
+		  }
+
       };
 
       buttonsLayer.appendChild(skipTooltipButton);
