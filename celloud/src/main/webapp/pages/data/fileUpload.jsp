@@ -84,10 +84,19 @@ $(function() {
  		multiple_queues : true,
 	});
 	var uploader = $('#fileUploadDiv').pluploadQueue();
-	if(intro != null){
-		intro.start();
-		intro.goToStep(4);
-	}
+	uploader.bind('Init', function(){
+		if(intro != null){
+			intro.exit();
+			intro = null;
+			intro = introJs();
+			intro.setOption('tooltipPosition', 'auto');
+			intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+			intro.setOption('showStepNumbers', false);
+			intro.setOption('showButtons', false);
+			intro.start();
+			intro.goToStep(4);
+		}
+	});
 	//绑定选择文件事件
 	uploader.bind('Browse', function() {
 		$.get("checkAdminSessionTimeOut",function(response){
@@ -114,6 +123,14 @@ $(function() {
 			clearInterval(refresh);
 		}
 		if(intro != null){
+// 			intro.exit();
+// 			intro = null;
+// 			intro = introJs();
+// 			intro.setOption('tooltipPosition', 'auto');
+// 			intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+// 			intro.setOption('showStepNumbers', false);
+// 			intro.setOption('showButtons', false);
+// 			intro.start();
 			intro.goToStep(6);
 		}
 	});

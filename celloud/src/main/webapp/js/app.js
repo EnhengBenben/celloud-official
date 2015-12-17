@@ -6,16 +6,6 @@ function initApp(){
 	getMyApp();
 	var pid = $("#defaultPid").val();
 	var pname = $("#defaultPname").val();
-	if(hasNavi == 1 && intro != null){
-		intro.exit();
-		intro = null;
-		intro = introJs();
-		intro.setOption('tooltipPosition', 'bottom');
-		intro.setOption('showStepNumbers', false);
-		intro.setOption('showButtons', false);
-		intro.start();
-		intro.goToStep(2);
-	}
 	toSclassifyApp(pid,pname);
 }
 function toSclassifyApp(pid,pname){
@@ -24,6 +14,16 @@ function toSclassifyApp(pid,pname){
 	$("#classifypidLi"+pid).addClass("active");
 	$.get("app3!toSclassifyApp",{"paramId":pid},function(responseText){
 		$("#sclassify").html(responseText);
+		if(hasNavi == 1 && intro != null && introNext==0){
+			intro.exit();
+			intro = null;
+			intro = introJs();
+			intro.setOption('tooltipPosition', 'bottom');
+			intro.setOption('showStepNumbers', false);
+			intro.setOption('showButtons', false);
+			intro.start();
+			intro.goToStep(2);
+		}
 		if(hasNavi == 1 && intro != null && introNext==1){
 			intro.exit();
 			intro = null;
@@ -49,9 +49,9 @@ function toMoreApp(pid,sid,pageNum,isParent){
 		$("#appMain").html(responseText);
 		$("#rootClassifyName").bind("click",function(){toMoreApp(pid,0,1,0);});
 		if($("#sid"+sid).html()=="全部"){
-			$("#secondClassifyName").bind("click",function(){alert("--1--"); toMoreApp(pid,0,1,0);});
+			$("#secondClassifyName").bind("click",function(){toMoreApp(pid,0,1,0);});
 		}else{
-			$("#secondClassifyName").bind("click",function(){alert("--2--"); toMoreApp(pid,sid,pageNum,isParent);});
+			$("#secondClassifyName").bind("click",function(){toMoreApp(pid,sid,pageNum,isParent);});
 		}
 		$("#secondClassifyName").parent().removeClass("hide");
 		$("#sortByCreateDate").bind("click",function(){
@@ -95,8 +95,8 @@ function toAppDetail(id){
 			intro.exit();
 			intro = null;
 			intro = introJs();
-			intro.setOption('tooltipPosition', 'auto');
-			intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+			intro.setOption('tooltipPosition', 'right');
+//			intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
 			intro.setOption('showStepNumbers', false);
 			intro.setOption('showButtons', false);
 			intro.start();

@@ -439,9 +439,6 @@ function toUse(){
 function initDataList(){
 	//全选
 	$("#selAll").click(function(){
-		if(intro != null){
-			intro.goToStep(8);
-		}
 		//清空checkedDataIds
 		var checked = $(this).prop("checked");
 		var arrChk;
@@ -496,12 +493,24 @@ function initDataList(){
 		intro.exit();
 		intro = null;
 		intro = introJs();
-		intro.setOption('tooltipPosition', 'auto');
-		intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+		intro.setOption('tooltipPosition', 'bottom');
 		intro.setOption('showStepNumbers', false);
 		intro.setOption('showButtons', false);
 		intro.start();
 		intro.goToStep(2);
+		$("#manageDataH3").bind('click',function(){
+			if(intro != null){
+				intro.exit();
+				intro = null;
+				intro = introJs();
+				intro.setOption('tooltipPosition', 'bottom');
+				intro.setOption('showStepNumbers', false);
+				intro.setOption('showButtons', false);
+				intro.start();
+				intro.goToStep(8);
+				$("#manageDataH3").unbind('click');
+			}
+		});
 	}
 }
 

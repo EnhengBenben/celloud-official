@@ -436,7 +436,7 @@ used as it is.
 				
 				$("#cleanUploaded").click(function(){
 					uploader.splice();
-					if(intro != null){
+					if(hasNavi == 1 && intro != null){
 						intro.goToStep(7);
 					}
 				})

@@ -15,7 +15,7 @@ select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 
 	<thead>
     	<tr>
         	<th class="center">
-        		<input type="checkbox" id="selAll" class="selAll" style="border:none;" data-step="2" data-position="right" data-intro="" data-img="checkdata.png"/>
+        		<input type="checkbox" id="selAll" class="selAll" style="border:none;"/>
         	</th>
         	<th style="min-width: 418px;">文件名称  <a href="javascript:sortByFileName();" id="sortNameA" class="a-gray"><i class="fa fa-sort-amount-asc" id="sortFileName"></i></a></th>
         	<th class="center" style="min-width:115px;">数据编号</th>

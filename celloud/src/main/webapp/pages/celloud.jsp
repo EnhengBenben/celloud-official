@@ -92,8 +92,8 @@
                 <span>报告</span>
               </a>
             </li>
-            <li class="treeview" data-step="1" data-position="right" data-intro="" data-img="yysc.png">
-              <a href="javascript:void(0)" onclick="showAppStore()">
+            <li class="treeview" id="toAppStoreMenu" data-step="1" data-position="right" data-intro="" data-img="yysc.png">
+              <a href="javascript:void(0)">
                 <i class="fa fa-cubes"></i>
                 <span>应用市场</span>
               </a>
@@ -150,21 +150,38 @@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script type="text/javascript">
     	var hasNavi = <%=session.getAttribute("userNav")%>;
-    	var intro = null;
+    	var intro;
+	    function toIntro(position,step){
+	    	if(hasNavi==1 && intro != null){
+	    		intro.exit();
+		    	intro = null;
+				intro = introJs();
+				intro.setOption('tooltipPosition', position);
+				intro.setOption('showStepNumbers', false);
+				intro.setOption('showButtons', false);
+				intro.start();
+				if(step > 1){
+					intro.goToStep(step);
+				}
+	    	}
+		}
 	    $.ajaxSetup ({
 		    cache: false //关闭AJAX相应的缓存
 		});
     	$(document).ready(function(){
     		showUserCount();
-    		if(hasNavi==1){
-    			intro = introJs();
-    			intro.setOption('tooltipPosition', 'auto');
-    			intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
-    			intro.setOption('showStepNumbers', false);
-    			intro.setOption('showButtons', false);
-				intro.start();
-    		}
+//     		if(hasNavi==1){
+//     			intro = introJs();
+//     			intro.setOption('tooltipPosition', 'auto');
+//     			intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+//     			intro.setOption('showStepNumbers', false);
+//     			intro.setOption('showButtons', false);
+// 				intro.start();
+			intro = introJs();
+			toIntro('right',1);
+//     		}
     	});
+    	
     </script>
   </body>
 </html>

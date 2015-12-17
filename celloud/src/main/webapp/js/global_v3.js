@@ -102,15 +102,6 @@ function lineModal(id,legend,xdata,ydata,yname){
 function showUpload(){
 	$("#uploadDIV").css("display","");
 	$("#mainDIV").css("display","none");
-	if(intro != null){
-		intro.exit();
-		intro = null;
-		intro = introJs();
-		intro.setOption('tooltipPosition', 'auto');
-		intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
-		intro.setOption('showStepNumbers', false);
-		intro.setOption('showButtons', false);
-	}
 	if($("#uploadDIV").html()==""){
 		$("#uploadDIV").load("pages/data/fileUpload.jsp");
 	}
@@ -146,7 +137,8 @@ function showReport(){
 			steps: [
               { 
             	step: 9,
-            	img: "endintro.png"
+            	img: "endintro.png",
+            	intro: ""
               }
             ]
 		});
@@ -157,14 +149,30 @@ function showReport(){
 /**
  * 应用市场
  */
-function showAppStore(){
-//	$.AdminLTE.closeSidebar();
+//function showAppStore(){
+////	$.AdminLTE.closeSidebar();
+//	$("#uploadDIV").css("display","none");
+//	$("#mainDIV").css("display","");
+//	$.get("app3!toAppStore",{},function(responseText){
+//		$("#mainDIV").html(responseText);
+//	});
+//}
+var toAppStoreMenu = document.getElementById("toAppStoreMenu");
+toAppStoreMenu.addEventListener("click",function(){
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
 	$.get("app3!toAppStore",{},function(responseText){
 		$("#mainDIV").html(responseText);
 	});
-}
+},false); 
+
+//$("#toAppStoreMenu").click(function(){
+//	$("#uploadDIV").css("display","none");
+//	$("#mainDIV").css("display","");
+//	$.get("app3!toAppStore",{},function(responseText){
+//		$("#mainDIV").html(responseText);
+//	});
+//});
 
 /**
  * 统计页面
