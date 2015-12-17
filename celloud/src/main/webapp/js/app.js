@@ -20,6 +20,8 @@ function initApp(){
 }
 function toSclassifyApp(pid,pname){
 	$("#secondClassifyName").parent().addClass("hide");
+	$("#appClassifyUl li").removeClass("active");
+	$("#classifypidLi"+pid).addClass("active");
 	$.get("app3!toSclassifyApp",{"paramId":pid},function(responseText){
 		$("#sclassify").html(responseText);
 		if(hasNavi == 1 && intro != null && introNext==1){

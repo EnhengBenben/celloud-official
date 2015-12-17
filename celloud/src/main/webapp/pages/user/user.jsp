@@ -19,10 +19,10 @@
 	  		<div class="info">
 	    	  <p>完善基本信息，通知邮箱及手机绑定。</p>
 	  		</div>
-	  		<ul>
-		      <li><a href="javascript:showUserInfo()" id="userinfoTab">基本信息</a></li>
-		      <li><a href="javascript:showChangePwd()" id="changePwdTab">修改密码</a></li>
-		      <li><a href="javascript:showOperaLog()" id="operlogTab">操作日志</a></li>
+	  		<ul id="userOperaUl">
+		      <li class="active" id="userinfoTab"><a href="javascript:showUserInfo()">基本信息</a></li>
+		      <li id="changePwdTab"><a href="javascript:showChangePwd()">修改密码</a></li>
+		      <li id="operlogTab"><a href="javascript:showOperaLog()">操作日志</a></li>
 	  		</ul>
 		  </div>
 	      <div class="y-row" style="padding: 20px 10px;background-color: #fff;"  data-spm="17">
@@ -113,22 +113,23 @@ function clearActive(){
 	$("#userinfo").addClass("hide");
 	$("#changePwd").addClass("hide");
 	$("#operlog").addClass("hide");
+	$("#userOperaUl li").removeClass("active");
 }
 function showUserInfo(){
 	clearActive();
-// 	$("#userinfoTab").addClass("bg-green-active");
+	$("#userinfoTab").addClass("active");
 	$("#userinfo").removeClass("hide");
 	$("#subtitle").html("基本信息");
 }
 function showChangePwd(){
 	clearActive();
-// 	$("#changePwdTab").addClass("bg-green-active");
+	$("#changePwdTab").addClass("active");
 	$("#changePwd").removeClass("hide");
 	$("#subtitle").html("修改密码");
 }
 function showOperaLog(){
 	clearActive();
-// 	$("#operlogTab").addClass("bg-green-active");
+	$("#operlogTab").addClass("active");
 	$("#operlog").removeClass("hide");
 	$("#subtitle").html("操作日志");
 	//获取日志信息
