@@ -45,10 +45,18 @@ select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 
 							</c:if>
 						</td>
 						<td class="center">${data.dataKey }</td>
-						<td class="center">${data.anotherName }</td>
-						<td align="center">${data.strain }<s:property value="#data.strain"/></td>
-						<td align="center">${data.dataTags }</td>
-						<td align="center">${data.sample }</td>
+						<td class="center" title="${data.anotherName }">
+							<c:choose><c:when test="${fn:length(data.anotherName)>10 }"><c:out value="${fn:substring(data.anotherName, 0, 10) }"/>...</c:when><c:otherwise>${data.anotherName }</c:otherwise></c:choose>
+						</td>
+						<td class="center" title="${data.strain }">
+							<c:choose><c:when test="${fn:length(data.strain)>10 }"><c:out value="${fn:substring(data.strain, 0, 10) }"/>...</c:when><c:otherwise>${data.strain }</c:otherwise></c:choose>
+						</td>
+						<td class="center" title="${data.dataTags }">
+							<c:choose><c:when test="${fn:length(data.dataTags)>10 }"><c:out value="${fn:substring(data.dataTags, 0, 10) }"/>...</c:when><c:otherwise>${data.dataTags }</c:otherwise></c:choose>
+						</td>
+						<td class="center" title="${data.sample }">
+							<c:choose><c:when test="${fn:length(data.sample)>10 }"><c:out value="${fn:substring(data.sample, 0, 10) }"/>...</c:when><c:otherwise>${data.sample }</c:otherwise></c:choose>
+						</td>
 						<td class="center">
 							<c:choose><c:when test="${data.size>1048576 }"><fmt:formatNumber pattern="0.00" value="${data.size/1048576 }"/>MB</c:when><c:otherwise><fmt:formatNumber pattern="0.00" value="${data.size/1024 }"/>KB</c:otherwise></c:choose>
 						</td>
