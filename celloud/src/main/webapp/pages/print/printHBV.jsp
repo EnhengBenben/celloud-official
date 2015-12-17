@@ -79,10 +79,14 @@
 				    	    <c:if test="${allPic!=null }">
 					    	    <p><img src="${allPic }" style="width: 900px;height: 136px;"></p>
 				    	    </c:if>
-				    	    <h2 class="mt20">结论：</h2>
-				    	    <p>${result }</p>
-				    	    <h2 class="mt20">原始序列：</h2>
-				    	    <p style="word-break: break-all;">${seq }</p>
+				    	    <c:if test="${result!=null && result.trim()!=''}">
+					    	    <h2 class="mt20">结论：</h2>
+					    	    <p>${result }</p>
+				    	    </c:if>
+				    	    <c:if test="${seq!=null && seq.trim()!='' }">
+					    	    <h2 class="mt20">原始序列：</h2>
+					    	    <p style="word-break: break-all;">${seq }</p>
+				    	    </c:if>
 				    	    <div class="w3cbbs"></div>
 				    	    <h2 class="mt20">原始峰图：</h2>
 				    	    <p style="width:750px;">
@@ -91,6 +95,9 @@
 						   				<img src="${imgHtml }" style="width:100%"/>
 						   				<br/><br/>
 						   			</c:forEach>
+					   			</c:if>
+					   			<c:if test="${imgList==null}">
+					   				样本异常，无法检测
 					   			</c:if>
 				    	    </p>
 					   </c:when>

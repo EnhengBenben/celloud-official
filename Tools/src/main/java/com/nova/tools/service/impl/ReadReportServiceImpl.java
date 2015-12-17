@@ -166,10 +166,12 @@ public class ReadReportServiceImpl {
 			List<String> xlslist = FileTools.fileSearch(snpPath, ".xls",
 					"endsWith");
 			String xls = null;
-			for (String s : xlslist) {
-				if (!"report.xls".equals(s)) {
-					xls = s;
-				}
+			if(xlslist!=null){
+			    for (String s : xlslist) {
+			        if (!"report.xls".equals(s)) {
+			            xls = s;
+			        }
+			    }
 			}
 			String context[] = null;
 			if (new File(snpPath + "/" + xls).exists()) {
@@ -309,10 +311,12 @@ public class ReadReportServiceImpl {
 		List<String> out = Arrays.asList(both);
 		List<String> unknow = FileTools.fileSearch(path, ".png", "endWith");
 		List<String> unResult = new ArrayList<>();
-		for (String un : unknow) {
-			if (!out.contains(un) && !un.endsWith(".10.png")) {
-				unResult.add(un);
-			}
+		if(unknow!=null){
+		    for (String un : unknow) {
+		        if (!out.contains(un) && !un.endsWith(".10.png")) {
+		            unResult.add(un);
+		        }
+		    }
 		}
 		String u = unResult.toString();
 		resultMap.put("unknow", u.substring(1, u.length()-1));
@@ -464,9 +468,11 @@ public class ReadReportServiceImpl {
         List<String> out = Arrays.asList(both);
         List<String> unknow = FileTools.fileSearch(path, ".png", "endWith");
         List<String> unResult = new ArrayList<>();
-        for (String un : unknow) {
-            if (!out.contains(un) && !un.endsWith(".10.png")) {
-                unResult.add(un);
+        if(unknow!=null){
+            for (String un : unknow) {
+                if (!out.contains(un) && !un.endsWith(".10.png")) {
+                    unResult.add(un);
+                }
             }
         }
         String u = unResult.toString();
@@ -514,8 +520,10 @@ public class ReadReportServiceImpl {
 		List<String> listNew = FileTools.fileSearch(snpPath, "new.png",
 				"endWith");
 		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < listNew.size(); i++) {
-			sb.append(listNew.get(i) + ";");
+		if(listNew!=null){
+		    for (int i = 0; i < listNew.size(); i++) {
+		        sb.append(listNew.get(i) + ";");
+		    }
 		}
 		String all1 = FileTools.fileExist(snpPath, "1_all.png", "endsWith");
 		String all2 = FileTools.fileExist(snpPath, "2_all.png", "endsWith");
