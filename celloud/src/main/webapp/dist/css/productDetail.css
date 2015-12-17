@@ -22,7 +22,7 @@ button,input,select,textarea{background-image:none}a,img{outline:none}.hide{disp
 .common-normal .normal-title .list-title a { text-decoration: none; color: #000; }
 .common-normal .normal-title .list-title li { float: left; line-height: 58px; padding-right: 28px; }
 .common-normal .normal-title .under-line { position: absolute; bottom: -1px; height: 2px; background: #45aeff; -webkit-transition: all 0.5s; -moz-transition: all 0.5s; -ms-transition: all 0.5s; -o-transition: all 0.5s; }
-.common-normal .normal-slide { height: 172px; overflow: hidden; position: relative; background-color: #fff; }
+.common-normal .normal-slide { width:100%; height: 172px; overflow: hidden; position: relative; background-color: #fff; }
 .common-normal .normal-slide .tab-content { height: 172px; overflow: hidden; position: relative; width: 100%; }
 .common-normal .normal-slide .tab-content .tab-pannel { float: left; width: 100%; height: 172px; overflow: hidden;}
 .common-normal .normal-slide .slide-con { overflow: hidden;margin-left: -1px; }
