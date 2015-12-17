@@ -107,9 +107,10 @@
   </div>
 </section>
 
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/baseInfo.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/baseInfo.js?version=3.0"></script>
 <script type="text/javascript">
 function clearActive(){
+	$("#appMain").find(".baseInfo").html("");
 	$("#userinfo").addClass("hide");
 	$("#changePwd").addClass("hide");
 	$("#operlog").addClass("hide");
@@ -123,6 +124,9 @@ function showUserInfo(){
 }
 function showChangePwd(){
 	clearActive();
+	$("#inputOldPassword").val("");
+	$("#inputNewPassword").val("");
+	$("#inputConfirmPassword").val("");
 	$("#changePwdTab").addClass("active");
 	$("#changePwd").removeClass("hide");
 	$("#subtitle").html("修改密码");

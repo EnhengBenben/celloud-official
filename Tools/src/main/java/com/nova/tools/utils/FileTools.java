@@ -522,6 +522,9 @@ public class FileTools {
             String mate) {
         File dir = new File(folderPath);
         File file[] = dir.listFiles();
+        if(file==null){
+            return null;
+        }
         List<String> list = new ArrayList<String>();
         for (int i = 0; i < file.length; i++) {
             if ("endWith".equals(mate)) {
