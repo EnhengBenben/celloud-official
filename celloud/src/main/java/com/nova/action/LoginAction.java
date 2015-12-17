@@ -26,8 +26,9 @@ import com.opensymphony.xwork2.ModelDriven;
 
 @ParentPackage("celloud-default")
 @Action("login")
-@Results({ @Result(name = "success", location = "/pages/celloud.jsp"),
+@Results({ @Result(name = "success", location = "/loadIndex.jsp"),
 	@Result(name = "input", location = "/index.jsp"),
+	@Result(name = "home", location = "/pages/celloud.jsp"),
 	@Result(name = "toLogin", location = "/index.jsp"),
 	@Result(name = "logout", type = "redirect", location = "toLogin"),
 	@Result(name = "init", type = "json", params = { "root", "publicKey" }) })
@@ -178,7 +179,7 @@ public class LoginAction extends BaseAction implements ModelDriven<User> {
 	    return INPUT;
 	}
     }
-
+    
     public String toLogin() {
 	HashMap<String, String> rsa = RSAUtil.map;
 	publicKey = new PublicKey();
@@ -218,7 +219,10 @@ public class LoginAction extends BaseAction implements ModelDriven<User> {
 	}
 	return "logout";
     }
-
+    @Action("index")
+    public String loadIndex(){
+    	return "home";
+    }
     public User getUser() {
 	return user;
     }
