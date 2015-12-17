@@ -93,7 +93,7 @@
               </a>
             </li>
             <li class="treeview" id="toAppStoreMenu" data-step="1" data-position="right" data-intro="" data-img="yysc.png">
-              <a href="javascript:void(0)">
+              <a href="javascript:void(0)" onclick="showAppStore()">
                 <i class="fa fa-cubes"></i>
                 <span>应用市场</span>
               </a>
