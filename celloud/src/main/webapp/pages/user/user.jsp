@@ -123,6 +123,9 @@ function showUserInfo(){
 }
 function showChangePwd(){
 	clearActive();
+	$("#inputOldPassword").val("");
+	$("#inputNewPassword").val("");
+	$("#inputConfirmPassword").val("");
 	$("#changePwdTab").addClass("active");
 	$("#changePwd").removeClass("hide");
 	$("#subtitle").html("修改密码");
