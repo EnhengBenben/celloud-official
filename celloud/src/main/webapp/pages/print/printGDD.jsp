@@ -73,7 +73,7 @@
       </thead>
       <tbody>
           <c:forEach items="${gsrList}" var="accountConfig" varStatus="status" >  
-            <c:if test="${!(fn:trim(accountConfig.diseaseName) eq '' || fn:trim(accountConfig.diseaseName) eq '改变一碳代谢' || fn:trim(accountConfig.diseaseName) eq '活力减少' || fn:trim(accountConfig.diseaseName) eq '降低表达')}">
+            <c:if test="${!(fn:trim(accountConfig.diseaseName) eq '' || fn:trim(accountConfig.diseaseName) eq '改变一碳代谢' || fn:trim(accountConfig.diseaseName) eq '活力减少' || fn:trim(accountConfig.diseaseName) eq '降低表达'|| fn:trim(accountConfig.diseaseName) eq '表型改变相关' || fn:trim(accountConfig.diseaseName) eq '改变高半胱氨酸水平')}">
              <tr>  
 	        	 <td>${accountConfig.diseaseName }</td>
 	        	 <td>${accountConfig.gene }</td>
@@ -166,7 +166,7 @@
    				</c:when>
    				<c:otherwise>
 		   			<c:forEach items="${gddDiseaseList}" var="gddDisease">
-		   			  <c:if test="${!(fn:trim(gddDisease.name) eq '' || fn:trim(gddDisease.name) eq '改变一碳代谢' || fn:trim(gddDisease.name) eq '活力减少' || fn:trim(gddDisease.name) eq '降低表达')}">
+		   			  <c:if test="${!(fn:trim(gddDisease.name) eq '' || fn:trim(gddDisease.name) eq '改变一碳代谢' || fn:trim(gddDisease.name) eq '活力减少' || fn:trim(gddDisease.name) eq '降低表达'|| fn:trim(accountConfig.diseaseName) eq '表型改变相关' || fn:trim(accountConfig.diseaseName) eq '改变高半胱氨酸水平')}">
    						<tr>
    							<td>${gddDisease.name }</td>
    							<td>${gddDisease.gene }</td>
@@ -220,7 +220,7 @@
  					<tr><td colspan="6">没有发现突变位点</td></tr>
  				</c:when>
  				<c:otherwise>
- 					<c:if test="${r.diseaseName!='' && r.diseaseName!='改变一碳代谢' && r.diseaseName!='活力减少' && r.diseaseName!='降低表达'}">
+ 					<c:if test="${r.diseaseName!='' && r.diseaseName!='改变一碳代谢' && r.diseaseName!='活力减少' && r.diseaseName!='降低表达'|| fn:trim(accountConfig.diseaseName) eq '表型改变相关' || fn:trim(accountConfig.diseaseName) eq '改变高半胱氨酸水平'}">
 						<tr>
 							<td>${r.gene }</td>
 							<td>${r.mutBase }</td>
@@ -347,7 +347,7 @@
       </tr>
     </table>
   </section>
-  <script language="javascript" src="<%=request.getContextPath()%>/plugins/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
   <script>
   	function preview(obj){
   		var inputVal;
@@ -368,7 +368,7 @@
   		var sex = $("input[type='radio']:checked").val();
   		$("#_sex").html(sex);
   		$("#change").hide();
-  		if($("#noMutation").attr("checked")){
+  		if($("#noMutation").prop("checked")){
   			$("#noDrug").css("display","");
   		}
   		$("a").css("display","none");
@@ -387,7 +387,7 @@
   			$(this).parent().html("<textarea class='form-control' rows='15' cols='100'>"+inputVal+"</textarea>");
   		});
   		$("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
-  		$("input[type='radio'][value="+sex+"]").attr("checked",true); 
+  		$("input[type='radio'][value="+sex+"]").prop("checked",true); 
   		$("a").css("display","");
   	}
   	function save(){

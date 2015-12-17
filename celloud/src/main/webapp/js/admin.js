@@ -35,10 +35,6 @@ $.ajaxSetup ({
 			}
 		});
 
-		$("#softCount").click(function(){
-			$("#main").load("admin/softwareStatistic.jsp");
-		});
-		
 		$("#dataMenu").click(function(){
 			$("#main").load("admin/dataMenu.jsp");
 		});
@@ -77,13 +73,6 @@ $.ajaxSetup ({
 		});
 		$("#data").click(function(){
 			$("#main").load("admin/data.jsp");
-		});
-		$("#logo").click(function(){
-			$("#main").load("admin/log.jsp");
-		});
-		
-		$("#count").click(function(){
-			$("#main").load("admin/count.jsp");
 		});
 		
 		$("#client").click(function(){
@@ -187,9 +176,6 @@ $.ajaxSetup ({
 						if(role==2||role==3){
 							$("#menu").load("admin/menu.jsp");
 							$("#loginModal").modal("hide");
-							if(role==3){
-								$("#main").load("admin/count.jsp");
-							}
 						}else{
 							$("#loginErrorDiv").css("display","");
 							$("#loginError").html("没有操作权限，登录失败！");
@@ -551,12 +537,12 @@ function toEditSoft(id){
 			$("#typeSel").val(soft.type);
 			//runData
 			var runData = soft.runData;
-			$("input[name='soft.runData'][value='"+runData+"']").attr("checked",true);
+			$("input[name='soft.runData'][value='"+runData+"']").prop("checked",true);
 			//dataNum
 			$("#dataNum").val(soft.dataNum);
 			//param
 			var param = soft.param;
-			$("input[name='soft.param'][value='"+param+"']").attr("checked",true);
+			$("input[name='soft.param'][value='"+param+"']").prop("checked",true);
 			//ScreenShot
 			var screenShot = soft.screenShot;
 			if(screenShot!=null&&screenShot!=""){
@@ -1720,175 +1706,6 @@ function searchUserByName(){
 /**
  * ============notice end========
  */
-/**
- * ============report end========
- */
-	function initReport(){
-		$.get("softwareJson_getAllSoft.action",{},function(softList){
-			for ( var i = 0; i < softList.length; i++) {
-				$("#dataSoftSel").append("<option value='"+softList[i].softwareId+"'>"+softList[i].softwareName+"</option>");
-				$("#proSoftSel").append("<option value='"+softList[i].softwareId+"'>"+softList[i].softwareName+"</option>");
-			}
-		});
-	}
-	function hideProInfo(){
-		$("#proAlertInfo").attr("style","display: none;");	
-	}
-	function hideDataInfo(){
-		$("#dataAlertInfo").attr("style","display: none;");	
-	}
-	//修改项目状态
-	function saveProReport(){
-		var proId = $("#proId").val();
-		var softId = $("#proSoftSel").val();
-		var state = $("input[name='pst']:checked").val();
-		if(proId==""||softId==""){
-			return;
-		}
-		//根据softId获取softName
-		$.get("getSoftwareNameById.action",{"softwareId":softId},function(softName){
-			if(softName=="FastQC"){
-				$.get("getPath.action",{},function(responseText){
-					var toolsOutPath = responseText.split(",")[2] + "Procedure!updataState";
-					$.get("getUserIdByProjectId.action",{"projectId":proId},function(userId){
-						$.get("getDataInfoListByProjectId.action",{"projectId":proId},function(fileList){
-							var dataKeyList = "";
-							$.each(fileList,function(index,item){
-								var ext = item.fileName.substring(item.fileName.indexOf("."));
-								var data = item.dataKey + "," + item.dataKey + ext + "," + item.fileName + ";";
-								dataKeyList += data;
-							});
-							$.get("getSoftwareIdByName.action",{"softwareName":softName},function(appId){
-								$.get(toolsOutPath,{"userId":userId,"appId":appId,"projectId":proId,"dataKeyList":dataKeyList},function(responseText){
-									if(responseText=="success"){
-										$.get("updateReportByDataKeyProjectId.action",{"softwareId":softId,"state":state,"projectId":proId},function(flag){
-											$("#proAlertInfo").attr("style","");
-											if(flag>0){
-												$("#proAlertInfo").html("保存成功！");
-											}else{
-												$("#proAlertInfo").html("保存失败！");
-											}
-											setTimeout("hideProInfo()",2000);
-										});
-									}else{
-										jBox.alert("FastQC项目报告创建失败！");
-									}
-								});
-							});
-						});
-					});
-				});
-			}else{
-				$.get("updateReportByProSoftId.action",{"projectId":proId,"softwareIds":softId,"state":state},function(flag){
-					$("#proAlertInfo").attr("style","");	
-					if(flag>0){
-						$("#proAlertInfo").html("保存成功！");
-					}else{
-						$("#proAlertInfo").html("保存失败！");
-					}
-					setTimeout("hideProInfo()",2000);
-				});
-			}
-		});
-	}
-	//修改数据状态
-	function saveDataReport(){
-		var dataKey = $("#dataKey").val();
-		var softId = $("#dataSoftSel").val();
-		var state = $("input[name='dst']:checked").val();
-		if(dataKey==""||softId==""){
-			return;
-		}
-		$.get("getSoftwareNameById.action",{"softwareId":softId},function(softName){
-			if(softName=="FastQC"){
-				$.get("getPath.action",{},function(responseText){
-					var toolsOutPath = responseText.split(",")[2] + "Procedure!updataState";
-					$.get("getFileNameByDataKey.action",{"dataKey":dataKey},function(fileName){
-						var ext = fileName.substring(fileName.indexOf("."));
-						var dataKeyList = dataKey + "," + dataKey + ext + "," + fileName + ";";
-						$.get("getUserIdBySoftIdDataKey.action",{"softwareId":softId,"dataKeys":dataKey},function(userId){
-							$.get(toolsOutPath,{"appId":softId,"dataKeyList":dataKeyList,"userId":userId,"projectId":""},function(responseText){
-								if(responseText=="success"){
-									$.get("updateReportByDataKeySoftId.action",{"dataKeys":dataKey,"softwareId":softId,"state":state},function(flag){
-										$("#dataAlertInfo").attr("style","");	
-										if(flag>0){
-											$("#dataAlertInfo").html("保存成功！");
-										}else{
-											$("#dataAlertInfo").html("保存失败！");
-										}
-										setTimeout("hideDataInfo()",2000);
-									});
-								}
-							});
-						});
-					});
-				});
-			}else{
-				$.get("updateReportByDataKeySoftId.action",{"dataKeys":dataKey,"softwareId":softId,"state":state},function(flag){
-					$("#dataAlertInfo").attr("style","");	
-					if(flag>0){
-						$("#dataAlertInfo").html("保存成功！");
-					}else{
-						$("#dataAlertInfo").html("保存失败！");
-					}
-					setTimeout("hideDataInfo()",2000);
-				});
-			}
-		});
-	}
-/**
- * ============report end========
- */
-/**
-*===================  count start ==========================
-*/
-	function initAnalysis(){
-		$.get("analysis!getUserList",function(response){
-			clearShow();
-			$("#userDataList").html(response);
-			$("#userDataList").css("display","");
-			$.get("analysis!getUserDataList",function(result){
-				$("#countUserAll").html(result);
-				$("#countUserAll").css("display","");
-			});
-		});
-	}
-	
-	function getUserData(userId){
-		$.get("analysis!getUserData",{"userId":userId},function(response){
-			clearShow();
-			$("#everyUser").html(response);
-			$("#everyUser").css("display","");
-		});
-	}
-	function getUserMounthData(userId,mounth){
-		$.get("analysis!getDataList",{"userId":userId,"mounth":mounth},function(response){
-			clearShow();
-			$("#everyMounth").html(response);
-			$("#everyMounth").css("display","");
-		});
-	}
-	function clearShow(){
-		$("#userDataList").css("display","none");
-		$("#countUserAll").css("display","none");
-		$("#everyUser").css("display","none");
-		$("#everyMounth").css("display","none");
-	}
-	
-	function toBack(flag){
-		if(flag == 0){
-			$("#everyUser").css("display","none");
-			$("#userDataList").css("display","");
-			$("#countUserAll").css("display","");
-		}else{
-			$("#everyMounth").css("display","none");
-			$("#everyUser").css("display","");
-		}
-	}
-	
-	/**
-	*===================  count end ==========================
-	*/
 	/**
 	 * ====================email start===========================
 	 */

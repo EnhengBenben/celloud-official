@@ -45,8 +45,8 @@ public class ProjectDaoImpl extends BaseDao implements ProjectDao {
 	    e.printStackTrace();
 	} finally {
 	    ConnectManager.free(conn, ps, rs);
-	}
-	return id;
+        }
+        return id;
     }
 
 }

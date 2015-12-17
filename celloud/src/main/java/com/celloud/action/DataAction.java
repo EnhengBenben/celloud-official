@@ -110,28 +110,18 @@ public class DataAction extends BaseAction {
     private static String basePath = SparkPro.TOOLSPATH;
     private static String dataPath = PropertiesUtil.bigFilePath;
     private static String datalist = PropertiesUtil.datalist;
-    private static Map<String, Map<String, String>> machines = null;
-    private static String sparkhost = null;
-    private static String sparkpwd = null;
-    private static String sparkuserName = null;
-    private static String sgeHost;
-    private static String sgePwd;
-    private static String sgeUserName;
+
+    private static Map<String, Map<String, String>> machines = XmlUtil.machines;
+    private static String sparkhost = machines.get("spark").get(Mod.HOST);
+    private static String sparkpwd = machines.get("spark").get(Mod.PWD);
+    private static String sparkuserName = machines.get("spark").get(Mod.USERNAME);
+    private static String sgeHost = machines.get("158").get(Mod.HOST);
+    private static String sgePwd = machines.get("158").get(Mod.PWD);;
+    private static String sgeUserName = machines.get("158").get(Mod.USERNAME);
+    
 
     // 初始化perl命令路径
-    private static Map<Long, App> appMap = null;
-    static {
-        SQLUtils sql = new SQLUtils();
-        appMap = sql.getAllSoftware();
-        XmlUtil.getMachines();
-        machines = XmlUtil.machines;
-        sparkhost = machines.get("spark").get(Mod.HOST);
-        sparkpwd = machines.get("spark").get(Mod.PWD);
-        sparkuserName = machines.get("spark").get(Mod.USERNAME);
-        sgeHost = machines.get("158").get(Mod.HOST);
-        sgePwd = machines.get("158").get(Mod.PWD);
-        sgeUserName = machines.get("158").get(Mod.USERNAME);
-    }
+    private static Map<Long, App> appMap = SQLUtils.appMap;
 
     public String getAllData() {
         userId = (Integer) super.session.get("userId");
@@ -385,14 +375,17 @@ public class DataAction extends BaseAction {
                     FileTools.appendWrite(dataListFile, dataResult.toString());
                     int runningNum = taskService.getRunningNumByAppId(appId_l);
                     Task task = new Task();
+                    task.setProjectId(proId);
                     task.setUserId(Long.valueOf(userId));
                     task.setAppId(appId_l);
                     task.setDataKey(datakey);
                     StringBuffer command = new StringBuffer(
-                            "perl /share/biosoft/perl/PGS_MG/bin/moniter_qsub.pl perl ");
+                            "nohup perl /share/biosoft/perl/PGS_MG/bin/moniter_qsub_url-v1.pl nohup perl ");
                     command.append(appMap.get(appId_l).getCommand())
                             .append(" ").append(dataListFile).append(" ")
-                            .append(appPath).append(" ProjectID").append(proId);
+                            .append(appPath).append(" ProjectID").append(proId)
+                            .append(" &>").append(appPath).append("/")
+                            .append(proId).append("/log ");
                     task.setCommand(command.toString());
                     StringBuffer params = new StringBuffer();
                     params.append("appName=")

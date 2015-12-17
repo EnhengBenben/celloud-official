@@ -166,10 +166,12 @@ public class ReadReportServiceImpl {
 			List<String> xlslist = FileTools.fileSearch(snpPath, ".xls",
 					"endsWith");
 			String xls = null;
-			for (String s : xlslist) {
-				if (!"report.xls".equals(s)) {
-					xls = s;
-				}
+			if(xlslist!=null){
+			    for (String s : xlslist) {
+			        if (!"report.xls".equals(s)) {
+			            xls = s;
+			        }
+			    }
 			}
 			String context[] = null;
 			if (new File(snpPath + "/" + xls).exists()) {
@@ -268,6 +270,11 @@ public class ReadReportServiceImpl {
 	public Map<String, String> EGFRDataReport(String path) {
 		Map<String, String> resultMap = new HashMap<String, String>();
 		// 先处理根目录下的文件
+        if (new File(path + "/report.txt").exists()) {
+            String first = FileTools.getFirstLine(path + "/report.txt");
+            String r = first == null ? "0" : first.replace("Exon", "").trim();
+            resultMap.put("length", r);
+        }
 		String wz1 = path + "/report.txt.wz.1";
 		if (new File(wz1).exists()) {
 			resultMap.put("wz1", FileTools.readAppoint(wz1));
@@ -304,10 +311,12 @@ public class ReadReportServiceImpl {
 		List<String> out = Arrays.asList(both);
 		List<String> unknow = FileTools.fileSearch(path, ".png", "endWith");
 		List<String> unResult = new ArrayList<>();
-		for (String un : unknow) {
-			if (!out.contains(un) && !un.endsWith(".10.png")) {
-				unResult.add(un);
-			}
+		if(unknow!=null){
+		    for (String un : unknow) {
+		        if (!out.contains(un) && !un.endsWith(".10.png")) {
+		            unResult.add(un);
+		        }
+		    }
 		}
 		String u = unResult.toString();
 		resultMap.put("unknow", u.substring(1, u.length()-1));
@@ -412,6 +421,12 @@ public class ReadReportServiceImpl {
 	public Map<String, String> KRASDataReport(String path) {
 	    Map<String, String> resultMap = new HashMap<String, String>();
         // 先处理根目录下的文件
+        if (new File(path + "/report.txt").exists()) {
+            String first = FileTools.getFirstLine(path + "/report.txt");
+            String r = first == null ? "0" : first.replace(
+                    "KRAS exon number is ", "");
+            resultMap.put("length", r);
+        }
         String wz1 = path + "/report.txt.wz.1";
         if (new File(wz1).exists()) {
             resultMap.put("wz1", FileTools.readAppoint(wz1));
@@ -453,9 +468,11 @@ public class ReadReportServiceImpl {
         List<String> out = Arrays.asList(both);
         List<String> unknow = FileTools.fileSearch(path, ".png", "endWith");
         List<String> unResult = new ArrayList<>();
-        for (String un : unknow) {
-            if (!out.contains(un) && !un.endsWith(".10.png")) {
-                unResult.add(un);
+        if(unknow!=null){
+            for (String un : unknow) {
+                if (!out.contains(un) && !un.endsWith(".10.png")) {
+                    unResult.add(un);
+                }
             }
         }
         String u = unResult.toString();
@@ -503,8 +520,10 @@ public class ReadReportServiceImpl {
 		List<String> listNew = FileTools.fileSearch(snpPath, "new.png",
 				"endWith");
 		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < listNew.size(); i++) {
-			sb.append(listNew.get(i) + ";");
+		if(listNew!=null){
+		    for (int i = 0; i < listNew.size(); i++) {
+		        sb.append(listNew.get(i) + ";");
+		    }
 		}
 		String all1 = FileTools.fileExist(snpPath, "1_all.png", "endsWith");
 		String all2 = FileTools.fileExist(snpPath, "2_all.png", "endsWith");

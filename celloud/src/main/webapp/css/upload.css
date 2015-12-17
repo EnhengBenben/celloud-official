@@ -1,18 +1,12 @@
 @CHARSET "UTF-8";
-html,body{margin:0px;height:100%;font-family: "微软雅黑"}
-.wholeheight{height:100%;}
-.download{ font-size:12px; color:#78BC28; float:left; display:inline; }
-.plupload_header_new{border-radius:5px ;background-color: #f2f5f9;margin-top:-5px;font-family: "微软雅黑";}
-.plupload_content_new_header{font-family: "微软雅黑";border: 1px solid #d8e2f0;border: 1px solid #d8e2f0;height: 32px;line-height: 32px;background: #f2f5f9;padding-left: 19px;position: relative;}
-.plupload_filelist_new{border-top:none;height: 100%;background: #fff;overflow-y: scroll;margin: 0;padding: 0;list-style: none;border: 1px solid #d8e2f0;}
+/* .plupload_header_new{border-radius:5px ;background-color: #f2f5f9;margin-top:-5px;} */
+.plupload_content_new_header{border: 1px solid #d8e2f0;border: 1px solid #d8e2f0;background: #f2f5f9;padding:10px 8px;position: relative;}
+.plupload_filelist_new{border-top:none;height: 100%;background: #fff;margin: 0;padding: 0;list-style: none;border: 1px solid #d8e2f0;}
 .footer{border-radius:0px 0px 5px 5px;border: 1px solid #d9e3f1;position:absolute; bottom:0px; width:99.7%; height:37px; line-height:37px; background-color:#f9fafd; color:#6e88ac;vertical-align: middle;}
 .footer span{color:#6e88ac;}
 .footer a{padding-left:10px;padding-right:10px;text-decoration: none;}
-.new_content{padding:10px 15px 10px 15px;}
-.addfile{display:block;background:url("../images/upload/add_file_normal.png"); width: 137px;height:36px;float:left;margin-right:20px;margin-top:10px;margin-left:5px;}
-.addfile:hover{background:url("../images/upload/addfile_hover.png");}
-.addfile:active{background:url("../images/upload/addfile_click.png");}
-.startfile{display:block;background:url("../images/upload/start_file_normal.png"); width: 137px;height:36px;float:left;margin-top:10px}
-.startfile:hover{background:url("../images/upload/start_hover.png");}
-.startfile:active{background:url("../images/upload/start_file_click.png");}
+.new_content{padding:10px 15px 10px 15px;min-height:}
+.addfile{display:block;width: 120px;float:left;margin-right:10px;margin-left:5px;}
+.startfile{display:block;width: 120px;float:left;margin-right:10px;}
 ._uploadAlert{display: inline-block; color: #CC6600; padding-top: 18px; padding-left: 30px;}
+/* .plupload_droptext{min-height:380px;} */

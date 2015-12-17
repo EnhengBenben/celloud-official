@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<div class="row">
+<div>
 	<div class="m-file">
 		数据编号：<span class="file-name">${ mib.dataKey}</span><br>
 		文件名称：
@@ -60,19 +60,19 @@
 			     <thead>
 			       <tr>
 			         <th>Species</th>
-			         <th>Genus</th>
-			         <th>GI</th>
-			         <th>%Coverage</th>
-			         <th>Reads_hit</th>
-			         <th>Reads_num</th>
-			         <th>Average depth of coverage</th>
+			         <th style="min-width:110px;">Genus</th>
+			         <th style="min-width:75px;">GI</th>
+			         <th style="min-width:76px;">%Coverage</th>
+			         <th style="min-width:65px;">Reads_hit</th>
+			         <th style="min-width:78px;">Reads_num</th>
+			         <th style="min-width:180px;">Average depth of coverage</th>
 			       </tr>
 			     </thead>
 			     <tbody>
-			       <c:if test="${fn:length(mib.summaryTable)>1}">
-			         <c:forEach items="${mib.summaryTable }" var="summary" varStatus="s" begin="1">
+			       <c:if test="${fn:length(mib.summaryTable)>0}">
+			         <c:forEach items="${mib.summaryTable }" var="summary" varStatus="s">
 					   <tr>
-					     <td>${summary.Species }</td>
+					     <td style="text-align: left;line-height:1em">${summary.Species }</td>
 					     <td>${summary.Genus }</td>
 					     <td>${summary.GI }</td>
 					     <td>${summary.Coverage }</td>

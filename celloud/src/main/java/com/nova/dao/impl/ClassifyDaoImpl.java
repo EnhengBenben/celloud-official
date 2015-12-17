@@ -13,7 +13,6 @@ import com.nova.dao.IClassifyDao;
 import com.nova.sdo.Classify;
 import com.nova.sdo.Software;
 import com.nova.utils.ConnectManager;
-import com.nova.utils.Page;
 
 public class ClassifyDaoImpl implements IClassifyDao {
 	Logger log = Logger.getLogger(NoticeDaoImpl.class);
@@ -105,64 +104,6 @@ public class ClassifyDaoImpl implements IClassifyDao {
 			ConnectManager.free(conn, ps, rs);
 		}
 		return classify;
-	}
-
-	@Override
-	public List<Classify> getAllClassifyList() {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		Classify classify = null;
-		List<Classify> list = new ArrayList<Classify>();
-		try {
-			conn = ConnectManager.getConnection();
-			String sql = "select * from tb_classify where classify_pid=0";
-			ps = conn.prepareStatement(sql);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				classify = new Classify();
-				classify.setClassifyId(rs.getInt("classify_id"));
-				classify.setClassifyName(rs.getString("classify_name"));
-				classify.setClassifyPid(rs.getInt("classify_pid"));
-				classify.setNotes(rs.getString("notes"));
-				list.add(classify);
-			}
-		} catch (SQLException e) {
-			log.error("查询所有软件分类失败" + e);
-		} finally {
-			ConnectManager.free(conn, ps, rs);
-		}
-		return list;
-	}
-
-	@Override
-	public List<Classify> getPageClassify(Page page) {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		Classify classify = null;
-		List<Classify> list = new ArrayList<Classify>();
-		try {
-			conn = ConnectManager.getConnection();
-			String sql = "select * from tb_classify limit "
-					+ (page.getPageNow() - 1) * page.getPageSize() + ","
-					+ page.getPageSize();
-			ps = conn.prepareStatement(sql);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				classify = new Classify();
-				classify.setClassifyId(rs.getInt("classify_id"));
-				classify.setClassifyName(rs.getString("classify_name"));
-				classify.setClassifyPid(rs.getInt("classify_pid"));
-				classify.setNotes(rs.getString("notes"));
-				list.add(classify);
-			}
-		} catch (SQLException e) {
-			log.error("查询所有软件分类失败" + e);
-		} finally {
-			ConnectManager.free(conn, ps, rs);
-		}
-		return list;
 	}
 
 	@Override

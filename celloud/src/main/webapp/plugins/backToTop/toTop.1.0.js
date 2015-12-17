@@ -5,7 +5,9 @@ $(function() {
 			speed : 1000
 		};
 		var options = $.extend(defaults,options);
-		$("body").prepend("<div id='totop'><a></a></div>");
+		if(!$("#totop").html()){
+			$("body").prepend("<div id='totop'><a></a></div>");
+		}
 		var $toTop = $(this);
 		var $top = $("#totop");
 		var $ta = $("#totop a");

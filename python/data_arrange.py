@@ -28,7 +28,7 @@ endTime = time.strftime(ISOTIMEFORMAT)[0:8]+'00'
 toPath = '/share/data1/DAAN/'
 fromPath = '/share/data/file/'
 ids = '9,12,15,16,18,20,21,23,24,27,28,71'
-sql= 'select distinct f.data_key,f.file_name,f.create_date,r.software_id from tb_report r,tb_file f ,tb_user u where r.file_id = f.file_id and  f.user_id = u.user_id and  u.company_id =3 and u.user_id not in ('+ids+') and f.create_date<"'+endTime+'"'
+sql= 'select distinct f.data_key,f.file_name,f.create_date,r.software_id,c.company_name from tb_report r,tb_file f ,tb_user u,tb_dept d,tb_company c where r.file_id = f.file_id and f.user_id = u.user_id and u.dept_id=d.dept_id and d.company_id = c.company_id and  u.company_id =3 and u.user_id not in ('+ids+') and f.create_date<"'+endTime+'"'
 print sql
 my=mysql.getInstance()
 if my:
@@ -37,7 +37,7 @@ if my:
 		timeFolder = str(d['create_date'])[0:7]
 		if not os.path.exists(os.path.join(toPath,timeFolder+'.zip')):
 			app = name[d['software_id']]
-			p = os.path.join(toPath,timeFolder,app)
+			p = os.path.join(toPath,timeFolder,app,d['company_name'])
 			if not os.path.exists(p):
 				os.makedirs(p)
 

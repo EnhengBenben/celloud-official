@@ -1,27 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>数据管理</title>
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> 
-    <link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">    
-  	<link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
-    <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.4" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
-    <div class="wrapper">
-      <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
             <small>&nbsp;</small>
           </h1>
           <ol class="breadcrumb">
-            <li><a href="#"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>数据管理</a></li>
+            <li><a href="javascript:void(0)"><i class="fa fa-tasks"></i> 数据管理</a></li>
             <li class="active">全部</li>
           </ol>
         </section>
@@ -40,11 +24,12 @@
 <!--               </div>/.box -->
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">
-                  	<a onclick="showRunApp()" class="btn btn-success btn-flat" style="margin-right:15px;width:100px" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-play"></i>Run</a>
-                    <a onclick="deleteData()" id="delDataBtn" class="btn btn-warning btn-flat disabled" disabled="disabled">删除</a>
-				  	<a onclick="toManageDatasModel()" id="batchManage" class="btn btn-info btn-flat disabled" disabled="disabled">批量管理</a>
+                  <h3 class="box-title" data-step="2" data-position="bottom" data-intro="" data-img="managerdata.png" id="manageDataH3">
+                  	<a onclick="showRunApp()" class="btn btn-success btn-flat" style="margin-right:15px;width:100px" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-play"></i> 运行</a>
+                    <a onclick="deleteData()" id="delDataBtn" class="btn btn-warning btn-flat disabled" style="margin-right:15px;width:100px" disabled="disabled"><i class="fa fa-university"></i> 删除</a>
+				  	<a onclick="toManageDatasModel()" id="batchManage" class="btn btn-info btn-flat disabled" style="margin-right:15px;width:100px" disabled="disabled"><i class="fa fa-pencil-square-o"></i> 编辑</a>
                   </h3>
+                  <div class="box-tools col-xs-7" id="dataSpinDiv"></div>
                   <div class="box-tools col-xs-4">
                     <div class="input-group">
                       <input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 200px;" placeholder="搜索文件名/数据标签/文件别名" id="dataTagSearch" onkeyup="javascript:getDataByCondition(1);"/>
@@ -61,8 +46,6 @@
             </div>
           </div><!--/.row-->
         </section><!-- /.content -->
-      </div><!-- /.content-wrapper -->
-    </div><!-- ./wrapper -->
     
     <!-- All Modal -->
     <div class="modal modal-green-header" id="runApp">
@@ -70,7 +53,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">运行APP</h4>
+            <h4 class="modal-title">运行</h4>
           </div>
           <div class="modal-body row">
             <div class="col-xs-12">
@@ -160,7 +143,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">统一编辑数据 <a href="javascript:toManageEachDataModel();" class="a-white" style="margin-left:30px">编辑单个数据</a></h4>
+            <h4 class="modal-title">批量编辑 <a href="javascript:toManageEachDataModel();" class="a-white" style="margin-left:30px">单独编辑</a></h4>
           	<input type="hidden" id="strainDataHide">
           </div>
           <div class="modal-body row">
@@ -210,7 +193,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	   	  	<h4 class="modal-title">编辑单个数据<a href="javascript:toManageDatasModel();" class="a-white" style="margin-left:30px">统一编辑数据</a></h4>
+	   	  	<h4 class="modal-title">单独编辑<a href="javascript:toManageDatasModel();" class="a-white" style="margin-left:30px">批量编辑</a></h4>
           </div>
           <div class="modal-body" id="eachDatasDiv">
           </div>
@@ -222,16 +205,7 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
      <!-- /All Modal-->
-    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-    <script src="//cdn.bootcss.com/jqueryui/1.11.4/jquery-ui.min.js"></script>
-    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
-    <script src="<%=request.getContextPath() %>/plugins/select/select2.min.js"></script>
-	<script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
-    <script src="<%=request.getContextPath() %>/dist/js/celloud.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/plugins/spin.min.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/data.js?version=2.24" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/data.js?version=2.26" type="text/javascript"></script>
 	<!-- spin:loading效果 end-->
 	<script type="text/javascript">
 		var session_userId = <%=session.getAttribute("userId")%>;
@@ -247,5 +221,3 @@
 			initData();
 		});
 	</script>
-  </body>
-</html>

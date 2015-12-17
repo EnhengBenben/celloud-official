@@ -16,13 +16,26 @@
     <div class="header">
 		<h1 style="font-size:32px;padding:0 0 5 0px;">MIB检测分析报告</h1>
 	</div>
-    <h4>1.&nbsp;&nbsp; 检测文件（${mib.dataKey}）</h4>
+	<h4>1.&nbsp;&nbsp; 基本信息</h3>
+	<div class="section1">
+    <ul>
+    	<li>编号：<span><input type="text" name="" value=""></span></li>
+        <li>样本类型：<span><input type="text" name="" value=""></span></li>
+    	<li>姓名：<span><input type="text" name="" value=""></span></li>
+        <li>申请日期：<span><input type="text" name=""></span></li>
+        <li>性别： <span id="_sex"><input type="radio" name="sex" value="男">男<input type="radio" name="sex" value="女" >女</span></li>
+        <li>接收日期：<span><input type="text" name=""></span></li>
+        <li>年龄：<span><input type="text" id="patientAge" name="" value=""></span>岁</li>
+        <li>样本状态：<span><input type="text" name=""></span></li>
+    </ul>
+    </div>
+    <h4>2.&nbsp;&nbsp; 检测文件（${mib.dataKey}）</h4>
     <div class="info">
 		<c:forEach items="${mib.data}" var="data">
 			${data.fileName}&nbsp;&nbsp;
 		</c:forEach>
 	</div>
-	<h4>2.&nbsp;&nbsp;数据统计</h4>
+	<h4>3.&nbsp;&nbsp;数据统计</h4>
     <div class="info">
     	<table class="table table-bordered table-condensed">
 			<thead>
@@ -37,7 +50,7 @@
 			</tbody>
 		</table>
     </div>
-    <h4>3.&nbsp;&nbsp;Reads Distribution</h4>
+    <h4>4.&nbsp;&nbsp;Reads Distribution</h4>
     <div class="info">
         <table style="width:90%;">
 	      <tr>
@@ -46,11 +59,11 @@
 	      </tr>
 	    </table>
     </div>
-    <h4>4.&nbsp;&nbsp;Genus Distribution</h4>
+    <h4>5.&nbsp;&nbsp;Genus Distribution</h4>
     <div class="info">
         <img src="${mib.genusDistribution }" style="width:90%;">
     </div>
-    <h4>5.&nbsp;&nbsp;报告</h4>
+    <h4>6.&nbsp;&nbsp;报告</h4>
     <div class="info">
     	<table class="table table-bordered table-condensed">
 			<thead>
@@ -66,8 +79,8 @@
 		     </thead>
 		     <tbody>
 		       <c:choose>
-		       	 <c:when test="${fn:length(mib.summaryTable)>1}">
-		       	   	<c:forEach items="${mib.summaryTable }" var="summary" varStatus="s" begin="1">
+		       	 <c:when test="${fn:length(mib.summaryTable)>0}">
+		       	   	<c:forEach items="${mib.summaryTable }" var="summary" varStatus="s">
 					   <tr>
 					     <td>${summary.Species }</td>
 					     <td>${summary.Genus }</td>
@@ -86,7 +99,7 @@
 		     </tbody>
 		</table>
     </div>
-    <h4>6.&nbsp;&nbsp;图</h4>
+    <h4>7.&nbsp;&nbsp;图</h4>
     <div class="info">
       <c:if test="${mib.pngPath.top1png!=null }">
 		<img src="${mib.pngPath.top1png }" style="width:90%;">
@@ -211,7 +224,7 @@
       </tr>
     </table>
 </section>
-<script language="javascript" src="<%=request.getContextPath()%>/plugins/jquery-1.8.3.min.js"></script>
+<script language="javascript" src="<%=request.getContextPath()%>/plugins/jQuery/jquery-1.11.3.min.js"></script>
 <script type="text/javascript">
 function preview(obj){
 	var inputVal;
@@ -221,11 +234,26 @@ function preview(obj){
 	$("body").find("section").each(function(){
 		$(this).removeClass("border1");
 	});
+	$("body").find("input[type='text']").each(function(){
+		inputVal = $(this).val();
+		classname = $(this).attr("class");
+		$(this).parent().html("<input type='hidden' value='"+classname+"'><span name='print'>"+inputVal+"</span>");
+	});
+	var sex = $("input[type='radio']:checked").val();
+	$("#_sex").html(sex);
+	$("#change").hide();
 	window.print();
 	$("#change").show();
 	$("body").find("section").each(function(){
 		$(this).addClass("border1");
 	});
+	$("body").find("span[name='print']").each(function(){
+		inputVal = $(this).html();
+		classname = $(this).prev().val();
+		$(this).parent().html("<input type='text' class='"+classname+"' value='"+inputVal+"'>");
+	});
+	$("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
+	$("input[type='radio'][value="+sex+"]").prop("checked",true); 
 }
 </script>
 </body>

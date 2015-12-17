@@ -19,4 +19,12 @@ public interface ReportService {
      * @return 主键
      */
     public Long insertProReport(Report report);
+
+    /**
+     * 统计个人报告数量
+     * 
+     * @param userId
+     * @return
+     */
+    public Integer countReport(Integer userId);
 }

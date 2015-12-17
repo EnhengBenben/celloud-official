@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <input type="hidden" id="splitId" value="${split.id}">
-<div class="row">
+<div>
 	<div class="m-file">
 		数据编号：<span class="file-name">${ split.dataKey}</span><br>
 		文件名称：

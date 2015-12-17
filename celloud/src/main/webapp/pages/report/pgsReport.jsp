@@ -1,34 +1,39 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="row">
+<div>
 	<c:if test="${pgs.noEnoughReads.equals('false') }">
 		<div class="m-file">
-			<div style="width: 800px">
-				文件名称：
-				<span class="file-name">
-					${pgs.dataKey }(<c:if test="${!empty pgs.anotherName }">${pgs.anotherName }</c:if><c:if test="${empty pgs.anotherName }">${pgs.fileName }</c:if> )
-				</span>
-			</div>
-			<div class="toolbar">
-				<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" class="btn btn-default"><i class="i-download"></i>报告下载</a>
-				<c:if test="${pgs.pdf!=null }">
-					
-					<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.pdf }" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
-				</c:if>
-				<c:if test="${pgs.pdf ==null }">
-					<c:if test="${pgs.createDate.time>1440432000000  }">
-						<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.dataKey }.pdf" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
-					</c:if>
-				</c:if>
-				<c:choose>
-					<c:when test="${pgs.splitPng!=null }">
-						<a target="_blank" href="../../printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }/${pgs.splitPng }" class="btn btn-default"><i class="i-print"></i>打印报告</a>
-						<a target="_blank" href="../../printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.splitPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }/null" class="btn btn-default"><i class="i-print"></i>点图报告</a>					
-					</c:when>
-					<c:otherwise>
-						<a target="_blank" href="../../printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }/null" class="btn btn-default"><i class="i-print"></i>打印报告</a>
-					</c:otherwise>
-				</c:choose>
+			<div class="row">
+				<div class="col-lg-7 force-break">
+					文件名称：
+					<span class="file-name">
+						${pgs.dataKey }(<c:if test="${!empty pgs.anotherName }">${pgs.anotherName }</c:if><c:if test="${empty pgs.anotherName }">${pgs.fileName }</c:if> )
+					</span>
+				</div>
+				<div class="col-lg-5">
+					<div class="toolbar" style="position: inherit;right: auto;">
+						<c:if test="${pgs.finalPng!=null && pgs.finalPng!='' }">
+							<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" class="btn btn-default"><i class="i-download"></i>报告下载</a>
+						</c:if>
+						<c:if test="${pgs.pdf!=null }">
+							<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.pdf }" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
+						</c:if>
+						<c:if test="${pgs.pdf ==null }">
+							<c:if test="${pgs.createDate.time>1440432000000  }">
+								<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.dataKey }.pdf" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
+							</c:if>
+						</c:if>
+						<c:choose>
+							<c:when test="${pgs.splitPng!=null }">
+								<a target="_blank" href="printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }/${pgs.splitPng }" class="btn btn-default"><i class="i-print"></i>打印报告</a>
+								<a target="_blank" href="printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.splitPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }/null" class="btn btn-default"><i class="i-print"></i>点图报告</a>					
+							</c:when>
+							<c:otherwise>
+								<a target="_blank" href="printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }/null" class="btn btn-default"><i class="i-print"></i>打印报告</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
 			</div>
 		</div>
 		<!--报告图示一-->
@@ -47,7 +52,7 @@
 							<th>Total_Reads</th>
 						</c:if>
 						<c:if test="${pgs.mapReads!=null}">
-							<td>Map_Reads</td>
+							<th>Map_Reads</th>
 						</c:if>
 						<c:if test="${pgs.mtRatio!=null}">
 							<th>MT_ratio(%)</th>
@@ -65,7 +70,7 @@
 							<th>*SD</th>
 						</c:if>
 						<c:if test="${pgs.winSize!=null}">
-							<td>Win_size(kb)</td>
+							<th>Win_size(kb)</th>
 						</c:if>
 					</tr>
 				  </thead>
@@ -152,27 +157,42 @@
         <div class="m-box">
         	<h2><i class="i-dna"></i>染色体</h2>
             <div class="m-boxCon">
-				<a href="javascript:showBg('${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }','miniPngImg');" >
-					<img src="${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }" style="width: 700px;" id="miniPngImg">
-				</a>
+            	<c:if test="${pgs.miniPng!=null && pgs.miniPng!='' }">
+					<a href="javascript:showBg('${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }','miniPngImg');" >
+						<img src="${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }" style="width: 700px;" id="miniPngImg">
+					</a>
+				</c:if>
+				<c:if test="${pgs.miniPng==null || pgs.miniPng=='' }">
+					<span style="color: red;">运行异常，未产生图片！</span>
+				</c:if>
             </div>
         </div>
         <!--染色体图示一-->
         <div class="m-box">
         	<h2><i class="i-dna"></i>染色体点图</h2>
             <div class="m-boxCon">
-				<a href="javascript:showBg('${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.testPng }','testPngImg');" >
-					<img src="${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.testPng }" style="width: 700px;height: 220px" id="testPngImg">
-				</a>
+            	<c:if test="${pgs.testPng!=null && pgs.testPng!='' }">
+					<a href="javascript:showBg('${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.testPng }','testPngImg');" >
+						<img src="${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.testPng }" style="width: 700px;height: 220px" id="testPngImg">
+					</a>
+				</c:if>
+				<c:if test="${pgs.testPng==null || pgs.testPng=='' }">
+					<span style="color: red;">运行异常，未产生图片！</span>
+				</c:if>
             </div>
         </div>
 		<!--染色体图示一-->
         <div class="m-box">
         	<h2><i class="i-dna"></i>染色体位置图</h2>
             <div class="m-boxCon">
-				<a href="javascript:showBg('${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }','finalPngImg');" >
-					<img src="${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" style="height: 1000px;" id="finalPngImg">
-				</a>
+	            <c:if test="${pgs.finalPng!=null && pgs.finalPng!='' }">
+					<a href="javascript:showBg('${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }','finalPngImg');" >
+						<img src="${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" style="height: 1000px;" id="finalPngImg">
+					</a>
+				</c:if>
+				<c:if test="${pgs.finalPng==null || pgs.finalPng=='' }">
+					<span style="color: red;">运行异常，未产生图片！</span>
+				</c:if>
             </div>
         </div>
 		<!--Celloud数据参数同比分析-->
@@ -180,7 +200,9 @@
 			<div class="bg-analysis">
 			    <div class="m-box">
 			        <h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
-			        <div class="m-boxCon" id="charDiv">
+			        <div class="m-boxCon">
+			        	<div class="row" id="charDiv">
+			        	</div>
 			        </div>
 			        <div class="m-tips">
 			        	<i class="i-tips"></i>
@@ -196,14 +218,14 @@
 	</c:if>
 </div>
 
-<div class="modal fade" id="countModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal modal-green-header in" id="countModal">
   <div class="modal-dialog">
    <div class="modal-content">
-	<div class="modal-header well">
+	<div class="modal-header">
 		<a class="close" data-dismiss="modal">×</a>
 		<h4>数据统计说明</h4>
 	</div>
-	<div class="modal-body well">
+	<div class="modal-body">
 		<div class="lineheight">Total_Reads：样本测序序列总数据量，分析要求数据量大于15万。</div>
 		<div class="lineheight">Map_Reads：样本序列比对到人类基因组的数据量。</div>
 		<div class="lineheight">Map_Ratio：样本序列比对到人类基因组的数据量比例。</div>
@@ -218,25 +240,25 @@
 		</c:if>
 	</div>
 	<div class="modal-footer">
-		<a class="btn close" href="javascript:void(0)" data-dismiss="modal"><i class="icon-ban-circle"></i> 取消</a>
+		<a class="btn btn-celloud-success btn-flat" href="javascript:void(0)" data-dismiss="modal"><i class="icon-ban-circle"></i> 取消</a>
 	</div>
   </div>
  </div>
 </div>
-<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal modal-green-header in" id="reportModal">
   <div class="modal-dialog">
    <div class="modal-content">
-	<div class="modal-header well">
+	<div class="modal-header">
 		<a class="close" data-dismiss="modal">×</a>
 		<h4>报告说明</h4>
 	</div>
-	<div class="modal-body well">
+	<div class="modal-body">
 		<div class="lineheight">Aneuploidy：染色体异倍性及异常区域。</div>
 		<div class="lineheight">Position：染色体异常位置。</div>
 		<div class="lineheight">Average：染色体拷贝数分析中每个染色体的平均值。该值为染色体拷贝数据的参考值。数据统计表明大部分正常染色体平均值为15-23，染色体三体的平均值大于25，染色体单体的平均值小于13。</div>
 	</div>
 	<div class="modal-footer">
-		<a class="btn close" href="javascript:void(0)" data-dismiss="modal"><i class="icon-ban-circle"></i> 取消</a>
+		<a class="btn btn-celloud-success btn-flat" href="javascript:void(0)" data-dismiss="modal"><i class="icon-ban-circle"></i> 取消</a>
 	</div>
   </div>
  </div>
@@ -244,6 +266,10 @@
 <style>
 .lineheight{
 	line-height: 30px;
+}
+.table > tbody > tr > td,.table>thead:first-child>tr:first-child>th{
+	border:1px solid #d8e2f0;
+	border-top:1px solid #d8e2f0;
 }
 </style>
 <script>
@@ -286,9 +312,9 @@ $(function() {
 function showBg(src,id) {
 	var width = $("#" + id).width();
 	var height = $("#" + id).height();
-	$(window.parent.document).find("img[id='imageFullScreen']").css("width",width*1.5);
-	$(window.parent.document).find("img[id='imageFullScreen']").css("height",height*1.5);
-	window.parent.showZoom(src);
+	$("img[id='imageFullScreen']").css("width",width*1.5);
+	$("img[id='imageFullScreen']").css("height",height*1.5);
+	showZoom(src);
 }
 function showModal(id){
 	$("#"+id).modal("show");

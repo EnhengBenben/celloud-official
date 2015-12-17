@@ -255,7 +255,7 @@
       </tr>
     </table>
 </section>
-<script language="javascript" src="<%=request.getContextPath()%>/plugins/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
 <script type="text/javascript">
 function preview(obj){
 	var inputVal;

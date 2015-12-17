@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	$.ajaxSetup ({
-	cache: false //关闭AJAX相应的缓存
+		cache: false //关闭AJAX相应的缓存
 	});
   	$.get("getUserInfo.action",{},function(user){
 	  $("#inputEmail").val(user.email);
@@ -11,8 +11,8 @@ $(document).ready(function(){
   	$("#updateBaseInfoDiv").html("");
 });
 function searchLogInfo(page){
-	$.get("getUserLogInfo.action",{"page.currentPage":page,"page.pageSize":10},function(responseText){
-		$("#tab3").html(responseText);
+	$.get("user!getUserLogInfo",{"page.currentPage":page,"page.pageSize":10},function(responseText){
+		$("#operlog").html(responseText);
 	});
 }
 //个人资料维护begin
@@ -142,7 +142,6 @@ function validateBaseInfo(){
 		  $("#emailSpanInfo").html("");
 	  }
   }
-
   if(telphone!=""){
 	  if(telphone.length!=11){
 		  flag = false;
@@ -165,7 +164,7 @@ function submitBaseInfo(){
   }else{
 	  var email = $("#inputEmail").val();
 	  var telphone = $("#inputPhone").val();
-	  $.get("user!checkUserEmailByUserId",{"user.userId":$.trim($("#baseInfoUserIdHidden").val()),"user.email":email},function(flag){
+	  $.get("user!checkUserEmailByUserId",{"user.email":email},function(flag){
 		  if(flag){
 			  $("#emailSpanInfo").html("该邮箱已存在");
 			  return flag;
@@ -223,20 +222,6 @@ function showTab(tabIndex){
 	  $("#inputConfirmPassword").val('');
 	  $("#confirmPwdSpanInfo").html("");
 	  $("#resetPwdSpanInfo").html("");
-  }else if(tabIndex==3){//查看历史登录日志
-	  $("#tab1").css({
-		 	display:"none"
-	  });
-	  $("#tab2").css({
-	 	    display:"none"
-	  });
-	  $("#tab3").css({
-	 	    display:"block"
-	  });
-	  //获取日志信息
-	  $.get("getUserLogInfo.action",{},function(responseText){
-		  $("#tab3").html(responseText);
-	  });
   }
 }
 //个人资料维护end

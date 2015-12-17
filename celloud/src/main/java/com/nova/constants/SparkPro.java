@@ -32,6 +32,11 @@ public class SparkPro {
     public static final String PYTHONPATH = "/share/biosoft/perl/PGS_MG/python/runover.py";
 
     /**
+     * 任务运行结束的python路径
+     */
+    public static final String TASKOVERPY = "/share/biosoft/perl/PGS_MG/python/task_over.py";
+
+    /**
      * 需要投递到spark集群的appId
      */
     public static final List<String> apps = Arrays.asList("86", "92", "93",

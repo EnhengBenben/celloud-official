@@ -16,8 +16,10 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
 import com.celloud.sdo.App;
+import com.celloud.sdo.Task;
 import com.celloud.service.RunOverService;
 import com.celloud.utils.DataKeyListToFile;
+import com.celloud.service.TaskService;
 import com.google.inject.Inject;
 import com.mongo.sdo.CmpGeneDetectionDetail;
 import com.mongo.sdo.CmpGeneSnpResult;
@@ -25,7 +27,9 @@ import com.mongo.sdo.CmpReport;
 import com.mongo.sdo.GeneDetectionResult;
 import com.mongo.service.ReportService;
 import com.mongo.service.ReportServiceImpl;
+import com.nova.constants.AppNameIDConstant;
 import com.nova.constants.Mod;
+import com.nova.constants.ReportState;
 import com.nova.constants.SparkPro;
 import com.nova.email.EmailProjectEnd;
 import com.nova.email.EmailService;
@@ -46,6 +50,7 @@ import com.nova.service.IProjectService;
 import com.nova.service.IReportService;
 import com.nova.service.ISoftwareService;
 import com.nova.service.IUserService;
+import com.nova.utils.Base64Util;
 import com.nova.utils.DateUtil;
 import com.nova.utils.FileTools;
 import com.nova.utils.PerlUtils;
@@ -88,6 +93,8 @@ public class ProjectAction extends BaseAction {
     private ISoftwareService softwareService;
     @Inject
     private ICompanyService companyService;
+    @Inject
+    private TaskService taskService;
     private Integer userId;
     private int userid;
     private String userNames;
@@ -121,26 +128,14 @@ public class ProjectAction extends BaseAction {
     private int sortByType;// 排序类型 1：按项目名称排序，2：按启动时间排序
 
     // 初始化app列表
-    private static Map<Long, App> appMap = null;
-    private static Map<String, Map<String, String>> machines = null;
-    private static String sparkhost = null;
-    private static String sparkpwd = null;
-    private static String sparkuserName = null;
-    private static String sgehost = null;
-    private static String sgepwd = null;
-    private static String sgeuserName = null;
-    static {
-        XmlUtil.getMachines();
-        machines = XmlUtil.machines;
-        sparkhost = machines.get("spark").get(Mod.HOST);
-        sparkpwd = machines.get("spark").get(Mod.PWD);
-        sparkuserName = machines.get("spark").get(Mod.USERNAME);
-        sgehost = machines.get("158").get(Mod.HOST);
-        sgepwd = machines.get("158").get(Mod.PWD);
-        sgeuserName = machines.get("158").get(Mod.USERNAME);
-        SQLUtils sql = new SQLUtils();
-        appMap = sql.getAllSoftware();
-    }
+    private static Map<Long, App> appMap = SQLUtils.appMap;
+    private static Map<String, Map<String, String>> machines = XmlUtil.machines;
+    private static String sparkhost = machines.get("spark").get(Mod.HOST);
+    private static String sparkpwd = machines.get("spark").get(Mod.PWD);
+    private static String sparkuserName = machines.get("spark").get(Mod.USERNAME);
+    private static String sgehost = machines.get("158").get(Mod.HOST);
+    private static String sgepwd = machines.get("158").get(Mod.PWD);
+    private static String sgeuserName = machines.get("158").get(Mod.USERNAME);
 
     private static String basePath = SparkPro.TOOLSPATH;
 
@@ -598,17 +593,44 @@ public class ProjectAction extends BaseAction {
         for (Report report : list) {
             int appId = report.getSoftwareId();
             projectId = report.getProjectId()+"";
-            String param = SparkPro.TOOLSPATH + report.getUserId() + "/"
-                    + appId + " ProjectID" + projectId;
-            if (SparkPro.apps.contains(String.valueOf(appId))) {
-                String command = SparkPro.SPARKKILL + " " + param;
-                SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
-                ssh.sshSubmit(command, true);
-                runQueue(projectId);
-            } else {
-                String command = SparkPro.SGEKILL + " " + param;
-                SSHUtil ssh = new SSHUtil(sgehost, sgeuserName, sgepwd);
-                ssh.sshSubmit(command, true);
+            if (report.getState() != ReportState.COMPLETE) {
+                String param = SparkPro.TOOLSPATH + report.getUserId() + "/"
+                        + appId + " ProjectID" + projectId;
+                if (SparkPro.apps.contains(String.valueOf(appId))) {
+                    String command = SparkPro.SPARKKILL + " " + param;
+                    SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
+                    ssh.sshSubmit(command, true);
+                    runQueue(projectId);
+                } else {
+                    String command = SparkPro.SGEKILL + " " + param;
+                    SSHUtil ssh = new SSHUtil(sgehost, sgeuserName, sgepwd);
+                    ssh.sshSubmit(command, true);
+                }
+            }
+            // TODO
+            if (AppNameIDConstant.MIB.equals(String.valueOf(appId))) {
+                taskService.deleteTask(Long.parseLong(projectId));
+                Long appId_l = (long) appId;
+                int runningNum = taskService.getRunningNumByAppId(appId_l);
+                Task task = taskService.getFirstTask(appId_l);
+                while (runningNum < 4 && task != null) {
+                    StringBuffer remotePath = new StringBuffer();
+                    Long taskId = task.getTaskId();
+                    remotePath.append(PropertiesUtil.toolsOutPath)
+                            .append("Procedure!runApp?userId=")
+                            .append(task.getUserId()).append("&appId=")
+                            .append(task.getAppId()).append("&dataKey=")
+                            .append(task.getDataKey()).append("&taskId=")
+                            .append(taskId).append("&command=")
+                            .append(Base64Util.encrypt(task.getCommand()))
+                            .append("&").append(task.getParams());
+                    RemoteRequests rr = new RemoteRequests();
+                    rr.run(remotePath.toString());
+                    log.info("任务" + task.getTaskId() + "开始投递");
+                    taskService.updateToRunning(taskId);
+                    runningNum = taskService.getRunningNumByAppId(appId_l);
+                    task = taskService.getFirstTask(appId_l);
+                }
             }
         }
         result = projectService.deleteProject(Integer.parseInt(projectId));

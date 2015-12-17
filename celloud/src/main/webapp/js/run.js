@@ -234,8 +234,8 @@ function clearWarn(){
  * 清理复选框
  */
 function resetCheckbox(){
-	$("input[type='checkbox'][name='data']").attr("checked", false);
-	$("input[type='radio'][name='data']").attr("checked", false);
+	$("input[type='checkbox'][name='data']").prop("checked", false);
+	$("input[type='radio'][name='data']").prop("checked", false);
 	checkedDataIds=[];
 }
 

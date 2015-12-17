@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
@@ -44,19 +43,7 @@ import com.opensymphony.xwork2.ActionSupport;
         @Result(name = "success", type = "json", params = { "root", "flag" }),
         @Result(name = "resultMap", type = "json", params = { "root",
                 "resultMap" }),
-        @Result(name = "percent", location = "../../pages/view/ajax/ProcessPercent.jsp"),
-        @Result(name = "step", location = "../../pages/view/ajax/ProcessStep.jsp"),
-        @Result(name = "SNPData", location = "../../pages/view/ajax/snpResult.jsp"),
-        @Result(name = "HBV_SNP2Data", location = "../../pages/view/ajax/HBV_SNP2Data.jsp"),
-        @Result(name = "ExomeSNVReport", location = "../../pages/view/ajax/hsnvReport.jsp"),
-        @Result(name = "EST", location = "../../pages/view/ajax/estReport.jsp"),
-        @Result(name = "miRNAData", location = "../../pages/view/ajax/microRNAReport.jsp"),
         @Result(name = "HBVTree", location = "../../pages/view/ajax/treeResult.jsp"),
-        @Result(name = "miRNADiff", location = "../../pages/view/ajax/miRNADiffResult.jsp"),
-        @Result(name = "DGE", location = "../../pages/view/ajax/DGEResult.jsp"),
-        @Result(name = "RNADeNovo", location = "../../pages/view/ajax/RNADeNovoResult.jsp"),
-        @Result(name = "DeNovoDiff", location = "../../pages/view/ajax/DeNovoDiff.jsp"),
-        @Result(name = "RNAseq", location = "../../pages/view/ajax/RNAseq.jsp"),
         @Result(name = "HCV", location = "../../pages/view/ajax/HCV.jsp"),
         @Result(name = "egfr", location = "../../pages/view/ajax/EGFR.jsp"),
         @Result(name = "DPD", location = "../../pages/view/ajax/DPD.jsp"),
@@ -77,23 +64,10 @@ public class ProcedureAction extends ActionSupport {
     private static Map<String, String> projectMap = new HashMap<String, String>();
 
     static {
-        dataMap.put(AppNameIDConstant.SNP, "SNPData");
         dataMap.put(AppNameIDConstant.HBV_SNP2, "HBV_SNP2Data");
         dataMap.put(AppNameIDConstant.PGS, "gDNA_HRData");
         dataMap.put(AppNameIDConstant.gDNA, "gDNA_HRData");
-        dataMap.put(AppNameIDConstant.gDNA_Chimeric, "gDNA_HRData");
-        dataMap.put(AppNameIDConstant.MDA_Chimeric, "gDNA_HRData");
-        dataMap.put(AppNameIDConstant.MDA_HR, "gDNA_HRData");
-        dataMap.put(AppNameIDConstant.gDNA_MR, "gDNA_HRData");
-        dataMap.put(AppNameIDConstant.gDNA_HR, "gDNA_HRData");
-        dataMap.put(AppNameIDConstant.MalBac, "gDNA_HRData");
-        dataMap.put(AppNameIDConstant.MDA_MR, "gDNA_HRData");
-        dataMap.put(AppNameIDConstant.SurePlex, "gDNA_HRData");
-        dataMap.put(AppNameIDConstant.miRNA, "miRNAData");
         dataMap.put(AppNameIDConstant.Tree, "HBVTree");
-        dataMap.put(AppNameIDConstant.EST, "EST");
-        dataMap.put(AppNameIDConstant.QC, "projectTable");
-        dataMap.put(AppNameIDConstant.ExomeSNV, "ExomeSNVReport");
         dataMap.put(AppNameIDConstant.HCV, "HCV");
         dataMap.put(AppNameIDConstant.EGFR, "egfr");
         dataMap.put(AppNameIDConstant.KRAS, "egfr");
@@ -108,7 +82,6 @@ public class ProcedureAction extends ActionSupport {
         dataMap.put(AppNameIDConstant.MDA_HR_v1, "gDNA_HRData");
         dataMap.put(AppNameIDConstant.MDA_MR_v1, "gDNA_HRData");
         dataMap.put(AppNameIDConstant.SurePlex_v1, "gDNA_HRData");
-        dataMap.put(AppNameIDConstant.Sureplex_HR, "gDNA_HRData");
         dataMap.put(AppNameIDConstant.MalBac_v1, "gDNA_HRData");
         dataMap.put(AppNameIDConstant.TB_INH, "TBINH");
         dataMap.put(AppNameIDConstant.DPD, "DPD");
@@ -367,62 +340,6 @@ public class ProcedureAction extends ActionSupport {
                 "Access-Control-Allow-Origin", "*");
         FileTools.fileDownLoad(ServletActionContext.getResponse(), basePath
                 + "/" + userId);
-    }
-
-    public String getRNADeNovo() {
-        ServletActionContext.getResponse().setHeader(
-                "Access-Control-Allow-Origin", "*");
-
-        String projectPath = basePath + "/" + userId + "/"
-                + AppNameIDConstant.RNA_DeNovo + "/" + projectId + "/";
-        String downFile = projectPath
-                + FileTools.fileExist(projectPath, "Assembly_Sta.txt",
-                        "endsWith");
-        String total = "";
-        try {
-            total = FileUtils.readFileToString(new File(downFile));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String detail[] = total.split("\n");
-        StringBuffer sb = new StringBuffer();
-        for (int i = 1; i < detail.length; i++) {
-            String line = detail[i];
-            if (!line.startsWith("*")) {
-                sb.append(line).append("\n");
-            }
-        }
-        flag = sb.toString().replace("\n", ";").replace("\t", ",");
-        return SUCCESS;
-    }
-
-    /**
-     * 删除报告接口
-     */
-    public void rmReport() {
-        ServletActionContext.getResponse().setHeader(
-                "Access-Control-Allow-Origin", "*");
-        log.info("删除报告：" + userId + "/" + projectId + "|" + dataKey);
-        String folder = (projectId == null || "".equals(projectId)) ? dataKey
-                : projectId;
-        String[] detail = folder.split(";");
-        File rmUser = new File(basePath + "/" + userId);
-        if (rmUser.exists()) {
-            File[] list = rmUser.listFiles();
-            for (int i = 0; i < list.length; i++) {
-                for (int j = 0; j < detail.length; j++) {
-                    File rmPath = new File(list[i] + "/" + detail[j]);
-                    if (rmPath.exists()) {
-                        try {
-                            FileUtils.deleteDirectory(rmPath);
-                            log.info("删除报告:" + rmPath + "成功");
-                        } catch (IOException e) {
-                            log.info("删除报告:" + rmPath + "失败，错误" + e);
-                        }
-                    }
-                }
-            }
-        }
     }
 
     public String getUserId() {

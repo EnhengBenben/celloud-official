@@ -45,17 +45,18 @@
             <div class="view-tips">最佳浏览体验：Chrome / Firefox 8.0+ / IE 9.0+</div>
         </div>
         <jsp:useBean id="_now" class="java.util.Date" />
-        <div class="footer">© <fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" /> CelLoud，Inc. All Rights reserved. <a  href="#">生物信息云平台</a> · <a  href="javascript:void();">沪ICP备14035977号</a> · <a href="service.html" target="_blank">服务与支持</a> · <a href="content/feedBack.html" target="_blank">意见反馈</a></div>
+        <div class="footer">© <fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" /> CelLoud，Inc. All Rights reserved. <a  href="#">生物信息云平台</a> · <a  href="javascript:void();">沪ICP备14035977号</a> · <a href="service.html" target="_blank">服务与支持</a> · <a href="feedBack.html" target="_blank">意见反馈</a></div>
 <!--     </div> -->
 	<!--#E wrapper-->
 </div>
 <!--#E bgContainer-->
-<script type="text/javascript" src="plugins/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="plugins/jQuery/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="js/metro.js"></script>
 <script type="text/javascript" src="js/tologin.js?version=1.0"></script>
 <script type="text/javascript" src="js/external.js"></script>
 <script type="text/javascript" src="plugins/md5.js"></script>
 <script type="text/javascript" src="plugins/security.js"></script>
+<script type="text/javascript" src="plugins/baidu.js"></script>
 <script type="text/javascript">
 //session超时iframe完全退出
 if(window.top!=window.self){

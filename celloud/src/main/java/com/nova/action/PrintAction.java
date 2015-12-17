@@ -24,11 +24,11 @@ import com.nova.utils.PropertiesUtil;
 
 @ParentPackage("celloud-default")
 @Action("print")
-@Results({ @Result(name = "pgs", location = "../../pages/print/PGS.jsp"),
-        @Result(name = "nipt", location = "../../pages/print/NIPT.jsp"),
-        @Result(name = "VSP", location = "../../pages/print/printVSP.jsp"),
-        @Result(name = "CMP", location = "../../pages/print/printCMP.jsp"),
-        @Result(name = "hbv", location = "../../pages/print/printHBV.jsp") })
+@Results({ @Result(name = "pgs", location = "../../pages/print/printPGS.jsp"),
+	@Result(name = "nipt", location = "../../pages/print/NIPT.jsp"),
+	@Result(name = "VSP", location = "../../pages/print/printVSP.jsp"),
+	@Result(name = "CMP", location = "../../pages/print/printCMP.jsp"),
+	@Result(name = "hbv", location = "../../pages/print/printHBV.jsp") })
 public class PrintAction extends BaseAction {
 
     private static final long serialVersionUID = 1L;
@@ -109,7 +109,7 @@ public class PrintAction extends BaseAction {
             return "hbv";
         }
         txt = iss.getSoftware(appId).getSoftwareName();
-        if (imgHtml != null) {
+        if (!StringUtils.isEmpty(imgHtml)) {
             String[] imgArr = imgHtml.split(",");
             imgList = new ArrayList<String>();
             for (String s : imgArr) {

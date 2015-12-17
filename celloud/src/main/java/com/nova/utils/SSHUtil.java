@@ -89,7 +89,8 @@ public class SSHUtil {
                     log.info(line);
                 }
                 // 获取命令执行结果
-                state = sess.getExitStatus() == 0 ? true : false;
+                state = sess.getExitStatus() == null ? false : sess
+                        .getExitStatus() == 0 ? true : false;
                 log.info("命令执行" + state);
             } else {
                 log.info("命令投递成功");

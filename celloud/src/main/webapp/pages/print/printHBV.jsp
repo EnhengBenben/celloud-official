@@ -79,10 +79,14 @@
 				    	    <c:if test="${allPic!=null }">
 					    	    <p><img src="${allPic }" style="width: 900px;height: 136px;"></p>
 				    	    </c:if>
-				    	    <h2 class="mt20">结论：</h2>
-				    	    <p>${result }</p>
-				    	    <h2 class="mt20">原始序列：</h2>
-				    	    <p style="word-break: break-all;">${seq }</p>
+				    	    <c:if test="${result!=null && result.trim()!=''}">
+					    	    <h2 class="mt20">结论：</h2>
+					    	    <p>${result }</p>
+				    	    </c:if>
+				    	    <c:if test="${seq!=null && seq.trim()!='' }">
+					    	    <h2 class="mt20">原始序列：</h2>
+					    	    <p style="word-break: break-all;">${seq }</p>
+				    	    </c:if>
 				    	    <div class="w3cbbs"></div>
 				    	    <h2 class="mt20">原始峰图：</h2>
 				    	    <p style="width:750px;">
@@ -91,6 +95,9 @@
 						   				<img src="${imgHtml }" style="width:100%"/>
 						   				<br/><br/>
 						   			</c:forEach>
+					   			</c:if>
+					   			<c:if test="${imgList==null}">
+					   				样本异常，无法检测
 					   			</c:if>
 				    	    </p>
 					   </c:when>
@@ -118,15 +125,15 @@
 					        <h2 class="mt10">原始序列：</h2>
 							<div style="word-break: break-all;">${seq }</div>
 							<br/>
-				    	    <h2 class="mt20">原始峰图：</h2>
-				    	    <div style="width:750px;" id="_allDiv">
-						       	<c:if test="${imgList.size()>0}">
+							<c:if test="${imgList.size()>0}">
+					    	    <h2 class="mt20">原始峰图：</h2>
+					    	    <div style="width:750px;" id="_allDiv">
 						   			<c:forEach items="${imgList}" var="imgHtml">
 						   				<img src="${imgHtml }" style="width:100%"/>
 						   				<br/><br/>
 						   			</c:forEach>
-					   			</c:if>
-				    	    </div>
+					    	    </div>
+				    	    </c:if>
 			    	   </div>
 					   </c:when>
 					   <c:when test="${appId==82 }">
@@ -247,7 +254,7 @@
 		</c:if>
 	</div>
 </body>
-<script type="text/javascript" src="/celloud/plugins/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="/celloud/js/browser.js"></script>
 <script type="text/javascript">
 function preview(obj){
@@ -340,7 +347,7 @@ $(document).ready(function(){
 	var appId = $("#_appId").html();
 	var _flag = $("#_flag").html();
 	if(appId==80){
-		$("#hcvTable").find("thead").html("<tr><th>File Name<br>(文件名)</th><th>Subtype<br>(亚型)</th><th>Subject Name<br>(参考序列名)</th><th>Identity<br>(相似度)</th><th>Overlap/total<br>(比对上的长度/比对的总长度)</th><th>E_value<br>(期望值)</th><th>Score<br>(比分)</th></tr>");
+		$("#hcvTable").find("thead").html("<tr><th>File Name<br>(文件名)</th><th>Subtype<br>(亚型)</th><th style='min-width: 90px;'>Subject Name<br>(参考序列名)</th><th style='min-width: 50px;'>Identity<br>(相似度)</th><th style='min-width: 160px;'>Overlap/total<br>(比对上的长度/比对的总长度)</th><th>E_value<br>(期望值)</th><th>Score<br>(比分)</th></tr>");
 		$("#hcvTable").css('width','800px')
 	}
 	if(appId==82&&_flag==0){
@@ -358,6 +365,8 @@ $(document).ready(function(){
 	});
 	$(".table").find("td").each(function(){
 		$(this).css("vertical-align","middle");
+		$(this).css("word-break","break-all");
+		$(this).css("word-wrap","break-word");
 		var isSaved = $("#isSaved").val();
 		if(isSaved==1){
 			var text= $(this).text();
