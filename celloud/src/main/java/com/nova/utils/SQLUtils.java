@@ -447,7 +447,10 @@ public class SQLUtils {
             ps.setInt(2, userId);
             ps.setString(3, dataKey);
             ps.setLong(4, num);
-            ps.executeUpdate();
+            int lines = ps.executeUpdate();
+            if(lines==0){
+                threadSave(userId, dataKey, num, position);
+            }
         } catch (SQLException e) {
             flag = 1;
             e.printStackTrace();
@@ -478,6 +481,9 @@ public class SQLUtils {
         } finally {
             ConnectManager.free(conn, ps, rs);
         }
+        if (list.size() == 0) {
+            return null;
+        }
         long[] pos = new long[list.size()];
         for (int i = 0; i < list.size(); i++) {
             pos[i] = list.get(i);
@@ -487,7 +493,7 @@ public class SQLUtils {
         for (long l : pos) {
             sb.append(l).append(",");
         }
-        return sb.toString().substring(0, sb.toString().length()-1);
+        return sb.toString().substring(0, sb.toString().length() - 1);
     }
 
     public Client getClient() {
