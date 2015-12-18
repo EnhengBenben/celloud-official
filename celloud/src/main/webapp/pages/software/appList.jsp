@@ -95,8 +95,8 @@
             <div class="list-left"></div>
             <div class="list-center">
               <div class="emptyInfo1">
-                <span class="icon icon-info" style="color:#0099cc;font-size: 20px;"></span>
-                <strong>没有查询到符合条件的商品，请尝试更改筛选条件!</strong>
+<!--                 <span class="icon icon-info" style="color:#0099cc;font-size: 20px;"></span> -->
+                <strong>暂没开放此类应用的权限，请选择其他分类!</strong>
               </div>
             </div>
             <div class="list-right"></div>
