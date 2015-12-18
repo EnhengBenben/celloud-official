@@ -5,7 +5,6 @@
 <link href="<%=request.getContextPath() %>/plugins/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
 <link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
 <link href="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
 <style>
 .tab-content>.tab-pane {
     display: block;
@@ -43,8 +42,8 @@ a:hover, a:active, a:focus{
        		  <span id="_alertSpan" style="color:red;display:none;"></span>
           </div><!-- /.form group -->
           <div class="form-inline">
-              <label class="form-inline" style="padding-top:-5px;font-family:黑体;font-size:14px;font-weight: lighter;">APP：</label>
-           		<a href="javascript:void(0)" class="capp _appred" onclick="changeApp(0,this)">全部</a>&nbsp;&nbsp;
+              <label class="form-inline" style="padding-top:-5px;font-family:黑体;font-size:14px;font-weight: lighter;">应用：</label>
+           		<a href="javascript:void(0)" class="capp _appred" onclick="changeApp(0,this)">全部</a>
            		<span id="showAppDiv" style="margin-right: 0;">
            		</span>
            		<div style="float: right;" id="showMore">
@@ -59,7 +58,7 @@ a:hover, a:active, a:focus{
 				<div class="input-group" style="margin-left:10px;width:330px;height:20px;">
 					<input type="text" class="form-control" style="height:20px;padding: 0px 12px;" id="_fileName" onchange="changeFileName()" placeholder="检索文件名/别名/数据编号">
 					<span class="input-group-btn">
-						<button class="btn btn-info btn-flat" type="button" onclick="submitSearch()" style="height:20px;font-size:14px;padding-top:0px">Go!</button>
+						<button class="btn btn-info btn-flat" type="button" onclick="submitSearch()" style="height:20px;font-size:14px;padding-top:0px;background-color: #85c540;border-color: #85c540;">Go!</button>
 					</span>
 				</div>
 			</div><!-- /.form group -->
@@ -103,10 +102,7 @@ a:hover, a:active, a:focus{
 		</div>
 	</div>
 </div>
-<!-- jquery_alert_dialogs begin -->
-<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
-<!-- jquery_alert_dialogs end -->
+
 <script src="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/select/select2.min.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>

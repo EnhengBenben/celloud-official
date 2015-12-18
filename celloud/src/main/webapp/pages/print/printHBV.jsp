@@ -347,7 +347,7 @@ $(document).ready(function(){
 	var appId = $("#_appId").html();
 	var _flag = $("#_flag").html();
 	if(appId==80){
-		$("#hcvTable").find("thead").html("<tr><th>File Name<br>(文件名)</th><th>Subtype<br>(亚型)</th><th style='min-width: 90px;'>Subject Name<br>(参考序列名)</th><th style='min-width: 50px;'>Identity<br>(相似度)</th><th style='min-width: 160px;'>Overlap/total<br>(比对上的长度/比对的总长度)</th><th>E_value<br>(期望值)</th><th>Score<br>(比分)</th></tr>");
+		$("#hcvTable").find("thead").html("<tr><th>File Name<br>(文件名)</th><th>Subtype<br>(亚型)</th><th style='min-width: 90px;'>Subject Name<br>(参考序列名)</th><th style='min-width: 50px;'>Identity<br>(相似度)</th><th style='min-width: 170px;'>Overlap/total<br>(比对上的长度/比对的总长度)</th><th style='min-width: 60px;'>E_value<br>(期望值)</th><th  style='min-width: 50px;'>Score<br>(比分)</th></tr>");
 		$("#hcvTable").css('width','800px')
 	}
 	if(appId==82&&_flag==0){
