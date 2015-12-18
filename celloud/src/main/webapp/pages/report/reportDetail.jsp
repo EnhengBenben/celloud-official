@@ -55,7 +55,7 @@ a:hover, a:active, a:focus{
           </div><!-- /.form group -->
 			<div class="form-inline" style="margin-bottom:10px">
 				<label class="form-inline" style="font-family:黑体;font-size:14px;font-weight: lighter;">数据：</label>
-				<div class="input-group" style="margin-left:10px;width:330px;height:20px;">
+				<div class="input-group" style="width:330px;height:20px;">
 					<input type="text" class="form-control" style="height:20px;padding: 0px 12px;" id="_fileName" onchange="changeFileName()" placeholder="检索文件名/别名/数据编号">
 					<span class="input-group-btn">
 						<button class="btn btn-info btn-flat" type="button" onclick="submitSearch()" style="height:20px;font-size:14px;padding-top:0px;background-color: #85c540;border-color: #85c540;">Go!</button>
