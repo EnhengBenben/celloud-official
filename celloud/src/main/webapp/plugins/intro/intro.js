@@ -936,6 +936,7 @@
 //        if (self._currentStep != 0) {
 //          _previousStep.call(self);
 //        }
+          $(".introjs-overlay").remove();
       };
 
       prevTooltipButton.href = 'javascript:void(0);';
@@ -961,7 +962,7 @@
 			  intro.exit();
 			  intro = null;
 		  }
-
+	  	$(".introjs-overlay").remove();
       };
 
       buttonsLayer.appendChild(skipTooltipButton);
