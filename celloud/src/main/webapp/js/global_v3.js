@@ -124,7 +124,6 @@ function showReport(){
 	$.AdminLTE.closeSidebar();
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
-	$("#mainDIV").load("pages/report/reportDetail.jsp");
 	if(intro != null && hasNavi == 1){
 		intro.exit();
 		intro = null;
@@ -135,15 +134,16 @@ function showReport(){
 		intro.setOption('showButtons', true);
 		intro.setOptions({
 			steps: [
-              { 
-            	step: 9,
-            	img: "endintro.png",
-            	intro: ""
-              }
-            ]
+			        { 
+			        	step: 9,
+			        	img: "endintro.png",
+			        	intro: ""
+			        }
+			        ]
 		});
 		intro.start(9);
 	}
+	$("#mainDIV").load("pages/report/reportDetail.jsp");
 }
 
 /**

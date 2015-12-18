@@ -86,6 +86,8 @@ $(function() {
 	var uploader = $('#fileUploadDiv').pluploadQueue();
 	uploader.bind('Init', function(){
 		if(intro != null){
+			$(".addfile").attr("disabled",true);
+			$("._start_custom").attr("disabled",true);
 			intro.exit();
 			intro = null;
 			intro = introJs();
@@ -95,8 +97,62 @@ $(function() {
 			intro.setOption('showButtons', false);
 			intro.start();
 			intro.goToStep(4);
+			$("#toaddfilediv").bind('click',function(){
+				if(intro != null){
+					intro.exit();
+					intro = null;
+					intro = introJs();
+					intro.setOption('tooltipPosition', 'bottom');
+					intro.setOption('showStepNumbers', false);
+					intro.setOption('showButtons', false);
+					intro.start();
+					intro.goToStep(5);
+					$("#tobeginfilediv").bind('click',function(){
+						if(intro != null){
+							intro.exit();
+							intro = null;
+							intro = introJs();
+							intro.setOption('tooltipPosition', 'bottom');
+							intro.setOption('showStepNumbers', false);
+							intro.setOption('showButtons', false);
+							intro.start();
+							intro.goToStep(6);
+							$("._start_custom").removeAttr("disabled");
+						}
+						$("#tobeginfilediv").unbind('click');
+					});
+					$(".addfile").removeAttr("disabled");
+				}
+				$("#toaddfilediv").unbind('click');
+			});
 		}
 	});
+// 	$("#toaddfilediv").bind('click',function(){
+// 		if(intro != null){
+// 			intro.exit();
+// 			intro = null;
+// 			intro = introJs();
+// 			intro.setOption('tooltipPosition', 'bottom');
+// 			intro.setOption('showStepNumbers', false);
+// 			intro.setOption('showButtons', false);
+// 			intro.start();
+// 			intro.goToStep(6);
+// 			$("#toaddfilediv").unbind('click');
+// 		}
+// 	});
+// 	$(".toaddfilediv").bind("click",function(){
+// 		if(intro != null){
+// 			intro.exit();
+// 			intro = null;
+// 			intro = introJs();
+// 			intro.setOption('tooltipPosition', 'auto');
+// 			intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+// 			intro.setOption('showStepNumbers', false);
+// 			intro.setOption('showButtons', false);
+// 			intro.start();
+// 			intro.goToStep(6);
+// 		}
+// 	});
 	//绑定选择文件事件
 	uploader.bind('Browse', function() {
 		$.get("checkAdminSessionTimeOut",function(response){
@@ -121,17 +177,6 @@ $(function() {
 		}else if(uploader.state === plupload.STOPPED){//文件队列全部上传结束
 			window.parent.isUploading = false;
 			clearInterval(refresh);
-		}
-		if(intro != null){
-// 			intro.exit();
-// 			intro = null;
-// 			intro = introJs();
-// 			intro.setOption('tooltipPosition', 'auto');
-// 			intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
-// 			intro.setOption('showStepNumbers', false);
-// 			intro.setOption('showButtons', false);
-// 			intro.start();
-			intro.goToStep(6);
 		}
 	});
 	//自定义上传按钮，先进行session超时校验，再决定是执行上传还是跳转登陆页面操作
