@@ -18,7 +18,7 @@
 <div class="row">
   <div class="col-xs-10">
 	<div class="mainpage" id="appMain">
-	  <div class="y-row operation-serve"  data-spm="16">
+	  <div class="y-row operation-serve box box-success"  data-spm="16">
   		<div class="info">
     	  <p>应用市场是CelLoud的一个开放平台，为用户提供专业、精准的生物信息分析服务。</p>
   		</div>
