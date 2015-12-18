@@ -62,7 +62,7 @@ class CMP:
                     f.close()
                 elif file == 'average.info':
                     f = open(os.path.join(resultPath, file),'r')
-                    result['avgCoverage'] = f.readlines()
+                    result['avgCoverage'] = f.readline()
                 elif file == 'snp_num.info':
                     f = open(os.path.join(resultPath, file),'r')
                     cmpGeneResult = []
