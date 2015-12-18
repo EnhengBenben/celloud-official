@@ -15,7 +15,7 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="mainpage" id="appMain">
-		  <div class="y-row operation-serve"  data-spm="16">
+		  <div class="y-row operation-serve box box-success"  data-spm="16">
 	  		<div class="info">
 	    	  <p>完善基本信息，通知邮箱及手机绑定。</p>
 	  		</div>

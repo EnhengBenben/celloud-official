@@ -15,7 +15,7 @@
 <section class="content">
   <div class="row">
     <div class="col-xs-12">
-      <div class="box" id="fileUploadDiv">
+      <div class="box box-success" id="fileUploadDiv">
       </div><!-- /.box -->
     </div>
   </div><!--/.row-->

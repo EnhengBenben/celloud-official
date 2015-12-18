@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="y-row clearfix">
-  <div class="J_single kind" style="top: 0px;">
+  <div class="J_single kind box box-success" style="top: 0px;">
     <div class="list-left">分类方式：</div>
     <div class="list-right list-kind-right">
       <c:forEach items="${pclassifys }" var="pc">
