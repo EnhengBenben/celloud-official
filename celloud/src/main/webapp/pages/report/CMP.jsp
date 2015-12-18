@@ -231,12 +231,12 @@
 				</table>
 				<table style="width:90%;">
 			      <tr>
-			    	<td style="width:50%;"><img src="${cmpReport.qualityPath1 }" style="max-width:500px;"></td>
-			    	<td><img src="${cmpReport.qualityPath2 }" style="max-width:500px;"></td>
+			    	<td style="width:50%;"><img style="max-width:500px;" src="<c:if test="${!cmpReport.qualityPath1.contains('Tools') }">${outPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.qualityPath1 }"></td>
+			    	<td><img style="max-width:500px;" src="<c:if test="${!cmpReport.qualityPath2.contains('Tools') }">${outPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }/</c:if>${cmpReport.qualityPath2 }"></td>
 			      </tr>
 			      <tr>
-			    	<td><img alt="" src="${cmpReport.seqContentPath1 }" style="max-width:500px;"></td>
-			    	<td><img alt="" src="${cmpReport.seqContentPath2 }" style="max-width:500px;"></td>
+			    	<td><img style="max-width:500px;" alt="" src="<c:if test="${!cmpReport.seqContentPath1.contains('Tools') }">${outPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.seqContentPath1 }"></td>
+			    	<td><img style="max-width:500px;" alt="" src="<c:if test="${!cmpReport.seqContentPath2.contains('Tools') }">${outPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.seqContentPath2 }"></td>
 			      </tr>
 			    </table>
 			</div>

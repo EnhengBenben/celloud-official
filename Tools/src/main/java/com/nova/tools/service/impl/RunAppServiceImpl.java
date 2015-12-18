@@ -172,7 +172,7 @@ public class RunAppServiceImpl {
 		} else if (AppNameIDConstant.GDD.equals(appId)) {
             command = GDD_perl;
 		}
-        command += " " + dataListFile + " " + outPath + " ProjectID"
+        command += " " + dataListFile + " " + outPath + "/ ProjectID"
                 + projectId + " &>" + outPath + "/" + projectId + "/log ";
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         ssh.sshSubmit(false);
