@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="s" uri="/struts-tags"%>
 <link href="<%=request.getContextPath() %>/css/report.css?version=3,0" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/css/buttons.css?version=20150730" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/plugins/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -41,9 +40,9 @@
 $(document).ready(function(){
 	$('#imageFullScreen').smartZoom({'containerClass':'zoomableContainer'});
 });
-function showZoom(src,imgh,imgw) {
-	var bh = $(document).height();  
-	var bw = $(document).width();
+function showZoom(src) {
+	var bh = $(window.parent.document).height();  
+	var bw = $(window.parent.document).width();
 	$("#imageFullScreen").smartZoom({'containerClass':'zoomableContainer'});
 	$("#imageFullScreen").attr("src",src);
 	$("#fullbg").css({  
