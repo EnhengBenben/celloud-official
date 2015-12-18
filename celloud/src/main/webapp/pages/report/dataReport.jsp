@@ -43,8 +43,6 @@ $(document).ready(function(){
 function showZoom(src) {
 	var bh = $(window.parent.document).height();  
 	var bw = $(window.parent.document).width();
-	alert(bh);
-	alert(bw);
 	$("#imageFullScreen").smartZoom({'containerClass':'zoomableContainer'});
 	$("#imageFullScreen").attr("src",src);
 	$("#fullbg").css({  

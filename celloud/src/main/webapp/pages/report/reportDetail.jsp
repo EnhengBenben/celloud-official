@@ -107,7 +107,7 @@ a:hover, a:active, a:focus{
 <script src="<%=request.getContextPath() %>/plugins/select/select2.min.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/calendar/WdatePicker.js"></script>
-<script src="<%=request.getContextPath() %>/js/report.js?version=1.5"></script>
+<script src="<%=request.getContextPath() %>/js/report.js?version=1.8"></script>
 <script src="<%=request.getContextPath() %>/js/dataformat.js"></script>
 <script src="<%=request.getContextPath() %>/js/codon.js"></script>
 <script type="text/javascript">
