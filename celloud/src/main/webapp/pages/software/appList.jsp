@@ -5,7 +5,7 @@
     <div class="list-left">分类方式：</div>
     <div class="list-right list-kind-right">
       <c:forEach items="${pclassifys }" var="pc">
-	    <a href="javascript:toMoreApp(${pc.classifyId },0,1,0)" class="linkage<c:if test='${pc.classifyId==classifyPid }'> current</c:if>" id="pid${pc.classifyId }">${pc.classifyName }</a>
+	    <a href="javascript:toMoreApp(${pc.classifyId },0,1,0)" class="linkage<c:if test='${pc.classifyId==classifyPid ||pc.classifyId==classifyId}'> current</c:if>" id="pid${pc.classifyId }">${pc.classifyName }</a>
       </c:forEach>
     </div>
   </div>

@@ -1,13 +1,4 @@
-/* div,h1,h2,h3,h4,h5,h6,hr,p,dl,dt,dd,ul,ol,li,pre,form,button,input,textarea,th,td,i,span{margin:0;padding:0} */
-/* h1,h2,h3,h4,h5,h6{font-size:100%;font-style:normal;font-weight:normal} */
 ul,ol{list-style:none}
-/* a{text-decoration:none;color:inherit;outline:none;cursor:pointer} */
-/* a:hover{text-decoration:none} */
-/* img{border:0;display:block} */
-/* textarea{overflow:auto;vertical-align:top} */
-/* table{border-collapse:collapse;border-spacing:0} */
-/* input,button,select,textarea{font-family:inherit;font-size:inherit;line-height:inherit} */
-/* button,input,select,textarea{background-image:none}a,img{outline:none}.hide{display:none} */
 .hidden {
   display: none;
 }
