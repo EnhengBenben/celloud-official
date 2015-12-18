@@ -262,7 +262,7 @@ function showBg(src,id) {
 	var height = $("#" + id).height();
 	$("img[id='imageFullScreen']").css("width",width*1.5);
 	$("img[id='imageFullScreen']").css("height",height*1.5);
-	window.parent.showZoom(src);
+	showZoom(src);
 } 
 function showGeneDetail(gname){
 	$.get("report!getCmpGeneInfo",{"gname":gname},function(cmpGene){
