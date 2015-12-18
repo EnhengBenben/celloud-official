@@ -158,6 +158,9 @@ input[type="text"], .onlybotton{
 .input-small {
     width: 90px;
 }
+a:hover, a:focus{
+    text-decoration: none;
+}
 </style>
 <!--[if IE]>
 <style>
