@@ -141,7 +141,7 @@ public class RunAppServiceImpl {
 			String company, String user, String dept) {
 		String dataListFile = formatDataKeyListToSplit(dataKeyList);
 		String command = split_perl + " " + dataListFile + " " + outPath
-                + " ProjectID" + projectId + " &>" + outPath + "/" + projectId
+                + "/ ProjectID" + projectId + " &>" + outPath + "/" + projectId
                 + "/log ";
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         ssh.sshSubmit(false);
@@ -1242,15 +1242,18 @@ public class RunAppServiceImpl {
 			String endData = "";
 			String d1 = "";
 			String d2 = "";
-			if (FileTools.getExt(detail1).equals(".lis")) {
+            if (FileTools.getExt(detail1).equals(".lis")
+                    || FileTools.getExt(detail1).equals(".txt")) {
 				endData = detail1;
 				d1 = detail2;
 				d2 = detail3;
-			} else if (FileTools.getExt(detail2).equals(".lis")) {
+            } else if (FileTools.getExt(detail2).equals(".lis")
+                    || FileTools.getExt(detail2).equals(".txt")) {
 				endData = detail2;
 				d1 = detail1;
 				d2 = detail3;
-			} else if (FileTools.getExt(detail3).equals(".lis")) {
+            } else if (FileTools.getExt(detail3).equals(".lis")
+                    || FileTools.getExt(detail3).equals(".txt")) {
 				endData = detail3;
 				d1 = detail1;
 				d2 = detail2;
