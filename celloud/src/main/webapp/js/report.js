@@ -572,7 +572,7 @@ $.ajaxSetup ({
 				$("#prevA").bind("click",function(){
 					var preId = $("#"+reportIdNow).prev().attr("id");
 					if(preId=='prevA'){
-						alert("已经是第一条数据");
+						jAlert("已经是第一条数据");
 						return ;
 					}
 					$("#fileListUl").find("#"+preId).trigger("click");
@@ -583,7 +583,7 @@ $.ajaxSetup ({
 				$("#nextA").bind("click",function(){
 					var nextId = $("#"+reportIdNow).next().attr("id");
 					if(nextId=='nextA'){
-						alert("已经是最后一条数据");
+						jAlert("已经是最后一条数据");
 						return ;
 					}
 					$("#fileListUl").find("#"+nextId).trigger("click");

@@ -5,7 +5,6 @@
 <link href="<%=request.getContextPath() %>/plugins/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
 <link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
 <link href="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
 <style>
 .tab-content>.tab-pane {
     display: block;
@@ -103,10 +102,7 @@ a:hover, a:active, a:focus{
 		</div>
 	</div>
 </div>
-<!-- jquery_alert_dialogs begin -->
-<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
-<!-- jquery_alert_dialogs end -->
+
 <script src="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/select/select2.min.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
