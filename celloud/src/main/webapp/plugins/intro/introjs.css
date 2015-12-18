@@ -284,7 +284,7 @@ tr.introjs-showElement > th {
 
 .introjs-nextbutton {
   margin-right: 5px;
-  background-image: url("close.png");
+  background-image: url("no.png");
   width:169px;
   height:74px
 /*   -webkit-border-radius: 0 0.2em 0.2em 0; */
