@@ -68,7 +68,7 @@ class CMP:
                     cmpGeneResult = []
                     for line in f.readlines():
                         gdrs = line.strip().split("\t")
-                        cmpGeneResult.append({'geneName': list_value(gdrs, 0), 'knownMSNum': list_value(gdrs, 1), 'SequencingDepth': list_value(gdrs, 2)})
+                        cmpGeneResult.append({'geneName': list_value(gdrs, 0), 'knownMSNum': list_value(gdrs, 1), 'sequencingDepth': list_value(gdrs, 2)})
                     result['cmpGeneResult'] = cmpGeneResult
                 else:
                     gdd = {}
