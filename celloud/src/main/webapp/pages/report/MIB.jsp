@@ -49,7 +49,7 @@
 		<div class="m-box">
 			<h2><i class="i-edit"></i>Genus Distribution</h2>
 			<div class="m-boxCon">
-				<img src="${mib.genusDistribution }" style="width:90%;">
+				<img src="<c:if test="${!mib.genusDistribution.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.genusDistribution }" style="width:90%;">
 			</div>
 		</div>
 		<!--检测结果-->
