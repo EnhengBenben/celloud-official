@@ -47,13 +47,16 @@ function toMoreApp(pid,sid,pageNum,isParent){
 		$("#appMain").html(responseText);
 		if(pid==0){//针对无二级分类的特殊处理
 			$("#rootClassifyName").html($("#pid"+sid).html());
-			$("#secondClassifyName").html('全部');
 		}else{
 			$("#rootClassifyName").html($("#pid"+pid).html());
+		}
+		if(sid==0||pid==0){
+			$("#secondClassifyName").html("全部");
+		}else{
 			$("#secondClassifyName").html($("#sid"+sid).html());
 		}
 		$("#rootClassifyName").bind("click",function(){toMoreApp(pid,0,1,0);});
-		if($("#sid"+sid).html()=="全部"){
+		if($("#secondClassifyName").html()=="全部"){
 			$("#secondClassifyName").bind("click",function(){toMoreApp(pid,0,1,0);});
 		}else{
 			$("#secondClassifyName").bind("click",function(){toMoreApp(pid,sid,pageNum,isParent);});

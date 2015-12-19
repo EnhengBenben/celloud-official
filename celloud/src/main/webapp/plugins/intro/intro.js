@@ -918,7 +918,6 @@
 
       prevTooltipButton.onclick = function() {
     	  $.get("user!updateNotify",{"notify":0},function(result){
-    		  alert(result);
     	  });
     	  if(intro != null){
     		  intro.exit();
