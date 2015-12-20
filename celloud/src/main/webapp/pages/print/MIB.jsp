@@ -215,12 +215,12 @@
 	</table>
 	<table style="width:100%;">
       <tr>
-    	<td style="width:50%;"><img src="<c:if test="${!mib.qualityPath1.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.qualityPath1 }"></td>
-    	<td><img src="<c:if test="${!mib.qualityPath2.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }/</c:if>${mib.qualityPath2 }"></td>
+    	<td style="width:50%;"><img style="width: 100%;" src="<c:if test="${!mib.qualityPath1.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.qualityPath1 }"></td>
+    	<td><img style="width: 100%;" src="<c:if test="${!mib.qualityPath2.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }/</c:if>${mib.qualityPath2 }"></td>
       </tr>
       <tr>
-    	<td><img alt="" src="<c:if test="${!mib.seqContentPath1.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.seqContentPath1 }"></td>
-    	<td><img alt="" src="<c:if test="${!mib.seqContentPath2.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.seqContentPath2 }"></td>
+    	<td><img style="width: 100%;" alt="" src="<c:if test="${!mib.seqContentPath1.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.seqContentPath1 }"></td>
+    	<td><img style="width: 100%;" alt="" src="<c:if test="${!mib.seqContentPath2.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.seqContentPath2 }"></td>
       </tr>
     </table>
 </section>
