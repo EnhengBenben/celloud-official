@@ -917,7 +917,7 @@
       var prevTooltipButton = document.createElement('a');
 
       prevTooltipButton.onclick = function() {
-    	  $.get("user!updateNotify",{"notify":0},function(){
+    	  $.get("user!updateNotify",{"notify":0},function(result){
     	  });
     	  if(intro != null){
     		  intro.exit();
@@ -935,6 +935,7 @@
 //        if (self._currentStep != 0) {
 //          _previousStep.call(self);
 //        }
+          $(".introjs-overlay").remove();
       };
 
       prevTooltipButton.href = 'javascript:void(0);';
@@ -960,7 +961,7 @@
 			  intro.exit();
 			  intro = null;
 		  }
-
+	  	$(".introjs-overlay").remove();
       };
 
       buttonsLayer.appendChild(skipTooltipButton);
@@ -1017,7 +1018,7 @@
 
     var parentElm = targetElement.element.parentNode;
     while (parentElm != null) {
-      if (parentElm.tagName.toLowerCase() === 'body') break;
+      if (parentElm.tagName.toLowerCase() === 'body' || parentElm.className === 'content-wrapper') break;
 
       //fix The Stacking Contenxt problem.
       //More detail: https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Understanding_z_index/The_stacking_context
@@ -1025,7 +1026,7 @@
       var opacity = parseFloat(_getPropValue(parentElm, 'opacity'));
       var transform = _getPropValue(parentElm, 'transform') || _getPropValue(parentElm, '-webkit-transform') || _getPropValue(parentElm, '-moz-transform') || _getPropValue(parentElm, '-ms-transform') || _getPropValue(parentElm, '-o-transform');
       if (/[0-9]+/.test(zIndex) || opacity < 1 || (transform !== 'none' && transform !== undefined)) {
-        parentElm.className += ' introjs-fixParent';
+    	  parentElm.className += ' introjs-fixParent';
       }
 
       parentElm = parentElm.parentNode;

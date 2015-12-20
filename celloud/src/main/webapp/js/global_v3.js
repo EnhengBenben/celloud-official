@@ -124,7 +124,6 @@ function showReport(){
 	$.AdminLTE.closeSidebar();
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
-	$("#mainDIV").load("pages/report/reportDetail.jsp");
 	if(intro != null && hasNavi == 1){
 		intro.exit();
 		intro = null;
@@ -135,44 +134,29 @@ function showReport(){
 		intro.setOption('showButtons', true);
 		intro.setOptions({
 			steps: [
-              { 
-            	step: 9,
-            	img: "endintro.png",
-            	intro: ""
-              }
-            ]
+			        { 
+			        	step: 9,
+			        	img: "endintro.png",
+			        	intro: ""
+			        }
+			        ]
 		});
 		intro.start(9);
 	}
+	$("#mainDIV").load("pages/report/reportDetail.jsp");
 }
 
 /**
  * 应用市场
  */
-//function showAppStore(){
-////	$.AdminLTE.closeSidebar();
-//	$("#uploadDIV").css("display","none");
-//	$("#mainDIV").css("display","");
-//	$.get("app3!toAppStore",{},function(responseText){
-//		$("#mainDIV").html(responseText);
-//	});
-//}
-var toAppStoreMenu = document.getElementById("toAppStoreMenu");
-toAppStoreMenu.addEventListener("click",function(){
+function showAppStore(){
+//	$.AdminLTE.closeSidebar();
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
 	$.get("app3!toAppStore",{},function(responseText){
 		$("#mainDIV").html(responseText);
 	});
-},false); 
-
-//$("#toAppStoreMenu").click(function(){
-//	$("#uploadDIV").css("display","none");
-//	$("#mainDIV").css("display","");
-//	$.get("app3!toAppStore",{},function(responseText){
-//		$("#mainDIV").html(responseText);
-//	});
-//});
+}
 
 /**
  * 统计页面
@@ -195,3 +179,20 @@ function showUser(){
     $("#accountManage").addClass('active');
 	$("#mainDIV").load("pages/user/user.jsp");
 }
+
+var EventUtil = {
+   addHandler: function(element,type,handler){
+        if(element.addEventListener){
+               element.addEventListener(type, handler, false);
+         }else if(element.attachEvent){
+               element.attachEvent("on" + type, handler);
+          }
+      },
+      removeHandler: function(element,type,handler){
+           if(element.removeEventListener){
+                 element.removeEventListener(type, handler, false);
+           }else if(element.detachEvent){
+                  element.detachEvent("on" + type, handler);
+                }            
+           }
+ };    

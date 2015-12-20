@@ -33,6 +33,7 @@ import com.mongo.service.ReportService;
 import com.nova.action.BaseAction;
 import com.nova.utils.ExcelUtil;
 import com.nova.utils.FileTools;
+import com.nova.utils.PropertiesUtil;
 
 /**
  * 操作CMP MongoDB报告工具
@@ -63,6 +64,7 @@ public class CmpReportAction extends BaseAction {
     private List<GddDiseaseDict> gddDiseaseList;
     private List<CmpGeneSnpResult> allGsr;
     private List<CmpReport> cmpList;
+    private String outPath = PropertiesUtil.toolsOutPath + "upload";
 
     public void updateFill() {
         if (infos != null) {
@@ -334,6 +336,14 @@ public class CmpReportAction extends BaseAction {
 
     public void setCmpList(List<CmpReport> cmpList) {
         this.cmpList = cmpList;
+    }
+
+    public String getOutPath() {
+        return outPath;
+    }
+
+    public void setOutPath(String outPath) {
+        this.outPath = outPath;
     }
 
 }

@@ -22,7 +22,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-family: Arial,'Hiragino Sans GB','Microsoft YaHei',微软雅黑, STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif;
   font-weight: 400;
-  font-size:12px;
+  font-size:14px;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -1488,7 +1488,7 @@ a:focus {
  */
 .box {
   position: relative;
-  border-radius: 3px;
+/*   border-radius: 3px; */
   background: #ffffff;
   border-top: 3px solid #d2d6de;
   margin-bottom: 20px;
@@ -1508,7 +1508,7 @@ a:focus {
   border-top-color: #f39c12;
 }
 .box.box-success {
-  border-top-color: #00a65a;
+  border-top-color: #85c540;
 }
 .box.box-default {
   border-top-color: #d2d6de;

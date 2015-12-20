@@ -18,6 +18,10 @@
     <link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
     <link href="<%=request.getContextPath() %>/dist/css/celloud.css?version=1.5" rel="stylesheet" type="text/css" />
     <link href="plugins/intro/introjs.css" rel="stylesheet" type="text/css" />
+    <link href="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
+  	<link href="<%=request.getContextPath() %>/dist/css/productDetail.css" rel="stylesheet" type="text/css" />
+	<link href="<%=request.getContextPath() %>/dist/css/productList.css" rel="stylesheet" type="text/css" />
+	<link href="<%=request.getContextPath() %>/dist/css/getNoResult.css" rel="stylesheet" type="text/css" />
   </head>
   <body class="skin-green sidebar-mini">
     <div class="wrapper">
@@ -93,7 +97,7 @@
               </a>
             </li>
             <li class="treeview" id="toAppStoreMenu" data-step="1" data-position="right" data-intro="" data-img="yysc.png">
-              <a href="javascript:void(0)">
+              <a href="javascript:void(0)" onclick="showAppStore()">
                 <i class="fa fa-cubes"></i>
                 <span>应用市场</span>
               </a>
@@ -138,7 +142,7 @@
     <script src="dist/js/moment.min.js" type="text/javascript"></script>
     <script src="plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
     <!-- FastClick -->
-    <script src="plugins/fastclick/fastclick.min.js"></script>
+<!--     <script src="plugins/fastclick/fastclick.min.js"></script> -->
     <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
     <script src="<%=request.getContextPath() %>/plugins/select/select2.min.js"></script>
 	<script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
@@ -148,6 +152,9 @@
 	<script src="<%=request.getContextPath() %>/plugins/highcharts/char.js?version=20150526"></script>
     <script src="dist/js/app.js?v=2" type="text/javascript"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <!-- jquery_alert_dialogs begin -->
+	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
     <script type="text/javascript">
     	var hasNavi = <%=session.getAttribute("userNav")%>;
     	var intro = null;

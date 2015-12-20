@@ -562,7 +562,6 @@ $.ajaxSetup ({
 					inner += "<button type='button' class='btn btn-success "+isActive+"' style='font-size:12px;' id='fileA"+proId+item.fileId+"' title='"+item.fileName+"'>"+(item.fileName.length>15?(item.fileName.substring(0,15)+"..."):item.fileName)+"</button>";
 					$("#fileListUl").append(inner);
 					$("#fileA"+proId+item.fileId).bind("click", function() {
-						dataItemClick(fileList.length,index);
 						viewADataReport(item.dataKey,item.fileName,userId,softwareId,item.fileId,proId,obj1);
 						$.get("report!clickItemDataReport",{},function(state){});
 					});
@@ -572,7 +571,7 @@ $.ajaxSetup ({
 				$("#prevA").bind("click",function(){
 					var preId = $("#"+reportIdNow).prev().attr("id");
 					if(preId=='prevA'){
-						alert("已经是第一条数据");
+						jAlert("已经是第一条数据");
 						return ;
 					}
 					$("#fileListUl").find("#"+preId).trigger("click");
@@ -583,7 +582,7 @@ $.ajaxSetup ({
 				$("#nextA").bind("click",function(){
 					var nextId = $("#"+reportIdNow).next().attr("id");
 					if(nextId=='nextA'){
-						alert("已经是最后一条数据");
+						jAlert("已经是最后一条数据");
 						return ;
 					}
 					$("#fileListUl").find("#"+nextId).trigger("click");
@@ -594,36 +593,13 @@ $.ajaxSetup ({
 			});
 			viewADataReport(dataKey,fileName,userId,softwareId,0,proId,obj.children(":first"));
 		}
-		function dataItemClick(length,index){
-			if(length>5){
-				var arr = [];
-				if(index>=4 && length-index>2){
-					var left1 = index-1;
-					var left2 = index-2;
-					var left3 = index-3;
-					var right1 = index+1;
-					var right2 = index+2;
-					arr = [index,left1,left2,left3,right1,right2];
-				} else if(index<4){
-					arr = [0,1,2,3,4,5];
-				} else if(length-index<=2){
-					arr = [length-1,length-2,length-3,length-4,length-5,length-6];
-				}
-				for(var i=0;i<length;i++){
-					if($.inArray(i,arr)==-1){
-						$("#dataLi"+i).attr("style","display:none;");
-					}else{
-						$("#dataLi"+i).attr("style","display:;");
-					}
-				}
-			}
-		}
 		function viewADataReport(dataKey,fileName,userId,softwareId,fileId,proId,obj){
 			reportIdNow = 'fileA'+proId+fileId;
 			obj.addClass("link_visited");
 			if(fileId != 0){
 				$("#fileListUl").find(".active").removeClass("active");
-				$("#fileA"+proId+fileId).parent().addClass("active");
+				$("#fileListUl").removeClass("active");
+				$("#"+reportIdNow).addClass("active");
 			}
 			if(softwareId == 110 || softwareId ==111 || softwareId ==112){
 				$.get("cmpReport!toCmpReport",{"cmpReport.projectId":proId,"cmpReport.dataKey":dataKey,"cmpReport.appId":softwareId},function(responseText){
@@ -983,7 +959,6 @@ $.ajaxSetup ({
 							$("#dataLi0").find("span").html(seq);
 							$("#dataLi0").attr("id","dataLi" + index);
 							$("#dataLi"+index).find("a").bind("click", function() {
-								dataItemClick(fileList.length,index);
 								viewAbiNjReport(userId,softwareId,projectId,dataItem0.fileId,obj1,dataItem0.dataKey,dataItem0.fileName);
 								$.get("report!clickItemDataReport",{},function(state){});
 							});
@@ -992,7 +967,6 @@ $.ajaxSetup ({
 						inner += "<a href='javascript:void(0)' id='fileA"+item.fileId+"' title='"+item.fileName+"'><span>"+1+"</span>"+(item.fileName.length>15?(item.fileName.substring(0,15)+"..."):item.fileName)+"</a></li>";
 						$("#prevLi").after(inner);
 						$("#fileA"+item.fileId).bind("click", function() {
-							dataItemClick(fileList.length,0);
 							viewAbiNjReport(userId,softwareId,projectId,item.fileId,obj1,item.dataKey,item.fileName);
 							$.get("report!clickItemDataReport",{},function(state){});
 						});
@@ -1001,7 +975,6 @@ $.ajaxSetup ({
 						inner += "<a href='javascript:void(0)' id='fileA"+item.fileId+"' title="+item.fileName+"><span>"+seq+"</span>"+(item.fileName.length>15?(item.fileName.substring(0,15)+"..."):item.fileName)+"</a></li>";
 						$("#fileListUl").append(inner);
 						$("#fileA"+item.fileId).bind("click", function() {
-							dataItemClick(fileList.length,index);
 							viewAbiNjReport(userId,softwareId,projectId,item.fileId,obj1,item.dataKey,item.fileName);
 							$.get("report!clickItemDataReport",{},function(state){});
 						});

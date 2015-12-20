@@ -309,7 +309,7 @@ public class DataAction extends BaseAction {
             String dataKeyList = dataResult.toString();
             // TODO
             String appPath = basePath + userId + "/" + appId + "/";
-            if(!FileTools.checkPath(appPath)){
+            if (!FileTools.checkPath(appPath)) {
                 new File(appPath).mkdirs();
             }
             if (SparkPro.apps.contains(appId)) {// 判断是否需要进队列
@@ -468,6 +468,21 @@ public class DataAction extends BaseAction {
                     RemoteRequests rr = new RemoteRequests();
                     rr.run(newPath);
                 }
+                String newPath = PropertiesUtil.toolsOutPath
+                        + "Procedure!runApp?userId=" + userId + "&appId="
+                        + appId + "&appName=" + appName + "&projectName="
+                        + proName + "&email=" + email + "&dataKeyList="
+                        + dataResult.toString() + "&projectId=" + proId
+                        + "&dataInfos="
+                        + Base64Util.encrypt(JSONObject.toJSONString(map))
+                        + "&company="
+                        + Base64Util.encrypt(JSONObject.toJSONString(com))
+                        + "&user="
+                        + Base64Util.encrypt(JSONObject.toJSONString(user))
+                        + "&dept="
+                        + Base64Util.encrypt(JSONObject.toJSONString(dept));
+                RemoteRequests rr = new RemoteRequests();
+                rr.run(newPath);
             }
         }
         return "info";

@@ -498,6 +498,7 @@ function initDataList(){
 		intro.setOption('showButtons', false);
 		intro.start();
 		intro.goToStep(2);
+		$("#toRunDataA").attr("disabled",true);
 		$("#manageDataH3").bind('click',function(){
 			if(intro != null){
 				intro.exit();
