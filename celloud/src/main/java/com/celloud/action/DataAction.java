@@ -468,21 +468,6 @@ public class DataAction extends BaseAction {
                     RemoteRequests rr = new RemoteRequests();
                     rr.run(newPath);
                 }
-                String newPath = PropertiesUtil.toolsOutPath
-                        + "Procedure!runApp?userId=" + userId + "&appId="
-                        + appId + "&appName=" + appName + "&projectName="
-                        + proName + "&email=" + email + "&dataKeyList="
-                        + dataResult.toString() + "&projectId=" + proId
-                        + "&dataInfos="
-                        + Base64Util.encrypt(JSONObject.toJSONString(map))
-                        + "&company="
-                        + Base64Util.encrypt(JSONObject.toJSONString(com))
-                        + "&user="
-                        + Base64Util.encrypt(JSONObject.toJSONString(user))
-                        + "&dept="
-                        + Base64Util.encrypt(JSONObject.toJSONString(dept));
-                RemoteRequests rr = new RemoteRequests();
-                rr.run(newPath);
             }
         }
         return "info";
