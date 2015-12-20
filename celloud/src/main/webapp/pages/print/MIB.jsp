@@ -102,34 +102,34 @@
     <h4>7.&nbsp;&nbsp;图</h4>
     <div class="info">
       <c:if test="${mib.pngPath.top1png!=null }">
-		<img src="<c:if test="${!mib.top1png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top1png }" style="width:90%;">
+		<img src="<c:if test="${!mib.pngPath.top1png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top1png }" style="width:90%;">
 	  </c:if>
 	  <c:if test="${mib.pngPath.top2png!=null }">
-		<img src="<c:if test="${!mib.top2png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top2png }" style="width:90%;">
+		<img src="<c:if test="${!mib.pngPath.top2png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top2png }" style="width:90%;">
 	  </c:if>
 	  <c:if test="${mib.pngPath.top3png!=null }">
-		<img src="<c:if test="${!mib.top3png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top3png }" style="width:90%;">
+		<img src="<c:if test="${!mib.pngPath.top3png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top3png }" style="width:90%;">
 	  </c:if>
 	  <c:if test="${mib.pngPath.top4png!=null }">
-		<img src="<c:if test="${!mib.top4png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top4png }" style="width:90%;">
+		<img src="<c:if test="${!mib.pngPath.top4png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top4png }" style="width:90%;">
 	  </c:if>
 	  <c:if test="${mib.pngPath.top5png!=null }">
-		<img src="<c:if test="${!mib.top5png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top5png }" style="width:90%;">
+		<img src="<c:if test="${!mib.pngPath.top5png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top5png }" style="width:90%;">
 	  </c:if>
 	  <c:if test="${mib.pngPath.top6png!=null }">
-		<img src="<c:if test="${!mib.top6png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top6png }" style="width:90%;">
+		<img src="<c:if test="${!mib.pngPath.top6png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top6png }" style="width:90%;">
 	  </c:if>
 	  <c:if test="${mib.pngPath.top7png!=null }">
-		<img src="<c:if test="${!mib.top7png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top7png }" style="width:90%;">
+		<img src="<c:if test="${!mib.pngPath.top7png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top7png }" style="width:90%;">
 	  </c:if>
 	  <c:if test="${mib.pngPath.top8png!=null }">
-		<img src="<c:if test="${!mib.top8png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top8png }" style="width:90%;">
+		<img src="<c:if test="${!mib.pngPath.top8png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top8png }" style="width:90%;">
 	  </c:if>
 	  <c:if test="${mib.pngPath.top9png!=null }">
-		<img src="<c:if test="${!mib.top9png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top9png }" style="width:90%;">
+		<img src="<c:if test="${!mib.pngPath.top9png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top9png }" style="width:90%;">
 	  </c:if>
 	  <c:if test="${mib.pngPath.top10png!=null }">
-		<img src="<c:if test="${!mib.top10png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top10png }" style="width:90%;">
+		<img src="<c:if test="${!mib.pngPath.top10png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top10png }" style="width:90%;">
 	  </c:if>
     </div>
 </section>
