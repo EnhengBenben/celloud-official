@@ -121,7 +121,7 @@
 											<thead>
 												<tr>
 													<th class="mwidth_Gene">基因</th>
-													<th>已知突变位点数<c:out value="${fn:length(cmpReport.cmpGeneResult)}"></c:out> </th>
+													<th>已知突变位点数 </th>
 													<th>测序深度</th>
 												</tr>	
 											</thead>

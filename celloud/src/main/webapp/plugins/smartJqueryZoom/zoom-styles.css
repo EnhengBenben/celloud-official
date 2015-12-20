@@ -2,13 +2,13 @@ html, body {
 	height: 100%;
 }
 
-body{
-  margin:0;
-  padding:0;
-  font-family: Trebuchet, Arial, Helvetica;
-  background-color: #FFFFFF;
-  min-width:1000px;
-}
+/* body{ */
+/*   margin:0; */
+/*   padding:0; */
+/*   font-family: Trebuchet, Arial, Helvetica; */
+/*   background-color: #FFFFFF; */
+/*   min-width:1000px; */
+/* } */
 
 .pageContent{
  	padding-top:0px;
