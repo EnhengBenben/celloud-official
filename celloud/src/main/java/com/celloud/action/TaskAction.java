@@ -59,7 +59,7 @@ public class TaskAction extends BaseAction {
     private IReportService reportService;
     private Task task;
     private Integer conditionInt;
-    private Integer projectId;
+    private String projectId;
     /** 文件名称 eg: filename1,filename2 */
     private String dataNames;
 
@@ -116,7 +116,8 @@ public class TaskAction extends BaseAction {
         }
         // 1. 数据库检索
         Map<String, Object> map = taskService
-                .getTaskInfoByProId((long) projectId);
+.getTaskInfoByProId(Long
+                .valueOf(projectId));
         Project pro = (Project) map.get("project");
         App app = (App) map.get("app");
         User user = (User) map.get("user");
@@ -163,7 +164,8 @@ public class TaskAction extends BaseAction {
             xml = XmlUtil.writeXML(projectFile.toString());
         }
         // 6. 项目报告插入mysql并修改项目运行状态
-        reportService.updateReportStateByProSoftId(userId, projectId,
+        reportService.updateReportStateByProSoftId(userId,
+                Integer.valueOf(projectId),
                 Integer.valueOf(appId.toString()), 3, xml);
         if (appId.toString().equals(AppNameIDConstant.split)) {
             String inPath = reportPath + "result/split/";
@@ -209,7 +211,8 @@ public class TaskAction extends BaseAction {
                 user.getEmail(), param, true);
 
         // 8.结束任务并开始执行等待任务
-        task = taskService.getTaskDataAppPro(dataKey, appId, (long) projectId);
+        task = taskService.getTaskDataAppPro(dataKey, appId,
+                Long.valueOf(projectId));
         if (task != null) {
             this.updateTaskState();
         }
@@ -232,11 +235,11 @@ public class TaskAction extends BaseAction {
         this.conditionInt = conditionInt;
     }
 
-    public Integer getProjectId() {
+    public String getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(Integer projectId) {
+    public void setProjectId(String projectId) {
         this.projectId = projectId;
     }
 
