@@ -60,4 +60,28 @@ class split:
                         rlist.append({'name': list_value(st, 0), 'number': list_value(st, 1)})
                     result['resultList'] = rlist
                     f.close()
+        # QC
+        qcPath = os.path.join(path, 'QC')
+        if os.path.exists(qcPath):
+            num = 1
+            for file in os.listdir(qcPath):
+                if file.endswith('_fastqc'):
+                    fastqcPath = os.path.join(qcPath, file)
+                    qcImgPath = os.path.join(fastqcPath, 'Images')
+                    if os.path.exists(os.path.join(qcImgPath, 'per_base_quality.png')):
+                        result['qualityPath'+str(num)] = '/QC/'+file+'/Images/'+'per_base_quality.png'
+                    if os.path.exists(os.path.join(qcImgPath, 'per_base_sequence_content.png')):
+                        result['seqContentPath'+str(num)] = '/QC/'+file+'/Images/'+'per_base_sequence_content.png'
+                    qcDataPath = os.path.join(fastqcPath, 'fastqc_data.txt')
+                    if os.path.exists(qcDataPath):
+                        basicStatistics = dict()
+                        basicStatistics['Filename'] = linecache.getline(qcDataPath, 4).split('\t')[1]
+                        basicStatistics['FileType'] = linecache.getline(qcDataPath, 5).split('\t')[1]
+                        basicStatistics['Encoding'] = linecache.getline(qcDataPath, 6).split('\t')[1]
+                        basicStatistics['TotalSeq'] = linecache.getline(qcDataPath, 7).split('\t')[1]
+                        basicStatistics['FilteredSeq'] = linecache.getline(qcDataPath, 8).split('\t')[1]
+                        basicStatistics['SeqLength'] = linecache.getline(qcDataPath, 9).split('\t')[1]
+                        basicStatistics['gc'] = linecache.getline(qcDataPath, 10).split('\t')[1]
+                        result['basicStatistics'+str(num)] = basicStatistics
+                    num += 1
         return result
