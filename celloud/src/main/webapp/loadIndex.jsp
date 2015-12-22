@@ -7,7 +7,7 @@
 <title>CelLoud</title>
 </head>
 <body>
-	<div style="top: 30%; left: 40%; position: absolute;">页面加载中。。。</div>
+	<div style="top: 30%; left: 40%; position: absolute;"><font color="#ccc">页面加载中。。。</font></div>
 	<script type="text/javascript">
 		setTimeout(function() {
 			window.location.href = "index";
