@@ -82,30 +82,6 @@
 	<bean id="exceptionHandler" class="com.celloud.exception.ExceptionHandler" />
 	<!-- 启动面向切面的自动代理 -->
 	<aop:aspectj-autoproxy />
-	<!-- 即使启动了面向切面的自动代理模式，也要把切面类注册成spring的bean -->
-	<bean class="com.celloud.interceptor.DaoAspect" />
-	<!-- 拦截器配置 -->
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/**" />
-			<mvc:exclude-mapping path="/js/**" />
-			<mvc:exclude-mapping path="/img/**" />
-			<mvc:exclude-mapping path="/css/**" />
-			<mvc:exclude-mapping path="/plugin/**" />
-			<mvc:exclude-mapping path="/resources/**" />
-			<bean class="com.celloud.interceptor.TestInterceptor" />
-		</mvc:interceptor>
-		<mvc:interceptor>
-			<mvc:mapping path="/interceptor/*" />
-			<bean class="com.celloud.interceptor.TimeInterceptor" />
-		</mvc:interceptor>
-		<mvc:interceptor>
-			<mvc:mapping path="/interceptor/*" />
-			<bean class="com.celloud.interceptor.LogInterceptor" />
-		</mvc:interceptor>
-		<!-- 默认拦截所以请求，包括静态资源，可将其加入<mvc:interceptor>标签中，自定义path，然后排除静态资源 -->
-		<!-- <bean class="com.celloud.interceptor.TestInterceptor" /> -->
-	</mvc:interceptors>
 	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
