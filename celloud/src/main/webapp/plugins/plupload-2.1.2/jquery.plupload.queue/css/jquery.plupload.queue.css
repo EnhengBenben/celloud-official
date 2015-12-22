@@ -9,7 +9,7 @@
 .plupload_button {
 	display: -moz-inline-box; /* FF < 3*/
 	display: inline-block;
-	font: normal 12px sans-serif;
+	font-size: 12px;
 	text-decoration: none;
     color: #42454a;
     border: 1px solid #bababa;
@@ -42,7 +42,7 @@
 }
 
 .plupload_wrapper {
-	font: normal 11px Verdana,sans-serif;
+	font-size: 12px;
 	width: 100%;
 }
 
@@ -54,24 +54,21 @@
 
 .plupload_container input {
 	border: 1px solid #DDD;
-	font: normal 11px Verdana,sans-serif;
+	font-size: 12px;
 	width: 98%;
 }
 
 .plupload_header {background: #2A2C2E url('../img/backgrounds.gif') repeat-x;}
 .plupload_header_content {
-/* 	background: url('../img/backgrounds.gif') no-repeat 0 -317px; */
-	min-height: 56px;
-/* 	padding-left: 60px; */
-	padding-left: 10px;
+/* 	padding-left: 10px; */
 	color: #FFF;
 }
 .plupload_header_title {
-	font: normal 18px sans-serif;
+	font-zize: 18px;
 	padding: 6px 0 3px;
 }
 .plupload_header_text {
-	font: normal 12px sans-serif;
+	font-size: 12px;
 }
 
 .plupload_filelist {
@@ -83,7 +80,7 @@
 .plupload_scroll .plupload_filelist {
 	height: 330px;
 /* 	background: #F5F5F5; */
-	overflow-y: scroll;
+/* 	overflow-y: scroll; */
 }
 
 .plupload_filelist li {
@@ -112,11 +109,11 @@
 }
 .plupload_file_status{
 	float: right;
-	width: 50px;
+	width: 100px;
 }
 .plupload_file_speed,.plupload_file_start,.plupload_file_size, .plupload_progress {
 	float: right;
-	width: 80px;
+	width: 100px;
 }
 .plupload_file_speed,.plupload_file_surplus,.plupload_file_start,.plupload_file_size, .plupload_file_status, .plupload_file_action {
 	text-align: right;
@@ -130,13 +127,13 @@
 
 .plupload_file_action {
 	float: right;
-	width: 16px;
+	width: 26px;
 	height: 16px;
 	margin-left: 15px;
 }
 
 .plupload_file_action * {
-	display: none;
+/* 	display: none; */
 	width: 16px;
 	height: 16px;
 }

@@ -13,6 +13,7 @@ import org.apache.struts2.convention.annotation.Results;
 
 import com.google.inject.Inject;
 import com.nova.sdo.Company;
+import com.nova.sdo.Data;
 import com.nova.sdo.Dept;
 import com.nova.service.ICompanyService;
 import com.nova.service.IDataService;
@@ -23,7 +24,7 @@ import com.nova.utils.PropertiesUtil;
 
 @ParentPackage("celloud-default")
 @Action("print")
-@Results({ @Result(name = "pgs", location = "../../pages/print/PGS.jsp"),
+@Results({ @Result(name = "pgs", location = "../../pages/print/printPGS.jsp"),
 	@Result(name = "nipt", location = "../../pages/print/NIPT.jsp"),
 	@Result(name = "VSP", location = "../../pages/print/printVSP.jsp"),
 	@Result(name = "CMP", location = "../../pages/print/printCMP.jsp"),
@@ -44,6 +45,7 @@ public class PrintAction extends BaseAction {
     private String outPath = PropertiesUtil.toolsOutPath + "upload";
     private String pagePath;
     private String miniPng;
+    private String splitPng;
     private String txt;
     private Company company;
     private Dept dept;
@@ -66,33 +68,34 @@ public class PrintAction extends BaseAction {
     private String seq;
     private String result;
     private String table;
+    private Data data;
 
     public String printCMP() {
-	String[] temp = StringUtils.splitByWholeSeparatorPreserveAllTokens(
-		context, ",");
-	resultMap = new HashMap<String, Object>();
-	resultMap.put("runDate", temp[0]);
-	resultMap.put("allFragment", temp[1]);
-	resultMap.put("avgQuality", temp[2]);
-	resultMap.put("avgGC", temp[3]);
-	resultMap.put("useFragment", temp[4]);
-	resultMap.put("undetectGene", temp[5]);
-	resultMap.put("detectGene", temp[6]);
-	resultMap.put("avgCoverage", temp[7]);
-	resultMap.put("snp_tbody1", temp[8]);
-	resultMap.put("snp_tbody2", temp[9]);
-	resultMap.put("fastqc_data", temp[10]);
-	resultMap.put("per_base_quality", temp[11]);
-	resultMap.put("per_base_seq_content", temp[12]);
-	resultMap.put("f2", temp[13]);
-	resultMap.put("q2", temp[14]);
-	resultMap.put("s2", temp[15]);
-	resultMap.put("fileName", temp[16]);
-	return "CMP";
+        String[] temp = StringUtils.splitByWholeSeparatorPreserveAllTokens(
+                context, ",");
+        resultMap = new HashMap<String, Object>();
+        resultMap.put("runDate", temp[0]);
+        resultMap.put("allFragment", temp[1]);
+        resultMap.put("avgQuality", temp[2]);
+        resultMap.put("avgGC", temp[3]);
+        resultMap.put("useFragment", temp[4]);
+        resultMap.put("undetectGene", temp[5]);
+        resultMap.put("detectGene", temp[6]);
+        resultMap.put("avgCoverage", temp[7]);
+        resultMap.put("snp_tbody1", temp[8]);
+        resultMap.put("snp_tbody2", temp[9]);
+        resultMap.put("fastqc_data", temp[10]);
+        resultMap.put("per_base_quality", temp[11]);
+        resultMap.put("per_base_seq_content", temp[12]);
+        resultMap.put("f2", temp[13]);
+        resultMap.put("q2", temp[14]);
+        resultMap.put("s2", temp[15]);
+        resultMap.put("fileName", temp[16]);
+        return "CMP";
     }
 
     public String printVSP() {
-	return "VSP";
+        return "VSP";
     }
 
     public String printHBV() {
@@ -106,7 +109,7 @@ public class PrintAction extends BaseAction {
             return "hbv";
         }
         txt = iss.getSoftware(appId).getSoftwareName();
-        if (imgHtml != null) {
+        if (!StringUtils.isEmpty(imgHtml)) {
             String[] imgArr = imgHtml.split(",");
             imgList = new ArrayList<String>();
             for (String s : imgArr) {
@@ -117,218 +120,235 @@ public class PrintAction extends BaseAction {
     }
 
     public String printPGS() {
-	String info[] = pagePath.split("/");
-	userId = Integer.parseInt(info[0]);
-	appId = Integer.parseInt(info[1]);
-	fileId = dataService.getDataByKey(info[2]).getFileId();
-	context = reportService.getPrintContext(userId, appId, fileId, 0);
-	// 首先检索该报告是否保存过，若没有，则查询该用户所属的医院
-	if (context == null || context.isEmpty()) {
-	    dept = deptService.getDept((Integer) super.session.get("deptId"));
-	    company = companyService.getCompany(dept.getCompanyId());
-	}
-	return "pgs";
+        String info[] = pagePath.split("/");
+        userId = Integer.parseInt(info[0]);
+        appId = Integer.parseInt(info[1]);
+        fileId = dataService.getDataByKey(info[2]).getFileId();
+        data = dataService.getDataById(String.valueOf(fileId));
+        context = reportService.getPrintContext(userId, appId, fileId, 0);
+        // 首先检索该报告是否保存过，若没有，则查询该用户所属的医院
+        if (context == null || context.isEmpty()) {
+            dept = deptService.getDept((Integer) super.session.get("deptId"));
+            company = companyService.getCompany(dept.getCompanyId());
+        }
+        return "pgs";
     }
 
     public String printNIPT() {
-	String info[] = pagePath.split("/");
-	userId = Integer.parseInt(info[0]);
-	appId = Integer.parseInt(info[1]);
-	fileId = dataService.getDataByKey(info[2]).getFileId();
-	context = reportService.getPrintContext(userId, appId, fileId, 0);
-	return "nipt";
+        String info[] = pagePath.split("/");
+        userId = Integer.parseInt(info[0]);
+        appId = Integer.parseInt(info[1]);
+        fileId = dataService.getDataByKey(info[2]).getFileId();
+        context = reportService.getPrintContext(userId, appId, fileId, 0);
+        return "nipt";
     }
 
     public String getOutPath() {
-	return outPath;
+        return outPath;
     }
 
     public void setOutPath(String outPath) {
-	this.outPath = outPath;
+        this.outPath = outPath;
     }
 
     public String getPagePath() {
-	return pagePath;
+        return pagePath;
     }
 
     public void setPagePath(String pagePath) {
-	this.pagePath = pagePath;
+        this.pagePath = pagePath;
     }
 
     public String getMiniPng() {
-	return miniPng;
+        return miniPng;
     }
 
     public void setMiniPng(String miniPng) {
-	this.miniPng = miniPng;
+        this.miniPng = miniPng;
     }
 
     public String getTxt() {
-	return txt;
+        return txt;
     }
 
     public void setTxt(String txt) {
-	this.txt = txt;
+        this.txt = txt;
     }
 
     public String getContext() {
-	return context;
+        return context;
     }
 
     public void setContext(String context) {
-	this.context = context;
+        this.context = context;
     }
 
     public int getUserId() {
-	return userId;
+        return userId;
     }
 
     public void setUserId(int userId) {
-	this.userId = userId;
+        this.userId = userId;
     }
 
     public int getAppId() {
-	return appId;
+        return appId;
     }
 
     public void setAppId(int appId) {
-	this.appId = appId;
+        this.appId = appId;
     }
 
     public int getFileId() {
-	return fileId;
+        return fileId;
     }
 
     public void setFileId(int fileId) {
-	this.fileId = fileId;
+        this.fileId = fileId;
     }
 
     public int getFlag() {
-	return flag;
+        return flag;
     }
 
     public void setFlag(int flag) {
-	this.flag = flag;
+        this.flag = flag;
     }
 
     public Company getCompany() {
-	return company;
+        return company;
     }
 
     public void setCompany(Company company) {
-	this.company = company;
+        this.company = company;
     }
 
     public Dept getDept() {
-	return dept;
+        return dept;
     }
 
     public void setDept(Dept dept) {
-	this.dept = dept;
+        this.dept = dept;
     }
 
     public String getSnpType() {
-	return snpType;
+        return snpType;
     }
 
     public void setSnpType(String snpType) {
-	this.snpType = snpType;
+        this.snpType = snpType;
     }
 
     public String getSensitive() {
-	return sensitive;
+        return sensitive;
     }
 
     public void setSensitive(String sensitive) {
-	this.sensitive = sensitive;
+        this.sensitive = sensitive;
     }
 
     public String getImgHtml() {
-	return imgHtml;
+        return imgHtml;
     }
 
     public void setImgHtml(String imgHtml) {
-	this.imgHtml = imgHtml;
+        this.imgHtml = imgHtml;
     }
 
     public List<String> getImgList() {
-	return imgList;
+        return imgList;
     }
 
     public void setImgList(List<String> imgList) {
-	this.imgList = imgList;
+        this.imgList = imgList;
     }
 
     public String getFileName() {
-	return fileName;
+        return fileName;
     }
 
     public void setFileName(String fileName) {
-	this.fileName = fileName;
+        this.fileName = fileName;
     }
 
     public Map<String, Object> getResultMap() {
-	return resultMap;
+        return resultMap;
     }
 
     public void setResultMap(Map<String, Object> resultMap) {
-	this.resultMap = resultMap;
+        this.resultMap = resultMap;
     }
 
     public String getDataKey() {
-	return dataKey;
+        return dataKey;
     }
 
     public void setDataKey(String dataKey) {
-	this.dataKey = dataKey;
+        this.dataKey = dataKey;
     }
 
     public String getPageTxt() {
-	return pageTxt;
+        return pageTxt;
     }
 
     public void setPageTxt(String pageTxt) {
-	this.pageTxt = pageTxt;
+        this.pageTxt = pageTxt;
     }
 
     public String getPeakFigure() {
-	return peakFigure;
+        return peakFigure;
     }
 
     public void setPeakFigure(String peakFigure) {
-	this.peakFigure = peakFigure;
+        this.peakFigure = peakFigure;
     }
 
     public String getAllPic() {
-	return allPic;
+        return allPic;
     }
 
     public void setAllPic(String allPic) {
-	this.allPic = allPic;
+        this.allPic = allPic;
     }
 
     public String getSeq() {
-	return seq;
+        return seq;
     }
 
     public void setSeq(String seq) {
-	this.seq = seq;
+        this.seq = seq;
     }
 
     public String getResult() {
-	return result;
+        return result;
     }
 
     public void setResult(String result) {
-	this.result = result;
+        this.result = result;
     }
 
     public String getTable() {
-	return table;
+        return table;
     }
 
     public void setTable(String table) {
-	this.table = table;
+        this.table = table;
+    }
+
+    public String getSplitPng() {
+        return splitPng;
+    }
+
+    public void setSplitPng(String splitPng) {
+        this.splitPng = splitPng;
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
     }
 
 }

@@ -32,19 +32,6 @@
 					<li class="subNavBtn">
 						<a href="javascript:void(0);" id="email">邮件群发</a>
 					</li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle subNavBtn" data-toggle="dropdown">系统统计
-							<b class="caret"></b>
-						</a>
-						<ul class="dropdown-menu">
-							<li>
-								<a href="javascript:void(0);" id="logo">登录统计</a>
-							</li>
-							<li>
-								<a href="javascript:void(0);" id="softCount">软件运行统计</a>
-							</li>
-						</ul>
-					</li>
 		    	</s:if>
 		    	<s:elseif test="#session.userRole==3">
 		    		<li>

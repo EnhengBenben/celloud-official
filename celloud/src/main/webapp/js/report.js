@@ -4,9 +4,9 @@ $.ajaxSetup ({
 //----------------------loading效果参数配置----------------------------
 		var opts = {
 		  lines: 13, // The number of lines to draw
-		  length: 20, // The length of each line
-		  width: 10, // The line thickness
-		  radius: 30, // The radius of the inner circle
+		  length: 28, // The length of each line
+		  width: 14, // The line thickness
+		  radius: 42, // The radius of the inner circle
 		  corners: 1, // Corner roundness (0..1)
 		  rotate: 0, // The rotation offset
 		  direction: 1, // 1: clockwise, -1: counterclockwise
@@ -24,17 +24,11 @@ $.ajaxSetup ({
 		var spinnerTotal;
 		//---------------------------------------------------------------------
 		var param = null;
-		function initReport(){
-			spinnerTotal = new Spinner(opts);
-			var target = document.getElementById('refreshTotalDiv');
-			spinnerTotal.spin(target);
-			$("#reportBody").load("reportDetail.jsp");
-		}
 		function downPDF(userId,softwareId,projectId){
 			$.get("project!downPdf",{"userId":userId,"softwareId":softwareId,"projectId":projectId},function(userNames){
 				userNames = userNames.replace(/"/g ,"").replace(/\\/g ,"");
 				if(userNames){
-					var url = window.location.href.split("pages")[0];
+					var url = window.location.href.split("index")[0];
 					window.location.href=url+"Tools/Procedure!miRNADownload?userId="+userNames;
 				}else{
 					jAlert("没有可以下载的pdf文件");
@@ -42,16 +36,10 @@ $.ajaxSetup ({
 			});
 		}
 		function initReportDetail(){
-			showTab(0);
-			$("#liReport").attr("style","display:none");
-			APP = window.parent.document.getElementById("_hidAppId").value;
-			if(APP==0){
-				getReportList();
-			}else{
-				submitSearch();
-				$(".capp").removeClass("_appred");
-				window.parent.resetAPP();
-			}
+			spinnerTotal = new Spinner(opts);
+			var target = document.getElementById('reportLoading');
+			spinnerTotal.spin(target);
+			getReportList();
 			// 初始化高级检索app列表
 			var _num = 0;
 			$.get("report!getAppListById",function(softList){
@@ -65,9 +53,9 @@ $.ajaxSetup ({
 						}
 						_num++;
 						if(APP==id){
-							context+="<a href='javascript:void(0)' class='capp _appred' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>";
+							context+="<a href='javascript:void(0)' class='capp _appred' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
 						}else{
-							context+="<a href='javascript:void(0)' class='capp' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>";
+							context+="<a href='javascript:void(0)' class='capp' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
 						}
 					}
 					$("#showMore").attr("style","display:none");
@@ -80,9 +68,9 @@ $.ajaxSetup ({
 						}
 						_num++;
 						if(APP==id){
-							context+="<a href='javascript:void(0)' class='capp _appred' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>";
+							context+="<a href='javascript:void(0)' class='capp _appred' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
 						}else{
-							context+="<a href='javascript:void(0)' class='capp' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>";
+							context+="<a href='javascript:void(0)' class='capp' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
 						}
 					}
 					context += "</div>";
@@ -96,16 +84,15 @@ $.ajaxSetup ({
 						}
 						_num++;
 						if(APP==id){
-							context+="<a href='javascript:void(0)' class='capp _appred' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>";
+							context+="<a href='javascript:void(0)' class='capp _appred' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
 						}else{
-							context+="<a href='javascript:void(0)' class='capp' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>";
+							context+="<a href='javascript:void(0)' class='capp' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
 						}
 					}
 					context += "</div>";
 					$("#appList").html(context);
 				}
 			});
-			spinnerTotal.stop();
 		}
 		
 		//删除共享来的项目报告
@@ -138,27 +125,6 @@ $.ajaxSetup ({
 					});
 				}
 			});
-		}
-		
-		//显示某个页签及其内容
-		function showTab(type){
-			if(type==0){
-				$("#liReportList").removeClass("active");
-				$("#liReportList").addClass("active");
-				$("#reListTab").attr("style","");
-				$("#liReport").removeClass("active");
-				$("#tab2").attr("style","display:none");
-			}else if(type==1){
-				if(close==0){
-					$("#liReportList").removeClass("active");
-					$("#reListTab").attr("style","display:none");
-					$("#liReport").removeClass("active");
-					$("#liReport").addClass("active");
-					$("#tab2").attr("style","");
-				}else{
-					close=0;
-				}
-			}
 		}
 		
 		var START = null;		//检索开始时间
@@ -236,13 +202,10 @@ $.ajaxSetup ({
 		}
 		//获取项目列表
 		function getReportList(){
-			spinner = new Spinner(opts);
-			var target = document.getElementById('selfReportDiv');
-			spinner.spin(target);
 			$.get("report!getReportPageList",{"page.pageSize":pageSize,"page.currentPage":currentPage},function(responseText){
 				$("#selfReportDiv").html(responseText);
 				loadReportList();
-				spinner.stop();
+				spinnerTotal.stop();
 			});
 		}
 		//高级检索
@@ -250,7 +213,7 @@ $.ajaxSetup ({
 			if(!isTIMETRUE){
 				START =$("#_searchDate").val();
 				END = $("#_endDate").val();
-				if(!START||!END){
+				if((!START && END)||(START && !END)){
 					$("#_alertSpan").css("display","");
 					$("#_alertSpan").html("请同时选择起始时间和结束时间");
 					return ;
@@ -260,21 +223,20 @@ $.ajaxSetup ({
 					$("#_alertSpan").html("起始日期不能大于结束日期");
 					return ;
 				}
-				if(START != null){
+				if(START != null && START != ""){
 					START = START+" 00:00:00";
 				}
-				if(END != null){
+				if(END != null && END != ""){
 					END = END+" 23:59:59";
 				}
 			}
 			spinner = new Spinner(opts);
-			var target = document.getElementById('selfReportDiv');
+			var target = document.getElementById('reportLoading');
 			spinner.spin(target);
 			$.get("report!getReportPageListByCondition",{"appId":APP,"start":START,"end":END,"fileName":FILENAME,"page.pageSize":pageSize,"page.currentPage":currentPage},function(responseText){
 				$("#selfReportDiv").html(responseText);
 				loadReportList();
 				spinner.stop();
-				$("#reportBody").scrollTop(0);
 			});
 		}
 		
@@ -369,7 +331,7 @@ $.ajaxSetup ({
 			                    }
 			                }
 			            }
-			            if(appId=="91"||appId=="95"||appId=="92"||appId=="93"||appId=="94"||appId=="86"||appId=="87"||appId=="88"||appId=="81"||appId=="83"||appId=="85"||appId=="96"||appId=="97"||appId=="98"||appId=="99"||appId=="100"||appId=="101"||appId=="102"||appId=="103"||appId=="104"){
+			            if(appId=="91"||appId=="95"||appId=="92"||appId=="93"||appId=="94"||appId=="86"||appId=="87"||appId=="88"||appId=="81"||appId=="83"||appId=="85"||appId=="96"||appId=="97"||appId=="98"||appId=="99"||appId=="100"||appId=="101"||appId=="102"||appId=="103"||appId=="104"||appId=="116"){
 			                if(j>0&&i==0){
 			                    param = {"fileName":$.trim($(this).html()),"dataKey":$.trim($(this).next().html()),"softwareId":appId,"softwareName":appName,"userId":userId,"obj":$(this),"proId":proId,"proName":proName};
 			                    $(this).addClass("sub");
@@ -525,8 +487,10 @@ $.ajaxSetup ({
 		var dataReportParam;
 		var dataItem0;
 		var obj0;
+		var reportIdNow;//记录当前报告ID
 		//查看数据报告
 		function viewDataReport(event){
+			$("#mainDIV").load("pages/report/dataReport.jsp");
 			if(typeof spinner != "undefined"){
 				spinner.stop();
 			}
@@ -545,22 +509,15 @@ $.ajaxSetup ({
 			var proId = event.data.proId;
 			var proName = event.data.proName;
 			obj.children(":first").addClass("link_visited");
-			$("#reportResultDiv").html("");
 			$("#fileNameH4").html("APP：" + softwareName);
 			$("#proforReport").html(proName);
-			$("#liReportList").removeClass("active");
-			$("#reListTab").attr("style","display:none;");
-			$("#liReport").attr("style","");
-			$("#liReport").removeClass("active");
-			$("#liReport").addClass("active");
-			$("#tab2").attr("style","");
 			$("#fileListUl").html("");
 			
 			spinner = new Spinner(opts);
-			var target = document.getElementById('tab2');
+			var target = document.getElementById('reportLoading');
 			spinner.spin(target);
 			$.get("getDataInfoListByProjectId.action",{"projectId":proId},function(fileList){
-				$("#fileListUl").append("<li id='prevLi'><a href='javascript:void(0)' id='prevA' class='forward'>prev</a></li>");
+				$("#fileListUl").append("<button type='button' id='prevA' class='btn btn-success'><span class='fa fa-sort-asc'></span></button>");
 				var fileNames = new Array();
 				var newList = "";
 				if(softwareId == 110||softwareId == 111||softwareId == 112||softwareId == 113){
@@ -597,85 +554,52 @@ $.ajaxSetup ({
 						dataItem0 = item;
 						obj1 = $("#dataSpan"+proId+dataItem0.dataKey);
 					}
+					var isActive = "";
 					if(item.dataKey == dataKey){
-						if(index>0){
-							var state = index-1;
-							if(state == 0){
-								$("#prevLi").after(inner);
-							}else {
-								$("#dataLi"+state).after($("#dataLi0"));
-							}
-							$("#dataLi0").find("span").html(seq);
-							$("#dataLi0").attr("id","dataLi" + index);
-							$("#dataLi"+index).find("a").bind("click", function() {
-								dataItemClick(fileList.length,index);
-								viewADataReport(dataItem0.dataKey,dataItem0.fileName,userId,softwareId,dataItem0.fileId,proId,obj1);
-								$.get("report!clickItemDataReport",{},function(state){});
-							});
-						}
-						inner += "<li class='active' id='dataLi0'>";
-						inner += "<a href='javascript:void(0)' id='fileA"+proId+item.fileId+"' title='"+item.fileName+"'><span>"+1+"</span>"+(item.fileName.length>15?(item.fileName.substring(0,15)+"..."):item.fileName)+"</a></li>";
-						$("#prevLi").after(inner);
-						$("#fileA"+proId+item.fileId).bind("click", function() {
-							dataItemClick(fileList.length,0);
-							viewADataReport(item.dataKey,item.fileName,userId,softwareId,item.fileId,proId,obj1);
-							$.get("report!clickItemDataReport",{},function(state){});
-						});
-					}else{
-						inner +="<li id='dataLi"+index+"'>";
-						inner += "<a href='javascript:void(0)' id='fileA"+proId+item.fileId+"' title='"+item.fileName+"'><span>"+seq+"</span>"+(item.fileName.length>15?(item.fileName.substring(0,15)+"..."):item.fileName)+"</a></li>";
-						$("#fileListUl").append(inner);
-						$("#fileA"+proId+item.fileId).bind("click", function() {
-							dataItemClick(fileList.length,index);
-							viewADataReport(item.dataKey,item.fileName,userId,softwareId,item.fileId,proId,obj1);
-							$.get("report!clickItemDataReport",{},function(state){});
-						});
+						isActive = "active";
+						reportIdNow = 'fileA'+proId+item.fileId;
 					}
-					if(index>5){
-						$("#dataLi"+index).attr("style","display:none;");
-					}
+					inner += "<button type='button' class='btn btn-success "+isActive+"' style='font-size:12px;' id='fileA"+proId+item.fileId+"' title='"+item.fileName+"'>"+(item.fileName.length>15?(item.fileName.substring(0,15)+"..."):item.fileName)+"</button>";
+					$("#fileListUl").append(inner);
+					$("#fileA"+proId+item.fileId).bind("click", function() {
+						viewADataReport(item.dataKey,item.fileName,userId,softwareId,item.fileId,proId,obj1);
+						$.get("report!clickItemDataReport",{},function(state){});
+					});
 				});
-				$("#fileListUl").append("<li><a href='javascript:void(0)' id='nextA' class='backward'>next</a></li>");
+				$("#fileListUl").append("<button type='button' id='nextA' class='btn btn-success'><span class='caret'></span></button>");
+				
 				$("#prevA").bind("click",function(){
-					$("#fileListUl").find(".active").prev().find("a:first").trigger("click");
+					var preId = $("#"+reportIdNow).prev().attr("id");
+					if(preId=='prevA'){
+						jAlert("已经是第一条数据");
+						return ;
+					}
+					$("#fileListUl").find("#"+preId).trigger("click");
+					$("#fileListUl").removeClass("active");
+					$("#"+preId).addClass("active");
 					$.get("report!prevDataReport",{},function(state){});
 				});
 				$("#nextA").bind("click",function(){
-					$("#fileListUl").find(".active").next().find("a:first").trigger("click");
+					var nextId = $("#"+reportIdNow).next().attr("id");
+					if(nextId=='nextA'){
+						jAlert("已经是最后一条数据");
+						return ;
+					}
+					$("#fileListUl").find("#"+nextId).trigger("click");
+					$("#fileListUl").removeClass("active");
+					$("#"+nextId).addClass("active");
 					$.get("report!nextDataReport",{},function(state){});
 				});
 			});
 			viewADataReport(dataKey,fileName,userId,softwareId,0,proId,obj.children(":first"));
 		}
-		function dataItemClick(length,index){
-			if(length>5){
-				var arr = [];
-				if(index>=4 && length-index>2){
-					var left1 = index-1;
-					var left2 = index-2;
-					var left3 = index-3;
-					var right1 = index+1;
-					var right2 = index+2;
-					arr = [index,left1,left2,left3,right1,right2];
-				} else if(index<4){
-					arr = [0,1,2,3,4,5];
-				} else if(length-index<=2){
-					arr = [length-1,length-2,length-3,length-4,length-5,length-6];
-				}
-				for(var i=0;i<length;i++){
-					if($.inArray(i,arr)==-1){
-						$("#dataLi"+i).attr("style","display:none;");
-					}else{
-						$("#dataLi"+i).attr("style","display:;");
-					}
-				}
-			}
-		}
 		function viewADataReport(dataKey,fileName,userId,softwareId,fileId,proId,obj){
+			reportIdNow = 'fileA'+proId+fileId;
 			obj.addClass("link_visited");
 			if(fileId != 0){
 				$("#fileListUl").find(".active").removeClass("active");
-				$("#fileA"+proId+fileId).parent().addClass("active");
+				$("#fileListUl").removeClass("active");
+				$("#"+reportIdNow).addClass("active");
 			}
 			if(softwareId == 110 || softwareId ==111 || softwareId ==112){
 				$.get("cmpReport!toCmpReport",{"cmpReport.projectId":proId,"cmpReport.dataKey":dataKey,"cmpReport.appId":softwareId},function(responseText){
@@ -689,7 +613,7 @@ $.ajaxSetup ({
 				$.get("splitReport!getMibReport",{"mib.projectId":proId,"mib.dataKey":dataKey,"mib.appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
-			}else if(softwareId == 85 || softwareId == 86 || softwareId == 87 || softwareId == 88 || softwareId == 91 || softwareId == 92 || softwareId == 93 || softwareId == 94 || softwareId == 104){
+			}else if(softwareId == 85 || softwareId == 86 || softwareId == 87 || softwareId == 88 || softwareId == 91 || softwareId == 92 || softwareId == 93 || softwareId == 94 || softwareId == 104|| softwareId == 116){
 				$.get("report3!getPgsReport",{"proId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
@@ -750,7 +674,7 @@ $.ajaxSetup ({
 					$("#charResult").html("");
 					for ( var i = 1; i < sp.length; i++) {
 						var big = 0;
-						var div = $("<div id='char"+i+"' style='width:380px;display: inline-block;margin-right:10px;'></div>");
+						var div = $("<div id='char"+i+"' class='col-lg-6'></div>");
 						$("#charDiv").append(div);
 						var ev = sp[i].split(":");
 						var one = getCountValue(ev[0],"_table");
@@ -777,7 +701,7 @@ $.ajaxSetup ({
 			}
 			if(appId==80){
 				$.get("count!getHCV",{"appId":appId,"path":DATAPATH},function(data){
-						var div = $("<div id='char0' style='width:380px;display: inline-block;margin-right:10px;'></div>");
+						var div = $("<div id='char0' class='col-lg-6'></div>");
 						$("#charDiv").append(div);
 						var one = getCountValue("Subtype","nomal");
 						var X = "[";
@@ -799,9 +723,12 @@ $.ajaxSetup ({
 			}
 			if(appId==82){
 				$.get("count!getHBV",{"appId":appId,"path":DATAPATH},function(data){
-					var div0 = $("<div id='char0' style='width:80%;display: inline-block;margin-right:10px;'></div>");
+					var div0 = $("<div id='char0' class='col-lg-12' style='max-width: 1000px;'></div>");
 					$("#charDiv").append(div0);
 					var sType = $("#snpType").html();
+					if(!sType){
+						sType = "";
+					}
 					var hbvtype=eval(data.split("@")[1]);
 					var aType=new Array();
 					if(sType.indexOf("A")>=0){
@@ -838,28 +765,30 @@ $.ajaxSetup ({
 					
 					
 					var result = $("#resultDiv").html();
-					var temp = result.split("<br>");
-					var rType = new Array();
-					if(temp[0].indexOf("未检测到")<0){
-						rType.push("ADV");
-					}
-					if(temp[1].indexOf("未检测到")<0){
-						rType.push("TDF");
-					}
-					if(temp[2].indexOf("未检测到")<0){
-						rType.push("LAM");
-					}
-					if(temp[3].indexOf("未检测到")<0){
-						rType.push("LDT");
-					}
-					if(temp[4].indexOf("未检测到")<0){
-						rType.push("FTC");
-					}
-					if(temp[5].indexOf("未检测到")<0){
-						rType.push("ETV");
+					if(result){
+						var temp = result.split("<br>");
+						var rType = new Array();
+						if(temp[0].indexOf("未检测到")<0){
+							rType.push("ADV");
+						}
+						if(temp.length>1 && temp[1].indexOf("未检测到")<0){
+							rType.push("TDF");
+						}
+						if(temp.length>2 && temp[2].indexOf("未检测到")<0){
+							rType.push("LAM");
+						}
+						if(temp.length>3 && temp[3].indexOf("未检测到")<0){
+							rType.push("LDT");
+						}
+						if(temp.length>4 && temp[4].indexOf("未检测到")<0){
+							rType.push("FTC");
+						}
+						if(temp.length>5 && temp[5].indexOf("未检测到")<0){
+							rType.push("ETV");
+						}
 					}
 					
-					var div1 = $("<div id='char1' style='width:80%;display: inline-block;margin-right:10px;'></div>");
+					var div1 = $("<div id='char1' class='col-lg-12' style='max-width: 1000px;'></div>");
 					$("#charDiv").append(div1);
 					var one = getCountValue("Subtype","nomal");
 					var X = "[";
@@ -881,13 +810,13 @@ $.ajaxSetup ({
 								}
 							}
 							if(isOne){
-//								Y+="{ dataLabels: { enabled: true, y: -5, crop: false },color:'rgba(0, 204, 204, .5)', y:"+ n[1]+"},";
+								Y+="{ dataLabels: { enabled: true, y: -5, crop: false },color:'rgba(0, 204, 204, .5)', y:"+ n[1]+"},";
 								ay.push([k,n[1]/2]);
 							}else{
 							}
 							Y+=n[1]+",";
 						}else if(rType.length==0&&n[0]=="none"){
-//							Y+="{ dataLabels: { enabled: true, y: -5, crop: false },color:'rgba(0, 204, 204, .5)', y:"+ n[1]+"},";
+							Y+="{ dataLabels: { enabled: true, y: -5, crop: false },color:'rgba(0, 204, 204, .5)', y:"+ n[1]+"},";
 							ay.push([0,n[1]/2]);
 						}else{
 						}
@@ -914,12 +843,12 @@ $.ajaxSetup ({
 						$("#char1").css({"width":880+"px"});
 					}
 					showHBVny("char1",eval(Y),ay,eval(X));
-//					showCharHCV("char1", "耐药类型", eval(X),eval(Y),-45);
+					showCharHCV("char1", "耐药类型", eval(X),eval(Y),-45);
 				});
 			}
 			if(appId==90){
 				$.get("count!getTB",{"appId":appId,"path":DATAPATH},function(data){
-						var div = $("<div id='char0' style='width:380px;display: inline-block;margin-right:10px;'></div>");
+						var div = $("<div id='char0' class='col-lg-6'></div>");
 						$("#charDiv").append(div);
 						var X = "[";
 						var Y = "[";
@@ -940,7 +869,7 @@ $.ajaxSetup ({
 					$("#charDiv").html("<p style=\"color: red;\">数据异常，没有同比结果</p>");
 				}else{  
 					$.get("count!getEGFR",{"appId":appId,"path":DATAPATH,"length":length},function(data){
-							var div = $("<div id='char0' style='width:380px;display: inline-block;margin-right:10px;'></div>");
+							var div = $("<div id='char0' class='col-lg-6'></div>");
 							$("#charDiv").append(div);
 							var X = "[";
 							var Y = "[";
@@ -956,15 +885,6 @@ $.ajaxSetup ({
 					});
 				}
 			}
-			//调整div的大小
-			var height = $("#reportResultDiv").children().height();
-			$("#reportResultDiv").css("height",height+20);
-			//绑定resize事件，若大小变化，则再调整
-			$("#reportResultDiv").children().resize(function(){
-				var height = $("#reportResultDiv").children().height();
-				$("#reportResultDiv").css("height",height+20);
-			});
-			$("#reportBody").scrollTop(0);
 			spinner.stop();
 		}
 		
@@ -1013,16 +933,10 @@ $.ajaxSetup ({
 			$("#reportResultDiv").html("");
 			$("#fileNameH4").html("APP：" + softwareName);
 			$("#proforReport").html(proName);
-			$("#liReportList").removeClass("active");
-			$("#reListTab").attr("style","display:none;");
-			$("#liReport").attr("style","");
-			$("#liReport").removeClass("active");
-			$("#liReport").addClass("active");
-			$("#tab2").attr("style","");
 			$("#fileListUl").html("");
 			
 			spinner = new Spinner(opts);
-			var target = document.getElementById('tab2');
+			var target = document.getElementById('reportLoading');
 			spinner.spin(target);
 			$.get("getDataInfoListByProjectId.action",{"projectId":proId},function(fileList){
 				$("#fileListUl").append("<li id='prevLi'><a href='javascript:void(0)' id='prevA' class='forward'>prev</a></li>");
@@ -1045,7 +959,6 @@ $.ajaxSetup ({
 							$("#dataLi0").find("span").html(seq);
 							$("#dataLi0").attr("id","dataLi" + index);
 							$("#dataLi"+index).find("a").bind("click", function() {
-								dataItemClick(fileList.length,index);
 								viewAbiNjReport(userId,softwareId,projectId,dataItem0.fileId,obj1,dataItem0.dataKey,dataItem0.fileName);
 								$.get("report!clickItemDataReport",{},function(state){});
 							});
@@ -1054,7 +967,6 @@ $.ajaxSetup ({
 						inner += "<a href='javascript:void(0)' id='fileA"+item.fileId+"' title='"+item.fileName+"'><span>"+1+"</span>"+(item.fileName.length>15?(item.fileName.substring(0,15)+"..."):item.fileName)+"</a></li>";
 						$("#prevLi").after(inner);
 						$("#fileA"+item.fileId).bind("click", function() {
-							dataItemClick(fileList.length,0);
 							viewAbiNjReport(userId,softwareId,projectId,item.fileId,obj1,item.dataKey,item.fileName);
 							$.get("report!clickItemDataReport",{},function(state){});
 						});
@@ -1063,7 +975,6 @@ $.ajaxSetup ({
 						inner += "<a href='javascript:void(0)' id='fileA"+item.fileId+"' title="+item.fileName+"><span>"+seq+"</span>"+(item.fileName.length>15?(item.fileName.substring(0,15)+"..."):item.fileName)+"</a></li>";
 						$("#fileListUl").append(inner);
 						$("#fileA"+item.fileId).bind("click", function() {
-							dataItemClick(fileList.length,index);
 							viewAbiNjReport(userId,softwareId,projectId,item.fileId,obj1,item.dataKey,item.fileName);
 							$.get("report!clickItemDataReport",{},function(state){});
 						});
@@ -1105,28 +1016,12 @@ $.ajaxSetup ({
 		function toProReport(responseText){
 			$("#reportResultDiv").html(responseText);
 			spinner.stop();
-			//动态调整div的大小
-			var height = $("#reportResultDiv").children().height();
-			if(height>380){
-				$("#reportResultDiv").css("height",height+20);
-				$("#reportResultDiv").children().resize(function(){
-					var height = $("#reportResultDiv").children().height();
-					$("#reportResultDiv").css("height",height+20);
-				});
-			}
-			$("#reportBody").scrollTop(0);
 		}
 		
 		//关闭报告视图
 		function closeDataReport(e){
 			var click = $("#reportTab").attr("onclick");
 			$("#reportTab").attr("onclick","");
-			$("#liReport").removeClass("active");
-			$("#liReport").attr("style","display:none");
-			$("#tab2").attr("style","display:none");
-			$("#liReportList").removeClass("active");
-			$("#liReportList").addClass("active");
-			$("#reListTab").attr("style","");
 			$("#reportTab").attr("onclick",click);
 			close = 1;
 			var e=e||window.event;
@@ -1391,22 +1286,7 @@ function toPrintHBV(pagePath,flag){
 				"context":$("#report_tb").html(),
 				"imgHtml":imgHtml
 		};
-	}else if(appId == 89){
-		var imgHtml="";
-		$("img[name='imgSrc']").each(function(){ 
-			imgHtml+=$(this).attr("src")+",";
-		});
-		if(imgHtml!=""){
-			imgHtml = imgHtml.substring(0,imgHtml.length-1);
-		}
-		param = {
-				"userId":userId,
-		        "dataKey":dataKey,
-				"appId" : appId,
-				"context":$("#report_tb").html(),
-				"imgHtml":imgHtml
-		};
-	}else if(appId == 84){
+	}else if(appId == 89 || appId == 84){
 		var imgHtml="";
 		$("img[name='imgSrc']").each(function(){ 
 			imgHtml+=$(this).attr("src")+",";

@@ -30,16 +30,6 @@ public interface ISoftwareDao {
     List<Software> getAllDb(int classifyId, int userId, int type);
 
     /**
-     * @Title: getAll
-     * @Description: (获取用户添加和未添加的软件)
-     * @param @param userId
-     * @param @return
-     * @return List<Software>
-     * @throws
-     */
-    List<Software> getAll(int userId);
-
-    /**
      * @Title: updateBhri
      * @Description: (更新人气指数)
      * @param @param softwareId
@@ -233,14 +223,6 @@ public interface ISoftwareDao {
     /*********************************************************************************************
      * 以下为最新software方法列表
      */
-    /**
-     * 根据用户Id获取软件数量
-     * 
-     * @param userId
-     * @return
-     */
-    int getAllSoftwareNum(Integer userId);
-
     /**
      * 根据软件类型分页查询软件
      * 

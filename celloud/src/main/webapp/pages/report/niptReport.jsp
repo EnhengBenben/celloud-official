@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="row">
+<div>
 	<div class="m-file">
 		文件名称：
 		<span class="file-name">
@@ -88,8 +88,8 @@ $(function() {
 function showBg(src,id) { 
 	var width = $("#" + id).width();
 	var height = $("#" + id).height();
-	$(window.parent.document).find("img[id='imageFullScreen']").css("width",width*1.5);
-	$(window.parent.document).find("img[id='imageFullScreen']").css("height",height*1.5);
-	window.parent.showZoom(src);
+	$("img[id='imageFullScreen']").css("width",width*1.5);
+	$("img[id='imageFullScreen']").css("height",height*1.5);
+	showZoom(src);
 } 
 </script>

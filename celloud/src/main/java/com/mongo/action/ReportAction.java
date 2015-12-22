@@ -2,6 +2,7 @@ package com.mongo.action;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -73,6 +74,15 @@ public class ReportAction extends BaseAction {
     public String toPgsCount() {
         log.info("查看用户" + pgs.getUsername() + "的数据报告统计");
         pgsList = reportService.getPgsList(pgs.getUserId());
+        //TODO 将mongodb中查询出来的日期回退8小时
+        if(pgsList!=null && pgsList.size()>0){
+            Calendar c = Calendar.getInstance();
+            for (Pgs p : pgsList) {
+                c.setTime(p.getUploadDate());
+                c.add(Calendar.HOUR_OF_DAY, -8);
+                p.setUploadDate(c.getTime());
+            }
+        }
         return "toPgsCount";
     }
 
@@ -160,9 +170,10 @@ public class ReportAction extends BaseAction {
      */
     public String getHBVReport() {
         hbv = reportService.getDataReport(HBV.class, dataKey, proId, appId);
+        if (hbv==null)
+            return "hbvReport";
         // 其他突变位点排序
         Map<String, String> map = hbv.getOther();
-        System.out.println(map == null);
         if(map!=null){
             String[] array = new String[map.size()];
             int i = 0;

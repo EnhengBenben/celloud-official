@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="row">
+<div>
 	<div class="m-file">
 		数据编号：<span class="file-name">${cmpReport.dataKey}</span><br>
 		文件名称：
@@ -121,7 +121,7 @@
 											<thead>
 												<tr>
 													<th class="mwidth_Gene">基因</th>
-													<th>已知突变位点数<c:out value="%{fn:length(cmpReport.cmpGeneResult)}"></c:out> </th>
+													<th>已知突变位点数 </th>
 													<th>测序深度</th>
 												</tr>	
 											</thead>
@@ -231,12 +231,12 @@
 				</table>
 				<table style="width:90%;">
 			      <tr>
-			    	<td style="width:50%;"><img src="${cmpReport.qualityPath1 }" style="max-width:500px;"></td>
-			    	<td><img src="${cmpReport.qualityPath2 }" style="max-width:500px;"></td>
+			    	<td style="width:50%;"><img style="max-width:500px;" src="<c:if test="${!cmpReport.qualityPath1.contains('Tools') }">${outPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.qualityPath1 }"></td>
+			    	<td><img style="max-width:500px;" src="<c:if test="${!cmpReport.qualityPath2.contains('Tools') }">${outPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }/</c:if>${cmpReport.qualityPath2 }"></td>
 			      </tr>
 			      <tr>
-			    	<td><img alt="" src="${cmpReport.seqContentPath1 }" style="max-width:500px;"></td>
-			    	<td><img alt="" src="${cmpReport.seqContentPath2 }" style="max-width:500px;"></td>
+			    	<td><img style="max-width:500px;" alt="" src="<c:if test="${!cmpReport.seqContentPath1.contains('Tools') }">${outPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.seqContentPath1 }"></td>
+			    	<td><img style="max-width:500px;" alt="" src="<c:if test="${!cmpReport.seqContentPath2.contains('Tools') }">${outPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.seqContentPath2 }"></td>
 			      </tr>
 			    </table>
 			</div>
@@ -261,9 +261,9 @@ $(function() {
 function showBg(src,id) { 
 	var width = $("#" + id).width();
 	var height = $("#" + id).height();
-	$(window.parent.document).find("img[id='imageFullScreen']").css("width",width*1.5);
-	$(window.parent.document).find("img[id='imageFullScreen']").css("height",height*1.5);
-	window.parent.showZoom(src);
+	$("img[id='imageFullScreen']").css("width",width*1.5);
+	$("img[id='imageFullScreen']").css("height",height*1.5);
+	showZoom(src);
 } 
 function showGeneDetail(gname){
 	$.get("report!getCmpGeneInfo",{"gname":gname},function(cmpGene){

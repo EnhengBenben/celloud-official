@@ -219,7 +219,7 @@ public class TaskDaoImpl extends BaseDao implements TaskDao {
     @Override
     public Integer deleteTask(Long proId) {
         Integer num = 0;
-        String sql = "update tb_task set state=?,delete_date=now() where proId=? and state<?;";
+        String sql = "update tb_task set state=?,delete_date=now() where project_id=? and state<?;";
         try {
             conn = ConnectManager.getConnection();
             ps = conn.prepareStatement(sql.toString());

@@ -30,7 +30,8 @@ public class RunOverService {
      * @return
      */
     public boolean MIB(String reportPath, String dataKey, String appTitle,
-            String projectFile, String projectId, List<Data> dataList) {
+            String projectFile, String projectId,
+            List<com.celloud.sdo.Data> dataList) {
         // 1. 追加表头
         StringBuffer resultArray = new StringBuffer();
         if (FileTools.countLines(projectFile) < 1) {
@@ -79,7 +80,8 @@ public class RunOverService {
      * @return
      */
     public boolean split(String reportPath, String dataKey, String appTitle,
-            String projectFile, String projectId, List<Data> dataList) {
+            String projectFile, String projectId,
+            List<com.celloud.sdo.Data> dataList) {
         // 1. 追加表头
         StringBuffer resultArray = new StringBuffer();
         if (FileTools.countLines(projectFile) < 1) {
@@ -116,7 +118,8 @@ public class RunOverService {
      * @return
      */
     public boolean CMP(String reportPath, String dataKey, String appTitle,
-            String projectFile, String projectId, List<Data> dataList) {
+            String projectFile, String projectId,
+            List<com.celloud.sdo.Data> dataList) {
         // 1. 追加表头
         StringBuffer resultArray = new StringBuffer();
         if (FileTools.countLines(projectFile) < 1) {

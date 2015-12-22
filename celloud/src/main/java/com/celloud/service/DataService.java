@@ -131,4 +131,29 @@ public interface DataService {
      * @return
      */
     public Integer addData(Data data);
+
+    /**
+     * 统计帐号下的文件数量
+     * 
+     * @param userId
+     * @return
+     */
+    public Integer countData(Integer userId);
+
+    /**
+     * 统计帐号下的文件大小
+     * 
+     * @param userId
+     * @return
+     */
+    public Long sumData(Integer userId);
+
+    /**
+     * 按照时间段统计用户数据
+     * 
+     * @param userId
+     * @param time
+     * @return
+     */
+    public List<Map<String, String>> countData(Integer userId, Integer time);
 }

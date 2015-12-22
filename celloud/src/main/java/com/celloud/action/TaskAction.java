@@ -1,6 +1,8 @@
 package com.celloud.action;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -20,11 +22,16 @@ import com.celloud.service.RunOverService;
 import com.celloud.service.TaskService;
 import com.google.inject.Inject;
 import com.nova.action.BaseAction;
+import com.nova.constants.AppNameIDConstant;
+import com.nova.constants.DataState;
+import com.nova.constants.FileFormat;
 import com.nova.constants.SparkPro;
 import com.nova.email.EmailProjectEnd;
 import com.nova.service.IReportService;
 import com.nova.utils.Base64Util;
+import com.nova.utils.DataUtil;
 import com.nova.utils.DateUtil;
+import com.nova.utils.FileTools;
 import com.nova.utils.PerlUtils;
 import com.nova.utils.PropertiesUtil;
 import com.nova.utils.RemoteRequests;
@@ -52,7 +59,7 @@ public class TaskAction extends BaseAction {
     private IReportService reportService;
     private Task task;
     private Integer conditionInt;
-    private Integer projectId;
+    private String projectId;
     /** 文件名称 eg: filename1,filename2 */
     private String dataNames;
 
@@ -93,22 +100,24 @@ public class TaskAction extends BaseAction {
      * @return
      */
     public String runOver() {
-        log.info("项目运行结束，id:" + projectId);
+        log.info("任务运行结束，proId:" + projectId + ",运行数据dataKey：" + dataNames);
         String[] dataArr = dataNames.split(",");
         StringBuffer dataKeys = new StringBuffer();
         String dataKey = "";
         for (int i = 0; i < dataArr.length; i++) {
+            String dname = dataArr[i];
             if (i == 0) {
-                dataKey = dataArr[i].split(".")[0];
+                dataKey = dname;
             }
-            dataKeys.append(dataArr[i].split(".")[0]);
+            dataKeys.append(dname);
             if (i < dataArr.length - 1) {
                 dataKeys.append(",");
             }
         }
         // 1. 数据库检索
         Map<String, Object> map = taskService
-                .getTaskInfoByProId((long) projectId);
+.getTaskInfoByProId(Long
+                .valueOf(projectId));
         Project pro = (Project) map.get("project");
         App app = (App) map.get("app");
         User user = (User) map.get("user");
@@ -120,7 +129,8 @@ public class TaskAction extends BaseAction {
         StringBuffer command = new StringBuffer();
         command.append("python ").append(SparkPro.TASKOVERPY).append(" ")
                 .append(SparkPro.TOOLSPATH).append(" ").append(userId)
-                .append(" ").append(appId).append(" ").append(dataKeys);
+                .append(" ").append(appId).append(" ").append(dataKeys)
+                .append(" ").append(projectId);
         PerlUtils.executeGadgetsPerl(command.toString());
         // 3. 创建项目结果文件
         StringBuffer basePath = new StringBuffer();
@@ -142,8 +152,9 @@ public class TaskAction extends BaseAction {
                             new Class[] { String.class, String.class,
                                     String.class, String.class, String.class,
                                     List.class })
-                    .invoke(ros, reportPath, app.getSoftwareName(),
-                            app.getTitle(), projectFile, projectId, dataList);
+                    .invoke(ros, reportPath.toString(), dataKey,
+                            app.getTitle(), projectFile.toString(),
+                            projectId.toString(), dataList);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -153,8 +164,44 @@ public class TaskAction extends BaseAction {
             xml = XmlUtil.writeXML(projectFile.toString());
         }
         // 6. 项目报告插入mysql并修改项目运行状态
-        reportService.updateReportStateByProSoftId(userId, projectId,
+        reportService.updateReportStateByProSoftId(userId,
+                Integer.valueOf(projectId),
                 Integer.valueOf(appId.toString()), 3, xml);
+        if (appId.toString().equals(AppNameIDConstant.split)) {
+            String inPath = reportPath + "result/split/";
+            String outPath = PropertiesUtil.fileFinal;
+            HashSet<String> resultFiles = FileTools.getFiles(inPath);
+            Iterator<String> rFile = resultFiles.iterator();
+            Long size = null;
+            while (rFile.hasNext()) {
+                String fstr = rFile.next();
+                if (!fstr.equals("...tar.gz") && !fstr.equals("..tar.gz")) {
+                    String extName = fstr
+                            .substring(fstr.lastIndexOf(".tar.gz"));
+                    String resourcePath = inPath + fstr;
+                    size = new File(resourcePath).length();
+                    Data data = new Data();
+                    data.setUserId(userId);
+                    data.setFileName(fstr);
+                    data.setState(DataState.DEELTED);
+                    int dataId = dataService.addData(data);
+                    String new_dataKey = DataUtil.getNewDataKey(dataId);
+                    String filePath = outPath + new_dataKey + extName;
+                    boolean state = PerlUtils.excuteCopyPerl(resourcePath,
+                            filePath);
+                    if (state) {
+                        data.setFileId((long) dataId);
+                        data.setDataKey(new_dataKey);
+                        data.setAnotherName("split:" + dataKey);
+                        data.setSize(size);
+                        data.setPath(filePath);
+                        data.setFileFormat(FileFormat.FQ);
+                        data.setState(DataState.ACTIVE);
+                        dataService.updateData(data);
+                    }
+                }
+            }
+        }
         // TODO 7.发送邮件
         String param = "fileName=" + null + "&userId=" + userId + "&appId="
                 + appId + "&dataKey=" + dataKeys + "&projectId=" + projectId
@@ -164,7 +211,8 @@ public class TaskAction extends BaseAction {
                 user.getEmail(), param, true);
 
         // 8.结束任务并开始执行等待任务
-        task = taskService.getTaskDataAppPro(dataKey, appId, (long) projectId);
+        task = taskService.getTaskDataAppPro(dataKey, appId,
+                Long.valueOf(projectId));
         if (task != null) {
             this.updateTaskState();
         }
@@ -187,11 +235,11 @@ public class TaskAction extends BaseAction {
         this.conditionInt = conditionInt;
     }
 
-    public Integer getProjectId() {
+    public String getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(Integer projectId) {
+    public void setProjectId(String projectId) {
         this.projectId = projectId;
     }
 
@@ -202,5 +250,4 @@ public class TaskAction extends BaseAction {
     public void setDataNames(String dataNames) {
         this.dataNames = dataNames;
     }
-
 }

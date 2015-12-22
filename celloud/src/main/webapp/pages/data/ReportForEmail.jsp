@@ -30,7 +30,7 @@
         </div>
     </div>
 </div>
-<script src="<%=request.getContextPath() %>/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
 <!-- amcharts -->
 <script src="<%=request.getContextPath() %>/plugins/amcharts/amcharts.js"></script>
 <script src="<%=request.getContextPath() %>/js/reportForEmail.js"></script>

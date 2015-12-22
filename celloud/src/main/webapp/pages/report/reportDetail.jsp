@@ -1,25 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<div class="tabbable"> <!-- tabs -->
-	<ul class="nav-tabs">
-	    <li id="liReportList"><a href="javascript:void(0)" data-toggle="tab" id="reportListTab" onclick="javascript:showTab(0);"><i class="i-reportList"></i>报告列表</a></li>
-	    <li id="liReport"><a href="javascript:void(0)" data-toggle="tab" id="reportTab" onclick="javascript:showTab(1);"><i class="i-report"></i>数据报告</a></li>
-	</ul>
-    <div class="tab-content">
-    	<div class="tab-pane" id="reListTab"> 
-           	<div id="searchReportDiv" class="m-fileList">
-           	  <div class="_super">
-      			<label>时间：</label>
-      			<a href="javascript:void(0)" onclick="changeDate('allTime',this)" class="cdate _datered">全部</a>
-      			<a href="javascript:void(0)" onclick="changeDate(-1,this)" class="cdate">一天以内</a>
-      			<a href="javascript:void(0)" onclick="changeDate(-7,this)" class="cdate">七天以内</a>
-      			<a href="javascript:void(0)" onclick="changeDate(-30,this)" class="cdate">三十天以内</a>
-       			<label>From：</label><input type="text" onchange="changeDate(0,obj)" id="_searchDate" class="Wdate input" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;width: 90px;"/>
-       			<label>To：</label><input type="text" onchange="changeDate(0,obj)" id="_endDate" class="input Wdate" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;width: 90px;"/>
-       			<span id="_alertSpan" style="color:red;display:none;"></span>
-      		  </div>
-      		  <div class="_super">
-           		<label>APP：</label>
+<link href="<%=request.getContextPath() %>/css/report.css?version=3.6" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/css/buttons.css?version=20150730" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/plugins/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
+<link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
+<link href="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.css" rel="stylesheet">
+<style>
+.tab-content>.tab-pane {
+    display: block;
+}
+a:hover, a:active, a:focus{
+	color: #CC0000;
+}
+</style>
+<section class="content-header">
+  <h1>
+    <small>&nbsp;</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="javascript:void(0)"><i class="fa fa-files-o"></i> 报告</a></li>
+    <li class="active">全部</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box box-success color-palette-bo">
+<!--         <div class="box-header with-border" style="padding-left:30px;padding-bottom: 0px;font-family:黑体;font-size:14px;"> -->
+<!--         	<p style="font-family:黑体;font-size:14px"> 本周数据报告：30 | 数据报告总量：230 个</p> -->
+<!--         </div> -->
+        <div class="box-body" style="padding-left:30px;padding-bottom: 0px;font-family:黑体;font-size:14px;">
+          <div class="form-inline">
+              <label class="form-inline" style="font-family:黑体;font-size:14px;font-weight: lighter;">时间：</label>
+              <a href="javascript:void(0)" onclick="changeDate('allTime',this)" class="cdate _datered">全部</a>&nbsp;&nbsp;&nbsp;&nbsp;
+      		  <a href="javascript:void(0)" onclick="changeDate(-1,this)" class="cdate">24小时</a>&nbsp;&nbsp;&nbsp;&nbsp;
+      		  <a href="javascript:void(0)" onclick="changeDate(-3,this)" class="cdate">3天</a>&nbsp;&nbsp;&nbsp;&nbsp;
+      		  <a href="javascript:void(0)" onclick="changeDate(-7,this)" class="cdate">7天</a>&nbsp;&nbsp;&nbsp;&nbsp;
+      		  <a href="javascript:void(0)" onclick="changeDate(-30,this)" class="cdate">30天</a>&nbsp;&nbsp;&nbsp;&nbsp;
+       		  <label>From：</label><input type="text" onchange="changeDate(0,obj)" id="_searchDate" class="Wdate input" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;width: 90px;"/>
+       		  <label>To：</label><input type="text" onchange="changeDate(0,obj)" id="_endDate" class="input Wdate" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;width: 90px;"/>
+       		  <span id="_alertSpan" style="color:red;display:none;"></span>
+          </div><!-- /.form group -->
+          <div class="form-inline">
+              <label class="form-inline" style="padding-top:-5px;font-family:黑体;font-size:14px;font-weight: lighter;">应用：</label>
            		<a href="javascript:void(0)" class="capp _appred" onclick="changeApp(0,this)">全部</a>
            		<span id="showAppDiv" style="margin-right: 0;">
            		</span>
@@ -29,63 +52,70 @@
            		<div id="appList" class="none">
            		
            		</div>
-           	  </div>
-      		  <div class="_super">
-           		<span id="_alertSpan" style="color:red;display:none;"></span>
-      			<label>数据：</label>
-      			<input type="text" id="_fileName" class="input" style="width: 150px;" onchange="changeFileName()"/>
-      			<a href="javascript:void(0)" class="btn" onclick="submitSearch()">检索</a>
-      		  </div>
-           	</div>
-            <div class="clearfix tablebox" id="selfReportDiv">
-
-            </div>
-    	</div>
-    	<div class="tab-pane" id="tab2"> 
-         <!--选择文件-->
-            <div class="m-fileList">
-            	<div><span>项目名称：<span id="proforReport">14141243793749</span></span><span id="fileNameH4"></span></div>
-                <ul id="fileListUl">
-                	<li><a href="#" class="forward">prev</a></li>
-                	
-                	<li class="active"><a href="#"><span>1</span>A572_muF2.ab1</a></li>
-                	<li><a href="#"><span>2</span>A572_muF2.ab1</a></li>
-                	<li><a href="#"><span>3</span>A572_muF2.ab1</a></li>
-                	<li><a href="#"><span>4</span>A572_muF2.ab1</a></li>
-                	<li><a href="#"><span>5</span>A572_muF2.ab1</a></li>
-                	<li><a href="#"><span>6</span>A572_muF2.ab1</a></li>
-                	<li><a href="#" class="backward">next</a></li>
-                </ul>
-            </div>
-            <div id="reportResultDiv">
-            
-            </div>
-      	</div>
+          </div><!-- /.form group -->
+			<div class="form-inline" style="margin-bottom:10px">
+				<label class="form-inline" style="font-family:黑体;font-size:14px;font-weight: lighter;">数据：</label>
+				<div class="input-group" style="width:330px;height:20px;">
+					<input type="text" class="form-control" style="height:20px;padding: 0px 12px;" id="_fileName" onchange="changeFileName()" placeholder="检索文件名/别名/数据编号">
+					<span class="input-group-btn">
+						<button class="btn btn-info btn-flat" type="button" onclick="submitSearch()" style="height:20px;font-size:14px;padding-top:0px;background-color: #85c540;border-color: #85c540;">Go!</button>
+					</span>
+				</div>
+			</div><!-- /.form group -->
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+      <!-- COLOR PALETTE -->
+      <div id="reportLoading" style="padding-left: 500px;"></div>
+      <div class="box color-palette-box">
+        <div class="box-body" id="selfReportDiv">
+        
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
     </div>
-</div>
+  </div><!--/.row-->
+</section>
 <!--项目共享-->
-<div class="modal hide fade" id="shareProjectModal" >
-	<div class="modal-header">
-		<input type="hidden" id="proIdHidden"/>
-		<input type="hidden" id="proOwnerHidden"/>
-		<a class="close" data-dismiss="modal">×</a>
-        <span id="proNameSpan">项目名称：</span>
-    	<h3><img src="<%=request.getContextPath()%>/images/publicIcon/icon-modal-03.png"/>项目共享</h3>
-  	</div>
-  	<div class="modal-body">
-		<p>共计<span id="proDataCountSpan"></span>个数据文件</p>
-        <input type="hidden" id="proSel" style="width:564px;" value=""/>
-        <span id="shareProPrompt"></span>
-  	</div>
-  	<div class="modal-footer">
-    	<a href="javascript:saveShareProject();" class="btn">确 定</a>
-  	</div>
+<div class="modal modal-green-header in" id="shareProjectModal" >
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<input type="hidden" id="proIdHidden"/>
+				<input type="hidden" id="proOwnerHidden"/>
+				<a class="close" data-dismiss="modal">×</a>
+		    	<h4 class="modal-title">
+		    		<img src="<%=request.getContextPath()%>/images/publicIcon/icon-modal-03.png"/> 项目共享
+		    		<a href="javascript:void(0);" class="a-white" style="margin-left:30px"><span id="proNameSpan">项目名称：</span></a>
+		    	</h4>
+		  	</div>
+		  	<div class="modal-body row">
+		  		<div class="col-xs-1">
+		  		</div>
+		  		<div class="col-xs-10">
+					<p>共计<span id="proDataCountSpan"></span>个数据文件</p>
+			        <input type="hidden" id="proSel" style="width:470px;" value=""/>
+			        <span id="shareProPrompt"></span>
+		  		</div>
+		  	</div>
+		  	<div class="modal-footer">
+		    	<a href="javascript:saveShareProject();" class="btn btn-celloud-success btn-flat">确 定</a>
+		  	</div>
+		</div>
+	</div>
 </div>
-<!-- jquery_alert_dialogs begin -->
-<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
-<!-- jquery_alert_dialogs end -->
+
+<script src="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.js"></script>
+<script src="<%=request.getContextPath() %>/plugins/select/select2.min.js"></script>
+<script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
+<script src="<%=request.getContextPath() %>/plugins/calendar/WdatePicker.js"></script>
+<script src="<%=request.getContextPath() %>/js/report.js?version=1.8"></script>
+<script src="<%=request.getContextPath() %>/js/dataformat.js"></script>
+<script src="<%=request.getContextPath() %>/js/codon.js"></script>
 <script type="text/javascript">
+var session_userId = <%=session.getAttribute("userId")%>;
+var sessionUserName = "<%=session.getAttribute("userName")%>";
+$.ajaxSetup ({
+	cache: false //关闭AJAX相应的缓存
+});
 $(document).ready(function(){
 	document.onkeydown = function(e){
 		var ev = document.all ? window.event : e;

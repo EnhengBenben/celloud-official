@@ -49,16 +49,6 @@ public class ClassifyAction extends BaseAction {
     }
 
     /**
-     * 获取某分类的所有子分类
-     * 
-     * @return
-     */
-    public String getSubClassifyById() {
-	list = classifyService.selectChildNode(classify.getClassifyId());
-	return SUCCESS;
-    }
-
-    /**
      * 新增软件分类
      * 
      * @return
@@ -91,53 +81,6 @@ public class ClassifyAction extends BaseAction {
      */
     public String updateClassify() {
 	flag = classifyService.updateClassify(classify);
-	return SUCCESS;
-    }
-
-    /**
-     * 查询所有的软件一级分类
-     * 
-     * @return
-     */
-    public String getAllClassify() {
-	list = classifyService.getAllClassifyList();
-	return SUCCESS;
-    }
-
-    /**
-     * 查询软件分类树
-     * 
-     * @return
-     */
-    public String getClassifyTree() {
-	list = classifyService.getAllClassifyList();
-	treeNodeList = new ArrayList<TreeNode>();
-	TreeNode treeNode = new TreeNode();
-	treeNode.setId(0);
-	treeNode.setName("root");
-	treeNode.setOpen(true);
-	treeNodeList.add(treeNode);
-	if (list != null) {
-	    for (Classify classify : list) {
-		treeNode = new TreeNode();
-		treeNode.setId(classify.getClassifyId());
-		treeNode.setName(classify.getClassifyName());
-		treeNode.setpId(classify.getClassifyPid());
-		treeNodeList.add(treeNode);
-	    }
-	}
-	return SUCCESS;
-    }
-
-    /**
-     * 分页查询软件分类
-     * 
-     * @return
-     */
-    public String getPageClassify() {
-	list = classifyService.getPageClassify(page);
-	page = new Page(page.getPageNow(), page.getPageSize(),
-		classifyService.getTotalClassify());
 	return SUCCESS;
     }
 

@@ -1,42 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="Access-Control-Allow-Origin" content="*">
-<title>数据管理</title>
 <link href="<%=request.getContextPath() %>/plugins/plupload-2.1.2/jquery.plupload.queue/css/jquery.plupload.queue.css?version=1.4" rel="stylesheet" type="text/css">
-<link href="<%=request.getContextPath() %>/css/upload.css" rel="stylesheet" type="text/css">
-<style type="text/css">
-</style>
-</head>
-<body id="fileDataBody">
+<link href="<%=request.getContextPath() %>/css/upload.css?v=3.0" rel="stylesheet" type="text/css">
 <input type="hidden" id="fileDataSessionUserIdHidden" value='<s:property value="#session.userId"/>'>
-<div id="fileUploadDiv" class="wholeheight">
-    
-</div>
+<section class="content-header">
+  <h1>
+    <small>&nbsp;</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="javascript:void(0)"><i class="fa fa-sellsy"></i> 数据上传</a></li>
+    <li class="active">全部</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box box-success" id="fileUploadDiv">
+      </div><!-- /.box -->
+    </div>
+  </div><!--/.row-->
+</section><!-- /.content -->  
 <div style="display: none;" id="_sessionTimeOut">
 </div>
-<script src="<%=request.getContextPath() %>/plugins/jquery-1.8.3.min.js"></script>
-<script src="<%=request.getContextPath() %>/plugins/bootstrap-tab.js"></script>
-<script src="<%=request.getContextPath() %>/plugins/bootstrap-modal.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/plupload.full.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/jquery.plupload.queue/jquery.plupload.queue.js?version=1.3"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/plupload.dev.js?version=1.7"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/i18n/zh_CN.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/baidu.js"></script>
-<!-- spin:loading效果 begin-->
-<script src="<%=request.getContextPath()%>/plugins/spin.min.js" type="text/javascript"></script>
-<!-- spin:loading效果 end-->
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/upload.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/spark-md5.js"></script>
 <script type="text/javascript">
-// window.onload = function() {
-// 	if (!window.applicationCache) {
-// 		document.write("<div style='text-align: center;color: red;'>很抱歉，您的浏览器版本过低，无法上传文件。请使用最新的Google Chrome浏览器上传数据。</div>");
-// 	}
-// };
 var session_userId = <%=session.getAttribute("userId")%>;
 var sessionUserName = "<%=session.getAttribute("userName")%>";
 //检验session是否超时
@@ -66,7 +57,7 @@ Date.prototype.format = function(format){
 $(function() {
 	$("#fileUploadDiv").html("<p>您的浏览器未安装 Flash, Silverlight, Gears, BrowserPlus 或者支持 HTML5 .</p>");
 	$("#fileUploadDiv").pluploadQueue({
-		url : '../../manyAjaxUploadFile_uploadManyFile',
+		url : 'manyAjaxUploadFile_uploadManyFile',
 		chunk_size : '1mb',
 		file_data_name : 'file',
 		filters : {
@@ -93,8 +84,74 @@ $(function() {
  		multiple_queues : true,
 	});
 	var uploader = $('#fileUploadDiv').pluploadQueue();
-// 	uploader.bind('BeforeUpload', function() {
-// 		$("._uploadAlert").html("数据正准备上传...");
+	uploader.bind('Init', function(){
+		if(intro != null){
+			$(".addfile").attr("disabled",true);
+			$("._start_custom").attr("disabled",true);
+			intro.exit();
+			intro = null;
+			intro = introJs();
+			intro.setOption('tooltipPosition', 'auto');
+			intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+			intro.setOption('showStepNumbers', false);
+			intro.setOption('showButtons', false);
+			intro.start();
+			intro.goToStep(4);
+			$("#toaddfilediv").bind('click',function(){
+				if(intro != null){
+					intro.exit();
+					intro = null;
+					intro = introJs();
+					intro.setOption('tooltipPosition', 'bottom');
+					intro.setOption('showStepNumbers', false);
+					intro.setOption('showButtons', false);
+					intro.start();
+					intro.goToStep(5);
+					$("#tobeginfilediv").bind('click',function(){
+						if(intro != null){
+							intro.exit();
+							intro = null;
+							intro = introJs();
+							intro.setOption('tooltipPosition', 'bottom');
+							intro.setOption('showStepNumbers', false);
+							intro.setOption('showButtons', false);
+							intro.start();
+							intro.goToStep(6);
+							$("._start_custom").removeAttr("disabled");
+						}
+						$("#tobeginfilediv").unbind('click');
+					});
+					$(".addfile").removeAttr("disabled");
+				}
+				$("#toaddfilediv").unbind('click');
+			});
+		}
+	});
+// 	$("#toaddfilediv").bind('click',function(){
+// 		if(intro != null){
+// 			intro.exit();
+// 			intro = null;
+// 			intro = introJs();
+// 			intro.setOption('tooltipPosition', 'bottom');
+// 			intro.setOption('showStepNumbers', false);
+// 			intro.setOption('showButtons', false);
+// 			intro.start();
+// 			intro.goToStep(6);
+// 			$("#toaddfilediv").unbind('click');
+// 		}
+// 	});
+// 	$(".toaddfilediv").bind("click",function(){
+// 		if(intro != null){
+// 			intro.exit();
+// 			intro = null;
+// 			intro = introJs();
+// 			intro.setOption('tooltipPosition', 'auto');
+// 			intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+// 			intro.setOption('showStepNumbers', false);
+// 			intro.setOption('showButtons', false);
+// 			intro.start();
+// 			intro.goToStep(6);
+// 		}
 // 	});
 	//绑定选择文件事件
 	uploader.bind('Browse', function() {
@@ -104,6 +161,9 @@ $(function() {
 				uploader.destroy();
 				//跳转登陆页面
 				$("#_sessionTimeOut").html(response);
+			}
+			if(intro != null){
+				intro.goToStep(5);
 			}
 		});
 	});
@@ -136,5 +196,3 @@ function refreshSession(){
     $.get("getAllDataType");
 }
 </script>
-</body>
-</html>

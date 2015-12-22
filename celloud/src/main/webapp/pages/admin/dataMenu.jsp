@@ -4,7 +4,6 @@
 <ul class="nav nav-tabs">
   <li class="active"><a id="toClean" href="#dataClean" data-toggle="tab">数据清理</a></li>
   <li><a id="toUpload" href="#dataUpload" data-toggle="tab">数据上传</a></li>
-  <li><a id="toExport" href="#dataExport" data-toggle="tab">数据导出</a></li>
 </ul>
 <div class="tab-content">
   <div class="tab-pane active" id="dataClean"></div>
@@ -21,6 +20,5 @@
 				$("#dataUpload").load("admin/fileUpload_bigData.jsp");
 			}
 		});
-		$("#dataExport").load("admin/dataOutput.jsp");
 	})
 </script>

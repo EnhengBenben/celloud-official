@@ -38,3 +38,6 @@ Tools/.project
 Tools/target/
 Tools/.settings/
 Tools/src/main/webapp/upload/
+.codepro/
+.idea/
+*/.idea/

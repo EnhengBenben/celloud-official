@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<div id="hcvdiv" class="row">
+<div>
 	<!--文件名称-->
 	<div class="m-file">文件名称：
 		<span class="file-name">${hcv.dataKey }(${hcv.fileName })</span>
@@ -114,7 +114,9 @@
 	<div class="bg-analysis">
 		<div class="m-box">
 			<h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
-			<div class="m-boxCon" id="charDiv">
+			<div class="m-boxCon">
+				<div class="row" id="charDiv">
+			    </div>
 			</div>
 		</div>
 	</div>
@@ -146,8 +148,8 @@ function change(){
 function showBg(src,id) { 
 	var width = $("#" + id).width();
 	var height = $("#" + id).height();
-	$(window.parent.document).find("img[id='imageFullScreen']").css("width",width*1.5);
-	$(window.parent.document).find("img[id='imageFullScreen']").css("height",height*1.5);
-	window.parent.showZoom(src);
+	$("img[id='imageFullScreen']").css("width",width*1.5);
+	$("img[id='imageFullScreen']").css("height",height*1.5);
+	showZoom(src);
 }
 </script>

@@ -337,17 +337,17 @@
 		</tbody>
 	</table>
 	<table style="width:100%;">
-      <tr>
-    	<td style="width:50%;"><img src="${cmpReport.qualityPath1 }"></td>
-    	<td><img src="${cmpReport.qualityPath2 }"></td>
+  	  <tr>
+    	<td style="width:50%;"><img style="max-width:500px;" src="<c:if test="${!cmpReport.qualityPath1.contains('Tools') }">${outPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.qualityPath1 }"></td>
+    	<td><img style="max-width:500px;" src="<c:if test="${!cmpReport.qualityPath2.contains('Tools') }">${outPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }/</c:if>${cmpReport.qualityPath2 }"></td>
       </tr>
       <tr>
-    	<td><img alt="" src="${cmpReport.seqContentPath1 }"></td>
-    	<td><img alt="" src="${cmpReport.seqContentPath2 }"></td>
+    	<td><img style="max-width:500px;" alt="" src="<c:if test="${!cmpReport.seqContentPath1.contains('Tools') }">${outPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.seqContentPath1 }"></td>
+    	<td><img style="max-width:500px;" alt="" src="<c:if test="${!cmpReport.seqContentPath2.contains('Tools') }">${outPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.seqContentPath2 }"></td>
       </tr>
     </table>
   </section>
-  <script language="javascript" src="<%=request.getContextPath()%>/plugins/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
   <script>
   	function preview(obj){
   		var inputVal;
@@ -368,7 +368,7 @@
   		var sex = $("input[type='radio']:checked").val();
   		$("#_sex").html(sex);
   		$("#change").hide();
-  		if($("#noMutation").attr("checked")){
+  		if($("#noMutation").prop("checked")){
   			$("#noDrug").css("display","");
   		}
   		$("a").css("display","none");
@@ -387,7 +387,7 @@
   			$(this).parent().html("<textarea class='form-control' rows='15' cols='100'>"+inputVal+"</textarea>");
   		});
   		$("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
-  		$("input[type='radio'][value="+sex+"]").attr("checked",true); 
+  		$("input[type='radio'][value="+sex+"]").prop("checked",true); 
   		$("a").css("display","");
   	}
   	function save(){

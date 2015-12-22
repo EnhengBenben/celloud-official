@@ -6,7 +6,6 @@ import com.google.inject.ImplementedBy;
 import com.nova.sdo.Classify;
 import com.nova.sdo.Software;
 import com.nova.service.impl.ClassifyServiceImpl;
-import com.nova.utils.Page;
 
 /**
  * 软件分类service
@@ -48,21 +47,6 @@ public interface IClassifyService {
      * @return
      */
     Classify getClassify(int classifyId);
-
-    /**
-     * 查询所有的软件分类
-     * 
-     * @return
-     */
-    List<Classify> getAllClassifyList();
-
-    /**
-     * 分页查询软件分类
-     * 
-     * @param page
-     * @return
-     */
-    List<Classify> getPageClassify(Page page);
 
     /**
      * 统计所有软件分类数量

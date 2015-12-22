@@ -35,6 +35,18 @@ public class Split extends Base {
     private Integer upload;
     /** 分析数据在mysql tb_file表中的id号, 格式： id1,id2,id3,..., */
     private String splitDataIds;
+    /**
+     * QC序列质量,数据1
+     */
+    private Map<String, String> basicStatistics1;
+    private String qualityPath1;
+    private String seqContentPath1;
+    /**
+     * QC序列质量,数据2
+     */
+    private Map<String, String> basicStatistics2;
+    private String qualityPath2;
+    private String seqContentPath2;
 
     public List<Data> getData() {
         return data;
@@ -90,6 +102,54 @@ public class Split extends Base {
 
     public void setSplitDataIds(String splitDataIds) {
         this.splitDataIds = splitDataIds;
+    }
+
+    public Map<String, String> getBasicStatistics1() {
+        return basicStatistics1;
+    }
+
+    public void setBasicStatistics1(Map<String, String> basicStatistics1) {
+        this.basicStatistics1 = basicStatistics1;
+    }
+
+    public String getQualityPath1() {
+        return qualityPath1;
+    }
+
+    public void setQualityPath1(String qualityPath1) {
+        this.qualityPath1 = qualityPath1;
+    }
+
+    public String getSeqContentPath1() {
+        return seqContentPath1;
+    }
+
+    public void setSeqContentPath1(String seqContentPath1) {
+        this.seqContentPath1 = seqContentPath1;
+    }
+
+    public Map<String, String> getBasicStatistics2() {
+        return basicStatistics2;
+    }
+
+    public void setBasicStatistics2(Map<String, String> basicStatistics2) {
+        this.basicStatistics2 = basicStatistics2;
+    }
+
+    public String getQualityPath2() {
+        return qualityPath2;
+    }
+
+    public void setQualityPath2(String qualityPath2) {
+        this.qualityPath2 = qualityPath2;
+    }
+
+    public String getSeqContentPath2() {
+        return seqContentPath2;
+    }
+
+    public void setSeqContentPath2(String seqContentPath2) {
+        this.seqContentPath2 = seqContentPath2;
     }
 
 }

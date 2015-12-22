@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<div class="row">
+<div>
 	<div class="m-file">
 		数据编号：<span class="file-name">${ mib.dataKey}</span><br>
 		文件名称：
@@ -39,8 +39,8 @@
 			<div class="m-boxCon">
 				<table style="width:90%;">
 			      <tr>
-			    	<td style="width:50%;"><img src="${mib.readsDistribution }" style="max-width:500px;"></td>
-			    	<td><img src="${mib.familyDistribution }" style="max-width:500px;"></td>
+			    	<td style="width:49%;"><img src="<c:if test="${!mib.readsDistribution.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.readsDistribution }" style="width:100%;"></td>
+			    	<td><img src="<c:if test="${!mib.familyDistribution.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.familyDistribution }" style="width:100%;"></td>
 			      </tr>
 			    </table>
 			</div>
@@ -49,7 +49,7 @@
 		<div class="m-box">
 			<h2><i class="i-edit"></i>Genus Distribution</h2>
 			<div class="m-boxCon">
-				<img src="${mib.genusDistribution }" style="width:90%;">
+				<img src="<c:if test="${!mib.genusDistribution.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.genusDistribution }" style="width:90%;">
 			</div>
 		</div>
 		<!--检测结果-->
@@ -60,19 +60,19 @@
 			     <thead>
 			       <tr>
 			         <th>Species</th>
-			         <th>Genus</th>
-			         <th>GI</th>
-			         <th>%Coverage</th>
-			         <th>Reads_hit</th>
-			         <th>Reads_num</th>
-			         <th>Average depth of coverage</th>
+			         <th style="min-width:110px;">Genus</th>
+			         <th style="min-width:75px;">GI</th>
+			         <th style="min-width:76px;">%Coverage</th>
+			         <th style="min-width:65px;">Reads_hit</th>
+			         <th style="min-width:78px;">Reads_num</th>
+			         <th style="min-width:180px;">Average depth of coverage</th>
 			       </tr>
 			     </thead>
 			     <tbody>
 			       <c:if test="${fn:length(mib.summaryTable)>0}">
 			         <c:forEach items="${mib.summaryTable }" var="summary" varStatus="s">
 					   <tr>
-					     <td>${summary.Species }</td>
+					     <td style="text-align: left;line-height:1em">${summary.Species }</td>
 					     <td>${summary.Genus }</td>
 					     <td>${summary.GI }</td>
 					     <td>${summary.Coverage }</td>
@@ -91,34 +91,34 @@
 			<h2><i class="i-edit"></i>报告</h2>
 			<div class="m-boxCon">
 			  <c:if test="${mib.pngPath.top1png!=null }">
-				<img src="${mib.pngPath.top1png }" style="width:90%;">
+				<img src="<c:if test="${!mib.pngPath.top1png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top1png }" style="width:90%;">
 			  </c:if>
 			  <c:if test="${mib.pngPath.top2png!=null }">
-				<img src="${mib.pngPath.top2png }" style="width:90%;">
+				<img src="<c:if test="${!mib.pngPath.top2png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top2png }" style="width:90%;">
 			  </c:if>
 			  <c:if test="${mib.pngPath.top3png!=null }">
-				<img src="${mib.pngPath.top3png }" style="width:90%;">
+				<img src="<c:if test="${!mib.pngPath.top3png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top3png }" style="width:90%;">
 			  </c:if>
 			  <c:if test="${mib.pngPath.top4png!=null }">
-				<img src="${mib.pngPath.top4png }" style="width:90%;">
+				<img src="<c:if test="${!mib.pngPath.top4png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top4png }" style="width:90%;">
 			  </c:if>
 			  <c:if test="${mib.pngPath.top5png!=null }">
-				<img src="${mib.pngPath.top5png }" style="width:90%;">
+				<img src="<c:if test="${!mib.pngPath.top5png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top5png }" style="width:90%;">
 			  </c:if>
 			  <c:if test="${mib.pngPath.top6png!=null }">
-				<img src="${mib.pngPath.top6png }" style="width:90%;">
+				<img src="<c:if test="${!mib.pngPath.top6png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top6png }" style="width:90%;">
 			  </c:if>
 			  <c:if test="${mib.pngPath.top7png!=null }">
-				<img src="${mib.pngPath.top7png }" style="width:90%;">
+				<img src="<c:if test="${!mib.pngPath.top7png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top7png }" style="width:90%;">
 			  </c:if>
 			  <c:if test="${mib.pngPath.top8png!=null }">
-				<img src="${mib.pngPath.top8png }" style="width:90%;">
+				<img src="<c:if test="${!mib.pngPath.top8png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top8png }" style="width:90%;">
 			  </c:if>
 			  <c:if test="${mib.pngPath.top9png!=null }">
-				<img src="${mib.pngPath.top9png }" style="width:90%;">
+				<img src="<c:if test="${!mib.pngPath.top9png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top9png }" style="width:90%;">
 			  </c:if>
 			  <c:if test="${mib.pngPath.top10png!=null }">
-				<img src="${mib.pngPath.top10png }" style="width:90%;">
+				<img src="<c:if test="${!mib.pngPath.top10png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top10png }" style="width:90%;">
 			  </c:if>
 			</div>
 		</div>
@@ -206,12 +206,12 @@
 				</table>
 				<table style="width:90%;">
 			      <tr>
-			    	<td style="width:50%;"><img src="${mib.qualityPath1 }" style="max-width:500px;"></td>
-			    	<td><img src="${mib.qualityPath2 }" style="max-width:500px;"></td>
+			    	<td style="width:50%;"><img style="max-width:500px;" src="<c:if test="${!mib.qualityPath1.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.qualityPath1 }"></td>
+			    	<td><img style="max-width:500px;" src="<c:if test="${!mib.qualityPath2.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }/</c:if>${mib.qualityPath2 }"></td>
 			      </tr>
 			      <tr>
-			    	<td><img alt="" src="${mib.seqContentPath1 }" style="max-width:500px;"></td>
-			    	<td><img alt="" src="${mib.seqContentPath2 }" style="max-width:500px;"></td>
+			    	<td><img style="max-width:500px;" alt="" src="<c:if test="${!mib.seqContentPath1.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.seqContentPath1 }"></td>
+			    	<td><img style="max-width:500px;" alt="" src="<c:if test="${!mib.seqContentPath2.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.seqContentPath2 }"></td>
 			      </tr>
 			    </table>
 			</div>

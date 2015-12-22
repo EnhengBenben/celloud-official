@@ -2,29 +2,30 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:choose>
-	<c:when test="${empty appList}">
-	  <div class="col-md-12">结果为空 </div>
-	</c:when>
-	<c:otherwise>
-		<c:forEach items="${appList}" var="app">
-		  <div class="col-md-12">
-		    <div class="info-box my-app-box">
-			  <div class="app-info-icon">
-				<img src="<%=request.getContextPath()%>/images/app/${app.pictureName}" class="Absolute-Center" style="width:90px;margin:0px">
-			  </div>
-			  <div class="info-box-content app-info-content">
-			      <span class="info-box-text">${app.softwareName }</span>
-			      <div>
-				      <span class="info-box-text">软件分类：${app.classifyNames } &nbsp;&nbsp;&nbsp; &nbsp;上线时间：${app.createDate }</span>
+<div class="nominate" style="display: block;">
+  <h5>已添加的APP</h5>
+  <ul>
+    <c:choose>
+		<c:when test="${empty appList}">
+		  <div class="col-md-12">结果为空 </div>
+		</c:when>
+		<c:otherwise>
+			<c:forEach items="${appList}" var="app">
+			  <li>
+			      <a href="#">
+			        <img src="<%=request.getContextPath()%>/images/app/${app.pictureName}" alt="">
+			      </a>
+			      <div class="intro">
+			        <h6 style="overflow: hidden;" title="${app.softwareName }">
+			          <a class="reco-hd-link" href="javascript:toAppDetail(${app.softwareId })">
+			          	${app.softwareName }
+			          </a>
+			        </h6>
+			       	<p><a href="javascript:void()" onclick="removeApp(${app.softwareId })" >取消添加</a></p>
 			      </div>
-			      <p class="info-box-artic">${app.intro }</p>
-			  	  <p class="info-box-artic">发布机构：${app.companyName }</p>
-			  	  <a class="a-green-normal" style="position:absolute;bottom:20px;" href="javascript:void()" onclick="toAppDetail(${app.softwareId})">查看APP详细</a>
-			      <button class="btn btn-celloud-close btn-flat info-btn" href="javascript:void()" onclick="removeApp(${app.softwareId })" ><i class="fa fa-minus"></i>&nbsp;取消添加</button>
-			  </div><!-- /.info-box-content -->
-		    </div><!-- /.info-box -->
-		  </div><!-- /.col -->
-		</c:forEach>
-	</c:otherwise>
-</c:choose>
+			   </li>
+			</c:forEach>
+		</c:otherwise>
+	</c:choose>
+  </ul>
+</div>

@@ -20,7 +20,7 @@ import com.nova.tools.utils.XMLUtil;
  */
 public class RunAppService {
     // TODO 不需要在Tools端进行后续处理的需要在这里配置下
-    private static final List<String> apps = Arrays.asList("80", "82", "83",
+    private static final List<String> apps = Arrays.asList("82", "83",
             "85", "86", "87", "88", "91", "92", "93", "94", "104", "110",
             "111", "112", "113", "114");
 
@@ -71,17 +71,8 @@ public class RunAppService {
 
         // split
         if (AppNameIDConstant.split.equals(appId)) {
-            Integer num = runApp.split(appPath, projectId, dataKeyList, appId,
+            runApp.split(appPath, projectId, dataKeyList, appId,
                     appName, userId, dataInfos, company, user, dept);
-            if (num != null && num > 0) {
-                String dataArray[] = dataKeyList.split(";");
-                String[] dataDetail = dataArray[0].split(",");
-                dataKey = FileTools.getArray(dataDetail, 0);
-                String resultPath = userId + "/" + appId + "/" + dataKey
-                        + "/result/split/";
-                ChangeStateServiceImpl.saveSplitResultData(dataKey, resultPath,
-                        num, Integer.parseInt(userId));
-            }
         }
 
         // CMP
@@ -196,14 +187,6 @@ public class RunAppService {
             runApp.rungDNAProject(appPath + "/", projectId, dataKeyList,
                     appName);
         }
-        if (AppNameIDConstant.gDNA_Chimeric.equals(appId)) {
-            runApp.rungDNA_ChimericProject(appPath + "/", projectId,
-                    dataKeyList, appName);
-        }
-        if (AppNameIDConstant.MDA_Chimeric.equals(appId)) {
-            runApp.runMDA_ChimericProject(appPath + "/", projectId,
-                    dataKeyList, appName);
-        }
         if (AppNameIDConstant.MDA_HR.equals(appId)) {
             runApp.runMDA_HRProject(appPath + "/", projectId, dataKeyList,
                     appName);
@@ -229,21 +212,6 @@ public class RunAppService {
             runApp.runMDA_HR_v1Project(appPath + "/", projectId, dataKeyList,
                     appName);
         }
-        // gDNA_HR_v1
-        if (AppNameIDConstant.gDNA_HR_v1.equals(appId)) {
-            runApp.rungDNA_HR_v1Project(appPath + "/", projectId, dataKeyList,
-                    appName);
-        }
-        // MDA_Chimeric_v1
-        if (AppNameIDConstant.MDA_Chimeric_v1.equals(appId)) {
-            runApp.runMDA_Chimeric_v1Project(appPath + "/", projectId,
-                    dataKeyList, appName);
-        }
-        // gDNA_Chimeric_v1
-        if (AppNameIDConstant.gDNA_Chimeric_v1.equals(appId)) {
-            runApp.rungDNA_Chimeric_v1Project(appPath + "/", projectId,
-                    dataKeyList, appName);
-        }
         // SurePlex_v1
         if (AppNameIDConstant.SurePlex_v1.equals(appId)) {
             runApp.runSurePlex_v1Project(appPath + "/", projectId, dataKeyList,
@@ -267,11 +235,6 @@ public class RunAppService {
                     appName);
         }
 
-        // gDNA_HR
-        if (AppNameIDConstant.gDNA_HR.equals(appId)) {
-            runApp.rungDNA_HRProject(appPath + "/", projectId, dataKeyList,
-                    appName);
-        }
         if (!apps.contains(appId)) {
             String txt = projectPath + "/" + projectId + ".txt";
             String xml = null;

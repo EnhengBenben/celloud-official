@@ -7,17 +7,20 @@ package com.celloud.utils;
  * @description :自定义字符串工具类（叫 StringUtil 的实在太多了）
  */
 public class CustomString {
-	/**
-	 * 通过文件名称获取Barcode
-	 * 
-	 * @param fileName
-	 * @return
-	 */
-	public static String getBarcode(String fileName) {
-		String[] s = fileName.split("_");
-		if (s.length > 2) {
-			fileName = s[0] + "_" + s[1];
-		}
-		return fileName;
-	}
+    /**
+     * 通过文件名称获取Barcode
+     * 
+     * @param fileName
+     * @return
+     */
+    public static String getBarcode(String fileName) {
+        if (fileName == null) {
+            return null;
+        }
+        String[] s = fileName.split("_");
+        if (s.length > 2) {
+            fileName = s[0] + "_" + s[1];
+        }
+        return fileName;
+    }
 }

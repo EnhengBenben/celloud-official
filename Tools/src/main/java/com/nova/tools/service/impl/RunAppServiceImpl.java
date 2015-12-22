@@ -2,7 +2,9 @@ package com.nova.tools.service.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
@@ -44,11 +46,8 @@ public class RunAppServiceImpl {
 			Mod.USERNAME);
 
 	private static String MalBac_perl = PropertiesUtils.MalBac;
-	private static String gDNA_HR_perl = PropertiesUtils.gDNA_HR;
 	private static String gDNA_MR_perl = PropertiesUtils.gDNA_MR;
 	private static String MDA_MR_perl = PropertiesUtils.MDA_MR;
-	private static String gDNA_Chimeric_perl = PropertiesUtils.gDNA_Chimeric_perl;
-	private static String MDA_Chimeric_perl = PropertiesUtils.MDA_Chimeric_perl;
 	private static String MDA_HR_perl = PropertiesUtils.MDA_HR_perl;
 	private static String SurePlex_perl = PropertiesUtils.SurePlex;
 	private static String SurePlex_HR_perl = PropertiesUtils.Sureplex_HR;
@@ -59,9 +58,6 @@ public class RunAppServiceImpl {
 	private static String gDNA_MR_v1 = PropertiesUtils.gDNA_MR_v1;
 	private static String MDA_MR_v1 = PropertiesUtils.MDA_MR_v1;
 	private static String MDA_HR_v1 = PropertiesUtils.MDA_HR_v1;
-	private static String gDNA_HR_v1 = PropertiesUtils.gDNA_HR_v1;
-	private static String MDA_Chimeric_v1 = PropertiesUtils.MDA_Chimeric_v1;
-	private static String gDNA_Chimeric_v1 = PropertiesUtils.gDNA_Chimeric_v1;
 	private static String SurePlex_v1 = PropertiesUtils.SurePlex_v1;
 	private static String MalBac_v1 = PropertiesUtils.MalBac_v1;
 	private static String TBINH_perl = PropertiesUtils.tbinh;
@@ -142,15 +138,15 @@ public class RunAppServiceImpl {
 	 * @param company
 	 * @param user
 	 */
-	public Integer split(String outPath, String projectId, String dataKeyList,
+    public void split(String outPath, String projectId, String dataKeyList,
 			String appId, String appName, String userId, String dataInfos,
 			String company, String user, String dept) {
 		String dataListFile = formatDataKeyListToSplit(dataKeyList);
 		String command = split_perl + " " + dataListFile + " " + outPath
-				+ " ProjectID" + projectId;
+                + "/ ProjectID" + projectId + " &>" + outPath + "/" + projectId
+                + "/log ";
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         ssh.sshSubmit(false);
-		return null;
 	}
 
 	/**
@@ -172,18 +168,14 @@ public class RunAppServiceImpl {
 		String dataListFile = formatDataKeyList(dataKeyList);
 		String command = null;
 		if (AppNameIDConstant.CMP.equals(appId)) {
-			command = CMP_perl + " " + dataListFile + " " + outPath
-                    + " ProjectID" + projectId + " &>" + outPath + "ProjectID"
-                    + projectId + ".log";
+            command = CMP_perl;
 		} else if (AppNameIDConstant.CMP_199.equals(appId)) {
-			command = CMP199_perl + " " + dataListFile + " " + outPath
-                    + " ProjectID" + projectId + " &>" + outPath + "ProjectID"
-                    + projectId + ".log";
+            command = CMP199_perl;
 		} else if (AppNameIDConstant.GDD.equals(appId)) {
-			command = GDD_perl + " " + dataListFile + " " + outPath
-                    + " ProjectID" + projectId + " &>" + outPath + "ProjectID"
-                    + projectId + ".log";
+            command = GDD_perl;
 		}
+        command += " " + dataListFile + " " + outPath + "/ ProjectID"
+                + projectId + " &>" + outPath + "/" + projectId + "/log ";
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         ssh.sshSubmit(false);
 	}
@@ -245,20 +237,58 @@ public class RunAppServiceImpl {
 		}
 	}
 
-	/**
-	 * 运行 HCV
-	 * 
-	 * @param resultPath
-	 * @param dataKeyList
-	 * @return
-	 */
+    private static String[] HCVType = { "1b", "2a", "3a", "3b", "6a" };
+    private static List<String> typeList = Arrays.asList(HCVType);
+
+    /**
+     * 运行 HCV
+     * 
+     * @param resultPath
+     * @param dataKeyList
+     * @return
+     */
     public void runHCV(String appPath, String projectId, String dataKeyList) {
-        // 创建要运行的文件列表文件
-        String dataListFile = dealDataKeyListContainFileName(dataKeyList);
-        String command = HCV + dataListFile + " " + appPath + "/ ProjectID"
-                + projectId + " &>" + appPath + "/" + projectId + "/log ";
+        String dataListFile = datalist + new Date().getTime() + ".txt";
+        FileTools.createFile(dataListFile);
+        String[] dataArray = dataKeyList.split(";");
+        for (int i = 0; i < dataArray.length; i++) {
+            String[] dataDetail = dataArray[i].split(",");
+            FileTools.appendWrite(
+                    dataListFile,
+                    dataPath + getArray(dataDetail, 1) + "\t"
+                            + getArray(dataDetail, 2) + "\n");
+        }
+        String command = HCV + " " + dataListFile + " " + appPath + "/ 2>"
+                + appPath + "/" + projectId + "/log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        ssh.sshSubmit(false);
+        boolean state = ssh.sshSubmit(true);
+        if (state) {
+            String projectFile = appPath + "/" + projectId + "/" + projectId
+                    + ".txt";
+            FileTools.createFile(projectFile);
+
+            FileTools.appendWrite(projectFile,
+                    "dataKey\tFile_Name\tSubtype\tSubject_Name\tIdentity\n");
+            for (int i = 0; i < dataArray.length; i++) {
+                String[] dataDetail = dataArray[i].split(",");
+                String finalPath = appPath + "/" + getArray(dataDetail, 0)
+                        + "/Result.txt";
+                String context = "";
+                if (FileTools.checkPath(finalPath)) {
+                    context = FileTools.getLastLine(finalPath);
+                    String[] c = context.split("\t");
+                    if (c.length > 4) {
+                        if (!typeList.contains(getArray(c, 1))) {
+                            c[1] = "其他";
+                        }
+                        context = getArray(c, 0) + "\t" + getArray(c, 1) + "\t"
+                                + getArray(c, 2) + "\t" + getArray(c, 3);
+                    }
+                }
+                FileTools.appendWrite(projectFile, getArray(dataDetail, 0)
+                        + "\t" + context + "\n");
+            }
+        }
     }
 
 	/**
@@ -368,28 +398,6 @@ public class RunAppServiceImpl {
 		String command = gDNA_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId + " &>" + basePath + "ProjectID"
 				+ projectId + ".log";
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		ssh.sshSubmit(false);
-	}
-
-	public void rungDNA_ChimericProject(String basePath, String projectId,
-			String dataKeyList, String appName) {
-		// 创建要运行的文件列表文件
-		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
-		String command = gDNA_Chimeric_perl + " " + dataListFile + " "
-				+ basePath + " ProjectID" + projectId + " &>" + basePath
-				+ "ProjectID" + projectId + ".log";
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		ssh.sshSubmit(false);
-	}
-
-	public void runMDA_ChimericProject(String basePath, String projectId,
-			String dataKeyList, String appName) {
-		// 创建要运行的文件列表文件
-		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
-		String command = MDA_Chimeric_perl + " " + dataListFile + " "
-				+ basePath + " ProjectID" + projectId + " &>" + basePath
-				+ "ProjectID" + projectId + ".log";
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
 		ssh.sshSubmit(false);
 	}
@@ -622,190 +630,6 @@ public class RunAppServiceImpl {
 		}
 	}
 
-	public void rungDNA_HR_v1Project(String basePath, String projectId,
-			String dataKeyList, String appName) {
-		// 创建要运行的文件列表文件
-		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
-		String command = gDNA_HR_v1 + " " + dataListFile + " " + basePath
-				+ " ProjectID" + projectId;
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
-		StringBuffer resultArray = new StringBuffer();
-		if (state) {
-			String dataArray[] = dataKeyList.split(";");
-			// 创建项目结果文件
-			String projectFile = basePath + projectId + "/" + projectId
-					+ ".txt";
-			FileTools.createFile(projectFile);
-			// 追加表头
-			resultArray
-					.append("dataName\tdataKey\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\n");
-			for (int i = 0; i < dataArray.length; i++) {
-				String[] dataDetail = dataArray[i].split(",");
-				String finalPath = basePath + getArray(dataDetail, 0);
-				try {
-					PGS_PDF.createPDF(finalPath, appName,
-							getBarcode(getArray(dataDetail, 2)),
-							getArray(dataDetail, 3), getArray(dataDetail, 0),
-							200, 800);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				String fileName = FileTools.fileExist(finalPath, ".xls",
-						"endsWith");
-				String result[] = null;
-				try {
-					String r[] = FileUtils.readFileToString(
-							new File(finalPath + "/" + fileName)).split("\n");
-					if (r.length > 2) {
-						result = getArray(r, 2).split("\t");
-					} else {
-						result = FileTools.getLastLine(
-								finalPath + "/" + fileName).split("\t");
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				if (result.length == 1) {
-					resultArray.append(getArray(dataDetail, 2) + "\t"
-							+ getArray(dataDetail, 0) + "\t"
-							+ getArray(result, 0) + "\n");
-				} else {
-					resultArray.append(getArray(dataDetail, 2) + "\t"
-							+ getArray(dataDetail, 0) + "\t"
-							+ getArray(result, 0) + "\t" + getArray(result, 1)
-							+ "\t" + getArray(result, 2) + "\t"
-							+ getArray(result, 3) + "\t" + getArray(result, 4)
-							+ "\n");
-				}
-			}
-			FileTools.appendWrite(projectFile, resultArray.toString());
-		}
-	}
-
-	public void runMDA_Chimeric_v1Project(String basePath, String projectId,
-			String dataKeyList, String appName) {
-		// 创建要运行的文件列表文件
-		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
-		String command = MDA_Chimeric_v1 + " " + dataListFile + " " + basePath
-				+ " ProjectID" + projectId;
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
-		StringBuffer resultArray = new StringBuffer();
-		if (state) {
-			String dataArray[] = dataKeyList.split(";");
-			// 创建项目结果文件
-			String projectFile = basePath + projectId + "/" + projectId
-					+ ".txt";
-			FileTools.createFile(projectFile);
-			// 追加表头
-			resultArray
-					.append("dataName\tdataKey\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
-			for (int i = 0; i < dataArray.length; i++) {
-				String[] dataDetail = dataArray[i].split(",");
-				String finalPath = basePath + getArray(dataDetail, 0);
-				try {
-					PGS_PDF.createPDF(finalPath, appName,
-							getBarcode(getArray(dataDetail, 2)),
-							getArray(dataDetail, 3), getArray(dataDetail, 0),
-							190, 800);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				String fileName = FileTools.fileExist(finalPath, ".xls",
-						"endsWith");
-				String result[] = null;
-				try {
-					String r[] = FileUtils.readFileToString(
-							new File(finalPath + "/" + fileName)).split("\n");
-					if (r.length > 2) {
-						result = getArray(r, 2).split("\t");
-					} else {
-						result = FileTools.getLastLine(
-								finalPath + "/" + fileName).split("\t");
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-				if (result.length == 1) {
-					resultArray.append(getArray(dataDetail, 2) + "\t"
-							+ getArray(dataDetail, 0) + "\t"
-							+ getArray(result, 0) + "\n");
-				} else {
-					resultArray.append(getArray(dataDetail, 2) + "\t"
-							+ getArray(dataDetail, 0) + "\t"
-							+ getArray(result, 0) + "\t" + getArray(result, 1)
-							+ "\t" + getArray(result, 2) + "\t"
-							+ getArray(result, 3) + "\t" + getArray(result, 4)
-							+ "\t" + getArray(result, 5) + "\n");
-				}
-			}
-			FileTools.appendWrite(projectFile, resultArray.toString());
-		}
-	}
-
-	public void rungDNA_Chimeric_v1Project(String basePath, String projectId,
-			String dataKeyList, String appName) {
-		// 创建要运行的文件列表文件
-		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
-		String command = gDNA_Chimeric_v1 + " " + dataListFile + " " + basePath
-				+ " ProjectID" + projectId;
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		boolean state = ssh.sshSubmit(true);
-		StringBuffer resultArray = new StringBuffer();
-		if (state) {
-			String dataArray[] = dataKeyList.split(";");
-			// 创建项目结果文件
-			String projectFile = basePath + projectId + "/" + projectId
-					+ ".txt";
-			FileTools.createFile(projectFile);
-			// 追加表头
-			resultArray
-					.append("dataName\tdataKey\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
-			for (int i = 0; i < dataArray.length; i++) {
-				String[] dataDetail = dataArray[i].split(",");
-				String finalPath = basePath + getArray(dataDetail, 0);
-				try {
-					PGS_PDF.createPDF(finalPath, appName,
-							getBarcode(getArray(dataDetail, 2)),
-							getArray(dataDetail, 3), getArray(dataDetail, 0),
-							190, 800);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				String fileName = FileTools.fileExist(finalPath, ".xls",
-						"endsWith");
-				String result[] = null;
-				try {
-					String r[] = FileUtils.readFileToString(
-							new File(finalPath + "/" + fileName)).split("\n");
-					if (r.length > 2) {
-						result = getArray(r, 2).split("\t");
-					} else {
-						result = FileTools.getLastLine(
-								finalPath + "/" + fileName).split("\t");
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				if (result.length == 1) {
-					resultArray.append(getArray(dataDetail, 2) + "\t"
-							+ getArray(dataDetail, 0) + "\t"
-							+ getArray(result, 0) + "\n");
-				} else {
-					resultArray.append(getArray(dataDetail, 2) + "\t"
-							+ getArray(dataDetail, 0) + "\t"
-							+ getArray(result, 0) + "\t" + getArray(result, 1)
-							+ "\t" + getArray(result, 2) + "\t"
-							+ getArray(result, 3) + "\t" + getArray(result, 4)
-							+ "\t" + getArray(result, 5) + "\n");
-				}
-			}
-			FileTools.appendWrite(projectFile, resultArray.toString());
-		}
-	}
-
 	public void runSurePlex_v1Project(String basePath, String projectId,
 			String dataKeyList, String appName) {
 		// 创建要运行的文件列表文件
@@ -922,17 +746,6 @@ public class RunAppServiceImpl {
 		// 创建要运行的文件列表文件
 		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
 		String command = MalBac_perl + " " + dataListFile + " " + basePath
-				+ " ProjectID" + projectId + " &>" + basePath + "ProjectID"
-				+ projectId + ".log";
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		ssh.sshSubmit(false);
-	}
-
-	public void rungDNA_HRProject(String basePath, String projectId,
-			String dataKeyList, String appName) {
-		// 创建要运行的文件列表文件
-		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
-		String command = gDNA_HR_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId + " &>" + basePath + "ProjectID"
 				+ projectId + ".log";
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
@@ -1133,36 +946,35 @@ public class RunAppServiceImpl {
 		boolean state = ssh.sshSubmit(true);
 		StringBuffer resultArray = new StringBuffer();
 		if (state) {
-			String dataArray[] = dataKeyList.split(";");
-			// 创建项目结果文件
-			String projectFile = basePath + projectId + "/" + projectId
-					+ ".txt";
-			FileTools.createFile(projectFile);
-			// 追加表头
-			FileTools.appendWrite(projectFile,
-					"dataID\t文件名称\tKRAS exon number\tPosition\tamino acid\n");
-			for (int i = 0; i < dataArray.length; i++) {
-				String[] dataDetail = dataArray[i].split(",");
-				String finalPath = basePath + getArray(dataDetail, 0);
-				try {
-					AB1_PDF.createPDF(finalPath + "/", getArray(dataDetail, 2),
-							appName, 230, 800);
-				} catch (DocumentException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				String first = FileTools
-						.getFirstLine(finalPath + "/report.txt");
-				String result = first == null ? "no result" : first.replace(
-						"EGFR exon number is ", "");
-				FileTools.appendWrite(projectFile, getArray(dataDetail, 0)
-						+ "\t" + getArray(dataDetail, 2) + "\t" + result + "\t"
-						+ ScreeningUtil.screen(finalPath + "/report.txt")
-						+ "\n");
-				resultArray.append(getArray(dataDetail, 0) + ",");
-			}
-		}
+            String dataArray[] = dataKeyList.split(";");
+            // 创建项目结果文件
+            String projectFile = basePath + projectId + "/" + projectId
+                    + ".txt";
+            FileTools.createFile(projectFile);
+            // 追加表头
+            FileTools.appendWrite(projectFile,
+                    "dataID\t文件名称\tKRAS exon number\t结论\n");
+            for (int i = 0; i < dataArray.length; i++) {
+                String[] dataDetail = dataArray[i].split(",");
+                String finalPath = basePath + getArray(dataDetail, 0);
+                try {
+                    AB1_PDF.createPDF(finalPath + "/", getArray(dataDetail, 2),
+                            appName, 230, 800);
+                } catch (DocumentException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                String first = FileTools
+                        .getFirstLine(finalPath + "/report.txt");
+                String result = first == null ? "no result" : first;
+                FileTools.appendWrite(projectFile, getArray(dataDetail, 0)
+                        + "\t" + getArray(dataDetail, 2) + "\t" + result + "\t"
+                        + FileTools.readAppoint(finalPath + "/report.txt.Report")
+                        + "\n");
+                resultArray.append(getArray(dataDetail, 0) + ",");
+            }
+        }
 	}
 
 	/**
@@ -1470,15 +1282,18 @@ public class RunAppServiceImpl {
 			String endData = "";
 			String d1 = "";
 			String d2 = "";
-			if (FileTools.getExt(detail1).equals(".lis")) {
+            if (FileTools.getExt(detail1).equals(".lis")
+                    || FileTools.getExt(detail1).equals(".txt")) {
 				endData = detail1;
 				d1 = detail2;
 				d2 = detail3;
-			} else if (FileTools.getExt(detail2).equals(".lis")) {
+            } else if (FileTools.getExt(detail2).equals(".lis")
+                    || FileTools.getExt(detail2).equals(".txt")) {
 				endData = detail2;
 				d1 = detail1;
 				d2 = detail3;
-			} else if (FileTools.getExt(detail3).equals(".lis")) {
+            } else if (FileTools.getExt(detail3).equals(".lis")
+                    || FileTools.getExt(detail3).equals(".txt")) {
 				endData = detail3;
 				d1 = detail1;
 				d2 = detail2;

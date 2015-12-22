@@ -1,7 +1,6 @@
 package com.celloud.service.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import com.celloud.dao.AppDao;
 import com.celloud.sdo.App;
@@ -9,6 +8,8 @@ import com.celloud.sdo.Classify;
 import com.celloud.sdo.Screen;
 import com.celloud.service.AppService;
 import com.google.inject.Inject;
+import com.nova.pager.Page;
+import com.nova.pager.PageList;
 
 /**
  * 
@@ -31,24 +32,31 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public List<App> getAllSoftware() {
-        return appDao.getAllSoftware();
+    public Classify getClassifyById(Integer id) {
+        return appDao.getClassifyById(id);
     }
 
     @Override
-    public Map<String, List<Classify>> getDoubleClassify(Integer classifyId) {
-        return appDao.getDoubleClassify(classifyId);
+    public List<Classify> getClassify(Integer pid) {
+        return appDao.getClassify(pid);
     }
 
     @Override
-    public List<App> getAppByClassify(Integer classifyId, Integer pid,
-            Integer companyId) {
-        return appDao.getAppByClassify(classifyId, pid, companyId);
+    public List<App> getAppByClassify(Integer classifyId, Integer companyId) {
+        return appDao.getAppByClassify(classifyId, companyId);
     }
 
     @Override
     public App getAppById(Integer id, Integer userId) {
         return appDao.getAppById(id, userId);
+    }
+
+    @Override
+    public PageList<App> getAppPageListByClassify(Integer classifyId,
+            Integer classifyPId, Integer companyId, String sortField,
+            String sortType, Page page) {
+        return appDao.getAppPageListByClassify(classifyId, classifyPId,
+                companyId, sortField, sortType, page);
     }
 
     @Override

@@ -246,16 +246,16 @@
 	</table>
 	<table style="width:100%;">
       <tr>
-    	<td style="width:50%;"><img src="${cmpReport.qualityPath1 }"></td>
-    	<td><img src="${cmpReport.qualityPath2 }"></td>
+    	<td style="width:50%;"><img src="<c:if test="${!cmpReport.qualityPath1.contains('Tools') }">${outPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.qualityPath1 }"></td>
+    	<td><img src="<c:if test="${!cmpReport.qualityPath2.contains('Tools') }">${outPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }/</c:if>${cmpReport.qualityPath2 }"></td>
       </tr>
       <tr>
-    	<td><img alt="" src="${cmpReport.seqContentPath1 }"></td>
-    	<td><img alt="" src="${cmpReport.seqContentPath2 }"></td>
+    	<td><img alt="" src="<c:if test="${!cmpReport.seqContentPath1.contains('Tools') }">${outPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.seqContentPath1 }"></td>
+    	<td><img alt="" src="<c:if test="${!cmpReport.seqContentPath2.contains('Tools') }">${outPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.seqContentPath2 }"></td>
       </tr>
     </table>
 </section>
-<script language="javascript" src="<%=request.getContextPath()%>/plugins/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
 <script type="text/javascript">
 function preview(obj){
 	var inputVal;

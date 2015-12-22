@@ -25,7 +25,7 @@
 	<rule>
 		<note>enter user forget password page</note>
 		<from>^/forgetPwd$</from>
-		<to>/user_goToForgetPwd.action</to>
+		<to>/user!goToForgetPwd</to>
 	</rule>
 
 	<rule>
@@ -37,13 +37,13 @@
 	<rule>
 		<note>enter modify password</note>
 		<from>^/resetPwd/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)$</from>
-		<to>/user_resetPassword.action?username=$1&amp;code=$2</to>
+		<to>/user!resetPassword?username=$1&amp;code=$2</to>
 	</rule>
 
 	<rule>
 		<note>Print</note>
-		<from>^/printPGS/([\w\W]+)/([\w\W]+)/([\w\W]+)$</from>
-		<to>/print!printPGS?pagePath=$1&amp;miniPng=$2&amp;txt=$3</to>
+		<from>^/printPGS/([\w\W]+)/([\w\W]+)/([\w\W]+)/([\w\W]+)$</from>
+		<to>/print!printPGS?pagePath=$1&amp;miniPng=$2&amp;txt=$3&amp;splitPng=$4</to>
 	</rule>
 
 	<rule>
@@ -113,6 +113,21 @@
 		<note>python</note>
 		<from>^/sendEmail/([\w\W]+)/([\w\W]+)/([\w\W]+)$</from>
 		<to>/python!sendEmail?id=$1&amp;fileName=$2&amp;dataKey=$3</to>
+	</rule>
+	<rule>
+		<note>python</note>
+		<from>^/threadSave/([\w\W]+)/([\w\W]+)/([\w\W]+)/([\w\W]+)$</from>
+		<to>/python!threadSave?id=$1&amp;dataKey=$2&amp;num=$3&amp;position=$4</to>
+	</rule>
+	<rule>
+		<note>python</note>
+		<from>^/threadUpdate/([\w\W]+)/([\w\W]+)/([\w\W]+)/([\w\W]+)$</from>
+		<to>/python!threadUpdate?id=$1&amp;dataKey=$2&amp;num=$3&amp;position=$4</to>
+	</rule>
+	<rule>
+		<note>python</note>
+		<from>^/threadRead/([\w\W]+)/([\w\W]+)$</from>
+		<to>/python!threadRead?id=$1&amp;dataKey=$2&amp;</to>
 	</rule>
 
 	<rule>

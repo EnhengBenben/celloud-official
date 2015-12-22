@@ -1,0 +1,133 @@
+body {
+	color: #333;
+}
+ul, menu, dir {
+	display: block;
+	-webkit-margin-before: 1em;
+	-webkit-margin-after: 1em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+	-webkit-padding-start: 40px;
+}
+ul {
+	list-style: none;
+}
+#talkList li {
+	-webkit-transition-property: background-color;
+	-webkit-transition-duration: 0.4s;
+	-khtml-transition-property: background-color;
+	-khtml-transition-duration: 0.4s;
+	transition-property: background-color;
+	transition-duration: 0.4s;
+}
+.LC li {
+	float: left;
+	width: 100%;
+	overflow-y: hidden;
+	padding: 16px 0;
+	border-bottom: 1px dotted #D1D1D1;
+	line-height: 23px;
+}
+li {
+	display: list-item;
+	text-align: -webkit-match-parent;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, input, textarea, p, blockquote, th, td {
+	margin: 0;
+	padding: 0;
+}
+.msgBox {
+	overflow: hidden;
+	margin-right: 20px;
+	word-wrap: break-word;
+}
+div {
+	display: block;
+}
+.userName {
+	float: left;
+	display: inline;
+	_display: inline-block;
+	height: 23px;
+	font-size: 14px;
+	line-height: 23px;
+	color: #006a92;
+}
+.msgCnt, .talkDetail, .RUI li {
+	font-size: 14px;
+	overflow: hidden;
+	word-wrap: break-word;
+}
+.msgCnt {
+	display: inline;
+	overflow: hidden;
+	word-wrap: break-word;
+	color: #666161;
+}
+.msgCnt:after {
+	content: '.';
+	visibility: hidden;
+}
+.replyBox, .orderWrap {
+	margin: 10px 0 11px;
+	line-height: 19px;
+	background: #F5F5F5;
+	border-left: 1px solid #DEE3E3;
+	clear: both;
+}
+.replyBox .msgBox {
+	padding: 16px 0;
+	margin: 0;
+}
+.msgBox {
+	overflow: hidden;
+	margin-right: 20px;
+	word-wrap: break-word;
+}
+.replyBox, .orderWrap {
+	line-height: 19px;
+}
+.replyBox .msgCnt {
+	line-height: 23px!important;
+	font-size: 14px!important;
+	display: block;
+	margin: 0 20px 1px;
+}
+.replyBox .pubInfo{
+	margin-left: 20px;
+	margin-right: 20px;
+}
+.pubInfo {
+	clear: both;
+	margin-top: 6px;
+	line-height: 19px;
+	color: #999;
+}
+.left{
+	float: left;
+}
+.c_tx5 {
+	color: #999;
+}
+.pubInfo .left a.zfNum, .pubInfo .left a.view {
+	color: #006a92;
+	margin-left: 5px;
+}
+a, .c_tx {
+	text-decoration: none;
+}
+.pubInfo .left a, .areaInfo a {
+	color: #759AAD;
+}
+.pubInfo {
+	clear: both;
+	margin-top: 6px;
+	line-height: 19px;
+	color: #999;
+}
+.LC .userPic {
+	padding-left: 20px;
+	position: relative;
+	float: left;
+	padding: 4px 15px 4px 10px;
+}

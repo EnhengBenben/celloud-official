@@ -34,6 +34,7 @@ public class SplitReportAction extends BaseAction {
     private Split split;
     private MIB mib;
     private String path;
+    private String outPath = PropertiesUtil.toolsOutPath + "upload";
 
     public String toSplitReport() {
         path = PropertiesUtil.toolsOutPath + "upload";
@@ -79,6 +80,14 @@ public class SplitReportAction extends BaseAction {
 
     public void setMib(MIB mib) {
         this.mib = mib;
+    }
+
+    public String getOutPath() {
+        return outPath;
+    }
+
+    public void setOutPath(String outPath) {
+        this.outPath = outPath;
     }
 
 }

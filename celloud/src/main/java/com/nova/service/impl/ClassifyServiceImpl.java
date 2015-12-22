@@ -7,7 +7,6 @@ import com.nova.dao.IClassifyDao;
 import com.nova.sdo.Classify;
 import com.nova.sdo.Software;
 import com.nova.service.IClassifyService;
-import com.nova.utils.Page;
 
 public class ClassifyServiceImpl implements IClassifyService {
 	@Inject
@@ -31,16 +30,6 @@ public class ClassifyServiceImpl implements IClassifyService {
 	@Override
 	public Classify getClassify(int classifyId) {
 		return classifyDao.getClassify(classifyId);
-	}
-
-	@Override
-	public List<Classify> getAllClassifyList() {
-		return classifyDao.getAllClassifyList();
-	}
-
-	@Override
-	public List<Classify> getPageClassify(Page page) {
-		return classifyDao.getPageClassify(page);
 	}
 
 	@Override

@@ -4,12 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <a href="" id="_downFile"></a>
 <table class="table_">
-    <thead>
-        <tr>
-            <th width="215">项目信息</th>
-            <th>数据列表</th>
-        </tr>
-    </thead>
     <tbody id="_show">
         <s:if test="%{list.datas.size()>0}">
             <s:iterator value="list.datas" id="report">

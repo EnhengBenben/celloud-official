@@ -33,6 +33,7 @@ import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
 import com.celloud.service.UserService;
+import com.celloud.utils.DataKeyListToFile;
 import com.google.inject.Inject;
 import com.nova.action.BaseAction;
 import com.nova.constants.DataState;
@@ -41,7 +42,6 @@ import com.nova.constants.Mod;
 import com.nova.constants.SparkPro;
 import com.nova.pager.Page;
 import com.nova.pager.PageList;
-import com.nova.portpool.PortPool;
 import com.nova.queue.GlobalQueue;
 import com.nova.service.IDataService;
 import com.nova.utils.Base64Util;
@@ -110,22 +110,18 @@ public class DataAction extends BaseAction {
     private static String basePath = SparkPro.TOOLSPATH;
     private static String dataPath = PropertiesUtil.bigFilePath;
     private static String datalist = PropertiesUtil.datalist;
-    private static Map<String, Map<String, String>> machines = null;
-    private static String sparkhost = null;
-    private static String sparkpwd = null;
-    private static String sparkuserName = null;
+
+    private static Map<String, Map<String, String>> machines = XmlUtil.machines;
+    private static String sparkhost = machines.get("spark").get(Mod.HOST);
+    private static String sparkpwd = machines.get("spark").get(Mod.PWD);
+    private static String sparkuserName = machines.get("spark").get(Mod.USERNAME);
+    private static String sgeHost = machines.get("158").get(Mod.HOST);
+    private static String sgePwd = machines.get("158").get(Mod.PWD);;
+    private static String sgeUserName = machines.get("158").get(Mod.USERNAME);
+    
 
     // 初始化perl命令路径
-    private static Map<Long, App> appMap = null;
-    static {
-        SQLUtils sql = new SQLUtils();
-        appMap = sql.getAllSoftware();
-        XmlUtil.getMachines();
-        machines = XmlUtil.machines;
-        sparkhost = machines.get("spark").get(Mod.HOST);
-        sparkpwd = machines.get("spark").get(Mod.PWD);
-        sparkuserName = machines.get("spark").get(Mod.USERNAME);
-    }
+    private static Map<Long, App> appMap = SQLUtils.appMap;
 
     public String getAllData() {
         userId = (Integer) super.session.get("userId");
@@ -313,6 +309,9 @@ public class DataAction extends BaseAction {
             String dataKeyList = dataResult.toString();
             // TODO
             String appPath = basePath + userId + "/" + appId + "/";
+            if (!FileTools.checkPath(appPath)) {
+                new File(appPath).mkdirs();
+            }
             if (SparkPro.apps.contains(appId)) {// 判断是否需要进队列
                 String select = SparkPro.apps.toString().substring(1,
                         SparkPro.apps.toString().length() - 1);
@@ -381,10 +380,12 @@ public class DataAction extends BaseAction {
                     task.setAppId(appId_l);
                     task.setDataKey(datakey);
                     StringBuffer command = new StringBuffer(
-                            "perl /share/biosoft/perl/PGS_MG/bin/moniter_qsub.pl perl ");
+                            "nohup perl /share/biosoft/perl/PGS_MG/bin/moniter_qsub_url-v1.pl nohup perl ");
                     command.append(appMap.get(appId_l).getCommand())
                             .append(" ").append(dataListFile).append(" ")
-                            .append(appPath).append(" ProjectID").append(proId);
+                            .append(appPath).append(" ProjectID").append(proId)
+                            .append(" &>").append(appPath).append("/")
+                            .append(proId).append("/log ");
                     task.setCommand(command.toString());
                     StringBuffer params = new StringBuffer();
                     params.append("appName=")
@@ -430,21 +431,43 @@ public class DataAction extends BaseAction {
                     }
                 }
             } else {
-                String newPath = PropertiesUtil.toolsOutPath
-                        + "Procedure!runApp?userId=" + userId + "&appId="
-                        + appId + "&appName=" + appName + "&projectName="
-                        + proName + "&email=" + email + "&dataKeyList="
-                        + dataResult.toString() + "&projectId=" + proId
-                        + "&dataInfos="
-                        + Base64Util.encrypt(JSONObject.toJSONString(map))
-                        + "&company="
-                        + Base64Util.encrypt(JSONObject.toJSONString(com))
-                        + "&user="
-                        + Base64Util.encrypt(JSONObject.toJSONString(user))
-                        + "&dept="
-                        + Base64Util.encrypt(JSONObject.toJSONString(dept));
-                RemoteRequests rr = new RemoteRequests();
-                rr.run(newPath);
+                if (SparkPro.SGEAPPS.contains(appId)) {
+                    // TODO 所有向Tools端投递任务的流程都向这里集中
+                    // 最终判断删除，非spark就是SGE
+                    log.info("celloud 直接向 SGE 投递任务");
+                    String dataListFile = DataKeyListToFile
+                            .containName(dataKeyList);
+                    String command = appMap.get(Long.parseLong(appId))
+                            .getCommand()
+                            + " "
+                            + dataListFile
+                            + " "
+                            + appPath
+                            + " ProjectID"
+                            + proId
+                            + " >"
+                            + appPath
+                            + "ProjectID" + proId + ".log &";
+                    log.info("运行命令：" + command);
+                    SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+                    ssh.sshSubmit(command, false);
+                } else {
+                    String newPath = PropertiesUtil.toolsOutPath
+                            + "Procedure!runApp?userId=" + userId + "&appId="
+                            + appId + "&appName=" + appName + "&projectName="
+                            + proName + "&email=" + email + "&dataKeyList="
+                            + dataResult.toString() + "&projectId=" + proId
+                            + "&dataInfos="
+                            + Base64Util.encrypt(JSONObject.toJSONString(map))
+                            + "&company="
+                            + Base64Util.encrypt(JSONObject.toJSONString(com))
+                            + "&user="
+                            + Base64Util.encrypt(JSONObject.toJSONString(user))
+                            + "&dept="
+                            + Base64Util.encrypt(JSONObject.toJSONString(dept));
+                    RemoteRequests rr = new RemoteRequests();
+                    rr.run(newPath);
+                }
             }
         }
         return "info";
@@ -453,7 +476,7 @@ public class DataAction extends BaseAction {
     private void submit(String basePath, String projectId, String dataKeyList,
             String appName, String perl) {
         // 创建要运行的文件列表文件
-        String dataListFile = dealDataKeyListContainFileName(projectId,
+        String dataListFile = DataKeyListToFile.toSpark(projectId,
                 dataKeyList);
         // TODO
         String command = "nohup perl  /share/biosoft/perl/wangzhen/PGS/bin/moniter_qsub_url.pl perl "
@@ -472,29 +495,6 @@ public class DataAction extends BaseAction {
         log.info("运行命令：" + command);
         SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
         ssh.sshSubmit(command, false);
-    }
-
-    /**
-     * 将 dataKeyList 封装成 dataListFile 文件，包含文件名
-     * 
-     * @param dataKeyList
-     * @return
-     */
-    private String dealDataKeyListContainFileName(String projectId,
-            String dataKeyList) {
-        StringBuffer sb = new StringBuffer();
-        String dataListFile = datalist + new Date().getTime() + "_"
-                + new Double(Math.random() * 1000).intValue() + ".txt";
-        FileTools.createFile(dataListFile);
-        String dataArray[] = dataKeyList.split(";");
-        List<String> ports = PortPool.getPorts(dataArray.length, projectId);
-        for (int i = 0; i < dataArray.length; i++) {
-            String[] dataDetail = dataArray[i].split(",");
-            sb.append(dataPath + getArray(dataDetail, 1) + "\t"
-                    + getArray(dataDetail, 2) + "\t" + ports.get(i) + "\n");
-        }
-        FileTools.appendWrite(dataListFile, sb.toString());
-        return dataListFile;
     }
 
     /**
@@ -539,19 +539,6 @@ public class DataAction extends BaseAction {
             }
         }
         return "info";
-    }
-
-    /**
-     * 取数组指定位置的值
-     * 
-     * @param n
-     *            ：数组
-     * @param num
-     *            ：位置
-     * @return：存在则返回值，否则返回null
-     */
-    private static String getArray(String[] n, int num) {
-        return n == null ? null : (n.length > num ? n[num] : null);
     }
 
     public PageList<Data> getDataPageList() {

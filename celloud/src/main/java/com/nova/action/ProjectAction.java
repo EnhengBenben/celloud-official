@@ -9,17 +9,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
-import com.alibaba.fastjson.JSONObject;
 import com.celloud.sdo.App;
 import com.celloud.sdo.Task;
 import com.celloud.service.RunOverService;
+import com.celloud.utils.DataKeyListToFile;
 import com.celloud.service.TaskService;
 import com.google.inject.Inject;
 import com.mongo.sdo.CmpGeneDetectionDetail;
@@ -28,7 +27,9 @@ import com.mongo.sdo.CmpReport;
 import com.mongo.sdo.GeneDetectionResult;
 import com.mongo.service.ReportService;
 import com.mongo.service.ReportServiceImpl;
+import com.nova.constants.AppNameIDConstant;
 import com.nova.constants.Mod;
+import com.nova.constants.ReportState;
 import com.nova.constants.SparkPro;
 import com.nova.email.EmailProjectEnd;
 import com.nova.email.EmailService;
@@ -38,16 +39,13 @@ import com.nova.queue.GlobalQueue;
 import com.nova.sdo.Company;
 import com.nova.sdo.Data;
 import com.nova.sdo.DataType;
-import com.nova.sdo.Dept;
 import com.nova.sdo.Project;
 import com.nova.sdo.ProjectParam;
 import com.nova.sdo.Report;
-import com.nova.sdo.Software;
 import com.nova.sdo.User;
 import com.nova.service.ICompanyService;
 import com.nova.service.IDataService;
 import com.nova.service.IDataTypeService;
-import com.nova.service.IDeptService;
 import com.nova.service.IProjectService;
 import com.nova.service.IReportService;
 import com.nova.service.ISoftwareService;
@@ -73,7 +71,6 @@ import com.nova.utils.XmlUtil;
 @ParentPackage("celloud-default")
 @Action("project")
 @Results({
-        @Result(name = "RunProject", type = "json", params = { "root", "error" }),
         @Result(name = "success", type = "json", params = { "root", "userNames" }),
         @Result(name = "returnBoolean", type = "json", params = { "root",
                 "flag" }),
@@ -96,8 +93,6 @@ public class ProjectAction extends BaseAction {
     private ISoftwareService softwareService;
     @Inject
     private ICompanyService companyService;
-    @Inject
-    private IDeptService deptService;
     @Inject
     private TaskService taskService;
     private Integer userId;
@@ -123,7 +118,6 @@ public class ProjectAction extends BaseAction {
     private ProjectParam proParam;
     private Map<String, Object> proParams;
     private String softwareId;
-    private int error;
     private PageList<Project> myProNamePageList;
     private PageList<Project> sharedProNamePageList;
     private List<Data> proDataList;// 项目中的数据信息
@@ -133,30 +127,15 @@ public class ProjectAction extends BaseAction {
     private List<Project> proNameList;// 用户的项目名称列表
     private int sortByType;// 排序类型 1：按项目名称排序，2：按启动时间排序
 
-    private static String dataPath = PropertiesUtil.bigFilePath;
-    private static String datalist = PropertiesUtil.datalist;
-
     // 初始化app列表
-    private static Map<Long, App> appMap = null;
-    private static Map<String, Map<String, String>> machines = null;
-    private static String sparkhost = null;
-    private static String sparkpwd = null;
-    private static String sparkuserName = null;
-    private static String sgehost = null;
-    private static String sgepwd = null;
-    private static String sgeuserName = null;
-    static {
-        XmlUtil.getMachines();
-        machines = XmlUtil.machines;
-        sparkhost = machines.get("spark").get(Mod.HOST);
-        sparkpwd = machines.get("spark").get(Mod.PWD);
-        sparkuserName = machines.get("spark").get(Mod.USERNAME);
-        sgehost = machines.get("158").get(Mod.HOST);
-        sgepwd = machines.get("158").get(Mod.PWD);
-        sgeuserName = machines.get("158").get(Mod.USERNAME);
-        SQLUtils sql = new SQLUtils();
-        appMap = sql.getAllSoftware();
-    }
+    private static Map<Long, App> appMap = SQLUtils.appMap;
+    private static Map<String, Map<String, String>> machines = XmlUtil.machines;
+    private static String sparkhost = machines.get("spark").get(Mod.HOST);
+    private static String sparkpwd = machines.get("spark").get(Mod.PWD);
+    private static String sparkuserName = machines.get("spark").get(Mod.USERNAME);
+    private static String sgehost = machines.get("158").get(Mod.HOST);
+    private static String sgepwd = machines.get("158").get(Mod.PWD);
+    private static String sgeuserName = machines.get("158").get(Mod.USERNAME);
 
     private static String basePath = SparkPro.TOOLSPATH;
 
@@ -447,138 +426,6 @@ public class ProjectAction extends BaseAction {
         return SUCCESS;
     }
     
-    /**
-     * 在app页面运行时调用的方法
-     * 
-     * @return
-     */
-    public String run() {
-        log.info("----------------运行APP Begin----------");
-        // 1.新建项目
-        userId = (Integer) super.session.get("userId");
-        projectName = new Date().getTime() + "";
-        proList = projectService.getAllProNameList(userId);
-        while (existsProName(projectName)) {
-            projectName = new Date().getTime() + "";
-        }
-        project = new Project();
-        project.setUserId(userId);
-        project.setProjectName(projectName);
-        // 根据softwareName获取对应的数据类型
-        int dataFormat = dataService.getDataById(dataIds.split(",")[0])
-                .getFileFormat();
-        project.setDataFormat(dataFormat);
-        flag = projectService.insertProject(project);
-        if (!flag) {
-            error = 1;
-            log.error("创建项目失败");
-            return "RunProject";
-        }
-        // 2.根据项目名称获取项目ID
-        int proId = projectService.getProjectIdByName(projectName);
-        // 3.新增数据项目关系
-        int isError = dataService.allocateDatasToProject(dataIds, proId);
-        if (isError == 0) {
-            error = 2;
-            log.error("创建项目数据关系失败");
-            return "RunProject";
-        }
-        // 4.为该项目和app添加项目报告
-        boolean hasReport = reportService.hasProReport(proId,
-                Integer.parseInt(softwareId));
-        if (!hasReport) {
-            Report report = new Report();
-            report.setProjectId(proId);
-            report.setUserId(userId);
-            report.setSoftwareId(Integer.parseInt(softwareId));
-            report.setState(1);// 1：正在运行
-            report.setFlag(1);// 1:项目报告
-            reportService.addReportInfo(report);
-        }
-        // 5.根据 appIds 获取 datakeys
-        StringBuffer dataResult = new StringBuffer();
-        String[] dataIdArr = dataIds.split(",");
-        if (dataIdArr.length > 0) {
-            for (String dataId : dataIdArr) {
-                if (StringUtils.isNotEmpty(dataId)) {
-                    Data data = dataService.getDataById(dataId);
-                    String filename = data.getFileName();
-                    String datakey = data.getDataKey();
-                    // int index = filename.lastIndexOf(".");
-                    String ext = FileTools.getExtName(filename);
-                    dataResult
-                            .append(datakey)
-                            .append(",")
-                            .append(datakey)
-                            .append(ext)
-                            .append(",")
-                            .append(filename)
-                            .append(",")
-                            .append(StringUtils.isEmpty(data.getAnotherName()) ? null
-                                    : data.getAnotherName()).append(";");
-                }
-            }
-        }
-        Map<String, List<Data>> map = new HashMap<String, List<Data>>();
-        if (Integer.parseInt(softwareId) == 110
-                || Integer.parseInt(softwareId) == 111
-                || Integer.parseInt(softwareId) == 112) {
-            String dataDetails = FileTools.dataListSort(dataResult.toString());
-            String dataArray[] = dataDetails.split(";");
-            for (int i = 0; i < dataArray.length; i = i + 2) {
-                String[] dataDetail = dataArray[i].split(",");
-                String[] dataDetail1 = dataArray[i + 1].split(",");
-                List<Data> dataList = dataService.getDataByDataKeys(
-                        FileTools.getArray(dataDetail, 0) + ","
-                                + FileTools.getArray(dataDetail1, 0), userId);
-                map.put(FileTools.getArray(dataDetail, 0), dataList);
-            }
-        }
-        Company com = companyService.getCompanyByUserId(userId);
-        User user = userService.getUserById(userId);
-        Dept dept = deptService.getDeptByUser(userId);
-        // 6.根据用户ID获取用户邮箱
-        String email = userService.getEmailBySessionUserId(userId);
-        // 7.根据软件id获取软件名称
-        Software soft = softwareService.getSoftware(Integer
-                .parseInt(softwareId));
-        String dataKeyList = dataResult.toString();
-        if (SparkPro.apps.contains(softwareId)) {// 判断是否需要进队列
-            String select = SparkPro.apps.toString().substring(1,
-                    SparkPro.apps.toString().length() - 1);
-            int running = dataService.dataRunning(select);
-            log.info("页面运行任务，此时正在运行的任务数：" + running);
-            String appPath = basePath + userId + "/" + softwareId + "/";
-            if (SparkPro.NODES >= running) {
-                log.info("资源满足需求，投递任务");
-                submit(appPath, proId + "", dataKeyList, appName,
-                        appMap.get(Long.parseLong(softwareId)).getCommand());
-            } else {
-                log.info("资源不满足需求，进入队列等待");
-                GlobalQueue.offer(appPath + "--" + proId + "--" + dataKeyList
-                        + "--" + appName + "--" + softwareId);
-            }
-        } else {
-            String newPath = PropertiesUtil.toolsOutPath
-                    + "Procedure!runApp?userId=" + userId + "&appId="
-                    + softwareId + "&appName=" + soft.getSoftwareName()
-                    + "&projectName=" + projectName + "&email=" + email
-                    + "&dataKeyList=" + dataKeyList + "&projectId=" + proId
-                    + "&dataInfos="
-                    + Base64Util.encrypt(JSONObject.toJSONString(map))
-                    + "&company="
-                    + Base64Util.encrypt(JSONObject.toJSONString(com))
-                    + "&user="
-                    + Base64Util.encrypt(JSONObject.toJSONString(user))
-                    + "&dept="
-                    + Base64Util.encrypt(JSONObject.toJSONString(dept));
-            RemoteRequests rr = new RemoteRequests();
-            rr.run(newPath);
-        }
-        error = 0;
-        return "RunProject";
-    }
-
     public String runQueue() {
         log.info("手动释放项目所占用的端口，ProjectId:" + projectId);
         runQueue(projectId);
@@ -617,8 +464,7 @@ public class ProjectAction extends BaseAction {
     private void submit(String basePath, String projectId, String dataKeyList,
             String appName, String perl) {
         // 创建要运行的文件列表文件
-        String dataListFile = dealDataKeyListContainFileName(projectId,
-                dataKeyList);
+        String dataListFile = DataKeyListToFile.toSpark(projectId, dataKeyList);
         // TODO
         String command = "nohup perl  /share/biosoft/perl/wangzhen/PGS/bin/moniter_qsub_url.pl perl "
                 + " "
@@ -701,29 +547,6 @@ public class ProjectAction extends BaseAction {
         return "returnBoolean";
     }
 
-    /**
-     * 将 dataKeyList 封装成 dataListFile 文件，包含文件名
-     * 
-     * @param dataKeyList
-     * @return
-     */
-    private String dealDataKeyListContainFileName(String projectId,
-            String dataKeyList) {
-        StringBuffer sb = new StringBuffer();
-        String dataListFile = datalist + new Date().getTime() + ".txt";
-        FileTools.createFile(dataListFile);
-        String dataArray[] = dataKeyList.split(";");
-        List<String> ports = PortPool.getPorts(dataArray.length, projectId);
-        for (int i = 0; i < dataArray.length; i++) {
-            String[] dataDetail = dataArray[i].split(",");
-            sb.append(dataPath + FileTools.getArray(dataDetail, 1) + "\t"
-                    + FileTools.getArray(dataDetail, 2) + "\t" + ports.get(i)
-                    + "\n");
-        }
-        FileTools.appendWrite(dataListFile, sb.toString());
-        return dataListFile;
-    }
-
     public String updateReportReadStateByPro() {
         result = reportService.updateReportReadStateByPro(
                 Integer.parseInt(projectId), Integer.parseInt(softwareId));
@@ -770,20 +593,22 @@ public class ProjectAction extends BaseAction {
         for (Report report : list) {
             int appId = report.getSoftwareId();
             projectId = report.getProjectId()+"";
-            String param = SparkPro.TOOLSPATH + report.getUserId() + "/"
-                    + appId + " ProjectID" + projectId;
-            if (SparkPro.apps.contains(String.valueOf(appId))) {
-                String command = SparkPro.SPARKKILL + " " + param;
-                SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
-                ssh.sshSubmit(command, true);
-                runQueue(projectId);
-            } else {
-                String command = SparkPro.SGEKILL + " " + param;
-                SSHUtil ssh = new SSHUtil(sgehost, sgeuserName, sgepwd);
-                ssh.sshSubmit(command, true);
+            if (report.getState() != ReportState.COMPLETE) {
+                String param = SparkPro.TOOLSPATH + report.getUserId() + "/"
+                        + appId + " ProjectID" + projectId;
+                if (SparkPro.apps.contains(String.valueOf(appId))) {
+                    String command = SparkPro.SPARKKILL + " " + param;
+                    SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
+                    ssh.sshSubmit(command, true);
+                    runQueue(projectId);
+                } else {
+                    String command = SparkPro.SGEKILL + " " + param;
+                    SSHUtil ssh = new SSHUtil(sgehost, sgeuserName, sgepwd);
+                    ssh.sshSubmit(command, true);
+                }
             }
             // TODO
-            if (appId == 114) {
+            if (AppNameIDConstant.MIB.equals(String.valueOf(appId))) {
                 taskService.deleteTask(Long.parseLong(projectId));
                 Long appId_l = (long) appId;
                 int runningNum = taskService.getRunningNumByAppId(appId_l);
@@ -804,6 +629,7 @@ public class ProjectAction extends BaseAction {
                     log.info("任务" + task.getTaskId() + "开始投递");
                     taskService.updateToRunning(taskId);
                     runningNum = taskService.getRunningNumByAppId(appId_l);
+                    task = taskService.getFirstTask(appId_l);
                 }
             }
         }
@@ -1419,14 +1245,6 @@ public class ProjectAction extends BaseAction {
 
     public void setSoftwareId(String softwareId) {
         this.softwareId = softwareId;
-    }
-
-    public int getError() {
-        return error;
-    }
-
-    public void setError(int error) {
-        this.error = error;
     }
 
 }

@@ -3,10 +3,10 @@ $.ajaxSetup ({
 });
 //----------------------loading效果参数配置----------------------------
 var opts = {
-  lines: 7, // The number of lines to draw
-  length: 10, // The length of each line
-  width: 5, // The line thickness
-  radius: 10, // The radius of the inner circle
+  lines: 13, // The number of lines to draw
+  length: 28, // The length of each line
+  width: 14, // The line thickness
+  radius: 42, // The radius of the inner circle
   corners: 1, // Corner roundness (0..1)
   rotate: 0, // The rotation offset
   direction: 1, // 1: clockwise, -1: counterclockwise
@@ -21,6 +21,9 @@ var opts = {
   left: 'auto' // Left position relative to parent in px
 };
 var spinner;
+//设置遮罩
+spinner = new Spinner(opts);
+var target = document.getElementById('dataSpinDiv');
 //---------------------------------------------------------------------
 
 //记录数据管理页面每页显示记录个数,默认是50
@@ -64,32 +67,28 @@ function initData(){
 //获取我的数据
 var addedApps = new Array();
 function getAllDataList(){
-	//设置遮罩
-	spinner = new Spinner(opts);
-	var target = document.getElementById('selfDataDiv');
 	spinner.spin(target);
 	$.get("data3!getAllData",{"page.pageSize":dataPageDataNum,"page.currentPage":1},function(responseText){
+		spinner.stop();
 		$("#selfDataDiv").html(responseText);
 		$("#pageRecordSel").val(dataPageDataNum);
 		toUse();
 		$("#fileDataBody").scrollTop(0);
-		spinner.stop();
 		privateIcon();
 	});
 }
 function getDataByCondition(pageNum){
-	//设置遮罩
-	spinner = new Spinner(opts);
-	var target = document.getElementById('selfDataDiv');
 	spinner.spin(target);
 	dataCurrentPageNumber = pageNum;
 	var condition = $.trim($("#dataTagSearch").val());
+	checkedDataIds = [];
+	addedDataNames = [];
 	$.get("data3!getDataByCondition",{"condition":condition,"page.pageSize":dataPageDataNum,"page.currentPage":pageNum,"conditionInt":sortType,"sortByName":fileNameSort,"sortByDate":createDateSort},function(responseText){
+		spinner.stop();
 		$("#selfDataDiv").html(responseText);
 		$("#pageRecordSel").val(dataPageDataNum);
 		toUse();
 		$("#fileDataBody").scrollTop(0);
-		spinner.stop();
 		privateIcon();
 	});
 }
@@ -145,6 +144,7 @@ function getExt(file_name){
 	return result;
 }
 function showRunApp(){
+	$("#toRunApp").attr("disabled","true");
 	var dataIds = "";
 	addedApps=[];
 	if(checkedDataIds.length==0){
@@ -235,7 +235,7 @@ function removetoRunData(id){
 	checkedDataIds.splice($.inArray(id,checkedDataIds),1);
 	addedDataNames.splice($.inArray(id,addedDataNames),1);
 	$("#selAll").prop("checked",false);	
-	$("#chk"+id).attr("checked",false);
+	$("#chk"+id).prop("checked",false);
 	$("#dataLi"+id).remove();
 	if(checkedDataIds.length==0){
 		$("#toRunApp").attr("disabled",true);
@@ -316,6 +316,7 @@ function showDataMoreInfoEdit(){
 	$(".select2-container").removeClass("select2-container-disabled");
 }
 function cancelEditMoreInfo(){
+	toEdit = false;
 	$("#moreDatasForm").find("input").prop("disabled",true);
 	$("#moreDatasForm").find("input").addClass("readonly");
 	$("#dataStrainHide").prop("readonly",true);
@@ -395,8 +396,8 @@ function toManageEachDataModel(){
 		$("#eachDatasDiv").html(response);
 		var strainData = $("#strainDataHide").val();
 		setSelect2Info("input[class='strain']",eval("("+strainData+")"));
-		$("#manageEachDataModal").modal("show");
 		$("#manageDatasModal").modal("hide");
+		$("#manageEachDataModal").modal("show");
 	});
 }
 function saveEachData(){
@@ -487,6 +488,30 @@ function initDataList(){
 	var currentPageRecordNum = $("#currentPageRecordNum").val();
 	if((arrChk.length==currentPageRecordNum)&&(arrChk.length!=0)){//若所有数据为选中状态，则全选复选框应设为选中状态
 		$("#selAll").prop("checked",true);
+	}
+	if(intro != null){
+		intro.exit();
+		intro = null;
+		intro = introJs();
+		intro.setOption('tooltipPosition', 'bottom');
+		intro.setOption('showStepNumbers', false);
+		intro.setOption('showButtons', false);
+		intro.start();
+		intro.goToStep(2);
+		$("#toRunDataA").attr("disabled",true);
+		$("#manageDataH3").bind('click',function(){
+			if(intro != null){
+				intro.exit();
+				intro = null;
+				intro = introJs();
+				intro.setOption('tooltipPosition', 'bottom');
+				intro.setOption('showStepNumbers', false);
+				intro.setOption('showButtons', false);
+				intro.start();
+				intro.goToStep(8);
+				$("#manageDataH3").unbind('click');
+			}
+		});
 	}
 }
 

@@ -17,19 +17,22 @@
 	}
 	//表单提交验证
 	function validateSubmitEmail(){
-		var flag = true;
 		var email = $("#inputEmail").val();
-		var validateCode = $("#inputValidateCode").val();
-		if(email==""){
-			flag = false;
+		if(!email){
 			$(".error").html("请输入邮箱");
-		}else{
-			if(validateCode==""){
-				flag = false;
-				$(".error").html("请输入验证码");
-			}
+			return false;
 		}
-		return flag;
+		var filter  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		if (!filter.test(email)){
+			$(".error").html("您的电子邮件格式不正确");
+			return false;
+		}
+		var validateCode = $("#inputValidateCode").val();
+		if(!validateCode){
+			$(".error").html("请输入验证码");
+			return false;
+		}
+		return true;
 	}
 	//提交表单
 	function submitEmail(){
@@ -39,7 +42,7 @@
 		}else{
 			var email = $("#inputEmail").val();
 			var validateCode = $("#inputValidateCode").val();
-			$.get("validateUserEmail.action",{"user.email":email,"kaptchaCode":validateCode},function(result){
+			$.get("user!validateUserEmail",{"user.email":email,"kaptchaCode":validateCode},function(result){
 				if(result==1){//验证码输入有误
 					$(".error").html("验证码输入有误");
 				}else if(result==2){//邮箱验证不通过

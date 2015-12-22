@@ -57,42 +57,44 @@ public class ReadReportService {
             for (String s : line) {
                 key.put(s.split("\t")[0], s.split("\t")[1]);
             }
-            for (int i = 0; i < xlss.size(); i++) {
-                reportMap.put("source" + i, key.get(xlss.get(i)));
-            }
-            for (String xls : xlss) {
-                String re = result + "/" + xls;
-                if (FileTools.getFirstLine(re).split("\t").length == 17) {// gene
-                    List<Integer> list = new ArrayList<>();
-                    list.add(0);
-                    list.add(7);
-                    list.add(2);
-                    String title = "<tr><th>编号</th><th>基因</th><th>染色体位置</th><th>突变位点数</th></tr>";
-                    String geneResult = TableUtil.simpleTable(re, list, 1,
-                            title, true);
-                    reportMap.put("geneResult", geneResult);
-
-                    List<Integer> list2 = new ArrayList<>();
-                    list2.add(0);
-                    list2.add(15);
-                    list2.add(16);
-                    String des = TableUtil.txtGetComumns(re, list2);
-                    reportMap.put("des", des);
-                } else if (FileTools.getFirstLine(re).split("\t").length == 71) {// Variants
-                    List<Integer> list = new ArrayList<>();
-                    list.add(0);
-                    list.add(1);
-                    list.add(2);
-                    list.add(6);
-                    list.add(7);
-                    list.add(12);
-                    list.add(13);
-                    list.add(21);
-                    list.add(35);
-                    String title = "<tr><th>Gene</th><th>Variant</th><th>Chr</th><th>Genotype</th><th>Exonic</th><th>Mut_base%</th><th>depth</th><th>Mut type</th><th>dbsnp ID</th></tr>";
-                    String variant = TableUtil.simpleTable(re, list, 1, title,
-                            false);
-                    reportMap.put("variant", variant);
+            if(xlss!=null){
+                for (int i = 0; i < xlss.size(); i++) {
+                    reportMap.put("source" + i, key.get(xlss.get(i)));
+                }
+                for (String xls : xlss) {
+                    String re = result + "/" + xls;
+                    if (FileTools.getFirstLine(re).split("\t").length == 17) {// gene
+                        List<Integer> list = new ArrayList<>();
+                        list.add(0);
+                        list.add(7);
+                        list.add(2);
+                        String title = "<tr><th>编号</th><th>基因</th><th>染色体位置</th><th>突变位点数</th></tr>";
+                        String geneResult = TableUtil.simpleTable(re, list, 1,
+                                title, true);
+                        reportMap.put("geneResult", geneResult);
+                        
+                        List<Integer> list2 = new ArrayList<>();
+                        list2.add(0);
+                        list2.add(15);
+                        list2.add(16);
+                        String des = TableUtil.txtGetComumns(re, list2);
+                        reportMap.put("des", des);
+                    } else if (FileTools.getFirstLine(re).split("\t").length == 71) {// Variants
+                        List<Integer> list = new ArrayList<>();
+                        list.add(0);
+                        list.add(1);
+                        list.add(2);
+                        list.add(6);
+                        list.add(7);
+                        list.add(12);
+                        list.add(13);
+                        list.add(21);
+                        list.add(35);
+                        String title = "<tr><th>Gene</th><th>Variant</th><th>Chr</th><th>Genotype</th><th>Exonic</th><th>Mut_base%</th><th>depth</th><th>Mut type</th><th>dbsnp ID</th></tr>";
+                        String variant = TableUtil.simpleTable(re, list, 1, title,
+                                false);
+                        reportMap.put("variant", variant);
+                    }
                 }
             }
             return reportMap;

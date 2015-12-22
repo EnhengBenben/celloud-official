@@ -8,8 +8,20 @@ package com.nova.constants;
  * @version      
  */
 public class ReportState {
-    public static final int UNRUN = 0;// 未运行
-    public static final int NOREPORT = 1;// 运行,但是没有产生报告
-    public static final int HAVEREPORT = 2;// 运行并且已经产生报告
-    public static final int COMPLETE = 3;// 运行完成
+    /**
+     * 未运行
+     */
+    public static final int UNRUN = 0;
+    /**
+     * 运行,但是没有产生报告
+     */
+    public static final int NOREPORT = 1;
+    /**
+     * 运行并且已经产生报告
+     */
+    public static final int HAVEREPORT = 2;
+    /**
+     * 运行完成
+     */
+    public static final int COMPLETE = 3;
 }
