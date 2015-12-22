@@ -2,7 +2,9 @@ package com.nova.tools.service.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
@@ -141,7 +143,7 @@ public class RunAppServiceImpl {
 			String company, String user, String dept) {
 		String dataListFile = formatDataKeyListToSplit(dataKeyList);
 		String command = split_perl + " " + dataListFile + " " + outPath
-                + " ProjectID" + projectId + " &>" + outPath + "/" + projectId
+                + "/ ProjectID" + projectId + " &>" + outPath + "/" + projectId
                 + "/log ";
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         ssh.sshSubmit(false);
@@ -172,7 +174,7 @@ public class RunAppServiceImpl {
 		} else if (AppNameIDConstant.GDD.equals(appId)) {
             command = GDD_perl;
 		}
-        command += " " + dataListFile + " " + outPath + " ProjectID"
+        command += " " + dataListFile + " " + outPath + "/ ProjectID"
                 + projectId + " &>" + outPath + "/" + projectId + "/log ";
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         ssh.sshSubmit(false);
@@ -235,20 +237,58 @@ public class RunAppServiceImpl {
 		}
 	}
 
-	/**
-	 * 运行 HCV
-	 * 
-	 * @param resultPath
-	 * @param dataKeyList
-	 * @return
-	 */
+    private static String[] HCVType = { "1b", "2a", "3a", "3b", "6a" };
+    private static List<String> typeList = Arrays.asList(HCVType);
+
+    /**
+     * 运行 HCV
+     * 
+     * @param resultPath
+     * @param dataKeyList
+     * @return
+     */
     public void runHCV(String appPath, String projectId, String dataKeyList) {
-        // 创建要运行的文件列表文件
-        String dataListFile = dealDataKeyListContainFileName(dataKeyList);
-        String command = HCV + dataListFile + " " + appPath + "/ ProjectID"
-                + projectId + " &>" + appPath + "/" + projectId + "/log ";
+        String dataListFile = datalist + new Date().getTime() + ".txt";
+        FileTools.createFile(dataListFile);
+        String[] dataArray = dataKeyList.split(";");
+        for (int i = 0; i < dataArray.length; i++) {
+            String[] dataDetail = dataArray[i].split(",");
+            FileTools.appendWrite(
+                    dataListFile,
+                    dataPath + getArray(dataDetail, 1) + "\t"
+                            + getArray(dataDetail, 2) + "\n");
+        }
+        String command = HCV + " " + dataListFile + " " + appPath + "/ 2>"
+                + appPath + "/" + projectId + "/log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        ssh.sshSubmit(false);
+        boolean state = ssh.sshSubmit(true);
+        if (state) {
+            String projectFile = appPath + "/" + projectId + "/" + projectId
+                    + ".txt";
+            FileTools.createFile(projectFile);
+
+            FileTools.appendWrite(projectFile,
+                    "dataKey\tFile_Name\tSubtype\tSubject_Name\tIdentity\n");
+            for (int i = 0; i < dataArray.length; i++) {
+                String[] dataDetail = dataArray[i].split(",");
+                String finalPath = appPath + "/" + getArray(dataDetail, 0)
+                        + "/Result.txt";
+                String context = "";
+                if (FileTools.checkPath(finalPath)) {
+                    context = FileTools.getLastLine(finalPath);
+                    String[] c = context.split("\t");
+                    if (c.length > 4) {
+                        if (!typeList.contains(getArray(c, 1))) {
+                            c[1] = "其他";
+                        }
+                        context = getArray(c, 0) + "\t" + getArray(c, 1) + "\t"
+                                + getArray(c, 2) + "\t" + getArray(c, 3);
+                    }
+                }
+                FileTools.appendWrite(projectFile, getArray(dataDetail, 0)
+                        + "\t" + context + "\n");
+            }
+        }
     }
 
 	/**
@@ -1242,15 +1282,18 @@ public class RunAppServiceImpl {
 			String endData = "";
 			String d1 = "";
 			String d2 = "";
-			if (FileTools.getExt(detail1).equals(".lis")) {
+            if (FileTools.getExt(detail1).equals(".lis")
+                    || FileTools.getExt(detail1).equals(".txt")) {
 				endData = detail1;
 				d1 = detail2;
 				d2 = detail3;
-			} else if (FileTools.getExt(detail2).equals(".lis")) {
+            } else if (FileTools.getExt(detail2).equals(".lis")
+                    || FileTools.getExt(detail2).equals(".txt")) {
 				endData = detail2;
 				d1 = detail1;
 				d2 = detail3;
-			} else if (FileTools.getExt(detail3).equals(".lis")) {
+            } else if (FileTools.getExt(detail3).equals(".lis")
+                    || FileTools.getExt(detail3).equals(".txt")) {
 				endData = detail3;
 				d1 = detail1;
 				d2 = detail2;

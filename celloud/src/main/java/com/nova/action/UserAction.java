@@ -139,7 +139,7 @@ public class UserAction extends BaseAction {
         log.info("用户" + userId + "不显示引导");
         userId = (Integer) session.get("userId");
         flag = userService.updateNotify(userId, notify);
-
+        super.session.put("userNav", notify);
         return SUCCESS;
     }
 

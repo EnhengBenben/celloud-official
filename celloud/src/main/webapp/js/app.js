@@ -44,11 +44,19 @@ function toMoreApp(pid,sid,pageNum,isParent){
 	$("#rootClassifyName").unbind("click");
 	$("#secondClassifyName").unbind("click");
 	$.get("app3!toMoreAppList",{"classifyId":sid,"classifyPid":pid,"classifyFloor":isParent,"page.pageSize":pageAppNum,"page.currentPage":currentPage,"condition":sortFiled,"type":sortType},function(responseText){
-		$("#rootClassifyName").html($("#pid"+pid).html());
-		$("#secondClassifyName").html($("#sid"+sid).html());
 		$("#appMain").html(responseText);
+		if(pid==0){//针对无二级分类的特殊处理
+			$("#rootClassifyName").html($("#pid"+sid).html());
+		}else{
+			$("#rootClassifyName").html($("#pid"+pid).html());
+		}
+		if(sid==0||pid==0){
+			$("#secondClassifyName").html("全部");
+		}else{
+			$("#secondClassifyName").html($("#sid"+sid).html());
+		}
 		$("#rootClassifyName").bind("click",function(){toMoreApp(pid,0,1,0);});
-		if($("#sid"+sid).html()=="全部"){
+		if($("#secondClassifyName").html()=="全部"){
 			$("#secondClassifyName").bind("click",function(){toMoreApp(pid,0,1,0);});
 		}else{
 			$("#secondClassifyName").bind("click",function(){toMoreApp(pid,sid,pageNum,isParent);});
@@ -96,11 +104,26 @@ function toAppDetail(id){
 			intro = null;
 			intro = introJs();
 			intro.setOption('tooltipPosition', 'right');
-//			intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
 			intro.setOption('showStepNumbers', false);
 			intro.setOption('showButtons', false);
 			intro.start();
 			intro.goToStep(2);
+			$("#manageAppBtns .btn").attr("disabled",true);
+			$("#manageAppBtns").bind("click",function(){
+				if(hasNavi == 1 && intro != null){
+					$("#toUploadMenu").attr("data-step",3);
+					intro.exit();
+					intro = null;
+					intro = introJs();
+					intro.setOption('tooltipPosition', 'auto');
+					intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+					intro.setOption('showStepNumbers', false);
+					intro.setOption('showButtons', false);
+					intro.start();
+					intro.goToStep(3);
+				}
+				$("#manageAppBtns").unbind("click");
+			});
 		}
 	});
 }
@@ -120,18 +143,6 @@ function addApp(id){
 			$("#toAddApp").html("<i class=\"fa fa-minus\"></i>&nbsp;取消添加");
 			$("#toAddApp").removeClass("btn-celloud-success").addClass("btn-celloud-close");
 			$("#myAppDiv").html(responseText);
-			if(hasNavi == 1 && intro != null){
-				$("#toUploadMenu").attr("data-step",3);
-				intro.exit();
-				intro = null;
-				intro = introJs();
-				intro.setOption('tooltipPosition', 'auto');
-				intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
-				intro.setOption('showStepNumbers', false);
-				intro.setOption('showButtons', false);
-				intro.start();
-				intro.goToStep(3);
-			}
 		}
 	});
 }
@@ -142,18 +153,6 @@ function removeApp(id){
 			$("#toAddApp").html("<i class=\"fa fa-plus\"></i>&nbsp;添加");
 			$("#toAddApp").removeClass("btn-celloud-close").addClass("btn-celloud-success");
 			$("#myAppDiv").html(responseText);
-			if(hasNavi == 1 && intro != null){
-				$("#toUploadMenu").attr("data-step",3);
-				intro.exit();
-				intro = null;
-				intro = introJs();
-				intro.setOption('tooltipPosition', 'bottom');
-				intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
-				intro.setOption('showStepNumbers', false);
-				intro.setOption('showButtons', false);
-				intro.start();
-				intro.goToStep(3);
-			}
 		}
 	});
 }

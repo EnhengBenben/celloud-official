@@ -66,7 +66,7 @@ td,th {
 }
 
 hr {
-	border: solid 2px #000;
+	border: solid 1px #000;
 	margin-top:5px;
 }
 
@@ -159,6 +159,9 @@ input[type="text"], .onlybotton{
 .input-small {
     width: 90px;
 }
+a:hover, a:focus{
+    text-decoration: none;
+}
 </style>
 <!--[if IE]>
 <style>
@@ -234,6 +237,7 @@ input[type="text"], .onlybotton{
 							<td></td>
 						</tr>
 					 </table>
+					 <hr>
 				  </s:if>
 				  <s:else>
 				    <table class="table table-bordered table-condensed miniTable_" style="margin:10px 0px">
@@ -300,11 +304,11 @@ input[type="text"], .onlybotton{
 						<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px"><s:property value="txt.replace('@','+')"/></textarea>
 					</div>
 				    <h4 class="smallh4">结果提示：</h4>
-					<div id="des1">
+					<div id="des1" style="min-height: 36px;">
 						<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px"></textarea>
 					</div>
 					<h4 class="smallh4">备注：</h4>
-					<div id="des2">
+					<div id="des2" style="min-height: 36px;">
 						<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px"></textarea>
 					</div>
 					<br/>
@@ -328,7 +332,7 @@ input[type="text"], .onlybotton{
 					<li class="left" style="font-size:12px;">审核者：<span><input type="text" class="input-mini" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></li>
 					<li class="right pull-right opinion" style="font-size:12px;">报告日期：<span id="jzkp"><input type="text" class="input-mini" id="jzkh" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></li>
 				</ul>
-				<hr style="margin:0px">
+				<hr>
 				<h4 class="smallh4" style="font-size:12px;">临床意见：<span class="opinion"><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></span></h4>
 			</s:if>
 			<s:else>
@@ -514,18 +518,24 @@ input[type="text"], .onlybotton{
 		var des1 = $("#des1").children().val();
 		if (des1){
 			inputVal = des1.replace(/\n/g,"<br>");
-			$("#des1").html(inputVal);
+		}else{
+			inputVal = "";
 		}
+		$("#des1").html(inputVal);
 		var des2 = $("#des2").children().val();
 		if (des2){
 			inputVal = des2.replace(/\n/g,"<br>");
-			$("#des2").html(inputVal);
+		}else{
+			inputVal = "";
 		}
+		$("#des2").html(inputVal);
 		var des3 = $("#des3").children().val();
 		if (des3){
 			inputVal = des3.replace(/\n/g,"<br>");
-			$("#des3").html(inputVal);
+		}else{
+			inputVal = "";
 		}
+		$("#des3").html(inputVal);
 		$("#p2footer").css("margin-top",(300-$("#page2").height())+"px");
 		window.print();
 		$("body").find("span[name='print']").each(function(){
@@ -547,16 +557,22 @@ input[type="text"], .onlybotton{
 		}
 		if (des1){
 			inputVal = $("#des1").html().replace(/<br>/g,"\n");
-			$("#des1").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
+		}else{
+			inputVal = "";
 		}
+		$("#des1").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
 		if (des2){
 			inputVal = $("#des2").html().replace(/<br>/g,"\n");
-			$("#des2").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
+		}else{
+			inputVal = "";
 		}
+		$("#des2").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
 		if (des3){
 			inputVal = $("#des3").html().replace(/<br>/g,"\n");
-			$("#des3").html("<textarea rows=\"8\">"+inputVal+"</textarea>");
+		}else{
+			inputVal = "";
 		}
+		$("#des3").html("<textarea rows=\"8\">"+inputVal+"</textarea>");
 	}
 	function savePage(){
 		$("body").find("input").each(function(){

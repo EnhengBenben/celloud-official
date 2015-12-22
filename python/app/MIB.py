@@ -73,7 +73,7 @@ class MIB:
                     result['readsDistribution'] = '/result/reads_distribution.all.fastq.png'
                 elif file == 'coverage_map_top10':
                     coveragePath = os.path.join(resultPath, 'coverage_map_top10')
-                    pmap = {}
+                    pngPath = {}
                     for f in os.listdir(coveragePath):
                         p_key = ''
                         if f == 'top1.all.fastq.png':
@@ -96,17 +96,14 @@ class MIB:
                             p_key = 'top9png'
                         elif f == 'top10.all.fastq.png':
                             p_key = 'top10png'
-                        result[p_key] = '/result/coverage_map_top10/' + f
+                        pngPath[p_key] = '/result/coverage_map_top10/' + f
+                    result['pngPath'] = pngPath
         # QC
         qcPath = os.path.join(path, 'QC')
         if os.path.exists(qcPath):
             num = 1
             for file in os.listdir(qcPath):
                 if file.endswith('_fastqc'):
-                    if dataKey in file:
-                        num = 1
-                    else:
-                        num = 2
                     fastqcPath = os.path.join(qcPath, file)
                     qcImgPath = os.path.join(fastqcPath, 'Images')
                     if os.path.exists(os.path.join(qcImgPath, 'per_base_quality.png')):
@@ -124,4 +121,5 @@ class MIB:
                         basicStatistics['SeqLength'] = linecache.getline(qcDataPath, 9).split('\t')[1]
                         basicStatistics['gc'] = linecache.getline(qcDataPath, 10).split('\t')[1]
                         result['basicStatistics'+str(num)] = basicStatistics
+                    num += 1
         return result

@@ -22,10 +22,10 @@
 <!--                   	本周上传：30 个| 数据总量：1230 个|  共删除：12个 | 总存储：800 GB -->
 <!--                 </div>/.box-body -->
 <!--               </div>/.box -->
-              <div class="box">
+              <div class="box box-success">
                 <div class="box-header">
                   <h3 class="box-title" data-step="2" data-position="bottom" data-intro="" data-img="managerdata.png" id="manageDataH3">
-                  	<a onclick="showRunApp()" class="btn btn-success btn-flat" style="margin-right:15px;width:100px" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-play"></i> 运行</a>
+                  	<a onclick="showRunApp()" class="btn btn-success btn-flat" style="margin-right:15px;width:100px" data-toggle="modal" data-target=".bs-example-modal-lg" id="toRunDataA"><i class="fa fa-play"></i> 运行</a>
                     <a onclick="deleteData()" id="delDataBtn" class="btn btn-warning btn-flat disabled" style="margin-right:15px;width:100px" disabled="disabled"><i class="fa fa-university"></i> 删除</a>
 				  	<a onclick="toManageDatasModel()" id="batchManage" class="btn btn-info btn-flat disabled" style="margin-right:15px;width:100px" disabled="disabled"><i class="fa fa-pencil-square-o"></i> 编辑</a>
                   </h3>

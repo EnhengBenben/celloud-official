@@ -112,7 +112,7 @@ public class AppAction extends BaseAction {
             sclassifys = appService.getClassify(classifyPid);
         } else {
             floor = 1;
-            classifyPid = classifyId;
+            classifyPid = ClassifyFloor.js;
         }
         appPageList = appService.getAppPageListByClassify(cid, floor,
                 companyId, condition, type, page);

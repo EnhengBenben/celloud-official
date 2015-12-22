@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="y-row clearfix">
-  <div class="J_single kind" style="top: 0px;">
+  <div class="J_single kind box box-success" style="top: 0px;">
     <div class="list-left">分类方式：</div>
     <div class="list-right list-kind-right">
       <c:forEach items="${pclassifys }" var="pc">
-	    <a href="javascript:toMoreApp(${pc.classifyId },0,1,0)" class="linkage<c:if test='${pc.classifyId==classifyPid }'> current</c:if>" id="pid${pc.classifyId }">${pc.classifyName }</a>
+	    <a href="javascript:toMoreApp(${pc.classifyId },0,1,0)" class="linkage<c:if test='${pc.classifyId==classifyPid ||pc.classifyId==classifyId}'> current</c:if>" id="pid${pc.classifyId }">${pc.classifyName }</a>
       </c:forEach>
     </div>
   </div>
@@ -75,13 +75,13 @@
 		            </div>
 		          </div>
 		          <div class="box-info-wrap">
-		            <div class="box-pic" <c:if test="${status.index==0}"> data-step="2" data-intro="" data-position="right" data-img="appDetail.png" </c:if>>
-		              <a target="_blank" href="javascript:toAppDetail(${app.softwareId })">
+		            <div class="box-pic" <c:if test="${status.first}"> data-step="2" data-intro="" data-position="right" data-img="appDetail.png" </c:if>>
+		              <a href="javascript:toAppDetail(${app.softwareId })">
 		                <img alt="产品logo" src="<%=request.getContextPath()%>/images/app/${app.pictureName}">
 		              </a>
 		            </div>
 		            <div class="box-info">
-		              <h4><a target="_blank" href="#">${app.softwareName }</a></h4>
+		              <h4><a href="#">${app.softwareName }</a></h4>
 		              <p>${app.intro }</p>
 <%-- 		              <p class="label">标签：${app.description }</p><!-- 标签内容待定 --> --%>
 		            </div>
@@ -95,8 +95,8 @@
             <div class="list-left"></div>
             <div class="list-center">
               <div class="emptyInfo1">
-                <span class="icon icon-info" style="color:#0099cc;font-size: 20px;"></span>
-                <strong>没有查询到符合条件的商品，请尝试更改筛选条件!</strong>
+<!--                 <span class="icon icon-info" style="color:#0099cc;font-size: 20px;"></span> -->
+                <strong>暂没开放此类应用的权限，请选择其他分类!</strong>
               </div>
             </div>
             <div class="list-right"></div>

@@ -73,6 +73,75 @@
 				<i class="i-tips"></i>注：点击文件名即可下载；已保存的数据可到数据管理页面查看
 			</div>
 		</div>
+		<!--检测结果-->
+		<div class="m-box">
+			<h2><i class="i-edit"></i>序列质量分析（见QC结果）</h2>
+			<div class="m-boxCon" id="_report" style="display: inline-block;width: 90%">
+			  <c:choose>
+				<c:when test="${empty split.basicStatistics1 }">
+					无质量分析结果
+				</c:when>
+				<c:otherwise>
+				  <div class="h2">Basic Statistics</div>
+				  <table class="table table-bordered table-condensed">
+					<thead>
+						<tr>
+							<th>#Measure</th>
+							<th colspan="2">Value</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Filename</td>
+							<td>${split.basicStatistics1.Filename }</td>
+							<td>${split.basicStatistics2.Filename }</td>
+						</tr>
+						<tr>
+							<td>File type</td>
+							<td>${split.basicStatistics1.FileType }</td>
+							<td>${split.basicStatistics2.FileType }</td>
+						</tr>
+						<tr>
+							<td>Encoding</td>
+							<td>${split.basicStatistics1.Encoding }</td>
+							<td>${split.basicStatistics2.Encoding }</td>
+						</tr>
+						<tr>
+							<td>Total Sequences</td>
+							<td>${split.basicStatistics1.TotalSeq }</td>
+							<td>${split.basicStatistics2.TotalSeq }</td>
+						</tr>
+						<tr>
+							<td>Filtered Sequences</td>
+							<td>${split.basicStatistics1.FilteredSeq }</td>
+							<td>${split.basicStatistics2.FilteredSeq }</td>
+						</tr>
+						<tr>
+							<td>Sequence length</td>
+							<td>${split.basicStatistics1.SeqLength }</td>
+							<td>${split.basicStatistics2.SeqLength }</td>
+						</tr>
+						<tr>
+							<td>%GC</td>
+							<td>${split.basicStatistics1.gc }</td>
+							<td>${split.basicStatistics2.gc }</td>
+						</tr>
+					</tbody>
+				  </table>
+				  <table style="width:90%;">
+			        <tr>
+			    	  <td style="width:50%;"><img style="max-width:500px;" src="${outPath }/${split.userId }/${split.appId }/${split.dataKey }${split.qualityPath1 }"></td>
+			    	  <td><img style="max-width:500px;" src="${outPath }/${split.userId }/${split.appId }/${split.dataKey }${split.qualityPath2 }"></td>
+			        </tr>
+			        <tr>
+			    	  <td><img style="max-width:500px;" alt="" src="${outPath }/${split.userId }/${split.appId }/${split.dataKey }${split.seqContentPath1 }"></td>
+			    	  <td><img style="max-width:500px;" alt="" src="${outPath }/${split.userId }/${split.appId }/${split.dataKey }${split.seqContentPath2 }"></td>
+			        </tr>
+			      </table>
+				</c:otherwise>
+			  </c:choose>
+			</div>
+		</div>
 	</div>
 </div>
 <script>

@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link href="<%=request.getContextPath() %>/dist/css/productDetail.css" rel="stylesheet" type="text/css" />
-<link href="<%=request.getContextPath() %>/dist/css/productList.css" rel="stylesheet" type="text/css" />
-<link href="<%=request.getContextPath() %>/dist/css/getNoResult.css" rel="stylesheet" type="text/css" />
 <section class="content-header">
   <h1>
     <small>&nbsp;</small>
@@ -21,14 +18,14 @@
 <div class="row">
   <div class="col-xs-10">
 	<div class="mainpage" id="appMain">
-	  <div class="y-row operation-serve"  data-spm="16">
+	  <div class="y-row operation-serve box box-success"  data-spm="16">
   		<div class="info">
     	  <p>应用市场是CelLoud的一个开放平台，为用户提供专业、精准的生物信息分析服务。</p>
   		</div>
   		<ul id="appClassifyUl" data-step="2" data-intro="" data-position="bottom" data-img="checkapp.png">
   		  <c:if test="${pclassifys.size()>0}">
-	  	 	<c:forEach items="${pclassifys}" var="pc" varStatus="status">
-		      <li id="classifypidLi${pc.classifyId }" <c:if test="${status.index==1}"> class="active"</c:if>><a href="javascript:toSclassifyApp(${pc.classifyId },'${pc.classifyName }')">${pc.classifyName }</a></li>
+	  	 	<c:forEach items="${pclassifys}" var="pc" varStatus="pcstatus">
+		      <li id="classifypidLi${pc.classifyId }" <c:if test="${pcstatus.first}"> class="active"</c:if>><a href="javascript:toSclassifyApp(${pc.classifyId },'${pc.classifyName }')">${pc.classifyName }</a></li>
 	  	 	</c:forEach>
   		  </c:if>
   		</ul>

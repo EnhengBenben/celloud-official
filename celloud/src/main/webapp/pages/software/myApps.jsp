@@ -17,7 +17,7 @@
 			      </a>
 			      <div class="intro">
 			        <h6 style="overflow: hidden;" title="${app.softwareName }">
-			          <a class="reco-hd-link" href="javascript:toAppDetail(${app.softwareId })" target="_blank">
+			          <a class="reco-hd-link" href="javascript:toAppDetail(${app.softwareId })">
 			          	${app.softwareName }
 			          </a>
 			        </h6>

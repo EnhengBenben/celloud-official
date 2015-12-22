@@ -17,7 +17,7 @@
   <div class="row">
     <div class="col-xs-12">
      <div class="mainpage" id="appMain">
-       <div class="y-row operation-serve"  data-spm="16">
+       <div class="y-row operation-serve box box-success"  data-spm="16">
 		  <c:if test="${session.companyId==6 }">
 		    <div class="info">
 	    	  <p>本页提供所有数据报告总览。</p>
