@@ -1,0 +1,29 @@
+@CHARSET "UTF-8";
+body {margin: 0;font-family: "微软雅黑"; background: none;padding-top: 60px;padding-bottom: 40px;}
+a{cursor: pointer;color:#78BC28}
+a:hover{color:#78BC28}
+/* .active{backgro und-color: #78BC28} */
+.container_{width:95%;margin-top:15px;}
+.mainContainer{position: relative;}
+.logo{background-image: url(../images/home/bg.png);background-repeat: no-repeat;position:fixed;display: inline-block;width: 116px;height: 46px;background-position: 0 -239px;text-indent: -9999em;margin-top:1px;}
+.navbar-new{
+	top:0;
+	position: fixed;
+	color:#595959;
+	border-radius:0;
+	z-index:1030;
+	width:100%;
+	background-image: -moz-linear-gradient(top,#e4f2d4,#e4f2d4);
+	background-image: -o-linear-gradient(top,#e4f2d4,#e4f2d4);
+	background-image: linear-gradient(to bottom,#e4f2d4,#e4f2d4);
+	background-repeat: repeat-x;
+	border: 0px;
+	filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ff222222',endColorstr='#ff111111',GradientType=0);
+ }
+.logofont{height: 46px;font-weight: bold;letter-spacing: 2px;color: #595959;opacity:0.9;padding-left:134px;margin-top:0px;}
+.subNavBtn {display: block;font-size: 14px;color:#595959;}
+.subNavBtn a{color:#595959;}
+.navbar-nav>li>a:hover{ background-color: #e4f2d4}
+.subNavBtn a:focus, .subNavBtn a:hover, .subNavBtn a:active { color:#78BC28; font-weight:bold;}
+.subNavBtnA{color:#78BC28; font-weight:bold}
+.usermenu{width:150px;text-align: right;}
