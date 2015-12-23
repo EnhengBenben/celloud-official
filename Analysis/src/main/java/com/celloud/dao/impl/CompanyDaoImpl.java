@@ -35,7 +35,7 @@ public class CompanyDaoImpl implements CompanyDao {
 		Map<String, Object> map = null;
 		String sql = "select count(*) num from (select c.company_name from tb_user u,tb_dept d,tb_company c where u.dept_id=d.dept_id and c.state=0 and c.company_id=d.company_id"
 			//	+ " and u.company_id=? "
-				+ SqlController.whereCompany(role, companyId)
+	//			+ SqlController.whereCompany(role, companyId)
 				+ " and u.user_id not in ("
 				+ noUserid + ") group by c.company_id) t";
 		LogUtil.info(log, sql);
@@ -87,8 +87,8 @@ public class CompanyDaoImpl implements CompanyDao {
 		String sql = "select count(*) num,left(create_date,7) createDate from "
 				+     	" (select c.company_name,c.create_date "
 				+ 	 	" from tb_user u,tb_dept d,tb_company c where u.dept_id=d.dept_id and c.state=0 and c.company_id=d.company_id "
-				+ SqlController.whereCompany("u", role, companyId)
-				+ SqlController.notUserId(role, noUserid)
+			//	+ SqlController.whereCompany("u", role, companyId)
+				+ SqlController.notUserId("u",role, noUserid)
 						+ "group by c.company_id) t group by createDate";
 		LogUtil.info(log, sql);
 
@@ -109,8 +109,8 @@ public class CompanyDaoImpl implements CompanyDao {
 				+ "(select ifnull(sum(f.size),0) from tb_file f where f.user_id=u.user_id and f.state=0) fsize,"
 				+ "(select count(*) from tb_report r where r.user_id=u.user_id and r.isdel=0 and (r.flag=0 or r.report_id=11)) rnum,"
 				+ "u.username from tb_company c,tb_dept d,tb_user u where c.company_id=d.company_id and d.dept_id=u.dept_id and c.state=0 and u.state=0 "
-				+ SqlController.notUserId(role, noUserid)
-				+SqlController.whereCompany(role, companyId)
+				+ SqlController.notUserId("u",role, noUserid)
+			//	+SqlController.whereCompany(role, companyId)
 				+" )a  group by a.company_id order by a.fsize desc; ";
 		LogUtil.info(log, sql);
 		List<Company> list = null;
@@ -147,7 +147,7 @@ public class CompanyDaoImpl implements CompanyDao {
 
 		String sql = "select province,count(distinct c.company_id) as num from tb_user u,tb_dept d,tb_company c where u.dept_id=d.dept_id and d.company_id=c.company_id and u.user_id not in ("
 						+ noUserid + ") "
-						+ SqlController.whereCompany(role, companyId)
+				//		+ SqlController.whereCompany(role, companyId)
 						+ "group by province";
 		LogUtil.info(log, sql);
 
@@ -258,8 +258,8 @@ public class CompanyDaoImpl implements CompanyDao {
 							+ " where u.dept_id = d.dept_id "
 							+ " and d.company_id = c.company_id"
 							+	SqlController.whereIdNotIn("c"," company_id", cmpIdList)
-							+  SqlController.whereCompany(role, cmpId)
-							+ 	SqlController.notUserId(role, noUserid)	//////排除测试用户
+			//				+  SqlController.whereCompany(role, cmpId)
+							+ 	SqlController.notUserId("y",role, noUserid)	//////排除测试用户
 							+ ") uc"
 							
 							+ " where tu.user_name = uc.username"
@@ -292,8 +292,8 @@ public class CompanyDaoImpl implements CompanyDao {
 							+ " where u.dept_id = d.dept_id "
 							+	SqlController.whereIdNotIn("c"," company_id", companyLis)
 							+ " and d.company_id = c.company_id"
-							+ SqlController.whereCompany(role, cmpId)
-							+ 	SqlController.notUserId(role, noUserid)	
+			//				+ SqlController.whereCompany(role, cmpId)
+							+ 	SqlController.notUserId("u",role, noUserid)	
 							 + ") uc"
 							
 							+ " where tu.user_name = uc.username"
@@ -327,7 +327,7 @@ public class CompanyDaoImpl implements CompanyDao {
 						+" from tb_user u,tb_dept d, tb_company c "
 						+" where u.dept_id = d.dept_id "
 						+ SqlController.whereIdNotIn("c", "company_id", cmpIdList)
-						+ SqlController.whereCompany(role, cmpId)
+				//		+ SqlController.whereCompany(role, cmpId)
 						+" 	and d.company_id = c.company_id) uc"
 												
 						+" 	where f.user_id = uc.user_id"
@@ -361,7 +361,7 @@ public class CompanyDaoImpl implements CompanyDao {
 				+"  (select u.user_id,u.username,company_name "
 				+" from tb_user u,tb_dept d, tb_company c "
 				+" where u.dept_id = d.dept_id "
-				+ SqlController.whereCompany(role, cmpId)
+//				+ SqlController.whereCompany(role, cmpId)
 				+ SqlController.whereIdNotIn("c", "company_id", cmpIdList)
 				+" and d.company_id = c.company_id) uc"
 				+" where f.user_id = uc.user_id"
@@ -396,7 +396,7 @@ public class CompanyDaoImpl implements CompanyDao {
 					+" from tb_user u,tb_dept d, tb_company c "
 					+" where u.dept_id = d.dept_id "
 					+ SqlController.whereIdNotIn("c", "company_id", cmpIds)
-					+ SqlController.whereCompany(role, cmpId)
+		//			+ SqlController.whereCompany(role, cmpId)
 					+" and d.company_id = c.company_id) uc"
 									
 					+" where rn.user_id = uc.user_id"
@@ -428,7 +428,7 @@ public class CompanyDaoImpl implements CompanyDao {
 					+" (select u.user_id,u.username,company_name "
 					+" from tb_user u,tb_dept d, tb_company c "
 					+" where u.dept_id = d.dept_id "
-					+ SqlController.whereCompany(role, cmpId)
+		//			+ SqlController.whereCompany(role, cmpId)
 					+" and d.company_id = c.company_id) uc"
 									
 					+" where rn.user_id = uc.user_id"
@@ -450,8 +450,8 @@ public class CompanyDaoImpl implements CompanyDao {
 		Connection conn = ConnectManager.getConnection();
 
 		String sql="select distinct(c.company_id),c.company_name   from tb_company c,tb_dept d,tb_user u"
-				+"	where c.company_id = d.company_id and d.dept_id = u.dept_id"
-				+ SqlController.whereCompany(role, cmpId);
+				+"	where c.company_id = d.company_id and d.dept_id = u.dept_id";
+	//			+ SqlController.whereCompany(role, cmpId);
 		LogUtil.info(log, sql);
 		try{
 			ResultSetHandler<List<Company>> rsh = new BeanListHandler<Company>(Company.class);

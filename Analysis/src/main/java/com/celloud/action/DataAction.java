@@ -26,12 +26,9 @@ import com.google.inject.Inject;
 		@Result(name = "usersMonthDataList", location = "../../pages/dataMonthList.jsp"),
 		@Result(name = "userMonthDetail", location = "../../pages/dataUserMonthDetail.jsp"),
 		@Result(name = "userDataInMonth", location = "../../pages/dataAllUserInMonth.jsp"),
-		@Result(name = "userDataInMonthJson", type="json", params={"root","list"}),
 		@Result(name = "success", type = "json", params = { "root", "fileName"}),
-		@Result(name = "userDataEchartOption", type = "json", params = {"root","list"}),
-		@Result(name = "usersMonthDataListJson", type = "json",params = {"root","dataList"}),
-		@Result(name = "userMonthDataJson", type = "json",params = {"root","dataList"})
-
+		@Result(name = "ListMap", type="json", params={"root","list"}),
+		@Result(name = "DataList", type = "json",params = {"root","dataList"})
 		})
 public class DataAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
@@ -46,6 +43,7 @@ public class DataAction extends BaseAction {
 	private String userIds;//多用户id，如：2,3,4,5
 	private String start;//开始时间
 	private String end;//结束时间
+	private String orderType; //排序字段 fileNum size
 	
 	/**总用户数据量－－－ 用户每月数据量
 	 * 取用户每月上传数据总量(个数)
@@ -54,19 +52,18 @@ public class DataAction extends BaseAction {
 	public String getUserDataJson() {
 		Integer compId = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
-		log.info(compId + "下所有用户及上传数据总量");
 		if (compId != null) {
 			list = dataService.getUserList(compId,role);
 			log.info(list);
 		}
-		return "userDataEchartOption";
+		return "ListMap";
 	}
 	public String getUserMonthDataJson(){
 		Integer compId = (Integer) getCid();
 		if (userId != null) { 
 			dataList = dataService.getUserMonthDataJson(userId, compId);
 		}
-		return "userMonthDataJson";
+		return "DataList";
 	}
 	
 	/**
@@ -134,7 +131,7 @@ public class DataAction extends BaseAction {
 		if (compId != null) {
 			dataList = dataService.getUserMonthDataList(compId,role);
 		}
-		return "usersMonthDataListJson";
+		return "DataList";
 	}
 
 	public String getUserMonthData() {
@@ -172,7 +169,7 @@ public class DataAction extends BaseAction {
 		if (compId != null) {
 			list = dataService.getAllUserDataInMonth(compId, month);
 		}
-		return "userDataInMonthJson";
+		return "ListMap";
 	}
 
 	public List<Map<String, Object>> getList() {
@@ -235,6 +232,12 @@ public class DataAction extends BaseAction {
 	}
 	public void setDataList(List<Data> dataList) {
 		this.dataList = dataList;
+	}
+	public String getOrderType() {
+		return orderType;
+	}
+	public void setOrderType(String orderType) {
+		this.orderType = orderType;
 	}
 
 }

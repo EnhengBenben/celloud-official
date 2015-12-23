@@ -36,29 +36,13 @@ import com.google.inject.Inject;
 		@Result(name = "userListJson", type = "json", params = { "root", "userList" }),
 		
 		
-	//	@Result(name = "appRunInMonth", type = "json", params = { "root", "entryList" }),
-	//	@Result(name = "appRunInWeek", type = "json", params = { "root", "entryList" }),
 		@Result(name = "EntryList", type = "json", params = { "root", "entryList" }),
 
 		/****/
 		@Result(name = "DataList", type = "json", params = { "root", "dataList" }),
-
-//		@Result(name = "fileMonth", type = "json", params = { "root", "dataList" }),
-//		@Result(name = "fileWeek", type = "json", params = { "root", "dataList" }),
-//		@Result(name = "activityFileWeek", type = "json", params = { "root", "dataList" }),
-//		@Result(name = "activityFileMonth", type = "json", params = { "root", "dataList" }),
-//		@Result(name = "userDataTop", type = "json", params = { "root", "dataList" }),
-//		
 		@Result(name = "SoftwareList", type = "json", params = { "root", "softList" }),
-//		@Result(name = "userRunApp", type = "json", params = { "root", "softList" }),
-//		@Result(name = "appRunWeek", type = "json", params = { "root", "softList" }),
-//		@Result(name = "appRunMonth", type = "json", params = { "root", "softList" }),
 		/**用户登陆排序*/
 		@Result(name = "LoginList", type = "json", params = { "root", "loginList" }),
-//		@Result(name = "loginLogJson", type = "json", params = { "root", "loginList" }),
-//		@Result(name = "loginNumMonth", type = "json", params = { "root", "loginList" }),
-//		@Result(name = "userLoginTop", type = "json", params = { "root", "loginList" }),
-//		@Result(name = "loginNumWeek", type = "json", params = { "root", "loginList" }),
 
 
 

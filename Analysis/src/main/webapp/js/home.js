@@ -139,7 +139,7 @@ function AppRunNum() {
 				show : true,
 				realtime : true,
 				start : 0,
-				end : 80
+				end : 25
 			},
 			xAxis : [ {
 				type : 'category',

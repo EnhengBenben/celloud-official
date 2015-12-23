@@ -264,6 +264,8 @@
 <script src="./js/jquery.dataTables.bootstrap.js"></script>
 <!-- <script src="./plugin/echarts-2.2.7/src/theme/infographic.js"></script> -->
 <script src="./js/util.js" type="text/javascript"></script>
+<script src="./js/OptionsFactory.js" type="text/javascript"></script>
+
 <script type="text/javascript">
 	jQuery(function($) {
 		toHome();

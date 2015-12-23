@@ -31,8 +31,8 @@ public class SoftwareDaoImpl implements SoftwareDao {
 	public Object getBigUserAPPNum(Integer companyId, int role) {
 		Connection conn = ConnectManager.getConnection();
 		Map<String, Object> map = new HashMap<String, Object>();
-		String sql = "select count(s.software_id) num from tb_software s where s.off_line=0"
-				+ SqlController.whereCompany("s", role, companyId);
+		String sql = "select count(s.app_id) num from tb_app s where s.off_line=0"
+				+ SqlController.whereCompany("s", "company_id", role, companyId);
 		try {
 			map = qr.query(conn, sql, new MapHandler());
 		} catch (SQLException e) {
@@ -48,8 +48,9 @@ public class SoftwareDaoImpl implements SoftwareDao {
 		String sql = "select s.software_id softwareId,s.software_name softwareName,s.create_date createDate,s.bhri,s.type,s.data_num dataNum,s.description,"
 				+ "(select count(r.report_id) from tb_report r where r.flag=0 and r.software_id=s.software_id "
 				+ SqlController.notUserId("r", role, noUserid)
-				+ ") runNum,(select GROUP_CONCAT(df.format_desc) from tb_data_format df,tb_software_format_relat sf where df.format_id=sf.format_id and sf.software_id=s.software_id group by sf.software_id) dataType "
-				+ "from tb_software s where s.off_line=0 " + SqlController.whereCompany("s", role, companyId);
+				+ ") runNum,(select GROUP_CONCAT(df.format_desc) from tb_data_format df,tb_software_format_relat sf where df.format_id=sf.format_id and sf.software_id=s.software_id group by sf.software_id) dataType ";
+		// + "from tb_software s where s.off_line=0 " +
+		// SqlController.whereCompany("s", role, companyId);
 		log.info(sql);
 		try {
 			ResultSetHandler<List<Software>> rsh = new BeanListHandler<Software>(Software.class);
@@ -87,7 +88,8 @@ public class SoftwareDaoImpl implements SoftwareDao {
 				+ " from tb_report r, "
 
 				+ " (select u.user_id,u.username,company_name " + " from tb_user u,tb_dept d, tb_company c "
-				+ " where u.dept_id = d.dept_id " + SqlController.whereCompany(role, cmpId)
+				// + " where u.dept_id = d.dept_id " +
+				// SqlController.whereCompany(role, cmpId)
 				+ " and d.company_id = c.company_id) uc "
 
 				+ " where r.create_date between ? and ?" + SqlController.whereSoftware("r", softwareId)
@@ -114,7 +116,8 @@ public class SoftwareDaoImpl implements SoftwareDao {
 				+ " from tb_report r ,"
 
 				+ " (select u.user_id,u.username,company_name " + " from tb_user u,tb_dept d, tb_company c "
-				+ " where u.dept_id = d.dept_id " + SqlController.whereCompany(role, cmpId)
+				// + " where u.dept_id = d.dept_id " +
+				// SqlController.whereCompany(role, cmpId)
 				+ " and d.company_id = c.company_id) uc "
 
 				+ " where r.create_date between ? and ?" + SqlController.whereSoftware("r", softwareId)
@@ -136,8 +139,9 @@ public class SoftwareDaoImpl implements SoftwareDao {
 		List<Software> list = null;
 		Connection conn = ConnectManager.getConnection();
 		String sql = "select s.software_id as softwareId,s.software_name as softwareName,s.english_name as englishName,s.picture_name as pictureName,s.bhri,"
-				+ " s.create_date as createDate,s.company_id as companyId,s.intro,s.description "
-				+ "  from tb_software s order by softwareName" + SqlController.whereCompany("s", role, cmpId);
+				+ " s.create_date as createDate,s.company_id as companyId,s.intro,s.description ";
+		// + " from tb_software s order by softwareName" +
+		// SqlController.whereCompany("s", role, cmpId);
 		log.info("query:" + sql);
 		try {
 			ResultSetHandler<List<Software>> rsh = new BeanListHandler<Software>(Software.class);
@@ -263,11 +267,9 @@ public class SoftwareDaoImpl implements SoftwareDao {
 	public List<Software> getTotalAppRunNum(int topN) {
 		List<Software> list = null;
 		Connection conn = ConnectManager.getConnection();
-		String sql = "select r.software_id,count(r.software_id)as runNum,"
-				+ " (select software_name from tb_software where software_id = r.software_id)as software_name  "
-				+ " from tb_report r group by r.software_id "
-				+ " order by runNum desc "
-				+ SqlController.limit(topN);
+		String sql = "select r.app_id,count(r.app_id)as runNum,"
+				+ " (select app_name from tb_app  where s.app_id = r.app_id)as softwareName  "
+				+ " from tb_report r group by r.app_id  order by runNum desc " + SqlController.limit(topN);
 		try {
 			ResultSetHandler<List<Software>> rsh = new BeanListHandler<Software>(Software.class);
 			list = qr.query(conn, sql, rsh);

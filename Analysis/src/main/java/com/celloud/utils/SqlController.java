@@ -6,43 +6,7 @@ import java.util.List;
 import com.celloud.sdo.User;
 
 public class SqlController {
-	/**
-	 * 排除测试账号 tb_user 别名为u
-	 *  and u.user_id not in (" + userids + ") ";
-	 * @param role
-	 * @param userids
-	 * @return
-	 */
-	public static String notUserId(Integer role, String userids) {
-		String sql = "";
-		if (role == User.BIG_USER || role == User.ADMIN)
-			sql = " and u.user_id not in (" + userids + ") ";
-		return sql;
-	}
-	/**
-	 *  " and " + tbName + "." + colName + " not in (" + userNames + ") ";
-	 * @param tbName
-	 * @param colName
-	 * @param userNames
-	 * @return
-	 */
-	public static String notUserName(String tbName, String colName, String userNames) {
-		String sql = null;
-		sql = " and " + tbName + "." + colName + " not in (" + userNames + ") ";
-		return sql;
-	}
-	/**
-	 * " where " + tbName + "." + colName + " not in (" + userNames + ") ";
-	 * @param tbName
-	 * @param colName
-	 * @param userNames
-	 * @return
-	 */
-	public static String whereNotUserName(String tbName, String colName, String userNames) {
-		String sql = null;
-		sql = " where " + tbName + "." + colName + " not in (" + userNames + ") ";
-		return sql;
-	}
+
 	/**
 	 * " and " + tbName + ".user_id not in (" + userids + ") ";
 	 * @param tbName
@@ -56,8 +20,39 @@ public class SqlController {
 			sql = " and " + tbName + ".user_id not in (" + userids + ") ";
 		return sql;
 	}
+
+	/**
+	 * " and " + tbName + "." + colName + " not in (" + userNames + ") ";
+	 * 
+	 * @param tbName
+	 * @param colName
+	 * @param userNames
+	 * @return
+	 */
+	public static String notUserName(int role, String tbName, String colName, String userNames) {
+		String sql = null;
+		if (role == User.BIG_USER || role == User.ADMIN)
+			sql = " and " + tbName + "." + colName + " not in (" + userNames + ") ";
+		return sql;
+	}
+
+	/**
+	 * " where " + tbName + "." + colName + " not in (" + userNames + ") ";
+	 * 
+	 * @param tbName
+	 * @param colName
+	 * @param userNames
+	 * @return
+	 */
+	public static String whereNotUserName(String tbName, String colName, String userNames) {
+		String sql = null;
+		sql = " where " + tbName + "." + colName + " not in (" + userNames + ") ";
+		return sql;
+	}
+
 	/**
 	 * " where " + tbName + ".user_id not in (" + userids + ") ";
+	 * 
 	 * @param tbName
 	 * @param userids
 	 * @return
@@ -65,8 +60,10 @@ public class SqlController {
 	public static String whereNotUserId(String tbName, String userids) {
 		return " where " + tbName + ".user_id not in (" + userids + ") ";
 	}
+
 	/**
 	 * and tbName.colName not in (userName)
+	 * 
 	 * @param tbName
 	 * @param colName
 	 * @param role
@@ -80,46 +77,26 @@ public class SqlController {
 		return sql;
 	}
 
-	/**
-	 * and u.company_id = ?
-	 * @param role
-	 * @return
-	 */
-	public static String whereCompany(int role, Integer companyId) {
-		String sql = "";
-		if (role == User.BIG_USER)
-			sql = " and u.company_id = " + companyId + " ";
-		return sql;
-	}
-	/**
-	 * and tbName.company_id = companyId
-	 * @param tbName
-	 * @param role
-	 * @param companyId
-	 * @return
-	 */
-	public static String whereCompany(String tbName, int role, int companyId) {
-		String sql = "";
-		if (role == User.BIG_USER)
-			sql = " and " + tbName + ".company_id = " + companyId + " ";
-		return sql;
-	}
+
 	/**
 	 * and tbName.colName = companyId
+	 * 
 	 * @param tbName
 	 * @param colName
 	 * @param role
 	 * @param companyId
 	 * @return
 	 */
-	public static String whereCompany(String tbName,String colName,int role,Integer companyId){
+	public static String whereCompany(String tbName, String colName, int role, Integer companyId) {
 		String sql = "";
 		if (role == User.BIG_USER)
-			sql = " and " + tbName + ". "+colName+" = " + companyId + " ";
+			sql = " and " + tbName + ". " + colName + " = " + companyId + " ";
 		return sql;
 	}
+
 	/**
 	 * and tbName.software_id = ?
+	 * 
 	 * @param tbName
 	 * @param softwareId
 	 * @return
@@ -130,8 +107,10 @@ public class SqlController {
 		else
 			return " and " + tbName + ".software_id = " + softwareId;
 	}
+
 	/**
 	 * and " + tbName + "." + colName + " between ? and ? ";
+	 * 
 	 * @param tbName
 	 * @param colName
 	 * @param start
@@ -143,8 +122,10 @@ public class SqlController {
 		sql = " and " + tbName + "." + colName + " between ? and ? ";
 		return sql;
 	}
+
 	/**
 	 * limit topN
+	 * 
 	 * @param topN
 	 * @return
 	 */
@@ -154,16 +135,18 @@ public class SqlController {
 		else
 			return " ";
 	}
-	public static String whereIdNotIn(String tbName,String colName,List<Integer> ids){
-		if(ids==null||ids.size()<1)
+
+	public static String whereIdNotIn(String tbName, String colName, List<Integer> ids) {
+		if (ids == null || ids.size() < 1)
 			return "";
 		StringBuffer sb = new StringBuffer();
-		for(Integer i : ids){
-			if(i!=null)
-			sb.append(""+i+",");
+		for (Integer i : ids) {
+			if (i != null)
+				sb.append("" + i + ",");
 		}
-		if(sb.length()<2)return "";
-		String sql = sb.substring(0, sb.length()-1);
-		return " and "+tbName+"."+colName +" in ( " +sql+" ) ";
+		if (sb.length() < 2)
+			return "";
+		String sql = sb.substring(0, sb.length() - 1);
+		return " and " + tbName + "." + colName + " in ( " + sql + " ) ";
 	}
 }

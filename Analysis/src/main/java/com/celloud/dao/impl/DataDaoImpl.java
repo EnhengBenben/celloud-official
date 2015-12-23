@@ -33,8 +33,8 @@ public class DataDaoImpl implements DataDao {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		String sql = "select a.user_id ,a.username ,a.create_date ,a.company_name ,count(f.file_id) as num,"
 				+ "IFNULL(sum(f.size),0) as size from (select u.user_id,u.username,u.create_date,company_name from tb_user u,tb_dept d,tb_company c where  u.dept_id = d.dept_id and d.company_id = c.company_id" 
-				+SqlController.whereCompany(role,companyId)
-				+SqlController.notUserId(role, noUserid)
+			//	+SqlController.whereCompany(role,companyId)
+				+SqlController.notUserId("u",role, noUserid)
 				+") as a left join (select * from tb_file where state = 0) f on a.user_id = f.user_id group by username order by username;";
 		log.info("Query:"+sql);
 		try {
@@ -51,9 +51,9 @@ public class DataDaoImpl implements DataDao {
 		Connection conn = ConnectManager.getConnection();
 
 		String sql = "select left(f.create_date,7) as yearMonth,count(f.file_id) as fileNum,sum(f.size)  as size from tb_file f,tb_user u,tb_dept d,tb_company c where f.state = 0 and f.user_id = u.user_id and f.create_date is not null"
-				+SqlController.notUserId(role, noUserid)
+				+SqlController.notUserId("f",role, noUserid)
 				+ " and u.dept_id = d.dept_id and d.company_id = c.company_id "
-				+ SqlController.whereCompany(role, companyId) 
+			//	+ SqlController.whereCompany(role, companyId) 
 				+ "group by yearMonth order by yearMonth desc";
 		log.info("Query:"+sql);
 		ResultSetHandler<List<Data>> rsh = new BeanListHandler<>(Data.class);
@@ -109,8 +109,8 @@ public class DataDaoImpl implements DataDao {
 	public Object getBigUserDataNum(Integer companyId,int role) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Connection conn = ConnectManager.getConnection();
-		String sql = "select count(f.file_id) num from tb_file f,tb_user u where f.state=0 and f.user_id=u.user_id and u.user_id not in (" + noUserid + ") "
-				+ SqlController.whereCompany(role, companyId);
+		String sql = "select count(f.file_id) num from tb_file f,tb_user u where f.state=0 and f.user_id=u.user_id and u.user_id not in (" + noUserid + ") ";
+		//		+ SqlController.whereCompany(role, companyId);
 		try {
 			map = qr.query(conn, sql, new MapHandler());
 		} catch (SQLException e) {
@@ -123,8 +123,8 @@ public class DataDaoImpl implements DataDao {
 	public Object getBigUserDataSize(Integer companyId,int role) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Connection conn = ConnectManager.getConnection();
-		String sql = "select sum(f.size) num from tb_file f,tb_user u where f.state=0 and f.user_id=u.user_id and u.user_id not in (" + noUserid + ") "
-				+ SqlController.whereCompany(role, companyId);
+		String sql = "select sum(f.size) num from tb_file f,tb_user u where f.state=0 and f.user_id=u.user_id and u.user_id not in (" + noUserid + ") ";
+	//			+ SqlController.whereCompany(role, companyId);
 		try {
 			map = qr.query(conn, sql, new MapHandler());
 		} catch (SQLException e) {

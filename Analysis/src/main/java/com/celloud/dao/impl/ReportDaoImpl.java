@@ -22,10 +22,11 @@ public  class ReportDaoImpl implements ReportDao {
 		Connection conn = ConnectManager.getConnection();
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		String sql = "select count(r.report_id) num from tb_report r,tb_user u "
-				+ "where r.user_id=u.user_id and r.flag=0 and r.isdel=0 and r.state=3 and u.state=0 and u.user_id not in ("
+		String sql = "select count(r.report_id)as num  FROM tb_report r,tb_user_company_relat uc "
+				+	"where r.user_id = uc.user_id  and r.user_id not in ( "
 				+ noUserid + ")  "
-				+ SqlController.whereCompany(role, companyId);
+			//	+ SqlController.whereCompany("uc", role, companyId)
+				+ " group by uc.company_id ";
 		LogUtil.info(log, sql);
 		try {
 			map = qr.query(conn, sql, new MapHandler());

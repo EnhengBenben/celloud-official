@@ -29,7 +29,7 @@ public class LoginLogDaoImpl implements LoginLogDao {
 		Connection conn = ConnectManager.getConnection();
 
 		String sql = "select  left(l.log_date,10)as weekDate, COUNT(l.user_name) AS logNum from tb_log l WHERE"
-				+ " l.user_name is not null" + SqlController.notUserName("l", "user_name", noUsername)
+				+ " l.user_name is not null" + SqlController.notUserName(2,"l", "user_name", noUsername)
 				+ " and left(l.log_date,10) >= left(date_add(? ,INTERVAL -weekday(?) day),10) and left(l.log_date,10)<=left(date_add(? ,INTERVAL 7-weekday(?) day),10)"
 				+ " group  by weekDate" + " order by weekDate desc";
 		log.info("query:" + sql);
@@ -47,7 +47,7 @@ public class LoginLogDaoImpl implements LoginLogDao {
 		Connection conn = ConnectManager.getConnection();
 		List<LoginLog> list = null;
 		String sql = "select l.user_name as userName,count(l.user_name) as logNum from tb_log l"
-				+ " where l.user_name is not null" + SqlController.notUserName("l", "user_name", noUsername)
+				+ " where l.user_name is not null" + SqlController.notUserName(2,"l", "user_name", noUsername)
 				+ " and left(l.log_date,10) >= left(date_add(?,INTERVAL -(7+weekday(now())) day),10) and left(l.log_date,10)<=left(?,10)"
 				+ " group by l.user_name" + " order by logNum desc";
 		log.info("query:" + sql);
@@ -65,7 +65,7 @@ public class LoginLogDaoImpl implements LoginLogDao {
 		List<LoginLog> list = null;
 		Connection conn = ConnectManager.getConnection();
 		String sql = "select l.browser,count(l.user_name) as logNum from tb_log l" + " where l.browser is not null"
-				+ SqlController.notUserName("l", "user_name", noUsername)
+				+ SqlController.notUserName(2,"l", "user_name", noUsername)
 				+ " and left(l.log_date,10) >= left(date_add(?,INTERVAL -(7+weekday(now())) day),10) and left(l.log_date,10)<=left(?,10)"
 				+ " group by l.browser" + " order by logNum desc";
 		log.info("query:" + sql);
