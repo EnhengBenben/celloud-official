@@ -30,6 +30,8 @@ public class Software implements Serializable {
 	private Integer offLine;
 	/** 所属公司ID */
 	private Integer companyId;
+	/** 所属公司名称*/
+	private String company_name;
 	/** 是否开放 0-所有人可见 1-所属公司旗下的用户可见 默认为0 */
 	private Integer attribute;
 	/** 最小运行的数据个数 */
@@ -38,6 +40,47 @@ public class Software implements Serializable {
 	private String dataType;
 	/** 软件描述 */
 	private String description;
+	/**保存create_date的字符形式 2015-06*/
+	private String yearMonth;
+	/**保存周的开始时间：*/
+	private String weekDate;
+	/**用户名*/
+	private String userName;
+	/**医院*/
+	private String companyName;
+
+	
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getWeekDate() {
+		return weekDate;
+	}
+	
+	public void setWeekDate(String weekDate) {
+		this.weekDate = weekDate;
+	}
+
+	public String getYearMonth() {
+		return yearMonth;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public void setYearMonth(String yearMonth) {
+		this.yearMonth = yearMonth;
+	}
 
 	public Integer getSoftwareId() {
 		return softwareId;
@@ -183,4 +226,20 @@ public class Software implements Serializable {
 		this.pictureName = pictureName;
 	}
 
+	public String getCompany_name() {
+		return company_name;
+	}
+
+	public void setCompany_name(String company_name) {
+		this.company_name = company_name;
+	}
+
+	@Override
+	public String toString() {
+		return "Software [softwareId=" + softwareId + ", softwareName=" + softwareName + ", bhri=" + bhri + ", createDate=" + createDate + ", type=" + type
+				+ ", englishName=" + englishName + ", pictureName=" + pictureName + ", intro=" + intro + ", isAdd=" + isAdd + ", runNum=" + runNum
+				+ ", runData=" + runData + ", fileFormat=" + fileFormat + ", offLine=" + offLine + ", companyId=" + companyId + ", company_name="
+				+ company_name + ", attribute=" + attribute + ", dataNum=" + dataNum + ", dataType=" + dataType + ", description=" + description
+				+ ", yearMonth=" + yearMonth + "]";
+	}
 }

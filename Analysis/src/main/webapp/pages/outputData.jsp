@@ -55,7 +55,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	initUserList();
-	$('input[name=date-picker]').daterangepicker({format: 'YYYY-MM-DD'}).prev().on(ace.click_event, function(){
+	$('input[name=date-picker]').daterangepicker({format: 'YYYY-MM--DD'}).prev().on(ace.click_event, function(){
 		$(this).next().focus();
 	});
 });

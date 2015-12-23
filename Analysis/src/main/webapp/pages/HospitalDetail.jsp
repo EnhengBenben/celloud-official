@@ -24,9 +24,9 @@
 					<span id="_month"></span>信息
 				</small>
 			</h3>
-			<div class="table-header hide" id="_companyName">
-				
-			</div>
+			<!-- 
+				<div class="table-header hide" id="_companyName"></div>
+			 -->
 			<div class="table-responsive" id="dataDiv">
 				<table id="allUserDataList" class="table table-striped table-bordered table-hover">
 					<thead>

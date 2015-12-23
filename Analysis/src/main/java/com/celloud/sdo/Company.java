@@ -22,7 +22,7 @@ public class Company implements Serializable {
 	/** 入驻部门 */
 	private String deptNames;
 	private Date create_date;
-
+	
 	public Integer getCompany_id() {
 		return company_id;
 	}
@@ -109,5 +109,12 @@ public class Company implements Serializable {
 
 	public void setDeptNames(String deptNames) {
 		this.deptNames = deptNames;
+	}
+
+	@Override
+	public String toString() {
+		return "Company [company_id=" + company_id + ", company_name=" + company_name + ", address=" + address + ", tel=" + tel + ", userNum=" + userNum
+				+ ", fileNum=" + fileNum + ", fileSize=" + fileSize + ", reportNum=" + reportNum + ", userNames=" + userNames + ", deptNames=" + deptNames
+				+ ", create_date=" + create_date + "]";
 	}
 }

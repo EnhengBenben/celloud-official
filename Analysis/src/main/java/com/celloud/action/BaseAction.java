@@ -22,7 +22,6 @@ public class BaseAction extends ActionSupport implements SessionAware,
 	
 	public Object getCid() {
 		Object cid = session.get("companyId");
-		log.info("获取companyId:" + cid);
 		if (cid == null) {
 			log.error("后台session超时或者非法访问");
 		}
