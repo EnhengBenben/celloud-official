@@ -1,6 +1,6 @@
     <%@ page language="java" contentType="text/html; charset=utf-8"
         pageEncoding="utf-8"%>
-    <%@ page import="com.nova.ueditor.Uploader" %>
+    <%@ page import="com.celloud.ueditor.Uploader" %>
 
     <%
     request.setCharacterEncoding("utf-8");
