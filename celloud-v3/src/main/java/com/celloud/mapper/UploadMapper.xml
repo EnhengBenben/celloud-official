@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.celloud.mapper.UploadMapper" >
+  <resultMap id="BaseResultMap" type="com.celloud.model.Upload" >
+    <id column="upload_id" property="uploadId" jdbcType="INTEGER" />
+    <result column="md5" property="md5" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="data_key" property="dataKey" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="position" property="position" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    upload_id, md5, create_date, user_id, data_key, num, position
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_upload
+    where upload_id = #{uploadId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_upload
+    where upload_id = #{uploadId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.celloud.model.Upload" >
+    insert into tb_upload (upload_id, md5, create_date, 
+      user_id, data_key, num, 
+      position)
+    values (#{uploadId,jdbcType=INTEGER}, #{md5,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=INTEGER}, #{dataKey,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, 
+      #{position,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.celloud.model.Upload" >
+    insert into tb_upload
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uploadId != null" >
+        upload_id,
+      </if>
+      <if test="md5 != null" >
+        md5,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="dataKey != null" >
+        data_key,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uploadId != null" >
+        #{uploadId,jdbcType=INTEGER},
+      </if>
+      <if test="md5 != null" >
+        #{md5,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="dataKey != null" >
+        #{dataKey,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.Upload" >
+    update tb_upload
+    <set >
+      <if test="md5 != null" >
+        md5 = #{md5,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="dataKey != null" >
+        data_key = #{dataKey,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where upload_id = #{uploadId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.celloud.model.Upload" >
+    update tb_upload
+    set md5 = #{md5,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=INTEGER},
+      data_key = #{dataKey,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      position = #{position,jdbcType=DOUBLE}
+    where upload_id = #{uploadId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -95,40 +95,19 @@ function submitFeedBack(){
 		return;
 	} 
 	var userName = $.trim($("#userName").val());
-	var checked = $("#chkUsername").prop("checked");
-	if(!checked){
-		$.get("checkUsername.action",{"username":userName},function(flag){
-			if(!flag){
-				$("#userNameSpanInfo").html("该用户名不存在！");
-				return;
-			}else{
-				var title = $.trim($("#title").val());
-				var content = editor.getContent();
-				var email = $.trim($("#email").val());
-				$.get("feedBack!saveFeedBack",{"fb.userName":userName,"fb.email":email,"fb.title":title,"fb.content":content},function(flag){
-					if(flag){
-						$("#submitSpanInfo").html("非常感谢您的反馈！专业人员正在快马加鞭的处理，请耐心等候哦~~");
-					}else{
-						$("#submitSpanInfo").html("保存失败");
-					}
-				});
-			}
-		});
-	}else{
-		var title = $.trim($("#title").val());
-		var content = editor.getContent();
-		var email = $.trim($("#email").val());
-		$.get("feedBack!saveFeedBack",{"fb.userName":userName,"fb.email":email,"fb.title":title,"fb.content":content},function(flag){
-			if(flag){
-				$("#submitSpanInfo").html("非常感谢您的反馈！专业人员正在快马加鞭的处理，请耐心等候哦~~");
-			}else{
-				$("#submitSpanInfo").html("保存失败");
-			}
-		});
-	}
+	var title = $.trim($("#title").val());
+	var content = editor.getContent();
+	var email = $.trim($("#email").val());
+	$.get("feedBack!saveFeedBack",{"userName":userName,"email":email,"title":title,"content":content},function(flag){
+		if(flag){
+			$("#submitSpanInfo").html("非常感谢您的反馈！专业人员正在快马加鞭的处理，请耐心等候哦~~");
+		}else{
+			$("#submitSpanInfo").html("保存失败");
+		}
+	});
 }
 function searchFbInfo(page){
-	$.get("feedBack!getAllFeedBack",{"page.currentPage":page,"page.pageSize":5},function(responseText){
+	$.get("feedBack!getAllFeedBack",{"currentPage":page,"pageSize":5},function(responseText){
 		$("#otherSay").html(responseText);
 	});
 }

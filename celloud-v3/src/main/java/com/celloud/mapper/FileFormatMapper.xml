@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.celloud.mapper.FileFormatMapper" >
+  <resultMap id="BaseResultMap" type="com.celloud.model.FileFormat" >
+    <id column="format_id" property="formatId" jdbcType="INTEGER" />
+    <result column="format_desc" property="formatDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    format_id, format_desc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_file_format
+    where format_id = #{formatId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_file_format
+    where format_id = #{formatId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.celloud.model.FileFormat" >
+    insert into tb_file_format (format_id, format_desc)
+    values (#{formatId,jdbcType=INTEGER}, #{formatDesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.celloud.model.FileFormat" >
+    insert into tb_file_format
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="formatId != null" >
+        format_id,
+      </if>
+      <if test="formatDesc != null" >
+        format_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="formatId != null" >
+        #{formatId,jdbcType=INTEGER},
+      </if>
+      <if test="formatDesc != null" >
+        #{formatDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.FileFormat" >
+    update tb_file_format
+    <set >
+      <if test="formatDesc != null" >
+        format_desc = #{formatDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where format_id = #{formatId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.celloud.model.FileFormat" >
+    update tb_file_format
+    set format_desc = #{formatDesc,jdbcType=VARCHAR}
+    where format_id = #{formatId,jdbcType=INTEGER}
+  </update>
+</mapper>

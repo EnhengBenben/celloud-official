@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.celloud.mapper.ActionLogMapper" >
+  <resultMap id="BaseResultMap" type="com.celloud.model.ActionLog" >
+    <result column="log_date" property="logDate" jdbcType="TIMESTAMP" />
+    <result column="thread" property="thread" jdbcType="VARCHAR" />
+    <result column="log_level" property="logLevel" jdbcType="VARCHAR" />
+    <result column="log_class" property="logClass" jdbcType="VARCHAR" />
+    <result column="log_message" property="logMessage" jdbcType="VARCHAR" />
+    <result column="browser" property="browser" jdbcType="VARCHAR" />
+    <result column="os" property="os" jdbcType="VARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.celloud.model.ActionLog" >
+    insert into tb_log (log_date, thread, log_level, 
+      log_class, log_message, browser, 
+      os, ip, user_name, address
+      )
+    values (#{logDate,jdbcType=TIMESTAMP}, #{thread,jdbcType=VARCHAR}, #{logLevel,jdbcType=VARCHAR}, 
+      #{logClass,jdbcType=VARCHAR}, #{logMessage,jdbcType=VARCHAR}, #{browser,jdbcType=VARCHAR}, 
+      #{os,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.celloud.model.ActionLog" >
+    insert into tb_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logDate != null" >
+        log_date,
+      </if>
+      <if test="thread != null" >
+        thread,
+      </if>
+      <if test="logLevel != null" >
+        log_level,
+      </if>
+      <if test="logClass != null" >
+        log_class,
+      </if>
+      <if test="logMessage != null" >
+        log_message,
+      </if>
+      <if test="browser != null" >
+        browser,
+      </if>
+      <if test="os != null" >
+        os,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logDate != null" >
+        #{logDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="thread != null" >
+        #{thread,jdbcType=VARCHAR},
+      </if>
+      <if test="logLevel != null" >
+        #{logLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="logClass != null" >
+        #{logClass,jdbcType=VARCHAR},
+      </if>
+      <if test="logMessage != null" >
+        #{logMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null" >
+        #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="os != null" >
+        #{os,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
