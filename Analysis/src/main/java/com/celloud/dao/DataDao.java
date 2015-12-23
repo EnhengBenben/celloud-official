@@ -10,30 +10,6 @@ import com.google.inject.ImplementedBy;
 
 @ImplementedBy(DataDaoImpl.class)
 public interface DataDao {
-	/**
-	 * 总数据量
-	 * 
-	 * @return
-	 */
-	public int dataCount(Date beginDate, Date endDate);
-
-	/**
-	 * 在指定时间内每个用户上传的数据量
-	 * 
-	 * @param beginDate
-	 * @param endDate
-	 * @return
-	 */
-	public List<Data> dataCountEveryUser(Date beginDate, Date endDate);
-
-	/**
-	 * 在指定时间内每个用户上传的数据列表
-	 * 
-	 * @param beginDate
-	 * @param endDate
-	 * @return
-	 */
-	public List<Data> clientDataCountEveryUser(Date beginDate, Date endDate);
 
 	/**
 	 * 获取大客户的所有用户及总上传数据列表
@@ -41,21 +17,22 @@ public interface DataDao {
 	 * @param companyId
 	 * @return
 	 */
-	public List<Map<String, Object>> getUserList(Integer companyId);
+	public List<Map<String, Object>> getUserList(Integer companyId,Integer role);
 
 	/**
 	 * 获取大客户的所有用户每月上传的数据列表
+	 * @param role 
 	 * 
 	 * @return
 	 */
-	public List<Map<String, Object>> getUserMonthDataList(Integer companyId);
+	public List<Data> getUserMonthDataList(Integer companyId, Integer role);
 
 	/**
 	 * 某个用户每个月的数据量
 	 * 
 	 * @return
 	 */
-	public List<Map<String, Object>> getUserMonthData(Integer userId,
+	public List<Data> getUserMonthData(Integer userId,
 			Integer companyId);
 
 	/**
@@ -82,7 +59,7 @@ public interface DataDao {
 	 * @param companyId
 	 * @return
 	 */
-	public Object getBigUserDataNum(Integer companyId);
+	public Object getBigUserDataNum(Integer companyId,int role);
 
 	/**
 	 * 获取大客户的数据总大小
@@ -90,7 +67,7 @@ public interface DataDao {
 	 * @param companyId
 	 * @return 数据大小 单位：b
 	 */
-	public Object getBigUserDataSize(Integer companyId);
+	public Object getBigUserDataSize(Integer companyId,int role);
 	
 	/**
 	 * 获取用户在一个时间段内上传的文件及运行状态
@@ -101,4 +78,18 @@ public interface DataDao {
 	 * @return
 	 */
 	public List<Map<String, Object>> getUserFileRunState(String userIds, String start, String end);
+	
+	/**
+	 * 统计周内各用上传文件大小、数量
+	 * @param start开始时间
+	 * @return
+	 */
+	public List<Data> getUserWeekData(Date start);
+	
+	/**
+	 * 统计周内每天上传的数据大小
+	 * @param start开始时间
+	 * @return
+	 */
+	public List<Data> getEachDayData(Date start);
 }

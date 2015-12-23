@@ -33,8 +33,6 @@
 	d3.json("china.json", function(root) {
 // 		if (error) 
 // 			return console.error(error);
-// 		console.log(root.features);
-		
 		svg.selectAll("path")
 			.data( root.features )
 			.enter()

@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <meta name="keywords" content="celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据,统计系统" />
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico"/>
 <link rel="bookmark" href="<%=request.getContextPath()%>/favicon.ico"/>
@@ -35,7 +36,7 @@
 	<script type="text/javascript">
 		try{ace.settings.check('navbar' , 'fixed');}catch(e){}
 	</script>
-	<div class="navbar-container" id="navbar-container">
+	<div class="navbar-container" id="navbar-container" >
 		<div class="navbar-header pull-left">
 			<a href="#" class="navbar-brand">
 				<small>
@@ -93,10 +94,8 @@
 					<a href="javascript:void(0)" class="dropdown-toggle">
 						<i class="icon-tasks"></i>
 						<span class="menu-text">数据统计 </span>
-
 						<b class="arrow icon-angle-down"></b>
 					</a>
-
 					<ul class="submenu">
 						<li>
 							<a href="javascript:getUserDataList()">
@@ -104,7 +103,6 @@
 								总用户数据量
 							</a>
 						</li>
-
 						<li>
 							<a href="javascript:getMonthDataList()">
 								<i class="icon-double-angle-right"></i>
@@ -172,22 +170,45 @@
 						<b class="arrow icon-angle-down"></b>
 					</a>
 					<ul class="submenu">
-<!-- 						<li> -->
-<!-- 							<a href="javascript:void()"> -->
-<!-- 								<i class="icon-double-angle-right"></i> -->
-<!-- 								用户活跃度统计 -->
-<!-- 							</a> -->
-<!-- 						</li> -->
 						<li>
 							<a href="javascript:toActivity()">
 								<i class="icon-double-angle-right"></i>
 								医院活跃度统计
 							</a>
 						</li>
+						<li>
+							<a href="javascript:toUserActivity()">
+								<i class="icon-double-angle-right"></i>
+								用户活跃度统计
+							</a>
+						</li>
+							<li>
+							<a href="javascript:toAppActivity()">
+								<i class="icon-double-angle-right"></i>
+								App统计
+							</a>
+						</li>
 					</ul>
 				</li>
+				<!-- 导出报表统计 -->
+				<c:if test="${userRole=='3' }">
+				<li>
+					<a href="javascript:void(0)" class="dropdown-toggle">
+						<i class="icon-file-alt"></i>
+						<span class="menu-text">导出结果 </span>
+						<b class="arrow icon-angle-down"></b>
+					</a>
+					<ul class="submenu">
+						<li>
+							<a href="javascript:toWeekReport()">
+								<i class="icon-double-angle-right"></i>
+								周统计
+							</a>
+						</li>
+					</ul>
+				</li>
+				</c:if>
 				
-
 			</ul><!-- /.nav-list -->
 
 			<div class="sidebar-collapse" id="sidebar-collapse">
@@ -236,52 +257,87 @@
 <script type="text/javascript" src="js/date-time/daterangepicker.min.js"></script>
 <!-- ECharts单文件引入 -->
 <script src="./js/sea.js"></script>
-<script src="./plugin/echarts-2.2.3/build/dist/echarts-all.js"></script>
-<script src="./plugin/echarts-2.2.3/build/dist/chart/bar.js"></script>
-<script src="./plugin/echarts-2.2.3/build/dist/chart/map.js"></script>
+<script src="./plugin/echarts-2.2.7/build/dist/echarts-all.js"></script>
+<script src="./plugin/echarts-2.2.7/build/dist/chart/bar.js"></script>
+<script src="./plugin/echarts-2.2.7/build/dist/chart/map.js"></script>
 <script src="./js/jquery.dataTables.min.js"></script>
 <script src="./js/jquery.dataTables.bootstrap.js"></script>
-<!-- <script src="./plugin/echarts-2.2.3/src/theme/infographic.js"></script> -->
+<!-- <script src="./plugin/echarts-2.2.7/src/theme/infographic.js"></script> -->
+<script src="./js/util.js" type="text/javascript"></script>
 <script type="text/javascript">
 	jQuery(function($) {
 		toHome();
 	});
+	/***活跃度统计－－－用户活跃度统计**/
+	function toUserActivity(){
+		$.get("user!toUserActivity",{},function(responseText){
+			$("#content").html(responseText);
+		});
+	}
+	/***活跃度统计－－－Ａpp活跃度统计**/
+	function toAppActivity(){
+		$.get("app!toAppActivity",{},function(responseText){
+			$("#content").html(responseText);
+		});
+	}
+	/***活跃度统计－－－医院活跃度统计**/
+	function toActivity(){
+		$.get("company!toActivity",{},function(responseText){
+			$("#content").html(responseText);
+		});
+	}
+	function toHospital(toText){
+		$("#content").html(toText);
+		
+	}
+	/***数据统计－－－总用户数据里**/
 	function getUserDataList(){
 		$.get("data!getAllUsersDataNum",{},function(responseText){
 			$("#content").html(responseText);
 		});
 	}
+	/***数据统计－－－数据时月统计**/
 	function getMonthDataList(){
 		$("#secondTitle").addClass("hide");
 		$.get("data!getUsersMonthDataList",{},function(responseText){
 			$("#content").html(responseText);
 		});
 	}
+	/***控制台**/
 	function toHome(){
 		$.get("home!toHome",{},function(responseText){
 			$("#content").html(responseText);
 		});
-	}
+	}	
 	function toActivity(){
 		$.get("company!toActivity",{},function(responseText){
 			$("#content").html(responseText);
 		});
 	}
+	////	医院详细信息
 	function toHospitalList(){
 		$("#secondTitle").addClass("hide");
 		$.get("company!getCompanyDetail",{},function(responseText){
 			$("#content").html(responseText);
 		});
 	}
+	/***用户统计**/
 	function toUserList(){
 		$("#secondTitle").addClass("hide");
 		$.get("user!getUserListByBigUser",{},function(responseText){
 			$("#content").html(responseText);
 		});
 	}
+	/***Ａpp统计**/
 	function toAPPList(){
 		$("#secondTitle").addClass("hide");
 		$.get("app!getAppListByBigUser",{},function(responseText){
+			$("#content").html(responseText);
+		});
+	}
+	function toWeekReport(){
+		$("#secondTitle").addClass("hide");
+		$.get("home!toWeekReport",{},function(responseText){
 			$("#content").html(responseText);
 		});
 	}

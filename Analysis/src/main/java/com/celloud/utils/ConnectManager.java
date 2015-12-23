@@ -35,6 +35,7 @@ public class ConnectManager {
 				.getResourceAsStream(PROPERTIES_FILE);
 		try {
 			prop.load(is);
+			logger.info(prop.values());
 			dataSource = BasicDataSourceFactory.createDataSource(prop);
 		} catch (IOException e) {
 			throw new RuntimeException(PROPERTIES_FILE + " file load error");

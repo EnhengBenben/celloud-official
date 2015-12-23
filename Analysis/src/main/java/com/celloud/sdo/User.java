@@ -5,13 +5,20 @@ import java.util.Date;
 
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
+	public static final int SYSTEM = 3;			// 系统管理员
+	public static final int ADMIN = 2;			// 超级管理员
+	public static final int BIG_USER = 1;		// 大客户
+	public static final int USER = 0;				// 普通用户
+	
+	public static final String USER_ROLE = "userRole";
+
 	private Integer userId;
 	private String username;
 	private String password;
 	/** 邮箱 */
 	private String email;
 	private Date createDate;
-	/** 角色，0，1 普通用户，2超级管理员，3管理员 */
+	/** 角色，0，1 大客户，2超级管理员，3管理员 */
 	private Integer role;
 	/** 真实姓名 */
 	private String truename;
@@ -53,15 +60,19 @@ public class User implements Serializable {
 	public void setReportNum(Long reportNum) {
 		this.reportNum = reportNum;
 	}
+
 	public Integer getUserId() {
 		return userId;
 	}
+
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
+
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -85,42 +96,55 @@ public class User implements Serializable {
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public Date getCreateDate() {
 		return createDate;
 	}
+
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+
 	public Integer getRole() {
 		return role;
 	}
+
 	public void setRole(Integer role) {
 		this.role = role;
 	}
+
 	public String getTruename() {
 		return truename;
 	}
+
 	public void setTruename(String truename) {
 		this.truename = truename;
 	}
+
 	public Integer getState() {
 		return state;
 	}
+
 	public void setState(Integer state) {
 		this.state = state;
 	}
+
 	public Integer getDeptId() {
 		return deptId;
 	}
+
 	public void setDeptId(Integer deptId) {
 		this.deptId = deptId;
 	}
+
 	public String getLoginUuid() {
 		return loginUuid;
 	}
+
 	public void setLoginUuid(String loginUuid) {
 		this.loginUuid = loginUuid;
 	}
@@ -165,4 +189,17 @@ public class User implements Serializable {
 		return reportNum;
 	}
 
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", username=" + username
+				+ ", password=" + password + ", email=" + email
+				+ ", createDate=" + createDate + ", role=" + role
+				+ ", truename=" + truename + ", cellphone=" + cellphone
+				+ ", state=" + state + ", deptId=" + deptId + ", loginUuid="
+				+ loginUuid + ", company_id=" + company_id + ", fileNum="
+				+ fileNum + ", kaptchaCode=" + kaptchaCode + ", fileSize="
+				+ fileSize + ", reportNum=" + reportNum + ", companyName="
+				+ companyName + ", deptName=" + deptName + "]";
+	}
+	
 }

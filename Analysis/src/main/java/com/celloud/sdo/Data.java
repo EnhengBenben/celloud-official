@@ -3,13 +3,17 @@ package com.celloud.sdo;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Data implements Serializable {
+public class Data implements Serializable,Cloneable {
 	private static final long serialVersionUID = 1L;
 	/** 文件编号 */
 	private Integer fileId;
 	/** 用户编号 提交者 */
 	private Integer userId;
 	private String userName;
+	/** 所属公司ID */
+	private Integer companyId;
+	/** 所属公司名称 */
+	private String company_name;
 	/** 数据编号 */
 	private String dataKey;
 	/** 文件名字 */
@@ -26,6 +30,55 @@ public class Data implements Serializable {
 	private Integer fileFormat;
 	/** 文件别名 */
 	private String anotherName;
+	
+	private int fileNum;
+	/**字符串年月2015-12*/
+	private String yearMonth;
+	
+	/**周统计时用来保存周一：年月日*/
+	private String weekDate;
+	
+	
+
+	public String getWeekDate() {
+		return weekDate;
+	}
+
+	public void setWeekDate(String weekDate) {
+		this.weekDate = weekDate;
+	}
+
+	public int getFileNum() {
+		return fileNum;
+	}
+
+	public String getYearMonth() {
+		return yearMonth;
+	}
+
+	public void setYearMonth(String yearMonth) {
+		this.yearMonth = yearMonth;
+	}
+
+	public void setFileNum(int fileNum) {
+		this.fileNum = fileNum;
+	}
+
+	public Integer getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Integer companyId) {
+		this.companyId = companyId;
+	}
+
+	public String getCompany_name() {
+		return company_name;
+	}
+
+	public void setCompany_name(String company_name) {
+		this.company_name = company_name;
+	}
 
 	public Integer getFileId() {
 		return fileId;
@@ -106,4 +159,15 @@ public class Data implements Serializable {
 	public void setAnotherName(String anotherName) {
 		this.anotherName = anotherName;
 	}
+
+	@Override
+	public String toString() {
+		return "Data [fileId=" + fileId + ", userId=" + userId + ", userName=" + userName + ", companyId=" + companyId + ", company_name=" + company_name
+				+ ", dataKey=" + dataKey + ", fileName=" + fileName + ", size=" + size + ", createDate=" + createDate + ", state=" + state + ", fileFormat="
+				+ fileFormat + ", anotherName=" + anotherName + ", fileNum=" + fileNum + ", yearMonth=" + yearMonth + "]";
+	}
+	 @Override 
+     public Object clone() throws CloneNotSupportedException { 
+         return super.clone(); 
+     } 
 }
