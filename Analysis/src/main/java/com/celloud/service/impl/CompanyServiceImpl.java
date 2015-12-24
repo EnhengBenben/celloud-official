@@ -10,9 +10,9 @@ import java.util.Map;
 
 import com.celloud.dao.CompanyDao;
 import com.celloud.sdo.Company;
-import com.celloud.sdo.Data;
+import com.celloud.sdo.DataFile;
 import com.celloud.sdo.LoginLog;
-import com.celloud.sdo.Software;
+import com.celloud.sdo.App;
 import com.celloud.service.CompanyService;
 import com.celloud.utils.LogUtil;
 import com.google.inject.Inject;
@@ -122,17 +122,17 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public List<Software> getCompanyRunAppNumByCId(Integer companyId) {
+	public List<App> getCompanyRunAppNumByCId(Integer companyId) {
 		return companyDao.getCompanyRunAppNumByCId(companyId,"software");
 	}
 
 	@Override
-	public List<Data> getCompanyUpLoadGroupMonthByCId(Integer companyId) {
-		List<Data> list = companyDao.getCompanyUpLoadDataByCId(companyId,"month");
-		LinkedList<Data> res = new LinkedList<>();
+	public List<DataFile> getCompanyUpLoadGroupMonthByCId(Integer companyId) {
+		List<DataFile> list = companyDao.getCompanyUpLoadDataByCId(companyId,"month");
+		LinkedList<DataFile> res = new LinkedList<>();
 		if (list != null && list.size() > 0) {
-			Data data = list.get(0);
-			Data endData = list.get(list.size() - 1);
+			DataFile data = list.get(0);
+			DataFile endData = list.get(list.size() - 1);
 			int startYear = Integer.parseInt(data.getYearMonth().substring(0, 4));
 			int startMonth = Integer.parseInt(data.getYearMonth().substring(5, 7));
 			int endYear = Integer.parseInt(endData.getYearMonth().substring(0, 4));
@@ -143,11 +143,11 @@ public class CompanyServiceImpl implements CompanyService {
 				if (y == startYear && y == endYear) {
 					for (int m = startMonth; m <= endMonth; m++) {
 						String ym = catYearMonth(y, m);
-						Data obj = DateHandle(list, ym);
+						DataFile obj = DateHandle(list, ym);
 						if (obj != null)
 							res.add(obj);
 						else {
-							Data d = new Data();
+							DataFile d = new DataFile();
 							d.setYearMonth(ym);
 							d.setFileNum(0);
 							res.add(d);
@@ -156,11 +156,11 @@ public class CompanyServiceImpl implements CompanyService {
 				} else if (y > startYear && y < endYear) {
 					for (int m = 1; m <= 12; m++) {
 						String ym = catYearMonth(y, m);
-						Data obj = DateHandle(list, ym);
+						DataFile obj = DateHandle(list, ym);
 						if (obj != null)
 							res.add(obj);
 						else {
-							Data d = new Data();
+							DataFile d = new DataFile();
 							d.setYearMonth(ym);
 							d.setFileNum(0);
 							res.add(d);
@@ -169,11 +169,11 @@ public class CompanyServiceImpl implements CompanyService {
 				} else if (y > startYear && y == endYear) {
 					for (int m = 1; m <= endMonth; m++) {
 						String ym = catYearMonth(y, m);
-						Data obj = DateHandle(list, ym);
+						DataFile obj = DateHandle(list, ym);
 						if (obj != null)
 							res.add(obj);
 						else {
-							Data d = new Data();
+							DataFile d = new DataFile();
 							d.setYearMonth(ym);
 							d.setFileNum(0);
 							res.add(d);
@@ -182,11 +182,11 @@ public class CompanyServiceImpl implements CompanyService {
 				} else if (y == startYear && y < endYear) {
 					for (int m = startMonth; m <= 12; m++) {
 						String ym = catYearMonth(y, m);
-						Data obj = DateHandle(list, ym);
+						DataFile obj = DateHandle(list, ym);
 						if (obj != null)
 							res.add(obj);
 						else {
-							Data d = new Data();
+							DataFile d = new DataFile();
 							d.setYearMonth(ym);
 							d.setFileNum(0);
 							res.add(d);
@@ -205,15 +205,15 @@ public class CompanyServiceImpl implements CompanyService {
 			return year + "-" + month;
 	}
 
-	public Data DateHandle(List<Data> list, String ym) {
-		for (Data data : list) {
+	public DataFile DateHandle(List<DataFile> list, String ym) {
+		for (DataFile data : list) {
 			if (data.getYearMonth().equals(ym))
 				return data;
 		}
 		return null;
 	}
-	public Software SoftwareHandle(List<Software> list, String ym) {
-		for (Software data : list) {
+	public App SoftwareHandle(List<App> list, String ym) {
+		for (App data : list) {
 			if (data.getYearMonth().equals(ym))
 				return data;
 		}
@@ -221,12 +221,12 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public List<Software> getCompanyRunAppNumGroupByMonth(Integer companyId) {
-		List<Software> list = companyDao.getCompanyRunAppNumByCId(companyId, "month");
-		LinkedList<Software> res = new LinkedList<>();
+	public List<App> getCompanyRunAppNumGroupByMonth(Integer companyId) {
+		List<App> list = companyDao.getCompanyRunAppNumByCId(companyId, "month");
+		LinkedList<App> res = new LinkedList<>();
 		if (list != null && list.size() > 0) {
-			Software data = list.get(0);
-			Software endData = list.get(list.size() - 1);
+			App data = list.get(0);
+			App endData = list.get(list.size() - 1);
 			int startYear = Integer.parseInt(data.getYearMonth().substring(0, 4));
 			int startMonth = Integer.parseInt(data.getYearMonth().substring(5, 7));
 			int endYear = Integer.parseInt(endData.getYearMonth().substring(0, 4));
@@ -238,11 +238,11 @@ public class CompanyServiceImpl implements CompanyService {
 				if (y == startYear && y == endYear) {
 					for (int m = startMonth; m <= endMonth; m++) {
 						String ym = catYearMonth(y, m);
-						Software obj = SoftwareHandle(list, ym);
+						App obj = SoftwareHandle(list, ym);
 						if (obj != null)
 							res.add(obj);
 						else {
-							Software d = new Software();
+							App d = new App();
 							d.setYearMonth(ym);
 							d.setRunNum(0);
 							res.add(d);
@@ -251,11 +251,11 @@ public class CompanyServiceImpl implements CompanyService {
 				} else if (y > startYear && y < endYear) {
 					for (int m = 1; m <= 12; m++) {
 						String ym = catYearMonth(y, m);
-						Software obj = SoftwareHandle(list, ym);
+						App obj = SoftwareHandle(list, ym);
 						if (obj != null)
 							res.add(obj);
 						else {
-							Software d = new Software();
+							App d = new App();
 							d.setYearMonth(ym);
 							d.setRunNum(0);
 							res.add(d);
@@ -264,11 +264,11 @@ public class CompanyServiceImpl implements CompanyService {
 				} else if (y > startYear && y == endYear) {
 					for (int m = 1; m <= endMonth; m++) {
 						String ym = catYearMonth(y, m);
-						Software obj = SoftwareHandle(list, ym);
+						App obj = SoftwareHandle(list, ym);
 						if (obj != null)
 							res.add(obj);
 						else {
-							Software d = new Software();
+							App d = new App();
 							d.setYearMonth(ym);
 							d.setRunNum(0);
 							res.add(d);
@@ -277,11 +277,11 @@ public class CompanyServiceImpl implements CompanyService {
 				} else if (y == startYear && y < endYear) {
 					for (int m = startMonth; m <= 12; m++) {
 						String ym = catYearMonth(y, m);
-						Software obj = SoftwareHandle(list, ym);
+						App obj = SoftwareHandle(list, ym);
 						if (obj != null)
 							res.add(obj);
 						else {
-							Software d = new Software();
+							App d = new App();
 							d.setYearMonth(ym);
 							d.setRunNum(0);
 							res.add(d);
@@ -294,13 +294,13 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public List<Software> getCompanyRunAppNumGroupByWeek(Integer companyId) {
+	public List<App> getCompanyRunAppNumGroupByWeek(Integer companyId) {
 		
 		return companyDao.getCompanyRunAppNumByCId(companyId,"week");
 	}
 
 	@Override
-	public List<Data> getCompanyUpLoadGroupWeekByCId(Integer companyId) {
+	public List<DataFile> getCompanyUpLoadGroupWeekByCId(Integer companyId) {
 		return companyDao.getCompanyUpLoadDataByCId(companyId, "week");
 	}
 
@@ -315,22 +315,22 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public List<Data> getCompanyFileInWeek(Integer cmpId, Date start, Date end, List<Integer> cmpIdList,Integer role) {
+	public List<DataFile> getCompanyFileInWeek(Integer cmpId, Date start, Date end, List<Integer> cmpIdList,Integer role) {
 		return companyDao.getCompanyFileInWeek(cmpId, start, end, cmpIdList,role);
 	}
 
 	@Override
-	public List<Data> getCompanyFileInMonth(Integer cmpId,Date start, Date end,List<Integer> cmpIdList,Integer role) {
+	public List<DataFile> getCompanyFileInMonth(Integer cmpId,Date start, Date end,List<Integer> cmpIdList,Integer role) {
 		return companyDao.getCompanyFileInMonth(cmpId, start, end,cmpIdList, role);
 	}
 
 	@Override
-	public List<Software> getCompanySoftwareInWeek(Integer cmpId,Date start, Date end, List<Integer> cmpIds,Integer role) {
+	public List<App> getCompanySoftwareInWeek(Integer cmpId,Date start, Date end, List<Integer> cmpIds,Integer role) {
 		return companyDao.getCompanySoftwareInWeek(cmpId, start, end, cmpIds,role);
 	}
 
 	@Override
-	public List<Software> getCompanySoftwareInMonth(Integer cmpId,Date start, Date end, List<Integer> cmpIds,Integer role) {
+	public List<App> getCompanySoftwareInMonth(Integer cmpId,Date start, Date end, List<Integer> cmpIds,Integer role) {
 		return companyDao.getCompanySoftwareInMonth(cmpId, start, end, cmpIds,role);
 	}
 

@@ -124,7 +124,7 @@
 				</div>
 			</div>
 			<!-- /row -->
-			<c:if test="${userRole=='2' || userRole=='3' }">
+			<c:if test="${userRole=='2' || userRole=='3' || 1==1}">
 				<div class="row">
 					<div class="col-xs-12">
 						<h3 class="header smaller lighter green">浏览器统计</h3>
@@ -132,19 +132,20 @@
 					</div>
 				</div>
 			</c:if>
+			
+			<div class="row">
+                <div class="col-xs-12">
+                    <h3 class="header smaller lighter green">APP使用统计</h3>
+                    <div class="col-sm-12" style="height: 450px;" id="AppRunNum"></div>
+                    <!-- row -->
+                </div>
+            </div>
+			
 			<!-- row -->
 			<div class="row">
 				<div class="col-xs-12">
 					<h3 class="header smaller lighter green">用户运行统计</h3>
 					<div class="col-sm-12" style="height: 450px;" id="UserRunNum"></div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-xs-12">
-					<h3 class="header smaller lighter green">APP使用统计</h3>
-					<div class="col-sm-12" style="height: 450px;" id="AppRunNum"></div>
-					<!-- row -->
 				</div>
 			</div>
 

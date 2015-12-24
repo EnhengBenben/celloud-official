@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.celloud.dao.impl.UserDaoImpl;
-import com.celloud.sdo.Data;
+import com.celloud.sdo.DataFile;
 import com.celloud.sdo.Entry;
 import com.celloud.sdo.LoginLog;
-import com.celloud.sdo.Software;
+import com.celloud.sdo.App;
 import com.celloud.sdo.TotalCount;
 import com.celloud.sdo.User;
 import com.google.inject.ImplementedBy;
@@ -110,11 +110,10 @@ public interface UserDao {
 
 	/**
 	 * 根据用户id查询用户运行各app次数
-	 * 
 	 * @param userId
 	 * @return
 	 */
-	public List<Software> getAppRunTimesByUId(Integer userId);
+	public List<App> getAppRunTimesByUId(Integer userId);
 
 	/**
 	 * 按月统计用户上App运行次数
@@ -138,7 +137,7 @@ public interface UserDao {
 	 * @param uesrId
 	 * @return
 	 */
-	public List<Data> getUploadFileMonth(Integer uesrId);
+	public List<DataFile> getUploadFileMonth(Integer uesrId);
 
 	/**
 	 * 按周统计用户上传文件
@@ -146,7 +145,7 @@ public interface UserDao {
 	 * @param uesrId
 	 * @return
 	 */
-	public List<Data> getUploadFileWeek(Integer userId);
+	public List<DataFile> getUploadFileWeek(Integer userId);
 	
 	/**
 	 * 获取月时间段登陆用户次数
@@ -166,7 +165,7 @@ public interface UserDao {
 	 * @param end
 	 * @return
 	 */
-	public List<Data>getFileMonthInDate(Integer cmpId, Integer role,List<Integer> uids, Date start,Date end);
+	public List<DataFile>getFileMonthInDate(Integer cmpId, Integer role,List<Integer> uids, Date start,Date end);
 	/**
 	 * 获取时间内文件大小、数量
 	 * @param userId
@@ -174,7 +173,7 @@ public interface UserDao {
 	 * @param end
 	 * @return
 	 */
-	public List<Data>getFileInWeekDate(Integer cmpId, Integer role,List<Integer> uids, Date start,Date end);
+	public List<DataFile>getFileInWeekDate(Integer cmpId, Integer role,List<Integer> uids, Date start,Date end);
 	/**
 	 * 按周分组 取用户在单位时间内运行app次数
 	 * @param userId
@@ -182,7 +181,7 @@ public interface UserDao {
 	 * @param end
 	 * @return
 	 */
-	public List<Software> getAppRunInWeek(Integer cmpId, Integer role,List<Integer> uids,Date start,Date end);
+	public List<App> getAppRunInWeek(Integer cmpId, Integer role,List<Integer> uids,Date start,Date end);
 	/**
 	 * 按月分组 取用户在单位时间内运行app次数
 	 * @param userId
@@ -190,7 +189,7 @@ public interface UserDao {
 	 * @param end
 	 * @return
 	 */
-	public List<Software> getAppRunInMonth(Integer cmpId, Integer role,List<Integer> uids,Date start,Date end);
+	public List<App> getAppRunInMonth(Integer cmpId, Integer role,List<Integer> uids,Date start,Date end);
 	/**
 	 * 按权限取用户
 	 * @param companyId
@@ -213,7 +212,7 @@ public interface UserDao {
 	 * @param end
 	 * @return
 	 */
-	public List<Data> getUserDataTop(String type, int topN, Date start, Date end);
+	public List<DataFile> getUserDataTop(String type, int topN, Date start, Date end);
 	
 	/***
 	 * 用户历史统计，与比较

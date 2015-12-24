@@ -18,9 +18,9 @@ public class Company implements Serializable {
 	/** 报告量（个数） */
 	private Long reportNum;
 	/** 所包含用户 */
-	private String userNames;
+	private String username;
 	/** 入驻部门 */
-	private String deptNames;
+	private String dept_name;
 	private Date create_date;
 	
 	public Integer getCompany_id() {
@@ -95,26 +95,27 @@ public class Company implements Serializable {
 		this.create_date = create_date;
 	}
 
-	public String getUserNames() {
-		return userNames;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserNames(String userNames) {
-		this.userNames = userNames;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public String getDeptNames() {
-		return deptNames;
+	public String getDept_name() {
+		return dept_name;
 	}
 
-	public void setDeptNames(String deptNames) {
-		this.deptNames = deptNames;
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
 	}
 
 	@Override
 	public String toString() {
-		return "Company [company_id=" + company_id + ", company_name=" + company_name + ", address=" + address + ", tel=" + tel + ", userNum=" + userNum
-				+ ", fileNum=" + fileNum + ", fileSize=" + fileSize + ", reportNum=" + reportNum + ", userNames=" + userNames + ", deptNames=" + deptNames
-				+ ", create_date=" + create_date + "]";
+		return "Company [company_id=" + company_id + ", company_name=" + company_name + ", address=" + address
+				+ ", tel=" + tel + ", userNum=" + userNum + ", fileNum=" + fileNum + ", fileSize=" + fileSize
+				+ ", reportNum=" + reportNum + ", username=" + username + ", dept_name=" + dept_name + ", create_date="
+				+ create_date + "]";
 	}
 }

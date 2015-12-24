@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class LoginLog implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/** 用户名 */
-	private String userName;
+	private String user_name;
 	/** 登录时间 */
 	private String logDate;
 	/** 浏览器 */
@@ -19,7 +19,7 @@ public class LoginLog implements Serializable {
 	/** 每人/每天/每个浏览器的登录次数 */
 	private Integer logNum;
 	/** 登陆人所属医院 **/
-	private String companyName;
+	private String company_name;
 	/** 按周统计时，周一 **/
 	private String weekDate;
 	/** 按月统计时、年月yyyy-MM **/
@@ -41,14 +41,6 @@ public class LoginLog implements Serializable {
 		this.yearMonth = yearMonth;
 	}
 
-	public String getCompanyName() {
-		return companyName;
-	}
-
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
-
 	public String getAddress() {
 		return address;
 	}
@@ -57,12 +49,20 @@ public class LoginLog implements Serializable {
 		this.address = address;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUser_name() {
+		return user_name;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+
+	public String getCompany_name() {
+		return company_name;
+	}
+
+	public void setCompany_name(String company_name) {
+		this.company_name = company_name;
 	}
 
 	public String getLogDate() {

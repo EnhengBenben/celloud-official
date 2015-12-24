@@ -17,7 +17,7 @@ import com.celloud.service.CompanyService;
 import com.celloud.service.DataService;
 import com.celloud.service.LoginLogService;
 import com.celloud.service.ReportService;
-import com.celloud.service.SoftwareService;
+import com.celloud.service.AppService;
 import com.celloud.service.UserService;
 import com.celloud.utils.DateUtil;
 import com.google.inject.Inject;
@@ -28,20 +28,16 @@ import com.google.inject.Inject;
 		@Result(name = "toWeekReport", location = "../../pages/weekExport.jsp"),
 		
 		@Result(name = "browserCount", type = "json", params = { "root", "browserList" }),
-		@Result(name = "userRunNum", type = "json", params = { "root", "userSoftList" }),
 		@Result(name = "historyList", type = "json", params = { "root", "historyList" }),
 		
-//		@Result(name = "userAppTop20", type = "json", params = { "root", "totalSoftList" }),
-//		@Result(name = "loginNumQueue", type = "json", params = { "root", "totalLogList" }),
-//		@Result(name = "eachDayLoginNum", type = "json", params = { "root", "totalLogList" }),
-//		@Result(name = "eachDayAppRunNum", type = "json", params = { "root", "totalSoftList" }),
-//		@Result(name = "eachDayAppRunNum", type = "json", params = { "root", "totalSoftList" }),
+	//	@Result(name = "userRunNum", type = "json", params = { "root", "userSoftList" }),
 		@Result(name = "softList", type = "json", params = { "root", "totalSoftList" }),
+		@Result(name = "eachUserRunApp", type = "json", params = { "root", "eachAppList" }),
+		@Result(name = "AppList", type = "json", params = { "root", "appList" }),
 		
 		@Result(name = "loginList", type = "json", params = { "root", "logList" }),
 		@Result(name = "eachDayDataSize", type = "json", params = { "root", "eachDataList" }),
 		@Result(name = "userFileList", type = "json", params = { "root", "userDataList" }),
-		@Result(name = "eachUserRunApp", type = "json", params = { "root", "eachAppList" }),
 
 })
 public class HomeAction extends BaseAction {
@@ -58,11 +54,11 @@ public class HomeAction extends BaseAction {
 	@Inject
 	private LoginLogService loginService;
 	@Inject
-	private SoftwareService softwareService;
+	private AppService appService;
 	private Map<String, Object> resultMap;
 	private List<LoginLog> logList;
-	private List<Data> dataList;
-	private List<Software> softList;
+	private List<DataFile> dataList;
+	private List<App> appList;
 	private Date startDate;
 	private Date endDate;
 	private String uids; // userId,..
@@ -76,17 +72,17 @@ public class HomeAction extends BaseAction {
 	/** 各浏览器使用 */
 	private List<LoginLog> browserList;
 	/** 各用户运行app次数 */
-	private List<Software> userSoftList;
+	private List<App> userSoftList;
 	/** 新用户活跃度统计 */
 	private List<LoginLog> newUserList;
 	/** 前20用户运行A之 */
-	private List<Software> totalSoftList;
+	private List<App> totalSoftList;
 	/** 每天运行APP的次数 **/
-	private List<Software> eachAppList;
+	private List<App> eachAppList;
 	/** 每天上传数据个数、大小统计 **/
-	private List<Data> userDataList;
+	private List<DataFile> userDataList;
 	/** 每天上传数据大小统计 **/
-	private List<Data> eachDataList;
+	private List<DataFile> eachDataList;
 
 	/**
 	 * @return
@@ -102,7 +98,7 @@ public class HomeAction extends BaseAction {
 		Double dataSize = dataService.getBigUserDataSize(companyId, role);
 		Object companyNum = companyService.getBigUserCompanyNum(companyId, role);
 		Object reportNum = reportService.getBigUserReportNum(companyId, role);
-		Object appNum = softwareService.getBigUserAPPNum(companyId, role);
+		Object appNum = appService.getBigUserAPPNum(companyId, role);
 
 		resultMap.put("userNum", userNum);
 		resultMap.put("dataNum", dataNum);
@@ -112,8 +108,8 @@ public class HomeAction extends BaseAction {
 		resultMap.put("appNum", appNum);
 
 		/** 历史比较 */
-		historyList = userService.getCountInHistory();
-		log.info("historyList" + historyList.size());
+//		historyList = userService.getCountInHistory();
+//		log.info("historyList" + historyList.size());
 //		/*** 前20运行app统计 */
 //		topN = 20;
 //		totalSoftList = softwareService.getTotalAppRunNum(topN);
@@ -145,14 +141,14 @@ public class HomeAction extends BaseAction {
 			log.info("Top 10统计dataList" + dataList.size());
 			logList = userService.getLoginTop(groupType, topN, startDate, endDate);
 			log.info("Top 10统计logList" + logList.size());
-			softList = softwareService.getAppRunTop(groupType, topN, startDate, endDate);
+			appList = appService.getAppRunTop(groupType, topN, startDate, endDate);
 			log.info("Top 10统计softList" + logList.size());
 
 			/** 周每天登陆统计 */
 			totalLogList = loginService.getUserLoginInWeek(startDate);
 			log.info("totalLogList:" + totalLogList.size());
 			/** 周每天APP运行次数统计 */
-			totalSoftList = softwareService.getAppRunNumCount(startDate);
+			totalSoftList = appService.getAppRunNumCount(startDate);
 			log.info("totalSoftList:" + totalSoftList.size());
 
 			/** 统计用户登陆次数 */
@@ -160,7 +156,7 @@ public class HomeAction extends BaseAction {
 			log.info("logList:" + logList.size());
 
 			/** 用户运行App情况统计 */
-			eachAppList = softwareService.getAppUserCount(startDate);
+			eachAppList = appService.getAppUserCount(startDate);
 			log.info("eachAppList:" + eachAppList.size());
 
 			/** 客户端使用情况统计 */
@@ -189,7 +185,7 @@ public class HomeAction extends BaseAction {
 	}
 
 	public String eachUserRunApp() {
-		eachAppList = softwareService.getAppUserCount(startDate);
+		eachAppList = appService.getAppUserCount(startDate);
 		log.info("eachAppList:" + eachAppList.size());
 		return "eachUserRunApp";
 	}
@@ -227,7 +223,7 @@ public class HomeAction extends BaseAction {
 	 */
 	public String eachDayAppRunNum() {
 		log.info(startDate);
-		totalSoftList = softwareService.getAppRunNumCount(startDate);
+		totalSoftList = appService.getAppRunNumCount(startDate);
 		return "softList";
 	}
 
@@ -248,7 +244,7 @@ public class HomeAction extends BaseAction {
 	 * @return
 	 */
 	public String loginNum() {
-		logList = softwareService.getTotalUserLogin(0);
+		logList = appService.getTotalUserLogin(0);
 		return "loginList";
 	}
 
@@ -258,7 +254,7 @@ public class HomeAction extends BaseAction {
 	 * @return
 	 */
 	public String getHistory() {
-		historyList = userService.getCountInHistory();
+	//	historyList = userService.getCountInHistory();
 		return "historyList";
 	}
 
@@ -268,7 +264,7 @@ public class HomeAction extends BaseAction {
 	 * @return
 	 */
 	public String appRunNum() {
-		totalSoftList = softwareService.getTotalAppRunNum(0);
+		totalSoftList = appService.getTotalAppRunNum(0);
 		return "softList";
 	}
 
@@ -277,8 +273,8 @@ public class HomeAction extends BaseAction {
 	 * 
 	 * @return
 	 */
-	public String totalBrowserDistribute() {
-		browserList = softwareService.getBrowerCount();
+	public String totalBrowser() {
+		browserList = appService.getBrowerCount();
 		return "browserCount";
 	}
 
@@ -298,8 +294,8 @@ public class HomeAction extends BaseAction {
 	 * @return
 	 */
 	public String userRunNum() {
-		userSoftList = softwareService.getTotalUserRunNum(0);
-		return "userRunNum";
+		appList = appService.getTotalUserRunNum(0);
+		return "AppList";
 	}
 
 	public Map<String, Object> getResultMap() {
@@ -341,19 +337,19 @@ public class HomeAction extends BaseAction {
 		}
 	}
 
-	public List<Data> getEachDataList() {
+	public List<DataFile> getEachDataList() {
 		return eachDataList;
 	}
 
-	public void setEachDataList(List<Data> eachDataList) {
+	public void setEachDataList(List<DataFile> eachDataList) {
 		this.eachDataList = eachDataList;
 	}
 
-	public List<Data> getUserDataList() {
+	public List<DataFile> getUserDataList() {
 		return userDataList;
 	}
 
-	public void setUserDataList(List<Data> userDataList) {
+	public void setUserDataList(List<DataFile> userDataList) {
 		this.userDataList = userDataList;
 	}
 
@@ -365,20 +361,22 @@ public class HomeAction extends BaseAction {
 		this.logList = logList;
 	}
 
-	public List<Data> getDataList() {
+	public List<DataFile> getDataList() {
 		return dataList;
 	}
 
-	public void setDataList(List<Data> dataList) {
+	public void setDataList(List<DataFile> dataList) {
 		this.dataList = dataList;
 	}
 
-	public List<Software> getSoftList() {
-		return softList;
+
+
+	public List<App> getAppList() {
+		return appList;
 	}
 
-	public void setSoftList(List<Software> softList) {
-		this.softList = softList;
+	public void setAppList(List<App> appList) {
+		this.appList = appList;
 	}
 
 	public String getUids() {
@@ -429,11 +427,11 @@ public class HomeAction extends BaseAction {
 		this.historyList = historyList;
 	}
 
-	public List<Software> getTotalSoftList() {
+	public List<App> getTotalSoftList() {
 		return totalSoftList;
 	}
 
-	public void setTotalSoftList(List<Software> totalSoftList) {
+	public void setTotalSoftList(List<App> totalSoftList) {
 		this.totalSoftList = totalSoftList;
 	}
 
@@ -445,11 +443,11 @@ public class HomeAction extends BaseAction {
 		this.browserList = browserList;
 	}
 
-	public List<Software> getUserSoftList() {
+	public List<App> getUserSoftList() {
 		return userSoftList;
 	}
 
-	public void setUserSoftList(List<Software> userSoftList) {
+	public void setUserSoftList(List<App> userSoftList) {
 		this.userSoftList = userSoftList;
 	}
 
@@ -461,11 +459,11 @@ public class HomeAction extends BaseAction {
 		this.newUserList = newUserList;
 	}
 
-	public List<Software> getEachAppList() {
+	public List<App> getEachAppList() {
 		return eachAppList;
 	}
 
-	public void setEachAppList(List<Software> eachAppList) {
+	public void setEachAppList(List<App> eachAppList) {
 		this.eachAppList = eachAppList;
 	}
 

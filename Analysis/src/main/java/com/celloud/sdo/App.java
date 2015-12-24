@@ -3,10 +3,10 @@ package com.celloud.sdo;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Software implements Serializable {
+public class App implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer softwareId;
-	private String softwareName;
+	private Integer app_id;
+	private String app_name;
 	/** 人气指数 */
 	private Integer bhri;
 	/** 创建时间 */
@@ -45,18 +45,7 @@ public class Software implements Serializable {
 	/**保存周的开始时间：*/
 	private String weekDate;
 	/**用户名*/
-	private String userName;
-	/**医院*/
-	private String companyName;
-
-	
-	public String getCompanyName() {
-		return companyName;
-	}
-
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
+	private String user_name;
 
 	public String getWeekDate() {
 		return weekDate;
@@ -71,31 +60,31 @@ public class Software implements Serializable {
 	}
 
 	public String getUserName() {
-		return userName;
+		return user_name;
 	}
 
 	public void setUserName(String userName) {
-		this.userName = userName;
+		this.user_name = userName;
 	}
 
 	public void setYearMonth(String yearMonth) {
 		this.yearMonth = yearMonth;
 	}
 
-	public Integer getSoftwareId() {
-		return softwareId;
+	public Integer getApp_id() {
+		return app_id;
 	}
 
-	public void setSoftwareId(Integer softwareId) {
-		this.softwareId = softwareId;
+	public void setApp_id(Integer app_id) {
+		this.app_id = app_id;
 	}
 
-	public String getSoftwareName() {
-		return softwareName;
+	public String getApp_name() {
+		return app_name;
 	}
 
-	public void setSoftwareName(String softwareName) {
-		this.softwareName = softwareName;
+	public void setApp_name(String app_name) {
+		this.app_name = app_name;
 	}
 
 	public Integer getBhri() {
@@ -236,7 +225,7 @@ public class Software implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Software [softwareId=" + softwareId + ", softwareName=" + softwareName + ", bhri=" + bhri + ", createDate=" + createDate + ", type=" + type
+		return "Software [softwareId=" + app_id + ", softwareName=" + app_name + ", bhri=" + bhri + ", createDate=" + createDate + ", type=" + type
 				+ ", englishName=" + englishName + ", pictureName=" + pictureName + ", intro=" + intro + ", isAdd=" + isAdd + ", runNum=" + runNum
 				+ ", runData=" + runData + ", fileFormat=" + fileFormat + ", offLine=" + offLine + ", companyId=" + companyId + ", company_name="
 				+ company_name + ", attribute=" + attribute + ", dataNum=" + dataNum + ", dataType=" + dataType + ", description=" + description

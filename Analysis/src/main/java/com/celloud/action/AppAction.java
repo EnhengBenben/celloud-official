@@ -9,9 +9,9 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-import com.celloud.sdo.Software;
+import com.celloud.sdo.App;
 import com.celloud.sdo.User;
-import com.celloud.service.SoftwareService;
+import com.celloud.service.AppService;
 import com.google.inject.Inject;
 
 @ParentPackage("json-default")
@@ -20,20 +20,19 @@ import com.google.inject.Inject;
 		@Result(name = "appList", location = "../../pages/appList.jsp"),
 		@Result(name = "oneApp", location = "../../pages/appOne.jsp"),
 		@Result(name = "appActivity", location = "../../pages/appActivity.jsp"),
+		
 		@Result(name = "success", type = "json", params = { "root", "fileName" }),
-		@Result(name = "appListJson", type = "json", params = { "root", "appList" }),
-		@Result(name = "appRunMonth", type = "json", params = { "root", "appList" }),
-		@Result(name = "appRunWeek", type = "json", params = { "root", "appList" }),
-		@Result(name = "appRunTop", type = "json", params = { "root", "appList" }),
+		@Result(name = "AppList", type = "json", params = { "root", "appList" }),
+
 		})
 
 public class AppAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
 	@Inject
-	private SoftwareService appService;
-	private List<Software> appList;
+	private AppService appService;
+	private List<App> appList;
 	private Integer compId;
-	private Software app;
+	private App app;
 	private User user;
 	private Date startDate;
 	private Date endDate;
@@ -54,7 +53,7 @@ public class AppAction extends BaseAction {
 	public String appRunTop(){
 		topN=10;
 	    appList = appService.getAppRunTop(type, topN, startDate, endDate);
-		return "appRunTop";
+		return "AppList";
 	}
 	/**
 	 *  获取App的运行信息
@@ -64,7 +63,7 @@ public class AppAction extends BaseAction {
 		compId = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		appList = appService.getAppListByBigUser(compId,role);
-		return "appListJson";
+		return "AppList";
 	}
 	public String toAppActivity(){
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
@@ -80,8 +79,8 @@ public class AppAction extends BaseAction {
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		Integer cmpId = (Integer) getCid();
 		log.info(softwareId);
-		appList = appService.getAppRunTimeInWeek(cmpId,user.getUserId(), startDate, endDate,role,softwareId);
-		return "appRunWeek";
+		appList = appService.getAppRunTimeInWeek(cmpId,user.getUser_id(), startDate, endDate,role,softwareId);
+		return "AppList";
 	}
 	/**
 	 * 统计各app在时间段内月运行次数
@@ -91,28 +90,28 @@ public class AppAction extends BaseAction {
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		Integer cmpId = (Integer) getCid();
 		log.info(softwareId);
-		appList = appService.getAppRunTimeInMonth(cmpId,user.getUserId(), startDate, endDate,role,softwareId);
-		return "appRunMonth";
+		appList = appService.getAppRunTimeInMonth(cmpId,user.getUser_id(), startDate, endDate,role,softwareId);
+		return "AppList";
 	}
 	
 	public String getAppById() {
-		app = appService.getAppById(app.getSoftwareId());
+		app = appService.getAppById(app.getApp_id());
 		return "oneApp";
 	}
 
-	public List<Software> getAppList() {
+	public List<App> getAppList() {
 		return appList;
 	}
 
-	public void setAppList(List<Software> appList) {
+	public void setAppList(List<App> appList) {
 		this.appList = appList;
 	}
 
-	public Software getApp() {
+	public App getApp() {
 		return app;
 	}
 
-	public void setApp(Software app) {
+	public void setApp(App app) {
 		this.app = app;
 	}
 	public User getUser() {

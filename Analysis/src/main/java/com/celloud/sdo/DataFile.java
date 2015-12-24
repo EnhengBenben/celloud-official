@@ -3,7 +3,7 @@ package com.celloud.sdo;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Data implements Serializable,Cloneable {
+public class DataFile implements Serializable,Cloneable {
 	private static final long serialVersionUID = 1L;
 	/** 文件编号 */
 	private Integer fileId;

@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.celloud.dao.UserDao;
-import com.celloud.sdo.Data;
+import com.celloud.sdo.DataFile;
 import com.celloud.sdo.Entry;
 import com.celloud.sdo.LoginLog;
-import com.celloud.sdo.Software;
+import com.celloud.sdo.App;
 import com.celloud.sdo.TotalCount;
 import com.celloud.sdo.User;
 import com.celloud.service.UserService;
@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Software> getAppRunTimesByUId(Integer userId) {
+	public List<App> getAppRunTimesByUId(Integer userId) {
 		return userDao.getAppRunTimesByUId(userId);
 	}
 
@@ -88,12 +88,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Data> getUploadFileMonth(Integer userId) {
+	public List<DataFile> getUploadFileMonth(Integer userId) {
 		return userDao.getUploadFileMonth(userId);
 	}
 
 	@Override
-	public List<Data> getUploadFileWeek(Integer userId) {
+	public List<DataFile> getUploadFileWeek(Integer userId) {
 		return userDao.getUploadFileWeek(userId);
 	}
 	@Override
@@ -107,22 +107,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Data> getFileMonthInDate(Integer cmpId, Integer role,List<Integer> uids, Date start, Date end) {
+	public List<DataFile> getFileMonthInDate(Integer cmpId, Integer role,List<Integer> uids, Date start, Date end) {
 		return userDao.getFileMonthInDate(cmpId,role,uids, start, end);
 	}
 
 	@Override
-	public List<Data> getFileInWeekDate(Integer cmpId, Integer role,List<Integer> uids, Date start, Date end) {
+	public List<DataFile> getFileInWeekDate(Integer cmpId, Integer role,List<Integer> uids, Date start, Date end) {
 		return userDao.getFileInWeekDate(cmpId,role,uids, start, end);
 	}
 
 	@Override
-	public List<Software> getAppRunInWeek(Integer cmpId, Integer role,List<Integer> uids, Date start, Date end) {
+	public List<App> getAppRunInWeek(Integer cmpId, Integer role,List<Integer> uids, Date start, Date end) {
 		return userDao.getAppRunInWeek(cmpId,role,uids, start, end);
 	}
 
 	@Override
-	public List<Software> getAppRunInMonth(Integer cmpId, Integer role,List<Integer> uids,  Date start, Date end) {
+	public List<App> getAppRunInMonth(Integer cmpId, Integer role,List<Integer> uids,  Date start, Date end) {
 		return userDao.getAppRunInMonth(cmpId,role,uids, start, end);
 	}
 
@@ -137,7 +137,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Data> getUserDataTop(String type, int topN, Date start, Date end) {
+	public List<DataFile> getUserDataTop(String type, int topN, Date start, Date end) {
 		return userDao.getUserDataTop(type, topN,start,end);
 	}
 

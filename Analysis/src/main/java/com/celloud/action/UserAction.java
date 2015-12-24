@@ -2,7 +2,6 @@ package com.celloud.action;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -12,11 +11,11 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-import com.celloud.sdo.Data;
+import com.celloud.sdo.DataFile;
 import com.celloud.sdo.Entry;
 import com.celloud.sdo.LoginLog;
 import com.celloud.sdo.PublicKey;
-import com.celloud.sdo.Software;
+import com.celloud.sdo.App;
 import com.celloud.sdo.User;
 import com.celloud.service.UserService;
 import com.celloud.utils.MD5Util;
@@ -34,7 +33,6 @@ import com.google.inject.Inject;
 		@Result(name = "output", type = "json", params = { "root", "list" }),
 		
 		@Result(name = "userListJson", type = "json", params = { "root", "userList" }),
-		
 		
 		@Result(name = "EntryList", type = "json", params = { "root", "entryList" }),
 
@@ -57,8 +55,8 @@ public class UserAction extends BaseAction {
 	private List<Map<String, Object>> list;
 	private List<User> userList;
 	private List<LoginLog> loginList;
-	private List<Software> softList;
-	private List<Data> dataList;
+	private List<App> softList;
+	private List<DataFile> dataList;
 	private List<Entry> entryList;
 	private Date startDate;
 	private Date endDate;
@@ -94,7 +92,7 @@ public class UserAction extends BaseAction {
 		if (user != null) {
 			if (user.getRole() >= 1) {
 				super.session.put("userName", user.getUsername());
-				super.session.put("userId", user.getUserId());
+				super.session.put("userId", user.getUser_id());
 				super.session.put(User.USER_ROLE, user.getRole());
 				super.session.put("deptId", user.getDeptId());
 				super.session.put("email", user.getEmail());
@@ -176,7 +174,6 @@ public class UserAction extends BaseAction {
 	public String activityFileMonth() {
 		Integer cmpId = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
-		List<Integer> list = new ArrayList<Integer>();
 		dataList = userService.getFileMonthInDate(cmpId, role, userIds, startDate, endDate);
 		return "DataList";
 	}
@@ -206,12 +203,12 @@ public class UserAction extends BaseAction {
 
 	public String uploadFileMonth() {
 
-		dataList = userService.getUploadFileMonth(user.getUserId());
+		dataList = userService.getUploadFileMonth(user.getUser_id());
 		return "DataList";
 	}
 
 	public String uploadFileWeek() {
-		dataList = userService.getUploadFileWeek(user.getUserId());
+		dataList = userService.getUploadFileWeek(user.getUser_id());
 		return "DataList";
 	}
 
@@ -221,7 +218,7 @@ public class UserAction extends BaseAction {
 	 * @return
 	 */
 	public String userRunApp() {
-		softList = userService.getAppRunTimesByUId(user.getUserId());
+		softList = userService.getAppRunTimesByUId(user.getUser_id());
 		return "SoftwareList";
 	}
 
@@ -231,7 +228,7 @@ public class UserAction extends BaseAction {
 	 * @return
 	 */
 	public String userRunAppInMonth() {
-		entryList = userService.getAppRunEachMonthByUId(user.getUserId());
+		entryList = userService.getAppRunEachMonthByUId(user.getUser_id());
 		return "EntryList";
 	}
 
@@ -241,7 +238,7 @@ public class UserAction extends BaseAction {
 	 * @return
 	 */
 	public String userRunAppInWeek() {
-		entryList = userService.getAppRunEachWeekByUId(user.getUserId());
+		entryList = userService.getAppRunEachWeekByUId(user.getUser_id());
 		return "EntryList";
 	}
 
@@ -312,7 +309,7 @@ public class UserAction extends BaseAction {
 	}
 
 	public String getUserById() {
-		user = userService.getUserById(user.getUserId());
+		user = userService.getUserById(user.getUser_id());
 		loginList = userService.getLogById(user.getUsername());
 		return "oneUser";
 	}
@@ -363,19 +360,19 @@ public class UserAction extends BaseAction {
 		this.loginList = loginList;
 	}
 
-	public List<Software> getSoftList() {
+	public List<App> getSoftList() {
 		return softList;
 	}
 
-	public void setSoftList(List<Software> softList) {
+	public void setSoftList(List<App> softList) {
 		this.softList = softList;
 	}
 
-	public List<Data> getDataList() {
+	public List<DataFile> getDataList() {
 		return dataList;
 	}
 
-	public void setDataList(List<Data> dataList) {
+	public void setDataList(List<DataFile> dataList) {
 		this.dataList = dataList;
 	}
 

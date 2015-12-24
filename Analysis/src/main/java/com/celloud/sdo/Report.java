@@ -5,19 +5,19 @@ import java.util.Date;
 
 public class Report implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer reportId;
+	private Integer report_id;
 	/** 文件编号 */
-	private Integer fileId;
+	private Integer file_id;
 	/** 项目编号 */
-	private Integer projectId;
+	private Integer project_id;
 	/** 软件编号 */
-	private Integer softwareId;
+	private Integer app_id;
 	/** 软件名称 */
-	private String softwareName;
+	private String app_name;
 	/** 标志位 0:数据报告；1项目报告 */
 	private Integer flag;
 	/** 用户编号 */
-	private Integer userId;
+	private Integer user_id;
 	/** 是否阅读 */
 	private Integer readed;
 	/** 创建时间 */
@@ -29,44 +29,52 @@ public class Report implements Serializable {
 	/** 结束时间 */
 	private Date endDate;
 
-	public Integer getReportId() {
-		return reportId;
+	public Integer getReport_id() {
+		return report_id;
 	}
 
-	public void setReportId(Integer reportId) {
-		this.reportId = reportId;
+	public void setReport_id(Integer report_id) {
+		this.report_id = report_id;
 	}
 
-	public Integer getFileId() {
-		return fileId;
+	public Integer getFile_id() {
+		return file_id;
 	}
 
-	public void setFileId(Integer fileId) {
-		this.fileId = fileId;
+	public void setFile_id(Integer file_id) {
+		this.file_id = file_id;
 	}
 
-	public Integer getProjectId() {
-		return projectId;
+	public Integer getProject_id() {
+		return project_id;
 	}
 
-	public void setProjectId(Integer projectId) {
-		this.projectId = projectId;
+	public void setProject_id(Integer project_id) {
+		this.project_id = project_id;
 	}
 
-	public Integer getSoftwareId() {
-		return softwareId;
+	public Integer getApp_id() {
+		return app_id;
 	}
 
-	public void setSoftwareId(Integer softwareId) {
-		this.softwareId = softwareId;
+	public void setApp_id(Integer app_id) {
+		this.app_id = app_id;
 	}
 
-	public String getSoftwareName() {
-		return softwareName;
+	public String getApp_name() {
+		return app_name;
 	}
 
-	public void setSoftwareName(String softwareName) {
-		this.softwareName = softwareName;
+	public void setApp_name(String app_name) {
+		this.app_name = app_name;
+	}
+
+	public Integer getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(Integer user_id) {
+		this.user_id = user_id;
 	}
 
 	public Integer getFlag() {
@@ -77,17 +85,10 @@ public class Report implements Serializable {
 		this.flag = flag;
 	}
 
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
 	public Integer getReaded() {
 		return readed;
 	}
+	
 
 	public void setReaded(Integer readed) {
 		this.readed = readed;

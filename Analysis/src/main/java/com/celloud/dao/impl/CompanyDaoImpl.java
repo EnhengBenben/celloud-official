@@ -16,9 +16,9 @@ import org.apache.log4j.Logger;
 
 import com.celloud.dao.CompanyDao;
 import com.celloud.sdo.Company;
-import com.celloud.sdo.Data;
+import com.celloud.sdo.DataFile;
 import com.celloud.sdo.LoginLog;
-import com.celloud.sdo.Software;
+import com.celloud.sdo.App;
 import com.celloud.utils.ConnectManager;
 import com.celloud.utils.LogUtil;
 import com.celloud.utils.PropertiesUtil;
@@ -33,11 +33,9 @@ public class CompanyDaoImpl implements CompanyDao {
 	public Object getBigUserCompanyNum(Integer companyId,int role) {
 		Connection conn = ConnectManager.getConnection();
 		Map<String, Object> map = null;
-		String sql = "select count(*) num from (select c.company_name from tb_user u,tb_dept d,tb_company c where u.dept_id=d.dept_id and c.state=0 and c.company_id=d.company_id"
-			//	+ " and u.company_id=? "
-	//			+ SqlController.whereCompany(role, companyId)
+		String sql = "select count(distinct(u.company_id))as num from tb_user u, tb_user_company_relat uc where u.user_id = uc.user_id and uc.company_id "
 				+ " and u.user_id not in ("
-				+ noUserid + ") group by c.company_id) t";
+				+ noUserid + ") "+SqlController.whereCompany("uc", "company_id", role, companyId);
 		LogUtil.info(log, sql);
 		try {
 			map = qr.query(conn, sql, new MapHandler());
@@ -160,8 +158,8 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
-	public List<Software> getCompanyRunAppNumByCId(Integer companyId,String groupByTag) {
-		List<Software> list =null;
+	public List<App> getCompanyRunAppNumByCId(Integer companyId,String groupByTag) {
+		List<App> list =null;
 		Connection conn = ConnectManager.getConnection();
 		String group="";//按不同的字段分组
 		switch(groupByTag){
@@ -199,7 +197,7 @@ public class CompanyDaoImpl implements CompanyDao {
 			    +group;
 		LogUtil.info(log, sql);
 		try{
-			ResultSetHandler<List<Software>> rsh = new BeanListHandler<Software>(Software.class);
+			ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);
 			list = qr.query(conn, sql, rsh, companyId);
 		}catch(SQLException e){
 			LogUtil.query(log, sql, e);
@@ -208,8 +206,8 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
-	public List<Data> getCompanyUpLoadDataByCId(Integer companyId,String groupBytag) {
-		List<Data> list =null;
+	public List<DataFile> getCompanyUpLoadDataByCId(Integer companyId,String groupBytag) {
+		List<DataFile> list =null;
 		Connection conn = ConnectManager.getConnection();
 
 		String group="";//按不同的字段分组
@@ -233,7 +231,7 @@ public class CompanyDaoImpl implements CompanyDao {
 				+		" order by uf.create_date";
 		LogUtil.info(log, sql);
 		try{
-			ResultSetHandler<List<Data>> rsh = new BeanListHandler<Data>(Data.class);
+			ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<DataFile>(DataFile.class);
 			list = qr.query(conn, sql, rsh, companyId);
 		}catch(SQLException e){
 			LogUtil.query(log, sql, e);
@@ -310,8 +308,8 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
-	public List<Data> getCompanyFileInWeek(Integer cmpId, Date start, Date end, List<Integer> cmpIdList,Integer role) {
-		List<Data> list =null;
+	public List<DataFile> getCompanyFileInWeek(Integer cmpId, Date start, Date end, List<Integer> cmpIdList,Integer role) {
+		List<DataFile> list =null;
 		Connection conn = ConnectManager.getConnection();
 
 		LogUtil.info(log, SqlController.whereIdNotIn("c", "company_id", cmpIdList));
@@ -337,7 +335,7 @@ public class CompanyDaoImpl implements CompanyDao {
 		LogUtil.info(log, SqlController.whereIdNotIn("c", "company_id", cmpIdList));
 
 		try{
-			ResultSetHandler<List<Data>> rsh = new BeanListHandler<Data>(Data.class);
+			ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<DataFile>(DataFile.class);
 			list = qr.query(conn, sql, rsh, start,end);
 		}catch(SQLException e){
 			LogUtil.query(log, sql, e);
@@ -346,8 +344,8 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
-	public List<Data> getCompanyFileInMonth(Integer cmpId, Date start, Date end,List<Integer> cmpIdList, Integer role) {
-		List<Data> list =null;
+	public List<DataFile> getCompanyFileInMonth(Integer cmpId, Date start, Date end,List<Integer> cmpIdList, Integer role) {
+		List<DataFile> list =null;
 		Connection conn = ConnectManager.getConnection();
 
 		String sql="select uc.company_name as company_name,sum(f.fileNum) as fileNum, sum(f.size) as size, f.yearMonth as yearMonth from"
@@ -371,7 +369,7 @@ public class CompanyDaoImpl implements CompanyDao {
 		LogUtil.info(log, SqlController.whereIdNotIn("c", "company_id", cmpIdList));
 
 		try{
-			ResultSetHandler<List<Data>> rsh = new BeanListHandler<Data>(Data.class);
+			ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<DataFile>(DataFile.class);
 			list = qr.query(conn, sql, rsh, start,end);
 		}catch(SQLException e){
 			LogUtil.query(log, sql, e);
@@ -380,8 +378,8 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
-	public List<Software> getCompanySoftwareInWeek(Integer cmpId,Date start, Date end, List<Integer> cmpIds,Integer role) {
-		List<Software> list =null;
+	public List<App> getCompanySoftwareInWeek(Integer cmpId,Date start, Date end, List<Integer> cmpIds,Integer role) {
+		List<App> list =null;
 		Connection conn = ConnectManager.getConnection();
 
 		String sql="select uc.company_name as companyName,sum(rn.runNum) as runNum,rn.weekDate as weekDate from"
@@ -404,7 +402,7 @@ public class CompanyDaoImpl implements CompanyDao {
 					+" order by weekDate ,runNum desc";
 		LogUtil.info(log, sql);
 		try{
-			ResultSetHandler<List<Software>> rsh = new BeanListHandler<Software>(Software.class);
+			ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);
 			list = qr.query(conn, sql, rsh, start,end);
 		}catch(SQLException e){
 			LogUtil.query(log, sql, e);
@@ -413,8 +411,8 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
-	public List<Software> getCompanySoftwareInMonth(Integer cmpId,Date start, Date end,List<Integer> cmpIds,Integer role) {
-		List<Software> list =null;
+	public List<App> getCompanySoftwareInMonth(Integer cmpId,Date start, Date end,List<Integer> cmpIds,Integer role) {
+		List<App> list =null;
 		Connection conn = ConnectManager.getConnection();
 
 		String sql="select uc.company_name as companyName,sum(rn.runNum) as runNum,rn.yearMonth as yearMonth from"
@@ -436,7 +434,7 @@ public class CompanyDaoImpl implements CompanyDao {
 					+" order by yearMonth ,runNum desc";
 				LogUtil.info(log, sql);
 				try{
-					ResultSetHandler<List<Software>> rsh = new BeanListHandler<Software>(Software.class);
+					ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);
 					list = qr.query(conn, sql, rsh, start,end);
 				}catch(SQLException e){
 					LogUtil.query(log, sql, e);

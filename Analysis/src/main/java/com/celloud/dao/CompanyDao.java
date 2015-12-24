@@ -6,9 +6,9 @@ import java.util.Map;
 
 import com.celloud.dao.impl.CompanyDaoImpl;
 import com.celloud.sdo.Company;
-import com.celloud.sdo.Data;
+import com.celloud.sdo.DataFile;
 import com.celloud.sdo.LoginLog;
-import com.celloud.sdo.Software;
+import com.celloud.sdo.App;
 import com.google.inject.ImplementedBy;
 
 @ImplementedBy(CompanyDaoImpl.class)
@@ -75,14 +75,14 @@ public interface CompanyDao {
 	 * @param companyId
 	 * @return
 	 */
-	public List<Software> getCompanyRunAppNumByCId(Integer companyId,String groupBytag);
+	public List<App> getCompanyRunAppNumByCId(Integer companyId,String groupBytag);
 	
 	/**
 	 * 取大客户下所有医院上传文件个数
 	 * @param companyId
 	 * @return
 	 */
-	public List<Data> getCompanyUpLoadDataByCId(Integer companyId,String groupBytag);
+	public List<DataFile> getCompanyUpLoadDataByCId(Integer companyId,String groupBytag);
 	
 	/**
 	 * 查询时间段内医院在各周登陆的次数
@@ -108,7 +108,7 @@ public interface CompanyDao {
 	 * @param companyList 仅看此医院
 	 * @return
 	 */
-	public List<Data> getCompanyFileInWeek(Integer cmpId,Date start ,Date end,List<Integer> cmpIdList,Integer role );
+	public List<DataFile> getCompanyFileInWeek(Integer cmpId,Date start ,Date end,List<Integer> cmpIdList,Integer role );
 	/**
 	 * 查询时间段医院在各个月上传文件大小、数量
 	 * @param userId
@@ -117,7 +117,7 @@ public interface CompanyDao {
 	 * @param companyList 仅看此医院
 	 * @return
 	 */
-	public List<Data> getCompanyFileInMonth(Integer cmpId,Date start ,Date end,List<Integer> cmpIdList,Integer role );
+	public List<DataFile> getCompanyFileInMonth(Integer cmpId,Date start ,Date end,List<Integer> cmpIdList,Integer role );
 	/**
 	 * 查询时间段内医院在各个周内运行app的次数
 	 * @param userId
@@ -126,7 +126,7 @@ public interface CompanyDao {
 	 * @param companyList 仅看此医院
 	 * @return
 	 */
-	public List<Software> getCompanySoftwareInWeek(Integer cmpId,Date start,Date end,List<Integer> cmpIdList,Integer role);
+	public List<App> getCompanySoftwareInWeek(Integer cmpId,Date start,Date end,List<Integer> cmpIdList,Integer role);
 	/**
 	 * 查询时间段内医院在各个月内运行app的次数
 	 * @param userId
@@ -135,7 +135,7 @@ public interface CompanyDao {
 	 * @param companyList 仅看此医院
 	 * @return
 	 */
-	public List<Software> getCompanySoftwareInMonth(Integer cmpId,Date start,Date end,List<Integer> cmpIdList,Integer role);
+	public List<App> getCompanySoftwareInMonth(Integer cmpId,Date start,Date end,List<Integer> cmpIdList,Integer role);
 
 	/**
 	 * 管好权限查询客户权限

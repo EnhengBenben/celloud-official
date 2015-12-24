@@ -4,9 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import com.celloud.sdo.Company;
-import com.celloud.sdo.Data;
+import com.celloud.sdo.DataFile;
 import com.celloud.sdo.LoginLog;
-import com.celloud.sdo.Software;
+import com.celloud.sdo.App;
 import com.celloud.service.impl.CompanyServiceImpl;
 import com.google.inject.ImplementedBy;
 
@@ -57,35 +57,35 @@ public interface CompanyService {
 	 * @param companyId
 	 * @return
 	 */
-	public List<Software> getCompanyRunAppNumByCId(Integer companyId);
+	public List<App> getCompanyRunAppNumByCId(Integer companyId);
 	
 	/**
 	 * 获取大客户下医院运行App的次数按月分组
 	 * @param companyId
 	 * @return
 	 */
-	public List<Software> getCompanyRunAppNumGroupByMonth(Integer companyId);
+	public List<App> getCompanyRunAppNumGroupByMonth(Integer companyId);
 	
 	/**
 	 * 获取大客户下医院运行App的次数按周分组
 	 * @param companyId
 	 * @return
 	 */
-	public List<Software> getCompanyRunAppNumGroupByWeek(Integer companyId);
+	public List<App> getCompanyRunAppNumGroupByWeek(Integer companyId);
 	
 	/**
 	 * 取大客户下所有医院上传文件个数按月统计
 	 * @param companyId
 	 * @return
 	 */
-	public List<Data> getCompanyUpLoadGroupMonthByCId(Integer companyId);
+	public List<DataFile> getCompanyUpLoadGroupMonthByCId(Integer companyId);
 	
 	/**
 	 * 取大客户下所有医院上传文件个数按周统计
 	 * @param companyId
 	 * @return
 	 */
-	public List<Data> getCompanyUpLoadGroupWeekByCId(Integer companyId);
+	public List<DataFile> getCompanyUpLoadGroupWeekByCId(Integer companyId);
 	/**
 	 * 查询时间段内医院在各周登陆的次数
 	 * @param userId
@@ -112,7 +112,7 @@ public interface CompanyService {
 	 * @param companyList 仅看此医院
 	 * @return
 	 */
-	public List<Data> getCompanyFileInWeek(Integer cmpId,Date start ,Date end,List<Integer> cmpIdList,Integer role );
+	public List<DataFile> getCompanyFileInWeek(Integer cmpId,Date start ,Date end,List<Integer> cmpIdList,Integer role );
 	/**
 	 * 查询时间段医院在各个月上传文件大小、数量
 	 * @param userId
@@ -121,7 +121,7 @@ public interface CompanyService {
 	 * @param companyList 仅看此医院
 	 * @return
 	 */
-	public List<Data> getCompanyFileInMonth(Integer cmpId,Date start ,Date end,List<Integer> cmpIdList,Integer role);
+	public List<DataFile> getCompanyFileInMonth(Integer cmpId,Date start ,Date end,List<Integer> cmpIdList,Integer role);
 	/**
 	 * 查询时间段内医院在各个周内运行app的次数
 	 * @param userId
@@ -130,7 +130,7 @@ public interface CompanyService {
 	 * @param companyList 仅看此医院
 	 * @return
 	 */
-	public List<Software> getCompanySoftwareInWeek(Integer cmpId,Date start,Date end,List<Integer> cmpIds,Integer role);
+	public List<App> getCompanySoftwareInWeek(Integer cmpId,Date start,Date end,List<Integer> cmpIds,Integer role);
 	/**
 	 * 查询时间段内医院在各个月内运行app的次数
 	 * @param userId
@@ -139,7 +139,7 @@ public interface CompanyService {
 	 * @param companyList 仅看此医院
 	 * @return
 	 */
-	public List<Software> getCompanySoftwareInMonth(Integer cmpId,Date start,Date end,List<Integer> cmpIds,Integer role);
+	public List<App> getCompanySoftwareInMonth(Integer cmpId,Date start,Date end,List<Integer> cmpIds,Integer role);
 	/**
 	 * 管好权限查询客户权限
 	 * @param cmpId

@@ -14,10 +14,10 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
 import com.celloud.sdo.Company;
-import com.celloud.sdo.Data;
+import com.celloud.sdo.DataFile;
 import com.celloud.sdo.Entry;
 import com.celloud.sdo.LoginLog;
-import com.celloud.sdo.Software;
+import com.celloud.sdo.App;
 import com.celloud.sdo.User;
 import com.celloud.service.CompanyService;
 import com.celloud.utils.LogUtil;
@@ -64,8 +64,8 @@ public class CompanyAction extends BaseAction {
 	private List<Company> complist;
 	private Company company;
 	private List<Entry> lists;
-	private List<Software> runList;
-	private List<Data> dataList;
+	private List<App> runList;
+	private List<DataFile> dataList;
 	private List<LoginLog> logList;
 	private User user;
 	private Date startDate;
@@ -301,11 +301,11 @@ public class CompanyAction extends BaseAction {
 		return list;
 	}
 
-	public List<Data> getDataList() {
+	public List<DataFile> getDataList() {
 		return dataList;
 	}
 
-	public void setDataList(List<Data> dataList) {
+	public void setDataList(List<DataFile> dataList) {
 		this.dataList = dataList;
 	}
 
@@ -321,11 +321,11 @@ public class CompanyAction extends BaseAction {
 		this.lists = lists;
 	}
 
-	public List<Software> getRunList() {
+	public List<App> getRunList() {
 		return runList;
 	}
 
-	public void setRunList(List<Software> runList) {
+	public void setRunList(List<App> runList) {
 		this.runList = runList;
 	}
 

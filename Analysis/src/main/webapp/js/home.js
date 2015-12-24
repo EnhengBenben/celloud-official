@@ -1,92 +1,33 @@
 //function url
+//var loadHistoryURL = "home!getHistory";
 
-var browserDistributeURL = "home!totalBrowserDistribute";
+var BrowserURL = "home!totalBrowser";
 var UserRunNumURL = "home!userRunNum";
-var loadHistoryURL = "home!getHistory";
 var AppRunNumURL = "home!appRunNum";
- var loginNumURL = "home!loginNum"
+ var LoginNumURL = "home!loginNum"
 
 // auto load
-loadBrowserLoad();
 UserRunNum();
 AppRunNum();
-loginNum();
+LoadBrowser();
+LoginNum();
 // /
 function tableswitch(id) {
 	$("#" + id).toggle();
 }
 
-function loginNum() {
+function LoginNum() {
 	var viewId = "loginId";
-	$.get(loginNumURL, {}, function(data) {
+	$.get(LoginNumURL, {}, function(data) {
 		console.log(data);
 		var xAxis = new Array(data.length);
 		var yAxis = new Array(data.length);
 		var t;
 		for (var i = 0; i < data.length; i++) {
-			xAxis[i] = data[i].userName;
+			xAxis[i] = data[i].user_name;
 			yAxis[i] = data[i].logNum;
 		}
-		option = {
-			title : {
-				text : '',
-				subtext : ''
-			},
-			tooltip : {
-				trigger : 'axis'
-			},
-			legend : {
-				data : [ '登陆次数' ]
-			},
-			toolbox : {
-				show : true,
-				feature : {
-					dataZoom : {
-						show : true
-					},
-					dataView : {
-						show : true
-					},
-					magicType : {
-						show : true,
-						type : [ 'line', 'bar' ]
-					},
-					restore : {
-						show : true
-					},
-					saveAsImage : {
-						show : true
-					}
-				}
-			},
-			calculable : true,
-			dataZoom : {
-				show : true,
-				realtime : true,
-				start : 0,
-				end : 20
-			},
-			xAxis : [ {
-				type : 'category',
-				boundaryGap : false,
-				data : xAxis
-			} ],
-			yAxis : [ {
-				type : 'value'
-			} ],
-			series : [ {
-				name : '登陆次数',
-				type : 'bar',
-				data : yAxis,
-				itemStyle : {
-					normal : {
-						label : {
-							show : true
-						}
-					}
-				}
-			} ]
-		};
+		var option = makeOptionScroll('', xAxis, yAxis, '登陆次数', 'bar',0,25);
 		var myChart = echarts.init(document.getElementById(viewId));
 		myChart.setOption(option);
 	});
@@ -99,69 +40,10 @@ function AppRunNum() {
 		var yAxis = new Array(data.length);
 		var t;
 		for (var i = 0; i < data.length; i++) {
-			xAxis[i] =  data[i].softwareName;
+			xAxis[i] =  data[i].app_name;
 			yAxis[i] = data[i].runNum;
 		}
-		option = {
-			title : {
-				text : '',
-				subtext : ''
-			},
-			tooltip : {
-				trigger : 'axis'
-			},
-			legend : {
-				data : [ '运行次数' ]
-			},
-			toolbox : {
-				show : true,
-				feature : {
-					dataZoom : {
-						show : true
-					},
-					dataView : {
-						show : true
-					},
-					magicType : {
-						show : true,
-						type : [ 'line', 'bar' ]
-					},
-					restore : {
-						show : true
-					},
-					saveAsImage : {
-						show : true
-					}
-				}
-			},
-			calculable : true,
-			dataZoom : {
-				show : true,
-				realtime : true,
-				start : 0,
-				end : 25
-			},
-			xAxis : [ {
-				type : 'category',
-				boundaryGap : false,
-				data : xAxis
-			} ],
-			yAxis : [ {
-				type : 'value'
-			} ],
-			series : [ {
-				name : '运行次数',
-				type : 'bar',
-				data : yAxis,
-				itemStyle : {
-					normal : {
-						label : {
-							show : true
-						}
-					}
-				}
-			} ]
-		};
+		var option = makeOptionScroll('', xAxis, yAxis, '运行次数', 'bar',0,50);
 		var myChart = echarts.init(document.getElementById(viewId));
 		myChart.setOption(option);
 	});
@@ -270,7 +152,7 @@ function loadHistory() {
 								type : 'max',
 								name : '最大值'
 							} ]
-						},
+						},startZoom
 					}, {
 						name : legendTitle[2],
 						type : 'bar',
@@ -346,94 +228,23 @@ function UserRunNum() {
 			xAxis[i] = data[i].userName;
 			yAxis[i] = data[i].runNum;
 		}
-		option = {
-			title : {
-				text : '',
-				subtext : ''
-			},
-			tooltip : {
-				trigger : 'axis'
-			},
-			legend : {
-				data : [ '运行次数' ]
-			},
-			toolbox : {
-				show : true,
-				feature : {
-					dataZoom : {
-						show : true
-					},
-					dataView : {
-						show : true
-					},
-					magicType : {
-						show : true,
-						type : [ 'line', 'bar' ]
-					},
-					restore : {
-						show : true
-					},
-					saveAsImage : {
-						show : true
-					}
-				}
-			},
-			calculable : true,
-			dataZoom : {
-				show : true,
-				realtime : true,
-				start : 0,
-				end : 20,
-			},
-			xAxis : [ {
-				type : 'category',
-				boundaryGap : false,
-				data : xAxis
-			} ],
-			yAxis : [ {
-				type : 'value'
-			} ],
-			series : [ {
-				name : '运行次数',
-				type : 'bar',
-				data : yAxis,
-				itemStyle : {
-					normal : {
-						label : {
-							show : true
-						}
-					}
-				}
-			} ]
-		};
+		var option = makeOptionScroll('', xAxis, yAxis, '运行次数', 'bar',0,25);
 		var myChart = echarts.init(document.getElementById(viewId));
 		myChart.setOption(option);
 	});
 }
 
 // app运行次数统计
-function loadBrowserLoad() {
+function LoadBrowser() {
 	var viewId = "browserDistribute";
 	if(document.getElementById(viewId)==null)
 		return ;
 	
-	$.get(browserDistributeURL, {}, function(data) {
-		if (data == null || data.length < 1) {
-			$("#" + viewId).css({
-				"display" : "none"
-			});
-			return;
-		} else {
-			$("#" + viewId).css({
-				"display" : "block"
-			});
-		}
+	$.get(BrowserURL, {}, function(data) {
 		var vlist = new Array(data.length);
-		// var xAxis = new Array(data.length);
 		var yAxis = new Array(data.length);
 		var legendName = new Array(data.length);
 		for (var i = 0; i < data.length; i++) {
-			// xAxis[i] = data[i].browser;
 			legendName[i] = data[i].browser;
 			yAxis[i] = data[i].logNum;
 			vlist[i] = {
@@ -441,55 +252,9 @@ function loadBrowserLoad() {
 				"value" : data[i].logNum
 			};
 		}
-		option = {
-			title : {
-				text : '',
-				subtext : ''
-			},
-			tooltip : {
-				trigger : 'axis'
-			},
-			legend : {
-				orient : 'vertical',
-				x : 'left',
-				data : legendName,
-			},
-			toolbox : {
-				orient : 'vertical',
-				x : 'right',
-				show : true,
-				feature : {
-					dataZoom : {
-						show : true
-					},
-					dataView : {
-						show : true
-					},
-					restore : {
-						show : true
-					},
-					saveAsImage : {
-						show : true
-					}
-				}
-			},
-			calculable : true,
-			/*
-			 * dataZoom : { show : true, realtime : true, start : 0, end : 80 },
-			 * 
-			 * xAxis : [ { type : 'category', boundaryGap : false, data : xAxis } ],
-			 * yAxis : [ { type : 'value' } ],
-			 */
-			series : [ {
-				name : '客户端使用',
-				type : 'pie',
-				radius : '70%',
-				center : [ '40%', '40%' ],
-				data : vlist
-			} ]
-		};
+		var opt = makePieOption('', legendName, '客户端使用', '80%', '40%', '55%', vlist);
 		var myChart = echarts.init(document.getElementById((viewId)));
-		myChart.setOption(option);
+		myChart.setOption(opt);
 	});
 }
 function chars(data) {

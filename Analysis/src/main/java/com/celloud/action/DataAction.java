@@ -11,7 +11,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
-import com.celloud.sdo.Data;
+import com.celloud.sdo.DataFile;
 import com.celloud.sdo.User;
 import com.celloud.service.DataService;
 import com.celloud.utils.FileTools;
@@ -36,7 +36,7 @@ public class DataAction extends BaseAction {
 	@Inject
 	private DataService dataService;
 	private List<Map<String, Object>> list;
-	private List<Data> dataList;
+	private List<DataFile> dataList;
 	private Integer userId;
 	private String month;
 	private String fileName;
@@ -227,10 +227,10 @@ public class DataAction extends BaseAction {
 	public void setEnd(String end) {
 		this.end = end;
 	}
-	public List<Data> getDataList() {
+	public List<DataFile> getDataList() {
 		return dataList;
 	}
-	public void setDataList(List<Data> dataList) {
+	public void setDataList(List<DataFile> dataList) {
 		this.dataList = dataList;
 	}
 	public String getOrderType() {

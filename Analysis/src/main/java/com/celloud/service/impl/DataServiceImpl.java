@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.celloud.utils.EntryUtil;
 import com.celloud.dao.DataDao;
-import com.celloud.sdo.Data;
+import com.celloud.sdo.DataFile;
 import com.celloud.service.DataService;
 import com.google.inject.Inject;
 
@@ -20,14 +20,14 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public List<Data> getUserMonthDataList(Integer companyId,Integer role) {
-		List<Data> list = dataDao.getUserMonthDataList(companyId,role);
-		List<Data> res = EntryUtil.toInsert(list);
+	public List<DataFile> getUserMonthDataList(Integer companyId,Integer role) {
+		List<DataFile> list = dataDao.getUserMonthDataList(companyId,role);
+		List<DataFile> res = EntryUtil.toInsert(list);
 		return res;
 	}
 
 	@Override
-	public List<Data> getUserMonthData(Integer userId, Integer companyId) {
+	public List<DataFile> getUserMonthData(Integer userId, Integer companyId) {
 		return dataDao.getUserMonthData(userId, companyId);
 	}
 
@@ -60,20 +60,20 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public List<Data> getUserMonthDataJson(Integer userId, Integer companyId) {
-		List<Data> list = dataDao.getUserMonthData(userId, companyId);
-		List<Data> res = null;
+	public List<DataFile> getUserMonthDataJson(Integer userId, Integer companyId) {
+		List<DataFile> list = dataDao.getUserMonthData(userId, companyId);
+		List<DataFile> res = null;
 		res = EntryUtil.toInsert(list);
 		return res;
 	}
 
 	@Override
-	public List<Data> getUserWeekData(Date start) {
+	public List<DataFile> getUserWeekData(Date start) {
 		return dataDao.getUserWeekData(start);
 	}
 
 	@Override
-	public List<Data> getEachDayData(Date start) {
+	public List<DataFile> getEachDayData(Date start) {
 		return dataDao.getEachDayData(start);
 	}
 

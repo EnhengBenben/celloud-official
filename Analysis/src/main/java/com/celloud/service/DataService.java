@@ -23,21 +23,21 @@ public interface DataService {
 	 * 
 	 * @return
 	 */
-	public List<Data> getUserMonthDataList(Integer companyId, Integer role);
+	public List<DataFile> getUserMonthDataList(Integer companyId, Integer role);
 
 	/**
 	 * 某个用户每个月的数据量
 	 * 
 	 * @return
 	 */
-	public List<Data> getUserMonthData(Integer userId, Integer companyId);
+	public List<DataFile> getUserMonthData(Integer userId, Integer companyId);
 
 	/**
 	 * 某个用户每个月的数据量
 	 * 
 	 * @return
 	 */
-	public List<Data> getUserMonthDataJson(Integer userId, Integer companyId);
+	public List<DataFile> getUserMonthDataJson(Integer userId, Integer companyId);
 
 	/**
 	 * 获取某个用户某个月的数据列表
@@ -89,12 +89,12 @@ public interface DataService {
 	 * @param start开始时间
 	 * @return
 	 */
-	public List<Data> getUserWeekData(Date start);
+	public List<DataFile> getUserWeekData(Date start);
 	
 	/**
 	 * 统计周内每天上传的数据大小
 	 * @param start开始时间
 	 * @return
 	 */
-	public List<Data> getEachDayData(Date start);
+	public List<DataFile> getEachDayData(Date start);
 }

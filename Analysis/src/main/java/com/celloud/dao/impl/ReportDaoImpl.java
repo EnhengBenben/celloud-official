@@ -25,8 +25,7 @@ public  class ReportDaoImpl implements ReportDao {
 		String sql = "select count(r.report_id)as num  FROM tb_report r,tb_user_company_relat uc "
 				+	"where r.user_id = uc.user_id  and r.user_id not in ( "
 				+ noUserid + ")  "
-			//	+ SqlController.whereCompany("uc", role, companyId)
-				+ " group by uc.company_id ";
+				+ SqlController.whereCompany("uc","company_id", role, companyId);
 		LogUtil.info(log, sql);
 		try {
 			map = qr.query(conn, sql, new MapHandler());

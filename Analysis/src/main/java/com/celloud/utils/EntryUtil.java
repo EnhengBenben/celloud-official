@@ -3,7 +3,7 @@ package com.celloud.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.celloud.sdo.Data;
+import com.celloud.sdo.DataFile;
 
 public class EntryUtil {
 	/**
@@ -11,10 +11,10 @@ public class EntryUtil {
 	 * @param list
 	 * @return
 	 */
-	public static List<Data> toInsert(List<Data> list){
+	public static List<DataFile> toInsert(List<DataFile> list){
 		if(list==null||list.size()<=1)
 			return list;
-		 List<Data> res = new ArrayList<Data>(list.size());
+		 List<DataFile> res = new ArrayList<DataFile>(list.size());
 		 for(int i=0;i<list.size()-1;i++){
 			 res.addAll(toCreateList(list.get(i), list.get(i+1)));
 		 }
@@ -22,11 +22,11 @@ public class EntryUtil {
 		 return res;
 	}
 	
-	public static List<Data> toCreateList(Data start,Data end){
-		 List<Data> res = new ArrayList<Data>();
+	public static List<DataFile> toCreateList(DataFile start,DataFile end){
+		 List<DataFile> res = new ArrayList<DataFile>();
 		return createOneData(res,start,end);
 	}
-	public static  List<Data> createOneData(List<Data>res,Data start,Data end){
+	public static  List<DataFile> createOneData(List<DataFile>res,DataFile start,DataFile end){
 		if(start==null)
 			return res;
 		else if (start!=null&&end==null){
@@ -38,9 +38,9 @@ public class EntryUtil {
 		if(nextMonth.equals(end.getYearMonth())){
 			return res;	
 		}else{
-			Data obj=null;
+			DataFile obj=null;
 			try {
-				obj = (Data) start.clone();
+				obj = (DataFile) start.clone();
 			} catch (CloneNotSupportedException e) {
 				e.printStackTrace();
 			} 
@@ -52,8 +52,8 @@ public class EntryUtil {
 		return res;
 	}
 public static void main(String[] args) {
-	List<Data>list = new ArrayList<>();
-	Data d1 = new Data();
+	List<DataFile>list = new ArrayList<>();
+	DataFile d1 = new DataFile();
 	d1.setYearMonth("2014-07");
 	d1.setFileNum(5);
 	list.add(d1);
@@ -67,8 +67,8 @@ public static void main(String[] args) {
 //	d3.setFileNum(15);
 //	list.add(d3);
 
-	List<Data> l = toInsert(list);
-	for (Data data : l) {
+	List<DataFile> l = toInsert(list);
+	for (DataFile data : l) {
 		System.out.println(data);
 	}
 }

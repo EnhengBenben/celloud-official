@@ -12,7 +12,7 @@ public class User implements Serializable {
 	
 	public static final String USER_ROLE = "userRole";
 
-	private Integer userId;
+	private Integer user_id;
 	private String username;
 	private String password;
 	/** 邮箱 */
@@ -61,12 +61,12 @@ public class User implements Serializable {
 		this.reportNum = reportNum;
 	}
 
-	public Integer getUserId() {
-		return userId;
+	public Integer getUser_id() {
+		return user_id;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setUser_id(Integer user_id) {
+		this.user_id = user_id;
 	}
 
 	public String getUsername() {
@@ -191,7 +191,7 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", username=" + username
+		return "User [userId=" + user_id + ", username=" + username
 				+ ", password=" + password + ", email=" + email
 				+ ", createDate=" + createDate + ", role=" + role
 				+ ", truename=" + truename + ", cellphone=" + cellphone
