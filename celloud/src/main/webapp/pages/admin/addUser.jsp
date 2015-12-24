@@ -25,6 +25,7 @@
 			    	<div class="register-font">用户注册</div>
 			    	<input type="hidden" name="user.deptId" value="<s:property value="user.deptId"/>" />
 					<input type="hidden" name="user.companyId" value="<s:property value="user.companyId"/>" />
+					<input type="hidden" name="user.navigation" value="1" />
 			    	<input type="text" name="user.email" readonly="readonly" value="<s:property value="user.email"/>" id="email"/>
 			    	<input type="text" id="add_username" name="user.username" class="addUser" placeholder="用户名">
 		    	    <input type="password" name="user.password" class="addUser pwd" placeholder="密码（6-16位数字字母组合）" id="add_password"/>
