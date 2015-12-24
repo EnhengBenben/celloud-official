@@ -78,7 +78,8 @@ class split:
                     f.close()
                 elif file == 'splitstat.xls':
                     splitstatPath = os.path.join(resultPath, file)
-                    lines = open(splitstatPath, 'r').readlines()
+                    f = open(splitstatPath, 'r')
+                    lines = f.readlines()
                     file_size = len(lines)
                     result['usefulReads'] = linecache.getline(splitstatPath, file_size)
                     result['unknownReads'] = linecache.getline(splitstatPath, file_size-1)
