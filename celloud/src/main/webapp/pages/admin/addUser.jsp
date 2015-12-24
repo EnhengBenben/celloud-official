@@ -150,7 +150,7 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
 								var params = $("#userForm").serialize();
 								//服务协议
 								var isAllow = $("#isAllow").prop("checked");
-								if(isAllow!="checked"){
+								if(!isAllow){
 									$("#isAllowError").css("display","");
 									$(".error").html("请阅读并同意《Celloud用户使用协议》");
 									return;

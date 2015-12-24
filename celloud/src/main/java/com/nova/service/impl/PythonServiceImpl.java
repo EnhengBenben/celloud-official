@@ -73,7 +73,7 @@ public class PythonServiceImpl implements IPythonService {
         String newName = dataKey + FileTools.getExtName(fileName);
         data.setDataKey(dataKey);
         data.setPath(path + newName);
-        data.setState(DataState.ACTIVE);
+        data.setState(DataState.DEELTED);
         sql.updateDataInfoByFileId(data);
         log.info("为用户：" + id + "返回" + newName);
         return newName;
