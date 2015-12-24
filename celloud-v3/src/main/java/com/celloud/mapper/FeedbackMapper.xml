@@ -8,22 +8,15 @@
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="solve" property="solve" jdbcType="INTEGER" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.celloud.model.FeedbackWithBLOBs" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
     <result column="method" property="method" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_name, email, title, create_date, solve
+    id, user_name, email, title, create_date, solve, content, method
   </sql>
-  <sql id="Blob_Column_List" >
-    content, method
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from tb_feedback
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -31,7 +24,7 @@
     delete from tb_feedback
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.celloud.model.FeedbackWithBLOBs" >
+  <insert id="insert" parameterType="com.celloud.model.Feedback" >
     insert into tb_feedback (id, user_name, email, 
       title, create_date, solve, 
       content, method)
@@ -39,7 +32,7 @@
       #{title,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{solve,jdbcType=INTEGER}, 
       #{content,jdbcType=LONGVARCHAR}, #{method,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.celloud.model.FeedbackWithBLOBs" >
+  <insert id="insertSelective" parameterType="com.celloud.model.Feedback" useGeneratedKeys="true" keyProperty="id">
     insert into tb_feedback
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -94,7 +87,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.FeedbackWithBLOBs" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.Feedback" useGeneratedKeys="true" keyProperty="id">
     update tb_feedback
     <set >
       <if test="userName != null" >
@@ -121,7 +114,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.celloud.model.FeedbackWithBLOBs" >
+  <update id="updateByPrimaryKey" parameterType="com.celloud.model.Feedback" >
     update tb_feedback
     set user_name = #{userName,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
@@ -130,15 +123,6 @@
       solve = #{solve,jdbcType=INTEGER},
       content = #{content,jdbcType=LONGVARCHAR},
       method = #{method,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.celloud.model.Feedback" >
-    update tb_feedback
-    set user_name = #{userName,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      title = #{title,jdbcType=VARCHAR},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      solve = #{solve,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

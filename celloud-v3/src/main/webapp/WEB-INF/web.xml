@@ -11,6 +11,15 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<filter>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<servlet-name>springMVC</servlet-name>
+	</filter-mapping>
 	<servlet>
 		<servlet-name>springMVC</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -53,45 +62,45 @@
 			<param-value>80</param-value>
 		</init-param>
 		<init-param>
-            <param-name>kaptcha.image.height</param-name>
-            <param-value>32</param-value>
-        </init-param>
-        <init-param>
-            <param-name>kaptcha.textproducer.char.length</param-name>
-            <param-value>4</param-value>
-        </init-param>
-        <init-param>
-            <param-name>kaptcha.textproducer.char.space</param-name>
-            <param-value>3</param-value>
-        </init-param>
-        <init-param>
-            <param-name>kaptcha.textproducer.font.names</param-name>
-            <param-value>Consolas</param-value>
-        </init-param>
-        <init-param>
-            <param-name>kaptcha.textproducer.font.size</param-name>
-            <param-value>22</param-value>
-        </init-param>
-        <init-param>
-            <param-name>kaptcha.background.clear.from</param-name>
-            <param-value>220,220,220</param-value>
-        </init-param>
-        <init-param>
-            <param-name>kaptcha.background.clear.to</param-name>
-            <param-value>220,220,220</param-value>
-        </init-param>
-        <init-param>
-            <param-name>kaptcha.textproducer.font.color</param-name>
-            <param-value>0,153,51</param-value>
-        </init-param>
-        <init-param>
-            <param-name>kaptcha.textproducer.char.string</param-name>
-            <param-value>123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ</param-value>
-        </init-param>
-        <init-param>
-            <param-name>kaptcha.obscurificator.impl</param-name>
-            <param-value>com.celloud.utils.NoNoise</param-value>
-        </init-param>
+			<param-name>kaptcha.image.height</param-name>
+			<param-value>32</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.textproducer.char.length</param-name>
+			<param-value>4</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.textproducer.char.space</param-name>
+			<param-value>3</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.textproducer.font.names</param-name>
+			<param-value>Consolas</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.textproducer.font.size</param-name>
+			<param-value>22</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.background.clear.from</param-name>
+			<param-value>220,220,220</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.background.clear.to</param-name>
+			<param-value>220,220,220</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.textproducer.font.color</param-name>
+			<param-value>0,153,51</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.textproducer.char.string</param-name>
+			<param-value>123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.obscurificator.impl</param-name>
+			<param-value>com.celloud.utils.NoNoise</param-value>
+		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Kaptcha</servlet-name>

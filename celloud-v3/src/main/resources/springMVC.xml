@@ -80,6 +80,23 @@
 	</bean>
 	<!-- 异常处理配置 -->
 	<bean id="exceptionHandler" class="com.celloud.exception.ExceptionHandler" />
+	<!-- 拦截器配置 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/js/**" />
+			<mvc:exclude-mapping path="/images/**" />
+			<mvc:exclude-mapping path="/css/**" />
+			<mvc:exclude-mapping path="/plugins/**" />
+			<mvc:exclude-mapping path="/resources/**" />
+			<mvc:exclude-mapping path="/home/**" />
+			<mvc:exclude-mapping path="/feedback/save" />
+			<mvc:exclude-mapping path="/service.html" />
+			<mvc:exclude-mapping path="/feedBack.html" />
+			<mvc:exclude-mapping path="/login/**" />
+			<bean class="com.celloud.interceptor.SecurityInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
 	<!-- 启动面向切面的自动代理 -->
 	<aop:aspectj-autoproxy />
 	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
@@ -109,17 +126,6 @@
 		<aop:advisor pointcut-ref="transactionPointcut"
 			advice-ref="transactionAdvice" />
 	</aop:config>
-
-	<!-- 定义mongo对象，对应的是mongodb官方jar包中的Mongo，replica-set设置集群副本的ip地址和端口 -->
-	<!-- <mongo:mongo id="mongo" replica-set="${mongo.hostport}"> 一些连接属性的设置 
-		<mongo:options threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}" 
-		connect-timeout="${mongo.connectTimeout}" max-wait-time="${mongo.maxWaitTime}" 
-		auto-connect-retry="${mongo.autoConnectRetry}" socket-keep-alive="${mongo.socketKeepAlive}" 
-		socket-timeout="${mongo.socketTimeout}" slave-ok="${mongo.slaveOk}" write-number="1" 
-		write-timeout="0" write-fsync="true" /> </mongo:mongo> <mongo:db-factory 
-		dbname="database" mongo-ref="mongo" /> <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate"> 
-		<constructor-arg ref="mongo" /> <constructor-arg name="databaseName" value="${mongo.database}" 
-		/> </bean> -->
 
 	<bean id="mongoServerAddress" class="com.mongodb.ServerAddress">
 		<constructor-arg value="${mongo.host}" />

@@ -21,13 +21,12 @@ public class BehaviorUtil {
             p = new UASparser(is);
             String userAgent = request.getHeader("user-agent");
             UserAgentInfo uai = p.parse(userAgent);
-            String browser = uai.getUaFamily();
-            String os = uai.getOsFamily();
             String ip = getIp(request);
             behavior = new Behavior();
             behavior.setIp(ip);
-            behavior.setBrowser(browser);
-            behavior.setOs(os);
+            behavior.setBrowserName(uai.getUaFamily());
+            behavior.setBrowserVersion(uai.getBrowserVersionInfo());
+            behavior.setOsName(uai.getOsName());
         } catch (IOException e) {
             e.printStackTrace();
         }

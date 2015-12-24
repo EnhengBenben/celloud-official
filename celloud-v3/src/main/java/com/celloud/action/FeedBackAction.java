@@ -1,6 +1,6 @@
 package com.celloud.action;
-import java.util.ArrayList;
-import java.util.List;
+
+import javax.annotation.Resource;
 
 /**
  * 投诉与建议
@@ -12,27 +12,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.celloud.model.Feedback;
+import com.celloud.service.FeedbackService;
+
 @Controller
 @RequestMapping("feedback")
 public class FeedBackAction {
+    @Resource
+    private FeedbackService feedbackService;
     @RequestMapping("list")
-    public String getAllFeedBack(){
-        return null;
+    public String getAllFeedBack() {
+        return "login";
     }
-    @RequestMapping(value="save",method=RequestMethod.PUT)
+
+    @RequestMapping(value = "save", method = RequestMethod.PUT)
     @ResponseBody
-    public boolean save(FeedBack feedBack){
-        return false;
+    public boolean save(Feedback feedback) {
+        return feedbackService.inserte(feedback)>=0;
     }
-    @RequestMapping("list")
-    @ResponseBody
-    public List<FeedBack> list(Page page){
-        return new ArrayList<>();
-    }
-}
-class Page{
-    
-}
-class FeedBack{
-    
 }

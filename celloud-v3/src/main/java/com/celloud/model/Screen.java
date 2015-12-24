@@ -5,7 +5,7 @@ public class Screen {
 
     private String screenName;
 
-    private Integer softwareId;
+    private Integer appId;
 
     public Integer getScreenId() {
         return screenId;
@@ -23,11 +23,12 @@ public class Screen {
         this.screenName = screenName == null ? null : screenName.trim();
     }
 
-    public Integer getSoftwareId() {
-        return softwareId;
+    public Integer getAppId() {
+        return appId;
     }
 
-    public void setSoftwareId(Integer softwareId) {
-        this.softwareId = softwareId;
+    public void setAppId(Integer appId) {
+        this.appId = appId;
     }
+
 }

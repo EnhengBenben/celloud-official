@@ -15,6 +15,10 @@ public class Feedback {
 
     private Integer solve;
 
+    private String content;
+
+    private String method;
+
     public Integer getId() {
         return id;
     }
@@ -61,5 +65,21 @@ public class Feedback {
 
     public void setSolve(Integer solve) {
         this.solve = solve;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method == null ? null : method.trim();
     }
 }
