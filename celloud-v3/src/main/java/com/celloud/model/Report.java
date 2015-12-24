@@ -7,7 +7,7 @@ public class Report {
 
     private Integer userId;
 
-    private Integer softwareId;
+    private Integer appId;
 
     private Integer fileId;
 
@@ -25,6 +25,10 @@ public class Report {
 
     private Date endDate;
 
+    private String printContext;
+
+    private String context;
+
     public Integer getReportId() {
         return reportId;
     }
@@ -41,12 +45,12 @@ public class Report {
         this.userId = userId;
     }
 
-    public Integer getSoftwareId() {
-        return softwareId;
+    public Integer getAppId() {
+        return appId;
     }
 
-    public void setSoftwareId(Integer softwareId) {
-        this.softwareId = softwareId;
+    public void setAppId(Integer appId) {
+        this.appId = appId;
     }
 
     public Integer getFileId() {
@@ -112,4 +116,21 @@ public class Report {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+    public String getPrintContext() {
+        return printContext;
+    }
+
+    public void setPrintContext(String printContext) {
+        this.printContext = printContext == null ? null : printContext.trim();
+    }
+
+    public String getContext() {
+        return context;
+    }
+
+    public void setContext(String context) {
+        this.context = context == null ? null : context.trim();
+    }
+
 }

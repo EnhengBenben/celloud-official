@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.celloud.model.Report" >
     <id column="report_id" property="reportId" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="software_id" property="softwareId" jdbcType="INTEGER" />
+    <result column="app_id" property="appId" jdbcType="INTEGER" />
     <result column="file_id" property="fileId" jdbcType="INTEGER" />
     <result column="project_id" property="projectId" jdbcType="INTEGER" />
     <result column="period" property="period" jdbcType="INTEGER" />
@@ -13,23 +13,16 @@
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="state" property="state" jdbcType="INTEGER" />
     <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.celloud.model.ReportWithBLOBs" extends="BaseResultMap" >
     <result column="print_context" property="printContext" jdbcType="LONGVARCHAR" />
     <result column="context" property="context" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    report_id, user_id, software_id, file_id, project_id, period, flag, readed, create_date, 
-    state, end_date
+    report_id, user_id, app_id, file_id, project_id, period, flag, readed, create_date, 
+    state, end_date,print_context, context
   </sql>
-  <sql id="Blob_Column_List" >
-    print_context, context
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from tb_report
     where report_id = #{reportId,jdbcType=INTEGER}
   </select>
@@ -37,19 +30,19 @@
     delete from tb_report
     where report_id = #{reportId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.celloud.model.ReportWithBLOBs" >
-    insert into tb_report (report_id, user_id, software_id, 
+  <insert id="insert" parameterType="com.celloud.model.Report" >
+    insert into tb_report (report_id, user_id, app_id, 
       file_id, project_id, period, 
       flag, readed, create_date, 
       state, end_date, print_context, 
       context)
-    values (#{reportId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{softwareId,jdbcType=INTEGER}, 
+    values (#{reportId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, 
       #{fileId,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, #{period,jdbcType=INTEGER}, 
       #{flag,jdbcType=INTEGER}, #{readed,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, 
       #{state,jdbcType=INTEGER}, #{endDate,jdbcType=TIMESTAMP}, #{printContext,jdbcType=LONGVARCHAR}, 
       #{context,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.celloud.model.ReportWithBLOBs" >
+  <insert id="insertSelective" parameterType="com.celloud.model.Report" >
     insert into tb_report
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="reportId != null" >
@@ -58,8 +51,8 @@
       <if test="userId != null" >
         user_id,
       </if>
-      <if test="softwareId != null" >
-        software_id,
+      <if test="appId != null" >
+        app_id,
       </if>
       <if test="fileId != null" >
         file_id,
@@ -99,8 +92,8 @@
       <if test="userId != null" >
         #{userId,jdbcType=INTEGER},
       </if>
-      <if test="softwareId != null" >
-        #{softwareId,jdbcType=INTEGER},
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
       </if>
       <if test="fileId != null" >
         #{fileId,jdbcType=INTEGER},
@@ -134,14 +127,14 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.ReportWithBLOBs" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.Report" >
     update tb_report
     <set >
       <if test="userId != null" >
         user_id = #{userId,jdbcType=INTEGER},
       </if>
-      <if test="softwareId != null" >
-        software_id = #{softwareId,jdbcType=INTEGER},
+      <if test="appId != null" >
+        app_id = #{appId,jdbcType=INTEGER},
       </if>
       <if test="fileId != null" >
         file_id = #{fileId,jdbcType=INTEGER},
@@ -176,10 +169,10 @@
     </set>
     where report_id = #{reportId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.celloud.model.ReportWithBLOBs" >
+  <update id="updateByPrimaryKey" parameterType="com.celloud.model.Report" >
     update tb_report
     set user_id = #{userId,jdbcType=INTEGER},
-      software_id = #{softwareId,jdbcType=INTEGER},
+      app_id = #{appId,jdbcType=INTEGER},
       file_id = #{fileId,jdbcType=INTEGER},
       project_id = #{projectId,jdbcType=INTEGER},
       period = #{period,jdbcType=INTEGER},
@@ -190,20 +183,6 @@
       end_date = #{endDate,jdbcType=TIMESTAMP},
       print_context = #{printContext,jdbcType=LONGVARCHAR},
       context = #{context,jdbcType=LONGVARCHAR}
-    where report_id = #{reportId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.celloud.model.Report" >
-    update tb_report
-    set user_id = #{userId,jdbcType=INTEGER},
-      software_id = #{softwareId,jdbcType=INTEGER},
-      file_id = #{fileId,jdbcType=INTEGER},
-      project_id = #{projectId,jdbcType=INTEGER},
-      period = #{period,jdbcType=INTEGER},
-      flag = #{flag,jdbcType=INTEGER},
-      readed = #{readed,jdbcType=INTEGER},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      state = #{state,jdbcType=INTEGER},
-      end_date = #{endDate,jdbcType=TIMESTAMP}
     where report_id = #{reportId,jdbcType=INTEGER}
   </update>
 </mapper>

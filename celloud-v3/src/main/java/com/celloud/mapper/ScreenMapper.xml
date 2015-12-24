@@ -4,10 +4,10 @@
   <resultMap id="BaseResultMap" type="com.celloud.model.Screen" >
     <id column="screen_id" property="screenId" jdbcType="INTEGER" />
     <result column="screen_name" property="screenName" jdbcType="VARCHAR" />
-    <result column="software_id" property="softwareId" jdbcType="INTEGER" />
+    <result column="app_id" property="appId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    screen_id, screen_name, software_id
+    screen_id, screen_name, app_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -20,9 +20,9 @@
     where screen_id = #{screenId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.celloud.model.Screen" >
-    insert into tb_screen (screen_id, screen_name, software_id
+    insert into tb_screen (screen_id, screen_name, app_id
       )
-    values (#{screenId,jdbcType=INTEGER}, #{screenName,jdbcType=VARCHAR}, #{softwareId,jdbcType=INTEGER}
+    values (#{screenId,jdbcType=INTEGER}, #{screenName,jdbcType=VARCHAR}, #{appId,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.celloud.model.Screen" >
@@ -34,8 +34,8 @@
       <if test="screenName != null" >
         screen_name,
       </if>
-      <if test="softwareId != null" >
-        software_id,
+      <if test="appId != null" >
+        app_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -45,8 +45,8 @@
       <if test="screenName != null" >
         #{screenName,jdbcType=VARCHAR},
       </if>
-      <if test="softwareId != null" >
-        #{softwareId,jdbcType=INTEGER},
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -56,8 +56,8 @@
       <if test="screenName != null" >
         screen_name = #{screenName,jdbcType=VARCHAR},
       </if>
-      <if test="softwareId != null" >
-        software_id = #{softwareId,jdbcType=INTEGER},
+      <if test="appId != null" >
+        app_id = #{appId,jdbcType=INTEGER},
       </if>
     </set>
     where screen_id = #{screenId,jdbcType=INTEGER}
@@ -65,7 +65,7 @@
   <update id="updateByPrimaryKey" parameterType="com.celloud.model.Screen" >
     update tb_screen
     set screen_name = #{screenName,jdbcType=VARCHAR},
-      software_id = #{softwareId,jdbcType=INTEGER}
+      app_id = #{appId,jdbcType=INTEGER}
     where screen_id = #{screenId,jdbcType=INTEGER}
   </update>
 </mapper>

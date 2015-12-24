@@ -1,20 +1,17 @@
 package com.celloud.mapper;
 
 import com.celloud.model.Report;
-import com.celloud.model.ReportWithBLOBs;
 
 public interface ReportMapper {
     int deleteByPrimaryKey(Integer reportId);
 
-    int insert(ReportWithBLOBs record);
+    int insert(Report record);
 
-    int insertSelective(ReportWithBLOBs record);
+    int insertSelective(Report record);
 
-    ReportWithBLOBs selectByPrimaryKey(Integer reportId);
+    Report selectByPrimaryKey(Integer reportId);
 
-    int updateByPrimaryKeySelective(ReportWithBLOBs record);
-
-    int updateByPrimaryKeyWithBLOBs(ReportWithBLOBs record);
+    int updateByPrimaryKeySelective(Report record);
 
     int updateByPrimaryKey(Report record);
 }
