@@ -1,6 +1,11 @@
 package com.mongo.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.bson.types.ObjectId;
 
 import com.mongo.core.SystemContext;
 import com.mongo.dao.ReportDAO;
@@ -94,6 +99,73 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public List<CmpReport> getCmpList(Integer userId) {
         return reportDao.getCmpList(userId);
+    }
+
+    @Override
+    public Map<String, List<List<Float>>> getSplitCount(ObjectId id) {
+        Map<String, List<List<Float>>> map = new HashMap<>();
+        List<Split> slist = reportDao.getSplitCount();
+        Split split = reportDao.getSplitById(id);
+        List<List<Float>> totalSourceList = new ArrayList<>();
+        List<List<Float>> totalSampleList = new ArrayList<>();
+        List<List<Float>> thisSourceList = new ArrayList<>();
+        List<List<Float>> thisSampleList = new ArrayList<>();
+        if (split.getAvgQuality() != null && split.getTotalReads() != null) {
+            List<Float> source = new ArrayList<>();
+            source.add(Float.valueOf(split.getAvgQuality().split("\n")[0]));
+            source.add(Float.valueOf(split.getTotalReads().split("\n")[0]));
+            thisSourceList.add(source);
+        }
+        if (split.getResultList() != null) {
+            for (Map<String, String> result : split.getResultList()) {
+                List<Float> sample = new ArrayList<>();
+                if (result.get("avgQuality") != null) {
+                    sample.add(Float.valueOf(result.get("avgQuality")));
+                } else {
+                    sample.add(new Float(0));
+                }
+                if (result.get("number") != null) {
+                    sample.add(Float.valueOf(result.get("number")));
+                } else {
+                    sample.add(new Float(0));
+                }
+                thisSampleList.add(sample);
+            }
+        }
+        for (Split s : slist) {
+            if (s.getAvgQuality() != null && s.getTotalReads() != null) {
+                List<Float> source = new ArrayList<>();
+                source.add(Float.valueOf(s.getAvgQuality().split("\n")[0]));
+                source.add(Float.valueOf(s.getTotalReads().split("\n")[0]));
+                totalSourceList.add(source);
+            }
+            if (s.getResultList() != null) {
+                for (Map<String, String> result : s.getResultList()) {
+                    List<Float> sample = new ArrayList<>();
+                    if (result.get("avgQuality") != null) {
+                        sample.add(Float.valueOf(result.get("avgQuality")));
+                    } else {
+                        sample.add(new Float(0));
+                    }
+                    if (result.get("number") != null) {
+                        sample.add(Float.valueOf(result.get("number")));
+                    } else {
+                        sample.add(new Float(0));
+                    }
+                    // if (result.get("number") != null
+                    // && result.get("avgQuality") != null) {
+                    // sample.add(Float.valueOf(result.get("number")));
+                    // sample.add(Float.valueOf(result.get("avgQuality")));
+                    totalSampleList.add(sample);
+                    // }
+                }
+            }
+        }
+        map.put("totalSource", totalSourceList);
+        map.put("totalSample", totalSampleList);
+        map.put("thisSource", thisSourceList);
+        map.put("thisSample", thisSampleList);
+        return map;
     }
 
 }

@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <link href="<%=request.getContextPath() %>/css/report.css?version=3.6" rel="stylesheet">
-<link href="<%=request.getContextPath() %>/css/buttons.css?version=20150730" rel="stylesheet">
-<link href="<%=request.getContextPath() %>/plugins/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
-<link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
+<%-- <link href="<%=request.getContextPath() %>/css/buttons.css?version=20150730" rel="stylesheet"> --%>
+<%-- <link href="<%=request.getContextPath() %>/plugins/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet"/> --%>
+<%-- <link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/> --%>
 <link href="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.css" rel="stylesheet">
 <style>
 .tab-content>.tab-pane {

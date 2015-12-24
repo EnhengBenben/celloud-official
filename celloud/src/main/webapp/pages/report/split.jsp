@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<input type="hidden" id="splitId" value="${split.id}">
+<input type="hidden" id="splitIdHidden" value="${split.id}">
 <div>
 	<div class="m-file">
 		数据编号：<span class="file-name">${ split.dataKey}</span><br>
@@ -11,8 +11,8 @@
 			${data.fileName}(${data.dataKey})&nbsp;&nbsp;&nbsp;
 		</c:forEach>
 		</span>
-		<div class="toolbar">
-			<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${split.userId }/${split.appId }/${split.dataKey }/result/split_reads.tar.gz" class="btn btn-default"><i class="i-download"></i>下载全部</a>
+		<div style=" position:absolute; right:0; top:-5px;">
+			<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${split.userId }/${split.appId }/${split.dataKey }/result/split_reads.tar.gz" class="btn btn-success btn-flat"><i class="fa fa-cloud-download"></i> 下载全部</a>
 		</div>
 	</div>
 	<div id="printCMPContext">
@@ -22,13 +22,33 @@
 			<div class="m-boxCon">
 		    	<table class="table table-bordered table-condensed">
 					<thead>
-						<tr><th>序列总数</th><th>平均质量</th><th>平均GC含量</th></tr>
+						<tr>
+						  <th>序列总数</th>
+						  <th>平均质量</th>
+						  <th>平均GC含量</th>
+						  <th>样本数量</th>
+						  <th>样本序列数平均值</th>
+						  <th>样本序列数最小值</th>
+						  <th>样本序列数最大值</th>
+						  <th>&lt;5000条序列的样本数</th>
+						  <th>&gt;20000条序列的样本数</th>
+						  <th>方差</th>
+						  <th>标准差</th>
+						</tr>
 				    </thead>
 					<tbody>
 						<tr>
-							<td>${split.totalReads }</td>
-							<td>${split.avgQuality }</td>
-							<td>${split.avgGCContent }</td>
+						  <td>${split.totalReads }</td>
+						  <td>${split.avgQuality }</td>
+						  <td>${split.avgGCContent }</td>
+						  <td>${split.sampleNum }</td>
+						  <td>${split.avgSampleSeq }</td>
+						  <td>${split.maxSampleSeq }</td>
+						  <td>${split.minSampleSeq }</td>
+						  <td>${split.less5000 }</td>
+						  <td>${split.more2000 }</td>
+						  <td>${split.variance }</td>
+						  <td>${split.stdev }</td>
 						</tr>
 					</tbody>
 				</table>
@@ -43,27 +63,31 @@
 						<tr>
 							<th>数据名称</th>	
 							<th>序列数量</th>
+							<th>平均质量</th>
+							<th>平均GC含量</th>
 						</tr>	
 					</thead>
 					<tbody>
 					  <c:choose>
-					  	<c:when test="${split.resultList==null}"><tr><td colspan="2">未分析出结果</td></tr></c:when>
+					  	<c:when test="${split.resultList==null}"><tr><td colspan="4">未分析出结果</td></tr></c:when>
 					  	<c:otherwise>
-							<c:forEach items="${split.resultList}" var="data">
-								<tr>
-									<td>
-										<c:choose>
-										  <c:when test="${data.name=='total' ||data.name=='useful'||data.name=='unknown'}">
-										    ${data.name }
-										  </c:when>
-										  <c:otherwise>
-											<a class="link" href="${path.replace('upload','') }Procedure!miRNADownload?userId=${split.userId }/${split.appId }/${split.dataKey }/result/split/${data.name }.tar.gz">${data.name }</a>  
-										  </c:otherwise>
-										</c:choose>
-									</td>
-									<td>${data.number }</td>
-								</tr>
-							</c:forEach>
+						  <c:forEach items="${split.resultList}" var="data">
+							<tr>
+							  <td>
+								<c:choose>
+								  <c:when test="${data.name=='total' ||data.name=='useful'||data.name=='unknown'}">
+								    ${data.name }
+								  </c:when>
+								  <c:otherwise>
+									<a class="link" href="${path.replace('upload','') }Procedure!miRNADownload?userId=${split.userId }/${split.appId }/${split.dataKey }/result/split/${data.name }.tar.gz">${data.name }</a>  
+								  </c:otherwise>
+								</c:choose>
+							  </td>
+							  <td>${data.number }</td>
+							  <td>${data.avgQuality }</td>
+							  <td>${data.avgGCContent }</td>
+							</tr>
+						  </c:forEach>
 					  	</c:otherwise>
 					  </c:choose>
 					</tbody>
@@ -141,6 +165,18 @@
 				</c:otherwise>
 			  </c:choose>
 			</div>
+		</div>
+		<!--Celloud数据参数同比分析-->
+		<div class="bg-analysis">
+		    <div class="m-box">
+		        <h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
+		        <div class="m-boxCon">
+		        	<div class="row" id="sourceCharDiv" style="height: 400px;width:100%;">
+			        </div>
+			        <div class="row" id="sampleCharDiv" style="height: 400px;width:100%;">
+			        </div>
+		        </div>
+		    </div>
 		</div>
 	</div>
 </div>

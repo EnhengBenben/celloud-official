@@ -1,10 +1,14 @@
 package com.mongo.action;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.bson.types.ObjectId;
 
 import com.google.inject.Inject;
 import com.mongo.sdo.MIB;
@@ -23,6 +27,8 @@ import com.nova.utils.PropertiesUtil;
 @ParentPackage("celloud-default")
 @Action("splitReport")
 @Results({
+        @Result(name = "splitCount", type = "json", params = { "root",
+                "countMapList" }),
         @Result(name = "toSplit", location = "../../pages/report/split.jsp"),
         @Result(name = "toMibReport", location = "../../pages/report/MIB.jsp"),
         @Result(name = "toPrintMib", location = "../../pages/print/MIB.jsp") })
@@ -35,6 +41,15 @@ public class SplitReportAction extends BaseAction {
     private MIB mib;
     private String path;
     private String outPath = PropertiesUtil.toolsOutPath + "upload";
+    /** 数据参数同比数据 */
+    private Map<String, List<List<Float>>> countMapList;
+    private String param;
+
+    public String getSplitCount() {
+        log.info("celloud-用户" + super.session.get("userId") + "获取split数据参数同比报告");
+        countMapList = reportService.getSplitCount(new ObjectId(param));
+        return "splitCount";
+    }
 
     public String toSplitReport() {
         path = PropertiesUtil.toolsOutPath + "upload";
@@ -88,6 +103,22 @@ public class SplitReportAction extends BaseAction {
 
     public void setOutPath(String outPath) {
         this.outPath = outPath;
+    }
+
+    public Map<String, List<List<Float>>> getCountMapList() {
+        return countMapList;
+    }
+
+    public void setCountMapList(Map<String, List<List<Float>>> countMapList) {
+        this.countMapList = countMapList;
+    }
+
+    public String getParam() {
+        return param;
+    }
+
+    public void setParam(String param) {
+        this.param = param;
     }
 
 }

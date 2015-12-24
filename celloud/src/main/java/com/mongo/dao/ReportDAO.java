@@ -3,6 +3,8 @@ package com.mongo.dao;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
+
 import com.google.inject.ImplementedBy;
 import com.mongo.sdo.CmpFilling;
 import com.mongo.sdo.CmpGeneSnpResult;
@@ -144,4 +146,19 @@ public interface ReportDAO {
      * @return
      */
     public List<CmpReport> getCmpList(Integer userId);
+
+    /**
+     * 根据id获取split
+     * 
+     * @param id
+     * @return
+     */
+    public Split getSplitById(ObjectId id);
+
+    /**
+     * split数据参数同比数据
+     * 
+     * @return
+     */
+    public List<Split> getSplitCount();
 }
