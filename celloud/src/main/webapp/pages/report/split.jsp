@@ -13,52 +13,62 @@
 		</span>
 		<div style=" position:absolute; right:0; top:-5px;">
 			<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${split.userId }/${split.appId }/${split.dataKey }/result/split_reads.tar.gz" class="btn btn-success btn-flat"><i class="fa fa-cloud-download"></i> 下载全部</a>
+			<a href="javascript:printSplit(${split.projectId },${split.dataKey },${split.userId },${split.appId })" class="btn btn-default"><i class="i-print"></i>打印报告</a>
 		</div>
 	</div>
-	<div id="printCMPContext">
-		<!--报告图示一-->
-		<div class="m-box">
-			<h2><i class="i-report1"></i>数据统计</h2>
-			<div class="m-boxCon">
-		    	<table class="table table-bordered table-condensed">
-					<thead>
-						<tr>
-						  <th>序列总数</th>
-						  <th>平均质量</th>
-						  <th>平均GC含量</th>
-						  <th>样本数量</th>
-						  <th>样本序列数平均值</th>
-						  <th>样本序列数最小值</th>
-						  <th>样本序列数最大值</th>
-						  <th>&lt;5000条序列的样本数</th>
-						  <th>&gt;20000条序列的样本数</th>
-						  <th>方差</th>
-						  <th>标准差</th>
-						</tr>
-				    </thead>
-					<tbody>
-						<tr>
-						  <td>${split.totalReads }</td>
-						  <td>${split.avgQuality }</td>
-						  <td>${split.avgGCContent }</td>
-						  <td>${split.sampleNum }</td>
-						  <td>${split.avgSampleSeq }</td>
-						  <td>${split.maxSampleSeq }</td>
-						  <td>${split.minSampleSeq }</td>
-						  <td>${split.less5000 }</td>
-						  <td>${split.more2000 }</td>
-						  <td>${split.variance }</td>
-						  <td>${split.stdev }</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+	<div>
+	  <div class="m-box">
+		<h2><i class="i-report1"></i>数据统计</h2>
+		<div class="m-boxCon">
+		  <div style="display:flex;">
+			  <div class="quota-left">
+				<div class="quota-inner">
+				  <h5 class="quota-title">源数据统计</h5>
+				  <dl class="quota-usage">
+				    <dt>平均质量</dt>
+				    <dd><span class="usage">${split.avgQuality }</span></dd>
+				    <dt>平均GC含量</dt>
+				    <dd><span class="usage">${split.avgGCContent }</span></dd>
+				    <dt>序列总数</dt>
+				    <dd><span class="usage">${split.totalReads }</span></dd>
+				    <dt>有效序列</dt>
+				    <dd><span class="usage">${split.usefulReads }</span></dd>
+				    <dt>未知序列</dt>
+				    <dd><span class="usage">${split.unknownReads }</span></dd>
+				  </dl>
+				</div>
+			  </div>
+			  <div class="quota-right">
+				<div class="quota-inner">
+				  <h5 class="quota-title">结果样本统计</h5>
+				  <dl class="quota-usage">
+				    <dt>样本数量</dt>
+				    <dd><span class="usage">${split.sampleNum }</span></dd>
+				    <dt>&lt;5000条序列的样本数量</dt>
+				    <dd><span class="usage">${split.less5000 }</span></dd>
+				    <dt>&gt;20000条序列的样本数量</dt>
+				    <dd><span class="usage">${split.more2000 }</span></dd>
+				    <dt>样本序列数平均值</dt>
+				    <dd><span class="usage">${split.avgSampleSeq }</span></dd>
+				    <dt>样本序列数最小值</dt>
+				    <dd><span class="usage">${split.minSampleSeq }</span></dd>
+				    <dt>样本序列数最大值</dt>
+				    <dd><span class="usage">${split.maxSampleSeq }</span></dd>
+				    <dt>方差</dt>
+				    <dd><span class="usage">${split.variance }</span></dd>
+				    <dt>标准差</dt>
+				    <dd><span class="usage">${split.stdev }</span></dd>
+				  </dl>
+				</div>
+			  </div>
+		    </div>
+		  </div>
 		</div>
 		<!--检测结果-->
-		<div class="m-box m-box-yc">
-			<h2><i class="i-edit"></i>报告</h2>
+		<div class="m-box">
+			<h2><i class="i-edit"></i>结果样本详细</h2>
 			<div class="m-boxCon">
-				<table class="table table-striped-green table-text-center table-padding0" id="snp_table1">
+				<table class="table table-striped-green table-text-center table-padding0">
 					<thead>
 						<tr>
 							<th>数据名称</th>	
@@ -72,21 +82,16 @@
 					  	<c:when test="${split.resultList==null}"><tr><td colspan="4">未分析出结果</td></tr></c:when>
 					  	<c:otherwise>
 						  <c:forEach items="${split.resultList}" var="data">
-							<tr>
-							  <td>
-								<c:choose>
-								  <c:when test="${data.name=='total' ||data.name=='useful'||data.name=='unknown'}">
-								    ${data.name }
-								  </c:when>
-								  <c:otherwise>
-									<a class="link" href="${path.replace('upload','') }Procedure!miRNADownload?userId=${split.userId }/${split.appId }/${split.dataKey }/result/split/${data.name }.tar.gz">${data.name }</a>  
-								  </c:otherwise>
-								</c:choose>
-							  </td>
-							  <td>${data.number }</td>
-							  <td>${data.avgQuality }</td>
-							  <td>${data.avgGCContent }</td>
-							</tr>
+							  <c:if test="${!(data.name=='total' ||data.name=='useful'||data.name=='unknown')}">
+								<tr>
+								  <td>
+									    <a class="link" href="${path.replace('upload','') }Procedure!miRNADownload?userId=${split.userId }/${split.appId }/${split.dataKey }/result/split/${data.name }.tar.gz">${data.name }</a>  
+								  </td>
+								  <td>${data.number }</td>
+								  <td>${data.avgQuality }</td>
+								  <td>${data.avgGCContent }</td>
+								</tr>
+							  </c:if>
 						  </c:forEach>
 					  	</c:otherwise>
 					  </c:choose>

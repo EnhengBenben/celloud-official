@@ -187,3 +187,49 @@ only screen and (min-device-pixel-ratio: 2) {
 .table-text-left tr td,.table-text-left tr th{text-align: left;padding-left:30px;}
 .clear{ clear: both;}
 ._help{ text-align:justify; text-indent: -1.2em; }
+
+.quota-left {
+    width: 50%;
+    float: left;
+}
+.quota-right {
+    width: 50%;
+    float: right;
+}
+.quota-inner {
+/*     margin-bottom: 25px; */
+}
+.quota-inner h5 {
+	padding-left:0px;
+	font-size:16px;
+    font-weight: 700;
+    margin: 8px 0;
+}
+.quota-usage {
+    margin-bottom: 3px;
+}
+.quota-usage dt {
+    width: 160px;
+    float: left;
+    line-height: 28px;
+    vertical-align: middle;
+    font-weight: 400;
+}
+.quota-usage dd {
+    margin-left: 130px;
+    overflow: hidden;
+    word-break: break-all;
+}
+.quota-usage dd,.quota-usage dt {
+    line-height: 28px;
+    min-height: 28px;
+}
+.quota-usage .usage {
+    display: block;
+    height: 24px;
+    width: 85%;
+    border-radius: 2px;
+    background: #f8f8f8;
+    position: relative;
+    padding-left:10px
+}

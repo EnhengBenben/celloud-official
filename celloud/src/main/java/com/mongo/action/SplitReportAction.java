@@ -30,6 +30,7 @@ import com.nova.utils.PropertiesUtil;
         @Result(name = "splitCount", type = "json", params = { "root",
                 "countMapList" }),
         @Result(name = "toSplit", location = "../../pages/report/split.jsp"),
+        @Result(name = "toPrintSplit", location = "../../pages/print/split.jsp"),
         @Result(name = "toMibReport", location = "../../pages/report/MIB.jsp"),
         @Result(name = "toPrintMib", location = "../../pages/print/MIB.jsp") })
 public class SplitReportAction extends BaseAction {
@@ -57,6 +58,13 @@ public class SplitReportAction extends BaseAction {
                 split.getProjectId(), split.getAppId());
         log.info("celloud-用户" + super.session.get("userId") + "查看split报告");
         return "toSplit";
+    }
+
+    public String toPrintSplit() {
+        split = reportService.getSplit(split.getDataKey(),
+                split.getProjectId(), split.getAppId());
+        log.info("celloud-用户" + super.session.get("userId") + "准备打印mib报告");
+        return "toPrintSplit";
     }
 
     public String getMibReport() {

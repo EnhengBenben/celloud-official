@@ -1360,3 +1360,10 @@ function printMIB(projectId,dataKey,userId,appId){
 		obj.document.close();
 	});
 }
+function printSplit(projectId,dataKey,userId,appId){
+	$.get("splitReport!toPrintSplit",{"split.projectId":projectId,"split.dataKey":dataKey,"split.userId":userId,"split.appId":appId},function(responseText){
+		var obj = window.open("");
+		obj.document.write(responseText);
+		obj.document.close();
+	});
+}
