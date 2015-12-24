@@ -77,17 +77,11 @@ class split:
                     result['resultList'] = r_list
                     f.close()
                 elif file == 'splitstat.xls':
-                    statPath = os.path.join(resultPath, file)
-                    f = open(statPath, 'r')
-                    file_size = os.path.getsize(statPath)
-                    index = 1
-                    for line in f.readlines():
-                        st = line.strip().split("\t")
-                        if index == file_size-1:
-                            result['usefulReads'] = list_value(st, 1)
-                        elif index == file_size:
-                            result['unknownReads'] = list_value(st, 1)
-                        index += 1
+                    splitstatPath = os.path.join(resultPath, file)
+                    lines = open(splitstatPath, 'r').readlines()
+                    file_size = len(lines)
+                    result['usefulReads'] = linecache.getline(splitstatPath, file_size)
+                    result['unknownReads'] = linecache.getline(splitstatPath, file_size-1)
                     f.close()
         # QC
         qcPath = os.path.join(path, 'QC')
