@@ -4,13 +4,12 @@ var UserFileSizeId = "userFileSize";
 var UserFileNumId = "userFileNum";
 
 $.get(UserDataURL, {'orderType':"fileNum"}, function(data) {
+	console.log(data);
 	var xAxis = new Array(data.length);
 	var yAxis = new Array(data.length);
-	var yAxisSize = new Array(data.length);
 	for (var i = 0; i < data.length; i++) {
 		xAxis[i] = data[i].username;
-		yAxis[i] = data[i].num;
-		yAxisSize[i] = (parseFloat(data[i].size / (1024 * 1024 * 1024)).toFixed(2));
+		yAxis[i] = data[i].fileNum;
 	}
 	var option = makeOption('', xAxis, yAxis, '文件数量:', 'bar');
 	var myChart = echarts.init(document.getElementById(UserFileNumId));
@@ -18,19 +17,24 @@ $.get(UserDataURL, {'orderType':"fileNum"}, function(data) {
 });
 
 $.get(UserDataURL, {'orderType':"size"}, function(data) {
+	console.log(data);
 	var xAxis = new Array(data.length);
 	var yAxis = new Array(data.length);
-	var yAxisSize = new Array(data.length);
 	for (var i = 0; i < data.length; i++) {
 		xAxis[i] = data[i].username;
-		yAxis[i] = data[i].num;
-		yAxisSize[i] = (parseFloat(data[i].size / (1024 * 1024 * 1024)).toFixed(2));
+		yAxis[i] = (parseFloat(data[i].size / (1024 * 1024 * 1024)).toFixed(2));
 	}
+	      
 	var option = makeOption('', xAxis, yAxis, '数据大小:', 'bar');
-	var myChart = echarts.init(document.getElementById(UserFileNumId));
+	option. yAxis = [
+	    	          {
+	    	              type : 'value',
+	    	              axisLabel:{formatter:'{value} ms'}
+	    	          }
+	    	      ];
+	var myChart = echarts.init(document.getElementById(UserFileSizeId));
 	myChart.setOption(option);
 });
-
 
 jQuery(function($) {
 	var oTable1 = $('#allUserDataList').dataTable({
@@ -55,10 +59,8 @@ jQuery(function($) {
 		var $parent = $source.closest('table')
 		var off1 = $parent.offset();
 		var w1 = $parent.width();
-		
 		var off2 = $source.offset();
 		var w2 = $source.width();
-		
 		if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2))
 			return 'right';
 		return 'left';

@@ -15,8 +15,8 @@ public class DataServiceImpl implements DataService {
 	private DataDao dataDao;
 
 	@Override
-	public List<Map<String, Object>> getUserList(Integer companyId,Integer role) {
-		return dataDao.getUserList(companyId,role);
+	public List<Map<String, Object>> getUserList(Integer companyId,Integer role,String orderType) {
+		return dataDao.getUserList(companyId,role,orderType);
 	}
 
 	@Override

@@ -4,7 +4,7 @@
 var BrowserURL = "home!totalBrowser";
 var UserRunNumURL = "home!userRunNum";
 var AppRunNumURL = "home!appRunNum";
- var LoginNumURL = "home!loginNum"
+var LoginNumURL = "home!loginNum"
 
 // auto load
 UserRunNum();
@@ -27,7 +27,7 @@ function LoginNum() {
 			xAxis[i] = data[i].user_name;
 			yAxis[i] = data[i].logNum;
 		}
-		var option = makeOptionScroll('', xAxis, yAxis, '登陆次数', 'bar',0,25);
+		var option = makeOptionScroll('', xAxis, yAxis, '登陆次数', 'bar', 0, 25);
 		var myChart = echarts.init(document.getElementById(viewId));
 		myChart.setOption(option);
 	});
@@ -40,183 +40,46 @@ function AppRunNum() {
 		var yAxis = new Array(data.length);
 		var t;
 		for (var i = 0; i < data.length; i++) {
-			xAxis[i] =  data[i].app_name;
+			xAxis[i] = data[i].app_name;
 			yAxis[i] = data[i].runNum;
 		}
-		var option = makeOptionScroll('', xAxis, yAxis, '运行次数', 'bar',0,50);
+		var option = makeOptionScroll('', xAxis, yAxis, '运行次数', 'bar', 0, 50);
 		var myChart = echarts.init(document.getElementById(viewId));
 		myChart.setOption(option);
 	});
 }
 /*
-function loadHistory() {
-	$.get(loadHistoryURL, {},
-			function(res) {
-				var viewId = 'historyId';
-				var xAxis = new Array(res.length);
-				var logNum = new Array(res.length);
-				var activityUesr = new Array(res.length);
-				var appRunNum = new Array(res.length);
-				var dataSize = new Array(res.length);
-				var activityApp = new Array(res.length);
-				var legendTitle = [ "登陆次数", "活跃用户数", "App运行次数", "活跃App数量",
-						"数据大小(MB)" ];
-				for (var i = 0; i < res.length; i++) {
-					xAxis[i] = res[i].time;
-					logNum[i] = res[i].logNum;
-					activityUesr[i] = res[i].activityUser;
-					appRunNum[i] = res[i].runNum;
-					activityApp[i] = res[i].activityApp;
-					dataSize[i] = parseFloat((res[i].dataSize / (1024 * 1024))
-							.toFixed(2));
-				}
-				option = {
-					tooltip : {
-						trigger : 'axis',
-						axisPointer : {
-							type : 'shadow',
-						}
-					},
-					legend : {
-						data : legendTitle,
-					},
-					toolbox : {
-						show : true,
-						feature : {
-							magicType : {
-								show : true,
-								type : [ 'bar', ' line' ]
-							},
-							restore : {
-								show : true
-							},
-							saveAsImage : {
-								show : true
-							}
-						}
-					},
-					calculable : true,
-					xAxis : [ {
-						type : 'category',
-						data : xAxis,
-						axisLabel : {
-							rotate : 60
-						}
-					} ],
-					yAxis : [ {
-						type : 'value',
-						name : "数量"
-					}, {
-						type : 'value',
-						name : "数据大小",
-						axisLabel : {
-							formatter : '{value} (GB)'
-						}
-					} ],
-					series : [ {
-						name : legendTitle[0],
-						type : 'bar',
-						data : logNum,
-						markLine : {
-							data : [ {
-								type : 'average',
-								name : '平均值'
-							} ]
-						},
-						itemStyle : {
-							normal : {
-								label : {
-									show : true
-								}
-							}
-						},
-						markPoint : {
-							data : [ {
-								type : 'max',
-								name : '最大值'
-							}, ]
-						},
-					}, {
-						name : legendTitle[1],
-						type : 'bar',
-						data : activityUesr,
-						itemStyle : {
-							normal : {
-								label : {
-									show : true
-								}
-							}
-						},
-						markPoint : {
-							data : [ {
-								type : 'max',
-								name : '最大值'
-							} ]
-						},startZoom
-					}, {
-						name : legendTitle[2],
-						type : 'bar',
-						data : appRunNum,
-						itemStyle : {
-							normal : {
-								label : {
-									show : true
-								}
-							}
-						},
-						markPoint : {
-							data : [ {
-								type : 'max',
-								name : '最大值'
-							} ]
-						},
-					}, {
-						name : legendTitle[3],
-						type : 'bar',
-						data : activityApp,
-						itemStyle : {
-							normal : {
-								label : {
-									show : true
-								}
-							}
-						},
-						markLine : {
-							data : [ {
-								type : 'average',
-								name : '平均值'
-							} ]
-						},
-						markPoint : {
-							data : [ {
-								type : 'max',
-								name : '最大值'
-							} ]
-						},
-					}, {
-						name : legendTitle[4],
-						type : 'bar',
-						data : dataSize,
-						itemStyle : {
-							normal : {
-								label : {
-									show : true
-								}
-							}
-						},
-						markPoint : {
-							data : [ {
-								type : 'max',
-								name : '最大值'
-							} ]
-						},
-					} ]
-				};
-				var myChart = echarts.init(document.getElementById(viewId));
-				myChart.setOption(option);
-			});
-}
-*/
+ * function loadHistory() { $.get(loadHistoryURL, {}, function(res) { var viewId =
+ * 'historyId'; var xAxis = new Array(res.length); var logNum = new
+ * Array(res.length); var activityUesr = new Array(res.length); var appRunNum =
+ * new Array(res.length); var dataSize = new Array(res.length); var activityApp =
+ * new Array(res.length); var legendTitle = [ "登陆次数", "活跃用户数", "App运行次数",
+ * "活跃App数量", "数据大小(MB)" ]; for (var i = 0; i < res.length; i++) { xAxis[i] =
+ * res[i].time; logNum[i] = res[i].logNum; activityUesr[i] =
+ * res[i].activityUser; appRunNum[i] = res[i].runNum; activityApp[i] =
+ * res[i].activityApp; dataSize[i] = parseFloat((res[i].dataSize / (1024 *
+ * 1024)) .toFixed(2)); } option = { tooltip : { trigger : 'axis', axisPointer : {
+ * type : 'shadow', } }, legend : { data : legendTitle, }, toolbox : { show :
+ * true, feature : { magicType : { show : true, type : [ 'bar', ' line' ] },
+ * restore : { show : true }, saveAsImage : { show : true } } }, calculable :
+ * true, xAxis : [ { type : 'category', data : xAxis, axisLabel : { rotate : 60 } } ],
+ * yAxis : [ { type : 'value', name : "数量" }, { type : 'value', name : "数据大小",
+ * axisLabel : { formatter : '{value} (GB)' } } ], series : [ { name :
+ * legendTitle[0], type : 'bar', data : logNum, markLine : { data : [ { type :
+ * 'average', name : '平均值' } ] }, itemStyle : { normal : { label : { show : true } } },
+ * markPoint : { data : [ { type : 'max', name : '最大值' }, ] }, }, { name :
+ * legendTitle[1], type : 'bar', data : activityUesr, itemStyle : { normal : {
+ * label : { show : true } } }, markPoint : { data : [ { type : 'max', name :
+ * '最大值' } ] },startZoom }, { name : legendTitle[2], type : 'bar', data :
+ * appRunNum, itemStyle : { normal : { label : { show : true } } }, markPoint : {
+ * data : [ { type : 'max', name : '最大值' } ] }, }, { name : legendTitle[3], type :
+ * 'bar', data : activityApp, itemStyle : { normal : { label : { show : true } } },
+ * markLine : { data : [ { type : 'average', name : '平均值' } ] }, markPoint : {
+ * data : [ { type : 'max', name : '最大值' } ] }, }, { name : legendTitle[4], type :
+ * 'bar', data : dataSize, itemStyle : { normal : { label : { show : true } } },
+ * markPoint : { data : [ { type : 'max', name : '最大值' } ] }, } ] }; var myChart =
+ * echarts.init(document.getElementById(viewId)); myChart.setOption(option); }); }
+ */
 
 function UserRunNum() {
 	var viewId = "UserRunNum";
@@ -228,7 +91,7 @@ function UserRunNum() {
 			xAxis[i] = data[i].userName;
 			yAxis[i] = data[i].runNum;
 		}
-		var option = makeOptionScroll('', xAxis, yAxis, '运行次数', 'bar',0,25);
+		var option = makeOptionScroll('', xAxis, yAxis, '运行次数', 'bar', 0, 25);
 		var myChart = echarts.init(document.getElementById(viewId));
 		myChart.setOption(option);
 	});
@@ -237,8 +100,8 @@ function UserRunNum() {
 // app运行次数统计
 function LoadBrowser() {
 	var viewId = "browserDistribute";
-	if(document.getElementById(viewId)==null)
-		return ;
+	if (document.getElementById(viewId) == null)
+		return;
 	
 	$.get(BrowserURL, {}, function(data) {
 		var vlist = new Array(data.length);
@@ -271,8 +134,7 @@ function chars(data) {
 			min : 0,
 			max : 10,
 			calculable : true,
-			color : [ 'maroon', 'purple', 'red', 'orange', 'yellow',
-					'lightgreen' ]
+			color : [ 'maroon', 'purple', 'red', 'orange', 'yellow', 'lightgreen' ]
 		},
 		toolbox : {
 			show : true,
@@ -295,6 +157,18 @@ function chars(data) {
 			hoverable : false,
 			roam : true,
 			data : [],
+			itemStyle : {
+				normal : {
+					label : {
+						show : true
+					}
+				},
+				emphasis : {
+					label : {
+						show : true
+					}
+				}
+			},
 			geoCoord : {
 				"北京" : [ 116.4, 39.9 ],
 				"天津" : [ 117.2, 39.12 ],
@@ -351,16 +225,14 @@ function chars(data) {
 	};
 	myChart.setOption(option);
 }
-$(document).ready(
-		function() {
-			$.get("company!getProvince", function(result) {
-				var data = "[";
-				for ( var i in result) {
-					var map = result[i];
-					data += "{name: '" + map['province'] + "', value: "
-							+ map['num'] + "},";
-				}
-				data += "]";
-				chars(eval(data));
-			});
-		});
+$(document).ready(function() {
+	$.get("company!getProvince", function(result) {
+		var data = "[";
+		for ( var i in result) {
+			var map = result[i];
+			data += "{name: '" + map['province'] + "', value: " + map['num'] + "},";
+		}
+		data += "]";
+		chars(eval(data));
+	});
+});

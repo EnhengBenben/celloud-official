@@ -34,23 +34,8 @@ import com.google.inject.Inject;
 
 		/***** 活跃度统计－－－ 医院活跃度统计 登陆、上传文件、app运行次数 ******/
 		@Result(name = "LogList", type = "json", params = { "root", "logList" }),
-//		@Result(name = "activityHospitaLoginMonth", type = "json", params = { "root", "logList" }),
-//		@Result(name = "activityHospitaLoginWeek", type = "json", params = { "root", "logList" }),
-//		
 		@Result(name = "DataList", type = "json", params = { "root", "dataList" }),
-
-//		@Result(name = "activityHospitalFileMonth", type = "json", params = { "root", "dataList" }),
-//		@Result(name = "activityHospitalFileWeek", type = "json", params = { "root", "dataList" }),
-//		@Result(name = "weekUpLoad", type = "json", params = { "root", "dataList" }),
-//		@Result(name = "monthUpLoad", type = "json", params = { "root", "dataList" }),
-		
 		@Result(name = "SoftWareList", type = "json", params = { "root", "runList" }),
-
-//	//	@Result(name = "hospitaAppRun", type = "json", params = { "root", "runList" }),
-//		@Result(name = "activityHospitalAppMonth", type = "json", params = { "root", "runList" }),
-//		@Result(name = "activityHospitalAppWeek", type = "json", params = { "root", "runList" }),
-//		@Result(name = "AppRunGroupMonth", type = "json", params = { "root", "runList" }),
-//		@Result(name = "AppRunGroupWeek", type = "json", params = { "root", "runList" }),
 
 })
 

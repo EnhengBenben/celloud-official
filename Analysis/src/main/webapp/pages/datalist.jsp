@@ -44,7 +44,6 @@
 							<th class="hidden-480">数据大小(GB)</th>
 						</tr>
 					</thead>
-
 					<tbody>
 						<s:if test="%{list.size()>0}">
 							<s:iterator id="data" value="list">
@@ -52,9 +51,10 @@
 									<td><a
 										href="javascript:userMonthDataList('${data.user_id }','${data.username }','${data.company_name }');">${data.username }</a></td>
 									<td>${data.company_name }</td>
-									<td>${data.num }</td>
+									<td>${data.fileNum }</td>
 									<td><fmt:formatNumber
-											value="${data.size/(1024*1024*1024)}" pattern="#00.0#" /></td>
+											value="${data.size/(1024*1024*1024)}" pattern="#00.0#" />
+									</td>
 								</tr>
 							</s:iterator>
 						</s:if>

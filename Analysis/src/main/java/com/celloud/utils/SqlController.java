@@ -149,4 +149,19 @@ public class SqlController {
 		String sql = sb.substring(0, sb.length() - 1);
 		return " and " + tbName + "." + colName + " in ( " + sql + " ) ";
 	}
+	
+	public static String orderBy(String colName){
+		if(colName==null||colName.length()<1)
+			return "";
+		String sql  = "order by ";
+		switch(colName){
+		case "size":
+			sql =sql+"size desc";
+			break;
+		case "fileNum":
+			sql =sql+"fileNum desc";
+			break;
+		}
+		return sql;
+	}
 }

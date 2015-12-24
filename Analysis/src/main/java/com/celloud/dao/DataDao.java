@@ -17,7 +17,7 @@ public interface DataDao {
 	 * @param companyId
 	 * @return
 	 */
-	public List<Map<String, Object>> getUserList(Integer companyId,Integer role);
+	public List<Map<String, Object>> getUserList(Integer companyId,Integer role,String orderType);
 
 	/**
 	 * 获取大客户的所有用户每月上传的数据列表
