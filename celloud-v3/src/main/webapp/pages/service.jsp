@@ -9,9 +9,9 @@
 <meta name="baidu-site-verification" content="IsldTuHqik" />
 <meta name="keywords" content="celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
 <title>CelLoud 服务</title>
-<link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico"/>
-<link rel="bookmark" href="<%=request.getContextPath()%>/favicon.ico"/>
-<link href="css/download.css" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico"/>
+<link rel="bookmark" href="<%=request.getContextPath()%>/images/favicon.ico"/>
+<link href="<%=request.getContextPath()%>/css/download.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="container longbackground">

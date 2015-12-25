@@ -90,9 +90,9 @@
 			<mvc:exclude-mapping path="/plugins/**" />
 			<mvc:exclude-mapping path="/resources/**" />
 			<mvc:exclude-mapping path="/home/**" />
+			<mvc:exclude-mapping path="/home**" />
 			<mvc:exclude-mapping path="/feedback/save" />
-			<mvc:exclude-mapping path="/service.html" />
-			<mvc:exclude-mapping path="/feedBack.html" />
+			<mvc:exclude-mapping path="/**.html" />
 			<mvc:exclude-mapping path="/login/**" />
 			<bean class="com.celloud.interceptor.SecurityInterceptor" />
 		</mvc:interceptor>
