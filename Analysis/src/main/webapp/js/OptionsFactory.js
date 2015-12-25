@@ -1,7 +1,8 @@
 /**
  * make echart option factorys
  */
-
+var lineType = 'line';
+var barType = 'bar';
 /**
  * title ='用户统计' legendList= [ '文件个数', '数据大小(GB)' ] xAxis yAxis seriesName typex
  * :line/bar

@@ -26,11 +26,11 @@ import com.google.inject.Inject;
 @Action("home")
 @Results({ @Result(name = "success", location = "../../pages/home.jsp"),
 		@Result(name = "toWeekReport", location = "../../pages/weekExport.jsp"),
-		
+		@Result(name = "toBigUser", location = "../../pages/bigUser.jsp"),
+
 		@Result(name = "browserCount", type = "json", params = { "root", "browserList" }),
 		@Result(name = "historyList", type = "json", params = { "root", "historyList" }),
 		
-	//	@Result(name = "userRunNum", type = "json", params = { "root", "userSoftList" }),
 		@Result(name = "softList", type = "json", params = { "root", "totalSoftList" }),
 		@Result(name = "eachUserRunApp", type = "json", params = { "root", "eachAppList" }),
 		@Result(name = "AppList", type = "json", params = { "root", "appList" }),
@@ -38,7 +38,6 @@ import com.google.inject.Inject;
 		@Result(name = "loginList", type = "json", params = { "root", "logList" }),
 		@Result(name = "eachDayDataSize", type = "json", params = { "root", "eachDataList" }),
 		@Result(name = "userFileList", type = "json", params = { "root", "userDataList" }),
-
 })
 public class HomeAction extends BaseAction {
 	Logger log = Logger.getLogger(HomeAction.class);
@@ -106,7 +105,7 @@ public class HomeAction extends BaseAction {
 		resultMap.put("companyNum", companyNum);
 		resultMap.put("reportNum", reportNum);
 		resultMap.put("appNum", appNum);
-
+		
 		/** 历史比较 */
 //		historyList = userService.getCountInHistory();
 //		log.info("historyList" + historyList.size());
@@ -177,12 +176,17 @@ public class HomeAction extends BaseAction {
 
 		return "toWeekReport";
 	}
-
+	public String toBigUserCount(){
+		dataList = dataService.getBigUserData();
+		return "toBigUser";
+	}
+	
 	public String weekBrowser() {
 		browserList = loginService.getBrowserInWeek(startDate);
 		log.info("browserList:" + browserList.size());
 		return "browserCount";
 	}
+	
 
 	public String eachUserRunApp() {
 		eachAppList = appService.getAppUserCount(startDate);

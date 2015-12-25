@@ -3,21 +3,21 @@ package com.celloud.sdo;
 import java.io.Serializable;
 import java.util.Date;
 
-public class DataFile implements Serializable,Cloneable {
+public class DataFile implements Serializable, Cloneable {
 	private static final long serialVersionUID = 1L;
 	/** 文件编号 */
-	private Integer fileId;
+	private Integer file_id;
 	/** 用户编号 提交者 */
-	private Integer userId;
-	private String userName;
+	private Integer user_id;
+	private String user_name;
 	/** 所属公司ID */
-	private Integer companyId;
+	private Integer company_id;
 	/** 所属公司名称 */
 	private String company_name;
 	/** 数据编号 */
 	private String dataKey;
 	/** 文件名字 */
-	private String fileName;
+	private String file_name;
 	/** 大小 单位：b */
 	private Long size;
 	/** 提交时间 */
@@ -29,47 +29,45 @@ public class DataFile implements Serializable,Cloneable {
 	 */
 	private Integer fileFormat;
 	/** 文件别名 */
-	private String anotherName;
-	
+	private String another_name;
+
 	private int fileNum;
-	/**字符串年月2015-12*/
+	/** 字符串年月2015-12 */
 	private String yearMonth;
-	
-	/**周统计时用来保存周一：年月日*/
+
+	/** 周统计时用来保存周一：年月日 */
 	private String weekDate;
-	
-	
 
-	public String getWeekDate() {
-		return weekDate;
+	public Integer getFile_id() {
+		return file_id;
 	}
 
-	public void setWeekDate(String weekDate) {
-		this.weekDate = weekDate;
+	public void setFile_id(Integer file_id) {
+		this.file_id = file_id;
 	}
 
-	public int getFileNum() {
-		return fileNum;
+	public Integer getUser_id() {
+		return user_id;
 	}
 
-	public String getYearMonth() {
-		return yearMonth;
+	public void setUser_id(Integer user_id) {
+		this.user_id = user_id;
 	}
 
-	public void setYearMonth(String yearMonth) {
-		this.yearMonth = yearMonth;
+	public String getUser_name() {
+		return user_name;
 	}
 
-	public void setFileNum(int fileNum) {
-		this.fileNum = fileNum;
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 
-	public Integer getCompanyId() {
-		return companyId;
+	public Integer getCompany_id() {
+		return company_id;
 	}
 
-	public void setCompanyId(Integer companyId) {
-		this.companyId = companyId;
+	public void setCompany_id(Integer company_id) {
+		this.company_id = company_id;
 	}
 
 	public String getCompany_name() {
@@ -80,30 +78,6 @@ public class DataFile implements Serializable,Cloneable {
 		this.company_name = company_name;
 	}
 
-	public Integer getFileId() {
-		return fileId;
-	}
-
-	public void setFileId(Integer fileId) {
-		this.fileId = fileId;
-	}
-
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
 	public String getDataKey() {
 		return dataKey;
 	}
@@ -112,12 +86,12 @@ public class DataFile implements Serializable,Cloneable {
 		this.dataKey = dataKey;
 	}
 
-	public String getFileName() {
-		return fileName;
+	public String getFile_name() {
+		return file_name;
 	}
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
+	public void setFile_name(String file_name) {
+		this.file_name = file_name;
 	}
 
 	public Long getSize() {
@@ -152,22 +126,49 @@ public class DataFile implements Serializable,Cloneable {
 		this.fileFormat = fileFormat;
 	}
 
-	public String getAnotherName() {
-		return anotherName;
+	public String getAnother_name() {
+		return another_name;
 	}
 
-	public void setAnotherName(String anotherName) {
-		this.anotherName = anotherName;
+	public void setAnother_name(String another_name) {
+		this.another_name = another_name;
+	}
+
+	public int getFileNum() {
+		return fileNum;
+	}
+
+	public void setFileNum(int fileNum) {
+		this.fileNum = fileNum;
+	}
+
+	public String getYearMonth() {
+		return yearMonth;
+	}
+
+	public void setYearMonth(String yearMonth) {
+		this.yearMonth = yearMonth;
+	}
+
+	public String getWeekDate() {
+		return weekDate;
+	}
+
+	public void setWeekDate(String weekDate) {
+		this.weekDate = weekDate;
 	}
 
 	@Override
 	public String toString() {
-		return "Data [fileId=" + fileId + ", userId=" + userId + ", userName=" + userName + ", companyId=" + companyId + ", company_name=" + company_name
-				+ ", dataKey=" + dataKey + ", fileName=" + fileName + ", size=" + size + ", createDate=" + createDate + ", state=" + state + ", fileFormat="
-				+ fileFormat + ", anotherName=" + anotherName + ", fileNum=" + fileNum + ", yearMonth=" + yearMonth + "]";
+		return "DataFile [file_id=" + file_id + ", user_id=" + user_id + ", userName=" + user_name + ", companyId="
+				+ company_id + ", company_name=" + company_name + ", dataKey=" + dataKey + ", fileName=" + file_name
+				+ ", size=" + size + ", createDate=" + createDate + ", state=" + state + ", fileFormat=" + fileFormat
+				+ ", anotherName=" + another_name + ", fileNum=" + fileNum + ", yearMonth=" + yearMonth + ", weekDate="
+				+ weekDate + "]";
 	}
-	 @Override 
-     public Object clone() throws CloneNotSupportedException { 
-         return super.clone(); 
-     } 
+
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
 }
