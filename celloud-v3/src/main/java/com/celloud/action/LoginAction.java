@@ -114,14 +114,17 @@ public class LoginAction {
         if (checked) {
             addCookies(request, response, user.getUsername(), user.getPassword(), publicKey.getModulus());
             key = rsaKeyService.getByModulus(publicKey.getModulus());
-            if (key == null || key.isExpires()) {
-                rsaKeyService.deleteByModulus(publicKey.getModulus());
-                privateKey = (PrivateKey) session.getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
-            } else {
+            if (key != null && !key.isExpires()) {
                 privateKey = new PrivateKey(new BigInteger(key.getModulus(), 16),
                         new BigInteger(key.getPriExponent(), 16));
             }
         }
+        if (privateKey == null) {
+            rsaKeyService.deleteByModulus(publicKey.getModulus());
+            privateKey = (PrivateKey) session.getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
+        }
+        logger.info("username:{},password:{}", user.getUsername(), user.getPassword());
+        logger.info("privateKey:{}", privateKey.getPrivateExponent());
         String password = RSAUtil.decryptStringByJs(privateKey, user.getPassword());
         user.setPassword(MD5Util.getMD5(password));
         user = userService.login(user);
@@ -139,6 +142,13 @@ public class LoginAction {
         return mv;
     }
 
+    /**
+     * 用户退出操作
+     * 
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping("logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();

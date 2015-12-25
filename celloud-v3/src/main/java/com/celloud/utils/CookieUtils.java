@@ -70,8 +70,7 @@ public class CookieUtils {
 	public static void deleteCookie(HttpServletRequest request,
 			HttpServletResponse response, Cookie cookie) {
 		if (cookie != null) {
-			cookie.setPath("/");
-			cookie.setValue("");
+			cookie.setValue(null);
 			cookie.setMaxAge(0);
 			response.addCookie(cookie);
 		}
