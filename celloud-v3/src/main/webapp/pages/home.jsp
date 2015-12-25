@@ -1,20 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="zh-cmn-Hans">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- 优先使用最新版本的IE 和 Chrome 内核 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="baidu-site-verification" content="IsldTuHqik" />
-<meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
 <title>CelLoud 平台</title>
-<link rel="shortcut icon" href="<%=request.getContextPath()%>images//favicon.ico"/>
-<link rel="bookmark" href="<%=request.getContextPath()%>/images/favicon.ico"/>
+<meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
+<meta name="description" content="一站式高通量基因检测数据分析系统">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="bookmark" href="<%=request.getContextPath()%>/favicon.ico"/>
+<link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico"/>
 <script type="text/javascript">
 if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))){ 
     if(window.location.href.indexOf("?mobile")<0){ 
         try{ 
             if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){ 
-                window.location.href="homePhone.html"; 
+                window.location.href="home_phone.html"; 
             }else if(/iPad/i.test(navigator.userAgent)){ 
             }else{ 
                 window.location.href="home.html" 
@@ -55,13 +59,12 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
     <div class="subMenu" >
         <div class="subInner">
             <div class="wrapper">
-            <a href="#sTop" class="subNavBtn">首页</a> 
-            <a href="#s1" class="subNavBtn">选择原因</a> 
-            <a href="#s3" class="subNavBtn">如何工作</a> 
-            <a href="#s5" class="subNavBtn">目标用户</a> 
-            <a href="#s6" class="subNavBtn">合作伙伴</a> 
-<!--             <a href="#s7" class="subNavBtn">资料下载</a>  -->
-            <a href="joinUs.html" class="subNavBtn">加入我们</a> 
+            <a class="subNavBtn" href="#sTop">首页</a> 
+            <a class="subNavBtn" href="#s1">选择原因</a> 
+            <a class="subNavBtn" href="#s3">如何工作</a> 
+            <a class="subNavBtn" href="#s5">目标用户</a> 
+            <a class="subNavBtn" href="#s6">合作伙伴</a> 
+            <a class="subNavBtn" href="joinUs.html">加入我们</a> 
             <h1><a href="#">CelLoud</a></h1>
             <div class="login"><a href="<%=request.getContextPath() %>/login" class="btn-register">登录</a></div>
             </div>
@@ -73,7 +76,6 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
             <div class="subInner"> 
                 <div class="wrapper">
                 <div class="pro"></div>
-<!--                <img src="images/home/pro.png"/><br /> -->
                 <div class="animateDiv">
                     <div style="background-position:-186px -227px;width:250px;height:309px;top:69px;left:453px;z-index:101"></div>
                     <div style="background-position:-8px -215px;width:167px;height:206px;top:120px;left:495px;z-index:102" id="img_c"></div>
@@ -245,12 +247,12 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
                     </li>
                 </ul>
                 <div class="feedback clearfix">
-                    <div class="fl"> <div href="javascript:void()" class="talker doctor"></div><br />
+                    <div class="fl"> <div class="talker doctor"></div><br />
                         @某医院实验人员 </div>
                     <div class="fr">" CelLoud帮助我们医院解决了从数据产出到临床报告的大问题，可以快速的定制基因检测的各项应用, 效率得到很大提升。感谢CelLoud这么专注的做大家需要和喜爱的产品。"</div>
                 </div>
                 <div class="feedback clearfix">
-                    <div class="fl"> <div src="" class="talker programmer"></div><br />
+                    <div class="fl"> <div class="talker programmer"></div><br />
                         @生物数据分析员 </div>
                     <div class="fr">" CelLoud提供了标准化的软件接口, 打通了生物信息软件开发人员和软件需求方的通道, 产出专业的生物产业报告。上手十分容易和简单, 公司的同事都十分喜欢。"</div>
                 </div>
