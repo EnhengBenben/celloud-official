@@ -24,8 +24,10 @@ public interface RSAKeyService {
      * @return
      */
     public RSAKey getByModulus(String modulus);
+
     /**
      * 根据系数删除公钥私钥对
+     * 
      * @param modulus
      * @return
      */
@@ -39,5 +41,13 @@ public interface RSAKeyService {
      * @return
      */
     public int deleteExpiresKeys(int days);
+
+    /**
+     * 删除某个用户对应的所有私钥
+     * 
+     * @param userId
+     * @return
+     */
+    public int deleteAllKeys(int userId);
 
 }

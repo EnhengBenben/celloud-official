@@ -32,6 +32,10 @@
         delete from tb_key
         where create_time &lt;= #{lastTime,jdbcType=TIMESTAMP}
     </delete>
+    <delete id="deleteAllKeys">
+        delete from tb_key
+        where user_id = #{userId,jdbcType=INTEGER}
+    </delete>
 	<insert id="insert" parameterType="com.celloud.model.RSAKey">
 		insert into tb_key (id, modulus, pub_exponent,
 		pri_exponent, user_id, state,create_time
