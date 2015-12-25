@@ -11,8 +11,8 @@
 <meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
 <meta name="description" content="一站式高通量基因检测数据分析系统">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="bookmark" href="<%=request.getContextPath()%>/favicon.ico"/>
-<link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico"/>
+<link rel="bookmark" href="<%=request.getContextPath()%>/images/favicon.ico"/>
+<link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico"/>
 <script type="text/javascript">
 if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))){ 
     if(window.location.href.indexOf("?mobile")<0){ 

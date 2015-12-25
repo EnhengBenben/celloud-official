@@ -8,12 +8,12 @@
 <!-- 优先使用最新版本的IE 和 Chrome 内核 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="baidu-site-verification" content="IsldTuHqik" />
-<title>CelLoud 登录</title>
+<title>CelLoud 用户登录</title>
 <meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
 <meta name="description" content="一站式高通量基因检测数据分析系统">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="bookmark" href="<%=request.getContextPath()%>/favicon.ico"/>
-<link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico"/>
+<link rel="bookmark" href="<%=request.getContextPath()%>/images/favicon.ico"/>
+<link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico"/>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/login.css" media="all" />
 </head>
 <body onselectstart="return false;">
