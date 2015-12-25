@@ -72,7 +72,7 @@ class split:
                     f = open(os.path.join(resultPath, file), 'r')
                     r_list = []
                     for line in f.readlines():
-                        st = line.strip().split("\t")
+                        st = line.strip().split('\t')
                         r_list.append({'name': list_value(st, 0), 'number': list_value(st, 1), 'avgQuality':  list_value(st, 2), 'avgGCContent':  list_value(st, 3)})
                     result['resultList'] = r_list
                     f.close()
@@ -81,8 +81,8 @@ class split:
                     f = open(splitstatPath, 'r')
                     lines = f.readlines()
                     file_size = len(lines)
-                    result['usefulReads'] = linecache.getline(splitstatPath, file_size)
-                    result['unknownReads'] = linecache.getline(splitstatPath, file_size-1)
+                    result['usefulReads'] = list_value(linecache.getline(splitstatPath, file_size).split('\t'), 1)
+                    result['unknownReads'] = list_value(linecache.getline(splitstatPath, file_size-1).split('\t'), 1)
                     f.close()
         # QC
         qcPath = os.path.join(path, 'QC')
