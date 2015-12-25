@@ -5,6 +5,7 @@ import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Date;
+import java.util.Enumeration;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -136,6 +137,19 @@ public class LoginAction {
         logger.info("userId:{},username:{}", user.getUserId(), user.getUsername());
         mv.setViewName("loadIndex");
         return mv;
+    }
+
+    @RequestMapping("logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        session.removeAttribute(Constants.SESSION_LOGIN_USER);
+        @SuppressWarnings("unchecked")
+        Enumeration<String> names = session.getAttributeNames();
+        while (names.hasMoreElements()) {
+            session.removeAttribute(names.nextElement());
+        }
+        deleteCookies(request, response);
+        return "redirect:login";
     }
 
     /**

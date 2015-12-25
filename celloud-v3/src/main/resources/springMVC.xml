@@ -94,6 +94,7 @@
 			<mvc:exclude-mapping path="/feedback/save" />
 			<mvc:exclude-mapping path="/**.html" />
 			<mvc:exclude-mapping path="/login/**" />
+			<mvc:exclude-mapping path="/logout/**" />
 			<bean class="com.celloud.interceptor.SecurityInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
