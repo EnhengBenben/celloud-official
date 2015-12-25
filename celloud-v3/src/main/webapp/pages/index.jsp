@@ -15,6 +15,6 @@
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico"/>
 </head>
 <body>
-
+<h2>celloud平台</h2>
 </body>
 </html>

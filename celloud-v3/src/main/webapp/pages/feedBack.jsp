@@ -14,6 +14,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="bookmark" href="<%=request.getContextPath()%>/favicon.ico"/>
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico"/>
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/feedback.css" />
+<link href="<%=request.getContextPath() %>/css/download.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="container longbackground">

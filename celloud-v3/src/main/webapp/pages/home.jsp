@@ -51,8 +51,8 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
 <meta name="keywords" content="SMINT jQuery Plugin, SMINT, jQuery Plugin, One Page Website, Sticky Navigation" />
 <meta name="description" content="SMINT is a simple plugin for lovers of one page websites, which helps with sticky menus and page scrolling." />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, minimum-scale=1,user-scalable=yes">
-<link href="css/home.min.css" rel="stylesheet" type="text/css">
-<link href="css/animate.min.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath() %>/css/home.min.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath() %>/css/animate.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="wrap">
@@ -66,7 +66,7 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
             <a class="subNavBtn" href="#s6">合作伙伴</a> 
             <a class="subNavBtn" href="joinUs.html">加入我们</a> 
             <h1><a href="#">CelLoud</a></h1>
-            <div class="login"><a href="toLogin" class="btn-register">登录</a></div>
+            <div class="login"><a href="<%=request.getContextPath() %>/login" class="btn-register">登录</a></div>
             </div>
         </div>
     </div>

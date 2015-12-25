@@ -1,5 +1,10 @@
 package com.celloud.model;
 
+import java.util.Calendar;
+import java.util.Date;
+
+import com.celloud.constants.Constants;
+
 public class RSAKey {
     private Integer id;
 
@@ -12,6 +17,8 @@ public class RSAKey {
     private Integer userId;
 
     private Integer state;
+
+    private Date createTime;
 
     public Integer getId() {
         return id;
@@ -59,5 +66,29 @@ public class RSAKey {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    /**
+     * 数据库存储的公钥私钥对是否过期(超过有效期)<br>
+     * 有效期时间参考：{@link com.celloud.constants.Constants#COOKIE_MAX_AGE_DAY}
+     * 
+     * @return
+     */
+    public boolean isExpires() {
+        boolean result = true;
+        if (this.getCreateTime() == null) {
+            return result;
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, 0 - Constants.COOKIE_MAX_AGE_DAY);
+        return this.getCreateTime().before(calendar.getTime());
     }
 }

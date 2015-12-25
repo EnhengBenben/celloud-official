@@ -12,7 +12,7 @@ public class EntryUtil {
 	 * @return
 	 */
 	public static List<DataFile> toInsert(List<DataFile> list){
-		if(list==null||list.size()<=1)
+		if(list==null||list.size()<=2)
 			return list;
 		 List<DataFile> res = new ArrayList<DataFile>(list.size());
 		 for(int i=0;i<list.size()-1;i++){

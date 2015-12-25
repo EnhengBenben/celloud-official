@@ -24,6 +24,13 @@ public interface DataService {
 	 * @return
 	 */
 	public List<DataFile> getUserMonthDataList(Integer companyId, Integer role);
+	
+	/**
+	 * 获某大客户的各月的数据与文件大小
+	 * @return
+	 */
+	public List<DataFile> getBigUserDataFile(Integer companyId);
+
 
 	/**
 	 * 某个用户每个月的数据量
@@ -97,4 +104,9 @@ public interface DataService {
 	 * @return
 	 */
 	public List<DataFile> getEachDayData(Date start);
+	/**
+	 * 只查询大客户的数据
+	 * @return
+	 */
+	public List<DataFile> getBigUserData();
 }

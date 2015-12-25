@@ -1,4 +1,7 @@
 package com.celloud.service;
+
+import com.celloud.model.User;
+
 /**
  * 用户服务接口
  * 
@@ -6,4 +9,10 @@ package com.celloud.service;
  * @date 2015年12月23日 下午12:53:35
  */
 public interface UserService {
+    /**
+     * 用户登录校验
+     * @param user
+     * @return
+     */
+    public User login(User user);
 }

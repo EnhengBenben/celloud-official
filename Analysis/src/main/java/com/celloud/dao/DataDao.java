@@ -92,4 +92,16 @@ public interface DataDao {
 	 * @return
 	 */
 	public List<DataFile> getEachDayData(Date start);
+	
+	/**
+	 * 只查询大客户的数据
+	 * @return
+	 */
+	public List<DataFile> getBigUserData();
+	
+	/**
+	 * 获取大客户的各月的数据与文件大小
+	 * @return
+	 */
+	public List<DataFile> getBigUserDataFile(Integer companyId);
 }

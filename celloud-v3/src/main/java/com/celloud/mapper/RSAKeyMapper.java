@@ -1,17 +1,23 @@
 package com.celloud.mapper;
 
+import java.util.Date;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.celloud.model.RSAKey;
 
 public interface RSAKeyMapper {
-    int deleteByPrimaryKey(Integer id);
+    public int deleteByPrimaryKey(Integer id);
 
-    int insert(RSAKey record);
+    public int deleteByModulus(String modulus);
 
-    int insertSelective(RSAKey record);
+    public int insert(RSAKey record);
 
-    RSAKey selectByPrimaryKey(Integer id);
+    public int insertSelective(RSAKey record);
 
-    int updateByPrimaryKeySelective(RSAKey record);
+    public RSAKey selectByPrimaryKey(Integer id);
+    
+    public int deleteExpiresKeys(Date lastTime);
 
-    int updateByPrimaryKey(RSAKey record);
+    public RSAKey getByModulus(@Param("modulus") String modulus);
 }

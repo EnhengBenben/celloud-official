@@ -220,4 +220,11 @@
       sign = #{sign,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
+   <select id="checkLogin" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_user
+    where username = #{username,jdbcType=VARCHAR}
+    AND password = #{password,jdbcType=VARCHAR}
+  </select>
 </mapper>
