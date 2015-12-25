@@ -20,4 +20,6 @@ public interface RSAKeyMapper {
     public int deleteExpiresKeys(Date lastTime);
 
     public RSAKey getByModulus(@Param("modulus") String modulus);
+
+    public int deleteAllKeys(@Param("userId") int userId);
 }

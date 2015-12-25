@@ -45,4 +45,9 @@ public class RSAKeyServiceImpl implements RSAKeyService {
         return rsaKeyMapper.deleteByModulus(modulus);
     }
 
+    @Override
+    public int deleteAllKeys(int userId) {
+        return rsaKeyMapper.deleteAllKeys(userId);
+    }
+
 }
