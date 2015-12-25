@@ -1,17 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- 优先使用最新版本的IE 和 Chrome 内核 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="baidu-site-verification" content="IsldTuHqik" />
-<meta name="keywords" content="celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
 <title>CelLoud 服务</title>
-<link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico"/>
+<meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
+<meta name="description" content="一站式高通量基因检测数据分析系统">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="bookmark" href="<%=request.getContextPath()%>/favicon.ico"/>
-<link href="css/download.css" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico"/>
+<link href="<%=request.getContextPath()%>/css/download.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="container longbackground">
@@ -20,8 +23,6 @@
             <h1 class="fl"><a href="<%=request.getContextPath() %>/">celloud</a></h1>
             <div class="nav fr">
                 <a href="#">服务与支持</a> 
-<!--                 <a href="#">服务与支持</a>  -->
-<!--                 <a href="#">意见反馈</a>  -->
             </div>
         </div>
     </div>
@@ -113,7 +114,7 @@
 	            </ul>
 				</p>
 				<p>
-	            您已认可Celloud生物信息云平台未对本服务内容加以任何事先审查<span class="bold_">（但由Celloud提供的继续医学教育项目服务除外）</span>，对用户的使用行为也无法进行全面控制，您使用任何内容时，包括依赖前述内容之正确性、完整性或实用性时，您同意将自行加以判断并承担所有风险，而不依赖于Celloud生物信息云平台。但Celloud生物信息云平台及其指定人有权（但无义务）依其自行之考虑，拒绝和删除可经由本服务提供之违反本条款的、或其它引起Celloud生物信息云平台反感的任何内容。您了解并同意：Celloud生物信息云平台依据法律法规的要求，或基于诚信为了以下目的或在合理、必要范围内，认定必须将内容加以保存或披露时，得加以保存或披露：
+ 您已认可Celloud生物信息云平台未对本服务内容加以任何事先审查<span class="bold_">（但由Celloud提供的继续医学教育项目服务除外）</span>，对用户的使用行为也无法进行全面控制，您使用任何内容时，包括依赖前述内容之正确性、完整性或实用性时，您同意将自行加以判断并承担所有风险，而不依赖于Celloud生物信息云平台。但Celloud生物信息云平台及其指定人有权（但无义务）依其自行之考虑，拒绝和删除可经由本服务提供之违反本条款的、或其它引起Celloud生物信息云平台反感的任何内容。您了解并同意：Celloud生物信息云平台依据法律法规的要求，或基于诚信为了以下目的或在合理、必要范围内，认定必须将内容加以保存或披露时，得加以保存或披露：
 				<ul>
 					<li>遵守法律程序；</li>
 					<li>执行本服务公约；</li>
@@ -122,8 +123,7 @@
 					<li>其它Celloud生物信息云平台（中国）认为有必要的情况。</li>
 					<li>您了解并同意经由本服务之技术处理及传送，您提供的任何内容，可能经由各个网路加以传送；</li>
 					<li>为了符合及配合连线网路或装置之技术要求而进行改变。</li>
-				</ul>
-	            </p>
+				</ul>	            </p>
 	            <div class="title">9. 国际使用之特别警告</div>
 	            <p>
 	            	您已了解国际互联网的无国界性，同意遵守当地所有关于网上行为及内容之法律法规。您特别同意并承诺遵守有关从中华人民共和国或您所在国家或地区输出信息之传输的所有适用法律、法规。

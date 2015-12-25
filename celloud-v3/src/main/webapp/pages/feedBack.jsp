@@ -1,19 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- 优先使用最新版本的IE 和 Chrome 内核 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="baidu-site-verification" content="IsldTuHqik" />
-<meta name="keywords" content="celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
 <title>CelLoud 服务与支持</title>
-<link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico"/>
+<meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
+<meta name="description" content="一站式高通量基因检测数据分析系统">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="bookmark" href="<%=request.getContextPath()%>/favicon.ico"/>
-<%-- <link rel="stylesheet" href="<%=request.getContextPath() %>/content/css/style.css" /> --%>
-<link rel="stylesheet" href="<%=request.getContextPath() %>/css/feedback.css" />
-<link href="<%=request.getContextPath() %>/css/download.css" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico"/>
 </head>
 <body>
 <div class="container longbackground">
@@ -22,13 +22,11 @@
             <h1 class="fl"><a href="<%=request.getContextPath() %>/">celloud</a></h1>
             <div class="nav fr">
                 <a href="#" onclick="javascript:clearForm();" id="toMe">投诉建议</a> 
-<!--                 <a href="#" onclick="javascript:showFeedBackList();" id="toOther">大家说</a>  -->
             </div>
         </div>
     </div>
     <div class="main">
     	<div class="wrapper longmargin">
-<!--             <div id="otherSay" style="height: 1000px;"></div> -->
             <div id="selfSay">  
                 <p class="fs16">欢迎使用CelLoud生物信息云平台！您在使用平台的过程中遇到的问题，或者您对平台的改进有什么好的想法和建议，都可以向我们提出。我们会认真阅读您的建议，不断改进我们的工作。
 				<p><span class="txt-span">姓名：</span><input type="text" class="input-normal" id="userName">
