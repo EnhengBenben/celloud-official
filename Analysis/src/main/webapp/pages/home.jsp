@@ -124,7 +124,7 @@
 				</div>
 			</div>
 			<!-- /row -->
-			<c:if test="${userRole=='2' || userRole=='3' || 1==1}">
+			<c:if test="${userRole=='2' || userRole=='3' }">
 				<div class="row">
 					<div class="col-xs-12">
 						<h3 class="header smaller lighter green">浏览器统计</h3>

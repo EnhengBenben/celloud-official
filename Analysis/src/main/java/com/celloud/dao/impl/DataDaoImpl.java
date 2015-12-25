@@ -28,17 +28,16 @@ public class DataDaoImpl implements DataDao {
 	private String noUserid = PropertiesUtil.noUserid;
 
 	@Override
-	public List<Map<String, Object>> getUserList(Integer companyId, Integer role,String orderType) {
+	public List<Map<String, Object>> getUserList(Integer companyId, Integer role, String orderType) {
 		Connection conn = ConnectManager.getConnection();
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		String sql = "select f.user_id,sum(ifnull(f.size,0))size,count(f.file_id)as fileNum,u.username,(select company_name "
 				+ " from tb_company where company_id = u.company_id)as company_name from tb_file f, tb_user_company_relat uc ,tb_user u"
-				+ " where f.user_id = uc.user_id and f.state=0 and f.user_id = u.user_id " 
+				+ " where f.user_id = uc.user_id and f.state=0 and f.user_id = u.user_id "
 				+ SqlController.whereCompany("uc", "company_id", role, companyId)
-				+ SqlController.notUserId("uc",role, noUserid)
-				+	" group by f.user_id "
+				+ SqlController.notUserId("uc", role, noUserid) + " group by f.user_id "
 				+ SqlController.orderBy(orderType);
-		LogUtil.info(log,sql);
+		LogUtil.info(log, sql);
 		try {
 			list = qr.query(conn, sql, new MapListHandler());
 		} catch (SQLException e) {
@@ -55,8 +54,8 @@ public class DataDaoImpl implements DataDao {
 		String sql = "select left(f.create_date,7) as yearMonth,count(f.file_id) as fileNum,sum(f.size)  as size "
 				+ " from tb_file f,tb_user_company_relat uc where  f.state = 0 and f.user_id = uc.user_id and f.create_date is not null "
 				+ SqlController.notUserId("f", role, noUserid)
-			    + SqlController.whereCompany("uc", "company_id", role, companyId)
-				+ "group by yearMonth order by yearMonth desc";
+				+ SqlController.whereCompany("uc", "company_id", role, companyId)
+				+ "group by yearMonth order by yearMonth asc";
 		LogUtil.info(log, sql);
 		ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
 		try {
@@ -124,11 +123,11 @@ public class DataDaoImpl implements DataDao {
 	}
 
 	@Override
-	public Object getBigUserDataSize(Integer companyId,int role) {
+	public Object getBigUserDataSize(Integer companyId, int role) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Connection conn = ConnectManager.getConnection();
-		String sql = "select sum(f.size) num from tb_file f,tb_user_company_relat uc  where f.state=0 and uc.user_id =f.user_id  and f.user_id not in (" + noUserid + ") "
-				+ SqlController.whereCompany("uc", "company_id", role, companyId);
+		String sql = "select sum(f.size) num from tb_file f,tb_user_company_relat uc  where f.state=0 and uc.user_id =f.user_id  and f.user_id not in ("
+				+ noUserid + ") " + SqlController.whereCompany("uc", "company_id", role, companyId);
 		LogUtil.info(log, sql);
 		try {
 			map = qr.query(conn, sql, new MapHandler());
@@ -186,6 +185,45 @@ public class DataDaoImpl implements DataDao {
 			list = qr.query(conn, sql, rsh, start, start);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<DataFile> getBigUserData() {
+		List<DataFile> list = null;
+		Connection conn = ConnectManager.getConnection();
+		String sql = " select sum(f.size) as size,count(f.file_id)as fileNum,uc.company_id,c.company_name "
+				+ " from tb_file f,tb_user_company_relat uc,tb_company c "
+				+ " where f.user_id = uc.user_id and c.company_name is not null  "
+				+ SqlController.notUserId("f", 3, noUserid)
+				+ " and uc.company_id = c.company_id " 
+				+ " group by uc.company_id order by fileNum desc";
+		ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
+		try {
+			list = qr.query(conn, sql, rsh);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<DataFile> getBigUserDataFile(Integer cmpId) {
+		List<DataFile> list = null;
+		Connection conn = ConnectManager.getConnection();
+		String sql = " select left(f.create_date,7)as yearMonth, sum(f.size) as size,count(f.file_id)as fileNum "
+				+ " from tb_file f,tb_user_company_relat uc"
+				+ " where f.user_id = uc.user_id  and f.state=0 and f.create_date is not null "
+				+ SqlController.notUserId("f", 3, noUserid)
+				+ " and uc.company_id = ? " 
+				+ " group by yearMonth order by yearMonth desc";
+		LogUtil.info(log, sql);
+		ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
+		try {
+			list = qr.query(conn, sql, rsh,cmpId);
+		} catch (SQLException e) {
+			LogUtil.query(log, sql, e);
 		}
 		return list;
 	}

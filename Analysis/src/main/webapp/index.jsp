@@ -111,6 +111,13 @@
 						</li>
 						
 						<li>
+                            <a href="javascript:bigUserCount()">
+                                <i class="icon-double-angle-right"></i>
+                               大客户统计
+                            </a>
+                        </li>
+                        
+						<li>
 							<a href="javascript:gotoOutputData()">
 								<i class="icon-double-angle-right"></i>
 								数据导出
@@ -343,6 +350,13 @@
 			$("#content").html(responseText);
 		});
 	}
+	function bigUserCount(){
+		  $("#secondTitle").addClass("hide");
+	        $.get("home!toBigUserCount",{},function(responseText){
+	            $("#content").html(responseText);
+	        });
+	}
+	
 </script>
 </body>
 </html>

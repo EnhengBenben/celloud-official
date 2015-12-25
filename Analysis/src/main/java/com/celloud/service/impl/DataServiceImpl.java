@@ -77,4 +77,16 @@ public class DataServiceImpl implements DataService {
 		return dataDao.getEachDayData(start);
 	}
 
+	@Override
+	public List<DataFile> getBigUserData() {
+		return dataDao.getBigUserData();
+	}
+
+	@Override
+	public List<DataFile> getBigUserDataFile(Integer companyId) {
+		//List<DataFile> res = null;
+		//res = EntryUtil.toInsert(dataDao.getBigUserDataFile(companyId));
+		return dataDao.getBigUserDataFile(companyId);
+	}
+
 }

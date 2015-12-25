@@ -23,11 +23,16 @@
 	<div class="row">
 		<h3 class="header smaller lighter blue">
 			<span onclick="getMonthDataList()">总数据量月统计</span>
-			<small id="secondTitle" class="hide"> <i class="icon-double-angle-right"></i> <span id="_month"></span>用户上传数据量
+			<small id="secondTitle" class="hide">
+				<i class="icon-double-angle-right"></i>
+				<span id="_month"></span>
+				用户上传数据量
 			</small>
 		</h3>
 		<div class="table-header hide" id="_companyName"></div>
+		  <h3 class="header smaller lighter green">每月用户数据量统计</h3>
 		<div class="col-xs-12" style="height: 450px;" id="fileSizeView"></div>
+		  <h3 class="header smaller lighter green">每月用户文件数量统计</h3>
 		<div class="col-xs-12" style="height: 450px;" id="fileNumView"></div>
 
 		<div class="col-xs-12">
@@ -76,8 +81,8 @@
 			yAxis[i] = data[i].fileNum;
 			yAxisSize[i] = parseFloat((data[i].size / (1024 * 1024 * 1024)).toFixed(2));
 		}
-		var fileSizeOpt = makeOption('', xAxis, yAxisSize, '文件大小', 'bar');
-		var fileNumOpt = makeOption('', xAxis, yAxis, '文件数量', 'bar');
+		var fileSizeOpt = makeOptionScroll('', xAxis, yAxisSize, '文件大小', 'bar',70,100);
+		var fileNumOpt = makeOptionScroll('', xAxis, yAxis, '文件数量', 'bar',70,100);
 		
 		var fileSizeChart = echarts.init(document.getElementById('fileSizeView'));
 		var fileNumChart = echarts.init(document.getElementById('fileNumView'));
