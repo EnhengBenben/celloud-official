@@ -20,4 +20,20 @@ public class HomeAction {
     public String feedBack() {
         return "feedBack";
     }
+    @RequestMapping("home.html")
+    public String home() {
+        return "home";
+    }
+    @RequestMapping("index")
+    public String index(){
+        return "index";
+    }
+    @RequestMapping("download.html")
+    public String download(){
+        return "download";
+    }
+    @RequestMapping("joinUs.html")
+    public String joinUs(){
+        return "joinUs";
+    }
 }

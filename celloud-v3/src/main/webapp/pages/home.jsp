@@ -7,8 +7,8 @@
 <meta name="baidu-site-verification" content="IsldTuHqik" />
 <meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
 <title>CelLoud 平台</title>
-<link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico"/>
-<link rel="bookmark" href="<%=request.getContextPath()%>/favicon.ico"/>
+<link rel="shortcut icon" href="<%=request.getContextPath()%>images//favicon.ico"/>
+<link rel="bookmark" href="<%=request.getContextPath()%>/images/favicon.ico"/>
 <script type="text/javascript">
 if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))){ 
     if(window.location.href.indexOf("?mobile")<0){ 
@@ -47,8 +47,8 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
 <meta name="keywords" content="SMINT jQuery Plugin, SMINT, jQuery Plugin, One Page Website, Sticky Navigation" />
 <meta name="description" content="SMINT is a simple plugin for lovers of one page websites, which helps with sticky menus and page scrolling." />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, minimum-scale=1,user-scalable=yes">
-<link href="css/home.min.css" rel="stylesheet" type="text/css">
-<link href="css/animate.min.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath() %>/css/home.min.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath() %>/css/animate.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="wrap">
@@ -63,7 +63,7 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
 <!--             <a href="#s7" class="subNavBtn">资料下载</a>  -->
             <a href="joinUs.html" class="subNavBtn">加入我们</a> 
             <h1><a href="#">CelLoud</a></h1>
-            <div class="login"><a href="toLogin" class="btn-register">登录</a></div>
+            <div class="login"><a href="<%=request.getContextPath() %>/login" class="btn-register">登录</a></div>
             </div>
         </div>
     </div>

@@ -6,11 +6,17 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import com.celloud.model.User;
 
 /**
  * 系统级常量及参数配置
@@ -19,9 +25,6 @@ import org.slf4j.LoggerFactory;
  * @date 2015年12月22日 下午4:17:37
  */
 public class ConstantsData {
-    public static void main(String[] args){
-        logger.info("---------");
-    }
     private static Logger logger = LoggerFactory.getLogger(ConstantsData.class);
     public static Map<String, Map<String, String>> machines = null;
 
@@ -77,5 +80,26 @@ public class ConstantsData {
             }
         }
         return machines;
+    }
+
+    /**
+     * 判断当前session有无用户登录
+     * 
+     * @return
+     */
+    public static boolean isLoggedIn() {
+        return getLoginUser() != null;
+    }
+
+    /**
+     * 获取当前session已登录的用户对象，如无用户登录，则为null
+     * 
+     * @return
+     */
+    public static User getLoginUser() {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+                .getRequest();
+        Object user = request.getSession().getAttribute(Constants.SESSION_LOGIN_USER);
+        return user == null ? null : (User) user;
     }
 }

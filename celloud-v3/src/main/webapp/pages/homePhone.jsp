@@ -7,8 +7,8 @@
 <meta name="baidu-site-verification" content="IsldTuHqik" />
 <meta name="keywords" content="celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
 <title>CelLoud 平台</title>
-<link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico"/>
-<link rel="bookmark" href="<%=request.getContextPath()%>/favicon.ico"/>
+<link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico"/>
+<link rel="bookmark" href="<%=request.getContextPath()%>/images/favicon.ico"/>
 <script type="text/javascript">
 if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))){ 
     if(window.location.href.indexOf("?mobile")<0){ 
@@ -33,9 +33,9 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
     <div class="subMenu" >
         <div class="subInner">
         	<div class="wrapper">
-			<a href="joinUs.html" class="subNavBtn">加入我们</a> 
+			<a href="<%=request.getContextPath() %>/joinUs.html" class="subNavBtn">加入我们</a> 
             <h1><a href="#">CelLoud</a></h1>
-            <div class="login"><a href="toLogin" class="btn-register">登录</a></div>
+            <div class="login"><a href="<%=request.getContextPath() %>/login" class="btn-register">登录</a></div>
             </div>
         </div>
     </div>

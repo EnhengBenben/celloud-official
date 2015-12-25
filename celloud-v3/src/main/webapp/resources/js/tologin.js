@@ -51,41 +51,43 @@ $(document).ready(function(){
 	};
 	
 	$("#loginForm").submit(function(){
-		var flag = false;
+		$(".error").html("");
+		//校验用户名是否为空
 		var username = $.trim($("#username").val());
-		var password = $.trim($("#password").val());
-		var captcha = $.trim($("#captcha").val());
-		if(checked=="true"&&error==""){
-			if(username==""){
-				$(".error").html("请输入用户名！");
-				$(".error").show();
-			}else if(password==""){
-				$(".error").html("请输入密码！");
-				$(".error").show();
-			}else {
-				flag = true;
-				var password1 = $.trim($("#password1").val());
-				var pwd = password + password1;
-				$("input[name='password']").val(pwd);
-			}
-		}else{
-			if(username==""){
-				$(".error").html("请输入用户名！");
-				$(".error").show();
-			}else if(password==""){
-				$(".error").html("请输入密码！");
-				$(".error").show();
-			}else if(captcha==""){
-				$(".error").html("请输入验证码！");
-				$(".error").show();
-			}else{
-				flag = true;
-				$("input[name='password']").val(secPWD(password));
-			}
-			delCookie("username");
-			delCookie("password");
+		if(username==""){
+			$(".error").html("请输入用户名！");
+			$(".error").show();
+			$("#username").focus();
+			return false;
 		}
-		return flag;
+		//校验密码是否为空
+		var password = $.trim($("#password").val());
+		if(password==""){
+			$(".error").html("请输入密码！");
+			$(".error").show();
+			$("#password").focus();
+			return false;
+		}
+		//记住密码，不需要校验验证码
+		if(checked=="true"&&error==""){
+			var password1 = $.trim($("#password1").val());
+			var pwd = password + password1;
+			$("input[name='password']").val(pwd);
+			return true;
+		}
+		//校验验证码是否为空
+		var captcha = $.trim($("#captcha").val());
+		if(captcha==""){
+			$(".error").html("请输入验证码！");
+			$(".error").show();
+			$("#captcha").focus();
+			return false;
+		}
+		//全部校验已通过
+		$("input[name='password']").val(secPWD(password));
+		delCookie("username");
+		delCookie("password");
+		return true;
 	});
 
 	$("#remPass").click(function(){
@@ -109,9 +111,6 @@ $(document).ready(function(){
 		}
 	});
 	
-	$("#logo").click(function(){
-			window.location = "home.html";
-	});
 });
 
 function secPWD(password){
