@@ -19,7 +19,7 @@ public interface CompanyDao {
 	 * @param companyId
 	 * @return
 	 */
-	public Object getBigUserCompanyNum(Integer companyId,int role);
+	public Object getBigUserCompanyNum(Integer companyId, int role);
 
 	/**
 	 * 根据医院地址获取大客户各省的医院数量
@@ -27,8 +27,7 @@ public interface CompanyDao {
 	 * @param companyId
 	 * @return
 	 */
-	public List<Map<String, Object>> getBigUserCompanyNumByAddr(
-			Integer companyId);
+	public List<Map<String, Object>> getBigUserCompanyNumByAddr(Integer companyId);
 
 	/**
 	 * 根据医院地址获取医院信息
@@ -44,7 +43,7 @@ public interface CompanyDao {
 	 * @param companyId
 	 * @return
 	 */
-	public List<Map<String, Object>> getCompanyNumEveryMonth(Integer companyId,Integer role);
+	public List<Map<String, Object>> getCompanyNumEveryMonth(Integer companyId, Integer role);
 
 	/**
 	 * 获取医院详细信息
@@ -53,7 +52,7 @@ public interface CompanyDao {
 	 *            大客户id
 	 * @return
 	 */
-	public List<Company> getCompanyDetailById(Integer companyId,Integer role);
+	public List<Company> getCompanyDetailById(Integer companyId, Integer role, String orderBy);
 
 	/**
 	 * 获取单个医院信息
@@ -68,79 +67,113 @@ public interface CompanyDao {
 	 * 
 	 * @return
 	 */
-	public List<Map<String, Object>> getProvince(Integer companyId,int role);
-	
+	public List<Map<String, Object>> getProvince(Integer companyId, int role);
+
 	/**
 	 * 获取大客户下医院运行App的次数
+	 * 
 	 * @param companyId
 	 * @return
 	 */
-	public List<App> getCompanyRunAppNumByCId(Integer companyId,String groupBytag);
-	
+	public List<App> getCompanyRunAppNumByCId(Integer companyId, String groupBytag);
+
 	/**
 	 * 取大客户下所有医院上传文件个数
+	 * 
 	 * @param companyId
 	 * @return
 	 */
-	public List<DataFile> getCompanyUpLoadDataByCId(Integer companyId,String groupBytag);
-	
+	public List<DataFile> getCompanyUpLoadDataByCId(Integer companyId, String groupBytag);
+
 	/**
 	 * 查询时间段内医院在各周登陆的次数
+	 * 
 	 * @param userId
 	 * @param start
 	 * @param end
-	 * @param companyList 仅看此医院
+	 * @param companyList
+	 *            仅看此医院
 	 * @return
 	 */
-	public List<LoginLog> getCompanyLoginInWeek(Integer cmpId,Date start,Date end,List<Integer> cmpIdList,Integer role) ;
+	public List<LoginLog> getCompanyLoginInWeek(Integer cmpId, Date start, Date end, List<Integer> cmpIdList,
+			Integer role);
+
 	/**
 	 * 查询时间段内医院在各个月内登陆的次数
+	 * 
 	 * @param start
 	 * @param end
-	 * @param companyList 仅看此医院
+	 * @param companyList
+	 *            仅看此医院
 	 * @return
 	 */
-	public List<LoginLog> getCompanyLoginInMonth(Integer cmpId,Date start,Date end,List<Integer> companyList,Integer role) ;
+	public List<LoginLog> getCompanyLoginInMonth(Integer cmpId, Date start, Date end, List<Integer> companyList,
+			Integer role);
+
 	/**
 	 * 查询时间段医院在各个周上传文件大小、数量
+	 * 
 	 * @param start
 	 * @param end
-	 * @param companyList 仅看此医院
+	 * @param companyList
+	 *            仅看此医院
 	 * @return
 	 */
-	public List<DataFile> getCompanyFileInWeek(Integer cmpId,Date start ,Date end,List<Integer> cmpIdList,Integer role );
+	public List<DataFile> getCompanyFileInWeek(Integer cmpId, Date start, Date end, List<Integer> cmpIdList,
+			Integer role);
+
 	/**
 	 * 查询时间段医院在各个月上传文件大小、数量
+	 * 
 	 * @param userId
 	 * @param start
 	 * @param end
-	 * @param companyList 仅看此医院
+	 * @param companyList
+	 *            仅看此医院
 	 * @return
 	 */
-	public List<DataFile> getCompanyFileInMonth(Integer cmpId,Date start ,Date end,List<Integer> cmpIdList,Integer role );
+	public List<DataFile> getCompanyFileInMonth(Integer cmpId, Date start, Date end, List<Integer> cmpIdList,
+			Integer role);
+
 	/**
 	 * 查询时间段内医院在各个周内运行app的次数
+	 * 
 	 * @param userId
 	 * @param start
 	 * @param end
-	 * @param companyList 仅看此医院
+	 * @param companyList
+	 *            仅看此医院
 	 * @return
 	 */
-	public List<App> getCompanySoftwareInWeek(Integer cmpId,Date start,Date end,List<Integer> cmpIdList,Integer role);
+	public List<App> getCompanySoftwareInWeek(Integer cmpId, Date start, Date end, List<Integer> cmpIdList,
+			Integer role);
+
 	/**
 	 * 查询时间段内医院在各个月内运行app的次数
+	 * 
 	 * @param userId
 	 * @param start
 	 * @param end
-	 * @param companyList 仅看此医院
+	 * @param companyList
+	 *            仅看此医院
 	 * @return
 	 */
-	public List<App> getCompanySoftwareInMonth(Integer cmpId,Date start,Date end,List<Integer> cmpIdList,Integer role);
+	public List<App> getCompanySoftwareInMonth(Integer cmpId, Date start, Date end, List<Integer> cmpIdList,
+			Integer role);
 
 	/**
 	 * 管好权限查询客户权限
+	 * 
 	 * @param cmpId
 	 * @param role
 	 * @return
 	 */
-	public List<Company> getCompanyClient(Integer cmpId,Integer role);}
+	public List<Company> getCompanyClient(Integer cmpId, Integer role);
+
+	/**
+	 * 大客户详细信息列表列表
+	 * 
+	 * @return
+	 */
+	public List<Company> BigUserList();
+}

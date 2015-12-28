@@ -88,7 +88,7 @@ public interface UserService {
 	 * @param companyId
 	 * @return
 	 */
-	public List<User> getUserListByBigCom(Integer companyId,Integer role);
+	public List<User> getUserListByBigCom(Integer companyId,Integer role,String orderType);
 
 	/**
 	 * 根据用户id获取用户信息

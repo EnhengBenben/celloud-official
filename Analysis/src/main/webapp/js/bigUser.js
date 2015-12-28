@@ -1,15 +1,11 @@
 
-
-
-
-
-
+bigUesrMonthData(3,"中山大学达安基因股份有限公司");
 
 
 function bigUesrMonthData(company_id,company_name) {
-	getBIgUserDataById(company_id);
+	getBigUserDataById(company_id);
 }
-function getBIgUserDataById(company_id){
+function getBigUserDataById(company_id){
 	var fileSizeId = "fileSize";
 	var fileNumId = "fileNum";
 	var bigUesrURL = "data!getBigUserMonth";

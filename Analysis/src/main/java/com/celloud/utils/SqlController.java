@@ -161,7 +161,14 @@ public class SqlController {
 		case "fileNum":
 			sql =sql+"fileNum desc";
 			break;
+		case "runNum":
+			sql =sql+"runNum desc";
+			break;
+		default:
+			sql="";
+			break;
 		}
+		
 		return sql;
 	}
 }

@@ -94,21 +94,8 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public List<Company> getCompanyDetailById(Integer companyId,Integer role) {
-		List<Company> list = companyDao.getCompanyDetailById(companyId,role);
-		List<Company> list1 = new ArrayList<Company>();
-		for (Company c : list) {
-			Company c1 = c;
-			Double size = c.getFileSize();
-			if (size != 0 || size != null) {
-				size = size / (1024 * 1024 * 1024);
-			} else {
-				size = 0.0;
-			}
-			c1.setFileSize(size);
-			list1.add(c1);
-		}
-		return list1;
+	public List<Company> getCompanyDetailById(Integer companyId,Integer role,String orderBy) {
+		return  companyDao.getCompanyDetailById(companyId,role,orderBy);
 	}
 
 	@Override
@@ -337,5 +324,10 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public List<Company> getCompanyClient(Integer cmpId, Integer role) {
 		return companyDao.getCompanyClient(cmpId, role);
+	}
+
+	@Override
+	public List<Company> BigUserList() {
+		return companyDao.BigUserList();
 	}
 }
