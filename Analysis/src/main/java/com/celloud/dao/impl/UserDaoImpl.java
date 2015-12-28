@@ -196,11 +196,10 @@ public class UserDaoImpl implements UserDao {
 				+	SqlController.notUserId("u",role, noUserid)
 				+ SqlController.whereCompany("u","company_id",role, companyId)
 				+ SqlController.orderBy(orderType);
-		log.info(sql);
+		LogUtil.info(log,sql);
 		try {
 			ResultSetHandler<List<User>> rsh = new BeanListHandler<User>(User.class);
 			list = qr.query(conn, sql, rsh);
-			LogUtil.info(log, sql);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
 		}
