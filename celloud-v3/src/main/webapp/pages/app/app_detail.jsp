@@ -10,7 +10,7 @@
         </div>
         <div class="itemInfo">
           <h5>${app.softwareName }</h5>
-          <div class="score-con">上线时间：<span class="score">${app.createDate }</span></div>
+          <div class="unlinedate">上线时间：<span class="date">${app.createDate }</span></div>
           <div class="intro">
             <ul>
               <li>分类：<span>${app.classifyNames}</span></li>

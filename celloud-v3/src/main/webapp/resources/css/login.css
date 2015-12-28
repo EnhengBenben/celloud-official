@@ -1,5 +1,4 @@
 @charset "utf-8";
-
 /* reset */
 body, div{margin:0;padding:0;}
 input,button,select,textarea{outline:none}
@@ -10,7 +9,6 @@ a{ text-decoration:none}
 .fr{float: right;}
 .clearfix:after{display:block;clear:both;content:'.';height:0;visibility:hidden;font-size:0;}
 .clearfix {zoom:1;}
-
 /* bgContainer */
 .bgContainer{position:relative;}
 .bgContainer img{max-width:100%;max-height:100%;}
@@ -62,9 +60,7 @@ color: #BABABA;
 #pwdPlaceholder, .placeholder {
 color: #BABABA;
 }
-
 .error{padding-left:30px;color:#CC6600}
-
 /*错误页面*/
 .error_return{ font-size:12px; color:#959595; display:inline; margin-left:10px;margin-top:10px;}
 .error_return:hover{ color:#78BC28;}

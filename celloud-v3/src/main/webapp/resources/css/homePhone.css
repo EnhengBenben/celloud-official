@@ -1,10 +1,4 @@
 @charset "utf-8";
-@font-face
-{/*方正正中黑简体*/
-font-family: 方正正中黑简体;
-src: url('FZZhengheiS-DB-GB.TTF'),
-     url('FZZhengheiS-DB-GB.eot'); /* IE9+ */
-}
 /* reset */
 body, div, ul, li, h1, h2, h3, h4, h5, h6, form, fieldset, input, button, textarea, select, p, table, th, td,a {margin:0;padding:0}
 header, footer {display:block;margin:0;padding:0;}

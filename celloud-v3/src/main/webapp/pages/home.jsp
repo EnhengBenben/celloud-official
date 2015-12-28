@@ -27,8 +27,8 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
     } 
 } 
 </script>
-<!–[if IE 6]>
-<script type="text/javascript" src="plugins/DD_belatedPNG_0.0.8a.min.js"></script>
+<!--[if IE 6]>
+<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/DD_belatedPNG_0.0.8a.min.js"></script>
 <script>
     //DD_belatedPNG.fix('CSS选择器, 应用类型');
     DD_belatedPNG.fix('img, img');
@@ -47,12 +47,13 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
     DD_belatedPNG.fix('.hex-box i, background');
     DD_belatedPNG.fix('.s4 .content, background');
 </script>
-<![endif]–>
+<![endif]-->
 <meta name="keywords" content="SMINT jQuery Plugin, SMINT, jQuery Plugin, One Page Website, Sticky Navigation" />
 <meta name="description" content="SMINT is a simple plugin for lovers of one page websites, which helps with sticky menus and page scrolling." />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, minimum-scale=1,user-scalable=yes">
+<link href="<%=request.getContextPath() %>/plugins/animate.min.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath() %>/css/font.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath() %>/css/home.min.css" rel="stylesheet" type="text/css">
-<link href="<%=request.getContextPath() %>/css/animate.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="wrap">
@@ -302,7 +303,7 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
 </div>
 </section>
 </div>
-<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/jquery.smint.min.js" type="text/javascript" ></script>
 <script src="<%=request.getContextPath() %>/plugins/jquery.lazyload.min.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath() %>/plugins/jquery.easing.1.3.min.js"></script> 
