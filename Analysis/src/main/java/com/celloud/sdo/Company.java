@@ -14,7 +14,7 @@ public class Company implements Serializable {
 	/** 数据量（个数） */
 	private Long fileNum;
 	/** 数据大小(GB) */
-	private Double fileSize;
+	private long size;
 	/** 报告量（个数） */
 	private Long reportNum;
 	/** 所包含用户 */
@@ -22,9 +22,26 @@ public class Company implements Serializable {
 	/** 入驻部门 */
 	private String dept_name;
 	private Date create_date;
+	private int runNum;
 	
 	public Integer getCompany_id() {
 		return company_id;
+	}
+	
+	public long getSize() {
+		return size;
+	}
+
+	public void setSize(long size) {
+		this.size = size;
+	}
+
+	public int getRunNum() {
+		return runNum;
+	}
+
+	public void setRunNum(int runNum) {
+		this.runNum = runNum;
 	}
 
 	public void setCompany_id(Integer company_id) {
@@ -53,14 +70,6 @@ public class Company implements Serializable {
 
 	public void setUserNum(Integer userNum) {
 		this.userNum = userNum;
-	}
-
-	public Double getFileSize() {
-		return fileSize;
-	}
-
-	public void setFileSize(Double fileSize) {
-		this.fileSize = fileSize;
 	}
 
 	public String getTel() {
@@ -114,7 +123,7 @@ public class Company implements Serializable {
 	@Override
 	public String toString() {
 		return "Company [company_id=" + company_id + ", company_name=" + company_name + ", address=" + address
-				+ ", tel=" + tel + ", userNum=" + userNum + ", fileNum=" + fileNum + ", fileSize=" + fileSize
+				+ ", tel=" + tel + ", userNum=" + userNum + ", fileNum=" + fileNum 
 				+ ", reportNum=" + reportNum + ", username=" + username + ", dept_name=" + dept_name + ", create_date="
 				+ create_date + "]";
 	}

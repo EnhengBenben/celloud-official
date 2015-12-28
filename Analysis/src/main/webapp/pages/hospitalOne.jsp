@@ -39,7 +39,7 @@
 							<dd>${company.reportNum }&nbsp;个</dd>
 							<dt>入驻时间：</dt>
 							<dd>
-								<fmt:formatDate type="both" value="${company.create_date }" />
+								<fmt:formatDate type="both" value="${company.create_date }"  pattern="yyyy-MM-dd"/>
 							</dd>
 						</dl>
 					</div>

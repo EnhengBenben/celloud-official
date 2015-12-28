@@ -27,6 +27,9 @@ import com.google.inject.Inject;
 @Results({ @Result(name = "success", location = "../../pages/home.jsp"),
 		@Result(name = "toWeekReport", location = "../../pages/weekExport.jsp"),
 		@Result(name = "toBigUser", location = "../../pages/bigUser.jsp"),
+		@Result(name = "toHospitalBigUser", location = "../../pages/hospitalBigUser.jsp"),
+
+		
 
 		@Result(name = "browserCount", type = "json", params = { "root", "browserList" }),
 		@Result(name = "historyList", type = "json", params = { "root", "historyList" }),
@@ -82,6 +85,7 @@ public class HomeAction extends BaseAction {
 	private List<DataFile> userDataList;
 	/** 每天上传数据大小统计 **/
 	private List<DataFile> eachDataList;
+	private List<Company> cmpList;
 
 	/**
 	 * @return
@@ -179,6 +183,10 @@ public class HomeAction extends BaseAction {
 	public String toBigUserCount(){
 		dataList = dataService.getBigUserData();
 		return "toBigUser";
+	}
+	public String toHospitalBigUesr(){
+		cmpList = companyService.BigUserList();
+		return "toHospitalBigUser";
 	}
 	
 	public String weekBrowser() {
@@ -308,6 +316,14 @@ public class HomeAction extends BaseAction {
 
 	public void setResultMap(Map<String, Object> resultMap) {
 		this.resultMap = resultMap;
+	}
+	
+	public List<Company> getCmpList() {
+		return cmpList;
+	}
+
+	public void setCmpList(List<Company> cmpList) {
+		this.cmpList = cmpList;
 	}
 
 	public void setStartDate(String startDate) {

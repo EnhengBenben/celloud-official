@@ -34,7 +34,7 @@ public interface CompanyService {
 	 *            大客户id
 	 * @return
 	 */
-	public List<Company> getCompanyDetailById(Integer companyId,Integer role);
+	public List<Company> getCompanyDetailById(Integer companyId,Integer role,String orderBy);
 
 	/**
 	 * 获取单个医院信息
@@ -147,4 +147,10 @@ public interface CompanyService {
 	 * @return
 	 */
 	public List<Company> getCompanyClient(Integer cmpId,Integer role);
+	
+	/**
+	 * 大客户详细信息列表列表
+	 * @return
+	 */
+	public List<Company>BigUserList();
 }

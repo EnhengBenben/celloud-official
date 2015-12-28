@@ -57,7 +57,7 @@ public class CompanyAction extends BaseAction {
 	private Date endDate;
 	private List<Company> companyList;
 	private List<Integer> companyIds; // id1,id2
-	private int orderby; // 1.文件数量;2.文件大小
+	private String orderby; // 1.文件数量;2.文件大小
 
 	/**
 	 * 医院活跃度统计－－医院各月的登陆次数
@@ -232,7 +232,7 @@ public class CompanyAction extends BaseAction {
 	public String getCompanyDetail() {
 		Integer cid = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
-		complist = companyService.getCompanyDetailById(cid, role);
+		complist = companyService.getCompanyDetailById(cid, role, orderby);
 		return "companyDetail";
 	}
 
@@ -244,7 +244,7 @@ public class CompanyAction extends BaseAction {
 	public String getCompanyDetailJson() {
 		Integer cid = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
-		complist = companyService.getCompanyDetailById(cid, role);
+		complist = companyService.getCompanyDetailById(cid, role,orderby);
 		return "companyDetailJson";
 	}
 
@@ -330,11 +330,11 @@ public class CompanyAction extends BaseAction {
 		this.user = user;
 	}
 
-	public int getOrderby() {
+	public String getOrderby() {
 		return orderby;
 	}
 
-	public void setOrderby(int orderby) {
+	public void setOrderby(String orderby) {
 		this.orderby = orderby;
 	}
 

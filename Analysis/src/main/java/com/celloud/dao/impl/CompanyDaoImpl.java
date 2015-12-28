@@ -99,17 +99,17 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
-	public List<Company> getCompanyDetailById(Integer companyId,Integer role) {
+	public List<Company> getCompanyDetailById(Integer companyId,Integer role,String orderBy) {
 		Connection conn = ConnectManager.getConnection();
-		String sql = "select a.company_id,a.company_name,a.address,a.tel,a.create_date,count(username) userNum,sum(a.fnum) fileNum,sum(a.fsize) fileSize"
-				+ ",sum(a.rnum) reportNum from "
-				+ "(select c.company_id,c.company_name,c.address,c.tel,c.create_date ,(select count(f.file_id) from tb_file f where f.user_id=u.user_id and f.state=0) fnum,"
-				+ "(select ifnull(sum(f.size),0) from tb_file f where f.user_id=u.user_id and f.state=0) fsize,"
-				+ "(select count(*) from tb_report r where r.user_id=u.user_id and r.isdel=0 and (r.flag=0 or r.report_id=11)) rnum,"
-				+ "u.username from tb_company c,tb_dept d,tb_user u where c.company_id=d.company_id and d.dept_id=u.dept_id and c.state=0 and u.state=0 "
-				+ SqlController.notUserId("u",role, noUserid)
-			//	+SqlController.whereCompany(role, companyId)
-				+" )a  group by a.company_id order by a.fsize desc; ";
+		String sql = " select distinct(c.company_id),c.company_name,c.tel,c.address,c.create_date,un.userNum,uf.fileNum,uf.size,ur.runNum from tb_company c, "
+				+" (select u.company_id,count(u.user_id)as userNum from tb_user u where u.state =0 group  by u.company_id)un, "
+				+" (select u.company_id,count(f.file_id)as fileNum,sum(f.size)as size from tb_file f,tb_user u where f.user_id = u.user_id and f.state=0 and u.state=0 group  by u.company_id)uf, "
+				+" (select u.company_id,count(r.report_id)as runNum from tb_report r,tb_user u where r.user_id = u.user_id and  r.flag = 0 group by u.company_id)ur , "
+				+" (select distinct(u.company_id),uc.company_id as parent from tb_user u ,tb_user_company_relat uc where u.user_id = uc.user_id)cc"
+				+" where c.company_id = un.company_id and c.company_id = uf.company_id  and cc.company_id = c.company_id"
+				+" and c.company_id = ur.company_id "
+				+ SqlController.whereCompany("cc", "parent", role, companyId)
+				+SqlController.orderBy(orderBy);
 		LogUtil.info(log, sql);
 		List<Company> list = null;
 		try {
@@ -450,6 +450,28 @@ public class CompanyDaoImpl implements CompanyDao {
 		String sql="select distinct(c.company_id),c.company_name   from tb_company c,tb_dept d,tb_user u"
 				+"	where c.company_id = d.company_id and d.dept_id = u.dept_id";
 	//			+ SqlController.whereCompany(role, cmpId);
+		LogUtil.info(log, sql);
+		try{
+			ResultSetHandler<List<Company>> rsh = new BeanListHandler<Company>(Company.class);
+			list = qr.query(conn, sql, rsh);
+		}catch(SQLException e){
+			LogUtil.query(log, sql, e);
+		}
+		return list;
+	}
+
+	@Override
+	public List<Company> BigUserList() {
+		List<Company> list = null;
+		Connection conn = ConnectManager.getConnection();
+		String sql="select distinct(uc.company_id)as company_id,c.company_name,c.create_date,c.address,c.tel,un.userNum,uf.fileNum,uf.size,ur.runNum from "
+				+"tb_user_company_relat uc,tb_company c, "
+				+"(select u.company_id,count(u.user_id)as userNum from tb_user u where u.state =0 group  by u.company_id)un, "
+				+"(select u.company_id,count(f.file_id)as fileNum,sum(f.size)as size from tb_file f,tb_user u where f.user_id = u.user_id and f.state=0 and u.state=0 group  by u.company_id)uf, "
+				+"(select u.company_id,count(r.report_id)as runNum from tb_report r,tb_user u where r.user_id = u.user_id and  r.flag = 0 group by u.company_id)ur "
+				+"where  uc.company_id = c.company_id and uc.company_id = un.company_id "
+				+"and uc.company_id = uf.company_id and uc.company_id = ur.company_id "
+				+ " order by fileNum desc";         
 		LogUtil.info(log, sql);
 		try{
 			ResultSetHandler<List<Company>> rsh = new BeanListHandler<Company>(Company.class);
