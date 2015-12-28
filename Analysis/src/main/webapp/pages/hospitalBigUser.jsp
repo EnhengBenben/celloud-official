@@ -8,7 +8,6 @@
 		} catch (e) {
 		}
 	</script>
-
 	<ul class="breadcrumb">
 		<li>
 			<i class="icon-tasks"></i>
@@ -18,7 +17,6 @@
 	</ul>
 	<!-- .breadcrumb -->
 </div>
-
 <div class="page-content">
 	<div class="row">
 		<h3 class="header smaller lighter blue">

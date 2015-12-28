@@ -37,13 +37,23 @@ public class User implements Serializable {
 	/** 验证码 **/
 	private String kaptchaCode;
 	/** 数据大小（b） */
-	private Double fileSize;
+	private long size;
 	/** 报告数量 */
 	private Long reportNum;
 	/** 所属医院名称 */
-	private String companyName;
+	private String company_name;
 	/** 所属部门名称 */
-	private String deptName;
+	private String dept_name;
+	
+	private int runNum;
+
+	public int getRunNum() {
+		return runNum;
+	}
+
+	public void setRunNum(int runNum) {
+		this.runNum = runNum;
+	}
 
 	public Long getFileNum() {
 		return fileNum;
@@ -51,10 +61,6 @@ public class User implements Serializable {
 
 	public void setFileNum(Long fileNum) {
 		this.fileNum = fileNum;
-	}
-
-	public void setFileSize(Double fileSize) {
-		this.fileSize = fileSize;
 	}
 
 	public void setReportNum(Long reportNum) {
@@ -165,41 +171,34 @@ public class User implements Serializable {
 		this.kaptchaCode = kaptchaCode;
 	}
 
-	public String getCompanyName() {
-		return companyName;
+	public long getSize() {
+		return size;
 	}
 
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
+	public void setSize(long size) {
+		this.size = size;
 	}
 
-	public String getDeptName() {
-		return deptName;
+	public String getCompany_name() {
+		return company_name;
 	}
 
-	public void setDeptName(String deptName) {
-		this.deptName = deptName;
+	public void setCompany_name(String company_name) {
+		this.company_name = company_name;
 	}
 
-	public Double getFileSize() {
-		return fileSize;
+	public String getDept_name() {
+		return dept_name;
+	}
+
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
 	}
 
 	public Long getReportNum() {
 		return reportNum;
 	}
 
-	@Override
-	public String toString() {
-		return "User [userId=" + user_id + ", username=" + username
-				+ ", password=" + password + ", email=" + email
-				+ ", createDate=" + createDate + ", role=" + role
-				+ ", truename=" + truename + ", cellphone=" + cellphone
-				+ ", state=" + state + ", deptId=" + deptId + ", loginUuid="
-				+ loginUuid + ", company_id=" + company_id + ", fileNum="
-				+ fileNum + ", kaptchaCode=" + kaptchaCode + ", fileSize="
-				+ fileSize + ", reportNum=" + reportNum + ", companyName="
-				+ companyName + ", deptName=" + deptName + "]";
-	}
+
 	
 }

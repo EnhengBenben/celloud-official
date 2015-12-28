@@ -163,7 +163,12 @@ public class SqlController {
 			break;
 		case "runNum":
 			sql =sql+"runNum desc";
+			break;
+		default:
+			sql="";
+			break;
 		}
+		
 		return sql;
 	}
 }

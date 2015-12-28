@@ -360,8 +360,8 @@
 		}
 		/***用户统计**/
 		function toUserList() {
-			$("#secondTitle").addClass("hide");
-			$.get("user!getUserListByBigUser", {}, function(responseText) {
+			$("#secondTitle").addClass("hide");       
+			$.get("user!userList", {}, function(responseText) {
 				$("#content").html(responseText);
 			});
 		}

@@ -31,18 +31,16 @@ import com.google.inject.Inject;
 		@Result(name = "toUserActivity", location = "../../pages/userActivity.jsp"),
 		@Result(name = "init", type = "json", params = { "root", "publicKey" }),
 		@Result(name = "output", type = "json", params = { "root", "list" }),
-		
+
 		@Result(name = "userListJson", type = "json", params = { "root", "userList" }),
-		
+
 		@Result(name = "EntryList", type = "json", params = { "root", "entryList" }),
 
 		/****/
 		@Result(name = "DataList", type = "json", params = { "root", "dataList" }),
 		@Result(name = "SoftwareList", type = "json", params = { "root", "softList" }),
-		/**用户登陆排序*/
+		/** 用户登陆排序 */
 		@Result(name = "LoginList", type = "json", params = { "root", "loginList" }),
-
-
 
 })
 public class UserAction extends BaseAction {
@@ -60,9 +58,9 @@ public class UserAction extends BaseAction {
 	private List<Entry> entryList;
 	private Date startDate;
 	private Date endDate;
-	private int orderType; // 1文件数量,2数据大小
-	private int topN =10;
-	private String groupType; //按周、月分组、
+	private String orderType; // 1文件数量,2数据大小
+	private int topN = 10;
+	private String groupType; // 按周、月分组、
 	private List<Integer> userIds;
 
 	public String login() {
@@ -113,11 +111,13 @@ public class UserAction extends BaseAction {
 			return INPUT;
 		}
 	}
-	public String userLoginTop(){
-		 loginList = userService.getLoginTop(groupType, topN, startDate, endDate);
+
+	public String userLoginTop() {
+		loginList = userService.getLoginTop(groupType, topN, startDate, endDate);
 		return "LoginList";
 	}
-	public String userDataTop(){
+
+	public String userDataTop() {
 		dataList = userService.getUserDataTop(groupType, topN, startDate, endDate);
 		return "DataList";
 	}
@@ -192,6 +192,7 @@ public class UserAction extends BaseAction {
 
 	/**
 	 * 活跃度统计 用户运行app次数按月统计
+	 * 
 	 * @return
 	 */
 	public String appRunInMonth() {
@@ -245,9 +246,11 @@ public class UserAction extends BaseAction {
 	public List<Integer> getUserIds() {
 		return userIds;
 	}
+
 	public void setUserIds(List<Integer> userIds) {
 		this.userIds = userIds;
 	}
+
 	/**
 	 * 查询用户日志
 	 * 
@@ -289,10 +292,10 @@ public class UserAction extends BaseAction {
 	 * 
 	 * @return
 	 */
-	public String getUserListByBigUser() {
+	public String userList() {
 		Integer companyId = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
-		userList = userService.getUserListByBigCom(companyId, role);
+		userList = userService.getUserListByBigCom(companyId, role, "fileNum");
 		return "userList";
 	}
 
@@ -304,7 +307,7 @@ public class UserAction extends BaseAction {
 	public String getUserListByBigUserJson() {
 		Integer companyId = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
-		userList = userService.getUserListByBigCom(companyId, role);
+		userList = userService.getUserListByBigCom(companyId, role, orderType);
 		return "userListJson";
 	}
 
@@ -333,9 +336,11 @@ public class UserAction extends BaseAction {
 	public int getTopN() {
 		return topN;
 	}
+
 	public void setTopN(int topN) {
 		this.topN = topN;
 	}
+
 	public List<Map<String, Object>> getList() {
 		return list;
 	}
@@ -400,6 +405,7 @@ public class UserAction extends BaseAction {
 			e.printStackTrace();
 		}
 	}
+
 	public void setEndDate(String endDate) {
 		SimpleDateFormat sdf = null;
 		if (endDate != null && endDate.length() == 7)// yyyy-MM
@@ -412,15 +418,16 @@ public class UserAction extends BaseAction {
 			e.printStackTrace();
 		}
 	}
+
 	public Date getEndDate() {
 		return endDate;
 	}
 
-	public int getOrderType() {
+	public String getOrderType() {
 		return orderType;
 	}
 
-	public void setOrderType(int orderType) {
+	public void setOrderType(String orderType) {
 		this.orderType = orderType;
 	}
 
