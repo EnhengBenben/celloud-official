@@ -27,9 +27,18 @@ public class Constants {
      * cookie中的modulus
      */
     public static final String COOKIE_MODULUS = "modulus";
-    
+
     /**
      * cookie的默认有效时间(天为单位)
      */
     public static final int COOKIE_MAX_AGE_DAY = 7;
+
+    /**
+     * 用户找回密码链接过期时长(小时为单位)
+     */
+    public static final int FIND_PASSWORD_EXPIRE_TIME = 1;
+    /**
+     * 用户找回密码功能，根据链接重置密码时，需要校验session中的userid是否与要修改的用户名是否对应
+     */
+    public static final String RESET_PASSWORD_USER_ID = "resetPasswordUserId";
 }

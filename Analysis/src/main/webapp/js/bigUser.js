@@ -16,7 +16,6 @@ function getBigUserDataById(company_id){
 	var optSizeName =  '数据量';
 	
 	$.get(bigUesrURL,param,function(data) {
-			console.log(data);
 			data = data==null?[]:data;
 			var xAxis = new Array(data.length);
 			var yAxis = new Array(data.length);

@@ -20,6 +20,7 @@ function LoginNum() {
 	var viewId = "loginId";
 	$.get(LoginNumURL, {}, function(data) {
 		console.log(data);
+		data = data==null?[]:data;
 		var xAxis = new Array(data.length);
 		var yAxis = new Array(data.length);
 		var t;
@@ -36,6 +37,7 @@ function LoginNum() {
 function AppRunNum() {
 	var viewId = "AppRunNum";
 	$.get(AppRunNumURL, {}, function(data) {
+		data = data==null?[]:data;
 		var xAxis = new Array(data.length);
 		var yAxis = new Array(data.length);
 		var t;
@@ -48,42 +50,11 @@ function AppRunNum() {
 		myChart.setOption(option);
 	});
 }
-/*
- * function loadHistory() { $.get(loadHistoryURL, {}, function(res) { var viewId =
- * 'historyId'; var xAxis = new Array(res.length); var logNum = new
- * Array(res.length); var activityUesr = new Array(res.length); var appRunNum =
- * new Array(res.length); var dataSize = new Array(res.length); var activityApp =
- * new Array(res.length); var legendTitle = [ "登陆次数", "活跃用户数", "App运行次数",
- * "活跃App数量", "数据大小(MB)" ]; for (var i = 0; i < res.length; i++) { xAxis[i] =
- * res[i].time; logNum[i] = res[i].logNum; activityUesr[i] =
- * res[i].activityUser; appRunNum[i] = res[i].runNum; activityApp[i] =
- * res[i].activityApp; dataSize[i] = parseFloat((res[i].dataSize / (1024 *
- * 1024)) .toFixed(2)); } option = { tooltip : { trigger : 'axis', axisPointer : {
- * type : 'shadow', } }, legend : { data : legendTitle, }, toolbox : { show :
- * true, feature : { magicType : { show : true, type : [ 'bar', ' line' ] },
- * restore : { show : true }, saveAsImage : { show : true } } }, calculable :
- * true, xAxis : [ { type : 'category', data : xAxis, axisLabel : { rotate : 60 } } ],
- * yAxis : [ { type : 'value', name : "数量" }, { type : 'value', name : "数据大小",
- * axisLabel : { formatter : '{value} (GB)' } } ], series : [ { name :
- * legendTitle[0], type : 'bar', data : logNum, markLine : { data : [ { type :
- * 'average', name : '平均值' } ] }, itemStyle : { normal : { label : { show : true } } },
- * markPoint : { data : [ { type : 'max', name : '最大值' }, ] }, }, { name :
- * legendTitle[1], type : 'bar', data : activityUesr, itemStyle : { normal : {
- * label : { show : true } } }, markPoint : { data : [ { type : 'max', name :
- * '最大值' } ] },startZoom }, { name : legendTitle[2], type : 'bar', data :
- * appRunNum, itemStyle : { normal : { label : { show : true } } }, markPoint : {
- * data : [ { type : 'max', name : '最大值' } ] }, }, { name : legendTitle[3], type :
- * 'bar', data : activityApp, itemStyle : { normal : { label : { show : true } } },
- * markLine : { data : [ { type : 'average', name : '平均值' } ] }, markPoint : {
- * data : [ { type : 'max', name : '最大值' } ] }, }, { name : legendTitle[4], type :
- * 'bar', data : dataSize, itemStyle : { normal : { label : { show : true } } },
- * markPoint : { data : [ { type : 'max', name : '最大值' } ] }, } ] }; var myChart =
- * echarts.init(document.getElementById(viewId)); myChart.setOption(option); }); }
- */
 
 function UserRunNum() {
 	var viewId = "UserRunNum";
 	$.get(UserRunNumURL, {}, function(data) {
+		data = data==null?[]:data;
 		var xAxis = new Array(data.length);
 		var yAxis = new Array(data.length);
 		var t;
@@ -104,6 +75,7 @@ function LoadBrowser() {
 		return;
 	
 	$.get(BrowserURL, {}, function(data) {
+		data = data==null?[]:data;
 		var vlist = new Array(data.length);
 		var yAxis = new Array(data.length);
 		var legendName = new Array(data.length);

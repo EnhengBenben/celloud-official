@@ -6,7 +6,7 @@
          type="javax.sql.DataSource"
          url="jdbc:mysql://localhost:3306/celloud"
          username="root"
-         password="novacloud"
+         password="celloud"
          maxActive="100" 
          maxIdle="30"
          maxWait="10000"

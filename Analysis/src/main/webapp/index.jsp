@@ -189,6 +189,12 @@
 									APP详细信息
 								</a>
 							</li>
+							<li>
+                                <a href="javascript:bigUserAppList()">
+                                    <i class="icon-double-angle-right"></i>
+                                    大客户统计
+                                </a>
+                            </li>
 						</ul>
 					</li>
 					<li>
@@ -236,14 +242,11 @@
 							</ul>
 						</li>
 					</c:if>
-
 				</ul>
 				<!-- /.nav-list -->
-
 				<div class="sidebar-collapse" id="sidebar-collapse">
 					<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
 				</div>
-
 				<script type="text/javascript">
 					try {
 						ace.settings.check('sidebar', 'collapsed');
@@ -251,12 +254,10 @@
 					}
 				</script>
 			</div>
-
 			<div class="main-content" id="content"></div>
 			<!-- /.main-content -->
 		</div>
 		<!-- /.main-container-inner -->
-
 		<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 			<i class="icon-double-angle-up icon-only bigger-110"></i>
 		</a>
@@ -372,6 +373,15 @@
 				$("#content").html(responseText);
 			});
 		}
+		/**大客户App统计*/
+		function bigUserAppList(){
+			$("#secondTitle").addClass("hide");
+            $.get("app!getBigUserAppList", {}, function(responseText) {
+                $("#content").html(responseText);
+            });
+			
+		}
+		
 		function toWeekReport() {
 			$("#secondTitle").addClass("hide");
 			$.get("home!toWeekReport", {}, function(responseText) {

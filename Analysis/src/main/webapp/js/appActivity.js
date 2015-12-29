@@ -30,6 +30,7 @@ function loadAppRunTime() {
 		"user.userId" : "16",
 		"softwareId" : softId
 	}, function(data) {
+		data = data==null?[]:data;
 		if ($("#groupTypeApp").val() == "week") {
 			data = doTopN(data, topN, "weekDate");
 		} else {

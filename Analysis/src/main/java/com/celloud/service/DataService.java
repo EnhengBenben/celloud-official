@@ -76,7 +76,7 @@ public interface DataService {
 	 * @param companyId
 	 * @return 数据大小 单位：b
 	 */
-	public Double getBigUserDataSize(Integer companyId,int role);
+	public Object getBigUserDataSize(Integer companyId,int role);
 
 	/**
 	 * 获取用户在一个时间段内上传的文件及运行状态
