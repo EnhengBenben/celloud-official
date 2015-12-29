@@ -175,13 +175,18 @@
             <artifactId>bcprov-jdk15on</artifactId>
             <version>1.52</version>
         </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
 	</dependencies>
 	<build>
 		<finalName>celloud-v3</finalName>
 		<resources>
 			<resource>
-				<directory>src/main/java</directory>
-				<targetPath>target/classes</targetPath>
+				<directory>${basedir}/src/main/java</directory>
+				<targetPath>${basedir}/target/classes</targetPath>
 				<includes>
 					<include>**/*.xml</include>
 				</includes>

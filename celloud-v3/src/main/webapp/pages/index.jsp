@@ -13,8 +13,150 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="bookmark" href="<%=request.getContextPath()%>/images/favicon.ico"/>
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico"/>
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/select2/4.0.1/css/select2.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/plugins/intro/introjs.css" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath() %>/css/font.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath() %>/css/main.css" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath() %>/css/app.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
-<h2>celloud平台</h2>
+<body class="skin-green sidebar-mini">
+  <div class="fixed wrapper">
+    <header class="main-header">
+      <a href="javascript:void(0)" class="logo">
+        <span class="logo-mini"><img src="<%=request.getContextPath() %>/images/icon/mini-logo.png"></span>
+        <span class="logo-lg"><img src="<%=request.getContextPath() %>/images/icon/logo.png"></span>
+      </a>
+      <!-- Header Navbar: style can be found in header.less -->
+      <nav class="navbar navbar-static-top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas">
+          <span class="sr-only">Toggle navigation</span>
+        </a>
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+            <li class="dropdown user user-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img src="<%=request.getContextPath() %>/images/icon/user2-160x160.jpg" class="user-image" alt="User Image"/>
+                <span class="hidden-xs">${session.user.username }</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li class="user-header">
+                  <img src="<%=request.getContextPath() %>/images/icon/user2-160x160.jpg" class="img-circle" alt="User Image">
+                  <p>
+                    CelLoud
+                    <small>您身边的基因数据分析云平台</small>
+                  </p>
+                </li>
+                <li class="user-footer">
+                  <div class="pull-left">
+                    <a href="javascript:void(0)" onclick="showUser()" class="btn btn-default btn-flat">个人信息</a>
+                  </div>
+                  <div class="pull-right">
+                    <a href="logout" class="btn btn-default btn-flat">退出</a>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+      <!-- sidebar: style can be found in sidebar.less -->
+      <section class="sidebar">
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+          <li class="header"><span>产品和服务</span></li>
+          <li class="active treeview">
+            <a href="javascript:void(0)" onclick="showUserCount();">
+              <i class="fa fa-dashboard"></i>
+              <span>总览</span>
+            </a>
+          </li>
+          <li class="treeview" id="toUploadMenu" data-step="4" data-position="right" data-intro="" data-img="toupload.png">
+            <a href="javascript:void(0)" onclick="showUpload();">
+              <i class="fa fa-sellsy"></i>
+              <span>数据上传</span>
+            </a>
+          </li>
+          <li class="treeview" id="toDataMenu" data-step="7" data-position="right" data-intro="" data-img="todata.png">
+            <a href="javascript:void(0)" onclick="showData()">
+              <i class="fa fa-tasks"></i>
+              <span>数据管理</span>
+            </a>
+          </li>
+          <li class="treeview" id="toReportMenu" data-step="8" data-position="right" data-intro="" data-img="toreport.png">
+            <a href="javascript:void(0)" onclick="showReport()">
+              <i class="fa fa-files-o"></i>
+              <span>报告</span>
+            </a>
+          </li>
+          <li class="treeview" id="toAppStoreMenu" data-step="1" data-position="right" data-intro="" data-img="yysc.png">
+            <a href="javascript:void(0)" onclick="showAppStore()">
+              <i class="fa fa-cubes"></i>
+              <span>应用市场</span>
+            </a>
+          </li>
+          <li class="treeview">
+            <a href="javascript:void(0)" onclick="showCount()">
+              <i class="fa fa-heartbeat"></i>
+              <span>统计</span>
+            </a>
+          </li>
+          <li class="header"><span>用户中心</span></li>
+          <li class="treeview" id="accountManage">
+           <a href="javascript:void(0)" onclick="showUser()">
+           	<i class="fa fa-user"></i>
+           	<span>账号管理</span>
+           </a>
+          </li>
+        </ul>
+      </section>
+      <!-- /.sidebar -->
+    </aside>
+    <!-- Content Wrapper. Contains page content -->
+     <div class="content-wrapper" id="uploadDIV"></div>
+     <div class="content-wrapper" id="mainDIV">
+       
+     </div>
+   </div>
+  <script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+  <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
+  <!-- TODO 数据参数同比有用，待统一为echarts -->
+  <script src="//cdn.bootcss.com/highcharts/4.2.1/highcharts.js"></script>
+  <script src="//cdn.bootcss.com/highcharts/4.2.1/modules/exporting.js"></script>
+  <script src="//cdn.bootcss.com/select2/4.0.1/js/select2.min.js"></script>
+<!--   <script src="//cdn.bootcss.com/select2/4.0.1/js/i18n/zh-CN.js"></script> -->
+  <script src="<%=request.getContextPath() %>/js/main.js" type="text/javascript"></script>
+  <script src="<%=request.getContextPath() %>/js/utils.js" type="text/javascript"></script>
+  <script src="<%=request.getContextPath() %>/plugins/intro/intro.js?version=1.0"></script>
+  <script src="<%=request.getContextPath() %>/plugins/highcharts/char.js?version=20150526"></script>
+  <script src="<%=request.getContextPath() %>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
+  <script src="<%=request.getContextPath() %>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
+  <script type="text/javascript">
+  var hasNavi = <%=session.getAttribute("userNav")%>;
+  var intro = null;
+  $.ajaxSetup ({
+    cache: false //关闭AJAX相应的缓存
+  });
+  $(document).ready(function(){
+  	showUserCount();
+  	if(hasNavi==1){
+  	  intro = introJs();
+  	  intro.setOption('tooltipPosition', 'auto');
+  	  intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+  	  intro.setOption('showStepNumbers', false);
+  	  intro.setOption('showButtons', false);
+  	  intro.start();
+  	}
+  });
+  </script>
 </body>
 </html>

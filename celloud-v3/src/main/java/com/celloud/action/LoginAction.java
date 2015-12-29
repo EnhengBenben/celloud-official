@@ -123,8 +123,6 @@ public class LoginAction {
             rsaKeyService.deleteByModulus(publicKey.getModulus());
             privateKey = (PrivateKey) session.getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
         }
-        logger.info("username:{},password:{}", user.getUsername(), user.getPassword());
-        logger.info("privateKey:{}", privateKey.getPrivateExponent());
         String password = RSAUtil.decryptStringByJs(privateKey, user.getPassword());
         user.setPassword(MD5Util.getMD5(password));
         user = userService.login(user);
@@ -137,7 +135,7 @@ public class LoginAction {
         if (checked && key == null) {
             saveRSAKey(publicKey, privateKey, user);
         }
-        logger.info("userId:{},username:{}", user.getUserId(), user.getUsername());
+        session.removeAttribute(Constants.SESSION_RSA_PRIVATEKEY);
         mv.setViewName("loadIndex");
         return mv;
     }

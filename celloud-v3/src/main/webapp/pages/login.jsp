@@ -26,7 +26,7 @@
 		<div class="login" style="position: absolute;">
 			<div class="logo" id="logo">
 				<a href="<%=request.getContextPath()%>/">
-					<img src="images/login/login_logo.png" />
+					<img src="<%=request.getContextPath() %>/images/icon/login_logo.png" />
 				</a>
 			</div>
 			<form action="login" method="post" id="loginForm">
@@ -55,14 +55,14 @@
 					</div>
 					<div class="autolog">
 						<span id="remPass">
-							<img src="images/login/nocheck.png" />
+							<img src="<%=request.getContextPath()%>/images/icon/nocheck.png" />
 						</span>
 						<input id="isRem" name="isRem" value="0" style="display: none">
 						记住密码
 						<span class="error"></span>
 					</div>
 					<a href="javascript:void(0);" class="btn-login" id="submit">登录</a>
-					<a href="forgetPwd" class="forget">忘记密码</a>
+					<a href="forgot.html" class="forget">忘记密码</a>
 					<a href="download.html" class="download" target="_blank">下载客户端</a>
 				</div>
 			</form>
@@ -88,63 +88,18 @@
 	<!--#E bgContainer-->
 	<script type="text/javascript"
 		src="plugins/jQuery/jquery-1.11.3.min.js"></script>
-	<script type="text/javascript" src="js/metro.js"></script>
-	<script type="text/javascript" src="js/tologin.js?version=1.0"></script>
-	<script type="text/javascript" src="js/external.js"></script>
-	<script type="text/javascript" src="plugins/md5.js"></script>
-	<script type="text/javascript" src="plugins/security.js"></script>
-	<script type="text/javascript" src="plugins/baidu.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/utils.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/tologin.js?version=1.0"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/md5.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/security.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/baidu.js"></script>
 	<script type="text/javascript">
 		//session超时iframe完全退出
 		if(window.top!=window.self){
 		    window.top.location = "<%=request.getContextPath() %>/toLogin";
 		}
-	
-		//判断浏览器是否支持 placeholder属性
-		function isPlaceholder(){
-		    var input = document.createElement('input');
-		    return 'placeholder' in input;
-		}
-	
-		if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
-		    $(document).ready(function() {
-		        if(!isPlaceholder()){
-		            $("input").not("input[name='password']").each(//把input绑定事件 排除password框
-		                function(){
-		                    if($(this).val()=="" && $(this).attr("placeholder")!=""){
-		                        $(this).val($(this).attr("placeholder"));
-		                        $(this).addClass("placeholder");
-		                        $(this).focus(function(){
-		                            if($(this).val()==$(this).attr("placeholder")) $(this).val("");
-		                        });
-		                        $(this).blur(function(){
-		                            if($(this).val()=="") $(this).val($(this).attr("placeholder"));
-		                        });
-		                    }
-		            });
-		            //对password框的特殊处理1.创建一个text框 2获取焦点和失去焦点的时候切换
-		            var pwdField    = $("input[type=password]");
-		            var pwdVal      = pwdField.attr('placeholder');
-		            pwdField.after('<input id="pwdPlaceholder" type="text" class="pwd" value='+pwdVal+' autocomplete="off" />');
-		            var pwdPlaceholder = $('#pwdPlaceholder');
-		            pwdPlaceholder.show();
-		            pwdField.hide();
-		            
-		            pwdPlaceholder.focus(function(){
-		                pwdPlaceholder.hide();
-		                pwdField.show();
-		                pwdField.focus();
-		            });
-		            
-		            pwdField.blur(function(){
-		                if(pwdField.val() == '') {
-		                    pwdPlaceholder.show();
-		                    pwdField.hide();
-		                }
-		            });
-		        }
-		    });
-		}
+		//根据视口和文档的宽高设置背景图片的尺寸
+		setDocSize();
 	</script>
 </body>
 </html>

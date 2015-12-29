@@ -207,7 +207,7 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
         <div class="footer">
         	© <fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" /> CelLoud，Inc. All Rights reserved.<br>
         	 <a  href="#">生物信息云平台</a> · <a  href="javascript:void();">沪ICP备14035977号</a> <br>
-        	 <a href="<%=request.getContextPath() %>/service.html" target="_blank">服务与支持</a> · <a href="<%=request.getContextPath() %>/feedBack.html" target="_blank">意见反馈</a>
+        	 <a href="<%=request.getContextPath() %>/service.html" target="_blank">服务与支持</a> · <a href="<%=request.getContextPath() %>/feedback.html" target="_blank">意见反馈</a>
         </div>
     </div>
 </div>
