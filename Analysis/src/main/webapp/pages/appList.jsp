@@ -78,7 +78,7 @@
 			runNum[i] = res[i].runNum;
 	
 		}
-		var option = makeOptionScrollUnit(xAxis, runNum, "运行次数", barType, 0  , 16, xAxis.length);
+		var option = makeOptionScrollUnit(xAxis, runNum, "运行次数", barType, 0  , 16);
 		var myChart = echarts.init(document.getElementById('echartView'));
 		myChart.setOption(option);
 	});

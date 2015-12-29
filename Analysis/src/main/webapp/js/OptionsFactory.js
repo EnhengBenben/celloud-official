@@ -3,8 +3,16 @@
  */
 var lineType = 'line';
 var barType = 'bar';
+
+var colorList = [
+                 '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+                 '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+                 '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
+              ];
+function getRandomInt(n){
+	return parseInt(Math.random()*(n+1));//parseInt(Math.random()*(上限-下限+1)+下限); 
+}
 /**
- * 
  * @param title
  * @param xAxis
  * @param yAxis
@@ -21,22 +29,26 @@ function makeOptionScroll(title, xAxis, yAxis, seriesName, typex, startZoom, end
 		realtime : true,
 		start : startZoom,
 		end : endZoom
-	}, console.log(opt);
+	};
 	return opt;
 }
 /**
- * 
  * @param xAxis 值
  * @param yAxis值
  * @param seriesName legend
  * @param typex line bar 
  * @param positon 显示开始位置
- * @param showNum  要显示多少个
+ * @param showNum  要显示多少个 showNum小于等于length不显示TｉｍｅＬｉｎｅ
  * @param length 全部有多少个
  */
-function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position,showNum, length){
-	var len =position+ (showNum/length)*100;
-	return makeOptionScroll('',xAxis,yAxis,seriesName,typex,position,len);
+function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position,showNum){
+	var length = xAxis.length;
+	if(showNum<length){
+		var len =position+ (showNum/length)*100;
+		return makeOptionScroll('',xAxis,yAxis,seriesName,typex,position,len);
+	}else{
+		return makeOption('', xAxis, yAxis, seriesName, typex);
+	}
 }
 
 /**

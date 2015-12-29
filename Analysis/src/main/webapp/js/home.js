@@ -28,7 +28,7 @@ function LoginNum() {
 			xAxis[i] = data[i].user_name;
 			yAxis[i] = data[i].logNum;
 		}
-		var option = makeOptionScroll('', xAxis, yAxis, '登陆次数', 'bar', 0, 25);
+		var option = makeOptionScrollUnit( xAxis, yAxis, '登陆次数', 'bar', 0, 20);
 		var myChart = echarts.init(document.getElementById(viewId));
 		myChart.setOption(option);
 	});

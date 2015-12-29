@@ -88,7 +88,7 @@
 			xAxis[i] = res[i].username;
 			yAxis[i] = res[i].runNum;
 		}
-		var opt = makeOptionScrollUnit(xAxis, yAxis, '运行次数', 'bar', 0, 20,xAxis.length);
+		var opt = makeOptionScrollUnit(xAxis, yAxis, '运行次数', 'bar', 0, 20);
 		var myChart = echarts.init(document.getElementById(runNumViewId));
 		myChart.setOption(opt);
 	});
@@ -100,7 +100,7 @@
 			xAxis[i] = res[i].username;
 			yAxis[i] = res[i].fileNum;
 		}
-		var opt = makeOptionScrollUnit( xAxis, yAxis, '数据量', 'bar', 0, 20,xAxis.length);
+		var opt = makeOptionScrollUnit( xAxis, yAxis, '数据量', 'bar', 0, 20);
 		var myChart = echarts.init(document.getElementById(fileNumViewId));
 		myChart.setOption(opt);
 	});
@@ -111,7 +111,7 @@
 			xAxis[i] = res[i].username;
 			yAxis[i] = parseFloat((res[i].size / (1024 * 1024 * 1024)).toFixed(2));
 		}
-		var opt = makeOptionScrollUnit(xAxis, yAxis, '数据大小', 'bar', 0, 20,xAxis.length);
+		var opt = makeOptionScrollUnit(xAxis, yAxis, '数据大小', 'bar', 0, 20);
 		var myChart = echarts.init(document.getElementById(fileSizeViewId));
 		myChart.setOption(opt);
 	});
