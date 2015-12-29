@@ -62,7 +62,7 @@
 						<span class="error"></span>
 					</div>
 					<a href="javascript:void(0);" class="btn-login" id="submit">登录</a>
-					<a href="forgetPwd" class="forget">忘记密码</a>
+					<a href="forgot.html" class="forget">忘记密码</a>
 					<a href="download.html" class="download" target="_blank">下载客户端</a>
 				</div>
 			</form>
@@ -95,11 +95,6 @@
 	<script type="text/javascript" src="plugins/security.js"></script>
 	<script type="text/javascript" src="plugins/baidu.js"></script>
 	<script type="text/javascript">
-		//session超时iframe完全退出
-		if(window.top!=window.self){
-		    window.top.location = "<%=request.getContextPath() %>/toLogin";
-		}
-	
 		//判断浏览器是否支持 placeholder属性
 		function isPlaceholder(){
 		    var input = document.createElement('input');

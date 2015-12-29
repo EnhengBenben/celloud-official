@@ -15,7 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.celloud.model.Feedback;
 import com.celloud.service.FeedbackService;
-
+/**
+ * 
+ * 
+ * @author <a href="sunwendong@celloud.cn">sun8wd</a>
+ * @date 2015年12月28日 下午1:35:15
+ */
 @Controller
 @RequestMapping("feedback")
 public class FeedBackAction {

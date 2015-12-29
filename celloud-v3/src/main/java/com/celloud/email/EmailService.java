@@ -1,4 +1,4 @@
-package com.nova.email;
+package com.celloud.email;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
@@ -22,12 +22,16 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @Description:邮件发送服务
  * @author lin
  * @date 2013-7-16 上午9:21:57
  */
 public class EmailService {
+    private static Logger logger = LoggerFactory.getLogger(EmailService.class);
     private static String username = EmailProperties.username;
     private static String password = EmailProperties.password;
     private static String smtp = EmailProperties.smtp;
@@ -97,11 +101,11 @@ public class EmailService {
                 }
                 message.setFrom(from);
             } catch (AddressException e) {
-                System.err.println("设置发信地址失败！" + e);
+                logger.error("设置发信地址失败！", e);
             } catch (UnsupportedEncodingException e) {
-                System.err.println("不支持编码异常" + e);
+                logger.error("不支持编码异常!", e);
             } catch (MessagingException e) {
-                System.err.println("设置发信地址失败！" + e);
+                logger.error("设置发信地址失败！", e);
             }
 
             try {
@@ -110,7 +114,7 @@ public class EmailService {
                     message.setSubject(defaultTitle);
                 }
             } catch (MessagingException e) {
-                System.err.println("设置默认主题失败！" + e);
+                logger.error("设置默认主题失败！", e);
             }
             try {
                 message.setText(msg);// 设置邮件内容
@@ -119,11 +123,11 @@ public class EmailService {
                     // 设置邮件发送时期
                     message.setSentDate(new Date());
                 } catch (MessagingException e) {
-                    System.err.println("设置邮件发送时期失败！" + e);
+                    logger.error("设置邮件发送时期失败！", e);
                 }
                 Transport.send(message);
             } catch (MessagingException e) {
-                System.err.println("邮件发送失败！" + e);
+                logger.error("邮件发送失败！", e);
             }
         }
     }
@@ -150,11 +154,11 @@ public class EmailService {
                 }
                 message.setFrom(from);
             } catch (AddressException e) {
-                System.err.println("设置发信地址失败！" + e);
+                logger.error("设置发信地址失败！", e);
             } catch (UnsupportedEncodingException e) {
-                System.err.println("不支持编码异常" + e);
+                logger.error("不支持编码异常!", e);
             } catch (MessagingException e) {
-                System.err.println("设置发信地址失败！" + e);
+                logger.error("设置发信地址失败！", e);
             }
 
             try {
@@ -163,7 +167,7 @@ public class EmailService {
                     message.setSubject(defaultTitle);
                 }
             } catch (MessagingException e) {
-                System.err.println("设置默认主题失败！" + e);
+                logger.error("设置默认主题失败！", e);
             }
             try {
                 message.setSubject(title);// 设置邮件主题
@@ -173,11 +177,11 @@ public class EmailService {
                     // 设置邮件发送时期
                     message.setSentDate(new Date());
                 } catch (MessagingException e) {
-                    System.err.println("设置邮件发送时期失败！" + e);
+                    logger.error("设置邮件发送时期失败！", e);
                 }
                 Transport.send(message);
             } catch (MessagingException e) {
-                System.err.println("邮件发送失败！" + e);
+                logger.error("邮件发送失败！", e);
             }
         }
     }
@@ -206,11 +210,11 @@ public class EmailService {
                 }
                 message.setFrom(from);
             } catch (AddressException e) {
-                System.err.println("设置发信地址失败！" + e);
+                logger.error("设置发信地址失败！", e);
             } catch (UnsupportedEncodingException e) {
-                System.err.println("不支持编码异常" + e);
+                logger.error("不支持编码异常", e);
             } catch (MessagingException e) {
-                System.err.println("设置发信地址失败！" + e);
+                logger.error("设置发信地址失败！", e);
             }
 
             try {
@@ -219,7 +223,7 @@ public class EmailService {
                     message.setSubject(defaultTitle);
                 }
             } catch (MessagingException e) {
-                System.err.println("设置默认主题失败！" + e);
+                logger.error("设置默认主题失败！", e);
             }
             if (flag) {
                 try {
@@ -237,13 +241,13 @@ public class EmailService {
                         // 设置邮件发送时期
                         message.setSentDate(new Date());
                     } catch (MessagingException e) {
-                        System.err.println("设置邮件发送时期失败！" + e);
+                        logger.error("设置邮件发送时期失败！", e);
                     }
                     Transport.send(message);
                 } catch (MessagingException e) {
-                    System.err.println("发送邮件失败！" + e);
+                    logger.error("发送邮件失败！", e);
                 } catch (UnsupportedEncodingException e) {
-                    System.err.println("发送邮件失败！" + e);
+                    logger.error("发送邮件失败！", e);
                 }
             } else {
                 send(emailTo, msg, title);
@@ -273,11 +277,11 @@ public class EmailService {
                 }
                 message.setFrom(from);
             } catch (AddressException e) {
-                System.err.println("设置发信地址失败！" + e);
+                logger.error("设置发信地址失败！", e);
             } catch (UnsupportedEncodingException e) {
-                System.err.println("不支持编码异常" + e);
+                logger.error("不支持编码异常", e);
             } catch (MessagingException e) {
-                System.err.println("设置发信地址失败！" + e);
+                logger.error("设置发信地址失败！", e);
             }
 
             try {
@@ -286,7 +290,7 @@ public class EmailService {
                     message.setSubject(defaultTitle);
                 }
             } catch (MessagingException e) {
-                System.err.println("设置默认主题失败！" + e);
+                logger.error("设置默认主题失败！", e);
             }
             if (flag) {
                 try {
@@ -303,11 +307,11 @@ public class EmailService {
                         // 设置邮件发送时期
                         message.setSentDate(new Date());
                     } catch (MessagingException e) {
-                        System.err.println("设置邮件发送时期失败！" + e);
+                        logger.error("设置邮件发送时期失败！", e);
                     }
                     Transport.send(message);
                 } catch (MessagingException e) {
-                    System.err.println("发送邮件失败！" + e);
+                    logger.error("发送邮件失败！", e);
                 }
             } else {
                 send(emailTo, msg);
@@ -337,11 +341,11 @@ public class EmailService {
                 }
                 message.setFrom(from);
             } catch (AddressException e) {
-                System.err.println("设置发信地址失败！" + e);
+                logger.error("设置发信地址失败！", e);
             } catch (UnsupportedEncodingException e) {
-                System.err.println("不支持编码异常" + e);
+                logger.error("不支持编码异常", e);
             } catch (MessagingException e) {
-                System.err.println("设置发信地址失败！" + e);
+                logger.error("设置发信地址失败！", e);
             }
 
             try {
@@ -350,7 +354,7 @@ public class EmailService {
                     message.setSubject(defaultTitle);
                 }
             } catch (MessagingException e) {
-                System.err.println("设置默认主题失败！" + e);
+                logger.error("设置默认主题失败！", e);
             }
             try {
                 // 设置邮件接收的地址
@@ -379,13 +383,13 @@ public class EmailService {
                     // 设置邮件发送时期
                     message.setSentDate(new Date());
                 } catch (MessagingException e) {
-                    System.err.println("设置邮件发送时期失败！" + e);
+                    logger.error("设置邮件发送时期失败！", e);
                 }
                 Transport.send(message);
             } catch (MessagingException e) {
-                System.err.println("发送邮件失败！" + e);
+                logger.error("发送邮件失败！", e);
             } catch (UnsupportedEncodingException e) {
-                System.err.println("发送邮件失败！" + e);
+                logger.error("发送邮件失败！", e);
             }
         }
     }
