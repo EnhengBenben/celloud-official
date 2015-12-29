@@ -2481,10 +2481,6 @@ table.text-center th {
  * General: Miscellaneous
  * ----------------------
  */
-.inline {
-  display: inline;
-  width: auto;
-}
 .alert-success,
 .alert-danger,
 .alert-error,
@@ -2541,6 +2537,17 @@ table.text-center th {
 .text-red {
   color: #dd4b39 !important;
 }
+.tipModal{width:300px;margin:30% auto}
+.tipModal .modal-header{cursor: move;}
+
+/*
+ * public css
+ * -----------
+ */
+.inline {
+  display: inline;
+  width: auto;
+}
 .hide {
   display: none !important;
 }
@@ -2569,52 +2576,14 @@ table.text-center th {
 }
 .readonly{
   background-color: #f4f4f4
-}
-.tipModal{width:300px;margin:30% auto}
-.tipModal .modal-header{cursor: move;}
+} 
+ 
+ 
 /*
- * Misc: print
- * -----------
+ * TODO 待删除
+ * 临时样式 
+ * ---------------------
  */
-@media print {
-  .no-print,
-  .main-sidebar,
-  .left-side,
-  .main-header,
-  .content-header {
-    display: none!important;
-  }
-  .content-wrapper,
-  .right-side {
-    margin-left: 0!important;
-    min-height: 0!important;
-    -webkit-transform: translate(0, 0) !important;
-    -ms-transform: translate(0, 0) !important;
-    -o-transform: translate(0, 0) !important;
-    transform: translate(0, 0) !important;
-  }
-  .fixed .content-wrapper,
-  .fixed .right-side {
-    padding-top: 0!important;
-  }
-  .invoice {
-    width: 100%;
-    border: 0;
-    margin: 0;
-    padding: 0;
-  }
-  .invoice-col {
-    float: left;
-    width: 33.3333333%;
-  }
-  .table-responsive {
-    overflow: auto;
-  }
-  .table-responsive > .table tr th,
-  .table-responsive > .table tr td {
-    white-space: normal!important;
-  }
-}
 .table td{word-break:break-all;word-wrap:break-word;}
 .table_{border-collapse:collapse;border-spacing:0;width:100%;border:1px solid #d8e2f0;backgroud:#fff}
 .table_ thead{ height:53px; line-height:38px; color:#009BCA; padding-left:19px; position:relative;border-collapse:collapse;}
