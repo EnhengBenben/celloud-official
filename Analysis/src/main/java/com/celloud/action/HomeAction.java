@@ -164,7 +164,6 @@ public class HomeAction extends BaseAction {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return "toWeekReport";
 	}
 

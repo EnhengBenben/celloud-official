@@ -369,7 +369,7 @@
 		/***Ａpp统计**/
 		function toAPPList() {
 			$("#secondTitle").addClass("hide");
-			$.get("app!getAppListByBigUser", {}, function(responseText) {
+			$.get("app!getAppListCount", {}, function(responseText) {
 				$("#content").html(responseText);
 			});
 		}

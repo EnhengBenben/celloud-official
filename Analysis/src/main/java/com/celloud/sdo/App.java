@@ -10,12 +10,12 @@ public class App implements Serializable {
 	/** 人气指数 */
 	private Integer bhri;
 	/** 创建时间 */
-	private Date createDate;
+	private Date create_date;;
 	/** 软件应用类型，0：CS软件，1：BS软件，2：数据库系统 */
 	private Integer type;
 	private String englishName;
 	/** 图片名称 */
-	private String pictureName;
+	private String picture_name;
 	/** 介绍 */
 	private String intro;
 	/** 是否添加 */
@@ -23,19 +23,19 @@ public class App implements Serializable {
 	/** 运行次数 */
 	private Integer runNum;
 	/** 是否支持数据的运行，默认为支持 */
-	private Integer runData;
+	private Integer run_data;
 	/** 运行的文件格式 */
 	private Integer fileFormat;
 	/** 下线标志 */
-	private Integer offLine;
+	private Integer off_line;
 	/** 所属公司ID */
-	private Integer companyId;
+	private Integer company_id;
 	/** 所属公司名称*/
 	private String company_name;
 	/** 是否开放 0-所有人可见 1-所属公司旗下的用户可见 默认为0 */
 	private Integer attribute;
 	/** 最小运行的数据个数 */
-	private Integer dataNum;
+	private Integer data_num;
 	/** 可运行的数据类型 */
 	private String dataType;
 	/** 软件描述 */
@@ -95,12 +95,13 @@ public class App implements Serializable {
 		this.bhri = bhri;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
+
+	public Date getCreate_date() {
+		return create_date;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setCreate_date(Date create_date) {
+		this.create_date = create_date;
 	}
 
 	public Integer getType() {
@@ -143,13 +144,6 @@ public class App implements Serializable {
 		this.runNum = runNum;
 	}
 
-	public Integer getRunData() {
-		return runData;
-	}
-
-	public void setRunData(Integer runData) {
-		this.runData = runData;
-	}
 
 	public Integer getFileFormat() {
 		return fileFormat;
@@ -159,20 +153,20 @@ public class App implements Serializable {
 		this.fileFormat = fileFormat;
 	}
 
-	public Integer getOffLine() {
-		return offLine;
+	public Integer getCompany_id() {
+		return company_id;
 	}
 
-	public void setOffLine(Integer offLine) {
-		this.offLine = offLine;
+	public void setCompany_id(Integer company_id) {
+		this.company_id = company_id;
 	}
 
-	public Integer getCompanyId() {
-		return companyId;
+	public String getUser_name() {
+		return user_name;
 	}
 
-	public void setCompanyId(Integer companyId) {
-		this.companyId = companyId;
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 
 	public Integer getAttribute() {
@@ -183,12 +177,28 @@ public class App implements Serializable {
 		this.attribute = attribute;
 	}
 
-	public Integer getDataNum() {
-		return dataNum;
+	public Integer getRun_data() {
+		return run_data;
 	}
 
-	public void setDataNum(Integer dataNum) {
-		this.dataNum = dataNum;
+	public void setRun_data(Integer run_data) {
+		this.run_data = run_data;
+	}
+
+	public Integer getOff_line() {
+		return off_line;
+	}
+
+	public void setOff_line(Integer off_line) {
+		this.off_line = off_line;
+	}
+
+	public Integer getData_num() {
+		return data_num;
+	}
+
+	public void setData_num(Integer data_num) {
+		this.data_num = data_num;
 	}
 
 	public String getDataType() {
@@ -207,12 +217,14 @@ public class App implements Serializable {
 		this.description = description;
 	}
 
-	public String getPictureName() {
-		return pictureName;
+
+
+	public String getPicture_name() {
+		return picture_name;
 	}
 
-	public void setPictureName(String pictureName) {
-		this.pictureName = pictureName;
+	public void setPicture_name(String picture_name) {
+		this.picture_name = picture_name;
 	}
 
 	public String getCompany_name() {
@@ -225,10 +237,12 @@ public class App implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Software [softwareId=" + app_id + ", softwareName=" + app_name + ", bhri=" + bhri + ", createDate=" + createDate + ", type=" + type
-				+ ", englishName=" + englishName + ", pictureName=" + pictureName + ", intro=" + intro + ", isAdd=" + isAdd + ", runNum=" + runNum
-				+ ", runData=" + runData + ", fileFormat=" + fileFormat + ", offLine=" + offLine + ", companyId=" + companyId + ", company_name="
-				+ company_name + ", attribute=" + attribute + ", dataNum=" + dataNum + ", dataType=" + dataType + ", description=" + description
-				+ ", yearMonth=" + yearMonth + "]";
+		return "App [app_id=" + app_id + ", app_name=" + app_name + ", bhri=" + bhri + ", createDate=" + create_date
+				+ ", type=" + type + ", englishName=" + englishName + ", pictureName=" + picture_name + ", intro="
+				+ intro + ", isAdd=" + isAdd + ", runNum=" + runNum + ", run_data=" + run_data + ", fileFormat="
+				+ fileFormat + ", off_line=" + off_line + ", company_id=" + company_id + ", company_name="
+				+ company_name + ", attribute=" + attribute + ", data_num=" + data_num + ", dataType=" + dataType
+				+ ", description=" + description + ", yearMonth=" + yearMonth + ", weekDate=" + weekDate
+				+ ", user_name=" + user_name + "]";
 	}
 }

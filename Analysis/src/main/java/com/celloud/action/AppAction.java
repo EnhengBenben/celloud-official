@@ -14,13 +14,15 @@ import com.celloud.sdo.User;
 import com.celloud.service.AppService;
 import com.google.inject.Inject;
 
-@ParentPackage("json-default")
+@ParentPackage("json-default")	
 @Action("app")
 @Results({
 		@Result(name = "appList", location = "../../pages/appList.jsp"),
 		@Result(name = "oneApp", location = "../../pages/appOne.jsp"),
 		@Result(name = "appActivity", location = "../../pages/appActivity.jsp"),
-		@Result(name = "bigUserAppList", location = "../../pages/appActivity.jsp"),
+		@Result(name = "bigUserAppList", location = "../../pages/appListBigUserCount.jsp"),
+		@Result(name = "oneBigUserApp", location = "../../pages/appListOneBigUser.jsp"),
+
 		@Result(name = "success", type = "json", params = { "root", "fileName" }),
 		@Result(name = "AppList", type = "json", params = { "root", "appList" }),
 		})
@@ -43,19 +45,40 @@ public class AppAction extends BaseAction {
 	 * 获取App的运行信息
 	 * @return
 	 */
-	public String getAppListByBigUser() {
+	public String getAppListCount() {
 		Integer cmpId = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		appList = appService.getAppListByBigUser(cmpId,role);
 		return "appList";
 	}
+	/**
+	 * 根据大客户ID取APP列表
+	 */
+	public String getOneBigUserAppList(){
+		appList = appService.getAppListByBigUserId(user.getUser_id());
+		return "oneBigUserApp";
+	}
+	
+	public String getOneBigUserAppListJson(){
+		appList = appService.getAppListByBigUserId(user.getUser_id());
+		return "AppList";
+	}
 	public String getBigUserAppList(){
-		
+		appList = appService.getBigUserAppList();
 		return "bigUserAppList";
 	}
 	public String appRunTop(){
 		topN=10;
 	    appList = appService.getAppRunTop(type, topN, startDate, endDate);
+		return "AppList";
+	}
+	/**
+	 * 查询APP每个月的运行次数
+	 * @return
+	 */
+	public String getAppRun(){
+		appList = appService.getAppRun(app.getApp_id());
+		//appList = EntryUtil.toInsert(list)
 		return "AppList";
 	}
 	/**

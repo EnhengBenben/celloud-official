@@ -77,4 +77,19 @@ public class AppServiceImpl implements AppService {
 	public List<App> getTotalAppRunNum(int topN) {
 		return appDao.getTotalAppRunNum(topN);
 	}
+
+	@Override
+	public List<App> getBigUserAppList() {
+		return appDao.getBigUserAppList();
+	}
+
+	@Override
+	public List<App> getAppRun(int app_id) {
+		return appDao.getAppRun(app_id);
+	}
+
+	@Override
+	public List<App> getAppListByBigUserId(int cmpId) {
+		return appDao.getAppListByBigUserId(cmpId);
+	}
 }

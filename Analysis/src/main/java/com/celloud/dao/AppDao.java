@@ -106,5 +106,25 @@ public interface AppDao {
 	 * @return
 	 */
 	public List<App> getTotalAppRunNum(int topN);
+	
+	/**
+	 * 取所有大客户的APP数量
+	 * @return
+	 */
+	public List<App> getBigUserAppList();
+	
+	/**
+	 * 根据APP查询每月运行次数
+	 * @param app_id
+	 * @return
+	 */
+	public List<App> getAppRun(int app_id);
+	
+	/**
+	 * 根据大客户ID取APP列表
+	 * @param cmpId
+	 * @return
+	 */
+	public List<App> getAppListByBigUserId(int cmpId);
 
 }
