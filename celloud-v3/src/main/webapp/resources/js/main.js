@@ -640,6 +640,7 @@ function _init() {
     });
   };
 }(jQuery));
+
 /**
  * 总览
  */

@@ -39,7 +39,7 @@
         </div>
     </div>
     <jsp:useBean id="_now" class="java.util.Date" />
-    <div class="footer">© <fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" /> CelLoud，Inc. All Rights reserved. <a  href="#">生物信息云平台</a> · <a  href="javascript:void();">沪ICP备14035977号</a> · <a href="<%=request.getContextPath() %>/service.html" target="_blank">服务与支持</a> · <a href="<%=request.getContextPath() %>/feedBack.html" target="_blank">意见反馈</a> · <a id="toshgsA" href='https://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&entyId=1atr5hendjiu232trv8vb6qred7d9ymqx1ly1i9na5fa0e04ya' target="_blank"><img src='images/home/shgs.png' style="width: 20px; margin-bottom: -5px;" border=0></a><a href='http://net.china.com.cn/' target="_blank"><img src='images/home/jbzx.png' style="width: 20px; margin-bottom: -5px;" border=0></a></div>
+    <div class="footer">© <fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" /> CelLoud，Inc. All Rights reserved. <a  href="#">生物信息云平台</a> · <a  href="javascript:void();">沪ICP备14035977号</a> · <a href="<%=request.getContextPath() %>/service.html" target="_blank">服务与支持</a> · <a href="<%=request.getContextPath() %>/feedback.html" target="_blank">意见反馈</a> · <a id="toshgsA" href='https://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&entyId=1atr5hendjiu232trv8vb6qred7d9ymqx1ly1i9na5fa0e04ya' target="_blank"><img src='images/home/shgs.png' style="width: 20px; margin-bottom: -5px;" border=0></a><a href='http://net.china.com.cn/' target="_blank"><img src='images/home/jbzx.png' style="width: 20px; margin-bottom: -5px;" border=0></a></div>
 </div>
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
 <script type="text/javascript">

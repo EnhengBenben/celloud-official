@@ -477,9 +477,9 @@ $.ajaxSetup ({
 		function showSuper(obj,divId){
 			if(!$("#"+divId).attr("class")){
 				$("#"+divId).addClass("none");
-				$(obj).html("更多 <img id='sortCreateDate' src='/celloud/images/report/descending.png'>");
+				$(obj).html("更多  <i id=\"sortCreateDate\" class=\"fa fa-angle-double-down\"></i>");
 			}else{
-				$(obj).html("收起 <img id='sortCreateDate' src='/celloud/images/report/ascending.png'>");
+				$(obj).html("收起  <i id=\"sortCreateDate\" class=\"fa fa-angle-double-up\"></i>");
 				$("#"+divId).removeClass("none");
 			}
 		}

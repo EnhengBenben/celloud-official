@@ -71,7 +71,7 @@ textarea.form-control { height: auto;}
 .section7 .h1{font-size: 9px;color:#0033CC;font-weight:bold;margin-bottom:10px;}
 .section7 .h2{font-weight:bold;color:#F0850A;line-height: 22px;padding-left:-8px;}
 .section7 ul{padding-left:20px;}
-.section7 ul li{list-style-type:none;list-style-image:url(../images/publicIcon/green-diamond.png);padding-left:10px;text-align: justify;}
+.section7 ul li{list-style-type:none;list-style-image:url(../images/icon/diamond_green.png);padding-left:10px;text-align: justify;}
 .section7 .reference{line-height:12px;}
 .section7 .reference .title{line-height:22px;font-weight: bold;padding-left:10px;}
 .section7 .reference p{text-indent:0em; padding-left:50px;}
@@ -143,7 +143,7 @@ table [class*=span],.row-fluid table [class*=span] { display: table-cell;  float
 .table-del th,.table-del td{padding:8px;line-height:20px;text-align:left;vertical-align: middle;}
 .table-del td{height:47px;}
 .table-del th{height:37px;}
-.table-del a{display: inline-block;width:20px;height:20px;background-image: url("../images/publicIcon/green_del.png");background-repeat: no-repeat;}
+.table-del a{display: inline-block;width:20px;height:20px;background-image: url("../images/icon/delete_green.png");background-repeat: no-repeat;}
 .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 { position: relative; min-height: 1px;padding-right: 15px; padding-left: 15px;}
 @media (min-width: 768px) {
   .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {float: left;}

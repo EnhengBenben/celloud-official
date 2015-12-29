@@ -134,13 +134,12 @@
   <script src="//cdn.bootcss.com/highcharts/4.2.1/modules/exporting.js"></script>
   <script src="//cdn.bootcss.com/select2/4.0.1/js/select2.min.js"></script>
 <!--   <script src="//cdn.bootcss.com/select2/4.0.1/js/i18n/zh-CN.js"></script> -->
-  <script src="<%=request.getContextPath() %>/plugins/intro/intro.js?version=1.0"></script>
-  <script src="<%=request.getContextPath() %>/js/global_v3.js" type="text/javascript"></script>
-  <script src="<%=request.getContextPath() %>/plugins/highcharts/char.js?version=20150526"></script>
   <script src="<%=request.getContextPath() %>/js/main.js" type="text/javascript"></script>
-  <!-- jquery_alert_dialogs begin -->
-  <script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
-  <script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
+  <script src="<%=request.getContextPath() %>/js/utils.js" type="text/javascript"></script>
+  <script src="<%=request.getContextPath() %>/plugins/intro/intro.js?version=1.0"></script>
+  <script src="<%=request.getContextPath() %>/plugins/highcharts/char.js?version=20150526"></script>
+  <script src="<%=request.getContextPath() %>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
+  <script src="<%=request.getContextPath() %>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
   <script type="text/javascript">
   var hasNavi = <%=session.getAttribute("userNav")%>;
   var intro = null;

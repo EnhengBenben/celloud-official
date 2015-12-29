@@ -16,7 +16,7 @@ public class HomeAction {
         return "service";
     }
 
-    @RequestMapping("feedBack.html")
+    @RequestMapping("feedback.html")
     public String feedBack() {
         return "feedBack";
     }

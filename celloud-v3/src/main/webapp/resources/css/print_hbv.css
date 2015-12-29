@@ -356,7 +356,7 @@ table [class*=span],
 	position: absolute;
 	width: 32px;
 	height: 20px;
-	background: url(../images/publicIcon/delete.png) no-repeat;
+	background: url(../images/icon/delete_red.png) no-repeat;
 	background-size:20px 20px;
 }
 textarea {width: 800px;	}

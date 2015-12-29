@@ -1,3 +1,14 @@
+function CreateScript(file){  
+	var new_element;  
+	new_element=document.createElement("script");  
+	new_element.setAttribute("type","text/javascript");  
+	new_element.setAttribute("src",file);  
+	document.body.appendChild(new_element);
+} 
+/**
+ * 百度统计
+ */
+CreateScript("plugins/baidu.js");
 $(document).ready(function(){
 	var wid =$(window).width();
 	var per =(1-(553/wid))*50; 
@@ -21,7 +32,7 @@ $(document).ready(function(){
 
 	var checked = $("#checked").val();
 	if(checked=="true"){
-		document.getElementById("remPass").innerHTML="<img src='images/login/checked.png'/>";
+		document.getElementById("remPass").innerHTML="<img src='images/icon/checked.png'/>";
 		tmpRem=1;
 		document.getElementById("isRem").value=1;
 		if(error==""){
@@ -29,7 +40,7 @@ $(document).ready(function(){
 			$(".yzm").css("display","none");
 		}
 	}else{
-		document.getElementById("remPass").innerHTML="<img src='images/login/nocheck.png'/>";
+		document.getElementById("remPass").innerHTML="<img src='images/icon/nocheck.png'/>";
 		tmpRem=0;
 		document.getElementById("isRem").value=0;
 	}
@@ -93,13 +104,13 @@ $(document).ready(function(){
 	$("#remPass").click(function(){
 		if(tmpRem==0){
 			//之前未勾选，现在勾选
-			document.getElementById("remPass").innerHTML="<img src='images/login/checked.png'/>";
+			document.getElementById("remPass").innerHTML="<img src='images/icon/checked.png'/>";
 			tmpRem=1;
 			document.getElementById("isRem").value=1;
 			$("#checked").val(true);
 		}else{
 			//之前勾选，现在取消勾选，则清空之前的密码，显示验证码
-			document.getElementById("remPass").innerHTML="<img src='images/login/nocheck.png'/>";
+			document.getElementById("remPass").innerHTML="<img src='images/icon/nocheck.png'/>";
 			tmpRem=0;
 			document.getElementById("isRem").value=0;
 			$("#checked").val(false);
