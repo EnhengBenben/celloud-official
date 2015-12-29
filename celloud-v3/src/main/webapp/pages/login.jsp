@@ -62,7 +62,7 @@
 						<span class="error"></span>
 					</div>
 					<a href="javascript:void(0);" class="btn-login" id="submit">登录</a>
-					<a href="forgetPwd" class="forget">忘记密码</a>
+					<a href="forgot.html" class="forget">忘记密码</a>
 					<a href="download.html" class="download" target="_blank">下载客户端</a>
 				</div>
 			</form>
