@@ -29,19 +29,16 @@ import com.google.inject.Inject;
 		@Result(name = "toBigUser", location = "../../pages/bigUser.jsp"),
 		@Result(name = "toHospitalBigUser", location = "../../pages/hospitalBigUser.jsp"),
 
-		
-
 		@Result(name = "browserCount", type = "json", params = { "root", "browserList" }),
 		@Result(name = "historyList", type = "json", params = { "root", "historyList" }),
-		
+
 		@Result(name = "softList", type = "json", params = { "root", "totalSoftList" }),
 		@Result(name = "eachUserRunApp", type = "json", params = { "root", "eachAppList" }),
 		@Result(name = "AppList", type = "json", params = { "root", "appList" }),
-		
+
 		@Result(name = "loginList", type = "json", params = { "root", "logList" }),
 		@Result(name = "eachDayDataSize", type = "json", params = { "root", "eachDataList" }),
-		@Result(name = "userFileList", type = "json", params = { "root", "userDataList" }),
-})
+		@Result(name = "userFileList", type = "json", params = { "root", "userDataList" }), })
 public class HomeAction extends BaseAction {
 	Logger log = Logger.getLogger(HomeAction.class);
 	private static final long serialVersionUID = 1L;
@@ -94,36 +91,26 @@ public class HomeAction extends BaseAction {
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		Integer companyId = (Integer) getCid();
 		log.info("role:" + role + "-company_id:" + companyId);
+		try {
+			resultMap = new HashMap<String, Object>();
+			Object userNum = userService.getBigUsersUserNum(companyId, role);
+			Object dataNum = dataService.getBigUserDataNum(companyId, role);
+			Object dataSize = dataService.getBigUserDataSize(companyId, role);
+			Object companyNum = companyService.getBigUserCompanyNum(companyId, role);
+			Object reportNum = reportService.getBigUserReportNum(companyId, role);
+			Object appNum = appService.getBigUserAPPNum(companyId, role);
 
-		resultMap = new HashMap<String, Object>();
-		Object userNum = userService.getBigUsersUserNum(companyId, role);
-		Object dataNum = dataService.getBigUserDataNum(companyId, role);
-		Double dataSize = dataService.getBigUserDataSize(companyId, role);
-		Object companyNum = companyService.getBigUserCompanyNum(companyId, role);
-		Object reportNum = reportService.getBigUserReportNum(companyId, role);
-		Object appNum = appService.getBigUserAPPNum(companyId, role);
-
-		resultMap.put("userNum", userNum);
-		resultMap.put("dataNum", dataNum);
-		resultMap.put("dataSize", dataSize / (1024 * 1024 * 1024));
-		resultMap.put("companyNum", companyNum);
-		resultMap.put("reportNum", reportNum);
-		resultMap.put("appNum", appNum);
-		
+			resultMap.put("userNum", userNum);
+			resultMap.put("dataNum", dataNum);
+			resultMap.put("dataSize", dataSize);
+			resultMap.put("companyNum", companyNum);
+			resultMap.put("reportNum", reportNum);
+			resultMap.put("appNum", appNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		/** 历史比较 */
-//		historyList = userService.getCountInHistory();
-//		log.info("historyList" + historyList.size());
-//		/*** 前20运行app统计 */
-//		topN = 20;
-//		totalSoftList = softwareService.getTotalAppRunNum(topN);
-//		log.info("totalSoftList" + totalSoftList.size());
-//		totalLogList = softwareService.getTotalUserLogin(0);
-//		log.info("totalLogList" + totalLogList.size());
-//		browserList = softwareService.getBrowerCount();
-//		log.info("totalSoftList" + totalSoftList.size());
-//		userSoftList = softwareService.getTotalAppRunNum(0);
-//		log.info("browserList" + browserList.size());
-		//
+
 		return "success";
 	}
 
@@ -131,7 +118,7 @@ public class HomeAction extends BaseAction {
 	public String toWeekReport() {
 		log.info("toWeekReport");
 		try {
-			if (startDate == null||1==1) {
+			if (startDate == null || 1 == 1) {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				Date d = sdf.parse("2015-11-02");
 				startDate = DateUtil.getLastMonday(d);
@@ -180,21 +167,22 @@ public class HomeAction extends BaseAction {
 
 		return "toWeekReport";
 	}
-	public String toBigUserCount(){
+
+	public String toBigUserCount() {
 		dataList = dataService.getBigUserData();
 		return "toBigUser";
 	}
-	public String toHospitalBigUesr(){
+
+	public String toHospitalBigUesr() {
 		cmpList = companyService.BigUserList();
 		return "toHospitalBigUser";
 	}
-	
+
 	public String weekBrowser() {
 		browserList = loginService.getBrowserInWeek(startDate);
 		log.info("browserList:" + browserList.size());
 		return "browserCount";
 	}
-	
 
 	public String eachUserRunApp() {
 		eachAppList = appService.getAppUserCount(startDate);
@@ -266,7 +254,7 @@ public class HomeAction extends BaseAction {
 	 * @return
 	 */
 	public String getHistory() {
-	//	historyList = userService.getCountInHistory();
+		// historyList = userService.getCountInHistory();
 		return "historyList";
 	}
 
@@ -317,7 +305,7 @@ public class HomeAction extends BaseAction {
 	public void setResultMap(Map<String, Object> resultMap) {
 		this.resultMap = resultMap;
 	}
-	
+
 	public List<Company> getCmpList() {
 		return cmpList;
 	}
@@ -388,8 +376,6 @@ public class HomeAction extends BaseAction {
 	public void setDataList(List<DataFile> dataList) {
 		this.dataList = dataList;
 	}
-
-
 
 	public List<App> getAppList() {
 		return appList;

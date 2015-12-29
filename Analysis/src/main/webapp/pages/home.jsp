@@ -101,7 +101,7 @@
 									<div class="infobox-icon">数据总大小：</div>
 									<div class="infobox-data">
 										<span class="infobox-data-number">
-											<fmt:formatNumber pattern="0.00" value="${resultMap.dataSize }"></fmt:formatNumber>
+											<fmt:formatNumber pattern="0.00" value="${resultMap.dataSize/(1024*1024*1024) }"></fmt:formatNumber>
 										</span>
 										<span class="infobox-content">(GB)</span>
 									</div>

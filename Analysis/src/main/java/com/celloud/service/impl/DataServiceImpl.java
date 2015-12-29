@@ -49,8 +49,8 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public Double getBigUserDataSize(Integer companyId,int role) {
-		return (Double) dataDao.getBigUserDataSize(companyId,role);
+	public Object getBigUserDataSize(Integer companyId,int role) {
+		return  dataDao.getBigUserDataSize(companyId,role);
 	}
 
 	@Override

@@ -20,10 +20,9 @@ import com.google.inject.Inject;
 		@Result(name = "appList", location = "../../pages/appList.jsp"),
 		@Result(name = "oneApp", location = "../../pages/appOne.jsp"),
 		@Result(name = "appActivity", location = "../../pages/appActivity.jsp"),
-		
+		@Result(name = "bigUserAppList", location = "../../pages/appActivity.jsp"),
 		@Result(name = "success", type = "json", params = { "root", "fileName" }),
 		@Result(name = "AppList", type = "json", params = { "root", "appList" }),
-
 		})
 
 public class AppAction extends BaseAction {
@@ -49,6 +48,10 @@ public class AppAction extends BaseAction {
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		appList = appService.getAppListByBigUser(cmpId,role);
 		return "appList";
+	}
+	public String getBigUserAppList(){
+		
+		return "bigUserAppList";
 	}
 	public String appRunTop(){
 		topN=10;

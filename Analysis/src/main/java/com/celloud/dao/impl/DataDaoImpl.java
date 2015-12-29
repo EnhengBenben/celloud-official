@@ -130,7 +130,7 @@ public class DataDaoImpl implements DataDao {
 				+ noUserid + ") " + SqlController.whereCompany("uc", "company_id", role, companyId);
 		LogUtil.info(log, sql);
 		try {
-			map = qr.query(conn, sql, new MapHandler());
+			map = qr.query(conn, sql,new MapHandler());
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
 		}

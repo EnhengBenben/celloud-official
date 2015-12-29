@@ -4,6 +4,7 @@ var UserFileSizeId = "userFileSize";
 var UserFileNumId = "userFileNum";
 
 $.get(UserDataURL, {'orderType':"fileNum"}, function(data) {
+	data = data==null?[]:data;
 	console.log(data);
 	var xAxis = new Array(data.length);
 	var yAxis = new Array(data.length);
@@ -17,7 +18,7 @@ $.get(UserDataURL, {'orderType':"fileNum"}, function(data) {
 });
 
 $.get(UserDataURL, {'orderType':"size"}, function(data) {
-	console.log(data);
+	data = data==null?[]:data;
 	var xAxis = new Array(data.length);
 	var yAxis = new Array(data.length);
 	for (var i = 0; i < data.length; i++) {
