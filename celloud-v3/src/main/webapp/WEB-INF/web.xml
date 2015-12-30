@@ -8,14 +8,13 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath*:/springMVC.xml </param-value>
 	</context-param>
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
 	<filter>
 		<filter-name>HiddenHttpMethodFilter</filter-name>
 		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
 	</filter>
-
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
 	<filter-mapping>
 		<filter-name>HiddenHttpMethodFilter</filter-name>
 		<servlet-name>springMVC</servlet-name>

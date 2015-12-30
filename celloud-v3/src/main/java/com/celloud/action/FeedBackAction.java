@@ -28,7 +28,7 @@ public class FeedBackAction {
     private FeedbackService feedbackService;
     @RequestMapping("list")
     public String getAllFeedBack() {
-        return "login";
+        return "redirect:/login";
     }
 
     @RequestMapping(value = "save", method = RequestMethod.PUT)

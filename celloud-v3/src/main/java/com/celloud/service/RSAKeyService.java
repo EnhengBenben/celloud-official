@@ -43,7 +43,7 @@ public interface RSAKeyService {
     public int deleteExpiresKeys(int days);
 
     /**
-     * 删除某个用户对应的所有私钥
+     * 删除某个用户对应的所有私钥，用在用户修改密码之后
      * 
      * @param userId
      * @return

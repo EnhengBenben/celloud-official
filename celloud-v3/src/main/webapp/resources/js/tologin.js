@@ -81,9 +81,6 @@ $(document).ready(function(){
 		}
 		//记住密码，不需要校验验证码
 		if(checked=="true"&&error==""){
-			var password1 = $.trim($("#password1").val());
-			var pwd = password + password1;
-			$("input[name='password']").val(pwd);
 			return true;
 		}
 		//校验验证码是否为空
@@ -123,7 +120,6 @@ $(document).ready(function(){
 	});
 	
 });
-
 function secPWD(password){
 	var modulus = $.trim($("#modulusHidden").val());
 	var exponent = $.trim($("#exponentHidden").val());

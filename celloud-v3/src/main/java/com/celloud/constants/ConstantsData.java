@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -97,9 +99,29 @@ public class ConstantsData {
      * @return
      */
     public static User getLoginUser() {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
-                .getRequest();
-        Object user = request.getSession().getAttribute(Constants.SESSION_LOGIN_USER);
+        Object user = getSession().getAttribute(Constants.SESSION_LOGIN_USER);
         return user == null ? null : (User) user;
+    }
+
+    /**
+     * 获取当前登录用户的用户名
+     * 
+     * @return
+     */
+    public static String getLoginUserName() {
+        User user = null;
+        return (user = getLoginUser()) == null ? null : user.getUsername();
+    }
+
+    public static HttpServletRequest getRequset() {
+        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    }
+
+    public static HttpServletResponse getResponse() {
+        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+    }
+
+    public static HttpSession getSession() {
+        return getRequset().getSession();
     }
 }

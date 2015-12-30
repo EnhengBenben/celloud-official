@@ -25,6 +25,7 @@ import com.celloud.model.PrivateKey;
 import com.celloud.model.PublicKey;
 import com.celloud.model.RSAKey;
 import com.celloud.model.User;
+import com.celloud.service.ActionLogService;
 import com.celloud.service.RSAKeyService;
 import com.celloud.service.UserService;
 import com.celloud.utils.CookieUtils;
@@ -44,6 +45,8 @@ public class LoginAction {
     private UserService userService;
     @Resource
     private RSAKeyService rsaKeyService;
+    @Resource
+    private ActionLogService logService;
 
     /**
      * 跳转到登录页面
@@ -71,6 +74,7 @@ public class LoginAction {
                 user.setPassword(password);
             } else {
                 rsaKeyService.deleteByModulus(modulus);
+                deleteCookies(request, response);
                 mv.addObject("info", "记住密码已过期，请重新使用密码登录！");
             }
         } else {
@@ -100,43 +104,44 @@ public class LoginAction {
         ModelAndView mv = new ModelAndView("login");
         HttpSession session = request.getSession();
         String kaptchaExpected = (String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
-        // 如果不需要记住密码，则直接删除用户cookie
-        if (!checked) {
-            deleteCookies(request, response);
-            rsaKeyService.deleteByModulus(publicKey.getModulus());
-        }
-        // 验证码错误，直接返回到登录页面
-        if (kaptchaExpected == null || !kaptchaExpected.equalsIgnoreCase(kaptchaCode)) {
-            return mv.addObject("info", "验证码错误，请重新登录！").addObject("publicKey", generatePublicKey(session));
-        }
         PrivateKey privateKey = null;
         RSAKey key = null;
+        String modulus = CookieUtils.getCookieValue(request, Constants.COOKIE_MODULUS);
+        if (!checked) {
+            deleteCookies(request, response);
+        }
+        // 验证码错误，直接返回到登录页面
+        if (!checked && (kaptchaExpected == null || !kaptchaExpected.equalsIgnoreCase(kaptchaCode))) {
+            return mv.addObject("info", "验证码错误，请重新登录！").addObject("publicKey", generatePublicKey(session));
+        }
+        // 如果cookie中存在公钥且和前台传过来的一致，则从数据库加载私钥，不管是否记住密码
+        if (modulus != null && modulus.equals(publicKey.getModulus())) {
+            key = rsaKeyService.getByModulus(publicKey.getModulus());
+            privateKey = new PrivateKey(new BigInteger(key.getModulus(), 16), new BigInteger(key.getPriExponent(), 16));
+        }else{
+            privateKey = (PrivateKey) session.getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
+        }
         if (checked) {
             addCookies(request, response, user.getUsername(), user.getPassword(), publicKey.getModulus());
-            key = rsaKeyService.getByModulus(publicKey.getModulus());
-            if (key != null && !key.isExpires()) {
-                privateKey = new PrivateKey(new BigInteger(key.getModulus(), 16),
-                        new BigInteger(key.getPriExponent(), 16));
-            }
-        }
-        if (privateKey == null) {
+        } else if (!checked || key.isExpires()) {
             rsaKeyService.deleteByModulus(publicKey.getModulus());
-            privateKey = (PrivateKey) session.getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
         }
         String password = RSAUtil.decryptStringByJs(privateKey, user.getPassword());
         user.setPassword(MD5Util.getMD5(password));
-        user = userService.login(user);
-        if (user == null) {
+        User loginUser = userService.login(user);
+        if (loginUser == null) {
             String msg = "用户名或密码错误，请重新登录！";
-            logger.info(msg);
+            logger.warn("用户（{}）登录失败，用户名或密码错误！", user.getUsername());
+            user.setPassword("");
             return mv.addObject("info", msg).addObject("user", user).addObject("publicKey", generatePublicKey(session));
         }
-        saveUserToSession(user, session);
+        saveUserToSession(loginUser, session);
+        logService.log("用户登录", "用户" + loginUser.getUsername() + "登录成功");
         if (checked && key == null) {
-            saveRSAKey(publicKey, privateKey, user);
+            saveRSAKey(publicKey, privateKey, loginUser);
         }
         session.removeAttribute(Constants.SESSION_RSA_PRIVATEKEY);
-        mv.setViewName("loading");
+        mv.setViewName("loadIndex");
         return mv;
     }
 
@@ -235,12 +240,19 @@ public class LoginAction {
      */
     private void addCookies(HttpServletRequest request, HttpServletResponse response, String username, String password,
             String modulus) {
-        CookieUtils.setCookie(request, response, Constants.COOKIE_USERNAME, username,
-                Constants.COOKIE_MAX_AGE_DAY * 24 * 60 * 60);
-        CookieUtils.setCookie(request, response, Constants.COOKIE_PASSWORD, password,
-                Constants.COOKIE_MAX_AGE_DAY * 24 * 60 * 60);
-        CookieUtils.setCookie(request, response, Constants.COOKIE_MODULUS, modulus,
-                Constants.COOKIE_MAX_AGE_DAY * 24 * 60 * 60);
+        // cookie不为空时才会重建cookie，否则会将cookie的过期时间重置
+        if (CookieUtils.getCookie(request, Constants.COOKIE_USERNAME) == null) {
+            CookieUtils.setCookie(request, response, Constants.COOKIE_USERNAME, username,
+                    Constants.COOKIE_MAX_AGE_DAY * 24 * 60 * 60);
+        }
+        if (CookieUtils.getCookie(request, Constants.COOKIE_PASSWORD) == null) {
+            CookieUtils.setCookie(request, response, Constants.COOKIE_PASSWORD, password,
+                    Constants.COOKIE_MAX_AGE_DAY * 24 * 60 * 60);
+        }
+        if (CookieUtils.getCookie(request, Constants.COOKIE_MODULUS) == null) {
+            CookieUtils.setCookie(request, response, Constants.COOKIE_MODULUS, modulus,
+                    Constants.COOKIE_MAX_AGE_DAY * 24 * 60 * 60);
+        }
     }
 
 }
