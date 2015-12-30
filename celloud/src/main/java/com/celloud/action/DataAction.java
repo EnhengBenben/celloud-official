@@ -435,19 +435,34 @@ public class DataAction extends BaseAction {
                     // TODO 所有向Tools端投递任务的流程都向这里集中
                     // 最终判断删除，非spark就是SGE
                     log.info("celloud 直接向 SGE 投递任务");
-                    String dataListFile = DataKeyListToFile
-                            .containName(dataKeyList);
-                    String command = appMap.get(Long.parseLong(appId))
-                            .getCommand()
-                            + " "
-                            + dataListFile
-                            + " "
-                            + appPath
-                            + " ProjectID"
-                            + proId
-                            + " >"
-                            + appPath
-                            + "ProjectID" + proId + ".log &";
+                    // TODO 统一命令形式
+                    String command = null;
+                    if (appId.equals("116")) {
+                        String dataListFile = DataKeyListToFile
+                                .containName(dataKeyList);
+                        command = appMap.get(Long.parseLong(appId))
+                                .getCommand()
+                                + " "
+                                + dataListFile
+                                + " "
+                                + appPath
+                                + " ProjectID"
+                                + proId
+                                + " >"
+                                + appPath + "ProjectID" + proId + ".log &";
+                    } else {
+                        String dataListFile = DataKeyListToFile.onlyPath(dataKeyList);
+                        command = appMap.get(Long.parseLong(appId))
+                                .getCommand()
+                                + " "
+                                + dataListFile
+                                + " "
+                                + appPath
+                                + " ProjectID"
+                                + proId
+                                + " &>"
+                                + appPath + "ProjectID" + proId + ".log";
+                    }
                     log.info("运行命令：" + command);
                     SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
                     ssh.sshSubmit(command, false);

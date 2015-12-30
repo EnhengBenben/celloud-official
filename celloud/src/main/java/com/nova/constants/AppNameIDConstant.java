@@ -115,6 +115,7 @@ public class AppNameIDConstant {
     public static final String split = "113";
     public static final String MIB = "114";
     public static final String SureplexMosaic = "116";
+    public static final String oncogene = "115";
 
     // 根据ID获取名称
     /**
@@ -172,5 +173,6 @@ public class AppNameIDConstant {
         map.put(split, "split");
         map.put(MIB, "MIB");
         map.put(SureplexMosaic, "SureplexMosaic");
+        map.put(oncogene, "oncogene");
     }
 }
