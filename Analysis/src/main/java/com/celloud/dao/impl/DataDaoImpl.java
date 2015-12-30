@@ -35,7 +35,7 @@ public class DataDaoImpl implements DataDao {
 				+ " from tb_company where company_id = u.company_id)as company_name from tb_file f, tb_user_company_relat uc ,tb_user u"
 				+ " where f.user_id = uc.user_id and f.state=0 and f.user_id = u.user_id "
 				+ SqlController.whereCompany("uc", "company_id", role, companyId)
-				+ SqlController.notUserId("uc", role, noUserid) + " group by f.user_id "
+				+ SqlController.notUserId("uc", noUserid) + " group by f.user_id "
 				+ SqlController.orderBy(orderType);
 		LogUtil.info(log, sql);
 		try {
@@ -53,7 +53,7 @@ public class DataDaoImpl implements DataDao {
 
 		String sql = "select left(f.create_date,7) as yearMonth,count(f.file_id) as fileNum,sum(f.size)  as size "
 				+ " from tb_file f,tb_user_company_relat uc where  f.state = 0 and f.user_id = uc.user_id and f.create_date is not null "
-				+ SqlController.notUserId("f", role, noUserid)
+				+ SqlController.notUserId("f", noUserid)
 				+ SqlController.whereCompany("uc", "company_id", role, companyId)
 				+ "group by yearMonth order by yearMonth asc";
 		LogUtil.info(log, sql);
@@ -196,7 +196,7 @@ public class DataDaoImpl implements DataDao {
 		String sql = " select sum(f.size) as size,count(f.file_id)as fileNum,uc.company_id,c.company_name "
 				+ " from tb_file f,tb_user_company_relat uc,tb_company c "
 				+ " where f.user_id = uc.user_id and c.company_name is not null  "
-				+ SqlController.notUserId("f", 3, noUserid)
+				+ SqlController.notUserId("f",  noUserid)
 				+ " and uc.company_id = c.company_id " 
 				+ " group by uc.company_id order by fileNum desc";
 		ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
@@ -215,7 +215,7 @@ public class DataDaoImpl implements DataDao {
 		String sql = " select left(f.create_date,7)as yearMonth, sum(f.size) as size,count(f.file_id)as fileNum "
 				+ " from tb_file f,tb_user_company_relat uc"
 				+ " where f.user_id = uc.user_id  and f.state=0 and f.create_date is not null "
-				+ SqlController.notUserId("f", 3, noUserid)
+				+ SqlController.notUserId("f", noUserid)
 				+ " and uc.company_id = ? " 
 				+ " group by yearMonth order by yearMonth desc";
 		LogUtil.info(log, sql);

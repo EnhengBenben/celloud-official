@@ -1,6 +1,8 @@
 package com.celloud.dao.impl;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -67,7 +69,7 @@ public class AppDaoImpl implements AppDao {
 		Connection conn = ConnectManager.getConnection();
 		String sql = "select p.app_id,p.app_name,p.data_num,p.create_date,p.intro,p.description,p.picture_name,"
 				+ "(select count(r.report_id) from tb_report r where r.flag=0 and r.app_id = p.app_id  "
-				+ SqlController.notUserId("r", 2, noUserid) + ") as runNum ,"
+				+ SqlController.notUserId("r", noUserid) + ") as runNum ,"
 				+ "(select ff.format_desc from tb_app_format_relat fr left join tb_file_format ff on fr.format_id = ff.format_id where fr.app_id = p.app_id limit 1) as dataType "
 				+ " from tb_app p  where p.app_id = 	?";
 		LogUtil.info(log, sql);
@@ -95,7 +97,7 @@ public class AppDaoImpl implements AppDao {
 				+ " and d.company_id = c.company_id) uc "
 
 				+ " where r.create_date between ? and ?" + SqlController.whereSoftware("r", softwareId)
-				+ " and r.flag = 0 and r.user_id = uc.user_id" + SqlController.notUserId("r", role, noUserid)
+				+ " and r.flag = 0 and r.user_id = uc.user_id" + SqlController.notUserId("r", noUserid)
 				+ "  group by weekDate, r.software_id" + " order by weekDate  ,runNum desc";
 		log.info("query:" + sql);
 		try {
@@ -123,7 +125,7 @@ public class AppDaoImpl implements AppDao {
 				+ " and d.company_id = c.company_id) uc "
 
 				+ " where r.create_date between ? and ?" + SqlController.whereSoftware("r", softwareId)
-				+ " and r.flag = 0 and r.user_id = uc.user_id" + SqlController.notUserId("r", role, noUserid)
+				+ " and r.flag = 0 and r.user_id = uc.user_id" + SqlController.notUserId("r", noUserid)
 				+ " group by yearMonth, r.software_id" + " order by yearMonth  ,runNum desc";
 		log.info("query:" + sql);
 		try {
@@ -181,7 +183,7 @@ public class AppDaoImpl implements AppDao {
 		List<App> list = null;
 		Connection conn = ConnectManager.getConnection();
 		String sql = "select r.user_id,count(r.report_id) as runNum,u.username FROM tb_report r,tb_user u where u.user_id = r.user_id and u.state =0 and r.flag = 1 "
-				+ SqlController.notUserId("u", 3, noUserid) + "  group by user_id order by runNum desc";
+				+ SqlController.notUserId("u",  noUserid) + "  group by user_id order by runNum desc";
 		LogUtil.info(log, sql);
 		try {
 			ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);
@@ -232,7 +234,7 @@ public class AppDaoImpl implements AppDao {
 		List<App> list = null;
 		Connection conn = ConnectManager.getConnection();
 		String sql = "select left(r.create_date,10) as weekDate,count(r.report_id)as runNum from tb_report r"
-				+ " where r.create_date is not null" + SqlController.notUserId("r", 3, noUserid)
+				+ " where r.create_date is not null" + SqlController.notUserId("r", noUserid)
 				+ " and left(date_add(r.create_date,INTERVAL -weekday(r.create_date) day),10)=left(date_add(?,INTERVAL -weekday(?) day),10)"
 				+ " group by weekDate" + " order by weekDate desc";
 		log.info("query:" + sql);
@@ -250,7 +252,7 @@ public class AppDaoImpl implements AppDao {
 		List<App> list = null;
 		Connection conn = ConnectManager.getConnection();
 		String sql = "select r.user_id,(select username from tb_user where user_id = r.user_id)as userName,count(r.report_id)as runNum from tb_report r"
-				+ " where r.create_date is not null" + SqlController.notUserId("r", 3, noUserid)
+				+ " where r.create_date is not null" + SqlController.notUserId("r",  noUserid)
 				+ " and left(date_add(r.create_date,INTERVAL -weekday(r.create_date) day),10)=left(date_add(?,INTERVAL -weekday(?) day),10)"
 				+ " group by r.user_id" + " order by runNum desc";
 		log.info("query:" + sql);
@@ -326,6 +328,30 @@ public class AppDaoImpl implements AppDao {
 			list = qr.query(conn, sql, rsh, cmpId);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
+		}
+		return list;
+	}
+
+	@Override
+	public List<App> getAppList(Connection conn, Integer role, Integer cmpId, Date start, Date end, Integer topN) {
+		List<App> list = null;
+		String sql = "select count(1)as runNum,r.app_id,(select app_name from tb_app where app_id = r.app_id)app_name "
+				+" from tb_report r,tb_user_company_relat uc where r.flag=0 and r.user_id = uc.user_id and r.create_date between  ? and  ?  "
+				+ SqlController.notUserId("r", noUserid)
+				+ SqlController.whereCompany("uc", "company_id", role, cmpId)
+				+ " group by r.app_id order by runNum desc"
+				+SqlController.limit(topN);
+		LogUtil.info(log, sql);
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setObject(1, start);
+			ps.setObject(2, end);
+			ResultSet rs = ps.executeQuery();
+			ResultSetHandler<List<App>> rsh = new BeanListHandler<>(App.class);
+			list = rsh.handle(rs);
+		} catch (Exception e) {
+			LogUtil.query(log, sql, e);
+			ConnectManager.close(conn);
 		}
 		return list;
 	}

@@ -33,7 +33,7 @@ import com.google.inject.Inject;
 		@Result(name = "output", type = "json", params = { "root", "list" }),
 
 		@Result(name = "userListJson", type = "json", params = { "root", "userList" }),
-
+		@Result(name = "resultMap", type = "json", params = { "root", "resultMap" }),
 		@Result(name = "EntryList", type = "json", params = { "root", "entryList" }),
 
 		/****/
@@ -59,9 +59,11 @@ public class UserAction extends BaseAction {
 	private Date startDate;
 	private Date endDate;
 	private String orderType; // 1文件数量,2数据大小
-	private int topN = 10;
+	private int topN = 0;
 	private String groupType; // 按周、月分组、
 	private List<Integer> userIds;
+	private Map<String, Object> resultMap;
+
 
 	public String login() {
 		String userName = user.getUsername();
@@ -123,11 +125,25 @@ public class UserAction extends BaseAction {
 	}
 
 	public String toUserActivity() {
+//		Integer cmpId = (Integer) getCid();
+//		Integer role = (Integer) super.session.get(User.USER_ROLE);
+//		userList = userService.getUserByCompany(cmpId, role);
+//		log.info(userList.size());
+		return "toUserActivity";
+	}
+	/**
+	 * 活跃度统计－－用户活跃度统计
+	 * @return
+	 */
+	public String getUserActivity(){
 		Integer cmpId = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
-		userList = userService.getUserByCompany(cmpId, role);
-		log.info(userList.size());
-		return "toUserActivity";
+		try {
+			resultMap = userService.getUserActivity(role, cmpId, startDate, endDate, topN);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "resultMap";
 	}
 
 	/**
@@ -159,7 +175,7 @@ public class UserAction extends BaseAction {
 	 * 
 	 * @return
 	 */
-	public String activityFileWeek() {
+	public String userActivity() {
 		Integer cmpId = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		dataList = userService.getFileInWeekDate(cmpId, role, userIds, startDate, endDate);
@@ -249,6 +265,14 @@ public class UserAction extends BaseAction {
 
 	public void setUserIds(List<Integer> userIds) {
 		this.userIds = userIds;
+	}
+
+	public Map<String, Object> getResultMap() {
+		return resultMap;
+	}
+
+	public void setResultMap(Map<String, Object> resultMap) {
+		this.resultMap = resultMap;
 	}
 
 	/**

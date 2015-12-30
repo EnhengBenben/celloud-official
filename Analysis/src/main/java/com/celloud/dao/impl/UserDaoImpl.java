@@ -1,6 +1,8 @@
 package com.celloud.dao.impl;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -183,20 +185,18 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<User> getUserListByBigCom(Integer companyId,Integer role,String orderType) {
+	public List<User> getUserListByBigCom(Integer companyId, Integer role, String orderType) {
 		List<User> list = null;
 		Connection conn = ConnectManager.getConnection();
 		String sql = " select u.user_id,u.username,u.email, u.cellphone,u.create_date as createDate,"
-					+" (select company_name from tb_company where company_id = u.company_id) as company_name, "
-					+" (select dept_name from tb_dept where dept_id = u.dept_id)as dept_name, "
-					+" (select count(ifnull(file_id,1)) from tb_file where user_id = u.user_id and state=0)as fileNum, "
-					+" (select sum(ifnull(size,0)) from tb_file where user_id = u.user_id and state=0)as size, "
-					+" (select count(report_id) from tb_report where user_id = u.user_id and flag =0)as runNum "
-					+" from tb_user u where u.role=0 and u.state=0 "
-				+	SqlController.notUserId("u",role, noUserid)
-				+ SqlController.whereCompany("u","company_id",role, companyId)
-				+ SqlController.orderBy(orderType);
-		LogUtil.info(log,sql);
+				+ " (select company_name from tb_company where company_id = u.company_id) as company_name, "
+				+ " (select dept_name from tb_dept where dept_id = u.dept_id)as dept_name, "
+				+ " (select count(ifnull(file_id,1)) from tb_file where user_id = u.user_id and state=0)as fileNum, "
+				+ " (select sum(ifnull(size,0)) from tb_file where user_id = u.user_id and state=0)as size, "
+				+ " (select count(report_id) from tb_report where user_id = u.user_id and flag =0)as runNum "
+				+ " from tb_user u where u.role=0 and u.state=0 " + SqlController.notUserId("u", noUserid)
+				+ SqlController.whereCompany("u", "company_id", role, companyId) + SqlController.orderBy(orderType);
+		LogUtil.info(log, sql);
 		try {
 			ResultSetHandler<List<User>> rsh = new BeanListHandler<User>(User.class);
 			list = qr.query(conn, sql, rsh);
@@ -320,7 +320,7 @@ public class UserDaoImpl implements UserDao {
 		String sql = "select left(log.log_date,10) as weekDate, log.user_name as userName,count(log.user_name)as logNum"
 				+ " from  tb_log log, tb_user u " + " where log.user_name = u.username and log.log_date between ? and ?"
 				// + SqlController.whereCompany(role, cmpId)
-				+ SqlController.notUserId("u", role, noUserid) + SqlController.whereIdNotIn("u", "user_id", uids)
+				+ SqlController.notUserId("u", noUserid) + SqlController.whereIdNotIn("u", "user_id", uids)
 				+ " group by weekDate,log.user_name order by weekDate ,logNum desc";
 		log.info("query:" + sql);
 		try {
@@ -339,7 +339,7 @@ public class UserDaoImpl implements UserDao {
 		String sql = "select left(date_add(log.log_date ,INTERVAL -weekday(log.log_date ) day),7) as yearMonth, log.user_name as userName,count(log.user_name)as logNum "
 				+ " from  tb_log log,tb_user u " + " where log.user_name = u.username and log.log_date between ? and ?"
 				// + SqlController.whereCompany(role, cmpId)
-				+ SqlController.notUserId("u", role, noUserid) + SqlController.whereIdNotIn("u", "user_id", uids)
+				+ SqlController.notUserId("u", noUserid) + SqlController.whereIdNotIn("u", "user_id", uids)
 				+ " group by yearMonth,log.user_name order by yearMonth ,logNum desc";
 		log.info("query:" + sql);
 		try {
@@ -358,7 +358,7 @@ public class UserDaoImpl implements UserDao {
 		String sql = "SELECT  left(f.create_date,7)as yearMonth,u.username as userName,count(f.file_id)as fileNum,sum(f.size)  as size "
 				+ " FROM tb_file f left join tb_user u on f.user_id = u.user_id" + " where u.user_id is not null"
 				// + SqlController.whereCompany(role, cmpId)
-				+ SqlController.notUserId("u", role, noUserid) + SqlController.whereIdNotIn("u", "user_id", uids)
+				+ SqlController.notUserId("u", noUserid) + SqlController.whereIdNotIn("u", "user_id", uids)
 				+ " and f.create_date between ? and ?" + " group by yearMonth,f.user_id";
 		LogUtil.info(log, sql);
 		try {
@@ -377,7 +377,7 @@ public class UserDaoImpl implements UserDao {
 		String sql = "SELECT  left(date_add(f.create_date ,INTERVAL -weekday(f.create_date ) day),10) as weekDate,u.username as userName,count(f.file_id)as fileNum,sum(f.size) as size "
 				+ " FROM tb_file f left join tb_user u on f.user_id = u.user_id" + " where u.user_id is not null"
 				// + SqlController.whereCompany(role, cmpId)
-				+ SqlController.notUserId("u", role, noUserid) + SqlController.whereIdNotIn("u", "user_id", uids)
+				+ SqlController.notUserId("u", noUserid) + SqlController.whereIdNotIn("u", "user_id", uids)
 				+ " and f.create_date between ? and ?" + " group by weekDate,f.user_id"
 				+ " order by weekDate desc,fileNum desc";
 		LogUtil.info(log, sql);
@@ -398,7 +398,7 @@ public class UserDaoImpl implements UserDao {
 		String sql = "select u.username as userName,left(date_add(r.create_date ,INTERVAL -weekday(r.create_date ) day),10)as weekDate,count(r.report_id) as runNum from tb_report r left join tb_user u on r.user_id = u.user_id"
 				+ " where r.create_date is not null and r.flag = 0"
 				// + SqlController.whereCompany(role, cmpId)
-				+ SqlController.whereIdNotIn("r", " user_id", uids) + SqlController.notUserId("u", role, noUserid)
+				+ SqlController.whereIdNotIn("r", " user_id", uids) + SqlController.notUserId("u", noUserid)
 				+ " and r.create_date between ? and ?" + " group by r.user_id" + " order by weekDate ,runNum desc";
 		log.info("query:" + sql);
 		try {
@@ -418,7 +418,7 @@ public class UserDaoImpl implements UserDao {
 				+ "from tb_report r left join tb_user u on r.user_id = u.user_id"
 				+ " where r.create_date is not null and r.flag = 0"
 				+ SqlController.whereCompany("r", "company_id", role, cmpId)
-				+ SqlController.whereIdNotIn("r", " user_id", uids) + SqlController.notUserId("u", role, noUserid)
+				+ SqlController.whereIdNotIn("r", " user_id", uids) + SqlController.notUserId("u", noUserid)
 				+ " and r.create_date between ? and ?" + " group by r.user_id" + " order by yearMonth ,runNum desc";
 		log.info("query:" + sql);
 		try {
@@ -476,7 +476,7 @@ public class UserDaoImpl implements UserDao {
 		String sql = "select left(date_add(f.create_date ,INTERVAL -weekday(f.create_date ) day),10)as weekDate,f.user_id, "
 				+ " (select username from tb_user where user_id = f.user_id)as userName,sum(f.size) as size from tb_file f "
 				+ " where f.user_id is not null " + SqlController.whereifTimeNull("f", "create_date", start, end)
-				+ SqlController.notUserId("f", 2, noUserid) + " group by weekDate, f.user_id "
+				+ SqlController.notUserId("f", noUserid) + " group by weekDate, f.user_id "
 				+ " order by weekDate desc,size desc";
 		log.info("query:" + sql);
 		try {
@@ -504,13 +504,10 @@ public class UserDaoImpl implements UserDao {
 				+ " from tb_log l " + SqlController.whereNotUserName("l", "user_name", noUsername)
 				+ " group by weekDate)tb2" + " on tb1.weekDate = tb2.weekDate" + " left join"
 				+ " (select left(date_add(r.create_date ,INTERVAL -weekday(r.create_date ) day),10)as weekDate,count(r.report_id)as runNum from tb_report r "
-				+ SqlController.whereNotUserId("r", noUserid) + " group by weekDate)tb3"
 				+ " on tb1.weekDate = tb3.weekDate" + " left join"
 				+ " (select left(date_add(r.create_date ,INTERVAL -weekday(r.create_date ) day),10)as weekDate,count(distinct(r.app_id))as activityApp from tb_report r "
-				+ SqlController.whereNotUserId("r", noUserid) + " group by weekDate)tb4"
 				+ " on tb1.weekDate = tb4.weekDate" + " left join"
 				+ " (select left(date_add(f.create_date ,INTERVAL -weekday(f.create_date ) day),10)as weekDate,sum(ifnull(f.size,0))as dataSize from tb_file f"
-				+ SqlController.whereNotUserId("f", noUserid) + " group by weekDate)tb5"
 				+ " on tb1.weekDate = tb5.weekDate" + " order by tb1.weekDate desc " + " limit 24";
 
 		log.info("query:" + sql);
@@ -547,4 +544,70 @@ public class UserDaoImpl implements UserDao {
 		}
 		return list;
 	}
+
+	@Override
+	public List<DataFile> getUserFileSize(Connection conn, int role, int cmpId, Date start, Date end, int topN) {
+		List<DataFile> list = null;
+		String sql = "select sum(f.size)as size,u.user_id,u.username as user_name "
+				+ " from tb_file f,tb_user u,tb_user_company_relat uc  where f.user_id = u.user_id and u.company_id !=0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
+				+ SqlController.notUserId("f", noUserid)
+				+ SqlController.whereCompany("uc", "company_id", role, cmpId) + " group by f.user_id order by size desc"
+				+ SqlController.limit(topN);
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setObject(1, start);
+			ps.setObject(2, end);
+			ResultSet rs = ps.executeQuery();
+			ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
+			list = rsh.handle(rs);
+		} catch (Exception e) {
+			LogUtil.query(log, sql, e);
+		}
+		return list;
+	}
+
+	@Override
+	public List<DataFile> getUserFileNum(Connection conn, int role, int cmpId, Date start, Date end, int topN) {
+		List<DataFile> list = null;
+		String sql = "select count(f.file_id)as fileNum,u.company_id,u.username as user_name "
+				+ " from tb_file f,tb_user u,tb_user_company_relat uc  where f.user_id = u.user_id and u.company_id !=0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
+				+ SqlController.notUserId("f", noUserid)
+				+ SqlController.whereCompany("uc", "company_id", role, cmpId)
+				+ " group by f.user_id order by fileNum desc" + SqlController.limit(topN);
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setObject(1, start);
+			ps.setObject(2, end);
+			ResultSet rs = ps.executeQuery();
+			ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
+			list = rsh.handle(rs);
+		} catch (Exception e) {
+			LogUtil.query(log, sql, e);
+			ConnectManager.close(conn);
+		}
+		return list;
+	}
+
+	@Override
+	public List<App> getUserRunApp(Connection conn, int role, int cmpId, Date start, Date end, int topN) {
+		List<App> list = null;
+		String sql = "select count(1)as runNum,r.user_id,(select username from tb_user where user_id = r.user_id)user_name "
+				+" from tb_report r where r.flag=0 and r.create_date between  ? and  ?  "
+				+ SqlController.notUserId("r", noUserid)
+				+ " group by r.user_id order by runNum desc"
+				+SqlController.limit(topN);
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setObject(1, start);
+			ps.setObject(2, end);
+			ResultSet rs = ps.executeQuery();
+			ResultSetHandler<List<App>> rsh = new BeanListHandler<>(App.class);
+			list = rsh.handle(rs);
+		} catch (Exception e) {
+			LogUtil.query(log, sql, e);
+			ConnectManager.close(conn);
+		}
+		return list;
+	}
+
 }

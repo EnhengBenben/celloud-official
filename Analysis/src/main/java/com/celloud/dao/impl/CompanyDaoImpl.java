@@ -90,7 +90,7 @@ public class CompanyDaoImpl implements CompanyDao {
 				+ " (select c.company_name,c.create_date "
 				+ " from tb_user u,tb_dept d,tb_company c where u.dept_id=d.dept_id and c.state=0 and c.company_id=d.company_id "
 				// + SqlController.whereCompany("u", role, companyId)
-				+ SqlController.notUserId("u", role, noUserid) + "group by c.company_id) t group by createDate";
+				+ SqlController.notUserId("u", noUserid) + "group by c.company_id) t group by createDate";
 		LogUtil.info(log, sql);
 
 		try {
@@ -238,7 +238,7 @@ public class CompanyDaoImpl implements CompanyDao {
 				+ " from tb_user u,tb_dept d, tb_company c " + " where u.dept_id = d.dept_id "
 				+ " and d.company_id = c.company_id" + SqlController.whereIdNotIn("c", " company_id", cmpIdList)
 				// + SqlController.whereCompany(role, cmpId)
-				+ SqlController.notUserId("y", role, noUserid) ////// 排除测试用户
+				+ SqlController.notUserId("y", noUserid) ////// 排除测试用户
 				+ ") uc"
 
 				+ " where tu.user_name = uc.username" + " group by weekDate, companyName"
@@ -269,7 +269,7 @@ public class CompanyDaoImpl implements CompanyDao {
 				+ " from tb_user u,tb_dept d, tb_company c " + " where u.dept_id = d.dept_id "
 				+ SqlController.whereIdNotIn("c", " company_id", companyLis) + " and d.company_id = c.company_id"
 				// + SqlController.whereCompany(role, cmpId)
-				+ SqlController.notUserId("u", role, noUserid) + ") uc"
+				+ SqlController.notUserId("u", noUserid) + ") uc"
 
 				+ " where tu.user_name = uc.username" + " group by yearMonth, companyName"
 				+ " order by yearMonth ,logNum desc";
@@ -292,7 +292,7 @@ public class CompanyDaoImpl implements CompanyDao {
 
 				+ " (SELECT r.user_id,count(r.user_id) as runNum,left(date_add(r.create_date ,INTERVAL -weekday(r.create_date ) day),10)as weekDate FROM tb_report r"
 				+ " where r.flag =0 " + " and r.create_date between ? and ? "
-				+ SqlController.notUserId("r", role, noUserid) ////// 排除测试用户
+				+ SqlController.notUserId("r", noUserid) ////// 排除测试用户
 				+ " group by r.user_id,weekDate) rn,"
 
 				+ " (select u.user_id,u.username,company_name " + " from tb_user u,tb_dept d, tb_company c "
@@ -322,7 +322,7 @@ public class CompanyDaoImpl implements CompanyDao {
 
 				+ " (SELECT r.user_id,count(r.user_id) as runNum,left(r.create_date,7)as yearMonth FROM tb_report r"
 				+ " where r.flag =0 " + " and r.create_date between ? and ? "
-				+ SqlController.notUserId("r", role, noUserid) ////// 排除测试用户
+				+ SqlController.notUserId("r", noUserid) ////// 排除测试用户
 				+ "  group by r.user_id,yearMonth) rn,"
 
 				+ " (select u.user_id,u.username,company_name " + " from tb_user u,tb_dept d, tb_company c "
@@ -387,7 +387,7 @@ public class CompanyDaoImpl implements CompanyDao {
 		List<DataFile> list = null;
 		String sql = "select count(f.file_id)as fileNum,u.company_id,(select company_name from tb_company where company_id = u.company_id)as company_name "
 				+" from tb_file f,tb_user u,tb_user_company_relat uc  where f.user_id = u.user_id and u.company_id !=0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
-				+ SqlController.notUserId("f", role, noUserid)
+				+ SqlController.notUserId("f", noUserid)
 				+SqlController.whereCompany("uc", "company_id", role, cmpId)
 				+ " group by u.company_id order by fileNum desc" + SqlController.limit(topN);
 		try{
@@ -399,6 +399,7 @@ public class CompanyDaoImpl implements CompanyDao {
 			list = rsh.handle(rs);
 		}catch (Exception e) {
 			LogUtil.query(log, sql, e);
+			ConnectManager.close(conn);
 		}
 		return list;
 	}
@@ -408,7 +409,7 @@ public class CompanyDaoImpl implements CompanyDao {
 		List<DataFile> list = null;
 		String sql = "select sum(f.size)as size,u.company_id,(select company_name from tb_company where company_id = u.company_id)as company_name "
 				+" from tb_file f,tb_user u,tb_user_company_relat uc  where f.user_id = u.user_id and u.company_id !=0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
-				+ SqlController.notUserId("f", role, noUserid)
+				+ SqlController.notUserId("f", noUserid)
 				+SqlController.whereCompany("uc", "company_id", role, cmpId)
 				+ " group by u.company_id order by size desc" + SqlController.limit(topN);
 		try{
@@ -420,6 +421,7 @@ public class CompanyDaoImpl implements CompanyDao {
 			list = rsh.handle(rs);
 		}catch (Exception e) {
 			LogUtil.query(log, sql, e);
+			ConnectManager.close(conn);
 		}
 		return list;
 	}

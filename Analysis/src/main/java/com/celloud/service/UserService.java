@@ -1,6 +1,7 @@
 package com.celloud.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.celloud.sdo.DataFile;
@@ -218,4 +219,14 @@ public interface UserService {
 	 * @return
 	 */
 	public List<LoginLog> getLoginLog(String isWeek);
+	/**
+	 * 用户活跃度统计
+	 * @param role
+	 * @param cmpId
+	 * @param start
+	 * @param end
+	 * @param topN
+	 * @return
+	 */
+	public Map<String,Object> getUserActivity(int role,int cmpId,Date start,Date end,int topN);
 }
