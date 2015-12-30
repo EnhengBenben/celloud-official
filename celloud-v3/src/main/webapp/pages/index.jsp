@@ -83,7 +83,7 @@
             </a>
           </li>
           <li class="treeview" id="toDataMenu" data-step="7" data-position="right" data-intro="" data-img="todata.png">
-            <a href="javascript:void(0)" onclick="showData()">
+            <a href="javascript:void(0)" id="to-data-main">
               <i class="fa fa-tasks"></i>
               <span>数据管理</span>
             </a>
@@ -123,6 +123,7 @@
        
      </div>
    </div>
+  <input type="hidden" id="user-navigation-hide" value="${session.user.navigation }">
   <script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
   <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
   <script src="//cdn.bootcss.com/jqueryui/1.11.4/jquery-ui.min.js"></script>
@@ -134,29 +135,12 @@
   <script src="//cdn.bootcss.com/highcharts/4.2.1/modules/exporting.js"></script>
   <script src="//cdn.bootcss.com/select2/4.0.1/js/select2.min.js"></script>
 <!--   <script src="//cdn.bootcss.com/select2/4.0.1/js/i18n/zh-CN.js"></script> -->
-  <script src="<%=request.getContextPath() %>/js/main.js" type="text/javascript"></script>
   <script src="<%=request.getContextPath() %>/js/utils.js" type="text/javascript"></script>
+  <script src="<%=request.getContextPath() %>/js/main_init.js" type="text/javascript"></script>
+  <script src="<%=request.getContextPath() %>/js/main.js" type="text/javascript"></script>
   <script src="<%=request.getContextPath() %>/plugins/intro/intro.js?version=1.0"></script>
   <script src="<%=request.getContextPath() %>/plugins/highcharts/char.js?version=20150526"></script>
   <script src="<%=request.getContextPath() %>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
   <script src="<%=request.getContextPath() %>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
-  <script type="text/javascript">
-  var hasNavi = <%=session.getAttribute("userNav")%>;
-  var intro = null;
-  $.ajaxSetup ({
-    cache: false //关闭AJAX相应的缓存
-  });
-  $(document).ready(function(){
-  	showUserCount();
-  	if(hasNavi==1){
-  	  intro = introJs();
-  	  intro.setOption('tooltipPosition', 'auto');
-  	  intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
-  	  intro.setOption('showStepNumbers', false);
-  	  intro.setOption('showButtons', false);
-  	  intro.start();
-  	}
-  });
-  </script>
 </body>
 </html>
