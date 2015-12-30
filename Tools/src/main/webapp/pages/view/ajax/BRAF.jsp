@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<div class="row">
+<!-- <div class="row"> -->
 	<div class="m-file">文件名称：
 		<span class="file-name"><s:property value="%{resultMap.pagePath.replace('/SVG','').substring(resultMap.pagePath.replace('/SVG','').lastIndexOf('/')+1,resultMap.pagePath.replace('/SVG','').length())}"/>(<s:property value="resultMap.fileName"/>)</span>
 	</div>
@@ -72,7 +72,7 @@
 <!-- 			</div> -->
 <!-- 		</div> -->
 <!-- 	</div> -->
-</div>
+<!-- </div> -->
 <script>
 $(function() {
     $(window).manhuatoTop({

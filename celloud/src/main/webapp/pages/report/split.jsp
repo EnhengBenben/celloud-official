@@ -191,5 +191,13 @@ $(function() {
 		showHeight : 100,
 		speed : 1000
 	});
+    $.get("splitReport!getSplitCount",{"param":$("#splitIdHidden").val()},function(data){
+        var totalSource = JSON.stringify(data.totalSource);
+        var totalSample = JSON.stringify(data.totalSample);
+        var thisSource = JSON.stringify(data.thisSource);
+        var thisSample = JSON.stringify(data.thisSample);
+        drawScatter("sourceCharDiv",eval(totalSource),eval(thisSource),'Split源数据同比图','平均质量','序列总数');
+        drawScatter("sampleCharDiv",eval(totalSample),eval(thisSample),'Split分离结果数据同比图','平均质量','序列总数');
+    });
 });
 </script>
