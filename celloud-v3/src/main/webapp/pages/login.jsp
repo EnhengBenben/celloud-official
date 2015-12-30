@@ -43,9 +43,7 @@
 						id="username" name="username" value="${requestScope.user.username }" />
 					<input type="password" class="pwd" placeholder="密码" id="password"
 						value="${fn:substring(requestScope.user.password,0,16)}" />
-					<input type="hidden" id="password1"
-						value="${fn:substring(requestScope.user.password,16,requestScope.user.password.length())}">
-					<input type="hidden" name="password">
+					<input type="hidden" name="password" value="${user.password }">
 					<div class="yzm">
 						<input type="text" class="yzm" placeholder="验证码" id="captcha"
 							name="kaptchaCode" value="${requestScope.kapcode }" />
