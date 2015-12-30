@@ -452,7 +452,7 @@ public class DataAction extends BaseAction {
                     SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
                     ssh.sshSubmit(command, false);
                 } else {
-                    String newPath = PropertiesUtil.toolsOutPath
+                    String newPath = PropertiesUtil.toolsPath
                             + "Procedure!runApp?userId=" + userId + "&appId="
                             + appId + "&appName=" + appName + "&projectName="
                             + proName + "&email=" + email + "&dataKeyList="
