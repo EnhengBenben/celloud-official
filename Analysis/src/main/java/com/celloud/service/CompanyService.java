@@ -1,5 +1,6 @@
 package com.celloud.service;
 
+import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -12,16 +13,15 @@ import com.google.inject.ImplementedBy;
 
 @ImplementedBy(CompanyServiceImpl.class)
 public interface CompanyService {
+	
 	/**
 	 * 获取大客户的总医院量
-	 * 
 	 * @param companyId
 	 * @return
 	 */
 	public Object getBigUserCompanyNum(Integer companyId,int role);
 	/**
 	 * 获取大客户每月的医院数量
-	 * 
 	 * @param companyId
 	 * @return
 	 */
@@ -29,7 +29,6 @@ public interface CompanyService {
 
 	/**
 	 * 获取医院详细信息
-	 * 
 	 * @param companyId
 	 *            大客户id
 	 * @return
@@ -38,7 +37,6 @@ public interface CompanyService {
 
 	/**
 	 * 获取单个医院信息
-	 * 
 	 * @param compId
 	 * @return
 	 */
@@ -104,24 +102,7 @@ public interface CompanyService {
 	 * @return
 	 */
 	public List<LoginLog> getCompanyLoginInMonth(Integer cmpId,Date start,Date end,List<Integer> companyList,Integer role) ;
-	/**
-	 * 查询时间段医院在各个周上传文件大小、数量
-	 * @param userId
-	 * @param start
-	 * @param end
-	 * @param companyList 仅看此医院
-	 * @return
-	 */
-	public List<DataFile> getCompanyFileInWeek(Integer cmpId,Date start ,Date end,List<Integer> cmpIdList,Integer role );
-	/**
-	 * 查询时间段医院在各个月上传文件大小、数量
-	 * @param userId
-	 * @param start
-	 * @param end
-	 * @param companyList 仅看此医院
-	 * @return
-	 */
-	public List<DataFile> getCompanyFileInMonth(Integer cmpId,Date start ,Date end,List<Integer> cmpIdList,Integer role);
+
 	/**
 	 * 查询时间段内医院在各个周内运行app的次数
 	 * @param userId
@@ -153,4 +134,16 @@ public interface CompanyService {
 	 * @return
 	 */
 	public List<Company>BigUserList();
+	
+	/**
+	 * 医院活跃度统计
+	 * @param role
+	 * @param cmpId
+	 * @param start
+	 * @param end
+	 * @param topN
+	 * @return
+	 */
+	public Map<String, Object> getCompanyFile(int role,int cmpId, Date start, Date end,int  topN);
+
 }

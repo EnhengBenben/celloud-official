@@ -2,20 +2,17 @@ package com.celloud.action;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-
 import com.celloud.sdo.Company;
 import com.celloud.sdo.DataFile;
-import com.celloud.sdo.Entry;
 import com.celloud.sdo.LoginLog;
 import com.celloud.sdo.App;
 import com.celloud.sdo.User;
@@ -48,13 +45,13 @@ public class CompanyAction extends BaseAction {
 	private List<Map<String, Object>> list;
 	private List<Company> complist;
 	private Company company;
-	private List<Entry> lists;
 	private List<App> runList;
 	private List<DataFile> dataList;
 	private List<LoginLog> logList;
 	private User user;
 	private Date startDate;
 	private Date endDate;
+	private int topN;
 	private List<Company> companyList;
 	private List<Integer> companyIds; // id1,id2
 	private String orderby; // 1.文件数量;2.文件大小
@@ -87,29 +84,19 @@ public class CompanyAction extends BaseAction {
 	}
 
 	/**
-	 * 医院活跃度统计－－医院各月的上传文件大小、数量统计
+	 * 查询医院时间内的排序，取前N条记录
 	 * 
 	 * @return JSON
 	 */
-	public String activityHospitalFileMonth() {
+	public String getHospitalFile() {
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		Integer cmpId = (Integer) getCid();
-		LogUtil.info(log, companyIds);
-		dataList = companyService.getCompanyFileInMonth(cmpId, startDate, endDate, companyIds, role);
-		return "DataList";
-	}
-
-	/**
-	 * 医院活跃度统计－－医院各周的登陆次数
-	 * 
-	 * @return JSON
-	 */
-	public String activityHospitalFileWeek() {
-		Integer role = (Integer) super.session.get(User.USER_ROLE);
-		Integer cmpId = (Integer) getCid();
-		LogUtil.info(log, companyIds);
-		dataList = companyService.getCompanyFileInWeek(cmpId, startDate, endDate, companyIds, role);
-		return "DataList";
+		try {
+			resultMap = companyService.getCompanyFile(role, cmpId, startDate, endDate, topN);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "resultMap";
 	}
 
 	/**
@@ -194,14 +181,7 @@ public class CompanyAction extends BaseAction {
 		log.info(complist);
 		resultMap = companyService.getCompanyNumEveryMonth(companyId, role);
 		String times = (String) resultMap.get("timeLine");
-		String data = (String) resultMap.get("data");
-		String[] keys = times.split(",");
-		String var[] = data.split(",");
-		for (int i = 0; i < keys.length; i++) {
-			if (lists == null)
-				lists = new ArrayList<Entry>();
-			lists.add(new Entry(keys[i], var[i]));
-		}
+
 		return "success";
 	}
 
@@ -244,7 +224,7 @@ public class CompanyAction extends BaseAction {
 	public String getCompanyDetailJson() {
 		Integer cid = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
-		complist = companyService.getCompanyDetailById(cid, role,orderby);
+		complist = companyService.getCompanyDetailById(cid, role, orderby);
 		return "companyDetailJson";
 	}
 
@@ -296,14 +276,6 @@ public class CompanyAction extends BaseAction {
 
 	public void setList(List<Map<String, Object>> list) {
 		this.list = list;
-	}
-
-	public List<Entry> getLists() {
-		return lists;
-	}
-
-	public void setLists(List<Entry> lists) {
-		this.lists = lists;
 	}
 
 	public List<App> getRunList() {
@@ -366,6 +338,14 @@ public class CompanyAction extends BaseAction {
 
 	public Date getEndDate() {
 		return endDate;
+	}
+
+	public int getTopN() {
+		return topN;
+	}
+
+	public void setTopN(int topN) {
+		this.topN = topN;
 	}
 
 	public void setEndDate(String endDate) {

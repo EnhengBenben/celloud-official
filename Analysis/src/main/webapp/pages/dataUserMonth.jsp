@@ -14,7 +14,7 @@
 		<s:if test="%{dataList.size()>0}">
 			<s:iterator id="data" value="dataList">
 				<tr>
-					<td><a href="javascript:monthDataList(${data.userId },'${data.yearMonth }');">${data.yearMonth }</a></td>
+					<td><a href="javascript:monthDataList(${data.user_id },'${data.yearMonth }');">${data.yearMonth }</a></td>
 					<td>${data.fileNum }</td>
 				</tr>
 			</s:iterator>

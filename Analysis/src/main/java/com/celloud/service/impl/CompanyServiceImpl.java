@@ -1,6 +1,7 @@
 package com.celloud.service.impl;
 
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -8,18 +9,24 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
+import com.celloud.action.CompanyAction;
 import com.celloud.dao.CompanyDao;
 import com.celloud.sdo.Company;
 import com.celloud.sdo.DataFile;
 import com.celloud.sdo.LoginLog;
 import com.celloud.sdo.App;
 import com.celloud.service.CompanyService;
+import com.celloud.utils.ConnectManager;
 import com.celloud.utils.LogUtil;
 import com.google.inject.Inject;
+
 
 public class CompanyServiceImpl implements CompanyService {
 	@Inject
 	private CompanyDao companyDao;
+	Logger log = Logger.getLogger(this.getClass().getSimpleName());
 
 	@Override
 	public Object getBigUserCompanyNum(Integer companyId,int role) {
@@ -165,7 +172,8 @@ public class CompanyServiceImpl implements CompanyService {
 							d.setFileNum(0);
 							res.add(d);
 						}
-					}
+					}	
+				
 				} else if (y == startYear && y < endYear) {
 					for (int m = startMonth; m <= 12; m++) {
 						String ym = catYearMonth(y, m);
@@ -302,16 +310,6 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public List<DataFile> getCompanyFileInWeek(Integer cmpId, Date start, Date end, List<Integer> cmpIdList,Integer role) {
-		return companyDao.getCompanyFileInWeek(cmpId, start, end, cmpIdList,role);
-	}
-
-	@Override
-	public List<DataFile> getCompanyFileInMonth(Integer cmpId,Date start, Date end,List<Integer> cmpIdList,Integer role) {
-		return companyDao.getCompanyFileInMonth(cmpId, start, end,cmpIdList, role);
-	}
-
-	@Override
 	public List<App> getCompanySoftwareInWeek(Integer cmpId,Date start, Date end, List<Integer> cmpIds,Integer role) {
 		return companyDao.getCompanySoftwareInWeek(cmpId, start, end, cmpIds,role);
 	}
@@ -329,5 +327,15 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public List<Company> BigUserList() {
 		return companyDao.BigUserList();
+	}
+
+	@Override
+	public Map<String, Object>  getCompanyFile(int role, int cmpId, Date start, Date end, int topN) {
+		Connection conn = ConnectManager.getConnection();
+		HashMap<String,Object> result = new HashMap<>();
+		result.put("fileNum",  companyDao.getCompanyFileNum(conn, role, cmpId, start, end, topN));
+		result.put("size",  companyDao.getCompanyFileSize(conn, role, cmpId, start, end, topN));
+		ConnectManager.close(conn);
+		return result;
 	}
 }
