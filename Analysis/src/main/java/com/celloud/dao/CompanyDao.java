@@ -1,5 +1,6 @@
 package com.celloud.dao;
 
+import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -111,31 +112,6 @@ public interface CompanyDao {
 			Integer role);
 
 	/**
-	 * 查询时间段医院在各个周上传文件大小、数量
-	 * 
-	 * @param start
-	 * @param end
-	 * @param companyList
-	 *            仅看此医院
-	 * @return
-	 */
-	public List<DataFile> getCompanyFileInWeek(Integer cmpId, Date start, Date end, List<Integer> cmpIdList,
-			Integer role);
-
-	/**
-	 * 查询时间段医院在各个月上传文件大小、数量
-	 * 
-	 * @param userId
-	 * @param start
-	 * @param end
-	 * @param companyList
-	 *            仅看此医院
-	 * @return
-	 */
-	public List<DataFile> getCompanyFileInMonth(Integer cmpId, Date start, Date end, List<Integer> cmpIdList,
-			Integer role);
-
-	/**
 	 * 查询时间段内医院在各个周内运行app的次数
 	 * 
 	 * @param userId
@@ -176,4 +152,27 @@ public interface CompanyDao {
 	 * @return
 	 */
 	public List<Company> BigUserList();
+	
+	/**
+	 * 查询医院时间内的排序，取前N条记录
+	 * @param role
+	 * @param cmpId
+	 * @param start
+	 * @param end
+	 * @param topN
+	 * @return
+	 */
+	public List<DataFile> getCompanyFileNum(Connection conn,int role,int cmpId, Date start, Date end,int  topN);
+	
+	/**
+	 * 查询医院时间内的排序，取前N条记录
+	 * @param role
+	 * @param cmpId
+	 * @param start
+	 * @param end
+	 * @param topN
+	 * @return
+	 */
+	public List<DataFile> getCompanyFileSize(Connection conn,int role,int cmpId, Date start, Date end,int  topN);
+	
 }

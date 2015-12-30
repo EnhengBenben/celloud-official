@@ -16,7 +16,7 @@ public class SqlController {
 	 */
 	public static String notUserId(String tbName, Integer role, String userids) {
 		String sql = "";
-		if (role == User.BIG_USER || role == User.ADMIN)
+		if (role == User.BIG_USER )
 			sql = " and " + tbName + ".user_id not in (" + userids + ") ";
 		return sql;
 	}
@@ -31,7 +31,7 @@ public class SqlController {
 	 */
 	public static String notUserName(int role, String tbName, String colName, String userNames) {
 		String sql = null;
-		if (role == User.BIG_USER || role == User.ADMIN)
+		if (role == User.BIG_USER)
 			sql = " and " + tbName + "." + colName + " not in (" + userNames + ") ";
 		return sql;
 	}
@@ -72,7 +72,7 @@ public class SqlController {
 	 */
 	public static String notUserName(String tbName, String colName, int role, String usernames) {
 		String sql = "";
-		if (role == User.BIG_USER || role == User.ADMIN)
+		if (role == User.BIG_USER )
 			sql = " and " + tbName + "." + colName + " not in (" + usernames + ") ";
 		return sql;
 	}

@@ -4,13 +4,10 @@
 var lineType = 'line';
 var barType = 'bar';
 
-var colorList = [
-                 '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
-                 '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
-                 '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
-              ];
-function getRandomInt(n){
-	return parseInt(Math.random()*(n+1));//parseInt(Math.random()*(上限-下限+1)+下限); 
+var colorList = [ '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B', '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD', '#D7504B', '#C6E579',
+		'#F4E001', '#F0805A', '#26C0C0' ];
+function getRandomInt(n) {
+	return parseInt(Math.random() * (n + 1));// parseInt(Math.random()*(上限-下限+1)+下限);
 }
 /**
  * @param title
@@ -19,7 +16,6 @@ function getRandomInt(n){
  * @param seriesName
  * @param typex
  * @param startZoom
- * @param endZoom
  * @returns {___anonymous243_245}
  */
 function makeOptionScroll(title, xAxis, yAxis, seriesName, typex, startZoom, endZoom) {
@@ -33,32 +29,46 @@ function makeOptionScroll(title, xAxis, yAxis, seriesName, typex, startZoom, end
 	return opt;
 }
 /**
- * @param xAxis 值
+ * @param xAxis
+ *            值
  * @param yAxis值
- * @param seriesName legend
- * @param typex line bar 
- * @param positon 显示开始位置
- * @param showNum  要显示多少个 showNum小于等于length不显示TｉｍｅＬｉｎｅ
- * @param length 全部有多少个
+ * @param seriesName
+ *            legend
+ * @param typex
+ *            line bar
+ * @param positon
+ *            显示开始位置
+ * @param showNum
+ *            要显示多少个 showNum小于等于length不显示TｉｍｅＬｉｎｅ
+ * @param length
+ *            全部有多少个
  */
-function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position,showNum){
+function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position, showNum) {
 	var length = xAxis.length;
-	if(showNum<length){
-		var len =position+ (showNum/length)*100;
-		return makeOptionScroll('',xAxis,yAxis,seriesName,typex,position,len);
-	}else{
+	if (showNum < length) {
+		if(position<100){
+			var len = position + (showNum / length) * 100;
+			return makeOptionScroll('', xAxis, yAxis, seriesName, typex, position, len);
+		}else{
+			var len =  (showNum / length) * 100;
+			return makeOptionScroll('', xAxis, yAxis, seriesName, typex, 100-len, 100);
+		}
+	} else {
 		return makeOption('', xAxis, yAxis, seriesName, typex);
 	}
 }
 
 /**
  * 
- * @param title 标题
- * @param legenName 
- * @param name 
+ * @param title
+ *            标题
+ * @param legenName
+ * @param name
  * @param rad
- * @param centerX 左右位置 ％比
- * @param centerY 上下位置 ％比
+ * @param centerX
+ *            左右位置 ％比
+ * @param centerY
+ *            上下位置 ％比
  * @param value {}
  * @returns
  */
@@ -108,12 +118,8 @@ function makePieOption(title, legenName, name, rad, centerX, centerY, value) {
 	return opt;
 }
 /**
- * title ='用户统计' 
- * legendList= [ '文件个数', '数据大小(GB)' ]
- *  xAxis 
- *  yAxis 
- *  seriesName 
- *  typex :line/bar
+ * title ='用户统计' legendList= [ '文件个数', '数据大小(GB)' ] xAxis yAxis seriesName typex
+ * :line/bar
  */
 function makeOption(title, xAxis, yAxis, seriesName, typex) {
 	if (title == null || title.length < 1)
