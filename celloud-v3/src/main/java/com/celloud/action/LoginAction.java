@@ -136,7 +136,7 @@ public class LoginAction {
             saveRSAKey(publicKey, privateKey, user);
         }
         session.removeAttribute(Constants.SESSION_RSA_PRIVATEKEY);
-        mv.setViewName("loadIndex");
+        mv.setViewName("loading");
         return mv;
     }
 
