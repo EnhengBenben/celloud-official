@@ -1,10 +1,10 @@
 var intro;
-var hasNavi = $("#user-navigation-hide").val();
 $(function () {
   $.ajaxSetup ({
     cache: false //关闭AJAX相应的缓存
   });
   showUserCount();
+  var hasNavi = $("#user-navigation-hide").val();
   if(hasNavi==1){
   	  intro = introJs();
   	  intro.setOption('tooltipPosition', 'auto');
@@ -13,6 +13,9 @@ $(function () {
   	  intro.setOption('showButtons', false);
   	  intro.start();
   }
+  $("#to-data-main").on('click', function(e){
+      alert('click event');
+  });
 });
 /**
  * 总览
