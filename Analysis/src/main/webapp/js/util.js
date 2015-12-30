@@ -3,12 +3,12 @@ Date.prototype.format = function() {
 	var m = this.getMonth() + 1;
 	var day = this.getDate();
 	var dd = day < 10 ? '0' + day : day
-	return this.getFullYear() + '/' + m + '/' + dd;
+	return this.getFullYear() + '-' + m + '-' + dd;
 }
 Date.prototype.yearmonth = function() {
 	var m = this.getMonth() + 1;
 	var mm = m < 10 ? '0' + m : m;
-	return this.getFullYear() + '/' + mm;
+	return this.getFullYear() + '-' + mm;
 }
 // 周日
 Date.prototype.sunday = function() {
@@ -19,7 +19,7 @@ Date.prototype.sunday = function() {
 		return new Date(l).format();
 	} else {
 		var d = 7 - n;
-		return new Date(l + d * 24 * 60 * 60 * 1000).format();
+		return new Date(l + d * 24 * 60 * 60 * 1000);
 	}
 }
 
@@ -56,10 +56,19 @@ Date.prototype.lastWeekSunday = function(var_date) {
 	}
 	return new Date(this.getTime() - d * 24 * 60 * 60 * 1000);
 }
+Date.prototype.localMonDay= function(var_date) {
+	var l = var_date.getTime();
+	var d = var_date.getDay();
+	if (d == 0) {
+		d = -6
+	} else {
+		d = d-1;
+	}
+	return new Date(this.getTime() - d * 24 * 60 * 60 * 1000);
+}
 
 Date.prototype.month = function() {
 	var l = this.getTime();
-	// 周月是每一天
 	var d = this.getDate();
 	return new Date(this.getTime() + d * 24 * 60 * 60 * 1000).format();
 }

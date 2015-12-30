@@ -5,14 +5,9 @@
 <style>
 <!--
 -->
-.searchKeyPadding {
-	padding-left: 5px, padding-right:5px, float:left
-}
-
 .title {
 	margin-left: 45px;
 }
-
 .form {
 	margin-left: 65px;
 }
@@ -40,12 +35,11 @@
 			用户活跃度统计
 		</h3>
 		<!-- 用户文件数量大小统计 -->
-
 		<div class="form">
 			<div style="padding-left: 65px">
-				<a style="font-size: 16px; cursor: pointer;">本周</a>
+				<a style="font-size: 16px; cursor: pointer;" href="javascript:localWeek()" >本周</a>
 				&nbsp;&nbsp;
-				<a style="font-size: 16px; cursor: pointer;">本月</a>
+				<a style="font-size: 16px; cursor: pointer;" href="javascript:localMonth()">本月</a>
 				&nbsp;&nbsp; &nbsp;&nbsp;
 				<label>开始时间： </label>
 				<input id="timeId" type="date" name="startDate" onchange="loadActivity()">
@@ -53,7 +47,7 @@
 				<input id="timeId2" type="date" name="endDate" onchange="loadActivity()">
 				<label class="searchKedivyPadding">Top N:</label>
 				&nbsp;&nbsp;
-				<select id="topId" class="searchKeyPadding" style="width: 120px" onchange="loadActivity()">
+				<select id="topId" style="width: 120px" onchange="loadActivity()">
 					<option value="0" selected></option>
 					<option value="1">1</option>
 					<option value="2">2</option>

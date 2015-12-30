@@ -23,6 +23,10 @@
 	<div class="row">
 		<h3 class="header smaller lighter blue">
 			<span onclick="bigUserCount()">大客户信息统计</span>
+			<small id="secondTitle" class="hide">
+                    <i class="icon-double-angle-right"></i>
+                    <span id="_oneApp"></span>
+                </small>
 		</h3>
 		<div style="htight: 10px"></div>
 		<div class="col-xs-11" style="margin-left: 60px; margin-top: 15px">

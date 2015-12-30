@@ -99,7 +99,7 @@
 			
 		}
 		var myChart = echarts.init(document.getElementById(runNumViewID));
-		var opt = makeOptionScroll("", xAxis, yAxis, "运行次数", "bar", 0, 30);
+		var opt = makeOptionScrollUnit( xAxis, yAxis, "运行次数", "bar", 0, 10);
 		myChart.setOption(opt);
 	});
 	
@@ -115,7 +115,7 @@
 			yAxis[i] = (parseFloat(res[i].size / (1024 * 1024 * 1024)).toFixed(2));
 		}
 		var myChart = echarts.init(document.getElementById(fileSizeViewID));
-		var opt = makeOptionScroll("", xAxis, yAxis, "数据大小(GB)", "bar", 0, 30);
+		var opt = makeOptionScrollUnit( xAxis, yAxis, "数据大小(GB)", "bar", 0, 10);
 		myChart.setOption(opt);
 	});
 	$.get(Company_DetailURL, {
@@ -129,7 +129,7 @@
 			yAxis[i] = res[i].fileNum;
 		}
 		var myChart = echarts.init(document.getElementById(fileNumViewID));
-		var opt = makeOptionScroll("", xAxis, yAxis, "数据量", "bar", 0, 30);
+		var opt = makeOptionScrollUnit(xAxis, yAxis, "数据量", "bar", 0, 10);
 		myChart.setOption(opt);
 	});
 	
