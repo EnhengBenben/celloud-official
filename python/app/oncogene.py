@@ -85,7 +85,7 @@ class oncogene:
 				'719.png', '768.png', '790.png', '858.png','861.png' ,
 				'719.10.png','768.10.png','790.10.png','858.10.png','861.10.png','Indel.30.png']
 			# 已知突变位点
-			know_mutation = ['ERCC1.118.10.png','EGFR.719.10.png','EGFR.768.10.png','EGFR.790.10.png','EGFR.858.10.png','EGFR.861.10.png','KRAS.12.10.png','KRAS.13.10.png','UGT1A1.71.10.png']
+			know_mutation = ['Indel.30.png','ERCC1.118.10.png','EGFR.719.10.png','EGFR.768.10.png','EGFR.790.10.png','EGFR.858.10.png','EGFR.861.10.png','KRAS.12.10.png','KRAS.13.10.png','UGT1A1.71.10.png']
 			km = []
 			original = {} # 原始峰图
 			out = [] # 其它图片
