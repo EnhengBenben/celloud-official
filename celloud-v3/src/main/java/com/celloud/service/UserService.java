@@ -3,6 +3,7 @@ package com.celloud.service;
 import java.util.Date;
 
 import com.celloud.model.User;
+import com.celloud.page.Page;
 
 /**
  * 用户服务接口
@@ -68,5 +69,7 @@ public interface UserService {
      * @param password
      */
     public void updatePassword(int userId, String password);
+
+    public Page<User> findUsers(Page<User> page);
 
 }

@@ -2,6 +2,7 @@ package com.celloud.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.celloud.constants.Constants;
 import com.celloud.mapper.UserMapper;
 import com.celloud.model.User;
+import com.celloud.page.Page;
 import com.celloud.service.UserService;
 import com.celloud.utils.MD5Util;
 
@@ -57,6 +59,13 @@ public class UserServiceImpl implements UserService {
         user.setUserId(userId);
         user.setPassword(MD5Util.getMD5(password));
         userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    @Override
+    public Page<User> findUsers(Page<User> page) {
+        List<User> lists = userMapper.findUsers(page);
+        page.setDatas(lists);
+        return page;
     }
 
 }

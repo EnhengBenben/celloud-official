@@ -9,11 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
 import com.celloud.email.EmailService;
 import com.celloud.model.User;
+import com.celloud.page.Page;
 import com.celloud.service.UserService;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.ResetPwdUtils;
@@ -28,6 +30,13 @@ import com.celloud.utils.ResetPwdUtils;
 public class HomeAction {
     @Resource
     private UserService userService;
+    // TODO 删除
+    @RequestMapping("users")
+    @ResponseBody
+    public Page<User> users(int page, int size) {
+        Page<User> pager = new Page<>(page, size);
+        return userService.findUsers(pager);
+    }
 
     /**
      * 用户重置密码--跳转到重置密码页面
