@@ -233,4 +233,22 @@
       md5 = #{md5,jdbcType=VARCHAR}
     where file_id = #{fileId,jdbcType=INTEGER}
   </update>
+  <select id="countData" resultType="java.lang.Integer">
+    select count(*) size from tb_file where user_id = #{userId } and state = #{state }
+  </select>
+  <select id="countDataByTime" resultType="map">
+    select left(create_date,#{time }) time,count(file_id) num from tb_file where user_id = #{userId } and state = #{state } group by time
+  </select>
+  <select id="sumData" resultType="java.lang.Long">
+   select sum(size) size from tb_file where user_id = #{userId } and state = #{state }
+  </select>
+  <select id="sumDataByTime" resultType="map">
+   select left(create_date,#{time }) time,sum(size) size from tb_file where user_id = #{userId } and state = #{state } group by time
+  </select>
+  <insert id="addDataInfo" parameterType="com.celloud.model.DataFile" >
+    insert into tb_file(user_id,file_name,create_date,md5,state) values(#{userId },#{fileName },now(),#{md5 },#{state})
+  </insert>
+  <update id="updateDataInfoByFileId" parameterType="com.celloud.model.DataFile" >
+    update tb_file set data_key=#{dataKey },size=#{size },path=#{path },another_name=#{anotherName },file_format=#{fileFormat },state=#{state } where file_id=#{fileId }
+  </update>
 </mapper>

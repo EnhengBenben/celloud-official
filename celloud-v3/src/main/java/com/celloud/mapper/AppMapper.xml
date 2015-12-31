@@ -296,4 +296,10 @@
       method = #{method,jdbcType=VARCHAR}
     where app_id = #{appId,jdbcType=INTEGER}
   </update>
+  <select id="countMyApp" resultType="java.lang.Integer" >
+    select count(a.app_id) from tb_user_app_right uar left join tb_app a on uar.app_id=a.app_id where uar.user_id=#{userId } and a.off_line=#{offLine } and uar.is_add=#{isAdd }
+  </select>
+  <select id="countMyAppByTime" resultType="map" >
+    select left(create_date,#{time }) time,count(a.app_id) num from tb_user_app_right uar left join tb_app a on uar.app_id=a.app_id where uar.user_id=#{userId } and a.off_line=#{offLine } and uar.is_add=#{isAdd } group by time
+  </select>
 </mapper>

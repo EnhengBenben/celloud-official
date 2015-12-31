@@ -13,7 +13,7 @@ public class DataFile {
 
     private String strain;
 
-    private Double size;
+    private Long size;
 
     private Date createDate;
 
@@ -73,11 +73,11 @@ public class DataFile {
         this.strain = strain == null ? null : strain.trim();
     }
 
-    public Double getSize() {
+    public Long getSize() {
         return size;
     }
 
-    public void setSize(Double size) {
+    public void setSize(Long size) {
         this.size = size;
     }
 

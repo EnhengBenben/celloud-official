@@ -71,7 +71,7 @@
         <ul class="sidebar-menu">
           <li class="header"><span>产品和服务</span></li>
           <li class="active treeview">
-            <a href="javascript:void(0)" onclick="showUserCount();">
+            <a href="javascript:void(0)" onclick="userCount.showUserCount();">
               <i class="fa fa-dashboard"></i>
               <span>总览</span>
             </a>
