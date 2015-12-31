@@ -1,5 +1,6 @@
 package com.mongo.sdo;
 
+import java.util.List;
 import java.util.Map;
 
 public class Oncogene extends Base {
@@ -10,15 +11,14 @@ public class Oncogene extends Base {
     private String length;//
     private String conclusion;//
     private String seq;//
-    private String know;//
+    private List<String> knowMutation;//
     /**
      * key : name.replace('.','_') eg : 原文件名：5_all.png 对应 key 为：5_all_png
      */
     private Map<String, String> original;// 原始峰图
-    private Map<String, String> out;// 非上述三种图片的图片
+    private List<String> out;// 非上述三种图片的图片
     private String fileName;// 文件名
     private String pdf;
-    
 
     public String getPdf() {
         return pdf;
@@ -84,14 +84,6 @@ public class Oncogene extends Base {
         this.seq = seq;
     }
 
-    public String getKnow() {
-        return know;
-    }
-
-    public void setKnow(String know) {
-        this.know = know;
-    }
-
     public Map<String, String> getOriginal() {
         return original;
     }
@@ -100,11 +92,19 @@ public class Oncogene extends Base {
         this.original = original;
     }
 
-    public Map<String, String> getOut() {
+    public List<String> getKnowMutation() {
+        return knowMutation;
+    }
+
+    public void setKnowMutation(List<String> knowMutation) {
+        this.knowMutation = knowMutation;
+    }
+
+    public List<String> getOut() {
         return out;
     }
 
-    public void setOut(Map<String, String> out) {
+    public void setOut(List<String> out) {
         this.out = out;
     }
 

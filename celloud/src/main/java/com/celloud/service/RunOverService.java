@@ -389,7 +389,6 @@ public class RunOverService {
             if (StringUtils.isEmpty(geneName)) {
                 geneName = "no result";
             }
-            System.out.println(result);
             resultArray.append(data.getDataKey()).append("\t")
                     .append(data.getFileName()).append("\t").append(geneName)
                     .append("\t").append(result).append("\t").append(re)
@@ -397,12 +396,5 @@ public class RunOverService {
         }
         FileTools.appendWrite(projectFile, resultArray.toString());
         return true;
-    }
-    
-    public static void main(String[] args) {
-        String first = "Exon    20@EGFR";
-        String result = StringUtils.isEmpty(first) ? "no result" : first
-                .replace("Exon", "").split("@")[0].trim();
-        System.out.println(result);
     }
 }
