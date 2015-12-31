@@ -12,21 +12,22 @@ $(document).ready(function() {
 	$('input[name=endDate]').val("2015-12-12");
 });
 // //////////////////////////////初始化
-loadActivity();
+localMonth();
 function localWeek()
 {
-	var d = new Date();
-	var l = d.localMonDay(d);
-	var s = d.sunday();
-	$("#timeId").val(l.format());
-	$('#timeId2').val(s.format());
-	logRes(l.format());
-	logRes(s.format())
+	console.log(showWeekFirstDay());
+	console.log(showWeekLastDay());
+	$("#timeId").val(showWeekFirstDay());
+	$('#timeId2').val(showWeekLastDay());
+	loadActivity();
 }
 function localMonth()
 {
-	logRes("test");
-
+	console.log(showMonthFirstDay());
+	console.log(showMonthLastDay());
+	$("#timeId").val(showMonthFirstDay());
+	$('#timeId2').val(showMonthLastDay());
+	loadActivity();
 }
 function loadActivity() {
 	var start = $("#timeId").val();
@@ -44,6 +45,24 @@ function loadActivity() {
 		var fileNum = data["fileNum"];
 		var fileSize = data["size"];
 		var appRun = data["appRun"];
+		if (fileNum == null || fileNum.length < 1) {
+			$("#fileNum").hide();
+			return;
+		}else{
+			$("#fileNum").show();
+		}
+		if (fileSize == null || fileSize.length < 1) {
+			$("#fileSize").hide();
+			return;
+		}else{
+			$("#fileSize").show();
+		}
+		if (appRun == null || appRun.length < 1) {
+			$("#appRun").hide();
+			return;
+		}else{
+			$("#appRun").show();
+		}
 		
 		var xAxis = new Array(fileNum.length);
 		var yAxis = new Array(fileNum.length);

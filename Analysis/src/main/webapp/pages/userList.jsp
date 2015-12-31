@@ -18,18 +18,31 @@
 </div>
 <div class="page-content">
 	<div class="row">
-		<h3 class="header smaller lighter blue">
+		<!-- <h3 class="header smaller lighter blue">
 			<span onclick="toUserList()">用户详细信息</span>
 			<small id="secondTitle" class="hide">
 				<i class="icon-double-angle-right"></i>
 				<span id="_oneUser"></span>
 			</small>
 		</h3>
+		 -->
+		<div class="title">
+			<h3 class="header smaller lighter green">数据量统计</h3>
+		</div>
 		<div class="col-xs-12" style="height: 450px;" id="fileNum"></div>
+		<div class="title">
+			<h3 class="header smaller lighter green">数据大小统计</h3>
+		</div>
 		<div class="col-xs-12" style="height: 450px;" id="fileSize"></div>
+		<div class="title">
+			<h3 class="header smaller lighter green">APP运行统计</h3>
+		</div>
 		<div class="col-xs-12" style="height: 450px;" id="runNum"></div>
 
 		<div class="table-header hide" id="_userName"></div>
+		<div class="title">
+			<h3 class="header smaller lighter green">用户详细信息列表</h3>
+		</div>
 		<div class="col-xs-11 table-responsive" id="userListDiv" style="margin-left: 60px; margin-top: 15px">
 			<table id="userList" class="table table-striped table-bordered table-hover">
 				<thead>
@@ -51,7 +64,7 @@
 						<s:iterator id="data" value="userList">
 							<tr>
 								<td>
-								${data.username }
+									${data.username }
 									<!-- 
 									 <a href="javascript:getUserDetail(${data.user_id },'${data.username }')">${data.username }</a>
 									 -->
@@ -80,11 +93,13 @@
 </div>
 <!-- /.page-content -->
 <script type="text/javascript">
-    var fileNumViewId = "fileNum";
-    var fileSizeViewId = "fileSize";
-    var runNumViewId = "runNum";
-    
-	$.get("user!getUserListByBigUserJson", {"orderType":"runNum"}, function(res) {
+	var fileNumViewId = "fileNum";
+	var fileSizeViewId = "fileSize";
+	var runNumViewId = "runNum";
+	
+	$.get("user!getUserListByBigUserJson", {
+		"orderType" : "runNum"
+	}, function(res) {
 		var xAxis = new Array(res.length);
 		var yAxis = new Array(res.length);
 		for (var i = 0; i < res.length; i++) {
@@ -95,7 +110,9 @@
 		var myChart = echarts.init(document.getElementById(runNumViewId));
 		myChart.setOption(opt);
 	});
-	$.get("user!getUserListByBigUserJson", {"orderType":"fileNum"}, function(res) {
+	$.get("user!getUserListByBigUserJson", {
+		"orderType" : "fileNum"
+	}, function(res) {
 		var xAxis = new Array(res.length);
 		var yAxis = new Array(res.length);
 		
@@ -103,11 +120,13 @@
 			xAxis[i] = res[i].username;
 			yAxis[i] = res[i].fileNum;
 		}
-		var opt = makeOptionScrollUnit( xAxis, yAxis, '数据量', 'bar', 0, 20);
+		var opt = makeOptionScrollUnit(xAxis, yAxis, '数据量', 'bar', 0, 20);
 		var myChart = echarts.init(document.getElementById(fileNumViewId));
 		myChart.setOption(opt);
 	});
-	$.get("user!getUserListByBigUserJson", {"orderType":"size"}, function(res) {
+	$.get("user!getUserListByBigUserJson", {
+		"orderType" : "size"
+	}, function(res) {
 		var xAxis = new Array(res.length);
 		var yAxis = new Array(res.length);
 		for (var i = 0; i < res.length; i++) {
@@ -118,7 +137,6 @@
 		var myChart = echarts.init(document.getElementById(fileSizeViewId));
 		myChart.setOption(opt);
 	});
-	
 	
 	jQuery(function($) {
 		var oTable1 = $('#userList').dataTable({

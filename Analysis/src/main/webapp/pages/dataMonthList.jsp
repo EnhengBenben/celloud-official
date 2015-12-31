@@ -22,11 +22,13 @@
 <div class="page-content">
 	<div class="row">
 		<div class="table-header hide" id="_companyName"></div>
-		  <h3 class="header smaller lighter green">每月用户数据量统计</h3>
+		  <h3 class="header smaller lighter green">每月数据大小统计</h3>
 		<div class="col-xs-12" style="height: 450px;" id="fileSizeView"></div>
-		  <h3 class="header smaller lighter green">每月用户文件数量统计</h3>
+		  <h3 class="header smaller lighter green">每月数据量统计</h3>
 		<div class="col-xs-12" style="height: 450px;" id="fileNumView"></div>
-
+        <div class="title">
+            <h3 class="header smaller lighter green">每月数据详细信息列表</h3>
+        </div>
 		<div class="col-xs-12">
 			<div class="table-responsive" id="dataDiv">
 				<table id="MonthDataList" class="table table-striped table-bordered table-hover">

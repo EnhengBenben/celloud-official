@@ -32,28 +32,30 @@
 				<div class="col-sm-12">
 					<div class="row">
 						<!-- 用户文件数量大小统计 -->
-						<h3 class="header smaller lighter green title">医院数据量统计</h3>
+						
 						<div style="padding-left: 65px">
-						     <a style="font-size: 16px;cursor: pointer;">本周</a>&nbsp;&nbsp;
-						      <a style="font-size: 16px;cursor: pointer;">本月</a>&nbsp;&nbsp;
-						     &nbsp;&nbsp;
+							<a style="font-size: 16px; cursor: pointer;" onclick="javascript:localWeek()">本周</a>
+							&nbsp;&nbsp;
+							<a style="font-size: 16px; cursor: pointer;" onclick="javascript:localMonth()">本月</a>
+							&nbsp;&nbsp; &nbsp;&nbsp;
 							<label>开始时间： </label>
-							<input id="fileTimeId" type="date" onchange="fileOnChange()" name="startDate" onchange="loadActivityFile()">
+							<input id="timeId" type="date" name="startDate" onchange="loadActivityFile()">
 							<label>结束时间： </label>
-							<input id="fileTimeId2" type="date" onchange="fileOnChange()" name="endDate" onchange="loadActivityFile()">						
+							<input id="timeId2" type="date" name="endDate" onchange="loadActivityFile()">
 							<label class="searchKedivyPadding">Top N:</label>
 							&nbsp;&nbsp;
 							<select id="fileTopId" class="searchKeyPadding" style="width: 120px" onchange="loadActivityFile()">
-							     <option value="0" selected></option>
+								<option value="0" selected></option>
 								<option value="1">1</option>
 								<option value="2">2</option>
-								<option value="3" >3</option>
+								<option value="3">3</option>
 								<option value="4">4</option>
 								<option value="5">5</option>
 							</select>
 						</div>
+						<h3 class="header smaller lighter green title">医院数据量统计</h3>
 						<div class="col-xs-12" id="fileNum" style="height: 450px"></div>
-						<!-- 登陆次数统计 -->
+						<h3 class="header smaller lighter green title">数据大小统计</h3>
 						<div class="col-xs-12" id="fileSize" style="height: 450px"></div>
 					</div>
 					<div class="space-6"></div>

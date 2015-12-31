@@ -30,13 +30,9 @@
 </div>
 <div class="col-sm-12">
 	<div class="row">
-		<h3 class="header smaller lighter green">
-			<i class="icon-signal"></i>
-			用户活跃度统计
-		</h3>
 		<!-- 用户文件数量大小统计 -->
 		<div class="form">
-			<div style="padding-left: 65px">
+			<div>
 				<a style="font-size: 16px; cursor: pointer;" href="javascript:localWeek()" >本周</a>
 				&nbsp;&nbsp;
 				<a style="font-size: 16px; cursor: pointer;" href="javascript:localMonth()">本月</a>
@@ -58,12 +54,15 @@
 			</div>
 		</div>
 		<div class="title">
-			<h3 class="header smaller lighter green">上传文件统计</h3>
+			<h3 class="header smaller lighter green">数据量统计</h3>
 		</div>
 		<div id="fileNum" style="height: 450px"></div>
-		<!-- 登陆次数统计 -->
+		<!-- 数据大小数统计 -->
+		<div class="title">
+            <h3 class="header smaller lighter green">数据大小统计</h3>
+        </div>
 		<div id="fileSize" style="height: 450px"></div>
-		<!-- App统计 -->
+		<!-- AppAPP运行统计 -->
 		<div>
 			<div class="title">
 				<h3 class="header smaller lighter green">APP运行统计</h3>
