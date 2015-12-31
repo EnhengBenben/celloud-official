@@ -1,5 +1,6 @@
 package com.celloud.service;
 
+import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
 
@@ -125,4 +126,16 @@ public interface AppService {
 	 * @return
 	 */
 	public List<App> getAppListByBigUserId(int cmpId);
+	
+	/**
+	 * 查询时间里APP运行次数
+	 * @param conn
+	 * @param role
+	 * @param cmpId
+	 * @param start
+	 * @param end
+	 * @param topN
+	 * @return
+	 */
+	public List<App> getAppList(Integer role, Integer cmpId, Date start, Date end, Integer topN);
 }

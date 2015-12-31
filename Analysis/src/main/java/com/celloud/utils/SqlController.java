@@ -9,15 +9,15 @@ public class SqlController {
 
 	/**
 	 * " and " + tbName + ".user_id not in (" + userids + ") ";
+	 * 
 	 * @param tbName
 	 * @param role
 	 * @param userids
 	 * @return
 	 */
-	public static String notUserId(String tbName, Integer role, String userids) {
+	public static String notUserId(String tbName, String userids) {
 		String sql = "";
-		if (role == User.BIG_USER )
-			sql = " and " + tbName + ".user_id not in (" + userids + ") ";
+		sql = " and " + tbName + ".user_id not in (" + userids + ") ";
 		return sql;
 	}
 
@@ -51,17 +51,6 @@ public class SqlController {
 	}
 
 	/**
-	 * " where " + tbName + ".user_id not in (" + userids + ") ";
-	 * 
-	 * @param tbName
-	 * @param userids
-	 * @return
-	 */
-	public static String whereNotUserId(String tbName, String userids) {
-		return " where " + tbName + ".user_id not in (" + userids + ") ";
-	}
-
-	/**
 	 * and tbName.colName not in (userName)
 	 * 
 	 * @param tbName
@@ -72,11 +61,10 @@ public class SqlController {
 	 */
 	public static String notUserName(String tbName, String colName, int role, String usernames) {
 		String sql = "";
-		if (role == User.BIG_USER )
+		if (role == User.BIG_USER)
 			sql = " and " + tbName + "." + colName + " not in (" + usernames + ") ";
 		return sql;
 	}
-
 
 	/**
 	 * and tbName.colName = companyId
@@ -129,7 +117,9 @@ public class SqlController {
 	 * @param topN
 	 * @return
 	 */
-	public static String limit(int topN) {
+	public static String limit(Integer topN) {
+		if (topN == null)
+			topN = 0;
 		if (topN > 0)
 			return " limit " + topN;
 		else
@@ -149,26 +139,26 @@ public class SqlController {
 		String sql = sb.substring(0, sb.length() - 1);
 		return " and " + tbName + "." + colName + " in ( " + sql + " ) ";
 	}
-	
-	public static String orderBy(String colName){
-		if(colName==null||colName.length()<1)
+
+	public static String orderBy(String colName) {
+		if (colName == null || colName.length() < 1)
 			return "";
-		String sql  = "order by ";
-		switch(colName){
+		String sql = "order by ";
+		switch (colName) {
 		case "size":
-			sql =sql+"size desc";
+			sql = sql + "size desc";
 			break;
 		case "fileNum":
-			sql =sql+"fileNum desc";
+			sql = sql + "fileNum desc";
 			break;
 		case "runNum":
-			sql =sql+"runNum desc";
+			sql = sql + "runNum desc";
 			break;
 		default:
-			sql="";
+			sql = "";
 			break;
 		}
-		
+
 		return sql;
 	}
 }

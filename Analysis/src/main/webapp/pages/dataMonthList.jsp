@@ -21,14 +21,6 @@
 
 <div class="page-content">
 	<div class="row">
-		<h3 class="header smaller lighter blue">
-			<span onclick="getMonthDataList()">总数据量月统计</span>
-			<small id="secondTitle" class="hide">
-				<i class="icon-double-angle-right"></i>
-				<span id="_month"></span>
-				用户上传数据量
-			</small>
-		</h3>
 		<div class="table-header hide" id="_companyName"></div>
 		  <h3 class="header smaller lighter green">每月用户数据量统计</h3>
 		<div class="col-xs-12" style="height: 450px;" id="fileSizeView"></div>

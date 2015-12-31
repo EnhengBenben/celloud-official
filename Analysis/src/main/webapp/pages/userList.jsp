@@ -51,7 +51,10 @@
 						<s:iterator id="data" value="userList">
 							<tr>
 								<td>
-									<a href="javascript:getUserDetail(${data.user_id },'${data.username }')">${data.username }</a>
+								${data.username }
+									<!-- 
+									 <a href="javascript:getUserDetail(${data.user_id },'${data.username }')">${data.username }</a>
+									 -->
 								</td>
 								<td>${data.email }</td>
 								<td>${data.cellphone }</td>

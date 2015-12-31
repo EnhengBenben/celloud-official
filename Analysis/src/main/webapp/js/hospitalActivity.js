@@ -33,6 +33,7 @@ function loadActivityFile() {
 		"endDate" : end,
 		"topN" : topN
 	};
+	logReq(fileNumURL, param);
 	$.get(fileNumURL, param, function(data) {
 		var fileNum = eval(data["fileNum"]);
 		var fileSize =  eval(data["size"]);

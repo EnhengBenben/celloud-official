@@ -1,5 +1,6 @@
 package com.celloud.dao;
 
+import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -226,5 +227,27 @@ public interface UserDao {
 	 * @return
 	 */
 	public List<LoginLog> getLoginLog(String isWeek);
+	/**
+	 * 查询时间内用户上传的文件大小
+	 * @param role
+	 * @param cmpId
+	 * @param start
+	 * @param end
+	 * @param topN
+	 * @return
+	 */
+	public List<DataFile> getUserFileSize(Connection conn,int role,int cmpId,Date start,Date end,int topN);
+	/**
+	 * 查询时间内用户上传的文件数量
+	 * @param role
+	 * @param cmpId
+	 * @param start
+	 * @param end
+	 * @param topN
+	 * @return
+	 */
+	public List<DataFile> getUserFileNum(Connection conn,int role,int cmpId,Date start,Date end,int topN);
+	
+	public List<App> getUserRunApp(Connection conn,int role,int cmpId,Date start,Date end,int topN);
 	
 }
