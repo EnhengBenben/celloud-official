@@ -126,7 +126,7 @@ public class HomeAction {
 
     @RequestMapping("feedback.html")
     public String feedBack() {
-        return "feedBack";
+        return "feedback";
     }
 
     @RequestMapping("home.html")

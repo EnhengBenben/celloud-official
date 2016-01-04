@@ -78,7 +78,7 @@
 			·
 			<a href="service.html" target="_blank">服务与支持</a>
 			·
-			<a href="feedBack.html" target="_blank">意见反馈</a>
+			<a href="feedback.html" target="_blank">意见反馈</a>
 		</div>
 		<!--     </div> -->
 		<!--#E wrapper-->

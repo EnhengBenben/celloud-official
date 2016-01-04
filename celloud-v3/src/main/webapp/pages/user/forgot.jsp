@@ -69,7 +69,7 @@
                 ·
                 <a href="<%=request.getContextPath()%>/service.html" target="_blank">服务与支持</a>
                 ·
-                <a href="<%=request.getContextPath()%>/feedBack.html" target="_blank">意见反馈</a>
+                <a href="<%=request.getContextPath()%>/feedback.html" target="_blank">意见反馈</a>
             </div>
         </div>
         <!--#E wrapper-->
