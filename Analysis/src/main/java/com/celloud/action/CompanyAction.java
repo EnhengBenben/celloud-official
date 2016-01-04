@@ -16,14 +16,17 @@ import com.celloud.sdo.LoginLog;
 import com.celloud.sdo.App;
 import com.celloud.sdo.User;
 import com.celloud.service.CompanyService;
+import com.celloud.utils.DateUtil;
 import com.celloud.utils.LogUtil;
 import com.google.inject.Inject;
 
 @ParentPackage("json-default")
 @Action("company")
-@Results({ @Result(name = "success", location = "../../pages/hospitalActivity.jsp"),
+@Results({ @Result(name = "success", location = "../../pages/form.jsp"),
 		@Result(name = "companyDetail", location = "../../pages/hospitalList.jsp"),
 		@Result(name = "oneCompany", location = "../../pages/hospitalOne.jsp"),
+		@Result(name = "content", location = "../../pages/activity.jsp"),
+
 		@Result(name = "list", type = "json", params = { "root", "list" }),
 		@Result(name = "resultMap", type = "json", params = { "root", "resultMap" }),
 		@Result(name = "companyDetailJson", type = "json", params = { "root", "complist" }),
@@ -54,6 +57,7 @@ public class CompanyAction extends BaseAction {
 	private List<Company> companyList;
 	private List<Integer> companyIds; // id1,id2
 	private String orderby; // 1.文件数量;2.文件大小
+	private List<DataFile> userDataList;
 
 	/**
 	 * 医院活跃度统计－－医院各月的登陆次数
@@ -66,6 +70,24 @@ public class CompanyAction extends BaseAction {
 		logList = companyService.getCompanyLoginInMonth(cmpId, startDate, endDate, companyIds, role);
 		LogUtil.info(log, companyIds);
 		return "LogList";
+	}
+	@SuppressWarnings("unchecked")
+	public String getContent() {
+		Integer role = (Integer) super.session.get(User.USER_ROLE);
+		Integer cmpId = (Integer) getCid();
+		try {
+			@SuppressWarnings("rawtypes")
+			Map<String, List> result = companyService.getList(role, cmpId, startDate, endDate, topN);
+			runList = (List<App>) result.get("appRun");
+			userDataList = (List<DataFile>) result.get("uFile");
+			dataList = (List<DataFile>) result.get("hFile");
+			log.info(result);
+			log.info(userDataList);
+			log.info(dataList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "content";
 	}
 
 	/**
@@ -91,6 +113,10 @@ public class CompanyAction extends BaseAction {
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		Integer cmpId = (Integer) getCid();
 		try {
+			if (startDate == null)
+				startDate = DateUtil.DAY_START_OF_MONTH();
+			if (endDate == null)
+				endDate = DateUtil.DAY_END_OF_MONTH();
 			resultMap = companyService.getCompanyFile(role, cmpId, startDate, endDate, topN);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -174,13 +200,6 @@ public class CompanyAction extends BaseAction {
 	}
 
 	public String toActivity() {
-		Integer companyId = (Integer) getCid();
-		Integer role = (Integer) super.session.get(User.USER_ROLE);
-//		complist = companyService.getCompanyClient(companyId, role);
-//		log.info(complist);
-//		resultMap = companyService.getCompanyNumEveryMonth(companyId, role);
-//		String times = (String) resultMap.get("timeLine");
-
 		return "success";
 	}
 
@@ -333,6 +352,14 @@ public class CompanyAction extends BaseAction {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public List<DataFile> getUserDataList() {
+		return userDataList;
+	}
+
+	public void setUserDataList(List<DataFile> userDataList) {
+		this.userDataList = userDataList;
 	}
 
 	public Date getEndDate() {

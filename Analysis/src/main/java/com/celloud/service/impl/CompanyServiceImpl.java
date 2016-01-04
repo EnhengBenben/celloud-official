@@ -1,18 +1,16 @@
 package com.celloud.service.impl;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
-
-import com.celloud.action.CompanyAction;
+import com.celloud.dao.AppDao;
 import com.celloud.dao.CompanyDao;
+import com.celloud.dao.UserDao;
 import com.celloud.sdo.Company;
 import com.celloud.sdo.DataFile;
 import com.celloud.sdo.LoginLog;
@@ -26,6 +24,10 @@ import com.google.inject.Inject;
 public class CompanyServiceImpl implements CompanyService {
 	@Inject
 	private CompanyDao companyDao;
+	@Inject
+	private AppDao appDao;
+	@Inject
+	private UserDao userDao;
 	Logger log = Logger.getLogger(this.getClass().getSimpleName());
 
 	@Override
@@ -333,9 +335,34 @@ public class CompanyServiceImpl implements CompanyService {
 	public Map<String, Object>  getCompanyFile(int role, int cmpId, Date start, Date end, int topN) {
 		Connection conn = ConnectManager.getConnection();
 		HashMap<String,Object> result = new HashMap<>();
-		result.put("fileNum",  companyDao.getCompanyFileNum(conn, role, cmpId, start, end, topN));
-		result.put("size",  companyDao.getCompanyFileSize(conn, role, cmpId, start, end, topN));
+		result.put("hFileNum",  companyDao.getCompanyFileNum(conn, role, cmpId, start, end, topN));
+		result.put("hSize",  companyDao.getCompanyFileSize(conn, role, cmpId, start, end, topN));
+		List<App> list = appDao.getAppList(conn, role, cmpId, start, end, topN);
+		result.put("appRun", list);
+		List<DataFile> fileNum = userDao.getUserFileNum(conn, role, cmpId, start, end, topN);
+		List<DataFile> fileSize = userDao.getUserFileSize(conn, role, cmpId, start, end, topN);
+		List<App> appRun = userDao.getUserRunApp(conn, role, cmpId, start, end, topN);
+		result.put("uFileNum", fileNum);
+		result.put("uSize", fileSize);
+		result.put("uAppRun", appRun);
 		ConnectManager.close(conn);
+		return result;
+	}
+
+	@Override
+	public Map<String, List> getList(int role, int cmpId, Date start, Date end, int topN) {
+		LogUtil.info(log, "role:"+role+"company:"+cmpId);
+		LogUtil.info(log, start);
+		LogUtil.info(log, end);
+		Connection conn = ConnectManager.getConnection();
+		HashMap<String,List> result = new HashMap<>();
+		result.put("hFile",  companyDao.getCompanyFileNum(conn, role, cmpId, start, end, topN));
+		List<App> list = appDao.getAppList(conn, role, cmpId, start, end, topN);
+		result.put("appRun", list);
+		List<DataFile> fileNum = userDao.getUserFileNum(conn, role, cmpId, start, end, topN);
+		result.put("uFile", fileNum);
+		ConnectManager.close(conn);
+		
 		return result;
 	}
 }

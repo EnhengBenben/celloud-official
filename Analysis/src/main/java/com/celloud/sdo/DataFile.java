@@ -21,7 +21,7 @@ public class DataFile implements Serializable, Cloneable {
 	/** 大小 单位：b */
 	private Long size;
 	/** 提交时间 */
-	private Date createDate;
+	private Date create_date;
 	/** 状态 0:未删除，1:已删除 */
 	private Integer state;
 	/**
@@ -32,6 +32,8 @@ public class DataFile implements Serializable, Cloneable {
 	private String another_name;
 
 	private int fileNum;
+	
+	private int runNum;
 	/** 字符串年月2015-12 */
 	private String yearMonth;
 
@@ -52,6 +54,14 @@ public class DataFile implements Serializable, Cloneable {
 
 	public void setUser_id(Integer user_id) {
 		this.user_id = user_id;
+	}
+
+	public int getRunNum() {
+		return runNum;
+	}
+
+	public void setRunNum(int runNum) {
+		this.runNum = runNum;
 	}
 
 	public String getUser_name() {
@@ -102,12 +112,13 @@ public class DataFile implements Serializable, Cloneable {
 		this.size = size;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
+
+	public Date getCreate_date() {
+		return create_date;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setCreate_date(Date create_date) {
+		this.create_date = create_date;
 	}
 
 	public Integer getState() {
@@ -162,7 +173,7 @@ public class DataFile implements Serializable, Cloneable {
 	public String toString() {
 		return "DataFile [file_id=" + file_id + ", user_id=" + user_id + ", userName=" + user_name + ", companyId="
 				+ company_id + ", company_name=" + company_name + ", dataKey=" + dataKey + ", fileName=" + file_name
-				+ ", size=" + size + ", createDate=" + createDate + ", state=" + state + ", fileFormat=" + fileFormat
+				+ ", size=" + size + ", createDate=" + create_date + ", state=" + state + ", fileFormat=" + fileFormat
 				+ ", anotherName=" + another_name + ", fileNum=" + fileNum + ", yearMonth=" + yearMonth + ", weekDate="
 				+ weekDate + "]";
 	}

@@ -27,30 +27,7 @@
         </h3>
 	 -->
 		<!-- App统计 -->
-		<div style="margin: 8px">
-			<div class="form">
-				<div style="padding-left: 65px">
-					<a style="font-size: 16px; cursor: pointer;" onclick="javascript:localWeek()">本周</a>
-					&nbsp;&nbsp;
-					<a style="font-size: 16px; cursor: pointer;" onclick="javascript:localMonth()">本月</a>
-					&nbsp;&nbsp; &nbsp;&nbsp;
-					<label>开始时间： </label>
-					<input id="timeId" type="date" name="startDate" onchange="loadAppRunTime()">
-					<label>结束时间： </label>
-					<input id="timeId2" type="date" name="endDate" onchange="loadAppRunTime()">
-					<label class="searchKedivyPadding">Top N:</label>
-					&nbsp;&nbsp;
-					<select id="topId" class="searchKeyPadding" style="width: 120px" onchange="loadAppRunTime()">
-						<option value="0" selected></option>
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-					</select>
-				</div>
-			</div>
-		</div>
+
 		<div class="title">
 			<h3 class="header smaller lighter green">APP运行统计</h3>
 		</div>

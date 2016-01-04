@@ -28,7 +28,6 @@ import com.google.inject.Inject;
 		@Result(name = "toWeekReport", location = "../../pages/weekExport.jsp"),
 		@Result(name = "toBigUser", location = "../../pages/bigUser.jsp"),
 		@Result(name = "toHospitalBigUser", location = "../../pages/hospitalBigUser.jsp"),
-
 		@Result(name = "browserCount", type = "json", params = { "root", "browserList" }),
 		@Result(name = "historyList", type = "json", params = { "root", "historyList" }),
 
@@ -118,7 +117,7 @@ public class HomeAction extends BaseAction {
 	public String toWeekReport() {
 		log.info("toWeekReport");
 		try {
-			if (startDate == null || 1 == 1) {
+			if (startDate == null) {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				Date d = sdf.parse("2015-11-02");
 				startDate = DateUtil.getLastMonday(d);
