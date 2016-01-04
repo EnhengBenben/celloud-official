@@ -16,7 +16,7 @@
     <div class="header">
 		<h1 style="font-size:32px;padding:0 0 5 0px;">MIB检测分析报告</h1>
 	</div>
-	<h4>1.&nbsp;&nbsp; 基本信息</h3>
+	<h4>1.&nbsp;&nbsp; 基本信息</h4>
 	<div class="section1">
     <ul>
     	<li>编号：<span><input type="text" name="" value=""></span></li>
@@ -68,7 +68,7 @@
     	<table class="table table-bordered table-condensed">
 			<thead>
                <tr>
-                 <th style="line-height: 12px;vertical-align: middle;text-align: center;">种<br><span style="font-size:12px;color: #9A9999;">pecies</span></th>
+                 <th style="line-height: 12px;vertical-align: middle;text-align: center;">种<br><span style="font-size:12px;color: #9A9999;">Species</span></th>
                  <th style="line-height: 12px;vertical-align: middle;text-align: center;min-width:90px;">属<br><span style="font-size:12px;color: #9A9999;">Genus</span></th>
                  <th style="line-height: 12px;vertical-align: middle;text-align: center;min-width:65px;">GI号<br><span style="font-size:12px;color: #9A9999;">GI</span></th>
                  <th style="line-height: 12px;vertical-align: middle;text-align: center;min-width:60px;">覆盖长度%<br><span style="font-size:12px;color: #9A9999;">%Coverage</span></th>

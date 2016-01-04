@@ -93,9 +93,11 @@ function drawScatter(id,totaldata,thisdata,title,xAxisName,yAxisName){
 			            name:'当前数据',
 			            type:'scatter',
 			            data: thisdata,
+			            symbol:'star',
+			            symbolSize: 10,
 			            markPoint : {
 			                data : [
-			                    {type : 'average', name: '平均值'}
+			                    {type : 'average', name: '当前数据平均值'}
 			                ]
 			            }
 			        }
@@ -110,9 +112,9 @@ function drawScatter(id,totaldata,thisdata,title,xAxisName,yAxisName){
 var macarons_theme = {
     // 默认色板
     color: [
-        '#2ec7c9','#b6a2de','#5ab1ef','#ffb980','#d87a80',
+        '#2ec7c9','#9a7fd1','#5ab1ef','#ffb980','#d87a80',
         '#8d98b3','#e5cf0d','#97b552','#95706d','#dc69aa',
-        '#07a2a4','#9a7fd1','#588dd5','#f5994e','#c05050',
+        '#07a2a4','#b6a2de','#588dd5','#f5994e','#c05050',
         '#59678c','#c9ab00','#7eb00a','#6f5553','#c14089'
     ],
 
@@ -156,7 +158,7 @@ var macarons_theme = {
     // 区域缩放控制器
     dataZoom: {
         dataBackgroundColor: '#efefff',            // 数据背景颜色
-        fillerColor: 'rgba(182,162,222,0.2)',   // 填充颜色
+        fillerColor: 'rgba(154,127,209,0.2)',   // 填充颜色
         handleColor: '#008acd'    // 手柄颜色
     },
 
