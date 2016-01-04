@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" session="true"%>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
@@ -39,7 +39,7 @@
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <img src="<%=request.getContextPath() %>/images/icon/user2-160x160.jpg" class="user-image" alt="User Image"/>
-                <span class="hidden-xs">${session.user.username }</span>
+                <span class="hidden-xs">${sessionScope.loginUserInSession.username }</span>
               </a>
               <ul class="dropdown-menu">
                 <li class="user-header">
