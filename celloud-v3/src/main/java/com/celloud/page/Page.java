@@ -1,13 +1,11 @@
 package com.celloud.page;
 
-import java.util.List;
-
 /**
  * 分页对象.
  * 
  * @version $Id: Page.java 2010-09-17 13:53:23Z tomaer $
  */
-public final class Page<T> {
+public final class Page {
 
     /** first page */
     private int firstPage;
@@ -44,7 +42,6 @@ public final class Page<T> {
 
     /** exists last page */
     private boolean hasLast;
-    private List<T> datas;
 
     /** Constructor default */
     public Page() {
@@ -209,14 +206,6 @@ public final class Page<T> {
     /** property hasLast setter method */
     public void setHasLast(boolean hasLast) {
         this.hasLast = hasLast;
-    }
-
-    public List<T> getDatas() {
-        return datas;
-    }
-
-    public void setDatas(List<T> datas) {
-        this.datas = datas;
     }
 
 }

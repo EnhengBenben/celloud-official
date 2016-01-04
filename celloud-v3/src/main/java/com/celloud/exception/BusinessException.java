@@ -8,23 +8,21 @@ package com.celloud.exception;
  */
 public class BusinessException extends RuntimeException {
     private static final long serialVersionUID = 1L;
-    private String msg;
 
     public BusinessException() {
         super();
     }
 
-    public BusinessException(String msg) {
-        super(msg);
-        this.msg = msg;
+    public BusinessException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    public String getMsg() {
-        return msg;
+    public BusinessException(String message) {
+        super(message);
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public BusinessException(Throwable cause) {
+        super(cause);
     }
 
 }

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.celloud.model.User;
 import com.celloud.page.Page;
+import com.celloud.page.PageList;
 
 /**
  * 用户服务接口
@@ -70,6 +71,6 @@ public interface UserService {
      */
     public void updatePassword(int userId, String password);
 
-    public Page<User> findUsers(Page<User> page);
+    public PageList<User> findUsers(Page page);
 
 }

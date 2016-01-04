@@ -6,25 +6,23 @@ package com.celloud.exception;
  * @author <a href="sunwendong@celloud.cn">sun8wd</a>
  * @date 2015年12月23日 下午4:11:54
  */
-public class SecurityException extends RuntimeException{
+public class SecurityException extends RuntimeException {
     private static final long serialVersionUID = 1L;
-    private String msg="当前用户未登录或登录已超时！";
+    private static String msg = "当前用户未登录或登录已超时！";
 
     public SecurityException() {
         super();
     }
 
-    public SecurityException(String msg) {
-        super(msg);
-        this.msg = msg;
+    public SecurityException(String message, Throwable cause) {
+        super(message == null ? msg : message, cause);
     }
 
-    public String getMsg() {
-        return msg;
+    public SecurityException(String message) {
+        super(message == null ? msg : message);
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public SecurityException(Throwable cause) {
+        super(cause);
     }
-
 }

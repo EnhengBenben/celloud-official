@@ -31,12 +31,19 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
         if (user == null) {
             logger.warn("用户非法访问：{}", getUrl(request));
             // throw new SecurityException();
+            if ("XMLHttpRequest".equalsIgnoreCase(request.getHeader("x-requested-with"))) {
+                // 如果是ajax请求响应头会有，x-requested-with
+                response.setHeader("sessionstatus", "timeout");// 在响应头设置session状态
+            } else {
+                response.sendRedirect(request.getContextPath() + "/login");
+            }
+            return false;
         }
         long time = System.currentTimeMillis();
         boolean result = super.preHandle(request, response, handler);
         time = System.currentTimeMillis() - time;
         if (time > 20) {
-            logger.info("请求响应时间过长({} ms)：{}", time , getUrl(request));
+            logger.info("请求响应时间过长({} ms)：{}", time, getUrl(request));
         }
         return result;
     }
