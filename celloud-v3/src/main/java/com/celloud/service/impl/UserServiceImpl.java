@@ -12,6 +12,7 @@ import com.celloud.constants.Constants;
 import com.celloud.mapper.UserMapper;
 import com.celloud.model.User;
 import com.celloud.page.Page;
+import com.celloud.page.PageList;
 import com.celloud.service.UserService;
 import com.celloud.utils.MD5Util;
 
@@ -62,10 +63,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> findUsers(Page<User> page) {
+    public PageList<User> findUsers(Page page) {
         List<User> lists = userMapper.findUsers(page);
-        page.setDatas(lists);
-        return page;
+        return new PageList<>(page, lists);
     }
 
 }

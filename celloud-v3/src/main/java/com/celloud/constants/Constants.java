@@ -41,4 +41,8 @@ public class Constants {
      * 用户找回密码功能，根据链接重置密码时，需要校验session中的userid是否与要修改的用户名是否对应
      */
     public static final String RESET_PASSWORD_USER_ID = "resetPasswordUserId";
+    /**
+     * 分页中，默认每页显示条数
+     */
+    public static final int DEFAULT_PAGE_SIZE = 10;
 }

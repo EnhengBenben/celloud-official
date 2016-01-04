@@ -34,6 +34,6 @@ public interface UserMapper {
 
     public User getUserByFindPwd(@Param("username") String username, @Param("randomCode") String randomCode);
 
-    public List<User> findUsers(Page<User> page);
+    public List<User> findUsers(Page page);
 
 }

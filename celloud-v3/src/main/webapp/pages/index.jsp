@@ -20,6 +20,7 @@
 <link href="<%=request.getContextPath() %>/css/font.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath() %>/css/main.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath() %>/css/app.css" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
 </head>
 <body class="skin-green sidebar-mini">
   <div class="fixed wrapper">
