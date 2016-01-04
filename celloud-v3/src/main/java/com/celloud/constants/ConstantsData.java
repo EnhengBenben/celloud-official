@@ -109,8 +109,18 @@ public class ConstantsData {
      * @return
      */
     public static String getLoginUserName() {
-        User user = null;
-        return (user = getLoginUser()) == null ? null : user.getUsername();
+        User user = getLoginUser();
+        return user == null ? null : user.getUsername();
+    }
+
+    /**
+     * 获取当前登录用户的id
+     * 
+     * @return
+     */
+    public static Integer getLoginUserId() {
+        User user = getLoginUser();
+        return user == null ? null : user.getUserId();
     }
 
     public static HttpServletRequest getRequset() {
