@@ -77,13 +77,50 @@ public class UserAgentUtil {
         ActionLog log = new ActionLog();
         Client c = uaParser.parse(userAgent);
         log.setBrowser(c.userAgent.family);
-        log.setBrowserVersion(c.userAgent.major + "." + c.userAgent.minor);
+        log.setBrowserVersion(getBrowserVersion(c));
         log.setOs(c.os.family);
-        log.setOsVersion(c.os.major + "." + c.os.minor);
+        log.setOsVersion(getOsVersion(c));
+        if (log.getOsVersion() == null) {
+            logger.warn("no os_version is found is userAgent:{}", userAgent);
+        }
         String ip = getIp(request);
         log.setIp(ip);
         log.setAddress(getAddreeByIp(ip));
         return log;
+    }
+
+    public static String getBrowserVersion(Client c) {
+        String version = null;
+        if (c.userAgent.major == null) {
+            return version;
+        }
+        version = c.userAgent.major;
+        if (c.userAgent.minor == null) {
+            return version;
+        }
+        version = version + "." + c.userAgent.minor;
+        if (c.userAgent.patch == null) {
+            return version;
+        }
+        version = version + "." + c.userAgent.patch;
+        return version;
+    }
+
+    public static String getOsVersion(Client c) {
+        String version = null;
+        if (c.os.major == null) {
+            return version;
+        }
+        version = c.os.major;
+        if (c.os.minor == null) {
+            return version;
+        }
+        version = version + "." + c.os.minor;
+        if (c.os.patch == null) {
+            return version;
+        }
+        version = version + "." + c.os.patch;
+        return version;
     }
 
     /**
@@ -101,7 +138,9 @@ public class UserAgentUtil {
             IPZone ipzone = qqwry.findIP(ip);
             result = ipzone.getMainInfo() + "-" + ipzone.getSubInfo();
         } catch (Exception e) {
-            logger.warn("不能识别的ip地址：{}", ip);
+            if(logger.isWarnEnabled()){
+                logger.warn("不能识别的ip地址：{}", ip);
+            }
         }
         return result;
     }

@@ -9,7 +9,8 @@ import com.celloud.model.ActionLog;
  * @date 2015年12月29日 下午2:00:28
  */
 public interface ActionLogService {
-    public void log(String action,String message);
+    public void log(String action, String message);
 
-    public void log(ActionLog log);
+    public void insert(ActionLog log);
+
 }

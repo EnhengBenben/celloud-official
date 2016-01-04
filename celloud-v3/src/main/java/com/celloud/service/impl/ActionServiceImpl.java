@@ -30,13 +30,11 @@ public class ActionServiceImpl implements ActionLogService {
         log.setMessage(message);
         log.setLogDate(new Date());
         log.setUserName(ConstantsData.getLoginUserName());
-        log(log);
-        //new ActionLogThread(log).setService(this).start();
+        new ActionLogThread(log).setService(this).start();
     }
 
     @Override
-    public void log(ActionLog log) {
-        System.out.println(log);
+    public void insert(ActionLog log) {
         logMapper.insert(log);
     }
 
@@ -50,7 +48,7 @@ public class ActionServiceImpl implements ActionLogService {
 
         @Override
         public void run() {
-            service.log(log);
+            service.insert(log);
         }
 
         public ActionLogThread setService(ActionLogService service) {
