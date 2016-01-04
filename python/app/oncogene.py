@@ -78,14 +78,19 @@ class oncogene:
 		#SVG
 		svgPath = os.path.join(path,'SVG')
 		if os.path.exists(svgPath):
-			# 已知位点峰图
-			know = ['719.10.png','768.10.png','790.10.png','858.10.png','861.10.png','Indel.30.png']
 			# 所有已知图片
 			allKnown = ['1_all.png', '2_all.png', '3_all.png', '4_all.png','5_all.png',
-				'719.png', '768.png', '790.png', '858.png','861.png' ,
-				'719.10.png','768.10.png','790.10.png','858.10.png','861.10.png','Indel.30.png']
+				'ERCC1.118.png',
+				'EGFR.719.png', 'EGFR.768.png', 'EGFR.790.png', 'EGFR.858.png',
+				'EGFR.861.png' ,'KRAS.12.png','KRAS.13.png','UGT1A1.71.png',
+				'ERCC1.118.10.png',
+				'EGFR.719.10.png','EGFR.768.10.png','EGFR.790.10.png','EGFR.858.10.png',
+				'EGFR.861.10.png', 'KRAS.12.10.png','KRAS.13.10.png','UGT1A1.71.10.png',
+				'Indel.30.png']
 			# 已知突变位点
-			know_mutation = ['Indel.30.png','ERCC1.118.10.png','EGFR.719.10.png','EGFR.768.10.png','EGFR.790.10.png','EGFR.858.10.png','EGFR.861.10.png','KRAS.12.10.png','KRAS.13.10.png','UGT1A1.71.10.png']
+			know_mutation = ['Indel.30.png','ERCC1.118.10.png','EGFR.719.10.png',
+				'EGFR.768.10.png','EGFR.790.10.png','EGFR.858.10.png','EGFR.861.10.png',
+				'KRAS.12.10.png','KRAS.13.10.png','UGT1A1.71.10.png']
 			km = []
 			original = {} # 原始峰图
 			out = [] # 其它图片
@@ -113,7 +118,6 @@ if __name__ == '__main__':
 	print '4'+re['length']
 	print '5'+re['conclusion']
 	print '6'+re['seq']
-	#print re['know']
 	print re['original']
 	print re['out']
 	
