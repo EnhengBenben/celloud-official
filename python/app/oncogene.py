@@ -84,18 +84,22 @@ class oncogene:
 			allKnown = ['1_all.png', '2_all.png', '3_all.png', '4_all.png','5_all.png',
 				'719.png', '768.png', '790.png', '858.png','861.png' ,
 				'719.10.png','768.10.png','790.10.png','858.10.png','861.10.png','Indel.30.png']
+			# 已知突变位点
+			know_mutation = ['Indel.30.png','ERCC1.118.10.png','EGFR.719.10.png','EGFR.768.10.png','EGFR.790.10.png','EGFR.858.10.png','EGFR.861.10.png','KRAS.12.10.png','KRAS.13.10.png','UGT1A1.71.10.png']
+			km = []
 			original = {} # 原始峰图
-			out = {} # 其它图片
+			out = [] # 其它图片
 			for x in os.listdir(svgPath):
 				if(x == 'Report.txt.seq.txt'):
 					result['seq'] = readAll(os.path.join(svgPath,x))
 				#以下处理所有png
 				elif(x.endswith('_all.png')):
 					original[x.replace('.','_')] = x
-				elif(x in know):
-					result['know'] = x
+				elif(x in know_mutation):
+					km.append(x)
 				elif(x not in allKnown and (not x.endswith('.10.png')) and x.endswith('.png')):
-					out[x.replace('.','_')] = x
+					out.append(x)
+			result['knowMutation'] = km
 			result['original'] = original
 			result['out'] = out
 

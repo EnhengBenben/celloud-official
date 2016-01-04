@@ -54,13 +54,16 @@ def createPDF(path,appName,fileName):
 	total.append(Paragraph(t1, styleTitle))
 	total.append(Spacer(1, 5))
 
-	# Type
-	t1 = '<font size=10 name="hei">Type:B</font><font size=8 name="hei">'+''+'</font>'
-	total.append(Paragraph(t1, styleTitle))
-	total.append(Spacer(1, 5))
-
 	#拼接图片路径
 	svgPath = os.path.join(path,"SVG")
+
+	# Type
+	typeTxt = os.path.join(svgPath,"type.txt")
+	if os.path.exists(typeTxt):
+		t1 = '<font size=10 name="hei">'+readAll(typeTxt)+'</font>'
+		total.append(Paragraph(t1, styleTitle))
+		total.append(Spacer(1, 5))
+
 	#检索其他检测结果
 	other = fileSearch(svgPath,'_new.png','endswith')
 	#定义每种药物的点图位点
@@ -124,4 +127,4 @@ def createPDF(path,appName,fileName):
 	doc.build(total)
 
 if __name__ == '__main__':
-	createPDF("/Users/lin/9/82/20151029437617","HBV_SNP","a.ab1")
+	createPDF("/Users/lin/23/82/20150902235788","HBV_SNP","a.ab1")

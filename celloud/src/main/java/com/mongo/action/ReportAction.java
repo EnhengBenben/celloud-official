@@ -3,6 +3,7 @@ package com.mongo.action;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -227,12 +228,24 @@ public class ReportAction extends BaseAction {
      * @return
      */
     public String getOncogeneReport() {
-        oncogene = reportService.getDataReport(Oncogene.class, dataKey, proId, appId);
+        oncogene = reportService.getDataReport(Oncogene.class, dataKey, proId,
+                appId);
         if (oncogene != null) {
             // jstl 处理 \n 很困难，就在 java 端处理
             oncogene.setReport(oncogene.getReport().replace("\n", "<br/>"));
             oncogene.setWz1(oncogene.getWz1().replace("\n", "<br/>"));
             oncogene.setWz2(oncogene.getWz2().replace("\n", "<br/>"));
+            // 排序
+            List<String> km = oncogene.getKnowMutation();
+            if (km != null) {
+                Collections.sort(km);
+                oncogene.setKnowMutation(km);
+            }
+            List<String> out = oncogene.getOut();
+            if (out != null) {
+                Collections.sort(out);
+                oncogene.setOut(out);
+            }
         }
         return "oncogeneReport";
     }
