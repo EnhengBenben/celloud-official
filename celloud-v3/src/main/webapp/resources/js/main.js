@@ -21,8 +21,13 @@ $(function () {
   	  intro.setOption('showButtons', false);
   	  intro.start();
   }
-  $("#to-data-main").on('click', function(e){
-      alert('click event');
+  
+  /** 数据管理 */
+  $("#to-data-main").on("click", function(e){
+	 $.AdminLTE.closeSidebar();
+	 $("#uploadDIV").css("display","none");
+	 $("#mainDIV").css("display","");
+	 $("#mainDIV").load("pages/data/data_main.jsp");
   });
 });
 /**
@@ -225,16 +230,6 @@ function showUpload(){
 	if($("#uploadDIV").html()==""){
 		$("#uploadDIV").load("pages/data/file_upload.jsp");
 	}
-}
-
-/**
- * 数据管理
- */
-function showData(){
-	$.AdminLTE.closeSidebar();
-	$("#uploadDIV").css("display","none");
-	$("#mainDIV").css("display","");
-	$("#mainDIV").load("pages/data/data.jsp");
 }
 
 /**
