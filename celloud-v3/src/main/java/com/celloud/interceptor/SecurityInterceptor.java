@@ -28,19 +28,21 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
         User user = (User) request.getSession().getAttribute(Constants.SESSION_LOGIN_USER);
-        String url = request.getRequestURL() + "?" + request.getQueryString() + "&behavior:"
-                + UserAgentUtil.getActionLog(request);
         if (user == null) {
-            logger.warn("用户非法访问：{}", url);
+            logger.warn("用户非法访问：{}", getUrl(request));
             // throw new SecurityException();
         }
         long time = System.currentTimeMillis();
         boolean result = super.preHandle(request, response, handler);
         time = System.currentTimeMillis() - time;
         if (time > 20) {
-            logger.info("请求响应时间过长({})：{}", time + "ms", url);
+            logger.info("请求响应时间过长({} ms)：{}", time , getUrl(request));
         }
-        service.log("---", "===");
         return result;
+    }
+
+    public String getUrl(HttpServletRequest request) {
+        return request.getRequestURL() + "?" + request.getQueryString() + "&behavior:"
+                + UserAgentUtil.getActionLog(request);
     }
 }
