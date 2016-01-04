@@ -4,6 +4,7 @@ bigUesrMonthData(3,"中山大学达安基因股份有限公司");
 
 function bigUesrMonthData(company_id,company_name) {
 	getBigUserDataById(company_id);
+	$("#_oneApp").html(company_name);
 }
 function getBigUserDataById(company_id){
 	var fileSizeId = "fileSize";
@@ -25,8 +26,8 @@ function getBigUserDataById(company_id){
 				fileNum[i] = data[i].fileNum;
 				yAxis[i] = parseFloat(data[i].size / (1024 * 1024 * 1024)).toFixed(2);
 			}
-			var fileSizeOpt = makeOptionScroll('', xAxis, yAxis, optNumName,lineType,0,30);
-			var fileNumOpt = makeOptionScroll('', xAxis, fileNum,optSizeName, barType,0,30);
+			var fileSizeOpt = makeOptionScrollUnit( xAxis, yAxis, optNumName,lineType,0,12);
+			var fileNumOpt = makeOptionScrollUnit(xAxis, fileNum,optSizeName, barType,0,12);
 			
 			var sizeChart = echarts.init(document.getElementById(fileSizeId));
 			var numChart= echarts.init(document.getElementById(fileNumId));

@@ -20,43 +20,42 @@
 </div>
 <div class="col-sm-12">
 	<div class="row">
-		<h3 class="header smaller lighter green">
-			<i class="icon-signal"></i>
-			App活跃度统计
-		</h3>
-
+		<!-- 
+	   <h3 class="header smaller lighter green">
+            <i class="icon-signal"></i>
+            App活跃度统计
+        </h3>
+	 -->
 		<!-- App统计 -->
 		<div style="margin: 8px">
 			<div class="form">
-				<label>开始时间： </label>
-				<input id="appTimeId" type="date" onchange="onChange()" name="startDate">
-				<label>结束时间： </label>
-				<input id="appTimeId2" type="date" onchange="onChange()" name="endDate">
-				<select id="groupTypeApp" onchange="onChange()">
-					<option value="month">月统计</option>
-					<option value="week" selected="selected">周统计</option>
-				</select>
-				<label>选择App</label>
-				<select id="softList" style="width: 120px" onchange="onChange()">
-					<option value="-1">==请选择=＝</option>
-					<s:if test="%{appList.size()>0}">
-						<s:iterator id="item" value="appList">
-							<option value="${item.softwareId}">${item.softwareName}</option>
-						</s:iterator>
-					</s:if>
-				</select>
-				<label>Top N:</label>
-				<select id="topId" style="width: 120px;" onchange="onChange()">
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3" selected>3</option>
-					<option value="4">4</option>
-					<option value="5">5</option>
-				</select>
+				<div style="padding-left: 65px">
+					<a style="font-size: 16px; cursor: pointer;" onclick="javascript:localWeek()">本周</a>
+					&nbsp;&nbsp;
+					<a style="font-size: 16px; cursor: pointer;" onclick="javascript:localMonth()">本月</a>
+					&nbsp;&nbsp; &nbsp;&nbsp;
+					<label>开始时间： </label>
+					<input id="timeId" type="date" name="startDate" onchange="loadAppRunTime()">
+					<label>结束时间： </label>
+					<input id="timeId2" type="date" name="endDate" onchange="loadAppRunTime()">
+					<label class="searchKedivyPadding">Top N:</label>
+					&nbsp;&nbsp;
+					<select id="topId" class="searchKeyPadding" style="width: 120px" onchange="loadAppRunTime()">
+						<option value="0" selected></option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					</select>
+				</div>
 			</div>
 		</div>
+		<div class="title">
+			<h3 class="header smaller lighter green">APP运行统计</h3>
+		</div>
+		<div class="col-xs-12" id="appListDiv" style="height: 450px"></div>
 	</div>
-	<div class="col-xs-12 table-responsive" id="appListDiv" style="height: 450px"></div>
+	<div class="space-6"></div>
 </div>
-<div class="space-6"></div>
 <script src="./js/appActivity.js"></script>

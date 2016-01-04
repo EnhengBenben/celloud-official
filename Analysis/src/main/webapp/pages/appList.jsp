@@ -21,17 +21,12 @@
 <div class="page-content">
 	<div class="row">
 		<div class="col-xs-12">
-			<h3 class="header smaller lighter blue">
-				<span onclick="toAPPList()">APP详细信息</span>
-				<small id="secondTitle" class="hide">
-					<i class="icon-double-angle-right"></i>
-					<span id="_oneApp"></span>
-					<span id="_app_id"></span>
-				</small>
-			</h3>
+			<div class="title">
+				<h3 class="header smaller lighter green">APP运行统计</h3>
+			</div>
 			<div class="col-sm-10" style="height: 350px;" id="echartView"></div>
 			<div class="table-header hide" id="_appName"></div>
-			<div class="col-xs-11 table-responsive " style="margin-left: 60px; margin-top: 15px" id="appListDiv">
+			<div class="col-xs-11" style="margin-left: 60px; margin-top: 15px" id="appListDiv">
 				<table id="appList" class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
@@ -52,7 +47,7 @@
 									</td>
 									<td>${data.company_name }</td>
 									<td>
-										<fmt:formatDate type="both" value="${data.create_date }"  pattern="yyyy-MM-dd"/>
+										<fmt:formatDate type="both" value="${data.create_date }" pattern="yyyy-MM-dd" />
 									</td>
 									<td>${data.runNum }</td>
 									<td>${data.description }</td>
@@ -76,9 +71,9 @@
 		for (var i = 0; i < res.length; i++) {
 			xAxis[i] = res[i].app_name;
 			runNum[i] = res[i].runNum;
-	
+			
 		}
-		var option = makeOptionScrollUnit(xAxis, runNum, "运行次数", barType, 0  , 16);
+		var option = makeOptionScrollUnit(xAxis, runNum, "运行次数", barType, 0, 16);
 		var myChart = echarts.init(document.getElementById('echartView'));
 		myChart.setOption(option);
 	});
@@ -116,7 +111,7 @@
 	})
 	function getAppDetail(id, name) {
 		$("#_oneApp").html(name);
-	     $("#_app_id").html(id);
+		$("#_app_id").html(id);
 		
 		$("#secondTitle").removeClass("hide");
 		$.get("app!getAppById", {
@@ -125,6 +120,4 @@
 			$("#appListDiv").html(responseText);
 		});
 	}
-
-	
 </script>

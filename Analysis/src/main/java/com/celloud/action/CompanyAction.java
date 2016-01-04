@@ -3,7 +3,6 @@ package com.celloud.action;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
@@ -177,10 +176,10 @@ public class CompanyAction extends BaseAction {
 	public String toActivity() {
 		Integer companyId = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
-		complist = companyService.getCompanyClient(companyId, role);
-		log.info(complist);
-		resultMap = companyService.getCompanyNumEveryMonth(companyId, role);
-		String times = (String) resultMap.get("timeLine");
+//		complist = companyService.getCompanyClient(companyId, role);
+//		log.info(complist);
+//		resultMap = companyService.getCompanyNumEveryMonth(companyId, role);
+//		String times = (String) resultMap.get("timeLine");
 
 		return "success";
 	}

@@ -33,6 +33,11 @@
 		from tb_user
 		where user_id = #{userId,jdbcType=INTEGER}
 	</select>
+	<select id="findUsers" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_user
+    </select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from
 		tb_user

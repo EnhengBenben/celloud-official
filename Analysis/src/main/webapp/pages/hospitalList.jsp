@@ -20,16 +20,26 @@
 </div>
 <div class="page-content">
 	<div class="row">
-		<h3 class="header smaller lighter blue">
+		<!--  <h3 class="header smaller lighter blue">
 			<span onclick="toHospitalList()">医院详细信息</span>
 			<small id="secondTitle" class="hide">
 				<i class="icon-double-angle-right"></i>
 				<span id="_oneHospital"></span>
 			</small>
 		</h3>
+		-->
 		<div class="table-header hide" id="_companyName"></div>
+		<div class="title">
+			<h3 class="header smaller lighter green">APP运行统计</h3>
+		</div>
 		<div class="col-xs-12" style="height: 450px;" id="runNumView"></div>
+		<div class="title">
+			<h3 class="header smaller lighter green">数据量统计</h3>
+		</div>
 		<div class="col-xs-12" style="height: 450px;" id="fileNumView"></div>
+		<div class="title">
+			<h3 class="header smaller lighter green">数据大小统计</h3>
+		</div>
 		<div class="col-xs-12" style="height: 450px;" id="fileSizeView"></div>
 		<div class="col-xs-11 table-responsive" id="dataDiv">
 			<table id="hospitalList" class="table table-striped table-bordered table-hover">
@@ -99,7 +109,7 @@
 			
 		}
 		var myChart = echarts.init(document.getElementById(runNumViewID));
-		var opt = makeOptionScroll("", xAxis, yAxis, "运行次数", "bar", 0, 30);
+		var opt = makeOptionScrollUnit(xAxis, yAxis, "运行次数", "bar", 0, 10);
 		myChart.setOption(opt);
 	});
 	
@@ -115,7 +125,7 @@
 			yAxis[i] = (parseFloat(res[i].size / (1024 * 1024 * 1024)).toFixed(2));
 		}
 		var myChart = echarts.init(document.getElementById(fileSizeViewID));
-		var opt = makeOptionScroll("", xAxis, yAxis, "数据大小(GB)", "bar", 0, 30);
+		var opt = makeOptionScrollUnit(xAxis, yAxis, "数据大小(GB)", "bar", 0, 10);
 		myChart.setOption(opt);
 	});
 	$.get(Company_DetailURL, {
@@ -129,7 +139,7 @@
 			yAxis[i] = res[i].fileNum;
 		}
 		var myChart = echarts.init(document.getElementById(fileNumViewID));
-		var opt = makeOptionScroll("", xAxis, yAxis, "数据量", "bar", 0, 30);
+		var opt = makeOptionScrollUnit(xAxis, yAxis, "数据量", "bar", 0, 10);
 		myChart.setOption(opt);
 	});
 	

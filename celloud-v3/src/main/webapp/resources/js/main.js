@@ -3,7 +3,7 @@ $(function () {
   $.ajaxSetup ({
     cache: false //关闭AJAX相应的缓存
   });
-  showUserCount();
+  userCount.showUserCount();
   var hasNavi = $("#user-navigation-hide").val();
   if(hasNavi==1){
   	  intro = introJs();
@@ -26,94 +26,187 @@ require.config({
         echarts: 'http://echarts.baidu.com/build/dist'
     }
 });
+//
+var userCount=(function(userCount){
+	var self=userCount||{};
+	
+	self.lineModal=function(id,legend,xdata,ydata,yname,unit){
+		require(
+		    [
+		        'echarts',
+		        'echarts/chart/line' // 使用柱状图就加载bar模块，按需加载
+		    ],
+		    function (ec) {
+		        // 基于准备好的dom，初始化echarts图表
+		        var myChart = ec.init(document.getElementById(id)); 
+		        
+		        var option = {
+		            tooltip: {
+		                show: true
+		            },
+		            legend: {
+		                data:[yname]
+		            },
+		            xAxis : [
+		                {
+		                    type : 'category',
+		                    data : xdata
+		                }
+		            ],
+		            yAxis : [
+		                {
+		                    type : 'value',
+		                    axisLabel : {
+		                        formatter: '{value}'+typeof(unit)==undefined?'':unit 
+		                    },
+		                }
+		            ],
+		            series : [
+		                {
+		                    "name":yname,
+		                    "type":"line",
+		                    "data":ydata,
+		                    "markPoint" : {  
+	                            data : [  
+	                                {type : 'max', name: '最大值'},  
+	                                {type : 'min', name: '最小值'}  
+	                            ]  
+	                        }
+		                }
+		            ]
+		        };
+		        // 为echarts对象加载数据 
+		        myChart.setOption(option); 
+		    }
+		);
+	};
+	self.fileDayCount=function(){
+		$.get("count/fileDayCount.action",function(data){
+			var x = "[";
+			var y = [];
+			$.each(data,function(index,map){
+					x += "'" + map.time + "',";
+					y[y.length]=Number(map.num);
+			})
+			x = x.substring(0,x.length-1);
+			x += "]";
+			self.lineModal("count-data-day-chart","日上传文件统计",eval(x),y,"日上传文件数量");
+		});
+	};
+	self.fileMonthCount=function(){
+		$.get("count/fileMonthCount.action",function(data){
+			var x = "[";
+			var y = [];
+			$.each(data,function(index,map){
+				x += "'" + map.time + "',";
+				y[y.length]=Number(map.num);
+			})
+			x = x.substring(0,x.length-1);
+			x += "]";
+			self.lineModal("count-data-month-chart","月上传文件统计",eval(x),y,"月上传文件数量");
+			self.fileDayCount();
+		});
+	};
+	self.fileSizeDayCount=function(){
+		$.get("count/fileSizeDayCount.action",function(data){
+			var x = "[";
+			var y = [];
+			$.each(data,function(index,map){
+					x += "'" + map.time + "',";
+					y[y.length]=Number(map.size/1073741824).toFixed(3);
+			})
+			x = x.substring(0,x.length-1);
+			x += "]";
+			self.lineModal("count-source-day-chart","日上传文件统计",eval(x),y,"日资源占用量");
+		});
+	};
+	self.fileSizeMonthCount=function(){
+		$.get("count/fileSizeMonthCount.action",function(data){
+			var x = "[";
+			var y = [];
+			$.each(data,function(index,map){
+				x += "'" + map.time + "',";
+				y[y.length]=Number(map.size/1073741824).toFixed(3);
+			})
+			x = x.substring(0,x.length-1);
+			x += "]";
+			self.lineModal("count-source-month-chart","月上传文件统计",eval(x),y,"月资源占用量");
+			self.fileSizeDayCount();
+		});
+	};
 
-function showUserCount(){
-	$("#uploadDIV").css("display","none");
-	$("#mainDIV").css("display","");
-	$.get("count3!loginCount",function(response){
-		$("#mainDIV").html(response);
-		fileMonthCount();
-	});
-}
+	self.reportDayCount=function(){
+		$.get("count/reportDayCount.action",function(data){
+			var x = "[";
+			var y = [];
+			$.each(data,function(index,map){
+					x += "'" + map.time + "',";
+					y[y.length]=Number(map.size);
+			})
+			x = x.substring(0,x.length-1);
+			x += "]";
+			self.lineModal("count-report-day-chart","日上传文件统计",eval(x),y,"日资源占用量");
+		});
+	};
 
-function fileMonthCount(){
-	$.get("count3!fileMonthCount",function(data){
-		var x = "[";
-		var y = "[";
-		$.each(data,function(index,map){
-			$.each(map,function(key,val){
-				x += "'" + key + "',";
-				y += "'" + val + "',";
-			});
-		})
-		x = x.substring(0,x.length-1);
-		y = y.substring(0,y.length-1);
-		x += "]";
-		y += "]";
-		lineModal("month-chart","月上传文件统计",eval(x),eval(y),"月上传文件数量");
-		fileDayCount();
-	});
-}
+	self.reportMonthCount=function(){
+		$.get("count/reportMonthCount.action",function(data){
+			var x = "[";
+			var y = [];
+			$.each(data,function(index,map){
+				x += "'" + map.time + "',";
+				y[y.length]=Number(map.size);
+			})
+			x = x.substring(0,x.length-1);
+			x += "]";
+			self.lineModal("count-report-month-chart","月上传文件统计",eval(x),y,"月资源占用量");
+			self.reportDayCount();
+		});
+	};
 
-function fileDayCount(){
-	$.get("count3!fileDayCount",function(data){
-		var x = "[";
-		var y = "[";
-		$.each(data,function(index,map){
-			$.each(map,function(key,val){
-				x += "'" + key + "',";
-				y += "'" + val + "',";
-			});
-		})
-		x = x.substring(0,x.length-1);
-		y = y.substring(0,y.length-1);
-		x += "]";
-		y += "]";
-		lineModal("day-chart","日上传文件统计",eval(x),eval(y),"日上传文件数量");
-	});
-}
-
-function lineModal(id,legend,xdata,ydata,yname){
-	require(
-	    [
-	        'echarts',
-	        'echarts/chart/line' // 使用柱状图就加载bar模块，按需加载
-	    ],
-	    function (ec) {
-	        // 基于准备好的dom，初始化echarts图表
-	        var myChart = ec.init(document.getElementById(id)); 
-	        
-	        var option = {
-	            tooltip: {
-	                show: true
-	            },
-	            legend: {
-	                data:[yname]
-	            },
-	            xAxis : [
-	                {
-	                    type : 'category',
-	                    data : xdata
-	                }
-	            ],
-	            yAxis : [
-	                {
-	                    type : 'value'
-	                }
-	            ],
-	            series : [
-	                {
-	                    "name":yname,
-	                    "type":"line",
-	                    "data":ydata
-	                }
-	            ]
-	        };
-	        // 为echarts对象加载数据 
-	        myChart.setOption(option); 
-	    }
-	);
-}
+	self.appDayCount=function(){
+		$.get("count/appDayCount.action",function(data){
+			var x = "[";
+			var y = [];
+			$.each(data,function(index,map){
+					x += "'" + map.time + "',";
+					y[y.length]=Number(map.num);
+			})
+			x = x.substring(0,x.length-1);
+			x += "]";
+			self.lineModal("count-app-day-chart","日上传文件统计",eval(x),y,"日资源占用量");
+		});
+	};
+	
+	self.appMonthCount=function(){
+		$.get("count/appMonthCount.action",function(data){
+			var x = "[";
+			var y = [];
+			$.each(data,function(index,map){
+				x += "'" + map.time + "',";
+				y[y.length]=Number(map.num);
+			})
+			x = x.substring(0,x.length-1);
+			x += "]";
+			self.lineModal("count-app-month-chart","月上传文件统计",eval(x),y,"月资源占用量");
+			self.appDayCount();
+		});
+	};
+	
+	self.showUserCount=function(){
+		$("#uploadDIV").css("display","none");
+		$("#mainDIV").css("display","");
+		$.get("count/loginCount.action",function(response){
+			$("#mainDIV").html(response);
+			self.fileMonthCount();
+			self.fileSizeMonthCount();
+			self.reportMonthCount();
+			self.appMonthCount();
+		});
+	};
+	
+	return self;
+})(userCount);
 
 /**
  * 数据上传
@@ -122,7 +215,7 @@ function showUpload(){
 	$("#uploadDIV").css("display","");
 	$("#mainDIV").css("display","none");
 	if($("#uploadDIV").html()==""){
-		$("#uploadDIV").load("pages/data/fileUpload.jsp");
+		$("#uploadDIV").load("pages/data/file_upload.jsp");
 	}
 }
 

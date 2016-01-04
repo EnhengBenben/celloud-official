@@ -38,7 +38,7 @@ public class AppAction extends BaseAction {
 	private Date startDate;
 	private Date endDate;
 	private String softwareId;
-	private int topN=10;
+	private int top;
 	private String type;//分组月、周
 	
 	/**
@@ -68,8 +68,8 @@ public class AppAction extends BaseAction {
 		return "bigUserAppList";
 	}
 	public String appRunTop(){
-		topN=10;
-	    appList = appService.getAppRunTop(type, topN, startDate, endDate);
+		top=10;
+	    appList = appService.getAppRunTop(type, top, startDate, endDate);
 		return "AppList";
 	}
 	/**
@@ -79,6 +79,18 @@ public class AppAction extends BaseAction {
 	public String getAppRun(){
 		appList = appService.getAppRun(app.getApp_id());
 		//appList = EntryUtil.toInsert(list)
+		return "AppList";
+	}
+	
+	public String getAppRunList(){
+		compId = (Integer) getCid();
+		Integer role = (Integer) super.session.get(User.USER_ROLE);
+		try {
+			System.out.println(top);
+			appList = appService.getAppList(role, compId, startDate, endDate, top);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "AppList";
 	}
 	/**
@@ -92,9 +104,9 @@ public class AppAction extends BaseAction {
 		return "AppList";
 	}
 	public String toAppActivity(){
-		Integer role = (Integer) super.session.get(User.USER_ROLE);
-		Integer cmpId = (Integer) getCid();
-		appList = appService.getAppByCompanyId(cmpId, role);
+	//	Integer role = (Integer) super.session.get(User.USER_ROLE);
+	//	Integer cmpId = (Integer) getCid();
+	//	appList = appService.getAppByCompanyId(cmpId, role);
 		return "appActivity";
 	}
 	/**
@@ -146,12 +158,11 @@ public class AppAction extends BaseAction {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	public int getTopN() {
-		return topN;
+	public int getTop() {
+		return top;
 	}
-	public void setTopN(int topN) {
-		this.topN = topN;
+	public void setTop(int top) {
+		this.top = top;
 	}
 	public String getType() {
 		return type;
@@ -194,6 +205,12 @@ public class AppAction extends BaseAction {
 	}
 	public void setSoftwareId(String softwareId) {
 		this.softwareId = softwareId;
+	}
+	public Integer getCompId() {
+		return compId;
+	}
+	public void setCompId(Integer compId) {
+		this.compId = compId;
 	}
 	
 }

@@ -48,6 +48,12 @@
 	$.get("app!getAppRun", {
 		"app.app_id" : id
 	}, function(res) {
+		   if(res==null||res.length<1){
+			   $('#'+vid).hide();
+			   return ;
+		   }else{
+			   $('#'+vid).show();
+		   }
 		var xAxis = new Array(res.length);
 		var runNum = new Array(res.length);
 		for (var i = 0; i < res.length; i++) {
