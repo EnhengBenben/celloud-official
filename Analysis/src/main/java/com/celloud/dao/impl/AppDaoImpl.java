@@ -335,8 +335,8 @@ public class AppDaoImpl implements AppDao {
 	@Override
 	public List<App> getAppList(Connection conn, Integer role, Integer cmpId, Date start, Date end, Integer topN) {
 		List<App> list = null;
-		String sql = "select count(1)as runNum,r.app_id,(select app_name from tb_app where app_id = r.app_id)app_name "
-				+" from tb_report r,tb_user_company_relat uc where r.flag=0 and r.user_id = uc.user_id and r.create_date between  ? and  ?  "
+		String sql = "select count(1)as runNum,r.app_id,s.app_name,s.create_date "
+				+" from tb_report r,tb_user_company_relat uc ,tb_app s where r.app_id = s.app_id and r.flag=0 and r.user_id = uc.user_id and r.create_date between  ? and  ?  "
 				+ SqlController.notUserId("r", noUserid)
 				+ SqlController.whereCompany("uc", "company_id", role, cmpId)
 				+ " group by r.app_id order by runNum desc"

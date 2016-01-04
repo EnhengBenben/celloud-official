@@ -569,11 +569,13 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<DataFile> getUserFileNum(Connection conn, int role, int cmpId, Date start, Date end, int topN) {
 		List<DataFile> list = null;
-		String sql = "select count(f.file_id)as fileNum,u.company_id,u.username as user_name "
+		String sql = "select count(f.file_id)as fileNum,sum(ifnull(f.size,0))as size,u.company_id,u.username as user_name,u.create_date,"
+				+ " (select count(report_id) from tb_report where user_id = f.user_id and flag =0 )as runNum "
 				+ " from tb_file f,tb_user u,tb_user_company_relat uc  where f.user_id = u.user_id and u.company_id !=0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
 				+ SqlController.notUserId("f", noUserid)
 				+ SqlController.whereCompany("uc", "company_id", role, cmpId)
 				+ " group by f.user_id order by fileNum desc" + SqlController.limit(topN);
+		LogUtil.info(log, sql);
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setObject(1, start);

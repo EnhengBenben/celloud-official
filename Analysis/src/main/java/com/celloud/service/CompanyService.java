@@ -145,5 +145,8 @@ public interface CompanyService {
 	 * @return
 	 */
 	public Map<String, Object> getCompanyFile(int role,int cmpId, Date start, Date end,int  topN);
+	
+	public Map<String, List> getList(int role,int cmpId, Date start, Date end,int  topN);
+
 
 }

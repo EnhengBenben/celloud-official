@@ -46,12 +46,12 @@ function makeOptionScroll(title, xAxis, yAxis, seriesName, typex, startZoom, end
 function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position, showNum) {
 	var length = xAxis.length;
 	if (showNum < length) {
-		if(position<100){
+		if (position < 100) {
 			var len = position + (showNum / length) * 100;
 			return makeOptionScroll('', xAxis, yAxis, seriesName, typex, position, len);
-		}else{
-			var len =  (showNum / length) * 100;
-			return makeOptionScroll('', xAxis, yAxis, seriesName, typex, 100-len, 100);
+		} else {
+			var len = (showNum / length) * 100;
+			return makeOptionScroll('', xAxis, yAxis, seriesName, typex, 100 - len, 100);
 		}
 	} else {
 		return makeOption('', xAxis, yAxis, seriesName, typex);
@@ -122,6 +122,13 @@ function makePieOption(title, legenName, name, rad, centerX, centerY, value) {
  * :line/bar
  */
 function makeOption(title, xAxis, yAxis, seriesName, typex) {
+	var max = xAxis[0].length;
+	for (var i = 1; i < xAxis.length; i++) {
+		max = max > xAxis[i].length?max:xAxis[i].length;
+		if (max > 8)
+			break;
+	}
+	
 	if (title == null || title.length < 1)
 		title = '';
 	var opt = {
@@ -163,9 +170,37 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 			data : xAxis,
 			scale : true,
 			lenght : 15,
+			axisLabel : {
+				show : true,
+				interval : 'auto', // {number}
+				rotate : 0,
+				margin : 8,
+				formatter : '{value}',
+				textStyle : {
+					color : 'blue',
+					fontFamily : 'sans-serif',
+					fontSize : 12,
+					fontStyle : 'italic',
+					fontWeight : 'bold'
+				}
+			},
 		} ],
 		yAxis : [ {
-			type : 'value'
+			type : 'value',
+			 axisLabel : {
+	                show:true,
+	                interval: 'auto',    // {number}
+	                rotate: 0,
+	                margin: 18,
+	                formatter: '{value}',    // Template formatter!
+	                textStyle: {
+	                    color: 'green',
+	                    fontFamily: 'verdana',
+	                    fontSize: 10,
+	                    fontStyle: 'normal',
+	                    fontWeight: 'bold'
+	                }
+	            },
 		} ],
 		dataZoom : {
 			show : false,
@@ -198,5 +233,20 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 			}
 		} ]
 	};
+	if (max >= 8) {
+		opt.xAxis[0].axisLabel.rotate=30;
+	}
+	switch(seriesName){
+		case "数据大小":
+			opt.yAxis[0].axisLabel.formatter= '{value}GB';
+		break;
+		case "数据量":
+			
+			break;
+		default :
+			
+			break;
+	}
+	console.log(opt);
 	return opt;
 }

@@ -384,11 +384,14 @@ public class CompanyDaoImpl implements CompanyDao {
 	@Override
 	public List<DataFile> getCompanyFileNum(Connection conn, int role, int cmpId, Date start, Date end, int topN) {
 		List<DataFile> list = null;
-		String sql = "select count(f.file_id)as fileNum,u.company_id,(select company_name from tb_company where company_id = u.company_id)as company_name "
+		String sql = "select count(f.file_id)as fileNum,sum(ifnull(f.size,0))as size,u.company_id,"
+				+ " (select company_name from tb_company where company_id = u.company_id)as company_name,"
+				+ "(select create_date from tb_company where company_id = u.company_id)as create_date "
 				+" from tb_file f,tb_user u,tb_user_company_relat uc  where f.user_id = u.user_id and u.company_id !=0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
 				+ SqlController.notUserId("f", noUserid)
 				+SqlController.whereCompany("uc", "company_id", role, cmpId)
 				+ " group by u.company_id order by fileNum desc" + SqlController.limit(topN);
+		LogUtil.info(log, sql);
 		try{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setObject(1, start);

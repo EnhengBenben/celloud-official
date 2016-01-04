@@ -99,9 +99,9 @@
 	var fileGroupInMonth = "getHospitaMonthUpload";
 	var fileGroupInWeek = "getHospitsWeekUpload";
 
-	getHospitaAppRunNum();
-	getAppRunInGroup(appRunGroupInMonth);
-	getHospitaMonthUpload(fileGroupInMonth);
+	//getHospitaAppRunNum();
+	//getAppRunInGroup(appRunGroupInMonth);
+	//getHospitaMonthUpload(fileGroupInMonth);
 	/*
 	Date.prototype.format = function() {
 		var m = this.getMonth() + 1;

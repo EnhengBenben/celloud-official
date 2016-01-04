@@ -198,11 +198,11 @@
 						</ul>
 					</li>
 					<li>
-						<a href="javascript:void(0)" class="dropdown-toggle">
+						<a href="javascript:toActivity()">
 							<i class="icon-bar-chart"></i>
 							<span class="menu-text">活跃度统计 </span>
-							<b class="arrow icon-angle-down"></b>
 						</a>
+						<!-- 
 						<ul class="submenu">
 							<li>
 								<a href="javascript:toActivity()">
@@ -223,6 +223,7 @@
 								</a>
 							</li>
 						</ul>
+						 -->
 					</li>
 					<!-- 导出报表统计 -->
 					<c:if test="${userRole=='3' }">
