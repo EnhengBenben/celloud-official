@@ -14,7 +14,7 @@
 <a href="javascript:void(0)" onclick="preview(this)" class="btn btn-default" id="change" style="float:right;margin-top:10px;margin-right:-80px;"><i class="i-print"></i>打印</a>
 <section class="section2 border1 w3cbbs">
     <div class="header">
-		<h1 style="font-size:32px;padding:0 0 5 0px;">split检测分析报告</h1>
+		<h1 style="font-size:32px;padding:0 0 5 0px;">数据拆分报告</h1>
 	</div>
 	<h4>1.&nbsp;&nbsp; 基本信息</h3>
 	<div class="section1">
