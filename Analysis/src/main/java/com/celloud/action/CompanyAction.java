@@ -17,7 +17,6 @@ import com.celloud.sdo.App;
 import com.celloud.sdo.User;
 import com.celloud.service.CompanyService;
 import com.celloud.utils.DateUtil;
-import com.celloud.utils.LogUtil;
 import com.google.inject.Inject;
 
 @ParentPackage("json-default")
@@ -59,18 +58,6 @@ public class CompanyAction extends BaseAction {
 	private String orderby; // 1.文件数量;2.文件大小
 	private List<DataFile> userDataList;
 
-	/**
-	 * 医院活跃度统计－－医院各月的登陆次数
-	 * 
-	 * @return JSON
-	 */
-	public String activityHospitaLoginMonth() {
-		Integer role = (Integer) super.session.get(User.USER_ROLE);
-		Integer cmpId = (Integer) getCid();
-		logList = companyService.getCompanyLoginInMonth(cmpId, startDate, endDate, companyIds, role);
-		LogUtil.info(log, companyIds);
-		return "LogList";
-	}
 	@SuppressWarnings("unchecked")
 	public String getContent() {
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
@@ -91,25 +78,11 @@ public class CompanyAction extends BaseAction {
 	}
 
 	/**
-	 * 医院活跃度统计－－医院各周的登陆次数
-	 * 
-	 * @return JSON
-	 */
-	public String activityHospitaLoginWeek() {
-		Integer role = (Integer) super.session.get(User.USER_ROLE);
-		Integer cmpId = (Integer) getCid();
-		logList = companyService.getCompanyLoginInWeek(cmpId, startDate, endDate, companyIds, role);
-		LogUtil.info(log, companyIds);
-
-		return "LogList";
-	}
-
-	/**
 	 * 查询医院时间内的排序，取前N条记录
 	 * 
 	 * @return JSON
 	 */
-	public String getHospitalFile() {
+	public String getActivityList() {
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		Integer cmpId = (Integer) getCid();
 		try {
@@ -124,30 +97,6 @@ public class CompanyAction extends BaseAction {
 		return "resultMap";
 	}
 
-	/**
-	 * 医院活跃度统计－－医院各月的app运行次数
-	 * 
-	 * @return JSON
-	 */
-	public String activityHospitalAppMonth() {
-		Integer role = (Integer) super.session.get(User.USER_ROLE);
-		Integer cmpId = (Integer) getCid();
-
-		runList = companyService.getCompanySoftwareInMonth(cmpId, startDate, endDate, companyIds, role);
-		return "SoftWareList";
-	}
-
-	/**
-	 * 医院活跃度统计－－医院各周的app运行次数
-	 * 
-	 * @return JSON
-	 */
-	public String activityHospitalAppWeek() {
-		Integer role = (Integer) super.session.get(User.USER_ROLE);
-		Integer cmpId = (Integer) getCid();
-		runList = companyService.getCompanySoftwareInWeek(cmpId, startDate, endDate, companyIds, role);
-		return "SoftWareList";
-	}
 
 	/**
 	 * 大客户下客户app运行次数统计
@@ -160,7 +109,7 @@ public class CompanyAction extends BaseAction {
 	}
 
 	/**
-	 * activityHospitaLoginWeek 取App运行次数按月统计
+	 *  取App运行次数按月统计
 	 * 
 	 * @return JSON [{'2012-12':55}]' object is Software
 	 */

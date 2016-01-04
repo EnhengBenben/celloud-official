@@ -41,7 +41,7 @@ a:active {
 							<th class="min-w-90">医院名称</th>
 							<th class="min-w-80">入驻时间</th>
 							<th class="min-w-80">数据个数</th>
-							<th class="min-w-80">数据大小(GB)</th>
+							<th class="min-w-80">数据大小(MB)</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -53,7 +53,7 @@ a:active {
 								</td>
 								<td>${data.fileNum }</td>
 								<td>
-									<fmt:formatNumber pattern="0.00" value="${data.size/1024/1024/1024 }" />
+									<fmt:formatNumber pattern="0.00" value="${data.size/1024/1024 }" />
 								</td>
 							</tr>
 						</c:forEach>
@@ -82,7 +82,7 @@ a:active {
 							<th class="min-w-90">用户名称</th>
 							<th class="min-w-80">注册时间</th>
 							<th class="min-w-80">数据个数</th>
-							<th class="min-w-80">数据大小(GB)</th>
+							<th class="min-w-80">数据大小(MB)</th>
 							<th class="min-w-80">运行次数</th>
 						</tr>
 					</thead>
@@ -95,7 +95,7 @@ a:active {
 								</td>
 								<td>${data.fileNum }</td>
 								<td>
-									<fmt:formatNumber pattern="0.00" value="${data.size/1024/1024/1024 }" />
+									<fmt:formatNumber pattern="0.00" value="${data.size/1024/1024 }" />
 								</td>
 								<td>${data.runNum }</td>
 							</tr>

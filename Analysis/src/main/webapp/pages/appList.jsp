@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <div class="breadcrumbs" id="breadcrumbs">
-	<script type="text/javascript">
+	<script type="text/javas
+	cript">
 		try {
 			ace.settings.check('breadcrumbs', 'fixed');
 		} catch (e) {
@@ -26,20 +28,19 @@
 			</div>
 			<div class="col-sm-10" style="height: 350px;" id="echartView"></div>
 			<div class="table-header hide" id="_appName"></div>
-			<div class="col-xs-11" style="margin-left: 60px; margin-top: 15px" id="appListDiv">
-				<table id="appList" class="table table-striped table-bordered table-hover">
-					<thead>
-						<tr>
-							<th>APP名称</th>
-							<th class="min-w-80">研发机构</th>
-							<th class="w160">上线时间</th>
-							<th class="min-w-80">运行次数</th>
-							<th class="min-w-110">描述</th>
-						</tr>
-					</thead>
-
-					<tbody>
-						<c:if test="${appList!=null}">
+			<c:if test="${appList!=null &&fn:length(appList) > 0}">
+				<div class="col-xs-11" style="margin-left: 60px; margin-top: 15px" id="appListDiv">
+					<table id="appList" class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>APP名称</th>
+								<th class="min-w-80">研发机构</th>
+								<th class="w160">上线时间</th>
+								<th class="min-w-80">运行次数</th>
+								<th class="min-w-110">描述</th>
+							</tr>
+						</thead>
+						<tbody>
 							<c:forEach var="data" items="${appList}">
 								<tr>
 									<td>
@@ -47,16 +48,17 @@
 									</td>
 									<td>${data.company_name }</td>
 									<td>
-										<fmt:formatDate type="both" value="${data.create_date }" pattern="yyyy-MM-dd" />
+										  <fmt:formatDate type="both" value="${data.createDate }" pattern="yyyy-MM-dd" />
 									</td>
 									<td>${data.runNum }</td>
 									<td>${data.description }</td>
 								</tr>
 							</c:forEach>
-						</c:if>
-					</tbody>
-				</table>
-			</div>
+
+						</tbody>
+					</table>
+				</div>
+			</c:if>
 			<!-- PAGE CONTENT ENDS -->
 		</div>
 		<!-- /.col -->
@@ -79,33 +81,15 @@
 	});
 	jQuery(function($) {
 		var oTable1 = $('#appList').dataTable({
-			// 			bFilter:false,
 			"aoColumns" : [ {
-				"bSearchable" : true,
-				"aTargets" : [ 0 ]
+				"bSortable" : false
 			}, {
-				"bSearchable" : false,
-				"aTargets" : [ 0 ]
-			}, {
-				"bSearchable" : false,
-				"aTargets" : [ 0 ]
-			}, {
-				"bSearchable" : false,
-				"aTargets" : [ 0 ]
-			}, {
-				"bSearchable" : false,
-				"aTargets" : [ 0 ]
-			}, {
-				"bSearchable" : false,
-				"aTargets" : [ 0 ]
-			}, {
-				"bSearchable" : false,
-				"aTargets" : [ 0 ]
-			}, {
-				"bSearchable" : false,
-				"aTargets" : [ 0 ]
+				"bSortable" : false
+			}, null, null, {
+				"bSortable" : false
 			} ],
-			iDisplayLength : 100
+			"aaSorting" : [ [ 3, "desc" ] ],
+			iDisplayLength : 10
 		
 		});
 	})

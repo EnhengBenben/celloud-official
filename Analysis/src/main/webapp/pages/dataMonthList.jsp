@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div class="breadcrumbs" id="breadcrumbs">
 	<script type="text/javascript">
 		try {
@@ -22,43 +23,43 @@
 <div class="page-content">
 	<div class="row">
 		<div class="table-header hide" id="_companyName"></div>
-		  <h3 class="header smaller lighter green">每月数据大小统计</h3>
+		<h3 class="header smaller lighter green">每月数据大小统计</h3>
 		<div class="col-xs-12" style="height: 450px;" id="fileSizeView"></div>
-		  <h3 class="header smaller lighter green">每月数据量统计</h3>
+		<h3 class="header smaller lighter green">每月数据量统计</h3>
 		<div class="col-xs-12" style="height: 450px;" id="fileNumView"></div>
-        <div class="title">
-            <h3 class="header smaller lighter green">每月数据详细信息列表</h3>
-        </div>
-		<div class="col-xs-12">
-			<div class="table-responsive" id="dataDiv">
-				<table id="MonthDataList" class="table table-striped table-bordered table-hover">
-					<thead>
-						<tr>
-							<th>上传月份</th>
-							<th>数据量(个)</th>
-							<th>数据大小(GB)</th>
-						</tr>
-					</thead>
-					<tbody>
-						<s:if test="%{dataList.size()>0}">
-							<s:iterator id="data" value="dataList">
+		<div class="title">
+			<h3 class="header smaller lighter green">每月数据详细信息列表</h3>
+		</div>
+		<c:if test="${dataList!=null && fn:length(dataList) > 0}">
+			<div class="col-xs-12">
+				<div class="table-responsive" id="dataDiv">
+					<table id="MonthDataList" class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>上传月份</th>
+								<th>数据量(个)</th>
+								<th>数据大小(MB)</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${dataList}" var="data">
 								<tr>
 									<td>
 										<a href="javascript:getAlluserDataAMonth('${data.yearMonth }')">${data.yearMonth }</a>
 									</td>
 									<td>${data.fileNum }</td>
 									<td>
-										<fmt:formatNumber value="${data.size/(1024*1024*1024)}" pattern="#0.0#" />
+										<fmt:formatNumber value="${data.size/(1024*1024)}" pattern="#0.0#" />
 									</td>
 								</tr>
-							</s:iterator>
-						</s:if>
-					</tbody>
-				</table>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+				<!-- PAGE CONTENT ENDS -->
+				<!-- /.col -->
 			</div>
-			<!-- PAGE CONTENT ENDS -->
-			<!-- /.col -->
-		</div>
+		</c:if>
 		<!-- /.row -->
 	</div>
 	<!-- /.page-content -->
@@ -73,10 +74,10 @@
 		for (var i = 0; i < data.length; i++) {
 			xAxis[i] = data[i].yearMonth;
 			yAxis[i] = data[i].fileNum;
-			yAxisSize[i] = parseFloat((data[i].size / (1024 * 1024 * 1024)).toFixed(2));
+			yAxisSize[i] = parseFloat((data[i].size / (1024 * 1024 )).toFixed(2));
 		}
-		var fileSizeOpt = makeOptionScroll('', xAxis, yAxisSize, '文件大小', 'bar',70,100);
-		var fileNumOpt = makeOptionScroll('', xAxis, yAxis, '文件数量', 'bar',70,100);
+		var fileSizeOpt = makeOptionScroll('', xAxis, yAxisSize, '文件大小MB', 'bar', 70, 100);
+		var fileNumOpt = makeOptionScroll('', xAxis, yAxis, '文件数量', 'bar', 70, 100);
 		
 		var fileSizeChart = echarts.init(document.getElementById('fileSizeView'));
 		var fileNumChart = echarts.init(document.getElementById('fileNumView'));
@@ -89,9 +90,9 @@
 	
 	jQuery(function($) {
 		var oTable1 = $('#MonthDataList').dataTable({
-			"aoColumns" : [ null, null ],
-			"bSort" : false,
-			iDisplayLength : 100
+			"aoColumns" : [ null, null, null ],
+			iDisplayLength : 100,
+			"aaSorting":[[0,"desc"]],
 		});
 		
 		$('table th input:checkbox').on('click', function() {

@@ -1,32 +1,29 @@
 /////////////////////////action方法名称
-var loginWeekFun = "company!activityHospitaLoginWeek";
-var loginMonthFun = "company!activityHospitaLoginMonth";
-var fileNumURL = "company!getHospitalFile";
-var appMonthFun = "company!activityHospitalAppMonth";
-var actionName = "company!company!";
+var fileNumURL = "company!getActivityList";
 
 // //////////////////////////////初始化
 loadActivityFile();
 // chars();// 医院月新增数量
 
-
 jQuery(function($) {
 	var companyTable = $('#fileListId').dataTable({
 		"aoColumns" : [ null, null, null, null ],
+		"aaSorting":[[2,"desc"]],
 		iDisplayLength : 10
 	});
 	var userDataTable = $('#userFileList').dataTable({
-		"aoColumns" : [ null, null, null, null,null ],
+		"aoColumns" : [ null, null, null, null, null ],
+		"aaSorting":[[2,"desc"]],
 		iDisplayLength : 10
 	});
 	var appTable = $('#appList').dataTable({
 		"aoColumns" : [ null, null, null ],
+		"aaSorting":[[2,"desc"]],
 		iDisplayLength : 10
 	});
 	
 	console.log("queue");
 })
-
 
 // //////////////////////////////函数区
 
@@ -86,7 +83,8 @@ function hospital_chart(data) {
 	} else {
 		$("#" + fileSizeId).show();
 	}
-	if(isReturn == true)return;
+	if (isReturn == true)
+		return;
 	var xAxis = new Array(fileNum.length);
 	var yAxis = new Array(fileNum.length);
 	var xAxisSize = new Array(fileSize.length);
@@ -136,7 +134,8 @@ function user_chart(data) {
 	} else {
 		$("#" + appRunId).show();
 	}
-	if(isReturn==true)return;
+	if (isReturn == true)
+		return;
 	var xAxis = new Array(fileNum.length);
 	var yAxis = new Array(fileNum.length);
 	for (var i = 0; i < fileNum.length; i++) {

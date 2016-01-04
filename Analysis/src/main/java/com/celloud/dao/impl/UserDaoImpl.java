@@ -498,10 +498,10 @@ public class UserDaoImpl implements UserDao {
 		String sql = "select tb1.weekDate as time, tb1.logNum, tb2.activityUser,ifnull(tb3.runNum,0) as runNum,ifnull(tb4.activityApp,0) as activityApp,ifnull(tb5.dataSize,0)as dataSize from "
 
 				+ " (select  left(date_add(l.log_date ,INTERVAL -weekday(l.log_date ) day),10)as weekDate,count(l.user_name)logNum "
-				+ " from tb_log l " + SqlController.whereNotUserName("l", "user_name", noUsername)
+				+ " from tb_log l " + SqlController.notUserName("l", "user_name", 2,noUsername)
 				+ " group by weekDate) tb1" + " left join"
 				+ " (select  left(date_add(l.log_date ,INTERVAL -weekday(l.log_date ) day),10)as weekDate,count(DISTINCT(l.user_name))as activityUser"
-				+ " from tb_log l " + SqlController.whereNotUserName("l", "user_name", noUsername)
+				+ " from tb_log l " + SqlController.notUserName("l", "user_name",2, noUsername)
 				+ " group by weekDate)tb2" + " on tb1.weekDate = tb2.weekDate" + " left join"
 				+ " (select left(date_add(r.create_date ,INTERVAL -weekday(r.create_date ) day),10)as weekDate,count(r.report_id)as runNum from tb_report r "
 				+ " on tb1.weekDate = tb3.weekDate" + " left join"
@@ -549,7 +549,7 @@ public class UserDaoImpl implements UserDao {
 	public List<DataFile> getUserFileSize(Connection conn, int role, int cmpId, Date start, Date end, int topN) {
 		List<DataFile> list = null;
 		String sql = "select sum(f.size)as size,u.user_id,u.username as user_name "
-				+ " from tb_file f,tb_user u,tb_user_company_relat uc  where f.user_id = u.user_id and u.company_id !=0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
+				+ " from tb_file f,tb_user u,tb_user_company_relat uc  where f.user_id = u.user_id and u.company_id !=0 and f.state =0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
 				+ SqlController.notUserId("f", noUserid)
 				+ SqlController.whereCompany("uc", "company_id", role, cmpId) + " group by f.user_id order by size desc"
 				+ SqlController.limit(topN);
@@ -571,7 +571,7 @@ public class UserDaoImpl implements UserDao {
 		List<DataFile> list = null;
 		String sql = "select count(f.file_id)as fileNum,sum(ifnull(f.size,0))as size,u.company_id,u.username as user_name,u.create_date,"
 				+ " (select count(report_id) from tb_report where user_id = f.user_id and flag =0 )as runNum "
-				+ " from tb_file f,tb_user u,tb_user_company_relat uc  where f.user_id = u.user_id and u.company_id !=0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
+				+ " from tb_file f,tb_user u,tb_user_company_relat uc  where f.user_id = u.user_id and u.company_id !=0 and f.state =0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
 				+ SqlController.notUserId("f", noUserid)
 				+ SqlController.whereCompany("uc", "company_id", role, cmpId)
 				+ " group by f.user_id order by fileNum desc" + SqlController.limit(topN);

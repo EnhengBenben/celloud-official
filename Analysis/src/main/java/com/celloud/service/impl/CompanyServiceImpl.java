@@ -13,7 +13,6 @@ import com.celloud.dao.CompanyDao;
 import com.celloud.dao.UserDao;
 import com.celloud.sdo.Company;
 import com.celloud.sdo.DataFile;
-import com.celloud.sdo.LoginLog;
 import com.celloud.sdo.App;
 import com.celloud.service.CompanyService;
 import com.celloud.utils.ConnectManager;
@@ -302,26 +301,6 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public List<LoginLog> getCompanyLoginInWeek(Integer cmpId,Date start, Date end, List<Integer> cmpIdList,Integer role) {
-		return companyDao.getCompanyLoginInWeek(cmpId, start, end, cmpIdList,role);
-	}
-
-	@Override
-	public List<LoginLog> getCompanyLoginInMonth(Integer cmpId, Date start, Date end, List<Integer> companyList,Integer role) {
-		return companyDao.getCompanyLoginInMonth(cmpId, start, end, companyList,role);
-	}
-
-	@Override
-	public List<App> getCompanySoftwareInWeek(Integer cmpId,Date start, Date end, List<Integer> cmpIds,Integer role) {
-		return companyDao.getCompanySoftwareInWeek(cmpId, start, end, cmpIds,role);
-	}
-
-	@Override
-	public List<App> getCompanySoftwareInMonth(Integer cmpId,Date start, Date end, List<Integer> cmpIds,Integer role) {
-		return companyDao.getCompanySoftwareInMonth(cmpId, start, end, cmpIds,role);
-	}
-
-	@Override
 	public List<Company> getCompanyClient(Integer cmpId, Integer role) {
 		return companyDao.getCompanyClient(cmpId, role);
 	}
@@ -351,9 +330,6 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public Map<String, List> getList(int role, int cmpId, Date start, Date end, int topN) {
-		LogUtil.info(log, "role:"+role+"company:"+cmpId);
-		LogUtil.info(log, start);
-		LogUtil.info(log, end);
 		Connection conn = ConnectManager.getConnection();
 		HashMap<String,List> result = new HashMap<>();
 		result.put("hFile",  companyDao.getCompanyFileNum(conn, role, cmpId, start, end, topN));

@@ -39,8 +39,13 @@ $.get(UserDataURL, {'orderType':"size"}, function(data) {
 
 jQuery(function($) {
 	var oTable1 = $('#allUserDataList').dataTable({
-		"aoColumns" : [ null, null, null ],
-		iDisplayLength : 100
+		"aoColumns" : [  {
+			"bSortable" : false
+		}, {
+			"bSortable" : false
+		}, null, null ],
+		iDisplayLength : 10,
+		"aaSorting":[[2,"desc"]],
 	});
 	
 	$('table th input:checkbox').on('click', function() {
@@ -81,7 +86,6 @@ function getUserMonthData(userId) {
 	$.get("data!getUserMonthData", {
 		"userId" : userId
 	}, function(responseText) {
-		
 		$("#dataDiv").html(responseText);
 	})
 }

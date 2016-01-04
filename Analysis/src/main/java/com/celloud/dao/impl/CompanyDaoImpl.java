@@ -222,126 +222,6 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
-	public List<LoginLog> getCompanyLoginInWeek(Integer cmpId, Date start, Date end, List<Integer> cmpIdList,
-			Integer role) {
-		List<LoginLog> list = null;
-		Connection conn = ConnectManager.getConnection();
-		String sql = "select uc.company_name,sum(tu.logNum) as logNum,tu.weekDate as weekDate from"
-
-				+ " (select l.user_name,count(l.user_name)as logNum,left(date_add(l.log_date ,INTERVAL -weekday(l.log_date ) day),10)as weekDate" //////// table
-																																					//////// 1
-				+ " from tb_log l " + " where l.user_name is not null" + " and l.log_date between ? and ? "
-				+ "  group by l.user_name,weekDate) tu,"
-
-				+ " (select u.username,company_name " //// table2
-				+ " from tb_user u,tb_dept d, tb_company c " + " where u.dept_id = d.dept_id "
-				+ " and d.company_id = c.company_id" + SqlController.whereIdNotIn("c", " company_id", cmpIdList)
-				// + SqlController.whereCompany(role, cmpId)
-				+ SqlController.notUserId("y", noUserid) ////// 排除测试用户
-				+ ") uc"
-
-				+ " where tu.user_name = uc.username" + " group by weekDate, companyName"
-				+ " order by weekDate ,logNum desc";
-		LogUtil.info(log, sql);
-		try {
-			ResultSetHandler<List<LoginLog>> rsh = new BeanListHandler<LoginLog>(LoginLog.class);
-			list = qr.query(conn, sql, rsh, start, end);
-		} catch (SQLException e) {
-			LogUtil.query(log, sql, e);
-		}
-		return list;
-	}
-
-	@Override
-	public List<LoginLog> getCompanyLoginInMonth(Integer cmpId, Date start, Date end, List<Integer> companyLis,
-			Integer role) {
-		List<LoginLog> list = null;
-		Connection conn = ConnectManager.getConnection();
-
-		String sql = "select uc.company_name as companyName,sum(tu.logNum) as logNum,tu.yearMonth as yearMonth from"
-				+ " (select l.user_name,count(l.user_name)as logNum,left(l.log_date,7)as yearMonth" //////// table
-																									//////// 1
-				+ " from tb_log l " + " where l.user_name is not null" + " and l.log_date between ? and ? "
-				+ "  group by l.user_name,yearMonth) tu,"
-
-				+ " (select u.username,company_name " //// table2
-				+ " from tb_user u,tb_dept d, tb_company c " + " where u.dept_id = d.dept_id "
-				+ SqlController.whereIdNotIn("c", " company_id", companyLis) + " and d.company_id = c.company_id"
-				// + SqlController.whereCompany(role, cmpId)
-				+ SqlController.notUserId("u", noUserid) + ") uc"
-
-				+ " where tu.user_name = uc.username" + " group by yearMonth, companyName"
-				+ " order by yearMonth ,logNum desc";
-		LogUtil.info(log, sql);
-		try {
-			ResultSetHandler<List<LoginLog>> rsh = new BeanListHandler<LoginLog>(LoginLog.class);
-			list = qr.query(conn, sql, rsh, start, end);
-		} catch (SQLException e) {
-			LogUtil.query(log, sql, e);
-		}
-		return list;
-	}
-
-	@Override
-	public List<App> getCompanySoftwareInWeek(Integer cmpId, Date start, Date end, List<Integer> cmpIds, Integer role) {
-		List<App> list = null;
-		Connection conn = ConnectManager.getConnection();
-
-		String sql = "select uc.company_name as companyName,sum(rn.runNum) as runNum,rn.weekDate as weekDate from"
-
-				+ " (SELECT r.user_id,count(r.user_id) as runNum,left(date_add(r.create_date ,INTERVAL -weekday(r.create_date ) day),10)as weekDate FROM tb_report r"
-				+ " where r.flag =0 " + " and r.create_date between ? and ? "
-				+ SqlController.notUserId("r", noUserid) ////// 排除测试用户
-				+ " group by r.user_id,weekDate) rn,"
-
-				+ " (select u.user_id,u.username,company_name " + " from tb_user u,tb_dept d, tb_company c "
-				+ " where u.dept_id = d.dept_id " + SqlController.whereIdNotIn("c", "company_id", cmpIds)
-				// + SqlController.whereCompany(role, cmpId)
-				+ " and d.company_id = c.company_id) uc"
-
-				+ " where rn.user_id = uc.user_id" + " group by weekDate,companyName"
-				+ " order by weekDate ,runNum desc";
-		LogUtil.info(log, sql);
-		try {
-			ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);
-			list = qr.query(conn, sql, rsh, start, end);
-		} catch (SQLException e) {
-			LogUtil.query(log, sql, e);
-		}
-		return list;
-	}
-
-	@Override
-	public List<App> getCompanySoftwareInMonth(Integer cmpId, Date start, Date end, List<Integer> cmpIds,
-			Integer role) {
-		List<App> list = null;
-		Connection conn = ConnectManager.getConnection();
-
-		String sql = "select uc.company_name as companyName,sum(rn.runNum) as runNum,rn.yearMonth as yearMonth from"
-
-				+ " (SELECT r.user_id,count(r.user_id) as runNum,left(r.create_date,7)as yearMonth FROM tb_report r"
-				+ " where r.flag =0 " + " and r.create_date between ? and ? "
-				+ SqlController.notUserId("r", noUserid) ////// 排除测试用户
-				+ "  group by r.user_id,yearMonth) rn,"
-
-				+ " (select u.user_id,u.username,company_name " + " from tb_user u,tb_dept d, tb_company c "
-				+ " where u.dept_id = d.dept_id "
-				// + SqlController.whereCompany(role, cmpId)
-				+ " and d.company_id = c.company_id) uc"
-
-				+ " where rn.user_id = uc.user_id" + " group by yearMonth, companyName"
-				+ " order by yearMonth ,runNum desc";
-		LogUtil.info(log, sql);
-		try {
-			ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);
-			list = qr.query(conn, sql, rsh, start, end);
-		} catch (SQLException e) {
-			LogUtil.query(log, sql, e);
-		}
-		return list;
-	}
-
-	@Override
 	public List<Company> getCompanyClient(Integer cmpId, Integer role) {
 		List<Company> list = null;
 		Connection conn = ConnectManager.getConnection();
@@ -387,7 +267,7 @@ public class CompanyDaoImpl implements CompanyDao {
 		String sql = "select count(f.file_id)as fileNum,sum(ifnull(f.size,0))as size,u.company_id,"
 				+ " (select company_name from tb_company where company_id = u.company_id)as company_name,"
 				+ "(select create_date from tb_company where company_id = u.company_id)as create_date "
-				+" from tb_file f,tb_user u,tb_user_company_relat uc  where f.user_id = u.user_id and u.company_id !=0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
+				+" from tb_file f,tb_user u,tb_user_company_relat uc  where f.state=0 and f.user_id = u.user_id and u.company_id !=0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
 				+ SqlController.notUserId("f", noUserid)
 				+SqlController.whereCompany("uc", "company_id", role, cmpId)
 				+ " group by u.company_id order by fileNum desc" + SqlController.limit(topN);
@@ -410,7 +290,7 @@ public class CompanyDaoImpl implements CompanyDao {
 	public List<DataFile> getCompanyFileSize(Connection conn, int role, int cmpId, Date start, Date end, int topN) {
 		List<DataFile> list = null;
 		String sql = "select sum(f.size)as size,u.company_id,(select company_name from tb_company where company_id = u.company_id)as company_name "
-				+" from tb_file f,tb_user u,tb_user_company_relat uc  where f.user_id = u.user_id and u.company_id !=0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
+				+" from tb_file f,tb_user u,tb_user_company_relat uc  where f.state=0 and f.user_id = u.user_id and u.company_id !=0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
 				+ SqlController.notUserId("f", noUserid)
 				+SqlController.whereCompany("uc", "company_id", role, cmpId)
 				+ " group by u.company_id order by size desc" + SqlController.limit(topN);

@@ -217,7 +217,7 @@ public class AppDaoImpl implements AppDao {
 		List<LoginLog> list = null;
 		Connection conn = ConnectManager.getConnection();
 		String sql = "SELECT l.browser,count(l.browser)as logNum FROM tb_log l "
-				+ SqlController.whereNotUserName("l", "user_name", noUsername) + "group by l.browser "
+				+ SqlController.notUserName("l", "user_name", 3,noUsername) + "group by l.browser "
 				+ "order by logNum desc";
 		log.info("query:" + sql);
 		try {

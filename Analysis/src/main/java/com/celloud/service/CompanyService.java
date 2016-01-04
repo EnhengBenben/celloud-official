@@ -84,43 +84,7 @@ public interface CompanyService {
 	 * @return
 	 */
 	public List<DataFile> getCompanyUpLoadGroupWeekByCId(Integer companyId);
-	/**
-	 * 查询时间段内医院在各周登陆的次数
-	 * @param userId
-	 * @param start
-	 * @param end
-	 * @param companyList 仅看此医院
-	 * @return
-	 */
-	public List<LoginLog> getCompanyLoginInWeek(Integer cmpId,Date start,Date end,List<Integer> cmpIdList,Integer role) ;
-	/**
-	 * 查询时间段内医院在各个月内登陆的次数
-	 * @param userId
-	 * @param start
-	 * @param end
-	 * @param companyList 仅看此医院
-	 * @return
-	 */
-	public List<LoginLog> getCompanyLoginInMonth(Integer cmpId,Date start,Date end,List<Integer> companyList,Integer role) ;
 
-	/**
-	 * 查询时间段内医院在各个周内运行app的次数
-	 * @param userId
-	 * @param start
-	 * @param end
-	 * @param companyList 仅看此医院
-	 * @return
-	 */
-	public List<App> getCompanySoftwareInWeek(Integer cmpId,Date start,Date end,List<Integer> cmpIds,Integer role);
-	/**
-	 * 查询时间段内医院在各个月内运行app的次数
-	 * @param userId
-	 * @param start
-	 * @param end
-	 * @param companyList 仅看此医院
-	 * @return
-	 */
-	public List<App> getCompanySoftwareInMonth(Integer cmpId,Date start,Date end,List<Integer> cmpIds,Integer role);
 	/**
 	 * 管好权限查询客户权限
 	 * @param cmpId

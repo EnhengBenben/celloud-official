@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <div class="breadcrumbs" id="breadcrumbs">
 	<script type="text/javascript">
 		try {
@@ -43,25 +45,23 @@
 		<div class="title">
 			<h3 class="header smaller lighter green">用户详细信息列表</h3>
 		</div>
-		<div class="col-xs-11 table-responsive" id="userListDiv" style="margin-left: 60px; margin-top: 15px">
-			<table id="userList" class="table table-striped table-bordered table-hover">
-				<thead>
-					<tr>
-						<th>用户名</th>
-						<th>Email</th>
-						<th class="min-w-120">电话</th>
-						<th class="min-w-120">所属医院</th>
-						<th class="min-w-80">所属部门</th>
-						<th class="min-w-80">数据个数</th>
-						<th class="min-w-110">数据大小(GB)</th>
-						<th class="min-w-80">运行次数</th>
-						<th class="w160">注册时间</th>
-					</tr>
-				</thead>
+		<c:if test="${userList!=null }">
+			<div class="col-xs-11 table-responsive" id="userListDiv" style="margin-left: 60px; margin-top: 15px">
+				<table id="userList" class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>用户名</th>
+							<th class="min-w-120">所属医院</th>
+							<th class="min-w-80">所属部门</th>
+							<th class="min-w-80">数据个数</th>
+							<th class="min-w-110">数据大小(GB)</th>
+							<th class="min-w-80">运行次数</th>
+							<th class="w160">注册时间</th>
+						</tr>
+					</thead>
 
-				<tbody>
-					<s:if test="%{userList.size()>0}">
-						<s:iterator id="data" value="userList">
+					<tbody>
+						<c:forEach items="${userList }" var="data">
 							<tr>
 								<td>
 									${data.username }
@@ -69,8 +69,6 @@
 									 <a href="javascript:getUserDetail(${data.user_id },'${data.username }')">${data.username }</a>
 									 -->
 								</td>
-								<td>${data.email }</td>
-								<td>${data.cellphone }</td>
 								<td>${data.company_name }</td>
 								<td>${data.dept_name }</td>
 								<td>${data.fileNum }</td>
@@ -82,11 +80,11 @@
 									<fmt:formatDate type="both" value="${data.createDate }" pattern="yyyy-MM-dd" />
 								</td>
 							</tr>
-						</s:iterator>
-					</s:if>
-				</tbody>
-			</table>
-		</div>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</c:if>
 		<!-- PAGE CONTENT ENDS -->
 	</div>
 	<!-- /.row -->
@@ -140,7 +138,14 @@
 	
 	jQuery(function($) {
 		var oTable1 = $('#userList').dataTable({
-			"aoColumns" : [ null, null, null, null, null, null, null, null, null ],
+			"aoColumns" : [ {
+				"bSortable" : false
+			}, {
+				"bSortable" : false
+			}, {
+				"bSortable" : false
+			}, null, null, null, null ],
+			"aaSorting" : [ [ 3, "desc" ] ],
 			iDisplayLength : 100
 		});
 	})
@@ -153,6 +158,4 @@
 			$("#userListDiv").html(responseText);
 		});
 	}
-
-	
 </script>

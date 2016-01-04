@@ -22,35 +22,6 @@ public class SqlController {
 	}
 
 	/**
-	 * " and " + tbName + "." + colName + " not in (" + userNames + ") ";
-	 * 
-	 * @param tbName
-	 * @param colName
-	 * @param userNames
-	 * @return
-	 */
-	public static String notUserName(int role, String tbName, String colName, String userNames) {
-		String sql = null;
-		if (role == User.BIG_USER)
-			sql = " and " + tbName + "." + colName + " not in (" + userNames + ") ";
-		return sql;
-	}
-
-	/**
-	 * " where " + tbName + "." + colName + " not in (" + userNames + ") ";
-	 * 
-	 * @param tbName
-	 * @param colName
-	 * @param userNames
-	 * @return
-	 */
-	public static String whereNotUserName(String tbName, String colName, String userNames) {
-		String sql = null;
-		sql = " where " + tbName + "." + colName + " not in (" + userNames + ") ";
-		return sql;
-	}
-
-	/**
 	 * and tbName.colName not in (userName)
 	 * 
 	 * @param tbName
