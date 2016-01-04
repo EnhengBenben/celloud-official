@@ -263,7 +263,7 @@ function showReport(){
 		});
 		intro.start(9);
 	}
-	$("#mainDIV").load("pages/report/reportDetail.jsp");
+	$("#mainDIV").load("pages/report/report_main.jsp");
 }
 
 /**
