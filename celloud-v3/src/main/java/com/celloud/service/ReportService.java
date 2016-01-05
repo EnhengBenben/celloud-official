@@ -18,8 +18,8 @@ public interface ReportService {
      * @return
      * @date 2015年12月25日 下午3:47:42
      */
-    Integer countReport(Integer userId);
-    
+    public Integer countReport(Integer userId);
+
     /**
      * 
      * (重构)按时间统计个人报告数量
@@ -28,5 +28,5 @@ public interface ReportService {
      * @return
      * @date 2015年12月25日 下午3:47:42
      */
-    List<Map<String, String>> countReport(Integer userId,Integer time);
+    public List<Map<String, String>> countReport(Integer userId, Integer time);
 }

@@ -31,7 +31,7 @@ public interface DataFileMapper {
      * @author han
      * @date 2015年12月31日 上午10:27:24
      */
-    Integer countData(@Param("userId") Integer userId, @Param("state") Integer state);
+    public Integer countData(@Param("userId") Integer userId, @Param("state") Integer state);
 
     /**
      * (重构)统计帐号下的文件大小
@@ -42,7 +42,7 @@ public interface DataFileMapper {
      * @author han
      * @date 2015年12月31日 上午10:27:40
      */
-    Long sumData(@Param("userId") Integer userId, @Param("state") Integer state);
+    public Long sumData(@Param("userId") Integer userId, @Param("state") Integer state);
 
     /**
      * (重构)按照时间段统计用户数据
@@ -54,8 +54,9 @@ public interface DataFileMapper {
      * @author han
      * @date 2015年12月31日 上午10:27:50
      */
-    List<Map<String, String>> countDataByTime(@Param("userId") Integer userId, @Param("time") Integer time,
+    public List<Map<String, String>> countDataByTime(@Param("userId") Integer userId, @Param("time") Integer time,
             @Param("state") Integer state);
+
     /**
      * (重构)按照时间段统计帐号下的文件大小
      *
@@ -66,7 +67,8 @@ public interface DataFileMapper {
      * @author han
      * @date 2015年12月31日 上午10:28:02
      */
-    List<Map<String, String>> sumDataByTime(@Param("userId") Integer userId, @Param("time") Integer time, @Param("state") Integer state);
+    public List<Map<String, String>> sumDataByTime(@Param("userId") Integer userId, @Param("time") Integer time,
+            @Param("state") Integer state);
 
     /**
      * (重构)添加上传文件信息
@@ -76,7 +78,7 @@ public interface DataFileMapper {
      * @author han
      * @date 2015年12月31日 上午10:28:28
      */
-    int addDataInfo(DataFile data);
+    public int addDataInfo(DataFile data);
 
     /**
      * (重构)修改数据信息
@@ -86,5 +88,5 @@ public interface DataFileMapper {
      * @author han
      * @date 2015年12月31日 上午10:28:37
      */
-    int updateDataInfoByFileId(DataFile data);
+    public int updateDataInfoByFileId(DataFile data);
 }

@@ -40,7 +40,8 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public int addDataInfo(DataFile data) {
-        return dataFileMapper.addDataInfo(data);
+        dataFileMapper.addDataInfo(data);
+        return data.getFileId();
     }
 
     @Override
@@ -50,7 +51,6 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public List<Map<String, String>> sumData(Integer userId, Integer time) {
-        // TODO Auto-generated method stub
         return dataFileMapper.sumDataByTime(userId, time, DataState.ACTIVE);
     }
 }

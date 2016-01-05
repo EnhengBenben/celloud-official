@@ -17,7 +17,8 @@ public interface AppService {
      * @return
      * @date 2015年12月25日 下午5:44:58
      */
-    Integer countMyApp(Integer userId);
+    public Integer countMyApp(Integer userId);
+
     /**
      * (重构)按时间段获取已添加的APP数量
      * 
@@ -25,6 +26,6 @@ public interface AppService {
      * @return
      * @date 2015年12月25日 下午5:44:58
      */
-    List<Map<String, String>> countMyApp(Integer userId,Integer time);
+    public List<Map<String, String>> countMyApp(Integer userId, Integer time);
 
 }
