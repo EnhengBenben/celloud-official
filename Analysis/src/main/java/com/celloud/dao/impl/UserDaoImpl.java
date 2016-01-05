@@ -159,7 +159,8 @@ public class UserDaoImpl implements UserDao {
 		Connection conn = ConnectManager.getConnection();
 		List<Map<String, Object>> list = null;
 		String sql = "select count(u.user_id) num from tb_user u ,tb_user_company_relat uc where  uc.user_id = u.user_id and u.state=0 and u.user_id not in ("
-				+ noUserid + ") " + SqlController.whereCompany("uc", "company_id", role, cmpId);
+				+ noUserid + ") " 
+				+ SqlController.whereCompany("uc", "company_id", role, cmpId);
 		LogUtil.info(log, sql);
 		try {
 			list = qr.query(conn, sql, new MapListHandler());
@@ -459,10 +460,10 @@ public class UserDaoImpl implements UserDao {
 		String sql = "select tb1.weekDate as time, tb1.logNum, tb2.activityUser,ifnull(tb3.runNum,0) as runNum,ifnull(tb4.activityApp,0) as activityApp,ifnull(tb5.dataSize,0)as dataSize from "
 
 				+ " (select  left(date_add(l.log_date ,INTERVAL -weekday(l.log_date ) day),10)as weekDate,count(l.user_name)logNum "
-				+ " from tb_log l " + SqlController.notUserName("l", "user_name", 2,noUsername)
+				+ " from tb_log l " + SqlController.notUserName("l", "user_name",noUsername)
 				+ " group by weekDate) tb1" + " left join"
 				+ " (select  left(date_add(l.log_date ,INTERVAL -weekday(l.log_date ) day),10)as weekDate,count(DISTINCT(l.user_name))as activityUser"
-				+ " from tb_log l " + SqlController.notUserName("l", "user_name",2, noUsername)
+				+ " from tb_log l " + SqlController.notUserName("l", "user_name", noUsername)
 				+ " group by weekDate)tb2" + " on tb1.weekDate = tb2.weekDate" + " left join"
 				+ " (select left(date_add(r.create_date ,INTERVAL -weekday(r.create_date ) day),10)as weekDate,count(r.report_id)as runNum from tb_report r "
 				+ " on tb1.weekDate = tb3.weekDate" + " left join"

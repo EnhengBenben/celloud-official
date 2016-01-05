@@ -23,14 +23,14 @@ $.get(UserDataURL, {'orderType':"size"}, function(data) {
 	var yAxis = new Array(data.length);
 	for (var i = 0; i < data.length; i++) {
 		xAxis[i] = data[i].username;
-		yAxis[i] = (parseFloat(data[i].size / (1024 * 1024 * 1024)).toFixed(2));
+		yAxis[i] = parseFloat( (data[i].size / (1024 * 1024 * 1024) ).toFixed(2));
 	}
 	      
 	var option = makeOptionScroll('', xAxis, yAxis, '数据大小:', 'bar',0,40);
 	option. yAxis = [
 	    	          {
 	    	              type : 'value',
-	    	              axisLabel:{formatter:'{value} ms'}
+	    	              axisLabel:{formatter:'{value} GB'}
 	    	          }
 	    	      ];
 	var myChart = echarts.init(document.getElementById(UserFileSizeId));

@@ -17,6 +17,7 @@ import com.celloud.service.DataService;
 import com.celloud.service.ReportService;
 import com.celloud.service.AppService;
 import com.celloud.service.UserService;
+import com.celloud.utils.LogUtil;
 import com.google.inject.Inject;
 
 @ParentPackage("json-default")
@@ -24,6 +25,9 @@ import com.google.inject.Inject;
 @Results({ @Result(name = "success", location = "../../pages/home.jsp"),
 		@Result(name = "toBigUser", location = "../../pages/bigUser.jsp"),
 		@Result(name = "toHospitalBigUser", location = "../../pages/hospitalBigUser.jsp"),
+		@Result(name = "toBigUser", location = "../../pages/bigUser.jsp"),
+		@Result(name = "toBigUserOne", location = "../../pages/bigUserOne.jsp"),
+		
 		@Result(name = "browserCount", type = "json", params = { "root", "browserList" }),
 		@Result(name = "historyList", type = "json", params = { "root", "historyList" }),
 		@Result(name = "softList", type = "json", params = { "root", "totalSoftList" }),
@@ -95,6 +99,39 @@ public class HomeAction extends BaseAction {
 
 		return "success";
 	}
+	public String toBigUserCount(){
+		dataList = dataService.getBigUserData();
+		return "toBigUser";
+	}
+	
+	public String bigUserOne()
+	{
+		LogUtil.info(log, "bigUesrOne");
+		return "toBigUserOne";
+	}
+	/**
+	 * 用户运行app前20的用户和APP
+	 * 
+	 * @return
+	 */
+	public String appRunNum() {
+		Integer role = (Integer) super.session.get(User.USER_ROLE);
+		Integer companyId = (Integer) getCid();
+		totalSoftList = appService.getAppRunNum(role,companyId);
+		return "softList";
+	}
+
+	/**
+	 * 总的用户运行APP统计
+	 * 
+	 * @return
+	 */
+	public String userRunNum() {
+		Integer role = (Integer) super.session.get(User.USER_ROLE);
+		Integer companyId = (Integer) getCid();
+		appList = appService.getUserRunNum(role,companyId);
+		return "AppList";
+	}
 
 	public String toHospitalBigUesr() {
 		cmpList = companyService.BigUserList();
@@ -107,7 +144,9 @@ public class HomeAction extends BaseAction {
 	 * @return
 	 */
 	public String loginNum() {
-		logList = appService.getTotalUserLogin(0);
+		Integer role = (Integer) super.session.get(User.USER_ROLE);
+		Integer companyId = (Integer) getCid();
+		logList = appService.getTotalUserLogin(role,companyId);
 		return "loginList";
 	}
 

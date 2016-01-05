@@ -16,7 +16,6 @@ function tableswitch(id) {
 function LoginNum() {
 	var viewId = "loginId";
 	$.get(LoginNumURL, {}, function(data) {
-		console.log(data);
 		data = data==null?[]:data;
 		var xAxis = new Array(data.length);
 		var yAxis = new Array(data.length);
@@ -34,6 +33,7 @@ function LoginNum() {
 function AppRunNum() {
 	var viewId = "AppRunNum";
 	$.get(AppRunNumURL, {}, function(data) {
+		console.log(data);
 		data = data==null?[]:data;
 		var xAxis = new Array(data.length);
 		var yAxis = new Array(data.length);
@@ -51,10 +51,11 @@ function AppRunNum() {
 function UserRunNum() {
 	var viewId = "UserRunNum";
 	$.get(UserRunNumURL, {}, function(data) {
+		console.log(data);
 		data = data==null?[]:data;
+
 		var xAxis = new Array(data.length);
 		var yAxis = new Array(data.length);
-		var t;
 		for (var i = 0; i < data.length; i++) {
 			xAxis[i] = data[i].userName;
 			yAxis[i] = data[i].runNum;
@@ -70,7 +71,6 @@ function LoadBrowser() {
 	var viewId = "browserDistribute";
 	if (document.getElementById(viewId) == null)
 		return;
-	
 	$.get(BrowserURL, {}, function(data) {
 		data = data==null?[]:data;
 		var vlist = new Array(data.length);
@@ -93,7 +93,7 @@ function chars(data) {
 	var myChart = echarts.init(document.getElementById('map'));
 	option = {
 		title : {
-			text : '医院用户所分布区域',
+			text : '',
 			x : 'center'
 		},
 		tooltip : {

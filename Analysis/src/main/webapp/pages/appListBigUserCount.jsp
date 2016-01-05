@@ -14,20 +14,13 @@
 			<i class="icon-cloud"></i>
 			<a href="#">APP统计</a>
 		</li>
-		<li class="active">大客户APP统计</li>
+		<li class="active"><a href="javascript:bigUserAppList()">大客户统计</a></li>
 	</ul>
 	<!-- .breadcrumb -->
 </div>
-<div class="page-content">
+<div class="page-content"> 
 	<div class="row">
 		<div class="col-xs-12">
-			<h3 class="header smaller lighter blue">
-				<span onclick="toAPPList()">大客户APP统计</span>
-				<small id="secondTitle" class="hide">
-					<i class="icon-double-angle-right"></i>
-					<span id="_oneApp"></span>
-				</small>
-			</h3>
 			<div class="table-header hide" id="_appName"></div>
 			<div class="col-xs-11 table-responsive ">
 				<table id="appList" class="table table-striped table-bordered table-hover">

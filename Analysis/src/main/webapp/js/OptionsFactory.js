@@ -122,8 +122,8 @@ function makePieOption(title, legenName, name, rad, centerX, centerY, value) {
  * :line/bar
  */
 function makeOption(title, xAxis, yAxis, seriesName, typex) {
-	var max = xAxis[0].length;
-	for (var i = 1; i < xAxis.length; i++) {
+	var max=0;
+	for (var i = 0; i < xAxis.length; i++) {
 		max = max > xAxis[i].length?max:xAxis[i].length;
 		if (max > 8)
 			break;

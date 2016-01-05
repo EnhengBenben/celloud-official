@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -15,17 +14,14 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.log4j.Logger;
-
 import com.celloud.dao.CompanyDao;
 import com.celloud.sdo.Company;
 import com.celloud.sdo.DataFile;
-import com.celloud.sdo.LoginLog;
 import com.celloud.sdo.App;
 import com.celloud.utils.ConnectManager;
 import com.celloud.utils.LogUtil;
 import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.SqlController;
-import com.mysql.fabric.xmlrpc.base.Data;
 
 public class CompanyDaoImpl implements CompanyDao {
 	Logger log = Logger.getLogger(CompanyDaoImpl.class);
@@ -267,19 +263,18 @@ public class CompanyDaoImpl implements CompanyDao {
 		String sql = "select count(f.file_id)as fileNum,sum(ifnull(f.size,0))as size,u.company_id,"
 				+ " (select company_name from tb_company where company_id = u.company_id)as company_name,"
 				+ "(select create_date from tb_company where company_id = u.company_id)as create_date "
-				+" from tb_file f,tb_user u,tb_user_company_relat uc  where f.state=0 and f.user_id = u.user_id and u.company_id !=0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
-				+ SqlController.notUserId("f", noUserid)
-				+SqlController.whereCompany("uc", "company_id", role, cmpId)
+				+ " from tb_file f,tb_user u,tb_user_company_relat uc  where f.state=0 and f.user_id = u.user_id and u.company_id !=0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
+				+ SqlController.notUserId("f", noUserid) + SqlController.whereCompany("uc", "company_id", role, cmpId)
 				+ " group by u.company_id order by fileNum desc" + SqlController.limit(topN);
 		LogUtil.info(log, sql);
-		try{
+		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setObject(1, start);
 			ps.setObject(2, end);
 			ResultSet rs = ps.executeQuery();
 			ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
 			list = rsh.handle(rs);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			LogUtil.query(log, sql, e);
 			ConnectManager.close(conn);
 		}
@@ -290,18 +285,17 @@ public class CompanyDaoImpl implements CompanyDao {
 	public List<DataFile> getCompanyFileSize(Connection conn, int role, int cmpId, Date start, Date end, int topN) {
 		List<DataFile> list = null;
 		String sql = "select sum(f.size)as size,u.company_id,(select company_name from tb_company where company_id = u.company_id)as company_name "
-				+" from tb_file f,tb_user u,tb_user_company_relat uc  where f.state=0 and f.user_id = u.user_id and u.company_id !=0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
-				+ SqlController.notUserId("f", noUserid)
-				+SqlController.whereCompany("uc", "company_id", role, cmpId)
+				+ " from tb_file f,tb_user u,tb_user_company_relat uc  where f.state=0 and f.user_id = u.user_id and u.company_id !=0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
+				+ SqlController.notUserId("f", noUserid) + SqlController.whereCompany("uc", "company_id", role, cmpId)
 				+ " group by u.company_id order by size desc" + SqlController.limit(topN);
-		try{
+		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setObject(1, start);
 			ps.setObject(2, end);
 			ResultSet rs = ps.executeQuery();
 			ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
 			list = rsh.handle(rs);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			LogUtil.query(log, sql, e);
 			ConnectManager.close(conn);
 		}

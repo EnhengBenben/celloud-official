@@ -48,8 +48,8 @@ public class AppServiceImpl implements AppService {
 	}
 
 	@Override
-	public List<LoginLog> getTotalUserLogin(int topN) {
-		return appDao.getTotalUserLogin(topN);
+	public List<LoginLog> getTotalUserLogin(int role,int cmpId) {
+		return appDao.getTotalUserLogin(role,cmpId);
 	}
 
 	@Override
@@ -79,5 +79,15 @@ public class AppServiceImpl implements AppService {
 		ConnectManager.close(conn);
 		return list;
 
+	}
+
+	@Override
+	public List<App> getUserRunNum(int role, int cmpId) {
+		return appDao.getUserRunNum(role, cmpId);
+	}
+
+	@Override
+	public List<App> getAppRunNum(int role, int cmpId) {
+		return appDao.getAppRunNum(role, cmpId);
 	}
 }
