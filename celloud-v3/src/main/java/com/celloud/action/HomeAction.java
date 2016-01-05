@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
-import com.celloud.email.EmailService;
 import com.celloud.model.User;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.UserService;
+import com.celloud.utils.EmailUtils;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.ResetPwdUtils;
 
@@ -32,6 +32,17 @@ import com.celloud.utils.ResetPwdUtils;
 public class HomeAction {
     @Resource
     private UserService userService;
+
+    @RequestMapping("email.html")
+    public String email() {
+        // EmailUtils utils=EmailUtils.getInstance();
+        String content = "<table>" + "<tr><td>姓名</td><td>性别</td><td>年龄</td></tr>"
+                + "<tr><td>孙文栋</td><td>男</td><td>28</td></tr>" + "<tr><td>夏文涛</td><td>男</td><td>29</td></tr>"
+                + "<tr><td>战美玲</td><td>女</td><td>27</td></tr>" + "</table>";
+        // utils.addTo("sun8wd@163.com").setContent(content).setTitle("ttt1").send();
+        EmailUtils.send(content, "sun8wd@163.com");
+        return "index";
+    }
 
     // TODO 删除
     @RequestMapping("users")
@@ -109,11 +120,11 @@ public class HomeAction {
         }
         String randomCode = MD5Util.getMD5(String.valueOf(new Date().getTime()));
         userService.insertFindPwdInfo(user.getUserId(), randomCode);
-        EmailService.send(user.getEmail(),
+        EmailUtils.sendWithTitle(ResetPwdUtils.title,
                 ResetPwdUtils.content.replaceAll("username", user.getUsername()).replaceAll("url",
                         ResetPwdUtils.celloudPath.replaceAll("resetpwduname", user.getUsername())
                                 .replaceAll("resetpwdcode", randomCode)),
-                ResetPwdUtils.title, true);
+                user.getEmail());
         email = email.substring(0, 1) + "***" + email.substring(email.lastIndexOf("@"));
         String emailAddress = "http://mail." + email.substring(email.lastIndexOf("@") + 1);
         return mv.addObject("sucess", "ok").addObject("email", email).addObject("emailAddress", emailAddress);
