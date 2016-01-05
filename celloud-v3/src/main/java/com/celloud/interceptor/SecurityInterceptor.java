@@ -29,7 +29,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
             throws Exception {
         User user = (User) request.getSession().getAttribute(Constants.SESSION_LOGIN_USER);
         if (user == null) {
-            logger.warn("用户非法访问：{}", getUrl(request));
+            logger.warn("用户非法访问：{}", UserAgentUtil.getUrl(request));
             // throw new SecurityException();
             if ("XMLHttpRequest".equalsIgnoreCase(request.getHeader("x-requested-with"))) {
                 // 如果是ajax请求响应头会有，x-requested-with
@@ -43,13 +43,8 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
         boolean result = super.preHandle(request, response, handler);
         time = System.currentTimeMillis() - time;
         if (time > 20) {
-            logger.info("请求响应时间过长({} ms)：{}", time, getUrl(request));
+            logger.info("请求响应时间过长({} ms)：{}", time, UserAgentUtil.getUrl(request));
         }
         return result;
-    }
-
-    public String getUrl(HttpServletRequest request) {
-        return request.getRequestURL() + "?" + request.getQueryString() + "&behavior:"
-                + UserAgentUtil.getActionLog(request);
     }
 }

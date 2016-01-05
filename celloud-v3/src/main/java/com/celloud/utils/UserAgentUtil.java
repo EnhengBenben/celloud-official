@@ -138,7 +138,7 @@ public class UserAgentUtil {
             IPZone ipzone = qqwry.findIP(ip);
             result = ipzone.getMainInfo() + "-" + ipzone.getSubInfo();
         } catch (Exception e) {
-            if(logger.isWarnEnabled()){
+            if (logger.isWarnEnabled()) {
                 logger.warn("不能识别的ip地址：{}", ip);
             }
         }
@@ -169,5 +169,16 @@ public class UserAgentUtil {
             ip = request.getRemoteAddr();
         }
         return ip;
+    }
+
+    public static String getUrl(HttpServletRequest request) {
+        StringBuffer url = request.getRequestURL();
+        url.append("?");
+        if (request.getQueryString() != null) {
+            url.append(request.getQueryString());
+            url.append("&");
+        }
+        url.append(getActionLog(request));
+        return url.toString();
     }
 }

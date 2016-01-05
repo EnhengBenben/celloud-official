@@ -33,27 +33,6 @@ public class HomeAction {
     @Resource
     private UserService userService;
 
-    @RequestMapping("email.html")
-    public String email() {
-        // EmailUtils utils=EmailUtils.getInstance();
-        String content = "<table>" + "<tr><td>姓名</td><td>性别</td><td>年龄</td></tr>"
-                + "<tr><td>孙文栋</td><td>男</td><td>28</td></tr>" + "<tr><td>夏文涛</td><td>男</td><td>29</td></tr>"
-                + "<tr><td>战美玲</td><td>女</td><td>27</td></tr>" + "</table>";
-        // utils.addTo("sun8wd@163.com").setContent(content).setTitle("ttt1").send();
-        EmailUtils.send(content, "sun8wd@163.com");
-        return "index";
-    }
-
-    // TODO 删除
-    @RequestMapping("users")
-    @ResponseBody
-    public PageList<User> users(@RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = Constants.DEFAULT_PAGE_SIZE + "") int size) {
-
-        Page pager = new Page(page, size);
-        return userService.findUsers(pager);
-    }
-
     /**
      * 用户重置密码--跳转到重置密码页面
      * 

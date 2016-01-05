@@ -4,9 +4,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -25,20 +31,21 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.celloud.model.Feedback;
+
 /**
  * <h4>发送邮件工具类</h4>
  * <h4>使用方式：</h4>
- * <h5>1、静态方式使用：</h5> 
- * <code>
+ * <h5>1、静态方式使用：</h5> <code>
  * EmailUtils.send(content,emails);//email为邮件列表，String类型不定参
  * EmailUtils.sendWidthTitle(title,content,emails)//email为邮件列表，String类型不定参
  * </code>
- * <h5>2、非静态方式使用：</h5> 
- * <code>
+ * <h5>2、非静态方式使用：</h5> <code>
  * EmailUtils utils = EmailUtils.getInstance();<br>
  * utils.addTo(emails);//接收人列表，string类型不定参<br>
  * utils.addCc(emails);//抄送人列表，string类型不定参<br>
@@ -75,6 +82,10 @@ public class EmailUtils {
     private static InternetAddress from;
     private Date sentDate;
     private Multipart multipart = new MimeMultipart();
+    private static String errorTitle;
+    private static String feedbackTitle;
+    private static String[] errorsMailTo;
+    private static String[] feedbackMailTo;
 
     private static Session session = null;
     private MimeMessage message = null;
@@ -123,7 +134,21 @@ public class EmailUtils {
         password = pro.getProperty("password");
         smtp = pro.getProperty("smtp");
         defaultTitle = pro.getProperty("defaultTitle");
+        errorTitle = pro.getProperty("errorTitle");
+        feedbackTitle = pro.getProperty("feedbackTitle");
         emailName = pro.getProperty("emailName");
+        String errorMails = pro.getProperty("errorsMailTo");
+        if (errorMails != null) {
+            errorsMailTo = errorMails.split(",");
+            List<String> list = new ArrayList<>(new HashSet<>(Arrays.asList(errorsMailTo)));
+            errorsMailTo = list.toArray(new String[list.size()]);
+        }
+        String feedbackMails = pro.getProperty("errorsMailTo");
+        if (feedbackMails != null) {
+            feedbackMailTo = feedbackMails.split(",");
+            List<String> list = new ArrayList<>(new HashSet<>(Arrays.asList(feedbackMailTo)));
+            feedbackMailTo = list.toArray(new String[list.size()]);
+        }
         Properties props = new Properties();// 获取系统环境
         Authenticator auth = new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -164,6 +189,72 @@ public class EmailUtils {
             utils.setTitle(defaultTitle);
         }
         return utils;
+    }
+
+    /**
+     * 发送已组织成邮件正文的错误日志
+     * 
+     * @param errorMessage
+     */
+    public static void sendError(String errorMessage) {
+        EmailUtils utils = getInstance();
+        if (errorsMailTo == null) {
+            logger.warn("系统出现异常，正在发送异常信息邮件，但是没有找到邮件接收者！");
+        }
+        utils.addTo(errorsMailTo).setTitle(errorTitle).setContent(errorMessage).send();
+    }
+
+    /**
+     * 将错误日志组织成邮件正文并发送
+     * 
+     * @param request
+     * @param exception
+     */
+    public static void sendError(HttpServletRequest request, Exception exception) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        exception.printStackTrace(pw);
+        StringBuffer buffer = new StringBuffer("");
+        buffer.append("<h3>异常地址：</h3>");
+        buffer.append(request.getRequestURL());
+        if (request.getQueryString() != null) {
+            buffer.append("?" + request.getQueryString());
+        }
+        buffer.append("<h3>用户信息：</h3>");
+        buffer.append(UserAgentUtil.getActionLog(request).toResume());
+        buffer.append("<h3>异常信息：</h3>");
+        buffer.append(exception.toString());
+        buffer.append("<h3>异常描述：</h3>");
+        buffer.append("<pre>");
+        buffer.append(sw.toString());
+        buffer.append("</pre>");
+        String content = buffer.toString();
+        pw.close();
+        sendError(content);
+    }
+
+    /**
+     * 发送已组织成邮件正文的问题反馈
+     * 
+     * @param content
+     */
+    public static void sendFeedback(String content) {
+        EmailUtils utils = getInstance();
+        if (feedbackMailTo == null) {
+            logger.warn("正在发送用户问题反馈邮件，但是没有找到邮件接收者！");
+        }
+        utils.addTo(feedbackMailTo).setTitle(feedbackTitle).setContent(content).send();
+    }
+
+    /**
+     * 将送问题反馈组织成邮件正文并发送
+     * 
+     * @param feedback
+     */
+    public static void sendFeedback(Feedback feedback) {
+        // TODO 未组织邮件正文
+        String content = "";
+        sendWithTitle(feedbackTitle, content, feedbackMailTo);
     }
 
     /**
