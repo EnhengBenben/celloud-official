@@ -246,9 +246,9 @@
    select left(create_date,#{time }) time,sum(size) size from tb_file where user_id = #{userId } and state = #{state } group by time
   </select>
   <insert id="addDataInfo" useGeneratedKeys="true" keyProperty="fileId" parameterType="com.celloud.model.DataFile" >
-    insert into tb_file(user_id,file_name,create_date,md5,state) values(#{userId },#{fileName },now(),#{md5 },#{state})
+    insert into tb_file(user_id,file_name,create_date,state) values(#{userId },#{fileName },now(),#{state})
   </insert>
   <update id="updateDataInfoByFileId" parameterType="com.celloud.model.DataFile" >
-    update tb_file set data_key=#{dataKey },size=#{size },path=#{path },another_name=#{anotherName },file_format=#{fileFormat },state=#{state } where file_id=#{fileId }
+    update tb_file set data_key=#{dataKey },size=#{size },path=#{path },another_name=#{anotherName },file_format=#{fileFormat },state=#{state },md5=#{md5 } where file_id=#{fileId }
   </update>
 </mapper>

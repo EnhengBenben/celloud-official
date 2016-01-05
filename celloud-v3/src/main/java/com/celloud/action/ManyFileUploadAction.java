@@ -28,6 +28,7 @@ import com.celloud.service.ReportService;
 import com.celloud.utils.CheckFileTypeUtil;
 import com.celloud.utils.DataUtil;
 import com.celloud.utils.FileTools;
+import com.celloud.utils.MD5Util;
 import com.celloud.utils.PerlUtils;
 import com.celloud.utils.PropertiesUtil;
 
@@ -158,6 +159,7 @@ public class ManyFileUploadAction {
         data.setSize(FileTools.getFileSize(filePath));
         data.setDataKey(dataKey);
         data.setPath(filePath);
+        data.setMd5(MD5Util.getFileMD5(filePath));
         int fileFormat = checkFileType.checkFileType(newName);
         data.setFileFormat(fileFormat);
         if (fileFormat == FileFormat.BAM) {

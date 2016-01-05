@@ -7,7 +7,13 @@
  */
 package com.celloud.utils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.security.MessageDigest;
+
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  * @ClassName: MD5Util
@@ -53,7 +59,41 @@ public class MD5Util {
         return s;
     }
 
-    public static void main(String[] args) {
-        System.out.println(getMD5("celloud"));
+    /**
+     * 获取文件的MD5值
+     * 
+     * @param path
+     * @return
+     */
+    public static String getFileMD5(String path) {
+        File file = new File(path);
+        if (!file.exists()) {
+            return null;
+        }
+        return getFileMD5(file);
     }
+
+    /**
+     * 获取文件的MD5值
+     * 
+     * @param file
+     * @return
+     */
+    public static String getFileMD5(File file) {
+        if (!file.exists()) {
+            return null;
+        }
+        FileInputStream fis = null;
+        String md5 = null;
+        try {
+            fis = new FileInputStream(file);
+            md5 = DigestUtils.md5Hex(fis);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return md5;
+    }
+
 }
