@@ -80,7 +80,7 @@ public interface AppDao {
 	 * @param topN
 	 * @return
 	 */
-	public List<LoginLog> getTotalUserLogin(int topN);
+	public List<LoginLog> getTotalUserLogin(int role,int cmpId);
 
 	/**
 	 * 统计各浏览器
@@ -123,4 +123,18 @@ public interface AppDao {
 	 * @return
 	 */
 	public List<App> getAppList(Connection conn, Integer role, Integer cmpId, Date start, Date end, Integer topN);
+	
+	/**
+	 * 统计用户运行APP次数排序。
+	 * @param topN
+	 * @return
+	 */
+	public List<App> getUserRunNum(int role,int cmpId);
+	/**
+	 * 统计APP运行次数
+	 * @param topN
+	 * @return
+	 */
+	public List<App> getAppRunNum(int role,int cmpId);
+
 }

@@ -90,5 +90,9 @@ public interface DataService {
 	 * @return
 	 */
 	public List<Map<String, Object>> getUserFileRunState(String userIds, String start, String end);
-
+	/**
+	 * 只查询大客户的数据
+	 * @return
+	 */
+	public List<DataFile> getBigUserData();
 }

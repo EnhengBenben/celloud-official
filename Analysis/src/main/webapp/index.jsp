@@ -202,48 +202,7 @@
 							<i class="icon-bar-chart"></i>
 							<span class="menu-text">活跃度统计 </span>
 						</a>
-						<!-- 
-						<ul class="submenu">
-							<li>
-								<a href="javascript:toActivity()">
-									<i class="icon-double-angle-right"></i>
-									医院活跃度统计
-								</a>
-							</li>
-							<li>
-								<a href="javascript:toUserActivity()">
-									<i class="icon-double-angle-right"></i>
-									用户活跃度统计
-								</a>
-							</li>
-							<li>
-								<a href="javascript:toAppActivity()">
-									<i class="icon-double-angle-right"></i>
-									App统计
-								</a>
-							</li>
-						</ul>
-						 -->
 					</li>
-					<!-- 导出报表统计 -->
-					<c:if test="${userRole=='3' }">
-						<li>
-							<a href="javascript:void(0)" class="dropdown-toggle">
-								<i class="icon-file-alt"></i>
-								<span class="menu-text">导出结果 </span>
-								<b class="arrow icon-angle-down"></b>
-							</a>
-							<ul class="submenu">
-								<li>
-									<a href="javascript:toWeekReport()">
-										<i class="icon-double-angle-right"></i>
-										周统计
-									</a>
-								</li>
-							</ul>
-						</li>
-					</c:if>
-				</ul>
 				<!-- /.nav-list -->
 				<div class="sidebar-collapse" id="sidebar-collapse">
 					<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
@@ -307,18 +266,6 @@
 		jQuery(function($) {
 			toHome();
 		});
-		/***活跃度统计－－－用户活跃度统计**/
-		function toUserActivity() {
-			$.get("user!toUserActivity", {}, function(responseText) {
-				$("#content").html(responseText);
-			});
-		}
-		/***活跃度统计－－－Ａpp活跃度统计**/
-		function toAppActivity() {
-			$.get("app!toAppActivity", {}, function(responseText) {
-				$("#content").html(responseText);
-			});
-		}
 		/***活跃度统计－－－医院活跃度统计**/
 		function toActivity() {
 			$.get("company!toActivity", {}, function(responseText) {
@@ -345,11 +292,6 @@
 		/***控制台**/
 		function toHome() {
 			$.get("home!toHome", {}, function(responseText) {
-				$("#content").html(responseText);
-			});
-		}
-		function toActivity() {
-			$.get("company!toActivity", {}, function(responseText) {
 				$("#content").html(responseText);
 			});
 		}
@@ -383,12 +325,6 @@
 			
 		}
 		
-		function toWeekReport() {
-			$("#secondTitle").addClass("hide");
-			$.get("home!toWeekReport", {}, function(responseText) {
-				$("#content").html(responseText);
-			});
-		}
 		function bigUserCount() {
 			$("#secondTitle").addClass("hide");
 			$.get("home!toBigUserCount", {}, function(responseText) {
