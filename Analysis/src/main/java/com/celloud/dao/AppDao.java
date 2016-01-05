@@ -72,24 +72,7 @@ public interface AppDao {
 	 */
 	public List<App> getAppByCompanyId(Integer cmpId, Integer role);
 
-	/**
-	 * 查询app运行排行
-	 * 
-	 * @param type
-	 * @param topN
-	 * @param start
-	 * @param end
-	 * @return
-	 */
-	public List<App> getAppRunTop(String type, int topN, Date start, Date end);
 
-	/**
-	 * 统计用户运行APP次数排序。
-	 * 
-	 * @param topN
-	 * @return
-	 */
-	public List<App> getTotalUserRunNum(int topN);
 
 	/**
 	 * 总的用户登陆排序
@@ -105,30 +88,6 @@ public interface AppDao {
 	 * @return
 	 */
 	public List<LoginLog> getBrowerCount();
-
-	/**
-	 * 统计周里每天
-	 * 
-	 * @param start
-	 * @return
-	 */
-	public List<App> getAppRunNumCount(Date start);
-
-	/**
-	 * 统计周里每个用户运行APP次数
-	 * 
-	 * @param start
-	 * @return
-	 */
-	public List<App> getAppUserCount(Date start);
-
-	/**
-	 * 统计APP运行次数
-	 * 
-	 * @param topN
-	 * @return
-	 */
-	public List<App> getTotalAppRunNum(int topN);
 
 	/**
 	 * 取所有大客户的APP数量

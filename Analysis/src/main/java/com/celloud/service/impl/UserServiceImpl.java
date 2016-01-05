@@ -137,24 +137,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<LoginLog> getLoginTop(String type, int topN, Date start, Date end) {
-		return userDao.getLoginTop(type, topN, start, end);
-	}
-
-	@Override
-	public List<DataFile> getUserDataTop(String type, int topN, Date start, Date end) {
-		return userDao.getUserDataTop(type, topN, start, end);
-	}
-
-	@Override
 	public List<TotalCount> getCountInHistory() {
 		return userDao.getCountInHistory();
 	}
 
-	@Override
-	public List<LoginLog> getLoginLog(String isWeek) {
-		return userDao.getLoginLog(isWeek);
-	}
 
 	@Override
 	public Map<String, Object> getUserActivity(int role, int cmpId, Date start, Date end, int topN) {

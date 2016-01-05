@@ -1,6 +1,3 @@
-//function url
-//var loadHistoryURL = "home!getHistory";
-
 var BrowserURL = "home!totalBrowser";
 var UserRunNumURL = "home!userRunNum";
 var AppRunNumURL = "home!appRunNum";
@@ -11,7 +8,7 @@ UserRunNum();
 AppRunNum();
 LoadBrowser();
 LoginNum();
-// /
+//
 function tableswitch(id) {
 	$("#" + id).toggle();
 }

@@ -67,11 +67,7 @@ public class AppAction extends BaseAction {
 		appList = appService.getBigUserAppList();
 		return "bigUserAppList";
 	}
-	public String appRunTop(){
-		top=10;
-	    appList = appService.getAppRunTop(type, top, startDate, endDate);
-		return "AppList";
-	}
+
 	/**
 	 * 查询APP每个月的运行次数
 	 * @return

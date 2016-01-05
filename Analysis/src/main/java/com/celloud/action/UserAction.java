@@ -114,16 +114,6 @@ public class UserAction extends BaseAction {
 		}
 	}
 
-	public String userLoginTop() {
-		loginList = userService.getLoginTop(groupType, topN, startDate, endDate);
-		return "LoginList";
-	}
-
-	public String userDataTop() {
-		dataList = userService.getUserDataTop(groupType, topN, startDate, endDate);
-		return "DataList";
-	}
-
 	public String toUserActivity() {
 //		Integer cmpId = (Integer) getCid();
 //		Integer role = (Integer) super.session.get(User.USER_ROLE);

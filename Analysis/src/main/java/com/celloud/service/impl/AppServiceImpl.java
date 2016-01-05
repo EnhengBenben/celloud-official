@@ -48,16 +48,6 @@ public class AppServiceImpl implements AppService {
 	}
 
 	@Override
-	public List<App> getAppRunTop(String type, int topN, Date start, Date end) {
-		return appDao.getAppRunTop(type, topN, start, end);
-	}
-
-	@Override
-	public List<App> getTotalUserRunNum(int topN) {
-		return appDao.getTotalUserRunNum(topN);
-	}
-
-	@Override
 	public List<LoginLog> getTotalUserLogin(int topN) {
 		return appDao.getTotalUserLogin(topN);
 	}
@@ -65,22 +55,6 @@ public class AppServiceImpl implements AppService {
 	@Override
 	public List<LoginLog> getBrowerCount() {
 		return appDao.getBrowerCount();
-	}
-
-	@Override
-	public List<App> getAppRunNumCount(Date start) {
-
-		return appDao.getAppRunNumCount(start);
-	}
-
-	@Override
-	public List<App> getAppUserCount(Date start) {
-		return appDao.getAppUserCount(start);
-	}
-
-	@Override
-	public List<App> getTotalAppRunNum(int topN) {
-		return appDao.getTotalAppRunNum(topN);
 	}
 
 	@Override

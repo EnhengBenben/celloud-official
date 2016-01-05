@@ -190,35 +190,14 @@ public interface UserService {
 	 * @return
 	 */
 	public List<User> getUserByCompany(Integer companyId,Integer role);
-	/**
-	 * 查询用户登陆前N的用户
-	 * @param topN
-	 * @return
-	 */
-	public List<LoginLog> getLoginTop(String type,int topN,Date start,Date end);
-	/**
-	 * 查询用户数据时排行
-	 * @param type
-	 * @param topN
-	 * @param start
-	 * @param end
-	 * @return
-	 */
-			
-	public List<DataFile> getUserDataTop(String type,int topN,Date start,Date end);
-	
+
 	/***
 	 * 用户历史统计，与比较
 	 * @return
 	 */
 	public List<TotalCount> getCountInHistory();
 	
-	/**
-	 * 新用户的活跃度
-	 * @param isWeek
-	 * @return
-	 */
-	public List<LoginLog> getLoginLog(String isWeek);
+
 	/**
 	 * 用户活跃度统计
 	 * @param role

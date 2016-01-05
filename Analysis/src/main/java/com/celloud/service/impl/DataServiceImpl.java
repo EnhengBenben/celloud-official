@@ -68,25 +68,9 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public List<DataFile> getUserWeekData(Date start) {
-		return dataDao.getUserWeekData(start);
-	}
-
-	@Override
-	public List<DataFile> getEachDayData(Date start) {
-		return dataDao.getEachDayData(start);
-	}
-
-	@Override
-	public List<DataFile> getBigUserData() {
-		return dataDao.getBigUserData();
-	}
-
-	@Override
 	public List<DataFile> getBigUserDataFile(Integer companyId) {
 		//List<DataFile> res = null;
 		//res = EntryUtil.toInsert(dataDao.getBigUserDataFile(companyId));
 		return dataDao.getBigUserDataFile(companyId);
 	}
-
 }
