@@ -84,4 +84,11 @@ public interface DataDao {
 	 * @return
 	 */
 	public List<DataFile> getBigUserDataFile(Integer companyId);
+	
+	/**
+	 * 只查询大客户的数据
+	 * @return
+	 */
+	public List<DataFile> getBigUserData();
+	
 }

@@ -119,7 +119,7 @@
 			<!-- /row -->
 			<div class="row">
 				<div class="col-xs-12">
-					<h3 class="header smaller lighter green">医院地理分布</h3>
+					<h3 class="header smaller lighter green">用户地理分布</h3>
 					<div class="col-sm-10" style="height: 550px;" id="map"></div>
 				</div>
 			</div>

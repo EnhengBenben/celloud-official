@@ -1,9 +1,7 @@
 package com.celloud.service;
 
-import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
-
 import com.celloud.sdo.LoginLog;
 import com.celloud.sdo.App;
 import com.celloud.service.impl.AppServiceImpl;
@@ -65,7 +63,7 @@ public interface AppService {
 	 * @param topN
 	 * @return
 	 */
-	public List<LoginLog> getTotalUserLogin(int topN);
+	public List<LoginLog> getTotalUserLogin(int role,int cmpId);
 	/**
 	 * 统计各浏览器
 	 * @return
@@ -103,4 +101,18 @@ public interface AppService {
 	 * @return
 	 */
 	public List<App> getAppList(Integer role, Integer cmpId, Date start, Date end, Integer topN);
+	
+	/**
+	 * 统计用户运行APP次数排序。
+	 * @param topN
+	 * @return
+	 */
+	public List<App> getUserRunNum(int role,int cmpId);
+	/**
+	 * 统计APP运行次数
+	 * @param topN
+	 * @return
+	 */
+	public List<App> getAppRunNum(int role,int cmpId);
+
 }

@@ -10,10 +10,10 @@
 	</script>
 	<ul class="breadcrumb">
 		<li>
-			<i class="icon-tasks"></i>
-			<a href="#">数据统计</a>
+			<i class="icon-hospital"></i>
+			<a href="#">医院统计</a>
 		</li>
-		<li class="active">大客户信息汇总</li>
+		<li class="active">大客户统计</li>
 	</ul>
 	<!-- .breadcrumb -->
 </div>
@@ -59,18 +59,18 @@
 			</div>
 			<!-- PAGE CONTENT ENDS -->
 		</div>
-		<!--  <div class="col-xs-12">
-			<h3 class="header smaller lighter green">用户数据量统计</h3>
-		</div>
-		<div class="col-xs-12" style="height: 450px;" id="fileSize"></div>
-		<div class="col-xs-12">
-			<h3 class="header smaller lighter green">用户文件数量统计</h3>
-		</div>
-		<div class="col-xs-12" style="height: 450px;" id="fileNum"></div>
-		<div class="col-xs-12" id="userDataList"></div>
-		-->
-		<!-- /.col -->
 	</div>
 	<!-- /.row -->
 </div>
 <!-- /.page-content -->
+<script type="text/javascript" >
+var oTable1 = $('#allUserDataList').dataTable({
+    "aoColumns" : [  {
+        "bSortable" : false
+    }, {
+        "bSortable" : false
+    }, null, null,null,null ],
+    iDisplayLength : 10,
+    "aaSorting":[[3,"desc"]],
+});
+</script>

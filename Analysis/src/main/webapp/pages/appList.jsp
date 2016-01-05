@@ -48,7 +48,7 @@
 									</td>
 									<td>${data.company_name }</td>
 									<td>
-										  <fmt:formatDate type="both" value="${data.createDate }" pattern="yyyy-MM-dd" />
+										  <fmt:formatDate type="both" value="${data.create_date }" pattern="yyyy-MM-dd" />
 									</td>
 									<td>${data.runNum }</td>
 									<td>${data.description }</td>
