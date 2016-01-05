@@ -124,7 +124,7 @@
        
      </div>
    </div>
-  <input type="hidden" id="user-navigation-hide" value="${loginUserInSession.navigation }">
+  <input type="hidden" id="user-navigation-hide" value="${sessionScope.loginUserInSession.navigation }">
   <script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
   <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
   <script src="//cdn.bootcss.com/jqueryui/1.11.4/jquery-ui.min.js"></script>
