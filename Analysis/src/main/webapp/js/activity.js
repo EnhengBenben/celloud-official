@@ -28,14 +28,14 @@ jQuery(function($) {
 function loadActivityFile() {
 	var start = $("#timeId").val();
 	var end = $("#timeId2").val();
-	var topN = $("#fileTopId").val();
+	var topN = $("#topId").val();
 	
 	var param = {
 		"startDate" : start,
 		"endDate" : end,
 		"topN" : topN
 	};
-	logReq(fileNumURL, param);
+	console.log(param);
 	$.get(fileNumURL, param, function(data) {
 		try {
 			hospital_chart(data);
