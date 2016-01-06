@@ -124,7 +124,10 @@ public class CompanyDaoImpl implements CompanyDao {
 	public Company getCompanyById(Integer compId) {
 		Connection conn = ConnectManager.getConnection();
 		String sql = "SELECT u.company_id,c.company_name,c.address,c.tel,c.create_date,count(distinct(u.user_id))userNum,count(distinct(d.dept_id))as deptNum,"
-				+ " group_concat(distinct(u.username))as userNames,group_concat(distinct(d.dept_name)) as deptNames"
+				+ " group_concat(distinct(u.username))as userNames,group_concat(distinct(d.dept_name)) as deptNames,"
+				+ "(select count(tf.file_id) from tb_file tf,tb_user tu where tu.company_id = u.company_id and tu.user_id = tf.user_id and tf.state=0)as fileNum, "
+				+ "(select sum(ifnull(tf.size,0)) from tb_file tf,tb_user tu where tu.company_id = u.company_id and tu.user_id = tf.user_id and tf.state=0)as size, "
+				+ " (select count(tr.report_id) FROM tb_report tr,tb_user tu2 where tr.user_id = tu2.user_id and tr.flag =0 and tu2.company_id = u.company_id) as reportNum "
 				+ " FROM tb_user u,tb_dept d,tb_company c where u.company_id=? and  c.company_id = u.company_id and u.dept_id = d.dept_id  group by u.company_id";
 		Company com = null;
 		LogUtil.info(log, sql);
