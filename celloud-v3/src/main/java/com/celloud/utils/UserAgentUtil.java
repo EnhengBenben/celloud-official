@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.celloud.constants.ConstantsData;
 import com.celloud.model.ActionLog;
 import com.github.jarod.qqwry.IPZone;
 import com.github.jarod.qqwry.QQWry;
@@ -49,7 +50,8 @@ public class UserAgentUtil {
             }
             if (qqwry == null) {
                 InputStream is = QQWry.class.getClassLoader().getResourceAsStream(QQWRY_PATH);
-                File file = new File(QQWRY_PATH);
+                String path = ConstantsData.getRequset().getSession().getServletContext().getRealPath(QQWRY_PATH);
+                File file = new File(path);
                 if (!file.exists()) {
                     FileUtils.copyInputStreamToFile(is, file);
                 }
