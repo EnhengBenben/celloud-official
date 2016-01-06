@@ -26,13 +26,11 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public Integer countMyApp(Integer userId) {
-        // TODO Auto-generated method stub
         return appMapper.countMyApp(userId, AppOffline.ON, AppIsAdd.ALREADY_ADDED);
     }
 
     @Override
     public List<Map<String, String>> countMyApp(Integer userId, Integer time) {
-        // TODO Auto-generated method stub
         return appMapper.countMyAppByTime(userId, time, AppOffline.ON, AppIsAdd.ALREADY_ADDED);
     }
 

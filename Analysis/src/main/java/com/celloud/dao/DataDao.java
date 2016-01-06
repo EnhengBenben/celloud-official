@@ -80,18 +80,10 @@ public interface DataDao {
 	public List<Map<String, Object>> getUserFileRunState(String userIds, String start, String end);
 	
 	/**
-	 * 统计周内各用上传文件大小、数量
-	 * @param start开始时间
+	 * 获取大客户的各月的数据与文件大小
 	 * @return
 	 */
-	public List<DataFile> getUserWeekData(Date start);
-	
-	/**
-	 * 统计周内每天上传的数据大小
-	 * @param start开始时间
-	 * @return
-	 */
-	public List<DataFile> getEachDayData(Date start);
+	public List<DataFile> getBigUserDataFile(Integer companyId);
 	
 	/**
 	 * 只查询大客户的数据
@@ -99,9 +91,4 @@ public interface DataDao {
 	 */
 	public List<DataFile> getBigUserData();
 	
-	/**
-	 * 获取大客户的各月的数据与文件大小
-	 * @return
-	 */
-	public List<DataFile> getBigUserDataFile(Integer companyId);
 }

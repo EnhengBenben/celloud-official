@@ -1,9 +1,7 @@
 package com.celloud.service;
 
-import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
-
 import com.celloud.sdo.LoginLog;
 import com.celloud.sdo.App;
 import com.celloud.service.impl.AppServiceImpl;
@@ -59,55 +57,20 @@ public interface AppService {
 	 * @return
 	 */
 	public List<App> getAppByCompanyId(Integer cmpId,Integer role);
-	
-	/**
-	 * 查询app运行排行榜
-	 * @param type 分组单位 月、周
-	 * @param topN
-	 * @param start
-	 * @param end
-	 * @return
-	 */
-	public List<App> getAppRunTop(String type,int topN,Date start,Date end);
-	
-	/**
-	 * 统计用户运行APP次数排序。
-	 * @param topN
-	 * @return
-	 */
-	public List<App> getTotalUserRunNum(int topN);
-	/**
-	 * 统计APP运行次数
-	 * @param topN
-	 * @return
-	 */
-	public List<App> getTotalAppRunNum(int topN);
 
 	/**
 	 * 总的用户登陆排序
 	 * @param topN
 	 * @return
 	 */
-	public List<LoginLog> getTotalUserLogin(int topN);
+	public List<LoginLog> getTotalUserLogin(int role,int cmpId);
 	/**
 	 * 统计各浏览器
 	 * @return
 	 */
 	public List<LoginLog> getBrowerCount();
-	/**
-	 *  统计周
-	 * @param start
-	 * @return
-	 */
-	public List<App> getAppRunNumCount(Date start);
-
-	/**
-	 *  统计周里每个用户运行APP次数
-	 * @param start
-	 * @return
-	 */
-	public List<App> getAppUserCount(Date start);
 	
+
 	/**
 	 * 取所有大客户的APP数量
 	 * @return
@@ -138,4 +101,18 @@ public interface AppService {
 	 * @return
 	 */
 	public List<App> getAppList(Integer role, Integer cmpId, Date start, Date end, Integer topN);
+	
+	/**
+	 * 统计用户运行APP次数排序。
+	 * @param topN
+	 * @return
+	 */
+	public List<App> getUserRunNum(int role,int cmpId);
+	/**
+	 * 统计APP运行次数
+	 * @param topN
+	 * @return
+	 */
+	public List<App> getAppRunNum(int role,int cmpId);
+
 }

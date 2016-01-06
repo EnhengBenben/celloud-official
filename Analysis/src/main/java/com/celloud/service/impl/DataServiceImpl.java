@@ -1,9 +1,6 @@
 package com.celloud.service.impl;
-
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 import com.celloud.utils.EntryUtil;
 import com.celloud.dao.DataDao;
 import com.celloud.sdo.DataFile;
@@ -68,25 +65,16 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public List<DataFile> getUserWeekData(Date start) {
-		return dataDao.getUserWeekData(start);
-	}
-
-	@Override
-	public List<DataFile> getEachDayData(Date start) {
-		return dataDao.getEachDayData(start);
-	}
-
-	@Override
-	public List<DataFile> getBigUserData() {
-		return dataDao.getBigUserData();
-	}
-
-	@Override
 	public List<DataFile> getBigUserDataFile(Integer companyId) {
 		//List<DataFile> res = null;
 		//res = EntryUtil.toInsert(dataDao.getBigUserDataFile(companyId));
 		return dataDao.getBigUserDataFile(companyId);
+	}
+
+	@Override
+	public List<DataFile> getBigUserData() {
+		
+		return dataDao.getBigUserData();
 	}
 
 }

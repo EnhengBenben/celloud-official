@@ -9,26 +9,20 @@
 		} catch (e) {
 		}
 	</script>
-	<ul class="breadcrumb">
+	<ul class="breadcrumb" >
 		<li>
 			<i class="icon-cloud"></i>
 			<a href="#">APP统计</a>
 		</li>
-		<li class="active">大客户APP统计</li>
+		<li class="active"><a href="javascript:bigUserAppList()">大客户统计</a></li>
+		<li class="active"  id="cmpName" style="display:" ></li>
 	</ul>
 	<!-- .breadcrumb -->
 </div>
-<div class="page-content">
+<div class="page-content"> 
 	<div class="row">
-		<div class="col-xs-12">
-			<h3 class="header smaller lighter blue">
-				<span onclick="toAPPList()">大客户APP统计</span>
-				<small id="secondTitle" class="hide">
-					<i class="icon-double-angle-right"></i>
-					<span id="_oneApp"></span>
-				</small>
-			</h3>
-			<div class="table-header hide" id="_appName"></div>
+		<div class="col-xs-12" id="cmpId">
+			<div class="table-header hide" ></div>
 			<div class="col-xs-11 table-responsive ">
 				<table id="appList" class="table table-striped table-bordered table-hover">
 					<thead>
@@ -59,7 +53,6 @@
 						</c:if>
 					</tbody>
 				</table>
-				<div class="col-sm-10" style="height: 450px;" id="echartView"></div>
 				<div class="col-sm-12" id="appListDiv"></div>
 			</div>
 			<!-- PAGE CONTENT ENDS -->
@@ -70,31 +63,14 @@
 </div>
 <!-- /.page-content -->
 <script type="text/javascript">
-   getToAppList("3","北京嘉宝仁和医疗科技有限公司");
    function getToAppList(id, name) {
-		$("#_oneApp").html(name);
-		$("#secondTitle").removeClass("hide");
-		loadRunNumChart(id);
+		$("#cmpId").val(id);
+		$("#cmpName").html(name);
+		$("#cmpName").css('display','inline'); 
 		$.get("app!getOneBigUserAppList", {
 			"user.user_id" : id
 		}, function(responseText) {
-			$("#appListDiv").html(responseText);
-		});
-		
-	}
-	function loadRunNumChart(id) {
-		$.get("app!getOneBigUserAppListJson", {
-			"user.user_id" : id
-		}, function(res) {
-			var xAxis = new Array(res.length);
-			var runNum = new Array(res.length);
-			for (var i = 0; i < res.length; i++) {
-				xAxis[i] = res[i].app_name;
-				runNum[i] = res[i].runNum;
-			}
-			var option = makeOptionScrollUnit(xAxis, runNum, "运行次数", barType, 0, 10);
-			var myChart = echarts.init(document.getElementById('echartView'));
-			myChart.setOption(option);
+			$("#cmpId").html(responseText);
 		});
 	}
 </script>

@@ -112,7 +112,8 @@ public class DataDaoImpl implements DataDao {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Connection conn = ConnectManager.getConnection();
 		String sql = "select count(f.file_id) num from tb_file f, tb_user_company_relat uc where f.state=0 and f.user_id = uc.user_id and f.user_id not in ("
-				+ noUserid + ") " + SqlController.whereCompany("uc", "company_id", role, companyId);
+				+ noUserid + ") "
+				+ SqlController.whereCompany("uc", "company_id", role, companyId);
 
 		try {
 			map = qr.query(conn, sql, new MapHandler());
@@ -155,60 +156,6 @@ public class DataDaoImpl implements DataDao {
 	}
 
 	@Override
-	public List<DataFile> getUserWeekData(Date start) {
-		List<DataFile> list = null;
-		Connection conn = ConnectManager.getConnection();
-
-		String sql = " select f.user_id,count(f.file_id)as fileNum, sum(f.size) as size,u.username from tb_file f,tb_user u "
-				+ " where u.user_id = f.user_id"
-				+ " and left(date_add(f.create_date,INTERVAL -weekday(f.create_date) day),10)=left(date_add(?,INTERVAL -weekday(?) day),10)"
-				+ " group by f.user_id" + " order by fileNum desc";
-		ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
-		try {
-			list = qr.query(conn, sql, rsh, start, start);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-
-	@Override
-	public List<DataFile> getEachDayData(Date start) {
-		List<DataFile> list = null;
-		Connection conn = ConnectManager.getConnection();
-		String sql = " select left(f.create_date,10)as weekDate,count(f.file_id)as fileNum, sum(f.size) as size,u.username from tb_file f,tb_user u "
-				+ " where u.user_id = f.user_id"
-				+ " and left(date_add(f.create_date,INTERVAL -weekday(f.create_date) day),10)=left(date_add(?,INTERVAL -weekday(?) day),10)"
-				+ " group by weekDate" + " order by weekDate desc";
-		ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
-		try {
-			list = qr.query(conn, sql, rsh, start, start);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-
-	@Override
-	public List<DataFile> getBigUserData() {
-		List<DataFile> list = null;
-		Connection conn = ConnectManager.getConnection();
-		String sql = " select sum(f.size) as size,count(f.file_id)as fileNum,uc.company_id,c.company_name "
-				+ " from tb_file f,tb_user_company_relat uc,tb_company c "
-				+ " where f.user_id = uc.user_id and c.company_name is not null  "
-				+ SqlController.notUserId("f",  noUserid)
-				+ " and uc.company_id = c.company_id " 
-				+ " group by uc.company_id order by fileNum desc";
-		ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
-		try {
-			list = qr.query(conn, sql, rsh);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-
-	@Override
 	public List<DataFile> getBigUserDataFile(Integer cmpId) {
 		List<DataFile> list = null;
 		Connection conn = ConnectManager.getConnection();
@@ -224,6 +171,25 @@ public class DataDaoImpl implements DataDao {
 			list = qr.query(conn, sql, rsh,cmpId);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
+		}
+		return list;
+	}
+
+	@Override
+	public List<DataFile> getBigUserData() {
+		List<DataFile> list = null;
+		Connection conn = ConnectManager.getConnection();
+		String sql = " select sum(f.size) as size,count(f.file_id)as fileNum,uc.company_id,c.company_name "
+				+ " from tb_file f,tb_user_company_relat uc,tb_company c "
+				+ " where f.user_id = uc.user_id and c.company_name is not null  "
+				+ SqlController.notUserId("f", noUserid)
+				+ " and uc.company_id = c.company_id " 
+				+ " group by uc.company_id order by fileNum desc";
+		ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
+		try {
+			list = qr.query(conn, sql, rsh);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return list;
 	}

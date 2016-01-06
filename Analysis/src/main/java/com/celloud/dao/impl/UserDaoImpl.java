@@ -159,7 +159,8 @@ public class UserDaoImpl implements UserDao {
 		Connection conn = ConnectManager.getConnection();
 		List<Map<String, Object>> list = null;
 		String sql = "select count(u.user_id) num from tb_user u ,tb_user_company_relat uc where  uc.user_id = u.user_id and u.state=0 and u.user_id not in ("
-				+ noUserid + ") " + SqlController.whereCompany("uc", "company_id", role, cmpId);
+				+ noUserid + ") " 
+				+ SqlController.whereCompany("uc", "company_id", role, cmpId);
 		LogUtil.info(log, sql);
 		try {
 			list = qr.query(conn, sql, new MapListHandler());
@@ -449,46 +450,7 @@ public class UserDaoImpl implements UserDao {
 		return list;
 	}
 
-	@Override
-	public List<LoginLog> getLoginTop(String type, int topN, Date start, Date end) {
-		List<LoginLog> list = null;
-		Connection conn = ConnectManager.getConnection();
-		String sql = " select l.user_name as userName,count(l.user_name) as logNum ,left(date_add(l.log_date ,INTERVAL -weekday(l.log_date ) day),10)as weekDate "
-				+ " from tb_log l where l.user_name is not null "
-				+ SqlController.notUserName("l", "user_name", 2, noUsername)
-				+ SqlController.whereifTimeNull("l", "log_date", start, end) + " group by userName,weekDate "
-				+ " order by weekDate desc,logNum desc ";
-		log.info("query:" + sql);
-		try {
-			ResultSetHandler<List<LoginLog>> rsh = new BeanListHandler<LoginLog>(LoginLog.class);
-			list = qr.query(conn, sql, rsh, start, end);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
 
-	@Override
-	public List<DataFile> getUserDataTop(String type, int topN, Date start, Date end) {
-		List<DataFile> list = null;
-		Connection conn = ConnectManager.getConnection();
-
-		String sql = "select left(date_add(f.create_date ,INTERVAL -weekday(f.create_date ) day),10)as weekDate,f.user_id, "
-				+ " (select username from tb_user where user_id = f.user_id)as userName,sum(f.size) as size from tb_file f "
-				+ " where f.user_id is not null " + SqlController.whereifTimeNull("f", "create_date", start, end)
-				+ SqlController.notUserId("f", noUserid) + " group by weekDate, f.user_id "
-				+ " order by weekDate desc,size desc";
-		log.info("query:" + sql);
-		try {
-			ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<DataFile>(DataFile.class);
-			log.info("query:" + sql);
-			list = qr.query(conn, sql, rsh, start, end);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return list;
-	}
 
 	@Override
 	public List<TotalCount> getCountInHistory() {
@@ -498,10 +460,10 @@ public class UserDaoImpl implements UserDao {
 		String sql = "select tb1.weekDate as time, tb1.logNum, tb2.activityUser,ifnull(tb3.runNum,0) as runNum,ifnull(tb4.activityApp,0) as activityApp,ifnull(tb5.dataSize,0)as dataSize from "
 
 				+ " (select  left(date_add(l.log_date ,INTERVAL -weekday(l.log_date ) day),10)as weekDate,count(l.user_name)logNum "
-				+ " from tb_log l " + SqlController.notUserName("l", "user_name", 2,noUsername)
+				+ " from tb_log l " + SqlController.notUserName("l", "user_name",noUsername)
 				+ " group by weekDate) tb1" + " left join"
 				+ " (select  left(date_add(l.log_date ,INTERVAL -weekday(l.log_date ) day),10)as weekDate,count(DISTINCT(l.user_name))as activityUser"
-				+ " from tb_log l " + SqlController.notUserName("l", "user_name",2, noUsername)
+				+ " from tb_log l " + SqlController.notUserName("l", "user_name", noUsername)
 				+ " group by weekDate)tb2" + " on tb1.weekDate = tb2.weekDate" + " left join"
 				+ " (select left(date_add(r.create_date ,INTERVAL -weekday(r.create_date ) day),10)as weekDate,count(r.report_id)as runNum from tb_report r "
 				+ " on tb1.weekDate = tb3.weekDate" + " left join"
@@ -521,30 +483,7 @@ public class UserDaoImpl implements UserDao {
 		return list;
 	}
 
-	@Override
-	public List<LoginLog> getLoginLog(String isWeek) {
-		List<LoginLog> list = null;
-		String segSQL = null;
-		Connection conn = ConnectManager.getConnection();
-
-		if ("week".equals(isWeek)) {//
-			segSQL = " left(date_add(create_date ,INTERVAL -weekday(create_date ) day),10) =left(date_add(now() ,INTERVAL -weekday(now()) day),10) ";
-		} else {
-			segSQL = " left (create_date,7) = left(now(),7) ";
-		}
-
-		String sql = "select user_name,count(user_name) from tb_log where user_name in (select username from tb_user where "
-				+ segSQL + " ) group by user_name;";
-		log.info("query:" + sql);
-		try {
-			ResultSetHandler<List<LoginLog>> rsh = new BeanListHandler<LoginLog>(LoginLog.class);
-			list = qr.query(conn, sql, rsh);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-
+	
 	@Override
 	public List<DataFile> getUserFileSize(Connection conn, int role, int cmpId, Date start, Date end, int topN) {
 		List<DataFile> list = null;

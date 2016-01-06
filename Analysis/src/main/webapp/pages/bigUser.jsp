@@ -8,31 +8,21 @@
 		} catch (e) {
 		}
 	</script>
-
 	<ul class="breadcrumb">
 		<li>
 			<i class="icon-tasks"></i>
 			<a href="#">数据统计</a>
 		</li>
-		<li class="active">大客户信息汇总</li>
+		<li class="active"><a onclick="bigUserCount()">大客户信息汇总</a></li>
 	</ul>
 	<!-- .breadcrumb -->
 </div>
-
 <div class="page-content">
 	<div class="row">
-		<h3 class="header smaller lighter blue">
-			<span onclick="bigUserCount()">大客户信息统计</span>
-			<small id="secondTitle" class="hide">
-                    <i class="icon-double-angle-right"></i>
-                    <span id="_oneApp"></span>
-                </small>
-		</h3>
-		<div style="htight: 10px"></div>
 		<div class="col-xs-11" style="margin-left: 60px; margin-top: 15px">
 			<div class="table-header hide" id="_companyName"></div>
 			<div class="table-responsive" id="dataDiv">
-				<table id="allUserDataList" class="table table-striped table-bordered table-hover">
+				<table id="bigUserTb" class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
 							<th>大客户编号</th>
@@ -63,15 +53,6 @@
 			</div>
 			<!-- PAGE CONTENT ENDS -->
 		</div>
-		<div class="col-xs-12">
-			<h3 class="header smaller lighter green">用户数据量统计</h3>
-		</div>
-		<div class="col-xs-12" style="height: 450px;" id="fileSize"></div>
-		<div class="col-xs-12">
-			<h3 class="header smaller lighter green">用户文件数量统计</h3>
-		</div>
-		<div class="col-xs-12" style="height: 450px;" id="fileNum"></div>
-		<div class="col-xs-12" id="userDataList"></div>
 		<!-- /.col -->
 	</div>
 	<!-- /.row -->

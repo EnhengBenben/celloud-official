@@ -20,7 +20,7 @@ public interface DataService {
      * @param userId
      * @return
      */
-    Integer countData(Integer userId);
+    public Integer countData(Integer userId);
 
     /**
      * (重构)统计帐号下的文件大小
@@ -28,7 +28,7 @@ public interface DataService {
      * @param userId
      * @return
      */
-    Long sumData(Integer userId);
+    public Long sumData(Integer userId);
 
     /**
      * (重构)按照时间段统计用户数据
@@ -37,17 +37,17 @@ public interface DataService {
      * @param time
      * @return
      */
-    List<Map<String, String>> countData(Integer userId, Integer time);
-    
+    public List<Map<String, String>> countData(Integer userId, Integer time);
+
     /**
-     *(重构)按照时间段统计帐号下的文件大小
+     * (重构)按照时间段统计帐号下的文件大小
      *
      * @param userId
      * @param time
      * @return
      * @date 2015年12月30日 下午4:03:12
      */
-    List<Map<String, String>> sumData(Integer userId, Integer time);
+    public List<Map<String, String>> sumData(Integer userId, Integer time);
 
     /**
      * (重构)添加上传文件信息
@@ -55,7 +55,7 @@ public interface DataService {
      * @param data
      * @return
      */
-    int addDataInfo(DataFile data);
+    public int addDataInfo(DataFile data);
 
     /**
      * 修改数据信息
@@ -63,19 +63,26 @@ public interface DataService {
      * @param data
      * @return
      */
-    int updateDataInfoByFileId(DataFile data);
+    public int updateDataInfoByFileId(DataFile data);
 
     /**
      * 数据分页列表
      * 
      * @param page
+     * @param userId
      * @return
      */
     PageList<DataFile> dataAllList(Page page, Integer userId);
 
     /**
-     * 数据分页列表
+     * 按条件检索数据列表
+     * 
      * @param page
+     * @param userId
+     * @param condition
+     * @param sort
+     * @param sortDateType
+     * @param sortNameType
      * @return
      */
     PageList<DataFile> dataLists(Page page, Integer userId, String condition,

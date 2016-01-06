@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
-import com.celloud.email.EmailService;
 import com.celloud.model.User;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.UserService;
+import com.celloud.utils.EmailUtils;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.ResetPwdUtils;
 
@@ -32,16 +32,6 @@ import com.celloud.utils.ResetPwdUtils;
 public class HomeAction {
     @Resource
     private UserService userService;
-
-    // TODO 删除
-    @RequestMapping("users")
-    @ResponseBody
-    public PageList<User> users(@RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = Constants.DEFAULT_PAGE_SIZE + "") int size) {
-
-        Page pager = new Page(page, size);
-        return userService.findUsers(pager);
-    }
 
     /**
      * 用户重置密码--跳转到重置密码页面
@@ -109,11 +99,11 @@ public class HomeAction {
         }
         String randomCode = MD5Util.getMD5(String.valueOf(new Date().getTime()));
         userService.insertFindPwdInfo(user.getUserId(), randomCode);
-        EmailService.send(user.getEmail(),
+        EmailUtils.sendWithTitle(ResetPwdUtils.title,
                 ResetPwdUtils.content.replaceAll("username", user.getUsername()).replaceAll("url",
                         ResetPwdUtils.celloudPath.replaceAll("resetpwduname", user.getUsername())
                                 .replaceAll("resetpwdcode", randomCode)),
-                ResetPwdUtils.title, true);
+                user.getEmail());
         email = email.substring(0, 1) + "***" + email.substring(email.lastIndexOf("@"));
         String emailAddress = "http://mail." + email.substring(email.lastIndexOf("@") + 1);
         return mv.addObject("sucess", "ok").addObject("email", email).addObject("emailAddress", emailAddress);

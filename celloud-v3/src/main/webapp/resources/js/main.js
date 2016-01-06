@@ -1,4 +1,5 @@
 var intro;
+var hasNavi;
 $(function () {
   $.ajaxSetup ({
 	  complete:function(request,textStatus){
@@ -12,7 +13,7 @@ $(function () {
 	  cache: false //关闭AJAX相应的缓存
   });
   userCount.showUserCount();
-  var hasNavi = $("#user-navigation-hide").val();
+  hasNavi = $("#user-navigation-hide").val();
   if(hasNavi==1){
   	  intro = introJs();
   	  intro.setOption('tooltipPosition', 'auto');
@@ -94,7 +95,7 @@ var userCount=(function(userCount){
 		);
 	};
 	self.fileDayCount=function(){
-		$.get("count/fileDayCount.action",function(data){
+		$.get("count/fileDayCount",function(data){
 			var x = "[";
 			var y = [];
 			$.each(data,function(index,map){
@@ -107,7 +108,7 @@ var userCount=(function(userCount){
 		});
 	};
 	self.fileMonthCount=function(){
-		$.get("count/fileMonthCount.action",function(data){
+		$.get("count/fileMonthCount",function(data){
 			var x = "[";
 			var y = [];
 			$.each(data,function(index,map){
@@ -121,7 +122,7 @@ var userCount=(function(userCount){
 		});
 	};
 	self.fileSizeDayCount=function(){
-		$.get("count/fileSizeDayCount.action",function(data){
+		$.get("count/fileSizeDayCount",function(data){
 			var x = "[";
 			var y = [];
 			$.each(data,function(index,map){
@@ -134,7 +135,7 @@ var userCount=(function(userCount){
 		});
 	};
 	self.fileSizeMonthCount=function(){
-		$.get("count/fileSizeMonthCount.action",function(data){
+		$.get("count/fileSizeMonthCount",function(data){
 			var x = "[";
 			var y = [];
 			$.each(data,function(index,map){
@@ -149,7 +150,7 @@ var userCount=(function(userCount){
 	};
 
 	self.reportDayCount=function(){
-		$.get("count/reportDayCount.action",function(data){
+		$.get("count/reportDayCount",function(data){
 			var x = "[";
 			var y = [];
 			$.each(data,function(index,map){
@@ -163,7 +164,7 @@ var userCount=(function(userCount){
 	};
 
 	self.reportMonthCount=function(){
-		$.get("count/reportMonthCount.action",function(data){
+		$.get("count/reportMonthCount",function(data){
 			var x = "[";
 			var y = [];
 			$.each(data,function(index,map){
@@ -178,7 +179,7 @@ var userCount=(function(userCount){
 	};
 
 	self.appDayCount=function(){
-		$.get("count/appDayCount.action",function(data){
+		$.get("count/appDayCount",function(data){
 			var x = "[";
 			var y = [];
 			$.each(data,function(index,map){
@@ -192,7 +193,7 @@ var userCount=(function(userCount){
 	};
 	
 	self.appMonthCount=function(){
-		$.get("count/appMonthCount.action",function(data){
+		$.get("count/appMonthCount",function(data){
 			var x = "[";
 			var y = [];
 			$.each(data,function(index,map){
@@ -209,7 +210,7 @@ var userCount=(function(userCount){
 	self.showUserCount=function(){
 		$("#uploadDIV").css("display","none");
 		$("#mainDIV").css("display","");
-		$.get("count/loginCount.action",function(response){
+		$.get("count/loginCount",function(response){
 			$("#mainDIV").html(response);
 			self.fileMonthCount();
 			self.fileSizeMonthCount();
@@ -228,7 +229,7 @@ function showUpload(){
 	$("#uploadDIV").css("display","");
 	$("#mainDIV").css("display","none");
 	if($("#uploadDIV").html()==""){
-		$("#uploadDIV").load("pages/data/file_upload.jsp");
+		$("#uploadDIV").load("pages/upload/upload.jsp");
 	}
 }
 

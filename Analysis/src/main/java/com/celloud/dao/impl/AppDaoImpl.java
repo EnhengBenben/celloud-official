@@ -157,50 +157,16 @@ public class AppDaoImpl implements AppDao {
 		return list;
 	}
 
-	@Override
-	public List<App> getAppRunTop(String type, int topN, Date start, Date end) {
-		List<App> list = null;
-		Connection conn = ConnectManager.getConnection();
-
-		String sql = " select left(date_add(r.create_date ,INTERVAL -weekday(r.create_date ) day),10)as weekDate,"
-				+ " r.software_id,(select s.software_name from tb_software s where s.software_id=r.software_id )as softwareName,count(r.software_id) as runNum"
-				+ " from tb_report r " + " where r.create_date is not null"
-				+ SqlController.whereifTimeNull("r", "create_date", start, end) + " group by weekDate,r.software_id"
-				+ " order by weekDate desc,runNum desc";
-		// + SqlController.limit(topN);
-		log.info("query:" + sql);
-		try {
-			ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);
-			list = qr.query(conn, sql, rsh, start, end);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
 
 	@Override
-	public List<App> getTotalUserRunNum(int topN) {
-		List<App> list = null;
-		Connection conn = ConnectManager.getConnection();
-		String sql = "select r.user_id,count(r.report_id) as runNum,u.username FROM tb_report r,tb_user u where u.user_id = r.user_id and u.state =0 and r.flag = 1 "
-				+ SqlController.notUserId("u",  noUserid) + "  group by user_id order by runNum desc";
-		LogUtil.info(log, sql);
-		try {
-			ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);
-			list = qr.query(conn, sql, rsh);
-		} catch (SQLException e) {
-			LogUtil.query(log, sql, e);
-		}
-		return list;
-	}
-
-	@Override
-	public List<LoginLog> getTotalUserLogin(int topN) {
+	public List<LoginLog> getTotalUserLogin(int role,int cmpId) {
 		List<LoginLog> list = null;
 		Connection conn = ConnectManager.getConnection();
-		String sql = "select l.user_name ,count(l.user_name) as logNum from tb_log l,tb_user u "
-				+ " where l.user_name is not null and l.user_name = u.username and u.state=0"
-				+ SqlController.notUserName("l", "user_name", 3, noUsername) + " group by l.user_name"
+		String sql = "select l.user_name ,count(l.user_name) as logNum from tb_log l,tb_user u,tb_user_company_relat uc "
+				+ " where l.user_name is not null and l.user_name = u.username and u.state=0 and u.user_id = uc.user_id "
+				+ SqlController.notUserName("l", "user_name", noUsername) 
+				+ SqlController.whereCompany("uc", "company_id", role, cmpId)
+				+ " group by l.user_name"
 				+ " order by logNum desc";
 		LogUtil.info(log, sql);
 		try {
@@ -216,66 +182,12 @@ public class AppDaoImpl implements AppDao {
 	public List<LoginLog> getBrowerCount() {
 		List<LoginLog> list = null;
 		Connection conn = ConnectManager.getConnection();
-		String sql = "SELECT l.browser,count(l.browser)as logNum FROM tb_log l "
-				+ SqlController.notUserName("l", "user_name", 3,noUsername) + "group by l.browser "
+		String sql = "SELECT l.browser,count(l.browser)as logNum FROM tb_log l where 1=1 "
+				+ SqlController.notUserName("l", "user_name",noUsername) + "group by l.browser "
 				+ "order by logNum desc";
-		log.info("query:" + sql);
-		try {
-			ResultSetHandler<List<LoginLog>> rsh = new BeanListHandler<LoginLog>(LoginLog.class);
-			list = qr.query(conn, sql, rsh);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-
-	@Override
-	public List<App> getAppRunNumCount(Date start) {
-		List<App> list = null;
-		Connection conn = ConnectManager.getConnection();
-		String sql = "select left(r.create_date,10) as weekDate,count(r.report_id)as runNum from tb_report r"
-				+ " where r.create_date is not null" + SqlController.notUserId("r", noUserid)
-				+ " and left(date_add(r.create_date,INTERVAL -weekday(r.create_date) day),10)=left(date_add(?,INTERVAL -weekday(?) day),10)"
-				+ " group by weekDate" + " order by weekDate desc";
-		log.info("query:" + sql);
-		try {
-			ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);
-			list = qr.query(conn, sql, rsh, start, start);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-
-	@Override
-	public List<App> getAppUserCount(Date start) {
-		List<App> list = null;
-		Connection conn = ConnectManager.getConnection();
-		String sql = "select r.user_id,(select username from tb_user where user_id = r.user_id)as userName,count(r.report_id)as runNum from tb_report r"
-				+ " where r.create_date is not null" + SqlController.notUserId("r",  noUserid)
-				+ " and left(date_add(r.create_date,INTERVAL -weekday(r.create_date) day),10)=left(date_add(?,INTERVAL -weekday(?) day),10)"
-				+ " group by r.user_id" + " order by runNum desc";
-		log.info("query:" + sql);
-		try {
-			ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);
-			list = qr.query(conn, sql, rsh, start, start);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-
-	@Override
-	public List<App> getTotalAppRunNum(int topN) {
-		List<App> list = null;
-		Connection conn = ConnectManager.getConnection();
-		String sql = "select r.app_id,count(r.app_id)as runNum,"
-				+ " (select app_name from tb_app  where app_id = r.app_id)as app_name "
-				+ " from tb_report r where r. flag=0  group by r.app_id  order by runNum desc "
-				+ SqlController.limit(topN);
 		LogUtil.info(log, sql);
 		try {
-			ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);
+			ResultSetHandler<List<LoginLog>> rsh = new BeanListHandler<LoginLog>(LoginLog.class);
 			list = qr.query(conn, sql, rsh);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
@@ -352,6 +264,44 @@ public class AppDaoImpl implements AppDao {
 		} catch (Exception e) {
 			LogUtil.query(log, sql, e);
 			ConnectManager.close(conn);
+		}
+		return list;
+	}
+
+	@Override
+	public List<App> getUserRunNum(int role, int cmpId) {
+		List<App> list = null;
+		Connection conn = ConnectManager.getConnection();
+		String sql = "select r.user_id,count(r.report_id) as runNum,u.username FROM tb_report r,tb_user u, tb_user_company_relat uc  where uc.user_id = u.user_id and u.user_id = r.user_id and u.state =0 and r.flag = 1 "
+				+ SqlController.notUserId("u" , noUserid)
+				+ SqlController.whereCompany("uc", "company_id", role, cmpId)
+				+ "  group by user_id order by runNum desc";
+		LogUtil.info(log, sql);
+		try {
+			ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);
+			list = qr.query(conn, sql, rsh);
+		} catch (SQLException e) {
+			LogUtil.query(log, sql, e);
+		}
+		return list;
+	}
+
+	@Override
+	public List<App> getAppRunNum(int role, int cmpId) {
+		List<App> list = null;
+		Connection conn = ConnectManager.getConnection();
+		String sql = "select r.app_id,count(r.app_id)as runNum,"
+				+ " (select app_name from tb_app  where app_id = r.app_id)as app_name "
+				+ " from tb_report r,tb_user_company_relat uc where r. flag=0 and r.user_id = uc.user_id "
+				+ SqlController.notUserId("r", noUserid)
+				+ SqlController.whereCompany("uc", "company_id", role, cmpId)
+				+ "  group by r.app_id  order by runNum desc ";
+		LogUtil.info(log, sql);
+		try {
+			ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);
+			list = qr.query(conn, sql, rsh);
+		} catch (SQLException e) {
+			LogUtil.query(log, sql, e);
 		}
 		return list;
 	}

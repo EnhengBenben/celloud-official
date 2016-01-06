@@ -3,6 +3,7 @@ package com.celloud.model;
 import java.util.Date;
 
 public class ActionLog {
+    private Integer userId;
     private String userName;
 
     private String operate;
@@ -103,10 +104,24 @@ public class ActionLog {
         this.address = address == null ? null : address.trim();
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
         return "{ browser:" + getBrowser() + " " + getBrowserVersion() + ",os:" + this.os + " " + getOsVersion()
-                + ",ip:" + this.ip + ",address:" + this.address + ",username:" + this.userName + ",operate:"
-                + this.operate + ",message:" + this.message + " }";
+                + ",ip:" + this.ip + ",address:" + this.address + ",userId:" + this.userId + ",username:"
+                + this.userName + ",operate:" + this.operate + ",message:" + this.message + " }";
+    }
+
+    public String toResume() {
+        return "{userId:" + this.userId + " ,username:" + this.userName + ",browser:" + getBrowser() + " "
+                + getBrowserVersion() + ",os:" + this.os + " " + getOsVersion() + ",ip:" + this.ip + ",address:"
+                + this.address + "}";
     }
 }

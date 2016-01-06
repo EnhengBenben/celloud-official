@@ -22,7 +22,6 @@ import com.google.inject.Inject;
 		@Result(name = "appActivity", location = "../../pages/appActivity.jsp"),
 		@Result(name = "bigUserAppList", location = "../../pages/appListBigUserCount.jsp"),
 		@Result(name = "oneBigUserApp", location = "../../pages/appListOneBigUser.jsp"),
-
 		@Result(name = "success", type = "json", params = { "root", "fileName" }),
 		@Result(name = "AppList", type = "json", params = { "root", "appList" }),
 		})
@@ -66,20 +65,6 @@ public class AppAction extends BaseAction {
 	public String getBigUserAppList(){
 		appList = appService.getBigUserAppList();
 		return "bigUserAppList";
-	}
-	public String appRunTop(){
-		top=10;
-	    appList = appService.getAppRunTop(type, top, startDate, endDate);
-		return "AppList";
-	}
-	/**
-	 * 查询APP每个月的运行次数
-	 * @return
-	 */
-	public String getAppRun(){
-		appList = appService.getAppRun(app.getApp_id());
-		//appList = EntryUtil.toInsert(list)
-		return "AppList";
 	}
 	
 	public String getAppRunList(){

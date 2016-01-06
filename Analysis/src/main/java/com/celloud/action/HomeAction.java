@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -15,29 +14,25 @@ import org.apache.struts2.convention.annotation.Results;
 import com.celloud.sdo.*;
 import com.celloud.service.CompanyService;
 import com.celloud.service.DataService;
-import com.celloud.service.LoginLogService;
 import com.celloud.service.ReportService;
 import com.celloud.service.AppService;
 import com.celloud.service.UserService;
-import com.celloud.utils.DateUtil;
+import com.celloud.utils.LogUtil;
 import com.google.inject.Inject;
 
 @ParentPackage("json-default")
 @Action("home")
 @Results({ @Result(name = "success", location = "../../pages/home.jsp"),
-		@Result(name = "toWeekReport", location = "../../pages/weekExport.jsp"),
 		@Result(name = "toBigUser", location = "../../pages/bigUser.jsp"),
 		@Result(name = "toHospitalBigUser", location = "../../pages/hospitalBigUser.jsp"),
+		@Result(name = "toBigUser", location = "../../pages/bigUser.jsp"),
+		@Result(name = "toBigUserOne", location = "../../pages/bigUserOne.jsp"),
+		
 		@Result(name = "browserCount", type = "json", params = { "root", "browserList" }),
 		@Result(name = "historyList", type = "json", params = { "root", "historyList" }),
-
 		@Result(name = "softList", type = "json", params = { "root", "totalSoftList" }),
-		@Result(name = "eachUserRunApp", type = "json", params = { "root", "eachAppList" }),
 		@Result(name = "AppList", type = "json", params = { "root", "appList" }),
-
-		@Result(name = "loginList", type = "json", params = { "root", "logList" }),
-		@Result(name = "eachDayDataSize", type = "json", params = { "root", "eachDataList" }),
-		@Result(name = "userFileList", type = "json", params = { "root", "userDataList" }), })
+		@Result(name = "loginList", type = "json", params = { "root", "logList" }) })
 public class HomeAction extends BaseAction {
 	Logger log = Logger.getLogger(HomeAction.class);
 	private static final long serialVersionUID = 1L;
@@ -49,15 +44,13 @@ public class HomeAction extends BaseAction {
 	private CompanyService companyService;
 	@Inject
 	private ReportService reportService;
-	@Inject
-	private LoginLogService loginService;
+
 	@Inject
 	private AppService appService;
 	private Map<String, Object> resultMap;
 	private List<LoginLog> logList;
 	private List<DataFile> dataList;
 	private List<App> appList;
-	private Date startDate;
 	private Date endDate;
 	private String uids; // userId,..
 	private int orderType; // 1文件数量,2数据大小
@@ -71,14 +64,8 @@ public class HomeAction extends BaseAction {
 	private List<LoginLog> browserList;
 	/** 各用户运行app次数 */
 	private List<App> userSoftList;
-	/** 新用户活跃度统计 */
-	private List<LoginLog> newUserList;
 	/** 前20用户运行A之 */
 	private List<App> totalSoftList;
-	/** 每天运行APP的次数 **/
-	private List<App> eachAppList;
-	/** 每天上传数据个数、大小统计 **/
-	private List<DataFile> userDataList;
 	/** 每天上传数据大小统计 **/
 	private List<DataFile> eachDataList;
 	private List<Company> cmpList;
@@ -112,128 +99,43 @@ public class HomeAction extends BaseAction {
 
 		return "success";
 	}
-
-	/** 周统计报表 */
-	public String toWeekReport() {
-		log.info("toWeekReport");
-		try {
-			if (startDate == null) {
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				Date d = sdf.parse("2015-11-02");
-				startDate = DateUtil.getLastMonday(d);
-				endDate = DateUtil.getLastSunday(d);
-			}
-			log.info("startDate:" + startDate);
-			log.info("endDate:" + endDate);
-			/** Top 10统计 */
-			dataList = userService.getUserDataTop(groupType, topN, startDate, endDate);
-			log.info("Top 10统计dataList" + dataList.size());
-			logList = userService.getLoginTop(groupType, topN, startDate, endDate);
-			log.info("Top 10统计logList" + logList.size());
-			appList = appService.getAppRunTop(groupType, topN, startDate, endDate);
-			log.info("Top 10统计softList" + logList.size());
-
-			/** 周每天登陆统计 */
-			totalLogList = loginService.getUserLoginInWeek(startDate);
-			log.info("totalLogList:" + totalLogList.size());
-			/** 周每天APP运行次数统计 */
-			totalSoftList = appService.getAppRunNumCount(startDate);
-			log.info("totalSoftList:" + totalSoftList.size());
-
-			/** 统计用户登陆次数 */
-			logList = loginService.getUserLoginNum(startDate);
-			log.info("logList:" + logList.size());
-
-			/** 用户运行App情况统计 */
-			eachAppList = appService.getAppUserCount(startDate);
-			log.info("eachAppList:" + eachAppList.size());
-
-			/** 客户端使用情况统计 */
-			browserList = loginService.getBrowserInWeek(startDate);
-			log.info("browserList:" + browserList.size());
-
-			/** 用户上传数据统计 */
-			userDataList = dataService.getUserWeekData(startDate);
-			/** 每天 */
-			eachDataList = dataService.getEachDayData(startDate);
-			log.info("userDataList:" + userDataList.size());
-
-			newUserList = userService.getLoginLog("week");
-			log.info("newUserList:" + newUserList.size());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "toWeekReport";
-	}
-
-	public String toBigUserCount() {
+	public String toBigUserCount(){
 		dataList = dataService.getBigUserData();
 		return "toBigUser";
+	}
+	
+	public String bigUserOne()
+	{
+		LogUtil.info(log, "bigUesrOne");
+		return "toBigUserOne";
+	}
+	/**
+	 * 用户运行app前20的用户和APP
+	 * 
+	 * @return
+	 */
+	public String appRunNum() {
+		Integer role = (Integer) super.session.get(User.USER_ROLE);
+		Integer companyId = (Integer) getCid();
+		totalSoftList = appService.getAppRunNum(role,companyId);
+		return "softList";
+	}
+
+	/**
+	 * 总的用户运行APP统计
+	 * 
+	 * @return
+	 */
+	public String userRunNum() {
+		Integer role = (Integer) super.session.get(User.USER_ROLE);
+		Integer companyId = (Integer) getCid();
+		appList = appService.getUserRunNum(role,companyId);
+		return "AppList";
 	}
 
 	public String toHospitalBigUesr() {
 		cmpList = companyService.BigUserList();
 		return "toHospitalBigUser";
-	}
-
-	public String weekBrowser() {
-		browserList = loginService.getBrowserInWeek(startDate);
-		log.info("browserList:" + browserList.size());
-		return "browserCount";
-	}
-
-	public String eachUserRunApp() {
-		eachAppList = appService.getAppUserCount(startDate);
-		log.info("eachAppList:" + eachAppList.size());
-		return "eachUserRunApp";
-	}
-
-	public String userFileList() {
-		/** 用户上传数据统计 */
-		userDataList = dataService.getUserWeekData(startDate);
-		return "userFileList";
-	}
-
-	/***
-	 * 周内每上传数据大小统计
-	 * 
-	 * @return
-	 */
-	public String eachDayDataSize() {
-		eachDataList = dataService.getEachDayData(startDate);
-		return "eachDayDataSize";
-	}
-
-	/**
-	 * 所有用在周时间内登陆次数排序
-	 * 
-	 * @return
-	 */
-	public String allUserLoginNunInWeek() {
-		logList = loginService.getUserLoginNum(startDate);
-		return "loginList";
-	}
-
-	/**
-	 * 周每天App的运行次数
-	 * 
-	 * @return
-	 */
-	public String eachDayAppRunNum() {
-		log.info(startDate);
-		totalSoftList = appService.getAppRunNumCount(startDate);
-		return "softList";
-	}
-
-	/**
-	 * 周内每登陆次数
-	 * 
-	 * @return
-	 */
-	public String eachDayLoginNum() {
-		log.info(startDate);
-		totalLogList = loginService.getUserLoginInWeek(startDate);
-		return "softList";
 	}
 
 	/**
@@ -242,7 +144,9 @@ public class HomeAction extends BaseAction {
 	 * @return
 	 */
 	public String loginNum() {
-		logList = appService.getTotalUserLogin(0);
+		Integer role = (Integer) super.session.get(User.USER_ROLE);
+		Integer companyId = (Integer) getCid();
+		logList = appService.getTotalUserLogin(role,companyId);
 		return "loginList";
 	}
 
@@ -257,16 +161,6 @@ public class HomeAction extends BaseAction {
 	}
 
 	/**
-	 * 用户运行app前20的用户和APP
-	 * 
-	 * @return
-	 */
-	public String appRunNum() {
-		totalSoftList = appService.getTotalAppRunNum(0);
-		return "softList";
-	}
-
-	/**
 	 * 总的客户端浏览器使用统计
 	 * 
 	 * @return
@@ -274,26 +168,6 @@ public class HomeAction extends BaseAction {
 	public String totalBrowser() {
 		browserList = appService.getBrowerCount();
 		return "browserCount";
-	}
-
-	/**
-	 * 新用户活跃度统计
-	 * 
-	 * @return
-	 */
-	public String newUserActivity() {
-		newUserList = userService.getLoginLog("week");
-		return "newUserActivity";
-	}
-
-	/**
-	 * 总的用户运行APP统计
-	 * 
-	 * @return
-	 */
-	public String userRunNum() {
-		appList = appService.getTotalUserRunNum(0);
-		return "AppList";
 	}
 
 	public Map<String, Object> getResultMap() {
@@ -310,20 +184,6 @@ public class HomeAction extends BaseAction {
 
 	public void setCmpList(List<Company> cmpList) {
 		this.cmpList = cmpList;
-	}
-
-	public void setStartDate(String startDate) {
-		SimpleDateFormat sdf = null;
-		if (startDate != null && startDate.length() == 7) // yyyy-MM
-			sdf = new SimpleDateFormat("yyyy-MM");
-		else if (startDate != null & startDate.length() == 10)
-			sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-		try {
-			this.startDate = sdf.parse(startDate);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public Date getEndDate() {
@@ -349,14 +209,6 @@ public class HomeAction extends BaseAction {
 
 	public void setEachDataList(List<DataFile> eachDataList) {
 		this.eachDataList = eachDataList;
-	}
-
-	public List<DataFile> getUserDataList() {
-		return userDataList;
-	}
-
-	public void setUserDataList(List<DataFile> userDataList) {
-		this.userDataList = userDataList;
 	}
 
 	public List<LoginLog> getLogList() {
@@ -454,21 +306,4 @@ public class HomeAction extends BaseAction {
 	public void setUserSoftList(List<App> userSoftList) {
 		this.userSoftList = userSoftList;
 	}
-
-	public List<LoginLog> getNewUserList() {
-		return newUserList;
-	}
-
-	public void setNewUserList(List<LoginLog> newUserList) {
-		this.newUserList = newUserList;
-	}
-
-	public List<App> getEachAppList() {
-		return eachAppList;
-	}
-
-	public void setEachAppList(List<App> eachAppList) {
-		this.eachAppList = eachAppList;
-	}
-
 }

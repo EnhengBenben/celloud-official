@@ -87,12 +87,6 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		<!-- Spring-Data-mongodb -->
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-mongodb</artifactId>
-			<version>1.8.1.RELEASE</version>
-		</dependency>
 		<!-- Spring 使用Morphia整合mongodb -->
 		<dependency>
 			<groupId>org.mongodb.morphia</groupId>

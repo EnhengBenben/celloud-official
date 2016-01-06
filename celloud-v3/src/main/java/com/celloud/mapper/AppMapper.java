@@ -32,8 +32,9 @@ public interface AppMapper {
      * @author han
      * @date 2015年12月31日 上午10:26:42
      */
-    Integer countMyApp(@Param("userId") Integer userId, @Param("offLine") Integer offLine,
+    public Integer countMyApp(@Param("userId") Integer userId, @Param("offLine") Integer offLine,
             @Param("isAdd") Integer isAdd);
+
     /**
      * (重构)按时间段获取已添加的APP数量
      *
@@ -45,6 +46,6 @@ public interface AppMapper {
      * @author han
      * @date 2015年12月31日 上午10:26:20
      */
-    List<Map<String, String>> countMyAppByTime(@Param("userId") Integer userId,@Param("time") Integer time,  @Param("offLine") Integer offLine,
-            @Param("isAdd") Integer isAdd);
+    public List<Map<String, String>> countMyAppByTime(@Param("userId") Integer userId, @Param("time") Integer time,
+            @Param("offLine") Integer offLine, @Param("isAdd") Integer isAdd);
 }

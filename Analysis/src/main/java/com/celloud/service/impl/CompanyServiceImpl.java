@@ -16,7 +16,6 @@ import com.celloud.sdo.DataFile;
 import com.celloud.sdo.App;
 import com.celloud.service.CompanyService;
 import com.celloud.utils.ConnectManager;
-import com.celloud.utils.LogUtil;
 import com.google.inject.Inject;
 
 

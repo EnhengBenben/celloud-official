@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.utils.EmailUtils;
+
 /**
  * 全局异常处理器
  * 
@@ -16,18 +18,15 @@ import org.springframework.web.servlet.ModelAndView;
  */
 public class ExceptionHandler implements HandlerExceptionResolver {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
             Exception exception) {
-        // log exception
-        // mail to programmer
+        EmailUtils.sendError(request, exception);
         if (exception instanceof BusinessException) {
             return new ModelAndView("errors/business").addObject("exception", exception);
         }
-        if (exception instanceof SecurityException) {
-            return new ModelAndView("login");
-        }
-        logger.error("系统出现未捕获的异常！",exception);
+        logger.error("系统出现未捕获的异常！", exception);
         return new ModelAndView("errors/error").addObject("exception", exception);
     }
 
