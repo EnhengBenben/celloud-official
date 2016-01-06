@@ -25,23 +25,33 @@ jQuery(function($) {
 	console.log("queue");
 })
 
-// //////////////////////////////函数区
-
 function loadActivityFile() {
 	var start = $("#timeId").val();
 	var end = $("#timeId2").val();
-	var topN = $("#fileTopId").val();
+	var topN = $("#topId").val();
 	
 	var param = {
 		"startDate" : start,
 		"endDate" : end,
 		"topN" : topN
 	};
-	logReq(fileNumURL, param);
+	console.log(param);
 	$.get(fileNumURL, param, function(data) {
-		hospital_chart(data);
-		app_chart(data);
-		user_chart(data);
+		try {
+			hospital_chart(data);
+		} catch (e) {
+			alert(e);
+		}
+		try {
+			app_chart(data);
+		} catch (e) {
+			alert(e);
+		}
+		try {
+			user_chart(data);
+		} catch (e) {
+			alert(e);
+		}
 	});
 }
 function app_chart(data) {
@@ -100,7 +110,7 @@ function hospital_chart(data) {
 	}
 	
 	var option = makeOptionScrollUnit(xAxis, yAxis, "数据量", barType, 0, 6)
-	var sizeoption = makeOptionScrollUnit(xAxisSize, yAxisSize, "数据大小", barType, 0, 6)
+	var sizeoption = makeOptionScrollUnit(xAxisSize, yAxisSize, "数据大小(GB)", barType, 0, 6)
 	var myChart = echarts.init(document.getElementById(fileNumId));
 	var sizeChart = echarts.init(document.getElementById(fileSizeId));
 	sizeChart.setOption(sizeoption);
@@ -152,7 +162,7 @@ function user_chart(data) {
 		xAxisSize[i] = fileSize[i].user_name;
 		yAxisSize[i] = parseFloat((fileSize[i].size / (1024 * 1024 * 1024)).toFixed(2));
 	}
-	var sizeoption = makeOptionScrollUnit(xAxisSize, yAxisSize, "数据大小", barType, 0, 15)
+	var sizeoption = makeOptionScrollUnit(xAxisSize, yAxisSize, "数据大小(GB)", barType, 0, 15)
 	var sizeChart = echarts.init(document.getElementById(fileSizeId));
 	sizeChart.setOption(sizeoption);
 	

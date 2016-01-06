@@ -131,7 +131,7 @@
 			xAxis[i] = res[i].username;
 			yAxis[i] = parseFloat((res[i].size / (1024 * 1024 * 1024)).toFixed(2));
 		}
-		var opt = makeOptionScrollUnit(xAxis, yAxis, '数据大小', 'bar', 0, 20);
+		var opt = makeOptionScrollUnit(xAxis, yAxis, '数据大小(GB)', 'bar', 0, 20);
 		var myChart = echarts.init(document.getElementById(fileSizeViewId));
 		myChart.setOption(opt);
 	});

@@ -5,18 +5,21 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+
+import com.celloud.sdo.App;
 import com.celloud.sdo.Company;
 import com.celloud.sdo.DataFile;
 import com.celloud.sdo.LoginLog;
-import com.celloud.sdo.App;
 import com.celloud.sdo.User;
 import com.celloud.service.CompanyService;
 import com.celloud.utils.DateUtil;
+import com.celloud.utils.LogUtil;
 import com.google.inject.Inject;
 
 @ParentPackage("json-default")
@@ -90,13 +93,13 @@ public class CompanyAction extends BaseAction {
 				startDate = DateUtil.DAY_START_OF_MONTH();
 			if (endDate == null)
 				endDate = DateUtil.DAY_END_OF_MONTH();
+			LogUtil.info(log, topN);
 			resultMap = companyService.getCompanyFile(role, cmpId, startDate, endDate, topN);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "resultMap";
 	}
-
 
 	/**
 	 * 大客户下客户app运行次数统计
@@ -109,7 +112,7 @@ public class CompanyAction extends BaseAction {
 	}
 
 	/**
-	 *  取App运行次数按月统计
+	 * 取App运行次数按月统计
 	 * 
 	 * @return JSON [{'2012-12':55}]' object is Software
 	 */
