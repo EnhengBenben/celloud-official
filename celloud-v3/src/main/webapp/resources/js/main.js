@@ -293,5 +293,5 @@ function showUser(){
 	//为右上角个人信息链接过来增加active样式
 	$('.treeview').removeClass("active");
     $("#accountManage").addClass('active');
-	$("#mainDIV").load("pages/user/user.jsp");
+	$("#mainDIV").load("user/info");
 }
