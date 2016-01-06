@@ -191,4 +191,50 @@
   <select id="countReportByTime" resultType="map" >
     select left(create_date,#{time }) time,count(p.file_id) size from tb_report r,tb_file_project_relat p where r.project_id = p.project_id and r.state = #{state } and r.flag = #{flag } and r.user_id=#{userId } group by time
   </select>
+  
+  <select id="getReportList" resultType="map">
+	select 
+		p.project_id,p.project_name,p.create_date,p.data_num,p.data_size,p.share ,
+		r.end_date,r.context,r.period,app.app_id,app.app_name,
+		(case WHEN p.user_id=#{userId} then #{userId} else s.share_from end) as user_id,
+		(case WHEN p.user_id=#{userId} then 'no_one' else u.username end) as userName
+	from 
+	
+		tb_project p,
+		tb_project_share s,
+		tb_user u ,
+		tb_report as r,
+		tb_app app,
+		tb_file_project_relat d,
+		tb_file f 
+	
+	where 
+	
+		p.state=0 
+		and (p.user_id=#{userId} 
+			OR (p.project_id=s.project_id 
+				and s.share_to = #{userId} 
+				)
+			) 
+		and u.user_id = s.share_from 
+		and r.project_id = p.project_id 
+		and r.app_id = app.app_id 
+		and p.project_id=d.project_id 
+		and d.file_id=f.file_id  
+	<if test="condition != null and condition!=''" >
+		and (f.file_name like CONCAT('%',#{condition},'%' ) or f.another_name like CONCAT('%',#{condition},'%' ) or f.data_key like CONCAT('%',#{condition},'%' ))
+	</if>
+	<if test="start != null and start!=''">
+		and p.create_date&gt;=#{start}
+	</if>
+	<if test="end != null and end!=''">
+		and p.create_date&lt;=#{end}
+	</if>
+	<if test="appId != 0">
+		and app.app_id = #{appId}
+	</if>
+	group by p.project_id 
+	
+	order by p.create_date desc
+  </select>
 </mapper>

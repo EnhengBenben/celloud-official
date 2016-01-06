@@ -36,63 +36,63 @@ $.ajaxSetup ({
 			});
 		}
 		function initReportDetail(){
-			spinnerTotal = new Spinner(opts);
-			var target = document.getElementById('reportLoading');
-			spinnerTotal.spin(target);
-			getReportList();
+//			spinnerTotal = new Spinner(opts);
+//			var target = document.getElementById('reportLoading');
+//			spinnerTotal.spin(target);
+			submitSearch();
 			// 初始化高级检索app列表
 			var _num = 0;
-			$.get("report!getAppListById",function(softList){
-				var total = softList.length;
-				var context = "";
-				if(total<9){
-					for ( var i = 0; i < total; i++) {
-						var id = softList[i].softwareId;
-						if(_num>1&&_num%8==0){
-							context+="<br/>";
-						}
-						_num++;
-						if(APP==id){
-							context+="<a href='javascript:void(0)' class='capp _appred' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
-						}else{
-							context+="<a href='javascript:void(0)' class='capp' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
-						}
-					}
-					$("#showMore").attr("style","display:none");
-					$("#showAppDiv").html(context);
-				}else{
-					for ( var i = 0; i < 8; i++) {
-						var id = softList[i].softwareId;
-						if(_num>1&&_num%8==0&&i>0){
-							context+="<br/>";
-						}
-						_num++;
-						if(APP==id){
-							context+="<a href='javascript:void(0)' class='capp _appred' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
-						}else{
-							context+="<a href='javascript:void(0)' class='capp' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
-						}
-					}
-					context += "</div>";
-					$("#showAppDiv").html(context);
-					context ="<div class='moreApp' style='margin-top:-20px'>";
-					_num = 0;
-					for ( var i = 8; i < softList.length; i++) {
-						var id = softList[i].softwareId;
-						if(_num%9==0){
-							context+="<br/>";
-						}
-						_num++;
-						if(APP==id){
-							context+="<a href='javascript:void(0)' class='capp _appred' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
-						}else{
-							context+="<a href='javascript:void(0)' class='capp' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
-						}
-					}
-					context += "</div>";
-					$("#appList").html(context);
-				}
-			});
+//			$.get("report!getAppListById",function(softList){
+//				var total = softList.length;
+//				var context = "";
+//				if(total<9){
+//					for ( var i = 0; i < total; i++) {
+//						var id = softList[i].softwareId;
+//						if(_num>1&&_num%8==0){
+//							context+="<br/>";
+//						}
+//						_num++;
+//						if(APP==id){
+//							context+="<a href='javascript:void(0)' class='capp _appred' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
+//						}else{
+//							context+="<a href='javascript:void(0)' class='capp' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
+//						}
+//					}
+//					$("#showMore").attr("style","display:none");
+//					$("#showAppDiv").html(context);
+//				}else{
+//					for ( var i = 0; i < 8; i++) {
+//						var id = softList[i].softwareId;
+//						if(_num>1&&_num%8==0&&i>0){
+//							context+="<br/>";
+//						}
+//						_num++;
+//						if(APP==id){
+//							context+="<a href='javascript:void(0)' class='capp _appred' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
+//						}else{
+//							context+="<a href='javascript:void(0)' class='capp' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
+//						}
+//					}
+//					context += "</div>";
+//					$("#showAppDiv").html(context);
+//					context ="<div class='moreApp' style='margin-top:-20px'>";
+//					_num = 0;
+//					for ( var i = 8; i < softList.length; i++) {
+//						var id = softList[i].softwareId;
+//						if(_num%9==0){
+//							context+="<br/>";
+//						}
+//						_num++;
+//						if(APP==id){
+//							context+="<a href='javascript:void(0)' class='capp _appred' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
+//						}else{
+//							context+="<a href='javascript:void(0)' class='capp' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
+//						}
+//					}
+//					context += "</div>";
+//					$("#appList").html(context);
+//				}
+//			});
 		}
 		
 		//删除共享来的项目报告
@@ -200,14 +200,6 @@ $.ajaxSetup ({
 			currentPage = page;
 			submitSearch();
 		}
-		//获取项目列表
-		function getReportList(){
-			$.get("report!getReportPageList",{"page.pageSize":pageSize,"page.currentPage":currentPage},function(responseText){
-				$("#selfReportDiv").html(responseText);
-				loadReportList();
-				spinnerTotal.stop();
-			});
-		}
 		//高级检索
 		function submitSearch(){
 			if(!isTIMETRUE){
@@ -233,7 +225,7 @@ $.ajaxSetup ({
 			spinner = new Spinner(opts);
 			var target = document.getElementById('reportLoading');
 			spinner.spin(target);
-			$.get("report!getReportPageListByCondition",{"appId":APP,"start":START,"end":END,"fileName":FILENAME,"page.pageSize":pageSize,"page.currentPage":currentPage},function(responseText){
+			$.get("report/getReportPageList",{"appId":APP,"start":START,"end":END,"condition":FILENAME,"size":pageSize,"page":currentPage},function(responseText){
 				$("#selfReportDiv").html(responseText);
 				loadReportList();
 				spinner.stop();
