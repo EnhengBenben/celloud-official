@@ -84,7 +84,7 @@
             </a>
           </li>
           <li class="treeview" id="toDataMenu" data-step="7" data-position="right" data-intro="" data-img="todata.png">
-            <a href="javascript:void(0)" id="to-data-main">
+            <a id="to-data-main" href="javascript:void(0)">
               <i class="fa fa-tasks"></i>
               <span>数据管理</span>
             </a>

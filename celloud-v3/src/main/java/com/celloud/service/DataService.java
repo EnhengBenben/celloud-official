@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.celloud.model.DataFile;
+import com.celloud.page.Page;
+import com.celloud.page.PageList;
 
 /**
  * 数据管理服务接口重构
@@ -62,4 +64,20 @@ public interface DataService {
      * @return
      */
     int updateDataInfoByFileId(DataFile data);
+
+    /**
+     * 数据分页列表
+     * 
+     * @param page
+     * @return
+     */
+    PageList<DataFile> dataAllList(Page page, Integer userId);
+
+    /**
+     * 数据分页列表
+     * @param page
+     * @return
+     */
+    PageList<DataFile> dataLists(Page page, Integer userId, String condition,
+            int sort, String sortDateType, String sortNameType);
 }

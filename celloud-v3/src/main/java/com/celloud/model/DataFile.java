@@ -32,6 +32,10 @@ public class DataFile {
     private String md5;
 
     private String dataTags;
+    /** 是否正在运行，0 否，>0 是 */
+    private Integer isRunning;
+    /** 报告数量 */
+    private Integer reportNum;
 
     public Integer getFileId() {
         return fileId;
@@ -152,4 +156,21 @@ public class DataFile {
     public void setDataTags(String dataTags) {
         this.dataTags = dataTags == null ? null : dataTags.trim();
     }
+
+    public Integer getIsRunning() {
+        return isRunning;
+    }
+
+    public void setIsRunning(Integer isRunning) {
+        this.isRunning = isRunning;
+    }
+
+    public Integer getReportNum() {
+        return reportNum;
+    }
+
+    public void setReportNum(Integer reportNum) {
+        this.reportNum = reportNum;
+    }
+    
 }

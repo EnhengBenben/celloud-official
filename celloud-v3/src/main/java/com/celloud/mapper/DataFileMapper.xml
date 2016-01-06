@@ -20,6 +20,10 @@
   <resultMap id="ResultMapWithBLOBs" type="com.celloud.model.DataFile" extends="BaseResultMap" >
     <result column="data_tags" property="dataTags" jdbcType="LONGVARCHAR" />
   </resultMap>
+  <resultMap id="ResultMapWithRunState" type="com.celloud.model.DataFile" extends="ResultMapWithBLOBs" >
+    <result column="isRunning" property="isRunning" jdbcType="INTEGER" />
+    <result column="reportNum" property="reportNum" jdbcType="INTEGER" />
+  </resultMap>
   <sql id="Base_Column_List" >
     file_id, user_id, data_key, file_name, strain, size, create_date, update_date, path, 
     state, file_format, sample, another_name, md5
@@ -251,4 +255,41 @@
   <update id="updateDataInfoByFileId" parameterType="com.celloud.model.DataFile" >
     update tb_file set data_key=#{dataKey },size=#{size },path=#{path },another_name=#{anotherName },file_format=#{fileFormat },state=#{state } where file_id=#{fileId }
   </update>
+  <select id="findAllDataLists" resultMap="ResultMapWithRunState" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+	,
+	<include refid="Blob_Column_List" />
+	,
+	(select count(*) reportNum from tb_report r where r.period = #{period } and r.flag = #{reportType } and r.state = #{state } and r.file_id=f.file_id) reportNum,
+    (select count(*) isRunning from tb_report r where r.period != #{period } and r.flag = #{reportType } and r.state = #{state } and r.file_id=f.file_id) isRunning
+    from tb_file f
+    where user_id = #{userId } and state = #{state }
+    order by f.create_date desc,f.file_name asc
+  </select>
+  <select id="findDataLists" resultMap="ResultMapWithRunState" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,
+    (select count(*) reportNum from tb_report r where r.period = #{period } and r.flag = #{reportType } and r.state = #{state } and r.file_id=f.file_id) reportNum,
+    (select count(*) isRunning from tb_report r where r.period != #{period } and r.flag = #{reportType } and r.state = #{state } and r.file_id=f.file_id) isRunning
+    from tb_file f
+    where user_id = #{userId } and state = #{state }
+    <if test="condition != ''" >
+        and (data_key like CONCAT('%',#{condition},'%' ) 
+        or file_name like CONCAT('%',#{condition},'%' ) 
+        or another_name like CONCAT('%',#{condition},'%' ) 
+        or data_tags like CONCAT('%',#{condition},'%' ))
+    </if>
+    <choose>
+      <when test="sort == 0">
+        order by date(f.create_date) ${sortDateType},f.file_name ${sortNameType}
+      </when>
+      <otherwise>
+	    order by f.file_name ${sortNameType},date(f.create_date) ${sortDateType}
+      </otherwise>
+    </choose>
+  </select>
 </mapper>
