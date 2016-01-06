@@ -6,22 +6,6 @@
 .echart {
 	height: 350px,
 }
-
-a:link {
-	text-decoration: none;
-}
-
-a:visited {
-	text-decoration: none;
-}
-
-a:hover {
-	text-decoration: none;
-}
-
-a:active {
-	text-decoration: none;
-}
 </style>
 <div class="col-sm-12">
 	<div class="row">
@@ -109,29 +93,29 @@ a:active {
 		</div>
 		<div class="col-xs-12 " id="appListDiv" style="height: 350px"></div>
 		<c:if test="${runList!=null && fn:length(runList) > 0 }">
-            <div class="col-xs-12 table-responsive" id="dataDiv">
-                <table id="appList" class="table table-striped table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th class="min-w-90">APP名称</th>
-                            <th class="min-w-80">上线时间</th>
-                            <th class="min-w-80">运行次数</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${runList }" var="data">
-                            <tr>
-                                <td>${data.app_name }</td>
-                                <td>
-                                    <fmt:formatDate type="both" value="${data.create_date }" pattern="yyyy-MM-dd" />
-                                </td>
-                                <td>${data.runNum }</td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </div>
-        </c:if>
+			<div class="col-xs-12 table-responsive" id="dataDiv">
+				<table id="appList" class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th class="min-w-90">APP名称</th>
+							<th class="min-w-80">上线时间</th>
+							<th class="min-w-80">运行次数</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${runList }" var="data">
+							<tr>
+								<td>${data.app_name }</td>
+								<td>
+									<fmt:formatDate type="both" value="${data.create_date }" pattern="yyyy-MM-dd" />
+								</td>
+								<td>${data.runNum }</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</c:if>
 	</div>
 </div>
 <script src="./js/activity.js" type="text/javascript"></script>

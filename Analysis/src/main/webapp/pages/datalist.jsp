@@ -15,7 +15,7 @@
 			<i class="icon-tasks"></i>
 			<a href="#">数据统计</a>
 		</li>
-		<li class="active">总用户数据量</li>
+		<li class="active"><a onclick="getUserDataList()">总用户数据量</a></li>
 	</ul>
 	<!-- .breadcrumb -->
 </div>

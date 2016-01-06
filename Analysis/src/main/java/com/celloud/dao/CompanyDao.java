@@ -6,10 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.celloud.dao.impl.CompanyDaoImpl;
+import com.celloud.sdo.App;
 import com.celloud.sdo.Company;
 import com.celloud.sdo.DataFile;
-import com.celloud.sdo.LoginLog;
-import com.celloud.sdo.App;
 import com.google.inject.ImplementedBy;
 
 @ImplementedBy(CompanyDaoImpl.class)
@@ -76,7 +75,7 @@ public interface CompanyDao {
 	 * @param companyId
 	 * @return
 	 */
-	public List<App> getCompanyRunAppNumByCId(Integer companyId, String groupBytag);
+	public List<App> getCompanyRunAppNumByCId(Integer companyId);
 
 	/**
 	 * 取大客户下所有医院上传文件个数
@@ -101,9 +100,10 @@ public interface CompanyDao {
 	 * @return
 	 */
 	public List<Company> BigUserList();
-	
+
 	/**
 	 * 查询医院时间内的排序，取前N条记录
+	 * 
 	 * @param role
 	 * @param cmpId
 	 * @param start
@@ -111,10 +111,11 @@ public interface CompanyDao {
 	 * @param topN
 	 * @return
 	 */
-	public List<DataFile> getCompanyFileNum(Connection conn,int role,int cmpId, Date start, Date end,int  topN);
-	
+	public List<DataFile> getCompanyFileNum(Connection conn, int role, int cmpId, Date start, Date end, int topN);
+
 	/**
 	 * 查询医院时间内的排序，取前N条记录
+	 * 
 	 * @param role
 	 * @param cmpId
 	 * @param start
@@ -122,6 +123,6 @@ public interface CompanyDao {
 	 * @param topN
 	 * @return
 	 */
-	public List<DataFile> getCompanyFileSize(Connection conn,int role,int cmpId, Date start, Date end,int  topN);
-	
+	public List<DataFile> getCompanyFileSize(Connection conn, int role, int cmpId, Date start, Date end, int topN);
+
 }

@@ -15,7 +15,7 @@
 			<a href="#">APP统计</a>
 		</li>
 		<li class="active"><a href="javascript:bigUserAppList()">大客户统计</a></li>
-		<li class="active"  id="cmpName" style="display:" ></li>
+		<li class="active"  id="cmpName" style="display:none" ></li>
 	</ul>
 	<!-- .breadcrumb -->
 </div>

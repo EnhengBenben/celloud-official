@@ -9,13 +9,12 @@
 		} catch (e) {
 		}
 	</script>
-
 	<ul class="breadcrumb">
 		<li>
 			<i class="icon-tasks"></i>
 			<a href="#">数据统计</a>
 		</li>
-		<li class="active">数据量月统计</li>
+		<li class="active"><a onclick="getMonthDataList()" >数据量月统计</a></li>
 	</ul>
 	<!-- .breadcrumb -->
 </div>
@@ -23,9 +22,9 @@
 <div class="page-content">
 	<div class="row">
 		<div class="table-header hide" id="_companyName"></div>
-		<h3 class="header smaller lighter green">每月数据大小统计</h3>
+		<h3 class="header smaller lighter green">每月数据大小</h3>
 		<div class="col-xs-12" style="height: 450px;" id="fileSizeView"></div>
-		<h3 class="header smaller lighter green">每月数据量统计</h3>
+		<h3 class="header smaller lighter green">每月数据量</h3>
 		<div class="col-xs-12" style="height: 450px;" id="fileNumView"></div>
 		<div class="title">
 			<h3 class="header smaller lighter green">每月数据详细信息列表</h3>
@@ -38,18 +37,19 @@
 							<tr>
 								<th>上传月份</th>
 								<th>数据量(个)</th>
-								<th>数据大小(MB)</th>
+								<th>数据大小(GB)</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach items="${dataList}" var="data">
 								<tr>
 									<td>
-										<a href="javascript:getAlluserDataAMonth('${data.yearMonth }')">${data.yearMonth }</a>
+										<!-- <a href="javascript:getAlluserDataAMonth('${data.yearMonth }')">${data.yearMonth }</a> -->
+										${data.yearMonth }
 									</td>
 									<td>${data.fileNum }</td>
 									<td>
-										<fmt:formatNumber value="${data.size/(1024*1024)}" pattern="#0.0#" />
+										<fmt:formatNumber value="${data.size/(1024*1024*1024)}" pattern="#0.0#" />
 									</td>
 								</tr>
 							</c:forEach>
@@ -74,9 +74,9 @@
 		for (var i = 0; i < data.length; i++) {
 			xAxis[i] = data[i].yearMonth;
 			yAxis[i] = data[i].fileNum;
-			yAxisSize[i] = parseFloat((data[i].size / (1024 * 1024 )).toFixed(2));
+			yAxisSize[i] = parseFloat((data[i].size / (1024 * 1024*1024 )).toFixed(2));
 		}
-		var fileSizeOpt = makeOptionScroll('', xAxis, yAxisSize, '文件大小MB', 'bar', 70, 100);
+		var fileSizeOpt = makeOptionScroll('', xAxis, yAxisSize, '文件大小(GB)', 'bar', 70, 100);
 		var fileNumOpt = makeOptionScroll('', xAxis, yAxis, '文件数量', 'bar', 70, 100);
 		
 		var fileSizeChart = echarts.init(document.getElementById('fileSizeView'));
@@ -91,7 +91,7 @@
 	jQuery(function($) {
 		var oTable1 = $('#MonthDataList').dataTable({
 			"aoColumns" : [ null, null, null ],
-			iDisplayLength : 100,
+			iDisplayLength : 12,
 			"aaSorting":[[0,"desc"]],
 		});
 		

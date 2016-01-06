@@ -18,6 +18,8 @@
 <link rel="stylesheet" href="css/analy-rtl.min.css" />
 <link rel="stylesheet" href="css/analy-skins.min.css" />
 <link rel="stylesheet" href="css/daterangepicker.css" />
+<link rel="stylesheet" href="css/global.css" />
+
 <!--[if lte IE 8]>
 <link rel="stylesheet" href="css/analy-ie.min.css" />
 <![endif]-->
@@ -49,7 +51,6 @@
 				<!-- /.brand -->
 			</div>
 			<!-- /.navbar-header -->
-
 			<div class="navbar-header pull-right" role="navigation">
 				<ul class="nav ace-nav">
 					<li class="light-blue">
@@ -203,6 +204,7 @@
 							<span class="menu-text">活跃度统计 </span>
 						</a>
 					</li>
+					</ul>
 				<!-- /.nav-list -->
 				<div class="sidebar-collapse" id="sidebar-collapse">
 					<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
@@ -324,13 +326,14 @@
             });
 			
 		}
-		
+		/**数据统计－大客户统计**/
 		function bigUserCount() {
 			$("#secondTitle").addClass("hide");
 			$.get("home!toBigUserCount", {}, function(responseText) {
 				$("#content").html(responseText);
 			});
 		}
+		/**医院统计－－大客户统计**/
 		function hospitalBigUserCount() {
 			$("#secondTitle").addClass("hide");
 			$.get("home!toHospitalBigUesr", {}, function(responseText) {

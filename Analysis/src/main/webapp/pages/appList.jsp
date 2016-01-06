@@ -16,12 +16,14 @@
 			<i class="icon-cloud"></i>
 			<a href="#">APP统计</a>
 		</li>
-		<li class="active">APP详细信息</li>
+		<li class="active"><a onclick="toAPPList()">APP详细信息</a></li>
+		<li  id = "app_name" style="display:none" ></li>
 	</ul>
 	<!-- .breadcrumb -->
+	<span id = "_app_id" class = "hide"></span>
 </div>
 <div class="page-content">
-	<div class="row">
+	<div class="row" id = "app_content">
 		<div class="col-xs-12">
 			<div class="title">
 				<h3 class="header smaller lighter green">APP运行统计</h3>
@@ -94,14 +96,15 @@
 		});
 	})
 	function getAppDetail(id, name) {
-		$("#_oneApp").html(name);
+		$("#app_name").html(name);
+		$("#app_name").css("display","inline");
 		$("#_app_id").html(id);
 		
 		$("#secondTitle").removeClass("hide");
 		$.get("app!getAppById", {
 			"app.app_id" : id
 		}, function(responseText) {
-			$("#appListDiv").html(responseText);
+			$("#app_content").html(responseText);
 		});
 	}
 </script>

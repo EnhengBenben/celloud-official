@@ -9,15 +9,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.log4j.Logger;
+
 import com.celloud.dao.AppDao;
-import com.celloud.sdo.LoginLog;
 import com.celloud.sdo.App;
+import com.celloud.sdo.LoginLog;
 import com.celloud.utils.ConnectManager;
 import com.celloud.utils.LogUtil;
 import com.celloud.utils.PropertiesUtil;
@@ -157,16 +159,14 @@ public class AppDaoImpl implements AppDao {
 		return list;
 	}
 
-
 	@Override
-	public List<LoginLog> getTotalUserLogin(int role,int cmpId) {
+	public List<LoginLog> getTotalUserLogin(int role, int cmpId) {
 		List<LoginLog> list = null;
 		Connection conn = ConnectManager.getConnection();
 		String sql = "select l.user_name ,count(l.user_name) as logNum from tb_log l,tb_user u,tb_user_company_relat uc "
 				+ " where l.user_name is not null and l.user_name = u.username and u.state=0 and u.user_id = uc.user_id "
-				+ SqlController.notUserName("l", "user_name", noUsername) 
-				+ SqlController.whereCompany("uc", "company_id", role, cmpId)
-				+ " group by l.user_name"
+				+ SqlController.notUserName("l", "user_name", noUsername)
+				+ SqlController.whereCompany("uc", "company_id", role, cmpId) + " group by l.user_name"
 				+ " order by logNum desc";
 		LogUtil.info(log, sql);
 		try {
@@ -183,7 +183,7 @@ public class AppDaoImpl implements AppDao {
 		List<LoginLog> list = null;
 		Connection conn = ConnectManager.getConnection();
 		String sql = "SELECT l.browser,count(l.browser)as logNum FROM tb_log l where 1=1 "
-				+ SqlController.notUserName("l", "user_name",noUsername) + "group by l.browser "
+				+ SqlController.notUserName("l", "user_name", noUsername) + "group by l.browser "
 				+ "order by logNum desc";
 		LogUtil.info(log, sql);
 		try {
@@ -215,7 +215,9 @@ public class AppDaoImpl implements AppDao {
 	public List<App> getAppRun(int app_id) {
 		List<App> list = null;
 		Connection conn = ConnectManager.getConnection();
-		String sql = "select left(r.create_date,7) as yearMonth,count(1)as runNum from tb_report r where  r.app_id = ? and r.flag =0 and r.create_date is not null group by yearMonth order by yearMonth desc";
+		String sql = "select left(r.create_date,7) as yearMonth,count(1)as runNum from tb_report r "
+				+ "where  r.app_id = ? and r.flag =0 and r.create_date is not null "
+				+ SqlController.notUserId("r", noUserid) + "group by yearMonth order by yearMonth asc";
 		LogUtil.info(log, sql);
 		try {
 			ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);
@@ -231,9 +233,9 @@ public class AppDaoImpl implements AppDao {
 		List<App> list = null;
 		Connection conn = ConnectManager.getConnection();
 		String sql = "select p.app_id,p.app_name,p.create_date,p.picture_name,p.company_id,p.description,"
-				+" (select count(1) from tb_report where app_id = p.app_id)as runNum,"
-				+" (select company_name from tb_company where company_id = p.company_id) as company_name"
-				+"  from tb_app p where p.company_id =? order by runNum desc";
+				+ " (select count(1) from tb_report where app_id = p.app_id)as runNum,"
+				+ " (select company_name from tb_company where company_id = p.company_id) as company_name"
+				+ "  from tb_app p where p.company_id =? order by runNum desc";
 		LogUtil.info(log, sql);
 		try {
 			ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);
@@ -248,11 +250,9 @@ public class AppDaoImpl implements AppDao {
 	public List<App> getAppList(Connection conn, Integer role, Integer cmpId, Date start, Date end, Integer topN) {
 		List<App> list = null;
 		String sql = "select count(1)as runNum,r.app_id,s.app_name,s.create_date "
-				+" from tb_report r,tb_user_company_relat uc ,tb_app s where r.app_id = s.app_id and r.flag=0 and r.user_id = uc.user_id and r.create_date between  ? and  ?  "
-				+ SqlController.notUserId("r", noUserid)
-				+ SqlController.whereCompany("uc", "company_id", role, cmpId)
-				+ " group by r.app_id order by runNum desc"
-				+SqlController.limit(topN);
+				+ " from tb_report r,tb_user_company_relat uc ,tb_app s where r.app_id = s.app_id and r.flag=0 and r.user_id = uc.user_id and r.create_date between  ? and  ?  "
+				+ SqlController.notUserId("r", noUserid) + SqlController.whereCompany("uc", "company_id", role, cmpId)
+				+ " group by r.app_id order by runNum desc" + SqlController.limit(topN);
 		LogUtil.info(log, sql);
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -273,8 +273,7 @@ public class AppDaoImpl implements AppDao {
 		List<App> list = null;
 		Connection conn = ConnectManager.getConnection();
 		String sql = "select r.user_id,count(r.report_id) as runNum,u.username FROM tb_report r,tb_user u, tb_user_company_relat uc  where uc.user_id = u.user_id and u.user_id = r.user_id and u.state =0 and r.flag = 1 "
-				+ SqlController.notUserId("u" , noUserid)
-				+ SqlController.whereCompany("uc", "company_id", role, cmpId)
+				+ SqlController.notUserId("u", noUserid) + SqlController.whereCompany("uc", "company_id", role, cmpId)
 				+ "  group by user_id order by runNum desc";
 		LogUtil.info(log, sql);
 		try {
@@ -293,8 +292,7 @@ public class AppDaoImpl implements AppDao {
 		String sql = "select r.app_id,count(r.app_id)as runNum,"
 				+ " (select app_name from tb_app  where app_id = r.app_id)as app_name "
 				+ " from tb_report r,tb_user_company_relat uc where r. flag=0 and r.user_id = uc.user_id "
-				+ SqlController.notUserId("r", noUserid)
-				+ SqlController.whereCompany("uc", "company_id", role, cmpId)
+				+ SqlController.notUserId("r", noUserid) + SqlController.whereCompany("uc", "company_id", role, cmpId)
 				+ "  group by r.app_id  order by runNum desc ";
 		LogUtil.info(log, sql);
 		try {

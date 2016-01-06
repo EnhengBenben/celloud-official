@@ -13,9 +13,11 @@
 			<i class="icon-tasks"></i>
 			<a href="#">数据统计</a>
 		</li>
-		<li class="active"><a onclick="bigUserCount()">大客户信息汇总</a></li>
+		<li class="active"><a onclick="javascript:bigUserCount()">大客户统计</a></li>
+		<li class="active" id = "cmpName" style="display:none"> </li>
 	</ul>
 	<!-- .breadcrumb -->
+	<span id ="_cmpId" class="hide"></span>
 </div>
 <div class="page-content">
 	<div class="row">

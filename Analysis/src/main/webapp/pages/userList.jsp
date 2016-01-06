@@ -15,7 +15,7 @@
 			<i class="icon-user-md"></i>
 			<a href="#">用户统计</a>
 		</li>
-		<li class="active">用户详细信息</li>
+		<li class="active"><a onclick="toUserList()">用户详细信息</a></li>
 	</ul>
 </div>
 <div class="page-content">

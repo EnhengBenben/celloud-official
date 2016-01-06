@@ -10,17 +10,15 @@
 		});
 	});
 	function bigUesrMonthData(company_id, company_name) {
-	    $("#_oneApp").html(company_name);
+	    $("#cmpName").html(company_name);
+	    $("#_cmpId").html(company_id);
+	    $("#cmpName").css("display","inline");
 	    var param = {
 	            "companyId" : company_id
 	        };
-	        var type = 'line';
-	        var optNumName = "'数据大小'";
-	        var optSizeName = '数据量';
 	        var bigUesrOneURL = "home!toBigUserOne";
-
+		    console.log(param);
 	        $.get(bigUesrOneURL, param, function(data) {
-	        	console.log(data);
 	        	$("#dataDiv").html(data);
 	        });
 	}

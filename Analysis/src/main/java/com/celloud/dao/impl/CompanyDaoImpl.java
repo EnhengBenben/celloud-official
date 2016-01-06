@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -14,10 +15,11 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.log4j.Logger;
+
 import com.celloud.dao.CompanyDao;
+import com.celloud.sdo.App;
 import com.celloud.sdo.Company;
 import com.celloud.sdo.DataFile;
-import com.celloud.sdo.App;
 import com.celloud.utils.ConnectManager;
 import com.celloud.utils.LogUtil;
 import com.celloud.utils.PropertiesUtil;
@@ -121,9 +123,9 @@ public class CompanyDaoImpl implements CompanyDao {
 	@Override
 	public Company getCompanyById(Integer compId) {
 		Connection conn = ConnectManager.getConnection();
-		String sql = "select  company_id,company_name,address,tel,create_date, count(id.user_id) userNum,group_concat(username) userNames,group_concat(distinct dept_name) deptNames,sum(fileNum) fileNum,sum(fileSize) fileSize,sum(reportNum) reportNum    from (select a.user_id,a.username,d.dept_name,c.company_id,c.company_name,c.address,c.tel,c.create_date from tb_company c,tb_dept d,tb_user a  where c.company_id=d.company_id and a.dept_id=d.dept_id and a.state=0 and a.user_id not in ("
-				+ noUserid
-				+ ") and c.company_id=?) id left join  (select user_id,count(file_id) fileNum,ifnull(sum(size),0) fileSize from tb_file where state = 0 group by user_id) f on f.user_id=id.user_id left join  (select user_id,count(report_id) reportNum from tb_report where isdel = 0 and (flag = 0 or software_id = 11) group by user_id) r on r.user_id=id.user_id";
+		String sql = "SELECT u.company_id,c.company_name,c.address,c.tel,c.create_date,count(distinct(u.user_id))userNum,count(distinct(d.dept_id))as deptNum,"
+				+ " group_concat(distinct(u.username))as userNames,group_concat(distinct(d.dept_name)) as deptNames"
+				+ " FROM tb_user u,tb_dept d,tb_company c where u.company_id=? and  c.company_id = u.company_id and u.dept_id = d.dept_id  group by u.company_id";
 		Company com = null;
 		LogUtil.info(log, sql);
 		try {
@@ -155,28 +157,14 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
-	public List<App> getCompanyRunAppNumByCId(Integer companyId, String groupByTag) {
+	public List<App> getCompanyRunAppNumByCId(Integer companyId) {
 		List<App> list = null;
 		Connection conn = ConnectManager.getConnection();
-		String group = "";// 按不同的字段分组
-		switch (groupByTag) {
-		case "month":
-			group = " group by left(r.create_date,7)";
-			break;
-		case "software":
-			group = " group by s.software_id";
-			break;
-		case "week":
-			group = "group by weekDate";
-			break;
-		}
-		String sql = " select "
-				+ " count(r.user_id) as runNum, s.software_id as softwareId, software_name as softwareName,left(r.create_date,7) as yearMonth,left(date_add(r.create_date ,INTERVAL -weekday(r.create_date ) day),10) as weekDate"
-				+ " from" + "( SELECT" + " u.user_id, c.company_id" + " FROM" + " tb_user u, tb_dept d, tb_company c"
-				+ " where" + " u.dept_id = d.dept_id" + " and d.company_id = c.company_id" + " and c.company_id = ?"
-				+ " and u.user_id not in(" + noUserid + ")) uc," + " tb_report r," + " tb_software s" + " where"
-				+ " r.user_id = uc.user_id" + " and s.software_id = r.software_id" + " and r.create_date is not null"
-				+ " and r.flag=0 " + group;
+		String sql = "select r.app_id,(select app_name from tb_app where app_id = r.app_id)as app_name,"
+				+ " count(r.report_id)as runNum "
+				+ " from tb_report r,tb_user_company_relat uc where r.flag=0 and r.user_id = uc.user_id "
+				+ SqlController.notUserId("r", noUserid) + " and uc.company_id = ? "
+				+ " group by uc.company_id,r.app_id ";
 		LogUtil.info(log, sql);
 		try {
 			ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);

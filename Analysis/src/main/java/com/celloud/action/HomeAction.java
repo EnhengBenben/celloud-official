@@ -6,16 +6,23 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-import com.celloud.sdo.*;
+
+import com.celloud.sdo.App;
+import com.celloud.sdo.Company;
+import com.celloud.sdo.DataFile;
+import com.celloud.sdo.LoginLog;
+import com.celloud.sdo.TotalCount;
+import com.celloud.sdo.User;
+import com.celloud.service.AppService;
 import com.celloud.service.CompanyService;
 import com.celloud.service.DataService;
 import com.celloud.service.ReportService;
-import com.celloud.service.AppService;
 import com.celloud.service.UserService;
 import com.celloud.utils.LogUtil;
 import com.google.inject.Inject;
@@ -27,7 +34,7 @@ import com.google.inject.Inject;
 		@Result(name = "toHospitalBigUser", location = "../../pages/hospitalBigUser.jsp"),
 		@Result(name = "toBigUser", location = "../../pages/bigUser.jsp"),
 		@Result(name = "toBigUserOne", location = "../../pages/bigUserOne.jsp"),
-		
+
 		@Result(name = "browserCount", type = "json", params = { "root", "browserList" }),
 		@Result(name = "historyList", type = "json", params = { "root", "historyList" }),
 		@Result(name = "softList", type = "json", params = { "root", "totalSoftList" }),
@@ -69,6 +76,7 @@ public class HomeAction extends BaseAction {
 	/** 每天上传数据大小统计 **/
 	private List<DataFile> eachDataList;
 	private List<Company> cmpList;
+	private int companyId;
 
 	/**
 	 * @return
@@ -99,16 +107,18 @@ public class HomeAction extends BaseAction {
 
 		return "success";
 	}
-	public String toBigUserCount(){
+
+	public String toBigUserCount() {
 		dataList = dataService.getBigUserData();
 		return "toBigUser";
 	}
-	
-	public String bigUserOne()
-	{
-		LogUtil.info(log, "bigUesrOne");
+
+	public String toBigUserOne() {
+		dataList = dataService.getBigUserDataFile(companyId);
+		LogUtil.info(log,dataList);
 		return "toBigUserOne";
 	}
+
 	/**
 	 * 用户运行app前20的用户和APP
 	 * 
@@ -117,7 +127,7 @@ public class HomeAction extends BaseAction {
 	public String appRunNum() {
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		Integer companyId = (Integer) getCid();
-		totalSoftList = appService.getAppRunNum(role,companyId);
+		totalSoftList = appService.getAppRunNum(role, companyId);
 		return "softList";
 	}
 
@@ -129,7 +139,7 @@ public class HomeAction extends BaseAction {
 	public String userRunNum() {
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		Integer companyId = (Integer) getCid();
-		appList = appService.getUserRunNum(role,companyId);
+		appList = appService.getUserRunNum(role, companyId);
 		return "AppList";
 	}
 
@@ -146,7 +156,7 @@ public class HomeAction extends BaseAction {
 	public String loginNum() {
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		Integer companyId = (Integer) getCid();
-		logList = appService.getTotalUserLogin(role,companyId);
+		logList = appService.getTotalUserLogin(role, companyId);
 		return "loginList";
 	}
 
@@ -176,6 +186,14 @@ public class HomeAction extends BaseAction {
 
 	public void setResultMap(Map<String, Object> resultMap) {
 		this.resultMap = resultMap;
+	}
+
+	public int getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
 	}
 
 	public List<Company> getCmpList() {

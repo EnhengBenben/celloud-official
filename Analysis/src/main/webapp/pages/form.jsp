@@ -1,6 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed');
+        } catch (e) {
+        }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+             <i class="icon-bar-chart"></i>
+             <a href="#" onclick="toActivity()">活跃度统计</a>
+        </li>
+    </ul>
+    <!-- .breadcrumb -->
+    <span id="_app_id" class="hide"></span>
+</div>
 <div class="page-content">
 	<div>
 		<div style="padding-left: 65px">

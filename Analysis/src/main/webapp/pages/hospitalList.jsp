@@ -15,7 +15,9 @@
 			<i class="icon-hospital"></i>
 			<a href="#">医院统计</a>
 		</li>
-		<li class="active">医院详细信息</li>
+		<li class="active">
+			<a onclick="toHospitalList()">医院详细信息</a>
+		</li>
 	</ul>
 	<!-- .breadcrumb -->
 </div>
@@ -35,7 +37,7 @@
 		</div>
 		<div class="col-xs-12" style="height: 450px;" id="fileSizeView"></div>
 		<c:if test="${complist!=null&&fn:length(complist) > 0}">
-			<div class="col-xs-11 table-responsive" id="dataDiv">
+			<div class="col-xs-11 table-responsive">
 				<table id="hospitalList" class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
@@ -47,7 +49,6 @@
 							<th class="min-w-80">报告个数</th>
 						</tr>
 					</thead>
-
 					<tbody>
 						<c:forEach items="${complist }" var="data">
 							<tr>
@@ -69,7 +70,6 @@
 				</table>
 			</div>
 		</c:if>
-
 		<!-- PAGE CONTENT ENDS -->
 	</div>
 	<!-- /.row -->
@@ -80,7 +80,7 @@
 	var fileNumViewID = "fileNumView";
 	var fileSizeViewID = "fileSizeView";
 	
-	var getOneCompany = "getOneCompany";
+	var getOneCompany = "company!getOneCompany";
 	var Company_DetailURL = "company!getCompanyDetailJson";
 	$.get(Company_DetailURL, {
 		"orderby" : "runNum"
@@ -92,8 +92,8 @@
 		for (var i = 0; i < res.length; i++) {
 			xAxis[i] = res[i].company_name;
 			yAxis[i] = res[i].runNum;
-			
 		}
+		
 		var myChart = echarts.init(document.getElementById(runNumViewID));
 		var opt = makeOptionScrollUnit(xAxis, yAxis, "运行次数", "bar", 0, 10);
 		myChart.setOption(opt);
@@ -106,7 +106,7 @@
 		var xAxis = new Array(res.length);
 		var yAxis = new Array(res.length);
 		
-		for (var i = 0; i < res.length; i++) {
+		for (var i = 0; i < res.length; i++) {${company.address }
 			xAxis[i] = res[i].company_name;
 			yAxis[i] = parseFloat((res[i].size / (1024 * 1024 * 1024)).toFixed(2));
 		}
@@ -142,10 +142,10 @@
 	function getCompanyDetail(id, name) {
 		$("#_oneHospital").html(name);
 		$("#secondTitle").removeClass("hide");
-		$.get("company!" + getOneCompany, {
+		$.get(getOneCompany, {
 			"company.company_id" : id
 		}, function(responseText) {
-			$("#dataDiv").html(responseText);
+			$("#content").html(responseText);
 		})
 	}
 </script>

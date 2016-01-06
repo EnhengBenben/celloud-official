@@ -122,9 +122,9 @@ function makePieOption(title, legenName, name, rad, centerX, centerY, value) {
  * :line/bar
  */
 function makeOption(title, xAxis, yAxis, seriesName, typex) {
-	var max=0;
+	var max = 0;
 	for (var i = 0; i < xAxis.length; i++) {
-		max = max > xAxis[i].length?max:xAxis[i].length;
+		max = max > xAxis[i].length ? max : xAxis[i].length;
 		if (max > 8)
 			break;
 	}
@@ -187,20 +187,20 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 		} ],
 		yAxis : [ {
 			type : 'value',
-			 axisLabel : {
-	                show:true,
-	                interval: 'auto',    // {number}
-	                rotate: 0,
-	                margin: 18,
-	                formatter: '{value}',    // Template formatter!
-	                textStyle: {
-	                    color: 'green',
-	                    fontFamily: 'verdana',
-	                    fontSize: 10,
-	                    fontStyle: 'normal',
-	                    fontWeight: 'bold'
-	                }
-	            },
+			axisLabel : {
+				show : true,
+				interval : 'auto', // {number}
+				rotate : 0,
+				margin : 18,
+				formatter : '{value}', // Template formatter!
+				textStyle : {
+					color : 'green',
+					fontFamily : 'verdana',
+					fontSize : 10,
+					fontStyle : 'normal',
+					fontWeight : 'bold'
+				}
+			},
 		} ],
 		dataZoom : {
 			show : false,
@@ -234,19 +234,12 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 		} ]
 	};
 	if (max >= 8) {
-		opt.xAxis[0].axisLabel.rotate=30;
+		opt.xAxis[0].axisLabel.rotate = 30;
 	}
-	switch(seriesName){
-		case "数据大小":
-			opt.yAxis[0].axisLabel.formatter= '{value}GB';
-		break;
-		case "数据量":
-			
-			break;
-		default :
-			
-			break;
+	if (seriesName.indexOf("大小")>0) {
+		var len = seriesName.length;
+		var ustr = seriesName.substring(len-3,len-1)
+		opt.yAxis[0].axisLabel.formatter = '{value}'+ustr;
 	}
-	console.log(opt);
 	return opt;
 }

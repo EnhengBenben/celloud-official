@@ -6,7 +6,6 @@
 	<div class="col-xs-12">
 		<div class="col-sm-10" style="height: 350px;" id="echartView"></div>
 		<div class="table-header hide" id="_appName"></div>
-
 		<table id="appList" class="table table-striped table-bordered table-hover">
 			<thead>
 				<tr>
@@ -17,7 +16,6 @@
 					<th class="min-w-80">软件介绍</th>
 				</tr>
 			</thead>
-
 			<tbody>
 				<c:if test="${appList!=null}">
 					<c:forEach var="item" items="${ appList}">

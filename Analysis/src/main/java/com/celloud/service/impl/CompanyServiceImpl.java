@@ -7,17 +7,18 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
+
 import com.celloud.dao.AppDao;
 import com.celloud.dao.CompanyDao;
 import com.celloud.dao.UserDao;
+import com.celloud.sdo.App;
 import com.celloud.sdo.Company;
 import com.celloud.sdo.DataFile;
-import com.celloud.sdo.App;
 import com.celloud.service.CompanyService;
 import com.celloud.utils.ConnectManager;
 import com.google.inject.Inject;
-
 
 public class CompanyServiceImpl implements CompanyService {
 	@Inject
@@ -29,14 +30,14 @@ public class CompanyServiceImpl implements CompanyService {
 	Logger log = Logger.getLogger(this.getClass().getSimpleName());
 
 	@Override
-	public Object getBigUserCompanyNum(Integer companyId,int role) {
-		return companyDao.getBigUserCompanyNum(companyId,role);
+	public Object getBigUserCompanyNum(Integer companyId, int role) {
+		return companyDao.getBigUserCompanyNum(companyId, role);
 	}
 
 	@Override
-	public Map<String, Object> getCompanyNumEveryMonth(Integer companyId,Integer role) {
+	public Map<String, Object> getCompanyNumEveryMonth(Integer companyId, Integer role) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		List<Map<String, Object>> list = companyDao.getCompanyNumEveryMonth(companyId,role);
+		List<Map<String, Object>> list = companyDao.getCompanyNumEveryMonth(companyId, role);
 		Calendar cal = Calendar.getInstance();
 		int year = cal.get(Calendar.YEAR);
 		int month = cal.get(Calendar.MONTH);
@@ -64,7 +65,7 @@ public class CompanyServiceImpl implements CompanyService {
 					tmp = i + "-" + j;
 				}
 				data += mapListHasIt(list, tmp);
-				timeLine += "," + tmp ;
+				timeLine += "," + tmp;
 			}
 		}
 		resultMap.put("timeLine", timeLine);
@@ -101,8 +102,8 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public List<Company> getCompanyDetailById(Integer companyId,Integer role,String orderBy) {
-		return  companyDao.getCompanyDetailById(companyId,role,orderBy);
+	public List<Company> getCompanyDetailById(Integer companyId, Integer role, String orderBy) {
+		return companyDao.getCompanyDetailById(companyId, role, orderBy);
 	}
 
 	@Override
@@ -111,18 +112,18 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getProvince(Integer companyId,int role) {
-		return companyDao.getProvince(companyId,role);
+	public List<Map<String, Object>> getProvince(Integer companyId, int role) {
+		return companyDao.getProvince(companyId, role);
 	}
 
 	@Override
 	public List<App> getCompanyRunAppNumByCId(Integer companyId) {
-		return companyDao.getCompanyRunAppNumByCId(companyId,"software");
+		return companyDao.getCompanyRunAppNumByCId(companyId);
 	}
 
 	@Override
 	public List<DataFile> getCompanyUpLoadGroupMonthByCId(Integer companyId) {
-		List<DataFile> list = companyDao.getCompanyUpLoadDataByCId(companyId,"month");
+		List<DataFile> list = companyDao.getCompanyUpLoadDataByCId(companyId, "month");
 		LinkedList<DataFile> res = new LinkedList<>();
 		if (list != null && list.size() > 0) {
 			DataFile data = list.get(0);
@@ -172,8 +173,8 @@ public class CompanyServiceImpl implements CompanyService {
 							d.setFileNum(0);
 							res.add(d);
 						}
-					}	
-				
+					}
+
 				} else if (y == startYear && y < endYear) {
 					for (int m = startMonth; m <= 12; m++) {
 						String ym = catYearMonth(y, m);
@@ -207,6 +208,7 @@ public class CompanyServiceImpl implements CompanyService {
 		}
 		return null;
 	}
+
 	public App SoftwareHandle(List<App> list, String ym) {
 		for (App data : list) {
 			if (data.getYearMonth().equals(ym))
@@ -217,7 +219,8 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public List<App> getCompanyRunAppNumGroupByMonth(Integer companyId) {
-		List<App> list = companyDao.getCompanyRunAppNumByCId(companyId, "month");
+		List<App> list = null;
+		// companyDao.getCompanyRunAppNumByCId(companyId, "month");
 		LinkedList<App> res = new LinkedList<>();
 		if (list != null && list.size() > 0) {
 			App data = list.get(0);
@@ -226,7 +229,7 @@ public class CompanyServiceImpl implements CompanyService {
 			int startMonth = Integer.parseInt(data.getYearMonth().substring(5, 7));
 			int endYear = Integer.parseInt(endData.getYearMonth().substring(0, 4));
 			int endMonth = Integer.parseInt(endData.getYearMonth().substring(5, 7));
-			/**检查数据中的数据是否有时间间隔*/
+			/** 检查数据中的数据是否有时间间隔 */
 			// 2013~2015遍历年
 			for (int y = startYear; y <= endYear; y++) {
 				// 月份遍历
@@ -290,8 +293,9 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public List<App> getCompanyRunAppNumGroupByWeek(Integer companyId) {
-		
-		return companyDao.getCompanyRunAppNumByCId(companyId,"week");
+
+		// return companyDao.getCompanyRunAppNumByCId(companyId, "week");
+		return null;
 	}
 
 	@Override
@@ -310,11 +314,11 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public Map<String, Object>  getCompanyFile(int role, int cmpId, Date start, Date end, int topN) {
+	public Map<String, Object> getCompanyFile(int role, int cmpId, Date start, Date end, int topN) {
 		Connection conn = ConnectManager.getConnection();
-		HashMap<String,Object> result = new HashMap<>();
-		result.put("hFileNum",  companyDao.getCompanyFileNum(conn, role, cmpId, start, end, topN));
-		result.put("hSize",  companyDao.getCompanyFileSize(conn, role, cmpId, start, end, topN));
+		HashMap<String, Object> result = new HashMap<>();
+		result.put("hFileNum", companyDao.getCompanyFileNum(conn, role, cmpId, start, end, topN));
+		result.put("hSize", companyDao.getCompanyFileSize(conn, role, cmpId, start, end, topN));
 		List<App> list = appDao.getAppList(conn, role, cmpId, start, end, topN);
 		result.put("appRun", list);
 		List<DataFile> fileNum = userDao.getUserFileNum(conn, role, cmpId, start, end, topN);
@@ -330,14 +334,14 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public Map<String, List> getList(int role, int cmpId, Date start, Date end, int topN) {
 		Connection conn = ConnectManager.getConnection();
-		HashMap<String,List> result = new HashMap<>();
-		result.put("hFile",  companyDao.getCompanyFileNum(conn, role, cmpId, start, end, topN));
+		HashMap<String, List> result = new HashMap<>();
+		result.put("hFile", companyDao.getCompanyFileNum(conn, role, cmpId, start, end, topN));
 		List<App> list = appDao.getAppList(conn, role, cmpId, start, end, topN);
 		result.put("appRun", list);
 		List<DataFile> fileNum = userDao.getUserFileNum(conn, role, cmpId, start, end, topN);
 		result.put("uFile", fileNum);
 		ConnectManager.close(conn);
-		
+
 		return result;
 	}
 }

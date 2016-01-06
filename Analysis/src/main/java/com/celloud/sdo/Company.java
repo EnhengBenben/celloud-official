@@ -23,11 +23,30 @@ public class Company implements Serializable {
 	private String dept_name;
 	private Date create_date;
 	private int runNum;
-	
+
+	private String userNames;
+	private String deptNames;
+
 	public Integer getCompany_id() {
 		return company_id;
 	}
-	
+
+	public String getUserNames() {
+		return userNames;
+	}
+
+	public void setUserNames(String userNames) {
+		this.userNames = userNames;
+	}
+
+	public String getDeptNames() {
+		return deptNames;
+	}
+
+	public void setDeptNames(String deptNames) {
+		this.deptNames = deptNames;
+	}
+
 	public long getSize() {
 		return size;
 	}
@@ -123,8 +142,7 @@ public class Company implements Serializable {
 	@Override
 	public String toString() {
 		return "Company [company_id=" + company_id + ", company_name=" + company_name + ", address=" + address
-				+ ", tel=" + tel + ", userNum=" + userNum + ", fileNum=" + fileNum 
-				+ ", reportNum=" + reportNum + ", username=" + username + ", dept_name=" + dept_name + ", create_date="
-				+ create_date + "]";
+				+ ", tel=" + tel + ", userNum=" + userNum + ", fileNum=" + fileNum + ", reportNum=" + reportNum
+				+ ", username=" + username + ", dept_name=" + dept_name + ", create_date=" + create_date + "]";
 	}
 }

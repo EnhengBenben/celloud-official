@@ -20,10 +20,10 @@
 							</dd>
 							<dt>运行次数：</dt>
 							<dd>${app.runNum }</dd>
-							<dt>运行需文件个数：</dt>
-							<dd>${app.data_num }</dd>
-							<dt>可运行数据格式：</dt>
+							<dt>数据格式：</dt>
 							<dd>${app.dataType }</dd>
+							<dt>运行文件数：</dt>
+							<dd>${app.data_num }</dd>
 							<dt>APP图标：</dt>
 							<dd>
 								<img src="http://celloud.org/images/app/${app.picture_name }">
@@ -33,9 +33,12 @@
 							<dt>软件介绍：</dt>
 							<dd>${app.intro }</dd>
 						</dl>
+						<dl id="dt-list-1" class="dl-horizontal">
+						
+						</dl>
 					</div>
 				</div>
-				<div class="col-sm-10" style="height: 350px;" id="appRun"></div>
+				<div style="height: 350px;" id="appRun"></div>
 			</div>
 		</div>
 	</div>
@@ -48,19 +51,19 @@
 	$.get("app!getAppRun", {
 		"app.app_id" : id
 	}, function(res) {
-		   if(res==null||res.length<1){
-			   $('#'+vid).hide();
-			   return ;
-		   }else{
-			   $('#'+vid).show();
-		   }
+		if (res == null || res.length < 1) {
+			$('#' + vid).hide();
+			return;
+		} else {
+			$('#' + vid).show();
+		}
 		var xAxis = new Array(res.length);
 		var runNum = new Array(res.length);
 		for (var i = 0; i < res.length; i++) {
 			xAxis[i] = res[i].yearMonth;
 			runNum[i] = res[i].runNum;
 		}
-		var option = makeOptionScrollUnit(xAxis, runNum, "运行次数", barType, 0, 12);
+		var option = makeOptionScrollUnit(xAxis, runNum, "运行次数", barType, 100, 12);
 		var myChart = echarts.init(document.getElementById(vid));
 		myChart.setOption(option);
 	});
