@@ -73,4 +73,13 @@ public interface UserService {
 
     public PageList<User> findUsers(Page page);
 
+    /**
+     * 根据用户名称获取用户
+     * 
+     * @param username
+     * @return
+     * @date 2016-1-7 下午5:10:00
+     */
+    public User getUserByName(String username);
+
 }

@@ -68,4 +68,9 @@ public class UserServiceImpl implements UserService {
         return new PageList<>(page, lists);
     }
 
+    @Override
+    public User getUserByName(String username) {
+        return userMapper.getUserByName(username);
+    }
+
 }

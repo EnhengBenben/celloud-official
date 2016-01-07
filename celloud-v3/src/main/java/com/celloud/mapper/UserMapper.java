@@ -36,4 +36,6 @@ public interface UserMapper {
 
     public List<User> findUsers(Page page);
 
+    public User getUserByName(@Param("username") String username);
+
 }
