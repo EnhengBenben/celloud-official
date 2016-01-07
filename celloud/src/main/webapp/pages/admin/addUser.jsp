@@ -147,7 +147,6 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
 								$(".error").html("该邮箱已经存在！");
 							}else{
 								$(".error").html("");
-								$("#add_username").val(username);
 								var params = $("#userForm").serialize();
 								//服务协议
 								var isAllow = $("#isAllow").prop("checked");
@@ -193,7 +192,7 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
 	
 	//验证addForm
 	function validateAddForm(){
-		var username = $.trim($("#add_username").val());
+		var username = $("#add_username").val();
 		if(username==""){
 			$(".error").html("请输入用户名！");
 			return false;
