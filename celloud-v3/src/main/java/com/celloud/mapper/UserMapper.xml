@@ -20,8 +20,9 @@
 		<result column="sign" property="sign" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		user_id, username, password, email, cellphone, create_date,
-		icon, role,
+		user_id, username, email, cellphone, create_date,
+		icon,
+		role,
 		remark, navigation,
 		truename, state, dept_id, login_uuid,
 		company_id, sign
@@ -33,11 +34,6 @@
 		from tb_user
 		where user_id = #{userId,jdbcType=INTEGER}
 	</select>
-	<select id="findUsers" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from tb_user
-    </select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from
 		tb_user
@@ -249,8 +245,12 @@
 		<include refid="Base_Column_List" />
 		from tb_user
 		where state = 0
-		AND username = #{username,jdbcType=VARCHAR}
+		AND  (
+		      username = #{username,jdbcType=VARCHAR}
+		      OR email = #{username,jdbcType=VARCHAR}
+		      )
 		AND password = #{password,jdbcType=VARCHAR}
+		AND role=0
 	</select>
 	<select id="getUserByEmail" resultMap="BaseResultMap">
 		select
@@ -299,4 +299,7 @@
 		AND
 		tb_user_find_pwd.md5=#{randomCode,jdbcType=VARCHAR}
 	</select>
+	<select id="isEmailInUse" resultType="int">
+        select count(1) from tb_user where email=#{email} and user_id != #{userId}
+    </select>
 </mapper>

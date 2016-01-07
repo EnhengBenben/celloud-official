@@ -39,6 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 @Intercepts({ @Signature(method = "prepare", type = StatementHandler.class, args = { Connection.class }) })
 public class PageInterceptor implements Interceptor {
+    private static Logger logger = LoggerFactory.getLogger(PageInterceptor.class);
     public static final String MYSQL = "mysql";
     public static final String ORACLE = "oracle";
     private String databaseType;// 数据库类型，不同的数据库有不同的分页方法
@@ -93,7 +94,9 @@ public class PageInterceptor implements Interceptor {
             String pageSql = this.getPageSql(page, sql);
             // 利用反射设置当前BoundSql对应的sql属性为我们建立好的分页Sql语句
             ReflectUtil.setFieldValue(boundSql, "sql", pageSql);
-            System.out.println(pageSql);
+            if(logger.isDebugEnabled()){
+                logger.debug(pageSql);
+            }
         }
         return invocation.proceed();
     }

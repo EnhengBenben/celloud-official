@@ -3,7 +3,9 @@ package com.celloud.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class User implements Serializable{
+import com.celloud.utils.AvatarUtil;
+
+public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer userId;
@@ -35,6 +37,8 @@ public class User implements Serializable{
     private String loginUuid;
 
     private Integer companyId;
+
+    private String avatar;
 
     private String sign;
 
@@ -87,11 +91,12 @@ public class User implements Serializable{
     }
 
     public String getIcon() {
-        return icon;
+        return this.icon;
     }
 
     public void setIcon(String icon) {
         this.icon = icon == null ? null : icon.trim();
+        this.avatar = AvatarUtil.getAvatar(icon);
     }
 
     public Integer getRole() {
@@ -164,5 +169,13 @@ public class User implements Serializable{
 
     public void setSign(String sign) {
         this.sign = sign == null ? null : sign.trim();
+    }
+
+    public String getAvatar() {
+        return AvatarUtil.getAvatar(avatar);
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

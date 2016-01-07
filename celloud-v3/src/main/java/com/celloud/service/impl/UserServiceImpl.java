@@ -2,17 +2,15 @@ package com.celloud.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
 import com.celloud.constants.Constants;
+import com.celloud.constants.ConstantsData;
 import com.celloud.mapper.UserMapper;
 import com.celloud.model.User;
-import com.celloud.page.Page;
-import com.celloud.page.PageList;
 import com.celloud.service.UserService;
 import com.celloud.utils.MD5Util;
 
@@ -55,17 +53,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updatePassword(int userId, String password) {
+    public int updatePassword(int userId, String password) {
         User user = new User();
         user.setUserId(userId);
         user.setPassword(MD5Util.getMD5(password));
-        userMapper.updateByPrimaryKeySelective(user);
+        return userMapper.updateByPrimaryKeySelective(user);
     }
 
     @Override
-    public PageList<User> findUsers(Page page) {
-        List<User> lists = userMapper.findUsers(page);
-        return new PageList<>(page, lists);
+    public User selectUserById(int userId) {
+        return userMapper.selectByPrimaryKey(userId);
+    }
+
+    @Override
+    public Integer updateUserInfo(User user) {
+        User temp = new User();
+        temp.setCellphone(user.getCellphone());
+        temp.setEmail(user.getEmail());
+        temp.setUserId(ConstantsData.getLoginUserId());
+        return userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    @Override
+    public boolean isEmailInUse(String email, Integer userId) {
+        return userMapper.isEmailInUse(email, userId == null ? 0 : userId) > 0;
     }
 
 }

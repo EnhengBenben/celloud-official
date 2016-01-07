@@ -1,5 +1,7 @@
 package com.celloud.page;
 
+import com.celloud.constants.Constants;
+
 /**
  * 分页对象.
  * 
@@ -20,7 +22,7 @@ public final class Page {
     private int prevPage;
 
     /** current page */
-    private int currentPage;
+    private int currentPage = 1;
 
     /** total page */
     private int totalPage;
@@ -29,7 +31,7 @@ public final class Page {
     private int rowCount;
 
     /** page size */
-    private int pageSize;
+    private int pageSize = Constants.DEFAULT_PAGE_SIZE;
 
     /** exists next page */
     private boolean hasNext;

@@ -1,6 +1,7 @@
 package com.celloud.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.celloud.constants.ConstantsData;
 import com.celloud.mapper.ActionLogMapper;
 import com.celloud.model.ActionLog;
+import com.celloud.page.Page;
+import com.celloud.page.PageList;
 import com.celloud.service.ActionLogService;
 import com.celloud.utils.UserAgentUtil;
 
@@ -57,5 +60,11 @@ public class ActionServiceImpl implements ActionLogService {
             return this;
         }
 
+    }
+
+    @Override
+    public PageList<ActionLog> findLogs(int userId, Page page) {
+        List<ActionLog> list = logMapper.findLogs(ConstantsData.getLoginUserId(), page);
+        return new PageList<>(page, list);
     }
 }

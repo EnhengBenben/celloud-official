@@ -18,7 +18,7 @@
 		<div class="wrapper">
 			<div class="login">
 				<div class="logo" id="logo">
-					<img src="<%=request.getContextPath()%>/images/login/login_logo.png" />
+					<img src="<%=request.getContextPath()%>/images/home/logo@2x.png" />
 				</div>
 				<div class="main_f clearfix">
 					<c:choose>

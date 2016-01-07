@@ -138,13 +138,13 @@ public class EmailUtils {
         feedbackTitle = pro.getProperty("feedbackTitle");
         emailName = pro.getProperty("emailName");
         String errorMails = pro.getProperty("errorsMailTo");
-        if (errorMails != null) {
+        if (errorMails != null && !errorMails.trim().equals("")) {
             errorsMailTo = errorMails.split(",");
             List<String> list = new ArrayList<>(new HashSet<>(Arrays.asList(errorsMailTo)));
             errorsMailTo = list.toArray(new String[list.size()]);
         }
         String feedbackMails = pro.getProperty("errorsMailTo");
-        if (feedbackMails != null) {
+        if (feedbackMails != null && !feedbackMails.trim().equals("")) {
             feedbackMailTo = feedbackMails.split(",");
             List<String> list = new ArrayList<>(new HashSet<>(Arrays.asList(feedbackMailTo)));
             feedbackMailTo = list.toArray(new String[list.size()]);
@@ -200,6 +200,7 @@ public class EmailUtils {
         EmailUtils utils = getInstance();
         if (errorsMailTo == null) {
             logger.warn("系统出现异常，正在发送异常信息邮件，但是没有找到邮件接收者！");
+            return;
         }
         utils.addTo(errorsMailTo).setTitle(errorTitle).setContent(errorMessage).send();
     }
@@ -242,6 +243,7 @@ public class EmailUtils {
         EmailUtils utils = getInstance();
         if (feedbackMailTo == null) {
             logger.warn("正在发送用户问题反馈邮件，但是没有找到邮件接收者！");
+            return;
         }
         utils.addTo(feedbackMailTo).setTitle(feedbackTitle).setContent(content).send();
     }
@@ -394,7 +396,6 @@ public class EmailUtils {
             } catch (MessagingException | UnsupportedEncodingException e) {
                 logger.error("添加附件失败：{}", file, e);
             }
-
         }
         return this;
     }
