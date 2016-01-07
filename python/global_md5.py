@@ -12,7 +12,7 @@ import hashlib
 from mysql.mysqlOperate import mysql
 
 basePath = '/share/data/file/'
-sql = 'select file_name,data_key from tb_file'
+sql = 'select file_name,data_key from tb_file  where md5 is null'
 
 def dataDeal():
 	my=mysql.getInstance()
@@ -26,8 +26,8 @@ def dataDeal():
 				path = os.path.join(basePath,key + ext)
 				if(os.path.exists(path)):
 					md5 = getMD5(path)
-					updateSQl = 'update tb_file set md5="' + md5 + '" where data_key=' + key
-					print updateSQl
+					updateSQl = 'update tb_file set md5="' + md5 + '" where data_key="' + key +'"'
+					#print updateSQl
 					my.execute(updateSQl)
 				else:
 					print path
@@ -61,9 +61,14 @@ def getMD5(path):
 	file.close()
 	return m.hexdigest()
 
+dataDeal()
+
 if __name__ == '__main__':
 	print '🐒🐒🐱'
-	dataDeal()
+	#dataDeal()
+	#f = '20150817346217.fastq.gz'
+	#f = f[0:f.index('.')]
+	#print f
 	#print getExt('中检所报价清单_v1.0.0.xlsx')
 	#print getExt('FileZilla_3.6.0.2_win32-setup.exe')
 	#print getExt('index11.lis')
