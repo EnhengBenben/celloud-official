@@ -101,7 +101,8 @@ public class LoginAction {
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public ModelAndView login(Model model, User user, String kaptchaCode, PublicKey publicKey, boolean checked,
             HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndView("login");
+        ModelAndView mv = new ModelAndView("login").addObject("checked",
+                CookieUtils.getCookieValue(request, Constants.COOKIE_MODULUS) != null&&checked);
         HttpSession session = request.getSession();
         String kaptchaExpected = (String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
         PrivateKey privateKey = null;
@@ -118,7 +119,7 @@ public class LoginAction {
         if (modulus != null && modulus.equals(publicKey.getModulus())) {
             key = rsaKeyService.getByModulus(publicKey.getModulus());
             privateKey = new PrivateKey(new BigInteger(key.getModulus(), 16), new BigInteger(key.getPriExponent(), 16));
-        }else{
+        } else {
             privateKey = (PrivateKey) session.getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
         }
         if (checked) {

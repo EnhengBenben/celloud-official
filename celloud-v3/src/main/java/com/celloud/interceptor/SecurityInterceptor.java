@@ -39,12 +39,6 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
             }
             return false;
         }
-        long time = System.currentTimeMillis();
-        boolean result = super.preHandle(request, response, handler);
-        time = System.currentTimeMillis() - time;
-        if (time > 20) {
-            logger.info("请求响应时间过长({} ms)：{}", time, UserAgentUtil.getUrl(request));
-        }
-        return result;
+        return super.preHandle(request, response, handler);
     }
 }

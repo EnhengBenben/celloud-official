@@ -50,7 +50,7 @@ public class UserAgentUtil {
             }
             if (qqwry == null) {
                 InputStream is = QQWry.class.getClassLoader().getResourceAsStream(QQWRY_PATH);
-                String path = ConstantsData.getRequset().getSession().getServletContext().getRealPath(QQWRY_PATH);
+                String path = ConstantsData.getSession().getServletContext().getRealPath(QQWRY_PATH);
                 File file = new File(path);
                 if (!file.exists()) {
                     FileUtils.copyInputStreamToFile(is, file);

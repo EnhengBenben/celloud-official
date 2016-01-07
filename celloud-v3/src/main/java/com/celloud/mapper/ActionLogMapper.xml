@@ -1,94 +1,113 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.celloud.mapper.ActionLogMapper" >
-  <resultMap id="BaseResultMap" type="com.celloud.model.ActionLog" >
-  <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="user_name" property="userName" jdbcType="VARCHAR" />
-    <result column="operate" property="operate" jdbcType="VARCHAR" />
-    <result column="message" property="message" jdbcType="VARCHAR" />
-    <result column="log_date" property="logDate" jdbcType="TIMESTAMP" />
-    <result column="browser" property="browser" jdbcType="VARCHAR" />
-    <result column="browser_version" property="browserVersion" jdbcType="VARCHAR" />
-    <result column="os" property="os" jdbcType="VARCHAR" />
-    <result column="os_version" property="osVersion" jdbcType="VARCHAR" />
-    <result column="ip" property="ip" jdbcType="VARCHAR" />
-    <result column="address" property="address" jdbcType="VARCHAR" />
-  </resultMap>
-  <insert id="insert" parameterType="com.celloud.model.ActionLog" >
-    insert into tb_log (user_id,user_name, operate, message, 
-      log_date, browser, browser_version, 
-      os, os_version, ip, 
-      address)
-    values (#{userId,jdbcType=INTEGER},#{userName,jdbcType=VARCHAR}, #{operate,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, 
-      #{logDate,jdbcType=TIMESTAMP}, #{browser,jdbcType=VARCHAR}, #{browserVersion,jdbcType=VARCHAR}, 
-      #{os,jdbcType=VARCHAR}, #{osVersion,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.celloud.model.ActionLog" >
-    insert into tb_log
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="userName != null" >
-        user_name,
-      </if>
-      <if test="operate != null" >
-        operate,
-      </if>
-      <if test="message != null" >
-        message,
-      </if>
-      <if test="logDate != null" >
-        log_date,
-      </if>
-      <if test="browser != null" >
-        browser,
-      </if>
-      <if test="browserVersion != null" >
-        browser_version,
-      </if>
-      <if test="os != null" >
-        os,
-      </if>
-      <if test="osVersion != null" >
-        os_version,
-      </if>
-      <if test="ip != null" >
-        ip,
-      </if>
-      <if test="address != null" >
-        address,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="userName != null" >
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="operate != null" >
-        #{operate,jdbcType=VARCHAR},
-      </if>
-      <if test="message != null" >
-        #{message,jdbcType=VARCHAR},
-      </if>
-      <if test="logDate != null" >
-        #{logDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="browser != null" >
-        #{browser,jdbcType=VARCHAR},
-      </if>
-      <if test="browserVersion != null" >
-        #{browserVersion,jdbcType=VARCHAR},
-      </if>
-      <if test="os != null" >
-        #{os,jdbcType=VARCHAR},
-      </if>
-      <if test="osVersion != null" >
-        #{osVersion,jdbcType=VARCHAR},
-      </if>
-      <if test="ip != null" >
-        #{ip,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        #{address,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
+<mapper namespace="com.celloud.mapper.ActionLogMapper">
+	<resultMap id="BaseResultMap" type="com.celloud.model.ActionLog">
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="operate" property="operate" jdbcType="VARCHAR" />
+		<result column="message" property="message" jdbcType="VARCHAR" />
+		<result column="log_date" property="logDate" jdbcType="TIMESTAMP" />
+		<result column="browser" property="browser" jdbcType="VARCHAR" />
+		<result column="browser_version" property="browserVersion"
+			jdbcType="VARCHAR" />
+		<result column="os" property="os" jdbcType="VARCHAR" />
+		<result column="os_version" property="osVersion" jdbcType="VARCHAR" />
+		<result column="ip" property="ip" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		user_id, user_name, operate, message, log_date, browser,
+		browser_version, os,
+		os_version, ip, address
+	</sql>
+	<insert id="insert" parameterType="com.celloud.model.ActionLog">
+		insert into tb_log
+		(user_id,user_name, operate, message,
+		log_date, browser,
+		browser_version,
+		os, os_version, ip,
+		address)
+		values
+		(#{userId,jdbcType=INTEGER},#{userName,jdbcType=VARCHAR},
+		#{operate,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR},
+		#{logDate,jdbcType=TIMESTAMP}, #{browser,jdbcType=VARCHAR},
+		#{browserVersion,jdbcType=VARCHAR},
+		#{os,jdbcType=VARCHAR},
+		#{osVersion,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.celloud.model.ActionLog">
+		insert into tb_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="operate != null">
+				operate,
+			</if>
+			<if test="message != null">
+				message,
+			</if>
+			<if test="logDate != null">
+				log_date,
+			</if>
+			<if test="browser != null">
+				browser,
+			</if>
+			<if test="browserVersion != null">
+				browser_version,
+			</if>
+			<if test="os != null">
+				os,
+			</if>
+			<if test="osVersion != null">
+				os_version,
+			</if>
+			<if test="ip != null">
+				ip,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="operate != null">
+				#{operate,jdbcType=VARCHAR},
+			</if>
+			<if test="message != null">
+				#{message,jdbcType=VARCHAR},
+			</if>
+			<if test="logDate != null">
+				#{logDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="browser != null">
+				#{browser,jdbcType=VARCHAR},
+			</if>
+			<if test="browserVersion != null">
+				#{browserVersion,jdbcType=VARCHAR},
+			</if>
+			<if test="os != null">
+				#{os,jdbcType=VARCHAR},
+			</if>
+			<if test="osVersion != null">
+				#{osVersion,jdbcType=VARCHAR},
+			</if>
+			<if test="ip != null">
+				#{ip,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="findLogs" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tb_log
+		where user_id = #{userId,jdbcType=INTEGER}
+		order by log_date desc
+	</select>
 </mapper>

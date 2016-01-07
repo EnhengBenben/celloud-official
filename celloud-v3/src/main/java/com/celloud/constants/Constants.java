@@ -45,4 +45,8 @@ public class Constants {
      * 分页中，默认每页显示条数
      */
     public static final int DEFAULT_PAGE_SIZE = 10;
+    /**
+     * 默认的用户头像
+     */
+    public static final String DELAULT_AVATAR = "01.png";
 }

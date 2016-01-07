@@ -27,22 +27,23 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public Integer countReport(Integer userId) {
-        return reportMapper.countReport(userId, DataState.ACTIVE,
-                ReportType.PROJECT);
+        return reportMapper.countReport(userId, DataState.ACTIVE, ReportType.PROJECT);
     }
 
     @Override
     public List<Map<String, String>> countReport(Integer userId, Integer time) {
-        return reportMapper.countReportByTime(userId, time, DataState.ACTIVE,
-                ReportType.PROJECT);
+        return reportMapper.countReportByTime(userId, time, DataState.ACTIVE, ReportType.PROJECT);
     }
 
     @Override
-    public PageList<Map<String, Object>> getReportPageList(Integer userId,
-            Page pager, String condition, String start, String end,
-            Integer appId) {
-        List<Map<String, Object>> list = reportMapper.getReportList(userId,
-                pager, condition, start, end, appId);
+    public PageList<Map<String, Object>> getReportPageList(Integer userId, Page pager, String condition, String start,
+            String end, Integer appId) {
+        long s = System.currentTimeMillis();
+        System.out.println("【Service】 start " + s);
+        List<Map<String, Object>> list = reportMapper.getReportList(userId, pager, condition, start, end, appId);
+        long e = System.currentTimeMillis();
+        System.out.println("【Service】 end " + e);
+        System.out.println("【Service】 time: " + (e - s));
         return new PageList<>(pager, list);
     }
 }

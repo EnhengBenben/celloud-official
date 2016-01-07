@@ -39,12 +39,12 @@
           <ul class="nav navbar-nav">
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <img src="<%=request.getContextPath() %>/images/icon/user2-160x160.jpg" class="user-image" alt="User Image"/>
+                <img src="${sessionScope.loginUserInSession.avatar}" class="user-image" alt="User Image" id="userImageSmall"/>
                 <span class="hidden-xs">${sessionScope.loginUserInSession.username }</span>
               </a>
               <ul class="dropdown-menu">
                 <li class="user-header">
-                  <img src="<%=request.getContextPath() %>/images/icon/user2-160x160.jpg" class="img-circle" alt="User Image">
+                  <img src="${sessionScope.loginUserInSession.avatar}" class="img-circle" alt="User Image" id="userImageLarge">
                   <p>
                     CelLoud
                     <small>您身边的基因数据分析云平台</small>

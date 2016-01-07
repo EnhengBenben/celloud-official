@@ -9,14 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
 import com.celloud.model.User;
-import com.celloud.page.Page;
-import com.celloud.page.PageList;
 import com.celloud.service.UserService;
 import com.celloud.utils.EmailUtils;
 import com.celloud.utils.MD5Util;

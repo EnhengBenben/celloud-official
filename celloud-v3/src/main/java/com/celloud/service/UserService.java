@@ -3,8 +3,6 @@ package com.celloud.service;
 import java.util.Date;
 
 import com.celloud.model.User;
-import com.celloud.page.Page;
-import com.celloud.page.PageList;
 
 /**
  * 用户服务接口
@@ -68,10 +66,34 @@ public interface UserService {
      * 
      * @param username
      * @param password
+     * @return 
      */
-    public void updatePassword(int userId, String password);
+    public int updatePassword(int userId, String password);
 
-    public PageList<User> findUsers(Page page);
+    /**
+     * 根据id获取user对象
+     * 
+     * @param userId
+     * @return
+     */
+    public User selectUserById(int userId);
+
+    /**
+     * 修改用户基本信息
+     * 
+     * @param user
+     * @return
+     */
+    public Integer updateUserInfo(User user);
+
+    /**
+     * 校验邮箱是否存在(排除userId本身的email，如userId不存在，则默认为0，表示校验email在全局范围内是否已存在)
+     * 
+     * @param email
+     * @param userId
+     * @return
+     */
+    public boolean isEmailInUse(String email, Integer userId);
 
     /**
      * 根据用户名称获取用户
