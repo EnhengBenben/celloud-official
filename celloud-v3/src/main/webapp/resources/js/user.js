@@ -141,6 +141,9 @@ var users = (function(users) {
 				if(data.data){
 					$("#inputEmail").val(data.data.email);
 					$("#inputPhone").val(data.data.cellphone);
+					$("#userImage").attr("src",data.data.avatar);
+					$("#userImageSmall").attr("src",data.data.avatar);
+					$("#userImageLarge").attr("src",data.data.avatar);
 				}
 			}
 		});

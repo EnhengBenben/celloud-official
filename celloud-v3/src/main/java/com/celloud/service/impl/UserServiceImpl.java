@@ -71,7 +71,8 @@ public class UserServiceImpl implements UserService {
         temp.setCellphone(user.getCellphone());
         temp.setEmail(user.getEmail());
         temp.setUserId(ConstantsData.getLoginUserId());
-        return userMapper.updateByPrimaryKeySelective(user);
+        temp.setIcon(user.getIcon());
+        return userMapper.updateByPrimaryKeySelective(temp);
     }
 
     @Override

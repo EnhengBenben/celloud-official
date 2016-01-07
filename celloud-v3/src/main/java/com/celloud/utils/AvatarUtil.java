@@ -21,11 +21,11 @@ public class AvatarUtil {
         if (ConstantsData.getSession().getServletContext().getRealPath("avatar/" + avatar) == null) {
             return getDefaultAvatar();
         }
-        return ConstantsData.getRequset().getContextPath() + "/images/avatar/" + avatar;
+        return ConstantsData.getRequset().getContextPath() + "/images/avatar/" + avatar+".png";
     }
 
     public static String getDefaultAvatar() {
-        return ConstantsData.getRequset().getContextPath() + "/images/avatar/" + Constants.DELAULT_AVATAR;
+        return ConstantsData.getRequset().getContextPath() + "/images/avatar/" + Constants.DELAULT_AVATAR+".png";
     }
 
     public static String encrypt() {

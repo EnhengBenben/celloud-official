@@ -44,7 +44,7 @@
 								<label for="photo" class="col-xs-2 form-label control-label">头像</label>
 								<input type="hidden" name="icon" value="${user.icon==null?'01':user.icon }">
 								<div class="col-xs-10">
-									<img src="${user.avatar }" role="button" class="img-circle" alt="User Image" onclick="users.showUserImages()"
+									<img src="${user.avatar }" role="button" class="img-circle" alt="User Image" title="头像预览，保存后生效" onclick="users.showUserImages()"
 										id="userImage" />
 								</div>
 							</div>
