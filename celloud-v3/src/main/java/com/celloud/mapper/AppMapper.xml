@@ -302,4 +302,7 @@
   <select id="countMyAppByTime" resultType="map" >
     select left(create_date,#{time }) time,count(a.app_id) num from tb_user_app_right uar left join tb_app a on uar.app_id=a.app_id where uar.user_id=#{userId } and a.off_line=#{offLine } and uar.is_add=#{isAdd } group by time
   </select>
+  <select id="getRanAPP" resultType="map">
+  	select s.app_id,app_name,count(*) as num from (select project_id from tb_project where user_id = #{userId } and state = 0 union all select p.project_id from tb_project p,tb_project_share s where p.state=0 and p.project_id=s.project_id and s.share_to = #{userId }) as p,tb_report as r,tb_app s where r.project_id = p.project_id and r.app_id = s.app_id group by app_id order by num desc , app_name;
+  </select>
 </mapper>

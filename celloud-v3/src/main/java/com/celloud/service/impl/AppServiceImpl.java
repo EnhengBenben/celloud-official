@@ -34,4 +34,9 @@ public class AppServiceImpl implements AppService {
         return appMapper.countMyAppByTime(userId, time, AppOffline.ON, AppIsAdd.ALREADY_ADDED);
     }
 
+    @Override
+    public List<Map<String, String>> getRanAPP(Integer userId) {
+        return appMapper.getRanAPP(userId);
+    }
+
 }

@@ -28,4 +28,13 @@ public interface AppService {
      */
     public List<Map<String, String>> countMyApp(Integer userId, Integer time);
 
+    /**
+     * 获取用户已运行的APP
+     * 
+     * @param userId
+     * @return
+     * @date 2016-1-7 下午2:07:45
+     */
+    public List<Map<String, String>> getRanAPP(Integer userId);
+
 }

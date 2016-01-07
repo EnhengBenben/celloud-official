@@ -48,4 +48,13 @@ public interface AppMapper {
      */
     public List<Map<String, String>> countMyAppByTime(@Param("userId") Integer userId, @Param("time") Integer time,
             @Param("offLine") Integer offLine, @Param("isAdd") Integer isAdd);
+
+    /**
+     * 获取用户已运行的APP
+     * 
+     * @param userId
+     * @return
+     * @date 2016-1-7 下午1:55:17
+     */
+    public List<Map<String, String>> getRanAPP(@Param("userId") Integer userId);
 }
