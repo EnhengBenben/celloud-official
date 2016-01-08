@@ -9,13 +9,13 @@
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
     <result column="state" property="state" jdbcType="INTEGER" />
-    <result column="share" property="share" jdbcType="INTEGER" />
+    <result column="share_num" property="shareNum" jdbcType="INTEGER" />
     <result column="data_num" property="dataNum" jdbcType="INTEGER" />
     <result column="data_size" property="dataSize" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     project_id, user_id, project_name, data_format, create_date, update_date, state, 
-    share, data_num, data_size
+    share_num, data_num, data_size
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -30,11 +30,11 @@
   <insert id="insert" parameterType="com.celloud.model.Project" >
     insert into tb_project (project_id, user_id, project_name, 
       data_format, create_date, update_date, 
-      state, share, data_num, 
+      state, share_num, data_num, 
       data_size)
     values (#{projectId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR}, 
       #{dataFormat,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
-      #{state,jdbcType=INTEGER}, #{share,jdbcType=INTEGER}, #{dataNum,jdbcType=INTEGER}, 
+      #{state,jdbcType=INTEGER}, #{shareNum,jdbcType=INTEGER}, #{dataNum,jdbcType=INTEGER}, 
       #{dataSize,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.celloud.model.Project" >
@@ -61,8 +61,8 @@
       <if test="state != null" >
         state,
       </if>
-      <if test="share != null" >
-        share,
+      <if test="shareNum != null" >
+        share_num,
       </if>
       <if test="dataNum != null" >
         data_num,
@@ -93,8 +93,8 @@
       <if test="state != null" >
         #{state,jdbcType=INTEGER},
       </if>
-      <if test="share != null" >
-        #{share,jdbcType=INTEGER},
+      <if test="shareNum != null" >
+        #{share_num,jdbcType=INTEGER},
       </if>
       <if test="dataNum != null" >
         #{dataNum,jdbcType=INTEGER},
@@ -125,8 +125,8 @@
       <if test="state != null" >
         state = #{state,jdbcType=INTEGER},
       </if>
-      <if test="share != null" >
-        share = #{share,jdbcType=INTEGER},
+      <if test="shareNum != null" >
+        share_num = #{share_num,jdbcType=INTEGER},
       </if>
       <if test="dataNum != null" >
         data_num = #{dataNum,jdbcType=INTEGER},
@@ -145,9 +145,29 @@
       create_date = #{createDate,jdbcType=TIMESTAMP},
       update_date = #{updateDate,jdbcType=TIMESTAMP},
       state = #{state,jdbcType=INTEGER},
-      share = #{share,jdbcType=INTEGER},
+      share_num = #{shareNum,jdbcType=INTEGER},
       data_num = #{dataNum,jdbcType=INTEGER},
       data_size = #{dataSize,jdbcType=VARCHAR}
     where project_id = #{projectId,jdbcType=INTEGER}
   </update>
+  
+  <delete id="deleteShareToMe" parameterType="java.lang.Integer">
+  	delete from tb_project_share where share_to=#{userId} and project_id=#{projectId}
+  </delete>
+  <delete id="deleteShareFromMe" parameterType="java.lang.Integer">
+  	delete from tb_project_share where share_from=#{userId} and project_id=#{projectId}
+  </delete>
+  <update id="updateShareNum" parameterType="java.lang.Integer">
+  	update tb_project set share_num = 
+  	<if test="num == null">
+	  	share_num -1 
+  	</if>
+  	<if test="num!=null">
+  		#{num}
+  	</if>
+  	where project_id = #{projectId}
+  </update>
+  <insert id="addShare" parameterType="java.lang.Integer">
+  	insert into tb_project_share (share_from,project_id,share_to) values (#{shareFrom,jdbcType=INTEGER},#{projectId,jdbcType=INTEGER},#{shareTo,jdbcType=INTEGER});
+  </insert>
 </mapper>

@@ -68,7 +68,6 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<input type="hidden" id="proIdHidden"/>
-				<input type="hidden" id="proOwnerHidden"/>
 				<a class="close" data-dismiss="modal">×</a>
 		    	<h4 class="modal-title">
 		    		项目共享

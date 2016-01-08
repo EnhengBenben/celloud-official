@@ -15,7 +15,7 @@
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico"/>
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-<link href="//cdn.bootcss.com/select2/4.0.1/css/select2.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
 <link href="<%=request.getContextPath() %>/plugins/intro/introjs.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath() %>/css/font.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath() %>/css/main.css" rel="stylesheet" type="text/css" />
@@ -134,7 +134,7 @@
   <!-- TODO 数据参数同比有用，待统一为echarts -->
   <script src="//cdn.bootcss.com/highcharts/4.2.1/highcharts.js"></script>
   <script src="//cdn.bootcss.com/highcharts/4.2.1/modules/exporting.js"></script>
-  <script src="//cdn.bootcss.com/select2/4.0.1/js/select2.min.js"></script>
+  <script src="<%=request.getContextPath() %>/plugins/select/select2.min.js"></script>
 <!--   <script src="//cdn.bootcss.com/select2/4.0.1/js/i18n/zh-CN.js"></script> -->
   <script src="<%=request.getContextPath() %>/js/utils.js" type="text/javascript"></script>
   <script src="<%=request.getContextPath() %>/js/main_init.js" type="text/javascript"></script>

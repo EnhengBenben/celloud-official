@@ -194,7 +194,7 @@
   
   <select id="getReportList" resultType="map">
 	select 
-		p.project_id,p.project_name,p.create_date,p.data_num,p.data_size,p.share ,
+		p.project_id,p.project_name,p.create_date,p.data_num,p.data_size,p.share_num ,
 		r.end_date,r.context,r.period,app.app_id,app.app_name,
 		(case WHEN p.user_id=#{userId} then #{userId} else s.share_from end) as user_id,
 		(case WHEN p.user_id=#{userId} then 'no_one' else u.username end) as userName
