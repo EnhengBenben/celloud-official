@@ -7,8 +7,8 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="javascript:showAppStore()"><i class="fa fa-cubes"></i> 应用市场</a></li>
-    <li class="active"><a href="javascript:void()" id="rootClassifyName">首页</a></li>
-    <li class="hide"><a href="javascript:void()" id="secondClassifyName">二级分类</a></li>
+    <li class="active"><a href="javascript:void(0);" id="rootClassifyName">首页</a></li>
+    <li class="hide"><a href="javascript:void(0);" id="secondClassifyName">二级分类</a></li>
     <li class="hide"><span id="appNameTitle">应用名称</span></li>
   </ol>
 </section>

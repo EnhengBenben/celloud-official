@@ -43,6 +43,13 @@ public class App {
 
     private String appDoc;
 
+    // 展示字段
+    private String companyName;
+    /** 是否已被用户添加 =0——>未添加 >0——>已添加 */
+    private Integer isAdded;
+    /** 所属分类名称 */
+    private String classifyNames;
+
     public Integer getAppId() {
         return appId;
     }
@@ -202,4 +209,29 @@ public class App {
     public void setAppDoc(String appDoc) {
         this.appDoc = appDoc == null ? null : appDoc.trim();
     }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public Integer getIsAdded() {
+        return isAdded;
+    }
+
+    public void setIsAdded(Integer isAdded) {
+        this.isAdded = isAdded;
+    }
+
+    public String getClassifyNames() {
+        return classifyNames;
+    }
+
+    public void setClassifyNames(String classifyNames) {
+        this.classifyNames = classifyNames;
+    }
+
 }

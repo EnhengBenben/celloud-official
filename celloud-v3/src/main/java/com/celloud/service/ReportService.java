@@ -13,44 +13,52 @@ import com.celloud.page.PageList;
  * @date 2015年12月25日 下午3:47:07
  */
 public interface ReportService {
-    /**
-     * 
-     * (重构)统计个人报告数量
-     * 
-     * @param userId
-     * @return
-     * @date 2015年12月25日 下午3:47:42
-     */
-    public Integer countReport(Integer userId);
+	/**
+	 * 
+	 * (重构)统计个人报告数量
+	 * 
+	 * @param userId
+	 * @return
+	 * @date 2015年12月25日 下午3:47:42
+	 */
+	public Integer countReport(Integer userId);
 
-    /**
-     * 
-     * (重构)按时间统计个人报告数量
-     * 
-     * @param userId
-     * @return
-     * @date 2015年12月25日 下午3:47:42
-     */
-    public List<Map<String, String>> countReport(Integer userId, Integer time);
+	/**
+	 * 
+	 * (重构)按时间统计个人报告数量
+	 * 
+	 * @param userId
+	 * @return
+	 * @date 2015年12月25日 下午3:47:42
+	 */
+	public List<Map<String, String>> countReport(Integer userId, Integer time);
 
-    /**
-     * 报告检索
-     * 
-     * @param userId
-     *            ：用户ID
-     * @param pager
-     *            ：分页类
-     * @param condition
-     *            ：检索条件
-     * @param start
-     *            ：开始时间
-     * @param end
-     *            ：结束时间
-     * @param appId
-     *            ：APPID
-     * @return
-     * @date 2016-1-5 下午3:26:05
-     */
-    PageList<Map<String, Object>> getReportPageList(Integer userId, Page pager,
-            String condition, String start, String end, Integer appId);
+	/**
+	 * 报告检索
+	 * 
+	 * @param userId
+	 *            ：用户ID
+	 * @param pager
+	 *            ：分页类
+	 * @param condition
+	 *            ：检索条件
+	 * @param start
+	 *            ：开始时间
+	 * @param end
+	 *            ：结束时间
+	 * @param appId
+	 *            ：APPID
+	 * @return
+	 * @date 2016-1-5 下午3:26:05
+	 */
+	PageList<Map<String, Object>> getReportPageList(Integer userId, Page pager,
+			String condition, String start, String end, Integer appId);
+
+	/**
+	 * 统计用户使用各App的次数
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public List<Map<String, String>> countAppRunNum(Integer userId);
 }

@@ -48,5 +48,5 @@ public class Constants {
     /**
      * 默认的用户头像
      */
-    public static final String DELAULT_AVATAR = "01.png";
+    public static final String DELAULT_AVATAR = "01";
 }

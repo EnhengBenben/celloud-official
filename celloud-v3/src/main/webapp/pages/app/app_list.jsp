@@ -36,7 +36,7 @@
       <a href="javascript:toMoreApp(${classifyPid },${classifyId },1,${classifyFloor });" id="defaultSort">默认排序</a>
     </li>
     <li class="" data-spm="1" id="sortByCreateDate">
-      <a target="_self" href="javascript:void();" id="sortByCreateDate">上线时间<i class="down"></i></a>
+      <a target="_self" href="javascript:void(0);" id="sortByCreateDate">上线时间<i class="down"></i></a>
     </li>
 <!--     <li class="" data-spm="2"> -->
 <!--       <a d-order="price-desc" a-order="price-asc" default="asc" target="_self" href="javascript:void(0);">价格<i class="down"></i></a> -->
@@ -57,7 +57,7 @@
 <!-- 		              <font id="price_unit_cmjz000559">￥</font> -->
 <!-- 		              <span class="sync_price" id="price_cmjz000559" code="cmjz000559" servicepackage="" inquerytype="cloudmarket">免费</span> -->
 		            </p>
-		            <a class="xq" href="javascript:toAppDetail(${app.softwareId })" style="display: none;">查看详情</a>
+		            <a class="xq" href="javascript:toAppDetail(${app.appId })" style="display: none;">查看详情</a>
 		          </div>
 		          <div class="box-star">
 		            <div class="unlinedate"> 上线时间：
@@ -72,12 +72,12 @@
 		          </div>
 		          <div class="box-info-wrap">
 		            <div class="box-pic" <c:if test="${status.first}"> data-step="2" data-intro="" data-position="right" data-img="appDetail.png" </c:if>>
-		              <a href="javascript:toAppDetail(${app.softwareId })">
+		              <a href="javascript:toAppDetail(${app.appId })">
 		                <img alt="产品logo" src="<%=request.getContextPath()%>/images/app/${app.pictureName}">
 		              </a>
 		            </div>
 		            <div class="box-info">
-		              <h4><a href="#">${app.softwareName }</a></h4>
+		              <h4><a href="#">${app.appName }</a></h4>
 		              <p>${app.intro }</p>
 <%-- 		              <p class="label">标签：${app.description }</p><!-- 标签内容待定 --> --%>
 		            </div>

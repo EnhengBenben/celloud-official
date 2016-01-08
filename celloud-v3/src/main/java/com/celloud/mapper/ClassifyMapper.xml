@@ -79,4 +79,10 @@
       notes = #{notes,jdbcType=VARCHAR}
     where classify_id = #{classifyId,jdbcType=INTEGER}
   </update>
+  <select id="getClassify" resultMap="BaseResultMap">
+    select classify_id,classify_pid,classify_name from tb_classify where classify_pid=#{pid }
+  </select>
+  <select id="getClassifyById" resultMap="BaseResultMap">
+    select classify_id,classify_pid,classify_name from tb_classify where classify_id=#{classifyId }
+  </select>
 </mapper>

@@ -3,6 +3,10 @@ package com.celloud.service;
 import java.util.List;
 import java.util.Map;
 
+import com.celloud.model.App;
+import com.celloud.page.Page;
+import com.celloud.page.PageList;
+
 /**
  * app接口
  *
@@ -36,5 +40,86 @@ public interface AppService {
      * @date 2016-1-7 下午2:07:45
      */
     public List<Map<String, String>> getRanAPP(Integer userId);
+
+    /**
+     * 根据数据类型查询APP列表
+     *
+     * @param formatId
+     * @param userId
+     * @return
+     * @author han
+     * @date 2016年1月5日 下午4:52:56
+     */
+    public List<App> getAppsByFormat(Integer formatId, Integer userId);
+
+    /**
+     * 根据app分类查询app列表
+     *
+     * @param classifyId
+     * @param userId
+     * @return
+     * @author han
+     * @date 2016年1月6日 上午10:30:34
+     */
+    public List<App> getAppByClassify(Integer classifyId, Integer userId);
+
+    /**
+     * 获取APP分页列表
+     *
+     * @param classifyId
+     * @param classifyPId
+     * @param companyId
+     * @param sortField
+     * @param sortType
+     * @param page
+     * @return
+     * @author han
+     * @date 2016年1月6日 上午10:44:30
+     */
+    public PageList<App> getAppPageListByClassify(Integer classifyId, Integer classifyPId, Integer userId,
+            String sortField, String sortType, Page page);
+
+    /**
+     * 根据id查询APP
+     *
+     * @param id
+     * @param userId
+     * @return
+     * @author han
+     * @date 2016年1月6日 下午1:15:30
+     */
+    public App getAppById(Integer id, Integer userId);
+
+    /**
+     * 获取已添加的APP
+     *
+     * @param userId
+     * @return
+     * @author han
+     * @date 2016年1月6日 下午1:36:58
+     */
+    public List<App> getMyAppList(Integer userId);
+
+    /**
+     * 用户添加APP到可运行列表
+     *
+     * @param userId
+     * @param appId
+     * @return
+     * @author han
+     * @date 2016年1月7日 下午1:41:28
+     */
+    public Integer userAddApp(Integer userId, Integer appId);
+
+    /**
+     * 用户取消APP在可运行列表
+     *
+     * @param userId
+     * @param appId
+     * @return
+     * @author han
+     * @date 2016年1月7日 下午1:41:35
+     */
+    public Integer userRemoveApp(Integer userId, Integer appId);
 
 }

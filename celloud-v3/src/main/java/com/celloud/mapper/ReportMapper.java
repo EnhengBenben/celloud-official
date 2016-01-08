@@ -22,7 +22,7 @@ public interface ReportMapper {
     int updateByPrimaryKey(Report record);
 
     /**
-     * (重构)统计个人报告数量
+     * 统计个人报告数量
      *
      * @param userId
      * @param state
@@ -35,7 +35,7 @@ public interface ReportMapper {
             @Param("flag") Integer flag);
 
     /**
-     * (重构)按时间段统计个人报告数量
+     * 按时间段统计个人报告数量
      *
      * @param userId
      * @param time
@@ -70,4 +70,6 @@ public interface ReportMapper {
             @Param("userId") Integer userId, Page pager,
             @Param("condition") String condition, @Param("start") String start,
             @Param("end") String end, @Param("appId") Integer appId);
+	public List<Map<String, String>> countAppRunNumByUserId(@Param("userId") Integer userId);
+
 }

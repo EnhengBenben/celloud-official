@@ -16,12 +16,12 @@
 			        <img src="<%=request.getContextPath()%>/images/app/${app.pictureName}" alt="">
 			      </a>
 			      <div class="intro">
-			        <h6 style="overflow: hidden;" title="${app.softwareName }">
-			          <a class="reco-hd-link" href="javascript:toAppDetail(${app.softwareId })">
-			          	${app.softwareName }
+			        <h6 style="overflow: hidden;" title="${app.appName }">
+			          <a class="reco-hd-link" href="javascript:toAppDetail(${app.appId })">
+			          	${app.appName }
 			          </a>
 			        </h6>
-			       	<p><a href="javascript:void()" onclick="removeApp(${app.softwareId })" >取消添加</a></p>
+			       	<p><a href="javascript:void(0);" onclick="removeApp(${app.appId })" >取消添加</a></p>
 			      </div>
 			   </li>
 			</c:forEach>

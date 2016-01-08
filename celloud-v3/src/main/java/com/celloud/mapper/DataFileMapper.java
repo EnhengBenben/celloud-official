@@ -24,7 +24,7 @@ public interface DataFileMapper {
     int updateByPrimaryKey(DataFile record);
 
     /**
-     * (重构)统计帐号下的文件数量
+     * 统计帐号下的文件数量
      *
      * @param userId
      * @param state
@@ -35,7 +35,7 @@ public interface DataFileMapper {
     public Integer countData(@Param("userId") Integer userId, @Param("state") Integer state);
 
     /**
-     * (重构)统计帐号下的文件大小
+     * 统计帐号下的文件大小
      *
      * @param userId
      * @param state
@@ -46,7 +46,7 @@ public interface DataFileMapper {
     public Long sumData(@Param("userId") Integer userId, @Param("state") Integer state);
 
     /**
-     * (重构)按照时间段统计用户数据
+     * 按照时间段统计用户数据
      *
      * @param userId
      * @param time
@@ -59,7 +59,7 @@ public interface DataFileMapper {
             @Param("state") Integer state);
 
     /**
-     * (重构)按照时间段统计帐号下的文件大小
+     * 按照时间段统计帐号下的文件大小
      *
      * @param userId
      * @param time
@@ -72,7 +72,7 @@ public interface DataFileMapper {
             @Param("state") Integer state);
 
     /**
-     * (重构)添加上传文件信息
+     * 添加上传文件信息
      *
      * @param data
      * @return
@@ -82,7 +82,7 @@ public interface DataFileMapper {
     public int addDataInfo(DataFile data);
 
     /**
-     * (重构)修改数据信息
+     * 修改数据信息
      *
      * @param data
      * @return
@@ -127,4 +127,11 @@ public interface DataFileMapper {
             @Param("state") Integer state,
             @Param("reportType") Integer reportType,
             @Param("period") Integer period);
+    /**
+	 * 根据用户编码查询用户已运行与未运行的文件数量
+	 * 
+	 * @param userId
+	 * @return {"fileNum":"","runNum":""}上传的文件数量，有多少文件未运行
+	 */
+	public Map<String, String> countFileNumByUserId(@Param("userId") Integer userId);
 }

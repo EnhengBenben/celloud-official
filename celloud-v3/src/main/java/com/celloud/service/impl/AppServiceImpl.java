@@ -9,7 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.celloud.constants.AppIsAdd;
 import com.celloud.constants.AppOffline;
+import com.celloud.constants.AppPermission;
 import com.celloud.mapper.AppMapper;
+import com.celloud.model.App;
+import com.celloud.page.Page;
+import com.celloud.page.PageList;
 import com.celloud.service.AppService;
 
 /**
@@ -39,4 +43,42 @@ public class AppServiceImpl implements AppService {
         return appMapper.getRanAPP(userId);
     }
 
+    @Override
+    public List<App> getAppsByFormat(Integer formatId, Integer userId) {
+        return appMapper.getAppsByFormat(formatId, userId, AppOffline.ON, AppPermission.PRIVATE, AppPermission.PUBLIC);
+    }
+
+    @Override
+    public List<App> getAppByClassify(Integer classifyId, Integer userId) {
+        return appMapper.getAppByClassify(classifyId, userId, AppOffline.ON, AppPermission.PRIVATE,
+                AppPermission.PUBLIC);
+    }
+
+    @Override
+    public PageList<App> getAppPageListByClassify(Integer classifyId, Integer classifyPId, Integer userId,
+            String sortField, String sortType, Page page) {
+        List<App> list = appMapper.getAppPageListByClassify(classifyId, classifyPId, userId, sortField, sortType,
+                AppOffline.ON, AppPermission.PRIVATE, AppPermission.PUBLIC, page);
+        return new PageList<>(page, list);
+    }
+
+    @Override
+    public App getAppById(Integer id, Integer userId) {
+        return appMapper.getAppById(id, userId);
+    }
+
+    @Override
+    public List<App> getMyAppList(Integer userId) {
+        return appMapper.getMyAppList(userId, AppOffline.ON);
+    }
+
+    @Override
+    public Integer userAddApp(Integer userId, Integer appId) {
+        return appMapper.userUpdateApp(userId, appId, AppIsAdd.ALREADY_ADDED);
+    }
+
+    @Override
+    public Integer userRemoveApp(Integer userId, Integer appId) {
+        return appMapper.userUpdateApp(userId, appId, AppIsAdd.ALREADY_ADDED);
+    }
 }

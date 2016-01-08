@@ -24,13 +24,13 @@
 		                    	  <div class="detail">
 		                      		<div class="picbox">
 		                        	  <div class="pic">
-		                          		<p><a href="javascript:toAppDetail(${app.softwareId })"><img src="<%=request.getContextPath()%>/images/app/${app.pictureName}"></a></p>
+		                          		<p><a href="javascript:toAppDetail(${app.appId })"><img src="<%=request.getContextPath()%>/images/app/${app.pictureName}"></a></p>
 		                        	  </div>
 		                      		</div>
-		                      		<p class="appname">${app.softwareName }</p>
+		                      		<p class="appname">${app.appName }</p>
 		                      		<p class="company">${app.createDate }</p>
 		                    	  </div>
-		                    	  <div class="button" style="color: #ff6600"> <a href="javascript:toAppDetail(${app.softwareId })">查看详情<i class="fa fa-arrow-circle-o-right"></i></a> </div>
+		                    	  <div class="button" style="color: #ff6600"> <a href="javascript:toAppDetail(${app.appId })">查看详情<i class="fa fa-arrow-circle-o-right"></i></a> </div>
 		                    	  <span class="app_mark"></span>
 		                  		</li>
 					    	  </c:if>

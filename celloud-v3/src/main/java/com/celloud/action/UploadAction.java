@@ -33,15 +33,15 @@ import com.celloud.utils.PerlUtils;
 import com.celloud.utils.PropertiesUtil;
 
 /**
- * (重构)多文件上传
+ * 多文件上传
  *
  * @author han
  * @date 2015年12月28日 下午3:12:11
  */
 @Controller
 @RequestMapping("upload")
-public class ManyFileUploadAction {
-    Logger logger = LoggerFactory.getLogger(ManyFileUploadAction.class);
+public class UploadAction {
+    Logger logger = LoggerFactory.getLogger(UploadAction.class);
     private static final int BUFFER_SIZE = 2 * 1024;
     private static final long serialVersionUID = 1L;
     @Resource
@@ -59,7 +59,7 @@ public class ManyFileUploadAction {
 
     /**
      * 
-     * (重构)数据上传
+     * 数据上传
      * 
      * @return
      * @date 2015年12月28日 下午3:22:38
@@ -72,7 +72,7 @@ public class ManyFileUploadAction {
         if (!f.exists()) {
             boolean isTrue = f.mkdir();
             if (!isTrue) {
-                logger.error("路径创建失败：{0}", realPath);
+                logger.error("路径创建失败：{}", realPath);
             }
         }
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
