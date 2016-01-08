@@ -269,7 +269,7 @@ function showAppStore(){
 //	$.AdminLTE.closeSidebar();
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
-	$.get("app3!toAppStore",{},function(responseText){
+	$.get("app/toAppStore",{},function(responseText){
 		$("#mainDIV").html(responseText);
 	});
 }

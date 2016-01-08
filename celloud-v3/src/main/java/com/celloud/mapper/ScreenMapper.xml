@@ -68,4 +68,7 @@
       app_id = #{appId,jdbcType=INTEGER}
     where screen_id = #{screenId,jdbcType=INTEGER}
   </update>
+  <select id="getScreenByAppId" resultMap="BaseResultMap"  >
+  select screen_id,screen_name,app_id from tb_screen where app_id=#{appId }
+  </select>
 </mapper>
