@@ -125,4 +125,10 @@ public interface AppMapper {
      */
     public Integer userUpdateApp(@Param("userId") Integer userId, @Param("appId") Integer appId,
             @Param("isAdd") Integer isAdd);
+    /**
+     * 按周统计该用的报告
+     * @param userId
+     * @return
+     */
+    public List<Map<String, String>>  countWeekByUserId(@Param("userId") Integer userId);
 }

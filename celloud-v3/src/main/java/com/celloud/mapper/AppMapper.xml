@@ -355,4 +355,9 @@
   <update id="userUpdateApp" >
     update tb_user_app_right set is_add=#{isAdd } where user_id=#{userId } and app_id=#{appId }
   </update>
+  <select id="countWeekByUserId" resultType="map">
+  	select left(date_add(r.create_date ,INTERVAL -weekday(r.create_date ) day),10)time,count(r.report_id)as runNum from tb_report r 
+	where r.flag =0 and r.user_id = ${userId}
+	group by time order by time desc
+  </select>
 </mapper>

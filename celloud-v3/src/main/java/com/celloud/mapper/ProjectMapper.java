@@ -7,6 +7,19 @@ import com.celloud.model.Project;
 public interface ProjectMapper {
     int deleteByPrimaryKey(Integer projectId);
 
+    /**
+     * 软删除项目
+     * 
+     * @param projectId
+     *            ：项目ID
+     * @param state
+     *            ：删除状态
+     * @return
+     * @date 2016-1-8 下午2:27:43
+     */
+    Integer deleteByState(@Param("projectId") Integer projectId,
+            @Param("state") Integer state);
+
     int insert(Project record);
 
     int insertSelective(Project record);

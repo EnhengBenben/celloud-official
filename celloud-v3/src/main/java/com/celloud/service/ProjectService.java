@@ -1,5 +1,7 @@
 package com.celloud.service;
 
+import com.celloud.model.Project;
+
 /**
  *  项目操作service
  * 
@@ -7,6 +9,25 @@ package com.celloud.service;
  * @date 2016-1-7 下午3:59:50
  */
 public interface ProjectService {
+
+    /**
+     * 项目软删除
+     * 
+     * @param projectId
+     * @return
+     * @date 2016-1-8 下午2:31:36
+     */
+    public Integer deleteByState(Integer projectId);
+
+    /**
+     * 修改项目
+     * 
+     * @param project
+     * @return
+     * @date 2016-1-8 下午1:40:04
+     */
+    public Integer update(Project project);
+
     /**
      * 删除共享来的项目
      * 

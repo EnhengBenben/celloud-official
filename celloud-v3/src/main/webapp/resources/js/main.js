@@ -281,7 +281,7 @@ function showCount(){
 	$.AdminLTE.closeSidebar();
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
-	$("#mainDIV").load("pages/count/count.jsp");
+	$("#mainDIV").load("pages/count/count_main.jsp");
 }
 
 /**

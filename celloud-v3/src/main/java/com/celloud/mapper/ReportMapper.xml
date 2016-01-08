@@ -241,4 +241,8 @@
   <select id="countAppRunNumByUserId" resultType="map">
     select r.app_id,(select app_name from tb_app where app_id = r.app_id)as app_name,count(r.report_id) from tb_report r where r.flag =0 and r.user_id = ${userId}  group by r.app_id
   </select>
+  <select id="countReportWeekByUserId" resultType="map">
+	 select left(date_add(r.create_date ,INTERVAL -weekday(r.create_date ) day),10)time,count(r.report_id)as reportNum from tb_report r where r.state=0 and r.flag=0 and r.user_id=${userId}
+	group by time order by time desc
+  </select>
 </mapper>

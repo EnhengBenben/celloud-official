@@ -37,7 +37,6 @@ import com.celloud.service.ScreenService;
 @Controller
 @RequestMapping("app")
 public class AppAction {
-    private static final long serialVersionUID = 1L;
     Logger log = LoggerFactory.getLogger(AppAction.class);
     @Resource
     private AppService appService;
@@ -46,6 +45,11 @@ public class AppAction {
     @Resource
     private ScreenService screenService;
 
+    @ResponseBody
+    @RequestMapping("getRanAPP")
+    public List<Map<String, String>> getRanAPP() {
+        return appService.getRanAPP(ConstantsData.getLoginUserId());
+    }
 
     @RequestMapping("toAppStore")
     public ModelAndView toAppStore() {

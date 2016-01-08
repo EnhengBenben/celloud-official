@@ -102,134 +102,139 @@
         </c:if>
     </tbody>
 </table>
-<div class="pagination-new center">
-	<c:if test="${pageList.datas.size()>0 }">
-        <ul class="pages">
-            <li>
-                <p>每页
-                    <select id="proPageRecordSel" onchange="javascript:changePageSize();">
-                        <option value="10" <c:if test="${pageList.page.pageSize==10}">selected="selected"</c:if>>10</option>
-                        <option value="20" <c:if test="${pageList.page.pageSize==20}">selected="selected"</c:if>>20</option>
-                        <option value="30" <c:if test="${pageList.page.pageSize==30}">selected="selected"</c:if>>30</option>
-                        <option value="40" <c:if test="${pageList.page.pageSize==40}">selected="selected"</c:if>>40</option>
-                        <option value="50" <c:if test="${pageList.page.pageSize==50}">selected="selected"</c:if>>50</option>
-                    </select>
-                条</p>
-            </li>
-            <c:if test="${pageList.page.hasPrev}">
-                <li><a href="javascript:changePage('${pageList.page.currentPage-1}')" id="prevReportList">&lt;</a></li>
-            </c:if>
-            <!-- 显示第一页 -->
-            <c:if test="${pageList.page.currentPage==1}">
-                <li class="active"><a href="javascript:void(0)">1</a></li>
-            </c:if>
-            <c:if test="${pageList.page.currentPage!=1}">
-                <li><a href="javascript:changePage(1)">1</a></li>
-            </c:if>
-            
-            <c:if test="${pageList.page.currentPage>4&&pageList.page.totalPage>10}">
-                <li>...</li>
-            </c:if>
-            
-            <c:if test="${pageList.page.totalPage-pageList.page.currentPage>=7}">
-                <c:if test="${pageList.page.currentPage==3}">
-                    <li><a href="javascript:changePage(${pageList.page.currentPage-1})">${pageList.page.currentPage-1}</a></li>
-                </c:if>
-                <c:if test="${pageList.page.currentPage==4}">
-                    <li><a href="javascript:changePage(${pageList.page.currentPage-2})">${pageList.page.currentPage-2}</a></li>
-                </c:if>
-                <c:if test="${pageList.page.currentPage>3}">
-                    <li><a href="javascript:changePage(${pageList.page.currentPage-1})">${pageList.page.currentPage-1}</a></li>
-                </c:if>
-                <c:if test="${pageList.page.currentPage>1&&pageList.page.currentPage<pageList.page.totalPage}">
-                    <li class="active"><a href="javascript:void(0)">${pageList.page.currentPage}</a></li>
-                </c:if>
-                <c:if test="${pageList.page.totalPage-pageList.page.currentPage>1}">
-                    <li><a href="javascript:changePage(${pageList.page.currentPage+1})">${pageList.page.currentPage+1}</a></li>
-                </c:if>
-                <c:if test="${pageList.page.totalPage-pageList.page.currentPage>2}">
-                    <li><a href="javascript:changePage(${pageList.page.currentPage+2})">${pageList.page.currentPage+2}</a></li>
-                </c:if>
-                <c:if test="${pageList.page.totalPage-pageList.page.currentPage>3}">
-                    <li><a href="javascript:changePage(${pageList.page.currentPage+3})">${pageList.page.currentPage+3}</a></li>
-                </c:if>
-                <c:if test="${pageList.page.totalPage-pageList.page.currentPage>4}">
-                    <li><a href="javascript:changePage(${pageList.page.currentPage+4})">${pageList.page.currentPage+4}</a></li>
-                </c:if>
-                <c:if test="${pageList.page.totalPage-pageList.page.currentPage>5}">
-                    <li><a href="javascript:changePage(${pageList.page.currentPage+5})">${pageList.page.currentPage+5}</a></li>
-                </c:if>
-                <c:if test="${pageList.page.currentPage<4}">
-                    <c:if test="${pageList.page.totalPage-pageList.page.currentPage>6}">
-                        <li><a href="javascript:changePage(${pageList.page.currentPage+6})">${pageList.page.currentPage+6}</a></li>
-                    </c:if>
-                </c:if>
-                <c:if test="${pageList.page.currentPage==1}">
-                    <c:if test="${pageList.page.totalPage-pageList.page.currentPage>7}">
-                        <li><a href="javascript:changePage(${pageList.page.currentPage+7})">${pageList.page.currentPage+7}</a></li>
-                    </c:if>
-                    <c:if test="${pageList.page.totalPage-pageList.page.currentPage>8}">
-                        <li><a href="javascript:changePage(${pageList.page.currentPage+8})">${pageList.page.currentPage+8}</a></li>
-                    </c:if>
-                </c:if>
-                <c:if test="${pageList.page.currentPage==2}">
-                    <c:if test="${pageList.page.totalPage-pageList.page.currentPage>7}">
-                        <li><a href="javascript:changePage(${pageList.page.currentPage+7})">${pageList.page.currentPage+7}</a></li>
-                    </c:if>
-                </c:if>
-                <c:if test="${pageList.page.currentPage>4}">
-                    <c:if test="${pageList.page.totalPage-pageList.page.currentPage>6}">
-                        <li><a href="javascript:changePage(${pageList.page.currentPage+6})">${pageList.page.currentPage+6}</a></li>
-                    </c:if>
-                </c:if>
-            </c:if>
-            <c:if test="${pageList.page.totalPage-pageList.page.currentPage<7}">
+<div class="pagination center">
+  <c:if test="${pageList.datas.size()>0}">
+    <input id="data-current-page-hide" value="${pageList.page.currentPage }" type="hidden" >
+    <ul class="pages" id="pagination-data">
+      <li> 每页
+        <select id="data-page-size-sel">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>条
+      </li>
+      <!-- 显示prev -->
+      <c:if test="${pageList.page.hasPrev}">
+          <li><a id="prev-page-data" href="javascript:void(0);">&lt;</a></li>
+      </c:if>
+      <!-- 显示第一页 -->
+      <c:choose>
+        <c:when test="${pageList.page.currentPage==1}"><li class="active"><a href="javascript:changePage(1)">1</a></li></c:when>
+        <c:otherwise><li><a href="javascript:changePage(1)">1</a></li></c:otherwise>
+      </c:choose>
+      
+      <c:if test="${pageList.page.currentPage>4&&pageList.page.totalPage>10}">
+          <li>...</li>
+      </c:if>
+      <c:choose>
+        <c:when test="${pageList.page.totalPage-pageList.page.currentPage>=7}">
+          <c:if test="${pageList.page.currentPage==3}">
+              <li><a href="javascript:changePage(${pageList.page.currentPage-1 })">${pageList.page.currentPage-1 }</a></li>
+          </c:if>
+          <c:if test="${pageList.page.currentPage==4}">
+              <li><a href="javascript:changePage(${pageList.page.currentPage-2 })">${pageList.page.currentPage-2 }</a></li>
+          </c:if>
+          <c:if test="${pageList.page.currentPage>3}">
+              <li><a href="javascript:changePage(${pageList.page.currentPage-1 })">${pageList.page.currentPage-1 }</a></li>
+          </c:if>
+          <c:if test="${pageList.page.currentPage>1&&pageList.page.currentPage<pageList.page.totalPage}">
+              <li class="active"><a href="javascript:changePage(${pageList.page.currentPage })">${pageList.page.currentPage }</a></li>
+          </c:if>
+          <c:if test="${pageList.page.totalPage-pageList.page.currentPage>1}">
+              <li><a href="javascript:changePage(${pageList.page.currentPage+1 })">${pageList.page.currentPage+1 }</a></li>
+          </c:if>
+          <c:if test="${pageList.page.totalPage-pageList.page.currentPage>2}">
+              <li><a href="javascript:changePage(${pageList.page.currentPage+2 })">${pageList.page.currentPage+2 }</a></li>
+          </c:if>
+          <c:if test="${pageList.page.totalPage-pageList.page.currentPage>3}">
+              <li><a href="javascript:changePage(${pageList.page.currentPage+3 })">${pageList.page.currentPage+3 }</a></li>
+          </c:if>
+          <c:if test="${pageList.page.totalPage-pageList.page.currentPage>4}">
+              <li><a href="javascript:changePage(${pageList.page.currentPage+4 })">${pageList.page.currentPage+4 }</a></li>
+          </c:if>
+          <c:if test="${pageList.page.totalPage-pageList.page.currentPage>5}">
+              <li><a href="javascript:changePage(${pageList.page.currentPage+5 })">${pageList.page.currentPage+5 }</a></li>
+          </c:if>
+          <c:if test="${pageList.page.currentPage<4}">
+              <c:if test="%{pageList.page.totalPage-pageList.page.currentPage>6}">
+                  <li><a href="javascript:changePage(${pageList.page.currentPage+6 })">${pageList.page.currentPage+6 }</a></li>
+              </c:if>
+          </c:if>
+          <c:choose>
+            <c:when test="${pageList.page.currentPage==1}">
+              <c:if test="%{pageList.page.totalPage-pageList.page.currentPage>7}">
+                  <li><a href="javascript:changePage(${pageList.page.currentPage+7 })">${pageList.page.currentPage+7 }</a></li>
+              </c:if>
+              <c:if test="%{pageList.page.totalPage-pageList.page.currentPage>8}">
+                  <li><a href="javascript:changePage(${pageList.page.currentPage+8 })">${pageList.page.currentPage+8 }</a></li>
+              </c:if>
+            </c:when>
+            <c:otherwise>
+              <c:choose>
+                <c:when test="${pageList.page.currentPage==2}">
+                  <c:if test="${pageList.page.totalPage-pageList.page.currentPage>7}">
+                      <li><a href="javascript:changePage(${pageList.page.currentPage+7 })">${pageList.page.currentPage+7 }</a></li>
+                  </c:if>
+                </c:when>
+                <c:otherwise>
+                  <c:if test="${pageList.page.currentPage>4 && (pageList.page.totalPage-pageList.page.currentPage>6)}">
+                      <li><a href="javascript:changePage(${pageList.page.currentPage+6 })">${pageList.page.currentPage+6 }</a></li>
+                  </c:if>
+                </c:otherwise>
+              </c:choose>
+            </c:otherwise>
+          </c:choose>
+        </c:when>
+        <c:otherwise>
+          <c:choose>
+            <c:when test="${pageList.page.totalPage-8>0}">
+              <c:forEach begin="${pageList.page.totalPage-8}" step="1" end="${pageList.page.totalPage-1}" var="step">
                 <c:choose>
-		            <c:when test="${dataList.page.totalPage-8>0}">
-		              <c:forEach begin="${dataList.page.totalPage-8}" step="1" end="${dataList.page.totalPage-1}" var="step">
-		                <c:choose>
-		                  <c:when test="${step==dataList.page.currentPage}">   
-		                      <li class="active"><a href="javascript:void(0)">${step }</a></li>
-		                  </c:when>
-		                  <c:otherwise>
-		                      <li><a href="javascript:changePage(${step })">${step }</a></li>
-		                  </c:otherwise>
-		                </c:choose>
-		              </c:forEach>
-		            </c:when>
-		            <c:otherwise>
-		              <c:forEach begin="2" step="1" end="${dataList.page.totalPage-1}" var="step">
-		                <c:choose>
-		                  <c:when test="${step==dataList.page.currentPage}">   
-		                      <li class="active"><a href="javascript:void(0)">${step }</a></li>
-		                  </c:when>
-		                  <c:otherwise>
-		                      <li><a href="javascript:changePage(${step })">${step }</a></li>
-		                  </c:otherwise>
-		                </c:choose>
-		              </c:forEach>
-		            </c:otherwise>
-		    	</c:choose>
-            </c:if>
-            
-            <c:if test="${pageList.page.totalPage-pageList.page.currentPage>=8&&pageList.page.totalPage>10}">
-                <li>...</li>
-            </c:if>
-            
-            <c:if test="${pageList.page.totalPage>1}">
-            	<c:if test="${pageList.page.currentPage==pageList.page.totalPage }">
-	                <li class="active"><a href="javascript:void(0)">${pageList.page.totalPage}</a></li>
-            	</c:if>
-            	<c:if test="${pageList.page.currentPage!=pageList.page.totalPage }">
-	                <li><a href="javascript:changePage(${pageList.page.totalPage})">${pageList.page.totalPage}</a></li>
-            	</c:if>
-            </c:if>
-            <c:if test="${pageList.page.hasNext}">
-                <li><a href="javascript:changePage(${pageList.page.currentPage+1})" id="nextReportList">&gt;</a></li>
-            </c:if>
-            <li>
-                共${pageList.page.totalPage}页&nbsp;|&nbsp;合计${pageList.page.rowCount}条
-            </li>
-        </ul>
-    </c:if>
+                  <c:when test="${step==pageList.page.currentPage}">   
+                      <li class="active"><a href="javascript:changePage(${step })">${step }</a></li>
+                  </c:when>
+                  <c:otherwise>
+                      <li><a href="javascript:changePage(${step })">${step }</a></li>
+                  </c:otherwise>
+                </c:choose>
+              </c:forEach>
+            </c:when>
+            <c:otherwise>
+              <c:forEach begin="2" step="1" end="${pageList.page.totalPage-1}" var="step">
+                <c:choose>
+                  <c:when test="${step==pageList.page.currentPage}">   
+                      <li class="active"><a href="javascript:changePage(${step })">${step }</a></li>
+                  </c:when>
+                  <c:otherwise>
+                      <li><a href="javascript:changePage(${step })">${step }</a></li>
+                  </c:otherwise>
+                </c:choose>
+              </c:forEach>
+            </c:otherwise>
+          </c:choose>
+        </c:otherwise>
+      </c:choose>
+      <c:if test="${pageList.page.totalPage-pageList.page.currentPage>=8&&pageList.page.totalPage>10}">
+          <li>...</li>
+      </c:if>
+      <c:choose>
+        <c:when test="${pageList.page.currentPage==pageList.page.totalPage&&pageList.page.totalPage>1}"> 
+          <li class="active"><a href="javascript:changePage(${pageList.page.totalPage })">${pageList.page.totalPage }</a></li>
+        </c:when>
+        <c:otherwise>
+          <c:if test="${pageList.page.totalPage>1}">   
+            <li><a href="javascript:changePage(${pageList.page.totalPage })">${pageList.page.totalPage }</a></li>
+          </c:if>
+        </c:otherwise>
+      </c:choose>
+      <c:if test="${pageList.page.hasNext}">
+          <li><a id="next-page-data" href="javascript:void(0)">&gt;</a></li>
+      </c:if>
+      <li>
+                  共${pageList.page.totalPage }页&nbsp;|&nbsp;合计${pageList.page.rowCount }条
+      </li>
+    </ul>
+  </c:if>
 </div>
