@@ -12,7 +12,7 @@ function toSclassifyApp(pid,pname){
 	$("#secondClassifyName").parent().addClass("hide");
 	$("#appClassifyUl li").removeClass("active");
 	$("#classifypidLi"+pid).addClass("active");
-	$.get("app3!toSclassifyApp",{"paramId":pid},function(responseText){
+	$.get("app/toSclassifyApp",{"paramId":pid},function(responseText){
 		$("#sclassify").html(responseText);
 		if(hasNavi == 1 && intro != null && introNext==0){
 			intro.exit();
@@ -43,7 +43,7 @@ function toMoreApp(pid,sid,pageNum,isParent){
 	currentPage = pageNum;
 	$("#rootClassifyName").unbind("click");
 	$("#secondClassifyName").unbind("click");
-	$.get("app3!toMoreAppList",{"classifyId":sid,"classifyPid":pid,"classifyFloor":isParent,"page.pageSize":pageAppNum,"page.currentPage":currentPage,"condition":sortFiled,"type":sortType},function(responseText){
+	$.get("app/toMoreAppList",{"classifyId":sid,"classifyPid":pid,"classifyFloor":isParent,"size":pageAppNum,"page":currentPage,"condition":sortFiled,"type":sortType},function(responseText){
 		$("#appMain").html(responseText);
 		if(pid==0){//针对无二级分类的特殊处理
 			$("#rootClassifyName").html($("#pid"+sid).html());
@@ -97,7 +97,7 @@ function sortApp(){
 	}
 }
 function toAppDetail(id){
-	$.get("app3!getAppById",{"paramId":id},function(responseText){
+	$.get("app/appDetail",{"paramId":id},function(responseText){
 		$("#appMain").html(responseText);
 		if(hasNavi == 1 && intro != null){
 			intro.exit();
@@ -132,12 +132,12 @@ function toAppMoreDetail(id){
 	$("#"+id).addClass("select");
 }
 function getMyApp(){
-	$.get("app3!getMyAppList",{},function(responseText){
+	$.get("app/myApps",{},function(responseText){
 		$("#myAppDiv").html(responseText);
 	});
 }
 function addApp(id){
-	$.get("app3!userAddApp",{"paramId":id},function(responseText){
+	$.get("app/addApp",{"paramId":id},function(responseText){
 		if(responseText.length>0){
 			$("#toAddApp").attr("onclick","removeApp("+id+")");
 			$("#toAddApp").html("<i class=\"fa fa-minus\"></i>&nbsp;取消添加");
@@ -147,7 +147,7 @@ function addApp(id){
 	});
 }
 function removeApp(id){
-	$.get("app3!userRemoveApp",{"paramId":id},function(responseText){
+	$.get("app/removeApp",{"paramId":id},function(responseText){
 		if(responseText.length>0){
 			$("#toAddApp").attr("onclick","addApp("+id+")");
 			$("#toAddApp").html("<i class=\"fa fa-plus\"></i>&nbsp;添加");

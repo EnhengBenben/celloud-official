@@ -15,7 +15,7 @@ import com.celloud.page.PageList;
 import com.celloud.service.ReportService;
 
 /**
- * 报告接口 实现类 重构
+ * 报告接口 实现类
  * 
  * @author han
  * @date 2015年12月25日 下午3:50:02

@@ -17,7 +17,7 @@ import com.celloud.page.PageList;
 import com.celloud.service.DataService;
 
 /**
- * 数据管理服务实现类 重构
+ * 数据管理服务实现类
  * 
  * @author han
  * @date 2015年12月23日 下午6:20:22
