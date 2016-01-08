@@ -70,18 +70,23 @@ public class DataServiceImpl implements DataService {
             String condition, int sort, String sortDateType, String sortNameType) {
         List<DataFile> lists = dataFileMapper.findDataLists(page, userId,
                 condition, sort, sortDateType, sortNameType, DataState.ACTIVE,
-                ReportType.DATA,
-                ReportPeriod.COMPLETE);
+                ReportType.DATA, ReportPeriod.COMPLETE);
         return new PageList<>(page, lists);
     }
 
-	@Override
-	public Map<String, String> countUserRunFileNum(Integer userId) {
-		return dataFileMapper.countFileNumByUserId(userId);
-	}
+    @Override
+    public Map<String, String> countUserRunFileNum(Integer userId) {
+        return dataFileMapper.countFileNumByUserId(userId);
+    }
 
     @Override
     public List<DataFile> getDatasInProject(Integer projectId) {
         return dataFileMapper.getDatasInProject(projectId);
+    }
+
+    @Override
+    public List<Map<String, String>> countDataFile(Integer userId) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

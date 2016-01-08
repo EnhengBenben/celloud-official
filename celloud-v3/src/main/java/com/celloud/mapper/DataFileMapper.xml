@@ -300,4 +300,9 @@
     <include refid="Base_Column_List" />
   	from tb_file where file_id in(select file_id from tb_file_project_relat where project_id=#{projectId})
   </select>
+  <select id="countDataFileWeek" resultType="map">
+  	select left(date_add(f.create_date ,INTERVAL -weekday(f.create_date ) day),10)time,count(f.file_id)as fileNum,sum(f.size)as size 
+  	from tb_file f where f.state=0 and f.user_id = ${userId} 
+	group by time order by time desc
+  </select>
 </mapper>

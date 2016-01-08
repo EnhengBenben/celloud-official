@@ -28,7 +28,6 @@ function showGeneResult(result){
   $("#geneResultModal").modal("show");
 }
 function showSysInfo() {
-
 	var SystemCountURL = "count/systemCount";
 	$.get(SystemCountURL, function(data) {
 		var monthData = data["monthData"];
@@ -46,13 +45,6 @@ function showSysInfo() {
 		console.log(monthReport);
 		console.log(monthApp);
 
-		
-		buildView("data_month_id", monthData, "time", "num", "数据量", "line", 0,12);
-
-		buildView("report_month_id", monthReport, "time", "size", "报告数量", "line", 0,12);
-		buildView("app_month_id", monthApp, "time", "num", "运行次数", "line", 0,12);
-		//buildView("data_month_id", monthData, "time", "num", "数据量", "line", 0,12);
-		
 		var max=0;
 		var min=2<<32;
 		$.each(monthSize,function(i,item){
@@ -82,6 +74,21 @@ function showSysInfo() {
 			monthSize[i]["size"]=parseFloat((item["size"]/(2<<len)).toFixed(2));
 		});
 		buildView("size_month_id", monthSize, "time", "size", "数据大小"+ustr, "line", 0,12);
+		try{
+			buildView("data_month_id", monthData, "time", "num", "数据量", "line", 0,12);
+		}catch (e) {
+			console.log(e);
+		}
+		try{
+			buildView("report_month_id", monthReport, "time", "size", "报告数量", "line", 0,12);
+		}catch (e) {
+			console.log(e);
+		}
+		try{
+			buildView("app_month_id", monthApp, "time", "num", "运行次数", "line", 0,12);
+		}catch (e) {
+			console.log(e);
+		}
 	});
 }
 function buildView(id, list, xPer, yPer, seriesName, typex, position, showNum) {
@@ -93,11 +100,10 @@ function buildView(id, list, xPer, yPer, seriesName, typex, position, showNum) {
 	});
 	makeOptionScrollUnit(id, x, y, seriesName, typex, position, showNum);
 }
-/*var userCount = (function(userCount) {
- var self = userCount || {};
-
- return self;
- })(userCount);
+/*
+ * var userCount = (function(userCount) { var self = userCount || {};
+ * 
+ * return self; })(userCount);
  */
 function makeOptionScrollUnit(id, xAxis, yAxis, seriesName, typex, position,
 		showNum) {

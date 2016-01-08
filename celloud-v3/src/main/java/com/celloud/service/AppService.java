@@ -15,7 +15,7 @@ import com.celloud.page.PageList;
  */
 public interface AppService {
     /**
-     * (重构)获取已添加的APP数量
+     * 获取已添加的APP数量
      * 
      * @param userId
      * @return
@@ -24,7 +24,7 @@ public interface AppService {
     public Integer countMyApp(Integer userId);
 
     /**
-     * (重构)按时间段获取已添加的APP数量
+     * 按时间段获取已添加的APP数量
      * 
      * @param userId
      * @return

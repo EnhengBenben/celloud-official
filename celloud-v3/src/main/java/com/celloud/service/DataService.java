@@ -9,7 +9,7 @@ import com.celloud.page.PageList;
 
 /**
  * 数据管理服务接口
- *
+ * 
  * @author han
  * @date 2015年12月23日 下午5:58:14
  */
@@ -41,7 +41,7 @@ public interface DataService {
 
     /**
      * 按照时间段统计帐号下的文件大小
-     *
+     * 
      * @param userId
      * @param time
      * @return
@@ -87,13 +87,14 @@ public interface DataService {
      */
     PageList<DataFile> dataLists(Page page, Integer userId, String condition,
             int sort, String sortDateType, String sortNameType);
-	/**
-	 * 查询用户的文件数量与运行的文件数量
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	public Map<String, String> countUserRunFileNum(Integer userId);
+
+    /**
+     * 查询用户的文件数量与运行的文件数量
+     * 
+     * @param userId
+     * @return
+     */
+    public Map<String, String> countUserRunFileNum(Integer userId);
 
     /**
      * 检索某个项目下的所有数据
@@ -103,4 +104,13 @@ public interface DataService {
      * @date 2016-1-9 上午3:05:40
      */
     public List<DataFile> getDatasInProject(Integer projectId);
+
+    /**
+     * 根据用户编号,统计各周的数据
+     * 
+     * @param userId
+     * @return
+     */
+    public List<Map<String, String>> countDataFile(Integer userId);
+
 }

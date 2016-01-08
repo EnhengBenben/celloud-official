@@ -5,19 +5,19 @@ public class PublicKey {
     private String exponent;
 
     public String getModulus() {
-	return modulus;
+        return modulus;
     }
 
     public void setModulus(String modulus) {
-	this.modulus = modulus;
+        this.modulus = modulus;
     }
 
     public String getExponent() {
-	return exponent;
+        return exponent;
     }
 
     public void setExponent(String exponent) {
-	this.exponent = exponent;
+        this.exponent = exponent;
     }
 
 }

@@ -85,7 +85,6 @@ public class UploadAction {
                 if (file != null) {
                     String myFileName = file.getOriginalFilename();
                     if (!"".equals(myFileName.trim())) {
-                        System.out.println(myFileName);
                         String fileName = realPath + File.separatorChar + name;
                         File localFile = new File(fileName);
                         try {
