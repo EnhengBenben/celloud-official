@@ -3,6 +3,8 @@ package com.celloud.service;
 import java.util.List;
 import java.util.Map;
 
+import com.celloud.model.HBV;
+import com.celloud.model.Pgs;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 
@@ -61,4 +63,26 @@ public interface ReportService {
 	 * @return
 	 */
 	public List<Map<String, String>> countAppRunNum(Integer userId);
+	
+    /**
+     * 获取HBV数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @date 2016-1-8 下午4:40:37
+     */
+    public HBV getHBVReport(String dataKey, Integer projectId, Integer appId);
+
+    /**
+     * 获取PGS报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @date 2016-1-9 上午2:56:01
+     */
+    public Pgs getPgsReport(String dataKey, Integer projectId, Integer appId);
 }

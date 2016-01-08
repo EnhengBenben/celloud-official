@@ -482,7 +482,7 @@ $.ajaxSetup ({
 		var reportIdNow;//记录当前报告ID
 		//查看数据报告
 		function viewDataReport(event){
-			$("#mainDIV").load("pages/report/dataReport.jsp");
+			$("#mainDIV").load("pages/report/report_data_main.jsp");
 			if(typeof spinner != "undefined"){
 				spinner.stop();
 			}
@@ -508,7 +508,7 @@ $.ajaxSetup ({
 			spinner = new Spinner(opts);
 			var target = document.getElementById('reportLoading');
 			spinner.spin(target);
-			$.get("getDataInfoListByProjectId.action",{"projectId":proId},function(fileList){
+			$.get("data/getDatasInProject",{"projectId":proId},function(fileList){
 				$("#fileListUl").append("<button type='button' id='prevA' class='btn btn-success'><span class='fa fa-sort-asc'></span></button>");
 				var fileNames = new Array();
 				var newList = "";
@@ -606,11 +606,11 @@ $.ajaxSetup ({
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
 			}else if(softwareId == 85 || softwareId == 86 || softwareId == 87 || softwareId == 88 || softwareId == 91 || softwareId == 92 || softwareId == 93 || softwareId == 94 || softwareId == 104|| softwareId == 116){
-				$.get("report3!getPgsReport",{"proId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
+				$.get("report/getPgsReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
 			}else if(softwareId == 82){
-				$.get("report3!getHBVReport",{"proId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
+				$.get("report/getHBVReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
 			//}else if(softwareId == 80){
@@ -637,6 +637,8 @@ $.ajaxSetup ({
 		
 		function toDataReport(responseText,appId,columns,DATAPATH){
 			$("#reportResultDiv").html(responseText);
+			//TODO 
+			return;
 			if(appId==105){
 				var mutant = $("#_hidMutant").val();
 				var wild = $("#_hidWild").val();

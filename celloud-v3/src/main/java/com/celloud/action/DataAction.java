@@ -1,5 +1,7 @@
 package com.celloud.action;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -7,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.ConstantsData;
@@ -27,6 +30,19 @@ public class DataAction {
     Logger logger = LoggerFactory.getLogger(DataAction.class);
     @Resource
     private DataService dataService;
+
+    /**
+     * 检索某个项目下的所有数据
+     * 
+     * @param projectId
+     * @return
+     * @date 2016-1-9 上午3:43:01
+     */
+    @RequestMapping("getDatasInProject")
+    @ResponseBody
+    public List<DataFile> getDatasInProject(Integer projectId) {
+        return dataService.getDatasInProject(projectId);
+    }
 
     /**
      * 获取全部数据列表

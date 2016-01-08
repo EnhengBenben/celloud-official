@@ -24,6 +24,16 @@ public interface DataFileMapper {
     int updateByPrimaryKey(DataFile record);
 
     /**
+     * 检索某个项目下的所有数据
+     * 
+     * @param projectId
+     * @return
+     * @date 2016-1-9 上午3:06:47
+     */
+    public List<DataFile> getDatasInProject(
+            @Param("projectId") Integer projectId);
+
+    /**
      * 统计帐号下的文件数量
      *
      * @param userId

@@ -94,4 +94,13 @@ public interface DataService {
 	 * @return
 	 */
 	public Map<String, String> countUserRunFileNum(Integer userId);
+
+    /**
+     * 检索某个项目下的所有数据
+     * 
+     * @param projectId
+     * @return
+     * @date 2016-1-9 上午3:05:40
+     */
+    public List<DataFile> getDatasInProject(Integer projectId);
 }

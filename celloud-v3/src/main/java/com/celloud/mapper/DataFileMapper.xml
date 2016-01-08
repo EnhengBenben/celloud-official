@@ -295,4 +295,9 @@
     <select id="countFileNumByUserId" resultType="map">
     select count(f.file_id)as fileNum,(select count(distinct(file_id))from tb_report where user_id = f.user_id)as runNum from tb_file f where f.user_id = ${userId}
   </select>
+  <select id="getDatasInProject" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+  	from tb_file where file_id in(select file_id from tb_file_project_relat where project_id=#{projectId})
+  </select>
 </mapper>
