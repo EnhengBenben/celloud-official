@@ -23,7 +23,7 @@ import com.celloud.service.FeedbackService;
  */
 @Controller
 @RequestMapping("feedback")
-public class FeedBackAction {
+public class FeedbackAction {
     @Resource
     private FeedbackService feedbackService;
     @RequestMapping("list")
