@@ -38,7 +38,7 @@ public class HomeAction {
     public ModelAndView resetPassword(HttpSession session, @PathVariable String username,
             @PathVariable String randomCode) {
         // TODO 添加rsa加密
-        ModelAndView mv = new ModelAndView("user/resetPassword");
+        ModelAndView mv = new ModelAndView("user/user_pwd_reset");
         User user = userService.getUserByFindPwd(username, randomCode);
         if (user == null) {
             return mv.addObject("info", "找回密码的链接错误或已过期");
@@ -81,7 +81,7 @@ public class HomeAction {
      */
     @RequestMapping(value = "findPassword.html", method = RequestMethod.POST)
     public ModelAndView findPassword(String email, String kaptchaCode, HttpSession session) {
-        ModelAndView mv = new ModelAndView("user/forgot").addObject("sucess", "fail");
+        ModelAndView mv = new ModelAndView("user/user_pwd_find").addObject("sucess", "fail");
         String kaptchaExpected = String
                 .valueOf(session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY));
         // 干掉session中的验证码，避免用户刷新页面重复提交
@@ -142,6 +142,6 @@ public class HomeAction {
 
     @RequestMapping("forgot.html")
     public String forgot() {
-        return "user/forgot";
+        return "user/user_pwd_find";
     }
 }
