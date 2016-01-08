@@ -25,16 +25,25 @@ public class MIB extends Base {
     private String avgQuality;
     /** 平均GC含量(%) */
     private String avgGCContent;
+    /** 报告结论 */
+    private String conclusion;
     /** 低质量序列、宿主序列、16S序列以及未能比对上的reads比例分布图 */
     private String readsDistribution;
+    /** 低质量序列、宿主序列、16S序列以及未能比对上的reads比例数据信息 */
+    private List<List<String>> readsDistributionInfo;
     /** 16s相关的序列在科层次上的比例分布图 */
     private String familyDistribution;
-    /** 样品中属层次上reads的比例 */
+    /** 16s相关的序列在科层次上的比例数据信息 */
+    private List<List<String>> familyDistributionInfo;
+    /** 样品中属层次上reads的比例图 */
     private String genusDistribution;
+    /** 样品中属层次上reads的比例数据信息 */
+    private List<List<String>> genusDistributionInfo;
     /**
      * 将以数字形式具体展示各个属的详细情况。 其中包括: Species——目标病原体在种水平上的鉴定(目前该结果属于推测)，
      * Genus——目标病原体在属水平上的鉴定， GI——参考序列的编号， %Coverage——reads能覆盖参考序列的百分比，
-     * Reads_hit——reads比对上该参考序列的数目， Reads_num——reads分类在该属下的数目， Average depth of
+     * Reads_hit——reads比对上该参考序列的数目，
+     * Reads_num——reads分类在该属下的数目，Reads_Ratio——种序列百分比， Average depth of
      * coverage——平均测序深度
      */
     private List<Map<String, String>> summaryTable;
@@ -169,6 +178,41 @@ public class MIB extends Base {
 
     public void setSeqContentPath2(String seqContentPath2) {
         this.seqContentPath2 = seqContentPath2;
+    }
+
+    public String getConclusion() {
+        return conclusion;
+    }
+
+    public void setConclusion(String conclusion) {
+        this.conclusion = conclusion;
+    }
+
+    public List<List<String>> getReadsDistributionInfo() {
+        return readsDistributionInfo;
+    }
+
+    public void setReadsDistributionInfo(
+            List<List<String>> readsDistributionInfo) {
+        this.readsDistributionInfo = readsDistributionInfo;
+    }
+
+    public List<List<String>> getFamilyDistributionInfo() {
+        return familyDistributionInfo;
+    }
+
+    public void setFamilyDistributionInfo(
+            List<List<String>> familyDistributionInfo) {
+        this.familyDistributionInfo = familyDistributionInfo;
+    }
+
+    public List<List<String>> getGenusDistributionInfo() {
+        return genusDistributionInfo;
+    }
+
+    public void setGenusDistributionInfo(
+            List<List<String>> genusDistributionInfo) {
+        this.genusDistributionInfo = genusDistributionInfo;
     }
 
 }

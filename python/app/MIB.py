@@ -8,6 +8,7 @@ import os
 import threading
 import linecache
 from utils.StringUtils import *
+from utils.FileUtils import *
 
 
 class MIB:
@@ -36,10 +37,19 @@ class MIB:
         if not os.path.exists(path):
             return result
 
-        # result/statistic.xls
+        # 样品中属层次上reads的比例数据信息（前10）
+        genusTop10Path = os.path.join(path, 'all.fastq.genus.top15')
+        if os.path.exists(genusTop10Path):
+            f = open(genusTop10Path, 'r')
+            genusDistributionInfo = []
+            for line in f.readlines():
+                reads = line.strip().split("\t")
+                genusDistributionInfo.append(reads)
+            result['genusDistributionInfo'] = genusDistributionInfo
+            f.close()
+        # result
         resultPath = os.path.join(path, 'result')
         if os.path.exists(resultPath):
-            geneDetectionDetail = {}
             for file in os.listdir(resultPath):
                 if file == 'statistic.xls':
                     f = open(os.path.join(resultPath, file), 'r')
@@ -53,6 +63,10 @@ class MIB:
                             result['avgGCContent'] = line
                         index += 1
                     f.close()
+                # 测序结果
+                elif file == 'conclusion.txt':
+                    conclusion = readAllChinese(os.path.join(resultPath, file))
+                    result['conclusion'] = conclusion
                 elif file == 'taxi.all.fastq.table':
                     f = open(os.path.join(resultPath, file), 'r')
                     index = 0
@@ -60,10 +74,28 @@ class MIB:
                     for line in f.readlines():
                         if index > 0:
                             st = line.strip().split("\t")
-                            info = {'Species': list_value(st, 0), 'Genus': list_value(st, 1), 'GI': list_value(st, 2), 'Coverage': list_value(st, 3), 'Reads_hit': list_value(st, 4), 'Reads_num': list_value(st, 5), 'avgCoverage': list_value(st, 6)}
+                            info = {'Species': list_value(st, 0), 'Genus': list_value(st, 1), 'GI': list_value(st, 2), 'Coverage': list_value(st, 3), 'Reads_hit': list_value(st, 4), 'Reads_num': list_value(st, 5), 'Reads_Ratio': list_value(st, 6), 'avgCoverage': list_value(st, 7)}
                             summaryTable.append(info)
                         index += 1
                     result['summaryTable'] = summaryTable
+                    f.close()
+                # 低质量序列、宿主序列、16S序列以及未能比对上的reads比例数据信息（第一个饼图）
+                elif file == 'all.fastq.reads_distribution':
+                    f = open(os.path.join(resultPath, file), 'r')
+                    readsDistributionInfo = []
+                    for line in f.readlines():
+                        reads = line.strip().split("\t")
+                        readsDistributionInfo.append(reads)
+                    result['readsDistributionInfo'] = readsDistributionInfo
+                    f.close()
+                # 16s相关的序列在科层次上的比例数据信息
+                elif file == 'family.distribution.lis':
+                    f = open(os.path.join(resultPath, file), 'r')
+                    familyDistributionInfo = []
+                    for line in f.readlines():
+                        reads = line.strip().split("\t")
+                        familyDistributionInfo.append(reads)
+                    result['familyDistributionInfo'] = familyDistributionInfo
                     f.close()
                 elif file == 'family_distribution.all.fastq.png':
                     result['familyDistribution'] = '/result/family_distribution.all.fastq.png'

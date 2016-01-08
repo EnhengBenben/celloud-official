@@ -10,6 +10,7 @@
 			${data.fileName}(${data.dataKey})&nbsp;&nbsp;&nbsp;
 		</c:forEach>
 		</span>
+		检测结果： ${mib.conclusion }
 		<div class="toolbar">
 			<a href="javascript:printMIB(${mib.projectId },${mib.dataKey },${mib.userId },${mib.appId })" class="btn btn-default"><i class="i-print"></i>打印报告</a>
 		</div>
@@ -39,17 +40,42 @@
 			<div class="m-boxCon">
 				<table style="width:90%;">
 			      <tr>
-			    	<td style="width:49%;"><img src="<c:if test="${!mib.readsDistribution.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.readsDistribution }" style="width:100%;"></td>
-			    	<td><img src="<c:if test="${!mib.familyDistribution.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.familyDistribution }" style="width:100%;"></td>
+			    	<td id="reads-distribution-parent" style="width:49%;">
+			    	  <c:choose>
+			    	    <c:when test="${empty mib.readsDistributionInfo}">
+				    	  <img src="<c:if test="${!mib.readsDistribution.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.readsDistribution }" style="width:100%;">
+			    	    </c:when>
+			    	    <c:otherwise>
+			    	      <div id="reads-distribution-char" style="width:100%;height:330px;">${mibCharList.readsDistributionInfo }</div>
+			    	    </c:otherwise>
+			    	  </c:choose>
+			    	</td>
+			    	<td id="family-distribution-parent">
+			    	  <c:choose>
+                        <c:when test="${empty mib.familyDistributionInfo}">
+				    	  <img src="<c:if test="${!mib.familyDistribution.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.familyDistribution }" style="width:100%;">
+                        </c:when>
+                        <c:otherwise>
+                          <div id="family-distribution-char" style="width:100%;height:330px;">${mibCharList.familyDistributionInfo }</div>
+                        </c:otherwise>
+                      </c:choose>
+			    	</td>
 			      </tr>
 			    </table>
 			</div>
 		</div>
 		<!--报告图示一-->
-		<div class="m-box">
+		<div id="genus-distribution-parent" class="m-box">
 			<h2><i class="i-edit"></i>Genus Distribution</h2>
 			<div class="m-boxCon">
-				<img src="<c:if test="${!mib.genusDistribution.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.genusDistribution }" style="width:90%;">
+			  <c:choose>
+                <c:when test="${empty mib.genusDistributionInfo}">
+			      <img src="<c:if test="${!mib.genusDistribution.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.genusDistribution }" style="width:90%;">
+                </c:when>
+                <c:otherwise>
+                  <div id="genus-distribution-char" style="width:100%;height:330px;">${mibCharList.genusDistributionInfo }</div>
+                </c:otherwise>
+              </c:choose>
 			</div>
 		</div>
 		<!--检测结果-->
@@ -59,13 +85,14 @@
 			  <table class="table table-striped-green table-text-center table-padding0" id="snp_table1">
 			     <thead>
 			       <tr>
-			         <th style="line-height: 12px;vertical-align: middle;">种<br><span style="font-size:12px;color: #9A9999;">(Species)</span></th>
-			         <th style="line-height: 12px;vertical-align: middle;min-width:110px;">属<br><span style="font-size:12px;color: #9A9999;">(Genus)</span></th>
-			         <th style="line-height: 12px;vertical-align: middle;min-width:80px;">GI号<br><span style="font-size:12px;color: #9A9999;">(GI)</span></th>
-			         <th style="line-height: 12px;vertical-align: middle;min-width:90px;">覆盖长度%<br><span style="font-size:12px;color: #9A9999;">(%Coverage)</span></th>
-			         <th style="line-height: 12px;vertical-align: middle;min-width:130px;">种比对上的序列数<br><span style="font-size:12px;color: #9A9999;">(Reads_hit)</span></th>
-			         <th style="line-height: 12px;vertical-align: middle;min-width:130px;">属比对上的序列数<br><span style="font-size:12px;color: #9A9999;">(Reads_num)</span></th>
-			         <th style="line-height: 12px;vertical-align: middle;min-width:170px;">平均覆盖深度<br><span style="font-size:12px;color: #9A9999;">(Average depth of coverage)</span></th>
+			         <th style="line-height: 12px;vertical-align: middle;">种<br><span style="font-size:12px;color: #9A9999;">Species</span></th>
+			         <th style="line-height: 12px;vertical-align: middle;min-width:110px;">属<br><span style="font-size:12px;color: #9A9999;">Genus</span></th>
+			         <th style="line-height: 12px;vertical-align: middle;min-width:80px;">GI号<br><span style="font-size:12px;color: #9A9999;">GI</span></th>
+			         <th style="line-height: 12px;vertical-align: middle;min-width:90px;">覆盖长度%<br><span style="font-size:12px;color: #9A9999;">%Coverage</span></th>
+			         <th style="line-height: 12px;vertical-align: middle;min-width:130px;">种比对上的序列数<br><span style="font-size:12px;color: #9A9999;">Reads_hit</span></th>
+			         <th style="line-height: 12px;vertical-align: middle;min-width:130px;">属比对上的序列数<br><span style="font-size:12px;color: #9A9999;">Reads_num</span></th>
+			         <th style="line-height: 12px;vertical-align: middle;min-width:130px;">种序列百分比<br><span style="font-size:12px;color: #9A9999;">%Reads_Ratio</span></th>
+			         <th style="line-height: 12px;vertical-align: middle;min-width:170px;">平均覆盖深度<br><span style="font-size:12px;color: #9A9999;">Average depth of coverage</span></th>
 			       </tr>
 			     </thead>
 			     <tbody style="font-size:12px">
@@ -78,6 +105,7 @@
 					     <td>${summary.Coverage }</td>
 					     <td>${summary.Reads_hit }</td>
 					     <td>${summary.Reads_num }</td>
+					     <td>${summary.Reads_Ratio }</td>
 					     <td>${summary.avgCoverage }</td>
 					   </tr>
 			         </c:forEach>
@@ -129,80 +157,48 @@
 				<div class="h2">Basic Statistics</div>
 				<table class="table table-bordered table-condensed">
 					<thead>
-						<tr>
-							<th>#Measure</th>
-							<th>Value</th>
-						</tr>
-					</thead>
+			            <tr>
+			                <th>#Measure</th>
+			                <th colspan="2">Value</th>
+			            </tr>
+			        </thead>
 					<tbody>
-						<tr>
-							<td>Filename</td>
-							<td>${mib.basicStatistics1.Filename }</td>
-						</tr>
-						<tr>
-							<td>File type</td>
-							<td>${mib.basicStatistics1.FileType }</td>
-						</tr>
-						<tr>
-							<td>Encoding</td>
-							<td>${mib.basicStatistics1.Encoding }</td>
-						</tr>
-						<tr>
-							<td>Total Sequences</td>
-							<td>${mib.basicStatistics1.TotalSeq }</td>
-						</tr>
-						<tr>
-							<td>Filtered Sequences</td>
-							<td>${mib.basicStatistics1.FilteredSeq }</td>
-						</tr>
-						<tr>
-							<td>Sequence length</td>
-							<td>${mib.basicStatistics1.SeqLength }</td>
-						</tr>
-						<tr>
-							<td>%GC</td>
-							<td>${mib.basicStatistics1.gc }</td>
-						</tr>
-					</tbody>
-				</table>
-				<div class="h2">Basic Statistics</div>
-				<table class="table table-bordered table-condensed">
-					<thead>
-						<tr>
-							<th>#Measure</th>
-							<th>Value</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Filename</td>
-							<td>${mib.basicStatistics2.Filename }</td>
-						</tr>
-						<tr>
-							<td>File type</td>
-							<td>${mib.basicStatistics2.FileType }</td>
-						</tr>
-						<tr>
-							<td>Encoding</td>
-							<td>${mib.basicStatistics2.Encoding }</td>
-						</tr>
-						<tr>
-							<td>Total Sequences</td>
-							<td>${mib.basicStatistics2.TotalSeq }</td>
-						</tr>
-						<tr>
-							<td>Filtered Sequences</td>
-							<td>${mib.basicStatistics2.FilteredSeq }</td>
-						</tr>
-						<tr>
-							<td>Sequence length</td>
-							<td>${mib.basicStatistics2.SeqLength }</td>
-						</tr>
-						<tr>
-							<td>%GC</td>
-							<td>${mib.basicStatistics2.gc }</td>
-						</tr>
-					</tbody>
+                        <tr>
+                            <td>Filename</td>
+                            <td>${mib.basicStatistics1.Filename }</td>
+                            <td>${mib.basicStatistics2.Filename }</td>
+                        </tr>
+                        <tr>
+                            <td>File type</td>
+                            <td>${mib.basicStatistics1.FileType }</td>
+                            <td>${mib.basicStatistics2.FileType }</td>
+                        </tr>
+                        <tr>
+                            <td>Encoding</td>
+                            <td>${mib.basicStatistics1.Encoding }</td>
+                            <td>${mib.basicStatistics2.Encoding }</td>
+                        </tr>
+                        <tr>
+                            <td>Total Sequences</td>
+                            <td>${mib.basicStatistics1.TotalSeq }</td>
+                            <td>${mib.basicStatistics2.TotalSeq }</td>
+                        </tr>
+                        <tr>
+                            <td>Filtered Sequences</td>
+                            <td>${mib.basicStatistics1.FilteredSeq }</td>
+                            <td>${mib.basicStatistics2.FilteredSeq }</td>
+                        </tr>
+                        <tr>
+                            <td>Sequence length</td>
+                            <td>${mib.basicStatistics1.SeqLength }</td>
+                            <td>${mib.basicStatistics2.SeqLength }</td>
+                        </tr>
+                        <tr>
+                            <td>%GC</td>
+                            <td>${mib.basicStatistics1.gc }</td>
+                            <td>${mib.basicStatistics2.gc }</td>
+                        </tr>
+                    </tbody>
 				</table>
 				<table style="width:90%;">
 			      <tr>

@@ -1,4 +1,200 @@
+$.reportChar = {};
 
+/**-------- 报告画图 -------*/
+$.reportChar.draw = {
+    _require: function(chartName,option,id){
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: 'http://echarts.baidu.com/build/dist'
+            }
+        });
+    	require(
+			[
+		        'echarts',
+		        'echarts/chart/' + chartName
+		    ],
+		    function (ec) {
+		        var myChart = ec.init(document.getElementById(id),macarons_theme); 
+		        myChart.setOption(option, true); 
+			}
+    	);
+    },
+    /** 
+     * ========
+     * 环形图 
+     * ========
+     */
+    circularGraphDataOptions: {
+	    dataStyle: {
+		  normal: {
+		    label: {show:false},
+		    labelLine: {show:false}
+		  }
+	    },
+	    placeHolderStyle: {
+		  normal : {
+		        color: "rgba(0,0,0,0)",
+		        label: {show:false},
+		        labelLine: {show:false}
+		      },
+		      emphasis : {
+		        color: "rgba(0,0,0,0)"
+		      }
+	    },
+	    legendData: null,
+	    seriesData: null
+	},
+    circularGraph: function(id,title,subTitle,data){
+	    $.reportChar.circularGraphSeriesData(data);
+	    option = {
+    	    title: {
+    	        text: title,
+    	        subtext: subTitle,
+    	        sublink: '',
+    	        x: 'center',
+    	        y: 'center',
+    	        itemGap: 5,
+    	        textStyle : {
+    	            color : 'rgba(30,144,255,0.8)',
+    	            fontFamily : '微软雅黑',
+    	            fontSize : 16,
+    	            fontWeight : 'bolder'
+    	        }
+    	    },
+    	    tooltip : {
+    	        show: true,
+    	        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    	    },
+    	    legend: {
+    	        orient : 'vertical',
+    	        x : document.getElementById(id).offsetWidth / 2 + 3,
+    	        y : 30,
+    	        itemGap:6,
+    	        data: $.reportChar.draw.circularGraphDataOptions.legendData //['','','']要与series data的name对应
+    	    },
+    	    series : $.reportChar.draw.circularGraphDataOptions.seriesData
+    	};
+	    $.reportChar.draw._require('pie',option,id);
+	},
+	/**
+	 * ===============
+	 * 单根渐变色柱状图
+	 * ===============
+	 */
+	singleBar: function(id,title,subTitle,data,yAxisName,seriesName){
+		var zrColor = require('zrender/tool/color');
+		var _xariaData = new Array();
+		var _seriesData = new Array();
+		for (var i = 0; i < data.length; i++) {
+		  var key = data[i][0];
+		  var value = data[i][1];
+		  var num_value = value!= ''?parseInt(value):0;
+		  _xariaData.push(key);
+		  _seriesData.push(num_value);
+	    }
+		option = {
+		    title : {
+		        x: 'center',
+		        text: title,
+		        subtext: '',
+		        textStyle : {
+    	            color : 'rgba(30,144,255,0.8)',
+    	            fontFamily : '微软雅黑',
+    	            fontSize : 16,
+    	            fontWeight : 'bolder'
+    	        }
+		    },
+		    tooltip : {
+		        trigger: 'axis',
+		        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+    	            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+    	        }
+		    },
+		    calculable : true,
+		    xAxis : [
+		        {
+		            type : 'category',
+		            axisLabel : {
+		              rotate : 10,
+		              margin : 3,
+		              interval : 0,
+		              textStyle: {
+		                align: 'right'
+		              }
+		            },
+		            data: _xariaData
+		        }
+		    ],
+		    yAxis : [
+		        {
+		            type : 'value',
+		            name: yAxisName
+		        }
+		    ],
+		    series : [
+		        {
+		            name:seriesName,
+		            type:'bar',
+		            itemStyle: {
+		                normal: {
+		                    color: function(params) { 
+		                      return zrColor.lift(
+		                        '#87cefa', params.dataIndex * 0.02
+		                      );
+		                    },
+		                    label: {
+		                        show: true,
+		                        position: 'top',
+		                        formatter: '{c}'
+		                    }
+		                }
+		            },
+		            data: _seriesData
+		        }
+		    ]
+		};
+		$.reportChar.draw._require('bar',option,id);
+	}
+};
+/**环形图数据参数*/
+$.reportChar.circularGraphSeriesData=function(list){
+  //list : [["16s_reads","4"],[],[]]
+  var o = $.reportChar.draw.circularGraphDataOptions;
+  o.legendData = new Array();
+  o.seriesData = new Array();
+  var radius_inner = 120;
+  var radius_outer = 140;
+  for (var i = 0; i < list.length; i++) {
+	  var _key = list[i][0];
+	  var _value = list[i][1];
+	  var num_value = _value!= ''?parseInt(_value):0;
+	  var data_name = _value+"% "+_key;
+	  o.legendData.push(data_name),
+	  o.seriesData.push({
+    	  name:_key,
+    	  type:'pie',
+    	  clockWise:false,
+    	  radius: [radius_inner, radius_outer],
+    	  itemStyle : o.dataStyle,
+	      data:[
+	          {
+	              value:num_value,
+	              name:data_name
+	          },
+	          {
+	              value:100-num_value,
+	              name:'invisible',
+	              itemStyle : o.placeHolderStyle
+	          }
+	      ]
+      });
+      if(radius_inner>0){
+    	  radius_inner-=20;
+    	  radius_outer-=20;
+      }
+  }
+};
 //数据参数同比画点图
 function drawScatter(id,totaldata,thisdata,title,xAxisName,yAxisName){
 	require(

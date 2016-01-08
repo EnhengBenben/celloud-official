@@ -14,7 +14,7 @@
 <a href="javascript:void(0)" onclick="preview(this)" class="btn btn-default" id="change" style="float:right;margin-top:10px;margin-right:-80px;"><i class="i-print"></i>打印</a>
 <section class="section2 border1 w3cbbs">
     <div class="header">
-		<h1 style="font-size:32px;padding:0 0 5 0px;">MIB检测分析报告</h1>
+		<h1 style="font-size:32px;padding:0 0 5 0px;">细菌感染检测分析报告</h1>
 	</div>
 	<h4>1.&nbsp;&nbsp; 基本信息</h4>
 	<div class="section1">
@@ -29,44 +29,29 @@
         <li>样本状态：<span><input type="text" name=""></span></li>
     </ul>
     </div>
-    <h4>2.&nbsp;&nbsp; 检测文件（${mib.dataKey}）</h4>
+    <h4>2.&nbsp;&nbsp;数据统计</h4>
     <div class="info">
-		<c:forEach items="${mib.data}" var="data">
-			${data.fileName}&nbsp;&nbsp;
-		</c:forEach>
+        <table class="table table-bordered table-condensed">
+            <thead>
+                <tr><th>序列总数</th><th>平均质量</th><th>平均GC含量</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>${mib.totalReads }</td>
+                    <td>${mib.avgQuality }</td>
+                    <td>${mib.avgGCContent }</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h4>3.&nbsp;&nbsp; 检测结果（${mib.dataKey}）</h4>
+    <div class="info">
+		${mib.conclusion }
 	</div>
-	<h4>3.&nbsp;&nbsp;数据统计</h4>
-    <div class="info">
-    	<table class="table table-bordered table-condensed">
-			<thead>
-				<tr><th>序列总数</th><th>平均质量</th><th>平均GC含量</th></tr>
-		    </thead>
-			<tbody>
-				<tr>
-					<td>${mib.totalReads }</td>
-					<td>${mib.avgQuality }</td>
-					<td>${mib.avgGCContent }</td>
-				</tr>
-			</tbody>
-		</table>
-    </div>
-    <h4>4.&nbsp;&nbsp;Reads Distribution</h4>
-    <div class="info">
-        <table style="width:90%;">
-	      <tr>
-	    	<td style="width:49%;"><img src="<c:if test="${!mib.readsDistribution.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.readsDistribution }" style="width:100%;"></td>
-	    	<td><img src="<c:if test="${!mib.familyDistribution.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.familyDistribution }" style="width:100%;"></td>
-	      </tr>
-	    </table>
-    </div>
-    <h4>5.&nbsp;&nbsp;Genus Distribution</h4>
-    <div class="info">
-        <img src="<c:if test="${!mib.genusDistribution.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.genusDistribution }" style="width:90%;">
-    </div>
-    <h4>6.&nbsp;&nbsp;报告</h4>
-    <div class="info">
-    	<table class="table table-bordered table-condensed">
-			<thead>
+	<h4>4.&nbsp;&nbsp;详细结果</h4>
+    <div class="info w3cbbs">
+        <table class="table table-bordered table-condensed">
+            <thead>
                <tr>
                  <th style="line-height: 14px;vertical-align: middle;text-align: center;">种<br><span style="font-size:12px;color: #9A9999;">Species</span></th>
                  <th style="line-height: 14px;vertical-align: middle;text-align: center;min-width:80px;">属<br><span style="font-size:12px;color: #9A9999;">Genus</span></th>
@@ -74,32 +59,72 @@
                  <th style="line-height: 14px;vertical-align: middle;text-align: center;min-width:45px;">覆盖长度%<br><span style="font-size:12px;color: #9A9999;">%Coverage</span></th>
                  <th style="line-height: 14px;vertical-align: middle;text-align: center;min-width:30px;">种比对上的序列数<br><span style="font-size:12px;color: #9A9999;">Reads_hit</span></th>
                  <th style="line-height: 14px;vertical-align: middle;text-align: center;">属比对上的序列数<br><span style="font-size:12px;color: #9A9999;">Reads_num</span></th>
+                 <th style="line-height: 14px;vertical-align: middle;text-align: center;">种序列百分比<br><span style="font-size:12px;color: #9A9999;">%Reads_Ratio</span></th>
                  <th style="line-height: 14px;vertical-align: middle;text-align: center;">平均覆盖深度<br><span style="font-size:12px;color: #9A9999;">Average depth of coverage</span></th>
                </tr>
              </thead>
-		     <tbody>
-		       <c:choose>
-		       	 <c:when test="${fn:length(mib.summaryTable)>0}">
-		       	   	<c:forEach items="${mib.summaryTable }" var="summary" varStatus="s">
-					   <tr>
-					     <td>${summary.Species }</td>
-					     <td>${summary.Genus }</td>
-					     <td>${summary.GI }</td>
-					     <td>${summary.Coverage }</td>
-					     <td>${summary.Reads_hit }</td>
-					     <td>${summary.Reads_num }</td>
-					     <td>${summary.avgCoverage }</td>
-					   </tr>
-			        </c:forEach>
-		       	 </c:when>
-		       	 <c:otherwise>
-		       	 	<tr><td colspan="7">无结果</td></tr>
-		       	 </c:otherwise>
-		       </c:choose>
-		     </tbody>
-		</table>
+             <tbody>
+               <c:choose>
+                 <c:when test="${fn:length(mib.summaryTable)>0}">
+                    <c:forEach items="${mib.summaryTable }" var="summary" varStatus="s">
+                       <tr>
+                         <td>${summary.Species }</td>
+                         <td>${summary.Genus }</td>
+                         <td>${summary.GI }</td>
+                         <td>${summary.Coverage }</td>
+                         <td>${summary.Reads_hit }</td>
+                         <td>${summary.Reads_num }</td>
+                         <td>${summary.Reads_Ratio }</td>
+                         <td>${summary.avgCoverage }</td>
+                       </tr>
+                    </c:forEach>
+                 </c:when>
+                 <c:otherwise>
+                    <tr><td colspan="7">无结果</td></tr>
+                 </c:otherwise>
+               </c:choose>
+             </tbody>
+        </table>
     </div>
-    <h4>7.&nbsp;&nbsp;图</h4>
+    <h4>5.&nbsp;&nbsp;测序结果分布图</h4>
+    <div class="info">
+        <table style="width:90%;">
+          <tr>
+            <td style="width:49%;">
+              <c:choose>
+                <c:when test="${empty mib.readsDistributionInfo}">
+                  <img src="<c:if test="${!mib.readsDistribution.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.readsDistribution }" style="width:100%;">
+                </c:when>
+                <c:otherwise>
+                  <div id="reads-distribution-char" style="width:100%;height:330px;">${mibCharList.readsDistributionInfo }</div>
+                </c:otherwise>
+              </c:choose>
+            </td>
+            <td>
+              <c:choose>
+                <c:when test="${empty mib.familyDistributionInfo}">
+                  <img src="<c:if test="${!mib.familyDistribution.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.familyDistribution }" style="width:100%;">
+                </c:when>
+                <c:otherwise>
+                  <div id="family-distribution-char" style="width:100%;height:330px;">${mibCharList.familyDistributionInfo }</div>
+                </c:otherwise>
+              </c:choose>
+            </td>
+          </tr>
+        </table>
+    </div>
+    <h4>6.&nbsp;&nbsp;属分布图</h4>
+    <div class="info">
+        <c:choose>
+          <c:when test="${empty mib.genusDistributionInfo}">
+            <img src="<c:if test="${!mib.genusDistribution.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.genusDistribution }" style="width:90%;">
+          </c:when>
+          <c:otherwise>
+            <div id="genus-distribution-char" style="width:100%;height:330px;">${mibCharList.genusDistributionInfo }</div>
+          </c:otherwise>
+        </c:choose>
+    </div>
+    <h4>7.&nbsp;&nbsp;各菌16s rRNA序列覆盖分布图</h4>
     <div class="info">
       <c:if test="${mib.pngPath.top1png!=null }">
 		<img src="<c:if test="${!mib.pngPath.top1png.contains('Tools') }">${outPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top1png }" style="width:90%;">
@@ -138,80 +163,48 @@
 	<div class="h2">Basic Statistics</div>
 	<table class="table table-green table-striped-blue table-text-center">
 		<thead>
-			<tr>
-				<th>#Measure</th>
-				<th>Value</th>
-			</tr>
-		</thead>
+            <tr>
+                <th>#Measure</th>
+                <th colspan="2">Value</th>
+            </tr>
+        </thead>
 		<tbody>
-			<tr>
-				<td>Filename</td>
-				<td>${mib.basicStatistics1.Filename }</td>
-			</tr>
-			<tr>
-				<td>File type</td>
-				<td>${mib.basicStatistics1.FileType }</td>
-			</tr>
-			<tr>
-				<td>Encoding</td>
-				<td>${mib.basicStatistics1.Encoding }</td>
-			</tr>
-			<tr>
-				<td>Total Sequences</td>
-				<td>${mib.basicStatistics1.TotalSeq }</td>
-			</tr>
-			<tr>
-				<td>Filtered Sequences</td>
-				<td>${mib.basicStatistics1.FilteredSeq }</td>
-			</tr>
-			<tr>
-				<td>Sequence length</td>
-				<td>${mib.basicStatistics1.SeqLength }</td>
-			</tr>
-			<tr>
-				<td>%GC</td>
-				<td>${mib.basicStatistics1.gc }</td>
-			</tr>
-		</tbody>
-	</table>
-	<div class="h2">Basic Statistics</div>
-	<table class="table table-green table-striped-orange table-text-center">
-		<thead>
-			<tr>
-				<th>#Measure</th>
-				<th>Value</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>Filename</td>
-				<td>${mib.basicStatistics2.Filename }</td>
-			</tr>
-			<tr>
-				<td>File type</td>
-				<td>${mib.basicStatistics2.FileType }</td>
-			</tr>
-			<tr>
-				<td>Encoding</td>
-				<td>${mib.basicStatistics2.Encoding }</td>
-			</tr>
-			<tr>
-				<td>Total Sequences</td>
-				<td>${mib.basicStatistics2.TotalSeq }</td>
-			</tr>
-			<tr>
-				<td>Filtered Sequences</td>
-				<td>${mib.basicStatistics2.FilteredSeq }</td>
-			</tr>
-			<tr>
-				<td>Sequence length</td>
-				<td>${mib.basicStatistics2.SeqLength }</td>
-			</tr>
-			<tr>
-				<td>%GC</td>
-				<td>${mib.basicStatistics2.gc }</td>
-			</tr>
-		</tbody>
+            <tr>
+                <td>Filename</td>
+                <td>${mib.basicStatistics1.Filename }</td>
+                <td>${mib.basicStatistics2.Filename }</td>
+            </tr>
+            <tr>
+                <td>File type</td>
+                <td>${mib.basicStatistics1.FileType }</td>
+                <td>${mib.basicStatistics2.FileType }</td>
+            </tr>
+            <tr>
+                <td>Encoding</td>
+                <td>${mib.basicStatistics1.Encoding }</td>
+                <td>${mib.basicStatistics2.Encoding }</td>
+            </tr>
+            <tr>
+                <td>Total Sequences</td>
+                <td>${mib.basicStatistics1.TotalSeq }</td>
+                <td>${mib.basicStatistics2.TotalSeq }</td>
+            </tr>
+            <tr>
+                <td>Filtered Sequences</td>
+                <td>${mib.basicStatistics1.FilteredSeq }</td>
+                <td>${mib.basicStatistics2.FilteredSeq }</td>
+            </tr>
+            <tr>
+                <td>Sequence length</td>
+                <td>${mib.basicStatistics1.SeqLength }</td>
+                <td>${mib.basicStatistics2.SeqLength }</td>
+            </tr>
+            <tr>
+                <td>%GC</td>
+                <td>${mib.basicStatistics1.gc }</td>
+                <td>${mib.basicStatistics2.gc }</td>
+            </tr>
+        </tbody>
 	</table>
 	<table style="width:100%;">
       <tr>
@@ -225,12 +218,25 @@
     </table>
 </section>
 <script language="javascript" src="<%=request.getContextPath()%>/plugins/jQuery/jquery-1.11.3.min.js"></script>
+<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+<script src="<%=request.getContextPath() %>/js/charts.js"></script>
 <script type="text/javascript">
+$(function(){
+	var mib_readsDisInfo = $("#reads-distribution-char").text();
+    var mib_familyDisInfo = $("#family-distribution-char").text();
+    var min_genusDisInfo = $("#genus-distribution-char").text();
+    if(mib_readsDisInfo != ""){
+        $.reportChar.draw.circularGraph("reads-distribution-char","Reads","Distribution",eval("("+mib_readsDisInfo+")"));
+    }
+    if(mib_familyDisInfo != ""){
+        $.reportChar.draw.circularGraph("family-distribution-char","Family","Distribution",eval("("+mib_familyDisInfo+")"));
+    }
+    if(min_genusDisInfo != ""){
+        $.reportChar.draw.singleBar("genus-distribution-char","Top 10 genus distribution","",eval("("+min_genusDisInfo+")"),"Depth","Depth");
+    }
+});
 function preview(obj){
 	var inputVal;
-	var textareaVal;
-	var classname;
-	var cmpDrug = "";
 	$("body").find("section").each(function(){
 		$(this).removeClass("border1");
 	});

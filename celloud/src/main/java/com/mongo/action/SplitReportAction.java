@@ -1,5 +1,6 @@
 package com.mongo.action;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.bson.types.ObjectId;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.inject.Inject;
 import com.mongo.sdo.MIB;
 import com.mongo.sdo.Split;
@@ -44,6 +46,8 @@ public class SplitReportAction extends BaseAction {
     private String outPath = PropertiesUtil.toolsOutPath + "upload";
     /** 数据参数同比数据 */
     private Map<String, List<List<Float>>> countMapList;
+    /** MIB报告图形数据 */
+    private Map<String, String> mibCharList;
     private String param;
 
     public String getSplitCount() {
@@ -70,6 +74,13 @@ public class SplitReportAction extends BaseAction {
     public String getMibReport() {
         mib = reportService.getMIB(mib.getDataKey(), mib.getProjectId(),
                 mib.getAppId());
+        mibCharList = new HashMap<>();
+        mibCharList.put("readsDistributionInfo",
+                JSONObject.toJSONString(mib.getReadsDistributionInfo()));
+        mibCharList.put("familyDistributionInfo",
+                JSONObject.toJSONString(mib.getFamilyDistributionInfo()));
+        mibCharList.put("genusDistributionInfo",
+                JSONObject.toJSONString(mib.getGenusDistributionInfo()));
         log.info("celloud-用户" + super.session.get("userId") + "查看mib报告");
         return "toMibReport";
     }
@@ -77,6 +88,13 @@ public class SplitReportAction extends BaseAction {
     public String toPrintMib() {
         mib = reportService.getMIB(mib.getDataKey(), mib.getProjectId(),
                 mib.getAppId());
+        mibCharList = new HashMap<>();
+        mibCharList.put("readsDistributionInfo",
+                JSONObject.toJSONString(mib.getReadsDistributionInfo()));
+        mibCharList.put("familyDistributionInfo",
+                JSONObject.toJSONString(mib.getFamilyDistributionInfo()));
+        mibCharList.put("genusDistributionInfo",
+                JSONObject.toJSONString(mib.getGenusDistributionInfo()));
         log.info("celloud-用户" + super.session.get("userId") + "准备打印mib报告");
         return "toPrintMib";
     }
@@ -127,6 +145,14 @@ public class SplitReportAction extends BaseAction {
 
     public void setParam(String param) {
         this.param = param;
+    }
+
+    public Map<String, String> getMibCharList() {
+        return mibCharList;
+    }
+
+    public void setMibCharList(Map<String, String> mibCharList) {
+        this.mibCharList = mibCharList;
     }
 
 }
