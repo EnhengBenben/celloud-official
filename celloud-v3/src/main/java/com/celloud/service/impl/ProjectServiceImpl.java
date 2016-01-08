@@ -4,7 +4,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.celloud.constants.DataState;
 import com.celloud.mapper.ProjectMapper;
+import com.celloud.model.Project;
 import com.celloud.service.ProjectService;
 
 @Service("projectServiceImpl")
@@ -36,6 +38,16 @@ public class ProjectServiceImpl implements ProjectService {
         }
         projectMapper.updateShareNum(projectId, count);
         return count;
+    }
+
+    @Override
+    public Integer update(Project project) {
+        return projectMapper.updateByPrimaryKeySelective(project);
+    }
+
+    @Override
+    public Integer deleteByState(Integer projectId) {
+        return projectMapper.deleteByState(projectId, DataState.DEELTED);
     }
 
 }

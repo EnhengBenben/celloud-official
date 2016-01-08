@@ -39,57 +39,60 @@ $.ajaxSetup ({
 			submitSearch();
 			// 初始化高级检索app列表
 			var _num = 0;
-//			$.get("report!getAppListById",function(softList){
-//				var total = softList.length;
-//				var context = "";
-//				if(total<9){
-//					for ( var i = 0; i < total; i++) {
-//						var id = softList[i].softwareId;
-//						if(_num>1&&_num%8==0){
-//							context+="<br/>";
-//						}
-//						_num++;
-//						if(APP==id){
-//							context+="<a href='javascript:void(0)' class='capp _appred' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
-//						}else{
-//							context+="<a href='javascript:void(0)' class='capp' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
-//						}
-//					}
-//					$("#showMore").attr("style","display:none");
-//					$("#showAppDiv").html(context);
-//				}else{
-//					for ( var i = 0; i < 8; i++) {
-//						var id = softList[i].softwareId;
-//						if(_num>1&&_num%8==0&&i>0){
-//							context+="<br/>";
-//						}
-//						_num++;
-//						if(APP==id){
-//							context+="<a href='javascript:void(0)' class='capp _appred' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
-//						}else{
-//							context+="<a href='javascript:void(0)' class='capp' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
-//						}
-//					}
-//					context += "</div>";
-//					$("#showAppDiv").html(context);
-//					context ="<div class='moreApp' style='margin-top:-20px'>";
-//					_num = 0;
-//					for ( var i = 8; i < softList.length; i++) {
-//						var id = softList[i].softwareId;
-//						if(_num%9==0){
-//							context+="<br/>";
-//						}
-//						_num++;
-//						if(APP==id){
-//							context+="<a href='javascript:void(0)' class='capp _appred' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
-//						}else{
-//							context+="<a href='javascript:void(0)' class='capp' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+softList[i].softwareName+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
-//						}
-//					}
-//					context += "</div>";
-//					$("#appList").html(context);
-//				}
-//			});
+			$.get("app/getRanAPP",function(appList){
+				var total = appList.length;
+				var context = "";
+				if(total<9){
+					for ( var i = 0; i < total; i++) {
+						var id = appList[i]['app_id'];
+						var name = appList[i]['app_name'];
+						if(_num>1&&_num%8==0){
+							context+="<br/>";
+						}
+						_num++;
+						if(APP==id){
+							context+="<a href='javascript:void(0)' class='capp _appred' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+name+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
+						}else{
+							context+="<a href='javascript:void(0)' class='capp' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+name+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
+						}
+					}
+					$("#showMore").attr("style","display:none");
+					$("#showAppDiv").html(context);
+				}else{
+					for ( var i = 0; i < 8; i++) {
+						var id = appList[i]['app_id'];
+						var name = appList[i]['app_name'];
+						if(_num>1&&_num%8==0&&i>0){
+							context+="<br/>";
+						}
+						_num++;
+						if(APP==id){
+							context+="<a href='javascript:void(0)' class='capp _appred' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+name+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
+						}else{
+							context+="<a href='javascript:void(0)' class='capp' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+name+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
+						}
+					}
+					context += "</div>";
+					$("#showAppDiv").html(context);
+					context ="<div class='moreApp' style='margin-top:-20px'>";
+					_num = 0;
+					for ( var i = 8; i < appList.length; i++) {
+						var id = appList[i]['app_id'];
+						var name = appList[i]['app_name'];
+						if(_num%9==0){
+							context+="<br/>";
+						}
+						_num++;
+						if(APP==id){
+							context+="<a href='javascript:void(0)' class='capp _appred' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+name+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
+						}else{
+							context+="<a href='javascript:void(0)' class='capp' onclick='changeApp("+id+",this)' id='_app"+id+"'>"+name+"</a>&nbsp;&nbsp;&nbsp;&nbsp;";
+						}
+					}
+					context += "</div>";
+					$("#appList").html(context);
+				}
+			});
 		}
 		
 		//删除共享来的项目报告
@@ -112,7 +115,7 @@ $.ajaxSetup ({
 		function removePro(proId){
 			jConfirm("确定删除该项目报告吗？", '确认提示框', function(r) {
 				if(r){
-					$.get("projectJson_deleteProject",{"projectId":proId},function(flag){
+					$.get("project/deleteByState",{"projectId":proId},function(flag){
 						if(flag ==1){
 							currentPage = 1;
 							submitSearch();
@@ -1139,7 +1142,7 @@ $.ajaxSetup ({
 		        $("#showPname"+id).removeClass("none");
 		        $("#changePname"+id).addClass("none");
 		    }else{
-		        $.get("projectJson_updateProjectNameById",{"project.projectId":id,"project.projectName":name},function(flag){
+		        $.get("project/update",{"projectId":id,"projectName":name},function(flag){
 		            if(flag){
 		            	if(name.length>13){
 		            		name=name.substring(0,12)+"...";

@@ -45,6 +45,12 @@ public class AppAction {
     private ScreenService screenService;
 
     @ResponseBody
+    @RequestMapping("getRanAPP")
+    public List<Map<String, String>> getRanAPP() {
+        return appService.getRanAPP(ConstantsData.getLoginUserId());
+    }
+
+    @ResponseBody
     @RequestMapping("appByFormat")
     public List<App> getAppByFormat(String condition) {
         Integer userId = ConstantsData.getLoginUserId();
