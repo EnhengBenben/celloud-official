@@ -12,32 +12,32 @@ public class PrivateKey implements RSAPrivateKey {
     private BigInteger privateExponent;
 
     public PrivateKey(BigInteger modulus, BigInteger privateExponent) {
-	this.modulus = modulus;
-	this.privateExponent = privateExponent;
+        this.modulus = modulus;
+        this.privateExponent = privateExponent;
     }
 
     @Override
     public String getAlgorithm() {
-	return algorithm;
+        return algorithm;
     }
 
     @Override
     public byte[] getEncoded() {
-	return encoded;
+        return encoded;
     }
 
     @Override
     public String getFormat() {
-	return format;
+        return format;
     }
 
     @Override
     public BigInteger getModulus() {
-	return modulus;
+        return modulus;
     }
 
     @Override
     public BigInteger getPrivateExponent() {
-	return privateExponent;
+        return privateExponent;
     }
 }
