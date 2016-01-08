@@ -150,7 +150,7 @@ public class AppAction {
             try {
                 response.sendRedirect("myApps");
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error(e.toString());
             }
             return "";
         } else {
@@ -168,7 +168,7 @@ public class AppAction {
             try {
                 response.sendRedirect("myApps");
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error(e.toString());
             }
             return "";
         } else {

@@ -15,7 +15,7 @@ import com.celloud.page.PageList;
 public interface ReportService {
 	/**
 	 * 
-	 * (重构)统计个人报告数量
+	 * 统计个人报告数量
 	 * 
 	 * @param userId
 	 * @return
@@ -25,7 +25,7 @@ public interface ReportService {
 
 	/**
 	 * 
-	 * (重构)按时间统计个人报告数量
+	 * 按时间统计个人报告数量
 	 * 
 	 * @param userId
 	 * @return
