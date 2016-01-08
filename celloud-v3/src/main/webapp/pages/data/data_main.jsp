@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<link href="<%=request.getContextPath() %>/css/app.css" rel="stylesheet" type="text/css" />
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
@@ -25,7 +26,7 @@
       <div class="box box-success">
         <div class="box-header">
           <h3 class="box-title" data-step="2" data-position="bottom" data-intro="" data-img="managerdata.png" id="manageDataH3">
-          	<a id="run-app-btn" onclick="showRunApp()" class="btn btn-success btn-flat" style="margin-right:15px;width:100px" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-play"></i> 运行</a>
+          	<a id="run-app-btn" class="btn btn-success btn-flat" style="margin-right:15px;width:100px" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-play"></i> 运行</a>
             <a onclick="deleteData()" id="del-data-btn" class="btn btn-warning btn-flat disabled" style="margin-right:15px;width:100px" disabled><i class="fa fa-university"></i> 删除</a>
             <a onclick="toManageDatasModel()" id="manage-data-btn" class="btn btn-info btn-flat disabled" style="margin-right:15px;width:100px" disabled><i class="fa fa-pencil-square-o"></i> 编辑</a>
           </h3>
@@ -48,7 +49,7 @@
 </section><!-- /.content -->
   
 <!-- All Modal -->
-<div class="modal modal-green-header" id="runApp">
+<div id="runApp" class="modal modal-green-header">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

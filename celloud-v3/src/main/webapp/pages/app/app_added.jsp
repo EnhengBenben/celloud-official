@@ -17,11 +17,11 @@
 			      </a>
 			      <div class="intro">
 			        <h6 style="overflow: hidden;" title="${app.appName }">
-			          <a class="reco-hd-link" href="javascript:toAppDetail(${app.appId })">
+			          <a class="reco-hd-link" href="javascript:appStore.toAppDetail(${app.appId })">
 			          	${app.appName }
 			          </a>
 			        </h6>
-			       	<p><a href="javascript:void(0);" onclick="removeApp(${app.appId })" >取消添加</a></p>
+			       	<p><a href="javascript:void(0);" onclick="appStore.removeApp(${app.appId })" >取消添加</a></p>
 			      </div>
 			   </li>
 			</c:forEach>

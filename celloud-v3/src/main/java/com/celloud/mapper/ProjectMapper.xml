@@ -170,4 +170,7 @@
   <insert id="addShare" parameterType="java.lang.Integer">
   	insert into tb_project_share (share_from,project_id,share_to) values (#{shareFrom,jdbcType=INTEGER},#{projectId,jdbcType=INTEGER},#{shareTo,jdbcType=INTEGER});
   </insert>
+  <update id="deleteByState" parameterType="java.lang.Integer">
+	  update tb_project set state = #{state } where project_id = #{projectId,jdbcType=INTEGER}
+  </update>
 </mapper>

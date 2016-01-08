@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.celloud.constants.ConstantsData;
+import com.celloud.model.Project;
 import com.celloud.model.User;
 import com.celloud.service.ProjectService;
 import com.celloud.service.UserService;
@@ -25,6 +26,32 @@ public class ProjectAction {
     private ProjectService projectService;
     @Resource
     private UserService userService;
+
+    /**
+     * 修改项目
+     * 
+     * @param project
+     * @return
+     * @date 2016-1-8 下午1:43:28
+     */
+    @RequestMapping("update")
+    @ResponseBody
+    public Integer update(Project project) {
+        return projectService.update(project);
+    }
+
+    /**
+     * 删除项目
+     * 
+     * @param projectId
+     * @return
+     * @date 2016-1-8 下午3:24:30
+     */
+    @RequestMapping("deleteByState")
+    @ResponseBody
+    public Integer deleteByState(Integer projectId) {
+        return projectService.deleteByState(projectId);
+    }
 
     /**
      * 共享项目

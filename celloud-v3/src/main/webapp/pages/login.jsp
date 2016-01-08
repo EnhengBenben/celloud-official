@@ -84,13 +84,11 @@
 		<!--#E wrapper-->
 	</div>
 	<!--#E bgContainer-->
-	<script type="text/javascript"
-		src="plugins/jQuery/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="plugins/jQuery/jquery-1.11.3.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/utils.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/tologin.js?version=1.0"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/md5.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/security.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/baidu.js"></script>
 	<script type="text/javascript">
 		//session超时iframe完全退出
 		if(window.top!=window.self){

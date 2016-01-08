@@ -59,18 +59,6 @@ public interface AppMapper {
      */
     public List<Map<String, String>> getRanAPP(@Param("userId") Integer userId);
 
-    /**
-     * 根据数据类型查询APP列表
-     *
-     * @param formatId
-     * @param userId
-     * @return
-     * @author han
-     * @date 2016年1月5日 下午4:54:33
-     */
-    public List<App> getAppsByFormat(@Param("formatId") Integer formatId, @Param("userId") Integer userId,
-            @Param("offLine") Integer offLine, @Param("attribute_private") Integer attribute_private,
-            @Param("attribute_public") Integer attribute_public);
 
     /**
      * 根据app分类查询app列表
@@ -123,7 +111,8 @@ public interface AppMapper {
      * @author han
      * @date 2016年1月6日 下午1:38:17
      */
-    public List<App> getMyAppList(@Param("userId") Integer userId, @Param("offLine") Integer offLine);
+    public List<App> getMyAppList(@Param("userId") Integer userId, @Param("offLine") Integer offLine,
+            @Param("isAdd") Integer isAdd);
 
     /**
      * 用户添加或取消APP到可运行列表

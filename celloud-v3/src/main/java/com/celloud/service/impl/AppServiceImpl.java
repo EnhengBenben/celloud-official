@@ -43,10 +43,6 @@ public class AppServiceImpl implements AppService {
         return appMapper.getRanAPP(userId);
     }
 
-    @Override
-    public List<App> getAppsByFormat(Integer formatId, Integer userId) {
-        return appMapper.getAppsByFormat(formatId, userId, AppOffline.ON, AppPermission.PRIVATE, AppPermission.PUBLIC);
-    }
 
     @Override
     public List<App> getAppByClassify(Integer classifyId, Integer userId) {
@@ -69,7 +65,7 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public List<App> getMyAppList(Integer userId) {
-        return appMapper.getMyAppList(userId, AppOffline.ON);
+        return appMapper.getMyAppList(userId, AppOffline.ON, AppIsAdd.ALREADY_ADDED);
     }
 
     @Override
@@ -79,6 +75,6 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public Integer userRemoveApp(Integer userId, Integer appId) {
-        return appMapper.userUpdateApp(userId, appId, AppIsAdd.ALREADY_ADDED);
+        return appMapper.userUpdateApp(userId, appId, AppIsAdd.NOT_ADDED);
     }
 }

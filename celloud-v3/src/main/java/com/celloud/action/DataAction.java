@@ -1,7 +1,6 @@
 package com.celloud.action;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,9 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.celloud.constants.Constants;
+import com.celloud.constants.ConstantsData;
 import com.celloud.model.DataFile;
-import com.celloud.model.User;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.DataService;
@@ -39,13 +37,12 @@ public class DataAction {
      * @return
      */
     @RequestMapping("dataAllList.action")
-    public ModelAndView dataAllList(HttpSession session,
-            @RequestParam(defaultValue = "1") int page,
+    public ModelAndView dataAllList(@RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size) {
         ModelAndView mv = new ModelAndView("data/data_list");
         Page pager = new Page(page, size);
         PageList<DataFile> dataList = dataService.dataAllList(pager,
-                getSessionUserId(session));
+                ConstantsData.getLoginUserId());
         mv.addObject("dataList", dataList);
         return mv;
     }
@@ -67,9 +64,7 @@ public class DataAction {
      * @return
      */
     @RequestMapping("dataList.action")
-    public ModelAndView dataList(
-            HttpSession session,
-            @RequestParam(defaultValue = "1") int page,
+    public ModelAndView dataList(@RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size, String condition,
             @RequestParam(defaultValue = "0") int sort,
             @RequestParam(defaultValue = "desc") String sortDateType,
@@ -77,14 +72,10 @@ public class DataAction {
         ModelAndView mv = new ModelAndView("data/data_list");
         Page pager = new Page(page, size);
         PageList<DataFile> dataList = dataService.dataLists(pager,
-                getSessionUserId(session), condition, sort, sortDateType,
+                ConstantsData.getLoginUserId(), condition, sort, sortDateType,
                 sortNameType);
         mv.addObject("dataList", dataList);
         return mv;
     }
 
-    public Integer getSessionUserId(HttpSession session) {
-        User user = (User) session.getAttribute(Constants.SESSION_LOGIN_USER);
-        return user != null ? user.getUserId() : null;
-    }
 }

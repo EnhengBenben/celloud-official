@@ -6,9 +6,9 @@ function CreateScript(file){
 	document.body.appendChild(new_element);
 } 
 /**
- * 百度统计
+ * 加载js百度统计
  */
-CreateScript("plugins/baidu.js");
+document.write("<script src='plugins/baidu.js'><\/script>");
 $(document).ready(function(){
 	var wid =$(window).width();
 	var per =(1-(553/wid))*50; 
