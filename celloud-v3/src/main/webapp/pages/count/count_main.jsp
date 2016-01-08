@@ -16,6 +16,7 @@
   <div class="row">
     <div class="col-xs-12">
      <div class="mainpage" id="appMain">
+     <!--  
        <div class="y-row operation-serve box box-success"  data-spm="16">
 		  <c:if test="${session.companyId==6 }">
 		    <div class="info">
@@ -44,6 +45,21 @@
 	       </div>
 	     </div>
 	  </div>
+	  -->
+	  <div class="y-row operation-serve box box-success" data-spm="16">
+					<ul id="userOperaUl">
+						<li class="active" id="systeminfoTab">
+							<a href="javascript:showSysInfo()">系统统计</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="y-row" style="padding: 20px 10px; background-color: #fff;" data-spm="17">
+					<div class="common-normal common-slide common-normals" id="sys_count_div">
+					<jsp:include page="count_system.jsp"></jsp:include>
+					</div>
+				</div>
+			</div>
     </div>
   </div><!--/.row-->
 </section><!-- /.content -->

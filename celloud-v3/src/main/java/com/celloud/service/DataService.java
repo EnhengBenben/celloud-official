@@ -87,4 +87,11 @@ public interface DataService {
      */
     PageList<DataFile> dataLists(Page page, Integer userId, String condition,
             int sort, String sortDateType, String sortNameType);
+	/**
+	 * 查询用户的文件数量与运行的文件数量
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public Map<String, String> countUserRunFileNum(Integer userId);
 }

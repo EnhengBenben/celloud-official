@@ -46,4 +46,8 @@ public class ReportServiceImpl implements ReportService {
         System.out.println("【Service】 time: " + (e - s));
         return new PageList<>(pager, list);
     }
+    @Override
+	public List<Map<String, String>> countAppRunNum(Integer userId) {
+		return reportMapper.countAppRunNumByUserId(userId);
+    }
 }

@@ -237,4 +237,8 @@
 	
 	order by p.create_date desc
   </select>
+    <!-- 根据用户ID统计该用户各APP的运行次数 -->
+  <select id="countAppRunNumByUserId" resultType="map">
+    select r.app_id,(select app_name from tb_app where app_id = r.app_id)as app_name,count(r.report_id) from tb_report r where r.flag =0 and r.user_id = ${userId}  group by r.app_id
+  </select>
 </mapper>
