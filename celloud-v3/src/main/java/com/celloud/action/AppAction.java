@@ -1,11 +1,13 @@
 package com.celloud.action;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,14 +46,6 @@ public class AppAction {
     @Resource
     private ScreenService screenService;
 
-    @ResponseBody
-    @RequestMapping("appByFormat")
-    public List<App> getAppByFormat(String condition) {
-        Integer userId = ConstantsData.getLoginUserId();
-        List<App> appList = appService.getAppsByFormat(Integer.parseInt(condition),
-                userId);
-        return appList;
-    }
 
     @RequestMapping("toAppStore")
     public ModelAndView toAppStore() {
@@ -145,12 +139,17 @@ public class AppAction {
 
     @ResponseBody
     @RequestMapping("addApp")
-    public Object userAddApp(Integer paramId) {
+    public Object userAddApp(Integer paramId, HttpServletResponse response) {
         log.info("用户{}添加APP{}", ConstantsData.getLoginUserName(), paramId);
         Integer userId = ConstantsData.getLoginUserId();
         Integer resultInt = appService.userAddApp(userId, paramId);
         if (resultInt > 0) {
-            return appService.getMyAppList(userId);
+            try {
+                response.sendRedirect("myApps");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return "";
         } else {
             return resultInt;
         }
@@ -158,12 +157,17 @@ public class AppAction {
 
     @ResponseBody
     @RequestMapping("removeApp")
-    public Object userRemoveApp(Integer paramId) {
+    public Object userRemoveApp(Integer paramId, HttpServletResponse response) {
         log.info("用户{}取消添加APP{}", ConstantsData.getLoginUserName(), paramId);
         Integer userId = ConstantsData.getLoginUserId();
         Integer resultInt = appService.userRemoveApp(userId, paramId);
         if (resultInt > 0) {
-            return appService.getMyAppList(userId);
+            try {
+                response.sendRedirect("myApps");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return "";
         } else {
             return resultInt;
         }

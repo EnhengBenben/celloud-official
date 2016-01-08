@@ -23,10 +23,10 @@
 			  	  <c:otherwise>
 			  	    <c:choose>
 				  	  <c:when test="${app.isAdded==0 }">
-					    <a class="btn btn-celloud-success btn-flat" href="javascript:void(0);" onclick="addApp(${app.appId })" id="toAddApp"><i class="fa fa-plus"></i>&nbsp;添加</a>
+					    <a class="btn btn-celloud-success btn-flat" href="javascript:void(0);" onclick="appStore.addApp(${app.appId });" id="toAddApp"><i class="fa fa-plus"></i>&nbsp;添加</a>
 				  	  </c:when>
 				  	  <c:otherwise>
-				  	    <a class="btn btn-celloud-close btn-flat" href="javascript:void(0);" onclick="removeApp(${app.appId })" id="toAddApp"><i class="fa fa-minus"></i>&nbsp;取消添加</a>
+				  	    <a class="btn btn-celloud-close btn-flat" href="javascript:void(0);" onclick="appStore.removeApp(${app.appId });" id="toAddApp"><i class="fa fa-minus"></i>&nbsp;取消添加</a>
 				  	  </c:otherwise>
 				    </c:choose>
 			  	  </c:otherwise>
@@ -45,8 +45,8 @@
   <div class="link">
     <div class="inner-link">
       <ul id="toAppMoreDetailUl">
-        <li class="select" style="border-left:0;" id="toAppIntro" onclick="toAppMoreDetail('toAppIntro')"><a href="#1">产品介绍</a></li>
-        <li style="border-right: 0;" class="" id="toAppScreeen" onclick="toAppMoreDetail('toAppScreeen')"><a href="#2">报告截图</a></li>
+        <li class="select" style="border-left:0;" id="toAppIntro" onclick="appStore.toAppMoreDetail('toAppIntro')"><a href="#1">产品介绍</a></li>
+        <li style="border-right: 0;" class="" id="toAppScreeen" onclick="appStore.toAppMoreDetail('toAppScreeen')"><a href="#2">报告截图</a></li>
       </ul>
     </div>
   </div>

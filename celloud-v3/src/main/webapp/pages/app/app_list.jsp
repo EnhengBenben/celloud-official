@@ -5,7 +5,7 @@
     <div class="list-left">分类方式：</div>
     <div class="list-right list-kind-right">
       <c:forEach items="${pclassifys }" var="pc">
-	    <a href="javascript:toMoreApp(${pc.classifyId },0,1,0)" class="linkage<c:if test='${pc.classifyId==classifyPid ||pc.classifyId==classifyId}'> current</c:if>" id="pid${pc.classifyId }">${pc.classifyName }</a>
+	    <a href="javascript:appStore.toMoreApp(${pc.classifyId },0,1,0)" class="linkage<c:if test='${pc.classifyId==classifyPid ||pc.classifyId==classifyId}'> current</c:if>" id="pid${pc.classifyId }">${pc.classifyName }</a>
       </c:forEach>
     </div>
   </div>
@@ -15,9 +15,9 @@
 	    <li class="J_single" data-spm="2">
 	      <div class="list-left">分类详细：</div>
 	      <div class="list-right">
-	        <a href="javascript:toMoreApp(${classifyPid },0,1,0)" <c:if test='${classifyId==0 }'>class="current"</c:if> id="sid0">全部</a>
+	        <a href="javascript:appStore.toMoreApp(${classifyPid },0,1,0)" <c:if test='${classifyId==0 }'>class="current"</c:if> id="sid0">全部</a>
 	        <c:forEach items="${sclassifys }" var="sc">
-	          <a <c:if test='${sc.classifyId==classifyId }'>class="current"</c:if> href="javascript:toMoreApp(${sc.classifyPid },${sc.classifyId },1,1)" id="sid${sc.classifyId }">${sc.classifyName }</a>
+	          <a <c:if test='${sc.classifyId==classifyId }'>class="current"</c:if> href="javascript:appStore.toMoreApp(${sc.classifyPid },${sc.classifyId },1,1)" id="sid${sc.classifyId }">${sc.classifyName }</a>
 	        </c:forEach>
 	      </div>
 	    </li>
@@ -33,7 +33,7 @@
   </div>
   <ul class="sort-list" data-spm="202" id="sort-listUl">
     <li class="current" id="defaultSort">
-      <a href="javascript:toMoreApp(${classifyPid },${classifyId },1,${classifyFloor });" id="defaultSort">默认排序</a>
+      <a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },1,${classifyFloor });" id="defaultSort">默认排序</a>
     </li>
     <li class="" data-spm="1" id="sortByCreateDate">
       <a target="_self" href="javascript:void(0);" id="sortByCreateDate">上线时间<i class="down"></i></a>
@@ -57,7 +57,7 @@
 <!-- 		              <font id="price_unit_cmjz000559">￥</font> -->
 <!-- 		              <span class="sync_price" id="price_cmjz000559" code="cmjz000559" servicepackage="" inquerytype="cloudmarket">免费</span> -->
 		            </p>
-		            <a class="xq" href="javascript:toAppDetail(${app.appId })" style="display: none;">查看详情</a>
+		            <a class="xq" href="javascript:appStore.toAppDetail(${app.appId })" style="display: none;">查看详情</a>
 		          </div>
 		          <div class="box-star">
 		            <div class="unlinedate"> 上线时间：
@@ -72,7 +72,7 @@
 		          </div>
 		          <div class="box-info-wrap">
 		            <div class="box-pic" <c:if test="${status.first}"> data-step="2" data-intro="" data-position="right" data-img="appDetail.png" </c:if>>
-		              <a href="javascript:toAppDetail(${app.appId })">
+		              <a href="javascript:appStore.toAppDetail(${app.appId })">
 		                <img alt="产品logo" src="<%=request.getContextPath()%>/images/app/${app.pictureName}">
 		              </a>
 		            </div>
@@ -104,12 +104,12 @@
 		<ul class="pages">
 	    	<!-- 显示prev -->
 	        <c:if test="${appPageList.page.hasPrev}">
-				<li><a href="javascript:toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage-1 },${classifyFloor })">&lt;</a></li>
+				<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage-1 },${classifyFloor })">&lt;</a></li>
 			</c:if>
 			<!-- 显示第一页 -->
 			<c:choose>
 			  <c:when test="${appPageList.page.currentPage==1}"><li class="active"><a href="#">1</a></li></c:when>
-			  <c:otherwise><li><a href="javascript:toMoreApp(${classifyPid },${classifyId },1,${classifyFloor })">1</a></li></c:otherwise>
+			  <c:otherwise><li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },1,${classifyFloor })">1</a></li></c:otherwise>
 			</c:choose>
 			
 			<c:if test="${appPageList.page.currentPage>4&&appPageList.page.totalPage>10}">
@@ -118,56 +118,56 @@
 			<c:choose>
 			  <c:when test="${appPageList.page.totalPage-appPageList.page.currentPage>=7}">
 				<c:if test="${appPageList.page.currentPage==3}">
-					<li><a href="javascript:toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage-1 },${classifyFloor })">${appPageList.page.currentPage-1 }</a></li>
+					<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage-1 },${classifyFloor })">${appPageList.page.currentPage-1 }</a></li>
 				</c:if>
 				<c:if test="${appPageList.page.currentPage==4}">
-					<li><a href="javascript:toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage-2 },${classifyFloor })">${appPageList.page.currentPage-2 }</a></li>
+					<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage-2 },${classifyFloor })">${appPageList.page.currentPage-2 }</a></li>
 				</c:if>
 				<c:if test="${appPageList.page.currentPage>3}">
-					<li><a href="javascript:toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage-1 },${classifyFloor })">${appPageList.page.currentPage-1 }</a></li>
+					<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage-1 },${classifyFloor })">${appPageList.page.currentPage-1 }</a></li>
 				</c:if>
 				<c:if test="${appPageList.page.currentPage>1&&appPageList.page.currentPage<appPageList.page.totalPage}">
 					<li class="active"><a href="#">${appPageList.page.currentPage }</a></li>
 				</c:if>
 				<c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>1}">
-					<li><a href="javascript:toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+1 },${classifyFloor })">${appPageList.page.currentPage+1 }</a></li>
+					<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+1 },${classifyFloor })">${appPageList.page.currentPage+1 }</a></li>
 				</c:if>
 				<c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>2}">
-					<li><a href="javascript:toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+2 },${classifyFloor })">${appPageList.page.currentPage+2 }</a></li>
+					<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+2 },${classifyFloor })">${appPageList.page.currentPage+2 }</a></li>
 				</c:if>
 				<c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>3}">
-					<li><a href="javascript:toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+3 })">${appPageList.page.currentPage+3 }</a></li>
+					<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+3 })">${appPageList.page.currentPage+3 }</a></li>
 				</c:if>
 				<c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>4}">
-					<li><a href="javascript:toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+4 })">${appPageList.page.currentPage+4 }</a></li>
+					<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+4 })">${appPageList.page.currentPage+4 }</a></li>
 				</c:if>
 				<c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>5}">
-					<li><a href="javascript:toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+5 })">${appPageList.page.currentPage+5 }</a></li>
+					<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+5 })">${appPageList.page.currentPage+5 }</a></li>
 				</c:if>
 				<c:if test="${appPageList.page.currentPage<4}">
 					<c:if test="%{appPageList.page.totalPage-appPageList.page.currentPage>6}">
-						<li><a href="javascript:toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+6 })">${appPageList.page.currentPage+6 }</a></li>
+						<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+6 })">${appPageList.page.currentPage+6 }</a></li>
 					</c:if>
 				</c:if>
 				<c:choose>
 				  <c:when test="${appPageList.page.currentPage==1}">
 				    <c:if test="%{appPageList.page.totalPage-appPageList.page.currentPage>7}">
-						<li><a href="javascript:toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+7 },${classifyFloor })">${appPageList.page.currentPage+7 }</a></li>
+						<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+7 },${classifyFloor })">${appPageList.page.currentPage+7 }</a></li>
 					</c:if>
 					<c:if test="%{appPageList.page.totalPage-appPageList.page.currentPage>8}">
-						<li><a href="javascript:toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+8 },${classifyFloor })">${appPageList.page.currentPage+8 }</a></li>
+						<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+8 },${classifyFloor })">${appPageList.page.currentPage+8 }</a></li>
 					</c:if>
 				  </c:when>
 				  <c:otherwise>
 				  	<c:choose>
 					  <c:when test="${appPageList.page.currentPage==2}">
 					    <c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>7}">
-							<li><a href="javascript:toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+7 },${classifyFloor })">${appPageList.page.currentPage+7 }</a></li>
+							<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+7 },${classifyFloor })">${appPageList.page.currentPage+7 }</a></li>
 						</c:if>
 					  </c:when>
 					  <c:otherwise>
 					    <c:if test="${appPageList.page.currentPage>4 && (appPageList.page.totalPage-appPageList.page.currentPage>6)}">
-							<li><a href="javascript:toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+6 },${classifyFloor })">${appPageList.page.currentPage+6 }</a></li>
+							<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+6 },${classifyFloor })">${appPageList.page.currentPage+6 }</a></li>
 						</c:if>
 					  </c:otherwise>
 					</c:choose>
@@ -183,7 +183,7 @@
 							<li class="active"><a href="#">${step }</a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="javascript:toMoreApp(${classifyPid },${classifyId },${step },${classifyFloor })">${step }</a></li>
+							<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${step },${classifyFloor })">${step }</a></li>
 						</c:otherwise>
 				      </c:choose>
 					</c:forEach>
@@ -195,7 +195,7 @@
 							<li class="active"><a href="#">${step }</a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="javascript:toMoreApp(${classifyPid },${classifyId },${step },${classifyFloor })">${step }</a></li>
+							<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${step },${classifyFloor })">${step }</a></li>
 						</c:otherwise>
 					  </c:choose>
 					</c:forEach>
@@ -212,12 +212,12 @@
 			  </c:when>
 			  <c:otherwise>
 				<c:if test="${appPageList.page.totalPage>1}">	
-				  <li><a href="javascript:toMoreApp(${classifyPid },${classifyId },${appPageList.page.totalPage },${classifyFloor })">${appPageList.page.totalPage }</a></li>
+				  <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.totalPage },${classifyFloor })">${appPageList.page.totalPage }</a></li>
 				</c:if>
 			  </c:otherwise>
 			</c:choose>
 			<c:if test="${appPageList.page.hasNext}">
-				<li><a href="javascript:toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+1 },${classifyFloor })">&gt;</a></li>
+				<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+1 },${classifyFloor })">&gt;</a></li>
 			</c:if>
 			<li>
 				共${appPageList.page.totalPage }页&nbsp;|&nbsp;合计${appPageList.page.rowCount }条
