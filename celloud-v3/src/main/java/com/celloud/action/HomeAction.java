@@ -135,9 +135,9 @@ public class HomeAction {
         return "download";
     }
 
-    @RequestMapping("joinUs.html")
+    @RequestMapping("join_us.html")
     public String joinUs() {
-        return "joinUs";
+        return "join_us";
     }
 
     @RequestMapping("forgot.html")
