@@ -295,3 +295,14 @@ function showUser(){
     $("#accountManage").addClass('active');
 	$("#mainDIV").load("user/info");
 }
+/**
+ * 问题反馈(工单)
+ */
+function showFeedback(){
+	$("#uploadDIV").css("display","none");
+	$("#mainDIV").css("display","");
+	//为右上角个人信息链接过来增加active样式
+	$('.treeview').removeClass("active");
+    $("#feedbackManage").addClass('active');
+	$("#mainDIV").load("feedback/main");
+}
