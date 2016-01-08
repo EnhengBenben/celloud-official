@@ -61,4 +61,10 @@ public interface ReportService {
 	 * @return
 	 */
 	public List<Map<String, String>> countAppRunNum(Integer userId);
+	/**
+	 * 系统统计业务
+	 * @param userId
+	 * @return
+	 */
+	public Map<String,Object> systemCount(Integer userId);
 }

@@ -1,11 +1,8 @@
 package com.celloud.action;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.Resource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -66,8 +63,7 @@ public class CountAction {
 	@RequestMapping("fileMonthCount")
 	public List<Map<String, String>> fileMonthCount() {
 		Integer userId = ConstantsData.getLoginUserId();
-		List<Map<String, String>> monthData = dataService.countData(userId,
-				TimeState.MONTH);
+		List<Map<String, String>> monthData = dataService.countData(userId, TimeState.MONTH);
 		return monthData;
 	}
 
@@ -80,8 +76,7 @@ public class CountAction {
 	@RequestMapping("fileSizeMonthCount")
 	public List<Map<String, String>> fileSizeMonthCount() {
 		Integer userId = ConstantsData.getLoginUserId();
-		List<Map<String, String>> monthData = dataService.sumData(userId,
-				TimeState.MONTH);
+		List<Map<String, String>> monthData = dataService.sumData(userId, TimeState.MONTH);
 		return monthData;
 	}
 
@@ -94,8 +89,7 @@ public class CountAction {
 	@RequestMapping("fileDayCount")
 	public List<Map<String, String>> fileDayCount() {
 		Integer userId = ConstantsData.getLoginUserId();
-		List<Map<String, String>> dayData = dataService.countData(userId,
-				TimeState.DAY);
+		List<Map<String, String>> dayData = dataService.countData(userId, TimeState.DAY);
 		return dayData;
 	}
 
@@ -108,8 +102,7 @@ public class CountAction {
 	@RequestMapping("fileSizeDayCount")
 	public List<Map<String, String>> fileSizeDayCount() {
 		Integer userId = ConstantsData.getLoginUserId();
-		List<Map<String, String>> dayData = dataService.sumData(userId,
-				TimeState.DAY);
+		List<Map<String, String>> dayData = dataService.sumData(userId, TimeState.DAY);
 		return dayData;
 	}
 
@@ -122,8 +115,7 @@ public class CountAction {
 	@RequestMapping("reportMonthCount")
 	public List<Map<String, String>> reportMonthCount() {
 		Integer userId = ConstantsData.getLoginUserId();
-		List<Map<String, String>> dayData = reportService.countReport(userId,
-				TimeState.MONTH);
+		List<Map<String, String>> dayData = reportService.countReport(userId, TimeState.MONTH);
 		return dayData;
 	}
 
@@ -136,8 +128,7 @@ public class CountAction {
 	@RequestMapping("reportDayCount")
 	public List<Map<String, String>> reportDayCount() {
 		Integer userId = ConstantsData.getLoginUserId();
-		List<Map<String, String>> dayData = reportService.countReport(userId,
-				TimeState.DAY);
+		List<Map<String, String>> dayData = reportService.countReport(userId, TimeState.DAY);
 		return dayData;
 	}
 
@@ -150,8 +141,7 @@ public class CountAction {
 	@RequestMapping("appMonthCount")
 	public List<Map<String, String>> appMonthCount() {
 		Integer userId = ConstantsData.getLoginUserId();
-		List<Map<String, String>> dayData = appService.countMyApp(userId,
-				TimeState.MONTH);
+		List<Map<String, String>> dayData = appService.countMyApp(userId, TimeState.MONTH);
 		return dayData;
 	}
 
@@ -164,8 +154,7 @@ public class CountAction {
 	@RequestMapping("appDayCount")
 	public List<Map<String, String>> appDayCount() {
 		Integer userId = ConstantsData.getLoginUserId();
-		List<Map<String, String>> dayData = appService.countMyApp(userId,
-				TimeState.DAY);
+		List<Map<String, String>> dayData = appService.countMyApp(userId, TimeState.DAY);
 		return dayData;
 	}
 
@@ -177,43 +166,8 @@ public class CountAction {
 	@ResponseBody
 	@RequestMapping("systemCount")
 	public Map<String, Object> systemCount() {
-		Map<String, Object> map = new HashMap<String, Object>();
 		Integer userId = ConstantsData.getLoginUserId();
-		List<Map<String, String>> monthData = dataService.countData(userId,
-				TimeState.MONTH);
-		List<Map<String, String>> dayData = dataService.countData(userId,
-				TimeState.DAY);
-		List<Map<String, String>> monthSize = dataService.sumData(userId,
-				TimeState.MONTH);
-		List<Map<String, String>> monthReport = reportService.countReport(
-				userId, TimeState.MONTH);
-		List<Map<String, String>> dayReport = reportService.countReport(userId,
-				TimeState.DAY);
-		List<Map<String, String>> dayApp = appService.countMyApp(userId,
-				TimeState.MONTH);
-		List<Map<String, String>> monthApp = appService.countMyApp(userId,
-				TimeState.DAY);
-
-		// 用户上传数据
-		Long size = dataService.sumData(userId);
-
-		// 已运行、未运行
-		Map<String, String> fileNum = dataService.countUserRunFileNum(userId);
-		// 已添加App使用次数
-		List<Map<String, String>> appRum = reportService.countAppRunNum(userId);
-
-		map.put("monthData", monthData);
-		map.put("dayData", dayData);
-		map.put("monthSize", monthSize);
-
-		map.put("monthReport", monthReport);
-		map.put("dayReport", dayReport);
-		map.put("dayApp", dayApp);
-		map.put("monthApp", monthApp);
-		map.put("appRum", appRum);
-		map.put("size", size);
-		map.put("fileNum", fileNum);
-
-		return map;
+		return reportService.systemCount(userId);
+		
 	}
 }

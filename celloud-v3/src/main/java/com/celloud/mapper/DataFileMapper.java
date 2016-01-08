@@ -134,4 +134,10 @@ public interface DataFileMapper {
 	 * @return {"fileNum":"","runNum":""}上传的文件数量，有多少文件未运行
 	 */
 	public Map<String, String> countFileNumByUserId(@Param("userId") Integer userId);
+	/**
+	 *根据用户编号,统计各周的数据
+	 * @param userId
+	 * @return
+	 */
+	public List<Map<String,String>> countDataFileWeek(@Param("userId")Integer userId);
 }

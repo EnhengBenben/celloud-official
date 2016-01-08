@@ -79,4 +79,10 @@ public class DataServiceImpl implements DataService {
 	public Map<String, String> countUserRunFileNum(Integer userId) {
 		return dataFileMapper.countFileNumByUserId(userId);
 	}
+
+	@Override
+	public List<Map<String, String>> countDataFile(Integer userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

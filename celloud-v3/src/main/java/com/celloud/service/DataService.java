@@ -94,4 +94,12 @@ public interface DataService {
 	 * @return
 	 */
 	public Map<String, String> countUserRunFileNum(Integer userId);
+	
+	/**
+	 *根据用户编号,统计各周的数据
+	 * @param userId
+	 * @return
+	 */
+	public List<Map<String,String>> countDataFile(Integer userId);
+	
 }
