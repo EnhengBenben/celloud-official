@@ -29,6 +29,7 @@
     <result column="company_Name" property="companyName" jdbcType="VARCHAR" />
     <result column="is_add" property="isAdded" jdbcType="VARCHAR" />
     <result column="classifyNames" property="classifyNames" jdbcType="VARCHAR" />
+    <result column="app_doc" property="appDoc" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     app_id, app_name, english_name, address, picture_name, create_date, intro, description, 
