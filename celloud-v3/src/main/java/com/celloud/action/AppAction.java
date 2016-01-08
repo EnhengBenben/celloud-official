@@ -105,8 +105,7 @@ public class AppAction {
             floor = 1;
             classifyPid = ClassifyFloor.js;
         }
-        PageList<App> appPageList = appService.getAppPageListByClassify(cid, floor,
- userId, condition, type, pager);
+        PageList<App> appPageList = appService.getAppPageListByClassify(cid, floor,userId, condition, type, pager);
         mv.addObject("pclassifys", pclassifys);
         mv.addObject("appPageList", appPageList);
         mv.addObject("classifyId", classifyId);
