@@ -70,4 +70,6 @@ public interface ReportMapper {
             @Param("userId") Integer userId, Page pager,
             @Param("condition") String condition, @Param("start") String start,
             @Param("end") String end, @Param("appId") Integer appId);
+	public List<Map<String, String>> countAppRunNumByUserId(@Param("userId") Integer userId);
+
 }

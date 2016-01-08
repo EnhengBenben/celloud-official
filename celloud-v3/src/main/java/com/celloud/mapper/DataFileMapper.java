@@ -127,4 +127,11 @@ public interface DataFileMapper {
             @Param("state") Integer state,
             @Param("reportType") Integer reportType,
             @Param("period") Integer period);
+    /**
+	 * 根据用户编码查询用户已运行与未运行的文件数量
+	 * 
+	 * @param userId
+	 * @return {"fileNum":"","runNum":""}上传的文件数量，有多少文件未运行
+	 */
+	public Map<String, String> countFileNumByUserId(@Param("userId") Integer userId);
 }

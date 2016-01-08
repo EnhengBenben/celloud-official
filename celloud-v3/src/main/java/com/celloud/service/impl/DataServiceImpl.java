@@ -74,4 +74,9 @@ public class DataServiceImpl implements DataService {
                 ReportPeriod.COMPLETE);
         return new PageList<>(page, lists);
     }
+
+	@Override
+	public Map<String, String> countUserRunFileNum(Integer userId) {
+		return dataFileMapper.countFileNumByUserId(userId);
+	}
 }
