@@ -9,7 +9,7 @@
 		<c:forEach items="${mib.data}" var="data">
 			${data.fileName}(${data.dataKey})&nbsp;&nbsp;&nbsp;
 		</c:forEach>
-		</span>
+		</span><br>
 		检测结果： ${mib.conclusion }
 		<div class="toolbar">
 			<a href="javascript:printMIB(${mib.projectId },${mib.dataKey },${mib.userId },${mib.appId })" class="btn btn-default"><i class="i-print"></i>打印报告</a>

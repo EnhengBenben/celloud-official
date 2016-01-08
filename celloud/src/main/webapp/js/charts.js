@@ -64,7 +64,7 @@ $.reportChar.draw = {
     	    },
     	    tooltip : {
     	        show: true,
-    	        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    	        formatter: "{a} <br/>{b}"
     	    },
     	    legend: {
     	        orient : 'vertical',
@@ -184,7 +184,7 @@ $.reportChar.circularGraphSeriesData=function(list){
 	          },
 	          {
 	              value:100-num_value,
-	              name:'invisible',
+	              name:data_name,
 	              itemStyle : o.placeHolderStyle
 	          }
 	      ]
