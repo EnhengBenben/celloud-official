@@ -17,7 +17,7 @@ public class Project {
 
     private Integer state;
 
-    private Integer share;
+    private Integer shareNum;
 
     private Integer dataNum;
 
@@ -79,12 +79,13 @@ public class Project {
         this.state = state;
     }
 
-    public Integer getShare() {
-        return share;
+
+    public Integer getShareNum() {
+        return shareNum;
     }
 
-    public void setShare(Integer share) {
-        this.share = share;
+    public void setShareNum(Integer shareNum) {
+        this.shareNum = shareNum;
     }
 
     public Integer getDataNum() {

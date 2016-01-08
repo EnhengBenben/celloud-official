@@ -36,9 +36,6 @@ $.ajaxSetup ({
 			});
 		}
 		function initReportDetail(){
-//			spinnerTotal = new Spinner(opts);
-//			var target = document.getElementById('reportLoading');
-//			spinnerTotal.spin(target);
 			submitSearch();
 			// 初始化高级检索app列表
 			var _num = 0;
@@ -96,11 +93,11 @@ $.ajaxSetup ({
 		}
 		
 		//删除共享来的项目报告
-		function cancelProjectShare(projectId,userId){
+		function cancelProjectShare(projectId){
 			jConfirm("确定删除该分享来的项目报告吗？", '确认提示框', function(r) {
 				if(r){
-					$.get("project!cancelProjectShare",{"project.projectId":projectId,"userId":userId},function(response){
-						if(response==true){
+					$.get("project/deleteShare",{"projectId":projectId},function(response){
+						if(response){
 							currentPage = 1;
 							submitSearch();
 						}else{
@@ -1027,14 +1024,13 @@ $.ajaxSetup ({
 		        window.event.cancelBubble=true;
 		}
 		
-		/** 打开项目共享 （未共享）
+		/** 
+		* 打开项目共享 （未共享）
 		* proId：项目id
-		* owner：所有者id
 		* proName：项目名称
 		* fileCount：项目下文件数量
 		*/
-		function toShareModal(proId,owner,proName,fileCount){
-			$("#proOwnerHidden").val(owner);
+		function toShareModal(proId,proName,fileCount){
 			$("#shareProPrompt").html("");
 			$("#proIdHidden").val(proId);
 			$("#proNameSpan").html("项目名称：" + proName);
@@ -1082,7 +1078,6 @@ $.ajaxSetup ({
 		
 		//保存共享项目
 		function saveShareProject(){
-			var owner = $("#proOwnerHidden").val();
 			var proId = $("#proIdHidden").val();
 			var data = $("#proSel").select2("data");
 			var empty = false;
@@ -1100,29 +1095,20 @@ $.ajaxSetup ({
 			$.each(data,function(id,value){
 				userNames += value.text + ",";
 			});
-			if(owner!=""){
-				if(userNames.indexOf(owner, 0)!=-1){
-					$("#shareProPrompt").html("项目不能共享给项目的所有人！");
-					return;
-				}
-			}
 			if(userNames.substring(0, userNames.length-1)==sessionUserName||userNames.indexOf(sessionUserName, 0)!=-1){
 				$("#shareProPrompt").html("项目不能共享给自己！");
 				return;
 			}else{
-				$.get("projectJson_saveProjectShare.action",{"project.projectId":proId,"userNames":userNames},function(data){
-					if(data=="1"){
+				$.get("project/shareProject",{"projectId":proId,"userNames":userNames},function(data){
+					if(data==""){
 						$("#shareProjectModal").modal("hide");
 						submitSearch();
 						//发送邮件
-						$.get("projectJson_sendProShareEmail.action",{"userNames":userNames,"project.projectId":proId},function(result){
-							if(result==0){
-								jAlert("邮件发送失败！");
-							}
-						});
-					}else if(data=="2"){
-						$("#shareProjectModal").modal("hide");
-						submitSearch();
+//						$.get("projectJson_sendProShareEmail.action",{"userNames":userNames,"project.projectId":proId},function(result){
+//							if(result==0){
+//								jAlert("邮件发送失败！");
+//							}
+//						});
 					}else{
 						$("#shareProPrompt").html("<br/>" + data);
 					}

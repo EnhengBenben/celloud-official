@@ -299,7 +299,7 @@
 		AND
 		tb_user_find_pwd.md5=#{randomCode,jdbcType=VARCHAR}
 	</select>
-	<select id="getUserIdByName" resultMap="BaseResultMap">
+	<select id="getUserByName" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from tb_user
