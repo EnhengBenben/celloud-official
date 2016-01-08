@@ -1,11 +1,13 @@
 package com.celloud.action;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +37,6 @@ import com.celloud.service.ScreenService;
 @Controller
 @RequestMapping("app")
 public class AppAction {
-    private static final long serialVersionUID = 1L;
     Logger log = LoggerFactory.getLogger(AppAction.class);
     @Resource
     private AppService appService;
@@ -48,15 +49,6 @@ public class AppAction {
     @RequestMapping("getRanAPP")
     public List<Map<String, String>> getRanAPP() {
         return appService.getRanAPP(ConstantsData.getLoginUserId());
-    }
-
-    @ResponseBody
-    @RequestMapping("appByFormat")
-    public List<App> getAppByFormat(String condition) {
-        Integer userId = ConstantsData.getLoginUserId();
-        List<App> appList = appService.getAppsByFormat(Integer.parseInt(condition),
-                userId);
-        return appList;
     }
 
     @RequestMapping("toAppStore")
@@ -117,8 +109,7 @@ public class AppAction {
             floor = 1;
             classifyPid = ClassifyFloor.js;
         }
-        PageList<App> appPageList = appService.getAppPageListByClassify(cid, floor,
- userId, condition, type, pager);
+        PageList<App> appPageList = appService.getAppPageListByClassify(cid, floor,userId, condition, type, pager);
         mv.addObject("pclassifys", pclassifys);
         mv.addObject("appPageList", appPageList);
         mv.addObject("classifyId", classifyId);
@@ -151,12 +142,17 @@ public class AppAction {
 
     @ResponseBody
     @RequestMapping("addApp")
-    public Object userAddApp(Integer paramId) {
+    public Object userAddApp(Integer paramId, HttpServletResponse response) {
         log.info("用户{}添加APP{}", ConstantsData.getLoginUserName(), paramId);
         Integer userId = ConstantsData.getLoginUserId();
         Integer resultInt = appService.userAddApp(userId, paramId);
         if (resultInt > 0) {
-            return appService.getMyAppList(userId);
+            try {
+                response.sendRedirect("myApps");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return "";
         } else {
             return resultInt;
         }
@@ -164,12 +160,17 @@ public class AppAction {
 
     @ResponseBody
     @RequestMapping("removeApp")
-    public Object userRemoveApp(Integer paramId) {
+    public Object userRemoveApp(Integer paramId, HttpServletResponse response) {
         log.info("用户{}取消添加APP{}", ConstantsData.getLoginUserName(), paramId);
         Integer userId = ConstantsData.getLoginUserId();
         Integer resultInt = appService.userRemoveApp(userId, paramId);
         if (resultInt > 0) {
-            return appService.getMyAppList(userId);
+            try {
+                response.sendRedirect("myApps");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return "";
         } else {
             return resultInt;
         }

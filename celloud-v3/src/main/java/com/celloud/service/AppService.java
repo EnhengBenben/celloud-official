@@ -41,16 +41,6 @@ public interface AppService {
      */
     public List<Map<String, String>> getRanAPP(Integer userId);
 
-    /**
-     * 根据数据类型查询APP列表
-     *
-     * @param formatId
-     * @param userId
-     * @return
-     * @author han
-     * @date 2016年1月5日 下午4:52:56
-     */
-    public List<App> getAppsByFormat(Integer formatId, Integer userId);
 
     /**
      * 根据app分类查询app列表

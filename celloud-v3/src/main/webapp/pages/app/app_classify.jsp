@@ -10,7 +10,7 @@
   	    	  <div class="y-row" style="padding-bottom: 20px;"  data-spm="17">
 	      		<div class="common-normal common-slide common-normals">
 	        	  <div class="normal-tit normal-title">
-	         		<p class="link"><a class="bc-a-tit" href="javascript:toMoreApp(${sc.classifyPid },${sc.classifyId },1,1)" title="" <c:if test="${scindex == 1}"> data-step="3" data-intro="" data-position="left" data-img="moreApp.png" </c:if> >获取更多&gt;</a></p>
+	         		<p class="link"><a class="bc-a-tit" href="javascript:appStore.toMoreApp(${sc.classifyPid },${sc.classifyId },1,1)" title="" <c:if test="${scindex == 1}"> data-step="3" data-intro="" data-position="left" data-img="moreApp.png" </c:if> >获取更多&gt;</a></p>
 	         		<h4>${sc.classifyName }</h4>
 	        	  </div>
 	        	  <div class="normal-slide">
@@ -24,13 +24,13 @@
 		                    	  <div class="detail">
 		                      		<div class="picbox">
 		                        	  <div class="pic">
-		                          		<p><a href="javascript:toAppDetail(${app.appId })"><img src="<%=request.getContextPath()%>/images/app/${app.pictureName}"></a></p>
+		                          		<p><a href="javascript:appStore.toAppDetail(${app.appId })"><img src="<%=request.getContextPath()%>/images/app/${app.pictureName}"></a></p>
 		                        	  </div>
 		                      		</div>
 		                      		<p class="appname">${app.appName }</p>
 		                      		<p class="company">${app.createDate }</p>
 		                    	  </div>
-		                    	  <div class="button" style="color: #ff6600"> <a href="javascript:toAppDetail(${app.appId })">查看详情<i class="fa fa-arrow-circle-o-right"></i></a> </div>
+		                    	  <div class="button" style="color: #ff6600"> <a href="javascript:appStore.toAppDetail(${app.appId })">查看详情<i class="fa fa-arrow-circle-o-right"></i></a> </div>
 		                    	  <span class="app_mark"></span>
 		                  		</li>
 					    	  </c:if>

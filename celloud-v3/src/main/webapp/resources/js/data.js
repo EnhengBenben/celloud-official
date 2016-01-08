@@ -93,4 +93,7 @@ function _init_data(){
 		$("#data-sort-date-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
 	}
   };
+  $.dataManager.run = function(){
+	  
+  };
 }
