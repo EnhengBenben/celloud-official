@@ -182,9 +182,9 @@ public class CountAction {
      * @date 2016-1-9 下午2:55:57
      */
     @ResponseBody
-    @RequestMapping("getHBVCount")
-    public String getHBVCount(Integer appId, String path) {
-        return reportService.getHBVCount(appId, path);
+    @RequestMapping("hbvCompare")
+    public String hbvCompare(Integer appId, String path) {
+        return reportService.hbvCompare(appId, path);
     }
 
     /**
@@ -196,8 +196,8 @@ public class CountAction {
      * @date 2016-1-9 下午3:16:01
      */
     @ResponseBody
-    @RequestMapping("getTBCount")
-    public String getTBCount(Integer appId, String path) {
+    @RequestMapping("tbCompare")
+    public String tbCompare(Integer appId, String path) {
         return FileTools.getLimitLines(path + appId, 1, 10);
     }
 
@@ -211,9 +211,9 @@ public class CountAction {
      * @date 2016-1-9 下午3:09:58
      */
     @ResponseBody
-    @RequestMapping("getEGFRCount")
-    public String getEGFRCount(Integer appId, String path, String length) {
-        return reportService.getEGFRCount(appId, path, length);
+    @RequestMapping("egfrCompare")
+    public String egfrCompare(Integer appId, String path, String length) {
+        return reportService.egfrCompare(appId, path, length);
     }
 
     /**
@@ -225,9 +225,9 @@ public class CountAction {
      * @date 2016-1-9 下午3:20:50
      */
     @ResponseBody
-    @RequestMapping("getHCVCount")
-    public String getHCVCount(Integer appId, String path) {
-        return reportService.getHCVCount(appId, path);
+    @RequestMapping("hcvCompare")
+    public String hcvCompare(Integer appId, String path) {
+        return reportService.hcvCompare(appId, path);
     }
 
     /**
@@ -240,8 +240,8 @@ public class CountAction {
      * @date 2016-1-9 下午3:27:25
      */
     @ResponseBody
-    @RequestMapping("getPGSCount")
-    public String getPGSCount(Integer appId, String path, String columns) {
-        return reportService.getPGSCount(appId, path, columns);
+    @RequestMapping("pgsCompare")
+    public String pgsCompare(Integer appId, String path, String columns) {
+        return reportService.pgsCompare(appId, path, columns);
     }
 }

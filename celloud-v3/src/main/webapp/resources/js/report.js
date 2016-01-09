@@ -669,7 +669,7 @@ $.ajaxSetup ({
 						}
 					}
 				});
-				$.get("count/getPGSCount",{"appId":appId,"columns":columns,"path":DATAPATH},function(data){
+				$.get("count/pgsCompare",{"appId":appId,"columns":columns,"path":DATAPATH},function(data){
 					var sp = data.split(";");
 					$("#charResult").html("");
 					for ( var i = 1; i < sp.length; i++) {
@@ -700,7 +700,7 @@ $.ajaxSetup ({
 				});
 			}
 			if(appId==80){
-				$.get("count/getHCVCount",{"appId":appId,"path":DATAPATH},function(data){
+				$.get("count/hcvCompare",{"appId":appId,"path":DATAPATH},function(data){
 						var div = $("<div id='char0' class='col-lg-6'></div>");
 						$("#charDiv").append(div);
 						var one = getCountValue("Subtype","nomal");
@@ -722,7 +722,7 @@ $.ajaxSetup ({
 				});
 			}
 			if(appId==82){
-				$.get("count/getHBVCount",{"appId":appId,"path":DATAPATH},function(data){
+				$.get("count/hbvCompare",{"appId":appId,"path":DATAPATH},function(data){
 					var div0 = $("<div id='char0' class='col-lg-12' style='max-width: 1000px;'></div>");
 					$("#charDiv").append(div0);
 					var sType = $("#snpType").html();
@@ -847,7 +847,7 @@ $.ajaxSetup ({
 				});
 			}
 			if(appId==90){
-				$.get("count/getTBCount",{"appId":appId,"path":DATAPATH},function(data){
+				$.get("count/tbCompare",{"appId":appId,"path":DATAPATH},function(data){
 						var div = $("<div id='char0' class='col-lg-6'></div>");
 						$("#charDiv").append(div);
 						var X = "[";
@@ -868,7 +868,7 @@ $.ajaxSetup ({
 				if(length==0 || isNaN(length)){
 					$("#charDiv").html("<p style=\"color: red;\">数据异常，没有同比结果</p>");
 				}else{  
-					$.get("count/getEGFRCount",{"appId":appId,"path":DATAPATH,"length":length},function(data){
+					$.get("count/egfrCompare",{"appId":appId,"path":DATAPATH,"length":length},function(data){
 							var div = $("<div id='char0' class='col-lg-6'></div>");
 							$("#charDiv").append(div);
 							var X = "[";

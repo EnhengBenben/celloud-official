@@ -157,7 +157,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 
     @Override
-    public String getHBVCount(Integer appId, String path) {
+    public String hbvCompare(Integer appId, String path) {
         List<String> list = FileTools.fileSearch(path, String.valueOf(appId),
                 "startWith");
         StringBuffer sb = new StringBuffer();
@@ -224,7 +224,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public String getEGFRCount(Integer appId, String path, String length) {
+    public String egfrCompare(Integer appId, String path, String length) {
         path = path + appId + "_" + length;
         if (FileTools.checkPath(path)) {
             return FileTools.getLimitLines(path, 1, 10);
@@ -233,7 +233,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public String getHCVCount(Integer appId, String path) {
+    public String hcvCompare(Integer appId, String path) {
         List<String> list = FileTools.fileSearch(path, String.valueOf(appId),
                 "startWith");
         StringBuffer sb = new StringBuffer();
@@ -247,7 +247,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public String getPGSCount(Integer appId, String path, String columns) {
+    public String pgsCompare(Integer appId, String path, String columns) {
         if (columns == null) {
             return null;
         }
