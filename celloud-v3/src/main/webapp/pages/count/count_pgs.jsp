@@ -22,8 +22,8 @@
   </thead>
   <tbody>
   <c:choose>
-  	<c:when test="${pgsList.size()>0}">
-  	  <c:forEach items="${pgsList }" var="pgs" varStatus="pgsSta">
+  	<c:when test="${list.size()>0}">
+  	  <c:forEach items="${list }" var="pgs" varStatus="pgsSta">
 	    <tr>
 	      <td align="center"><c:out value="${pgsSta.index}"/></td>
 	      <td align="center">${pgs.dataKey }</td>

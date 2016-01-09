@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.TimeState;
+import com.celloud.model.Pgs;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.ReportService;
@@ -243,5 +244,44 @@ public class CountAction {
     @RequestMapping("pgsCompare")
     public String pgsCompare(Integer appId, String path, String columns) {
         return reportService.pgsCompare(appId, path, columns);
+    }
+
+    /**
+     * HBV 统计
+     * 
+     * @return
+     * @date 2016-1-10 上午12:26:32
+     */
+    @RequestMapping("hbvCount")
+    public ModelAndView hbvCount() {
+        Integer userId = ConstantsData.getLoginUserId();
+        Map<String, Object> map = reportService.hbvCount(userId);
+        return new ModelAndView("count/count_hbv").addObject("map", map);
+    }
+
+    /**
+     * PGS 统计
+     * 
+     * @return
+     * @date 2016-1-10 上午12:44:21
+     */
+    @RequestMapping("pgsCount")
+    public ModelAndView pgsCount() {
+        Integer userId = ConstantsData.getLoginUserId();
+        List<Pgs> list = reportService.pgsCount(userId);
+        return new ModelAndView("count/count_pgs").addObject("list", list);
+    }
+
+    /**
+     * CMP 统计
+     * 
+     * @return
+     * @date 2016-1-10 上午1:00:07
+     */
+    @RequestMapping("cmpCount")
+    public ModelAndView cmpCount() {
+        Integer userId = ConstantsData.getLoginUserId();
+        Map<String, Object> map = reportService.cmpCount(userId);
+        return new ModelAndView("count/count_cmp").addObject("map", map);
     }
 }

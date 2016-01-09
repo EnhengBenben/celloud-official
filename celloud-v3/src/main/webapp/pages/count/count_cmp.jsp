@@ -1,8 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <table class="table_">
   <thead>
     <tr>
@@ -17,8 +14,8 @@
   </thead>
   <tbody>
   <c:choose>
-  	<c:when test="${cmpList.size()>0}">
-  	  <c:forEach items="${cmpList }" var="cmp" varStatus="cmpSta">
+  	<c:when test="${map.data.size()>0}">
+  	  <c:forEach items="${map.data }" var="cmp" varStatus="cmpSta">
 	    <tr>
 	      <td align="center">${cmp.dataKey }</td>
 	      <td align="center">${cmp.data[0].fileName }(${cmp.data[0].dataKey })</td>
@@ -44,7 +41,7 @@
   </c:choose>
   </tbody>
 </table>
-<input type="hidden" value="report3!download?fileName=${infos }" id="downUrl"></input>
+<input type="hidden" value="report3!download?fileName=${map.fileName }" id="downUrl"></input>
 <div class="modal modal-green-header" id="geneResultModal">
  <div class="modal-dialog">
   <div class="modal-content">

@@ -104,4 +104,14 @@ public interface UserService {
      */
     public User getUserByName(String username);
 
+    // TODO 返回值将来也许需要改成List<Integer>
+    /**
+     * 获取用户所属的大客户
+     * 
+     * @param userId
+     * @return
+     * @date 2016-1-9 下午10:35:29
+     */
+    public Integer getCompanyIdByUserId(Integer userId);
+
 }

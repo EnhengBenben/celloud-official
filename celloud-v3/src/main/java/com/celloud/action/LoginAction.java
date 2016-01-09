@@ -123,7 +123,8 @@ public class LoginAction {
             privateKey = (PrivateKey) session.getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
         }
         if (checked) {
-            addCookies(request, response, user.getUsername(), user.getPassword(), publicKey.getModulus());
+            addCookies(request, response, user.getUsername(),
+                    user.getPassword(), publicKey.getModulus());
         } else if (key.isExpires()) {
             rsaKeyService.deleteByModulus(publicKey.getModulus());
         }
@@ -142,6 +143,10 @@ public class LoginAction {
             saveRSAKey(publicKey, privateKey, loginUser);
         }
         session.removeAttribute(Constants.SESSION_RSA_PRIVATEKEY);
+        // 获取用户所属的大客户，决定是否有统计菜单
+        Integer companyId = userService.getCompanyIdByUserId(loginUser
+                .getUserId());
+        session.setAttribute("companyId", companyId);
         mv.setViewName("loading");
         return mv;
     }

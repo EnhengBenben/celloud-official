@@ -5,11 +5,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
@@ -23,12 +27,17 @@ import com.celloud.dao.ReportDao;
 import com.celloud.mapper.AppMapper;
 import com.celloud.mapper.DataFileMapper;
 import com.celloud.mapper.ReportMapper;
+import com.celloud.model.CmpReport;
+import com.celloud.model.DataFile;
+import com.celloud.model.GeneDetectionResult;
 import com.celloud.model.HBV;
 import com.celloud.model.Pgs;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.ReportService;
+import com.celloud.utils.ExcelUtil;
 import com.celloud.utils.FileTools;
+import com.celloud.utils.PropertiesUtil;
 
 /**
  * 报告接口 实现类
@@ -46,33 +55,38 @@ public class ReportServiceImpl implements ReportService {
     DataFileMapper dataMapper;
     @Resource
     AppMapper appMapper;
-   
+
     Logger log = Logger.getLogger(this.getClass());
 
     @Override
     public Integer countReport(Integer userId) {
-        return reportMapper.countReport(userId, DataState.ACTIVE, ReportType.PROJECT);
+        return reportMapper.countReport(userId, DataState.ACTIVE,
+                ReportType.PROJECT);
     }
 
     @Override
     public List<Map<String, String>> countReport(Integer userId, Integer time) {
-        return reportMapper.countReportByTime(userId, time, DataState.ACTIVE, ReportType.PROJECT);
+        return reportMapper.countReportByTime(userId, time, DataState.ACTIVE,
+                ReportType.PROJECT);
     }
 
     @Override
-    public PageList<Map<String, Object>> getReportPageList(Integer userId, Page pager, String condition, String start,
-            String end, Integer appId) {
+    public PageList<Map<String, Object>> getReportPageList(Integer userId,
+            Page pager, String condition, String start, String end,
+            Integer appId) {
         long s = System.currentTimeMillis();
         System.out.println("【Service】 start " + s);
-        List<Map<String, Object>> list = reportMapper.getReportList(userId, pager, condition, start, end, appId);
+        List<Map<String, Object>> list = reportMapper.getReportList(userId,
+                pager, condition, start, end, appId);
         long e = System.currentTimeMillis();
         System.out.println("【Service】 end " + e);
         System.out.println("【Service】 time: " + (e - s));
         return new PageList<>(pager, list);
     }
+
     @Override
-	public List<Map<String, String>> countAppRunNum(Integer userId) {
-		return reportMapper.countAppRunNumByUserId(userId);
+    public List<Map<String, String>> countAppRunNum(Integer userId) {
+        return reportMapper.countAppRunNumByUserId(userId);
     }
 
     @Override
@@ -110,51 +124,59 @@ public class ReportServiceImpl implements ReportService {
     public Pgs getPgsReport(String dataKey, Integer projectId, Integer appId) {
         return reportDao.getDataReport(Pgs.class, dataKey, projectId, appId);
     }
-	@Override
-	public Map<String, Object> systemCount(Integer userId) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		/***按月统计的每月上传的:数据量\数据大小\报告数量\APP运行次数***/
-		List<Map<String, String>> monthData = dataMapper.countDataByTime(userId, TimeState.MONTH,DataState.ACTIVE);
-		List<Map<String, String>> monthSize = dataMapper.sumDataByTime(userId, TimeState.MONTH,DataState.ACTIVE);
-		List<Map<String, String>> monthReport = reportMapper.countReportByTime(userId, TimeState.MONTH,DataState.ACTIVE, ReportType.DATA);
-		List<Map<String, String>> monthApp = appMapper.countMyAppByTime(userId, TimeState.MONTH,DataState.ACTIVE,DataState.ACTIVE);
-		/****按周统计每周上传:数据量\数据大小\报告数量\APP数量*****/
-		List<Map<String, String>> weekData =dataMapper.countDataFileWeek(userId);
-		List<Map<String, String>> weekReport =reportMapper.countReportWeekByUserId(userId);
-		List<Map<String, String>> weekApp = appMapper.countWeekByUserId(userId);
 
-		// 用户上传数据
-		Long size = dataMapper.sumData(userId,DataState.ACTIVE);
-		// 已运行、未运行
-		Map<String, String> fileNum = dataMapper.countFileNumByUserId(userId);
-		// 已添加App使用次数
-		List<Map<String, String>> appRum = reportMapper.countAppRunNumByUserId(userId);
+    @Override
+    public Map<String, Object> systemCount(Integer userId) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        /*** 按月统计的每月上传的:数据量\数据大小\报告数量\APP运行次数 ***/
+        List<Map<String, String>> monthData = dataMapper.countDataByTime(
+                userId, TimeState.MONTH, DataState.ACTIVE);
+        List<Map<String, String>> monthSize = dataMapper.sumDataByTime(userId,
+                TimeState.MONTH, DataState.ACTIVE);
+        List<Map<String, String>> monthReport = reportMapper.countReportByTime(
+                userId, TimeState.MONTH, DataState.ACTIVE, ReportType.DATA);
+        List<Map<String, String>> monthApp = appMapper.countMyAppByTime(userId,
+                TimeState.MONTH, DataState.ACTIVE, DataState.ACTIVE);
+        /**** 按周统计每周上传:数据量\数据大小\报告数量\APP数量 *****/
+        List<Map<String, String>> weekData = dataMapper
+                .countDataFileWeek(userId);
+        List<Map<String, String>> weekReport = reportMapper
+                .countReportWeekByUserId(userId);
+        List<Map<String, String>> weekApp = appMapper.countWeekByUserId(userId);
 
-		map.put("monthData", monthData);
-		map.put("weekData", weekData);
-		map.put("monthSize", monthSize);
+        // 用户上传数据
+        Long size = dataMapper.sumData(userId, DataState.ACTIVE);
+        // 已运行、未运行
+        Map<String, String> fileNum = dataMapper.countFileNumByUserId(userId);
+        // 已添加App使用次数
+        List<Map<String, String>> appRum = reportMapper
+                .countAppRunNumByUserId(userId);
 
-		map.put("monthReport", monthReport);
-		map.put("monthApp", monthApp);
-		map.put("appRum", appRum);
-		map.put("size", size);
-		map.put("weekReport", weekReport);
-		map.put("weekApp", weekApp);
-		map.put("fileNum", fileNum);
-		
-		log.info("monthData"+monthData.size());
-		log.info("monthSize"+monthSize.size());
-		log.info("monthReport"+monthReport.size());
-		log.info("monthApp"+monthApp.size());
-		log.info("appRum"+appRum.size());
-		log.info("appRum"+size);
-		log.info("fileNum"+fileNum.size());
-		log.info("weekData"+weekData.size());
-		log.info("weekReport"+weekReport.size());
-		log.info("weekApp"+weekApp.size());
+        map.put("monthData", monthData);
+        map.put("weekData", weekData);
+        map.put("monthSize", monthSize);
 
-		return map;
-	}
+        map.put("monthReport", monthReport);
+        map.put("monthApp", monthApp);
+        map.put("appRum", appRum);
+        map.put("size", size);
+        map.put("weekReport", weekReport);
+        map.put("weekApp", weekApp);
+        map.put("fileNum", fileNum);
+
+        log.info("monthData" + monthData.size());
+        log.info("monthSize" + monthSize.size());
+        log.info("monthReport" + monthReport.size());
+        log.info("monthApp" + monthApp.size());
+        log.info("appRum" + appRum.size());
+        log.info("appRum" + size);
+        log.info("fileNum" + fileNum.size());
+        log.info("weekData" + weekData.size());
+        log.info("weekReport" + weekReport.size());
+        log.info("weekApp" + weekApp.size());
+
+        return map;
+    }
 
     @Override
     public String hbvCompare(Integer appId, String path) {
@@ -283,5 +305,170 @@ public class ReportServiceImpl implements ReportService {
             }
         }
         return sb.toString();
+    }
+
+    @Override
+    public Map<String, Object> hbvCount(Integer userId) {
+        Map<String, Object> result = new HashMap<>();
+        // TODO 不应该在结果中去重，应该在查询时候去重
+        // 去重规则是，每个datakey只保留最近运行的那一次
+        // 1. 查询
+        List<HBV> hbvList = reportDao.getAppList(HBV.class, userId);
+        // 2.筛选
+        Map<String, HBV> map = new HashMap<String, HBV>();
+        for (int i = 0; i < hbvList.size(); i++) {
+            HBV hbv = hbvList.get(i);
+            String dataKey = hbv.getDataKey();
+            if (map.containsKey(dataKey)) {
+                HBV before = map.get(dataKey);
+                if (before.getCreateDate().getTime() < hbv.getCreateDate()
+                        .getTime()) {
+                    map.put(dataKey, hbv);
+                }
+            } else {
+                map.put(dataKey, hbv);
+            }
+        }
+        // 3. 排序
+        Map<Long, HBV> sort = new HashMap<>();
+        Long time[] = new Long[map.size()];
+        int count = 0;
+        for (Entry<String, HBV> hbv : map.entrySet()) {
+            long e = hbv.getValue().getCreateDate().getTime()
+                    + Long.parseLong((Math.random() * 1000 + "").split("\\.")[0]);
+            time[count] = e;
+            count++;
+            sort.put(e, hbv.getValue());
+        }
+        Arrays.sort(time);
+        // 4.按照排好的序列倒序取值
+        hbvList = new ArrayList<>();
+        for (int i = time.length - 1; i > -1; i--) {
+            hbvList.add(sort.get(time[i]));
+        }
+        // TODO 考虑前台下载时 js导出excel
+        long l = new Date().getTime();
+        String txt = String.valueOf(l + ".txt");
+        String fileName = String.valueOf(l + ".xls");
+        String path = PropertiesUtil.outputPath + txt;
+        String excelpath = PropertiesUtil.outputPath + fileName;
+        result.put("fileName", fileName);
+        result.put("data", hbvList);
+        FileTools.createFile(path);
+        FileTools
+                .appendWrite(
+                        path,
+                        "文件名\tI169T\tV173L\tL180M\tA181V/T\tT184A/G/S/I/L/F\tA194T\tS202G/I\tM204V\tN236T\tM250V/L/I\t序列\n");
+        for (HBV hbv : hbvList) {
+            StringBuffer line = new StringBuffer(hbv.getFileName())
+                    .append("\t");
+            if (hbv.getSite() == null) {
+                line.append("由于分析流程的升级，八月一日之前的分析结果无法提取到该信息，若需要请重新运行。");
+                for (int i = 0; i < 10; i++) {
+                    line.append("\t");
+                }
+            } else {
+                int site[] = { 169, 173, 180, 181, 184, 194, 202, 204, 236, 250 };
+                for (int i : site) {
+                    String w = hbv.getSite().get(i + "_wild");
+                    String m = hbv.getSite().get(i + "_mutation");
+                    if (m.contains("未检测到")) {
+                        line.append(w.substring(0, 1));
+                    } else {
+                        line.append(m.substring(0, 1));
+                    }
+                    line.append("\t");
+                }
+            }
+            line.append(hbv.getSeq()).append("\n");
+            FileTools.appendWrite(path, line.toString());
+        }
+        ExcelUtil.simpleTxtToExcel(path, excelpath, "count");
+        return result;
+    }
+
+    @Override
+    public List<Pgs> pgsCount(Integer userId) {
+        List<Pgs> pgsList = reportDao.getAppList(Pgs.class, userId);
+        // TODO 将mongodb中查询出来的日期回退8小时
+        // 要彻底解决此问题，需要
+        // 1.python插入时时间做处理
+        // 2.历史数据时间全部做处理
+        if (pgsList != null && pgsList.size() > 0) {
+            Calendar c = Calendar.getInstance();
+            for (Pgs p : pgsList) {
+                c.setTime(p.getUploadDate());
+                c.add(Calendar.HOUR_OF_DAY, -8);
+                p.setUploadDate(c.getTime());
+            }
+        }
+        return pgsList;
+    }
+
+    @Override
+    public Map<String, Object> cmpCount(Integer userId) {
+        Map<String, Object> result = new HashMap<>();
+        List<CmpReport> cmpList = reportDao.getAppList(CmpReport.class, userId);
+        Map<String, CmpReport> map = new HashMap<>();
+        for (int i = 0; i < cmpList.size(); i++) {
+            CmpReport cmp = cmpList.get(i);
+            String dataKey = cmp.getDataKey();
+            if (map.containsKey(dataKey)) {
+                CmpReport before = map.get(dataKey);
+                if (before.getCreateDate().getTime() < cmp.getCreateDate()
+                        .getTime()) {
+                    map.put(dataKey, cmp);
+                }
+            } else {
+                map.put(dataKey, cmp);
+            }
+        }
+        Map<Long, CmpReport> sort = new HashMap<>();
+        Long time[] = new Long[map.size()];
+        int count = 0;
+        for (Entry<String, CmpReport> cmp : map.entrySet()) {
+            long e = cmp.getValue().getCreateDate().getTime()
+                    + Long.parseLong((Math.random() * 1000 + "").split("\\.")[0]);
+            time[count] = e;
+            count++;
+            sort.put(e, cmp.getValue());
+        }
+        Arrays.sort(time);
+        cmpList = new ArrayList<>();
+        for (int i = time.length - 1; i > -1; i--) {
+            cmpList.add(sort.get(time[i]));
+        }
+        // TODO 考虑前台下载时 js导出excel
+        long l = new Date().getTime();
+        String txt = String.valueOf(l + ".txt");
+        String fileName = String.valueOf(l + ".xls");
+        String path = PropertiesUtil.outputPath + txt;
+        String excelpath = PropertiesUtil.outputPath + fileName;
+        result.put("fileName", fileName);
+        result.put("data", cmpList);
+        FileTools.createFile(path);
+        FileTools.appendWrite(path,
+                "数据编号\t原始文件名1\t原始文件名2\t共获得有效片段\t可用片段\t平均测序深度\t基因检测结果\n");
+        for (CmpReport cmp : cmpList) {
+            StringBuffer line = new StringBuffer(cmp.getDataKey()).append("\t");
+            List<DataFile> dataList = cmp.getData();
+            for (DataFile d : dataList) {
+                line.append(d.getFileName()).append("(").append(d.getDataKey())
+                        .append(")").append("\t");
+            }
+            line.append(cmp.getAllFragment()).append("\t");
+            line.append(cmp.getUsableFragment()).append("\t");
+            line.append(cmp.getAvgCoverage()).append("\t");
+            if (cmp.getCmpGeneResult() != null) {
+                for (GeneDetectionResult gene : cmp.getCmpGeneResult()) {
+                    line.append(gene.getGeneName()).append(":")
+                            .append(gene.getSequencingDepth()).append(";");
+                }
+            }
+            line.append("\n");
+            FileTools.appendWrite(path, line.toString());
+        }
+        ExcelUtil.simpleTxtToExcel(path, excelpath, "count");
+        return result;
     }
 }

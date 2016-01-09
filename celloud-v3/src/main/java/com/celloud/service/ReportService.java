@@ -135,4 +135,31 @@ public interface ReportService {
      * @date 2016-1-9 下午3:25:22
      */
     public String pgsCompare(Integer appId, String path, String columns);
+
+    /**
+     * HBV 统计
+     * 
+     * @param userId
+     * @return
+     * @date 2016-1-10 上午12:24:41
+     */
+    public Map<String, Object> hbvCount(Integer userId);
+
+    /**
+     * PGS 统计
+     * 
+     * @param userId
+     * @return
+     * @date 2016-1-10 上午12:36:22
+     */
+    public List<Pgs> pgsCount(Integer userId);
+
+    /**
+     * CMP 统计
+     * 
+     * @param userId
+     * @return
+     * @date 2016-1-10 上午12:46:57
+     */
+    public Map<String, Object> cmpCount(Integer userId);
 }
