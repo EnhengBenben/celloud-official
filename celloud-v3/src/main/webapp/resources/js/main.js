@@ -26,6 +26,7 @@ $(function () {
   /** 数据管理 */
   $("#to-data-main").on("click", function(e){
 	 $.AdminLTE.closeSidebar();
+	 $("#dataReportDIV").css("display","none");
 	 $("#uploadDIV").css("display","none");
 	 $("#mainDIV").css("display","");
 	 $("#mainDIV").load("pages/data/data_main.jsp");
@@ -208,6 +209,7 @@ var userCount=(function(userCount){
 	};
 	
 	self.showUserCount=function(){
+		$("#dataReportDIV").css("display","none");
 		$("#uploadDIV").css("display","none");
 		$("#mainDIV").css("display","");
 		$.get("count/loginCount",function(response){
@@ -227,6 +229,7 @@ var userCount=(function(userCount){
  */
 function showUpload(){
 	$("#uploadDIV").css("display","");
+	$("#dataReportDIV").css("display","none");
 	$("#mainDIV").css("display","none");
 	if($("#uploadDIV").html()==""){
 		$("#uploadDIV").load("pages/upload/upload.jsp");
@@ -238,6 +241,7 @@ function showUpload(){
  */
 function showReport(){
 	$.AdminLTE.closeSidebar();
+	$("#dataReportDIV").css("display","none");
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
 	if(intro != null && hasNavi == 1){
@@ -267,6 +271,7 @@ function showReport(){
  */
 function showAppStore(){
 //	$.AdminLTE.closeSidebar();
+	$("#dataReportDIV").css("display","none");
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
 	$.get("app/toAppStore",{},function(responseText){
@@ -279,6 +284,7 @@ function showAppStore(){
  */
 function showCount(){
 	$.AdminLTE.closeSidebar();
+	$("#dataReportDIV").css("display","none");
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
 	$("#mainDIV").load("pages/count/count_main.jsp");
@@ -288,6 +294,7 @@ function showCount(){
  * 帐号管理
  */
 function showUser(){
+	$("#dataReportDIV").css("display","none");
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
 	//为右上角个人信息链接过来增加active样式
@@ -299,6 +306,7 @@ function showUser(){
  * 问题反馈(工单)
  */
 function showFeedback(){
+	$("#dataReportDIV").css("display","none");
 	$("#uploadDIV").css("display","none");
 	$("#mainDIV").css("display","");
 	//为右上角个人信息链接过来增加active样式

@@ -134,6 +134,7 @@
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper" id="uploadDIV"></div>
 		<div class="content-wrapper" id="mainDIV"></div>
+		<div class="content-wrapper" id="dataReportDIV"></div>
 	</div>
 	<input type="hidden" id="user-navigation-hide" value="${sessionScope.loginUserInSession.navigation }">
 	<script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>

@@ -2,7 +2,9 @@ package com.celloud.action;
 
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import com.celloud.constants.TimeState;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.ReportService;
+import com.celloud.utils.FileTools;
 
 /**
  * 总览相关action
@@ -25,7 +28,6 @@ import com.celloud.service.ReportService;
 @Controller
 @RequestMapping("count")
 public class CountAction {
-	private static final long serialVersionUID = 1L;
 	Logger logger = LoggerFactory.getLogger(CountAction.class);
 	@Resource
 	private DataService dataService;
@@ -170,4 +172,76 @@ public class CountAction {
 		return reportService.systemCount(userId);
 		
 	}
+
+    /**
+     * HBV 流程数据参数同比
+     * 
+     * @param appId
+     * @param path
+     * @return
+     * @date 2016-1-9 下午2:55:57
+     */
+    @ResponseBody
+    @RequestMapping("getHBVCount")
+    public String getHBVCount(Integer appId, String path) {
+        return reportService.getHBVCount(appId, path);
+    }
+
+    /**
+     * TB 数据参数同比
+     * 
+     * @param appId
+     * @param path
+     * @return
+     * @date 2016-1-9 下午3:16:01
+     */
+    @ResponseBody
+    @RequestMapping("getTBCount")
+    public String getTBCount(Integer appId, String path) {
+        return FileTools.getLimitLines(path + appId, 1, 10);
+    }
+
+    /**
+     * EGFR 和 KRAS 数据参数同比
+     * 
+     * @param appId
+     * @param path
+     * @param length
+     * @return
+     * @date 2016-1-9 下午3:09:58
+     */
+    @ResponseBody
+    @RequestMapping("getEGFRCount")
+    public String getEGFRCount(Integer appId, String path, String length) {
+        return reportService.getEGFRCount(appId, path, length);
+    }
+
+    /**
+     * HCV 数据参数同比
+     * 
+     * @param appId
+     * @param path
+     * @return
+     * @date 2016-1-9 下午3:20:50
+     */
+    @ResponseBody
+    @RequestMapping("getHCVCount")
+    public String getHCVCount(Integer appId, String path) {
+        return reportService.getHCVCount(appId, path);
+    }
+
+    /**
+     * PGS 数据参数同比
+     * 
+     * @param appId
+     * @param path
+     * @param columns
+     * @return
+     * @date 2016-1-9 下午3:27:25
+     */
+    @ResponseBody
+    @RequestMapping("getPGSCount")
+    public String getPGSCount(Integer appId, String path, String columns) {
+        return reportService.getPGSCount(appId, path, columns);
+    }
 }

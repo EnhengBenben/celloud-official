@@ -95,6 +95,12 @@ $.ajaxSetup ({
 			});
 		}
 		
+		//切换项目报告
+		function toProjectReport(){
+			$("#dataReportDIV").css("display","none");
+			$("#mainDIV").css("display","");
+		}
+		
 		//删除共享来的项目报告
 		function cancelProjectShare(projectId){
 			jConfirm("确定删除该分享来的项目报告吗？", '确认提示框', function(r) {
@@ -482,7 +488,9 @@ $.ajaxSetup ({
 		var reportIdNow;//记录当前报告ID
 		//查看数据报告
 		function viewDataReport(event){
-			$("#mainDIV").load("pages/report/report_data_main.jsp");
+			$("#mainDIV").css("display","none");
+			$("#dataReportDIV").css("display","");
+			$("#dataReportDIV").load("pages/report/report_data_main.jsp");
 			if(typeof spinner != "undefined"){
 				spinner.stop();
 			}
@@ -637,8 +645,6 @@ $.ajaxSetup ({
 		
 		function toDataReport(responseText,appId,columns,DATAPATH){
 			$("#reportResultDiv").html(responseText);
-			//TODO 
-			return;
 			if(appId==105){
 				var mutant = $("#_hidMutant").val();
 				var wild = $("#_hidWild").val();
@@ -663,7 +669,7 @@ $.ajaxSetup ({
 						}
 					}
 				});
-				$.get("count!getData",{"appId":appId,"columns":columns,"path":DATAPATH},function(data){
+				$.get("count/getPGSCount",{"appId":appId,"columns":columns,"path":DATAPATH},function(data){
 					var sp = data.split(";");
 					$("#charResult").html("");
 					for ( var i = 1; i < sp.length; i++) {
@@ -694,7 +700,7 @@ $.ajaxSetup ({
 				});
 			}
 			if(appId==80){
-				$.get("count!getHCV",{"appId":appId,"path":DATAPATH},function(data){
+				$.get("count/getHCVCount",{"appId":appId,"path":DATAPATH},function(data){
 						var div = $("<div id='char0' class='col-lg-6'></div>");
 						$("#charDiv").append(div);
 						var one = getCountValue("Subtype","nomal");
@@ -716,7 +722,7 @@ $.ajaxSetup ({
 				});
 			}
 			if(appId==82){
-				$.get("count!getHBV",{"appId":appId,"path":DATAPATH},function(data){
+				$.get("count/getHBVCount",{"appId":appId,"path":DATAPATH},function(data){
 					var div0 = $("<div id='char0' class='col-lg-12' style='max-width: 1000px;'></div>");
 					$("#charDiv").append(div0);
 					var sType = $("#snpType").html();
@@ -841,7 +847,7 @@ $.ajaxSetup ({
 				});
 			}
 			if(appId==90){
-				$.get("count!getTB",{"appId":appId,"path":DATAPATH},function(data){
+				$.get("count/getTBCount",{"appId":appId,"path":DATAPATH},function(data){
 						var div = $("<div id='char0' class='col-lg-6'></div>");
 						$("#charDiv").append(div);
 						var X = "[";
@@ -862,7 +868,7 @@ $.ajaxSetup ({
 				if(length==0 || isNaN(length)){
 					$("#charDiv").html("<p style=\"color: red;\">数据异常，没有同比结果</p>");
 				}else{  
-					$.get("count!getEGFR",{"appId":appId,"path":DATAPATH,"length":length},function(data){
+					$.get("count/getEGFRCount",{"appId":appId,"path":DATAPATH,"length":length},function(data){
 							var div = $("<div id='char0' class='col-lg-6'></div>");
 							$("#charDiv").append(div);
 							var X = "[";

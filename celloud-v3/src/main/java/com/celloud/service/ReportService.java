@@ -93,4 +93,46 @@ public interface ReportService {
      * @return
      */
     public Map<String, Object> systemCount(Integer userId);
+
+    /**
+     * HBV 数据参数同比
+     * 
+     * @param appId
+     * @param path
+     * @return
+     * @date 2016-1-9 下午2:57:29
+     */
+    public String getHBVCount(Integer appId, String path);
+
+    /**
+     * EGFR 和 KRAS 数据参数同比
+     * 
+     * @param appId
+     * @param path
+     * @param length
+     * @return
+     * @date 2016-1-9 下午3:07:38
+     */
+    public String getEGFRCount(Integer appId, String path, String length);
+
+    /**
+     * HCV 数据参数同比
+     * 
+     * @param appId
+     * @param path
+     * @return
+     * @date 2016-1-9 下午3:18:39
+     */
+    public String getHCVCount(Integer appId, String path);
+
+    /**
+     * PGS 数据参数同比
+     * 
+     * @param appId
+     * @param path
+     * @param columns
+     * @return
+     * @date 2016-1-9 下午3:25:22
+     */
+    public String getPGSCount(Integer appId, String path, String columns);
 }
