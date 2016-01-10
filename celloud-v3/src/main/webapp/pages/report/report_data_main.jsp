@@ -17,7 +17,7 @@
   <ol class="breadcrumb">
     <li><a href="javascript:void(0)"><i class="fa fa-files-o"></i> 报告</a></li>
     <li class="active">数据报告</li>
-    <li><a href="javascript:void(0)" onclick="showReport()">返回</a></li>
+    <li><a href="javascript:void(0)" onclick="toProjectReport()">返回</a></li>
   </ol>
 </section>
 <section class="content">

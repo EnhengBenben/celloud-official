@@ -36,4 +36,13 @@ public interface UserMapper {
 
     public User getUserByName(@Param("username") String username);
 
+    // TODO 返回值将来也许需要改成List<Integer>
+    /**
+     * 获取用户所属的大客户
+     * 
+     * @param userId
+     * @return
+     * @date 2016-1-9 下午10:37:35
+     */
+    public Integer getCompanyIdByUserId(@Param("userId") Integer userId);
 }

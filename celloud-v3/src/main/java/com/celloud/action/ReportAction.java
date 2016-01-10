@@ -11,8 +11,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
+import com.celloud.model.CmpReport;
 import com.celloud.model.HBV;
+import com.celloud.model.MIB;
 import com.celloud.model.Pgs;
+import com.celloud.model.Split;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.ReportService;
@@ -23,6 +26,18 @@ public class ReportAction {
     @Resource
     private ReportService reportService;
 
+    /**
+     * 获取报告模块列表
+     * 
+     * @param page
+     * @param size
+     * @param condition
+     * @param start
+     * @param end
+     * @param appId
+     * @return
+     * @date 2016-1-10 下午10:36:57
+     */
     @RequestMapping("getReportPageList")
     public ModelAndView reportPages(
             @RequestParam(defaultValue = "1") Integer page,
@@ -34,6 +49,76 @@ public class ReportAction {
         PageList<Map<String, Object>> pageList = reportService
                 .getReportPageList(userId, pager, condition, start, end, appId);
         return mv.addObject("pageList", pageList);
+    }
+
+    /**
+     * 获取 CMP 报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @date 2016-1-10 下午10:57:24
+     */
+    @RequestMapping("getCMPReport")
+    public ModelAndView getCMPReport(String dataKey, Integer projectId,
+            Integer appId) {
+        CmpReport cmpReport = reportService.getCMPReport(dataKey, projectId,
+                appId);
+        ModelAndView mv = new ModelAndView("report/report_data_cmp");
+        return mv.addObject("cmpReport", cmpReport);
+    }
+
+    /**
+     * 获取 GDD 报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @date 2016-1-10 下午10:57:13
+     */
+    @RequestMapping("getGDDReport")
+    public ModelAndView getGDDReport(String dataKey, Integer projectId,
+            Integer appId) {
+        CmpReport cmpReport = reportService.getCMPReport(dataKey, projectId,
+                appId);
+        ModelAndView mv = new ModelAndView("report/report_data_gdd");
+        return mv.addObject("cmpReport", cmpReport);
+    }
+
+    /**
+     * 获取 Split 数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @date 2016-1-10 下午10:44:45
+     */
+    @RequestMapping("getSplitReport")
+    public ModelAndView getSplitReport(String dataKey, Integer projectId,
+            Integer appId) {
+        Split split = reportService.getSplitReport(dataKey, projectId, appId);
+        ModelAndView mv = new ModelAndView("report/report_data_split");
+        return mv.addObject("split", split);
+    }
+
+    /**
+     * 获取 MIB 的数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @date 2016-1-10 下午10:40:40
+     */
+    @RequestMapping("getMIBReport")
+    public ModelAndView getMIBReport(String dataKey, Integer projectId,
+            Integer appId) {
+        MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
+        ModelAndView mv = new ModelAndView("report/report_data_mib");
+        return mv.addObject("mib", mib);
     }
 
     /**

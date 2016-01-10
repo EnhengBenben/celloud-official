@@ -3,9 +3,12 @@ package com.celloud.service;
 import java.util.List;
 import java.util.Map;
 
+import com.celloud.model.CmpReport;
 import com.celloud.model.HBV;
+import com.celloud.model.MIB;
 import com.celloud.model.Pgs;
 import com.celloud.model.Report;
+import com.celloud.model.Split;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 
@@ -88,6 +91,40 @@ public interface ReportService {
     public Pgs getPgsReport(String dataKey, Integer projectId, Integer appId);
 
     /**
+     * 获取 MIB 报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @date 2016-1-10 下午10:33:49
+     */
+    public MIB getMIBReport(String dataKey, Integer projectId, Integer appId);
+
+    /**
+     * 获取 Split 报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @date 2016-1-10 下午10:42:22
+     */
+    public Split getSplitReport(String dataKey, Integer projectId, Integer appId);
+
+    /**
+     * 获取 CMP 和 GDD 数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @date 2016-1-10 下午10:51:50
+     */
+    public CmpReport getCMPReport(String dataKey, Integer projectId,
+            Integer appId);
+
+    /**
      * 系统统计业务
      * 
      * @param userId
@@ -115,4 +152,73 @@ public interface ReportService {
      * @date 2016-1-10 下午5:01:31
      */
     public Integer insertDataReport(Report report, String[] dataIds);
+    
+    /**
+     * HBV 数据参数同比
+     * 
+     * @param appId
+     * @param path
+     * @return
+     * @date 2016-1-9 下午2:57:29
+     */
+    public String hbvCompare(Integer appId, String path);
+
+    /**
+     * EGFR 和 KRAS 数据参数同比
+     * 
+     * @param appId
+     * @param path
+     * @param length
+     * @return
+     * @date 2016-1-9 下午3:07:38
+     */
+    public String egfrCompare(Integer appId, String path, String length);
+
+    /**
+     * HCV 数据参数同比
+     * 
+     * @param appId
+     * @param path
+     * @return
+     * @date 2016-1-9 下午3:18:39
+     */
+    public String hcvCompare(Integer appId, String path);
+
+    /**
+     * PGS 数据参数同比
+     * 
+     * @param appId
+     * @param path
+     * @param columns
+     * @return
+     * @date 2016-1-9 下午3:25:22
+     */
+    public String pgsCompare(Integer appId, String path, String columns);
+
+    /**
+     * HBV 统计
+     * 
+     * @param userId
+     * @return
+     * @date 2016-1-10 上午12:24:41
+     */
+    public Map<String, Object> hbvCount(Integer userId);
+
+    /**
+     * PGS 统计
+     * 
+     * @param userId
+     * @return
+     * @date 2016-1-10 上午12:36:22
+     */
+    public List<Pgs> pgsCount(Integer userId);
+
+    /**
+     * CMP 统计
+     * 
+     * @param userId
+     * @return
+     * @date 2016-1-10 上午12:46:57
+     */
+    public Map<String, Object> cmpCount(Integer userId);
 }

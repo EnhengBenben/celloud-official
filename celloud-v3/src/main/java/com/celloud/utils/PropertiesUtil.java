@@ -11,6 +11,7 @@ public class PropertiesUtil {
 	public static String bigFilePath;
     public static String datalist;
     public static String toolsOutPath;
+    public static String outputPath;
 	static {
 		Properties prop = new Properties();
 		InputStream inStream = PropertiesUtil.class.getClassLoader()
@@ -20,6 +21,7 @@ public class PropertiesUtil {
 			bigFilePath = prop.getProperty("bigFilePath");
             datalist = prop.getProperty("datalist");
             toolsOutPath = prop.getProperty("toolsOutPath");
+            outputPath = prop.getProperty("outputPath");
 		} catch (IOException e) {
 			logger.info("读取jdbc配置文件失败");
 		}

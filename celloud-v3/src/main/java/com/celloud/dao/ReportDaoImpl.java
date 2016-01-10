@@ -1,5 +1,7 @@
 package com.celloud.dao;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.mongodb.morphia.Datastore;
@@ -21,6 +23,12 @@ public class ReportDaoImpl implements ReportDao {
             Integer appId) {
         return dataStore.createQuery(T).filter("dataKey", dataKey)
                 .filter("projectId", projectId).filter("appId", appId).get();
+    }
+
+    @Override
+    public <T> List<T> getAppList(Class<T> T, Integer userId) {
+        return dataStore.createQuery(T).filter("userId", userId)
+                .order("-createDate").asList();
     }
 
 }

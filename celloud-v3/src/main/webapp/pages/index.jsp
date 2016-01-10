@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
@@ -106,12 +107,14 @@
 							<span>应用市场</span>
 						</a>
 					</li>
+				<c:if test="${companyId == 3 or companyId == 6 or companyId == 33 }">
 					<li class="treeview">
 						<a href="javascript:void(0)" onclick="showCount()">
 							<i class="fa fa-heartbeat"></i>
 							<span>统计</span>
 						</a>
 					</li>
+				</c:if>
 					<li class="header">
 						<span>用户中心</span>
 					</li>
@@ -134,6 +137,7 @@
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper" id="uploadDIV"></div>
 		<div class="content-wrapper" id="mainDIV"></div>
+		<div class="content-wrapper" id="dataReportDIV"></div>
 	</div>
 	<input type="hidden" id="user-navigation-hide" value="${sessionScope.loginUserInSession.navigation }">
 	<script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
