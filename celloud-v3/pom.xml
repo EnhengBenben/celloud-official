@@ -182,6 +182,12 @@
 			<artifactId>qqwry-java</artifactId>
 			<version>0.6.1</version>
 		</dependency>
+		<!-- spark链接 -->
+        <dependency>
+            <groupId>ch.ethz.ganymed</groupId>
+            <artifactId>ganymed-ssh2</artifactId>
+            <version>build210</version>
+        </dependency>
 	</dependencies>
 	<build>
 		<finalName>celloud-v3</finalName>
