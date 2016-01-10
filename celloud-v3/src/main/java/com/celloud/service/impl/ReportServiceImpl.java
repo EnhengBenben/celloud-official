@@ -31,7 +31,9 @@ import com.celloud.model.CmpReport;
 import com.celloud.model.DataFile;
 import com.celloud.model.GeneDetectionResult;
 import com.celloud.model.HBV;
+import com.celloud.model.MIB;
 import com.celloud.model.Pgs;
+import com.celloud.model.Split;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.ReportService;
@@ -470,5 +472,22 @@ public class ReportServiceImpl implements ReportService {
         }
         ExcelUtil.simpleTxtToExcel(path, excelpath, "count");
         return result;
+    }
+
+    @Override
+    public MIB getMIBReport(String dataKey, Integer projectId, Integer appId) {
+        return reportDao.getDataReport(MIB.class, dataKey, projectId, appId);
+    }
+
+    @Override
+    public Split getSplitReport(String dataKey, Integer projectId, Integer appId) {
+        return reportDao.getDataReport(Split.class, dataKey, projectId, appId);
+    }
+
+    @Override
+    public CmpReport getCMPReport(String dataKey, Integer projectId,
+            Integer appId) {
+        return reportDao.getDataReport(CmpReport.class, dataKey, projectId,
+                appId);
     }
 }
