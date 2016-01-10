@@ -218,4 +218,14 @@ public interface DataService {
      */
     public List<Map<String, String>> countDataFile(Integer userId);
 
+    /**
+     * 根据 DataKey 获取数据
+     * 
+     * @param dataKey
+     * @return
+     * @author lin
+     * @date 2016-1-10 下午11:54:31
+     */
+    public DataFile getDataByKey(String dataKey);
+
 }

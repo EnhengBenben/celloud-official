@@ -181,4 +181,9 @@ public class DataServiceImpl implements DataService {
         // TODO Auto-generated method stub
         return null;
     }
+
+    @Override
+    public DataFile getDataByKey(String dataKey) {
+        return dataFileMapper.selectByDataKey(dataKey);
+    }
 }

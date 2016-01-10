@@ -630,19 +630,13 @@ $.ajaxSetup ({
 				//	toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				//});
 			}else{
-				$.get("data!getDataByKey",{"dataKey":dataKey},function(data){
-					var anotherName = data.anotherName;
-					$.get("getPath.action",{},function(responseText){
-						var toolsPath = responseText.split(",")[0];
-						var newPath = toolsPath + "Procedure!readReport" + "?fileName="+fileName+"&userId=" + userId + "&appId=" + softwareId + "&dataKey=" + dataKey + "&projectId=&anotherName=" + anotherName;
-						spinner.stop();
-						$.get("getDataReport.action",{"url":newPath},function(responseText){
-							toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-							if(softwareId==73){
-								$("#translateDataKey").html(dataKey);
-							}
-						});
-					});
+				var newPath = "Procedure!readReport" + "?fileName="+fileName+"&userId=" + userId + "&appId=" + softwareId + "&dataKey=" + dataKey + "&projectId=";
+				$.get("report/getReportFromTools",{"dataKey":dataKey,"url":newPath},function(responseText){
+					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+					spinner.stop();
+					if(softwareId==73){
+						$("#translateDataKey").html(dataKey);
+					}
 				});
 			}
 		}

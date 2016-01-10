@@ -17,6 +17,16 @@ public interface DataFileMapper {
 
     DataFile selectByPrimaryKey(Integer fileId);
 
+    /**
+     * 根据 datakey 获取数据
+     * 
+     * @param dataKey
+     * @return
+     * @author lin
+     * @date 2016-1-10 下午11:56:02
+     */
+    public DataFile selectByDataKey(@Param("dataKey") String dataKey);
+
     int updateByPrimaryKeySelective(DataFile record);
 
     int updateByPrimaryKeyWithBLOBs(DataFile record);

@@ -4,27 +4,35 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.model.CmpReport;
+import com.celloud.model.DataFile;
 import com.celloud.model.HBV;
 import com.celloud.model.MIB;
 import com.celloud.model.Pgs;
 import com.celloud.model.Split;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
+import com.celloud.service.DataService;
 import com.celloud.service.ReportService;
+import com.celloud.utils.HttpURLUtils;
+import com.celloud.utils.PropertiesUtil;
 
 @RequestMapping(value = "/report")
 @Controller
 public class ReportAction {
     @Resource
     private ReportService reportService;
+    @Resource
+    private DataService dataService;
 
     /**
      * 获取报告模块列表
@@ -49,6 +57,26 @@ public class ReportAction {
         PageList<Map<String, Object>> pageList = reportService
                 .getReportPageList(userId, pager, condition, start, end, appId);
         return mv.addObject("pageList", pageList);
+    }
+
+    /**
+     * 从 Tools 端获取数据报告
+     * 
+     * @param dataKey
+     * @param url
+     * @return
+     * @date 2016-1-10 下午11:37:40
+     */
+    @ResponseBody
+    @RequestMapping("getReportFromTools")
+    public String getReportFromTools(String dataKey, String url) {
+        url = PropertiesUtil.toolsPath + url;
+        DataFile data = dataService.getDataByKey(dataKey);
+        String anotherName = data.getAnotherName();
+        if (!StringUtils.isEmpty(anotherName)) {
+            url += "&anotherName=" + anotherName;
+        }
+        return HttpURLUtils.getHTTPResult(url);
     }
 
     /**
