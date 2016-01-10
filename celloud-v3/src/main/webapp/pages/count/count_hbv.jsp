@@ -52,4 +52,4 @@
   </c:choose>
   </tbody>
 </table>
-<input type="hidden" value="report3!download?fileName=${map.fileName }" id="downUrl"></input>
+<input type="hidden" value="count/download?fileName=${map.fileName }" id="downUrl"></input>

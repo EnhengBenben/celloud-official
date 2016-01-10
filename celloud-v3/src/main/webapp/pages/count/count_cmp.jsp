@@ -41,7 +41,7 @@
   </c:choose>
   </tbody>
 </table>
-<input type="hidden" value="report3!download?fileName=${map.fileName }" id="downUrl"></input>
+<input type="hidden" value="count/download?fileName=${map.fileName }" id="downUrl"></input>
 <div class="modal modal-green-header" id="geneResultModal">
  <div class="modal-dialog">
   <div class="modal-content">

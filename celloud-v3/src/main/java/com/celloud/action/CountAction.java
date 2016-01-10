@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,7 @@ import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.ReportService;
 import com.celloud.utils.FileTools;
+import com.celloud.utils.PropertiesUtil;
 
 /**
  * 总览相关action
@@ -283,5 +286,19 @@ public class CountAction {
         Integer userId = ConstantsData.getLoginUserId();
         Map<String, Object> map = reportService.cmpCount(userId);
         return new ModelAndView("count/count_cmp").addObject("map", map);
+    }
+
+    /**
+     * 统计模块Excel文件下载
+     * 
+     * @param response
+     * @param fileName
+     * @date 2016-1-10 下午10:18:26
+     */
+    @RequestMapping("download")
+    public void download(HttpServletResponse response, String fileName) {
+        if (!StringUtils.isEmpty(fileName))
+            FileTools.fileDownLoad(response, PropertiesUtil.outputPath
+                    + fileName);
     }
 }
