@@ -19,6 +19,7 @@ import com.celloud.mapper.DataFileMapper;
 import com.celloud.mapper.ReportMapper;
 import com.celloud.model.HBV;
 import com.celloud.model.Pgs;
+import com.celloud.model.Report;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.ReportService;
@@ -148,4 +149,21 @@ public class ReportServiceImpl implements ReportService {
 
 		return map;
 	}
+
+    @Override
+    public Integer insertProReport(Report report) {
+        report.setFlag(ReportType.PROJECT);
+        return reportMapper.insertSelective(report);
+    }
+
+    @Override
+    public Integer insertDataReport(Report report, String[] dataIds) {
+        int index = 0;
+        report.setFlag(ReportType.DATA);
+        for (String dataId : dataIds) {
+            report.setFileId(Integer.parseInt(dataId));
+            index += reportMapper.insertSelective(report);
+        }
+        return index;
+    }
 }

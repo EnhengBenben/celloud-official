@@ -77,4 +77,15 @@ public class AppServiceImpl implements AppService {
     public Integer userRemoveApp(Integer userId, Integer appId) {
         return appMapper.userUpdateApp(userId, appId, AppIsAdd.NOT_ADDED);
     }
+
+    @Override
+    public List<App> findAppsByFormat(Integer userId, Integer formatId) {
+        return appMapper.findAppsByFormat(userId, formatId, AppOffline.ON);
+    }
+
+    @Override
+    public App findAppById(Integer appId) {
+        return appMapper.selectByPrimaryKey(appId);
+    }
+
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.celloud.model.HBV;
 import com.celloud.model.Pgs;
+import com.celloud.model.Report;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 
@@ -93,4 +94,25 @@ public interface ReportService {
      * @return
      */
     public Map<String, Object> systemCount(Integer userId);
+
+    /**
+     * 新增项目报告
+     * 
+     * @param report
+     * @return
+     * @author leamo
+     * @date 2016-1-10 下午5:00:12
+     */
+    public Integer insertProReport(Report report);
+
+    /**
+     * 新增数据报告
+     * 
+     * @param report
+     * @param dataIds
+     * @return
+     * @author leamo
+     * @date 2016-1-10 下午5:01:31
+     */
+    public Integer insertDataReport(Report report, String[] dataIds);
 }

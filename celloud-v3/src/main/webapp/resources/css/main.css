@@ -2803,3 +2803,12 @@ table.text-center th {
 .table_ thead th{ color:#333; text-align:center}
 .table_ tr td{height:30px;}
 .table_ .red,.table .red{ color:#ff9992;}
+
+
+/*
+ ===========================
+  数据管理
+ ===========================
+ */
+.manage-btn >.btn{ margin-right:10px;width:100px;}
+

@@ -1,9 +1,16 @@
 package com.celloud.action;
 
+import java.io.File;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -13,10 +20,28 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.ConstantsData;
+import com.celloud.constants.GlobalQueue;
+import com.celloud.constants.Mod;
+import com.celloud.constants.SparkPro;
+import com.celloud.model.App;
 import com.celloud.model.DataFile;
+import com.celloud.model.Project;
+import com.celloud.model.Report;
+import com.celloud.model.Task;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
+import com.celloud.service.AppService;
 import com.celloud.service.DataService;
+import com.celloud.service.ProjectService;
+import com.celloud.service.ReportService;
+import com.celloud.service.TaskService;
+import com.celloud.utils.Base64Util;
+import com.celloud.utils.DataKeyListToFile;
+import com.celloud.utils.FileTools;
+import com.celloud.utils.PropertiesUtil;
+import com.celloud.utils.RemoteRequests;
+import com.celloud.utils.SSHUtil;
+import com.celloud.utils.XmlUtil;
 
 /**
  * 数据管理
@@ -30,6 +55,27 @@ public class DataAction {
     Logger logger = LoggerFactory.getLogger(DataAction.class);
     @Resource
     private DataService dataService;
+    @Resource
+    private AppService appService;
+    @Resource
+    private ProjectService projectService;
+    @Resource
+    private ReportService reportService;
+    @Resource
+    private TaskService taskService;
+
+    private static String basePath = SparkPro.TOOLSPATH;
+    private static String dataPath = PropertiesUtil.bigFilePath;
+    private static String datalist = PropertiesUtil.datalist;
+
+    private static Map<String, Map<String, String>> machines = XmlUtil.machines;
+    private static String sparkhost = machines.get("spark").get(Mod.HOST);
+    private static String sparkpwd = machines.get("spark").get(Mod.PWD);
+    private static String sparkuserName = machines.get("spark").get(
+            Mod.USERNAME);
+    private static String sgeHost = machines.get("158").get(Mod.HOST);
+    private static String sgePwd = machines.get("158").get(Mod.PWD);;
+    private static String sgeUserName = machines.get("158").get(Mod.USERNAME);
 
     /**
      * 检索某个项目下的所有数据
@@ -94,4 +140,374 @@ public class DataAction {
         return mv;
     }
 
+    /**
+     * 根据数据编号获取数据类型
+     * 
+     * @param dataIds
+     * @return -1:所选类型大于一种
+     */
+    @RequestMapping("getFormatByDataIds.action")
+    public Integer getFormatByDataIds(String dataIds) {
+        Integer result = dataService.getFormatByIds(dataIds);
+        return result;
+    }
+
+    /**
+     * 根据数据类型获取可运行的app
+     * 
+     * @param formatId
+     * @return
+     */
+    @RequestMapping("getRunApp.action")
+    public List<App> getRunApp(
+            @RequestParam(defaultValue = "0") Integer formatId) {
+        List<App> apps = appService.findAppsByFormat(
+                ConstantsData.getLoginUserId(), formatId);
+        return apps;
+    }
+
+    /**
+     * 验证正在运行某APP的数据
+     * 
+     * @param dataIds
+     * @param appId
+     * @return
+     */
+    @RequestMapping("checkDataRunningApp.action")
+    public List<Integer> checkDataRunningApp(String dataIds, Integer appId) {
+        List<Integer> dataIdList = dataService.findRunningAppData(dataIds,
+                appId);
+        return dataIdList;
+    }
+
+    /**
+     * 删除数据
+     * 
+     * @param dataIds
+     * @return
+     * @author leamo
+     * @date 2016-1-10 下午9:49:10
+     */
+    @RequestMapping("delete.action")
+    public Integer delete(String dataIds) {
+        Integer result = dataService.delete(dataIds);
+        return result;
+    }
+
+    /**
+     * 修改数据信息页面
+     * 
+     * @param dataId
+     * @return
+     * @author leamo
+     * @date 2016-1-10 下午10:04:24
+     */
+    @RequestMapping("toEachEditDatas.action")
+    public ModelAndView toEachEditDatas(String dataIds) {
+        ModelAndView mv = new ModelAndView("data/data_all_update.jsp");
+        List<DataFile> dataList = dataService.findDatasById(dataIds);
+        mv.addObject("dataList", dataList);
+        return mv;
+    }
+
+    /**
+     * 获取物种列表
+     * 
+     * @return
+     * @author leamo
+     * @date 2016-1-10 下午10:21:13
+     */
+    @RequestMapping("getStrainList.action")
+    public List<Map<String, String>> getStrainList() {
+        List<Map<String, String>> mapList = dataService
+                .getStrainList(ConstantsData.getLoginUserId());
+        return mapList;
+    }
+
+    /**
+     * 批量修改数据
+     * 
+     * @param dataIds
+     * @param data
+     * @return
+     * @author leamo
+     * @date 2016-1-10 下午11:04:34
+     */
+    @RequestMapping("batchEditDataByIds.action")
+    public Integer batchEditDataByIds(String dataIds, DataFile data) {
+        Integer result = dataService.updateDataByIds(dataIds, data);
+        return result;
+    }
+
+    /**
+     * 批量修改数据
+     * 
+     * @param dataIds
+     * @param data
+     * @return
+     * @author leamo
+     * @date 2016-1-10 下午11:04:34
+     */
+    @RequestMapping("eachEditDataByIds.action")
+    public Integer eachEditDataByIds(List<DataFile> dataList) {
+        Integer result = dataService.updateDatas(dataList);
+        return result;
+    }
+
+    /**
+     * 数据运行
+     * 
+     * @param dataIds
+     * @param appIds
+     * @return
+     */
+    @RequestMapping("run.action")
+    public String run(String dataIds, String appIds) {
+        String failApp = "";
+        Integer userId = ConstantsData.getLoginUserId();
+        String email = ConstantsData.getLoginEmail();
+        String[] appIdArr = appIds.split(",");
+        String[] dataIdArr = dataIds.split(",");
+        String proName = new Date().getTime() + "";
+        String dataSize = dataService.queryFileSize(dataIds);
+
+        Project project = new Project();
+        project.setUserId(userId);
+        project.setProjectName(proName);
+        project.setDataNum(dataIdArr.length);
+        project.setDataSize(dataSize);
+
+        Report report = new Report();
+        report.setUserId(userId);
+        StringBuffer dataResult = new StringBuffer();
+        List<DataFile> dataList = dataService.findDatasById(dataIds);
+        for (DataFile d : dataList) {
+            dataResult.append(getDataResult(d));
+        }
+        for (String appIdStr : appIdArr) {
+            Integer appId = Integer.parseInt(appIdStr);
+            App app = appService.findAppById(appId);
+            String appName = app.getAppName();
+            // 创建项目
+            Integer proId = projectService.insertProject(project);
+            if (proId == null) {
+                failApp += appName + ",";
+                logger.error("创建项目失败");
+                continue;
+            }
+            // 项目添加数据
+            Integer flag = dataService.insertDataProjectRelat(dataIdArr, proId);
+            logger.info("用户" + userId + "创建项目" + proId + "与数据" + dataIds + "关系"
+                    + flag);
+            if (flag < 1) {
+                failApp += appName + ",";
+                logger.error("创建项目数据关系失败");
+                continue;
+            }
+            // 添加项目报告
+            report.setProjectId(proId);
+            report.setAppId(appId);
+            Integer reportId = reportService.insertProReport(report);
+            if (reportId == null) {
+                failApp += appName + ",";
+                logger.error("创建项目报告失败");
+                continue;
+            } else {
+                // 添加数据报告
+                reportService.insertDataReport(report, dataIdArr);
+            }
+            // 判断运行文件顺序是否需要重组
+            if (appId == 113) {
+                String dataDetails = FileTools.dataListSortNoEnd(dataResult
+                        .toString());
+                dataResult = new StringBuffer();
+                dataResult.append(dataDetails);
+            }
+            logger.info("用户" + userId + "开始运行" + appId);
+            String dataKeyList = dataResult.toString();
+            // TODO
+            String appPath = basePath + userId + "/" + appId + "/";
+            if (!FileTools.checkPath(appPath)) {
+                new File(appPath).mkdirs();
+            }
+            if (SparkPro.apps.contains(appId)) {// 判断是否需要进队列
+                String select = SparkPro.apps.toString().substring(1,
+                        SparkPro.apps.toString().length() - 1);
+                int running = dataService.dataRunning(select);
+                logger.info("页面运行任务，此时正在运行的任务数：" + running);
+                if (SparkPro.NODES >= running) {
+                    logger.info("资源满足需求，投递任务");
+                    submit(appPath, proId + "", dataKeyList, appName,
+                            app.getCommand());
+                } else {
+                    logger.info("资源不满足需求，进入队列等待");
+                    String command = appPath + "--" + proId + "--"
+                            + dataKeyList + "--" + appName + "--"
+                            + appId;
+                    GlobalQueue.offer(command);
+                }
+            } else if (appId == 110 || appId == 111 || appId == 112
+                    || appId == 114) {
+                sortDataList(dataList);
+                Iterator<DataFile> chk_it = dataList.iterator();
+                while (chk_it.hasNext()) {
+                    String dataListFile = datalist + new Date().getTime() + "_"
+                            + new Double(Math.random() * 1000).intValue()
+                            + ".txt";
+                    FileTools.createFile(dataListFile);
+                    DataFile _data = sortFastqFile(chk_it, dataListFile);
+                    String dataKey = _data.getDataKey();
+                    int runningNum = taskService.getRunningNumByAppId(appId);
+                    Task task = new Task();
+                    task.setProjectId(proId);
+                    task.setUserId(userId);
+                    task.setAppId(appId);
+                    task.setDataKey(dataKey);
+                    StringBuffer command = new StringBuffer(
+                            "nohup perl /share/biosoft/perl/PGS_MG/bin/moniter_qsub_url-v1.pl nohup perl ");
+                    command.append(app.getCommand()).append(" ")
+                            .append(dataListFile).append(" ").append(appPath)
+                            .append(" ProjectID").append(proId).append(" &>")
+                            .append(appPath).append("/").append(proId)
+                            .append("/log ");
+                    task.setCommand(command.toString());
+                    StringBuffer params = new StringBuffer();
+                    params.append("appName=").append(appName)
+                            .append("&projectName=").append(proName)
+                            .append("&email=").append(email)
+                            .append("&fileName=").append(_data.getFileName())
+                            .append("&projectId=").append(proId);
+                    task.setParams(params.toString());
+                    Integer taskId = taskService.create(task);
+                    // TODO
+                    if (runningNum < 4) {
+                        StringBuffer remotePath = new StringBuffer();
+                        remotePath.append(PropertiesUtil.toolsOutPath)
+                                .append("Procedure!runApp?userId=")
+                                .append(userId).append("&appId=").append(appId)
+                                .append("&dataKey=").append(dataKey)
+                                .append("&taskId=").append(taskId)
+                                .append("&command=")
+                                .append(Base64Util.encrypt(command.toString()))
+                                .append("&").append(params);
+                        RemoteRequests rr = new RemoteRequests();
+                        rr.run(remotePath.toString());
+                        taskService.updateToRunning(taskId);
+                    } else {
+                        logger.info("数据" + dataKey + "排队运行" + app.getAppName());
+                    }
+                }
+            } else {
+                if (SparkPro.SGEAPPS.contains(appId)) {
+                    // TODO 所有向Tools端投递任务的流程都向这里集中
+                    // 最终判断删除，非spark就是SGE
+                    logger.info("celloud 直接向 SGE 投递任务");
+                    String dataListFile = DataKeyListToFile
+                            .containName(dataKeyList);
+                    String command = app
+                            .getCommand()
+                            + " "
+                            + dataListFile
+                            + " "
+                            + appPath
+                            + " ProjectID"
+                            + proId
+                            + " >"
+                            + appPath
+                            + "ProjectID" + proId + ".log &";
+                    logger.info("运行命令：" + command);
+                    SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+                    ssh.sshSubmit(command, false);
+                } else {
+                    String newPath = PropertiesUtil.toolsOutPath
+                            + "Procedure!runApp?userId=" + userId + "&appId="
+                            + appId + "&appName=" + appName + "&projectName="
+                            + proName + "&email=" + email + "&dataKeyList=";
+                    RemoteRequests rr = new RemoteRequests();
+                    rr.run(newPath);
+                }
+            }
+        }
+        return failApp;
+    }
+
+    private void submit(String basePath, String projectId, String dataKeyList,
+            String appName, String perl) {
+        // 创建要运行的文件列表文件
+        String dataListFile = DataKeyListToFile.toSpark(projectId, dataKeyList);
+        // TODO
+        String command = "nohup perl  /share/biosoft/perl/wangzhen/PGS/bin/moniter_qsub_url.pl perl "
+                + " "
+                + perl
+                + " "
+                + dataListFile
+                + " "
+                + basePath
+                + " ProjectID"
+                + projectId
+                + " >"
+                + basePath
+                + "ProjectID"
+                + projectId + ".log &";
+        logger.info("运行命令：" + command);
+        SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
+        ssh.sshSubmit(command, false);
+    }
+
+    /**
+     * 运行所需信息
+     * 
+     * @param d
+     * @return
+     * @author leamo
+     * @date 2016-1-10 下午8:44:38
+     */
+    private StringBuffer getDataResult(DataFile d) {
+        StringBuffer sb = new StringBuffer();
+        String filename = d.getFileName();
+        String datakey = d.getDataKey();
+        String anotherName = d.getAnotherName();
+        String ext = FileTools.getExtName(filename);
+        sb.append(datakey).append(",").append(datakey).append(ext).append(",")
+                .append(filename).append(",")
+                .append(StringUtils.isEmpty(anotherName) ? null : anotherName)
+                .append(";");
+        return sb;
+    }
+
+    private void sortDataList(List<DataFile> dataList) {
+        Collections.sort(dataList, new Comparator<DataFile>() {
+            @Override
+            public int compare(DataFile d1, DataFile d2) {
+                return d1.getFileName().compareTo(d2.getFileName());
+            }
+        });
+    }
+
+    private DataFile sortFastqFile(Iterator<DataFile> dataFileIt, String file) {
+        StringBuffer dataResult = new StringBuffer();
+        DataFile d = dataFileIt.next();
+        String datakey = d.getDataKey();
+        String _fname = d.getFileName();
+        String ext = FileTools.getExtName(_fname);
+        if (_fname.contains("R1") || _fname.contains("R2")) {
+            String s1 = _fname.substring(0, _fname.lastIndexOf("R1"));
+            String s2 = _fname.substring(_fname.lastIndexOf("R1") + 2,
+                    _fname.length());
+            DataFile d1 = dataFileIt.next();
+            String _fname2 = d1.getFileName();
+            if (_fname2.contains(s1 + "R2")
+                    && _fname2.substring(_fname2.lastIndexOf("R2") + 2,
+                            _fname2.length()).equals(s2)) {
+                dataResult.append(dataPath).append(datakey).append(ext)
+                        .append("\t").append(dataPath).append(d1.getDataKey())
+                        .append(ext).append("\t");
+                _fname += "+" + d1.getFileName();
+            }
+        } else {
+            dataResult.append(dataPath).append(datakey).append(ext);
+        }
+        FileTools.appendWrite(file, dataResult.toString());
+        return d;
+    }
 }
