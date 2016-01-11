@@ -31,8 +31,22 @@ $(function(){
     $("#run-error-content").draggable("destroy");
   });
   
-  $("#confirm-run").on("click",$.dataManager.run.confirmRunApp());
-  $("#run-btn").on("click",$.dataManager.run.beginRun());
+  $("#run-app-btn").on("click",function(){
+    $.dataManager.run.showModal();
+  });
+  $("#del-data-btn").on("click",function(){
+    $.dataManager.deleteData();
+  });
+  $("#manage-data-btn").on("click",function(){
+    $.dataManager.updateData.showBatchEditModal();
+  });
+  
+  $("#confirm-run").on("click",function(){
+    $.dataManager.run.confirmRunApp();
+  });
+  $("#run-btn").on("click",function(){
+    $.dataManager.run.beginRun();
+  });
   
 });
 
