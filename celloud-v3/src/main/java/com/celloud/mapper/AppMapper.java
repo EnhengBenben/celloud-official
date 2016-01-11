@@ -37,7 +37,7 @@ public interface AppMapper {
             @Param("offLine") Integer offLine, @Param("isAdd") Integer isAdd);
 
     /**
-     * 按时间段获取已添加的APP数量
+     * 按时间段获取已添加的APP运行次数
      * 
      * @param userId
      * @param time
