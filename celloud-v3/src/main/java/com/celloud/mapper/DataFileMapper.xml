@@ -325,7 +325,7 @@
   <select id="queryFileSize" resultType="java.lang.String">
     select sum(size) size from tb_file where file_id in (#{dataIds})
   </select>
-  <select id="findDatasById" resultType="BaseResultMap">
+  <select id="findDatasById" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from tb_file where file_id in (#{dataIds})

@@ -41,7 +41,6 @@ import com.celloud.utils.FileTools;
 import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.RemoteRequests;
 import com.celloud.utils.SSHUtil;
-import com.celloud.utils.XmlUtil;
 
 /**
  * 数据管理
@@ -68,7 +67,8 @@ public class DataAction {
     private static String dataPath = PropertiesUtil.bigFilePath;
     private static String datalist = PropertiesUtil.datalist;
 
-    private static Map<String, Map<String, String>> machines = XmlUtil.machines;
+    private static Map<String, Map<String, String>> machines = ConstantsData
+            .getMachines();
     private static String sparkhost = machines.get("spark").get(Mod.HOST);
     private static String sparkpwd = machines.get("spark").get(Mod.PWD);
     private static String sparkuserName = machines.get("spark").get(

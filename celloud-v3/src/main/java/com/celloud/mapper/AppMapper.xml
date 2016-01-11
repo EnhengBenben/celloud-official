@@ -363,7 +363,7 @@
 	where r.flag =0 and r.user_id = ${userId}
 	group by time order by time desc
   </select>
-  <select id="findAppsByFormat" resultType="miniBaseMap">
+  <select id="findAppsByFormat" resultMap="miniBaseMap">
     select app_id,app_name,data_num 
     from tb_app a 
     left join tb_app_format_relat af on a.app_id = af.app_id 
