@@ -19,7 +19,7 @@ public interface CompanyDao {
 	 * @param companyId
 	 * @return
 	 */
-	public Object getBigUserCompanyNum(Integer companyId, int role);
+	public Object getBigUserCompanyNum(Connection conn, Integer companyId, int role);
 
 	/**
 	 * 根据医院地址获取大客户各省的医院数量

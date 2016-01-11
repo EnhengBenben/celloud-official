@@ -12,8 +12,8 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.log4j.Logger;
 
 import com.celloud.dao.CompanyDao;
@@ -31,19 +31,21 @@ public class CompanyDaoImpl implements CompanyDao {
 	private String noUserid = PropertiesUtil.noUserid;
 
 	@Override
-	public Object getBigUserCompanyNum(Integer companyId, int role) {
-		Connection conn = ConnectManager.getConnection();
-		Map<String, Object> map = null;
+	public Object getBigUserCompanyNum(Connection conn, Integer companyId, int role) {
 		String sql = "select count(distinct(u.company_id))as num from tb_user u, tb_user_company_relat uc where u.user_id = uc.user_id and uc.company_id "
 				+ " and u.user_id not in (" + noUserid + ") "
 				+ SqlController.whereCompany("uc", "company_id", role, companyId);
 		LogUtil.info(log, sql);
+		Long count = 0l;
 		try {
-			map = qr.query(conn, sql, new MapHandler());
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			ResultSetHandler<Long> rsh = new ScalarHandler<Long>();
+			count = rsh.handle(rs);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
 		}
-		return map.get("num");
+		return count;
 	}
 
 	@Override

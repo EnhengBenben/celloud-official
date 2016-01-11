@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.celloud.dao.AppDao;
-import com.celloud.sdo.LoginLog;
 import com.celloud.sdo.App;
+import com.celloud.sdo.LoginLog;
 import com.celloud.service.AppService;
 import com.celloud.utils.ConnectManager;
 import com.google.inject.Inject;
@@ -14,11 +14,6 @@ import com.google.inject.Inject;
 public class AppServiceImpl implements AppService {
 	@Inject
 	private AppDao appDao;
-
-	@Override
-	public Object getBigUserAPPNum(Integer companyId, int role) {
-		return appDao.getBigUserAPPNum(companyId, role);
-	}
 
 	@Override
 	public List<App> getAppListByBigUser(Integer companyId, Integer role) {
@@ -48,8 +43,8 @@ public class AppServiceImpl implements AppService {
 	}
 
 	@Override
-	public List<LoginLog> getTotalUserLogin(int role,int cmpId) {
-		return appDao.getTotalUserLogin(role,cmpId);
+	public List<LoginLog> getTotalUserLogin(int role, int cmpId) {
+		return appDao.getTotalUserLogin(role, cmpId);
 	}
 
 	@Override

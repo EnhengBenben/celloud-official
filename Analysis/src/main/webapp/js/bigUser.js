@@ -17,7 +17,6 @@
 	            "companyId" : company_id
 	        };
 	        var bigUesrOneURL = "home!toBigUserOne";
-		    console.log(param);
 	        $.get(bigUesrOneURL, param, function(data) {
 	        	$("#dataDiv").html(data);
 	        });

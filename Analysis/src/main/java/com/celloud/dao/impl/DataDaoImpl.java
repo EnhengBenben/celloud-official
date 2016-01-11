@@ -1,18 +1,19 @@
 package com.celloud.dao.impl;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.log4j.Logger;
 
 import com.celloud.dao.DataDao;
@@ -35,8 +36,7 @@ public class DataDaoImpl implements DataDao {
 				+ " from tb_company where company_id = u.company_id)as company_name from tb_file f, tb_user_company_relat uc ,tb_user u"
 				+ " where f.user_id = uc.user_id and f.state=0 and f.user_id = u.user_id "
 				+ SqlController.whereCompany("uc", "company_id", role, companyId)
-				+ SqlController.notUserId("uc", noUserid) + " group by f.user_id "
-				+ SqlController.orderBy(orderType);
+				+ SqlController.notUserId("uc", noUserid) + " group by f.user_id " + SqlController.orderBy(orderType);
 		LogUtil.info(log, sql);
 		try {
 			list = qr.query(conn, sql, new MapListHandler());
@@ -108,34 +108,36 @@ public class DataDaoImpl implements DataDao {
 	}
 
 	@Override
-	public Object getBigUserDataNum(Integer companyId, int role) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		Connection conn = ConnectManager.getConnection();
+	public Object getBigUserDataNum(Connection conn, Integer companyId, int role) {
 		String sql = "select count(f.file_id) num from tb_file f, tb_user_company_relat uc where f.state=0 and f.user_id = uc.user_id and f.user_id not in ("
-				+ noUserid + ") "
-				+ SqlController.whereCompany("uc", "company_id", role, companyId);
-
+				+ noUserid + ") " + SqlController.whereCompany("uc", "company_id", role, companyId);
+		Long count = 0l;
 		try {
-			map = qr.query(conn, sql, new MapHandler());
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			ResultSetHandler<Long> rsh = new ScalarHandler<Long>();
+			count = rsh.handle(rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return map.get("num");
+		return count;
 	}
 
 	@Override
-	public Object getBigUserDataSize(Integer companyId, int role) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		Connection conn = ConnectManager.getConnection();
+	public Object getBigUserDataSize(Connection conn, Integer companyId, int role) {
 		String sql = "select sum(f.size) num from tb_file f,tb_user_company_relat uc  where f.state=0 and uc.user_id =f.user_id  and f.user_id not in ("
 				+ noUserid + ") " + SqlController.whereCompany("uc", "company_id", role, companyId);
 		LogUtil.info(log, sql);
+		Long size = 0l;
 		try {
-			map = qr.query(conn, sql,new MapHandler());
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			ResultSetHandler<BigDecimal> rsh = new ScalarHandler<BigDecimal>();
+			size = rsh.handle(rs).longValue();
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
 		}
-		return map.get("num");
+		return size;
 	}
 
 	@Override
@@ -162,13 +164,12 @@ public class DataDaoImpl implements DataDao {
 		String sql = " select left(f.create_date,7)as yearMonth, sum(f.size) as size,count(f.file_id)as fileNum "
 				+ " from tb_file f,tb_user_company_relat uc"
 				+ " where f.user_id = uc.user_id  and f.state=0 and f.create_date is not null "
-				+ SqlController.notUserId("f", noUserid)
-				+ " and uc.company_id = ? " 
+				+ SqlController.notUserId("f", noUserid) + " and uc.company_id = ? "
 				+ " group by yearMonth order by yearMonth desc";
 		LogUtil.info(log, sql);
 		ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
 		try {
-			list = qr.query(conn, sql, rsh,cmpId);
+			list = qr.query(conn, sql, rsh, cmpId);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
 		}
@@ -182,8 +183,7 @@ public class DataDaoImpl implements DataDao {
 		String sql = " select sum(f.size) as size,count(f.file_id)as fileNum,uc.company_id,c.company_name "
 				+ " from tb_file f,tb_user_company_relat uc,tb_company c "
 				+ " where f.user_id = uc.user_id and c.company_name is not null  "
-				+ SqlController.notUserId("f", noUserid)
-				+ " and uc.company_id = c.company_id " 
+				+ SqlController.notUserId("f", noUserid) + " and uc.company_id = c.company_id "
 				+ " group by uc.company_id order by fileNum desc";
 		ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
 		try {

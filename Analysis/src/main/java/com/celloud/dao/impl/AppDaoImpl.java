@@ -6,15 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.MapHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.log4j.Logger;
 
 import com.celloud.dao.AppDao;
@@ -32,18 +30,20 @@ public class AppDaoImpl implements AppDao {
 	private String noUsername = PropertiesUtil.noUsername;
 
 	@Override
-	public Object getBigUserAPPNum(Integer companyId, int role) {
-		Connection conn = ConnectManager.getConnection();
-		Map<String, Object> map = new HashMap<String, Object>();
+	public Object getBigUserAPPNum(Connection conn, Integer companyId, int role) {
 		String sql = "select count(s.app_id) num from tb_app s where s.off_line=0"
 				+ SqlController.whereCompany("s", "company_id", role, companyId);
 		LogUtil.info(log, sql);
+		Long count = 0l;
 		try {
-			map = qr.query(conn, sql, new MapHandler());
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			ResultSetHandler<Long> rsh = new ScalarHandler<Long>();
+			count = rsh.handle(rs);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
 		}
-		return map.get("num");
+		return count;
 	}
 
 	@Override

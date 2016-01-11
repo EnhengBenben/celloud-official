@@ -1,10 +1,12 @@
 package com.celloud.service.impl;
+
 import java.util.List;
 import java.util.Map;
-import com.celloud.utils.EntryUtil;
+
 import com.celloud.dao.DataDao;
 import com.celloud.sdo.DataFile;
 import com.celloud.service.DataService;
+import com.celloud.utils.EntryUtil;
 import com.google.inject.Inject;
 
 public class DataServiceImpl implements DataService {
@@ -12,13 +14,13 @@ public class DataServiceImpl implements DataService {
 	private DataDao dataDao;
 
 	@Override
-	public List<Map<String, Object>> getUserList(Integer companyId,Integer role,String orderType) {
-		return dataDao.getUserList(companyId,role,orderType);
+	public List<Map<String, Object>> getUserList(Integer companyId, Integer role, String orderType) {
+		return dataDao.getUserList(companyId, role, orderType);
 	}
 
 	@Override
-	public List<DataFile> getUserMonthDataList(Integer companyId,Integer role) {
-		List<DataFile> list = dataDao.getUserMonthDataList(companyId,role);
+	public List<DataFile> getUserMonthDataList(Integer companyId, Integer role) {
+		List<DataFile> list = dataDao.getUserMonthDataList(companyId, role);
 		List<DataFile> res = EntryUtil.toInsert(list);
 		return res;
 	}
@@ -29,30 +31,17 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getMonthDataList(Integer userId,
-			String month, Integer companyId) {
+	public List<Map<String, Object>> getMonthDataList(Integer userId, String month, Integer companyId) {
 		return dataDao.getMonthDataList(userId, month, companyId);
 	}
 
 	@Override
-	public List<Map<String, Object>> getAllUserDataInMonth(Integer companyId,
-			String month) {
+	public List<Map<String, Object>> getAllUserDataInMonth(Integer companyId, String month) {
 		return dataDao.getAllUserDataInMonth(companyId, month);
 	}
 
 	@Override
-	public Object getBigUserDataNum(Integer companyId,int role) {
-		return dataDao.getBigUserDataNum(companyId,role);
-	}
-
-	@Override
-	public Object getBigUserDataSize(Integer companyId,int role) {
-		return  dataDao.getBigUserDataSize(companyId,role);
-	}
-
-	@Override
-	public List<Map<String, Object>> getUserFileRunState(String userIds,
-			String start, String end) {
+	public List<Map<String, Object>> getUserFileRunState(String userIds, String start, String end) {
 		return dataDao.getUserFileRunState(userIds, start, end);
 	}
 
@@ -66,14 +55,14 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public List<DataFile> getBigUserDataFile(Integer companyId) {
-		//List<DataFile> res = null;
-		//res = EntryUtil.toInsert(dataDao.getBigUserDataFile(companyId));
+		// List<DataFile> res = null;
+		// res = EntryUtil.toInsert(dataDao.getBigUserDataFile(companyId));
 		return dataDao.getBigUserDataFile(companyId);
 	}
 
 	@Override
 	public List<DataFile> getBigUserData() {
-		
+
 		return dataDao.getBigUserData();
 	}
 

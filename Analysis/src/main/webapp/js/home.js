@@ -84,7 +84,7 @@ function LoadBrowser() {
 				"value" : data[i].logNum
 			};
 		}
-		var opt = makePieOption('', legendName, '客户端使用', '80%', '40%', '55%', vlist);
+		var opt = makePieOption('', legendName, '客户端使用', '70%', '50%', '55%', vlist);
 		var myChart = echarts.init(document.getElementById((viewId)));
 		myChart.setOption(opt);
 	});
@@ -126,6 +126,8 @@ function chars(data) {
 			hoverable : false,
 			roam : true,
 			data : [],
+			scaleLimit:{min:0.9,max:1.1},
+			selectedMode : 'multiple',
 			itemStyle : {
 				normal : {
 					label : {
@@ -150,7 +152,7 @@ function chars(data) {
 				"黑龙江" : [ 126.53, 45.8 ],
 				"江苏" : [ 118.78, 32.07 ],
 				"浙江" : [ 120.15, 30.28 ],
-				"安徽" : [ 117.25, 31.83 ],
+				"安徽" : [ 117.25, 30.83 ],
 				"福建" : [ 119.3, 26.08 ],
 				"江西" : [ 115.85, 28.68 ],
 				"山东" : [ 116.98, 36.67 ],
@@ -170,8 +172,8 @@ function chars(data) {
 				"广西壮族自治区" : [ 108.37, 22.82 ],
 				"新疆维吾尔" : [ 87.62, 43.82 ],
 				"内蒙古自治区" : [ 111.73, 40.83 ],
-				"香港" : [ 114.08, 22.2 ],
-				"澳门" : [ 113.33, 22.13 ],
+				"香港" : [ 115.08, 22.2 ],
+				"澳门" : [ 114.33, 21.33 ],
 				"台北市" : [ 121.5, 25.03 ]
 			}
 		}, {

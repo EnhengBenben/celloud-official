@@ -151,7 +151,7 @@
 
 			<div class="row">
 				<div class="col-xs-12">
-					<h3 class="header smaller lighter green">登陆排序</h3>
+					<h3 class="header smaller lighter green">用户登陆统计</h3>
 					<div id="loginId" class="col-sm-12" style="height: 450px;"></div>
 					<!-- row -->
 					<div class="space"></div>

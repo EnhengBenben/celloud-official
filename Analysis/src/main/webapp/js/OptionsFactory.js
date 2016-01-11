@@ -145,6 +145,12 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 		legend : {
 			data : [ seriesName ],// [ '文件个数', '数据大小(GB)' ]
 		},
+		grid:{
+			x:80,
+			y:60,
+			x2:80,
+			y2:80
+		},
 		toolbox : {
 			show : true,
 			feature : {
@@ -181,7 +187,8 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 					fontFamily : 'sans-serif',
 					fontSize : 12,
 					fontStyle : 'italic',
-					fontWeight : 'bold'
+					fontWeight : 'bold',
+					align:'left'
 				}
 			},
 		} ],
@@ -196,7 +203,7 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 				textStyle : {
 					color : 'green',
 					fontFamily : 'verdana',
-					fontSize : 10,
+					fontSize : 12,
 					fontStyle : 'normal',
 					fontWeight : 'bold'
 				}
@@ -210,11 +217,16 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 			type : typex,
 			data : yAxis,
 			itemStyle : {
-				normal : {
-					label : {
-						show : true
-					}
-				}
+					normal : {
+						label : {
+							show : true,
+							textStyle:{
+								fontSize:14,
+								fontWeight:'bolder',
+								color:'green',
+							}
+						}
+					},
 			},
 			markPoint : {
 				data : [ {

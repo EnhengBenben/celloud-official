@@ -15,8 +15,8 @@ Date.prototype.format = function(formatStr) {
 	
 	str = str.replace(/yyyy|YYYY/, this.getFullYear());
 	str = str.replace(/yy|YY/, (this.getYear() % 100) > 9 ? (this.getYear() % 100).toString() : '0' + (this.getYear() % 100));
-	var m = this.getMonth()+1;
-	str = str.replace(/MM/, m> 9 ?m.toString() : '0' + m);
+	var m = this.getMonth() + 1;
+	str = str.replace(/MM/, m > 9 ? m.toString() : '0' + m);
 	str = str.replace(/M/g, this.getMonth());
 	
 	str = str.replace(/w|W/g, Week[this.getDay()]);
@@ -66,8 +66,6 @@ function showMonthLastDay() {
 	var MonthLastDay = new Date(MonthNextFirstDay - 86400000);
 	return MonthLastDay.format('yyyy-MM-dd')
 }
-
-
 
 Date.prototype.yearmonth = function() {
 	var m = this.getMonth() + 1;
@@ -185,6 +183,22 @@ function doTopN(list, top, poperty) {
 	}
 	return lt;
 }
+/** * */
+function ListAvg(list) {
+	var count = 0;
+	if (list.length > 1) {
+		count = list[0];
+		for (var i = 1; i < list.length; i++) {
+			count = count+list[i];
+		}
+		return count/list.length;
+	} else if (list.length == 1) {
+		return list[0];
+	}
+	
+}
+
+/** ** */
 var Env = {
 	"dev_mode" : true,
 }

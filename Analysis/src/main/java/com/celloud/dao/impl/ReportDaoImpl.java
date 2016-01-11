@@ -1,38 +1,45 @@
 package com.celloud.dao.impl;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.log4j.Logger;
+
 import com.celloud.dao.ReportDao;
 import com.celloud.utils.ConnectManager;
 import com.celloud.utils.LogUtil;
 import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.SqlController;
 
-public  class ReportDaoImpl implements ReportDao {
+public class ReportDaoImpl implements ReportDao {
 	Logger log = Logger.getLogger(ReportDaoImpl.class);
 	private QueryRunner qr = new QueryRunner();
 	private String noUserid = PropertiesUtil.noUserid;
-	@Override
-	public Object getBigUserReportNum(Integer companyId,int role) {
-		Connection conn = ConnectManager.getConnection();
 
-		Map<String, Object> map = new HashMap<String, Object>();
+	@Override
+	public Object getBigUserReportNum(Connection conn, Integer companyId, int role) {
 		String sql = "select count(r.report_id)as num  FROM tb_report r,tb_user_company_relat uc "
-				+	"where r.user_id = uc.user_id  and r.user_id not in ( "
-				+ noUserid + ")  "
-				+ SqlController.whereCompany("uc","company_id", role, companyId);
+				+ "where r.user_id = uc.user_id  and r.user_id not in ( " + noUserid + ")  "
+				+ SqlController.whereCompany("uc", "company_id", role, companyId);
 		LogUtil.info(log, sql);
+		Long count = 0l;
 		try {
-			map = qr.query(conn, sql, new MapHandler());
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			ResultSetHandler<Long> rsh = new ScalarHandler<Long>();
+			count = rsh.handle(rs);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
 		}
-		return map.get("num");
+		return count;
 	}
 
 	@Override
@@ -48,6 +55,5 @@ public  class ReportDaoImpl implements ReportDao {
 		}
 		return map.get("num");
 	}
-
 
 }

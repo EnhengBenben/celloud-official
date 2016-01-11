@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.celloud.dao.impl.AppDaoImpl;
-import com.celloud.sdo.LoginLog;
 import com.celloud.sdo.App;
+import com.celloud.sdo.LoginLog;
 import com.google.inject.ImplementedBy;
 
 @ImplementedBy(AppDaoImpl.class)
@@ -17,7 +17,7 @@ public interface AppDao {
 	 * @param companyId
 	 * @return
 	 */
-	public Object getBigUserAPPNum(Integer companyId, int role);
+	public Object getBigUserAPPNum(Connection conn, Integer companyId, int role);
 
 	/**
 	 * 获取大客户的APP列表
@@ -72,15 +72,13 @@ public interface AppDao {
 	 */
 	public List<App> getAppByCompanyId(Integer cmpId, Integer role);
 
-
-
 	/**
 	 * 总的用户登陆排序
 	 * 
 	 * @param topN
 	 * @return
 	 */
-	public List<LoginLog> getTotalUserLogin(int role,int cmpId);
+	public List<LoginLog> getTotalUserLogin(int role, int cmpId);
 
 	/**
 	 * 统计各浏览器
@@ -114,6 +112,7 @@ public interface AppDao {
 
 	/**
 	 * 查询时间里APP运行次数
+	 * 
 	 * @param conn
 	 * @param role
 	 * @param cmpId
@@ -123,18 +122,21 @@ public interface AppDao {
 	 * @return
 	 */
 	public List<App> getAppList(Connection conn, Integer role, Integer cmpId, Date start, Date end, Integer topN);
-	
+
 	/**
 	 * 统计用户运行APP次数排序。
+	 * 
 	 * @param topN
 	 * @return
 	 */
-	public List<App> getUserRunNum(int role,int cmpId);
+	public List<App> getUserRunNum(int role, int cmpId);
+
 	/**
 	 * 统计APP运行次数
+	 * 
 	 * @param topN
 	 * @return
 	 */
-	public List<App> getAppRunNum(int role,int cmpId);
+	public List<App> getAppRunNum(int role, int cmpId);
 
 }

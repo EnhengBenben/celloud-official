@@ -7,17 +7,20 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.log4j.Logger;
+
 import com.celloud.dao.UserDao;
+import com.celloud.sdo.App;
 import com.celloud.sdo.DataFile;
 import com.celloud.sdo.Entry;
 import com.celloud.sdo.LoginLog;
-import com.celloud.sdo.App;
 import com.celloud.sdo.TotalCount;
 import com.celloud.sdo.User;
 import com.celloud.utils.ConnectManager;
@@ -155,20 +158,20 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public Object getBigUsersUserNum(Integer cmpId, int role) {
-		Connection conn = ConnectManager.getConnection();
-		List<Map<String, Object>> list = null;
+	public Object getBigUsersUserNum(Connection conn, Integer cmpId, int role) {
 		String sql = "select count(u.user_id) num from tb_user u ,tb_user_company_relat uc where  uc.user_id = u.user_id and u.state=0 and u.user_id not in ("
-				+ noUserid + ") " 
-				+ SqlController.whereCompany("uc", "company_id", role, cmpId);
+				+ noUserid + ") " + SqlController.whereCompany("uc", "company_id", role, cmpId);
 		LogUtil.info(log, sql);
+		Long count = 0l;
 		try {
-			list = qr.query(conn, sql, new MapListHandler());
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			ResultSetHandler<Long> rsh = new ScalarHandler<Long>();
+			count = rsh.handle(rs);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
 		}
-		Map<String, Object> m = list.get(0);
-		return m.get("num");
+		return count;
 	}
 
 	@Override
@@ -450,8 +453,6 @@ public class UserDaoImpl implements UserDao {
 		return list;
 	}
 
-
-
 	@Override
 	public List<TotalCount> getCountInHistory() {
 		List<TotalCount> list = null;
@@ -460,11 +461,11 @@ public class UserDaoImpl implements UserDao {
 		String sql = "select tb1.weekDate as time, tb1.logNum, tb2.activityUser,ifnull(tb3.runNum,0) as runNum,ifnull(tb4.activityApp,0) as activityApp,ifnull(tb5.dataSize,0)as dataSize from "
 
 				+ " (select  left(date_add(l.log_date ,INTERVAL -weekday(l.log_date ) day),10)as weekDate,count(l.user_name)logNum "
-				+ " from tb_log l " + SqlController.notUserName("l", "user_name",noUsername)
+				+ " from tb_log l " + SqlController.notUserName("l", "user_name", noUsername)
 				+ " group by weekDate) tb1" + " left join"
 				+ " (select  left(date_add(l.log_date ,INTERVAL -weekday(l.log_date ) day),10)as weekDate,count(DISTINCT(l.user_name))as activityUser"
-				+ " from tb_log l " + SqlController.notUserName("l", "user_name", noUsername)
-				+ " group by weekDate)tb2" + " on tb1.weekDate = tb2.weekDate" + " left join"
+				+ " from tb_log l " + SqlController.notUserName("l", "user_name", noUsername) + " group by weekDate)tb2"
+				+ " on tb1.weekDate = tb2.weekDate" + " left join"
 				+ " (select left(date_add(r.create_date ,INTERVAL -weekday(r.create_date ) day),10)as weekDate,count(r.report_id)as runNum from tb_report r "
 				+ " on tb1.weekDate = tb3.weekDate" + " left join"
 				+ " (select left(date_add(r.create_date ,INTERVAL -weekday(r.create_date ) day),10)as weekDate,count(distinct(r.app_id))as activityApp from tb_report r "
@@ -483,15 +484,13 @@ public class UserDaoImpl implements UserDao {
 		return list;
 	}
 
-	
 	@Override
 	public List<DataFile> getUserFileSize(Connection conn, int role, int cmpId, Date start, Date end, int topN) {
 		List<DataFile> list = null;
 		String sql = "select sum(f.size)as size,u.user_id,u.username as user_name "
 				+ " from tb_file f,tb_user u,tb_user_company_relat uc  where f.user_id = u.user_id and u.company_id !=0 and f.state =0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
-				+ SqlController.notUserId("f", noUserid)
-				+ SqlController.whereCompany("uc", "company_id", role, cmpId) + " group by f.user_id order by size desc"
-				+ SqlController.limit(topN);
+				+ SqlController.notUserId("f", noUserid) + SqlController.whereCompany("uc", "company_id", role, cmpId)
+				+ " group by f.user_id order by size desc" + SqlController.limit(topN);
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setObject(1, start);
@@ -511,8 +510,7 @@ public class UserDaoImpl implements UserDao {
 		String sql = "select count(f.file_id)as fileNum,sum(ifnull(f.size,0))as size,u.company_id,u.username as user_name,u.create_date,"
 				+ " (select count(report_id) from tb_report where user_id = f.user_id and flag =0 )as runNum "
 				+ " from tb_file f,tb_user u,tb_user_company_relat uc  where f.user_id = u.user_id and u.company_id !=0 and f.state =0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
-				+ SqlController.notUserId("f", noUserid)
-				+ SqlController.whereCompany("uc", "company_id", role, cmpId)
+				+ SqlController.notUserId("f", noUserid) + SqlController.whereCompany("uc", "company_id", role, cmpId)
 				+ " group by f.user_id order by fileNum desc" + SqlController.limit(topN);
 		LogUtil.info(log, sql);
 		try {
@@ -533,10 +531,9 @@ public class UserDaoImpl implements UserDao {
 	public List<App> getUserRunApp(Connection conn, int role, int cmpId, Date start, Date end, int topN) {
 		List<App> list = null;
 		String sql = "select count(1)as runNum,r.user_id,(select username from tb_user where user_id = r.user_id)user_name "
-				+" from tb_report r where r.flag=0 and r.create_date between  ? and  ?  "
-				+ SqlController.notUserId("r", noUserid)
-				+ " group by r.user_id order by runNum desc"
-				+SqlController.limit(topN);
+				+ " from tb_report r where r.flag=0 and r.create_date between  ? and  ?  "
+				+ SqlController.notUserId("r", noUserid) + " group by r.user_id order by runNum desc"
+				+ SqlController.limit(topN);
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setObject(1, start);

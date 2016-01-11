@@ -3,7 +3,6 @@ package com.celloud.action;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +21,7 @@ import com.celloud.sdo.User;
 import com.celloud.service.AppService;
 import com.celloud.service.CompanyService;
 import com.celloud.service.DataService;
+import com.celloud.service.HomeService;
 import com.celloud.service.ReportService;
 import com.celloud.service.UserService;
 import com.celloud.utils.LogUtil;
@@ -51,6 +51,8 @@ public class HomeAction extends BaseAction {
 	private CompanyService companyService;
 	@Inject
 	private ReportService reportService;
+	@Inject
+	private HomeService homeService;
 
 	@Inject
 	private AppService appService;
@@ -84,22 +86,8 @@ public class HomeAction extends BaseAction {
 	public String toHome() {
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		Integer companyId = (Integer) getCid();
-		log.info("role:" + role + "-company_id:" + companyId);
 		try {
-			resultMap = new HashMap<String, Object>();
-			Object userNum = userService.getBigUsersUserNum(companyId, role);
-			Object dataNum = dataService.getBigUserDataNum(companyId, role);
-			Object dataSize = dataService.getBigUserDataSize(companyId, role);
-			Object companyNum = companyService.getBigUserCompanyNum(companyId, role);
-			Object reportNum = reportService.getBigUserReportNum(companyId, role);
-			Object appNum = appService.getBigUserAPPNum(companyId, role);
-
-			resultMap.put("userNum", userNum);
-			resultMap.put("dataNum", dataNum);
-			resultMap.put("dataSize", dataSize);
-			resultMap.put("companyNum", companyNum);
-			resultMap.put("reportNum", reportNum);
-			resultMap.put("appNum", appNum);
+			resultMap = homeService.toHome(companyId, role);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -115,7 +103,7 @@ public class HomeAction extends BaseAction {
 
 	public String toBigUserOne() {
 		dataList = dataService.getBigUserDataFile(companyId);
-		LogUtil.info(log,dataList);
+		LogUtil.info(log, dataList);
 		return "toBigUserOne";
 	}
 

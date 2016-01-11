@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.celloud.dao.UserDao;
+import com.celloud.sdo.App;
 import com.celloud.sdo.DataFile;
 import com.celloud.sdo.Entry;
 import com.celloud.sdo.LoginLog;
-import com.celloud.sdo.App;
 import com.celloud.sdo.TotalCount;
 import com.celloud.sdo.User;
 import com.celloud.service.UserService;
@@ -49,11 +49,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User login(User user) {
 		return userDao.login(user.getUsername(), user.getPassword());
-	}
-
-	@Override
-	public Object getBigUsersUserNum(Integer companyId, int role) {
-		return userDao.getBigUsersUserNum(companyId, role);
 	}
 
 	@Override
@@ -140,7 +135,6 @@ public class UserServiceImpl implements UserService {
 	public List<TotalCount> getCountInHistory() {
 		return userDao.getCountInHistory();
 	}
-
 
 	@Override
 	public Map<String, Object> getUserActivity(int role, int cmpId, Date start, Date end, int topN) {

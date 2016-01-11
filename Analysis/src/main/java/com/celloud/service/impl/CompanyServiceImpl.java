@@ -30,11 +30,6 @@ public class CompanyServiceImpl implements CompanyService {
 	Logger log = Logger.getLogger(this.getClass().getSimpleName());
 
 	@Override
-	public Object getBigUserCompanyNum(Integer companyId, int role) {
-		return companyDao.getBigUserCompanyNum(companyId, role);
-	}
-
-	@Override
 	public Map<String, Object> getCompanyNumEveryMonth(Integer companyId, Integer role) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		List<Map<String, Object>> list = companyDao.getCompanyNumEveryMonth(companyId, role);
