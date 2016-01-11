@@ -189,7 +189,7 @@ var userCount=(function(userCount){
 			})
 			x = x.substring(0,x.length-1);
 			x += "]";
-			self.lineModal("count-app-day-chart","日已添加APP运行次数",eval(x),y,"日已添加APP运行次数");
+			self.lineModal("count-app-day-chart","日已添加APP运行次数",eval(x),y,"日APP运行次数");
 		});
 	};
 	
@@ -203,7 +203,7 @@ var userCount=(function(userCount){
 			})
 			x = x.substring(0,x.length-1);
 			x += "]";
-			self.lineModal("count-app-month-chart","月已添加APP运行次数",eval(x),y,"月已添加APP运行次数");
+			self.lineModal("count-app-month-chart","月已添加APP运行次数",eval(x),y,"月APP运行次数");
 			self.appDayCount();
 		});
 	};
@@ -319,4 +319,15 @@ function showFeedback(){
 	$('.treeview').removeClass("active");
     $("#feedbackManage").addClass('active');
 	$("#mainDIV").load("feedback/main");
+}
+/**
+ * 帮助
+ */
+function showHelp(){
+	$("#dataReportDIV").css("display","none");
+	$("#uploadDIV").css("display","none");
+	$("#mainDIV").css("display","");
+	$('.treeview').removeClass("active");
+    $("#toHelpMenu").addClass('active');
+	$("#mainDIV").load("pages/help/help_main.jsp");
 }
