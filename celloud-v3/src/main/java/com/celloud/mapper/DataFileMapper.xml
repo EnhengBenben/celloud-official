@@ -293,7 +293,7 @@
     </choose>
   </select>
     <select id="countFileNumByUserId" resultType="map">
-    select count(f.file_id)as fileNum,(select count(distinct(file_id))from tb_report where user_id = f.user_id)as runNum from tb_file f where f.user_id = ${userId}
+    select count(f.file_id)as fileNum,(select count(distinct(file_id))from tb_report where user_id = f.user_id)as runFileNum from tb_file f where f.user_id = ${userId}
   </select>
   <select id="countDataFileWeek" resultType="map">
   	select left(date_add(f.create_date ,INTERVAL -weekday(f.create_date ) day),10)time,count(f.file_id)as fileNum,sum(f.size)as size 

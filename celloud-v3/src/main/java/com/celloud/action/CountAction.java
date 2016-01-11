@@ -2,7 +2,9 @@ package com.celloud.action;
 
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -167,7 +169,16 @@ public class CountAction {
 	@RequestMapping("systemCount")
 	public Map<String, Object> systemCount() {
 		Integer userId = ConstantsData.getLoginUserId();
-		return reportService.systemCount(userId);
+		 Map<String, Object> map= reportService.systemCount(userId);;
+	//	Long size = Long.parseLong(map.get("size").toString());
+	//	Map<String,String>fileMap = (Map<String, String>) map.get("fileNum");
+	//	String fNumStr = fileMap.get("runFileNum");
+	//	logger.info(fNumStr);
+	//	int runFileNum = Integer.parseInt(fNumStr);
+	//	String funNum = fileMap.get("fileNum");
+	//	logger.info(funNum);
+	//	int fileNum =Integer.parseInt(funNum);
+		return map;
 		
 	}
 }

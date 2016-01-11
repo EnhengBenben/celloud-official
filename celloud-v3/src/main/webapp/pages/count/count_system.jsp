@@ -25,10 +25,9 @@
 						</c:choose>
 					</h4>
 					<h4>已运行数据:</h4>
-					<h4>45</h4>
+					<h4 id = "run_File_Num"></h4>
 					<h4>未运行数据:</h4>
-					<h4>15</h4>
-
+					<h4 id = "unRun_Num"></h4>
 				</div>
 				<div class="icon">
 					<i class="fa fa-pie-chart"></i>
@@ -37,7 +36,7 @@
 		</div>
 		<!-- ./col -->
 		<div class="col-xs-6" data-toggle="tab">
-			<h2>test</h2>
+			<h2></h2>
 		</div>
 	</div>
 	<!-- Small boxes (Stat box) -->
@@ -64,8 +63,8 @@
 			</ul>
 			<div class="tab-content no-padding">
 				<!-- Morris chart - Sales -->
-				<div id="data_month_id" class="chart tab-pane active"  style="position: relative; height: 300px; width: 1165px;"></div>
-				<div id="data_week_id" class="chart tab-pane" style="position: relative; height: 300px; width: 1165px;"></div>
+				<div id="data_month_id" class="chart tab-pane "  style="position: relative; height: 300px; width: 1165px;"></div>
+				<div id="data_week_id" class="chart tab-pane active"  style="position: relative; height: 300px; width: 1165px;"></div>
 			</div>
 		</div>
 		<!-- /.nav-tabs-custom -->
@@ -78,10 +77,10 @@
 			<!-- Tabs within a box -->
 			<ul class="nav nav-tabs pull-right">
 				<li class="active">
-					<a href="#count-source-day-chart" data-toggle="tab">每周</a>
+					<a href="#size_week_id" data-toggle="tab">每周</a>
 				</li>
 				<li>
-					<a href="#count-source-month-chart" data-toggle="tab">每月</a>
+					<a href="#size_month_id" data-toggle="tab">每月</a>
 				</li>
 				<li class="pull-left header">
 					<i class="fa fa-inbox"></i>
@@ -90,8 +89,8 @@
 			</ul>
 			<div class="tab-content no-padding">
 				<!-- Morris chart - Sales -->
-				<div id="size_month_id"  class="chart tab-pane active" style="position: relative; height: 300px; width: 1165px;"></div>
-				<div id="size_week_id" class="chart tab-pane"  style="position: relative; height: 300px; width: 1165px;"></div>
+				<div id="size_month_id"  class="chart tab-pane " style="position: relative; height: 300px; width: 1165px;"></div>
+				<div id="size_week_id" class="chart tab-pane active"  style="position: relative; height: 300px; width: 1165px;"></div>
 			</div>
 		</div>
 		<!-- /.nav-tabs-custom -->
@@ -104,10 +103,10 @@
 			<!-- Tabs within a box -->
 			<ul class="nav nav-tabs pull-right">
 				<li class="active">
-					<a href="#count-report-day-chart" data-toggle="tab">每周</a>
+					<a href="#report_week_id" data-toggle="tab">每周</a>
 				</li>
 				<li>
-					<a href="#count-report-month-chart" data-toggle="tab">每月</a>
+					<a href="#report_month_id" data-toggle="tab">每月</a>
 				</li>
 				<li class="pull-left header">
 					<i class="fa fa-inbox"></i>
@@ -116,9 +115,12 @@
 			</ul>
 			<div class="tab-content no-padding">
 				<!-- Morris chart - Sales -->
-				<div id="report_month_id" class="chart tab-pane active"  style="position: relative; height: 300px; width: 1165px;"></div>
-				<div id="report_week_id" class="chart tab-pane"  style="position: relative; height: 300px; width: 1165px;"></div>
+				<div id="report_month_id" class="chart tab-pane "  style="position: relative; height: 300px; width: 1165px;"></div>
+				<div id="report_week_id" class="chart tab-pane active"  style="position: relative; height: 300px; width: 1165px;"></div>
 			</div>
+		</div>
+		<div class="nav-tabs-custom">
+			<div id="app_run_id" style="position: relative; height: 300px; width: 1165px;"></div>
 		</div>
 		<!-- /.nav-tabs-custom -->
 	</section>
@@ -130,10 +132,10 @@
 			<!-- Tabs within a box -->
 			<ul class="nav nav-tabs pull-right">
 				<li class="active">
-					<a href="#count-app-day-chart" data-toggle="tab">每周</a>
+					<a href="#app_week_id" data-toggle="tab">每周</a>
 				</li>
 				<li>
-					<a href="#count-app-month-chart" data-toggle="tab">每月</a>
+					<a href="#app_month_id" data-toggle="tab">每月</a>
 				</li>
 				<li class="pull-left header">
 					<i class="fa fa-inbox"></i>
@@ -142,8 +144,8 @@
 			</ul>
 			<div class="tab-content no-padding">
 				<!-- Morris chart - Sales -->
-				<div  id="app_month_id"  class="chart tab-pane active"style="position: relative; height: 300px; width: 1165px;"></div>
-				<div  id="app_week_id" class="chart tab-pane" style="position: relative; height: 300px; width: 1165px;"></div>
+				<div  id="app_month_id"  class="chart tab-pane "style="position: relative; height: 300px; width: 1165px;"></div>
+				<div  id="app_week_id" class="chart tab-pane active" style="position: relative; height: 300px; width: 1165px;"></div>
 			</div>
 		</div>
 		<!-- /.nav-tabs-custom -->

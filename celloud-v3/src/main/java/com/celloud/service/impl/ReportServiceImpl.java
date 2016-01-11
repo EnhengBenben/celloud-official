@@ -69,7 +69,9 @@ public class ReportServiceImpl implements ReportService {
 		/***按月统计的每月上传的:数据量\数据大小\报告数量\APP运行次数***/
 		List<Map<String, String>> monthData = dataMapper.countDataByTime(userId, TimeState.MONTH,DataState.ACTIVE);
 		List<Map<String, String>> monthSize = dataMapper.sumDataByTime(userId, TimeState.MONTH,DataState.ACTIVE);
-		List<Map<String, String>> monthReport = reportMapper.countReportByTime(userId, TimeState.MONTH,DataState.ACTIVE, ReportType.DATA);
+		
+		List<Map<String, String>> monthReport = reportMapper.countReportMonthByUserId(userId);
+		
 		List<Map<String, String>> monthApp = appMapper.countMyAppByTime(userId, TimeState.MONTH,DataState.ACTIVE,DataState.ACTIVE);
 		/****按周统计每周上传:数据量\数据大小\报告数量\APP数量*****/
 		List<Map<String, String>> weekData =dataMapper.countDataFileWeek(userId);
@@ -94,18 +96,20 @@ public class ReportServiceImpl implements ReportService {
 		map.put("weekReport", weekReport);
 		map.put("weekApp", weekApp);
 		map.put("fileNum", fileNum);
-		
-		log.info("monthData"+monthData.size());
+		log.info("fileNum"+fileNum);
+		log.info("size"+size);
+
+	/*	log.info("monthData"+monthData.size());
 		log.info("monthSize"+monthSize.size());
-		log.info("monthReport"+monthReport.size());
+		log.info("monthReport"+monthReport);
 		log.info("monthApp"+monthApp.size());
 		log.info("appRum"+appRum.size());
-		log.info("appRum"+size);
+		log.info("size"+size);
 		log.info("fileNum"+fileNum.size());
 		log.info("weekData"+weekData.size());
 		log.info("weekReport"+weekReport.size());
 		log.info("weekApp"+weekApp.size());
-
+*/
 		return map;
 	}
 }
