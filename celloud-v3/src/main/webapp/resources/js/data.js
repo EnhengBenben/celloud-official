@@ -40,6 +40,9 @@ $(function(){
   $("#manage-data-btn").on("click",function(){
     $.dataManager.updateData.showBatchEditModal();
   });
+  $("#to-each-editdata-modal").on("click",function(){
+    $.dataManager.updateData.showEachEditModal();
+  });
   
   $("#confirm-run").on("click",function(){
     $.dataManager.run.confirmRunApp();
@@ -112,7 +115,7 @@ function _init_data(){
         dataLi += "<li class=\"types-options data-select\" title=\"点击删除\" name=\"to-run-data\" data-dataid=\""+checkedIds[i]+"\">"+fileName+"</li>";
       }
       dataIds = dataIds.substring(0, dataIds.length-1);
-      var dataLength = checkedDataIds.length;
+      var dataLength = checkedIds.length;
       $.get("data/getFormatByDataIds.action",{"dataIds":dataIds},function(result){
         if(result == -1){
           $.dataManager.showTipModal("所选数据格式不统一");
@@ -156,7 +159,7 @@ function _init_data(){
       $("#chk"+_dataId).prop("checked",false);
       $(Obj).remove();
       if(checkedIds.length==0){
-        $("#run-app-btn").attr("disabled",true);
+        $("#run-btn").attr("disabled",true);
         $("#run-modal").modal("hide");
         $.dataManager.editBtn.disable();
       }
@@ -164,14 +167,20 @@ function _init_data(){
     updateRunApp: function(Obj){
       var appId = $(Obj).data("appid");
       var appName = $(Obj).html();
+      var o = $.dataManager.options;
       if($(Obj).hasClass("selected")){
-        var runAppIds = $.dataManager.options.runAppIds;
-        $.dataManager.options.runAppIds.splice($.inArray(appId,runAppIds),1);
+        var runAppIds = o.runAppIds;
+        o.runAppIds.splice($.inArray(appId,runAppIds),1);
         $(Obj).removeClass("selected");
         if(runAppIds.length==0){
-          $("#run-app-btn").attr("disabled","true");
+          $("#run-btn").attr("disabled","true");
         }
       }else{
+        var checkedIds = o.checkedIds;
+        var dataIds = "";
+        for (var i=0;i<checkedIds.length;i++){
+          dataIds += checkedIds[i];
+        }
         $.get("data/checkDataRunningApp.action",{"dataIds":dataIds,"appId":appId},function(dataIdList){
           if(dataIdList.length>0){
             var dataName = "";
@@ -190,7 +199,7 @@ function _init_data(){
               $("#run-error-modal").modal("show");
             }else{
               $(Obj).addClass("selected");
-              $("#run-app-btn").removeAttr("disabled");
+              $("#run-btn").removeAttr("disabled");
               $.dataManager.options.runAppIds.push(appId);
             }
           }
@@ -200,7 +209,7 @@ function _init_data(){
     confirmRunApp: function(){
       var appId = $("#appId-hide").val();
       $("#apps-data-ul li[data-appid="+appId+"]").addClass("selected");
-      $("#run-app-btn").removeAttr("disabled");
+      $("#run-btn").removeAttr("disabled");
       $.dataManager.options.runAppIds.push(appId);
     },
     beginRun: function(){
@@ -209,7 +218,7 @@ function _init_data(){
       var addedApps = o.runAppIds;
       var dataIds = "";
       var appIds = "";
-      for (var i=0;i<checkedIds;i++){
+      for (var i=0;i<checkedIds.length;i++){
         dataIds += checkedIds[i] + ",";
       }
       dataIds = dataIds.substring(0, dataIds.length-1);
@@ -236,10 +245,13 @@ function _init_data(){
     showBatchEditModal: function(){
       $.dataManager.updateData.strainList("#batch-editdatas-strain");
       $("#each-editdata-modal").modal("hide");
-      $("#batch-editdata-form").reset();
+//      $("#batch-editdata-form").reset();
       $("#batch-editdata-error").addClass("hide");
       $("#batch-editdatas-strain").val("");
       $("#batch-editdata-modal").modal("show");
+      $("#save-batch-data").on("click",function(){
+        $.dataManager.updateData.saveBatchEdit();
+      });
     },
     saveBatchEdit: function(){
       var checkedIds = $.dataManager.options.checkedIds;
@@ -270,14 +282,15 @@ function _init_data(){
         $.dataManager.updateData.strainList("input[class='strain']");
         $("#batch-editdata-modal").modal("hide");
         $("#each-editdata-modal").modal("show");
+        $("#save-each-data").on("click",function(){
+          $.dataManager.updateData.saveEachEdit();
+        });
       });
     },
     saveEachEdit: function(){
       $.post("data/eachEditDataByIds.action",$("#each-editdata-form").serialize(),function(result){
         if(result>0){
-          getDataByCondition(dataCurrentPageNumber);
-          checkedDataIds = [];
-          addedDataNames = [];
+          $.dataManager.find.condition();
           $("#each-editdata-modal").modal("hide");
         }else{
           $("#each-updatedata-error").removeClass("hide");
@@ -297,15 +310,17 @@ function _init_data(){
   $.dataManager.deleteData = function(){
     $.dataManager.showTipModal("确定要删除选中数据吗？");
     $("#check-true").one("click",function(){
-      var checkedIds = $.dataManager.checkedIds;
+      var checkedIds = $.dataManager.options.checkedIds;
       var dataIds = "";
       for (var i=0;i<checkedIds.length;i++){
         dataIds += checkedIds[i] + ",";
       }
       dataIds = dataIds.substring(0, dataIds.length-1);
-      $.get("data/delete.action",{"dataIds":dataIds},function(result){
-        if(result>0){
-          $.dataManager.find.condition();;
+      $.get("data/delete.action",{"dataIds":dataIds},function(data){
+        if(data.code == "104"){
+          $.dataManager.find.condition();
+        }else{
+          $.dataManager.showTipModal(data.message);
         }
       });
     });
@@ -340,7 +355,10 @@ function _init_data(){
   	var o = $.dataManager.options;
     o.checkedIds = [];
     o.checkedNames = [];
-    
+    $.dataManager.editBtn.disable();
+    $("input[name='data-checkone']").on("click",function(){
+      $.dataManager.checkOneData($(this));
+    });
     /** 
      *翻页
      */
@@ -402,7 +420,7 @@ function _init_data(){
    * =====================
    * 选择单个数据
    */
-  $.dataManager.checkData = function(obj){
+  $.dataManager.checkOneData = function(obj){
   	var _checked = $(obj).prop("checked");//jquery1.11获取属性
   	var _dataId = $(obj).val();
     if(_checked){
@@ -465,17 +483,7 @@ function _init_data(){
       $("#manage-data-btn").addClass("disabled");
     }
   };
-  /**Tools
-   * ==========
-   * 判断配置文件
-   */
-  $.dataManager.isConfigure = function(fileName){
-    if($.dataManager.getExt(fileName)==".txt" || getExt(fileName)==".lis"){
-      return true;
-    }else {
-      return false;
-    }
-  };
+  
   /**Tools
    * ==========
    * 获取文件后缀
@@ -483,5 +491,16 @@ function _init_data(){
   $.dataManager.getExt = function(fileName){
     var result =/\.[^\.]+/.exec(fileName);
     return result;
+  };
+  /**Tools
+   * ==========
+   * 判断配置文件
+   */
+  $.dataManager.isConfigure = function(fileName){
+    if($.dataManager.getExt(fileName)==".txt" || $.dataManager.getExt(fileName)==".lis"){
+      return true;
+    }else {
+      return false;
+    }
   };
 }

@@ -1,5 +1,6 @@
 package com.celloud.mapper;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -158,7 +159,7 @@ public interface DataFileMapper {
      * @param dataIds
      * @return
      */
-    Map<String, Integer> findFormatByIds(@Param("dataIds") String dataIds);
+    Map<String, Long> findFormatByIds(@Param("dataIds") String dataIds);
 
     /**
      * 查询正在运行制定APP的数据id
@@ -208,7 +209,11 @@ public interface DataFileMapper {
      * @author leamo
      * @date 2016-1-10 下午10:59:06
      */
-    Integer updateDataByIds(@Param("dataIds") String dataIds, DataFile data);
+    Integer updateDataByIds(@Param("dataIds") String dataIds,
+            @Param("strain") String strain, @Param("sample") String sample,
+            @Param("updateDate") Date updateDate,
+            @Param("anotherName") String anotherName,
+            @Param("dataTags") String dataTags);
 
     /**
      * app正在运行运行个数

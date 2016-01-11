@@ -25,6 +25,7 @@ import com.celloud.constants.Mod;
 import com.celloud.constants.SparkPro;
 import com.celloud.model.App;
 import com.celloud.model.DataFile;
+import com.celloud.model.DataFileEditForm;
 import com.celloud.model.Project;
 import com.celloud.model.Report;
 import com.celloud.model.Task;
@@ -40,6 +41,7 @@ import com.celloud.utils.DataKeyListToFile;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.RemoteRequests;
+import com.celloud.utils.Response;
 import com.celloud.utils.SSHUtil;
 
 /**
@@ -76,6 +78,7 @@ public class DataAction {
     private static String sgeHost = machines.get("158").get(Mod.HOST);
     private static String sgePwd = machines.get("158").get(Mod.PWD);;
     private static String sgeUserName = machines.get("158").get(Mod.USERNAME);
+    private static final Response DELETE_DATA_FAIL = new Response("删除数据失败");
 
     /**
      * 检索某个项目下的所有数据
@@ -147,8 +150,9 @@ public class DataAction {
      * @return -1:所选类型大于一种
      */
     @RequestMapping("getFormatByDataIds.action")
-    public Integer getFormatByDataIds(String dataIds) {
-        Integer result = dataService.getFormatByIds(dataIds);
+    @ResponseBody
+    public Long getFormatByDataIds(String dataIds) {
+        Long result = dataService.getFormatByIds(dataIds);
         return result;
     }
 
@@ -159,6 +163,7 @@ public class DataAction {
      * @return
      */
     @RequestMapping("getRunApp.action")
+    @ResponseBody
     public List<App> getRunApp(
             @RequestParam(defaultValue = "0") Integer formatId) {
         List<App> apps = appService.findAppsByFormat(
@@ -174,6 +179,7 @@ public class DataAction {
      * @return
      */
     @RequestMapping("checkDataRunningApp.action")
+    @ResponseBody
     public List<Integer> checkDataRunningApp(String dataIds, Integer appId) {
         List<Integer> dataIdList = dataService.findRunningAppData(dataIds,
                 appId);
@@ -189,9 +195,11 @@ public class DataAction {
      * @date 2016-1-10 下午9:49:10
      */
     @RequestMapping("delete.action")
-    public Integer delete(String dataIds) {
-        Integer result = dataService.delete(dataIds);
-        return result;
+    @ResponseBody
+    public Response delete(String dataIds) {
+        int result = dataService.delete(dataIds);
+        logger.info("用户{}删除数据{}", ConstantsData.getLoginUserName(), dataIds);
+        return result > 0 ? Response.DELETE_SUCESS : DELETE_DATA_FAIL;
     }
 
     /**
@@ -204,7 +212,7 @@ public class DataAction {
      */
     @RequestMapping("toEachEditDatas.action")
     public ModelAndView toEachEditDatas(String dataIds) {
-        ModelAndView mv = new ModelAndView("data/data_all_update.jsp");
+        ModelAndView mv = new ModelAndView("data/data_all_update");
         List<DataFile> dataList = dataService.findDatasById(dataIds);
         mv.addObject("dataList", dataList);
         return mv;
@@ -218,6 +226,7 @@ public class DataAction {
      * @date 2016-1-10 下午10:21:13
      */
     @RequestMapping("getStrainList.action")
+    @ResponseBody
     public List<Map<String, String>> getStrainList() {
         List<Map<String, String>> mapList = dataService
                 .getStrainList(ConstantsData.getLoginUserId());
@@ -234,6 +243,7 @@ public class DataAction {
      * @date 2016-1-10 下午11:04:34
      */
     @RequestMapping("batchEditDataByIds.action")
+    @ResponseBody
     public Integer batchEditDataByIds(String dataIds, DataFile data) {
         Integer result = dataService.updateDataByIds(dataIds, data);
         return result;
@@ -249,8 +259,10 @@ public class DataAction {
      * @date 2016-1-10 下午11:04:34
      */
     @RequestMapping("eachEditDataByIds.action")
-    public Integer eachEditDataByIds(List<DataFile> dataList) {
-        Integer result = dataService.updateDatas(dataList);
+    @ResponseBody
+    public Integer eachEditDataByIds(DataFileEditForm dataFileEditForm) {
+        Integer result = dataService
+                .updateDatas(dataFileEditForm.getDataList());
         return result;
     }
 

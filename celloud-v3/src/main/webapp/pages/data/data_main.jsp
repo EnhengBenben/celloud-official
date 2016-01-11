@@ -132,7 +132,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">批量编辑 <a href="javascript:toManageEachDataModel();" class="a-white" style="margin-left:30px">单独编辑</a></h4>
+        <h4 class="modal-title">批量编辑 <a id="to-each-editdata-modal" href="javascript:void(0);" class="a-white" style="margin-left:30px">单独编辑</a></h4>
       </div>
       <div class="modal-body row">
         <form id="batch-editdata-form" class="form-horizontal form-cel">
@@ -140,26 +140,26 @@
           <div class="form-group">
          	<div class="control-label form-label col-xs-3">文件别名</div>
          	<div class="col-xs-9">
-         		<input type="text" name="data.anotherName" onkeyup="value=value.replace(/[^\u4E00-\u9FA5\w]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5\w]/g,''))" placeholder="请输入字母\数字\下划线\汉字"/>
+         		<input type="text" name="anotherName" onkeyup="value=value.replace(/[^\u4E00-\u9FA5\w]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5\w]/g,''))" placeholder="请输入字母\数字\下划线\汉字"/>
          	</div>
           </div>
           <div class="form-group">
          	<div class="control-label form-label col-xs-3">数据标签</div>
          	<div class="col-xs-9">
-         		<input type="text" name="data.dataTags"/>
+         		<input type="text" name="dataTags"/>
          	</div>
           </div>
           <div class="form-group">
          	<div class="control-label form-label col-xs-3">样本</div>
          	<div class="col-xs-9">
-         		<input type="text" name="data.sample" maxlength="45"/>
+         		<input type="text" name="sample" maxlength="45"/>
          	</div>
           </div>
           <div class="form-group">
          	<div class="control-label form-label col-xs-3">样本类型/物种</div>
          	<div class="col-xs-9">
          		<span id="dataMoreInfoStrainSpan">
-     				<input id="batch-editdatas-strain" type="hidden" name="data.strain" style="width: 270px;" value=""/>
+     				<input id="batch-editdatas-strain" type="hidden" name="strain" style="width: 270px;" value=""/>
       			</span>
           	</div>
           </div>
@@ -171,7 +171,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-celloud-close btn-flat pull-left" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-celloud-success btn-flat" onclick="saveManageDatas()">保存</button>
+        <button id="save-batch-data" type="button" class="btn btn-celloud-success btn-flat">保存</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -186,7 +186,7 @@
       <div id="each-editdatas-div" class="modal-body"></div>
       <div class="modal-footer">
         <button type="button" class="btn btn-celloud-close btn-flat pull-left" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-celloud-success btn-flat" onclick="saveEachData()">确 定</button>
+        <button id="save-each-data" type="button" class="btn btn-celloud-success btn-flat">确 定</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

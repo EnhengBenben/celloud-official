@@ -364,10 +364,10 @@
 	group by time order by time desc
   </select>
   <select id="findAppsByFormat" resultMap="miniBaseMap">
-    select app_id,app_name,data_num 
+    select a.app_id,app_name,data_num 
     from tb_app a 
     left join tb_app_format_relat af on a.app_id = af.app_id 
-    left join tb_user_app ua on a.app_id=ua.app_id 
-    where af.format_id = #{formatId} and a.off_line = #{formatId} and us.user_id=#{formatId} 
+    left join tb_user_app_right ua on a.app_id=ua.app_id 
+    where af.format_id = #{formatId} and a.off_line = #{offLine} and ua.user_id=#{userId} 
   </select>
 </mapper>
