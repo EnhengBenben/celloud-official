@@ -123,6 +123,16 @@ public class ConstantsData {
         return user == null ? null : user.getUserId();
     }
 
+    /**
+     * 获取当前登录用户的email
+     * 
+     * @return
+     */
+    public static String getLoginEmail() {
+        User user = getLoginUser();
+        return user == null ? null : user.getEmail();
+    }
+
     public static HttpServletRequest getRequset() {
         return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
     }

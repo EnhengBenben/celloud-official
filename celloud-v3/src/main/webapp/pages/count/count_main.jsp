@@ -9,21 +9,18 @@
     <li class="active">全部</li>
   </ol>
 </section>
-<input type="hidden" id="sessionUserId" value="${session.userId }">
-<input type="hidden" id="sessionUserName" value="${session.userName }">
-<input type="hidden" id="sessionCompanyId" value="${session.companyId }">
+<input type="hidden" id="sessionCompanyId" value="${companyId }">
 <section class="content">
   <div class="row">
     <div class="col-xs-12">
      <div class="mainpage" id="appMain">
-     <!--  
        <div class="y-row operation-serve box box-success"  data-spm="16">
-		  <c:if test="${session.companyId==6 }">
+		  <c:if test="${companyId==6 }">
 		    <div class="info">
 	    	  <p>本页提供所有数据报告总览。</p>
 	  		</div>
      	  </c:if>
-     	  <c:if test="${session.companyId==3 }">
+     	  <c:if test="${companyId==3 }">
      	    <div class="info">
 	    	  <p>目前只提供 HBV_SNP流程的报告统计；查看页面中不提供序列详细信息的直接展示，用户可以通过“下载Excel”获得全部序列信息。</p>
 	  		</div>
@@ -31,7 +28,7 @@
 		      <li><a href="javascript:void(0)" id="_down">下载 Excel</a></li>
 	  		</ul>
      	  </c:if>
-    	  <c:if test="${session.companyId==33 }">
+    	  <c:if test="${companyId==33 }">
     	    <div class="info">
 	    	  <p>目前只提供 CMP流程的统计；查看页面中不提供序列详细信息的直接展示，用户可以通过“下载Excel”获得全部序列信息。</p>
 	  		</div>
@@ -45,21 +42,18 @@
 	       </div>
 	     </div>
 	  </div>
-	  -->
-	  <div class="y-row operation-serve box box-success" data-spm="16">
-					<ul id="userOperaUl">
-						<li class="active" id="systeminfoTab">
-							<a href="javascript:showSysInfo()">系统统计</a>
-						</li>
-					</ul>
-				</div>
-
-				<div class="y-row" style="padding: 20px 10px; background-color: #fff;" data-spm="17">
-					<div class="common-normal common-slide common-normals" id="sys_count_div">
-					<jsp:include page="count_system.jsp"></jsp:include>
-					</div>
-				</div>
-			</div>
+<!-- 		<div class="y-row operation-serve box box-success" data-spm="16"> -->
+<!-- 			<ul id="userOperaUl"> -->
+<!-- 				<li class="active" id="systeminfoTab"> -->
+<!-- 					<a href="javascript:showSysInfo()">系统统计</a> -->
+<!-- 				</li> -->
+<!-- 			</ul> -->
+<!-- 		</div> -->
+<!-- 		<div class="y-row" style="padding: 20px 10px; background-color: #fff;" data-spm="17"> -->
+<!-- 			<div class="common-normal common-slide common-normals" id="sys_count_div"> -->
+<%-- 				<jsp:include page="count_system.jsp"></jsp:include> --%>
+<!-- 			</div> -->
+<!-- 		</div> -->
     </div>
   </div><!--/.row-->
 </section><!-- /.content -->

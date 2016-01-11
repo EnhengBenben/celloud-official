@@ -50,4 +50,9 @@ public class ProjectServiceImpl implements ProjectService {
         return projectMapper.deleteByState(projectId, DataState.DEELTED);
     }
 
+    @Override
+    public Integer insertProject(Project project) {
+        return projectMapper.insertSelective(project);
+    }
+
 }

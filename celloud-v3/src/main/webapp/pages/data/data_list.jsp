@@ -14,7 +14,7 @@ select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 
 	<thead>
     	<tr>
         	<th class="center">
-        		<input type="checkbox" id="selAll" class="selAll" style="border:none;"/>
+        		<input id="data-checkall" type="checkbox" style="border:none;"/>
         	</th>
         	<th style="min-width: 418px;">文件名称  <a id="data-sort-name" class="a-gray" href="javascript:void(0);"><i id="data-sort-name-icon" class="fa fa-sort-amount-asc"></i></a></th>
         	<th class="center" style="min-width:115px;">数据编号</th>
@@ -33,8 +33,8 @@ select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 
 				<c:forEach items="${dataList.datas }" var="data">
 					<tr>
 						<td class="center">
-			        		<input name="datachk" type="checkbox" id='chk${data.fileId }' value='${data.fileId }' onclick="javascript:chkOnChange(this);" style="border:none;"/>
-			        		<input type="hidden" value="${data.fileName }" id="fileName${data.fileId }">
+			        		<input id="chk${data.fileId }" name="data-checkone" type="checkbox" value="${data.fileId }" style="border:none;"/>
+			        		<input id="filename-${data.fileId }" type="hidden" value="${data.fileName }">
 			        	</td>
 						<td title="${data.fileName }">
 							<c:choose><c:when test="${fn:length(data.fileName)>60 }"><c:out value="${fn:substring(data.fileName, 0, 60) }"/>...</c:when><c:otherwise>${data.fileName }</c:otherwise></c:choose>

@@ -61,4 +61,14 @@ public interface ProjectService {
      * @date 2016-1-7 下午6:51:11
      */
     public Integer addShare(Integer userId, Integer projectId, String userIds);
+
+    /**
+     * 新增报告
+     * 
+     * @param project
+     * @return
+     * @author leamo
+     * @date 2016-1-10 下午4:07:16
+     */
+    public Integer insertProject(Project project);
 }

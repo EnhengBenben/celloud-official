@@ -102,7 +102,7 @@ public class LoginAction {
     public ModelAndView login(Model model, User user, String kaptchaCode, PublicKey publicKey, boolean checked,
             HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndView("login").addObject("checked",
-                CookieUtils.getCookieValue(request, Constants.COOKIE_MODULUS) != null&&checked);
+                CookieUtils.getCookieValue(request, Constants.COOKIE_MODULUS) != null && checked);
         HttpSession session = request.getSession();
         String kaptchaExpected = (String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
         PrivateKey privateKey = null;
@@ -124,7 +124,7 @@ public class LoginAction {
         }
         if (checked) {
             addCookies(request, response, user.getUsername(), user.getPassword(), publicKey.getModulus());
-        } else if (!checked || key.isExpires()) {
+        } else if (key == null || key.isExpires()) {
             rsaKeyService.deleteByModulus(publicKey.getModulus());
         }
         String password = RSAUtil.decryptStringByJs(privateKey, user.getPassword());
@@ -142,6 +142,9 @@ public class LoginAction {
             saveRSAKey(publicKey, privateKey, loginUser);
         }
         session.removeAttribute(Constants.SESSION_RSA_PRIVATEKEY);
+        // 获取用户所属的大客户，决定是否有统计菜单
+        Integer companyId = userService.getCompanyIdByUserId(loginUser.getUserId());
+        session.setAttribute("companyId", companyId);
         mv.setViewName("loading");
         return mv;
     }

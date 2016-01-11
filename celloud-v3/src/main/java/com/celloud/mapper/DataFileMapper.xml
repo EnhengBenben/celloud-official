@@ -39,6 +39,14 @@
     from tb_file
     where file_id = #{fileId,jdbcType=INTEGER}
   </select>
+  <select id="selectByDataKey" resultMap="ResultMapWithBLOBs" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_file
+    where data_key = #{dataKey}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_file
     where file_id = #{fileId,jdbcType=INTEGER}
@@ -295,9 +303,64 @@
     <select id="countFileNumByUserId" resultType="map">
     select count(f.file_id)as fileNum,(select count(distinct(file_id))from tb_report where user_id = f.user_id)as runFileNum from tb_file f where f.user_id = ${userId}
   </select>
+  <select id="getDatasInProject" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+  	from tb_file where file_id in(select file_id from tb_file_project_relat where project_id=#{projectId})
+  </select>
   <select id="countDataFileWeek" resultType="map">
   	select left(date_add(f.create_date ,INTERVAL -weekday(f.create_date ) day),10)time,count(f.file_id)as fileNum,sum(f.size)as size 
   	from tb_file f where f.state=0 and f.user_id = ${userId} 
 	group by time order by time desc
   </select>
+  <select id="findFormatByIds" resultType="map">
+    select count(*) formatNum,file_format fileFormat from(select file_format from tb_file where file_id in (#{dataIds}) group by file_format) t
+  </select>
+  <select id="findRunningAppData" resultType="java.lang.Integer">
+    select file_id 
+    from tb_report r 
+    where file_id in (#{dataIds}) and app_id=#{appId} and period!=#{period} and state=#{state} 
+    group by file_id;
+  </select>
+  <select id="queryFileSize" resultType="java.lang.String">
+    select sum(size) size from tb_file where file_id in (#{dataIds})
+  </select>
+  <select id="findDatasById" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_file where file_id in (#{dataIds})
+  </select>
+  <insert id="insertDataProjectRelat">
+    insert into tb_data_project_relat(file_id,project_id) values(#{dataId},#{projectId})
+  </insert>
+  <select id="queryDataRunning" resultType="java.lang.Integer">
+    select count(*) number
+    from tb_report r 
+    where  
+    and r.flag=#{flag} and r.isdel=#{state} and r.period=#{period} and r.software_id in (#{appIds});
+  </select>
+  <select id="queryStrainList" resultType="java.lang.Integer">
+   select distinct strain from tb_file where user_id=#{user_id} and strain is not null and strain !='';
+  </select>
+  <update id="updateDataByIds" parameterType="com.celloud.model.DataFile" >
+    update tb_file
+    <set >
+      <if test="strain != null" >
+        strain = #{strain,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sample != null" >
+        sample = #{sample,jdbcType=VARCHAR},
+      </if>
+      <if test="anotherName != null" >
+        another_name = #{anotherName,jdbcType=VARCHAR},
+      </if>
+      <if test="dataTags != null" >
+        data_tags = #{dataTags,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where file_id in (#{dataIds})
+  </update>
 </mapper>

@@ -1,5 +1,7 @@
 package com.celloud.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -70,19 +72,118 @@ public class DataServiceImpl implements DataService {
             String condition, int sort, String sortDateType, String sortNameType) {
         List<DataFile> lists = dataFileMapper.findDataLists(page, userId,
                 condition, sort, sortDateType, sortNameType, DataState.ACTIVE,
-                ReportType.DATA,
-                ReportPeriod.COMPLETE);
+                ReportType.DATA, ReportPeriod.COMPLETE);
         return new PageList<>(page, lists);
     }
 
-	@Override
-	public Map<String, String> countUserRunFileNum(Integer userId) {
-		return dataFileMapper.countFileNumByUserId(userId);
-	}
+    @Override
+    public Integer getFormatByIds(String dataIds) {
+        Map<String, Integer> map = dataFileMapper.findFormatByIds(dataIds);
+        Integer result = null;
+        if (map.get("formatNum") != null && map.get("formatNum") > 1) {
+            result = -1;
+        } else {
+            result = map.get("formatNum");
+        }
+        return result;
+    }
 
-	@Override
-	public List<Map<String, String>> countDataFile(Integer userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public List<Integer> findRunningAppData(String dataIds, Integer appId) {
+        return dataFileMapper.findRunningAppData(dataIds, appId,
+                DataState.ACTIVE, ReportPeriod.COMPLETE);
+    }
+
+    @Override
+    public String queryFileSize(String dataIds) {
+        return dataFileMapper.queryFileSize(dataIds);
+    }
+
+    @Override
+    public List<DataFile> findDatasById(String dataIds) {
+        return dataFileMapper.findDatasById(dataIds);
+    }
+
+    @Override
+    public Integer insertDataProjectRelat(String[] dataIdArr, Integer projectId) {
+        int index = 0;
+        for (String dataId : dataIdArr) {
+            index += dataFileMapper.insertDataProjectRelat(
+                    Integer.valueOf(dataId), projectId);
+        }
+        return index;
+    }
+
+    @Override
+    public Integer dataRunning(String appIds) {
+        return dataFileMapper.queryDataRunning(appIds,
+                ReportPeriod.RUNNING_NO_REPORT, DataState.ACTIVE,
+                ReportType.DATA);
+    }
+
+    @Override
+    public Integer delete(String dataIds) {
+        String[] dataIdArr = dataIds.split(",");
+        int index = 0;
+        for (String dataId : dataIdArr) {
+            DataFile data = new DataFile();
+            data.setFileId(Integer.parseInt(dataId));
+            data.setState(DataState.DEELTED);
+            index += dataFileMapper.updateByPrimaryKeySelective(data);
+        }
+        return index;
+    }
+
+    @Override
+    public DataFile getDataById(Integer dataId) {
+        return dataFileMapper.selectByPrimaryKey(dataId);
+    }
+
+    @Override
+    public List<Map<String, String>> getStrainList(Integer userId) {
+        List<Map<String, String>> mlist = new ArrayList<>();
+        List<String> list = dataFileMapper.queryStrainList(userId);
+        for (String s : list) {
+            Map<String, String> map = new HashMap<>();
+            map.put("id", s);
+            map.put("text", s);
+            mlist.add(map);
+        }
+        return mlist;
+    }
+
+    @Override
+    public Integer updateDataByIds(String dataIds, DataFile data) {
+        return dataFileMapper.updateDataByIds(dataIds, data);
+    }
+
+    @Override
+    public Integer updateDatas(List<DataFile> dataList) {
+        Integer index = 0;
+        for (DataFile d : dataList) {
+            index += dataFileMapper.updateByPrimaryKeySelective(d);
+        }
+        return index;
+    }
+
+    @Override
+    public Map<String, String> countUserRunFileNum(Integer userId) {
+        return dataFileMapper.countFileNumByUserId(userId);
+    }
+
+    @Override
+    public List<DataFile> getDatasInProject(Integer projectId) {
+        return dataFileMapper.getDatasInProject(projectId);
+    }
+
+    @Override
+    public List<Map<String, String>> countDataFile(Integer userId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public DataFile getDataByKey(String dataKey) {
+        return dataFileMapper.selectByDataKey(dataKey);
+    }
 }

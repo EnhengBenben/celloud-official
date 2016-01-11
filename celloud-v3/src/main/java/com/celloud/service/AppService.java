@@ -112,4 +112,22 @@ public interface AppService {
      */
     public Integer userRemoveApp(Integer userId, Integer appId);
 
+    /**
+     * 根据数据类型索取用户可运行APP
+     * 
+     * @param formatId
+     * @param userId
+     * @return
+     */
+    public List<App> findAppsByFormat(Integer userId, Integer formatId);
+
+    /**
+     * 根据ID获取详细信息
+     * 
+     * @param appId
+     * @return
+     * @author leamo
+     * @date 2016-1-10 下午8:03:53
+     */
+    public App findAppById(Integer appId);
 }

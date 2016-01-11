@@ -5,10 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import javax.servlet.ServletContext;
-
 import org.apache.log4j.Logger;
-import org.springframework.web.context.ServletContextAware;
 
 /**
  * @Description:perl程序执行方法

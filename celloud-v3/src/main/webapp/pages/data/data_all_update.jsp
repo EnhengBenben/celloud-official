@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="hide" id="strainListHide">
-${data.strainList }
-</div>
 <c:choose>
 	<c:when test="${dataList.size()>0}">
-	  <form class="form-horizontal form-cel" id="eachDataForm">
+	  <form id="each-editdata-form" class="form-horizontal form-cel">
 	  	<c:forEach items="${dataList}" var="data" varStatus="size">
 	    	<div class="form-group">
 				<div class="control-label form-label col-xs-3">文件名称</div>
@@ -49,7 +46,7 @@ ${data.strainList }
 		
 	</c:otherwise>
 </c:choose>
-<div class="alert alert-warning-cel alert-dismissable hide" id="eachDataErrorDiv">
+<div id="each-updatedata-error" class="alert alert-warning-cel alert-dismissable hide">
    <button type="button" class="close"><i class="fa fa-close"></i></button>
    <h5><i class="icon fa fa-warning"></i>保存失败！</h5>
 </div>

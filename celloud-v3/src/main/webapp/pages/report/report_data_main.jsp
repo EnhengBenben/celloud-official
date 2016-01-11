@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link href="<%=request.getContextPath() %>/css/report.css?version=3,0" rel="stylesheet">
-<link href="<%=request.getContextPath() %>/css/buttons.css?version=20150730" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/plugins/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
 <link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
 <link href="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.css" rel="stylesheet">
@@ -18,7 +17,7 @@
   <ol class="breadcrumb">
     <li><a href="javascript:void(0)"><i class="fa fa-files-o"></i> 报告</a></li>
     <li class="active">数据报告</li>
-    <li><a href="javascript:void(0)" onclick="showReport()">返回</a></li>
+    <li><a href="javascript:void(0)" onclick="toProjectReport()">返回</a></li>
   </ol>
 </section>
 <section class="content">

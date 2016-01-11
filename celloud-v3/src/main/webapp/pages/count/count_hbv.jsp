@@ -1,8 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <table class="table_" id="hbv_count">
   <thead>
     <tr>
@@ -22,8 +19,8 @@
   </thead>
   <tbody>
   <c:choose>
-  	<c:when test="${hbvList.size()>0}">
-  	  <c:forEach items="${hbvList }" var="hbv">
+  	<c:when test="${map.data.size()>0}">
+  	  <c:forEach items="${map.data }" var="hbv">
 	    <tr>
 	      <td align="center" style="max-width: 150px;">${hbv.fileName }</td>
 	      <c:if test="${not empty hbv.site  }">
@@ -43,7 +40,6 @@
 	      <c:if test="${empty hbv.site }">
 	      	<td align="center" colspan="10">由于分析流程的升级，八月一日之前的分析结果无法提取到该信息，若需要请重新运行。</td>
 	      </c:if>
-<%-- 	      <td align="center">${hbv.seq }</td> --%>
 	      <td align="center"><a href="javascript:showSeq('${hbv.seq }')">查看序列</a></td>
 	    </tr>
   	  </c:forEach>
@@ -56,4 +52,4 @@
   </c:choose>
   </tbody>
 </table>
-<input type="hidden" value="report3!download?fileName=${fileName }" id="downUrl"></input>
+<input type="hidden" value="count/download?fileName=${map.fileName }" id="downUrl"></input>

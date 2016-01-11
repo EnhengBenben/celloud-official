@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.model.Feedback;
 import com.celloud.service.FeedbackService;
@@ -26,11 +27,10 @@ import com.celloud.service.FeedbackService;
 public class FeedbackAction {
     @Resource
     private FeedbackService feedbackService;
-    @RequestMapping("list")
-    public String getAllFeedBack() {
-        return "redirect:/login";
+    @RequestMapping("main")
+    public ModelAndView index(){
+        return new ModelAndView("feedback/feedback_main");
     }
-
     @RequestMapping(value = "save", method = RequestMethod.PUT)
     @ResponseBody
     public boolean save(Feedback feedback) {
