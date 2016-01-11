@@ -12,7 +12,7 @@
 		</c:forEach>
 		</span>
 		<div class="toolbar">
-			<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${split.userId }/${split.appId }/${split.dataKey }/result/split_reads.tar.gz" class="btn btn-default"><i class="i-download"></i>下载全部</a>
+			<a href="${toolsPath }Procedure!miRNADownload?userId=${split.userId }/${split.appId }/${split.dataKey }/result/split_reads.tar.gz" class="btn btn-default"><i class="i-download"></i>下载全部</a>
 		</div>
 	</div>
 	<div id="printCMPContext">
@@ -57,7 +57,7 @@
 										    ${data.name }
 										  </c:when>
 										  <c:otherwise>
-											<a class="link" href="${path.replace('upload','') }Procedure!miRNADownload?userId=${split.userId }/${split.appId }/${split.dataKey }/result/split/${data.name }.tar.gz">${data.name }</a>  
+											<a class="link" href="${toolsPath }Procedure!miRNADownload?userId=${split.userId }/${split.appId }/${split.dataKey }/result/split/${data.name }.tar.gz">${data.name }</a>  
 										  </c:otherwise>
 										</c:choose>
 									</td>
@@ -130,12 +130,12 @@
 				  </table>
 				  <table style="width:90%;">
 			        <tr>
-			    	  <td style="width:50%;"><img style="max-width:500px;" src="${outPath }/${split.userId }/${split.appId }/${split.dataKey }${split.qualityPath1 }"></td>
-			    	  <td><img style="max-width:500px;" src="${outPath }/${split.userId }/${split.appId }/${split.dataKey }${split.qualityPath2 }"></td>
+			    	  <td style="width:50%;"><img style="max-width:500px;" src="${uploadPath}${split.userId }/${split.appId }/${split.dataKey }${split.qualityPath1 }"></td>
+			    	  <td><img style="max-width:500px;" src="${uploadPath}${split.userId }/${split.appId }/${split.dataKey }${split.qualityPath2 }"></td>
 			        </tr>
 			        <tr>
-			    	  <td><img style="max-width:500px;" alt="" src="${outPath }/${split.userId }/${split.appId }/${split.dataKey }${split.seqContentPath1 }"></td>
-			    	  <td><img style="max-width:500px;" alt="" src="${outPath }/${split.userId }/${split.appId }/${split.dataKey }${split.seqContentPath2 }"></td>
+			    	  <td><img style="max-width:500px;" alt="" src="${uploadPath}${split.userId }/${split.appId }/${split.dataKey }${split.seqContentPath1 }"></td>
+			    	  <td><img style="max-width:500px;" alt="" src="${uploadPath}${split.userId }/${split.appId }/${split.dataKey }${split.seqContentPath2 }"></td>
 			        </tr>
 			      </table>
 				</c:otherwise>

@@ -94,7 +94,7 @@ public interface DataService {
      * @param dataIds
      * @return -1：大于一种数据类型
      */
-    Integer getFormatByIds(String dataIds);
+    Long getFormatByIds(String dataIds);
 
     /**
      * 查询正在运行制定APP的数据id

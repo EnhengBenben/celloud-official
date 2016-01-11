@@ -1,21 +1,18 @@
 $(document).ready(function() {
-	showSysInfo();
+	//showSysInfo();
 	var companyId = $("#sessionCompanyId").val();
 	if (companyId == 6) {
-		$.get("report3!toPgsCount", {
-			"pgs.userId" : $("#sessionUserId").val(),
-			"pgs.username" : $("#sessionUserName").val()
-		}, function(responseText) {
+		$.get("count/pgsCount",function(responseText){
 			$("#countDiv").html(responseText);
 		});
 	} else if (companyId == 3) {
-		$.get("report3!toHBVCount", function(responseText) {
+		$.get("count/hbvCount",function(responseText){
 			$("#countDiv").html(responseText);
 			var url = $("#downUrl").val();
 			$("#_down").attr("href", url);
 		});
 	} else if (companyId == 33) {
-		$.get("cmpReport!toCmpCount", function(responseText) {
+		$.get("count/cmpCount",function(responseText){
 			$("#countDiv").html(responseText);
 			var url = $("#downUrl").val();
 			$("#_down").attr("href", url);

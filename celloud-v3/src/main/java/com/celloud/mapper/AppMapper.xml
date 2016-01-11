@@ -308,7 +308,10 @@
     select count(a.app_id) from tb_user_app_right uar left join tb_app a on uar.app_id=a.app_id where uar.user_id=#{userId } and a.off_line=#{offLine } and uar.is_add=#{isAdd }
   </select>
   <select id="countMyAppByTime" resultType="map" >
-    select left(create_date,#{time }) time,count(a.app_id) num from tb_user_app_right uar left join tb_app a on uar.app_id=a.app_id where uar.user_id=#{userId } and a.off_line=#{offLine } and uar.is_add=#{isAdd } group by time
+    select left(r.create_date,#{time }) time,count(r.report_id) num from tb_user_app_right uar 
+	left join tb_app a on uar.app_id=a.app_id
+	left join tb_report r on r.app_id=uar.app_id
+	where uar.user_id=#{userId } and a.off_line=#{offLine } and uar.is_add=#{isAdd } and r.user_id=#{userId } group by time
   </select>
   <select id="getRanAPP" resultType="map">
   	select s.app_id,app_name,count(*) as num from (select project_id from tb_project where user_id = #{userId } and state = 0 union all select p.project_id from tb_project p,tb_project_share s where p.state=0 and p.project_id=s.project_id and s.share_to = #{userId }) as p,tb_report as r,tb_app s where r.project_id = p.project_id and r.app_id = s.app_id group by app_id order by num desc , app_name;
@@ -364,10 +367,10 @@
 	group by time order by time desc
   </select>
   <select id="findAppsByFormat" resultMap="miniBaseMap">
-    select app_id,app_name,data_num 
+    select a.app_id,app_name,data_num 
     from tb_app a 
     left join tb_app_format_relat af on a.app_id = af.app_id 
-    left join tb_user_app ua on a.app_id=ua.app_id 
-    where af.format_id = #{formatId} and a.off_line = #{formatId} and us.user_id=#{formatId} 
+    left join tb_user_app_right ua on a.app_id=ua.app_id 
+    where af.format_id = #{formatId} and a.off_line = #{offLine} and ua.user_id=#{userId} 
   </select>
 </mapper>

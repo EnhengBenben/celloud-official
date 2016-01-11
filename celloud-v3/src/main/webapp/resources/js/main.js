@@ -132,7 +132,7 @@ var userCount=(function(userCount){
 			})
 			x = x.substring(0,x.length-1);
 			x += "]";
-			self.lineModal("count-source-day-chart","日上传文件统计",eval(x),y,"日资源占用量");
+			self.lineModal("count-source-day-chart","日资源占用量统计",eval(x),y,"日上传文件大小");
 		});
 	};
 	self.fileSizeMonthCount=function(){
@@ -145,7 +145,7 @@ var userCount=(function(userCount){
 			})
 			x = x.substring(0,x.length-1);
 			x += "]";
-			self.lineModal("count-source-month-chart","月上传文件统计",eval(x),y,"月资源占用量");
+			self.lineModal("count-source-month-chart","月资源占用量统计",eval(x),y,"月上传文件大小");
 			self.fileSizeDayCount();
 		});
 	};
@@ -160,7 +160,7 @@ var userCount=(function(userCount){
 			})
 			x = x.substring(0,x.length-1);
 			x += "]";
-			self.lineModal("count-report-day-chart","日上传文件统计",eval(x),y,"日资源占用量");
+			self.lineModal("count-report-day-chart","日报告统计",eval(x),y,"日生成的报告个数");
 		});
 	};
 
@@ -174,7 +174,7 @@ var userCount=(function(userCount){
 			})
 			x = x.substring(0,x.length-1);
 			x += "]";
-			self.lineModal("count-report-month-chart","月上传文件统计",eval(x),y,"月资源占用量");
+			self.lineModal("count-report-month-chart","月报告统计",eval(x),y,"月生成的报告个数");
 			self.reportDayCount();
 		});
 	};
@@ -189,7 +189,7 @@ var userCount=(function(userCount){
 			})
 			x = x.substring(0,x.length-1);
 			x += "]";
-			self.lineModal("count-app-day-chart","日上传文件统计",eval(x),y,"日资源占用量");
+			self.lineModal("count-app-day-chart","日已添加APP运行次数",eval(x),y,"日APP运行次数");
 		});
 	};
 	
@@ -203,7 +203,7 @@ var userCount=(function(userCount){
 			})
 			x = x.substring(0,x.length-1);
 			x += "]";
-			self.lineModal("count-app-month-chart","月上传文件统计",eval(x),y,"月资源占用量");
+			self.lineModal("count-app-month-chart","月已添加APP运行次数",eval(x),y,"月APP运行次数");
 			self.appDayCount();
 		});
 	};
@@ -220,7 +220,13 @@ var userCount=(function(userCount){
 			self.appMonthCount();
 		});
 	};
-	
+	self.toDataMain=function(){
+		$.AdminLTE.closeSidebar();
+		 $("#dataReportDIV").css("display","none");
+		 $("#uploadDIV").css("display","none");
+		 $("#mainDIV").css("display","");
+		 $("#mainDIV").load("pages/data/data_main.jsp");
+	}
 	return self;
 })(userCount);
 
@@ -313,4 +319,15 @@ function showFeedback(){
 	$('.treeview').removeClass("active");
     $("#feedbackManage").addClass('active');
 	$("#mainDIV").load("feedback/main");
+}
+/**
+ * 帮助
+ */
+function showHelp(){
+	$("#dataReportDIV").css("display","none");
+	$("#uploadDIV").css("display","none");
+	$("#mainDIV").css("display","");
+	$('.treeview').removeClass("active");
+    $("#toHelpMenu").addClass('active');
+	$("#mainDIV").load("pages/help/help_main.jsp");
 }

@@ -314,24 +314,26 @@
 	group by time order by time desc
   </select>
   <select id="findFormatByIds" resultType="map">
-    select count(*) formatNum,file_format fileFormat from(select file_format from tb_file where file_id in (#{dataIds}) group by file_format) t
+    select count(*) formatNum,file_format fileFormat from (select file_format from tb_file where file_id in (${dataIds})) t group by file_format
   </select>
   <select id="findRunningAppData" resultType="java.lang.Integer">
     select file_id 
     from tb_report r 
-    where file_id in (#{dataIds}) and app_id=#{appId} and period!=#{period} and state=#{state} 
+    where file_id in (${dataIds}) and app_id=#{appId} and period!=#{period} and state=#{state} 
     group by file_id;
   </select>
   <select id="queryFileSize" resultType="java.lang.String">
-    select sum(size) size from tb_file where file_id in (#{dataIds})
+    select sum(size) size from tb_file where file_id in (${dataIds})
   </select>
-  <select id="findDatasById" resultMap="BaseResultMap">
+  <select id="findDatasById" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
-    from tb_file where file_id in (#{dataIds})
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_file where file_id in (${dataIds})
   </select>
   <insert id="insertDataProjectRelat">
-    insert into tb_data_project_relat(file_id,project_id) values(#{dataId},#{projectId})
+    insert into tb_file_project_relat(file_id,project_id) values(#{dataId},#{projectId})
   </insert>
   <select id="queryDataRunning" resultType="java.lang.Integer">
     select count(*) number
@@ -339,28 +341,16 @@
     where  
     and r.flag=#{flag} and r.isdel=#{state} and r.period=#{period} and r.software_id in (#{appIds});
   </select>
-  <select id="queryStrainList" resultType="java.lang.Integer">
-   select distinct strain from tb_file where user_id=#{user_id} and strain is not null and strain !='';
+  <select id="queryStrainList" resultType="java.lang.String">
+    select distinct strain from tb_file where user_id=#{user_id} and strain is not null and strain !='';
   </select>
-  <update id="updateDataByIds" parameterType="com.celloud.model.DataFile" >
-    update tb_file
-    <set >
-      <if test="strain != null" >
-        strain = #{strain,jdbcType=VARCHAR},
-      </if>
-      <if test="updateDate != null" >
-        update_date = #{updateDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="sample != null" >
-        sample = #{sample,jdbcType=VARCHAR},
-      </if>
-      <if test="anotherName != null" >
-        another_name = #{anotherName,jdbcType=VARCHAR},
-      </if>
-      <if test="dataTags != null" >
-        data_tags = #{dataTags,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where file_id in (#{dataIds})
+  <update id="updateDataByIds" >
+    update tb_file set
+        strain = #{strain},
+        update_date = #{updateDate},
+        sample = #{sample},
+        another_name = #{anotherName},
+        data_tags = #{dataTags}
+    where file_id in (${dataIds})
   </update>
 </mapper>

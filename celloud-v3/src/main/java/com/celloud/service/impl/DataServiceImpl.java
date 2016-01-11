@@ -1,6 +1,7 @@
 package com.celloud.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,11 +78,11 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public Integer getFormatByIds(String dataIds) {
-        Map<String, Integer> map = dataFileMapper.findFormatByIds(dataIds);
-        Integer result = null;
-        if (map.get("formatNum") != null && map.get("formatNum") > 1) {
-            result = -1;
+    public Long getFormatByIds(String dataIds) {
+        Map<String, Long> map = dataFileMapper.findFormatByIds(dataIds);
+        Long result = null;
+        if (map.get("formatNum") != null && map.get("formatNum") > 1l) {
+            result = -1l;
         } else {
             result = map.get("formatNum");
         }
@@ -101,6 +102,7 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public List<DataFile> findDatasById(String dataIds) {
+        // String[] dataIdArr = dataIds.split(",");
         return dataFileMapper.findDatasById(dataIds);
     }
 
@@ -154,7 +156,9 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public Integer updateDataByIds(String dataIds, DataFile data) {
-        return dataFileMapper.updateDataByIds(dataIds, data);
+        return dataFileMapper.updateDataByIds(dataIds, data.getStrain(),
+                data.getSample(), new Date(), data.getAnotherName(),
+                data.getDataTags());
     }
 
     @Override

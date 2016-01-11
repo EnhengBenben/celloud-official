@@ -124,7 +124,7 @@ public class LoginAction {
         }
         if (checked) {
             addCookies(request, response, user.getUsername(), user.getPassword(), publicKey.getModulus());
-        } else if (key == null || key.isExpires()) {
+        } else if (key != null && key.isExpires()) {
             rsaKeyService.deleteByModulus(publicKey.getModulus());
         }
         String password = RSAUtil.decryptStringByJs(privateKey, user.getPassword());

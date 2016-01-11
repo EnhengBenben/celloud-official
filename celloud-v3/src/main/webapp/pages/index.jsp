@@ -130,6 +130,11 @@
 							<span>问题反馈</span>
 						</a>
 					</li>
+					<li class="treeview" id="toHelpMenu">
+					   <a href="javascript:void(0);" onclick="showHelp()"><i class="fa fa-question-circle text-aqua"></i>
+							<span>帮助</span>
+						</a>
+					</li>
 				</ul>
 			</section>
 			<!-- /.sidebar -->
