@@ -81,33 +81,33 @@
 	<div class="m-box" id="printDiv3">
 		<h2><i class="i-dna"></i>原始峰图</h2>
 	    <div class="m-boxCon result">
-			<a href="javascript:showBg('${path }/${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['1_all_png'] }','listAll1Img');" >
-				<img class="imgtop" name="imgSrc" src="${path }/${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['1_all_png'] }" style="width: 750px;height: 150px;" id="listAll1Img">
+			<a href="javascript:showBg('${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['1_all_png'] }','listAll1Img');" >
+				<img class="imgtop" name="imgSrc" src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['1_all_png'] }" style="width: 750px;height: 150px;" id="listAll1Img">
 			</a>
 	    </div>
 	     <div class="m-boxCon result">
-			<a href="javascript:showBg('${path }/${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['2_all_png'] }','listAll2Img');" >
-				<img class="imgtop" name="imgSrc" src="${path }/${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['2_all_png'] }" style="width: 750px;height: 150px;" id="listAll2Img">
+			<a href="javascript:showBg('${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['2_all_png'] }','listAll2Img');" >
+				<img class="imgtop" name="imgSrc" src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['2_all_png'] }" style="width: 750px;height: 150px;" id="listAll2Img">
 			</a>
 	    </div>
 	     <div class="m-boxCon result">
-			<a href="javascript:showBg('${path }/${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['3_all_png'] }','listAll3Img');" >
-				<img class="imgtop" name="imgSrc" src="${path }/${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['3_all_png'] }" style="width: 750px;height: 150px;" id="listAll3Img">
+			<a href="javascript:showBg('${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['3_all_png'] }','listAll3Img');" >
+				<img class="imgtop" name="imgSrc" src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['3_all_png'] }" style="width: 750px;height: 150px;" id="listAll3Img">
 			</a>
 	    </div>
 	     <div class="m-boxCon result">
-			<a href="javascript:showBg('${path }/${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['4_all_png'] }','listAll4Img');" >
-				<img class="imgtop" name="imgSrc" src="${path }/${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['4_all_png'] }" style="width: 750px;height: 150px;" id="listAll4Img">
+			<a href="javascript:showBg('${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['4_all_png'] }','listAll4Img');" >
+				<img class="imgtop" name="imgSrc" src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['4_all_png'] }" style="width: 750px;height: 150px;" id="listAll4Img">
 			</a>
 	    </div>
 	    <div class="m-boxCon result">
-			<a href="javascript:showBg('${path }/${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['5_all_png'] }','listAll5Img');" >
-				<img class="imgtop" name="imgSrc" src="${path }/${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['5_all_png'] }" style="width: 750px;height: 150px;" id="listAll5Img">
+			<a href="javascript:showBg('${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['5_all_png'] }','listAll5Img');" >
+				<img class="imgtop" name="imgSrc" src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['5_all_png'] }" style="width: 750px;height: 150px;" id="listAll5Img">
 			</a>
 	    </div>
 	    <div class="m-boxCon result">
-			<a href="javascript:showBg('${path }/${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['6_all_png'] }','listAll6Img');" >
-				<img class="imgtop" name="imgSrc" src="${path }/${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['6_all_png'] }" style="width: 750px;height: 150px;" id="listAll6Img">
+			<a href="javascript:showBg('${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['6_all_png'] }','listAll6Img');" >
+				<img class="imgtop" name="imgSrc" src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['6_all_png'] }" style="width: 750px;height: 150px;" id="listAll6Img">
 			</a>
 	    </div>
 	</div>

@@ -173,132 +173,141 @@ public class CountAction {
 	@RequestMapping("systemCount")
 	public Map<String, Object> systemCount() {
 		Integer userId = ConstantsData.getLoginUserId();
-		return reportService.systemCount(userId);
-		
+		Map<String, Object> map = reportService.systemCount(userId);
+		;
+		// Long size = Long.parseLong(map.get("size").toString());
+		// Map<String,String>fileMap = (Map<String, String>) map.get("fileNum");
+		// String fNumStr = fileMap.get("runFileNum");
+		// logger.info(fNumStr);
+		// int runFileNum = Integer.parseInt(fNumStr);
+		// String funNum = fileMap.get("fileNum");
+		// logger.info(funNum);
+		// int fileNum =Integer.parseInt(funNum);
+		return map;
+
 	}
 
-    /**
-     * HBV 流程数据参数同比
-     * 
-     * @param appId
-     * @param path
-     * @return
-     * @date 2016-1-9 下午2:55:57
-     */
-    @ResponseBody
-    @RequestMapping("hbvCompare")
-    public String hbvCompare(Integer appId, String path) {
-        return reportService.hbvCompare(appId, path);
-    }
+	/**
+	 * HBV 流程数据参数同比
+	 * 
+	 * @param appId
+	 * @param path
+	 * @return
+	 * @date 2016-1-9 下午2:55:57
+	 */
+	@ResponseBody
+	@RequestMapping("hbvCompare")
+	public String hbvCompare(Integer appId, String path) {
+		return reportService.hbvCompare(appId, path);
+	}
 
-    /**
-     * TB 数据参数同比
-     * 
-     * @param appId
-     * @param path
-     * @return
-     * @date 2016-1-9 下午3:16:01
-     */
-    @ResponseBody
-    @RequestMapping("tbCompare")
-    public String tbCompare(Integer appId, String path) {
-        return FileTools.getLimitLines(path + appId, 1, 10);
-    }
+	/**
+	 * TB 数据参数同比
+	 * 
+	 * @param appId
+	 * @param path
+	 * @return
+	 * @date 2016-1-9 下午3:16:01
+	 */
+	@ResponseBody
+	@RequestMapping("tbCompare")
+	public String tbCompare(Integer appId, String path) {
+		return FileTools.getLimitLines(path + appId, 1, 10);
+	}
 
-    /**
-     * EGFR 和 KRAS 数据参数同比
-     * 
-     * @param appId
-     * @param path
-     * @param length
-     * @return
-     * @date 2016-1-9 下午3:09:58
-     */
-    @ResponseBody
-    @RequestMapping("egfrCompare")
-    public String egfrCompare(Integer appId, String path, String length) {
-        return reportService.egfrCompare(appId, path, length);
-    }
+	/**
+	 * EGFR 和 KRAS 数据参数同比
+	 * 
+	 * @param appId
+	 * @param path
+	 * @param length
+	 * @return
+	 * @date 2016-1-9 下午3:09:58
+	 */
+	@ResponseBody
+	@RequestMapping("egfrCompare")
+	public String egfrCompare(Integer appId, String path, String length) {
+		return reportService.egfrCompare(appId, path, length);
+	}
 
-    /**
-     * HCV 数据参数同比
-     * 
-     * @param appId
-     * @param path
-     * @return
-     * @date 2016-1-9 下午3:20:50
-     */
-    @ResponseBody
-    @RequestMapping("hcvCompare")
-    public String hcvCompare(Integer appId, String path) {
-        return reportService.hcvCompare(appId, path);
-    }
+	/**
+	 * HCV 数据参数同比
+	 * 
+	 * @param appId
+	 * @param path
+	 * @return
+	 * @date 2016-1-9 下午3:20:50
+	 */
+	@ResponseBody
+	@RequestMapping("hcvCompare")
+	public String hcvCompare(Integer appId, String path) {
+		return reportService.hcvCompare(appId, path);
+	}
 
-    /**
-     * PGS 数据参数同比
-     * 
-     * @param appId
-     * @param path
-     * @param columns
-     * @return
-     * @date 2016-1-9 下午3:27:25
-     */
-    @ResponseBody
-    @RequestMapping("pgsCompare")
-    public String pgsCompare(Integer appId, String path, String columns) {
-        return reportService.pgsCompare(appId, path, columns);
-    }
+	/**
+	 * PGS 数据参数同比
+	 * 
+	 * @param appId
+	 * @param path
+	 * @param columns
+	 * @return
+	 * @date 2016-1-9 下午3:27:25
+	 */
+	@ResponseBody
+	@RequestMapping("pgsCompare")
+	public String pgsCompare(Integer appId, String path, String columns) {
+		return reportService.pgsCompare(appId, path, columns);
+	}
 
-    /**
-     * HBV 统计
-     * 
-     * @return
-     * @date 2016-1-10 上午12:26:32
-     */
-    @RequestMapping("hbvCount")
-    public ModelAndView hbvCount() {
-        Integer userId = ConstantsData.getLoginUserId();
-        Map<String, Object> map = reportService.hbvCount(userId);
-        return new ModelAndView("count/count_hbv").addObject("map", map);
-    }
+	/**
+	 * HBV 统计
+	 * 
+	 * @return
+	 * @date 2016-1-10 上午12:26:32
+	 */
+	@RequestMapping("hbvCount")
+	public ModelAndView hbvCount() {
+		Integer userId = ConstantsData.getLoginUserId();
+		Map<String, Object> map = reportService.hbvCount(userId);
+		return new ModelAndView("count/count_hbv").addObject("map", map);
+	}
 
-    /**
-     * PGS 统计
-     * 
-     * @return
-     * @date 2016-1-10 上午12:44:21
-     */
-    @RequestMapping("pgsCount")
-    public ModelAndView pgsCount() {
-        Integer userId = ConstantsData.getLoginUserId();
-        List<Pgs> list = reportService.pgsCount(userId);
-        return new ModelAndView("count/count_pgs").addObject("list", list);
-    }
+	/**
+	 * PGS 统计
+	 * 
+	 * @return
+	 * @date 2016-1-10 上午12:44:21
+	 */
+	@RequestMapping("pgsCount")
+	public ModelAndView pgsCount() {
+		Integer userId = ConstantsData.getLoginUserId();
+		List<Pgs> list = reportService.pgsCount(userId);
+		return new ModelAndView("count/count_pgs").addObject("list", list);
+	}
 
-    /**
-     * CMP 统计
-     * 
-     * @return
-     * @date 2016-1-10 上午1:00:07
-     */
-    @RequestMapping("cmpCount")
-    public ModelAndView cmpCount() {
-        Integer userId = ConstantsData.getLoginUserId();
-        Map<String, Object> map = reportService.cmpCount(userId);
-        return new ModelAndView("count/count_cmp").addObject("map", map);
-    }
+	/**
+	 * CMP 统计
+	 * 
+	 * @return
+	 * @date 2016-1-10 上午1:00:07
+	 */
+	@RequestMapping("cmpCount")
+	public ModelAndView cmpCount() {
+		Integer userId = ConstantsData.getLoginUserId();
+		Map<String, Object> map = reportService.cmpCount(userId);
+		return new ModelAndView("count/count_cmp").addObject("map", map);
+	}
 
-    /**
-     * 统计模块Excel文件下载
-     * 
-     * @param response
-     * @param fileName
-     * @date 2016-1-10 下午10:18:26
-     */
-    @RequestMapping("download")
-    public void download(HttpServletResponse response, String fileName) {
-        if (!StringUtils.isEmpty(fileName))
-            FileTools.fileDownLoad(response, PropertiesUtil.outputPath
-                    + fileName);
-    }
+	/**
+	 * 统计模块Excel文件下载
+	 * 
+	 * @param response
+	 * @param fileName
+	 * @date 2016-1-10 下午10:18:26
+	 */
+	@RequestMapping("download")
+	public void download(HttpServletResponse response, String fileName) {
+		if (!StringUtils.isEmpty(fileName))
+			FileTools.fileDownLoad(response, PropertiesUtil.outputPath + fileName);
+	}
 }

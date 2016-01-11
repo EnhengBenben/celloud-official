@@ -64,8 +64,8 @@
     <div class="m-box">
     	<h2><i class="i-dna"></i>染色体</h2>
         <div class="m-boxCon">
-			<a href="javascript:showBg('${path }/${nipt.userId }/${nipt.appId }/${nipt.dataKey }/Result/${nipt.minipng }','finalPngImg');" >
-				<img src="${path }/${nipt.userId }/${nipt.appId }/${nipt.dataKey }/Result/${nipt.minipng }" style="width: 750px;height: 150px;" id="finalPngImg">
+			<a href="javascript:showBg('${uploadPath}${nipt.userId }/${nipt.appId }/${nipt.dataKey }/Result/${nipt.minipng }','finalPngImg');" >
+				<img src="${uploadPath}${nipt.userId }/${nipt.appId }/${nipt.dataKey }/Result/${nipt.minipng }" style="width: 750px;height: 150px;" id="finalPngImg">
 			</a>
         </div>
     </div>

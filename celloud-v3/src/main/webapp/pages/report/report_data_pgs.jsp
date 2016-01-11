@@ -13,14 +13,14 @@
 				<div class="col-lg-5">
 					<div class="toolbar" style="position: inherit;right: auto;">
 						<c:if test="${pgs.finalPng!=null && pgs.finalPng!='' }">
-							<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" class="btn btn-default"><i class="i-download"></i>报告下载</a>
+							<a href="${toolsPath }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" class="btn btn-default"><i class="i-download"></i>报告下载</a>
 						</c:if>
 						<c:if test="${pgs.pdf!=null }">
-							<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.pdf }" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
+							<a href="${toolsPath }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.pdf }" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
 						</c:if>
 						<c:if test="${pgs.pdf ==null }">
 							<c:if test="${pgs.createDate.time>1440432000000  }">
-								<a href="${path.replace('upload','') }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.dataKey }.pdf" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
+								<a href="${toolsPath }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.dataKey }.pdf" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
 							</c:if>
 						</c:if>
 						<c:choose>
@@ -158,8 +158,8 @@
         	<h2><i class="i-dna"></i>染色体</h2>
             <div class="m-boxCon">
             	<c:if test="${pgs.miniPng!=null && pgs.miniPng!='' }">
-					<a href="javascript:showBg('${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }','miniPngImg');" >
-						<img src="${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }" style="width: 700px;" id="miniPngImg">
+					<a href="javascript:showBg('${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }','miniPngImg');" >
+						<img src="${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }" style="width: 700px;" id="miniPngImg">
 					</a>
 				</c:if>
 				<c:if test="${pgs.miniPng==null || pgs.miniPng=='' }">
@@ -172,8 +172,8 @@
         	<h2><i class="i-dna"></i>染色体点图</h2>
             <div class="m-boxCon">
             	<c:if test="${pgs.testPng!=null && pgs.testPng!='' }">
-					<a href="javascript:showBg('${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.testPng }','testPngImg');" >
-						<img src="${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.testPng }" style="width: 700px;height: 220px" id="testPngImg">
+					<a href="javascript:showBg('${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.testPng }','testPngImg');" >
+						<img src="${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.testPng }" style="width: 700px;height: 220px" id="testPngImg">
 					</a>
 				</c:if>
 				<c:if test="${pgs.testPng==null || pgs.testPng=='' }">
@@ -186,8 +186,8 @@
         	<h2><i class="i-dna"></i>染色体位置图</h2>
             <div class="m-boxCon">
 	            <c:if test="${pgs.finalPng!=null && pgs.finalPng!='' }">
-					<a href="javascript:showBg('${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }','finalPngImg');" >
-						<img src="${path }/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" style="height: 1000px;" id="finalPngImg">
+					<a href="javascript:showBg('${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }','finalPngImg');" >
+						<img src="${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" style="height: 1000px;" id="finalPngImg">
 					</a>
 				</c:if>
 				<c:if test="${pgs.finalPng==null || pgs.finalPng=='' }">
@@ -235,7 +235,7 @@
 		<c:if test="${pgs.appId==81||pgs.appId==88||pgs.appId==91||pgs.appId==93 }">
 			<div class="lineheight">MT_Ratio：样本测序序列中线粒体序列百分比。数据统计表明染色体拷贝数异常胚胎线粒体比例高。</div>
 			<div>
-				<img alt="" src="${path.replace('upload','') }/resource/img/pgs.png" width="100%">
+				<img alt="" src="${toolsPath }/resource/img/pgs.png" width="100%">
 			</div>
 		</c:if>
 	</div>
