@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <link href="<%=request.getContextPath() %>/css/report.css?version=3.7" rel="stylesheet">
-<%-- <link href="<%=request.getContextPath() %>/css/buttons.css?version=20150730" rel="stylesheet"> --%>
-<%-- <link href="<%=request.getContextPath() %>/plugins/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet"/> --%>
-<%-- <link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/> --%>
+<link href="<%=request.getContextPath() %>/css/buttons.css?version=20150730" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.css" rel="stylesheet">
 <style>
 .tab-content>.tab-pane {
@@ -107,7 +105,7 @@ a:hover, a:active, a:focus{
 <script src="<%=request.getContextPath() %>/plugins/select/select2.min.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/calendar/WdatePicker.js"></script>
-<script src="<%=request.getContextPath() %>/js/report.js?version=1.8"></script>
+<script src="<%=request.getContextPath() %>/js/report.js?version=1.9"></script>
 <script src="<%=request.getContextPath() %>/js/dataformat.js"></script>
 <script src="<%=request.getContextPath() %>/js/codon.js"></script>
 <script type="text/javascript">
