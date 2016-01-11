@@ -3,6 +3,8 @@ package com.celloud.mapper;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.ws.Action;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.celloud.model.Report;
@@ -83,4 +85,6 @@ public interface ReportMapper {
 	 * @return
 	 */
 	public List<Map<String, String>> countReportWeekByUserId(@Param("userId") Integer userId);
+	
+	public List<Map<String,String>> countReportMonthByUserId(@Param("userId") Integer userId);
 }

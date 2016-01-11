@@ -80,6 +80,21 @@ public class ReportAction {
     }
 
     /**
+     * 用于 ModelAndView 加载共有参数
+     * 
+     * @param path
+     * @return
+     * @author lin
+     * @date 2016-1-11 上午10:39:13
+     */
+    private ModelAndView getModelAndView(String path) {
+        ModelAndView mv = new ModelAndView(path);
+        mv.addObject("toolsPath", PropertiesUtil.toolsPath);
+        mv.addObject("uploadPath", PropertiesUtil.toolsPath + "upload/");
+        return mv;
+    }
+
+    /**
      * 获取 CMP 报告
      * 
      * @param dataKey
@@ -93,7 +108,7 @@ public class ReportAction {
             Integer appId) {
         CmpReport cmpReport = reportService.getCMPReport(dataKey, projectId,
                 appId);
-        ModelAndView mv = new ModelAndView("report/report_data_cmp");
+        ModelAndView mv = getModelAndView("report/report_data_cmp");
         return mv.addObject("cmpReport", cmpReport);
     }
 
@@ -111,7 +126,7 @@ public class ReportAction {
             Integer appId) {
         CmpReport cmpReport = reportService.getCMPReport(dataKey, projectId,
                 appId);
-        ModelAndView mv = new ModelAndView("report/report_data_gdd");
+        ModelAndView mv = getModelAndView("report/report_data_gdd");
         return mv.addObject("cmpReport", cmpReport);
     }
 
@@ -128,7 +143,7 @@ public class ReportAction {
     public ModelAndView getSplitReport(String dataKey, Integer projectId,
             Integer appId) {
         Split split = reportService.getSplitReport(dataKey, projectId, appId);
-        ModelAndView mv = new ModelAndView("report/report_data_split");
+        ModelAndView mv = getModelAndView("report/report_data_split");
         return mv.addObject("split", split);
     }
 
@@ -145,7 +160,7 @@ public class ReportAction {
     public ModelAndView getMIBReport(String dataKey, Integer projectId,
             Integer appId) {
         MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
-        ModelAndView mv = new ModelAndView("report/report_data_mib");
+        ModelAndView mv = getModelAndView("report/report_data_mib");
         return mv.addObject("mib", mib);
     }
 
@@ -162,7 +177,7 @@ public class ReportAction {
     public ModelAndView getHBVReport(String dataKey, Integer projectId,
             Integer appId) {
         HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
-        ModelAndView mv = new ModelAndView("report/report_data_hbv");
+        ModelAndView mv = getModelAndView("report/report_data_hbv");
         return mv.addObject("hbv", hbv);
     }
 
@@ -179,7 +194,7 @@ public class ReportAction {
     public ModelAndView getPgsReport(String dataKey, Integer projectId,
             Integer appId) {
         Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
-        ModelAndView mv = new ModelAndView("report/report_data_pgs");
+        ModelAndView mv = getModelAndView("report/report_data_pgs");
         return mv.addObject("pgs", pgs);
     }
 }

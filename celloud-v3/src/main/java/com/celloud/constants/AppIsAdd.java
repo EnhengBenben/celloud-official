@@ -7,8 +7,8 @@ package com.celloud.constants;
  * @version Revision: 1.0
  */
 public class AppIsAdd {
-    /** 已添加 */
-    public static final int NOT_ADDED = 0;
     /** 未添加 */
+    public static final int NOT_ADDED = 0;
+    /** 已添加 */
     public static final int ALREADY_ADDED = 1;
 }
