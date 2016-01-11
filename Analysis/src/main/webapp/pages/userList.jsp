@@ -146,7 +146,7 @@
 				"bSortable" : false
 			}, null, null, null, null ],
 			"aaSorting" : [ [ 3, "desc" ] ],
-			iDisplayLength : 100
+			iDisplayLength : 10
 		});
 	})
 	function getUserDetail(id, name) {

@@ -6,16 +6,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+
+import com.celloud.sdo.App;
 import com.celloud.sdo.DataFile;
 import com.celloud.sdo.Entry;
 import com.celloud.sdo.LoginLog;
 import com.celloud.sdo.PublicKey;
-import com.celloud.sdo.App;
 import com.celloud.sdo.User;
 import com.celloud.service.UserService;
 import com.celloud.utils.MD5Util;
@@ -64,7 +66,6 @@ public class UserAction extends BaseAction {
 	private List<Integer> userIds;
 	private Map<String, Object> resultMap;
 
-
 	public String login() {
 		String userName = user.getUsername();
 		String kaptchaExpected = (String) session.get(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
@@ -87,7 +88,7 @@ public class UserAction extends BaseAction {
 		user = userService.login(user);
 		log.info(user);
 		/***
-		 * zuo role枚举 0:用户 1:大客户 2:超级管理员 3:系统管理员
+		 * zuo role枚举 0:用户 1:大客户 2:超级管理员
 		 */
 		if (user != null) {
 			if (user.getRole() >= 1) {
@@ -115,17 +116,19 @@ public class UserAction extends BaseAction {
 	}
 
 	public String toUserActivity() {
-//		Integer cmpId = (Integer) getCid();
-//		Integer role = (Integer) super.session.get(User.USER_ROLE);
-//		userList = userService.getUserByCompany(cmpId, role);
-//		log.info(userList.size());
+		// Integer cmpId = (Integer) getCid();
+		// Integer role = (Integer) super.session.get(User.USER_ROLE);
+		// userList = userService.getUserByCompany(cmpId, role);
+		// log.info(userList.size());
 		return "toUserActivity";
 	}
+
 	/**
 	 * 活跃度统计－－用户活跃度统计
+	 * 
 	 * @return
 	 */
-	public String getUserActivity(){
+	public String getUserActivity() {
 		Integer cmpId = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		try {

@@ -163,11 +163,10 @@ public class AppDaoImpl implements AppDao {
 	public List<LoginLog> getTotalUserLogin(int role, int cmpId) {
 		List<LoginLog> list = null;
 		Connection conn = ConnectManager.getConnection();
-		String sql = "select l.user_name ,count(l.user_name) as logNum from tb_log l,tb_user u,tb_user_company_relat uc "
-				+ " where l.user_name is not null and l.user_name = u.username and u.state=0 and u.user_id = uc.user_id "
-				+ SqlController.notUserName("l", "user_name", noUsername)
-				+ SqlController.whereCompany("uc", "company_id", role, cmpId) + " group by l.user_name"
-				+ " order by logNum desc";
+		String sql = "select u.username ,count(l.user_id) as logNum from tb_log l,tb_user u,tb_user_company_relat uc "
+				+ " where  l.user_id = u.user_id and u.state=0 and u.user_id = uc.user_id "
+				+ SqlController.notUserId("l", noUserid) + SqlController.whereCompany("uc", "company_id", role, cmpId)
+				+ " group by l.user_id" + " order by logNum desc";
 		LogUtil.info(log, sql);
 		try {
 			ResultSetHandler<List<LoginLog>> rsh = new BeanListHandler<LoginLog>(LoginLog.class);
@@ -183,8 +182,7 @@ public class AppDaoImpl implements AppDao {
 		List<LoginLog> list = null;
 		Connection conn = ConnectManager.getConnection();
 		String sql = "SELECT l.browser,count(l.browser)as logNum FROM tb_log l where 1=1 "
-				+ SqlController.notUserName("l", "user_name", noUsername) + "group by l.browser "
-				+ "order by logNum desc";
+				+ SqlController.notUserId("l", noUserid) + "group by l.browser " + "order by logNum desc";
 		LogUtil.info(log, sql);
 		try {
 			ResultSetHandler<List<LoginLog>> rsh = new BeanListHandler<LoginLog>(LoginLog.class);

@@ -198,8 +198,9 @@ public class UserDaoImpl implements UserDao {
 				+ " (select count(ifnull(file_id,1)) from tb_file where user_id = u.user_id and state=0)as fileNum, "
 				+ " (select sum(ifnull(size,0)) from tb_file where user_id = u.user_id and state=0)as size, "
 				+ " (select count(report_id) from tb_report where user_id = u.user_id and flag =0)as runNum "
-				+ " from tb_user u where u.role=0 and u.state=0 " + SqlController.notUserId("u", noUserid)
-				+ SqlController.whereCompany("u", "company_id", role, companyId) + SqlController.orderBy(orderType);
+				+ " from tb_user u,tb_user_company_relat uc where  u.state=0 and uc.user_id = u.user_id "
+				+ SqlController.notUserId("u", noUserid)
+				+ SqlController.whereCompany("uc", "company_id", role, companyId) + SqlController.orderBy(orderType);
 		LogUtil.info(log, sql);
 		try {
 			ResultSetHandler<List<User>> rsh = new BeanListHandler<User>(User.class);

@@ -182,14 +182,17 @@ public class DataDaoImpl implements DataDao {
 		Connection conn = ConnectManager.getConnection();
 		String sql = " select sum(f.size) as size,count(f.file_id)as fileNum,uc.company_id,c.company_name "
 				+ " from tb_file f,tb_user_company_relat uc,tb_company c "
-				+ " where f.user_id = uc.user_id and c.company_name is not null  "
+				+ " where f.user_id = uc.user_id and f.state=0 "// and
+																// c.company_name
+																// is not null "
 				+ SqlController.notUserId("f", noUserid) + " and uc.company_id = c.company_id "
 				+ " group by uc.company_id order by fileNum desc";
 		ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
+		LogUtil.info(log, sql);
 		try {
 			list = qr.query(conn, sql, rsh);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LogUtil.erro(log, e);
 		}
 		return list;
 	}

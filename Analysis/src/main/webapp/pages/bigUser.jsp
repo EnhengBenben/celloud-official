@@ -30,7 +30,7 @@
 							<th>大客户编号</th>
 							<th>大客户名称</th>
 							<th class="hidden-480">数据量(个)</th>
-							<th class="hidden-480">数据大小(GB)</th>
+							<th class="hidden-480">数据大小</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -45,7 +45,9 @@
 									</td>
 									<td>${data.fileNum }</td>
 									<td>
-										<fmt:formatNumber value="${data.size/(1024*1024*1024)}" pattern="#00.0#" />
+										<c:choose><c:when test="${data.size>1073741824 }"><fmt:formatNumber pattern="0.00" value="${data.size/1073741824 }"/>GB</c:when>
+										<c:when test="${data.size>1048576 }"><fmt:formatNumber pattern="0.00" value="${data.size/1048576 }"/>MB</c:when>
+										<c:otherwise><fmt:formatNumber pattern="0.00" value="${data.size/1024 }"/>KB</c:otherwise></c:choose>
 									</td>
 								</tr>
 							</c:forEach>
