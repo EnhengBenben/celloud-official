@@ -710,3 +710,7 @@ a.reco-hd-link:hover {
     padding-bottom: 100px;
     padding-top: 50px
 }
+a {
+    color: inherit;
+    cursor: pointer
+}

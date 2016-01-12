@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
       <c:choose>
   		<c:when test="${sclassifys.size()>0 }">
   		  <c:set var="scindex" value="0"></c:set>
@@ -28,7 +29,7 @@
 		                        	  </div>
 		                      		</div>
 		                      		<p class="appname">${app.appName }</p>
-		                      		<p class="company">${app.createDate }</p>
+		                      		<p class="company"><fmt:formatDate value="${app.createDate }" type="date"/></p>
 		                    	  </div>
 		                    	  <div class="button" style="color: #ff6600"> <a href="javascript:appStore.toAppDetail(${app.appId })">查看详情<i class="fa fa-arrow-circle-o-right"></i></a> </div>
 		                    	  <span class="app_mark"></span>
