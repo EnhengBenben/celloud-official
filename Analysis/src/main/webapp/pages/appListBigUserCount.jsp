@@ -73,4 +73,13 @@
 			$("#cmpId").html(responseText);
 		});
 	}
+   var oTable1 = $('#appList').dataTable({
+       "aoColumns" : [{
+           "bSortable" : false
+       }, {
+           "bSortable" : false
+       }, null, null ],
+       iDisplayLength : 12,
+       "aaSorting":[[3,"desc"]],
+   });
 </script>

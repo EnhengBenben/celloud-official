@@ -180,13 +180,10 @@ public class DataDaoImpl implements DataDao {
 	public List<DataFile> getBigUserData() {
 		List<DataFile> list = null;
 		Connection conn = ConnectManager.getConnection();
-		String sql = " select sum(f.size) as size,count(f.file_id)as fileNum,uc.company_id,c.company_name "
-				+ " from tb_file f,tb_user_company_relat uc,tb_company c "
-				+ " where f.user_id = uc.user_id and f.state=0 "// and
-																// c.company_name
-																// is not null "
-				+ SqlController.notUserId("f", noUserid) + " and uc.company_id = c.company_id "
-				+ " group by uc.company_id order by fileNum desc";
+		String sql = " select distinct(p.company_id) as company_id sum(f.size) as size,count(f.file_id)as fileNum,c.company_name "
+				+ " from tb_app p, tb_file f,tb_company c " + " where f.user_id = p.user_id and f.state=0 "// and
+				+ SqlController.notUserId("f", noUserid) + " and p.company_id = c.company_id "
+				+ " group by p.company_id order by fileNum desc ";
 		ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
 		LogUtil.info(log, sql);
 		try {

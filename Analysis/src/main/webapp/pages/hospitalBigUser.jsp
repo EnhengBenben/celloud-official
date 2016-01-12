@@ -34,8 +34,8 @@
 							<th class="min-w-80">大客户名称</th>
 							<th class="hidden-480">入驻时间</th>
 							<th class="hidden-480">数据量(个)</th>
-							<th class="hidden-480">数据大小(GB)</th>
-							<th class="hidden-480">APP运行次数</th>
+							<th class="hidden-480">数据大小</th>
+							<th class="hidden-480">运行次数</th>
 							<th class="min-w-80">用户数量</th>
 						</tr>
 					</thead>
@@ -50,8 +50,10 @@
 									</td>
 									<td>${item.fileNum }</td>
 									<td>
-										<fmt:formatNumber value="${item.size/(1024*1024*1024)}" pattern="#00.0#" />
-									</td>
+                                        <c:choose><c:when test="${item.size>1073741824 }"><fmt:formatNumber pattern="0.00" value="${item.size/1073741824 }"/>GB</c:when>
+                                        <c:when test="${item.size>1048576 }"><fmt:formatNumber pattern="0.00" value="${item.size/1048576 }"/>MB</c:when>
+                                        <c:otherwise><fmt:formatNumber pattern="0.00" value="${item.size/1024 }"/>KB</c:otherwise></c:choose>
+                                    </td>
 									<td>${item.runNum}</td>
 									<td>${item.userNum}</td>
 								</tr>

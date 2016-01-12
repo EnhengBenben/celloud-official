@@ -45,7 +45,7 @@
 							<th class="min-w-80">入驻时间</th>
 							<th class="min-w-80">用户数量</th>
 							<th class="min-w-80">数据个数</th>
-							<th class="min-w-80">数据大小(GB)</th>
+							<th class="min-w-80">数据大小</th>
 							<th class="min-w-80">报告个数</th>
 						</tr>
 					</thead>
@@ -61,7 +61,14 @@
 								<td>${data.userNum }</td>
 								<td>${data.fileNum }</td>
 								<td>
-									<fmt:formatNumber pattern="0.00" value="${data.size/1024/1024/1024 }" />
+									<c:choose>
+										<c:when test="${data.size>1073741824 }">
+											<fmt:formatNumber pattern="0.00" value="${data.size/1073741824 }" />GB</c:when>
+										<c:when test="${data.size>1048576 }">
+											<fmt:formatNumber pattern="0.00" value="${data.size/1048576 }" />MB</c:when>
+										<c:otherwise>
+											<fmt:formatNumber pattern="0.00" value="${data.size/1024 }" />KB</c:otherwise>
+									</c:choose>
 								</td>
 								<td>${data.runNum }</td>
 							</tr>
@@ -85,15 +92,12 @@
 	$.get(Company_DetailURL, {
 		"orderby" : "runNum"
 	}, function(res) {
-		console.log(res);
 		var xAxis = new Array(res.length);
 		var yAxis = new Array(res.length);
-		
 		for (var i = 0; i < res.length; i++) {
 			xAxis[i] = res[i].company_name;
 			yAxis[i] = res[i].runNum;
 		}
-		
 		var myChart = echarts.init(document.getElementById(runNumViewID));
 		var opt = makeOptionScrollUnit(xAxis, yAxis, "运行次数", "bar", 0, 10);
 		myChart.setOption(opt);
@@ -106,7 +110,7 @@
 		var xAxis = new Array(res.length);
 		var yAxis = new Array(res.length);
 		
-		for (var i = 0; i < res.length; i++) {${company.address }
+		for (var i = 0; i < res.length; i++) {
 			xAxis[i] = res[i].company_name;
 			yAxis[i] = parseFloat((res[i].size / (1024 * 1024 * 1024)).toFixed(2));
 		}
@@ -117,7 +121,6 @@
 	$.get(Company_DetailURL, {
 		"orderby" : "fileNum"
 	}, function(res) {
-		console.log(res);
 		var xAxis = new Array(res.length);
 		var yAxis = new Array(res.length);
 		for (var i = 0; i < res.length; i++) {

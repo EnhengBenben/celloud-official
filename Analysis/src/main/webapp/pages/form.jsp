@@ -18,7 +18,6 @@
     <span id="_app_id" class="hide"></span>
 </div>
 <div class="page-content">
-	<div>
 		<div style="padding-left: 65px">
 			<a style="font-size: 16px; cursor: pointer;" onclick="javascript:localWeek()">本周</a>
 			&nbsp;&nbsp;
@@ -31,9 +30,9 @@
 			<label>Top N:</label>
 			&nbsp;&nbsp;
 			<select id="topId" style="width: 120px"  onchange="loadContent()">
-				<option value="0" selected></option>
+				<option value="0" ></option>
 				<option value="5">5</option>
-				<option value="10">10</option>
+				<option value="10" selected>10</option>
 				<option value="15">15</option>
 			</select>
 		</div>

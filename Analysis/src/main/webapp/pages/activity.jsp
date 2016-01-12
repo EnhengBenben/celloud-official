@@ -25,7 +25,7 @@
 							<th class="min-w-90">医院名称</th>
 							<th class="min-w-80">入驻时间</th>
 							<th class="min-w-80">数据个数</th>
-							<th class="min-w-80">数据大小(MB)</th>
+							<th class="min-w-80">数据大小</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -37,7 +37,14 @@
 								</td>
 								<td>${data.fileNum }</td>
 								<td>
-									<fmt:formatNumber pattern="0.00" value="${data.size/1024/1024 }" />
+									<c:choose>
+										<c:when test="${data.size>1073741824 }">
+											<fmt:formatNumber pattern="0.00" value="${data.size/1073741824 }" />GB</c:when>
+										<c:when test="${data.size>1048576 }">
+											<fmt:formatNumber pattern="0.00" value="${data.size/1048576 }" />MB</c:when>
+										<c:otherwise>
+											<fmt:formatNumber pattern="0.00" value="${data.size/1024 }" />KB</c:otherwise>
+									</c:choose>
 								</td>
 							</tr>
 						</c:forEach>
@@ -66,7 +73,7 @@
 							<th class="min-w-90">用户名称</th>
 							<th class="min-w-80">注册时间</th>
 							<th class="min-w-80">数据个数</th>
-							<th class="min-w-80">数据大小(MB)</th>
+							<th class="min-w-80">数据大小</th>
 							<th class="min-w-80">运行次数</th>
 						</tr>
 					</thead>
@@ -79,7 +86,14 @@
 								</td>
 								<td>${data.fileNum }</td>
 								<td>
-									<fmt:formatNumber pattern="0.00" value="${data.size/1024/1024 }" />
+									<c:choose>
+										<c:when test="${data.size>1073741824 }">
+											<fmt:formatNumber pattern="0.00" value="${data.size/1073741824 }" />GB</c:when>
+										<c:when test="${data.size>1048576 }">
+											<fmt:formatNumber pattern="0.00" value="${data.size/1048576 }" />MB</c:when>
+										<c:otherwise>
+											<fmt:formatNumber pattern="0.00" value="${data.size/1024 }" />KB</c:otherwise>
+									</c:choose>
 								</td>
 								<td>${data.runNum }</td>
 							</tr>

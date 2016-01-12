@@ -52,8 +52,8 @@ public class AppDaoImpl implements AppDao {
 		Connection conn = ConnectManager.getConnection();
 		String sql = "select p.app_id,p.app_name,p.create_date,p.description,"
 				+ "(select company_name from tb_company where company_id = p.company_id)as company_name,"
-				+ "(select count(report_id) from tb_report where app_id = p.app_id)as runNum"
-				+ " from tb_app p where p.off_line =0" + " order by runNum desc; ";
+				+ "(select count(report_id) from tb_report where app_id = p.app_id and  flag=0 and user_id not in("
+				+ noUserid + "))as runNum" + " from tb_app p where p.off_line =0" + " order by runNum desc; ";
 		SqlController.whereCompany("p", "company_id", role, companyId);
 		LogUtil.info(log, sql);
 		try {
@@ -163,7 +163,7 @@ public class AppDaoImpl implements AppDao {
 	public List<LoginLog> getTotalUserLogin(int role, int cmpId) {
 		List<LoginLog> list = null;
 		Connection conn = ConnectManager.getConnection();
-		String sql = "select u.username ,count(l.user_id) as logNum from tb_log l,tb_user u,tb_user_company_relat uc "
+		String sql = "select u.username as user_name ,count(l.user_id) as logNum from tb_log l,tb_user u,tb_user_company_relat uc "
 				+ " where  l.user_id = u.user_id and u.state=0 and u.user_id = uc.user_id "
 				+ SqlController.notUserId("l", noUserid) + SqlController.whereCompany("uc", "company_id", role, cmpId)
 				+ " group by l.user_id" + " order by logNum desc";
@@ -233,7 +233,7 @@ public class AppDaoImpl implements AppDao {
 		String sql = "select p.app_id,p.app_name,p.create_date,p.picture_name,p.company_id,p.description,"
 				+ " (select count(1) from tb_report where app_id = p.app_id)as runNum,"
 				+ " (select company_name from tb_company where company_id = p.company_id) as company_name"
-				+ "  from tb_app p where p.company_id =? order by runNum desc";
+				+ "  from tb_app p where p.company_id =? and p.off_line =0 order by runNum desc";
 		LogUtil.info(log, sql);
 		try {
 			ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);
