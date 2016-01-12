@@ -235,6 +235,7 @@ $.ajaxSetup ({
 			spinner.spin(target);
 			$.get("report!getReportPageListByCondition",{"appId":APP,"start":START,"end":END,"fileName":FILENAME,"page.pageSize":pageSize,"page.currentPage":currentPage},function(responseText){
 				$("#selfReportDiv").html(responseText);
+				window.scrollTo(0,0);
 				loadReportList();
 				spinner.stop();
 			});
@@ -1130,6 +1131,9 @@ $.ajaxSetup ({
 					return;
 				}
 			}
+			//全部转化成小写再比较
+			userNames = userNames.toLowerCase();
+			sessionUserName = sessionUserName.toLowerCase();
 			if(userNames.substring(0, userNames.length-1)==sessionUserName||userNames.indexOf(sessionUserName, 0)!=-1){
 				$("#shareProPrompt").html("项目不能共享给自己！");
 				return;
