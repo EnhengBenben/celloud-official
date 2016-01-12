@@ -53,7 +53,7 @@ var appStore=(function(appStore){
 	
 	self.sortApp=function(){
 		$("#sort-listUl li").removeClass("current");
-		if(sortFiled == "s.create_date"){
+		if(sortFiled == "a.create_date"){
 			$("#sortByCreateDate").addClass("current");
 			if(sortType == "desc"){
 				$("#sortByCreateDate i").removeClass("up").addClass("down");
@@ -91,7 +91,7 @@ var appStore=(function(appStore){
 			}
 			$("#secondClassifyName").parent().removeClass("hide");
 			$("#sortByCreateDate").bind("click",function(){
-	            sortFiled = "s.create_date";
+	            sortFiled = "a.create_date";
 	            self.toMoreApp(pid,sid,1,isParent);
 			});
 			self.sortApp();
