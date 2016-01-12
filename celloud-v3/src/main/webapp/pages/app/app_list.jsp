@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="y-row clearfix">
   <div class="J_single kind box box-success" style="top: 0px;">
     <div class="list-left">分类方式：</div>
@@ -61,7 +62,7 @@
 		          </div>
 		          <div class="box-star">
 		            <div class="unlinedate"> 上线时间：
-		               <span class="date">${app.createDate }</span>
+		               <span class="date"><fmt:formatDate value="${app.createDate }" type="date"/></span>
 		            </div>
 		            <div class="service-com">服务商：
 		              <c:choose>

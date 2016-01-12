@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="item-list">
   <div class="item-left">
 	<div class="product-info-top-wrap">
@@ -10,7 +11,7 @@
         </div>
         <div class="itemInfo">
           <h5>${app.appName }</h5>
-          <div class="unlinedate">上线时间：<span class="date">${app.createDate }</span></div>
+          <div class="unlinedate">上线时间：<span class="date"><fmt:formatDate value="${app.createDate }" type="date"/></span></div>
           <div class="intro">
             <ul>
               <li>分类：<span>${app.classifyNames}</span></li>

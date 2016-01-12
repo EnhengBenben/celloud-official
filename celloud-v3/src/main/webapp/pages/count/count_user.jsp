@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<link href="<%=request.getContextPath()%>/css/count.css" rel="stylesheet" type="text/css" />
 <section class="content-header">
   <h1>
     <small>&nbsp;</small>
@@ -73,10 +74,10 @@
        <!-- Custom tabs (Charts with tabs)-->
        <div class="nav-tabs-custom">
          <!-- Tabs within a box -->
-         <ul class="nav nav-tabs pull-right">
+         <ul class="nav nav-tabs pull-right line-charts-nav">
            <li class="active"><a href="#count-data-day-chart" data-toggle="tab">每天</a></li>
            <li><a href="#count-data-month-chart" data-toggle="tab">每月</a></li>
-           <li class="pull-left header"><i class="fa fa-inbox"></i> 数据量</li>
+           <li class="pull-left header"><i class="fa fa-list"></i> 数据量</li>
          </ul>
          <div class="tab-content no-padding">
            <!-- Morris chart - Sales -->
@@ -90,10 +91,10 @@
        <!-- Custom tabs (Charts with tabs)-->
        <div class="nav-tabs-custom">
          <!-- Tabs within a box -->
-         <ul class="nav nav-tabs pull-right">
+         <ul class="nav nav-tabs pull-right line-charts-nav">
            <li class="active"><a href="#count-source-day-chart" data-toggle="tab">每天</a></li>
            <li><a href="#count-source-month-chart" data-toggle="tab">每月</a></li>
-           <li class="pull-left header"><i class="fa fa-inbox"></i> 总资源占用</li>
+           <li class="pull-left header"><i class="fa fa-pie-chart"></i> 总资源占用</li>
          </ul>
          <div class="tab-content no-padding">
            <!-- Morris chart - Sales -->
@@ -107,10 +108,10 @@
        <!-- Custom tabs (Charts with tabs)-->
        <div class="nav-tabs-custom">
          <!-- Tabs within a box -->
-         <ul class="nav nav-tabs pull-right">
+         <ul class="nav nav-tabs pull-right line-charts-nav">
            <li class="active"><a href="#count-report-day-chart" data-toggle="tab">每天</a></li>
            <li><a href="#count-report-month-chart" data-toggle="tab">每月</a></li>
-           <li class="pull-left header"><i class="fa fa-inbox"></i> 报告量</li>
+           <li class="pull-left header"><i class="fa fa-file-text-o"></i> 报告量</li>
          </ul>
          <div class="tab-content no-padding">
            <!-- Morris chart - Sales -->
@@ -124,10 +125,10 @@
        <!-- Custom tabs (Charts with tabs)-->
        <div class="nav-tabs-custom">
          <!-- Tabs within a box -->
-         <ul class="nav nav-tabs pull-right">
+         <ul class="nav nav-tabs pull-right line-charts-nav">
            <li class="active"><a href="#count-app-day-chart" data-toggle="tab">每天</a></li>
            <li><a href="#count-app-month-chart" data-toggle="tab">每月</a></li>
-           <li class="pull-left header"><i class="fa fa-inbox"></i> 已添加APP</li>
+           <li class="pull-left header"><i class="fa fa-cube"></i> 已添加APP</li>
          </ul>
          <div class="tab-content no-padding">
            <!-- Morris chart - Sales -->

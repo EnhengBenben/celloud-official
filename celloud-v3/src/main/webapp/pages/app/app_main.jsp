@@ -22,7 +22,7 @@
   		<div class="info">
     	  <p>应用市场是CelLoud的一个开放平台，为用户提供专业、精准的生物信息分析服务。</p>
   		</div>
-  		<ul id="appClassifyUl" data-step="2" data-intro="" data-position="bottom" data-img="checkapp.png">
+  		<ul id="appClassifyUl" class="app-classify-ul" data-step="2" data-intro="" data-position="bottom" data-img="checkapp.png">
   		  <c:if test="${pclassifys.size()>0}">
 	  	 	<c:forEach items="${pclassifys}" var="pc" varStatus="pcstatus">
 		      <li id="classifypidLi${pc.classifyId }" <c:if test="${pcstatus.first}"> class="active"</c:if>><a href="javascript:appStore.toSclassifyApp(${pc.classifyId },'${pc.classifyName }')">${pc.classifyName }</a></li>
