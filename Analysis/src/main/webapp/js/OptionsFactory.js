@@ -253,5 +253,10 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 		var ustr = seriesName.substring(len-3,len-1)
 		opt.yAxis[0].axisLabel.formatter = '{value}'+ustr;
 	}
+	if(xAxis.length<5){
+		var x2 = (10-length)*80;
+		opt.grid.x2 = x2;
+	}
+	console.log(opt.grid);
 	return opt;
 }

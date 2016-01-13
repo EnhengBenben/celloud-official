@@ -109,8 +109,8 @@ function hospital_chart(data) {
 		yAxisSize[i] = parseFloat((fileSize[i].size / (1024 * 1024 * 1024)).toFixed(2));
 	}
 	
-	var option = makeOptionScrollUnit(xAxis, yAxis, "数据量", barType, 0, 6)
-	var sizeoption = makeOptionScrollUnit(xAxisSize, yAxisSize, "数据大小(GB)", barType, 0, 6)
+	var option = makeOptionScrollUnit(xAxis, yAxis, "数据量", barType, 0, 10)
+	var sizeoption = makeOptionScrollUnit(xAxisSize, yAxisSize, "数据大小(GB)", barType, 0, 10)
 	var myChart = echarts.init(document.getElementById(fileNumId));
 	var sizeChart = echarts.init(document.getElementById(fileSizeId));
 	sizeChart.setOption(sizeoption);
@@ -152,7 +152,7 @@ function user_chart(data) {
 		xAxis[i] = fileNum[i].user_name;
 		yAxis[i] = fileNum[i].fileNum;
 	}
-	var option = makeOptionScrollUnit(xAxis, yAxis, "数据量", barType, 0, 15)
+	var option = makeOptionScrollUnit(xAxis, yAxis, "数据量", barType, 0, 10)
 	var myChart = echarts.init(document.getElementById(fileNumId));
 	myChart.setOption(option);
 	
@@ -162,7 +162,7 @@ function user_chart(data) {
 		xAxisSize[i] = fileSize[i].user_name;
 		yAxisSize[i] = parseFloat((fileSize[i].size / (1024 * 1024 * 1024)).toFixed(2));
 	}
-	var sizeoption = makeOptionScrollUnit(xAxisSize, yAxisSize, "数据大小(GB)", barType, 0, 15)
+	var sizeoption = makeOptionScrollUnit(xAxisSize, yAxisSize, "数据大小(GB)", barType, 0, 10)
 	var sizeChart = echarts.init(document.getElementById(fileSizeId));
 	sizeChart.setOption(sizeoption);
 	
@@ -172,7 +172,7 @@ function user_chart(data) {
 		xAxisApp[i] = appRun[i].user_name;
 		yAxisApp[i] = appRun[i].runNum;
 	}
-	var appOpt = makeOptionScrollUnit(xAxisApp, yAxisApp, "运行次数", barType, 0, 15)
+	var appOpt = makeOptionScrollUnit(xAxisApp, yAxisApp, "运行次数", barType, 0, 10)
 	var appChart = echarts.init(document.getElementById(appRunId));
 	appChart.setOption(appOpt);
 	

@@ -28,7 +28,7 @@
 		 -->
 		<h3 class="header smaller lighter green">数据量统计</h3>
 		<div class="col-xs-12" style="height: 450px;" id="userFileSize"></div>
-		<h3 class="header smaller lighter green">文件数量统计</h3>
+		<h3 class="header smaller lighter green">数据大小统计</h3>
 		<div class="col-xs-12" style="height: 450px;" id="userFileNum"></div>
 		<div style="htight: 10px"></div>
 		<div class="col-xs-11" style="margin-left: 60px; margin-top: 15px">
@@ -41,7 +41,7 @@
 								<th>用户名</th>
 								<th>所在医院</th>
 								<th class="hidden-480">数据量(个)</th>
-								<th class="hidden-480">数据大小(GB)</th>
+								<th class="hidden-480">数据大小</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -53,9 +53,11 @@
 									</td>
 									<td>${data.company_name }</td>
 									<td>${data.fileNum }</td>
-									<td>
-										<fmt:formatNumber value="${data.size/(1024*1024*1024)}" pattern="#00.0#" />
-									</td>
+									<td> 
+                                        <c:choose><c:when test="${data.size>1073741824 }"><fmt:formatNumber pattern="0.00" value="${data.size/1073741824 }"/>GB</c:when>
+                                        <c:when test="${data.size>1048576 }"><fmt:formatNumber pattern="0.00" value="${data.size/1048576 }"/>MB</c:when>
+                                        <c:otherwise><fmt:formatNumber pattern="0.00" value="${data.size/1024 }"/>KB</c:otherwise></c:choose>
+                                    </td>
 								</tr>
 							</c:forEach>
 						</tbody>

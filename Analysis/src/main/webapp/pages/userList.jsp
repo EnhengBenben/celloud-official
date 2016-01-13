@@ -15,7 +15,9 @@
 			<i class="icon-user-md"></i>
 			<a href="#">用户统计</a>
 		</li>
-		<li class="active"><a onclick="toUserList()">用户详细信息</a></li>
+		<li class="active">
+			<a onclick="toUserList()">用户详细信息</a>
+		</li>
 	</ul>
 </div>
 <div class="page-content">
@@ -54,7 +56,7 @@
 							<th class="min-w-120">所属医院</th>
 							<th class="min-w-80">所属部门</th>
 							<th class="min-w-80">数据个数</th>
-							<th class="min-w-110">数据大小(GB)</th>
+							<th class="min-w-110">数据大小</th>
 							<th class="min-w-80">运行次数</th>
 							<th class="w160">注册时间</th>
 						</tr>
@@ -73,7 +75,14 @@
 								<td>${data.dept_name }</td>
 								<td>${data.fileNum }</td>
 								<td>
-									<fmt:formatNumber pattern="0.00" value="${data.size/ (1024 * 1024 * 1024) }" />
+									<c:choose>
+										<c:when test="${data.size>1073741824 }">
+											<fmt:formatNumber pattern="0.00" value="${data.size/1073741824 }" />GB</c:when>
+										<c:when test="${data.size>1048576 }">
+											<fmt:formatNumber pattern="0.00" value="${data.size/1048576 }" />MB</c:when>
+										<c:otherwise>
+											<fmt:formatNumber pattern="0.00" value="${data.size/1024 }" />KB</c:otherwise>
+									</c:choose>
 								</td>
 								<td>${data.runNum }</td>
 								<td>

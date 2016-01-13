@@ -36,7 +36,6 @@
 </div>
 <script type="text/javascript">
 	var cmpid = $("#cmpId").val();
-	console.log(cmpid);
 	loadRunNumChart(cmpid);
 	function loadRunNumChart(cmpid) {
 		$.get("app!getOneBigUserAppListJson", {
@@ -53,4 +52,16 @@
 			myChart.setOption(option);
 		});
 	}
+	var oTable1 = $('#appList').dataTable({
+        "aoColumns" : [  {
+            "bSortable" : false
+        }, {
+            "bSortable" : false
+        }, null, null, {
+            "bSortable" : false
+        } ],
+        iDisplayLength : 10,
+        "aaSorting":[[3,"desc"]],
+    });
+    
 </script>

@@ -32,9 +32,9 @@ public class CompanyDaoImpl implements CompanyDao {
 
 	@Override
 	public Object getBigUserCompanyNum(Connection conn, Integer companyId, int role) {
-		String sql = "select count(distinct(u.company_id))as num from tb_user u, tb_user_company_relat uc where u.user_id = uc.user_id and uc.company_id "
-				+ " and u.user_id not in (" + noUserid + ") "
-				+ SqlController.whereCompany("uc", "company_id", role, companyId);
+		String sql = "select count(distinct(c.company_id))cmpNum from tb_company c left join tb_user u on u.company_id = c.company_id "
+				+ " left join tb_user_company_relat uc on u.user_id = uc.user_id  " + "where  u.user_id not in ("
+				+ noUserid + ") " + SqlController.whereCompany("uc", "company_id", role, companyId);
 		LogUtil.info(log, sql);
 		Long count = 0l;
 		try {
@@ -103,13 +103,17 @@ public class CompanyDaoImpl implements CompanyDao {
 	@Override
 	public List<Company> getCompanyDetailById(Integer companyId, Integer role, String orderBy) {
 		Connection conn = ConnectManager.getConnection();
-		String sql = " select distinct(c.company_id),c.company_name,c.tel,c.address,c.create_date,un.userNum,uf.fileNum,uf.size,ur.runNum from tb_company c, "
-				+ " (select u.company_id,count(u.user_id)as userNum from tb_user u where u.state =0 group  by u.company_id)un, "
-				+ " (select u.company_id,count(f.file_id)as fileNum,sum(f.size)as size from tb_file f,tb_user u where f.user_id = u.user_id and f.state=0 and u.state=0 group  by u.company_id)uf, "
-				+ " (select u.company_id,count(r.report_id)as runNum from tb_report r,tb_user u where r.user_id = u.user_id and  r.flag = 0 group by u.company_id)ur , "
-				+ " (select distinct(u.company_id),uc.company_id as parent from tb_user u ,tb_user_company_relat uc where u.user_id = uc.user_id)cc"
-				+ " where c.company_id = un.company_id and c.company_id = uf.company_id  and cc.company_id = c.company_id"
-				+ " and c.company_id = ur.company_id " + SqlController.whereCompany("cc", "parent", role, companyId)
+		String sql = "select distinct(c.company_id),c.company_name,c.tel,c.address,c.create_date,"
+				+ " (select count(u.user_id)as userNum from tb_user u where u.state =0 and u.company_id = c.company_id and u.dept_id is not null and u.user_id not in ("
+				+ noUserid + "))userNum ,  "
+				+ " (select count(f.file_id)as fileNum from tb_file f,tb_user u where f.user_id = u.user_id and f.state=0 and u.state=0 and u.company_id=c.company_id and f.user_id not in ("
+				+ noUserid + ") )as fileNum, "
+				+ " (select sum(f.size)as size from tb_file f,tb_user u where f.user_id = u.user_id and f.state=0 and u.state=0 and u.company_id=c.company_id and f.user_id not in ("
+				+ noUserid + ")) as size, "
+				+ " (select count(r.report_id)as runNum from tb_report r,tb_user u where r.user_id = u.user_id and  r.flag = 0 and u.company_id=c.company_id and r.user_id not in ("
+				+ noUserid + ")) as runNum" + " from tb_company c left join tb_user u on c.company_id = u.company_id "
+				+ " left join tb_user_company_relat uc on u.company_id = uc.company_id  where u.user_id not in ("
+				+ noUserid + ") " + SqlController.whereCompany("uc", "company_id", role, companyId)
 				+ SqlController.orderBy(orderBy);
 		LogUtil.info(log, sql);
 		List<Company> list = null;
@@ -130,7 +134,8 @@ public class CompanyDaoImpl implements CompanyDao {
 				+ "(select count(tf.file_id) from tb_file tf,tb_user tu where tu.company_id = u.company_id and tu.user_id = tf.user_id and tf.state=0)as fileNum, "
 				+ "(select sum(ifnull(tf.size,0)) from tb_file tf,tb_user tu where tu.company_id = u.company_id and tu.user_id = tf.user_id and tf.state=0)as size, "
 				+ " (select count(tr.report_id) FROM tb_report tr,tb_user tu2 where tr.user_id = tu2.user_id and tr.flag =0 and tu2.company_id = u.company_id) as reportNum "
-				+ " FROM tb_user u,tb_dept d,tb_company c where u.company_id=? and  c.company_id = u.company_id and u.dept_id = d.dept_id  group by u.company_id";
+				+ " FROM tb_user u,tb_dept d,tb_company c where u.state =0 and u.user_id not in (" + noUserid
+				+ ") and  u.company_id=? and  c.company_id = u.company_id and u.dept_id = d.dept_id  group by u.company_id";
 		Company com = null;
 		LogUtil.info(log, sql);
 		try {
