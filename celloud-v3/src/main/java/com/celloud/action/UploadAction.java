@@ -1,7 +1,12 @@
 package com.celloud.action;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -88,7 +93,7 @@ public class UploadAction {
                         String fileName = realPath + File.separatorChar + name;
                         File localFile = new File(fileName);
                         try {
-                            file.transferTo(localFile);
+                            this.copy(file, localFile);
                             if ((chunk == chunks - 1) || chunk == chunks) {
                                 int dataId = addFileInfo(originalName);
                                 String fileDataKey = DataUtil.getNewDataKey(dataId);
@@ -101,7 +106,7 @@ public class UploadAction {
                                         + fileDataKey;
                                 updateFileInfo(dataId, fileDataKey, newName, perlPath, outPath);
                             }
-                        } catch (IllegalStateException | IOException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -113,6 +118,51 @@ public class UploadAction {
         return "uploadMSuc";
     }
 
+    /**
+     * 
+     *
+     * @param file原始文件
+     * @param dst 目标文件
+     * @author han
+     * @date 2016年1月13日 上午10:04:06
+     */
+    private void copy(MultipartFile file, File dst) {
+        InputStream in = null;
+        OutputStream out = null;
+        try {
+            if (dst.exists()) {
+                out = new BufferedOutputStream(new FileOutputStream(dst, true),
+                        BUFFER_SIZE);
+                in = new BufferedInputStream(file.getInputStream(), BUFFER_SIZE);
+                byte[] buffer = new byte[BUFFER_SIZE];
+                int len = 0;
+                while ((len = in.read(buffer)) > 0) {
+                    out.write(buffer, 0, len);
+                }
+            } else {
+                file.transferTo(dst);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (null != in) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (null != out) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    
     /**
      * 将上传文件添加到数据库中
      * 

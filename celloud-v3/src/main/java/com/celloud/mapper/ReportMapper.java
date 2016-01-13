@@ -3,8 +3,6 @@ package com.celloud.mapper;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.ws.Action;
-
 import org.apache.ibatis.annotations.Param;
 
 import com.celloud.model.Report;
@@ -17,6 +15,8 @@ public interface ReportMapper {
 	int insert(Report record);
 
 	int insertSelective(Report record);
+
+    int insertSelectiveReturnKey(Report record);
 
 	Report selectByPrimaryKey(Integer reportId);
 

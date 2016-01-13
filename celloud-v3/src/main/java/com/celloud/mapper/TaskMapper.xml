@@ -49,7 +49,7 @@
       #{projectId,jdbcType=INTEGER}, #{deleteDate,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, 
       #{params,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.celloud.model.Task" >
+  <insert id="insertSelective" parameterType="com.celloud.model.Task" useGeneratedKeys="true" keyProperty="taskId" >
     insert into tb_task
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="taskId != null" >

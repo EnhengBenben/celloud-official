@@ -5,6 +5,7 @@ $.ajaxSetup ({
 $(function(){
   _init_data();
   $.dataManager.find.all();
+  //给各按钮绑定事件
   $("#data-condition-find").on("click",function(){
 	  $.dataManager.options.condition = $("#data-condition-input").val();
 	  $.dataManager.find.condition();
@@ -13,10 +14,25 @@ $(function(){
 	  $.dataManager.options.condition = $(this).val();
 	  $.dataManager.find.condition();
   });
-  $("#data-page-size-sel").on("change",function(){
-	  $.dataManager.options.pageSize = $(this).val();
-	  $.dataManager.find.condition();
+  $("#run-app-btn").on("click",function(){
+    $.dataManager.run.showModal();
   });
+  $("#del-data-btn").on("click",function(){
+    $.dataManager.deleteData();
+  });
+  $("#manage-data-btn").on("click",function(){
+    $.dataManager.updateData.showBatchEditModal();
+  });
+  $("#to-each-editdata-modal").on("click",function(){
+    $.dataManager.updateData.showEachEditModal();
+  });
+  $("#confirm-run").on("click",function(){
+    $.dataManager.run.confirmRunApp();
+  });
+  $("#run-btn").on("click",function(){
+    $.dataManager.run.beginRun();
+  });
+  
   //提示框添加可移动功能
   $("#tip-modal-head").mouseover(function() {
     $("#tip-modal-content").draggable();
@@ -30,27 +46,6 @@ $(function(){
   $("#run-error-head").mouseover(function() {
     $("#run-error-content").draggable("destroy");
   });
-  
-  $("#run-app-btn").on("click",function(){
-    $.dataManager.run.showModal();
-  });
-  $("#del-data-btn").on("click",function(){
-    $.dataManager.deleteData();
-  });
-  $("#manage-data-btn").on("click",function(){
-    $.dataManager.updateData.showBatchEditModal();
-  });
-  $("#to-each-editdata-modal").on("click",function(){
-    $.dataManager.updateData.showEachEditModal();
-  });
-  
-  $("#confirm-run").on("click",function(){
-    $.dataManager.run.confirmRunApp();
-  });
-  $("#run-btn").on("click",function(){
-    $.dataManager.run.beginRun();
-  });
-  
 });
 
 /**
@@ -67,6 +62,11 @@ function _init_data(){
     checkedNames: [],
     runAppIds: []
   };
+  
+  /**
+   * ==========================
+   * 主方法  ---begin
+   */
   
   /**
    * 数据检索
@@ -324,10 +324,20 @@ function _init_data(){
         }
       });
     });
-  };
+  }; 
+  /**
+   * 主方法  ---end
+   * ==========================
+   */
   
-  /**Tools
+  
+  
+  /**
    * ============================
+   * Tools  ---start
+   */
+
+  /**
    * 加载select2
    */
   $.dataManager.setSelect2Info = function(objId,data){
@@ -345,8 +355,7 @@ function _init_data(){
     });
   };
 
-  /**Tools
-   * ================================
+  /**
    * 加载数据列表
    */
   $.dataManager.loadlist = function(response){
@@ -356,9 +365,17 @@ function _init_data(){
     o.checkedIds = [];
     o.checkedNames = [];
     $.dataManager.editBtn.disable();
+    
+    /**
+     * 复选框事件
+     */
     $("input[name='data-checkone']").on("click",function(){
-      $.dataManager.checkOneData($(this));
+      $.dataManager.checkOneData($(this),25);
     });
+    $("#data-checkall").on("click",function(){
+      $.dataManager.checkAll($(this), "data-checkone", 25);
+    });
+    
     /** 
      *翻页
      */
@@ -369,7 +386,14 @@ function _init_data(){
   			  $(this).html() : (id == "prev-page-data" ? currentPage-1 : currentPage+1);
   	  $.dataManager.find.pagination(page);
     });
-  	
+  	/**
+  	 * 选择每页n条数据
+  	 */
+    $("#data-page-size-sel").on("change",function(){
+      $.dataManager.options.pageSize = $(this).val();
+      $.dataManager.find.condition();
+    });
+    
   	/** 
   	 * 按文件名排序
   	 */
@@ -389,8 +413,7 @@ function _init_data(){
     });
   };
   
-  /**Tools
-   * ==========
+  /**
    * 排序图标
    */
   $.dataManager.sortIcon = function(){
@@ -416,16 +439,15 @@ function _init_data(){
   	}
   };
   
-  /**Tools
-   * =====================
+  /**
    * 选择单个数据
    */
-  $.dataManager.checkOneData = function(obj){
+  $.dataManager.checkOneData = function(obj, num){
   	var _checked = $(obj).prop("checked");//jquery1.11获取属性
   	var _dataId = $(obj).val();
     if(_checked){
-  	  if($.dataManager.options.checkedIds.length>=25){
-  	    $.dataManager.showTipModal("最多允许同时操作25条数据！");
+  	  if($.dataManager.options.checkedIds.length>=num){
+  	    $.dataManager.showTipModal("最多允许同时操作"+num+"条数据！");
   	  }else{
   	    $.dataManager.checkData.isCheck(_dataId);
   	  }
@@ -435,6 +457,36 @@ function _init_data(){
     $.dataManager.editBtn.update();
   };
   
+  /**
+   * 数据全选
+   */
+  $.dataManager.checkAll = function(obj, name, num){
+    var _checked = $(obj).prop("checked");
+    $.dataManager.options.checkedIds = new Array();
+    $.dataManager.options.checkedNames = new Array();
+    if(_checked){
+      var choicearr = document.getElementsByName(name);
+      var _checkedLength = num;
+      if(choicearr.length<=num){
+        _checkedLength = choicearr.length;
+      }else{
+        $.dataManager.showTipModal("最多允许同时操作"+num+"条数据！");
+      }
+      for(var i=0;i<_checkedLength;i++) {
+        $(choicearr[i]).prop("checked",true);
+        var dataId = $(choicearr[i]).val();
+        $.dataManager.checkData.isCheck(dataId);
+      }
+      $.dataManager.editBtn.show();
+    }else{
+      $("[name='"+name+"']").prop("checked",false);
+      $.dataManager.editBtn.disable();
+    }
+  }
+  
+  /**
+   * 复选框事件
+   */
   $.dataManager.checkData = {
     isCheck: function(dataId){
       $.dataManager.options.checkedIds.push(dataId);
@@ -448,8 +500,7 @@ function _init_data(){
     }
   };
   
-  /**Tools
-   * =============
+  /**
    * 弹出提示框
    */
   $.dataManager.showTipModal = function(text){
@@ -457,8 +508,7 @@ function _init_data(){
     $("#tip-modal").modal("show");
   };
   
-  /**Tools
-   * =============================
+  /**
    * 编辑按钮显示状态
    */ 
   $.dataManager.editBtn = {
@@ -484,16 +534,14 @@ function _init_data(){
     }
   };
   
-  /**Tools
-   * ==========
+  /**
    * 获取文件后缀
    */
   $.dataManager.getExt = function(fileName){
     var result =/\.[^\.]+/.exec(fileName);
     return result;
   };
-  /**Tools
-   * ==========
+  /**
    * 判断配置文件
    */
   $.dataManager.isConfigure = function(fileName){
@@ -503,4 +551,9 @@ function _init_data(){
       return false;
     }
   };
+  
+  /**
+   * Tools ----end
+   * ========================
+   */
 }

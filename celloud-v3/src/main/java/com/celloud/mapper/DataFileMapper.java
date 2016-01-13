@@ -159,7 +159,7 @@ public interface DataFileMapper {
      * @param dataIds
      * @return
      */
-    Map<String, Long> findFormatByIds(@Param("dataIds") String dataIds);
+    Map<String, Object> findFormatByIds(@Param("dataIds") String dataIds);
 
     /**
      * 查询正在运行制定APP的数据id

@@ -37,7 +37,7 @@
       #{state,jdbcType=INTEGER}, #{shareNum,jdbcType=INTEGER}, #{dataNum,jdbcType=INTEGER}, 
       #{dataSize,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.celloud.model.Project" >
+  <insert id="insertSelective" parameterType="com.celloud.model.Project" useGeneratedKeys="true" keyProperty="projectId" >
     insert into tb_project
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="projectId != null" >
