@@ -138,7 +138,7 @@
 			"aoColumns" : [ {
 				"bSortable" : false
 			}, null, null, null, null, null ],//列支持排序方式
-			"aaSorting" : [ [ 3, "desc" ] ],//默认列排序
+			"aaSorting" : [ [ 2, "desc" ] ],//默认列排序
 			iDisplayLength : 10
 		});
 	})
