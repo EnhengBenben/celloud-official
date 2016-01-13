@@ -90,13 +90,11 @@ public class UploadAction {
                 if (file != null) {
                     String myFileName = file.getOriginalFilename();
                     if (!"".equals(myFileName.trim())) {
-                        logger.info("上传块name:{}",name);
                         String fileName = realPath + File.separatorChar + name;
                         File localFile = new File(fileName);
                         try {
                             this.copy(file, localFile);
                             if ((chunk == chunks - 1) || chunk == chunks) {
-                                logger.info("执行次数");
                                 int dataId = addFileInfo(originalName);
                                 String fileDataKey = DataUtil.getNewDataKey(dataId);
                                 String newName = fileDataKey + FileTools.getExtName(originalName);
