@@ -49,8 +49,10 @@
 									</td>
 									<td>${data.fileNum }</td>
 									<td>
-										<fmt:formatNumber value="${data.size/(1024*1024*1024)}" pattern="#0.0#" />
-									</td>
+                                        <c:choose><c:when test="${data.size>1073741824 }"><fmt:formatNumber pattern="0.00" value="${data.size/1073741824 }"/>GB</c:when>
+                                        <c:when test="${data.size>1048576 }"><fmt:formatNumber pattern="0.00" value="${data.size/1048576 }"/>MB</c:when>
+                                        <c:otherwise><fmt:formatNumber pattern="0.00" value="${data.size/1024 }"/>KB</c:otherwise></c:choose>
+                                    </td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -76,8 +78,8 @@
 			yAxis[i] = data[i].fileNum;
 			yAxisSize[i] = parseFloat((data[i].size / (1024 * 1024*1024 )).toFixed(2));
 		}
-		var fileSizeOpt = makeOptionScroll('', xAxis, yAxisSize, '文件大小(GB)', 'bar', 70, 100);
-		var fileNumOpt = makeOptionScroll('', xAxis, yAxis, '文件数量', 'bar', 70, 100);
+		var fileSizeOpt = makeOptionScroll('', xAxis, yAxisSize, '数据大小(GB)', 'bar', 70, 100);
+		var fileNumOpt = makeOptionScroll('', xAxis, yAxis, '数据量', 'bar', 70, 100);
 		
 		var fileSizeChart = echarts.init(document.getElementById('fileSizeView'));
 		var fileNumChart = echarts.init(document.getElementById('fileNumView'));
@@ -100,8 +102,7 @@
 			$(this).closest('table').find('tr > td:first-child input:checkbox').each(function() {
 				this.checked = that.checked;
 				$(this).closest('tr').toggleClass('selected');
-			});
-			
+			});		
 		});
 		
 		$('[data-rel="tooltip"]').tooltip({

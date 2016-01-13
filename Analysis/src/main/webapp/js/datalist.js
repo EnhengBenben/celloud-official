@@ -12,7 +12,7 @@ $.get(UserDataURL, {'orderType':"fileNum"}, function(data) {
 		xAxis[i] = data[i].username;
 		yAxis[i] = data[i].fileNum;
 	}
-	var option = makeOptionScroll('', xAxis, yAxis, '文件数量:', 'bar',0,40);
+	var option = makeOptionScroll('', xAxis, yAxis, '数据量', 'bar',0,40);
 	var myChart = echarts.init(document.getElementById(UserFileNumId));
 	myChart.setOption(option);
 });
@@ -26,7 +26,7 @@ $.get(UserDataURL, {'orderType':"size"}, function(data) {
 		yAxis[i] = parseFloat( (data[i].size / (1024 * 1024 * 1024) ).toFixed(2));
 	}
 	      
-	var option = makeOptionScroll('', xAxis, yAxis, '数据大小:', 'bar',0,40);
+	var option = makeOptionScroll('', xAxis, yAxis, '数据大小(GB)', 'bar',0,40);
 	option. yAxis = [
 	    	          {
 	    	              type : 'value',

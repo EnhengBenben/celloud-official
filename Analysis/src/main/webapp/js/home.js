@@ -16,7 +16,7 @@ function tableswitch(id) {
 function LoginNum() {
 	var viewId = "loginId";
 	$.get(LoginNumURL, {}, function(data) {
-		data = data==null?[]:data;
+		console.log(data);
 		var xAxis = new Array(data.length);
 		var yAxis = new Array(data.length);
 		var t;
@@ -33,8 +33,6 @@ function LoginNum() {
 function AppRunNum() {
 	var viewId = "AppRunNum";
 	$.get(AppRunNumURL, {}, function(data) {
-		console.log(data);
-		data = data==null?[]:data;
 		var xAxis = new Array(data.length);
 		var yAxis = new Array(data.length);
 		var t;
@@ -51,9 +49,6 @@ function AppRunNum() {
 function UserRunNum() {
 	var viewId = "UserRunNum";
 	$.get(UserRunNumURL, {}, function(data) {
-		console.log(data);
-		data = data==null?[]:data;
-
 		var xAxis = new Array(data.length);
 		var yAxis = new Array(data.length);
 		for (var i = 0; i < data.length; i++) {

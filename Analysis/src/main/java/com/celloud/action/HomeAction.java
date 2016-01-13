@@ -97,7 +97,11 @@ public class HomeAction extends BaseAction {
 	}
 
 	public String toBigUserCount() {
-		dataList = dataService.getBigUserData();
+		try {
+			dataList = dataService.getBigUserData();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "toBigUser";
 	}
 
@@ -144,7 +148,11 @@ public class HomeAction extends BaseAction {
 	public String loginNum() {
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		Integer companyId = (Integer) getCid();
-		logList = appService.getTotalUserLogin(role, companyId);
+		try {
+			logList = appService.getTotalUserLogin(role, companyId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "loginList";
 	}
 
