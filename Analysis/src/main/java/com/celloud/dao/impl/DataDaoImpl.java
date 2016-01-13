@@ -165,7 +165,8 @@ public class DataDaoImpl implements DataDao {
 				+ " from tb_file f,tb_user_company_relat uc"
 				+ " where f.user_id = uc.user_id  and f.state=0 and f.create_date is not null "
 				+ SqlController.notUserId("f", noUserid) + " and uc.company_id = ? "
-				+ " group by yearMonth order by yearMonth desc";
+				+ " group by yearMonth order by yearMonth asc";
+
 		LogUtil.info(log, sql);
 		ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
 		try {
@@ -180,10 +181,9 @@ public class DataDaoImpl implements DataDao {
 	public List<DataFile> getBigUserData() {
 		List<DataFile> list = null;
 		Connection conn = ConnectManager.getConnection();
-		String sql = " select distinct(p.company_id) as company_id sum(f.size) as size,count(f.file_id)as fileNum,c.company_name "
-				+ " from tb_app p, tb_file f,tb_company c " + " where f.user_id = p.user_id and f.state=0 "// and
-				+ SqlController.notUserId("f", noUserid) + " and p.company_id = c.company_id "
-				+ " group by p.company_id order by fileNum desc ";
+		String sql = " select distinct(uc.company_id) as company_id, sum(f.size) as size,count(f.file_id)as fileNum,(select company_name from tb_company where company_id = uc.company_id)as company_name   "
+				+ " from tb_user_company_relat uc,tb_user u, tb_file f where uc.company_id = u.company_id and u.user_id = f.user_id and f.state=0 "// and
+				+ SqlController.notUserId("f", noUserid) + " group by uc.company_id order by fileNum desc ";
 		ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
 		LogUtil.info(log, sql);
 		try {

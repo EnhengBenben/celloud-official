@@ -96,7 +96,7 @@
 				xAxis[i] = data[i].app_name;
 				yAxis[i] = data[i].runNum;
 			}
-			var option = makeOptionScrollUnit(xAxis, yAxis, "各App运行", barType, 0, 10);
+			var option = makeOptionScrollUnit(xAxis, yAxis, "运行次数", barType, 0, 10);
 			var myChart = echarts.init(document.getElementById('runTimeDiv'));
 			myChart.setOption(option);
 		});

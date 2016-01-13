@@ -73,9 +73,9 @@ public class DataAction extends BaseAction {
 
 	public String getBigUserMonth() {
 		dataList = dataService.getBigUserDataFile(companyId);
-		try{
+		try {
 			dataList = EntryUtil.toInsert(dataList);
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			dataList = dataService.getBigUserDataFile(companyId);
 		}
@@ -83,7 +83,11 @@ public class DataAction extends BaseAction {
 	}
 
 	public String getBigUserMonthTable() {
-		dataList = dataService.getBigUserDataFile(companyId);
+		try {
+			dataList = dataService.getBigUserDataFile(companyId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "bigUserTable";
 	}
 

@@ -92,7 +92,7 @@ public class CompanyAction extends BaseAction {
 			if (startDate == null)
 				startDate = DateUtil.DAY_START_OF_MONTH();
 			if (endDate == null)
-				endDate = DateUtil.DAY_END_OF_MONTH();
+				endDate = new Date();
 			LogUtil.info(log, topN);
 			resultMap = companyService.getCompanyFile(role, cmpId, startDate, endDate, topN);
 		} catch (Exception e) {
