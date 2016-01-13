@@ -113,9 +113,9 @@ var userId = $("#hideUserId").val();
 	jQuery(function($) {
 		var oTable1 = $('#userMonthDataList').dataTable( {
 		"aoColumns": [
-	      null,null
+	      null,null,null
 		],
-		iDisplayLength: 100
+		iDisplayLength: 12
 		} );
 	})
 	function monthDataList(userId,month){

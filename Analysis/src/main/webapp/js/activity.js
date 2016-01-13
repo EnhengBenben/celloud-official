@@ -28,6 +28,7 @@ jQuery(function($) {
 function loadActivityFile() {
 	var start = $("#timeId").val();
 	var end = $("#timeId2").val();
+
 	var topN = $("#topId").val();
 	
 	var param = {
@@ -35,7 +36,6 @@ function loadActivityFile() {
 		"endDate" : end,
 		"topN" : topN
 	};
-	console.log(param);
 	$.get(fileNumURL, param, function(data) {
 		try {
 			hospital_chart(data);
@@ -55,7 +55,6 @@ function loadActivityFile() {
 	});
 }
 function app_chart(data) {
-	console.log(data);
 	var appRun = data["appRun"];
 	if (appRun == null || appRun.length < 1) {
 		$("#appListDiv").hide();
@@ -63,7 +62,6 @@ function app_chart(data) {
 	} else {
 		$("#appListDiv").show();
 	}
-	
 	var xAxisApp = new Array(appRun.length);
 	var yAxisApp = new Array(appRun.length);
 	for (var i = 0; i < appRun.length; i++) {

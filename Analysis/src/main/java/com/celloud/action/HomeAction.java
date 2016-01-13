@@ -30,7 +30,6 @@ import com.google.inject.Inject;
 @ParentPackage("json-default")
 @Action("home")
 @Results({ @Result(name = "success", location = "../../pages/home.jsp"),
-		@Result(name = "toBigUser", location = "../../pages/bigUser.jsp"),
 		@Result(name = "toHospitalBigUser", location = "../../pages/hospitalBigUser.jsp"),
 		@Result(name = "toBigUser", location = "../../pages/bigUser.jsp"),
 		@Result(name = "toBigUserOne", location = "../../pages/bigUserOne.jsp"),
@@ -107,7 +106,7 @@ public class HomeAction extends BaseAction {
 
 	public String toBigUserOne() {
 		dataList = dataService.getBigUserDataFile(companyId);
-		LogUtil.info(log, dataList);
+		LogUtil.info(log, dataList.size());
 		return "toBigUserOne";
 	}
 

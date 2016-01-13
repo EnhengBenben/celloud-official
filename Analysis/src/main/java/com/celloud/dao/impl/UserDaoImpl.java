@@ -489,7 +489,7 @@ public class UserDaoImpl implements UserDao {
 	public List<DataFile> getUserFileSize(Connection conn, int role, int cmpId, Date start, Date end, int topN) {
 		List<DataFile> list = null;
 		String sql = "select sum(f.size)as size,u.user_id,u.username as user_name "
-				+ " from tb_file f,tb_user u,tb_user_company_relat uc  where f.user_id = u.user_id and u.company_id !=0 and f.state =0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
+				+ " from tb_file f,tb_user u,tb_user_company_relat uc  where f.user_id = u.user_id and u.company_id !=0 and f.state =0 and left(f.create_date,10) between  left(?,10) and  left(?,10)  and u.user_id = uc.user_id "
 				+ SqlController.notUserId("f", noUserid) + SqlController.whereCompany("uc", "company_id", role, cmpId)
 				+ " group by f.user_id order by size desc" + SqlController.limit(topN);
 		try {
@@ -510,7 +510,7 @@ public class UserDaoImpl implements UserDao {
 		List<DataFile> list = null;
 		String sql = "select count(f.file_id)as fileNum,sum(ifnull(f.size,0))as size,u.company_id,u.username as user_name,u.create_date,"
 				+ " (select count(report_id) from tb_report where user_id = f.user_id and flag =0 )as runNum "
-				+ " from tb_file f,tb_user u,tb_user_company_relat uc  where f.user_id = u.user_id and u.company_id !=0 and f.state =0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
+				+ " from tb_file f,tb_user u,tb_user_company_relat uc  where f.user_id = u.user_id and u.company_id !=0 and f.state =0 and left(f.create_date,10) between  left(?,10) and  left(?,10)  and u.user_id = uc.user_id "
 				+ SqlController.notUserId("f", noUserid) + SqlController.whereCompany("uc", "company_id", role, cmpId)
 				+ " group by f.user_id order by fileNum desc" + SqlController.limit(topN);
 		LogUtil.info(log, sql);
@@ -532,7 +532,7 @@ public class UserDaoImpl implements UserDao {
 	public List<App> getUserRunApp(Connection conn, int role, int cmpId, Date start, Date end, int topN) {
 		List<App> list = null;
 		String sql = "select count(1)as runNum,r.user_id,(select username from tb_user where user_id = r.user_id)user_name "
-				+ " from tb_report r where r.flag=0 and r.create_date between  ? and  ?  "
+				+ " from tb_report r where r.flag=0 and left(r.create_date,10) between left(?,10) and  left(?,10)  "
 				+ SqlController.notUserId("r", noUserid) + " group by r.user_id order by runNum desc"
 				+ SqlController.limit(topN);
 		try {

@@ -78,8 +78,8 @@
 			yAxis[i] = data[i].fileNum;
 			yAxisSize[i] = parseFloat((data[i].size / (1024 * 1024*1024 )).toFixed(2));
 		}
-		var fileSizeOpt = makeOptionScroll('', xAxis, yAxisSize, '数据大小(GB)', 'bar', 70, 100);
-		var fileNumOpt = makeOptionScroll('', xAxis, yAxis, '数据量', 'bar', 70, 100);
+		var fileSizeOpt = makeOptionScrollUnit(xAxis, yAxisSize, '数据大小(GB)', barType, 100, 12);
+		var fileNumOpt = makeOptionScrollUnit( xAxis, yAxis, '数据量', barType,100, 12);
 		
 		var fileSizeChart = echarts.init(document.getElementById('fileSizeView'));
 		var fileNumChart = echarts.init(document.getElementById('fileNumView'));
@@ -93,7 +93,7 @@
 	jQuery(function($) {
 		var oTable1 = $('#MonthDataList').dataTable({
 			"aoColumns" : [ null, null, null ],
-			iDisplayLength : 12,
+			iDisplayLength : 10,
 			"aaSorting":[[0,"desc"]],
 		});
 		

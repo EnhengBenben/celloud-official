@@ -21,7 +21,7 @@
 </div>
 
 <div class="page-content">
-	<div class="row">
+	<div class="col-xs-12">
 		<!-- <h3 class="header smaller lighter blue">
 			<input type="hidden" id="hideUserId">
 		</h3>

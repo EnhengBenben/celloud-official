@@ -18,6 +18,7 @@
     <span id="_app_id" class="hide"></span>
 </div>
 <div class="page-content">
+    <div class ="col-xs-12">
 		<div style="padding-left: 65px">
 			<a style="font-size: 16px; cursor: pointer;" onclick="javascript:localWeek()">本周</a>
 			&nbsp;&nbsp;
@@ -45,30 +46,30 @@
 		var start = $("#timeId").val();
 		var end = $("#timeId2").val();
 		var top = $("#topId").val();
+		  if(start>end){
+			   alert("输入时间错误","重新输入");
+			   window.open("./pages/activity.jsp","info","width=270,height=300");
+		        localMonth();
+		        return ;
+		    }
 		var param = {
 			"startDate" : start,
 			"endDate" : end,
 			"topN" : top
 		};
-		console.log(param);
 		$.get("company!getContent", param, function(responseText) {
 			$("#contentView").html(responseText);
 		});
 	}
 
 	function localWeek() {
-		console.log(showWeekFirstDay());
-		console.log(showWeekLastDay());
-		
 		$("#timeId").val(showWeekFirstDay());
 		$('#timeId2').val(showWeekLastDay());
 		loadContent();
 	}
 	function localMonth() {
-		console.log(showMonthFirstDay());
-		console.log(showMonthLastDay());
 		$("#timeId").val(showMonthFirstDay());
-		$('#timeId2').val(showMonthLastDay());
+		$('#timeId2').val(new Date().format("yyyy-MM-dd"));
 		loadContent();
 	}
 </script>

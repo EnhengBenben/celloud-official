@@ -2,20 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<style>
-.echart {
-	height: 350px,
-}
-</style>
 <div class="col-sm-12">
 	<div class="row">
-		<div class="title">
-			<h4 class="header smaller lighter green title">医院数据量统计</h4>
-		</div>
+		<h4 class="header smaller lighter green title">医院数据量统计</h4>
 		<div class="col-xs-12 " id="hfileNum" style="height: 350px"></div>
-		<div class="title">
-			<h4 class="header smaller lighter green title">医院数据大小统计</h4>
-		</div>
+		<h4 class="header smaller lighter green title">医院数据大小统计</h4>
 		<div id="hfileSize" style="height: 350px"></div>
 		<c:if test="${dataList!=null&& fn:length(dataList) > 0}">
 			<div class="col-xs-12 table-responsive" id="dataDiv">
@@ -53,17 +44,11 @@
 			</div>
 		</c:if>
 
-		<div class="title">
-			<h4 class="header smaller lighter green">用户数据量统计</h4>
-		</div>
+		<h4 class="header smaller lighter green">用户数据量统计</h4>
 		<div id="uFileNum" style="height: 350px"></div>
-		<div class="title">
-			<h4 class="header smaller lighter green">用户数据大小统计</h4>
-		</div>
+		<h4 class="header smaller lighter green">用户数据大小统计</h4>
 		<div id="uFileSize" style="height: 350px"></div>
-		<div class="title">
-			<h4 class="header smaller lighter green">用户APP运行统计</h4>
-		</div>
+		<h4 class="header smaller lighter green">用户APP运行统计</h4>
 		<div id="uAppRun" style="height: 350px"></div>
 		<c:if test="${userDataList!=null && fn:length(userDataList) > 0 }">
 			<div class="col-xs-12 table-responsive" id="dataDiv">
@@ -102,9 +87,7 @@
 				</table>
 			</div>
 		</c:if>
-		<div class="title">
-			<h4 class="header smaller lighter green">APP运行统计</h4>
-		</div>
+		<h4 class="header smaller lighter green">运行统计</h4>
 		<div class="col-xs-12 " id="appListDiv" style="height: 350px"></div>
 		<c:if test="${runList!=null && fn:length(runList) > 0 }">
 			<div class="col-xs-12 table-responsive" id="dataDiv">

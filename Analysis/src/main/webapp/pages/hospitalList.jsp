@@ -42,11 +42,11 @@
 					<thead>
 						<tr>
 							<th class="min-w-90">医院名称</th>
-							<th class="min-w-80">入驻时间</th>
 							<th class="min-w-80">用户数量</th>
 							<th class="min-w-80">数据个数</th>
 							<th class="min-w-80">数据大小</th>
 							<th class="min-w-80">报告个数</th>
+							<th class="min-w-80">入驻时间</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -55,9 +55,7 @@
 								<td>
 									<a href="javascript:getCompanyDetail(${data.company_id },'${data.company_name }')">${data.company_name }</a>
 								</td>
-								<td>
-									<fmt:formatDate type="both" value="${data.create_date }" pattern="yyyy-MM-dd" />
-								</td>
+
 								<td>${data.userNum }</td>
 								<td>${data.fileNum }</td>
 								<td>
@@ -71,6 +69,9 @@
 									</c:choose>
 								</td>
 								<td>${data.runNum }</td>
+								<td>
+									<fmt:formatDate type="both" value="${data.create_date }" pattern="yyyy-MM-dd" />
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
