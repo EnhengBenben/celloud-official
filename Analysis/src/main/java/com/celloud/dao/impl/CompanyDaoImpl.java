@@ -151,13 +151,10 @@ public class CompanyDaoImpl implements CompanyDao {
 	public List<Map<String, Object>> getProvince(Integer companyId, int role) {
 		List<Map<String, Object>> list = null;
 		Connection conn = ConnectManager.getConnection();
-
-		String sql = "select province,count(distinct c.company_id) as num from tb_user u,tb_dept d,tb_company c where u.dept_id=d.dept_id and d.company_id=c.company_id and u.user_id not in ("
-				+ noUserid + ") "
-				// + SqlController.whereCompany(role, companyId)
-				+ "group by province";
+		String sql = "select c.province,count(distinct(u.company_id)) as num from tb_user u,tb_company c, tb_user_company_relat uc where "
+				+ " u.company_id = c.company_id and u.user_id = uc.user_id and u.user_id not in (" + noUserid + ") "
+				+ SqlController.whereCompany("uc", "company_id", role, companyId) + "group by province";
 		LogUtil.info(log, sql);
-
 		try {
 			list = qr.query(conn, sql, new MapListHandler());
 		} catch (SQLException e) {

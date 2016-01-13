@@ -24,8 +24,7 @@
 <link rel="stylesheet" href="css/analy-ie.min.css" />
 <![endif]-->
 <!-- inline styles related to this page -->
-<!-- ace settings handler -->
-<script src="js/analy-extra.min.js"></script>
+
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
 <script src="js/html5shiv.js"></script>
@@ -191,11 +190,11 @@
 								</a>
 							</li>
 							<li>
-                                <a href="javascript:bigUserAppList()">
-                                    <i class="icon-double-angle-right"></i>
-                                    大客户统计
-                                </a>
-                            </li>
+								<a href="javascript:bigUserAppList()">
+									<i class="icon-double-angle-right"></i>
+									大客户统计
+								</a>
+							</li>
 						</ul>
 					</li>
 					<li>
@@ -204,7 +203,7 @@
 							<span class="menu-text">活跃度统计 </span>
 						</a>
 					</li>
-					</ul>
+				</ul>
 				<!-- /.nav-list -->
 				<div class="sidebar-collapse" id="sidebar-collapse">
 					<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
@@ -248,6 +247,8 @@
 	<!-- analysis scripts -->
 	<script src="js/analy-elements.min.js"></script>
 	<script src="js/analy.min.js?version=20150813"></script>
+	<!-- ace settings handler -->
+	<script src="js/analy-extra.min.js"></script>
 	<!-- inline scripts related to this page -->
 
 	<script src="js/user.js"></script>
@@ -265,6 +266,7 @@
 	<script src="./js/OptionsFactory.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		jQuery(function($) {
+			
 			toHome();
 		});
 		/***活跃度统计－－－医院活跃度统计**/
@@ -305,7 +307,7 @@
 		}
 		/***用户统计**/
 		function toUserList() {
-			$("#secondTitle").addClass("hide");       
+			$("#secondTitle").addClass("hide");
 			$.get("user!userList", {}, function(responseText) {
 				$("#content").html(responseText);
 			});
@@ -318,11 +320,11 @@
 			});
 		}
 		/**大客户App统计*/
-		function bigUserAppList(){
+		function bigUserAppList() {
 			$("#secondTitle").addClass("hide");
-            $.get("app!getBigUserAppList", {}, function(responseText) {
-                $("#content").html(responseText);
-            });
+			$.get("app!getBigUserAppList", {}, function(responseText) {
+				$("#content").html(responseText);
+			});
 			
 		}
 		/**数据统计－大客户统计**/
