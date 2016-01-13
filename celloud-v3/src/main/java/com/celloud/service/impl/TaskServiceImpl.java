@@ -1,5 +1,6 @@
 package com.celloud.service.impl;
 
+import java.util.Date;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -24,6 +25,7 @@ public class TaskServiceImpl implements TaskService {
     TaskMapper taskMapper;
     @Override
     public Integer create(Task task) {
+        task.setCreateDate(new Date());
         return taskMapper.insertSelective(task);
     }
 

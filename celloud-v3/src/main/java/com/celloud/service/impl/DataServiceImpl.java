@@ -70,7 +70,8 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public PageList<DataFile> dataLists(Page page, Integer userId,
-            String condition, int sort, String sortDateType, String sortNameType) {
+            String condition, int sort, String sortDateType,
+            String sortNameType) {
         List<DataFile> lists = dataFileMapper.findDataLists(page, userId,
                 condition, sort, sortDateType, sortNameType, DataState.ACTIVE,
                 ReportType.DATA, ReportPeriod.COMPLETE);
@@ -78,13 +79,13 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public Long getFormatByIds(String dataIds) {
-        Map<String, Long> map = dataFileMapper.findFormatByIds(dataIds);
-        Long result = null;
-        if (map.get("formatNum") != null && map.get("formatNum") > 1l) {
-            result = -1l;
+    public Integer getFormatByIds(String dataIds) {
+        Map<String, Object> map = dataFileMapper.findFormatByIds(dataIds);
+        Integer result = null;
+        if (map.get("formatNum") != null && (Long) map.get("formatNum") > 1) {
+            result = -1;
         } else {
-            result = map.get("formatNum");
+            result = (Integer) map.get("fileFormat");
         }
         return result;
     }
@@ -107,11 +108,12 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public Integer insertDataProjectRelat(String[] dataIdArr, Integer projectId) {
+    public Integer insertDataProjectRelat(String[] dataIdArr,
+            Integer projectId) {
         int index = 0;
         for (String dataId : dataIdArr) {
-            index += dataFileMapper.insertDataProjectRelat(
-                    Integer.valueOf(dataId), projectId);
+            index += dataFileMapper
+                    .insertDataProjectRelat(Integer.valueOf(dataId), projectId);
         }
         return index;
     }

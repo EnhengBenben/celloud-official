@@ -73,8 +73,8 @@ public class DataAction {
             .getMachines();
     private static String sparkhost = machines.get("spark").get(Mod.HOST);
     private static String sparkpwd = machines.get("spark").get(Mod.PWD);
-    private static String sparkuserName = machines.get("spark").get(
-            Mod.USERNAME);
+    private static String sparkuserName = machines.get("spark")
+            .get(Mod.USERNAME);
     private static String sgeHost = machines.get("158").get(Mod.HOST);
     private static String sgePwd = machines.get("158").get(Mod.PWD);;
     private static String sgeUserName = machines.get("158").get(Mod.USERNAME);
@@ -109,6 +109,7 @@ public class DataAction {
         PageList<DataFile> dataList = dataService.dataAllList(pager,
                 ConstantsData.getLoginUserId());
         mv.addObject("dataList", dataList);
+        logger.info("用户{}打开数据管理", ConstantsData.getLoginUserName());
         return mv;
     }
 
@@ -140,6 +141,7 @@ public class DataAction {
                 ConstantsData.getLoginUserId(), condition, sort, sortDateType,
                 sortNameType);
         mv.addObject("dataList", dataList);
+        logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
         return mv;
     }
 
@@ -151,8 +153,9 @@ public class DataAction {
      */
     @RequestMapping("getFormatByDataIds.action")
     @ResponseBody
-    public Long getFormatByDataIds(String dataIds) {
-        Long result = dataService.getFormatByIds(dataIds);
+    public Integer getFormatByDataIds(String dataIds) {
+        Integer result = dataService.getFormatByIds(dataIds);
+        logger.info("用户{}获取{}数据类型", ConstantsData.getLoginUserName(), dataIds);
         return result;
     }
 
@@ -166,8 +169,10 @@ public class DataAction {
     @ResponseBody
     public List<App> getRunApp(
             @RequestParam(defaultValue = "0") Integer formatId) {
-        List<App> apps = appService.findAppsByFormat(
-                ConstantsData.getLoginUserId(), formatId);
+        List<App> apps = appService
+                .findAppsByFormat(ConstantsData.getLoginUserId(), formatId);
+        logger.info("用户{}获取可运行数据类型{}的app", ConstantsData.getLoginUserName(),
+                formatId);
         return apps;
     }
 
@@ -183,6 +188,8 @@ public class DataAction {
     public List<Integer> checkDataRunningApp(String dataIds, Integer appId) {
         List<Integer> dataIdList = dataService.findRunningAppData(dataIds,
                 appId);
+        logger.info("用户{}验证数据{}是否正在运行APP{}", ConstantsData.getLoginUserName(),
+                dataIds, appId);
         return dataIdList;
     }
 
@@ -198,7 +205,8 @@ public class DataAction {
     @ResponseBody
     public Response delete(String dataIds) {
         int result = dataService.delete(dataIds);
-        logger.info("用户{}删除数据{}", ConstantsData.getLoginUserName(), dataIds);
+        logger.info("用户{}删除数据{}{}", ConstantsData.getLoginUserName(), dataIds,
+                result);
         return result > 0 ? Response.DELETE_SUCESS : DELETE_DATA_FAIL;
     }
 
@@ -215,6 +223,8 @@ public class DataAction {
         ModelAndView mv = new ModelAndView("data/data_all_update");
         List<DataFile> dataList = dataService.findDatasById(dataIds);
         mv.addObject("dataList", dataList);
+        logger.info("用户{}打开分别修改数据列表Modal", ConstantsData.getLoginUserName(),
+                dataIds);
         return mv;
     }
 
@@ -246,6 +256,7 @@ public class DataAction {
     @ResponseBody
     public Integer batchEditDataByIds(String dataIds, DataFile data) {
         Integer result = dataService.updateDataByIds(dataIds, data);
+        logger.info("用户{}批量修改数据{}", ConstantsData.getLoginUserName(), dataIds);
         return result;
     }
 
@@ -263,6 +274,7 @@ public class DataAction {
     public Integer eachEditDataByIds(DataFileEditForm dataFileEditForm) {
         Integer result = dataService
                 .updateDatas(dataFileEditForm.getDataList());
+        logger.info("用户{}分别修改{}个数据", ConstantsData.getLoginUserName(), result);
         return result;
     }
 
@@ -274,7 +286,10 @@ public class DataAction {
      * @return
      */
     @RequestMapping("run.action")
+    @ResponseBody
     public String run(String dataIds, String appIds) {
+        logger.info("用户{}使用数据{}运行APP{}", ConstantsData.getLoginUserName(),
+                dataIds, appIds);
         String failApp = "";
         Integer userId = ConstantsData.getLoginUserId();
         String email = ConstantsData.getLoginEmail();
@@ -300,8 +315,10 @@ public class DataAction {
             Integer appId = Integer.parseInt(appIdStr);
             App app = appService.findAppById(appId);
             String appName = app.getAppName();
+            project.setProjectId(null);
             // 创建项目
-            Integer proId = projectService.insertProject(project);
+            projectService.insertProject(project);
+            Integer proId = project.getProjectId();
             if (proId == null) {
                 failApp += appName + ",";
                 logger.error("创建项目失败");
@@ -309,8 +326,8 @@ public class DataAction {
             }
             // 项目添加数据
             Integer flag = dataService.insertDataProjectRelat(dataIdArr, proId);
-            logger.info("用户" + userId + "创建项目" + proId + "与数据" + dataIds + "关系"
-                    + flag);
+            logger.info("用户{}创建项目{}与数据{}关系", ConstantsData.getLoginUserName(),
+                    proId, dataIds, flag);
             if (flag < 1) {
                 failApp += appName + ",";
                 logger.error("创建项目数据关系失败");
@@ -319,19 +336,28 @@ public class DataAction {
             // 添加项目报告
             report.setProjectId(proId);
             report.setAppId(appId);
-            Integer reportId = reportService.insertProReport(report);
+            reportService.insertProReport(report);
+            Integer reportId = report.getReportId();
             if (reportId == null) {
                 failApp += appName + ",";
                 logger.error("创建项目报告失败");
                 continue;
             } else {
+                logger.info("用户{}创建项目报告{}成功", ConstantsData.getLoginUserName(),
+                        reportId);
+                report.setReportId(null);
                 // 添加数据报告
-                reportService.insertDataReport(report, dataIdArr);
+                Integer _drstate = reportService.insertDataReport(report,
+                        dataIdArr);
+                if (_drstate > 0) {
+                    logger.info("用户{}创建数据报告成功",
+                            ConstantsData.getLoginUserName());
+                }
             }
             // 判断运行文件顺序是否需要重组
             if (appId == 113) {
-                String dataDetails = FileTools.dataListSortNoEnd(dataResult
-                        .toString());
+                String dataDetails = FileTools
+                        .dataListSortNoEnd(dataResult.toString());
                 dataResult = new StringBuffer();
                 dataResult.append(dataDetails);
             }
@@ -346,16 +372,15 @@ public class DataAction {
                 String select = SparkPro.apps.toString().substring(1,
                         SparkPro.apps.toString().length() - 1);
                 int running = dataService.dataRunning(select);
-                logger.info("页面运行任务，此时正在运行的任务数：" + running);
+                logger.info("页面运行任务，此时正在运行的任务数：{}", running);
                 if (SparkPro.NODES >= running) {
                     logger.info("资源满足需求，投递任务");
                     submit(appPath, proId + "", dataKeyList, appName,
                             app.getCommand());
                 } else {
                     logger.info("资源不满足需求，进入队列等待");
-                    String command = appPath + "--" + proId + "--"
-                            + dataKeyList + "--" + appName + "--"
-                            + appId;
+                    String command = appPath + "--" + proId + "--" + dataKeyList
+                            + "--" + appName + "--" + appId;
                     GlobalQueue.offer(command);
                 }
             } else if (appId == 110 || appId == 111 || appId == 112
@@ -394,7 +419,7 @@ public class DataAction {
                     // TODO
                     if (runningNum < 4) {
                         StringBuffer remotePath = new StringBuffer();
-                        remotePath.append(PropertiesUtil.toolsOutPath)
+                        remotePath.append(PropertiesUtil.toolsPath)
                                 .append("Procedure!runApp?userId=")
                                 .append(userId).append("&appId=").append(appId)
                                 .append("&dataKey=").append(dataKey)
@@ -416,29 +441,26 @@ public class DataAction {
                     logger.info("celloud 直接向 SGE 投递任务");
                     String dataListFile = DataKeyListToFile
                             .containName(dataKeyList);
-                    String command = app
-                            .getCommand()
-                            + " "
-                            + dataListFile
-                            + " "
-                            + appPath
-                            + " ProjectID"
-                            + proId
-                            + " >"
-                            + appPath
+                    String command = app.getCommand() + " " + dataListFile + " "
+                            + appPath + " ProjectID" + proId + " >" + appPath
                             + "ProjectID" + proId + ".log &";
                     logger.info("运行命令：" + command);
                     SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
                     ssh.sshSubmit(command, false);
                 } else {
-                    String newPath = PropertiesUtil.toolsOutPath
+                    String newPath = PropertiesUtil.toolsPath
                             + "Procedure!runApp?userId=" + userId + "&appId="
                             + appId + "&appName=" + appName + "&projectName="
-                            + proName + "&email=" + email + "&dataKeyList=";
+                            + proName + "&email=" + email + "&dataKeyList="
+                            + dataResult.toString() + "&projectId=" + proId;
                     RemoteRequests rr = new RemoteRequests();
                     rr.run(newPath);
                 }
             }
+        }
+        if (failApp != "") {
+            logger.info("用户{}使用数据{}运投递APP{}失败",
+                    ConstantsData.getLoginUserName(), dataIds, appIds);
         }
         return failApp;
     }
@@ -449,17 +471,8 @@ public class DataAction {
         String dataListFile = DataKeyListToFile.toSpark(projectId, dataKeyList);
         // TODO
         String command = "nohup perl  /share/biosoft/perl/wangzhen/PGS/bin/moniter_qsub_url.pl perl "
-                + " "
-                + perl
-                + " "
-                + dataListFile
-                + " "
-                + basePath
-                + " ProjectID"
-                + projectId
-                + " >"
-                + basePath
-                + "ProjectID"
+                + " " + perl + " " + dataListFile + " " + basePath
+                + " ProjectID" + projectId + " >" + basePath + "ProjectID"
                 + projectId + ".log &";
         logger.info("运行命令：" + command);
         SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
@@ -508,9 +521,9 @@ public class DataAction {
                     _fname.length());
             DataFile d1 = dataFileIt.next();
             String _fname2 = d1.getFileName();
-            if (_fname2.contains(s1 + "R2")
-                    && _fname2.substring(_fname2.lastIndexOf("R2") + 2,
-                            _fname2.length()).equals(s2)) {
+            if (_fname2.contains(s1 + "R2") && _fname2
+                    .substring(_fname2.lastIndexOf("R2") + 2, _fname2.length())
+                    .equals(s2)) {
                 dataResult.append(dataPath).append(datakey).append(ext)
                         .append("\t").append(dataPath).append(d1.getDataKey())
                         .append(ext).append("\t");

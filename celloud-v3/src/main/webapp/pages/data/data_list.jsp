@@ -2,14 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<style>
-.dataautocomplete{list-style-type:none;margin-left:30px;border:1px solid #ccc;width:281px;position:absolute;left:170px;top:83px; background:#fff}
-.dataautocomplete li{font-size:12px; font-family:"Lucida Console", Monaco, monospace; cursor:pointer; height:21px; line-height:20px}
-.datahovers{ background-color:#3368c4; color:fff}
-select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 28px;padding: 4px;font-size: 13px;line-height: 18px;color: #555555;border: 1px solid #a0d1e3;font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;font-weight: normal;margin: 0;vertical-align: middle;-webkit-appearance: menulist;box-sizing: border-box;align-items: center;white-space: pre;-webkit-rtl-ordering: logical;cursor: default;font: -webkit-small-control;letter-spacing: normal;word-spacing: normal;text-transform: none;text-indent: 0px;text-shadow: none;text-align: start;-webkit-writing-mode: horizontal-tb;}
-</style>
-<input type="hidden" id="pageRecordNumHidden" value='<s:property value="pageRecordNum"/>'/>
-<input type="hidden" id="currentPageRecordNum" value='<s:property value="%{dataList.datas.size()}" />'>
 <table class="table">
 	<thead>
     	<tr>
@@ -77,14 +69,14 @@ select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 
 <div class="pagination center">
   <c:if test="${dataList.datas.size()>0}">
     <input id="data-current-page-hide" value="${dataList.page.currentPage }" type="hidden" >
-    <ul class="pages" id="pagination-data">
+    <ul id="pagination-data" class="pages">
       <li> 每页
-        <select id="data-page-size-sel">
-            <option value="10">10</option>
-            <option value="20" selected>20</option>
-            <option value="30">30</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
+        <select id="data-page-size-sel" class="data_page_select">
+          <option value="10" <c:if test="${dataList.page.pageSize==10}">selected</c:if>>10</option>
+          <option value="20" <c:if test="${dataList.page.pageSize==20}">selected</c:if>>20</option>
+          <option value="30" <c:if test="${dataList.page.pageSize==30}">selected</c:if>>30</option>
+          <option value="50" <c:if test="${dataList.page.pageSize==50}">selected</c:if>>50</option>
+          <option value="100" <c:if test="${dataList.page.pageSize==100}">selected</c:if>>100</option>
         </select>条
       </li>
       <!-- 显示prev -->

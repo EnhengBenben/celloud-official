@@ -181,13 +181,15 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public Integer insertProReport(Report report) {
         report.setFlag(ReportType.PROJECT);
-        return reportMapper.insertSelective(report);
+        report.setCreateDate(new Date());
+        return reportMapper.insertSelectiveReturnKey(report);
     }
 
     @Override
     public Integer insertDataReport(Report report, String[] dataIds) {
         int index = 0;
         report.setFlag(ReportType.DATA);
+        report.setCreateDate(new Date());
         for (String dataId : dataIds) {
             report.setFileId(Integer.parseInt(dataId));
             index += reportMapper.insertSelective(report);

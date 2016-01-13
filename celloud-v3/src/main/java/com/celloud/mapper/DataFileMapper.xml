@@ -314,7 +314,7 @@
 	group by time order by time desc
   </select>
   <select id="findFormatByIds" resultType="map">
-    select count(*) formatNum,file_format fileFormat from (select file_format from tb_file where file_id in (${dataIds})) t group by file_format
+    select count(*) formatNum,file_format fileFormat from (select file_format from tb_file where file_id in (${dataIds}) group by file_format) t
   </select>
   <select id="findRunningAppData" resultType="java.lang.Integer">
     select file_id 

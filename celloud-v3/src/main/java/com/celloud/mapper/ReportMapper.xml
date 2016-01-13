@@ -42,6 +42,91 @@
       #{state,jdbcType=INTEGER}, #{endDate,jdbcType=TIMESTAMP}, #{printContext,jdbcType=LONGVARCHAR}, 
       #{context,jdbcType=LONGVARCHAR})
   </insert>
+  <insert id="insertSelectiveReturnKey" parameterType="com.celloud.model.Report" useGeneratedKeys="true" keyProperty="reportId" >
+    insert into tb_report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="reportId != null" >
+        report_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="fileId != null" >
+        file_id,
+      </if>
+      <if test="projectId != null" >
+        project_id,
+      </if>
+      <if test="period != null" >
+        period,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+      <if test="readed != null" >
+        readed,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="printContext != null" >
+        print_context,
+      </if>
+      <if test="context != null" >
+        context,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="reportId != null" >
+        #{reportId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="fileId != null" >
+        #{fileId,jdbcType=INTEGER},
+      </if>
+      <if test="projectId != null" >
+        #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="period != null" >
+        #{period,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="readed != null" >
+        #{readed,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="printContext != null" >
+        #{printContext,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="context != null" >
+        #{context,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
   <insert id="insertSelective" parameterType="com.celloud.model.Report" >
     insert into tb_report
     <trim prefix="(" suffix=")" suffixOverrides="," >

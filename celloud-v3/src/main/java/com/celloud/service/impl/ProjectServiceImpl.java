@@ -1,5 +1,7 @@
 package com.celloud.service.impl;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -52,6 +54,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Integer insertProject(Project project) {
+        project.setCreateDate(new Date());
         return projectMapper.insertSelective(project);
     }
 
