@@ -121,6 +121,7 @@ var appStore=(function(appStore){
 	self.toAppDetail=function (id){
 		$.get("app/appDetail",{"paramId":id},function(responseText){
 			$("#appMain").html(responseText);
+			window.scrollTo(0,0);//滚动条回到顶部
 			if(hasNavi == 1 && intro != null){
 				intro.exit();
 				intro = null;

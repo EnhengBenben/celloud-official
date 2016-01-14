@@ -81,8 +81,8 @@
          </ul>
          <div class="tab-content no-padding">
            <!-- Morris chart - Sales -->
-           <div class="chart tab-pane active" id="count-data-day-chart" style="position: relative; height: 300px;width: 582px;"></div>
-           <div class="chart tab-pane" id="count-data-month-chart" style="position: relative; height: 300px;width: 582px;"></div>
+           <div class="chart tab-pane active" id="count-data-day-chart" style="height: 300px;"></div>
+           <div class="chart tab-pane" id="count-data-month-chart" style="height: 300px;"></div>
          </div>
        </div><!-- /.nav-tabs-custom -->
 	</section><!-- /.Left col -->
@@ -98,8 +98,8 @@
          </ul>
          <div class="tab-content no-padding">
            <!-- Morris chart - Sales -->
-           <div class="chart tab-pane active" id="count-source-day-chart" style="position: relative; height: 300px;width: 582px;"></div>
-           <div class="chart tab-pane" id="count-source-month-chart" style="position: relative; height: 300px;width:582px;"></div>
+           <div class="chart tab-pane active" id="count-source-day-chart" style="height: 300px;"></div>
+           <div class="chart tab-pane" id="count-source-month-chart" style="height: 300px;"></div>
          </div>
        </div><!-- /.nav-tabs-custom -->
     </section><!-- /.Left col -->
@@ -115,8 +115,8 @@
          </ul>
          <div class="tab-content no-padding">
            <!-- Morris chart - Sales -->
-           <div class="chart tab-pane active" id="count-report-day-chart" style="position: relative; height: 300px;width: 582px;"></div>
-           <div class="chart tab-pane" id="count-report-month-chart" style="position: relative; height: 300px;width:582px;"></div>
+           <div class="chart tab-pane active" id="count-report-day-chart" style="height: 300px;"></div>
+           <div class="chart tab-pane" id="count-report-month-chart" style="height: 300px;"></div>
          </div>
        </div><!-- /.nav-tabs-custom -->
     </section><!-- /.Left col -->
@@ -132,8 +132,8 @@
          </ul>
          <div class="tab-content no-padding">
            <!-- Morris chart - Sales -->
-           <div class="chart tab-pane active" id="count-app-day-chart" style="position: relative; height: 300px;width: 582px;"></div>
-           <div class="chart tab-pane" id="count-app-month-chart" style="position: relative; height: 300px;width:582px;"></div>
+           <div class="chart tab-pane active" id="count-app-day-chart" style="height: 300px;"></div>
+           <div class="chart tab-pane" id="count-app-month-chart" style="height: 300px;"></div>
          </div>
        </div><!-- /.nav-tabs-custom -->
     </section><!-- /.Left col -->
