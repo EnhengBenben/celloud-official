@@ -79,7 +79,7 @@ public interface DataFileMapper {
      * @date 2015年12月31日 上午10:27:50
      */
     public List<Map<String, String>> countDataByTime(
-            @Param("userId") Integer userId, @Param("time") Integer time,
+            @Param("userId") Integer userId, @Param("time") String time,
             @Param("state") Integer state);
 
     /**
@@ -93,7 +93,7 @@ public interface DataFileMapper {
      * @date 2015年12月31日 上午10:28:02
      */
     public List<Map<String, String>> sumDataByTime(
-            @Param("userId") Integer userId, @Param("time") Integer time,
+            @Param("userId") Integer userId, @Param("time") String time,
             @Param("state") Integer state);
 
     /**
@@ -187,18 +187,6 @@ public interface DataFileMapper {
      * @return
      */
     List<DataFile> findDatasById(@Param("dataIds") String dataIds);
-
-    /**
-     * 新增项目数据关系
-     * 
-     * @param dataId
-     * @param project
-     * @return
-     * @author leamo
-     * @date 2016-1-10 下午4:43:57
-     */
-    Integer insertDataProjectRelat(@Param("dataId") Integer dataId,
-            @Param("projectId") Integer projectId);
 
     /**
      * 批量修改数据

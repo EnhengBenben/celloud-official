@@ -41,7 +41,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<Map<String, String>> countData(Integer userId, Integer time) {
+    public List<Map<String, String>> countData(Integer userId, String time) {
         return dataFileMapper.countDataByTime(userId, time, DataState.ACTIVE);
     }
 
@@ -57,7 +57,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<Map<String, String>> sumData(Integer userId, Integer time) {
+    public List<Map<String, String>> sumData(Integer userId, String time) {
         return dataFileMapper.sumDataByTime(userId, time, DataState.ACTIVE);
     }
 
@@ -105,17 +105,6 @@ public class DataServiceImpl implements DataService {
     public List<DataFile> findDatasById(String dataIds) {
         // String[] dataIdArr = dataIds.split(",");
         return dataFileMapper.findDatasById(dataIds);
-    }
-
-    @Override
-    public Integer insertDataProjectRelat(String[] dataIdArr,
-            Integer projectId) {
-        int index = 0;
-        for (String dataId : dataIdArr) {
-            index += dataFileMapper
-                    .insertDataProjectRelat(Integer.valueOf(dataId), projectId);
-        }
-        return index;
     }
 
     @Override

@@ -37,7 +37,7 @@ public interface ReportService {
      * @return
      * @date 2015年12月25日 下午3:47:42
      */
-    public List<Map<String, String>> countReport(Integer userId, Integer time);
+    public List<Map<String, String>> countReport(Integer userId, String time);
 
     /**
      * 报告检索
@@ -141,6 +141,18 @@ public interface ReportService {
      * @date 2016-1-10 下午5:00:12
      */
     public Integer insertProReport(Report report);
+
+    /**
+     * 为多个APP添加报告
+     * 
+     * @param report
+     * @param appProId
+     * @return 失败的APPid
+     * @author leamo
+     * @date 2016年1月14日 下午2:11:52
+     */
+    public List<Integer> insertMultipleProReport(Report report,
+            Map<Integer, Integer> appProId, String[] dataIds);
 
     /**
      * 新增数据报告

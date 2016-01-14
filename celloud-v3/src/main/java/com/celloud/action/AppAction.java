@@ -115,6 +115,8 @@ public class AppAction {
         mv.addObject("classifyId", classifyId);
         mv.addObject("classifyPid", classifyPid);
         mv.addObject("classifyFloor", classifyFloor);
+        mv.addObject("condition",condition);
+        mv.addObject("type",type);
         return mv;
     }
 

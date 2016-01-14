@@ -48,7 +48,7 @@ public interface AppMapper {
      * @date 2015年12月31日 上午10:26:20
      */
     public List<Map<String, String>> countMyAppByTime(
-            @Param("userId") Integer userId, @Param("time") Integer time,
+            @Param("userId") Integer userId, @Param("time") String time,
             @Param("offLine") Integer offLine, @Param("isAdd") Integer isAdd);
 
     /**
@@ -151,4 +151,14 @@ public interface AppMapper {
     public List<App> findAppsByFormat(@Param("userId") Integer userId,
             @Param("formatId") Integer formatId,
             @Param("offLine") Integer offLine);
+
+    /**
+     * 批量获取APP列表
+     * 
+     * @param appIds
+     * @return
+     * @author leamo
+     * @date 2016年1月14日 下午1:49:46
+     */
+    public List<App> findAppsByIds(@Param("appIds") String appIds);
 }

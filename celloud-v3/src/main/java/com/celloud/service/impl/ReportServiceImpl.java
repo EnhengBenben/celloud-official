@@ -68,7 +68,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public List<Map<String, String>> countReport(Integer userId, Integer time) {
+    public List<Map<String, String>> countReport(Integer userId, String time) {
         return reportMapper.countReportByTime(userId, time, DataState.ACTIVE,
                 ReportType.PROJECT);
     }
@@ -183,6 +183,33 @@ public class ReportServiceImpl implements ReportService {
         report.setFlag(ReportType.PROJECT);
         report.setCreateDate(new Date());
         return reportMapper.insertSelectiveReturnKey(report);
+    }
+
+    @Override
+    public List<Integer> insertMultipleProReport(Report report,
+            Map<Integer, Integer> appProId, String[] dataIds) {
+        List<Integer> failAppId = new ArrayList<>();
+        report.setCreateDate(new Date());
+        for (Entry<Integer, Integer> entry : appProId.entrySet()) {
+            Integer appId = entry.getKey();
+            Integer proId = entry.getValue();
+            report.setReportId(null);
+            report.setProjectId(proId);
+            report.setAppId(appId);
+            report.setFlag(ReportType.PROJECT);
+            int pindex = reportMapper.insertSelective(report);
+            // 创建数据报告
+            report.setFlag(ReportType.DATA);
+            int dindex = 0;
+            for (String dataId : dataIds) {
+                report.setFileId(Integer.parseInt(dataId));
+                dindex += reportMapper.insertSelective(report);
+            }
+            if (pindex == 0 || dindex == 0) {
+                failAppId.add(appId);
+            }
+        }
+        return failAppId;
     }
 
     @Override

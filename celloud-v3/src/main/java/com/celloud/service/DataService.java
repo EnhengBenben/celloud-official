@@ -37,7 +37,7 @@ public interface DataService {
      * @param time
      * @return
      */
-    public List<Map<String, String>> countData(Integer userId, Integer time);
+    public List<Map<String, String>> countData(Integer userId, String time);
 
     /**
      * 按照时间段统计帐号下的文件大小
@@ -47,7 +47,7 @@ public interface DataService {
      * @return
      * @date 2015年12月30日 下午4:03:12
      */
-    public List<Map<String, String>> sumData(Integer userId, Integer time);
+    public List<Map<String, String>> sumData(Integer userId, String time);
 
     /**
      * 添加上传文件信息
@@ -120,17 +120,6 @@ public interface DataService {
      * @return
      */
     List<DataFile> findDatasById(String dataIds);
-
-    /**
-     * 新增项目数据关系
-     * 
-     * @param dataId
-     * @param project
-     * @return
-     * @author leamo
-     * @date 2016-1-10 下午4:43:57
-     */
-    Integer insertDataProjectRelat(String[] dataIdArr, Integer projectId);
 
     /**
      * app正在运行运行个数
