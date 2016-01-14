@@ -9,9 +9,9 @@ public class TimeState {
     /**
      * 月
      */
-    public static final Integer MONTH = 7;
+    public static final String MONTH = "%Y-%m";
     /**
      * 日
      */
-    public static final Integer DAY = 10;
+    public static final String DAY = "%Y-%m-%d";
 }

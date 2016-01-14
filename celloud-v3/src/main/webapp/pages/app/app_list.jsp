@@ -100,7 +100,7 @@
         </c:otherwise>
       </c:choose>
     </ul>
-    <div class="pagination center">
+    <div class="pagination text-center">
 	  <c:if test="${appPageList.datas.size()>0}">
 		<ul class="pages">
 	    	<!-- 显示prev -->

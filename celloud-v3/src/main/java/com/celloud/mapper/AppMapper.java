@@ -48,7 +48,7 @@ public interface AppMapper {
      * @date 2015年12月31日 上午10:26:20
      */
     public List<Map<String, String>> countMyAppByTime(
-            @Param("userId") Integer userId, @Param("time") Integer time,
+            @Param("userId") Integer userId, @Param("time") String time,
             @Param("offLine") Integer offLine, @Param("isAdd") Integer isAdd);
 
     /**

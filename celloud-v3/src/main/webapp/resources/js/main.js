@@ -222,10 +222,22 @@ var userCount=(function(userCount){
 	};
 	self.toDataMain=function(){
 		$.AdminLTE.closeSidebar();
+		$('.treeview').removeClass("active");
+		$("#toDataMenu").addClass('active');
 		 $("#dataReportDIV").css("display","none");
 		 $("#uploadDIV").css("display","none");
 		 $("#mainDIV").css("display","");
 		 $("#mainDIV").load("pages/data/data_main.jsp");
+	}
+	self.toReportMain=function(){
+		$('.treeview').removeClass("active");
+		$("#toReportMenu").addClass('active');
+		showReport();
+	}
+	self.toAppStore=function(){
+		$('.treeview').removeClass("active");
+		$("#toAppStoreMenu").addClass('active');
+		showAppStore();
 	}
 	return self;
 })(userCount);
