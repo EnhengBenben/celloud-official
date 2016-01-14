@@ -38,11 +38,6 @@ public class AppServiceImpl implements AppService {
 	}
 
 	@Override
-	public List<App> getAppByCompanyId(Integer cmpId, Integer role) {
-		return appDao.getAppByCompanyId(cmpId, role);
-	}
-
-	@Override
 	public List<LoginLog> getTotalUserLogin(int role, int cmpId) {
 		return appDao.getTotalUserLogin(role, cmpId);
 	}

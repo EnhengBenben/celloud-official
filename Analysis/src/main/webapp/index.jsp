@@ -113,15 +113,23 @@
 							<li>
 								<a href="javascript:getUserDataList()">
 									<i class="icon-double-angle-right"></i>
-									总用户数据量
+									数据总览
 								</a>
 							</li>
+							<li>
+								<a href="javascript:getUserDataList()">
+									<i class="icon-double-angle-right"></i>
+									用户数据统计
+								</a>
+							</li>
+							<!-- 
 							<li>
 								<a href="javascript:getMonthDataList()">
 									<i class="icon-double-angle-right"></i>
 									数据量月统计
 								</a>
 							</li>
+							 -->
 							<c:if test="${userRole=='2'|| userRole=='3'}">
 								<li>
 									<a href="javascript:bigUserCount()">
@@ -148,10 +156,22 @@
 							<li>
 								<a href="javascript:toHospitalList()">
 									<i class="icon-double-angle-right"></i>
-									医院详细信息
+									医院总览
 								</a>
 							</li>
-							<c:if test="${userRole=='2'|| userRole=='3'}">
+							<li>
+								<a href="javascript:toCompanyDataList()">
+									<i class="icon-double-angle-right"></i>
+									医院数据统计
+								</a>
+							</li>
+							<li>
+                                <a href="javascript:toCompanyReportList()">
+                                    <i class="icon-double-angle-right"></i>
+                                    医院报告统计
+                                </a>
+                            </li>
+							<c:if test="${ userRole=='2'}">
 								<li>
 									<a href="javascript:hospitalBigUserCount()">
 										<i class="icon-double-angle-right"></i>
@@ -161,48 +181,50 @@
 							</c:if>
 						</ul>
 					</li>
-					<li>
-						<a href="javascript:void(0)" class="dropdown-toggle">
-							<i class="icon-user-md"></i>
-							<span class="menu-text">用户统计 </span>
-							<b class="arrow icon-angle-down"></b>
-						</a>
-						<ul class="submenu">
-							<li>
-								<a href="javascript:toUserList()">
-									<i class="icon-double-angle-right"></i>
-									用户详细信息
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="javascript:void(0)" class="dropdown-toggle">
-							<i class="icon-cloud"></i>
-							<span class="menu-text">APP统计 </span>
-							<b class="arrow icon-angle-down"></b>
-						</a>
-						<ul class="submenu">
-							<li>
-								<a href="javascript:toAPPList()">
-									<i class="icon-double-angle-right"></i>
-									APP详细信息
-								</a>
-							</li>
-							<li>
-								<a href="javascript:bigUserAppList()">
-									<i class="icon-double-angle-right"></i>
-									大客户统计
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="javascript:toActivity()">
-							<i class="icon-bar-chart"></i>
-							<span class="menu-text">活跃度统计 </span>
-						</a>
-					</li>
+					<c:if test="${ userRole=='3'}">
+						<li>
+							<a href="javascript:void(0)" class="dropdown-toggle">
+								<i class="icon-user-md"></i>
+								<span class="menu-text">用户统计 </span>
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							<ul class="submenu">
+								<li>
+									<a href="javascript:toUserList()">
+										<i class="icon-double-angle-right"></i>
+										用户详细信息
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="javascript:void(0)" class="dropdown-toggle">
+								<i class="icon-cloud"></i>
+								<span class="menu-text">APP统计 </span>
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							<ul class="submenu">
+								<li>
+									<a href="javascript:toAPPList()">
+										<i class="icon-double-angle-right"></i>
+										APP详细信息
+									</a>
+								</li>
+								<li>
+									<a href="javascript:bigUserAppList()">
+										<i class="icon-double-angle-right"></i>
+										大客户统计
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="javascript:toActivity()">
+								<i class="icon-bar-chart"></i>
+								<span class="menu-text">活跃度统计 </span>
+							</a>
+						</li>
+					</c:if>
 				</ul>
 				<!-- /.nav-list -->
 				<div class="sidebar-collapse" id="sidebar-collapse">
@@ -266,20 +288,15 @@
 	<script src="./js/OptionsFactory.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		jQuery(function($) {
-			
 			toHome();
 		});
-		/***活跃度统计－－－医院活跃度统计**/
-		function toActivity() {
-			$.get("company!toActivity", {}, function(responseText) {
-				$("#content").html(responseText);
-			});
-		}
-		function toHospital(toText) {
-			$("#content").html(toText);
-			
-		}
-		/***数据统计－－－总用户数据里**/
+	       /***控制台--总览**/
+        function toHome() {
+            $.get("home!toHome", {}, function(responseText) {
+                $("#content").html(responseText);
+            });
+        }
+		/***数据统计－－用户数据统计**/
 		function getUserDataList() {
 			$.get("data!getAllUsersDataNum", {}, function(responseText) {
 				$("#content").html(responseText);
@@ -292,12 +309,6 @@
 				$("#content").html(responseText);
 			});
 		}
-		/***控制台**/
-		function toHome() {
-			$.get("home!toHome", {}, function(responseText) {
-				$("#content").html(responseText);
-			});
-		}
 		////	医院详细信息
 		function toHospitalList() {
 			$("#secondTitle").addClass("hide");
@@ -305,6 +316,20 @@
 				$("#content").html(responseText);
 			});
 		}
+		///医院数据统计信息
+		  function toCompanyDataList() {
+	            $("#secondTitle").addClass("hide");
+	            $.get("home!toCompanyDataList", {}, function(responseText) {
+	                $("#content").html(responseText);
+	            });
+	        }
+		    ///医院报告统计信息
+		    function toCompanyReportList() {
+	            $("#secondTitle").addClass("hide");
+	            $.get("home!toCompanyReportList", {}, function(responseText) {
+	                $("#content").html(responseText);
+	            });
+	        }
 		/***用户统计**/
 		function toUserList() {
 			$("#secondTitle").addClass("hide");
@@ -341,6 +366,15 @@
 				$("#content").html(responseText);
 			});
 		}
+	      /***活跃度统计－－－医院活跃度统计**/
+        function toActivity() {
+            $.get("company!toActivity", {}, function(responseText) {
+                $("#content").html(responseText);
+            });
+        }
+        function showContent(toText) {
+            $("#content").html(toText);     
+        }
 	</script>
 </body>
 </html>

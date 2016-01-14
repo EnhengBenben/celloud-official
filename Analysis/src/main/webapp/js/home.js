@@ -40,7 +40,7 @@ function AppRunNum() {
 			xAxis[i] = data[i].app_name;
 			yAxis[i] = data[i].runNum;
 		}
-		var option = makeOptionScroll('', xAxis, yAxis, '运行次数', 'bar', 0, 50);
+		var option = makeOptionScrollUnit(xAxis, yAxis, '运行次数', 'bar', 0, 10);
 		var myChart = echarts.init(document.getElementById(viewId));
 		myChart.setOption(option);
 	});
@@ -55,7 +55,7 @@ function UserRunNum() {
 			xAxis[i] = data[i].userName;
 			yAxis[i] = data[i].runNum;
 		}
-		var option = makeOptionScroll('', xAxis, yAxis, '运行次数', 'bar', 0, 25);
+		var option = makeOptionScrollUnit(xAxis, yAxis, '运行次数', 'bar', 0, 10);
 		var myChart = echarts.init(document.getElementById(viewId));
 		myChart.setOption(option);
 	});
@@ -95,6 +95,8 @@ function chars(data) {
 			trigger : 'item'
 		},
 		dataRange : {
+			x:'right',
+			y:'bottom',
 			min : 0,
 			max : 10,
 			calculable : true,
@@ -118,6 +120,11 @@ function chars(data) {
 			name : 'pm2.5',
 			type : 'map',
 			mapType : 'china',
+			mapLocation:{
+				x:60,
+				width:"600",
+				height:"500"
+			},
 			hoverable : false,
 			roam : true,
 			data : [],

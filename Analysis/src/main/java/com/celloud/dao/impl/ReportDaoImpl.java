@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.dbutils.QueryRunner;
@@ -54,6 +56,25 @@ public class ReportDaoImpl implements ReportDao {
 			e.printStackTrace();
 		}
 		return map.get("num");
+	}
+
+	@Override
+	public List<Map<String, Object>> getUserRunEachApp(Connection conn, Integer role, Integer cmpId) {
+		String sql = "select uc.company_id,c.company_name,r.app_id,count(r.report_id)as runNum from tb_report r,tb_user_company_relat uc,tb_company c where uc.company_id = c.company_id and r.user_id = uc.user_id "
+				+ " and r.user_id not in ( " + noUserid + ")  "
+				+ SqlController.whereCompany("uc", "company_id", role, cmpId)
+				+ " group by r.app_id,uc.company_id order by runNum desc";
+		LogUtil.info(log, sql);
+		List<Map<String, Object>> res = new ArrayList<>();
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			ResultSetHandler<List<Map<String, Object>>> rsh = new ScalarHandler<List<Map<String, Object>>>();
+			res = rsh.handle(rs);
+		} catch (SQLException e) {
+			LogUtil.query(log, sql, e);
+		}
+		return res;
 	}
 
 }

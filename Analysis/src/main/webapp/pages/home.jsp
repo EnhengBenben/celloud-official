@@ -13,11 +13,9 @@
 	margin-left: 40px;
 	margin-right: 20px;
 }
-
 .btn-position {
 	margin-left: 45px;
 }
-
 .btn {
 	margin-left: 5px;
 	margin-top: 7px;
@@ -120,10 +118,21 @@
 			<div class="row">
 				<div class="col-xs-12">
 					<h3 class="header smaller lighter green">用户地理分布</h3>
-					<div class="col-sm-10" style="height: 550px;" id="map"></div>
+					<div class="col-sm-10" style="height: 500px;width:70%" id="map"></div>
 				</div>
 			</div>
-			<!-- /row -->
+			     <div class="row">
+                <div class="col-xs-12">
+                    <h3 class="header smaller lighter green">用户登陆统计</h3>
+                    <div id="loginId" class="col-sm-12" style="height: 450px;"></div>
+                    <!-- row -->
+                    <div class="space"></div>
+                    <div class="hr hr32 hr-dotted"></div>
+                    <!-- PAGE CONTENT ENDS -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
 			<c:if test="${userRole=='2' || userRole=='3' }">
 				<div class="row">
 					<div class="col-xs-12">
@@ -149,18 +158,7 @@
 				</div>
 			</div>
 
-			<div class="row">
-				<div class="col-xs-12">
-					<h3 class="header smaller lighter green">用户登陆统计</h3>
-					<div id="loginId" class="col-sm-12" style="height: 450px;"></div>
-					<!-- row -->
-					<div class="space"></div>
-					<div class="hr hr32 hr-dotted"></div>
-					<!-- PAGE CONTENT ENDS -->
-				</div>
-				<!-- /.col -->
-			</div>
-			<!-- /.row -->
+	
 		</div>
 	</div>
 	<!-- /.page-content -->

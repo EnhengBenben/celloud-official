@@ -15,4 +15,6 @@ public interface HomeService {
 	 * @return
 	 */
 	public Map<String, Object> toHome(Integer cmpId, Integer role);
+
+	public Map<String, Object> toCompanyReport(Integer cmpId, Integer role);
 }

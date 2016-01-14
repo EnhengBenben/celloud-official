@@ -145,26 +145,15 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 		legend : {
 			data : [ seriesName ],// [ '文件个数', '数据大小(GB)' ]
 		},
-		grid:{
-			x:80,
-			y:60,
-			x2:80,
-			y2:80
+		grid : {
+			x : 80,
+			y : 60,
+			x2 : 80,
+			y2 : 80
 		},
 		toolbox : {
 			show : true,
 			feature : {
-				dataView : {
-					show : true,
-					readOnly : false
-				},
-				magicType : {
-					show : true,
-					type : [ 'line', 'bar' ]
-				},
-				restore : {
-					show : true
-				},
 				saveAsImage : {
 					show : true
 				}
@@ -173,8 +162,10 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 		calculable : true,
 		xAxis : [ {
 			type : 'category',
+			position : 'bottom',
 			data : xAxis,
 			scale : true,
+			barMaxWidth : 100,
 			lenght : 15,
 			axisLabel : {
 				show : true,
@@ -188,7 +179,7 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 					fontSize : 12,
 					fontStyle : 'italic',
 					fontWeight : 'bold',
-					align:'left'
+					align : 'left'
 				}
 			},
 		} ],
@@ -216,17 +207,19 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 			name : seriesName,
 			type : typex,
 			data : yAxis,
+			barMaxWidth : 100,
 			itemStyle : {
-					normal : {
-						label : {
-							show : true,
-							textStyle:{
-								fontSize:14,
-								fontWeight:'bolder',
-								color:'green',
-							}
+				normal : {
+					color : "#F0F0F0",
+					label : {
+						show : true,
+						textStyle : {
+							fontSize : 14,
+							fontWeight : 'bolder',
+							color : 'green',
 						}
-					},
+					}
+				},
 			},
 			markPoint : {
 				data : [ {
@@ -245,18 +238,32 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 			}
 		} ]
 	};
-	if (max >= 8) {
+	if (max >= 8 && xAxis.length > 6) {
 		opt.xAxis[0].axisLabel.rotate = 30;
+	} else {
+		opt.xAxis[0].axisLabel.rotate = 0;
 	}
-	if (seriesName.indexOf("大小")>0) {
+	if (seriesName.indexOf("大小") > 0) {
 		var len = seriesName.length;
-		var ustr = seriesName.substring(len-3,len-1)
-		opt.yAxis[0].axisLabel.formatter = '{value}'+ustr;
+		var ustr = seriesName.substring(len - 3, len - 1)
+		opt.yAxis[0].axisLabel.formatter = '{value}' + ustr;
 	}
-	if(xAxis.length<5){
-		var x2 = (10-length)*80;
+	if (xAxis.length < 5) {
+		var x2 = (10 - length) * 80;
 		opt.grid.x2 = x2;
 	}
+	var colorStr ;
+	/**柱状图颜色*/
+	if(seriesName.indexOf("数据量")>-1){
+		colorStr = colorList[1];
+	}else if (seriesName.indexOf("数据大小")>-1){
+		colorStr = colorList[4];
+	}else if(seriesName.indexOf("运行")>-1){
+		colorStr = colorList[9];
+	}else if(seriesName.indexOf("登陆")>-1){
+		colorStr = colorList[4];
+	}
+	opt.series[0].itemStyle.normal.color = colorStr;
 	console.log(opt.grid);
 	return opt;
 }

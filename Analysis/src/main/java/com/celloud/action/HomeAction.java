@@ -33,6 +33,8 @@ import com.google.inject.Inject;
 		@Result(name = "toHospitalBigUser", location = "../../pages/hospitalBigUser.jsp"),
 		@Result(name = "toBigUser", location = "../../pages/bigUser.jsp"),
 		@Result(name = "toBigUserOne", location = "../../pages/bigUserOne.jsp"),
+		@Result(name = "companyReportList", location = "../../pages/companyReportList.jsp"),
+		@Result(name = "companyDataList", location = "../../pages/companyDataList.jsp"),
 
 		@Result(name = "browserCount", type = "json", params = { "root", "browserList" }),
 		@Result(name = "historyList", type = "json", params = { "root", "historyList" }),
@@ -77,6 +79,8 @@ public class HomeAction extends BaseAction {
 	/** 每天上传数据大小统计 **/
 	private List<DataFile> eachDataList;
 	private List<Company> cmpList;
+	private String orderby; // 1.文件数量;2.文件大小
+	private List<Map<String, Object>> mapList;
 	private int companyId;
 
 	/**
@@ -93,6 +97,22 @@ public class HomeAction extends BaseAction {
 		/** 历史比较 */
 
 		return "success";
+	}
+
+	public String toCompanyDataList() {
+		Integer cid = (Integer) getCid();
+		Integer role = (Integer) super.session.get(User.USER_ROLE);
+		cmpList = companyService.getCompanyDetailById(cid, role, null);
+		return "companyDataList";
+	}
+
+	public String toCompanyReportList() {
+		Integer cid = (Integer) getCid();
+		Integer role = (Integer) super.session.get(User.USER_ROLE);
+		Map<String, Object> map = homeService.toCompanyReport(cid, role);
+		appList = (List<App>) map.get("listApps");
+		mapList = (List<Map<String, Object>>) map.get("userAppRun");
+		return "companyReportList";
 	}
 
 	public String toBigUserCount() {
@@ -201,6 +221,14 @@ public class HomeAction extends BaseAction {
 
 	public Date getEndDate() {
 		return endDate;
+	}
+
+	public String getOrderby() {
+		return orderby;
+	}
+
+	public void setOrderby(String orderby) {
+		this.orderby = orderby;
 	}
 
 	public void setEndDate(String endDate) {
