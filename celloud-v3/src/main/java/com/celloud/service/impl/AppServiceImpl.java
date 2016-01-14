@@ -35,7 +35,7 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public List<Map<String, String>> countMyApp(Integer userId, Integer time) {
+    public List<Map<String, String>> countMyApp(Integer userId, String time) {
         return appMapper.countMyAppByTime(userId, time, AppOffline.ON, AppIsAdd.ALREADY_ADDED);
     }
 

@@ -41,7 +41,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<Map<String, String>> countData(Integer userId, Integer time) {
+    public List<Map<String, String>> countData(Integer userId, String time) {
         return dataFileMapper.countDataByTime(userId, time, DataState.ACTIVE);
     }
 
@@ -57,7 +57,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<Map<String, String>> sumData(Integer userId, Integer time) {
+    public List<Map<String, String>> sumData(Integer userId, String time) {
         return dataFileMapper.sumDataByTime(userId, time, DataState.ACTIVE);
     }
 

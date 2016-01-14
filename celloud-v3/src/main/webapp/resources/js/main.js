@@ -100,8 +100,10 @@ var userCount=(function(userCount){
 			var x = "[";
 			var y = [];
 			$.each(data,function(index,map){
+				if (typeof(map.time) != "undefined") {
 					x += "'" + map.time + "',";
 					y[y.length]=Number(map.num);
+				}
 			})
 			x = x.substring(0,x.length-1);
 			x += "]";
@@ -110,11 +112,14 @@ var userCount=(function(userCount){
 	};
 	self.fileMonthCount=function(){
 		$.get("count/fileMonthCount",function(data){
+			$("#count-data-month-chart").width($("#count-data-day-chart").width());
 			var x = "[";
 			var y = [];
 			$.each(data,function(index,map){
+				if (typeof(map.time) != "undefined") {
 				x += "'" + map.time + "',";
 				y[y.length]=Number(map.num);
+				}
 			})
 			x = x.substring(0,x.length-1);
 			x += "]";
@@ -127,8 +132,10 @@ var userCount=(function(userCount){
 			var x = "[";
 			var y = [];
 			$.each(data,function(index,map){
+				if (typeof(map.time) != "undefined") {
 					x += "'" + map.time + "',";
 					y[y.length]=Number(map.size/1073741824).toFixed(3);
+				}
 			})
 			x = x.substring(0,x.length-1);
 			x += "]";
@@ -137,11 +144,14 @@ var userCount=(function(userCount){
 	};
 	self.fileSizeMonthCount=function(){
 		$.get("count/fileSizeMonthCount",function(data){
+			$("#count-source-month-chart").width($("#count-source-day-chart").width());
 			var x = "[";
 			var y = [];
 			$.each(data,function(index,map){
+				if (typeof(map.time) != "undefined") {
 				x += "'" + map.time + "',";
 				y[y.length]=Number(map.size/1073741824).toFixed(3);
+				}
 			})
 			x = x.substring(0,x.length-1);
 			x += "]";
@@ -155,8 +165,10 @@ var userCount=(function(userCount){
 			var x = "[";
 			var y = [];
 			$.each(data,function(index,map){
+				if (typeof(map.time) != "undefined") {
 					x += "'" + map.time + "',";
 					y[y.length]=Number(map.size);
+				}
 			})
 			x = x.substring(0,x.length-1);
 			x += "]";
@@ -166,11 +178,14 @@ var userCount=(function(userCount){
 
 	self.reportMonthCount=function(){
 		$.get("count/reportMonthCount",function(data){
+			$("#count-report-month-chart").width($("#count-report-day-chart").width());
 			var x = "[";
 			var y = [];
 			$.each(data,function(index,map){
+				if (typeof(map.time) != "undefined") {
 				x += "'" + map.time + "',";
 				y[y.length]=Number(map.size);
+				}
 			})
 			x = x.substring(0,x.length-1);
 			x += "]";
@@ -184,8 +199,10 @@ var userCount=(function(userCount){
 			var x = "[";
 			var y = [];
 			$.each(data,function(index,map){
+				if (typeof(map.time) != "undefined") {
 					x += "'" + map.time + "',";
 					y[y.length]=Number(map.num);
+				}
 			})
 			x = x.substring(0,x.length-1);
 			x += "]";
@@ -195,11 +212,14 @@ var userCount=(function(userCount){
 	
 	self.appMonthCount=function(){
 		$.get("count/appMonthCount",function(data){
+			$("#count-app-month-chart").width($("#count-app-day-chart").width());
 			var x = "[";
 			var y = [];
 			$.each(data,function(index,map){
+				if (typeof(map.time) != "undefined") {
 				x += "'" + map.time + "',";
 				y[y.length]=Number(map.num);
+				}
 			})
 			x = x.substring(0,x.length-1);
 			x += "]";
@@ -222,10 +242,22 @@ var userCount=(function(userCount){
 	};
 	self.toDataMain=function(){
 		$.AdminLTE.closeSidebar();
+		$('.treeview').removeClass("active");
+		$("#toDataMenu").addClass('active');
 		 $("#dataReportDIV").css("display","none");
 		 $("#uploadDIV").css("display","none");
 		 $("#mainDIV").css("display","");
 		 $("#mainDIV").load("pages/data/data_main.jsp");
+	}
+	self.toReportMain=function(){
+		$('.treeview').removeClass("active");
+		$("#toReportMenu").addClass('active');
+		showReport();
+	}
+	self.toAppStore=function(){
+		$('.treeview').removeClass("active");
+		$("#toAppStoreMenu").addClass('active');
+		showAppStore();
 	}
 	return self;
 })(userCount);

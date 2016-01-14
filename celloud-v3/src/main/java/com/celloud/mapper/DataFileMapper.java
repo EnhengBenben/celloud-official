@@ -79,7 +79,7 @@ public interface DataFileMapper {
      * @date 2015年12月31日 上午10:27:50
      */
     public List<Map<String, String>> countDataByTime(
-            @Param("userId") Integer userId, @Param("time") Integer time,
+            @Param("userId") Integer userId, @Param("time") String time,
             @Param("state") Integer state);
 
     /**
@@ -93,7 +93,7 @@ public interface DataFileMapper {
      * @date 2015年12月31日 上午10:28:02
      */
     public List<Map<String, String>> sumDataByTime(
-            @Param("userId") Integer userId, @Param("time") Integer time,
+            @Param("userId") Integer userId, @Param("time") String time,
             @Param("state") Integer state);
 
     /**

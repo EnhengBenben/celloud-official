@@ -309,7 +309,7 @@
     select count(a.app_id) from tb_user_app_right uar left join tb_app a on uar.app_id=a.app_id where uar.user_id=#{userId } and a.off_line=#{offLine } and uar.is_add=#{isAdd }
   </select>
   <select id="countMyAppByTime" resultType="map" >
-    select left(r.create_date,#{time }) time,count(r.report_id) num from tb_user_app_right uar 
+    select date_format(r.create_date,#{time }) time,count(r.report_id) num from tb_user_app_right uar 
 	left join tb_app a on uar.app_id=a.app_id
 	left join tb_report r on r.app_id=uar.app_id
 	where uar.user_id=#{userId } and a.off_line=#{offLine } and uar.is_add=#{isAdd } and r.user_id=#{userId } group by time
@@ -318,7 +318,7 @@
   	select s.app_id,app_name,count(*) as num from (select project_id from tb_project where user_id = #{userId } and state = 0 union all select p.project_id from tb_project p,tb_project_share s where p.state=0 and p.project_id=s.project_id and s.share_to = #{userId }) as p,tb_report as r,tb_app s where r.project_id = p.project_id and r.app_id = s.app_id group by app_id order by num desc , app_name;
   </select>
   <select id="getAppByClassify" resultMap="BaseResultMap"  >
-    select a.app_id,a.app_name,a.picture_name,a.intro,a.description,a.create_date 
+    select DISTINCT a.app_id,a.app_name,a.picture_name,a.intro,a.description,a.create_date 
     from tb_app a 
     left join tb_app_classify_relat ac on a.app_id=ac.app_id 
     left join tb_user_app_right uar on uar.app_id = a.app_id 

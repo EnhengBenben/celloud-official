@@ -32,7 +32,7 @@ public interface AppService {
      * @return
      * @date 2015年12月25日 下午5:44:58
      */
-    public List<Map<String, String>> countMyApp(Integer userId, Integer time);
+    public List<Map<String, String>> countMyApp(Integer userId, String time);
 
     /**
      * 获取用户已运行的APP

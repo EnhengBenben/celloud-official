@@ -47,7 +47,7 @@ public interface ReportMapper {
 	 * @author han
 	 * @date 2015年12月31日 上午10:29:19
 	 */
-	public List<Map<String, String>> countReportByTime(@Param("userId") Integer userId, @Param("time") Integer time, @Param("state") Integer state, @Param("flag") Integer flag);
+	public List<Map<String, String>> countReportByTime(@Param("userId") Integer userId, @Param("time") String time, @Param("state") Integer state, @Param("flag") Integer flag);
 
 	/**
 	 * 报告检索

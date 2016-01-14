@@ -2,10 +2,11 @@ var appStore=(function(appStore){
 	var self=appStore||{};
 	
 	//默认打开按功能分类
-	self.classifyPid = 1;
-	self.classifySid = 0;
+	//self.classifyPid = 1;
+	//self.classifySid = 0;
 	self.introNext = 0;
-	
+	self.sortFiled = null;
+	self.sortType=null;
 	self.getMyApp=function(){
 		$.get("app/myApps",{},function(responseText){
 			$("#myAppDiv").html(responseText);
@@ -18,7 +19,7 @@ var appStore=(function(appStore){
 		$("#classifypidLi"+pid).addClass("active");
 		$.get("app/toSclassifyApp",{"paramId":pid},function(responseText){
 			$("#sclassify").html(responseText);
-			if(hasNavi == 1 && intro != null && introNext==0){
+			if(hasNavi == 1 && intro != null && self.introNext==0){
 				intro.exit();
 				intro = null;
 				intro = introJs();
@@ -28,7 +29,7 @@ var appStore=(function(appStore){
 				intro.start();
 				intro.goToStep(2);
 			}
-			if(hasNavi == 1 && intro != null && introNext==1){
+			if(hasNavi == 1 && intro != null && self.introNext==1){
 				intro.exit();
 				intro = null;
 				intro = introJs();
@@ -38,7 +39,7 @@ var appStore=(function(appStore){
 				intro.start();
 				intro.goToStep(3);
 			}
-			introNext = 1;
+			self.introNext = 1;
 		});
 		$("#defaultPid").val(pid);
 		$("#defaultPname").val(pname);
@@ -53,14 +54,12 @@ var appStore=(function(appStore){
 	
 	self.sortApp=function(){
 		$("#sort-listUl li").removeClass("current");
-		if(sortFiled == "a.create_date"){
+		if(self.sortFiled == "a.create_date"){
 			$("#sortByCreateDate").addClass("current");
-			if(sortType == "desc"){
+			if(self.sortType == "desc"){
 				$("#sortByCreateDate i").removeClass("up").addClass("down");
-				sortType = "asc";
 			}else{
 				$("#sortByCreateDate i").removeClass("down").addClass("up");
-				sortType = "desc";
 			}
 		}else{
 			$("#defaultSort").addClass("current");
@@ -71,7 +70,7 @@ var appStore=(function(appStore){
 		currentPage = pageNum;
 		$("#rootClassifyName").unbind("click");
 		$("#secondClassifyName").unbind("click");
-		$.get("app/toMoreAppList",{"classifyId":sid,"classifyPid":pid,"classifyFloor":isParent,"size":pageAppNum,"page":currentPage,"condition":sortFiled,"type":sortType},function(responseText){
+		$.get("app/toMoreAppList",{"classifyId":sid,"classifyPid":pid,"classifyFloor":isParent,"size":pageAppNum,"page":currentPage,"condition":self.sortFiled,"type":self.sortType},function(responseText){
 			$("#appMain").html(responseText);
 			if(pid==0){//针对无二级分类的特殊处理
 				$("#rootClassifyName").html($("#pid"+sid).html());
@@ -91,11 +90,20 @@ var appStore=(function(appStore){
 			}
 			$("#secondClassifyName").parent().removeClass("hide");
 			$("#sortByCreateDate").bind("click",function(){
-	            sortFiled = "a.create_date";
+	            self.sortFiled = "a.create_date";
+	            if(self.sortType == "desc"){
+	            	self.sortType="asc";
+				}else{
+					self.sortType="desc";
+				}
+	            self.toMoreApp(pid,sid,1,isParent);
+			});
+			$("#defaultSort").bind("click",function(){
+	            self.sortFiled = null;
+	            self.sortType=null;
 	            self.toMoreApp(pid,sid,1,isParent);
 			});
 			self.sortApp();
-			sortFiled = "";
 			if(hasNavi == 1 && intro != null){
 				intro.exit();
 				intro = null;
@@ -113,6 +121,7 @@ var appStore=(function(appStore){
 	self.toAppDetail=function (id){
 		$.get("app/appDetail",{"paramId":id},function(responseText){
 			$("#appMain").html(responseText);
+			window.scrollTo(0,0);//滚动条回到顶部
 			if(hasNavi == 1 && intro != null){
 				intro.exit();
 				intro = null;
