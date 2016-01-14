@@ -151,13 +151,10 @@ public class CompanyDaoImpl implements CompanyDao {
 	public List<Map<String, Object>> getProvince(Integer companyId, int role) {
 		List<Map<String, Object>> list = null;
 		Connection conn = ConnectManager.getConnection();
-
-		String sql = "select province,count(distinct c.company_id) as num from tb_user u,tb_dept d,tb_company c where u.dept_id=d.dept_id and d.company_id=c.company_id and u.user_id not in ("
-				+ noUserid + ") "
-				// + SqlController.whereCompany(role, companyId)
-				+ "group by province";
+		String sql = "select c.province,count(distinct(u.company_id)) as num from tb_user u,tb_company c, tb_user_company_relat uc where "
+				+ " u.company_id = c.company_id and u.user_id = uc.user_id and u.user_id not in (" + noUserid + ") "
+				+ SqlController.whereCompany("uc", "company_id", role, companyId) + "group by province";
 		LogUtil.info(log, sql);
-
 		try {
 			list = qr.query(conn, sql, new MapListHandler());
 		} catch (SQLException e) {
@@ -239,9 +236,12 @@ public class CompanyDaoImpl implements CompanyDao {
 		Connection conn = ConnectManager.getConnection();
 		String sql = "select distinct(uc.company_id)as company_id,c.company_name,c.create_date,c.address,c.tel,un.userNum,uf.fileNum,uf.size,ur.runNum from "
 				+ "tb_user_company_relat uc,tb_company c, "
-				+ "(select u.company_id,count(u.user_id)as userNum from tb_user u where u.state =0 group  by u.company_id)un, "
-				+ "(select u.company_id,count(f.file_id)as fileNum,sum(f.size)as size from tb_file f,tb_user u where f.user_id = u.user_id and f.state=0 and u.state=0 group  by u.company_id)uf, "
-				+ "(select u.company_id,count(r.report_id)as runNum from tb_report r,tb_user u where r.user_id = u.user_id and  r.flag = 0 group by u.company_id)ur "
+				+ "(select u.company_id,count(u.user_id)as userNum from tb_user u where u.state =0 and u.user_id not in ("
+				+ noUserid + ") group  by u.company_id)un, "
+				+ "(select u.company_id,count(f.file_id)as fileNum,sum(f.size)as size from tb_file f,tb_user u where f.user_id = u.user_id and f.state=0 and f.user_id not in ("
+				+ noUserid + ") and u.state=0 group  by u.company_id)uf, "
+				+ "(select u.company_id,count(r.report_id)as runNum from tb_report r,tb_user u where r.user_id = u.user_id and  r.flag = 0 and r.user_id not in ("
+				+ noUserid + ") group by u.company_id)ur "
 				+ "where  uc.company_id = c.company_id and uc.company_id = un.company_id "
 				+ "and uc.company_id = uf.company_id and uc.company_id = ur.company_id " + " order by fileNum desc";
 		LogUtil.info(log, sql);
@@ -261,7 +261,7 @@ public class CompanyDaoImpl implements CompanyDao {
 		String sql = "select count(f.file_id)as fileNum,sum(ifnull(f.size,0))as size,u.company_id,"
 				+ " (select company_name from tb_company where company_id = u.company_id)as company_name,"
 				+ "(select create_date from tb_company where company_id = u.company_id)as create_date "
-				+ " from tb_file f,tb_user u,tb_user_company_relat uc  where f.state=0 and f.user_id = u.user_id and u.company_id !=0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
+				+ " from tb_file f,tb_user u,tb_user_company_relat uc  where f.state=0 and f.user_id = u.user_id and u.company_id !=0 and left(f.create_date,10) between  left(?,10) and  left(?,10)  and u.user_id = uc.user_id "
 				+ SqlController.notUserId("f", noUserid) + SqlController.whereCompany("uc", "company_id", role, cmpId)
 				+ " group by u.company_id order by fileNum desc" + SqlController.limit(topN);
 		LogUtil.info(log, sql);
@@ -283,7 +283,7 @@ public class CompanyDaoImpl implements CompanyDao {
 	public List<DataFile> getCompanyFileSize(Connection conn, int role, int cmpId, Date start, Date end, int topN) {
 		List<DataFile> list = null;
 		String sql = "select sum(f.size)as size,u.company_id,(select company_name from tb_company where company_id = u.company_id)as company_name "
-				+ " from tb_file f,tb_user u,tb_user_company_relat uc  where f.state=0 and f.user_id = u.user_id and u.company_id !=0 and f.create_date between  ? and  ?  and u.user_id = uc.user_id "
+				+ " from tb_file f,tb_user u,tb_user_company_relat uc  where f.state=0 and f.user_id = u.user_id and u.company_id !=0 and left(f.create_date,10) between  left(?,10) and  left(?,10)  and u.user_id = uc.user_id "
 				+ SqlController.notUserId("f", noUserid) + SqlController.whereCompany("uc", "company_id", role, cmpId)
 				+ " group by u.company_id order by size desc" + SqlController.limit(topN);
 		try {

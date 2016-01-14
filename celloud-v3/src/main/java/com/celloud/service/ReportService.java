@@ -37,7 +37,7 @@ public interface ReportService {
      * @return
      * @date 2015年12月25日 下午3:47:42
      */
-    public List<Map<String, String>> countReport(Integer userId, Integer time);
+    public List<Map<String, String>> countReport(Integer userId, String time);
 
     /**
      * 报告检索
