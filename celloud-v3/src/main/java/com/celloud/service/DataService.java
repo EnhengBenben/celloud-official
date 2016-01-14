@@ -122,17 +122,6 @@ public interface DataService {
     List<DataFile> findDatasById(String dataIds);
 
     /**
-     * 新增项目数据关系
-     * 
-     * @param dataId
-     * @param project
-     * @return
-     * @author leamo
-     * @date 2016-1-10 下午4:43:57
-     */
-    Integer insertDataProjectRelat(String[] dataIdArr, Integer projectId);
-
-    /**
      * app正在运行运行个数
      * 
      * @param appIds

@@ -151,4 +151,14 @@ public interface AppMapper {
     public List<App> findAppsByFormat(@Param("userId") Integer userId,
             @Param("formatId") Integer formatId,
             @Param("offLine") Integer offLine);
+
+    /**
+     * 批量获取APP列表
+     * 
+     * @param appIds
+     * @return
+     * @author leamo
+     * @date 2016年1月14日 下午1:49:46
+     */
+    public List<App> findAppsByIds(@Param("appIds") String appIds);
 }

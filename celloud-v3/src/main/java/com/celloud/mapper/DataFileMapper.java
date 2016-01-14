@@ -189,18 +189,6 @@ public interface DataFileMapper {
     List<DataFile> findDatasById(@Param("dataIds") String dataIds);
 
     /**
-     * 新增项目数据关系
-     * 
-     * @param dataId
-     * @param project
-     * @return
-     * @author leamo
-     * @date 2016-1-10 下午4:43:57
-     */
-    Integer insertDataProjectRelat(@Param("dataId") Integer dataId,
-            @Param("projectId") Integer projectId);
-
-    /**
      * 批量修改数据
      * 
      * @param dataId

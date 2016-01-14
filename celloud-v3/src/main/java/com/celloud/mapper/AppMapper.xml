@@ -23,6 +23,7 @@
     <result column="command" property="command" jdbcType="VARCHAR" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="method" property="method" jdbcType="VARCHAR" />
+    <result column="max_task" property="maxTask" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.celloud.model.App" extends="BaseResultMap" >
     <result column="app_doc" property="appDoc" jdbcType="LONGVARCHAR" />
@@ -36,7 +37,7 @@
   <sql id="Base_Column_List" >
     app_id, app_name, english_name, address, picture_name, create_date, intro, description, 
     company_id, attribute, run_type, flag, run_data, data_num, param, off_line, command, 
-    title, method
+    title, method, max_task
   </sql>
   <sql id="Blob_Column_List" >
     app_doc
@@ -372,5 +373,8 @@
     left join tb_app_format_relat af on a.app_id = af.app_id 
     left join tb_user_app_right ua on a.app_id=ua.app_id 
     where af.format_id = #{formatId} and a.off_line = #{offLine} and ua.user_id=#{userId} 
+  </select>
+  <select id="findAppsByIds" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from tb_app where app_id in (${appIds})
   </select>
 </mapper>

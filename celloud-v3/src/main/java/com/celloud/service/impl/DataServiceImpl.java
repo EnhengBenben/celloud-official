@@ -108,17 +108,6 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public Integer insertDataProjectRelat(String[] dataIdArr,
-            Integer projectId) {
-        int index = 0;
-        for (String dataId : dataIdArr) {
-            index += dataFileMapper
-                    .insertDataProjectRelat(Integer.valueOf(dataId), projectId);
-        }
-        return index;
-    }
-
-    @Override
     public Integer dataRunning(String appIds) {
         return dataFileMapper.queryDataRunning(appIds,
                 ReportPeriod.RUNNING_NO_REPORT, DataState.ACTIVE,

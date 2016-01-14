@@ -173,4 +173,7 @@
   <update id="deleteByState" parameterType="java.lang.Integer">
 	  update tb_project set state = #{state } where project_id = #{projectId,jdbcType=INTEGER}
   </update>
+  <insert id="insertDataProjectRelat">
+    insert into tb_file_project_relat(file_id,project_id) values(#{dataId},#{projectId})
+  </insert>
 </mapper>

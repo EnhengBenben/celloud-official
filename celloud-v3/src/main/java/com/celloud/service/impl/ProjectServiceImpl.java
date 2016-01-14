@@ -1,6 +1,8 @@
 package com.celloud.service.impl;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -54,8 +56,27 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Integer insertProject(Project project) {
+        project.setProjectId(null);
         project.setCreateDate(new Date());
         return projectMapper.insertSelective(project);
+    }
+
+    @Override
+    public Map<Integer, Integer> insertMultipleProject(Project project,
+            String[] appIdArr, String[] dataIdArr) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (String appId : appIdArr) {
+            project.setProjectId(null);
+            project.setCreateDate(new Date());
+            projectMapper.insertSelective(project);
+            Integer projectId = project.getProjectId();
+            for (String dataId : dataIdArr) {
+                projectMapper.insertDataProjectRelat(Integer.valueOf(dataId),
+                        projectId);
+            }
+            map.put(Integer.valueOf(appId), projectId);
+        }
+        return map;
     }
 
 }

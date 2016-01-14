@@ -43,6 +43,8 @@ public class App {
 
     private String appDoc;
 
+    private Integer maxTask;
+
     // 展示字段
     private String companyName;
     /** 是否已被用户添加 =0——>未添加 >0——>已添加 */
@@ -234,4 +236,11 @@ public class App {
         this.classifyNames = classifyNames;
     }
 
+    public Integer getMaxTask() {
+        return maxTask;
+    }
+
+    public void setMaxTask(Integer maxTask) {
+        this.maxTask = maxTask;
+    }
 }

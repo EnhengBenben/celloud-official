@@ -3,6 +3,8 @@ package com.celloud.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.celloud.model.App;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
@@ -130,4 +132,24 @@ public interface AppService {
      * @date 2016-1-10 下午8:03:53
      */
     public App findAppById(Integer appId);
+
+    /**
+     * 批量获取APP列表
+     * 
+     * @param appIds
+     * @return
+     * @author leamo
+     * @date 2016年1月14日 下午1:49:46
+     */
+    public List<App> findAppsByIds(@Param("appIds") String appIds);
+
+    /**
+     * 批量获取APP名称
+     * 
+     * @param appIds
+     * @return
+     * @author leamo
+     * @date 2016年1月14日 下午2:29:23
+     */
+    public String findAppNamesByIds(@Param("appIds") String appIds);
 }
