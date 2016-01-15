@@ -22,18 +22,6 @@ public class ChangeStateServiceImpl {
     private static String celloud = PropertiesUtils.celloud;
 
     /**
-     * 修改任务运行状态并继续执行排队的任务
-     * 
-     * @param taskId
-     * @param appId
-     */
-    public static void changeTaskState(Long taskId, Long appId) {
-        String url = celloud + "task!updateTaskState?task.taskId=" + taskId
-                + "&task.appId=" + appId;
-        remoteRequest(url);
-    }
-
-    /**
      * 修改报告状态
      * 
      * @param appId
