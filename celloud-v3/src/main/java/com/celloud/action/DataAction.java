@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.text.StrSubstitutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.AppDataListType;
+import com.celloud.constants.CommandKey;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.GlobalQueue;
 import com.celloud.constants.Mod;
@@ -387,8 +389,12 @@ public class DataAction {
                         .toSpark(appProMap.get(appId).toString(), dataList);
                 if (SparkPro.NODES >= running) {
                     logger.info("资源满足需求，投递任务");
-                    submit(appPath, proId + "", _dataFilePath, appName,
-                            app.getCommand());
+                    Map<String, String> map = CommandKey.getMap(_dataFilePath, appPath, String.valueOf(proId));
+                    StrSubstitutor sub = new StrSubstitutor(map);
+                    String command = sub.replace( app.getCommand());
+                    logger.info("运行命令：" + command);
+                    SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
+                    ssh.sshSubmit(command, false);
                 } else {
                     logger.info("资源不满足需求，进入队列等待");
                     String command = appPath + "--" + proId + "--"
@@ -405,43 +411,35 @@ public class DataAction {
                     task.setUserId(userId);
                     task.setAppId(appId);
                     task.setDataKey(dataKey);
-                    StringBuffer command = new StringBuffer(
-                            "nohup perl /share/biosoft/perl/PGS_MG/bin/moniter_qsub_url-v1.pl nohup perl ");
-                    command.append(app.getCommand()).append(" ")
-                            .append(dataListFile).append(" ").append(appPath)
-                            .append(" ProjectID").append(proId).append(" &>")
-                            .append(appPath).append("/").append(proId)
-                            .append("/log ");
-                    task.setCommand(command.toString());
+                    Map<String, String> map = CommandKey.getMap(dataListFile, appPath, String.valueOf(proId));
+                    StrSubstitutor sub = new StrSubstitutor(map);
+                    String command = sub.replace( app.getCommand());
+                    task.setCommand(command);
                     Integer taskId = taskService.create(task);
                     if (runningNum < app.getMaxTask()
                             || app.getMaxTask() == 0) {
                         logger.info("运行命令：{}", command);
                         SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-                        ssh.sshSubmit(command.toString(), false);
+                        ssh.sshSubmit(command, false);
                         taskService.updateToRunning(taskId);
                     } else {
                         logger.info("数据{}排队运行{}", dataKey, app.getAppName());
                     }
                 }
             } else if (AppDataListType.SPLIT.contains(appId)||SparkPro.SGEAPPS.contains(appId)) {
-                StringBuffer command = new StringBuffer(
-                        "nohup perl /share/biosoft/perl/PGS_MG/bin/moniter_qsub_url-v1.pl nohup perl ");
-                command.append(app.getCommand()).append(" ")
-                        .append(dataFilePath).append(" ").append(appPath)
-                        .append(" ProjectID").append(proId).append(" &>")
-                        .append(appPath).append("/").append(proId)
-                        .append("/log ");
+				Map<String, String> map = CommandKey.getMap(dataFilePath, appPath, String.valueOf(proId));
+				StrSubstitutor sub = new StrSubstitutor(map);
+				String command = sub.replace(app.getCommand());
                 SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-                ssh.sshSubmit(command.toString(), false);
+                ssh.sshSubmit(command, false);
             } else {
                 if (SparkPro.SGEAPPS.contains(appId)) {
                     // TODO 所有向Tools端投递任务的流程都向这里集中
                     // 最终判断删除，非spark就是SGE
                     logger.info("celloud 直接向 SGE 投递任务");
-                    String command = app.getCommand() + " " + dataFilePath + " "
-                            + appPath + " ProjectID" + proId + " >" + appPath
-                            + "ProjectID" + proId + ".log &";
+                    Map<String, String> map = CommandKey.getMap(dataFilePath, appPath, String.valueOf(proId));
+    				StrSubstitutor sub = new StrSubstitutor(map);
+    				String command = sub.replace(app.getCommand());
                     logger.info("运行命令:{}", command);
                     SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
                     ssh.sshSubmit(command, false);
@@ -457,18 +455,6 @@ public class DataAction {
             }
         }
         return result;
-    }
-
-    private void submit(String basePath, String projectId, String dataListFile,
-            String appName, String perl) {
-        // TODO
-        String command = "nohup perl  /share/biosoft/perl/wangzhen/PGS/bin/moniter_qsub_url.pl perl "
-                + " " + perl + " " + dataListFile + " " + basePath
-                + " ProjectID" + projectId + " >" + basePath + "ProjectID"
-                + projectId + ".log &";
-        logger.info("运行命令：" + command);
-        SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
-        ssh.sshSubmit(command, false);
     }
 
     /**
