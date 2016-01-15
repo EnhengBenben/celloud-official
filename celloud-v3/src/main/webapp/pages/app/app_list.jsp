@@ -78,7 +78,7 @@
 		              </a>
 		            </div>
 		            <div class="box-info">
-		              <h4><a href="#">${app.appName }</a></h4>
+		              <h4><a href="javascript:appStore.toAppDetail(${app.appId })">${app.appName }</a></h4>
 		              <p>${app.intro }</p>
 <%-- 		              <p class="label">标签：${app.description }</p><!-- 标签内容待定 --> --%>
 		            </div>
