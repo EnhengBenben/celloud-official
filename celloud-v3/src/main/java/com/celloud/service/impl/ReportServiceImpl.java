@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.celloud.constants.DataState;
+import com.celloud.constants.ReportPeriod;
 import com.celloud.constants.ReportType;
 import com.celloud.constants.TimeState;
 import com.celloud.dao.ReportDao;
@@ -533,5 +534,18 @@ public class ReportServiceImpl implements ReportService {
             Integer appId) {
         return reportDao.getDataReport(CmpReport.class, dataKey, projectId,
                 appId);
+    }
+
+    @Override
+    public Integer reportCompeleteByProId(Integer projectId, String context) {
+        Report report = new Report();
+        report.setProjectId(projectId);
+        report.setFlag(ReportType.DATA);
+        report.setPeriod(ReportPeriod.COMPLETE);
+        report.setState(DataState.ACTIVE);
+        reportMapper.updateReportPeriod(report);
+        report.setFlag(ReportType.PROJECT);
+        report.setContext(context);
+        return reportMapper.updateReportPeriod(report);
     }
 }

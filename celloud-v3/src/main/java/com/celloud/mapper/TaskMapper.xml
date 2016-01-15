@@ -217,4 +217,24 @@
   <select id="findAppRunningNum" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
     select count(command) runNum from tb_task where  state=#{state} and app_id=#{appId}
   </select>
+  <select id="findTaskInfoByProId" resultType="map" parameterType="java.lang.Integer">
+    select t.app_id appId,t.user_id userId,a.title,a.method
+	from tb_task t left join tb_app a on t.app_id=a.app_id 
+	where project_id=#{projectId} group by project_id;
+  </select>
+  <update id="updatePeriodByProAndData" >
+    update tb_task
+    <set >
+      <if test="period != null" >
+        period = #{period,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where project_id = #{projectId} and data_key = #{dataKey}
+  </update>
 </mapper>

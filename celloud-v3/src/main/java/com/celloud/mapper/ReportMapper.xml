@@ -306,4 +306,28 @@
   		 select left(r.create_date ,7)time,count(r.report_id)as reportNum from tb_report r where r.state=0 and r.flag=0 and r.user_id=${userId}
   	group by time order by time asc
   </select>
+  <update id="deleteByState" parameterType="java.lang.Integer">
+    update tb_report set state = #{state } where project_id = #{projectId,jdbcType=INTEGER}
+  </update>
+  <update id="updateReportPeriod" parameterType="com.celloud.model.Report">
+    update tb_report 
+    <set >
+      <if test="period != null" >
+        period = #{period,jdbcType=INTEGER},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="context != null" >
+        context = #{context,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where project_id = #{projectId,jdbcType=INTEGER} and state = #{state,jdbcType=INTEGER} and flag=#{flag,jdbcType=INTEGER}
+    <if test="fileId != null" >
+      and file_id = #{fileId,jdbcType=INTEGER}
+    </if>
+  </update>
+  <select id="selectRunNumByPro" resultType="java.lang.Integer">
+    select count(*) runNum from tb_report where project_id=#{projectId} and flag=#{flag} and state=#{state} and period!=#{period}
+  </select>
 </mapper>

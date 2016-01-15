@@ -1,5 +1,10 @@
 package com.celloud.mapper;
 
+import java.util.Date;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.celloud.model.Task;
 
 public interface TaskMapper {
@@ -10,6 +15,22 @@ public interface TaskMapper {
     int insertSelective(Task record);
 
     Task selectByPrimaryKey(Integer taskId);
+
+    /**
+     * 根据项目id 和 数据编号修改任务运行状态
+     * 
+     * @param projectId
+     * @param dataKey
+     * @param period
+     * @param startDate
+     * @param endDate
+     * @return
+     * @author leamo
+     * @date 2016年1月14日 下午7:59:40
+     */
+    int updatePeriodByProAndData(@Param("projectId") Integer projectId,
+            @Param("dataKey") String dataKey, @Param("period") Integer period,
+            @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
     int updateByPrimaryKeySelective(Task record);
 
@@ -37,4 +58,13 @@ public interface TaskMapper {
      */
     Integer findAppRunningNum(Integer appId, Integer state);
 
+    /**
+     * 根据项目编号获取任务信息
+     * 
+     * @param projectId
+     * @return
+     * @author leamo
+     * @date 2016年1月14日 下午7:11:18
+     */
+    Map<String, Object> findTaskInfoByProId(Integer projectId);
 }

@@ -233,4 +233,16 @@ public interface ReportService {
      * @date 2016-1-10 上午12:46:57
      */
     public Map<String, Object> cmpCount(Integer userId);
+
+    /**
+     * 项目报告运行完成
+     * 
+     * @param projectId
+     * @param context
+     * @return
+     * @author leamo
+     * @date 2016年1月15日 上午10:58:52
+     */
+    public Integer reportCompeleteByProId(Integer projectId,
+            String context);
 }

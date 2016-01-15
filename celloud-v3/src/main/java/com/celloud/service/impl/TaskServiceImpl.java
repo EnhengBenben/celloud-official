@@ -7,8 +7,15 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.celloud.constants.TaskState;
+import com.celloud.constants.DataState;
+import com.celloud.constants.ReportPeriod;
+import com.celloud.constants.ReportType;
+import com.celloud.constants.TaskPeriod;
+import com.celloud.mapper.DataFileMapper;
+import com.celloud.mapper.ReportMapper;
 import com.celloud.mapper.TaskMapper;
+import com.celloud.model.DataFile;
+import com.celloud.model.Report;
 import com.celloud.model.Task;
 import com.celloud.service.TaskService;
 
@@ -23,6 +30,10 @@ import com.celloud.service.TaskService;
 public class TaskServiceImpl implements TaskService {
     @Resource
     TaskMapper taskMapper;
+    @Resource
+    DataFileMapper dataMapper;
+    @Resource
+    ReportMapper reportMapper;
     @Override
     public Integer create(Task task) {
         task.setCreateDate(new Date());
@@ -30,43 +41,59 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task getFirstTask(Integer appId) {
-        return taskMapper.findFirstTaskByAppId(appId, TaskState.WAITTING);
+    public Task findFirstTask(Integer appId) {
+        return taskMapper.findFirstTaskByAppId(appId, TaskPeriod.WAITTING);
     }
 
     @Override
     public Integer updateToRunning(Integer taskId) {
         Task task = new Task();
         task.setTaskId(taskId);
-        task.setState(TaskState.RUNNING);
+        task.setState(TaskPeriod.RUNNING);
         return taskMapper.updateByPrimaryKeyWithBLOBs(task);
     }
 
     @Override
-    public Integer updateToDone(Integer taskId) {
-        Task task = new Task();
-        task.setTaskId(taskId);
-        task.setState(TaskState.DONE);
-        return taskMapper.updateByPrimaryKeyWithBLOBs(task);
+    public Task updateToDone(Integer appId, Integer projectId, String dataKey,
+            String context) {
+        taskMapper.updatePeriodByProAndData(projectId, dataKey,
+                TaskPeriod.DONE, null, new Date());
+        DataFile data = dataMapper.selectByDataKey(dataKey);
+        Report report = new Report();
+        report.setProjectId(projectId);
+        report.setPeriod(ReportPeriod.COMPLETE);
+        report.setState(DataState.ACTIVE);
+        report.setFlag(ReportType.DATA);
+        report.setFileId(data.getFileId());
+        reportMapper.updateReportPeriod(report);
+        Integer runNum = reportMapper.selectRunNumByPro(projectId,
+                DataState.ACTIVE, ReportType.DATA, ReportPeriod.COMPLETE);
+        if (runNum == 0) {
+            report.setFlag(ReportType.PROJECT);
+            report.setEndDate(new Date());
+            reportMapper.updateReportPeriod(report);
+        }
+        return taskMapper.findFirstTaskByAppId(appId, TaskPeriod.WAITTING);
     }
 
     @Override
-    public Integer getRunningNumByAppId(Integer appId) {
-        return taskMapper.findAppRunningNum(appId, TaskState.RUNNING);
+    public Integer findRunningNumByAppId(Integer appId) {
+        return taskMapper.findAppRunningNum(appId, TaskPeriod.RUNNING);
     }
 
     @Override
-    public Map<String, Object> getTaskInfoByProId(Integer proId) {
+    public Map<String, Object> findTaskInfoByProId(Integer projectId) {
+        return taskMapper.findTaskInfoByProId(projectId);
+    }
+
+    @Override
+    public Task findTaskDataAppPro(String dataKey, Integer appId,
+            Integer projectId) {
         return null;
     }
 
     @Override
-    public Task getTaskDataAppPro(String dataKey, Integer appId, Integer proId) {
-        return null;
-    }
-
-    @Override
-    public Integer deleteTask(Integer proId) {
+    public Integer deleteTask(Integer projectId) {
         return null;
     }
 

@@ -25,7 +25,7 @@ public interface TaskService {
      * @param appId
      * @return
      */
-    public Task getFirstTask(Integer appId);
+    public Task findFirstTask(Integer appId);
 
     /**
      * 任务修改为正在运行
@@ -36,12 +36,21 @@ public interface TaskService {
     public Integer updateToRunning(Integer taskId);
 
     /**
-     * 任务修改为运行结束
+     * 任务运行结束，获取APP正在排队的任务
      * 
-     * @param taskId
+     * @param appId
+     * @param projectId
+     *            需改状态项目
+     * @param dataKey
+     *            需改状态数据
+     * @param context
+     *            项目报告内容
      * @return
+     * @author leamo
+     * @date 2016年1月14日 下午7:43:46
      */
-    public Integer updateToDone(Integer taskId);
+    public Task updateToDone(Integer appId, Integer projectId, String dataKey,
+            String context);
 
     /**
      * 指定app正在运行的任务数
@@ -49,7 +58,7 @@ public interface TaskService {
      * @param appId
      * @return
      */
-    public Integer getRunningNumByAppId(Integer appId);
+    public Integer findRunningNumByAppId(Integer appId);
 
     /**
      * 根据proId获取报告信息、任务编号、app信息、数据个数
@@ -57,7 +66,7 @@ public interface TaskService {
      * @param proId
      * @return
      */
-    public Map<String, Object> getTaskInfoByProId(Integer proId);
+    public Map<String, Object> findTaskInfoByProId(Integer projectId);
 
     /**
      * 根据dataKey appId proId获取任务信息
@@ -67,7 +76,8 @@ public interface TaskService {
      * @param dataKey
      * @return
      */
-    public Task getTaskDataAppPro(String dataKey, Integer appId, Integer proId);
+    public Task findTaskDataAppPro(String dataKey, Integer appId,
+            Integer projectId);
 
     /**
      * 根据proId删除未运行或正在运行的任务
@@ -75,5 +85,5 @@ public interface TaskService {
      * @param proId
      * @return
      */
-    public Integer deleteTask(Integer proId);
+    public Integer deleteTask(Integer projectId);
 }

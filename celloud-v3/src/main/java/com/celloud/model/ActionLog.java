@@ -4,7 +4,8 @@ import java.util.Date;
 
 public class ActionLog {
     private Integer userId;
-    private String userName;
+
+    private String username;
 
     private String operate;
 
@@ -24,12 +25,12 @@ public class ActionLog {
 
     private String address;
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
     }
 
     public String getOperate() {
@@ -116,11 +117,11 @@ public class ActionLog {
     public String toString() {
         return "{ browser:" + getBrowser() + " " + getBrowserVersion() + ",os:" + this.os + " " + getOsVersion()
                 + ",ip:" + this.ip + ",address:" + this.address + ",userId:" + this.userId + ",username:"
-                + this.userName + ",operate:" + this.operate + ",message:" + this.message + " }";
+                + this.username + ",operate:" + this.operate + ",message:" + this.message + " }";
     }
 
     public String toResume() {
-        return "{userId:" + this.userId + " ,username:" + this.userName + ",browser:" + getBrowser() + " "
+        return "{userId:" + this.userId + " ,username:" + this.username + ",browser:" + getBrowser() + " "
                 + getBrowserVersion() + ",os:" + this.os + " " + getOsVersion() + ",ip:" + this.ip + ",address:"
                 + this.address + "}";
     }

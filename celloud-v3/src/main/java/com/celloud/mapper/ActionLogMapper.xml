@@ -3,7 +3,7 @@
 <mapper namespace="com.celloud.mapper.ActionLogMapper">
 	<resultMap id="BaseResultMap" type="com.celloud.model.ActionLog">
 		<result column="user_id" property="userId" jdbcType="INTEGER" />
-		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
 		<result column="operate" property="operate" jdbcType="VARCHAR" />
 		<result column="message" property="message" jdbcType="VARCHAR" />
 		<result column="log_date" property="logDate" jdbcType="TIMESTAMP" />
@@ -16,13 +16,13 @@
 		<result column="address" property="address" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		user_id, user_name, operate, message, log_date, browser,
+		tb_log.user_id as user_id, operate, message, log_date, browser,
 		browser_version, os,
 		os_version, ip, address
 	</sql>
 	<insert id="insert" parameterType="com.celloud.model.ActionLog">
 		insert into tb_log
-		(user_id,user_name, operate, message,
+		(user_id, operate, message,
 		log_date, browser,
 		browser_version,
 		os, os_version, ip,
@@ -39,9 +39,6 @@
 	<insert id="insertSelective" parameterType="com.celloud.model.ActionLog">
 		insert into tb_log
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="userName != null">
-				user_name,
-			</if>
 			<if test="operate != null">
 				operate,
 			</if>
@@ -71,9 +68,6 @@
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="userName != null">
-				#{userName,jdbcType=VARCHAR},
-			</if>
 			<if test="operate != null">
 				#{operate,jdbcType=VARCHAR},
 			</if>
@@ -105,9 +99,11 @@
 	</insert>
 	<select id="findLogs" resultMap="BaseResultMap">
 		select
-		<include refid="Base_Column_List" />
+		<include refid="Base_Column_List" />,
+		tb_user.username as username
 		from tb_log
-		where user_id = #{userId,jdbcType=INTEGER}
+		left join tb_user on tb_user.user_id=tb_log.user_id
+		where tb_log.user_id = #{userId,jdbcType=INTEGER}
 		order by log_date desc
 	</select>
 </mapper>

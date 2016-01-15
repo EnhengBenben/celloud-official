@@ -88,6 +88,7 @@ public class SSHUtil {
                     line = br.readLine();
                     log.info(line);
                 }
+                br.close();
                 // 获取命令执行结果
                 state = sess.getExitStatus() == null ? false : sess
                         .getExitStatus() == 0 ? true : false;
