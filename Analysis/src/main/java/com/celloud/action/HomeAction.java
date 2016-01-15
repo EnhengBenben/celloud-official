@@ -35,6 +35,7 @@ import com.google.inject.Inject;
 		@Result(name = "toBigUserOne", location = "../../pages/bigUserOne.jsp"),
 		@Result(name = "companyReportList", location = "../../pages/companyReportList.jsp"),
 		@Result(name = "companyDataList", location = "../../pages/companyDataList.jsp"),
+		@Result(name = "getPreDataView", location = "../../pages/dataPreView.jsp"),
 
 		@Result(name = "browserCount", type = "json", params = { "root", "browserList" }),
 		@Result(name = "historyList", type = "json", params = { "root", "historyList" }),
@@ -97,6 +98,13 @@ public class HomeAction extends BaseAction {
 		/** 历史比较 */
 
 		return "success";
+	}
+
+	public String getPreDataView() {
+		Integer compId = (Integer) getCid();
+		Integer role = (Integer) super.session.get(User.USER_ROLE);
+		dataList = dataService.getUserMonthDataList(compId, role);
+		return "getPreDataView";
 	}
 
 	public String toCompanyDataList() {

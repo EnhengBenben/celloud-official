@@ -111,7 +111,7 @@
 						</a>
 						<ul class="submenu">
 							<li>
-								<a href="javascript:getUserDataList()">
+								<a href="javascript:getPreDataView()">
 									<i class="icon-double-angle-right"></i>
 									数据总览
 								</a>
@@ -129,7 +129,7 @@
 									数据量月统计
 								</a>
 							</li>
-							 -->
+							 
 							<c:if test="${userRole=='2'|| userRole=='3'}">
 								<li>
 									<a href="javascript:bigUserCount()">
@@ -138,6 +138,7 @@
 									</a>
 								</li>
 							</c:if>
+							-->
 							<li>
 								<a href="javascript:gotoOutputData()">
 									<i class="icon-double-angle-right"></i>
@@ -301,6 +302,11 @@
 			$.get("data!getAllUsersDataNum", {}, function(responseText) {
 				$("#content").html(responseText);
 			});
+		}
+		function getPreDataView(){
+			$.get("home!getPreDataView", {}, function(responseText) {
+                $("#content").html(responseText);
+            });
 		}
 		/***数据统计－－－数据时月统计**/
 		function getMonthDataList() {

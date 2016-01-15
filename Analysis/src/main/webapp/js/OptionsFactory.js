@@ -57,9 +57,32 @@ function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position, showNum
 		return makeOption('', xAxis, yAxis, seriesName, typex);
 	}
 }
-
 /**
+ * 添加拆线图
  * 
+ * @param option
+ * @param yAxis
+ * @param serierName
+ * @param typex
+ * @param isArear
+ *            是否阴影
+ * @returns
+ */
+function makeOptionAdd(option, yAxis, serierName, typex, isArear) {
+	option.series[option.series.length] = {
+			name : serierName,
+			type : typex,
+			data : yAxis,
+			smooth:"false",
+			itemStyle:{}
+		};
+		option.legend.data[option.legend.data.length] = serierName;
+	if(isArear!=null){
+		option.series[option.series.length-1].itemStyle.normal={areaStyle: {type: 'default'}};
+	}
+	return option;
+}
+/**
  * @param title
  *            标题
  * @param legenName
@@ -207,6 +230,7 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 			name : seriesName,
 			type : typex,
 			data : yAxis,
+			smooth:"false",
 			barMaxWidth : 100,
 			itemStyle : {
 				normal : {
@@ -252,15 +276,15 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 		var x2 = (10 - length) * 80;
 		opt.grid.x2 = x2;
 	}
-	var colorStr ;
-	/**柱状图颜色*/
-	if(seriesName.indexOf("数据量")>-1){
+	var colorStr;
+	/** 柱状图颜色 */
+	if (seriesName.indexOf("数据量") > -1) {
 		colorStr = colorList[1];
-	}else if (seriesName.indexOf("数据大小")>-1){
+	} else if (seriesName.indexOf("数据大小") > -1) {
 		colorStr = colorList[4];
-	}else if(seriesName.indexOf("运行")>-1){
+	} else if (seriesName.indexOf("运行") > -1) {
 		colorStr = colorList[9];
-	}else if(seriesName.indexOf("登陆")>-1){
+	} else if (seriesName.indexOf("登陆") > -1) {
 		colorStr = colorList[4];
 	}
 	opt.series[0].itemStyle.normal.color = colorStr;
