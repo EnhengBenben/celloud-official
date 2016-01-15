@@ -1,6 +1,8 @@
 package com.celloud.dao;
 
 import java.sql.Connection;
+import java.util.List;
+import java.util.Map;
 
 import com.celloud.dao.impl.ReportDaoImpl;
 import com.google.inject.ImplementedBy;
@@ -22,5 +24,14 @@ public interface ReportDao {
 	 * @return
 	 */
 	public Object getBigUserRunNum(Integer companyId);
+
+	/**
+	 * 查询医院的各APP运行次数
+	 * 
+	 * @param role
+	 * @param cmpId
+	 * @return
+	 */
+	public List<Map<String, Object>> getUserRunEachApp(Connection conn, Integer role, Integer cmpId);
 
 }

@@ -47,8 +47,8 @@ public class SqlController {
 	 */
 	public static String whereCompany(String tbName, String colName, int role, Integer companyId) {
 		String sql = "";
-		 if (role == User.BIG_USER)
-		sql = " and " + tbName + ". " + colName + " = " + companyId + " ";
+		if (role == User.BIG_USER)
+			sql = " and " + tbName + ". " + colName + " = " + companyId + " ";
 		return sql;
 	}
 
@@ -113,7 +113,7 @@ public class SqlController {
 	public static String orderBy(String colName) {
 		if (colName == null || colName.length() < 1)
 			return "";
-		String sql = "order by ";
+		String sql = " order by ";
 		switch (colName) {
 		case "size":
 			sql = sql + "size desc";

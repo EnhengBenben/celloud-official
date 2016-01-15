@@ -5,6 +5,7 @@ var fileNumURL = "company!getActivityList";
 loadActivityFile();
 // chars();// 医院月新增数量
 
+
 jQuery(function($) {
 	var companyTable = $('#fileListId').dataTable({
 		"aoColumns" : [ null, null, null, null ],

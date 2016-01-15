@@ -56,15 +56,6 @@ public interface AppService {
 			String softwareId);
 
 	/**
-	 * 查询app
-	 * 
-	 * @param cmpId
-	 * @param role
-	 * @return
-	 */
-	public List<App> getAppByCompanyId(Integer cmpId, Integer role);
-
-	/**
 	 * 总的用户登陆排序
 	 * 
 	 * @param topN

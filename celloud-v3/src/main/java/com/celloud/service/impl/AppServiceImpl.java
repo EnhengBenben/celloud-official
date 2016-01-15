@@ -1,5 +1,6 @@
 package com.celloud.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -86,6 +87,21 @@ public class AppServiceImpl implements AppService {
     @Override
     public App findAppById(Integer appId) {
         return appMapper.selectByPrimaryKey(appId);
+    }
+
+    @Override
+    public List<App> findAppsByIds(String appIds) {
+        return appMapper.findAppsByIds(appIds);
+    }
+
+    @Override
+    public String findAppNamesByIds(String appIds) {
+        List<App> list = appMapper.findAppsByIds(appIds);
+        List<String> names = new ArrayList<>();
+        for (App app : list) {
+            names.add(app.getAppName());
+        }
+        return names.toString();
     }
 
 }

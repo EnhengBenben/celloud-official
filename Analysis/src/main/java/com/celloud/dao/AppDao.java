@@ -64,15 +64,6 @@ public interface AppDao {
 			String softwareId);
 
 	/**
-	 * 查询app
-	 * 
-	 * @param cmpId
-	 * @param role
-	 * @return
-	 */
-	public List<App> getAppByCompanyId(Integer cmpId, Integer role);
-
-	/**
 	 * 总的用户登陆排序
 	 * 
 	 * @param topN
@@ -139,4 +130,12 @@ public interface AppDao {
 	 */
 	public List<App> getAppRunNum(int role, int cmpId);
 
+	/**
+	 * s查询大客户APP
+	 * 
+	 * @param role
+	 * @param cmpId
+	 * @return
+	 */
+	public List<App> getApps(Connection conn, int role, int cmpId);
 }

@@ -103,17 +103,10 @@ public class CompanyDaoImpl implements CompanyDao {
 	@Override
 	public List<Company> getCompanyDetailById(Integer companyId, Integer role, String orderBy) {
 		Connection conn = ConnectManager.getConnection();
-		String sql = "select distinct(c.company_id),c.company_name,c.tel,c.address,c.create_date,"
-				+ " (select count(u.user_id)as userNum from tb_user u where u.state =0 and u.company_id = c.company_id and u.dept_id is not null and u.user_id not in ("
-				+ noUserid + "))userNum ,  "
-				+ " (select count(f.file_id)as fileNum from tb_file f,tb_user u where f.user_id = u.user_id and f.state=0 and u.state=0 and u.company_id=c.company_id and f.user_id not in ("
-				+ noUserid + ") )as fileNum, "
-				+ " (select sum(f.size)as size from tb_file f,tb_user u where f.user_id = u.user_id and f.state=0 and u.state=0 and u.company_id=c.company_id and f.user_id not in ("
-				+ noUserid + ")) as size, "
-				+ " (select count(r.report_id)as runNum from tb_report r,tb_user u where r.user_id = u.user_id and  r.flag = 0 and u.company_id=c.company_id and r.user_id not in ("
-				+ noUserid + ")) as runNum" + " from tb_company c left join tb_user u on c.company_id = u.company_id "
-				+ " left join tb_user_company_relat uc on u.company_id = uc.company_id  where u.user_id not in ("
-				+ noUserid + ") " + SqlController.whereCompany("uc", "company_id", role, companyId)
+		String sql = "select c.company_name,c.tel,c.address,c.create_date,u.company_id, count(f.file_id) as fileNum,sum(f.size) as size"
+				+ " from tb_user u,tb_file f,tb_company c,tb_user_company_relat uc "
+				+ "  where  u.user_id = f.user_id and u.company_id = c.company_id and u.user_id = uc.user_id and u.user_id not in (9,12,15,16,18,20,21,23,24,27,28,71) "
+				+ SqlController.whereCompany("uc", "company_id", role, companyId) + " group by u.company_id "
 				+ SqlController.orderBy(orderBy);
 		LogUtil.info(log, sql);
 		List<Company> list = null;

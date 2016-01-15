@@ -143,6 +143,18 @@ public interface ReportService {
     public Integer insertProReport(Report report);
 
     /**
+     * 为多个APP添加报告
+     * 
+     * @param report
+     * @param appProId
+     * @return 失败的APPid
+     * @author leamo
+     * @date 2016年1月14日 下午2:11:52
+     */
+    public List<Integer> insertMultipleProReport(Report report,
+            Map<Integer, Integer> appProId, String[] dataIds);
+
+    /**
      * 新增数据报告
      * 
      * @param report

@@ -16,7 +16,7 @@
 			<a href="#">医院统计</a>
 		</li>
 		<li class="active">
-			<a onclick="toHospitalList()">医院详细信息</a>
+			<a onclick="toHospitalList()">医院数据量统计</a>
 		</li>
 	</ul>
 	<!-- .breadcrumb -->
@@ -25,38 +25,36 @@
 	<div class="row">
 		<div class="table-header hide" id="_companyName"></div>
 		<div class="title">
-			<h3 class="header smaller lighter green">APP运行统计</h3>
-		</div>
-		<div class="col-xs-12" style="height: 450px;" id="runNumView"></div>
-		<div class="title">
 			<h3 class="header smaller lighter green">数据量统计</h3>
 		</div>
-		<div class="col-xs-12" style="height: 450px;" id="fileNumView"></div>
-		<div class="title">
-			<h3 class="header smaller lighter green">数据大小统计</h3>
-		</div>
-		<div class="col-xs-12" style="height: 450px;" id="fileSizeView"></div>
-		<c:if test="${complist!=null&&fn:length(complist) > 0}">
+		<div class="col-xs-12" style="height: 350px;" id="fileNumView"></div>
+		<c:if test="${cmpList!=null&&fn:length(cmpList) > 0}">
 			<div class="col-xs-11 table-responsive">
 				<table id="hospitalList" class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
 							<th class="min-w-90">医院名称</th>
-							<th class="min-w-80">用户数量</th>
+							<th class="min-w-90">医院地址</th>
+							<th class="min-w-90">医院电话</th>
+							<th class="min-w-80">入驻时间</th>
 							<th class="min-w-80">数据个数</th>
 							<th class="min-w-80">数据大小</th>
-							<th class="min-w-80">报告个数</th>
-							<th class="min-w-80">入驻时间</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${complist }" var="data">
+						<c:forEach items="${cmpList }" var="data">
 							<tr>
 								<td>
+									<!--  
 									<a href="javascript:getCompanyDetail(${data.company_id },'${data.company_name }')">${data.company_name }</a>
+									-->
+									${data.company_name }
 								</td>
-
-								<td>${data.userNum }</td>
+								<td>${data.address }</td>
+								<td>${data.tel }</td>
+								<td>
+									<fmt:formatDate type="both" value="${data.create_date }" pattern="yyyy-MM-dd" />
+								</td>
 								<td>${data.fileNum }</td>
 								<td>
 									<c:choose>
@@ -67,10 +65,6 @@
 										<c:otherwise>
 											<fmt:formatNumber pattern="0.00" value="${data.size/1024 }" />KB</c:otherwise>
 									</c:choose>
-								</td>
-								<td>${data.runNum }</td>
-								<td>
-									<fmt:formatDate type="both" value="${data.create_date }" pattern="yyyy-MM-dd" />
 								</td>
 							</tr>
 						</c:forEach>
@@ -86,10 +80,11 @@
 <script type="text/javascript">
 	var runNumViewID = "runNumView";
 	var fileNumViewID = "fileNumView";
-	var fileSizeViewID = "fileSizeView";
+	//var fileSizeViewID = "fileSizeView";
 	
 	var getOneCompany = "company!getOneCompany";
 	var Company_DetailURL = "company!getCompanyDetailJson";
+	/* 	
 	$.get(Company_DetailURL, {
 		"orderby" : "runNum"
 	}, function(res) {
@@ -118,7 +113,18 @@
 		var myChart = echarts.init(document.getElementById(fileSizeViewID));
 		var opt = makeOptionScrollUnit(xAxis, yAxis, "数据大小(GB)", "bar", 0, 10);
 		myChart.setOption(opt);
-	});
+	}); 
+
+	function getCompanyDetail(id, name) {
+	    $("#_oneHospital").html(name);
+	    $("#secondTitle").removeClass("hide");
+	    $.get(getOneCompany, {
+	        "company.company_id" : id
+	    }, function(responseText) {
+	        $("#content").html(responseText);
+	    })
+	}
+	 */
 	$.get(Company_DetailURL, {
 		"orderby" : "fileNum"
 	}, function(res) {
@@ -129,7 +135,7 @@
 			yAxis[i] = res[i].fileNum;
 		}
 		var myChart = echarts.init(document.getElementById(fileNumViewID));
-		var opt = makeOptionScrollUnit(xAxis, yAxis, "数据量", "bar", 0, 10);
+		var opt = makeOptionScrollUnit(xAxis, yAxis, "数据量", "bar", 0, 20);
 		myChart.setOption(opt);
 	});
 	
@@ -137,19 +143,13 @@
 		var oTable1 = $('#hospitalList').dataTable({
 			"aoColumns" : [ {
 				"bSortable" : false
-			}, null, null, null, null, null ],//列支持排序方式
-			"aaSorting" : [ [ 2, "desc" ] ],//默认列排序
+			}, {
+				"bSortable" : false
+			}, {
+				"bSortable" : false
+			},null, null, null ],//列支持排序方式
+			"aaSorting" : [ [ 4, "desc" ] ],//默认列排序
 			iDisplayLength : 10
 		});
 	})
-
-	function getCompanyDetail(id, name) {
-		$("#_oneHospital").html(name);
-		$("#secondTitle").removeClass("hide");
-		$.get(getOneCompany, {
-			"company.company_id" : id
-		}, function(responseText) {
-			$("#content").html(responseText);
-		})
-	}
 </script>

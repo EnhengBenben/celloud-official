@@ -24,6 +24,18 @@ public interface ProjectMapper {
 
     int insertSelective(Project record);
 
+    /**
+     * 新增项目数据关系
+     * 
+     * @param dataId
+     * @param project
+     * @return
+     * @author leamo
+     * @date 2016-1-10 下午4:43:57
+     */
+    Integer insertDataProjectRelat(@Param("dataId") Integer dataId,
+            @Param("projectId") Integer projectId);
+
     Project selectByPrimaryKey(Integer projectId);
 
     int updateByPrimaryKeySelective(Project record);

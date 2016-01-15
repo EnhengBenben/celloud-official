@@ -15,22 +15,19 @@
 			<i class="icon-tasks"></i>
 			<a href="#">数据统计</a>
 		</li>
-		<li class="active"><a onclick="getUserDataList()">总用户数据量</a></li>
+		<li class="active"><a onclick="getUserDataList()">用户数据统计</a></li>
 	</ul>
 	<!-- .breadcrumb -->
 </div>
 
 <div class="page-content">
 	<div class="col-xs-12">
-		<!-- <h3 class="header smaller lighter blue">
-			<input type="hidden" id="hideUserId">
-		</h3>
-		 -->
 		<h3 class="header smaller lighter green">数据量统计</h3>
-		<div class="col-xs-12" style="height: 450px;" id="userFileSize"></div>
-		<h3 class="header smaller lighter green">数据大小统计</h3>
 		<div class="col-xs-12" style="height: 450px;" id="userFileNum"></div>
-		<div style="htight: 10px"></div>
+		<!-- 
+		<h3 class="header smaller lighter green">数据大小统计</h3>
+        <div class="col-xs-12" style="height: 450px;" id="userFileSize"></div>
+		 -->
 		<div class="col-xs-11" style="margin-left: 60px; margin-top: 15px">
 			<div class="table-header hide" id="_companyName"></div>
 			<c:if test="${list!=null && fn:length(list) > 0 }">

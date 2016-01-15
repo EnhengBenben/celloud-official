@@ -69,12 +69,63 @@
 </div>
 <!-- /.page-content -->
 <script type="text/javascript" >
+jQuery.fn.dataTableExt.oSort['numeric-comma-desc'] = function(a, b) {
+	console.log(a+">"+b);
+    if (a == null || b == null)
+        return 0;
+    var alen = a.substring(a.length - 2, a.lenght);
+    var blen = b.substring(a.length - 2, a.lenght);
+    
+    if (alen == blen) {// 单位一样比较数字
+        var av = parseFloat(a);
+        var bv = parseFloat(b);
+        return av > bv ? 0 : 1;
+    } else {
+        if (alen == "GB" || alen == "gb") {
+            return 0;
+        } else if (alen == "KB" || alen == "kb") {
+            return 1;
+        } else {
+            if (blen == "GB" || blen == "gb") {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    }
+};
+
+jQuery.fn.dataTableExt.oSort['numeric-comma-asc'] = function(a, b) {
+	console.log(a+">"+b);
+    if (a == null || b == null)
+        return 0;
+    var alen = a.substring(a.length - 2, a.lenght);
+    var blen = b.substring(a.length - 2, a.lenght);
+    
+    if (alen == blen) {// 单位一样比较数字
+        var av = parseFloat(a);
+        var bv = parseFloat(b);
+        return av < bv ? 0 : 1;
+    } else {
+        if (alen == "GB" || alen == "gb") {
+            return 1;
+        } else if (alen == "KB" || alen == "kb") {
+            return 0;
+        } else {
+            if (blen == "GB" || blen == "gb") {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
+    }
+};
 var oTable1 = $('#allUserDataList').dataTable({
     "aoColumns" : [  {
         "bSortable" : false
     }, {
         "bSortable" : false
-    }, null, null,null,null,null ],
+    }, null, null,null,  {"sTitle":"filesize", "sType": "numeric-comma","sWidth":"20%","sClass":"center"},null ],
     iDisplayLength : 10,
     "aaSorting":[[3,"desc"]],
 });

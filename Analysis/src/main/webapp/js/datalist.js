@@ -12,11 +12,11 @@ $.get(UserDataURL, {'orderType':"fileNum"}, function(data) {
 		xAxis[i] = data[i].username;
 		yAxis[i] = data[i].fileNum;
 	}
-	var option = makeOptionScrollUnit( xAxis, yAxis, '数据量', barType,0,10);
+	var option = makeOptionScrollUnit( xAxis, yAxis, '数据量', barType,0,20);
 	var myChart = echarts.init(document.getElementById(UserFileNumId));
 	myChart.setOption(option);
 });
-
+/*
 $.get(UserDataURL, {'orderType':"size"}, function(data) {
 	data = data==null?[]:data;
 	var xAxis = new Array(data.length);
@@ -36,7 +36,7 @@ $.get(UserDataURL, {'orderType':"size"}, function(data) {
 	var myChart = echarts.init(document.getElementById(UserFileSizeId));
 	myChart.setOption(option);
 });
-
+*/
 jQuery(function($) {
 	var oTable1 = $('#allUserDataList').dataTable({
 		"aoColumns" : [  {

@@ -141,32 +141,13 @@ public class AppDaoImpl implements AppDao {
 	}
 
 	@Override
-	public List<App> getAppByCompanyId(Integer cmpId, Integer role) {
-		List<App> list = null;
-		Connection conn = ConnectManager.getConnection();
-		String sql = "select s.software_id as softwareId,s.software_name as softwareName,s.english_name as englishName,s.picture_name as pictureName,s.bhri,"
-				+ " s.create_date as createDate,s.company_id as companyId,s.intro,s.description ";
-		// + " from tb_software s order by softwareName" +
-		// SqlController.whereCompany("s", role, cmpId);
-		log.info("query:" + sql);
-		try {
-			ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);
-			list = qr.query(conn, sql, rsh);
-		} catch (SQLException e) {
-			log.error("获取APP各月运行次数列表失败:" + e);
-			e.printStackTrace();
-		}
-		return list;
-	}
-
-	@Override
 	public List<LoginLog> getTotalUserLogin(int role, int cmpId) {
 		List<LoginLog> list = null;
 		Connection conn = ConnectManager.getConnection();
 		String sql = "select u.username as user_name ,count(l.user_id) as logNum from tb_log l,tb_user u,tb_user_company_relat uc "
 				+ " where  l.user_id = u.user_id and u.state=0 and u.user_id = uc.user_id "
 				+ SqlController.notUserId("l", noUserid) + SqlController.whereCompany("uc", "company_id", role, cmpId)
-				+ " group by l.user_id" + " order by logNum desc";
+				+ " group by l.user_id" + " order by logNum desc limit 20";
 		LogUtil.info(log, sql);
 		try {
 			ResultSetHandler<List<LoginLog>> rsh = new BeanListHandler<LoginLog>(LoginLog.class);
@@ -272,7 +253,7 @@ public class AppDaoImpl implements AppDao {
 		Connection conn = ConnectManager.getConnection();
 		String sql = "select r.user_id,count(r.report_id) as runNum,u.username FROM tb_report r,tb_user u, tb_user_company_relat uc  where uc.user_id = u.user_id and u.user_id = r.user_id and u.state =0 and r.flag = 1 "
 				+ SqlController.notUserId("u", noUserid) + SqlController.whereCompany("uc", "company_id", role, cmpId)
-				+ "  group by user_id order by runNum desc";
+				+ "  group by user_id order by runNum desc limit 10";
 		LogUtil.info(log, sql);
 		try {
 			ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);
@@ -291,11 +272,28 @@ public class AppDaoImpl implements AppDao {
 				+ " (select app_name from tb_app  where app_id = r.app_id)as app_name "
 				+ " from tb_report r,tb_user_company_relat uc where r. flag=0 and r.user_id = uc.user_id "
 				+ SqlController.notUserId("r", noUserid) + SqlController.whereCompany("uc", "company_id", role, cmpId)
-				+ "  group by r.app_id  order by runNum desc ";
+				+ "  group by r.app_id  order by runNum desc limit 10 ";
 		LogUtil.info(log, sql);
 		try {
 			ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);
 			list = qr.query(conn, sql, rsh);
+		} catch (SQLException e) {
+			LogUtil.query(log, sql, e);
+		}
+		return list;
+	}
+
+	@Override
+	public List<App> getApps(Connection conn, int role, int cmpId) {
+		List<App> list = null;
+		String sql = "select app_id,app_name from tb_app where 1=1 "
+				+ SqlController.whereCompany("tb_app", "company_id", role, cmpId);
+		LogUtil.info(log, sql);
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			ResultSetHandler<List<App>> rsh = new BeanListHandler<App>(App.class);
+			list = rsh.handle(rs);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
 		}

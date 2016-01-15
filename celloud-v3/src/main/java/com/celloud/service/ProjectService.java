@@ -1,5 +1,7 @@
 package com.celloud.service;
 
+import java.util.Map;
+
 import com.celloud.model.Project;
 
 /**
@@ -71,4 +73,19 @@ public interface ProjectService {
      * @date 2016-1-10 下午4:07:16
      */
     public Integer insertProject(Project project);
+
+    /**
+     * 批量运行新增报告
+     * 
+     * @param project
+     * @param appIdArr
+     *            需要建项目的APP
+     * @param dataIdArr
+     *            需要建项目的数据
+     * @return {appId: projectId}
+     * @author leamo
+     * @date 2016年1月14日 下午1:12:51
+     */
+    public Map<Integer, Integer> insertMultipleProject(Project project,
+            String[] appIdArr, String[] dataIdArr);
 }
