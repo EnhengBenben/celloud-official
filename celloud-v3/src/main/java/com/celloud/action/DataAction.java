@@ -374,13 +374,13 @@ public class DataAction {
         for (App app : appList) {
             Integer appId = app.getAppId();
             String appName = app.getAppName();
-            Integer proId = appProMap.get(appId.toString());
+            Integer proId = appProMap.get(appId);
             // TODO
             appPath += appId + "/";
             if (!FileTools.checkPath(appPath)) {
                 new File(appPath).mkdirs();
             }
-            if (AppDataListType.SPARK.contains(appId)) {// 判断是否需要进队列
+            if (AppDataListType.SPARK.contains(String.valueOf(appId))) {// 判断是否需要进队列
                 String select = SparkPro.apps.toString().substring(1,
                         SparkPro.apps.toString().length() - 1);
                 int running = dataService.dataRunning(select);
@@ -401,7 +401,7 @@ public class DataAction {
                             + dataFilePath + "--" + appName + "--" + appId;
                     GlobalQueue.offer(command);
                 }
-            } else if (AppDataListType.FASTQ_PATH.contains(appId)) {
+            } else if (AppDataListType.FASTQ_PATH.contains(String.valueOf(appId))) {
                 for (Entry<String, String> entry : dataFilePathMap.entrySet()) {
                     String dataKey = entry.getKey();
                     String dataListFile = entry.getValue();
@@ -426,14 +426,14 @@ public class DataAction {
                         logger.info("数据{}排队运行{}", dataKey, app.getAppName());
                     }
                 }
-            } else if (AppDataListType.SPLIT.contains(appId)||SparkPro.SGEAPPS.contains(appId)) {
+            } else if (AppDataListType.SPLIT.contains(String.valueOf(appId))) {
 				Map<String, String> map = CommandKey.getMap(dataFilePath, appPath, String.valueOf(proId));
 				StrSubstitutor sub = new StrSubstitutor(map);
 				String command = sub.replace(app.getCommand());
                 SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
                 ssh.sshSubmit(command, false);
             } else {
-                if (SparkPro.SGEAPPS.contains(appId)) {
+                if (SparkPro.SGEAPPS.contains(String.valueOf(appId))) {
                     // TODO 所有向Tools端投递任务的流程都向这里集中
                     // 最终判断删除，非spark就是SGE
                     logger.info("celloud 直接向 SGE 投递任务");
@@ -456,7 +456,7 @@ public class DataAction {
         }
         return result;
     }
-
+    
     /**
      * 运行所需信息
      * 
