@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.celloud.dao.impl.ReportDaoImpl;
+import com.celloud.sdo.Company;
 import com.google.inject.ImplementedBy;
 
 @ImplementedBy(ReportDaoImpl.class)
@@ -32,6 +33,8 @@ public interface ReportDao {
 	 * @param cmpId
 	 * @return
 	 */
-	public List<Map<String, Object>> getUserRunEachApp(Connection conn, Integer role, Integer cmpId);
+	public List<Map<String, Object>> getCompanyRunEachApp(Connection conn, Integer role, Integer cmpId);
+
+	public List<Company> getCompanyRunEachApp_Company(Connection conn, Integer role, Integer cmpId);
 
 }
