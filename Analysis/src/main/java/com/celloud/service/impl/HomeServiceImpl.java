@@ -11,6 +11,7 @@ import com.celloud.dao.DataDao;
 import com.celloud.dao.ReportDao;
 import com.celloud.dao.UserDao;
 import com.celloud.sdo.App;
+import com.celloud.sdo.Company;
 import com.celloud.service.HomeService;
 import com.celloud.utils.ConnectManager;
 import com.google.inject.Inject;
@@ -51,10 +52,13 @@ public class HomeServiceImpl implements HomeService {
 	public Map<String, Object> toCompanyReport(Integer cmpId, Integer role) {
 		Connection conn = ConnectManager.getConnection();
 		List<App> listApps = appDao.getApps(conn, role, cmpId);
-		List<Map<String, Object>> userAppRun = reportDao.getUserRunEachApp(conn, role, cmpId);
+
+		List<Map<String, Object>> userAppRun = reportDao.getCompanyRunEachApp(conn, role, cmpId);
+		List<Company> cmpList = reportDao.getCompanyRunEachApp_Company(conn, role, cmpId);
 		Map<String, Object> res = new HashMap<>();
 		res.put("listApps", listApps);
 		res.put("userAppRun", userAppRun);
+		res.put("cmpList", cmpList);
 		return res;
 	}
 

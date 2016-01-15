@@ -109,9 +109,18 @@ public class HomeAction extends BaseAction {
 	public String toCompanyReportList() {
 		Integer cid = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
-		Map<String, Object> map = homeService.toCompanyReport(cid, role);
-		appList = (List<App>) map.get("listApps");
-		mapList = (List<Map<String, Object>>) map.get("userAppRun");
+		try {
+			Map<String, Object> map = homeService.toCompanyReport(cid, role);
+			appList = (List<App>) map.get("listApps");
+			mapList = (List<Map<String, Object>>) map.get("userAppRun");
+			cmpList = (List<Company>) map.get("cmpList");
+			LogUtil.info(log, " AppList:" + appList.size());
+			LogUtil.info(log, "mapList:" + mapList.size());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return "companyReportList";
 	}
 
@@ -201,6 +210,14 @@ public class HomeAction extends BaseAction {
 
 	public void setResultMap(Map<String, Object> resultMap) {
 		this.resultMap = resultMap;
+	}
+
+	public List<Map<String, Object>> getMapList() {
+		return mapList;
+	}
+
+	public void setMapList(List<Map<String, Object>> mapList) {
+		this.mapList = mapList;
 	}
 
 	public int getCompanyId() {
