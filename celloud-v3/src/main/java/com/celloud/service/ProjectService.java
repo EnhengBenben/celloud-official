@@ -88,4 +88,6 @@ public interface ProjectService {
      */
     public Map<Integer, Integer> insertMultipleProject(Project project,
             String[] appIdArr, String[] dataIdArr);
+
+    public Map<String, Object> findProjectInfoById(Integer projectId);
 }

@@ -340,6 +340,7 @@ public class DataAction {
                 }
             }
         }
+        System.out.println(list_tmp);
         // 批量创建项目
         Map<Integer, Integer> appProMap = projectService
                 .insertMultipleProject(project, appIdArr, dataIdArr);
@@ -399,7 +400,7 @@ public class DataAction {
                 for (Entry<String, String> entry : dataFilePathMap.entrySet()) {
                     String dataKey = entry.getKey();
                     String dataListFile = entry.getValue();
-                    int runningNum = taskService.getRunningNumByAppId(appId);
+                    int runningNum = taskService.findRunningNumByAppId(appId);
                     Task task = new Task();
                     task.setProjectId(proId);
                     task.setUserId(userId);
@@ -424,7 +425,7 @@ public class DataAction {
                         logger.info("数据{}排队运行{}", dataKey, app.getAppName());
                     }
                 }
-            } else if (AppDataListType.SPLIT.contains(appId)||SparkPro.SGEAPPS.contains(appId)) {
+            } else if (AppDataListType.SPLIT.contains(appId)) {
                 StringBuffer command = new StringBuffer(
                         "nohup perl /share/biosoft/perl/PGS_MG/bin/moniter_qsub_url-v1.pl nohup perl ");
                 command.append(app.getCommand()).append(" ")

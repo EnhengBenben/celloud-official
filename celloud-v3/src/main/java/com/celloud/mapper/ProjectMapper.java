@@ -1,5 +1,7 @@
 package com.celloud.mapper;
 
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.celloud.model.Project;
@@ -92,4 +94,14 @@ public interface ProjectMapper {
      */
     public Integer addShare(@Param("shareFrom") Integer from,
             @Param("projectId") Integer projectId, @Param("shareTo") Integer to);
+
+    /**
+     * 根据项目编号获取userId，APP信息
+     * 
+     * @param projectId
+     * @return
+     * @author leamo
+     * @date 2016年1月15日 上午10:41:53
+     */
+    Map<String, Object> findProjectInfoById(Integer projectId);
 }

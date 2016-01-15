@@ -13,6 +13,10 @@ public class PropertiesUtil {
 	public static String bigFilePath;
     public static String datalist;
     public static String outputPath;
+    /**
+     * pdf 的 logo
+     */
+    public static String img;
 	static {
 		Properties prop = new Properties();
 		InputStream inStream = PropertiesUtil.class.getClassLoader()
@@ -24,6 +28,7 @@ public class PropertiesUtil {
 			bigFilePath = prop.getProperty("bigFilePath");
             datalist = prop.getProperty("datalist");
             outputPath = prop.getProperty("outputPath");
+            img = prop.getProperty("img");
 		} catch (IOException e) {
 			logger.info("读取jdbc配置文件失败");
 		}

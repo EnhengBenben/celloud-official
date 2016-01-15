@@ -217,4 +217,14 @@ public interface DataService {
      */
     public DataFile getDataByKey(String dataKey);
 
+    /**
+     * 根据dataKey批量获取数据
+     * 
+     * @param dataKey
+     * @return
+     * @author leamo
+     * @date 2016年1月14日 下午6:15:30
+     */
+    public List<DataFile> selectDataByKeys(String dataKeys);
+
 }

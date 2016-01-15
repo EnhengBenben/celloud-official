@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.celloud.constants.DataState;
 import com.celloud.mapper.ProjectMapper;
+import com.celloud.mapper.ReportMapper;
 import com.celloud.model.Project;
 import com.celloud.service.ProjectService;
 
@@ -17,6 +18,8 @@ import com.celloud.service.ProjectService;
 public class ProjectServiceImpl implements ProjectService {
     @Resource
     private ProjectMapper projectMapper;
+    @Resource
+    private ReportMapper reportMapper;
 
     @Override
     public Integer deleteShareToMe(Integer userId, Integer projectId) {
@@ -51,7 +54,10 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Integer deleteByState(Integer projectId) {
-        return projectMapper.deleteByState(projectId, DataState.DEELTED);
+        Integer pdel = projectMapper.deleteByState(projectId,
+                DataState.DEELTED);
+        reportMapper.deleteByState(projectId, DataState.DEELTED);
+        return pdel;
     }
 
     @Override
@@ -77,6 +83,11 @@ public class ProjectServiceImpl implements ProjectService {
             map.put(Integer.valueOf(appId), projectId);
         }
         return map;
+    }
+
+    @Override
+    public Map<String, Object> findProjectInfoById(Integer projectId) {
+        return projectMapper.findProjectInfoById(projectId);
     }
 
 }

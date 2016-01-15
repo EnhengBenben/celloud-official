@@ -181,4 +181,9 @@ public class DataServiceImpl implements DataService {
     public DataFile getDataByKey(String dataKey) {
         return dataFileMapper.selectByDataKey(dataKey);
     }
+
+    @Override
+    public List<DataFile> selectDataByKeys(String dataKeys) {
+        return dataFileMapper.selectByDataKeys(dataKeys);
+    }
 }

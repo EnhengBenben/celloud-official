@@ -28,6 +28,16 @@ public interface DataFileMapper {
      */
     public DataFile selectByDataKey(@Param("dataKey") String dataKey);
 
+    /**
+     * 根据dataKey批量获取数据
+     * 
+     * @param dataKeys
+     * @return
+     * @author leamo
+     * @date 2016年1月14日 下午6:13:00
+     */
+    List<DataFile> selectByDataKeys(@Param("dataKey") String dataKeys);
+
     int updateByPrimaryKeySelective(DataFile record);
 
     int updateByPrimaryKeyWithBLOBs(DataFile record);

@@ -30,4 +30,27 @@ public class PerlUtils{
         return "success";
     }
 
+    public static boolean excuteCopyFile(String inPath, String outPath) {
+        boolean state = false;
+        String command = "cp -i " + inPath + " " + outPath;
+        Runtime runtime = Runtime.getRuntime();
+        Process proc;
+        try {
+            proc = runtime.exec(command);
+            log.info("执行命令：command=" + command);
+            InputStream ins = proc.getInputStream();
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(ins));
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                log.info(line);
+            }
+            state = true;
+            log.info("拷贝命令执行" + state);
+        } catch (IOException e) {
+            log.error("命令command=" + command + " 执行失败，错误：" + e);
+            e.printStackTrace();
+        }
+        return state;
+    }
 }
