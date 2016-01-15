@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
@@ -43,6 +44,7 @@ import com.celloud.utils.XmlUtil;
  * @date 2016年1月14日 下午5:05:52
  */
 @Controller
+@RequestMapping("task")
 public class TaskAction {
     Logger logger = LoggerFactory.getLogger(TaskAction.class);
     @Resource
@@ -64,45 +66,52 @@ public class TaskAction {
     private static String sparkpwd = machines.get("spark").get(Mod.PWD);
     private static String sparkuserName = machines.get("spark")
             .get(Mod.USERNAME);
+
     /**
      * 任务运行结束
-     * perl端调用：http://www.celloud.cn/task!runOver?projectId=1&dataNames=data1
-     * .fastq,data2.fastq
+     * perl端调用：http://www.celloud.cn/task/taskRunOver.html?projectId=1&dataNames
+     * =data1 .fastq,data2.fastq
      * 
      * @return
      * @author leamo
      * @date 2016年1月14日 下午5:09:27
      */
-    @RequestMapping("task!runOver")
-    public String runOver(String projectId, String dataNames) {
+    @RequestMapping("taskRunOver.html")
+    @ResponseBody
+    public String taskRunOver(String projectId, String dataNames) {
         logger.info("任务运行结束，proId:{},运行数据dataKey：{}", projectId, dataNames);
         String[] dataArr = dataNames.split(",");
+        System.out.println("dataArr:" + dataArr);
         List<String> dataKeyList = new ArrayList<>();
         String dataKey = "";
         for (int i = 0; i < dataArr.length; i++) {
             String dname = dataArr[i];
+            System.out.println(dname + "----" + i);
             if (i == 0) {
                 dataKey = dname;
             }
             dataKeyList.add(dname);
         }
-
+        System.out.println("dataKeyList:" + dataKeyList);
+        System.out.println("dataKey: " + dataKey);
         // 1. 数据库检索
         Map<String, Object> map = taskService
                 .findTaskInfoByProId(Integer.parseInt(projectId));
+        System.out.println("通过项目编号获取信息：" + map);
+        if (map == null) {
+            logger.info("获取项目信息错误" + map);
+        }
         Integer userId = (Integer) map.get("userId");
         Integer appId = (Integer) map.get("appId");
         String title = (String) map.get("title");
         String method = (String) map.get("method");
-        List<DataFile> dataList = dataService
-                .selectDataByKeys(dataKeyList.toString());
-
+        List<DataFile> dataList = dataService.selectDataByKeys(dataNames);
         // 2. 利用 python将数据报告插入 mongodb
         StringBuffer command = new StringBuffer();
         command.append("python ").append(SparkPro.TASKOVERPY).append(" ")
                 .append(SparkPro.TOOLSPATH).append(" ").append(userId)
-                .append(" ").append(appId).append(" ")
-                .append(dataKeyList.toString()).append(" ").append(projectId);
+                .append(" ").append(appId).append(" ").append(dataNames)
+                .append(" ").append(projectId);
         PerlUtils.excutePerl(command.toString());
         // 3. 创建项目结果文件
         StringBuffer basePath = new StringBuffer();
@@ -113,6 +122,7 @@ public class TaskAction {
                 .append(projectId).append(".txt");
         StringBuffer reportPath = new StringBuffer();
         reportPath.append(basePath).append(dataKey).append("/");
+        System.out.println("task 结果路径 ----" + reportPath.toString());
         // 4. 通过反射调用相应app的处理方法，传参格式如下：
         // String reportPath, String appName, String appTitle,String
         // projectFile,String projectId, List<DataFile> dataList
@@ -180,15 +190,17 @@ public class TaskAction {
                 }
             }
         }
-        return "运行完成";
+        return "run over";
     }
 
     /**
      * 项目运行结束之后
+     * perl端调用：http://www.celloud.cn/task/projectRunOver.html?projectId=
      * 
      * @return
      */
-    @RequestMapping("project!projectRunOver")
+    @RequestMapping("projectRunOver.html")
+    @ResponseBody
     public String projectRunOver(String projectId) {
         logger.info("项目运行结束，id:{}", projectId);
         // 1. 利用 python 生成数据 pdf，并将数据报告插入 mongodb
@@ -217,15 +229,15 @@ public class TaskAction {
         FileTools.createFile(projectFile);
         // 4. 通过反射调用相应app的处理方法，传参格式如下：
         // String appPath, String appName, String appTitle,String
-        // projectFile,String projectId, List<Data> proDataList
+        // projectFile,String projectId, List<DataFile> proDataList
         RunOverService ros = new RunOverService();
         try {
             // TODO 方法名称和title类型应该从数据库获取
             ros.getClass().getMethod(method,
                     new Class[] { String.class, String.class, String.class,
                             String.class, String.class, List.class })
-                    .invoke(ros, basePath, appName, title, projectFile,
-                            projectId, dataList);
+                    .invoke(ros, basePath.toString(), appName, title,
+                            projectFile, projectId, dataList);
         } catch (Exception e) {
             e.printStackTrace();
         }

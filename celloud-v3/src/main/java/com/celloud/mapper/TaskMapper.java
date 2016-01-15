@@ -46,7 +46,8 @@ public interface TaskMapper {
      * @author leamo
      * @date 2016-1-10 下午8:15:21
      */
-    Task findFirstTaskByAppId(Integer appId, Integer state);
+    Task findFirstTaskByAppId(@Param("appId") Integer appId,
+            @Param("period") Integer period, @Param("state") Integer state);
 
     /**
      * 获取APP正在运行的任务数
@@ -56,7 +57,8 @@ public interface TaskMapper {
      * @author leamo
      * @date 2016-1-10 下午8:23:32
      */
-    Integer findAppRunningNum(Integer appId, Integer state);
+    Integer findAppRunningNum(@Param("appId") Integer appId,
+            @Param("period") Integer period, @Param("state") Integer state);
 
     /**
      * 根据项目编号获取任务信息

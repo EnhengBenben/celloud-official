@@ -36,21 +36,23 @@ public class TaskServiceImpl implements TaskService {
     ReportMapper reportMapper;
     @Override
     public Integer create(Task task) {
+        task.setPeriod(TaskPeriod.WAITTING);
         task.setCreateDate(new Date());
         return taskMapper.insertSelective(task);
     }
 
     @Override
     public Task findFirstTask(Integer appId) {
-        return taskMapper.findFirstTaskByAppId(appId, TaskPeriod.WAITTING);
+        return taskMapper.findFirstTaskByAppId(appId, TaskPeriod.WAITTING,
+                DataState.ACTIVE);
     }
 
     @Override
     public Integer updateToRunning(Integer taskId) {
         Task task = new Task();
         task.setTaskId(taskId);
-        task.setState(TaskPeriod.RUNNING);
-        return taskMapper.updateByPrimaryKeyWithBLOBs(task);
+        task.setPeriod(TaskPeriod.RUNNING);
+        return taskMapper.updateByPrimaryKeySelective(task);
     }
 
     @Override
@@ -73,12 +75,14 @@ public class TaskServiceImpl implements TaskService {
             report.setEndDate(new Date());
             reportMapper.updateReportPeriod(report);
         }
-        return taskMapper.findFirstTaskByAppId(appId, TaskPeriod.WAITTING);
+        return taskMapper.findFirstTaskByAppId(appId, TaskPeriod.WAITTING,
+                DataState.ACTIVE);
     }
 
     @Override
     public Integer findRunningNumByAppId(Integer appId) {
-        return taskMapper.findAppRunningNum(appId, TaskPeriod.RUNNING);
+        return taskMapper.findAppRunningNum(appId, TaskPeriod.RUNNING,
+                DataState.ACTIVE);
     }
 
     @Override
