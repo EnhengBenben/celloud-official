@@ -370,13 +370,12 @@ public class DataAction {
 
         // 运行APP详细信息
         List<App> appList = appService.findAppsByIds(appIds);
-        String appPath = basePath + userId + "/";
+        String bp = basePath + userId + "/";
         for (App app : appList) {
             Integer appId = app.getAppId();
             String appName = app.getAppName();
             Integer proId = appProMap.get(appId);
-            // TODO
-            appPath += appId + "/";
+			String appPath = bp + appId + "/";
             if (!FileTools.checkPath(appPath)) {
                 new File(appPath).mkdirs();
             }
