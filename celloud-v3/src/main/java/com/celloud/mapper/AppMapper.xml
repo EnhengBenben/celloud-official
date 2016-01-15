@@ -339,7 +339,7 @@
             </otherwise>  
         </choose>
         <if test="sortField!=''">
-            order by ${sortField } ${sortType }
+            order by ${sortField } ${sortType },a.app_id
         </if>
     </select>
     <select id="getAppById" resultMap="extraResultMap"  >

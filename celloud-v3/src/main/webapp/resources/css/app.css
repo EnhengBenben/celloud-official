@@ -44,7 +44,7 @@
     line-height: 45px
 }
 .J_single.kind .list-left {
-    width: 116px
+    /* width: 116px */
 }
 .J_single .list-left {
     float: left;
@@ -178,7 +178,8 @@
     margin: 0 20px
 }
 .box-info-wrap {
-    margin-right: 400px
+    margin-right: 400px;
+    padding-top:18px;
 }
 .box-star {
     width: 230px;
@@ -503,7 +504,8 @@
 .item-list .item-left .itemInfo {
 	width: 65%;
 	float: left;
-	margin-left: 4%
+	margin-left: 4%;
+	min-width:700px;
 }
 .item-list .item-left .itemInfo h5 {
 	font-size: 22px;
@@ -515,7 +517,7 @@
 	overflow: hidden
 }
 .item-list .item-left .itemInfo .intro li {
-	width: 240px;
+	width: 260px;
 	height: 24px;
 	line-height: 24px;
 	float: left;
@@ -565,7 +567,8 @@
 }
 .myApplist .nominate li .intro h6 {
 	font-size: 14px;
-	color: #333
+	color: #333;
+	margin:0;
 }
 a.reco-hd-link:hover {
 	color: #00a2ca;
