@@ -13,7 +13,7 @@
 	<ul class="breadcrumb">
 		<li>
 			<i class="icon-hospital"></i>
-			<a href="#">医院统计</a>
+			<a href="#">医院统计</a> -->
 		</li>
 		<li class="active">
 			<a onclick="toCompanyReportList()">医院报告统计</a>

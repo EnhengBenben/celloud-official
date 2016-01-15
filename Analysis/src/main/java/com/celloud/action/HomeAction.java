@@ -36,6 +36,7 @@ import com.google.inject.Inject;
 		@Result(name = "companyReportList", location = "../../pages/companyReportList.jsp"),
 		@Result(name = "companyDataList", location = "../../pages/companyDataList.jsp"),
 		@Result(name = "getPreDataView", location = "../../pages/dataPreView.jsp"),
+		@Result(name = "getPreCompanyView", location = "../../pages/companyPreView.jsp"),
 
 		@Result(name = "browserCount", type = "json", params = { "root", "browserList" }),
 		@Result(name = "historyList", type = "json", params = { "root", "historyList" }),
@@ -94,8 +95,7 @@ public class HomeAction extends BaseAction {
 			resultMap = homeService.toHome(companyId, role);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		/** 历史比较 */
+		} /** 历史比较 */
 
 		return "success";
 	}
@@ -105,6 +105,11 @@ public class HomeAction extends BaseAction {
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		dataList = dataService.getUserMonthDataList(compId, role);
 		return "getPreDataView";
+	}
+
+	public String toPreCompanyView() {
+
+		return "getPreCompanyView";
 	}
 
 	public String toCompanyDataList() {

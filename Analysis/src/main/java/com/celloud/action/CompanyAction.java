@@ -170,8 +170,8 @@ public class CompanyAction extends BaseAction {
 	public String getCompanyNumEveryMonth() {
 		Integer companyId = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
-		resultMap = companyService.getCompanyNumEveryMonth(companyId, role);
-		return "resultMap";
+		list = companyService.getCompanyNumEveryMonth(companyId, role);
+		return "list";
 	}
 
 	/**

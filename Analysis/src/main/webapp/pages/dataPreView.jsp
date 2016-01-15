@@ -85,8 +85,8 @@
 			xAxis[i] = data[i].yearMonth;
 			yAxis[i] = data[i].fileNum;
 		}
-		  yAxisAdd[0]=0;
 		  yAxisCount[0] = yAxis[0];
+		  yAxisAdd[0]=0;
 		  var count = yAxis[0];
 		  for (var i = 1; i < yAxis.length; i++) {
 			  yAxisAdd[i] = yAxis[i]-yAxis[i-1];

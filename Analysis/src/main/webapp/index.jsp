@@ -155,7 +155,7 @@
 						</a>
 						<ul class="submenu">
 							<li>
-								<a href="javascript:toHospitalList()">
+								<a href="javascript:toPreCompanyView()">
 									<i class="icon-double-angle-right"></i>
 									医院总览
 								</a>
@@ -172,6 +172,7 @@
                                     医院报告统计
                                 </a>
                             </li>
+                            <!-- 
 							<c:if test="${ userRole=='2'}">
 								<li>
 									<a href="javascript:hospitalBigUserCount()">
@@ -180,8 +181,10 @@
 									</a>
 								</li>
 							</c:if>
+							 -->
 						</ul>
 					</li>
+					<!-- 
 					<c:if test="${ userRole=='3'}">
 						<li>
 							<a href="javascript:void(0)" class="dropdown-toggle">
@@ -211,7 +214,7 @@
 										APP详细信息
 									</a>
 								</li>
-								<li>
+								<li>数据量统计
 									<a href="javascript:bigUserAppList()">
 										<i class="icon-double-angle-right"></i>
 										大客户统计
@@ -226,6 +229,7 @@
 							</a>
 						</li>
 					</c:if>
+					 -->
 				</ul>
 				<!-- /.nav-list -->
 				<div class="sidebar-collapse" id="sidebar-collapse">
@@ -322,13 +326,20 @@
 				$("#content").html(responseText);
 			});
 		}
-		///医院数据统计信息
+		///医院统计--数据统计
 		  function toCompanyDataList() {
 	            $("#secondTitle").addClass("hide");
 	            $.get("home!toCompanyDataList", {}, function(responseText) {
 	                $("#content").html(responseText);
 	            });
 	        }
+		  ///医院统计--医院总览
+		  function toPreCompanyView(){
+			  $("#secondTitle").addClass("hide");
+	            $.get("home!toPreCompanyView", {}, function(responseText) {
+	                $("#content").html(responseText);
+	            });
+		  }
 		    ///医院报告统计信息
 		    function toCompanyReportList() {
 	            $("#secondTitle").addClass("hide");

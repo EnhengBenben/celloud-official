@@ -168,12 +168,6 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 		legend : {
 			data : [ seriesName ],// [ '文件个数', '数据大小(GB)' ]
 		},
-		grid : {
-			x : 80,
-			y : 60,
-			x2 : 80,
-			y2 : 80
-		},
 		toolbox : {
 			show : true,
 			feature : {
@@ -278,16 +272,16 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 	}
 	var colorStr;
 	/** 柱状图颜色 */
+	var ran = parseInt(Math.random()*10);
 	if (seriesName.indexOf("数据量") > -1) {
-		colorStr = colorList[1];
+		colorStr = colorList[ran];
 	} else if (seriesName.indexOf("数据大小") > -1) {
-		colorStr = colorList[4];
+		colorStr = colorList[ran];
 	} else if (seriesName.indexOf("运行") > -1) {
-		colorStr = colorList[9];
+		colorStr = colorList[ran];
 	} else if (seriesName.indexOf("登陆") > -1) {
-		colorStr = colorList[4];
+		colorStr = colorList[ran];
 	}
 	opt.series[0].itemStyle.normal.color = colorStr;
-	console.log(opt.grid);
 	return opt;
 }

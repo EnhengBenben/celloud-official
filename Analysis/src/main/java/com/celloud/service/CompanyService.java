@@ -19,7 +19,7 @@ public interface CompanyService {
 	 * @param companyId
 	 * @return
 	 */
-	public Map<String, Object> getCompanyNumEveryMonth(Integer companyId, Integer role);
+	public List<Map<String, Object>> getCompanyNumEveryMonth(Integer companyId, Integer role);
 
 	/**
 	 * 获取医院详细信息

@@ -1,7 +1,6 @@
 package com.celloud.service.impl;
 
 import java.sql.Connection;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -30,42 +29,9 @@ public class CompanyServiceImpl implements CompanyService {
 	Logger log = Logger.getLogger(this.getClass().getSimpleName());
 
 	@Override
-	public Map<String, Object> getCompanyNumEveryMonth(Integer companyId, Integer role) {
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+	public List<Map<String, Object>> getCompanyNumEveryMonth(Integer companyId, Integer role) {
 		List<Map<String, Object>> list = companyDao.getCompanyNumEveryMonth(companyId, role);
-		Calendar cal = Calendar.getInstance();
-		int year = cal.get(Calendar.YEAR);
-		int month = cal.get(Calendar.MONTH);
-		String timeLine = "2014-08,2014-09,2014-10,2014-11,2014-12";
-		String data = "";
-		for (int i = 8; i <= 12; i++) {
-			String tmp = "";
-			if (i < 10) {
-				tmp = "2014-0" + i;
-			} else {
-				tmp = "2014-" + i;
-			}
-			data += mapListHasIt(list, tmp);
-		}
-		for (int i = 2015; i <= year; i++) {
-			int end = 12;
-			if (i == year) {
-				end = month;
-			}
-			for (int j = 1; j <= end; j++) {
-				String tmp = "";
-				if (j < 10) {
-					tmp = i + "-0" + j;
-				} else {
-					tmp = i + "-" + j;
-				}
-				data += mapListHasIt(list, tmp);
-				timeLine += "," + tmp;
-			}
-		}
-		resultMap.put("timeLine", timeLine);
-		resultMap.put("data", data.substring(0, data.length() - 1));
-		return resultMap;
+		return list;
 	}
 
 	/**
