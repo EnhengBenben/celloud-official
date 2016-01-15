@@ -15,39 +15,66 @@
 			<i class="icon-hospital"></i>
 			<a href="#">医院统计</a>
 		</li>
-		<li class="active"><a onclick = "hospitalBigUserCount()">医院报告统计</a></li>
+		<li class="active">
+			<a onclick="toCompanyReportList()">医院报告统计</a>
+		</li>
 	</ul>
 </div>
 <div class="page-content">
 	<div class="row">
-	<span>${appList }</span>
-	 <span>${mapList }</span>
-	
-	<c:if test="${fn:length(appList) > 0&&fn:length(mapList) > 0 }">
-                <div class="table-responsive" id="dataDiv">
-                    <table id="allUserDataList" class="table table-striped table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>医院编码</th>
-                                <th>医院名称</th>
-                                <c:forEach items="${appList}" var="item">
-                                <th>${item.app_name}</th>
-                                </c:forEach>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${mapList}" var="item">
-                                <tr>
-                                    <td>
-                                        ${item.company_id }
-                                    </td>
-                                    <td>${item.app_id }</td>
-                                    <td>${item.runNum}</td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
-            </c:if>
+		<c:if test="${appList!=null && fn:length(appList)>0 }">
+			<div class="table-responsive" id="dataDiv">
+				<table id="allUserDataList" class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th class="hidden-480">医院编码</th>
+							<th class="hidden-480">医院名称</th>
+							<c:forEach items="${appList}" var="item">
+								<th class="hidden-480">${item.app_name}</th>
+							</c:forEach>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${cmpList}" var="item">
+							<tr>
+								<td>${item.company_id }</td>
+								<td>${item.company_name }</td>
+								<c:forEach items="${appList}" var="item2">
+									<c:set var="runNumber" scope="session" value="0" />
+									<c:forEach items="${mapList}" var="item3">
+										<c:if test="${ item3.app_id == item2.app_id}">
+											<c:if test="${ item3.company_id == item.company_id }">
+												<c:set var="runNumber" scope="session" value="${item3.runNum}" />
+											</c:if>
+										</c:if>
+									</c:forEach>
+									<td>${runNumber }</td>
+								</c:forEach>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</c:if>
 	</div>
 </div>
+<script>
+	jQuery(function($) {
+		var cells = document.getElementById("allUserDataList").rows.item(0).cells.length;
+		var arrLen = new Array(cells);
+		$.each(arrLen, function(index, value) {
+			arrLen[index] = null;
+		})
+		arrLen[0] = {
+			"bSortable" : false
+		};
+		arrLen[1] = {
+			"bSortable" : false
+		};
+		var oTable1 = $('#allUserDataList').dataTable({
+			"aoColumns" : arrLen,
+			iDisplayLength : 10,
+			"aaSorting" : [ [ 2, "desc" ] ],
+		});
+	});
+</script>

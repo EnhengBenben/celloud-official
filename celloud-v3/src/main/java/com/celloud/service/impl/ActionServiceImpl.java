@@ -33,7 +33,7 @@ public class ActionServiceImpl implements ActionLogService {
         log.setMessage(message);
         log.setLogDate(new Date());
         log.setUserId(ConstantsData.getLoginUserId());
-        log.setUserName(ConstantsData.getLoginUserName());
+        log.setUsername(ConstantsData.getLoginUserName());
         new ActionLogThread(log).setService(this).start();
     }
 
