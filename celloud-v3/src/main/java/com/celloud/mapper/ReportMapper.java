@@ -99,7 +99,8 @@ public interface ReportMapper {
     public List<Map<String, Object>> getReportList(
             @Param("userId") Integer userId, Page pager,
             @Param("condition") String condition, @Param("start") String start,
-            @Param("end") String end, @Param("appId") Integer appId);
+            @Param("end") String end, @Param("appId") Integer appId,
+            @Param("flag") Integer flag);
 
     /**
      * 纹计用户报告

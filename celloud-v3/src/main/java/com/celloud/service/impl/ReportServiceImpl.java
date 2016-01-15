@@ -81,7 +81,7 @@ public class ReportServiceImpl implements ReportService {
         long s = System.currentTimeMillis();
         System.out.println("【Service】 start " + s);
         List<Map<String, Object>> list = reportMapper.getReportList(userId,
-                pager, condition, start, end, appId);
+                pager, condition, start, end, appId, ReportType.PROJECT);
         long e = System.currentTimeMillis();
         System.out.println("【Service】 end " + e);
         System.out.println("【Service】 time: " + (e - s));
