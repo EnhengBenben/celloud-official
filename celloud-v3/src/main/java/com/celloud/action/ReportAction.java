@@ -90,7 +90,7 @@ public class ReportAction {
     private ModelAndView getModelAndView(String path) {
         ModelAndView mv = new ModelAndView(path);
         mv.addObject("toolsPath", PropertiesUtil.toolsPath);
-        mv.addObject("uploadPath", PropertiesUtil.toolsPath + "upload/");
+        mv.addObject("uploadPath", PropertiesUtil.toolsOutPath + "upload/");
         return mv;
     }
 
