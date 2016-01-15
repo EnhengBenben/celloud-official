@@ -47,7 +47,7 @@
     from tb_file
     where data_key = #{dataKey}
   </select>
-  <select id="selectByDataKeys" resultMap="Base_Column_List" >
+  <select id="selectByDataKeys" resultMap="ResultMapWithBLOBs" >
     select 
     <include refid="Base_Column_List" />
     ,
