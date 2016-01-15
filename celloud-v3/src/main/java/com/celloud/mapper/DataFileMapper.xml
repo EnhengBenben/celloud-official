@@ -53,7 +53,7 @@
     ,
     <include refid="Blob_Column_List" />
     from tb_file
-    where data_key in ${dataKey}
+    where data_key in (${dataKey})
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_file

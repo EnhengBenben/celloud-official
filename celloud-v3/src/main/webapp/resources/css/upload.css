@@ -8,3 +8,6 @@
 .addfile{display:block;width: 120px;float:left;margin-right:10px;margin-left:5px;}
 .startfile{display:block;width: 120px;float:left;margin-right:10px;}
 ._uploadAlert{display: inline-block; color: #CC6600; padding-top: 18px; padding-left: 30px;}
+#fileUploadDiv_filelist .tooltip-inner{
+    max-width:none;
+}

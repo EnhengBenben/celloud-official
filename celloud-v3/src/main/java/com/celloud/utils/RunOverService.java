@@ -162,7 +162,7 @@ public class RunOverService {
         for (DataFile d : proDataList) {
             String filename = d.getFileName();
             String datakey = d.getDataKey();
-            String anotherName = d.getAnotherName().isEmpty() ? null
+            String anotherName = d.getAnotherName() == null ? null
                     : d.getAnotherName();
             // 3. 为项目PDF生成数据
             sb.append(datakey).append(",")

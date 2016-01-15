@@ -1,5 +1,6 @@
 package com.celloud.utils;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -18,7 +19,6 @@ import com.celloud.model.DataFile;
  * @description :将dataKeyList转化成输入文件
  */
 public class DataKeyListToFile {
-    private static String dataPath = PropertiesUtil.bigFilePath;
     private static String datalist = PropertiesUtil.datalist;
 
     /**
@@ -36,8 +36,8 @@ public class DataKeyListToFile {
         List<String> ports = PortPool.getPorts(dataList.size(), projectId);
         for (int i = 0; i < dataList.size(); i++) {
             DataFile data = dataList.get(i);
-            sb.append(dataPath + data.getPath() + "\t" + data.getFileName()
-                    + "\t" + ports.get(i) + "\n");
+            sb.append(data.getPath() + "\t" + data.getFileName() + "\t"
+                    + ports.get(i) + "\n");
         }
         FileTools.appendWrite(dataListFile, sb.toString());
         return dataListFile;
@@ -55,8 +55,7 @@ public class DataKeyListToFile {
                 + new Double(Math.random() * 1000).intValue() + ".txt";
         FileTools.createFile(dataListFile);
         for (DataFile data : dataList) {
-            sb.append(dataPath + data.getPath() + "\t" + data.getFileName()
-                    + "\n");
+            sb.append(data.getPath() + "\t" + data.getFileName() + "\n");
         }
         FileTools.appendWrite(dataListFile, sb.toString());
         return dataListFile;
@@ -74,7 +73,7 @@ public class DataKeyListToFile {
                 + new Double(Math.random() * 1000).intValue() + ".txt";
         FileTools.createFile(dataListFile);
         for (DataFile data : dataList) {
-            sb.append(dataPath + data.getPath() + "\n");
+            sb.append(data.getPath() + "\n");
         }
         FileTools.appendWrite(dataListFile, sb.toString());
         return dataListFile;
@@ -111,12 +110,11 @@ public class DataKeyListToFile {
                         fname_r2.lastIndexOf("R2") + 2, fname_r2.length());
                 if (fname_r2.contains(commonPrefix + "R2")
                         && r2_Suffix.equals(commonSuffix)) {
-                    sb.append(dataPath).append(data.getPath()).append("\t")
-                            .append(dataPath).append(data_r2.getPath())
-                            .append("\t");
+                    sb.append(data.getPath()).append("\t")
+                            .append(data_r2.getPath()).append("\t");
                 }
             } else {
-                sb.append(dataPath).append(data.getPath());
+                sb.append(data.getPath());
             }
             FileTools.appendWrite(dataListFile, sb.toString());
             dataListFileMap.put(dataKey, dataListFile);
@@ -132,28 +130,34 @@ public class DataKeyListToFile {
      * @param dataKeyList
      * @return
      */
-    public static String toSplit(List<DataFile> dataList) {
+    public static Map<String, String> toSplit(List<DataFile> dataList) {
+        Map<String, String> dataListFileMap = new HashMap<>();
         StringBuffer sb = new StringBuffer();
         String dataListFile = datalist + new Date().getTime() + "_"
                 + new Double(Math.random() * 1000).intValue() + ".txt";
         FileTools.createFile(dataListFile);
         sortDataList(dataList);
-        String[] pathArr = new String[3];
-        for (int i = 0; i < dataList.size(); i++) {
-            DataFile data = dataList.get(i);
-            String fileName = data.getFileName();
-            String ext = FileTools.getExt(fileName);
-            if (ext.equals(".lis") || ext.equals(".txt")) {
-                pathArr[2] = data.getPath();
+        List<String> pathList = new ArrayList<>();
+        String endPath = "";
+        int i = 0;
+        String dataKey = "";
+        for (DataFile data : dataList) {
+            String path = data.getPath();
+            if (path.endsWith(".lis") || path.endsWith(".txt")) {
+                endPath = path;
             } else {
-                pathArr[i] = data.getPath();
+                if (i == 0) {
+                    dataKey = data.getDataKey();
+                }
+                pathList.add(path);
+                i++;
             }
         }
-        sb.append(dataPath).append(pathArr[0]).append("\t").append(dataPath)
-                .append(pathArr[1]).append("\t").append(dataPath)
-                .append(pathArr[2]);
+        sb.append(pathList.get(0)).append("\t").append(pathList.get(1))
+                .append("\t").append(endPath);
         FileTools.appendWrite(dataListFile, sb.toString());
-        return dataListFile;
+        dataListFileMap.put(dataKey, dataListFile);
+        return dataListFileMap;
     }
 
     public static void sortDataList(List<DataFile> dataList) {

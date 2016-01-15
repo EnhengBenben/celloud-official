@@ -207,15 +207,15 @@
       state = #{state,jdbcType=INTEGER}
     where task_id = #{taskId,jdbcType=INTEGER}
   </update>
-  <select id="findFirstTaskByAppId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+  <select id="findFirstTaskByAppId" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from tb_task WHERE state=#{state} and app_id=#{appId} ORDER BY task_id LIMIT 1
+    from tb_task WHERE period=#{period} and app_id=#{appId} and state=#{state} ORDER BY task_id LIMIT 1
   </select>
-  <select id="findAppRunningNum" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
-    select count(command) runNum from tb_task where  state=#{state} and app_id=#{appId}
+  <select id="findAppRunningNum" resultType="java.lang.Integer">
+    select count(command) runNum from tb_task where period=#{period} and app_id=#{appId} and state=#{state}
   </select>
   <select id="findTaskInfoByProId" resultType="map" parameterType="java.lang.Integer">
     select t.app_id appId,t.user_id userId,a.title,a.method

@@ -331,18 +331,17 @@ public class DataAction {
                 list_tmp = new ArrayList<>(appIdList);
                 list_tmp.retainAll(AppDataListType.PATH_AND_NAME);
                 if (list_tmp.size() > 0) {
-                    dataFilePath = DataKeyListToFile.onlyPath(dataList);
+                    dataFilePath = DataKeyListToFile.containName(dataList);
                 } else {
                     list_tmp = new ArrayList<>(appIdList);
                     list_tmp.retainAll(AppDataListType.SPLIT);
                     if (list_tmp.size() > 0) {
-                        dataFilePath = DataKeyListToFile.onlyPath(dataList);
+                        dataFilePathMap = DataKeyListToFile.toSplit(dataList);
                         project.setDataNum(1);
                     }
                 }
             }
         }
-        System.out.println(list_tmp);
         // 批量创建项目
         Map<Integer, Integer> appProMap = projectService
                 .insertMultipleProject(project, appIdArr, dataIdArr);
@@ -402,7 +401,9 @@ public class DataAction {
                             + dataFilePath + "--" + appName + "--" + appId;
                     GlobalQueue.offer(command);
                 }
-            } else if (AppDataListType.FASTQ_PATH.contains(String.valueOf(appId))) {
+            } else if (AppDataListType.FASTQ_PATH
+                    .contains(String.valueOf(appId))
+                    || AppDataListType.SPLIT.contains(String.valueOf(appId))) {
                 for (Entry<String, String> entry : dataFilePathMap.entrySet()) {
                     String dataKey = entry.getKey();
                     String dataListFile = entry.getValue();
@@ -416,10 +417,11 @@ public class DataAction {
                     StrSubstitutor sub = new StrSubstitutor(map);
                     String command = sub.replace( app.getCommand());
                     task.setCommand(command);
-                    Integer taskId = taskService.create(task);
+                    taskService.create(task);
+                    Integer taskId = task.getTaskId();
                     if (runningNum < app.getMaxTask()
                             || app.getMaxTask() == 0) {
-                        logger.info("运行命令：{}", command);
+                        logger.info("任务{}运行命令：{}", taskId, command);
                         SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
                         ssh.sshSubmit(command, false);
                         taskService.updateToRunning(taskId);
@@ -427,12 +429,6 @@ public class DataAction {
                         logger.info("数据{}排队运行{}", dataKey, app.getAppName());
                     }
                 }
-            } else if (AppDataListType.SPLIT.contains(String.valueOf(appId))) {
-				Map<String, String> map = CommandKey.getMap(dataFilePath, appPath, String.valueOf(proId));
-				StrSubstitutor sub = new StrSubstitutor(map);
-				String command = sub.replace(app.getCommand());
-                SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-                ssh.sshSubmit(command, false);
             } else {
                 if (SparkPro.SGEAPPS.contains(String.valueOf(appId))) {
                     // TODO 所有向Tools端投递任务的流程都向这里集中
