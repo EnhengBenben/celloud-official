@@ -55,5 +55,5 @@ public class SparkPro {
     /**
      * celloud端直接投递到SGE的appId
      */
-    public static final List<String> SGEAPPS = Arrays.asList("116");
+	public static final List<String> SGEAPPS = Arrays.asList("85", "87", "88", "91", "94", "104", "116");
 }
