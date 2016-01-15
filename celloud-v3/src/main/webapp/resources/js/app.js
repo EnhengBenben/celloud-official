@@ -101,7 +101,6 @@ var appStore=(function(appStore){
 			$("#defaultSort").bind("click",function(){
 	            self.sortFiled = null;
 	            self.sortType=null;
-	            self.toMoreApp(pid,sid,1,isParent);
 			});
 			self.sortApp();
 			if(hasNavi == 1 && intro != null){

@@ -4,6 +4,7 @@
 }
 .question-list li div{
     display:none;
+    color: #009999;
 }
 .help-list li ul li{
     list-style:circle;

@@ -11,8 +11,7 @@
   </ol>
 </section>
 <!-- Main content -->
-<section class="content">
-  <div class="row">
+<section class="row content">
 	  <div class="col-sm-2">
 	      <div class="btn-group-vertical" style="width:100%;padding-right:0px;padding-left:0px;">
 	         <a href="javascript:userHelp.openPage('pages/help/help_main.jsp')" class="btn btn-success">
@@ -159,7 +158,6 @@
 	        </div>
 	      </div>
 	  </div>
-  </div>
 </section><!-- /.content -->
 <script type="text/javascript">
 $(".question-list li").click(function(){

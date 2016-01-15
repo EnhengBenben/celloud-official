@@ -34,7 +34,10 @@
 			    </c:choose>
 			    </span>
               </li>
-              <li>提供者：<span>${app.companyName }</span></li>
+              <li>提供者：<span><c:choose>
+                        <c:when test="${app.companyName==null }">上海华点云生物科技有限公司</c:when>
+                        <c:otherwise>${app.companyName }</c:otherwise>
+                      </c:choose></span></li>
             </ul>
           </div>
         </div>
