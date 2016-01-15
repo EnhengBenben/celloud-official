@@ -126,6 +126,13 @@ var datafileUpload=(function(datafileUpload){
 				clearInterval(refresh);
 			}
 		});
+		
+		uploader.bind('FilesAdded',function(uploader,files){
+			for(var i in files){//文件名称过长时，tooltip显示全部
+				$("#"+files[i].id+" div.plupload_file_name span").attr("data-toggle","tooltip").attr("data-placement","bottom").attr("title",files[i].name);
+			}
+			$("[data-toggle='tooltip']").tooltip();
+	    });
 		//自定义上传按钮，先进行session超时校验，再决定是执行上传还是跳转登陆页面操作
 		$("._start_custom").click(function(){
 			$.get("upload/checkAdminSessionTimeOut",function(response){

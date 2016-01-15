@@ -517,10 +517,10 @@
 	overflow: hidden
 }
 .item-list .item-left .itemInfo .intro li {
-	width: 260px;
+	/* width: 260px; */
 	height: 24px;
 	line-height: 24px;
-	float: left;
+	/* float: left; */
 	color: #666
 }
 .item-list .item-left .itemInfo .intro li span {
