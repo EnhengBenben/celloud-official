@@ -23,13 +23,13 @@
 	      </div>
 	    </li>
       </c:if>
-      <li class="J_single" data-spm="1">
+      <!-- <li class="J_single" data-spm="1">
         <div class="list-left">价格：</div>
         <div class="list-right">
           <a class="current" target="_self" href="#">全部</a>
           <a target="_self" href="#" >免费</a>
         </div>
-      </li>
+      </li> -->
 	</ul>
   </div>
   <ul class="sort-list" data-spm="202" id="sort-listUl">
@@ -64,7 +64,7 @@
 		            <div class="unlinedate"> 上线时间：
 		               <span class="date"><fmt:formatDate value="${app.createDate }" type="date"/></span>
 		            </div>
-		            <div class="service-com">服务商：
+		            <div class="service-com">提供者：
 		              <c:choose>
 		              	<c:when test="${app.companyName==null }">上海华点云生物科技有限公司</c:when>
 		              	<c:otherwise>${app.companyName }</c:otherwise>

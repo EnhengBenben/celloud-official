@@ -139,7 +139,7 @@ var datafileUpload=(function(datafileUpload){
 		window.onbeforeunload=function(){
 			var qp=uploader.total;
 			var percent=qp.percent;
-			if(qp.size>0&&percent<100){
+			if(qp.size>0&&percent<100&&percent>0){
 				return "数据正在上传，您确定要关闭页面吗?"
 			}
 		}
