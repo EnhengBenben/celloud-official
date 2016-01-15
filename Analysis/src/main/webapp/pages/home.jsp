@@ -8,20 +8,7 @@
 %>
 <script type="text/javascript" src="./js/tableExport.js"></script>
 <script type="text/javascript" src="./js/home.js"></script>
-<style>
-.table {
-	margin-left: 40px;
-	margin-right: 20px;
-}
-.btn-position {
-	margin-left: 45px;
-}
-.btn {
-	margin-left: 5px;
-	margin-top: 7px;
-	margin-bootom: 5px;
-}
-</style>
+<link rel="stylesheet" href="./css/home.css" />
 
 <div class="breadcrumbs" id="breadcrumbs">
 	<script type="text/javascript">
@@ -39,7 +26,6 @@
 	<!-- .breadcrumb -->
 </div>
 <div class="page-content">
-
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="row">
@@ -55,111 +41,123 @@
 							</a>
 						</div>
 					</div>
-
-					<div class="widget-body">
-						<div class="widget-main padding-4">
-							<div class="col-sm-7 infobox-container" style="min-width: 600px">
-								<div class="infobox infobox-green  ">
-									<div class="infobox-icon">医院总量：</div>
-									<div class="infobox-data">
-										<span class="infobox-data-number">${resultMap.companyNum }</span>
-										<span class="infobox-content">（个）</span>
-									</div>
+					<div class="col-sm-12 home-numbers">
+						<ul>
+							<li>
+								<a class="number">${resultMap.companyNum }</a>
+								<div class="info">
+									<b>
+										${resultMap.companyNum }
+										<span class="unit">(个)</span>
+									</b>
+									医院数量:
 								</div>
-								<div class="infobox infobox-blue  ">
-									<div class="infobox-icon">用户总量：</div>
-									<div class="infobox-data">
-										<span class="infobox-data-number">${resultMap.userNum }</span>
-										<span class="infobox-content">（个）</span>
-									</div>
+							</li>
+							<li>
+								<a class="number">${resultMap.userNum }</a>
+								<div class="info">
+									<b>
+										${resultMap.userNum }
+										<span class="unit">(个)</span>
+									</b>
+									用户数量:
 								</div>
-								<div class="infobox infobox-pink  ">
-									<div class="infobox-icon">报告总量：</div>
-									<div class="infobox-data">
-										<span class="infobox-data-number">${resultMap.reportNum }</span>
-										<span class="infobox-content">（个）</span>
-									</div>
+							</li>
+							<li>
+								<a class="number">${resultMap.reportNum }</a>
+								<div class="info">
+									<b>
+										${resultMap.reportNum }
+										<span class="unit">(个)</span>
+									</b>
+									报告数量:
 								</div>
-								<div class="infobox infobox-pink  ">
-									<div class="infobox-icon">APP总量：</div>
-									<div class="infobox-data">
-										<span class="infobox-data-number">${resultMap.appNum }</span>
-										<span class="infobox-content">（个）</span>
-									</div>
+							</li>
+							<li>
+								<a class="number">${resultMap.appNum }</a>
+								<div class="info">
+									<b>
+										${resultMap.appNum }
+										<span class="unit">(个)</span>
+									</b>
+									APP数量:
 								</div>
-								<div class="infobox infobox-red  ">
-									<div class="infobox-icon">数据总量：</div>
-									<div class="infobox-data">
-										<span class="infobox-data-number">${resultMap.dataNum }</span>
-										<span class="infobox-content">(个)</span>
-									</div>
+							</li>
+							<li>
+								<a class="number">${resultMap.dataNum }</a>
+								<div class="info">
+									<b>
+										${resultMap.dataNum }
+										<span class="unit">(个)</span>
+									</b>
+									数据总量:
 								</div>
-
-								<div class="infobox infobox-orange2  ">
-									<div class="infobox-icon">数据总大小：</div>
-									<div class="infobox-data">
-										<span class="infobox-data-number">
-											<fmt:formatNumber pattern="0.00" value="${resultMap.dataSize/(1024*1024*1024) }"></fmt:formatNumber>
-										</span>
-										<span class="infobox-content">(GB)</span>
-									</div>
+							</li>
+							<li>
+								<a class="number">
+									<fmt:formatNumber pattern="0.00" value="${resultMap.dataSize/(1024*1024*1024) }"></fmt:formatNumber>
+								</a>
+								<div class="info">
+									<b>
+										<fmt:formatNumber pattern="0.00" value="${resultMap.dataSize/(1024*1024*1024) }"></fmt:formatNumber>
+										<span class="unit">(GB)</span>
+									</b>
+									数据大小:
 								</div>
-								<div class="space-6"></div>
-							</div>
-						</div>
-						<!-- /widget-main -->
+							</li>
+						</ul>
+						<div class="space-6"></div>
 					</div>
-					<!-- /widget-body -->
+					<!-- /widget-main -->
 				</div>
-				<!-- /widget-box -->
-				<div class="space-6"></div>
+				<!-- /widget-body -->
 			</div>
-			<!-- /row -->
+			<!-- /widget-box -->
+			<div class="space-6"></div>
+		</div>
+		<!-- /row -->
+		<div class="row">
+			<div class="col-xs-12">
+				<h3 class="header smaller lighter green">用户地理分布</h3>
+				<div class="col-sm-10" style="height: 500px; width: 70%" id="map"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h3 class="header smaller lighter green">用户登陆统计</h3>
+				<div id="loginId" class="col-sm-12" style="height: 450px;"></div>
+				<!-- row -->
+				<div class="space"></div>
+				<div class="hr hr32 hr-dotted"></div>
+				<!-- PAGE CONTENT ENDS -->
+			</div>
+			<!-- /.col -->
+		</div>
+		<!-- /.row -->
+		<c:if test="${userRole=='2' || userRole=='3' }">
 			<div class="row">
 				<div class="col-xs-12">
-					<h3 class="header smaller lighter green">用户地理分布</h3>
-					<div class="col-sm-10" style="height: 500px;width:70%" id="map"></div>
+					<h3 class="header smaller lighter green">浏览器统计</h3>
+					<div class="col-sm-12" style="height: 450px" id="browserDistribute"></div>
 				</div>
 			</div>
-			     <div class="row">
-                <div class="col-xs-12">
-                    <h3 class="header smaller lighter green">用户登陆统计</h3>
-                    <div id="loginId" class="col-sm-12" style="height: 450px;"></div>
-                    <!-- row -->
-                    <div class="space"></div>
-                    <div class="hr hr32 hr-dotted"></div>
-                    <!-- PAGE CONTENT ENDS -->
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
-			<c:if test="${userRole=='2' || userRole=='3' }">
-				<div class="row">
-					<div class="col-xs-12">
-						<h3 class="header smaller lighter green">浏览器统计</h3>
-						<div class="col-sm-12" style="height: 450px" id="browserDistribute"></div>
-					</div>
-				</div>
-			</c:if>
-			
-			<div class="row">
-                <div class="col-xs-12">
-                    <h3 class="header smaller lighter green">APP使用统计</h3>
-                    <div class="col-sm-12" style="height: 450px;" id="AppRunNum"></div>
-                    <!-- row -->
-                </div>
-            </div>
-			
-			<!-- row -->
-			<div class="row">
-				<div class="col-xs-12">
-					<h3 class="header smaller lighter green">用户运行统计</h3>
-					<div class="col-sm-12" style="height: 450px;" id="UserRunNum"></div>
-				</div>
-			</div>
+		</c:if>
 
-	
+		<div class="row">
+			<div class="col-xs-12">
+				<h3 class="header smaller lighter green">APP使用统计</h3>
+				<div class="col-sm-12" style="height: 450px;" id="AppRunNum"></div>
+				<!-- row -->
+			</div>
+		</div>
+		<!-- row -->
+		<div class="row">
+			<div class="col-xs-12">
+				<h3 class="header smaller lighter green">用户运行统计</h3>
+				<div class="col-sm-12" style="height: 450px;" id="UserRunNum"></div>
+			</div>
 		</div>
 	</div>
-	<!-- /.page-content -->
-	</div>
+</div>
+<!-- /.page-content -->
+</div>

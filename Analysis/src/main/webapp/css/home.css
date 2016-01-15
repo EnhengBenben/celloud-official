@@ -1,0 +1,79 @@
+ul, menu, dir {
+    display: block;
+    list-style-type: disc;
+}
+.home-numbers {
+    background: #FFFFFF;
+    padding: 20px 0;
+    text-align: center;
+    color: #fff;
+    overflow: hidden
+}
+::selection {
+    color: #fff;
+    background: #57b382
+}
+.viewport-inner {
+    width: 1100px;
+    margin: 0 auto
+}
+.home-numbers ul {
+    margin: 0;
+    padding: 0
+}
+
+.home-numbers li {
+    padding: 30px 0;
+    width: 180px;
+    margin: 0 5px;
+    float: left;
+    list-style-type: none;
+    background: #4fae7b;
+    height: 180px;
+    position: relative;
+    border-radius: 200px
+}
+
+.home-numbers .number {
+    color: #fff;
+    font-size: 50.4px;
+    line-height: 130px;
+    font-weight: 700;
+    vertical-align: middle;
+    font-family: Arial
+}
+
+.home-numbers .unit {
+    font-size: 14px;
+    font-weight: 400
+}
+
+.home-numbers .info {
+    z-index: 2;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #353644;
+    color: #fff;
+    line-height: 36px;
+    height: 180px;
+    vertical-align: middle;
+    width: 100%;
+    font-weight: 700;
+    padding: 65px 0;
+    font-size: 22px;
+    border-radius: 180px;
+    transition: all .4s ease-in-out;
+    transform: scale(0);
+}
+
+.home-numbers .info b {
+    display: block;
+    font-size: 36.4px
+}
+
+.home-numbers li:hover .info {
+    transform: scale(1);
+    opacity: .9
+}
