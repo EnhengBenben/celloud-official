@@ -162,7 +162,7 @@ public class RunOverService {
         for (DataFile d : proDataList) {
             String filename = d.getFileName();
             String datakey = d.getDataKey();
-            String anotherName = d.getAnotherName() == null ? null
+            String anotherName = d.getAnotherName() == null ? ""
                     : d.getAnotherName();
             // 3. 为项目PDF生成数据
             sb.append(datakey).append(",")
@@ -176,14 +176,16 @@ public class RunOverService {
                 xls = FileTools.fileExist(finalPath, "no_enough_reads.xls",
                         "endsWith");
             }
-            String result[] = null;
-            String r[] = FileTools.readFileToString(finalPath + "/" + xls)
-                    .split("\n");
-            if (r.length > 2) {
-                result = FileTools.getArray(r, 2).split("\t");
-            } else {
-                result = FileTools.getLastLine(finalPath + "/" + xls)
-                        .split("\t");
+            String result[] = {"Error:未产生xls文件"};
+            if(!xls.equals("")){
+            	String r[] = FileTools.readFileToString(finalPath + "/" + xls)
+            			.split("\n");
+            	if (r.length > 2) {
+            		result = FileTools.getArray(r, 2).split("\t");
+            	} else {
+            		result = FileTools.getLastLine(finalPath + "/" + xls)
+            				.split("\t");
+            	}
             }
             resultArray.append(filename).append("\t").append(datakey)
                     .append("\t").append(anotherName).append("\t");
