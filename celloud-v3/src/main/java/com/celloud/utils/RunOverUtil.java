@@ -13,7 +13,7 @@ import com.celloud.model.DataFile;
  * @date 2015-11-2 下午2:39:11
  * @description :项目运行结束后的后续操作
  */
-public class RunOverService {
+public class RunOverUtil {
     /**
      * MIB流程运行结束后的处理
      * 
@@ -91,12 +91,17 @@ public class RunOverService {
             }
         }
         resultArray.append("\t");
-        List<String> list = FileTools
-                .readLinestoString(reportPath + "result/statistic.xls");
-        if (!(list == null || list.isEmpty())) {
-            resultArray.append(FileTools.listIsNull(list, 0)).append("\t")
-                    .append(FileTools.listIsNull(list, 1)).append("\t")
-                    .append(FileTools.listIsNull(list, 2));
+        File f = new File(reportPath + "result/statistic.xls");
+        if (f.exists()) {
+            List<String> list = FileTools
+                    .readLinestoString(reportPath + "result/statistic.xls");
+            if (!(list == null || list.isEmpty())) {
+                resultArray.append(FileTools.listIsNull(list, 0)).append("\t")
+                        .append(FileTools.listIsNull(list, 1)).append("\t")
+                        .append(FileTools.listIsNull(list, 2));
+            }
+        } else {
+            resultArray.append("本数据未生成有效结果").append("\t\t");
         }
         FileTools.appendWrite(projectFile, resultArray.toString() + "\n");
         return true;
@@ -128,15 +133,23 @@ public class RunOverService {
             }
         }
         resultArray.append("\t");
-        List<String> list = FileTools
-                .readLinestoString(reportPath + "result/statistic.xls");
-        if (!(list == null || list.isEmpty())) {
-            resultArray.append(FileTools.listIsNull(list, 0)).append("\t")
-                    .append(FileTools.listIsNull(list, 1)).append("\t")
-                    .append(FileTools.listIsNull(list, 2)).append("\t")
-                    .append(FileTools
-                            .getFirstLine(reportPath + "/result/average.info"));
+        File f = new File(reportPath + "result/statistic.xls");
+        if (f.exists()) {
+            List<String> list = FileTools
+                    .readLinestoString(reportPath + "result/statistic.xls");
+            if (!(list == null || list.isEmpty())) {
+                resultArray.append(FileTools.listIsNull(list, 0)).append("\t")
+                        .append(FileTools.listIsNull(list, 1)).append("\t")
+                        .append(FileTools.listIsNull(list, 2)).append("\t");
+            }
+            File avgFile = new File(reportPath + "result/average.info");
+            if (avgFile.exists())
+                resultArray.append(FileTools
+                        .getFirstLine(reportPath + "/result/average.info"));
+        } else {
+            resultArray.append("结果异常").append("\t\t\t");
         }
+        
         FileTools.appendWrite(projectFile, resultArray.toString() + "\n");
         return true;
     }

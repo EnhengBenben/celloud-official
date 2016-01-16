@@ -237,4 +237,9 @@
     </set>
     where project_id = #{projectId} and data_key = #{dataKey}
   </update>
+  <select id="findTaskByProData" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_task WHERE project_id = #{projectId} and data_key = #{dataKey}
+  </select>
 </mapper>

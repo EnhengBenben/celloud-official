@@ -1,7 +1,6 @@
 package com.celloud.action;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -33,7 +32,7 @@ import com.celloud.utils.DataUtil;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.PerlUtils;
 import com.celloud.utils.PropertiesUtil;
-import com.celloud.utils.RunOverService;
+import com.celloud.utils.RunOverUtil;
 import com.celloud.utils.SSHUtil;
 import com.celloud.utils.XmlUtil;
 
@@ -81,23 +80,10 @@ public class TaskAction {
     public String taskRunOver(String projectId, String dataNames) {
         logger.info("任务运行结束，proId:{},运行数据dataKey：{}", projectId, dataNames);
         String[] dataArr = dataNames.split(",");
-        System.out.println("dataArr:" + dataArr);
-        List<String> dataKeyList = new ArrayList<>();
-        String dataKey = "";
-        for (int i = 0; i < dataArr.length; i++) {
-            String dname = dataArr[i];
-            System.out.println(dname + "----" + i);
-            if (i == 0) {
-                dataKey = dname;
-            }
-            dataKeyList.add(dname);
-        }
-        System.out.println("dataKeyList:" + dataKeyList);
-        System.out.println("dataKey: " + dataKey);
+        String dataKey = FileTools.getArray(dataArr, 0);
         // 1. 数据库检索
         Map<String, Object> map = taskService
                 .findTaskInfoByProId(Integer.parseInt(projectId));
-        System.out.println("通过项目编号获取信息：" + map);
         if (map == null) {
             logger.info("获取项目信息错误" + map);
         }
@@ -117,22 +103,25 @@ public class TaskAction {
         StringBuffer basePath = new StringBuffer();
         basePath.append(SparkPro.TOOLSPATH).append(userId).append("/")
                 .append(appId).append("/");
-        StringBuffer projectFile = new StringBuffer();
-        projectFile.append(basePath).append(projectId).append("/")
+
+        StringBuffer projectFileBf = new StringBuffer();
+        projectFileBf.append(basePath).append(projectId).append("/")
                 .append(projectId).append(".txt");
+        String projectFile = projectFileBf.toString();
+        FileTools.createFile(projectFile);
+
         StringBuffer reportPath = new StringBuffer();
         reportPath.append(basePath).append(dataKey).append("/");
-        System.out.println("task 结果路径 ----" + reportPath.toString());
         // 4. 通过反射调用相应app的处理方法，传参格式如下：
         // String reportPath, String appName, String appTitle,String
         // projectFile,String projectId, List<DataFile> dataList
-        RunOverService ros = new RunOverService();
+        RunOverUtil ros = new RunOverUtil();
         try {
             ros.getClass().getMethod(method,
                     new Class[] { String.class, String.class, String.class,
                             String.class, String.class, List.class })
                     .invoke(ros, reportPath.toString(), dataKey, title,
-                            projectFile.toString(), projectId, dataList);
+                            projectFile, projectId, dataList);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -143,7 +132,8 @@ public class TaskAction {
         }
         // 6.结束任务修改项目报告状态
         Task task = taskService.updateToDone(appId, Integer.parseInt(projectId),
-                dataKey, xml);
+                dataKey, dataNames, xml);
+
         if (task != null) {
             logger.info("任务{}执行完毕", task.getTaskId());
             task = taskService.findFirstTask(appId);
@@ -154,7 +144,6 @@ public class TaskAction {
                 taskService.updateToRunning(task.getTaskId());
             }
         }
-
         if (appId == 113) {
             String inPath = reportPath + "result/split/";
             String outPath = PropertiesUtil.bigFilePath;
@@ -230,7 +219,7 @@ public class TaskAction {
         // 4. 通过反射调用相应app的处理方法，传参格式如下：
         // String appPath, String appName, String appTitle,String
         // projectFile,String projectId, List<DataFile> proDataList
-        RunOverService ros = new RunOverService();
+        RunOverUtil ros = new RunOverUtil();
         try {
             // TODO 方法名称和title类型应该从数据库获取
             ros.getClass().getMethod(method,

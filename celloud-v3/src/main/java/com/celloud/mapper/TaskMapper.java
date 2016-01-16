@@ -69,4 +69,16 @@ public interface TaskMapper {
      * @date 2016年1月14日 下午7:11:18
      */
     Map<String, Object> findTaskInfoByProId(Integer projectId);
+
+    /**
+     * 根据报告、数据获取任务信息
+     * 
+     * @param projectId
+     * @param dataKey
+     * @return
+     * @author leamo
+     * @date 2016年1月16日 下午4:44:17
+     */
+    Task findTaskByProData(@Param("projectId") Integer projectId,
+            @Param("dataKey") String dataKey);
 }

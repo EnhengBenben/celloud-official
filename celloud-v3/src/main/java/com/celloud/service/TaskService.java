@@ -49,8 +49,8 @@ public interface TaskService {
      * @author leamo
      * @date 2016年1月14日 下午7:43:46
      */
-    public Task updateToDone(Integer appId, Integer projectId, String dataKey,
-            String context);
+    public Task updateToDone(Integer appId, Integer projectId,
+            String dataKey, String dataKeys, String context);
 
     /**
      * 指定app正在运行的任务数

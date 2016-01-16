@@ -1,6 +1,7 @@
 package com.celloud.service.impl;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -34,6 +35,7 @@ public class TaskServiceImpl implements TaskService {
     DataFileMapper dataMapper;
     @Resource
     ReportMapper reportMapper;
+
     @Override
     public Integer create(Task task) {
         task.setPeriod(TaskPeriod.WAITTING);
@@ -57,26 +59,33 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task updateToDone(Integer appId, Integer projectId, String dataKey,
-            String context) {
-        taskMapper.updatePeriodByProAndData(projectId, dataKey,
-                TaskPeriod.DONE, null, new Date());
-        DataFile data = dataMapper.selectByDataKey(dataKey);
+            String dataKeys, String context) {
+        Task task = taskMapper.findTaskByProData(projectId, dataKey);
+        task.setEndDate(new Date());
+        task.setPeriod(TaskPeriod.DONE);
+        taskMapper.updateByPrimaryKeySelective(task);
+
         Report report = new Report();
         report.setProjectId(projectId);
         report.setPeriod(ReportPeriod.COMPLETE);
         report.setState(DataState.ACTIVE);
         report.setFlag(ReportType.DATA);
-        report.setFileId(data.getFileId());
-        reportMapper.updateReportPeriod(report);
-        Integer runNum = reportMapper.selectRunNumByPro(projectId,
+        List<DataFile> dataList = dataMapper.selectByDataKeys(dataKeys);
+        for (DataFile data : dataList) {
+            report.setFileId(data.getFileId());
+            reportMapper.updateReportPeriod(report);
+        }
+
+        int runNum = reportMapper.selectRunNumByPro(projectId,
                 DataState.ACTIVE, ReportType.DATA, ReportPeriod.COMPLETE);
         if (runNum == 0) {
             report.setFlag(ReportType.PROJECT);
             report.setEndDate(new Date());
+            report.setContext(context);
+            report.setFileId(null);
             reportMapper.updateReportPeriod(report);
         }
-        return taskMapper.findFirstTaskByAppId(appId, TaskPeriod.WAITTING,
-                DataState.ACTIVE);
+        return task;
     }
 
     @Override
