@@ -1,5 +1,6 @@
 package com.celloud.action;
 
+import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,6 +13,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
+import com.celloud.dao.CompanyDao;
 import com.celloud.sdo.App;
 import com.celloud.sdo.Company;
 import com.celloud.sdo.DataFile;
@@ -24,6 +26,7 @@ import com.celloud.service.DataService;
 import com.celloud.service.HomeService;
 import com.celloud.service.ReportService;
 import com.celloud.service.UserService;
+import com.celloud.utils.ConnectManager;
 import com.celloud.utils.LogUtil;
 import com.google.inject.Inject;
 
@@ -53,10 +56,11 @@ public class HomeAction extends BaseAction {
 	@Inject
 	private CompanyService companyService;
 	@Inject
+	private CompanyDao companyDao;
+	@Inject
 	private ReportService reportService;
 	@Inject
 	private HomeService homeService;
-
 	@Inject
 	private AppService appService;
 	private Map<String, Object> resultMap;
@@ -64,7 +68,6 @@ public class HomeAction extends BaseAction {
 	private List<DataFile> dataList;
 	private List<App> appList;
 	private Date endDate;
-	private String uids; // userId,..
 	private int orderType; // 1文件数量,2数据大小
 	private int topN = 10;
 	private String groupType; // 按周、月分组、
@@ -83,6 +86,7 @@ public class HomeAction extends BaseAction {
 	private List<Company> cmpList;
 	private String orderby; // 1.文件数量;2.文件大小
 	private List<Map<String, Object>> mapList;
+	private int num;
 	private int companyId;
 
 	/**
@@ -103,12 +107,21 @@ public class HomeAction extends BaseAction {
 	public String getPreDataView() {
 		Integer compId = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
-		dataList = dataService.getUserMonthDataList(compId, role);
+		resultMap = dataService.getPreDataView(compId, role);
+
 		return "getPreDataView";
 	}
 
 	public String toPreCompanyView() {
-
+		Integer compId = (Integer) getCid();
+		Integer role = (Integer) super.session.get(User.USER_ROLE);
+		try {
+			Connection conn = ConnectManager.getConnection();
+			num = (int) Long.parseLong(companyDao.getBigUserCompanyNum(conn, compId, role).toString());
+			ConnectManager.close(conn);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "getPreCompanyView";
 	}
 
@@ -257,6 +270,14 @@ public class HomeAction extends BaseAction {
 		return orderby;
 	}
 
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
 	public void setOrderby(String orderby) {
 		this.orderby = orderby;
 	}
@@ -304,14 +325,6 @@ public class HomeAction extends BaseAction {
 
 	public void setAppList(List<App> appList) {
 		this.appList = appList;
-	}
-
-	public String getUids() {
-		return uids;
-	}
-
-	public void setUids(String uids) {
-		this.uids = uids;
 	}
 
 	public List<LoginLog> getTotalLogList() {

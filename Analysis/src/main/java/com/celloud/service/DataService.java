@@ -23,6 +23,8 @@ public interface DataService {
 	 * 
 	 * @return
 	 */
+	public Map<String, Object> getPreDataView(Integer companyId, Integer role);
+
 	public List<DataFile> getUserMonthDataList(Integer companyId, Integer role);
 
 	/**

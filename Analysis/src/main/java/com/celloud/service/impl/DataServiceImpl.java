@@ -1,11 +1,14 @@
 package com.celloud.service.impl;
 
+import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.celloud.dao.DataDao;
 import com.celloud.sdo.DataFile;
 import com.celloud.service.DataService;
+import com.celloud.utils.ConnectManager;
 import com.celloud.utils.EntryUtil;
 import com.google.inject.Inject;
 
@@ -19,10 +22,24 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public List<DataFile> getUserMonthDataList(Integer companyId, Integer role) {
-		List<DataFile> list = dataDao.getUserMonthDataList(companyId, role);
+	public Map<String, Object> getPreDataView(Integer cmpId, Integer role) {
+		Map<String, Object> resultMap = new HashMap<>();
+		List<DataFile> list = dataDao.getUserMonthDataList(cmpId, role);
 		List<DataFile> res = EntryUtil.toInsert(list);
-		return res;
+		Connection conn = ConnectManager.getConnection();
+		Object dataNum = dataDao.getBigUserDataNum(conn, cmpId, role);
+		Object dataSize = dataDao.getBigUserDataSize(conn, cmpId, role);
+		ConnectManager.close(conn);
+		resultMap.put("dataNum", dataNum);
+		resultMap.put("dataSize", dataSize);
+		resultMap.put("dataList", list);
+		return resultMap;
+	}
+
+	@Override
+	public List<DataFile> getUserMonthDataList(Integer cmpId, Integer role) {
+		List<DataFile> list = dataDao.getUserMonthDataList(cmpId, role);
+		return list;
 	}
 
 	@Override

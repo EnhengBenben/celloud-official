@@ -33,15 +33,15 @@ public class HomeServiceImpl implements HomeService {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		Connection conn = ConnectManager.getConnection();
 		Object userNum = userDao.getBigUsersUserNum(conn, cmpId, role);
-		Object dataNum = dataDao.getBigUserDataNum(conn, cmpId, role);
-		Object dataSize = dataDao.getBigUserDataSize(conn, cmpId, role);
 		Object companyNum = companyDao.getBigUserCompanyNum(conn, cmpId, role);
 		Object reportNum = reportDao.getBigUserReportNum(conn, cmpId, role);
 		Object appNum = appDao.getBigUserAPPNum(conn, cmpId, role);
+		Object dataNum = dataDao.getBigUserDataNum(conn, cmpId, role);
+		Object dataSize = dataDao.getBigUserDataSize(conn, cmpId, role);
 		ConnectManager.close(conn);
-		resultMap.put("userNum", userNum);
 		resultMap.put("dataNum", dataNum);
 		resultMap.put("dataSize", dataSize);
+		resultMap.put("userNum", userNum);
 		resultMap.put("companyNum", companyNum);
 		resultMap.put("reportNum", reportNum);
 		resultMap.put("appNum", appNum);
