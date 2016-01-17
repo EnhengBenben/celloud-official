@@ -18,18 +18,13 @@
 						<c:if test="${pgs.pdf!=null }">
 							<a href="${toolsPath }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.pdf }" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
 						</c:if>
-						<c:if test="${pgs.pdf ==null }">
-							<c:if test="${pgs.createDate.time>1440432000000  }">
-								<a href="${toolsPath }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.dataKey }.pdf" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
-							</c:if>
-						</c:if>
 						<c:choose>
 							<c:when test="${pgs.splitPng!=null }">
-								<a target="_blank" href="printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }/${pgs.splitPng }" class="btn btn-default"><i class="i-print"></i>打印报告</a>
-								<a target="_blank" href="printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.splitPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }/null" class="btn btn-default"><i class="i-print"></i>点图报告</a>					
+								<a target="_blank" href="report/printPGS?appId=${pgs.appId }&dataKey='${pgs.dataKey }'&miniPng='${pgs.miniPng }'&txt='${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }'&splitPng='${pgs.splitPng }'" class="btn btn-default"><i class="i-print"></i>打印报告</a>
+								<a target="_blank" href="report/printPGS?appId=${pgs.appId }&dataKey='${pgs.dataKey }'&miniPng='${pgs.miniPng }'&txt='${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }'&splitPng=null" class="btn btn-default"><i class="i-print"></i>点图报告</a>					
 							</c:when>
 							<c:otherwise>
-								<a target="_blank" href="printPGS/${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }/${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }/null" class="btn btn-default"><i class="i-print"></i>打印报告</a>
+								<a target="_blank" href="report/printPGS?appId=${pgs.appId }&dataKey='${pgs.dataKey }'&miniPng='${pgs.miniPng }'&txt='${pgs.report.replace('+','@').replace('	','&nbsp;&nbsp;&nbsp;&nbsp;') }'&splitPng=null" class="btn btn-default"><i class="i-print"></i>打印报告</a>
 							</c:otherwise>
 						</c:choose>
 					</div>

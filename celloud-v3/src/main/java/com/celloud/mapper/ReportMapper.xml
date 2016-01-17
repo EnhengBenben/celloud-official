@@ -26,6 +26,12 @@
     from tb_report
     where report_id = #{reportId,jdbcType=INTEGER}
   </select>
+  <select id="getReport" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_report
+    where user_id = #{userId} and app_id = #{appId} and file_id = #{fileId} and flag = #{flag}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_report
     where report_id = #{reportId,jdbcType=INTEGER}

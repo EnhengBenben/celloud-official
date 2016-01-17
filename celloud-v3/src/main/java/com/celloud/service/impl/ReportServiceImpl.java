@@ -608,4 +608,9 @@ public class ReportServiceImpl implements ReportService {
         report.setContext(context);
         return reportMapper.updateReportPeriod(report);
     }
+
+	@Override
+	public Report getReport(Integer userId, Integer appId, Integer fileId, Integer flag) {
+		return reportMapper.getReport(userId, appId, fileId, flag);
+	}
 }
