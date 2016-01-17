@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -258,6 +259,22 @@ public class CountAction {
 	public String pgsCompare(Integer appId, String path, String columns) {
 		return reportService.pgsCompare(appId, path, columns);
 	}
+
+    /**
+     * split 数据参数同比
+     * 
+     * @param id
+     * @return
+     * @author leamo
+     * @date 2016年1月17日 下午1:55:50
+     */
+    @ResponseBody
+    @RequestMapping("splitCompare")
+    public Map<String, List<List<Float>>> splitCompare(String id) {
+        Map<String, List<List<Float>>> countMapList = reportService
+                .splitCompare(new ObjectId(id));
+        return countMapList;
+    }
 
 	/**
 	 * HBV 统计

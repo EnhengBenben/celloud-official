@@ -1330,8 +1330,8 @@ function printGDD(projectId,dataKey,userId,appId){
 		obj.document.close();
 	});
 }
-function printMIB(projectId,dataKey,userId,appId){
-	$.get("splitReport!toPrintMib",{"mib.projectId":projectId,"mib.dataKey":dataKey,"mib.userId":userId,"mib.appId":appId},function(responseText){
+function printMIB(projectId,dataKey,appId){
+	$.get("report/printMIBReport",{"projectId":projectId,"dataKey":dataKey,"appId":appId},function(responseText){
 		var obj = window.open("");
 		obj.document.write(responseText);
 		obj.document.close();

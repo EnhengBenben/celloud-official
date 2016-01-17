@@ -22,10 +22,30 @@ public class Split extends Base {
     private String avgQuality;
     /** 平均GC含量(%) */
     private String avgGCContent;
+    /** 样本数Number of Values */
+    private String sampleNum;
+    /** 样本序列数平均值 Mean */
+    private String avgSampleSeq;
+    /** 方差 Variance */
+    private String variance;
+    /** 标准差 SD */
+    private String stdev;
+    /** 样本序列数最小值 */
+    private String minSampleSeq;
+    /** 样本序列数最大值 */
+    private String maxSampleSeq;
+    /** <5000条序列的样本数 */
+    private String less5000;
+    /** >20000条序列的样本数 */
+    private String more2000;
     /**
      * 分离后的结果文件 Key: name(数据名称) number(序列数量)
      */
     private List<Map<String, String>> resultList;
+    /** 有效序列数量 */
+    private String usefulReads;
+    /** 未知序列数量 */
+    private String unknownReads;
     /** 1:分离的结果文件已上传 */
     private Integer upload;
     /** 分析数据在mysql tb_file表中的id号, 格式： id1,id2,id3,..., */
@@ -145,6 +165,86 @@ public class Split extends Base {
 
     public void setSeqContentPath2(String seqContentPath2) {
         this.seqContentPath2 = seqContentPath2;
+    }
+
+    public String getSampleNum() {
+        return sampleNum;
+    }
+
+    public void setSampleNum(String sampleNum) {
+        this.sampleNum = sampleNum;
+    }
+
+    public String getAvgSampleSeq() {
+        return avgSampleSeq;
+    }
+
+    public void setAvgSampleSeq(String avgSampleSeq) {
+        this.avgSampleSeq = avgSampleSeq;
+    }
+
+    public String getVariance() {
+        return variance;
+    }
+
+    public void setVariance(String variance) {
+        this.variance = variance;
+    }
+
+    public String getStdev() {
+        return stdev;
+    }
+
+    public void setStdev(String stdev) {
+        this.stdev = stdev;
+    }
+
+    public String getMinSampleSeq() {
+        return minSampleSeq;
+    }
+
+    public void setMinSampleSeq(String minSampleSeq) {
+        this.minSampleSeq = minSampleSeq;
+    }
+
+    public String getMaxSampleSeq() {
+        return maxSampleSeq;
+    }
+
+    public void setMaxSampleSeq(String maxSampleSeq) {
+        this.maxSampleSeq = maxSampleSeq;
+    }
+
+    public String getLess5000() {
+        return less5000;
+    }
+
+    public void setLess5000(String less5000) {
+        this.less5000 = less5000;
+    }
+
+    public String getMore2000() {
+        return more2000;
+    }
+
+    public void setMore2000(String more2000) {
+        this.more2000 = more2000;
+    }
+
+    public String getUsefulReads() {
+        return usefulReads;
+    }
+
+    public void setUsefulReads(String usefulReads) {
+        this.usefulReads = usefulReads;
+    }
+
+    public String getUnknownReads() {
+        return unknownReads;
+    }
+
+    public void setUnknownReads(String unknownReads) {
+        this.unknownReads = unknownReads;
     }
 
 }

@@ -2,6 +2,8 @@ package com.celloud.dao;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
+
 /**
  * mongodb 操作接口
  * 
@@ -34,5 +36,27 @@ public interface ReportDao {
      * @date 2016-1-9 下午11:48:18
      */
     public <T> List<T> getAppList(Class<T> T, Integer userId);
+
+    /**
+     * 根据id获取数据报告信息
+     * 
+     * @param id
+     * @return
+     * @author leamo
+     * @date 2016年1月17日 下午1:42:32
+     */
+    public <T> T getDataById(Class<T> T, ObjectId id);
+
+    /**
+     * 获取某APP的所有信息（用于数据参数同比）
+     * 
+     * @param T
+     * @param retrievedFields
+     *            显示的字段
+     * @return
+     * @author leamo
+     * @date 2016年1月17日 下午1:49:57
+     */
+    public <T> List<T> getAllAppList(Class<T> T, String[] retrievedFields);
 
 }

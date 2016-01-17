@@ -3,6 +3,8 @@ package com.celloud.service;
 import java.util.List;
 import java.util.Map;
 
+import org.bson.types.ObjectId;
+
 import com.celloud.model.CmpReport;
 import com.celloud.model.HBV;
 import com.celloud.model.MIB;
@@ -206,6 +208,16 @@ public interface ReportService {
      * @date 2016-1-9 下午3:25:22
      */
     public String pgsCompare(Integer appId, String path, String columns);
+
+    /**
+     * split数据参数同比
+     * 
+     * @param id
+     * @return原始数据 [平均质量,序列数]列表 分数据 [平均质量,序列数]列表
+     * @author leamo
+     * @date 2016年1月17日 下午1:38:30
+     */
+    public Map<String, List<List<Float>>> splitCompare(ObjectId id);
 
     /**
      * HBV 统计

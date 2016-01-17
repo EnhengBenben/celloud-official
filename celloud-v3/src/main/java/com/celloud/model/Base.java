@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Id;
 
 /**
  * 基本数据内容
@@ -15,6 +16,7 @@ import org.bson.types.ObjectId;
  */
 public class Base implements Serializable {
     private static final long serialVersionUID = 1L;
+    @Id
     private ObjectId id;
     // --------------以下均为mysql表中信息-----------------
     /**

@@ -50,15 +50,39 @@ class split:
                             result['avgQuality'] = line
                         elif index == 2:
                             result['avgGCContent'] = line
+                        elif index == 3:
+                            result['sampleNum'] = line
+                        elif index == 4:
+                            result['avgSampleSeq'] = line
+                        elif index == 5:
+                            result['variance'] = line
+                        elif index == 6:
+                            result['stdev'] = line
+                        elif index == 7:
+                            result['minSampleSeq'] = line
+                        elif index == 8:
+                            result['maxSampleSeq'] = line
+                        elif index == 9:
+                            result['less5000'] = line
+                        elif index == 10:
+                            result['more2000'] = line
                         index += 1
                     f.close()
-                elif file == 'splitstat.xls':
+                elif file == 'sample_statistic.xls':
                     f = open(os.path.join(resultPath, file), 'r')
-                    rlist = []
+                    r_list = []
                     for line in f.readlines():
-                        st = line.strip().split("\t")
-                        rlist.append({'name': list_value(st, 0), 'number': list_value(st, 1)})
-                    result['resultList'] = rlist
+                        st = line.strip().split('\t')
+                        r_list.append({'name': list_value(st, 0), 'number': list_value(st, 1), 'avgQuality':  list_value(st, 2), 'avgGCContent':  list_value(st, 3)})
+                    result['resultList'] = r_list
+                    f.close()
+                elif file == 'splitstat.xls':
+                    splitstatPath = os.path.join(resultPath, file)
+                    f = open(splitstatPath, 'r')
+                    lines = f.readlines()
+                    file_size = len(lines)
+                    result['usefulReads'] = list_value(linecache.getline(splitstatPath, file_size).split('\t'), 1)
+                    result['unknownReads'] = list_value(linecache.getline(splitstatPath, file_size-1).split('\t'), 1)
                     f.close()
         # QC
         qcPath = os.path.join(path, 'QC')

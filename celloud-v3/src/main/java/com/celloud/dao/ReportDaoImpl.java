@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,17 @@ public class ReportDaoImpl implements ReportDao {
     public <T> List<T> getAppList(Class<T> T, Integer userId) {
         return dataStore.createQuery(T).filter("userId", userId)
                 .order("-createDate").asList();
+    }
+
+    @Override
+    public <T> T getDataById(Class<T> T, ObjectId id) {
+        return dataStore.createQuery(T).filter("_id", id).get();
+    }
+
+    @Override
+    public <T> List<T> getAllAppList(Class<T> T, String[] retrievedFields) {
+        return dataStore.createQuery(T).retrievedFields(true, retrievedFields)
+                .asList();
     }
 
 }

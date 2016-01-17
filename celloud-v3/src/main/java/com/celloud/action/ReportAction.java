@@ -1,5 +1,6 @@
 package com.celloud.action;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -26,6 +27,8 @@ import com.celloud.service.ReportService;
 import com.celloud.utils.HttpURLUtils;
 import com.celloud.utils.PropertiesUtil;
 
+import net.sf.json.JSONArray;
+
 @RequestMapping(value = "/report")
 @Controller
 public class ReportAction {
@@ -49,7 +52,8 @@ public class ReportAction {
     @RequestMapping("getReportPageList")
     public ModelAndView reportPages(
             @RequestParam(defaultValue = "1") Integer page,
-            @RequestParam(defaultValue = Constants.DEFAULT_PAGE_SIZE + "") Integer size,
+            @RequestParam(defaultValue = Constants.DEFAULT_PAGE_SIZE
+                    + "") Integer size,
             String condition, String start, String end, Integer appId) {
         Integer userId = ConstantsData.getLoginUserId();
         ModelAndView mv = new ModelAndView("report/report_list");
@@ -148,6 +152,32 @@ public class ReportAction {
     }
 
     /**
+     * 用于 ModelAndView 加载MIB信息
+     * 
+     * @param path
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author leamo
+     * @date 2016年1月17日 下午1:10:57
+     */
+    private ModelAndView getMIBModelAndView(String path, String dataKey,
+            Integer projectId, Integer appId) {
+        MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
+        Map<String, JSONArray> mibCharList = new HashMap<>();
+        mibCharList.put("readsDistributionInfo",
+                JSONArray.fromObject(mib.getReadsDistributionInfo()));
+        mibCharList.put("familyDistributionInfo",
+                JSONArray.fromObject(mib.getFamilyDistributionInfo()));
+        mibCharList.put("genusDistributionInfo",
+                JSONArray.fromObject(mib.getGenusDistributionInfo()));
+        ModelAndView mv = getModelAndView(path);
+        mv.addObject("mibCharList", mibCharList);
+        return mv.addObject("mib", mib);
+    }
+
+    /**
      * 获取 MIB 的数据报告
      * 
      * @param dataKey
@@ -159,9 +189,24 @@ public class ReportAction {
     @RequestMapping("getMIBReport")
     public ModelAndView getMIBReport(String dataKey, Integer projectId,
             Integer appId) {
-        MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
-        ModelAndView mv = getModelAndView("report/report_data_mib");
-        return mv.addObject("mib", mib);
+        return getMIBModelAndView("report/report_data_mib", dataKey, projectId,
+                appId);
+    }
+
+    /**
+     * 打印MIB报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author leamo
+     * @date 2016年1月17日 下午1:02:09
+     */
+    @RequestMapping("printMIBReport")
+    public ModelAndView printMIBReport(String dataKey, Integer projectId,
+            Integer appId) {
+        return getMIBModelAndView("print/print_mib", dataKey, projectId, appId);
     }
 
     /**
