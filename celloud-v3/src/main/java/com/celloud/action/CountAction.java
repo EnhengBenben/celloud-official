@@ -307,7 +307,7 @@ public class CountAction {
 	 */
 	@RequestMapping("download")
 	public void download(HttpServletResponse response, String fileName) {
-		if (!StringUtils.isEmpty(fileName))
+		if (StringUtils.isNotEmpty(fileName))
 			FileTools.fileDownLoad(response, PropertiesUtil.outputPath + fileName);
 	}
 }

@@ -563,7 +563,7 @@ $.ajaxSetup ({
 					$("#fileListUl").append(inner);
 					$("#fileA"+proId+item.fileId).bind("click", function() {
 						viewADataReport(item.dataKey,item.fileName,userId,softwareId,item.fileId,proId,obj1);
-						$.get("report!clickItemDataReport",{},function(state){});
+						$.get("report/clickItemDataReport",{},function(state){});
 					});
 				});
 				$("#fileListUl").append("<button type='button' id='nextA' class='btn btn-success'><span class='caret'></span></button>");
@@ -577,7 +577,7 @@ $.ajaxSetup ({
 					$("#fileListUl").find("#"+preId).trigger("click");
 					$("#fileListUl").removeClass("active");
 					$("#"+preId).addClass("active");
-					$.get("report!prevDataReport",{},function(state){});
+					$.get("report/prevDataReport",{},function(state){});
 				});
 				$("#nextA").bind("click",function(){
 					var nextId = $("#"+reportIdNow).next().attr("id");
@@ -588,7 +588,7 @@ $.ajaxSetup ({
 					$("#fileListUl").find("#"+nextId).trigger("click");
 					$("#fileListUl").removeClass("active");
 					$("#"+nextId).addClass("active");
-					$.get("report!nextDataReport",{},function(state){});
+					$.get("report/nextDataReport",{},function(state){});
 				});
 			});
 			viewADataReport(dataKey,fileName,userId,softwareId,0,proId,obj.children(":first"));
@@ -958,7 +958,7 @@ $.ajaxSetup ({
 							$("#dataLi0").attr("id","dataLi" + index);
 							$("#dataLi"+index).find("a").bind("click", function() {
 								viewAbiNjReport(userId,softwareId,projectId,dataItem0.fileId,obj1,dataItem0.dataKey,dataItem0.fileName);
-								$.get("report!clickItemDataReport",{},function(state){});
+								$.get("report/clickItemDataReport",{},function(state){});
 							});
 						}
 						inner += "<li class='active' id='dataLi0'>";
@@ -966,7 +966,7 @@ $.ajaxSetup ({
 						$("#prevLi").after(inner);
 						$("#fileA"+item.fileId).bind("click", function() {
 							viewAbiNjReport(userId,softwareId,projectId,item.fileId,obj1,item.dataKey,item.fileName);
-							$.get("report!clickItemDataReport",{},function(state){});
+							$.get("report/clickItemDataReport",{},function(state){});
 						});
 					}else{
 						inner +="<li id='dataLi"+index+"'>";
@@ -974,7 +974,7 @@ $.ajaxSetup ({
 						$("#fileListUl").append(inner);
 						$("#fileA"+item.fileId).bind("click", function() {
 							viewAbiNjReport(userId,softwareId,projectId,item.fileId,obj1,item.dataKey,item.fileName);
-							$.get("report!clickItemDataReport",{},function(state){});
+							$.get("report/clickItemDataReport",{},function(state){});
 						});
 					}
 					if(index>5){
@@ -984,11 +984,11 @@ $.ajaxSetup ({
 				$("#fileListUl").append("<li><a href='javascript:void(0)' id='nextA' class='backward'>prev</a></li>");
 				$("#prevA").bind("click",function(){
 					$("#fileListUl").find(".active").prev().find("a:first").trigger("click");
-					$.get("report!prevDataReport",{},function(state){});
+					$.get("report/prevDataReport",{},function(state){});
 				});
 				$("#nextA").bind("click",function(){
 					$("#fileListUl").find(".active").next().find("a:first").trigger("click");
-					$.get("report!nextDataReport",{},function(state){});
+					$.get("report/nextDataReport",{},function(state){});
 				});
 				viewAbiNjReport(userId,softwareId,projectId,0,obj.children(":first"),dataKey,fileName);
 			});

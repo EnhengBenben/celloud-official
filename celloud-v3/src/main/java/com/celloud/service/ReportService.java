@@ -3,6 +3,8 @@ package com.celloud.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.celloud.model.CmpReport;
 import com.celloud.model.HBV;
 import com.celloud.model.MIB;
@@ -245,4 +247,18 @@ public interface ReportService {
      */
     public Integer reportCompeleteByProId(Integer projectId,
             String context);
+    
+    /**
+     * 检索数据报告
+     * 
+     * @param userId
+     * @param appId
+     * @param fileId
+     * @param flag
+     * @return
+     * @author lin
+     * @date 2016年1月17日上午1:52:21
+     */
+    Report getReport(@Param("userId") Integer userId, @Param("appId") Integer appId, @Param("fileId") Integer fileId,
+			@Param("flag") Integer flag);
 }

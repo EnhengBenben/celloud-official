@@ -68,7 +68,7 @@ public class ProjectAction {
     public String share(String userNames, Integer projectId) {
         String error = "";
         String userIds = "";
-        if (!StringUtils.isEmpty(userNames)) {
+        if (StringUtils.isNotEmpty(userNames)) {
             String username[] = userNames.split(",");
             for (String uname : username) {
                 User user = userService.getUserByName(uname);
@@ -78,7 +78,7 @@ public class ProjectAction {
                     userIds += "" + user.getUserId() + ",";
                 }
             }
-            if (!StringUtils.isEmpty(error)) {
+            if (StringUtils.isNotEmpty(error)) {
                 error = error.substring(0, error.length() - 1);
                 error = "用户" + error + "不存在！";
                 return error;
@@ -86,7 +86,7 @@ public class ProjectAction {
         }
         Integer userId = ConstantsData.getLoginUserId();
         projectService.deleteShareFromMe(userId, projectId);
-        if (!StringUtils.isEmpty(userIds)) {
+        if (StringUtils.isNotEmpty(userIds)) {
             projectService.addShare(userId, projectId, userIds);
         }
         return error;

@@ -32,6 +32,20 @@ public interface ReportMapper {
     int insertSelectiveReturnKey(Report record);
 
     Report selectByPrimaryKey(Integer reportId);
+    
+	/**
+	 * 检索数据报告
+	 * 
+	 * @param userId
+	 * @param appId
+	 * @param fileId
+	 * @param flag
+	 * @return
+	 * @author lin
+	 * @date 2016年1月17日上午1:51:49
+	 */
+	Report getReport(@Param("userId") Integer userId, @Param("appId") Integer appId, @Param("fileId") Integer fileId,
+			@Param("flag") Integer flag);
 
     int updateByPrimaryKeySelective(Report record);
 

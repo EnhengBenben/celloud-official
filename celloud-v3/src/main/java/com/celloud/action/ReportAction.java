@@ -5,6 +5,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,14 +15,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
+import com.celloud.constants.ReportType;
 import com.celloud.model.CmpReport;
+import com.celloud.model.Company;
 import com.celloud.model.DataFile;
 import com.celloud.model.HBV;
 import com.celloud.model.MIB;
 import com.celloud.model.Pgs;
+import com.celloud.model.Report;
 import com.celloud.model.Split;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
+import com.celloud.service.CompanyService;
 import com.celloud.service.DataService;
 import com.celloud.service.ReportService;
 import com.celloud.utils.HttpURLUtils;
@@ -29,10 +35,13 @@ import com.celloud.utils.PropertiesUtil;
 @RequestMapping(value = "/report")
 @Controller
 public class ReportAction {
+	Logger log = LoggerFactory.getLogger(ReportAction.class);
     @Resource
     private ReportService reportService;
     @Resource
     private DataService dataService;
+    @Resource
+    private CompanyService companyService;
 
     /**
      * 获取报告模块列表
@@ -73,7 +82,7 @@ public class ReportAction {
         url = PropertiesUtil.toolsPath + url;
         DataFile data = dataService.getDataByKey(dataKey);
         String anotherName = data.getAnotherName();
-        if (!StringUtils.isEmpty(anotherName)) {
+        if (StringUtils.isNotEmpty(anotherName)) {
             url += "&anotherName=" + anotherName;
         }
         return HttpURLUtils.getHTTPResult(url);
@@ -89,7 +98,7 @@ public class ReportAction {
      */
     private ModelAndView getModelAndView(String path) {
         ModelAndView mv = new ModelAndView(path);
-        mv.addObject("toolsPath", PropertiesUtil.toolsPath);
+        mv.addObject("toolsPath", PropertiesUtil.toolsOutPath);
         mv.addObject("uploadPath", PropertiesUtil.toolsOutPath + "upload/");
         return mv;
     }
@@ -196,5 +205,74 @@ public class ReportAction {
         Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
         ModelAndView mv = getModelAndView("report/report_data_pgs");
         return mv.addObject("pgs", pgs);
+    }
+    
+	/**
+	 * 点击数据报告列表查看上一页数据报告
+	 * 
+	 * @author lin
+	 * @date 2016年1月17日上午12:53:22
+	 */
+	@RequestMapping("prevDataReport")
+	public void prevDataReport() {
+		log.info("点击数据报告列表查看上一页数据报告");
+	}
+
+	/**
+	 * 点击数据报告列表查看下一页数据报告
+	 * 
+	 * @author lin
+	 * @date 2016年1月17日上午12:53:33
+	 */
+	@RequestMapping("nextDataReport")
+	public void nextDataReport() {
+		log.info("点击数据报告列表查看下一页数据报告");
+	}
+	
+	/**
+	 * 点击数据报告列表查看报告
+	 * 
+	 * @author lin
+	 * @date 2016年1月17日上午1:03:30
+	 */
+	@RequestMapping("clickItemDataReport")
+	public void clickItemDataReport() {
+		log.info("点击数据报告列表查看报告");
+	}
+	
+	/**
+	 * 打印PGS报告
+	 * 
+	 * @param appId
+	 * @param dataKey
+	 * @return
+	 * @author lin
+	 * @date 2016年1月17日下午4:47:37
+	 */
+	@RequestMapping("printPGS")
+	public ModelAndView printPGS(Integer appId,String dataKey,String miniPng,String txt,String splitPng) {
+		ModelAndView mv = getModelAndView("print/print_pgs");
+        Integer userId = ConstantsData.getLoginUserId();
+        DataFile data = dataService.getDataByKey(dataKey);
+        Integer fileId = data.getFileId();
+        Report report = reportService.getReport(userId, appId, fileId, ReportType.DATA);
+        System.out.println(userId);
+        System.out.println(appId);
+        System.out.println(fileId);
+        System.out.println(miniPng);
+        System.out.println(txt);
+        System.out.println(splitPng);
+        System.out.println();
+        if (StringUtils.isEmpty(report.getContext())) {
+//            Dept dept = deptService.getDept(ConstantsData.getLoginUser().getDeptId());
+//            company = companyService.getCompany(dept.getCompanyId());
+        	Company company = companyService.selectByPrimaryKey(6);
+            mv.addObject("userId", userId).addObject("appId", appId).addObject("fileId", fileId);
+            mv.addObject("miniPng", miniPng).addObject("txt", txt).addObject(splitPng, splitPng);
+            mv.addObject("company", company);
+        }else{
+        	mv.addObject("context", report.getContext());
+        }
+        return mv;
     }
 }

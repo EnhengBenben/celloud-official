@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -176,32 +177,35 @@ a:hover, a:focus{
 <![endif]-->
 </head>
 <body>
-	<s:if test="context==null||context.equals('')">
-		<div style="display: none;" id="_userId"><s:property value="userId"/></div>
-		<div style="display: none;" id="_appId"><s:property value="appId"/></div>
-		<div style="display: none;" id="_fileId"><s:property value="fileId"/></div>
+	<c:if test="${!empty context }">
+		${context}
+	</c:if>
+	<c:if test="${empty context }">
+		<div style="display: none;" id="_userId">${userId}</div>
+		<div style="display: none;" id="_appId">${appId}</div>
+		<div style="display: none;" id="_fileId">${fileId}</div>
 		<div class="row Noprn" style="margin:20px auto;">
 			<a href="javascript:void(0)" onclick="savePage()" class="print-blue">保存</a>
 			<a href="javascript:void(0)" onclick="reset()" class="print-blue">重置</a>
 			<a href="javascript:void(0)" onclick="preview(this)" class="print-blue">打印</a>
 		</div>
-		<s:if test="%{company.companyId==14||company.companyId==42}">
+		<c:if test="${company.companyId==14||company.companyId==42 }">
 			<div class="row" style="margin:0px auto;font-size:12px;">
-				<s:if test="%{company.companyIcon!=null&&!company.companyIcon.equals('')}">
+				<c:if test="${company.companyIcon!=null&&!company.companyIcon.equals('')}">
 					<div align="center" class="clearfix">
-					    <img src="<%=request.getContextPath() %>/images/hospitalIcon/<s:property value="company.companyIcon"/>" style="width:60px">
+					    <img src="<%=request.getContextPath() %>/images/hospitalIcon/${company.companyIcon}" style="width:60px">
 						<h2 class="shotH3 smallTitle" style="line-height: 20px;margin-top:0px">
-							<s:property value="company.companyName" escape="false"/>
+							${company.companyName" escape="false}
 							<br />染色体拷贝数变异检测报告
 							<br />
-							<span class="subtitle"><s:property value="company.address"/>，
-							电话：<s:property value="company.tel"/></span>
+							<span class="subtitle">${company.address}，
+							电话：${company.tel}</span>
 						</h2>
 					</div>
 					<hr style="margin:0px">
-				</s:if>
+				</c:if>
 				<div>
-				  <s:if test="%{company.companyId==14}">
+				  <c:if test="${company.companyId==14}">
 					<table class="table table-condensed miniTable_ noborder" style="margin:0px">
 						<tr>
 							<th>姓名:</th>
@@ -237,8 +241,8 @@ a:hover, a:focus{
 						</tr>
 					 </table>
 					 <hr>
-				  </s:if>
-				  <s:else>
+				  </c:if>
+				  <c:if test="${company.companyId==14}">
 				    <table class="table table-bordered table-condensed miniTable_" style="margin:10px 0px">
 					  <tr>
 							<th>姓名</th>
@@ -264,22 +268,22 @@ a:hover, a:focus{
 							<th></th>
 							<td></td>
 						</tr>
-					  </s:else>
 					</table>
+				  </c:if>
 				</div>
 				<div>
 					<h4 class="smallh4">检测方法:<span class="subtitle"> NGS </span></h4>
 					<h4 class="smallh4">检测项目:<span class="subtitle"> 23对染色体拷贝数变异 </span></h4>
 				</div>
-				<s:if test="%{company.companyId==42}">
+				<c:if test="${company.companyId==42}">
 					<div>
 						<h4 class="smallh4">检测结果:</h4>
-						<s:if test="%{miniPng!='null'}">
-							<img src='<s:property value="outPath"/>/<s:property value="pagePath"/>/<s:property value="miniPng"/>' style="width:90%;max-height:245px;">
-						</s:if>
-						<s:if test="%{splitPng!='null'}">
-							<img src='<s:property value="outPath"/>/<s:property value="pagePath"/>/<s:property value="splitPng"/>' style="width:90%;max-height:245px;">
-						</s:if>
+						<c:if test="${miniPng!='null'}">
+							<img src='${outPath}/${pagePath}/${miniPng}' style="width:90%;max-height:245px;">
+						</c:if>
+						<c:if test="${splitPng!='null'}">
+							<img src='${outPath}/${pagePath}/${splitPng}' style="width:90%;max-height:245px;">
+						</c:if>
 					</div>
 					<br/>
 					<h4 class="smallh4">结果解释：</h4>
@@ -287,20 +291,20 @@ a:hover, a:focus{
 						报告名称：<span><input type="text" value="${data.fileName }(${data.anotherName })" class="onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;width:400px"/></span><br>
 						样本报告：
 					    <div id="des" style="margin:0px">
-							<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px"><s:property value="txt.replace('@','+')"/></textarea>
+							<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px">${txt.replace('@','+')}</textarea>
 						</div>
 					</div>
-				</s:if>
-				<s:else>
+				</c:if>
+				<c:if test="${company.companyId!=42}">
 					<div>
 						<h4 class="smallh4">检测结果:</h4>
-						<s:if test="%{miniPng!='null'}">
-							<img src='<s:property value="outPath"/>/<s:property value="pagePath"/>/<s:property value="miniPng"/>' style="width:90%;max-height:245px;">
-						</s:if>
+						<c:if test="${miniPng!='null'}">
+							<img src='${outPath}/${pagePath}/${miniPng}' style="width:90%;max-height:245px;">
+						</c:if>
 					</div>
 					<br/>
 					<div id="des" style="margin:0px">
-						<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px"><s:property value="txt.replace('@','+')"/></textarea>
+						<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px">${txt.replace('@','+')}</textarea>
 					</div>
 				    <h4 class="smallh4">结果提示：</h4>
 					<div id="des1" style="min-height: 36px;">
@@ -323,9 +327,9 @@ a:hover, a:focus{
 	</textarea>
 						</div>
 					</div>
-				</s:else>
+				</c:if>
 			</div>
-			<s:if test="%{company.companyId==14}">
+			<c:if test="${company.companyId==14 }">
 				<ul class="footer" style="margin-bottom: 0px;font-size:12px;/* margin-top: 450px; */">
 					<li class="left" style="font-size:12px;">报告者：<span><input type="text" class="input-mini" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></li>
 					<li class="left" style="font-size:12px;">审核者：<span><input type="text" class="input-mini" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></li>
@@ -333,45 +337,45 @@ a:hover, a:focus{
 				</ul>
 				<hr>
 				<h4 class="smallh4" style="font-size:12px;">临床意见：<span class="opinion"><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></span></h4>
-			</s:if>
-			<s:else>
+			</c:if>
+			<c:if test="${company.companyId!=14 }">
 				<ul class="footer" style="margin-bottom: 0px;font-size:12px;margin-top:150px;" id="p2footer">
 					<li class="left" style="font-size:12px;">报告者：<span><input type="text" class="input-mini" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>
 					<li class="left" style="font-size:12px;">审核者：<span><input type="text" class="input-mini" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>
 					<li class="right pull-right opinion" style="font-size:12px;">报告日期：<span id="jzkp"><input type="text" class="input-mini" id="jzkh" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>
 				</ul>
-			</s:else>
-		</s:if>
-		<s:else>
-			<s:if test="%{company.companyId!=10}">
+			</c:if>
+		</c:if>
+		<c:if test="${company.companyId!=14&&company.companyId!=42 }">
+			<c:if test="${company.companyId!=10}">
 				<div class="jzk" style="margin:0px auto;">就诊卡号：<span id="jzkp"><input type="text" class="input-mini" id="jzkh"/></span></div>
-			</s:if>
+			</c:if>
 			<div class="row" style="margin:0px auto;" id="mainDiv">
-				<s:if test="%{company.companyIcon!=null&&!company.companyIcon.equals('')}">
+				<c:if test="${company.companyIcon!=null&&!company.companyIcon.equals('')}">
 					<div align="center" class="clearfix">
-						<img src="<%=request.getContextPath() %>/images/hospitalIcon/<s:property value="company.companyIcon"/>" style="width:90px">
+						<img src="<%=request.getContextPath() %>/images/hospitalIcon/${company.companyIcon"/>" style="width:90px">
 						<h2 class="shotH3">
-							<s:property value="company.companyName" escape="false"/>
+							${company.companyName" escape="false}
 							<br />
-							<span class="secTitle"><s:property value="company.englishName" escape="false"/></span>
+							<span class="secTitle">${company.englishName" escape="false}</span>
 						</h2>
-						<s:if test="%{company.companyId!=12&&company.companyId!=10&&company.companyId!=22}">
-							<img id="_imgShow" src="<%=request.getContextPath() %>/images/deptIcon/<s:property value="dept.deptIcon"/>" style="width:95px">
-						</s:if>
+						<c:if test="${company.companyId!=12&&company.companyId!=10&&company.companyId!=22}">
+							<img id="_imgShow" src="<%=request.getContextPath() %>/images/deptIcon/${dept.deptIcon}" style="width:95px">
+						</c:if>
 					</div>
 					<hr>
-				</s:if>
+				</c:if>
 				<div align="center">
 					<h3>
-						<s:if test="%{company.companyId==10}">流产组织</s:if>染色体拷贝数变异检测报告
+						<c:if test="${company.companyId==10}">流产组织</c:if>染色体拷贝数变异检测报告
 					</h3>
 				</div>
 				<div>
 					<h4>基本信息：</h4>
 					<table class="table table-bordered table-condensed">
-						<s:if test="%{company.companyId!=9}">
+						<c:if test="${company.companyId!=9}">
 							<tr>
-								<th><s:if test="%{company.companyId==10}">实验室</s:if>编号</th>
+								<th><c:if test="${company.companyId==10}">实验室</c:if> 编号</th>
 								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
 								<th>姓名</th>
 								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
@@ -390,8 +394,8 @@ a:hover, a:focus{
 								<th>样本状态</th>
 								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
 							</tr>
-						</s:if>
-						<s:if test="%{company.companyId==9}">
+						</c:if>
+						<c:if test="${company.companyId==9}">
 							<tr>
 								<th>胚胎编号</th>
 								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
@@ -402,8 +406,8 @@ a:hover, a:focus{
 								<th>取卵日期</th>
 								<td><span><input type="text" class="input-small onlybotton" /></span></td>
 							</tr>
-						</s:if>
-						<s:if test="%{company.companyId==10}">
+						</c:if>
+						<c:if test="${company.companyId==10 }">
 							<tr>
 								<th>临床诊断</th>
 								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
@@ -414,7 +418,7 @@ a:hover, a:focus{
 								<th></th>
 								<td></td>
 							</tr>
-						</s:if>
+						</c:if>
 					</table>
 				</div>
 				<div>
@@ -425,65 +429,62 @@ a:hover, a:focus{
 				</div>
 				<div>
 					<h4>检测结果:</h4>
-					<img src='<s:property value="outPath"/>/<s:property value="pagePath"/>/<s:property value="miniPng"/>' width="100%">
+					<img src='${outPath}/${pagePath}/${miniPng}' width="100%">
 				</div>
-				<s:if test="%{company.companyId==10}">
+				<c:if test="${company.companyId==10}">
 					<br/>
 					<div id="des">
-						<textarea rows="3"><s:property value="txt.replace('@','+')"/></textarea>
+						<textarea rows="3">${txt.replace('@','+')}</textarea>
 					</div>
 					<h4>结果解释：</h4>
 					<div id="des2">
 						<textarea rows="3"></textarea>
 					</div>
-				</s:if>
-				<s:else>
+				</c:if>
+				<c:if test="${company.companyId!=10}">
 					<h4>结果解释：</h4>
 					<div id="des">
-						<textarea rows="3"><s:property value="txt.replace('@','+')"/></textarea>
+						<textarea rows="3">${txt.replace('@','+')}</textarea>
 					</div>
-				</s:else>
+				</c:if>
 				<div class="notes">注：该检测对于&lt;
-				<s:if test="%{appId==92||appId==93}">
+				<c:if test="${appId==92||appId==93}">
 				15Mb
-				</s:if>
-				<s:elseif test="%{appId==85}">
+				</c:if>
+				<c:if test="${appId==85}">
 				12Mb
-				</s:elseif>
-				<s:elseif test="%{appId==87||appId==88||appId==94}">
+				</c:if>
+				<c:if test="${appId==87||appId==88||appId==94}">
 				4Mb
-				</s:elseif>
-				<s:elseif test="%{appId==86||appId==91||appId==104}">
+				</c:if>
+				<c:if test="${appId==86||appId==91||appId==104}">
 				1Mb
-				</s:elseif>
+				</c:if>
 				的微小畸变可能不能检出。</div>
 			</div>
 			<ul class="footer">
 				<li class="left">检测人：<span><input type="text" class="input-mini" /></span></li>
-				<s:if test="%{company.companyId!=10}">
+				<c:if test="${company.companyId!=10}">
 					<li class="left">复核人：<span><input type="text" class="input-mini" /></span></li>
-				</s:if>
-				<s:if test="%{company.companyId!=9}">
+				</c:if>
+				<c:if test="${company.companyId!=9}">
 					<li class="left">审核人：<span><input type="text" class="input-mini" /></span></li>
-				</s:if>
+				</c:if>
 				<li class="right pull-right">日期：<span><input type="text" class="input-small" /></span></li>
 			</ul>
-			<s:if test="%{company.companyIcon!=null&&!company.companyIcon.equals('')&&company.companyId!=12&&company.companyId!=10&&company.companyId!=22}">
+			<c:if test="${company.companyIcon!=null&&!company.companyIcon.equals('')&&company.companyId!=12&&company.companyId!=10&&company.companyId!=22}">
 				<div style="margin:0px auto;">
 					<hr>
 					<div class="end">
-						地址：<s:property value="company.address"/>
-						邮编：<s:property value="company.zipCode"/>
-						电话：<s:property value="company.tel"/>
-						<br/><s:property value="company.addressEn"/>
+						地址：${company.address}
+						邮编：${company.zipCode}
+						电话：${company.tel}
+						<br/>${company.addressEn}
 					</div>
 				</div>
-			</s:if>
-		</s:else>
-	</s:if>
-	<s:else>
-		<s:property value="context" escape="false"/>
-	</s:else>
+			</c:if>
+		</c:if>
+	</c:if>
 </body>
 <script type="text/javascript">
 	if($(".end").html()){

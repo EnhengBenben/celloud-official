@@ -470,6 +470,7 @@ public class DataAction {
         String ext = FileTools.getExtName(filename);
         sb.append(datakey).append(",").append(datakey).append(ext).append(",")
                 .append(filename).append(",")
+                //TODO 这个三目有必要么？
                 .append(StringUtils.isEmpty(anotherName) ? null : anotherName)
                 .append(";");
         return sb;
