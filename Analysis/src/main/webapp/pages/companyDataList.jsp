@@ -15,8 +15,8 @@
 			<i class="icon-hospital"></i>
 			<a href="#">医院统计</a>
 		</li>
-		<li class="active">
-			<a onclick="toHospitalList()">医院数据量统计</a>
+		<li class="active" onclick="toHospitalList()">
+			医院数据量统计
 		</li>
 	</ul>
 	<!-- .breadcrumb -->

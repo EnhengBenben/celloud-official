@@ -119,6 +119,8 @@ public class HomeAction extends BaseAction {
 			Connection conn = ConnectManager.getConnection();
 			num = (int) Long.parseLong(companyDao.getBigUserCompanyNum(conn, compId, role).toString());
 			ConnectManager.close(conn);
+			mapList = companyService.getCompanyNumEveryMonth(compId, role);
+			LogUtil.info(log, mapList.size());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
