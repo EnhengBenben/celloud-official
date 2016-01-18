@@ -125,4 +125,13 @@ public interface CompanyDao {
 	 */
 	public List<DataFile> getCompanyFileSize(Connection conn, int role, int cmpId, Date start, Date end, int topN);
 
+	/**
+	 * 按省查询相关医院
+	 * 
+	 * @param role
+	 * @param cmpId
+	 * @param province
+	 * @return
+	 */
+	public List<Map<String, Object>> getCompanys(Integer role, Integer cmpId, String province);
 }

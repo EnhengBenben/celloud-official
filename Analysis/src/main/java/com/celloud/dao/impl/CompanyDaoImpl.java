@@ -292,4 +292,21 @@ public class CompanyDaoImpl implements CompanyDao {
 		}
 		return list;
 	}
+
+	@Override
+	public List<Map<String, Object>> getCompanys(Integer role, Integer cmpId, String province) {
+		List<Map<String, Object>> list = null;
+		Connection conn = ConnectManager.getConnection();
+		String sql = "select distinct(c.company_id),c.company_name FROM tb_company c,tb_user u,tb_user_company_relat uc "
+				+ "where c.company_id = u.company_id and u.user_id = uc.user_id and c.province like \'%" + province
+				+ "%\'" + SqlController.whereCompany("uc", "company_id", role, cmpId);
+
+		LogUtil.info(log, sql);
+		try {
+			list = qr.query(conn, sql, new MapListHandler());
+		} catch (SQLException e) {
+			LogUtil.query(log, sql, e);
+		}
+		return list;
+	}
 }

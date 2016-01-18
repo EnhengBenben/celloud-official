@@ -155,10 +155,38 @@ public class CompanyAction extends BaseAction {
 		return "success";
 	}
 
+	/**
+	 * 统计各省下的医院数量
+	 * 
+	 * @return
+	 */
 	public String getProvince() {
 		Integer companyId = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		list = companyService.getProvince(companyId, role);
+		return "list";
+	}
+
+	/**
+	 * 查询省下医院名称
+	 * 
+	 * @return
+	 */
+	public String getCompanyProvince() {
+		Integer companyId = (Integer) getCid();
+		Integer role = (Integer) super.session.get(User.USER_ROLE);
+		try {
+			LogUtil.info(log, companyService);
+			LogUtil.info(log, companyId);
+			LogUtil.info(log, company.getProvince());
+			LogUtil.info(log, company);
+
+			list = companyService.getCompanys(role, companyId, company.getProvince());
+			LogUtil.info(log, list);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "list";
 	}
 
@@ -171,7 +199,6 @@ public class CompanyAction extends BaseAction {
 		Integer companyId = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		list = companyService.getCompanyNumEveryMonth(companyId, role);
-		LogUtil.info(log, list.size());
 		return "list";
 	}
 
