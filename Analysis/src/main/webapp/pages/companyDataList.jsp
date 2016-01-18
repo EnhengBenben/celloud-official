@@ -147,7 +147,7 @@
 				"bSortable" : false
 			}, {
 				"bSortable" : false
-			},null, null, null ],//列支持排序方式
+			},null, null, { "sType": "filesize" } ],//列支持排序方式
 			"aaSorting" : [ [ 4, "desc" ] ],//默认列排序
 			iDisplayLength : 10
 		});

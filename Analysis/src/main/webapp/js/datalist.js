@@ -43,7 +43,7 @@ jQuery(function($) {
 			"bSortable" : false
 		}, {
 			"bSortable" : false
-		}, null, null ],
+		}, null, { "sType": "filesize" } ],
 		iDisplayLength : 10,
 		"aaSorting":[[2,"desc"]],
 	});
