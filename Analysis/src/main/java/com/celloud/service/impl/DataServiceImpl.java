@@ -33,6 +33,17 @@ public class DataServiceImpl implements DataService {
 		resultMap.put("dataNum", dataNum);
 		resultMap.put("dataSize", dataSize);
 		resultMap.put("dataList", list);
+		long size = Long.parseLong(dataSize.toString());
+		if ((size >> 30) > 0) {
+			resultMap.put("size", size / (1024 * 1024 * 1024));
+			resultMap.put("unit", "GB");
+		} else if ((size >> 20) > 0) {
+			resultMap.put("size", size / (1024 * 1024));
+			resultMap.put("unit", "MB");
+		} else if ((size >> 20) > 0) {
+			resultMap.put("size", size / (1024));
+			resultMap.put("unit", "KB");
+		}
 		return resultMap;
 	}
 

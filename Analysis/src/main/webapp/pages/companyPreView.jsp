@@ -239,3 +239,6 @@
 	}
 	chars();
 </script>
+<script type="text/javascript" src="./js/joinable.js"></script>
+<script type="text/javascript" src="./js/xenon-custom.js"></script>
+<script type="text/javascript" src="./js/xenon-widgets.js"></script>
