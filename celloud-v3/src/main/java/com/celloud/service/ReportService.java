@@ -6,7 +6,9 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.bson.types.ObjectId;
 
+import com.celloud.model.CmpGeneSnpResult;
 import com.celloud.model.CmpReport;
+import com.celloud.model.GddDiseaseDict;
 import com.celloud.model.HBV;
 import com.celloud.model.MIB;
 import com.celloud.model.Pgs;
@@ -125,6 +127,28 @@ public interface ReportService {
      * @date 2016-1-10 下午10:51:50
      */
     public CmpReport getCMPReport(String dataKey, Integer projectId,
+            Integer appId);
+
+    /**
+     * 获取GDD未检测到的疾病
+     * 
+     * @param unnormalGene
+     * @return
+     * @author leamo
+     * @date 2016年1月18日 下午3:08:01
+     */
+    public List<GddDiseaseDict> getGddDiseaseDictNormal(
+            List<String> unnormalGene);
+    
+    /**
+     * 获取GDD总表检测突变数统计
+     * 
+     * @param dataKey
+     * @param proId
+     * @param appId
+     * @return
+     */
+    public List<CmpGeneSnpResult> getGddResult(String dataKey, Integer proId,
             Integer appId);
 
     /**
