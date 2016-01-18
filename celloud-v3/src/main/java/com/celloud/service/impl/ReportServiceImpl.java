@@ -610,7 +610,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 	@Override
-	public Report getReport(Integer userId, Integer appId, Integer fileId, Integer flag) {
-		return reportMapper.getReport(userId, appId, fileId, flag);
+	public Report getReport(Integer userId, Integer appId,Integer projectId, Integer fileId, Integer flag) {
+		return reportMapper.getReport(userId, appId,projectId, fileId, flag);
 	}
 }
