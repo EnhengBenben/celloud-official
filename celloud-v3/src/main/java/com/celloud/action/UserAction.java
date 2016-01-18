@@ -70,7 +70,7 @@ public class UserAction {
         }
         user = userService.selectUserById(user.getUserId());
         request.getSession().setAttribute(Constants.SESSION_LOGIN_USER, user);
-        return Response.SAVE_SUCESS.setData(user);
+        return Response.SAVE_SUCCESS.setData(user);
     }
 
     @RequestMapping("updatePassword")
@@ -82,7 +82,7 @@ public class UserAction {
             return WRONG_PASSWORD;
         }
         int result = userService.updatePassword(user.getUserId(), MD5Util.getMD5(newPassword));
-        return result > 0 ? Response.SAVE_SUCESS : UPDATE_PASSWORD_FAIL;
+        return result > 0 ? Response.SAVE_SUCCESS : UPDATE_PASSWORD_FAIL;
     }
 
     /**
