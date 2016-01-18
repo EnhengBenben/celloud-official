@@ -1,17 +1,10 @@
+/**
+ * 问题反馈，登录前的
+ */
 $.ajaxSetup ({
 	cache: false //关闭AJAX相应的缓存
 });
 //var editor;
-function showFeedBackList(){
-	$("#selfSay").hide();
-	$("#otherSay").html("");
-	$("#otherSay").show();
-	$("#toMe").removeClass("active");
-	$("#toOther").addClass("active");
-	$.get("feedBack!getAllFeedBack",{},function(responseText){
-		$("#otherSay").html(responseText);
-	});
-}
 function clearForm(){
 	$("#toOther").removeClass("active");
 	$("#toMe").addClass("active");
@@ -104,10 +97,5 @@ function submitFeedBack(){
 		}else{
 			$("#submitSpanInfo").html("保存失败");
 		}
-	});
-}
-function searchFbInfo(page){
-	$.get("feedBack!getAllFeedBack",{"page.currentPage":page,"page.pageSize":5},function(responseText){
-		$("#otherSay").html(responseText);
 	});
 }

@@ -23,6 +23,7 @@ public class ExceptionHandler implements HandlerExceptionResolver {
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
             Exception exception) {
         EmailUtils.sendError(request, exception);
+        response.setHeader("exceptionstatus", "exception");
         if (exception instanceof BusinessException) {
             return new ModelAndView("errors/business").addObject("exception", exception);
         }

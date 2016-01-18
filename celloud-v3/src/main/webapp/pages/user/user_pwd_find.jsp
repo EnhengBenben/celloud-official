@@ -22,7 +22,7 @@
                     <img src="<%=request.getContextPath()%>/images/home/logo@2x.png" />
                 </div>
                 <c:choose>
-                    <c:when test="${requestScope.sucess eq 'ok' }">
+                    <c:when test="${requestScope.success eq 'ok' }">
                         <div class="main_f clearfix">
                             <br>
                             <br>

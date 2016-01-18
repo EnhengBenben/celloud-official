@@ -5,7 +5,9 @@ import java.util.Date;
 public class Feedback {
     private Integer id;
 
-    private String userName;
+    private Integer userId;
+
+    private String username;
 
     private String email;
 
@@ -13,11 +15,11 @@ public class Feedback {
 
     private Date createDate;
 
-    private Integer solve;
+    private Byte solve;
+
+    private Byte hasAttachment;
 
     private String content;
-
-    private String method;
 
     public Integer getId() {
         return id;
@@ -27,12 +29,20 @@ public class Feedback {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
     }
 
     public String getEmail() {
@@ -59,12 +69,28 @@ public class Feedback {
         this.createDate = createDate;
     }
 
-    public Integer getSolve() {
+    public Byte getSolve() {
         return solve;
     }
 
-    public void setSolve(Integer solve) {
+    public boolean isSolved() {
+        return solve != 0;
+    }
+
+    public void setSolve(Byte solve) {
         this.solve = solve;
+    }
+
+    public Byte getHasAttachment() {
+        return hasAttachment;
+    }
+
+    public boolean hasAttachment() {
+        return hasAttachment != 0;
+    }
+
+    public void setHasAttachment(Byte hasAttachment) {
+        this.hasAttachment = hasAttachment;
     }
 
     public String getContent() {
@@ -73,13 +99,5 @@ public class Feedback {
 
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
-    }
-
-    public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method == null ? null : method.trim();
     }
 }
