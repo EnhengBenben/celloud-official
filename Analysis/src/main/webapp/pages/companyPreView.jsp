@@ -4,7 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="./css/xenon-components.css" />
 <link rel="stylesheet" href="./css/linecons.css" />
-<link rel="stylesheet" href="./cssclass="active" /xenon-core.css" />
+<link rel="stylesheet" href="./css/xenon-core.css" />
 <div class="breadcrumbs" id="breadcrumbs">
 	<script type="text/jaicon-hospitalvascript">
 		try {

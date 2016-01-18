@@ -145,9 +145,11 @@ public class DataDaoImpl implements DataDao {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		Connection conn = ConnectManager.getConnection();
 
-		String sql = "select res.user_id,res.username,res.file_id,res.data_key,res.file_name,res.create_date,res.path,GROUP_CONCAT(distinct(res.software_name)) as soft from (select f.user_id,u.username,f.file_id,f.data_key,f.file_name,f.create_date,f.path,s.software_name from (select * from tb_file where user_id in ("
-				+ userIds + " ) and create_date between '" + start + " 00:00:00' and '" + end
-				+ " 23:59:59') f left join tb_report r on r.file_id = f.file_id left join tb_software s on r.software_id = s.software_id left join tb_user u on f.user_id=u.user_id) res GROUP BY res.user_id,res.file_id order by res.user_id,res.file_id;";
+		String sql = "select res.user_id,res.username,res.file_id,res.data_key,res.file_name,res.create_date,res.path,GROUP_CONCAT(distinct(res.app_name)) as soft"
+				+ " from (select f.user_id,u.username,f.file_id,f.data_key,f.file_name,f.create_date,f.path,s.app_name from"
+				+ " (select * from tb_file where user_id in (" + userIds + " ) and create_date between '" + start
+				+ " 00:00:00' and '" + end + " 23:59:59') f "
+				+ "left join tb_report r on r.file_id = f.file_id left join tb_app s on r.app_id = s.app_id left join tb_user u on f.user_id=u.user_id) res GROUP BY res.user_id,res.file_id order by res.user_id,res.file_id;";
 		try {
 			list = qr.query(conn, sql, new MapListHandler());
 		} catch (SQLException e) {
