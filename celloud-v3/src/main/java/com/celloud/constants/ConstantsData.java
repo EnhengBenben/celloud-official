@@ -133,14 +133,29 @@ public class ConstantsData {
         return user == null ? null : user.getEmail();
     }
 
+    /**
+     * 获取当前的request对象
+     * 
+     * @return
+     */
     public static HttpServletRequest getRequset() {
         return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
     }
 
+    /**
+     * 获取当前的response对象
+     * 
+     * @return
+     */
     public static HttpServletResponse getResponse() {
         return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
     }
 
+    /**
+     * 获取当前的session对象
+     * 
+     * @return
+     */
     public static HttpSession getSession() {
         return getRequset().getSession();
     }
