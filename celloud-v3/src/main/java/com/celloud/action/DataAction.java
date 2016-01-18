@@ -208,7 +208,7 @@ public class DataAction {
         int result = dataService.delete(dataIds);
         logger.info("用户{}删除数据{}{}", ConstantsData.getLoginUserName(), dataIds,
                 result);
-        return result > 0 ? Response.DELETE_SUCESS : DELETE_DATA_FAIL;
+        return result > 0 ? Response.DELETE_SUCCESS : DELETE_DATA_FAIL;
     }
 
     /**

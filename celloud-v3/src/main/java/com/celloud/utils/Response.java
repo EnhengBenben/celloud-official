@@ -7,14 +7,15 @@ package com.celloud.utils;
  * @date 2016年1月6日 下午12:59:26
  */
 public class Response {
-    public static final Response SUCESS = new Response(true, "101", "操作成功！");
-    public static final Response SAVE_SUCESS = new Response(true, "102", "保存成功！");
-    public static final Response UPDATE_SUCESS = new Response(true, "103", "修改成功！");
-    public static final Response DELETE_SUCESS = new Response(true, "104", "删除成功！");
+    public static final Response SUCCESS = new Response(true, "101", "操作成功！");
+    public static final Response SAVE_SUCCESS = new Response(true, "102", "保存成功！");
+    public static final Response UPDATE_SUCCESS = new Response(true, "103", "修改成功！");
+    public static final Response DELETE_SUCCESS = new Response(true, "104", "删除成功！");
+    public static final Response FAIL = new Response("210", "操作失败，原因未知！");
     /**
      * 操作是否成
      */
-    private boolean sucess;
+    private boolean success;
     /**
      * 操作失败的错误码
      */
@@ -31,8 +32,8 @@ public class Response {
     public Response() {
     }
 
-    public Response(boolean sucess, String code, String message) {
-        this.sucess = sucess;
+    public Response(boolean success, String code, String message) {
+        this.success = success;
         this.code = code;
         this.message = message;
     }
@@ -45,7 +46,7 @@ public class Response {
      * @param message
      */
     public Response(String code, String message) {
-        this.sucess = false;
+        this.success = false;
         this.code = code;
         this.message = message;
     }
@@ -58,17 +59,17 @@ public class Response {
      * @param message
      */
     public Response(String message) {
-        this.sucess = false;
+        this.success = false;
         this.code = "201";
         this.message = message;
     }
 
-    public boolean isSucess() {
-        return sucess;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void setSucess(boolean sucess) {
-        this.sucess = sucess;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
     public String getCode() {
