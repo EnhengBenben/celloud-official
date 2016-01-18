@@ -11,7 +11,6 @@ import com.celloud.sdo.App;
 import com.celloud.sdo.DataFile;
 import com.celloud.sdo.Entry;
 import com.celloud.sdo.LoginLog;
-import com.celloud.sdo.TotalCount;
 import com.celloud.sdo.User;
 import com.celloud.service.UserService;
 import com.celloud.utils.ConnectManager;
@@ -20,31 +19,6 @@ import com.google.inject.Inject;
 public class UserServiceImpl implements UserService {
 	@Inject
 	private UserDao userDao;
-
-	@Override
-	public List<LoginLog> logCountEveryUser(Date beginDate, Date endDate) {
-		return userDao.logCountEveryUser(beginDate, endDate);
-	}
-
-	@Override
-	public List<LoginLog> logCountEveryDay(Date beginDate, Date endDate) {
-		return userDao.logCountEveryDay(beginDate, endDate);
-	}
-
-	@Override
-	public List<LoginLog> logCountEveryBrowser(Date beginDate, Date endDate) {
-		return userDao.logCountEveryBrowser(beginDate, endDate);
-	}
-
-	@Override
-	public Integer userCount() {
-		return userDao.userCount();
-	}
-
-	@Override
-	public Integer userAddBetweenDate(Date beginDate, Date endDate) {
-		return userDao.userAddBetweenDate(beginDate, endDate);
-	}
 
 	@Override
 	public User login(User user) {
@@ -129,11 +103,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> getUserByCompany(Integer companyId, Integer role) {
 		return userDao.getUserByCompany(companyId, role);
-	}
-
-	@Override
-	public List<TotalCount> getCountInHistory() {
-		return userDao.getCountInHistory();
 	}
 
 	@Override

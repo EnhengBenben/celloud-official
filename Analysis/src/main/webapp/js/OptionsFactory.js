@@ -43,19 +43,22 @@ function makeOptionScroll(title, xAxis, yAxis, seriesName, typex, startZoom, end
  * @param length
  *            全部有多少个
  */
-function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position, showNum) {
+function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position, showNum,isArea) {
 	var length = xAxis.length;
+	var option=null;
 	if (showNum < length) {
 		if (position < 100) {
 			var len = position + (showNum / length) * 100;
-			return makeOptionScroll('', xAxis, yAxis, seriesName, typex, position, len);
+			option =  makeOptionScroll('', xAxis, yAxis, seriesName, typex, position, len);
 		} else {
 			var len = (showNum / length) * 100;
-			return makeOptionScroll('', xAxis, yAxis, seriesName, typex, 100 - len, 100);
+			option = makeOptionScroll('', xAxis, yAxis, seriesName, typex, 100 - len, 100);
 		}
 	} else {
-		return makeOption('', xAxis, yAxis, seriesName, typex);
+		option = makeOption('', xAxis, yAxis, seriesName, typex);
 	}
+	option =addArea(option, isArea);
+	return option;
 }
 /**
  * 添加拆线图
@@ -77,6 +80,11 @@ function makeOptionAdd(option, yAxis, serierName, typex, isArear) {
 			itemStyle:{}
 		};
 		option.legend.data[option.legend.data.length] = serierName;
+		option = addArea(option,isArear);
+	return option;
+}
+
+function addArea(option,isArear){
 	if(isArear!=null){
 		option.series[option.series.length-1].itemStyle.normal={areaStyle: {type: 'default'}};
 	}

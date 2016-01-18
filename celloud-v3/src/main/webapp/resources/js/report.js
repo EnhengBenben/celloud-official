@@ -1309,31 +1309,28 @@ function toPrintVSP(){
 		obj.document.close();
 	});
 }
-function printCMP(projectId,dataKey,userId,appId){
-	$.get("cmpReport!toPrintDetailCmp",{"cmpReport.projectId":projectId,"cmpReport.dataKey":dataKey,"cmpReport.userId":userId,"cmpReport.appId":appId},function(responseText){
-		var obj = window.open("");
-		obj.document.write(responseText);
-		obj.document.close();
-	});
+var printReport = {
+    main: function(method,param){
+      $.get(method,param,function(responseText){
+        var obj = window.open("");
+        obj.document.write(responseText);
+        obj.document.close();
+      });
+    },
+    mongoParam: function(projectId,dataKey,appId){
+      var _param = {"projectId":projectId,"dataKey":dataKey,"appId":appId};
+      return _param;
+    }
 }
-function printSimpCMP(projectId,dataKey,userId,appId){
-	$.get("cmpReport!toPrintSimpleCmp",{"cmpReport.projectId":projectId,"cmpReport.dataKey":dataKey,"cmpReport.userId":userId,"cmpReport.appId":appId},function(responseText){
-		var obj = window.open("");
-		obj.document.write(responseText);
-		obj.document.close();
-	});
+function printMoreCMPReport(projectId,dataKey,appId){
+	printReport.main("report/printMoreCMPReport",printReport.mongoParam(projectId,dataKey,appId));
 }
-function printGDD(projectId,dataKey,userId,appId){
-	$.get("cmpReport!toPrintGdd",{"cmpReport.projectId":projectId,"cmpReport.dataKey":dataKey,"cmpReport.userId":userId,"cmpReport.appId":appId},function(responseText){
-		var obj = window.open("");
-		obj.document.write(responseText);
-		obj.document.close();
-	});
+function printLessCMPReport(projectId,dataKey,appId){
+	printReport.main("report/printLessCMPReport",printReport.mongoParam(projectId,dataKey,appId));
+}
+function printGDD(projectId,dataKey,appId){
+  printReport.main("report/printGDDReport",printReport.mongoParam(projectId,dataKey,appId));
 }
 function printMIB(projectId,dataKey,appId){
-	$.get("report/printMIBReport",{"projectId":projectId,"dataKey":dataKey,"appId":appId},function(responseText){
-		var obj = window.open("");
-		obj.document.write(responseText);
-		obj.document.close();
-	});
+  printReport.main("report/printMIBReport",printReport.mongoParam(projectId,dataKey,appId));
 }

@@ -4,7 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="./css/xenon-components.css" />
 <link rel="stylesheet" href="./css/linecons.css" />
-<link rel="stylesheet" href="./cssclass="active" /xenon-core.css" />
+<link rel="stylesheet" href="./css/xenon-core.css" />
 <div class="breadcrumbs" id="breadcrumbs">
 	<script type="text/jaicon-hospitalvascript">
 		try {
@@ -17,9 +17,7 @@
 			<i class="icon-hospital"></i>
 			<a href="#">医院统计</a>
 		</li>
-		<li class="active" onclick="getPreDataView()">
-			医院总览
-		</li>
+		<li class="active" onclick="getPreDataView()">医院总览</li>
 	</ul>
 	<!-- .breadcrumb -->
 </div>
@@ -27,26 +25,46 @@
 	<div class="col-xs-12">
 		<div class="row">
 			<div class="col-sm-3">
-				<div class="xe-widget xe-counter-block xe-counter-block-orange">
+				<div class="xe-widget xe-counter-block" data-count=".num" data-from="0" data-to="${resultMap.num }" data-suffix="(个)" data-duration="2">
 					<div class="xe-upper">
-						<div class="xe-icon">
-							<i class="fa-life-ring"></i>
-						</div>
-						<div class="xe-label" data-count=".num" data-from="0" data-to="${num}" data-suffix="(个)" data-duration="2">
+						<div class="xe-label">
 							<strong>医院数量:</strong>
-							<strong class="num">${num }</strong>
+							<strong class="num">${resultMap.num }</strong>
 						</div>
 					</div>
 					<div class="xe-lower">
 						<div class="border"></div>
 					</div>
 				</div>
+
+			</div>
+			<div class="col-sm-3">
+
+				<div class="xe-widget xe-counter-block xe-counter-block-blue" data-suffix="(个)" data-count=".num" data-from="0" data-to="${resultMap.userNum }"
+					data-duration="2" data-easing="false">
+					<div class="xe-upper">
+						<div class="xe-label">
+							<strong>用户数量:</strong>
+							<strong class="num">${resultMap.userNum }</strong>
+						</div>
+
+					</div>
+					<div class="xe-lower">
+						<div class="border"></div>
+					</div>
+				</div>
+
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-12">
 				<h3 class="header smaller lighter green">用户地理分布</h3>
-				<div class="col-sm-10" style="height: 500px;" id="map"></div>
+				<div class="col-sm-9" style="height: 500px;" id="map"></div>
+				<div class="col-sm-2" style="height: 500px;">
+					<ul id="listCompany">
+					</ul>
+				</div>
+
 			</div>
 		</div>
 		<div id="main" style="height: 400px; width: 80%; border: 1px solid #ddd; margin: 20px"></div>
@@ -77,8 +95,19 @@
 </div>
 <script type="text/javascript">
 	jQuery(function($) {
+		chars();
+		$.get("company!getProvince", function(result) {
+			var data = "[";
+			for ( var i in result) {
+				var map = result[i];
+				data += "{name: '" + map['province'] + "', value: " + map['num'] + "},";
+			}
+			data += "]";
+			showView(eval(data));
+		});
+		
 		var oTable1 = $('#newCompanyList').dataTable({
-			"aoColumns" : [null,null ],
+			"aoColumns" : [ null, null ],
 			iDisplayLength : 10,
 			"aaSorting" : [ [ 0, "desc" ] ],
 		});
@@ -131,7 +160,7 @@
 					min : 0.9,
 					max : 1.1
 				},
-				selectedMode : 'multiple',
+				selectedMode : 'single',
 				itemStyle : {
 					normal : {
 						label : {
@@ -199,43 +228,46 @@
 			} ]
 		};
 		var myChart = echarts.init(document.getElementById('map'));
+		myChart.on(echarts.config.EVENT.MAP_SELECTED, function(param) {
+			var selected = param.selected;
+			var str = '';
+			for ( var p in selected) {
+				if (selected[p]) {
+					str += p + ' ';
+				}
+			}
+			console.log(str);
+			$.post("company!getCompanyProvince", {
+				"company.province" : str.replace(/(^\s*)|(\s*$)/g, '')
+			}, function(result) {
+				$('#listCompany').children().remove();
+				for (item in result) {
+					var li = $("<li>" + result[item].company_name + "</li>");
+					$("#listCompany").append(li);
+				}
+			});
+		});
 		myChart.setOption(option);
 	}
-	$(document).ready(function() {
-		$.get("company!getProvince", function(result) {
-			var data = "[";
-			for ( var i in result) {
-				var map = result[i];
-				data += "{name: '" + map['province'] + "', value: " + map['num'] + "},";
-			}
-			data += "]";
-			showView(eval(data));
-		});
-	});
-	
 	function chars() {
 		$.get("company!getCompanyNumEveryMonth", {}, function(result) {
 			var xAxis = new Array(result.length);
 			var yAxis = new Array(result.length);
-			var yAxisAdd = new Array(result.length);
 			
 			for (var i = 0; i < result.length; i++) {
 				xAxis[i] = result[i].createDate;
 				yAxis[i] = result[i].num;
 			}
 			
-			yAxisAdd[0] = 0;
-			var count = yAxis[0];
-			for (var i = 1; i < yAxis.length; i++) {
-				yAxisAdd[i] = yAxis[i] - yAxis[i - 1];
-			}
-			var option = makeOptionScrollUnit(xAxis, yAxis, "月新增医院数量", barType, 100, 12);
-			option = makeOptionAdd(option, yAxisAdd, "数据量变化曲线图", lineType, "阴影");
+			var option = makeOptionScrollUnit(xAxis, yAxis, "月新增医院数量", lineType, 100, xAxis.length, "阴影");
+			//option = makeOptionAdd(option, yAxisAdd, "数据量变化曲线图", lineType, "阴影");
 			
 			// 基于准备好的dom，初始化echarts图表
 			var myChart = echarts.init(document.getElementById('main'));
 			myChart.setOption(option);
 		})
 	}
-	chars();
 </script>
+<script type="text/javascript" src="./js/joinable.js"></script>
+<script type="text/javascript" src="./js/xenon-custom.js"></script>
+<script type="text/javascript" src="./js/xenon-widgets.js"></script>

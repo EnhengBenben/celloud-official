@@ -59,4 +59,33 @@ public interface ReportDao {
      */
     public <T> List<T> getAllAppList(Class<T> T, String[] retrievedFields);
 
+    /**
+     * 获取报告指定字段
+     * 
+     * @param T
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @param retrievedFields
+     *            显示的字段
+     * @return
+     * @author leamo
+     * @date 2016年1月18日 下午3:13:24
+     */
+    public <T> T getDataFileds(Class<T> T, String dataKey, Integer projectId,
+            Integer appId, String[] retrievedFields);
+
+    /**
+     * 获取指定字段
+     * 
+     * @param T
+     * @param Field
+     * @param condition
+     * @return
+     * @author leamo
+     * @date 2016年1月18日 上午11:52:49
+     */
+    public <T> List<T> getDataFieldInAndOrder(Class<T> T, String Field,
+            List<String> condition);
+
 }

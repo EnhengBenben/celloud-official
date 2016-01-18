@@ -17,4 +17,6 @@ public interface HomeService {
 	public Map<String, Object> toHome(Integer cmpId, Integer role);
 
 	public Map<String, Object> toCompanyReport(Integer cmpId, Integer role);
+
+	public Map<String, Object> companyPreVIew(Integer cmpId, Integer role);
 }

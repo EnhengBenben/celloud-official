@@ -26,6 +26,7 @@ public class Company implements Serializable {
 
 	private String userNames;
 	private String deptNames;
+	private String province;
 
 	public Integer getCompany_id() {
 		return company_id;
@@ -41,6 +42,14 @@ public class Company implements Serializable {
 
 	public String getDeptNames() {
 		return deptNames;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
 	}
 
 	public void setDeptNames(String deptNames) {

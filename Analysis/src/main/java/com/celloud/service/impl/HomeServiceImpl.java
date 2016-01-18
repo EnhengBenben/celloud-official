@@ -62,4 +62,21 @@ public class HomeServiceImpl implements HomeService {
 		return res;
 	}
 
+	@Override
+	public Map<String, Object> companyPreVIew(Integer cmpId, Integer role) {
+
+		Map<String, Object> res = new HashMap<>();
+
+		Connection conn = ConnectManager.getConnection();
+		Object num = companyDao.getBigUserCompanyNum(conn, cmpId, role);
+		Object userNum = userDao.getBigUsersUserNum(conn, cmpId, role);
+		ConnectManager.close(conn);
+		List<Map<String, Object>> mapList = companyDao.getCompanyNumEveryMonth(cmpId, role);
+		res.put("num", num);
+		res.put("userNum", userNum);
+		res.put("mapList", mapList);
+
+		return res;
+	}
+
 }
