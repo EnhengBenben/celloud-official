@@ -154,10 +154,12 @@
 		
 		jQuery(function($) {
 			var oTable1 = $('#MonthDataList').dataTable({
-				"aoColumns" : [ null, null, null ],
+				"aoColumns" : [ null, null, { "sType": "filesize" }],
 				iDisplayLength : 10,
 				"aaSorting" : [ [ 0, "desc" ] ],
 			});
 		});
 	</script>
-	<script type="text/javascript" src="./js/xenon-widgets.js"></script>
+	<!-- 
+	 <script type="text/javascript" src="./js/xenon-widgets.js"></script>
+	 -->
