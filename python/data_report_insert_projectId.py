@@ -26,29 +26,35 @@ for d in result:
 		#print '--'
 		#break
 	else:
-		sql = 'insert into tb_report (user_id,app_id,file_id,project_id,period,flag,state) values (' + str(d['user_id']) + ','+str(d['app_id'])+ ','+str(d['file_id'])+ ','+str(d['project_id'])+ ',3,0,0)'
-		print 'insert:'+sql
-		my.execute(sql)
+		sql_ = 'select * from tb_report where user_id = '+str(d['user_id']) +' and file_id='+str(d['file_id']) +' and app_id = ' +str(d['app_id'])+' and project_id = '+str(d['project_id'])
+		true_data = my.query(sql_)
+		if true_data:
+			continue
+		else:
+			sql = 'insert into tb_report (user_id,app_id,file_id,project_id,period,flag,state) values (' + str(d['user_id']) + ','+str(d['app_id'])+ ','+str(d['file_id'])+ ','+str(d['project_id'])+ ',3,0,0)'
+			print 'insert:'+sql
+			my.execute(sql)
 		#print 'xx'
 		#break
+
 sql = 'delete from tb_file where user_id in (9,12,15,16,18,20,21,23,24,27,28,71)'
 my.execute(sql)
-sql = 'delete from tb_file where state = 1;'
-my.execute(sql)
-sql = 'delete from tb_project where state = 1;'
-my.execute(sql)
+#sql = 'delete from tb_file where state = 1;'
+#my.execute(sql)
+#sql = 'delete from tb_project where state = 1;'
+#my.execute(sql)
 sql = 'delete from tb_project where user_id in (9,12,15,16,18,20,21,23,24,27,28,71);'
 my.execute(sql)
-sql = 'delete from tb_file_project_relat where file_id not in (select file_id from tb_file);'
-my.execute(sql)
-sql = 'delete from tb_file_project_relat where project_id not in (select project_id from tb_project);'
-my.execute(sql)
+#sql = 'delete from tb_file_project_relat where file_id not in (select file_id from tb_file);'
+#my.execute(sql)
+#sql = 'delete from tb_file_project_relat where project_id not in (select project_id from tb_project);'
+#my.execute(sql)
 sql = 'delete from tb_report where user_id in (9,12,15,16,18,20,21,23,24,27,28,71);'
 my.execute(sql)
-sql = 'delete from tb_report where file_id not in (select file_id from tb_file);'
-my.execute(sql)
-sql = 'delete from tb_report where project_id not in (select project_id from tb_project);'
-my.execute(sql)
+#sql = 'delete from tb_report where file_id not in (select file_id from tb_file);'
+#my.execute(sql)
+#sql = 'delete from tb_report where project_id not in (select project_id from tb_project);'
+#my.execute(sql)
 
 
 
