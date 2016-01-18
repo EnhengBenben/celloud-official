@@ -66,7 +66,8 @@
 			</div>
 		</div>
 		<h3 class="header smaller lighter green">数据量统计</h3>
-		<div class="col-xs-12" style="height: 450px;" id="fileNumView"></div>
+		<div class="col-xs-12" style="height: 350px;" id="fileNumView"></div>
+		<div class="col-xs-12" style="height: 350px;" id="fileTotalNum"></div>
 		<div class="col-xs-11" style="margin-left: 60px; margin-top: 15px">
 			<div class="table-header hide" id="_companyName"></div>
 			<c:if test="${resultMap.dataList!=null && fn:length(resultMap.dataList) > 0}">
@@ -106,7 +107,7 @@
 					<!-- PAGE CONTENT ENDS -->
 					<!-- /.col -->
 				</div>
-			</c:if>
+			</c:if>xe-counter-block
 			<!-- PAGE CONTENT ENDS -->
 		</div>
 		<!-- /.col -->
@@ -120,7 +121,6 @@
 		console.log(data);
 		var xAxis = new Array(data.length);
 		var yAxis = new Array(data.length);
-		var yAxisAdd = new Array(data.length);
 		var yAxisCount = new Array(data.length);
 		
 		for (var i = 0; i < data.length; i++) {
@@ -128,20 +128,19 @@
 			yAxis[i] = data[i].fileNum;
 		}
 		yAxisCount[0] = yAxis[0];
-		yAxisAdd[0] = 0;
-		var count = yAxis[0];
 		for (var i = 1; i < yAxis.length; i++) {
-			yAxisAdd[i] = yAxis[i] - yAxis[i - 1];
-			count = count + yAxis[i];
-			yAxisCount[i] = count;
+			yAxisCount[i] =yAxisCount[i-1]+yAxis[i] ;
 		}
 		
-		var fileNumOpt = makeOptionScrollUnit(xAxis, yAxis, '数据量', barType, 100, 12);
-		fileNumOpt = makeOptionAdd(fileNumOpt, yAxisAdd, "数据量变化曲线图", lineType, "阴影");
-		fileNumOpt = makeOptionAdd(fileNumOpt, yAxisCount, "数据量累计", lineType);
+		var fileNumOpt = makeOptionScrollUnit(xAxis, yAxis, '数据增量曲线图', lineType, 100,xAxis.length,"阴影");
+		var fileTotalOpt = makeOptionScrollUnit(xAxis, yAxisCount, "数据量累计图", lineType,100,xAxis.length);
 		
 		var fileNumChart = echarts.init(document.getElementById('fileNumView'));
+	      var fileTotalNum = echarts.init(document.getElementById('fileTotalNum'));
+
 		fileNumChart.setOption(fileNumOpt);
+		fileTotalNum.setOption(fileTotalOpt);
+
 	});
 	
 	jQuery(function($) {

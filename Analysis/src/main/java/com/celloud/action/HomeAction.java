@@ -1,6 +1,5 @@
 package com.celloud.action;
 
-import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,6 +13,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
 import com.celloud.dao.CompanyDao;
+import com.celloud.dao.UserDao;
 import com.celloud.sdo.App;
 import com.celloud.sdo.Company;
 import com.celloud.sdo.DataFile;
@@ -26,7 +26,6 @@ import com.celloud.service.DataService;
 import com.celloud.service.HomeService;
 import com.celloud.service.ReportService;
 import com.celloud.service.UserService;
-import com.celloud.utils.ConnectManager;
 import com.celloud.utils.LogUtil;
 import com.google.inject.Inject;
 
@@ -57,6 +56,8 @@ public class HomeAction extends BaseAction {
 	private CompanyService companyService;
 	@Inject
 	private CompanyDao companyDao;
+	@Inject
+	private UserDao userDao;
 	@Inject
 	private ReportService reportService;
 	@Inject
@@ -113,13 +114,10 @@ public class HomeAction extends BaseAction {
 	}
 
 	public String toPreCompanyView() {
-		Integer compId = (Integer) getCid();
+		Integer cmpId = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		try {
-			Connection conn = ConnectManager.getConnection();
-			num = (int) Long.parseLong(companyDao.getBigUserCompanyNum(conn, compId, role).toString());
-			ConnectManager.close(conn);
-			mapList = companyService.getCompanyNumEveryMonth(compId, role);
+			resultMap = homeService.companyPreVIew(cmpId, role);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
