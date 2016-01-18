@@ -20,6 +20,7 @@ import com.celloud.constants.ReportType;
 import com.celloud.model.CmpReport;
 import com.celloud.model.Company;
 import com.celloud.model.DataFile;
+import com.celloud.model.Dept;
 import com.celloud.model.HBV;
 import com.celloud.model.MIB;
 import com.celloud.model.Pgs;
@@ -29,6 +30,7 @@ import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.CompanyService;
 import com.celloud.service.DataService;
+import com.celloud.service.DeptService;
 import com.celloud.service.ReportService;
 import com.celloud.utils.HttpURLUtils;
 import com.celloud.utils.PropertiesUtil;
@@ -45,6 +47,8 @@ public class ReportAction {
     private DataService dataService;
     @Resource
     private CompanyService companyService;
+    @Resource
+    private DeptService deptService;
 
     /**
      * 获取报告模块列表
@@ -307,11 +311,9 @@ public class ReportAction {
         System.out.println(miniPng);
         System.out.println(txt);
         System.out.println(splitPng);
-        System.out.println();
         if (StringUtils.isEmpty(report.getContext())) {
-//            Dept dept = deptService.getDept(ConstantsData.getLoginUser().getDeptId());
-//            company = companyService.getCompany(dept.getCompanyId());
-        	Company company = companyService.selectByPrimaryKey(6);
+            Dept dept = deptService.selectByPrimaryKey(ConstantsData.getLoginUser().getDeptId());
+        	Company company = companyService.selectByPrimaryKey(dept.getCompanyId());
             mv.addObject("userId", userId).addObject("appId", appId).addObject("fileId", fileId);
             mv.addObject("miniPng", miniPng).addObject("txt", txt).addObject(splitPng, splitPng);
             mv.addObject("company", company);
