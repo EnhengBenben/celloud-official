@@ -23,7 +23,7 @@ public interface FeedbackService {
      * @param feedback
      * @return
      */
-    public int inserte(Feedback feedback);
+    public int inserte(Feedback feedback,List<String> attachments);
 
     /**
      * 获取当前用户的问题反馈（工单）
@@ -64,7 +64,7 @@ public interface FeedbackService {
      * @param content
      * @return
      */
-    public boolean reply(int feedbackId, String content);
+    public boolean insertReply(int feedbackId, String content);
 
     /**
      * 关闭工单
@@ -73,4 +73,5 @@ public interface FeedbackService {
      * @return
      */
     public boolean solve(int feedbackId);
+
 }

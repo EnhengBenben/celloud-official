@@ -1,9 +1,19 @@
 package com.celloud.action;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
+import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 /**
  * 投诉与建议
  * 
@@ -14,9 +24,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.constants.FeedbackConstants;
 import com.celloud.model.Feedback;
 import com.celloud.model.FeedbackAttachment;
 import com.celloud.model.FeedbackReply;
@@ -34,6 +47,7 @@ import com.celloud.utils.Response;
 @Controller
 @RequestMapping("feedback")
 public class FeedbackAction {
+    private static Logger logger = LoggerFactory.getLogger(FeedbackAction.class);
     @Resource
     private FeedbackService feedbackService;
 
@@ -68,7 +82,7 @@ public class FeedbackAction {
     @RequestMapping(value = "save", method = RequestMethod.PUT)
     @ResponseBody
     public boolean save(Feedback feedback) {
-        return feedbackService.inserte(feedback) >= 0;
+        return feedbackService.inserte(feedback, null) >= 0;
     }
 
     /**
@@ -79,8 +93,9 @@ public class FeedbackAction {
      */
     @RequestMapping(value = "create", method = RequestMethod.PUT)
     @ResponseBody
-    public Response create(Feedback feedback) {
-        int result = feedbackService.inserte(feedback);
+    public Response create(Feedback feedback, String[] attachments) {
+        List<String> list = attachments == null || attachments.length <= 0 ? null : Arrays.asList(attachments);
+        int result = feedbackService.inserte(feedback, list);
         if (result > 0) {
             return Response.SAVE_SUCCESS;
         }
@@ -124,7 +139,7 @@ public class FeedbackAction {
     @RequestMapping(value = "reply/{feedbackId}", method = RequestMethod.PUT)
     @ResponseBody
     public Response reply(@PathVariable int feedbackId, String content) {
-        boolean result = feedbackService.reply(feedbackId, content);
+        boolean result = feedbackService.insertReply(feedbackId, content);
         return result ? Response.SUCCESS.setData(feedbackId) : Response.FAIL;
     }
 
@@ -139,5 +154,57 @@ public class FeedbackAction {
     public Response solve(@PathVariable int feedbackId) {
         boolean result = feedbackService.solve(feedbackId);
         return result ? Response.SUCCESS.setData(feedbackId) : Response.FAIL;
+    }
+
+    /**
+     * 工单上传附件
+     * 
+     * @param file
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "attach", method = RequestMethod.POST)
+    @ResponseBody
+    public String attach(@RequestParam("file") CommonsMultipartFile file, HttpSession session) {
+        String fileName = file.getOriginalFilename();
+        String type = fileName.substring(fileName.lastIndexOf("."));
+        File targetFile = new File(FeedbackConstants.getAttachmentTempPath(), new ObjectId().toString() + type);
+        if (!targetFile.exists()) {
+            targetFile.mkdirs();
+        }
+        try {
+            file.transferTo(targetFile);
+        } catch (Exception e) {
+            logger.error("工单上传附件失败：{}", fileName, e);
+        }
+        return targetFile.getName();
+    }
+
+    /**
+     * 获取工单附件
+     * 
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "attach", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> attach(String file) throws IOException {
+        String path = FeedbackConstants.getAttachment(file);
+        File targetFile = new File(path);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
+    }
+
+    /**
+     * 获取工单附件（已上传未保存的临时文件）
+     * 
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "attach/temp", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> attachTemp(String file) throws IOException {
+        String path = FeedbackConstants.getAttachmentTempPath() + File.separator + file;
+        File targetFile = new File(path);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
     }
 }

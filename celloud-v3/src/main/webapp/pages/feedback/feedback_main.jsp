@@ -6,7 +6,7 @@
 	</h1>
 	<ol class="breadcrumb">
 		<li>
-			<a href="#">
+			<a href="javascript:;">
 				<i class="fa fa-comments"></i>问题反馈
 			</a>
 		</li>
@@ -26,7 +26,6 @@
 				<form class="form-horizontal" id="feedbackCreateForm" action="<%=request.getContextPath()%>/feedback/create"
 					method="post">
 					<input type="hidden" name="_method" value="put">
-					<input type="hidden" name="hasAttachment" value="0">
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">标题</label>
 						<div class="col-sm-9">
@@ -48,13 +47,17 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<c:forEach begin="1" end="4" var="num">
-								<img style="height: 60px; margin-right: 10px; cursor: pointer;" src="images/avatar/0${num }.png"
-									alt="User Image" />
-							</c:forEach>
-							<a class="btn btn-default btn-lg">
+							<img id="attachmentUploading" class="img-thumbnail hide" style="height: 60px;margin-right: 10px;" src="images/icon/loading.jpg">
+							<a class="btn btn-default btn-lg" id="uploadAttachmentBtn">
 								<i class="fa fa-plus"></i>
 							</a>
+							<div id="attachmentContainer"></div>
+						</div>
+					</div>
+					<div class="form-group has-error" id="warning-group" style="color: #a94442">
+					 <label class="col-sm-2 control-label">WARNING：</label>
+						<div class="col-sm-9">
+							<p class="form-control-static">Your browser doesn't have Flash, Silverlight or HTML5 support.</p>
 						</div>
 					</div>
 				</form>
@@ -64,9 +67,7 @@
 				<button type="button" class="btn btn-primary" onclick="feedbacks.create()">提交</button>
 			</div>
 		</div>
-		<!-- /.modal-content -->
 	</div>
-	<!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
+<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/plupload-2.1.2/plupload.full.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/feedbacks.js"></script>

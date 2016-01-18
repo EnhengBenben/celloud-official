@@ -10,7 +10,7 @@
 				<c:if test="${page.rowCount == 0 }">
 					<div>问题反馈是您与 CelLoud 最直接有效的交流平台，您可以通过问题反馈来咨询任何问题，我们会第一时间为您解决。同时我们也欢迎您提交建议与意见。</div>
 				</c:if>
-				<button onclick="feedbacks.showForm()" class="btn btn-success" style="">新问题</button>
+				<button onclick="feedbacks.showForm()" class="btn btn-success">新问题</button>
 				<c:if test="${page.totalPage>1 }">
 					<div class="btn-group pull-right">
 						<c:if test="${page.hasPrev }">

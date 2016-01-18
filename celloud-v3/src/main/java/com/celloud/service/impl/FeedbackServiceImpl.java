@@ -1,10 +1,18 @@
 package com.celloud.service.impl;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.io.FileUtils;
+import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.celloud.constants.ConstantsData;
@@ -28,6 +36,7 @@ import com.celloud.service.FeedbackService;
  */
 @Service("feedbackServiceImpl")
 public class FeedbackServiceImpl implements FeedbackService {
+    private Logger logger = LoggerFactory.getLogger(FeedbackServiceImpl.class);
     private static final Page DEFAULT_PAGE = new Page(1, 5);
     @Resource
     private FeedbackMapper feedbackMapper;
@@ -37,13 +46,62 @@ public class FeedbackServiceImpl implements FeedbackService {
     private FeedbackReplyMapper replyMapper;
 
     @Override
-    public int inserte(Feedback feedback) {
+    public int inserte(Feedback feedback, List<String> attachments) {
         User user = ConstantsData.getLoginUser();
         feedback.setCreateDate(new Date());
+        feedback.setHasAttachment(attachments != null && attachments.size() > 0
+                ? FeedbackConstants.HASATTACHMENT.byteValue() : FeedbackConstants.NOT_HAS_ATTACHMENT.byteValue());
         feedback.setUserId(user.getUserId());
         feedback.setUsername(user.getUsername());
         feedback.setEmail(user.getEmail());
-        return feedbackMapper.insertSelective(feedback);
+        int result = feedbackMapper.insertSelective(feedback);
+        List<FeedbackAttachment> feedbackAttachments = new ArrayList<>();
+        if (attachments != null) {
+            for (String name : attachments) {
+                FeedbackAttachment attachment = new FeedbackAttachment();
+                attachment.setFeedbackId(feedback.getId());
+                attachment.setFilePath(name);
+                attachment.setFileType(name.substring(name.lastIndexOf(".") + 1));
+                try {
+                    FileUtils.moveFile(new File(FeedbackConstants.getAttachmentTempPath() + File.separator + name),
+                            new File(FeedbackConstants.getAttachment(name)));
+                    feedbackAttachments.add(attachment);
+                } catch (IOException e) {
+                    logger.error("复制附件失败：{}", name, e);
+                }
+            }
+        }
+        if (feedbackAttachments.size() > 0) {
+            result = attachmentMapper.insertbatch(feedbackAttachments);
+        }
+        feedbackMapper.updateAttachState();
+        if (feedbackAttachments.size() > 0 && result <= 0) {
+            feedbackMapper.updateAttachState();
+        }
+        cleanAttachment();
+        return result;
+    }
+
+    private void cleanAttachment() {
+        String path = FeedbackConstants.getAttachmentTempPath();
+        File tempDir = new File(path);
+        if (tempDir == null || !tempDir.exists()) {
+            return;
+        }
+        if (tempDir.isFile()) {
+            tempDir.delete();
+            return;
+        }
+        File[] tempFiles = tempDir.listFiles();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, -7);
+        Date date = calendar.getTime();
+        for (File file : tempFiles) {
+            ObjectId id = new ObjectId(file.getName().substring(0, file.getName().indexOf(".")));
+            if (date.after(id.getDate())) {
+                file.delete();
+            }
+        }
     }
 
     @Override
@@ -70,7 +128,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public boolean reply(int feedbackId, String content) {
+    public boolean insertReply(int feedbackId, String content) {
         FeedbackReply reply = new FeedbackReply();
         reply.setContent(content);
         reply.setFeedbackId(feedbackId);
@@ -79,6 +137,10 @@ public class FeedbackServiceImpl implements FeedbackService {
         reply.setUserId(ConstantsData.getLoginUserId());
         reply.setUserName(ConstantsData.getLoginUserName());
         return replyMapper.insertSelective(reply) > 0;
+    }
+
+    public boolean updateAttachState() {
+        return feedbackMapper.updateAttachState() > 0;
     }
 
     @Override

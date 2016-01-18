@@ -1,21 +1,22 @@
 /**
  * 问题反馈，登录后的
  */
-$.ajaxSetup({
-	cache : false
-// 关闭AJAX相应的缓存
-});
 var feedbacks = (function(feedbacks) {
 	var self = feedbacks || {};
 	self.currentPage = 1;
+	var uploader = null;
 	var resetFeedbackFormState = function(){
 		var $form = $("#feedbackCreateForm");
 		$form.find(".form-group").removeClass("has-error");
+		$form.find("[name=attachments]").remove();
+		$("#attachmentUploading").siblings("img").remove();
+		self.initUploader();
 		$form.find(".help-block").html("");
 	}
 	var validateFeedback = function(){
-		resetFeedbackFormState();
 		var $form = $("#feedbackCreateForm");
+		$form.find(".form-group").removeClass("has-error");
+		$form.find(".help-block").html("");
 		var $title = $form.find("[name=title]");
 		var title = $title.val();
 		var $titleGroup = $title.parent(".form-group");
@@ -59,6 +60,49 @@ var feedbacks = (function(feedbacks) {
 		}
 		return true;
 	}
+	self.initUploader = function(){
+		if(uploader){
+			uploader.destroy();
+		}
+		uploader = new plupload.Uploader({
+			browse_button : 'uploadAttachmentBtn', 
+			url : "../feedback/attach",
+			container:'attachmentContainer',
+	        chunk_size : "1mb",
+	        file_data_name:'file',
+	        filters : {
+				max_file_size : "2mb",
+				mime_types: [
+				    {title : "Image files", extensions : "jpg,jpeg,png" }
+				],
+				prevent_duplicates : true //不允许选取重复文件
+			},
+			multi_selection:false,
+	        flash_swf_url : '../plugins/plupload-2.1.2/Moxie.swf',
+	        init:{
+	        	PostInit: function() {
+	        		$("#feedbackCreateForm").find("#warning-group").hide();
+	            },
+	        	FilesAdded: function(up, files) {
+	        		$("#attachmentUploading").show();
+	        		uploader.start();
+	            },
+	            FileUploaded:function(up,file,response){
+	            	$("#attachmentUploading").hide();
+	            	var $img = $("<img />");
+	            	$img.attr("src","feedback/attach/temp?file="+response.response);
+	            	$img.addClass("img-thumbnail");
+	            	$img.css("height","60px");
+	            	$img.css("margin-right","10px");
+	            	var $input = $('<input type="hidden" name="attachments"/>');
+	            	$input.val(response.response);
+	            	$("#attachmentUploading").before($img);
+	            	$("#feedbackCreateForm").append($input);
+	            }
+	        }
+	    });
+		uploader.init();
+	}
 	self.create = function() {
 		if(!validateFeedback()){
 			return;
@@ -67,13 +111,14 @@ var feedbacks = (function(feedbacks) {
 		var url = $form.attr("action");
 		$.post(url, $form.serialize(), function(data) {
 			if(data.success){
-				$form[0].reset();
 				$("#addQa").modal('hide');
 				self.page(1);
 			}
 		});
 	}
 	self.showForm = function() {
+		$("#feedbackCreateForm")[0].reset();
+		resetFeedbackFormState();
 		$("#addQa").modal('show');
 	}
 	self.attach = function() {
@@ -95,6 +140,7 @@ var feedbacks = (function(feedbacks) {
 			var id = $item.attr('feedback_id');
 			if(id){
 				self.detail(id);
+				self.initUploader();
 			}
 		});
 	}
@@ -148,68 +194,4 @@ var feedbacks = (function(feedbacks) {
 	});
 	return self;
 })(feedbacks);
-// var editor;
-function clearForm() {
-	$("#toOther").removeClass("active");
-	$("#toMe").addClass("active");
-	$("#otherSay").hide();
-	$("#selfSay").show();
-	if (userName != null && userName != "" && userName != "null") {
-		$("#userName").val(userName);
-	} else {
-		$("#userName").val("");
-	}
-	$("#email").val("");
-	$("#emailSpanInfo").html("");
-	$("#title").val("");
-	editor.setContent("");
-	$("#userNameSpanInfo").html("");
-	$("#titleSpanInfo").html("");
-	$("#contentSpanInfo").html("");
-	$("#submitSpanInfo").html("");
-	$("#chkUsername").prop("checked", false);
-	$("#userName").attr("disabled", false);
-}
-function validateFeed() {
-	var result = true;
-	var userName = $.trim($("#userName").val());
-	var email = $.trim($("#email").val());
-	var title = $.trim($("#title").val());
-	var content = $.trim(editor.getContentTxt());
-	if (userName == "") {
-		result = false;
-		$("#userNameSpanInfo").html("请输入用户名");
-	} else {
-		$("#userNameSpanInfo").html("");
-	}
-	if (email != "") {
-		var emailregex = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-		if (!emailregex.test(email)) {
-			result = false;
-			$("#emailSpanInfo").html("邮箱格式不正确");
-		} else {
-			$("#emailSpanInfo").html("");
-		}
-	}
-	if (title != "") {
-		if (title.length < 4 || title.length > 30) {
-			result = false;
-			$("#titleSpanInfo").html("请输入4~30个字符的标题");
-		} else {
-			$("#titleSpanInfo").html("");
-		}
-	}
-	if (content == "") {
-		result = false;
-		$("#contentSpanInfo").html("请输入10~10000个字符的内容");
-	} else {
-		if (content.length < 10 || content.length > 10000) {
-			result = false;
-			$("#contentSpanInfo").html("请输入10~10000个字符的内容");
-		} else {
-			$("#contentSpanInfo").html("");
-		}
-	}
-	return result;
-}
 feedbacks.page(1);

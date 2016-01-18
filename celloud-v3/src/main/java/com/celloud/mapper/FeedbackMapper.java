@@ -12,7 +12,7 @@ public interface FeedbackMapper {
 
     int insert(Feedback record);
 
-    int insertSelective(Feedback record);
+    Integer insertSelective(Feedback record);
 
     Feedback selectByPrimaryKey(Integer id);
 
@@ -23,4 +23,6 @@ public interface FeedbackMapper {
     int updateByPrimaryKey(Feedback record);
 
     public List<Feedback> selectByUserId(@Param("userId") Integer userId, Page page);
+
+    public int updateAttachState();
 }

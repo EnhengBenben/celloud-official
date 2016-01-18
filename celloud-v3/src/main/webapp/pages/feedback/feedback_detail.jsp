@@ -28,8 +28,9 @@
 		<h5>附件：</h5>
 		<c:choose>
 			<c:when test="${feedback.hasAttachment() }">
-				<c:forEach begin="1" end="5" var="num">
-					<img style="height: 60px; margin-right: 10px;" src="images/avatar/0${num }.png" alt="User Image" />
+				<c:forEach items="${attachments }" var="attachment">
+					<img class="img-thumbnail" style="height: 60px; margin-right: 10px;"
+						src="<%=request.getContextPath() %>/feedback/attach?file=${attachment.filePath}" alt="User Image" />
 				</c:forEach>
 			</c:when>
 			<c:otherwise>

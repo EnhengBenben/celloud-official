@@ -9,6 +9,8 @@ public interface FeedbackAttachmentMapper {
 
     int insert(FeedbackAttachment record);
 
+    int insertbatch(List<FeedbackAttachment> attachments);
+
     int insertSelective(FeedbackAttachment record);
 
     FeedbackAttachment selectByPrimaryKey(Integer id);
@@ -16,6 +18,6 @@ public interface FeedbackAttachmentMapper {
     int updateByPrimaryKeySelective(FeedbackAttachment record);
 
     int updateByPrimaryKey(FeedbackAttachment record);
-    
+
     public List<FeedbackAttachment> findByFeedbackId(Integer feedbackId);
 }

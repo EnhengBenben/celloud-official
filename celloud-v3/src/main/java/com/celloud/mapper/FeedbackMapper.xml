@@ -36,7 +36,7 @@
 		tb_feedback
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
-	<insert id="insert" parameterType="com.celloud.model.Feedback">
+	<insert id="insert" parameterType="com.celloud.model.Feedback" useGeneratedKeys="true" keyProperty="id">
 		insert into tb_feedback (id,
 		user_id, username,
 		email, title, create_date,
@@ -51,7 +51,7 @@
 		#{content,jdbcType=LONGVARCHAR}
 		)
 	</insert>
-	<insert id="insertSelective" parameterType="com.celloud.model.Feedback">
+	<insert id="insertSelective" parameterType="com.celloud.model.Feedback" useGeneratedKeys="true" keyProperty="id">
 		insert into tb_feedback
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -174,4 +174,9 @@
 		where id =
 		#{id,jdbcType=INTEGER}
 	</update>
+	<update id="updateAttachState" parameterType="java.lang.Integer">
+       update tb_feedback set has_attachment = 
+       (select count(*) from tb_feedback_attachment where feedback_id = #{id,jdbcType=INTEGER}) 
+       where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>
