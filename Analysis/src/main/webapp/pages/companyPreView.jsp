@@ -17,9 +17,7 @@
 			<i class="icon-hospital"></i>
 			<a href="#">医院统计</a>
 		</li>
-		<li class="active" onclick="getPreDataView()">
-			医院总览
-		</li>
+		<li class="active" onclick="getPreDataView()">医院总览</li>
 	</ul>
 	<!-- .breadcrumb -->
 </div>
@@ -46,7 +44,12 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<h3 class="header smaller lighter green">用户地理分布</h3>
-				<div class="col-sm-10" style="height: 500px;" id="map"></div>
+				<div class="col-sm-9" style="height: 500px;" id="map"></div>
+				<div class="col-sm-2" style="height: 500px;">
+					<ul id="listCompany">
+					</ul>
+				</div>
+
 			</div>
 		</div>
 		<div id="main" style="height: 400px; width: 80%; border: 1px solid #ddd; margin: 20px"></div>
@@ -77,8 +80,19 @@
 </div>
 <script type="text/javascript">
 	jQuery(function($) {
+		chars();
+		$.get("company!getProvince", function(result) {
+			var data = "[";
+			for ( var i in result) {
+				var map = result[i];
+				data += "{name: '" + map['province'] + "', value: " + map['num'] + "},";
+			}
+			data += "]";
+			showView(eval(data));
+		});
+		
 		var oTable1 = $('#newCompanyList').dataTable({
-			"aoColumns" : [null,null ],
+			"aoColumns" : [ null, null ],
 			iDisplayLength : 10,
 			"aaSorting" : [ [ 0, "desc" ] ],
 		});
@@ -131,7 +145,7 @@
 					min : 0.9,
 					max : 1.1
 				},
-				selectedMode : 'multiple',
+				selectedMode : 'single',
 				itemStyle : {
 					normal : {
 						label : {
@@ -199,20 +213,27 @@
 			} ]
 		};
 		var myChart = echarts.init(document.getElementById('map'));
+		myChart.on(echarts.config.EVENT.MAP_SELECTED, function(param) {
+			var selected = param.selected;
+			var str = '';
+			for ( var p in selected) {
+				if (selected[p]) {
+					str += p + ' ';
+				}
+			}
+			console.log(str);
+			$.post("company!getCompanyProvince", {
+				"company.province" : str.replace(/(^\s*)|(\s*$)/g, '')
+			}, function(result) {
+				$('#listCompany').children().remove();
+				for (item in result) {
+					var li = $("<li>" + result[item].company_name + "</li>");
+					$("#listCompany").append(li);
+				}
+			});
+		});
 		myChart.setOption(option);
 	}
-	$(document).ready(function() {
-		$.get("company!getProvince", function(result) {
-			var data = "[";
-			for ( var i in result) {
-				var map = result[i];
-				data += "{name: '" + map['province'] + "', value: " + map['num'] + "},";
-			}
-			data += "]";
-			showView(eval(data));
-		});
-	});
-	
 	function chars() {
 		$.get("company!getCompanyNumEveryMonth", {}, function(result) {
 			var xAxis = new Array(result.length);
@@ -237,7 +258,6 @@
 			myChart.setOption(option);
 		})
 	}
-	chars();
 </script>
 <script type="text/javascript" src="./js/joinable.js"></script>
 <script type="text/javascript" src="./js/xenon-custom.js"></script>
