@@ -68,7 +68,7 @@
 			<i class="i-edit"></i>三、 参考结论
 		</h2>
 	    <div class="m-boxCon result" id="_result">
-	    	${oncogene.report }
+	    	${oncogene.conclusion }
 	    </div>
 	</div>
 	<!--检测结果-->
