@@ -10,9 +10,10 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
@@ -76,7 +77,7 @@ public class TaskAction {
      * @date 2016年1月14日 下午5:09:27
      */
     @RequestMapping("taskRunOver.html")
-    @ResponseBody
+    @ResponseStatus(value = HttpStatus.OK)
     public String taskRunOver(String projectId, String dataNames) {
         logger.info("任务运行结束，proId:{},运行数据dataKey：{}", projectId, dataNames);
         String[] dataArr = dataNames.split(",");
@@ -189,7 +190,7 @@ public class TaskAction {
      * @return
      */
     @RequestMapping("projectRunOver.html")
-    @ResponseBody
+    @ResponseStatus(value = HttpStatus.OK)
     public String projectRunOver(String projectId) {
         logger.info("项目运行结束，id:{}", projectId);
         // 1. 利用 python 生成数据 pdf，并将数据报告插入 mongodb

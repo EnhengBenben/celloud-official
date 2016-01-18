@@ -8,12 +8,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
@@ -29,8 +32,11 @@ import com.celloud.dao.ReportDao;
 import com.celloud.mapper.AppMapper;
 import com.celloud.mapper.DataFileMapper;
 import com.celloud.mapper.ReportMapper;
+import com.celloud.model.CmpGeneDetectionDetail;
+import com.celloud.model.CmpGeneSnpResult;
 import com.celloud.model.CmpReport;
 import com.celloud.model.DataFile;
+import com.celloud.model.GddDiseaseDict;
 import com.celloud.model.GeneDetectionResult;
 import com.celloud.model.HBV;
 import com.celloud.model.MIB;
@@ -594,6 +600,73 @@ public class ReportServiceImpl implements ReportService {
             Integer appId) {
         return reportDao.getDataReport(CmpReport.class, dataKey, projectId,
                 appId);
+    }
+
+    @Override
+    public List<GddDiseaseDict> getGddDiseaseDictNormal(
+            List<String> unnormalGene) {
+        return reportDao.getDataFieldInAndOrder(GddDiseaseDict.class, "gene",
+                unnormalGene);
+    }
+
+    @Override
+    public List<CmpGeneSnpResult> getGddResult(String dataKey,
+            Integer projectId,
+            Integer appId) {
+        List<CmpGeneSnpResult> resultList = new ArrayList<>();
+        String[] retrievedFields = { "geneDetectionDetail" };
+        CmpReport cr = reportDao.getDataFileds(CmpReport.class, dataKey,
+                projectId, appId, retrievedFields);
+        Map<String, CmpGeneDetectionDetail> map_gene = cr
+                .getGeneDetectionDetail();
+        if (map_gene != null) {
+            CmpGeneDetectionDetail gdd = map_gene.get("all");
+            if (gdd != null) {
+                List<CmpGeneSnpResult> list = gdd.getResult();
+                List<CmpGeneSnpResult> list_tmp = new ArrayList<CmpGeneSnpResult>();
+                // 只允许字母和数字
+                String regEx = "[^\\w\\.\\_\\-\u4e00-\u9fa5]";
+                Pattern p = Pattern.compile(regEx);
+                for (CmpGeneSnpResult gsr : list) {
+                    CmpGeneSnpResult gsr_tmp = new CmpGeneSnpResult();
+                    gsr_tmp.setDiseaseName(gsr.getDiseaseName());
+                    gsr_tmp.setDiseaseEngName(p.matcher(gsr.getDiseaseEngName())
+                            .replaceAll("").trim());
+                    gsr_tmp.setGene(gsr.getGene());
+                    list_tmp.add(gsr_tmp);
+                }
+                for (int i = 0; i < list_tmp.size(); i++) {
+                    int num = 1;
+                    for (int j = list_tmp.size() - 1; j > i; j--) {
+                        if (list_tmp.get(j).getDiseaseEngName()
+                                .equals(list_tmp.get(i).getDiseaseEngName())
+                                && list_tmp.get(j).getGene()
+                                        .equals(list_tmp.get(i).getGene())) {
+                            list_tmp.remove(j);
+                            num++;
+                        }
+                    }
+                    CmpGeneSnpResult gsr_tmp = new CmpGeneSnpResult();
+                    gsr_tmp.setDiseaseName(list_tmp.get(i).getDiseaseName());
+                    gsr_tmp.setDiseaseEngName(
+                            list_tmp.get(i).getDiseaseEngName());
+                    gsr_tmp.setGene(list_tmp.get(i).getGene());
+                    gsr_tmp.setMutNum(num);
+                    resultList.add(gsr_tmp);
+                }
+                // 将结果根据疾病类型排序
+                Collections.sort(resultList,
+                        new Comparator<CmpGeneSnpResult>() {
+                            @Override
+                            public int compare(CmpGeneSnpResult gsr1,
+                                    CmpGeneSnpResult gsr2) {
+                                return gsr1.getDiseaseName()
+                                        .compareTo(gsr2.getDiseaseName());
+                            }
+                        });
+            }
+        }
+        return resultList;
     }
 
     @Override

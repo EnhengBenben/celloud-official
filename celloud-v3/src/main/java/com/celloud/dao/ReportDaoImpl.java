@@ -43,4 +43,19 @@ public class ReportDaoImpl implements ReportDao {
                 .asList();
     }
 
+    @Override
+    public <T> T getDataFileds(Class<T> T, String dataKey, Integer projectId,
+            Integer appId, String[] retrievedFields) {
+        return dataStore.createQuery(T).retrievedFields(true, retrievedFields)
+                .filter("dataKey", dataKey).filter("projectId", projectId)
+                .filter("appId", appId).get();
+    }
+
+    @Override
+    public <T> List<T> getDataFieldInAndOrder(Class<T> T, String Field,
+            List<String> condition) {
+        return dataStore.createQuery(T).filter(Field + " nin", condition)
+                .order(Field).asList();
+    }
+
 }
