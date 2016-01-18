@@ -305,4 +305,9 @@ public class CompanyServiceImpl implements CompanyService {
 
 		return result;
 	}
+
+	@Override
+	public List<Map<String, Object>> getCompanys(Integer role, Integer cmpId, String province) {
+		return companyDao.getCompanys(role, cmpId, province);
+	}
 }

@@ -421,27 +421,22 @@ public class ReportAction {
 	 * @date 2016年1月17日下午4:47:37
 	 */
 	@RequestMapping("printPGS")
-	public ModelAndView printPGS(Integer appId,String dataKey,String miniPng,String txt,String splitPng) {
+	public ModelAndView printPGS(Integer appId, Integer projectId, String dataKey, String miniPng, String txt,
+			String splitPng) {
 		ModelAndView mv = getModelAndView("print/print_pgs");
-        Integer userId = ConstantsData.getLoginUserId();
-        DataFile data = dataService.getDataByKey(dataKey);
-        Integer fileId = data.getFileId();
-        Report report = reportService.getReport(userId, appId, fileId, ReportType.DATA);
-        System.out.println(userId);
-        System.out.println(appId);
-        System.out.println(fileId);
-        System.out.println(miniPng);
-        System.out.println(txt);
-        System.out.println(splitPng);
-        if (StringUtils.isEmpty(report.getContext())) {
-            Dept dept = deptService.selectByPrimaryKey(ConstantsData.getLoginUser().getDeptId());
-        	Company company = companyService.selectByPrimaryKey(dept.getCompanyId());
-            mv.addObject("userId", userId).addObject("appId", appId).addObject("fileId", fileId);
-            mv.addObject("miniPng", miniPng).addObject("txt", txt).addObject(splitPng, splitPng);
-            mv.addObject("company", company);
-        }else{
-        	mv.addObject("context", report.getContext());
-        }
-        return mv;
-    }
+		Integer userId = ConstantsData.getLoginUserId();
+		DataFile data = dataService.getDataByKey(dataKey);
+		Integer fileId = data.getFileId();
+		Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
+		if (StringUtils.isEmpty(report.getContext())) {
+			Dept dept = deptService.selectByPrimaryKey(ConstantsData.getLoginUser().getDeptId());
+			Company company = companyService.selectByPrimaryKey(dept.getCompanyId());
+			mv.addObject("userId", userId).addObject("appId", appId).addObject("data", data);
+			mv.addObject("miniPng", miniPng).addObject("txt", txt).addObject("splitPng", splitPng);
+			mv.addObject("company", company).addObject("dept", dept);
+		} else {
+			mv.addObject("context", report.getContext());
+		}
+		return mv;
+	}
 }

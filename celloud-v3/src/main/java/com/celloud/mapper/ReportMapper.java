@@ -38,13 +38,14 @@ public interface ReportMapper {
 	 * 
 	 * @param userId
 	 * @param appId
+	 * @param projectId
 	 * @param fileId
 	 * @param flag
 	 * @return
 	 * @author lin
-	 * @date 2016年1月17日上午1:51:49
+	 * @date 2016年1月18日上午11:16:24
 	 */
-	Report getReport(@Param("userId") Integer userId, @Param("appId") Integer appId, @Param("fileId") Integer fileId,
+	Report getReport(@Param("userId") Integer userId, @Param("appId") Integer appId,@Param("projectId") Integer projectId, @Param("fileId") Integer fileId,
 			@Param("flag") Integer flag);
 
     int updateByPrimaryKeySelective(Report record);

@@ -195,7 +195,7 @@ a:hover, a:focus{
 					<div align="center" class="clearfix">
 					    <img src="<%=request.getContextPath() %>/images/hospitalIcon/${company.companyIcon}" style="width:60px">
 						<h2 class="shotH3 smallTitle" style="line-height: 20px;margin-top:0px">
-							${company.companyName" escape="false}
+							${company.companyName}
 							<br />染色体拷贝数变异检测报告
 							<br />
 							<span class="subtitle">${company.address}，
@@ -242,7 +242,7 @@ a:hover, a:focus{
 					 </table>
 					 <hr>
 				  </c:if>
-				  <c:if test="${company.companyId==14}">
+				  <c:if test="${company.companyId!=14}">
 				    <table class="table table-bordered table-condensed miniTable_" style="margin:10px 0px">
 					  <tr>
 							<th>姓名</th>
@@ -278,11 +278,11 @@ a:hover, a:focus{
 				<c:if test="${company.companyId==42}">
 					<div>
 						<h4 class="smallh4">检测结果:</h4>
-						<c:if test="${miniPng!='null'}">
-							<img src='${outPath}/${pagePath}/${miniPng}' style="width:90%;max-height:245px;">
+						<c:if test="${splitPng=='null' && miniPng!='null'}">
+							<img src='${uploadPath}/${userId}/${appId}/${data.dataKey}/${miniPng}' style="width:90%;max-height:245px;">
 						</c:if>
 						<c:if test="${splitPng!='null'}">
-							<img src='${outPath}/${pagePath}/${splitPng}' style="width:90%;max-height:245px;">
+							<img src='${uploadPath}/${userId}/${appId}/${data.dataKey}/${splitPng}' style="width:90%;max-height:245px;">
 						</c:if>
 					</div>
 					<br/>
@@ -298,8 +298,11 @@ a:hover, a:focus{
 				<c:if test="${company.companyId!=42}">
 					<div>
 						<h4 class="smallh4">检测结果:</h4>
-						<c:if test="${miniPng!='null'}">
-							<img src='${outPath}/${pagePath}/${miniPng}' style="width:90%;max-height:245px;">
+						<c:if test="${splitPng=='null' && miniPng!='null'}">
+							<img src='${uploadPath}/${userId}/${appId}/${data.dataKey}/${miniPng}' style="width:90%;max-height:245px;">
+						</c:if>
+						<c:if test="${splitPng!='null'}">
+							<img src='${uploadPath}/${userId}/${appId}/${data.dataKey}/${splitPng}' style="width:90%;max-height:245px;">
 						</c:if>
 					</div>
 					<br/>
@@ -353,11 +356,11 @@ a:hover, a:focus{
 			<div class="row" style="margin:0px auto;" id="mainDiv">
 				<c:if test="${company.companyIcon!=null&&!company.companyIcon.equals('')}">
 					<div align="center" class="clearfix">
-						<img src="<%=request.getContextPath() %>/images/hospitalIcon/${company.companyIcon"/>" style="width:90px">
+						<img src="<%=request.getContextPath() %>/images/hospitalIcon/${company.companyIcon}" style="width:90px">
 						<h2 class="shotH3">
-							${company.companyName" escape="false}
+							${company.companyName}
 							<br />
-							<span class="secTitle">${company.englishName" escape="false}</span>
+							<span class="secTitle">${company.englishName}</span>
 						</h2>
 						<c:if test="${company.companyId!=12&&company.companyId!=10&&company.companyId!=22}">
 							<img id="_imgShow" src="<%=request.getContextPath() %>/images/deptIcon/${dept.deptIcon}" style="width:95px">
@@ -429,7 +432,12 @@ a:hover, a:focus{
 				</div>
 				<div>
 					<h4>检测结果:</h4>
-					<img src='${outPath}/${pagePath}/${miniPng}' width="100%">
+					<c:if test="${splitPng=='null' && miniPng!='null'}">
+						<img src='${uploadPath}/${userId}/${appId}/${data.dataKey}/${miniPng}' style="width:100%;">
+					</c:if>
+					<c:if test="${splitPng!='null'}">
+						<img src='${uploadPath}/${userId}/${appId}/${data.dataKey}/${splitPng}' style="width:100%;">
+					</c:if>
 				</div>
 				<c:if test="${company.companyId==10}">
 					<br/>
