@@ -15,7 +15,7 @@
 			<i class="icon-tasks"></i>
 			<a href="#">数据统计</a>
 		</li>
-		<li class="active"><a onclick="getUserDataList()">用户数据统计</a></li>
+		<li class="active" onclick="getUserDataList()">用户数据统计</li>
 	</ul>
 	<!-- .breadcrumb -->
 </div>
@@ -50,11 +50,16 @@
 									</td>
 									<td>${data.company_name }</td>
 									<td>${data.fileNum }</td>
-									<td> 
-                                        <c:choose><c:when test="${data.size>1073741824 }"><fmt:formatNumber pattern="0.00" value="${data.size/1073741824 }"/>GB</c:when>
-                                        <c:when test="${data.size>1048576 }"><fmt:formatNumber pattern="0.00" value="${data.size/1048576 }"/>MB</c:when>
-                                        <c:otherwise><fmt:formatNumber pattern="0.00" value="${data.size/1024 }"/>KB</c:otherwise></c:choose>
-                                    </td>
+									<td>
+										<c:choose>
+											<c:when test="${data.size>1073741824 }">
+												<fmt:formatNumber pattern="0.00" value="${data.size/1073741824 }" />GB</c:when>
+											<c:when test="${data.size>1048576 }">
+												<fmt:formatNumber pattern="0.00" value="${data.size/1048576 }" />MB</c:when>
+											<c:otherwise>
+												<fmt:formatNumber pattern="0.00" value="${data.size/1024 }" />KB</c:otherwise>
+										</c:choose>
+									</td>
 								</tr>
 							</c:forEach>
 						</tbody>

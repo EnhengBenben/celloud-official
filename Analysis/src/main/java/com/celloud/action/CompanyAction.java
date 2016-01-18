@@ -171,6 +171,7 @@ public class CompanyAction extends BaseAction {
 		Integer companyId = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		list = companyService.getCompanyNumEveryMonth(companyId, role);
+		LogUtil.info(log, list.size());
 		return "list";
 	}
 
