@@ -15,8 +15,8 @@
 			<i class="icon-hospital"></i>
 			<a href="#">医院统计</a>
 		</li>
-		<li class="active">
-			<a onclick="toHospitalList()">医院数据量统计</a>
+		<li class="active" onclick="toHospitalList()">
+			医院数据量统计
 		</li>
 	</ul>
 	<!-- .breadcrumb -->
@@ -147,7 +147,7 @@
 				"bSortable" : false
 			}, {
 				"bSortable" : false
-			},null, null, null ],//列支持排序方式
+			},null, null, { "sType": "filesize" } ],//列支持排序方式
 			"aaSorting" : [ [ 4, "desc" ] ],//默认列排序
 			iDisplayLength : 10
 		});

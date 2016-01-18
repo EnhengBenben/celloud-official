@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="./css/xenon-components.css" />
 <link rel="stylesheet" href="./css/linecons.css" />
 <link rel="stylesheet" href="./css/xenon-core.css" />
 <div class="breadcrumbs" id="breadcrumbs">
-	<script type="text/javascript">
+	<script type="text/jaicon-hospitalvascript">
 		try {
 			ace.settings.check('breadcrumbs', 'fixed')
 		} catch (e) {
@@ -12,11 +14,11 @@
 	</script>
 	<ul class="breadcrumb">
 		<li>
-			<i class="icon-tasks"></i>
+			<i class="icon-hospital"></i>
 			<a href="#">医院统计</a>
 		</li>
-		<li class="active">
-			<a onclick="getPreDataView()">医院总览</a>
+		<li class="active" onclick="getPreDataView()">
+			医院总览
 		</li>
 	</ul>
 	<!-- .breadcrumb -->
@@ -48,9 +50,40 @@
 			</div>
 		</div>
 		<div id="main" style="height: 400px; width: 80%; border: 1px solid #ddd; margin: 20px"></div>
+
+		<div class="row">
+			<c:if test="${mapList!=null && fn:length(mapList)>0 }">
+				<div class="table-responsive" id="dataDiv">
+					<table id="newCompanyList" class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th class="hidden-480">医院编码</th>
+								<th class="hidden-480">医院新增数量</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${mapList}" var="item">
+								<tr>
+									<td>${item.createDate }</td>
+									<td>${item.num }</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</c:if>
+		</div>
 	</div>
 </div>
 <script type="text/javascript">
+	jQuery(function($) {
+		var oTable1 = $('#newCompanyList').dataTable({
+			"aoColumns" : [null,null ],
+			iDisplayLength : 10,
+			"aaSorting" : [ [ 0, "desc" ] ],
+		});
+	});
+	
 	function showView(data) {
 		option = {
 			title : {
@@ -206,3 +239,6 @@
 	}
 	chars();
 </script>
+<script type="text/javascript" src="./js/joinable.js"></script>
+<script type="text/javascript" src="./js/xenon-custom.js"></script>
+<script type="text/javascript" src="./js/xenon-widgets.js"></script>

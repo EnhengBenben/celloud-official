@@ -19,7 +19,34 @@
 		}
 		else
 		{
-			setupWidgets();
+			$("[data-from][data-to]").each(function(i, el)
+					{
+						var $el = $(el),
+							sm = scrollMonitor.create(el);
+						
+						sm.fullyEnterViewport(function()
+						{
+							var opts = {
+								useEasing: 		attrDefault($el, 'easing', true),
+								useGrouping:	attrDefault($el, 'grouping', true),
+								separator: 		attrDefault($el, 'separator', ','),
+								decimal: 		attrDefault($el, 'decimal', '.'),
+								prefix: 		attrDefault($el, 'prefix', ''),
+								suffix:			attrDefault($el, 'suffix', ''),
+							},
+							$count		= attrDefault($el, 'count', 'this') == 'this' ? $el : $el.find($el.data('count')),
+							from        = attrDefault($el, 'from', 0),
+							to          = attrDefault($el, 'to', 100),
+							duration    = attrDefault($el, 'duration', 2.5),
+							delay       = attrDefault($el, 'delay', 0),
+							decimals	= new String(to).match(/\.([0-9]+)/) ? new String(to).match(/\.([0-9]+)$/)[1].length : 0,
+							counter 	= new countUp($count.get(0), from, to, decimals, duration, opts);
+							
+							setTimeout(function(){ counter.start(); }, delay * 1000);
+							
+							sm.destroy();
+						});
+					});
 		}	
 	});
 	

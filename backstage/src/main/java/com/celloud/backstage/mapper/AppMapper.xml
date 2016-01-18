@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.celloud.backstage.mapper.AppMapper" >
+  <resultMap id="BaseResultMap" type="com.celloud.backstage.model.App" >
+    <id column="app_id" property="appId" jdbcType="INTEGER" />
+    <result column="app_name" property="appName" jdbcType="VARCHAR" />
+    <result column="english_name" property="englishName" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="picture_name" property="pictureName" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="INTEGER" />
+    <result column="attribute" property="attribute" jdbcType="INTEGER" />
+    <result column="run_type" property="runType" jdbcType="INTEGER" />
+    <result column="flag" property="flag" jdbcType="INTEGER" />
+    <result column="run_data" property="runData" jdbcType="INTEGER" />
+    <result column="data_num" property="dataNum" jdbcType="INTEGER" />
+    <result column="param" property="param" jdbcType="INTEGER" />
+    <result column="off_line" property="offLine" jdbcType="INTEGER" />
+    <result column="command" property="command" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="method" property="method" jdbcType="VARCHAR" />
+    <result column="max_task" property="maxTask" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.celloud.backstage.model.App" extends="BaseResultMap" >
+    <result column="app_doc" property="appDoc" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    app_id, app_name, english_name, address, picture_name, create_date, intro, description, 
+    company_id, attribute, run_type, flag, run_data, data_num, param, off_line, command, 
+    title, method, max_task
+  </sql>
+  <sql id="Blob_Column_List" >
+    app_doc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_app
+    where app_id = #{appId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_app
+    where app_id = #{appId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.celloud.backstage.model.App" >
+    insert into tb_app (app_id, app_name, english_name, 
+      address, picture_name, create_date, 
+      intro, description, company_id, 
+      attribute, run_type, flag, 
+      run_data, data_num, param, 
+      off_line, command, title, 
+      method, max_task, app_doc
+      )
+    values (#{appId,jdbcType=INTEGER}, #{appName,jdbcType=VARCHAR}, #{englishName,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{pictureName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{intro,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{companyId,jdbcType=INTEGER}, 
+      #{attribute,jdbcType=INTEGER}, #{runType,jdbcType=INTEGER}, #{flag,jdbcType=INTEGER}, 
+      #{runData,jdbcType=INTEGER}, #{dataNum,jdbcType=INTEGER}, #{param,jdbcType=INTEGER}, 
+      #{offLine,jdbcType=INTEGER}, #{command,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{method,jdbcType=VARCHAR}, #{maxTask,jdbcType=INTEGER}, #{appDoc,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.celloud.backstage.model.App" >
+    insert into tb_app
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="appName != null" >
+        app_name,
+      </if>
+      <if test="englishName != null" >
+        english_name,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="pictureName != null" >
+        picture_name,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="intro != null" >
+        intro,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="attribute != null" >
+        attribute,
+      </if>
+      <if test="runType != null" >
+        run_type,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+      <if test="runData != null" >
+        run_data,
+      </if>
+      <if test="dataNum != null" >
+        data_num,
+      </if>
+      <if test="param != null" >
+        param,
+      </if>
+      <if test="offLine != null" >
+        off_line,
+      </if>
+      <if test="command != null" >
+        command,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="method != null" >
+        method,
+      </if>
+      <if test="maxTask != null" >
+        max_task,
+      </if>
+      <if test="appDoc != null" >
+        app_doc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="appName != null" >
+        #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="englishName != null" >
+        #{englishName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureName != null" >
+        #{pictureName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="intro != null" >
+        #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="attribute != null" >
+        #{attribute,jdbcType=INTEGER},
+      </if>
+      <if test="runType != null" >
+        #{runType,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="runData != null" >
+        #{runData,jdbcType=INTEGER},
+      </if>
+      <if test="dataNum != null" >
+        #{dataNum,jdbcType=INTEGER},
+      </if>
+      <if test="param != null" >
+        #{param,jdbcType=INTEGER},
+      </if>
+      <if test="offLine != null" >
+        #{offLine,jdbcType=INTEGER},
+      </if>
+      <if test="command != null" >
+        #{command,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null" >
+        #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="maxTask != null" >
+        #{maxTask,jdbcType=INTEGER},
+      </if>
+      <if test="appDoc != null" >
+        #{appDoc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.backstage.model.App" >
+    update tb_app
+    <set >
+      <if test="appName != null" >
+        app_name = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="englishName != null" >
+        english_name = #{englishName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureName != null" >
+        picture_name = #{pictureName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="intro != null" >
+        intro = #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="attribute != null" >
+        attribute = #{attribute,jdbcType=INTEGER},
+      </if>
+      <if test="runType != null" >
+        run_type = #{runType,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="runData != null" >
+        run_data = #{runData,jdbcType=INTEGER},
+      </if>
+      <if test="dataNum != null" >
+        data_num = #{dataNum,jdbcType=INTEGER},
+      </if>
+      <if test="param != null" >
+        param = #{param,jdbcType=INTEGER},
+      </if>
+      <if test="offLine != null" >
+        off_line = #{offLine,jdbcType=INTEGER},
+      </if>
+      <if test="command != null" >
+        command = #{command,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null" >
+        method = #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="maxTask != null" >
+        max_task = #{maxTask,jdbcType=INTEGER},
+      </if>
+      <if test="appDoc != null" >
+        app_doc = #{appDoc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where app_id = #{appId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.celloud.backstage.model.App" >
+    update tb_app
+    set app_name = #{appName,jdbcType=VARCHAR},
+      english_name = #{englishName,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      picture_name = #{pictureName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      intro = #{intro,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=INTEGER},
+      attribute = #{attribute,jdbcType=INTEGER},
+      run_type = #{runType,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=INTEGER},
+      run_data = #{runData,jdbcType=INTEGER},
+      data_num = #{dataNum,jdbcType=INTEGER},
+      param = #{param,jdbcType=INTEGER},
+      off_line = #{offLine,jdbcType=INTEGER},
+      command = #{command,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      method = #{method,jdbcType=VARCHAR},
+      max_task = #{maxTask,jdbcType=INTEGER},
+      app_doc = #{appDoc,jdbcType=LONGVARCHAR}
+    where app_id = #{appId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.celloud.backstage.model.App" >
+    update tb_app
+    set app_name = #{appName,jdbcType=VARCHAR},
+      english_name = #{englishName,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      picture_name = #{pictureName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      intro = #{intro,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=INTEGER},
+      attribute = #{attribute,jdbcType=INTEGER},
+      run_type = #{runType,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=INTEGER},
+      run_data = #{runData,jdbcType=INTEGER},
+      data_num = #{dataNum,jdbcType=INTEGER},
+      param = #{param,jdbcType=INTEGER},
+      off_line = #{offLine,jdbcType=INTEGER},
+      command = #{command,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      method = #{method,jdbcType=VARCHAR},
+      max_task = #{maxTask,jdbcType=INTEGER}
+    where app_id = #{appId,jdbcType=INTEGER}
+  </update>
+</mapper>

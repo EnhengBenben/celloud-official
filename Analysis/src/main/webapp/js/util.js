@@ -197,27 +197,30 @@ function ListAvg(list) {
 	}
 	
 }
-
+/**
+ * 自定义文件大小排序;
+ * jquery datatable
+ */
 jQuery.fn.dataTableExt.oSort['filesize-desc'] = function(a, b) {
 	if (a == null || b == null)
 		return 0;
 	var alen = a.substring(a.length - 2, a.lenght);
-	var blen = b.substring(a.length - 2, a.lenght);
+	var blen = b.substring(b.length - 2, b.lenght);
+	var av = parseFloat(a);
+	var bv = parseFloat(b);
 	
 	if (alen == blen) {// 单位一样比较数字
-		var av = parseFloat(a);
-		var bv = parseFloat(b);
-		return av > bv ? 0 : 1;
+		return av - bv;
 	} else {
 		if (alen == "GB" || alen == "gb") {
-			return 0;
-		} else if (alen == "KB" || alen == "kb") {
 			return 1;
+		} else if (alen == "KB" || alen == "kb") {
+			return -1;
 		} else {
 			if (blen == "GB" || blen == "gb") {
-				return 1;
+				return -1;
 			} else {
-				return 0;
+				return 1;
 			}
 		}
 	}
@@ -227,22 +230,22 @@ jQuery.fn.dataTableExt.oSort['filesize-asc'] = function(a, b) {
 	if (a == null || b == null)
 		return 0;
 	var alen = a.substring(a.length - 2, a.lenght);
-	var blen = b.substring(a.length - 2, a.lenght);
+	var blen = b.substring(b.length - 2, b.lenght);
 	
 	if (alen == blen) {// 单位一样比较数字
 		var av = parseFloat(a);
 		var bv = parseFloat(b);
-		return av < bv ? 0 : 1;
+		return bv - av ;
 	} else {
 		if (alen == "GB" || alen == "gb") {
-			return 1;
+			return -1;
 		} else if (alen == "KB" || alen == "kb") {
-			return 0;
+			return 1;
 		} else {
 			if (blen == "GB" || blen == "gb") {
-				return 0;
-			} else {
 				return 1;
+			} else {
+				return -1;
 			}
 		}
 	}

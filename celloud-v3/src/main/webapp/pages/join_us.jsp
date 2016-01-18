@@ -25,7 +25,7 @@
              <a href="<%=request.getContextPath() %>/#f6" class="subNavBtn">合作伙伴</a> 
              <a href="#" class="subNavBtn active">加入我们</a> 
              <h1><a href="<%=request.getContextPath() %>/">celloud</a></h1>
-             <div class="login"><a href="toLogin" class="btn-login">登录</a></div>
+             <div class="login"><a href="login" class="btn-login">登录</a></div>
          </div>
     </div>
     </div>

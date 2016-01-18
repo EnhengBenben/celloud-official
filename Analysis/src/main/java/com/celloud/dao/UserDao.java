@@ -10,55 +10,11 @@ import com.celloud.sdo.App;
 import com.celloud.sdo.DataFile;
 import com.celloud.sdo.Entry;
 import com.celloud.sdo.LoginLog;
-import com.celloud.sdo.TotalCount;
 import com.celloud.sdo.User;
 import com.google.inject.ImplementedBy;
 
 @ImplementedBy(UserDaoImpl.class)
 public interface UserDao {
-
-	/**
-	 * 指定时间内每个用户登录次数，倒序排序
-	 * 
-	 * @param beginDate
-	 * @param endDate
-	 * @return List<LoginLog>
-	 */
-	public List<LoginLog> logCountEveryUser(Date beginDate, Date endDate);
-
-	/**
-	 * 指定时间内每天的登录次数
-	 * 
-	 * @param beginDate
-	 * @param endDate
-	 * @return
-	 */
-	public List<LoginLog> logCountEveryDay(Date beginDate, Date endDate);
-
-	/**
-	 * 指定时间内所有浏览器的登录次数
-	 * 
-	 * @param beginDate
-	 * @param endDate
-	 * @return
-	 */
-	public List<LoginLog> logCountEveryBrowser(Date beginDate, Date endDate);
-
-	/**
-	 * 总用户数量统计
-	 * 
-	 * @return Integer
-	 */
-	public Integer userCount();
-
-	/**
-	 * 指定时间内新增的用户
-	 * 
-	 * @param beginDate
-	 * @param endDate
-	 * @return
-	 */
-	public Integer userAddBetweenDate(Date beginDate, Date endDate);
 
 	/**
 	 * 登录
@@ -212,13 +168,6 @@ public interface UserDao {
 	 * @return
 	 */
 	public List<User> getUserByCompany(Integer companyId, Integer role);
-
-	/***
-	 * 用户历史统计，与比较
-	 * 
-	 * @return
-	 */
-	public List<TotalCount> getCountInHistory();
 
 	/**
 	 * 查询时间内用户上传的文件大小

@@ -1,6 +1,11 @@
 package com.celloud.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.celloud.model.Feedback;
+import com.celloud.page.Page;
 
 public interface FeedbackMapper {
     int deleteByPrimaryKey(Integer id);
@@ -13,5 +18,9 @@ public interface FeedbackMapper {
 
     int updateByPrimaryKeySelective(Feedback record);
 
+    int updateByPrimaryKeyWithBLOBs(Feedback record);
+
     int updateByPrimaryKey(Feedback record);
+
+    public List<Feedback> selectByUserId(@Param("userId") Integer userId, Page page);
 }

@@ -85,11 +85,11 @@ public class CompanyDaoImpl implements CompanyDao {
 		List<Map<String, Object>> list = null;
 		Connection conn = ConnectManager.getConnection();
 
-		String sql = "select count(*) num,left(create_date,7) createDate from "
-				+ " (select c.company_name,c.create_date "
-				+ " from tb_user u,tb_dept d,tb_company c where u.dept_id=d.dept_id and c.state=0 and c.company_id=d.company_id "
-				// + SqlController.whereCompany("u", role, companyId)
-				+ SqlController.notUserId("u", noUserid) + "group by c.company_id) t group by createDate";
+		String sql = "select count(t.company_id) num,left(t.create_date,7) createDate from "
+				+ " (select distinct(c.company_id),left(c.create_date,7)as create_date from tb_user u,tb_company c,tb_user_company_relat uc "
+				+ " where u.company_id = c.company_id and u.user_id = uc.user_id and c.state=0  "
+				+ SqlController.whereCompany("uc", "company_id", role, companyId)
+				+ SqlController.notUserId("u", noUserid) + ") t group by createDate";
 		LogUtil.info(log, sql);
 
 		try {
