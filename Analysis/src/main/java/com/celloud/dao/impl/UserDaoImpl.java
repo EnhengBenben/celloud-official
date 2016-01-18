@@ -21,7 +21,6 @@ import com.celloud.sdo.App;
 import com.celloud.sdo.DataFile;
 import com.celloud.sdo.Entry;
 import com.celloud.sdo.LoginLog;
-import com.celloud.sdo.TotalCount;
 import com.celloud.sdo.User;
 import com.celloud.utils.ConnectManager;
 import com.celloud.utils.LogUtil;
@@ -31,116 +30,7 @@ import com.celloud.utils.SqlController;
 public class UserDaoImpl implements UserDao {
 	Logger log = Logger.getLogger(UserDaoImpl.class);
 	private QueryRunner qr = new QueryRunner();
-	private String noUsername = PropertiesUtil.noUsername;
 	private String noUserid = PropertiesUtil.noUserid;
-
-	@Override
-	public List<LoginLog> logCountEveryUser(Date beginDate, Date endDate) {
-		Connection conn = ConnectManager.getConnection();
-		List<LoginLog> list = null;
-		try {
-			ResultSetHandler<List<LoginLog>> rsh = new BeanListHandler<LoginLog>(LoginLog.class);
-			StringBuffer sql = new StringBuffer(
-					"select user_name as userName,count(*) as logNum from tb_log where 1=1");
-			if (beginDate != null) {
-				sql.append(" and log_date>'").append(beginDate).append("'");
-			}
-			if (endDate != null) {
-				sql.append(" and log_date<'").append(endDate).append("'");
-			}
-			sql.append(" and user_name not in (").append(noUsername).append(") group by userName order by logNum desc");
-			list = qr.query(conn, sql.toString(), rsh);
-		} catch (SQLException e) {
-			log.error("统计指定时间内每个用户登录次数出错！！！" + e);
-			e.printStackTrace();
-		}
-		return list;
-	}
-
-	@Override
-	public List<LoginLog> logCountEveryDay(Date beginDate, Date endDate) {
-		Connection conn = ConnectManager.getConnection();
-		List<LoginLog> list = null;
-		try {
-			ResultSetHandler<List<LoginLog>> rsh = new BeanListHandler<LoginLog>(LoginLog.class);
-			StringBuffer sql = new StringBuffer(
-					"select date_format(log_date,'%Y-%c-%d') as logDate,count(*) as logNum from tb_log where 1=1");
-			if (beginDate != null) {
-				sql.append(" and log_date>'").append(beginDate).append("'");
-			}
-			if (endDate != null) {
-				sql.append(" and log_date<'").append(endDate).append("'");
-			}
-			sql.append(" and user_name not in (").append(noUsername).append(") group by logDate");
-			list = qr.query(conn, sql.toString(), rsh);
-		} catch (SQLException e) {
-			log.error("统计指定时间内所有用户每天登录次数出错！！！" + e);
-			e.printStackTrace();
-		}
-		return list;
-	}
-
-	@Override
-	public List<LoginLog> logCountEveryBrowser(Date beginDate, Date endDate) {
-		Connection conn = ConnectManager.getConnection();
-		List<LoginLog> list = null;
-		try {
-			ResultSetHandler<List<LoginLog>> rsh = new BeanListHandler<LoginLog>(LoginLog.class);
-			StringBuffer sql = new StringBuffer("select os,browser from tb_log from tb_log where 1=1");
-			if (beginDate != null) {
-				sql.append(" and log_date>'").append(beginDate).append("'");
-			}
-			if (endDate != null) {
-				sql.append(" and log_date<'").append(endDate).append("'");
-			}
-			sql.append(" and user_name not in (").append(noUsername).append(") group by browser");
-			list = qr.query(conn, sql.toString(), rsh);
-		} catch (SQLException e) {
-			log.error("指定时间内所有浏览器的登录次数出错！！！" + e);
-			e.printStackTrace();
-		}
-		return list;
-	}
-
-	@Override
-	public Integer userCount() {
-		Connection conn = ConnectManager.getConnection();
-		int count = 0;
-		try {
-			ResultSetHandler<LoginLog> rsh = new BeanHandler<LoginLog>(LoginLog.class);
-			StringBuffer sql = new StringBuffer("select count(*) as logNum from tb_user where state=0 and role != 3");
-			sql.append(" and username not in (").append(noUsername).append(")");
-			LoginLog loginlog = qr.query(conn, sql.toString(), rsh);
-			count = loginlog.getLogNum();
-		} catch (SQLException e) {
-			log.error("统计所有用户数量出错！！！" + e);
-			e.printStackTrace();
-		}
-		return count;
-	}
-
-	@Override
-	public Integer userAddBetweenDate(Date beginDate, Date endDate) {
-		int count = 0;
-		Connection conn = ConnectManager.getConnection();
-		try {
-			ResultSetHandler<LoginLog> rsh = new BeanHandler<LoginLog>(LoginLog.class);
-			StringBuffer sql = new StringBuffer("select count(*) as logNum from tb_user where 1=1");
-			if (beginDate != null) {
-				sql.append(" and create_date>'").append(beginDate).append("'");
-			}
-			if (endDate != null) {
-				sql.append(" and create_date<'").append(endDate).append("'");
-			}
-			sql.append(" and username not in (").append(noUsername).append(")");
-			LoginLog loginlog = qr.query(conn, sql.toString(), rsh);
-			count = loginlog.getLogNum();
-		} catch (SQLException e) {
-			log.error("统计指定时间段新增的用户数量出错！！！" + e);
-			e.printStackTrace();
-		}
-		return count;
-	}
 
 	@Override
 	public User login(String username, String password) {
@@ -446,37 +336,6 @@ public class UserDaoImpl implements UserDao {
 		// + SqlController.whereCompany("u", role, companyId);
 		try {
 			ResultSetHandler<List<User>> rsh = new BeanListHandler<User>(User.class);
-			log.info("query:" + sql);
-			list = qr.query(conn, sql, rsh);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-
-	@Override
-	public List<TotalCount> getCountInHistory() {
-		List<TotalCount> list = null;
-		Connection conn = ConnectManager.getConnection();
-
-		String sql = "select tb1.weekDate as time, tb1.logNum, tb2.activityUser,ifnull(tb3.runNum,0) as runNum,ifnull(tb4.activityApp,0) as activityApp,ifnull(tb5.dataSize,0)as dataSize from "
-
-				+ " (select  left(date_add(l.log_date ,INTERVAL -weekday(l.log_date ) day),10)as weekDate,count(l.user_name)logNum "
-				+ " from tb_log l " + SqlController.notUserName("l", "user_name", noUsername)
-				+ " group by weekDate) tb1" + " left join"
-				+ " (select  left(date_add(l.log_date ,INTERVAL -weekday(l.log_date ) day),10)as weekDate,count(DISTINCT(l.user_name))as activityUser"
-				+ " from tb_log l " + SqlController.notUserName("l", "user_name", noUsername) + " group by weekDate)tb2"
-				+ " on tb1.weekDate = tb2.weekDate" + " left join"
-				+ " (select left(date_add(r.create_date ,INTERVAL -weekday(r.create_date ) day),10)as weekDate,count(r.report_id)as runNum from tb_report r "
-				+ " on tb1.weekDate = tb3.weekDate" + " left join"
-				+ " (select left(date_add(r.create_date ,INTERVAL -weekday(r.create_date ) day),10)as weekDate,count(distinct(r.app_id))as activityApp from tb_report r "
-				+ " on tb1.weekDate = tb4.weekDate" + " left join"
-				+ " (select left(date_add(f.create_date ,INTERVAL -weekday(f.create_date ) day),10)as weekDate,sum(ifnull(f.size,0))as dataSize from tb_file f"
-				+ " on tb1.weekDate = tb5.weekDate" + " order by tb1.weekDate desc " + " limit 24";
-
-		log.info("query:" + sql);
-		try {
-			ResultSetHandler<List<TotalCount>> rsh = new BeanListHandler<TotalCount>(TotalCount.class);
 			log.info("query:" + sql);
 			list = qr.query(conn, sql, rsh);
 		} catch (SQLException e) {

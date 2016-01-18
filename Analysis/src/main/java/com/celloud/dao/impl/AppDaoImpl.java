@@ -27,7 +27,6 @@ public class AppDaoImpl implements AppDao {
 	Logger log = Logger.getLogger(ReportDaoImpl.class);
 	private QueryRunner qr = new QueryRunner();
 	private String noUserid = PropertiesUtil.noUserid;
-	private String noUsername = PropertiesUtil.noUsername;
 
 	@Override
 	public Object getBigUserAPPNum(Connection conn, Integer companyId, int role) {
