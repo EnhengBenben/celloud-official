@@ -10,7 +10,7 @@
 		</c:forEach>
 		</span>
 		<div class="toolbar">
-			<a href="javascript:printGDD(${cmpReport.projectId },${cmpReport.dataKey },${cmpReport.userId },${cmpReport.appId })" class="btn btn-default"><i class="i-print"></i>打印GDD报告</a>
+			<a href="javascript:printGDD(${cmpReport.projectId },${cmpReport.dataKey },${cmpReport.appId })" class="btn btn-default"><i class="i-print"></i>打印GDD报告</a>
 		</div>
 	</div>
 	<div id="printCMPContext">

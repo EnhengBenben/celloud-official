@@ -163,6 +163,7 @@ public class ReportAction {
      * @author leamo
      * @date 2016年1月18日 上午11:20:57
      */
+    @RequestMapping("printLessCMPReport")
     public ModelAndView printLessCMPReport(String dataKey, Integer projectId,
             Integer appId) {
         return getCMPModelAndView("print/print_cmp_less", dataKey, projectId,
@@ -179,6 +180,7 @@ public class ReportAction {
      * @author leamo
      * @date 2016年1月18日 上午11:20:57
      */
+    @RequestMapping("printMoreCMPReport")
     public ModelAndView printMoreCMPReport(String dataKey, Integer projectId,
             Integer appId) {
         return getCMPModelAndView("print/print_cmp_more", dataKey, projectId,
@@ -259,7 +261,6 @@ public class ReportAction {
         List<CmpGeneSnpResult> gsrList = reportService.getGddResult(
                 cmpReport.getDataKey(),
                 cmpReport.getProjectId(), cmpReport.getAppId());
-
         ModelAndView mv = getModelAndView("print/print_gdd");
         mv.addObject("cmpReport", cmpReport);
         mv.addObject("gsrList", gsrList);
