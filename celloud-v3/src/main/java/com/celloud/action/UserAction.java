@@ -73,6 +73,13 @@ public class UserAction {
         return Response.SAVE_SUCCESS.setData(user);
     }
 
+    /**
+     * 用户修改密码
+     * 
+     * @param oldPassword
+     * @param newPassword
+     * @return
+     */
     @RequestMapping("updatePassword")
     @ResponseBody
     public Response updatePassword(String oldPassword, String newPassword) {
@@ -81,7 +88,7 @@ public class UserAction {
         if (userService.login(user) == null) {
             return WRONG_PASSWORD;
         }
-        int result = userService.updatePassword(user.getUserId(), MD5Util.getMD5(newPassword));
+        int result = userService.updatePassword(user.getUserId(), newPassword);
         return result > 0 ? Response.SAVE_SUCCESS : UPDATE_PASSWORD_FAIL;
     }
 

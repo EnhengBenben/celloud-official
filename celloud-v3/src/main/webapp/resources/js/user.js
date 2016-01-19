@@ -159,6 +159,9 @@ var users = (function(users) {
 				$("#oldPwdSpanInfo").html("原始密码错误");
 				$("#inputOldPassword").focus();
 			} else {
+				if(data.success){
+					$("#updatePasswordForm")[0].reset();
+				}
 				$("#resetPwdSpanInfo").show();
 				$("#resetPwdSpanInfo").html(data.message);
 			}
