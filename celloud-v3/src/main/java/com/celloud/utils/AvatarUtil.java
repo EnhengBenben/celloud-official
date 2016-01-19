@@ -10,6 +10,12 @@ import com.celloud.constants.ConstantsData;
  * @date 2016年1月7日 下午4:23:24
  */
 public class AvatarUtil {
+    /**
+     * 根据名字获取用户头像
+     * 
+     * @param avatar
+     * @return
+     */
     public static String getAvatar(String avatar) {
         if (avatar == null || avatar.trim().equals("")) {
             return getDefaultAvatar();
@@ -21,14 +27,16 @@ public class AvatarUtil {
         if (ConstantsData.getSession().getServletContext().getRealPath("avatar/" + avatar) == null) {
             return getDefaultAvatar();
         }
-        return ConstantsData.getRequset().getContextPath() + "/images/avatar/" + avatar+".png";
+        return ConstantsData.getRequset().getContextPath() + "/images/avatar/" + avatar + ".png";
     }
 
+    /**
+     * 获取默认的用户头像
+     * 
+     * @return
+     */
     public static String getDefaultAvatar() {
-        return ConstantsData.getRequset().getContextPath() + "/images/avatar/" + Constants.DELAULT_AVATAR+".png";
+        return ConstantsData.getRequset().getContextPath() + "/images/avatar/" + Constants.DELAULT_AVATAR + ".png";
     }
 
-    public static String encrypt() {
-        return null;
-    }
 }
