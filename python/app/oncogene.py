@@ -80,9 +80,9 @@ class oncogene:
 		if os.path.exists(svgPath):
 			# 所有已知图片
 			allKnown = ['1_all.png', '2_all.png', '3_all.png', '4_all.png','5_all.png',
-				'ERCC1.118.png',
-				'EGFR.719.png', 'EGFR.768.png', 'EGFR.790.png', 'EGFR.858.png',
-				'EGFR.861.png' ,'KRAS.12.png','KRAS.13.png','UGT1A1.71.png',
+				'ERCC1.118.3.png',
+				'EGFR.719.3.png', 'EGFR.768.3.png', 'EGFR.790.3.png', 'EGFR.858.3.png',
+				'EGFR.861.3.png' ,'KRAS.12.3.png','KRAS.13.3.png','UGT1A1.71.3.png',
 				'ERCC1.118.10.png',
 				'EGFR.719.10.png','EGFR.768.10.png','EGFR.790.10.png','EGFR.858.10.png',
 				'EGFR.861.10.png', 'KRAS.12.10.png','KRAS.13.10.png','UGT1A1.71.10.png',
