@@ -56,13 +56,13 @@ public class HomeAction {
     @RequestMapping(value = "resetPassword.html", method = RequestMethod.POST)
     public ModelAndView resetPassword(String username, String password, String randomCode, HttpSession session) {
         // TODO 添加rsa加密
-        ModelAndView mv = new ModelAndView("user/resetPassword");
+        ModelAndView mv = new ModelAndView("user/user_pwd_reset");
         String userId = String.valueOf(session.getAttribute(Constants.RESET_PASSWORD_USER_ID));
         if (userId == null) {
             return mv.addObject("info", "请求不合法").addObject("forbidden", "forbidden");
         }
         User user = userService.getUserByFindPwd(username, randomCode);
-        if (!userId.equals(String.valueOf(user.getUserId()))) {
+        if (user == null || !userId.equals(String.valueOf(user.getUserId()))) {
             return mv.addObject("info", "请求不合法").addObject("forbidden", "forbidden");
         }
         session.removeAttribute(Constants.RESET_PASSWORD_USER_ID);
@@ -102,7 +102,7 @@ public class HomeAction {
                 user.getEmail());
         email = email.substring(0, 1) + "***" + email.substring(email.lastIndexOf("@"));
         String emailAddress = "http://mail." + email.substring(email.lastIndexOf("@") + 1);
-        return mv.addObject("sucess", "ok").addObject("email", email).addObject("emailAddress", emailAddress);
+        return mv.addObject("success", "ok").addObject("email", email).addObject("emailAddress", emailAddress);
     }
 
     @RequestMapping(value = "findPassword.html", method = RequestMethod.GET)

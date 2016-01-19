@@ -10,6 +10,11 @@ var wid =$(window).width();
 		$('#kaptchaImage').click(function() {
 			$(this).hide().attr('src','kaptcha.jpg?' + Math.floor(Math.random() * 100)).fadeIn();
 		});
+		$(document).on("keypress","#findPasswordForm",function(e){
+			if(e.keyCode==13){
+				submitEmail();
+			}
+		});
 	});
 	//跳转到登录页面
 	function forwardIndex(){
@@ -20,16 +25,19 @@ var wid =$(window).width();
 		var email = $("#inputEmail").val();
 		if(!email){
 			$(".error").html("请输入邮箱");
+			$("#inputEmail").focus();
 			return false;
 		}
 		var filter  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 		if (!filter.test(email)){
 			$(".error").html("您的电子邮件格式不正确");
+			$("#inputEmail").focus();
 			return false;
 		}
 		var validateCode = $("#inputValidateCode").val();
 		if(!validateCode){
 			$(".error").html("请输入验证码");
+			$("#inputValidateCode").focus();
 			return false;
 		}
 		return true;

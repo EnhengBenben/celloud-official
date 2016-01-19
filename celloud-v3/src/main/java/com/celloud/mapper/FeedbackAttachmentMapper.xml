@@ -42,7 +42,6 @@
 			#{item.fileType,jdbcType=VARCHAR},
 			#{item.filePath,jdbcType=VARCHAR})
 		</foreach>
-
 	</insert>
 	<insert id="insertSelective" parameterType="com.celloud.model.FeedbackAttachment">
 		insert into tb_feedback_attachment

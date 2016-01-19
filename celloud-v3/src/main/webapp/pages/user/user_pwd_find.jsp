@@ -76,7 +76,7 @@
     </div>
     <!--#E bgContainer-->
     <script type="text/javascript" src="<%=request.getContextPath()%>/plugins/jQuery/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/user_pwd_reset.js?version=3.0"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/user_pwd_reset.js?version=3.1"></script>
     <script type="text/javascript">
     //判断浏览器是否支持 placeholder属性
     function isPlaceholder(){
