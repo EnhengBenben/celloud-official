@@ -51,6 +51,19 @@ public interface ReportMapper {
     int updateByPrimaryKeySelective(Report record);
 
     int updateByPrimaryKey(Report record);
+    
+    /**
+     * 根据外键组合修改非外键字段
+     * 
+     * 外键组合：user_id（可选），app_id（可选），file_id（flag==0时必选，flag==1时无效），project_id（必选），flag（必选）
+     * 修改（均可选）：period，readed，state，end_date，print_context，context
+     * 
+     * @param report
+     * @return
+     * @author lin
+     * @date 2016年1月19日上午10:22:28
+     */
+	int updateReport(Report report);
 
     /**
      * 修改项目运行状态
