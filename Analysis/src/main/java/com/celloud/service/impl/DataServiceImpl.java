@@ -1,12 +1,17 @@
 package com.celloud.service.impl;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.celloud.dao.DataDao;
+import com.celloud.dao.UserDao;
 import com.celloud.sdo.DataFile;
+import com.celloud.sdo.User;
 import com.celloud.service.DataService;
 import com.celloud.utils.ConnectManager;
 import com.celloud.utils.EntryUtil;
@@ -15,6 +20,8 @@ import com.google.inject.Inject;
 public class DataServiceImpl implements DataService {
 	@Inject
 	private DataDao dataDao;
+	@Inject
+	private UserDao userDao;
 
 	@Override
 	public List<Map<String, Object>> getUserList(Integer companyId, Integer role, String orderType) {
@@ -92,6 +99,61 @@ public class DataServiceImpl implements DataService {
 	public List<DataFile> getBigUserData() {
 
 		return dataDao.getBigUserData();
+	}
+
+	@Override
+	public Map<String, Object> getAllBigUserMonthData() {
+		Connection conn = ConnectManager.getConnection();
+		List<DataFile> list = null;
+		list = dataDao.getAllBigUserMonthData(conn);
+		List<User> userList = userDao.getBigUserList(conn);
+		ConnectManager.close(conn);
+		List<String> times = new ArrayList<>(48);
+		Map<String, Object> map = new HashMap<>();
+		Set<String> compnayNames = new HashSet<>(10);
+		for (User u : userList) {
+			compnayNames.add(u.getCompany_name());
+		}
+		map.put("companyNames", compnayNames);
+		for (DataFile item : list) {
+			if (!times.contains(item.getYearMonth())) {
+				times.add(item.getYearMonth());
+			}
+		}
+		map.put("xAxis", times);
+		for (String time : times) {
+			for (String cmpName : compnayNames) {
+				getDataFileMap(map, cmpName).add(getDataFileList(time, cmpName, list));
+			}
+		}
+		return map;
+	}
+
+	public List<DataFile> getDataFileMap(Map<String, Object> map, String cmpName) {
+		Object object = map.get(cmpName);
+		if (object == null) {
+			object = new ArrayList<DataFile>();
+			map.put(cmpName, object);
+		}
+		return (List<DataFile>) object;
+	}
+
+	public DataFile getDataFileList(String time, String cmpName, List<DataFile> list) {
+		DataFile df = null;
+		for (DataFile f : list) {
+			if (f.getYearMonth().equals(time) && f.getCompany_name().equals(cmpName)) {
+				df = f;
+				break;
+			}
+		}
+
+		if (df == null) {
+			df = new DataFile();
+			df.setYearMonth(time);
+			df.setCompany_name(cmpName);
+			df.setFileNum(0);
+		}
+		return df;
 	}
 
 }

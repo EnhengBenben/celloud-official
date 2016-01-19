@@ -14,7 +14,7 @@ public class LoginLog implements Serializable {
 	private String os;
 	/** IP地址 */
 	private String ip;
-
+	private String browser_version;
 	private String address;
 	/** 每人/每天/每个浏览器的登录次数 */
 	private Integer logNum;
@@ -103,5 +103,13 @@ public class LoginLog implements Serializable {
 
 	public void setLogNum(Integer logNum) {
 		this.logNum = logNum;
+	}
+
+	public String getBrowser_version() {
+		return browser_version;
+	}
+
+	public void setBrowser_version(String browser_version) {
+		this.browser_version = browser_version;
 	}
 }

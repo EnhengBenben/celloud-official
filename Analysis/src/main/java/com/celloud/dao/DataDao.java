@@ -91,4 +91,11 @@ public interface DataDao {
 	 */
 	public List<DataFile> getBigUserData();
 
+	/**
+	 * 查询各大客户各月的数据量
+	 * 
+	 * @return
+	 */
+	public List<DataFile> getAllBigUserMonthData(Connection conn);
+
 }

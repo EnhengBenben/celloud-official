@@ -12,6 +12,7 @@ import com.celloud.dao.ReportDao;
 import com.celloud.dao.UserDao;
 import com.celloud.sdo.App;
 import com.celloud.sdo.Company;
+import com.celloud.sdo.LoginLog;
 import com.celloud.service.HomeService;
 import com.celloud.utils.ConnectManager;
 import com.google.inject.Inject;
@@ -39,12 +40,14 @@ public class HomeServiceImpl implements HomeService {
 		Object dataNum = dataDao.getBigUserDataNum(conn, cmpId, role);
 		Object dataSize = dataDao.getBigUserDataSize(conn, cmpId, role);
 		ConnectManager.close(conn);
+		List<LoginLog> browser = appDao.getBrowerCount();
 		resultMap.put("dataNum", dataNum);
 		resultMap.put("dataSize", dataSize);
 		resultMap.put("userNum", userNum);
 		resultMap.put("companyNum", companyNum);
 		resultMap.put("reportNum", reportNum);
 		resultMap.put("appNum", appNum);
+		resultMap.put("browser", browser);
 		return resultMap;
 	}
 

@@ -48,15 +48,13 @@
 				</div>
 			</div>
 			<div class="col-sm-3">
-				<div class="xe-widget xe-counter-block xe-counter-block-purple" data-count=".num" data-from="0" data-to="${resultMap.size}", data-suffix="${resultMap.unit }"
-					data-duration="3">
+				<div class="xe-widget xe-counter-block xe-counter-block-purple" data-count=".num" data-from="0" data-to="${resultMap.size}"
+					, data-suffix="${resultMap.unit }" data-duration="3">
 					<div class="xe-upper">
 						<div class="xe-icon"></div>
 						<div class="xe-label">
 							<strong>数据大小:</strong>
-							<strong class="num">
-								${resultMap.size}${resultMap.unit}
-							</strong>
+							<strong class="num"> ${resultMap.size}${resultMap.unit} </strong>
 						</div>
 					</div>
 					<div class="xe-lower">
@@ -65,6 +63,9 @@
 				</div>
 			</div>
 		</div>
+			<h3 class="header smaller lighter green">大客户数据增量曲线图</h3>
+			<div class="col-xs-12" style="height: 350px;" id="bigUserFileNumView"></div>
+
 		<h3 class="header smaller lighter green">数据量统计</h3>
 		<div class="col-xs-12" style="height: 350px;" id="fileNumView"></div>
 		<div class="col-xs-12" style="height: 350px;" id="fileTotalNum"></div>
@@ -107,7 +108,7 @@
 					<!-- PAGE CONTENT ENDS -->
 					<!-- /.col -->
 				</div>
-			</c:if>xe-counter-block
+			</c:if>
 			<!-- PAGE CONTENT ENDS -->
 		</div>
 		<!-- /.col -->
@@ -117,8 +118,29 @@
 <!-- /.page-content -->
 <script type="text/javascript">
 	var getUsersMonthDataURL = "data!getUsersMonthData";
-	$.get(getUsersMonthDataURL, {}, function(data) {
+	var getBigUserMonthURL = "data!getAllBigUserMonthData";
+	$.get(getBigUserMonthURL, {}, function(data) {
 		console.log(data);
+		var listCmp = data["companyNames"];
+		var xAxis = data["xAxis"];
+		var opt
+		for (var i = 0; i < listCmp.length; i++) {
+			var temp = data[listCmp[i]];
+			var yAxis = new Array(temp.length);
+			for(var j=0;j<temp.length;j++){
+				yAxis[j]=temp[j].fileNum;
+			}
+			if (i == 0) {
+				opt = makeOptionScrollUnit(xAxis, yAxis, listCmp[0], lineType, 100, xAxis.length);
+			} else {
+				opt = makeOptionAdd(opt, yAxis, listCmp[i], lineType);
+			}
+		}
+		  var bigUserView = echarts.init(document.getElementById('bigUserFileNumView'));
+		  bigUserView.setOption(opt);
+	});
+	
+	$.get(getUsersMonthDataURL, {}, function(data) {
 		var xAxis = new Array(data.length);
 		var yAxis = new Array(data.length);
 		var yAxisCount = new Array(data.length);
@@ -129,18 +151,17 @@
 		}
 		yAxisCount[0] = yAxis[0];
 		for (var i = 1; i < yAxis.length; i++) {
-			yAxisCount[i] =yAxisCount[i-1]+yAxis[i] ;
+			yAxisCount[i] = yAxisCount[i - 1] + yAxis[i];
 		}
 		
-		var fileNumOpt = makeOptionScrollUnit(xAxis, yAxis, '数据增量曲线图', lineType, 100,xAxis.length,"阴影");
-		var fileTotalOpt = makeOptionScrollUnit(xAxis, yAxisCount, "数据量累计图", lineType,100,xAxis.length);
+		var fileNumOpt = makeOptionScrollUnit(xAxis, yAxis, '数据增量曲线图', lineType, 100, xAxis.length, "阴影");
+		var fileTotalOpt = makeOptionScrollUnit(xAxis, yAxisCount, "数据量累计图", lineType, 100, xAxis.length);
 		
 		var fileNumChart = echarts.init(document.getElementById('fileNumView'));
-	      var fileTotalNum = echarts.init(document.getElementById('fileTotalNum'));
-
-		fileNumChart.setOption(fileNumOpt);
+		var fileTotalNum = echarts.init(document.getElementById('fileTotalNum'));
 		fileTotalNum.setOption(fileTotalOpt);
-
+		fileNumChart.setOption(fileNumOpt);
+		
 	});
 	
 	jQuery(function($) {

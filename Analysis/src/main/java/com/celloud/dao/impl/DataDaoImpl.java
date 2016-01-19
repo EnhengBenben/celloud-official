@@ -195,4 +195,25 @@ public class DataDaoImpl implements DataDao {
 		}
 		return list;
 	}
+
+	@Override
+	public List<DataFile> getAllBigUserMonthData(Connection conn) {
+		List<DataFile> list = null;
+		String sql = "select uc.company_id,count(f.file_id)as fileNum ,left(f.create_date,7)as yearMonth,c.company_name "
+				+ " from tb_user_company_relat uc join tb_user u on uc.user_id = u.user_id join tb_file f on u.user_id = f.user_id left join tb_company c on uc.company_id = c.company_id "
+				+ " where f.user_id not in ( " + noUserid
+				+ ")  group by uc.company_id,yearMonth order by yearMonth asc";
+		ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
+		LogUtil.info(log, sql);
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			list = rsh.handle(rs);
+		} catch (SQLException e) {
+			LogUtil.erro(log, e);
+		}
+		LogUtil.info(log, list);
+		return list;
+	}
+
 }

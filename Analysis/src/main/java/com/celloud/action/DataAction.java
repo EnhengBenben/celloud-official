@@ -30,7 +30,8 @@ import com.google.inject.Inject;
 		@Result(name = "bigUserTable", location = "../../pages/bigUserOne.jsp"),
 		@Result(name = "success", type = "json", params = { "root", "fileName" }),
 		@Result(name = "ListMap", type = "json", params = { "root", "list" }),
-		@Result(name = "DataList", type = "json", params = { "root", "dataList" }) })
+		@Result(name = "DataList", type = "json", params = { "root", "dataList" }),
+		@Result(name = "resultMap", type = "json", params = { "root", "resultMap" }) })
 
 public class DataAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
@@ -38,6 +39,7 @@ public class DataAction extends BaseAction {
 	@Inject
 	private DataService dataService;
 	private List<Map<String, Object>> list;
+	private Map<String, Object> resultMap;
 	private List<DataFile> dataList;
 	private Integer userId;
 	private String month;
@@ -89,6 +91,21 @@ public class DataAction extends BaseAction {
 			e.printStackTrace();
 		}
 		return "bigUserTable";
+	}
+
+	/**
+	 * 查询各大客户可月的数据量
+	 * 
+	 * @return
+	 */
+	public String getAllBigUserMonthData() {
+		try {
+			resultMap = dataService.getAllBigUserMonthData();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		LogUtil.info(log, resultMap);
+		return "resultMap";
 	}
 
 	/**
@@ -220,6 +237,14 @@ public class DataAction extends BaseAction {
 
 	public String getFileName() {
 		return fileName;
+	}
+
+	public Map<String, Object> getResultMap() {
+		return resultMap;
+	}
+
+	public void setResultMap(Map<String, Object> resultMap) {
+		this.resultMap = resultMap;
 	}
 
 	public void setFileName(String fileName) {

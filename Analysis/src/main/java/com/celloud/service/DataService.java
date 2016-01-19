@@ -83,4 +83,11 @@ public interface DataService {
 	 * @return
 	 */
 	public List<DataFile> getBigUserData();
+
+	/**
+	 * 查询各大客户各月的数据量
+	 * 
+	 * @return
+	 */
+	public Map<String, Object> getAllBigUserMonthData();
 }

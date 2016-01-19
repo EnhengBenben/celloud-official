@@ -408,4 +408,17 @@ public class UserDaoImpl implements UserDao {
 		return list;
 	}
 
+	@Override
+	public List<User> getBigUserList(Connection conn) {
+		List<User> list = null;
+		String sql = "select distinct(uc.company_id),c.company_name from tb_user_company_relat uc left join tb_company c on uc.company_id = c.company_id where c.company_name is not null and c.state=0";
+		LogUtil.info(log, sql);
+		ResultSetHandler<List<User>> rsh = new BeanListHandler<>(User.class);
+		try {
+			list = qr.query(conn, sql, rsh);
+		} catch (SQLException e) {
+			LogUtil.query(log, sql, e);
+		}
+		return list;
+	}
 }

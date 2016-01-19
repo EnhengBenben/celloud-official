@@ -195,4 +195,10 @@ public interface UserDao {
 
 	public List<App> getUserRunApp(Connection conn, int role, int cmpId, Date start, Date end, int topN);
 
+	/**
+	 * 取得大客户列表
+	 * 
+	 * @return
+	 */
+	public List<User> getBigUserList(Connection conn);
 }
