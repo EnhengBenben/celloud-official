@@ -15,7 +15,7 @@ public class Report {
 
     private Integer period;
 
-    private Integer flag;
+    private Integer flag = 0;
 
     private Integer readed;
 

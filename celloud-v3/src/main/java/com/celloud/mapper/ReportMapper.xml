@@ -260,6 +260,41 @@
     </set>
     where report_id = #{reportId,jdbcType=INTEGER}
   </update>
+  <update id="updateReport" parameterType="com.celloud.model.Report" >
+    update tb_report
+    <set >
+      <if test="period != null" >
+        period = #{period,jdbcType=INTEGER},
+      </if>
+      <if test="readed != null" >
+        readed = #{readed,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="printContext != null" >
+        print_context = #{printContext,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="context != null" >
+        context = #{context,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where 1 = 1
+    <if test="userId != null" >
+    	and user_id = #{userId,jdbcType=INTEGER}
+    </if>
+    <if test="appId != null" >
+    	and app_id = #{appId,jdbcType=INTEGER}
+    </if>
+    <if test="flag == 0" >
+	    and file_id = #{fileId,jdbcType=INTEGER}
+    </if>
+    and project_id = #{projectId,jdbcType=INTEGER}
+    and flag = #{flag,jdbcType=INTEGER}
+  </update>
   <update id="updateByPrimaryKey" parameterType="com.celloud.model.Report" >
     update tb_report
     set user_id = #{userId,jdbcType=INTEGER},

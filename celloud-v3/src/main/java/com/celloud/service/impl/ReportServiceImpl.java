@@ -686,4 +686,9 @@ public class ReportServiceImpl implements ReportService {
 	public Report getReport(Integer userId, Integer appId,Integer projectId, Integer fileId, Integer flag) {
 		return reportMapper.getReport(userId, appId,projectId, fileId, flag);
 	}
+
+	@Override
+	public int updateReport(Report report) {
+		return reportMapper.updateReport(report);
+	}
 }

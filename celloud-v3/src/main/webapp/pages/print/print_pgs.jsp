@@ -5,7 +5,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/plugins/bootstrap/css/bootstrap.css">
-<link rel="stylesheet" href="<%=request.getContextPath() %>/plugins/bootstrap/css/bootstrap-responsive.css">
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
 <!-- jquery_alert_dialogs begin -->
 <script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
@@ -177,13 +176,13 @@ a:hover, a:focus{
 <![endif]-->
 </head>
 <body>
-	<c:if test="${!empty context }">
-		${context}
+	<c:if test="${!empty printContext }">
+		${printContext}
 	</c:if>
-	<c:if test="${empty context }">
-		<div style="display: none;" id="_userId">${userId}</div>
+	<c:if test="${empty printContext }">
 		<div style="display: none;" id="_appId">${appId}</div>
-		<div style="display: none;" id="_fileId">${fileId}</div>
+		<div style="display: none;" id="_fileId">${report.fileId}</div>
+		<div style="display: none;" id="_projectId">${report.projectId}</div>
 		<div class="row Noprn" style="margin:20px auto;">
 			<a href="javascript:void(0)" onclick="savePage()" class="print-blue">保存</a>
 			<a href="javascript:void(0)" onclick="reset()" class="print-blue">重置</a>
@@ -591,7 +590,7 @@ a:hover, a:focus{
 		$("#des2").children().html($("#des2").children().val());
 		$("#des3").children().html($("#des3").children().val());
 		var url = window.location.href.split("printPGS")[0];
-		$.post(url+"updateContext",{"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":$("body").html()},function(result){
+		$.post(url+"updateContext",{"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"projectId":$("#_projectId").html(),"printContext":$("body").html()},function(result){
 			if(result==1){
 				jAlert("信息保存成功！");
 			}else{
@@ -602,7 +601,7 @@ a:hover, a:focus{
 	function reset(){
 		if(confirm("确定要重置之前保存的报告吗？")){
 			var url = window.location.href.split("printPGS")[0];
-			$.post(url+"updateContext",{"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":""},function(result){
+			$.post(url+"updateContext",{"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"projectId":$("#_projectId").html(),"printContext":""},function(result){
 				if(result==1){
 					location=location ;
 				}else{

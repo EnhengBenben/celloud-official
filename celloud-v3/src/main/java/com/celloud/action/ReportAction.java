@@ -428,15 +428,21 @@ public class ReportAction {
 		DataFile data = dataService.getDataByKey(dataKey);
 		Integer fileId = data.getFileId();
 		Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
-		if (StringUtils.isEmpty(report.getContext())) {
+		if (StringUtils.isEmpty(report.getPrintContext())) {
 			Dept dept = deptService.selectByPrimaryKey(ConstantsData.getLoginUser().getDeptId());
 			Company company = companyService.selectByPrimaryKey(dept.getCompanyId());
 			mv.addObject("userId", userId).addObject("appId", appId).addObject("data", data);
 			mv.addObject("miniPng", miniPng).addObject("txt", txt).addObject("splitPng", splitPng);
-			mv.addObject("company", company).addObject("dept", dept);
+			mv.addObject("company", company).addObject("dept", dept).addObject("report", report);
 		} else {
-			mv.addObject("context", report.getContext());
+			mv.addObject("printContext", report.getPrintContext());
 		}
 		return mv;
+	}
+	
+	@RequestMapping("updateContext")
+	@ResponseBody
+	public Integer updateContext(Report report){
+		return reportService.updateReport(report);
 	}
 }
