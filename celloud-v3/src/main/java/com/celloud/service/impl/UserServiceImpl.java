@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService {
     public void insertFindPwdInfo(Integer userId, String randomCode) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.HOUR_OF_DAY, Constants.FIND_PASSWORD_EXPIRE_TIME);
+        cleanFindPwd(userId, new Date());
         userMapper.insertFindPwdInfo(userId, calendar.getTime(), randomCode);
     }
 
