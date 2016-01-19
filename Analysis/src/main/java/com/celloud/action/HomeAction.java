@@ -33,8 +33,8 @@ import com.google.inject.Inject;
 @Action("home")
 @Results({ @Result(name = "success", location = "../../pages/home.jsp"),
 		@Result(name = "toHospitalBigUser", location = "../../pages/hospitalBigUser.jsp"),
-		@Result(name = "toBigUser", location = "../../pages/bigUser.jsp"),
-		@Result(name = "toBigUserOne", location = "../../pages/bigUserOne.jsp"),
+		@Result(name = "toBigUser", location = "../../pages/dataBigUser.jsp"),
+		@Result(name = "toBigUserOne", location = "../../pages/dataBigUserOne.jsp"),
 		@Result(name = "companyReportList", location = "../../pages/companyReportList.jsp"),
 		@Result(name = "companyDataList", location = "../../pages/companyDataList.jsp"),
 		@Result(name = "getPreDataView", location = "../../pages/dataPreView.jsp"),
@@ -44,7 +44,8 @@ import com.google.inject.Inject;
 		@Result(name = "historyList", type = "json", params = { "root", "historyList" }),
 		@Result(name = "softList", type = "json", params = { "root", "totalSoftList" }),
 		@Result(name = "AppList", type = "json", params = { "root", "appList" }),
-		@Result(name = "loginList", type = "json", params = { "root", "logList" }) })
+		@Result(name = "loginList", type = "json", params = { "root", "logList" }),
+		@Result(name = "DataList", type = "json", params = { "root", "dataList" }) })
 public class HomeAction extends BaseAction {
 	Logger log = Logger.getLogger(HomeAction.class);
 	private static final long serialVersionUID = 1L;
@@ -156,6 +157,11 @@ public class HomeAction extends BaseAction {
 			e.printStackTrace();
 		}
 		return "toBigUser";
+	}
+
+	public String getBigUserCountJson() {
+		dataList = dataService.getBigUserData();
+		return "DataList";
 	}
 
 	public String toBigUserOne() {

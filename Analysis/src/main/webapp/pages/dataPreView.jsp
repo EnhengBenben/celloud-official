@@ -63,9 +63,10 @@
 				</div>
 			</div>
 		</div>
+		<c:if test="${ userRole=='2'}">
 			<h3 class="header smaller lighter green">大客户数据增量曲线图</h3>
 			<div class="col-xs-12" style="height: 350px;" id="bigUserFileNumView"></div>
-
+		</c:if>
 		<h3 class="header smaller lighter green">数据量统计</h3>
 		<div class="col-xs-12" style="height: 350px;" id="fileNumView"></div>
 		<div class="col-xs-12" style="height: 350px;" id="fileTotalNum"></div>
@@ -127,8 +128,8 @@
 		for (var i = 0; i < listCmp.length; i++) {
 			var temp = data[listCmp[i]];
 			var yAxis = new Array(temp.length);
-			for(var j=0;j<temp.length;j++){
-				yAxis[j]=temp[j].fileNum;
+			for (var j = 0; j < temp.length; j++) {
+				yAxis[j] = temp[j].fileNum;
 			}
 			if (i == 0) {
 				opt = makeOptionScrollUnit(xAxis, yAxis, listCmp[0], lineType, 100, xAxis.length);
@@ -136,8 +137,8 @@
 				opt = makeOptionAdd(opt, yAxis, listCmp[i], lineType);
 			}
 		}
-		  var bigUserView = echarts.init(document.getElementById('bigUserFileNumView'));
-		  bigUserView.setOption(opt);
+		var bigUserView = echarts.init(document.getElementById('bigUserFileNumView'));
+		bigUserView.setOption(opt);
 	});
 	
 	$.get(getUsersMonthDataURL, {}, function(data) {

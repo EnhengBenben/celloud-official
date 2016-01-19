@@ -79,7 +79,7 @@ function LoadBrowser() {
 				"value" : data[i].logNum
 			};
 		}
-		var opt = makePieOption('', legendName, '客户端使用', '70%', '50%', '55%', vlist);
+		var opt = makePieOption('', legendName, '客户端使用', '60%', '50%', '55%', vlist);
 		var myChart = echarts.init(document.getElementById((viewId)));
 		myChart.setOption(opt);
 	});

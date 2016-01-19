@@ -13,11 +13,13 @@
 			<i class="icon-tasks"></i>
 			<a href="#">数据统计</a>
 		</li>
-		<li class="active"><a onclick="javascript:bigUserCount()">大客户统计</a></li>
-		<li class="active" id = "cmpName" style="display:none"> </li>
+		<li class="active">
+			<a onclick="javascript:bigUserCount()">大客户统计</a>
+		</li>
+		<li class="active" id="cmpName" style="display: none"></li>
 	</ul>
 	<!-- .breadcrumb -->
-	<span id ="_cmpId" class="hide"></span>
+	<span id="_cmpId" class="hide"></span>
 </div>
 <div class="page-content">
 	<div class="row">
@@ -45,9 +47,14 @@
 									</td>
 									<td>${data.fileNum }</td>
 									<td>
-										<c:choose><c:when test="${data.size>1073741824 }"><fmt:formatNumber pattern="0.00" value="${data.size/1073741824 }"/>GB</c:when>
-										<c:when test="${data.size>1048576 }"><fmt:formatNumber pattern="0.00" value="${data.size/1048576 }"/>MB</c:when>
-										<c:otherwise><fmt:formatNumber pattern="0.00" value="${data.size/1024 }"/>KB</c:otherwise></c:choose>
+										<c:choose>
+											<c:when test="${data.size>1073741824 }">
+												<fmt:formatNumber pattern="0.00" value="${data.size/1073741824 }" />GB</c:when>
+											<c:when test="${data.size>1048576 }">
+												<fmt:formatNumber pattern="0.00" value="${data.size/1048576 }" />MB</c:when>
+											<c:otherwise>
+												<fmt:formatNumber pattern="0.00" value="${data.size/1024 }" />KB</c:otherwise>
+										</c:choose>
 									</td>
 								</tr>
 							</c:forEach>
@@ -59,7 +66,17 @@
 		</div>
 		<!-- /.col -->
 	</div>
+	<div class="row">
+	       <h3 class="header smaller lighter green">大客户数据统计</h3>
+	
+	       <div class="col-sm-6" style="height:450px" id = "fileSizePie">
+	       
+	       </div>
+	       <div class="col-sm-6" style="height:450px" id = "fileNumPie">
+           
+           </div>
+	</div>
 	<!-- /.row -->
 </div>
 <!-- /.page-content -->
-<script type="text/javascript" src="./js/bigUser.js"></script>
+<script type="text/javascript" src="./js/dataBigUser.js"></script>

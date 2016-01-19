@@ -43,13 +43,13 @@ function makeOptionScroll(title, xAxis, yAxis, seriesName, typex, startZoom, end
  * @param length
  *            全部有多少个
  */
-function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position, showNum,isArea) {
+function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position, showNum, isArea) {
 	var length = xAxis.length;
-	var option=null;
+	var option = null;
 	if (showNum < length) {
 		if (position < 100) {
 			var len = position + (showNum / length) * 100;
-			option =  makeOptionScroll('', xAxis, yAxis, seriesName, typex, position, len);
+			option = makeOptionScroll('', xAxis, yAxis, seriesName, typex, position, len);
 		} else {
 			var len = (showNum / length) * 100;
 			option = makeOptionScroll('', xAxis, yAxis, seriesName, typex, 100 - len, 100);
@@ -57,7 +57,7 @@ function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position, showNum
 	} else {
 		option = makeOption('', xAxis, yAxis, seriesName, typex);
 	}
-	option =addArea(option, isArea);
+	option = addArea(option, isArea);
 	return option;
 }
 /**
@@ -73,20 +73,24 @@ function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position, showNum
  */
 function makeOptionAdd(option, yAxis, serierName, typex, isArear) {
 	option.series[option.series.length] = {
-			name : serierName,
-			type : typex,
-			data : yAxis,
-			smooth:"false",
-			itemStyle:{}
-		};
-		option.legend.data[option.legend.data.length] = serierName;
-		option = addArea(option,isArear);
+		name : serierName,
+		type : typex,
+		data : yAxis,
+		smooth : "false",
+		itemStyle : {}
+	};
+	option.legend.data[option.legend.data.length] = serierName;
+	option = addArea(option, isArear);
 	return option;
 }
 
-function addArea(option,isArear){
-	if(isArear!=null){
-		option.series[option.series.length-1].itemStyle.normal={areaStyle: {type: 'default'}};
+function addArea(option, isArear) {
+	if (isArear != null) {
+		option.series[option.series.length - 1].itemStyle.normal = {
+			areaStyle : {
+				type : 'default'
+			}
+		};
 	}
 	return option;
 }
@@ -101,23 +105,34 @@ function addArea(option,isArear){
  * @param centerY
  *            上下位置 ％比
  * @param value {}
+ * @param legendPosition
+ *            {x,orient}
  * @returns
  */
 
-function makePieOption(title, legenName, name, rad, centerX, centerY, value) {
+function makePieOption(title, legenName, name, rad, centerX, centerY, value, legendPosition) {
+	var legendObj = {
+		orient : 'vertical',//horizontal
+		x : 'left',
+		y: "top",
+		data : legenName,
+	};
+	if(legendPosition!=null){
+		legendObj.x = legendPosition.x!=null?legendPosition.x:'left';
+		legendObj.y = legendPosition.y!=null?legendPosition.y:'top';
+		legendObj.orient = legendPosition.orient!=null?legendPosition.orient:'vertical';
+	}
+
 	var opt = {
 		title : {
 			text : '',
 			subtext : ''
 		},
 		tooltip : {
-			trigger : 'axis'
+			trigger : 'item',
+			formatter : "{a} <br/>{b} : {c} ({d}%)"
 		},
-		legend : {
-			orient : 'vertical',
-			x : 'left',
-			data : legenName,
-		},
+		legend : legendObj,
 		toolbox : {
 			orient : 'vertical',
 			x : 'right',
@@ -232,7 +247,7 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 			name : seriesName,
 			type : typex,
 			data : yAxis,
-			smooth:"false",
+			smooth : "false",
 			barMaxWidth : 100,
 			itemStyle : {
 				normal : {
@@ -274,10 +289,10 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 		var ustr = seriesName.substring(len - 3, len - 1)
 		opt.yAxis[0].axisLabel.formatter = '{value}' + ustr;
 	}
-
+	
 	var colorStr;
 	/** 柱状图颜色 */
-	var ran = parseInt(Math.random()*10);
+	var ran = parseInt(Math.random() * 10);
 	if (seriesName.indexOf("数据量") > -1) {
 		colorStr = colorList[ran];
 	} else if (seriesName.indexOf("数据大小") > -1) {

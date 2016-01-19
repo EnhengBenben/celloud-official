@@ -129,8 +129,8 @@
 									数据量月统计
 								</a>
 							</li>
-							 
-							<c:if test="${userRole=='2'|| userRole=='3'}">
+							-->
+							<c:if test="${userRole=='2'}">
 								<li>
 									<a href="javascript:bigUserCount()">
 										<i class="icon-double-angle-right"></i>
@@ -138,7 +138,6 @@
 									</a>
 								</li>
 							</c:if>
-							-->
 							<li>
 								<a href="javascript:gotoOutputData()">
 									<i class="icon-double-angle-right"></i>
