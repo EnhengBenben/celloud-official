@@ -64,7 +64,7 @@ var users = (function(users) {
 		if (!emailregex.test(email)) {
 			flag = false;
 			$("#emailSpanInfo").html("邮箱格式不正确");
-			$("#inputPhone").focus();
+			$("#inputEmail").focus();
 			return false;
 		}
 		if (telphone == "") {
