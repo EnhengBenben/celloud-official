@@ -58,7 +58,7 @@
                  <th style="line-height: 14px;vertical-align: middle;text-align: center;min-width:54px;">GI号<br><span style="font-size:12px;color: #9A9999;">GI</span></th>
                  <th style="line-height: 14px;vertical-align: middle;text-align: center;min-width:45px;">覆盖长度%<br><span style="font-size:12px;color: #9A9999;">%Coverage</span></th>
                  <th style="line-height: 14px;vertical-align: middle;text-align: center;min-width:30px;">种比对上的序列数<br><span style="font-size:12px;color: #9A9999;">Reads_hit</span></th>
-                 <th style="line-height: 14px;vertical-align: middle;text-align: center;">属比对上的序列数<br><span style="font-size:12px;color: #9A9999;">Reads_num</span></th>
+<!--                  <th style="line-height: 14px;vertical-align: middle;text-align: center;">属比对上的序列数<br><span style="font-size:12px;color: #9A9999;">Reads_num</span></th> -->
                  <th style="line-height: 14px;vertical-align: middle;text-align: center;">种序列百分比<br><span style="font-size:12px;color: #9A9999;">%Reads_Ratio</span></th>
                  <th style="line-height: 14px;vertical-align: middle;text-align: center;">平均覆盖深度<br><span style="font-size:12px;color: #9A9999;">Average depth of coverage</span></th>
                </tr>
@@ -73,7 +73,7 @@
                          <td>${summary.GI }</td>
                          <td>${summary.Coverage }</td>
                          <td>${summary.Reads_hit }</td>
-                         <td>${summary.Reads_num }</td>
+<%--                          <td>${summary.Reads_num }</td> --%>
                          <td>${summary.Reads_Ratio }</td>
                          <td>${summary.avgCoverage }</td>
                        </tr>
