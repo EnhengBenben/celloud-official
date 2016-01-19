@@ -113,7 +113,9 @@ public class LoginAction {
         }
         // 验证码错误，直接返回到登录页面
         if (!checked && (kaptchaExpected == null || !kaptchaExpected.equalsIgnoreCase(kaptchaCode))) {
-            return mv.addObject("info", "验证码错误，请重新登录！").addObject("publicKey", generatePublicKey(session));
+            user.setPassword("");
+            return mv.addObject("info", "验证码错误，请重新登录！").addObject("user", user).addObject("publicKey",
+                    generatePublicKey(session));
         }
         // 如果cookie中存在公钥且和前台传过来的一致，则从数据库加载私钥，不管是否记住密码
         if (modulus != null && modulus.equals(publicKey.getModulus())) {
