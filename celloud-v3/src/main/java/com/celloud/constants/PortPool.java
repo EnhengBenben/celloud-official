@@ -29,15 +29,35 @@ public class PortPool {
      * 记录项目和端口关系的文件
      */
     private static String pro_ports = "/share/data/command/pro_ports.txt";
+    
+    private static boolean isInit = false;
 
-    static {
-        if (!new File(path).exists()) {
-            FileTools.createFile(path);
-            for (int i = SparkPro.START; i < SparkPro.START + SparkPro.NODES; i++) {
-                FileTools.appendWrite(path, i + "\n");
-            }
-        }
-    }
+	/**
+	 * 初始化端口文件
+	 * 
+	 * @author lin
+	 * @date 2016年1月19日下午1:39:05
+	 */
+	public static void init() {
+		File f = new File(path);
+		if (!f.exists()) {
+			FileTools.createFile(path);
+			// 锁定端口文件
+			FileLock lock = FileTools.getFileLock(f);
+			StringBuffer sb = new StringBuffer();
+			for (int i = SparkPro.START; i < SparkPro.START + SparkPro.NODES; i++) {
+				sb.append(i + "\n");
+			}
+			FileTools.appendWrite(path, sb.toString());
+			// 释放锁
+			try {
+				lock.release();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		isInit = true;
+	}
 
     /**
      * 获取端口
@@ -49,6 +69,9 @@ public class PortPool {
      * @return：可用的端口List<String>，若返回null则端口不足
      */
     public synchronized static List<String> getPorts(int need, String projectId) {
+    	if(!isInit){
+    		init();
+    	}
         // 需要的端口比可提供的多，则返回null
         if (need > getSize()) {
             return null;
@@ -163,6 +186,9 @@ public class PortPool {
      * @return
      */
     public synchronized static int getSize() {
+    	if(!isInit){
+    		init();
+    	}
         File f = new File(path);
         // 获取锁
         FileLock lock = FileTools.getFileLock(f);
