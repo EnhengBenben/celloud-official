@@ -66,12 +66,12 @@
 		</c:choose>
    	</tbody>
 </table>
-<div class="pagination center">
+<div class="pagination text-center">
   <c:if test="${dataList.datas.size()>0}">
     <input id="data-current-page-hide" value="${dataList.page.currentPage }" type="hidden" >
     <ul id="pagination-data" class="pages">
       <li> 每页
-        <select id="data-page-size-sel" class="data_page_select">
+        <select id="data-page-size-sel" class="data-page-select">
           <option value="10" <c:if test="${dataList.page.pageSize==10}">selected</c:if>>10</option>
           <option value="20" <c:if test="${dataList.page.pageSize==20}">selected</c:if>>20</option>
           <option value="30" <c:if test="${dataList.page.pageSize==30}">selected</c:if>>30</option>

@@ -31,13 +31,15 @@
             <a id="manage-data-btn" class="btn btn-info btn-flat disabled" disabled><i class="fa fa-pencil-square-o"></i> 编辑</a>
           </h3>
           <div id="data-spin-div" class="box-tools col-xs-7"></div>
-          <div class="box-tools col-xs-4">
-            <div class="input-group">
-              <input id="data-condition-input" class="form-control input-sm pull-right" name="table_search" type="text" placeholder="搜索文件名/数据标签/文件别名"/>
-              <div class="input-group-btn">
-                <button id="data-condition-find" class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
-              </div>
-            </div>
+          <div class="box-tools col-xs-3 data-select">
+            <form class="form-cel">
+	          <div class="input-group">
+	            <input id="data-condition-input" class="form-control input-sm pull-right" name="table_search" type="text" placeholder="搜索文件名/数据标签/文件别名"/>
+	            <div class="input-group-btn">
+	              <button id="data-condition-find" class="btn btn-sm btn-celloud-success btn-flat"><i class="fa fa-search"></i></button>
+	            </div>
+	          </div>
+            </form>
           </div>
         </div><!-- /.box-header -->
         <div id="data-list-div" class="box-body">
