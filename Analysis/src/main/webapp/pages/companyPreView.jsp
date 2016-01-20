@@ -36,10 +36,8 @@
 						<div class="border"></div>
 					</div>
 				</div>
-
 			</div>
 			<div class="col-sm-3">
-
 				<div class="xe-widget xe-counter-block xe-counter-block-blue" data-suffix="(个)" data-count=".num" data-from="0" data-to="${resultMap.userNum }"
 					data-duration="2" data-easing="false">
 					<div class="xe-upper">
@@ -47,15 +45,19 @@
 							<strong>用户数量:</strong>
 							<strong class="num">${resultMap.userNum }</strong>
 						</div>
-
 					</div>
 					<div class="xe-lower">
 						<div class="border"></div>
 					</div>
 				</div>
-
 			</div>
 		</div>
+		<h3 class="header smaller lighter green">大客户新增用户统计</h3>
+		<c:if test="${ userRole=='2'}">
+			<div id="newCmpBigUser" style="height: 300px;"></div>
+		</c:if>
+		<div id="main" style="height: 300px"></div>
+
 		<div class="row">
 			<div class="col-xs-12">
 				<h3 class="header smaller lighter green">用户地理分布</h3>
@@ -64,10 +66,8 @@
 					<ul id="listCompany">
 					</ul>
 				</div>
-
 			</div>
 		</div>
-		<div id="main" style="height: 400px; width: 80%; border: 1px solid #ddd; margin: 20px"></div>
 
 		<div class="row">
 			<c:if test="${mapList!=null && fn:length(mapList)>0 }">
@@ -111,6 +111,28 @@
 			iDisplayLength : 10,
 			"aaSorting" : [ [ 0, "desc" ] ],
 		});
+	});
+	
+	var getBigUserMonthNewCmpURL = "home!getPreDataViewBigUesrNewCmp";
+	$.get(getBigUserMonthNewCmpURL, {}, function(data) {
+		console.log(data);
+		var listCmp = data["companyNames"];
+		var xAxis = data["xAxis"];
+		var opt
+		for (var i = 0; i < listCmp.length; i++) {
+			var temp = data[listCmp[i]];
+			var yAxis = new Array(temp.length);
+			for (var j = 0; j < temp.length; j++) {
+				yAxis[j] = temp[j].num;
+			}
+			if (i == 0) {
+				opt = makeOptionScrollUnit(xAxis, yAxis, listCmp[0], lineType, 100, xAxis.length);
+			} else {
+				opt = makeOptionAdd(opt, yAxis, listCmp[i], lineType);
+			}
+		}
+		var bigUserView = echarts.init(document.getElementById('newCmpBigUser'));
+		bigUserView.setOption(opt);
 	});
 	
 	function showView(data) {
@@ -253,14 +275,20 @@
 		$.get("company!getCompanyNumEveryMonth", {}, function(result) {
 			var xAxis = new Array(result.length);
 			var yAxis = new Array(result.length);
-			
+			var yAxisAdd = new Array(result.length);
 			for (var i = 0; i < result.length; i++) {
 				xAxis[i] = result[i].createDate;
 				yAxis[i] = result[i].num;
+				if(i==0){
+					yAxisAdd[0] = result[0].num;
+				}else{
+	                   yAxisAdd[i] = result[i].num+yAxisAdd[i-1] ;
+
+				}
 			}
 			
 			var option = makeOptionScrollUnit(xAxis, yAxis, "月新增医院数量", lineType, 100, xAxis.length, "阴影");
-			//option = makeOptionAdd(option, yAxisAdd, "数据量变化曲线图", lineType, "阴影");
+			option = makeOptionAdd(option, yAxisAdd, "新增医院累积曲线图", lineType);
 			
 			// 基于准备好的dom，初始化echarts图表
 			var myChart = echarts.init(document.getElementById('main'));

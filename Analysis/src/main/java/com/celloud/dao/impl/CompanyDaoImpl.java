@@ -309,4 +309,23 @@ public class CompanyDaoImpl implements CompanyDao {
 		}
 		return list;
 	}
+
+	@Override
+	public List<Company> getBigUserCmpNum(Connection conn) {
+		List<Company> list = null;
+		String sql = "select count(distinct(c.company_id))as num,left(c.create_date,7)as yearMonth,uc.company_id,cname.company_name  from tb_company c,tb_user u,tb_user_company_relat uc,tb_company cname "
+				+ " where c.company_id = u.company_id and u.user_id = uc.user_id and uc.company_id = cname.company_id"
+				+ " group by uc.company_id,yearMonth " + " order by yearMonth asc";
+		LogUtil.info(log, sql);
+		try {
+			ResultSetHandler<List<Company>> rsh = new BeanListHandler<Company>(Company.class);
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			list = rsh.handle(rs);
+
+		} catch (SQLException e) {
+			LogUtil.query(log, sql, e);
+		}
+		return list;
+	}
 }

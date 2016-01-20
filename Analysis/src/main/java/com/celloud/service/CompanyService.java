@@ -124,4 +124,5 @@ public interface CompanyService {
 	 * @return
 	 */
 	public List<Map<String, Object>> getCompanys(Integer role, Integer cmpId, String province);
+
 }

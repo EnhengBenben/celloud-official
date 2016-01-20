@@ -31,7 +31,7 @@ import com.google.inject.Inject;
 
 		@Result(name = "list", type = "json", params = { "root", "list" }),
 		@Result(name = "resultMap", type = "json", params = { "root", "resultMap" }),
-		@Result(name = "companyDetailJson", type = "json", params = { "root", "complist" }),
+		@Result(name = "companyList", type = "json", params = { "root", "complist" }),
 
 		/***** 活跃度统计－－－ 医院活跃度统计 登陆、上传文件、app运行次数 ******/
 		@Result(name = "LogList", type = "json", params = { "root", "logList" }),
@@ -71,13 +71,22 @@ public class CompanyAction extends BaseAction {
 			runList = (List<App>) result.get("appRun");
 			userDataList = (List<DataFile>) result.get("uFile");
 			dataList = (List<DataFile>) result.get("hFile");
-			log.info(result);
-			log.info(userDataList);
+
 			log.info(dataList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "content";
+	}
+
+	/**
+	 * 查询各大客户每月新增的医院数量
+	 * 
+	 * @return
+	 */
+	public String getBigUserAddCmp() {
+
+		return "companyList";
 	}
 
 	/**
@@ -223,7 +232,7 @@ public class CompanyAction extends BaseAction {
 		Integer cid = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		complist = companyService.getCompanyDetailById(cid, role, orderby);
-		return "companyDetailJson";
+		return "companyList";
 	}
 
 	/**
