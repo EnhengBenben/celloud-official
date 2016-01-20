@@ -8,7 +8,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>打印CMP简报</title>
-<link href="<%=request.getContextPath() %>/css/print.css?version=20150526" rel="stylesheet">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/font.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/print_cmp.css?version=1.0">
 </head>
 <body>
 <a href="javascript:void(0)" onclick="preview(this)" class="btn btn-default" id="change" style="float:right;margin-top:10px;margin-right:-80px;"><i class="i-print"></i>打印</a>
