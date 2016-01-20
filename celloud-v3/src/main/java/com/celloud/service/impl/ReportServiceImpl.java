@@ -692,7 +692,7 @@ public class ReportServiceImpl implements ReportService {
 	public int updateReport(Report report) {
 		return reportMapper.updateReport(report);
 	}
-
+	
 	@Override
 	public Integer updateReportStateToTools(Integer userId, Integer appId, Integer projectId, Integer state,
 			String context) {
@@ -704,7 +704,14 @@ public class ReportServiceImpl implements ReportService {
 		report.setUserId(userId);
 		report.setAppId(appId);
 		report.setProjectId(projectId);
-		report.setState(state);
+		report.setPeriod(state);
+		List<DataFile> list = dataMapper.getDatasInProject(projectId);
+		for (DataFile data : list) {
+			report.setFileId(data.getFileId());
+			report.setFlag(ReportType.DATA);
+			reportMapper.updateReport(report);
+		}
+		report.setFlag(ReportType.PROJECT);
 		report.setContext(context);
 		return reportMapper.updateReport(report);
 	}

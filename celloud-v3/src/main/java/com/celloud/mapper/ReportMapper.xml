@@ -289,7 +289,7 @@
     <if test="appId != null" >
     	and app_id = #{appId,jdbcType=INTEGER}
     </if>
-    <if test="flag == 0" >
+    <if test="flag != null and flag ==0" >
 	    and file_id = #{fileId,jdbcType=INTEGER}
     </if>
     <if test="flag != null" >
