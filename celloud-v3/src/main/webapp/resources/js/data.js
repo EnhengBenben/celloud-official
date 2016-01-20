@@ -510,8 +510,8 @@ function _init_data(){
     noCheck: function(dataId){
       $("#data-checkall").prop("checked",false);
       var index = $.inArray(dataId, $.dataManager.options.checkedIds);
-      $.dataManager.options.checkedIds.splice(index);
-      $.dataManager.options.checkedNames.splice(index);
+      $.dataManager.options.checkedIds.splice(index, 1);
+      $.dataManager.options.checkedNames.splice(index, 1);
     }
   };
   
