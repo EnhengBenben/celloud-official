@@ -157,25 +157,25 @@ var appStore=(function(appStore){
 
 	self.addApp=function(id){
 		$.get("app/addApp",{"paramId":id},function(responseText){
-			if(responseText.length>0){
+			if(responseText>0){
 				$("#toAddApp").attr("onclick","appStore.removeApp("+id+")");
 				$("#toAddApp").html("<i class=\"fa fa-minus\"></i>&nbsp;取消添加");
 				$("#toAddApp").removeClass("btn-celloud-success").addClass("btn-celloud-close");
-				$("#myAppDiv").html(responseText);
+				self.getMyApp();
 			}
 		});
 	};
 	
 	self.removeApp=function(id){
 		$.get("app/removeApp",{"paramId":id},function(responseText){
-			if(responseText.length>0){
+			if(responseText>0){
 				var appId=$("#app-detail-appId").val();
 				if(appId==id){
 					$("#toAddApp").attr("onclick","appStore.addApp("+id+")");
 					$("#toAddApp").html("<i class=\"fa fa-plus\"></i>&nbsp;添加");
 					$("#toAddApp").removeClass("btn-celloud-close").addClass("btn-celloud-success");
 				}
-				$("#myAppDiv").html(responseText);
+				self.getMyApp();
 			}
 		});
 	};

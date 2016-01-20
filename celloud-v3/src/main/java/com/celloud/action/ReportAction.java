@@ -12,10 +12,12 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
@@ -385,6 +387,7 @@ public class ReportAction {
 	 * @date 2016年1月17日上午12:53:22
 	 */
 	@RequestMapping("prevDataReport")
+	@ResponseStatus(value = HttpStatus.OK)
 	public void prevDataReport() {
 		log.info("点击数据报告列表查看上一页数据报告");
 	}
@@ -396,6 +399,7 @@ public class ReportAction {
 	 * @date 2016年1月17日上午12:53:33
 	 */
 	@RequestMapping("nextDataReport")
+	@ResponseStatus(value = HttpStatus.OK)
 	public void nextDataReport() {
 		log.info("点击数据报告列表查看下一页数据报告");
 	}
@@ -407,6 +411,7 @@ public class ReportAction {
 	 * @date 2016年1月17日上午1:03:30
 	 */
 	@RequestMapping("clickItemDataReport")
+	@ResponseStatus(value = HttpStatus.OK)
 	public void clickItemDataReport() {
 		log.info("点击数据报告列表查看报告");
 	}

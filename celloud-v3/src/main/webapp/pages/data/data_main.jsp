@@ -31,13 +31,15 @@
             <a id="manage-data-btn" class="btn btn-info btn-flat disabled" disabled><i class="fa fa-pencil-square-o"></i> 编辑</a>
           </h3>
           <div id="data-spin-div" class="box-tools col-xs-7"></div>
-          <div class="box-tools col-xs-4">
-            <div class="input-group">
-              <input id="data-condition-input" class="form-control input-sm pull-right" name="table_search" type="text" placeholder="搜索文件名/数据标签/文件别名"/>
-              <div class="input-group-btn">
-                <button id="data-condition-find" class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
-              </div>
-            </div>
+          <div class="box-tools col-xs-3 data-select">
+            <form class="form-cel">
+	          <div class="input-group">
+	            <input id="data-condition-input" class="form-control input-sm pull-right" name="table_search" type="text" placeholder="搜索文件名/数据标签/文件别名"/>
+	            <div class="input-group-btn">
+	              <button id="data-condition-find" class="btn btn-sm btn-celloud-success btn-flat"><i class="fa fa-search"></i></button>
+	            </div>
+	          </div>
+            </form>
           </div>
         </div><!-- /.box-header -->
         <div id="data-list-div" class="box-body">
@@ -181,7 +183,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">单独编辑<a href="javascript:toManageDatasModel();" class="a-white" style="margin-left:30px">批量编辑</a></h4>
+        <h4 class="modal-title">单独编辑<a id="to-batch-editdata-modal" href="javascript:void(0);" class="a-white" style="margin-left:30px">批量编辑</a></h4>
       </div>
       <div id="each-editdatas-div" class="modal-body"></div>
       <div class="modal-footer">

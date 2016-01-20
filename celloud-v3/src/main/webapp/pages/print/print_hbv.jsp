@@ -6,10 +6,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>报告打印</title>
-<link rel="stylesheet" href="/celloud/css/style_print.css?version=1.16">
+<link rel="stylesheet" href="css/print_hbv.css?version=1.16">
 </head>
 <body>
-<input type="hidden" value="${report.projectId }" id="_projectId">
 	<div>
 		<c:if test="${empty printContext}">
 			<input type="hidden" value="1" id="isSaved"/>
@@ -20,9 +19,10 @@
 	</div>
 	<div id="printMain">
 		<c:if test="${empty printContext}">
+			<input type="hidden" value="${report.projectId }" id="_projectId">
 			<div style="display: none;" id="_userId">${userId }</div>
 			<div style="display: none;" id="_appId">${appId }</div>
-			<div style="display: none;" id="_fileId">${fileId }</div>
+			<div style="display: none;" id="_fileId">${report.fileId }</div>
 			<div style="display: none;" id="_flag">${flag }</div>
 			<div>
 				<a href="javascript:void(0)" onclick="preview(this)" class="button btn-info" name="change" style="float:right;margin-top:10px;margin-right:-100px;"><i class=""></i>打印</a>
@@ -388,14 +388,14 @@ $(document).ready(function(){
 		$(this).attr("style","width:600px");
 	})
 });
-var url = "http://121.201.7.200:81/";
+var url = "http://121.201.7.200:81/report/";
 function savePage(){
 	$("body").find("input").each(function(){
 		$(this).attr("value",$(this).val());
 	});
 	inputVal = $("#des").children().val();
 	$("#des").children().html(inputVal);
-	$.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":$("#printMain").html()},function(result){
+	$.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"printContext":$("#printMain").html()},function(result){
 		if(result==1){
 			alert("信息保存成功！");
 		}else{
@@ -405,7 +405,7 @@ function savePage(){
 }
 function reset(){
 	if(confirm("确定要重置之前保存的报告吗？")){
-		$.post(url+"updateContext",{"projectId":$("#_projectId").html(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":""},function(result){
+		$.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"printContext":""},function(result){
 			if(result==1){
 				alert("请重新打开页面");
 				window.close();

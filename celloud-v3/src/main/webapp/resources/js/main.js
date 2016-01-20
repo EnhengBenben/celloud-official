@@ -121,10 +121,14 @@ var userCount=(function(userCount){
 				y[y.length]=Number(map.num);
 				}
 			})
-			x = x.substring(0,x.length-1);
+			x = x.length>1?x.substring(0,x.length-1):x;
 			x += "]";
-			self.lineModal("count-data-month-chart","月上传文件统计",eval(x),y,"月上传文件数量");
-			self.fileDayCount();
+			if(x!="[]"){
+				self.lineModal("count-data-month-chart","月上传文件统计",eval(x),y,"月上传文件数量");
+				self.fileDayCount();
+			}else{
+				$("#count-data-charts").hide();
+			}
 		});
 	};
 	self.fileSizeDayCount=function(){
@@ -153,10 +157,14 @@ var userCount=(function(userCount){
 				y[y.length]=Number(map.size/1073741824).toFixed(3);
 				}
 			})
-			x = x.substring(0,x.length-1);
+			x = x.length>1?x.substring(0,x.length-1):x;
 			x += "]";
-			self.lineModal("count-source-month-chart","月资源占用量统计",eval(x),y,"月上传文件大小");
-			self.fileSizeDayCount();
+			if(x!="[]"){
+				self.lineModal("count-source-month-chart","月资源占用量统计",eval(x),y,"月上传文件大小");
+				self.fileSizeDayCount();
+			}else{
+				$("#count-source-charts").hide();
+			}
 		});
 	};
 
@@ -187,10 +195,14 @@ var userCount=(function(userCount){
 				y[y.length]=Number(map.size);
 				}
 			})
-			x = x.substring(0,x.length-1);
+			x = x.length>1?x.substring(0,x.length-1):x;
 			x += "]";
-			self.lineModal("count-report-month-chart","月报告统计",eval(x),y,"月生成的报告个数");
-			self.reportDayCount();
+			if(x!="[]"){
+				self.lineModal("count-report-month-chart","月报告统计",eval(x),y,"月生成的报告个数");
+				self.reportDayCount();
+			}else{
+				$("#count-report-charts").hide();
+			}
 		});
 	};
 
@@ -221,10 +233,14 @@ var userCount=(function(userCount){
 				y[y.length]=Number(map.num);
 				}
 			})
-			x = x.substring(0,x.length-1);
+			x = x.length>1?x.substring(0,x.length-1):x;
 			x += "]";
-			self.lineModal("count-app-month-chart","月已添加APP运行次数",eval(x),y,"月APP运行次数");
-			self.appDayCount();
+			if(x!="[]"){
+				self.lineModal("count-app-month-chart","月已添加APP运行次数",eval(x),y,"月APP运行次数");
+				self.appDayCount();
+			}else{
+				$("#count-app-charts").hide();
+			}
 		});
 	};
 	

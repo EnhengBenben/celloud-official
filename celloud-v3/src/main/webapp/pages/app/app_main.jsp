@@ -50,9 +50,6 @@
 	var classifyPid;
 	var classifyId;
 	var classifyfloor;
-	$.ajaxSetup ({
-		cache: false //关闭AJAX相应的缓存
-	});
 	$(document).ready(function(){
 		appStore.initApp();
 	});
