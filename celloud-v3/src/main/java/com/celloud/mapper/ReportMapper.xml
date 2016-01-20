@@ -282,7 +282,7 @@
         context = #{context,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where 1 = 1
+    where project_id = #{projectId,jdbcType=INTEGER}
     <if test="userId != null" >
     	and user_id = #{userId,jdbcType=INTEGER}
     </if>
@@ -292,8 +292,9 @@
     <if test="flag == 0" >
 	    and file_id = #{fileId,jdbcType=INTEGER}
     </if>
-    and project_id = #{projectId,jdbcType=INTEGER}
-    and flag = #{flag,jdbcType=INTEGER}
+    <if test="flag != null" >
+    	and flag = #{flag,jdbcType=INTEGER}
+   	</if>
   </update>
   <update id="updateByPrimaryKey" parameterType="com.celloud.model.Report" >
     update tb_report

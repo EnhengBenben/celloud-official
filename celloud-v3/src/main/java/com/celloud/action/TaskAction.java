@@ -282,5 +282,11 @@ public class TaskAction {
         SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
         ssh.sshSubmit(command, false);
     }
+    
+	@RequestMapping("toolsRunOver.html")
+	@ResponseStatus(value = HttpStatus.OK)
+	public void toolsRunOver(Integer userId, Integer appId, Integer projectId, Integer state, String context) {
+		reportService.updateReportStateToTools(userId, appId, projectId, state, context);
+	}
 
 }
