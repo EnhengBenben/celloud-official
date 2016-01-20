@@ -55,10 +55,6 @@ public class PropertiesUtils {
     public static String PGS;
     public static String img;
 
-    /**
-     * HBV_SNP2
-     */
-    public static String HBV_SNP2;
     public static String gDNA;
     /**
      * 上传文件的存放位置
@@ -136,7 +132,6 @@ public class PropertiesUtils {
         DeNovo_Diff = pro.getProperty("DeNovo_Diff");
         HCV = pro.getProperty("HCV");
         PGS = pro.getProperty("MDA");
-        HBV_SNP2 = pro.getProperty("HBV_SNP2");
         gDNA = pro.getProperty("gDNA");
         img = pro.getProperty("img");
         EGFR = pro.getProperty("EGFR");
