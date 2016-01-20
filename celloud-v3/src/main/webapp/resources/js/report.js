@@ -616,6 +616,18 @@ $.ajaxSetup ({
 			}else if(softwareId == 114){
 				$.get("report/getMIBReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+					var mib_readsDisInfo = $("#reads-distribution-char").text();
+          var mib_familyDisInfo = $("#family-distribution-char").text();
+          var min_genusDisInfo = $("#genus-distribution-char").text();
+          if(mib_readsDisInfo != ""){
+            $.reportChar.draw.circularGraph("reads-distribution-char","Reads","Distribution",eval("("+mib_readsDisInfo+")"));
+          }
+          if(mib_familyDisInfo != ""){
+            $.reportChar.draw.circularGraph("family-distribution-char","Family","Distribution",eval("("+mib_familyDisInfo+")"));
+          }
+          if(min_genusDisInfo != ""){
+            $.reportChar.draw.singleBar("genus-distribution-char","Top 10 genus distribution","",eval("("+min_genusDisInfo+")"),"Depth","Depth");
+          }
 				});
 			}else if(softwareId == 85 || softwareId == 86 || softwareId == 87 || softwareId == 88 || softwareId == 91 || softwareId == 92 || softwareId == 93 || softwareId == 94 || softwareId == 104|| softwareId == 116){
 				$.get("report/getPgsReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){

@@ -43,7 +43,7 @@
                     <td id="reads-distribution-parent" style="width:49%;">
                       <c:choose>
                         <c:when test="${empty mib.readsDistributionInfo}">
-                          <img src="<c:if test="${!mib.readsDistribution.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.readsDistribution }" style="width:100%;">
+                          <img src="<c:if test="${!mib.readsDistribution.contains('Tools') }">${toolsPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.readsDistribution }" style="width:100%;">
                         </c:when>
                         <c:otherwise>
                           <div id="reads-distribution-char" style="width:100%;height:330px;">${mibCharList.readsDistributionInfo }</div>
@@ -53,7 +53,7 @@
                     <td id="family-distribution-parent">
                       <c:choose>
                         <c:when test="${empty mib.familyDistributionInfo}">
-                          <img src="<c:if test="${!mib.familyDistribution.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.familyDistribution }" style="width:100%;">
+                          <img src="<c:if test="${!mib.familyDistribution.contains('Tools') }">${toolsPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.familyDistribution }" style="width:100%;">
                         </c:when>
                         <c:otherwise>
                           <div id="family-distribution-char" style="width:100%;height:330px;">${mibCharList.familyDistributionInfo }</div>
@@ -70,7 +70,7 @@
             <div class="m-boxCon">
               <c:choose>
                 <c:when test="${empty mib.genusDistributionInfo}">
-                  <img src="<c:if test="${!mib.genusDistribution.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.genusDistribution }" style="width:90%;">
+                  <img src="<c:if test="${!mib.genusDistribution.contains('Tools') }">${toolsPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.genusDistribution }" style="width:90%;">
                 </c:when>
                 <c:otherwise>
                   <div id="genus-distribution-char" style="width:100%;height:330px;">${mibCharList.genusDistributionInfo }</div>
@@ -119,34 +119,34 @@
             <h2><i class="i-edit"></i>报告</h2>
             <div class="m-boxCon">
               <c:if test="${mib.pngPath.top1png!=null }">
-                <img src="<c:if test="${!mib.pngPath.top1png.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top1png }" style="width:90%;">
+                <img src="<c:if test="${!mib.pngPath.top1png.contains('Tools') }">${toolsPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top1png }" style="width:90%;">
               </c:if>
               <c:if test="${mib.pngPath.top2png!=null }">
-                <img src="<c:if test="${!mib.pngPath.top2png.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top2png }" style="width:90%;">
+                <img src="<c:if test="${!mib.pngPath.top2png.contains('Tools') }">${toolsPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top2png }" style="width:90%;">
               </c:if>
               <c:if test="${mib.pngPath.top3png!=null }">
-                <img src="<c:if test="${!mib.pngPath.top3png.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top3png }" style="width:90%;">
+                <img src="<c:if test="${!mib.pngPath.top3png.contains('Tools') }">${toolsPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top3png }" style="width:90%;">
               </c:if>
               <c:if test="${mib.pngPath.top4png!=null }">
-                <img src="<c:if test="${!mib.pngPath.top4png.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top4png }" style="width:90%;">
+                <img src="<c:if test="${!mib.pngPath.top4png.contains('Tools') }">${toolsPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top4png }" style="width:90%;">
               </c:if>
               <c:if test="${mib.pngPath.top5png!=null }">
-                <img src="<c:if test="${!mib.pngPath.top5png.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top5png }" style="width:90%;">
+                <img src="<c:if test="${!mib.pngPath.top5png.contains('Tools') }">${toolsPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top5png }" style="width:90%;">
               </c:if>
               <c:if test="${mib.pngPath.top6png!=null }">
-                <img src="<c:if test="${!mib.pngPath.top6png.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top6png }" style="width:90%;">
+                <img src="<c:if test="${!mib.pngPath.top6png.contains('Tools') }">${toolsPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top6png }" style="width:90%;">
               </c:if>
               <c:if test="${mib.pngPath.top7png!=null }">
-                <img src="<c:if test="${!mib.pngPath.top7png.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top7png }" style="width:90%;">
+                <img src="<c:if test="${!mib.pngPath.top7png.contains('Tools') }">${toolsPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top7png }" style="width:90%;">
               </c:if>
               <c:if test="${mib.pngPath.top8png!=null }">
-                <img src="<c:if test="${!mib.pngPath.top8png.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top8png }" style="width:90%;">
+                <img src="<c:if test="${!mib.pngPath.top8png.contains('Tools') }">${toolsPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top8png }" style="width:90%;">
               </c:if>
               <c:if test="${mib.pngPath.top9png!=null }">
-                <img src="<c:if test="${!mib.pngPath.top9png.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top9png }" style="width:90%;">
+                <img src="<c:if test="${!mib.pngPath.top9png.contains('Tools') }">${toolsPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top9png }" style="width:90%;">
               </c:if>
               <c:if test="${mib.pngPath.top10png!=null }">
-                <img src="<c:if test="${!mib.pngPath.top10png.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top10png }" style="width:90%;">
+                <img src="<c:if test="${!mib.pngPath.top10png.contains('Tools') }">${toolsPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top10png }" style="width:90%;">
               </c:if>
             </div>
         </div>
@@ -202,12 +202,12 @@
                 </table>
                 <table style="width:90%;">
                   <tr>
-                    <td style="width:50%;"><img style="max-width:500px;" src="<c:if test="${!mib.qualityPath1.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.qualityPath1 }"></td>
-                    <td><img style="max-width:500px;" src="<c:if test="${!mib.qualityPath2.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }/</c:if>${mib.qualityPath2 }"></td>
+                    <td style="width:50%;"><img style="max-width:500px;" src="<c:if test="${!mib.qualityPath1.contains('Tools') }">${toolsPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.qualityPath1 }"></td>
+                    <td><img style="max-width:500px;" src="<c:if test="${!mib.qualityPath2.contains('Tools') }">${toolsPath }/${mib.userId }/${mib.appId }/${mib.dataKey }/</c:if>${mib.qualityPath2 }"></td>
                   </tr>
                   <tr>
-                    <td><img style="max-width:500px;" alt="" src="<c:if test="${!mib.seqContentPath1.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.seqContentPath1 }"></td>
-                    <td><img style="max-width:500px;" alt="" src="<c:if test="${!mib.seqContentPath2.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.seqContentPath2 }"></td>
+                    <td><img style="max-width:500px;" alt="" src="<c:if test="${!mib.seqContentPath1.contains('Tools') }">${toolsPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.seqContentPath1 }"></td>
+                    <td><img style="max-width:500px;" alt="" src="<c:if test="${!mib.seqContentPath2.contains('Tools') }">${toolsPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.seqContentPath2 }"></td>
                   </tr>
                 </table>
             </div>

@@ -28,7 +28,7 @@
       </div>
     </div>
     <div class="col-xs-2">
-     <div class="btn-group-vertical" id="fileListUl">
+     <div class="btn-group-vertical width-percent-100" id="fileListUl">
       </div>
     </div>
   </div>

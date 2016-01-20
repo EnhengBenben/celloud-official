@@ -2789,7 +2789,9 @@ table.text-center th {
 .readonly{
   background-color: #f4f4f4
 } 
- 
+.width-percent-100{
+  width: 100%;
+}
  
 /*
  * TODO 待删除
