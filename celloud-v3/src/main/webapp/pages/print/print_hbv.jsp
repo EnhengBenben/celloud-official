@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="css/print_hbv.css?version=1.16">
 </head>
 <body>
-<input type="hidden" value="${report.projectId }" id="_projectId">
 	<div>
 		<c:if test="${empty printContext}">
 			<input type="hidden" value="1" id="isSaved"/>
@@ -20,6 +19,7 @@
 	</div>
 	<div id="printMain">
 		<c:if test="${empty printContext}">
+			<input type="hidden" value="${report.projectId }" id="_projectId">
 			<div style="display: none;" id="_userId">${userId }</div>
 			<div style="display: none;" id="_appId">${appId }</div>
 			<div style="display: none;" id="_fileId">${report.fileId }</div>
