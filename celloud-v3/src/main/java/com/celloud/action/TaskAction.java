@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -285,12 +286,11 @@ public class TaskAction {
     }
     
 	@RequestMapping("toolsRunOver.html")
-	@ResponseStatus(value = HttpStatus.OK)
+    @ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public Integer toolsRunOver(Integer userId, Integer appId, Integer projectId, Integer state, String context) {
+	public String toolsRunOver(Integer userId, Integer appId, Integer projectId, Integer state, String context) {
 		Integer result = reportService.updateReportStateToTools(userId, appId, projectId, state, context);
-		System.out.println(result);
-		return result;
+		return String.valueOf(result);
 	}
 
 }
