@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<machines>
+	<machine>
+		<NAME>158</NAME>
+		<HOST>192.168.100.200</HOST>
+		<PORT>22</PORT>
+		<USERNAME>celloud</USERNAME>
+		<PWD>CelLoud1010</PWD>
+	</machine>
+	<machine>
+		<NAME>spark</NAME>
+		<HOST>192.168.100.7</HOST>
+		<PORT>22</PORT>
+		<USERNAME>root</USERNAME>
+		<PWD>CelLoud1010</PWD>
+	</machine>
+</machines>
