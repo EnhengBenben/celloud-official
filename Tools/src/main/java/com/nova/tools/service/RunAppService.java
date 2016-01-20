@@ -19,7 +19,7 @@ import com.nova.tools.utils.XMLUtil;
  */
 public class RunAppService {
     // TODO 不需要在Tools端进行后续处理的需要在这里配置下
-    private static final List<String> apps = Arrays.asList("82", "83");
+    private static final List<String> apps = Arrays.asList("83");
 
     /**
      * 运行项目
@@ -110,12 +110,6 @@ public class RunAppService {
         // SNP
         if (AppNameIDConstant.SNP.equals(appId)) {
             runApp.runSNPProject(appPath + "/", projectId, dataKeyList);
-        }
-
-        // HBV_SNP2
-        if (AppNameIDConstant.HBV_SNP2.equals(appId)) {
-            runApp.runHBV_SNP2Project(appPath + "/", projectId, dataKeyList,
-                    basePath);
         }
 
         // DPD

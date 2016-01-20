@@ -1221,22 +1221,19 @@ function toPrintHBV(pagePath,flag){
 		var printDiv0 = $("#resultDiv").html().trim();
 		printDiv0 = printDiv0.replace(/<br>/g,"\n").trim();
 		var printDiv1 = $("#printDiv1").html().replace(new RegExp('style="padding-left: 30px;"',"gm"),'').replace(' height="170px;" width="150px;"',"").replace(new RegExp('<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal(\'helpModal\',0,1)"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>',"gm"),'');
-		var printDiv2 = $("#printDiv2").html();
 		var printDiv3 = "";
 		$("#printDiv3").find("a").each(function(){
 			printDiv3+=$(this).html();
 		});
 		var printDiv4 = $("#printDiv4").html();
 		param = {
-		        "snpType" : $("#snpType").html(),
+				"appId" : appId,
+				"dataKey":dataKey,
+				"projectId":$("#_projectId").val(),
+				"imgHtml" : imgHtml,
 		        "sensitive" : sensitive,
 		        "context" : rType,
-		        "imgHtml" : imgHtml,
-		        "appId" : appId,
-		        "userId":userId,
-		        "dataKey":dataKey,
 		        "peakFigure":printDiv1,
-		        "seq":printDiv2,
 		        "allPic":printDiv3,
 		        "result":printDiv0,
 		        "table":printDiv4,
@@ -1296,7 +1293,7 @@ function toPrintHBV(pagePath,flag){
 		        "table":table,
 		};
 	}
-	$.post("print!printHBV",param,function(responseText){
+	$.post("print/printHBV",param,function(responseText){
 		var obj = window.open("");
 		obj.document.write(responseText);
 		obj.document.close();

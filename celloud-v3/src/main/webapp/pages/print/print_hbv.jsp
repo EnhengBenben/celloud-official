@@ -9,16 +9,17 @@
 <link rel="stylesheet" href="/celloud/css/style_print.css?version=1.16">
 </head>
 <body>
+<input type="hidden" value="${report.projectId }" id="_projectId">
 	<div>
-		<c:if test="${empty pageTxt}">
+		<c:if test="${empty printContext}">
 			<input type="hidden" value="1" id="isSaved"/>
 		</c:if>
-		<c:if test="${not empty pageTxt}">
+		<c:if test="${not empty printContext}">
 			<input type="hidden" value="0" id="isSaved"/>
 		</c:if>
 	</div>
 	<div id="printMain">
-		<c:if test="${empty pageTxt}">
+		<c:if test="${empty printContext}">
 			<div style="display: none;" id="_userId">${userId }</div>
 			<div style="display: none;" id="_appId">${appId }</div>
 			<div style="display: none;" id="_fileId">${fileId }</div>
@@ -141,7 +142,7 @@
 			        		<c:when test="${company.companyId==41 }">
 			        			<h2 name="geneType" class="mt10">基因分型结果：</h2>
 			        			<div name="geneType" class="m-box_1">
-			        				${snpType }
+			        				${hbv.type.replace('Type','基因型') }
 			        			</div>
 			        			<h2 name="resistanceType" class="mt10 hide">一、耐药突变位点检测结果：</h2>
 			        			<div name="resistanceType" class="m-box_1 hide">
@@ -170,7 +171,7 @@
 											<textarea rows="6">${result }</textarea>
 								        </div>
 									   	<h2 class="mt10">四、测序序列结果：</h2>
-									   	<p style="word-break: break-all;" class="m-box_1">${seq }</p>
+									   	<p style="word-break: break-all;" class="m-box_1">${hbv.seq }</p>
 									   	<div id="moreDiv">
 											<div class="w3cbbs" style="display: none;"></div>
 											<div class="container" style="display: none;"></div>
@@ -193,7 +194,7 @@
 						        </c:choose>
 			        		</c:when>
 			        		<c:otherwise>
-			        			<h2 class="mt10">一、基因分型结果：<span style="font-size:12px;font-weight: normal">${snpType }</span></h2>
+			        			<h2 class="mt10">一、基因分型结果：<span style="font-size:12px;font-weight: normal">${hbv.type.replace('Type','基因型') }</span></h2>
 			        			<h2 class="mt10">二、耐药突变位点检测结果：</h2>
 			        			<div class="m-box_1">
 						        	${table }
@@ -219,7 +220,7 @@
 										<textarea rows="6">${result }</textarea>
 							        </div>
 								   	<h2 class="mt10">五、测序序列结果：</h2>
-								   	<p style="word-break: break-all;" class="m-box_1">${seq }</p>
+								   	<p style="word-break: break-all;" class="m-box_1">${hbv.seq }</p>
 								   	<div id="moreDiv">
 										<div class="w3cbbs" style="display: none;"></div>
 										<div class="container" style="display: none;"></div>
@@ -249,8 +250,8 @@
 			    </div>
 			</div>
 		</c:if>
-		<c:if test="${not empty pageTxt}">
-			${pageTxt }
+		<c:if test="${not empty printContext}">
+			${printContext }
 		</c:if>
 	</div>
 </body>
@@ -387,14 +388,14 @@ $(document).ready(function(){
 		$(this).attr("style","width:600px");
 	})
 });
+var url = "http://121.201.7.200:81/";
 function savePage(){
 	$("body").find("input").each(function(){
 		$(this).attr("value",$(this).val());
 	});
 	inputVal = $("#des").children().val();
 	$("#des").children().html(inputVal);
-	var url = "http://www.celloud.org/";
-	$.post(url+"updateContext",{"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":$("#printMain").html()},function(result){
+	$.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":$("#printMain").html()},function(result){
 		if(result==1){
 			alert("信息保存成功！");
 		}else{
@@ -404,8 +405,7 @@ function savePage(){
 }
 function reset(){
 	if(confirm("确定要重置之前保存的报告吗？")){
-		var url = "http://www.celloud.org/";
-		$.post(url+"updateContext",{"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":""},function(result){
+		$.post(url+"updateContext",{"projectId":$("#_projectId").html(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"context":""},function(result){
 			if(result==1){
 				alert("请重新打开页面");
 				window.close();

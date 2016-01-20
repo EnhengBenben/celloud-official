@@ -104,4 +104,9 @@ public class AppServiceImpl implements AppService {
         return names.toString();
     }
 
+	@Override
+	public App selectByPrimaryKey(Integer appId) {
+		return appMapper.selectByPrimaryKey(appId);
+	}
+
 }

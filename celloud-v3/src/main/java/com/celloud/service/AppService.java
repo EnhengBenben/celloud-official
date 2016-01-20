@@ -152,4 +152,14 @@ public interface AppService {
      * @date 2016年1月14日 下午2:29:23
      */
     public String findAppNamesByIds(@Param("appIds") String appIds);
+    
+    /**
+     * 单查
+     * 
+     * @param appId
+     * @return
+     * @author lin
+     * @date 2016年1月19日下午7:03:41
+     */
+    public App selectByPrimaryKey(Integer appId);
 }
