@@ -294,12 +294,12 @@
     from tb_file f
     where user_id = #{userId } and state = #{state }
     <if test="condition != null" >
-        and (data_key like CONCAT('%',#{condition},'%' ) 
-        or file_name like CONCAT('%',#{condition},'%' ) 
-        or another_name like CONCAT('%',#{condition},'%' ) 
-        or data_tags like CONCAT('%',#{condition},'%' ) 
-        or strain like CONCAT('%',#{condition},'%' ) 
-        or sample like CONCAT('%',#{condition},'%' ))
+        and (data_key like '%${condition}%' 
+        or file_name like '%${condition}%' 
+        or another_name like '%${condition}%'  
+        or data_tags like '%${condition}%'  
+        or strain like '%${condition}%' 
+        or sample like '%${condition}%')
     </if>
     <choose>
       <when test="sort == 0">

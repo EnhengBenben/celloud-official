@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
@@ -136,10 +138,19 @@ public class DataAction {
             @RequestParam(defaultValue = "0") int sort,
             @RequestParam(defaultValue = "desc") String sortDateType,
             @RequestParam(defaultValue = "asc") String sortNameType) {
+        Pattern p = Pattern.compile("\\_|\\%|\\\\|\\'|\"");
+        Matcher m = p.matcher(condition);
+        StringBuffer con_sb = new StringBuffer();
+        while (m.find()) {
+            String rep = "\\\\" + m.group(0);
+            m.appendReplacement(con_sb, rep);
+        }
+        m.appendTail(con_sb);
         ModelAndView mv = new ModelAndView("data/data_list");
         Page pager = new Page(page, size);
         PageList<DataFile> dataList = dataService.dataLists(pager,
-                ConstantsData.getLoginUserId(), condition, sort, sortDateType,
+                ConstantsData.getLoginUserId(), con_sb.toString(), sort,
+                sortDateType,
                 sortNameType);
         mv.addObject("dataList", dataList);
         logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());

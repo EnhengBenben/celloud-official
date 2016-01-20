@@ -10,9 +10,11 @@ $(function(){
 	  $.dataManager.options.condition = $("#data-condition-input").val();
 	  $.dataManager.find.condition();
   });
-  $("#data-condition-input").on("keyup",function(){
-	  $.dataManager.options.condition = $(this).val();
-	  $.dataManager.find.condition();
+  $("#data-condition-input").on("keyup",function(e){
+    e = e || window.event;
+    if (e.keyCode == "13") {//keyCode=13是回车键
+        $("#data-condition-find").click();
+    }
   });
   $("#run-app-btn").on("click",function(){
     $.dataManager.run.showModal();

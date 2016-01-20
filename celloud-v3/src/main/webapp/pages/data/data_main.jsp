@@ -32,14 +32,12 @@
           </h3>
           <div id="data-spin-div" class="box-tools col-xs-7"></div>
           <div class="box-tools col-xs-3 data-select">
-            <form class="form-cel">
-	          <div class="input-group">
-	            <input id="data-condition-input" class="form-control input-sm pull-right" name="table_search" type="text" placeholder="搜索文件名/数据标签/文件别名"/>
-	            <div class="input-group-btn">
-	              <button id="data-condition-find" class="btn btn-sm btn-celloud-success btn-flat"><i class="fa fa-search"></i></button>
-	            </div>
+	        <div class="form-cel input-group">
+	          <input id="data-condition-input" class="form-control input-sm pull-right" type="text" placeholder="搜索文件名/数据标签/文件别名"/>
+	          <div class="input-group-btn">
+	            <button id="data-condition-find" class="btn btn-sm btn-celloud-success btn-flat" type="button"><i class="fa fa-search"></i></button>
 	          </div>
-            </form>
+	        </div>
           </div>
         </div><!-- /.box-header -->
         <div id="data-list-div" class="box-body">
