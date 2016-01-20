@@ -293,18 +293,20 @@
     (select count(*) isRunning from tb_report r where r.period != #{period } and r.flag = #{reportType } and r.state = #{state } and r.file_id=f.file_id) isRunning
     from tb_file f
     where user_id = #{userId } and state = #{state }
-    <if test="condition != ''" >
+    <if test="condition != null" >
         and (data_key like CONCAT('%',#{condition},'%' ) 
         or file_name like CONCAT('%',#{condition},'%' ) 
         or another_name like CONCAT('%',#{condition},'%' ) 
-        or data_tags like CONCAT('%',#{condition},'%' ))
+        or data_tags like CONCAT('%',#{condition},'%' ) 
+        or strain like CONCAT('%',#{condition},'%' ) 
+        or sample like CONCAT('%',#{condition},'%' ))
     </if>
     <choose>
       <when test="sort == 0">
-        order by date(f.create_date) ${sortDateType},f.file_name ${sortNameType}
+        order by f.create_date ${sortDateType},f.file_name ${sortNameType}
       </when>
       <otherwise>
-	    order by f.file_name ${sortNameType},date(f.create_date) ${sortDateType}
+	    order by f.file_name ${sortNameType},f.create_date ${sortDateType}
       </otherwise>
     </choose>
   </select>
