@@ -181,7 +181,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">单独编辑<a href="javascript:toManageDatasModel();" class="a-white" style="margin-left:30px">批量编辑</a></h4>
+        <h4 class="modal-title">单独编辑<a id="to-batch-editdata-modal" href="javascript:void(0);" class="a-white" style="margin-left:30px">批量编辑</a></h4>
       </div>
       <div id="each-editdatas-div" class="modal-body"></div>
       <div class="modal-footer">

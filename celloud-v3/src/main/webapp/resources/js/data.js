@@ -23,6 +23,9 @@ $(function(){
   $("#manage-data-btn").on("click",function(){
     $.dataManager.updateData.showBatchEditModal();
   });
+  $("#to-batch-editdata-modal").on("click",function(){
+    $.dataManager.updateData.showBatchEditModal();
+  });
   $("#to-each-editdata-modal").on("click",function(){
     $.dataManager.updateData.showEachEditModal();
   });
@@ -45,6 +48,14 @@ $(function(){
   });
   $("#run-error-head").mouseover(function() {
     $("#run-error-content").draggable("destroy");
+  });
+  
+  //运行modal按钮绑定事件
+  $("#added-data-ul").on("click","li",function(e){
+    $.dataManager.run.removeToRunData($(this));
+  });
+  $("#apps-data-ul").on("click","li",function(e){
+    $.dataManager.run.updateRunApp($(this));
   });
 });
 
@@ -141,12 +152,6 @@ function _init_data(){
             }
             $("#apps-data-ul").html(appLi);
             $("#added-data-ul").html(dataLi);
-            $("#added-data-ul").on("click","li",function(e){
-              $.dataManager.run.removeToRunData($(this));
-            });
-            $("#apps-data-ul").on("click","li",function(e){
-              $.dataManager.run.updateRunApp($(this));
-            });
             $("#run-modal").modal("show");
           });
         }
@@ -245,7 +250,7 @@ function _init_data(){
     showBatchEditModal: function(){
       $.dataManager.updateData.strainList("#batch-editdatas-strain");
       $("#each-editdata-modal").modal("hide");
-//      $("#batch-editdata-form").reset();
+      $("#batch-editdata-form")[0].reset();
       $("#batch-editdata-error").addClass("hide");
       $("#batch-editdatas-strain").val("");
       $("#batch-editdata-modal").modal("show");
@@ -363,6 +368,13 @@ function _init_data(){
    */
   $.dataManager.loadlist = function(response){
   	$("#data-list-div").html(response);
+  	$("#data-list-tbody").find("td[name='data-name-td']").each(function(){
+  	  var _data = $(this).attr("title");
+  	  if(_data.length>50){
+  	    var newData = $.dataManager.splitDataByInfo(_data, "\r\n" ,50);
+  	    $(this).attr("title",newData);
+  	  }
+  	});
   	$.dataManager.sortIcon();
   	var o = $.dataManager.options;
     o.checkedIds = [];
@@ -554,6 +566,29 @@ function _init_data(){
       return false;
     }
   };
+  /**
+   * title每隔n个字符插入指定字符
+   */
+  /**
+    @param data 原始字符串
+    @param splitStr 要插入的字符串
+    @param number 间隔的字符长度
+    @example $.dataManager.splitDataByInfo("abcdefghijklmno","\r\n",10) 
+       即表示在字符串"abcdefghijklmno"中每隔10个字符串插入"\r\n字符串"
+  */
+  $.dataManager.splitDataByInfo = function(data,splitStr,number){
+    var reStr = "(.{"+number+"}|.*)"; 
+    var reg = new RegExp(reStr,"g"); 
+    var dataArray = data.match(reg) ;
+    dataArray.pop();
+    var arrLength = dataArray.length+1; 
+    for(var i=0;i<dataArray.length;i+=2){ 
+      dataArray.splice(i+1,0,splitStr);
+    } 
+    dataArray.pop();
+    var str = dataArray.join('');
+    return str; 
+  }
   
   /**
    * Tools ----end

@@ -19,7 +19,7 @@
         	<th class="center">运行状态</th>
         </tr>
     </thead>
-	<tbody>
+	<tbody id="data-list-tbody">
 		<c:choose>
 			<c:when test="${dataList.datas.size()>0}">
 				<c:forEach items="${dataList.datas }" var="data">
@@ -28,7 +28,7 @@
 			        		<input id="chk${data.fileId }" name="data-checkone" type="checkbox" value="${data.fileId }" style="border:none;"/>
 			        		<input id="filename-${data.fileId }" type="hidden" value="${data.fileName }">
 			        	</td>
-						<td title="${data.fileName }">
+						<td title="${data.fileName }" name="data-name-td" >
 							<c:choose><c:when test="${fn:length(data.fileName)>60 }"><c:out value="${fn:substring(data.fileName, 0, 60) }"/>...</c:when><c:otherwise>${data.fileName }</c:otherwise></c:choose>
 							<c:if test="${data.isRunning>0}">
 								<img src="<%=request.getContextPath()%>/images/icon/icon-running.png" title="running" style="position: absolute;margin-top: 1px;"/>
