@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<input type="hidden" id="app-detail-appId" value="${app.appId }">
 <div class="item-list">
   <div class="item-left">
 	<div class="product-info-top-wrap">

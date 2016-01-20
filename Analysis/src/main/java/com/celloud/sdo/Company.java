@@ -27,6 +27,8 @@ public class Company implements Serializable {
 	private String userNames;
 	private String deptNames;
 	private String province;
+	private String yearMonth;
+	private int num;
 
 	public Integer getCompany_id() {
 		return company_id;
@@ -36,8 +38,24 @@ public class Company implements Serializable {
 		return userNames;
 	}
 
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
 	public void setUserNames(String userNames) {
 		this.userNames = userNames;
+	}
+
+	public String getYearMonth() {
+		return yearMonth;
+	}
+
+	public void setYearMonth(String yearMonth) {
+		this.yearMonth = yearMonth;
 	}
 
 	public String getDeptNames() {

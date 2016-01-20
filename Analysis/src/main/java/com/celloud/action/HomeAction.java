@@ -32,7 +32,7 @@ import com.google.inject.Inject;
 @ParentPackage("json-default")
 @Action("home")
 @Results({ @Result(name = "success", location = "../../pages/home.jsp"),
-		@Result(name = "toHospitalBigUser", location = "../../pages/hospitalBigUser.jsp"),
+		@Result(name = "toCompanyBigUesr", location = "../../pages/companyBigUser.jsp"),
 		@Result(name = "toBigUser", location = "../../pages/dataBigUser.jsp"),
 		@Result(name = "toBigUserOne", location = "../../pages/dataBigUserOne.jsp"),
 		@Result(name = "companyReportList", location = "../../pages/companyReportList.jsp"),
@@ -45,7 +45,8 @@ import com.google.inject.Inject;
 		@Result(name = "softList", type = "json", params = { "root", "totalSoftList" }),
 		@Result(name = "AppList", type = "json", params = { "root", "appList" }),
 		@Result(name = "loginList", type = "json", params = { "root", "logList" }),
-		@Result(name = "DataList", type = "json", params = { "root", "dataList" }) })
+		@Result(name = "DataList", type = "json", params = { "root", "dataList" }),
+		@Result(name = "resultMap", type = "json", params = { "root", "resultMap" }) })
 public class HomeAction extends BaseAction {
 	Logger log = Logger.getLogger(HomeAction.class);
 	private static final long serialVersionUID = 1L;
@@ -114,11 +115,20 @@ public class HomeAction extends BaseAction {
 		return "getPreDataView";
 	}
 
+	public String getPreDataViewBigUesrNewCmp() {
+		try {
+			resultMap = homeService.getPreDataViewBigUesrNewCmp();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "resultMap";
+	}
+
 	public String toPreCompanyView() {
 		Integer cmpId = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		try {
-			resultMap = homeService.companyPreVIew(cmpId, role);
+			resultMap = homeService.companyPreView(cmpId, role);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -194,9 +204,9 @@ public class HomeAction extends BaseAction {
 		return "AppList";
 	}
 
-	public String toHospitalBigUesr() {
+	public String toCompanyBigUesr() {
 		cmpList = companyService.BigUserList();
-		return "toHospitalBigUser";
+		return "toCompanyBigUesr";
 	}
 
 	/**

@@ -26,6 +26,11 @@
 		<div class="col-xs-11" style="margin-left: 60px; margin-top: 15px">
 			<div class="table-header hide" id="_companyName"></div>
 			<div class="table-responsive" id="dataDiv">
+				<div class="col-xs-11">
+					<h3 class="header smaller lighter green">大客户数据统计</h3>
+					<div class="col-sm-6" style="height: 450px" id="fileNumPie"></div>
+					<div class="col-sm-6" style="height: 450px" id="fileSizePie"></div>
+				</div>
 				<table id="bigUserTb" class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
@@ -66,16 +71,7 @@
 		</div>
 		<!-- /.col -->
 	</div>
-	<div class="row">
-	       <h3 class="header smaller lighter green">大客户数据统计</h3>
-	
-	       <div class="col-sm-6" style="height:450px" id = "fileSizePie">
-	       
-	       </div>
-	       <div class="col-sm-6" style="height:450px" id = "fileNumPie">
-           
-           </div>
-	</div>
+
 	<!-- /.row -->
 </div>
 <!-- /.page-content -->

@@ -134,4 +134,11 @@ public interface CompanyDao {
 	 * @return
 	 */
 	public List<Map<String, Object>> getCompanys(Integer role, Integer cmpId, String province);
+
+	/**
+	 * 查询大客户每月新增的医院数量
+	 * 
+	 * @return
+	 */
+	public List<Company> getBigUserCmpNum(Connection conn);
 }

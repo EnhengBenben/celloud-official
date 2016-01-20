@@ -18,5 +18,12 @@ public interface HomeService {
 
 	public Map<String, Object> toCompanyReport(Integer cmpId, Integer role);
 
-	public Map<String, Object> companyPreVIew(Integer cmpId, Integer role);
+	public Map<String, Object> companyPreView(Integer cmpId, Integer role);
+
+	/**
+	 * 查询各大客户各月的新增的医院数量
+	 * 
+	 * @return
+	 */
+	public Map<String, Object> getPreDataViewBigUesrNewCmp();
 }
