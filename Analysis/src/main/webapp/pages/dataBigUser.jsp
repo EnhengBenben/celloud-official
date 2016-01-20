@@ -25,10 +25,9 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="table-header hide" id="_companyName"></div>
-			<div class="col-xs-11">
-				<h3 class="header smaller lighter green">大客户数据统计</h3>
-				<div class="col-sm-6" style="height: 450px" id="fileNumPie"></div>
-				<div class="col-sm-6" style="height: 450px" id="fileSizePie"></div>
+			<h3 class="header smaller lighter green">大客户数据统计</h3>
+			<div>
+				<div class="col-sm-12" style="height:350px" id="fileNumPie"></div>
 			</div>
 		</div>
 		<div class="col-xs-12">

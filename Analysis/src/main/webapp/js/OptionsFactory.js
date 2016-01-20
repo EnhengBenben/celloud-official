@@ -44,10 +44,12 @@ function makeOptionScroll(title, xAxis, yAxis, seriesName, typex, startZoom, end
  *            全部有多少个 *
  * @param isArea
  *            曲线图时是否阴影
- * @param showPoint
+ * @param showPoint{}
  *            是否显示最大最小值
+@param showItem
+ *            是否显示各点数据默认显示 
  */
-function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position, showNum, isArea, showPoint) {
+function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position, showNum, isArea, showPoint,showItem) {
 	var length = xAxis.length;
 	var option = null;
 	if (showNum < length) {
@@ -62,6 +64,10 @@ function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position, showNum
 		option = makeOption('', xAxis, yAxis, seriesName, typex);
 	}
 	option = addArea(option, isArea);
+	option = addMakePoint(option,showPoint);
+	if(showItem!=null){
+		option.series[0].itemStyle.normal.label.show=false;
+	}
 	return option;
 }
 function addMakePoint(option, showPoint) {
@@ -128,6 +134,7 @@ function addArea(option, isArear) {
 
 function makePieOption(title, legenName, name, rad, centerX, centerY, value, legendPosition) {
 	var legendObj = {
+		show:true,
 		orient : 'vertical',// horizontal
 		x : 'left',
 		y : "top",
@@ -137,6 +144,8 @@ function makePieOption(title, legenName, name, rad, centerX, centerY, value, leg
 		legendObj.x = legendPosition.x != null ? legendPosition.x : 'left';
 		legendObj.y = legendPosition.y != null ? legendPosition.y : 'top';
 		legendObj.orient = legendPosition.orient != null ? legendPosition.orient : 'vertical';
+	}else{
+		legendObj.show = false;
 	}
 	
 	var opt = {
@@ -169,6 +178,17 @@ function makePieOption(title, legenName, name, rad, centerX, centerY, value, leg
 		} ]
 	};
 	return opt;
+}
+function makePieOptionAdd(option,name,rad, centerX, centerY, value){
+	option.series[option.series.length]={
+			name : name,
+			type : 'pie',
+			radius : rad,// '70%',
+			center : [ centerX, centerY ],// [ '40%', '40%' ],
+			data : value
+		};
+//	option.legend.data[option.legend.data.length]=name;
+	return option;
 }
 /**
  * title ='用户统计' legendList= [ '文件个数', '数据大小(GB)' ] xAxis yAxis seriesName typex

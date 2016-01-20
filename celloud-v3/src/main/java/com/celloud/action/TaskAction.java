@@ -7,12 +7,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.celloud.constants.ConstantsData;
@@ -282,5 +284,13 @@ public class TaskAction {
         SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
         ssh.sshSubmit(command, false);
     }
+    
+	@RequestMapping("toolsRunOver.html")
+    @ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
+	public String toolsRunOver(Integer userId, Integer appId, Integer projectId, Integer state, String context) {
+		Integer result = reportService.updateReportStateToTools(userId, appId, projectId, state, context);
+		return String.valueOf(result);
+	}
 
 }

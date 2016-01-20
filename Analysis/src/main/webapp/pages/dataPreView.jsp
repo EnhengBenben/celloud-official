@@ -150,7 +150,7 @@
 		}
 		
 		var fileNumOpt = makeOptionScrollUnit(xAxis, yAxis, '数据增量曲线图', lineType, 100, xAxis.length, "阴影");
-		var fileTotalOpt = makeOptionScrollUnit(xAxis, yAxisCount, "数据量累计图", lineType, 100, xAxis.length);
+		var fileTotalOpt = makeOptionScrollUnit(xAxis, yAxisCount, "数据量累计图", lineType, 100, xAxis.length,null,null,"test");
 		
 		var fileNumChart = echarts.init(document.getElementById('fileNumView'));
 		var fileTotalNum = echarts.init(document.getElementById('fileTotalNum'));

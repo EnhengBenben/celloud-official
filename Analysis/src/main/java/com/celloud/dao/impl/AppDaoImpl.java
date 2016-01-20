@@ -285,7 +285,7 @@ public class AppDaoImpl implements AppDao {
 	@Override
 	public List<App> getApps(Connection conn, int role, int cmpId) {
 		List<App> list = null;
-		String sql = "select app_id,app_name from tb_app where 1=1 "
+		String sql = "select app_id,app_name from tb_app where off_line=0 "
 				+ SqlController.whereCompany("tb_app", "company_id", role, cmpId);
 		LogUtil.info(log, sql);
 		try {

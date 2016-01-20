@@ -27,10 +27,10 @@
 				<table id="allUserDataList" class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
-							<th class="hidden-480">医院编码</th>
-							<th class="hidden-480">医院名称</th>
+							<th class="min-w-50">编码</th>
+							<th class="min-w-200 ">医院名称</th>
 							<c:forEach items="${appList}" var="item">
-								<th class="hidden-480">${item.app_name}</th>
+								<th class="min-w-50">${item.app_name}</th>
 							</c:forEach>
 						</tr>
 					</thead>

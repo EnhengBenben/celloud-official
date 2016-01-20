@@ -34,13 +34,15 @@
 						};
 				}
 				var myChart = echarts.init(document.getElementById("fileNumPie"));
-				var option = makePieOption('', xAxis, '大客户数据量', '50%', '60%', '45%', fileNumObj,{'x':'left','y':'top','orient':'vertical'});
+				var option = makePieOption('', xAxis, '大客户数据量', '55%', '30%', '55%', fileNumObj,{'x':'center','y':'top','orient':'horizontal'});
+				option = makePieOptionAdd(option,'大客户数据大小(GB)', '30%', '70%', '60%', fileSizeObj);
+				console.log(option);
 				myChart.setOption(option);
 				
 		  
-				var mySizeChart = echarts.init(document.getElementById("fileSizePie"));
-				var sizeOption = makePieOption('', xAxis, '大客户数据大小(GB)', '50%', '60%', '45%', fileSizeObj,{'x':'left','y':'top','orient':'vertical'});
-				mySizeChart.setOption(sizeOption);
+			//	var mySizeChart = echarts.init(document.getElementById("fileSizePie"));
+			//	var sizeOption = makePieOption('', xAxis, '大客户数据大小(GB)', '40%', '60%', '45%', fileSizeObj,null);
+			//	mySizeChart.setOption(sizeOption);
 		  });
 	}
 	

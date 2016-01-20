@@ -115,7 +115,6 @@
 	
 	var getBigUserMonthNewCmpURL = "home!getPreDataViewBigUesrNewCmp";
 	$.get(getBigUserMonthNewCmpURL, {}, function(data) {
-		console.log(data);
 		var listCmp = data["companyNames"];
 		var xAxis = data["xAxis"];
 		var opt
@@ -126,7 +125,7 @@
 				yAxis[j] = temp[j].num;
 			}
 			if (i == 0) {
-				opt = makeOptionScrollUnit(xAxis, yAxis, listCmp[0], lineType, 100, xAxis.length);
+				opt = makeOptionScrollUnit(xAxis, yAxis, listCmp[0], lineType, 100, xAxis.length,null,null,"test");
 			} else {
 				opt = makeOptionAdd(opt, yAxis, listCmp[i], lineType);
 			}

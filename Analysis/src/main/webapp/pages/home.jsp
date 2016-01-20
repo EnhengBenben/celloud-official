@@ -125,7 +125,7 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<h3 class="header smaller lighter green">用户登陆统计</h3>
-				<div id="loginId" class="col-sm-12" style="height: 450px;"></div>
+				<div id="loginId" class="col-sm-12" style="height: 350px;"></div>
 				<!-- row -->
 				<div class="space"></div>
 				<div class="hr hr32 hr-dotted"></div>
@@ -140,7 +140,7 @@
 					<h3 class="header smaller lighter green">浏览器统计</h3>
 				</div>
 
-				<div class="col-xs-4 table-responsiv " style="height: 450px; overflow-y: scroll">
+				<div class="col-xs-4 table-responsiv " style="height: 350px; overflow-y: scroll">
 					<table id="allUserDataList" class="table table-striped table-bordered table-hover">
 						<thead>
 							<tr>
@@ -162,7 +162,7 @@
 					</table>
 				</div>
 				<div class="col-xs-8">
-					<div class="col-sm-12" style="height: 450px" id="browserDistribute"></div>
+					<div class="col-sm-12" style="height: 350px" id="browserDistribute"></div>
 				</div>
 			</div>
 		</c:if>
@@ -170,7 +170,7 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<h3 class="header smaller lighter green">APP使用统计</h3>
-				<div class="col-sm-12" style="height: 450px;" id="AppRunNum"></div>
+				<div class="col-sm-12" style="height: 350px;" id="AppRunNum"></div>
 				<!-- row -->
 			</div>
 		</div>
@@ -178,10 +178,9 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<h3 class="header smaller lighter green">用户运行统计</h3>
-				<div class="col-sm-12" style="height: 450px;" id="UserRunNum"></div>
+				<div class="col-sm-12" style="height: 350px;" id="UserRunNum"></div>
 			</div>
 		</div>
 	</div>
 </div>
 <!-- /.page-content -->
-</div>
