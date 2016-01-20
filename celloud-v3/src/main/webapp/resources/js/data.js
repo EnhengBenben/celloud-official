@@ -245,7 +245,7 @@ function _init_data(){
     showBatchEditModal: function(){
       $.dataManager.updateData.strainList("#batch-editdatas-strain");
       $("#each-editdata-modal").modal("hide");
-//      $("#batch-editdata-form").reset();
+      $("#batch-editdata-form")[0].reset();
       $("#batch-editdata-error").addClass("hide");
       $("#batch-editdatas-strain").val("");
       $("#batch-editdata-modal").modal("show");
