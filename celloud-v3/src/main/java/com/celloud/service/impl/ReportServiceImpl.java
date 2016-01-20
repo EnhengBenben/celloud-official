@@ -694,7 +694,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
-	public void updateReportStateToTools(Integer userId, Integer appId, Integer projectId, Integer state,
+	public Integer updateReportStateToTools(Integer userId, Integer appId, Integer projectId, Integer state,
 			String context) {
 		if (context != null) {
 			context = context.replaceAll(" ", "+");
@@ -706,6 +706,6 @@ public class ReportServiceImpl implements ReportService {
 		report.setProjectId(projectId);
 		report.setState(state);
 		report.setContext(context);
-		reportMapper.updateReport(report);
+		return reportMapper.updateReport(report);
 	}
 }

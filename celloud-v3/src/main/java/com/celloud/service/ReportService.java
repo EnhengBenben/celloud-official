@@ -316,6 +316,6 @@ public interface ReportService {
 	 * @author lin
 	 * @date 2016年1月20日下午6:14:55
 	 */
-	public void updateReportStateToTools(Integer userId, Integer appId, Integer projectId, Integer state,
+	public Integer updateReportStateToTools(Integer userId, Integer appId, Integer projectId, Integer state,
 			String context);
 }

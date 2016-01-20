@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.celloud.constants.ConstantsData;
@@ -285,8 +286,11 @@ public class TaskAction {
     
 	@RequestMapping("toolsRunOver.html")
 	@ResponseStatus(value = HttpStatus.OK)
-	public void toolsRunOver(Integer userId, Integer appId, Integer projectId, Integer state, String context) {
-		reportService.updateReportStateToTools(userId, appId, projectId, state, context);
+	@ResponseBody
+	public Integer toolsRunOver(Integer userId, Integer appId, Integer projectId, Integer state, String context) {
+		Integer result = reportService.updateReportStateToTools(userId, appId, projectId, state, context);
+		System.out.println(result);
+		return result;
 	}
 
 }
