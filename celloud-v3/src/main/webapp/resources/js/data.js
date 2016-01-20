@@ -324,6 +324,9 @@ function _init_data(){
         }
       });
     });
+    $("#check-flase").one("click",function(){
+      $("#check-true").unbind("click");
+    })
   }; 
   /**
    * 主方法  ---end

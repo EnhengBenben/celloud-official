@@ -103,8 +103,8 @@
         <p id="tip-text">&hellip;</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">取消</button>
-        <button id="check-true" type="button" class="btn btn-outline" data-dismiss="modal" onclick="">确定</button>
+        <button id="check-flase" type="button" class="btn btn-outline pull-left" data-dismiss="modal">取消</button>
+        <button id="check-true" type="button" class="btn btn-outline" data-dismiss="modal">确定</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
