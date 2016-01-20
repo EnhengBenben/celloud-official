@@ -23,6 +23,9 @@ $(function(){
   $("#manage-data-btn").on("click",function(){
     $.dataManager.updateData.showBatchEditModal();
   });
+  $("#to-batch-editdata-modal").on("click",function(){
+    $.dataManager.updateData.showBatchEditModal();
+  });
   $("#to-each-editdata-modal").on("click",function(){
     $.dataManager.updateData.showEachEditModal();
   });
