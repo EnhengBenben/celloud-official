@@ -36,3 +36,29 @@
   word-break:break-all;
   word-wrap:break-word;
 }
+.data-table th,
+.data-table td{
+  text-align: center;
+}
+.data-table .file-name{
+  min-width: 418px;
+  text-align: left;
+}
+.data-table .data-key{
+  min-width: 115px;
+}
+.data-table .strain{
+  min-width: 100px;
+}
+.data-table .data-tags{
+  min-width: 70px;
+}
+.data-table .sample{
+  min-width: 50px;
+}
+.data-table .data-size{
+  min-width: 80px;
+}
+.data-table .create-date{
+  min-width: 80px;
+}

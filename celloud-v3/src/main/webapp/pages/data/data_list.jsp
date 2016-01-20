@@ -2,21 +2,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<table class="table">
+<table class="table data-table">
 	<thead>
     	<tr>
-        	<th class="center">
+        	<th>
         		<input id="data-checkall" type="checkbox" style="border:none;"/>
         	</th>
-        	<th style="min-width: 418px;">文件名称  <a id="data-sort-name" class="a-gray" href="javascript:void(0);"><i id="data-sort-name-icon" class="fa fa-sort-amount-asc"></i></a></th>
-        	<th class="center" style="min-width:115px;">数据编号</th>
-        	<th class="center" style="min-width:70px;">文件别名</th>
-        	<th class="center" style="min-width:100px;">样本类型/物种</th>
-        	<th class="center" style="min-width:70px;">数据标签</th>
-        	<th class="center" style="min-width:50px;">样本</th>
-        	<th class="center" style="min-width:80px">数据大小</th>
-        	<th class="center" style="min-width:80px">上传时间  <a id="data-sort-createdate" class="a-green-normal" href="javascript:void(0);" ><i id="data-sort-date-icon" class="fa fa-sort-amount-desc"></i></a></th>
-        	<th class="center">运行状态</th>
+        	<th class="file-name">文件名称  <a id="data-sort-name" class="a-gray" href="javascript:void(0);"><i id="data-sort-name-icon" class="fa fa-sort-amount-asc"></i></a></th>
+        	<th class="data-key">数据编号</th>
+        	<th class="another-name">文件别名</th>
+        	<th class="strain">样本类型/物种</th>
+        	<th class="data-tags">数据标签</th>
+        	<th class="sample">样本</th>
+        	<th class="data-size">数据大小</th>
+        	<th class="create-date" style="min-width:80px">上传时间  <a id="data-sort-createdate" class="a-green-normal" href="javascript:void(0);" ><i id="data-sort-date-icon" class="fa fa-sort-amount-desc"></i></a></th>
+        	<th>运行状态</th>
         </tr>
     </thead>
 	<tbody id="data-list-tbody">
@@ -24,34 +24,34 @@
 			<c:when test="${dataList.datas.size()>0}">
 				<c:forEach items="${dataList.datas }" var="data">
 					<tr>
-						<td class="center">
+						<td>
 			        		<input id="chk${data.fileId }" name="data-checkone" type="checkbox" value="${data.fileId }" style="border:none;"/>
 			        		<input id="filename-${data.fileId }" type="hidden" value="${data.fileName }">
 			        	</td>
-						<td title="${data.fileName }" name="data-name-td" >
+						<td class="file-name" title="${data.fileName }" name="data-name-td" >
 							<c:choose><c:when test="${fn:length(data.fileName)>60 }"><c:out value="${fn:substring(data.fileName, 0, 60) }"/>...</c:when><c:otherwise>${data.fileName }</c:otherwise></c:choose>
 							<c:if test="${data.isRunning>0}">
 								<img src="<%=request.getContextPath()%>/images/icon/icon-running.png" title="running" style="position: absolute;margin-top: 1px;"/>
 							</c:if>
 						</td>
-						<td class="center">${data.dataKey }</td>
-						<td class="center" title="${data.anotherName }">
+						<td>${data.dataKey }</td>
+						<td title="${data.anotherName }">
 							<c:choose><c:when test="${fn:length(data.anotherName)>10 }"><c:out value="${fn:substring(data.anotherName, 0, 10) }"/>...</c:when><c:otherwise>${data.anotherName }</c:otherwise></c:choose>
 						</td>
-						<td class="center" title="${data.strain }">
+						<td title="${data.strain }">
 							<c:choose><c:when test="${fn:length(data.strain)>10 }"><c:out value="${fn:substring(data.strain, 0, 10) }"/>...</c:when><c:otherwise>${data.strain }</c:otherwise></c:choose>
 						</td>
-						<td class="center" title="${data.dataTags }">
+						<td title="${data.dataTags }">
 							<c:choose><c:when test="${fn:length(data.dataTags)>10 }"><c:out value="${fn:substring(data.dataTags, 0, 10) }"/>...</c:when><c:otherwise>${data.dataTags }</c:otherwise></c:choose>
 						</td>
-						<td class="center" title="${data.sample }">
+						<td title="${data.sample }">
 							<c:choose><c:when test="${fn:length(data.sample)>10 }"><c:out value="${fn:substring(data.sample, 0, 10) }"/>...</c:when><c:otherwise>${data.sample }</c:otherwise></c:choose>
 						</td>
-						<td class="center">
+						<td>
 							<c:choose><c:when test="${data.size>1048576 }"><fmt:formatNumber pattern="0.00" value="${data.size/1048576 }"/>MB</c:when><c:otherwise><fmt:formatNumber pattern="0.00" value="${data.size/1024 }"/>KB</c:otherwise></c:choose>
 						</td>
-						<td class="center"><fmt:formatDate type="date" value="${data.createDate }"/></td>
-						<td class="center">
+						<td><fmt:formatDate type="date" value="${data.createDate }"/></td>
+						<td>
 							<c:choose>
 								<c:when test="${data.reportNum>0}"><span class="label label-success">已运行</span></c:when>
 								<c:otherwise><span class="label label-warning">未运行</span></c:otherwise>

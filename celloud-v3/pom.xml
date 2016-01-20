@@ -222,8 +222,8 @@
 				</includes>
 			</resource>
 			<resource>
-				<directory>${basedir}/src/main/resources</directory>
-			</resource>
+                <directory>${basedir}/src/main/resources</directory>
+            </resource>
 		</resources>
 		<plugins>
 			<plugin>

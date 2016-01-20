@@ -46,6 +46,7 @@ import com.celloud.model.Split;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.ReportService;
+import com.celloud.utils.Base64Util;
 import com.celloud.utils.ExcelUtil;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.PropertiesUtil;
@@ -689,6 +690,22 @@ public class ReportServiceImpl implements ReportService {
 
 	@Override
 	public int updateReport(Report report) {
+		return reportMapper.updateReport(report);
+	}
+
+	@Override
+	public Integer updateReportStateToTools(Integer userId, Integer appId, Integer projectId, Integer state,
+			String context) {
+		if (context != null) {
+			context = context.replaceAll(" ", "+");
+			context = Base64Util.decrypt(context);
+		}
+		Report report = new Report();
+		report.setUserId(userId);
+		report.setAppId(appId);
+		report.setProjectId(projectId);
+		report.setState(state);
+		report.setContext(context);
 		return reportMapper.updateReport(report);
 	}
 }
