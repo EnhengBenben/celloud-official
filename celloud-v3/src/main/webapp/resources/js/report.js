@@ -1305,7 +1305,7 @@ function toPrintHBV(pagePath,flag){
 		        "table":table,
 		};
 	}
-	$.post("print/printHBV",param,function(responseText){
+	$.post("report/printHBV",param,function(responseText){
 		var obj = window.open("");
 		obj.document.write(responseText);
 		obj.document.close();
