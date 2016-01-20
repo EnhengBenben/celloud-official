@@ -49,6 +49,14 @@ $(function(){
   $("#run-error-head").mouseover(function() {
     $("#run-error-content").draggable("destroy");
   });
+  
+  //运行modal按钮绑定事件
+  $("#added-data-ul").on("click","li",function(e){
+    $.dataManager.run.removeToRunData($(this));
+  });
+  $("#apps-data-ul").on("click","li",function(e){
+    $.dataManager.run.updateRunApp($(this));
+  });
 });
 
 /**
@@ -144,12 +152,6 @@ function _init_data(){
             }
             $("#apps-data-ul").html(appLi);
             $("#added-data-ul").html(dataLi);
-            $("#added-data-ul").on("click","li",function(e){
-              $.dataManager.run.removeToRunData($(this));
-            });
-            $("#apps-data-ul").on("click","li",function(e){
-              $.dataManager.run.updateRunApp($(this));
-            });
             $("#run-modal").modal("show");
           });
         }
