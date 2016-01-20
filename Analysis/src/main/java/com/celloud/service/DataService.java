@@ -90,4 +90,5 @@ public interface DataService {
 	 * @return
 	 */
 	public Map<String, Object> getAllBigUserMonthData();
+
 }

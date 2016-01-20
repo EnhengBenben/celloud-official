@@ -171,16 +171,14 @@
                                     医院报告统计
                                 </a>
                             </li>
-                            <!-- 
 							<c:if test="${ userRole=='2'}">
 								<li>
-									<a href="javascript:hospitalBigUserCount()">
+									<a href="javascript:companyBigUserCount()">
 										<i class="icon-double-angle-right"></i>
 										大客户统计
 									</a>
 								</li>
 							</c:if>
-							 -->
 						</ul>
 					</li>
 					<!-- 
@@ -376,9 +374,9 @@
 			});
 		}
 		/**医院统计－－大客户统计**/
-		function hospitalBigUserCount() {
+		function companyBigUserCount() {
 			$("#secondTitle").addClass("hide");
-			$.get("home!toHospitalBigUesr", {}, function(responseText) {
+			$.get("home!toCompanyBigUesr", {}, function(responseText) {
 				$("#content").html(responseText);
 			});
 		}

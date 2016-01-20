@@ -4,46 +4,46 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <div class="row">
+    <div class="col-xs-12">
+
+	<h3 class="header smaller lighter green">数据统计</h3>
+	<div style="height: 300px;" id="fileNum"></div>
+	<!-- 
+	 <div style="height: 300px;" id="fileSize"></div>
+	 -->
+	</div>
 	<div class="col-xs-12">
-	<c:if test="${fn:length(dataList) > 0}">
-		<div class="table-responsive">
-			<table id="allUserDataList" class="table table-striped table-bordered table-hover">
-				<thead>
-					<tr>
-						<th>月份</th>
-						<th class="hidden-480">数据量(个)</th>
-						<th class="hidden-480">数据大小</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${dataList}" var="data">
+		<c:if test="${fn:length(dataList) > 0}">
+			<div class="table-responsive">
+				<table id="allUserDataList" class="table table-striped table-bordered table-hover">
+					<thead>
 						<tr>
-							<td>${data.yearMonth }</td>
-							<td>${data.fileNum }</td>
-							<td>
-								<c:choose>
-									<c:when test="${data.size>1073741824 }">
-										<fmt:formatNumber pattern="0.00" value="${data.size/1073741824 }" />GB</c:when>
-									<c:when test="${data.size>1048576 }">
-										<fmt:formatNumber pattern="0.00" value="${data.size/1048576 }" />MB</c:when>
-									<c:otherwise>
-										<fmt:formatNumber pattern="0.00" value="${data.size/1024 }" />KB</c:otherwise>
-								</c:choose>
-							</td>
+							<th>月份</th>
+							<th class="hidden-480">数据量(个)</th>
+							<th class="hidden-480">数据大小</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
-        </c:if>
-		<div class="col-xs-12">
-			<h3 class="header smaller lighter green">数据量统计</h3>
-		</div>
-		<div class="col-xs-12" style="height: 450px;" id="fileNum"></div>
-		<div class="col-xs-12">
-			<h3 class="header smaller lighter green">数据大小统计</h3>
-		</div>
-		<div class="col-xs-12" style="height: 450px;" id="fileSize"></div>
+					</thead>
+					<tbody>
+						<c:forEach items="${dataList}" var="data">
+							<tr>
+								<td>${data.yearMonth }</td>
+								<td>${data.fileNum }</td>
+								<td>
+									<c:choose>
+										<c:when test="${data.size>1073741824 }">
+											<fmt:formatNumber pattern="0.00" value="${data.size/1073741824 }" />GB</c:when>
+										<c:when test="${data.size>1048576 }">
+											<fmt:formatNumber pattern="0.00" value="${data.size/1048576 }" />MB</c:when>
+										<c:otherwise>
+											<fmt:formatNumber pattern="0.00" value="${data.size/1024 }" />KB</c:otherwise>
+									</c:choose>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</c:if>
 
 	</div>
 </div>
@@ -90,20 +90,19 @@
 				else if (len == 30)
 					yAxis[i] = parseFloat((yAxis[i] / (1024 * 1024 * 1024)).toFixed(2));
 			}
-			var fileSizeOpt = makeOptionScrollUnit(xAxis, yAxis, optSizeName, barType, 100, 12);
-			var fileNumOpt = makeOptionScrollUnit(xAxis, fileNum, optNumName, barType, 100, 12);
+		//	var fileSizeOpt = makeOptionScrollUnit(xAxis, yAxis, optSizeName, lineType, 100, 12);
+			var fileNumOpt = makeOptionScrollUnit(xAxis, fileNum, optNumName, lineType, 100, xAxis.length);
 			
-			var sizeChart = echarts.init(document.getElementById(fileSizeId));
+	//		var sizeChart = echarts.init(document.getElementById(fileSizeId));
 			var numChart = echarts.init(document.getElementById(fileNumId));
 			
-			sizeChart.setOption(fileSizeOpt);
+	//		sizeChart.setOption(fileSizeOpt);
 			numChart.setOption(fileNumOpt);
 		});
 	}
-	   var oTable1 = $('#allUserDataList').dataTable({
-	        "aoColumns" : [  
-	                         null,  null, null ],
-	        iDisplayLength : 12,
-	        "aaSorting":[[0,"desc"]],
-	    });
+	var oTable1 = $('#allUserDataList').dataTable({
+		"aoColumns" : [ null, null, { "sType": "filesize" }  ],
+		iDisplayLength : 12,
+		"aaSorting" : [ [ 0, "desc" ] ],
+	});
 </script>

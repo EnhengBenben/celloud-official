@@ -41,9 +41,13 @@ function makeOptionScroll(title, xAxis, yAxis, seriesName, typex, startZoom, end
  * @param showNum
  *            要显示多少个 showNum小于等于length不显示TｉｍｅＬｉｎｅ
  * @param length
- *            全部有多少个
+ *            全部有多少个 *
+ * @param isArea
+ *            曲线图时是否阴影
+ * @param showPoint
+ *            是否显示最大最小值
  */
-function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position, showNum, isArea) {
+function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position, showNum, isArea, showPoint) {
 	var length = xAxis.length;
 	var option = null;
 	if (showNum < length) {
@@ -58,6 +62,18 @@ function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position, showNum
 		option = makeOption('', xAxis, yAxis, seriesName, typex);
 	}
 	option = addArea(option, isArea);
+	return option;
+}
+function addMakePoint(option, showPoint) {
+	if (showPoint != null) {
+		option.series[0].data = [ {
+			type : 'max',
+			name : '最大值'
+		}, {
+			type : 'min',
+			name : '最小值'
+		} ];
+	}
 	return option;
 }
 /**
@@ -112,17 +128,17 @@ function addArea(option, isArear) {
 
 function makePieOption(title, legenName, name, rad, centerX, centerY, value, legendPosition) {
 	var legendObj = {
-		orient : 'vertical',//horizontal
+		orient : 'vertical',// horizontal
 		x : 'left',
-		y: "top",
+		y : "top",
 		data : legenName,
 	};
-	if(legendPosition!=null){
-		legendObj.x = legendPosition.x!=null?legendPosition.x:'left';
-		legendObj.y = legendPosition.y!=null?legendPosition.y:'top';
-		legendObj.orient = legendPosition.orient!=null?legendPosition.orient:'vertical';
+	if (legendPosition != null) {
+		legendObj.x = legendPosition.x != null ? legendPosition.x : 'left';
+		legendObj.y = legendPosition.y != null ? legendPosition.y : 'top';
+		legendObj.orient = legendPosition.orient != null ? legendPosition.orient : 'vertical';
 	}
-
+	
 	var opt = {
 		title : {
 			text : '',
@@ -138,15 +154,6 @@ function makePieOption(title, legenName, name, rad, centerX, centerY, value, leg
 			x : 'right',
 			show : true,
 			feature : {
-				dataZoom : {
-					show : true
-				},
-				dataView : {
-					show : true
-				},
-				restore : {
-					show : true
-				},
 				saveAsImage : {
 					show : true
 				}
@@ -262,15 +269,7 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 					}
 				},
 			},
-			markPoint : {
-				data : [ {
-					type : 'max',
-					name : '最大值'
-				}, {
-					type : 'min',
-					name : '最小值'
-				} ]
-			},
+			markPoint : '',
 			markLine : {
 				data : [ {
 					type : 'average',
