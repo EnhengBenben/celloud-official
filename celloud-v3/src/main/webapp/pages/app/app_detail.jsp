@@ -11,7 +11,25 @@
           <img src="<%=request.getContextPath()%>/images/app/${app.pictureName}">
         </div>
         <div class="itemInfo">
-          <h5>${app.appName }</h5>
+          <h5>${app.appName }
+            <span id="manageAppBtns" style="display:inline-block;position:relative;margin-left:20px;" data-step="2" data-intro="" data-position="bottom" data-img="changedApp.png">
+              <c:choose>
+                <c:when test="${app.classifyNames.contains('工具软件') }">
+                  <a class="btn btn-celloud-success btn-flat" href="${app.address }" target="_blank"><i class="fa fa-plus"></i>&nbsp;点击使用</a>
+                </c:when>
+                <c:otherwise>
+                  <c:choose>
+                    <c:when test="${app.isAdded==0 }">
+                      <a class="btn btn-celloud-success btn-flat" href="javascript:void(0);" onclick="appStore.addApp(${app.appId });" id="toAddApp"><i class="fa fa-plus"></i>&nbsp;添加</a>
+                    </c:when>
+                    <c:otherwise>
+                      <a class="btn btn-celloud-close btn-flat" href="javascript:void(0);" onclick="appStore.removeApp(${app.appId });" id="toAddApp"><i class="fa fa-minus"></i>&nbsp;取消添加</a>
+                    </c:otherwise>
+                  </c:choose>
+                </c:otherwise>
+              </c:choose>
+          </span>
+         </h5>
           <div class="unlinedate">上线时间：<span class="date"><fmt:formatDate value="${app.createDate }" type="date"/></span></div>
           <div class="intro">
             <ul>
@@ -20,24 +38,6 @@
                         <c:when test="${app.companyName==null }">上海华点云生物科技有限公司</c:when>
                         <c:otherwise>${app.companyName }</c:otherwise>
                       </c:choose></span>
-                      
-                  <span id="manageAppBtns" style="display:inline-block;position:relative;bottom: 20px;" data-step="2" data-intro="" data-position="bottom" data-img="changedApp.png">
-                <c:choose>
-                  <c:when test="${app.classifyNames.contains('工具软件') }">
-                    <a class="btn btn-celloud-success btn-flat" href="${app.address }" target="_blank"><i class="fa fa-plus"></i>&nbsp;点击使用</a>
-                  </c:when>
-                  <c:otherwise>
-                    <c:choose>
-                      <c:when test="${app.isAdded==0 }">
-                        <a class="btn btn-celloud-success btn-flat" href="javascript:void(0);" onclick="appStore.addApp(${app.appId });" id="toAddApp"><i class="fa fa-plus"></i>&nbsp;添加</a>
-                      </c:when>
-                      <c:otherwise>
-                        <a class="btn btn-celloud-close btn-flat" href="javascript:void(0);" onclick="appStore.removeApp(${app.appId });" id="toAddApp"><i class="fa fa-minus"></i>&nbsp;取消添加</a>
-                      </c:otherwise>
-                    </c:choose>
-                  </c:otherwise>
-                </c:choose>
-                </span>
               </li>
             </ul>
           </div>

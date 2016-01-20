@@ -278,8 +278,9 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 			}
 		} ]
 	};
-	if (max >= 8 && xAxis.length > 6) {
-		opt.xAxis[0].axisLabel.rotate = 30;
+	if (max >= 10 && xAxis.length > 8) {
+		opt.xAxis[0].axisLabel.rotate = 0;
+		opt.xAxis[0].show= false;
 	} else {
 		opt.xAxis[0].axisLabel.rotate = 0;
 	}

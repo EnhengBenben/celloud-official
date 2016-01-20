@@ -32,7 +32,6 @@
 			<div class="col-sm-3">
 				<div class="xe-widget xe-counter-block" data-count=".num" data-from="0" data-to="${resultMap.dataNum}" data-suffix="(个)" data-duration="2">
 					<div class="xe-upper">
-						<div class="xe-icon"></div>
 						<div class="xe-label">
 							<strong>数据量:</strong>
 							<strong class="num">${resultMap.dataNum}(个)</strong>
@@ -40,10 +39,6 @@
 					</div>
 					<div class="xe-lower">
 						<div class="border"></div>
-						<!--
-						<span>所有用户的数据量</span>
-					<strong>78% Increase</strong>
-				 -->
 					</div>
 				</div>
 			</div>
@@ -51,7 +46,6 @@
 				<div class="xe-widget xe-counter-block xe-counter-block-purple" data-count=".num" data-from="0" data-to="${resultMap.size}"
 					, data-suffix="${resultMap.unit }" data-duration="3">
 					<div class="xe-upper">
-						<div class="xe-icon"></div>
 						<div class="xe-label">
 							<strong>数据大小:</strong>
 							<strong class="num"> ${resultMap.size}${resultMap.unit} </strong>
@@ -70,7 +64,7 @@
 		<h3 class="header smaller lighter green">数据量统计</h3>
 		<div class="col-xs-12" style="height: 350px;" id="fileNumView"></div>
 		<div class="col-xs-12" style="height: 350px;" id="fileTotalNum"></div>
-		<div class="col-xs-11" style="margin-left: 60px; margin-top: 15px">
+		<div class="col-xs-12">
 			<div class="table-header hide" id="_companyName"></div>
 			<c:if test="${resultMap.dataList!=null && fn:length(resultMap.dataList) > 0}">
 				<div class="col-xs-12">

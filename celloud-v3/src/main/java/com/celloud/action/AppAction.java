@@ -147,17 +147,7 @@ public class AppAction {
     public Object userAddApp(Integer paramId, HttpServletResponse response) {
         log.info("用户{}添加APP{}", ConstantsData.getLoginUserName(), paramId);
         Integer userId = ConstantsData.getLoginUserId();
-        Integer resultInt = appService.userAddApp(userId, paramId);
-        if (resultInt > 0) {
-            try {
-                response.sendRedirect("myApps");
-            } catch (IOException e) {
-                log.error(e.toString());
-            }
-            return "";
-        } else {
-            return resultInt;
-        }
+        return appService.userAddApp(userId, paramId);
     }
 
     @ResponseBody
@@ -165,17 +155,7 @@ public class AppAction {
     public Object userRemoveApp(Integer paramId, HttpServletResponse response) {
         log.info("用户{}取消添加APP{}", ConstantsData.getLoginUserName(), paramId);
         Integer userId = ConstantsData.getLoginUserId();
-        Integer resultInt = appService.userRemoveApp(userId, paramId);
-        if (resultInt > 0) {
-            try {
-                response.sendRedirect("myApps");
-            } catch (IOException e) {
-                log.error(e.toString());
-            }
-            return "";
-        } else {
-            return resultInt;
-        }
+        return appService.userRemoveApp(userId, paramId);
     }
 
 }
