@@ -460,17 +460,6 @@ $.ajaxSetup ({
 		//标签关闭标志
 		var close = 0;
 		
-		//打印
-		function toPrint(outPath,pagePath,miniPng,txt){
-			var result ="";
-			$.get("print!printPGS",{"outPath":outPath,"pagePath":pagePath,"miniPng":miniPng,"txt":txt},function(rel){
-				result = rel.url;
-				if(result.length>0){
-				      window.open(result,"_blank");
-				}
-			});
-		}
-		
 		//显示更多检索条件
 		function showSuper(obj,divId){
 			if(!$("#"+divId).attr("class")){
