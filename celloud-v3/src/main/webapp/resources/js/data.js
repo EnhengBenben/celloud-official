@@ -199,16 +199,15 @@ function _init_data(){
         }
       }else{
         var checkedIds = o.checkedIds;
-        var dataIds = "";
+        var dataIds = new Array();
         for (var i=0;i<checkedIds.length;i++){
-          dataIds += checkedIds[i];
+          dataIds.push(checkedIds[i]);
         }
-        $.get("data/checkDataRunningApp.action",{"dataIds":dataIds,"appId":appId},function(dataIdList){
+        $.get("data/checkDataRunningApp.action",{"dataIds":dataIds.toString(),"appId":appId},function(dataIdList){
           if(dataIdList.length>0){
-            var dataName = "";
-            for(var i=0;i<intList.length;i++){
-              var dataId = intList[i];
-              dataName+=$("#filename-"+dataId).val() + "<br>";
+            var dataName = new Array();
+            for(var i=0;i<dataIdList.length;i++){
+              dataName.push($("#filename-"+dataIdList[i]).val() + "<br>");
             }
             $.dataManager.showTipModal("以下数据正在运行APP："+appName+"<br>"+dataName+"<br>请选择其他APP或删除选中数据");
           }else{
