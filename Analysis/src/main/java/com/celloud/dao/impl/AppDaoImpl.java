@@ -286,7 +286,7 @@ public class AppDaoImpl implements AppDao {
 	public List<App> getApps(Connection conn, int role, int cmpId) {
 		List<App> list = null;
 		String sql = "select app_id,app_name from tb_app where off_line=0 "
-				+ SqlController.whereCompany("tb_app", "company_id", role, cmpId);
+				+ SqlController.whereCompany("tb_app", "company_id", role, cmpId) + "order by length(app_name) asc";
 		LogUtil.info(log, sql);
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);

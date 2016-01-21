@@ -16,7 +16,6 @@ function tableswitch(id) {
 function LoginNum() {
 	var viewId = "loginId";
 	$.get(LoginNumURL, {}, function(data) {
-		console.log(data);
 		var xAxis = new Array(data.length);
 		var yAxis = new Array(data.length);
 		var t;
@@ -25,7 +24,7 @@ function LoginNum() {
 			yAxis[i] = data[i].logNum;
 		}
 		var option = makeOptionScrollUnit( xAxis, yAxis, '登陆次数', 'bar', 0, 20);
-		var myChart = echarts.init(document.getElementById(viewId));
+		var myChart = echarts.init(document.getElementById(viewId),theme);
 		myChart.setOption(option);
 	});
 }
@@ -41,7 +40,7 @@ function AppRunNum() {
 			yAxis[i] = data[i].runNum;
 		}
 		var option = makeOptionScrollUnit(xAxis, yAxis, '运行次数', 'bar', 0, 10);
-		var myChart = echarts.init(document.getElementById(viewId));
+		var myChart = echarts.init(document.getElementById(viewId),theme);
 		myChart.setOption(option);
 	});
 }
@@ -56,7 +55,7 @@ function UserRunNum() {
 			yAxis[i] = data[i].runNum;
 		}
 		var option = makeOptionScrollUnit(xAxis, yAxis, '运行次数', 'bar', 0, 10);
-		var myChart = echarts.init(document.getElementById(viewId));
+		var myChart = echarts.init(document.getElementById(viewId),theme);
 		myChart.setOption(option);
 	});
 }

@@ -30,7 +30,7 @@
 							<th class="min-w-50">编码</th>
 							<th class="min-w-200 ">医院名称</th>
 							<c:forEach items="${appList}" var="item">
-								<th class="min-w-50">${item.app_name}</th>
+								<th style="max-width:100px;word-wrap:break-word;">${item.app_name}</th>
 							</c:forEach>
 						</tr>
 					</thead>

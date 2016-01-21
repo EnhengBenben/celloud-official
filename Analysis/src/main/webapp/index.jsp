@@ -55,8 +55,7 @@
 					<li class="light-blue">
 						<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 							<span class="user-info">
-								<small>欢迎光临,</small>
-								${session.userName }
+								<small>欢迎光临:${session.userName }</small>
 							</span>
 							<i class="icon-caret-down"></i>
 						</a>
@@ -166,11 +165,11 @@
 								</a>
 							</li>
 							<li>
-                                <a href="javascript:toCompanyReportList()">
-                                    <i class="icon-double-angle-right"></i>
-                                    医院报告统计
-                                </a>
-                            </li>
+								<a href="javascript:toCompanyReportList()">
+									<i class="icon-double-angle-right"></i>
+									医院报告统计
+								</a>
+							</li>
 							<c:if test="${ userRole=='2'}">
 								<li>
 									<a href="javascript:companyBigUserCount()">
@@ -285,29 +284,57 @@
 	<script src="./plugin/echarts-2.2.7/build/dist/chart/map.js"></script>
 	<script src="./js/jquery.dataTables.min.js"></script>
 	<script src="./js/jquery.dataTables.bootstrap.js"></script>
+	<!-- theme echarts -->
+	<script src="./plugin/echarts-2.2.7/src/theme/dark.js"></script>
+	<script src="./plugin/echarts-2.2.7/src/theme/blue.js"></script>
+    <script src="./plugin/echarts-2.2.7/src/theme/gray.js"></script>
+    <script src="./plugin/echarts-2.2.7/src/theme/green.js"></script>
+    <script src="./plugin/echarts-2.2.7/src/theme/helianthus.js"></script>
+    <script src="./plugin/echarts-2.2.7/src/theme/infographic.js"></script>
+    <script src="./plugin/echarts-2.2.7/src/theme/macarons.js"></script>
+    <script src="./plugin/echarts-2.2.7/src/theme/macarons2.js"></script>
+    <script src="./plugin/echarts-2.2.7/src/theme/mint.js"></script>
+    <script src="./plugin/echarts-2.2.7/src/theme/red.js"></script>
+    <script src="./plugin/echarts-2.2.7/src/theme/roma.js"></script>
+    <script src="./plugin/echarts-2.2.7/src/theme/sakura.js"></script>
+    <script src="./plugin/echarts-2.2.7/src/theme/shine.js"></script>
+
 	<!-- <script src="./plugin/echarts-2.2.7/src/theme/infographic.js"></script> -->
 	<script src="./js/util.js" type="text/javascript"></script>
 	<script src="./js/OptionsFactory.js" type="text/javascript"></script>
+
 	<script type="text/javascript">
+	var themes={"blue":blue,"grap":gray,"green":green,"helianthus":helianthus,"infographic":infographic,"macarons":macarons,
+			   "macarons2":macarons2,"mint":mint,"red":red,"roma":roma,"sakura":sakura,"shine":shine	};
+	var theme = themes.mint;
 		jQuery(function($) {
 			toHome();
+			console.log(dark);
+			/*
+			requirejs.config({
+			    baseUrl: './plugin/echarts-2.2.7/src/theme',
+			    paths: {
+			        blue:'blue.js',
+			        jquery: 'jquery-1.9.0'
+			    }
+			});*/
 		});
-	       /***控制台--总览**/
-        function toHome() {
-            $.get("home!toHome", {}, function(responseText) {
-                $("#content").html(responseText);
-            });
-        }
+		/***控制台--总览**/
+		function toHome() {
+			$.get("home!toHome", {}, function(responseText) {
+				$("#content").html(responseText);
+			});
+		}
 		/***数据统计－－用户数据统计**/
 		function getUserDataList() {
 			$.get("data!getAllUsersDataNum", {}, function(responseText) {
 				$("#content").html(responseText);
 			});
 		}
-		function getPreDataView(){
+		function getPreDataView() {
 			$.get("home!getPreDataView", {}, function(responseText) {
-                $("#content").html(responseText);
-            });
+				$("#content").html(responseText);
+			});
 		}
 		/***数据统计－－－数据时月统计**/
 		function getMonthDataList() {
@@ -324,26 +351,26 @@
 			});
 		}
 		///医院统计--数据统计
-		  function toCompanyDataList() {
-	            $("#secondTitle").addClass("hide");
-	            $.get("home!toCompanyDataList", {}, function(responseText) {
-	                $("#content").html(responseText);
-	            });
-	        }
-		  ///医院统计--医院总览
-		  function toPreCompanyView(){
-			  $("#secondTitle").addClass("hide");
-	            $.get("home!toPreCompanyView", {}, function(responseText) {
-	                $("#content").html(responseText);
-	            });
-		  }
-		    ///医院报告统计信息
-		    function toCompanyReportList() {
-	            $("#secondTitle").addClass("hide");
-	            $.get("home!toCompanyReportList", {}, function(responseText) {
-	                $("#content").html(responseText);
-	            });
-	        }
+		function toCompanyDataList() {
+			$("#secondTitle").addClass("hide");
+			$.get("home!toCompanyDataList", {}, function(responseText) {
+				$("#content").html(responseText);
+			});
+		}
+		///医院统计--医院总览
+		function toPreCompanyView() {
+			$("#secondTitle").addClass("hide");
+			$.get("home!toPreCompanyView", {}, function(responseText) {
+				$("#content").html(responseText);
+			});
+		}
+		///医院报告统计信息
+		function toCompanyReportList() {
+			$("#secondTitle").addClass("hide");
+			$.get("home!toCompanyReportList", {}, function(responseText) {
+				$("#content").html(responseText);
+			});
+		}
 		/***用户统计**/
 		function toUserList() {
 			$("#secondTitle").addClass("hide");
@@ -380,15 +407,15 @@
 				$("#content").html(responseText);
 			});
 		}
-	      /***活跃度统计－－－医院活跃度统计**/
-        function toActivity() {
-            $.get("company!toActivity", {}, function(responseText) {
-                $("#content").html(responseText);
-            });
-        }
-        function showContent(toText) {
-            $("#content").html(toText);     
-        }
+		/***活跃度统计－－－医院活跃度统计**/
+		function toActivity() {
+			$.get("company!toActivity", {}, function(responseText) {
+				$("#content").html(responseText);
+			});
+		}
+		function showContent(toText) {
+			$("#content").html(toText);
+		}
 	</script>
 </body>
 </html>

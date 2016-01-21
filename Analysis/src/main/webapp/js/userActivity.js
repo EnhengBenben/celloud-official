@@ -71,7 +71,7 @@ function loadActivity() {
 			yAxis[i] = fileNum[i].fileNum;
 		}
 		var option = makeOptionScrollUnit(xAxis, yAxis, "数据量", barType, 0, 15)
-		var myChart = echarts.init(document.getElementById('fileNum'));
+		var myChart = echarts.init(document.getElementById('fileNum'),theme);
 		myChart.setOption(option);
 		
 		var xAxisSize = new Array(fileSize.length);
@@ -81,7 +81,7 @@ function loadActivity() {
 			yAxisSize[i] = parseFloat((fileSize[i].size / (1024 * 1024 * 1024)).toFixed(2));
 		}
 		var sizeoption = makeOptionScrollUnit(xAxisSize, yAxisSize, "数据大小", barType, 0, 15)
-		var sizeChart = echarts.init(document.getElementById('fileSize'));
+		var sizeChart = echarts.init(document.getElementById('fileSize'),theme);
 		sizeChart.setOption(sizeoption);
 		
 		var xAxisApp = new Array(appRun.length);
@@ -91,7 +91,7 @@ function loadActivity() {
 			yAxisApp[i] = appRun[i].runNum;
 		}
 		var appOpt = makeOptionScrollUnit(xAxisApp, yAxisApp, "运行次数", barType, 0, 15)
-		var appChart = echarts.init(document.getElementById('appRun'));
+		var appChart = echarts.init(document.getElementById('appRun'),theme);
 		appChart.setOption(appOpt);
 		
 	});
