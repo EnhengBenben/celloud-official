@@ -27,6 +27,7 @@ import com.celloud.model.User;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.FeedbackService;
+import com.celloud.utils.EmailUtils;
 
 /**
  * 投诉与建议service实现类
@@ -78,10 +79,14 @@ public class FeedbackServiceImpl implements FeedbackService {
         if (feedbackAttachments.size() > 0 && result <= 0) {
             feedbackMapper.updateAttachState();
         }
+        EmailUtils.sendFeedback(feedback, feedbackAttachments);
         cleanAttachment();
         return result;
     }
 
+    /**
+     * 清理工单附件的临时目录
+     */
     private void cleanAttachment() {
         String path = FeedbackConstants.getAttachmentTempPath();
         File tempDir = new File(path);

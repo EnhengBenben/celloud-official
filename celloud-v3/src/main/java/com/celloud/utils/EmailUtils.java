@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -36,7 +37,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.celloud.constants.FeedbackConstants;
 import com.celloud.model.Feedback;
+import com.celloud.model.FeedbackAttachment;
 
 /**
  * <h4>发送邮件工具类</h4>
@@ -143,7 +146,7 @@ public class EmailUtils {
             List<String> list = new ArrayList<>(new HashSet<>(Arrays.asList(errorsMailTo)));
             errorsMailTo = list.toArray(new String[list.size()]);
         }
-        String feedbackMails = pro.getProperty("errorsMailTo");
+        String feedbackMails = pro.getProperty("feedbackMailTo");
         if (feedbackMails != null && !feedbackMails.trim().equals("")) {
             feedbackMailTo = feedbackMails.split(",");
             List<String> list = new ArrayList<>(new HashSet<>(Arrays.asList(feedbackMailTo)));
@@ -253,10 +256,28 @@ public class EmailUtils {
      * 
      * @param feedback
      */
-    public static void sendFeedback(Feedback feedback) {
-        // TODO 未组织邮件正文
-        String content = "";
-        sendWithTitle(feedbackTitle, content, feedbackMailTo);
+    public static void sendFeedback(Feedback feedback, List<FeedbackAttachment> attachments) {
+        EmailUtils utils = getInstance();
+        if (feedbackMailTo == null) {
+            logger.warn("用户提交了工单，正在发送工单信息邮件，但是没有找到邮件接收者！");
+            return;
+        }
+        StringBuffer buffer = new StringBuffer("");
+        buffer.append("<strong>标题：</strong>" + feedback.getTitle());
+        buffer.append("<br>");
+        buffer.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(feedback.getCreateDate()));
+        buffer.append("&nbsp;&nbsp;&nbsp;    &nbsp;&nbsp;&nbsp;");
+        buffer.append(feedback.getUsername());
+        buffer.append("(" + feedback.getEmail() + ")");
+        buffer.append("<br>");
+        buffer.append("<strong>内容：</strong>" + feedback.getContent());
+        if (attachments != null && attachments.size() > 0) {
+            for (FeedbackAttachment fa : attachments) {
+                String file = FeedbackConstants.getAttachment(fa.getFilePath());
+                utils.attach(file);
+            }
+        }
+        utils.addTo(feedbackMailTo).setTitle(feedbackTitle).setContent(buffer.toString()).send();
     }
 
     /**
