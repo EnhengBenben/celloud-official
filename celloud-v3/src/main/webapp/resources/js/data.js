@@ -142,21 +142,29 @@ function _init_data(){
             if(appList.length==0 ){
               appLi += "<li class='types-options'>没有可运行的APP</li>";
             }else{
+              var _checkConfigure = false;
               for(var i=0;i<appList.length;i++){
                 var appId = appList[i].appId;
                 var appName = appList[i].appName;
                 var dataNum = appList[i].dataNum;
                 if(hasConfigure && appId!=113){
-                  $.dataManager.showTipModal("所选数据格式不统一");
-                  return;
-                }
-                if(dataNum <= dataLength){
-                  if((appId==109||appId==110||appId==111||appId==112||appId==113) && dataNum<dataLength){
-                  }else{
-                    appLi += "<li class=\"types-options\" title=\"点击选中\" name=\"to-run-app\" data-appid=\""+appId+"\" >"+appName+"</li>";
-                    noAPP++;
+                  break;
+                }else{
+                  if(dataNum <= dataLength){
+                    if((appId==109||appId==110||appId==111||appId==112||appId==113) && dataNum<dataLength){
+                    }else{
+                      appLi += "<li class=\"types-options\" title=\"点击选中\" name=\"to-run-app\" data-appid=\""+appId+"\" >"+appName+"</li>";
+                      noAPP++;
+                    }
                   }
                 }
+                if(appId == 113){
+                  _checkConfigure = true;
+                }
+              }
+              if(!_checkConfigure){
+                $.dataManager.showTipModal("所选数据格式不统一");
+                return;
               }
             }
             $("#apps-data-ul").html(appLi);
@@ -196,7 +204,6 @@ function _init_data(){
           dataIds += checkedIds[i];
         }
         $.get("data/checkDataRunningApp.action",{"dataIds":dataIds,"appId":appId},function(dataIdList){
-          alert(JSON.stringify(dataIdList));
           if(dataIdList.length>0){
             var dataName = "";
             for(var i=0;i<intList.length;i++){
