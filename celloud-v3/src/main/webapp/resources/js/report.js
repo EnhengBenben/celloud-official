@@ -496,12 +496,7 @@ $.ajaxSetup ({
 			}
 			dataReportParam = event;
 			var softwareId = event.data.softwareId;
-			var fileName = "";
-			if(softwareId == "110"||softwareId == "111"||softwareId == "112"||softwareId == "113"){
-				fileName = event.data.fileName.split(" ")[0];
-			}else{
-				fileName = event.data.fileName;
-			}
+			var fileName = event.data.fileName;
 			var dataKey = event.data.dataKey;
 			var softwareName = event.data.softwareName;
 			var userId = event.data.userId;
@@ -512,10 +507,11 @@ $.ajaxSetup ({
 			$("#fileNameH4").html("APP：" + softwareName);
 			$("#proforReport").html(proName);
 			$("#fileListUl").html("");
-			
+			alert(proId);
 			spinner = new Spinner(opts);
 			var target = document.getElementById('reportLoading');
 			spinner.spin(target);
+			
 			$.get("data/getDatasInProject",{"projectId":proId},function(fileList){
 				$("#fileListUl").append("<button type='button' id='prevA' class='btn btn-success'><span class='fa fa-sort-asc'></span></button>");
 				var fileNames = new Array();
@@ -546,6 +542,7 @@ $.ajaxSetup ({
 				}else{
 					newList=fileList;
 				}
+				alert(newList);
 				$.each(newList,function(index,item){
 					var inner = "";
 					var seq = index+1;
