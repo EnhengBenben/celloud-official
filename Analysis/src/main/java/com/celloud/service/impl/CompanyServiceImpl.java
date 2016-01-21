@@ -11,12 +11,14 @@ import org.apache.log4j.Logger;
 
 import com.celloud.dao.AppDao;
 import com.celloud.dao.CompanyDao;
+import com.celloud.dao.DataDao;
 import com.celloud.dao.UserDao;
 import com.celloud.sdo.App;
 import com.celloud.sdo.Company;
 import com.celloud.sdo.DataFile;
 import com.celloud.service.CompanyService;
 import com.celloud.utils.ConnectManager;
+import com.celloud.utils.LogUtil;
 import com.google.inject.Inject;
 
 public class CompanyServiceImpl implements CompanyService {
@@ -26,6 +28,8 @@ public class CompanyServiceImpl implements CompanyService {
 	private AppDao appDao;
 	@Inject
 	private UserDao userDao;
+	@Inject
+	private DataDao dataDao;
 	Logger log = Logger.getLogger(this.getClass().getSimpleName());
 
 	@Override
@@ -271,7 +275,21 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public List<Company> BigUserList() {
-		return companyDao.BigUserList();
+		Connection conn = ConnectManager.getConnection();
+		List<Company> list = companyDao.BigUserList(conn);
+		List<DataFile> dfs = dataDao.getBigUserData(conn);
+		ConnectManager.close(conn);
+		LogUtil.info(log, list.size());
+		for (Company c : list) {
+			for (DataFile df : dfs) {
+				if (c.getCompany_id().equals(df.getCompany_id())) {
+					c.setFileNum(new Long(df.getFileNum()));
+					c.setSize(df.getSize());
+					break;
+				}
+			}
+		}
+		return list;
 	}
 
 	@Override

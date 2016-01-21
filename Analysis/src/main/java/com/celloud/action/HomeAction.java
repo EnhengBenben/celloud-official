@@ -46,6 +46,7 @@ import com.google.inject.Inject;
 		@Result(name = "AppList", type = "json", params = { "root", "appList" }),
 		@Result(name = "loginList", type = "json", params = { "root", "logList" }),
 		@Result(name = "DataList", type = "json", params = { "root", "dataList" }),
+		@Result(name = "cmpList", type = "json", params = { "root", "cmpList" }),
 		@Result(name = "resultMap", type = "json", params = { "root", "resultMap" }) })
 public class HomeAction extends BaseAction {
 	Logger log = Logger.getLogger(HomeAction.class);
@@ -207,6 +208,11 @@ public class HomeAction extends BaseAction {
 	public String toCompanyBigUesr() {
 		cmpList = companyService.BigUserList();
 		return "toCompanyBigUesr";
+	}
+
+	public String toCompanyBigUserJson() {
+		cmpList = companyService.BigUserList();
+		return "cmpList";
 	}
 
 	/**

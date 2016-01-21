@@ -224,24 +224,21 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
-	public List<Company> BigUserList() {
+	public List<Company> BigUserList(Connection conn) {
 		List<Company> list = null;
-		Connection conn = ConnectManager.getConnection();
-		String sql = "select distinct(uc.company_id)as company_id,c.company_name,c.create_date,c.address,c.tel,un.userNum,uf.fileNum,uf.size,ur.runNum from "
-				+ "tb_user_company_relat uc,tb_company c, "
-				+ "(select u.company_id,count(u.user_id)as userNum from tb_user u where u.state =0 and u.user_id not in ("
-				+ noUserid + ") group  by u.company_id)un, "
-				+ "(select u.company_id,count(f.file_id)as fileNum,sum(f.size)as size from tb_file f,tb_user u where f.user_id = u.user_id and f.state=0 and f.user_id not in ("
-				+ noUserid + ") and u.state=0 group  by u.company_id)uf, "
-				+ "(select u.company_id,count(r.report_id)as runNum from tb_report r,tb_user u where r.user_id = u.user_id and  r.flag = 0 and r.user_id not in ("
-				+ noUserid + ") group by u.company_id)ur "
-				+ "where  uc.company_id = c.company_id and uc.company_id = un.company_id "
-				+ "and uc.company_id = uf.company_id and uc.company_id = ur.company_id " + " order by fileNum desc";
+		String sql = "select uc.company_id,c.company_name,c.create_date,count(distinct(u.user_id))as userNum,count(distinct(u.company_id))as companyNum,"
+				+ " sum(ifnull(p.data_num,0))as runNum "
+				+ " from tb_user_company_relat uc left join tb_user u on uc.user_id = u.user_id "
+				+ " left join tb_company c on uc.company_id = c.company_id "
+				+ " left join tb_project p on uc.user_id = p.user_id "
+				+ " where uc.company_id!=0 and c.state=0 and u.state=0 " + SqlController.notUserId("uc", noUserid)
+				+ " group by uc.company_id";
 		LogUtil.info(log, sql);
 		try {
 			ResultSetHandler<List<Company>> rsh = new BeanListHandler<Company>(Company.class);
-			list = qr.query(conn, sql, rsh);
-
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			list = rsh.handle(rs);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
 		}

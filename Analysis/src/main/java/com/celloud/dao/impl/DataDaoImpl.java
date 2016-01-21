@@ -183,7 +183,7 @@ public class DataDaoImpl implements DataDao {
 	public List<DataFile> getBigUserData() {
 		List<DataFile> list = null;
 		Connection conn = ConnectManager.getConnection();
-		String sql = " select distinct(uc.company_id) as company_id, sum(f.size) as size,count(f.file_id)as fileNum,(select company_name from tb_company where company_id = uc.company_id)as company_name   "
+		String sql = " select uc.company_id , sum(f.size) as size,count(f.file_id)as fileNum,(select company_name from tb_company where company_id = uc.company_id)as company_name   "
 				+ " from tb_user_company_relat uc,tb_user u, tb_file f where uc.user_id = u.user_id and u.user_id = f.user_id and f.state=0 "// and
 				+ SqlController.notUserId("f", noUserid) + " group by uc.company_id order by fileNum desc ";
 		ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
@@ -213,6 +213,24 @@ public class DataDaoImpl implements DataDao {
 			LogUtil.erro(log, e);
 		}
 		LogUtil.info(log, list);
+		return list;
+	}
+
+	@Override
+	public List<DataFile> getBigUserData(Connection conn) {
+		List<DataFile> list = null;
+		String sql = "select uc.company_id as company_id, sum(f.size) as size,count(f.file_id)as fileNum "
+				+ " from tb_user_company_relat uc,  tb_file f where uc.user_id  = f.user_id and f.state=0 "// and
+				+ SqlController.notUserId("f", noUserid) + " group by uc.company_id order by fileNum desc ";
+		ResultSetHandler<List<DataFile>> rsh = new BeanListHandler<>(DataFile.class);
+		LogUtil.info(log, sql);
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			list = rsh.handle(rs);
+		} catch (SQLException e) {
+			LogUtil.erro(log, e);
+		}
 		return list;
 	}
 

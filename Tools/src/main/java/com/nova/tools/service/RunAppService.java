@@ -8,8 +8,6 @@ import com.nova.tools.constant.AppNameIDConstant;
 import com.nova.tools.constant.ReportStateConstant;
 import com.nova.tools.service.impl.ChangeStateServiceImpl;
 import com.nova.tools.service.impl.RunAppServiceImpl;
-import com.nova.tools.utils.DateUtil;
-import com.nova.tools.utils.EmailUtil;
 import com.nova.tools.utils.XMLUtil;
 
 /**
@@ -52,7 +50,6 @@ public class RunAppService {
                 + projectId;
         String appPath = basePath + "/" + userId + "/" + appId;
         RunAppServiceImpl runApp = new RunAppServiceImpl();
-        String start = DateUtil.formatNowDate();
 
         // VSP
         if (AppNameIDConstant.VSP.equals(appId)) {
@@ -192,12 +189,6 @@ public class RunAppService {
             }
             ChangeStateServiceImpl.changeState(appId, appName, projectId, null,
                     ReportStateConstant.FINISH, userId, xml);
-            String param = "fileName=" + fileName + "&userId=" + userId
-                    + "&appId=" + appId + "&projectId=" + projectId
-                    + "&sampleList=" + sampleList;
-            param += "&dataKey=" + dataKeyList.split(",")[0];
-            EmailUtil.sendEndEmail(projectName, appId, start, email, param,
-                    true);
         }
     }
 }

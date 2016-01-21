@@ -28,6 +28,8 @@ public class Company implements Serializable {
 	private String deptNames;
 	private String province;
 	private String yearMonth;
+	private int appNum;
+	private int companyNum;
 	private int num;
 
 	public Integer getCompany_id() {
@@ -38,8 +40,24 @@ public class Company implements Serializable {
 		return userNames;
 	}
 
+	public int getCompanyNum() {
+		return companyNum;
+	}
+
+	public void setCompanyNum(int companyNum) {
+		this.companyNum = companyNum;
+	}
+
 	public int getNum() {
 		return num;
+	}
+
+	public int getAppNum() {
+		return appNum;
+	}
+
+	public void setAppNum(int appNum) {
+		this.appNum = appNum;
 	}
 
 	public void setNum(int num) {

@@ -15,9 +15,9 @@ public class SqlController {
 	 * @param userids
 	 * @return
 	 */
-	public static String notUserId(String tbName, String userids) {
+	public static String notUserId(String tbName, String noUserid) {
 		String sql = "";
-		sql = " and " + tbName + ".user_id not in (" + userids + ") ";
+		sql = " and " + tbName + ".user_id not in (" + noUserid + ") ";
 		return sql;
 	}
 
