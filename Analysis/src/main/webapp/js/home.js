@@ -84,7 +84,7 @@ function LoadBrowser() {
 	});
 }
 function chars(data) {
-	var myChart = echarts.init(document.getElementById('map'));
+	var myChart = echarts.init(document.getElementById('map'),theme);
 	option = {
 		title : {
 			text : '',

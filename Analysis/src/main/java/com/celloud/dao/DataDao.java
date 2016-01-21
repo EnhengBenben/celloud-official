@@ -91,6 +91,8 @@ public interface DataDao {
 	 */
 	public List<DataFile> getBigUserData();
 
+	public List<DataFile> getBigUserData(Connection conn);
+
 	/**
 	 * 查询各大客户各月的数据量
 	 * 

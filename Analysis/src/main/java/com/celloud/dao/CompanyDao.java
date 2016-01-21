@@ -99,7 +99,7 @@ public interface CompanyDao {
 	 * 
 	 * @return
 	 */
-	public List<Company> BigUserList();
+	public List<Company> BigUserList(Connection conn);
 
 	/**
 	 * 查询医院时间内的排序，取前N条记录

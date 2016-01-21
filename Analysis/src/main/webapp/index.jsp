@@ -306,7 +306,7 @@
 	<script type="text/javascript">
 	var themes={"blue":blue,"grap":gray,"green":green,"helianthus":helianthus,"infographic":infographic,"macarons":macarons,
 			   "macarons2":macarons2,"mint":mint,"red":red,"roma":roma,"sakura":sakura,"shine":shine	};
-	var theme = themes.mint;
+	var theme = themes.shine;
 		jQuery(function($) {
 			toHome();
 			console.log(dark);
