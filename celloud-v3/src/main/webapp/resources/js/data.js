@@ -119,11 +119,14 @@ function _init_data(){
         return;
       }
       var dataLi = "";
+      var hasConfigure = false;
       for (var i=0;i<checkedIds.length;i++){
         var fileName = checkedNames[i];
         var fileId = checkedIds[i];
         if(!utils.isConfigure(fileName)){
           dataIds += fileId + ",";
+        }else{
+          hasConfigure = true;
         }
         dataLi += "<li class=\"types-options data-select\" title=\"点击删除\" name=\"to-run-data\" data-dataid=\""+checkedIds[i]+"\">"+fileName+"</li>";
       }
@@ -143,6 +146,10 @@ function _init_data(){
                 var appId = appList[i].appId;
                 var appName = appList[i].appName;
                 var dataNum = appList[i].dataNum;
+                if(hasConfigure && appId!=113){
+                  $.dataManager.showTipModal("所选数据格式不统一");
+                  return;
+                }
                 if(dataNum <= dataLength){
                   if((appId==109||appId==110||appId==111||appId==112||appId==113) && dataNum<dataLength){
                   }else{
@@ -189,6 +196,7 @@ function _init_data(){
           dataIds += checkedIds[i];
         }
         $.get("data/checkDataRunningApp.action",{"dataIds":dataIds,"appId":appId},function(dataIdList){
+          alert(JSON.stringify(dataIdList));
           if(dataIdList.length>0){
             var dataName = "";
             for(var i=0;i<intList.length;i++){
