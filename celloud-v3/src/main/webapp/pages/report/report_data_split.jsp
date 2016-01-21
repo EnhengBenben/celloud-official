@@ -13,7 +13,7 @@
         </span>
         <div style=" position:absolute; right:0; top:-5px;">
             <a href="${toolsPath }Procedure!miRNADownload?userId=${split.userId }/${split.appId }/${split.dataKey }/result/split_reads.tar.gz" class="btn btn-success btn-flat"><i class="fa fa-cloud-download"></i> 下载全部</a>
-            <a href="javascript:printSplit(${split.projectId },${split.dataKey },${split.userId },${split.appId })" class="btn btn-default"><i class="i-print"></i>打印报告</a>
+            <a href="javascript:printSplit(${split.projectId },${split.dataKey },${split.appId })" class="btn btn-default"><i class="i-print"></i>打印报告</a>
         </div>
     </div>
     <div>

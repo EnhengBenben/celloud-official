@@ -1329,3 +1329,6 @@ function printGDD(projectId,dataKey,appId){
 function printMIB(projectId,dataKey,appId){
   printReport.main("report/printMIBReport",printReport.mongoParam(projectId,dataKey,appId));
 }
+function printSplit(projectId,dataKey,appId){
+  printReport.main("report/printSplitReport",printReport.mongoParam(projectId,dataKey,appId));
+}

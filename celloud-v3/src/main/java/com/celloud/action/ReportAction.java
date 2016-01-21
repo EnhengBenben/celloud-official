@@ -273,6 +273,24 @@ public class ReportAction {
     }
 
     /**
+     * 用于 ModelAndView 加载split信息
+     * 
+     * @param path
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author leamo
+     * @date 2016年1月17日 下午1:10:57
+     */
+    private ModelAndView getSplitModelAndView(String path, String dataKey,
+            Integer projectId, Integer appId) {
+        Split split = reportService.getSplitReport(dataKey, projectId, appId);
+        ModelAndView mv = getModelAndView(path);
+        return mv.addObject("split", split);
+    }
+
+    /**
      * 获取 Split 数据报告
      * 
      * @param dataKey
@@ -284,9 +302,24 @@ public class ReportAction {
     @RequestMapping("getSplitReport")
     public ModelAndView getSplitReport(String dataKey, Integer projectId,
             Integer appId) {
-        Split split = reportService.getSplitReport(dataKey, projectId, appId);
-        ModelAndView mv = getModelAndView("report/report_data_split");
-        return mv.addObject("split", split);
+        return getSplitModelAndView("report/report_data_split", dataKey,
+                projectId, appId);
+    }
+
+    /**
+     * 打印 Split 数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @date 2016-1-10 下午10:44:45
+     */
+    @RequestMapping("printSplitReport")
+    public ModelAndView printSplitReport(String dataKey, Integer projectId,
+            Integer appId) {
+        return getSplitModelAndView("print/print_split", dataKey, projectId,
+                appId);
     }
 
     /**
