@@ -72,7 +72,6 @@ public class DataServiceImpl implements DataService {
     public PageList<DataFile> dataLists(Page page, Integer userId,
             String condition, int sort, String sortDateType,
             String sortNameType) {
-        System.out.println(condition);
         List<DataFile> lists = dataFileMapper.findDataLists(page, userId,
                 condition, sort, sortDateType, sortNameType, DataState.ACTIVE,
                 ReportType.DATA, ReportPeriod.COMPLETE);

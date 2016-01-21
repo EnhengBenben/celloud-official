@@ -241,11 +241,8 @@ function drawScatter(id,totaldata,thisdata,title,xAxisName,yAxisName){
           toolbox: {
               show : true,
               feature : {
-                  mark : {show: true},
                   dataZoom : {show: true},
-                  dataView : {show: true, readOnly: false},
-                  restore : {show: true},
-                  saveAsImage : {show: true}
+                  restore : {show: true}
               }
           },
           xAxis : [
