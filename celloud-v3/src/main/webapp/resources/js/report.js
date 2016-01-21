@@ -507,7 +507,6 @@ $.ajaxSetup ({
 			$("#fileNameH4").html("APP：" + softwareName);
 			$("#proforReport").html(proName);
 			$("#fileListUl").html("");
-			alert(proId);
 			spinner = new Spinner(opts);
 			var target = document.getElementById('reportLoading');
 			spinner.spin(target);
@@ -518,7 +517,9 @@ $.ajaxSetup ({
 				var newList = "";
 				if(softwareId == 110||softwareId == 111||softwareId == 112||softwareId == 113){
 					$.each(fileList,function(index,item){
-						fileNames.push(item.fileName);
+					  if(!utils.isConfigure(item.fileName)){
+					    fileNames.push(item.fileName);
+					  }
 					});
 					newList = "[{";
 					fileNames.sort();
@@ -542,7 +543,6 @@ $.ajaxSetup ({
 				}else{
 					newList=fileList;
 				}
-				alert(newList);
 				$.each(newList,function(index,item){
 					var inner = "";
 					var seq = index+1;

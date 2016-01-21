@@ -122,7 +122,7 @@ function _init_data(){
       for (var i=0;i<checkedIds.length;i++){
         var fileName = checkedNames[i];
         var fileId = checkedIds[i];
-        if(!$.dataManager.isConfigure(fileName)){
+        if(!utils.isConfigure(fileName)){
           dataIds += fileId + ",";
         }
         dataLi += "<li class=\"types-options data-select\" title=\"点击删除\" name=\"to-run-data\" data-dataid=\""+checkedIds[i]+"\">"+fileName+"</li>";
@@ -551,23 +551,6 @@ function _init_data(){
     }
   };
   
-  /**
-   * 获取文件后缀
-   */
-  $.dataManager.getExt = function(fileName){
-    var result =/\.[^\.]+/.exec(fileName);
-    return result;
-  };
-  /**
-   * 判断配置文件
-   */
-  $.dataManager.isConfigure = function(fileName){
-    if($.dataManager.getExt(fileName)==".txt" || $.dataManager.getExt(fileName)==".lis"){
-      return true;
-    }else {
-      return false;
-    }
-  };
   /**
    * title每隔n个字符插入指定字符
    */

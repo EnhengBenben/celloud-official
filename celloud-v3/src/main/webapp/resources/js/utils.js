@@ -14,7 +14,6 @@ var utils = {};
 ;(function($){$.extend({format:function(str,step,splitor){str=str.toString();var len=str.length;if(len>step){var l1=len%step,l2=parseInt(len/step),arr=[],first=str.substr(0,l1);if(first!=''){arr.push(first);};for(var i=0;i<l2;i++){arr.push(str.substr(l1+i*step,step));};str=arr.join(splitor);};return str;}});})(jQuery);
 
 utils._stopDefault = function(e){
-  alert("---");
   if(e && e.preventDefault) {
     e.preventDefault();  
   } else {
@@ -22,6 +21,25 @@ utils._stopDefault = function(e){
   }  
   return false;  
 }
+/**
+ * 获取文件后缀
+ */
+utils.getExt = function(fileName){
+  var result =/\.[^\.]+/.exec(fileName);
+  return result;
+};
+
+/**
+ * 判断配置文件
+ */
+utils.isConfigure = function(fileName){
+  if(utils.getExt(fileName)==".txt" || utils.getExt(fileName)==".lis"){
+    return true;
+  }else {
+    return false;
+  }
+};
+
 //根据视口和文档的宽高设置背景图片的尺寸
 function setDocSize(){
 	var winWidth = $(window).width();
