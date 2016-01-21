@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -94,7 +95,7 @@ public class ReportAction {
      * @date 2016-1-10 下午11:37:40
      */
     @ResponseBody
-    @RequestMapping("getReportFromTools")
+	@RequestMapping(value = "getReportFromTools", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getReportFromTools(String dataKey, String url) {
         url = PropertiesUtil.toolsPath + url;
         DataFile data = dataService.getDataByKey(dataKey);
