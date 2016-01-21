@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div>
 	<input type="hidden" value="<s:property value="resultMap.length"/>" id="seq_length"/>
+	<input type="hidden" value="<s:property value="resultMap.projectId"/>" id="_projectId">
 	<!--文件名称-->
 	<div class="m-file">
 		<div class="row">

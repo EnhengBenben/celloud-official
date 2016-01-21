@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div>
+	<input type="hidden" value="<s:property value="resultMap.projectId"/>" id="_projectId">
 	<div class="m-file">
 		<div class="row">
 			<div class="col-lg-9 force-break">

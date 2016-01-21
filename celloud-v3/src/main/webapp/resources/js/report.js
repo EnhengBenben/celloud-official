@@ -639,7 +639,7 @@ $.ajaxSetup ({
 				//	toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				//});
 			}else{
-				var newPath = "Procedure!readReport" + "?fileName="+fileName+"&userId=" + userId + "&appId=" + softwareId + "&dataKey=" + dataKey + "&projectId=";
+				var newPath = "Procedure!readReport" + "?fileName="+fileName+"&userId=" + userId + "&appId=" + softwareId + "&dataKey=" + dataKey + "&projectId="+proId;
 				$.get("report/getReportFromTools",{"dataKey":dataKey,"url":newPath},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 					spinner.stop();
@@ -1247,7 +1247,13 @@ function toPrintHBV(pagePath,flag){
 		        "result":printDiv0,
 		        "table":printDiv4,
 		        "flag":flag
-		    };
+		 };
+		$.post("report/printHBV",param,function(responseText){
+			var obj = window.open("");
+			obj.document.write(responseText);
+			obj.document.close();
+		});
+		return;
 	}else if(appId == 80){
 		var imgHtml="";
 		$("img[name='imgSrc']").each(function(){ 
@@ -1257,12 +1263,12 @@ function toPrintHBV(pagePath,flag){
 			imgHtml = imgHtml.substring(0,imgHtml.length-1);
 		}
 		param = {
-				"userId":userId,
-		        "dataKey":dataKey,
 				"appId" : appId,
+		        "dataKey":dataKey,
+		        "projectId":$("#_projectId").val(),
 				"context":$("#resultHcv2").html(),
-				"seq":$("#seq").html(),
-				"imgHtml" : imgHtml
+				"imgHtml" : imgHtml,
+				"seq":$("#seq").html()
 			};
 	}else if(appId == 90){
 		var imgHtml="";
@@ -1273,9 +1279,9 @@ function toPrintHBV(pagePath,flag){
 			imgHtml = imgHtml.substring(0,imgHtml.length-1);
 		}
 		param = {
-				"userId":userId,
-		        "dataKey":dataKey,
 				"appId" : appId,
+		        "dataKey":dataKey,
+		        "projectId":$("#_projectId").val(),
 				"context":$("#report_tb").html(),
 				"imgHtml":imgHtml
 		};
@@ -1291,18 +1297,18 @@ function toPrintHBV(pagePath,flag){
 		var table = $("#knowResult").html().trim();
 		var knowPic = $("img[name='know']").attr("src"); 
 		param = {
-				"userId":userId,
-		        "dataKey":dataKey,
 				"appId" : appId,
+		        "dataKey":dataKey,
+		        "projectId":$("#_projectId").val(),
 				"context":$("#report_tb").html(),
 				"imgHtml":imgHtml,
 				"seq":$("#_seq").html(),
 				"result":_result,
 				"allPic":knowPic,
-		        "table":table,
+		        "table":table
 		};
 	}
-	$.post("report/printHBV",param,function(responseText){
+	$.post("report/printDAAN",param,function(responseText){
 		var obj = window.open("");
 		obj.document.write(responseText);
 		obj.document.close();
