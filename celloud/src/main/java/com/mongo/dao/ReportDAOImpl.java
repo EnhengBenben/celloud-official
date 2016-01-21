@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import org.bson.types.ObjectId;
+
 import com.google.code.morphia.Morphia;
 import com.google.code.morphia.dao.BasicDAO;
 import com.mongo.sdo.CmpFilling;
@@ -182,6 +184,20 @@ public class ReportDAOImpl extends BasicDAO<CmpReport, String> implements
     public List<CmpReport> getCmpList(Integer userId) {
         return ds.createQuery(CmpReport.class).filter("userId", userId)
                 .order("-createDate").asList();
+    }
+
+    @Override
+    public List<Split> getSplitCount() {
+        return ds
+                .createQuery(Split.class)
+                .retrievedFields(true, "_id")
+                .retrievedFields(true, "resultList", "totalReads", "avgQuality")
+                .asList();
+    }
+
+    @Override
+    public Split getSplitById(ObjectId id) {
+        return ds.createQuery(Split.class).filter("_id", id).get();
     }
 
 }

@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="col-xs-2">
-     <div class="btn-group-vertical" id="fileListUl">
+     <div class="btn-group-vertical" style="width:100%;" id="fileListUl">
       </div>
     </div>
   </div>

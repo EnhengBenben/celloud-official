@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<link href="<%=request.getContextPath() %>/css/report.css?version=3.6" rel="stylesheet">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<link href="<%=request.getContextPath() %>/css/report.css?version=3.7" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/css/buttons.css?version=20150730" rel="stylesheet">
-<link href="<%=request.getContextPath() %>/plugins/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
-<link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
 <link href="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.css" rel="stylesheet">
 <style>
 .tab-content>.tab-pane {
@@ -56,7 +55,7 @@ a:hover, a:active, a:focus{
 			<div class="form-inline" style="margin-bottom:10px">
 				<label class="form-inline" style="font-family:黑体;font-size:14px;font-weight: lighter;">数据：</label>
 				<div class="input-group" style="width:330px;height:20px;">
-					<input type="text" class="form-control" style="height:20px;padding: 0px 12px;" id="_fileName" onchange="changeFileName()" placeholder="检索文件名/别名/数据编号">
+					<input type="text" class="form-control" style="height:20px;padding: 0px 12px;" id="_fileName" onchange="changeFileName()" placeholder="检索文件名/<c:if test="${session.companyId==6 }">别名/</c:if>数据编号等">
 					<span class="input-group-btn">
 						<button class="btn btn-info btn-flat" type="button" onclick="submitSearch()" style="height:20px;font-size:14px;padding-top:0px;background-color: #85c540;border-color: #85c540;">Go!</button>
 					</span>
@@ -107,7 +106,7 @@ a:hover, a:active, a:focus{
 <script src="<%=request.getContextPath() %>/plugins/select/select2.min.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/calendar/WdatePicker.js"></script>
-<script src="<%=request.getContextPath() %>/js/report.js?version=1.8"></script>
+<script src="<%=request.getContextPath() %>/js/report.js?version=1.10"></script>
 <script src="<%=request.getContextPath() %>/js/dataformat.js"></script>
 <script src="<%=request.getContextPath() %>/js/codon.js"></script>
 <script type="text/javascript">

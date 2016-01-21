@@ -3,6 +3,7 @@ package com.mongo.action;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ import com.google.inject.Inject;
 import com.mongo.sdo.HBV;
 import com.mongo.sdo.HCV;
 import com.mongo.sdo.NIPT;
+import com.mongo.sdo.Oncogene;
 import com.mongo.sdo.Pgs;
 import com.mongo.service.ReportService;
 import com.nova.action.BaseAction;
@@ -39,6 +41,7 @@ import com.nova.utils.PropertiesUtil;
         @Result(name = "pgsReport", location = "../../pages/report/pgsReport.jsp"),
         @Result(name = "hcvReport", location = "../../pages/report/hcvReport.jsp"),
         @Result(name = "hbvReport", location = "../../pages/report/hbvReport.jsp"),
+        @Result(name = "oncogeneReport", location = "../../pages/report/oncogeneReport.jsp"),
         @Result(name = "toHBVCount", location = "../../pages/count/hbvCount.jsp"),
         @Result(name = "toPgsCount", location = "../../pages/count/pgsCount.jsp")})
 public class ReportAction extends BaseAction {
@@ -53,6 +56,7 @@ public class ReportAction extends BaseAction {
     private HCV hcv;
     private Pgs pgs;
     private NIPT nipt;
+    private Oncogene oncogene;
     private String dataKey;
     private Integer proId;
     private Integer appId;
@@ -219,6 +223,34 @@ public class ReportAction extends BaseAction {
     }
     
     /**
+     * 获取Oncogene报告
+     * 
+     * @return
+     */
+    public String getOncogeneReport() {
+        oncogene = reportService.getDataReport(Oncogene.class, dataKey, proId,
+                appId);
+        if (oncogene != null) {
+            // jstl 处理 \n 很困难，就在 java 端处理
+            oncogene.setReport(oncogene.getReport().replace("\n", "<br/>"));
+            oncogene.setWz1(oncogene.getWz1().replace("\n", "<br/>"));
+            oncogene.setWz2(oncogene.getWz2().replace("\n", "<br/>"));
+            // 排序
+            List<String> km = oncogene.getKnowMutation();
+            if (km != null) {
+                Collections.sort(km);
+                oncogene.setKnowMutation(km);
+            }
+            List<String> out = oncogene.getOut();
+            if (out != null) {
+                Collections.sort(out);
+                oncogene.setOut(out);
+            }
+        }
+        return "oncogeneReport";
+    }
+    
+    /**
      * 获取NIPT报告
      * 
      * @return
@@ -314,6 +346,14 @@ public class ReportAction extends BaseAction {
 
     public void setNipt(NIPT nipt) {
         this.nipt = nipt;
+    }
+
+    public Oncogene getOncogene() {
+        return oncogene;
+    }
+
+    public void setOncogene(Oncogene oncogene) {
+        this.oncogene = oncogene;
     }
 
 }

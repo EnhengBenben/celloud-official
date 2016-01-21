@@ -1,0 +1,559 @@
+$.reportChar = {};
+
+/**-------- 报告画图 -------*/
+$.reportChar.draw = {
+    _require: function(chartName,option,id){
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: 'http://echarts.baidu.com/build/dist'
+            }
+        });
+    	require(
+			[
+		        'echarts',
+		        'echarts/chart/' + chartName
+		    ],
+		    function (ec) {
+		        var myChart = ec.init(document.getElementById(id),macarons_theme); 
+		        myChart.setOption(option, true); 
+			}
+    	);
+    },
+    /** 
+     * ========
+     * 环形图 
+     * ========
+     */
+    circularGraphDataOptions: {
+	    dataStyle: {
+		  normal: {
+		    label: {show:false},
+		    labelLine: {show:false}
+		  }
+	    },
+	    placeHolderStyle: {
+		  normal : {
+		        color: "rgba(0,0,0,0)",
+		        label: {show:false},
+		        labelLine: {show:false}
+		      },
+		      emphasis : {
+		        color: "rgba(0,0,0,0)"
+		      }
+	    },
+	    legendData: null,
+	    seriesData: null
+	},
+    circularGraph: function(id,title,subTitle,data){
+	    $.reportChar.circularGraphSeriesData(data);
+	    option = {
+    	    title: {
+    	        text: title,
+    	        subtext: subTitle,
+    	        sublink: '',
+    	        x: 'center',
+    	        y: 'center',
+    	        itemGap: 5,
+    	        textStyle : {
+    	            color : 'rgba(30,144,255,0.8)',
+    	            fontFamily : '微软雅黑',
+    	            fontSize : 16,
+    	            fontWeight : 'bolder'
+    	        }
+    	    },
+    	    tooltip : {
+    	        show: true,
+    	        formatter: "{a} <br/>{b}"
+    	    },
+    	    legend: {
+    	        orient : 'vertical',
+    	        x : document.getElementById(id).offsetWidth / 2 + 3,
+    	        y : 30,
+    	        itemGap:6,
+    	        data: $.reportChar.draw.circularGraphDataOptions.legendData //['','','']要与series data的name对应
+    	    },
+    	    series : $.reportChar.draw.circularGraphDataOptions.seriesData
+    	};
+	    $.reportChar.draw._require('pie',option,id);
+	},
+	/**
+	 * ===============
+	 * 单根渐变色柱状图
+	 * ===============
+	 */
+	singleBar: function(id,title,subTitle,data,yAxisName,seriesName){
+		var zrColor = require('zrender/tool/color');
+		var _xariaData = new Array();
+		var _seriesData = new Array();
+		for (var i = 0; i < data.length; i++) {
+		  var key = data[i][0];
+		  var value = data[i][1];
+		  var num_value = value!= ''?parseInt(value):0;
+		  _xariaData.push(key);
+		  _seriesData.push(num_value);
+	    }
+		option = {
+		    title : {
+		        x: 'center',
+		        text: title,
+		        subtext: '',
+		        textStyle : {
+    	            color : 'rgba(30,144,255,0.8)',
+    	            fontFamily : '微软雅黑',
+    	            fontSize : 16,
+    	            fontWeight : 'bolder'
+    	        }
+		    },
+		    tooltip : {
+		        trigger: 'axis',
+		        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+    	            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+    	        }
+		    },
+		    calculable : true,
+		    xAxis : [
+		        {
+		            type : 'category',
+		            axisLabel : {
+		              rotate : 10,
+		              margin : 3,
+		              interval : 0,
+		              textStyle: {
+		                align: 'right'
+		              }
+		            },
+		            data: _xariaData
+		        }
+		    ],
+		    yAxis : [
+		        {
+		            type : 'value',
+		            name: yAxisName
+		        }
+		    ],
+		    series : [
+		        {
+		            name:seriesName,
+		            type:'bar',
+		            itemStyle: {
+		                normal: {
+		                    color: function(params) { 
+		                      return zrColor.lift(
+		                        '#87cefa', params.dataIndex * 0.02
+		                      );
+		                    },
+		                    label: {
+		                        show: true,
+		                        position: 'top',
+		                        formatter: '{c}'
+		                    }
+		                }
+		            },
+		            data: _seriesData
+		        }
+		    ]
+		};
+		$.reportChar.draw._require('bar',option,id);
+	}
+};
+/**环形图数据参数*/
+$.reportChar.circularGraphSeriesData=function(list){
+  //list : [["16s_reads","4"],[],[]]
+  var o = $.reportChar.draw.circularGraphDataOptions;
+  o.legendData = new Array();
+  o.seriesData = new Array();
+  var radius_inner = 120;
+  var radius_outer = 140;
+  for (var i = 0; i < list.length; i++) {
+	  var _key = list[i][0];
+	  var _value = list[i][1];
+	  var num_value = _value!= ''?parseInt(_value):0;
+	  var data_name = _value+"% "+_key;
+	  o.legendData.push(data_name),
+	  o.seriesData.push({
+    	  name:_key,
+    	  type:'pie',
+    	  clockWise:false,
+    	  radius: [radius_inner, radius_outer],
+    	  itemStyle : o.dataStyle,
+	      data:[
+	          {
+	              value:num_value,
+	              name:data_name
+	          },
+	          {
+	              value:100-num_value,
+	              name:data_name,
+	              itemStyle : o.placeHolderStyle
+	          }
+	      ]
+      });
+      if(radius_inner>0){
+    	  radius_inner-=20;
+    	  radius_outer-=20;
+      }
+  }
+};
+//数据参数同比画点图
+function drawScatter(id,totaldata,thisdata,title,xAxisName,yAxisName){
+	require(
+	    [
+	        'echarts',
+	        'echarts/chart/scatter' // 使用柱状图就加载bar模块，按需加载
+	    ],
+	    function (ec) {
+	        // 基于准备好的dom，初始化echarts图表
+	        var myChart = ec.init(document.getElementById(id),macarons_theme); 
+	        
+	        option = {
+			    title : {
+			        text: title,
+			        subtext: '结果来自: CelLoud全部数据'
+			    },
+			    tooltip : {
+			        trigger: 'axis',
+			        showDelay : 0,
+			        formatter : function (params) {
+			            if (params.value.length > 1) {
+			                return params.seriesName + ' :<br/>'
+			                   + params.value[0] + ' ' 
+			                   + params.value[1] + ' ';
+			            }
+			            else {
+			                return params.seriesName + ' :<br/>'
+			                   + params.name + ' : '
+			                   + params.value + ' ';
+			            }
+			        },  
+			        axisPointer:{
+			            show: true,
+			            type : 'cross',
+			            lineStyle: {
+			                type : 'dashed',
+			                width : 1
+			            }
+			        }
+			    },
+			    legend: {
+			        data:['全部数据','当前数据']
+			    },
+			    toolbox: {
+			        show : true,
+			        feature : {
+			            mark : {show: true},
+			            dataZoom : {show: true},
+			            dataView : {show: true, readOnly: false},
+			            restore : {show: true},
+			            saveAsImage : {show: true}
+			        }
+			    },
+			    xAxis : [
+			        {
+			            type : 'value',
+			            name : xAxisName,
+			            scale:true,
+			            axisLabel : {
+			                formatter: '{value} '
+			            }
+			        }
+			    ],
+			    yAxis : [
+			        {
+			            type : 'value',
+			            name : yAxisName,
+			            scale:true,
+			            axisLabel : {
+			                formatter: '{value} '
+			            }
+			        }
+			    ],
+			    series : [
+			        {
+			            name:'全部数据',
+			            type:'scatter',
+			            data: totaldata,
+			            markPoint : {
+			                data : [
+			                    {type : 'max', name: '最大值'},
+			                    {type : 'min', name: '最小值'}
+			                ]
+			            },
+			            markLine : {
+			                data : [
+			                    {type : 'average', name: '平均值'}
+			                ]
+			            }
+			        },
+			        {
+			            name:'当前数据',
+			            type:'scatter',
+			            data: thisdata,
+			            symbol:'star',
+			            symbolSize: 10,
+			            markPoint : {
+			                data : [
+			                    {type : 'average', name: '当前数据平均值'}
+			                ]
+			            }
+			        }
+			    ]
+			};
+	        // 为echarts对象加载数据 
+	        myChart.setOption(option, true); 
+	    }
+	);
+}
+
+var macarons_theme = {
+    // 默认色板
+    color: [
+        '#2ec7c9','#9a7fd1','#5ab1ef','#ffb980','#d87a80',
+        '#8d98b3','#e5cf0d','#97b552','#95706d','#dc69aa',
+        '#07a2a4','#b6a2de','#588dd5','#f5994e','#c05050',
+        '#59678c','#c9ab00','#7eb00a','#6f5553','#c14089'
+    ],
+
+    // 图表标题
+    title: {
+        textStyle: {
+            fontWeight: 'normal',
+            color: '#008acd'          // 主标题文字颜色
+        }
+    },
+    
+    // 值域
+    dataRange: {
+        itemWidth: 15,
+        color: ['#5ab1ef','#e0ffff']
+    },
+
+    // 工具箱
+    toolbox: {
+        color : ['#1e90ff', '#1e90ff', '#1e90ff', '#1e90ff'],
+        effectiveColor : '#ff4500'
+    },
+
+    // 提示框
+    tooltip: {
+        backgroundColor: 'rgba(50,50,50,0.5)',     // 提示背景颜色，默认为透明度为0.7的黑色
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'line',         // 默认为直线，可选为：'line' | 'shadow'
+            lineStyle : {          // 直线指示器样式设置
+                color: '#008acd'
+            },
+            crossStyle: {
+                color: '#008acd'
+            },
+            shadowStyle : {                     // 阴影指示器样式设置
+                color: 'rgba(200,200,200,0.2)'
+            }
+        }
+    },
+
+    // 区域缩放控制器
+    dataZoom: {
+        dataBackgroundColor: '#efefff',            // 数据背景颜色
+        fillerColor: 'rgba(154,127,209,0.2)',   // 填充颜色
+        handleColor: '#008acd'    // 手柄颜色
+    },
+
+    // 网格
+    grid: {
+        borderColor: '#eee'
+    },
+
+    // 类目轴
+    categoryAxis: {
+        axisLine: {            // 坐标轴线
+            lineStyle: {       // 属性lineStyle控制线条样式
+                color: '#008acd'
+            }
+        },
+        splitLine: {           // 分隔线
+            lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                color: ['#eee']
+            }
+        }
+    },
+
+    // 数值型坐标轴默认参数
+    valueAxis: {
+        axisLine: {            // 坐标轴线
+            lineStyle: {       // 属性lineStyle控制线条样式
+                color: '#008acd'
+            }
+        },
+        splitArea : {
+            show : true,
+            areaStyle : {
+                color: ['rgba(250,250,250,0.1)','rgba(200,200,200,0.1)']
+            }
+        },
+        splitLine: {           // 分隔线
+            lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                color: ['#eee']
+            }
+        }
+    },
+
+    polar : {
+        axisLine: {            // 坐标轴线
+            lineStyle: {       // 属性lineStyle控制线条样式
+                color: '#ddd'
+            }
+        },
+        splitArea : {
+            show : true,
+            areaStyle : {
+                color: ['rgba(250,250,250,0.2)','rgba(200,200,200,0.2)']
+            }
+        },
+        splitLine : {
+            lineStyle : {
+                color : '#ddd'
+            }
+        }
+    },
+
+    timeline : {
+        lineStyle : {
+            color : '#008acd'
+        },
+        controlStyle : {
+            normal : { color : '#008acd'},
+            emphasis : { color : '#008acd'}
+        },
+        symbol : 'emptyCircle',
+        symbolSize : 3
+    },
+
+    // 柱形图默认参数
+    bar: {
+        itemStyle: {
+            normal: {
+                barBorderRadius: 5
+            },
+            emphasis: {
+                barBorderRadius: 5
+            }
+        }
+    },
+
+    // 折线图默认参数
+    line: {
+        smooth : true,
+        symbol: 'emptyCircle',  // 拐点图形类型
+        symbolSize: 3           // 拐点图形大小
+    },
+    
+    // K线图默认参数
+    k: {
+        itemStyle: {
+            normal: {
+                color: '#d87a80',       // 阳线填充颜色
+                color0: '#2ec7c9',      // 阴线填充颜色
+                lineStyle: {
+                    color: '#d87a80',   // 阳线边框颜色
+                    color0: '#2ec7c9'   // 阴线边框颜色
+                }
+            }
+        }
+    },
+    
+    // 散点图默认参数
+    scatter: {
+        symbol: 'circle',    // 图形类型
+        symbolSize: 4        // 图形大小，半宽（半径）参数，当图形为方向或菱形则总宽度为symbolSize * 2
+    },
+
+    // 雷达图默认参数
+    radar : {
+        symbol: 'emptyCircle',    // 图形类型
+        symbolSize:3
+        //symbol: null,         // 拐点图形类型
+        //symbolRotate : null,  // 图形旋转控制
+    },
+
+    map: {
+        itemStyle: {
+            normal: {
+                areaStyle: {
+                    color: '#ddd'
+                },
+                label: {
+                    textStyle: {
+                        color: '#d87a80'
+                    }
+                }
+            },
+            emphasis: {                 // 也是选中样式
+                areaStyle: {
+                    color: '#fe994e'
+                }
+            }
+        }
+    },
+    
+    force : {
+        itemStyle: {
+            normal: {
+                linkStyle : {
+                    color : '#1e90ff'
+                }
+            }
+        }
+    },
+
+    chord : {
+        itemStyle : {
+            normal : {
+                borderWidth: 1,
+                borderColor: 'rgba(128, 128, 128, 0.5)',
+                chordStyle : {
+                    lineStyle : {
+                        color : 'rgba(128, 128, 128, 0.5)'
+                    }
+                }
+            },
+            emphasis : {
+                borderWidth: 1,
+                borderColor: 'rgba(128, 128, 128, 0.5)',
+                chordStyle : {
+                    lineStyle : {
+                        color : 'rgba(128, 128, 128, 0.5)'
+                    }
+                }
+            }
+        }
+    },
+
+    gauge : {
+        axisLine: {            // 坐标轴线
+            lineStyle: {       // 属性lineStyle控制线条样式
+                color: [[0.2, '#2ec7c9'],[0.8, '#5ab1ef'],[1, '#d87a80']], 
+                width: 10
+            }
+        },
+        axisTick: {            // 坐标轴小标记
+            splitNumber: 10,   // 每份split细分多少段
+            length :15,        // 属性length控制线长
+            lineStyle: {       // 属性lineStyle控制线条样式
+                color: 'auto'
+            }
+        },
+        splitLine: {           // 分隔线
+            length :22,         // 属性length控制线长
+            lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                color: 'auto'
+            }
+        },
+        pointer : {
+            width : 5
+        }
+    },
+    
+    textStyle: {
+        fontFamily: '微软雅黑, Arial, Verdana, sans-serif'
+    }
+};

@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.nova.constants.DataState;
@@ -1675,20 +1676,17 @@ public class ReportDaoImpl extends BaseDao implements IReportDao {
 		PageList<Map<String, String>> pageList = new PageList<Map<String, String>>();
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		StringBuffer sql = new StringBuffer();
-		sql.append("select p.*,r.end_date,r.context,r.state,s.software_id,s.software_name from (select project_id,project_name,create_date,num,size,share,user_id,'no_one' as userName from tb_project where user_id = ? and state = 0 union all select p.project_id,project_name,p.create_date,num,size,0 as share,s.sharer_id as user_id,u.username as userName from tb_project p,tb_file_share s,tb_user u where p.state=0 and p.project_id=s.project_id and s.user_id = ? and s.state = 1 and u.user_id = s.sharer_id ) as p,tb_report as r,tb_software s,tb_data_project_relat d,tb_file f where r.project_id = p.project_id and r.software_id = s.software_id and p.project_id=d.project_id and d.file_id=f.file_id ");
-		if (proName != null && !proName.isEmpty()) {
-			String name= " and (f.file_name like '%"+proName+"%' or f.another_name like '%"+proName+"%' or f.data_key like '%"+proName+"%') ";
-			sql.append(name);
+		sql.append("select p.*,r.end_date,r.context,r.state,s.software_id,s.software_name from (select project_id,project_name,create_date,num,size,share,user_id,'no_one' as userName from tb_project where user_id = ? and state = 0 union all select p.project_id,project_name,p.create_date,num,size,0 as share,s.sharer_id as user_id,u.username as userName from tb_project p,tb_file_share s,tb_user u where p.state=0 and p.project_id=s.project_id and s.user_id = ? and s.state = 1 and u.user_id = s.sharer_id ) as p,tb_report as r,tb_software s");
+		sql.append(" where r.project_id = p.project_id and r.software_id = s.software_id ");
+		if (StringUtils.isNotEmpty(proName)) {
+			sql.append(" and r.context like '%").append(proName).append("%' ");
 		}
-		if (start != null && !start.isEmpty()) {
-			sql.append(" and p.create_date<='").append(end)
-					.append("' and p.create_date>='").append(start)
-					.append("' ");
+		if (StringUtils.isNotEmpty(start)) {
+			sql.append(" and p.create_date<='").append(end).append("' and p.create_date>='").append(start).append("' ");
 		}
 		if (appId != 0) {
 			sql.append(" and s.software_id=").append(appId);
 		}
-		sql.append(" group by p.project_id");
 		String sqlC = sql.toString();
 		sql.append(" order by p.create_date desc limit ?,?");
 		try {

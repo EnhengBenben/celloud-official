@@ -141,9 +141,8 @@
     <!-- daterangepicker -->
     <script src="dist/js/moment.min.js" type="text/javascript"></script>
     <script src="plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
-    <!-- FastClick -->
-<!--     <script src="plugins/fastclick/fastclick.min.js"></script> -->
     <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+    <script src="<%=request.getContextPath() %>/js/charts.js?v=1.0"></script>
     <script src="<%=request.getContextPath() %>/plugins/select/select2.min.js"></script>
 	<script src="<%=request.getContextPath() %>/plugins/select/select2_locale_zh-CN.js"></script>
     <script src="<%=request.getContextPath() %>/js/global_v3.js?v=3.2" type="text/javascript"></script>

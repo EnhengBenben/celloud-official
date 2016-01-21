@@ -171,8 +171,10 @@ public class CmpReportAction extends BaseAction {
             noDiseaseName.add("表型改变相关");
             noDiseaseName.add("改变高半胱氨酸水平");
             for (String dataKey : geneMap.keySet()) {
-                if (geneMap.get(dataKey).getResult().get(0).getGene()
-                        .contains("没有发现突变位点")
+                if ((geneMap.get(dataKey).getResult() != null
+                        &&geneMap.get(dataKey).getResult().get(0)!=null
+                        &&geneMap.get(dataKey).getResult().get(0).getGene()
+                        .contains("没有发现突变位点"))
                         || dataKey.equals("all")) {
                 } else {
                     CmpGeneDetectionDetail gdd = geneMap.get(dataKey);

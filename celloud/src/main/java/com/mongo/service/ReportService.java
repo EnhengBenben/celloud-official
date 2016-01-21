@@ -2,6 +2,9 @@
 package com.mongo.service;
 
 import java.util.List;
+import java.util.Map;
+
+import org.bson.types.ObjectId;
 
 import com.google.inject.ImplementedBy;
 import com.mongo.sdo.CmpFilling;
@@ -149,4 +152,11 @@ public interface ReportService {
      * @return
      */
     public List<CmpReport> getCmpList(Integer userId);
+
+    /**
+     * split数据参数同比数据
+     * 
+     * @return 原始数据 [平均质量,序列数]列表 分数据 [平均质量,序列数]列表
+     */
+    public Map<String, List<List<Float>>> getSplitCount(ObjectId id);
 }

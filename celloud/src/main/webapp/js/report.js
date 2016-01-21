@@ -235,6 +235,7 @@ $.ajaxSetup ({
 			spinner.spin(target);
 			$.get("report!getReportPageListByCondition",{"appId":APP,"start":START,"end":END,"fileName":FILENAME,"page.pageSize":pageSize,"page.currentPage":currentPage},function(responseText){
 				$("#selfReportDiv").html(responseText);
+				window.scrollTo(0,0);
 				loadReportList();
 				spinner.stop();
 			});
@@ -303,7 +304,7 @@ $.ajaxSetup ({
 			                    }
 			                }
 			            }
-			            if(appId=="114"||appId=="113"||appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
+			            if(appId=="115"||appId=="114"||appId=="113"||appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
 			                param = {"fileName":$.trim($(this).html()),"dataKey":$.trim($(this).prev().html()),"softwareId":appId,"softwareName":appName,"userId":userId,"obj":$(this),"proId":proId,"proName":proName};
 			                if(j>0&&i==1){
 			                    $(this).addClass("sub");
@@ -612,6 +613,18 @@ $.ajaxSetup ({
 			}else if(softwareId == 114){
 				$.get("splitReport!getMibReport",{"mib.projectId":proId,"mib.dataKey":dataKey,"mib.appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+					var mib_readsDisInfo = $("#reads-distribution-char").text();
+				    var mib_familyDisInfo = $("#family-distribution-char").text();
+				    var min_genusDisInfo = $("#genus-distribution-char").text();
+				    if(mib_readsDisInfo != ""){
+				 	    $.reportChar.draw.circularGraph("reads-distribution-char","Reads","Distribution",eval("("+mib_readsDisInfo+")"));
+				    }
+				    if(mib_familyDisInfo != ""){
+				 	    $.reportChar.draw.circularGraph("family-distribution-char","Family","Distribution",eval("("+mib_familyDisInfo+")"));
+				    }
+				    if(min_genusDisInfo != ""){
+				    	$.reportChar.draw.singleBar("genus-distribution-char","Top 10 genus distribution","",eval("("+min_genusDisInfo+")"),"Depth","Depth");
+				    }
 				});
 			}else if(softwareId == 85 || softwareId == 86 || softwareId == 87 || softwareId == 88 || softwareId == 91 || softwareId == 92 || softwareId == 93 || softwareId == 94 || softwareId == 104|| softwareId == 116){
 				$.get("report3!getPgsReport",{"proId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
@@ -625,6 +638,10 @@ $.ajaxSetup ({
 				//$.get("report3!getHCVReport",{"proId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
 				//	toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				//});
+			}else if(softwareId == 115){
+				$.get("report3!getOncogeneReport",{"proId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
+					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+				});
 			}else{
 				$.get("data!getDataByKey",{"dataKey":dataKey},function(data){
 					var anotherName = data.anotherName;
@@ -1114,6 +1131,9 @@ $.ajaxSetup ({
 					return;
 				}
 			}
+			//全部转化成小写再比较
+			userNames = userNames.toLowerCase();
+			sessionUserName = sessionUserName.toLowerCase();
 			if(userNames.substring(0, userNames.length-1)==sessionUserName||userNames.indexOf(sessionUserName, 0)!=-1){
 				$("#shareProPrompt").html("项目不能共享给自己！");
 				return;
@@ -1345,6 +1365,13 @@ function printGDD(projectId,dataKey,userId,appId){
 }
 function printMIB(projectId,dataKey,userId,appId){
 	$.get("splitReport!toPrintMib",{"mib.projectId":projectId,"mib.dataKey":dataKey,"mib.userId":userId,"mib.appId":appId},function(responseText){
+		var obj = window.open("");
+		obj.document.write(responseText);
+		obj.document.close();
+	});
+}
+function printSplit(projectId,dataKey,userId,appId){
+	$.get("splitReport!toPrintSplit",{"split.projectId":projectId,"split.dataKey":dataKey,"split.userId":userId,"split.appId":appId},function(responseText){
 		var obj = window.open("");
 		obj.document.write(responseText);
 		obj.document.close();

@@ -25,6 +25,7 @@
 			    	<div class="register-font">用户注册</div>
 			    	<input type="hidden" name="user.deptId" value="<s:property value="user.deptId"/>" />
 					<input type="hidden" name="user.companyId" value="<s:property value="user.companyId"/>" />
+					<input type="hidden" name="user.navigation" value="1" />
 			    	<input type="text" name="user.email" readonly="readonly" value="<s:property value="user.email"/>" id="email"/>
 			    	<input type="text" id="add_username" name="user.username" class="addUser" placeholder="用户名">
 		    	    <input type="password" name="user.password" class="addUser pwd" placeholder="密码（6-16位数字字母组合）" id="add_password"/>
@@ -149,7 +150,7 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
 								var params = $("#userForm").serialize();
 								//服务协议
 								var isAllow = $("#isAllow").prop("checked");
-								if(isAllow!="checked"){
+								if(!isAllow){
 									$("#isAllowError").css("display","");
 									$(".error").html("请阅读并同意《Celloud用户使用协议》");
 									return;
@@ -191,7 +192,7 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
 	
 	//验证addForm
 	function validateAddForm(){
-		var username = $.trim($("#add_username").val());
+		var username = $("#add_username").val();
 		if(username==""){
 			$(".error").html("请输入用户名！");
 			return false;

@@ -53,12 +53,14 @@ public class RunOverService {
                 for (int z = 1; z < list.size(); z++) {
                     if (z == 1) {
                         String[] line_z = list.get(z).split("\t");
-                        resultArray.append(FileTools.getArray(line_z, 0)).append("\t")
-                        .append(FileTools.getArray(line_z, 5)).append("\t")
-                        .append(FileTools.getArray(line_z, 6));
+                        resultArray.append(FileTools.getArray(line_z, 0))
+                                .append("\t")
+                                .append(FileTools.getArray(line_z, 5))
+                                .append("\t")
+                                .append(FileTools.getArray(line_z, 6));
                     }
                 }
-            }else{
+            } else {
                 resultArray.append("运行结果异常").append("\t\t");
             }
         } else {
@@ -336,7 +338,7 @@ public class RunOverService {
             String context = null;
             if (FileTools.checkPath(finalPath)) {
                 context = FileTools.getLastLine(finalPath);
-                if(context != null){
+                if (context != null) {
                     String c[] = context.split("\t");
                     if (c.length > 4) {
                         if (!typeList.contains(FileTools.getArray(c, 1))) {
@@ -347,11 +349,49 @@ public class RunOverService {
                                 + FileTools.getArray(c, 2) + "\t"
                                 + FileTools.getArray(c, 3);
                     }
-                }else{
+                } else {
                     context = " \t \t \t";
                 }
             }
             resultArray.append(data.getDataKey()).append("\t").append(context)
+                    .append("\n");
+        }
+        FileTools.appendWrite(projectFile, resultArray.toString());
+        return true;
+    }
+
+    /**
+     * oncogene 流程项目运行结束后的处理
+     * 
+     * @param appPath
+     * @param appName
+     * @param appTitle
+     * @param projectFile
+     * @param projectId
+     * @param proDataList
+     * @return
+     */
+    public boolean oncogene(String appPath, String appName, String appTitle,
+            String projectFile, String projectId, List<Data> proDataList) {
+        // 1. 追加表头
+        StringBuffer resultArray = new StringBuffer();
+        resultArray.append(appTitle);
+        // 2. 遍历数据列表
+        for (Data data : proDataList) {
+            String finalPath = appPath + data.getDataKey();
+            String first = FileTools.getFirstLine(finalPath + "/report.txt");
+            String result = StringUtils.isEmpty(first) ? "no result" : first
+                    .replace("Exon", "").split("@")[0].trim();
+            String re = FileTools.readAppoint(
+                    finalPath + "/report.txt.wz.Report").replace("<br />", "");
+            String geneName = FileTools.getFirstLine(finalPath
+                    + "/Result/edit_dir/gene_name.txt");
+            if (StringUtils.isEmpty(geneName)) {
+                geneName = "no result";
+            }
+            resultArray.append(data.getDataKey()).append("\t")
+                    .append(data.getFileName()).append("\t").append(geneName)
+                    .append("\t").append(result).append("\t").append(re)
                     .append("\n");
         }
         FileTools.appendWrite(projectFile, resultArray.toString());

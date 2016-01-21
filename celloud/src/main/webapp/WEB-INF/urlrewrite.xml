@@ -36,7 +36,7 @@
 
 	<rule>
 		<note>enter modify password</note>
-		<from>^/resetPwd/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)$</from>
+		<from>^/resetPwd/([\w\W]+)/([a-zA-Z0-9]+)$</from>
 		<to>/user!resetPassword?username=$1&amp;code=$2</to>
 	</rule>
 
