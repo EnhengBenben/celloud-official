@@ -119,11 +119,14 @@ function _init_data(){
         return;
       }
       var dataLi = "";
+      var hasConfigure = false;
       for (var i=0;i<checkedIds.length;i++){
         var fileName = checkedNames[i];
         var fileId = checkedIds[i];
         if(!utils.isConfigure(fileName)){
           dataIds += fileId + ",";
+        }else{
+          hasConfigure = true;
         }
         dataLi += "<li class=\"types-options data-select\" title=\"点击删除\" name=\"to-run-data\" data-dataid=\""+checkedIds[i]+"\">"+fileName+"</li>";
       }
@@ -139,17 +142,29 @@ function _init_data(){
             if(appList.length==0 ){
               appLi += "<li class='types-options'>没有可运行的APP</li>";
             }else{
+              var _checkConfigure = false;
               for(var i=0;i<appList.length;i++){
                 var appId = appList[i].appId;
                 var appName = appList[i].appName;
                 var dataNum = appList[i].dataNum;
-                if(dataNum <= dataLength){
-                  if((appId==109||appId==110||appId==111||appId==112||appId==113) && dataNum<dataLength){
-                  }else{
-                    appLi += "<li class=\"types-options\" title=\"点击选中\" name=\"to-run-app\" data-appid=\""+appId+"\" >"+appName+"</li>";
-                    noAPP++;
+                if(hasConfigure && appId!=113){
+                  break;
+                }else{
+                  if(dataNum <= dataLength){
+                    if((appId==109||appId==110||appId==111||appId==112||appId==113) && dataNum<dataLength){
+                    }else{
+                      appLi += "<li class=\"types-options\" title=\"点击选中\" name=\"to-run-app\" data-appid=\""+appId+"\" >"+appName+"</li>";
+                      noAPP++;
+                    }
                   }
                 }
+                if(appId == 113){
+                  _checkConfigure = true;
+                }
+              }
+              if(!_checkConfigure){
+                $.dataManager.showTipModal("所选数据格式不统一");
+                return;
               }
             }
             $("#apps-data-ul").html(appLi);
@@ -184,16 +199,15 @@ function _init_data(){
         }
       }else{
         var checkedIds = o.checkedIds;
-        var dataIds = "";
+        var dataIds = new Array();
         for (var i=0;i<checkedIds.length;i++){
-          dataIds += checkedIds[i];
+          dataIds.push(checkedIds[i]);
         }
-        $.get("data/checkDataRunningApp.action",{"dataIds":dataIds,"appId":appId},function(dataIdList){
+        $.get("data/checkDataRunningApp.action",{"dataIds":dataIds.toString(),"appId":appId},function(dataIdList){
           if(dataIdList.length>0){
-            var dataName = "";
-            for(var i=0;i<intList.length;i++){
-              var dataId = intList[i];
-              dataName+=$("#filename-"+dataId).val() + "<br>";
+            var dataName = new Array();
+            for(var i=0;i<dataIdList.length;i++){
+              dataName.push($("#filename-"+dataIdList[i]).val() + "<br>");
             }
             $.dataManager.showTipModal("以下数据正在运行APP："+appName+"<br>"+dataName+"<br>请选择其他APP或删除选中数据");
           }else{

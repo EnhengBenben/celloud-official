@@ -56,10 +56,10 @@ public class RunOverUtil {
                     }
                 }
             } else {
-                resultArray.append("运行结果异常").append("\t\t");
+                resultArray.append("运行结果异常").append("\t&nbsp;\tnbsp;");
             }
         } else {
-            resultArray.append("运行结果异常").append("\t\t");
+            resultArray.append("运行结果异常").append("\tnbsp;\tnbsp;");
         }
         FileTools.appendWrite(projectFile, resultArray.toString() + "\n");
         return true;
@@ -101,7 +101,7 @@ public class RunOverUtil {
                         .append(FileTools.listIsNull(list, 2));
             }
         } else {
-            resultArray.append("本数据未生成有效结果").append("\t\t");
+            resultArray.append("运行结果异常").append("\tnbsp;\tnbsp;");
         }
         FileTools.appendWrite(projectFile, resultArray.toString() + "\n");
         return true;
@@ -141,13 +141,18 @@ public class RunOverUtil {
                 resultArray.append(FileTools.listIsNull(list, 0)).append("\t")
                         .append(FileTools.listIsNull(list, 1)).append("\t")
                         .append(FileTools.listIsNull(list, 2)).append("\t");
+            } else {
+                resultArray.append("运行结果异常").append("\tnbsp;\tnbsp;\t");
             }
             File avgFile = new File(reportPath + "result/average.info");
-            if (avgFile.exists())
+            if (avgFile.exists()) {
                 resultArray.append(FileTools
                         .getFirstLine(reportPath + "/result/average.info"));
+            } else {
+                resultArray.append("nbsp;");
+            }
         } else {
-            resultArray.append("结果异常").append("\t\t\t");
+            resultArray.append("运行结果异常").append("\tnbsp;\tnbsp;\tnbsp;");
         }
         
         FileTools.appendWrite(projectFile, resultArray.toString() + "\n");

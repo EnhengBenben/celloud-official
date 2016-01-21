@@ -313,10 +313,10 @@
     where report_id = #{reportId,jdbcType=INTEGER}
   </update>
   <select id="countReport" resultType="java.lang.Integer" >
-    select count(p.file_id) size from tb_report r,tb_file_project_relat p where r.project_id = p.project_id and r.state = #{state } and r.flag = #{flag } and r.user_id=#{userId }
+    select count(p.data_num) size from tb_report r,tb_project p  where r.project_id = p.project_id and r.state = #{state } and r.flag = #{flag } and r.user_id=#{userId }
   </select>
   <select id="countReportByTime" resultType="map" >
-    select date_format(create_date,#{time }) time,count(p.file_id) size from tb_report r,tb_file_project_relat p where r.project_id = p.project_id and r.state = #{state } and r.flag = #{flag } and r.user_id=#{userId } group by time
+    select date_format(r.create_date,#{time }) time,count(p.data_num) size from tb_report r,tb_project p where r.project_id = p.project_id and r.state = #{state } and r.flag = #{flag } and r.user_id=#{userId } group by time
   </select>
   
   <select id="getReportList" resultType="map">

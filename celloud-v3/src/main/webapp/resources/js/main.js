@@ -138,7 +138,7 @@ var userCount=(function(userCount){
 			$.each(data,function(index,map){
 				if (typeof(map.time) != "undefined") {
 					x += "'" + map.time + "',";
-					y[y.length]=Number(map.size/1073741824).toFixed(3);
+					y[y.length]=Number(map.size/1073741824).toFixed(2);
 				}
 			})
 			x = x.substring(0,x.length-1);
@@ -154,7 +154,7 @@ var userCount=(function(userCount){
 			$.each(data,function(index,map){
 				if (typeof(map.time) != "undefined") {
 				x += "'" + map.time + "',";
-				y[y.length]=Number(map.size/1073741824).toFixed(3);
+				y[y.length]=Number(map.size/1073741824).toFixed(2);
 				}
 			})
 			x = x.length>1?x.substring(0,x.length-1):x;
