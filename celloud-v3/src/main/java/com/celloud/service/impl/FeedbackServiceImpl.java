@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.FeedbackConstants;
+import com.celloud.mail.EmailUtils;
 import com.celloud.mapper.FeedbackAttachmentMapper;
 import com.celloud.mapper.FeedbackMapper;
 import com.celloud.mapper.FeedbackReplyMapper;
@@ -27,7 +28,6 @@ import com.celloud.model.User;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.FeedbackService;
-import com.celloud.utils.EmailUtils;
 
 /**
  * 投诉与建议service实现类

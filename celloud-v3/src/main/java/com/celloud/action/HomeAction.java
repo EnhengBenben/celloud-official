@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
+import com.celloud.mail.EmailSender;
 import com.celloud.model.User;
 import com.celloud.service.UserService;
-import com.celloud.utils.EmailUtils;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.ResetPwdUtils;
 
@@ -95,7 +95,7 @@ public class HomeAction {
         }
         String randomCode = MD5Util.getMD5(String.valueOf(new Date().getTime()));
         userService.insertFindPwdInfo(user.getUserId(), randomCode);
-        EmailUtils.sendWithTitle(ResetPwdUtils.title,
+        EmailSender.sendWithTitle(ResetPwdUtils.title,
                 ResetPwdUtils.content.replaceAll("username", user.getUsername()).replaceAll("url",
                         ResetPwdUtils.celloudPath.replaceAll("resetpwduname", user.getUsername())
                                 .replaceAll("resetpwdcode", randomCode)),

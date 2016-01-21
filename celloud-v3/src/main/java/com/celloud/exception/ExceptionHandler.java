@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.celloud.utils.EmailUtils;
+import com.celloud.mail.EmailUtils;
 
 /**
  * 全局异常处理器
