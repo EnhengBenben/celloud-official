@@ -33,13 +33,14 @@ public class HttpURLUtils {
         try {
             conn = (HttpURLConnection) new URL(url).openConnection();
             conn.setRequestMethod("GET");
+            conn.setRequestProperty("contentType", "UTF-8");
             conn.setDoOutput(true);
             conn.setConnectTimeout(120000);
             conn.setReadTimeout(240000);
             conn.connect();
 
             br = new BufferedReader(
-                    new InputStreamReader(conn.getInputStream()));
+                    new InputStreamReader(conn.getInputStream(),"UTF-8"));
             StringBuffer buff = new StringBuffer();
             String lineStr = null;
             while ((lineStr = br.readLine()) != null) {

@@ -169,7 +169,7 @@ public class RunAppServiceImpl {
                             + getArray(dataDetail, 2) + "\n");
         }
         String command = HCV + " " + dataListFile + " " + appPath + "/ 2>"
-                + appPath + "/" + projectId + "/log";
+                + appPath + "/" + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         boolean state = ssh.sshSubmit(true);
         if (state) {
