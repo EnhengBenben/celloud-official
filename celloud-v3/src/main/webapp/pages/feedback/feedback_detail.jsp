@@ -16,7 +16,10 @@
 					<button class="btn btn-close pull-right" disabled="disabled">已解决</button>
 				</c:if>
 				<c:if test="${!feedback.isSolved() }">
-					<button onclick="feedbacks.solve('${feedback.id}')" class="btn btn-success pull-right">问题已解决</button>
+					<button onclick="feedbacks.solve('${feedback.id}')" class="btn btn-success pull-right">
+						<span aria-hidden="true" class="glyphicon glyphicon-remove"></span>
+						问题已解决
+					</button>
 				</c:if>
 			</div>
 		</div>
@@ -53,8 +56,10 @@
 					</form>
 				</div>
 				<div class="col-xs-2">
-					<button id="feedbackReplyBtn" class="btn btn-success btn-block" disabled="disabled" onclick="feedbacks.reply()"
-						style="height: 100%">回复</button>
+					<button id="feedbackReplyBtn" class="btn btn-success btn-block" disabled="disabled" onclick="feedbacks.reply()">
+						<span aria-hidden="true" class="glyphicon glyphicon-send"></span>
+						回复
+					</button>
 				</div>
 			</div>
 		</div>
