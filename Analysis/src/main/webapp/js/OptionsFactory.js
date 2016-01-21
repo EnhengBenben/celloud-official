@@ -3,12 +3,6 @@
  */
 var lineType = 'line';
 var barType = 'bar';
-
-var colorList = [ '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B', '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD', '#D7504B', '#C6E579',
-		'#F4E001', '#F0805A', '#26C0C0' ];
-function getRandomInt(n) {
-	return parseInt(Math.random() * (n + 1));// parseInt(Math.random()*(上限-下限+1)+下限);
-}
 /**
  * @param title
  * @param xAxis
@@ -241,7 +235,6 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 				margin : 8,
 				formatter : '{value}',
 				textStyle : {
-					color : 'blue',
 					fontFamily : 'sans-serif',
 					fontSize : 12,
 					fontStyle : 'italic',
@@ -259,8 +252,6 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 				margin : 18,
 				formatter : '{value}', // Template formatter!
 				textStyle : {
-					color : 'green',
-					fontFamily : 'verdana',
 					fontSize : 12,
 					fontStyle : 'normal',
 					fontWeight : 'bold'
@@ -278,13 +269,11 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 			barMaxWidth : 100,
 			itemStyle : {
 				normal : {
-					color : "#F0F0F0",
 					label : {
 						show : true,
 						textStyle : {
 							fontSize : 14,
 							fontWeight : 'bolder',
-							color : 'green',
 						}
 					}
 				},
@@ -299,8 +288,8 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 		} ]
 	};
 	if (max >= 10 && xAxis.length > 8) {
-		opt.xAxis[0].axisLabel.rotate = 0;
-		opt.xAxis[0].show= false;
+		opt.xAxis[0].axisLabel.rotate = 25;
+		opt.xAxis[0].show= true;
 	} else {
 		opt.xAxis[0].axisLabel.rotate = 0;
 	}
@@ -310,8 +299,8 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 		opt.yAxis[0].axisLabel.formatter = '{value}' + ustr;
 	}
 	
+	/** 柱状图颜色 
 	var colorStr;
-	/** 柱状图颜色 */
 	var ran = parseInt(Math.random() * 10);
 	if (seriesName.indexOf("数据量") > -1) {
 		colorStr = colorList[ran];
@@ -323,5 +312,6 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 		colorStr = colorList[ran];
 	}
 	opt.series[0].itemStyle.normal.color = colorStr;
+	*/
 	return opt;
 }

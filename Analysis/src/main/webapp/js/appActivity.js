@@ -50,7 +50,7 @@ function loadAppRunTime() {
 			yAxis[i] = data[i].runNum;
 		}
 		var option = makeOptionScrollUnit(xAxis, yAxis, "运行次数", barType, 0, 15)
-		var myChart = echarts.init(document.getElementById('appListDiv'));
+		var myChart = echarts.init(document.getElementById('appListDiv'),theme);
 		myChart.setOption(option);
 	});
 }

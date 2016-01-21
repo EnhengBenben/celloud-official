@@ -1,17 +1,22 @@
-
-var infographic = {
+var helianthus = {
+    backgroundColor: '#F2F2E6',
     // 默认色板
     color: [
-        '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
-        '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
-        '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
+        '#44B7D3','#E42B6D','#F4E24E','#FE9616','#8AED35',
+        '#ff69b4','#ba55d3','#cd5c5c','#ffa500','#40e0d0',
+        '#E95569','#ff6347','#7b68ee','#00fa9a','#ffd700',
+        '#6699FF','#ff6666','#3cb371','#b8860b','#30e0e0'
     ],
 
     // 图表标题
     title: {
+        backgroundColor: '#F2F2E6',
+        itemGap: 10,               // 主副标题纵向间隔，单位px，默认为10，
         textStyle: {
-            fontWeight: 'normal',
-            color: '#27727B'          // 主标题文字颜色
+            color: '#8A826D'          // 主标题文字颜色
+        },
+        subtextStyle: {
+            color: '#E877A3'          // 副标题文字颜色
         }
     },
 
@@ -21,28 +26,30 @@ var infographic = {
         y:'center',
         itemWidth: 5,
         itemHeight:25,
-        color:['#C1232B','#FCCE10']
+        color:['#E42B6D','#F9AD96'],
+        text:['高','低'],         // 文本，默认为数值文本
+        textStyle: {
+            color: '#8A826D'          // 值域文字颜色
+        }
     },
 
     toolbox: {
-        color : [
-            '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
-            '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD'
-        ],
-        effectiveColor : '#ff4500'
+        color : ['#E95569','#E95569','#E95569','#E95569'],
+        effectiveColor : '#ff4500',
+        itemGap: 8
     },
 
     // 提示框
     tooltip: {
-        backgroundColor: 'rgba(50,50,50,0.5)',     // 提示背景颜色，默认为透明度为0.7的黑色
+        backgroundColor: 'rgba(138,130,109,0.7)',     // 提示背景颜色，默认为透明度为0.7的黑色
         axisPointer : {            // 坐标轴指示器，坐标轴触发有效
             type : 'line',         // 默认为直线，可选为：'line' | 'shadow'
             lineStyle : {          // 直线指示器样式设置
-                color: '#27727B',
+                color: '#6B6455',
                 type: 'dashed'
             },
-            crossStyle: {
-                color: '#27727B'
+            crossStyle: {          //十字准星指示器
+                color: '#A6A299'
             },
             shadowStyle : {                     // 阴影指示器样式设置
                 color: 'rgba(200,200,200,0.3)'
@@ -52,9 +59,9 @@ var infographic = {
 
     // 区域缩放控制器
     dataZoom: {
-        dataBackgroundColor: 'rgba(181,195,52,0.3)',            // 数据背景颜色
-        fillerColor: 'rgba(181,195,52,0.2)',   // 填充颜色
-        handleColor: '#27727B'    // 手柄颜色
+        dataBackgroundColor: 'rgba(130,197,209,0.6)',            // 数据背景颜色
+        fillerColor: 'rgba(233,84,105,0.1)',   // 填充颜色
+        handleColor: 'rgba(107,99,84,0.8)'     // 手柄颜色
     },
 
     // 网格
@@ -66,7 +73,7 @@ var infographic = {
     categoryAxis: {
         axisLine: {            // 坐标轴线
             lineStyle: {       // 属性lineStyle控制线条样式
-                color: '#27727B'
+                color: '#6B6455'
             }
         },
         splitLine: {           // 分隔线
@@ -84,7 +91,7 @@ var infographic = {
         },
         splitLine: {           // 分隔线
             lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
-                color: ['#ccc'],
+                color: ['#FFF'],
                 type: 'dashed'
             }
         }
@@ -111,44 +118,46 @@ var infographic = {
 
     timeline : {
         lineStyle : {
-            color : '#27727B'
+            color : '#6B6455'
         },
         controlStyle : {
-            normal : { color : '#27727B'},
-            emphasis : { color : '#27727B'}
+            normal : { color : '#6B6455'},
+            emphasis : { color : '#6B6455'}
         },
         symbol : 'emptyCircle',
         symbolSize : 3
     },
 
-    // 折线图默认参数
-    line: {
+    // 柱形图默认参数
+    bar: {
         itemStyle: {
             normal: {
-                borderWidth:2,
-                borderColor:'#fff',
-                lineStyle: {
-                    width: 3
-                }
+                barBorderRadius: 0
             },
             emphasis: {
-                borderWidth:0
+                barBorderRadius: 0
             }
-        },
-        symbol: 'circle',  // 拐点图形类型
-        symbolSize: 3.5           // 拐点图形大小
+        }
     },
+
+    // 折线图默认参数
+    line: {
+        smooth : true,
+        symbol: 'emptyCircle',  // 拐点图形类型
+        symbolSize: 3           // 拐点图形大小
+    },
+
 
     // K线图默认参数
     k: {
         itemStyle: {
             normal: {
-                color: '#C1232B',       // 阳线填充颜色
-                color0: '#B5C334',      // 阴线填充颜色
+                color: '#E42B6D',       // 阳线填充颜色
+                color0: '#44B7D3',      // 阴线填充颜色
                 lineStyle: {
                     width: 1,
-                    color: '#C1232B',   // 阳线边框颜色
-                    color0: '#B5C334'   // 阴线边框颜色
+                    color: '#E42B6D',   // 阳线边框颜色
+                    color0: '#44B7D3'   // 阴线边框颜色
                 }
             }
         }
@@ -165,7 +174,7 @@ var infographic = {
                 borderWidth:0
             }
         },
-        symbol: 'star4',    // 图形类型
+        symbol: 'circle',    // 图形类型
         symbolSize: 4        // 图形大小，半宽（半径）参数，当图形为方向或菱形则总宽度为symbolSize * 2
     },
 
@@ -185,7 +194,7 @@ var infographic = {
                 },
                 label: {
                     textStyle: {
-                        color: '#C1232B'
+                        color: '#E42B6D'
                     }
                 }
             },
@@ -205,8 +214,11 @@ var infographic = {
     force : {
         itemStyle: {
             normal: {
+                nodeStyle : {
+                    borderColor : 'rgba(0,0,0,0)'
+                },
                 linkStyle : {
-                    color : '#27727B'
+                    color : '#6B6455'
                 }
             }
         }
@@ -215,19 +227,17 @@ var infographic = {
     chord : {
         itemStyle : {
             normal : {
-                borderWidth: 1,
-                borderColor: 'rgba(128, 128, 128, 0.5)',
                 chordStyle : {
                     lineStyle : {
+                        width : 0,
                         color : 'rgba(128, 128, 128, 0.5)'
                     }
                 }
             },
             emphasis : {
-                borderWidth: 1,
-                borderColor: 'rgba(128, 128, 128, 0.5)',
                 chordStyle : {
                     lineStyle : {
+                        width : 1,
                         color : 'rgba(128, 128, 128, 0.5)'
                     }
                 }
@@ -235,7 +245,7 @@ var infographic = {
         }
     },
 
-    gauge : {
+    gauge : {                  // 仪表盘
         center:['50%','80%'],
         radius:'100%',
         startAngle: 180,
@@ -243,7 +253,7 @@ var infographic = {
         axisLine: {            // 坐标轴线
             show: true,        // 默认显示，属性show控制显示与否
             lineStyle: {       // 属性lineStyle控制线条样式
-                color: [[0.2, '#B5C334'],[0.8, '#27727B'],[1, '#C1232B']],
+                color: [[0.2, '#44B7D3'],[0.8, '#6B6455'],[1, '#E42B6D']],
                 width: '40%'
             }
         },

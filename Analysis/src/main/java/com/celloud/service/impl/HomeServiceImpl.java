@@ -59,7 +59,6 @@ public class HomeServiceImpl implements HomeService {
 	public Map<String, Object> toCompanyReport(Integer cmpId, Integer role) {
 		Connection conn = ConnectManager.getConnection();
 		List<App> listApps = appDao.getApps(conn, role, cmpId);
-
 		List<Map<String, Object>> userAppRun = reportDao.getCompanyRunEachApp(conn, role, cmpId);
 		List<Company> cmpList = reportDao.getCompanyRunEachApp_Company(conn, role, cmpId);
 		Map<String, Object> res = new HashMap<>();

@@ -70,7 +70,7 @@ function app_chart(data) {
 		yAxisApp[i] = appRun[i].runNum;
 	}
 	var option = makeOptionScrollUnit(xAxisApp, yAxisApp, "运行次数", barType, 0, 10)
-	var myChart = echarts.init(document.getElementById('appListDiv'));
+	var myChart = echarts.init(document.getElementById('appListDiv'),theme);
 	myChart.setOption(option);
 }
 function hospital_chart(data) {
@@ -110,8 +110,8 @@ function hospital_chart(data) {
 	
 	var option = makeOptionScrollUnit(xAxis, yAxis, "数据量", barType, 0, 10)
 	var sizeoption = makeOptionScrollUnit(xAxisSize, yAxisSize, "数据大小(GB)", barType, 0, 10)
-	var myChart = echarts.init(document.getElementById(fileNumId));
-	var sizeChart = echarts.init(document.getElementById(fileSizeId));
+	var myChart = echarts.init(document.getElementById(fileNumId),theme);
+	var sizeChart = echarts.init(document.getElementById(fileSizeId),theme);
 	sizeChart.setOption(sizeoption);
 	myChart.setOption(option);
 }
@@ -152,7 +152,7 @@ function user_chart(data) {
 		yAxis[i] = fileNum[i].fileNum;
 	}
 	var option = makeOptionScrollUnit(xAxis, yAxis, "数据量", barType, 0, 10)
-	var myChart = echarts.init(document.getElementById(fileNumId));
+	var myChart = echarts.init(document.getElementById(fileNumId),theme);
 	myChart.setOption(option);
 	
 	var xAxisSize = new Array(fileSize.length);
@@ -162,7 +162,7 @@ function user_chart(data) {
 		yAxisSize[i] = parseFloat((fileSize[i].size / (1024 * 1024 * 1024)).toFixed(2));
 	}
 	var sizeoption = makeOptionScrollUnit(xAxisSize, yAxisSize, "数据大小(GB)", barType, 0, 10)
-	var sizeChart = echarts.init(document.getElementById(fileSizeId));
+	var sizeChart = echarts.init(document.getElementById(fileSizeId),theme);
 	sizeChart.setOption(sizeoption);
 	
 	var xAxisApp = new Array(appRun.length);
@@ -172,7 +172,7 @@ function user_chart(data) {
 		yAxisApp[i] = appRun[i].runNum;
 	}
 	var appOpt = makeOptionScrollUnit(xAxisApp, yAxisApp, "运行次数", barType, 0, 10)
-	var appChart = echarts.init(document.getElementById(appRunId));
+	var appChart = echarts.init(document.getElementById(appRunId),theme);
 	appChart.setOption(appOpt);
 	
 }
@@ -182,7 +182,7 @@ function chars() {
 		var xAxis = (result.timeLine).split(",");
 		var yAxis = eval("[" + result.data + "]");
 		var option = makeOptionScrollUnit(xAxis, yAxis, '月新增医院数量', barType, 100, 12);
-		var myChart = echarts.init(document.getElementById('newHospitalEvyMonth'));
+		var myChart = echarts.init(document.getElementById('newHospitalEvyMonth'),theme);
 		myChart.setOption(option);
 	})
 }
