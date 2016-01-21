@@ -416,8 +416,8 @@ function _init_data(){
   	 */
   	$("#data-sort-name").on("click",function(e){
   	  $.dataManager.options.sort = 1;
-  	  $.dataManager.find.condition();
   	  $.dataManager.options.sortNameType = $.dataManager.options.sortNameType=="desc"?"asc":"desc";
+  	  $.dataManager.find.condition();
     });
   	
   	/** 
@@ -425,8 +425,8 @@ function _init_data(){
   	 */
   	$("#data-sort-createdate").on("click",function(e){
   	  $.dataManager.options.sort = 0;
-  	  $.dataManager.find.condition();
   	  $.dataManager.options.sortDateType = $.dataManager.options.sortDateType=="desc"?"asc":"desc";
+  	  $.dataManager.find.condition();
     });
   };
   
