@@ -173,12 +173,12 @@
     </table>
     <table style="width:100%;">
       <tr>
-        <td style="width:50%;"><img style="width: 100%;" src="<c:if test="${!split.qualityPath1.contains('Tools') }">${outPath }/${split.userId }/${split.appId }/${split.dataKey }</c:if>${split.qualityPath1 }"></td>
-        <td><img style="width: 100%;" src="<c:if test="${!split.qualityPath2.contains('Tools') }">${outPath }/${split.userId }/${split.appId }/${split.dataKey }/</c:if>${split.qualityPath2 }"></td>
+        <td style="width:50%;"><img style="width: 100%;" src="<c:if test="${!split.qualityPath1.contains('Tools') }">${uploadPath }/${split.userId }/${split.appId }/${split.dataKey }</c:if>${split.qualityPath1 }"></td>
+        <td><img style="width: 100%;" src="<c:if test="${!split.qualityPath2.contains('Tools') }">${uploadPath }/${split.userId }/${split.appId }/${split.dataKey }/</c:if>${split.qualityPath2 }"></td>
       </tr>
       <tr>
-        <td><img style="width: 100%;" alt="" src="<c:if test="${!split.seqContentPath1.contains('Tools') }">${outPath }/${split.userId }/${split.appId }/${split.dataKey }</c:if>${split.seqContentPath1 }"></td>
-        <td><img style="width: 100%;" alt="" src="<c:if test="${!split.seqContentPath2.contains('Tools') }">${outPath }/${split.userId }/${split.appId }/${split.dataKey }</c:if>${split.seqContentPath2 }"></td>
+        <td><img style="width: 100%;" alt="" src="<c:if test="${!split.seqContentPath1.contains('Tools') }">${uploadPath }/${split.userId }/${split.appId }/${split.dataKey }</c:if>${split.seqContentPath1 }"></td>
+        <td><img style="width: 100%;" alt="" src="<c:if test="${!split.seqContentPath2.contains('Tools') }">${uploadPath }/${split.userId }/${split.appId }/${split.dataKey }</c:if>${split.seqContentPath2 }"></td>
       </tr>
     </table>
 </section>

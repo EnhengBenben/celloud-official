@@ -107,17 +107,17 @@
     <input id="data-current-page-hide" value="${pageList.page.currentPage }" type="hidden" >
     <ul class="pages" id="pagination-data">
       <li> 每页
-        <select id="data-page-size-sel">
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
+        <select id="proPageRecordSel" onchange="javascript:changePageSize();">
+            <option value="10" <c:if test="${pageList.page.pageSize==10}">selected</c:if>>10</option>
+            <option value="20" <c:if test="${pageList.page.pageSize==20}">selected</c:if>>20</option>
+            <option value="30" <c:if test="${pageList.page.pageSize==30}">selected</c:if>>30</option>
+            <option value="50" <c:if test="${pageList.page.pageSize==50}">selected</c:if>>50</option>
+            <option value="100" <c:if test="${pageList.page.pageSize==100}">selected</c:if>>100</option>
         </select>条
       </li>
       <!-- 显示prev -->
       <c:if test="${pageList.page.hasPrev}">
-          <li><a id="prev-page-data" href="javascript:void(0);">&lt;</a></li>
+          <li><a href="javascript:changePage(${pageList.page.currentPage-1 })">&lt;</a></li>
       </c:if>
       <!-- 显示第一页 -->
       <c:choose>
@@ -230,7 +230,7 @@
         </c:otherwise>
       </c:choose>
       <c:if test="${pageList.page.hasNext}">
-          <li><a id="next-page-data" href="javascript:void(0)">&gt;</a></li>
+          <li><a href="javascript:changePage(${pageList.page.currentPage+1 })">&gt;</a></li>
       </c:if>
       <li>
                   共${pageList.page.totalPage }页&nbsp;|&nbsp;合计${pageList.page.rowCount }条
