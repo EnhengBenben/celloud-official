@@ -118,7 +118,8 @@ public class EmailUtils {
         if (attachments != null && attachments.size() > 0) {
             for (FeedbackAttachment fa : attachments) {
                 String file = FeedbackConstants.getAttachment(fa.getFilePath());
-                utils.attach(file);
+                // TODO fa.getFileName() 用户上传的文件名
+                utils.attachWithFileName(null, file);
             }
         }
         utils.addTo(EmailProperties.feedbackMailTo).setTitle(EmailProperties.feedbackTitle)
