@@ -39,6 +39,7 @@ import com.google.inject.Inject;
 		@Result(name = "companyDataList", location = "../../pages/companyDataList.jsp"),
 		@Result(name = "getPreDataView", location = "../../pages/dataPreView.jsp"),
 		@Result(name = "getPreCompanyView", location = "../../pages/companyPreView.jsp"),
+		@Result(name = "toCompanyBaseInfo", location = "../../pages/companyBaseInfo.jsp"),
 
 		@Result(name = "browserCount", type = "json", params = { "root", "browserList" }),
 		@Result(name = "historyList", type = "json", params = { "root", "historyList" }),
@@ -143,6 +144,7 @@ public class HomeAction extends BaseAction {
 		return "companyDataList";
 	}
 
+	@SuppressWarnings("unchecked")
 	public String toCompanyReportList() {
 		Integer cid = (Integer) getCid();
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
@@ -213,6 +215,11 @@ public class HomeAction extends BaseAction {
 	public String toCompanyBigUserJson() {
 		cmpList = companyService.BigUserList();
 		return "cmpList";
+	}
+
+	public String toCompanyBaseInfo() {
+		mapList = homeService.getCompanyBaseInfo();
+		return "toCompanyBaseInfo";
 	}
 
 	/**

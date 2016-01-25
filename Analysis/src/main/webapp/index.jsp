@@ -121,6 +121,12 @@
 									用户数据统计
 								</a>
 							</li>
+							<li>
+                                <a href="javascript:toCompanyDataList()">
+                                    <i class="icon-double-angle-right"></i>
+                                    医院数据统计
+                                </a>
+                            </li>
 							<!-- 
 							<li>
 								<a href="javascript:getMonthDataList()">
@@ -159,11 +165,18 @@
 								</a>
 							</li>
 							<li>
+                                <a href="javascript:toCompanyBaseInfo()">
+                                    <i class="icon-double-angle-right"></i>
+                                    医院基本信息
+                                </a>
+                            </li>
+							<li>
 								<a href="javascript:toCompanyDataList()">
 									<i class="icon-double-angle-right"></i>
 									医院数据统计
 								</a>
 							</li>
+							
 							<li>
 								<a href="javascript:toCompanyReportList()">
 									<i class="icon-double-angle-right"></i>
@@ -363,6 +376,12 @@
 			$.get("home!toPreCompanyView", {}, function(responseText) {
 				$("#content").html(responseText);
 			});
+		}
+		function toCompanyBaseInfo(){
+			$("#secondTitle").addClass("hide");
+            $.get("home!toCompanyBaseInfo", {}, function(responseText) {
+                $("#content").html(responseText);
+            });
 		}
 		///医院报告统计信息
 		function toCompanyReportList() {
