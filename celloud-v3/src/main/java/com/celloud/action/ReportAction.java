@@ -523,8 +523,11 @@ public class ReportAction {
             }
             mv.addObject("imgList", imgList);
         }
+        HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
         App app = appService.selectByPrimaryKey(appId);
-        mv.addObject("app", app);
+        //TODO 传递HBV之后，很多参数已经不需要传递了，修改时需要改动页面接收参数的方法
+        //为了兼容下面的方法，需要等每个流程一个打印页面之后再修改
+        mv.addObject("app", app).addObject("hbv", hbv);
 		mv.addObject("userId", userId).addObject("appId", appId).addObject("sensitive", sensitive);
 		mv.addObject("context", context).addObject("peakFigure", peakFigure).addObject("allPic", allPic);
 		mv.addObject("result", result).addObject("table", table).addObject("flag", flag);
