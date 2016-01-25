@@ -1,10 +1,14 @@
 package com.celloud.action;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.celloud.constants.ConstantsData;
@@ -63,7 +67,7 @@ public class ProjectAction {
      * @return
      * @date 2016-1-7 下午7:00:10
      */
-    @RequestMapping("shareProject")
+    @RequestMapping(value = "shareProject", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String share(String userNames, Integer projectId) {
         String error = "";
@@ -107,4 +111,19 @@ public class ProjectAction {
         Integer num = projectService.deleteShareToMe(userId, projectId);
         return num == 2;
     }
+    
+	/**
+	 * 查询项目共享给了哪些用户
+	 * 
+	 * @param projectId
+	 * @return
+	 * @author lin
+	 * @date 2016年1月25日下午3:24:00
+	 */
+	@RequestMapping("getShareTo")
+	@ResponseBody
+	public List<Map<String, Object>> getShareTo(Integer projectId) {
+		Integer userId = ConstantsData.getLoginUserId();
+		return projectService.getShareTo(userId, projectId);
+	}
 }

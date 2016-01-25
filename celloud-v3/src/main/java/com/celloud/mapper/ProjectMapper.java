@@ -1,5 +1,6 @@
 package com.celloud.mapper;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
@@ -104,4 +105,15 @@ public interface ProjectMapper {
      * @date 2016年1月15日 上午10:41:53
      */
     Map<String, Object> findProjectInfoById(Integer projectId);
+    
+	/**
+	 * 获取项目共享给了哪些用户
+	 * 
+	 * @param userId：项目共享人（share_from）
+	 * @param projectId：要检索的项目
+	 * @return
+	 * @author lin
+	 * @date 2016年1月25日下午3:12:38
+	 */
+	public List<Map<String, Object>> getShareTo(@Param("userId") Integer userId, @Param("projectId") Integer projectId);
 }

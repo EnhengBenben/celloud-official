@@ -17,6 +17,10 @@
     project_id, user_id, project_name, data_format, create_date, update_date, state, 
     share_num, data_num, data_size
   </sql>
+  <select id="getShareTo" resultType="map">
+  	select user_id as id,username as text from tb_user where user_id!=#{userId} and user_id in
+  	(select share_to from tb_project_share where project_id=#{projectId} and share_from=#{userId})
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

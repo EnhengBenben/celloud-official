@@ -1074,7 +1074,7 @@ $.ajaxSetup ({
 			 	},
 				multiple: true
 			});
-			$.get("userJson_getUsersMapSharedPro.action",{"projectId":proId},function(data){
+			$.get("project/getShareTo",{"projectId":proId},function(data){
 				if(data.length>0){
 					$("#proSel").select2("data",data);
 				}

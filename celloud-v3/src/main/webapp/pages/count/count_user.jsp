@@ -24,7 +24,7 @@
         <div class="icon">
           <i class="fa fa-list"></i>
         </div>
-        <a href="javascript:void(0)" onClick="userCount.toDataMain()" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="javascript:void(0)" onClick="userCount.toDataMain()" class="small-box-footer">详情 <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div><!-- ./col -->
     <div class="col-lg-3 col-xs-6" data-toggle="tab" href="#count-source-charts">
@@ -37,7 +37,7 @@
         <div class="icon">
           <i class="fa fa-pie-chart"></i>
         </div>
-        <a href="javascript:void(0)" onClick="userCount.toDataMain()" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="javascript:void(0)" onClick="userCount.toDataMain()" class="small-box-footer">详情 <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div><!-- ./col -->
     <div class="col-lg-3 col-xs-6" data-toggle="tab" href="#count-report-charts">
@@ -50,7 +50,7 @@
         <div class="icon">
           <i class="fa fa-file-text-o"></i>
         </div>
-        <a href="javascript:void(0);" onClick="userCount.toReportMain()" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="javascript:void(0);" onClick="userCount.toReportMain()" class="small-box-footer">详情 <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div><!-- ./col -->
     <div class="col-lg-3 col-xs-6" data-toggle="tab" href="#count-app-charts">
@@ -63,7 +63,7 @@
         <div class="icon">
           <i class="fa fa-cube"></i>
         </div>
-        <a href="javascript:void(0);" onClick="userCount.toAppStore()" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="javascript:void(0);" onClick="userCount.toAppStore()" class="small-box-footer">详情 <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div><!-- ./col -->
   </div><!-- /.row -->

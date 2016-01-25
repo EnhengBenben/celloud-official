@@ -1,5 +1,6 @@
 package com.celloud.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.celloud.model.Project;
@@ -90,4 +91,15 @@ public interface ProjectService {
             String[] appIdArr, String[] dataIdArr);
 
     public Map<String, Object> findProjectInfoById(Integer projectId);
+    
+    /**
+     * 获取项目共享给了哪些用户
+     * 
+     * @param userId：项目共享人（share_from）
+     * @param projectId：要检索的项目
+     * @return
+     * @author lin
+     * @date 2016年1月25日下午3:10:31
+     */
+	public List<Map<String, Object>> getShareTo(Integer userId, Integer projectId);
 }
