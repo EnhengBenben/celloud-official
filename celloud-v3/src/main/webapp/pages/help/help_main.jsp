@@ -15,12 +15,12 @@
 <section class="content">
   <div class="col-sm-2">
       <div class="btn-group-vertical" style="width:100%;padding-right:0px;padding-left:0px;">
-         <a href="javascript:userHelp.openPage('pages/help/help_main.jsp')" class="btn btn-success bg-green-active">
+         <!-- <a href="javascript:userHelp.openPage('pages/help/help_main.jsp')" class="btn btn-success bg-green-active">
             用户指南
         </a>
         <a href="javascript:userHelp.openPage('pages/help/help_usefast.jsp')" class="btn btn-success">
             快速上手
-        </a>
+        </a> -->
         <a href="javascript:userHelp.openPage('pages/help/help_question.jsp')" class="btn btn-success">
             常见问题
         </a>
