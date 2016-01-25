@@ -298,6 +298,7 @@
 	<script src="./js/jquery.dataTables.min.js"></script>
 	<script src="./js/jquery.dataTables.bootstrap.js"></script>
 	<!-- theme echarts -->
+	<!-- 
 	<script src="./plugin/echarts-2.2.7/src/theme/dark.js"></script>
 	<script src="./plugin/echarts-2.2.7/src/theme/blue.js"></script>
     <script src="./plugin/echarts-2.2.7/src/theme/gray.js"></script>
@@ -311,6 +312,8 @@
     <script src="./plugin/echarts-2.2.7/src/theme/roma.js"></script>
     <script src="./plugin/echarts-2.2.7/src/theme/sakura.js"></script>
     <script src="./plugin/echarts-2.2.7/src/theme/shine.js"></script>
+     -->
+    <script src="./plugin/echarts-2.2.7/src/theme/theme.js"></script>
 
 	<!-- <script src="./plugin/echarts-2.2.7/src/theme/infographic.js"></script> -->
 	<script src="./js/util.js" type="text/javascript"></script>

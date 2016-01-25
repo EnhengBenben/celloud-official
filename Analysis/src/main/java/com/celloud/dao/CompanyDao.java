@@ -142,5 +142,5 @@ public interface CompanyDao {
 	 */
 	public List<Company> getBigUserCmpNum(Connection conn);
 
-	public List<Map<String, Object>> getCompanyBaseInfo(Connection conn);
+	public List<Company> getCompanyBaseInfo(Connection conn);
 }
