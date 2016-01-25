@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.ReportType;
+import com.celloud.model.App;
 import com.celloud.model.CmpGeneDetectionDetail;
 import com.celloud.model.CmpGeneSnpResult;
 import com.celloud.model.CmpReport;
@@ -38,6 +39,7 @@ import com.celloud.model.Report;
 import com.celloud.model.Split;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
+import com.celloud.service.AppService;
 import com.celloud.service.CompanyService;
 import com.celloud.service.DataService;
 import com.celloud.service.DeptService;
@@ -59,6 +61,8 @@ public class ReportAction {
     private CompanyService companyService;
     @Resource
     private DeptService deptService;
+    @Resource
+    private AppService appService;
 
     /**
      * 获取报告模块列表
@@ -519,6 +523,8 @@ public class ReportAction {
             }
             mv.addObject("imgList", imgList);
         }
+        App app = appService.selectByPrimaryKey(appId);
+        mv.addObject("app", app);
 		mv.addObject("userId", userId).addObject("appId", appId).addObject("sensitive", sensitive);
 		mv.addObject("context", context).addObject("peakFigure", peakFigure).addObject("allPic", allPic);
 		mv.addObject("result", result).addObject("table", table).addObject("flag", flag);
@@ -548,6 +554,8 @@ public class ReportAction {
             }
             mv.addObject("imgList", imgList);
         }
+        App app = appService.selectByPrimaryKey(appId);
+        mv.addObject("app", app);
 		mv.addObject("userId", userId).addObject("appId", appId);
 		mv.addObject("context", context).addObject("allPic", allPic);
 		mv.addObject("result", result).addObject("table", table).addObject("seq", seq);

@@ -36,7 +36,7 @@
 				<c:if test="${flag==0 }">
 					<div class="container" style="display: none;"></div>
 				</c:if>
-				<h1>${company.companyName }${txt }
+				<h1>${company.companyName }${app.appName }
 					<c:if test="${company.companyId==41 }">
 						<span name="geneType">基因分型检测</span>
 						<span name="resistanceType" class="hide">耐药突变检测</span><br>
