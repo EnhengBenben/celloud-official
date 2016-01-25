@@ -8,6 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>打印split报告</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/font.css">
 <link href="<%=request.getContextPath() %>/css/print_gdd.css?version=1.0" rel="stylesheet">
 </head>
 <body>
