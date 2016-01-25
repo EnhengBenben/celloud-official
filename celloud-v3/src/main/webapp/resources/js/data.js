@@ -390,8 +390,8 @@ function _init_data(){
   	$("#data-list-div").html(response);
   	$("#data-list-tbody").find("td[name='data-name-td']").each(function(){
   	  var _data = $(this).attr("title");
-  	  if(_data.length>50){
-  	    var newData = $.dataManager.splitDataByInfo(_data, "\r\n" ,50);
+  	  if(_data.length>40){
+  	    var newData = $.dataManager.splitDataByInfo(_data, "\r\n" ,40);
   	    $(this).attr("title",newData);
   	  }
   	});
