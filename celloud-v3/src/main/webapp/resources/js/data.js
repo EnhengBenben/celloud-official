@@ -199,7 +199,7 @@ function _init_data(){
         o.runAppIds.splice($.inArray(appId,runAppIds),1);
         $(Obj).removeClass("selected");
         if(runAppIds.length==0){
-          $("#run-btn").attr("disabled","true");
+          $("#run-btn").attr("disabled",true);
         }
       }else{
         var checkedIds = o.checkedIds;
