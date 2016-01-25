@@ -117,7 +117,7 @@ public final class EmailProperties {
         feedbackTitle = getProperty("feedbackTitle");
         emailName = getProperty("emailName");
         errorsMailTo = getMails("errorsMailTo");
-        errorsMailTo = getMails("feedbackMailTo");
+        feedbackMailTo = getMails("feedbackMailTo");
         return true;
     }
 
