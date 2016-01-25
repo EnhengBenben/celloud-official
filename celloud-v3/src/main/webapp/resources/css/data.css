@@ -47,6 +47,9 @@
 .data-table .data-key{
   min-width: 115px;
 }
+.data-table .another-name{
+  min-width: 80px;
+}
 .data-table .strain{
   min-width: 100px;
 }

@@ -44,7 +44,7 @@ function makeOptionScroll(title, xAxis, yAxis, seriesName, typex, startZoom, end
  *            是否显示各点数据默认显示 
  */
 function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position, showNum, isArea, showPoint,showItem) {
-	var length = xAxis.length;
+	var length =xAxis!=null? xAxis.length:0;
 	var option = null;
 	if (showNum < length) {
 		if (position < 100) {

@@ -250,7 +250,8 @@ public class AppDaoImpl implements AppDao {
 	public List<App> getUserRunNum(int role, int cmpId) {
 		List<App> list = null;
 		Connection conn = ConnectManager.getConnection();
-		String sql = "select r.user_id,count(r.report_id) as runNum,u.username FROM tb_report r,tb_user u, tb_user_company_relat uc  where uc.user_id = u.user_id and u.user_id = r.user_id and u.state =0 and r.flag = 1 "
+		String sql = "select sum(p.data_num) as runNum,p.user_id,u.username from tb_project p join tb_user_company_relat uc on p.user_id = uc.user_id "
+				+ " left join tb_user u on p.user_id= u.user_id where p.state=0"
 				+ SqlController.notUserId("u", noUserid) + SqlController.whereCompany("uc", "company_id", role, cmpId)
 				+ "  group by user_id order by runNum desc limit 10";
 		LogUtil.info(log, sql);
@@ -267,10 +268,11 @@ public class AppDaoImpl implements AppDao {
 	public List<App> getAppRunNum(int role, int cmpId) {
 		List<App> list = null;
 		Connection conn = ConnectManager.getConnection();
-		String sql = "select r.app_id,count(r.app_id)as runNum,"
-				+ " (select app_name from tb_app  where app_id = r.app_id)as app_name "
-				+ " from tb_report r,tb_user_company_relat uc where r. flag=0 and r.user_id = uc.user_id "
-				+ SqlController.notUserId("r", noUserid) + SqlController.whereCompany("uc", "company_id", role, cmpId)
+		String sql = "select sum(p.data_num)runNum,r.app_id,a.app_name from tb_project p "
+				+ " left join tb_report r on r.project_id= p.project_id  "
+				+ " left join tb_app a on a.app_id = r.app_id ,"
+				+ "  tb_user_company_relat uc where p.user_id = uc.user_id and app_name is not null   "
+				+ SqlController.notUserId("p", noUserid) + SqlController.whereCompany("uc", "company_id", role, cmpId)
 				+ "  group by r.app_id  order by runNum desc limit 10 ";
 		LogUtil.info(log, sql);
 		try {

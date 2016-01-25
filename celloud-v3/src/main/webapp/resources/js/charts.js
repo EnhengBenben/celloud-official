@@ -44,7 +44,7 @@ $.reportChar.draw = {
       },
       legendData: null,
       seriesData: null
-  },
+    },
     circularGraph: function(id,title,subTitle,data){
       $.reportChar.circularGraphSeriesData(data);
       option = {
@@ -64,7 +64,7 @@ $.reportChar.draw = {
           },
           tooltip : {
               show: true,
-              formatter: "{a} <br/>{b}"
+              formatter: "{b}"
           },
           legend: {
               orient : 'vertical',
@@ -157,9 +157,11 @@ $.reportChar.draw = {
     $.reportChar.draw._require('bar',option,id);
   }
 };
-/**环形图数据参数*/
+/**
+ * 环形图数据参数
+ * @param list : [["16s_reads","4"],[],[]]
+ */
 $.reportChar.circularGraphSeriesData=function(list){
-  //list : [["16s_reads","4"],[],[]]
   var o = $.reportChar.draw.circularGraphDataOptions;
   o.legendData = new Array();
   o.seriesData = new Array();

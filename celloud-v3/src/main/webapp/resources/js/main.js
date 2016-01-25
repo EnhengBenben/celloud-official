@@ -377,5 +377,5 @@ function showHelp(){
 	$("#mainDIV").css("display","");
 	$('.treeview').removeClass("active");
     $("#toHelpMenu").addClass('active');
-	$("#mainDIV").load("pages/help/help_main.jsp");
+	$("#mainDIV").load("pages/help/help_question.jsp");
 }
