@@ -86,7 +86,7 @@
                     <td class="none">
                         ${report.app_id},${report.app_name},${report.project_id},${report.user_id}
                     </td>
-                    <td class="no" align="center">
+                    <td class="no" align="text-center">
                     	<c:if test="${report.period==3 }">
                     		${report.context }
                     	</c:if>
@@ -102,7 +102,7 @@
         </c:if>
     </tbody>
 </table>
-<div class="pagination center">
+<div class="pagination text-center">
   <c:if test="${pageList.datas.size()>0}">
     <input id="data-current-page-hide" value="${pageList.page.currentPage }" type="hidden" >
     <ul class="pages" id="pagination-data">

@@ -1,8 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<link href="<%=request.getContextPath() %>/css/report.css?version=3,0" rel="stylesheet">
-<link href="<%=request.getContextPath() %>/plugins/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
-<link href="<%=request.getContextPath() %>/plugins/select/select2.css" rel="stylesheet"/>
-<link href="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/plugins/smartJqueryZoom/zoom-styles.css" rel="stylesheet" type="text/css"/>
 <!-- 放大图片所需的div -->
 <div id="fullbg"></div> 

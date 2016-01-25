@@ -1,41 +1,16 @@
 @charset "utf-8";
 
 /* reset */
-/* table {border-collapse:collapse;border-spacing:0;} */
-fieldset, img {border:0;}
-li {list-style:none;}
-caption, th {text-align:left;font-weight:normal;}
-h1, h2, h3, h4, h5, h6 {font-size:100%;font-weight:normal;margin:0;}
-a{ text-decoration:none; color:#666}
 /* base */
-.fl{float:left;}
-.fr{float:right;}
-input:focus{ outline:none}
-.center{ text-align:center}
 .mt10{ margin-top:10px;}
 .mb10{ padding-bottom:10px;}
 .ml30{ margin-left:30px;}
 .w500{ width:500px}
-ul{ margin:0}
-.nav-tabs li a i, .forward, .backward, .m-file .toolbar a i, .m-box h2 i, .m-tips i,.i-view, .i-back,.i-printback{ background-image:url(../images/report/_celloud.png); background-repeat: no-repeat;}
+/* ul{ margin:0} */
+.forward, .backward, .m-file .toolbar a i, .m-box h2 i, .m-tips i,.i-view, .i-back,.i-printback{ background-image:url(../images/report/_celloud.png); background-repeat: no-repeat;}
 .i-printback{ display: inline-block; width: 17px; height: 16px; vertical-align: middle; margin-right: 3px;}
-/* tab分页样式 */
-.tabbable {*zoom:1; width:98%; margin:5px auto;}
-.tabbable:before, .tabbable:after {display:table;content:""}
-.tabbable:after {clear:both}
-.nav-tabs {margin-left:0;list-style:none;*zoom:1;border-bottom:1px solid #D9E3F2;}/*展示区上边框样式*/
-.nav-tabs:before, .nav-tabs:after {display:table;content:""}
-.nav-tabs:after {clear:both}
-.nav-tabs>li {float:left;margin-bottom:-1px}
-.nav-tabs>li>a { display:inline-block;*display:inline;*zoom:1;width:135px; height:33px; line-height:33px; text-align:center;border:1px solid #D9E3F2; background:url(../images/report/navTabs_bg.png) 0 0 repeat-x;-webkit-border-radius:4px 4px 0 0;-moz-border-radius:4px 4px 0 0;border-radius:4px 4px 0 0; margin-right:2px; border-bottom:0; }/*tab标签页的样式*/
-.nav-tabs>li>a:hover {border-color:#c1d2e8;background:url(../images/report/navTabs_bg.png) 0 -40px repeat-x;}/*鼠标滑过样式*/
-.nav-tabs>.active>a, .nav-tabs>.active>a:hover {cursor:default;background:#fff;border:1px solid #D9E3F2;border-bottom-color:transparent;}/*当前标签页样式*/
-.nav-tabs li a i{ display:inline-block;*display:inline;*zoom:1; width:15px; height:16px; vertical-align:middle; margin-right:7px;}
 .i-reportList{ background-position:-80px 0;}
 .i-report{ background-position:-100px 0;}
-.tab-content>.tab-pane {padding:1px;}
-.tab-content>.active {display:block}
-.tab-content{ border:1px solid #D9E3F2; border-top:0;}/*展示区其他边框样式*/
 
 .m-fileList{ background-color:#f2f5f9; padding:10px 8px;}
 .m-fileList,
