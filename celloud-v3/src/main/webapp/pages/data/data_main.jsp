@@ -31,7 +31,7 @@
             <a id="manage-data-btn" class="btn btn-info btn-flat disabled" disabled><i class="fa fa-pencil-square-o"></i> 编辑</a>
           </h3>
           <div id="data-spin-div" class="box-tools col-xs-7"></div>
-          <div class="box-tools col-xs-3 data-select">
+          <div class="box-tools data-select">
 	        <div class="form-cel input-group">
 	          <input id="data-condition-input" class="form-control input-sm pull-right" type="text" placeholder="搜索文件名/数据标签/文件别名"/>
 	          <div class="input-group-btn">
