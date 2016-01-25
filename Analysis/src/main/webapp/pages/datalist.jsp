@@ -22,22 +22,22 @@
 
 <div class="page-content">
 	<div class="col-xs-12">
-		<h3 class="header smaller lighter green">数据量统计</h3>
-		<div class="col-xs-12" style="height: 450px;" id="userFileNum"></div>
+		<h3 class="header smaller lighter green">数据个数统计</h3>
+		<div class="col-xs-12" style="height: 350px;" id="userFileNum"></div>
 		<!-- 
 		<h3 class="header smaller lighter green">数据大小统计</h3>
         <div class="col-xs-12" style="height: 450px;" id="userFileSize"></div>
 		 -->
-		<div class="col-xs-11" style="margin-left: 60px; margin-top: 15px">
+		<div class="col-xs-11 table-div" >
 			<div class="table-header hide" id="_companyName"></div>
 			<c:if test="${list!=null && fn:length(list) > 0 }">
-				<div class="table-responsive" id="dataDiv">
+				<div class="table-responsive " id="dataDiv">
 					<table id="allUserDataList" class="table table-striped table-bordered table-hover">
 						<thead>
 							<tr>
 								<th>用户名</th>
 								<th>所在医院</th>
-								<th class="hidden-480">数据量(个)</th>
+								<th class="hidden-480">数据个数(个)</th>
 								<th class="hidden-480">数据大小</th>
 							</tr>
 						</thead>

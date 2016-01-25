@@ -15,21 +15,18 @@
 			<i class="icon-hospital"></i>
 			<a href="#">医院统计</a>
 		</li>
-		<li class="active" onclick="toHospitalList()">
-			医院数据量统计
-		</li>
+		<li class="active" onclick="toHospitalList()">医院数据量统计</li>
 	</ul>
-	<!-- .breadcrumb -->
 </div>
 <div class="page-content">
 	<div class="row">
 		<div class="table-header hide" id="_companyName"></div>
 		<div class="title">
-			<h3 class="header smaller lighter green">数据量统计</h3>
+			<h3 class="header smaller lighter green title">数据个数统计</h3>
 		</div>
 		<div class="col-xs-12" style="height: 350px;" id="fileNumView"></div>
 		<c:if test="${cmpList!=null&&fn:length(cmpList) > 0}">
-			<div class="col-xs-11 table-responsive">
+			<div class="col-xs-11 table-responsive table-div">
 				<table id="hospitalList" class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
@@ -135,7 +132,7 @@
 			yAxis[i] = res[i].fileNum;
 		}
 		var myChart = echarts.init(document.getElementById(fileNumViewID));
-		var opt = makeOptionScrollUnit(xAxis, yAxis, "数据量", "bar", 0, 20);
+		var opt = makeOptionScrollUnit(xAxis, yAxis, "数据个数", "bar", 0, 20);
 		myChart.setOption(opt);
 	});
 	
@@ -147,7 +144,9 @@
 				"bSortable" : false
 			}, {
 				"bSortable" : false
-			},null, null, { "sType": "filesize" } ],//列支持排序方式
+			}, null, null, {
+				"sType" : "filesize"
+			} ],//列支持排序方式
 			"aaSorting" : [ [ 4, "desc" ] ],//默认列排序
 			iDisplayLength : 10
 		});

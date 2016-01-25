@@ -100,7 +100,9 @@ public class DataAction extends BaseAction {
 	 */
 	public String getAllBigUserMonthData() {
 		try {
-			resultMap = dataService.getAllBigUserMonthData();
+			Integer role = (Integer) super.session.get(User.USER_ROLE);
+			if (role == 2)
+				resultMap = dataService.getAllBigUserMonthData();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

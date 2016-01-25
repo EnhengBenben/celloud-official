@@ -7,7 +7,7 @@
 	<thead>
 		<tr>
 			<th>上传月份</th>
-			<th>数据量(个)</th>
+			<th>数据个数(个)</th>
 		</tr>
 	</thead>
 	<tbody>

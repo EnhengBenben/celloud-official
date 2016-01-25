@@ -108,7 +108,7 @@ function hospital_chart(data) {
 		yAxisSize[i] = parseFloat((fileSize[i].size / (1024 * 1024 * 1024)).toFixed(2));
 	}
 	
-	var option = makeOptionScrollUnit(xAxis, yAxis, "数据量", barType, 0, 10)
+	var option = makeOptionScrollUnit(xAxis, yAxis, "数据个数", barType, 0, 10)
 	var sizeoption = makeOptionScrollUnit(xAxisSize, yAxisSize, "数据大小(GB)", barType, 0, 10)
 	var myChart = echarts.init(document.getElementById(fileNumId),theme);
 	var sizeChart = echarts.init(document.getElementById(fileSizeId),theme);
@@ -151,7 +151,7 @@ function user_chart(data) {
 		xAxis[i] = fileNum[i].user_name;
 		yAxis[i] = fileNum[i].fileNum;
 	}
-	var option = makeOptionScrollUnit(xAxis, yAxis, "数据量", barType, 0, 10)
+	var option = makeOptionScrollUnit(xAxis, yAxis, "数据个数", barType, 0, 10)
 	var myChart = echarts.init(document.getElementById(fileNumId),theme);
 	myChart.setOption(option);
 	

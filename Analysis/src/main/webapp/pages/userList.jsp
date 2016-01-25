@@ -31,7 +31,7 @@
 		</h3>
 		 -->
 		<div class="title">
-			<h3 class="header smaller lighter green">数据量统计</h3>
+			<h3 class="header smaller lighter green">数据个数统计</h3>
 		</div>
 		<div class="col-xs-12" style="height: 450px;" id="fileNum"></div>
 		<div class="title">
@@ -127,7 +127,7 @@
 			xAxis[i] = res[i].username;
 			yAxis[i] = res[i].fileNum;
 		}
-		var opt = makeOptionScrollUnit(xAxis, yAxis, '数据量', 'bar', 0, 20);
+		var opt = makeOptionScrollUnit(xAxis, yAxis, '数据个数', 'bar', 0, 20);
 		var myChart = echarts.init(document.getElementById(fileNumViewId));
 		myChart.setOption(opt);
 	});

@@ -5,13 +5,7 @@
 <style>
 <!--
 -->
-.title {
-	margin-left: 45px;
-}
-.form {
-	margin-left: 65px;
-	margin-top:15px;
-}
+
 </style>
 <div class="breadcrumbs" id="breadcrumbs">
 	<script type="text/javascript">
@@ -55,7 +49,7 @@
 			</div>
 		</div>
 		<div class="title">
-			<h3 class="header smaller lighter green">数据量统计</h3>
+			<h3 class="header smaller lighter green">数据个数统计</h3>
 		</div>
 		<div id="fileNum" style="height: 450px"></div>
 		<!-- 数据大小数统计 -->

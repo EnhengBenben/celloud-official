@@ -19,7 +19,7 @@
 					<thead>
 						<tr>
 							<th>月份</th>
-							<th class="hidden-480">数据量(个)</th>
+							<th class="hidden-480">数据个数(个)</th>
 							<th class="hidden-480">数据大小</th>
 						</tr>
 					</thead>
@@ -59,7 +59,7 @@
 		var param = {
 			"companyId" : cmpId
 		};
-		var optNumName = '数据量';
+		var optNumName = '数据个数';
 		var optSizeName = "数据大小(GB)";
 		$.get(bigUesrURL, param, function(data) {
 			var xAxis = new Array(data.length);

@@ -33,7 +33,7 @@
 						<tr>
 							<th>用户名</th>
 							<th>所在医院</th>
-							<th class="hidden-480">数据量(个)</th>
+							<th class="hidden-480">数据个数(个)</th>
 						</tr>
 					</thead>
 

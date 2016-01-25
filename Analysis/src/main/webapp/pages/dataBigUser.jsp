@@ -37,7 +37,7 @@
 						<tr>
 							<th>大客户编号</th>
 							<th>大客户名称</th>
-							<th class="hidden-480">数据量(个)</th>
+							<th class="hidden-480">数据个数(个)</th>
 							<th class="hidden-480">数据大小</th>
 						</tr>
 					</thead>

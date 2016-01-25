@@ -52,12 +52,35 @@
 				</div>
 			</div>
 		</div>
-		<h3 class="header smaller lighter green">大客户新增用户统计</h3>
+		<h3 class="title header smaller lighter green ">大客户新增用户统计</h3>
 		<c:if test="${ userRole=='2'}">
 			<div id="newCmpBigUser" style="height: 300px;"></div>
 		</c:if>
 		<div id="main" style="height: 300px"></div>
+		<div id="newCompany" style="height: 300px"></div>
 
+		<div class="row">
+			<c:if test="${resultMap.mapList!=null && fn:length(resultMap.mapList)>0 }">
+				<div class="table-responsive table-div" id="dataDiv">
+					<table id="newCompanyList" class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th class="hidden-480">医院编码</th>
+								<th class="hidden-480">医院新增数量</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${resultMap.mapList}" var="item">
+								<tr>
+									<td>${item.createDate }</td>
+									<td>${item.num }</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</c:if>
+		</div>
 		<div class="row">
 			<div class="col-xs-12">
 				<h3 class="header smaller lighter green">用户地理分布</h3>
@@ -69,28 +92,7 @@
 			</div>
 		</div>
 
-		<div class="row">
-			<c:if test="${mapList!=null && fn:length(mapList)>0 }">
-				<div class="table-responsive" id="dataDiv">
-					<table id="newCompanyList" class="table table-striped table-bordered table-hover">
-						<thead>
-							<tr>
-								<th class="hidden-480">医院编码</th>
-								<th class="hidden-480">医院新增数量</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${mapList}" var="item">
-								<tr>
-									<td>${item.createDate }</td>
-									<td>${item.num }</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
-			</c:if>
-		</div>
+
 	</div>
 </div>
 <script type="text/javascript">
@@ -125,7 +127,7 @@
 				yAxis[j] = temp[j].num;
 			}
 			if (i == 0) {
-				opt = makeOptionScrollUnit(xAxis, yAxis, listCmp[0], lineType, 100, xAxis.length,null,null,"test");
+				opt = makeOptionScrollUnit(xAxis, yAxis, listCmp[0], lineType, 100, xAxis.length, null, null, "test");
 			} else {
 				opt = makeOptionAdd(opt, yAxis, listCmp[i], lineType);
 			}
@@ -278,19 +280,24 @@
 			for (var i = 0; i < result.length; i++) {
 				xAxis[i] = result[i].createDate;
 				yAxis[i] = result[i].num;
-				if(i==0){
+				if (i == 0) {
 					yAxisAdd[0] = result[0].num;
-				}else{
-	                   yAxisAdd[i] = result[i].num+yAxisAdd[i-1] ;
-
+				} else {
+					yAxisAdd[i] = result[i].num + yAxisAdd[i - 1];
+					
 				}
 			}
 			
-			var option = makeOptionScrollUnit(xAxis, yAxis, "月新增医院数量", lineType, 100, xAxis.length, "阴影");
-			option = makeOptionAdd(option, yAxisAdd, "新增医院累积曲线图", lineType);
+			var option = makeOptionScrollUnit(xAxis, yAxis, "月新增医院数量", lineType, 100, xAxis.length);
+			
+			var newoption = makeOptionScrollUnit(xAxis, yAxisAdd, "新增医院累积曲线图", lineType, 100, xAxis.length, "阴影");
+			
+			//	option = makeOptionAdd(option, yAxisAdd, "新增医院累积曲线图", lineType);
 			
 			// 基于准备好的dom，初始化echarts图表
 			var myChart = echarts.init(document.getElementById('main'));
+			var newCompany = echarts.init(document.getElementById('newCompany'));
+			newCompany.setOption(newoption);
 			myChart.setOption(option);
 		})
 	}

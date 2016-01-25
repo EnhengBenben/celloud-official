@@ -168,7 +168,8 @@ function makePieOption(title, legenName, name, rad, centerX, centerY, value, leg
 			type : 'pie',
 			radius : rad,// '70%',
 			center : [ centerX, centerY ],// [ '40%', '40%' ],
-			data : value
+			data : value,
+	
 		} ]
 	};
 	return opt;
@@ -181,7 +182,6 @@ function makePieOptionAdd(option,name,rad, centerX, centerY, value){
 			center : [ centerX, centerY ],// [ '40%', '40%' ],
 			data : value
 		};
-//	option.legend.data[option.legend.data.length]=name;
 	return option;
 }
 /**
@@ -298,20 +298,5 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 		var ustr = seriesName.substring(len - 3, len - 1)
 		opt.yAxis[0].axisLabel.formatter = '{value}' + ustr;
 	}
-	
-	/** 柱状图颜色 
-	var colorStr;
-	var ran = parseInt(Math.random() * 10);
-	if (seriesName.indexOf("数据量") > -1) {
-		colorStr = colorList[ran];
-	} else if (seriesName.indexOf("数据大小") > -1) {
-		colorStr = colorList[ran];
-	} else if (seriesName.indexOf("运行") > -1) {
-		colorStr = colorList[ran];
-	} else if (seriesName.indexOf("登陆") > -1) {
-		colorStr = colorList[ran];
-	}
-	opt.series[0].itemStyle.normal.color = colorStr;
-	*/
 	return opt;
 }

@@ -24,7 +24,7 @@ function LoginNum() {
 			yAxis[i] = data[i].logNum;
 		}
 		var option = makeOptionScrollUnit( xAxis, yAxis, '登陆次数', 'bar', 0, 20);
-		var myChart = echarts.init(document.getElementById(viewId),theme);
+		var myChart = echarts.init(document.getElementById(viewId),themes.helianthus);
 		myChart.setOption(option);
 	});
 }
@@ -42,7 +42,7 @@ function AppRunNum() {
 		}
 		console.log(xAxis);
 		var option = makeOptionScrollUnit(xAxis, yAxis, '运行次数', 'bar', 0, 10);
-		var myChart = echarts.init(document.getElementById(viewId),theme);
+		var myChart = echarts.init(document.getElementById(viewId),themes.blue);
 		myChart.setOption(option);
 	});
 }
@@ -57,7 +57,7 @@ function UserRunNum() {
 			yAxis[i] = data[i].runNum;
 		}
 		var option = makeOptionScrollUnit(xAxis, yAxis, '运行次数', 'bar', 0, 10);
-		var myChart = echarts.init(document.getElementById(viewId),theme);
+		var myChart = echarts.init(document.getElementById(viewId),themes.green);
 		myChart.setOption(option);
 	});
 }
@@ -81,12 +81,12 @@ function LoadBrowser() {
 			};
 		}
 		var opt = makePieOption('', legendName, '客户端使用', '60%', '50%', '55%', vlist);
-		var myChart = echarts.init(document.getElementById((viewId)));
+		var myChart = echarts.init(document.getElementById(viewId),blue);
 		myChart.setOption(opt);
 	});
 }
 function chars(data) {
-	var myChart = echarts.init(document.getElementById('map'),theme);
+	var myChart = echarts.init(document.getElementById('map'),mint);
 	option = {
 		title : {
 			text : '',
@@ -95,13 +95,19 @@ function chars(data) {
 		tooltip : {
 			trigger : 'item'
 		},
+	    roamController: {
+	        show: true,
+	        x: 'right',
+	        mapTypeControl: {
+	            'china': true
+	        }
+	    },
 		dataRange : {
 			x:'right',
 			y:'bottom',
 			min : 0,
 			max : 10,
 			calculable : true,
-			color : [ 'maroon', 'purple', 'red', 'orange', 'yellow', 'lightgreen' ]
 		},
 		toolbox : {
 			show : true,
@@ -121,16 +127,16 @@ function chars(data) {
 			name : 'pm2.5',
 			type : 'map',
 			mapType : 'china',
+			roam: false,
 			mapLocation:{
 				x:60,
 				width:"600",
 				height:"500"
 			},
 			hoverable : false,
-			roam : true,
 			data : [],
 			scaleLimit:{min:0.9,max:1.1},
-			selectedMode : 'multiple',
+			selectedMode:'single',
 			itemStyle : {
 				normal : {
 					label : {

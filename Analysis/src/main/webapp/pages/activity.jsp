@@ -4,7 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div class="col-sm-12">
 	<div class="row">
-		<h4 class="header smaller lighter green title">医院数据量统计</h4>
+		<h4 class="header smaller lighter green title">医院数据个数统计</h4>
 		<div class="col-xs-12 " id="hfileNum" style="height: 350px"></div>
 		<h4 class="header smaller lighter green title">医院数据大小统计</h4>
 		<div id="hfileSize" style="height: 350px"></div>
@@ -44,7 +44,7 @@
 			</div>
 		</c:if>
 
-		<h4 class="header smaller lighter green">用户数据量统计</h4>
+		<h4 class="header smaller lighter green">用户数据个数统计</h4>
 		<div id="uFileNum" style="height: 350px"></div>
 		<h4 class="header smaller lighter green">用户数据大小统计</h4>
 		<div id="uFileSize" style="height: 350px"></div>
