@@ -132,6 +132,10 @@ function _init_data(){
       }
       dataIds = dataIds.substring(0, dataIds.length-1);
       var dataLength = checkedIds.length;
+      if(dataIds=="" && hasConfigure){
+        $.dataManager.showTipModal("请选择有效数据");
+        return;
+      }
       $.get("data/getFormatByDataIds.action",{"dataIds":dataIds},function(result){
         if(result == -1){
           $.dataManager.showTipModal("所选数据格式不统一");
@@ -142,7 +146,7 @@ function _init_data(){
             if(appList.length==0 ){
               appLi += "<li class='types-options'>没有可运行的APP</li>";
             }else{
-              var _checkConfigure = false;
+              var _checkConfigure = true;
               for(var i=0;i<appList.length;i++){
                 var appId = appList[i].appId;
                 var appName = appList[i].appName;
@@ -159,10 +163,10 @@ function _init_data(){
                   }
                 }
                 if(appId == 113){
-                  _checkConfigure = true;
+                  _checkConfigure = false;
                 }
               }
-              if(!_checkConfigure){
+              if(hasConfigure && _checkConfigure){
                 $.dataManager.showTipModal("所选数据格式不统一");
                 return;
               }
