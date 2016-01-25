@@ -155,6 +155,7 @@
 	<script src="//cdn.bootcss.com/highcharts/4.2.1/highcharts.js"></script>
 	<script src="//cdn.bootcss.com/highcharts/4.2.1/modules/exporting.js"></script>
 	<script src="<%=request.getContextPath()%>/plugins/select/select2.min.js"></script>
+	<script src="<%=request.getContextPath()%>/plugins/select/select2_locale_zh-CN.js"></script>
 	<!--   <script src="//cdn.bootcss.com/select2/4.0.1/js/i18n/zh-CN.js"></script> -->
 	<script src="<%=request.getContextPath()%>/js/utils.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/main_init.js" type="text/javascript"></script>
