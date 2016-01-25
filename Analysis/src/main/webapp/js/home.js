@@ -32,6 +32,7 @@ function LoginNum() {
 function AppRunNum() {
 	var viewId = "AppRunNum";
 	$.get(AppRunNumURL, {}, function(data) {
+		console.log(data);
 		var xAxis = new Array(data.length);
 		var yAxis = new Array(data.length);
 		var t;
@@ -39,6 +40,7 @@ function AppRunNum() {
 			xAxis[i] = data[i].app_name;
 			yAxis[i] = data[i].runNum;
 		}
+		console.log(xAxis);
 		var option = makeOptionScrollUnit(xAxis, yAxis, '运行次数', 'bar', 0, 10);
 		var myChart = echarts.init(document.getElementById(viewId),theme);
 		myChart.setOption(option);

@@ -1,5 +1,6 @@
 package com.celloud.dao.impl;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,16 +32,16 @@ public class ReportDaoImpl implements ReportDao {
 
 	@Override
 	public Object getBigUserReportNum(Connection conn, Integer companyId, int role) {
-		String sql = "select count(r.report_id)as num  FROM tb_report r,tb_user_company_relat uc "
-				+ "where r.user_id = uc.user_id  and r.user_id not in ( " + noUserid + ")  "
+		String sql = "select sum(p.data_num) from tb_project p join tb_user_company_relat uc on p.user_id = uc.user_id "
+				+ " where p.user_id not in ( " + noUserid + ")  "
 				+ SqlController.whereCompany("uc", "company_id", role, companyId);
 		LogUtil.info(log, sql);
-		Long count = 0l;
+		Long count = 0L;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			ResultSetHandler<Long> rsh = new ScalarHandler<Long>();
-			count = rsh.handle(rs);
+			ResultSetHandler<BigDecimal> rsh = new ScalarHandler<BigDecimal>();
+			count = rsh.handle(rs).longValue();
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
 		}
