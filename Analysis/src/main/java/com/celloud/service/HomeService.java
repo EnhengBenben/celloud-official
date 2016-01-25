@@ -1,5 +1,6 @@
 package com.celloud.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.celloud.service.impl.HomeServiceImpl;
@@ -26,4 +27,6 @@ public interface HomeService {
 	 * @return
 	 */
 	public Map<String, Object> getPreDataViewBigUesrNewCmp();
+
+	public List<Map<String, Object>> getCompanyBaseInfo();
 }

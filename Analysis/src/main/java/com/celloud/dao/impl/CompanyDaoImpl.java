@@ -325,4 +325,22 @@ public class CompanyDaoImpl implements CompanyDao {
 		}
 		return list;
 	}
+
+	@Override
+	public List<Map<String, Object>> getCompanyBaseInfo(Connection conn) {
+		List<Map<String, Object>> list = null;
+		String sql = "select distinct(c.company_id),c.company_name,c.create_date,c.address,"
+				+ " count(distinct(u.user_id))as userNum,uc.company_id,big.company_name as belowCompany "
+				+ " from tb_company c left join tb_user u on c.company_id = u.company_id "
+				+ " left join tb_user_company_relat uc on uc.user_id = u.user_id "
+				+ " left join tb_company big on uc.company_id = big.company_id " + " where uc.company_id is not null "
+				+ " group by uc.company_id, c.company_id ";
+		LogUtil.info(log, sql);
+		try {
+			list = qr.query(conn, sql, new MapListHandler());
+		} catch (SQLException e) {
+			LogUtil.query(log, sql, e);
+		}
+		return list;
+	}
 }
