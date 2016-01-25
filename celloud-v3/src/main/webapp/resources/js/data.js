@@ -132,6 +132,10 @@ function _init_data(){
       }
       dataIds = dataIds.substring(0, dataIds.length-1);
       var dataLength = checkedIds.length;
+      if(dataIds=="" && hasConfigure){
+        $.dataManager.showTipModal("请选择有效数据");
+        return;
+      }
       $.get("data/getFormatByDataIds.action",{"dataIds":dataIds},function(result){
         if(result == -1){
           $.dataManager.showTipModal("所选数据格式不统一");
