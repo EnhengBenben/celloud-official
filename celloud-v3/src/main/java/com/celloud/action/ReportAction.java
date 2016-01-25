@@ -550,7 +550,7 @@ public class ReportAction {
         }
 		mv.addObject("userId", userId).addObject("appId", appId);
 		mv.addObject("context", context).addObject("allPic", allPic);
-		mv.addObject("result", result).addObject("table", table);
+		mv.addObject("result", result).addObject("table", table).addObject("seq", seq);
 		mv.addObject("company", company).addObject("dept", dept).addObject("report", report);
 		return mv;
 	}
