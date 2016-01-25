@@ -1178,7 +1178,7 @@ a:focus {
   font-weight: normal;
 }
 .form-cel input[type="text"],.form-cel input[type="password"]{
-	padding: 0px 9px;
+	padding: 9px;
 	border: 2px solid #c0e06a;
 	width: 270px;
 	-webkit-border-radius: 4px;
