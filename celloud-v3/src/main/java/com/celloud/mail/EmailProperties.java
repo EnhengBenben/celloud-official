@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -118,7 +117,7 @@ public final class EmailProperties {
         feedbackTitle = getProperty("feedbackTitle");
         emailName = getProperty("emailName");
         errorsMailTo = getMails("errorsMailTo");
-        errorsMailTo = getMails("feedbackMailTo");
+        feedbackMailTo = getMails("feedbackMailTo");
         return true;
     }
 
@@ -129,12 +128,13 @@ public final class EmailProperties {
      * @return
      */
     public static String getProperty(String name) {
-        String value = null;
+        String value = properties.getProperty(name);
         try {
             // 属性配置文件自身的编码
-            value = new String(properties.getProperty(name).getBytes("ISO-8859-1"), ENCODING);
-        } catch (UnsupportedEncodingException e) {
-            value = properties.getProperty(name);
+            if (value != null) {
+                value = new String(value.getBytes("ISO-8859-1"), ENCODING);
+            }
+        } catch (Exception e) {
         }
         return value;
     }

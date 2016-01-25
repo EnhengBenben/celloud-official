@@ -17,8 +17,10 @@
 		异常信息：<%=ex.getMessage()%></h2>
 	<hr>
 	<h2>异常描述</h2>
+	<pre>
 	<%
 	    ex.printStackTrace(new java.io.PrintWriter(out));
 	%>
+	</pre>
 </body>
 </html>

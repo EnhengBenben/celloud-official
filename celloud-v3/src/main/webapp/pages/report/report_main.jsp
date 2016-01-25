@@ -1,3 +1,4 @@
+<%@page import="com.celloud.model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link href="<%=request.getContextPath() %>/css/report.css?version=3.6" rel="stylesheet">
 <section class="content-header">
@@ -95,7 +96,7 @@
 <script src="<%=request.getContextPath() %>/js/report_codon.js"></script>
 <script type="text/javascript">
 var session_userId = <%=session.getAttribute("userId")%>;
-var sessionUserName = "<%=session.getAttribute("userName")%>";
+var sessionUserName = "<%=((User)session.getAttribute("loginUserInSession")).getUsername() %>";
 $.ajaxSetup ({
 	cache: false //关闭AJAX相应的缓存
 });

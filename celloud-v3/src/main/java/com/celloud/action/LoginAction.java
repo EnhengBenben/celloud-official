@@ -101,6 +101,7 @@ public class LoginAction {
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public ModelAndView login(Model model, User user, String kaptchaCode, PublicKey publicKey, boolean checked,
             HttpServletRequest request, HttpServletResponse response) {
+        logger.info("用户正在登陆：" + user.getUsername());
         ModelAndView mv = new ModelAndView("login").addObject("checked",
                 CookieUtils.getCookieValue(request, Constants.COOKIE_MODULUS) != null && checked);
         HttpSession session = request.getSession();
@@ -113,6 +114,7 @@ public class LoginAction {
         }
         // 验证码错误，直接返回到登录页面
         if (!checked && (kaptchaExpected == null || !kaptchaExpected.equalsIgnoreCase(kaptchaCode))) {
+            logger.info("用户登陆验证码错误：" + kaptchaCode + "---" + kaptchaExpected);
             user.setPassword("");
             return mv.addObject("info", "验证码错误，请重新登录！").addObject("user", user).addObject("publicKey",
                     generatePublicKey(session));

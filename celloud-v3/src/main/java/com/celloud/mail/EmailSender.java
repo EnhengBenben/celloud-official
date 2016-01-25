@@ -2,13 +2,16 @@ package com.celloud.mail;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.Properties;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
+import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -72,6 +75,17 @@ public class EmailSender {
         if (!EmailProperties.load()) {
             return null;
         }
+        Properties props = new Properties();// 获取系统环境
+        Authenticator auth = new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(EmailProperties.username, EmailProperties.password);
+            }
+        };
+        // 进行邮件服务用户认证
+        props.put("mail.smtp.host", EmailProperties.smtp);
+        props.put("mail.smtp.auth", "true");
+        // 设置session,和邮件服务器进行通讯
+        session = Session.getDefaultInstance(props, auth);
         EmailSender sender = new EmailSender();
         sender.message = new MimeMessage(session);
         try {
@@ -90,8 +104,6 @@ public class EmailSender {
         }
         return sender;
     }
-
-    
 
     /**
      * 发送邮件，使用默认主题，可发送多人
