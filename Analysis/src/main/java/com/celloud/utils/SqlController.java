@@ -22,21 +22,6 @@ public class SqlController {
 	}
 
 	/**
-	 * and tbName.colName not in (userName)
-	 * 
-	 * @param tbName
-	 * @param colName
-	 * @param role
-	 * @param usernames
-	 * @return
-	 */
-	public static String notUserName(String tbName, String colName, String usernames) {
-		String sql = "";
-		sql = " and " + tbName + "." + colName + " not in (" + usernames + ") ";
-		return sql;
-	}
-
-	/**
 	 * and tbName.colName = companyId
 	 * 
 	 * @param tbName

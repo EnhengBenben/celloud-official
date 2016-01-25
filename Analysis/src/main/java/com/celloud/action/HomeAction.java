@@ -12,8 +12,6 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
-import com.celloud.dao.CompanyDao;
-import com.celloud.dao.UserDao;
 import com.celloud.sdo.App;
 import com.celloud.sdo.Company;
 import com.celloud.sdo.DataFile;
@@ -58,10 +56,6 @@ public class HomeAction extends BaseAction {
 	private DataService dataService;
 	@Inject
 	private CompanyService companyService;
-	@Inject
-	private CompanyDao companyDao;
-	@Inject
-	private UserDao userDao;
 	@Inject
 	private ReportService reportService;
 	@Inject
@@ -191,7 +185,12 @@ public class HomeAction extends BaseAction {
 	public String appRunNum() {
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		Integer companyId = (Integer) getCid();
-		totalSoftList = appService.getAppRunNum(role, companyId);
+		try {
+			totalSoftList = appService.getAppRunNum(role, companyId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return "softList";
 	}
 
@@ -203,7 +202,12 @@ public class HomeAction extends BaseAction {
 	public String userRunNum() {
 		Integer role = (Integer) super.session.get(User.USER_ROLE);
 		Integer companyId = (Integer) getCid();
-		appList = appService.getUserRunNum(role, companyId);
+		try {
+			appList = appService.getUserRunNum(role, companyId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return "AppList";
 	}
 
