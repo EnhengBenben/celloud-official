@@ -218,7 +218,8 @@ public class HomeAction extends BaseAction {
 	}
 
 	public String toCompanyBaseInfo() {
-		mapList = homeService.getCompanyBaseInfo();
+		cmpList = homeService.getCompanyBaseInfo();
+		log.info(cmpList);
 		return "toCompanyBaseInfo";
 	}
 

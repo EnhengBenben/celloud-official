@@ -15,31 +15,31 @@
 			<i class="icon-hospital"></i>
 			<a href="#">医院统计</a>
 		</li>
-		<li class="active" onclick="toCompanyReportList()">医院报告统计</li>
+		<li class="active" onclick="toCompanyReportList()">医院基本信息</li>
 	</ul>
 </div>
 <div class="page-content">
 	<div class="row">
-		<c:if test="${mapList!=null && fn:length(mapList)>0 }">
+		<c:if test="${cmpList!=null && fn:length(cmpList)>0 }">
 			<div class="table-responsive" id="dataDiv">
 				<table id="allUserDataList" class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
 							<th class="min-w-50">医院编码</th>
 							<th class="min-w-200 ">医院名称</th>
-							<th class="min-w-200 ">所属大客户</th>
 							<th class="min-w-100 ">入驻时间</th>
+							<th class="min-w-200 ">所属大客户</th>
 							<th class="min-w-200 ">医院地址</th>
 							<th class="min-w-50 ">账号数量</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${mapList}" var="item">
+						<c:forEach items="${cmpList}" var="item">
 							<tr>
 								<td>${item.company_id }</td>
 								<td>${item.company_name }</td>
-								<td>${item.belowCompany }</td>
 								<td>${item.create_date }</td>
+								<td>${item.belowCompany }</td>
 								<td>${item.address }</td>
 								<td>${item.userNum }</td>
 							</tr>

@@ -3,6 +3,7 @@ package com.celloud.service;
 import java.util.List;
 import java.util.Map;
 
+import com.celloud.sdo.Company;
 import com.celloud.service.impl.HomeServiceImpl;
 import com.google.inject.ImplementedBy;
 
@@ -28,5 +29,5 @@ public interface HomeService {
 	 */
 	public Map<String, Object> getPreDataViewBigUesrNewCmp();
 
-	public List<Map<String, Object>> getCompanyBaseInfo();
+	public List<Company> getCompanyBaseInfo();
 }

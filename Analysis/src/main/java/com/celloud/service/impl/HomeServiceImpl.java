@@ -141,9 +141,9 @@ public class HomeServiceImpl implements HomeService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getCompanyBaseInfo() {
+	public List<Company> getCompanyBaseInfo() {
 		Connection conn = ConnectManager.getConnection();
-		List<Map<String, Object>> list = companyDao.getCompanyBaseInfo(conn);
+		List<Company> list = companyDao.getCompanyBaseInfo(conn);
 		ConnectManager.close(conn);
 		return list;
 	}

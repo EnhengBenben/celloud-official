@@ -7,6 +7,7 @@ public class Company implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer company_id;
 	private String company_name;
+	private String belowCompany;
 	private String address;
 	private String tel;
 	/** 用户数量 */
@@ -34,6 +35,14 @@ public class Company implements Serializable {
 
 	public Integer getCompany_id() {
 		return company_id;
+	}
+
+	public String getBelowCompany() {
+		return belowCompany;
+	}
+
+	public void setBelowCompany(String belowCompany) {
+		this.belowCompany = belowCompany;
 	}
 
 	public String getUserNames() {
