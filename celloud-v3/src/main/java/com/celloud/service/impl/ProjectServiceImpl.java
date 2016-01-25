@@ -2,6 +2,7 @@ package com.celloud.service.impl;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -89,5 +90,10 @@ public class ProjectServiceImpl implements ProjectService {
     public Map<String, Object> findProjectInfoById(Integer projectId) {
         return projectMapper.findProjectInfoById(projectId);
     }
+
+	@Override
+	public List<Map<String, Object>> getShareTo(Integer userId, Integer projectId) {
+		return projectMapper.getShareTo(userId, projectId);
+	}
 
 }
