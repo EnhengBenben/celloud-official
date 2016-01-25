@@ -29,13 +29,20 @@ public class EmailUtils {
      * 
      * @param errorMessage
      */
-    public static void sendError(String errorMessage) {
-        EmailSender sender = EmailSender.getInstance();
+    public static void sendError(final String errorMessage) {
+        final EmailSender sender = EmailSender.getInstance();
         if (EmailProperties.errorsMailTo == null) {
             logger.warn("系统出现异常，正在发送异常信息邮件，但是没有找到邮件接收者！");
             return;
         }
-        sender.addTo(EmailProperties.errorsMailTo).setTitle(EmailProperties.errorTitle).setContent(errorMessage).send();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                sender.addTo(EmailProperties.errorsMailTo).setTitle(EmailProperties.errorTitle).setContent(errorMessage)
+                        .send();
+            }
+        }).start();
+
     }
 
     /**
@@ -72,13 +79,20 @@ public class EmailUtils {
      * 
      * @param content
      */
-    public static void sendFeedback(String content) {
-        EmailSender utils = EmailSender.getInstance();
+    public static void sendFeedback(final String content) {
+        final EmailSender sender = EmailSender.getInstance();
         if (EmailProperties.feedbackMailTo == null) {
             logger.warn("正在发送用户问题反馈邮件，但是没有找到邮件接收者！");
             return;
         }
-        utils.addTo(EmailProperties.feedbackMailTo).setTitle(EmailProperties.feedbackTitle).setContent(content).send();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                sender.addTo(EmailProperties.feedbackMailTo).setTitle(EmailProperties.feedbackTitle).setContent(content)
+                        .send();
+            }
+        }).start();
+
     }
 
     /**
