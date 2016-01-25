@@ -56,10 +56,10 @@ public class RunOverUtil {
                     }
                 }
             } else {
-                resultArray.append("运行结果异常").append("\t&nbsp;\tnbsp;");
+                resultArray.append("运行结果异常").append("\t&nbsp;\t&nbsp;");
             }
         } else {
-            resultArray.append("运行结果异常").append("\tnbsp;\tnbsp;");
+            resultArray.append("运行结果异常").append("\t&nbsp;\t&nbsp;");
         }
         FileTools.appendWrite(projectFile, resultArray.toString() + "\n");
         return true;
@@ -101,7 +101,7 @@ public class RunOverUtil {
                         .append(FileTools.listIsNull(list, 2));
             }
         } else {
-            resultArray.append("运行结果异常").append("\tnbsp;\tnbsp;");
+            resultArray.append("运行结果异常").append("\t&nbsp;\t&nbsp;");
         }
         FileTools.appendWrite(projectFile, resultArray.toString() + "\n");
         return true;
@@ -142,7 +142,7 @@ public class RunOverUtil {
                         .append(FileTools.listIsNull(list, 1)).append("\t")
                         .append(FileTools.listIsNull(list, 2)).append("\t");
             } else {
-                resultArray.append("运行结果异常").append("\tnbsp;\tnbsp;\t");
+                resultArray.append("运行结果异常").append("\t&nbsp;\t&nbsp;\t");
             }
             File avgFile = new File(reportPath + "result/average.info");
             if (avgFile.exists()) {
@@ -152,7 +152,7 @@ public class RunOverUtil {
                 resultArray.append("nbsp;");
             }
         } else {
-            resultArray.append("运行结果异常").append("\tnbsp;\tnbsp;\tnbsp;");
+            resultArray.append("运行结果异常").append("\t&nbsp;\t&nbsp;\t&nbsp;");
         }
         
         FileTools.appendWrite(projectFile, resultArray.toString() + "\n");
