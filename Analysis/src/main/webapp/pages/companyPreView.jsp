@@ -91,8 +91,6 @@
 				</div>
 			</div>
 		</div>
-
-
 	</div>
 </div>
 <script type="text/javascript">
@@ -159,6 +157,13 @@
 				calculable : true,
 				color : [ 'maroon', 'purple', 'red', 'orange', 'yellow', 'lightgreen' ]
 			},
+			 roamController : {
+		            show : true,
+		            x : 'right',
+		            mapTypeControl : {
+		                'china' : true
+		            }
+		        },
 			toolbox : {
 				show : true,
 				orient : 'vertical',
@@ -183,7 +188,7 @@
 					height : "500"
 				},
 				hoverable : false,
-				roam : true,
+				roam : false,
 				data : [],
 				scaleLimit : {
 					min : 0.9,
