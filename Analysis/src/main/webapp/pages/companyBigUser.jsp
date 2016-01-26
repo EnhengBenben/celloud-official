@@ -61,7 +61,6 @@
 										</c:choose>
 									</td>
 									<td>${item.runNum}</td>
-
 								</tr>
 							</c:forEach>
 						</c:if>
@@ -103,7 +102,7 @@
 					'name' : data[i].company_name
 				}
 			}
-			var option = makePieOption('', xAxis, '医院数量统计', '60%', '55%', '45%', yAxis, null)
+			var option = makePieOption('', xAxis, '医院数量统计', '70%', '45%', '45%', yAxis, {x:'left',y:'center',orient : 'vertical'})
 			var myChart = echarts.init(document.getElementById('companyNum'), theme);
 			myChart.setOption(option);
 		});
