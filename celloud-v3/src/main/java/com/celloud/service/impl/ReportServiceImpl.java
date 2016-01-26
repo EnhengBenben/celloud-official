@@ -570,9 +570,10 @@ public class ReportServiceImpl implements ReportService {
                 line.append(d.getFileName()).append("(").append(d.getDataKey())
                         .append(")").append("\t");
             }
-            line.append(cmp.getAllFragment()).append("\t");
-            line.append(cmp.getUsableFragment()).append("\t");
-            line.append(cmp.getAvgCoverage()).append("\t");
+            line.append(cmp.getAllFragment().replaceAll("\n", "")).append("\t");
+            line.append(cmp.getUsableFragment().replaceAll("\n", ""))
+                    .append("\t");
+            line.append(cmp.getAvgCoverage().replaceAll("\n", "")).append("\t");
             if (cmp.getCmpGeneResult() != null) {
                 for (GeneDetectionResult gene : cmp.getCmpGeneResult()) {
                     line.append(gene.getGeneName()).append(":")
