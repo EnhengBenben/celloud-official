@@ -14,7 +14,7 @@
 				<br/>
 				App 名称：
 				<span class="file-name">
-					${pgs.appName }
+					${hbv.appName }
 				</span>
 				<br/>
 				文件名称：

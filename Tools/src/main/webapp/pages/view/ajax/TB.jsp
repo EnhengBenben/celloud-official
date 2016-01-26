@@ -1,11 +1,22 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="row">
 	<input type="hidden" value="<s:property value="resultMap.projectId"/>" id="_projectId">
 	<!--文件名称-->
 	<div class="m-file">
 		<div class="row">
 			<div class="col-lg-9 force-break">
+				项目名称：
+				<span class="file-name">
+					${project.projectName }
+				</span>
+				<br/>
+				App 名称：
+				<span class="file-name">
+					${hbv.appName }
+				</span>
+				<br/>
 				文件名称：
 				<span class="file-name">
 					<s:property value="%{resultMap.pagePath.replace('/SVG','').substring(resultMap.pagePath.replace('/SVG','').lastIndexOf('/')+1,resultMap.pagePath.replace('/SVG','').length())}"/>(<s:property value="resultMap.fileName"/>)
