@@ -114,25 +114,41 @@
 <script type="text/javascript">
 	var getUsersMonthDataURL = "data!getUsersMonthData";
 	var getBigUserMonthURL = "data!getAllBigUserMonthData";
-	$.get(getBigUserMonthURL, {}, function(data) {
-		var listCmp = data["companyNames"];
-		var xAxis = data["xAxis"];
-		var opt
-		for (var i = 0; i < listCmp.length; i++) {
-			var temp = data[listCmp[i]];
-			var yAxis = new Array(temp.length);
-			for (var j = 0; j < temp.length; j++) {
-				yAxis[j] = temp[j].fileNum;
-			}
-			if (i == 0) {
-				opt = makeOptionScrollUnit(xAxis, yAxis, listCmp[0], lineType, 100, xAxis.length);
-			} else {
-				opt = makeOptionAdd(opt, yAxis, listCmp[i], lineType);
-			}
-		}
-		var bigUserView = echarts.init(document.getElementById('bigUserFileNumView'));
-		bigUserView.setOption(opt);
-	});
+	   jQuery(function($) {
+		   var role = $("#_user_role").html();
+		    if (role == 2) {
+		        loadAdminView();
+		    }
+	        var oTable1 = $('#MonthDataList').dataTable({
+	            "aoColumns" : [ null, null, {
+	                "sType" : "filesize"
+	            } ],
+	            iDisplayLength : 10,
+	            "aaSorting" : [ [ 0, "desc" ] ],
+	        });
+	    });
+	function loadAdminView(){
+		$.get(getBigUserMonthURL, {}, function(data) {
+	        var listCmp = data["companyNames"];
+	        var xAxis = data["xAxis"];
+	        var opt
+	        for (var i = 0; i < listCmp.length; i++) {
+	            var temp = data[listCmp[i]];
+	            var yAxis = new Array(temp.length);
+	            for (var j = 0; j < temp.length; j++) {
+	                yAxis[j] = temp[j].fileNum;
+	            }
+	            if (i == 0) {
+	                opt = makeOptionScrollUnit(xAxis, yAxis, listCmp[0], lineType, 100, xAxis.length);
+	            } else {
+	                opt = makeOptionAdd(opt, yAxis, listCmp[i], lineType);
+	            }
+	        }
+	        var bigUserView = echarts.init(document.getElementById('bigUserFileNumView'));
+	        bigUserView.setOption(opt);
+	    });
+	}
+	
 	
 	$.get(getUsersMonthDataURL, {}, function(data) {
 		var xAxis = new Array(data.length);
@@ -166,15 +182,6 @@
 		fileTotalNum.connect([fileNumChart ]);
 	});
 	
-	jQuery(function($) {
-		var oTable1 = $('#MonthDataList').dataTable({
-			"aoColumns" : [ null, null, {
-				"sType" : "filesize"
-			} ],
-			iDisplayLength : 10,
-			"aaSorting" : [ [ 0, "desc" ] ],
-		});
-	});
 </script>
 <script type="text/javascript" src="./js/joinable.js"></script>
 <script type="text/javascript" src="./js/xenon-custom.js"></script>
