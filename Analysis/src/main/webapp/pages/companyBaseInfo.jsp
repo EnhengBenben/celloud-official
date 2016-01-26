@@ -22,7 +22,7 @@
 	<div class="row">
 		<c:if test="${cmpList!=null && fn:length(cmpList)>0 }">
 			<div class="table-responsive" id="dataDiv">
-				<table id="allUserDataList" class="table table-striped table-bordered table-hover">
+				<table id="allUserDataList " class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
 							<th class="min-w-50">医院编码</th>
