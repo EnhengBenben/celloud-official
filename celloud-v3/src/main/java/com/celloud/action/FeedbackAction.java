@@ -12,7 +12,9 @@ import org.apache.commons.io.FileUtils;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 /**
  * 投诉与建议
@@ -191,7 +193,9 @@ public class FeedbackAction {
     public ResponseEntity<byte[]> attach(String file) throws IOException {
         String path = FeedbackConstants.getAttachment(file);
         File targetFile = new File(path);
-        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_PNG);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), headers, HttpStatus.OK);
     }
 
     /**
@@ -205,6 +209,8 @@ public class FeedbackAction {
     public ResponseEntity<byte[]> attachTemp(String file) throws IOException {
         String path = FeedbackConstants.getAttachmentTempPath() + File.separator + file;
         File targetFile = new File(path);
-        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_PNG);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), headers, HttpStatus.OK);
     }
 }

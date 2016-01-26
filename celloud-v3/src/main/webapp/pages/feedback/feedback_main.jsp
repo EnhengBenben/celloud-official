@@ -47,7 +47,8 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<img id="attachmentUploading" class="img-thumbnail hide" style="height: 60px;margin-right: 10px;" src="images/icon/loading.jpg">
+							<img id="attachmentUploading" class="img-thumbnail hide" style="height: 60px; margin-right: 10px;"
+								src="images/icon/loading.jpg">
 							<a class="btn btn-default btn-lg" id="uploadAttachmentBtn">
 								<i class="fa fa-plus"></i>
 							</a>
@@ -55,7 +56,7 @@
 						</div>
 					</div>
 					<div class="form-group has-error" id="warning-group" style="color: #a94442">
-					 <label class="col-sm-2 control-label">WARNING：</label>
+						<label class="col-sm-2 control-label">WARNING：</label>
 						<div class="col-sm-9">
 							<p class="form-control-static">Your browser doesn't have Flash, Silverlight or HTML5 support.</p>
 						</div>
@@ -65,6 +66,26 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
 				<button type="button" class="btn btn-primary" onclick="feedbacks.create()">提交</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal" id="showAttachment">
+	<div class="modal-dialog">
+		<div class="modal-content box box-success">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">问题反馈附件</h4>
+			</div>
+			<div class="modal-body" style="border-bottom: 1px solid #ccc">
+				<a href="" target="_blank">
+					<img class="img-thumbnail" alt="Feedback Attachment" />
+				</a>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 			</div>
 		</div>
 	</div>
