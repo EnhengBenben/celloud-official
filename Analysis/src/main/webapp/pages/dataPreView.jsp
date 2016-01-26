@@ -139,7 +139,7 @@
 	                yAxis[j] = temp[j].fileNum;
 	            }
 	            if (i == 0) {
-	                opt = makeOptionScrollUnit(xAxis, yAxis, listCmp[0], lineType, 100, xAxis.length);
+	                opt = makeOptionScrollUnit(xAxis, yAxis, listCmp[0], lineType, 100, xAxis.length,null,null,"hideItem");
 	            } else {
 	                opt = makeOptionAdd(opt, yAxis, listCmp[i], lineType);
 	            }
