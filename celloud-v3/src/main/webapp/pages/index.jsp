@@ -14,6 +14,7 @@
 <link rel="bookmark" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link href="//cdn.bootcss.com/Buttons/2.0.0/css/buttons.min.css" rel="stylesheet">
 <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/plugins/select/select2.css" rel="stylesheet" />
 <link href="<%=request.getContextPath()%>/plugins/intro/introjs.css" rel="stylesheet" type="text/css" />
