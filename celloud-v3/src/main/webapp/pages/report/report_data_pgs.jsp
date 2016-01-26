@@ -258,15 +258,6 @@
   </div>
  </div>
 </div>
-<style>
-.lineheight{
-	line-height: 30px;
-}
-.table > tbody > tr > td,.table>thead:first-child>tr:first-child>th{
-	border:1px solid #d8e2f0;
-	border-top:1px solid #d8e2f0;
-}
-</style>
 <script>
 $(function() {
 	$(window).manhuatoTop({

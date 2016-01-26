@@ -212,3 +212,6 @@ only screen and (min-device-pixel-ratio: 2) {
 .datareport-title dd{
     margin-left:100px;
 }
+.lineheight{
+    line-height: 30px;
+}
