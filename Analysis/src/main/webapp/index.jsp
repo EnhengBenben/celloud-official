@@ -39,6 +39,7 @@
 			} catch (e) {
 			}
 		</script>
+		<span class = 'hide' id ='_user_role'>${userRole }</span>
 		<div class="navbar-container" id="navbar-container">
 			<div class="navbar-header pull-left">
 				<a href="#" class="navbar-brand">

@@ -106,6 +106,10 @@
 			}
 			data += "]";
 			showView(eval(data));
+			var role = $("#_user_role").html();
+			if (role == 2) {
+				loadAdminView();
+			}
 		});
 		
 		var oTable1 = $('#newCompanyList').dataTable({
@@ -116,26 +120,28 @@
 	});
 	
 	var getBigUserMonthNewCmpURL = "home!getPreDataViewBigUesrNewCmp";
-	$.get(getBigUserMonthNewCmpURL, {}, function(data) {
-		var listCmp = data["companyNames"];
-		var xAxis = data["xAxis"];
-		var opt
-		for (var i = 0; i < listCmp.length; i++) {
-			var temp = data[listCmp[i]];
-			var yAxis = new Array(temp.length);
-			for (var j = 0; j < temp.length; j++) {
-				yAxis[j] = temp[j].num;
+	function loadAdminView() {
+		$.get(getBigUserMonthNewCmpURL, {}, function(data) {
+			var listCmp = data["companyNames"];
+			var xAxis = data["xAxis"];
+			var opt
+			for (var i = 0; i < listCmp.length; i++) {
+				var temp = data[listCmp[i]];
+				var yAxis = new Array(temp.length);
+				for (var j = 0; j < temp.length; j++) {
+					yAxis[j] = temp[j].num;
+				}
+				if (i == 0) {
+					opt = makeOptionScrollUnit(xAxis, yAxis, listCmp[0], lineType, 100, xAxis.length, null, null, "test");
+				} else {
+					opt = makeOptionAdd(opt, yAxis, listCmp[i], lineType);
+				}
 			}
-			if (i == 0) {
-				opt = makeOptionScrollUnit(xAxis, yAxis, listCmp[0], lineType, 100, xAxis.length, null, null, "test");
-			} else {
-				opt = makeOptionAdd(opt, yAxis, listCmp[i], lineType);
-			}
-		}
-		var bigUserView = echarts.init(document.getElementById('newCmpBigUser'));
-		bigUserView.setOption(opt);
-	});
-	
+			var bigUserView = echarts.init(document.getElementById('newCmpBigUser'));
+			bigUserView.setOption(opt);
+		});
+	}
+
 	function showView(data) {
 		option = {
 			title : {
