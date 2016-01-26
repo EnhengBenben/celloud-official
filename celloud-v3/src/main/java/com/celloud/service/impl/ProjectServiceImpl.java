@@ -96,4 +96,9 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectMapper.getShareTo(userId, projectId);
 	}
 
+	@Override
+	public Project selectByPrimaryKey(Integer projectId) {
+		return projectMapper.selectByPrimaryKey(projectId);
+	}
+
 }
