@@ -1,17 +1,17 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<div class="row">
+<div>
 	<input type="hidden" value="<s:property value="resultMap.projectId"/>" id="_projectId">
 	<div class="m-file">
 		项目名称：
 		<span class="file-name">
-			${projectName }
+			${resultMap['projectName'] }
 		</span>
 		<br/>
 		App 名称：
 		<span class="file-name">
-			${appName }
+			${resultMap['appName'] }
 		</span>
 		<br/>
 		文件名称：

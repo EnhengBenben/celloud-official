@@ -8,12 +8,12 @@
 			<div class="col-lg-9 force-break">
 				项目名称：
 				<span class="file-name">
-					${project.projectName }
+					${resultMap['projectName'] }
 				</span>
 				<br/>
 				App 名称：
 				<span class="file-name">
-					${hbv.appName }
+					${resultMap['appName'] }
 				</span>
 				<br/>
 				文件名称：
