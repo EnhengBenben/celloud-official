@@ -92,8 +92,10 @@ var feedbacks = (function(feedbacks) {
 	            	var $img = $("<img />");
 	            	$img.attr("src","feedback/attach/temp?file="+response.response);
 	            	$img.addClass("img-thumbnail");
-	            	$img.css("height","60px");
-	            	$img.css("margin-right","10px");
+	            	$img.addClass("feedback-attachment");
+	            	$img.click(function(){
+	            		self.showAttachment(response.response,true);
+	            	});
 	            	var $input = $('<input type="hidden" name="attachments"/>');
 	            	$input.val(response.response);
 	            	$("#attachmentUploading").before($img);
@@ -120,6 +122,12 @@ var feedbacks = (function(feedbacks) {
 		$("#feedbackCreateForm")[0].reset();
 		resetFeedbackFormState();
 		$("#addQa").modal('show');
+	}
+	self.showAttachment=function(filename,temp){
+		var url = "feedback/attach"+(temp?"/temp":"")+"?file="+filename;
+		$("#showAttachment").find(".modal-body img").attr("src",url);
+		$("#showAttachment").find(".modal-body a").attr("href",url);
+		$("#showAttachment").modal("show");
 	}
 	self.attach = function() {
 

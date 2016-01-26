@@ -2825,5 +2825,6 @@ table.text-center th {
 .list-group .list-group-item .feedback-date{font-size: 12px; font-color: #8A8A8A; text-align: left;}
 .list-group .list-group-item .feedback-content{font-size: 12px; font-color: #8A8A8A; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
 .box .feedback-reply{min-height: 120px;}
-.box .feedback-attachment{min-height: 120px;}
+.box .feedback-attachment-box{min-height: 120px;}
+.feedback-attachment{height: 60px;width:60px; margin-right: 5px;margin-bottom: 10px;padding: 0px;cursor: pointer;}
 .box pre{background-color: transparent;border: 0px;font-size: 14px;font-weight: 400;color: #5a5a5a;line-height: 1.5em}

@@ -677,6 +677,7 @@ public class ReportServiceImpl implements ReportService {
         report.setFlag(ReportType.DATA);
         report.setPeriod(ReportPeriod.COMPLETE);
         report.setState(DataState.ACTIVE);
+        report.setEndDate(new Date());
         reportMapper.updateReportPeriod(report);
         report.setFlag(ReportType.PROJECT);
         report.setContext(context);
@@ -694,7 +695,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	@Override
-	public Integer updateReportStateToTools(Integer userId, Integer appId, Integer projectId, Integer state,
+	public Integer updateReportStateToTools(Integer userId, Integer appId, Integer projectId, Integer period,
 			String context) {
 		if (context != null) {
 			context = context.replaceAll(" ", "+");
@@ -704,15 +705,17 @@ public class ReportServiceImpl implements ReportService {
 		report.setUserId(userId);
 		report.setAppId(appId);
 		report.setProjectId(projectId);
-		report.setPeriod(state);
+		report.setPeriod(period);
 		List<DataFile> list = dataMapper.getDatasInProject(projectId);
 		for (DataFile data : list) {
 			report.setFileId(data.getFileId());
 			report.setFlag(ReportType.DATA);
+			report.setEndDate(new Date());
 			reportMapper.updateReport(report);
 		}
 		report.setFlag(ReportType.PROJECT);
 		report.setContext(context);
+		report.setEndDate(new Date());
 		return reportMapper.updateReport(report);
 	}
 }

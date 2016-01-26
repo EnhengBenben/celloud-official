@@ -24,11 +24,12 @@ $.ajaxSetup ({
 		var spinnerTotal;
 		//---------------------------------------------------------------------
 		var param = null;
-		function downPDF(userId,softwareId,projectId){
-			$.get("project!downPdf",{"userId":userId,"softwareId":softwareId,"projectId":projectId},function(userNames){
+		function downPDF(appId,projectId){
+			$.get("report/downPdf",{"appId":appId,"projectId":projectId},function(userNames){
 				userNames = userNames.replace(/"/g ,"").replace(/\\/g ,"");
 				if(userNames){
-					var url = window.location.href.split("index")[0];
+//					var url = window.location.href.split("index")[0];
+					var url = "http://121.201.7.200:8088/";
 					window.location.href=url+"Tools/Procedure!miRNADownload?userId="+userNames;
 				}else{
 					jAlert("没有可以下载的pdf文件");
@@ -670,7 +671,7 @@ $.ajaxSetup ({
 					$("#charResult").html("");
 					for ( var i = 1; i < sp.length; i++) {
 						var big = 0;
-						var div = $("<div id='char"+i+"' class='col-lg-6'></div>");
+						var div = $("<div id='char"+i+"' class='col-lg-5'></div>");
 						$("#charDiv").append(div);
 						var ev = sp[i].split(":");
 						var one = getCountValue(ev[0],"_table");
@@ -1102,6 +1103,9 @@ $.ajaxSetup ({
 			$.each(data,function(id,value){
 				userNames += value.text + ",";
 			});
+			//全部转化成小写再比较
+            userNames = userNames.toLowerCase();
+            sessionUserName = sessionUserName.toLowerCase();
 			if(userNames.substring(0, userNames.length-1)==sessionUserName||userNames.indexOf(sessionUserName, 0)!=-1){
 				$("#shareProPrompt").html("项目不能共享给自己！");
 				return;
