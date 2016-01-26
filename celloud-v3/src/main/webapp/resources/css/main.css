@@ -2815,3 +2815,15 @@ table.text-center th {
 .manage-btn >.btn{ margin-right:10px;width:100px;}
 .data-page-select{display: inline-block;margin-bottom: 0;background-color: #f3fafd;height: 28px;padding: 4px;font-size: 13px;line-height: 18px;color: #555555;border: 1px solid #a0d1e3;font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;font-weight: normal;margin: 0;vertical-align: middle;-webkit-appearance: menulist;box-sizing: border-box;align-items: center;white-space: pre;-webkit-rtl-ordering: logical;cursor: default;font: -webkit-small-control;letter-spacing: normal;word-spacing: normal;text-transform: none;text-indent: 0px;text-shadow: none;text-align: start;-webkit-writing-mode: horizontal-tb;}
 .check-data-div{top:10px}
+
+/*
+ ===========================
+  问题反馈(工单)
+ ===========================
+ */
+ 
+.list-group .list-group-item .feedback-date{font-size: 12px; font-color: #8A8A8A; text-align: left;}
+.list-group .list-group-item .feedback-content{font-size: 12px; font-color: #8A8A8A; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.box .feedback-reply{min-height: 120px;}
+.box .feedback-attachment{min-height: 120px;}
+.box pre{background-color: transparent;border: 0px;font-size: 14px;font-weight: 400;color: #5a5a5a;line-height: 1.5em}
