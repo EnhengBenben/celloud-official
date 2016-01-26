@@ -37,7 +37,7 @@
 		</c:if>
 	</tbody>
 </table>
-<div class="pagination center">
+<div class="pagination text-center">
 	<ul class="pages">
 		<li class="${page.hasPrev?'':'active' }">
 			<a href="javascript:users.searchLogInfo('${page.hasPrev?(page.currentPage-1):'' }');">&lt;</a>
