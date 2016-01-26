@@ -334,7 +334,7 @@
 	<if test="appId != 0">
 		and s.app_id = #{appId}
 	</if>
-	order by p.create_date desc
+	order by p.create_date desc,s.app_name asc
   </select>
     <!-- 根据用户ID统计该用户各APP的运行次数 -->
   <select id="countAppRunNumByUserId" resultType="map">
