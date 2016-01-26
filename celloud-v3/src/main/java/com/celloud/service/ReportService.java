@@ -311,11 +311,11 @@ public interface ReportService {
 	 * @param userId
 	 * @param appId
 	 * @param projectId
-	 * @param state
-	 * @param context
+	 * @param period：运行阶段
+	 * @param context：项目报告
 	 * @author lin
 	 * @date 2016年1月20日下午6:14:55
 	 */
-	public Integer updateReportStateToTools(Integer userId, Integer appId, Integer projectId, Integer state,
+	public Integer updateReportStateToTools(Integer userId, Integer appId, Integer projectId, Integer period,
 			String context);
 }

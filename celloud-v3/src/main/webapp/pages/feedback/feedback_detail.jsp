@@ -27,13 +27,13 @@
 	<div class="box-body" style="min-height: 150px;">
 		<pre>${feedback.content }</pre>
 	</div>
-	<div class="box-footer feedback-attachment">
+	<div class="box-footer feedback-attachment-box">
 		<h5>附件：</h5>
 		<c:choose>
 			<c:when test="${feedback.hasAttachment() }">
 				<c:forEach items="${attachments }" var="attachment">
-					<img class="img-thumbnail" style="height: 60px; margin-right: 10px;"
-						src="<%=request.getContextPath() %>/feedback/attach?file=${attachment.filePath}" alt="User Image" />
+					<img class="img-thumbnail feedback-attachment" onclick="feedbacks.showAttachment('${attachment.filePath}')"
+						src="<%=request.getContextPath() %>/feedback/attach?file=${attachment.filePath}" alt="Feedback Attachment" />
 				</c:forEach>
 			</c:when>
 			<c:otherwise>

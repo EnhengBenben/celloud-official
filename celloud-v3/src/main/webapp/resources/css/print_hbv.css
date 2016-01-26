@@ -59,6 +59,7 @@ table {
 
 .table th {
   font-weight: bold;
+  text-align: center;
 }
 
 .table thead th {

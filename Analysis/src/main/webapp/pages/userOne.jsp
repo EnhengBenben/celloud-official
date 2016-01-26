@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div class="col-sm-12">
 	<div class="row">
 		<div class="col-xs-12">
@@ -57,8 +57,7 @@
 				</thead>
 
 				<tbody>
-					<s:if test="%{loginList.size()>0}">
-						<s:iterator id="data" value="loginList">
+						  <c:forEach items="${loginList }" var="data">
 							<tr>
 								<td>${data.userName }</td>
 								<td>${data.logDate }</td>
@@ -67,8 +66,7 @@
 								<td>${data.browser }</td>
 								<td>${data.address }</td>
 							</tr>
-						</s:iterator>
-					</s:if>
+					</c:forEach>
 				</tbody>
 			</table>
 			<div class="col-xs-12" style="height: 450px;" id="runTimeDiv"></div>

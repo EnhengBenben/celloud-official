@@ -28,7 +28,8 @@ $.ajaxSetup ({
 			$.get("report/downPdf",{"appId":appId,"projectId":projectId},function(userNames){
 				userNames = userNames.replace(/"/g ,"").replace(/\\/g ,"");
 				if(userNames){
-					var url = window.location.href.split("index")[0];
+//					var url = window.location.href.split("index")[0];
+					var url = "http://121.201.7.200:8088/";
 					window.location.href=url+"Tools/Procedure!miRNADownload?userId="+userNames;
 				}else{
 					jAlert("没有可以下载的pdf文件");
@@ -670,7 +671,7 @@ $.ajaxSetup ({
 					$("#charResult").html("");
 					for ( var i = 1; i < sp.length; i++) {
 						var big = 0;
-						var div = $("<div id='char"+i+"' class='col-lg-6'></div>");
+						var div = $("<div id='char"+i+"' class='col-lg-5'></div>");
 						$("#charDiv").append(div);
 						var ev = sp[i].split(":");
 						var one = getCountValue(ev[0],"_table");
