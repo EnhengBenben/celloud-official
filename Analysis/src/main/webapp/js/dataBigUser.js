@@ -36,7 +36,6 @@
 				var myChart = echarts.init(document.getElementById("fileNumPie"));
 				var option = makePieOption('', xAxis, '大客户数据个数', '60%', '30%', '55%', fileNumObj,{'x':'center','y':'top','orient':'horizontal'});
 				option = makePieOptionAdd(option,'大客户数据大小(GB)', '60%', '70%', '60%', fileSizeObj);
-				console.log(option);
 				myChart.setOption(option);
 				
 		  

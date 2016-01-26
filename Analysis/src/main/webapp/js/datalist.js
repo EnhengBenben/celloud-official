@@ -5,7 +5,6 @@ var UserFileNumId = "userFileNum";
 
 $.get(UserDataURL, {'orderType':"fileNum"}, function(data) {
 	data = data==null?[]:data;
-	console.log(data);
 	var xAxis = new Array(data.length);
 	var yAxis = new Array(data.length);
 	for (var i = 0; i < data.length; i++) {
@@ -13,7 +12,7 @@ $.get(UserDataURL, {'orderType':"fileNum"}, function(data) {
 		yAxis[i] = data[i].fileNum;
 	}
 	var option = makeOptionScrollUnit( xAxis, yAxis, '数据个数', barType,0,20);
-	var myChart = echarts.init(document.getElementById(UserFileNumId),themes.helianthus);
+	var myChart = echarts.init(document.getElementById(UserFileNumId),themes.green);
 	myChart.setOption(option);
 });
 /*

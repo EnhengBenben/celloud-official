@@ -83,7 +83,6 @@
 		$.get("company!getHospitaAppRunNum", {
 			"company.company_id" : '${company.company_id }'
 		}, function(data) {
-			console.log(data);
 			if (data.length <= 0) {
 				$("#runTimeDiv").css({
 					"display" : "none"

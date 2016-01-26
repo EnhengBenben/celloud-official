@@ -115,7 +115,6 @@
 	var getUsersMonthDataURL = "data!getUsersMonthData";
 	var getBigUserMonthURL = "data!getAllBigUserMonthData";
 	$.get(getBigUserMonthURL, {}, function(data) {
-		console.log(data);
 		var listCmp = data["companyNames"];
 		var xAxis = data["xAxis"];
 		var opt

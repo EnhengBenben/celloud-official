@@ -10,7 +10,10 @@
 				<c:if test="${page.rowCount == 0 }">
 					<div>问题反馈是您与 CelLoud 最直接有效的交流平台，您可以通过问题反馈来咨询任何问题，我们会第一时间为您解决。同时我们也欢迎您提交建议与意见。</div>
 				</c:if>
-				<button onclick="feedbacks.showForm()" class="btn btn-success"><span aria-hidden="true" class="glyphicon glyphicon-inbox"></span> 新问题</button>
+				<button onclick="feedbacks.showForm()" class="btn btn-success">
+					<span aria-hidden="true" class="glyphicon glyphicon-inbox"></span>
+					新问题
+				</button>
 				<c:if test="${page.totalPage>1 }">
 					<div class="btn-group pull-right">
 						<c:if test="${page.hasPrev }">
@@ -38,11 +41,11 @@
 						<span class="badge glyphicon glyphicon-paperclip" aria-hidden="true"> </span>
 					</c:if>
 					<p>${feedback.title }</p>
-					<p style="font-size: 12px; font-color: #8A8A8A; text-align: left">
+					<p class="feedback-date">
 						提问时间：
 						<fmt:formatDate value="${feedback.createDate }" pattern="yyyy-MM-dd HH:mm" />
 					</p>
-					<p style="font-size: 12px; font-color: #8A8A8A; text-align: left">${feedback.content }</p>
+					<p class="feedback-content" title="${ feedback.content}">${feedback.content }</p>
 				</button>
 			</c:forEach>
 		</div>

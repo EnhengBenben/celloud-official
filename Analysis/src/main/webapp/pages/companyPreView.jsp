@@ -52,7 +52,7 @@
 				</div>
 			</div>
 		</div>
-		<h3 class="title header smaller lighter green ">大客户新增用户统计</h3>
+		<h3 class="header smaller lighter green ">大客户新增用户统计</h3>
 		<c:if test="${ userRole=='2'}">
 			<div id="newCmpBigUser" style="height: 300px;"></div>
 		</c:if>
@@ -259,7 +259,6 @@
 					str += p + ' ';
 				}
 			}
-			console.log(str);
 			$.post("company!getCompanyProvince", {
 				"company.province" : str.replace(/(^\s*)|(\s*$)/g, '')
 			}, function(result) {

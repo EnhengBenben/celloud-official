@@ -25,9 +25,9 @@
 		</div>
 	</div>
 	<div class="box-body" style="min-height: 150px;">
-		<p>${feedback.content }</p>
+		<pre>${feedback.content }</pre>
 	</div>
-	<div class="box-footer" style="min-height: 120px;">
+	<div class="box-footer feedback-attachment">
 		<h5>附件：</h5>
 		<c:choose>
 			<c:when test="${feedback.hasAttachment() }">
@@ -42,7 +42,7 @@
 		</c:choose>
 	</div>
 	<div id="feedbackReplyList">
-		<div class="box-footer" style="min-height: 120px;">
+		<div class="box-footer feedback-reply">
 			<h5>回复加载中。。。</h5>
 		</div>
 	</div>
