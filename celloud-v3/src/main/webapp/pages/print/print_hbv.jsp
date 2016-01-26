@@ -128,7 +128,7 @@
 							<br/>
 							<c:if test="${imgList.size()>0}">
 					    	    <h2 class="mt20">原始峰图：</h2>
-					    	    <div style="width:750px;" id="_allDiv">
+					    	    <div id="_allDiv">
 						   			<c:forEach items="${imgList}" var="imgHtml">
 						   				<img src="${imgHtml }" style="width:100%"/>
 						   				<br/><br/>
