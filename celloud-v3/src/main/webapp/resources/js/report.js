@@ -670,7 +670,7 @@ $.ajaxSetup ({
 					$("#charResult").html("");
 					for ( var i = 1; i < sp.length; i++) {
 						var big = 0;
-						var div = $("<div id='char"+i+"' class='col-lg-6'></div>");
+						var div = $("<div id='char"+i+"' class='col-lg-5'></div>");
 						$("#charDiv").append(div);
 						var ev = sp[i].split(":");
 						var one = getCountValue(ev[0],"_table");
