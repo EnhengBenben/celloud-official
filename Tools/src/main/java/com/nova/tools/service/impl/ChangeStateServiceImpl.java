@@ -47,11 +47,8 @@ public class ChangeStateServiceImpl {
             if (context != null) {
                 context = Encrypt.encrypt(context);
             }
-            url = celloud + "updateReportByProSoftId.action?projectId="
-                    + projectId + "&softwareIds=" + appId + "&state=" + state
-                    + "&userId=" + userId + "&appResult=" + userId + ","
-                    + appId + "," + appName + "," + projectId + ",1&context="
-                    + context;
+			url = celloud + "toolsRunOver.html?userId=" + userId + "&appId=" + appId + "&projectId=" + projectId
+					+ "&period=" + state + "&context=" + context;
         }
         remoteRequest(url);
     }
