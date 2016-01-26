@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<div class="row">
+<div>
 	<input type="hidden" value="<s:property value="resultMap.projectId"/>" id="_projectId">
 	<input type="hidden" value="<s:property value="resultMap.length"/>" id="seq_length"/>
 	<!--文件名称-->
