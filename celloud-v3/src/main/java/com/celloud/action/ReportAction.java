@@ -571,4 +571,21 @@ public class ReportAction {
 	public Integer updateContext(Report report){
 		return reportService.updateReport(report);
 	}
+	
+	@RequestMapping("downPdf")
+	@ResponseBody
+	public String downPdf(Integer appId,Integer projectId){
+		StringBuffer sb = new StringBuffer();
+		Integer userId = ConstantsData.getLoginUserId();
+        sb.append(userId).append(";").append(appId).append(";")
+                .append(projectId).append(";");
+        List<DataFile> list = dataService.getDatasInProject(projectId);
+        for (DataFile data : list) {
+            sb.append(data.getDataKey()).append(",");
+        }
+        String requestUrl = PropertiesUtil.toolsPath
+                + "Procedure!downPDF?dataKeyList=" + sb.toString();
+        log.info("requestUrl:" + requestUrl);
+		return HttpURLUtils.getHTTPResult(requestUrl);
+	}
 }

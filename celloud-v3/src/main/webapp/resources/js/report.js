@@ -24,8 +24,8 @@ $.ajaxSetup ({
 		var spinnerTotal;
 		//---------------------------------------------------------------------
 		var param = null;
-		function downPDF(userId,softwareId,projectId){
-			$.get("project!downPdf",{"userId":userId,"softwareId":softwareId,"projectId":projectId},function(userNames){
+		function downPDF(appId,projectId){
+			$.get("report/downPdf",{"appId":appId,"projectId":projectId},function(userNames){
 				userNames = userNames.replace(/"/g ,"").replace(/\\/g ,"");
 				if(userNames){
 					var url = window.location.href.split("index")[0];
