@@ -19,59 +19,60 @@
 	</ul>
 </div>
 <div class="page-content">
-	<div class="row">
-		<h3 class="header smaller lighter green">医院数量统计</h3>
-		<div class="col-xs-12" style="height: 350px;" id="companyNum"></div>
-		<div class="col-xs-12">
-			<div class="table-header hide" id="_companyName"></div>
-			<div class="table-responsive" id="dataDiv">
-				<table id="allUserDataList" class="table table-striped table-bordered table-hover">
-					<thead>
-						<tr>
-							<th>大客户编号</th>
-							<th class="min-w-80">大客户名称</th>
-							<th class="min-w-80">入驻时间</th>
-							<th class="min-w-80">医院数量</th>
-							<th class="min-w-80">用户数量</th>
-							<th class="min-w-80">数据个数(个)</th>
-							<th class="min-w-80">数据大小</th>
-							<th class="min-w-80">运行次数</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:if test="${cmpList!=null }">
-							<c:forEach items="${cmpList}" var="item">
-								<tr>
-									<td>${item.company_id }</td>
-									<td>${item.company_name }</td>
-									<td>
-										<fmt:formatDate type="both" value="${item.create_date }" pattern="yyyy-MM-dd" />
-									</td>
-									<td>${item.companyNum}</td>
-									<td>${item.userNum}</td>
-									<td>${item.fileNum }</td>
-									<td>
-										<c:choose>
-											<c:when test="${item.size>1073741824 }">
-												<fmt:formatNumber pattern="0.00" value="${item.size/1073741824 }" />GB</c:when>
-											<c:when test="${item.size>1048576 }">
-												<fmt:formatNumber pattern="0.00" value="${item.size/1048576 }" />MB</c:when>
-											<c:otherwise>
-												<fmt:formatNumber pattern="0.00" value="${item.size/1024 }" />KB</c:otherwise>
-										</c:choose>
-									</td>
-									<td>${item.runNum}</td>
-
-								</tr>
-							</c:forEach>
-						</c:if>
-					</tbody>
-				</table>
+	<div class="col-xs-12">
+		<div class="row">
+			<h3 class="header smaller lighter green">医院数量统计</h3>
+			<div class="col-xs-12" style="height: 350px;" id="companyNum"></div>
+			<div class="col-xs-12">
+				<div class="table-header hide" id="_companyName"></div>
+				<div class="table-responsive" id="dataDiv">
+					<table id="allUserDataList" class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>大客户编号</th>
+								<th class="min-w-80">大客户名称</th>
+								<th class="min-w-80">入驻时间</th>
+								<th class="min-w-80">医院数量</th>
+								<th class="min-w-80">用户数量</th>
+								<th class="min-w-80">数据个数(个)</th>
+								<th class="min-w-80">数据大小</th>
+								<th class="min-w-80">运行次数</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:if test="${cmpList!=null }">
+								<c:forEach items="${cmpList}" var="item">
+									<tr>
+										<td>${item.company_id }</td>
+										<td>${item.company_name }</td>
+										<td>
+											<fmt:formatDate type="both" value="${item.create_date }" pattern="yyyy-MM-dd" />
+										</td>
+										<td>${item.companyNum}</td>
+										<td>${item.userNum}</td>
+										<td>${item.fileNum }</td>
+										<td>
+											<c:choose>
+												<c:when test="${item.size>1073741824 }">
+													<fmt:formatNumber pattern="0.00" value="${item.size/1073741824 }" />GB</c:when>
+												<c:when test="${item.size>1048576 }">
+													<fmt:formatNumber pattern="0.00" value="${item.size/1048576 }" />MB</c:when>
+												<c:otherwise>
+													<fmt:formatNumber pattern="0.00" value="${item.size/1024 }" />KB</c:otherwise>
+											</c:choose>
+										</td>
+										<td>${item.runNum}</td>
+									</tr>
+								</c:forEach>
+							</c:if>
+						</tbody>
+					</table>
+				</div>
+				<!-- PAGE CONTENT ENDS -->
 			</div>
-			<!-- PAGE CONTENT ENDS -->
 		</div>
+		<!-- /.row -->
 	</div>
-	<!-- /.row -->
 </div>
 <!-- /.page-content -->
 <script type="text/javascript">
@@ -103,7 +104,11 @@
 					'name' : data[i].company_name
 				}
 			}
-			var option = makePieOption('', xAxis, '医院数量统计', '60%', '55%', '45%', yAxis, null)
+			var option = makePieOption('', xAxis, '医院数量统计', '70%', '45%', '45%', yAxis, {
+				x : 'left',
+				y : 'center',
+				orient : 'vertical'
+			})
 			var myChart = echarts.init(document.getElementById('companyNum'), theme);
 			myChart.setOption(option);
 		});
