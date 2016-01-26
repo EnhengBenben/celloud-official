@@ -630,7 +630,7 @@ $.ajaxSetup ({
 				//});
 			}else{
 				var newPath = "Procedure!readReport" + "?fileName="+fileName+"&userId=" + userId + "&appId=" + softwareId + "&dataKey=" + dataKey + "&projectId="+proId;
-				$.get("report/getReportFromTools",{"dataKey":dataKey,"url":newPath},function(responseText){
+				$.get("report/getReportFromTools",{"dataKey":dataKey,"url":newPath,"projectId":proId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 					spinner.stop();
 					if(softwareId==73){

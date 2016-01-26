@@ -102,4 +102,14 @@ public interface ProjectService {
      * @date 2016年1月25日下午3:10:31
      */
 	public List<Map<String, Object>> getShareTo(Integer userId, Integer projectId);
+	
+	/**
+	 * 单查项目
+	 * 
+	 * @param projectId
+	 * @return
+	 * @author lin
+	 * @date 2016年1月26日下午7:09:46
+	 */
+	public Project selectByPrimaryKey(Integer projectId);
 }

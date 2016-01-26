@@ -35,6 +35,7 @@ import com.celloud.model.GddDiseaseDict;
 import com.celloud.model.HBV;
 import com.celloud.model.MIB;
 import com.celloud.model.Pgs;
+import com.celloud.model.Project;
 import com.celloud.model.Report;
 import com.celloud.model.Split;
 import com.celloud.page.Page;
@@ -43,6 +44,7 @@ import com.celloud.service.AppService;
 import com.celloud.service.CompanyService;
 import com.celloud.service.DataService;
 import com.celloud.service.DeptService;
+import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.utils.HttpURLUtils;
 import com.celloud.utils.PropertiesUtil;
@@ -63,6 +65,8 @@ public class ReportAction {
     private DeptService deptService;
     @Resource
     private AppService appService;
+    @Resource
+    private ProjectService projectService;
 
     /**
      * 获取报告模块列表
@@ -100,13 +104,15 @@ public class ReportAction {
      */
     @ResponseBody
 	@RequestMapping(value = "getReportFromTools", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String getReportFromTools(String dataKey, String url) {
+    public String getReportFromTools(String dataKey, String url,Integer projectId) {
         url = PropertiesUtil.toolsPath + url;
         DataFile data = dataService.getDataByKey(dataKey);
         String anotherName = data.getAnotherName();
         if (StringUtils.isNotEmpty(anotherName)) {
             url += "&anotherName=" + anotherName;
         }
+        Project project = projectService.selectByPrimaryKey(projectId);
+        url += "&projectName=" + project.getProjectName();
         return HttpURLUtils.getHTTPResult(url);
     }
 
@@ -118,10 +124,12 @@ public class ReportAction {
      * @author lin
      * @date 2016-1-11 上午10:39:13
      */
-    private ModelAndView getModelAndView(String path) {
+    private ModelAndView getModelAndView(String path,Integer projectId) {
         ModelAndView mv = new ModelAndView(path);
         mv.addObject("toolsPath", PropertiesUtil.toolsOutPath);
         mv.addObject("uploadPath", PropertiesUtil.toolsOutPath + "upload/");
+        Project project = projectService.selectByPrimaryKey(projectId);
+        mv.addObject("project", project);
         return mv;
     }
 
@@ -140,7 +148,7 @@ public class ReportAction {
             Integer projectId, Integer appId) {
         CmpReport cmpReport = reportService.getCMPReport(dataKey, projectId,
                 appId);
-        ModelAndView mv = getModelAndView(path);
+        ModelAndView mv = getModelAndView(path,projectId);
         return mv.addObject("cmpReport", cmpReport);
     }
 
@@ -268,7 +276,7 @@ public class ReportAction {
         List<CmpGeneSnpResult> gsrList = reportService.getGddResult(
                 cmpReport.getDataKey(),
                 cmpReport.getProjectId(), cmpReport.getAppId());
-        ModelAndView mv = getModelAndView("print/print_gdd");
+        ModelAndView mv = getModelAndView("print/print_gdd",projectId);
         mv.addObject("cmpReport", cmpReport);
         mv.addObject("gsrList", gsrList);
         mv.addObject("allGsr", allGsr);
@@ -290,7 +298,7 @@ public class ReportAction {
     private ModelAndView getSplitModelAndView(String path, String dataKey,
             Integer projectId, Integer appId) {
         Split split = reportService.getSplitReport(dataKey, projectId, appId);
-        ModelAndView mv = getModelAndView(path);
+        ModelAndView mv = getModelAndView(path,projectId);
         return mv.addObject("split", split);
     }
 
@@ -347,7 +355,7 @@ public class ReportAction {
                 JSONArray.fromObject(mib.getFamilyDistributionInfo()));
         mibCharList.put("genusDistributionInfo",
                 JSONArray.fromObject(mib.getGenusDistributionInfo()));
-        ModelAndView mv = getModelAndView(path);
+        ModelAndView mv = getModelAndView(path,projectId);
         mv.addObject("mibCharList", mibCharList);
         return mv.addObject("mib", mib);
     }
@@ -397,7 +405,7 @@ public class ReportAction {
     public ModelAndView getHBVReport(String dataKey, Integer projectId,
             Integer appId) {
         HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
-        ModelAndView mv = getModelAndView("report/report_data_hbv");
+        ModelAndView mv = getModelAndView("report/report_data_hbv",projectId);
         return mv.addObject("hbv", hbv);
     }
 
@@ -414,7 +422,7 @@ public class ReportAction {
     public ModelAndView getPgsReport(String dataKey, Integer projectId,
             Integer appId) {
         Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
-        ModelAndView mv = getModelAndView("report/report_data_pgs");
+        ModelAndView mv = getModelAndView("report/report_data_pgs",projectId);
         return mv.addObject("pgs", pgs);
     }
     
@@ -466,7 +474,7 @@ public class ReportAction {
 	@RequestMapping("printPGS")
 	public ModelAndView printPGS(Integer appId, Integer projectId, String dataKey, String miniPng, String txt,
 			String splitPng) {
-		ModelAndView mv = getModelAndView("print/print_pgs");
+		ModelAndView mv = getModelAndView("print/print_pgs",projectId);
 		Integer userId = ConstantsData.getLoginUserId();
 		DataFile data = dataService.getDataByKey(dataKey);
 		Integer fileId = data.getFileId();
@@ -504,7 +512,7 @@ public class ReportAction {
 	@RequestMapping("printHBV")
 	public ModelAndView printHBV(Integer appId,String dataKey,Integer projectId,String imgHtml,String sensitive
 			,String context,String peakFigure,String allPic,String result,String table,Integer flag) {
-		ModelAndView mv = getModelAndView("print/print_hbv");
+		ModelAndView mv = getModelAndView("print/print_hbv",projectId);
 		Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
@@ -538,7 +546,7 @@ public class ReportAction {
 	@RequestMapping("printDAAN")
 	public ModelAndView printDAAN(Integer appId,String dataKey,Integer projectId,String context,String imgHtml,String seq
 			,String result,String allPic,String table) {
-		ModelAndView mv = getModelAndView("print/print_hbv");
+		ModelAndView mv = getModelAndView("print/print_hbv",projectId);
 		Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
