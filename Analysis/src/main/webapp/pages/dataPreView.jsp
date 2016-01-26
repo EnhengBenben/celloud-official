@@ -149,19 +149,21 @@
 		}
 		
 		var fileNumOpt = makeOptionScrollUnit(xAxis, yAxis, '数据增量曲线图', lineType, 100, xAxis.length, "阴影");
-		var fileTotalOpt = makeOptionScrollUnit(xAxis, yAxisCount, '', lineType, 100, xAxis.length, null, null, "test");
+		var fileTotalOpt = makeOptionScrollUnit(xAxis, yAxisCount, '数据个数累计图', lineType, 100, xAxis.length, null, null, "test");
 		
-	//	var demo = makeOptionScrollUnit(xAxis, yAxisCount, '', lineType, 100, xAxis.length, null, null, "test");
+		var demo = makeOptionScrollUnit(xAxis, [], '数据个数累计图', lineType, 100, xAxis.length, null, null, "test");
 		fileNumOpt.legend.data[fileNumOpt.legend.data.length]="数据个数累计图";
-	//	fileNumOpt.series[1] = demo.series[0];
+		demo.series[0]
+		fileNumOpt.series[1] = demo.series[0];
 		
 		fileTotalOpt.grid={x:80,y:0,x2:80,y2:100};
 		var fileNumChart = echarts.init(document.getElementById('fileNumView'),themes.green);
 		var fileTotalNum = echarts.init(document.getElementById('fileTotalNum'),themes.green);
+		fileTotalOpt.legend.y=-30;
 		fileTotalNum.setOption(fileTotalOpt);
 		fileNumChart.setOption(fileNumOpt);
-		fileNumChart.connect([ fileTotalNum ]);
-		fileTotalNum.connect([ fileNumChart ]);
+		fileNumChart.connect([fileTotalNum ]);
+		fileTotalNum.connect([fileNumChart ]);
 	});
 	
 	jQuery(function($) {

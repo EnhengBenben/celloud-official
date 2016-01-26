@@ -22,53 +22,51 @@
 
 <div class="page-content">
 	<div class="col-xs-12">
-		<h3 class="header smaller lighter green">数据个数统计</h3>
-		<div class="col-xs-12" style="height: 350px;" id="userFileNum"></div>
-		<!-- 
-		<h3 class="header smaller lighter green">数据大小统计</h3>
-        <div class="col-xs-12" style="height: 450px;" id="userFileSize"></div>
-		 -->
-		<div class="col-xs-11 table-div" >
-			<div class="table-header hide" id="_companyName"></div>
-			<c:if test="${list!=null && fn:length(list) > 0 }">
-				<div class="table-responsive " id="dataDiv">
-					<table id="allUserDataList" class="table table-striped table-bordered table-hover">
-						<thead>
-							<tr>
-								<th>用户名</th>
-								<th>所在医院</th>
-								<th class="hidden-480">数据个数(个)</th>
-								<th class="hidden-480">数据大小</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${list }" var="data">
+		<div class='row'>
+			<h3 class="header smaller lighter green">用户数据个数统计</h3>
+			<div class="col-xs-12" style="height: 350px;" id="userFileNum"></div>
+			<div class="col-xs-11 table-div">
+				<div class="table-header hide" id="_companyName"></div>
+				<c:if test="${list!=null && fn:length(list) > 0 }">
+					<div class="table-responsive " id="dataDiv">
+						<table id="allUserDataList" class="table table-striped table-bordered table-hover">
+							<thead>
 								<tr>
-									<td>
-										${data.username }
-										<!--<a href="javascript:userMonthDataList('${data.user_id }','${data.username }','${data.company_name }');">${data.username }</a>-->
-									</td>
-									<td>${data.company_name }</td>
-									<td>${data.fileNum }</td>
-									<td>
-										<c:choose>
-											<c:when test="${data.size>1073741824 }">
-												<fmt:formatNumber pattern="0.00" value="${data.size/1073741824 }" />GB</c:when>
-											<c:when test="${data.size>1048576 }">
-												<fmt:formatNumber pattern="0.00" value="${data.size/1048576 }" />MB</c:when>
-											<c:otherwise>
-												<fmt:formatNumber pattern="0.00" value="${data.size/1024 }" />KB</c:otherwise>
-										</c:choose>
-									</td>
+									<th>用户名</th>
+									<th>所在医院</th>
+									<th class="hidden-480">数据个数(个)</th>
+									<th class="hidden-480">数据大小</th>
 								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
-			</c:if>
-			<!-- PAGE CONTENT ENDS -->
+							</thead>
+							<tbody>
+								<c:forEach items="${list }" var="data">
+									<tr>
+										<td>
+											${data.username }
+											<!--<a href="javascript:userMonthDataList('${data.user_id }','${data.username }','${data.company_name }');">${data.username }</a>-->
+										</td>
+										<td>${data.company_name }</td>
+										<td>${data.fileNum }</td>
+										<td>
+											<c:choose>
+												<c:when test="${data.size>1073741824 }">
+													<fmt:formatNumber pattern="0.00" value="${data.size/1073741824 }" />GB</c:when>
+												<c:when test="${data.size>1048576 }">
+													<fmt:formatNumber pattern="0.00" value="${data.size/1048576 }" />MB</c:when>
+												<c:otherwise>
+													<fmt:formatNumber pattern="0.00" value="${data.size/1024 }" />KB</c:otherwise>
+											</c:choose>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+				</c:if>
+				<!-- PAGE CONTENT ENDS -->
+			</div>
+			<!-- /.col -->
 		</div>
-		<!-- /.col -->
 	</div>
 	<!-- /.row -->
 </div>
