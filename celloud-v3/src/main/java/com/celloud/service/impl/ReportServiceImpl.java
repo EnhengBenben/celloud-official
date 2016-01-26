@@ -133,54 +133,61 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-	public Map<String, Object> systemCount(Integer userId) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		/***按月统计的每月上传的:数据量\数据大小\报告数量\APP运行次数***/
-		List<Map<String, String>> monthData = dataMapper.countDataByTime(userId, TimeState.MONTH,DataState.ACTIVE);
-		List<Map<String, String>> monthSize = dataMapper.sumDataByTime(userId, TimeState.MONTH,DataState.ACTIVE);
-		
-		List<Map<String, String>> monthReport = reportMapper.countReportMonthByUserId(userId);
-		
-		List<Map<String, String>> monthApp = appMapper.countMyAppByTime(userId, TimeState.MONTH,DataState.ACTIVE,DataState.ACTIVE);
-		/****按周统计每周上传:数据量\数据大小\报告数量\APP数量*****/
-		List<Map<String, String>> weekData =dataMapper.countDataFileWeek(userId);
-		List<Map<String, String>> weekReport =reportMapper.countReportWeekByUserId(userId);
-		List<Map<String, String>> weekApp = appMapper.countWeekByUserId(userId);
+    public Map<String, Object> systemCount(Integer userId) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        /*** 按月统计的每月上传的:数据量\数据大小\报告数量\APP运行次数 ***/
+        List<Map<String, String>> monthData = dataMapper.countDataByTime(userId,
+                TimeState.MONTH, DataState.ACTIVE);
+        List<Map<String, String>> monthSize = dataMapper.sumDataByTime(userId,
+                TimeState.MONTH, DataState.ACTIVE);
 
-		// 用户上传数据
-		Long size = dataMapper.sumData(userId,DataState.ACTIVE);
-		// 已运行、未运行
-		Map<String, String> fileNum = dataMapper.countFileNumByUserId(userId);
-		// 已添加App使用次数
-		List<Map<String, String>> appRum = reportMapper.countAppRunNumByUserId(userId);
+        List<Map<String, String>> monthReport = reportMapper
+                .countReportMonthByUserId(userId);
 
-		map.put("monthData", monthData);
-		map.put("weekData", weekData);
-		map.put("monthSize", monthSize);
+        List<Map<String, String>> monthApp = appMapper.countMyAppByTime(userId,
+                TimeState.MONTH, DataState.ACTIVE, DataState.ACTIVE);
+        /**** 按周统计每周上传:数据量\数据大小\报告数量\APP数量 *****/
+        List<Map<String, String>> weekData = dataMapper
+                .countDataFileWeek(userId);
+        List<Map<String, String>> weekReport = reportMapper
+                .countReportWeekByUserId(userId);
+        List<Map<String, String>> weekApp = appMapper.countWeekByUserId(userId);
 
-		map.put("monthReport", monthReport);
-		map.put("monthApp", monthApp);
-		map.put("appRum", appRum);
-		map.put("size", size);
-		map.put("weekReport", weekReport);
-		map.put("weekApp", weekApp);
-		map.put("fileNum", fileNum);
-		log.info("fileNum"+fileNum);
-		log.info("size"+size);
+        // 用户上传数据
+        Long size = dataMapper.sumData(userId, DataState.ACTIVE);
+        // 已运行、未运行
+        Map<String, String> fileNum = dataMapper.countFileNumByUserId(userId);
+        // 已添加App使用次数
+        List<Map<String, String>> appRum = reportMapper
+                .countAppRunNumByUserId(userId);
 
-	/*	log.info("monthData"+monthData.size());
-		log.info("monthSize"+monthSize.size());
-		log.info("monthReport"+monthReport);
-		log.info("monthApp"+monthApp.size());
-		log.info("appRum"+appRum.size());
-		log.info("size"+size);
-		log.info("fileNum"+fileNum.size());
-		log.info("weekData"+weekData.size());
-		log.info("weekReport"+weekReport.size());
-		log.info("weekApp"+weekApp.size());
-*/
-		return map;
-	}
+        map.put("monthData", monthData);
+        map.put("weekData", weekData);
+        map.put("monthSize", monthSize);
+
+        map.put("monthReport", monthReport);
+        map.put("monthApp", monthApp);
+        map.put("appRum", appRum);
+        map.put("size", size);
+        map.put("weekReport", weekReport);
+        map.put("weekApp", weekApp);
+        map.put("fileNum", fileNum);
+        log.info("fileNum" + fileNum);
+        log.info("size" + size);
+
+        /*
+         * log.info("monthData"+monthData.size());
+         * log.info("monthSize"+monthSize.size());
+         * log.info("monthReport"+monthReport);
+         * log.info("monthApp"+monthApp.size());
+         * log.info("appRum"+appRum.size()); log.info("size"+size);
+         * log.info("fileNum"+fileNum.size());
+         * log.info("weekData"+weekData.size());
+         * log.info("weekReport"+weekReport.size());
+         * log.info("weekApp"+weekApp.size());
+         */
+        return map;
+    }
 
     @Override
     public Integer insertProReport(Report report) {
@@ -256,8 +263,8 @@ public class ReportServiceImpl implements ReportService {
         int[] hbvType = new int[10];
         for (int i = 0; i < list.size(); i++) {
             String name = list.get(i);
-            String column = name
-                    .substring(name.indexOf("_") + 1, name.length());
+            String column = name.substring(name.indexOf("_") + 1,
+                    name.length());
             String val = FileTools.getFirstLine(path + name);
             int val_i = Integer.valueOf(val);
             if (name.equals("82_A")) {
@@ -448,8 +455,8 @@ public class ReportServiceImpl implements ReportService {
         Long time[] = new Long[map.size()];
         int count = 0;
         for (Entry<String, HBV> hbv : map.entrySet()) {
-            long e = hbv.getValue().getCreateDate().getTime()
-                    + Long.parseLong((Math.random() * 1000 + "").split("\\.")[0]);
+            long e = hbv.getValue().getCreateDate().getTime() + Long
+                    .parseLong((Math.random() * 1000 + "").split("\\.")[0]);
             time[count] = e;
             count++;
             sort.put(e, hbv.getValue());
@@ -469,10 +476,8 @@ public class ReportServiceImpl implements ReportService {
         result.put("fileName", fileName);
         result.put("data", hbvList);
         FileTools.createFile(path);
-        FileTools
-                .appendWrite(
-                        path,
-                        "文件名\tI169T\tV173L\tL180M\tA181V/T\tT184A/G/S/I/L/F\tA194T\tS202G/I\tM204V\tN236T\tM250V/L/I\t序列\n");
+        FileTools.appendWrite(path,
+                "文件名\tI169T\tV173L\tL180M\tA181V/T\tT184A/G/S/I/L/F\tA194T\tS202G/I\tM204V\tN236T\tM250V/L/I\t序列\n");
         for (HBV hbv : hbvList) {
             StringBuffer line = new StringBuffer(hbv.getFileName())
                     .append("\t");
@@ -482,7 +487,8 @@ public class ReportServiceImpl implements ReportService {
                     line.append("\t");
                 }
             } else {
-                int site[] = { 169, 173, 180, 181, 184, 194, 202, 204, 236, 250 };
+                int site[] = { 169, 173, 180, 181, 184, 194, 202, 204, 236,
+                        250 };
                 for (int i : site) {
                     String w = hbv.getSite().get(i + "_wild");
                     String m = hbv.getSite().get(i + "_mutation");
@@ -541,8 +547,8 @@ public class ReportServiceImpl implements ReportService {
         Long time[] = new Long[map.size()];
         int count = 0;
         for (Entry<String, CmpReport> cmp : map.entrySet()) {
-            long e = cmp.getValue().getCreateDate().getTime()
-                    + Long.parseLong((Math.random() * 1000 + "").split("\\.")[0]);
+            long e = cmp.getValue().getCreateDate().getTime() + Long
+                    .parseLong((Math.random() * 1000 + "").split("\\.")[0]);
             time[count] = e;
             count++;
             sort.put(e, cmp.getValue());
@@ -570,10 +576,13 @@ public class ReportServiceImpl implements ReportService {
                 line.append(d.getFileName()).append("(").append(d.getDataKey())
                         .append(")").append("\t");
             }
-            line.append(cmp.getAllFragment().replaceAll("\n", "")).append("\t");
-            line.append(cmp.getUsableFragment().replaceAll("\n", ""))
+            line.append(cmp.getAllFragment() == null ? ""
+                    : cmp.getAllFragment().replaceAll("\n", "")).append("\t");
+            line.append(cmp.getUsableFragment() == null ? ""
+                    : cmp.getUsableFragment().replaceAll("\n", ""))
                     .append("\t");
-            line.append(cmp.getAvgCoverage().replaceAll("\n", "")).append("\t");
+            line.append(cmp.getAvgCoverage() == null ? ""
+                    : cmp.getAvgCoverage().replaceAll("\n", "")).append("\t");
             if (cmp.getCmpGeneResult() != null) {
                 for (GeneDetectionResult gene : cmp.getCmpGeneResult()) {
                     line.append(gene.getGeneName()).append(":")
@@ -593,7 +602,8 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Split getSplitReport(String dataKey, Integer projectId, Integer appId) {
+    public Split getSplitReport(String dataKey, Integer projectId,
+            Integer appId) {
         return reportDao.getDataReport(Split.class, dataKey, projectId, appId);
     }
 
@@ -613,8 +623,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public List<CmpGeneSnpResult> getGddResult(String dataKey,
-            Integer projectId,
-            Integer appId) {
+            Integer projectId, Integer appId) {
         List<CmpGeneSnpResult> resultList = new ArrayList<>();
         String[] retrievedFields = { "geneDetectionDetail" };
         CmpReport cr = reportDao.getDataFileds(CmpReport.class, dataKey,
@@ -685,38 +694,39 @@ public class ReportServiceImpl implements ReportService {
         return reportMapper.updateReportPeriod(report);
     }
 
-	@Override
-	public Report getReport(Integer userId, Integer appId,Integer projectId, Integer fileId, Integer flag) {
-		return reportMapper.getReport(userId, appId,projectId, fileId, flag);
-	}
+    @Override
+    public Report getReport(Integer userId, Integer appId, Integer projectId,
+            Integer fileId, Integer flag) {
+        return reportMapper.getReport(userId, appId, projectId, fileId, flag);
+    }
 
-	@Override
-	public int updateReport(Report report) {
-		return reportMapper.updateReport(report);
-	}
-	
-	@Override
-	public Integer updateReportStateToTools(Integer userId, Integer appId, Integer projectId, Integer period,
-			String context) {
-		if (context != null) {
-			context = context.replaceAll(" ", "+");
-			context = Base64Util.decrypt(context);
-		}
-		Report report = new Report();
-		report.setUserId(userId);
-		report.setAppId(appId);
-		report.setProjectId(projectId);
-		report.setPeriod(period);
-		List<DataFile> list = dataMapper.getDatasInProject(projectId);
-		for (DataFile data : list) {
-			report.setFileId(data.getFileId());
-			report.setFlag(ReportType.DATA);
-			report.setEndDate(new Date());
-			reportMapper.updateReport(report);
-		}
-		report.setFlag(ReportType.PROJECT);
-		report.setContext(context);
-		report.setEndDate(new Date());
-		return reportMapper.updateReport(report);
-	}
+    @Override
+    public int updateReport(Report report) {
+        return reportMapper.updateReport(report);
+    }
+
+    @Override
+    public Integer updateReportStateToTools(Integer userId, Integer appId,
+            Integer projectId, Integer period, String context) {
+        if (context != null) {
+            context = context.replaceAll(" ", "+");
+            context = Base64Util.decrypt(context);
+        }
+        Report report = new Report();
+        report.setUserId(userId);
+        report.setAppId(appId);
+        report.setProjectId(projectId);
+        report.setPeriod(period);
+        List<DataFile> list = dataMapper.getDatasInProject(projectId);
+        for (DataFile data : list) {
+            report.setFileId(data.getFileId());
+            report.setFlag(ReportType.DATA);
+            report.setEndDate(new Date());
+            reportMapper.updateReport(report);
+        }
+        report.setFlag(ReportType.PROJECT);
+        report.setContext(context);
+        report.setEndDate(new Date());
+        return reportMapper.updateReport(report);
+    }
 }
