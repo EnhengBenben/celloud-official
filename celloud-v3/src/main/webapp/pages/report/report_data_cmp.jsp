@@ -2,13 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div>
 	<div class="m-file">
-		数据编号：<span class="file-name">${cmpReport.dataKey}</span><br>
-		文件名称：
-		<span class="file-name">
-		<c:forEach items="${cmpReport.data}" var="data">
-			${data.fileName}(${data.dataKey})&nbsp;&nbsp;
-		</c:forEach>
-		</span>
+		<dl class="dl-horizontal datareport-title">
+          <dt>数据编号：</dt>
+          <dd>${cmpReport.dataKey}</dd>
+          <dt>文件名称：</dt>
+          <c:forEach items="${cmpReport.data}" var="data">
+            <dd>${data.fileName}(${data.dataKey})</dd>
+          </c:forEach>
+        </dl>
 		<div class="toolbar">
 			<a href="javascript:printLessCMPReport(${cmpReport.projectId },${cmpReport.dataKey },${cmpReport.appId })" class="btn btn-default"><i class="i-print"></i>打印临床报告</a>
 			<a href="javascript:printMoreCMPReport(${cmpReport.projectId },${cmpReport.dataKey },${cmpReport.appId })" class="btn btn-default"><i class="i-print"></i>打印科研报告</a>
