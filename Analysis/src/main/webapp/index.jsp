@@ -122,11 +122,11 @@
 								</a>
 							</li>
 							<li>
-                                <a href="javascript:toCompanyDataList()">
-                                    <i class="icon-double-angle-right"></i>
-                                    医院数据统计
-                                </a>
-                            </li>
+								<a href="javascript:toCompanyDataList()">
+									<i class="icon-double-angle-right"></i>
+									医院数据统计
+								</a>
+							</li>
 							<!-- 
 							<li>
 								<a href="javascript:getMonthDataList()">
@@ -164,19 +164,21 @@
 									医院总览
 								</a>
 							</li>
-							<li>
-                                <a href="javascript:toCompanyBaseInfo()">
-                                    <i class="icon-double-angle-right"></i>
-                                    医院基本信息
-                                </a>
-                            </li>
+							<c:if test="${userRole=='2'}">
+								<li>
+									<a href="javascript:toCompanyBaseInfo()">
+										<i class="icon-double-angle-right"></i>
+										医院基本信息
+									</a>
+								</li>
+							</c:if>
 							<li>
 								<a href="javascript:toCompanyDataList()">
 									<i class="icon-double-angle-right"></i>
 									医院数据统计
 								</a>
 							</li>
-							
+
 							<li>
 								<a href="javascript:toCompanyReportList()">
 									<i class="icon-double-angle-right"></i>
@@ -298,42 +300,31 @@
 	<script src="./js/jquery.dataTables.min.js"></script>
 	<script src="./js/jquery.dataTables.bootstrap.js"></script>
 	<!-- theme echarts -->
-	<!-- 
-	<script src="./plugin/echarts-2.2.7/src/theme/dark.js"></script>
-	<script src="./plugin/echarts-2.2.7/src/theme/blue.js"></script>
-    <script src="./plugin/echarts-2.2.7/src/theme/gray.js"></script>
-    <script src="./plugin/echarts-2.2.7/src/theme/green.js"></script>
-    <script src="./plugin/echarts-2.2.7/src/theme/helianthus.js"></script>
-    <script src="./plugin/echarts-2.2.7/src/theme/infographic.js"></script>
-    <script src="./plugin/echarts-2.2.7/src/theme/macarons.js"></script>
-    <script src="./plugin/echarts-2.2.7/src/theme/macarons2.js"></script>
-    <script src="./plugin/echarts-2.2.7/src/theme/mint.js"></script>
-    <script src="./plugin/echarts-2.2.7/src/theme/red.js"></script>
-    <script src="./plugin/echarts-2.2.7/src/theme/roma.js"></script>
-    <script src="./plugin/echarts-2.2.7/src/theme/sakura.js"></script>
-    <script src="./plugin/echarts-2.2.7/src/theme/shine.js"></script>
-     -->
-    <script src="./plugin/echarts-2.2.7/src/theme/theme.js"></script>
+
+	<script src="./plugin/echarts-2.2.7/src/theme/theme.js"></script>
 
 	<!-- <script src="./plugin/echarts-2.2.7/src/theme/infographic.js"></script> -->
 	<script src="./js/util.js" type="text/javascript"></script>
 	<script src="./js/OptionsFactory.js" type="text/javascript"></script>
 
 	<script type="text/javascript">
-	var themes={"blue":blue,"grap":gray,"green":green,"helianthus":helianthus,"infographic":infographic,"macarons":macarons,
-			   "macarons2":macarons2,"mint":mint,"red":red,"roma":roma,"sakura":sakura,"shine":shine	};
-	var theme = themes.shine;
+		var themes = {
+			"blue" : blue,
+			"gray" : gray,
+			"green" : green,
+			"helianthus" : helianthus,
+			"infographic" : infographic,
+			"macarons" : macarons,
+			"macarons2" : macarons2,
+			"mint" : mint,
+			"red" : red,
+			"roma" : roma,
+			"sakura" : sakura,
+			"shine" : shine
+		};
+		var theme = themes.shine;
 		jQuery(function($) {
 			toHome();
-			console.log(dark);
-			/*
-			requirejs.config({
-			    baseUrl: './plugin/echarts-2.2.7/src/theme',
-			    paths: {
-			        blue:'blue.js',
-			        jquery: 'jquery-1.9.0'
-			    }
-			});*/
 		});
 		/***控制台--总览**/
 		function toHome() {
@@ -380,11 +371,11 @@
 				$("#content").html(responseText);
 			});
 		}
-		function toCompanyBaseInfo(){
+		function toCompanyBaseInfo() {
 			$("#secondTitle").addClass("hide");
-            $.get("home!toCompanyBaseInfo", {}, function(responseText) {
-                $("#content").html(responseText);
-            });
+			$.get("home!toCompanyBaseInfo", {}, function(responseText) {
+				$("#content").html(responseText);
+			});
 		}
 		///医院报告统计信息
 		function toCompanyReportList() {

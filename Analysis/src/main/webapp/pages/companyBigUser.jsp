@@ -33,7 +33,7 @@
 							<th class="min-w-80">入驻时间</th>
 							<th class="min-w-80">医院数量</th>
 							<th class="min-w-80">用户数量</th>
-							<th class="min-w-80">数据量(个)</th>
+							<th class="min-w-80">数据个数(个)</th>
 							<th class="min-w-80">数据大小</th>
 							<th class="min-w-80">运行次数</th>
 						</tr>

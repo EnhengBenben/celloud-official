@@ -70,7 +70,7 @@ function loadActivity() {
 			xAxis[i] = fileNum[i].user_name;
 			yAxis[i] = fileNum[i].fileNum;
 		}
-		var option = makeOptionScrollUnit(xAxis, yAxis, "数据量", barType, 0, 15)
+		var option = makeOptionScrollUnit(xAxis, yAxis, "数据个数", barType, 0, 15)
 		var myChart = echarts.init(document.getElementById('fileNum'),theme);
 		myChart.setOption(option);
 		

@@ -14,7 +14,7 @@
 			<i class="icon-tasks"></i>
 			<a href="#">数据统计</a>
 		</li>
-		<li class="active"><a onclick="getMonthDataList()" >数据量月统计</a></li>
+		<li class="active"><a onclick="getMonthDataList()" >数据个数月统计</a></li>
 	</ul>
 	<!-- .breadcrumb -->
 </div>
@@ -24,7 +24,7 @@
 		<div class="table-header hide" id="_companyName"></div>
 		<h3 class="header smaller lighter green">每月数据大小</h3>
 		<div class="col-xs-12" style="height: 450px;" id="fileSizeView"></div>
-		<h3 class="header smaller lighter green">每月数据量</h3>
+		<h3 class="header smaller lighter green">每月数据个数</h3>
 		<div class="col-xs-12" style="height: 450px;" id="fileNumView"></div>
 		<div class="title">
 			<h3 class="header smaller lighter green">每月数据详细信息列表</h3>
@@ -36,7 +36,7 @@
 						<thead>
 							<tr>
 								<th>上传月份</th>
-								<th>数据量(个)</th>
+								<th>数据个数(个)</th>
 								<th>数据大小(GB)</th>
 							</tr>
 						</thead>
@@ -79,7 +79,7 @@
 			yAxisSize[i] = parseFloat((data[i].size / (1024 * 1024*1024 )).toFixed(2));
 		}
 		var fileSizeOpt = makeOptionScrollUnit(xAxis, yAxisSize, '数据大小(GB)', barType, 100, 12);
-		var fileNumOpt = makeOptionScrollUnit( xAxis, yAxis, '数据量', barType,100, 12);
+		var fileNumOpt = makeOptionScrollUnit( xAxis, yAxis, '数据个数', barType,100, 12);
 		
 		var fileSizeChart = echarts.init(document.getElementById('fileSizeView'));
 		var fileNumChart = echarts.init(document.getElementById('fileNumView'));

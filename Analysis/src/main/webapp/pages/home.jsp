@@ -43,7 +43,7 @@
 					</div>
 					<div class="col-sm-12 col-md-12 home-numbers">
 						<ul>
-							<li >
+							<li>
 								<a class="number">${resultMap.companyNum }</a>
 								<div class="info">
 									<b>
@@ -53,7 +53,7 @@
 									医院数量:
 								</div>
 							</li>
-							<li >
+							<li>
 								<a class="number">${resultMap.userNum }</a>
 								<div class="info">
 									<b>
@@ -63,7 +63,7 @@
 									用户数量:
 								</div>
 							</li>
-							<li >
+							<li>
 								<a class="number">${resultMap.reportNum }</a>
 								<div class="info">
 									<b>
@@ -73,7 +73,7 @@
 									报告数量:
 								</div>
 							</li>
-							<li >
+							<li>
 								<a class="number">${resultMap.appNum }</a>
 								<div class="info">
 									<b>
@@ -83,17 +83,17 @@
 									APP数量:
 								</div>
 							</li>
-							<li >
+							<li>
 								<a class="number">${resultMap.dataNum }</a>
 								<div class="info">
 									<b>
 										${resultMap.dataNum }
 										<span class="unit">(个)</span>
 									</b>
-									数据总量:
+									数据个数:
 								</div>
 							</li>
-							<li >
+							<li>
 								<a class="number">
 									<fmt:formatNumber pattern="0.00" value="${resultMap.dataSize/(1024*1024*1024) }"></fmt:formatNumber>
 								</a>
@@ -133,6 +133,20 @@
 			</div>
 			<!-- /.col -->
 		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h3 class="header smaller lighter green">APP使用统计</h3>
+				<div class="col-sm-12" style="height: 350px;" id="AppRunNum"></div>
+				<!-- row -->
+			</div>
+		</div>
+		<!-- row -->
+		<div class="row">
+			<div class="col-xs-12">
+				<h3 class="header smaller lighter green">用户运行统计</h3>
+				<div class="col-sm-12" style="height: 350px;" id="UserRunNum"></div>
+			</div>
+		</div>
 		<!-- /.row -->
 		<c:if test="${userRole=='2' || userRole=='3' }">
 			<div class="row">
@@ -166,21 +180,6 @@
 				</div>
 			</div>
 		</c:if>
-
-		<div class="row">
-			<div class="col-xs-12">
-				<h3 class="header smaller lighter green">APP使用统计</h3>
-				<div class="col-sm-12" style="height: 350px;" id="AppRunNum"></div>
-				<!-- row -->
-			</div>
-		</div>
-		<!-- row -->
-		<div class="row">
-			<div class="col-xs-12">
-				<h3 class="header smaller lighter green">用户运行统计</h3>
-				<div class="col-sm-12" style="height: 350px;" id="UserRunNum"></div>
-			</div>
-		</div>
 	</div>
 </div>
 <!-- /.page-content -->

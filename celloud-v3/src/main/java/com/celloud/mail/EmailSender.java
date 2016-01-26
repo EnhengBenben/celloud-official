@@ -233,15 +233,30 @@ public class EmailSender {
      */
     public EmailSender attach(String... files) {
         for (String file : files) {
-            MimeBodyPart fattach = new MimeBodyPart();
-            FileDataSource fds = new FileDataSource(file);
-            try {
-                fattach.setDataHandler(new DataHandler(fds));
-                fattach.setFileName(MimeUtility.encodeWord(fds.getName(), "GB2312", null));
-                multipart.addBodyPart(fattach);
-            } catch (MessagingException | UnsupportedEncodingException e) {
-                logger.error("添加附件失败：{}", file, e);
+            attachWithFileName(null, file);
+        }
+        return this;
+    }
+
+    /**
+     * 添加附件，自定义附件名称
+     * 
+     * @param name
+     * @param file
+     * @return
+     */
+    public EmailSender attachWithFileName(String name, String file) {
+        MimeBodyPart fattach = new MimeBodyPart();
+        FileDataSource fds = new FileDataSource(file);
+        try {
+            fattach.setDataHandler(new DataHandler(fds));
+            if (name == null || name.equals("")) {
+                name = fds.getName();
             }
+            fattach.setFileName(MimeUtility.encodeWord(name, "GB2312", null));
+            multipart.addBodyPart(fattach);
+        } catch (MessagingException | UnsupportedEncodingException e) {
+            logger.error("添加附件失败：{}", file, e);
         }
         return this;
     }

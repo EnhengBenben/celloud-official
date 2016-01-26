@@ -33,7 +33,7 @@
 				<div class="xe-widget xe-counter-block" data-count=".num" data-from="0" data-to="${resultMap.dataNum}" data-suffix="(个)" data-duration="2">
 					<div class="xe-upper">
 						<div class="xe-label">
-							<strong>数据量:</strong>
+							<strong>数据个数:</strong>
 							<strong class="num">${resultMap.dataNum}(个)</strong>
 						</div>
 					</div>
@@ -61,9 +61,9 @@
 			<h3 class="header smaller lighter green">大客户数据增量曲线图</h3>
 			<div class="col-xs-12" style="height: 350px;" id="bigUserFileNumView"></div>
 		</c:if>
-		<h3 class="header smaller lighter green">数据量统计</h3>
-		<div class="col-xs-12" style="height: 350px;" id="fileNumView"></div>
-		<div class="col-xs-12" style="height: 350px;" id="fileTotalNum"></div>
+		<h3 class="header smaller lighter green">数据个数统计</h3>
+		<div class="col-xs-12" style="height: 250px;" id="fileNumView"></div>
+		<div class="col-xs-12" style="height: 250px;" id="fileTotalNum"></div>
 		<div class="col-xs-12">
 			<div class="table-header hide" id="_companyName"></div>
 			<c:if test="${resultMap.dataList!=null && fn:length(resultMap.dataList) > 0}">
@@ -73,8 +73,8 @@
 							<thead>
 								<tr>
 									<th>上传月份</th>
-									<th>数据量(个)</th>
-									<th>数据大小(GB)</th>
+									<th>数据个数(个)</th>
+									<th>数据大小</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -150,13 +150,19 @@
 		}
 		
 		var fileNumOpt = makeOptionScrollUnit(xAxis, yAxis, '数据增量曲线图', lineType, 100, xAxis.length, "阴影");
-		var fileTotalOpt = makeOptionScrollUnit(xAxis, yAxisCount, "数据量累计图", lineType, 100, xAxis.length,null,null,"test");
+		var fileTotalOpt = makeOptionScrollUnit(xAxis, yAxisCount, '', lineType, 100, xAxis.length, null, null, "test");
 		
-		var fileNumChart = echarts.init(document.getElementById('fileNumView'));
-		var fileTotalNum = echarts.init(document.getElementById('fileTotalNum'));
+	//	var demo = makeOptionScrollUnit(xAxis, yAxisCount, '', lineType, 100, xAxis.length, null, null, "test");
+		fileNumOpt.legend.data[fileNumOpt.legend.data.length]="数据个数累计图";
+	//	fileNumOpt.series[1] = demo.series[0];
+		
+		fileTotalOpt.grid={x:80,y:0,x2:80,y2:100};
+		var fileNumChart = echarts.init(document.getElementById('fileNumView'),themes.green);
+		var fileTotalNum = echarts.init(document.getElementById('fileTotalNum'),themes.green);
 		fileTotalNum.setOption(fileTotalOpt);
 		fileNumChart.setOption(fileNumOpt);
-		
+		fileNumChart.connect([ fileTotalNum ]);
+		fileTotalNum.connect([ fileNumChart ]);
 	});
 	
 	jQuery(function($) {
