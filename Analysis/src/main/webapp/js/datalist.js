@@ -5,7 +5,6 @@ var UserFileNumId = "userFileNum";
 
 $.get(UserDataURL, {'orderType':"fileNum"}, function(data) {
 	data = data==null?[]:data;
-	console.log(data);
 	var xAxis = new Array(data.length);
 	var yAxis = new Array(data.length);
 	for (var i = 0; i < data.length; i++) {

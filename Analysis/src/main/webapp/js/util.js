@@ -255,14 +255,3 @@ jQuery.fn.dataTableExt.oSort['filesize-asc'] = function(a, b) {
 var Env = {
 	"dev_mode" : true,
 }
-function logReq(url, msg) {
-	if (Env.dev_mode) {
-		console.log("URL:" + url)
-		console.log(msg);
-	}
-}
-function logRes(msg) {
-	if (Env.dev_mode) {
-		console.log(msg);
-	}
-}

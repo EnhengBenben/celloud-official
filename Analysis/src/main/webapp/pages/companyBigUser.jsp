@@ -94,7 +94,6 @@
 	});
 	function getCompanyBigUesr() {
 		$.get(GetCompanyNumURL, {}, function(data) {
-			console.log(data);
 			var xAxis = new Array(data.length);
 			var yAxis = new Array(data.length);
 			for (var i = 0; i < data.length; i++) {

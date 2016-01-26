@@ -47,7 +47,6 @@
 <script type="text/javascript">
 	var id = $("#_app_id").html();
 	var vid = "appRun";
-	console.log(id);
 	$.get("app!getAppRun", {
 		"app.app_id" : id
 	}, function(res) {
