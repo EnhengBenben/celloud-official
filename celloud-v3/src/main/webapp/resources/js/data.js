@@ -198,7 +198,7 @@ function _init_data(){
         var runAppIds = o.runAppIds;
         o.runAppIds.splice($.inArray(appId,runAppIds),1);
         $(Obj).removeClass("selected");
-        if(runAppIds.length==0){
+        if(o.runAppIds.length==0){
           $("#run-btn").attr("disabled",true);
         }
       }else{
