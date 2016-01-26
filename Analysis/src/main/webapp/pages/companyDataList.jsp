@@ -22,7 +22,7 @@
 <div class="col-xs-12" >
 	<div class="row">
 		<div class="table-header hide" id="_companyName"></div>
-		<h3 class="header smaller lighter green">数据个数统计</h3>
+		<h3 class="header smaller lighter green">医院数据个数统计</h3>
 		<div class="col-xs-12" style="height: 350px;" id="fileNumView"></div>
 		<c:if test="${cmpList!=null&&fn:length(cmpList) > 0}">
 			<div class="col-xs-11 table-responsive table-div">

@@ -62,7 +62,6 @@ public class UserAction extends BaseAction {
 	private Date endDate;
 	private String orderType; // 1文件数量,2数据大小
 	private int topN = 0;
-	private String groupType; // 按周、月分组、
 	private List<Integer> userIds;
 	private Map<String, Object> resultMap;
 
@@ -116,10 +115,6 @@ public class UserAction extends BaseAction {
 	}
 
 	public String toUserActivity() {
-		// Integer cmpId = (Integer) getCid();
-		// Integer role = (Integer) super.session.get(User.USER_ROLE);
-		// userList = userService.getUserByCompany(cmpId, role);
-		// log.info(userList.size());
 		return "toUserActivity";
 	}
 

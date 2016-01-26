@@ -65,3 +65,6 @@
 .data-table .create-date{
   min-width: 80px;
 }
+.data-search input[type="text"]{
+  padding:0px 9px;
+}

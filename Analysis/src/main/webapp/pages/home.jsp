@@ -42,7 +42,7 @@
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-12 home-numbers">
-						<ul>
+						<ul style='margin-left:15px'>
 							<li>
 								<a class="number">${resultMap.companyNum }</a>
 								<div class="info">

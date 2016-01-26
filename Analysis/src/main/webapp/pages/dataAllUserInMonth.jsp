@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="s" uri="/struts-tags"%>
-<div class="col-xs-12" style="height: 350px;" id="monthechartView"></div>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%><div class="col-xs-12" style="height: 350px;" id="monthechartView"></div>
 <table id="userMonthDataList"
 	class="table table-striped table-bordered table-hover">
 	<thead>
@@ -13,15 +14,15 @@
 	</thead>
 
 	<tbody>
-		<s:if test="%{list.size()>0}">
-			<s:iterator id="data" value="list">
+		<c:if test="${list!=null && fn:length(list) > 0 }">
+			  <c:forEach items="${list }" var="data">
 				<tr>
 					<td>${data.username }</td>
 					<td>${data.company_name }</td>
 					<td>${data.num }</td>
 				</tr>
-			</s:iterator>
-		</s:if>
+			</c:forEach>
+		</c:if>
 	</tbody>
 </table>
 <script type="text/javascript">
