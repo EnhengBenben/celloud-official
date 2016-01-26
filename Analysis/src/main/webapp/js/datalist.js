@@ -13,7 +13,7 @@ $.get(UserDataURL, {'orderType':"fileNum"}, function(data) {
 		yAxis[i] = data[i].fileNum;
 	}
 	var option = makeOptionScrollUnit( xAxis, yAxis, '数据个数', barType,0,20);
-	var myChart = echarts.init(document.getElementById(UserFileNumId),theme);
+	var myChart = echarts.init(document.getElementById(UserFileNumId),themes.helianthus);
 	myChart.setOption(option);
 });
 /*

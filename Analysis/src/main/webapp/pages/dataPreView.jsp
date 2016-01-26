@@ -157,8 +157,8 @@
 	//	fileNumOpt.series[1] = demo.series[0];
 		
 		fileTotalOpt.grid={x:80,y:0,x2:80,y2:100};
-		var fileNumChart = echarts.init(document.getElementById('fileNumView'));
-		var fileTotalNum = echarts.init(document.getElementById('fileTotalNum'));
+		var fileNumChart = echarts.init(document.getElementById('fileNumView'),themes.green);
+		var fileTotalNum = echarts.init(document.getElementById('fileTotalNum'),themes.green);
 		fileTotalNum.setOption(fileTotalOpt);
 		fileNumChart.setOption(fileNumOpt);
 		fileNumChart.connect([ fileTotalNum ]);

@@ -65,8 +65,8 @@
 					<table id="newCompanyList" class="table table-striped table-bordered table-hover">
 						<thead>
 							<tr>
-								<th class="hidden-480">医院编码</th>
-								<th class="hidden-480">医院新增数量</th>
+								<th class="min-w-200">月份</th>
+								<th class="min-w-200">医院新增数量</th>
 							</tr>
 						</thead>
 						<tbody>

@@ -64,10 +64,10 @@ public class ReportDaoImpl implements ReportDao {
 
 	@Override
 	public List<Map<String, Object>> getCompanyRunEachApp(Connection conn, Integer role, Integer cmpId) {
-		String sql = "select u.company_id,c.company_name,r.app_id,p.app_name,count(r.report_id)as runNum from tb_report r,tb_user_company_relat uc,tb_company c,tb_app p,tb_user u where u.company_id = c.company_id and r.user_id = uc.user_id "
-				+ " and r.user_id = u.user_id and r.app_id = p.app_id and  r.user_id not in ( " + noUserid + ")  "
-				+ SqlController.whereCompany("uc", "company_id", role, cmpId)
-				+ " group by r.app_id,uc.company_id order by runNum desc";
+		String sql = "select sum(p.data_num)as runNum,u.company_id,r.app_id from tb_project p left join tb_report r on p.project_id = r.project_id "
+				+ " left join tb_user u on p.user_id = u.user_id left join tb_user_company_relat uc on p.user_id = uc.user_id where "
+				+ " p.user_id not in ( " + noUserid + ")  "
+				+ SqlController.whereCompany("uc", "company_id", role, cmpId) + " group by r.app_id,u.company_id ";
 		LogUtil.info(log, sql);
 		List<Map<String, Object>> res = new ArrayList<>();
 		try {
