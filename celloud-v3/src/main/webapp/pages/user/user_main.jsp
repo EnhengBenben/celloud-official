@@ -110,7 +110,13 @@
 							</div>
 						</form>
 					</div>
-					<div class="common-normal common-slide common-normals hide" id="operlog"></div>
+					<div class="common-normal common-slide common-normals hide" id="operlog">
+					   <table class="table_" style="text-align: center;">
+					       <tr>
+					           <td>数据加载中。。。</td>
+					       </tr>
+					   </table>
+					</div>
 				</div>
 			</div>
 		</div>
