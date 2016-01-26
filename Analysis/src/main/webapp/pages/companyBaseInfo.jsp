@@ -52,7 +52,10 @@
 </div>
 <script>
 	jQuery(function($) {
-		var cells = document.getElementById("allUserDataList").rows.item(0).cells.length;
+		var cells = null
+		if (document.getElementById("allUserDataList")!= null) {
+			cell = document.getElementById("allUserDataList").rows.item(0).cells.length;
+		}
 		var arrLen = new Array(cells);
 		$.each(arrLen, function(index, value) {
 			arrLen[index] = null;

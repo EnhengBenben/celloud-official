@@ -4,11 +4,27 @@ var AppRunNumURL = "home!appRunNum";
 var LoginNumURL = "home!loginNum"
 
 // auto load
-UserRunNum();
-AppRunNum();
-LoadBrowser();
-LoginNum();
+
 //
+$(document).ready(function() {
+	UserRunNum();
+	AppRunNum();
+	
+	LoginNum();
+	var role = $("#_user_role").html();
+	if (role == 2) {
+		LoadBrowser();
+	}
+	$.get("company!getProvince", function(result) {
+		var data = "[";
+		for ( var i in result) {
+			var map = result[i];
+			data += "{name: '" + map['province'] + "', value: " + map['num'] + "},";
+		}
+		data += "]";
+		chars(eval(data));
+	});
+});
 function tableswitch(id) {
 	$("#" + id).toggle();
 }
@@ -23,8 +39,8 @@ function LoginNum() {
 			xAxis[i] = data[i].user_name;
 			yAxis[i] = data[i].logNum;
 		}
-		var option = makeOptionScrollUnit( xAxis, yAxis, '登陆次数', 'bar', 0, 20);
-		var myChart = echarts.init(document.getElementById(viewId),themes.helianthus);
+		var option = makeOptionScrollUnit(xAxis, yAxis, '登陆次数', 'bar', 0, 20);
+		var myChart = echarts.init(document.getElementById(viewId), themes.helianthus);
 		myChart.setOption(option);
 	});
 }
@@ -40,7 +56,7 @@ function AppRunNum() {
 			yAxis[i] = data[i].runNum;
 		}
 		var option = makeOptionScrollUnit(xAxis, yAxis, '运行次数', 'bar', 0, 10);
-		var myChart = echarts.init(document.getElementById(viewId),themes.blue);
+		var myChart = echarts.init(document.getElementById(viewId), themes.blue);
 		myChart.setOption(option);
 	});
 }
@@ -55,7 +71,7 @@ function UserRunNum() {
 			yAxis[i] = data[i].runNum;
 		}
 		var option = makeOptionScrollUnit(xAxis, yAxis, '运行次数', 'bar', 0, 10);
-		var myChart = echarts.init(document.getElementById(viewId),themes.green);
+		var myChart = echarts.init(document.getElementById(viewId), themes.green);
 		myChart.setOption(option);
 	});
 }
@@ -66,7 +82,7 @@ function LoadBrowser() {
 	if (document.getElementById(viewId) == null)
 		return;
 	$.get(BrowserURL, {}, function(data) {
-		data = data==null?[]:data;
+		data = data == null ? [] : data;
 		var vlist = new Array(data.length);
 		var yAxis = new Array(data.length);
 		var legendName = new Array(data.length);
@@ -79,12 +95,12 @@ function LoadBrowser() {
 			};
 		}
 		var opt = makePieOption('', legendName, '客户端使用', '60%', '50%', '55%', vlist);
-		var myChart = echarts.init(document.getElementById(viewId),blue);
+		var myChart = echarts.init(document.getElementById(viewId), blue);
 		myChart.setOption(opt);
 	});
 }
 function chars(data) {
-	var myChart = echarts.init(document.getElementById('map'),mint);
+	var myChart = echarts.init(document.getElementById('map'), mint);
 	option = {
 		title : {
 			text : '',
@@ -93,16 +109,16 @@ function chars(data) {
 		tooltip : {
 			trigger : 'item'
 		},
-	    roamController: {
-	        show: true,
-	        x: 'right',
-	        mapTypeControl: {
-	            'china': true
-	        }
-	    },
+		roamController : {
+			show : true,
+			x : 'right',
+			mapTypeControl : {
+				'china' : true
+			}
+		},
 		dataRange : {
-			x:'right',
-			y:'bottom',
+			x : 'right',
+			y : 'bottom',
 			min : 0,
 			max : 10,
 			calculable : true,
@@ -122,19 +138,22 @@ function chars(data) {
 			}
 		},
 		series : [ {
-			name : 'pm2.5',
+			name : 'company',
 			type : 'map',
 			mapType : 'china',
-			roam: false,
-			mapLocation:{
-				x:60,
-				width:"600",
-				height:"500"
+			roam : false,
+			mapLocation : {
+				x : 60,
+				width : "600",
+				height : "500"
 			},
 			hoverable : false,
 			data : [],
-			scaleLimit:{min:0.9,max:1.1},
-			selectedMode:'single',
+			scaleLimit : {
+				min : 0.9,
+				max : 1.1
+			},
+			selectedMode : 'single',
 			itemStyle : {
 				normal : {
 					label : {
@@ -203,14 +222,3 @@ function chars(data) {
 	};
 	myChart.setOption(option);
 }
-$(document).ready(function() {
-	$.get("company!getProvince", function(result) {
-		var data = "[";
-		for ( var i in result) {
-			var map = result[i];
-			data += "{name: '" + map['province'] + "', value: " + map['num'] + "},";
-		}
-		data += "]";
-		chars(eval(data));
-	});
-});

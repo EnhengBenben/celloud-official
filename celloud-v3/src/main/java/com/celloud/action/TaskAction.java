@@ -287,8 +287,8 @@ public class TaskAction {
 	@RequestMapping("toolsRunOver.html")
     @ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public String toolsRunOver(Integer userId, Integer appId, Integer projectId, Integer state, String context) {
-		Integer result = reportService.updateReportStateToTools(userId, appId, projectId, state, context);
+	public String toolsRunOver(Integer userId, Integer appId, Integer projectId, Integer period, String context) {
+		Integer result = reportService.updateReportStateToTools(userId, appId, projectId, period, context);
 		return String.valueOf(result);
 	}
 

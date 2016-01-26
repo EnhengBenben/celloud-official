@@ -87,8 +87,8 @@
 </div>
 <script>
 $(document).ready(function(){
-	$("#cfda").find("thead").html("<tr><th>File Name<br>(文件名)</th><th style='min-width: 60px;'>Subtype<br>(亚型)</th><th style='min-width: 90px;'>Subject Name<br>(参考序列名)</th><th style='min-width: 60px;'>Identity<br>(相似度)</th><th style='min-width: 170px;'>Overlap/total<br>(比对上的长度/比对的总长度)</th><th style='min-width: 70px;'>E_value<br>(期望值)</th><th style='min-width: 50px;'>Score<br>(比分)</th></tr>");
-	$("#nomal").find("thead").html("<tr><th>File Name<br>(文件名)</th><th style='min-width: 60px;'>Subtype<br>(亚型)</th><th style='min-width: 90px;'>Subject Name<br>(参考序列名)</th><th style='min-width: 60px;'>Identity<br>(相似度)</th><th style='min-width: 170px;'>Overlap/total<br>(比对上的长度/比对的总长度)</th><th style='min-width: 70px;'>E_value<br>(期望值)</th><th style='min-width: 50px;'>Score<br>(比分)</th></tr>");
+	$("#cfda").find("thead").html("<tr><th>File Name<br>(文件名)</th><th style='min-width: 70px;'>Subtype<br>(亚型)</th><th style='min-width: 100px;'>Subject Name<br>(参考序列名)</th><th style='min-width: 80px;'>Identity<br>(相似度)</th><th style='min-width: 200px;'>Overlap/total<br>(比对上的长度/比对的总长度)</th><th style='min-width: 70px;'>E_value<br>(期望值)</th><th style='min-width: 50px;'>Score<br>(比分)</th></tr>");
+	$("#nomal").find("thead").html("<tr><th>File Name<br>(文件名)</th><th style='min-width: 70px;'>Subtype<br>(亚型)</th><th style='min-width: 100px;'>Subject Name<br>(参考序列名)</th><th style='min-width: 80px;'>Identity<br>(相似度)</th><th style='min-width: 200px;'>Overlap/total<br>(比对上的长度/比对的总长度)</th><th style='min-width: 70px;'>E_value<br>(期望值)</th><th style='min-width: 50px;'>Score<br>(比分)</th></tr>");
 	$("#cfda").find("td").each(function(i){
 		$(this).css("word-break","break-all");
 		$(this).css("word-wrap","break-word");

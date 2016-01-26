@@ -570,9 +570,10 @@ public class ReportServiceImpl implements ReportService {
                 line.append(d.getFileName()).append("(").append(d.getDataKey())
                         .append(")").append("\t");
             }
-            line.append(cmp.getAllFragment()).append("\t");
-            line.append(cmp.getUsableFragment()).append("\t");
-            line.append(cmp.getAvgCoverage()).append("\t");
+            line.append(cmp.getAllFragment().replaceAll("\n", "")).append("\t");
+            line.append(cmp.getUsableFragment().replaceAll("\n", ""))
+                    .append("\t");
+            line.append(cmp.getAvgCoverage().replaceAll("\n", "")).append("\t");
             if (cmp.getCmpGeneResult() != null) {
                 for (GeneDetectionResult gene : cmp.getCmpGeneResult()) {
                     line.append(gene.getGeneName()).append(":")
@@ -677,6 +678,7 @@ public class ReportServiceImpl implements ReportService {
         report.setFlag(ReportType.DATA);
         report.setPeriod(ReportPeriod.COMPLETE);
         report.setState(DataState.ACTIVE);
+        report.setEndDate(new Date());
         reportMapper.updateReportPeriod(report);
         report.setFlag(ReportType.PROJECT);
         report.setContext(context);
@@ -694,7 +696,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	@Override
-	public Integer updateReportStateToTools(Integer userId, Integer appId, Integer projectId, Integer state,
+	public Integer updateReportStateToTools(Integer userId, Integer appId, Integer projectId, Integer period,
 			String context) {
 		if (context != null) {
 			context = context.replaceAll(" ", "+");
@@ -704,15 +706,17 @@ public class ReportServiceImpl implements ReportService {
 		report.setUserId(userId);
 		report.setAppId(appId);
 		report.setProjectId(projectId);
-		report.setPeriod(state);
+		report.setPeriod(period);
 		List<DataFile> list = dataMapper.getDatasInProject(projectId);
 		for (DataFile data : list) {
 			report.setFileId(data.getFileId());
 			report.setFlag(ReportType.DATA);
+			report.setEndDate(new Date());
 			reportMapper.updateReport(report);
 		}
 		report.setFlag(ReportType.PROJECT);
 		report.setContext(context);
+		report.setEndDate(new Date());
 		return reportMapper.updateReport(report);
 	}
 }

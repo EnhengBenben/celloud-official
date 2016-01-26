@@ -114,6 +114,7 @@ public class HomeAction extends BaseAction {
 	public String getPreDataViewBigUesrNewCmp() {
 		try {
 			resultMap = homeService.getPreDataViewBigUesrNewCmp();
+			log.info(resultMap);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

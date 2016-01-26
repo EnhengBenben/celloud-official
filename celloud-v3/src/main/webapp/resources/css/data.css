@@ -1,10 +1,11 @@
 @CHARSET "UTF-8";
 .types-options {
+	min-width: 140px;
 	padding: 16px 0;
 	background: #fff;
 	color: #78bc28;
 	border: 1px solid #bede68;
-	font-size: 16px;
+	font-size: 14px;
 	margin: 0 1px 3px 1px;
 	cursor: pointer;
 	display: inline-block;
@@ -35,6 +36,8 @@
   max-width: 570px;
   word-break:break-all;
   word-wrap:break-word;
+  line-height: 12px;
+  text-align: left;
 }
 .data-table th,
 .data-table td{
@@ -64,4 +67,7 @@
 }
 .data-table .create-date{
   min-width: 80px;
+}
+.data-search input[type="text"]{
+  padding:0px 9px;
 }

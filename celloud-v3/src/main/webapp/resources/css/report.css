@@ -204,3 +204,14 @@ only screen and (min-device-pixel-ratio: 2) {
     position: relative;
     padding-left:10px
 }
+
+.datareport-title dt{
+	width:80px;
+	font-weight: normal;
+}
+.datareport-title dd{
+    margin-left:100px;
+}
+.lineheight{
+    line-height: 30px;
+}

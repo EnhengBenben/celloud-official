@@ -114,25 +114,41 @@
 <script type="text/javascript">
 	var getUsersMonthDataURL = "data!getUsersMonthData";
 	var getBigUserMonthURL = "data!getAllBigUserMonthData";
-	$.get(getBigUserMonthURL, {}, function(data) {
-		var listCmp = data["companyNames"];
-		var xAxis = data["xAxis"];
-		var opt
-		for (var i = 0; i < listCmp.length; i++) {
-			var temp = data[listCmp[i]];
-			var yAxis = new Array(temp.length);
-			for (var j = 0; j < temp.length; j++) {
-				yAxis[j] = temp[j].fileNum;
-			}
-			if (i == 0) {
-				opt = makeOptionScrollUnit(xAxis, yAxis, listCmp[0], lineType, 100, xAxis.length);
-			} else {
-				opt = makeOptionAdd(opt, yAxis, listCmp[i], lineType);
-			}
-		}
-		var bigUserView = echarts.init(document.getElementById('bigUserFileNumView'));
-		bigUserView.setOption(opt);
-	});
+	   jQuery(function($) {
+		   var role = $("#_user_role").html();
+		    if (role == 2) {
+		        loadAdminView();
+		    }
+	        var oTable1 = $('#MonthDataList').dataTable({
+	            "aoColumns" : [ null, null, {
+	                "sType" : "filesize"
+	            } ],
+	            iDisplayLength : 10,
+	            "aaSorting" : [ [ 0, "desc" ] ],
+	        });
+	    });
+	function loadAdminView(){
+		$.get(getBigUserMonthURL, {}, function(data) {
+	        var listCmp = data["companyNames"];
+	        var xAxis = data["xAxis"];
+	        var opt
+	        for (var i = 0; i < listCmp.length; i++) {
+	            var temp = data[listCmp[i]];
+	            var yAxis = new Array(temp.length);
+	            for (var j = 0; j < temp.length; j++) {
+	                yAxis[j] = temp[j].fileNum;
+	            }
+	            if (i == 0) {
+	                opt = makeOptionScrollUnit(xAxis, yAxis, listCmp[0], lineType, 100, xAxis.length,null,null,"hideItem");
+	            } else {
+	                opt = makeOptionAdd(opt, yAxis, listCmp[i], lineType);
+	            }
+	        }
+	        var bigUserView = echarts.init(document.getElementById('bigUserFileNumView'));
+	        bigUserView.setOption(opt);
+	    });
+	}
+	
 	
 	$.get(getUsersMonthDataURL, {}, function(data) {
 		var xAxis = new Array(data.length);
@@ -149,30 +165,23 @@
 		}
 		
 		var fileNumOpt = makeOptionScrollUnit(xAxis, yAxis, '数据增量曲线图', lineType, 100, xAxis.length, "阴影");
-		var fileTotalOpt = makeOptionScrollUnit(xAxis, yAxisCount, '', lineType, 100, xAxis.length, null, null, "test");
+		var fileTotalOpt = makeOptionScrollUnit(xAxis, yAxisCount, '数据个数累计图', lineType, 100, xAxis.length, null, null, "test");
 		
-	//	var demo = makeOptionScrollUnit(xAxis, yAxisCount, '', lineType, 100, xAxis.length, null, null, "test");
+		var demo = makeOptionScrollUnit(xAxis, [], '数据个数累计图', lineType, 100, xAxis.length, null, null, "test");
 		fileNumOpt.legend.data[fileNumOpt.legend.data.length]="数据个数累计图";
-	//	fileNumOpt.series[1] = demo.series[0];
+		demo.series[0]
+		fileNumOpt.series[1] = demo.series[0];
 		
 		fileTotalOpt.grid={x:80,y:0,x2:80,y2:100};
 		var fileNumChart = echarts.init(document.getElementById('fileNumView'),themes.green);
 		var fileTotalNum = echarts.init(document.getElementById('fileTotalNum'),themes.green);
+		fileTotalOpt.legend.y=-30;
 		fileTotalNum.setOption(fileTotalOpt);
 		fileNumChart.setOption(fileNumOpt);
-		fileNumChart.connect([ fileTotalNum ]);
-		fileTotalNum.connect([ fileNumChart ]);
+		fileNumChart.connect([fileTotalNum ]);
+		fileTotalNum.connect([fileNumChart ]);
 	});
 	
-	jQuery(function($) {
-		var oTable1 = $('#MonthDataList').dataTable({
-			"aoColumns" : [ null, null, {
-				"sType" : "filesize"
-			} ],
-			iDisplayLength : 10,
-			"aaSorting" : [ [ 0, "desc" ] ],
-		});
-	});
 </script>
 <script type="text/javascript" src="./js/joinable.js"></script>
 <script type="text/javascript" src="./js/xenon-custom.js"></script>

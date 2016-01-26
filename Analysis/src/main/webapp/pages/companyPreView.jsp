@@ -52,7 +52,7 @@
 				</div>
 			</div>
 		</div>
-		<h3 class="header smaller lighter green ">大客户新增用户统计</h3>
+		<h3 class="header smaller lighter green ">新增用户统计</h3>
 		<c:if test="${ userRole=='2'}">
 			<div id="newCmpBigUser" style="height: 300px;"></div>
 		</c:if>
@@ -91,8 +91,6 @@
 				</div>
 			</div>
 		</div>
-
-
 	</div>
 </div>
 <script type="text/javascript">
@@ -106,6 +104,10 @@
 			}
 			data += "]";
 			showView(eval(data));
+			var role = $("#_user_role").html();
+			if (role == 2) {
+				loadAdminView();
+			}
 		});
 		
 		var oTable1 = $('#newCompanyList').dataTable({
@@ -116,26 +118,28 @@
 	});
 	
 	var getBigUserMonthNewCmpURL = "home!getPreDataViewBigUesrNewCmp";
-	$.get(getBigUserMonthNewCmpURL, {}, function(data) {
-		var listCmp = data["companyNames"];
-		var xAxis = data["xAxis"];
-		var opt
-		for (var i = 0; i < listCmp.length; i++) {
-			var temp = data[listCmp[i]];
-			var yAxis = new Array(temp.length);
-			for (var j = 0; j < temp.length; j++) {
-				yAxis[j] = temp[j].num;
+	function loadAdminView() {
+		$.get(getBigUserMonthNewCmpURL, {}, function(data) {
+			var listCmp = data["companyNames"];
+			var xAxis = data["xAxis"];
+			var opt
+			for (var i = 0; i < listCmp.length; i++) {
+				var temp = data[listCmp[i]];
+				var yAxis = new Array(temp.length);
+				for (var j = 0; j < temp.length; j++) {
+					yAxis[j] = temp[j].num;
+				}
+				if (i == 0) {
+					opt = makeOptionScrollUnit(xAxis, yAxis, listCmp[0], lineType, 100, xAxis.length, null, null, "test");
+				} else {
+					opt = makeOptionAdd(opt, yAxis, listCmp[i], lineType);
+				}
 			}
-			if (i == 0) {
-				opt = makeOptionScrollUnit(xAxis, yAxis, listCmp[0], lineType, 100, xAxis.length, null, null, "test");
-			} else {
-				opt = makeOptionAdd(opt, yAxis, listCmp[i], lineType);
-			}
-		}
-		var bigUserView = echarts.init(document.getElementById('newCmpBigUser'));
-		bigUserView.setOption(opt);
-	});
-	
+			var bigUserView = echarts.init(document.getElementById('newCmpBigUser'));
+			bigUserView.setOption(opt);
+		});
+	}
+
 	function showView(data) {
 		option = {
 			title : {
@@ -153,6 +157,13 @@
 				calculable : true,
 				color : [ 'maroon', 'purple', 'red', 'orange', 'yellow', 'lightgreen' ]
 			},
+			 roamController : {
+		            show : true,
+		            x : 'right',
+		            mapTypeControl : {
+		                'china' : true
+		            }
+		        },
 			toolbox : {
 				show : true,
 				orient : 'vertical',
@@ -177,7 +188,7 @@
 					height : "500"
 				},
 				hoverable : false,
-				roam : true,
+				roam : false,
 				data : [],
 				scaleLimit : {
 					min : 0.9,
@@ -288,16 +299,27 @@
 			}
 			
 			var option = makeOptionScrollUnit(xAxis, yAxis, "月新增医院数量", lineType, 100, xAxis.length);
-			
 			var newoption = makeOptionScrollUnit(xAxis, yAxisAdd, "新增医院累积曲线图", lineType, 100, xAxis.length, "阴影");
 			
-			//	option = makeOptionAdd(option, yAxisAdd, "新增医院累积曲线图", lineType);
+			var demo = makeOptionScrollUnit(xAxis, [], '新增医院累积曲线图', lineType, 100, xAxis.length, null, null, "hide");
+			option.legend.data[option.legend.data.length] = "新增医院累积曲线图";
+			option.series[1] = demo.series[0]; //图一显示图二的legend
+			newoption.grid = {
+				x : 80,
+				y : 0,
+				x2 : 80,
+				y2 : 100
+			}; //两图距离
+			newoption.legend.y = -30;//隐藏图二的legend
 			
 			// 基于准备好的dom，初始化echarts图表
 			var myChart = echarts.init(document.getElementById('main'));
 			var newCompany = echarts.init(document.getElementById('newCompany'));
 			newCompany.setOption(newoption);
 			myChart.setOption(option);
+			//两图联动
+			newCompany.connect([ myChart ]);
+			myChart.connect([ newCompany ]);
 		})
 	}
 </script>
