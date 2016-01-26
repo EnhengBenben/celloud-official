@@ -25,7 +25,7 @@
 	<div class="m-box">
 		<h2>
 			<i class="i-edit"></i>一、 已知突变位点（依据已发表文献，该突变位点有明确临床意义）
-			<span style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal')"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></span>
+			<span style="float:right;padding-right: 30px;padding-top: 8px;" title="帮助" onclick="showModal('helpModal')"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></div></span>
 		</h2>
 	    <div class="m-boxCon result">
 	    	<div id="knowResult">
@@ -55,7 +55,7 @@
 	<div class="m-box">
 		<h2>
 			<i class="i-edit"></i>二、 未知突变位点（该突变位点目前没有已发表文献支持，无明确临床意义）
-			<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal')"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
+			<div style="float:right;padding-right: 30px;padding-top: 8px;" title="帮助" onclick="showModal('helpModal')"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></div></div>
 		</h2>
 	    <div class="m-boxCon result">
 	    	<s:if test="%{!resultMap.wz2.equals('')}">
