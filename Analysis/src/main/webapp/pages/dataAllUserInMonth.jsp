@@ -29,9 +29,7 @@
 	var month = $("#_month").html();
 	loadMonthAllCompany(month);
 	function loadMonthAllCompany(month) {
-		console.log(month);
 		$.get("data!"+getUserDataInMonthJson, {"month":month}, function(data) {
-			console.log(data);
 			var xAxis = new Array(data.length);
 			var yAxis = new Array(data.length);
 			for (var i = 0; i < data.length; i++) {

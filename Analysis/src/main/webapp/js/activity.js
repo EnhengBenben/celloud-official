@@ -22,8 +22,6 @@ jQuery(function($) {
 		"aaSorting":[[2,"desc"]],
 		iDisplayLength : 10
 	});
-	
-	console.log("queue");
 })
 
 function loadActivityFile() {

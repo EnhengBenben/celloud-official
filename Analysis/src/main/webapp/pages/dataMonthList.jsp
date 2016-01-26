@@ -69,7 +69,6 @@
 <script type="text/javascript">
 	var getUsersMonthDataURL = "data!getUsersMonthData";
 	$.get(getUsersMonthDataURL, {}, function(data) {
-		console.log(data);
 		var xAxis = new Array(data.length);
 		var yAxis = new Array(data.length);
 		var yAxisSize = new Array(data.length);
@@ -84,7 +83,6 @@
 		var fileSizeChart = echarts.init(document.getElementById('fileSizeView'));
 		var fileNumChart = echarts.init(document.getElementById('fileNumView'));
 		
-		console.log("test");
 		fileSizeChart.setOption(fileSizeOpt);
 		fileNumChart.setOption(fileNumOpt);
 		
