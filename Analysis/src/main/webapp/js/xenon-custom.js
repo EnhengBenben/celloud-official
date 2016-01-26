@@ -1596,8 +1596,6 @@ function attrDefault($el, data_var, default_val)
 function callback_test()
 {
 	alert("Callback function executed! No. of arguments: " + arguments.length + "\n\nSee console log for outputed of the arguments.");
-	
-	console.log(arguments);
 }
 
 

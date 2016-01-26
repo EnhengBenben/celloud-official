@@ -15,16 +15,12 @@ $(document).ready(function() {
 localMonth();
 function localWeek()
 {
-	console.log(showWeekFirstDay());
-	console.log(showWeekLastDay());
 	$("#timeId").val(showWeekFirstDay());
 	$('#timeId2').val(showWeekLastDay());
 	loadActivity();
 }
 function localMonth()
 {
-	console.log(showMonthFirstDay());
-	console.log(showMonthLastDay());
 	$("#timeId").val(showMonthFirstDay());
 	$('#timeId2').val(showMonthLastDay());
 	loadActivity();

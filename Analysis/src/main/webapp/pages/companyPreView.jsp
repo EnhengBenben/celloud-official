@@ -259,7 +259,6 @@
 					str += p + ' ';
 				}
 			}
-			console.log(str);
 			$.post("company!getCompanyProvince", {
 				"company.province" : str.replace(/(^\s*)|(\s*$)/g, '')
 			}, function(result) {
