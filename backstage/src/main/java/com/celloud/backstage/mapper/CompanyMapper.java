@@ -26,7 +26,9 @@ public interface CompanyMapper {
      * @author han
      * @date 2016年1月25日 下午1:44:53
      */
-    List<Company> getComanyByPage(@Param("state") int state,Page page);
+    public List<Company> getComanyByPage(@Param("state") int state,Page page);
+    
+    public List<Company> getComanyList(@Param("state") int state);
     
     public int updateCompany(Company company);
     

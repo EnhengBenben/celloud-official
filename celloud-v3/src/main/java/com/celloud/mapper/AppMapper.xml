@@ -372,7 +372,7 @@
     from tb_app a 
     left join tb_app_format_relat af on a.app_id = af.app_id 
     left join tb_user_app_right ua on a.app_id=ua.app_id 
-    where af.format_id = #{formatId} and a.off_line = #{offLine} and ua.user_id=#{userId} 
+    where af.format_id = #{formatId} and a.off_line = #{offLine} and ua.user_id=#{userId} and ua.is_add=#{isAdd}
   </select>
   <select id="findAppsByIds" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" /> from tb_app where app_id in (${appIds})

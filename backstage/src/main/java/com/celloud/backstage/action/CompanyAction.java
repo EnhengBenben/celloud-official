@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
@@ -45,7 +46,7 @@ public class CompanyAction {
     @Resource
     private CompanyService companyService;
     @RequestMapping("company/companyMain")
-    public ModelAndView getAppByPage(@RequestParam(defaultValue = "1") int currentPage,
+    public ModelAndView getCompanyByPage(@RequestParam(defaultValue = "1") int currentPage,
              @RequestParam(defaultValue = "10") int size){
          ModelAndView mv=new ModelAndView("company/company_main");
          Page page = new Page(currentPage, size);
@@ -55,19 +56,16 @@ public class CompanyAction {
      }
     
     @RequestMapping("company/companyEdit")
-    public ModelAndView toCompanyEdit(@RequestParam("companyId") Integer companyId){
+    public ModelAndView toCompanyEdit(HttpServletRequest request){
         ModelAndView mv=new ModelAndView("company/company_edit");
-        Company company=companyService.getCompanyById(companyId);
-        mv.addObject("company", company);
-        mv.addObject("provinces", getCityByProvince(null));
-        if(company!=null&&StringUtils.isNotBlank(company.getProvince())){
-            mv.addObject("citys", getCityByProvince(company.getProvince()));
+        String companyId=request.getParameter("companyId");
+        if(StringUtils.isNotBlank(companyId)){
+            Company company=companyService.getCompanyById(Integer.parseInt(companyId));
+            mv.addObject("company", company);
+            if(company!=null&&StringUtils.isNotBlank(company.getProvince())){
+                mv.addObject("citys", getCityByProvince(company.getProvince()));
+            }
         }
-        return mv;
-    }
-    @RequestMapping("company/companyAdd")
-    public ModelAndView toCompanyAdd(){
-        ModelAndView mv=new ModelAndView("company/company_add");
         mv.addObject("provinces", getCityByProvince(null));
         return mv;
     }

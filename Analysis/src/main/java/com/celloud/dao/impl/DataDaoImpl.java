@@ -42,7 +42,9 @@ public class DataDaoImpl implements DataDao {
 			list = qr.query(conn, sql, new MapListHandler());
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -62,7 +64,9 @@ public class DataDaoImpl implements DataDao {
 			list = qr.query(conn, sql, rsh);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -76,7 +80,9 @@ public class DataDaoImpl implements DataDao {
 			list = qr.query(conn, sql, rsh, userId);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -89,7 +95,9 @@ public class DataDaoImpl implements DataDao {
 			list = qr.query(conn, sql, new MapListHandler(), companyId, userId, month);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -103,7 +111,9 @@ public class DataDaoImpl implements DataDao {
 			list = qr.query(conn, sql, new MapListHandler(), companyId, month);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -155,7 +165,9 @@ public class DataDaoImpl implements DataDao {
 		} catch (SQLException e) {
 			log.error("query:" + sql + "\n" + e);
 			e.printStackTrace();
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -175,7 +187,9 @@ public class DataDaoImpl implements DataDao {
 			list = qr.query(conn, sql, rsh, cmpId);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -192,7 +206,9 @@ public class DataDaoImpl implements DataDao {
 			list = qr.query(conn, sql, rsh);
 		} catch (SQLException e) {
 			LogUtil.erro(log, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 

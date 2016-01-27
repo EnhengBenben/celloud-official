@@ -86,6 +86,7 @@ public class UserAction extends BaseAction {
 		}
 		user = userService.login(user);
 		log.info(user);
+        System.out.println(user.getUsername());
 		/***
 		 * zuo role枚举 0:用户 1:大客户 2:超级管理员
 		 */

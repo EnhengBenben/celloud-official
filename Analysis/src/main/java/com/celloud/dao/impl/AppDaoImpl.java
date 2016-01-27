@@ -60,7 +60,9 @@ public class AppDaoImpl implements AppDao {
 			list = qr.query(conn, sql, rsh);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -79,7 +81,9 @@ public class AppDaoImpl implements AppDao {
 			soft = qr.query(conn, sql, rsh, appId);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return soft;
 	}
 
@@ -107,7 +111,9 @@ public class AppDaoImpl implements AppDao {
 		} catch (SQLException e) {
 			log.error("获取周APP运行次数列表失败:" + e);
 			e.printStackTrace();
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -135,7 +141,9 @@ public class AppDaoImpl implements AppDao {
 		} catch (SQLException e) {
 			log.error("获取APP各月运行次数列表失败:" + e);
 			e.printStackTrace();
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -153,7 +161,9 @@ public class AppDaoImpl implements AppDao {
 			list = qr.query(conn, sql, rsh);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -169,7 +179,9 @@ public class AppDaoImpl implements AppDao {
 			list = qr.query(conn, sql, rsh);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -185,7 +197,9 @@ public class AppDaoImpl implements AppDao {
 			list = qr.query(conn, sql, rsh);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -202,7 +216,9 @@ public class AppDaoImpl implements AppDao {
 			list = qr.query(conn, sql, rsh, app_id);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -220,7 +236,9 @@ public class AppDaoImpl implements AppDao {
 			list = qr.query(conn, sql, rsh, cmpId);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -260,7 +278,9 @@ public class AppDaoImpl implements AppDao {
 			list = qr.query(conn, sql, rsh);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -280,7 +300,9 @@ public class AppDaoImpl implements AppDao {
 			list = qr.query(conn, sql, rsh);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 

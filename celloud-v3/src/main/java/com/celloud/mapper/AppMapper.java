@@ -150,7 +150,7 @@ public interface AppMapper {
      */
     public List<App> findAppsByFormat(@Param("userId") Integer userId,
             @Param("formatId") Integer formatId,
-            @Param("offLine") Integer offLine);
+            @Param("offLine") Integer offLine, @Param("isAdd") Integer isAdd);
 
     /**
      * 批量获取APP列表
