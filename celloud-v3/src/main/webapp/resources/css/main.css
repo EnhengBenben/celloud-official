@@ -2828,3 +2828,25 @@ table.text-center th {
 .box .feedback-attachment-box{min-height: 120px;}
 .feedback-attachment{height: 60px;width:60px; margin: 5px 5px 5px 0px;padding: 0px;cursor: pointer;}
 .box pre{background-color: transparent;border: 0px;font-size: 14px;font-weight: 400;color: #5a5a5a;line-height: 1.5em}
+
+/*
+ ===========================
+ 报告主页
+ ===========================
+ */
+.report-search-div{
+  padding-left: 30px;
+  padding-bottom: 10px;
+  font-size: 12px;
+}
+.report-search-div label{
+  font-size:  12px;
+  font-weight: lighter;
+}
+.report-search-div a{
+  color: #5a5a5a;
+}
+.report-search-div ._datered,
+.report-search-div ._appred{
+  color: #CC0000;
+}

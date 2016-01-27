@@ -86,7 +86,7 @@
                     <td class="none">
                         ${report.app_id},${report.app_name},${report.project_id},${report.user_id}
                     </td>
-                    <td class="no" align="text-center">
+                    <td class="no">
                     	<c:if test="${report.period==3 }">
                     		${report.context }
                     	</c:if>
