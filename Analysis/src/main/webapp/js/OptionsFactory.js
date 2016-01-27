@@ -59,6 +59,7 @@ function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position, showNum
 	}
 	option = addArea(option, isArea);
 	option = addMakePoint(option,showPoint);
+	console.log(option.series[0].itemStyle.normal.label.show);
 	if(showItem!=null){
 		option.series[0].itemStyle.normal.label.show=false;
 	}
@@ -235,11 +236,11 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 				margin : 8,
 				formatter : '{value}',
 				textStyle : {
+					align:'center',
 					fontFamily : 'sans-serif',
 					fontSize : 12,
 					fontStyle : 'italic',
-					fontWeight : 'bold',
-					align : 'left'
+					fontWeight : 'bold'
 				}
 			},
 		} ],

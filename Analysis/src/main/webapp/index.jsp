@@ -325,6 +325,9 @@
 		};
 		var theme = themes.shine;
 		jQuery(function($) {
+			$.ajaxSetup ({
+			    cache: false //关闭AJAX相应的缓存
+			});
 			toHome();
 		});
 		/***控制台--总览**/

@@ -164,12 +164,12 @@
 			yAxisCount[i] = yAxisCount[i - 1] + yAxis[i];
 		}
 		
-		var fileNumOpt = makeOptionScrollUnit(xAxis, yAxis, '数据增量曲线图', lineType, 100, xAxis.length, "阴影");
-		var fileTotalOpt = makeOptionScrollUnit(xAxis, yAxisCount, '数据个数累计图', lineType, 100, xAxis.length, null, null, "test");
+		var fileNumOpt = makeOptionScrollUnit(xAxis, yAxis, '数据增量曲线图', lineType, 100, xAxis.length,null,null,'hide');
+		var fileTotalOpt = makeOptionScrollUnit(xAxis, yAxisCount, '数据个数累计图', lineType, 100, xAxis.length,null,null,'hide');
 		
-		var demo = makeOptionScrollUnit(xAxis, [], '数据个数累计图', lineType, 100, xAxis.length, null, null, "test");
+		var demo = makeOptionScrollUnit(xAxis, [], '数据个数累计图', lineType, 100, xAxis.length, 'isArea', null, "hide");
 		fileNumOpt.legend.data[fileNumOpt.legend.data.length]="数据个数累计图";
-		demo.series[0]
+		fileTotalOpt.series[0].itemStyle.normal.color=themes.green.color[1];
 		fileNumOpt.series[1] = demo.series[0];
 		
 		fileTotalOpt.grid={x:80,y:0,x2:80,y2:100};
