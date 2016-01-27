@@ -60,7 +60,9 @@ public class CompanyDaoImpl implements CompanyDao {
 			list = qr.query(conn, sql, new MapListHandler(), companyId);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -76,7 +78,9 @@ public class CompanyDaoImpl implements CompanyDao {
 			list = qr.query(conn, sql, rsh);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -96,7 +100,9 @@ public class CompanyDaoImpl implements CompanyDao {
 			list = qr.query(conn, sql, new MapListHandler());
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -115,7 +121,9 @@ public class CompanyDaoImpl implements CompanyDao {
 			list = qr.query(conn, sql, rsh);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -136,7 +144,9 @@ public class CompanyDaoImpl implements CompanyDao {
 			com = qr.query(conn, sql, rsh, compId);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return com;
 	}
 
@@ -152,7 +162,9 @@ public class CompanyDaoImpl implements CompanyDao {
 			list = qr.query(conn, sql, new MapListHandler());
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -171,7 +183,9 @@ public class CompanyDaoImpl implements CompanyDao {
 			list = qr.query(conn, sql, rsh, companyId);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -201,7 +215,9 @@ public class CompanyDaoImpl implements CompanyDao {
 			list = qr.query(conn, sql, rsh, companyId);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -219,7 +235,9 @@ public class CompanyDaoImpl implements CompanyDao {
 			list = qr.query(conn, sql, rsh);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -303,7 +321,9 @@ public class CompanyDaoImpl implements CompanyDao {
 			list = qr.query(conn, sql, new MapListHandler());
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 

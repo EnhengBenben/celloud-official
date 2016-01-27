@@ -65,6 +65,7 @@ public class HomeServiceImpl implements HomeService {
 		res.put("listApps", listApps);
 		res.put("userAppRun", userAppRun);
 		res.put("cmpList", cmpList);
+        ConnectManager.close(conn);
 		return res;
 	}
 

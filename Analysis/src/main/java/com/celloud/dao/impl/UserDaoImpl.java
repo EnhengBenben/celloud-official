@@ -43,7 +43,9 @@ public class UserDaoImpl implements UserDao {
 			user = qr.query(conn, sql.toString(), rsh, username, username, username, password);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return user;
 	}
 
@@ -74,7 +76,9 @@ public class UserDaoImpl implements UserDao {
 		} catch (SQLException e) {
 			log.error("获取大客户的所有客户信息出错。" + e);
 			e.printStackTrace();
-		}
+		}finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -97,7 +101,9 @@ public class UserDaoImpl implements UserDao {
 			list = qr.query(conn, sql, rsh);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+		}finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -112,7 +118,9 @@ public class UserDaoImpl implements UserDao {
 		} catch (SQLException e) {
 			log.error("根据用户id获取用户信息失败:" + e);
 			e.printStackTrace();
-		}
+		}finally {
+            ConnectManager.close(conn);
+        }
 		return user;
 	}
 
@@ -126,7 +134,9 @@ public class UserDaoImpl implements UserDao {
 			list = qr.query(conn, sql, rsh, userId);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -142,7 +152,9 @@ public class UserDaoImpl implements UserDao {
 			list = qr.query(conn, sql, rsh, userId);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -158,7 +170,9 @@ public class UserDaoImpl implements UserDao {
 			list = qr.query(conn, sql, rsh, userId);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -174,7 +188,9 @@ public class UserDaoImpl implements UserDao {
 			list = qr.query(conn, sql, rsh, userId);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -189,7 +205,9 @@ public class UserDaoImpl implements UserDao {
 			list = qr.query(conn, sql, rsh, userId);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -204,7 +222,9 @@ public class UserDaoImpl implements UserDao {
 			list = qr.query(conn, sql, rsh, userId);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -223,7 +243,9 @@ public class UserDaoImpl implements UserDao {
 			list = qr.query(conn, sql, rsh, start, end);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -242,7 +264,9 @@ public class UserDaoImpl implements UserDao {
 			list = qr.query(conn, sql, rsh, start, end);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -261,7 +285,9 @@ public class UserDaoImpl implements UserDao {
 			list = qr.query(conn, sql, rsh, start, end);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+		}finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -281,7 +307,9 @@ public class UserDaoImpl implements UserDao {
 			list = qr.query(conn, sql, rsh, start, end);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
+		}finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -301,7 +329,9 @@ public class UserDaoImpl implements UserDao {
 			list = qr.query(conn, sql, rsh, start, end);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -321,7 +351,9 @@ public class UserDaoImpl implements UserDao {
 			list = qr.query(conn, sql, rsh, start, end);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -335,12 +367,15 @@ public class UserDaoImpl implements UserDao {
 				+ "where u.dept_id = d.dept_id and d.company_id = c.company_id ";
 		// + SqlController.whereCompany("u", role, companyId);
 		try {
-			ResultSetHandler<List<User>> rsh = new BeanListHandler<User>(User.class);
-			log.info("query:" + sql);
+            ResultSetHandler<List<User>> rsh = new BeanListHandler<User>(
+                    User.class);
+            log.info("query:" + sql);
 			list = qr.query(conn, sql, rsh);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}finally {
+            ConnectManager.close(conn);
+        }
 		return list;
 	}
 
@@ -418,7 +453,7 @@ public class UserDaoImpl implements UserDao {
 			list = qr.query(conn, sql, rsh);
 		} catch (SQLException e) {
 			LogUtil.query(log, sql, e);
-		}
-		return list;
-	}
+        }
+        return list;
+    }
 }

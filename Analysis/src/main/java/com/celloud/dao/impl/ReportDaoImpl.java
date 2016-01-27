@@ -58,7 +58,9 @@ public class ReportDaoImpl implements ReportDao {
 			map = qr.query(conn, sql, new MapHandler(), companyId);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+        } finally {
+            ConnectManager.close(conn);
+        }
 		return map.get("num");
 	}
 
