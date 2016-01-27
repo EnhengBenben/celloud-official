@@ -8,7 +8,6 @@ var company=(function(company){
 	var self=company||{};
 	var uploader = null;
 	self.currentPage = 1;
-	
 	self.initUploader = function(){
 		if(uploader){
 			uploader.destroy();
@@ -77,21 +76,15 @@ var company=(function(company){
 		});
 	};
 	self.addCompany=function(){
-		$.post("company/companyAdd",function(responseText){
+		$.post("company/companyEdit",function(responseText){
 			$("#company-editModal .modal-content").html(responseText);
+			$("#company-editModal .modal-content .panel-title").html("添加公司");
 			self.initUploader();
 			$("#company-editModal").modal("show");
 		});
 			
 	}
-	self.editCompany=function(companyId){
-		$.post("company/companyEdit",{companyId:companyId},function(responseText){
-			$("#company-editModal .modal-content").html(responseText);
-			self.initUploader();
-			$("#company-editModal").modal("show");
-		});
-			
-	}
+	
 	self.saveCompany=function(){
 		$.post("company/save",$("#companyForm").serialize(),function(responseText){
 			if(responseText>0){
@@ -100,6 +93,15 @@ var company=(function(company){
 				self.getCompanyAsync(self.currentPage);
 			}
 		});
+	}
+	
+	self.editCompany=function(companyId){
+		$.post("company/companyEdit",{companyId:companyId},function(responseText){
+			$("#company-editModal .modal-content").html(responseText);
+			self.initUploader();
+			$("#company-editModal").modal("show");
+		});
+			
 	}
 	self.deleteCompany=function(companyId){
 		$.post("company/companyDelete",{companyId:companyId},function(responseText){
