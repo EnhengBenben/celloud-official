@@ -38,7 +38,7 @@ $(function () {
 // 路径配置
 require.config({
     paths: {
-        echarts: 'http://echarts.baidu.com/build/dist'
+        echarts: '//cdn.bootcss.com/echarts/2.2.7/'
     }
 });
 //

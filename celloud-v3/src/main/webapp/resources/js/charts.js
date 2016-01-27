@@ -3,12 +3,6 @@ $.reportChar = {};
 /**-------- 报告画图 -------*/
 $.reportChar.draw = {
     _require: function(chartName,option,id){
-        // 路径配置
-        require.config({
-            paths: {
-                echarts: 'http://echarts.baidu.com/build/dist'
-            }
-        });
       require(
       [
             'echarts',
