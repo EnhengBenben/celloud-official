@@ -45,7 +45,7 @@ import com.celloud.utils.XmlUtil;
  * @date 2016年1月14日 下午5:05:52
  */
 @Controller
-@RequestMapping("task")
+@RequestMapping("api/task")
 public class TaskAction {
     Logger logger = LoggerFactory.getLogger(TaskAction.class);
     @Resource

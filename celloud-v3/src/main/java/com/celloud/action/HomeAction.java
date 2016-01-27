@@ -133,7 +133,6 @@ public class HomeAction {
 
     @RequestMapping("download.html")
     public String download() {
-        EmailReceiver.getInstance().recerveNews();
         return "download";
     }
 

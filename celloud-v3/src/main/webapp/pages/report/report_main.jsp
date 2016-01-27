@@ -17,9 +17,9 @@
 <!--         <div class="box-header with-border" style="padding-left:30px;padding-bottom: 0px;font-family:黑体;font-size:14px;"> -->
 <!--         	<p style="font-family:黑体;font-size:14px"> 本周数据报告：30 | 数据报告总量：230 个</p> -->
 <!--         </div> -->
-        <div class="box-body" style="padding-left:30px;padding-bottom: 0px;font-family:黑体;font-size:14px;">
+        <div class="box-body report-search-div">
           <div class="form-inline">
-              <label class="form-inline" style="font-family:黑体;font-size:14px;font-weight: lighter;">时间：</label>
+              <label class="form-inline">时间：</label>
               <a href="javascript:void(0)" onclick="changeDate('allTime',this)" class="cdate _datered">全部</a>&nbsp;&nbsp;&nbsp;&nbsp;
       		  <a href="javascript:void(0)" onclick="changeDate(-1,this)" class="cdate">24小时</a>&nbsp;&nbsp;&nbsp;&nbsp;
       		  <a href="javascript:void(0)" onclick="changeDate(-3,this)" class="cdate">3天</a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -30,7 +30,7 @@
        		  <span id="_alertSpan" style="color:red;display:none;"></span>
           </div><!-- /.form group -->
           <div class="form-inline">
-              <label class="form-inline" style="padding-top:-5px;font-family:黑体;font-size:14px;font-weight: lighter;">应用：</label>
+              <label class="form-inline">应用：</label>
            		<a href="javascript:void(0)" class="capp _appred" onclick="changeApp(0,this)">全部</a>
            		<span id="showAppDiv" style="margin-right: 0;">
            		</span>
@@ -41,15 +41,15 @@
            		
            		</div>
           </div><!-- /.form group -->
-			<div class="form-inline" style="margin-bottom:10px">
-				<label class="form-inline" style="font-family:黑体;font-size:14px;font-weight: lighter;">数据：</label>
-				<div class="input-group" style="width:330px;height:20px;">
-					<input type="text" class="form-control" style="height:20px;padding: 0px 12px;" id="_fileName" onchange="changeFileName()" placeholder="检索文件名/别名/数据编号">
-					<span class="input-group-btn">
-						<button class="btn btn-info btn-flat" type="button" onclick="submitSearch()" style="height:20px;font-size:14px;padding-top:0px;background-color: #85c540;border-color: #85c540;">Go!</button>
-					</span>
-				</div>
-			</div><!-- /.form group -->
+		  <div class="form-inline">
+			<label class="form-inline">数据：</label>
+			<div class="input-group" style="width:330px;height:20px;">
+				<input type="text" class="form-control" style="height:20px;padding: 0px 12px;" id="_fileName" onchange="changeFileName()" placeholder="检索文件名/别名/数据编号">
+				<span class="input-group-btn">
+					<button class="btn btn-info btn-flat" type="button" onclick="submitSearch()" style="height:20px;font-size:14px;padding-top:0px;background-color: #85c540;border-color: #85c540;">Go!</button>
+				</span>
+			</div>
+		  </div><!-- /.form group -->
         </div><!-- /.box-body -->
       </div><!-- /.box -->
       <!-- COLOR PALETTE -->

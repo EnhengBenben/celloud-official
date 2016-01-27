@@ -9,7 +9,6 @@
 <script type="text/javascript" src="./js/tableExport.js"></script>
 <script type="text/javascript" src="./js/home.js"></script>
 <link rel="stylesheet" href="./css/home.css" />
-
 <div class="breadcrumbs" id="breadcrumbs">
 	<script type="text/javascript">
 		try {
@@ -36,13 +35,13 @@
 							总量统计
 						</h3>
 						<div class="widget-toolbar">
-							<a href="#" data-action="collapse">
-								<i class="icon-chevron-up"></i>
+							<a href="#" data-action="collapse" onClick="javascript:document.getElementsByTagName('BODY')[0].scrollTop=document.getElementsByTagName('BODY')[0].scrollHeight;">
+								<i class="icon-chevron-down"></i>
 							</a>
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-12 home-numbers">
-						<ul style='margin-left:15px'>
+						<ul style='margin-left: 15px'>
 							<li>
 								<a class="number">${resultMap.companyNum }</a>
 								<div class="info">
@@ -64,16 +63,6 @@
 								</div>
 							</li>
 							<li>
-								<a class="number">${resultMap.reportNum }</a>
-								<div class="info">
-									<b>
-										${resultMap.reportNum }
-										<span class="unit">(个)</span>
-									</b>
-									报告数量:
-								</div>
-							</li>
-							<li>
 								<a class="number">${resultMap.appNum }</a>
 								<div class="info">
 									<b>
@@ -91,6 +80,16 @@
 										<span class="unit">(个)</span>
 									</b>
 									数据个数:
+								</div>
+							</li>
+							<li>
+								<a class="number">${resultMap.reportNum }</a>
+								<div class="info">
+									<b>
+										${resultMap.reportNum }
+										<span class="unit">(个)</span>
+									</b>
+									报告数量:
 								</div>
 							</li>
 							<li>
