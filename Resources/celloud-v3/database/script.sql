@@ -1,1 +1,1 @@
-select * from tb_user
+select * from tb_user 
