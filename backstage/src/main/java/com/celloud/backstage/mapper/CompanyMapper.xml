@@ -199,6 +199,9 @@
   <select id="getComanyByPage" resultMap="BaseResultMap">
     select * from tb_company where state=#{state } order by create_date
   </select>
+  <select id="getComanyList" resultMap="BaseResultMap">
+    select company_id,company_name from tb_company where state=#{state } order by company_id
+  </select>
   <select id="getCompanyById" resultMap="BaseResultMap">
     select * from tb_company where state=#{state } and company_id=#{companyId }
   </select>

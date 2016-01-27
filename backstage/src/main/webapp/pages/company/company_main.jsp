@@ -1,16 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!-- Basic Setup -->
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">公司管理</h3>
-        <div class="panel-options">
+        <!-- <div class="panel-options">
             <a href="#">
                 <button class="btn btn-danger">下线应用</button>
             </a>
-        </div>
+        </div> -->
     </div>
     <div class="panel-body">
         <table id="example-2" class="table table-bordered table-striped" cellspacing="0" width="100%">
@@ -33,7 +32,7 @@
                     <td>
                         <input type="checkbox" class="cbr">
                     </td>
-                    <td>${company.companyName }</td>
+                    <td><a href="javascript:dept.getDeptByCompany(${company.companyId },1)">${company.companyName }</a></td>
                     <td>
                         <a href="javascript:company.editCompany(${company.companyId })">
                             <button class="btn btn-secondary">编辑</button>
@@ -108,6 +107,12 @@
 		</c:if>
     </div>
 </div>
+
+<div class="panel panel-default" id="dept-manager">
+    
+</div>
+
+
 <div class="modal fade bs-example-modal-lg" id="company-editModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
