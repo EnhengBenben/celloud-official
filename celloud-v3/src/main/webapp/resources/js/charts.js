@@ -3,6 +3,11 @@ $.reportChar = {};
 /**-------- 报告画图 -------*/
 $.reportChar.draw = {
     _require: function(chartName,option,id){
+      require.config({
+        paths: {
+            echarts: '//cdn.bootcss.com/echarts/2.2.7/'
+        }
+      });
       require(
       [
             'echarts',

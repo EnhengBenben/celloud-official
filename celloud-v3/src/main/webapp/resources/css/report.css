@@ -124,12 +124,15 @@ only screen and (min-device-pixel-ratio: 2) {
 ._super a{margin-right:30px;}
 .table_ a{color:#009aca;cursor:pointer};
 .sub{word-break:break-all;}
+.no {text-align: center;}
 .no table{width: 100%;font-size:12px;height:100%;}
-.no td{min-width:42px;align:center;padding:3px 5px;}
-.no tbody tr>:first-child{border-right:1px solid #d8e2f0;}
+.no td{min-width:42px;text-align:center;padding:3px 5px;}
 .no tbody>:first-child{text-align:center;border-top:none;background-color:#f2f5f9;}
 .no tbody>:first-child td{border-top:none;height: 30px;}
 .no tbody>:last-child td{border-bottom:none;}
+.no tbody tr td:nth-child(2){text-align:left;}
+.no tbody tr:first-child{border-right:1px solid #d8e2f0;text-align:center;}
+.no tbody tr:first-child td:nth-child(2){text-align:left;text-align:center;}
 .no tr{ background: #fbfbfb;}
 .no tr:nth-child(2n){ background: #fff;} 
 .no tr{ background-color: expression((this.sectionRowIndex % 2 == 0) ?   "#fbfbfb" : "#fff" );}

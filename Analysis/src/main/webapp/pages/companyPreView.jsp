@@ -157,13 +157,13 @@
 				calculable : true,
 				color : [ 'maroon', 'purple', 'red', 'orange', 'yellow', 'lightgreen' ]
 			},
-			 roamController : {
-		            show : true,
-		            x : 'right',
-		            mapTypeControl : {
-		                'china' : true
-		            }
-		        },
+			roamController : {
+				show : true,
+				x : 'right',
+				mapTypeControl : {
+					'china' : true
+				}
+			},
 			toolbox : {
 				show : true,
 				orient : 'vertical',
@@ -267,19 +267,24 @@
 			var str = '';
 			for ( var p in selected) {
 				if (selected[p]) {
-					str += p + ' ';
+					str += p + '';
 				}
 			}
-			$.post("company!getCompanyProvince", {
-				"company.province" : str.replace(/(^\s*)|(\s*$)/g, '')
-			}, function(result) {
+			if (str.trim().length > 0) {
+				$.post("company!getCompanyProvince", {
+					"company.province" : str.replace(/(^\s*)|(\s*$)/g, '')
+				}, function(result) {
+					$('#listCompany').children().remove();
+					for (item in result) {
+						var li = $("<li>" + result[item].company_name + "</li>");
+						$("#listCompany").append(li);
+					}
+				});
+			} else {
 				$('#listCompany').children().remove();
-				for (item in result) {
-					var li = $("<li>" + result[item].company_name + "</li>");
-					$("#listCompany").append(li);
-				}
-			});
+			}
 		});
+		
 		myChart.setOption(option);
 	}
 	function chars() {
@@ -300,7 +305,8 @@
 			
 			var option = makeOptionScrollUnit(xAxis, yAxis, "月新增医院数量", lineType, 100, xAxis.length);
 			var newoption = makeOptionScrollUnit(xAxis, yAxisAdd, "新增医院累积曲线图", lineType, 100, xAxis.length, "阴影");
-			
+			newoption.series[0].itemStyle.normal.color=themes.macarons.color[1];
+		   
 			var demo = makeOptionScrollUnit(xAxis, [], '新增医院累积曲线图', lineType, 100, xAxis.length, null, null, "hide");
 			option.legend.data[option.legend.data.length] = "新增医院累积曲线图";
 			option.series[1] = demo.series[0]; //图一显示图二的legend
@@ -313,8 +319,8 @@
 			newoption.legend.y = -30;//隐藏图二的legend
 			
 			// 基于准备好的dom，初始化echarts图表
-			var myChart = echarts.init(document.getElementById('main'));
-			var newCompany = echarts.init(document.getElementById('newCompany'));
+			var myChart = echarts.init(document.getElementById('main'),themes.macarons);
+			var newCompany = echarts.init(document.getElementById('newCompany'),themes.macarons);
 			newCompany.setOption(newoption);
 			myChart.setOption(option);
 			//两图联动

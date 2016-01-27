@@ -40,7 +40,7 @@ function LoginNum() {
 			yAxis[i] = data[i].logNum;
 		}
 		var option = makeOptionScrollUnit(xAxis, yAxis, '登陆次数', 'bar', 0, 20);
-		var myChart = echarts.init(document.getElementById(viewId), themes.helianthus);
+		var myChart = echarts.init(document.getElementById(viewId), themes.green);
 		myChart.setOption(option);
 	});
 }
@@ -56,6 +56,8 @@ function AppRunNum() {
 			yAxis[i] = data[i].runNum;
 		}
 		var option = makeOptionScrollUnit(xAxis, yAxis, '运行次数', 'bar', 0, 10);
+		console.log(option.xAxis[0].axisLabel.textStyle.align);
+		option.xAxis[0].axisLabel.textStyle.align = 'center';
 		var myChart = echarts.init(document.getElementById(viewId), themes.blue);
 		myChart.setOption(option);
 	});
@@ -71,6 +73,7 @@ function UserRunNum() {
 			yAxis[i] = data[i].runNum;
 		}
 		var option = makeOptionScrollUnit(xAxis, yAxis, '运行次数', 'bar', 0, 10);
+		option.xAxis[0].axisLabel.textStyle.align = 'center';
 		var myChart = echarts.init(document.getElementById(viewId), themes.green);
 		myChart.setOption(option);
 	});
@@ -120,8 +123,9 @@ function chars(data) {
 			x : 'right',
 			y : 'bottom',
 			min : 0,
-			max : 10,
+			max : 20,
 			calculable : true,
+			color : [ 'maroon', 'purple', 'red', 'orange' ]
 		},
 		toolbox : {
 			show : true,
