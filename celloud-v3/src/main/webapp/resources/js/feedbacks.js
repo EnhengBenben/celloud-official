@@ -137,6 +137,7 @@ var feedbacks = (function(feedbacks) {
 	}
 	self.showAttachment=function(filename,temp){
 		var $delButton = $("#showAttachment").find(".modal-footer button.btn-danger");
+		temp?$delButton.show():$delButton.hide();
 		$("#showAttachment").find(".modal-body input[name='attachment_file_id']").val(temp?temp:"");
 		$("#showAttachment").find(".modal-body input[name='attachment_file_name']").val(temp?filename:"");
 		$delButton.click(function(){
