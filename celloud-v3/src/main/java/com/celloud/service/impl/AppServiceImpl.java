@@ -81,7 +81,8 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public List<App> findAppsByFormat(Integer userId, Integer formatId) {
-        return appMapper.findAppsByFormat(userId, formatId, AppOffline.ON);
+        return appMapper.findAppsByFormat(userId, formatId, AppOffline.ON,
+                AppIsAdd.ALREADY_ADDED);
     }
 
     @Override
