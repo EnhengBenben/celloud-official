@@ -59,8 +59,8 @@ function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position, showNum
 	}
 	option = addArea(option, isArea);
 	option = addMakePoint(option,showPoint);
-	console.log(option.series[0].itemStyle.normal.label.show);
 	if(showItem!=null){
+		if(option.series[0].itemStyle.normal)
 		option.series[0].itemStyle.normal.label.show=false;
 	}
 	return option;
