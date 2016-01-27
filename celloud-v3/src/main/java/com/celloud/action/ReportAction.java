@@ -54,7 +54,7 @@ import net.sf.json.JSONArray;
 @RequestMapping(value = "/report")
 @Controller
 public class ReportAction {
-	Logger log = LoggerFactory.getLogger(ReportAction.class);
+    Logger log = LoggerFactory.getLogger(ReportAction.class);
     @Resource
     private ReportService reportService;
     @Resource
@@ -103,8 +103,9 @@ public class ReportAction {
      * @date 2016-1-10 下午11:37:40
      */
     @ResponseBody
-	@RequestMapping(value = "getReportFromTools", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String getReportFromTools(String dataKey, String url,Integer projectId) {
+    @RequestMapping(value = "getReportFromTools", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getReportFromTools(String dataKey, String url,
+            Integer projectId) {
         url = PropertiesUtil.toolsPath + url;
         DataFile data = dataService.getDataByKey(dataKey);
         String anotherName = data.getAnotherName();
@@ -124,7 +125,7 @@ public class ReportAction {
      * @author lin
      * @date 2016-1-11 上午10:39:13
      */
-    private ModelAndView getModelAndView(String path,Integer projectId) {
+    private ModelAndView getModelAndView(String path, Integer projectId) {
         ModelAndView mv = new ModelAndView(path);
         mv.addObject("toolsPath", PropertiesUtil.toolsOutPath);
         mv.addObject("uploadPath", PropertiesUtil.toolsOutPath + "upload/");
@@ -148,7 +149,7 @@ public class ReportAction {
             Integer projectId, Integer appId) {
         CmpReport cmpReport = reportService.getCMPReport(dataKey, projectId,
                 appId);
-        ModelAndView mv = getModelAndView(path,projectId);
+        ModelAndView mv = getModelAndView(path, projectId);
         return mv.addObject("cmpReport", cmpReport);
     }
 
@@ -239,8 +240,11 @@ public class ReportAction {
             noDiseaseName.add("表型改变相关");
             noDiseaseName.add("改变高半胱氨酸水平");
             for (String str : geneMap.keySet()) {
-                if (geneMap.get(str).getResult().get(0).getGene()
-                        .contains("没有发现突变位点") || str.equals("all")) {
+                if ((geneMap.get(dataKey).getResult() != null
+                        && geneMap.get(dataKey).getResult().get(0) != null
+                        && geneMap.get(dataKey).getResult().get(0).getGene()
+                                .contains("没有发现突变位点"))
+                        || dataKey.equals("all")) {
                 } else {
                     CmpGeneDetectionDetail gdd = geneMap.get(str);
                     List<CmpGeneSnpResult> gsrli = gdd.getResult();
@@ -274,9 +278,9 @@ public class ReportAction {
         }
         gddDiseaseList = reportService.getGddDiseaseDictNormal(unnormalGene);
         List<CmpGeneSnpResult> gsrList = reportService.getGddResult(
-                cmpReport.getDataKey(),
-                cmpReport.getProjectId(), cmpReport.getAppId());
-        ModelAndView mv = getModelAndView("print/print_gdd",projectId);
+                cmpReport.getDataKey(), cmpReport.getProjectId(),
+                cmpReport.getAppId());
+        ModelAndView mv = getModelAndView("print/print_gdd", projectId);
         mv.addObject("cmpReport", cmpReport);
         mv.addObject("gsrList", gsrList);
         mv.addObject("allGsr", allGsr);
@@ -298,7 +302,7 @@ public class ReportAction {
     private ModelAndView getSplitModelAndView(String path, String dataKey,
             Integer projectId, Integer appId) {
         Split split = reportService.getSplitReport(dataKey, projectId, appId);
-        ModelAndView mv = getModelAndView(path,projectId);
+        ModelAndView mv = getModelAndView(path, projectId);
         return mv.addObject("split", split);
     }
 
@@ -355,7 +359,7 @@ public class ReportAction {
                 JSONArray.fromObject(mib.getFamilyDistributionInfo()));
         mibCharList.put("genusDistributionInfo",
                 JSONArray.fromObject(mib.getGenusDistributionInfo()));
-        ModelAndView mv = getModelAndView(path,projectId);
+        ModelAndView mv = getModelAndView(path, projectId);
         mv.addObject("mibCharList", mibCharList);
         return mv.addObject("mib", mib);
     }
@@ -405,7 +409,7 @@ public class ReportAction {
     public ModelAndView getHBVReport(String dataKey, Integer projectId,
             Integer appId) {
         HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
-        ModelAndView mv = getModelAndView("report/report_data_hbv",projectId);
+        ModelAndView mv = getModelAndView("report/report_data_hbv", projectId);
         return mv.addObject("hbv", hbv);
     }
 
@@ -422,107 +426,118 @@ public class ReportAction {
     public ModelAndView getPgsReport(String dataKey, Integer projectId,
             Integer appId) {
         Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
-        ModelAndView mv = getModelAndView("report/report_data_pgs",projectId);
+        ModelAndView mv = getModelAndView("report/report_data_pgs", projectId);
         return mv.addObject("pgs", pgs);
     }
-    
-	/**
-	 * 点击数据报告列表查看上一页数据报告
-	 * 
-	 * @author lin
-	 * @date 2016年1月17日上午12:53:22
-	 */
-	@RequestMapping("prevDataReport")
-	@ResponseStatus(value = HttpStatus.OK)
-	public void prevDataReport() {
-		log.info("点击数据报告列表查看上一页数据报告");
-	}
 
-	/**
-	 * 点击数据报告列表查看下一页数据报告
-	 * 
-	 * @author lin
-	 * @date 2016年1月17日上午12:53:33
-	 */
-	@RequestMapping("nextDataReport")
-	@ResponseStatus(value = HttpStatus.OK)
-	public void nextDataReport() {
-		log.info("点击数据报告列表查看下一页数据报告");
-	}
-	
-	/**
-	 * 点击数据报告列表查看报告
-	 * 
-	 * @author lin
-	 * @date 2016年1月17日上午1:03:30
-	 */
-	@RequestMapping("clickItemDataReport")
-	@ResponseStatus(value = HttpStatus.OK)
-	public void clickItemDataReport() {
-		log.info("点击数据报告列表查看报告");
-	}
-	
-	/**
-	 * 打印PGS报告
-	 * 
-	 * @param appId
-	 * @param dataKey
-	 * @return
-	 * @author lin
-	 * @date 2016年1月17日下午4:47:37
-	 */
-	@RequestMapping("printPGS")
-	public ModelAndView printPGS(Integer appId, Integer projectId, String dataKey, String miniPng, String txt,
-			String splitPng) {
-		ModelAndView mv = getModelAndView("print/print_pgs",projectId);
-		Integer userId = ConstantsData.getLoginUserId();
-		DataFile data = dataService.getDataByKey(dataKey);
-		Integer fileId = data.getFileId();
-		Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
-		if (StringUtils.isEmpty(report.getPrintContext())) {
-			Dept dept = deptService.selectByPrimaryKey(ConstantsData.getLoginUser().getDeptId());
-			Company company = companyService.selectByPrimaryKey(dept.getCompanyId());
-			mv.addObject("userId", userId).addObject("appId", appId).addObject("data", data);
-			mv.addObject("miniPng", miniPng).addObject("txt", txt).addObject("splitPng", splitPng);
-			mv.addObject("company", company).addObject("dept", dept).addObject("report", report);
-		} else {
-			mv.addObject("printContext", report.getPrintContext());
-		}
-		return mv;
-	}
-	
-	/**
-	 * 打印HBV等
-	 * 
-	 * @param appId
-	 * @param dataKey
-	 * @param projectId
-	 * @param imgHtml
-	 * @param sensitive
-	 * @param context
-	 * @param peakFigure
-	 * @param allPic
-	 * @param result
-	 * @param table
-	 * @param flag
-	 * @return
-	 * @author lin
-	 * @date 2016年1月20日上午11:05:24
-	 */
-	@RequestMapping("printHBV")
-	public ModelAndView printHBV(Integer appId,String dataKey,Integer projectId,String imgHtml,String sensitive
-			,String context,String peakFigure,String allPic,String result,String table,Integer flag) {
-		ModelAndView mv = getModelAndView("print/print_hbv",projectId);
-		Integer userId = ConstantsData.getLoginUserId();
+    /**
+     * 点击数据报告列表查看上一页数据报告
+     * 
+     * @author lin
+     * @date 2016年1月17日上午12:53:22
+     */
+    @RequestMapping("prevDataReport")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void prevDataReport() {
+        log.info("点击数据报告列表查看上一页数据报告");
+    }
+
+    /**
+     * 点击数据报告列表查看下一页数据报告
+     * 
+     * @author lin
+     * @date 2016年1月17日上午12:53:33
+     */
+    @RequestMapping("nextDataReport")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void nextDataReport() {
+        log.info("点击数据报告列表查看下一页数据报告");
+    }
+
+    /**
+     * 点击数据报告列表查看报告
+     * 
+     * @author lin
+     * @date 2016年1月17日上午1:03:30
+     */
+    @RequestMapping("clickItemDataReport")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void clickItemDataReport() {
+        log.info("点击数据报告列表查看报告");
+    }
+
+    /**
+     * 打印PGS报告
+     * 
+     * @param appId
+     * @param dataKey
+     * @return
+     * @author lin
+     * @date 2016年1月17日下午4:47:37
+     */
+    @RequestMapping("printPGS")
+    public ModelAndView printPGS(Integer appId, Integer projectId,
+            String dataKey, String miniPng, String txt, String splitPng) {
+        ModelAndView mv = getModelAndView("print/print_pgs", projectId);
+        Integer userId = ConstantsData.getLoginUserId();
+        DataFile data = dataService.getDataByKey(dataKey);
+        Integer fileId = data.getFileId();
+        Report report = reportService.getReport(userId, appId, projectId,
+                fileId, ReportType.DATA);
+        if (StringUtils.isEmpty(report.getPrintContext())) {
+            Dept dept = deptService.selectByPrimaryKey(
+                    ConstantsData.getLoginUser().getDeptId());
+            Company company = companyService
+                    .selectByPrimaryKey(dept.getCompanyId());
+            mv.addObject("userId", userId).addObject("appId", appId)
+                    .addObject("data", data);
+            mv.addObject("miniPng", miniPng).addObject("txt", txt)
+                    .addObject("splitPng", splitPng);
+            mv.addObject("company", company).addObject("dept", dept)
+                    .addObject("report", report);
+        } else {
+            mv.addObject("printContext", report.getPrintContext());
+        }
+        return mv;
+    }
+
+    /**
+     * 打印HBV等
+     * 
+     * @param appId
+     * @param dataKey
+     * @param projectId
+     * @param imgHtml
+     * @param sensitive
+     * @param context
+     * @param peakFigure
+     * @param allPic
+     * @param result
+     * @param table
+     * @param flag
+     * @return
+     * @author lin
+     * @date 2016年1月20日上午11:05:24
+     */
+    @RequestMapping("printHBV")
+    public ModelAndView printHBV(Integer appId, String dataKey,
+            Integer projectId, String imgHtml, String sensitive, String context,
+            String peakFigure, String allPic, String result, String table,
+            Integer flag) {
+        ModelAndView mv = getModelAndView("print/print_hbv", projectId);
+        Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
-        Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
+        Report report = reportService.getReport(userId, appId, projectId,
+                fileId, ReportType.DATA);
         // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
         if (StringUtils.isNotEmpty(report.getPrintContext())) {
-        	return mv.addObject("printContext", report.getPrintContext()).addObject("report", report);
+            return mv.addObject("printContext", report.getPrintContext())
+                    .addObject("report", report);
         }
         Integer deptId = ConstantsData.getLoginUser().getDeptId();
         Dept dept = deptService.selectByPrimaryKey(deptId);
-        Company company = companyService.selectByPrimaryKey(dept.getCompanyId());
+        Company company = companyService
+                .selectByPrimaryKey(dept.getCompanyId());
         if (StringUtils.isNotEmpty(imgHtml)) {
             String[] imgArr = imgHtml.split(",");
             ArrayList<String> imgList = new ArrayList<String>();
@@ -533,30 +548,39 @@ public class ReportAction {
         }
         HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
         App app = appService.selectByPrimaryKey(appId);
-        //TODO 传递HBV之后，很多参数已经不需要传递了，修改时需要改动页面接收参数的方法
-        //为了兼容下面的方法，需要等每个流程一个打印页面之后再修改
+        // TODO 传递HBV之后，很多参数已经不需要传递了，修改时需要改动页面接收参数的方法
+        // 为了兼容下面的方法，需要等每个流程一个打印页面之后再修改
         mv.addObject("app", app).addObject("hbv", hbv);
-		mv.addObject("userId", userId).addObject("appId", appId).addObject("sensitive", sensitive);
-		mv.addObject("context", context).addObject("peakFigure", peakFigure).addObject("allPic", allPic);
-		mv.addObject("result", result).addObject("table", table).addObject("flag", flag);
-		mv.addObject("company", company).addObject("dept", dept).addObject("report", report);
-		return mv;
+        mv.addObject("userId", userId).addObject("appId", appId)
+                .addObject("sensitive", sensitive);
+        mv.addObject("context", context).addObject("peakFigure", peakFigure)
+                .addObject("allPic", allPic);
+        mv.addObject("result", result).addObject("table", table)
+                .addObject("flag", flag);
+        mv.addObject("company", company).addObject("dept", dept)
+                .addObject("report", report);
+        return mv;
     }
-	//TODO 达安流程打印，需要拆分页面，拆分方法
-	@RequestMapping("printDAAN")
-	public ModelAndView printDAAN(Integer appId,String dataKey,Integer projectId,String context,String imgHtml,String seq
-			,String result,String allPic,String table) {
-		ModelAndView mv = getModelAndView("print/print_hbv",projectId);
-		Integer userId = ConstantsData.getLoginUserId();
+
+    // TODO 达安流程打印，需要拆分页面，拆分方法
+    @RequestMapping("printDAAN")
+    public ModelAndView printDAAN(Integer appId, String dataKey,
+            Integer projectId, String context, String imgHtml, String seq,
+            String result, String allPic, String table) {
+        ModelAndView mv = getModelAndView("print/print_hbv", projectId);
+        Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
-        Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
+        Report report = reportService.getReport(userId, appId, projectId,
+                fileId, ReportType.DATA);
         // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
         if (StringUtils.isNotEmpty(report.getPrintContext())) {
-        	return mv.addObject("printContext", report.getPrintContext()).addObject("report", report);
+            return mv.addObject("printContext", report.getPrintContext())
+                    .addObject("report", report);
         }
         Integer deptId = ConstantsData.getLoginUser().getDeptId();
         Dept dept = deptService.selectByPrimaryKey(deptId);
-        Company company = companyService.selectByPrimaryKey(dept.getCompanyId());
+        Company company = companyService
+                .selectByPrimaryKey(dept.getCompanyId());
         if (StringUtils.isNotEmpty(imgHtml)) {
             String[] imgArr = imgHtml.split(",");
             ArrayList<String> imgList = new ArrayList<String>();
@@ -567,24 +591,26 @@ public class ReportAction {
         }
         App app = appService.selectByPrimaryKey(appId);
         mv.addObject("app", app);
-		mv.addObject("userId", userId).addObject("appId", appId);
-		mv.addObject("context", context).addObject("allPic", allPic);
-		mv.addObject("result", result).addObject("table", table).addObject("seq", seq);
-		mv.addObject("company", company).addObject("dept", dept).addObject("report", report);
-		return mv;
-	}
-	
-	@RequestMapping("updateContext")
-	@ResponseBody
-	public Integer updateContext(Report report){
-		return reportService.updateReport(report);
-	}
-	
-	@RequestMapping("downPdf")
-	@ResponseBody
-	public String downPdf(Integer appId,Integer projectId){
-		StringBuffer sb = new StringBuffer();
-		Integer userId = ConstantsData.getLoginUserId();
+        mv.addObject("userId", userId).addObject("appId", appId);
+        mv.addObject("context", context).addObject("allPic", allPic);
+        mv.addObject("result", result).addObject("table", table)
+                .addObject("seq", seq);
+        mv.addObject("company", company).addObject("dept", dept)
+                .addObject("report", report);
+        return mv;
+    }
+
+    @RequestMapping("updateContext")
+    @ResponseBody
+    public Integer updateContext(Report report) {
+        return reportService.updateReport(report);
+    }
+
+    @RequestMapping("downPdf")
+    @ResponseBody
+    public String downPdf(Integer appId, Integer projectId) {
+        StringBuffer sb = new StringBuffer();
+        Integer userId = ConstantsData.getLoginUserId();
         sb.append(userId).append(";").append(appId).append(";")
                 .append(projectId).append(";");
         List<DataFile> list = dataService.getDatasInProject(projectId);
@@ -594,6 +620,6 @@ public class ReportAction {
         String requestUrl = PropertiesUtil.toolsPath
                 + "Procedure!downPDF?dataKeyList=" + sb.toString();
         log.info("requestUrl:" + requestUrl);
-		return HttpURLUtils.getHTTPResult(requestUrl);
-	}
+        return HttpURLUtils.getHTTPResult(requestUrl);
+    }
 }
