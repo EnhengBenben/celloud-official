@@ -77,8 +77,9 @@ public class TaskAction {
      * @author leamo
      * @date 2016年1月14日 下午5:09:27
      */
-    @RequestMapping("taskRunOver.html")
+    @RequestMapping("taskRunOver")
     @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
     public String taskRunOver(String projectId, String dataNames) {
         logger.info("任务运行结束，proId:{},运行数据dataKey：{}", projectId, dataNames);
         String[] dataArr = dataNames.split(",");
@@ -190,8 +191,9 @@ public class TaskAction {
      * 
      * @return
      */
-    @RequestMapping("projectRunOver.html")
+    @RequestMapping("projectRunOver")
     @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
     public String projectRunOver(String projectId) {
         logger.info("项目运行结束，id:{}", projectId);
         // 1. 利用 python 生成数据 pdf，并将数据报告插入 mongodb
@@ -258,33 +260,21 @@ public class TaskAction {
             String command = GlobalQueue.peek();
             if (command != null) {
                 String[] infos = command.split("--");
-                int need = infos[2].split(";").length;
-                logger.info("需要节点 {}可使用节点 ", need, PortPool.getSize());
+                int need = FileTools.countLines(infos[0]);
+                logger.info("需要节点 {}可使用节点 {}", need, PortPool.getSize());
                 if (PortPool.getSize() < need) {
                     logger.info("节点不满足需要，暂缓投递任务");
                     break;
                 }
-                logger.info("满足需要，投递任务");
-                submit(infos[0], infos[1], infos[2], infos[3], appService
-                        .findAppById(Integer.parseInt(infos[4])).getCommand());
+                logger.info("满足需要，投递任务！运行命令：{}", infos[1]);
+                SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
+                ssh.sshSubmit(infos[1], false);
                 GlobalQueue.poll();
             }
         }
     }
-
-    private void submit(String basePath, String projectId, String dataListFile,
-            String appName, String perl) {
-        // TODO
-        String command = "nohup perl  /share/biosoft/perl/wangzhen/PGS/bin/moniter_qsub_url.pl perl "
-                + " " + perl + " " + dataListFile + " " + basePath
-                + " ProjectID" + projectId + " >" + basePath + "ProjectID"
-                + projectId + ".log &";
-        logger.info("运行命令：{}", command);
-        SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
-        ssh.sshSubmit(command, false);
-    }
     
-	@RequestMapping("toolsRunOver.html")
+	@RequestMapping("toolsRunOver")
     @ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public String toolsRunOver(Integer userId, Integer appId, Integer projectId, Integer period, String context) {

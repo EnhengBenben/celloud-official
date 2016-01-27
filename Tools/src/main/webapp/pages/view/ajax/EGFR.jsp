@@ -8,6 +8,16 @@
 	<div class="m-file">
 		<div class="row">
 			<div class="col-lg-9 force-break">
+				项目名称：
+				<span class="file-name">
+					${resultMap['projectName'] }
+				</span>
+				<br/>
+				App 名称：
+				<span class="file-name">
+					${resultMap['appName'] }
+				</span>
+				<br/>
 				文件名称：
 				<span class="file-name"><s:property value="%{resultMap.pagePath.replace('/SVG','').substring(resultMap.pagePath.replace('/SVG','').lastIndexOf('/')+1,resultMap.pagePath.replace('/SVG','').length())}"/>(<s:property value="resultMap.fileName"/>)</span>
 			</div>

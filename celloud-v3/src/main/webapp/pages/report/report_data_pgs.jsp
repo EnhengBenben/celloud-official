@@ -5,6 +5,16 @@
 		<div class="m-file">
 			<div class="row">
 				<div class="col-lg-7 force-break">
+					项目名称：
+					<span class="file-name">
+						${project.projectName }
+					</span>
+					<br/>
+					App 名称：
+					<span class="file-name">
+						${pgs.appName }
+					</span>
+					<br/>
 					文件名称：
 					<span class="file-name">
 						${pgs.dataKey }(<c:if test="${!empty pgs.anotherName }">${pgs.anotherName }</c:if><c:if test="${empty pgs.anotherName }">${pgs.fileName }</c:if> )

@@ -394,22 +394,20 @@ public class DataAction {
                 String select = SparkPro.apps.toString().substring(1,
                         SparkPro.apps.toString().length() - 1);
                 int running = dataService.dataRunning(select);
-                logger.info("页面运行任务，此时正在运行的任务数：{}", running);
+                logger.info("spark 正在运行的任务数：{}", running);
                 String _dataFilePath = DataKeyListToFile
                         .toSpark(appProMap.get(appId).toString(), dataList);
+                Map<String, String> map = CommandKey.getMap(_dataFilePath, appPath,proId);
+                StrSubstitutor sub = new StrSubstitutor(map);
+				String command = sub.replace(app.getCommand());
                 if (SparkPro.NODES >= running) {
-                    logger.info("资源满足需求，投递任务");
-                    Map<String, String> map = CommandKey.getMap(_dataFilePath, appPath, String.valueOf(proId));
-                    StrSubstitutor sub = new StrSubstitutor(map);
-                    String command = sub.replace( app.getCommand());
-                    logger.info("运行命令：" + command);
+                    logger.info("资源满足需求，投递任务！运行命令：" + command);
                     SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
                     ssh.sshSubmit(command, false);
                 } else {
                     logger.info("资源不满足需求，进入队列等待");
-                    String command = appPath + "--" + proId + "--"
-                            + dataFilePath + "--" + appName + "--" + appId;
-                    GlobalQueue.offer(command);
+                    String wait = _dataFilePath + "--" + command;
+                    GlobalQueue.offer(wait);
                 }
             } else if (AppDataListType.FASTQ_PATH
                     .contains(String.valueOf(appId))
@@ -423,7 +421,7 @@ public class DataAction {
                     task.setUserId(userId);
                     task.setAppId(appId);
                     task.setDataKey(dataKey);
-                    Map<String, String> map = CommandKey.getMap(dataListFile, appPath, String.valueOf(proId));
+                    Map<String, String> map = CommandKey.getMap(dataListFile, appPath, proId);
                     StrSubstitutor sub = new StrSubstitutor(map);
                     String command = sub.replace( app.getCommand());
                     task.setCommand(command);
@@ -444,7 +442,7 @@ public class DataAction {
                     // TODO 所有向Tools端投递任务的流程都向这里集中
                     // 最终判断删除，非spark就是SGE
                     logger.info("celloud 直接向 SGE 投递任务");
-                    Map<String, String> map = CommandKey.getMap(dataFilePath, appPath, String.valueOf(proId));
+                    Map<String, String> map = CommandKey.getMap(dataFilePath, appPath, proId);
     				StrSubstitutor sub = new StrSubstitutor(map);
     				String command = sub.replace(app.getCommand());
                     logger.info("运行命令:{}", command);
