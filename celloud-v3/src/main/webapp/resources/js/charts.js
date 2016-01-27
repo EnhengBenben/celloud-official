@@ -181,6 +181,7 @@ $.reportChar.circularGraphSeriesData=function(list){
             {
                 value:100-num_value,
                 name:data_name,
+                tooltip:null,
                 itemStyle : o.placeHolderStyle
             }
         ]
