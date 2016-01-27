@@ -25,11 +25,11 @@ public class CommandKey {
 	 */
 	public static final String PROJECTID = "projectId";
 
-	public static HashMap<String, String> getMap(String dataList, String resultPath, String projectId) {
+	public static HashMap<String, String> getMap(String dataList, String resultPath, Integer projectId) {
 		HashMap<String, String> map = new HashMap<>();
 		map.put(DATALIST, dataList);
 		map.put(RESULTPATH, resultPath);
-		map.put(PROJECTID, projectId);
+		map.put(PROJECTID, String.valueOf(projectId));
 		return map;
 	}
 
