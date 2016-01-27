@@ -1,1 +1,1 @@
-select count(*) from tb_user  
+sselect count(*) from tb_user  
