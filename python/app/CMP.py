@@ -63,6 +63,7 @@ class CMP:
                 elif file == 'average.info':
                     f = open(os.path.join(resultPath, file),'r')
                     result['avgCoverage'] = f.readline()
+                    f.close()
                 elif file == 'snp_num.info':
                     f = open(os.path.join(resultPath, file),'r')
                     cmpGeneResult = []
@@ -70,6 +71,7 @@ class CMP:
                         gdrs = line.strip().split("\t")
                         cmpGeneResult.append({'geneName': list_value(gdrs, 0), 'knownMSNum': list_value(gdrs, 1), 'sequencingDepth': list_value(gdrs, 2)})
                     result['cmpGeneResult'] = cmpGeneResult
+                    f.close()
                 else:
                     gdd = {}
                     f = open(os.path.join(resultPath, file),'r')
@@ -96,6 +98,7 @@ class CMP:
                                 if gddGm is not None:
                                     gsr_d['geneticMethod'] = dict_value(gddGm, 'method')
                             result_gdd.append(gsr_d)
+                    f.close()
                     geneDetectionDetail[file.split('.')[0]] = {'avgCoverage': avgSeqDepth, 'result': result_gdd}
             result['geneDetectionDetail'] = geneDetectionDetail
 
@@ -104,7 +107,7 @@ class CMP:
         if os.path.exists(logPath):
             f = open(logPath,'r')
             result['runDate'] = f.readline()
-
+            f.close()
         # QC
         qcPath = os.path.join(path, 'QC')
         if os.path.exists(qcPath):
