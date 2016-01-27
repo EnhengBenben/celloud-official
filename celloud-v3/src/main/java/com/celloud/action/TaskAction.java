@@ -77,8 +77,9 @@ public class TaskAction {
      * @author leamo
      * @date 2016年1月14日 下午5:09:27
      */
-    @RequestMapping("taskRunOver.html")
+    @RequestMapping("taskRunOver")
     @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
     public String taskRunOver(String projectId, String dataNames) {
         logger.info("任务运行结束，proId:{},运行数据dataKey：{}", projectId, dataNames);
         String[] dataArr = dataNames.split(",");
@@ -190,8 +191,9 @@ public class TaskAction {
      * 
      * @return
      */
-    @RequestMapping("projectRunOver.html")
+    @RequestMapping("projectRunOver")
     @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
     public String projectRunOver(String projectId) {
         logger.info("项目运行结束，id:{}", projectId);
         // 1. 利用 python 生成数据 pdf，并将数据报告插入 mongodb
@@ -284,7 +286,7 @@ public class TaskAction {
         ssh.sshSubmit(command, false);
     }
     
-	@RequestMapping("toolsRunOver.html")
+	@RequestMapping("toolsRunOver")
     @ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public String toolsRunOver(Integer userId, Integer appId, Integer projectId, Integer period, String context) {

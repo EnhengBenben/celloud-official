@@ -47,7 +47,7 @@ public class ChangeStateServiceImpl {
             if (context != null) {
                 context = Encrypt.encrypt(context);
             }
-			url = celloud + "toolsRunOver.html?userId=" + userId + "&appId=" + appId + "&projectId=" + projectId
+			url = celloud + "task/toolsRunOver?userId=" + userId + "&appId=" + appId + "&projectId=" + projectId
 					+ "&period=" + state + "&context=" + context;
         }
         remoteRequest(url);
