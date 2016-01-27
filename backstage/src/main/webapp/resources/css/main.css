@@ -1,0 +1,8 @@
+@CHARSET "UTF-8";
+#index-main-div{
+    position:static;
+    z-index:auto;
+}
+.img-thumbnail-inline{
+	display:inline-block;
+}

@@ -196,4 +196,43 @@
       address_detail = #{addressDetail,jdbcType=VARCHAR}
     where company_id = #{companyId,jdbcType=INTEGER}
   </update>
+  <select id="getComanyByPage" resultMap="BaseResultMap">
+    select * from tb_company where state=#{state } order by create_date
+  </select>
+  <select id="getCompanyById" resultMap="BaseResultMap">
+    select * from tb_company where state=#{state } and company_id=#{companyId }
+  </select>
+  
+  <update id="updateCompany" parameterType="com.celloud.backstage.model.Company" >
+    update tb_company
+    set company_name = #{companyName },
+      english_name = #{englishName },
+      company_icon = #{companyIcon },
+      address = #{address },
+      address_en = #{addressEn },
+      zip_code = #{zipCode },
+      tel = #{tel },
+      update_date = now(),
+      province = #{province },
+      city = #{city },
+      address_detail = #{addressDetail }
+    where company_id = #{companyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateCompanyState">
+    update tb_company
+    set state = #{state,jdbcType=INTEGER}
+    where company_id = #{companyId,jdbcType=INTEGER}
+  </update>
+  <insert id="addCompany" parameterType="com.celloud.backstage.model.Company" >
+    insert into tb_company (company_name, english_name, 
+      company_icon, address, address_en, 
+      zip_code, tel, state, 
+      create_date, province, 
+      city, address_detail)
+    values (#{companyName }, #{englishName }, 
+      #{companyIcon }, #{address }, #{addressEn }, 
+      #{zipCode }, #{tel }, #{state }, 
+      now(), #{province }, 
+      #{city }, #{addressDetail })
+  </insert>
 </mapper>
