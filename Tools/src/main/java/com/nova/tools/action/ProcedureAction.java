@@ -258,6 +258,8 @@ public class ProcedureAction extends ActionSupport {
             if (resultMap != null) {
                 resultMap.put("outProject", PropertiesUtils.outProject);
                 resultMap.put("projectId", projectId);
+                resultMap.put("projectName", projectName);
+                resultMap.put("appName", AppNameIDConstant.map.get(appId));
             }
             long end = new Date().getTime();
             log.info("用户" + userId + "访问app：" + appId + "下DataKey=" + dataKey

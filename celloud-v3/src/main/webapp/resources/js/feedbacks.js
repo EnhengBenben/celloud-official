@@ -81,21 +81,30 @@ var feedbacks = (function(feedbacks) {
 	        flash_swf_url : '../plugins/plupload-2.1.2/Moxie.swf',
 	        init:{
 	        	PostInit: function() {
+	        		$("#feedbackCreateForm").find("#attachment-group").removeClass("hide");
+	        		$("#feedbackCreateForm").find("#attachment-group").show();
 	        		$("#feedbackCreateForm").find("#warning-group").hide();
 	            },
 	        	FilesAdded: function(up, files) {
 	        		$("#attachmentUploading").show();
-	        		uploader.start();
+	        		uploader = up;
+	        		up.start();
+	            },
+	            QueueChanged:function(up){
+	            	uploader = up;
+	            	up.disableBrowse(up.files.length>=5);
 	            },
 	            FileUploaded:function(up,file,response){
+	            	uploader = up;
 	            	$("#attachmentUploading").hide();
 	            	var $img = $("<img />");
 	            	$img.attr("src","feedback/attach/temp?file="+response.response);
 	            	$img.addClass("img-thumbnail");
 	            	$img.addClass("feedback-attachment");
 	            	$img.click(function(){
-	            		self.showAttachment(response.response,true);
+	            		self.showAttachment(response.response,file.id);
 	            	});
+	            	$img.attr("name","feedback_attachment_"+response.response)
 	            	var $input = $('<input type="hidden" name="attachments"/>');
 	            	$input.val(response.response);
 	            	$("#attachmentUploading").before($img);
@@ -109,11 +118,14 @@ var feedbacks = (function(feedbacks) {
 		if(!validateFeedback()){
 			return;
 		}
+		var $button = $("#addQa").find(".modal-footer button.btn-primary");
+		$button.attr("disabled","disabled");
 		var $form = $("#feedbackCreateForm");
 		var url = $form.attr("action");
 		$.post(url, $form.serialize(), function(data) {
 			if(data.success){
 				$("#addQa").modal('hide');
+				$button.removeAttr("disabled");
 				self.page(1);
 			}
 		});
@@ -124,10 +136,29 @@ var feedbacks = (function(feedbacks) {
 		$("#addQa").modal('show');
 	}
 	self.showAttachment=function(filename,temp){
+		var $delButton = $("#showAttachment").find(".modal-footer button.btn-danger");
+		$("#showAttachment").find(".modal-body input[name='attachment_file_id']").val(temp?temp:"");
+		$("#showAttachment").find(".modal-body input[name='attachment_file_name']").val(temp?filename:"");
+		$delButton.click(function(){
+			var id = $("#showAttachment").find(".modal-body input[name='attachment_file_id']").val();
+			var name = $("#showAttachment").find(".modal-body input[name='attachment_file_name']").val();
+			self.removeAttachment(id,name);
+		});
 		var url = "feedback/attach"+(temp?"/temp":"")+"?file="+filename;
 		$("#showAttachment").find(".modal-body img").attr("src",url);
 		$("#showAttachment").find(".modal-body a").attr("href",url);
 		$("#showAttachment").modal("show");
+	}
+	self.removeAttachment = function(id,filename){
+		$("#attachmentUploading").siblings("img[name='feedback_attachment_"+filename+"']").remove();
+		$("#feedbackCreateForm").find("input[name='attachments']").each(function(index,item){
+			if($(this).val()==filename){
+				$(this).remove();
+			}
+		});
+		var file = uploader.getFile(id);
+		uploader.removeFile(file);
+		$("#showAttachment").modal("hide");
 	}
 	self.attach = function() {
 

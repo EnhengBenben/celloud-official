@@ -45,7 +45,7 @@
 							<label for="attachment" class=" control-label">附件</label>&nbsp;&nbsp;附件支持格式： jpg / jpeg / png，最大2M，每个工单最多可上传5个附件
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group hide" id="attachment-group">
 						<div class="col-sm-12">
 							<img id="attachmentUploading" class="img-thumbnail hide" style="height: 60px; margin-right: 10px;"
 								src="images/icon/loading.jpg">
@@ -80,11 +80,14 @@
 				<h4 class="modal-title">问题反馈附件</h4>
 			</div>
 			<div class="modal-body" style="border-bottom: 1px solid #ccc">
+			     <input type="hidden" name="attachment_file_id" />
+			     <input type="hidden" name="attachment_file_name" />
 				<a href="" target="_blank">
 					<img class="img-thumbnail" alt="Feedback Attachment" />
 				</a>
 			</div>
 			<div class="modal-footer">
+				<button type="button" class="btn btn-danger">删除附件</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 			</div>
 		</div>
