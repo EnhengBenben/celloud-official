@@ -96,7 +96,7 @@ class CMP:
                                 if gddGm is not None:
                                     gsr_d['geneticMethod'] = dict_value(gddGm, 'method')
                             result_gdd.append(gsr_d)
-                    geneDetectionDetail[file.split('.')[0]] = {'avgSeqDepth': avgSeqDepth, 'result': result_gdd}
+                    geneDetectionDetail[file.split('.')[0]] = {'avgCoverage': avgSeqDepth, 'result': result_gdd}
             result['geneDetectionDetail'] = geneDetectionDetail
 
         # /LOG.txt

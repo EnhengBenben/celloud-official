@@ -240,9 +240,9 @@ public class ReportAction {
             noDiseaseName.add("表型改变相关");
             noDiseaseName.add("改变高半胱氨酸水平");
             for (String str : geneMap.keySet()) {
-                if ((geneMap.get(dataKey).getResult() != null
-                        && geneMap.get(dataKey).getResult().get(0) != null
-                        && geneMap.get(dataKey).getResult().get(0).getGene()
+                if ((geneMap.get(str).getResult() != null
+                        && geneMap.get(str).getResult().get(0) != null
+                        && geneMap.get(str).getResult().get(0).getGene()
                                 .contains("没有发现突变位点"))
                         || dataKey.equals("all")) {
                 } else {
