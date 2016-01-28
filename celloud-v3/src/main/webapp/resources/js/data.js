@@ -211,11 +211,11 @@ function _init_data(){
         }
         $.get("data/checkDataRunningApp.action",{"dataIds":dataIds.toString(),"appId":appId},function(dataIdList){
           if(dataIdList.length>0){
-            var dataName = new Array();
+            var dataNames = "";
             for(var i=0;i<dataIdList.length;i++){
-              dataName.push($("#filename-"+dataIdList[i]).val() + "<br>");
+              dataNames += $("#filename-"+dataIdList[i]).val() + "<br>";
             }
-            $.dataManager.showTipModal("以下数据正在运行APP："+appName+"<br>"+dataName+"<br>请选择其他APP或删除选中数据");
+            $.dataManager.showTipModal("以下数据正在运行APP："+appName+"<br>"+dataNames+"<br>请选择其他APP或删除选中数据");
             return;
           }else{
             //判断为包含CMP/CMP_199/GDD则提示检查所选数据
