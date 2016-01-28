@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
-import com.celloud.mail.EmailReceiver;
 import com.celloud.mail.EmailSender;
 import com.celloud.model.User;
 import com.celloud.service.UserService;
