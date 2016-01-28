@@ -34,7 +34,7 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
         	<div class="wrapper">
 			<a href="join_us.html" class="subNavBtn">加入我们</a> 
             <h1><a href="#">CelLoud</a></h1>
-            <div class="login"><a href="toLogin" class="btn-register">登录</a></div>
+            <div class="login"><a href="<%=request.getContextPath() %>/login" class="btn-register">登录</a></div>
             </div>
         </div>
     </div>
