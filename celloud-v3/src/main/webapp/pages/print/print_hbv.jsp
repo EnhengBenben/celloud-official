@@ -356,6 +356,9 @@ $(document).ready(function(){
 		$(".imgtop").each(function(){
 			$(this).removeClass("imgtop");
 		});
+		$("span[title='帮助']").each(function(){
+		  $(this).remove();
+		});
 	}else if(_flag==1){
 
 	}else if($("#mainDIv").height()>1000){
@@ -388,7 +391,7 @@ $(document).ready(function(){
 		$(this).attr("style","width:600px");
 	})
 });
-var url = "http://121.201.7.200:81/report/";
+var url = "https://www.celloud.cn/report/";
 function savePage(){
 	$("body").find("input").each(function(){
 		$(this).attr("value",$(this).val());
