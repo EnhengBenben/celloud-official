@@ -29,12 +29,12 @@ public class SparkPro {
     /**
      * 配置python路径
      */
-    public static final String PYTHONPATH = "/share/biosoft/perl/PGS_MG/pcopy/runover.py";
+    public static final String PYTHONPATH = "/share/biosoft/perl/PGS_MG/python/runover.py";
 
     /**
      * 任务运行结束的python路径
      */
-    public static final String TASKOVERPY = "/share/biosoft/perl/PGS_MG/pcopy/task_over.py";
+    public static final String TASKOVERPY = "/share/biosoft/perl/PGS_MG/python/task_over.py";
 
     /**
      * 需要投递到spark集群的appId

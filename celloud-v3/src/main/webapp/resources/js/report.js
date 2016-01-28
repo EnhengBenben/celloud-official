@@ -28,8 +28,7 @@ $.ajaxSetup ({
 			$.get("report/downPdf",{"appId":appId,"projectId":projectId},function(userNames){
 				userNames = userNames.replace(/"/g ,"").replace(/\\/g ,"");
 				if(userNames){
-//					var url = window.location.href.split("index")[0];
-					var url = "http://121.201.7.200:8088/";
+					var url = window.location.href.split("index")[0];
 					window.location.href=url+"Tools/Procedure!miRNADownload?userId="+userNames;
 				}else{
 					jAlert("没有可以下载的pdf文件");

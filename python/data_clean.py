@@ -9,7 +9,7 @@ from mysql.mysqlOperate import mysql
 
 basePath = '/share/data/file/'
 #清理测试帐号及其文件
-ids = '0,6,9,12,15,16,18,20,21,23,24,27,28,71'
+ids = '0,6,9,12,15,16,18,21,23,24,27,28,71'
 querySQL= "select path from tb_file where user_id in ("+ids+");"
 deleteSQL= "delete from tb_file where user_id in ("+ids+");"
 my=mysql.getInstance()
