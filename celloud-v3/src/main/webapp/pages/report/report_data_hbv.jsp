@@ -5,38 +5,26 @@
 	<input type="hidden" value="${hbv.projectId }" id="_projectId">
 	<!--文件名称-->
 	<div class="m-file">
-		<div class="row">
-			<div class="col-lg-7 force-break">
-				项目名称：
-				<span class="file-name">
-					${project.projectName }
-				</span>
-				<br/>
-				App 名称：
-				<span class="file-name">
-					${hbv.appName }
-				</span>
-				<br/>
-				文件名称：
-				<span class="file-name">
-					${hbv.dataKey }(${hbv.fileName })
-				</span>
-			</div>
-			<div class="col-lg-5">
-				<div class="toolbar" style="position: inherit;right: auto;">
-					<c:if test="${hbv.pdf!=null && hbv.pdf!='' }">
-						<a href="${toolsPath }Procedure!miRNADownload?userId=${hbv.userId }/${hbv.appId }/${hbv.dataKey }/${hbv.pdf }" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
-					</c:if>
-					<c:if test="${hbv.dataKey!=null && hbv.dataKey!='' }">
-						<a href='javascript:toPrintHBV("${hbv.userId }/${hbv.appId }/${hbv.dataKey }",0)' class="btn btn-default"><i class="i-print"></i>详细报告</a>
-						<a href='javascript:toPrintHBV("${hbv.userId }/${hbv.appId }/${hbv.dataKey }",1)' class="btn btn-default"><i class="i-print"></i>简要报告</a>
-					</c:if>
-					<c:if test="${hbv.pdf!=zip && hbv.zip!='' }">
-						<a href="${toolsPath }Procedure!miRNADownload?userId=${hbv.userId }/${hbv.appId }/${hbv.dataKey }/${hbv.zip }" class="btn btn-default"><i class="i-download"></i>报告下载</a>
-					</c:if>
-				</div>
-			</div>
-		</div>
+	    <dl class="dl-horizontal datareport-title">
+          <dt>项目名称：</dt>
+          <dd>${project.projectName}</dd>
+          <dt>应用名称：</dt>
+          <dd>${hbv.appName}</dd>
+          <dt>文件名称：</dt>
+          <dd>${hbv.fileName}(${hbv.dataKey})</dd>
+        </dl>
+        <div class="toolbar">
+            <c:if test="${hbv.dataKey!=null && hbv.dataKey!='' }">
+                <a class="btn btn-celloud-success btn-flat" href='javascript:toPrintHBV("${hbv.userId }/${hbv.appId }/${hbv.dataKey }",0)'><i class="fa fa-print"></i>详细报告</a>
+                <a class="btn btn-celloud-success btn-flat" href='javascript:toPrintHBV("${hbv.userId }/${hbv.appId }/${hbv.dataKey }",1)'><i class="fa fa-print"></i>简要报告</a>
+            </c:if>
+            <c:if test="${hbv.pdf!=null && hbv.pdf!='' }">
+                <a class="btn btn-warning btn-flat" href="${toolsPath }Procedure!miRNADownload?userId=${hbv.userId }/${hbv.appId }/${hbv.dataKey }/${hbv.pdf }"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
+            </c:if>
+            <c:if test="${hbv.pdf!=zip && hbv.zip!='' }">
+                <a class="btn btn-info btn-flat" href="${toolsPath }Procedure!miRNADownload?userId=${hbv.userId }/${hbv.appId }/${hbv.dataKey }/${hbv.zip }"><i class="fa fa-cloud-download"></i>报告下载</a>
+            </c:if>
+        </div>
 	</div>
 	<div class="m-file" id="cfda">
 		<div class="m-box w500">

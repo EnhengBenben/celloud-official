@@ -3,23 +3,33 @@
 <div>
 	<c:if test="${pgs.noEnoughReads.equals('false') }">
 		<div class="m-file">
+			<dl class="dl-horizontal datareport-title">
+	          <dt>项目名称：</dt>
+	          <dd>${project.projectName}</dd>
+	          <dt>应用名称：</dt>
+	          <dd>${pgs.appName}</dd>
+	          <dt>文件名称：</dt>
+	          <dd>
+	            <c:choose>
+	              <c:when test="${empty pgs.anotherName }">${pgs.fileName }</c:when>
+	              <c:otherwise>${pgs.anotherName }</c:otherwise>
+	            </c:choose>
+	            (${pgs.dataKey})
+	          </dd>
+	        </dl>
+	        <div class="toolbar">
+                <a class="btn btn-celloud-success btn-flat" target="_blank" href="report/printPGS?appId=${pgs.appId }&projectId=${pgs.projectId }&dataKey=${pgs.dataKey }&miniPng=${pgs.miniPng }&txt=${pgs.report.replace('+','@').replace('    ','&nbsp;&nbsp;&nbsp;&nbsp;') }&splitPng=null"><i class="fa fa-print"></i>打印报告</a>
+                <c:if test="${pgs.splitPng!=null }">
+                    <a class="btn btn-celloud-success btn-flat" target="_blank" href="report/printPGS?appId=${pgs.appId }&projectId=${pgs.projectId }&dataKey=${pgs.dataKey }&miniPng=${pgs.miniPng }&txt=${pgs.report.replace('+','@').replace('    ','&nbsp;&nbsp;&nbsp;&nbsp;') }&splitPng=${pgs.splitPng }"><i class="fa fa-print"></i>点图报告</a>                  
+                </c:if>
+                <c:if test="${pgs.pdf!=null }">
+                    <a class="btn btn-warning btn-flat" href="${toolsPath }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.pdf }" class="btn btn-default"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
+                </c:if>
+	            <c:if test="${pgs.finalPng!=null && pgs.finalPng!='' }">
+                    <a class="btn btn-info btn-flat" href="${toolsPath }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" class="btn btn-default"><i class="fa fa-cloud-download"></i>报告下载</a>
+                </c:if>
+	        </div>
 			<div class="row">
-				<div class="col-lg-7 force-break">
-					项目名称：
-					<span class="file-name">
-						${project.projectName }
-					</span>
-					<br/>
-					App 名称：
-					<span class="file-name">
-						${pgs.appName }
-					</span>
-					<br/>
-					文件名称：
-					<span class="file-name">
-						${pgs.dataKey }(<c:if test="${!empty pgs.anotherName }">${pgs.anotherName }</c:if><c:if test="${empty pgs.anotherName }">${pgs.fileName }</c:if> )
-					</span>
-				</div>
 				<div class="col-lg-5">
 					<div class="toolbar" style="position: inherit;right: auto;">
 						<c:if test="${pgs.finalPng!=null && pgs.finalPng!='' }">

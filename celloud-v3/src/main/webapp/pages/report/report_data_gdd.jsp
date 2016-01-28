@@ -2,16 +2,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div>
 	<div class="m-file">
-		<dl class="dl-horizontal datareport-title">
-          <dt>数据编号：</dt>
-          <dd>${cmpReport.dataKey}</dd>
+	    <dl class="dl-horizontal datareport-title">
+          <dt>项目名称：</dt>
+          <dd>${project.projectName}</dd>
+          <dt>应用名称：</dt>
+          <dd>${cmpReport.appName}</dd>
           <dt>文件名称：</dt>
           <c:forEach items="${cmpReport.data}" var="data">
             <dd>${data.fileName}(${data.dataKey})</dd>
           </c:forEach>
         </dl>
 		<div class="toolbar">
-			<a href="javascript:printGDD(${cmpReport.projectId },${cmpReport.dataKey },${cmpReport.appId })" class="btn btn-default"><i class="i-print"></i>打印GDD报告</a>
+			<a class="btn btn-celloud-success btn-flat" target="_blank" href="<%=request.getContextPath()%>/report/printGDDReport?projectId=${cmpReport.projectId }&dataKey=${cmpReport.dataKey }&appId=${cmpReport.appId }"><i class="fa fa-print"></i>打印GDD报告</a>
 		</div>
 	</div>
 	<div id="printCMPContext">

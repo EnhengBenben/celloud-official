@@ -2,20 +2,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div>
 	<div class="m-file">
-		文件名称：
-		<span class="file-name">
-			${nipt.dataKey }(
-			<c:if test="${empty nipt.anotherName }">
-				${nipt.fileName }
-			</c:if>
-			<c:if test="${not empty nipt.anotherName }">
-				${nipt.anotherName }
-			</c:if>
-			)
-		</span>
-		<div class="toolbar">
-			<a target="_blank" id="_url" href='../../printNIPT/${nipt.userId }/${nipt.appId }/${nipt.dataKey }/${nipt.minipng }/' class="btn btn-default"><i class="i-print"></i>打印报告</a>
-		</div>
+	   <dl class="dl-horizontal datareport-title">
+          <dt>项目名称：</dt>
+          <dd>${project.projectName}</dd>
+          <dt>应用名称：</dt>
+          <dd>${nipt.appName}</dd>
+          <dt>文件名称：</dt>
+          <dd>
+            <c:choose>
+              <c:when test="${empty nipt.anotherName }">${nipt.fileName }</c:when>
+              <c:otherwise>${nipt.anotherName }</c:otherwise>
+            </c:choose>
+            (${nipt.dataKey})
+          </dd>
+        </dl>
+        <div class="toolbar">
+			<a id="_url" class="btn btn-celloud-success btn-flat" target="_blank" href="../../printNIPT/${nipt.userId }/${nipt.appId }/${nipt.dataKey }/${nipt.minipng }/"><i class="fa fa-print"></i>打印报告</a>
+        </div>
 	</div>
 	<!--报告图示一-->
 	<div class="m-box">

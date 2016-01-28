@@ -2017,7 +2017,8 @@ a:focus {
 .btn-success.hover {
   background-color: #008d4c;
 }
-.btn-celloud-success{
+.btn-celloud-success,
+.btn-celloud-success:visited{
   background-color: #4cba42;
   border-color: #4cba42;
   color: #fff;

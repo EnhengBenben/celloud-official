@@ -12,7 +12,7 @@
         </span><br>
         检测结果： ${mib.conclusion }
         <div class="toolbar">
-            <a href="javascript:printMIB(${mib.projectId },${mib.dataKey },${mib.appId })" class="btn btn-default"><i class="i-print"></i>打印报告</a>
+            <a class="btn btn-celloud-success btn-flat" target="_blank" href="<%=request.getContextPath()%>/report/printMIBReport?projectId=${mib.projectId }&dataKey=${mib.dataKey }&appId=${mib.appId }"><i class="fa fa-print"></i>打印报告</a>
         </div>
     </div>
     <div>

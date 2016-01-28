@@ -1,12 +1,19 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <div>
 	<!--文件名称-->
-	<div class="m-file">文件名称：
-		<span class="file-name">${hcv.dataKey }(${hcv.fileName })</span>
-		<div class="toolbar">
-			<a href='javascript:toPrintHBV("${hcv.userId }/${hcv.appId }/${hcv.dataKey }")' class="btn btn-default"><i class="i-print"></i>打印报告</a>
-			<a href="javascript:void(0)" class="btn btn-default" onclick="change()" id="change" style="display: none;">显示更多</a>
-		</div>
+	<div class="m-file">
+	    <dl class="dl-horizontal datareport-title">
+          <dt>项目名称：</dt>
+          <dd>${project.projectName}</dd>
+          <dt>应用名称：</dt>
+          <dd>${hcv.appName}</dd>
+          <dt>文件名称：</dt>
+          <dd>${hcv.fileName}(${hcv.dataKey})</dd>
+        </dl>
+        <div class="toolbar">
+            <a class="btn btn-celloud-success btn-flat" href="javascript:toPrintHBV("${hcv.userId }/${hcv.appId }/${hcv.dataKey }")"><i class="fa fa-print"></i>打印报告</a>
+            <a class="btn btn-warning btn-flat" style="display: none;" href="javascript:void(0)" onclick="change()"><i class="fa fa-folder-open-o"></i>显示更多</a>
+        </div>
 	</div>
 	<div id="cfda">
 		<!--检测结果-->

@@ -3,8 +3,8 @@
 <div class="row" id="reportBody">
 	<div style="display: none;" id="detailDiv">
 		<div class="m-file">
-			<div class="toolbar" style="top: -45px">
-				<a href='javascript:toPrintVSP()' class="btn btn-default"><i class="i-print"></i>打印报告</a>
+			<div class="toolbar">
+				<a class="btn btn-celloud-success btn-flat" href="javascript:toPrintVSP()"><i class="fa fa-print"></i>打印报告</a>
 			</div>
 		</div>
 		<div class="m-box" style="margin-top: 60px;">

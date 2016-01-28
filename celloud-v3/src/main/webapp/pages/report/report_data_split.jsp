@@ -4,16 +4,19 @@
 <input type="hidden" id="splitIdHidden" value="${split.id}">
 <div>
     <div class="m-file">
-        数据编号：<span class="file-name">${ split.dataKey}</span><br>
-        文件名称：
-        <span class="file-name">
-        <c:forEach items="${split.data}" var="data">
-            ${data.fileName}(${data.dataKey})&nbsp;&nbsp;&nbsp;
-        </c:forEach>
-        </span>
-        <div style=" position:absolute; right:0; top:-5px;">
-            <a href="${toolsPath }Procedure!miRNADownload?userId=${split.userId }/${split.appId }/${split.dataKey }/result/split_reads.tar.gz" class="btn btn-success btn-flat"><i class="fa fa-cloud-download"></i> 下载全部</a>
-            <a href="javascript:printSplit(${split.projectId },${split.dataKey },${split.appId })" class="btn btn-default"><i class="i-print"></i>打印报告</a>
+        <dl class="dl-horizontal datareport-title">
+          <dt>项目名称：</dt>
+          <dd>${project.projectName}</dd>
+          <dt>应用名称：</dt>
+          <dd>${split.appName}</dd>
+          <dt>文件名称：</dt>
+          <c:forEach items="${split.data}" var="data">
+            <dd>${data.fileName}(${data.dataKey})</dd>
+          </c:forEach>
+        </dl>
+        <div class="toolbar">
+            <a class="btn btn-celloud-success btn-flat" href="javascript:printSplit(${split.projectId },${split.dataKey },${split.appId })"><i class="fa fa-print"></i>打印报告</a>
+            <a class="btn btn-warning btn-flat" href="${toolsPath }Procedure!miRNADownload?userId=${split.userId }/${split.appId }/${split.dataKey }/result/split_reads.tar.gz"><i class="fa fa-cloud-download"></i> 下载全部</a>
         </div>
     </div>
     <div>

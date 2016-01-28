@@ -4,28 +4,18 @@
 <div>
 	<input type="hidden" value="<s:property value="resultMap.projectId"/>" id="_projectId">
 	<div class="m-file">
-		<div class="row">
-			<div class="col-lg-9 force-break">
-				项目名称：
-				<span class="file-name">
-					${resultMap['projectName'] }
-				</span>
-				<br/>
-				App 名称：
-				<span class="file-name">
-					${resultMap['appName'] }
-				</span>
-				<br/>
-				文件名称：
-				<span class="file-name"><s:property value="resultMap.datakey"/>（<s:property value="resultMap.fileName"/>）</span>
-			</div>
-			<div class="col-lg-3">
-				<div class="toolbar" style="position: inherit;right: auto;">
-					<a href='javascript:toPrintHBV("<s:property value="resultMap.pagePath"/>")' class="btn btn-default"><i class="i-print"></i>打印报告</a>
-					<a href="javascript:void(0)" class="btn btn-default" onclick="change()" id="change" style="display: none;">显示更多</a>
-				</div>
-			</div>
-		</div>
+	   <dl class="dl-horizontal datareport-title">
+          <dt>项目名称：</dt>
+          <dd>${resultMap['projectName'] }</dd>
+          <dt>应用名称：</dt>
+          <dd>${resultMap['appName'] }</dd>
+          <dt>文件名称：</dt>
+          <dd><s:property value="resultMap.fileName"/>(<s:property value="resultMap.datakey"/>)</dd>
+        </dl>
+        <div class="toolbar">
+            <a class="btn btn-celloud-success btn-flat" href="javascript:toPrintHBV("<s:property value="resultMap.pagePath"/>")"><i class="fa fa-print"></i>打印报告</a>
+            <a class="btn btn-warning btn-flat" style="display: none;" href="javascript:void(0)" onclick="change()"><i class="fa fa-folder-open-o"></i>显示更多</a>
+        </div>
 	</div>
 	<div id="cfda">
 		<!--检测结果-->

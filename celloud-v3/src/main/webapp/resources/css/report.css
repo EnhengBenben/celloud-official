@@ -7,7 +7,7 @@
 .ml30{ margin-left:30px;}
 .w500{ width:500px}
 /* ul{ margin:0} */
-.forward, .backward, .m-file .toolbar a i, .m-box h2 i, .m-tips i,.i-view, .i-back,.i-printback{ background-image:url(../images/report/_celloud.png); background-repeat: no-repeat;}
+.forward, .backward, .m-box h2 i, .m-tips i,.i-view, .i-back,.i-printback{ background-image:url(../images/report/_celloud.png); background-repeat: no-repeat;}
 .i-printback{ display: inline-block; width: 17px; height: 16px; vertical-align: middle; margin-right: 3px;}
 .i-reportList{ background-position:-80px 0;}
 .i-report{ background-position:-100px 0;}
