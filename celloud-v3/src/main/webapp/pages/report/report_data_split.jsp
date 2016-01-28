@@ -85,7 +85,7 @@
                               <c:if test="${!(data.name=='total' ||data.name=='useful'||data.name=='unknown')}">
                                 <tr>
                                   <td>
-                                        <a class="link" href="${path.replace('upload','') }Procedure!miRNADownload?userId=${split.userId }/${split.appId }/${split.dataKey }/result/split/${data.name }.tar.gz">${data.name }</a>  
+                                        <a class="link" href="${toolsPath }Procedure!miRNADownload?userId=${split.userId }/${split.appId }/${split.dataKey }/result/split/${data.name }.tar.gz">${data.name }</a>  
                                   </td>
                                   <td>${data.number }</td>
                                   <td>${data.avgQuality }</td>
