@@ -34,6 +34,7 @@ import com.celloud.model.Dept;
 import com.celloud.model.GddDiseaseDict;
 import com.celloud.model.HBV;
 import com.celloud.model.MIB;
+import com.celloud.model.Oncogene;
 import com.celloud.model.Pgs;
 import com.celloud.model.Project;
 import com.celloud.model.Report;
@@ -429,6 +430,29 @@ public class ReportAction {
         ModelAndView mv = getModelAndView("report/report_data_pgs", projectId);
         return mv.addObject("pgs", pgs);
     }
+    
+	/**
+	 * 获取Oncogene报告
+	 * 
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 * @author lin
+	 * @date 2016年1月28日下午7:18:01
+	 */
+	@RequestMapping("getOncogeneReport")
+	public ModelAndView getOncogeneReport(String dataKey, Integer projectId, Integer appId) {
+		Oncogene oncogene = reportService.getOncogeneReport(dataKey, projectId, appId);
+		if (oncogene != null) {
+			// jstl 处理 \n 很困难，就在 java 端处理
+			oncogene.setReport(oncogene.getReport().replace("\n", "<br/>"));
+			oncogene.setWz1(oncogene.getWz1().replace("\n", "<br/>"));
+			oncogene.setWz2(oncogene.getWz2().replace("\n", "<br/>"));
+		}
+		ModelAndView mv = getModelAndView("report/report_data_oncogene", projectId);
+		return mv.addObject("oncogene", oncogene);
+	}
 
     /**
      * 点击数据报告列表查看上一页数据报告

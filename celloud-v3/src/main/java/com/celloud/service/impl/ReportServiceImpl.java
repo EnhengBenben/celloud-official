@@ -40,6 +40,7 @@ import com.celloud.model.GddDiseaseDict;
 import com.celloud.model.GeneDetectionResult;
 import com.celloud.model.HBV;
 import com.celloud.model.MIB;
+import com.celloud.model.Oncogene;
 import com.celloud.model.Pgs;
 import com.celloud.model.Report;
 import com.celloud.model.Split;
@@ -130,6 +131,11 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public Pgs getPgsReport(String dataKey, Integer projectId, Integer appId) {
         return reportDao.getDataReport(Pgs.class, dataKey, projectId, appId);
+    }
+    
+    @Override
+    public Oncogene getOncogeneReport(String dataKey, Integer projectId, Integer appId) {
+        return reportDao.getDataReport(Oncogene.class, dataKey, projectId, appId);
     }
 
     @Override

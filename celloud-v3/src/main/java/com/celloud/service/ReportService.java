@@ -10,6 +10,7 @@ import com.celloud.model.CmpReport;
 import com.celloud.model.GddDiseaseDict;
 import com.celloud.model.HBV;
 import com.celloud.model.MIB;
+import com.celloud.model.Oncogene;
 import com.celloud.model.Pgs;
 import com.celloud.model.Report;
 import com.celloud.model.Split;
@@ -93,6 +94,18 @@ public interface ReportService {
 	 * @date 2016-1-9 上午2:56:01
 	 */
 	public Pgs getPgsReport(String dataKey, Integer projectId, Integer appId);
+	
+	/**
+	 * 获取Oncogene报告
+	 * 
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 * @author lin
+	 * @date 2016年1月28日下午7:15:48
+	 */
+	public Oncogene getOncogeneReport(String dataKey, Integer projectId, Integer appId);
 
 	/**
 	 * 获取 MIB 报告

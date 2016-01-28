@@ -11,6 +11,7 @@ from mongo.mongoOperate import mongo
 from app.PGS import PGS
 from app.NIPT import NIPT
 from app.HBV import HBV
+from app.oncogene import oncogene
 
 #command: python *.py basePath projectId
 #eg : python runover.py '/share/data/webapps/Tools/upload/' 4018
@@ -29,7 +30,8 @@ method_dic = {
 94:PGS,
 104:PGS,
 116:PGS,
-95:NIPT
+95:NIPT,
+115:oncogene
 }
 
 #对应database名
@@ -45,7 +47,8 @@ collection_dic = {
 94:"Pgs",
 104:"Pgs",
 116:"Pgs",
-95:"NIPT"
+95:"NIPT",
+115:"Oncogene"
 }
 
 if len(sys.argv) != 3:
