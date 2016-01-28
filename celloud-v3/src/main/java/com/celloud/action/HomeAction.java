@@ -145,4 +145,8 @@ public class HomeAction {
     public String forgot() {
         return "user/user_pwd_find";
     }
+    @RequestMapping("home_phone.html")
+    public String homePhone(){
+        return "home_phone";
+    }
 }
