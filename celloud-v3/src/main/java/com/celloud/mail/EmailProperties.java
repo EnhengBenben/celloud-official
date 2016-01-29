@@ -44,10 +44,6 @@ public final class EmailProperties {
      */
     public static String smtp;
     /**
-     * pop3
-     */
-    public static String pop3;
-    /**
      * 默认标题
      */
     public static String defaultTitle;
@@ -66,7 +62,7 @@ public final class EmailProperties {
     /**
      * 系统异常信息的邮件接收者
      */
-    public static String[] errorsMailTo;
+    public static String[] errorMailTo;
     /**
      * 工单提示信息的邮件接收者
      */
@@ -107,17 +103,16 @@ public final class EmailProperties {
             logger.error("获取email.properties文件信息失败", e);
             return false;
         }
-        username = getProperty("username");
-        password = getProperty("password");
-        smtp = getProperty("smtp");
-        pop3 = getProperty("pop3");
-        defaultTitle = getProperty("defaultTitle");
-        emailName = getProperty("emailName");
-        errorTitle = getProperty("errorTitle");
-        feedbackTitle = getProperty("feedbackTitle");
-        emailName = getProperty("emailName");
-        errorsMailTo = getMails("errorsMailTo");
-        feedbackMailTo = getMails("feedbackMailTo");
+        username = getProperty("mail.username");
+        password = getProperty("mail.password");
+        smtp = getProperty("mail.smtp");
+        defaultTitle = getProperty("mail.defaultTitle");
+        emailName = getProperty("mail.emailName");
+        errorTitle = getProperty("mail.errorTitle");
+        feedbackTitle = getProperty("mail.feedbackTitle");
+        emailName = getProperty("mail.emailName");
+        errorMailTo = getMails("mail.errorMailTo");
+        feedbackMailTo = getMails("mail.feedbackMailTo");
         return true;
     }
 

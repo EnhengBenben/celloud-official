@@ -1,10 +1,13 @@
 package com.celloud.constants;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +32,7 @@ import com.celloud.model.User;
 public class ConstantsData {
     private static Logger logger = LoggerFactory.getLogger(ConstantsData.class);
     public static Map<String, Map<String, String>> machines = null;
+    private static Properties systemProperties;
 
     /**
      * 获取所有机器列表(如果内存中已存在，则直接使用内存中的；如果内存中不存在，则加载配置文件)
@@ -158,5 +162,27 @@ public class ConstantsData {
      */
     public static HttpSession getSession() {
         return getRequset().getSession();
+    }
+
+    public static Properties loadProperties(String filepath) {
+        String path = (ConstantsData.class.getClassLoader().getResource("") + filepath).replace("file:", "");
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream(new File(path)));
+        } catch (IOException e) {
+            logger.error("加载properties文件失败：{}", filepath, e);
+        }
+        return properties;
+    }
+
+    public static void loadSystemProperties() {
+        systemProperties = loadProperties(Constants.SYSTEM_PROPERTIES_FILE);
+    }
+
+    public static Object getContextUrl() {
+        if(systemProperties==null){
+            loadSystemProperties();
+        }
+        return systemProperties.getProperty("context_url");
     }
 }

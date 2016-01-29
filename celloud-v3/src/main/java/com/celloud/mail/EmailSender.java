@@ -1,7 +1,10 @@
 package com.celloud.mail;
 
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -20,8 +23,15 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.tools.generic.DateTool;
+import org.apache.velocity.tools.generic.NumberTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.celloud.constants.ConstantsData;
 
 /**
  * <h4>发送邮件工具类</h4>
@@ -62,6 +72,11 @@ public class EmailSender {
     private Multipart multipart = new MimeMultipart();
     private static Session session = null;
     private MimeMessage message = null;
+    private static boolean inited = false;
+    private Map<String, Object> context = new HashMap<>();
+    private static VelocityEngine velocityEngine;
+    private String templateName;
+    private String content;
 
     private EmailSender() {
     }
@@ -72,8 +87,25 @@ public class EmailSender {
      * @return
      */
     public static EmailSender getInstance() {
-        if (!EmailProperties.load()) {
+        if (!EmailProperties.load() || !init()) {
             return null;
+        }
+        EmailSender sender = new EmailSender();
+        sender.message = new MimeMessage(session);
+        try {
+            sender.message.setFrom(from);
+        } catch (Exception e) {
+            logger.error("设置发信地址失败：username={},emailName={}", EmailProperties.username, EmailProperties.emailName, e);
+        }
+        if (EmailProperties.defaultTitle != null) {
+            sender.setTitle(EmailProperties.defaultTitle);
+        }
+        return sender;
+    }
+
+    public static boolean init() {
+        if (inited) {
+            return true;
         }
         Properties props = new Properties();// 获取系统环境
         Authenticator auth = new Authenticator() {
@@ -86,8 +118,6 @@ public class EmailSender {
         props.put("mail.smtp.auth", "true");
         // 设置session,和邮件服务器进行通讯
         session = Session.getDefaultInstance(props, auth);
-        EmailSender sender = new EmailSender();
-        sender.message = new MimeMessage(session);
         try {
             if (from == null) {
                 from = new InternetAddress(EmailProperties.username);
@@ -95,14 +125,15 @@ public class EmailSender {
             if (EmailProperties.emailName != null) {
                 from.setPersonal(MimeUtility.encodeText(EmailProperties.emailName));
             }
-            sender.message.setFrom(from);
         } catch (Exception e) {
             logger.error("设置发信地址失败：username={},emailName={}", EmailProperties.username, EmailProperties.emailName, e);
+            return false;
         }
-        if (EmailProperties.defaultTitle != null) {
-            sender.setTitle(EmailProperties.defaultTitle);
-        }
-        return sender;
+        velocityEngine = new VelocityEngine(ConstantsData.loadProperties("velocity.properties"));
+        velocityEngine.setApplicationAttribute("javax.servlet.ServletContext",
+                ConstantsData.getSession().getServletContext());
+        inited = true;
+        return inited;
     }
 
     /**
@@ -192,13 +223,18 @@ public class EmailSender {
         return this;
     }
 
+    public EmailSender setContent(String content) {
+        this.content = content;
+        return this;
+    }
+
     /**
      * 设置邮件内容
      * 
      * @param content
      * @return
      */
-    public EmailSender setContent(String content) {
+    private void addContent(String content) {
         try {
             // 构建一个消息内容块
             BodyPart mbpFile = new MimeBodyPart();
@@ -207,6 +243,50 @@ public class EmailSender {
         } catch (MessagingException e) {
             logger.error("设置邮件内容失败：content={}", content, e);
         }
+    }
+
+    /**
+     * 设置邮件模板
+     * 
+     * @param name
+     * @return
+     */
+    public EmailSender setTemplate(String name) {
+        this.templateName = name;
+        return this;
+    }
+
+    /**
+     * 添加模板数据
+     * 
+     * @param key
+     * @param obj
+     * @return
+     */
+    public EmailSender addObject(String key, Object obj) {
+        this.context.put(key, obj);
+        return this;
+    }
+
+    /**
+     * 添加模板数据
+     * 
+     * @param context
+     * @return
+     */
+    public EmailSender addContext(Map<String, Object> context) {
+        this.context.putAll(context);
+        return this;
+    }
+
+    /**
+     * 添加模板数据
+     * 
+     * @param context
+     * @return
+     */
+    public EmailSender setContext(Map<String, Object> context) {
+        this.context = context;
         return this;
     }
 
@@ -215,6 +295,18 @@ public class EmailSender {
      */
     public void send() {
         try {
+            String temp = null;
+            if (this.templateName != null) {
+                try {
+                    temp = mergeTemplate();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (temp == null) {
+                temp = this.content;
+            }
+            addContent(temp);
             message.setContent(multipart);
             message.saveChanges();
             message.setSentDate(sentDate);
@@ -270,5 +362,19 @@ public class EmailSender {
     public EmailSender setSentDate(Date date) {
         this.sentDate = date;
         return this;
+    }
+
+    /**
+     * 渲染模板
+     */
+    private String mergeTemplate() {
+        Template template = velocityEngine.getTemplate(templateName, "utf-8");
+        StringWriter writer = new StringWriter();
+        context.put("dateTool", new DateTool());
+        context.put("numberTool", new NumberTool());
+        context.put("base", ConstantsData.getContextUrl());
+        context.put("rightDate", new Date());
+        template.merge(new VelocityContext(context), writer);
+        return writer.toString();
     }
 }

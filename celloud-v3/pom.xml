@@ -144,6 +144,7 @@
 			<artifactId>kaptcha</artifactId>
 			<version>0.0.9</version>
 		</dependency>
+		<!-- 日志相关 -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
@@ -154,6 +155,7 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
+		<!-- dom4j -->
 		<dependency>
 			<groupId>dom4j</groupId>
 			<artifactId>dom4j</artifactId>
@@ -165,10 +167,22 @@
 			<artifactId>bcprov-jdk15on</artifactId>
 			<version>1.52</version>
 		</dependency>
+		<!-- java mail发送邮件 -->
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
+		</dependency>
+		<!-- velocity模板引擎，用来渲染邮件模板 -->
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity-tools</artifactId>
+			<version>2.0</version>
 		</dependency>
 		<!-- userAgent分析，获取用户浏览器操作系统等信息 -->
 		<dependency>
@@ -222,8 +236,8 @@
 				</includes>
 			</resource>
 			<resource>
-                <directory>${basedir}/src/main/resources</directory>
-            </resource>
+				<directory>${basedir}/src/main/resources</directory>
+			</resource>
 		</resources>
 		<plugins>
 			<plugin>
