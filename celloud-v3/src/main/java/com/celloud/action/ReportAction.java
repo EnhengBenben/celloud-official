@@ -1,6 +1,7 @@
 package com.celloud.action;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -449,6 +450,17 @@ public class ReportAction {
 			oncogene.setReport(oncogene.getReport().replace("\n", "<br/>"));
 			oncogene.setWz1(oncogene.getWz1().replace("\n", "<br/>"));
 			oncogene.setWz2(oncogene.getWz2().replace("\n", "<br/>"));
+			// 排序
+			List<String> km = oncogene.getKnowMutation();
+			if (km != null) {
+				Collections.sort(km);
+				oncogene.setKnowMutation(km);
+			}
+			List<String> out = oncogene.getOut();
+			if (out != null) {
+				Collections.sort(out);
+				oncogene.setOut(out);
+			}
 		}
 		ModelAndView mv = getModelAndView("report/report_data_oncogene", projectId);
 		return mv.addObject("oncogene", oncogene);
