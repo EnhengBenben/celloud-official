@@ -100,8 +100,8 @@ public class UploadAction {
                                 String newName = fileDataKey + FileTools.getExtName(originalName);
                                 FileTools.renameFile(realPath, name, newName);
                                 String resultData = dataId + "," + originalName;
-                                String perlPath = request.getSession().getServletContext().getRealPath("/plugins")
-                                        + "/getAliases.pl";
+                                String perlPath = request.getSession().getServletContext().getRealPath("/resources")
+                                        + "/plugins/getAliases.pl";
                                 String outPath = request.getSession().getServletContext().getRealPath("/temp") + "/"
                                         + fileDataKey;
                                 updateFileInfo(dataId, fileDataKey, newName, perlPath, outPath);
