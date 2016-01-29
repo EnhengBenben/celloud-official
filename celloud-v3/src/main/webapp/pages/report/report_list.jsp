@@ -70,7 +70,7 @@
                         </c:if>
                         <c:if test="${report.userName=='no_one'}">
                             <div class="operate">
-                            	<c:if test="${report.app_id>84&&report.app_id!=89&&report.app_id!=90&&report.app_id!=105&&report.app_id!=106&&report.app_id!=107&&report.app_id!=108&&report.app_id!=109&&report.app_id!=110&&report.app_id!=111&&report.app_id!=112&&report.app_id!=113&&report.app_id!=114 }">
+                            	<c:if test="${report.app_id>84&&report.app_id!=89&&report.app_id!=90&&report.app_id!=105&&report.app_id!=106&&report.app_id!=107&&report.app_id!=108&&report.app_id!=109&&report.app_id!=110&&report.app_id!=111&&report.app_id!=112&&report.app_id!=113&&report.app_id!=114&&report.app_id!=117 }">
                                 	<a class="pdfdown" title="PDF下载" onclick="downPDF(${report.app_id},${report.project_id})" href="javascript:void(0)"></a>
                             	</c:if>
                             	<c:if test="${report.share_num==0 }">

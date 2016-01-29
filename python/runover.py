@@ -31,7 +31,7 @@ method_dic = {
 104:PGS,
 116:PGS,
 95:NIPT,
-115:oncogene
+117:oncogene
 }
 
 #对应database名
@@ -48,7 +48,7 @@ collection_dic = {
 104:"Pgs",
 116:"Pgs",
 95:"NIPT",
-115:"Oncogene"
+117:"Oncogene"
 }
 
 if len(sys.argv) != 3:
