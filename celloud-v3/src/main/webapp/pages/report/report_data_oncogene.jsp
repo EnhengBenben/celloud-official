@@ -35,9 +35,12 @@
 	    			未检测到突变
 		    	</c:if>
 	    	</div>
-	    	<c:if test="${oncogene.know!=null && oncogene.know!='' }">
-	    		<br/>
-		    	<img name="know" src="${path }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.know}" style="width: 100%;">
+	    	<br/>
+	    	<c:if test="${oncogene.knowMutation!=null}">
+		    	<c:forEach var="img" items="${oncogene.knowMutation }">
+		    		<br/>
+			    	<img name="know" src="${path }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img}" style="width: 100%;">
+		    	</c:forEach>
 	    	</c:if>
 	    </div>
 	</div>
@@ -50,8 +53,8 @@
 		    	${oncogene.wz2 }
 		    	<br/>
 		    	<c:forEach var="img" items="${oncogene.out }">
-		    		<a href="javascript:showBgTwo('${path }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img.value.replace('png','10.png') }');" >
-						<img class="imgtop" title="${img.value }" name="imgSrc" style="padding-left: 30px;" src="${path }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img.value }" height="170px;" width="150px;">
+		    		<a href="javascript:showBgTwo('${path }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img.replace('png','10.png') }');" >
+						<img class="imgtop" title="${img }" name="imgSrc" style="padding-left: 30px;" src="${path }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img }" height="170px;" width="150px;">
 					</a>
 		    	</c:forEach>
 	    	</c:if>

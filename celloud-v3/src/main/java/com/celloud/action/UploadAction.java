@@ -48,7 +48,6 @@ import com.celloud.utils.PropertiesUtil;
 public class UploadAction {
     Logger logger = LoggerFactory.getLogger(UploadAction.class);
     private static final int BUFFER_SIZE = 2 * 1024;
-    private static final long serialVersionUID = 1L;
     @Resource
     private AppService appService;
     @Resource
@@ -99,7 +98,6 @@ public class UploadAction {
                                 String fileDataKey = DataUtil.getNewDataKey(dataId);
                                 String newName = fileDataKey + FileTools.getExtName(originalName);
                                 FileTools.renameFile(realPath, name, newName);
-                                String resultData = dataId + "," + originalName;
                                 String perlPath = request.getSession().getServletContext().getRealPath("/resources")
                                         + "/plugins/getAliases.pl";
                                 String outPath = request.getSession().getServletContext().getRealPath("/temp") + "/"
@@ -139,6 +137,7 @@ public class UploadAction {
                 while ((len = in.read(buffer)) > 0) {
                     out.write(buffer, 0, len);
                 }
+                out.flush();
             } else {
                 file.transferTo(dst);
             }
