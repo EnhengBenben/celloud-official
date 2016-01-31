@@ -226,5 +226,15 @@ public interface DataService {
      * @date 2016年1月14日 下午6:15:30
      */
     public List<DataFile> selectDataByKeys(String dataKeys);
+    
+    /**
+     * 根据主键修改非空字段
+     * 
+     * @param record
+     * @return
+     * @author lin
+     * @date 2016年2月1日上午12:26:33
+     */
+    public int updateByPrimaryKeySelective(DataFile record);
 
 }

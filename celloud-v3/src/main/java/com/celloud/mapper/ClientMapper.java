@@ -14,4 +14,13 @@ public interface ClientMapper {
     int updateByPrimaryKeySelective(Client record);
 
     int updateByPrimaryKey(Client record);
+    
+    /**
+     * 获取最新的客户端版本
+     * 
+     * @return
+     * @author lin
+     * @date 2016年1月31日下午10:03:37
+     */
+    Client getLast();
 }
