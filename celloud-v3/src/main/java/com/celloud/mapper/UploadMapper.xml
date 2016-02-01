@@ -19,9 +19,8 @@
     from tb_upload
     where upload_id = #{uploadId,jdbcType=INTEGER}
   </select>
-  <select id="getUploadList" resultMap="BaseResultMap">
-    select
-	<include refid="Base_Column_List" />
+  <select id="getUploadList" resultType="java.lang.Long">
+    select	position
 	from tb_upload
 	where user_id=#{userId} and data_key=#{dataKey}
   </select>

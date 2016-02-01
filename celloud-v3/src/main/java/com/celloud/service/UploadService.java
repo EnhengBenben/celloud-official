@@ -2,8 +2,6 @@ package com.celloud.service;
 
 import java.util.List;
 
-import com.celloud.model.Upload;
-
 public interface UploadService {
 	/**
 	 * 修改每个线程位置
@@ -40,5 +38,5 @@ public interface UploadService {
 	 * @author lin
 	 * @date 2016年1月31日下午10:59:18
 	 */
-	List<Upload> getUploadList( Integer userId,  String dataKey);
+	List<Long> getUploadList( Integer userId,  String dataKey);
 }

@@ -39,7 +39,7 @@ public class UploadServiceImpl implements UploadService{
 	}
 
 	@Override
-	public List<Upload> getUploadList(Integer userId, String dataKey) {
+	public List<Long> getUploadList(Integer userId, String dataKey) {
 		return uploadMapper.getUploadList(userId, dataKey);
 	}
 

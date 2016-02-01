@@ -18,7 +18,6 @@ import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
 import com.celloud.mail.EmailSender;
 import com.celloud.model.DataFile;
-import com.celloud.model.Upload;
 import com.celloud.model.User;
 import com.celloud.service.ActionLogService;
 import com.celloud.service.ClientService;
@@ -112,17 +111,17 @@ public class PythonServiceImpl implements PythonService {
 	@Override
 	public String threadRead(Integer userId, String dataKey) {
 		// TODO 排序实现有问题，先存list，再存数组，然后排序，最后转字符串
-		List<Upload> list = uploadService.getUploadList(userId, dataKey);
+		List<Long> list = uploadService.getUploadList(userId, dataKey);
 		if (list == null || list.size() == 0) {
 			return null;
 		}
-		double[] pos = new double[list.size()];
+		Long[] pos = new Long[list.size()];
 		for (int i = 0; i < list.size(); i++) {
-			pos[i] = list.get(i).getPosition();
+			pos[i] = list.get(i);
 		}
 		Arrays.sort(pos);
 		StringBuffer sb = new StringBuffer();
-		for (double l : pos) {
+		for (Long l : pos) {
 			sb.append(l).append(",");
 		}
 		return sb.toString().substring(0, sb.toString().length() - 1);
