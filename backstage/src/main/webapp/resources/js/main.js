@@ -85,7 +85,7 @@ var company=(function(company){
 			
 	}
 	
-	self.saveCompany=function(){
+	/*self.saveCompany=function(){
 		$.post("company/save",$("#companyForm").serialize(),function(responseText){
 			if(responseText>0){
 				$("#company-editModal").modal("hide");
@@ -93,7 +93,7 @@ var company=(function(company){
 				self.getCompanyAsync(self.currentPage);
 			}
 		});
-	}
+	}*/
 	
 	self.editCompany=function(companyId){
 		$.post("company/companyEdit",{companyId:companyId},function(responseText){
@@ -227,7 +227,7 @@ var dept=(function(dept){
 			
 	}
 	
-	self.saveDept=function(){
+	/*self.saveDept=function(){
 		$.post("dept/save",$("#deptForm").serialize(),function(responseText){
 			if(responseText>0){
 				$("#dept-editModal").modal("hide");
@@ -235,7 +235,7 @@ var dept=(function(dept){
 				self.getDeptAsync(self.currentPage);
 			}
 		});
-	}
+	}*/
 	self.deleteDept=function(deptId){
 		$.post("dept/deptDelete",{deptId:deptId},function(responseText){
 			if(responseText>0){
@@ -291,16 +291,13 @@ var user=(function(user){
 			var params = $("#emailForm").serialize(); 
 			$.get("user/checkEmail",params,function(flag){
 				if(flag.indexOf("1")>=0){
-					var error = flag.split(",");
-					for ( var i = 0; i < error.length; i++) {
-						if(error[i]==1){
-							$("#email"+i).addClass("error");
-							$("#email"+i).find(".help-inline").html("此邮箱已经添加！");
+						if(flag==1){
+							$("#emailArray").parent().parent().addClass("error");
+							$("#emailArray").parent().parent().find(".help-inline").html("此邮箱已经添加！");
 						}else{
-							$("#email"+i).removeClass("error");
-							$("#email"+i).find(".help-inline").html("");
+							$("#emailArray").parent().parent().removeClass("error");
+							$("#emailArray").parent().parent().find(".help-inline").html("");
 						}
-					}
 				}else{
 					alert("邮件发送成功");
 					$("#sendEmail").modal("hide");

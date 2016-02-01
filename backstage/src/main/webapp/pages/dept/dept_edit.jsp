@@ -13,22 +13,22 @@
         <form role="form" class="form-horizontal" id="deptForm">
             <input type="hidden" value="${dept.deptId }" name="deptId">
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="deptName">部门名称</label>
+                <label class="col-sm-2 control-label" for="deptName">部门名称<font color="red">*</font></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="deptName" name="deptName" value="${dept.deptName }" placeholder="部门名称">
+                    <input type="text" class="form-control" data-rule-required="true" id="deptName" name="deptName" value="${dept.deptName }" placeholder="部门名称">
                 </div>
             </div>
             
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="englishName">英语名称</label>
+                <label class="col-sm-2 control-label" for="englishName">英语名称<font color="red">*</font></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="englishName" name="englishName" value="${dept.englishName }" placeholder="英语名称">
+                    <input type="text" class="form-control" data-rule-required="true" id="englishName" name="englishName" value="${dept.englishName }" placeholder="英语名称">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="tel">电话</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="tel" name="tel" value="${dept.tel }" placeholder="电话">
+                    <input type="text" class="form-control" data-rule-isPhone="true" id="tel" name="tel" value="${dept.tel }" placeholder="电话">
                 </div>
             </div>
             <div class="form-group">
@@ -45,10 +45,10 @@
             </div>
             
             <div class="form-group">
-                <label class="col-sm-2 control-label">所属于公司</label>
+                <label class="col-sm-2 control-label">所属于公司<font color="red">*</font></label>
                 
                 <div class="row col-sm-10">
-                    <select class="form-control col-sm-5" name="companyId" >
+                    <select class="form-control col-sm-5" name="companyId" data-rule-required="true" >
                         <option value=''>--请选择--</option>
                         <c:forEach items="${companyList }" var="company">
                             <option value="${company.companyId }" <c:if test="${dept.companyId==company.companyId ||companyId==company.companyId }">selected</c:if>>${company.companyName }</option>
@@ -59,7 +59,7 @@
             <div class="form-group-separator"></div>
             <div class="form-group">
                 <div class="col-sm-10 text-center">
-                    <button type="button" class="btn btn-success" onclick="dept.saveDept()">保存</button>
+                    <button type="submit" class="btn btn-success">保存</button>
                     <button type="reset" class="btn btn-white">重置</button>
                 </div>
             </div>
@@ -68,3 +68,21 @@
     </div>
 </div>
 <script type="text/javascript" src="<%=request.getContextPath()%>/plugins/plupload-2.1.2/plupload.full.min.js"></script>
+<script type="text/javascript">
+$(function(){
+    $("#deptForm").validate({
+        submitHandler:function(form) {      
+            $(form).ajaxSubmit({
+                url:"dept/save",
+                success:function(responseText){
+                    if(responseText>0){
+                        $("#dept-editModal").modal("hide");
+                        alert("成功");
+                        dept.getDeptAsync(dept.currentPage);
+                    }
+                }
+            });     
+         }
+    });
+});
+</script>

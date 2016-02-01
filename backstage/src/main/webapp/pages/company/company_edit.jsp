@@ -12,16 +12,16 @@
         <form role="form" class="form-horizontal" id="companyForm">
             <input type="hidden" name="companyId" value="${company.companyId }">
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="companyName">公司名称</label>
+                <label class="col-sm-2 control-label" for="companyName">公司名称<font color="red">*</font></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="companyName" name="companyName" value="${company.companyName }" placeholder="公司名称">
+                    <input type="text" class="form-control" data-rule-required="true" id="companyName" name="companyName" value="${company.companyName }" placeholder="公司名称">
                 </div>
             </div>
             
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="englishName">英文名称</label>
+                <label class="col-sm-2 control-label" for="englishName">英文名称<font color="red">*</font></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="englishName" name="englishName" value="${company.englishName }" placeholder="英文名称">
+                    <input type="text" class="form-control" data-rule-required="true" id="englishName" name="englishName" value="${company.englishName }" placeholder="英文名称">
                 </div>
             </div>
             <div class="form-group">
@@ -37,35 +37,35 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="address">打印地址</label>
+                <label class="col-sm-2 control-label" for="address">打印地址<font color="red">*</font></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="address" name="address" value="${company.address }" placeholder="打印地址">
+                    <input type="text" class="form-control" data-rule-required="true" id="address" name="address" value="${company.address }" placeholder="打印地址">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="addressEn">英语地址</label>
+                <label class="col-sm-2 control-label" for="addressEn">英语地址<font color="red">*</font></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="addressEn" name="addressEn" value="${company.addressEn }" placeholder="英语地址">
+                    <input type="text" class="form-control" data-rule-required="true" id="addressEn" name="addressEn" value="${company.addressEn }" placeholder="英语地址">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="zipCode">邮编</label>
+                <label class="col-sm-2 control-label" for="zipCode" >邮编</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="zipCode" name="zipCode" value="${company.zipCode }" placeholder="邮编">
+                    <input type="text" class="form-control" id="zipCode" name="zipCode" data-rule-zipcode="true" value="${company.zipCode }" placeholder="邮编">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="tel">联系电话</label>
+                <label class="col-sm-2 control-label" for="tel" data-rule-isPhone="true">联系电话</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="tel" name="tel" value="${company.tel }" placeholder="联系电话">
+                    <input type="text" class="form-control isPhone" id="tel" name="tel" value="${company.tel }" placeholder="联系电话">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">所在地区</label>
+                <label class="col-sm-2 control-label">所在地区<font color="red">*</font></label>
                 
                 <div class="row col-sm-10">
                 <div class="col-sm-5">
-                    <select class="form-control col-sm-5" name="province" onChange="company.changeProvince(this.value,false,'add-city')" >
+                    <select class="form-control col-sm-5" data-rule-required="true" data-msg-required="该项为必选项，请选择。"  name="province" onChange="company.changeProvince(this.value,false,'add-city')" >
                         <option value=''>--请选择省份--</option>
                         <c:forEach items="${provinces }" var="province">
                             <option value="${province }" <c:if test="${province==company.province }">selected</c:if>>${province }</option>
@@ -73,7 +73,7 @@
                     </select>
                 </div>
                 <div class="col-sm-5">
-                    <select class="form-control col-sm-5  <c:if test="${empty citys }">invisible</c:if>" id="add-city" name="city">
+                    <select class="form-control col-sm-5  <c:if test="${empty citys }">invisible</c:if>" id="add-city" name="city" data-rule-required="true" data-msg-required="该项为必选项，请选择。">
                         <option value=''>--请选择城市--</option>
                         <c:if test="${not empty citys }">
 	                        <c:forEach items="${citys }" var="city">
@@ -85,15 +85,15 @@
                 </div>
             </div>
              <div class="form-group">
-                <label class="col-sm-2 control-label" for="addressDetail">详细地址</label>
+                <label class="col-sm-2 control-label" for="addressDetail">详细地址<font color="red">*</font></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="addressDetail" name="addressDetail" value="${company.addressDetail }" placeholder="详细地址">
+                    <input type="text" class="form-control" id="addressDetail" name="addressDetail" value="${company.addressDetail }" placeholder="详细地址" data-rule-required="true">
                 </div>
             </div>
             <div class="form-group-separator"></div>
             <div class="form-group">
                 <div class="col-sm-10 text-center">
-                    <button type="button" class="btn btn-success" onclick="company.saveCompany()">保存</button>
+                    <button type="submit" class="btn btn-success">保存</button>
                     <button type="reset" class="btn btn-white">重置</button>
                 </div>
             </div>
@@ -102,3 +102,21 @@
     </div>
 </div>
 <script type="text/javascript" src="<%=request.getContextPath()%>/plugins/plupload-2.1.2/plupload.full.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#companyForm").validate({
+		submitHandler:function(form) {      
+            $(form).ajaxSubmit({
+            	url:"company/save",
+            	success:function(responseText){
+                    if(responseText>0){
+                        $("#company-editModal").modal("hide");
+                        alert("成功");
+                        company.getCompanyAsync(company.currentPage);
+                    }
+                }
+            });     
+         }
+	});
+});
+</script>
