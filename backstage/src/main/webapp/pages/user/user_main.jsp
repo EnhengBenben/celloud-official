@@ -1,8 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<div class="panel panel-default">
 <div class="panel-heading">
-    <h3 class="panel-title">${company.companyName }部门管理</h3>
+    <h3 class="panel-title">用户管理</h3>
+    <div class="panel-options">
+         <a href="javascript:user.toSendEmail();">
+             <button class="btn btn-danger">发送邮件</button>
+         </a>
+     </div>
 </div>
 <div class="panel-body">
     <table class="table table-bordered table-striped" cellspacing="0" width="100%">
@@ -11,28 +17,31 @@
                 <th class="no-sorting">
                     <input type="checkbox" class="cbr">
                 </th>
-                <th>部门名称</th>
-                <th>操作|
-                    <a href="javascript:dept.addDept();" class="text-success">
-                                                新增
-                    </a>
-                </th>
+                <th>用户编号</th>
+                <th>用户名 </th>
+                <th>真实姓名 </th>
+                <th>邮箱 </th>
+                <th>手机号码 </th>
+                <th>角色 </th>
+                <th>操作</th>
             </tr>
         </thead>
         <tbody>
-            <c:forEach items="${pageList.datas }" var="dept">
+            <c:forEach items="${pageList.datas }" var="user">
                 <tr>
                 <td>
                     <input type="checkbox" class="cbr">
                 </td>
-                <td>${dept.deptName }</td>
+                <td>${user.userId }</td>
+                <td>${user.username }</td>
+                <td>${user.truename }</td>
+                <td>${user.email }</td>
+                <td>${user.cellphone }</td>
                 <td>
-                    <a class="btn btn-secondary" href="javascript:dept.editDept(${dept.deptId })">
-                                            编辑
-                    </a>
-                    <a class="btn btn-secondary" href="javascript:dept.deleteDept(${dept.deptId })">
-                                            删除
-                    </a>
+                    <c:if test="${user.role==0 }">普通用户</c:if>
+                </td>
+                <td>
+                   
                 </td>
             </tr>
             </c:forEach>
@@ -45,7 +54,7 @@
                     <ul class="pagination">
                         <c:choose>
                             <c:when test="${pageList.page.hasPrev}">
-                                <li><a href="javascript:dept.getDept(${pageList.page.prevPage })">&lt;</a></li>
+                                <li><a href="javascript:user.getUserList(${pageList.page.prevPage })">&lt;</a></li>
                             </c:when>
                             <c:otherwise>
                                 <li><a href="javascript:void(0)">&lt;</a></li>
@@ -56,20 +65,20 @@
                                 <li class="active"><a href="javascript:void(0)">1</a></li>
                             </c:when>
                             <c:otherwise>
-                                <li><a href="javascript:dept.getDept(1)">1</a></li>
+                                <li><a href="javascript:user.getUserList(1)">1</a></li>
                             </c:otherwise>
                         </c:choose>
                         <c:if test="${pageList.page.currentPage>3}">
                             <li><a href="javascript:void(0)">..</a></li>
                         </c:if>
                         <c:if test="${pageList.page.currentPage>2}">
-                            <li><a href="javascript:dept.getDept(${pageList.page.prevPage })">${pageList.page.prevPage }</a></li>
+                            <li><a href="javascript:user.getUserList(${pageList.page.prevPage })">${pageList.page.prevPage }</a></li>
                         </c:if>
                         <c:if test="${pageList.page.currentPage>1&&pageList.page.currentPage<pageList.page.totalPage}">
                             <li class="active"><a href="javascript:void(0)">${pageList.page.currentPage }</a></li>
                         </c:if>
                         <c:if test="${pageList.page.totalPage-pageList.page.currentPage>1}">
-                            <li><a href="javascript:dept.getDept(${pageList.page.nextPage })">${pageList.page.nextPage }</a></li>
+                            <li><a href="javascript:user.getUserList(${pageList.page.nextPage })">${pageList.page.nextPage }</a></li>
                         </c:if>
                         <c:if test="${pageList.page.totalPage-pageList.page.currentPage>2}">
                             <li><a href="javascript:void(0)">..</a></li>
@@ -79,12 +88,12 @@
                                 <li class="active"><a href="javascript:void(0)">${pageList.page.totalPage }</a></li>
                             </c:when>
                             <c:when test="${pageList.page.totalPage>1}">
-                                <li><a href="javascript:dept.getDept(${pageList.page.totalPage })">${pageList.page.totalPage }</a></li>
+                                <li><a href="javascript:user.getUserList(${pageList.page.totalPage })">${pageList.page.totalPage }</a></li>
                             </c:when>
                         </c:choose>
                         <c:choose>
                             <c:when test="${pageList.page.hasNext}">
-                                <li><a href="javascript:dept.getDept(${pageList.page.nextPage })">&gt;</a></li>
+                                <li><a href="javascript:user.getUserList(${pageList.page.nextPage })">&gt;</a></li>
                             </c:when>
                             <c:otherwise>
                                 <li><a href="javascript:void(0)">&gt;</a></li>
@@ -99,10 +108,10 @@
         </div>
     </c:if>
 </div>
-
-<div class="modal fade bs-example-modal-lg" id="dept-editModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-    </div>
-  </div>
+</div>
+<div class="modal fade bs-example-modal-lg" id="user-sendEmailModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+	  <div class="modal-dialog modal-lg">
+	    <div class="modal-content">
+	    </div>
+	  </div>
 </div>

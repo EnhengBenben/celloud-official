@@ -38,5 +38,5 @@ public interface UploadMapper {
 	 * @author lin
 	 * @date 2016年1月31日下午10:58:24
 	 */
-	List<Upload> getUploadList(@Param("userId") Integer userId, @Param("dataKey") String dataKey);
+	List<Long> getUploadList(@Param("userId") Integer userId, @Param("dataKey") String dataKey);
 }

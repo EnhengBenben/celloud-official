@@ -3,6 +3,8 @@ package com.celloud.backstage.service;
 import java.util.Date;
 
 import com.celloud.backstage.model.User;
+import com.celloud.backstage.page.Page;
+import com.celloud.backstage.page.PageList;
 
 /**
  * 用户服务接口
@@ -35,7 +37,7 @@ public interface UserService {
      * @param randomCode
      */
     public void insertFindPwdInfo(Integer userId, String randomCode);
-
+    
     /**
      * 清理重置密码链接(指定用户的，或者已过期的)
      * 
@@ -94,6 +96,16 @@ public interface UserService {
      * @return
      */
     public boolean isEmailInUse(String email, Integer userId);
+    /**
+     * 校验用户名是否存在
+     *
+     * @param username
+     * @param userId
+     * @return
+     * @author han
+     * @date 2016年1月28日 下午2:38:54
+     */
+    public boolean isUsernameInUse(String username, Integer userId);
 
     /**
      * 根据用户名称获取用户
@@ -113,5 +125,46 @@ public interface UserService {
      * @date 2016-1-9 下午10:35:29
      */
     public Integer getCompanyIdByUserId(Integer userId);
+    
+    /**
+     * 分页获取用户列表
+     *
+     * @param page
+     * @return
+     * @author han
+     * @date 2016年1月27日 下午4:13:47
+     */
+    public PageList<User> getUserByPage(Page page);
+    
+    /**
+     * 根据邮箱和验证码来判断请求是否有效（用于注册）
+     * 
+     * @param email
+     * @param md5
+     * @return
+     */
+    public boolean getValidate(String email, String md5);
+    /**
+     * 添加用户信息
+     *
+     * @param user
+     * @return
+     * @author han
+     * @date 2016年1月28日 下午2:50:31
+     */
+    public boolean addUser(User user,String md5code,Integer appCompanyId);
+    
+    /**
+     * 发送添加用户邮件
+     *
+     * @param emailArray
+     * @param deptId       所属部门Id
+     * @param companyId    所属公司Id
+     * @param appCompanyId 大客户Id
+     * @param appIdArray
+     * @author han
+     * @date 2016年1月29日 上午11:12:39
+     */
+    public void sendRegisterEmail( String[] emailArray,Integer deptId,Integer companyId,Integer appCompanyId,Integer[] appIdArray);
 
 }
