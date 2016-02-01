@@ -250,7 +250,7 @@
 		      OR email = #{username,jdbcType=VARCHAR}
 		      )
 		AND password = #{password,jdbcType=VARCHAR}
-		AND role=1
+		AND role=2
 	</select>
 	<select id="getUserByEmail" resultMap="BaseResultMap">
 		select
