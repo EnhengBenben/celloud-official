@@ -3,8 +3,11 @@ package com.celloud.action;
 import java.util.Date;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +20,7 @@ import com.celloud.model.User;
 import com.celloud.service.UserService;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.ResetPwdUtils;
+import com.celloud.utils.UserAgentUtil;
 
 /**
  * 首页相关的action
@@ -26,6 +30,7 @@ import com.celloud.utils.ResetPwdUtils;
  */
 @Controller
 public class HomeAction {
+    private static final Logger logger = LoggerFactory.getLogger(HomeAction.class);
     @Resource
     private UserService userService;
 
@@ -43,6 +48,7 @@ public class HomeAction {
         if (user == null) {
             return mv.addObject("info", "找回密码的链接错误或已过期");
         }
+        logger.info("用户正在找回密码：userId={},username={},randomCode={}", user.getUserId(), username, randomCode);
         session.setAttribute(Constants.RESET_PASSWORD_USER_ID, user.getUserId());
         return mv.addObject("user", user).addObject("randomCode", randomCode);
     }
@@ -54,15 +60,27 @@ public class HomeAction {
      * @return
      */
     @RequestMapping(value = "resetPassword.html", method = RequestMethod.POST)
-    public ModelAndView resetPassword(String username, String password, String randomCode, HttpSession session) {
+    public ModelAndView resetPassword(String username, String password, String randomCode, HttpServletRequest request) {
+        HttpSession session = request.getSession();
         // TODO 添加rsa加密
+        logger.info("【重置密码】username=" + username);
+        logger.info("【重置密码】randomCode=" + randomCode);
         ModelAndView mv = new ModelAndView("user/user_pwd_reset");
         String userId = String.valueOf(session.getAttribute(Constants.RESET_PASSWORD_USER_ID));
+        logger.info("【重置密码】userId=" + userId);
         if (userId == null) {
+            logger.warn("用户进行了非法请求：重置密码时未检查到session中的userId.{},{},{}", username, randomCode,
+                    UserAgentUtil.getUrl(request));
             return mv.addObject("info", "请求不合法").addObject("forbidden", "forbidden");
         }
         User user = userService.getUserByFindPwd(username, randomCode);
         if (user == null || !userId.equals(String.valueOf(user.getUserId()))) {
+            if (user == null) {
+                logger.warn("用户进行了非法请求：重置密码时未检查到要修改的用户{},{}.{}", username, randomCode, UserAgentUtil.getUrl(request));
+            } else {
+                logger.warn("用户进行了非法请求：重置密码时检测到的userId不正确{}={},{},{}.{}", userId, String.valueOf(user.getUserId()),
+                        username, randomCode, UserAgentUtil.getUrl(request));
+            }
             return mv.addObject("info", "请求不合法").addObject("forbidden", "forbidden");
         }
         session.removeAttribute(Constants.RESET_PASSWORD_USER_ID);
@@ -144,8 +162,9 @@ public class HomeAction {
     public String forgot() {
         return "user/user_pwd_find";
     }
+
     @RequestMapping("home_phone.html")
-    public String homePhone(){
+    public String homePhone() {
         return "home_phone";
     }
 }
