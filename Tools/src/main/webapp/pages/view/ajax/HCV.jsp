@@ -13,7 +13,7 @@
           <dd><s:property value="resultMap.fileName"/>(<s:property value="resultMap.datakey"/>)</dd>
         </dl>
         <div class="toolbar">
-            <a class="btn btn-celloud-success btn-flat" href="javascript:toPrintHBV("<s:property value="resultMap.pagePath"/>")"><i class="fa fa-print"></i>打印报告</a>
+            <a class="btn btn-celloud-success btn-flat" href="javascript:toPrintHBV('<s:property value="resultMap.pagePath"/>')"><i class="fa fa-print"></i>打印报告</a>
             <a class="btn btn-warning btn-flat" style="display: none;" href="javascript:void(0)" onclick="change()"><i class="fa fa-folder-open-o"></i>显示更多</a>
         </div>
 	</div>
