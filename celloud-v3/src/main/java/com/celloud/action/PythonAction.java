@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.celloud.service.PythonService;
 
 @Controller
+@RequestMapping("api/python")
 public class PythonAction {
 	Logger log = LoggerFactory.getLogger(PythonAction.class);
 	@Resource
@@ -114,7 +115,7 @@ public class PythonAction {
 	public String sendEmail(@PathVariable("userId") Integer userId, @PathVariable("fileName") String fileName,
 			@PathVariable("dataKey") String dataKey) {
 		pythonService.sendEmail(userId, fileName, dataKey);
-		return null;
+		return "success";
 	}
 
 	@ResponseBody

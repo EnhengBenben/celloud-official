@@ -107,18 +107,6 @@
 			<mvc:exclude-mapping path="/api/**" />
 			<mvc:exclude-mapping path="/login/**" />
 			<mvc:exclude-mapping path="/logout/**" />
-			<!-- 客户端接口 -->
-			<mvc:exclude-mapping path="/clientlogin/**"/>
-			<mvc:exclude-mapping path="/getSize/**"/>
-			<mvc:exclude-mapping path="/getNumber/**"/>
-			<mvc:exclude-mapping path="/initDataKey/**"/>
-			<mvc:exclude-mapping path="/uploaded/**"/>
-			<mvc:exclude-mapping path="/getClientVersion"/>
-			<mvc:exclude-mapping path="/getDataSize/**"/>
-			<mvc:exclude-mapping path="/saveDataSize/**"/>
-			<mvc:exclude-mapping path="/sendEmail/**"/>
-			<mvc:exclude-mapping path="/threadUpdate/**"/>
-			<mvc:exclude-mapping path="/threadRead/**"/>
 			<bean class="com.celloud.interceptor.SecurityInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
