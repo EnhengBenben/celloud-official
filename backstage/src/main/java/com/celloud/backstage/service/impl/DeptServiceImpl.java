@@ -123,4 +123,10 @@ public class DeptServiceImpl implements DeptService {
         return new PageList<Dept>(page,list);
     }
 
+
+    @Override
+    public List<Dept> getDeptByCompanyId(int companyId) {
+        return deptMapper.getDeptByCompanyId(DataState.ACTIVE, companyId);
+    }
+
 }

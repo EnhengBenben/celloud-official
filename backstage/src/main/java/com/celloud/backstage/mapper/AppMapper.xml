@@ -310,4 +310,10 @@
       max_task = #{maxTask,jdbcType=INTEGER}
     where app_id = #{appId,jdbcType=INTEGER}
   </update>
+  <select id="getAppListByCompany" resultMap="BaseResultMap">
+    select app_id,app_name from tb_app where company_id = #{companyId } and attribute = #{attribute } and off_line=#{offLine } and run_type != 0
+  </select>
+  <select id="getAppListAdded" resultMap="BaseResultMap">
+    select app_id,app_name from tb_app where run_type != 0 and attribute = #{attribute } and off_line=#{offLine }
+  </select>
 </mapper>

@@ -8,7 +8,6 @@
         <h3 class="panel-title">修改公司信息</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     </div>
-    </div>
     <div class="panel-body">
         <form role="form" class="form-horizontal" id="companyForm">
             <input type="hidden" name="companyId" value="${company.companyId }">

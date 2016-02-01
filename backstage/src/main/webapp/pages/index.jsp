@@ -69,23 +69,11 @@
                             <span class="title">公司管理</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
-                            <i class="linecons-mail"></i>
+                    <li id="user-menu">
+                        <a href="javascript:user.toUserMain();">
+                            <i class="linecons-note"></i>
                             <span class="title">用户管理</span>
                         </a>
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    <span class="title">用户列表</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="title">新增用户</span>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                     <li>
                         <a href="#">

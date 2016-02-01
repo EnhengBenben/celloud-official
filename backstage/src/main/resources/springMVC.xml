@@ -98,6 +98,7 @@
 			<mvc:exclude-mapping path="/**/*.html" />
 			<mvc:exclude-mapping path="/login/**" />
 			<mvc:exclude-mapping path="/logout/**" />
+			<mvc:exclude-mapping path="/user/addUser/**" />
 			<bean class="com.celloud.backstage.interceptor.SecurityInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

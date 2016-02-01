@@ -38,4 +38,6 @@ public interface DeptMapper {
     public int updateDeptState(@Param("deptId")int deptId,@Param("state") int state);
     
     public Dept getDeptById(@Param("deptId") int deptId,@Param("state") int state);
+    
+    public List<Dept> getDeptByCompanyId(@Param("state") int state,@Param("companyId") int companyId);
 }

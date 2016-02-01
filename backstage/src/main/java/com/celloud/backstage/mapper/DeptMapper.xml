@@ -147,4 +147,9 @@
     from tb_dept
     where dept_id = #{deptId } and state=#{state }
   </select>
+  <select id="getDeptByCompanyId" resultMap="BaseResultMap" >
+    select dept_id,dept_name
+    from tb_dept
+    where state=#{state } and company_id=#{companyId }
+  </select>
 </mapper>

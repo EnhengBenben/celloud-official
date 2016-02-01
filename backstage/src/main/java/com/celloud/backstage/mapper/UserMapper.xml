@@ -50,7 +50,7 @@
 		values (#{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR},
 		#{password,jdbcType=VARCHAR},
 		#{email,jdbcType=VARCHAR},
-		#{cellphone,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+		#{cellphone,jdbcType=VARCHAR},now(),
 		#{icon,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER},
 		#{remark,jdbcType=VARCHAR},
 		#{navigation,jdbcType=INTEGER},
@@ -308,7 +308,56 @@
 	<select id="isEmailInUse" resultType="int">
         select count(1) from tb_user where email=#{email} and user_id != #{userId}
     </select>
+    <select id="isUsernameInUse" resultType="int">
+        select count(1) from tb_user where username=#{username } and user_id != #{userId}
+    </select>
     <select id="getCompanyIdByUserId" resultType="java.lang.Integer">
     	select company_id from tb_user_company_relat where user_id = #{userId}
     </select>
+    
+    <select id="getUserByPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_user
+        where state=#{state } and role=#{role } order by create_date desc
+    </select>
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="userId" parameterType="com.celloud.backstage.model.User" >
+        insert into tb_user (
+        username, password,
+        email, cellphone, create_date,
+        icon, role, remark,
+        navigation, truename, state,
+        dept_id, login_uuid, company_id,
+        sign)
+        values (#{username,jdbcType=VARCHAR},
+        #{password,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR},
+        #{cellphone,jdbcType=VARCHAR},now(),
+        #{icon,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER},
+        #{remark,jdbcType=VARCHAR},
+        #{navigation,jdbcType=INTEGER},
+        #{truename,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER},
+        #{deptId,jdbcType=INTEGER}, #{loginUuid,jdbcType=VARCHAR},
+        #{companyId,jdbcType=INTEGER},
+        #{sign,jdbcType=VARCHAR})
+    </insert>
+    <insert id="addUserAppRight"  useGeneratedKeys="true">
+	     <selectKey resultType="long" keyProperty="id" order="AFTER">  
+	        SELECT  
+	        LAST_INSERT_ID()  
+	    </selectKey>  
+        insert into tb_user_app_right (
+        user_id, app_id,
+        is_add)
+        values
+        <foreach collection="appIds" item="appId" index="index" separator="," >
+            (#{userId},${appId},#{isAdded})
+        </foreach>
+    </insert>
+    <insert id="addUserCompanyRelat">
+        insert into tb_user_company_relat (
+        user_id, company_id)
+        values
+        (#{userId},#{companyId})
+    </insert>
 </mapper>

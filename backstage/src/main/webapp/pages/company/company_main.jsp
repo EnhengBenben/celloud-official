@@ -34,11 +34,11 @@
                     </td>
                     <td><a href="javascript:dept.getDeptByCompany(${company.companyId },1)">${company.companyName }</a></td>
                     <td>
-                        <a href="javascript:company.editCompany(${company.companyId })">
-                            <button class="btn btn-secondary">编辑</button>
+                        <a class="btn btn-secondary" href="javascript:company.editCompany(${company.companyId })">
+                                                    编辑
                         </a>
-                        <a href="javascript:company.deleteCompany(${company.companyId })">
-                            <button class="btn btn-danger">删除</button>
+                        <a class="btn btn-secondary" href="javascript:company.deleteCompany(${company.companyId })">
+                                                    删除
                         </a>
                     </td>
                 </tr>
