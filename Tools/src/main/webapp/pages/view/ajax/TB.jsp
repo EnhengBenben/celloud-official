@@ -13,7 +13,7 @@
           <dd><s:property value="resultMap.fileName"/>(<s:property value="%{resultMap.pagePath.replace('/SVG','').substring(resultMap.pagePath.replace('/SVG','').lastIndexOf('/')+1,resultMap.pagePath.replace('/SVG','').length())}"/>)</dd>
         </dl>
         <div class="toolbar">
-            <a class="btn btn-celloud-success btn-flat" href="javascript:toPrintHBV("<s:property value="resultMap.pagePath"/>")"><i class="fa fa-print"></i>打印报告</a>
+            <a class="btn btn-celloud-success btn-flat" href="javascript:toPrintHBV('<s:property value="resultMap.pagePath"/>')"><i class="fa fa-print"></i>打印报告</a>
             <s:if test="%{!resultMap.pdf.equals('false')}">
                 <a class="btn btn-warning btn-flat" href="<s:property value="resultMap.pdf"/>"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
             </s:if>

@@ -17,6 +17,10 @@
 <link rel="stylesheet" href="css/main.css">
 
 <script src="plugins/bootstrap/js/jquery-1.11.1.min.js"></script>
+<script src="plugins/jQuery/jquery.validate.min.js"></script>
+<script src="plugins/jQuery/messages_zh.min.js"></script>
+<script src="js/validate.extend.js"></script>
+<script src="js/jquery.form.js"></script>
 <script src="js/main.js"></script>
 </head>
 <body class="page-body">
