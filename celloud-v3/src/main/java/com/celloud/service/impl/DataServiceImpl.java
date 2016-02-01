@@ -186,4 +186,9 @@ public class DataServiceImpl implements DataService {
     public List<DataFile> selectDataByKeys(String dataKeys) {
         return dataFileMapper.selectByDataKeys(dataKeys);
     }
+
+	@Override
+	public int updateByPrimaryKeySelective(DataFile record) {
+		return dataFileMapper.updateByPrimaryKeySelective(record);
+	}
 }

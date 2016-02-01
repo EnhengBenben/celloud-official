@@ -30,13 +30,15 @@ public class VisitFilter implements Filter {
 	    FilterChain chain) throws IOException, ServletException {
 	HttpServletRequest request = (HttpServletRequest) req;
 	HttpServletResponse response = (HttpServletResponse) resp;
-	String referer = request.getHeader("referer");
-	boolean isAllow = referer == null ? true : !referer.contains("celloud");
+	//TODO https 无法获取referer，该判断已经无法使用
+	// String referer = request.getHeader("referer");
+	// boolean isAllow = referer == null ? true :
+	// !referer.contains("celloud");
 	// isAllow 为空，说明是地址栏直接输入的地址
-	if (isAllow) {
-	    log.error("非法访问！试图访问：" + request.getRequestURI());
-	    response.sendRedirect(request.getContextPath() + "/error.html");
-	}
+	// if (isAllow) {
+	// log.error("非法访问！试图访问：" + request.getRequestURI());
+	// response.sendRedirect(request.getContextPath() + "/error.html");
+	// }
 	chain.doFilter(request, response);
     }
 

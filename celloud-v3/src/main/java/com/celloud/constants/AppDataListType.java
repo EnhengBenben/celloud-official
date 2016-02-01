@@ -30,12 +30,12 @@ public class AppDataListType {
      * 需要路径
      */
     public static final List<String> ONLY_PATH = Arrays.asList("1", "73", "82",
-            "84", "89", "90", "105", "106", "107", "108");
+            "84", "89", "90", "105", "106", "107", "108", "117");
 
     /**
      * 需要路径和文件名
      */
     public static final List<String> PATH_AND_NAME = Arrays.asList("11", "80",
-            "85", "87", "88", "91", "94", "104", "109");
+            "85", "87", "88", "91", "94", "104", "109","116");
 
 }

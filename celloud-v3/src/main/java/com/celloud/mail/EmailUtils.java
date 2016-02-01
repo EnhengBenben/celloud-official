@@ -2,7 +2,6 @@ package com.celloud.mail;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,14 +30,14 @@ public class EmailUtils {
      */
     public static void sendError(final String errorMessage) {
         final EmailSender sender = EmailSender.getInstance();
-        if (EmailProperties.errorsMailTo == null) {
+        if (EmailProperties.errorMailTo == null) {
             logger.warn("系统出现异常，正在发送异常信息邮件，但是没有找到邮件接收者！");
             return;
         }
         new Thread(new Runnable() {
             @Override
             public void run() {
-                sender.addTo(EmailProperties.errorsMailTo).setTitle(EmailProperties.errorTitle).setContent(errorMessage)
+                sender.addTo(EmailProperties.errorMailTo).setTitle(EmailProperties.errorTitle).setContent(errorMessage)
                         .send();
             }
         }).start();
@@ -57,6 +56,7 @@ public class EmailUtils {
         exception.printStackTrace(pw);
         StringBuffer buffer = new StringBuffer("");
         buffer.append("<h3>异常地址：</h3>");
+        buffer.append(request.getMethod() + "   ");
         buffer.append(request.getRequestURL());
         if (request.getQueryString() != null) {
             buffer.append("?" + request.getQueryString());
@@ -100,29 +100,25 @@ public class EmailUtils {
      * 
      * @param feedback
      */
-    public static void sendFeedback(Feedback feedback, List<FeedbackAttachment> attachments) {
-        EmailSender utils = EmailSender.getInstance();
-        if (EmailProperties.feedbackMailTo == null) {
-            logger.warn("用户提交了工单，正在发送工单信息邮件，但是没有找到邮件接收者！");
-            return;
-        }
-        StringBuffer buffer = new StringBuffer("");
-        buffer.append("<strong>标题：</strong>" + feedback.getTitle());
-        buffer.append("<br>");
-        buffer.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(feedback.getCreateDate()));
-        buffer.append("&nbsp;&nbsp;&nbsp;    &nbsp;&nbsp;&nbsp;");
-        buffer.append(feedback.getUsername());
-        buffer.append("(" + feedback.getEmail() + ")");
-        buffer.append("<br>");
-        buffer.append("<strong>内容：</strong>" + feedback.getContent());
-        if (attachments != null && attachments.size() > 0) {
-            for (FeedbackAttachment fa : attachments) {
-                String file = FeedbackConstants.getAttachment(fa.getFilePath());
-                // TODO fa.getFileName() 用户上传的文件名
-                utils.attachWithFileName(null, file);
+    public static void sendFeedback(final Feedback feedback, final List<FeedbackAttachment> attachments) {
+        final EmailSender sender = EmailSender.getInstance();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (EmailProperties.feedbackMailTo == null) {
+                    logger.warn("用户提交了工单，正在发送工单信息邮件，但是没有找到邮件接收者！");
+                    return;
+                }
+                if (attachments != null && attachments.size() > 0) {
+                    for (FeedbackAttachment fa : attachments) {
+                        String file = FeedbackConstants.getAttachment(fa.getFilePath());
+                        // TODO fa.getFileName() 用户上传的文件名
+                        sender.attachWithFileName(null, file);
+                    }
+                }
+                sender.addTo(EmailProperties.feedbackMailTo).setTitle(EmailProperties.feedbackTitle)
+                        .setTemplate("feedback.vm").addObject("feedback", feedback).send();
             }
-        }
-        utils.addTo(EmailProperties.feedbackMailTo).setTitle(EmailProperties.feedbackTitle)
-                .setContent(buffer.toString()).send();
+        }).start();
     }
 }
