@@ -73,14 +73,12 @@
       </thead>
       <tbody>
           <c:forEach items="${gsrList}" var="accountConfig" varStatus="status" >  
-            <c:if test="${!(fn:trim(accountConfig.diseaseName) eq '' || fn:trim(accountConfig.diseaseName) eq '改变一碳代谢' || fn:trim(accountConfig.diseaseName) eq '活力减少' || fn:trim(accountConfig.diseaseName) eq '降低表达'|| fn:trim(accountConfig.diseaseName) eq '表型改变相关' || fn:trim(accountConfig.diseaseName) eq '改变高半胱氨酸水平')}">
-             <tr>  
-	        	 <td>${accountConfig.diseaseName }</td>
-	        	 <td>${accountConfig.gene }</td>
-	        	 <td>${accountConfig.mutNum }</td>
-	        	 <td><input type="text" name="cmpFill.decisionResult.${accountConfig.diseaseEngName }" value="${cmpReport.cmpFilling.decisionResult[accountConfig.diseaseEngName] }"></td>  
-             </tr>
-           </c:if>
+            <tr>  
+        	 <td>${accountConfig.diseaseName }</td>
+        	 <td>${accountConfig.gene }</td>
+        	 <td>${accountConfig.mutNum }</td>
+        	 <td><input type="text" name="cmpFill.decisionResult.${accountConfig.diseaseEngName }" value="${cmpReport.cmpFilling.decisionResult[accountConfig.diseaseEngName] }"></td>  
+            </tr>
           </c:forEach>
       </tbody>
     </table>
@@ -166,14 +164,14 @@
    				</c:when>
    				<c:otherwise>
 		   			<c:forEach items="${gddDiseaseList}" var="gddDisease">
-		   			  <c:if test="${!(fn:trim(gddDisease.name) eq '' || fn:trim(gddDisease.name) eq '改变一碳代谢' || fn:trim(gddDisease.name) eq '活力减少' || fn:trim(gddDisease.name) eq '降低表达'|| fn:trim(accountConfig.diseaseName) eq '表型改变相关' || fn:trim(accountConfig.diseaseName) eq '改变高半胱氨酸水平')}">
+<%-- 		   			  <c:if test="${!(fn:trim(gddDisease.name) eq '' || fn:trim(gddDisease.name) eq '改变一碳代谢' || fn:trim(gddDisease.name) eq '活力减少' || fn:trim(gddDisease.name) eq '降低表达'|| fn:trim(accountConfig.diseaseName) eq '表型改变相关' || fn:trim(accountConfig.diseaseName) eq '改变高半胱氨酸水平')}"> --%>
    						<tr>
    							<td>${gddDisease.name }</td>
    							<td>${gddDisease.gene }</td>
    							<td>未发现异常</td>
    							<td>正常</td>
    						</tr>
-   					  </c:if>
+<%--    					  </c:if> --%>
 		   			</c:forEach>
    				</c:otherwise>
    			</c:choose>

@@ -4,6 +4,7 @@ package com.celloud.model;
 import java.util.List;
 
 /**
+ * CMP报告基因检测详细信息
  * 
  * @author <a href="mailto:liuqingxiao@celloud.cn">liuqx</a>
  * @date 2015-7-8下午5:00:32

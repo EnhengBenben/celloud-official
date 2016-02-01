@@ -89,6 +89,7 @@ public class TaskAction {
                 .findTaskInfoByProId(Integer.parseInt(projectId));
         if (map == null) {
             logger.info("获取项目信息错误" + map);
+            return "run error";
         }
         Integer userId = (Integer) map.get("userId");
         Integer appId = (Integer) map.get("appId");

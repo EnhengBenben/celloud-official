@@ -2,6 +2,7 @@ package com.celloud.action;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,6 @@ import com.celloud.model.CmpReport;
 import com.celloud.model.Company;
 import com.celloud.model.DataFile;
 import com.celloud.model.Dept;
-import com.celloud.model.GddDiseaseDict;
 import com.celloud.model.HBV;
 import com.celloud.model.MIB;
 import com.celloud.model.Oncogene;
@@ -226,67 +226,114 @@ public class ReportAction {
             Integer appId) {
         CmpReport cmpReport = reportService.getCMPReport(dataKey, projectId,
                 appId);
+        ModelAndView mv = getModelAndView("print/print_gdd", projectId);
+        if (cmpReport == null)
+            return mv;
         Map<String, CmpGeneDetectionDetail> geneMap = cmpReport
                 .getGeneDetectionDetail();
-        Map<String, CmpGeneDetectionDetail> treeMap = new TreeMap<>();
-        List<String> unnormalGene = new ArrayList<>();
-        List<CmpGeneSnpResult> allGsr = new ArrayList<>();
-        List<GddDiseaseDict> gddDiseaseList = new ArrayList<>();
-        if (geneMap != null) {
-            // 需要排除的疾病
-            List<String> noDiseaseName = new ArrayList<>();
-            noDiseaseName.add("");
-            noDiseaseName.add("改变一碳代谢");
-            noDiseaseName.add("活力减少");
-            noDiseaseName.add("降低表达");
-            noDiseaseName.add("表型改变相关");
-            noDiseaseName.add("改变高半胱氨酸水平");
-            for (String str : geneMap.keySet()) {
-                if ((geneMap.get(str).getResult() != null
-                        && geneMap.get(str).getResult().get(0) != null
-                        && geneMap.get(str).getResult().get(0).getGene()
-                                .contains("没有发现突变位点"))
-                        || dataKey.equals("all")) {
-                } else {
-                    CmpGeneDetectionDetail gdd = geneMap.get(str);
-                    List<CmpGeneSnpResult> gsrli = gdd.getResult();
-                    List<CmpGeneSnpResult> gsrli_ = new ArrayList<>();
-                    for (CmpGeneSnpResult gsr : gsrli) {
-                        if (noDiseaseName
-                                .contains(gsr.getDiseaseName().trim())) {
+        if (geneMap == null)
+            return mv;
+        // 需要排除的疾病
+        List<String> noDiseaseName = new ArrayList<>();
+        noDiseaseName.add("");
+        noDiseaseName.add("改变一碳代谢");
+        noDiseaseName.add("活力减少");
+        noDiseaseName.add("降低表达");
+        noDiseaseName.add("表型改变相关");
+        noDiseaseName.add("改变高半胱氨酸水平");
+        // 过滤疾病英文名称只允许字母和数字
+        String regEx = "[^\\w\\.\\_\\-\u4e00-\u9fa5]";
+        Pattern p = Pattern.compile(regEx);
 
-                        } else {
-                            CmpGeneSnpResult gsr_ = gsr;
-                            // 只允许字母和数字
-                            String regEx = "[^\\w\\.\\_\\-\u4e00-\u9fa5]";
-                            Pattern p = Pattern.compile(regEx);
-                            gsr_.setDiseaseEngName(
-                                    p.matcher(gsr.getDiseaseEngName())
-                                            .replaceAll("").trim());
-                            gsrli_.add(gsr_);
+        Map<String, CmpGeneDetectionDetail> treeMap = new TreeMap<>();
+        List<CmpGeneSnpResult> gsrList = new ArrayList<>();
+        List<String> unnormalGene = new ArrayList<>();
+        for (String key : geneMap.keySet()) {
+            if (geneMap.get(key) == null)
+                continue;
+            List<CmpGeneSnpResult> gddResultList = geneMap.get(key).getResult();
+            if (gddResultList == null || gddResultList.get(0) == null
+                    || gddResultList.get(0).getGene() == null
+                    || gddResultList.get(0).getGene().contains("没有发现突变位点"))
+                continue;
+
+            if ("all".equals(key)) {
+                for (int i = 0; i < gddResultList.size(); i++) {
+                    int num = 1;
+                    CmpGeneSnpResult gsr_i = gddResultList.get(i);
+                    if (gsr_i == null || gsr_i.getDiseaseName() == null
+                            || gsr_i.getDiseaseEngName() == null
+                            || gsr_i.getGene() == null || noDiseaseName
+                                    .contains(gsr_i.getDiseaseName().trim())) {
+                        gddResultList.remove(i);
+                        continue;
+                    }
+                    String engName_i = p.matcher(gsr_i.getDiseaseEngName())
+                            .replaceAll("").trim();
+                    String gene_i = gsr_i.getGene();
+                    for (int j = gddResultList.size() - 1; j > i; j--) {
+                        CmpGeneSnpResult gsr_j = gddResultList.get(j);
+                        if (gsr_j == null || gsr_j.getDiseaseName() == null
+                                || gsr_j.getDiseaseEngName() == null
+                                || gsr_j.getGene() == null
+                                || noDiseaseName.contains(
+                                        gsr_j.getDiseaseName().trim())) {
+                            gddResultList.remove(j);
+                            continue;
+                        }
+                        String engName_j = p.matcher(gsr_j.getDiseaseEngName())
+                                .replaceAll("").trim();
+                        String gene_j = gsr_j.getGene();
+                        if (engName_i.equals(engName_j)
+                                && gene_j.equals(gene_j)) {
+                            gddResultList.remove(j);
+                            num++;
                         }
                     }
-                    if (gsrli_.size() > 0) {
-                        gdd.setResult(gsrli_);
-                        treeMap.put(str, gdd);
-                    }
-                    unnormalGene.add(str);
+                    CmpGeneSnpResult gsr_tmp = new CmpGeneSnpResult();
+                    gsr_tmp.setDiseaseName(gsr_i.getDiseaseName());
+                    gsr_tmp.setDiseaseEngName(engName_i);
+                    gsr_tmp.setGene(gene_i);
+                    gsr_tmp.setMutNum(num);
+                    gsrList.add(gsr_tmp);
                 }
+                // 将结果根据疾病类型排序
+                Collections.sort(gsrList, new Comparator<CmpGeneSnpResult>() {
+                    @Override
+                    public int compare(CmpGeneSnpResult gsr1,
+                            CmpGeneSnpResult gsr2) {
+                        return gsr1.getDiseaseName()
+                                .compareTo(gsr2.getDiseaseName());
+                    }
+                });
+            } else {
+                CmpGeneDetectionDetail gdd = geneMap.get(key);
+                List<CmpGeneSnpResult> gsrli_temp = new ArrayList<>();
+                for (CmpGeneSnpResult gsr : gddResultList) {
+                    if (gsr == null || gsr.getDiseaseName() == null
+                            || gsr.getDiseaseEngName() == null || noDiseaseName
+                                    .contains(gsr.getDiseaseName().trim()))
+                        continue;
+                    gsr.setDiseaseEngName(p.matcher(gsr.getDiseaseEngName())
+                            .replaceAll("").trim());
+                    gsrli_temp.add(gsr);
+                }
+                if (gsrli_temp != null) {
+                    gdd.setResult(gsrli_temp);
+                    treeMap.put(key, gdd);
+                }
+                unnormalGene.add(key);
             }
-            allGsr = geneMap.get("all").getResult();
-            cmpReport.setGeneDetectionDetail(treeMap);
-        } else {
-            unnormalGene.add("");
         }
-        gddDiseaseList = reportService.getGddDiseaseDictNormal(unnormalGene);
-        List<CmpGeneSnpResult> gsrList = reportService.getGddResult(
-                cmpReport.getDataKey(), cmpReport.getProjectId(),
-                cmpReport.getAppId());
-        ModelAndView mv = getModelAndView("print/print_gdd", projectId);
-        mv.addObject("cmpReport", cmpReport);
+        cmpReport.setGeneDetectionDetail(treeMap);
+        unnormalGene.addAll(unnormalGene);
+        if (unnormalGene == null || unnormalGene.size() == 0)
+            unnormalGene.add("");
         mv.addObject("gsrList", gsrList);
-        mv.addObject("allGsr", allGsr);
-        mv.addObject("gddDiseaseList", gddDiseaseList);
+        mv.addObject("cmpReport", cmpReport);
+        mv.addObject("allGsr", geneMap.get("all").getResult());
+        mv.addObject("gddDiseaseList",
+                reportService.getGddDiseaseDictNormal(unnormalGene));
         return mv;
     }
 
@@ -431,40 +478,43 @@ public class ReportAction {
         ModelAndView mv = getModelAndView("report/report_data_pgs", projectId);
         return mv.addObject("pgs", pgs);
     }
-    
-	/**
-	 * 获取Oncogene报告
-	 * 
-	 * @param dataKey
-	 * @param projectId
-	 * @param appId
-	 * @return
-	 * @author lin
-	 * @date 2016年1月28日下午7:18:01
-	 */
-	@RequestMapping("getOncogeneReport")
-	public ModelAndView getOncogeneReport(String dataKey, Integer projectId, Integer appId) {
-		Oncogene oncogene = reportService.getOncogeneReport(dataKey, projectId, appId);
-		if (oncogene != null) {
-			// jstl 处理 \n 很困难，就在 java 端处理
-			oncogene.setReport(oncogene.getReport().replace("\n", "<br/>"));
-			oncogene.setWz1(oncogene.getWz1().replace("\n", "<br/>"));
-			oncogene.setWz2(oncogene.getWz2().replace("\n", "<br/>"));
-			// 排序
-			List<String> km = oncogene.getKnowMutation();
-			if (km != null) {
-				Collections.sort(km);
-				oncogene.setKnowMutation(km);
-			}
-			List<String> out = oncogene.getOut();
-			if (out != null) {
-				Collections.sort(out);
-				oncogene.setOut(out);
-			}
-		}
-		ModelAndView mv = getModelAndView("report/report_data_oncogene", projectId);
-		return mv.addObject("oncogene", oncogene);
-	}
+
+    /**
+     * 获取Oncogene报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author lin
+     * @date 2016年1月28日下午7:18:01
+     */
+    @RequestMapping("getOncogeneReport")
+    public ModelAndView getOncogeneReport(String dataKey, Integer projectId,
+            Integer appId) {
+        Oncogene oncogene = reportService.getOncogeneReport(dataKey, projectId,
+                appId);
+        if (oncogene != null) {
+            // jstl 处理 \n 很困难，就在 java 端处理
+            oncogene.setReport(oncogene.getReport().replace("\n", "<br/>"));
+            oncogene.setWz1(oncogene.getWz1().replace("\n", "<br/>"));
+            oncogene.setWz2(oncogene.getWz2().replace("\n", "<br/>"));
+            // 排序
+            List<String> km = oncogene.getKnowMutation();
+            if (km != null) {
+                Collections.sort(km);
+                oncogene.setKnowMutation(km);
+            }
+            List<String> out = oncogene.getOut();
+            if (out != null) {
+                Collections.sort(out);
+                oncogene.setOut(out);
+            }
+        }
+        ModelAndView mv = getModelAndView("report/report_data_oncogene",
+                projectId);
+        return mv.addObject("oncogene", oncogene);
+    }
 
     /**
      * 点击数据报告列表查看上一页数据报告
