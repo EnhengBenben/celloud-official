@@ -149,7 +149,7 @@ public class RunOverUtil {
                 resultArray.append(FileTools
                         .getFirstLine(reportPath + "/result/average.info"));
             } else {
-                resultArray.append("nbsp;");
+                resultArray.append("&nbsp;");
             }
         } else {
             resultArray.append("运行结果异常").append("\t&nbsp;\t&nbsp;\t&nbsp;");
