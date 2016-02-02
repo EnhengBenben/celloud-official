@@ -1,11 +1,13 @@
 package com.celloud.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.query.Query;
 import org.springframework.stereotype.Service;
 
 /**
@@ -52,10 +54,21 @@ public class ReportDaoImpl implements ReportDao {
     }
 
     @Override
-    public <T> List<T> getDataFieldInAndOrder(Class<T> T, String Field,
-            List<String> condition) {
-        return dataStore.createQuery(T).filter(Field + " nin", condition)
-                .order(Field).asList();
+    public <T> List<T> getDataFieldInAndOrder(Class<T> T, String[] fields,
+            Map<String, List<String>> conditionMap, String sortField) {
+        Query<T> q = dataStore.createQuery(T);
+        for (String s : fields) {
+            q.filter(s + " nin", conditionMap.get(s));
+        }
+        return q.order(sortField).asList();
+    }
+
+    @Override
+    public <T> void editData(Class<T> T, ObjectId id, String field,
+            Object obj) {
+        dataStore.update(dataStore.createQuery(T).filter("_id", id),
+                dataStore.createUpdateOperations(T).set(field, obj));
+
     }
 
 }

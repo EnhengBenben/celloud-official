@@ -13,11 +13,10 @@
 </head>
 <body>
 <a href="javascript:void(0)" onclick="preview(this)" class="btn btn-default" id="change" style="float:right;margin-top:10px;margin-right:-80px;">打印</a>
-<form id="form">
+<form id="cmp-form">
 <input type="hidden" name="cmpId" id="cmpId" value="${cmpReport.id }">
 <input type="hidden" name="cmpReport.dataKey" value="${cmpReport.dataKey }">
 <input type="hidden" name="cmpReport.userId" value="${cmpReport.userId }">
-<input type="hidden" name="infos" id="infos">
 <section class="section0 border1 w3cbbs">
 	<div class="header">
 		<img src="<%=request.getContextPath()%>/images/report/yanda_print.png">
@@ -25,7 +24,7 @@
 	</div>
 	<div class="titletype">
 		<div>
-			<span>肿瘤类型：</span><span><input type="text" class="input200" id="tumorType" name="cmpFill.tumorType" value="${cmpReport.cmpFilling.tumorType }"></span>
+			<span>肿瘤类型：</span><span><input type="text" class="input200" id="tumorType" name="tumorType" value="${cmpReport.cmpFilling.tumorType }"></span>
 		</div>
 		<div>
 			<span>姓</span><span style="margin-left:40px">名：</span><span><input type="text" class="input200" value="${cmpReport.cmpFilling.patientName }"></span>
@@ -34,7 +33,7 @@
 			<span>取样日期：</span><span><input type="text" class="input200" value="${cmpReport.cmpFilling.samplingDate }" ></span>
 		</div>
 		<div>
-			<span>报告日期：</span><span><input type="text" class="input200" name="cmpFill.reportDate" value="${cmpReport.cmpFilling.reportDate }"></span>
+			<span>报告日期：</span><span><input type="text" class="input200" name="reportDate" value="${cmpReport.cmpFilling.reportDate }"></span>
 		</div>
 	</div>
 	<footer>
@@ -45,18 +44,18 @@
 	<h3>一、基本信息</h3>
 	<h4>1、送检基本信息</h4>
 	<ul class="info">
-        <li>姓名：<span><input type="text" id="patientName" name="cmpFill.patientName" value="${cmpReport.cmpFilling.patientName }"></span></li>
-        <li>取样日期：<span><input type="text" id="samplingDate" name="cmpFill.samplingDate" value="${cmpReport.cmpFilling.samplingDate }"></span></li>
-        <li>性别： <span id="_sex"><input type="radio" name="cmpFill.patientSex" value="男" <c:if test="${cmpReport.cmpFilling.patientSex eq '男' }">checked="checked"</c:if>>男<input type="radio" name="cmpFill.patientSex" value="女" <c:if test="${cmpReport.cmpFilling.patientSex eq '女' }">checked="checked"</c:if>>女</span></li>
-        <li>样本来源：<span><input type="text" id="sampleSource" name="cmpFill.sampleSource" value="${cmpReport.cmpFilling.sampleSource }"></span></li>
-        <li>年龄：<span><input type="text" id="patientAge" name="cmpFill.patientAge" value="<c:if test="${!empty cmpReport.cmpFilling.patientAge && !cmpReport.cmpFilling.patientAge eq 'NaN'}">${cmpReport.cmpFilling.patientAge }</c:if>"></span>岁</li>
-        <li>临床诊断：<span><input type="text" id="clinicalDiagnosis" name="cmpFill.clinicalDiagnosis" value="${cmpReport.cmpFilling.clinicalDiagnosis }"></span></li>
-        <li>病理诊断：<span><input type="text" id="pathologicDiagnosis" name="cmpFill.pathologicDiagnosis" value="${cmpReport.cmpFilling.pathologicDiagnosis }"></span></li>
-        <li>分析日期：<span><input type="text" id="analysisDate" name="cmpFill.analysisDate" value="${cmpReport.cmpFilling.analysisDate }"></span></li>
-        <li>病理位置：<span><input type="text" id="pathologicalPosition" name="cmpFill.pathologicalPosition" value="${cmpReport.cmpFilling.pathologicalPosition }"></span></li>
-        <li>分子生物实验操作：<span><input type="text" class="input100" id="molecularBioExperOper" name="cmpFill.molecularBioExperOper" value="${cmpReport.cmpFilling.molecularBioExperOper }"></span></li>
-        <li>病理类型：<span><input type="text" id="pathologicalType" name="cmpFill.pathologicalType" value="${cmpReport.cmpFilling.pathologicalType }"></span></li>
-        <li>基因分析：<span><input type="text" id="geneAnalysis" name="cmpFill.geneAnalysis" value="${cmpReport.cmpFilling.geneAnalysis }"></span></li>
+        <li>姓名：<span><input type="text" id="patientName" name="patientName" value="${cmpReport.cmpFilling.patientName }"></span></li>
+        <li>取样日期：<span><input type="text" id="samplingDate" name="samplingDate" value="${cmpReport.cmpFilling.samplingDate }"></span></li>
+        <li>性别： <span id="_sex"><input type="radio" name="patientSex" value="男" <c:if test="${cmpReport.cmpFilling.patientSex eq '男' }">checked="checked"</c:if>>男<input type="radio" name="patientSex" value="女" <c:if test="${cmpReport.cmpFilling.patientSex eq '女' }">checked="checked"</c:if>>女</span></li>
+        <li>样本来源：<span><input type="text" id="sampleSource" name="sampleSource" value="${cmpReport.cmpFilling.sampleSource }"></span></li>
+        <li>年龄：<span><input type="text" id="patientAge" name="patientAge" value="<c:if test="${!empty cmpReport.cmpFilling.patientAge && !cmpReport.cmpFilling.patientAge eq 'NaN'}">${cmpReport.cmpFilling.patientAge }</c:if>"></span>岁</li>
+        <li>临床诊断：<span><input type="text" id="clinicalDiagnosis" name="clinicalDiagnosis" value="${cmpReport.cmpFilling.clinicalDiagnosis }"></span></li>
+        <li>病理诊断：<span><input type="text" id="pathologicDiagnosis" name="pathologicDiagnosis" value="${cmpReport.cmpFilling.pathologicDiagnosis }"></span></li>
+        <li>分析日期：<span><input type="text" id="analysisDate" name="analysisDate" value="${cmpReport.cmpFilling.analysisDate }"></span></li>
+        <li>病理位置：<span><input type="text" id="pathologicalPosition" name="pathologicalPosition" value="${cmpReport.cmpFilling.pathologicalPosition }"></span></li>
+        <li>分子生物实验操作：<span><input type="text" class="input100" id="molecularBioExperOper" name="molecularBioExperOper" value="${cmpReport.cmpFilling.molecularBioExperOper }"></span></li>
+        <li>病理类型：<span><input type="text" id="pathologicalType" name="pathologicalType" value="${cmpReport.cmpFilling.pathologicalType }"></span></li>
+        <li>基因分析：<span><input type="text" id="geneAnalysis" name="geneAnalysis" value="${cmpReport.cmpFilling.geneAnalysis }"></span></li>
     </ul>
     <h4>2、送检要求</h4>
     <div class="info">
@@ -95,7 +94,6 @@
     	</table>
     </div>
 </section>
-</form>
 <section class="section2 border1 w3cbbs">
   <h3>二、基因检测结果简述</h3>
   <h4>1、检测结果</h4>
@@ -238,7 +236,7 @@
    	<ul class="list" style="display:none;" id="noDrug">
    		<li>未见明确耐药位点突变</li>
    	</ul>
-   	<table class="table table-striped-blue table-text-center" id="drugTable" name="cmpDrugTable">
+   	<table class="table table-striped-blue table-text-center" id="drugTable">
 		<thead>
 			<tr>
 				<th style="width:110px;">基因</th>
@@ -247,21 +245,23 @@
 			</tr>	
 		</thead>
 		<tbody id="drugTbody_3">
+		  <c:set var="resistanceIndex" scope="page" value="0"/>
 			<c:choose>
 				<c:when test="${cmpReport.cmpFilling.resistanceSiteSum.size()>0}">
 					<c:forEach items="${cmpReport.cmpFilling.resistanceSiteSum}" var="li" varStatus="size">
-						<tr id="drugTbody_3_tr<c:out value="${size.index}"/>" name="drugTbody_3_tr">
-							<td><input type="text" class="form-control" value="${li.geneName }"></td>
-							<td><input type="text" class="form-control" value="${li.mutationSite }"></td>
-							<td><input type="text" class="form-control" value="${li.drug }"></td>
+						<tr id="drugTbody_3_tr${size.index}" name="drugTbody_3_tr">
+							<td><input type="text" name="resistanceSiteSum[${size.index}].geneName" class="form-control" value="${li.geneName }"></td>
+							<td><input type="text" name="resistanceSiteSum[${size.index}].mutationSite" class="form-control" value="${li.mutationSite }"></td>
+							<td><input type="text" name="resistanceSiteSum[${size.index}].drug" class="form-control" value="${li.drug }"></td>
 						</tr>
 					</c:forEach>
+					<c:set var="resistanceIndex" scope="page" value="${cmpReport.cmpFilling.resistanceSiteSum.size() }"/>
 				</c:when>
 				<c:otherwise>
 					<tr id="drugTbody_3_tr0" name="drugTbody_3_tr">
-						<td><input type="text" class="form-control"></td>
-						<td><input type="text" class="form-control"></td>
-						<td><input type="text" class="form-control"></td>
+						<td><input type="text" name="resistanceSiteSum[0].geneName" class="form-control"></td>
+						<td><input type="text" name="resistanceSiteSum[0].mutationSite" class="form-control"></td>
+						<td><input type="text" name="resistanceSiteSum[0].drug" class="form-control"></td>
 					</tr>
 				</c:otherwise>
 			</c:choose>
@@ -272,7 +272,7 @@
 		<c:choose>
 			<c:when test="${cmpReport.cmpFilling.resistanceSiteSum.size()>0}">
 				<c:forEach items="${cmpReport.cmpFilling.resistanceSiteSum}" var="li" varStatus="size">
-					<tr id="drugTbody_3_deltr<c:out value="${size.index}"/>"><td><a href="javascript:removeThisTr('drugTbody_3',<c:out value="${size.index}"/>)" title="删除所有"/></td></tr>
+					<tr id="drugTbody_3_deltr${size.index}"><td><a href="javascript:removeThisTr('drugTbody_3',${size.index})" title="删除所有"/></td></tr>
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
@@ -281,7 +281,7 @@
 		</c:choose>
 	</table>
 	<a href="javascript:void(0)" onclick="removeTableTr('drugTbody_3')">删除行</a>&nbsp;&nbsp;
-	<a href="javascript:void(0)" onclick="addTableTr('drugTbody_3')">添加行</a>
+	<a href="javascript:void(0)" onclick="addDrugResistance('drugTbody_3',${resistanceIndex})">添加行</a>
 </section>
 <input type="hidden" id="drugTbody_3_tr_length" value="${cmpReport.cmpFilling.resistanceSiteSum.size()}">
 <input type="hidden" id="drugTbody_4_tr_length" value="${cmpReport.cmpFilling.personalizedMedicine.size()}">
@@ -296,21 +296,23 @@
 			</tr>
 		</thead>
 		<tbody id="drugTbody_4">
+		  <c:set var="personMedicineIndex" scope="page" value="0"/>
 			<c:choose>
 				<c:when test="${cmpReport.cmpFilling.personalizedMedicine.size()>0}">
 					<c:forEach items="${cmpReport.cmpFilling.personalizedMedicine}" var="li" varStatus="size">
-						<tr id="drugTbody_4_tr<c:out value="${size.index}"/>" name="drugTbody_4_tr">
-							<td><input type="text" class="form-control" value="${li.geneName }"></td>
-							<td><input type="text" class="form-control" value="${li.mutationSite }"></td>
-							<td><input type="text" class="form-control" value="${li.drug }"></td>
+						<tr id="drugTbody_4_tr${size.index}" name="drugTbody_4_tr">
+							<td><input type="text" name="personalizedMedicine[${size.index}].geneName" class="form-control" value="${li.geneName }"></td>
+							<td><input type="text" name="personalizedMedicine[${size.index}].mutationSite" class="form-control" value="${li.mutationSite }"></td>
+							<td><input type="text" name="personalizedMedicine[${size.index}].drug" class="form-control" value="${li.drug }"></td>
 						</tr>
 					</c:forEach>
+					<c:set var="personMedicineIndex" scope="page" value="${cmpReport.cmpFilling.personalizedMedicine.size()-1}"/>
 				</c:when>
 				<c:otherwise>
 					<tr id="drugTbody_4_tr0" name="drugTbody_4_tr">
-						<td><input type="text" class="form-control"></td>
-						<td><input type="text" class="form-control"></td>
-						<td><input type="text" class="form-control"></td>
+						<td><input type="text" name="personalizedMedicine[0].geneName" class="form-control"></td>
+						<td><input type="text" name="personalizedMedicine[0].mutationSite" class="form-control"></td>
+						<td><input type="text" name="personalizedMedicine[0].drug" class="form-control"></td>
 					</tr>
 				</c:otherwise>
 			</c:choose>
@@ -320,7 +322,7 @@
 		<c:choose>
 			<c:when test="${cmpReport.cmpFilling.personalizedMedicine.size()>0}">
 				<c:forEach items="${cmpReport.cmpFilling.personalizedMedicine}" var="li" varStatus="size">
-					<tr id="drugTbody_4_deltr<c:out value="${size.index}"/>"><td><a href="javascript:removeThisTr('drugTbody_4',<c:out value="${size.index}"/>)" title="删除所有"/></td></tr>
+					<tr id="drugTbody_4_deltr${size.index}"><td><a href="javascript:removeThisTr('drugTbody_4',${size.index})" title="删除所有"/></td></tr>
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
@@ -329,44 +331,46 @@
 		</c:choose>
 	</table>
 	<a href="javascript:void(0)" onclick="removeTableTr('drugTbody_4')">删除行</a>&nbsp;&nbsp;
-	<a href="javascript:void(0)" onclick="addTableTr('drugTbody_4')">添加行</a>
+	<a href="javascript:void(0)" onclick="addPersonalizedMedicine('drugTbody_4',${personMedicineIndex})">添加行</a>
 	<h4>推荐药物：</h4>
 	<div id="drugDescipDiv">
+	    <c:set var="recommendDrugIndex" scope="page" value="0"/>
 		<c:choose>
 			<c:when test="${cmpReport.cmpFilling.recommendDrug.size()>0}">
 				<c:forEach items="${cmpReport.cmpFilling.recommendDrug}" var="li" varStatus="size">
 				  <div name="drugContent">
 					<div class="h2">
-				    	<input type="text" class="form-control col-sm-10" value="${li.drugName }">
+				    	<input type="text" name="recommendDrug[${size.index }].drugName" class="form-control col-sm-10" value="${li.drugName }">
 				    </div>
 				    <div name="section4Text">
-				    	<textarea class="form-control" rows="15" cols="100">${li.drugDescrip }</textarea>
+				    	<textarea class="form-control" name="recommendDrug[${size.index }].drugDescrip" rows="15" cols="100">${li.drugDescrip }</textarea>
 			    	</div>
 					<c:if test="size.index>0"><br></c:if>
 				  </div>
 				</c:forEach>
+			  <c:set var="recommendDrugIndex" scope="page" value="${cmpReport.cmpFilling.recommendDrug.size()-1 }"/>
 			</c:when>
 			<c:otherwise>
 			  <div name="drugContent">
 				<div class="h2">
-			    	<input type="text" class="form-control col-sm-10">
+			    	<input type="text" name="recommendDrug[0].drugName" class="form-control col-sm-10">
 			    </div>
 			    <div name="section4Text">
-			    	<textarea class="form-control" rows="15" cols="100"></textarea>
+			    	<textarea class="form-control" name="recommendDrug[0].drugDescrip" rows="15" cols="100"></textarea>
 		    	</div>
 		      </div>
 			</c:otherwise>
 		</c:choose>
     </div>
     <a href="javascript:void();" onclick="removeDrugInput('drugDescipDiv')">删除药物</a>&nbsp;&nbsp;
-    <a href="javascript:void();" onclick="addDrugInput('drugDescipDiv')">添加药物</a>
+    <a href="javascript:void();" onclick="addDrugInput('drugDescipDiv'),${recommendDrugIndex}">添加药物</a>
 </section>
+</form>
 <section class="section5 border1 w3cbbs" id="section5">
     <h3>五、检测基因的详细信息</h3>
-    <s:set name="a" value="1"/>
-<%--     <s:if test="resultMap.ABL1Coverage!=''&&resultMap.ABL1Coverage!=null"> --%>
+    <c:set var="a" scope="page" value="1"/>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;ABL1基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;ABL1基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    	  <div name="geneDescriptDiv">
@@ -431,10 +435,8 @@
 	    	</ul>
 	    </div>
 	  </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.AKT1Coverage!=''&&resultMap.AKT1Coverage!=null"> --%>
       <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;AKT1基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;AKT1基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -502,10 +504,8 @@
 	    	</ul>
 	    </div>
 	  </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.ALKCoverage!=''&&resultMap.ALKCoverage!=null"> --%>
       <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;ALK基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;ALK基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -573,10 +573,8 @@
 	    	</ul>
 	    </div>
 	  </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.APCCoverage!=''&&resultMap.APCCoverage!=null"> --%>
       <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;APC基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;APC基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -643,10 +641,8 @@
 	    	</ul>
 	    </div>
 	  </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.ATMCoverage!=''&&resultMap.ATMCoverage!=null"> --%>
       <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;ATM基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;ATM基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -714,10 +710,8 @@
 	    	</ul>
 	    </div>
 	  </div>
-<%--      </s:if> --%>
-<%--      <s:if test="resultMap.BRAFCoverage!=''&&resultMap.BRAFCoverage!=null"> --%>
    	   <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;BRAF基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;BRAF基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    	  <div name="geneDescriptDiv">
@@ -785,10 +779,8 @@
 	    	</ul>
 	    </div>
 	  </div>
-<%--      </s:if> --%>
-<%--      <s:if test="resultMap.CDH1Coverage!=''&&resultMap.CDH1Coverage!=null"> --%>
      <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;CDH1基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;CDH1基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -849,10 +841,8 @@
 	    	</ul>
 	    </div>
 	</div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.CDKN2ACoverage!=''&&resultMap.CDKN2ACoverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;CDKN2A基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;CDKN2A基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -913,10 +903,8 @@
 	    	</ul>
 	    </div>
 	 </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.CSF1RCoverage!=''&&resultMap.CSF1RCoverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;CSF1R基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;CSF1R基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -980,10 +968,8 @@
 	    	</ul>
 	    </div>
 	  </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.CTNNB1Coverage!=''&&resultMap.CTNNB1Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;CTNNB1基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;CTNNB1基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    	  <div name="geneDescriptDiv">
@@ -1048,10 +1034,8 @@
 	    	</ul>
 	    </div>
 	 </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.EGFRCoverage!=''&&resultMap.EGFRCoverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;EGFR基因(表皮生长因子受体基因)突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;EGFR基因(表皮生长因子受体基因)突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -1125,10 +1109,8 @@
 	    	</ul>
 	    </div>
 	 </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.ERBB2Coverage!=''&&resultMap.ERBB2Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;ERBB2（也称HER2）基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;ERBB2（也称HER2）基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -1196,10 +1178,8 @@
 	    	</ul>
 	    </div>
 	 </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.ERBB4Coverage!=''&&resultMap.ERBB4Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;ERBB4基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;ERBB4基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -1263,10 +1243,8 @@
 	    	</ul>
 	    </div>
 	 </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.EZH2Coverage!=''&&resultMap.EZH2Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;EZH2基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;EZH2基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -1329,10 +1307,8 @@
 			    </table>
 	    	</ul>
 	    </div></div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.FBXW7Coverage!=''&&resultMap.FBXW7Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;FBXW7基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;FBXW7基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -1395,10 +1371,8 @@
 			    </table>
 	    	</ul>
 	    </div></div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.FGFR1Coverage!=''&&resultMap.FGFR1Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;FGFR1基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;FGFR1基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -1461,10 +1435,8 @@
 			    </table>
 	    	</ul>
 	    </div></div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.FGFR2Coverage!=''&&resultMap.FGFR2Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;FGFR2基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;FGFR2基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -1527,10 +1499,8 @@
 			    </table>
 	    	</ul>
 	    </div></div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.FGFR3Coverage!=''&&resultMap.FGFR3Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;FGFR3基因（纤维芽细胞生长因子受体-3）突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;FGFR3基因（纤维芽细胞生长因子受体-3）突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -1592,10 +1562,8 @@
 	    	</ul>
 	    </div>
 	</div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.FLT3Coverage!=''&&resultMap.FLT3Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;FLT3基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;FLT3基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -1662,10 +1630,8 @@
 			    </table>
 	    	</ul>
 	    </div></div>
-<%--     </s:if> --%>
-<%--      <s:if test="resultMap.GNA11Coverage!=''&&resultMap.GNA11Coverage!=null"> --%>
      <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;GNA11基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;GNA11基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -1728,10 +1694,8 @@
 			    </table>
 	    	</ul>
 	    </div></div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.GNAQCoverage!=''&&resultMap.GNAQCoverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;GNAQ基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;GNAQ基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -1798,10 +1762,8 @@
 			    </table>
 	    	</ul>
 	    </div></div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.GNASCoverage!=''&&resultMap.GNASCoverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;GNAS基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;GNAS基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -1864,10 +1826,8 @@
 			    </table>
 	    	</ul>
 	    </div></div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.HNF1ACoverage!=''&&resultMap.HNF1ACoverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;HNF1A基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;HNF1A基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -1930,10 +1890,8 @@
 			    </table>
 	    	</ul>
 	    </div></div>
-<%--      </s:if> --%>
-<%--      <s:if test="resultMap.HRASCoverage!=''&&resultMap.HRASCoverage!=null"> --%>
      <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;HRAS基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;HRAS基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -1996,10 +1954,8 @@
 			    </table>
 	    	</ul>
 	    </div></div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.IDH1Coverage!=''&&resultMap.IDH1Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;IDH1基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;IDH1基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -2063,10 +2019,8 @@
 	    	</ul>
 	    </div>
 	  </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.IDH2Coverage!=''&&resultMap.IDH2Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;IDH2基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;IDH2基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -2133,10 +2087,8 @@
 			    </table>
 	    	</ul>
 	    </div></div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.JAK2Coverage!=''&&resultMap.JAK2Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;JAK2基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;JAK2基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -2196,10 +2148,8 @@
 			    </table>
 	    	</ul>
 	    </div></div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.JAK3Coverage!=''&&resultMap.JAK3Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;JAK3基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;JAK3基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -2266,10 +2216,8 @@
 			    </table>
 	    	</ul>
 	    </div></div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.KDRCoverage!=''&&resultMap.KDRCoverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;KDR基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;KDR基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -2342,10 +2290,8 @@
 			    </table>
 	    	</ul>
 	    </div></div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.KITCoverage!=''&&resultMap.KITCoverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;KIT基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;KIT基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -2415,10 +2361,8 @@
 			    </table>
 	    	</ul>
 	    </div></div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.KRASCoverage!=''&&resultMap.KRASCoverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;KRAS基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;KRAS基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -2486,10 +2430,8 @@
 	    	</ul>
 	    </div>
 	</div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.METCoverage!=''&&resultMap.METCoverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;MET基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;MET基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -2569,10 +2511,8 @@
 	    	</ul>
 	    </div>
 	</div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.MLH1Coverage!=''&&resultMap.MLH1Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;MLH1基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;MLH1基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -2636,10 +2576,8 @@
 	    	</ul>
 	    </div>
 	   </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.MPLCoverage!=''&&resultMap.MPLCoverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;MPL（CD110）基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;MPL（CD110）基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    	<div name="geneDescriptDiv">
@@ -2703,10 +2641,8 @@
 			 </ul>
 	    </div>
 	 </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.NOTCH1Coverage!=''&&resultMap.NOTCH1Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;NOTCH1基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;NOTCH1基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -2770,10 +2706,8 @@
 	    	</ul>
 	    </div>
 	 </div>
-<%--     </s:if> --%>
-<%--     <s:if test="esultMap.NPM1Coverage!=''&&esultMap.NPM1Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;NPM1基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;NPM1基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -2836,10 +2770,8 @@
 			    </table>
 	    	</ul>
 	    </div></div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.NRASCoverage!=''&&resultMap.NRASCoverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;NRAS基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;NRAS基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -2903,10 +2835,8 @@
 	    	</ul>
 	    </div>
 	</div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.PDGFRACoverage!=''&&resultMap.PDGFRACoverage!=null"> --%>
    	<div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;PDGFRA基因（血小板源性生长因子受体α多肽）突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;PDGFRA基因（血小板源性生长因子受体α多肽）突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -2977,10 +2907,8 @@
 	    	</ul>
 	    </div>
 	</div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.PIK3CACoverage!=''&&resultMap.PIK3CACoverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;PIK3CA基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;PIK3CA基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -3054,10 +2982,8 @@
 	    	</ul>
 	    </div>
 	  </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.PTENCoverage!=''&&resultMap.PTENCoverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;PTEN基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;PTEN基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -3128,10 +3054,8 @@
 	    	</ul>
 	    </div>
 	 </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.PTPN11Coverage!=''&&resultMap.PTPN11Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;PTPN11基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;PTPN11基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -3195,10 +3119,8 @@
 	    	</ul>
 	    </div>
 	 </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.RB1Coverage!=''&&resultMap.RB1Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;RB1基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;RB1基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -3262,10 +3184,8 @@
 	    	</ul>
 	    </div>
 	 </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.RETCoverage!=''&&resultMap.RETCoverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;RET基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;RET基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -3336,10 +3256,8 @@
 	    	</ul>
 	    </div>
 	  </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.SMAD4Coverage!=''&&resultMap.SMAD4Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;SMAD4基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;SMAD4基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -3403,10 +3321,8 @@
 			</ul>
 	    </div>
 	    </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.SMARCB1Coverage!=''&&resultMap.SMARCB1Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;SMARCB1基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;SMARCB1基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -3470,10 +3386,8 @@
 	    	</ul>
 	    </div>
 	 </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.SMOCoverage!=''&&resultMap.SMOCoverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;SMO基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;SMO基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -3541,10 +3455,8 @@
 	    	</ul>
 	    </div>
 	   </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.SRCCoverage!=''&&resultMap.SRCCoverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;SRC基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;SRC基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -3612,10 +3524,8 @@
 	    	</ul>
 	    </div>
 	 </div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.STK11Coverage!=''&&resultMap.STK11Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;STK11基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;STK11基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -3679,10 +3589,8 @@
 	    	</ul>
 	    </div>
 	</div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.TP53Coverage!=''&&resultMap.TP53Coverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;TP53基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;TP53基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -3746,10 +3654,8 @@
 	    	</ul>
 	    </div>
 	</div>
-<%--     </s:if> --%>
-<%--     <s:if test="resultMap.VHLCoverage!=''&&resultMap.VHLCoverage!=null"> --%>
     <div class="w3cbbs">
-	    <h4><s:property value="#a"/><s:set name="a" value="#a+1"/>.&nbsp;&nbsp;VHL基因突变检测</h4>
+	    <h4>${a }<c:set var="a" scope="page" value="${a+1}"/>.&nbsp;&nbsp;VHL基因突变检测</h4>
 	    <div class="info">
 	    	<ul class="list">
 	    		<div name="geneDescriptDiv">
@@ -3817,7 +3723,6 @@
 	    	</ul>
 	    </div>
 	   </div>
-<%--     </s:if> --%>
 </section>
 <section class="section6 border1 w3cbbs" id="section6">
     <h3>六、附件：检测结果详细信息</h3>
@@ -5608,7 +5513,6 @@
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/browser.js"></script>
 <script type="text/javascript">
-var num = 1;
 $(document).ready(function(){
 	var ntemp = 0;
 	if($("#drugTbody_3_tr_length").val()>1){
@@ -5655,14 +5559,33 @@ window.onload=function(){
 	printSection6Table();
 };
 
-function addTableTr(tbody){
-	var v1="<tr name=\""+tbody+"_tr\" id=\""+tbody+"_tr"+num+"\"><td><input type=\"text\" class=\"form-control\"></td><td><input type=\"text\" class=\"form-control\"></td><td><input type=\"text\" class=\"form-control\"></td></tr>";
-	$("#"+tbody).append(v1);
-	$("#del_"+tbody).append("<tr id='"+tbody+"_deltr"+num+"'><td><a href='javascript:removeThisTr(\""+tbody+"\","+num+")' title='删除此行'/></td></tr>");
-	num++;
+var drugResistanceIndex = 0;
+function addDrugResistance(tbody,index){
+  if(drugResistanceIndex == 0){
+	  drugResistanceIndex = index;
+  }
+  drugResistanceIndex++;
+  var v1="<tr id=\""+tbody+"_tr"+drugResistanceIndex+"\"><td><input type=\"text\" name=\"resistanceSiteSum["+drugResistanceIndex+"].geneName\" class=\"form-control\"></td><td><input type=\"text\" name=\"resistanceSiteSum["+drugResistanceIndex+"].mutationSite\" class=\"form-control\"></td><td><input type=\"text\" name=\"resistanceSiteSum["+drugResistanceIndex+"].drug\" class=\"form-control\"></td></tr>";
+  $("#"+tbody).append(v1);
+  $("#del_"+tbody).append("<tr id='"+tbody+"_deltr"+drugResistanceIndex+"'><td><a href='javascript:removeThisTr(\""+tbody+"\","+drugResistanceIndex+")' title='删除此行'/></td></tr>");
 }
-function addDrugInput(div){
-	$("#"+div).append("<br><div name=\"drugContent\"><div class=\"h2\"><input type=\"text\" class=\"form-control col-sm-10\"></div><div name=\"section4Text\"><textarea class=\"form-control\" rows=\"15\" cols=\"100\"></textarea></div></div>");
+var personalizedMedicineIndex = 0;
+function addPersonalizedMedicine(tbody,index){
+  if(personalizedMedicineIndex == 0){
+    personalizedMedicineIndex = index;
+  }
+  personalizedMedicineIndex++;
+  var v1="<tr name=\""+tbody+"_tr\" id=\""+tbody+"_tr"+personalizedMedicineIndex+"\"><td><input type=\"text\" name=\"personalizedMedicine["+personalizedMedicineIndex+"].geneName\" class=\"form-control\"></td><td><input type=\"text\" name=\"personalizedMedicine["+personalizedMedicineIndex+"].mutationSite\" class=\"form-control\"></td><td><input type=\"text\" name=\"personalizedMedicine["+personalizedMedicineIndex+"].drug\" class=\"form-control\"></td></tr>";
+  $("#"+tbody).append(v1);
+  $("#del_"+tbody).append("<tr id='"+tbody+"_deltr"+personalizedMedicineIndex+"'><td><a href='javascript:removeThisTr(\""+tbody+"\","+personalizedMedicineIndex+")' title='删除此行'/></td></tr>");
+}
+var recommendDrugIndex = 0
+function addDrugInput(div,index){
+  if(recommendDrugIndex == 0){
+    recommendDrugIndex = index;
+  }
+  recommendDrugIndex++;
+  $("#"+div).append("<br><div name=\"drugContent\"><div class=\"h2\"><input type=\"text\" name=\"recommendDrug["+recommendDrugIndex+"].drugName\" class=\"form-control col-sm-10\"></div><div name=\"section4Text\"><textarea class=\"form-control\" name=\"recommendDrug["+recommendDrugIndex+"].drugDescrip\" rows=\"15\" cols=\"100\"></textarea></div></div>");
 }
 function removeTableTr(tbody){
 	$("#"+tbody).children("tr:last-child").remove();
@@ -5839,23 +5762,8 @@ function printSection2Table(){
 	}
 }
 function saveFillCmp(){
-	var resistanceSiteSum = "";
-	var personalizedMedicine = "";
-	var recommendDrug = "";
-	$("#drugTbody_3").find("tr").each(function(){
-		resistanceSiteSum += getTbodyDrug($(this),resistanceSiteSum);
-	});
-	$("#drugTbody_4").find("tr").each(function(){
-		personalizedMedicine += getTbodyDrug($(this),personalizedMedicine);
-	});
-	$("#drugDescipDiv").find("div[name='drugContent']").each(function(){
-		recommendDrug += $(this).find("input[type='text']").val()+","+$(this).find("textarea").val()+";";
-	});
-	var infos = ""+resistanceSiteSum+"----"+personalizedMedicine+"----"+recommendDrug;
-	$("#infos").val(infos);
-	var age = parseInt($("#patientAge").val());
-	$("#patientAge").val(age);
-	$.get("cmpReport!updateFill",$("#form").serialize());
+  alert($("#cmp-form").serialize());
+	$.post("../report/updateYANDAFilling",$("#cmp-form").serialize());
 }
 function getTbodyDrug(obj,result){
 	result = "";

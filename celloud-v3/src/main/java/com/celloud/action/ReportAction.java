@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -27,17 +28,20 @@ import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.ReportType;
 import com.celloud.model.App;
+import com.celloud.model.CmpFilling;
 import com.celloud.model.CmpGeneDetectionDetail;
 import com.celloud.model.CmpGeneSnpResult;
 import com.celloud.model.CmpReport;
 import com.celloud.model.Company;
 import com.celloud.model.DataFile;
 import com.celloud.model.Dept;
+import com.celloud.model.DrugResistanceSite;
 import com.celloud.model.HBV;
 import com.celloud.model.MIB;
 import com.celloud.model.Oncogene;
 import com.celloud.model.Pgs;
 import com.celloud.model.Project;
+import com.celloud.model.RecommendDrug;
 import com.celloud.model.Report;
 import com.celloud.model.Split;
 import com.celloud.page.Page;
@@ -247,6 +251,7 @@ public class ReportAction {
 
         Map<String, CmpGeneDetectionDetail> treeMap = new TreeMap<>();
         List<CmpGeneSnpResult> gsrList = new ArrayList<>();
+        List<CmpGeneSnpResult> allGsrList = new ArrayList<>();
         List<String> unnormalGene = new ArrayList<>();
         for (String key : geneMap.keySet()) {
             if (geneMap.get(key) == null)
@@ -258,6 +263,7 @@ public class ReportAction {
                 continue;
 
             if ("all".equals(key)) {
+                allGsrList = gddResultList;
                 for (int i = 0; i < gddResultList.size(); i++) {
                     int num = 1;
                     CmpGeneSnpResult gsr_i = gddResultList.get(i);
@@ -326,15 +332,67 @@ public class ReportAction {
             }
         }
         cmpReport.setGeneDetectionDetail(treeMap);
-        unnormalGene.addAll(unnormalGene);
         if (unnormalGene == null || unnormalGene.size() == 0)
             unnormalGene.add("");
         mv.addObject("gsrList", gsrList);
         mv.addObject("cmpReport", cmpReport);
+        for (CmpGeneSnpResult gsr_tmp : allGsrList) {
+            String name_tmp = gsr_tmp.getDiseaseName();
+            if (name_tmp != null && noDiseaseName.contains(name_tmp)) {
+                allGsrList.remove(this);
+            }
+        }
         mv.addObject("allGsr", geneMap.get("all").getResult());
-        mv.addObject("gddDiseaseList",
-                reportService.getGddDiseaseDictNormal(unnormalGene));
+        String[] fields = { "gene", "name" };
+        Map<String, List<String>> conditionMap = new HashMap<>();
+        conditionMap.put("gene", unnormalGene);
+        conditionMap.put("name", noDiseaseName);
+        mv.addObject("gddDiseaseList", reportService
+                .getGddDiseaseDictNormal(fields, conditionMap, "gene"));
         return mv;
+    }
+    
+    /**
+     * 修改燕达流程用户填写信息
+     * 
+     * @param cmpFill
+     * @param cmpId
+     * @author leamo
+     * @date 2016年2月1日 下午7:51:52
+     */
+    @RequestMapping("updateYANDAFilling")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void updateYANDAFilling(CmpFilling cmpFill, String cmpId) {
+        List<DrugResistanceSite> resistanceSiteSum = cmpFill
+                .getResistanceSiteSum();
+        List<DrugResistanceSite> pmList = cmpFill.getPersonalizedMedicine();
+        List<RecommendDrug> rdList = cmpFill.getRecommendDrug();
+        if (resistanceSiteSum != null) {
+            List<DrugResistanceSite> resistanceSiteSumNew = new ArrayList<>();
+            for (DrugResistanceSite rs : resistanceSiteSum) {
+                if (rs.getDrug() == null && rs.getGeneName() == null
+                        && rs.getMutationSite() == null) {
+
+                } else {
+                    resistanceSiteSumNew.add(rs);
+                }
+            }
+            cmpFill.setResistanceSiteSum(resistanceSiteSumNew);
+        }
+        if (pmList != null) {
+            List<DrugResistanceSite> pmListNew = new ArrayList<>();
+            for (DrugResistanceSite rs : pmList) {
+                if (rs.getDrug() == null && rs.getGeneName() == null
+                        && rs.getMutationSite() == null) {
+
+                } else {
+                    pmListNew.add(rs);
+                }
+            }
+            cmpFill.setPersonalizedMedicine(pmListNew);
+        }
+
+        reportService.updateCmpFilling(new ObjectId(cmpId), cmpFill);
     }
 
     /**
