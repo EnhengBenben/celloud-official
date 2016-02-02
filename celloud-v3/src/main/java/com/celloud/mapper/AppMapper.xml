@@ -308,11 +308,17 @@
   <select id="countMyApp" resultType="java.lang.Integer" >
     select count(a.app_id) from tb_user_app_right uar left join tb_app a on uar.app_id=a.app_id where uar.user_id=#{userId } and a.off_line=#{offLine } and uar.is_add=#{isAdd }
   </select>
-  <select id="countMyAppByTime" resultType="map" >
+  <select id="countMyAppRanNumByTime" resultType="map" >
 	select date_format(p.create_date,#{time }) time,sum(p.data_num) num from tb_user_app_right uar left join tb_app a on uar.app_id=a.app_id 
 	left join tb_report r on a.app_id=r.app_id
 	left join tb_project p on p.project_id=r.project_id
 	where uar.user_id=#{userId } and uar.is_add=#{isAdd } and a.off_line=#{offLine } and r.user_id=#{userId } and r.flag=#{flag } group by time
+  </select>
+  <select id="countMyAppByTime" resultType="map" >
+    select date_format(r.create_date,#{time }) time,count(r.report_id) num from tb_user_app_right uar 
+	left join tb_app a on uar.app_id=a.app_id
+	left join tb_report r on r.app_id=uar.app_id
+	where uar.user_id=#{userId } and a.off_line=#{offLine } and uar.is_add=#{isAdd } and r.user_id=#{userId } group by time
   </select>
   <select id="getRanAPP" resultType="map">
   	select s.app_id,app_name,count(*) as num from (select project_id from tb_project where user_id = #{userId } and state = 0 union all select p.project_id from tb_project p,tb_project_share s where p.state=0 and p.project_id=s.project_id and s.share_to = #{userId }) as p,tb_report as r,tb_app s where r.project_id = p.project_id and r.app_id = s.app_id group by app_id order by num desc , app_name;
