@@ -32,12 +32,12 @@
                     <td>
                         <input type="checkbox" class="cbr">
                     </td>
-                    <td><a href="javascript:dept.getDeptByCompany(${company.companyId },1)">${company.companyName }</a></td>
+                    <td><a href="javascript:dept.getDeptByCompany(${company.companyId },1)" class="text-success">${company.companyName }</a></td>
                     <td>
                         <a class="btn btn-secondary" href="javascript:company.editCompany(${company.companyId })">
                                                     编辑
                         </a>
-                        <a class="btn btn-secondary" href="javascript:company.deleteCompany(${company.companyId })">
+                        <a class="btn btn-danger" href="javascript:company.deleteCompany(${company.companyId })">
                                                     删除
                         </a>
                     </td>

@@ -62,7 +62,7 @@
         	   <c:otherwise>
         	       <div class="main_f clearfix">
 	                    <span style="font-size:50px">对不起，您的链接已超时，请重新申请！</span>
-	                    <a href="../home.html" class="error_return">返回首页</a>
+	                    <a href="http://www.celloud.cn" class="error_return">返回首页</a>
 	                </div>
         	   </c:otherwise>
         	</c:choose>
@@ -190,7 +190,7 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
 		if(--time>0){
 		   setTimeout("countDown("+time+")",1000);//设定超时时间
 		}else{
-			window.location.href="<%=request.getContextPath() %>/toLogin";//跳转页面
+			window.location.href="http://www.celloud.cn/login";//跳转页面
 		}
 	}
 	

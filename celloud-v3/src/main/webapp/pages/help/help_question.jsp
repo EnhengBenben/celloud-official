@@ -32,7 +32,6 @@
 	      </div>
 	  </div> -->
 	  <div class="col-xs-12" style="padding-left:0px;font-size:12px; font-color:#8A8A8A;">
-	    <div class="box box-success">
 	        <div class="y-row operation-serve box box-success">
 		        <ul style="margin-bottom:0">
 				   <li class="active" ><a href="#question-platform" data-toggle="tab">平台</a></li>
@@ -153,7 +152,6 @@
                   </li>
                 </ul> -->
                 </div>
-	      </div>
 	  </div>
 </section><!-- /.content -->
 <script type="text/javascript">

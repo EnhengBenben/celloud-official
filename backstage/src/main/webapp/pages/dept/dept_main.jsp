@@ -30,7 +30,7 @@
                     <a class="btn btn-secondary" href="javascript:dept.editDept(${dept.deptId })">
                                             编辑
                     </a>
-                    <a class="btn btn-secondary" href="javascript:dept.deleteDept(${dept.deptId })">
+                    <a class="btn btn-danger" href="javascript:dept.deleteDept(${dept.deptId })">
                                             删除
                     </a>
                 </td>
