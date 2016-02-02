@@ -313,7 +313,7 @@
     where report_id = #{reportId,jdbcType=INTEGER}
   </update>
   <select id="countReport" resultType="java.lang.Integer" >
-    select sum(p.data_num) size from tb_report r,tb_project p  where r.project_id = p.project_id and r.state = #{state } and r.flag = #{flag } and r.user_id=#{userId }
+    select sum(p.data_num) size from tb_report r,tb_project p  where r.project_id = p.project_id and r.state = #{state } and r.flag = #{flag } and r.user_id=#{userId } and r.period=#{period }
   </select>
   <select id="countReportByTime" resultType="map" >
     select date_format(p.create_date,#{time }) time,sum(p.data_num) size 

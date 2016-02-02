@@ -89,7 +89,7 @@ public interface ReportMapper {
      * @date 2015年12月31日 上午10:29:12
      */
     public Integer countReport(@Param("userId") Integer userId,
-            @Param("state") Integer state, @Param("flag") Integer flag);
+            @Param("state") Integer state, @Param("flag") Integer flag,@Param("period") Integer period);
 
     /**
      * 按时间段统计个人报告数量
