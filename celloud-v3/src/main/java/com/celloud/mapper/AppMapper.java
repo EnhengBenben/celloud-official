@@ -49,7 +49,7 @@ public interface AppMapper {
      */
     public List<Map<String, String>> countMyAppByTime(
             @Param("userId") Integer userId, @Param("time") String time,
-            @Param("offLine") Integer offLine, @Param("isAdd") Integer isAdd);
+            @Param("offLine") Integer offLine, @Param("isAdd") Integer isAdd,@Param("flag") Integer flag);
 
     /**
      * 获取用户已运行的APP
