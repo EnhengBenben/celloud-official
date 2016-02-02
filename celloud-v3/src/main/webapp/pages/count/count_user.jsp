@@ -44,7 +44,8 @@
       <!-- small box -->
       <div class="small-box bg-yellow">
         <div class="inner">
-          <h3>${countReport }<sup style="font-size: 16px">个</sup></h3>
+          <h3><c:choose><c:when test="${not empty countReport }">${countReport }</c:when><c:otherwise>0</c:otherwise></c:choose>
+          <sup style="font-size: 16px">个</sup></h3>
           <p>报告总量</p>
         </div>
         <div class="icon">

@@ -312,7 +312,7 @@
 	select date_format(p.create_date,#{time }) time,sum(p.data_num) num from tb_user_app_right uar left join tb_app a on uar.app_id=a.app_id 
 	left join tb_report r on a.app_id=r.app_id
 	left join tb_project p on p.project_id=r.project_id
-	where uar.user_id=#{userId } and uar.is_add=#{isAdd } and a.off_line=#{offLine } and r.user_id=#{userId } and r.flag=#{flag } group by time
+	where uar.user_id=#{userId } and uar.is_add=#{isAdd } and a.off_line=#{offLine } and r.user_id=#{userId } and r.flag=#{flag } and r.period=#{period } group by time
   </select>
   <select id="countMyAppByTime" resultType="map" >
     select date_format(r.create_date,#{time }) time,count(r.report_id) num from tb_user_app_right uar 

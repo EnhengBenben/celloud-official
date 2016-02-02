@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.security.MessageDigest;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @ClassName: MD5Util
@@ -23,6 +25,7 @@ import org.apache.commons.codec.digest.DigestUtils;
  * 
  */
 public class MD5Util {
+    private static Logger logger=LoggerFactory.getLogger(MD5Util.class);
     /**
      * @Title: getMD5
      * @Description: (获取MD5加密后字符串)
@@ -54,7 +57,7 @@ public class MD5Util {
             s = new String(str); // 换后的结果转换为字符串
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return s;
     }
@@ -89,9 +92,9 @@ public class MD5Util {
             fis = new FileInputStream(file);
             md5 = DigestUtils.md5Hex(fis);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return md5;
     }

@@ -75,7 +75,7 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public Integer countReport(Integer userId) {
         return reportMapper.countReport(userId, DataState.ACTIVE,
-                ReportType.PROJECT);
+                ReportType.PROJECT,ReportPeriod.COMPLETE);
     }
 
     @Override
