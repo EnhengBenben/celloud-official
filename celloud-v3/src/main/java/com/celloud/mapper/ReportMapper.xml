@@ -316,7 +316,8 @@
     select sum(p.data_num) size from tb_report r,tb_project p  where r.project_id = p.project_id and r.state = #{state } and r.flag = #{flag } and r.user_id=#{userId }
   </select>
   <select id="countReportByTime" resultType="map" >
-    select date_format(p.create_date,#{time }) time,sum(p.data_num) size from tb_report r,tb_project p where r.project_id = p.project_id and r.state = #{state } and r.flag = #{flag } and r.user_id=#{userId } group by time
+    select date_format(p.create_date,#{time }) time,sum(p.data_num) size 
+    from tb_report r left join tb_project p on r.project_id = p.project_id where p.state = #{state } and r.flag = #{flag } and r.user_id=#{userId } and r.period=#{period } group by time
   </select>
   
   <select id="getReportList" resultType="map">

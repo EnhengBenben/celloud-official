@@ -6,13 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.celloud.constants.FileFormat;
 import com.celloud.constants.FileTitleType;
 
 public class CheckFileTypeUtil {
-    Logger log = Logger.getLogger(CheckFileTypeUtil.class);
+    Logger log = LoggerFactory.getLogger(CheckFileTypeUtil.class);
 
     /**
      * 验证上传文件的类型格式
@@ -82,7 +83,7 @@ public class CheckFileTypeUtil {
                     fr.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error(e.getMessage());
             }
         }
         return isFasta;
@@ -134,7 +135,7 @@ public class CheckFileTypeUtil {
                     fr.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error(e.getMessage());
             }
         }
         return isFastq;
@@ -168,14 +169,13 @@ public class CheckFileTypeUtil {
                 type = bytesToHexString(b).toUpperCase();
             }
         } catch (IOException e) {
-            log.error("判断文件头格式时文件读取异常");
-            e.printStackTrace();
+            log.error("判断文件头格式时文件读取异常{}",e.getMessage());
         } finally {
             if (is != null) {
                 try {
                     is.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error(e.getMessage());
                 }
             }
         }

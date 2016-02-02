@@ -104,7 +104,7 @@ public interface ReportMapper {
      */
     public List<Map<String, String>> countReportByTime(
             @Param("userId") Integer userId, @Param("time") String time,
-            @Param("state") Integer state, @Param("flag") Integer flag);
+            @Param("state") Integer state, @Param("flag") Integer flag,@Param("period") Integer period);
 
     /**
      * 报告检索
