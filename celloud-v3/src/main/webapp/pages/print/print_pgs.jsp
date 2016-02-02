@@ -278,10 +278,10 @@ a:hover, a:focus{
 					<div>
 						<h4 class="smallh4">检测结果:</h4>
 						<c:if test="${splitPng=='null' && miniPng!='null'}">
-							<img src='${uploadPath}/${userId}/${appId}/${data.dataKey}/${miniPng}' style="width:90%;max-height:245px;">
+							<img src='${uploadPath}/${report.userId}/${appId}/${data.dataKey}/${miniPng}' style="width:90%;max-height:245px;">
 						</c:if>
 						<c:if test="${splitPng!='null'}">
-							<img src='${uploadPath}/${userId}/${appId}/${data.dataKey}/${splitPng}' style="width:90%;max-height:245px;">
+							<img src='${uploadPath}/${report.userId}/${appId}/${data.dataKey}/${splitPng}' style="width:90%;max-height:245px;">
 						</c:if>
 					</div>
 					<br/>
@@ -298,10 +298,10 @@ a:hover, a:focus{
 					<div>
 						<h4 class="smallh4">检测结果:</h4>
 						<c:if test="${splitPng=='null' && miniPng!='null'}">
-							<img src='${uploadPath}/${userId}/${appId}/${data.dataKey}/${miniPng}' style="width:90%;max-height:245px;">
+							<img src='${uploadPath}/${report.userId}/${appId}/${data.dataKey}/${miniPng}' style="width:90%;max-height:245px;">
 						</c:if>
 						<c:if test="${splitPng!='null'}">
-							<img src='${uploadPath}/${userId}/${appId}/${data.dataKey}/${splitPng}' style="width:90%;max-height:245px;">
+							<img src='${uploadPath}/${report.userId}/${appId}/${data.dataKey}/${splitPng}' style="width:90%;max-height:245px;">
 						</c:if>
 					</div>
 					<br/>
@@ -432,10 +432,10 @@ a:hover, a:focus{
 				<div>
 					<h4>检测结果:</h4>
 					<c:if test="${splitPng=='null' && miniPng!='null'}">
-						<img src='${uploadPath}/${userId}/${appId}/${data.dataKey}/${miniPng}' style="width:100%;">
+						<img src='${uploadPath}/${report.userId}/${appId}/${data.dataKey}/${miniPng}' style="width:100%;">
 					</c:if>
 					<c:if test="${splitPng!='null'}">
-						<img src='${uploadPath}/${userId}/${appId}/${data.dataKey}/${splitPng}' style="width:100%;">
+						<img src='${uploadPath}/${report.userId}/${appId}/${data.dataKey}/${splitPng}' style="width:100%;">
 					</c:if>
 				</div>
 				<c:if test="${company.companyId==10}">

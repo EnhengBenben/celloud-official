@@ -72,7 +72,7 @@ var userCount=(function(userCount){
 		                {
 		                    type : 'value',
 		                    axisLabel : {
-		                        formatter: '{value}'+typeof(unit)==undefined?'':unit 
+		                        formatter: '{value}'+(typeof(unit)=='undefined'?'':unit)
 		                    },
 		                }
 		            ],
@@ -138,12 +138,28 @@ var userCount=(function(userCount){
 			$.each(data,function(index,map){
 				if (typeof(map.time) != "undefined") {
 					x += "'" + map.time + "',";
-					y[y.length]=Number(map.size/1073741824).toFixed(2);
+					y[y.length]=Number(map.size);
 				}
 			})
+			var max=Math.max.apply(null,y);
+			var unit="";
+			var divisor=1;
+			if(max>1073741824){
+				divisor=1073741824;
+				unit="GB";
+			}else if(max>1048576){
+				divisor=1048576;
+				unit="MB";
+			}else{
+				divisor=1024;
+				unit="kB";
+			}
+			for(var i=0;i<y.length;i++){
+				y[i]=(y[i]/divisor).toFixed(2);
+			}
 			x = x.substring(0,x.length-1);
 			x += "]";
-			self.lineModal("count-source-day-chart","日资源占用量统计",eval(x),y,"日上传文件大小");
+			self.lineModal("count-source-day-chart","日资源占用量统计",eval(x),y,"日上传文件大小",unit);
 		});
 	};
 	self.fileSizeMonthCount=function(){
@@ -154,13 +170,29 @@ var userCount=(function(userCount){
 			$.each(data,function(index,map){
 				if (typeof(map.time) != "undefined") {
 				x += "'" + map.time + "',";
-				y[y.length]=Number(map.size/1073741824).toFixed(2);
+				y[y.length]=Number(map.size);
 				}
 			})
+			var max=Math.max.apply(null,y);
+			var unit="";
+			var divisor=1;
+			if(max>1073741824){
+				divisor=1073741824;
+				unit="GB";
+			}else if(max>1048576){
+				divisor=1048576;
+				unit="MB";
+			}else{
+				divisor=1024;
+				unit="kB";
+			}
+			for(var i=0;i<y.length;i++){
+				y[i]=(y[i]/divisor).toFixed(2);
+			}
 			x = x.length>1?x.substring(0,x.length-1):x;
 			x += "]";
 			if(x!="[]"){
-				self.lineModal("count-source-month-chart","月资源占用量统计",eval(x),y,"月上传文件大小");
+				self.lineModal("count-source-month-chart","月资源占用量统计",eval(x),y,"月上传文件大小",unit);
 				self.fileSizeDayCount();
 			}else{
 				$("#count-source-charts").hide();

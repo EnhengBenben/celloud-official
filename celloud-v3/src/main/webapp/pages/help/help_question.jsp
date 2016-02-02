@@ -33,7 +33,10 @@
 	  </div> -->
 	  <div class="col-xs-12" style="padding-left:0px;font-size:12px; font-color:#8A8A8A;">
 	        <div class="y-row operation-serve box box-success">
-		        <ul style="margin-bottom:0">
+	           <div class="info">
+                    <p>常见问题</p>
+                </div>
+		        <ul style="margin-bottom:0;padding-left: 0">
 				   <li class="active" ><a href="#question-platform" data-toggle="tab">平台</a></li>
 				   <li><a href="#question-client" data-toggle="tab">客户端</a></li>
 				   <!-- <li><a href="#question-newideas" data-toggle="tab">我有新想法</a></li> -->

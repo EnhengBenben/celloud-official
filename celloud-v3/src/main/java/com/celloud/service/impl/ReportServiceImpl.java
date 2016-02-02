@@ -81,7 +81,7 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public List<Map<String, String>> countReport(Integer userId, String time) {
         return reportMapper.countReportByTime(userId, time, DataState.ACTIVE,
-                ReportType.PROJECT);
+                ReportType.DATA, ReportPeriod.COMPLETE);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class ReportServiceImpl implements ReportService {
             Page pager, String condition, String start, String end,
             Integer appId) {
         List<Map<String, Object>> list = reportMapper.getReportList(userId,
-                pager, condition, start, end, appId, ReportType.PROJECT);
+                pager, condition, start, end, appId, ReportType.DATA);
         return new PageList<>(pager, list);
     }
 

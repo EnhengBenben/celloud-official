@@ -27,7 +27,7 @@ var datafileUpload=(function(datafileUpload){
 	};
 	self.refreshSession=function(){
 	    //为了防止上传过程中session超时而随便请求的一个方法
-	    $.get("getAllDataType");
+	    $.get("upload/checkAdminSessionTimeOut");
 	}
 	$(function() {
 		$("#fileUploadDiv").html("<p>您的浏览器未安装 Flash, Silverlight, Gears, BrowserPlus 或者支持 HTML5 .</p>");

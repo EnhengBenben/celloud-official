@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.celloud.constants.AppIsAdd;
 import com.celloud.constants.AppOffline;
 import com.celloud.constants.AppPermission;
+import com.celloud.constants.ReportType;
 import com.celloud.mapper.AppMapper;
 import com.celloud.model.App;
 import com.celloud.page.Page;
@@ -36,7 +37,7 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public List<Map<String, String>> countMyApp(Integer userId, String time) {
-        return appMapper.countMyAppByTime(userId, time, AppOffline.ON, AppIsAdd.ALREADY_ADDED);
+        return appMapper.countMyAppRanNumByTime(userId, time, AppOffline.ON, AppIsAdd.ALREADY_ADDED,ReportType.DATA);
     }
 
     @Override

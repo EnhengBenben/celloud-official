@@ -47,6 +47,10 @@ public interface AppMapper {
      * @author han
      * @date 2015年12月31日 上午10:26:20
      */
+    public List<Map<String, String>> countMyAppRanNumByTime(
+            @Param("userId") Integer userId, @Param("time") String time,
+            @Param("offLine") Integer offLine, @Param("isAdd") Integer isAdd,@Param("flag") Integer flag);
+    
     public List<Map<String, String>> countMyAppByTime(
             @Param("userId") Integer userId, @Param("time") String time,
             @Param("offLine") Integer offLine, @Param("isAdd") Integer isAdd);

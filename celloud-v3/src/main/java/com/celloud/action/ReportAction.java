@@ -291,7 +291,7 @@ public class ReportAction {
                                 .replaceAll("").trim();
                         String gene_j = gsr_j.getGene();
                         if (engName_i.equals(engName_j)
-                                && gene_j.equals(gene_j)) {
+                                && gene_i.equals(gene_j)) {
                             gddResultList.remove(j);
                             num++;
                         }
@@ -351,7 +351,7 @@ public class ReportAction {
                 .getGddDiseaseDictNormal(fields, conditionMap, "gene"));
         return mv;
     }
-    
+
     /**
      * 修改燕达流程用户填写信息
      * 
@@ -370,8 +370,11 @@ public class ReportAction {
         if (resistanceSiteSum != null) {
             List<DrugResistanceSite> resistanceSiteSumNew = new ArrayList<>();
             for (DrugResistanceSite rs : resistanceSiteSum) {
-                if (rs.getDrug() == null && rs.getGeneName() == null
-                        && rs.getMutationSite() == null) {
+                if ((rs.getDrug() == null || rs.getDrug().trim().equals(""))
+                        && (rs.getGeneName() == null
+                                || rs.getGeneName().trim().equals(""))
+                        && (rs.getMutationSite() == null
+                                || rs.getMutationSite().trim().equals(""))) {
 
                 } else {
                     resistanceSiteSumNew.add(rs);
@@ -382,8 +385,11 @@ public class ReportAction {
         if (pmList != null) {
             List<DrugResistanceSite> pmListNew = new ArrayList<>();
             for (DrugResistanceSite rs : pmList) {
-                if (rs.getDrug() == null && rs.getGeneName() == null
-                        && rs.getMutationSite() == null) {
+                if ((rs.getDrug() == null || rs.getDrug().trim().equals(""))
+                        && (rs.getGeneName() == null
+                                || rs.getGeneName().trim().equals(""))
+                        && (rs.getMutationSite() == null
+                                || rs.getMutationSite().trim().equals(""))) {
 
                 } else {
                     pmListNew.add(rs);
@@ -391,7 +397,20 @@ public class ReportAction {
             }
             cmpFill.setPersonalizedMedicine(pmListNew);
         }
+        if (rdList != null) {
+            List<RecommendDrug> rdListNew = new ArrayList<>();
+            for (RecommendDrug rd : rdList) {
+                if ((rd.getDrugName() == null
+                        || rd.getDrugName().trim().equals(""))
+                        && (rd.getDrugDescrip() == null
+                                || rd.getDrugDescrip().trim().equals(""))) {
 
+                } else {
+                    rdListNew.add(rd);
+                }
+            }
+            cmpFill.setRecommendDrug(rdListNew);
+        }
         reportService.updateCmpFilling(new ObjectId(cmpId), cmpFill);
     }
 
