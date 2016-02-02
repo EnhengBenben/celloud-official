@@ -206,6 +206,7 @@ var dept=(function(dept){
 		self.currentPage=currentPage;
 		$.post("dept/deptList#dept-manager",{companyId:companyId,currentPage:currentPage},function(responseText){
 			$("#dept-manager").html(responseText);
+			window.location.hash = "#dept-manager";  
 		});
 	};
 	self.addDept=function(){
