@@ -3,6 +3,7 @@ package com.celloud.utils;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -42,19 +43,15 @@ public class CustomFileUtils extends FileUtils {
      * @return 如读取文件异常，则返回null，否则返回包含所有符合条件的行的list(list可能为empty)
      */
     public static List<String> readLines(File file, String encoding, FileLineFilter filter) {
-        if (file == null) {
-            return null;
-        }
-        if (encoding == null) {
-            encoding = "utf-8";
-        }
         List<String> list = new ArrayList<>();
         try {
             if (filter == null) {
                 return readLines(file, encoding);
             }
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(new FileInputStream(file), Charsets.toCharset(encoding)));
+            BufferedReader reader = openBufferReader(file, encoding);
+            if (reader == null) {
+                return null;
+            }
             String line = null;
             int lineNumber = 0;
             while ((line = reader.readLine()) != null) {
@@ -96,19 +93,18 @@ public class CustomFileUtils extends FileUtils {
      * @return 如读取文件异常，则返回null，否则返回包含所有符合条件的行的list(list可能为empty)
      */
     public static List<String> readLines(File file, String encoding, Integer... lineNumbersStartByZero) {
-        if (file == null || lineNumbersStartByZero == null) {
+        if (lineNumbersStartByZero == null) {
             return null;
-        }
-        if (encoding == null) {
-            encoding = "utf-8";
         }
         Arrays.sort(lineNumbersStartByZero);
         int maxLineNumber = lineNumbersStartByZero[lineNumbersStartByZero.length - 1];
         List<Integer> lineNumbers = Arrays.asList(lineNumbersStartByZero);
         List<String> list = new ArrayList<>();
         try {
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(new FileInputStream(file), Charsets.toCharset(encoding)));
+            BufferedReader reader = openBufferReader(file, encoding);
+            if (reader == null) {
+                return null;
+            }
             String line = null;
             Integer lineNumber = 0;
             while ((line = reader.readLine()) != null) {
@@ -126,6 +122,105 @@ public class CustomFileUtils extends FileUtils {
             return null;
         }
         return list;
+    }
+
+    /**
+     * 使用utf-8编码读取文件的第一行
+     * 
+     * @param file
+     * @return
+     */
+    public static String readFirstLine(File file) {
+        return readFirstLine(file, null);
+    }
+
+    /**
+     * 使用指定编码读取文件的第一行
+     * 
+     * @param file
+     * @param encoding
+     * @return
+     */
+    public static String readFirstLine(File file, String encoding) {
+        String line = null;
+        try {
+            BufferedReader reader = openBufferReader(file, encoding);
+            if (reader == null) {
+                return null;
+            }
+            line = reader.readLine();
+            reader.close();
+        } catch (IOException e) {
+            logger.error("读取文件异常：{}", file.getAbsolutePath(), e);
+            return null;
+        }
+        return line;
+    }
+
+    /**
+     * 使用utf-8编码读取文件的最后一行
+     * 
+     * @param file
+     * @return
+     */
+    public static String readLastLine(File file) {
+        return readLastLine(file, null);
+    }
+
+    /**
+     * 使用指定编码读取文件的最后一行
+     * 
+     * @param file
+     * @param encoding
+     * @return
+     */
+    public static String readLastLine(File file, String encoding) {
+        String lastLine = null;
+        try {
+            BufferedReader reader = openBufferReader(file, encoding);
+            if (reader == null) {
+                return null;
+            }
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                lastLine = line;
+            }
+            reader.close();
+        } catch (IOException e) {
+            logger.error("读取文件异常：{}", file.getAbsolutePath(), e);
+            return null;
+        }
+        return lastLine;
+    }
+
+    /**
+     * 使用BufferedReader打开文件
+     * 
+     * @param file
+     * @param encoding
+     * @return
+     */
+    private static BufferedReader openBufferReader(File file, String encoding) {
+        if (encoding == null) {
+            encoding = "utf-8";
+        }
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), Charsets.toCharset(encoding)));
+        } catch (FileNotFoundException e) {
+            logger.error("打开文件异常：{}", getFileAbsolutePath(file), e);
+        }
+        return reader;
+    }
+
+    /**
+     * 获取文件的绝对路径
+     * 
+     * @param file
+     * @return
+     */
+    private static String getFileAbsolutePath(File file) {
+        return file == null ? null : file.getAbsolutePath();
     }
 
     public static interface FileLineFilter {
