@@ -1,6 +1,7 @@
 jQuery.validator.addMethod("isPhone", function(value, element) {   
         var tel = /^1[3|4|5|7|8]\d{9}$/;
-        return this.optional(element) || (tel.test(value));
+        var fixedtel=/^(0[0-9]{2,3}\-)?([2-9][0-9]{6,7})+(\-[0-9]{1,4})?$/;
+        return this.optional(element) || (tel.test(value)||fixedtel.test(value));
     }, "请正确填写您的联系电话");
 jQuery.validator.addMethod("zipcode", function(value, element) {
 	return this.optional(element) || /^[1-9][0-9]{5}$/.test(value);
