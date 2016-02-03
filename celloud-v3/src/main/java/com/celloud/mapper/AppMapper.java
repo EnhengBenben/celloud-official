@@ -49,7 +49,7 @@ public interface AppMapper {
      */
     public List<Map<String, String>> countMyAppRanNumByTime(
             @Param("userId") Integer userId, @Param("time") String time,
-            @Param("offLine") Integer offLine, @Param("isAdd") Integer isAdd,@Param("flag") Integer flag);
+            @Param("offLine") Integer offLine, @Param("isAdd") Integer isAdd,@Param("flag") Integer flag,@Param("period") Integer period);
     
     public List<Map<String, String>> countMyAppByTime(
             @Param("userId") Integer userId, @Param("time") String time,

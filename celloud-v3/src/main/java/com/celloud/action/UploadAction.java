@@ -105,7 +105,7 @@ public class UploadAction {
                                 updateFileInfo(dataId, fileDataKey, newName, perlPath, outPath);
                             }
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            logger.error(e.getMessage());
                         }
                     }
                 }
@@ -142,20 +142,20 @@ public class UploadAction {
                 file.transferTo(dst);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         } finally {
             if (null != in) {
                 try {
                     in.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage());
                 }
             }
             if (null != out) {
                 try {
                     out.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage());
                 }
             }
         }

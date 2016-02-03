@@ -32,6 +32,7 @@ import com.celloud.dao.ReportDao;
 import com.celloud.mapper.AppMapper;
 import com.celloud.mapper.DataFileMapper;
 import com.celloud.mapper.ReportMapper;
+import com.celloud.model.CmpFilling;
 import com.celloud.model.CmpGeneDetectionDetail;
 import com.celloud.model.CmpGeneSnpResult;
 import com.celloud.model.CmpReport;
@@ -74,13 +75,13 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public Integer countReport(Integer userId) {
         return reportMapper.countReport(userId, DataState.ACTIVE,
-                ReportType.PROJECT);
+                ReportType.DATA,ReportPeriod.COMPLETE);
     }
 
     @Override
     public List<Map<String, String>> countReport(Integer userId, String time) {
         return reportMapper.countReportByTime(userId, time, DataState.ACTIVE,
-                ReportType.DATA);
+                ReportType.DATA, ReportPeriod.COMPLETE);
     }
 
     @Override
@@ -88,7 +89,7 @@ public class ReportServiceImpl implements ReportService {
             Page pager, String condition, String start, String end,
             Integer appId) {
         List<Map<String, Object>> list = reportMapper.getReportList(userId,
-                pager, condition, start, end, appId, ReportType.DATA);
+                pager, condition, start, end, appId, ReportType.PROJECT);
         return new PageList<>(pager, list);
     }
 
@@ -132,10 +133,12 @@ public class ReportServiceImpl implements ReportService {
     public Pgs getPgsReport(String dataKey, Integer projectId, Integer appId) {
         return reportDao.getDataReport(Pgs.class, dataKey, projectId, appId);
     }
-    
+
     @Override
-    public Oncogene getOncogeneReport(String dataKey, Integer projectId, Integer appId) {
-        return reportDao.getDataReport(Oncogene.class, dataKey, projectId, appId);
+    public Oncogene getOncogeneReport(String dataKey, Integer projectId,
+            Integer appId) {
+        return reportDao.getDataReport(Oncogene.class, dataKey, projectId,
+                appId);
     }
 
     @Override
@@ -621,10 +624,15 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public List<GddDiseaseDict> getGddDiseaseDictNormal(
-            List<String> unnormalGene) {
-        return reportDao.getDataFieldInAndOrder(GddDiseaseDict.class, "gene",
-                unnormalGene);
+    public void updateCmpFilling(ObjectId id, CmpFilling cmpFill) {
+        reportDao.editData(CmpReport.class, id, "cmpFilling", cmpFill);
+    }
+
+    @Override
+    public List<GddDiseaseDict> getGddDiseaseDictNormal(String[] fields,
+            Map<String, List<String>> conditionMap, String sortField) {
+        return reportDao.getDataFieldInAndOrder(GddDiseaseDict.class, fields,
+                conditionMap, sortField);
     }
 
     @Override

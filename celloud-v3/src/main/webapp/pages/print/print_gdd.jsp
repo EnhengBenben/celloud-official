@@ -13,7 +13,7 @@
 <body>
 <a href="javascript:void(0)" onclick="preview(this)" class="btn btn-default" id="change" style="float:right;margin-top:10px;margin-right:-80px;">打印</a>
 <a href="javascript:void(0)" onclick="save()" class="btn btn-default" id="change" style="float:right;margin-top:40px;margin-right:-80px;">保存</a>
-<form id="form">
+<form id="gdd-form">
 <input type="hidden" name="cmpId" id="cmpId" value="${cmpReport.id }">
 <input type="hidden" name="cmpReport.dataKey" value="${cmpReport.dataKey }">
 <input type="hidden" name="cmpReport.userId" value="${cmpReport.userId }">
@@ -40,22 +40,22 @@
 <section class="section1 border1 w3cbbs">
 	<h3>受检者信息</h3>
     <ul>
-    	<li>母亲姓名：<span><input type="text" name="cmpFill.motherName" value="${cmpReport.cmpFilling.motherName }"></span></li>
-    	<li>病历号：<span><input type="text" name="cmpFill.medicalRecord" value="${cmpReport.cmpFilling.medicalRecord }"></span></li>
-    	<li style="width:90%">项目编号：<span><input type="text" name="cmpFill.projectNo" value="${cmpReport.cmpFilling.projectNo }"></span></li>
-        <li>新生儿姓名：<span><input type="text" name="cmpFill.patientName" value="${cmpReport.cmpFilling.patientName }"></span></li>
-        <li>出生日期：<span><input type="text" name="cmpFill.birthday" value="${cmpReport.cmpFilling.birthday }"></span></li>
-        <li>受检者性别： <span id="_sex"><input type="radio" name="cmpFill.patientSex" value="男" <c:if test="${cmpReport.cmpFilling.patientSex eq '男' }">checked="checked"</c:if>>男<input type="radio" name="cmpFill.patientSex" value="女" <c:if test="${cmpReport.cmpFilling.patientSex eq '女' }">checked="checked"</c:if>>女</span></li>
-        <li>指导医生：<span><input type="text" name="cmpFill.doctorName" value="${cmpReport.cmpFilling.doctorName }"></span></li>
-        <li>送检单位：<span><input type="text" name="cmpFill.inspectionUnit" value="${cmpReport.cmpFilling.inspectionUnit }"></span></li>
-        <li>样本状态：<span><input type="text" name="cmpFill.sampleStatus" value="${cmpReport.cmpFilling.sampleStatus }"></span></li>
+    	<li>母亲姓名：<span><input type="text" name="motherName" value="${cmpReport.cmpFilling.motherName }"></span></li>
+    	<li>病历号：<span><input type="text" name="medicalRecord" value="${cmpReport.cmpFilling.medicalRecord }"></span></li>
+    	<li style="width:90%">项目编号：<span><input type="text" name="projectNo" value="${cmpReport.cmpFilling.projectNo }"></span></li>
+        <li>新生儿姓名：<span><input type="text" name="patientName" value="${cmpReport.cmpFilling.patientName }"></span></li>
+        <li>出生日期：<span><input type="text" name="birthday" value="${cmpReport.cmpFilling.birthday }"></span></li>
+        <li>受检者性别： <span id="_sex"><input type="radio" name="patientSex" value="男" <c:if test="${cmpReport.cmpFilling.patientSex eq '男' }">checked="checked"</c:if>>男<input type="radio" name="patientSex" value="女" <c:if test="${cmpReport.cmpFilling.patientSex eq '女' }">checked="checked"</c:if>>女</span></li>
+        <li>指导医生：<span><input type="text" name="doctorName" value="${cmpReport.cmpFilling.doctorName }"></span></li>
+        <li>送检单位：<span><input type="text" name="inspectionUnit" value="${cmpReport.cmpFilling.inspectionUnit }"></span></li>
+        <li>样本状态：<span><input type="text" name="sampleStatus" value="${cmpReport.cmpFilling.sampleStatus }"></span></li>
         <li style="width:90%">检测项目：<span>新生儿遗传代谢病相关基因检测</span></li>
         <li style="width:90%">检测方法：<span>外显子捕获，illumina高通量测序平台，SNPs/微插入/微缺失检测</span></li>
-        <li>分子生物实验操作：<span><input type="text" class="input100" name="cmpFill.molecularBioExperOper" value="${cmpReport.cmpFilling.molecularBioExperOper }"></span></li>
-        <li>基因分析：<span><input type="text" name="cmpFill.geneAnalysis" value="${cmpReport.cmpFilling.geneAnalysis }"></span></li>
-        <li>送检日期：<span><input type="text" name="cmpFill.samplingDate" value="${cmpReport.cmpFilling.samplingDate }"></span></li>
-        <li>分析日期：<span><input type="text" name="cmpFill.analysisDate" value="${cmpReport.cmpFilling.analysisDate }"></span></li>
-        <li>报告日期：<span><input type="text" name="cmpFill.reportDate" value="${cmpReport.cmpFilling.reportDate }"></span></li>
+        <li>分子生物实验操作：<span><input type="text" class="input100" name="molecularBioExperOper" value="${cmpReport.cmpFilling.molecularBioExperOper }"></span></li>
+        <li>基因分析：<span><input type="text" name="geneAnalysis" value="${cmpReport.cmpFilling.geneAnalysis }"></span></li>
+        <li>送检日期：<span><input type="text" name="samplingDate" value="${cmpReport.cmpFilling.samplingDate }"></span></li>
+        <li>分析日期：<span><input type="text" name="analysisDate" value="${cmpReport.cmpFilling.analysisDate }"></span></li>
+        <li>报告日期：<span><input type="text" name="reportDate" value="${cmpReport.cmpFilling.reportDate }"></span></li>
     </ul>
 	<h3>检测结果</h3>
 	<h4>一. 致病性明确的基因检测结果</h4>
@@ -77,7 +77,7 @@
         	 <td>${accountConfig.diseaseName }</td>
         	 <td>${accountConfig.gene }</td>
         	 <td>${accountConfig.mutNum }</td>
-        	 <td><input type="text" name="cmpFill.decisionResult.${accountConfig.diseaseEngName }" value="${cmpReport.cmpFilling.decisionResult[accountConfig.diseaseEngName] }"></td>  
+        	 <td><input type="text" name="decisionResult['${accountConfig.diseaseEngName }']" value="${cmpReport.cmpFilling.decisionResult[accountConfig.diseaseEngName] }"></td>  
             </tr>
           </c:forEach>
       </tbody>
@@ -140,7 +140,7 @@
 	    	</tbody>
 	      </table>
 	      <h6>疾病简介</h6>
-	      <div><textarea class="form-control" rows="15" cols="100" name="cmpFill.diseaseProfile.${geneDetection.value.result[0].diseaseEngName }">${cmpReport.cmpFilling.diseaseProfile[geneDetection.value.result[0].diseaseEngName] }</textarea></div>
+	      <div><textarea class="form-control" rows="15" cols="100" name="diseaseProfile['${geneDetection.value.result[0].diseaseEngName }']">${cmpReport.cmpFilling.diseaseProfile[geneDetection.value.result[0].diseaseEngName] }</textarea></div>
 	    </div>
 	  </div>
     </c:forEach>
@@ -164,14 +164,12 @@
    				</c:when>
    				<c:otherwise>
 		   			<c:forEach items="${gddDiseaseList}" var="gddDisease">
-<%-- 		   			  <c:if test="${!(fn:trim(gddDisease.name) eq '' || fn:trim(gddDisease.name) eq '改变一碳代谢' || fn:trim(gddDisease.name) eq '活力减少' || fn:trim(gddDisease.name) eq '降低表达'|| fn:trim(accountConfig.diseaseName) eq '表型改变相关' || fn:trim(accountConfig.diseaseName) eq '改变高半胱氨酸水平')}"> --%>
    						<tr>
    							<td>${gddDisease.name }</td>
    							<td>${gddDisease.gene }</td>
    							<td>未发现异常</td>
    							<td>正常</td>
    						</tr>
-<%--    					  </c:if> --%>
 		   			</c:forEach>
    				</c:otherwise>
    			</c:choose>
@@ -218,7 +216,6 @@
  					<tr><td colspan="6">没有发现突变位点</td></tr>
  				</c:when>
  				<c:otherwise>
- 					<c:if test="${r.diseaseName!='' && r.diseaseName!='改变一碳代谢' && r.diseaseName!='活力减少' && r.diseaseName!='降低表达'|| fn:trim(accountConfig.diseaseName) eq '表型改变相关' || fn:trim(accountConfig.diseaseName) eq '改变高半胱氨酸水平'}">
 						<tr>
 							<td>${r.gene }</td>
 							<td>${r.mutBase }</td>
@@ -237,7 +234,6 @@
 							</td>
 							<td>${r.diseaseName }</td>
 						</tr>
- 					</c:if>
  				</c:otherwise>
  			</c:choose>
 			</c:forEach>
@@ -389,7 +385,7 @@
   		$("a").css("display","");
   	}
   	function save(){
-  		$.get("cmpReport!saveGddFile",$("#form").serialize());
+  		$.post("../report/updateYANDAFilling",$("#gdd-form").serialize());
   	}
   </script>
 </body>
