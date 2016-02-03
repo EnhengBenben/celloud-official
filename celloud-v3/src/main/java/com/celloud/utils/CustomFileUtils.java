@@ -130,8 +130,8 @@ public class CustomFileUtils extends FileUtils {
      * @param file
      * @return
      */
-    public static String readFirstLine(File file) {
-        return readFirstLine(file, null);
+    public static String readFirstLine(File file, boolean excludeBlankLine) {
+        return readFirstLine(file, excludeBlankLine, null);
     }
 
     /**
@@ -141,20 +141,27 @@ public class CustomFileUtils extends FileUtils {
      * @param encoding
      * @return
      */
-    public static String readFirstLine(File file, String encoding) {
-        String line = null;
+    public static String readFirstLine(File file, boolean excludeBlankLine, String encoding) {
+       
+        String firstLine = null;
         try {
             BufferedReader reader = openBufferReader(file, encoding);
             if (reader == null) {
                 return null;
             }
-            line = reader.readLine();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                if (!excludeBlankLine || !line.trim().equals("")) {
+                    firstLine = line;
+                    break;
+                }
+            }
             reader.close();
         } catch (IOException e) {
             logger.error("读取文件异常：{}", file.getAbsolutePath(), e);
             return null;
         }
-        return line;
+        return firstLine;
     }
 
     /**
@@ -163,8 +170,8 @@ public class CustomFileUtils extends FileUtils {
      * @param file
      * @return
      */
-    public static String readLastLine(File file) {
-        return readLastLine(file, null);
+    public static String readLastLine(File file, boolean excludeBlankLine) {
+        return readLastLine(file, excludeBlankLine, null);
     }
 
     /**
@@ -174,7 +181,7 @@ public class CustomFileUtils extends FileUtils {
      * @param encoding
      * @return
      */
-    public static String readLastLine(File file, String encoding) {
+    public static String readLastLine(File file, boolean excludeBlankLine, String encoding) {
         String lastLine = null;
         try {
             BufferedReader reader = openBufferReader(file, encoding);
@@ -183,7 +190,9 @@ public class CustomFileUtils extends FileUtils {
             }
             String line = null;
             while ((line = reader.readLine()) != null) {
-                lastLine = line;
+                if (!excludeBlankLine || !line.trim().equals("")) {
+                    lastLine = line;
+                }
             }
             reader.close();
         } catch (IOException e) {
