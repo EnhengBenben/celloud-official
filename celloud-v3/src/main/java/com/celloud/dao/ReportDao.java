@@ -1,6 +1,7 @@
 package com.celloud.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.bson.types.ObjectId;
 
@@ -85,7 +86,20 @@ public interface ReportDao {
      * @author leamo
      * @date 2016年1月18日 上午11:52:49
      */
-    public <T> List<T> getDataFieldInAndOrder(Class<T> T, String Field,
-            List<String> condition);
+    public <T> List<T> getDataFieldInAndOrder(Class<T> T, String[] fields,
+            Map<String, List<String>> conditionMap, String sortField);
+
+    /**
+     * 修改数据
+     * 
+     * @param T
+     * @param id
+     * @param field
+     * @param obj
+     * @author leamo
+     * @date 2016年2月1日 下午6:05:02
+     */
+    public <T> void editData(Class<T> T, ObjectId id, String field,
+            Object obj);
 
 }
