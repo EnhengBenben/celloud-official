@@ -1,6 +1,7 @@
 package com.celloud.action;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -55,6 +56,8 @@ import com.celloud.service.ReportService;
 import com.celloud.utils.HttpURLUtils;
 import com.celloud.utils.PropertiesUtil;
 
+import net.sf.cglib.core.CollectionUtils;
+import net.sf.cglib.core.Predicate;
 import net.sf.json.JSONArray;
 
 @RequestMapping(value = "/report")
@@ -238,13 +241,8 @@ public class ReportAction {
         if (geneMap == null)
             return mv;
         // 需要排除的疾病
-        List<String> noDiseaseName = new ArrayList<>();
-        noDiseaseName.add("");
-        noDiseaseName.add("改变一碳代谢");
-        noDiseaseName.add("活力减少");
-        noDiseaseName.add("降低表达");
-        noDiseaseName.add("表型改变相关");
-        noDiseaseName.add("改变高半胱氨酸水平");
+        final List<String> noDiseaseName = Arrays.asList("", "改变一碳代谢", "活力减少",
+                "降低表达", "表型改变相关", "改变高半胱氨酸水平");
         // 过滤疾病英文名称只允许字母和数字
         String regEx = "[^\\w\\.\\_\\-\u4e00-\u9fa5]";
         Pattern p = Pattern.compile(regEx);
@@ -336,13 +334,27 @@ public class ReportAction {
             unnormalGene.add("");
         mv.addObject("gsrList", gsrList);
         mv.addObject("cmpReport", cmpReport);
+        List<CmpGeneSnpResult> allGsrListNew = new ArrayList<>();
         for (CmpGeneSnpResult gsr_tmp : allGsrList) {
             String name_tmp = gsr_tmp.getDiseaseName();
             if (name_tmp != null && noDiseaseName.contains(name_tmp)) {
-                allGsrList.remove(this);
+            } else {
+                allGsrListNew.add(gsr_tmp);
             }
         }
-        mv.addObject("allGsr", geneMap.get("all").getResult());
+        CollectionUtils.filter(allGsrList, new Predicate() {
+            @Override
+            public boolean evaluate(Object obj) {
+                CmpGeneSnpResult gsr_tmp = (CmpGeneSnpResult)obj;
+                String name_tmp = gsr_tmp.getDiseaseName();
+                if (name_tmp != null && noDiseaseName.contains(name_tmp)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        });
+        mv.addObject("allGsr", allGsrListNew);
         String[] fields = { "gene", "name" };
         Map<String, List<String>> conditionMap = new HashMap<>();
         conditionMap.put("gene", unnormalGene);
@@ -363,55 +375,61 @@ public class ReportAction {
     @RequestMapping("updateYANDAFilling")
     @ResponseStatus(value = HttpStatus.OK)
     public void updateYANDAFilling(CmpFilling cmpFill, String cmpId) {
-        List<DrugResistanceSite> resistanceSiteSum = cmpFill
+        List<DrugResistanceSite> rssList = cmpFill
                 .getResistanceSiteSum();
         List<DrugResistanceSite> pmList = cmpFill.getPersonalizedMedicine();
         List<RecommendDrug> rdList = cmpFill.getRecommendDrug();
-        if (resistanceSiteSum != null) {
-            List<DrugResistanceSite> resistanceSiteSumNew = new ArrayList<>();
-            for (DrugResistanceSite rs : resistanceSiteSum) {
-                if ((rs.getDrug() == null || rs.getDrug().trim().equals(""))
-                        && (rs.getGeneName() == null
-                                || rs.getGeneName().trim().equals(""))
-                        && (rs.getMutationSite() == null
-                                || rs.getMutationSite().trim().equals(""))) {
-
-                } else {
-                    resistanceSiteSumNew.add(rs);
-                }
-            }
-            cmpFill.setResistanceSiteSum(resistanceSiteSumNew);
+        if (rssList != null) {
+            filterFillDrugResistanceSite(rssList);
+            cmpFill.setResistanceSiteSum(rssList);
         }
         if (pmList != null) {
-            List<DrugResistanceSite> pmListNew = new ArrayList<>();
-            for (DrugResistanceSite rs : pmList) {
+            filterFillDrugResistanceSite(pmList);
+            cmpFill.setPersonalizedMedicine(pmList);
+        }
+        if (rdList != null) {
+            CollectionUtils.filter(rdList, new Predicate() {
+                @Override
+                public boolean evaluate(Object obj) {
+                    RecommendDrug rd = (RecommendDrug) obj;
+                    if ((rd.getDrugName() == null
+                            || rd.getDrugName().trim().equals(""))
+                            && (rd.getDrugDescrip() == null
+                                    || rd.getDrugDescrip().trim().equals(""))) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+            });
+            cmpFill.setRecommendDrug(rdList);
+        }
+        reportService.updateCmpFilling(new ObjectId(cmpId), cmpFill);
+    }
+
+    /**
+     * 过滤CMP用户填写药物信息为空的信息
+     * 
+     * @param list
+     * @author leamo
+     * @date 2016年2月3日 下午3:40:59
+     */
+    private void filterFillDrugResistanceSite(List<DrugResistanceSite> list) {
+        CollectionUtils.filter(list, new Predicate() {
+            @Override
+            public boolean evaluate(Object obj) {
+                DrugResistanceSite rs = (DrugResistanceSite) obj;
                 if ((rs.getDrug() == null || rs.getDrug().trim().equals(""))
                         && (rs.getGeneName() == null
                                 || rs.getGeneName().trim().equals(""))
                         && (rs.getMutationSite() == null
                                 || rs.getMutationSite().trim().equals(""))) {
-
+                    return false;
                 } else {
-                    pmListNew.add(rs);
+                    return true;
                 }
             }
-            cmpFill.setPersonalizedMedicine(pmListNew);
-        }
-        if (rdList != null) {
-            List<RecommendDrug> rdListNew = new ArrayList<>();
-            for (RecommendDrug rd : rdList) {
-                if ((rd.getDrugName() == null
-                        || rd.getDrugName().trim().equals(""))
-                        && (rd.getDrugDescrip() == null
-                                || rd.getDrugDescrip().trim().equals(""))) {
-
-                } else {
-                    rdListNew.add(rd);
-                }
-            }
-            cmpFill.setRecommendDrug(rdListNew);
-        }
-        reportService.updateCmpFilling(new ObjectId(cmpId), cmpFill);
+        });
     }
 
     /**
