@@ -28,7 +28,8 @@ public class MergePdf {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			document.close();
+			if (document != null)
+				document.close();
 		}
 		return retValue;
 	}

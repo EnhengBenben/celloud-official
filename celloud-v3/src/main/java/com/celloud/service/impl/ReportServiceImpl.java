@@ -350,8 +350,10 @@ public class ReportServiceImpl implements ReportService {
                 try {
                     br = new BufferedReader(new FileReader(file));
                 } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                    log.error(fileName+"文件不存在");
                 }
+                if(br==null)
+                	continue;
                 String line = null;
                 try {
                     while ((line = br.readLine()) != null) {

@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 
 import com.celloud.itext.utils.WatermarkUtil;
 import com.celloud.utils.FileTools;
@@ -45,15 +46,13 @@ public class PGS_PDF {
 	 *            ：水印位置，Y轴
 	 * @throws Exception
 	 */
-	public static void createPDF(String path, String appName, String barcode,
-			String anotherName, String dataKey, int posX, int posY)
-			throws Exception {
+	public static void createPDF(String path, String appName, String barcode, String anotherName, String dataKey,
+			int posX, int posY) throws Exception {
 		path = path.endsWith("/") ? path : path + "/";
 		String errorFile = path + "no_enough_reads.xls";
 		if (!FileTools.checkPath(errorFile)) {
 			boolean isBigPic = true;
-			String finalPng = FileTools
-					.fileExist(path, "final.png", "endsWith");
+			String finalPng = FileTools.fileExist(path, "final.png", "endsWith");
 			if (finalPng.equals("")) {
 				isBigPic = false;
 				finalPng = FileTools.fileExist(path, "mini.png", "endsWith");
@@ -62,21 +61,17 @@ public class PGS_PDF {
 			String fileName = null;
 			String tableTitle = null;
 			String tableContext = null;
-			System.out.println(path);
-			String xls = FileTools.fileExist(path, dataKey+".xls", "endsWith");
+			String xls = FileTools.fileExist(path, dataKey + ".xls", "endsWith");
 			if (!"".equals(xls)) {
-				String xlsContext[] = FileUtils.readFileToString(
-						new File(path + xls)).split("\n");
+				String xlsContext[] = FileUtils.readFileToString(new File(path + xls)).split("\n");
 				fileName = xlsContext[0];
 				tableTitle = xlsContext[1];
 				tableContext = xlsContext[2];
 			}
 
-			String report = FileUtils.readFileToString(new File(path
-					+ "report.txt"));
+			String report = FileUtils.readFileToString(new File(path + "report.txt"));
 			// 定义中文
-			BaseFont bfChinese = BaseFont.createFont("STSongStd-Light",
-					"UniGB-UCS2-H", false);
+			BaseFont bfChinese = BaseFont.createFont("STSongStd-Light", "UniGB-UCS2-H", false);
 			// 定义Title字体样式
 			Font titleFont = new Font(bfChinese, 16, Font.BOLD, BaseColor.BLACK);
 
@@ -85,8 +80,7 @@ public class PGS_PDF {
 			Font contextFont = new Font(context, 12, Font.NORMAL);
 
 			// 定义正文字体样式（汉语）
-			BaseFont contextC = BaseFont.createFont("STSongStd-Light",
-					"UniGB-UCS2-H", false);
+			BaseFont contextC = BaseFont.createFont("STSongStd-Light", "UniGB-UCS2-H", false);
 			Font contextFontC = new Font(contextC, 12, Font.NORMAL);
 
 			Document doc = new Document();
@@ -125,8 +119,8 @@ public class PGS_PDF {
 			title = new Paragraph("Data:", contextFont);
 			doc.add(title);
 			float widths[] = null;// 设置表格的列宽和列数
-			if ("Sureplex_HR".equals(appName) || "MDA_HR".equals(appName)
-					|| "gDNA_HR".equals(appName) || "MalBac".equals(appName)) {
+			if ("Sureplex_HR".equals(appName) || "MDA_HR".equals(appName) || "gDNA_HR".equals(appName)
+					|| "MalBac".equals(appName)) {
 				widths = new float[] { 100f, 100f, 100f, 100f, 100f };
 			} else {
 				widths = new float[] { 120f, 110f, 130f, 120f, 130f, 60f };
@@ -134,21 +128,23 @@ public class PGS_PDF {
 			PdfPTable table = new PdfPTable(widths);// 建立一个pdf表格
 			table.getDefaultCell().setBorder(1);
 			PdfPCell cell = null;
-			System.out.println(tableTitle);
-			for (String f : tableTitle.split("\t")) {
-				cell = new PdfPCell(new Paragraph(f, contextFont));
-				cell.setBorder(Rectangle.BOX);
-				table.addCell(cell);
+			if (StringUtils.isNotEmpty(tableTitle)) {
+				for (String f : tableTitle.split("\t")) {
+					cell = new PdfPCell(new Paragraph(f, contextFont));
+					cell.setBorder(Rectangle.BOX);
+					table.addCell(cell);
+				}
 			}
-			for (String f : tableContext.split("\t")) {
-				cell = new PdfPCell(new Paragraph(f, contextFont));
-				cell.setBorder(Rectangle.BOX);
-				table.addCell(cell);
+			if (StringUtils.isNotEmpty(tableContext)) {
+				for (String f : tableContext.split("\t")) {
+					cell = new PdfPCell(new Paragraph(f, contextFont));
+					cell.setBorder(Rectangle.BOX);
+					table.addCell(cell);
+				}
 			}
 			doc.add(table);
 
-			title = new Paragraph("Result:\n         "
-					+ report.replace("\t", "    "), contextFont);
+			title = new Paragraph("Result:\n         " + report.replace("\t", "    "), contextFont);
 			doc.add(title);
 
 			img = Image.getInstance(path + finalPng);
@@ -162,8 +158,7 @@ public class PGS_PDF {
 
 			doc.close();
 			if (new File(path + "temp.pdf").exists()) {
-				WatermarkUtil.addMark(path + "temp.pdf", path + dataKey
-						+ ".pdf", PropertiesUtil.img, 1, posX, posY);
+				WatermarkUtil.addMark(path + "temp.pdf", path + dataKey + ".pdf", PropertiesUtil.img, 1, posX, posY);
 			}
 		}
 	}
