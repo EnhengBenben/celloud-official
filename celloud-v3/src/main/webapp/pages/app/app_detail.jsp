@@ -97,3 +97,8 @@
   </div>
 </div>
 <%-- <script src="<%=request.getContextPath()%>/dist/js/toolDetail.js" type="text/javascript"></script> --%>
+<<script type="text/javascript">
+<!--
+$('#appScreen').carousel({interval:3000});
+//-->
+</script>
