@@ -16,28 +16,44 @@ public class PrivateKey implements RSAPrivateKey {
         this.privateExponent = privateExponent;
     }
 
-    @Override
     public String getAlgorithm() {
         return algorithm;
     }
 
-    @Override
+    public void setAlgorithm(String algorithm) {
+        this.algorithm = algorithm;
+    }
+
     public byte[] getEncoded() {
         return encoded;
     }
 
-    @Override
+    public void setEncoded(byte[] encoded) {
+        this.encoded = encoded;
+    }
+
     public String getFormat() {
         return format;
     }
 
-    @Override
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
     public BigInteger getModulus() {
         return modulus;
     }
 
-    @Override
+    public void setModulus(BigInteger modulus) {
+        this.modulus = modulus;
+    }
+
     public BigInteger getPrivateExponent() {
         return privateExponent;
     }
+
+    public void setPrivateExponent(BigInteger privateExponent) {
+        this.privateExponent = privateExponent;
+    }
+
 }
