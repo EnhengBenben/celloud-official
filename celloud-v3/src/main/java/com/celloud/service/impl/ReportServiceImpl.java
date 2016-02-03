@@ -89,7 +89,7 @@ public class ReportServiceImpl implements ReportService {
             Page pager, String condition, String start, String end,
             Integer appId) {
         List<Map<String, Object>> list = reportMapper.getReportList(userId,
-                pager, condition, start, end, appId, ReportType.DATA);
+                pager, condition, start, end, appId, ReportType.PROJECT);
         return new PageList<>(pager, list);
     }
 
