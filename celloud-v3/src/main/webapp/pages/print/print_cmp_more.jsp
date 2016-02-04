@@ -5762,7 +5762,6 @@ function printSection2Table(){
 	}
 }
 function saveFillCmp(){
-  alert($("#cmp-form").serialize());
 	$.post("../report/updateYANDAFilling",$("#cmp-form").serialize());
 }
 function getTbodyDrug(obj,result){

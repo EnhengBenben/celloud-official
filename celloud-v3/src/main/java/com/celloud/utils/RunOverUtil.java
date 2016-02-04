@@ -184,7 +184,7 @@ public class RunOverUtil {
                     : d.getAnotherName();
             // 3. 为项目PDF生成数据
             sb.append(datakey).append(",")
-                    .append(CustomString.getBarcode(filename)).append(",")
+                    .append(CustomStringUtils.getBarcode(filename)).append(",")
                     .append(anotherName).append(";");
 
             String finalPath = appPath + datakey;
@@ -389,13 +389,13 @@ public class RunOverUtil {
         for (DataFile data : proDataList) {
             String finalPath = appPath + data.getDataKey();
             String first = FileTools.getFirstLine(finalPath + "/report.txt");
-            String result = StringUtils.isEmpty(first) ? "no result" : first
+            String result = CustomStringUtils.isEmpty(first) ? "no result" : first
                     .replace("Exon", "").split("@")[0].trim();
             String re = FileTools.readAppoint(
                     finalPath + "/report.txt.wz.Report").replace("<br />", "");
             String geneName = FileTools.getFirstLine(finalPath
                     + "/Result/edit_dir/gene_name.txt");
-            if (StringUtils.isEmpty(geneName)) {
+            if (CustomStringUtils.isEmpty(geneName)) {
                 geneName = "no result";
             }
             System.out.println(result);

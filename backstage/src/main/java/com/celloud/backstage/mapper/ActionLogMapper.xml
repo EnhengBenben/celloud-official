@@ -28,7 +28,7 @@
 		os, os_version, ip,
 		address)
 		values
-		(#{userId,jdbcType=INTEGER},#{userName,jdbcType=VARCHAR},
+		(#{userId,jdbcType=INTEGER},
 		#{operate,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR},
 		#{logDate,jdbcType=TIMESTAMP}, #{browser,jdbcType=VARCHAR},
 		#{browserVersion,jdbcType=VARCHAR},

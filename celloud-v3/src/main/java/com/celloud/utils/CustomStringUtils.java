@@ -1,12 +1,14 @@
 package com.celloud.utils;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * 自定义的字符串处理类
  * 
  * @author <a href="sunwendong@celloud.cn">sun8wd</a>
  * @date 2016年1月19日 下午12:58:02
  */
-public class StringUtils extends org.apache.commons.lang.StringUtils {
+public class CustomStringUtils extends StringUtils {
     /**
      * 将一个字符串转化为一个6位长度的短字符串（不保证唯一性），区分大小写
      * 
@@ -57,5 +59,22 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
      */
     public static String[] shortString(String longString) {
         return shortString(longString, true);
+    }
+
+    /**
+     * 通过文件名称获取Barcode
+     * 
+     * @param fileName
+     * @return
+     */
+    public static String getBarcode(String fileName) {
+        if (fileName == null) {
+            return null;
+        }
+        String[] s = fileName.split("_");
+        if (s.length > 2) {
+            fileName = s[0] + "_" + s[1];
+        }
+        return fileName;
     }
 }

@@ -168,10 +168,14 @@ public class PythonServiceImpl implements PythonService {
 		try {
 			source = FileUtils.readFileToString(file, "UTF-8");
 		} catch (IOException e) {
-			System.out.println("读取邮件模板失败" + e);
+			log.error("读取邮件模板失败" + e);
 		}
-		String context = source.replace("#dataName", fileName);
-		EmailSender.send(context, email);
+		if(source==null){
+			log.error("读取邮件模板失败");
+		}else{
+			String context = source.replace("#dataName", fileName);
+			EmailSender.send(context, email);
+		}
 	}
 
 	@Override
