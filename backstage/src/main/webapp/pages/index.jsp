@@ -15,11 +15,13 @@
 <link rel="stylesheet" href="plugins/bootstrap/css/xenon-skins.css">
 <link rel="stylesheet" href="plugins/bootstrap/js/datatables/dataTables.bootstrap.css">
 <link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="plugins/jquery_alert_dialogs/jquery.alerts.css">
 
 <script src="plugins/bootstrap/js/jquery-1.11.1.min.js"></script>
 <script src="plugins/jQuery/jquery.validate.min.js"></script>
 <script src="plugins/jQuery/messages_zh.min.js"></script>
 <script src="js/validate.extend.js"></script>
+<script src="plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
 <script src="js/jquery.form.js"></script>
 <script src="js/main.js"></script>
 </head>

@@ -104,13 +104,16 @@ var company=(function(company){
 			
 	}
 	self.deleteCompany=function(companyId){
-		$.post("company/companyDelete",{companyId:companyId},function(responseText){
-			if(responseText>0){
-				alert("成功");
-				self.getCompanyAsync(self.currentPage);
+		jConfirm("确定删除该公司信息吗？", '确认提示框', function(r) {
+			if(r){
+				$.post("company/companyDelete",{companyId:companyId},function(responseText){
+					if(responseText>0){
+						alert("成功");
+						self.getCompanyAsync(self.currentPage);
+					}
+				});
 			}
 		});
-			
 	}
 	
 	self.changeProvince=function(p,async,id){
@@ -238,13 +241,17 @@ var dept=(function(dept){
 		});
 	}*/
 	self.deleteDept=function(deptId){
-		$.post("dept/deptDelete",{deptId:deptId},function(responseText){
-			if(responseText>0){
-				alert("成功");
-				self.getDeptAsync(self.currentPage);
+		
+		jConfirm("确定删除该部门信息吗？", '确认提示框', function(r) {
+			if(r){
+				$.post("dept/deptDelete",{deptId:deptId},function(responseText){
+					if(responseText>0){
+						alert("成功");
+						self.getDeptAsync(self.currentPage);
+					}
+				});
 			}
 		});
-			
 	}
 	
 	
