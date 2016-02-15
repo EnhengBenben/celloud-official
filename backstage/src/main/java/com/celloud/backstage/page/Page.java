@@ -76,6 +76,9 @@ public final class Page {
             this.hasFirst = true;
             this.firstPage = 1;
         }
+        if (this.totalPage>0&&this.currentPage > this.totalPage) {//currentPage大于totalPage
+            this.currentPage=this.totalPage;
+        }
         if (this.currentPage > 1) {
             this.hasPrev = true;
             this.prevPage = this.currentPage - 1;
