@@ -15,11 +15,12 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.log4j.Logger;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RSAUtil {
-    private static final Logger LOGGER = Logger.getLogger(RSAUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(RSAUtil.class);
     /* 算法名称 */
     private static final String ALGORITHOM = "RSA";
     /* 默认的安全服务提供者 */
@@ -33,11 +34,11 @@ public class RSAUtil {
 
     static {
         try {
-            if(keyPairGen==null){
+            if (keyPairGen == null) {
                 keyPairGen = KeyPairGenerator.getInstance(ALGORITHOM, DEFAULT_PROVIDER);
             }
         } catch (NoSuchAlgorithmException e) {
-            LOGGER.error(e.getMessage());
+            logger.error(e.getMessage());
         }
 
     }
@@ -48,7 +49,8 @@ public class RSAUtil {
 
     /* 生成并返回RSA密钥对 */
     public static KeyPair generateKeyPair() {
-        keyPairGen.initialize(KEY_SIZE, new SecureRandom(DateFormatUtils.format(new Date(), "yyyyMMddhhmmss").getBytes()));
+        keyPairGen.initialize(KEY_SIZE,
+                new SecureRandom(DateFormatUtils.format(new Date(), "yyyyMMddhhmmss").getBytes()));
         return keyPairGen.generateKeyPair();
     }
 
@@ -60,29 +62,32 @@ public class RSAUtil {
             ci.init(Cipher.DECRYPT_MODE, privateKey);
             return ci.doFinal(data);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            logger.error(e.getMessage());
         }
         return null;
     }
 
     /* 使用私钥解密给定的字符串 */
-    private static String decryptString(PrivateKey privateKey,String encryptStr) {
+    private static String decryptString(PrivateKey privateKey, String encryptStr) {
         if (encryptStr == null || encryptStr.equals("")) {
             return null;
         }
+        String result = null;
         try {
             byte[] en_data = Hex.decodeHex(encryptStr.toCharArray());
             byte[] data = decrypt(privateKey, en_data);
-            return new String(data);
+            if (data != null) {
+                result = new String(data);
+            }
         } catch (DecoderException e) {
-            LOGGER.error(e.getMessage());
+            logger.error(e.getMessage());
         }
-        return null;
+        return result;
     }
 
     /* 使用私钥解密由js加密的字符串 */
-    public static String decryptStringByJs(PrivateKey privateKey,String encryptStr) {
-        String result = decryptString(privateKey,encryptStr);
+    public static String decryptStringByJs(PrivateKey privateKey, String encryptStr) {
+        String result = decryptString(privateKey, encryptStr);
         if (result != null) {
             return StringUtils.reverse(result);
         }
