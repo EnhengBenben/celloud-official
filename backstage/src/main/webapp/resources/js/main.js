@@ -58,17 +58,6 @@ var company=(function(company){
 			$("#company-menu").addClass("active");
 		});
 	}
-	self.getCompanyAsync=function(currentPage){
-		self.currentPage=currentPage;
-		$.ajax({
-			url:"company/companyMain",
-			data:{currentPage:currentPage},
-			async:false,
-			success:function(responseText){
-				$("#main-content").html(responseText);
-			}
-		});
-	};
 	self.getCompany=function(currentPage){
 		self.currentPage=currentPage;
 		$.post("company/companyMain",{currentPage:currentPage},function(responseText){
@@ -85,16 +74,6 @@ var company=(function(company){
 			
 	}
 	
-	/*self.saveCompany=function(){
-		$.post("company/save",$("#companyForm").serialize(),function(responseText){
-			if(responseText>0){
-				$("#company-editModal").modal("hide");
-				alert("成功");
-				self.getCompanyAsync(self.currentPage);
-			}
-		});
-	}*/
-	
 	self.editCompany=function(companyId){
 		$.post("company/companyEdit",{companyId:companyId},function(responseText){
 			$("#company-editModal .modal-content").html(responseText);
@@ -109,7 +88,7 @@ var company=(function(company){
 				$.post("company/companyDelete",{companyId:companyId},function(responseText){
 					if(responseText>0){
 						alert("成功");
-						self.getCompanyAsync(self.currentPage);
+						self.getCompany(self.currentPage);
 					}
 				});
 			}

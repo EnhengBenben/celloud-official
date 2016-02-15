@@ -112,11 +112,14 @@ $(function(){
                     if(responseText>0){
                         $("#company-editModal").modal("hide");
                         alert("成功");
-                        company.getCompanyAsync(company.currentPage);
+                        
                     }
                 }
             });     
          }
+	});
+	$('#company-editModal').on('hidden.bs.modal', function (e) {//此事件在模态框被隐藏（并且同时在 CSS 过渡效果完成）之后被触发。
+		company.getCompany(company.currentPage);
 	});
 });
 </script>
