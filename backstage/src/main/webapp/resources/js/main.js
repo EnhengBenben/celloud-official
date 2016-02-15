@@ -46,6 +46,7 @@ var company=(function(company){
 	            	$input.val(response.response);
 	            	$("#companyIconUploading").siblings(".img-thumbnail-inline").html($img);
 	            	$("#companyForm .companyIcon-input-hidden").html($input);
+	            	uploader.splice();
 	            }
 	        }
 	    });
@@ -161,6 +162,7 @@ var dept=(function(dept){
 	            	$input.val(response.response);
 	            	$("#deptIconUploading").siblings(".img-thumbnail-inline").html($img);
 	            	$("#deptForm .deptIcon-input-hidden").html($input);
+	            	uploader.splice();
 	            }
 	        }
 	    });
