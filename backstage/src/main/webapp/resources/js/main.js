@@ -166,17 +166,6 @@ var dept=(function(dept){
 	    });
 		uploader.init();
 	}
-	self.getDeptAsync=function(currentPage){
-		self.currentPage=currentPage;
-		$.ajax({
-			url:"dept/deptList",
-			data:{currentPage:currentPage,companyId:self.companyId},
-			async:false,
-			success:function(responseText){
-				$("#dept-manager").html(responseText);
-			}
-		});
-	};
 	self.getDept=function(currentPage){
 		self.currentPage=currentPage;
 		$.post("dept/deptList",{currentPage:currentPage,companyId:self.companyId},function(responseText){
@@ -210,15 +199,6 @@ var dept=(function(dept){
 			
 	}
 	
-	/*self.saveDept=function(){
-		$.post("dept/save",$("#deptForm").serialize(),function(responseText){
-			if(responseText>0){
-				$("#dept-editModal").modal("hide");
-				alert("成功");
-				self.getDeptAsync(self.currentPage);
-			}
-		});
-	}*/
 	self.deleteDept=function(deptId){
 		
 		jConfirm("确定删除该部门信息吗？", '确认提示框', function(r) {
@@ -226,7 +206,7 @@ var dept=(function(dept){
 				$.post("dept/deptDelete",{deptId:deptId},function(responseText){
 					if(responseText>0){
 						alert("成功");
-						self.getDeptAsync(self.currentPage);
+						self.getDept(self.currentPage);
 					}
 				});
 			}

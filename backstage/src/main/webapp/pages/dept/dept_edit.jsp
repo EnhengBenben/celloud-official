@@ -78,11 +78,13 @@ $(function(){
                     if(responseText>0){
                         $("#dept-editModal").modal("hide");
                         alert("成功");
-                        dept.getDeptAsync(dept.currentPage);
                     }
                 }
             });     
          }
+    });
+    $('#dept-editModal').on('hidden.bs.modal', function (e) {//此事件在模态框被隐藏（并且同时在 CSS 过渡效果完成）之后被触发。
+    	dept.getDept(dept.currentPage);
     });
 });
 </script>
