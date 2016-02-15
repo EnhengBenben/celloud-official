@@ -132,6 +132,9 @@ public class LoginAction {
             rsaKeyService.deleteByModulus(publicKey.getModulus());
         }
         String password = RSAUtil.decryptStringByJs(privateKey, user.getPassword());
+        if (password == null) {
+            password = "";
+        }
         user.setPassword(MD5Util.getMD5(password));
         User loginUser = userService.login(user);
         if (loginUser == null) {
