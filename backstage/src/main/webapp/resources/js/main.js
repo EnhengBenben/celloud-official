@@ -242,7 +242,11 @@ var user=(function(user){
 			}else{
 				isPass = false;
 				$(this).parent().parent().addClass("error");
-				$(this).parent().parent().find(".help-inline").html("邮箱格式不正确！");
+				if($.trim(email).length==0){
+					$(this).parent().parent().find(".help-inline").html("邮箱不能为空！");
+				}else{
+					$(this).parent().parent().find(".help-inline").html("邮箱格式不正确！");
+				}
 			}
 		});
 		$("#emailForm").find("select").each(function(){
