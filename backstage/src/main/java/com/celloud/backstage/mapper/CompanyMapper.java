@@ -26,7 +26,7 @@ public interface CompanyMapper {
      * @author han
      * @date 2016年1月25日 下午1:44:53
      */
-    public List<Company> getComanyByPage(@Param("state") int state,Page page);
+    public List<Company> getComanyByPage(@Param("state") int state,Page page,@Param("keyword") String keyword);
     
     public List<Company> getComanyList(@Param("state") int state);
     

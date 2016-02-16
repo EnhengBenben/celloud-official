@@ -27,8 +27,8 @@ public class CompanyServiceImpl implements CompanyService {
     private CompanyMapper companyMapper;
 
     @Override
-    public PageList<Company> getCompanyByPage(Page page) {
-        List<Company> list=companyMapper.getComanyByPage(DataState.ACTIVE, page);
+    public PageList<Company> getCompanyByPage(Page page,String keyword) {
+        List<Company> list=companyMapper.getComanyByPage(DataState.ACTIVE, page,keyword);
         return new PageList<Company>(page,list);
     }
 
