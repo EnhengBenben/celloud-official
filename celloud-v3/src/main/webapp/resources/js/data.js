@@ -449,6 +449,35 @@ function _init_data(){
   	  $.dataManager.options.sortDateType = $.dataManager.options.sortDateType=="desc"?"asc":"desc";
   	  $.dataManager.find.condition();
     });
+  	
+  	/**
+  	 * 添加导航
+  	 */
+  	if(intro != null){
+      intro.exit();
+      intro = null;
+      intro = introJs();
+      intro.setOption('tooltipPosition', 'bottom');
+      intro.setOption('showStepNumbers', false);
+      intro.setOption('showButtons', false);
+      intro.start();
+      intro.goToStep(2);
+      $("#run-app-btn").attr("disabled",true);
+      $("#manage-data-h3").bind('click',function(){
+        if(intro != null){
+          intro.exit();
+          intro = null;
+          intro = introJs();
+          intro.setOption('tooltipPosition', 'bottom');
+          intro.setOption('showStepNumbers', false);
+          intro.setOption('showButtons', false);
+          intro.start();
+          intro.goToStep(8);
+          $("#run-app-btn").removeAttr("disabled");
+          $("#manage-data-h3").unbind('click');
+        }
+      });
+    }
   };
   
   /**

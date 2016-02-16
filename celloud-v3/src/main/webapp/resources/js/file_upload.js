@@ -73,33 +73,16 @@ var datafileUpload=(function(datafileUpload){
 				intro.start();
 				intro.goToStep(4);
 				$("#toaddfilediv").bind("click",function(){
-					if(intro != null){
-						intro.exit();
-						intro = null;
-						intro = introJs();
-						intro.setOption("tooltipPosition", "bottom");
-						intro.setOption("showStepNumbers", false);
-						intro.setOption("showButtons", false);
-						intro.start();
-						intro.goToStep(5);
-						$("#tobeginfilediv").bind("click",function(){
-							if(intro != null){
-								intro.exit();
-								intro = null;
-								intro = introJs();
-								intro.setOption("tooltipPosition", "bottom");
-								intro.setOption("showStepNumbers", false);
-								intro.setOption("showButtons", false);
-								intro.start();
-								intro.goToStep(6);
-								$("._start_custom").removeAttr("disabled");
-							}
-							$("#tobeginfilediv").unbind("click");
-						});
-						$(".addfile").removeAttr("disabled");
-					}
+					intro.setOption("tooltipPosition", "bottom");
+					intro.goToStep(5);
+          $(".addfile").removeAttr("disabled");
 					$("#toaddfilediv").unbind("click");
 				});
+				$("#tobeginfilediv").bind("click",function(){
+          intro.goToStep(6);
+          $("._start_custom").removeAttr("disabled");
+          $("#tobeginfilediv").unbind("click");
+        });
 			}
 		});
 		//绑定选择文件事件
