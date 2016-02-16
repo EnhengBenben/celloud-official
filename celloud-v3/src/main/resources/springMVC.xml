@@ -39,6 +39,7 @@
 			<list>
 				<value>classpath:jdbc.properties</value>
 				<value>classpath:mongodb.properties</value>
+				<value>classpath:email.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -59,6 +60,13 @@
 		<property name="minIdle" value="${minIdle}" />
 		<!-- 获取连接最大等待时间 -->
 		<property name="maxWait" value="${maxWait}" />
+		<property name="testWhileIdle" value="${testWhileIdle}" />
+		<property name="testOnBorrow" value="${testOnBorrow}" />
+		<property name="testOnReturn" value="${testOnReturn}" />
+		<property name="validationQuery" value="${validationQuery}" />
+		<property name="removeAbandoned" value="${removeAbandoned}" />
+		<property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}" />
+		<property name="logAbandoned" value="${logAbandoned}" />
 	</bean>
 	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -66,7 +74,7 @@
 		<!-- 自动扫描mapping.xml文件 -->
 		<property name="mapperLocations" value="classpath:com/celloud/mapper/*.xml" />
 		<property name="plugins">
-		  <bean class="com.celloud.page.PageInterceptor"/>
+			<bean class="com.celloud.page.PageInterceptor" />
 		</property>
 	</bean>
 	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
@@ -96,6 +104,7 @@
 			<mvc:exclude-mapping path="/home**" />
 			<mvc:exclude-mapping path="/feedback/save" />
 			<mvc:exclude-mapping path="/**/*.html" />
+			<mvc:exclude-mapping path="/api/**" />
 			<mvc:exclude-mapping path="/login/**" />
 			<mvc:exclude-mapping path="/logout/**" />
 			<bean class="com.celloud.interceptor.SecurityInterceptor" />

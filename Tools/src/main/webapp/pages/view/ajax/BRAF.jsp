@@ -1,8 +1,18 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<!-- <div class="row"> -->
-	<div class="m-file">文件名称：
-		<span class="file-name"><s:property value="%{resultMap.pagePath.replace('/SVG','').substring(resultMap.pagePath.replace('/SVG','').lastIndexOf('/')+1,resultMap.pagePath.replace('/SVG','').length())}"/>(<s:property value="resultMap.fileName"/>)</span>
+	<input type="hidden" value="<s:property value="resultMap.projectId"/>" id="_projectId">
+	<div class="m-file">
+	   <dl class="dl-horizontal datareport-title">
+          <dt>项目名称：</dt>
+          <dd>${resultMap['projectName'] }</dd>
+          <dt>应用名称：</dt>
+          <dd>${resultMap['appName'] }</dd>
+          <dt>文件名称：</dt>
+          <dd>
+            <s:property value="resultMap.fileName"/>(<s:property value="%{resultMap.pagePath.replace('/SVG','').substring(resultMap.pagePath.replace('/SVG','').lastIndexOf('/')+1,resultMap.pagePath.replace('/SVG','').length())}"/>)
+          </dd>
+        </dl>
 	</div>
 	<div class="m-box">
 		<h2><i class="i-edit"></i>突变类型</h2>

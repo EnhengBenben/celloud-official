@@ -120,4 +120,3 @@ if __name__ == '__main__':
 	print '6'+re['seq']
 	print re['original']
 	print re['out']
-	

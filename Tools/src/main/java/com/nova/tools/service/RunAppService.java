@@ -8,9 +8,6 @@ import com.nova.tools.constant.AppNameIDConstant;
 import com.nova.tools.constant.ReportStateConstant;
 import com.nova.tools.service.impl.ChangeStateServiceImpl;
 import com.nova.tools.service.impl.RunAppServiceImpl;
-import com.nova.tools.utils.DateUtil;
-import com.nova.tools.utils.EmailUtil;
-import com.nova.tools.utils.FileTools;
 import com.nova.tools.utils.XMLUtil;
 
 /**
@@ -20,9 +17,7 @@ import com.nova.tools.utils.XMLUtil;
  */
 public class RunAppService {
     // TODO 不需要在Tools端进行后续处理的需要在这里配置下
-    private static final List<String> apps = Arrays.asList("82", "83",
-            "85", "86", "87", "88", "91", "92", "93", "94", "104", "110",
-            "111", "112", "113", "114");
+    private static final List<String> apps = Arrays.asList("83");
 
     /**
      * 运行项目
@@ -55,33 +50,6 @@ public class RunAppService {
                 + projectId;
         String appPath = basePath + "/" + userId + "/" + appId;
         RunAppServiceImpl runApp = new RunAppServiceImpl();
-        String start = DateUtil.formatNowDate();
-
-        // MIB
-        if (AppNameIDConstant.MIB.equals(appId)) {
-            File profile = new File(projectPath);
-            if (!profile.exists()) {
-                profile.mkdirs();
-            }
-            runApp.MIB(command, taskId, appPath, projectId, dataKey, fileName,
-                    appId, appName, userId, dataInfos, company, user, dept);
-        } else {
-            FileTools.createDir(projectPath);
-        }
-
-        // split
-        if (AppNameIDConstant.split.equals(appId)) {
-            runApp.split(appPath, projectId, dataKeyList, appId,
-                    appName, userId, dataInfos, company, user, dept);
-        }
-
-        // CMP
-        if (AppNameIDConstant.CMP.equals(appId)
-                || AppNameIDConstant.CMP_199.equals(appId)
-                || AppNameIDConstant.GDD.equals(appId)) {
-            runApp.runCMP(appPath, projectId, dataKeyList, appId, appName,
-                    userId, dataInfos, company, user, dept);
-        }
 
         // VSP
         if (AppNameIDConstant.VSP.equals(appId)) {
@@ -141,12 +109,6 @@ public class RunAppService {
             runApp.runSNPProject(appPath + "/", projectId, dataKeyList);
         }
 
-        // HBV_SNP2
-        if (AppNameIDConstant.HBV_SNP2.equals(appId)) {
-            runApp.runHBV_SNP2Project(appPath + "/", projectId, dataKeyList,
-                    basePath);
-        }
-
         // DPD
         if (AppNameIDConstant.DPD.equals(appId)) {
             runApp.runDPDProject(appPath + "/", projectId, dataKeyList,
@@ -165,18 +127,6 @@ public class RunAppService {
                     basePath);
         }
 
-        // SurePlex
-        if (AppNameIDConstant.SurePlex.equals(appId)) {
-            runApp.runSurePlexProject(appPath + "/", projectId, dataKeyList,
-                    appName);
-        }
-
-        // SurePlex_HR
-        if (AppNameIDConstant.Sureplex_HR.equals(appId)) {
-            runApp.runSurePlex_HRProject(appPath + "/", projectId, dataKeyList,
-                    appName);
-        }
-
         // PGS
         if (AppNameIDConstant.PGS.equals(appId)) {
             runApp.runPGSProject(appPath + "/", projectId, dataKeyList, appName);
@@ -187,16 +137,7 @@ public class RunAppService {
             runApp.rungDNAProject(appPath + "/", projectId, dataKeyList,
                     appName);
         }
-        if (AppNameIDConstant.MDA_HR.equals(appId)) {
-            runApp.runMDA_HRProject(appPath + "/", projectId, dataKeyList,
-                    appName);
-        }
 
-        // gDNA_MR
-        if (AppNameIDConstant.gDNA_MR.equals(appId)) {
-            runApp.rungDNA_MRProject(appPath + "/", projectId, dataKeyList,
-                    appName);
-        }
         // gDNA_MR_v1
         if (AppNameIDConstant.gDNA_MR_v1.equals(appId)) {
             runApp.rungDNA_MR_v1Project(appPath + "/", projectId, dataKeyList,
@@ -220,18 +161,6 @@ public class RunAppService {
         // MalBac_v1
         if (AppNameIDConstant.MalBac_v1.equals(appId)) {
             runApp.runMalBac_v1Project(appPath + "/", projectId, dataKeyList,
-                    appName);
-        }
-
-        // MDA_MR
-        if (AppNameIDConstant.MDA_MR.equals(appId)) {
-            runApp.runMDA_MRProject(appPath + "/", projectId, dataKeyList,
-                    appName);
-        }
-
-        // MalBac
-        if (AppNameIDConstant.MalBac.equals(appId)) {
-            runApp.runMalBacProject(appPath + "/", projectId, dataKeyList,
                     appName);
         }
 
@@ -260,20 +189,6 @@ public class RunAppService {
             }
             ChangeStateServiceImpl.changeState(appId, appName, projectId, null,
                     ReportStateConstant.FINISH, userId, xml);
-            String param = "fileName=" + fileName + "&userId=" + userId
-                    + "&appId=" + appId + "&projectId=" + projectId
-                    + "&sampleList=" + sampleList;
-            if (AppNameIDConstant.MIB.equals(appId)) {
-                ChangeStateServiceImpl.changeTaskState(Long.parseLong(taskId),
-                        Long.parseLong(appId));
-                param += "&dataKey=" + dataKey;
-                EmailUtil.sendEndEmail(fileName, appId, start, email, param,
-                        false);
-            } else {
-                param += "&dataKey=" + dataKeyList.split(",")[0];
-                EmailUtil.sendEndEmail(projectName, appId, start, email, param,
-                        true);
-            }
         }
     }
 }

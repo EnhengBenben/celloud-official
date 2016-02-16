@@ -251,12 +251,15 @@ public class ProcedureAction extends ActionSupport {
                 "Access-Control-Allow-Origin", "*");
         long start = new Date().getTime();
         ReadReportService report = new ReadReportService();
-        if (projectId == null || "".equals(projectId)) {
+        if (!"11".equals(appId)) {
             // 查看数据报告
             resultMap = report.readDataReport(basePath, userId, appId, dataKey,
                     fileName, anotherName);
             if (resultMap != null) {
                 resultMap.put("outProject", PropertiesUtils.outProject);
+                resultMap.put("projectId", projectId);
+                resultMap.put("projectName", projectName);
+                resultMap.put("appName", AppNameIDConstant.map.get(appId));
             }
             long end = new Date().getTime();
             log.info("用户" + userId + "访问app：" + appId + "下DataKey=" + dataKey

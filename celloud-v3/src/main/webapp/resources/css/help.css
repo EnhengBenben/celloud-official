@@ -1,0 +1,18 @@
+@CHARSET "UTF-8";
+.help-list li{
+	list-style:disc;
+}
+.question-list li div{
+    display:none;
+    color: #009999;
+}
+.help-list li ul li{
+    list-style:circle;
+}
+.question-list li{
+	cursor:pointer;
+	margin:10px 0;
+}
+.question-list li:hover{
+    background-color:#f5f5f5;
+}

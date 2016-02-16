@@ -9,7 +9,6 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 
 import com.itextpdf.text.DocumentException;
-import com.nova.tools.constant.AppNameIDConstant;
 import com.nova.tools.constant.Mod;
 import com.nova.tools.itext.AB1_PDF;
 import com.nova.tools.itext.NIPTPDF;
@@ -35,7 +34,6 @@ public class RunAppServiceImpl {
 	private static String SNP_multiple = PropertiesUtils.SNP_multiple;
 	private static String HCV = PropertiesUtils.HCV;
 	private static String PGS = PropertiesUtils.PGS;
-	private static String HBV_SNP2_perl = PropertiesUtils.HBV_SNP2;
 	private static String gDNA_perl = PropertiesUtils.gDNA;
 	private static String EGFR_perl = PropertiesUtils.EGFR;
 	private static String TB_perl = PropertiesUtils.TB;
@@ -45,12 +43,6 @@ public class RunAppServiceImpl {
 	private static String userName = XMLUtil.machines.get("158").get(
 			Mod.USERNAME);
 
-	private static String MalBac_perl = PropertiesUtils.MalBac;
-	private static String gDNA_MR_perl = PropertiesUtils.gDNA_MR;
-	private static String MDA_MR_perl = PropertiesUtils.MDA_MR;
-	private static String MDA_HR_perl = PropertiesUtils.MDA_HR_perl;
-	private static String SurePlex_perl = PropertiesUtils.SurePlex;
-	private static String SurePlex_HR_perl = PropertiesUtils.Sureplex_HR;
 	private static String KRAS_perl = PropertiesUtils.KRAS;
 	private static String translate_perl = PropertiesUtils.Translate;
 	private static String _16S_perl = PropertiesUtils._16S;
@@ -64,10 +56,6 @@ public class RunAppServiceImpl {
 	private static String DPD_perl = PropertiesUtils.DPD;
 	private static String BRAF_perl = PropertiesUtils.BRAF;
 	private static String UGT_perl = PropertiesUtils.UGT;
-	private static String CMP_perl = PropertiesUtils.CMP;
-	private static String CMP199_perl = PropertiesUtils.CMP199;
-	private static String GDD_perl = PropertiesUtils.GDD;
-	private static String split_perl = PropertiesUtils.split;
 
 	public void VSP(String appPath, String projectId, String dataKeyList) {
 		String dataArray[] = dataKeyList.split(";");
@@ -101,85 +89,7 @@ public class RunAppServiceImpl {
 					+ getArray(dataDetail, 2) + "\n");
 		}
 	}
-
-
-	/**
-	 * 运行MIB
-	 * 
-	 * @param outPath
-	 * @param projectId
-	 * @param dataKeyList
-	 * @param appId
-	 * @param appName
-	 * @param userId
-	 * @param dataInfos
-	 * @param company
-	 * @param user
-	 */
-	// TODO
-	public void MIB(String command, String taskId, String outPath,
-			String projectId, String dataKey, String fileName, String appId,
-			String appName, String userId, String dataInfos, String company,
-			String user, String dept) {
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        ssh.sshSubmit(false);
-	}
-
-	/**
-	 * 运行split
-	 * 
-	 * @param outPath
-	 * @param projectId
-	 * @param dataKeyList
-	 * @param appId
-	 * @param appName
-	 * @param userId
-	 * @param dataInfos
-	 * @param company
-	 * @param user
-	 */
-    public void split(String outPath, String projectId, String dataKeyList,
-			String appId, String appName, String userId, String dataInfos,
-			String company, String user, String dept) {
-		String dataListFile = formatDataKeyListToSplit(dataKeyList);
-		String command = split_perl + " " + dataListFile + " " + outPath
-                + "/ ProjectID" + projectId + " &>" + outPath + "/" + projectId
-                + "/log ";
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        ssh.sshSubmit(false);
-	}
-
-	/**
-	 * 运行CMP
-	 * 
-	 * @param outPath
-	 * @param projectId
-	 * @param dataKeyList
-	 * @param appId
-	 * @param appName
-	 * @param userId
-	 * @param dataInfos
-	 * @param company
-	 * @param user
-	 */
-	public void runCMP(String outPath, String projectId, String dataKeyList,
-			String appId, String appName, String userId, String dataInfos,
-			String company, String user, String dept) {
-		String dataListFile = formatDataKeyList(dataKeyList);
-		String command = null;
-		if (AppNameIDConstant.CMP.equals(appId)) {
-            command = CMP_perl;
-		} else if (AppNameIDConstant.CMP_199.equals(appId)) {
-            command = CMP199_perl;
-		} else if (AppNameIDConstant.GDD.equals(appId)) {
-            command = GDD_perl;
-		}
-        command += " " + dataListFile + " " + outPath + "/ ProjectID"
-                + projectId + " &>" + outPath + "/" + projectId + "/log ";
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-        ssh.sshSubmit(false);
-	}
-
+	
 	public void _16S(String appPath, String projectId, String dataKeyList) {
 		String[] data = dataKeyList.split(",");
 		String dataKeyPath = appPath + "/" + getArray(data, 0);
@@ -259,7 +169,7 @@ public class RunAppServiceImpl {
                             + getArray(dataDetail, 2) + "\n");
         }
         String command = HCV + " " + dataListFile + " " + appPath + "/ 2>"
-                + appPath + "/" + projectId + "/log";
+                + appPath + "/" + projectId + ".log";
         GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
         boolean state = ssh.sshSubmit(true);
         if (state) {
@@ -396,50 +306,6 @@ public class RunAppServiceImpl {
 		// 创建要运行的文件列表文件
 		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
 		String command = gDNA_perl + " " + dataListFile + " " + basePath
-				+ " ProjectID" + projectId + " &>" + basePath + "ProjectID"
-				+ projectId + ".log";
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		ssh.sshSubmit(false);
-	}
-
-	public void runMDA_HRProject(String basePath, String projectId,
-			String dataKeyList, String appName) {
-		// 创建要运行的文件列表文件
-		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
-		String command = MDA_HR_perl + " " + dataListFile + " " + basePath
-				+ " ProjectID" + projectId + " &>" + basePath + "ProjectID"
-				+ projectId + ".log";
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		ssh.sshSubmit(false);
-	}
-
-	public void runSurePlexProject(String basePath, String projectId,
-			String dataKeyList, String appName) {
-		// 创建要运行的文件列表文件
-		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
-		String command = SurePlex_perl + " " + dataListFile + " " + basePath
-				+ " ProjectID" + projectId + " &>" + basePath + "ProjectID"
-				+ projectId + ".log";
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		ssh.sshSubmit(false);
-	}
-
-	public void runSurePlex_HRProject(String basePath, String projectId,
-			String dataKeyList, String appName) {
-		// 创建要运行的文件列表文件
-		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
-		String command = SurePlex_HR_perl + " " + dataListFile + " " + basePath
-				+ " ProjectID" + projectId + " &>" + basePath + "ProjectID"
-				+ projectId + ".log";
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		ssh.sshSubmit(false);
-	}
-
-	public void rungDNA_MRProject(String basePath, String projectId,
-			String dataKeyList, String appName) {
-		// 创建要运行的文件列表文件
-		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
-		String command = gDNA_MR_perl + " " + dataListFile + " " + basePath
 				+ " ProjectID" + projectId + " &>" + basePath + "ProjectID"
 				+ projectId + ".log";
 		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
@@ -728,28 +594,6 @@ public class RunAppServiceImpl {
 			}
 			FileTools.appendWrite(projectFile, resultArray.toString());
 		}
-	}
-
-	public void runMDA_MRProject(String basePath, String projectId,
-			String dataKeyList, String appName) {
-		// 创建要运行的文件列表文件
-		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
-		String command = MDA_MR_perl + " " + dataListFile + " " + basePath
-				+ " ProjectID" + projectId + " &>" + basePath + "ProjectID"
-				+ projectId + ".log";
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		ssh.sshSubmit(false);
-	}
-
-	public void runMalBacProject(String basePath, String projectId,
-			String dataKeyList, String appName) {
-		// 创建要运行的文件列表文件
-		String dataListFile = dealDataKeyListContainFileName(dataKeyList);
-		String command = MalBac_perl + " " + dataListFile + " " + basePath
-				+ " ProjectID" + projectId + " &>" + basePath + "ProjectID"
-				+ projectId + ".log";
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		ssh.sshSubmit(false);
 	}
 
 	/**
@@ -1177,27 +1021,6 @@ public class RunAppServiceImpl {
 		}
 	}
 
-	/**
-	 * HBV_SNP2项目
-	 * 
-	 * @param basePath
-	 *            :basePath + "/" + userId + "/" + appId + "/"
-	 * @param projectId
-	 * @param dataKeyList
-	 * @param uploadPath
-	 *            ：basePath
-	 */
-	public void runHBV_SNP2Project(String basePath, String projectId,
-			String dataKeyList, String uploadPath) {
-		// 创建要运行的文件列表文件
-		String dataListFile = dealDataKeyList(dataKeyList);
-		String command = HBV_SNP2_perl + " " + dataListFile + " " + basePath
-				+ " ProjectID" + projectId + " &>" + basePath + "ProjectID"
-				+ projectId + ".log";
-		GanymedSSH ssh = new GanymedSSH(host158, userName, pwd, command);
-		ssh.sshSubmit(false);
-	}
-
 	// 以下是通用方法
 
 	/**
@@ -1236,71 +1059,6 @@ public class RunAppServiceImpl {
 		for (int i = 0; i < dataArray.length; i++) {
 			String[] detail = dataArray[i].split(",");
 			sb.append(dataPath + detail[1] + "\n");
-		}
-		FileTools.appendWrite(dataListFile, sb.toString());
-		return dataListFile;
-	}
-
-	/**
-	 * 将dataKeyList格式化成CMP需要的文件
-	 * 
-	 * @param dataKeyList
-	 * @return
-	 */
-	private String formatDataKeyList(String dataKeyList) {
-		StringBuffer sb = new StringBuffer();
-		String dataListFile = datalist + new Date().getTime() + "_"
-				+ new Double(Math.random() * 1000).intValue() + ".txt";
-		FileTools.createFile(dataListFile);
-		String dataArray[] = dataKeyList.split(";");
-		for (int i = 0; i < dataArray.length; i = i + 2) {
-			String[] detail1 = dataArray[i].split(",");
-			String[] detail2 = dataArray[i + 1].split(",");
-			sb.append(dataPath + detail1[1] + "\t" + dataPath + detail2[1]
-					+ "\n");
-		}
-		FileTools.appendWrite(dataListFile, sb.toString());
-		return dataListFile;
-	}
-
-	/**
-	 * 将dataKeyList格式化成split需要的文件
-	 * 
-	 * @param dataKeyList
-	 * @return
-	 */
-	private String formatDataKeyListToSplit(String dataKeyList) {
-		StringBuffer sb = new StringBuffer();
-		String dataListFile = datalist + new Date().getTime() + "_"
-				+ new Double(Math.random() * 1000).intValue() + ".txt";
-		FileTools.createFile(dataListFile);
-		String dataArray[] = dataKeyList.split(";");
-		for (int i = 0; i < dataArray.length; i = i + 3) {
-			String detail1 = dataArray[i].split(",")[1];
-			String detail2 = dataArray[i + 1].split(",")[1];
-			String detail3 = dataArray[i + 2].split(",")[1];
-			String endData = "";
-			String d1 = "";
-			String d2 = "";
-            if (FileTools.getExt(detail1).equals(".lis")
-                    || FileTools.getExt(detail1).equals(".txt")) {
-				endData = detail1;
-				d1 = detail2;
-				d2 = detail3;
-            } else if (FileTools.getExt(detail2).equals(".lis")
-                    || FileTools.getExt(detail2).equals(".txt")) {
-				endData = detail2;
-				d1 = detail1;
-				d2 = detail3;
-            } else if (FileTools.getExt(detail3).equals(".lis")
-                    || FileTools.getExt(detail3).equals(".txt")) {
-				endData = detail3;
-				d1 = detail1;
-				d2 = detail2;
-			}
-			sb.append(dataPath).append(d1).append("\t").append(dataPath)
-					.append(d2).append("\t").append(dataPath).append(endData)
-					.append("\n");
 		}
 		FileTools.appendWrite(dataListFile, sb.toString());
 		return dataListFile;

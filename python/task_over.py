@@ -32,7 +32,8 @@ dataKeys = sys.argv[4]
 dataKey = dataKeys.split(',')[0]
 proId = sys.argv[5]
 
-user_info_sql = "select c.company_id companyId,c.company_name companyName,c.english_name companyEngName,c.company_icon companyIcon,c.address companyAddr,c.address_en companyEnAddr,c.zip_code zipCode,c.tel companyTel,d.dept_name deptName,d.english_name deptEngName,d.dept_icon deptIcon,d.tel deptTel,u.user_id userId,u.username,u.email,s.software_id appId,s.software_name appName,s.title from tb_company c,tb_user u,tb_dept d,tb_software s where u.dept_id=d.dept_id and d.company_id=c.company_id and u.user_id="+userId+" and s.software_id="+appId
+user_info_sql = "select c.company_id companyId,c.company_name companyName,c.english_name companyEngName,c.company_icon companyIcon,c.address companyAddr,c.address_en companyEnAddr,c.zip_code zipCode,c.tel companyTel,d.dept_name deptName,d.english_name deptEngName,d.dept_icon deptIcon,d.tel deptTel,u.user_id userId,u.username,u.email from tb_user u left join tb_dept d on u.dept_id=d.dept_id left join tb_company c on u.company_id=c.company_id where u.user_id="+userId
+app_info_sql = "select app_id appId,app_name appName,title from tb_app where app_id="+appId
 data_info_sql = "select file_id fileId,user_id userId,data_key dataKey,file_name fileName,another_name anotherName,strain,sample,data_tags dataTags,size,create_date createDate from tb_file where data_key in ("+dataKeys+")"
 myDB = mysql.getInstance()
 print 1
@@ -40,8 +41,9 @@ if myDB:
     appFun = method_dic[int(appId)].getInstance()
     if appFun:
         user_dict = myDB.query(user_info_sql)[0]
+        app_dict = myDB.query(app_info_sql)[0]
         data_dict = myDB.query(data_info_sql)
-        base = dict(**user_dict)
+        base = dict(app_dict,**user_dict)
         base['data'] = data_dict
         base['dataKey'] = dataKey
         base['projectId'] = int(proId)

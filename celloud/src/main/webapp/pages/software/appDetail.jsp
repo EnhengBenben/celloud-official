@@ -52,7 +52,6 @@
   </div>
   <div class="box-icon" id="1">
     <h5>应用介绍</h5>
-<!--     <h3><strong>应用介绍：</strong></h3> -->
     <p>${app.appDoc }</p>
   </div>
   <div class="box-icon" id="2">

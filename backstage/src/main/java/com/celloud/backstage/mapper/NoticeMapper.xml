@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.celloud.backstage.mapper.NoticeMapper" >
+  <resultMap id="BaseResultMap" type="com.celloud.backstage.model.Notice" >
+    <id column="notice_id" property="noticeId" jdbcType="INTEGER" />
+    <result column="notice_title" property="noticeTitle" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="expire_date" property="expireDate" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.celloud.backstage.model.Notice" extends="BaseResultMap" >
+    <result column="notice_context" property="noticeContext" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    notice_id, notice_title, create_date, expire_date, state
+  </sql>
+  <sql id="Blob_Column_List" >
+    notice_context
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_notice
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_notice
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.celloud.backstage.model.Notice" >
+    insert into tb_notice (notice_id, notice_title, create_date, 
+      expire_date, state, notice_context
+      )
+    values (#{noticeId,jdbcType=INTEGER}, #{noticeTitle,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{expireDate,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{noticeContext,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.celloud.backstage.model.Notice" >
+    insert into tb_notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="noticeId != null" >
+        notice_id,
+      </if>
+      <if test="noticeTitle != null" >
+        notice_title,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="expireDate != null" >
+        expire_date,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="noticeContext != null" >
+        notice_context,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="noticeId != null" >
+        #{noticeId,jdbcType=INTEGER},
+      </if>
+      <if test="noticeTitle != null" >
+        #{noticeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireDate != null" >
+        #{expireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="noticeContext != null" >
+        #{noticeContext,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.backstage.model.Notice" >
+    update tb_notice
+    <set >
+      <if test="noticeTitle != null" >
+        notice_title = #{noticeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireDate != null" >
+        expire_date = #{expireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="noticeContext != null" >
+        notice_context = #{noticeContext,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.celloud.backstage.model.Notice" >
+    update tb_notice
+    set notice_title = #{noticeTitle,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      expire_date = #{expireDate,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER}
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateNotice" parameterType="com.celloud.backstage.model.Notice" >
+    update tb_notice
+    set notice_title = #{noticeTitle,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      expire_date = #{expireDate,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER},
+      notice_context = #{noticeContext,jdbcType=LONGVARCHAR}
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </update>
+  <insert id="addNotice" parameterType="com.celloud.backstage.model.Notice" >
+    insert into tb_notice (notice_title, create_date, 
+      expire_date, state, notice_context
+      )
+    values (#{noticeTitle,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{expireDate,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{noticeContext,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <select id="getNoticeByPage" resultMap="ResultMapWithBLOBs">
+    select * from tb_notice where state=#{state } order by create_date desc
+  </select>
+  
+  <select id="getNoticeById" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_notice
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </select>
+</mapper>

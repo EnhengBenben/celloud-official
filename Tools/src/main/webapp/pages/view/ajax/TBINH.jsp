@@ -1,14 +1,18 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<div class="row">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<div>
+	<input type="hidden" value="<s:property value="resultMap.projectId"/>" id="_projectId">
 	<input type="hidden" value="<s:property value="resultMap.length"/>" id="seq_length"/>
-	<!--文件名称-->
-	<div class="m-file">文件名称：
-		<span class="file-name"><s:property value="%{resultMap.pagePath.replace('/SVG','').substring(resultMap.pagePath.replace('/SVG','').lastIndexOf('/')+1,resultMap.pagePath.replace('/SVG','').length())}"/>(<s:property value="resultMap.fileName"/>)</span>
-<%-- 		<s:if test="%{!resultMap.pdf.equals('false')}"> --%>
-<%-- 			<div class="toolbar"><a href="<s:property value="resultMap.pdf"/>" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a></div> --%>
-<%-- 		</s:if> --%>
-<%-- 		<a href='javascript:toPrintHBV("<s:property value="resultMap.pagePath"/>")' class="btn btn-info toolbar" style="float:right;margin-right:110px;"><i class="i-printback i-print"></i>打印报告</a> --%>
+	<div class="m-file">
+	   <dl class="dl-horizontal datareport-title">
+          <dt>项目名称：</dt>
+          <dd>${resultMap['projectName'] }</dd>
+          <dt>应用名称：</dt>
+          <dd>${resultMap['appName'] }</dd>
+          <dt>文件名称：</dt>
+          <dd><s:property value="resultMap.fileName"/>(<s:property value="%{resultMap.pagePath.replace('/SVG','').substring(resultMap.pagePath.replace('/SVG','').lastIndexOf('/')+1,resultMap.pagePath.replace('/SVG','').length())}"/>)</dd>
+        </dl>
 	</div>
 	<div class="m-box">
 		<h2><i class="i-edit"></i>Gene Name</h2>

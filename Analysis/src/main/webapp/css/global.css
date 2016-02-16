@@ -1,0 +1,26 @@
+a:link {
+    text-decoration: none;
+}
+a:visited {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+}
+a:active {
+    text-decoration: none;
+}
+a{
+	cursor: pointer;
+}
+.table-div{
+	 margin-left: 60px;
+	  margin-top: 15px;
+}
+.title {
+    margin-left: 45px;
+}
+.form {
+    margin-left: 65px;
+    margin-top:15px;
+}
