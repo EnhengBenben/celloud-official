@@ -515,6 +515,7 @@ function _init_data(){
     if(_checked){
   	  if($.dataManager.options.checkedIds.length>=num){
   	    $.dataManager.showTipModal("最多允许同时操作"+num+"条数据！");
+  	    $(obj).prop("checked",false);
   	  }else{
   	    $.dataManager.checkData.isCheck(_dataId);
   	  }
