@@ -3,28 +3,31 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div>
 	<input type="hidden" value="<s:property value="resultMap.length"/>" id="seq_length"/>
+	<input type="hidden" value="<s:property value="resultMap.projectId"/>" id="_projectId">
 	<!--文件名称-->
 	<div class="m-file">
-		<div class="row">
-			<div class="col-lg-9 force-break">
-				文件名称：
-				<span class="file-name"><s:property value="%{resultMap.pagePath.replace('/SVG','').substring(resultMap.pagePath.replace('/SVG','').lastIndexOf('/')+1,resultMap.pagePath.replace('/SVG','').length())}"/>(<s:property value="resultMap.fileName"/>)</span>
-			</div>
-			<div class="col-lg-3">
-				<div class="toolbar" style="position: inherit;right: auto;">
-					<s:if test="%{!resultMap.pdf.equals('false')}">
-						<a href="<s:property value="resultMap.pdf"/>" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
-					</s:if>
-					<a href='javascript:toPrintHBV("<s:property value="resultMap.pagePath"/>")' class="btn btn-default"><i class="i-printback i-print"></i>打印报告</a>
-				</div>
-			</div>
-		</div>
+	   <dl class="dl-horizontal datareport-title">
+          <dt>项目名称：</dt>
+          <dd>${resultMap['projectName'] }</dd>
+          <dt>应用名称：</dt>
+          <dd>${resultMap['appName'] }</dd>
+          <dt>文件名称：</dt>
+          <dd>
+            <s:property value="resultMap.fileName"/>(<s:property value="%{resultMap.pagePath.replace('/SVG','').substring(resultMap.pagePath.replace('/SVG','').lastIndexOf('/')+1,resultMap.pagePath.replace('/SVG','').length())}"/>)
+          </dd>
+        </dl>
+        <div class="toolbar">
+            <a class="btn btn-celloud-success btn-flat" href='javascript:toPrintHBV("<s:property value="resultMap.pagePath"/>")'><i class="fa fa-print"></i>打印报告</a>
+            <s:if test="%{!resultMap.pdf.equals('false')}">
+                <a class="btn btn-warning btn-flat" href="<s:property value="resultMap.pdf"/>"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
+            </s:if>
+        </div>
 	</div>
 	<!--位点突变-->
 	<div class="m-box">
 		<h2>
 			<i class="i-edit"></i>一、 已知突变位点（依据已发表文献，该突变位点有明确临床意义）
-			<span style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal')"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></span>
+			<span style="float:right;padding-right: 30px;padding-top: 8px;" title="帮助" onclick="showModal('helpModal')"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
 		</h2>
 	    <div class="m-boxCon result">
 	    	<div id="knowResult">
@@ -54,7 +57,7 @@
 	<div class="m-box">
 		<h2>
 			<i class="i-edit"></i>二、 未知突变位点（该突变位点目前没有已发表文献支持，无明确临床意义）
-			<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal('helpModal')"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>
+			<div style="float:right;padding-right: 30px;padding-top: 8px;" title="帮助" onclick="showModal('helpModal')"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></div>
 		</h2>
 	    <div class="m-boxCon result">
 	    	<s:if test="%{!resultMap.wz2.equals('')}">

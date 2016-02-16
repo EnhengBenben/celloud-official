@@ -8,9 +8,17 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath*:/springMVC.xml </param-value>
 	</context-param>
+	<filter>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+	</filter>
 	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
+	<filter-mapping>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<servlet-name>springMVC</servlet-name>
+	</filter-mapping>
 	<servlet>
 		<servlet-name>springMVC</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -53,56 +61,55 @@
 			<param-value>80</param-value>
 		</init-param>
 		<init-param>
-            <param-name>kaptcha.image.height</param-name>
-            <param-value>32</param-value>
-        </init-param>
-        <init-param>
-            <param-name>kaptcha.textproducer.char.length</param-name>
-            <param-value>4</param-value>
-        </init-param>
-        <init-param>
-            <param-name>kaptcha.textproducer.char.space</param-name>
-            <param-value>3</param-value>
-        </init-param>
-        <init-param>
-            <param-name>kaptcha.textproducer.font.names</param-name>
-            <param-value>Consolas</param-value>
-        </init-param>
-        <init-param>
-            <param-name>kaptcha.textproducer.font.size</param-name>
-            <param-value>22</param-value>
-        </init-param>
-        <init-param>
-            <param-name>kaptcha.background.clear.from</param-name>
-            <param-value>220,220,220</param-value>
-        </init-param>
-        <init-param>
-            <param-name>kaptcha.background.clear.to</param-name>
-            <param-value>220,220,220</param-value>
-        </init-param>
-        <init-param>
-            <param-name>kaptcha.textproducer.font.color</param-name>
-            <param-value>0,153,51</param-value>
-        </init-param>
-        <init-param>
-            <param-name>kaptcha.textproducer.char.string</param-name>
-            <param-value>123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ</param-value>
-        </init-param>
-        <init-param>
-            <param-name>kaptcha.obscurificator.impl</param-name>
-            <param-value>com.celloud.utils.NoNoise</param-value>
-        </init-param>
+			<param-name>kaptcha.image.height</param-name>
+			<param-value>32</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.textproducer.char.length</param-name>
+			<param-value>4</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.textproducer.char.space</param-name>
+			<param-value>3</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.textproducer.font.names</param-name>
+			<param-value>Consolas</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.textproducer.font.size</param-name>
+			<param-value>22</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.background.clear.from</param-name>
+			<param-value>220,220,220</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.background.clear.to</param-name>
+			<param-value>220,220,220</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.textproducer.font.color</param-name>
+			<param-value>0,153,51</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.textproducer.char.string</param-name>
+			<param-value>123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.obscurificator.impl</param-name>
+			<param-value>com.celloud.utils.NoNoise</param-value>
+		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Kaptcha</servlet-name>
 		<url-pattern>/kaptcha.jpg</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>pages/home.jsp</welcome-file>
 	</welcome-file-list>
+	<session-config>
+	   <session-timeout>60</session-timeout>
+	</session-config>
+	<distributable/>
 </web-app>

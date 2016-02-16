@@ -5,13 +5,20 @@ import java.util.Date;
 
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer userId;
+	public static final int SYSTEM = 3;			// 系统管理员
+	public static final int ADMIN = 2;			// 超级管理员
+	public static final int BIG_USER = 1;		// 大客户
+	public static final int USER = 0;				// 普通用户
+	
+	public static final String USER_ROLE = "userRole";
+
+	private Integer user_id;
 	private String username;
 	private String password;
 	/** 邮箱 */
 	private String email;
 	private Date createDate;
-	/** 角色，0，1 普通用户，2超级管理员，3管理员 */
+	/** 角色，0，1 大客户，2超级管理员，3管理员 */
 	private Integer role;
 	/** 真实姓名 */
 	private String truename;
@@ -30,13 +37,23 @@ public class User implements Serializable {
 	/** 验证码 **/
 	private String kaptchaCode;
 	/** 数据大小（b） */
-	private Double fileSize;
+	private long size;
 	/** 报告数量 */
 	private Long reportNum;
 	/** 所属医院名称 */
-	private String companyName;
+	private String company_name;
 	/** 所属部门名称 */
-	private String deptName;
+	private String dept_name;
+	
+	private int runNum;
+
+	public int getRunNum() {
+		return runNum;
+	}
+
+	public void setRunNum(int runNum) {
+		this.runNum = runNum;
+	}
 
 	public Long getFileNum() {
 		return fileNum;
@@ -46,22 +63,22 @@ public class User implements Serializable {
 		this.fileNum = fileNum;
 	}
 
-	public void setFileSize(Double fileSize) {
-		this.fileSize = fileSize;
-	}
-
 	public void setReportNum(Long reportNum) {
 		this.reportNum = reportNum;
 	}
-	public Integer getUserId() {
-		return userId;
+
+	public Integer getUser_id() {
+		return user_id;
 	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+
+	public void setUser_id(Integer user_id) {
+		this.user_id = user_id;
 	}
+
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -85,42 +102,55 @@ public class User implements Serializable {
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public Date getCreateDate() {
 		return createDate;
 	}
+
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+
 	public Integer getRole() {
 		return role;
 	}
+
 	public void setRole(Integer role) {
 		this.role = role;
 	}
+
 	public String getTruename() {
 		return truename;
 	}
+
 	public void setTruename(String truename) {
 		this.truename = truename;
 	}
+
 	public Integer getState() {
 		return state;
 	}
+
 	public void setState(Integer state) {
 		this.state = state;
 	}
+
 	public Integer getDeptId() {
 		return deptId;
 	}
+
 	public void setDeptId(Integer deptId) {
 		this.deptId = deptId;
 	}
+
 	public String getLoginUuid() {
 		return loginUuid;
 	}
+
 	public void setLoginUuid(String loginUuid) {
 		this.loginUuid = loginUuid;
 	}
@@ -141,28 +171,34 @@ public class User implements Serializable {
 		this.kaptchaCode = kaptchaCode;
 	}
 
-	public String getCompanyName() {
-		return companyName;
+	public long getSize() {
+		return size;
 	}
 
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
+	public void setSize(long size) {
+		this.size = size;
 	}
 
-	public String getDeptName() {
-		return deptName;
+	public String getCompany_name() {
+		return company_name;
 	}
 
-	public void setDeptName(String deptName) {
-		this.deptName = deptName;
+	public void setCompany_name(String company_name) {
+		this.company_name = company_name;
 	}
 
-	public Double getFileSize() {
-		return fileSize;
+	public String getDept_name() {
+		return dept_name;
+	}
+
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
 	}
 
 	public Long getReportNum() {
 		return reportNum;
 	}
 
+
+	
 }

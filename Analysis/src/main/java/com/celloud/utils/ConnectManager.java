@@ -31,10 +31,10 @@ public class ConnectManager {
 			return true;
 		}
 		logger.info("init SystemContext...");
-		InputStream is = ConnectManager.class.getClassLoader()
-				.getResourceAsStream(PROPERTIES_FILE);
+		InputStream is = ConnectManager.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE);
 		try {
 			prop.load(is);
+			logger.info(prop.values());
 			dataSource = BasicDataSourceFactory.createDataSource(prop);
 		} catch (IOException e) {
 			throw new RuntimeException(PROPERTIES_FILE + " file load error");
@@ -58,6 +58,15 @@ public class ConnectManager {
 			logger.info("获取数据库连接失败！");
 			e.printStackTrace();
 			return null;
+		}
+	}
+
+	public static void close(Connection conn) {
+		try {
+			if (!conn.isClosed())
+				conn.close();
+		} catch (SQLException e) {
+			LogUtil.erro(Logger.getLogger(ConnectManager.class), e);
 		}
 	}
 }

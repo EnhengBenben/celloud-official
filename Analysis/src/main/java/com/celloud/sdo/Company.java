@@ -7,6 +7,7 @@ public class Company implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer company_id;
 	private String company_name;
+	private String belowCompany;
 	private String address;
 	private String tel;
 	/** 用户数量 */
@@ -14,17 +15,106 @@ public class Company implements Serializable {
 	/** 数据量（个数） */
 	private Long fileNum;
 	/** 数据大小(GB) */
-	private Double fileSize;
+	private long size;
 	/** 报告量（个数） */
 	private Long reportNum;
 	/** 所包含用户 */
-	private String userNames;
+	private String username;
 	/** 入驻部门 */
-	private String deptNames;
+	private String dept_name;
 	private Date create_date;
+	private int runNum;
+
+	private String userNames;
+	private String deptNames;
+	private String province;
+	private String yearMonth;
+	private int appNum;
+	private int companyNum;
+	private int num;
 
 	public Integer getCompany_id() {
 		return company_id;
+	}
+
+	public String getBelowCompany() {
+		return belowCompany;
+	}
+
+	public void setBelowCompany(String belowCompany) {
+		this.belowCompany = belowCompany;
+	}
+
+	public String getUserNames() {
+		return userNames;
+	}
+
+	public int getCompanyNum() {
+		return companyNum;
+	}
+
+	public void setCompanyNum(int companyNum) {
+		this.companyNum = companyNum;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public int getAppNum() {
+		return appNum;
+	}
+
+	public void setAppNum(int appNum) {
+		this.appNum = appNum;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
+	public void setUserNames(String userNames) {
+		this.userNames = userNames;
+	}
+
+	public String getYearMonth() {
+		return yearMonth;
+	}
+
+	public void setYearMonth(String yearMonth) {
+		this.yearMonth = yearMonth;
+	}
+
+	public String getDeptNames() {
+		return deptNames;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public void setDeptNames(String deptNames) {
+		this.deptNames = deptNames;
+	}
+
+	public long getSize() {
+		return size;
+	}
+
+	public void setSize(long size) {
+		this.size = size;
+	}
+
+	public int getRunNum() {
+		return runNum;
+	}
+
+	public void setRunNum(int runNum) {
+		this.runNum = runNum;
 	}
 
 	public void setCompany_id(Integer company_id) {
@@ -53,14 +143,6 @@ public class Company implements Serializable {
 
 	public void setUserNum(Integer userNum) {
 		this.userNum = userNum;
-	}
-
-	public Double getFileSize() {
-		return fileSize;
-	}
-
-	public void setFileSize(Double fileSize) {
-		this.fileSize = fileSize;
 	}
 
 	public String getTel() {
@@ -95,19 +177,26 @@ public class Company implements Serializable {
 		this.create_date = create_date;
 	}
 
-	public String getUserNames() {
-		return userNames;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserNames(String userNames) {
-		this.userNames = userNames;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public String getDeptNames() {
-		return deptNames;
+	public String getDept_name() {
+		return dept_name;
 	}
 
-	public void setDeptNames(String deptNames) {
-		this.deptNames = deptNames;
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
+	}
+
+	@Override
+	public String toString() {
+		return "Company [company_id=" + company_id + ", company_name=" + company_name + ", address=" + address
+				+ ", tel=" + tel + ", userNum=" + userNum + ", fileNum=" + fileNum + ", reportNum=" + reportNum
+				+ ", username=" + username + ", dept_name=" + dept_name + ", create_date=" + create_date + "]";
 	}
 }

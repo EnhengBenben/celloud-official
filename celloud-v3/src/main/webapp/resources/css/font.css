@@ -1,0 +1,12 @@
+@CHARSET "UTF-8";
+
+@font-face { 
+  font-family: 方正正中黑简体;
+  src: url('FZZhengheiS-DB-GB.TTF'),
+       url('FZZhengheiS-DB-GB.eot'); /* IE9+ */
+}
+
+@font-face {
+  font-family: 华文新魏;
+  src: url('STXinwei.ttf')
+}

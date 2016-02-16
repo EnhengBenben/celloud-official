@@ -22,18 +22,6 @@ public class ChangeStateServiceImpl {
     private static String celloud = PropertiesUtils.celloud;
 
     /**
-     * 修改任务运行状态并继续执行排队的任务
-     * 
-     * @param taskId
-     * @param appId
-     */
-    public static void changeTaskState(Long taskId, Long appId) {
-        String url = celloud + "task!updateTaskState?task.taskId=" + taskId
-                + "&task.appId=" + appId;
-        remoteRequest(url);
-    }
-
-    /**
      * 修改报告状态
      * 
      * @param appId
@@ -59,11 +47,8 @@ public class ChangeStateServiceImpl {
             if (context != null) {
                 context = Encrypt.encrypt(context);
             }
-            url = celloud + "updateReportByProSoftId.action?projectId="
-                    + projectId + "&softwareIds=" + appId + "&state=" + state
-                    + "&userId=" + userId + "&appResult=" + userId + ","
-                    + appId + "," + appName + "," + projectId + ",1&context="
-                    + context;
+			url = celloud + "api/task/toolsRunOver?userId=" + userId + "&appId=" + appId + "&projectId=" + projectId
+					+ "&period=" + state + "&context=" + context;
         }
         remoteRequest(url);
     }

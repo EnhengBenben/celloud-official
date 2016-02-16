@@ -9,11 +9,6 @@ public class ReportServiceImpl implements ReportService {
 	private ReportDao reportDao;
 
 	@Override
-	public Object getBigUserReportNum(Integer companyId) {
-		return reportDao.getBigUserReportNum(companyId);
-	}
-
-	@Override
 	public Object getBigUserRunNum(Integer companyId) {
 		return reportDao.getBigUserRunNum(companyId);
 	}

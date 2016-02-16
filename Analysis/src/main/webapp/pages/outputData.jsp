@@ -19,9 +19,9 @@
 				<span>用户列表</span>
 			</h3>
 			<div>
-				<a class="btn" onclick="selectAll();">全选</a>
-				<a class="btn" onclick="selectNone();">全不选</a>
-				<a class="btn" onclick="selectOthers();">反选</a>
+				<a class="btn btn-info" onclick="selectAll();">全&nbsp;选</a>
+				<a class="btn btn-info" onclick="selectNone();">取&nbsp;消</a>
+				<a class="btn btn-info" onclick="selectOthers();">反&nbsp;选</a>
 			</div>
 			<div>
 				<table id="userList">
@@ -55,7 +55,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	initUserList();
-	$('input[name=date-picker]').daterangepicker({format: 'YYYY-MM-DD'}).prev().on(ace.click_event, function(){
+	$('input[name=date-picker]').daterangepicker({format: 'YYYY-MM--DD'}).prev().on(ace.click_event, function(){
 		$(this).next().focus();
 	});
 });

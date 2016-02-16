@@ -11,33 +11,104 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
+import com.celloud.sdo.DataFile;
+import com.celloud.sdo.User;
 import com.celloud.service.DataService;
+import com.celloud.utils.EntryUtil;
 import com.celloud.utils.FileTools;
+import com.celloud.utils.LogUtil;
 import com.celloud.utils.PropertiesUtil;
 import com.google.inject.Inject;
 
 @ParentPackage("json-default")
 @Action("data")
-@Results({
-		@Result(name = "allUserDataNum", location = "../../pages/datalist.jsp"),
+@Results({ @Result(name = "allUserDataNum", location = "../../pages/datalist.jsp"),
 		@Result(name = "userMonthData", location = "../../pages/dataUserMonth.jsp"),
 		@Result(name = "usersMonthDataList", location = "../../pages/dataMonthList.jsp"),
 		@Result(name = "userMonthDetail", location = "../../pages/dataUserMonthDetail.jsp"),
 		@Result(name = "userDataInMonth", location = "../../pages/dataAllUserInMonth.jsp"),
-		@Result(name = "success", type = "json", params = { "root", "fileName"})
-		})
+		@Result(name = "bigUserTable", location = "../../pages/bigUserOne.jsp"),
+		@Result(name = "success", type = "json", params = { "root", "fileName" }),
+		@Result(name = "ListMap", type = "json", params = { "root", "list" }),
+		@Result(name = "DataList", type = "json", params = { "root", "dataList" }),
+		@Result(name = "resultMap", type = "json", params = { "root", "resultMap" }) })
+
 public class DataAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
 	Logger log = Logger.getLogger(DataAction.class);
 	@Inject
 	private DataService dataService;
 	private List<Map<String, Object>> list;
+	private Map<String, Object> resultMap;
+	private List<DataFile> dataList;
 	private Integer userId;
 	private String month;
 	private String fileName;
-	private String userIds;//多用户id，如：2,3,4,5
-	private String start;//开始时间
-	private String end;//结束时间
+	private String userIds;// 多用户id，如：2,3,4,5
+	private String start;// 开始时间
+	private String end;// 结束时间
+	private String orderType; // 排序字段 fileNum size
+	private Integer companyId;
+
+	/**
+	 * 总用户数据量－－－ 用户每月数据量 取用户每月上传数据总量(个数)
+	 * 
+	 * @return json
+	 */
+	public String getUserDataJson() {
+		try {
+			LogUtil.info(log, orderType);
+			Integer compId = (Integer) getCid();
+			Integer role = (Integer) super.session.get(User.USER_ROLE);
+			list = dataService.getUserList(compId, role, orderType);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "ListMap";
+	}
+
+	public String getUserMonthDataJson() {
+		Integer compId = (Integer) getCid();
+		dataList = dataService.getUserMonthDataJson(userId, compId);
+		return "DataList";
+	}
+
+	public String getBigUserMonth() {
+		dataList = dataService.getBigUserDataFile(companyId);
+		try {
+			dataList = EntryUtil.toInsert(dataList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			dataList = dataService.getBigUserDataFile(companyId);
+		}
+		return "DataList";
+	}
+
+	public String getBigUserMonthTable() {
+		try {
+			dataList = dataService.getBigUserDataFile(companyId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "bigUserTable";
+	}
+
+	/**
+	 * 查询各大客户可月的数据量
+	 * 
+	 * @return
+	 */
+	public String getAllBigUserMonthData() {
+		try {
+			Integer role = (Integer) super.session.get(User.USER_ROLE);
+			if (role == 2)
+				resultMap = dataService.getAllBigUserMonthData();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		LogUtil.info(log, resultMap);
+		return "resultMap";
+	}
 
 	/**
 	 * 导出数据运行状态
@@ -50,66 +121,96 @@ public class DataAction extends BaseAction {
 		fileName = new Date().getTime() + ".xls";
 		String path = PropertiesUtil.outputPath + fileName;
 		FileTools.createFile(path);
-		StringBuffer sb = new StringBuffer( "user_id\tusername\tdata_key\tfile_name\tcreate_date\tpath\tsoft\n");
+		StringBuffer sb = new StringBuffer(
+				"user_id\tusernamgetUsersMonthDataListe\tdata_key\tfile_name\tcreate_date\tpath\tsoft\n");
 		for (Map<String, Object> data : list) {
-			sb.append(data.get("user_id")) .append("\t") .append(data.get("username")) .append("\t")
-					.append(data.get("data_key")) .append("\t") .append(data.get("file_name")) .append("\t")
-					.append(data.get("create_date").toString().substring(0, 10))
-					.append("\t").append(data.get("path")).append("\t") .append(data.get("soft")).append("\n");
+			sb.append(data.get("user_id")).append("\t").append(data.get("username")).append("\t")
+					.append(data.get("data_key")).append("\t").append(data.get("file_name")).append("\t")
+					.append(data.get("create_date").toString().substring(0, 10)).append("\t").append(data.get("path"))
+					.append("\t").append(data.get("soft")).append("\n");
 		}
 		FileTools.appendWrite(path, sb.toString());
 		return SUCCESS;
 	}
-	
+
 	public void download() {
 		if (fileName != null) {
 			FileTools.fileDownLoad(ServletActionContext.getResponse(), PropertiesUtil.outputPath + fileName);
 		}
 	}
 
+	/**
+	 * 数据统计--总的用户数据量
+	 * 
+	 * @return
+	 */
 	public String getAllUsersDataNum() {
 		Integer compId = (Integer) getCid();
-		log.info("获取大客户" + compId + "所有用户及上传数据总量");
-		if (compId != null) {
-			list = dataService.getUserList(compId);
-		}
+		Integer role = (Integer) super.session.get(User.USER_ROLE);
+		list = dataService.getUserList(compId, role, null);
 		return "allUserDataNum";
 	}
 
+	/**
+	 * 数据统计－－总用户数据－－单个用户每月上传的数据 取单个户每月上传数据量
+	 * 
+	 * @return
+	 */
 	public String getUsersMonthDataList() {
 		Integer compId = (Integer) getCid();
-		log.info("获取大客户" + compId + "所有用户每月上传数据量");
-		if (compId != null) {
-			list = dataService.getUserMonthDataList(compId);
-		}
+		Integer role = (Integer) super.session.get(User.USER_ROLE);
+		dataList = dataService.getUserMonthDataList(compId, role);
 		return "usersMonthDataList";
+	}
+
+	/**
+	 * 大客户所有用户每月上传的数据数量
+	 * 
+	 * @return json
+	 */
+	public String getUsersMonthData() {
+		Integer compId = (Integer) getCid();
+		log.info(compId + "用户每月上传数据量");
+		Integer role = (Integer) super.session.get(User.USER_ROLE);
+		dataList = dataService.getUserMonthDataList(compId, role);
+		return "DataList";
 	}
 
 	public String getUserMonthData() {
 		Integer compId = (Integer) getCid();
-		log.info("获取大客户" + compId + "用户" + userId + "每月上传数据量");
-		if (compId != null) {
-			list = dataService.getUserMonthData(userId, compId);
-		}
+		dataList = dataService.getUserMonthData(userId, compId);
 		return "userMonthData";
 	}
 
 	public String getUserMonthDetail() {
 		Integer compId = (Integer) getCid();
-		log.info("获取大客户" + compId + "用户" + userId + "在" + month + "上传数据量");
-		if (compId != null) {
-			list = dataService.getMonthDataList(userId, month, compId);
-		}
+		list = dataService.getMonthDataList(userId, month, compId);
 		return "userMonthDetail";
 	}
 
+	/**
+	 * 数据统计－－数据量月统计－－每个月各医院上传数据量
+	 * 
+	 * @return
+	 */
 	public String getUserDataInMonth() {
 		Integer compId = (Integer) getCid();
-		log.info("获取大客户" + compId + "在" + month + "上传数据量");
-		if (compId != null) {
-			list = dataService.getAllUserDataInMonth(compId, month);
-		}
+		list = dataService.getAllUserDataInMonth(compId, month);
 		return "userDataInMonth";
+	}
+
+	public String getUserDataInMonthJson() {
+		Integer compId = (Integer) getCid();
+		list = dataService.getAllUserDataInMonth(compId, month);
+		return "ListMap";
+	}
+
+	public Integer getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Integer companyId) {
+		this.companyId = companyId;
 	}
 
 	public List<Map<String, Object>> getList() {
@@ -140,6 +241,14 @@ public class DataAction extends BaseAction {
 		return fileName;
 	}
 
+	public Map<String, Object> getResultMap() {
+		return resultMap;
+	}
+
+	public void setResultMap(Map<String, Object> resultMap) {
+		this.resultMap = resultMap;
+	}
+
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
@@ -166,6 +275,22 @@ public class DataAction extends BaseAction {
 
 	public void setEnd(String end) {
 		this.end = end;
+	}
+
+	public List<DataFile> getDataList() {
+		return dataList;
+	}
+
+	public void setDataList(List<DataFile> dataList) {
+		this.dataList = dataList;
+	}
+
+	public String getOrderType() {
+		return orderType;
+	}
+
+	public void setOrderType(String orderType) {
+		this.orderType = orderType;
 	}
 
 }

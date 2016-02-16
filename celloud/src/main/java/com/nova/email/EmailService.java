@@ -47,7 +47,7 @@ public class EmailService {
      *            ：附件地址
      */
     public static void addAttachemnt(String attachPath) {
-	vfile.add(attachPath);
+        vfile.add(attachPath);
     }
 
     /**
@@ -58,21 +58,21 @@ public class EmailService {
      * @3.增加了一个默认标题
      */
     static {
-	if (username != null && password != null && smtp != null) {
-	    isChecked = true;
-	    System.out.println("属性校验通过");
-	} else {
-	    isChecked = false;
-	    System.out.println("属性校验失败");
-	}
-	if (isChecked) {
-	    Properties props = new Properties();// 获取系统环境
-	    Authenticator auth = new EmailAuthenticator(username, password);// 进行邮件服务用户认证
-	    props.put("mail.smtp.host", smtp);
-	    props.put("mail.smtp.auth", "true");
-	    // 设置session,和邮件服务器进行通讯
-	    session = Session.getDefaultInstance(props, auth);
-	}
+        if (username != null && password != null && smtp != null) {
+            isChecked = true;
+            System.out.println("属性校验通过");
+        } else {
+            isChecked = false;
+            System.out.println("属性校验失败");
+        }
+        if (isChecked) {
+            Properties props = new Properties();// 获取系统环境
+            Authenticator auth = new EmailAuthenticator(username, password);// 进行邮件服务用户认证
+            props.put("mail.smtp.host", smtp);
+            props.put("mail.smtp.auth", "true");
+            // 设置session,和邮件服务器进行通讯
+            session = Session.getDefaultInstance(props, auth);
+        }
     }
 
     // TODO 要优化
@@ -86,47 +86,46 @@ public class EmailService {
      *            ：邮件内容
      */
     public static void send(String emailTo, String msg) {
-	if (isChecked) {
-	    message = new MimeMessage(session);
+        if (isChecked) {
+            message = new MimeMessage(session);
 
-	    try {
-		// 设置邮件发送者的地址
-		InternetAddress from = new InternetAddress(username);
-		if (emailName != null) {
-		    from.setPersonal(MimeUtility.encodeText(emailName));
-		}
-		message.setFrom(from);
-	    } catch (AddressException e) {
-		System.err.println("设置发信地址失败！" + e);
-	    } catch (UnsupportedEncodingException e) {
-		System.err.println("不支持编码异常" + e);
-	    } catch (MessagingException e) {
-		System.err.println("设置发信地址失败！" + e);
-	    }
+            try {
+                // 设置邮件发送者的地址
+                InternetAddress from = new InternetAddress(username);
+                if (emailName != null) {
+                    from.setPersonal(MimeUtility.encodeText(emailName));
+                }
+                message.setFrom(from);
+            } catch (AddressException e) {
+                System.err.println("设置发信地址失败！" + e);
+            } catch (UnsupportedEncodingException e) {
+                System.err.println("不支持编码异常" + e);
+            } catch (MessagingException e) {
+                System.err.println("设置发信地址失败！" + e);
+            }
 
-	    try {
-		// 设置默认邮件主题
-		if (defaultTitle != null) {
-		    message.setSubject(defaultTitle);
-		}
-	    } catch (MessagingException e) {
-		System.err.println("设置默认主题失败！" + e);
-	    }
-	    try {
-		message.setText(msg);// 设置邮件内容
-		message.addRecipient(Message.RecipientType.TO,
-			new InternetAddress(emailTo));// 设置邮件接收者的地址
-		try {
-		    // 设置邮件发送时期
-		    message.setSentDate(new Date());
-		} catch (MessagingException e) {
-		    System.err.println("设置邮件发送时期失败！" + e);
-		}
-		Transport.send(message);
-	    } catch (MessagingException e) {
-		System.err.println("邮件发送失败！" + e);
-	    }
-	}
+            try {
+                // 设置默认邮件主题
+                if (defaultTitle != null) {
+                    message.setSubject(defaultTitle);
+                }
+            } catch (MessagingException e) {
+                System.err.println("设置默认主题失败！" + e);
+            }
+            try {
+                message.setText(msg);// 设置邮件内容
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailTo));// 设置邮件接收者的地址
+                try {
+                    // 设置邮件发送时期
+                    message.setSentDate(new Date());
+                } catch (MessagingException e) {
+                    System.err.println("设置邮件发送时期失败！" + e);
+                }
+                Transport.send(message);
+            } catch (MessagingException e) {
+                System.err.println("邮件发送失败！" + e);
+            }
+        }
     }
 
     /**
@@ -140,48 +139,47 @@ public class EmailService {
      *            ：邮件标题
      */
     public static void send(String emailTo, String msg, String title) {
-	if (isChecked) {
-	    message = new MimeMessage(session);
+        if (isChecked) {
+            message = new MimeMessage(session);
 
-	    try {
-		// 设置邮件发送者的地址
-		InternetAddress from = new InternetAddress(username);
-		if (emailName != null) {
-		    from.setPersonal(MimeUtility.encodeText(emailName));
-		}
-		message.setFrom(from);
-	    } catch (AddressException e) {
-		System.err.println("设置发信地址失败！" + e);
-	    } catch (UnsupportedEncodingException e) {
-		System.err.println("不支持编码异常" + e);
-	    } catch (MessagingException e) {
-		System.err.println("设置发信地址失败！" + e);
-	    }
+            try {
+                // 设置邮件发送者的地址
+                InternetAddress from = new InternetAddress(username);
+                if (emailName != null) {
+                    from.setPersonal(MimeUtility.encodeText(emailName));
+                }
+                message.setFrom(from);
+            } catch (AddressException e) {
+                System.err.println("设置发信地址失败！" + e);
+            } catch (UnsupportedEncodingException e) {
+                System.err.println("不支持编码异常" + e);
+            } catch (MessagingException e) {
+                System.err.println("设置发信地址失败！" + e);
+            }
 
-	    try {
-		// 设置默认邮件主题
-		if (defaultTitle != null) {
-		    message.setSubject(defaultTitle);
-		}
-	    } catch (MessagingException e) {
-		System.err.println("设置默认主题失败！" + e);
-	    }
-	    try {
-		message.setSubject(title);// 设置邮件主题
-		message.setText(msg);// 设置邮件内容
-		message.addRecipient(Message.RecipientType.TO,
-			new InternetAddress(emailTo));
-		try {
-		    // 设置邮件发送时期
-		    message.setSentDate(new Date());
-		} catch (MessagingException e) {
-		    System.err.println("设置邮件发送时期失败！" + e);
-		}
-		Transport.send(message);
-	    } catch (MessagingException e) {
-		System.err.println("邮件发送失败！" + e);
-	    }
-	}
+            try {
+                // 设置默认邮件主题
+                if (defaultTitle != null) {
+                    message.setSubject(defaultTitle);
+                }
+            } catch (MessagingException e) {
+                System.err.println("设置默认主题失败！" + e);
+            }
+            try {
+                message.setSubject(title);// 设置邮件主题
+                message.setText(msg);// 设置邮件内容
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailTo));
+                try {
+                    // 设置邮件发送时期
+                    message.setSentDate(new Date());
+                } catch (MessagingException e) {
+                    System.err.println("设置邮件发送时期失败！" + e);
+                }
+                Transport.send(message);
+            } catch (MessagingException e) {
+                System.err.println("邮件发送失败！" + e);
+            }
+        }
     }
 
     /**
@@ -196,63 +194,61 @@ public class EmailService {
      * @param flag
      *            ：true 为 html 风格，false 为 text 文本
      */
-    public static void send(String emailTo, String msg, String title,
-	    boolean flag) {
-	if (isChecked) {
-	    message = new MimeMessage(session);
+    public static void send(String emailTo, String msg, String title, boolean flag) {
+        if (isChecked) {
+            message = new MimeMessage(session);
 
-	    try {
-		// 设置邮件发送者的地址
-		InternetAddress from = new InternetAddress(username);
-		if (emailName != null) {
-		    from.setPersonal(MimeUtility.encodeText(emailName));
-		}
-		message.setFrom(from);
-	    } catch (AddressException e) {
-		System.err.println("设置发信地址失败！" + e);
-	    } catch (UnsupportedEncodingException e) {
-		System.err.println("不支持编码异常" + e);
-	    } catch (MessagingException e) {
-		System.err.println("设置发信地址失败！" + e);
-	    }
+            try {
+                // 设置邮件发送者的地址
+                InternetAddress from = new InternetAddress(username);
+                if (emailName != null) {
+                    from.setPersonal(MimeUtility.encodeText(emailName));
+                }
+                message.setFrom(from);
+            } catch (AddressException e) {
+                System.err.println("设置发信地址失败！" + e);
+            } catch (UnsupportedEncodingException e) {
+                System.err.println("不支持编码异常" + e);
+            } catch (MessagingException e) {
+                System.err.println("设置发信地址失败！" + e);
+            }
 
-	    try {
-		// 设置默认邮件主题
-		if (defaultTitle != null) {
-		    message.setSubject(defaultTitle);
-		}
-	    } catch (MessagingException e) {
-		System.err.println("设置默认主题失败！" + e);
-	    }
-	    if (flag) {
-		try {
-		    message.setRecipient(Message.RecipientType.TO,
-			    new InternetAddress(emailTo));
-		    message.setSubject(MimeUtility.encodeText(title));
-		    // 构建邮件内容对象
-		    Multipart mm = new MimeMultipart();
-		    // 构建一个消息内容块
-		    BodyPart mbpFile = new MimeBodyPart();
-		    mbpFile.setContent(msg, "text/html;charset=UTF-8");
-		    mm.addBodyPart(mbpFile);
-		    message.setContent(mm);
-		    message.saveChanges();
-		    try {
-			// 设置邮件发送时期
-			message.setSentDate(new Date());
-		    } catch (MessagingException e) {
-			System.err.println("设置邮件发送时期失败！" + e);
-		    }
-		    Transport.send(message);
-		} catch (MessagingException e) {
-		    System.err.println("发送邮件失败！" + e);
-		} catch (UnsupportedEncodingException e) {
-		    System.err.println("发送邮件失败！" + e);
-		}
-	    } else {
-		send(emailTo, msg, title);
-	    }
-	}
+            try {
+                // 设置默认邮件主题
+                if (defaultTitle != null) {
+                    message.setSubject(defaultTitle);
+                }
+            } catch (MessagingException e) {
+                System.err.println("设置默认主题失败！" + e);
+            }
+            if (flag) {
+                try {
+                    message.setRecipient(Message.RecipientType.TO, new InternetAddress(emailTo));
+                    message.setSubject(MimeUtility.encodeText(title));
+                    // 构建邮件内容对象
+                    Multipart mm = new MimeMultipart();
+                    // 构建一个消息内容块
+                    BodyPart mbpFile = new MimeBodyPart();
+                    mbpFile.setContent(msg, "text/html;charset=UTF-8");
+                    mm.addBodyPart(mbpFile);
+                    message.setContent(mm);
+                    message.saveChanges();
+                    try {
+                        // 设置邮件发送时期
+                        message.setSentDate(new Date());
+                    } catch (MessagingException e) {
+                        System.err.println("设置邮件发送时期失败！" + e);
+                    }
+                    Transport.send(message);
+                } catch (MessagingException e) {
+                    System.err.println("发送邮件失败！" + e);
+                } catch (UnsupportedEncodingException e) {
+                    System.err.println("发送邮件失败！" + e);
+                }
+            } else {
+                send(emailTo, msg, title);
+            }
+        }
     }
 
     /**
@@ -266,58 +262,57 @@ public class EmailService {
      *            ：true 为 html 风格，false 为 text 文本
      */
     public static void send(String emailTo, String msg, boolean flag) {
-	if (isChecked) {
-	    message = new MimeMessage(session);
+        if (isChecked) {
+            message = new MimeMessage(session);
 
-	    try {
-		// 设置邮件发送者的地址
-		InternetAddress from = new InternetAddress(username);
-		if (emailName != null) {
-		    from.setPersonal(MimeUtility.encodeText(emailName));
-		}
-		message.setFrom(from);
-	    } catch (AddressException e) {
-		System.err.println("设置发信地址失败！" + e);
-	    } catch (UnsupportedEncodingException e) {
-		System.err.println("不支持编码异常" + e);
-	    } catch (MessagingException e) {
-		System.err.println("设置发信地址失败！" + e);
-	    }
+            try {
+                // 设置邮件发送者的地址
+                InternetAddress from = new InternetAddress(username);
+                if (emailName != null) {
+                    from.setPersonal(MimeUtility.encodeText(emailName));
+                }
+                message.setFrom(from);
+            } catch (AddressException e) {
+                System.err.println("设置发信地址失败！" + e);
+            } catch (UnsupportedEncodingException e) {
+                System.err.println("不支持编码异常" + e);
+            } catch (MessagingException e) {
+                System.err.println("设置发信地址失败！" + e);
+            }
 
-	    try {
-		// 设置默认邮件主题
-		if (defaultTitle != null) {
-		    message.setSubject(defaultTitle);
-		}
-	    } catch (MessagingException e) {
-		System.err.println("设置默认主题失败！" + e);
-	    }
-	    if (flag) {
-		try {
-		    message.setRecipient(Message.RecipientType.TO,
-			    new InternetAddress(emailTo));
-		    // 构建邮件内容对象
-		    Multipart mm = new MimeMultipart();
-		    // 构建一个消息内容块
-		    BodyPart mbpFile = new MimeBodyPart();
-		    mbpFile.setContent(msg, "text/html;charset=UTF-8");
-		    mm.addBodyPart(mbpFile);
-		    message.setContent(mm);
-		    message.saveChanges();
-		    try {
-			// 设置邮件发送时期
-			message.setSentDate(new Date());
-		    } catch (MessagingException e) {
-			System.err.println("设置邮件发送时期失败！" + e);
-		    }
-		    Transport.send(message);
-		} catch (MessagingException e) {
-		    System.err.println("发送邮件失败！" + e);
-		}
-	    } else {
-		send(emailTo, msg);
-	    }
-	}
+            try {
+                // 设置默认邮件主题
+                if (defaultTitle != null) {
+                    message.setSubject(defaultTitle);
+                }
+            } catch (MessagingException e) {
+                System.err.println("设置默认主题失败！" + e);
+            }
+            if (flag) {
+                try {
+                    message.setRecipient(Message.RecipientType.TO, new InternetAddress(emailTo));
+                    // 构建邮件内容对象
+                    Multipart mm = new MimeMultipart();
+                    // 构建一个消息内容块
+                    BodyPart mbpFile = new MimeBodyPart();
+                    mbpFile.setContent(msg, "text/html;charset=UTF-8");
+                    mm.addBodyPart(mbpFile);
+                    message.setContent(mm);
+                    message.saveChanges();
+                    try {
+                        // 设置邮件发送时期
+                        message.setSentDate(new Date());
+                    } catch (MessagingException e) {
+                        System.err.println("设置邮件发送时期失败！" + e);
+                    }
+                    Transport.send(message);
+                } catch (MessagingException e) {
+                    System.err.println("发送邮件失败！" + e);
+                }
+            } else {
+                send(emailTo, msg);
+            }
+        }
     }
 
     /**
@@ -331,69 +326,67 @@ public class EmailService {
      *            ：要作为附件的文件地址，Vector<String>类型
      */
     public static void send(String emailTo, String msg, Vector<String> file) {
-	if (isChecked) {
-	    message = new MimeMessage(session);
+        if (isChecked) {
+            message = new MimeMessage(session);
 
-	    try {
-		// 设置邮件发送者的地址
-		InternetAddress from = new InternetAddress(username);
-		if (emailName != null) {
-		    from.setPersonal(MimeUtility.encodeText(emailName));
-		}
-		message.setFrom(from);
-	    } catch (AddressException e) {
-		System.err.println("设置发信地址失败！" + e);
-	    } catch (UnsupportedEncodingException e) {
-		System.err.println("不支持编码异常" + e);
-	    } catch (MessagingException e) {
-		System.err.println("设置发信地址失败！" + e);
-	    }
+            try {
+                // 设置邮件发送者的地址
+                InternetAddress from = new InternetAddress(username);
+                if (emailName != null) {
+                    from.setPersonal(MimeUtility.encodeText(emailName));
+                }
+                message.setFrom(from);
+            } catch (AddressException e) {
+                System.err.println("设置发信地址失败！" + e);
+            } catch (UnsupportedEncodingException e) {
+                System.err.println("不支持编码异常" + e);
+            } catch (MessagingException e) {
+                System.err.println("设置发信地址失败！" + e);
+            }
 
-	    try {
-		// 设置默认邮件主题
-		if (defaultTitle != null) {
-		    message.setSubject(defaultTitle);
-		}
-	    } catch (MessagingException e) {
-		System.err.println("设置默认主题失败！" + e);
-	    }
-	    try {
-		// 设置邮件接收的地址
-		message.addRecipient(Message.RecipientType.TO,
-			new InternetAddress(emailTo));
-		// 构造Multipart
-		Multipart mp = new MimeMultipart();
-		// 向Multipart添加正文
-		MimeBodyPart content = new MimeBodyPart();
-		content.setContent(msg, "text/html;charset=gb2312");
-		mp.addBodyPart(content);
-		// 向Multipart添加附件
-		Enumeration<String> efile = file.elements();
-		while (efile.hasMoreElements()) {
-		    MimeBodyPart fattach = new MimeBodyPart();
-		    String fName = efile.nextElement();
-		    FileDataSource fds = new FileDataSource(fName);
-		    fattach.setDataHandler(new DataHandler(fds));
-		    fattach.setFileName(MimeUtility.encodeWord(fds.getName(),
-			    "GB2312", null));
-		    mp.addBodyPart(fattach);
-		}
-		file.removeAllElements();
-		message.setContent(mp);
-		message.saveChanges();
-		// 发送邮件
-		try {
-		    // 设置邮件发送时期
-		    message.setSentDate(new Date());
-		} catch (MessagingException e) {
-		    System.err.println("设置邮件发送时期失败！" + e);
-		}
-		Transport.send(message);
-	    } catch (MessagingException e) {
-		System.err.println("发送邮件失败！" + e);
-	    } catch (UnsupportedEncodingException e) {
-		System.err.println("发送邮件失败！" + e);
-	    }
-	}
+            try {
+                // 设置默认邮件主题
+                if (defaultTitle != null) {
+                    message.setSubject(defaultTitle);
+                }
+            } catch (MessagingException e) {
+                System.err.println("设置默认主题失败！" + e);
+            }
+            try {
+                // 设置邮件接收的地址
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailTo));
+                // 构造Multipart
+                Multipart mp = new MimeMultipart();
+                // 向Multipart添加正文
+                MimeBodyPart content = new MimeBodyPart();
+                content.setContent(msg, "text/html;charset=gb2312");
+                mp.addBodyPart(content);
+                // 向Multipart添加附件
+                Enumeration<String> efile = file.elements();
+                while (efile.hasMoreElements()) {
+                    MimeBodyPart fattach = new MimeBodyPart();
+                    String fName = efile.nextElement();
+                    FileDataSource fds = new FileDataSource(fName);
+                    fattach.setDataHandler(new DataHandler(fds));
+                    fattach.setFileName(MimeUtility.encodeWord(fds.getName(), "GB2312", null));
+                    mp.addBodyPart(fattach);
+                }
+                file.removeAllElements();
+                message.setContent(mp);
+                message.saveChanges();
+                // 发送邮件
+                try {
+                    // 设置邮件发送时期
+                    message.setSentDate(new Date());
+                } catch (MessagingException e) {
+                    System.err.println("设置邮件发送时期失败！" + e);
+                }
+                Transport.send(message);
+            } catch (MessagingException e) {
+                System.err.println("发送邮件失败！" + e);
+            } catch (UnsupportedEncodingException e) {
+                System.err.println("发送邮件失败！" + e);
+            }
+        }
     }
 }

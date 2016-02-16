@@ -55,10 +55,6 @@ public class PropertiesUtils {
     public static String PGS;
     public static String img;
 
-    /**
-     * HBV_SNP2
-     */
-    public static String HBV_SNP2;
     public static String gDNA;
     /**
      * 上传文件的存放位置
@@ -85,30 +81,19 @@ public class PropertiesUtils {
     public static String miRNA_MG;
     public static String EGFR;
     public static String TB;
-    public static String MalBac;
-    public static String gDNA_MR;
-    public static String MDA_MR;
     public static String KRAS;
-    public static String MDA_HR_perl;
     public static String Translate;
     public static String _16S;
-    public static String SurePlex;
     public static String NIPT;
     public static String gDNA_MR_v1;
     public static String MDA_MR_v1;
     public static String MDA_HR_v1;
     public static String SurePlex_v1;
     public static String MalBac_v1;
-    public static String Sureplex_HR;
     public static String tbinh;
     public static String DPD;
     public static String BRAF;
     public static String UGT;
-    public static String CMP;
-    public static String CMP199;
-    public static String GDD;
-    public static String split;
-    public static String MIB;
     public static String report_dburl;
     public static String report_dbname;
     static {
@@ -147,35 +132,23 @@ public class PropertiesUtils {
         DeNovo_Diff = pro.getProperty("DeNovo_Diff");
         HCV = pro.getProperty("HCV");
         PGS = pro.getProperty("MDA");
-        HBV_SNP2 = pro.getProperty("HBV_SNP2");
         gDNA = pro.getProperty("gDNA");
         img = pro.getProperty("img");
         EGFR = pro.getProperty("EGFR");
-        MalBac = pro.getProperty("MalBac");
-        gDNA_MR = pro.getProperty("gDNA_MR");
-        MDA_MR = pro.getProperty("MDA_MR");
         KRAS = pro.getProperty("KRAS");
         TB = pro.getProperty("TB");
-        MDA_HR_perl = pro.getProperty("MDA_HR");
         Translate = pro.getProperty("Translate");
         _16S = pro.getProperty("_16S");
-        SurePlex = pro.getProperty("SurePlex");
         NIPT = pro.getProperty("NIPT");
         gDNA_MR_v1 = pro.getProperty("gDNA_MR_v1");
         MDA_MR_v1 = pro.getProperty("MDA_MR_v1");
         MDA_HR_v1 = pro.getProperty("MDA_HR_v1");
         SurePlex_v1 = pro.getProperty("SurePlex_v1");
         MalBac_v1 = pro.getProperty("MalBac_v1");
-        Sureplex_HR = pro.getProperty("Sureplex_HR");
         tbinh = pro.getProperty("TBINH");
         DPD = pro.getProperty("DPD");
         BRAF = pro.getProperty("BRAF");
         UGT = pro.getProperty("UGT");
-        CMP = pro.getProperty("CMP");
-        CMP199 = pro.getProperty("CMP199");
-        GDD = pro.getProperty("GDD");
-        split = pro.getProperty("split");
-        MIB = pro.getProperty("MIB");
         report_dburl = pro.getProperty("report_dburl");
         report_dbname = pro.getProperty("report_dbname");
     }

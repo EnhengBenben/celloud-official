@@ -1,19 +1,21 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div>
+	<input type="hidden" value="<s:property value="resultMap.projectId"/>" id="_projectId">
 	<div class="m-file">
-		<div class="row">
-			<div class="col-lg-9 force-break">
-				文件名称：
-				<span class="file-name"><s:property value="resultMap.datakey"/>（<s:property value="resultMap.fileName"/>）</span>
-			</div>
-			<div class="col-lg-3">
-				<div class="toolbar" style="position: inherit;right: auto;">
-					<a href='javascript:toPrintHBV("<s:property value="resultMap.pagePath"/>")' class="btn btn-default"><i class="i-print"></i>打印报告</a>
-					<a href="javascript:void(0)" class="btn btn-default" onclick="change()" id="change" style="display: none;">显示更多</a>
-				</div>
-			</div>
-		</div>
+	   <dl class="dl-horizontal datareport-title">
+          <dt>项目名称：</dt>
+          <dd>${resultMap['projectName'] }</dd>
+          <dt>应用名称：</dt>
+          <dd>${resultMap['appName'] }</dd>
+          <dt>文件名称：</dt>
+          <dd><s:property value="resultMap.fileName"/>(<s:property value="resultMap.datakey"/>)</dd>
+        </dl>
+        <div class="toolbar">
+            <a class="btn btn-celloud-success btn-flat" href='javascript:toPrintHBV("<s:property value="resultMap.pagePath"/>")'><i class="fa fa-print"></i>打印报告</a>
+            <a class="btn btn-warning btn-flat" style="display: none;" href="javascript:void(0)" onclick="change()"><i class="fa fa-folder-open-o"></i>显示更多</a>
+        </div>
 	</div>
 	<div id="cfda">
 		<!--检测结果-->
@@ -86,8 +88,8 @@
 </div>
 <script>
 $(document).ready(function(){
-	$("#cfda").find("thead").html("<tr><th>File Name<br>(文件名)</th><th style='min-width: 60px;'>Subtype<br>(亚型)</th><th style='min-width: 90px;'>Subject Name<br>(参考序列名)</th><th style='min-width: 60px;'>Identity<br>(相似度)</th><th style='min-width: 170px;'>Overlap/total<br>(比对上的长度/比对的总长度)</th><th style='min-width: 70px;'>E_value<br>(期望值)</th><th style='min-width: 50px;'>Score<br>(比分)</th></tr>");
-	$("#nomal").find("thead").html("<tr><th>File Name<br>(文件名)</th><th style='min-width: 60px;'>Subtype<br>(亚型)</th><th style='min-width: 90px;'>Subject Name<br>(参考序列名)</th><th style='min-width: 60px;'>Identity<br>(相似度)</th><th style='min-width: 170px;'>Overlap/total<br>(比对上的长度/比对的总长度)</th><th style='min-width: 70px;'>E_value<br>(期望值)</th><th style='min-width: 50px;'>Score<br>(比分)</th></tr>");
+	$("#cfda").find("thead").html("<tr><th>File Name<br>(文件名)</th><th style='min-width: 70px;'>Subtype<br>(亚型)</th><th style='min-width: 100px;'>Subject Name<br>(参考序列名)</th><th style='min-width: 80px;'>Identity<br>(相似度)</th><th style='min-width: 200px;'>Overlap/total<br>(比对上的长度/比对的总长度)</th><th style='min-width: 70px;'>E_value<br>(期望值)</th><th style='min-width: 50px;'>Score<br>(比分)</th></tr>");
+	$("#nomal").find("thead").html("<tr><th>File Name<br>(文件名)</th><th style='min-width: 70px;'>Subtype<br>(亚型)</th><th style='min-width: 100px;'>Subject Name<br>(参考序列名)</th><th style='min-width: 80px;'>Identity<br>(相似度)</th><th style='min-width: 200px;'>Overlap/total<br>(比对上的长度/比对的总长度)</th><th style='min-width: 70px;'>E_value<br>(期望值)</th><th style='min-width: 50px;'>Score<br>(比分)</th></tr>");
 	$("#cfda").find("td").each(function(i){
 		$(this).css("word-break","break-all");
 		$(this).css("word-wrap","break-word");
