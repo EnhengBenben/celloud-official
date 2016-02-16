@@ -67,7 +67,7 @@ $.reportChar.draw = {
           },
           legend: {
               orient : 'vertical',
-              x : document.getElementById(id).offsetWidth / 2 + 3,
+              x : document.getElementById(id).offsetWidth / 2-10,
               y : 30,
               itemGap:6,
               data: $.reportChar.draw.circularGraphDataOptions.legendData //['','','']要与series data的name对应
@@ -91,7 +91,7 @@ $.reportChar.draw = {
       var num_value = value!= ''?parseInt(value):0;
       _xariaData.push(key);
       _seriesData.push(num_value);
-      }
+    }
     option = {
         title : {
             x: 'center',
@@ -177,6 +177,7 @@ $.reportChar.circularGraphSeriesData=function(list){
         type:'pie',
         clockWise:false,
         radius: [radius_inner, radius_outer],
+        center: ['45%', '50%'],
         itemStyle : o.dataStyle,
         data:[
             {
