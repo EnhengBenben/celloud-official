@@ -47,11 +47,12 @@ public class CompanyAction {
     private CompanyService companyService;
     @RequestMapping("company/companyMain")
     public ModelAndView getCompanyByPage(@RequestParam(defaultValue = "1") int currentPage,
-             @RequestParam(defaultValue = "10") int size){
+             @RequestParam(defaultValue = "10") int size,@RequestParam("keyword") String keyword){
          ModelAndView mv=new ModelAndView("company/company_main");
          Page page = new Page(currentPage, size);
-         PageList<Company> pageList=companyService.getCompanyByPage(page);
+         PageList<Company> pageList=companyService.getCompanyByPage(page,keyword);
          mv.addObject("pageList",pageList);
+         mv.addObject("keyword",keyword);
          return mv;
      }
     

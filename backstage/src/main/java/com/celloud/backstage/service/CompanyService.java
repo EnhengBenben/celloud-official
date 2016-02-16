@@ -15,7 +15,7 @@ import com.celloud.backstage.page.PageList;
  */
 public interface CompanyService {
     
-    public PageList<Company> getCompanyByPage(Page page);
+    public PageList<Company> getCompanyByPage(Page page,String keyword);
     
     public int updateCompany(Company company);
     

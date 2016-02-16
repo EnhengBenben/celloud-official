@@ -5,11 +5,14 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">公司管理</h3>
-        <!-- <div class="panel-options">
-            <a href="#">
-                <button class="btn btn-danger">下线应用</button>
-            </a>
-        </div> -->
+        <div class="panel-options">
+        <form class="form-inline">
+		  <div class="form-group">
+		   <input type="text" class="form-control" data-rule-required="true" id="keyword" name="keyword" value="${keyword }" placeholder="医院中文名称">
+		  </div>
+		  <a class="btn btn-warning" href="javascript:company.search()" style="margin-bottom:0">检索</a>
+		</form>
+        </div>
     </div>
     <div class="panel-body">
         <table id="example-2" class="table table-bordered table-striped" cellspacing="0" width="100%">

@@ -8,6 +8,7 @@ var company=(function(company){
 	var self=company||{};
 	var uploader = null;
 	self.currentPage = 1;
+	self.keyword=null;
 	self.initUploader = function(){
 		if(uploader){
 			uploader.destroy();
@@ -52,8 +53,13 @@ var company=(function(company){
 	    });
 		uploader.init();
 	}
+	self.search=function(){
+		self.keyword=$("#keyword").val();
+		self.getCompany(1);
+	}
 	self.toCompanyMain=function(){
-		$.post("company/companyMain",function(responseText){
+		self.keyword=null;
+		$.post("company/companyMain",{keyword:self.keyword},function(responseText){
 			$("#main-content").html(responseText);
 			$("#main-menu li").removeClass("active").removeClass("opened");
 			$("#company-menu").addClass("active");
@@ -61,7 +67,7 @@ var company=(function(company){
 	}
 	self.getCompany=function(currentPage){
 		self.currentPage=currentPage;
-		$.post("company/companyMain",{currentPage:currentPage},function(responseText){
+		$.post("company/companyMain",{currentPage:currentPage,keyword:self.keyword},function(responseText){
 			$("#main-content").html(responseText);
 		});
 	};
