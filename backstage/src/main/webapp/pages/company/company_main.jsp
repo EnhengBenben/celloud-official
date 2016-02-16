@@ -10,7 +10,7 @@
 		  <div class="form-group">
 		   <input type="text" class="form-control" data-rule-required="true" id="keyword" name="keyword" value="${keyword }" placeholder="医院中文名称">
 		  </div>
-		  <a class="btn btn-warning" href="javascript:company.search()" style="margin-bottom:0">检索</a>
+		  <button type="button" class="btn btn-warning" onclick="javascript:company.search()" style="margin-bottom:0">检索</button>
 		</form>
         </div>
     </div>

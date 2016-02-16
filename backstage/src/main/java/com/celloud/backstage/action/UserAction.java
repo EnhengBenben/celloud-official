@@ -46,11 +46,16 @@ public class UserAction {
     
     @RequestMapping("user/userList")
     public ModelAndView getUserByPage(@RequestParam(defaultValue = "1") int currentPage,
-             @RequestParam(defaultValue = "10") int size){
+             @RequestParam(defaultValue = "10") int size,@RequestParam("searchFiled") String searchFiled,@RequestParam("keyword") String keyword){
          ModelAndView mv=new ModelAndView("user/user_main");
          Page page = new Page(currentPage, size);
-         PageList<User> pageList=userService.getUserByPage(page);
+         if(!"username".equals(searchFiled)&&!"email".equals(searchFiled)){
+             searchFiled="username";
+         }
+         PageList<User> pageList=userService.getUserByPage(page,searchFiled,keyword);
          mv.addObject("pageList",pageList);
+         mv.addObject("searchFiled",searchFiled);
+         mv.addObject("keyword",keyword);
          return mv;
      }
     @RequestMapping("user/toSendEmail")

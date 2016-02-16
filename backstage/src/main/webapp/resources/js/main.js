@@ -228,7 +228,13 @@ var dept=(function(dept){
 var user=(function(user){
 	var self=user||{};
 	self.currentPage = 1;
-	
+	self.searchFiled="username";
+	self.keyword=null;
+	self.search=function(){
+		self.searchFiled=$("#searchFiled").val();
+		self.keyword=$("#keyword").val();
+		self.getUserList(1);
+	}
 	self.checkEmail=function(email){
 		if(email){
 			if(!email.match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)){
@@ -287,7 +293,7 @@ var user=(function(user){
 		}
 	};
 	self.toUserMain=function(){
-		$.post("user/userList",function(responseText){
+		$.post("user/userList",{searchFiled:self.searchFiled,keyword:self.keyword},function(responseText){
 			$("#main-content").html(responseText);
 			$("#main-menu li").removeClass("active").removeClass("opened");
 			$("#user-menu").addClass("active");
@@ -295,7 +301,7 @@ var user=(function(user){
 	}
 	
 	self.getUserList=function(currentPage){
-		$.post("user/userList",{currentPage:currentPage},function(responseText){
+		$.post("user/userList",{currentPage:currentPage,searchFiled:self.searchFiled,keyword:self.keyword},function(responseText){
 			$("#main-content").html(responseText);
 		});
 	}

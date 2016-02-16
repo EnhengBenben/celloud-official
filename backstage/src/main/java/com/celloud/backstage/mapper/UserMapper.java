@@ -59,7 +59,7 @@ public interface UserMapper {
      * @author han
      * @date 2016年1月27日 下午4:15:48
      */
-    public List<User> getUserByPage(@Param("state") Integer state,@Param("role") Integer role,Page page);
+    public List<User> getUserByPage(@Param("state") Integer state,@Param("role") Integer role,Page page,@Param("searchField")String searchField,@Param("keyword")String keyword);
     /**
      * 添加用户
      *
