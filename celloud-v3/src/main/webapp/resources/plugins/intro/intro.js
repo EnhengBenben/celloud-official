@@ -957,10 +957,10 @@
 
         _exitIntro.call(self, self._targetElement);
 	  	  if(intro != null){
-			  intro.exit();
-			  intro = null;
-		  }
-	  	$(".introjs-overlay").remove();
+  			  intro.exit();
+  			  intro = null;
+  		  }
+	  	  $(".introjs-overlay").remove();
       };
 
       buttonsLayer.appendChild(skipTooltipButton);

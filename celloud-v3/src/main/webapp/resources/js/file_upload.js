@@ -61,8 +61,6 @@ var datafileUpload=(function(datafileUpload){
 		var uploader = $("#fileUploadDiv").pluploadQueue();
 		uploader.bind("Init", function(){
 			if(intro != null){
-				$(".addfile").attr("disabled",true);
-				$("._start_custom").attr("disabled",true);
 				intro.exit();
 				intro = null;
 				intro = introJs();
@@ -72,16 +70,12 @@ var datafileUpload=(function(datafileUpload){
 				intro.setOption("showButtons", false);
 				intro.start();
 				intro.goToStep(4);
-				$("#toaddfilediv").bind("click",function(){
+				$("#toaddfilediv").one("click",function(){
 					intro.setOption("tooltipPosition", "bottom");
 					intro.goToStep(5);
-          $(".addfile").removeAttr("disabled");
-					$("#toaddfilediv").unbind("click");
 				});
-				$("#tobeginfilediv").bind("click",function(){
+				$("#tobeginfilediv").one("click",function(){
           intro.goToStep(6);
-          $("._start_custom").removeAttr("disabled");
-          $("#tobeginfilediv").unbind("click");
         });
 			}
 		});

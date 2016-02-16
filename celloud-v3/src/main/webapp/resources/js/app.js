@@ -130,7 +130,9 @@ var appStore=(function(appStore){
 				intro.setOption('showButtons', false);
 				intro.start();
 				intro.goToStep(2);
-				$("#manageAppBtns .btn").attr("disabled",true);
+				
+				$("#manageAppBtns .btn").removeAttr("href");
+				$("#manageAppBtns .btn").removeAttr("onclick");
 				$("#manageAppBtns").bind("click",function(){
 					if(hasNavi == 1 && intro != null){
 						$("#toUploadMenu").attr("data-step",3);
