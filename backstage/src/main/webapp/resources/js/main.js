@@ -338,3 +338,39 @@ var user=(function(user){
 	}
 	return self;
 })(user);
+
+var notice=(function(notice){
+	var self=notice||{};
+	
+	self.toNoticeMain=function(){
+		$.post("notice/noticeList",function(responseText){
+			$("#main-content").html(responseText);
+			$("#main-menu li").removeClass("active").removeClass("opened");
+			$("#notice-menu").addClass("active");
+		});
+	}
+	self.getNoticeList=function(currentPage){
+		$.post("notice/noticeList",{currentPage:currentPage},function(responseText){
+			$("#main-content").html(responseText);
+		});
+	}
+	
+	self.addNotice=function(){
+		$.post("notice/noticeEdit",function(responseText){
+			$("#notice-editModal .modal-content").html(responseText);
+			$("#notice-editModal .modal-content .panel-title").html("新增公告");
+			$("#notice-editModal").modal("show");
+		});
+			
+	}
+	
+	self.editNotice=function(noticeId){
+		$.post("notice/noticeEdit",{noticeId:noticeId},function(responseText){
+			$("#notice-editModal .modal-content").html(responseText);
+			self.initUploader();
+			$("#notice-editModal").modal("show");
+		});
+			
+	}
+	return self;
+})(notice);

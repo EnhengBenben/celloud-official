@@ -99,8 +99,8 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#">
+                    <li id="notice-menu">
+                        <a href="javascript:notice.toNoticeMain();">
                             <i class="linecons-params"></i>
                             <span class="title">公告管理</span>
                         </a>

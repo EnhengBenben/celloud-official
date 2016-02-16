@@ -101,15 +101,6 @@
     </set>
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.celloud.backstage.model.Notice" >
-    update tb_notice
-    set notice_title = #{noticeTitle,jdbcType=VARCHAR},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      expire_date = #{expireDate,jdbcType=TIMESTAMP},
-      state = #{state,jdbcType=INTEGER},
-      notice_context = #{noticeContext,jdbcType=LONGVARCHAR}
-    where notice_id = #{noticeId,jdbcType=INTEGER}
-  </update>
   <update id="updateByPrimaryKey" parameterType="com.celloud.backstage.model.Notice" >
     update tb_notice
     set notice_title = #{noticeTitle,jdbcType=VARCHAR},
@@ -118,4 +109,33 @@
       state = #{state,jdbcType=INTEGER}
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </update>
+  <update id="updateNotice" parameterType="com.celloud.backstage.model.Notice" >
+    update tb_notice
+    set notice_title = #{noticeTitle,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      expire_date = #{expireDate,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER},
+      notice_context = #{noticeContext,jdbcType=LONGVARCHAR}
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </update>
+  <insert id="addNotice" parameterType="com.celloud.backstage.model.Notice" >
+    insert into tb_notice (notice_title, create_date, 
+      expire_date, state, notice_context
+      )
+    values (#{noticeTitle,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{expireDate,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{noticeContext,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <select id="getNoticeByPage" resultMap="ResultMapWithBLOBs">
+    select * from tb_notice where state=#{state } order by create_date desc
+  </select>
+  
+  <select id="getNoticeById" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_notice
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </select>
 </mapper>
