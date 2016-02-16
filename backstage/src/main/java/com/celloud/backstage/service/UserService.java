@@ -134,7 +134,7 @@ public interface UserService {
      * @author han
      * @date 2016年1月27日 下午4:13:47
      */
-    public PageList<User> getUserByPage(Page page);
+    public PageList<User> getUserByPage(Page page,String searchField,String keyword);
     
     /**
      * 根据邮箱和验证码来判断请求是否有效（用于注册）

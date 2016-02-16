@@ -5,9 +5,19 @@
 <div class="panel-heading">
     <h3 class="panel-title">用户管理</h3>
     <div class="panel-options">
-         <a href="javascript:user.toSendEmail();">
-             <button class="btn btn-danger">发送邮件</button>
-         </a>
+        <form class="form-inline">
+         <div class="form-group">
+          <input type="text" class="form-control" data-rule-required="true" id="keyword" name="keyword" value="${keyword }" placeholder="请输入关键字">
+         </div>
+         <div class="form-group">
+            <select class="form-control" id="searchFiled">
+			  <option value="username" >用户名</option>
+			  <option value="email" <c:if test="${searchFiled=='email' }">selected</c:if>>邮箱</option>
+			</select>
+		 </div>
+         <button class="btn btn-warning" type="button" onclick="javascript:user.search()" style="margin-bottom:0;">检索</button>
+         <button class="btn btn-danger" type="button" onclick="user.toSendEmail();" style="margin-bottom:0;">发送邮件</button>
+       </form>
      </div>
 </div>
 <div class="panel-body">

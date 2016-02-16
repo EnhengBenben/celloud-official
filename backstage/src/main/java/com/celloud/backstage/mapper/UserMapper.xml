@@ -319,7 +319,11 @@
         select
         <include refid="Base_Column_List" />
         from tb_user
-        where state=#{state } and role=#{role } order by create_date desc
+        where state=#{state } and role=#{role }
+        <if test="keyword!=null and keyword!=''">
+            and ${searchField} like '%${keyword }%'
+        </if>
+        order by create_date desc
     </select>
     <insert id="addUser" useGeneratedKeys="true" keyProperty="userId" parameterType="com.celloud.backstage.model.User" >
         insert into tb_user (
