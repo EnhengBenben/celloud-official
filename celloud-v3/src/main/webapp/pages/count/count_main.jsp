@@ -30,7 +30,7 @@
      	  </c:if>
     	  <c:if test="${companyId==33 }">
     	    <div class="info">
-	    	  <p>目前只提供 CMP流程的统计；查看页面中不提供序列详细信息的直接展示，用户可以通过“下载Excel”获得全部序列信息。</p>
+	    	  <p>查看页面中不提供序列详细信息的直接展示，用户可以通过“下载Excel”获得全部序列信息。</p>
 	  		</div>
 	  		<ul>
 		      <li><a href="javascript:void(0)" id="_down">下载 Excel</a></li>
