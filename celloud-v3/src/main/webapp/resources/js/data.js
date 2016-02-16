@@ -462,8 +462,9 @@ function _init_data(){
       intro.setOption('showButtons', false);
       intro.start();
       intro.goToStep(2);
-      $("#run-app-btn").attr("disabled",true);
-      $("#manage-data-h3").bind('click',function(){
+      $("#manage-data-btns a").attr("disabled",true);
+      $("#manage-data-btns a").unbind("click");
+      $("#manage-data-btns").on("click",function(){
         if(intro != null){
           intro.exit();
           intro = null;
@@ -473,8 +474,7 @@ function _init_data(){
           intro.setOption('showButtons', false);
           intro.start();
           intro.goToStep(8);
-          $("#run-app-btn").removeAttr("disabled");
-          $("#manage-data-h3").unbind('click');
+          $("#manage-data-btns").unbind("click");
         }
       });
     }
@@ -515,6 +515,7 @@ function _init_data(){
     if(_checked){
   	  if($.dataManager.options.checkedIds.length>=num){
   	    $.dataManager.showTipModal("最多允许同时操作"+num+"条数据！");
+  	    $(obj).prop("checked",false);
   	  }else{
   	    $.dataManager.checkData.isCheck(_dataId);
   	  }

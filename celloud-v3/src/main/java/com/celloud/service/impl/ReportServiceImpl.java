@@ -75,7 +75,7 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public Integer countReport(Integer userId) {
         return reportMapper.countReport(userId, DataState.ACTIVE,
-                ReportType.PROJECT,ReportPeriod.COMPLETE);
+                ReportType.PROJECT, ReportPeriod.COMPLETE);
     }
 
     @Override
@@ -350,10 +350,10 @@ public class ReportServiceImpl implements ReportService {
                 try {
                     br = new BufferedReader(new FileReader(file));
                 } catch (FileNotFoundException e) {
-                    log.error(fileName+"文件不存在");
+                    log.error(fileName + "文件不存在");
                 }
-                if(br==null)
-                	continue;
+                if (br == null)
+                    continue;
                 String line = null;
                 try {
                     while ((line = br.readLine()) != null) {
@@ -579,14 +579,19 @@ public class ReportServiceImpl implements ReportService {
         result.put("data", cmpList);
         FileTools.createFile(path);
         FileTools.appendWrite(path,
-                "数据编号\t原始文件名1\t原始文件名2\t共获得有效片段\t可用片段\t平均测序深度\t基因检测结果\n");
+                "数据编号\t原始文件名1\t原始文件名2\t应用名称\t共获得有效片段\t可用片段\t平均测序深度\t基因检测结果\n");
         for (CmpReport cmp : cmpList) {
             StringBuffer line = new StringBuffer(cmp.getDataKey()).append("\t");
             List<DataFile> dataList = cmp.getData();
+            if (dataList == null) {
+                continue;
+            }
             for (DataFile d : dataList) {
                 line.append(d.getFileName()).append("(").append(d.getDataKey())
                         .append(")").append("\t");
             }
+            line.append(cmp.getAppName() == null ? "" : cmp.getAppName())
+                    .append("\t");
             line.append(cmp.getAllFragment() == null ? ""
                     : cmp.getAllFragment().replaceAll("\n", "")).append("\t");
             line.append(cmp.getUsableFragment() == null ? ""
@@ -596,8 +601,11 @@ public class ReportServiceImpl implements ReportService {
                     : cmp.getAvgCoverage().replaceAll("\n", "")).append("\t");
             if (cmp.getCmpGeneResult() != null) {
                 for (GeneDetectionResult gene : cmp.getCmpGeneResult()) {
-                    line.append(gene.getGeneName()).append(":")
-                            .append(gene.getSequencingDepth()).append(";");
+                    if (gene.getKnownMSNum() != null
+                            && Integer.valueOf(gene.getKnownMSNum()) > 0) {
+                        line.append(gene.getGeneName()).append(":")
+                                .append(gene.getKnownMSNum()).append(";");
+                    }
                 }
             }
             line.append("\n");

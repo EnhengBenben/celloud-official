@@ -151,7 +151,7 @@
 	<script src="//cdn.bootcss.com/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-	<script src="<%=request.getContextPath()%>/plugins/intro/intro.js?version=1.0"></script>
+	<script src="<%=request.getContextPath()%>/plugins/intro/intro.js?version=1.1"></script>
 	<script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
 	<!-- TODO 数据参数同比有用，待统一为echarts -->
 	<script src="//cdn.bootcss.com/highcharts/4.2.1/highcharts.js"></script>

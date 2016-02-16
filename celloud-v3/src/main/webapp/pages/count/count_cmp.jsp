@@ -6,6 +6,7 @@
       <th style="min-width:100px;">数据编号</th>
       <th style="min-width:160px">原始文件名1</th>
       <th style="min-width:160px">原始文件名2</th>
+      <th style="min-width:70px">应用名称</th>
       <th style="min-width:90px">共获得有效片段</th>
       <th style="min-width:60px">可用片段</th>
       <th style="min-width:80px">平均测序深度</th>
@@ -16,21 +17,22 @@
   <c:choose>
   	<c:when test="${map.data.size()>0}">
   	  <c:forEach items="${map.data }" var="cmp" varStatus="cmpSta">
-	    <tr>
-	      <td align="center">${cmp.dataKey }</td>
-	      <td align="center">${cmp.data[0].fileName }(${cmp.data[0].dataKey })</td>
-	      <td align="center">${cmp.data[1].fileName }(${cmp.data[1].dataKey })</td>
-	      <td align="center">${cmp.allFragment }</td>
-	      <td align="center">${cmp.usableFragment }</td>
-	      <td align="center">${cmp.avgCoverage }</td>
-	      <td align="center">
-	        <a href="javascript:showGeneResult('<c:forEach items="${cmp.cmpGeneResult}" var="gene">
-	          <c:if test="${gene.knownMSNum>0}">
-	          	${gene.geneName }:${gene.knownMSNum }&nbsp;&nbsp;&nbsp;
-	          </c:if>
-			</c:forEach>')">查看结果</a>
-	      </td>
-	    </tr>
+  	    <c:if test="${not empty cmp.data}">
+  	      <tr>
+	          <td align="center">${cmp.dataKey }</td>
+	          <td align="center">${cmp.data[0].fileName }(${cmp.data[0].dataKey })</td>
+	          <td align="center">${cmp.data[1].fileName }(${cmp.data[1].dataKey })</td>
+	          <td align="center">${cmp.appName }</td>
+	          <td align="center">${cmp.allFragment }</td>
+	          <td align="center">${cmp.usableFragment }</td>
+	          <td align="center">${cmp.avgCoverage }</td>
+	          <td align="center">
+	            <a href="javascript:showGeneResult('<c:forEach items="${cmp.cmpGeneResult}" var="gene">
+	              <c:if test="${gene.knownMSNum>0}">${gene.geneName }:${gene.knownMSNum }&nbsp;&nbsp;&nbsp;</c:if>
+	            </c:forEach>')">查看结果</a>
+	          </td>
+	        </tr>
+  	    </c:if>
   	  </c:forEach>
   	</c:when>
   	<c:otherwise>

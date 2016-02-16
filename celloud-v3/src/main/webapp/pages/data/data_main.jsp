@@ -25,11 +25,11 @@
 <!--       </div> -->
       <div class="box box-success">
         <div class="box-header">
-          <h3 id="manage-data-h3" class="box-title manage-btn" data-step="2" data-position="bottom" data-intro="" data-img="managerdata.png">
+          <div id="manage-data-btns" class="box-title manage-btn" data-step="2" data-position="bottom" data-intro="" data-img="managerdata.png">
           	<a id="run-app-btn" class="btn btn-success btn-flat" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-play"></i> 运行</a>
             <a id="del-data-btn" class="btn btn-warning btn-flat disabled" disabled><i class="fa fa-university"></i> 删除</a>
             <a id="manage-data-btn" class="btn btn-info btn-flat disabled" disabled><i class="fa fa-pencil-square-o"></i> 编辑</a>
-          </h3>
+          </div>
           <div id="data-spin-div" class="box-tools col-xs-7"></div>
           <div class="box-tools data-select">
 	        <div class="form-cel input-group data-search">
@@ -192,4 +192,4 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- /All Modal-->
-<script src="<%=request.getContextPath()%>/js/data.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/data.js?version=1.0" type="text/javascript"></script>
