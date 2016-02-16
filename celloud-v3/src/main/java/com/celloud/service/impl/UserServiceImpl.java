@@ -73,6 +73,7 @@ public class UserServiceImpl implements UserService {
         temp.setEmail(user.getEmail());
         temp.setUserId(ConstantsData.getLoginUserId());
         temp.setIcon(user.getIcon());
+        temp.setNavigation(user.getNavigation());
         return userMapper.updateByPrimaryKeySelective(temp);
     }
 

@@ -917,8 +917,7 @@
       var prevTooltipButton = document.createElement('a');
 
       prevTooltipButton.onclick = function() {
-    	  $.get("user!updateNotify",{"notify":0},function(result){
-    	  });
+    	  $.get("user/updateInfo",{"navigation":0});
     	  if(intro != null){
     		  intro.exit();
     		  intro = null;
