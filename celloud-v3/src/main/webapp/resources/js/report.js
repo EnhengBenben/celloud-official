@@ -344,11 +344,11 @@ $.ajaxSetup ({
 			                if(i==1){
 			                    $(this).addClass("none");
 			                }
-			                if(j>0&&(i==2||i==3)){
-								var val = $(this).html();
-								if(!isNaN(val)){
-									$(this).html($.format(val, 3, ','));
-								}
+			                if(j>0&&(i==4||i==3)){
+        								var val = $(this).html();
+        								if(!isNaN(val)&&val>999){
+        									$(this).html($.format(val, 3, ','));
+        								}
 			                }
 			            }
 			            if(appId=="80"){
