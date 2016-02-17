@@ -58,7 +58,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task updateToDone(Integer appId, Integer projectId, String dataKey,
+    public synchronized Task updateToDone(Integer appId, Integer projectId, String dataKey,
             String dataKeys, String context) {
         Task task = taskMapper.findTaskByProData(projectId, dataKey);
         task.setEndDate(new Date());
