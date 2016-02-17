@@ -341,7 +341,7 @@ var user=(function(user){
 
 var notice=(function(notice){
 	var self=notice||{};
-	
+	self.currentPage = 1;
 	self.toNoticeMain=function(){
 		$.post("notice/noticeList",function(responseText){
 			$("#main-content").html(responseText);
@@ -350,6 +350,7 @@ var notice=(function(notice){
 		});
 	}
 	self.getNoticeList=function(currentPage){
+		self.currentPage=currentPage;
 		$.post("notice/noticeList",{currentPage:currentPage},function(responseText){
 			$("#main-content").html(responseText);
 		});
@@ -374,3 +375,31 @@ var notice=(function(notice){
 	}
 	return self;
 })(notice);
+
+var client=(function(client){
+	var self=client||{};
+	self.currentPage = 1;
+	self.toClientMain=function(){
+		$.post("client/clientList",function(responseText){
+			$("#main-content").html(responseText);
+			$("#main-menu li").removeClass("active").removeClass("opened");
+			$("#client-menu").addClass("active");
+		});
+	}
+	
+	self.getClientList=function(currentPage){
+		self.currentPage=currentPage;
+		$.post("client/clientList",{currentPage:currentPage},function(responseText){
+			$("#main-content").html(responseText);
+		});
+	}
+	
+	self.addClient=function(){
+		$.post("client/clientEdit",function(responseText){
+			$("#client-editModal .modal-content").html(responseText);
+			$("#client-editModal").modal("show");
+		});
+			
+	}
+	return self;
+})(client);

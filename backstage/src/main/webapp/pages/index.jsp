@@ -129,8 +129,8 @@
                             <span class="title">邮件群发</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
+                    <li id="client-menu">
+                        <a href="javascript:client.toClientMain();">
                             <i class="linecons-cloud"></i>
                             <span class="title">客户端</span>
                         </a>
