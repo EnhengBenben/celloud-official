@@ -11,6 +11,7 @@
 html,
 body {
   min-height: 100%;
+  min-width: 1200px;
   color: #5a5a5a;
   line-height: 1.5em;
 }
@@ -20,7 +21,7 @@ body {
   font-family: Arial,'Hiragino Sans GB','Microsoft YaHei',微软雅黑, STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif;
   font-weight: 400;
   font-size:14px;
-  overflow-x: hidden;
+  overflow-x: auto;
   overflow-y: auto;
 }
 input,button,select,textarea{outline:none}/*取消chrome下input和textarea的聚焦边框：*/
@@ -2850,4 +2851,11 @@ table.text-center th {
 .report-search-div ._datered,
 .report-search-div ._appred{
   color: #CC0000;
+}
+.report-data-content{
+  min-width: 970px;
+}
+.report-data-titlelist{
+  float: right;
+  margin-right: -15px;
 }

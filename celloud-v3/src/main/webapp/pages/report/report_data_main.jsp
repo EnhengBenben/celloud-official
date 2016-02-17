@@ -19,12 +19,12 @@
 <section class="content">
   <div class="row">
     <div class="col-xs-10">
-      <div class="box box-success color-palette-box" id="reportResultDiv">
+      <div class="box box-success color-palette-box report-data-content" id="reportResultDiv">
       	
       </div>
     </div>
     <div class="col-xs-2">
-     <div class="btn-group-vertical width-percent-100" id="fileListUl">
+     <div class="btn-group-vertical width-percent-100 report-data-titlelist" id="fileListUl">
       </div>
     </div>
   </div>
