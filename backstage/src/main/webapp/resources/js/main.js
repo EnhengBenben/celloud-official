@@ -367,7 +367,7 @@ var notice=(function(notice){
 	self.editNotice=function(noticeId){
 		$.post("notice/noticeEdit",{noticeId:noticeId},function(responseText){
 			$("#notice-editModal .modal-content").html(responseText);
-			self.initUploader();
+			CKEDITOR.instances.noticeContext.setData($("#noticeContext").val());
 			$("#notice-editModal").modal("show");
 		});
 			
