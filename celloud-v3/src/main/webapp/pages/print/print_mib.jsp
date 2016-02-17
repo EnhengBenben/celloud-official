@@ -55,7 +55,7 @@
             <thead>
                <tr>
                  <th style="line-height: 14px;vertical-align: middle;text-align: center;">种<br><span style="font-size:12px;color: #9A9999;">Species</span></th>
-                 <th style="line-height: 14px;vertical-align: middle;text-align: center;min-width:80px;">属<br><span style="font-size:12px;color: #9A9999;">Genus</span></th>
+                 <th style="line-height: 14px;vertical-align: middle;text-align: center;min-width:92px;">属<br><span style="font-size:12px;color: #9A9999;">Genus</span></th>
                  <th style="line-height: 14px;vertical-align: middle;text-align: center;min-width:54px;">GI号<br><span style="font-size:12px;color: #9A9999;">GI</span></th>
                  <th style="line-height: 14px;vertical-align: middle;text-align: center;min-width:45px;">覆盖长度%<br><span style="font-size:12px;color: #9A9999;">%Coverage</span></th>
                  <th style="line-height: 14px;vertical-align: middle;text-align: center;min-width:30px;">种比对上的序列数<br><span style="font-size:12px;color: #9A9999;">Reads_hit</span></th>
