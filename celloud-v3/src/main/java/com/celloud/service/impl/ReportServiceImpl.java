@@ -621,6 +621,12 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
+    public void updateMIBFilling(MIB mib) {
+        reportDao.editData(MIB.class, mib.getId(), "baseInfo",
+                mib.getBaseInfo());
+    }
+
+    @Override
     public Split getSplitReport(String dataKey, Integer projectId,
             Integer appId) {
         return reportDao.getDataReport(Split.class, dataKey, projectId, appId);
@@ -753,4 +759,5 @@ public class ReportServiceImpl implements ReportService {
         report.setEndDate(new Date());
         return reportMapper.updateReport(report);
     }
+
 }

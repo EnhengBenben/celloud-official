@@ -121,6 +121,15 @@ public interface ReportService {
     public MIB getMIBReport(String dataKey, Integer projectId, Integer appId);
 
     /**
+     * 修改MIB报告用户填写部分
+     * 
+     * @param mib
+     * @author leamo
+     * @date 2016年2月18日 上午11:05:37
+     */
+    public void updateMIBFilling(MIB mib);
+
+    /**
      * 获取 Split 报告
      * 
      * @param dataKey

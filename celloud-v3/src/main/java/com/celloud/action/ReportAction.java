@@ -541,6 +541,20 @@ public class ReportAction {
     }
 
     /**
+     * 修改
+     * 
+     * @param cmpFill
+     * @param cmpId
+     * @author leamo
+     * @date 2016年2月18日 上午10:54:53
+     */
+    @RequestMapping("updateMIBFilling")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void updateMIBFilling(MIB mib) {
+        reportService.updateMIBFilling(mib);
+    }
+
+    /**
      * 获取HBV的数据报告
      * 
      * @param dataKey

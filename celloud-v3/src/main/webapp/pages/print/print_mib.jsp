@@ -19,16 +19,19 @@
     </div>
     <h4>1.&nbsp;&nbsp; 基本信息</h4>
     <div class="section1">
-    <ul>
-        <li>编号：<span><input type="text" name="" value=""></span></li>
-        <li>样本类型：<span><input type="text" name="" value=""></span></li>
-        <li>姓名：<span><input type="text" name="" value=""></span></li>
-        <li>申请日期：<span><input type="text" name=""></span></li>
-        <li>性别： <span id="_sex"><input type="radio" name="sex" value="男">男<input type="radio" name="sex" value="女" >女</span></li>
-        <li>接收日期：<span><input type="text" name=""></span></li>
-        <li>年龄：<span><input type="text" id="patientAge" name="" value=""></span>岁</li>
-        <li>样本状态：<span><input type="text" name=""></span></li>
-    </ul>
+    <form id="mib-form">
+        <input type="hidden" name="id" value="${mib.id }">
+        <ul>
+            <li>编号：<span><input type="text" name="baseInfo['number']" value="${mib.baseInfo.number }"></span></li>
+            <li>样本类型：<span><input type="text" name="baseInfo['sampleType']" value="${mib.baseInfo.sampleType }"></span></li>
+            <li>姓名：<span><input type="text" name="baseInfo['name']" value="${mib.baseInfo.name }"></span></li>
+            <li>申请日期：<span><input type="text" name="baseInfo['applicationDate']" value="${mib.baseInfo.applicationDate }"></span></li>
+            <li>性别： <span id="_sex"><input type="radio" name="baseInfo['sex']" value="男" <c:if test="${mib.baseInfo.sex=='男' }">checked="checked"</c:if> >男<input type="radio" name="baseInfo['sex']" value="女" <c:if test="${mib.baseInfo.sex=='女' }">checked="checked"</c:if> >女</span></li>
+            <li>接收日期：<span><input type="text" name="baseInfo['receivedDate']" value="${mib.baseInfo.receivedDate }"></span></li>
+            <li>年龄：<span><input type="text" id="patientAge" name="baseInfo['age']" value="${mib.baseInfo.age }"></span>岁</li>
+            <li>样本状态：<span><input type="text" name="baseInfo['status']" value="${mib.baseInfo.status }"></span></li>
+        </ul>
+    </form>
     </div>
     <h4>2.&nbsp;&nbsp;数据统计</h4>
     <div class="info">
@@ -237,14 +240,15 @@ $(function(){
     }
 });
 function preview(obj){
-    var inputVal;
+    $.post("../report/updateMIBFilling",$("#mib-form").serialize());
     $("body").find("section").each(function(){
         $(this).removeClass("border1");
     });
     $("body").find("input[type='text']").each(function(){
-        inputVal = $(this).val();
-        classname = $(this).attr("class");
-        $(this).parent().html("<input type='hidden' value='"+classname+"'><span name='print'>"+inputVal+"</span>");
+        var inputVal = $(this).val();
+        var classname = $(this).attr("class");
+        var name = $(this).attr("name");
+        $(this).parent().html("<input type='hidden' name='"+name+"' value='"+classname+"'><span name='print'>"+inputVal+"</span>");
     });
     var sex = $("input[type='radio']:checked").val();
     $("#_sex").html(sex);
@@ -255,11 +259,12 @@ function preview(obj){
         $(this).addClass("border1");
     });
     $("body").find("span[name='print']").each(function(){
-        inputVal = $(this).html();
-        classname = $(this).prev().val();
-        $(this).parent().html("<input type='text' class='"+classname+"' value='"+inputVal+"'>");
+        var inputVal = $(this).html();
+        var classname = $(this).prev().val();
+        var name = $(this).prev().attr("name");
+        $(this).parent().html("<input type='text' name='"+name+"' class='"+classname+"' value='"+inputVal+"'>");
     });
-    $("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
+    $("#_sex").html("<input type='radio' name='baseInfo.sex' value='男'>男<input type='radio' name='baseInfo.sex' value='女'>女");
     $("input[type='radio'][value="+sex+"]").prop("checked",true); 
 }
 </script>
