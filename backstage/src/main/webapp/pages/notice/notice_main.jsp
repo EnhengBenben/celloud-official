@@ -23,7 +23,7 @@
                 <c:forEach items="${pageList.datas }" var="notice">
                     <tr>
                     <td>
-                        ${notice.noticeTitle }
+                        <a href="javascript:void(0);" data-toggle="tooltip" data-placement="right">${notice.noticeTitle }<div class="hide">${notice.noticeContext }</div></a>
                     </td>
                     <td><fmt:formatDate value="${notice.createDate }" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                     <td>
@@ -104,4 +104,12 @@
     </div>
   </div>
 </div>
-
+<script type="text/javascript">
+$(function () {
+  $('[data-toggle="tooltip"]').each(function(i,dom){
+	  var title=$(dom).children("div").html();
+	  $(dom).tooltip({html : true,title:title});
+  });
+  
+});
+</script>

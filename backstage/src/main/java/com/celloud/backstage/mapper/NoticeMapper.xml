@@ -122,7 +122,7 @@
     insert into tb_notice (notice_title, create_date, 
       expire_date, state, notice_context
       )
-    values (#{noticeTitle,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+    values (#{noticeTitle,jdbcType=VARCHAR}, now(), 
       #{expireDate,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{noticeContext,jdbcType=LONGVARCHAR}
       )
   </insert>

@@ -41,6 +41,7 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public int addNotice(Notice notice) {
         if(notice!=null){
+            notice.setState(DataState.ACTIVE);
             return noticeMapper.addNotice(notice);
         }
         return 0;

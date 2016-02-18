@@ -7,7 +7,9 @@ public class Client {
 
     private String version;
 
-    private String name;
+    private String nameX86;
+
+    private String nameX64;
 
     private Date createDate;
 
@@ -27,12 +29,20 @@ public class Client {
         this.version = version == null ? null : version.trim();
     }
 
-    public String getName() {
-        return name;
+    public String getNameX86() {
+        return nameX86;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setNameX86(String nameX86) {
+        this.nameX86 = nameX86 == null ? null : nameX86.trim();
+    }
+
+    public String getNameX64() {
+        return nameX64;
+    }
+
+    public void setNameX64(String nameX64) {
+        this.nameX64 = nameX64 == null ? null : nameX64.trim();
     }
 
     public Date getCreateDate() {
