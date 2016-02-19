@@ -24,10 +24,10 @@
 	</div>
 	<div class="titletype">
 		<div class="titleinfo">
-			<span>姓</span><span style="margin-left:40px">名：</span><span><input type="text" class="input200" value="${cmpReport.cmpFilling.patientName }"></span>
+			<span>姓</span><span style="margin-left:40px">名：</span><span><input id="patientName1" type="text" class="input200" value="${cmpReport.cmpFilling.patientName }"></span>
 		</div>
 		<div class="titleinfo">
-			<span>取样日期：</span><span><input type="text" class="input200" value="${cmpReport.cmpFilling.samplingDate }" ></span>
+			<span>送检日期：</span><span><input id="samplingDate1" type="text" class="input200" value="${cmpReport.cmpFilling.samplingDate }" ></span>
 		</div>
 		<div class="titleinfo">
 			<span>报告日期：</span><span><input type="text" class="input200" value="${cmpReport.cmpFilling.reportDate }"></span>
@@ -43,7 +43,7 @@
     	<li>母亲姓名：<span><input type="text" name="motherName" value="${cmpReport.cmpFilling.motherName }"></span></li>
     	<li>病历号：<span><input type="text" name="medicalRecord" value="${cmpReport.cmpFilling.medicalRecord }"></span></li>
     	<li style="width:90%">项目编号：<span><input type="text" name="projectNo" value="${cmpReport.cmpFilling.projectNo }"></span></li>
-        <li>新生儿姓名：<span><input type="text" name="patientName" value="${cmpReport.cmpFilling.patientName }"></span></li>
+        <li>新生儿姓名：<span><input id="patientName" type="text" name="patientName" value="${cmpReport.cmpFilling.patientName }"></span></li>
         <li>出生日期：<span><input type="text" name="birthday" value="${cmpReport.cmpFilling.birthday }"></span></li>
         <li>受检者性别： <span id="_sex"><input type="radio" name="patientSex" value="男" <c:if test="${cmpReport.cmpFilling.patientSex eq '男' }">checked="checked"</c:if>>男<input type="radio" name="patientSex" value="女" <c:if test="${cmpReport.cmpFilling.patientSex eq '女' }">checked="checked"</c:if>>女</span></li>
         <li>指导医生：<span><input type="text" name="doctorName" value="${cmpReport.cmpFilling.doctorName }"></span></li>
@@ -53,7 +53,7 @@
         <li style="width:90%">检测方法：<span>外显子捕获，illumina高通量测序平台，SNPs/微插入/微缺失检测</span></li>
         <li>分子生物实验操作：<span><input type="text" class="input100" name="molecularBioExperOper" value="${cmpReport.cmpFilling.molecularBioExperOper }"></span></li>
         <li>基因分析：<span><input type="text" name="geneAnalysis" value="${cmpReport.cmpFilling.geneAnalysis }"></span></li>
-        <li>送检日期：<span><input type="text" name="samplingDate" value="${cmpReport.cmpFilling.samplingDate }"></span></li>
+        <li>送检日期：<span><input id="samplingDate" type="text" name="samplingDate" value="${cmpReport.cmpFilling.samplingDate }"></span></li>
         <li>分析日期：<span><input type="text" name="analysisDate" value="${cmpReport.cmpFilling.analysisDate }"></span></li>
         <li>报告日期：<span><input type="text" name="reportDate" value="${cmpReport.cmpFilling.reportDate }"></span></li>
     </ul>
@@ -342,51 +342,73 @@
     </table>
   </section>
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
-  <script>
-  	function preview(obj){
-  		var inputVal;
-  		var textareaVal;
-  		var classname;
-  		$("body").find("section").each(function(){
-  			$(this).removeClass("border1");
-  		});
-  		$("body").find("input[type='text']").each(function(){
-  			inputVal = $(this).val();
-  			classname = $(this).attr("class");
-  			$(this).parent().html("<input type='hidden' value='"+classname+"'><span name='print'>"+inputVal+"</span>");
-  		});
-  		$("#section2 textarea").each(function(){
-  			textareaVal = $(this).val();
-  			$(this).parent().html("<p name='section4p'>"+textareaVal+"</p>");
-  		});
-  		var sex = $("input[type='radio']:checked").val();
-  		$("#_sex").html(sex);
-  		$("#change").hide();
-  		if($("#noMutation").prop("checked")){
-  			$("#noDrug").css("display","");
-  		}
-  		$("a").css("display","none");
-  		window.print();
-  		$("#change").show();
-  		$("body").find("section").each(function(){
-  			$(this).addClass("border1");
-  		});
-  		$("body").find("span[name='print']").each(function(){
-  			inputVal = $(this).html();
-  			classname = $(this).prev().val();
-  			$(this).parent().html("<input type='text' class='"+classname+"' value='"+inputVal+"'>");
-  		});
-  		$("body").find("p[name='section4p']").each(function(){
-  			inputVal = $(this).html();
-  			$(this).parent().html("<textarea class='form-control' rows='15' cols='100'>"+inputVal+"</textarea>");
-  		});
-  		$("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
-  		$("input[type='radio'][value="+sex+"]").prop("checked",true); 
-  		$("a").css("display","");
-  	}
-  	function save(){
-  		$.post("../report/updateYANDAFilling",$("#gdd-form").serialize());
-  	}
-  </script>
+<script>
+  $(document).ready(function(){
+      $("#patientName").on("change",function(){
+        unityPatientName($(this).val());
+      });
+      $("#patientName1").on("change",function(){
+          unityPatientName($(this).val());
+      });
+      $("#samplingDate").on("change",function(){
+        unitySamplingDate($(this).val());
+      });
+      $("#samplingDate1").on("change",function(){
+          unitySamplingDate($(this).val());
+      });
+  });
+  function unityPatientName(name){
+    $("#patientName").val(name);
+    $("#patientName1").val(name);
+  }
+  function unitySamplingDate(name){
+    $("#samplingDate").val(name);
+    $("#samplingDate1").val(name);
+  }
+function preview(obj){
+	var inputVal;
+	var textareaVal;
+	var classname;
+	$("body").find("section").each(function(){
+		$(this).removeClass("border1");
+	});
+	$("body").find("input[type='text']").each(function(){
+		inputVal = $(this).val();
+		classname = $(this).attr("class");
+		$(this).parent().html("<input type='hidden' value='"+classname+"'><span name='print'>"+inputVal+"</span>");
+	});
+	$("#section2 textarea").each(function(){
+		textareaVal = $(this).val();
+		$(this).parent().html("<p name='section4p'>"+textareaVal+"</p>");
+	});
+	var sex = $("input[type='radio']:checked").val();
+	$("#_sex").html(sex);
+	$("#change").hide();
+	if($("#noMutation").prop("checked")){
+		$("#noDrug").css("display","");
+	}
+	$("a").css("display","none");
+	window.print();
+	$("#change").show();
+	$("body").find("section").each(function(){
+		$(this).addClass("border1");
+	});
+	$("body").find("span[name='print']").each(function(){
+		inputVal = $(this).html();
+		classname = $(this).prev().val();
+		$(this).parent().html("<input type='text' class='"+classname+"' value='"+inputVal+"'>");
+	});
+	$("body").find("p[name='section4p']").each(function(){
+		inputVal = $(this).html();
+		$(this).parent().html("<textarea class='form-control' rows='15' cols='100'>"+inputVal+"</textarea>");
+	});
+	$("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
+	$("input[type='radio'][value="+sex+"]").prop("checked",true); 
+	$("a").css("display","");
+}
+function save(){
+	$.post("../report/updateYANDAFilling",$("#gdd-form").serialize());
+}
+</script>
 </body>
 </html>

@@ -391,7 +391,7 @@ $(document).ready(function(){
 		$(this).attr("style","width:600px");
 	})
 });
-var url = "https://www.celloud.cn/report/";
+var url = window.location.href.split("index")[0]+"report/";
 function savePage(){
 	$("body").find("input").each(function(){
 		$(this).attr("value",$(this).val());
