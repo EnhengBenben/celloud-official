@@ -27,10 +27,10 @@
 			<span>肿瘤类型：</span><span><input type="text" class="input200" id="tumorType" name="tumorType" value="${cmpReport.cmpFilling.tumorType }"></span>
 		</div>
 		<div>
-			<span>姓</span><span style="margin-left:40px">名：</span><span><input type="text" class="input200" value="${cmpReport.cmpFilling.patientName }"></span>
+			<span>姓</span><span style="margin-left:40px">名：</span><span><input type="text" class="input200" name="patientName" value="${cmpReport.cmpFilling.patientName }"></span>
 		</div>
 		<div>
-			<span>取样日期：</span><span><input type="text" class="input200" value="${cmpReport.cmpFilling.samplingDate }" ></span>
+			<span>取样日期：</span><span><input type="text" class="input200" name="samplingDate" value="${cmpReport.cmpFilling.samplingDate }" ></span>
 		</div>
 		<div>
 			<span>报告日期：</span><span><input type="text" class="input200" name="reportDate" value="${cmpReport.cmpFilling.reportDate }"></span>
@@ -5619,7 +5619,6 @@ function preview(obj){
 		});
 		cmpDrug += "@";
 	});
-	$.get("report!addCmpDrug",{"context":cmpDrug},function(flag){});
 	$("#section4 textarea").each(function(){
 		textareaVal = $(this).val();
 		$(this).parent().html("<p name='section4p'>"+textareaVal+"</p>");
