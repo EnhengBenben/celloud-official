@@ -1,6 +1,7 @@
 package com.celloud.backstage.service;
 
 import java.util.Date;
+import java.util.List;
 
 import com.celloud.backstage.model.User;
 import com.celloud.backstage.page.Page;
@@ -166,5 +167,14 @@ public interface UserService {
      * @date 2016年1月29日 上午11:12:39
      */
     public void sendRegisterEmail( String[] emailArray,Integer deptId,Integer companyId,Integer appCompanyId,Integer[] appIdArray);
+    
+    /**
+     * 获取所有用户列表
+     *
+     * @return
+     * @author han
+     * @date 2016年2月18日 下午5:17:39
+     */
+    public List<User> getAllUserList();
 
 }

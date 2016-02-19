@@ -172,4 +172,9 @@ public class UserServiceImpl implements UserService {
         
     }
 
+    @Override
+    public List<User> getAllUserList() {
+        return userMapper.getAllUserList(DataState.ACTIVE);
+    }
+
 }
