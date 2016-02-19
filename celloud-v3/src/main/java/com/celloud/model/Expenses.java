@@ -13,7 +13,7 @@ import org.mongodb.morphia.annotations.Id;
  * @author lin
  * @date 2016年2月18日 下午6:29:43
  */
-public class BaseExpenses implements Serializable {
+public class Expenses implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	private ObjectId id;
