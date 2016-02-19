@@ -4,12 +4,12 @@
   <resultMap id="BaseResultMap" type="com.celloud.model.Price" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="item_id" property="itemId" jdbcType="INTEGER" />
-    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="flag" property="flag" jdbcType="TINYINT" />
     <result column="price" property="price" jdbcType="DECIMAL" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, item_id, type, price, create_date
+    id, item_id, flag, price, create_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -22,9 +22,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.celloud.model.Price" >
-    insert into tb_price (id, item_id, type, 
+    insert into tb_price (id, item_id, flag, 
       price, create_date)
-    values (#{id,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, 
+    values (#{id,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, #{flag,jdbcType=TINYINT}, 
       #{price,jdbcType=DECIMAL}, #{createDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.celloud.model.Price" >
@@ -36,8 +36,8 @@
       <if test="itemId != null" >
         item_id,
       </if>
-      <if test="type != null" >
-        type,
+      <if test="flag != null" >
+        flag,
       </if>
       <if test="price != null" >
         price,
@@ -53,8 +53,8 @@
       <if test="itemId != null" >
         #{itemId,jdbcType=INTEGER},
       </if>
-      <if test="type != null" >
-        #{type,jdbcType=TINYINT},
+      <if test="flag != null" >
+        #{flag,jdbcType=TINYINT},
       </if>
       <if test="price != null" >
         #{price,jdbcType=DECIMAL},
@@ -70,8 +70,8 @@
       <if test="itemId != null" >
         item_id = #{itemId,jdbcType=INTEGER},
       </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=TINYINT},
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=TINYINT},
       </if>
       <if test="price != null" >
         price = #{price,jdbcType=DECIMAL},
@@ -85,7 +85,7 @@
   <update id="updateByPrimaryKey" parameterType="com.celloud.model.Price" >
     update tb_price
     set item_id = #{itemId,jdbcType=INTEGER},
-      type = #{type,jdbcType=TINYINT},
+      flag = #{flag,jdbcType=TINYINT},
       price = #{price,jdbcType=DECIMAL},
       create_date = #{createDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

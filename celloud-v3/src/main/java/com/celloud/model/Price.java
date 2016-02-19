@@ -8,7 +8,7 @@ public class Price {
 
     private Integer itemId;
 
-    private Byte type;
+    private Byte flag;
 
     private BigDecimal price;
 
@@ -30,15 +30,15 @@ public class Price {
         this.itemId = itemId;
     }
 
-    public Byte getType() {
-        return type;
-    }
+    public Byte getFlag() {
+		return flag;
+	}
 
-    public void setType(Byte type) {
-        this.type = type;
-    }
+	public void setFlag(Byte flag) {
+		this.flag = flag;
+	}
 
-    public BigDecimal getPrice() {
+	public BigDecimal getPrice() {
         return price;
     }
 
