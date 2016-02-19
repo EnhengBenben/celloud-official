@@ -8,7 +8,7 @@
 <meta name="keywords" content="celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico"/>
 <link rel="bookmark" href="<%=request.getContextPath()%>/favicon.ico"/>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/login.css" media="all" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/login.css?version=1.0" media="all" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/user-add.css" />
 <title>CelLoud 用户注册</title>
 </head>
@@ -61,7 +61,8 @@
         	   </c:when>
         	   <c:otherwise>
         	       <div class="main_f clearfix">
-	                    <span style="font-size:50px">对不起，您的链接已超时，请重新申请！</span>
+	                    <span style="font-size:22px">对不起，您的链接已超时，请重新申请！</span>
+	                    <br/><br/>
 	                    <a href="http://www.celloud.cn" class="error_return">返回首页</a>
 	                </div>
         	   </c:otherwise>
