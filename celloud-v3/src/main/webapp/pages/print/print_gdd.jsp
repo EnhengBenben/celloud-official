@@ -72,6 +72,9 @@
         </tr>	
       </thead>
       <tbody>
+          <c:if test="${empty gsrList}">
+            <tr><td colspan="4">没有发现突变位点</td></tr>
+          </c:if>
           <c:forEach items="${gsrList}" var="accountConfig" varStatus="status" >  
             <tr>  
         	 <td>${accountConfig.diseaseName }</td>
@@ -88,6 +91,9 @@
   </section>
   <section class="section2 border1 w3cbbs" id="section2">
     <h4>二. 检测结果详述</h4>
+    <c:if test="${cmpReport.geneDetectionDetail.size()==0 }">
+      <div class="info">没有发现突变基因</div>
+    </c:if>
     <c:forEach items="${cmpReport.geneDetectionDetail }" var="geneDetection" varStatus="size">
       <h5>${size.count}.&nbsp;&nbsp;${geneDetection.key }基因：该基因突变与${geneDetection.value.result[0].diseaseName }相关</h5>
       <div class="info">
@@ -210,10 +216,13 @@
 		  </tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${allGsr}" var="r" varStatus="size">
+		  <c:if test="${allGsr.size()==0}">
+		      <tr><td colspan="7">没有发现突变位点</td></tr>
+		  </c:if>
+		  <c:forEach items="${allGsr}" var="r" varStatus="size">
  			<c:choose>
  				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
- 					<tr><td colspan="6">没有发现突变位点</td></tr>
+ 					<tr><td colspan="7">没有发现突变位点</td></tr>
  				</c:when>
  				<c:otherwise>
 						<tr>
@@ -236,7 +245,7 @@
 						</tr>
  				</c:otherwise>
  			</c:choose>
-			</c:forEach>
+		  </c:forEach>
  	    </tbody>
     </table>
   </section>
