@@ -92,7 +92,7 @@
             cache: false //关闭AJAX相应的缓存
         });
         //根据视口和文档的宽高设置背景图片的尺寸
-        setDocSize();
+        utils.setDocSize();
         //表单提交验证
         function validateSubmitPassword(){
             var pwd = $("#inputPassword").val();

@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
+<link rel="dns-prefetch" href="//cdn.bootcss.com">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- 优先使用最新版本的IE 和 Chrome 内核 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -304,8 +305,8 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
 </section>
 </div>
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-<script src="<%=request.getContextPath() %>/plugins/jquery.smint.min.js" type="text/javascript" ></script>
-<script src="<%=request.getContextPath() %>/plugins/jquery.lazyload.min.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath() %>/plugins/jquery.smint.min.js" ></script>
+<script src="<%=request.getContextPath() %>/plugins/jquery.lazyload.min.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/jquery.easing.1.3.min.js"></script> 
 <script src="<%=request.getContextPath() %>/plugins/scrollify.min.js"></script> 
 <script src="<%=request.getContextPath() %>/js/home.js"></script>

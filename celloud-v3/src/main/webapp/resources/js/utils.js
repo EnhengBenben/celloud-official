@@ -40,8 +40,10 @@ utils.isConfigure = function(fileName){
   }
 };
 
-//根据视口和文档的宽高设置背景图片的尺寸
-function setDocSize(){
+/**
+ * 根据视口和文档的宽高设置背景图片的尺寸
+ */
+utils.setDocSize = function(){
 	var winWidth = $(window).width();
 	var docWidth = $(document).width();
 	var winHeight = $(window).height();
@@ -69,14 +71,14 @@ function setDocSize(){
 	$(".bgContainer").css("overflow","hidden");
 }
 
+
 //判断浏览器是否支持 placeholder属性
-function isPlaceholder(){
-    var input = document.createElement('input');
-    return 'placeholder' in input;
-}
-if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
+utils.checkPlaceholder = function(){
+  var input = document.createElement('input');
+  var isPlaceholder = 'placeholder' in input;
+  if (!isPlaceholder) {//不支持placeholder 用jquery来完成
     $(document).ready(function() {
-        if(!isPlaceholder()){
+        if(!isPlaceholder){
             $("input").not("input[name='password']").each(//把input绑定事件 排除password框
                 function(){
                     if($(this).val()=="" && $(this).attr("placeholder")!=""){
@@ -112,4 +114,27 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
             });
         }
     });
+  }
 }
+
+/**
+ * 加载百度统计js
+ */
+utils.loadBaiduTongji = function(){
+  //获取域名
+  var host = window.location.host;
+  if(host.indexOf("https://www.celloud.cn")>=0){
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f6b04d06932c0fc1578e79be222599f4";
+      hm.async = "async";
+      hm.defer = "defer";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+  }
+}
+$(document).ready(function(){
+  utils.loadBaiduTongji();
+})
