@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/print_cmp.css?version=1.0">
 </head>
 <body>
-<a href="javascript:void(0)" onclick="preview(this)" class="btn btn-default" id="change" style="float:right;margin-top:10px;margin-right:-80px;"><i class="i-print"></i>打印</a>
+<a href="javascript:void(0)" onclick="preview(this)" class="btn btn-default" id="change" style="float:right;margin-top:10px;margin-right:-100px;"><i class="i-print"></i>打印</a>
 <section class="section2 border1 w3cbbs">
     <h3>基因检测结果简述</h3>
     <h4>1.&nbsp;&nbsp; 检测文件</h4>

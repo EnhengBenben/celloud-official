@@ -3,13 +3,13 @@
 <table class="table_">
   <thead>
     <tr>
-      <th style="min-width:100px;">数据编号</th>
-      <th style="min-width:160px">原始文件名1</th>
-      <th style="min-width:160px">原始文件名2</th>
+      <th style="min-width:120px;">数据编号</th>
+      <th>原始文件名1</th>
+      <th>原始文件名2</th>
       <th style="min-width:70px">应用名称</th>
-      <th style="min-width:90px">共获得有效片段</th>
-      <th style="min-width:60px">可用片段</th>
-      <th style="min-width:80px">平均测序深度</th>
+      <th style="min-width:100px">共获得有效片段</th>
+      <th style="min-width:80px">可用片段</th>
+      <th style="min-width:90px">平均测序深度</th>
       <th style="min-width:60px">基因检测</th>
     </tr>
   </thead>
