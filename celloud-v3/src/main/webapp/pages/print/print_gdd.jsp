@@ -12,7 +12,7 @@
 </head>
 <body>
 <a href="javascript:void(0)" onclick="preview(this)" class="btn btn-default" id="change" style="float:right;margin-top:10px;margin-right:-80px;">打印</a>
-<a href="javascript:void(0)" onclick="save()" class="btn btn-default" id="change" style="float:right;margin-top:40px;margin-right:-80px;">保存</a>
+<!-- <a href="javascript:void(0)" onclick="save()" class="btn btn-default" id="change" style="float:right;margin-top:40px;margin-right:-80px;">保存</a> -->
 <form id="gdd-form">
 <input type="hidden" name="cmpId" id="cmpId" value="${cmpReport.id }">
 <input type="hidden" name="cmpReport.dataKey" value="${cmpReport.dataKey }">
@@ -369,17 +369,21 @@ function preview(obj){
 	var inputVal;
 	var textareaVal;
 	var classname;
+	var name;
+	var id;
 	$("body").find("section").each(function(){
 		$(this).removeClass("border1");
 	});
 	$("body").find("input[type='text']").each(function(){
 		inputVal = $(this).val();
 		classname = $(this).attr("class");
-		$(this).parent().html("<input type='hidden' value='"+classname+"'><span name='print'>"+inputVal+"</span>");
+		name = $(this).attr("name");
+		id = $(this).attr("id");
+		$(this).parent().html("<input id='"+id+"' name='"+name+"' type='hidden' value='"+classname+"'><span name='print'>"+inputVal+"</span>");
 	});
 	$("#section2 textarea").each(function(){
 		textareaVal = $(this).val();
-		$(this).parent().html("<p name='section4p'>"+textareaVal+"</p>");
+		$(this).parent().html("<p name='section4p'><input type='hidden' value='"+$(this).attr("name")+"'>"+textareaVal+"</p>");
 	});
 	var sex = $("input[type='radio']:checked").val();
 	$("#_sex").html(sex);
@@ -388,6 +392,7 @@ function preview(obj){
 		$("#noDrug").css("display","");
 	}
 	$("a").css("display","none");
+	save();
 	window.print();
 	$("#change").show();
 	$("body").find("section").each(function(){
@@ -396,15 +401,30 @@ function preview(obj){
 	$("body").find("span[name='print']").each(function(){
 		inputVal = $(this).html();
 		classname = $(this).prev().val();
-		$(this).parent().html("<input type='text' class='"+classname+"' value='"+inputVal+"'>");
+		name = $(this).attr("name");
+        id = $(this).attr("id");
+		$(this).parent().html("<input id='"+id+"' name='"+name+"' type='text' class='"+classname+"' value='"+inputVal+"'>");
 	});
 	$("body").find("p[name='section4p']").each(function(){
 		inputVal = $(this).html();
-		$(this).parent().html("<textarea class='form-control' rows='15' cols='100'>"+inputVal+"</textarea>");
+		name = $(this).find("input").val();
+		$(this).parent().html("<textarea name='"+name+"' class='form-control' rows='15' cols='100'>"+inputVal+"</textarea>");
 	});
-	$("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
+	$("#_sex").html("<input type='radio' name='patientSex' value='男'>男<input type='radio' name='patientSex' value='女'>女");
 	$("input[type='radio'][value="+sex+"]").prop("checked",true); 
 	$("a").css("display","");
+	$("#patientName").on("change",function(){
+	    unityPatientName($(this).val());
+	  });
+	  $("#patientName1").on("change",function(){
+	      unityPatientName($(this).val());
+	  });
+	  $("#samplingDate").on("change",function(){
+	    unitySamplingDate($(this).val());
+	  });
+	  $("#samplingDate1").on("change",function(){
+	      unitySamplingDate($(this).val());
+	  });
 }
 function save(){
 	$.post("../report/updateYANDAFilling",$("#gdd-form").serialize());
