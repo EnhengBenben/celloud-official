@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.backstage.constants.ConstantsData;
 import com.celloud.backstage.model.App;
 import com.celloud.backstage.model.Company;
 import com.celloud.backstage.model.Dept;
@@ -24,6 +25,7 @@ import com.celloud.backstage.service.CompanyService;
 import com.celloud.backstage.service.DeptService;
 import com.celloud.backstage.service.UserService;
 import com.celloud.backstage.utils.Base64Util;
+import com.celloud.backstage.utils.MD5Util;
 
 /**
  * 
@@ -40,9 +42,9 @@ public class UserAction {
     private CompanyService companyService;
     @Resource
     private AppService appService;
-    
     @Resource
     private DeptService deptService;
+    
     
     @RequestMapping("user/userList")
     public ModelAndView getUserByPage(@RequestParam(defaultValue = "1") int currentPage,
@@ -172,4 +174,23 @@ public class UserAction {
         return userService.addUser(user,md5code,appCompanyId);
     }
     
+    
+    /**
+     * 用户修改密码
+     * 
+     * @param oldPassword
+     * @param newPassword
+     * @return
+     */
+    @RequestMapping("user/updatePassword")
+    @ResponseBody
+    public int updatePassword(String oldPassword, String newPassword) {
+        User user = ConstantsData.getLoginUser();
+        user.setPassword(MD5Util.getMD5(oldPassword));
+        if (userService.login(user) == null) {
+            return 203;
+        }
+        int result = userService.updatePassword(user.getUserId(), newPassword);
+        return result;
+    }
 }

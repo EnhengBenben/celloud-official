@@ -306,8 +306,11 @@ var user=(function(user){
 			$("#main-menu li").removeClass("active").removeClass("opened");
 			$("#user-menu").addClass("active");
 		});
-	}
-	
+	};
+	self.showChangePwd=function(){
+		$("#main-content").load("./pages/user/user_pwd_reset.jsp");
+		$("#main-menu li").removeClass("active").removeClass("opened");
+	};
 	self.getUserList=function(currentPage){
 		$.post("user/userList",{currentPage:currentPage,searchFiled:self.searchFiled,keyword:self.keyword},function(responseText){
 			$("#main-content").html(responseText);

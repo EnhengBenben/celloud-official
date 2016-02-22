@@ -6,6 +6,17 @@ jQuery.validator.addMethod("isPhone", function(value, element) {
 jQuery.validator.addMethod("zipcode", function(value, element) {
 	return this.optional(element) || /^[1-9][0-9]{5}$/.test(value);
 }, "请正确填写您的邮政编码");
+
+//密码校验
+jQuery.validator.addMethod("pwdRE1", function(value, element) {
+	return this.optional(element) || !(/^[\d+]{6,16}$/.test(value));
+}, "密码不能全为数字");
+
+jQuery.validator.addMethod("pwdRE2", function(value, element) {
+	return this.optional(element) || /^[a-zA-Z0-9_]{6,16}$/.test(value);
+}, "密码为6-16位的字母、数字及下划线组合");
+
+
 jQuery.validator.setDefaults({
 	errorElement: 'div',
     errorClass: 'help-block',
