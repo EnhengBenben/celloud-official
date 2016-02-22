@@ -8,8 +8,8 @@ li {list-style:none;}
 /* base -chrome*/
 body{ font-family:"Times New Roman","微软雅黑"; font-size:12px; max-width: 900px;margin:auto;color:#232323}
 /* h3{ font-size:22px;  padding:10px 0px 10px 0px;background-color: #b0d73d; margin:0px -15px 10px -15px; padding-left: 20px; color: #fff;} */
-h3{ font-family: "方正正中黑简体";font-size: 18px; color: #79bb26;padding-bottom:6px}
-h4{ font-family: "方正正中黑简体";color: #79bb26;font-size:16px; padding-bottom:10px;}
+h3{ font-size: 18px; color: #79bb26;padding-bottom:6px}
+h4{ color: #79bb26;font-size:16px; padding-bottom:10px;}
 h5{ font-size:14px; line-height: 1.3em}
 h6{ font-size:14px;}
 section{margin:0px auto;}
@@ -51,7 +51,7 @@ footer{ font-size:22px;width:100%; position:relative;margin-top: 80px;text-align
 .section2 .table tbody td{ border:1px dotted #79bc27;}
 .section2 .info{padding-left:10px;padding-bottom: 10px;}
 .section2 p{text-indent:1.5em;}
-.section2 p span{font-family: "方正正中黑简体";color:#79bb26}
+.section2 p span{color:#79bb26}
 /* 附件1*/
 .fj p{text-indent:1.5em;}
 .fj p{text-indent:1.5em;}
