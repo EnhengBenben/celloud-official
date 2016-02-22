@@ -64,7 +64,7 @@ textarea.form-control { height: auto;}
 .section5 .mwidth_Gene{width:80px}
 .section5 .mwidth_Ref_Base{width:70px}
 .section5 .mwidth_Mut_base{min-width:79px}
-.section5 .mwidth_Depth{width:42px}
+.section5 .mwidth_Depth{min-width:42px}
 .section5 .mwidth_CDS_mut_syntax{min-width:120px}
 .section5 .mwidth_AA_mut_syntax{min-width:112px}
 .section7{font-size: 8px;line-height: 18px;}
