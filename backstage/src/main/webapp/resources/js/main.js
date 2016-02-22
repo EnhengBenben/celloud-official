@@ -1,9 +1,17 @@
+$.ajaxSetup ({
+	  complete:function(request,textStatus){
+		  var sessionstatus=request.getResponseHeader("sessionstatus"); //通过XMLHttpRequest取得响应头，sessionstatus，  
+		  if(sessionstatus=="timeout"){
+			  jAlert("登录超时,请重新登录！","登录超时",function(){
+				  window.location.href="login";
+			  });
+		  }
+	  },
+	  cache: false //关闭AJAX相应的缓存
+  });
 /**
 *公司管理
 **/
-$.ajaxSetup ({
-	  cache: false //关闭AJAX相应的缓存
-  });
 var company=(function(company){
 	var self=company||{};
 	var uploader = null;
@@ -403,3 +411,19 @@ var client=(function(client){
 	}
 	return self;
 })(client);
+
+var dataFile=(function(dataFile){
+	var self=dataFile||{};
+	self.toDataFileUpload=function(){
+		$.post("dataFile/toDataFileUpload",function(responseText){
+			$("#main-content").html(responseText);
+			$("#main-menu li").removeClass("active").removeClass("opened").removeClass("expanded");
+			$("#file-upload-menu").addClass("active").parent().parent("li").addClass("active").addClass("opened").addClass("expanded");
+		});
+	}
+	self.empty=function(){
+		$("#data-upload-set-panel").html('');
+		$("#DataAmountForm")[0].reset();
+	}
+	return self;
+})(dataFile);

@@ -5,7 +5,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>CelLoud后台管理系统</title>
-<link rel="stylesheet" href="http://fonts.useso.com/css?family=Arimo:400,700,400italic">
 <link rel="stylesheet" href="plugins/bootstrap/css/fonts/linecons/css/linecons.css">
 <link rel="stylesheet" href="plugins/bootstrap/css/fonts/fontawesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.css">
@@ -116,8 +115,8 @@
                                     <span class="title">数据清理</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">
+                            <li id="file-upload-menu">
+                                <a href="javascript:dataFile.toDataFileUpload();">
                                     <span class="title">数据上传</span>
                                 </a>
                             </li>

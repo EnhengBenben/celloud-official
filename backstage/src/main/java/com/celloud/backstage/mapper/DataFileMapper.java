@@ -16,4 +16,23 @@ public interface DataFileMapper {
     int updateByPrimaryKeyWithBLOBs(DataFile record);
 
     int updateByPrimaryKey(DataFile record);
+    /**
+     * 添加上传文件信息
+     * 
+     * @param data
+     * @return
+     * @author han
+     * @date 2015年12月31日 上午10:28:28
+     */
+    public int addDataInfo(DataFile data);
+
+    /**
+     * 修改数据信息
+     * 
+     * @param data
+     * @return
+     * @author han
+     * @date 2015年12月31日 上午10:28:37
+     */
+    public int updateDataInfoByFileId(DataFile data);
 }

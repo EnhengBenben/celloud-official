@@ -233,4 +233,18 @@
       md5 = #{md5,jdbcType=VARCHAR}
     where file_id = #{fileId,jdbcType=INTEGER}
   </update>
+  <insert id="addDataInfo" useGeneratedKeys="true" keyProperty="fileId" parameterType="com.celloud.backstage.model.DataFile" >
+    insert into tb_file(user_id,file_name,create_date,state
+    <if test="md5 != null" >
+      ,md5
+    </if>
+    ) values(#{userId },#{fileName },now(),#{state}
+    <if test="md5 != null" >
+      ,#{md5}
+    </if>
+    )
+  </insert>
+  <update id="updateDataInfoByFileId" parameterType="com.celloud.backstage.model.DataFile" >
+    update tb_file set data_key=#{dataKey },size=#{size },path=#{path },another_name=#{anotherName },file_format=#{fileFormat },state=#{state },md5=#{md5 } where file_id=#{fileId }
+  </update>
 </mapper>
