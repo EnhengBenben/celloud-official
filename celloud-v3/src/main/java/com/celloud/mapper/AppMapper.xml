@@ -33,6 +33,8 @@
     <result column="is_add" property="isAdded" jdbcType="VARCHAR" />
     <result column="classifyNames" property="classifyNames" jdbcType="VARCHAR" />
     <result column="app_doc" property="appDoc" jdbcType="LONGVARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="discount_price" property="discountPrice" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Base_Column_List" >
     app_id, app_name, english_name, address, picture_name, create_date, intro, description, 
@@ -331,12 +333,13 @@
     where ac.classify_id=#{classifyId } and a.off_line=#{offLine } and ((uar.user_id=#{userId } and a.attribute=#{attribute_private }) or a.attribute=#{attribute_public })
   </select>
   <select id="getAppPageListByClassify" resultMap="extraResultMap">
-        select DISTINCT a.app_id,a.app_name,a.picture_name,a.intro,a.description,a.create_date,c.company_name 
+        select DISTINCT a.app_id,a.app_name,a.picture_name,a.intro,a.description,a.create_date,c.company_name,p.price
         from tb_app a 
         left join tb_app_classify_relat ac on a.app_id=ac.app_id 
         left join  tb_user_app_right uar on uar.app_id = a.app_id 
         left join tb_company c on a.company_id=c.company_id
-        where a.off_line=#{offLine } and ((uar.user_id=#{userId } and a.attribute=#{attribute_private }) or a.attribute=#{attribute_public })
+        left join tb_price p on p.item_id=a.app_id
+        where p.flag=#{priceType} and a.off_line=#{offLine } and ((uar.user_id=#{userId } and a.attribute=#{attribute_private }) or a.attribute=#{attribute_public })
          <choose>  
             <when test="classifyPId == 0">
                 and ac.classify_id in (select classify_id from tb_classify c where classify_pid = #{classifyId })
@@ -351,11 +354,15 @@
     </select>
     <select id="getAppById" resultMap="extraResultMap"  >
     select a.app_id,a.app_name,a.english_name,a.address,a.picture_name,a.create_date,a.intro,a.description,a.app_doc,a.data_num,
-    c.company_name,GROUP_CONCAT(distinct cls.classify_name) classifyNames,(select ua.is_add from tb_user_app_right ua where ua.user_id=#{userId } and ua.app_id=#{appId}) is_add
+    c.company_name,GROUP_CONCAT(distinct cls.classify_name) classifyNames,ua.is_add,p.price,d.discount_price
     from tb_app a
     left join tb_company c on a.company_id=c.company_id 
     left join tb_app_classify_relat ac on a.app_id=ac.app_id 
-    left join tb_classify cls on ac.classify_id=cls.classify_id where a.app_id=#{appId}
+    left join tb_classify cls on ac.classify_id=cls.classify_id 
+    left join tb_price p on a.app_id=p.item_id
+    left join tb_user_app_right ua on ua.app_id=a.app_id
+    left join (select * from tb_discount where end_date>now()) d on d.price_id = p.id
+    where a.app_id=#{appId} and p.flag=#{priceType}
   </select>
   <select id="getMyAppList" resultMap="extraResultMap"  >
     select a.app_id,a.app_name,a.picture_name,a.intro,a.description,a.create_date,GROUP_CONCAT(distinct c.classify_name) classifyNames,com.company_name 

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.celloud.constants.AppIsAdd;
 import com.celloud.constants.AppOffline;
 import com.celloud.constants.AppPermission;
+import com.celloud.constants.PriceType;
 import com.celloud.constants.ReportPeriod;
 import com.celloud.constants.ReportType;
 import com.celloud.mapper.AppMapper;
@@ -33,12 +34,15 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public Integer countMyApp(Integer userId) {
-        return appMapper.countMyApp(userId, AppOffline.ON, AppIsAdd.ALREADY_ADDED);
+        return appMapper.countMyApp(userId, AppOffline.ON,
+                AppIsAdd.ALREADY_ADDED);
     }
 
     @Override
     public List<Map<String, String>> countMyApp(Integer userId, String time) {
-        return appMapper.countMyAppRanNumByTime(userId, time, AppOffline.ON, AppIsAdd.ALREADY_ADDED,ReportType.PROJECT,ReportPeriod.COMPLETE);
+        return appMapper.countMyAppRanNumByTime(userId, time, AppOffline.ON,
+                AppIsAdd.ALREADY_ADDED, ReportType.PROJECT,
+                ReportPeriod.COMPLETE);
     }
 
     @Override
@@ -46,29 +50,32 @@ public class AppServiceImpl implements AppService {
         return appMapper.getRanAPP(userId);
     }
 
-
     @Override
     public List<App> getAppByClassify(Integer classifyId, Integer userId) {
-        return appMapper.getAppByClassify(classifyId, userId, AppOffline.ON, AppPermission.PRIVATE,
-                AppPermission.PUBLIC);
+        return appMapper.getAppByClassify(classifyId, userId, AppOffline.ON,
+                AppPermission.PRIVATE, AppPermission.PUBLIC);
     }
 
     @Override
-    public PageList<App> getAppPageListByClassify(Integer classifyId, Integer classifyPId, Integer userId,
-            String sortField, String sortType, Page page) {
-        List<App> list = appMapper.getAppPageListByClassify(classifyId, classifyPId, userId, sortField, sortType,
-                AppOffline.ON, AppPermission.PRIVATE, AppPermission.PUBLIC, page);
+    public PageList<App> getAppPageListByClassify(Integer classifyId,
+            Integer classifyPId, Integer userId, String sortField,
+            String sortType, Page page) {
+        List<App> list = appMapper.getAppPageListByClassify(classifyId,
+                classifyPId, userId, sortField, sortType, AppOffline.ON,
+                PriceType.isApp, AppPermission.PRIVATE, AppPermission.PUBLIC,
+                page);
         return new PageList<>(page, list);
     }
 
     @Override
     public App getAppById(Integer id, Integer userId) {
-        return appMapper.getAppById(id, userId);
+        return appMapper.getAppById(id, userId, PriceType.isApp);
     }
 
     @Override
     public List<App> getMyAppList(Integer userId) {
-        return appMapper.getMyAppList(userId, AppOffline.ON, AppIsAdd.ALREADY_ADDED);
+        return appMapper.getMyAppList(userId, AppOffline.ON,
+                AppIsAdd.ALREADY_ADDED);
     }
 
     @Override
@@ -107,9 +114,9 @@ public class AppServiceImpl implements AppService {
         return names.toString();
     }
 
-	@Override
-	public App selectByPrimaryKey(Integer appId) {
-		return appMapper.selectByPrimaryKey(appId);
-	}
+    @Override
+    public App selectByPrimaryKey(Integer appId) {
+        return appMapper.selectByPrimaryKey(appId);
+    }
 
 }

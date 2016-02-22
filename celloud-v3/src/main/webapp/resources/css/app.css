@@ -18,7 +18,7 @@
 .mainpage ol,
 .mainpage p,
 .mainpage pre,
-.mainpage span,
+/* .mainpage span, */
 .mainpage ul{
     margin: 0;
     padding: 0
@@ -178,11 +178,11 @@
     margin: 0 20px
 }
 .box-info-wrap {
-    margin-right: 400px;
+    margin-right: 450px;
     padding-top:18px;
 }
 .box-star {
-    width: 230px;
+    width: 280px;
     height: 140px;
     float: right;
     padding-top: 18px
@@ -506,7 +506,6 @@
 	width: 65%;
 	float: left;
 	margin-left: 4%;
-	min-width:700px;
 }
 .item-list .item-left .itemInfo h5 {
 	font-size: 22px;
@@ -518,11 +517,12 @@
 	overflow: hidden
 }
 .item-list .item-left .itemInfo .intro li {
-	/* width: 260px; */
+	width: 260px;
 	height: 24px;
 	line-height: 24px;
-	/* float: left; */
-	color: #666
+	float: left;
+	color: #666;
+	font-size: 12px;
 }
 .item-list .item-left .itemInfo .intro li span {
 	color: #333
@@ -535,6 +535,31 @@
 }
 .item-list .item-left .itemInfo .intro li .btn-celloud-close {
 	color: #4cba42
+}
+.item-list .item-left .select-one {
+    margin-top: 0;
+    margin-left: 246px;
+}
+.item-list .item-left .select-one .price-con {
+    margin: 6px 0 15px
+}
+.item-list .item-left .select-one .price-con .text {
+    color: #999;
+    font-size: 14px
+}
+.item-list .item-left .select-one .price-con .text em {
+    color: #f60;
+    font-size: 22px;
+    font-style: normal
+}
+.item-list .item-left .select-one .price-con .comm {
+    font-size: 14px;
+    text-indent: 25px;
+    color: #999
+}
+.item-list .item-left .select-one .price-con .comm em,.item-list .item-left .select-one .price-con .comm i {
+    color: #f60;
+    font-style: normal
 }
 .myApplist {
 	background: #fff;
@@ -640,7 +665,8 @@ a.reco-hd-link:link,a.reco-hd-link:visited {
 	display: block;
 	width: 100%;
 	height: 100%;
-	color: #666
+	color: #666;
+	padding-top:10px;
 }
 .item-intro .link .inner-link ul li.select {
 	border-top: 2px solid #1291be;
@@ -651,8 +677,7 @@ a.reco-hd-link:link,a.reco-hd-link:visited {
 	color: #00a2ca
 }
 .item-intro .box-icon {
-	padding: 0 40px;
-	margin-top: 20px
+	padding: 20px 40px;
 }
 .item-intro .box-icon h5 {
 	color: #000;
@@ -717,4 +742,11 @@ a.reco-hd-link:hover {
 .app-classify-ul li a {
     color: inherit;
     cursor: pointer
+}
+.cuxiao {
+    padding: 3px 6px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    background-color: #fc0;
+    color: #000;
 }

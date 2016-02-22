@@ -43,6 +43,32 @@
           </div>
         </div>
       </div>
+      <div class="select-one">
+        <c:choose>
+            <c:when test="${empty app.discountPrice }">
+                <div class="price-con">
+		            <span class="text">
+		                <span id="app-price-label">金额</span>：
+		                <em id="total-price">${app.price }</em>
+		                <span style="font-size:14px;color:#f60">C</span>
+		            </span>
+		        </div>
+            </c:when>
+            <c:otherwise>
+                <div id="app-old-price" class="price-con">
+		            <span class="text">原价：<span style="text-decoration: line-through;" class="y-light-grey"><span id="old-price">${app.price }</span>C</span> </span>
+		        </div>
+		        <div class="price-con">
+		            <span class="text">
+		                <span id="app-price-label">促销</span>：
+		                <em id="total-price">${app.discountPrice }</em>
+		                <span style="font-size:14px;color:#f60">C</span>
+		            </span>
+		            <span id="app-cuxiao" class="cuxiao">限时促销</span>
+		        </div>
+            </c:otherwise>
+        </c:choose>
+      </div>
     </div>
   </div>
 </div>
@@ -96,9 +122,4 @@
     </div>
   </div>
 </div>
-<%-- <script src="<%=request.getContextPath()%>/dist/js/toolDetail.js" type="text/javascript"></script> --%>
-<<script type="text/javascript">
-<!--
-$('#appScreen').carousel({interval:3000});
-//-->
-</script>
+

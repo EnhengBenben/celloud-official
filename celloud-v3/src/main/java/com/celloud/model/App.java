@@ -1,5 +1,6 @@
 package com.celloud.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class App {
@@ -51,6 +52,10 @@ public class App {
     private Integer isAdded;
     /** 所属分类名称 */
     private String classifyNames;
+    /** APP单价 */
+    private BigDecimal price;
+    /** APP折后价 */
+    private BigDecimal discountPrice;
 
     public Integer getAppId() {
         return appId;
@@ -243,4 +248,21 @@ public class App {
     public void setMaxTask(Integer maxTask) {
         this.maxTask = maxTask;
     }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public BigDecimal getDiscountPrice() {
+        return discountPrice;
+    }
+
+    public void setDiscountPrice(BigDecimal discountPrice) {
+        this.discountPrice = discountPrice;
+    }
+
 }

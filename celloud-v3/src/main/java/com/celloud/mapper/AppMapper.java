@@ -49,8 +49,9 @@ public interface AppMapper {
      */
     public List<Map<String, String>> countMyAppRanNumByTime(
             @Param("userId") Integer userId, @Param("time") String time,
-            @Param("offLine") Integer offLine, @Param("isAdd") Integer isAdd,@Param("flag") Integer flag,@Param("period") Integer period);
-    
+            @Param("offLine") Integer offLine, @Param("isAdd") Integer isAdd,
+            @Param("flag") Integer flag, @Param("period") Integer period);
+
     public List<Map<String, String>> countMyAppByTime(
             @Param("userId") Integer userId, @Param("time") String time,
             @Param("offLine") Integer offLine, @Param("isAdd") Integer isAdd);
@@ -86,6 +87,8 @@ public interface AppMapper {
      * @param userId
      * @param sortField
      * @param sortType
+     * @param offLine
+     * @param priceType
      * @param page
      * @return
      * @author han
@@ -98,6 +101,7 @@ public interface AppMapper {
             @Param("sortField") String sortField,
             @Param("sortType") String sortType,
             @Param("offLine") Integer offLine,
+            @Param("priceType") Integer priceType,
             @Param("attribute_private") Integer attribute_private,
             @Param("attribute_public") Integer attribute_public, Page page);
 
@@ -106,12 +110,14 @@ public interface AppMapper {
      * 
      * @param id
      * @param userId
+     * @param priceType
      * @return
      * @author han
      * @date 2016年1月6日 下午1:16:22
      */
     public App getAppById(@Param("appId") Integer appId,
-            @Param("userId") Integer userId);
+            @Param("userId") Integer userId,
+            @Param("priceType") Integer priceType);
 
     /**
      * 获取已添加的APP
