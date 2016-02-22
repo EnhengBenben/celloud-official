@@ -180,14 +180,8 @@
                         </a>
                         
                         <ul class="dropdown-menu user-profile-menu list-unstyled">
-                            <li>
-                                <a href="#settings">
-                                    <i class="fa-wrench"></i>
-                                    设置
-                                </a>
-                            </li>
                             <li class="last">
-                                <a href="extra-lockscreen.html">
+                                <a href="logout">
                                     <i class="fa-lock"></i>
                                     退出
                                 </a>
