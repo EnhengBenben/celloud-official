@@ -27,10 +27,10 @@
 			<span>肿瘤类型：</span><span><input type="text" class="input200" id="tumorType" name="tumorType" value="${cmpReport.cmpFilling.tumorType }"></span>
 		</div>
 		<div>
-			<span>姓</span><span style="margin-left:40px">名：</span><span><input id="patientName1" type="text" class="input200" name="patientName" value="${cmpReport.cmpFilling.patientName }"></span>
+			<span>姓</span><span style="margin-left:40px">名：</span><span><input id="patientName1" type="text" class="input200" value="${cmpReport.cmpFilling.patientName }"></span>
 		</div>
 		<div>
-			<span>取样日期：</span><span><input id="samplingDate1" type="text" class="input200" name="samplingDate" value="${cmpReport.cmpFilling.samplingDate }" ></span>
+			<span>取样日期：</span><span><input id="samplingDate1" type="text" class="input200" value="${cmpReport.cmpFilling.samplingDate }" ></span>
 		</div>
 		<div>
 			<span>报告日期：</span><span><input type="text" class="input200" name="reportDate" value="${cmpReport.cmpFilling.reportDate }"></span>
@@ -5601,7 +5601,6 @@ function addPersonalizedMedicine(tbody,index){
 }
 var recommendDrugIndex = 0
 function addDrugInput(div,index){
-  alert(index);
   if(recommendDrugIndex == 0){
     recommendDrugIndex = index;
   }
