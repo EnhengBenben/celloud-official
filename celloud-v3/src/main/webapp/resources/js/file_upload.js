@@ -88,9 +88,6 @@ var datafileUpload=(function(datafileUpload){
 					//销毁uploader，间接取消选择文件弹窗
 					uploader.destroy();
 				}
-//				if(intro != null){
-//					intro.goToStep(5);
-//				}
 			});
 		});
 		uploader.bind("StateChanged", function() {
