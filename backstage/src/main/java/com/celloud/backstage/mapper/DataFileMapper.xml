@@ -247,4 +247,16 @@
   <update id="updateDataInfoByFileId" parameterType="com.celloud.backstage.model.DataFile" >
     update tb_file set data_key=#{dataKey },size=#{size },path=#{path },another_name=#{anotherName },file_format=#{fileFormat },state=#{state },md5=#{md5 } where file_id=#{fileId }
   </update>
+  <select id="selectByUserId" resultMap="BaseResultMap">
+    select 
+    file_id,path
+    from tb_file
+    where user_id = #{userId}
+  </select>
+  <delete id="deletefileProjectRelatByUserId" parameterType="java.lang.Integer" >
+    DELETE fpr.* from tb_file_project_relat fpr LEFT JOIN tb_file f on fpr.file_id=f.file_id where user_id=#{userId}
+  </delete>
+  <delete id="deleteDataFileByUserId" parameterType="java.lang.Integer" >
+   delete from tb_file where user_id=#{userId}
+  </delete>
 </mapper>

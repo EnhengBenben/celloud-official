@@ -25,6 +25,16 @@ public interface DataService {
      * @return
      */
     public int updateDataInfoByFileId(DataFile data);
+    
+    /**
+     * 硬删除账户数据
+     *
+     * @param userId
+     * @return
+     * @author han
+     * @date 2016年2月22日 下午3:58:23
+     */
+    public boolean removeData(Integer userId);
 
 
 }

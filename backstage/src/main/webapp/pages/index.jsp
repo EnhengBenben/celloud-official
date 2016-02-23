@@ -110,8 +110,8 @@
                             <span class="title">数据管理</span>
                         </a>
                         <ul>
-                            <li>
-                                <a href="#">
+                            <li id="file-clean-menu">
+                                <a href="javascript:dataFile.toDataClean();">
                                     <span class="title">数据清理</span>
                                 </a>
                             </li>
