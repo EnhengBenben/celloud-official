@@ -5623,6 +5623,7 @@ function preview(obj){
 	var inputVal;
 	var textareaVal;
 	var classname;
+	var id;
 	var name;
 	var cmpDrug = "";
 	saveFillCmp();
@@ -5633,7 +5634,8 @@ function preview(obj){
 		inputVal = $(this).val();
 		classname = $(this).attr("class");
 		name = $(this).attr("name"); 
-		$(this).parent().html("<input type='hidden' value='"+classname+"' name='"+name+"'><span name='print'>"+inputVal+"</span>");
+		id = $(this).attr("id"); 
+		$(this).parent().html("<input id='"+id+"' name='"+name+"' type='hidden' value='"+classname+"'><span name='print'>"+inputVal+"</span>");
 	});
 	$("body").find("table[name='cmpDrugTable']").find("tbody").find("tr").each(function(){
 		$(this).find("td").each(function(){
@@ -5662,7 +5664,8 @@ function preview(obj){
 		inputVal = $(this).html();
 		classname = $(this).prev().val();
 		name = $(this).prev().attr("name"); 
-		$(this).parent().html("<input type='text' name='"+name+"' class='"+classname+"' value='"+inputVal+"'>");
+		id = $(this).prev().attr("id"); 
+		$(this).parent().html("<input id='"+id+"' name='"+name+"' type='text' class='"+classname+"' value='"+inputVal+"'>");
 	});
 	$("body").find("p[name='section4p']").each(function(){
 		inputVal = $(this).text();
@@ -5673,6 +5676,18 @@ function preview(obj){
 	$("input[type='radio'][value="+sex+"]").prop("checked",true); 
 	$("#noDrug").css("display","none");
 	$("#checkboxdiv").css("display","");
+	$("#patientName").on("change",function(){
+	   unityPatientName($(this).val());
+	 });
+	 $("#patientName1").on("change",function(){
+	     unityPatientName($(this).val());
+	 });
+	 $("#samplingDate").on("change",function(){
+	   unitySamplingDate($(this).val());
+	 });
+	 $("#samplingDate1").on("change",function(){
+	     unitySamplingDate($(this).val());
+	 });
 	$("a").css("display","");
 }
 function printTable($parentDiv_,height){

@@ -61,6 +61,7 @@ var datafileUpload=(function(datafileUpload){
 		var uploader = $("#fileUploadDiv").pluploadQueue();
 		uploader.bind("Init", function(){
 			if(intro != null){
+			  uploader.disableBrowse(true);
 				intro.exit();
 				intro = null;
 				intro = introJs();
@@ -73,6 +74,7 @@ var datafileUpload=(function(datafileUpload){
 				$("#toaddfilediv").one("click",function(){
 					intro.setOption("tooltipPosition", "bottom");
 					intro.goToStep(5);
+					uploader.disableBrowse(false);
 				});
 				$("#tobeginfilediv").one("click",function(){
           intro.goToStep(6);
@@ -85,9 +87,6 @@ var datafileUpload=(function(datafileUpload){
 				if(!response){//session超时则执行下两步
 					//销毁uploader，间接取消选择文件弹窗
 					uploader.destroy();
-				}
-				if(intro != null){
-					intro.goToStep(5);
 				}
 			});
 		});
