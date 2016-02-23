@@ -213,5 +213,7 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
 </div>
 </section>
 </div>
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="<%=request.getContextPath() %>/js/utils.js"></script>
 </body>
 </html>

@@ -310,6 +310,7 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
 <script src="<%=request.getContextPath() %>/plugins/jquery.easing.1.3.min.js"></script> 
 <script src="<%=request.getContextPath() %>/plugins/scrollify.min.js"></script> 
 <script src="<%=request.getContextPath() %>/js/home.js"></script>
+<script src="<%=request.getContextPath() %>/js/utils.js"></script>
 <script type="text/javascript">
     var url = window.location.href;
     if(url.indexOf(".cn")!=-1){
