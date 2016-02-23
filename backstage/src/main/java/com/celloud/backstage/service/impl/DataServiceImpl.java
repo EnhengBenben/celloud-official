@@ -1,10 +1,17 @@
 package com.celloud.backstage.service.impl;
 
+import java.io.File;
+import java.util.List;
+
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.celloud.backstage.mapper.DataFileMapper;
+import com.celloud.backstage.mapper.ProjectMapper;
+import com.celloud.backstage.mapper.ReportMapper;
 import com.celloud.backstage.model.DataFile;
 import com.celloud.backstage.service.DataService;
 
@@ -17,8 +24,13 @@ import com.celloud.backstage.service.DataService;
  */
 @Service("dataService")
 public class DataServiceImpl implements DataService {
+    Logger logger=LoggerFactory.getLogger(DataServiceImpl.class);
     @Resource
-    DataFileMapper dataFileMapper;
+    private DataFileMapper dataFileMapper;
+    @Resource
+    private ProjectMapper projectMapper;
+    @Resource
+    private ReportMapper reportMapper;
 
 
     @Override
@@ -30,5 +42,30 @@ public class DataServiceImpl implements DataService {
     @Override
     public int updateDataInfoByFileId(DataFile data) {
         return dataFileMapper.updateDataInfoByFileId(data);
+    }
+
+    @Override
+    public boolean removeData(Integer userId) {
+        boolean flag=false;
+        try {
+            if(userId!=null){
+                List<DataFile> list=dataFileMapper.selectByUserId(userId);
+                dataFileMapper.deletefileProjectRelatByUserId(userId);
+                dataFileMapper.deleteDataFileByUserId(userId);
+                for(DataFile data:list){
+                    File file=new File(data.getPath());
+                    if(file.exists()&&file.isFile()){
+                        file.delete();
+                    }
+                }
+                projectMapper.deleteProjectByUserId(userId);
+                projectMapper.deleteProjectShareByFrom(userId);
+                reportMapper.deleteByUserId(userId);
+                flag=true;
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return flag;
     }
 }

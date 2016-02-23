@@ -1,6 +1,7 @@
 package com.celloud.backstage.action;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,6 +58,25 @@ public class DataFileAction {
          ModelAndView mv=new ModelAndView("data/data_upload");
          return mv;
      }
+    @RequestMapping("dataFile/toDataClean")
+    public ModelAndView toDataClean(){
+        ModelAndView mv=new ModelAndView("data/data_clean");
+        String[] testAccountIds=PropertiesUtil.testAccountIds.split(",");
+        List<User> userList=new ArrayList<User>();
+        for(String id:testAccountIds){
+            User user=userService.selectUserById(Integer.parseInt(id));
+            if(user!=null){
+                userList.add(user);
+            }
+        }
+        mv.addObject("userList", userList);
+        return mv;
+    }
+    @ResponseBody
+    @RequestMapping("dataFile/cleanData")
+    public boolean cleanData(Integer userId){
+        return dataService.removeData(userId);
+    }
     
     @RequestMapping("dataFile/sumitAmount")
     public ModelAndView sumitAmount(@RequestParam("amount") int amount){

@@ -53,9 +53,9 @@ $(function(){
                     } else {
                         if(data>0){
                             $("#pwdResetForm")[0].reset();
-                            $("#resetPwdInfo").attr("class",'alert alert-success').html("保存成功");
+                            $("#resetPwdInfo").attr("class",'alert alert-success').html("<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>保存成功");
                         }else{
-                        	 $("#resetPwdInfo").attr("class",'alert alert-danger').html("用户修改原始密码失败");
+                        	 $("#resetPwdInfo").attr("class",'alert alert-danger').html("<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>用户修改原始密码失败");
                         }
                     }
                 }

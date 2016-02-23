@@ -424,6 +424,13 @@ var dataFile=(function(dataFile){
 			$("#file-upload-menu").addClass("active").parent().parent("li").addClass("active").addClass("opened").addClass("expanded");
 		});
 	}
+	self.toDataClean=function(){
+		$.post("dataFile/toDataClean",function(responseText){
+			$("#main-content").html(responseText);
+			$("#main-menu li").removeClass("active").removeClass("opened").removeClass("expanded");
+			$("#file-clean-menu").addClass("active").parent().parent("li").addClass("active").addClass("opened").addClass("expanded");
+		});
+	}
 	self.empty=function(){
 		$("#data-upload-set-panel").html('');
 		$("#DataAmountForm")[0].reset();
