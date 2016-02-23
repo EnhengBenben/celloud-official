@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.celloud.model.Feedback;
+import com.celloud.model.mysql.Feedback;
 import com.celloud.page.Page;
 
 public interface FeedbackMapper {

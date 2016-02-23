@@ -1,6 +1,6 @@
 package com.celloud.mapper;
 
-import com.celloud.model.Company;
+import com.celloud.model.mysql.Company;
 
 public interface CompanyMapper {
     int deleteByPrimaryKey(Integer companyId);

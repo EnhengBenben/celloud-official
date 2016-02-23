@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.celloud.model.Screen;
+import com.celloud.model.mysql.Screen;
 
 public interface ScreenMapper {
     int deleteByPrimaryKey(Integer screenId);

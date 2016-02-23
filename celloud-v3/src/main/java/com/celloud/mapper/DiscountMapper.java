@@ -1,6 +1,6 @@
 package com.celloud.mapper;
 
-import com.celloud.model.Discount;
+import com.celloud.model.mysql.Discount;
 
 public interface DiscountMapper {
     int deleteByPrimaryKey(Integer id);

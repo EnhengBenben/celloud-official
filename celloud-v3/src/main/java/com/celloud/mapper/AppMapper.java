@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.celloud.model.App;
+import com.celloud.model.mysql.App;
 import com.celloud.page.Page;
 
 public interface AppMapper {

@@ -1,6 +1,6 @@
 package com.celloud.mapper;
 
-import com.celloud.model.Dept;
+import com.celloud.model.mysql.Dept;
 
 public interface DeptMapper {
     int deleteByPrimaryKey(Integer deptId);

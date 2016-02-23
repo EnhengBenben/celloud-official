@@ -1,6 +1,6 @@
 package com.celloud.mapper;
 
-import com.celloud.model.FileFormat;
+import com.celloud.model.mysql.FileFormat;
 
 public interface FileFormatMapper {
     int deleteByPrimaryKey(Integer formatId);

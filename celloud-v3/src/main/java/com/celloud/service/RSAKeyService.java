@@ -1,6 +1,6 @@
 package com.celloud.service;
 
-import com.celloud.model.RSAKey;
+import com.celloud.model.mysql.RSAKey;
 
 /**
  * 用户记住密码使用的公钥私钥管理接口

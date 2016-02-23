@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.celloud.model.User;
+import com.celloud.model.mysql.User;
 
 public interface UserMapper {
     public int deleteByPrimaryKey(Integer userId);

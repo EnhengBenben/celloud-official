@@ -2,7 +2,7 @@ package com.celloud.mapper;
 
 import java.util.List;
 
-import com.celloud.model.FeedbackAttachment;
+import com.celloud.model.mysql.FeedbackAttachment;
 
 public interface FeedbackAttachmentMapper {
     int deleteByPrimaryKey(Integer id);

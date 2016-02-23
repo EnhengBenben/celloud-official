@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.celloud.model.Project;
+import com.celloud.model.mysql.Project;
 
 public interface ProjectMapper {
     int deleteByPrimaryKey(Integer projectId);

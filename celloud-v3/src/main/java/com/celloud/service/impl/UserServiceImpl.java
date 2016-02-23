@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.mapper.UserMapper;
-import com.celloud.model.User;
+import com.celloud.model.mysql.User;
 import com.celloud.service.UserService;
 import com.celloud.utils.MD5Util;
 

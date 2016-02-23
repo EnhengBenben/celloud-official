@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.celloud.model.Task;
+import com.celloud.model.mysql.Task;
 
 public interface TaskMapper {
     int deleteByPrimaryKey(Integer taskId);

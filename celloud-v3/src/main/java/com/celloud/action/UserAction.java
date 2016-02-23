@@ -10,8 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
-import com.celloud.model.ActionLog;
-import com.celloud.model.User;
+import com.celloud.model.mysql.ActionLog;
+import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.ActionLogService;

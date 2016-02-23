@@ -5,7 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.celloud.mapper.ClientMapper;
-import com.celloud.model.Client;
+import com.celloud.model.mysql.Client;
 import com.celloud.service.ClientService;
 
 @Service("clientService")

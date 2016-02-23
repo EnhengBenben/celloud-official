@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.celloud.constants.ConstantsData;
-import com.celloud.model.Project;
-import com.celloud.model.User;
+import com.celloud.model.mysql.Project;
+import com.celloud.model.mysql.User;
 import com.celloud.service.ProjectService;
 import com.celloud.service.UserService;
 

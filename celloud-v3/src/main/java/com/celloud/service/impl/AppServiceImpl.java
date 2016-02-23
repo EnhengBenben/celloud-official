@@ -15,7 +15,7 @@ import com.celloud.constants.PriceType;
 import com.celloud.constants.ReportPeriod;
 import com.celloud.constants.ReportType;
 import com.celloud.mapper.AppMapper;
-import com.celloud.model.App;
+import com.celloud.model.mysql.App;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.AppService;

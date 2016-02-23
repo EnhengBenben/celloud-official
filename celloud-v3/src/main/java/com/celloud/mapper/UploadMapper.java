@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.celloud.model.Upload;
+import com.celloud.model.mysql.Upload;
 
 public interface UploadMapper {
 	int deleteByPrimaryKey(Integer uploadId);

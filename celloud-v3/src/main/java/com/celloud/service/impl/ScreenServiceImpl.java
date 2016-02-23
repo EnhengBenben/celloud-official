@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.celloud.mapper.ScreenMapper;
-import com.celloud.model.Screen;
+import com.celloud.model.mysql.Screen;
 import com.celloud.service.ScreenService;
 
 /**

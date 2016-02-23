@@ -68,7 +68,10 @@ public class ReportDaoImpl implements ReportDao {
             Object obj) {
         dataStore.update(dataStore.createQuery(T).filter("_id", id),
                 dataStore.createUpdateOperations(T).set(field, obj));
-
     }
 
+    @Override
+    public <T> void saveData(Class<T> T) {
+        dataStore.save(T);
+    }
 }

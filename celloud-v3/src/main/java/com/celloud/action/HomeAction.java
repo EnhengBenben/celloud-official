@@ -16,8 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
 import com.celloud.mail.EmailSender;
-import com.celloud.model.Client;
-import com.celloud.model.User;
+import com.celloud.model.mysql.Client;
+import com.celloud.model.mysql.User;
 import com.celloud.service.ClientService;
 import com.celloud.service.UserService;
 import com.celloud.utils.MD5Util;

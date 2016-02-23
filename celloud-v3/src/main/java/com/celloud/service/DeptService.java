@@ -1,6 +1,6 @@
 package com.celloud.service;
 
-import com.celloud.model.Dept;
+import com.celloud.model.mysql.Dept;
 
 /**
  * 部门service

@@ -15,9 +15,9 @@ import com.celloud.constants.TaskPeriod;
 import com.celloud.mapper.DataFileMapper;
 import com.celloud.mapper.ReportMapper;
 import com.celloud.mapper.TaskMapper;
-import com.celloud.model.DataFile;
-import com.celloud.model.Report;
-import com.celloud.model.Task;
+import com.celloud.model.mysql.DataFile;
+import com.celloud.model.mysql.Report;
+import com.celloud.model.mysql.Task;
 import com.celloud.service.TaskService;
 
 /**

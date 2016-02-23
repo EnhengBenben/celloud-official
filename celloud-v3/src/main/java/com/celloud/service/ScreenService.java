@@ -2,7 +2,7 @@ package com.celloud.service;
 
 import java.util.List;
 
-import com.celloud.model.Screen;
+import com.celloud.model.mysql.Screen;
 
 /**
  * 

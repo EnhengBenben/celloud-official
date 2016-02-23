@@ -1,6 +1,6 @@
 package com.celloud.mapper;
 
-import com.celloud.model.Price;
+import com.celloud.model.mysql.Price;
 
 public interface PriceMapper {
     int deleteByPrimaryKey(Integer id);

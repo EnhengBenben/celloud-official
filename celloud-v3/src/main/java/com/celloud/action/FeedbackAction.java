@@ -32,9 +32,9 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.FeedbackConstants;
-import com.celloud.model.Feedback;
-import com.celloud.model.FeedbackAttachment;
-import com.celloud.model.FeedbackReply;
+import com.celloud.model.mysql.Feedback;
+import com.celloud.model.mysql.FeedbackAttachment;
+import com.celloud.model.mysql.FeedbackReply;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.FeedbackService;

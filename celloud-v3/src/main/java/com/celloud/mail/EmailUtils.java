@@ -10,8 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.celloud.constants.FeedbackConstants;
-import com.celloud.model.Feedback;
-import com.celloud.model.FeedbackAttachment;
+import com.celloud.model.mysql.Feedback;
+import com.celloud.model.mysql.FeedbackAttachment;
 import com.celloud.utils.UserAgentUtil;
 
 /**

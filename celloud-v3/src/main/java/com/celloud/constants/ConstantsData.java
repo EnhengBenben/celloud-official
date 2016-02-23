@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.celloud.model.User;
+import com.celloud.model.mysql.User;
 
 /**
  * 系统级常量及参数配置

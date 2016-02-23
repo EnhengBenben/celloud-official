@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.celloud.mapper.UploadMapper;
-import com.celloud.model.Upload;
+import com.celloud.model.mysql.Upload;
 import com.celloud.service.UploadService;
 
 @Service("uploadService")

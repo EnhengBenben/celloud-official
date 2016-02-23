@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.celloud.model.RSAKey;
+import com.celloud.model.mysql.RSAKey;
 
 public interface RSAKeyMapper {
     public int deleteByPrimaryKey(Integer id);

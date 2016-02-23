@@ -14,7 +14,7 @@ import com.celloud.constants.DataState;
 import com.celloud.constants.ReportPeriod;
 import com.celloud.constants.ReportType;
 import com.celloud.mapper.DataFileMapper;
-import com.celloud.model.DataFile;
+import com.celloud.model.mysql.DataFile;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.DataService;

@@ -1,6 +1,6 @@
 package com.celloud.mapper;
 
-import com.celloud.model.Client;
+import com.celloud.model.mysql.Client;
 
 public interface ClientMapper {
     int deleteByPrimaryKey(Integer id);

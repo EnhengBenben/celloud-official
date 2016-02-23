@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.celloud.mapper.RSAKeyMapper;
-import com.celloud.model.RSAKey;
+import com.celloud.model.mysql.RSAKey;
 import com.celloud.service.RSAKeyService;
 
 /**

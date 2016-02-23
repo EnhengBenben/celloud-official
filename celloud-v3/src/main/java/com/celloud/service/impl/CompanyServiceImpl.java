@@ -5,7 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.celloud.mapper.CompanyMapper;
-import com.celloud.model.Company;
+import com.celloud.model.mysql.Company;
 import com.celloud.service.CompanyService;
 
 @Service("companyService")

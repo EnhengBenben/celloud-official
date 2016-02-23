@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.celloud.constants.ConstantsData;
-import com.celloud.model.ActionLog;
+import com.celloud.model.mysql.ActionLog;
 import com.github.jarod.qqwry.IPZone;
 import com.github.jarod.qqwry.QQWry;
 

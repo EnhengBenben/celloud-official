@@ -19,9 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.ClassifyFloor;
 import com.celloud.constants.ConstantsData;
-import com.celloud.model.App;
-import com.celloud.model.Classify;
-import com.celloud.model.Screen;
+import com.celloud.model.mysql.App;
+import com.celloud.model.mysql.Classify;
+import com.celloud.model.mysql.Screen;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.AppService;

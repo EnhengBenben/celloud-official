@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.celloud.constants.DataState;
 import com.celloud.mapper.ProjectMapper;
 import com.celloud.mapper.ReportMapper;
-import com.celloud.model.Project;
+import com.celloud.model.mysql.Project;
 import com.celloud.service.ProjectService;
 
 @Service("projectServiceImpl")

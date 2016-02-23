@@ -2,7 +2,7 @@ package com.celloud.service;
 
 import java.util.Date;
 
-import com.celloud.model.User;
+import com.celloud.model.mysql.User;
 
 /**
  * 用户服务接口

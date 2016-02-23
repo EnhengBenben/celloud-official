@@ -1,6 +1,6 @@
 package com.celloud.mapper;
 
-import com.celloud.model.Notice;
+import com.celloud.model.mysql.Notice;
 
 public interface NoticeMapper {
     int deleteByPrimaryKey(Integer noticeId);

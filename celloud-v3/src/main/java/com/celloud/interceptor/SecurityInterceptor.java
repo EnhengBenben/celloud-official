@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.celloud.constants.Constants;
-import com.celloud.model.User;
+import com.celloud.model.mysql.User;
 import com.celloud.service.ActionLogService;
 import com.celloud.utils.UserAgentUtil;
 

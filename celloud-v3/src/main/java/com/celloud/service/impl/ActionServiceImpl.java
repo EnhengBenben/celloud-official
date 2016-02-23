@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.mapper.ActionLogMapper;
-import com.celloud.model.ActionLog;
+import com.celloud.model.mysql.ActionLog;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.ActionLogService;

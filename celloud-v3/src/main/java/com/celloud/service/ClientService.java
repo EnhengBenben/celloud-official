@@ -1,6 +1,6 @@
 package com.celloud.service;
 
-import com.celloud.model.Client;
+import com.celloud.model.mysql.Client;
 
 public interface ClientService {
 

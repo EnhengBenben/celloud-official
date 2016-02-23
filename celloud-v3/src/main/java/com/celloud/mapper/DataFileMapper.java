@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.celloud.model.DataFile;
+import com.celloud.model.mysql.DataFile;
 import com.celloud.page.Page;
 
 public interface DataFileMapper {

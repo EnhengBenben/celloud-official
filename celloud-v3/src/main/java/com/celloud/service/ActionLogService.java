@@ -1,6 +1,6 @@
 package com.celloud.service;
 
-import com.celloud.model.ActionLog;
+import com.celloud.model.mysql.ActionLog;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 

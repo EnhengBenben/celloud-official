@@ -26,7 +26,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
-import com.celloud.model.DataFile;
+import com.celloud.model.mysql.DataFile;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.ReportService;

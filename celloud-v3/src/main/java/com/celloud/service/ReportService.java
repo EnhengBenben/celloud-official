@@ -5,16 +5,16 @@ import java.util.Map;
 
 import org.bson.types.ObjectId;
 
-import com.celloud.model.CmpFilling;
-import com.celloud.model.CmpGeneSnpResult;
-import com.celloud.model.CmpReport;
-import com.celloud.model.GddDiseaseDict;
-import com.celloud.model.HBV;
-import com.celloud.model.MIB;
-import com.celloud.model.Oncogene;
-import com.celloud.model.Pgs;
-import com.celloud.model.Report;
-import com.celloud.model.Split;
+import com.celloud.model.mongo.CmpFilling;
+import com.celloud.model.mongo.CmpGeneSnpResult;
+import com.celloud.model.mongo.CmpReport;
+import com.celloud.model.mongo.GddDiseaseDict;
+import com.celloud.model.mongo.HBV;
+import com.celloud.model.mongo.MIB;
+import com.celloud.model.mongo.Oncogene;
+import com.celloud.model.mongo.Pgs;
+import com.celloud.model.mongo.Split;
+import com.celloud.model.mysql.Report;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 

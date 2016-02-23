@@ -1,6 +1,6 @@
 package com.celloud.service;
 
-import com.celloud.model.Company;
+import com.celloud.model.mysql.Company;
 
 /**
  * 公司服务接口

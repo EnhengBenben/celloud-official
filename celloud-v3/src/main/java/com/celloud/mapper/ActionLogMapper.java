@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.celloud.model.ActionLog;
+import com.celloud.model.mysql.ActionLog;
 import com.celloud.page.Page;
 
 public interface ActionLogMapper {

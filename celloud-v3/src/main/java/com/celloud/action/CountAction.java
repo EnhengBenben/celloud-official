@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.TimeState;
-import com.celloud.model.Pgs;
+import com.celloud.model.mongo.Pgs;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.ReportService;

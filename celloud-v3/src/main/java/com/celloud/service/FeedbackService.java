@@ -2,9 +2,9 @@ package com.celloud.service;
 
 import java.util.List;
 
-import com.celloud.model.Feedback;
-import com.celloud.model.FeedbackAttachment;
-import com.celloud.model.FeedbackReply;
+import com.celloud.model.mysql.Feedback;
+import com.celloud.model.mysql.FeedbackAttachment;
+import com.celloud.model.mysql.FeedbackReply;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 

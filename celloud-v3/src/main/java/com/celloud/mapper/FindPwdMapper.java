@@ -1,6 +1,6 @@
 package com.celloud.mapper;
 
-import com.celloud.model.FindPwd;
+import com.celloud.model.mysql.FindPwd;
 
 public interface FindPwdMapper {
     int deleteByPrimaryKey(Integer id);

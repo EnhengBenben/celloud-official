@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.celloud.mapper.ClassifyMapper;
-import com.celloud.model.Classify;
+import com.celloud.model.mysql.Classify;
 import com.celloud.service.ClassifyService;
 
 @Service("classifyService")
