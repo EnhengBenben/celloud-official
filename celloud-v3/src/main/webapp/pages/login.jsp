@@ -84,7 +84,7 @@
 		<!--#E wrapper-->
 	</div>
 	<!--#E bgContainer-->
-	<script type="text/javascript" src="plugins/jQuery/jquery-1.11.3.min.js"></script>
+	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/utils.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/tologin.js?version=1.0"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/md5.js"></script>

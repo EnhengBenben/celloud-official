@@ -58,7 +58,7 @@
 	var context = '<%=request.getContextPath() %>';
 	var userName = '<%=session.getAttribute("userName")%>';
 </script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/utils.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/ueditor/ueditor.config.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/ueditor/ueditor.all.js"></script>

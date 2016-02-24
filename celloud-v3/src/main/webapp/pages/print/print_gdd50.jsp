@@ -338,8 +338,8 @@
       </tr>
     </table>
 </section>
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 <script language="javascript" src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/browser.js"></script>
 <script type="text/javascript">
 var num = 1;

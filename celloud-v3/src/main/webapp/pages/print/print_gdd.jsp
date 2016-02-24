@@ -350,7 +350,7 @@
       </tr>
     </table>
   </section>
-<script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 <script>
   $(document).ready(function(){
       $("#patientName").on("change",function(){

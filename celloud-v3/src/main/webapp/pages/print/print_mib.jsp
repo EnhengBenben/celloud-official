@@ -221,7 +221,7 @@
       </tr>
     </table>
 </section>
-<script language="javascript" src="<%=request.getContextPath()%>/plugins/jQuery/jquery-1.11.3.min.js"></script>
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
 <script src="<%=request.getContextPath() %>/js/charts.js"></script>
 <script type="text/javascript">
