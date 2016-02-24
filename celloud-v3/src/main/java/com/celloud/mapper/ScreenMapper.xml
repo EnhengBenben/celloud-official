@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.celloud.mapper.ScreenMapper" >
-  <resultMap id="BaseResultMap" type="com.celloud.model.Screen" >
+  <resultMap id="BaseResultMap" type="com.celloud.model.mysql.Screen" >
     <id column="screen_id" property="screenId" jdbcType="INTEGER" />
     <result column="screen_name" property="screenName" jdbcType="VARCHAR" />
     <result column="app_id" property="appId" jdbcType="INTEGER" />
@@ -19,13 +19,13 @@
     delete from tb_screen
     where screen_id = #{screenId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.celloud.model.Screen" >
+  <insert id="insert" parameterType="com.celloud.model.mysql.Screen" >
     insert into tb_screen (screen_id, screen_name, app_id
       )
     values (#{screenId,jdbcType=INTEGER}, #{screenName,jdbcType=VARCHAR}, #{appId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.celloud.model.Screen" >
+  <insert id="insertSelective" parameterType="com.celloud.model.mysql.Screen" >
     insert into tb_screen
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="screenId != null" >
@@ -50,7 +50,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.Screen" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.Screen" >
     update tb_screen
     <set >
       <if test="screenName != null" >
@@ -62,7 +62,7 @@
     </set>
     where screen_id = #{screenId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.celloud.model.Screen" >
+  <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.Screen" >
     update tb_screen
     set screen_name = #{screenName,jdbcType=VARCHAR},
       app_id = #{appId,jdbcType=INTEGER}

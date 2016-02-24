@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.celloud.mapper.FindPwdMapper" >
-  <resultMap id="BaseResultMap" type="com.celloud.model.FindPwd" >
+  <resultMap id="BaseResultMap" type="com.celloud.model.mysql.FindPwd" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="expire_date" property="expireDate" jdbcType="TIMESTAMP" />
@@ -22,13 +22,13 @@
     delete from tb_user_find_pwd
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.celloud.model.FindPwd" >
+  <insert id="insert" parameterType="com.celloud.model.mysql.FindPwd" >
     insert into tb_user_find_pwd (id, user_id, expire_date, 
       md5, email, state)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{expireDate,jdbcType=TIMESTAMP}, 
       #{md5,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.celloud.model.FindPwd" >
+  <insert id="insertSelective" parameterType="com.celloud.model.mysql.FindPwd" >
     insert into tb_user_find_pwd
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -71,7 +71,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.FindPwd" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.FindPwd" >
     update tb_user_find_pwd
     <set >
       <if test="userId != null" >
@@ -92,7 +92,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.celloud.model.FindPwd" >
+  <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.FindPwd" >
     update tb_user_find_pwd
     set user_id = #{userId,jdbcType=INTEGER},
       expire_date = #{expireDate,jdbcType=TIMESTAMP},

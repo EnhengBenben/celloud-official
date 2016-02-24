@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.celloud.mapper.FileFormatMapper" >
-  <resultMap id="BaseResultMap" type="com.celloud.model.FileFormat" >
+  <resultMap id="BaseResultMap" type="com.celloud.model.mysql.FileFormat" >
     <id column="format_id" property="formatId" jdbcType="INTEGER" />
     <result column="format_desc" property="formatDesc" jdbcType="VARCHAR" />
   </resultMap>
@@ -18,11 +18,11 @@
     delete from tb_file_format
     where format_id = #{formatId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.celloud.model.FileFormat" >
+  <insert id="insert" parameterType="com.celloud.model.mysql.FileFormat" >
     insert into tb_file_format (format_id, format_desc)
     values (#{formatId,jdbcType=INTEGER}, #{formatDesc,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.celloud.model.FileFormat" >
+  <insert id="insertSelective" parameterType="com.celloud.model.mysql.FileFormat" >
     insert into tb_file_format
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="formatId != null" >
@@ -41,7 +41,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.FileFormat" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.FileFormat" >
     update tb_file_format
     <set >
       <if test="formatDesc != null" >
@@ -50,7 +50,7 @@
     </set>
     where format_id = #{formatId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.celloud.model.FileFormat" >
+  <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.FileFormat" >
     update tb_file_format
     set format_desc = #{formatDesc,jdbcType=VARCHAR}
     where format_id = #{formatId,jdbcType=INTEGER}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.celloud.mapper.FeedbackMapper">
-	<resultMap id="BaseResultMap" type="com.celloud.model.Feedback">
+	<resultMap id="BaseResultMap" type="com.celloud.model.mysql.Feedback">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="user_id" property="userId" jdbcType="INTEGER" />
 		<result column="username" property="username" jdbcType="VARCHAR" />
@@ -36,7 +36,7 @@
 		tb_feedback
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
-	<insert id="insert" parameterType="com.celloud.model.Feedback" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insert" parameterType="com.celloud.model.mysql.Feedback" useGeneratedKeys="true" keyProperty="id">
 		insert into tb_feedback (id,
 		user_id, username,
 		email, title, create_date,
@@ -51,7 +51,7 @@
 		#{content,jdbcType=LONGVARCHAR}
 		)
 	</insert>
-	<insert id="insertSelective" parameterType="com.celloud.model.Feedback" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insertSelective" parameterType="com.celloud.model.mysql.Feedback" useGeneratedKeys="true" keyProperty="id">
 		insert into tb_feedback
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -112,7 +112,7 @@
 			</if>
 		</trim>
 	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.Feedback">
+	<update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.Feedback">
 		update tb_feedback
 		<set>
 			<if test="userId != null">
@@ -142,7 +142,7 @@
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
-	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.celloud.model.Feedback">
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.celloud.model.mysql.Feedback">
 		update
 		tb_feedback
 		set user_id = #{userId,jdbcType=INTEGER},
@@ -159,7 +159,7 @@
 		#{content,jdbcType=LONGVARCHAR}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
-	<update id="updateByPrimaryKey" parameterType="com.celloud.model.Feedback">
+	<update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.Feedback">
 		update tb_feedback
 		set user_id = #{userId,jdbcType=INTEGER},
 		username =

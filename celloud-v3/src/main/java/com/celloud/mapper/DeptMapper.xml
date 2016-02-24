@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.celloud.mapper.DeptMapper" >
-  <resultMap id="BaseResultMap" type="com.celloud.model.Dept" >
+  <resultMap id="BaseResultMap" type="com.celloud.model.mysql.Dept" >
     <id column="dept_id" property="deptId" jdbcType="INTEGER" />
     <result column="dept_name" property="deptName" jdbcType="VARCHAR" />
     <result column="english_name" property="englishName" jdbcType="VARCHAR" />
@@ -23,7 +23,7 @@
     delete from tb_dept
     where dept_id = #{deptId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.celloud.model.Dept" >
+  <insert id="insert" parameterType="com.celloud.model.mysql.Dept" >
     insert into tb_dept (dept_id, dept_name, english_name, 
       tel, dept_icon, company_id, 
       state)
@@ -31,7 +31,7 @@
       #{tel,jdbcType=VARCHAR}, #{deptIcon,jdbcType=VARCHAR}, #{companyId,jdbcType=INTEGER}, 
       #{state,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.celloud.model.Dept" >
+  <insert id="insertSelective" parameterType="com.celloud.model.mysql.Dept" >
     insert into tb_dept
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="deptId != null" >
@@ -80,7 +80,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.Dept" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.Dept" >
     update tb_dept
     <set >
       <if test="deptName != null" >
@@ -104,7 +104,7 @@
     </set>
     where dept_id = #{deptId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.celloud.model.Dept" >
+  <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.Dept" >
     update tb_dept
     set dept_name = #{deptName,jdbcType=VARCHAR},
       english_name = #{englishName,jdbcType=VARCHAR},

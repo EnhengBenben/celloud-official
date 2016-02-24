@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.celloud.mapper.AppMapper" >
-  <resultMap id="miniBaseMap" type="com.celloud.model.App">
+  <resultMap id="miniBaseMap" type="com.celloud.model.mysql.App">
     <id column="app_id" property="appId" jdbcType="INTEGER" />
     <result column="app_name" property="appName" jdbcType="VARCHAR" />
     <result column="data_num" property="dataNum" jdbcType="INTEGER" />
   </resultMap>
-  <resultMap id="BaseResultMap" type="com.celloud.model.App" extends="miniBaseMap" >
+  <resultMap id="BaseResultMap" type="com.celloud.model.mysql.App" extends="miniBaseMap" >
     <result column="english_name" property="englishName" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="picture_name" property="pictureName" jdbcType="VARCHAR" />
@@ -25,10 +25,10 @@
     <result column="method" property="method" jdbcType="VARCHAR" />
     <result column="max_task" property="maxTask" jdbcType="INTEGER" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.celloud.model.App" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.celloud.model.mysql.App" extends="BaseResultMap" >
     <result column="app_doc" property="appDoc" jdbcType="LONGVARCHAR" />
   </resultMap>
-  <resultMap id="extraResultMap" type="com.celloud.model.App" extends="BaseResultMap" >
+  <resultMap id="extraResultMap" type="com.celloud.model.mysql.App" extends="BaseResultMap" >
     <result column="company_Name" property="companyName" jdbcType="VARCHAR" />
     <result column="is_add" property="isAdded" jdbcType="VARCHAR" />
     <result column="classifyNames" property="classifyNames" jdbcType="VARCHAR" />
@@ -56,7 +56,7 @@
     delete from tb_app
     where app_id = #{appId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.celloud.model.App" >
+  <insert id="insert" parameterType="com.celloud.model.mysql.App" >
     insert into tb_app (app_id, app_name, english_name, 
       address, picture_name, create_date, 
       intro, description, company_id, 
@@ -72,7 +72,7 @@
       #{offLine,jdbcType=INTEGER}, #{command,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
       #{method,jdbcType=VARCHAR}, #{appDoc,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.celloud.model.App" >
+  <insert id="insertSelective" parameterType="com.celloud.model.mysql.App" >
     insert into tb_app
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="appId != null" >
@@ -199,7 +199,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.App" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.App" >
     update tb_app
     <set >
       <if test="appName != null" >
@@ -262,7 +262,7 @@
     </set>
     where app_id = #{appId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.celloud.model.App" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.celloud.model.mysql.App" >
     update tb_app
     set app_name = #{appName,jdbcType=VARCHAR},
       english_name = #{englishName,jdbcType=VARCHAR},
@@ -285,7 +285,7 @@
       app_doc = #{appDoc,jdbcType=LONGVARCHAR}
     where app_id = #{appId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.celloud.model.App" >
+  <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.App" >
     update tb_app
     set app_name = #{appName,jdbcType=VARCHAR},
       english_name = #{englishName,jdbcType=VARCHAR},

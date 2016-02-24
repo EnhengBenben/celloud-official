@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.celloud.mapper.CompanyMapper" >
-  <resultMap id="BaseResultMap" type="com.celloud.model.Company" >
+  <resultMap id="BaseResultMap" type="com.celloud.model.mysql.Company" >
     <id column="company_id" property="companyId" jdbcType="INTEGER" />
     <result column="company_name" property="companyName" jdbcType="VARCHAR" />
     <result column="english_name" property="englishName" jdbcType="VARCHAR" />
@@ -31,7 +31,7 @@
     delete from tb_company
     where company_id = #{companyId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.celloud.model.Company" >
+  <insert id="insert" parameterType="com.celloud.model.mysql.Company" >
     insert into tb_company (company_id, company_name, english_name, 
       company_icon, address, address_en, 
       zip_code, tel, state, 
@@ -43,7 +43,7 @@
       #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{province,jdbcType=VARCHAR}, 
       #{city,jdbcType=VARCHAR}, #{addressDetail,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.celloud.model.Company" >
+  <insert id="insertSelective" parameterType="com.celloud.model.mysql.Company" >
     insert into tb_company
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="companyId != null" >
@@ -134,7 +134,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.Company" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.Company" >
     update tb_company
     <set >
       <if test="companyName != null" >
@@ -179,7 +179,7 @@
     </set>
     where company_id = #{companyId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.celloud.model.Company" >
+  <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.Company" >
     update tb_company
     set company_name = #{companyName,jdbcType=VARCHAR},
       english_name = #{englishName,jdbcType=VARCHAR},

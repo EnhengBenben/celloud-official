@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.celloud.mapper.ClassifyMapper" >
-  <resultMap id="BaseResultMap" type="com.celloud.model.Classify" >
+  <resultMap id="BaseResultMap" type="com.celloud.model.mysql.Classify" >
     <id column="classify_id" property="classifyId" jdbcType="INTEGER" />
     <result column="classify_name" property="classifyName" jdbcType="VARCHAR" />
     <result column="classify_pid" property="classifyPid" jdbcType="INTEGER" />
@@ -20,13 +20,13 @@
     delete from tb_classify
     where classify_id = #{classifyId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.celloud.model.Classify" >
+  <insert id="insert" parameterType="com.celloud.model.mysql.Classify" >
     insert into tb_classify (classify_id, classify_name, classify_pid, 
       notes)
     values (#{classifyId,jdbcType=INTEGER}, #{classifyName,jdbcType=VARCHAR}, #{classifyPid,jdbcType=INTEGER}, 
       #{notes,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.celloud.model.Classify" >
+  <insert id="insertSelective" parameterType="com.celloud.model.mysql.Classify" >
     insert into tb_classify
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="classifyId != null" >
@@ -57,7 +57,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.Classify" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.Classify" >
     update tb_classify
     <set >
       <if test="classifyName != null" >
@@ -72,7 +72,7 @@
     </set>
     where classify_id = #{classifyId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.celloud.model.Classify" >
+  <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.Classify" >
     update tb_classify
     set classify_name = #{classifyName,jdbcType=VARCHAR},
       classify_pid = #{classifyPid,jdbcType=INTEGER},

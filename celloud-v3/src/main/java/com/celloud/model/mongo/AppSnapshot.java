@@ -3,6 +3,8 @@ package com.celloud.model.mongo;
 import java.util.Date;
 import java.util.List;
 
+import org.mongodb.morphia.annotations.Entity;
+
 import com.celloud.model.mysql.DataFile;
 
 /**
@@ -11,10 +13,11 @@ import com.celloud.model.mysql.DataFile;
  * @author leamo
  * @date 2016年2月23日 下午5:10:25
  */
+@Entity(noClassnameStored = true)
 public class AppSnapshot {
-    private String appId;
+    private Integer appId;
 
-    private Integer appName;
+    private String appName;
 
     private Integer userId;
 
@@ -32,19 +35,19 @@ public class AppSnapshot {
 
     private Date endDate;
 
-    public String getAppId() {
+    public Integer getAppId() {
         return appId;
     }
 
-    public void setAppId(String appId) {
+    public void setAppId(Integer appId) {
         this.appId = appId;
     }
 
-    public Integer getAppName() {
+    public String getAppName() {
         return appName;
     }
 
-    public void setAppName(Integer appName) {
+    public void setAppName(String appName) {
         this.appName = appName;
     }
 

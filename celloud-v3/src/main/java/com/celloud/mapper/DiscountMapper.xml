@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.celloud.mapper.DiscountMapper" >
-  <resultMap id="BaseResultMap" type="com.celloud.model.Discount" >
+  <resultMap id="BaseResultMap" type="com.celloud.model.mysql.Discount" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="price_id" property="priceId" jdbcType="INTEGER" />
     <result column="discount_rate" property="discountRate" jdbcType="REAL" />
@@ -23,7 +23,7 @@
     delete from tb_discount
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.celloud.model.Discount" >
+  <insert id="insert" parameterType="com.celloud.model.mysql.Discount" >
     insert into tb_discount (id, price_id, discount_rate, 
       discount_price, start_date, end_date, 
       create_date)
@@ -31,7 +31,7 @@
       #{discountPrice,jdbcType=DECIMAL}, #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, 
       #{createDate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.celloud.model.Discount" >
+  <insert id="insertSelective" parameterType="com.celloud.model.mysql.Discount" >
     insert into tb_discount
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -80,7 +80,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.Discount" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.Discount" >
     update tb_discount
     <set >
       <if test="priceId != null" >
@@ -104,7 +104,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.celloud.model.Discount" >
+  <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.Discount" >
     update tb_discount
     set price_id = #{priceId,jdbcType=INTEGER},
       discount_rate = #{discountRate,jdbcType=REAL},

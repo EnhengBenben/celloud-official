@@ -27,6 +27,7 @@ import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Task;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
+import com.celloud.service.ExpensesService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
@@ -58,6 +59,8 @@ public class TaskAction {
     private ReportService reportService;
     @Resource
     private AppService appService;
+    @Resource
+    private ExpensesService expencesService;
     private static Map<String, Map<String, String>> machines = ConstantsData
             .getMachines();
     private static String sgeHost = machines.get("158").get(Mod.HOST);
@@ -102,7 +105,7 @@ public class TaskAction {
                 .append(SparkPro.TOOLSPATH).append(" ").append(userId)
                 .append(" ").append(appId).append(" ").append(dataNames)
                 .append(" ").append(projectId);
-        PerlUtils.excutePerl(command.toString());
+        // PerlUtils.excutePerl(command.toString());
         // 3. 创建项目结果文件
         StringBuffer basePath = new StringBuffer();
         basePath.append(SparkPro.TOOLSPATH).append(userId).append("/")
@@ -133,20 +136,6 @@ public class TaskAction {
         String xml = null;
         if (new File(projectFile.toString()).exists()) {
             xml = XmlUtil.writeXML(projectFile.toString());
-        }
-        // 6.结束任务修改项目报告状态
-        Task task = taskService.updateToDone(appId, Integer.parseInt(projectId),
-                dataKey, dataNames, xml);
-
-        if (task != null) {
-            logger.info("任务{}执行完毕", task.getTaskId());
-            task = taskService.findFirstTask(appId);
-            if (task != null) {
-                logger.info("运行命令：{}", command);
-                SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-                ssh.sshSubmit(command.toString(), false);
-                taskService.updateToRunning(task.getTaskId());
-            }
         }
         if (appId == 113) {
             String inPath = reportPath + "result/split/";
@@ -181,6 +170,19 @@ public class TaskAction {
                         dataService.updateDataInfoByFileId(DataFile);
                     }
                 }
+            }
+        }
+        // 6.结束任务修改项目报告状态
+        Task task = taskService.updateToDone(appId, Integer.parseInt(projectId),
+                dataKey, dataNames, xml);
+        if (task != null) {
+            logger.info("任务{}执行完毕", task.getTaskId());
+            task = taskService.findFirstTask(appId);
+            if (task != null) {
+                logger.info("运行命令：{}", command);
+                SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+                ssh.sshSubmit(command.toString(), false);
+                taskService.updateToRunning(task.getTaskId());
             }
         }
         return "run over";

@@ -101,7 +101,7 @@ public interface AppMapper {
             @Param("sortField") String sortField,
             @Param("sortType") String sortType,
             @Param("offLine") Integer offLine,
-            @Param("priceType") Integer priceType,
+            @Param("priceType") Byte priceType,
             @Param("attribute_private") Integer attribute_private,
             @Param("attribute_public") Integer attribute_public, Page page);
 
@@ -117,7 +117,7 @@ public interface AppMapper {
      */
     public App getAppById(@Param("appId") Integer appId,
             @Param("userId") Integer userId,
-            @Param("priceType") Integer priceType);
+            @Param("priceType") Byte priceType);
 
     /**
      * 获取已添加的APP

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.celloud.mapper.FeedbackAttachmentMapper">
-	<resultMap id="BaseResultMap" type="com.celloud.model.FeedbackAttachment">
+	<resultMap id="BaseResultMap" type="com.celloud.model.mysql.FeedbackAttachment">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="feedback_id" property="feedbackId" jdbcType="INTEGER" />
 		<result column="file_type" property="fileType" jdbcType="VARCHAR" />
@@ -22,7 +22,7 @@
 		tb_feedback_attachment
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
-	<insert id="insert" parameterType="com.celloud.model.FeedbackAttachment">
+	<insert id="insert" parameterType="com.celloud.model.mysql.FeedbackAttachment">
 		insert into
 		tb_feedback_attachment (id, feedback_id, file_type,
 		file_path)
@@ -43,7 +43,7 @@
 			#{item.filePath,jdbcType=VARCHAR})
 		</foreach>
 	</insert>
-	<insert id="insertSelective" parameterType="com.celloud.model.FeedbackAttachment">
+	<insert id="insertSelective" parameterType="com.celloud.model.mysql.FeedbackAttachment">
 		insert into tb_feedback_attachment
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -74,7 +74,7 @@
 			</if>
 		</trim>
 	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.FeedbackAttachment">
+	<update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.FeedbackAttachment">
 		update tb_feedback_attachment
 		<set>
 			<if test="feedbackId != null">
@@ -89,7 +89,7 @@
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
-	<update id="updateByPrimaryKey" parameterType="com.celloud.model.FeedbackAttachment">
+	<update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.FeedbackAttachment">
 		update
 		tb_feedback_attachment
 		set feedback_id =

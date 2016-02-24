@@ -10,5 +10,5 @@ public class PriceType {
     /**
      * item_id为APP编号
      */
-    public static final int isApp = 0;
+    public static final Byte isApp = 0;
 }

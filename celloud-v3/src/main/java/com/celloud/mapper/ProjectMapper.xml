@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.celloud.mapper.ProjectMapper" >
-  <resultMap id="BaseResultMap" type="com.celloud.model.Project" >
+  <resultMap id="BaseResultMap" type="com.celloud.model.mysql.Project" >
     <id column="project_id" property="projectId" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="project_name" property="projectName" jdbcType="VARCHAR" />
@@ -31,7 +31,7 @@
     delete from tb_project
     where project_id = #{projectId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.celloud.model.Project" >
+  <insert id="insert" parameterType="com.celloud.model.mysql.Project" >
     insert into tb_project (project_id, user_id, project_name, 
       data_format, create_date, update_date, 
       state, share_num, data_num, 
@@ -41,7 +41,7 @@
       #{state,jdbcType=INTEGER}, #{shareNum,jdbcType=INTEGER}, #{dataNum,jdbcType=INTEGER}, 
       #{dataSize,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.celloud.model.Project" useGeneratedKeys="true" keyProperty="projectId" >
+  <insert id="insertSelective" parameterType="com.celloud.model.mysql.Project" useGeneratedKeys="true" keyProperty="projectId" >
     insert into tb_project
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="projectId != null" >
@@ -108,7 +108,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.Project" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.Project" >
     update tb_project
     <set >
       <if test="userId != null" >
@@ -141,7 +141,7 @@
     </set>
     where project_id = #{projectId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.celloud.model.Project" >
+  <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.Project" >
     update tb_project
     set user_id = #{userId,jdbcType=INTEGER},
       project_name = #{projectName,jdbcType=VARCHAR},

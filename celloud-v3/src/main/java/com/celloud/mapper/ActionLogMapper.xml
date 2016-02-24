@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.celloud.mapper.ActionLogMapper">
-	<resultMap id="BaseResultMap" type="com.celloud.model.ActionLog">
+	<resultMap id="BaseResultMap" type="com.celloud.model.mysql.ActionLog">
 		<result column="user_id" property="userId" jdbcType="INTEGER" />
 		<result column="username" property="username" jdbcType="VARCHAR" />
 		<result column="operate" property="operate" jdbcType="VARCHAR" />
@@ -20,7 +20,7 @@
 		browser_version, os,
 		os_version, ip, address
 	</sql>
-	<insert id="insert" parameterType="com.celloud.model.ActionLog">
+	<insert id="insert" parameterType="com.celloud.model.mysql.ActionLog">
 		insert into tb_log
 		(user_id, operate, message,
 		log_date, browser,
@@ -36,7 +36,7 @@
 		#{osVersion,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR},
 		#{address,jdbcType=VARCHAR})
 	</insert>
-	<insert id="insertSelective" parameterType="com.celloud.model.ActionLog">
+	<insert id="insertSelective" parameterType="com.celloud.model.mysql.ActionLog">
 		insert into tb_log
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="operate != null">

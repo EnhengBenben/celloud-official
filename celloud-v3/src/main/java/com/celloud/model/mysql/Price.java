@@ -14,6 +14,13 @@ public class Price {
 
     private Date createDate;
 
+    /** 查询所需 */
+    private Float discountRate;
+    private BigDecimal discountPrice;
+    private Date startDate;
+    private Date endDate;
+    private String appName;
+
     public Integer getId() {
         return id;
     }
@@ -52,5 +59,45 @@ public class Price {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public Float getDiscountRate() {
+        return discountRate;
+    }
+
+    public void setDiscountRate(Float discountRate) {
+        this.discountRate = discountRate;
+    }
+
+    public BigDecimal getDiscountPrice() {
+        return discountPrice;
+    }
+
+    public void setDiscountPrice(BigDecimal discountPrice) {
+        this.discountPrice = discountPrice;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getAppName() {
+        return appName;
+    }
+
+    public void setAppName(String appName) {
+        this.appName = appName;
     }
 }

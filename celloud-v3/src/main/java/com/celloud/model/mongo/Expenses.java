@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
 /**
@@ -15,6 +16,7 @@ import org.mongodb.morphia.annotations.Id;
  * @author lin
  * @date 2016年2月18日 下午6:29:43
  */
+@Entity(noClassnameStored = true)
 public class Expenses implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -30,7 +32,7 @@ public class Expenses implements Serializable {
 	/**
      * 折扣 name(折扣名称):限时打折 discountRate(折扣率):0.8
      */
-    private List<Map<String, String>> discount;
+    private List<ExpenseDiscount> discount;
 	/**
 	 * 真实价格
 	 */
@@ -42,6 +44,7 @@ public class Expenses implements Serializable {
     /**
      * 交易快照
      */
+    @Embedded
 	private Object snapshot;
 	/**
 	 * 创建时间
@@ -104,11 +107,11 @@ public class Expenses implements Serializable {
         this.expenseType = expenseType;
     }
 
-    public List<Map<String, String>> getDiscount() {
+    public List<ExpenseDiscount> getDiscount() {
         return discount;
     }
 
-    public void setDiscount(List<Map<String, String>> discount) {
+    public void setDiscount(List<ExpenseDiscount> discount) {
         this.discount = discount;
     }
 

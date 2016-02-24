@@ -109,5 +109,5 @@ public interface ReportDao {
      * @author leamo
      * @date 2016年2月23日 下午5:59:42
      */
-    public <T> void saveData(Class<T> T);
+    public <T> void saveData(T T);
 }
