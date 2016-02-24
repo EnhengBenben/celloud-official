@@ -73,7 +73,7 @@ public class HomeAction {
         ModelAndView mv = new ModelAndView("user/user_pwd_reset");
         String userId = String.valueOf(session.getAttribute(Constants.RESET_PASSWORD_USER_ID));
         logger.info("【重置密码】userId=" + userId);
-        if (userId == null) {
+        if (userId == null||userId.equalsIgnoreCase("null")) {
             logger.warn("用户进行了非法请求：重置密码时未检查到session中的userId.{},{},{}", username, randomCode,
                     UserAgentUtil.getUrl(request));
             return mv.addObject("info", "请求不合法").addObject("forbidden", "forbidden");
