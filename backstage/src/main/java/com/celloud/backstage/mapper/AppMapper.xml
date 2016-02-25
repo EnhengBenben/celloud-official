@@ -26,6 +26,13 @@
   <resultMap id="ResultMapWithBLOBs" type="com.celloud.backstage.model.App" extends="BaseResultMap" >
     <result column="app_doc" property="appDoc" jdbcType="LONGVARCHAR" />
   </resultMap>
+  
+  <resultMap id="ResultMapWithExtend" type="com.celloud.backstage.model.App" extends="BaseResultMap" >
+    <result column="classifyNames" property="classifyNames" jdbcType="VARCHAR" />
+    <result column="classifyIds" property="classifyIds" jdbcType="VARCHAR" />
+    <result column="fileFormatIds" property="fileFormatIds" jdbcType="VARCHAR" />
+    <result column="companyName" property="companyName" jdbcType="VARCHAR" />
+  </resultMap>
   <sql id="Base_Column_List" >
     app_id, app_name, english_name, address, picture_name, create_date, intro, description, 
     company_id, attribute, run_type, flag, run_data, data_num, param, off_line, command, 
@@ -315,5 +322,52 @@
   </select>
   <select id="getAppListAdded" resultMap="BaseResultMap">
     select app_id,app_name from tb_app where run_type != 0 and attribute = #{attribute } and off_line=#{offLine }
+  </select>
+  
+  <select id="getAppListByPage" resultMap="ResultMapWithExtend">
+    SELECT group_concat(c.classify_name separator ';') classifyNames ,a.*,com.company_name companyName from tb_app a LEFT JOIN tb_app_classify_relat acr on a.app_id=acr.app_id LEFT JOIN tb_classify c on acr.classify_id=c.classify_id LEFT JOIN tb_company com on a.company_id=com.company_id GROUP BY a.app_id order by a.off_line,a.app_id desc
+  </select>
+  <update id="updateAppOffline" parameterType="com.celloud.backstage.model.App" >
+    update tb_app
+    set off_line = #{offLine,jdbcType=INTEGER},
+    where app_id = #{appId,jdbcType=INTEGER}
+  </update>
+  
+  <insert id="insertApp" useGeneratedKeys="true" keyProperty="appId" parameterType="com.celloud.backstage.model.App" >
+    insert into tb_app ( app_name, english_name, 
+      address, picture_name, create_date, 
+      intro, description, company_id, 
+      attribute, run_type, flag, 
+      run_data, data_num, param, 
+      off_line, command, title, 
+      method, max_task, app_doc
+      )
+    values (#{appName,jdbcType=VARCHAR}, #{englishName,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{pictureName,jdbcType=VARCHAR}, now(), 
+      #{intro,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{companyId,jdbcType=INTEGER}, 
+      #{attribute,jdbcType=INTEGER}, #{runType,jdbcType=INTEGER}, #{flag,jdbcType=INTEGER}, 
+      #{runData,jdbcType=INTEGER}, #{dataNum,jdbcType=INTEGER}, #{param,jdbcType=INTEGER}, 
+      #{offLine,jdbcType=INTEGER}, #{command,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{method,jdbcType=VARCHAR}, #{maxTask,jdbcType=INTEGER}, #{appDoc,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertAppFileFormatBatch" >
+    insert into tb_app_format_relat (app_id, format_id)
+    values
+    <foreach collection="formatIds" item="item" index="index"
+            separator=",">
+    (#{appId,jdbcType=INTEGER}, #{item,jdbcType=INTEGER})
+    </foreach> 
+  </insert>
+  <insert id="insertAppClassifyBatch" >
+    insert into tb_app_classify_relat (app_id, classify_id)
+    values
+    <foreach collection="calssifyIds" item="item" index="index"
+            separator=",">
+    (#{appId,jdbcType=INTEGER}, #{item,jdbcType=INTEGER})
+    </foreach> 
+  </insert>
+  <select id="appNameExist" resultType="java.lang.Integer">
+    select count(app_id) from tb_app where app_name = #{appName }
   </select>
 </mapper>

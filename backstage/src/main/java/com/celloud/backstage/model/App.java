@@ -44,6 +44,17 @@ public class App {
     private Integer maxTask;
 
     private String appDoc;
+    
+    
+    /**
+     * 展示字段
+     * @time 2016-2-23
+     */
+    private String classifyNames;//所属分类名称，以;隔开
+    private String classifyIds;//所属分类Id,以;隔开
+    private String fileFormatIds;//运行文件格式Id,以;隔开
+    private String companyName;//所属公司
+    private String screenNames;//app截图
 
     public Integer getAppId() {
         return appId;
@@ -212,4 +223,46 @@ public class App {
     public void setAppDoc(String appDoc) {
         this.appDoc = appDoc == null ? null : appDoc.trim();
     }
+
+    public String getClassifyNames() {
+        return classifyNames;
+    }
+
+    public void setClassifyNames(String classifyNames) {
+        this.classifyNames = classifyNames;
+    }
+
+    public String getClassifyIds() {
+        return classifyIds;
+    }
+
+    public void setClassifyIds(String classifyIds) {
+        this.classifyIds = classifyIds;
+    }
+
+    public String getFileFormatIds() {
+        return fileFormatIds;
+    }
+
+    public void setFileFormatIds(String fileFormatIds) {
+        this.fileFormatIds = fileFormatIds;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getScreenNames() {
+        return screenNames;
+    }
+
+    public void setScreenNames(String screenNames) {
+        this.screenNames = screenNames;
+    }
+    
+    
 }

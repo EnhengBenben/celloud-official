@@ -68,4 +68,10 @@
       app_id = #{appId,jdbcType=INTEGER}
     where screen_id = #{screenId,jdbcType=INTEGER}
   </update>
+  <insert id="insertScreen" parameterType="com.celloud.backstage.model.Screen">
+        insert into tb_screen (screen_name, app_id)
+        values
+            (#{screenName,jdbcType=VARCHAR},
+             #{appId,jdbcType=INTEGER})
+    </insert>
 </mapper>

@@ -437,3 +437,162 @@ var dataFile=(function(dataFile){
 	}
 	return self;
 })(dataFile);
+
+var app=(function(app){
+	var self=app||{};
+	self.currentPage = 1;
+	var pictureUploader = null;
+	var screenUploader=null;
+	
+	self.initPictureNameUploader = function(){
+		if(pictureUploader){
+			pictureUploader.destroy();
+		}
+		pictureUploader = new plupload.Uploader({
+			browse_button : 'uploadPictureNameBtn', 
+			url : "../app/upload",
+			container:'pictureNameContainer',
+	        chunk_size : "1mb",
+	        file_data_name:'file',
+	        filters : {
+				max_file_size : "2mb",
+				mime_types: [
+				    {title : "Image files", extensions : "jpg,jpeg,png" }
+				],
+				prevent_duplicates : true //不允许选取重复文件
+			},
+			multi_selection:false,
+	        flash_swf_url : '../plugins/plupload-2.1.2/Moxie.swf',
+	        init:{
+	        	PostInit: function() {
+	        		$("#appForm").find("#warning-group").hide();
+	            },
+	        	FilesAdded: function(up, files) {
+	        		$("#pictureNameUploading").show();
+	        		pictureUploader.start();
+	            },
+	            FileUploaded:function(up,file,response){
+	            	$("#pictureNameUploading").hide();
+	            	var $img = $("<img />");
+	            	$img.attr("src","app/icon/temp?file="+response.response);
+	            	$img.addClass("img-thumbnail");
+	            	$img.css("height","60px");
+	            	$img.css("margin-right","10px");
+	            	var $input = $('<input type="hidden" name="pictureName"/>');
+	            	$input.val(response.response);
+	            	$("#pictureNameUploading").siblings(".img-thumbnail-inline").html($img);
+	            	$("#appForm .pictureName-input-hidden").html($input);
+	            	pictureUploader.splice();
+	            }
+	        }
+	    });
+		pictureUploader.init();
+	}
+	
+	self.initScreenUploader = function(){
+		if(screenUploader){
+			screenUploader.destroy();
+		}
+		screenUploader = new plupload.Uploader({
+			browse_button : 'uploadScreenBtn', 
+			url : "../app/upload",
+			container:'screenContainer',
+	        chunk_size : "1mb",
+	        file_data_name:'file',
+	        filters : {
+				max_file_size : "2mb",
+				mime_types: [
+				    {title : "Image files", extensions : "jpg,jpeg,png" }
+				],
+				prevent_duplicates : true //不允许选取重复文件
+			},
+			multi_selection:false,
+	        flash_swf_url : '../plugins/plupload-2.1.2/Moxie.swf',
+	        init:{
+	        	PostInit: function() {
+	        		$("#appForm").find("#screen-group").removeClass("hide");
+	        		$("#appForm").find("#screen-group").show();
+	        		$("#appForm").find("#warning-group").hide();
+	            },
+	        	FilesAdded: function(up, files) {
+	        		$("#screenUploading").show();
+	        		screenUploader = up;
+	        		up.start();
+	            },
+	            QueueChanged:function(up){
+	            	screenUploader = up;
+	            	up.disableBrowse(up.files.length>=5);
+	            },
+	            FileUploaded:function(up,file,response){
+	            	screenUploader = up;
+	            	$("#screenUploading").hide();
+	            	var $input = $('<input type="hidden" name="screenName"/>');
+	            	$input.val(response.response);
+	            	var $imgdiv=$("<div class='inline'></div>")
+	            	var $img = $("<img style='height: 60px; margin-right: 10px;'/>");
+	            	$img.attr("src","app/icon/temp?file="+response.response);
+	            	$img.addClass("img-thumbnail");
+	            	$img.attr("name","screen_"+response.response)
+	            	$imgdiv.append($img);
+	            	var $imgdel=$('<a href="javascript:void(0)"><span style="position: relative; right: 18px; top: -25px;">×</span></a>');
+	            	$imgdel.click(function(){
+	            		$imgdiv.remove();
+	            		$input.remove();
+	            		screenUploader.removeFile(file);
+	            	});
+	            	$imgdiv.append($imgdel);
+	            	$("#screenUploading").before($imgdiv);
+	            	$("#appForm").append($input);
+	            }
+	        }
+	    });
+		screenUploader.init();
+	}
+	self.toAppMain=function(){
+		$.post("app/appList",function(responseText){
+			$("#main-content").html(responseText);
+			$("#main-menu li").removeClass("active").removeClass("opened").removeClass("expanded");
+			$("#app-list-menu").addClass("active").parent().parent("li").addClass("active").addClass("opened").addClass("expanded");
+		});
+	}
+	self.getAppList=function(currentPage){
+		self.currentPage=currentPage;
+		$.post("app/appList",{currentPage:currentPage},function(responseText){
+			$("#main-content").html(responseText);
+		});
+	}
+	self.on=function(appId){
+		jConfirm("确定恢复该App上线吗？", '确认提示框', function(r) {
+			if(r){
+				$.post("app/on",{appId:appId},function(data){
+					if(data>1){
+						alert("app上线成功");
+						self.getAppList(self.currentPage);
+					}
+				});
+			}
+		});
+	}
+	self.off=function(appId){
+		jConfirm("确定下线该App吗？", '确认提示框', function(r) {
+			if(r){
+				$.post("app/off",{appId:appId},function(data){
+					if(data>1){
+						alert("app下线成功");
+						self.getAppList(self.currentPage);
+					}
+				});
+			}
+		});
+	}
+	self.toAddApp=function(){
+		$.post("app/toEditApp",function(responseText){
+			$("#main-content").html(responseText);
+			self.initPictureNameUploader();
+			self.initScreenUploader();
+			$("#main-menu li").removeClass("active").removeClass("opened").removeClass("expanded");
+			$("#app-add-menu").addClass("active").parent().parent("li").addClass("active").addClass("opened").addClass("expanded");
+		});
+	}
+	return self;
+})(app);
