@@ -9,7 +9,7 @@
 	          <dt>应用名称：</dt>
 	          <dd>${pgs.appName}</dd>
 	          <dt>文件名称：</dt>
-	          <dd>
+	          <dd class="force-break">
 	            <c:choose>
 	              <c:when test="${empty pgs.anotherName }">${pgs.fileName }</c:when>
 	              <c:otherwise>${pgs.anotherName }</c:otherwise>

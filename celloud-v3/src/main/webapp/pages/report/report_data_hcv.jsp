@@ -8,7 +8,7 @@
           <dt>应用名称：</dt>
           <dd>${hcv.appName}</dd>
           <dt>文件名称：</dt>
-          <dd>${hcv.fileName}(${hcv.dataKey})</dd>
+          <dd class="force-break">${hcv.fileName}(${hcv.dataKey})</dd>
         </dl>
         <div class="toolbar">
             <a class="btn btn-celloud-success btn-flat" href="javascript:toPrintHBV('${hcv.userId }/${hcv.appId }/${hcv.dataKey }')"><i class="fa fa-print"></i>打印报告</a>

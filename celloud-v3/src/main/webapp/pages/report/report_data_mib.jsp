@@ -5,7 +5,7 @@
     <div class="m-file">
         数据编号：<span class="file-name">${ mib.dataKey}</span><br>
         文件名称：
-        <span class="file-name">
+        <span class="file-name force-break">
         <c:forEach items="${mib.data}" var="data">
             ${data.fileName}(${data.dataKey})&nbsp;&nbsp;&nbsp;
         </c:forEach>

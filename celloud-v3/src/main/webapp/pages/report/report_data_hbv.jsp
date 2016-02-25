@@ -11,7 +11,7 @@
           <dt>应用名称：</dt>
           <dd>${hbv.appName}</dd>
           <dt>文件名称：</dt>
-          <dd>${hbv.fileName}(${hbv.dataKey})</dd>
+          <dd class="force-break">${hbv.fileName}(${hbv.dataKey})</dd>
         </dl>
         <div class="toolbar">
             <c:if test="${hbv.dataKey!=null && hbv.dataKey!='' }">
