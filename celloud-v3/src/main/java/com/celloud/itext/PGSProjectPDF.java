@@ -143,7 +143,6 @@ public class PGSProjectPDF {
 				doc.add(title);
 			}
 		}
-		System.out.println("sb:"+sb.toString());
 		if(StringUtils.isNotEmpty(sb.toString())){
 			doc.newPage();
 			String[] imgString = sb.toString().split(";");
