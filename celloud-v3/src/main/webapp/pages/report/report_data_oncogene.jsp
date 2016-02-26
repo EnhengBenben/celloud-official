@@ -7,7 +7,7 @@
 		<div class="row">
 			<div class="col-lg-9 force-break">
 				文件名称：
-				<span class="file-name">
+				<span class="file-name force-break">
 					${oncogene.dataKey }(${oncogene.fileName })
 				</span>
 			</div>

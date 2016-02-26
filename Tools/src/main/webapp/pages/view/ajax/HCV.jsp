@@ -10,7 +10,7 @@
           <dt>应用名称：</dt>
           <dd>${resultMap['appName'] }</dd>
           <dt>文件名称：</dt>
-          <dd><s:property value="resultMap.fileName"/>(<s:property value="resultMap.datakey"/>)</dd>
+          <dd class="force-break"><s:property value="resultMap.fileName"/>(<s:property value="resultMap.datakey"/>)</dd>
         </dl>
         <div class="toolbar">
             <a class="btn btn-celloud-success btn-flat" href='javascript:toPrintHBV("<s:property value="resultMap.pagePath"/>")'><i class="fa fa-print"></i>打印报告</a>
