@@ -101,5 +101,14 @@ public interface ReportDao {
      */
     public <T> void editData(Class<T> T, ObjectId id, String field,
             Object obj);
+    
+    /**
+     * 保存数据
+     * 
+     * @param T
+     * @author leamo
+     * @date 2016年2月23日 下午5:59:42
+     */
+    public <T> void saveData(T T);
 
 }

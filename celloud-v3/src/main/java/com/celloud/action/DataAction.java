@@ -35,6 +35,7 @@ import com.celloud.model.DataFileEditForm;
 import com.celloud.model.Project;
 import com.celloud.model.Report;
 import com.celloud.model.Task;
+import com.celloud.model.TaskQueue;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.AppService;
@@ -289,7 +290,7 @@ public class DataAction {
         logger.info("用户{}分别修改{}个数据", ConstantsData.getLoginUserName(), result);
         return result;
     }
-
+    
     /**
      * 数据运行
      * 
@@ -395,19 +396,26 @@ public class DataAction {
                         SparkPro.apps.toString().length() - 1);
                 int running = dataService.dataRunning(select);
                 logger.info("spark 正在运行的任务数：{}", running);
-                String _dataFilePath = DataKeyListToFile
-                        .toSpark(appProMap.get(appId).toString(), dataList);
-                Map<String, String> map = CommandKey.getMap(_dataFilePath, appPath,proId);
-                StrSubstitutor sub = new StrSubstitutor(map);
-				String command = sub.replace(app.getCommand());
                 if (SparkPro.NODES >= running) {
-                    logger.info("资源满足需求，投递任务！运行命令：" + command);
+	                String _dataFilePath = DataKeyListToFile
+	                        .toSpark(proId.toString(), dataList);
+	                Map<String, String> map = CommandKey.getMap(_dataFilePath, appPath,proId);
+	                StrSubstitutor sub = new StrSubstitutor(map);
+					String command = sub.replace(app.getCommand());
+					logger.info("资源满足需求，投递任务！运行命令：" + command);
                     SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
                     ssh.sshSubmit(command, false);
                 } else {
+                	TaskQueue tq = new TaskQueue();
+                	tq.setAppId(0);
+                	tq.setDataKey("");
+                	tq.setProjectId(proId);
+                	tq.setDataList(dataList);
+                	tq.setPath(appPath);
+                	tq.setCommand(app.getCommand());
+                	reportService.saveTask(tq);
                     logger.info("资源不满足需求，进入队列等待");
-                    String wait = _dataFilePath + "--" + command;
-                    GlobalQueue.offer(wait);
+                    GlobalQueue.offer(proId.toString());
                 }
             } else if (AppDataListType.FASTQ_PATH
                     .contains(String.valueOf(appId))
