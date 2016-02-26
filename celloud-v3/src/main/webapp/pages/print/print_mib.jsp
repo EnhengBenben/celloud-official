@@ -94,7 +94,9 @@
             <td style="width:49%;">
               <c:choose>
                 <c:when test="${empty mib.readsDistributionInfo}">
-                  <img src="<c:if test="${!mib.readsDistribution.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.readsDistribution }" style="width:100%;">
+                  <c:if test="${empty mib.readsDistribution}">
+                    <img src="<c:if test="${!mib.readsDistribution.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.readsDistribution }" style="width:100%;">
+                  </c:if>
                 </c:when>
                 <c:otherwise>
                   <div id="reads-distribution-char" style="width:100%;height:330px;">${mibCharList.readsDistributionInfo }</div>
@@ -104,7 +106,9 @@
             <td>
               <c:choose>
                 <c:when test="${empty mib.familyDistributionInfo}">
-                  <img src="<c:if test="${!mib.familyDistribution.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.familyDistribution }" style="width:100%;">
+                  <c:if test="${empty mib.familyDistribution}">
+                    <img src="<c:if test="${!mib.familyDistribution.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.familyDistribution }" style="width:100%;">
+                  </c:if>
                 </c:when>
                 <c:otherwise>
                   <div id="family-distribution-char" style="width:100%;height:330px;">${mibCharList.familyDistributionInfo }</div>
@@ -118,7 +122,9 @@
     <div class="info">
         <c:choose>
           <c:when test="${empty mib.genusDistributionInfo}">
-            <img src="<c:if test="${!mib.genusDistribution.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.genusDistribution }" style="width:90%;">
+            <c:if test="${empty mib.genusDistribution}">
+              <img src="<c:if test="${!mib.genusDistribution.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.genusDistribution }" style="width:90%;">
+            </c:if>
           </c:when>
           <c:otherwise>
             <div id="genus-distribution-char" style="width:100%;height:330px;">${mibCharList.genusDistributionInfo }</div>
@@ -127,34 +133,34 @@
     </div>
     <h4>7.&nbsp;&nbsp;各菌16s rRNA序列覆盖分布图</h4>
     <div class="info">
-      <c:if test="${mib.pngPath.top1png!=null }">
+      <c:if test="${not empty mib.pngPath.top1png }">
         <img src="<c:if test="${!mib.pngPath.top1png.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top1png }" style="width:90%;">
       </c:if>
-      <c:if test="${mib.pngPath.top2png!=null }">
+      <c:if test="${not empty mib.pngPath.top2png }">
         <img src="<c:if test="${!mib.pngPath.top2png.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top2png }" style="width:90%;">
       </c:if>
-      <c:if test="${mib.pngPath.top3png!=null }">
+      <c:if test="${not empty mib.pngPath.top3png }">
         <img src="<c:if test="${!mib.pngPath.top3png.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top3png }" style="width:90%;">
       </c:if>
-      <c:if test="${mib.pngPath.top4png!=null }">
+      <c:if test="${not empty mib.pngPath.top4png }">
         <img src="<c:if test="${!mib.pngPath.top4png.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top4png }" style="width:90%;">
       </c:if>
-      <c:if test="${mib.pngPath.top5png!=null }">
+      <c:if test="${not empty mib.pngPath.top5png }">
         <img src="<c:if test="${!mib.pngPath.top5png.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top5png }" style="width:90%;">
       </c:if>
-      <c:if test="${mib.pngPath.top6png!=null }">
+      <c:if test="${not empty mib.pngPath.top6png }">
         <img src="<c:if test="${!mib.pngPath.top6png.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top6png }" style="width:90%;">
       </c:if>
-      <c:if test="${mib.pngPath.top7png!=null }">
+      <c:if test="${not empty mib.pngPath.top7png }">
         <img src="<c:if test="${!mib.pngPath.top7png.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top7png }" style="width:90%;">
       </c:if>
-      <c:if test="${mib.pngPath.top8png!=null }">
+      <c:if test="${not empty mib.pngPath.top8png }">
         <img src="<c:if test="${!mib.pngPath.top8png.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top8png }" style="width:90%;">
       </c:if>
-      <c:if test="${mib.pngPath.top9png!=null }">
+      <c:if test="${not empty mib.pngPath.top9png }">
         <img src="<c:if test="${!mib.pngPath.top9png.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top9png }" style="width:90%;">
       </c:if>
-      <c:if test="${mib.pngPath.top10png!=null }">
+      <c:if test="${not empty mib.pngPath.top10png }">
         <img src="<c:if test="${!mib.pngPath.top10png.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.pngPath.top10png }" style="width:90%;">
       </c:if>
     </div>
@@ -209,12 +215,28 @@
     </table>
     <table style="width:100%;">
       <tr>
-        <td style="width:50%;"><img style="width: 100%;" src="<c:if test="${!mib.qualityPath1.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.qualityPath1 }"></td>
-        <td><img style="width: 100%;" src="<c:if test="${!mib.qualityPath2.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }/</c:if>${mib.qualityPath2 }"></td>
+        <td style="width:50%;">
+          <c:if test="${not empty mib.qualityPath1 }">
+            <img style="width: 100%;" src="<c:if test="${!mib.qualityPath1.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.qualityPath1 }">
+          </c:if>
+        </td>
+        <td>
+          <c:if test="${not empty mib.qualityPath2 }">
+              <img style="width: 100%;" src="<c:if test="${!mib.qualityPath2.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }/</c:if>${mib.qualityPath2 }">
+          </c:if>
+        </td>
       </tr>
       <tr>
-        <td><img style="width: 100%;" alt="" src="<c:if test="${!mib.seqContentPath1.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.seqContentPath1 }"></td>
-        <td><img style="width: 100%;" alt="" src="<c:if test="${!mib.seqContentPath2.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.seqContentPath2 }"></td>
+        <td>
+          <c:if test="${not empty mib.seqContentPath1 }">
+            <img style="width: 100%;" src="<c:if test="${!mib.seqContentPath1.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.seqContentPath1 }">
+          </c:if>
+        </td>
+        <td>
+          <c:if test="${not empty mib.seqContentPath2 }">
+            <img style="width: 100%;" src="<c:if test="${!mib.seqContentPath2.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.seqContentPath2 }">
+          </c:if>
+        </td>
       </tr>
     </table>
 </section>
