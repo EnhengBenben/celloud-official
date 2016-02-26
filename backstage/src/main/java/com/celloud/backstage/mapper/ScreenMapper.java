@@ -1,5 +1,7 @@
 package com.celloud.backstage.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.celloud.backstage.model.Screen;
 
 public interface ScreenMapper {
@@ -24,4 +26,6 @@ public interface ScreenMapper {
      * @date 2016年2月24日 下午3:50:39
      */
     public int insertScreen(Screen screen);
+    
+    public int deleteByAppId(@Param("appId") Integer appId,@Param("screenName") String screenName);
 }

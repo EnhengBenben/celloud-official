@@ -32,6 +32,14 @@
     <result column="classifyIds" property="classifyIds" jdbcType="VARCHAR" />
     <result column="fileFormatIds" property="fileFormatIds" jdbcType="VARCHAR" />
     <result column="companyName" property="companyName" jdbcType="VARCHAR" />
+    <result column="screenNames" property="screenNames" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapBLOBsWithExtend" type="com.celloud.backstage.model.App" extends="ResultMapWithBLOBs" >
+    <result column="classifyNames" property="classifyNames" jdbcType="VARCHAR" />
+    <result column="classifyIds" property="classifyIds" jdbcType="VARCHAR" />
+    <result column="fileFormatIds" property="fileFormatIds" jdbcType="VARCHAR" />
+    <result column="companyName" property="companyName" jdbcType="VARCHAR" />
+    <result column="screenNames" property="screenNames" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     app_id, app_name, english_name, address, picture_name, create_date, intro, description, 
@@ -329,7 +337,7 @@
   </select>
   <update id="updateAppOffline" parameterType="com.celloud.backstage.model.App" >
     update tb_app
-    set off_line = #{offLine,jdbcType=INTEGER},
+    set off_line = #{offLine,jdbcType=INTEGER}
     where app_id = #{appId,jdbcType=INTEGER}
   </update>
   
@@ -369,5 +377,50 @@
   </insert>
   <select id="appNameExist" resultType="java.lang.Integer">
     select count(app_id) from tb_app where app_name = #{appName }
+    <if test="appId!=null">
+    and app_id!=#{appId}
+    </if>
   </select>
+  <select id="getAppById" resultMap="ResultMapBLOBsWithExtend" >
+    SELECT group_concat(DISTINCT sc.screen_name separator ';') screenNames,
+    group_concat(DISTINCT acr.classify_id separator ';') classifyIds,
+    group_concat(DISTINCT afr.format_id separator ';') fileFormatIds ,
+    a.* from tb_app a 
+	LEFT JOIN tb_app_classify_relat acr on a.app_id=acr.app_id 
+	LEFT JOIN tb_screen sc on sc.app_id=a.app_id 
+	LEFT JOIN tb_app_format_relat afr on afr.app_id=a.app_id
+	where a.app_id=#{appId,jdbcType=INTEGER}
+	GROUP BY a.app_id 
+	order by a.off_line,a.app_id desc;
+  </select>
+  <update id="updateApp" parameterType="com.celloud.backstage.model.App" >
+    update tb_app
+    set app_name = #{appName,jdbcType=VARCHAR},
+      english_name = #{englishName,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      picture_name = #{pictureName,jdbcType=VARCHAR},
+      intro = #{intro,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=INTEGER},
+      attribute = #{attribute,jdbcType=INTEGER},
+      run_type = #{runType,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=INTEGER},
+      run_data = #{runData,jdbcType=INTEGER},
+      data_num = #{dataNum,jdbcType=INTEGER},
+      param = #{param,jdbcType=INTEGER},
+      command = #{command,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      method = #{method,jdbcType=VARCHAR},
+      max_task = #{maxTask,jdbcType=INTEGER},
+      app_doc = #{appDoc,jdbcType=LONGVARCHAR}
+    where app_id = #{appId,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteAppFileFormat" parameterType="java.lang.Integer" >
+    delete from tb_app_format_relat
+    where app_id = #{appId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteAppClassify" parameterType="java.lang.Integer" >
+    delete from tb_app_classify_relat
+    where app_id = #{appId,jdbcType=INTEGER}
+  </delete>
 </mapper>

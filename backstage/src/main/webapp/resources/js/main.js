@@ -548,6 +548,7 @@ var app=(function(app){
 	    });
 		screenUploader.init();
 	}
+	
 	self.toAppMain=function(){
 		$.post("app/appList",function(responseText){
 			$("#main-content").html(responseText);
@@ -565,7 +566,7 @@ var app=(function(app){
 		jConfirm("确定恢复该App上线吗？", '确认提示框', function(r) {
 			if(r){
 				$.post("app/on",{appId:appId},function(data){
-					if(data>1){
+					if(data>0){
 						alert("app上线成功");
 						self.getAppList(self.currentPage);
 					}
@@ -577,7 +578,7 @@ var app=(function(app){
 		jConfirm("确定下线该App吗？", '确认提示框', function(r) {
 			if(r){
 				$.post("app/off",{appId:appId},function(data){
-					if(data>1){
+					if(data>0){
 						alert("app下线成功");
 						self.getAppList(self.currentPage);
 					}
@@ -593,6 +594,23 @@ var app=(function(app){
 			$("#main-menu li").removeClass("active").removeClass("opened").removeClass("expanded");
 			$("#app-add-menu").addClass("active").parent().parent("li").addClass("active").addClass("opened").addClass("expanded");
 		});
+	}
+	
+	self.toEditApp=function(appId){
+		$.post("app/toEditApp",{appId:appId},function(responseText){
+			$("#main-content").html(responseText);
+			$("#main-content .panel-heading").html("<h3 class='panel-title'>编辑应用</h3><div class='panel-options'><button type='button' class='btn btn-warning' onclick='javascript:app.getAppList("+self.currentPage+")' style='margin-bottom:0'>返回</button></div>");
+			self.initPictureNameUploader();
+			self.initScreenUploader();
+			CKEDITOR.instances.editordescription.setData($("#editordescription").val());
+			CKEDITOR.instances.editorappDoc.setData($("#editorappDoc").val());
+		});
+	}
+	self.delScreen=function(dom,screenName){
+		var $input = $('<input type="hidden" name="delScreenName"/>');
+		$input.val(screenName);
+		$("#appForm").append($input);
+		$(dom).parent().remove();
 	}
 	return self;
 })(app);
