@@ -45,6 +45,7 @@ import com.celloud.model.Oncogene;
 import com.celloud.model.Pgs;
 import com.celloud.model.Report;
 import com.celloud.model.Split;
+import com.celloud.model.TaskQueue;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.ReportService;
@@ -753,4 +754,14 @@ public class ReportServiceImpl implements ReportService {
         report.setEndDate(new Date());
         return reportMapper.updateReport(report);
     }
+
+	@Override
+	public void saveTask(TaskQueue tq) {
+		reportDao.saveData(tq);
+	}
+
+	@Override
+	public TaskQueue getTaskQueue(Integer projectId) {
+		return reportDao.getDataReport(TaskQueue.class, "", projectId, 0);
+	}
 }

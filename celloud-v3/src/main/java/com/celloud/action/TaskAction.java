@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.text.StrSubstitutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.celloud.constants.CommandKey;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
@@ -25,11 +27,13 @@ import com.celloud.constants.PortPool;
 import com.celloud.constants.SparkPro;
 import com.celloud.model.DataFile;
 import com.celloud.model.Task;
+import com.celloud.model.TaskQueue;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
+import com.celloud.utils.DataKeyListToFile;
 import com.celloud.utils.DataUtil;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.PerlUtils;
@@ -258,18 +262,23 @@ public class TaskAction {
                 logger.info("任务队列为空");
                 break;
             }
-            String command = GlobalQueue.peek();
-            if (command != null) {
-                String[] infos = command.split("--");
-                int need = FileTools.countLines(infos[0]);
+            String proId = GlobalQueue.peek();
+            if (proId != null) {
+            	TaskQueue tq = reportService.getTaskQueue(Integer.parseInt(proId));
+            	List<DataFile> list = tq.getDataList();
+                int need = list.size();
                 logger.info("需要节点 {}可使用节点 {}", need, PortPool.getSize());
                 if (PortPool.getSize() < need) {
                     logger.info("节点不满足需要，暂缓投递任务");
                     break;
                 }
-                logger.info("满足需要，投递任务！运行命令：{}", infos[1]);
+                String _dataFilePath = DataKeyListToFile.toSpark(proId, list);
+                Map<String, String> map = CommandKey.getMap(_dataFilePath, tq.getPath(),Integer.valueOf(proId));
+                StrSubstitutor sub = new StrSubstitutor(map);
+				String command = sub.replace(tq.getCommand());
+				logger.info("资源满足需求，投递任务！运行命令：" + command);
                 SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
-                ssh.sshSubmit(infos[1], false);
+                ssh.sshSubmit(command, false);
                 GlobalQueue.poll();
             }
         }
