@@ -43,6 +43,7 @@ import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
 import com.celloud.model.mongo.Split;
+import com.celloud.model.mongo.TaskQueue;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Report;
 import com.celloud.page.Page;
@@ -760,4 +761,13 @@ public class ReportServiceImpl implements ReportService {
         return reportMapper.updateReport(report);
     }
 
+	@Override
+	public void saveTask(TaskQueue tq) {
+		reportDao.saveData(tq);
+	}
+
+	@Override
+	public TaskQueue getTaskQueue(Integer projectId) {
+		return reportDao.getDataReport(TaskQueue.class, "", projectId, 0);
+	}
 }

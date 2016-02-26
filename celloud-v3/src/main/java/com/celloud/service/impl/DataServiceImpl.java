@@ -110,7 +110,7 @@ public class DataServiceImpl implements DataService {
     @Override
     public Integer dataRunning(String appIds) {
         return dataFileMapper.queryDataRunning(appIds,
-                ReportPeriod.RUNNING_NO_REPORT, DataState.ACTIVE,
+                ReportPeriod.NOT_RUN, DataState.ACTIVE,
                 ReportType.DATA);
     }
 

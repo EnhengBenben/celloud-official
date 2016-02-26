@@ -101,7 +101,7 @@ public interface ReportDao {
      */
     public <T> void editData(Class<T> T, ObjectId id, String field,
             Object obj);
-
+    
     /**
      * 保存数据
      * 

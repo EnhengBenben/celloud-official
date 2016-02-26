@@ -506,6 +506,7 @@
 	width: 65%;
 	float: left;
 	margin-left: 4%;
+	min-width:400px;
 }
 .item-list .item-left .itemInfo h5 {
 	font-size: 22px;

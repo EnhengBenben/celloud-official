@@ -33,7 +33,7 @@ textarea.form-control { height: auto;}
 .form-inline .form-control {display: inline-block; width: auto; vertical-align: middle; }
 
 /* section0: the css of report cover */
-h1{ font-family: "方正正中黑简体";text-align:center; font-size:40px; padding:50px 0 20px 0;}
+h1{ text-align:center; font-size:40px; padding:50px 0 20px 0;}
 .header{font-size:32px; text-align:center; }
 .header img{width:100%;margin:0px auto}
 .titletype{ position:relative; padding-top: 300px;padding-left:255px;font-size:20px; }

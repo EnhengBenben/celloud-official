@@ -354,7 +354,7 @@
     select count(*) number
     from tb_report r 
     where  
-    r.flag=#{flag} and r.state=#{state} and r.period=#{period} and r.app_id in (#{appIds});
+    r.flag=#{flag} and r.state=#{state} and r.period=#{period} and r.app_id in (${appIds});
   </select>
   <select id="queryStrainList" resultType="java.lang.String">
     select distinct strain from tb_file where user_id=#{user_id} and strain is not null and strain !='';

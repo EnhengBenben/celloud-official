@@ -1,9 +1,12 @@
 package com.celloud.model.mysql;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class DataFile {
-    private Integer fileId;
+public class DataFile implements Serializable{
+	private static final long serialVersionUID = 1L;
+
+	private Integer fileId;
 
     private Integer userId;
 

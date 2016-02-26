@@ -14,6 +14,7 @@ import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
 import com.celloud.model.mongo.Split;
+import com.celloud.model.mongo.TaskQueue;
 import com.celloud.model.mysql.Report;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
@@ -358,4 +359,23 @@ public interface ReportService {
      */
     public Integer updateReportStateToTools(Integer userId, Integer appId,
             Integer projectId, Integer period, String context);
+    
+    /**
+     *  保存spark排队任务
+     * 
+     * @param tq
+     * @author lin
+     * @date 2016年2月26日下午1:45:27
+     */
+    public void saveTask(TaskQueue tq);
+    
+    /**
+     * 根据项目ID检索任务信息
+     * 
+     * @param projectId
+     * @return
+     * @author lin
+     * @date 2016年2月26日下午1:51:09
+     */
+    public TaskQueue getTaskQueue(Integer projectId);
 }

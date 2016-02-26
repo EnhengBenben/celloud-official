@@ -8,7 +8,7 @@
           <dt>应用名称：</dt>
           <dd>${nipt.appName}</dd>
           <dt>文件名称：</dt>
-          <dd>
+          <dd class="force-break">
             <c:choose>
               <c:when test="${empty nipt.anotherName }">${nipt.fileName }</c:when>
               <c:otherwise>${nipt.anotherName }</c:otherwise>

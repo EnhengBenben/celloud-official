@@ -10,7 +10,7 @@
           <dt>应用名称：</dt>
           <dd>${resultMap['appName'] }</dd>
           <dt>文件名称：</dt>
-          <dd>
+          <dd class="force-break">
             <s:property value="resultMap.fileName"/>(<s:property value="%{resultMap.pagePath.replace('/SVG','').substring(resultMap.pagePath.replace('/SVG','').lastIndexOf('/')+1,resultMap.pagePath.replace('/SVG','').length())}"/>)
           </dd>
         </dl>

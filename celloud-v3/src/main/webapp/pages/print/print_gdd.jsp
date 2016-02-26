@@ -91,7 +91,7 @@
   </section>
   <section class="section2 border1 w3cbbs" id="section2">
     <h4>二. 检测结果详述</h4>
-    <c:if test="${cmpReport.geneDetectionDetail.size()==0 }">
+    <c:if test="${empty cmpReport.geneDetectionDetail }">
       <div class="info">没有发现突变基因</div>
     </c:if>
     <c:forEach items="${cmpReport.geneDetectionDetail }" var="geneDetection" varStatus="size">
@@ -164,21 +164,17 @@
    		  </tr>
    		</thead>
    		<tbody>
-   			<c:choose>
-   				<c:when test="${gddDiseaseList.size()==0}">
-   					<tr><td colspan="4">没有发现其他检测结果</td></tr>
-   				</c:when>
-   				<c:otherwise>
-		   			<c:forEach items="${gddDiseaseList}" var="gddDisease">
-   						<tr>
-   							<td>${gddDisease.name }</td>
-   							<td>${gddDisease.gene }</td>
-   							<td>未发现异常</td>
-   							<td>正常</td>
-   						</tr>
-		   			</c:forEach>
-   				</c:otherwise>
-   			</c:choose>
+   		  <c:if test="${empty gddDiseaseList }">
+	        <tr><td colspan="4">没有发现其他检测结果</td></tr>
+	      </c:if>
+  		  <c:forEach items="${gddDiseaseList}" var="gddDisease">
+			<tr>
+				<td>${gddDisease.name }</td>
+				<td>${gddDisease.gene }</td>
+				<td>未发现异常</td>
+				<td>正常</td>
+			</tr>
+  		  </c:forEach>
     	</tbody>
       </table>
   </section>
@@ -216,7 +212,7 @@
 		  </tr>
 		</thead>
 		<tbody>
-		  <c:if test="${allGsr.size()==0}">
+		  <c:if test="${empty allGsr}">
 		      <tr><td colspan="7">没有发现突变位点</td></tr>
 		  </c:if>
 		  <c:forEach items="${allGsr}" var="r" varStatus="size">
@@ -225,24 +221,24 @@
  					<tr><td colspan="7">没有发现突变位点</td></tr>
  				</c:when>
  				<c:otherwise>
-						<tr>
-							<td>${r.gene }</td>
-							<td>${r.mutBase }</td>
-							<td>${r.depth }</td>
-							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-							<td>
-								<c:choose>
-					 				<c:when test="${r.hetOrHom=='het'}">
-					 					杂合
-					 				</c:when>
-					 				<c:otherwise>
-					 					纯合
-					 				</c:otherwise>
-	 							</c:choose>
-							</td>
-							<td>${r.diseaseName }</td>
-						</tr>
+					<tr>
+						<td>${r.gene }</td>
+						<td>${r.mutBase }</td>
+						<td>${r.depth }</td>
+						<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+						<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+						<td>
+							<c:choose>
+				 				<c:when test="${r.hetOrHom=='het'}">
+				 					杂合
+				 				</c:when>
+				 				<c:otherwise>
+				 					纯合
+				 				</c:otherwise>
+ 							</c:choose>
+						</td>
+						<td>${r.diseaseName }</td>
+					</tr>
  				</c:otherwise>
  			</c:choose>
 		  </c:forEach>
@@ -341,12 +337,28 @@
 	</table>
 	<table style="width:100%;">
   	  <tr>
-    	<td style="width:50%;"><img style="max-width:500px;" src="<c:if test="${!cmpReport.qualityPath1.contains('Tools') }">${uploadPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.qualityPath1 }"></td>
-    	<td><img style="max-width:500px;" src="<c:if test="${!cmpReport.qualityPath2.contains('Tools') }">${uploadPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }/</c:if>${cmpReport.qualityPath2 }"></td>
+    	<td style="width:50%;">
+    	  <c:if test="${not empty cmpReport.qualityPath1 }">
+	    	<img style="max-width:500px;" src="<c:if test="${!cmpReport.qualityPath1.contains('Tools') }">${uploadPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.qualityPath1 }">
+    	  </c:if>
+    	</td>
+    	<td>
+    	  <c:if test="${not empty cmpReport.qualityPath2 }">
+    	      <img style="max-width:500px;" src="<c:if test="${!cmpReport.qualityPath2.contains('Tools') }">${uploadPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }/</c:if>${cmpReport.qualityPath2 }">
+    	  </c:if>
+    	</td>
       </tr>
       <tr>
-    	<td><img style="max-width:500px;" alt="" src="<c:if test="${!cmpReport.seqContentPath1.contains('Tools') }">${uploadPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.seqContentPath1 }"></td>
-    	<td><img style="max-width:500px;" alt="" src="<c:if test="${!cmpReport.seqContentPath2.contains('Tools') }">${uploadPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.seqContentPath2 }"></td>
+    	<td>
+    	  <c:if test="${not empty cmpReport.seqContentPath1 }">
+    	    <img style="max-width:500px;" alt="" src="<c:if test="${!cmpReport.seqContentPath1.contains('Tools') }">${uploadPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.seqContentPath1 }">
+    	  </c:if>
+    	</td>
+    	<td>
+    	  <c:if test="${not empty cmpReport.seqContentPath2 }">
+    	    <img style="max-width:500px;" alt="" src="<c:if test="${!cmpReport.seqContentPath2.contains('Tools') }">${uploadPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.seqContentPath2 }">
+    	  </c:if>
+    	</td>
       </tr>
     </table>
   </section>
@@ -436,7 +448,10 @@ function preview(obj){
 	  });
 }
 function save(){
+  var _id = $("#cmpId").val();
+  if(_id != "" && _id != undefined){
 	$.post("../report/updateYANDAFilling",$("#gdd-form").serialize());
+  }
 }
 </script>
 </body>
