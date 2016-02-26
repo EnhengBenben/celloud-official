@@ -14,7 +14,7 @@
 <section class="content">
   <!-- Small boxes (Stat box) -->
   <div class="row nav-tabs">
-  	<div class="col-lg-3 col-xs-6" data-toggle="tab" href="#count-data-charts">
+  	<div class="col-lg-3 col-xs-3" data-toggle="tab" href="#count-data-charts">
       <!-- small box -->
       <div class="small-box bg-green">
         <div class="inner">
@@ -27,7 +27,7 @@
         <a href="javascript:void(0)" onClick="userCount.toDataMain()" class="small-box-footer">详情 <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div><!-- ./col -->
-    <div class="col-lg-3 col-xs-6" data-toggle="tab" href="#count-source-charts">
+    <div class="col-lg-3 col-xs-3" data-toggle="tab" href="#count-source-charts">
       <!-- small box -->
       <div class="small-box bg-aqua">
         <div class="inner">
@@ -40,7 +40,7 @@
         <a href="javascript:void(0)" onClick="userCount.toDataMain()" class="small-box-footer">详情 <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div><!-- ./col -->
-    <div class="col-lg-3 col-xs-6" data-toggle="tab" href="#count-report-charts">
+    <div class="col-lg-3 col-xs-3" data-toggle="tab" href="#count-report-charts">
       <!-- small box -->
       <div class="small-box bg-yellow">
         <div class="inner">
@@ -53,7 +53,7 @@
         <a href="javascript:void(0);" onClick="userCount.toReportMain()" class="small-box-footer">详情 <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div><!-- ./col -->
-    <div class="col-lg-3 col-xs-6" data-toggle="tab" href="#count-app-charts">
+    <div class="col-lg-3 col-xs-3" data-toggle="tab" href="#count-app-charts">
       <!-- small box -->
       <div class="small-box bg-red">
         <div class="inner">
@@ -70,7 +70,7 @@
   <!-- Main row -->
   <div class="row">
     <!-- Left col -->
-     <section class="col-lg-6 connectedSortable tab-pane active" id="count-data-charts">
+     <section class="col-xs-6 connectedSortable tab-pane active" id="count-data-charts">
        <!-- Custom tabs (Charts with tabs)-->
        <div class="nav-tabs-custom">
          <!-- Tabs within a box -->
@@ -87,7 +87,7 @@
        </div><!-- /.nav-tabs-custom -->
 	</section><!-- /.Left col -->
 	<!-- Left col -->
-     <section class="col-lg-6 connectedSortable tab-pane" id="count-source-charts">
+     <section class="col-xs-6 connectedSortable tab-pane" id="count-source-charts">
        <!-- Custom tabs (Charts with tabs)-->
        <div class="nav-tabs-custom">
          <!-- Tabs within a box -->
@@ -104,7 +104,7 @@
        </div><!-- /.nav-tabs-custom -->
     </section><!-- /.Left col -->
     <!-- Left col -->
-     <section class="col-lg-6 connectedSortable tab-pane" id="count-report-charts">
+     <section class="col-xs-6 connectedSortable tab-pane" id="count-report-charts">
        <!-- Custom tabs (Charts with tabs)-->
        <div class="nav-tabs-custom">
          <!-- Tabs within a box -->
@@ -121,7 +121,7 @@
        </div><!-- /.nav-tabs-custom -->
     </section><!-- /.Left col -->
     <!-- Left col -->
-     <section class="col-lg-6 connectedSortable tab-pane" id="count-app-charts">
+     <section class="col-xs-6 connectedSortable tab-pane" id="count-app-charts">
        <!-- Custom tabs (Charts with tabs)-->
        <div class="nav-tabs-custom">
          <!-- Tabs within a box -->

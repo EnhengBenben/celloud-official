@@ -71,4 +71,9 @@ public class ReportDaoImpl implements ReportDao {
 
     }
 
+    @Override
+    public <T> void saveData(T T) {
+        dataStore.save(T);
+    }
+
 }

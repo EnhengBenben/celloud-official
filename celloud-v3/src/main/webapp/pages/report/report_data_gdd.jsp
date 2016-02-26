@@ -9,7 +9,7 @@
           <dd>${cmpReport.appName}</dd>
           <dt>文件名称：</dt>
           <c:forEach items="${cmpReport.data}" var="data">
-            <dd>${data.fileName}(${data.dataKey})</dd>
+            <dd class="force-break">${data.fileName}(${data.dataKey})</dd>
           </c:forEach>
         </dl>
 		<div class="toolbar">

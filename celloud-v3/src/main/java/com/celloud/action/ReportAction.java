@@ -238,11 +238,18 @@ public class ReportAction {
             return mv;
         Map<String, CmpGeneDetectionDetail> geneMap = cmpReport
                 .getGeneDetectionDetail();
-        if (geneMap == null)
-            return mv;
         // 需要排除的疾病
         final List<String> noDiseaseName = Arrays.asList("", "改变一碳代谢", "活力减少",
                 "降低表达", "表型改变相关", "改变高半胱氨酸水平");
+        Map<String, List<String>> conditionMap = new HashMap<>();
+        conditionMap.put("name", noDiseaseName);
+        if (geneMap == null) {
+            String[] fields = { "name" };
+            mv.addObject("cmpReport", cmpReport);
+            mv.addObject("gddDiseaseList", reportService
+                    .getGddDiseaseDictNormal(fields, conditionMap, "gene"));
+            return mv;
+        }
         // 过滤疾病英文名称只允许字母和数字
         String regEx = "[^\\w\\.\\_\\-\u4e00-\u9fa5]";
         Pattern p = Pattern.compile(regEx);
@@ -356,9 +363,7 @@ public class ReportAction {
         });
         mv.addObject("allGsr", allGsrListNew);
         String[] fields = { "gene", "name" };
-        Map<String, List<String>> conditionMap = new HashMap<>();
         conditionMap.put("gene", unnormalGene);
-        conditionMap.put("name", noDiseaseName);
         mv.addObject("gddDiseaseList", reportService
                 .getGddDiseaseDictNormal(fields, conditionMap, "gene"));
         return mv;

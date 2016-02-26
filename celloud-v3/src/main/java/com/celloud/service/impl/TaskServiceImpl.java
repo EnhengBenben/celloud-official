@@ -58,7 +58,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task updateToDone(Integer appId, Integer projectId, String dataKey,
+    public synchronized Task updateToDone(Integer appId, Integer projectId, String dataKey,
             String dataKeys, String context) {
         Task task = taskMapper.findTaskByProData(projectId, dataKey);
         task.setEndDate(new Date());
@@ -78,13 +78,16 @@ public class TaskServiceImpl implements TaskService {
 
         int runNum = reportMapper.selectRunNumByPro(projectId,
                 DataState.ACTIVE, ReportType.DATA, ReportPeriod.COMPLETE);
+        report.setFlag(ReportType.PROJECT);
+        report.setFileId(null);
+        report.setContext(context);
         if (runNum == 0) {
-            report.setFlag(ReportType.PROJECT);
+            report.setPeriod(ReportPeriod.COMPLETE);
             report.setEndDate(new Date());
-            report.setContext(context);
-            report.setFileId(null);
-            reportMapper.updateReportPeriod(report);
+        } else {
+            report.setPeriod(ReportPeriod.RUNNING_HAVE_REPORT);
         }
+        reportMapper.updateReportPeriod(report);
         return task;
     }
 

@@ -16,7 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
 import com.celloud.mail.EmailSender;
+import com.celloud.model.Client;
 import com.celloud.model.User;
+import com.celloud.service.ClientService;
 import com.celloud.service.UserService;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.ResetPwdUtils;
@@ -33,6 +35,9 @@ public class HomeAction {
     private static final Logger logger = LoggerFactory.getLogger(HomeAction.class);
     @Resource
     private UserService userService;
+    
+    @Resource
+    private ClientService clientService;
 
     /**
      * 用户重置密码--跳转到重置密码页面
@@ -149,8 +154,11 @@ public class HomeAction {
     }
 
     @RequestMapping("download.html")
-    public String download() {
-        return "download";
+    public ModelAndView download() {
+        ModelAndView mv=new ModelAndView("download");
+        Client client=clientService.getLast();
+        mv.addObject("client", client);
+        return mv;
     }
 
     @RequestMapping("join_us.html")

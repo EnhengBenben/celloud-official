@@ -12,7 +12,7 @@
 </head>
 <body>
 <a href="javascript:void(0)" onclick="preview(this)" class="btn btn-default" id="change" style="float:right;margin-top:10px;margin-right:-80px;">打印</a>
-<a href="javascript:void(0)" onclick="save()" class="btn btn-default" id="change" style="float:right;margin-top:40px;margin-right:-80px;">保存</a>
+<!-- <a href="javascript:void(0)" onclick="save()" class="btn btn-default" id="change" style="float:right;margin-top:40px;margin-right:-80px;">保存</a> -->
 <form id="gdd-form">
 <input type="hidden" name="cmpId" id="cmpId" value="${cmpReport.id }">
 <input type="hidden" name="cmpReport.dataKey" value="${cmpReport.dataKey }">
@@ -24,10 +24,10 @@
 	</div>
 	<div class="titletype">
 		<div class="titleinfo">
-			<span>姓</span><span style="margin-left:40px">名：</span><span><input type="text" class="input200" value="${cmpReport.cmpFilling.patientName }"></span>
+			<span>姓</span><span style="margin-left:40px">名：</span><span><input id="patientName1" type="text" class="input200" value="${cmpReport.cmpFilling.patientName }"></span>
 		</div>
 		<div class="titleinfo">
-			<span>取样日期：</span><span><input type="text" class="input200" value="${cmpReport.cmpFilling.samplingDate }" ></span>
+			<span>送检日期：</span><span><input id="samplingDate1" type="text" class="input200" value="${cmpReport.cmpFilling.samplingDate }" ></span>
 		</div>
 		<div class="titleinfo">
 			<span>报告日期：</span><span><input type="text" class="input200" value="${cmpReport.cmpFilling.reportDate }"></span>
@@ -43,7 +43,7 @@
     	<li>母亲姓名：<span><input type="text" name="motherName" value="${cmpReport.cmpFilling.motherName }"></span></li>
     	<li>病历号：<span><input type="text" name="medicalRecord" value="${cmpReport.cmpFilling.medicalRecord }"></span></li>
     	<li style="width:90%">项目编号：<span><input type="text" name="projectNo" value="${cmpReport.cmpFilling.projectNo }"></span></li>
-        <li>新生儿姓名：<span><input type="text" name="patientName" value="${cmpReport.cmpFilling.patientName }"></span></li>
+        <li>新生儿姓名：<span><input id="patientName" type="text" name="patientName" value="${cmpReport.cmpFilling.patientName }"></span></li>
         <li>出生日期：<span><input type="text" name="birthday" value="${cmpReport.cmpFilling.birthday }"></span></li>
         <li>受检者性别： <span id="_sex"><input type="radio" name="patientSex" value="男" <c:if test="${cmpReport.cmpFilling.patientSex eq '男' }">checked="checked"</c:if>>男<input type="radio" name="patientSex" value="女" <c:if test="${cmpReport.cmpFilling.patientSex eq '女' }">checked="checked"</c:if>>女</span></li>
         <li>指导医生：<span><input type="text" name="doctorName" value="${cmpReport.cmpFilling.doctorName }"></span></li>
@@ -53,7 +53,7 @@
         <li style="width:90%">检测方法：<span>外显子捕获，illumina高通量测序平台，SNPs/微插入/微缺失检测</span></li>
         <li>分子生物实验操作：<span><input type="text" class="input100" name="molecularBioExperOper" value="${cmpReport.cmpFilling.molecularBioExperOper }"></span></li>
         <li>基因分析：<span><input type="text" name="geneAnalysis" value="${cmpReport.cmpFilling.geneAnalysis }"></span></li>
-        <li>送检日期：<span><input type="text" name="samplingDate" value="${cmpReport.cmpFilling.samplingDate }"></span></li>
+        <li>送检日期：<span><input id="samplingDate" type="text" name="samplingDate" value="${cmpReport.cmpFilling.samplingDate }"></span></li>
         <li>分析日期：<span><input type="text" name="analysisDate" value="${cmpReport.cmpFilling.analysisDate }"></span></li>
         <li>报告日期：<span><input type="text" name="reportDate" value="${cmpReport.cmpFilling.reportDate }"></span></li>
     </ul>
@@ -72,6 +72,9 @@
         </tr>	
       </thead>
       <tbody>
+          <c:if test="${empty gsrList}">
+            <tr><td colspan="4">没有发现突变位点</td></tr>
+          </c:if>
           <c:forEach items="${gsrList}" var="accountConfig" varStatus="status" >  
             <tr>  
         	 <td>${accountConfig.diseaseName }</td>
@@ -88,6 +91,9 @@
   </section>
   <section class="section2 border1 w3cbbs" id="section2">
     <h4>二. 检测结果详述</h4>
+    <c:if test="${empty cmpReport.geneDetectionDetail }">
+      <div class="info">没有发现突变基因</div>
+    </c:if>
     <c:forEach items="${cmpReport.geneDetectionDetail }" var="geneDetection" varStatus="size">
       <h5>${size.count}.&nbsp;&nbsp;${geneDetection.key }基因：该基因突变与${geneDetection.value.result[0].diseaseName }相关</h5>
       <div class="info">
@@ -158,21 +164,17 @@
    		  </tr>
    		</thead>
    		<tbody>
-   			<c:choose>
-   				<c:when test="${gddDiseaseList.size()==0}">
-   					<tr><td colspan="4">没有发现其他检测结果</td></tr>
-   				</c:when>
-   				<c:otherwise>
-		   			<c:forEach items="${gddDiseaseList}" var="gddDisease">
-   						<tr>
-   							<td>${gddDisease.name }</td>
-   							<td>${gddDisease.gene }</td>
-   							<td>未发现异常</td>
-   							<td>正常</td>
-   						</tr>
-		   			</c:forEach>
-   				</c:otherwise>
-   			</c:choose>
+   		  <c:if test="${empty gddDiseaseList }">
+	        <tr><td colspan="4">没有发现其他检测结果</td></tr>
+	      </c:if>
+  		  <c:forEach items="${gddDiseaseList}" var="gddDisease">
+			<tr>
+				<td>${gddDisease.name }</td>
+				<td>${gddDisease.gene }</td>
+				<td>未发现异常</td>
+				<td>正常</td>
+			</tr>
+  		  </c:forEach>
     	</tbody>
       </table>
   </section>
@@ -210,33 +212,36 @@
 		  </tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${allGsr}" var="r" varStatus="size">
+		  <c:if test="${empty allGsr}">
+		      <tr><td colspan="7">没有发现突变位点</td></tr>
+		  </c:if>
+		  <c:forEach items="${allGsr}" var="r" varStatus="size">
  			<c:choose>
  				<c:when test="${fn:contains(r.gene, '没有发现突变位点')}">
- 					<tr><td colspan="6">没有发现突变位点</td></tr>
+ 					<tr><td colspan="7">没有发现突变位点</td></tr>
  				</c:when>
  				<c:otherwise>
-						<tr>
-							<td>${r.gene }</td>
-							<td>${r.mutBase }</td>
-							<td>${r.depth }</td>
-							<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
-							<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
-							<td>
-								<c:choose>
-					 				<c:when test="${r.hetOrHom=='het'}">
-					 					杂合
-					 				</c:when>
-					 				<c:otherwise>
-					 					纯合
-					 				</c:otherwise>
-	 							</c:choose>
-							</td>
-							<td>${r.diseaseName }</td>
-						</tr>
+					<tr>
+						<td>${r.gene }</td>
+						<td>${r.mutBase }</td>
+						<td>${r.depth }</td>
+						<td><c:choose><c:when test="${fn:length(r.cdsMutSyntax)>14 }"><c:out value="${fn:substring(r.cdsMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.cdsMutSyntax }</c:otherwise></c:choose></td>
+						<td><c:choose><c:when test="${fn:length(r.aaMutSyntax)>14 }"><c:out value="${fn:substring(r.aaMutSyntax, 0, 14) }"/></c:when><c:otherwise>${r.aaMutSyntax }</c:otherwise></c:choose></td>
+						<td>
+							<c:choose>
+				 				<c:when test="${r.hetOrHom=='het'}">
+				 					杂合
+				 				</c:when>
+				 				<c:otherwise>
+				 					纯合
+				 				</c:otherwise>
+ 							</c:choose>
+						</td>
+						<td>${r.diseaseName }</td>
+					</tr>
  				</c:otherwise>
  			</c:choose>
-			</c:forEach>
+		  </c:forEach>
  	    </tbody>
     </table>
   </section>
@@ -332,61 +337,122 @@
 	</table>
 	<table style="width:100%;">
   	  <tr>
-    	<td style="width:50%;"><img style="max-width:500px;" src="<c:if test="${!cmpReport.qualityPath1.contains('Tools') }">${uploadPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.qualityPath1 }"></td>
-    	<td><img style="max-width:500px;" src="<c:if test="${!cmpReport.qualityPath2.contains('Tools') }">${uploadPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }/</c:if>${cmpReport.qualityPath2 }"></td>
+    	<td style="width:50%;">
+    	  <c:if test="${not empty cmpReport.qualityPath1 }">
+	    	<img style="max-width:500px;" src="<c:if test="${!cmpReport.qualityPath1.contains('Tools') }">${uploadPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.qualityPath1 }">
+    	  </c:if>
+    	</td>
+    	<td>
+    	  <c:if test="${not empty cmpReport.qualityPath2 }">
+    	      <img style="max-width:500px;" src="<c:if test="${!cmpReport.qualityPath2.contains('Tools') }">${uploadPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }/</c:if>${cmpReport.qualityPath2 }">
+    	  </c:if>
+    	</td>
       </tr>
       <tr>
-    	<td><img style="max-width:500px;" alt="" src="<c:if test="${!cmpReport.seqContentPath1.contains('Tools') }">${uploadPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.seqContentPath1 }"></td>
-    	<td><img style="max-width:500px;" alt="" src="<c:if test="${!cmpReport.seqContentPath2.contains('Tools') }">${uploadPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.seqContentPath2 }"></td>
+    	<td>
+    	  <c:if test="${not empty cmpReport.seqContentPath1 }">
+    	    <img style="max-width:500px;" alt="" src="<c:if test="${!cmpReport.seqContentPath1.contains('Tools') }">${uploadPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.seqContentPath1 }">
+    	  </c:if>
+    	</td>
+    	<td>
+    	  <c:if test="${not empty cmpReport.seqContentPath2 }">
+    	    <img style="max-width:500px;" alt="" src="<c:if test="${!cmpReport.seqContentPath2.contains('Tools') }">${uploadPath }/${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.seqContentPath2 }">
+    	  </c:if>
+    	</td>
       </tr>
     </table>
   </section>
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/jQuery/jquery-1.11.3.min.js"></script>
-  <script>
-  	function preview(obj){
-  		var inputVal;
-  		var textareaVal;
-  		var classname;
-  		$("body").find("section").each(function(){
-  			$(this).removeClass("border1");
-  		});
-  		$("body").find("input[type='text']").each(function(){
-  			inputVal = $(this).val();
-  			classname = $(this).attr("class");
-  			$(this).parent().html("<input type='hidden' value='"+classname+"'><span name='print'>"+inputVal+"</span>");
-  		});
-  		$("#section2 textarea").each(function(){
-  			textareaVal = $(this).val();
-  			$(this).parent().html("<p name='section4p'>"+textareaVal+"</p>");
-  		});
-  		var sex = $("input[type='radio']:checked").val();
-  		$("#_sex").html(sex);
-  		$("#change").hide();
-  		if($("#noMutation").prop("checked")){
-  			$("#noDrug").css("display","");
-  		}
-  		$("a").css("display","none");
-  		window.print();
-  		$("#change").show();
-  		$("body").find("section").each(function(){
-  			$(this).addClass("border1");
-  		});
-  		$("body").find("span[name='print']").each(function(){
-  			inputVal = $(this).html();
-  			classname = $(this).prev().val();
-  			$(this).parent().html("<input type='text' class='"+classname+"' value='"+inputVal+"'>");
-  		});
-  		$("body").find("p[name='section4p']").each(function(){
-  			inputVal = $(this).html();
-  			$(this).parent().html("<textarea class='form-control' rows='15' cols='100'>"+inputVal+"</textarea>");
-  		});
-  		$("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
-  		$("input[type='radio'][value="+sex+"]").prop("checked",true); 
-  		$("a").css("display","");
-  	}
-  	function save(){
-  		$.post("../report/updateYANDAFilling",$("#gdd-form").serialize());
-  	}
-  </script>
+<script>
+  $(document).ready(function(){
+      $("#patientName").on("change",function(){
+        unityPatientName($(this).val());
+      });
+      $("#patientName1").on("change",function(){
+          unityPatientName($(this).val());
+      });
+      $("#samplingDate").on("change",function(){
+        unitySamplingDate($(this).val());
+      });
+      $("#samplingDate1").on("change",function(){
+          unitySamplingDate($(this).val());
+      });
+  });
+  function unityPatientName(name){
+    $("#patientName").val(name);
+    $("#patientName1").val(name);
+  }
+  function unitySamplingDate(name){
+    $("#samplingDate").val(name);
+    $("#samplingDate1").val(name);
+  }
+function preview(obj){
+	var inputVal;
+	var textareaVal;
+	var classname;
+	var name;
+	var id;
+	$("body").find("section").each(function(){
+		$(this).removeClass("border1");
+	});
+	$("body").find("input[type='text']").each(function(){
+		inputVal = $(this).val();
+		classname = $(this).attr("class");
+		name = $(this).attr("name");
+		id = $(this).attr("id");
+		$(this).parent().html("<input id='"+id+"' name='"+name+"' type='hidden' value='"+classname+"'><span name='print'>"+inputVal+"</span>");
+	});
+	$("#section2 textarea").each(function(){
+		textareaVal = $(this).val();
+		$(this).parent().html("<p name='section4p'><input type='hidden' value='"+$(this).attr("name")+"'>"+textareaVal+"</p>");
+	});
+	var sex = $("input[type='radio']:checked").val();
+	$("#_sex").html(sex);
+	$("#change").hide();
+	if($("#noMutation").prop("checked")){
+		$("#noDrug").css("display","");
+	}
+	$("a").css("display","none");
+	save();
+	window.print();
+	$("#change").show();
+	$("body").find("section").each(function(){
+		$(this).addClass("border1");
+	});
+	$("body").find("span[name='print']").each(function(){
+		inputVal = $(this).html();
+		classname = $(this).prev().val();
+		name = $(this).attr("name");
+        id = $(this).attr("id");
+		$(this).parent().html("<input id='"+id+"' name='"+name+"' type='text' class='"+classname+"' value='"+inputVal+"'>");
+	});
+	$("body").find("p[name='section4p']").each(function(){
+		inputVal = $(this).html();
+		name = $(this).find("input").val();
+		$(this).parent().html("<textarea name='"+name+"' class='form-control' rows='15' cols='100'>"+inputVal+"</textarea>");
+	});
+	$("#_sex").html("<input type='radio' name='patientSex' value='男'>男<input type='radio' name='patientSex' value='女'>女");
+	$("input[type='radio'][value="+sex+"]").prop("checked",true); 
+	$("a").css("display","");
+	$("#patientName").on("change",function(){
+	    unityPatientName($(this).val());
+	  });
+	  $("#patientName1").on("change",function(){
+	      unityPatientName($(this).val());
+	  });
+	  $("#samplingDate").on("change",function(){
+	    unitySamplingDate($(this).val());
+	  });
+	  $("#samplingDate1").on("change",function(){
+	      unitySamplingDate($(this).val());
+	  });
+}
+function save(){
+  var _id = $("#cmpId").val();
+  if(_id != "" && _id != undefined){
+	$.post("../report/updateYANDAFilling",$("#gdd-form").serialize());
+  }
+}
+</script>
 </body>
 </html>

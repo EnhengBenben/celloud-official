@@ -4,11 +4,12 @@
   <resultMap id="BaseResultMap" type="com.celloud.backstage.model.Client" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="version" property="version" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="name_x86" property="nameX86" jdbcType="VARCHAR" />
+    <result column="name_x64" property="nameX64" jdbcType="VARCHAR" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, version, name, create_date
+    id, version, name_x86, name_x64, create_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -21,10 +22,10 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.celloud.backstage.model.Client" >
-    insert into tb_client (id, version, name, 
-      create_date)
-    values (#{id,jdbcType=INTEGER}, #{version,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=TIMESTAMP})
+    insert into tb_client (id, version, name_x86, 
+      name_x64, create_date)
+    values (#{id,jdbcType=INTEGER}, #{version,jdbcType=VARCHAR}, #{nameX86,jdbcType=VARCHAR}, 
+      #{nameX64,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.celloud.backstage.model.Client" >
     insert into tb_client
@@ -35,8 +36,11 @@
       <if test="version != null" >
         version,
       </if>
-      <if test="name != null" >
-        name,
+      <if test="nameX86 != null" >
+        name_x86,
+      </if>
+      <if test="nameX64 != null" >
+        name_x64,
       </if>
       <if test="createDate != null" >
         create_date,
@@ -49,8 +53,11 @@
       <if test="version != null" >
         #{version,jdbcType=VARCHAR},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+      <if test="nameX86 != null" >
+        #{nameX86,jdbcType=VARCHAR},
+      </if>
+      <if test="nameX64 != null" >
+        #{nameX64,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null" >
         #{createDate,jdbcType=TIMESTAMP},
@@ -63,8 +70,11 @@
       <if test="version != null" >
         version = #{version,jdbcType=VARCHAR},
       </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+      <if test="nameX86 != null" >
+        name_x86 = #{nameX86,jdbcType=VARCHAR},
+      </if>
+      <if test="nameX64 != null" >
+        name_x64 = #{nameX64,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null" >
         create_date = #{createDate,jdbcType=TIMESTAMP},
@@ -75,8 +85,21 @@
   <update id="updateByPrimaryKey" parameterType="com.celloud.backstage.model.Client" >
     update tb_client
     set version = #{version,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
+      name_x86 = #{nameX86,jdbcType=VARCHAR},
+      name_x64 = #{nameX64,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getClientByPage" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_client
+    order by create_date desc
+  </select>
+  <insert id="addClient" parameterType="com.celloud.backstage.model.Client" >
+    insert into tb_client (version, name_x86, 
+      name_x64, create_date)
+    values (#{version,jdbcType=VARCHAR}, #{nameX86,jdbcType=VARCHAR}, 
+      #{nameX64,jdbcType=VARCHAR}, now())
+  </insert>
 </mapper>

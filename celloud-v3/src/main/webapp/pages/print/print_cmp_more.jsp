@@ -27,10 +27,10 @@
 			<span>肿瘤类型：</span><span><input type="text" class="input200" id="tumorType" name="tumorType" value="${cmpReport.cmpFilling.tumorType }"></span>
 		</div>
 		<div>
-			<span>姓</span><span style="margin-left:40px">名：</span><span><input type="text" class="input200" value="${cmpReport.cmpFilling.patientName }"></span>
+			<span>姓</span><span style="margin-left:40px">名：</span><span><input id="patientName1" type="text" class="input200" value="${cmpReport.cmpFilling.patientName }"></span>
 		</div>
 		<div>
-			<span>取样日期：</span><span><input type="text" class="input200" value="${cmpReport.cmpFilling.samplingDate }" ></span>
+			<span>取样日期：</span><span><input id="samplingDate1" type="text" class="input200" value="${cmpReport.cmpFilling.samplingDate }" ></span>
 		</div>
 		<div>
 			<span>报告日期：</span><span><input type="text" class="input200" name="reportDate" value="${cmpReport.cmpFilling.reportDate }"></span>
@@ -48,7 +48,7 @@
         <li>取样日期：<span><input type="text" id="samplingDate" name="samplingDate" value="${cmpReport.cmpFilling.samplingDate }"></span></li>
         <li>性别： <span id="_sex"><input type="radio" name="patientSex" value="男" <c:if test="${cmpReport.cmpFilling.patientSex eq '男' }">checked="checked"</c:if>>男<input type="radio" name="patientSex" value="女" <c:if test="${cmpReport.cmpFilling.patientSex eq '女' }">checked="checked"</c:if>>女</span></li>
         <li>样本来源：<span><input type="text" id="sampleSource" name="sampleSource" value="${cmpReport.cmpFilling.sampleSource }"></span></li>
-        <li>年龄：<span><input type="text" id="patientAge" name="patientAge" value="<c:if test="${!empty cmpReport.cmpFilling.patientAge && !cmpReport.cmpFilling.patientAge eq 'NaN'}">${cmpReport.cmpFilling.patientAge }</c:if>"></span>岁</li>
+        <li>年龄：<span><input type="text" id="patientAge" name="patientAge" value="<c:if test="${cmpReport.cmpFilling.patientAge != 'NaN'}">${cmpReport.cmpFilling.patientAge }</c:if>"></span>岁</li>
         <li>临床诊断：<span><input type="text" id="clinicalDiagnosis" name="clinicalDiagnosis" value="${cmpReport.cmpFilling.clinicalDiagnosis }"></span></li>
         <li>病理诊断：<span><input type="text" id="pathologicDiagnosis" name="pathologicDiagnosis" value="${cmpReport.cmpFilling.pathologicDiagnosis }"></span></li>
         <li>分析日期：<span><input type="text" id="analysisDate" name="analysisDate" value="${cmpReport.cmpFilling.analysisDate }"></span></li>
@@ -280,8 +280,8 @@
 			</c:otherwise>
 		</c:choose>
 	</table>
-	<a href="javascript:void(0)" onclick="removeTableTr('drugTbody_3')">删除行</a>&nbsp;&nbsp;
-	<a href="javascript:void(0)" onclick="addDrugResistance('drugTbody_3',${resistanceIndex})">添加行</a>
+	<a href="javascript:removeTableTr('drugTbody_3')" >删除行</a>&nbsp;&nbsp;
+	<a href="javascript:addDrugResistance('drugTbody_3',${resistanceIndex})" >添加行</a>
 </section>
 <input type="hidden" id="drugTbody_3_tr_length" value="${cmpReport.cmpFilling.resistanceSiteSum.size()}">
 <input type="hidden" id="drugTbody_4_tr_length" value="${cmpReport.cmpFilling.personalizedMedicine.size()}">
@@ -330,8 +330,8 @@
 			</c:otherwise>
 		</c:choose>
 	</table>
-	<a href="javascript:void(0)" onclick="removeTableTr('drugTbody_4')">删除行</a>&nbsp;&nbsp;
-	<a href="javascript:void(0)" onclick="addPersonalizedMedicine('drugTbody_4',${personMedicineIndex})">添加行</a>
+	<a href="javascript:removeTableTr('drugTbody_4')">删除行</a>&nbsp;&nbsp;
+	<a href="javascript:addPersonalizedMedicine('drugTbody_4',${personMedicineIndex})">添加行</a>
 	<h4>推荐药物：</h4>
 	<div id="drugDescipDiv">
 	    <c:set var="recommendDrugIndex" scope="page" value="0"/>
@@ -340,15 +340,15 @@
 				<c:forEach items="${cmpReport.cmpFilling.recommendDrug}" var="li" varStatus="size">
 				  <div name="drugContent">
 					<div class="h2">
-				    	<input type="text" name="recommendDrug[${size.index }].drugName" class="form-control col-sm-10" value="${li.drugName }">
+				    	<input type="text" name="recommendDrug[${size.index}].drugName" class="form-control col-sm-10" value="${li.drugName }">
 				    </div>
 				    <div name="section4Text">
-				    	<textarea class="form-control" name="recommendDrug[${size.index }].drugDescrip" rows="15" cols="100">${li.drugDescrip }</textarea>
+				    	<textarea class="form-control" name="recommendDrug[${size.index}].drugDescrip" rows="15" cols="100">${li.drugDescrip }</textarea>
 			    	</div>
-					<c:if test="size.index>0"><br></c:if>
+					<br>
 				  </div>
 				</c:forEach>
-			  <c:set var="recommendDrugIndex" scope="page" value="${cmpReport.cmpFilling.recommendDrug.size()-1 }"/>
+				<c:set var="recommendDrugIndex" scope="page" value="${cmpReport.cmpFilling.recommendDrug.size()-1}"/>
 			</c:when>
 			<c:otherwise>
 			  <div name="drugContent">
@@ -362,8 +362,8 @@
 			</c:otherwise>
 		</c:choose>
     </div>
-    <a href="javascript:void();" onclick="removeDrugInput('drugDescipDiv')">删除药物</a>&nbsp;&nbsp;
-    <a href="javascript:void();" onclick="addDrugInput('drugDescipDiv'),${recommendDrugIndex}">添加药物</a>
+    <a href="javascript:removeDrugInput('drugDescipDiv');">删除药物</a>&nbsp;&nbsp;
+    <a href="javascript:addDrugInput('drugDescipDiv',${recommendDrugIndex});">添加药物</a>
 </section>
 </form>
 <section class="section5 border1 w3cbbs" id="section5">
@@ -5542,7 +5542,27 @@ $(document).ready(function(){
 			$("#drugTable").parent().find("a").css("display","");
 		}
 	});
+	$("#patientName").on("change",function(){
+	  unityPatientName($(this).val());
+	});
+	$("#patientName1").on("change",function(){
+	    unityPatientName($(this).val());
+	});
+	$("#samplingDate").on("change",function(){
+	  unitySamplingDate($(this).val());
+	});
+	$("#samplingDate1").on("change",function(){
+	    unitySamplingDate($(this).val());
+	});
 });
+function unityPatientName(name){
+  $("#patientName").val(name);
+  $("#patientName1").val(name);
+}
+function unitySamplingDate(name){
+  $("#samplingDate").val(name);
+  $("#samplingDate1").val(name);
+}
 window.onload=function(){
 	printSection2Table();
 	$("#section5").find("div[name='geneDescriptDiv']").each(function(index,element){
@@ -5603,6 +5623,8 @@ function preview(obj){
 	var inputVal;
 	var textareaVal;
 	var classname;
+	var id;
+	var name;
 	var cmpDrug = "";
 	saveFillCmp();
 	$("body").find("section").each(function(){
@@ -5611,7 +5633,9 @@ function preview(obj){
 	$("body").find("input[type='text']").each(function(){
 		inputVal = $(this).val();
 		classname = $(this).attr("class");
-		$(this).parent().html("<input type='hidden' value='"+classname+"'><span name='print'>"+inputVal+"</span>");
+		name = $(this).attr("name"); 
+		id = $(this).attr("id"); 
+		$(this).parent().html("<input id='"+id+"' name='"+name+"' type='hidden' value='"+classname+"'><span name='print'>"+inputVal+"</span>");
 	});
 	$("body").find("table[name='cmpDrugTable']").find("tbody").find("tr").each(function(){
 		$(this).find("td").each(function(){
@@ -5619,10 +5643,9 @@ function preview(obj){
 		});
 		cmpDrug += "@";
 	});
-	$.get("report!addCmpDrug",{"context":cmpDrug},function(flag){});
 	$("#section4 textarea").each(function(){
 		textareaVal = $(this).val();
-		$(this).parent().html("<p name='section4p'>"+textareaVal+"</p>");
+		$(this).parent().html("<p name='section4p'><input type='hidden' value='"+$(this).attr("name")+"'>"+textareaVal+"</p>");
 	});
 	var sex = $("input[type='radio']:checked").val();
 	$("#_sex").html(sex);
@@ -5640,16 +5663,31 @@ function preview(obj){
 	$("body").find("span[name='print']").each(function(){
 		inputVal = $(this).html();
 		classname = $(this).prev().val();
-		$(this).parent().html("<input type='text' class='"+classname+"' value='"+inputVal+"'>");
+		name = $(this).prev().attr("name"); 
+		id = $(this).prev().attr("id"); 
+		$(this).parent().html("<input id='"+id+"' name='"+name+"' type='text' class='"+classname+"' value='"+inputVal+"'>");
 	});
 	$("body").find("p[name='section4p']").each(function(){
-		inputVal = $(this).html();
-		$(this).parent().html("<textarea class='form-control' rows='15' cols='100'>"+inputVal+"</textarea>");
+		inputVal = $(this).text();
+		name = $(this).find("input").val();
+		$(this).parent().html("<textarea name='"+name+"' class='form-control' rows='15' cols='100'>"+inputVal+"</textarea>");
 	});
-	$("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
+	$("#_sex").html("<input type='radio' name='patientSex' value='男'>男<input type='radio' name='patientSex' value='女'>女");
 	$("input[type='radio'][value="+sex+"]").prop("checked",true); 
 	$("#noDrug").css("display","none");
 	$("#checkboxdiv").css("display","");
+	$("#patientName").on("change",function(){
+	   unityPatientName($(this).val());
+	 });
+	 $("#patientName1").on("change",function(){
+	     unityPatientName($(this).val());
+	 });
+	 $("#samplingDate").on("change",function(){
+	   unitySamplingDate($(this).val());
+	 });
+	 $("#samplingDate1").on("change",function(){
+	     unitySamplingDate($(this).val());
+	 });
 	$("a").css("display","");
 }
 function printTable($parentDiv_,height){
