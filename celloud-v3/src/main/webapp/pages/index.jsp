@@ -125,6 +125,12 @@
 							<span>账号管理</span>
 						</a>
 					</li>
+					<li class="treeview">
+                        <a id="to-expense-main" href="javascript:void(0)">
+                            <i class="fa fa-rmb"></i>
+                            <span>费用中心</span>
+                        </a>
+                    </li>
 					<li class="treeview" id="feedbackManage">
 						<a href="javascript:void(0)" onclick="showFeedback()">
 							<i class="fa fa-comments text-yellow"></i>

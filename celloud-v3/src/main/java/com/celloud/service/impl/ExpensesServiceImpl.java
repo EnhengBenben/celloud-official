@@ -1,5 +1,9 @@
 package com.celloud.service.impl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -21,8 +25,15 @@ public class ExpensesServiceImpl implements ExpensesService {
 
     @Override
     public void saveExpenses(Expenses expenses) {
-        Integer appId;
-
         reportDao.saveData(expenses);
+    }
+
+    @Override
+    public List<Expenses> getExpensesList(Integer userId, String expenseType) {
+        Map<String, Object> conditionMap = new HashMap<>();
+        conditionMap.put("userId", userId);
+        conditionMap.put("expenseType", expenseType);
+        return reportDao.getDataListAndOrder(Expenses.class, conditionMap,
+                "-createDate");
     }
 }

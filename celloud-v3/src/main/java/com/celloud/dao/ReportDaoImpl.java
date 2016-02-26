@@ -74,4 +74,16 @@ public class ReportDaoImpl implements ReportDao {
     public <T> void saveData(T T) {
         dataStore.save(T);
     }
+
+    @Override
+    public <T> List<T> getDataListAndOrder(Class<T> T,
+            Map<String, Object> conditionMap, String sortField) {
+        Query<T> q = dataStore.createQuery(T);
+        if (conditionMap != null) {
+            for (Map.Entry<String, Object> entry : conditionMap.entrySet()) {
+                q.filter(entry.getKey(), entry.getValue());
+            }
+        }
+        return q.order(sortField).asList();
+    }
 }

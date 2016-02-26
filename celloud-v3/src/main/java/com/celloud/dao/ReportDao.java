@@ -110,4 +110,19 @@ public interface ReportDao {
      * @date 2016年2月23日 下午5:59:42
      */
     public <T> void saveData(T T);
+
+    /**
+     * 根据获取全部信息列表
+     * 
+     * @param T
+     * @param conditionMap
+     *            筛选条件
+     * @param sortField
+     *            排序字段
+     * @return
+     * @author leamo
+     * @date 2016年2月25日 下午3:59:53
+     */
+    public <T> List<T> getDataListAndOrder(Class<T> T,
+            Map<String, Object> conditionMap, String sortField);
 }
