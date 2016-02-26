@@ -43,7 +43,7 @@
                     <td id="reads-distribution-parent" style="width:49%;">
                       <c:choose>
                         <c:when test="${empty mib.readsDistributionInfo}">
-                          <c:if test="${empty mib.readsDistribution}">
+                          <c:if test="${not empty mib.readsDistribution}">
 		                    <img src="<c:if test="${!mib.readsDistribution.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.readsDistribution }" style="width:100%;">
 		                  </c:if>
                         </c:when>
@@ -55,7 +55,7 @@
                     <td id="family-distribution-parent">
                       <c:choose>
                         <c:when test="${empty mib.familyDistributionInfo}">
-		                  <c:if test="${empty mib.familyDistribution}">
+		                  <c:if test="${not empty mib.familyDistribution}">
 		                    <img src="<c:if test="${!mib.familyDistribution.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.familyDistribution }" style="width:100%;">
 		                  </c:if>
                         </c:when>
@@ -74,7 +74,7 @@
             <div class="m-boxCon">
               <c:choose>
                 <c:when test="${empty mib.genusDistributionInfo}">
-		            <c:if test="${empty mib.genusDistribution}">
+		            <c:if test="${not empty mib.genusDistribution}">
 		              <img src="<c:if test="${!mib.genusDistribution.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.genusDistribution }" style="width:90%;">
 		            </c:if>
                 </c:when>
