@@ -20,7 +20,7 @@
 <link href="<%=request.getContextPath()%>/plugins/intro/introjs.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/css/font.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/main.css" rel="stylesheet" type="text/css" />
-<link href="<%=request.getContextPath()%>/css/app.css" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/css/app.css?version=1.0" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
 <link href="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.css" rel="stylesheet">
 </head>
