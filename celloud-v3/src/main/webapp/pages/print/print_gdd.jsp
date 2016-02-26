@@ -165,7 +165,7 @@
    		</thead>
    		<tbody>
    		  <c:if test="${empty gddDiseaseList }">
-	        <tr><td colspan="1">没有发现其他检测结果</td></tr>
+	        <tr><td colspan="4">没有发现其他检测结果</td></tr>
 	      </c:if>
   		  <c:forEach items="${gddDiseaseList}" var="gddDisease">
 			<tr>
