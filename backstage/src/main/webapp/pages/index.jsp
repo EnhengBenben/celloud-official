@@ -50,19 +50,19 @@
                             <span class="title">控制台</span>
                         </a>
                     </li>
-                    <li class="expanded has-sub">
+                    <li>
                         <a id="to-app-manage" href="#">
                             <i class="linecons-desktop"></i>
                             <span class="title">应用管理</span>
                         </a>
                         <ul>
-                            <li>
-                                <a href="app_list.html">
+                            <li id="app-list-menu">
+                                <a href="javascript:app.toAppMain();">
                                     <span class="title">应用列表</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="add_app.html">
+                            <li id="app-add-menu">
+                                <a href="javascript:app.toAddApp();">
                                     <span class="title">添加应用</span>
                                 </a>
                             </li>

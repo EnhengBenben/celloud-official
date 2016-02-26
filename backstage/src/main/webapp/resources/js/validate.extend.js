@@ -16,6 +16,19 @@ jQuery.validator.addMethod("pwdRE2", function(value, element) {
 	return this.optional(element) || /^[a-zA-Z0-9_]{6,16}$/.test(value);
 }, "密码为6-16位的字母、数字及下划线组合");
 
+jQuery.validator.addMethod("appNameExist", function(value, element) {
+	var flag=false;
+	$.ajax({url:"app/appNameExist",
+			data:{appName:value},
+			async: false,
+			success:function(data){
+				if(data==0){
+					flag=true;
+				}
+			}
+	});
+	return flag;
+}, "app名称已经存在");
 
 jQuery.validator.setDefaults({
 	errorElement: 'div',
