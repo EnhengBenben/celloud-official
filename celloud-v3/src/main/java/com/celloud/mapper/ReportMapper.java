@@ -164,4 +164,15 @@ public interface ReportMapper {
     public Integer selectRunNumByPro(@Param("projectId") Integer projectId,
             @Param("state") Integer state, @Param("flag") Integer flag,
             @Param("period") Integer period);
+
+    /**
+     * 根据projectId获取project、app详细
+     * 
+     * @param projectId
+     * @return
+     * @author leamo
+     * @date 2016年2月29日 下午7:31:00
+     */
+    public Map<String, Object> getAllReportInfoByProjectId(
+            @Param("projectId") Integer projectId, @Param("flag") Integer flag);
 }

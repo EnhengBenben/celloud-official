@@ -1,60 +1,170 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="y-row clearfix">
-  <div id="JS_listBox" class="page-list">
-    <ul class="act-list">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<table class="table data-table">
+    <thead>
+        <tr>
+            <th>扣费时间</th>
+            <th class="file-name">文件名称</th>
+            <th class="another-name">所属项目</th>
+            <th class="strain">应用名称</th>
+            <th class="data-tags">应用单价</th>
+            <th class="sample">实付价格</th>
+            <th class="data-size">开始时间</th>
+            <th class="create-date" style="min-width:80px">结束时间</th>
+        </tr>
+    </thead>
+    <tbody id="data-list-tbody">
+		<c:choose>
+		  <c:when test="${expensePageList.datas.size()>0 }">
+		    <c:forEach items="${expensePageList.datas }" var="expense" varStatus="status">
+		       <tr>
+                  <td><fmt:formatDate value="${expense.createDate }" type="date"/></td>
+                  <td class="file-name">
+                      <c:forEach items="${expense.snapshot.files }" var="data">
+                        ${data.fileName }(${data.dataKey })<br>
+                      </c:forEach>
+                  </td>
+                  <td>${expense.snapshot.projectName }</td>
+                  <td>${expense.snapshot.appName }</td>
+                  <td>${expense.price }C</td>
+                  <td>${expense.realPrice }C</td>
+                  <td><fmt:formatDate value="${expense.snapshot.startDate }" type="date"/></td>
+                  <td><fmt:formatDate value="${expense.snapshot.endDate }" type="date"/></td>
+              </tr>
+            </c:forEach>
+          </c:when>
+          <c:otherwise>
+            <tr><td colspan="8">记录为空</td></tr>
+          </c:otherwise>
+		</c:choose>
+	</tbody>
+</table>
+<div class="pagination text-center">
+  <c:if test="${expensePageList.datas.size()>0}">
+    <input id="expense-current-page-hide" value="${expensePageList.page.currentPage }" type="hidden" >
+    <ul id="pagination-pay" class="pages">
+      <!-- 显示prev -->
+      <c:if test="${expensePageList.page.hasPrev}">
+          <li><a id="prev-page-expense" href="javascript:void(0);">&lt;</a></li>
+      </c:if>
+      <!-- 显示第一页 -->
       <c:choose>
-        <c:when test="${expenseList.size()>0 }">
-          <c:forEach items="${appPageList.datas }" var="app" varStatus="status">
-            <li class="list-item show">
-              <div class="item-box">
-                  <div class="box-btn">
-                    <p>
-                      <span class="sync_price" id="price_cmjz000559" code="cmjz000559" servicepackage="" inquerytype="cloudmarket">${app.price }</span>
-                      <font id="price_unit_cmjz000559">&nbsp;C</font>
-                    </p>
-                    <a class="xq" href="javascript:appStore.toAppDetail(${app.appId })" style="display: none;">查看详情</a>
-                  </div>
-                  <div class="box-star">
-                    <div class="unlinedate"> 上线时间：
-                       <span class="date"><fmt:formatDate value="${app.createDate }" type="date"/></span>
-                    </div>
-                    <div class="service-com">提供者：
-                      <c:choose>
-                        <c:when test="${app.companyName==null }">上海华点云生物科技有限公司</c:when>
-                        <c:otherwise>${app.companyName }</c:otherwise>
-                      </c:choose>
-                    </div>
-                  </div>
-                  <div class="box-info-wrap">
-                    <div class="box-pic" <c:if test="${status.first}"> data-step="2" data-intro="" data-position="right" data-img="appDetail.png" </c:if>>
-                      <a href="javascript:appStore.toAppDetail(${app.appId })">
-                        <img alt="产品logo" src="<%=request.getContextPath()%>/images/app/${app.pictureName}">
-                      </a>
-                    </div>
-                    <div class="box-info">
-                      <h4><a href="javascript:appStore.toAppDetail(${app.appId })">${app.appName }</a></h4>
-                      <p>${app.intro }</p>
-<%--                      <p class="label">标签：${app.description }</p><!-- 标签内容待定 --> --%>
-                    </div>
-                  </div>
-              </div>
-            </li>
-          </c:forEach>
+        <c:when test="${expensePageList.page.currentPage==1}"><li class="active"><a href="#">1</a></li></c:when>
+        <c:otherwise><li><a name="pagination-pay" href="javascript:void(0);">1</a></li></c:otherwise>
+      </c:choose>
+      
+      <c:if test="${expensePageList.page.currentPage>4&&expensePageList.page.totalPage>10}">
+          <li>...</li>
+      </c:if>
+      <c:choose>
+        <c:when test="${expensePageList.page.totalPage-expensePageList.page.currentPage>=7}">
+          <c:if test="${expensePageList.page.currentPage==3}">
+              <li><a name="pagination-pay" href="javascript:void(0)">${expensePageList.page.currentPage-1 }</a></li>
+          </c:if>
+          <c:if test="${expensePageList.page.currentPage==4}">
+              <li><a name="pagination-pay" href="javascript:void(0)">${expensePageList.page.currentPage-2 }</a></li>
+          </c:if>
+          <c:if test="${expensePageList.page.currentPage>3}">
+              <li><a name="pagination-pay" href="javascript:void(0)">${expensePageList.page.currentPage-1 }</a></li>
+          </c:if>
+          <c:if test="${expensePageList.page.currentPage>1&&expensePageList.page.currentPage<expensePageList.page.totalPage}">
+              <li class="active"><a href="#">${expensePageList.page.currentPage }</a></li>
+          </c:if>
+          <c:if test="${expensePageList.page.totalPage-expensePageList.page.currentPage>1}">
+              <li><a name="pagination-pay" href="javascript:void(0)">${expensePageList.page.currentPage+1 }</a></li>
+          </c:if>
+          <c:if test="${expensePageList.page.totalPage-expensePageList.page.currentPage>2}">
+              <li><a name="pagination-pay" href="javascript:void(0)">${expensePageList.page.currentPage+2 }</a></li>
+          </c:if>
+          <c:if test="${expensePageList.page.totalPage-expensePageList.page.currentPage>3}">
+              <li><a name="pagination-pay" href="javascript:void(0)">${expensePageList.page.currentPage+3 }</a></li>
+          </c:if>
+          <c:if test="${expensePageList.page.totalPage-expensePageList.page.currentPage>4}">
+              <li><a name="pagination-pay" href="javascript:void(0)">${expensePageList.page.currentPage+4 }</a></li>
+          </c:if>
+          <c:if test="${expensePageList.page.totalPage-expensePageList.page.currentPage>5}">
+              <li><a name="pagination-pay" href="javascript:void(0)">${expensePageList.page.currentPage+5 }</a></li>
+          </c:if>
+          <c:if test="${expensePageList.page.currentPage<4}">
+              <c:if test="%{expensePageList.page.totalPage-expensePageList.page.currentPage>6}">
+                  <li><a name="pagination-pay" href="javascript:void(0)">${expensePageList.page.currentPage+6 }</a></li>
+              </c:if>
+          </c:if>
+          <c:choose>
+            <c:when test="${expensePageList.page.currentPage==1}">
+              <c:if test="%{expensePageList.page.totalPage-expensePageList.page.currentPage>7}">
+                  <li><a name="pagination-pay" href="javascript:void(0)">${expensePageList.page.currentPage+7 }</a></li>
+              </c:if>
+              <c:if test="%{expensePageList.page.totalPage-expensePageList.page.currentPage>8}">
+                  <li><a name="pagination-pay" href="javascript:void(0)">${expensePageList.page.currentPage+8 }</a></li>
+              </c:if>
+            </c:when>
+            <c:otherwise>
+              <c:choose>
+                <c:when test="${expensePageList.page.currentPage==2}">
+                  <c:if test="${expensePageList.page.totalPage-expensePageList.page.currentPage>7}">
+                      <li><a name="pagination-pay" href="javascript:void(0)">${expensePageList.page.currentPage+7 }</a></li>
+                  </c:if>
+                </c:when>
+                <c:otherwise>
+                  <c:if test="${expensePageList.page.currentPage>4 && (expensePageList.page.totalPage-expensePageList.page.currentPage>6)}">
+                      <li><a name="pagination-pay" href="javascript:void(0)">${expensePageList.page.currentPage+6 }</a></li>
+                  </c:if>
+                </c:otherwise>
+              </c:choose>
+            </c:otherwise>
+          </c:choose>
         </c:when>
         <c:otherwise>
-          <li class="list-item show">
-            <div class="list-left"></div>
-            <div class="list-center">
-              <div class="emptyInfo">
-                <strong>暂没开放此类应用的权限，请选择其他分类!</strong>
-              </div>
-            </div>
-            <div class="list-right"></div>
-          </li>
+          <c:choose>
+            <c:when test="${expensePageList.page.totalPage-8>0}">
+              <c:forEach begin="${expensePageList.page.totalPage-8}" step="1" end="${expensePageList.page.totalPage-1}" var="step">
+                <c:choose>
+                  <c:when test="${step==expensePageList.page.currentPage}">   
+                      <li class="active"><a href="#">${step }</a></li>
+                  </c:when>
+                  <c:otherwise>
+                      <li><a name="pagination-pay" href="javascript:void(0)">${step }</a></li>
+                  </c:otherwise>
+                </c:choose>
+              </c:forEach>
+            </c:when>
+            <c:otherwise>
+              <c:forEach begin="2" step="1" end="${expensePageList.page.totalPage-1}" var="step">
+                <c:choose>
+                  <c:when test="${step==expensePageList.page.currentPage}">   
+                      <li class="active"><a href="#">${step }</a></li>
+                  </c:when>
+                  <c:otherwise>
+                      <li><a name="pagination-pay" href="javascript:void(0)">${step }</a></li>
+                  </c:otherwise>
+                </c:choose>
+              </c:forEach>
+            </c:otherwise>
+          </c:choose>
         </c:otherwise>
       </c:choose>
+      <c:if test="${expensePageList.page.totalPage-expensePageList.page.currentPage>=8&&expensePageList.page.totalPage>10}">
+          <li>...</li>
+      </c:if>
+      <c:choose>
+        <c:when test="${expensePageList.page.currentPage==expensePageList.page.totalPage&&expensePageList.page.totalPage>1}"> 
+          <li class="active"><a href="#">${expensePageList.page.totalPage }</a></li>
+        </c:when>
+        <c:otherwise>
+          <c:if test="${expensePageList.page.totalPage>1}">   
+            <li><a name="pagination-pay" href="javascript:void(0)">${expensePageList.page.totalPage }</a></li>
+          </c:if>
+        </c:otherwise>
+      </c:choose>
+      <c:if test="${expensePageList.page.hasNext}">
+          <li><a id="next-page-data" href="javascript:void(0)">&gt;</a></li>
+      </c:if>
+      <li>
+                  共${expensePageList.page.totalPage }页&nbsp;|&nbsp;合计${expensePageList.page.rowCount }条
+      </li>
     </ul>
-  </div>
+  </c:if>
 </div>

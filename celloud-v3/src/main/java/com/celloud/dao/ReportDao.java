@@ -5,6 +5,9 @@ import java.util.Map;
 
 import org.bson.types.ObjectId;
 
+import com.celloud.page.Page;
+import com.celloud.page.PageList;
+
 /**
  * mongodb 操作接口
  * 
@@ -99,9 +102,8 @@ public interface ReportDao {
      * @author leamo
      * @date 2016年2月1日 下午6:05:02
      */
-    public <T> void editData(Class<T> T, ObjectId id, String field,
-            Object obj);
-    
+    public <T> void editData(Class<T> T, ObjectId id, String field, Object obj);
+
     /**
      * 保存数据
      * 
@@ -125,4 +127,18 @@ public interface ReportDao {
      */
     public <T> List<T> getDataListAndOrder(Class<T> T,
             Map<String, Object> conditionMap, String sortField);
+
+    /**
+     * 分页查询数据
+     * 
+     * @param T
+     * @param conditionMap
+     * @param sortField
+     * @param page
+     * @return
+     * @author leamo
+     * @date 2016年2月26日 下午5:14:46
+     */
+    public <T> PageList<T> getDataPageListAndOrder(Class<T> T,
+            Map<String, Object> conditionMap, String sortField, Page page);
 }

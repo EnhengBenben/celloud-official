@@ -1,13 +1,11 @@
 package com.celloud.model.mongo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Embedded;
-import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
 /**
@@ -16,7 +14,6 @@ import org.mongodb.morphia.annotations.Id;
  * @author lin
  * @date 2016年2月18日 下午6:29:43
  */
-@Entity(noClassnameStored = true)
 public class Expenses implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -28,7 +25,7 @@ public class Expenses implements Serializable {
 	/**
 	 * 价格
 	 */
-	private BigDecimal price;
+    private String price;
 	/**
      * 折扣 name(折扣名称):限时打折 discountRate(折扣率):0.8
      */
@@ -36,7 +33,7 @@ public class Expenses implements Serializable {
 	/**
 	 * 真实价格
 	 */
-	private BigDecimal realPrice;
+    private String realPrice;
 	/**
      * 消费类型(运行 or ...)
      */
@@ -67,19 +64,19 @@ public class Expenses implements Serializable {
 		this.userId = userId;
 	}
 
-	public BigDecimal getPrice() {
+    public String getPrice() {
 		return price;
 	}
 
-	public void setPrice(BigDecimal price) {
+    public void setPrice(String price) {
 		this.price = price;
 	}
 
-	public BigDecimal getRealPrice() {
+    public String getRealPrice() {
 		return realPrice;
 	}
 
-	public void setRealPrice(BigDecimal realPrice) {
+    public void setRealPrice(String realPrice) {
 		this.realPrice = realPrice;
 	}
 
