@@ -248,6 +248,9 @@ $(function(){
     CKEDITOR.replace( 'editordescription');
     CKEDITOR.replace( 'editorappDoc');
     $("#appForm").validate({
+    	errorPlacement: function (error, element) {
+            error.appendTo($(element).closest("div.col-sm-10"));
+       },
         submitHandler:function(form) {
             $("#editordescription").val(CKEDITOR.instances.editordescription.getData());
             $("#editorappDoc").val(CKEDITOR.instances.editorappDoc.getData());
