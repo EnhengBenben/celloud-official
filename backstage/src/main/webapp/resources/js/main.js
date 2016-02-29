@@ -614,3 +614,33 @@ var app=(function(app){
 	}
 	return self;
 })(app);
+
+var mailing=(function(mailing){
+	self=mailing||{};
+	self.toMailingMain=function(){
+		$.post("mailing",function(responseText){
+			$("#main-content").html(responseText);
+			$("#main-menu li").removeClass("active").removeClass("opened");
+			$("#mailing-menu").addClass("active");
+		});
+	}
+	self.checkedAll=function(flag){
+		if(flag==1){
+			/*$("input[name='emails']:checkbox").each(function(i,dom){
+				dom.checked=true;
+			});*/
+			$("input[name='emails']:checkbox").prop("checked",true);
+		}else if(flag==0){
+			/*$("input[name='emails']:checkbox").each(function(i,dom){
+				dom.checked=false;
+			});*/
+			$("input[name='emails']:checkbox").prop("checked",false);
+		}else{
+			$("input[name='emails']:checkbox").each(function(i,dom){
+				dom.checked=!(dom.checked);
+			});
+		}
+	}
+	
+	return self;
+})(mailing);
