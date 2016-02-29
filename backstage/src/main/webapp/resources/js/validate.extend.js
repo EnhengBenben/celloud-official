@@ -18,8 +18,9 @@ jQuery.validator.addMethod("pwdRE2", function(value, element) {
 
 jQuery.validator.addMethod("appNameExist", function(value, element) {
 	var flag=false;
+	var appId=$.trim($("#appForm input[name='appId']").val());
 	$.ajax({url:"app/appNameExist",
-			data:{appName:value},
+			data:{appName:value,appId:appId},
 			async: false,
 			success:function(data){
 				if(data==0){

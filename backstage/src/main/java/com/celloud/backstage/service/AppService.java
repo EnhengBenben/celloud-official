@@ -61,6 +61,8 @@ public interface AppService {
     
     public int addApp(App app,String[]screenNames,Integer[] formatIds,Integer[] calssifyIds);
     
-    public int updateApp(App app,String[]screenNames);
-    public int appNameExist(String appName);
+    public int updateApp(App app,String[]screenNames,String[] delScreenNames,Integer[] formatIds,Integer[] calssifyIds);
+    public int appNameExist(Integer appId,String appName);
+    
+    public App getAppById(Integer appId);
 }

@@ -74,4 +74,8 @@
             (#{screenName,jdbcType=VARCHAR},
              #{appId,jdbcType=INTEGER})
     </insert>
+    <delete id="deleteByAppId" >
+    delete from tb_screen
+    where app_id = #{appId,jdbcType=INTEGER} and screen_name=#{screenName }
+  </delete>
 </mapper>

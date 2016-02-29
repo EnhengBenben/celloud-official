@@ -122,8 +122,8 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#">
+                    <li id="mailing-menu">
+                        <a href="javascript:mailing.toMailingMain();">
                             <i class="linecons-globe"></i>
                             <span class="title">邮件群发</span>
                         </a>

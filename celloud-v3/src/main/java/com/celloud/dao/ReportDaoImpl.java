@@ -10,6 +10,9 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.springframework.stereotype.Service;
 
+import com.celloud.page.Page;
+import com.celloud.page.PageList;
+
 /**
  * mongodb 操作实现
  * 
@@ -85,5 +88,25 @@ public class ReportDaoImpl implements ReportDao {
             }
         }
         return q.order(sortField).asList();
+    }
+
+    @Override
+    public <T> PageList<T> getDataPageListAndOrder(Class<T> T,
+            Map<String, Object> conditionMap, String sortField, Page page) {
+        PageList<T> pageList = new PageList<T>();
+        Query<T> q = dataStore.find(T);
+        if (conditionMap != null) {
+            for (Map.Entry<String, Object> entry : conditionMap.entrySet()) {
+                q.filter(entry.getKey(), entry.getValue());
+            }
+        }
+        List<T> list_all = q.asList();
+        page.make(list_all.size());
+        List<T> list = q.order(sortField)
+                .offset((page.getCurrentPage() - 1) * page.getPageSize())
+                .limit(page.getPageSize()).asList();
+        pageList.setDatas(list);
+        pageList.setPage(page);
+        return pageList;
     }
 }

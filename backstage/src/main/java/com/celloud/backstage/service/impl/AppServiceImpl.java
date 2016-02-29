@@ -1,6 +1,7 @@
 package com.celloud.backstage.service.impl;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -118,12 +119,78 @@ public class AppServiceImpl implements AppService{
 
 
     @Override
-    public int updateApp(App app, String[] screenNames) {
+    public int updateApp(App app,String[]screenNames,String[] delScreenNames,Integer[] formatIds,Integer[] calssifyIds) {
         if(app==null||app.getAppId()==null){
             return 0;
         }
         int flag=0;
         try {
+            App a=appMapper.selectByPrimaryKey(app.getAppId());
+            
+            String oldPictureName=a.getPictureName();
+            String newPictureName=app.getPictureName();
+            
+            a.setAddress(app.getAddress());
+            a.setAppDoc(app.getAppDoc());
+            a.setAppName(a.getAppName());
+            a.setAttribute(app.getAttribute());
+            a.setCommand(app.getCommand());
+            a.setCompanyId(app.getCompanyId());
+            a.setDataNum(app.getDataNum());
+            a.setDescription(app.getDescription());
+            a.setEnglishName(app.getEnglishName());
+            a.setFlag(app.getFlag());
+            a.setIntro(app.getIntro());
+            a.setMaxTask(app.getMaxTask());
+            a.setMethod(app.getMethod());
+            a.setParam(app.getParam());
+            a.setPictureName(app.getPictureName());
+            a.setRunData(app.getRunData());
+            a.setRunType(app.getRunType());
+            a.setTitle(app.getTitle());
+            int result=appMapper.updateApp(a);
+            if(StringUtils.isNotBlank(oldPictureName)&&!oldPictureName.equals(newPictureName)){
+                File delFile=new File(AppConstants.geAppPicturePath(oldPictureName));
+                if(delFile.exists()){
+                    FileUtils.deleteQuietly(delFile);
+                }
+           }
+           if(StringUtils.isNotBlank(newPictureName)&&!newPictureName.equals(oldPictureName)){
+               try {
+                   FileUtils.moveFile(new File(AppConstants.getAppTempPath() + File.separator + newPictureName),
+                           new File(AppConstants.geAppPicturePath(newPictureName)));
+               } catch (IOException e) {
+                   e.printStackTrace();
+               }
+           }
+           appMapper.deleteAppClassify(a.getAppId());
+           if(calssifyIds!=null&&calssifyIds.length>0){
+               appMapper.insertAppClassifyBatch(a.getAppId(), calssifyIds);
+           }
+           appMapper.deleteAppFileFormat(a.getAppId());
+           if(formatIds!=null&&formatIds.length>0){
+               appMapper.insertAppFileFormatBatch(a.getAppId(), formatIds);
+           }
+           if(delScreenNames!=null && delScreenNames.length>0){
+               for(String del:delScreenNames){
+                   screenMapper.deleteByAppId(a.getAppId(), del);
+               }
+           }
+           if(screenNames!=null&&screenNames.length>0){
+               for(String screenName:screenNames){
+                   Screen screen=new Screen();
+                   screen.setAppId(a.getAppId());
+                   screen.setScreenName(screenName);
+                   int r=screenMapper.insertScreen(screen);
+                   if(r>0){
+                           FileUtils.moveFile(new File(AppConstants.getAppTempPath() + File.separator + screenName),
+                                   new File(AppConstants.geAppScreenPath(screenName)));
+                   }
+               }
+               
+           }
+           cleanAppTemp();
+           flag=1;
         } catch (Exception e) {
             logger.error("更新App异常：{}",e.getMessage());
         }
@@ -154,8 +221,17 @@ public class AppServiceImpl implements AppService{
 
 
     @Override
-    public int appNameExist(String appName) {
-        return appMapper.appNameExist(appName);
+    public int appNameExist(Integer appId,String appName) {
+        return appMapper.appNameExist(appId,appName);
+    }
+
+
+    @Override
+    public App getAppById(Integer appId) {
+        if(appId==null){
+            return null;
+        }
+        return appMapper.getAppById(appId);
     }
     
 }

@@ -24,9 +24,9 @@ import com.celloud.mapper.ProjectMapper;
 import com.celloud.mapper.ReportMapper;
 import com.celloud.mapper.TaskMapper;
 import com.celloud.mapper.UserMapper;
+import com.celloud.model.mongo.AppExpenses;
 import com.celloud.model.mongo.AppSnapshot;
 import com.celloud.model.mongo.ExpenseDiscount;
-import com.celloud.model.mongo.Expenses;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Price;
 import com.celloud.model.mysql.Project;
@@ -149,11 +149,11 @@ public class TaskServiceImpl implements TaskService {
                 discount.setDiscountRate(discountRate);
                 discountList.add(discount);
             }
-            Expenses expenses = new Expenses();
+            AppExpenses expenses = new AppExpenses();
             expenses.setUserId(userId);
             expenses.setExpenseType(ExpenseType.isRun);
-            expenses.setPrice(appOldPrice);
-            expenses.setRealPrice(realPrice);
+            expenses.setPrice(appOldPrice.toString());
+            expenses.setRealPrice(realPrice.toString());
             expenses.setSnapshot(appSnapshot);
             expenses.setCreateDate(new Date());
             expenses.setDiscount(discountList);

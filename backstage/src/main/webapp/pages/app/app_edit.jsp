@@ -9,7 +9,7 @@
     </div>
     <div class="panel-body">
         <form role="form" class="form-horizontal" id="appForm">
-            <input type="hidden" value="${app.appId }">
+            <input type="hidden" name="appId" value="${app.appId }">
             <div class="form-group">
                 <label class="col-sm-2 control-label">应用名称<font color="red">*</font></label>
                 
@@ -34,24 +34,23 @@
                 <label class="col-sm-2 control-label">所属公司<font color="red">*</font></label>
                 
                 <div class="col-sm-10">
-                    <select class="form-control" name="companyId"  value="${app.companyId }" data-rule-required="true">
+                    <select class="form-control" name="companyId"  data-rule-required="true">
                         <option value="" selected="selected">--请选择--</option>
                         <c:forEach items="${companyList }" var="company">
-                            <option value="${company.companyId }">${company.companyName }</option>
+                            <option value="${company.companyId }" <c:if test="${app.companyId==company.companyId }">selected</c:if>>${company.companyName }</option>
                         </c:forEach>
                     </select>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">推荐标识</label>
-                
                 <div class="col-sm-10">
                     <label class="radio-inline">
-                        <input type="radio" name="flag" value="1" checked>
+                        <input type="radio" name="flag" value="1" <c:if test="${app.flag==1 }">checked</c:if>>
                         推荐
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="flag" value="0">
+                        <input type="radio" name="flag" value="0" <c:if test="${app.flag==0 }">checked</c:if>>
                         不推荐
                     </label>
                 </div>
@@ -61,8 +60,9 @@
                 
                 <div class="col-sm-10">
                 <c:forEach items="${classifyList }" var="classify">
+                <c:set var="containClassifyId" value=";${classify.classifyId };" />
                     <label class="checkbox-inline">
-                        <input type="checkbox" name="classifyIds" value="${classify.classifyId }" checked data-rule-required="true">
+                        <input type="checkbox" name="classifyIds" value="${classify.classifyId }" <c:if test="${fn:contains(app.classifyIds,containClassifyId)}">checked</c:if> data-rule-required="true">
                                             ${classify.classifyName }
                     </label>
                 </c:forEach>
@@ -74,11 +74,11 @@
                 
                 <div class="col-sm-10">
                     <label class="radio-inline">
-                        <input type="radio" name="runData" value="0" checked data-rule-required="true">
+                        <input type="radio" name="runData" value="0" <c:if test="${app.flag==1 }">checked</c:if> data-rule-required="true">
                         可以
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="runData" value="1">
+                        <input type="radio" name="runData" value="1" <c:if test="${app.flag==1 }">checked</c:if>>
                         不可以
                     </label>
                 </div>
@@ -86,38 +86,38 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">最少数据个数<font color="red">*</font></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="dataNum" placeholder="最少数据个数"  data-rule-required="true" data-rule-digits="true">
+                    <input type="text" class="form-control" name="dataNum" placeholder="最少数据个数" value="${app.dataNum }"  data-rule-required="true" data-rule-digits="true">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label" >运行命令<font color="red">*</font></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="command" placeholder="perl &hellip;" data-rule-required="true">
+                    <input type="text" class="form-control" name="command" placeholder="perl &hellip;" value="${app.command }" data-rule-required="true">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label" >报告标题</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="title" placeholder="dataKey\tfileName\t&hellip;">
+                    <input type="text" class="form-control" name="title" value="${app.title }" placeholder="dataKey\tfileName\t&hellip;">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">运行完成后调用方法名称<font color="red">*</font></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="method" placeholder="" data-rule-required="true">
+                    <input type="text" class="form-control" name="method" placeholder="" value="${app.method }" data-rule-required="true">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label" >同时运行任务数限制<font color="red">*</font></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="maxTask" placeholder="0：表示无限制" data-rule-required="true"  data-rule-digits="true">
+                    <input type="text" class="form-control" name="maxTask" placeholder="0：表示无限制" value="${app.maxTask }" data-rule-required="true"  data-rule-digits="true">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">运行方式<font color="red">*</font></label>
                 
                 <div class="col-sm-10">
-                    <select class="form-control" name="runType" data-rule-required="true">
+                    <select class="form-control" name="runType" data-rule-required="true" value="${app.runType }">
                         <option value="0">直接运行</option>
                         <option value="1">需添加然后运行</option>
                         <option value="2">可直接运行可添加</option>
@@ -143,11 +143,11 @@
                 
                 <div class="col-sm-10">
                     <label class="radio-inline">
-                        <input type="radio" name="param" value="1" checked data-rule-required="true">
+                        <input type="radio" name="param" value="1" <c:if test="${app.param==1 }">checked</c:if> data-rule-required="true">
                         有
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="param" value="0">
+                        <input type="radio" name="param" value="0" <c:if test="${app.param==0 }">checked</c:if>>
                         无
                     </label>
 
@@ -158,8 +158,9 @@
                 
                 <div class="col-sm-10">
                 <c:forEach items="${fileFormatList }" var="fileFormat">
+                    <c:set var="containFormat" value=";${fileFormat.formatId };" />
                     <label class="checkbox-inline">
-                        <input type="checkbox" name="fileFormatIds" value="${fileFormat.formatId }" checked data-rule-required="true">
+                        <input type="checkbox" name="fileFormatIds" value="${fileFormat.formatId }" <c:if test="${fn:contains(app.fileFormatIds,containFormat)}">checked</c:if> data-rule-required="true">
                                             ${fileFormat.formatDesc }
                     </label>
                 </c:forEach>
@@ -177,7 +178,7 @@
                 <label class="col-sm-2 control-label" >详细描述</label>
                 
                 <div class="col-sm-10">
-                    <textarea class="form-control" cols="5" id="editordescription" name="description"></textarea>
+                    <textarea class="form-control" cols="5" id="editordescription" name="description">${app.description }</textarea>
                 </div>
             </div>
             <div class="form-group-separator"></div>
@@ -198,6 +199,15 @@
                 <label class="col-sm-2 control-label" for="field-4">APP报告截图</label>
                 
                 <div class="col-sm-10">
+                    <c:if test="${not empty app.screenNames}">
+                        <c:forTokens items="${app.screenNames }" delims=";" var="screen">
+                            <div class="inline">
+	                            <img style="height: 60px; margin-right: 10px;" src="app/screen?file=${screen }" class="img-thumbnail">
+	                            <a href="javascript:void(0);" onClick="app.delScreen(this,'${screen }')"><span style="position: relative; right: 18px; top: -25px;">×</span></a>
+                            </div>
+                        </c:forTokens>
+                    </c:if>
+                
                     <img id="screenUploading" class="img-thumbnail hide" style="height: 60px; margin-right: 10px;"
                          src="images/icon/loading.jpg">
                      <a class="btn btn-default btn-lg" id="uploadScreenBtn">
@@ -217,13 +227,13 @@
                 <label class="col-sm-2 control-label" >文档介绍</label>
                 
                 <div class="col-sm-10">
-                    <textarea class="form-control" cols="5" id="editorappDoc" name="appDoc"></textarea>
+                    <textarea class="form-control" cols="5" id="editorappDoc" name="appDoc">${app.appDoc }</textarea>
                 </div>
             </div>
             <div class="form-group-separator"></div>
             <div class="form-group">
                 <div class="col-sm-12 text-center">
-                    <button type="submit" class="btn btn-success">添加</button>
+                    <button type="submit" class="btn btn-success">保存</button>
                     <button type="reset" class="btn btn-white">重置</button>
                 </div>
             </div>
@@ -238,10 +248,12 @@ $(function(){
     CKEDITOR.replace( 'editordescription');
     CKEDITOR.replace( 'editorappDoc');
     $("#appForm").validate({
+    	errorPlacement: function (error, element) {
+            error.appendTo($(element).closest("div.col-sm-10"));
+       },
         submitHandler:function(form) {
             $("#editordescription").val(CKEDITOR.instances.editordescription.getData());
             $("#editorappDoc").val(CKEDITOR.instances.editorappDoc.getData());
-            
             $(form).ajaxSubmit({
                 url:"app/save",
                 type:"POST",

@@ -33,16 +33,16 @@
                     <td><c:if test="${app.offLine==0 }"><font color="green">已上线</font></c:if>
                         <c:if test="${app.offLine==1 }"><font color="red">已下线</font></c:if> </td>
                     <td>
-                        <a class="btn btn-secondary" href="javascript:company.editCompany(${app.appId })">
+                        <a class="btn btn-secondary" href="javascript:app.toEditApp(${app.appId })">
                                                     编辑
                         </a>
                         <c:if test="${app.offLine==0 }">
-	                        <a class="btn btn-danger" href="javascript:company.deleteCompany(${app.appId })">
+	                        <a class="btn btn-danger" href="javascript:app.off(${app.appId })">
 	                                                    下线
 	                        </a>
                         </c:if>
                         <c:if test="${app.offLine==1 }">
-                            <a class="btn btn-orange" href="javascript:company.deleteCompany(${app.appId })">
+                            <a class="btn btn-orange" href="javascript:app.on(${app.appId })">
                                                         上线
                             </a>
                         </c:if>

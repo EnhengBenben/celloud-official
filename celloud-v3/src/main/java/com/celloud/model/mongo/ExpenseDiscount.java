@@ -1,7 +1,5 @@
 package com.celloud.model.mongo;
 
-import java.math.BigDecimal;
-
 import org.mongodb.morphia.annotations.Entity;
 
 @Entity(noClassnameStored = true)
@@ -11,7 +9,7 @@ public class ExpenseDiscount {
     /** 折扣率 */
     private Float discountRate;
     /** 折扣价 */
-    private BigDecimal discountPrice;
+    private String discountPrice;
 
     public String getName() {
         return name;
@@ -29,11 +27,11 @@ public class ExpenseDiscount {
         this.discountRate = discountRate;
     }
 
-    public BigDecimal getDiscountPrice() {
+    public String getDiscountPrice() {
         return discountPrice;
     }
 
-    public void setDiscountPrice(BigDecimal discountPrice) {
+    public void setDiscountPrice(String discountPrice) {
         this.discountPrice = discountPrice;
     }
 }

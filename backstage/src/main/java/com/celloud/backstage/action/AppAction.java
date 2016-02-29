@@ -73,7 +73,12 @@ public class AppAction {
         ModelAndView mv=new ModelAndView("app/app_edit");
         String appId=request.getParameter("appId");
         if(StringUtils.isNotBlank(appId)){
-            
+            App app=appService.getAppById(Integer.parseInt(appId));
+            if(app!=null){
+                app.setClassifyIds(";"+app.getClassifyIds()+";");
+                app.setFileFormatIds(";"+app.getFileFormatIds()+";");
+                mv.addObject("app", app);
+            }
         }
         List<Company> companyList=companyService.getAllCompany();
         List<Classify> classifyList=classifyService.getLeaf();
@@ -149,14 +154,21 @@ public class AppAction {
     
     @ResponseBody
     @RequestMapping(value = "app/save", method = RequestMethod.POST)
-    public int save(App app,Integer[]classifyIds,Integer[]fileFormatIds,String[]screenName){
-        logger.info("新增app");;
-        return appService.addApp(app, screenName, fileFormatIds, classifyIds);
+    public int save(App app,Integer[]classifyIds,Integer[]fileFormatIds,String[]screenName,String[] delScreenName){
+        
+        if(app.getAppId()!=null){
+            logger.info("修改appId={}",app.getAppId());
+            return appService.updateApp(app, screenName, delScreenName, fileFormatIds, classifyIds);
+        }else{
+            logger.info("新增app");
+            return appService.addApp(app, screenName, fileFormatIds, classifyIds);  
+        }
+        
     }
     
     @ResponseBody
     @RequestMapping("app/appNameExist")
-    public int appNameExist(@RequestParam("appName")String appName){
-        return appService.appNameExist(appName);
+    public int appNameExist(@RequestParam("appName")String appName,@RequestParam("appId")Integer appId){
+        return appService.appNameExist(appId,appName);
     }
 }

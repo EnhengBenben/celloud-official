@@ -64,5 +64,9 @@ public interface AppMapper {
     
     public int insertAppClassifyBatch(@Param("appId") Integer appId,@Param("calssifyIds")Integer[] calssifyIds);
     
-    public int appNameExist(@Param("appName") String appName);
+    public int appNameExist(@Param("appId") Integer appId,@Param("appName") String appName);
+    
+    public int deleteAppFileFormat(@Param("appId") Integer appId);
+    public int deleteAppClassify(@Param("appId") Integer appId);
+    public int updateApp(App app);
 }
