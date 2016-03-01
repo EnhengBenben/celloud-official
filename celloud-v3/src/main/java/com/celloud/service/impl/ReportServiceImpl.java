@@ -826,6 +826,12 @@ public class ReportServiceImpl implements ReportService {
         report.setAppId(appId);
         report.setProjectId(projectId);
         report.setPeriod(period);
+
+        Map<String, Object> map = reportMapper
+                .getAllReportInfoByProjectId(projectId, ReportType.PROJECT);
+        String projectName = (String) map.get("projectName");
+        String appName = (String) map.get("appName");
+        String userName = (String) map.get("userName");
         List<DataFile> list = dataMapper.getDatasInProject(projectId);
         for (DataFile data : list) {
             report.setFileId(data.getFileId());
@@ -833,12 +839,6 @@ public class ReportServiceImpl implements ReportService {
             Date endDate = new Date();
             report.setEndDate(endDate);
             reportMapper.updateReport(report);
-
-            Map<String, Object> map = reportMapper
-                    .getAllReportInfoByProjectId(projectId, ReportType.PROJECT);
-            String projectName = (String) map.get("projectName");
-            String appName = (String) map.get("appName");
-            String userName = (String) map.get("userName");
             SimpleDateFormat format = new SimpleDateFormat(
                     "yyyy-M-dd HH:mm:ss");
             Date startDate = null;
@@ -847,7 +847,6 @@ public class ReportServiceImpl implements ReportService {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
             Price price = priceMapper.selectByItemId(appId, PriceType.isApp);
             if (price != null) {
                 // 增加消费记录
