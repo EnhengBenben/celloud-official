@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -742,9 +744,14 @@ public class ReportServiceImpl implements ReportService {
         String appName = (String) map.get("appName");
         Integer userId = (Integer) map.get("userId");
         String userName = (String) map.get("userName");
-        String fileIds = (String) map.get("fileIds");
-        Date startDate = (Date) map.get("startDate");
-
+        String fileIds = map.get("fileIds").toString();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
+        Date startDate = null;
+        try {
+            startDate = format.parse(map.get("startDate").toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Price price = priceMapper.selectByItemId(appId, PriceType.isApp);
         if (price != null) {
             // 增加消费记录
@@ -832,7 +839,14 @@ public class ReportServiceImpl implements ReportService {
             String projectName = (String) map.get("projectName");
             String appName = (String) map.get("appName");
             String userName = (String) map.get("userName");
-            Date startDate = (Date) map.get("startDate");
+            SimpleDateFormat format = new SimpleDateFormat(
+                    "yyyy-M-dd HH:mm:ss");
+            Date startDate = null;
+            try {
+                startDate = format.parse(map.get("startDate").toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
             Price price = priceMapper.selectByItemId(appId, PriceType.isApp);
             if (price != null) {
