@@ -362,7 +362,7 @@
     left join (select * from tb_price where flag=#{priceType}) p on a.app_id=p.item_id
     left join tb_user_app_right ua on ua.app_id=a.app_id
     left join (select * from tb_discount where end_date>now()) d on d.price_id = p.id
-    where a.app_id=#{appId}
+    where a.app_id=#{appId} and ua.user_id=#{userId}
   </select>
   <select id="getMyAppList" resultMap="extraResultMap"  >
     select a.app_id,a.app_name,a.picture_name,a.intro,a.description,a.create_date,GROUP_CONCAT(distinct c.classify_name) classifyNames,com.company_name 
