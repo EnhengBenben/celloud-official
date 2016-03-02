@@ -92,7 +92,7 @@
 
 <script src="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/calendar/WdatePicker.js"></script>
-<script src="<%=request.getContextPath() %>/js/report.js?version=1.2"></script>
+<script src="<%=request.getContextPath() %>/js/report.js?version=1.3"></script>
 <script src="<%=request.getContextPath() %>/js/report_codon.js"></script>
 <script type="text/javascript">
 var session_userId = <%=session.getAttribute("userId")%>;
