@@ -336,10 +336,10 @@
         select DISTINCT a.app_id,a.app_name,a.picture_name,a.intro,a.description,a.create_date,c.company_name,p.price
         from tb_app a 
         left join tb_app_classify_relat ac on a.app_id=ac.app_id 
-        left join  tb_user_app_right uar on uar.app_id = a.app_id 
+        left join tb_user_app_right uar on uar.app_id = a.app_id 
         left join tb_company c on a.company_id=c.company_id
-        left join tb_price p on p.item_id=a.app_id
-        where p.flag=#{priceType} and a.off_line=#{offLine } and ((uar.user_id=#{userId } and a.attribute=#{attribute_private }) or a.attribute=#{attribute_public })
+        left join (select * from tb_price where flag=#{priceType}) p on p.item_id=a.app_id
+        where a.off_line=#{offLine } and ((uar.user_id=#{userId } and a.attribute=#{attribute_private }) or a.attribute=#{attribute_public })
          <choose>  
             <when test="classifyPId == 0">
                 and ac.classify_id in (select classify_id from tb_classify c where classify_pid = #{classifyId })
@@ -359,10 +359,10 @@
     left join tb_company c on a.company_id=c.company_id 
     left join tb_app_classify_relat ac on a.app_id=ac.app_id 
     left join tb_classify cls on ac.classify_id=cls.classify_id 
-    left join tb_price p on a.app_id=p.item_id
+    left join (select * from tb_price where flag=#{priceType}) p on a.app_id=p.item_id
     left join tb_user_app_right ua on ua.app_id=a.app_id
     left join (select * from tb_discount where end_date>now()) d on d.price_id = p.id
-    where a.app_id=#{appId} and p.flag=#{priceType}
+    where a.app_id=#{appId}
   </select>
   <select id="getMyAppList" resultMap="extraResultMap"  >
     select a.app_id,a.app_name,a.picture_name,a.intro,a.description,a.create_date,GROUP_CONCAT(distinct c.classify_name) classifyNames,com.company_name 
