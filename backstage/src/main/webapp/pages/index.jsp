@@ -44,12 +44,6 @@
                 
                         
                 <ul id="main-menu" class="main-menu">
-                    <li class="active opened">
-                        <a href="#">
-                            <i class="linecons-cog"></i>
-                            <span class="title">控制台</span>
-                        </a>
-                    </li>
                     <li>
                         <a id="to-app-manage" href="#">
                             <i class="linecons-desktop"></i>
@@ -80,23 +74,11 @@
                             <span class="title">用户管理</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
+                    <li id="feedback-menu">
+                        <a href="javascript:feedback.tofeedbackMain();">
                             <i class="linecons-database"></i>
                             <span class="title">意见反馈</span>
                         </a>
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    <span class="title">已解决</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="title">未解决</span>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                     <li id="notice-menu">
                         <a href="javascript:notice.toNoticeMain();">

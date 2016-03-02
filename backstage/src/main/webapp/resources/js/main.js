@@ -644,3 +644,100 @@ var mailing=(function(mailing){
 	
 	return self;
 })(mailing);
+
+var feedback=(function(feedback){
+	var self=feedback||{};
+	self.currentPage=1;
+	self.sortFiled=null;
+	self.sortType=null;
+	var uploader = null;
+	var validateReply = function(){
+		var value = $("#feedbackReplyContent").val();
+		if(!$.trim(value)){
+			$("#feedbackReplyBtn").attr("disabled","disabled");
+			return false;
+		}
+		return true;
+	}
+	self.tofeedbackMain=function(){
+		$.post("feedback/list",{sortFiled:self.sortFiled,sortType:self.sortType},function(responseText){
+			$("#main-content").html(responseText);
+			$("#main-menu li").removeClass("active").removeClass("opened");
+			$("#feedback-menu").addClass("active");
+		});
+	}
+	self.getFeedbackList=function(currentPage){
+		self.currentPage=currentPage;
+		$.post("feedback/list",{currentPage:currentPage,sortFiled:self.sortFiled,sortType:self.sortType},function(responseText){
+			$("#main-content").html(responseText);
+		});
+	}
+	self.listReplies = function(id){
+		$("#feedbackReplyList").load("feedback/replies/"+id);
+	}
+	self.detail=function(id){
+		$.get("feedback/"+id,function(responseText){
+			$("#feedback-Modal .modal-content").html(responseText);
+			self.listReplies(id);
+			$("#feedback-Modal").modal("show");
+		});
+	}
+	self.solve = function(id){
+		jConfirm('确认要关闭这个问题吗?', '问题反馈', function(result) {
+			if(!result){
+				return;
+			}
+			$.post('feedback/solve/'+id,function(data){
+				if(data>0){
+					$("#feedback-Modal").modal("hide");
+					$('#feedback-Modal').on('hidden.bs.modal', function (e) {//此事件在模态框被隐藏（并且同时在 CSS 过渡效果完成）之后被触发。
+						self.getFeedbackList(self.currentPage);
+					});
+				}else{
+					jAlert("系统繁忙，请您稍后再试！");
+				}
+			});
+		});
+	}
+	self.reply = function(id){
+		if(!validateReply()){
+			return;
+		}
+		var $form=$("#feedbackReplyForm");
+		var url = $form.attr("action");
+		$.post(url,$form.serialize(),function(data){
+			if(data>0){
+				self.listReplies(id);
+				$("#feedbackReplyBtn").attr("disabled","disabled");
+				$("#feedbackReplyContent").val('');
+			}
+		});
+	}
+	
+	self.sortFeedback=function(filed){
+		if(self.sortFiled!= filed){
+			self.sortType=null;
+			self.sortFiled= filed;
+		}
+        if(self.sortType == "desc"){
+        	self.sortType="asc";
+		}else{
+			self.sortType="desc";
+		}
+        self.getFeedbackList(1);
+	}
+	self.sortDefault=function(){
+		self.sortType=null;
+		self.sortFiled= null;
+		self.getFeedbackList(1);
+	}
+	$(document).on("keyup","#feedbackReplyContent",function(e){
+		var value = $(this).val();
+		if($.trim(value)){
+			$("#feedbackReplyBtn").removeAttr("disabled");
+		}else{
+			$("#feedbackReplyBtn").attr("disabled","disabled");
+		}
+	});
+	return self;
+})(feedback);
