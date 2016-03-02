@@ -25,9 +25,9 @@ import com.celloud.constants.GlobalQueue;
 import com.celloud.constants.Mod;
 import com.celloud.constants.PortPool;
 import com.celloud.constants.SparkPro;
+import com.celloud.model.mongo.TaskQueue;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Task;
-import com.celloud.model.mongo.TaskQueue;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.ExpensesService;
@@ -109,7 +109,7 @@ public class TaskAction {
                 .append(SparkPro.TOOLSPATH).append(" ").append(userId)
                 .append(" ").append(appId).append(" ").append(dataNames)
                 .append(" ").append(projectId);
-        // PerlUtils.excutePerl(command.toString());
+        PerlUtils.excutePerl(command.toString());
         // 3. 创建项目结果文件
         StringBuffer basePath = new StringBuffer();
         basePath.append(SparkPro.TOOLSPATH).append(userId).append("/")
