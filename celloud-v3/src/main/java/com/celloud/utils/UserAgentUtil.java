@@ -88,6 +88,8 @@ public class UserAgentUtil {
         String ip = getIp(request);
         log.setIp(ip);
         log.setAddress(getAddreeByIp(ip));
+        log.setUserId(ConstantsData.getLoginUserId());
+        log.setUsername(ConstantsData.getLoginUserName());
         return log;
     }
 

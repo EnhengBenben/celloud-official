@@ -477,9 +477,10 @@ $.ajaxSetup ({
 		var reportIdNow;//记录当前报告ID
 		//查看数据报告
 		function viewDataReport(event){
+		  $("#dataReportDIV").load("pages/report/report_data_main.jsp");
+		  $("#reportResultDiv").html("");
 			$("#mainDIV").css("display","none");
 			$("#dataReportDIV").css("display","");
-			$("#dataReportDIV").load("pages/report/report_data_main.jsp");
 			if(typeof spinner != "undefined"){
 				spinner.stop();
 			}

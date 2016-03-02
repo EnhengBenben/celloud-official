@@ -502,13 +502,15 @@ public class ReportAction {
             Integer projectId, Integer appId) {
         MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
         Map<String, JSONArray> mibCharList = new HashMap<>();
+        ModelAndView mv = getModelAndView(path, projectId);
+        if (mib == null)
+            return mv;
         mibCharList.put("readsDistributionInfo",
                 JSONArray.fromObject(mib.getReadsDistributionInfo()));
         mibCharList.put("familyDistributionInfo",
                 JSONArray.fromObject(mib.getFamilyDistributionInfo()));
         mibCharList.put("genusDistributionInfo",
                 JSONArray.fromObject(mib.getGenusDistributionInfo()));
-        ModelAndView mv = getModelAndView(path, projectId);
         mv.addObject("mibCharList", mibCharList);
         return mv.addObject("mib", mib);
     }

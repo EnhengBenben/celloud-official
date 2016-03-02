@@ -373,13 +373,13 @@
     select count(*) runNum from tb_report where project_id=#{projectId} and flag=#{flag} and state=#{state} and period!=#{period}
   </select>
   <select id="getAllReportInfoByProjectId" resultType="map">
-    select r.create_date startDate,p.project_id projectId,p.project_name projectName,a.app_id appId,a.app_name appName,u.user_id userId,u.username userName,GROUP_CONCAT(fp.file_id) fileIds
+    select r.create_date startDate,p.project_id projectId,p.project_name projectName,a.app_id appId,a.app_name appName,u.user_id userId,u.username userName,CAST(GROUP_CONCAT(fp.file_id) AS CHAR) fileIds
 	from tb_report r
 	left join tb_project p on r.project_id=p.project_id
 	left join tb_app a on a.app_id=r.app_id
 	left join tb_file_project_relat fp on fp.project_id=p.project_id
 	left join tb_user u on r.user_id=u.user_id
-	where p.project_id=#{projectId,jdbcType=INTEGER} and r.flag=#{flag,jdbcType=INTEGER}
+	where r.project_id=#{projectId,jdbcType=INTEGER} and r.flag=#{flag,jdbcType=INTEGER}
   </select>
   
 </mapper>

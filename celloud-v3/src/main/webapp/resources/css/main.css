@@ -11,7 +11,7 @@
 html,
 body {
   min-height: 100%;
-  min-width: 1200px;
+  min-width: 1280px;
   color: #5a5a5a;
   line-height: 1.5em;
 }
@@ -2829,7 +2829,7 @@ table.text-center th {
 .box .feedback-reply{min-height: 120px;}
 .box .feedback-attachment-box{min-height: 120px;}
 .feedback-attachment{height: 60px;width:60px; margin: 5px 5px 5px 0px;padding: 0px;cursor: pointer;}
-.box pre{background-color: transparent;border: 0px;font-size: 14px;font-weight: 400;color: #5a5a5a;line-height: 1.5em}
+.box pre{background-color: transparent;border: 0px;font-size: 14px;font-weight: 400;color: #5a5a5a;line-height: 1.5em;white-space: pre-wrap;}
 
 /*
  ===========================

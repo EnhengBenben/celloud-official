@@ -47,7 +47,6 @@ public class ExpensesAction {
         PageList<AppExpenses> expensePageList = expensesService
                 .getRunExpensesList(userId, pager);
         mv.addObject("expensePageList", expensePageList);
-        System.out.println(expensePageList.getDatas().get(0).getSnapshot());
         logger.info("用户{}查看消费记录", userId);
         return mv;
     }
