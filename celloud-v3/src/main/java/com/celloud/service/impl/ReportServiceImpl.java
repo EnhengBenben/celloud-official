@@ -782,12 +782,6 @@ public class ReportServiceImpl implements ReportService {
                 discount.setDiscountRate(discountRate);
                 discountList.add(discount);
             }
-            AppExpenses expenses = new AppExpenses();
-            expenses.setUserId(userId);
-            expenses.setExpenseType(ExpenseType.isRun);
-            expenses.setPrice(appOldPrice.toString());
-            expenses.setRealPrice(realPrice.toString());
-            expenses.setDiscount(discountList);
 
             List<DataFile> dataList = dataMapper.findDatasById(fileIds);
             for (DataFile d : dataList) {
@@ -795,6 +789,12 @@ public class ReportServiceImpl implements ReportService {
                 dlist.add(d);
                 appSnapshot.setDataKey(d.getDataKey());
                 appSnapshot.setFiles(dlist);
+                AppExpenses expenses = new AppExpenses();
+                expenses.setUserId(userId);
+                expenses.setExpenseType(ExpenseType.isRun);
+                expenses.setPrice(appOldPrice.toString());
+                expenses.setRealPrice(realPrice.toString());
+                expenses.setDiscount(discountList);
                 expenses.setSnapshot(appSnapshot);
                 expenses.setCreateDate(new Date());
                 reportDao.saveData(expenses);
