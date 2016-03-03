@@ -111,8 +111,8 @@ public class UserAction {
     @RequestMapping("user/sendEmail")
     public void sendEmail(@RequestParam("emailArray") String[] emailArray,@RequestParam("deptId") Integer deptId,
             @RequestParam("companyId") Integer companyId,@RequestParam("appCompanyId") Integer appCompanyId,
-            @RequestParam("appIdArray") Integer[] appIdArray) {
-        userService.sendRegisterEmail(emailArray, deptId, companyId, appCompanyId, appIdArray);
+            @RequestParam("appIdArray") Integer[] appIdArray,@RequestParam("role") Integer role) {
+        userService.sendRegisterEmail(emailArray, deptId, companyId, appCompanyId, appIdArray,role);
     }
     
     /**
@@ -129,7 +129,7 @@ public class UserAction {
         System.out.println(param);
         logger.info("注册邮件{}",param);
         String p[] = param.split("/");
-        if (p.length != 5) {
+        if (p.length != 6) {
             mv.addObject("flag", false);
         } else {
             String code=p[1];
@@ -137,6 +137,7 @@ public class UserAction {
             user.setEmail(p[0]);
             user.setDeptId(Integer.parseInt(p[2]));
             user.setCompanyId(Integer.parseInt(p[3]));
+            user.setRole(Integer.parseInt(p[5]));
             mv.addObject("appCompanyId",Integer.parseInt(p[4]));//大客户Id
             mv.addObject("code", code);
             mv.addObject("user", user);

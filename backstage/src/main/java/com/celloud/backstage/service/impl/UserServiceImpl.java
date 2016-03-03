@@ -150,7 +150,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void sendRegisterEmail(String[] emailArray, Integer deptId, Integer companyId, Integer appCompanyId,
-            Integer[] appIdArray) {
+            Integer[] appIdArray,Integer role) {
         for (String email : emailArray) {
             String randomCode = MD5Util.getMD5(String.valueOf(new Date()
                     .getTime()));
@@ -164,7 +164,7 @@ public class UserServiceImpl implements UserService {
             }
             userRegisterMapper.insertUserRegisterInfo(email, randomCode, appIds.toString());
             String param = Base64Util.encrypt(email + "/" + randomCode + "/"
-                    + deptId + "/" + companyId+"/"+appCompanyId);
+                    + deptId + "/" + companyId+"/"+appCompanyId+"/"+role);
             String context = ResetPwdUtils.userContent.replaceAll("url",
                     "<a href='"+ResetPwdUtils.userPath.replaceAll("path", param)+"'>"+ResetPwdUtils.userPath.replaceAll("path", param)+"</a>");
             EmailUtils.sendWithTitle (ResetPwdUtils.userTitle,context,email );
