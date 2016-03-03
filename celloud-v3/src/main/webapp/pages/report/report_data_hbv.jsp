@@ -443,7 +443,7 @@
 			<div class="lineheight">峰图中的 “ * ” 表示该位置的碱基发生了突变</div>
 		</div>
 		<div id="_showImg">
-			<img class="imgtop" src="images/app/HBV_explain.png" width="550px">
+			<img class="imgtop" src="<%=request.getContextPath()%>/app/image?file=HBV_explain.png" width="550px">
 		</div>
 	</div>
 	<div class="modal-footer">

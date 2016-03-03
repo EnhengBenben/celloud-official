@@ -1,5 +1,7 @@
 package com.celloud.action;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -12,11 +14,13 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,8 +29,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.constants.CompanyConstants;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
+import com.celloud.constants.DeptConstants;
 import com.celloud.constants.ReportType;
 import com.celloud.model.mongo.CmpFilling;
 import com.celloud.model.mongo.CmpGeneDetectionDetail;
@@ -823,5 +829,34 @@ public class ReportAction {
                 + "Procedure!downPDF?dataKeyList=" + sb.toString();
         log.info("requestUrl:" + requestUrl);
         return HttpURLUtils.getHTTPResult(requestUrl);
+    }
+    
+    /**
+     * 获取已保存的医院logo
+     * 
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "company/icon", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> companyIcon(String file) throws IOException {
+        String path = CompanyConstants.getCompanyIconPath() + File.separator + file;
+        File targetFile = new File(path);
+        log.info("医院logo绝对路径{}",targetFile.getAbsolutePath());
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
+    }
+    /**
+     * 获取已保存的部门logo
+     * 
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "dept/icon", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> deptIcon(String file) throws IOException {
+        String path = DeptConstants.getDeptIconPath() + File.separator + file;
+        File targetFile = new File(path);
+        log.info("部门logo目录的绝对路径{}",targetFile.getAbsolutePath());
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
     }
 }
