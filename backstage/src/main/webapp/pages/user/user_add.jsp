@@ -29,19 +29,13 @@
                             <input type="hidden" name="appCompanyId" value="${appCompanyId }" />
 					        <input type="hidden" name="deptId" value="${user.deptId }" />
 					        <input type="hidden" name="companyId" value="${user.companyId }" />
+					        <input type="hidden" name="role" value="${user.role }">
 					        <input type="text" name="email" readonly="readonly" value="${user.email }" id="email"/>
 					        <input type="text" id="add_username" name="username" class="addUser" placeholder="用户名">
 					        <input type="password" name="password" class="addUser pwd" placeholder="密码（6-16位数字字母组合）" id="add_password"/>
 					        <input type="password" placeholder="确认密码" id="add_confirmPwd" name="confirmPwd" class="addUser pwd">
 					        <input type="text" placeholder="真实姓名" name="truename" class="addUser">
 					        <input type="text" placeholder="手机号码" id="add_cellphone" name="cellPhone" class="addUser" >
-					        <div class="autolog">
-					            <label class="role-label">角色：</label>
-                                <select name="role">
-                                    <option value="0">普通用户</option>
-                                    <option value="1">大客户</option>
-                                </select>
-                           </div>
 					        <div class="autolog">
 					<%--                    <span id="remPass"><img src="images/login/nocheck.png"/></span> --%>
 					<!--                    <input id="isAllow" name="isRem" value="0" style="display: none"> -->

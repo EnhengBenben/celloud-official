@@ -59,7 +59,16 @@
                    <span class="help-inline text-danger"></span>
                </div>
            </div>
-           
+           <div class="form-group">
+               <label class="col-sm-2 control-label" for="tel">角色<font color="red">*</font> </label>
+               <div class="col-sm-10">
+                   <select name="role">
+                       <option value="0">普通用户</option>
+                       <option value="1">大客户</option>
+                   </select>
+                   <span class="help-inline text-danger"></span>
+               </div>
+           </div>
            <div class="form-group-separator"></div>
            <div class="form-group">
                <div class="col-sm-10 text-center">
