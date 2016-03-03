@@ -74,7 +74,7 @@
 		          <div class="box-info-wrap">
 		            <div class="box-pic" <c:if test="${status.first}"> data-step="2" data-intro="" data-position="right" data-img="appDetail.png" </c:if>>
 		              <a href="javascript:appStore.toAppDetail(${app.appId })">
-		                <img alt="产品logo" src="<%=request.getContextPath()%>/images/app/${app.pictureName}">
+		                <img alt="产品logo" src="<%=request.getContextPath()%>/app/image?file=${app.pictureName}">
 		              </a>
 		            </div>
 		            <div class="box-info">

@@ -8,7 +8,7 @@
 	<div class="product-info-top-wrap">
   	  <div class="product-info-hd clearfix">
         <div class="view">
-          <img src="<%=request.getContextPath()%>/images/app/${app.pictureName}">
+          <img src="<%=request.getContextPath()%>/app/image?file=${app.pictureName}">
         </div>
         <div class="itemInfo">
           <h5>${app.appName }
@@ -101,7 +101,7 @@
                  <div class="carousel-inner">
                    <c:forEach items="${screenList }" var="screen" varStatus="size">
                     <div class="item <c:if test='${size.index==0}'>active</c:if>">
-                      <img style="height:200px;width:100%" src="<%=request.getContextPath()%>/images/screenshot/${screen.screenName}" alt="First slide">
+                      <img style="height:200px;width:100%" src="<%=request.getContextPath()%>/app/screen?file=${screen.screenName}" alt="First slide">
                     </div>
                    </c:forEach>
                  </div>
