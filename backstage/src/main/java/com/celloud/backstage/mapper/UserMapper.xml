@@ -330,7 +330,7 @@
         username, password,
         email, cellphone, create_date,
         icon, role, remark,
-        navigation, truename, state,
+         truename, state,
         dept_id, login_uuid, company_id,
         sign)
         values (#{username,jdbcType=VARCHAR},
@@ -339,7 +339,6 @@
         #{cellphone,jdbcType=VARCHAR},now(),
         #{icon,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER},
         #{remark,jdbcType=VARCHAR},
-        #{navigation,jdbcType=INTEGER},
         #{truename,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER},
         #{deptId,jdbcType=INTEGER}, #{loginUuid,jdbcType=VARCHAR},
         #{companyId,jdbcType=INTEGER},
