@@ -43,7 +43,7 @@
 					            我已阅读并同意<a href="https://www.celloud.cn/service.html" target="_blank">《Celloud用户使用协议》</a></span>
 					        </div>
 					       <div class="autolog">
-					         <span class="error"></span>
+					         <span class="error" style="padding-left:0px;"></span>
 					       </div>
 					       <a href="javascript:void(0)" class="btn-email" id="save">注册</a>
 					       <a href="javascript:void(0);" id="cancle" class="return">重置</a>
@@ -141,7 +141,7 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
 				return;
 			}else{
 				//验证用户名重复问题
-				var username = $.trim($("#add_username").val());
+				var username = $("#add_username").val();
 				$.post("<%=request.getContextPath() %>/addUser/checkUsername",{username:username},function(flag){
 					if(flag){
 						$(".error").html("该用户名已经存在！");
@@ -198,12 +198,13 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
 	
 	//验证addForm
 	function validateAddForm(){
-		var username = $.trim($("#add_username").val());
+		$("#add_username").val($.trim($("#add_username").val()));
+		var username = $("#add_username").val();
 		if(username==""){
 			$(".error").html("请输入用户名！");
 			return false;
-		}else if(!/^([a-zA-z_]{1})([\w]*)$/g.test(username)){
-			$(".error").html("用户名只能由字母、数字、下划线组成，且只能以下划线或字母开头！");
+		}else if(!/^([a-zA-Z_]{1})([\w]{2,29})$/g.test(username)){
+			$(".error").html("用户名只能由字母、数字、下划线组成，长度在3~30，且以下划线或字母开头！");
 			return false;
 		}
 		var password = $.trim($("#add_password").val());
