@@ -207,7 +207,7 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
 			$(".error").html("用户名只能由字母、数字、下划线组成，长度在3~30，且以下划线或字母开头！");
 			return false;
 		}
-		var password = $.trim($("#add_password").val());
+		var password = $("#add_password").val();
 		if(password==""){
 			$(".error").html("请输入密码！");
 			return false;
