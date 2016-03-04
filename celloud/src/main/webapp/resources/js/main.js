@@ -158,7 +158,7 @@ var userCount=(function(userCount){
 				unit="kB";
 			}
 			for(var i=0;i<y.length;i++){
-				y[i]=(y[i]/divisor).toFixed(2);
+				y[i]=Number((y[i]/divisor).toFixed(2));
 			}
 			x = x.substring(0,x.length-1);
 			x += "]";
@@ -190,7 +190,7 @@ var userCount=(function(userCount){
 				unit="kB";
 			}
 			for(var i=0;i<y.length;i++){
-				y[i]=(y[i]/divisor).toFixed(2);
+				y[i]=Number((y[i]/divisor).toFixed(2));
 			}
 			x = x.length>1?x.substring(0,x.length-1):x;
 			x += "]";
