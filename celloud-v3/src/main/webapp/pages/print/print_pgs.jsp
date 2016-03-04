@@ -192,7 +192,7 @@ a:hover, a:focus{
 			<div class="row" style="margin:0px auto;font-size:12px;">
 				<c:if test="${company.companyIcon!=null&&!company.companyIcon.equals('')}">
 					<div align="center" class="clearfix">
-					    <img src="<%=request.getContextPath() %>/images/hospitalIcon/${company.companyIcon}" style="width:60px">
+					    <img src="<%=request.getContextPath() %>/report/company/icon?file=${company.companyIcon}" style="width:60px">
 						<h2 class="shotH3 smallTitle" style="line-height: 20px;margin-top:0px">
 							${company.companyName}
 							<br />染色体拷贝数变异检测报告
@@ -355,14 +355,14 @@ a:hover, a:focus{
 			<div class="row" style="margin:0px auto;" id="mainDiv">
 				<c:if test="${company.companyIcon!=null&&!company.companyIcon.equals('')}">
 					<div align="center" class="clearfix">
-						<img src="<%=request.getContextPath() %>/images/hospitalIcon/${company.companyIcon}" style="width:90px">
+						<img src="<%=request.getContextPath() %>/report/company/icon?file=${company.companyIcon}" style="width:90px">
 						<h2 class="shotH3">
 							${company.companyName}
 							<br />
 							<span class="secTitle">${company.englishName}</span>
 						</h2>
 						<c:if test="${company.companyId!=12&&company.companyId!=10&&company.companyId!=22}">
-							<img id="_imgShow" src="<%=request.getContextPath() %>/images/deptIcon/${dept.deptIcon}" style="width:95px">
+							<img id="_imgShow" src="<%=request.getContextPath() %>/report/dept/icon?file=${dept.deptIcon}" style="width:95px">
 						</c:if>
 					</div>
 					<hr>
