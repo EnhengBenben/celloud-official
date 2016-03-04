@@ -62,6 +62,11 @@ var company=(function(company){
 		uploader.init();
 	}
 	self.search=function(){
+		var keyword=$("#keyword").val();
+		if(!/[^%&',;<>/\\_!*=?$\x22]+/g.test(keyword)){
+			jAlert("搜索关键字不能包含特殊字符");
+			return;
+		}
 		self.keyword=$("#keyword").val();
 		self.getCompany(1);
 	}
@@ -239,6 +244,11 @@ var user=(function(user){
 	self.searchFiled="username";
 	self.keyword=null;
 	self.search=function(){
+		var keyword=$("#keyword").val();
+		if(!/[^%&',;<>/\\_!*=?$\x22]+/g.test(keyword)){
+			jAlert("搜索关键字不能包含特殊字符");
+			return;
+		}
 		self.searchFiled=$("#searchFiled").val();
 		self.keyword=$("#keyword").val();
 		self.getUserList(1);

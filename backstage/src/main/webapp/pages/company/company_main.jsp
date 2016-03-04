@@ -122,7 +122,7 @@
     </div>
   </div>
 </div>
-<<script type="text/javascript">
+<script type="text/javascript">
 <!--
 $(function(){
 	$("#keyword").keydown(function(e){
