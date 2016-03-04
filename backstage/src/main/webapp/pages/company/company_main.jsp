@@ -6,7 +6,7 @@
     <div class="panel-heading">
         <h3 class="panel-title">公司管理</h3>
         <div class="panel-options">
-        <form class="form-inline">
+        <form class="form-inline" onsubmit="return false;">
 		  <div class="form-group">
 		   <input type="text" class="form-control" data-rule-required="true" id="keyword" name="keyword" value="${keyword }" placeholder="医院中文名称">
 		  </div>
@@ -122,4 +122,15 @@
     </div>
   </div>
 </div>
+<<script type="text/javascript">
+<!--
+$(function(){
+	$("#keyword").keydown(function(e){
+		if(e.keyCode==13){
+			company.search();
+		}
+	});
+})
+//-->
+</script>
 
