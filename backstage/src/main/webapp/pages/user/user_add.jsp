@@ -40,7 +40,7 @@
 					<%--                    <span id="remPass"><img src="images/login/nocheck.png"/></span> --%>
 					<!--                    <input id="isAllow" name="isRem" value="0" style="display: none"> -->
 					            <input type="checkbox" id="isAllow">
-					            我已阅读并同意<a href="<%=request.getContextPath() %>/service.html" target="_blank">《Celloud用户使用协议》</a></span>
+					            我已阅读并同意<a href="https://www.celloud.cn/service.html" target="_blank">《Celloud用户使用协议》</a></span>
 					        </div>
 					       <div class="autolog">
 					         <span class="error"></span>
@@ -156,7 +156,7 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
 								var params = $("#userForm").serialize();
 								//服务协议
 								var isAllow = $("#isAllow").prop("checked");
-								if(isAllow=="true"){
+								if(isAllow==false){
 									$("#isAllowError").css("display","");
 									$(".error").html("请阅读并同意《Celloud用户使用协议》");
 									return;
