@@ -2,670 +2,495 @@ package com.celloud.action;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.convention.annotation.Results;
+import javax.annotation.Resource;
 
-import com.alibaba.fastjson.JSONObject;
-import com.celloud.sdo.App;
-import com.celloud.sdo.Company;
-import com.celloud.sdo.Data;
-import com.celloud.sdo.Dept;
-import com.celloud.sdo.Project;
-import com.celloud.sdo.Report;
-import com.celloud.sdo.Task;
-import com.celloud.sdo.User;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.text.StrSubstitutor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.celloud.constants.AppDataListType;
+import com.celloud.constants.CommandKey;
+import com.celloud.constants.ConstantsData;
+import com.celloud.constants.GlobalQueue;
+import com.celloud.constants.Mod;
+import com.celloud.constants.SparkPro;
+import com.celloud.model.DataFileEditForm;
+import com.celloud.model.mongo.TaskQueue;
+import com.celloud.model.mysql.App;
+import com.celloud.model.mysql.DataFile;
+import com.celloud.model.mysql.Project;
+import com.celloud.model.mysql.Report;
+import com.celloud.model.mysql.Task;
+import com.celloud.page.Page;
+import com.celloud.page.PageList;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
-import com.celloud.service.UserService;
 import com.celloud.utils.DataKeyListToFile;
-import com.google.inject.Inject;
-import com.nova.action.BaseAction;
-import com.nova.constants.DataState;
-import com.nova.constants.FileFormat;
-import com.nova.constants.Mod;
-import com.nova.constants.SparkPro;
-import com.nova.pager.Page;
-import com.nova.pager.PageList;
-import com.nova.queue.GlobalQueue;
-import com.nova.service.IDataService;
-import com.nova.utils.Base64Util;
-import com.nova.utils.DataUtil;
-import com.nova.utils.FileTools;
-import com.nova.utils.PerlUtils;
-import com.nova.utils.PropertiesUtil;
-import com.nova.utils.RemoteRequests;
-import com.nova.utils.SQLUtils;
-import com.nova.utils.SSHUtil;
-import com.nova.utils.XmlUtil;
+import com.celloud.utils.FileTools;
+import com.celloud.utils.PropertiesUtil;
+import com.celloud.utils.RemoteRequests;
+import com.celloud.utils.Response;
+import com.celloud.utils.SSHUtil;
 
 /**
- * v3.0数据管理
+ * 数据管理
  * 
- * @author <a href="mailto:liuqingxiao@celloud.cn">liuqx</a>
- * @date 2015-9-14上午10:22:21
- * @version Revision: 1.0
+ * @author liuqx
+ * @date 2015-12-30 下午4:08:06
  */
-@ParentPackage("celloud-default")
-@Action("data3")
-@Results({
-        @Result(name = "success", type = "json", params = { "root",
-                "conditionInt" }),
-        @Result(name = "info", type = "json", params = { "root", "result" }),
-        @Result(name = "checkDataRunningSoft", type = "json", params = {
-                "root", "intList" }),
-        @Result(name = "mapList", type = "json", params = { "root", "mapList" }),
-        @Result(name = "getSoftList", type = "redirect", location = "app3!getAppByFormat", params = {
-                "condition", "${condition}" }),
-        @Result(name = "toDataManage", location = "../../pages/data/myData.jsp"),
-        @Result(name = "toMoreInfo", location = "../../pages/data/moreDataInfo.jsp"),
-        @Result(name = "toUpdateDatas", location = "../../pages/data/updateDatas.jsp") })
-public class DataAction extends BaseAction {
-    private static final long serialVersionUID = 1L;
-    Logger log = Logger.getLogger(DataAction.class);
-    @Inject
+@Controller
+@RequestMapping("data")
+public class DataAction {
+    Logger logger = LoggerFactory.getLogger(DataAction.class);
+    @Resource
     private DataService dataService;
-    @Inject
-    private ProjectService proService;
-    @Inject
-    private ReportService reportService;
-    @Inject
-    private UserService userService;
-    @Inject
+    @Resource
     private AppService appService;
-    @Inject
-    private IDataService idataService;
-    @Inject
+    @Resource
+    private ProjectService projectService;
+    @Resource
+    private ReportService reportService;
+    @Resource
     private TaskService taskService;
-    private PageList<Data> dataPageList;
-    private List<Integer> intList;
-    private List<Data> dataList;
-    private List<Map<String, String>> mapList;
-    private Data data;
-    private Integer userId;
-    private Page page = new Page(50, 0);
-    private String sortByName;
-    private String sortByDate;
-    private String condition;
-    private Integer conditionInt;
-    private Long fileId;
-    private String dataIds;
-    private String result;
 
     private static String basePath = SparkPro.TOOLSPATH;
-    private static String dataPath = PropertiesUtil.bigFilePath;
-    private static String datalist = PropertiesUtil.datalist;
 
-    private static Map<String, Map<String, String>> machines = XmlUtil.machines;
+    private static Map<String, Map<String, String>> machines = ConstantsData
+            .getMachines();
     private static String sparkhost = machines.get("spark").get(Mod.HOST);
     private static String sparkpwd = machines.get("spark").get(Mod.PWD);
-    private static String sparkuserName = machines.get("spark").get(Mod.USERNAME);
+    private static String sparkuserName = machines.get("spark")
+            .get(Mod.USERNAME);
     private static String sgeHost = machines.get("158").get(Mod.HOST);
     private static String sgePwd = machines.get("158").get(Mod.PWD);;
     private static String sgeUserName = machines.get("158").get(Mod.USERNAME);
-    
+    private static final Response DELETE_DATA_FAIL = new Response("删除数据失败");
 
-    // 初始化perl命令路径
-    private static Map<Long, App> appMap = SQLUtils.appMap;
-
-    public String getAllData() {
-        userId = (Integer) super.session.get("userId");
-        log.info("用户" + super.session.get("userName") + "访问数据管理页面");
-        dataPageList = dataService.getAllData(page, userId);
-        return "toDataManage";
+    /**
+     * 检索某个项目下的所有数据
+     * 
+     * @param projectId
+     * @return
+     * @date 2016-1-9 上午3:43:01
+     */
+    @RequestMapping("getDatasInProject")
+    @ResponseBody
+    public List<DataFile> getDatasInProject(Integer projectId) {
+        return dataService.getDatasInProject(projectId);
     }
 
-    public String getDataByCondition() {
-        userId = (Integer) super.session.get("userId");
-        log.info("用户" + super.session.get("userName") + "根据条件搜索数据");
-        dataPageList = dataService.getDataByCondition(page, userId,
-                conditionInt, sortByName, sortByDate, condition);
-        return "toDataManage";
+    /**
+     * 获取全部数据列表
+     * 
+     * @param session
+     * @param page
+     * @param size
+     * @return
+     */
+    @RequestMapping("dataAllList.action")
+    public ModelAndView dataAllList(@RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        ModelAndView mv = new ModelAndView("data/data_list");
+        Page pager = new Page(page, size);
+        PageList<DataFile> dataList = dataService.dataAllList(pager,
+                ConstantsData.getLoginUserId());
+        mv.addObject("dataList", dataList);
+        logger.info("用户{}打开数据管理", ConstantsData.getLoginUserName());
+        return mv;
     }
 
-    public String getAppListByFormat() {
-        log.info("用户" + super.session.get("userName") + "获取数据可运行的APP");
-        Map<String, Integer> formatMap = dataService.getFormatNumByIds(dataIds);
-        if (formatMap.get("formatNum") != null
-                && formatMap.get("formatNum") > 1) {
-            result = "所选数据格式不统一！";
-            return "info";
-        } else {
-            condition = String.valueOf(formatMap.get("format"));
-            return "getSoftList";
+    /**
+     * 根据条件获取数据列表
+     * 
+     * @param session
+     * @param page
+     *            当前页
+     * @param size
+     *            每页行数
+     * @param condition
+     *            检索条件
+     * @param sort
+     *            排序字段 0:create_date 1:file_name
+     * @param sortType
+     *            排序类型
+     * @return
+     */
+    @RequestMapping("dataList.action")
+    public ModelAndView dataList(@RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size, String condition,
+            @RequestParam(defaultValue = "0") int sort,
+            @RequestParam(defaultValue = "desc") String sortDateType,
+            @RequestParam(defaultValue = "asc") String sortNameType) {
+        Pattern p = Pattern.compile("\\_|\\%|\\\\|\\'|\"");
+        Matcher m = p.matcher(condition);
+        StringBuffer con_sb = new StringBuffer();
+        while (m.find()) {
+            String rep = "\\\\" + m.group(0);
+            m.appendReplacement(con_sb, rep);
         }
+        m.appendTail(con_sb);
+        ModelAndView mv = new ModelAndView("data/data_list");
+        Page pager = new Page(page, size);
+        PageList<DataFile> dataList = dataService.dataLists(pager,
+                ConstantsData.getLoginUserId(), con_sb.toString(), sort,
+                sortDateType,
+                sortNameType);
+        mv.addObject("dataList", dataList);
+        logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
+        return mv;
     }
 
-    public String checkDataRunningSoft() {
-        log.info("验证用户" + super.session.get("userName") + "为数据" + dataIds
-                + "选择APP" + conditionInt);
-        intList = dataService.getRunningDataBySoft(dataIds, conditionInt);
-        return "checkDataRunningSoft";
+    /**
+     * 根据数据编号获取数据类型
+     * 
+     * @param dataIds
+     * @return -1:所选类型大于一种
+     */
+    @RequestMapping("getFormatByDataIds.action")
+    @ResponseBody
+    public Integer getFormatByDataIds(String dataIds) {
+        Integer result = dataService.getFormatByIds(dataIds);
+        logger.info("用户{}获取{}数据类型", ConstantsData.getLoginUserName(), dataIds);
+        return result;
     }
 
-    public String deleteData() {
-        log.info("用户" + super.session.get("userName") + "删除数据" + dataIds);
-        conditionInt = dataService.deleteDataByIds(dataIds);
-        return "success";
+    /**
+     * 根据数据类型获取可运行的app
+     * 
+     * @param formatId
+     * @return
+     */
+    @RequestMapping("getRunApp.action")
+    @ResponseBody
+    public List<App> getRunApp(
+            @RequestParam(defaultValue = "0") Integer formatId) {
+        List<App> apps = appService
+                .findAppsByFormat(ConstantsData.getLoginUserId(), formatId);
+        logger.info("用户{}获取可运行数据类型{}的app", ConstantsData.getLoginUserName(),
+                formatId);
+        return apps;
     }
 
-    public String getMoreData() {
-        log.info("用户" + super.session.get("userName") + "获取数据" + fileId
-                + "别名、物种、样本类型等信息");
-        userId = (Integer) super.session.get("userId");
-        data = dataService.getDataAndStrain(userId, fileId);
-        return "toMoreInfo";
+    /**
+     * 验证正在运行某APP的数据
+     * 
+     * @param dataIds
+     * @param appId
+     * @return
+     */
+    @RequestMapping("checkDataRunningApp.action")
+    @ResponseBody
+    public List<Integer> checkDataRunningApp(String dataIds, Integer appId) {
+        List<Integer> dataIdList = dataService.findRunningAppData(dataIds,
+                appId);
+        logger.info("用户{}验证数据{}是否正在运行APP{}", ConstantsData.getLoginUserName(),
+                dataIds, appId);
+        return dataIdList;
     }
 
-    public String getStrainList() {
-        log.info("用户" + super.session.get("userName") + "获取物种信息列表");
-        userId = (Integer) super.session.get("userId");
-        mapList = dataService.getStrainList(userId);
-        return "mapList";
+    /**
+     * 删除数据
+     * 
+     * @param dataIds
+     * @return
+     * @author leamo
+     * @date 2016-1-10 下午9:49:10
+     */
+    @RequestMapping("delete.action")
+    @ResponseBody
+    public Response delete(String dataIds) {
+        int result = dataService.delete(dataIds);
+        logger.info("用户{}删除数据{}{}", ConstantsData.getLoginUserName(), dataIds,
+                result);
+        return result > 0 ? Response.DELETE_SUCCESS : DELETE_DATA_FAIL;
     }
 
-    public String toUpdateDatas() {
-        log.info("用户" + super.session.get("userName") + "打开批量逐个编辑多个数据页面");
-        dataList = dataService.getDatasByIds(dataIds);
-        return "toUpdateDatas";
+    /**
+     * 修改数据信息页面
+     * 
+     * @param dataId
+     * @return
+     * @author leamo
+     * @date 2016-1-10 下午10:04:24
+     */
+    @RequestMapping("toEachEditDatas.action")
+    public ModelAndView toEachEditDatas(String dataIds) {
+        ModelAndView mv = new ModelAndView("data/data_all_update");
+        List<DataFile> dataList = dataService.findDatasById(dataIds);
+        mv.addObject("dataList", dataList);
+        logger.info("用户{}打开分别修改数据列表Modal", ConstantsData.getLoginUserName(),
+                dataIds);
+        return mv;
     }
 
-    public String updateDataByIds() {
-        log.info("用户" + super.session.get("userName") + "修改数据" + dataIds);
-        conditionInt = dataService.updateData(dataIds, data);
-        return "success";
+    /**
+     * 获取物种列表
+     * 
+     * @return
+     * @author leamo
+     * @date 2016-1-10 下午10:21:13
+     */
+    @RequestMapping("getStrainList.action")
+    @ResponseBody
+    public List<Map<String, String>> getStrainList() {
+        List<Map<String, String>> mapList = dataService
+                .getStrainList(ConstantsData.getLoginUserId());
+        return mapList;
     }
 
-    public String updateManyDatas() {
-        log.info("用户" + super.session.get("userName") + "批量修改数据");
-        conditionInt = dataService.updateDatas(dataList);
-        return "success";
+    /**
+     * 批量修改数据
+     * 
+     * @param dataIds
+     * @param data
+     * @return
+     * @author leamo
+     * @date 2016-1-10 下午11:04:34
+     */
+    @RequestMapping("batchEditDataByIds.action")
+    @ResponseBody
+    public Integer batchEditDataByIds(String dataIds, DataFile data) {
+        Integer result = dataService.updateDataByIds(dataIds, data);
+        logger.info("用户{}批量修改数据{}", ConstantsData.getLoginUserName(), dataIds);
+        return result;
     }
 
-    public String run() {
-        log.info("用户" + super.session.get("userName") + "准备运行数据");
-        userId = (Integer) super.session.get("userId");
-        String[] appIds = condition.split(",");
+    /**
+     * 批量修改数据
+     * 
+     * @param dataIds
+     * @param data
+     * @return
+     * @author leamo
+     * @date 2016-1-10 下午11:04:34
+     */
+    @RequestMapping("eachEditDataByIds.action")
+    @ResponseBody
+    public Integer eachEditDataByIds(DataFileEditForm dataFileEditForm) {
+        Integer result = dataService
+                .updateDatas(dataFileEditForm.getDataList());
+        logger.info("用户{}分别修改{}个数据", ConstantsData.getLoginUserName(), result);
+        return result;
+    }
+    
+    /**
+     * 数据运行
+     * 
+     * @param dataIds
+     * @param appIds
+     * @return
+     */
+    @RequestMapping("run.action")
+    @ResponseBody
+    public String run(String dataIds, String appIds) {
+        Integer userId = ConstantsData.getLoginUserId();
+        String userName = ConstantsData.getLoginUserName();
+        String result = "";
+        logger.info("用户{}使用数据{}运行APP{}", userName, dataIds, appIds);
+        String[] appIdArr = appIds.split(",");
         String[] dataIdArr = dataIds.split(",");
-        String proName = new Date().getTime() + "";
-        String fileSize = dataService.getDataSize(dataIds);
 
+        // 公共项目信息
         Project project = new Project();
+        String proName = new Date().getTime() + "";
         project.setUserId(userId);
         project.setProjectName(proName);
-        project.setFileNum(dataIdArr.length);
-        project.setFileSize(fileSize);
+        project.setDataNum(dataIdArr.length);
+        project.setDataSize(dataService.queryFileSize(dataIds));
 
+        // 公共报告信息
         Report report = new Report();
         report.setUserId(userId);
-        // 5.根据 appIds 获取 datakeys
-        StringBuffer dataResult = new StringBuffer();
-        dataList = dataService.getDatasByIds(dataIds);
-        for (Data d : dataList) {
-            String filename = d.getFileName();
-            String datakey = d.getDataKey();
-            String anotherName = d.getAnotherName();
-            String ext = FileTools.getExtName(filename);
-            dataResult
-                    .append(datakey)
-                    .append(",")
-                    .append(datakey)
-                    .append(ext)
-                    .append(",")
-                    .append(filename)
-                    .append(",")
-                    .append(StringUtils.isEmpty(anotherName) ? null
-                            : anotherName).append(";");
-        }
-        Map<String, Object> userMap = userService.getUserAllInfo(userId);
-        Company com = (Company) userMap.get("company");
-        User user = (User) userMap.get("user");
-        Dept dept = (Dept) userMap.get("dept");
-        String email = user.getEmail();
-        result = "";
-        for (String appId : appIds) {
-            Long appId_l = Long.parseLong(appId);
-            String appName = appService.getAppNameById(Long.parseLong(appId));
-            // 创建项目
-            Long proId = proService.insertProject(project);
-            log.info("用户" + super.session.get("userName") + "创建项目" + proId);
 
-            if (proId == null) {
-                result += appName + "  ";
-                log.error("创建项目失败");
-                continue;
-            }
-            // 项目添加数据
-            Integer flag = dataService.addDataToPro(dataIdArr, proId);
-            log.info("用户" + super.session.get("userName") + "创建项目" + proId
-                    + "与数据" + dataIds + "关系" + flag);
-            if (flag < 1) {
-                result += appName + "  ";
-                log.error("创建项目数据关系失败");
-                continue;
-            }
-            // 添加项目报告
-            report.setProjectId(proId);
-            report.setSoftwareId(Long.parseLong(appId));
-            Long reportId = reportService.insertProReport(report);
-            if (reportId == null) {
-                result += appName + "  ";
-                log.error("创建项目报告失败");
-                continue;
-            }
-            Map<String, List<Data>> map = new HashMap<String, List<Data>>();
-            if (Integer.parseInt(appId) == 110
-                    || Integer.parseInt(appId) == 111
-                    || Integer.parseInt(appId) == 112) {
-                String dataDetails = FileTools.dataListSort(dataResult
-                        .toString());
-                String dataArray[] = dataDetails.split(";");
-                for (int i = 0; i < dataArray.length; i = i + 2) {
-                    String[] dataDetail = dataArray[i].split(",");
-                    String[] dataDetail1 = dataArray[i + 1].split(",");
-                    List<Data> dataList = dataService
-                            .getDataByDataKeys(FileTools
-                                    .getArray(dataDetail, 0)
-                                    + ","
-                                    + FileTools.getArray(dataDetail1, 0));
-                    map.put(FileTools.getArray(dataDetail, 0), dataList);
-                }
-            } else if (Integer.parseInt(appId) == 113) {
-                String dataDetails = FileTools.dataListSortNoEnd(dataResult
-                        .toString());
-                String dataArray[] = dataDetails.split(";");
-                dataResult = new StringBuffer();
-                dataResult.append(dataDetails);
-                for (int i = 0; i < dataArray.length; i = i + 3) {
-                    String[] dataDetail = dataArray[i].split(",");
-                    String[] dataDetail1 = dataArray[i + 1].split(",");
-                    String[] dataDetail2 = dataArray[i + 2].split(",");
-                    List<Data> dataList = dataService
-                            .getDataByDataKeys(FileTools
-                                    .getArray(dataDetail, 0)
-                                    + ","
-                                    + FileTools.getArray(dataDetail1, 0)
-                                    + ","
-                                    + FileTools.getArray(dataDetail2, 0));
-                    map.put(FileTools.getArray(dataDetail, 0), dataList);
+        List<DataFile> dataList = dataService.findDatasById(dataIds);
+
+        // 构建运行所需dataListFile文件路径
+        Map<String, String> dataFilePathMap = new HashMap<>();// 针对按数据投递APP
+        String dataFilePath = "";// 针对按项目投递APP
+
+        List<String> appIdList = new ArrayList<>(Arrays.asList(appIdArr));
+        List<String> list_tmp = new ArrayList<>(appIdList);
+        list_tmp.retainAll(AppDataListType.FASTQ_PATH);
+        if (list_tmp.size() > 0) {
+            dataFilePathMap = DataKeyListToFile.onlyFastqPath(dataList);
+            project.setDataNum(
+                    Integer.parseInt(dataFilePathMap.get("dataReportNum")));
+            dataFilePathMap.remove("dataReportNum");
+        } else {
+            list_tmp = new ArrayList<>(appIdList);
+            list_tmp.retainAll(AppDataListType.ONLY_PATH);
+            if (list_tmp.size() > 0) {
+                dataFilePath = DataKeyListToFile.onlyPath(dataList);
+            } else {
+                list_tmp = new ArrayList<>(appIdList);
+                list_tmp.retainAll(AppDataListType.PATH_AND_NAME);
+                if (list_tmp.size() > 0) {
+                    dataFilePath = DataKeyListToFile.containName(dataList);
+                } else {
+                    list_tmp = new ArrayList<>(appIdList);
+                    list_tmp.retainAll(AppDataListType.SPLIT);
+                    if (list_tmp.size() > 0) {
+                        dataFilePathMap = DataKeyListToFile.toSplit(dataList);
+                        project.setDataNum(1);
+                    }
                 }
             }
-            log.info("用户" + super.session.get("userName") + "开始运行" + appName);
-            String dataKeyList = dataResult.toString();
-            // TODO
-            String appPath = basePath + userId + "/" + appId + "/";
+        }
+        // 批量创建项目
+        Map<Integer, Integer> appProMap = projectService
+                .insertMultipleProject(project, appIdArr, dataIdArr);
+        if (appProMap == null) {
+            result = "项目创建失败";
+            logger.info("{}{}", userName, result);
+            return result;
+        }
+
+        // 批量创建报告
+        List<Integer> failAppIdList = reportService
+                .insertMultipleProReport(report, appProMap, dataIdArr);
+        if (failAppIdList.size() > 0) {
+            result = appService.findAppNamesByIds(failAppIdList.toString())
+                    + "创建报告失败";
+            logger.info("{}{}", userName, result);
+            return result;
+        }
+
+
+        // TODO 向tools端传参 优化tools投递后删除
+        StringBuffer dataResult = new StringBuffer();
+        for (DataFile d : dataList) {
+            dataResult.append(getDataResult(d));
+        }
+
+        // 运行APP详细信息
+        List<App> appList = appService.findAppsByIds(appIds);
+        String bp = basePath + userId + "/";
+        for (App app : appList) {
+            Integer appId = app.getAppId();
+            String appName = app.getAppName();
+            Integer proId = appProMap.get(appId);
+			String appPath = bp + appId + "/";
             if (!FileTools.checkPath(appPath)) {
                 new File(appPath).mkdirs();
             }
-            if (SparkPro.apps.contains(appId)) {// 判断是否需要进队列
+            if (AppDataListType.SPARK.contains(String.valueOf(appId))) {// 判断是否需要进队列
                 String select = SparkPro.apps.toString().substring(1,
                         SparkPro.apps.toString().length() - 1);
-                int running = idataService.dataRunning(select);
-                log.info("页面运行任务，此时正在运行的任务数：" + running);
+                int running = dataService.dataRunning(select);
+                logger.info("spark 正在运行的任务数：{}", running);
                 if (SparkPro.NODES >= running) {
-                    log.info("资源满足需求，投递任务");
-                    submit(appPath, proId + "", dataKeyList, appName, appMap
-                            .get(appId_l).getCommand());
+	                String _dataFilePath = DataKeyListToFile
+	                        .toSpark(proId.toString(), dataList);
+	                Map<String, String> map = CommandKey.getMap(_dataFilePath, appPath,proId);
+	                StrSubstitutor sub = new StrSubstitutor(map);
+					String command = sub.replace(app.getCommand());
+					logger.info("资源满足需求，投递任务！运行命令：" + command);
+                    SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
+                    ssh.sshSubmit(command, false);
                 } else {
-                    log.info("资源不满足需求，进入队列等待");
-                    String command = appPath + "--" + proId + "--"
-                            + dataKeyList + "--" + appName + "--" + appId;
-                    GlobalQueue.offer(command);
+                	TaskQueue tq = new TaskQueue();
+                	tq.setAppId(0);
+                	tq.setDataKey("");
+                	tq.setProjectId(proId);
+                	tq.setDataList(dataList);
+                	tq.setPath(appPath);
+                	tq.setCommand(app.getCommand());
+                	reportService.saveTask(tq);
+                    logger.info("资源不满足需求，进入队列等待");
+                    GlobalQueue.offer(proId.toString());
                 }
-            } else if (Integer.parseInt(appId) == 114) {
-                Collections.sort(dataList, new Comparator<Data>() {
-                    @Override
-                    public int compare(Data d1, Data d2) {
-                        return d1.getFileName().compareTo(d2.getFileName());
-                    }
-                });
-                Iterator<Data> chk_it = dataList.iterator();
-                while (chk_it.hasNext()) {
-                    dataResult = new StringBuffer();
-                    List<Data> _dlist = new ArrayList<>();
-                    String dataListFile = datalist + new Date().getTime() + "_"
-                            + new Double(Math.random() * 1000).intValue()
-                            + ".txt";
-                    FileTools.createFile(dataListFile);
-                    Data d = chk_it.next();
-                    String datakey = d.getDataKey();
-                    String _fname = d.getFileName();
-                    map = new HashMap<String, List<Data>>();
-                    String ext = FileTools.getExtName(_fname);
-                    if (_fname.contains("R1") || _fname.contains("R2")) {
-                        String s1 = _fname.substring(0,
-                                _fname.lastIndexOf("R1"));
-                        String s2 = _fname.substring(
-                                _fname.lastIndexOf("R1") + 2, _fname.length());
-                        Data d1 = chk_it.next();
-                        String _fname2 = d1.getFileName();
-                        if (_fname2.contains(s1 + "R2")
-                                && _fname2.substring(
-                                        _fname2.lastIndexOf("R2") + 2,
-                                        _fname2.length()).equals(s2)) {
-                            dataResult.append(dataPath).append(datakey)
-                                    .append(ext).append("\t").append(dataPath)
-                                    .append(d1.getDataKey()).append(ext)
-                                    .append("\t");
-                            _dlist.add(d);
-                            _dlist.add(d1);
-                            map.put(datakey, _dlist);
-                            _fname += "+" + d1.getFileName();
-                        }
-                    } else {
-                        dataResult.append(dataPath).append(datakey).append(ext);
-                        _dlist.add(d);
-                        map.put(datakey, _dlist);
-                    }
-                    FileTools.appendWrite(dataListFile, dataResult.toString());
-                    int runningNum = taskService.getRunningNumByAppId(appId_l);
+            } else if (AppDataListType.FASTQ_PATH
+                    .contains(String.valueOf(appId))
+                    || AppDataListType.SPLIT.contains(String.valueOf(appId))) {
+                for (Entry<String, String> entry : dataFilePathMap.entrySet()) {
+                    String dataKey = entry.getKey();
+                    String dataListFile = entry.getValue();
+                    int runningNum = taskService.findRunningNumByAppId(appId);
                     Task task = new Task();
                     task.setProjectId(proId);
-                    task.setUserId(Long.valueOf(userId));
-                    task.setAppId(appId_l);
-                    task.setDataKey(datakey);
-                    StringBuffer command = new StringBuffer(
-                            "nohup perl /share/biosoft/perl/PGS_MG/bin/moniter_qsub_url-v1.pl nohup perl ");
-                    command.append(appMap.get(appId_l).getCommand())
-                            .append(" ").append(dataListFile).append(" ")
-                            .append(appPath).append(" ProjectID").append(proId)
-                            .append(" &>").append(appPath).append("/")
-                            .append(proId).append("/log ");
-                    task.setCommand(command.toString());
-                    StringBuffer params = new StringBuffer();
-                    params.append("appName=")
-                            .append(appName)
-                            .append("&projectName=")
-                            .append(proName)
-                            .append("&email=")
-                            .append(email)
-                            .append("&fileName=")
-                            .append(_fname)
-                            .append("&projectId=")
-                            .append(proId)
-                            .append("&dataInfos=")
-                            .append(Base64Util.encrypt(JSONObject
-                                    .toJSONString(map)))
-                            .append("&company=")
-                            .append(Base64Util.encrypt(JSONObject
-                                    .toJSONString(com)))
-                            .append("&user=")
-                            .append(Base64Util.encrypt(JSONObject
-                                    .toJSONString(user)))
-                            .append("&dept=")
-                            .append(Base64Util.encrypt(JSONObject
-                                    .toJSONString(dept)));
-                    task.setParams(params.toString());
-                    Long taskId = taskService.create(task);
-                    // TODO
-                    if (runningNum < 4) {
-                        StringBuffer remotePath = new StringBuffer();
-                        remotePath.append(PropertiesUtil.toolsOutPath)
-                                .append("Procedure!runApp?userId=")
-                                .append(userId).append("&appId=").append(appId)
-                                .append("&dataKey=").append(datakey)
-                                .append("&taskId=").append(taskId)
-                                .append("&command=")
-                                .append(Base64Util.encrypt(command.toString()))
-                                .append("&").append(params);
-                        RemoteRequests rr = new RemoteRequests();
-                        rr.run(remotePath.toString());
+                    task.setUserId(userId);
+                    task.setAppId(appId);
+                    task.setDataKey(dataKey);
+                    Map<String, String> map = CommandKey.getMap(dataListFile, appPath, proId);
+                    StrSubstitutor sub = new StrSubstitutor(map);
+                    String command = sub.replace( app.getCommand());
+                    task.setCommand(command);
+                    taskService.create(task);
+                    Integer taskId = task.getTaskId();
+                    if (runningNum < app.getMaxTask()
+                            || app.getMaxTask() == 0) {
+                        logger.info("任务{}运行命令：{}", taskId, command);
+                        SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+                        ssh.sshSubmit(command, false);
                         taskService.updateToRunning(taskId);
                     } else {
-                        log.info("数据" + datakey + "排队运行" + appName);
+                        logger.info("数据{}排队运行{}", dataKey, app.getAppName());
                     }
                 }
             } else {
-                if (SparkPro.SGEAPPS.contains(appId)) {
+                if (SparkPro.SGEAPPS.contains(String.valueOf(appId))) {
                     // TODO 所有向Tools端投递任务的流程都向这里集中
                     // 最终判断删除，非spark就是SGE
-                    log.info("celloud 直接向 SGE 投递任务");
-                    // TODO 统一命令形式
-                    String command = null;
-                    if (appId.equals("116")) {
-                        String dataListFile = DataKeyListToFile
-                                .containName(dataKeyList);
-                        command = appMap.get(Long.parseLong(appId))
-                                .getCommand()
-                                + " "
-                                + dataListFile
-                                + " "
-                                + appPath
-                                + " ProjectID"
-                                + proId
-                                + " >"
-                                + appPath + "ProjectID" + proId + ".log &";
-                    } else {
-                        String dataListFile = DataKeyListToFile.onlyPath(dataKeyList);
-                        command = appMap.get(Long.parseLong(appId))
-                                .getCommand()
-                                + " "
-                                + dataListFile
-                                + " "
-                                + appPath
-                                + " ProjectID"
-                                + proId
-                                + " &>"
-                                + appPath + "ProjectID" + proId + ".log";
-                    }
-                    log.info("运行命令：" + command);
+                    logger.info("celloud 直接向 SGE 投递任务");
+                    Map<String, String> map = CommandKey.getMap(dataFilePath, appPath, proId);
+    				StrSubstitutor sub = new StrSubstitutor(map);
+    				String command = sub.replace(app.getCommand());
+                    logger.info("运行命令:{}", command);
                     SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
                     ssh.sshSubmit(command, false);
                 } else {
                     String newPath = PropertiesUtil.toolsPath
                             + "Procedure!runApp?userId=" + userId + "&appId="
                             + appId + "&appName=" + appName + "&projectName="
-                            + proName + "&email=" + email + "&dataKeyList="
-                            + dataResult.toString() + "&projectId=" + proId
-                            + "&dataInfos="
-                            + Base64Util.encrypt(JSONObject.toJSONString(map))
-                            + "&company="
-                            + Base64Util.encrypt(JSONObject.toJSONString(com))
-                            + "&user="
-                            + Base64Util.encrypt(JSONObject.toJSONString(user))
-                            + "&dept="
-                            + Base64Util.encrypt(JSONObject.toJSONString(dept));
+                            + proName + "&dataKeyList=" + dataResult.toString()
+                            + "&projectId=" + proId;
                     RemoteRequests rr = new RemoteRequests();
                     rr.run(newPath);
                 }
             }
         }
-        return "info";
-    }
-
-    private void submit(String basePath, String projectId, String dataKeyList,
-            String appName, String perl) {
-        // 创建要运行的文件列表文件
-        String dataListFile = DataKeyListToFile.toSpark(projectId,
-                dataKeyList);
-        // TODO
-        String command = "nohup perl  /share/biosoft/perl/wangzhen/PGS/bin/moniter_qsub_url.pl perl "
-                + " "
-                + perl
-                + " "
-                + dataListFile
-                + " "
-                + basePath
-                + " ProjectID"
-                + projectId
-                + " >"
-                + basePath
-                + "ProjectID"
-                + projectId + ".log &";
-        log.info("运行命令：" + command);
-        SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
-        ssh.sshSubmit(command, false);
-    }
-
-    /**
-     * 将数据报告分离出来的数据(split流程运行结果)拷贝到数据目录并保存
-     * 
-     * @return
-     */
-    public String saveSplitReportData() {
-        String inPath = PropertiesUtil.reportPath + condition;
-        String outPath = PropertiesUtil.fileFinal;
-        HashSet<String> resultFiles = FileTools.getFiles(inPath);
-        Iterator<String> rFile = resultFiles.iterator();
-        Long size = null;
-        String dataKey = "";
-        conditionInt = 0;
-        result = "";
-        while (rFile.hasNext()) {
-            String fstr = rFile.next();
-            if (!fstr.equals("...tar.gz") && !fstr.equals("..tar.gz")) {
-                String extName = fstr.substring(fstr.lastIndexOf(".tar.gz"));
-                String resourcePath = inPath + fstr;
-                size = new File(resourcePath).length();
-                data = new Data();
-                data.setUserId(userId);
-                data.setFileName(fstr);
-                data.setState(DataState.DEELTED);
-                int dataId = dataService.addData(data);
-                dataKey = DataUtil.getNewDataKey(dataId);
-                String filePath = outPath + dataKey + extName;
-                boolean state = PerlUtils
-                        .excuteCopyPerl(resourcePath, filePath);
-                if (state) {
-                    data.setFileId((long) dataId);
-                    data.setDataKey(dataKey);
-                    data.setAnotherName("split:" + dataIds);
-                    data.setSize(size);
-                    data.setPath(filePath);
-                    data.setFileFormat(FileFormat.FQ);
-                    data.setState(DataState.ACTIVE);
-                    result += dataService.updateData(data) + ",";
-                }
-            }
-        }
-        return "info";
-    }
-
-    public PageList<Data> getDataPageList() {
-        return dataPageList;
-    }
-
-    public void setDataPageList(PageList<Data> dataPageList) {
-        this.dataPageList = dataPageList;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public Page getPage() {
-        return page;
-    }
-
-    public void setPage(Page page) {
-        this.page = page;
-    }
-
-    public String getSortByName() {
-        return sortByName;
-    }
-
-    public void setSortByName(String sortByName) {
-        this.sortByName = sortByName;
-    }
-
-    public String getSortByDate() {
-        return sortByDate;
-    }
-
-    public void setSortByDate(String sortByDate) {
-        this.sortByDate = sortByDate;
-    }
-
-    public String getCondition() {
-        return condition;
-    }
-
-    public void setCondition(String condition) {
-        this.condition = condition;
-    }
-
-    public Integer getConditionInt() {
-        return conditionInt;
-    }
-
-    public void setConditionInt(Integer conditionInt) {
-        this.conditionInt = conditionInt;
-    }
-
-    public String getResult() {
         return result;
     }
-
-    public void setResult(String result) {
-        this.result = result;
-    }
-
-    public List<Integer> getIntList() {
-        return intList;
-    }
-
-    public void setIntList(List<Integer> intList) {
-        this.intList = intList;
-    }
-
-    public Data getData() {
-        return data;
-    }
-
-    public void setData(Data data) {
-        this.data = data;
-    }
-
-    public List<Map<String, String>> getMapList() {
-        return mapList;
-    }
-
-    public void setMapList(List<Map<String, String>> mapList) {
-        this.mapList = mapList;
-    }
-
-    public String getDataIds() {
-        return dataIds;
-    }
-
-    public void setDataIds(String dataIds) {
-        this.dataIds = dataIds;
-    }
-
-    public List<Data> getDataList() {
-        return dataList;
-    }
-
-    public void setDataList(List<Data> dataList) {
-        this.dataList = dataList;
-    }
-
-    public Long getFileId() {
-        return fileId;
-    }
-
-    public void setFileId(Long fileId) {
-        this.fileId = fileId;
+    
+    /**
+     * 运行所需信息
+     * 
+     * @param d
+     * @return
+     * @author leamo
+     * @date 2016-1-10 下午8:44:38
+     */
+    // TODO 待删
+    private StringBuffer getDataResult(DataFile d) {
+        StringBuffer sb = new StringBuffer();
+        String filename = d.getFileName();
+        String datakey = d.getDataKey();
+        String anotherName = d.getAnotherName();
+        String ext = FileTools.getExtName(filename);
+        sb.append(datakey).append(",").append(datakey).append(ext).append(",")
+                .append(filename).append(",")
+                //TODO 这个三目有必要么？
+                .append(StringUtils.isEmpty(anotherName) ? null : anotherName)
+                .append(";");
+        return sb;
     }
 
 }

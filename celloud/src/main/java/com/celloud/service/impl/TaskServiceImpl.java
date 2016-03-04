@@ -1,11 +1,28 @@
 package com.celloud.service.impl;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
-import com.celloud.dao.TaskDao;
-import com.celloud.sdo.Task;
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.celloud.constants.DataState;
+import com.celloud.constants.ReportPeriod;
+import com.celloud.constants.ReportType;
+import com.celloud.constants.TaskPeriod;
+import com.celloud.dao.ReportDao;
+import com.celloud.mapper.DataFileMapper;
+import com.celloud.mapper.PriceMapper;
+import com.celloud.mapper.ProjectMapper;
+import com.celloud.mapper.ReportMapper;
+import com.celloud.mapper.TaskMapper;
+import com.celloud.mapper.UserMapper;
+import com.celloud.model.mysql.DataFile;
+import com.celloud.model.mysql.Report;
+import com.celloud.model.mysql.Task;
 import com.celloud.service.TaskService;
-import com.google.inject.Inject;
 
 /**
  * 任务服务类
@@ -14,47 +31,99 @@ import com.google.inject.Inject;
  * @date 2015-11-3下午4:07:53
  * @version Revision: 1.0
  */
+@Service("taskService")
 public class TaskServiceImpl implements TaskService {
-    @Inject
-    TaskDao taskDao;
+    @Resource
+    TaskMapper taskMapper;
+    @Resource
+    DataFileMapper dataMapper;
+    @Resource
+    ReportMapper reportMapper;
+    @Resource
+    ProjectMapper projectMapper;
+    @Resource
+    UserMapper userMapper;
+    @Resource
+    PriceMapper priceMapper;
+    @Resource
+    ReportDao reportDao;
+
     @Override
-    public Long create(Task task) {
-        return taskDao.create(task);
+    public Integer create(Task task) {
+        task.setPeriod(TaskPeriod.WAITTING);
+        task.setCreateDate(new Date());
+        return taskMapper.insertSelective(task);
     }
 
     @Override
-    public Task getFirstTask(Long appId) {
-        return taskDao.getFirstTask(appId);
+    public Task findFirstTask(Integer appId) {
+        return taskMapper.findFirstTaskByAppId(appId, TaskPeriod.WAITTING,
+                DataState.ACTIVE);
     }
 
     @Override
-    public Integer updateToRunning(Long taskId) {
-        return taskDao.updateToRunning(taskId);
+    public Integer updateToRunning(Integer taskId) {
+        Task task = new Task();
+        task.setTaskId(taskId);
+        task.setPeriod(TaskPeriod.RUNNING);
+        return taskMapper.updateByPrimaryKeySelective(task);
     }
 
     @Override
-    public Integer updateToDone(Long taskId) {
-        return taskDao.updateToDone(taskId);
+    public synchronized Task updateToDone(Integer appId, Integer projectId,
+            String dataKey, String dataKeys, String context) {
+        Task task = taskMapper.findTaskByProData(projectId, dataKey);
+        Date endDate = new Date();
+        task.setEndDate(endDate);
+        task.setPeriod(TaskPeriod.DONE);
+        taskMapper.updateByPrimaryKeySelective(task);
+
+        Report report = new Report();
+        report.setProjectId(projectId);
+        report.setPeriod(ReportPeriod.COMPLETE);
+        report.setState(DataState.ACTIVE);
+        report.setFlag(ReportType.DATA);
+        List<DataFile> dataList = dataMapper.selectByDataKeys(dataKeys);
+        for (DataFile data : dataList) {
+            report.setFileId(data.getFileId());
+            reportMapper.updateReportPeriod(report);
+        }
+
+        int runNum = reportMapper.selectRunNumByPro(projectId, DataState.ACTIVE,
+                ReportType.DATA, ReportPeriod.COMPLETE);
+        report.setFlag(ReportType.PROJECT);
+        report.setFileId(null);
+        report.setContext(context);
+        if (runNum == 0) {
+            report.setPeriod(ReportPeriod.COMPLETE);
+            report.setEndDate(new Date());
+        } else {
+            report.setPeriod(ReportPeriod.RUNNING_HAVE_REPORT);
+        }
+        reportMapper.updateReportPeriod(report);
+        return task;
     }
 
     @Override
-    public Integer getRunningNumByAppId(Long appId) {
-        return taskDao.getRunningNumByAppId(appId);
+    public Integer findRunningNumByAppId(Integer appId) {
+        return taskMapper.findAppRunningNum(appId, TaskPeriod.RUNNING,
+                DataState.ACTIVE);
     }
 
     @Override
-    public Map<String, Object> getTaskInfoByProId(Long proId) {
-        return taskDao.getTaskInfoByProId(proId);
+    public Map<String, Object> findTaskInfoByProId(Integer projectId) {
+        return taskMapper.findTaskInfoByProId(projectId);
     }
 
     @Override
-    public Task getTaskDataAppPro(String dataKey, Long appId, Long proId) {
-        return taskDao.getTaskDataAppPro(dataKey, appId, proId);
+    public Task findTaskDataAppPro(String dataKey, Integer appId,
+            Integer projectId) {
+        return null;
     }
 
     @Override
-    public Integer deleteTask(Long proId) {
-        return taskDao.deleteTask(proId);
+    public Integer deleteTask(Integer projectId) {
+        return null;
     }
 
 }

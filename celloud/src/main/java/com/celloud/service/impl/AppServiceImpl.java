@@ -1,82 +1,122 @@
 package com.celloud.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import com.celloud.dao.AppDao;
-import com.celloud.sdo.App;
-import com.celloud.sdo.Classify;
-import com.celloud.sdo.Screen;
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.celloud.constants.AppIsAdd;
+import com.celloud.constants.AppOffline;
+import com.celloud.constants.AppPermission;
+import com.celloud.constants.PriceType;
+import com.celloud.constants.ReportPeriod;
+import com.celloud.constants.ReportType;
+import com.celloud.mapper.AppMapper;
+import com.celloud.model.mysql.App;
+import com.celloud.page.Page;
+import com.celloud.page.PageList;
 import com.celloud.service.AppService;
-import com.google.inject.Inject;
-import com.nova.pager.Page;
-import com.nova.pager.PageList;
 
 /**
- * 
- * @author <a href="mailto:liuqingxiao@celloud.cn">liuqx</a>
- * @date 2015-9-15下午4:39:56
- * @version Revision: 1.0
+ * app接口实现类
+ *
+ * @author han
+ * @date 2015年12月25日 下午5:54:15
  */
+@Service("appService")
 public class AppServiceImpl implements AppService {
-    @Inject
-    private AppDao appDao;
+
+    @Resource
+    private AppMapper appMapper;
 
     @Override
-    public List<App> getAppsByFormat(Integer formatId,Integer userId) {
-        return appDao.getAppsByFormat(formatId, userId);
+    public Integer countMyApp(Integer userId) {
+        return appMapper.countMyApp(userId, AppOffline.ON,
+                AppIsAdd.ALREADY_ADDED);
     }
 
     @Override
-    public String getAppNameById(Long softwareId) {
-        return appDao.getAppNameById(softwareId);
+    public List<Map<String, String>> countMyApp(Integer userId, String time) {
+        return appMapper.countMyAppRanNumByTime(userId, time, AppOffline.ON,
+                AppIsAdd.ALREADY_ADDED, ReportType.PROJECT,
+                ReportPeriod.COMPLETE);
     }
 
     @Override
-    public Classify getClassifyById(Integer id) {
-        return appDao.getClassifyById(id);
+    public List<Map<String, String>> getRanAPP(Integer userId) {
+        return appMapper.getRanAPP(userId);
     }
 
     @Override
-    public List<Classify> getClassify(Integer pid) {
-        return appDao.getClassify(pid);
-    }
-
-    @Override
-    public List<App> getAppByClassify(Integer classifyId, Integer companyId) {
-        return appDao.getAppByClassify(classifyId, companyId);
-    }
-
-    @Override
-    public App getAppById(Integer id, Integer userId) {
-        return appDao.getAppById(id, userId);
+    public List<App> getAppByClassify(Integer classifyId, Integer userId) {
+        return appMapper.getAppByClassify(classifyId, userId, AppOffline.ON,
+                AppPermission.PRIVATE, AppPermission.PUBLIC);
     }
 
     @Override
     public PageList<App> getAppPageListByClassify(Integer classifyId,
-            Integer classifyPId, Integer companyId, String sortField,
+            Integer classifyPId, Integer userId, String sortField,
             String sortType, Page page) {
-        return appDao.getAppPageListByClassify(classifyId, classifyPId,
-                companyId, sortField, sortType, page);
+        List<App> list = appMapper.getAppPageListByClassify(classifyId,
+                classifyPId, userId, sortField, sortType, AppOffline.ON,
+                PriceType.isApp, AppPermission.PRIVATE, AppPermission.PUBLIC,
+                page);
+        return new PageList<>(page, list);
+    }
+
+    @Override
+    public App getAppById(Integer id, Integer userId) {
+        return appMapper.getAppById(id, userId, PriceType.isApp);
     }
 
     @Override
     public List<App> getMyAppList(Integer userId) {
-        return appDao.getMyAppList(userId);
-    }
-
-    @Override
-    public List<Screen> getScreenByAppId(Integer id) {
-        return appDao.getScreenByAppId(id);
+        return appMapper.getMyAppList(userId, AppOffline.ON,
+                AppIsAdd.ALREADY_ADDED);
     }
 
     @Override
     public Integer userAddApp(Integer userId, Integer appId) {
-        return appDao.userAddApp(userId, appId);
+        return appMapper.userUpdateApp(userId, appId, AppIsAdd.ALREADY_ADDED);
     }
 
     @Override
     public Integer userRemoveApp(Integer userId, Integer appId) {
-        return appDao.userRemoveApp(userId, appId);
+        return appMapper.userUpdateApp(userId, appId, AppIsAdd.NOT_ADDED);
+    }
+
+    @Override
+    public List<App> findAppsByFormat(Integer userId, Integer formatId) {
+        return appMapper.findAppsByFormat(userId, formatId, AppOffline.ON,
+                AppIsAdd.ALREADY_ADDED);
+    }
+
+    @Override
+    public App findAppById(Integer appId) {
+        return appMapper.selectByPrimaryKey(appId);
+    }
+
+    @Override
+    public List<App> findAppsByIds(String appIds) {
+        return appMapper.findAppsByIds(appIds);
+    }
+
+    @Override
+    public String findAppNamesByIds(String appIds) {
+        List<App> list = appMapper.findAppsByIds(appIds);
+        List<String> names = new ArrayList<>();
+        for (App app : list) {
+            names.add(app.getAppName());
+        }
+        return names.toString();
+    }
+
+    @Override
+    public App selectByPrimaryKey(Integer appId) {
+        return appMapper.selectByPrimaryKey(appId);
     }
 
 }
