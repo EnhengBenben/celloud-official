@@ -22,12 +22,20 @@ public class ExpensesServiceImpl implements ExpensesService {
     ExpensesMapper expensesMapper;
 
     @Override
-    public void saveExpenses(Expenses expenses) {
-        expensesMapper.insert(expenses);
+    public void saveRunExpenses(Integer projectId) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void saveRunExpenses(Integer projectId, String dataKeys) {
+        // TODO Auto-generated method stub
+
     }
 
     @Override
     public PageList<Expenses> getRunExpensesList(Integer userId, Page page) {
         return null;
     }
+
 }

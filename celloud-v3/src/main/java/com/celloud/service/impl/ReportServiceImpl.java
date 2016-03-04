@@ -5,9 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -28,9 +25,6 @@ import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 import com.celloud.constants.DataState;
-import com.celloud.constants.DiscountType;
-import com.celloud.constants.ExpenseType;
-import com.celloud.constants.PriceType;
 import com.celloud.constants.ReportPeriod;
 import com.celloud.constants.ReportType;
 import com.celloud.constants.TimeState;
@@ -39,13 +33,10 @@ import com.celloud.mapper.AppMapper;
 import com.celloud.mapper.DataFileMapper;
 import com.celloud.mapper.PriceMapper;
 import com.celloud.mapper.ReportMapper;
-import com.celloud.model.mongo.AppExpenses;
-import com.celloud.model.mongo.AppSnapshot;
 import com.celloud.model.mongo.CmpFilling;
 import com.celloud.model.mongo.CmpGeneDetectionDetail;
 import com.celloud.model.mongo.CmpGeneSnpResult;
 import com.celloud.model.mongo.CmpReport;
-import com.celloud.model.mongo.ExpenseDiscount;
 import com.celloud.model.mongo.GddDiseaseDict;
 import com.celloud.model.mongo.GeneDetectionResult;
 import com.celloud.model.mongo.HBV;
@@ -55,7 +46,6 @@ import com.celloud.model.mongo.Pgs;
 import com.celloud.model.mongo.Split;
 import com.celloud.model.mongo.TaskQueue;
 import com.celloud.model.mysql.DataFile;
-import com.celloud.model.mysql.Price;
 import com.celloud.model.mysql.Report;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
@@ -736,70 +726,6 @@ public class ReportServiceImpl implements ReportService {
         reportMapper.updateReportPeriod(report);
         report.setFlag(ReportType.PROJECT);
         report.setContext(context);
-
-        Map<String, Object> map = reportMapper
-                .getAllReportInfoByProjectId(projectId, ReportType.PROJECT);
-        String projectName = (String) map.get("projectName");
-        Integer appId = (Integer) map.get("appId");
-        String appName = (String) map.get("appName");
-        Integer userId = (Integer) map.get("userId");
-        String userName = (String) map.get("userName");
-        String fileIds = map.get("fileIds").toString();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
-        Date startDate = null;
-        try {
-            startDate = format.parse(map.get("startDate").toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Price price = priceMapper.selectByItemId(appId, PriceType.isApp);
-        if (price != null) {
-            // 增加消费记录
-            AppSnapshot appSnapshot = new AppSnapshot();
-            appSnapshot.setAppId(appId);
-            appSnapshot.setAppName(appName);
-            appSnapshot.setProjectId(projectId);
-            appSnapshot.setProjectName(projectName);
-            appSnapshot.setStartDate(startDate);
-            appSnapshot.setEndDate(endDate);
-            appSnapshot.setUserId(userId);
-            appSnapshot.setUserName(userName);
-
-            BigDecimal appOldPrice = price.getPrice();
-            BigDecimal appDiscountPrice = price.getDiscountPrice();
-            BigDecimal realPrice = null;
-            Float discountRate = price.getDiscountRate();
-            List<ExpenseDiscount> discountList = new ArrayList<>();
-            // 实际价格 = 原价 * app折扣
-            if (appDiscountPrice == null || appDiscountPrice.equals("")) {
-                realPrice = appOldPrice;
-            } else {
-                realPrice = appDiscountPrice;
-            }
-            if (discountRate != null) {
-                ExpenseDiscount discount = new ExpenseDiscount();
-                discount.setName(DiscountType.Limited_Time_Discount);
-                discount.setDiscountRate(discountRate);
-                discountList.add(discount);
-            }
-
-            List<DataFile> dataList = dataMapper.findDatasById(fileIds);
-            for (DataFile d : dataList) {
-                List<DataFile> dlist = new ArrayList<>();
-                dlist.add(d);
-                appSnapshot.setDataKey(d.getDataKey());
-                appSnapshot.setFiles(dlist);
-                AppExpenses expenses = new AppExpenses();
-                expenses.setUserId(userId);
-                expenses.setExpenseType(ExpenseType.isRun);
-                expenses.setPrice(appOldPrice.toString());
-                expenses.setRealPrice(realPrice.toString());
-                expenses.setDiscount(discountList);
-                expenses.setSnapshot(appSnapshot);
-                expenses.setCreateDate(new Date());
-                reportDao.saveData(expenses);
-            }
-        }
         return reportMapper.updateReportPeriod(report);
     }
 
@@ -827,71 +753,12 @@ public class ReportServiceImpl implements ReportService {
         report.setProjectId(projectId);
         report.setPeriod(period);
 
-        Map<String, Object> map = reportMapper
-                .getAllReportInfoByProjectId(projectId, ReportType.PROJECT);
-        String projectName = (String) map.get("projectName");
-        String appName = (String) map.get("appName");
-        String userName = (String) map.get("userName");
         List<DataFile> list = dataMapper.getDatasInProject(projectId);
         for (DataFile data : list) {
             report.setFileId(data.getFileId());
             report.setFlag(ReportType.DATA);
-            Date endDate = new Date();
-            report.setEndDate(endDate);
+            report.setEndDate(new Date());
             reportMapper.updateReport(report);
-            SimpleDateFormat format = new SimpleDateFormat(
-                    "yyyy-M-dd HH:mm:ss");
-            Date startDate = null;
-            try {
-                startDate = format.parse(map.get("startDate").toString());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            Price price = priceMapper.selectByItemId(appId, PriceType.isApp);
-            if (price != null) {
-                // 增加消费记录
-                AppSnapshot appSnapshot = new AppSnapshot();
-                appSnapshot.setAppId(appId);
-                appSnapshot.setAppName(appName);
-                appSnapshot.setProjectId(projectId);
-                appSnapshot.setProjectName(projectName);
-                appSnapshot.setStartDate(startDate);
-                appSnapshot.setEndDate(endDate);
-                appSnapshot.setUserId(userId);
-                appSnapshot.setUserName(userName);
-                List<DataFile> dlist = new ArrayList<>();
-                dlist.add(data);
-                appSnapshot.setDataKey(data.getDataKey());
-                appSnapshot.setFiles(dlist);
-
-                BigDecimal appOldPrice = price.getPrice();
-                BigDecimal appDiscountPrice = price.getDiscountPrice();
-                BigDecimal realPrice = null;
-                Float discountRate = price.getDiscountRate();
-                List<ExpenseDiscount> discountList = new ArrayList<>();
-                // 实际价格 = 原价 * app折扣
-                if (appDiscountPrice == null || appDiscountPrice.equals("")) {
-                    realPrice = appOldPrice;
-                } else {
-                    realPrice = appDiscountPrice;
-                }
-                if (discountRate != null) {
-                    ExpenseDiscount discount = new ExpenseDiscount();
-                    discount.setName(DiscountType.Limited_Time_Discount);
-                    discount.setDiscountRate(discountRate);
-                    discountList.add(discount);
-                }
-                AppExpenses expenses = new AppExpenses();
-                expenses.setUserId(userId);
-                expenses.setExpenseType(ExpenseType.isRun);
-                expenses.setPrice(appOldPrice.toString());
-                expenses.setRealPrice(realPrice.toString());
-                expenses.setSnapshot(appSnapshot);
-                expenses.setCreateDate(new Date());
-                expenses.setDiscount(discountList);
-                reportDao.saveData(expenses);
-            }
-
         }
         report.setFlag(ReportType.PROJECT);
         report.setContext(context);
