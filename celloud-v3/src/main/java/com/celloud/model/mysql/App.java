@@ -54,8 +54,6 @@ public class App {
     private String classifyNames;
     /** APP单价 */
     private BigDecimal price;
-    /** APP折后价 */
-    private BigDecimal discountPrice;
 
     public Integer getAppId() {
         return appId;
@@ -256,13 +254,4 @@ public class App {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-
-    public BigDecimal getDiscountPrice() {
-        return discountPrice;
-    }
-
-    public void setDiscountPrice(BigDecimal discountPrice) {
-        this.discountPrice = discountPrice;
-    }
-
 }

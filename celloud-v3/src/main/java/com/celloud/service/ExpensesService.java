@@ -1,7 +1,6 @@
 package com.celloud.service;
 
-import com.celloud.model.mongo.AppExpenses;
-import com.celloud.model.mongo.Expenses;
+import com.celloud.model.mysql.Expenses;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 
@@ -12,15 +11,27 @@ import com.celloud.page.PageList;
  * @date 2016年2月23日 下午6:42:28
  */
 public interface ExpensesService {
+    /**
+     * 保存整个项目运行的消费记录（假设一个数据运行一次）
+     * 
+     * @param projectId
+     *            运行的项目编号
+     * @author leamo
+     * @date 2016年3月4日 下午1:54:36
+     */
+    public void saveRunExpenses(Integer projectId);
 
     /**
-     * 保存消费记录
+     * 保存运行的消费记录
      * 
-     * @param expenses
+     * @param projectId
+     *            运行的项目编号
+     * @param dataKeys
+     *            所运行的数据编号 格式：datakey1,datakey2
      * @author leamo
-     * @date 2016年2月23日 下午6:43:52
+     * @date 2016年3月4日 下午1:54:36
      */
-    public void saveExpenses(Expenses expenses);
+    public void saveRunExpenses(Integer projectId, String dataKeys);
 
     /**
      * 获取消费记录列表
@@ -32,6 +43,6 @@ public interface ExpensesService {
      * @author leamo
      * @date 2016年2月25日 下午3:11:02
      */
-    public PageList<AppExpenses> getRunExpensesList(Integer userId, Page page);
+    public PageList<Expenses> getRunExpensesList(Integer userId, Page page);
 
 }

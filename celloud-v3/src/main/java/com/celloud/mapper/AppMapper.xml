@@ -34,7 +34,6 @@
     <result column="classifyNames" property="classifyNames" jdbcType="VARCHAR" />
     <result column="app_doc" property="appDoc" jdbcType="LONGVARCHAR" />
     <result column="price" property="price" jdbcType="DECIMAL" />
-    <result column="discount_price" property="discountPrice" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Base_Column_List" >
     app_id, app_name, english_name, address, picture_name, create_date, intro, description, 
@@ -354,14 +353,13 @@
     </select>
     <select id="getAppById" resultMap="extraResultMap"  >
     select a.app_id,a.app_name,a.english_name,a.address,a.picture_name,a.create_date,a.intro,a.description,a.app_doc,a.data_num,
-    c.company_name,GROUP_CONCAT(distinct cls.classify_name) classifyNames,ua.is_add,p.price,d.discount_price
+    c.company_name,GROUP_CONCAT(distinct cls.classify_name) classifyNames,ua.is_add,p.price
     from tb_app a
     left join tb_company c on a.company_id=c.company_id 
     left join tb_app_classify_relat ac on a.app_id=ac.app_id 
     left join tb_classify cls on ac.classify_id=cls.classify_id 
     left join (select * from tb_price where flag=#{priceType}) p on a.app_id=p.item_id
     left join tb_user_app_right ua on ua.app_id=a.app_id
-    left join (select * from tb_discount where end_date>now()) d on d.price_id = p.id
     where a.app_id=#{appId} and ua.user_id=#{userId}
   </select>
   <select id="getMyAppList" resultMap="extraResultMap"  >

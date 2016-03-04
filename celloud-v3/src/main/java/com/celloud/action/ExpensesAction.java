@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.ConstantsData;
-import com.celloud.model.mongo.AppExpenses;
+import com.celloud.model.mysql.Expenses;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.ExpensesService;
@@ -44,7 +44,7 @@ public class ExpensesAction {
         ModelAndView mv = new ModelAndView("expense/expense_pay_detail");
         Page pager = new Page(page, size);
         Integer userId = ConstantsData.getLoginUserId();
-        PageList<AppExpenses> expensePageList = expensesService
+        PageList<Expenses> expensePageList = expensesService
                 .getRunExpensesList(userId, pager);
         mv.addObject("expensePageList", expensePageList);
         logger.info("用户{}查看消费记录", userId);

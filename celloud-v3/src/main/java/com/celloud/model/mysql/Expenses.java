@@ -3,8 +3,10 @@ package com.celloud.model.mysql;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Price {
+public class Expenses {
     private Integer id;
+
+    private Integer userId;
 
     private Integer itemId;
 
@@ -14,9 +16,7 @@ public class Price {
 
     private Date createDate;
 
-    private Date expireDate;
-
-    private Boolean state;
+    private String remark;
 
     public Integer getId() {
         return id;
@@ -24,6 +24,14 @@ public class Price {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getItemId() {
@@ -58,19 +66,11 @@ public class Price {
         this.createDate = createDate;
     }
 
-    public Date getExpireDate() {
-        return expireDate;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setExpireDate(Date expireDate) {
-        this.expireDate = expireDate;
-    }
-
-    public Boolean getState() {
-        return state;
-    }
-
-    public void setState(Boolean state) {
-        this.state = state;
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
     }
 }
