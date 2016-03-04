@@ -1,5 +1,7 @@
 package com.celloud.action;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,14 +10,19 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.constants.AppConstants;
 import com.celloud.constants.ClassifyFloor;
 import com.celloud.constants.ConstantsData;
 import com.celloud.model.mysql.App;
@@ -156,5 +163,34 @@ public class AppAction {
         Integer userId = ConstantsData.getLoginUserId();
         return appService.userRemoveApp(userId, paramId);
     }
-
+    
+    /**
+     * 获取已保存app图标
+     * 
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "image", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> appImage(String file) throws IOException {
+        String path = AppConstants.getAppPicturePath() + File.separator + file;
+        File targetFile = new File(path);
+        log.info("app图标的绝对路径{}",targetFile.getAbsolutePath());
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
+    }
+    
+    /**
+     * 获取已保存app截图
+     * 
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "screen", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> appScreen(String file) throws IOException {
+        String path = AppConstants.getAppScreenPath() + File.separator + file;
+        File targetFile = new File(path);
+        log.info("app截图的绝对路径{}",targetFile.getAbsolutePath());
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
+    }
 }

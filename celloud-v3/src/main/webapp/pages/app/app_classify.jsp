@@ -25,7 +25,7 @@
 		                    	  <div class="detail">
 		                      		<div class="picbox">
 		                        	  <div class="pic">
-		                          		<p><a href="javascript:appStore.toAppDetail(${app.appId })"><img src="<%=request.getContextPath()%>/images/app/${app.pictureName}"></a></p>
+		                          		<p><a href="javascript:appStore.toAppDetail(${app.appId })"><img src="<%=request.getContextPath()%>/app/image?file=${app.pictureName}"></a></p>
 		                        	  </div>
 		                      		</div>
 		                      		<p class="appname">${app.appName }</p>

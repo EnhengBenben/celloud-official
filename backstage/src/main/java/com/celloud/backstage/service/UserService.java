@@ -166,7 +166,7 @@ public interface UserService {
      * @author han
      * @date 2016年1月29日 上午11:12:39
      */
-    public void sendRegisterEmail( String[] emailArray,Integer deptId,Integer companyId,Integer appCompanyId,Integer[] appIdArray);
+    public void sendRegisterEmail( String[] emailArray,Integer deptId,Integer companyId,Integer appCompanyId,Integer[] appIdArray,Integer role);
     
     /**
      * 获取所有用户列表

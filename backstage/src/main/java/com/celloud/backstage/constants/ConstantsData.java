@@ -1,9 +1,16 @@
 package com.celloud.backstage.constants;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -17,6 +24,8 @@ import com.celloud.backstage.model.User;
  */
 public class ConstantsData {
 
+    private static Logger logger=LoggerFactory.getLogger(ConstantsData.class);
+    private static Properties systemProperties;
     /**
      * 判断当前session有无用户登录
      * 
@@ -85,5 +94,25 @@ public class ConstantsData {
      */
     public static HttpSession getSession() {
         return getRequset().getSession();
+    }
+    public static Properties loadProperties(String filepath) {
+        String path = (ConstantsData.class.getClassLoader().getResource("") + filepath).replace("file:", "");
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream(new File(path)));
+        } catch (IOException e) {
+            logger.error("加载properties文件失败：{}", filepath, e);
+        }
+        return properties;
+    }
+    
+    public static void loadSystemProperties() {
+        systemProperties = loadProperties(Constants.SYSTEM_PROPERTIES_FILE);
+    }
+    public static Object getContextUrl() {
+        if(systemProperties==null){
+            loadSystemProperties();
+        }
+        return systemProperties.getProperty("context_url");
     }
 }

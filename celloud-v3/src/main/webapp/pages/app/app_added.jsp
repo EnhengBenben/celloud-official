@@ -13,7 +13,7 @@
 			<c:forEach items="${appList}" var="app">
 			  <li>
 			      <a href="#">
-			        <img src="<%=request.getContextPath()%>/images/app/${app.pictureName}" alt="">
+			        <img src="<%=request.getContextPath()%>/app/image?file=${app.pictureName}" alt="">
 			      </a>
 			      <div class="intro">
 			        <h6 style="overflow: hidden;" title="${app.appName }">
