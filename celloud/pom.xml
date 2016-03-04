@@ -2,10 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.celloud</groupId>
-	<artifactId>celloud-v3</artifactId>
+	<artifactId>celloud</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>celloud-v3 Maven Webapp</name>
+	<name>celloud Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<!-- 定义各个依赖的版本号 -->
 	<properties>
@@ -226,7 +226,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>celloud-v3</finalName>
+		<finalName>celloud</finalName>
 		<resources>
 			<resource>
 				<directory>${basedir}/src/main/java</directory>
