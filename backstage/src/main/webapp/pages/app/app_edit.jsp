@@ -183,7 +183,7 @@
             </div>
             <div class="form-group-separator"></div>
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="field-4">APP图标</label>
+                <label class="col-sm-2 control-label" for="field-4">APP图标<font color="red">*</font></label>
                 
                 <div class="col-sm-10">
                     <div class="pictureName-input-hidden"><input type="hidden" name="pictureName" value="${app.pictureName }" data-rule-required="true"></div>
