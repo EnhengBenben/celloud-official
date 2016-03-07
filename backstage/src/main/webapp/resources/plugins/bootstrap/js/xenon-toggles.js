@@ -114,7 +114,6 @@
 			$(el).on('click', function(ev)
 			{
 				ev.preventDefault();
-				
 				if(public_vars.$sidebarMenu.hasClass('collapsed'))
 				{
 					public_vars.$sidebarMenu.removeClass('collapsed');
@@ -122,6 +121,7 @@
 				}
 				else
 				{
+					public_vars.$mainMenu.find("ul").removeAttr("style").parent().removeClass("expanded");
 					public_vars.$sidebarMenu.addClass('collapsed');
 					ps_destroy();
 				}
