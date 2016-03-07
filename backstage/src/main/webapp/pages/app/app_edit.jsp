@@ -74,11 +74,11 @@
                 
                 <div class="col-sm-10">
                     <label class="radio-inline">
-                        <input type="radio" name="runData" value="0" <c:if test="${app.flag==1 }">checked</c:if> data-rule-required="true">
+                        <input type="radio" name="runData" value="0" <c:if test="${app.runData==0 }">checked</c:if> data-rule-required="true">
                         可以
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="runData" value="1" <c:if test="${app.flag==1 }">checked</c:if>>
+                        <input type="radio" name="runData" value="1" <c:if test="${app.runData==1 }">checked</c:if>>
                         不可以
                     </label>
                 </div>
@@ -117,10 +117,10 @@
                 <label class="col-sm-2 control-label">运行方式<font color="red">*</font></label>
                 
                 <div class="col-sm-10">
-                    <select class="form-control" name="runType" data-rule-required="true" value="${app.runType }">
-                        <option value="0">直接运行</option>
-                        <option value="1">需添加然后运行</option>
-                        <option value="2">可直接运行可添加</option>
+                    <select class="form-control" name="runType" data-rule-required="true">
+                        <option value="0" <c:if test="${app.runType==0 }">selected="selected"</c:if>>直接运行</option>
+                        <option value="1" <c:if test="${app.runType==1 }">selected="selected"</c:if>>需添加然后运行</option>
+                        <option value="2" <c:if test="${app.runType==2 }">selected="selected"</c:if>>可直接运行可添加</option>
                     </select>
                 </div>
             </div>
@@ -183,7 +183,7 @@
             </div>
             <div class="form-group-separator"></div>
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="field-4">APP图标</label>
+                <label class="col-sm-2 control-label" for="field-4">APP图标<font color="red">*</font></label>
                 
                 <div class="col-sm-10">
                     <div class="pictureName-input-hidden"><input type="hidden" name="pictureName" value="${app.pictureName }" data-rule-required="true"></div>
