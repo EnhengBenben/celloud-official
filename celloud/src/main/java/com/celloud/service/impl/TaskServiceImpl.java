@@ -22,6 +22,7 @@ import com.celloud.mapper.UserMapper;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Report;
 import com.celloud.model.mysql.Task;
+import com.celloud.service.ExpensesService;
 import com.celloud.service.TaskService;
 
 /**
@@ -47,6 +48,8 @@ public class TaskServiceImpl implements TaskService {
     PriceMapper priceMapper;
     @Resource
     ReportDao reportDao;
+    @Resource
+    ExpensesService expenseService;
 
     @Override
     public Integer create(Task task) {
@@ -72,12 +75,13 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public synchronized Task updateToDone(Integer appId, Integer projectId,
             String dataKey, String dataKeys, String context) {
+        // 修改任务状态
         Task task = taskMapper.findTaskByProData(projectId, dataKey);
         Date endDate = new Date();
         task.setEndDate(endDate);
         task.setPeriod(TaskPeriod.DONE);
         taskMapper.updateByPrimaryKeySelective(task);
-
+        // 修改数据报告运行状态
         Report report = new Report();
         report.setProjectId(projectId);
         report.setPeriod(ReportPeriod.COMPLETE);
@@ -88,9 +92,9 @@ public class TaskServiceImpl implements TaskService {
             report.setFileId(data.getFileId());
             reportMapper.updateReportPeriod(report);
         }
-
         int runNum = reportMapper.selectRunNumByPro(projectId, DataState.ACTIVE,
                 ReportType.DATA, ReportPeriod.COMPLETE);
+        // 修改项目报告运行状态
         report.setFlag(ReportType.PROJECT);
         report.setFileId(null);
         report.setContext(context);
@@ -101,6 +105,9 @@ public class TaskServiceImpl implements TaskService {
             report.setPeriod(ReportPeriod.RUNNING_HAVE_REPORT);
         }
         reportMapper.updateReportPeriod(report);
+        // 保存消费记录
+        expenseService.saveRunExpenses(projectId, appId, task.getUserId(),
+                dataList);
         return task;
     }
 

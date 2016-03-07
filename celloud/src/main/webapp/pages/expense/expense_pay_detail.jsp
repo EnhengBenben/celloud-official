@@ -7,12 +7,10 @@
         <tr>
             <th>扣费时间</th>
             <th class="file-name">文件名称</th>
-            <th class="another-name">所属项目</th>
             <th class="strain">应用名称</th>
             <th class="data-tags">应用单价</th>
             <th class="sample">实付价格</th>
-            <th class="data-size">开始时间</th>
-            <th class="create-date" style="min-width:80px">结束时间</th>
+            <th class="data-size">备注</th>
         </tr>
     </thead>
     <tbody id="data-list-tbody">
@@ -20,18 +18,12 @@
 		  <c:when test="${expensePageList.datas.size()>0 }">
 		    <c:forEach items="${expensePageList.datas }" var="expense" varStatus="status">
 		       <tr>
-                  <td><fmt:formatDate value="${expense.createDate }" type="date"/></td>
-                  <td class="file-name">
-                      <c:forEach items="${expense.snapshot.files }" var="data">
-                        ${data.fileName }(${data.dataKey })<br>
-                      </c:forEach>
-                  </td>
-                  <td>${expense.snapshot.projectName }</td>
-                  <td>${expense.snapshot.appName }</td>
+                  <td><fmt:formatDate value="${expense.createDate }" type="both"/></td>
+                  <td>${expense.fileInfos }</td>
+                  <td>${expense.appName }</td>
                   <td>${expense.price }C</td>
-                  <td>${expense.realPrice }C</td>
-                  <td><fmt:formatDate value="${expense.snapshot.startDate }" type="date"/></td>
-                  <td><fmt:formatDate value="${expense.snapshot.endDate }" type="date"/></td>
+                  <td>${expense.price }C</td>
+                  <td>${expense.remark }</td>
               </tr>
             </c:forEach>
           </c:when>

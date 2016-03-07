@@ -1,5 +1,8 @@
 package com.celloud.service;
 
+import java.util.List;
+
+import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Expenses;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
@@ -19,19 +22,20 @@ public interface ExpensesService {
      * @author leamo
      * @date 2016年3月4日 下午1:54:36
      */
-    public void saveRunExpenses(Integer projectId);
+    public void saveProRunExpenses(Integer projectId, List<DataFile> dataList);
 
     /**
      * 保存运行的消费记录
      * 
      * @param projectId
      *            运行的项目编号
-     * @param dataKeys
-     *            所运行的数据编号 格式：datakey1,datakey2
+     * @param dataList
+     *            所运行的数据列表
      * @author leamo
      * @date 2016年3月4日 下午1:54:36
      */
-    public void saveRunExpenses(Integer projectId, String dataKeys);
+    public void saveRunExpenses(Integer projectId, Integer appId,
+            Integer userId, List<DataFile> dataList);
 
     /**
      * 获取消费记录列表

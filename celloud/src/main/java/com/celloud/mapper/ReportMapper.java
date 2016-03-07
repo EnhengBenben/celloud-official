@@ -173,6 +173,6 @@ public interface ReportMapper {
      * @author leamo
      * @date 2016年2月29日 下午7:31:00
      */
-    public Map<String, Object> getAllReportInfoByProjectId(
+    public Report getReportByProjectId(
             @Param("projectId") Integer projectId, @Param("flag") Integer flag);
 }

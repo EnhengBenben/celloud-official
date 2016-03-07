@@ -18,6 +18,10 @@ public class Expenses {
 
     private String remark;
 
+    // 查询字段
+    private String fileInfos;
+    private String appName;
+
     public Integer getId() {
         return id;
     }
@@ -72,5 +76,21 @@ public class Expenses {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getFileInfos() {
+        return fileInfos;
+    }
+
+    public void setFileInfos(String fileInfos) {
+        this.fileInfos = fileInfos;
+    }
+
+    public String getAppName() {
+        return appName;
+    }
+
+    public void setAppName(String appName) {
+        this.appName = appName;
     }
 }

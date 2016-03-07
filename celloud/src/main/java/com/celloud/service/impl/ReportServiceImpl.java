@@ -49,6 +49,7 @@ import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Report;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
+import com.celloud.service.ExpensesService;
 import com.celloud.service.ReportService;
 import com.celloud.utils.Base64Util;
 import com.celloud.utils.ExcelUtil;
@@ -73,6 +74,8 @@ public class ReportServiceImpl implements ReportService {
     AppMapper appMapper;
     @Resource
     PriceMapper priceMapper;
+    @Resource
+    ExpensesService expenseService;
 
     Logger log = Logger.getLogger(this.getClass());
 
@@ -726,7 +729,11 @@ public class ReportServiceImpl implements ReportService {
         reportMapper.updateReportPeriod(report);
         report.setFlag(ReportType.PROJECT);
         report.setContext(context);
-        return reportMapper.updateReportPeriod(report);
+        int result = reportMapper.updateReportPeriod(report);
+        List<DataFile> dataList = dataMapper.getDatasInProject(projectId);
+        // 保存消费记录
+        expenseService.saveProRunExpenses(projectId, dataList);
+        return result;
     }
 
     @Override
@@ -763,7 +770,10 @@ public class ReportServiceImpl implements ReportService {
         report.setFlag(ReportType.PROJECT);
         report.setContext(context);
         report.setEndDate(new Date());
-        return reportMapper.updateReport(report);
+        int result = reportMapper.updateReport(report);
+        // 保存消费记录
+        expenseService.saveProRunExpenses(projectId, list);
+        return result;
     }
 
 	@Override

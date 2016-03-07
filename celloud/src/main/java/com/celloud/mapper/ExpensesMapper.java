@@ -1,6 +1,11 @@
 package com.celloud.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.celloud.model.mysql.Expenses;
+import com.celloud.page.Page;
 
 public interface ExpensesMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +19,44 @@ public interface ExpensesMapper {
     int updateByPrimaryKeySelective(Expenses record);
 
     int updateByPrimaryKey(Expenses record);
+
+    /**
+     * 新增数据消费记录关系
+     * 
+     * @param expensesId
+     * @param projectId
+     * @param fileId
+     * @param dataKey
+     * @param fileName
+     * @return
+     * @author leamo
+     * @date 2016年3月4日 下午4:27:18
+     */
+    int addFileExpenseRelat(@Param("expensesId") Integer expensesId,
+            @Param("projectId") Integer projectId,
+            @Param("fileId") Integer fileId, @Param("dataKey") String dataKey,
+            @Param("fileName") String fileName);
+
+    /**
+     * 查询数据消费次数
+     * 
+     * @param fileId
+     * @return
+     * @author leamo
+     * @date 2016年3月4日 下午4:27:31
+     */
+    int getFileExpenseNum(@Param("fileId") Integer fileId);
+
+    /**
+     * 查询所有运行消费记录
+     * 
+     * @param page
+     * @param userId
+     * @return
+     * @author leamo
+     * @date 2016年3月4日 下午5:26:41
+     */
+    List<Expenses> getAllRunExpensesByUser(Page page,
+            @Param("userId") Integer userId,
+            @Param("ItemType") Byte itemType);
 }
