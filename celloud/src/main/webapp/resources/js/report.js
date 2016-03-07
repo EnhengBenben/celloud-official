@@ -624,10 +624,10 @@ $.ajaxSetup ({
 				$.get("report/getHBVReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
-			//}else if(softwareId == 80){
-				//$.get("report3!getHCVReport",{"proId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-				//	toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-				//});
+			}else if(softwareId == 80){
+				$.get("report/getHCVReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
+					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+				});
 			}else if(softwareId == 117){
         $.get("report/getOncogeneReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
           toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);

@@ -40,6 +40,7 @@ import com.celloud.model.mongo.CmpReport;
 import com.celloud.model.mongo.GddDiseaseDict;
 import com.celloud.model.mongo.GeneDetectionResult;
 import com.celloud.model.mongo.HBV;
+import com.celloud.model.mongo.HCV;
 import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
@@ -147,6 +148,11 @@ public class ReportServiceImpl implements ReportService {
         return reportDao.getDataReport(Oncogene.class, dataKey, projectId,
                 appId);
     }
+    
+	@Override
+	public HCV getHCVReport(String dataKey, Integer projectId, Integer appId) {
+		return reportDao.getDataReport(HCV.class, dataKey, projectId, appId);
+	}
 
     @Override
     public Map<String, Object> systemCount(Integer userId) {

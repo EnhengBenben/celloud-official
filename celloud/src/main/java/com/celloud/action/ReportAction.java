@@ -40,6 +40,7 @@ import com.celloud.model.mongo.CmpGeneSnpResult;
 import com.celloud.model.mongo.CmpReport;
 import com.celloud.model.mongo.DrugResistanceSite;
 import com.celloud.model.mongo.HBV;
+import com.celloud.model.mongo.HCV;
 import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
@@ -637,6 +638,23 @@ public class ReportAction {
                 projectId);
         return mv.addObject("oncogene", oncogene);
     }
+    
+	/**
+	 * 获取HCV数据报告
+	 * 
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 * @author lin
+	 * @date 2016年3月7日下午5:07:31
+	 */
+	@RequestMapping("getHCVReport")
+	public ModelAndView getHCVReport(String dataKey, Integer projectId, Integer appId) {
+		HCV hcv = reportService.getHCVReport(dataKey, projectId, appId);
+		ModelAndView mv = getModelAndView("report/report_data_hcv", projectId);
+		return mv.addObject("hcv", hcv);
+	}
 
     /**
      * 点击数据报告列表查看上一页数据报告
