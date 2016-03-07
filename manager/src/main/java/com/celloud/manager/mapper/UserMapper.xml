@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.celloud.manager.mapper.UserMapper">
+	<resultMap id="BaseResultMap" type="com.celloud.manager.model.User">
+		<id column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="cellphone" property="cellphone" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="role" property="role" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="navigation" property="navigation" jdbcType="INTEGER" />
+		<result column="truename" property="truename" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+		<result column="dept_id" property="deptId" jdbcType="INTEGER" />
+		<result column="login_uuid" property="loginUuid" jdbcType="VARCHAR" />
+		<result column="company_id" property="companyId" jdbcType="INTEGER" />
+		<result column="sign" property="sign" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		user_id, username, email, cellphone, create_date,
+		icon,
+		role,
+		remark, navigation,
+		truename, state, dept_id, login_uuid,
+		company_id, sign
+	</sql>
+	<select id="checkLogin" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_user
+        where state = 0
+        AND  (
+              username = #{username,jdbcType=VARCHAR}
+              OR email = #{username,jdbcType=VARCHAR}
+              )
+        AND password = #{password,jdbcType=VARCHAR}
+        AND role=0
+    </select>
+</mapper>
