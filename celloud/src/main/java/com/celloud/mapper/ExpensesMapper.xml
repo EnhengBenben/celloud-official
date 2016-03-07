@@ -28,10 +28,10 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.celloud.model.mysql.Expenses" >
-    insert into tb_expenses (id, user_id, item_id, 
+    insert into tb_expenses (user_id, item_id, 
       item_type, price, create_date, 
       remark)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, 
+    values (#{userId,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, 
       #{itemType,jdbcType=TINYINT}, #{price,jdbcType=DECIMAL}, #{createDate,jdbcType=TIMESTAMP}, 
       #{remark,jdbcType=VARCHAR})
   </insert>
