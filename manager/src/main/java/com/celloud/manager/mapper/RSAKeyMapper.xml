@@ -1,117 +1,98 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.celloud.manager.mapper.RSAKeyMapper" >
-  <resultMap id="BaseResultMap" type="com.celloud.manager.model.RSAKey" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="modulus" property="modulus" jdbcType="VARCHAR" />
-    <result column="pub_exponent" property="pubExponent" jdbcType="VARCHAR" />
-    <result column="pri_exponent" property="priExponent" jdbcType="VARCHAR" />
-    <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="state" property="state" jdbcType="INTEGER" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, modulus, pub_exponent, pri_exponent, user_id, state, create_time
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from tb_key
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from tb_key
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.celloud.manager.model.RSAKey" >
-    insert into tb_key (id, modulus, pub_exponent, 
-      pri_exponent, user_id, state, 
-      create_time)
-    values (#{id,jdbcType=INTEGER}, #{modulus,jdbcType=VARCHAR}, #{pubExponent,jdbcType=VARCHAR}, 
-      #{priExponent,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.celloud.manager.model.RSAKey" >
-    insert into tb_key
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="modulus != null" >
-        modulus,
-      </if>
-      <if test="pubExponent != null" >
-        pub_exponent,
-      </if>
-      <if test="priExponent != null" >
-        pri_exponent,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="state != null" >
-        state,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="modulus != null" >
-        #{modulus,jdbcType=VARCHAR},
-      </if>
-      <if test="pubExponent != null" >
-        #{pubExponent,jdbcType=VARCHAR},
-      </if>
-      <if test="priExponent != null" >
-        #{priExponent,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="state != null" >
-        #{state,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.manager.model.RSAKey" >
-    update tb_key
-    <set >
-      <if test="modulus != null" >
-        modulus = #{modulus,jdbcType=VARCHAR},
-      </if>
-      <if test="pubExponent != null" >
-        pub_exponent = #{pubExponent,jdbcType=VARCHAR},
-      </if>
-      <if test="priExponent != null" >
-        pri_exponent = #{priExponent,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="state != null" >
-        state = #{state,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.celloud.manager.model.RSAKey" >
-    update tb_key
-    set modulus = #{modulus,jdbcType=VARCHAR},
-      pub_exponent = #{pubExponent,jdbcType=VARCHAR},
-      pri_exponent = #{priExponent,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=INTEGER},
-      state = #{state,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+<mapper namespace="com.celloud.backstage.mapper.RSAKeyMapper">
+	<resultMap id="BaseResultMap" type="com.celloud.backstage.model.RSAKey">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="modulus" property="modulus" jdbcType="VARCHAR" />
+		<result column="pub_exponent" property="pubExponent" jdbcType="VARCHAR" />
+		<result column="pri_exponent" property="priExponent" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, modulus, pub_exponent, pri_exponent, user_id, state,create_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from tb_key
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tb_key
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByModulus">
+        delete from tb_key
+        where modulus = #{modulus,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteExpiresKeys">
+        delete from tb_key
+        where create_time &lt;= #{lastTime,jdbcType=TIMESTAMP}
+    </delete>
+    <delete id="deleteAllKeys">
+        delete from tb_key
+        where user_id = #{userId,jdbcType=INTEGER}
+    </delete>
+	<insert id="insert" parameterType="com.celloud.backstage.model.RSAKey">
+		insert into tb_key (id, modulus, pub_exponent,
+		pri_exponent, user_id, state,create_time
+		)
+		values (#{id,jdbcType=INTEGER}, #{modulus,jdbcType=VARCHAR},
+		#{pubExponent,jdbcType=VARCHAR},
+		#{priExponent,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER},
+		#{state,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.celloud.backstage.model.RSAKey">
+		insert into tb_key
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="modulus != null">
+				modulus,
+			</if>
+			<if test="pubExponent != null">
+				pub_exponent,
+			</if>
+			<if test="priExponent != null">
+				pri_exponent,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="modulus != null">
+				#{modulus,jdbcType=VARCHAR},
+			</if>
+			<if test="pubExponent != null">
+				#{pubExponent,jdbcType=VARCHAR},
+			</if>
+			<if test="priExponent != null">
+				#{priExponent,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<select id="getByModulus" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tb_key
+		where modulus = #{modulus,jdbcType=INTEGER}
+	</select>
 </mapper>
