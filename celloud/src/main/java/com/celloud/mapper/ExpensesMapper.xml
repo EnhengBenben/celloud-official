@@ -28,10 +28,10 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.celloud.model.mysql.Expenses" >
-    insert into tb_expenses (id, user_id, item_id, 
+    insert into tb_expenses (user_id, item_id, 
       item_type, price, create_date, 
       remark)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, 
+    values (#{userId,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, 
       #{itemType,jdbcType=TINYINT}, #{price,jdbcType=DECIMAL}, #{createDate,jdbcType=TIMESTAMP}, 
       #{remark,jdbcType=VARCHAR})
   </insert>
@@ -132,5 +132,8 @@
     from tb_expenses e,tb_file_expenses_relat fe,tb_app a
     where e.item_id=a.app_id and e.id=fe.expenses_id and e.user_id = #{userId}
     group by e.id
+  </select>
+  <select id="getTotalExpensesByUser" resultType="java.math.BigDecimal">
+    select sum(price) from tb_expenses where user_id=#{userId}
   </select>
 </mapper>

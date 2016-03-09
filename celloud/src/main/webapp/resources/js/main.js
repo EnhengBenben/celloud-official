@@ -31,9 +31,15 @@ $(function () {
 	 $("#mainDIV").css("display","");
 	 $("#mainDIV").load("pages/data/data_main.jsp");
   });
+  $("#to-expense-model").on("click", function(){
+    $.get("expense/getTotalConsumption",{},function(result){
+      $("#total-consumption").html(result);
+    });
+  });
   $("#to-expense-main").on("click", function(){
     $("#mainDIV").load("pages/expense/expense_main.jsp");
   });
+  
 });
 /**
  * 总览

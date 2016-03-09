@@ -1,5 +1,6 @@
 package com.celloud.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.celloud.model.mysql.DataFile;
@@ -48,5 +49,15 @@ public interface ExpensesService {
      * @date 2016年2月25日 下午3:11:02
      */
     public PageList<Expenses> getRunExpensesList(Integer userId, Page page);
+
+    /**
+     * 查询用户总消费金额
+     * 
+     * @param userId
+     * @return
+     * @author leamo
+     * @date 2016年3月8日 上午11:26:58
+     */
+    public BigDecimal getUserTotalExpenses(Integer userId);
 
 }

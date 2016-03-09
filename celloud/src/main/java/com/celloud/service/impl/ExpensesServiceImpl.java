@@ -50,6 +50,7 @@ public class ExpensesServiceImpl implements ExpensesService {
         expense.setUserId(userId);
         expense.setCreateDate(new Date());
         for (DataFile d : dataList) {
+            expense.setId(null);
             int fileExpenseNum = expensesMapper
                     .getFileExpenseNum(d.getFileId());
             if (fileExpenseNum == 0) {
@@ -102,4 +103,8 @@ public class ExpensesServiceImpl implements ExpensesService {
         return new PageList<>(page, elist);
     }
 
+    @Override
+    public BigDecimal getUserTotalExpenses(Integer userId) {
+        return expensesMapper.getTotalExpensesByUser(userId);
+    }
 }
