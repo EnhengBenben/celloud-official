@@ -37,6 +37,7 @@ import com.celloud.service.TaskService;
 import com.celloud.utils.DataKeyListToFile;
 import com.celloud.utils.DataUtil;
 import com.celloud.utils.FileTools;
+import com.celloud.utils.MD5Util;
 import com.celloud.utils.PerlUtils;
 import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.RunOverUtil;
@@ -171,6 +172,7 @@ public class TaskAction {
                         DataFile.setPath(filePath);
                         DataFile.setFileFormat(FileFormat.FQ);
                         DataFile.setState(DataState.ACTIVE);
+                        DataFile.setMd5(MD5Util.getFileMD5(filePath));
                         dataService.updateDataInfoByFileId(DataFile);
                     }
                 }
