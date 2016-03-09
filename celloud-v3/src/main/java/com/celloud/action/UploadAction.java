@@ -70,7 +70,8 @@ public class UploadAction {
      */
     @ResponseBody
     @RequestMapping("uploadManyFile")
-    public String uploadManyFile(String name, String onlyName, String md5, String originalName, int chunk, int chunks,
+    public String uploadManyFile(String name, String onlyName, String md5,
+            String originalName, Integer chunk, Integer chunks,
             HttpServletRequest request) {
         File f = new File(realPath);
         if (!f.exists()) {
@@ -93,7 +94,7 @@ public class UploadAction {
                         File localFile = new File(fileName);
                         try {
                             this.copy(file, localFile);
-                            if ((chunk == chunks - 1) || chunk == chunks) {
+                            if (chunk == chunks || (chunk == chunks - 1)) {
                                 int dataId = addFileInfo(originalName);
                                 String fileDataKey = DataUtil.getNewDataKey(dataId);
                                 String newName = fileDataKey + FileTools.getExtName(originalName);
