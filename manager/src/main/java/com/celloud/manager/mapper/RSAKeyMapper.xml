@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.celloud.backstage.mapper.RSAKeyMapper">
-	<resultMap id="BaseResultMap" type="com.celloud.backstage.model.RSAKey">
+<mapper namespace="com.celloud.manager.mapper.RSAKeyMapper">
+	<resultMap id="BaseResultMap" type="com.celloud.manager.model.RSAKey">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="modulus" property="modulus" jdbcType="VARCHAR" />
 		<result column="pub_exponent" property="pubExponent" jdbcType="VARCHAR" />
@@ -36,7 +36,7 @@
         delete from tb_key
         where user_id = #{userId,jdbcType=INTEGER}
     </delete>
-	<insert id="insert" parameterType="com.celloud.backstage.model.RSAKey">
+	<insert id="insert" parameterType="com.celloud.manager.model.RSAKey">
 		insert into tb_key (id, modulus, pub_exponent,
 		pri_exponent, user_id, state,create_time
 		)
@@ -46,7 +46,7 @@
 		#{state,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP}
 		)
 	</insert>
-	<insert id="insertSelective" parameterType="com.celloud.backstage.model.RSAKey">
+	<insert id="insertSelective" parameterType="com.celloud.manager.model.RSAKey">
 		insert into tb_key
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">

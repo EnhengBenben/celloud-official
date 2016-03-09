@@ -36,6 +36,6 @@
               OR email = #{username,jdbcType=VARCHAR}
               )
         AND password = #{password,jdbcType=VARCHAR}
-        AND role=0
+        AND (role=1 or role=2)
     </select>
 </mapper>
