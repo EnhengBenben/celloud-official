@@ -33,7 +33,7 @@
 	<div class="box-footer feedback-attachment-box">
 		<h5>附件：</h5>
 		<c:choose>
-			<c:when test="${feedback.hasAttachment() }">
+			<c:when test="${not empty feedback.hasAttachment && feedback.hasAttachment!=0 }">
 				<c:forEach items="${attachments }" var="attachment">
 					<img class="img-thumbnail feedback-attachment" onclick="feedback.showAttachment('${attachment.filePath}')"
 						src="<%=request.getContextPath() %>/feedback/attach?file=${attachment.filePath}&userId=${feedback.userId}" alt="Feedback Attachment" />

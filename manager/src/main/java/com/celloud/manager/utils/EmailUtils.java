@@ -131,20 +131,20 @@ public class EmailUtils {
             }
             pro.setProperty(key, newValue);
         }
-        username = pro.getProperty("username");
-        password = pro.getProperty("password");
-        smtp = pro.getProperty("smtp");
-        defaultTitle = pro.getProperty("defaultTitle");
-        errorTitle = pro.getProperty("errorTitle");
-        feedbackTitle = pro.getProperty("feedbackTitle");
-        emailName = pro.getProperty("emailName");
-        String errorMails = pro.getProperty("errorsMailTo");
+        username = pro.getProperty("mail.username");
+        password = pro.getProperty("mail.password");
+        smtp = pro.getProperty("mail.smtp");
+        defaultTitle = pro.getProperty("mail.defaultTitle");
+        errorTitle = pro.getProperty("mail.errorTitle");
+        feedbackTitle = pro.getProperty("mail.feedbackTitle");
+        emailName = pro.getProperty("mail.emailName");
+        String errorMails = pro.getProperty("mail.errorsMailTo");
         if (errorMails != null && !errorMails.trim().equals("")) {
             errorsMailTo = errorMails.split(",");
             List<String> list = new ArrayList<>(new HashSet<>(Arrays.asList(errorsMailTo)));
             errorsMailTo = list.toArray(new String[list.size()]);
         }
-        String feedbackMails = pro.getProperty("errorsMailTo");
+        String feedbackMails = pro.getProperty("mail.errorsMailTo");
         if (feedbackMails != null && !feedbackMails.trim().equals("")) {
             feedbackMailTo = feedbackMails.split(",");
             List<String> list = new ArrayList<>(new HashSet<>(Arrays.asList(feedbackMailTo)));
