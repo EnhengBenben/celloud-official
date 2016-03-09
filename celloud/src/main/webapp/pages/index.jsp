@@ -42,6 +42,21 @@
 				</a>
 				<div class="navbar-custom-menu">
 					<ul class="nav navbar-nav">
+					<!-- Messages: style can be found in dropdown.less-->
+			            <li class="dropdown messages-menu">
+			                <a id="to-expense-model" href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+			                  <i class="fa fa-rmb"></i>
+			                  <span class="hidden-xs">消费记录</span>
+			                </a>
+			                <div class="dropdown-menu">
+			                  <div class="dropdown-menu-inner">
+                                <p>总消费金额: <small class="pull-right"><span id="total-consumption"></span>C</small></p>
+                                <div class="text-center">
+                                  <a id="to-expense-main" class="btn btn-sm btn-celloud-success btn-flat" href="javascript:void(0)">查看详情</a>
+                                </div>
+			                  </div>
+			                </div>
+			            </li>
 						<li class="dropdown user user-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 								<img src="${sessionScope.loginUserInSession.avatar}" class="user-image" alt="User Image" id="userImageSmall" />
@@ -124,12 +139,6 @@
 							<span>账号管理</span>
 						</a>
 					</li>
-					<li class="treeview">
-                        <a id="to-expense-main" href="javascript:void(0)">
-                            <i class="fa fa-rmb"></i>
-                            <span>费用中心</span>
-                        </a>
-                    </li>
 					<li class="treeview" id="feedbackManage">
 						<a href="javascript:void(0)" onclick="showFeedback()">
 							<i class="fa fa-comments text-yellow"></i>

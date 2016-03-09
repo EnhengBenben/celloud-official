@@ -810,6 +810,14 @@ a:focus {
 .dropdown-menu > .divider {
   background-color: #eee;
 }
+.dropdown-menu .dropdown-menu-inner{
+  padding: 20px;
+}
+.dropdown-menu .dropdown-menu-inner small{
+  font-size: 16px;
+  font-weight: bolder;
+  margin-right: 20px;
+}
 .navbar-nav .dropdown-menu {
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
@@ -819,6 +827,7 @@ a:focus {
 .navbar-nav > .tasks-menu {
   position: relative;
 }
+
 .navbar-nav > .notifications-menu > .dropdown-menu,
 .navbar-nav > .messages-menu > .dropdown-menu,
 .navbar-nav > .tasks-menu > .dropdown-menu {
@@ -2750,6 +2759,12 @@ table.text-center th {
 }
 .text-red {
   color: #dd4b39 !important;
+}
+.text-yellow {
+    color: #f39c12 !important;
+}
+.text-aqua {
+    color: #00c0ef !important;
 }
 .tipModal{width:300px;margin:30% auto}
 .tipModal .modal-header{cursor: move;}

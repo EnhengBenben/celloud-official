@@ -103,4 +103,8 @@ public class ExpensesServiceImpl implements ExpensesService {
         return new PageList<>(page, elist);
     }
 
+    @Override
+    public BigDecimal getUserTotalExpenses(Integer userId) {
+        return expensesMapper.getTotalExpensesByUser(userId);
+    }
 }

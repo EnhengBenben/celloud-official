@@ -337,7 +337,7 @@
         left join tb_app_classify_relat ac on a.app_id=ac.app_id 
         left join tb_user_app_right uar on uar.app_id = a.app_id 
         left join tb_company c on a.company_id=c.company_id
-        left join (select * from tb_price where flag=#{priceType}) p on p.item_id=a.app_id
+        left join (select * from tb_price where item_type=#{priceType}) p on p.item_id=a.app_id
         where a.off_line=#{offLine } and ((uar.user_id=#{userId } and a.attribute=#{attribute_private }) or a.attribute=#{attribute_public })
          <choose>  
             <when test="classifyPId == 0">
@@ -358,7 +358,7 @@
     left join tb_company c on a.company_id=c.company_id 
     left join tb_app_classify_relat ac on a.app_id=ac.app_id 
     left join tb_classify cls on ac.classify_id=cls.classify_id 
-    left join (select * from tb_price where flag=#{priceType}) p on a.app_id=p.item_id
+    left join (select * from tb_price where item_type=#{priceType}) p on a.app_id=p.item_id
     left join tb_user_app_right ua on ua.app_id=a.app_id
     where a.app_id=#{appId} and ua.user_id=#{userId}
   </select>

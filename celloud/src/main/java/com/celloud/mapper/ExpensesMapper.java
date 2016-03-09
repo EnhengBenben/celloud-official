@@ -1,5 +1,6 @@
 package com.celloud.mapper;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -59,4 +60,14 @@ public interface ExpensesMapper {
     List<Expenses> getAllRunExpensesByUser(Page page,
             @Param("userId") Integer userId,
             @Param("ItemType") Byte itemType);
+
+    /**
+     * 查询用户总消费金额
+     * 
+     * @param userId
+     * @return
+     * @author leamo
+     * @date 2016年3月8日 上午11:26:58
+     */
+    BigDecimal getTotalExpensesByUser(@Param("userId") Integer userId);
 }

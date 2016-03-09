@@ -133,4 +133,7 @@
     where e.item_id=a.app_id and e.id=fe.expenses_id and e.user_id = #{userId}
     group by e.id
   </select>
+  <select id="getTotalExpensesByUser" resultType="java.math.BigDecimal">
+    select sum(price) from tb_expenses where user_id=#{userId}
+  </select>
 </mapper>

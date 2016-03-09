@@ -1,5 +1,7 @@
 package com.celloud.action;
 
+import java.math.BigDecimal;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -7,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.ConstantsData;
@@ -49,5 +52,20 @@ public class ExpensesAction {
         mv.addObject("expensePageList", expensePageList);
         logger.info("用户{}查看消费记录", userId);
         return mv;
+    }
+
+    /**
+     * 获取用户总消费金额
+     * 
+     * @return
+     * @author leamo
+     * @date 2016年3月8日 上午11:31:22
+     */
+    @RequestMapping("getTotalConsumption")
+    @ResponseBody
+    public BigDecimal getTotalConsumption() {
+        BigDecimal total = expensesService
+                .getUserTotalExpenses(ConstantsData.getLoginUserId());
+        return total == null || total.equals("") ? new BigDecimal(0) : total;
     }
 }
