@@ -403,7 +403,7 @@ a:hover, a:focus{
 								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
 								<th>女方姓名</th>
 								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
-								<th>年龄</th>
+								<th>男方姓名</th>
 								<td><span><input type="text" class="input-mini onlybotton" /></span></td>
 								<th>取卵日期</th>
 								<td><span><input type="text" class="input-small onlybotton" /></span></td>
