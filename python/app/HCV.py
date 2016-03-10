@@ -58,7 +58,6 @@ class HCV:
 		#seq
 		fasta = fileSearch(os.path.join(path,'Fasta'),'.ab1','endswith')
 		if(len(fasta)>0):
-			print os.path.join(path,'Fasta',fasta[0])
 			seq = readAll(os.path.join(path,'Fasta',fasta[0]))
 			result['seq'] = seq
 		#SVG，以下处理所有png

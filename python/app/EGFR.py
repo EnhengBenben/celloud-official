@@ -49,19 +49,19 @@ class EGFR:
 		#report.txt
 		report = os.path.join(path,'report.txt')
 		if (os.path.exists(report)):
-			result['report'] = readAll(report)
+			result['report'] = readAllChinese(report)
 
 		#report.txt.wz.1
 		wz1 = os.path.join(path,'report.txt.wz.1')
 		if (os.path.exists(wz1)):
-			info = readAll(wz1)
+			info = readAllChinese(wz1)
 			result['position'] = info
 			result['pos'] = info.replace('Exon','').strip()
 
 		#report.txt.wz.2
 		wz2 = os.path.join(path,'report.txt.wz.2')
 		if (os.path.exists(wz2)):
-			result['mutationPosition'] = readAll(wz2)
+			result['mutationPosition'] = readAllChinese(wz2)
 
 		#report.txt.wz.Report
 		conclusion = os.path.join(path,'report.txt.wz.Report')
@@ -82,7 +82,6 @@ class EGFR:
 				result['pdf'] = appName+'.pdf'
 		#SVG
 		svgPath=os.path.join(path,'SVG')
-		print svgPath
 		if os.path.exists(svgPath):
 			# 已知突变位点前后10bp图片
 			know_mutation_big = ['719.10.png','768.10.png', '790.10.png', '858.10.png', 
