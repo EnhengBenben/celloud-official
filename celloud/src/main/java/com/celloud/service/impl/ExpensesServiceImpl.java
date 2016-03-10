@@ -54,7 +54,9 @@ public class ExpensesServiceImpl implements ExpensesService {
             int fileExpenseNum = expensesMapper
                     .getFileExpenseNum(d.getFileId());
             if (fileExpenseNum == 0) {
-                expense.setPrice(price.getPrice());
+                // TODO 暂时免费，真正收费时需要修改成真实价格
+                // expense.setPrice(price.getPrice());
+                expense.setPrice(new BigDecimal(0));
             } else {
                 expense.setPrice(new BigDecimal(0));
                 expense.setRemark(ExpensesRemark.RERUN_FREE);
@@ -82,7 +84,9 @@ public class ExpensesServiceImpl implements ExpensesService {
                     fileExpenseNum = expensesMapper
                             .getFileExpenseNum(d.getFileId());
                     if (fileExpenseNum == 0) {
-                        expense.setPrice(price.getPrice());
+                        // TODO 暂时免费，真正收费时需要修改成真实价格
+                        // expense.setPrice(price.getPrice());
+                        expense.setPrice(new BigDecimal(0));
                     } else {
                         expense.setPrice(new BigDecimal(0));
                         expense.setRemark(ExpensesRemark.RERUN_FREE);
