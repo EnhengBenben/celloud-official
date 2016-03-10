@@ -39,6 +39,7 @@ import com.celloud.model.mongo.CmpGeneDetectionDetail;
 import com.celloud.model.mongo.CmpGeneSnpResult;
 import com.celloud.model.mongo.CmpReport;
 import com.celloud.model.mongo.DrugResistanceSite;
+import com.celloud.model.mongo.EGFR;
 import com.celloud.model.mongo.HBV;
 import com.celloud.model.mongo.HCV;
 import com.celloud.model.mongo.MIB;
@@ -654,6 +655,23 @@ public class ReportAction {
 		HCV hcv = reportService.getHCVReport(dataKey, projectId, appId);
 		ModelAndView mv = getModelAndView("report/report_data_hcv", projectId);
 		return mv.addObject("hcv", hcv);
+	}
+	
+	/**
+	 * 获取EGFR数据报告
+	 * 
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 * @author lin
+	 * @date 2016年3月10日下午2:47:57
+	 */
+	@RequestMapping("getEGFRReport")
+	public ModelAndView getEGFRReport(String dataKey, Integer projectId, Integer appId) {
+		EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
+		ModelAndView mv = getModelAndView("report/report_data_egfr", projectId);
+		return mv.addObject("egfr", egfr);
 	}
 
     /**

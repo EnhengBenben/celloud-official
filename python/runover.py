@@ -11,6 +11,8 @@ from mongo.mongoOperate import mongo
 from app.PGS import PGS
 from app.NIPT import NIPT
 from app.HBV import HBV
+from app.EGFR import EGFR
+from app.HCV import HCV
 from app.oncogene import oncogene
 
 #command: python *.py basePath projectId
@@ -19,7 +21,9 @@ from app.oncogene import oncogene
 
 #对应class名
 method_dic = {
+80:HCV,
 82:HBV,
+84:EGFR,
 85:PGS,
 86:PGS,
 87:PGS,
@@ -36,7 +40,9 @@ method_dic = {
 
 #对应database名
 collection_dic = {
+80:"HCV",
 82:"HBV",
+84:"EGFR",
 85:"Pgs",
 86:"Pgs",
 87:"Pgs",

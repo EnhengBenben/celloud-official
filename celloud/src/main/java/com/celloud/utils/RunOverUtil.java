@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.celloud.itext.PGSProjectPDF;
 import com.celloud.model.mysql.DataFile;
 
@@ -14,6 +16,36 @@ import com.celloud.model.mysql.DataFile;
  * @description :项目运行结束后的后续操作
  */
 public class RunOverUtil {
+	/**
+	 * EGFR流程运行结束后的数据处理
+	 * 
+	 * @param reportPath
+	 * @param dataKey
+	 * @param appTitle
+	 * @param projectFile
+	 * @param projectId
+	 * @param dataList
+	 * @return
+	 * @author lin
+	 * @date 2016年3月10日下午3:03:25
+	 */
+	public boolean EGFR(String reportPath, String dataKey, String appTitle, String projectFile, String projectId,
+			List<DataFile> dataList) {
+		// 1. 追加表头
+		StringBuffer resultArray = new StringBuffer();
+		resultArray.append(appTitle);
+		// 2. 遍历数据列表
+		for (DataFile data : dataList) {
+			String finalPath = reportPath + data.getDataKey();
+			String first = FileTools.getFirstLine(finalPath + "/report.txt");
+			String result = StringUtils.isBlank(first) ? "no result" : first.replace("Exon", "").trim();
+			String re = FileTools.readAppoint(finalPath + "/report.txt.wz.Report").replace("<br />", "");
+			resultArray.append(data.getDataKey() + "\t" + data.getFileName() + "\t" + result + "\t" + re + "\n");
+		}
+		FileTools.appendWrite(projectFile, resultArray.toString());
+		return true;
+	}
+	
     /**
      * MIB流程运行结束后的处理
      * 

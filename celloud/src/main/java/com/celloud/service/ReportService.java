@@ -8,6 +8,7 @@ import org.bson.types.ObjectId;
 import com.celloud.model.mongo.CmpFilling;
 import com.celloud.model.mongo.CmpGeneSnpResult;
 import com.celloud.model.mongo.CmpReport;
+import com.celloud.model.mongo.EGFR;
 import com.celloud.model.mongo.GddDiseaseDict;
 import com.celloud.model.mongo.HBV;
 import com.celloud.model.mongo.HCV;
@@ -122,6 +123,18 @@ public interface ReportService {
      * @date 2016年3月7日下午5:06:00
      */
 	public HCV getHCVReport(String dataKey, Integer projectId, Integer appId);
+	
+	/**
+	 * 获取EGFR报告
+	 * 
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 * @author lin
+	 * @date 2016年3月10日下午2:46:20
+	 */
+	public EGFR getEGFRReport(String dataKey, Integer projectId, Integer appId);
 
     /**
      * 获取 MIB 报告

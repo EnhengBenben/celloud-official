@@ -37,6 +37,7 @@ import com.celloud.model.mongo.CmpFilling;
 import com.celloud.model.mongo.CmpGeneDetectionDetail;
 import com.celloud.model.mongo.CmpGeneSnpResult;
 import com.celloud.model.mongo.CmpReport;
+import com.celloud.model.mongo.EGFR;
 import com.celloud.model.mongo.GddDiseaseDict;
 import com.celloud.model.mongo.GeneDetectionResult;
 import com.celloud.model.mongo.HBV;
@@ -152,6 +153,11 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public HCV getHCVReport(String dataKey, Integer projectId, Integer appId) {
 		return reportDao.getDataReport(HCV.class, dataKey, projectId, appId);
+	}
+	
+	@Override
+	public EGFR getEGFRReport(String dataKey, Integer projectId, Integer appId) {
+		return reportDao.getDataReport(EGFR.class, dataKey, projectId, appId);
 	}
 
     @Override
