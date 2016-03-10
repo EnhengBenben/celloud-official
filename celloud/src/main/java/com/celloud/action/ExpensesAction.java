@@ -50,6 +50,8 @@ public class ExpensesAction {
         PageList<Expenses> expensePageList = expensesService
                 .getRunExpensesList(userId, pager);
         mv.addObject("expensePageList", expensePageList);
+        mv.addObject("expenseTotal",
+                expensesService.getUserTotalExpenses(userId));
         logger.info("用户{}查看消费记录", userId);
         return mv;
     }
@@ -64,8 +66,7 @@ public class ExpensesAction {
     @RequestMapping("getTotalConsumption")
     @ResponseBody
     public BigDecimal getTotalConsumption() {
-        BigDecimal total = expensesService
+        return expensesService
                 .getUserTotalExpenses(ConstantsData.getLoginUserId());
-        return total == null || total.equals("") ? new BigDecimal(0) : total;
     }
 }

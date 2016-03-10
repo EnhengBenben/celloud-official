@@ -59,8 +59,8 @@ public class ExpensesServiceImpl implements ExpensesService {
                 expense.setPrice(new BigDecimal(0));
                 expense.setRemark(ExpensesRemark.RERUN_FREE);
             }
-            int expenseId = expensesMapper.insertSelective(expense);
-            expensesMapper.addFileExpenseRelat(expenseId, projectId,
+            expensesMapper.insertSelective(expense);
+            expensesMapper.addFileExpenseRelat(expense.getId(), projectId,
                     d.getFileId(), d.getDataKey(), d.getFileName());
         }
     }
@@ -75,7 +75,6 @@ public class ExpensesServiceImpl implements ExpensesService {
         expense.setUserId(userId);
         expense.setCreateDate(new Date());
         int fileExpenseNum = 0;
-        int expenseId = 0;
         if (dataList != null) {
             for (int i = 0; i < dataList.size(); i++) {
                 DataFile d = dataList.get(i);
@@ -88,8 +87,9 @@ public class ExpensesServiceImpl implements ExpensesService {
                         expense.setPrice(new BigDecimal(0));
                         expense.setRemark(ExpensesRemark.RERUN_FREE);
                     }
-                    expenseId = expensesMapper.insertSelective(expense);
-                    expensesMapper.addFileExpenseRelat(expenseId, projectId,
+                    expensesMapper.insertSelective(expense);
+                    expensesMapper.addFileExpenseRelat(expense.getId(),
+                            projectId,
                             d.getFileId(), d.getDataKey(), d.getFileName());
                 }
             }
@@ -105,6 +105,7 @@ public class ExpensesServiceImpl implements ExpensesService {
 
     @Override
     public BigDecimal getUserTotalExpenses(Integer userId) {
-        return expensesMapper.getTotalExpensesByUser(userId);
+        BigDecimal total = expensesMapper.getTotalExpensesByUser(userId);
+        return total == null || total.equals("") ? new BigDecimal(0) : total;
     }
 }

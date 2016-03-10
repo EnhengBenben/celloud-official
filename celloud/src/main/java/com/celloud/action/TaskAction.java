@@ -110,7 +110,7 @@ public class TaskAction {
                 .append(SparkPro.TOOLSPATH).append(" ").append(userId)
                 .append(" ").append(appId).append(" ").append(dataNames)
                 .append(" ").append(projectId);
-        // PerlUtils.excutePerl(command.toString());
+        PerlUtils.excutePerl(command.toString());
         // 3. 创建项目结果文件
         StringBuffer basePath = new StringBuffer();
         basePath.append(SparkPro.TOOLSPATH).append(userId).append("/")
