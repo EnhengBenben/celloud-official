@@ -38,4 +38,21 @@
         AND password = #{password,jdbcType=VARCHAR}
         AND (role=1 or role=2)
     </select>
+    <select id="countUser" resultType="java.lang.Integer">
+        select count(DISTINCT ucr.user_id) 
+        from tb_user_company_relat ucr LEFT JOIN tb_user u on u.user_id=ucr.user_id 
+        where u.state=#{state}
+        <if test="companyId != null">
+        and ucr.company_id=#{companyId}
+        </if>
+    </select>
+    <select id="countCompany" resultType="java.lang.Integer">
+        select count(DISTINCT u.company_id) 
+        from tb_user_company_relat ucr 
+        LEFT JOIN tb_user u on u.user_id=ucr.user_id 
+        where u.state=#{state}
+        <if test="companyId != null">
+        and ucr.company_id=#{companyId}
+        </if>
+    </select>
 </mapper>

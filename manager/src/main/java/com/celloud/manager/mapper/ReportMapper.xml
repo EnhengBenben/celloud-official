@@ -206,4 +206,15 @@
       end_date = #{endDate,jdbcType=TIMESTAMP}
     where report_id = #{reportId,jdbcType=INTEGER}
   </update>
+  <select id="countReport" resultType="java.lang.Integer">
+  SELECT sum(a.data_num) from (
+  select DISTINCT p.project_id,p.data_num
+  from tb_user_company_relat ucr LEFT JOIN tb_user u on u.user_id=ucr.user_id LEFT JOIN tb_project p on p.user_id=u.user_id
+  LEFT JOIN tb_report r on r.project_id=p.project_id
+  where u.state=#{state} and r.state=#{state} and r.period=#{period}
+  <if test="companyId!=null">
+    and ucr.company_id=#{companyId}
+  </if>
+  ) a;
+  </select>
 </mapper>

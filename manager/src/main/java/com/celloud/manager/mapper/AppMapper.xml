@@ -310,4 +310,12 @@
       max_task = #{maxTask,jdbcType=INTEGER}
     where app_id = #{appId,jdbcType=INTEGER}
   </update>
+  <select id="countApp" resultType="java.lang.Integer">
+  select count(DISTINCT app.app_id) 
+  from tb_app app 
+  where app.off_line=#{offLine}
+  <if test="companyId!=null">
+    and app.company_id=#{companyId}
+  </if>
+  </select>
 </mapper>

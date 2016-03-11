@@ -233,4 +233,24 @@
       md5 = #{md5,jdbcType=VARCHAR}
     where file_id = #{fileId,jdbcType=INTEGER}
   </update>
+  <select id="countDataFile" resultType="java.lang.Integer">
+  select count(DISTINCT f.file_id) 
+  from tb_user_company_relat ucr 
+  LEFT JOIN tb_user u on u.user_id=ucr.user_id  
+  LEFT JOIN tb_file f on u.user_id=f.user_id
+  where u.state=#{state} and f.state=#{state}
+  <if test="companyId!=null">
+    and ucr.company_id=#{companyId}
+  </if>
+  </select>
+  <select id="countDataFileSize" resultType="java.lang.Long">
+  select sum(f.size) 
+  from tb_user_company_relat ucr 
+  LEFT JOIN tb_user u on u.user_id=ucr.user_id  
+  LEFT JOIN tb_file f on u.user_id=f.user_id
+  where u.state=#{state} and f.state=#{state}
+  <if test="companyId!=null">
+    and ucr.company_id=#{companyId}
+  </if>
+  </select>
 </mapper>

@@ -659,7 +659,7 @@ footer.main-footer .go-up a,
   clear: both;
 }
 body {
-  background-color: #eeeeee;
+  background-color: #ffffff;
 }
 a {
   outline: none !important;
@@ -1993,7 +1993,7 @@ body.chat-open .user-info-navbar a[data-toggle="chat"] {
   color: #606161;
 }
 .user-info-navbar {
-  background-color: #ffffff;
+  background-color: #eeeeee;
   min-height: 0;
   border: 0;
   padding: 0;
@@ -4688,7 +4688,7 @@ label.cbr-inline + .cbr-inline {
 .panel-group .panel .panel-heading a[data-toggle="collapse"]:before {
   float: right;
   display: block;
-  content: '–';
+  content: '鈥�;
   font-size: 18px;
   width: 25px;
   text-align: right;
@@ -5550,7 +5550,7 @@ blockquote small {
   width: 10%;
 }
 .dataTables_wrapper tr .yadcf-filter-wrapper .yadcf-filter-wrapper-inner .yadcf-filter-range-number-seperator:after {
-  content: '–';
+  content: '鈥�;
   color: #979898;
   font-size: 11px;
   font-weight: normal;

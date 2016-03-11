@@ -42,8 +42,8 @@
                 
                         
                 <ul id="main-menu" class="main-menu">
-                    <li class="active opened active">
-                        <a href="index.html">
+                    <li class="active opened active" id="console-menu">
+                        <a href="javascript:console.toConsole();">
                             <i class="linecons-cog"></i>
                             <span class="title">控制台</span>
                         </a>
@@ -176,5 +176,7 @@
 
     <!-- JavaScripts initializations and stuff -->
     <script src="plugins/bootstrap/js/xenon-custom.js"></script>
+    
+    <script src="js/main.js"></script>
 </body>
 </html>
