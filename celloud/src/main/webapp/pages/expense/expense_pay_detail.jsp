@@ -1,29 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<table class="table data-table">
+<table class="table data-table text-center">
     <thead>
         <tr>
-            <th>扣费时间</th>
-            <th class="file-name">文件名称</th>
-            <th class="strain">应用名称</th>
-            <th class="data-tags">应用单价</th>
-            <th class="sample">实付价格</th>
-            <th class="data-size">备注</th>
+            <th class="pay-date">消费时间</th>
+            <th class="pay-detail">消费明细</th>
+<!--             <th class="data-tags">应用单价</th> -->
+            <th class="pay-money">消费C币</th>
+            <th class="pay-remarks">备注</th>
         </tr>
     </thead>
-    <tbody id="data-list-tbody">
+    <tbody id="data-list-tbody" class="pay-tbody">
 		<c:choose>
 		  <c:when test="${expensePageList.datas.size()>0 }">
 		    <c:forEach items="${expensePageList.datas }" var="expense" varStatus="status">
 		       <tr>
                   <td><fmt:formatDate value="${expense.createDate }" type="both"/></td>
-                  <td>${expense.fileInfos }</td>
-                  <td>${expense.appName }</td>
-                  <td>${expense.price }C</td>
-                  <td>${expense.price }C</td>
-                  <td>${expense.remark }</td>
+                  <td>数据<span title="${expense.fileInfos }"><c:choose><c:when test="${fn:length(expense.fileInfos)>80 }"><c:out value="${fn:substring(expense.fileInfos, 0, 80) }"/>...</c:when><c:otherwise>${expense.fileInfos }</c:otherwise></c:choose></span>
+                                                      运行${expense.appName }
+                  </td>
+<%--                   <td>${expense.price }C</td> --%>
+                  <td>${expense.price }</td>
+                  <td>
+                     <c:if test="${empty expense.remark }">无</c:if>
+                     ${expense.remark }
+                  </td>
               </tr>
             </c:forEach>
           </c:when>

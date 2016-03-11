@@ -128,7 +128,7 @@
   </select>
   <select id="getAllRunExpensesByUser" resultMap="extraResultMap" >
     select e.id, e.user_id, e.item_id, e.price, e.create_date, e.remark,a.app_Name,
-    GROUP_CONCAT(fe.file_name,'(',fe.data_key,')' SEPARATOR '&lt;br&gt;') file_infos
+    GROUP_CONCAT(fe.file_name SEPARATOR ',') file_infos
     from tb_expenses e,tb_file_expenses_relat fe,tb_app a
     where e.item_id=a.app_id and e.id=fe.expenses_id and e.user_id = #{userId}
     group by e.id

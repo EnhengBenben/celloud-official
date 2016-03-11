@@ -46,9 +46,9 @@
       <div class="select-one">
         <div class="price-con">
             <span class="text">
-                <span id="app-price-label">金额</span>：
-                <em id="total-price"><c:if test="${empty app.price }">0</c:if>${app.price }</em>
-                <span style="font-size:14px;color:#f60">C</span>
+<!--                 <span id="app-price-label">金额</span>： -->
+<%--                 <em id="total-price"><c:if test="${empty app.price }">0</c:if>${app.price }</em> --%>
+<!--                 <span style="font-size:14px;color:#f60">C</span> -->
             </span>
         </div>
       </div>
