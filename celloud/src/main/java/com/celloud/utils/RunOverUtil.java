@@ -285,7 +285,7 @@ public class RunOverUtil {
             String finalPath = appPath + DataFile.getDataKey();
             String result = FileTools.readAppoint(finalPath + "/SVG/type.txt");
             result = result.replace("Type: ", "");
-            result = result.replace(" <br />", "");
+            result = result.replace("<br />", "");
             String snpType = FileTools
                     .readAppoint(finalPath + "/SVG/Report.txt");
             String type[] = snpType.split("<br />");
