@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.manager.constants.ConstantsData;
@@ -41,7 +42,24 @@ public class ConsoleAction {
                 map=consoleService.totalStatistics(user.getCompanyId());
             }
         }
+        mv.addObject("browserData", consoleService.getBrowserData());
         mv.addObject("resultMap", map);
         return mv;
+    }
+    
+    @ResponseBody
+    @RequestMapping("console/data")
+    public Map<String,Object> getStatisticsData(){
+        User user=ConstantsData.getLoginUser();
+        if(user!=null){
+            Integer role=user.getRole();
+            if(UserRole.ADMINISTRATOR.equals(role)){//超级管理员
+                return consoleService.getStatisticsData(null);
+            }
+            if(UserRole.BIG_CUSTOMER.equals(role)){//大客户
+                return consoleService.getStatisticsData(user.getCompanyId());
+            }
+        }
+        return null;
     }
 }

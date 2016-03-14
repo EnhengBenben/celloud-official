@@ -178,5 +178,9 @@
     <script src="plugins/bootstrap/js/xenon-custom.js"></script>
     
     <script src="js/main.js"></script>
+    
+     <!-- echarts -->
+    <script src="plugins/echarts-2.2.7/echarts-all.js"></script>
+    <script src="plugins/echarts-2.2.7/theme.js"></script>
 </body>
 </html>

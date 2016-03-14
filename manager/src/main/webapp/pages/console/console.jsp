@@ -4,6 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="css/home.css">
 <link rel="stylesheet" href="css/console.css">
+<script src="js/drawCharts.js"></script>
+<script src="js/console.js"></script>
 <div class="col-xs-12 console">
     <div class="row">
         <div class="widget-box transparent">
@@ -98,61 +100,63 @@
 	    </div>
 	</div>
 </div>
-<div class="row">
-    <div class="col-xs-12">
-        <h3 class="header smaller lighter green">用户登陆统计</h3>
-        <div id="loginId" class="col-sm-12" style="height: 350px;"></div>
-        <!-- row -->
-        <div class="space"></div>
-        <div class="hr hr32 hr-dotted"></div>
-        <!-- PAGE CONTENT ENDS -->
+<div class="col-xs-12 console">
+    <div class="row">
+        <div class="widget-box transparent">
+            <div class="widget-header widget-header-flat">
+	           <h3 class="header smaller lighter green">用户登陆统计</h3>
+	        </div>
+            <div id="loginId" class="col-sm-12" style="height: 350px;"></div>
+        </div>
     </div>
-    <!-- /.col -->
 </div>
-<div class="row">
-    <div class="col-xs-12">
-        <h3 class="header smaller lighter green">APP使用统计</h3>
-        <div class="col-sm-12" style="height: 350px;" id="AppRunNum"></div>
-        <!-- row -->
+<div class="col-xs-12 console">
+    <div class="row">
+        <div class="widget-box transparent">
+            <div class="widget-header widget-header-flat">
+	           <h3 class="header smaller lighter green">APP使用统计</h3>
+	         </div>
+            <div class="col-sm-12" style="height: 350px;" id="AppRunNum"></div>
+        </div>
     </div>
 </div>
 <!-- row -->
-<div class="row">
-    <div class="col-xs-12">
-        <h3 class="header smaller lighter green">用户运行统计</h3>
-        <div class="col-sm-12" style="height: 350px;" id="UserRunNum"></div>
+<div class="col-xs-12 console">
+    <div class="row">
+        <div class="widget-box transparent">
+            <div class="widget-header widget-header-flat">
+               <h3 class="header smaller lighter green">用户运行统计</h3>
+             </div>
+            <div class="col-sm-12" style="height: 350px;" id="UserRunNum"></div>
+        </div>
     </div>
 </div>
 <!-- /.row -->
-<c:if test="${userRole=='2' || userRole=='3' }">
-    <div class="row">
-        <div class="col-xs-12">
-            <h3 class="header smaller lighter green">浏览器统计</h3>
-        </div>
-
-        <div class="col-xs-4 table-responsiv " style="height: 350px; overflow-y: scroll">
-            <table id="allUserDataList" class="table table-striped table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>浏览器</th>
-                        <th class="hidden">版本号</th>
-                        <th class="hidden-180">使用数量</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach items="${resultMap.browser }" var="data">
-                        <tr>
-
-                            <td>${data.browser }</td>
-                            <td class="hidden">${data.browser_version }</td>
-                            <td>${data.logNum }</td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-xs-8">
-            <div class="col-sm-12" style="height: 350px" id="browserDistribute"></div>
-        </div>
+<div class="row">
+    <div class="col-xs-12">
+        <h3 class="header smaller lighter green">浏览器统计</h3>
     </div>
-</c:if>
+
+    <div class="col-xs-4 table-responsiv " style="height: 350px; overflow-y: scroll">
+        <table id="allUserDataList" class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>浏览器</th>
+                    <th class="hidden-180">使用数量</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach items="${browserData }" var="data">
+                    <tr>
+
+                        <td>${data.browser }</td>
+                        <td>${data.logNum }</td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-xs-8">
+        <div class="col-sm-12" style="height: 350px" id="browserDistribute"></div>
+    </div>
+</div>
