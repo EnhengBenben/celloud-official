@@ -1,5 +1,23 @@
+$.main = {};
 var intro;
 var hasNavi;
+$.main.show = {
+    mainDIV: function(){
+      $("#dataReportDIV").addClass("hide");
+      $("#uploadDIV").addClass("hide");
+      $("#mainDIV").removeClass("hide");
+    },
+    uploadDIV: function(){
+      $("#dataReportDIV").addClass("hide");
+      $("#mainDIV").addClass("hide");
+      $("#uploadDIV").removeClass("hide");
+    },
+    dataReportDIV: function(){
+      $("#mainDIV").addClass("hide");
+      $("#uploadDIV").addClass("hide");
+      $("#dataReportDIV").removeClass("hide");
+    }
+}
 $(function () {
   $.ajaxSetup ({
 	  complete:function(request,textStatus){
@@ -25,18 +43,17 @@ $(function () {
   
   /** 数据管理 */
   $("#to-data-main").on("click", function(e){
-	 $.AdminLTE.closeSidebar();
-	 $("#dataReportDIV").css("display","none");
-	 $("#uploadDIV").css("display","none");
-	 $("#mainDIV").css("display","");
+	 $.main.show.mainDIV();
 	 $("#mainDIV").load("pages/data/data_main.jsp");
   });
+  /** 消费记录 */
   $("#to-expense-model").on("click", function(){
     $.get("expense/getTotalConsumption",{},function(result){
       $("#total-consumption").html(result);
     });
   });
   $("#to-expense-main").on("click", function(){
+    $.main.show.mainDIV();
     $("#mainDIV").load("pages/expense/expense_main.jsp");
   });
   
@@ -286,9 +303,7 @@ var userCount=(function(userCount){
 	};
 	
 	self.showUserCount=function(){
-		$("#dataReportDIV").css("display","none");
-		$("#uploadDIV").css("display","none");
-		$("#mainDIV").css("display","");
+	  $.main.show.mainDIV();
 		$.get("count/loginCount",function(response){
 			$("#mainDIV").html(response);
 			self.fileMonthCount();
@@ -297,15 +312,6 @@ var userCount=(function(userCount){
 			self.appMonthCount();
 		});
 	};
-	self.toDataMain=function(){
-		$.AdminLTE.closeSidebar();
-		$('.treeview').removeClass("active");
-		$("#toDataMenu").addClass('active');
-		 $("#dataReportDIV").css("display","none");
-		 $("#uploadDIV").css("display","none");
-		 $("#mainDIV").css("display","");
-		 $("#mainDIV").load("pages/data/data_main.jsp");
-	}
 	self.toReportMain=function(){
 		$('.treeview').removeClass("active");
 		$("#toReportMenu").addClass('active');
@@ -323,9 +329,7 @@ var userCount=(function(userCount){
  * 数据上传
  */
 function showUpload(){
-	$("#uploadDIV").css("display","");
-	$("#dataReportDIV").css("display","none");
-	$("#mainDIV").css("display","none");
+	$.main.show.uploadDIV();
 	if($("#uploadDIV").html()==""){
 		$("#uploadDIV").load("pages/upload/upload.jsp");
 	}
@@ -336,9 +340,7 @@ function showUpload(){
  */
 function showReport(){
 	$.AdminLTE.closeSidebar();
-	$("#dataReportDIV").css("display","none");
-	$("#uploadDIV").css("display","none");
-	$("#mainDIV").css("display","");
+	$.main.show.mainDIV();
 	if(intro != null && hasNavi == 1){
 		intro.exit();
 		intro = null;
@@ -365,10 +367,7 @@ function showReport(){
  * 应用市场
  */
 function showAppStore(){
-//	$.AdminLTE.closeSidebar();
-	$("#dataReportDIV").css("display","none");
-	$("#uploadDIV").css("display","none");
-	$("#mainDIV").css("display","");
+  $.main.show.mainDIV();
 	$.get("app/toAppStore",{},function(responseText){
 		$("#mainDIV").html(responseText);
 	});
@@ -378,10 +377,7 @@ function showAppStore(){
  * 统计页面
  */
 function showCount(){
-	$.AdminLTE.closeSidebar();
-	$("#dataReportDIV").css("display","none");
-	$("#uploadDIV").css("display","none");
-	$("#mainDIV").css("display","");
+  $.main.show.mainDIV();
 	$("#mainDIV").load("pages/count/count_main.jsp");
 }
 
@@ -389,21 +385,17 @@ function showCount(){
  * 帐号管理
  */
 function showUser(){
-	$("#dataReportDIV").css("display","none");
-	$("#uploadDIV").css("display","none");
-	$("#mainDIV").css("display","");
+  $.main.show.mainDIV();
 	//为右上角个人信息链接过来增加active样式
 	$('.treeview').removeClass("active");
-    $("#accountManage").addClass('active');
+  $("#accountManage").addClass('active');
 	$("#mainDIV").load("user/info");
 }
 /**
  * 问题反馈(工单)
  */
 function showFeedback(){
-	$("#dataReportDIV").css("display","none");
-	$("#uploadDIV").css("display","none");
-	$("#mainDIV").css("display","");
+  $.main.show.mainDIV();
 	//为右上角个人信息链接过来增加active样式
 	$('.treeview').removeClass("active");
     $("#feedbackManage").addClass('active');
@@ -413,9 +405,7 @@ function showFeedback(){
  * 帮助
  */
 function showHelp(){
-	$("#dataReportDIV").css("display","none");
-	$("#uploadDIV").css("display","none");
-	$("#mainDIV").css("display","");
+  $.main.show.mainDIV();
 	$('.treeview').removeClass("active");
     $("#toHelpMenu").addClass('active');
 	$("#mainDIV").load("pages/help/help_question.jsp");
