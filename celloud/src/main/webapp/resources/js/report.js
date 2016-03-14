@@ -324,7 +324,7 @@ $.ajaxSetup ({
 			                    $(this).css("border-left","none");
 			                }
 			                if(appId=="82"){
-			                    if($(this).html()=="<span>不敏感</span>"){
+			                    if($(this).html()=="不敏感"){
 			                        $(this).addClass("red");
 			                    }
 			                }
