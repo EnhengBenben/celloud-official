@@ -379,7 +379,11 @@
 	opacity: 0;
 	filter: alpha(opacity = 0);
 	position: relative;
-	z-index: 3
+	z-index: 3;
+	font-weight: normal;
+    font-family: "微软雅黑";
+    padding: 0px;
+    display: block;
 }
 .common-normal .slide-con li:hover .button {
 	opacity: 1;

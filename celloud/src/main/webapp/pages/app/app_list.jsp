@@ -55,8 +55,8 @@
 		      <div class="item-box">
 		          <div class="box-btn">
 		            <p>
-		              <span class="sync_price" id="price_cmjz000559" code="cmjz000559" servicepackage="" inquerytype="cloudmarket">${app.price }</span>
-		              <font id="price_unit_cmjz000559">&nbsp;C</font>
+<%-- 		              <span class="sync_price" id="price_cmjz000559" code="cmjz000559" servicepackage="" inquerytype="cloudmarket">${app.price }</span> --%>
+<!-- 		              <font id="price_unit_cmjz000559">&nbsp;C</font> -->
 		            </p>
 		            <a class="xq" href="javascript:appStore.toAppDetail(${app.appId })" style="display: none;">查看详情</a>
 		          </div>

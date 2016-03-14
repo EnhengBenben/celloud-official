@@ -2874,3 +2874,17 @@ table.text-center th {
   float: right;
   margin-right: -15px;
 }
+/*
+=============
+费用中心
+=============
+*/
+.pay-date{
+	width: 150px;
+}
+.pay-money{
+	width: 100px;
+}
+.pay-remarks{
+	width: 100px;
+}

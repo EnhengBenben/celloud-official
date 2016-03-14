@@ -8,5 +8,5 @@ package com.celloud.constants;
  */
 public class ExpensesRemark {
 
-    public static final String RERUN_FREE = "同一数据运行同一应用只计一次费用";
+    public static final String RERUN_FREE = "重复运行";
 }
