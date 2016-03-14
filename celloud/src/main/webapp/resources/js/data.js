@@ -545,7 +545,9 @@ function _init_data(){
         var dataId = $(choicearr[i]).val();
         $.dataManager.checkData.isCheck(dataId);
       }
-      $.dataManager.editBtn.show();
+      if(_checkedLength.length>0){
+        $.dataManager.editBtn.show();
+      }
     }else{
       $("[name='"+name+"']").prop("checked",false);
       $.dataManager.editBtn.disable();
