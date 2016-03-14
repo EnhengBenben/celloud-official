@@ -133,7 +133,7 @@
     GROUP_CONCAT(fe.file_name SEPARATOR ',') file_infos
     from tb_expenses e,tb_file_expenses_relat fe,tb_app a
     where e.item_id=a.app_id and e.id=fe.expenses_id and e.user_id = #{userId}
-    group by e.id
+    group by e.id order by e.create_date desc
   </select>
   <select id="getTotalExpensesByUser" resultType="java.math.BigDecimal">
     select sum(price) from tb_expenses where user_id=#{userId}
