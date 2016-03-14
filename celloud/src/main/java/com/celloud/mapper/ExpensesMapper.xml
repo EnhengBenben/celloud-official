@@ -123,8 +123,10 @@
       data_key, file_name)
     values (#{expensesId}, #{projectId}, #{fileId}, #{dataKey},#{fileName})
   </insert>
-  <select id="getFileExpenseNum" resultType="java.lang.Integer">
-     select count(*) exp_num from tb_file_expenses_relat where file_id=#{fileId}
+  <select id="getFileExpenseNum">
+     select count(*) exp_num from tb_file_expenses_relat fe,tb_expenses e 
+     where fe.expenses_id=e.id and file_id=#{fileId}
+     and e.item_id=#{itemId} and e.item_type=#{itemType}
   </select>
   <select id="getAllRunExpensesByUser" resultMap="extraResultMap" >
     select e.id, e.user_id, e.item_id, e.price, e.create_date, e.remark,a.app_Name,
