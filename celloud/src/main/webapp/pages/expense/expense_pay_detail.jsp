@@ -13,7 +13,7 @@
             <th class="pay-remarks">备注</th>
         </tr>
     </thead>
-    <tbody id="data-list-tbody" class="pay-tbody">
+    <tbody id="pay-list-tbody" class="pay-tbody">
 		<c:choose>
 		  <c:when test="${expensePageList.datas.size()>0 }">
 		    <c:forEach items="${expensePageList.datas }" var="expense" varStatus="status">

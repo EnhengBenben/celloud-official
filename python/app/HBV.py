@@ -151,6 +151,9 @@ class HBV:
 			result['original'] = original
 			result['other'] = other
 			result['out'] = out
+			if 'type' not in result.keys() or result['type']=='':
+				result['reporttxt']='测序失败，建议重测'
+
 		#zip
 		zip = os.path.join(path,'HBV_SNP.zip')
 		if(os.path.exists(zip)):

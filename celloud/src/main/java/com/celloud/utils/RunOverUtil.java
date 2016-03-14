@@ -285,7 +285,7 @@ public class RunOverUtil {
             String finalPath = appPath + DataFile.getDataKey();
             String result = FileTools.readAppoint(finalPath + "/SVG/type.txt");
             result = result.replace("Type: ", "");
-            result = result.replace(" <br />", "");
+            result = result.replace("<br />", "");
             String snpType = FileTools
                     .readAppoint(finalPath + "/SVG/Report.txt");
             String type[] = snpType.split("<br />");
@@ -345,6 +345,9 @@ public class RunOverUtil {
             for (int j = 0; j < typeResult.length; j++) {
                 typeTotal.append(typeResult[j]);
             }
+			if (StringUtils.isBlank(result)) {
+				typeTotal = new StringBuffer("测序失败，建议重测");
+			}
             resultArray.append(DataFile.getDataKey()).append("\t")
                     .append(DataFile.getFileName()).append("\t").append(result)
                     .append("\t").append(typeTotal.toString()).append("\n");

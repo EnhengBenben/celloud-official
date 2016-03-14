@@ -394,7 +394,7 @@ function _init_data(){
   	$("#data-list-tbody").find("td[name='data-name-td']").each(function(){
   	  var _data = $(this).attr("title");
   	  if(_data.length>40){
-  	    var newData = $.dataManager.splitDataByInfo(_data, "\r\n" ,40);
+  	    var newData = utils.splitDataByInfo(_data, "\r\n" ,40);
   	    $(this).attr("title",newData);
   	  }
   	});
@@ -601,30 +601,6 @@ function _init_data(){
       $("#manage-data-btn").addClass("disabled");
     }
   };
-  
-  /**
-   * title每隔n个字符插入指定字符
-   */
-  /**
-    @param data 原始字符串
-    @param splitStr 要插入的字符串
-    @param number 间隔的字符长度
-    @example $.dataManager.splitDataByInfo("abcdefghijklmno","\r\n",10) 
-       即表示在字符串"abcdefghijklmno"中每隔10个字符串插入"\r\n字符串"
-  */
-  $.dataManager.splitDataByInfo = function(data,splitStr,number){
-    var reStr = "(.{"+number+"}|.*)"; 
-    var reg = new RegExp(reStr,"g"); 
-    var dataArray = data.match(reg) ;
-    dataArray.pop();
-    var arrLength = dataArray.length+1; 
-    for(var i=0;i<dataArray.length;i+=2){ 
-      dataArray.splice(i+1,0,splitStr);
-    } 
-    dataArray.pop();
-    var str = dataArray.join('');
-    return str; 
-  }
   
   /**
    * Tools ----end
