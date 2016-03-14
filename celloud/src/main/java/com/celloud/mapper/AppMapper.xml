@@ -352,7 +352,7 @@
         </if>
     </select>
     <select id="getAppById" resultMap="extraResultMap"  >
-    select a.app_id,a.app_name,a.english_name,a.address,a.picture_name,a.create_date,a.intro,a.description,a.app_doc,a.data_num,
+    select a.app_id,a.app_name,a.english_name,a.address,a.picture_name,a.create_date,a.intro,a.description,a.app_doc,a.data_num,a.run_type,
     c.company_name,GROUP_CONCAT(distinct cls.classify_name) classifyNames,ua.is_add,p.price
     from tb_app a
     left join tb_company c on a.company_id=c.company_id 
