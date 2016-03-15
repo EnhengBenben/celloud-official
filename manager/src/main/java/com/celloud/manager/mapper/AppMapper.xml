@@ -328,6 +328,9 @@
 		   <if test="companyId!=null">
 	       and a.company_id=#{companyId}
 	       </if>
+	       <if test="testAccountIds != null">
+	        and p.user_id not in(${testAccountIds})
+	        </if>
             and r.flag=#{flag} and r.period=#{period}) temp
 	GROUP BY temp.app_id 
 	ORDER BY runNum desc 
@@ -343,6 +346,9 @@
            <if test="companyId!=null">
            and a.company_id=#{companyId}
            </if>
+           <if test="testAccountIds != null">
+            and p.user_id not in(${testAccountIds})
+            </if>
             and r.flag=#{flag} and r.period=#{period}) temp
     GROUP BY temp.user_id 
     ORDER BY runNum desc 

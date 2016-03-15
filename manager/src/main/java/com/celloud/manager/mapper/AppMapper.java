@@ -44,7 +44,7 @@ public interface AppMapper {
      * @author han
      * @date 2016年3月11日 下午3:12:16
      */
-    public List<Map<String,Integer>> countAppRunNum(@Param("companyId") Integer companyId,@Param("offLine") int offLine,@Param("flag") Integer flag,@Param("period") int period);
+    public List<Map<String,Integer>> countAppRunNum(@Param("companyId") Integer companyId,@Param("offLine") int offLine,@Param("flag") Integer flag,@Param("period") int period,@Param("testAccountIds")String testAccountIds);
     
     /**
      * 统计大客户下的用户运行 app次数
@@ -57,6 +57,6 @@ public interface AppMapper {
      * @author han
      * @date 2016年3月11日 下午3:22:33
      */
-    public List<Map<String,Integer>> countAppRunNumByUser(@Param("companyId") Integer companyId,@Param("offLine") int offLine,@Param("flag") Integer flag,@Param("period") int period);
+    public List<Map<String,Integer>> countAppRunNumByUser(@Param("companyId") Integer companyId,@Param("offLine") int offLine,@Param("flag") Integer flag,@Param("period") int period,@Param("testAccountIds")String testAccountIds);
     
 }

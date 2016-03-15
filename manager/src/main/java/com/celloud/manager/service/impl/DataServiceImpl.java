@@ -28,12 +28,12 @@ public class DataServiceImpl implements DataService{
 
     @Override
     public int totalDataNum(Integer companyId) {
-        return dataFileMapper.countDataFile(companyId, DataState.ACTIVE);
+        return dataFileMapper.countDataFile(companyId, DataState.ACTIVE,PropertiesUtil.testAccountIds);
     }
 
     @Override
     public long totalDataSize(Integer companyId) {
-        return dataFileMapper.countDataFileSize(companyId, DataState.ACTIVE);
+        return dataFileMapper.countDataFileSize(companyId, DataState.ACTIVE,PropertiesUtil.testAccountIds);
     }
 
     @Override

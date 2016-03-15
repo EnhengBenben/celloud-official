@@ -45,6 +45,9 @@
         <if test="companyId != null">
         and ucr.company_id=#{companyId}
         </if>
+        <if test="testAccountIds != null">
+        and ucr.user_id not in(${testAccountIds})
+        </if>
     </select>
     <select id="countCompany" resultType="java.lang.Integer">
         select count(DISTINCT u.company_id) 
@@ -53,6 +56,9 @@
         where u.state=#{state}
         <if test="companyId != null">
         and ucr.company_id=#{companyId}
+        </if>
+        <if test="testAccountIds != null">
+        and ucr.user_id not in(${testAccountIds})
         </if>
     </select>
     <select id="countCompanyByProvince" resultType="java.util.Map">
@@ -64,6 +70,9 @@
         <if test="companyId != null">
         and ucr.company_id=#{companyId}
         </if>
+        <if test="testAccountIds != null">
+        and ucr.user_id not in(${testAccountIds})
+        </if>
 		GROUP BY c.province
     </select>
     <select id="countLogin" resultType="java.util.Map">
@@ -73,6 +82,9 @@
         where u.state=#{state}
         <if test="companyId != null">
         and ucr.company_id=#{companyId}
+        </if>
+        <if test="testAccountIds != null">
+        and ucr.user_id not in(${testAccountIds})
         </if>) a on l.user_id=a.user_id 
 		where l.operate='登录' or l.operate='用户登录' 
 		GROUP BY l.user_id 

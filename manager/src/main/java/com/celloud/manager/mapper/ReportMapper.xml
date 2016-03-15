@@ -215,6 +215,9 @@
   <if test="companyId!=null">
     and ucr.company_id=#{companyId}
   </if>
+  <if test="testAccountIds!=null">
+    and p.user_id not in(${testAccountIds }) 
+    </if>
   ) a;
   </select>
 </mapper>

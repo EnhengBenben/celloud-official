@@ -39,12 +39,12 @@ public class ConsoleServiceImpl implements ConsoleService{
     @Override
     public Map<String, Object> totalStatistics(Integer companyId) {
         Map<String,Object> map=new HashMap<String,Object>();
-        int userNum=userMapper.countUser(companyId, DataState.ACTIVE);//大客户下的用户数量
-        int companyNum=userMapper.countCompany(companyId, DataState.ACTIVE);//大客户下的医院数量
+        int userNum=userMapper.countUser(companyId, DataState.ACTIVE,PropertiesUtil.testAccountIds);//大客户下的用户数量
+        int companyNum=userMapper.countCompany(companyId, DataState.ACTIVE,PropertiesUtil.testAccountIds);//大客户下的医院数量
         int appNum=appMapper.countApp(companyId, AppOffline.ON);//大客户下的app数量
-        int dataNum=dataFileMapper.countDataFile(companyId, DataState.ACTIVE);
-        long dataSize=dataFileMapper.countDataFileSize(companyId, DataState.ACTIVE);
-        int reportNum=reportMapper.countReport(companyId, DataState.ACTIVE,ReportPeriod.COMPLETE);
+        int dataNum=dataFileMapper.countDataFile(companyId, DataState.ACTIVE,PropertiesUtil.testAccountIds);
+        long dataSize=dataFileMapper.countDataFileSize(companyId, DataState.ACTIVE,PropertiesUtil.testAccountIds);
+        int reportNum=reportMapper.countReport(companyId, DataState.ACTIVE,ReportPeriod.COMPLETE,PropertiesUtil.testAccountIds);
         map.put("userNum", userNum);
         map.put("companyNum", companyNum);
         map.put("appNum", appNum);
@@ -57,10 +57,10 @@ public class ConsoleServiceImpl implements ConsoleService{
     @Override
     public Map<String, Object> getStatisticsData(Integer companyId) {
         Map<String,Object> map=new HashMap<String,Object>();
-        List<Map<String,Integer>>provinceData=userMapper.countCompanyByProvince(companyId, DataState.ACTIVE);//医院地理分布统计
-        List<Map<String,Integer>>loginData=userMapper.countLogin(companyId, DataState.ACTIVE);
-        List<Map<String,Integer>>appRunData=appMapper.countAppRunNum(companyId, AppOffline.ON, ReportType.PROJECT, ReportPeriod.COMPLETE);
-        List<Map<String,Integer>>userRunData=appMapper.countAppRunNumByUser(companyId, AppOffline.ON, ReportType.PROJECT, ReportPeriod.COMPLETE);
+        List<Map<String,Integer>>provinceData=userMapper.countCompanyByProvince(companyId, DataState.ACTIVE,PropertiesUtil.testAccountIds);//医院地理分布统计
+        List<Map<String,Integer>>loginData=userMapper.countLogin(companyId, DataState.ACTIVE,PropertiesUtil.testAccountIds);
+        List<Map<String,Integer>>appRunData=appMapper.countAppRunNum(companyId, AppOffline.ON, ReportType.PROJECT, ReportPeriod.COMPLETE,PropertiesUtil.testAccountIds);
+        List<Map<String,Integer>>userRunData=appMapper.countAppRunNumByUser(companyId, AppOffline.ON, ReportType.PROJECT, ReportPeriod.COMPLETE,PropertiesUtil.testAccountIds);
         List<Map<String,Integer>>browserData=logMapper.countBrowser(PropertiesUtil.testAccountIds);
         map.put("provinceData", provinceData);
         map.put("loginData", loginData);

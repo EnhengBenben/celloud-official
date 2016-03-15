@@ -31,7 +31,7 @@ public interface DataFileMapper {
      * @author han
      * @date 2016年3月10日 下午3:06:36
      */
-    public int countDataFile(@Param("companyId")Integer companyId,@Param("state")int state);
+    public int countDataFile(@Param("companyId")Integer companyId,@Param("state")int state,@Param("testAccountIds")String testAccountIds);
     
     /**
      * 大客户下数据大小统计
@@ -42,7 +42,7 @@ public interface DataFileMapper {
      * @author han
      * @date 2016年3月10日 下午3:11:16
      */
-    public long countDataFileSize(@Param("companyId")Integer companyId,@Param("state")int state);
+    public long countDataFileSize(@Param("companyId")Integer companyId,@Param("state")int state,@Param("testAccountIds")String testAccountIds);
     
     /**
      * 按月份统计大客户数据
