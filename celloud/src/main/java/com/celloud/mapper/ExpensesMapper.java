@@ -48,7 +48,7 @@ public interface ExpensesMapper {
      * @date 2016年3月4日 下午4:27:31
      */
     int getFileExpenseNum(@Param("fileId") Integer fileId,
-            @Param("itemId") Integer itemId, @Param("ItemType") Byte itemType);
+            @Param("itemId") Integer itemId, @Param("itemType") Byte itemType);
 
     /**
      * 查询所有运行消费记录
