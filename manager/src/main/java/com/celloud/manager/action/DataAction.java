@@ -84,4 +84,40 @@ public class DataAction {
         }
         return resultMap;
     }
+    
+    @RequestMapping("userDataCount")
+    public ModelAndView userDataCount(){
+        ModelAndView mv=new ModelAndView("data/data_user");
+        User user=ConstantsData.getLoginUser();
+        List<Map<String,Object>> userDataCount=null;
+        if(user!=null){
+            Integer role=user.getRole();
+            mv.addObject("userRole", role);
+            if(UserRole.ADMINISTRATOR.equals(role)){//超级管理员
+                userDataCount=dataService.getBigCustomerDataCountByUser(null);
+            }
+            if(UserRole.BIG_CUSTOMER.equals(role)){//大客户
+                userDataCount=dataService.getBigCustomerDataCountByUser(user.getCompanyId());
+            }
+        }
+        mv.addObject("userDataCount", userDataCount);
+        return mv;
+    }
+    
+    @ResponseBody
+    @RequestMapping("data/dataUser")
+    public List<Map<String,Object>> getDataByUser(){
+        User user=ConstantsData.getLoginUser();
+        List<Map<String,Object>> userDataCount=null;
+        if(user!=null){
+            Integer role=user.getRole();
+            if(UserRole.ADMINISTRATOR.equals(role)){//超级管理员
+                userDataCount=dataService.getBigCustomerDataCountByUser(null);
+            }
+            if(UserRole.BIG_CUSTOMER.equals(role)){//大客户
+                userDataCount=dataService.getBigCustomerDataCountByUser(user.getCompanyId());
+            }
+        }
+        return userDataCount;
+    }
 }

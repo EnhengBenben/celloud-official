@@ -60,4 +60,9 @@ public class DataServiceImpl implements DataService{
         return dataFileMapper.countDataFileByMonth(companyId, DataState.ACTIVE, PropertiesUtil.testAccountIds,order);
     }
 
+    @Override
+    public List<Map<String, Object>> getBigCustomerDataCountByUser(Integer companyId) {
+        return dataFileMapper.countDataFileByUser(companyId, DataState.ACTIVE, PropertiesUtil.testAccountIds);
+    }
+
 }

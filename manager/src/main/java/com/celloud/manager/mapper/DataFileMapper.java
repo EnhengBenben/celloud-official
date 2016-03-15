@@ -55,4 +55,17 @@ public interface DataFileMapper {
      * @date 2016年3月14日 下午6:23:29
      */
     public List<Map<String,Object>> countDataFileByMonth(@Param("companyId")Integer companyId,@Param("state")int state,@Param("testAccountIds")String testAccountIds,@Param("order")String order);
+    
+    /**
+     * 按用户统计大客户数据
+     *
+     * @param companyId
+     * @param state
+     * @param testAccountIds
+     * @return
+     * @author han
+     * @date 2016年3月15日 下午3:45:13
+     */
+    public List<Map<String,Object>> countDataFileByUser(@Param("companyId")Integer companyId,@Param("state")int state,@Param("testAccountIds")String testAccountIds);
+
 }

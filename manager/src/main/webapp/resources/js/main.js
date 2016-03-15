@@ -30,6 +30,14 @@ var dataFile=(function(dataFile){
 			$("#data-count-menu").addClass("active");
 		});
 	};
+	
+	self.toUserDataCount=function(){
+		$.post("userDataCount",function(responseText){
+			$("#main-content").html(responseText);
+			$("#main-menu li").removeClass("active");
+			$("#data-user-menu").addClass("active");
+		});
+	};
 	return self;
 })(dataFile);
 

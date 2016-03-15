@@ -275,4 +275,22 @@
 	GROUP BY time
 	ORDER BY time ${order}
   </select>
+  <select id="countDataFileByUser" resultType="java.util.Map">
+  select count(f.file_id) dataNum,sum(f.size) dataSize,u.username,c.company_name
+    from tb_file f 
+    LEFT JOIN tb_user u on f.user_id=u.user_id 
+    LEFT JOIN tb_user_company_relat ucr on ucr.user_id=u.user_id
+    INNER JOIN tb_company c on c.company_id=u.company_id
+    where f.state=#{state}
+    
+    <if test="companyId!=null">
+    and ucr.company_id=#{companyId}
+    </if>
+    <if test="testAccountIds!=null">
+    and f.user_id not in(${testAccountIds }) 
+    </if>
+    
+    GROUP BY f.user_id
+    ORDER BY dataNum desc
+  </select>
 </mapper>
