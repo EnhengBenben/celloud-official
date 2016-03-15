@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <div>
+	<input type="hidden" value="${hcv.projectId }" id="_projectId">
 	<!--文件名称-->
 	<div class="m-file">
 	    <dl class="dl-horizontal datareport-title">
