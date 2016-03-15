@@ -339,7 +339,6 @@ function showUpload(){
  * 报告
  */
 function showReport(){
-	$.AdminLTE.closeSidebar();
 	$.main.show.mainDIV();
 	if(intro != null && hasNavi == 1){
 		intro.exit();
