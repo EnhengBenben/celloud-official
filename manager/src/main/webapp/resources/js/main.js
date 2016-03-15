@@ -21,6 +21,18 @@ var console=(function(console){
 	return self;
 })(console);
 
+var dataFile=(function(dataFile){
+	var self=dataFile||{};
+	self.toDataCount=function(){
+		$.post("dataCount",function(responseText){
+			$("#main-content").html(responseText);
+			$("#main-menu li").removeClass("active");
+			$("#data-count-menu").addClass("active");
+		});
+	};
+	return self;
+})(dataFile);
+
 $(function(){
 	console.toConsole();
 });

@@ -1,5 +1,8 @@
 package com.celloud.manager.mapper;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.celloud.manager.model.DataFile;
@@ -40,4 +43,16 @@ public interface DataFileMapper {
      * @date 2016年3月10日 下午3:11:16
      */
     public long countDataFileSize(@Param("companyId")Integer companyId,@Param("state")int state);
+    
+    /**
+     * 按月份统计大客户数据
+     *
+     * @param companyId
+     * @param state
+     * @param testAccountIds
+     * @return
+     * @author han
+     * @date 2016年3月14日 下午6:23:29
+     */
+    public List<Map<String,Object>> countDataFileByMonth(@Param("companyId")Integer companyId,@Param("state")int state,@Param("testAccountIds")String testAccountIds,@Param("order")String order);
 }

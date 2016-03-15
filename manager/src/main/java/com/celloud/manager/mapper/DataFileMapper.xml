@@ -253,4 +253,18 @@
     and ucr.company_id=#{companyId}
   </if>
   </select>
+  <select id="countDataFileByMonth" resultType="java.util.Map">
+    select count(f.file_id) dataNum,c.company_name,date_format(f.create_date,'%Y-%m') time,c.company_id,sum(f.size) dataSize
+	from tb_file f 
+	LEFT JOIN tb_user u on f.user_id=u.user_id 
+	LEFT JOIN tb_user_company_relat ucr on ucr.user_id=u.user_id
+	INNER JOIN tb_company c on c.company_id=ucr.company_id
+	where f.user_id not in(${testAccountIds }) 
+	<if test="companyId!=null">
+    and ucr.company_id=#{companyId}
+    </if>
+	and f.state=#{state}
+	GROUP BY time
+	ORDER BY time ${order}
+  </select>
 </mapper>

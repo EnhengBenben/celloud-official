@@ -141,15 +141,64 @@ var drawCharts=(function(drawCharts){
 		myChart.setOption(option);
 	}
 	
+	self.barChart=function(id,data,title,length,x,y,theme) {
+		var xAxis = new Array(data.length);
+		var yAxis = new Array(data.length);
+		var t;
+		for (var i = 0; i < data.length; i++) {
+			xAxis[i] = data[i][x];
+			yAxis[i] = data[i][y];
+		}
+		var option = makeOptionScrollUnit(xAxis, yAxis, title, 'bar', 0, length);
+		var myChart = echarts.init(document.getElementById(id), theme);
+		myChart.setOption(option);
+	}
+	
+	self.lineChart=function(id,data, seriesName,dataName,x,y){
+		var listCmp = data[seriesName];
+		var dataMon=data[dataName];
+        var opt;
+        for (var i = 0; i < listCmp.length; i++) {
+        	var temp = dataMon[i];
+        	var xAxis = new Array(temp.length);
+            var yAxis = new Array(temp.length);
+            for (var j = 0; j < temp.length; j++) {
+                yAxis[j] = temp[j][y];
+                xAxis[j] = temp[j][x];
+            }
+            if (i == 0) {
+                opt = makeOptionScrollUnit(xAxis, yAxis, listCmp[0], 'line', 100, xAxis.length,null,null,"hideItem");
+            } else {
+                opt = makeOptionAdd(opt, yAxis, listCmp[i], 'line');
+            }
+        }
+        var myChart = echarts.init(document.getElementById(id));
+        myChart.setOption(opt);
+	};
+	
+	self.pieChart=function(id,data,x,y,title,name,rad, centerX, centerY) {
+		if (document.getElementById(id) == null)
+			return;
+		var vlist = new Array(data.length);
+		var yAxis = new Array(data.length);
+		var legendName = new Array(data.length);
+		for (var i = 0; i < data.length; i++) {
+			legendName[i] = data[i][x];
+			yAxis[i] = data[i][y];
+			vlist[i] = {
+				"name" : data[i][x],
+				"value" : data[i][y]
+			};
+		}
+		var opt = makePieOption(title, legendName, name, rad, centerX, centerY, vlist);
+		var myChart = echarts.init(document.getElementById(id), blue);
+		myChart.setOption(opt);
+	}
+	
 	
 	return self;
 })(drawCharts);
 
-/**
- * make echart option factorys
- */
-var lineType = 'line';
-var barType = 'bar';
 /**
  * @param title
  * @param xAxis

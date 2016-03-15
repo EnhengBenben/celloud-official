@@ -196,4 +196,7 @@
       address_detail = #{addressDetail,jdbcType=VARCHAR}
     where company_id = #{companyId,jdbcType=INTEGER}
   </update>
+  <select id="getBigCustomerCompany" resultMap="BaseResultMap" >
+    select c.* from tb_user u LEFT JOIN tb_company c on u.company_id=c.company_id where  u.role=#{role } and c.state=#{state} and u.state=#{state}
+  </select>
 </mapper>

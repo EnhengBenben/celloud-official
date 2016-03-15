@@ -54,8 +54,8 @@
                             <span class="title">数据统计</span>
                         </a>
                         <ul>
-                            <li>
-                                <a href="app_list.html">
+                            <li id="data-count-menu">
+                                <a href="javascript:dataFile.toDataCount();">
                                     <span class="title">数据总览</span>
                                 </a>
                             </li>
