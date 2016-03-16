@@ -9,7 +9,10 @@ $(document).ready(function() {
 		$.get("count/hbvCount",function(responseText){
 			$("#countDiv").html(responseText);
 			var url = $("#downUrl").val();
-			$("#_down").attr("href", url);
+			if(url){
+			  $("#_down").attr("href", url);
+			  $("#_down").removeClass("hide");
+			}
 		});
 	} else if (companyId == 33) {
 		$.get("count/cmpCount",function(responseText){

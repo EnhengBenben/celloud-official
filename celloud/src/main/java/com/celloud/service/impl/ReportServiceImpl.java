@@ -465,6 +465,10 @@ public class ReportServiceImpl implements ReportService {
         // 去重规则是，每个datakey只保留最近运行的那一次
         // 1. 查询
         List<HBV> hbvList = reportDao.getAppList(HBV.class, userId);
+        if(hbvList == null){
+        	result.put("data", hbvList);
+        	return result;
+        }
         // 2.筛选
         Map<String, HBV> map = new HashMap<String, HBV>();
         for (int i = 0; i < hbvList.size(); i++) {
@@ -512,7 +516,7 @@ public class ReportServiceImpl implements ReportService {
             StringBuffer line = new StringBuffer(hbv.getFileName())
                     .append("\t");
             if (hbv.getSite() == null) {
-                line.append("由于分析流程的升级，八月一日之前的分析结果无法提取到该信息，若需要请重新运行。");
+                line.append("由于分析流程的升级，2015年8月1日之前的分析结果无法提取到该信息，若需要请重新运行。");
                 for (int i = 0; i < 10; i++) {
                     line.append("\t");
                 }
