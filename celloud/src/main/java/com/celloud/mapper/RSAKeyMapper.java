@@ -6,12 +6,12 @@ import org.apache.ibatis.annotations.Param;
 
 import com.celloud.model.mysql.RSAKey;
 
-public interface RSAKeyMapper {
+public interface RSAKeyMapper extends AbstractDao<RSAKey>{
     public int deleteByPrimaryKey(Integer id);
 
     public int deleteByModulus(String modulus);
 
-    public int insert(RSAKey record);
+    public long insert(RSAKey record);
 
     public int insertSelective(RSAKey record);
 
