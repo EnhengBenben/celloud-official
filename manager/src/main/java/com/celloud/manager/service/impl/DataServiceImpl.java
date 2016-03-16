@@ -70,4 +70,9 @@ public class DataServiceImpl implements DataService{
         return dataFileMapper.countDataFileByCompany(companyId, DataState.ACTIVE, PropertiesUtil.testAccountIds);
     }
 
+    @Override
+    public List<Map<String, Object>> getBigCustomerDataCount() {
+        return dataFileMapper.countBigCustomerDataFile(DataState.ACTIVE, PropertiesUtil.testAccountIds);
+    }
+
 }

@@ -78,5 +78,17 @@ public interface DataFileMapper {
      * @date 2016年3月16日 上午10:33:17
      */
     public List<Map<String,Object>> countDataFileByCompany(@Param("companyId")Integer companyId,@Param("state")int state,@Param("testAccountIds")String testAccountIds);
+    
+    
+    /**
+     * 大客户统计
+     *
+     * @param state
+     * @param testAccountIds
+     * @return
+     * @author han
+     * @date 2016年3月16日 上午11:03:17
+     */
+    public List<Map<String,Object>> countBigCustomerDataFile(@Param("state")int state,@Param("testAccountIds")String testAccountIds);
 
 }

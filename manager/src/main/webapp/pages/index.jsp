@@ -70,8 +70,8 @@
                                 </a>
                             </li>
                             <c:if test="${loginUserInSession.role=='2'}">
-                                <li>
-                                    <a href="javascript:bigUserCount()">
+                                <li id="data-bigCustomer-menu">
+                                    <a href="javascript:dataFile.toBigCustomerDataCount()">
                                         <span class="title">大客户统计</span>
                                     </a>
                                 </li>

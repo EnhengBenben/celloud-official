@@ -45,6 +45,13 @@ var dataFile=(function(dataFile){
 			$("#data-company-menu").addClass("active");
 		});
 	};
+	self.toBigCustomerDataCount=function(){
+		$.post("bigCustomerDataCount",function(responseText){
+			$("#main-content").html(responseText);
+			$("#main-menu li").removeClass("active");
+			$("#data-bigCustomer-menu").addClass("active");
+		});
+	};
 	return self;
 })(dataFile);
 

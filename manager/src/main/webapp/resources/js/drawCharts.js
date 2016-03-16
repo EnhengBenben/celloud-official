@@ -159,7 +159,7 @@ var drawCharts=(function(drawCharts){
 		}
 	}
 	
-	self.lineChart=function(id,data, seriesName,dataName,x,y){
+	self.manyLineChart=function(id,data, seriesName,dataName,x,y){
 		var listCmp = data[seriesName];
 		var dataMon=data[dataName];
         var opt;
@@ -177,6 +177,20 @@ var drawCharts=(function(drawCharts){
                 opt = makeOptionAdd(opt, yAxis, listCmp[i], 'line');
             }
         }
+        var myChart = echarts.init(document.getElementById(id));
+        myChart.setOption(opt);
+	};
+	
+	self.lineChart=function(id,data, seriesName,x,y){
+		var listCmp = data[seriesName];
+        var opt;
+        var xAxis = new Array(data.length);
+        var yAxis = new Array(data.length);
+        for (var j = 0; j < data.length; j++) {
+        	yAxis[j] = data[j][y];
+        	xAxis[j] = data[j][x];
+        }
+        opt = makeOptionScrollUnit(xAxis, yAxis, seriesName, 'line', 100, xAxis.length,null,null,"hideItem");
         var myChart = echarts.init(document.getElementById(id));
         myChart.setOption(opt);
 	};

@@ -61,6 +61,15 @@ public interface DataService {
      */
     public List<Map<String,Object>> getBigCustomerDataCountByCompany(Integer companyId);
     
+    /**
+     * 大客户数据统计
+     *
+     * @return
+     * @author han
+     * @date 2016年3月16日 上午11:19:08
+     */
+    public List<Map<String,Object>> getBigCustomerDataCount();
+    
     
     
 }

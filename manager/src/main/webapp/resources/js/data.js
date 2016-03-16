@@ -53,7 +53,7 @@ $(function(){
      });
 	$.post("data/dataMon",function(data){
 		if(data.adminData!=null){
-			drawCharts.lineChart("bigUserFileNumView",data.adminData,'seriesName','dataMon','time','dataNum');
+			drawCharts.manyLineChart("bigUserFileNumView",data.adminData,'seriesName','dataMon','time','dataNum');
 		}
 		dataFile.drawChart(data.dataMon);
 	});

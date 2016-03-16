@@ -7,7 +7,9 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -85,6 +87,37 @@ public class DataAction {
         return resultMap;
     }
     
+    @ResponseBody
+    @RequestMapping(value="data/dataMon/{companyId}",method=RequestMethod.POST)
+    public List<Map<String,Object>> getDataByMon(@PathVariable Integer companyId){
+        User user=ConstantsData.getLoginUser();
+        List<Map<String,Object>> dataMon=null;
+        if(user!=null){
+            Integer role=user.getRole();
+            if(UserRole.ADMINISTRATOR.equals(role)&&companyId!=null){//超级管理员
+                dataMon=dataService.getBigCustomerDataCountByMon(companyId,"asc");
+            }
+            
+        }
+        return dataMon;
+    }
+    
+    @RequestMapping(value="data/dataMon/{companyId}",method=RequestMethod.GET)
+    public ModelAndView countDataByMon(@PathVariable Integer companyId){
+        ModelAndView mv=new ModelAndView("data/data_each_bigCustomer");
+        User user=ConstantsData.getLoginUser();
+        List<Map<String,Object>> dataMon=null;
+        if(user!=null){
+            Integer role=user.getRole();
+            if(UserRole.ADMINISTRATOR.equals(role)&&companyId!=null){//超级管理员
+                dataMon=dataService.getBigCustomerDataCountByMon(companyId,"desc");
+            }
+            
+        }
+        mv.addObject("dataMon", dataMon);
+        return mv;
+    }
+    
     @RequestMapping("userDataCount")
     public ModelAndView userDataCount(){
         ModelAndView mv=new ModelAndView("data/data_user");
@@ -156,4 +189,36 @@ public class DataAction {
         }
         return companyDataCount;
     }
+    
+    @RequestMapping("bigCustomerDataCount")
+    public ModelAndView bigCustomerDataCount(){
+        ModelAndView mv=new ModelAndView("data/data_bigCustomer");
+        User user=ConstantsData.getLoginUser();
+        List<Map<String,Object>> bigCustomerDataCount=null;
+        if(user!=null){
+            Integer role=user.getRole();
+            mv.addObject("userRole", role);
+            if(UserRole.ADMINISTRATOR.equals(role)){//超级管理员
+                bigCustomerDataCount=dataService.getBigCustomerDataCount();
+            }
+        }
+        mv.addObject("bigCustomerDataCount", bigCustomerDataCount);
+        return mv;
+    }
+    
+    @ResponseBody
+    @RequestMapping("data/dataBigCustomer")
+    public List<Map<String,Object>> getBigCustomerData(){
+        User user=ConstantsData.getLoginUser();
+        List<Map<String,Object>> bigCustomerDataCount=null;
+        if(user!=null){
+            Integer role=user.getRole();
+            if(UserRole.ADMINISTRATOR.equals(role)){//超级管理员
+                bigCustomerDataCount=dataService.getBigCustomerDataCount();
+            }
+        }
+        return bigCustomerDataCount;
+    }
+    
+    
 }
