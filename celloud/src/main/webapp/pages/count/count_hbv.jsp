@@ -52,4 +52,6 @@
   </c:choose>
   </tbody>
 </table>
-<input type="hidden" value="count/download?fileName=${map.fileName }" id="downUrl"></input>
+<c:if test="${map.data.size()>0}">
+	<input type="hidden" value="count/download?fileName=${map.fileName }" id="downUrl"></input>
+</c:if>
