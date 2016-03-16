@@ -545,7 +545,9 @@ function _init_data(){
         var dataId = $(choicearr[i]).val();
         $.dataManager.checkData.isCheck(dataId);
       }
-      $.dataManager.editBtn.show();
+      if($.dataManager.options.checkedIds.length>0){
+        $.dataManager.editBtn.show();
+      }
     }else{
       $("[name='"+name+"']").prop("checked",false);
       $.dataManager.editBtn.disable();
@@ -562,7 +564,7 @@ function _init_data(){
     },
     noCheck: function(dataId){
       $("#data-checkall").prop("checked",false);
-      var index = $.inArray(dataId, $.dataManager.options.checkedIds) + 1;
+      var index = $.inArray(dataId.toString(), $.dataManager.options.checkedIds);
       $.dataManager.options.checkedIds.splice(index, 1);
       $.dataManager.options.checkedNames.splice(index, 1);
     }

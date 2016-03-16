@@ -97,8 +97,7 @@ $.ajaxSetup ({
 		
 		//切换项目报告
 		function toProjectReport(){
-			$("#dataReportDIV").css("display","none");
-			$("#mainDIV").css("display","");
+		  $.main.show.mainDIV();
 		}
 		
 		//删除共享来的项目报告
@@ -479,8 +478,7 @@ $.ajaxSetup ({
 		function viewDataReport(event){
 		  $("#dataReportDIV").load("pages/report/report_data_main.jsp");
 		  $("#reportResultDiv").html("");
-			$("#mainDIV").css("display","none");
-			$("#dataReportDIV").css("display","");
+		  $.main.show.dataReportDIV();
 			if(typeof spinner != "undefined"){
 				spinner.stop();
 			}

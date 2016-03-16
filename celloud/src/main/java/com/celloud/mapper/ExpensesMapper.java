@@ -42,11 +42,13 @@ public interface ExpensesMapper {
      * 查询数据消费次数
      * 
      * @param fileId
+     * @param itemId
      * @return
      * @author leamo
      * @date 2016年3月4日 下午4:27:31
      */
-    int getFileExpenseNum(@Param("fileId") Integer fileId);
+    int getFileExpenseNum(@Param("fileId") Integer fileId,
+            @Param("itemId") Integer itemId, @Param("itemType") Byte itemType);
 
     /**
      * 查询所有运行消费记录
@@ -58,8 +60,7 @@ public interface ExpensesMapper {
      * @date 2016年3月4日 下午5:26:41
      */
     List<Expenses> getAllRunExpensesByUser(Page page,
-            @Param("userId") Integer userId,
-            @Param("ItemType") Byte itemType);
+            @Param("userId") Integer userId, @Param("ItemType") Byte itemType);
 
     /**
      * 查询用户总消费金额
