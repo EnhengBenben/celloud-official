@@ -23,6 +23,13 @@ function init_expense(){
       },
       loadlist: function(response){
         $("#expense-content").html(response);
+        $("#pay-list-tbody").find("span").each(function(){
+          var _data = $(this).attr("title");
+          if(_data.length>40){
+            var newData = utils.splitDataByInfo(_data, "\r\n" ,40);
+            $(this).attr("title",newData);
+          }
+        });
         /** 
          *翻页
          */

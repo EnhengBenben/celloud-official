@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,8 +66,6 @@ public class CompanyConstants {
      * @return
      */
     public static String getCompanyIconPath(String nameWithSuffix) {
-        int index = nameWithSuffix.indexOf(".");
-        ObjectId id = new ObjectId(nameWithSuffix.substring(0, index));
         return getCompanyIconPath() + File.separator + nameWithSuffix;
     }
 }

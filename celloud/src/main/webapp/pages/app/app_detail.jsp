@@ -14,10 +14,13 @@
           <h5>${app.appName }
             <span id="manageAppBtns" style="display:inline-block;position:relative;margin-left:20px;" data-step="2" data-intro="" data-position="bottom" data-img="changedApp.png">
               <c:choose>
-                <c:when test="${app.classifyNames.contains('工具软件') }">
+                <c:when test="${app.runType==0 }">
                   <a class="btn btn-celloud-success btn-flat" href="${app.address }" target="_blank"><i class="fa fa-plus"></i>&nbsp;点击使用</a>
                 </c:when>
                 <c:otherwise>
+                  <c:if test="${app.runType==2 }">
+	                  <a class="btn btn-celloud-success btn-flat" href="${app.address }" target="_blank"><i class="fa fa-plus"></i>&nbsp;点击使用</a>
+                  </c:if>
                   <c:choose>
                     <c:when test="${app.isAdded==0 }">
                       <a class="btn btn-celloud-success btn-flat" href="javascript:void(0);" onclick="appStore.addApp(${app.appId });" id="toAddApp"><i class="fa fa-plus"></i>&nbsp;添加</a>

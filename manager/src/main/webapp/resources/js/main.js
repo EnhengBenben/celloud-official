@@ -9,17 +9,46 @@ $.ajaxSetup ({
 	  },
 	  cache: false //关闭AJAX相应的缓存
   });
+function menu(id,content){
+	$("#main-content").html(content);
+	$("#main-menu li").removeClass("active");
+	$("#"+id).addClass("active").parent("li").addClass("active");
+}
 var console=(function(console){
 	var self=console||{};
 	self.toConsole=function(){
 		$.post("console",function(responseText){
-			$("#main-content").html(responseText);
-			$("#main-menu li").removeClass("active");
-			$("#console-menu").addClass("active");
+			menu("console-menu",responseText);
 		});
 	};
 	return self;
 })(console);
+
+var dataFile=(function(dataFile){
+	var self=dataFile||{};
+	self.toDataCount=function(){
+		$.post("dataCount",function(responseText){
+			menu("data-count-menu",responseText);
+		});
+	};
+	
+	self.toUserDataCount=function(){
+		$.post("userDataCount",function(responseText){
+			menu("data-user-menu",responseText);
+		});
+	};
+	self.toCompanyDataCount=function(){
+		$.post("companyDataCount",function(responseText){
+			menu("data-company-menu",responseText);
+		});
+	};
+	self.toBigCustomerDataCount=function(){
+		$.post("bigCustomerDataCount",function(responseText){
+			menu("data-bigCustomer-menu",responseText);
+		});
+	};
+	return self;
+})(dataFile);
 
 $(function(){
 	console.toConsole();

@@ -25,7 +25,7 @@
 	    	  <p>目前只提供 HBV_SNP流程的报告统计；查看页面中不提供序列详细信息的直接展示，用户可以通过“下载Excel”获得全部序列信息。</p>
 	  		</div>
 	  		<ul>
-		      <li><a href="javascript:void(0)" id="_down">下载 Excel</a></li>
+		      <li><a href="javascript:void(0)" id="_down" class="hide">下载 Excel</a></li>
 	  		</ul>
      	  </c:if>
     	  <c:if test="${companyId==33 }">
@@ -76,4 +76,4 @@
   </div>
  </div>
 </div>
-<script src="<%=request.getContextPath()%>/js/count.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/count.js?version=1.1" type="text/javascript"></script>

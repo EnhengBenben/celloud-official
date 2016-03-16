@@ -51,8 +51,8 @@ public class ExpensesServiceImpl implements ExpensesService {
         expense.setCreateDate(new Date());
         for (DataFile d : dataList) {
             expense.setId(null);
-            int fileExpenseNum = expensesMapper
-                    .getFileExpenseNum(d.getFileId());
+            int fileExpenseNum = expensesMapper.getFileExpenseNum(d.getFileId(),
+                    appId, PriceType.isApp);
             if (fileExpenseNum == 0) {
                 // TODO 暂时免费，真正收费时需要修改成真实价格
                 // expense.setPrice(price.getPrice());
@@ -77,12 +77,13 @@ public class ExpensesServiceImpl implements ExpensesService {
         expense.setUserId(userId);
         expense.setCreateDate(new Date());
         int fileExpenseNum = 0;
+        int expenseId = 0;
         if (dataList != null) {
             for (int i = 0; i < dataList.size(); i++) {
                 DataFile d = dataList.get(i);
                 if (i == 0) {
-                    fileExpenseNum = expensesMapper
-                            .getFileExpenseNum(d.getFileId());
+                    fileExpenseNum = expensesMapper.getFileExpenseNum(
+                            d.getFileId(), appId, PriceType.isApp);
                     if (fileExpenseNum == 0) {
                         // TODO 暂时免费，真正收费时需要修改成真实价格
                         // expense.setPrice(price.getPrice());
@@ -92,10 +93,10 @@ public class ExpensesServiceImpl implements ExpensesService {
                         expense.setRemark(ExpensesRemark.RERUN_FREE);
                     }
                     expensesMapper.insertSelective(expense);
-                    expensesMapper.addFileExpenseRelat(expense.getId(),
-                            projectId,
-                            d.getFileId(), d.getDataKey(), d.getFileName());
+                    expenseId = expense.getId();
                 }
+                expensesMapper.addFileExpenseRelat(expenseId, projectId,
+                        d.getFileId(), d.getDataKey(), d.getFileName());
             }
         }
     }
