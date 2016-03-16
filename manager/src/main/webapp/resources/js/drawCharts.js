@@ -150,8 +150,13 @@ var drawCharts=(function(drawCharts){
 			yAxis[i] = data[i][y];
 		}
 		var option = makeOptionScrollUnit(xAxis, yAxis, title, 'bar', 0, length);
-		var myChart = echarts.init(document.getElementById(id), theme);
-		myChart.setOption(option);
+		if (typeof(theme) == "undefined" ||theme==null) {
+			var myChart = echarts.init(document.getElementById(id));
+			myChart.setOption(option);
+		}else{
+			var myChart = echarts.init(document.getElementById(id), theme);
+			myChart.setOption(option);
+		}
 	}
 	
 	self.lineChart=function(id,data, seriesName,dataName,x,y){

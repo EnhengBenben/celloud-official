@@ -64,8 +64,8 @@
                                     <span class="title">用户数据统计</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="add_app.html">
+                            <li id="data-company-menu">
+                                <a href="javascript:dataFile.toCompanyDataCount();">
                                     <span class="title">医院数据统计</span>
                                 </a>
                             </li>

@@ -38,6 +38,13 @@ var dataFile=(function(dataFile){
 			$("#data-user-menu").addClass("active");
 		});
 	};
+	self.toCompanyDataCount=function(){
+		$.post("companyDataCount",function(responseText){
+			$("#main-content").html(responseText);
+			$("#main-menu li").removeClass("active");
+			$("#data-company-menu").addClass("active");
+		});
+	};
 	return self;
 })(dataFile);
 
