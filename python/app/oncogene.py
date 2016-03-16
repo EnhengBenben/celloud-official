@@ -86,11 +86,28 @@ class oncogene:
 				'ERCC1.118.10.png',
 				'EGFR.719.10.png','EGFR.768.10.png','EGFR.790.10.png','EGFR.858.10.png',
 				'EGFR.861.10.png', 'KRAS.12.10.png','KRAS.13.10.png','UGT1A1.71.10.png',
-				'Indel.30.png']
+				'Indel.30.png',
+				"GJB2.71.3.png","GJB2.71.10.png","GJB3.538.3.png","GJB3.538.10.png",
+				"GJB3.547.3.png","GJB3.547.10.png","GJB3.766.3.png","GJB3.766.10.png",
+				"GJB3.798.3.png","GJB3.798.10.png","SLC26A4.281.3.png","SLC26A4.281.10.png",
+				"SLC26A4.589.3.png","SLC26A4.589.10.png","SLC26A4.1174.3.png","SLC26A4.1174.10.png",
+				"SLC26A4.1226.3.png","SLC26A4.1226.10.png","SLC26A4.1229.3.png","SLC26A4.1229.10.png",
+				"SLC26A4.1975.3.png","SLC26A4.1975.10.png","SLC26A4.2027.3.png","SLC26A4.2027.10.png",
+				"SLC26A4.2162.3.png","SLC26A4.2162.10.png","SLC26A4.2168.3.png","SLC26A4.2168.10.png",
+				"OTOF.4023.3.png","OTOF.4023.10.png","OTOF.4819.3.png","OTOF.4819.10.png",
+				"SLC17A8.824.3.png","SLC17A8.824.10.png",
+				]
 			# 已知突变位点
 			know_mutation = ['Indel.30.png','ERCC1.118.10.png','EGFR.719.10.png',
 				'EGFR.768.10.png','EGFR.790.10.png','EGFR.858.10.png','EGFR.861.10.png',
-				'KRAS.12.10.png','KRAS.13.10.png','UGT1A1.71.10.png']
+				'KRAS.12.10.png','KRAS.13.10.png','UGT1A1.71.10.png',
+				"GJB2.71.10.png","GJB3.538.10.png","GJB3.547.10.png",
+				"GJB3.766.10.png","GJB3.798.10.png","SLC26A4.281.10.png",
+				"SLC26A4.589.10.png","SLC26A4.1174.10.png","SLC26A4.1226.10.png",
+				"SLC26A4.1229.10.png","SLC26A4.1975.10.png","SLC26A4.2027.10.png",
+				"SLC26A4.2162.10.png","SLC26A4.2168.10.png","OTOF.4023.10.png",
+				"OTOF.4819.10.png","SLC17A8.824.10.png",
+				]
 			km = []
 			original = {} # 原始峰图
 			out = [] # 其它图片
