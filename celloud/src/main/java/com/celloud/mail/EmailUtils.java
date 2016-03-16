@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.celloud.constants.ConstantsData;
 import com.celloud.constants.FeedbackConstants;
 import com.celloud.model.mysql.Feedback;
 import com.celloud.model.mysql.FeedbackAttachment;
@@ -102,6 +103,13 @@ public class EmailUtils {
      */
     public static void sendFeedback(final Feedback feedback, final List<FeedbackAttachment> attachments) {
         final EmailSender sender = EmailSender.getInstance();
+        if (attachments != null && attachments.size() > 0) {
+            for (FeedbackAttachment fa : attachments) {
+                String file = FeedbackConstants.getAttachment(fa.getFilePath());
+                // TODO fa.getFileName() 用户上传的文件名
+                sender.attachWithFileName(null, file);
+            }
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -109,15 +117,9 @@ public class EmailUtils {
                     logger.warn("用户提交了工单，正在发送工单信息邮件，但是没有找到邮件接收者！");
                     return;
                 }
-                if (attachments != null && attachments.size() > 0) {
-                    for (FeedbackAttachment fa : attachments) {
-                        String file = FeedbackConstants.getAttachment(fa.getFilePath());
-                        // TODO fa.getFileName() 用户上传的文件名
-                        sender.attachWithFileName(null, file);
-                    }
-                }
                 sender.addTo(EmailProperties.feedbackMailTo).setTitle(EmailProperties.feedbackTitle)
-                        .setTemplate("feedback.vm").addObject("feedback", feedback).send();
+                        .setTemplate("feedback.vm").addObject("feedback", feedback)
+                        .addObject("base", ConstantsData.getContextUrl()).send();
             }
         }).start();
     }
