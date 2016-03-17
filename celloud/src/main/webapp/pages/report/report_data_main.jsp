@@ -31,9 +31,16 @@
 </section>
 <script src="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js"></script>
+<script src="<%=request.getContextPath() %>/plugins/jquery.ba-resize.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$('#imageFullScreen').smartZoom({'containerClass':'zoomableContainer'});
+	var revise = $(document).width()-$('.sidebar-menu').width();
+	$("#pageContent").css("width",revise+"px");
+	$('.sidebar-menu').resize(function(){
+		revise = $(document).width()-$(this).width();
+		$("#pageContent").css("width",revise+"px");
+	});
 });
 function showZoom(src) {
 	var bh = $(window.parent.document).height();  
