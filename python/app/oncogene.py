@@ -95,7 +95,11 @@ class oncogene:
 				"SLC26A4.659.3.png","SLC26A4.659.10.png","SLC26A4.676.3.png","SLC26A4.676.10.png",
 				"SLC26A4.721.3.png","SLC26A4.721.10.png","SLC26A4.723.3.png","SLC26A4.723.10.png",
 				"OTOF.1341.3.png","OTOF.1341.10.png","OTOF.1607.3.png","OTOF.1607.10.png",
-				"SLC17A8.275.3.png","SLC17A8.275.10.png"
+				"SLC17A8.275.3.png","SLC17A8.275.10.png",
+				"MT-12SrRNA.283.3.png","MT-12SrRNA.283.10.png","MT-12SrRNA.303.3.png",
+				"MT-12SrRNA.303.10.png","MT-12SrRNA.137.3.png","MT-12SrRNA.137.10.png",
+				"MT-12SrRNA.150.3.png","MT-12SrRNA.150.10.png","MT-12SrRNA.313.3.png",
+				"MT-12SrRNA.313.10.png"
 				]
 			# 已知突变位点
 			know_mutation = ['Indel.30.png','ERCC1.118.10.png','EGFR.719.10.png',
@@ -106,7 +110,9 @@ class oncogene:
 				"SLC26A4.197.10.png","SLC26A4.392.10.png","SLC26A4.409.10.png",
 				"SLC26A4.410.10.png","SLC26A4.659.10.png","SLC26A4.676.10.png",
 				"SLC26A4.721.10.png","SLC26A4.723.10.png","OTOF.1341.10.png",
-				"OTOF.1607.10.png","SLC17A8.275.10.png"
+				"OTOF.1607.10.png","SLC17A8.275.10.png",
+				"MT-12SrRNA.283.10.png","MT-12SrRNA.303.10.png",
+				"MT-12SrRNA.137.10.png","MT-12SrRNA.150.10.png","MT-12SrRNA.313.10.png"
 				]
 			km = []
 			original = {} # 原始峰图

@@ -61,6 +61,7 @@ import com.celloud.service.DataService;
 import com.celloud.service.DeptService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
+import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.HttpURLUtils;
 import com.celloud.utils.PropertiesUtil;
 
@@ -602,7 +603,7 @@ public class ReportAction {
         ModelAndView mv = getModelAndView("report/report_data_pgs", projectId);
         return mv.addObject("pgs", pgs);
     }
-
+    
     /**
      * 获取Oncogene报告
      * 
@@ -620,9 +621,9 @@ public class ReportAction {
                 appId);
         if (oncogene != null) {
             // jstl 处理 \n 很困难，就在 java 端处理
-            oncogene.setReport(oncogene.getReport().replace("\n", "<br/>"));
-            oncogene.setWz1(oncogene.getWz1().replace("\n", "<br/>"));
-            oncogene.setWz2(oncogene.getWz2().replace("\n", "<br/>"));
+			oncogene.setReport(CustomStringUtils.htmlbr(oncogene.getReport()));
+			oncogene.setWz1(CustomStringUtils.htmlbr(oncogene.getWz1()));
+			oncogene.setWz2(CustomStringUtils.htmlbr(oncogene.getWz2()));
             // 排序
             List<String> km = oncogene.getKnowMutation();
             if (km != null) {

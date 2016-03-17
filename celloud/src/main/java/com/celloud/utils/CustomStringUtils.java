@@ -77,4 +77,8 @@ public class CustomStringUtils extends StringUtils {
         }
         return fileName;
     }
+    
+    public static String htmlbr(String txt) {
+		return txt == null ? null : txt.replace("\n", "<br/>");
+	}
 }
