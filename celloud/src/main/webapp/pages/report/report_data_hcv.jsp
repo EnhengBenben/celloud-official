@@ -24,13 +24,13 @@
 				<table class="table table-bordered table-condensed" id="hcvTable">
 					<thead>
 						<tr>
-							<th>File Name</th>
-							<th>Subtype</th>
-							<th>Subject Name</th>
-							<th>Identity</th>
-							<th>Overlap/total</th>
-							<th>E_value</th>
-							<th>Score</th>
+							<th>File Name<br>(文件名)</th>
+							<th style="min-width: 70px;">Subtype<br>(亚型)</th>
+							<th style="min-width: 100px;">Subject Name<br>(参考序列名)</th>
+							<th style="min-width: 80px;">Identity<br>(相似度)</th>
+							<th style="min-width: 200px;">Overlap/total<br>(比对上的长度/比对的总长度)</th>
+							<th style="min-width: 70px;">E_value<br>(期望值)</th>
+							<th style="min-width: 50px;">Score<br>(比分)</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -56,13 +56,13 @@
 				<table class="table table-bordered table-condensed" id="hcvTable">
 					<thead>
 						<tr>
-							<th>File Name</th>
-							<th>Subtype</th>
-							<th>Subject Name</th>
-							<th>Identity</th>
-							<th>Overlap/total</th>
-							<th>E_value</th>
-							<th>Score</th>
+							<th>File Name<br>(文件名)</th>
+							<th style="min-width: 70px;">Subtype<br>(亚型)</th>
+							<th style="min-width: 100px;">Subject Name<br>(参考序列名)</th>
+							<th style="min-width: 80px;">Identity<br>(相似度)</th>
+							<th style="min-width: 200px;">Overlap/total<br>(比对上的长度/比对的总长度)</th>
+							<th style="min-width: 70px;">E_value<br>(期望值)</th>
+							<th style="min-width: 50px;">Score<br>(比分)</th>
 						</tr>
 					</thead>
 					<tbody>
