@@ -38,7 +38,7 @@
 	</tbody>
 </table>
 <div class="pagination text-center">
-  <c:if test="${expensePageList.datas.size()>0}">
+<c:if test="${expensePageList.datas.size()>0}">
     <input id="expense-current-page-hide" value="${expensePageList.page.currentPage }" type="hidden" >
     <ul id="pagination-pay" class="pages">
       <!-- 显示prev -->
