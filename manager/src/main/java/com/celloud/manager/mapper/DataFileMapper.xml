@@ -275,6 +275,25 @@
 	GROUP BY time
 	ORDER BY time ${order}
   </select>
+  <select id="countDataFileOfMonth" resultType="java.util.Map">
+    SELECT t.time,n.dataNum from(select DISTINCT date_format(f.create_date,'%Y-%m') time from tb_file f) t
+    LEFT JOIN (
+    select count(f.file_id) dataNum,c.company_name,date_format(f.create_date,'%Y-%m') time,c.company_id,sum(f.size) dataSize
+    from tb_file f 
+    LEFT JOIN tb_user u on f.user_id=u.user_id 
+    LEFT JOIN tb_user_company_relat ucr on ucr.user_id=u.user_id
+    INNER JOIN tb_company c on c.company_id=ucr.company_id
+    where f.state=#{state}
+    <if test="companyId!=null">
+    and ucr.company_id=#{companyId}
+    </if>
+    <if test="testAccountIds!=null">
+    and f.user_id not in(${testAccountIds }) 
+    </if>
+    GROUP BY time
+    )n on t.time=n.time
+    order by t.time
+  </select>
   <select id="countDataFileByUser" resultType="java.util.Map">
   select count(f.file_id) dataNum,sum(f.size) dataSize,u.username,c.company_name
     from tb_file f 

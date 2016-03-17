@@ -45,7 +45,7 @@ public class DataServiceImpl implements DataService{
             List<Object> list=new ArrayList<Object>();
             map=new HashMap<String,Object>();
             for(Company c:coms){
-                List<Map<String,Object>> obj=dataFileMapper.countDataFileByMonth(c.getCompanyId(), DataState.ACTIVE, PropertiesUtil.testAccountIds,"asc");
+                List<Map<String,Object>> obj=dataFileMapper.countDataFileOfMonth(c.getCompanyId(), DataState.ACTIVE, PropertiesUtil.testAccountIds);
                 list.add(obj);
                 seriesName.add(c.getCompanyName());
             }
