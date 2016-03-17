@@ -50,6 +50,19 @@ var dataFile=(function(dataFile){
 	return self;
 })(dataFile);
 
+var companyCount=(function(companyCount){
+	var self=companyCount||{};
+	/**
+	 * 医院总览
+	 */
+	self.toCompanyGuideCount=function(){
+		$.post("company/guide",function(responseText){
+			menu("company-guide-menu",responseText);
+		});
+	};
+	return self;
+})(companyCount);
+
 $(function(){
 	console.toConsole();
 });

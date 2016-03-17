@@ -66,7 +66,7 @@
 		from tb_user_company_relat ucr 
 		LEFT JOIN tb_user u on u.user_id=ucr.user_id  
 		LEFT JOIN tb_company c on u.company_id=c.company_id
-		where u.state=#{state} and not ISNULL(c.province)
+		where u.state=#{state} and not ISNULL(c.province) and c.state=#{state}
         <if test="companyId != null">
         and ucr.company_id=#{companyId}
         </if>
@@ -90,5 +90,22 @@
 		GROUP BY l.user_id 
 		ORDER BY logNum desc 
 		LIMIT 0,20
+    </select>
+    <select id="getUserNumOfMon" resultType="java.util.Map">
+		SELECT t.time,n.userNum from (SELECT DISTINCT date_format(usr.create_date,'%Y-%m') time from tb_user usr ) t
+        LEFT  JOIN (
+        SELECT count(u.user_id) userNum,date_format(u.create_date,'%Y-%m') time from tb_user_company_relat ucr 
+        LEFT JOIN tb_user u on u.user_id=ucr.user_id
+        where u.state=#{state} 
+        <if test="companyId != null">
+        and ucr.company_id=#{companyId}
+        </if>
+        <if test="testAccountIds != null">
+        and ucr.user_id not in(${testAccountIds})
+        </if>
+        
+        GROUP BY time
+        ) n on t.time=n.time
+        ORDER BY time;
     </select>
 </mapper>

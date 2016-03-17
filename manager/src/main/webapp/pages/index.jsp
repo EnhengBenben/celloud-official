@@ -89,8 +89,8 @@
                             <span class="title">医院统计 </span>
                         </a>
                         <ul>
-                            <li>
-                                <a href="#">
+                            <li id="company-guide-menu">
+                                <a href="javascript:companyCount.toCompanyGuideCount();">
                                     <span class="title">医院总览</span>
                                 </a>
                             </li>

@@ -168,7 +168,7 @@ var drawCharts=(function(drawCharts){
         	var xAxis = new Array(temp.length);
             var yAxis = new Array(temp.length);
             for (var j = 0; j < temp.length; j++) {
-                yAxis[j] = temp[j][y];
+                yAxis[j] = temp[j][y]==null?0:temp[j][y];
                 xAxis[j] = temp[j][x];
             }
             if (i == 0) {
@@ -212,6 +212,45 @@ var drawCharts=(function(drawCharts){
 		var opt = makePieOption(title, legendName, name, rad, centerX, centerY, vlist);
 		var myChart = echarts.init(document.getElementById(id), blue);
 		myChart.setOption(opt);
+	}
+	
+	self.incrementCumulantLineChart=function(incrementId,cumulantId,data,x,y,incrementSeriesName,cumulantSeriesName,incrementSeriesShowItem,cumulantShowItem,theme){//新增和累积关系图
+		var xAxis = new Array(data.length);
+		var yAxis = new Array(data.length);
+		var yAxisCount = new Array(data.length);
+		
+		for (var i = 0; i < data.length; i++) {
+			xAxis[i] = data[i][x];
+			yAxis[i] = data[i][y];
+		}
+		yAxisCount[0] = yAxis[0];
+		for (var i = 1; i < yAxis.length; i++) {
+			yAxisCount[i] = yAxisCount[i - 1] + yAxis[i];
+		}
+		var option = makeOptionScrollUnit(xAxis, yAxis, incrementSeriesName, 'line', 100, xAxis.length,null,null,incrementSeriesShowItem);
+		var newoption = makeOptionScrollUnit(xAxis, yAxisCount, cumulantSeriesName, 'line', 100, xAxis.length,null,null,cumulantShowItem);
+		
+		newoption.series[0].itemStyle.normal.color=themes.macarons.color[1];
+		   
+		var demo = makeOptionScrollUnit(xAxis, [], cumulantSeriesName, 'line', 100, xAxis.length, null, null, "hide");
+		option.legend.data[option.legend.data.length] = cumulantSeriesName;
+		option.series[1] = demo.series[0]; //图一显示图二的legend
+		newoption.grid = {
+			x : 80,
+			y : 0,
+			x2 : 80,
+			y2 : 100
+		}; //两图距离
+		newoption.legend.y = -30;//隐藏图二的legend
+		
+		// 基于准备好的dom，初始化echarts图表
+		var myChart = echarts.init(document.getElementById(incrementId),theme);
+		var newCompany = echarts.init(document.getElementById(cumulantId),theme);
+		newCompany.setOption(newoption);
+		myChart.setOption(option);
+		//两图联动
+		newCompany.connect([ myChart ]);
+		myChart.connect([ newCompany ]);
 	}
 	
 	
