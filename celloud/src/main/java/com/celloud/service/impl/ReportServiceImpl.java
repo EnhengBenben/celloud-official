@@ -54,6 +54,7 @@ import com.celloud.page.PageList;
 import com.celloud.service.ExpensesService;
 import com.celloud.service.ReportService;
 import com.celloud.utils.Base64Util;
+import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.ExcelUtil;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.PropertiesUtil;
@@ -134,7 +135,7 @@ public class ReportServiceImpl implements ReportService {
             }
         }
         // jstl 处理 \n 很困难，就在 java 端处理
-        hbv.setReporttxt(hbv.getReporttxt().replace("\n", "<br/>"));
+        hbv.setReporttxt(CustomStringUtils.htmlbr(hbv.getReporttxt()));
         return hbv;
     }
 
