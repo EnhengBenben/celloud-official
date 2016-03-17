@@ -175,4 +175,14 @@ public class HomeAction {
     public String homePhone() {
         return "home_phone";
     }
+
+    @RequestMapping({ "bsi.html" })
+    public String bsi() {
+        return "print/print_bsi";
+    }
+
+    @RequestMapping({ "bsianaly.html" })
+    public String bsianaly() {
+        return "print/print_bsi_detail";
+    }
 }
