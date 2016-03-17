@@ -1,44 +1,46 @@
-<table style="width: 100%; background-color: #fffeee;">
-    <tr style="height: 50px;">
-        <td width="100%;"></td>
-    </tr>
-    <tr class="header">
-        <td align="center">
-            <a href="${base}/">
-                <img src="${base}/images/icon/login_logo.png" />
-            </a>
+<table border="0" cellpadding="0" cellspacing="0" width="660" style="margin:20px auto;min-height: 600px;font-family:微软雅黑;">
+    <tr>
+        <td width="100%" style="background-color:#E4F2D4;height: 60px;">
+            <table width="100%">
+                <tr>
+                    <td align="left" style="padding-left:20px;">
+                        <a href="${base}/">
+                            <img src="${base}/images/home/logo.png" />
+                        </a>
+                    </td>
+                    <td align="right" style="color: #79BA26;padding-right:20px">问题反馈</td>
+                </tr>
+            </table>
         </td>
     </tr>
-    <tr style="height: 30px;">
-        <td></td>
-    </tr>
-    <tr class="main">
-        <td align="center">
-            <table style="width: 60%; background-color: #fff; min-height: 300px; font-size: 12px;">
-                <tr>
-                    <td align="left" valign="top" style="padding: 10px;">
-                        <h2 style="text-align: center">问题反馈</h2>
-                        <h3>标题：${feedback.title}</h3>
-                        <div>
-                            <span style="margin-right: 15px"><label style="font-weight:bold;">提问时间：</label>${dateTool.format('yyyy-MM-dd HH:mm',${feedback.createDate})}</span>
-                            <span>
-                                <label style="font-weight:bold;">用户：</label>${feedback.username}(
-                                <a style="color:#337ab7" href="mailto:${feedback.email}">${feedback.email}</a>
-                                )
-                            </span>
+    <tr style="min-height:600px;background:url(${base}/images/home/login_bg.png) repeat-y;background-size:100% 100%;">
+        <td>
+            <table width="400" style="min-height:260px;padding: 10px 20px 10px 0px;background: #fff;box-shadow: 0 0 20px rgba(133, 197, 64, .36);border-radius: 8px;margin:20px auto;margin-top:30px;font-size:12px;color:#424141;">
+                <tr height="20">
+                    <td width="100" align="right">标题：</td>
+                    <td style="max-width:200px;">${feedback.title}</td>
+                </tr>
+                <tr height="20">
+                    <td align="right">提问时间：</td>
+                    <td>${dateTool.format('yyyy-MM-dd HH:mm',${feedback.createDate})}</td>
+                </tr>
+                <tr height="20">
+                    <td align="right">用户：</td>
+                    <td>${feedback.username}( <a style="color:#78BC28" href="mailto:${feedback.email}">${feedback.email}</a>)</td>
+                </tr>
+                <tr valign="top">
+                    <td align="right" >问题描述：</td>
+                    <td style="max-width:200px;">
+                        <div style="width:80%;min-height:100px;box-shadow: 0 0 5px rgba(133, 197, 64, .36);border-radius: 3px; padding:20px;word-break: break-word;">
+                          ${feedback.content}
                         </div>
-                        <pre style="width:98.5%;overflow: auto;display: block;padding: 5px;border: 1px solid #ccc;border-radius: 4px;word-break: break-all;word-wrap: break-word;min-height: 100px;white-space: pre-wrap;">
-${feedback.content}       
                     </td>
                 </tr>
             </table>
         </td>
     </tr>
-    <tr style="height: 50px;">
-        <td></td>
-    </tr>
-    <tr class="footer" align="center">
-        <td align="center" style="background-color: #85C540; height: 40px; line-height: 40px; color: #fff; font-size: 12px;">
+    <tr>
+        <td align="center" style="background-color:#85C540;height: 40px;color: #fff;font-size: 12px;">
             © ${dateTool.format('yyyy',${rightDate})} CelLoud，Inc. All Rights reserved.
             <a style="color: #fff;text-decoration: none;" href="#">生物信息云平台</a>
             ·
