@@ -1,5 +1,10 @@
 package com.celloud.manager.mapper;
 
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.celloud.manager.model.Company;
 
 public interface CompanyMapper {
@@ -14,4 +19,17 @@ public interface CompanyMapper {
     int updateByPrimaryKeySelective(Company record);
 
     int updateByPrimaryKey(Company record);
+    
+    public List<Company> getBigCustomerCompany(@Param("role")Integer role,@Param("state")Integer state);
+    
+    /**
+     * 大客户的医院数量
+     *
+     * @param companyId
+     * @param state
+     * @return
+     * @author han
+     * @date 2016年3月16日 下午3:44:02
+     */
+    public List<Map<String,Object>> getCompanyNumOfMon(@Param("companyId")Integer companyId,@Param("state")Integer state,@Param("testAccountIds")String testAccountIds,@Param("order")String order);
 }

@@ -312,6 +312,9 @@ var userCount=(function(userCount){
 			self.appMonthCount();
 		});
 	};
+  self.toDataMain=function(){
+    $("#to-data-main").trigger("click");
+  }
 	self.toReportMain=function(){
 		$('.treeview').removeClass("active");
 		$("#toReportMenu").addClass('active');

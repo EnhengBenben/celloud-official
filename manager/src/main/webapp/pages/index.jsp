@@ -54,24 +54,24 @@
                             <span class="title">数据统计</span>
                         </a>
                         <ul>
-                            <li>
-                                <a href="app_list.html">
+                            <li id="data-count-menu">
+                                <a href="javascript:dataFile.toDataCount();">
                                     <span class="title">数据总览</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="add_app.html">
+                            <li id="data-user-menu">
+                                <a href="javascript:dataFile.toUserDataCount();">
                                     <span class="title">用户数据统计</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="add_app.html">
+                            <li id="data-company-menu">
+                                <a href="javascript:dataFile.toCompanyDataCount();">
                                     <span class="title">医院数据统计</span>
                                 </a>
                             </li>
                             <c:if test="${loginUserInSession.role=='2'}">
-                                <li>
-                                    <a href="javascript:bigUserCount()">
+                                <li id="data-bigCustomer-menu">
+                                    <a href="javascript:dataFile.toBigCustomerDataCount()">
                                         <span class="title">大客户统计</span>
                                     </a>
                                 </li>
@@ -89,8 +89,8 @@
                             <span class="title">医院统计 </span>
                         </a>
                         <ul>
-                            <li>
-                                <a href="#">
+                            <li id="company-guide-menu">
+                                <a href="javascript:companyCount.toCompanyGuideCount();">
                                     <span class="title">医院总览</span>
                                 </a>
                             </li>

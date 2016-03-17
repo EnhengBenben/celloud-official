@@ -16,7 +16,6 @@ import com.celloud.mapper.PriceMapper;
 import com.celloud.mapper.ReportMapper;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Expenses;
-import com.celloud.model.mysql.Price;
 import com.celloud.model.mysql.Report;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
@@ -43,7 +42,7 @@ public class ExpensesServiceImpl implements ExpensesService {
                 ReportType.PROJECT);
         Integer appId = report.getAppId();
         Integer userId = report.getUserId();
-        Price price = priceMapper.selectByItemId(appId, PriceType.isApp);
+//        Price price = priceMapper.selectByItemId(appId, PriceType.isApp);
         Expenses expense = new Expenses();
         expense.setItemId(appId);
         expense.setItemType(PriceType.isApp);
@@ -70,7 +69,7 @@ public class ExpensesServiceImpl implements ExpensesService {
     @Override
     public void saveRunExpenses(Integer projectId, Integer appId,
             Integer userId, List<DataFile> dataList) {
-        Price price = priceMapper.selectByItemId(appId, PriceType.isApp);
+//        Price price = priceMapper.selectByItemId(appId, PriceType.isApp);
         Expenses expense = new Expenses();
         expense.setItemId(appId);
         expense.setItemType(PriceType.isApp);

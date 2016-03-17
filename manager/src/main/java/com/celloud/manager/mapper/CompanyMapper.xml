@@ -196,4 +196,22 @@
       address_detail = #{addressDetail,jdbcType=VARCHAR}
     where company_id = #{companyId,jdbcType=INTEGER}
   </update>
+  <select id="getBigCustomerCompany" resultMap="BaseResultMap" >
+    select c.* from tb_user u LEFT JOIN tb_company c on u.company_id=c.company_id where  u.role=#{role } and c.state=#{state} and u.state=#{state}
+  </select>
+  <select id="getCompanyNumOfMon" resultType="java.util.Map" >
+    select count(DISTINCT u.company_id) companyNum,date_format(c.create_date,'%Y-%m') time
+        from tb_user_company_relat ucr 
+        LEFT JOIN tb_user u on u.user_id=ucr.user_id  
+        LEFT JOIN tb_company c on u.company_id=c.company_id
+        where u.state=#{state} and c.state=#{state}
+         <if test="companyId != null">
+        and ucr.company_id=#{companyId}
+        </if>
+        <if test="testAccountIds != null">
+        and ucr.user_id not in(${testAccountIds})
+        </if>
+        GROUP BY time
+        ORDER BY time ${order} 
+   </select>
 </mapper>
