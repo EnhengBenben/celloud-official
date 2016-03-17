@@ -44,7 +44,7 @@
 				<div class="navbar-custom-menu">
 					<ul class="nav navbar-nav">
 					<!-- Messages: style can be found in dropdown.less-->
-			            <li class="dropdown messages-menu">
+			            <li class="dropdown messages-menu expense-menu">
 			                <a id="to-expense-model" href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
 			                  <i class="fa fa-rmb"></i>
 			                  <span class="hidden-xs">消费记录</span>

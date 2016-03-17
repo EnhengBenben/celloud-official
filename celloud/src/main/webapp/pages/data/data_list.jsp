@@ -16,7 +16,7 @@
         	<th class="sample">样本</th>
         	<th class="data-size">数据大小</th>
         	<th class="create-date" style="min-width:80px">上传时间  <a id="data-sort-createdate" class="a-green-normal" href="javascript:void(0);" ><i id="data-sort-date-icon" class="fa fa-sort-amount-desc"></i></a></th>
-        	<th>运行状态</th>
+        	<th class="run-state">运行状态</th>
         </tr>
     </thead>
 	<tbody id="data-list-tbody">
