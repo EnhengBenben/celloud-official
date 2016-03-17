@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="plugins/bootstrap/js/datatables/dataTables.bootstrap.css">
 
 <script src="plugins/bootstrap/js/jquery-1.11.1.min.js"></script>
+<script src="plugins/jquery.alerts.js"></script>
 
 </head>
 <body class="page-body">
@@ -94,15 +95,15 @@
                                     <span class="title">医院总览</span>
                                 </a>
                             </li>
-                            <c:if test="${loginUserInSession.role=='2'}">
-                                <li>
-                                    <a href="javascript:toCompanyBaseInfo()">
-                                        <span class="title">医院基本信息</span>
-                                    </a>
-                                </li>
-                            </c:if>
-                            <li>
-                                <a href="#">
+                            
+                            <li id="company-baseInfo-menu">
+                                <a href="javascript:companyCount.toCompanyBaseInfo()">
+                                    <span class="title">医院基本信息</span>
+                                </a>
+                            </li>
+                            
+                            <li id="company-data-menu">
+                                <a href="javascript:companyCount.toCompanyDataCount();">
                                     <span class="title">医院数据统计</span>
                                 </a>
                             </li>

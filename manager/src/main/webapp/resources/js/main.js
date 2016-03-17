@@ -12,7 +12,7 @@ $.ajaxSetup ({
 function menu(id,content){
 	$("#main-content").html(content);
 	$("#main-menu li").removeClass("active");
-	$("#"+id).addClass("active").parent("li").addClass("active");
+	$("#"+id).addClass("active").parent("ul").parent("li").addClass("active");
 }
 var console=(function(console){
 	var self=console||{};
@@ -58,6 +58,17 @@ var companyCount=(function(companyCount){
 	self.toCompanyGuideCount=function(){
 		$.post("company/guide",function(responseText){
 			menu("company-guide-menu",responseText);
+		});
+	};
+	
+	self.toCompanyBaseInfo=function(){
+		$.post("company/baseInfo",function(responseText){
+			menu("company-baseInfo-menu",responseText);
+		});
+	};
+	self.toCompanyDataCount=function(){
+		$.post("companyDataCount",function(responseText){
+			menu("company-data-menu",responseText);
 		});
 	};
 	return self;

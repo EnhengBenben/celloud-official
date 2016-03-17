@@ -30,6 +30,10 @@ public class Company {
     private String city;
 
     private String addressDetail;
+    
+    private String bigCustomerName;//所属大客户
+    
+    private Integer userNum;//普通账号数量
 
     public Integer getCompanyId() {
         return companyId;
@@ -142,4 +146,22 @@ public class Company {
     public void setAddressDetail(String addressDetail) {
         this.addressDetail = addressDetail == null ? null : addressDetail.trim();
     }
+
+    public String getBigCustomerName() {
+        return bigCustomerName;
+    }
+
+    public void setBigCustomerName(String bigCustomerName) {
+        this.bigCustomerName = bigCustomerName;
+    }
+
+    public Integer getUserNum() {
+        return userNum;
+    }
+
+    public void setUserNum(Integer userNum) {
+        this.userNum = userNum;
+    }
+    
+    
 }

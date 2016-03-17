@@ -16,6 +16,8 @@
     <result column="province" property="province" jdbcType="VARCHAR" />
     <result column="city" property="city" jdbcType="VARCHAR" />
     <result column="address_detail" property="addressDetail" jdbcType="VARCHAR" />
+    <result column="bigCustomerName" property="bigCustomerName" jdbcType="VARCHAR" />
+    <result column="userNum" property="userNum" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     company_id, company_name, english_name, company_icon, address, address_en, zip_code, 
@@ -213,5 +215,19 @@
         </if>
         GROUP BY time
         ORDER BY time ${order} 
+   </select>
+   <select id="getCompany" resultMap="BaseResultMap">
+    select tc.*,c.company_name bigCustomerName,count(u.company_id) userNum  from tb_user_company_relat ucr 
+	LEFT JOIN tb_company c on ucr.company_id=c.company_id 
+	LEFT JOIN tb_user u on u.user_id=ucr.user_id 
+	LEFT JOIN tb_company tc on tc.company_id=u.company_id
+	where u.state=#{state } and tc.state=#{state }
+	<if test="testAccountIds != null">
+    and ucr.user_id not in(${testAccountIds})
+    </if>
+	<if test="companyId != null">
+    and ucr.company_id=#{companyId}
+    </if>
+	GROUP BY u.company_id
    </select>
 </mapper>
