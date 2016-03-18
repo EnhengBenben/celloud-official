@@ -175,7 +175,7 @@ public class AppAction {
     public ResponseEntity<byte[]> appImage(String file) throws IOException {
         String path = AppConstants.getAppPicturePath() + File.separator + file;
         File targetFile = new File(path);
-        log.info("app图标的绝对路径{}",targetFile.getAbsolutePath());
+        //log.debug("app图标的绝对路径{}",targetFile.getAbsolutePath());
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
     }
     
@@ -190,7 +190,7 @@ public class AppAction {
     public ResponseEntity<byte[]> appScreen(String file) throws IOException {
         String path = AppConstants.getAppScreenPath() + File.separator + file;
         File targetFile = new File(path);
-        log.info("app截图的绝对路径{}",targetFile.getAbsolutePath());
+        //log.info("app截图的绝对路径{}",targetFile.getAbsolutePath());
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
     }
 }

@@ -1,5 +1,6 @@
 package com.celloud.manager.action;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.manager.constants.ConstantsData;
 import com.celloud.manager.constants.UserRole;
+import com.celloud.manager.model.Company;
 import com.celloud.manager.model.User;
 import com.celloud.manager.service.CompanyService;
 
@@ -58,5 +60,23 @@ public class CompanyAction {
             }
         }
         return resultMap;
+    }
+    
+    @RequestMapping("company/baseInfo")
+    public ModelAndView companyBaseInfo(){
+        ModelAndView mv=new ModelAndView("company/company_baseInfo");
+        User user=ConstantsData.getLoginUser();
+        List<Company> list=null;
+        if(user!=null){
+            Integer role=user.getRole();
+            if(UserRole.ADMINISTRATOR.equals(role)){//超级管理员
+                list=companyService.getCompany(null);
+            }
+            if(UserRole.BIG_CUSTOMER.equals(role)){//大客户
+                list=companyService.getCompany(user.getCompanyId());
+            }
+        }
+        mv.addObject("companyList", list);
+        return mv;
     }
 }

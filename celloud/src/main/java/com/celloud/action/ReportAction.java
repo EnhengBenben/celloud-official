@@ -879,7 +879,7 @@ public class ReportAction {
     public ResponseEntity<byte[]> companyIcon(String file) throws IOException {
         String path = CompanyConstants.getCompanyIconPath() + File.separator + file;
         File targetFile = new File(path);
-        log.info("医院logo绝对路径{}",targetFile.getAbsolutePath());
+        //log.info("医院logo绝对路径{}",targetFile.getAbsolutePath());
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
     }
     /**
@@ -893,7 +893,7 @@ public class ReportAction {
     public ResponseEntity<byte[]> deptIcon(String file) throws IOException {
         String path = DeptConstants.getDeptIconPath() + File.separator + file;
         File targetFile = new File(path);
-        log.info("部门logo目录的绝对路径{}",targetFile.getAbsolutePath());
+        //log.info("部门logo目录的绝对路径{}",targetFile.getAbsolutePath());
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
     }
 }

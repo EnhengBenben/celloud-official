@@ -66,4 +66,9 @@ public class CompanyServiceImpl implements CompanyService{
         return map;
     }
 
+    @Override
+    public List<Company> getCompany(Integer companyId) {
+        return companyMapper.getCompany(companyId, DataState.ACTIVE, PropertiesUtil.testAccountIds);
+    }
+
 }
