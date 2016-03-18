@@ -69,6 +69,7 @@ public class TaskServiceImpl implements TaskService {
         Task task = new Task();
         task.setTaskId(taskId);
         task.setPeriod(TaskPeriod.RUNNING);
+        task.setStartDate(new Date());
         return taskMapper.updateByPrimaryKeySelective(task);
     }
 
