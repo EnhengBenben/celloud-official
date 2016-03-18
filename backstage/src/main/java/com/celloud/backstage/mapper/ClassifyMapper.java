@@ -1,5 +1,7 @@
 package com.celloud.backstage.mapper;
 
+import java.util.List;
+
 import com.celloud.backstage.model.Classify;
 
 public interface ClassifyMapper {
@@ -14,4 +16,6 @@ public interface ClassifyMapper {
     int updateByPrimaryKeySelective(Classify record);
 
     int updateByPrimaryKey(Classify record);
+    
+    public List<Classify> getLeaf();
 }

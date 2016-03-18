@@ -1,11 +1,16 @@
 package com.celloud.utils;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-import com.nova.portpool.PortPool;
-import com.nova.utils.FileTools;
-import com.nova.utils.PropertiesUtil;
+import com.celloud.constants.PortPool;
+import com.celloud.model.mysql.DataFile;
 
 /**
  * 
@@ -14,7 +19,6 @@ import com.nova.utils.PropertiesUtil;
  * @description :将dataKeyList转化成输入文件
  */
 public class DataKeyListToFile {
-    private static String dataPath = PropertiesUtil.bigFilePath;
     private static String datalist = PropertiesUtil.datalist;
 
     /**
@@ -24,18 +28,16 @@ public class DataKeyListToFile {
      * @param dataKeyList
      * @return
      */
-    public static String toSpark(String projectId, String dataKeyList) {
+    public static String toSpark(String projectId, List<DataFile> dataList) {
         StringBuffer sb = new StringBuffer();
         String dataListFile = datalist + new Date().getTime() + "_"
                 + new Double(Math.random() * 1000).intValue() + ".txt";
         FileTools.createFile(dataListFile);
-        String dataArray[] = dataKeyList.split(";");
-        List<String> ports = PortPool.getPorts(dataArray.length, projectId);
-        for (int i = 0; i < dataArray.length; i++) {
-            String[] dataDetail = dataArray[i].split(",");
-            sb.append(dataPath + FileTools.getArray(dataDetail, 1) + "\t"
-                    + FileTools.getArray(dataDetail, 2) + "\t" + ports.get(i)
-                    + "\n");
+        List<String> ports = PortPool.getPorts(dataList.size(), projectId);
+        for (int i = 0; i < dataList.size(); i++) {
+            DataFile data = dataList.get(i);
+            sb.append(data.getPath() + "\t" + data.getFileName() + "\t"
+                    + ports.get(i) + "\n");
         }
         FileTools.appendWrite(dataListFile, sb.toString());
         return dataListFile;
@@ -47,16 +49,13 @@ public class DataKeyListToFile {
      * @param dataKeyList
      * @return
      */
-    public static String containName(String dataKeyList) {
+    public static String containName(List<DataFile> dataList) {
         StringBuffer sb = new StringBuffer();
         String dataListFile = datalist + new Date().getTime() + "_"
                 + new Double(Math.random() * 1000).intValue() + ".txt";
         FileTools.createFile(dataListFile);
-        String dataArray[] = dataKeyList.split(";");
-        for (int i = 0; i < dataArray.length; i++) {
-            String[] dataDetail = dataArray[i].split(",");
-            sb.append(dataPath + FileTools.getArray(dataDetail, 1) + "\t"
-                    + FileTools.getArray(dataDetail, 2) + "\n");
+        for (DataFile data : dataList) {
+            sb.append(data.getPath() + "\t" + data.getFileName() + "\n");
         }
         FileTools.appendWrite(dataListFile, sb.toString());
         return dataListFile;
@@ -68,80 +67,106 @@ public class DataKeyListToFile {
      * @param dataKeyList
      * @return
      */
-    public static String onlyPath(String dataKeyList) {
+    public static String onlyPath(List<DataFile> dataList) {
         StringBuffer sb = new StringBuffer();
         String dataListFile = datalist + new Date().getTime() + "_"
                 + new Double(Math.random() * 1000).intValue() + ".txt";
         FileTools.createFile(dataListFile);
-        String dataArray[] = dataKeyList.split(";");
-        for (int i = 0; i < dataArray.length; i++) {
-            String[] detail = dataArray[i].split(",");
-            sb.append(dataPath + detail[1] + "\n");
+        for (DataFile data : dataList) {
+            sb.append(data.getPath() + "\n");
         }
         FileTools.appendWrite(dataListFile, sb.toString());
         return dataListFile;
     }
 
     /**
-     * 面向 CMP 封装，格式为：
+     * 面向运行fastq文件的APP封装， 格式分两种：1. path_R1 \t path_R2 2. path
      * 
      * @param dataKeyList
      * @return
      */
-    public static String toCMP(String dataKeyList) {
-        StringBuffer sb = new StringBuffer();
-        String dataListFile = datalist + new Date().getTime() + "_"
-                + new Double(Math.random() * 1000).intValue() + ".txt";
-        FileTools.createFile(dataListFile);
-        String dataArray[] = dataKeyList.split(";");
-        for (int i = 0; i < dataArray.length; i = i + 2) {
-            String[] detail1 = dataArray[i].split(",");
-            String[] detail2 = dataArray[i + 1].split(",");
-            sb.append(dataPath + detail1[1] + "\t" + dataPath + detail2[1]
-                    + "\n");
-        }
-        FileTools.appendWrite(dataListFile, sb.toString());
-        return dataListFile;
-    }
-
-    /**
-     * 面向 split 封装，格式为：
-     * 
-     * @param dataKeyList
-     * @return
-     */
-    public static String toSplit(String dataKeyList) {
-        StringBuffer sb = new StringBuffer();
-        String dataListFile = datalist + new Date().getTime() + "_"
-                + new Double(Math.random() * 1000).intValue() + ".txt";
-        FileTools.createFile(dataListFile);
-        String dataArray[] = dataKeyList.split(";");
-        for (int i = 0; i < dataArray.length; i = i + 3) {
-            String detail1 = dataArray[i].split(",")[1];
-            String detail2 = dataArray[i + 1].split(",")[1];
-            String detail3 = dataArray[i + 2].split(",")[1];
-            String endData = "";
-            String d1 = "";
-            String d2 = "";
-            if (FileTools.getExt(detail1).equals(".lis")) {
-                endData = detail1;
-                d1 = detail2;
-                d2 = detail3;
-            } else if (FileTools.getExt(detail2).equals(".lis")) {
-                endData = detail2;
-                d1 = detail1;
-                d2 = detail3;
-            } else if (FileTools.getExt(detail3).equals(".lis")) {
-                endData = detail3;
-                d1 = detail1;
-                d2 = detail2;
+    public static Map<String, String> onlyFastqPath(List<DataFile> dataList) {
+        Map<String, String> dataListFileMap = new HashMap<>();
+        sortDataList(dataList);
+        Iterator<DataFile> chk_it = dataList.iterator();
+        StringBuffer sb = null;
+        Integer dataReportNum = 0;
+        while (chk_it.hasNext()) {
+            sb = new StringBuffer();
+            String dataListFile = datalist + new Date().getTime() + "_"
+                    + new Double(Math.random() * 1000).intValue() + ".txt";
+            FileTools.createFile(dataListFile);
+            DataFile data = chk_it.next();
+            String dataKey = data.getDataKey();
+            String fname = data.getFileName();
+            if (fname.contains("R1") || fname.contains("R2")) {
+                int index_r1 = fname.lastIndexOf("R1");
+                String commonPrefix = fname.substring(0, index_r1);
+                String commonSuffix = fname.substring(index_r1 + 2,
+                        fname.length());
+                DataFile data_r2 = chk_it.next();
+                String fname_r2 = data_r2.getFileName();
+                String r2_Suffix = fname_r2.substring(
+                        fname_r2.lastIndexOf("R2") + 2, fname_r2.length());
+                if (fname_r2.contains(commonPrefix + "R2")
+                        && r2_Suffix.equals(commonSuffix)) {
+                    sb.append(data.getPath()).append("\t")
+                            .append(data_r2.getPath()).append("\t");
+                }
+            } else {
+                sb.append(data.getPath());
             }
-            sb.append(dataPath).append(d1).append("\t").append(dataPath)
-                    .append(d2).append("\t").append(dataPath).append(endData)
-                    .append("\n");
+            FileTools.appendWrite(dataListFile, sb.toString());
+            dataListFileMap.put(dataKey, dataListFile);
+            dataReportNum++;
         }
+        dataListFileMap.put("dataReportNum", dataReportNum.toString());
+        return dataListFileMap;
+    }
+
+    /**
+     * 面向 split 封装，格式为： path_R1 \t path_R2 \t path_lis
+     * 
+     * @param dataKeyList
+     * @return
+     */
+    public static Map<String, String> toSplit(List<DataFile> dataList) {
+        Map<String, String> dataListFileMap = new HashMap<>();
+        StringBuffer sb = new StringBuffer();
+        String dataListFile = datalist + new Date().getTime() + "_"
+                + new Double(Math.random() * 1000).intValue() + ".txt";
+        FileTools.createFile(dataListFile);
+        sortDataList(dataList);
+        List<String> pathList = new ArrayList<>();
+        String endPath = "";
+        int i = 0;
+        String dataKey = "";
+        for (DataFile data : dataList) {
+            String path = data.getPath();
+            if (path.endsWith(".lis") || path.endsWith(".txt")) {
+                endPath = path;
+            } else {
+                if (i == 0) {
+                    dataKey = data.getDataKey();
+                }
+                pathList.add(path);
+                i++;
+            }
+        }
+        sb.append(pathList.get(0)).append("\t").append(pathList.get(1))
+                .append("\t").append(endPath);
         FileTools.appendWrite(dataListFile, sb.toString());
-        return dataListFile;
+        dataListFileMap.put(dataKey, dataListFile);
+        return dataListFileMap;
+    }
+
+    public static void sortDataList(List<DataFile> dataList) {
+        Collections.sort(dataList, new Comparator<DataFile>() {
+            @Override
+            public int compare(DataFile d1, DataFile d2) {
+                return d1.getFileName().compareTo(d2.getFileName());
+            }
+        });
     }
 
 }

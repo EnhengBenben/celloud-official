@@ -55,4 +55,9 @@
     set format_desc = #{formatDesc,jdbcType=VARCHAR}
     where format_id = #{formatId,jdbcType=INTEGER}
   </update>
+  <select id="getFileFormatList" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_file_format
+  </select>
 </mapper>

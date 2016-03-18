@@ -1,5 +1,7 @@
 package com.celloud.backstage.mapper;
 
+import java.util.List;
+
 import com.celloud.backstage.model.FeedbackReply;
 
 public interface FeedbackReplyMapper {
@@ -16,4 +18,6 @@ public interface FeedbackReplyMapper {
     int updateByPrimaryKeyWithBLOBs(FeedbackReply record);
 
     int updateByPrimaryKey(FeedbackReply record);
+    
+    public List<FeedbackReply> findByFeedbackId(Integer feedbackId);
 }

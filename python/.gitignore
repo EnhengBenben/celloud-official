@@ -1,0 +1,7 @@
+# Created by https://www.gitignore.io
+
+### python ###
+*.pyc
+
+# MAC Os
+*.DS_Store

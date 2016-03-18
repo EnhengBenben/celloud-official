@@ -1,286 +1,196 @@
 package com.celloud.action;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.convention.annotation.Results;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.celloud.constants.AppConstants;
 import com.celloud.constants.ClassifyFloor;
-import com.celloud.sdo.App;
-import com.celloud.sdo.Classify;
-import com.celloud.sdo.Screen;
+import com.celloud.constants.ConstantsData;
+import com.celloud.model.mysql.App;
+import com.celloud.model.mysql.Classify;
+import com.celloud.model.mysql.Screen;
+import com.celloud.page.Page;
+import com.celloud.page.PageList;
 import com.celloud.service.AppService;
-import com.google.inject.Inject;
-import com.nova.action.BaseAction;
-import com.nova.pager.Page;
-import com.nova.pager.PageList;
+import com.celloud.service.ClassifyService;
+import com.celloud.service.ScreenService;
 
 /**
- * 
- * @author <a href="mailto:liuqingxiao@celloud.cn">liuqx</a>
- * @date 2015-9-15下午4:48:30
- * @version Revision: 1.0
+ * 应用市场
+ *
+ * @author han
+ * @date 2016年1月5日 下午4:01:20
  */
-@ParentPackage("celloud-default")
-@Action("app3")
-@Results({
-        @Result(name = "success", type = "json", params = { "root", "resultInt" }),
-        @Result(name = "toAppByFormat", type = "json", params = { "root",
-                "appList" }),
-        @Result(name = "toAppStore", location = "../../pages/software/appStore.jsp"),
-        @Result(name = "toSclassifyApp", location = "../../pages/software/appClassify.jsp"),
-        @Result(name = "toMoreAppList", location = "../../pages/software/appList.jsp"),
-        @Result(name = "toAppDetail", location = "../../pages/software/appDetail.jsp"),
-        @Result(name = "toMyAppPage", location = "../../pages/software/myApps.jsp") })
-public class AppAction extends BaseAction {
-    private static final long serialVersionUID = 1L;
-    Logger log = Logger.getLogger(AppAction.class);
-    @Inject
+@Controller
+@RequestMapping("app")
+public class AppAction {
+    Logger log = LoggerFactory.getLogger(AppAction.class);
+    @Resource
     private AppService appService;
-    private String type;
-    private String condition;
-    private Integer paramId;
-    private Integer resultInt;
-    /** app父级分类id */
-    private Integer classifyPid;
-    /** app子分类id */
-    private Integer classifyId;
-    /** app分类等级 */
-    private Integer classifyFloor;
-    private App app;
-    private Page page;
-    private List<App> appList;
-    private List<Screen> screenList;
-    private List<Classify> pclassifys;
-    private List<Classify> sclassifys;
-    private Map<Integer, List<App>> classifyAppMap;
-    private PageList<App> appPageList;
+    @Resource
+    private ClassifyService classifyService;
+    @Resource
+    private ScreenService screenService;
 
-    public String getAppByFormat() {
-        Integer userId = (Integer) super.session.get("userId");
-        appList = appService.getAppsByFormat(Integer.parseInt(condition),
-                userId);
-        return "toAppByFormat";
+    @ResponseBody
+    @RequestMapping("getRanAPP")
+    public List<Map<String, String>> getRanAPP() {
+        return appService.getRanAPP(ConstantsData.getLoginUserId());
     }
 
-    public String toAppStore() {
-        log.info("用户" + super.session.get("userName") + "查看应用市场");
+    @RequestMapping("toAppStore")
+    public ModelAndView toAppStore() {
+        log.info("用户{}查看应用市场", ConstantsData.getLoginUserName());
+        ModelAndView mv = new ModelAndView("app/app_main");
         /** 一级分类列表 */
-        pclassifys = appService.getClassify(ClassifyFloor.root);
-        return "toAppStore";
+        List<Classify> pclassifys = classifyService.getClassify(ClassifyFloor.root);
+        mv.addObject("pclassifys", pclassifys);
+        return mv;
     }
 
-    public String toSclassifyApp() {
-        log.info(super.session.get("userName") + "在APP首页查看" + paramId + "的子分类");
-        Integer companyId = (Integer) super.session.get("companyId");
+    @RequestMapping("toSclassifyApp")
+    public ModelAndView toSclassifyApp(Integer paramId) {
+        log.info("{}在APP首页查看{}的子分类", ConstantsData.getLoginUserName(), paramId);
+        ModelAndView mv = new ModelAndView("app/app_classify");
+        Integer userId = ConstantsData.getLoginUserId();
+        List<Classify> sclassifys = null;
         if (paramId == ClassifyFloor.js) {
             /** 小软件 */
-            Classify clas = appService.getClassifyById(paramId);
+            Classify clas = classifyService.getClassifyById(paramId);
             sclassifys = new ArrayList<>();
             sclassifys.add(clas);
         } else {
             /** 第一个一级分类的子分类 */
-            sclassifys = appService.getClassify(paramId);
+            sclassifys = classifyService.getClassify(paramId);
         }
         /** 二级分类下的app */
-        classifyAppMap = new HashMap<>();
+        Map<Integer, List<App>> classifyAppMap = new HashMap<>();
         for (Classify c : sclassifys) {
             Integer cid = c.getClassifyId();
-            appList = appService.getAppByClassify(cid, companyId);
+            List<App> appList = appService.getAppByClassify(cid, userId);
             classifyAppMap.put(cid, appList);
         }
-        return "toSclassifyApp";
+        mv.addObject("sclassifys", sclassifys);
+        mv.addObject("classifyAppMap", classifyAppMap);
+        return mv;
     }
 
-    public String toMoreAppList() {
-        log.info(super.session.get("userName") + "查看分类" + classifyPid + "-"
-                + classifyId + "下的APP");
-        Integer companyId = (Integer) super.session.get("companyId");
-        pclassifys = appService.getClassify(ClassifyFloor.root);
+    @RequestMapping("toMoreAppList")
+    public ModelAndView toMoreAppList(Integer classifyId, Integer classifyPid, String condition, String type,
+            Integer classifyFloor, @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Page pager = new Page(page, size);
+        log.info("{}查看分类{}-{}下的APP", ConstantsData.getLoginUserName(), classifyPid, classifyId);
+        ModelAndView mv = new ModelAndView("app/app_list");
+        Integer userId = ConstantsData.getLoginUserId();
+        List<Classify> pclassifys = classifyService.getClassify(ClassifyFloor.root);
         Integer cid = classifyId;
         Integer floor = classifyFloor;
         if (classifyId == 0) {
             cid = classifyPid;
         }
         if (classifyPid != ClassifyFloor.js && classifyId != ClassifyFloor.js) {
-            sclassifys = appService.getClassify(classifyPid);
+            List<Classify> sclassifys = classifyService.getClassify(classifyPid);
+            mv.addObject("sclassifys", sclassifys);
         } else {
             floor = 1;
             classifyPid = ClassifyFloor.js;
         }
-        appPageList = appService.getAppPageListByClassify(cid, floor,
-                companyId, condition, type, page);
-        return "toMoreAppList";
+        PageList<App> appPageList = appService.getAppPageListByClassify(cid, floor,userId, condition, type, pager);
+        mv.addObject("pclassifys", pclassifys);
+        mv.addObject("appPageList", appPageList);
+        mv.addObject("classifyId", classifyId);
+        mv.addObject("classifyPid", classifyPid);
+        mv.addObject("classifyFloor", classifyFloor);
+        mv.addObject("condition",condition);
+        mv.addObject("type",type);
+        return mv;
     }
 
-    public String getAppById() {
-        Integer userId = (Integer) super.session.get("userId");
-        log.info("用户" + super.session.get("userName") + "查看APP" + paramId
-                + "详细信息");
-        app = appService.getAppById(paramId, userId);
-        screenList = appService.getScreenByAppId(paramId);
-        return "toAppDetail";
+    @RequestMapping("appDetail")
+    public ModelAndView getAppById(Integer paramId) {
+        log.info("用户{}查看APP{}详细信息", ConstantsData.getLoginUserName(), paramId);
+        ModelAndView mv = new ModelAndView("app/app_detail");
+        Integer userId = ConstantsData.getLoginUserId();
+        App app = appService.getAppById(paramId, userId);
+        List<Screen> screenList = screenService.getScreenByAppId(paramId);
+        mv.addObject("app", app);
+        mv.addObject("screenList", screenList);
+        return mv;
     }
 
-    public String getMyApp() {
-        Integer userId = (Integer) super.session.get("userId");
-        log.info("用户" + super.session.get("userName") + "查看已添加的APP");
-        appList = appService.getMyAppList(userId);
-        return "toMyAppPage";
+    @RequestMapping("myApps")
+    public ModelAndView getMyApp() {
+        log.info("用户{}查看已添加的APP", ConstantsData.getLoginUserName());
+        ModelAndView mv = new ModelAndView("app/app_added");
+        Integer userId = ConstantsData.getLoginUserId();
+        List<App> appList = appService.getMyAppList(userId);
+        mv.addObject("appList", appList);
+        return mv;
     }
 
-    public String userAddApp() {
-        Integer userId = (Integer) super.session.get("userId");
-        log.info("用户" + super.session.get("userName") + "添加APP" + paramId);
-        resultInt = appService.userAddApp(userId, paramId);
-        if (resultInt > 0) {
-            return getMyAppList();
-        } else {
-            return SUCCESS;
-        }
+    @ResponseBody
+    @RequestMapping("addApp")
+    public Object userAddApp(Integer paramId, HttpServletResponse response) {
+        log.info("用户{}添加APP{}", ConstantsData.getLoginUserName(), paramId);
+        Integer userId = ConstantsData.getLoginUserId();
+        return appService.userAddApp(userId, paramId);
     }
 
-    public String userRemoveApp() {
-        Integer userId = (Integer) super.session.get("userId");
-        log.info("用户" + super.session.get("userName") + "取消添加APP" + paramId);
-        resultInt = appService.userRemoveApp(userId, paramId);
-        if (resultInt > 0) {
-            return getMyAppList();
-        } else {
-            return SUCCESS;
-        }
+    @ResponseBody
+    @RequestMapping("removeApp")
+    public Object userRemoveApp(Integer paramId, HttpServletResponse response) {
+        log.info("用户{}取消添加APP{}", ConstantsData.getLoginUserName(), paramId);
+        Integer userId = ConstantsData.getLoginUserId();
+        return appService.userRemoveApp(userId, paramId);
     }
-
-    public String getMyAppList() {
-        Integer userId = (Integer) super.session.get("userId");
-        appList = appService.getMyAppList(userId);
-        return "toMyAppPage";
+    
+    /**
+     * 获取已保存app图标
+     * 
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "image", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> appImage(String file) throws IOException {
+        String path = AppConstants.getAppPicturePath() + File.separator + file;
+        File targetFile = new File(path);
+        log.info("app图标的绝对路径{}",targetFile.getAbsolutePath());
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
     }
-
-    public List<App> getAppList() {
-        return appList;
+    
+    /**
+     * 获取已保存app截图
+     * 
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "screen", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> appScreen(String file) throws IOException {
+        String path = AppConstants.getAppScreenPath() + File.separator + file;
+        File targetFile = new File(path);
+        log.info("app截图的绝对路径{}",targetFile.getAbsolutePath());
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
     }
-
-    public void setAppList(List<App> appList) {
-        this.appList = appList;
-    }
-
-    public String getCondition() {
-        return condition;
-    }
-
-    public void setCondition(String condition) {
-        this.condition = condition;
-    }
-
-    public Integer getParamId() {
-        return paramId;
-    }
-
-    public void setParamId(Integer paramId) {
-        this.paramId = paramId;
-    }
-
-    public App getApp() {
-        return app;
-    }
-
-    public void setApp(App app) {
-        this.app = app;
-    }
-
-    public List<Screen> getScreenList() {
-        return screenList;
-    }
-
-    public void setScreenList(List<Screen> screenList) {
-        this.screenList = screenList;
-    }
-
-    public Integer getResultInt() {
-        return resultInt;
-    }
-
-    public void setResultInt(Integer resultInt) {
-        this.resultInt = resultInt;
-    }
-
-    public List<Classify> getPclassifys() {
-        return pclassifys;
-    }
-
-    public void setPclassifys(List<Classify> pclassifys) {
-        this.pclassifys = pclassifys;
-    }
-
-    public List<Classify> getSclassifys() {
-        return sclassifys;
-    }
-
-    public void setSclassifys(List<Classify> sclassifys) {
-        this.sclassifys = sclassifys;
-    }
-
-    public Map<Integer, List<App>> getClassifyAppMap() {
-        return classifyAppMap;
-    }
-
-    public void setClassifyAppMap(Map<Integer, List<App>> classifyAppMap) {
-        this.classifyAppMap = classifyAppMap;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Page getPage() {
-        return page;
-    }
-
-    public void setPage(Page page) {
-        this.page = page;
-    }
-
-    public PageList<App> getAppPageList() {
-        return appPageList;
-    }
-
-    public void setAppPageList(PageList<App> appPageList) {
-        this.appPageList = appPageList;
-    }
-
-    public Integer getClassifyPid() {
-        return classifyPid;
-    }
-
-    public void setClassifyPid(Integer classifyPid) {
-        this.classifyPid = classifyPid;
-    }
-
-    public Integer getClassifyId() {
-        return classifyId;
-    }
-
-    public void setClassifyId(Integer classifyId) {
-        this.classifyId = classifyId;
-    }
-
-    public Integer getClassifyFloor() {
-        return classifyFloor;
-    }
-
-    public void setClassifyFloor(Integer classifyFloor) {
-        this.classifyFloor = classifyFloor;
-    }
-
 }

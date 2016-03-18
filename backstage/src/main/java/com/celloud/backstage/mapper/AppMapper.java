@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.celloud.backstage.model.App;
+import com.celloud.backstage.page.Page;
 
 public interface AppMapper {
     int deleteByPrimaryKey(Integer appId);
@@ -43,4 +44,29 @@ public interface AppMapper {
      */
     
     List<App> getAppListAdded(@Param("attribute") Integer attribute,@Param("offLine") Integer offLine);
+    /**
+     * 分页查询app列表
+     *
+     * @param page
+     * @return
+     * @author han
+     * @date 2016年2月23日 下午2:04:18
+     */
+    public List<App> getAppListByPage(Page page);
+    
+    public int updateAppOffline(@Param("offLine") Integer offLine,@Param("appId") Integer appId);
+    
+    public int insertApp(App app);
+    
+    public App getAppById(@Param("appId") Integer appId );
+    
+    public int insertAppFileFormatBatch(@Param("appId") Integer appId,@Param("formatIds")Integer[] formatIds);
+    
+    public int insertAppClassifyBatch(@Param("appId") Integer appId,@Param("calssifyIds")Integer[] calssifyIds);
+    
+    public int appNameExist(@Param("appId") Integer appId,@Param("appName") String appName);
+    
+    public int deleteAppFileFormat(@Param("appId") Integer appId);
+    public int deleteAppClassify(@Param("appId") Integer appId);
+    public int updateApp(App app);
 }

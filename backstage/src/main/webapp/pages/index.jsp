@@ -5,7 +5,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>CelLoud后台管理系统</title>
-<link rel="stylesheet" href="http://fonts.useso.com/css?family=Arimo:400,700,400italic">
 <link rel="stylesheet" href="plugins/bootstrap/css/fonts/linecons/css/linecons.css">
 <link rel="stylesheet" href="plugins/bootstrap/css/fonts/fontawesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.css">
@@ -45,25 +44,19 @@
                 
                         
                 <ul id="main-menu" class="main-menu">
-                    <li class="active opened">
-                        <a href="#">
-                            <i class="linecons-cog"></i>
-                            <span class="title">控制台</span>
-                        </a>
-                    </li>
-                    <li class="expanded has-sub">
+                    <li>
                         <a id="to-app-manage" href="#">
                             <i class="linecons-desktop"></i>
                             <span class="title">应用管理</span>
                         </a>
                         <ul>
-                            <li>
-                                <a href="app_list.html">
+                            <li id="app-list-menu">
+                                <a href="javascript:app.toAppMain();">
                                     <span class="title">应用列表</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="add_app.html">
+                            <li id="app-add-menu">
+                                <a href="javascript:app.toAddApp();">
                                     <span class="title">添加应用</span>
                                 </a>
                             </li>
@@ -81,23 +74,11 @@
                             <span class="title">用户管理</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
+                    <li id="feedback-menu">
+                        <a href="javascript:feedback.tofeedbackMain();">
                             <i class="linecons-database"></i>
                             <span class="title">意见反馈</span>
                         </a>
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    <span class="title">已解决</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="title">未解决</span>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                     <li id="notice-menu">
                         <a href="javascript:notice.toNoticeMain();">
@@ -111,20 +92,20 @@
                             <span class="title">数据管理</span>
                         </a>
                         <ul>
-                            <li>
-                                <a href="#">
+                            <li id="file-clean-menu">
+                                <a href="javascript:dataFile.toDataClean();">
                                     <span class="title">数据清理</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">
+                            <li id="file-upload-menu">
+                                <a href="javascript:dataFile.toDataFileUpload();">
                                     <span class="title">数据上传</span>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#">
+                    <li id="mailing-menu">
+                        <a href="javascript:mailing.toMailingMain();">
                             <i class="linecons-globe"></i>
                             <span class="title">邮件群发</span>
                         </a>
@@ -158,37 +139,24 @@
                 
                 <!-- Right links for user info navbar -->
                 <ul class="user-info-menu right-links list-inline list-unstyled">
-                    
-                    <li class="search-form"><!-- You can add "always-visible" to show make the search input visible -->
-                        
-                        <form method="get" action="extra-search.html">
-                            <input type="text" name="s" class="form-control search-field" placeholder="Type to search..." />
-                            
-                            <button type="submit" class="btn btn-link">
-                                <i class="linecons-search"></i>
-                            </button>
-                        </form>
-                        
-                    </li>
-                    
                     <li class="dropdown user-profile">
                         <a href="#" data-toggle="dropdown">
                             <img src="images/index/user-4.png" alt="user-image" class="img-circle img-inline userpic-32" width="28" />
                             <span>
-                                Arlind Nushi
+                                ${loginUserInSession.username }
                                 <i class="fa-angle-down"></i>
                             </span>
                         </a>
                         
                         <ul class="dropdown-menu user-profile-menu list-unstyled">
                             <li>
-                                <a href="#settings">
+                                <a href="javascript:user.showChangePwd();">
                                     <i class="fa-wrench"></i>
-                                    设置
+                                   修改密码
                                 </a>
                             </li>
                             <li class="last">
-                                <a href="extra-lockscreen.html">
+                                <a href="logout">
                                     <i class="fa-lock"></i>
                                     退出
                                 </a>

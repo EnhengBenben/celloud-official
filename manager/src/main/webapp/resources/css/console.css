@@ -1,0 +1,5 @@
+@charset "utf-8";
+.console .widget-box>.widget-header{
+	border-bottom:1px solid #dce8f1;
+	color:#4383b4;
+}

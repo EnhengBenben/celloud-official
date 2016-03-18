@@ -90,5 +90,14 @@ public interface UserMapper {
      * @date 2016年1月29日 下午1:52:48
      */
     public int addUserCompanyRelat(@Param("userId")int userId,@Param("companyId")int companyId);
+    /**
+     * 
+     *
+     * @param state
+     * @return
+     * @author han
+     * @date 2016年2月18日 下午5:19:10
+     */
+    public List<User> getAllUserList(@Param("state") Integer state);
     
 }

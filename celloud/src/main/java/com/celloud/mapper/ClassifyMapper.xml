@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.celloud.mapper.ClassifyMapper" >
+  <resultMap id="BaseResultMap" type="com.celloud.model.mysql.Classify" >
+    <id column="classify_id" property="classifyId" jdbcType="INTEGER" />
+    <result column="classify_name" property="classifyName" jdbcType="VARCHAR" />
+    <result column="classify_pid" property="classifyPid" jdbcType="INTEGER" />
+    <result column="notes" property="notes" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    classify_id, classify_name, classify_pid, notes
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_classify
+    where classify_id = #{classifyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_classify
+    where classify_id = #{classifyId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.celloud.model.mysql.Classify" >
+    insert into tb_classify (classify_id, classify_name, classify_pid, 
+      notes)
+    values (#{classifyId,jdbcType=INTEGER}, #{classifyName,jdbcType=VARCHAR}, #{classifyPid,jdbcType=INTEGER}, 
+      #{notes,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.celloud.model.mysql.Classify" >
+    insert into tb_classify
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="classifyId != null" >
+        classify_id,
+      </if>
+      <if test="classifyName != null" >
+        classify_name,
+      </if>
+      <if test="classifyPid != null" >
+        classify_pid,
+      </if>
+      <if test="notes != null" >
+        notes,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="classifyId != null" >
+        #{classifyId,jdbcType=INTEGER},
+      </if>
+      <if test="classifyName != null" >
+        #{classifyName,jdbcType=VARCHAR},
+      </if>
+      <if test="classifyPid != null" >
+        #{classifyPid,jdbcType=INTEGER},
+      </if>
+      <if test="notes != null" >
+        #{notes,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.Classify" >
+    update tb_classify
+    <set >
+      <if test="classifyName != null" >
+        classify_name = #{classifyName,jdbcType=VARCHAR},
+      </if>
+      <if test="classifyPid != null" >
+        classify_pid = #{classifyPid,jdbcType=INTEGER},
+      </if>
+      <if test="notes != null" >
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where classify_id = #{classifyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.Classify" >
+    update tb_classify
+    set classify_name = #{classifyName,jdbcType=VARCHAR},
+      classify_pid = #{classifyPid,jdbcType=INTEGER},
+      notes = #{notes,jdbcType=VARCHAR}
+    where classify_id = #{classifyId,jdbcType=INTEGER}
+  </update>
+  <select id="getClassify" resultMap="BaseResultMap">
+    select classify_id,classify_pid,classify_name from tb_classify where classify_pid=#{pid }
+  </select>
+  <select id="getClassifyById" resultMap="BaseResultMap">
+    select classify_id,classify_pid,classify_name from tb_classify where classify_id=#{classifyId }
+  </select>
+</mapper>

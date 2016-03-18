@@ -28,6 +28,18 @@
     from tb_feedback
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByPage" resultMap="ResultMapWithBLOBs" >
+    select f.*,count(fr.id)>0 isResponse 
+	from tb_feedback f LEFT JOIN tb_feedback_reply fr on f.id=fr.feedback_id GROUP BY f.id 
+    <choose>
+        <when test="sortFiled!=null and sortFiled!=''">
+            order by ${sortFiled} ${sortType}
+        </when>
+        <otherwise>
+            order by f.id desc
+        </otherwise>
+    </choose>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_feedback
     where id = #{id,jdbcType=INTEGER}
@@ -155,5 +167,10 @@
       solve = #{solve,jdbcType=TINYINT},
       has_attachment = #{hasAttachment,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateAttachState" parameterType="java.lang.Integer">
+       update tb_feedback set has_attachment = 
+       (select count(*) from tb_feedback_attachment where feedback_id = #{id,jdbcType=INTEGER}) 
+       where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

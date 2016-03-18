@@ -10,11 +10,11 @@ from mysql.mysqlOperate import mysql
 from data_insert import *
 
 basePath = '/share/data/webapps/Tools/upload/'
-sql = "select user_id,software_id,project_id from tb_report where software_id =80 and flag = 1;"
+sql = "select user_id,app_id,project_id from tb_report where app_id =80 and flag = 1;"
 my=mysql.getInstance()
 if my:
 	result = my.query(sql)
 	for i in range(len(result)):
 		re = result[i]
-		path = os.path.join(basePath , str(re['user_id']) , str(re['software_id']))
+		path = os.path.join(basePath , str(re['user_id']) , str(re['app_id']))
 		datainsert(path,str(re['project_id']))

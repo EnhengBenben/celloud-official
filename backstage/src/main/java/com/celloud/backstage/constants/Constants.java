@@ -49,4 +49,5 @@ public class Constants {
      * 默认的用户头像
      */
     public static final String DELAULT_AVATAR = "01";
+    public static final String SYSTEM_PROPERTIES_FILE = "system.properties";
 }

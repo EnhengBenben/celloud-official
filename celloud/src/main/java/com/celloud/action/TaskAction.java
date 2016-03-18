@@ -6,155 +6,134 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.convention.annotation.Results;
+import javax.annotation.Resource;
 
-import com.celloud.sdo.App;
-import com.celloud.sdo.Data;
-import com.celloud.sdo.Project;
-import com.celloud.sdo.Task;
-import com.celloud.sdo.User;
+import org.apache.commons.lang.text.StrSubstitutor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import com.celloud.constants.CommandKey;
+import com.celloud.constants.ConstantsData;
+import com.celloud.constants.DataState;
+import com.celloud.constants.FileFormat;
+import com.celloud.constants.GlobalQueue;
+import com.celloud.constants.Mod;
+import com.celloud.constants.PortPool;
+import com.celloud.constants.SparkPro;
+import com.celloud.model.mongo.TaskQueue;
+import com.celloud.model.mysql.DataFile;
+import com.celloud.model.mysql.Task;
+import com.celloud.service.AppService;
 import com.celloud.service.DataService;
-import com.celloud.service.RunOverService;
+import com.celloud.service.ExpensesService;
+import com.celloud.service.ProjectService;
+import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
-import com.google.inject.Inject;
-import com.nova.action.BaseAction;
-import com.nova.constants.AppNameIDConstant;
-import com.nova.constants.DataState;
-import com.nova.constants.FileFormat;
-import com.nova.constants.SparkPro;
-import com.nova.email.EmailProjectEnd;
-import com.nova.service.IReportService;
-import com.nova.utils.Base64Util;
-import com.nova.utils.DataUtil;
-import com.nova.utils.DateUtil;
-import com.nova.utils.FileTools;
-import com.nova.utils.PerlUtils;
-import com.nova.utils.PropertiesUtil;
-import com.nova.utils.RemoteRequests;
-import com.nova.utils.XmlUtil;
+import com.celloud.utils.DataKeyListToFile;
+import com.celloud.utils.DataUtil;
+import com.celloud.utils.FileTools;
+import com.celloud.utils.MD5Util;
+import com.celloud.utils.PerlUtils;
+import com.celloud.utils.PropertiesUtil;
+import com.celloud.utils.RunOverUtil;
+import com.celloud.utils.SSHUtil;
+import com.celloud.utils.XmlUtil;
 
 /**
- * 任务应用
+ * 投递任务管理
  * 
- * @author <a href="mailto:liuqingxiao@celloud.cn">liuqx</a>
- * @date 2015-11-3下午5:18:22
- * @version Revision: 1.0
+ * @author leamo
+ * @date 2016年1月14日 下午5:05:52
  */
-@ParentPackage("celloud-default")
-@Action("task")
-@Results({ @Result(name = "success", type = "json", params = { "root",
-        "conditionInt" }) })
-public class TaskAction extends BaseAction {
-    private static final long serialVersionUID = 1L;
-    Logger log = Logger.getLogger(DataAction.class);
-    @Inject
+@Controller
+@RequestMapping("api/task")
+public class TaskAction {
+    Logger logger = LoggerFactory.getLogger(TaskAction.class);
+    @Resource
     private TaskService taskService;
-    @Inject
+    @Resource
     private DataService dataService;
-    @Inject
-    private IReportService reportService;
-    private Task task;
-    private Integer conditionInt;
-    private String projectId;
-    /** 文件名称 eg: filename1,filename2 */
-    private String dataNames;
-
-    /**
-     * 修改任务状态并执行排队任务
-     * 
-     * @return
-     */
-    public String updateTaskState() {
-        taskService.updateToDone(task.getTaskId());
-        log.info("任务" + task.getTaskId() + "执行完毕");
-        task = taskService.getFirstTask(task.getAppId());
-        if (task != null) {
-            StringBuffer remotePath = new StringBuffer();
-            Long taskId = task.getTaskId();
-            remotePath.append(PropertiesUtil.toolsOutPath)
-                    .append("Procedure!runApp?userId=")
-                    .append(task.getUserId()).append("&appId=")
-                    .append(task.getAppId()).append("&dataKey=")
-                    .append(task.getDataKey()).append("&taskId=")
-                    .append(taskId).append("&command=")
-                    .append(Base64Util.encrypt(task.getCommand())).append("&")
-                    .append(task.getParams());
-            RemoteRequests rr = new RemoteRequests();
-            rr.run(remotePath.toString());
-            log.info("任务" + task.getTaskId() + "开始完成投递");
-            taskService.updateToRunning(taskId);
-        }
-        conditionInt = 1;
-        return SUCCESS;
-    }
+    @Resource
+    private ProjectService projectService;
+    @Resource
+    private ReportService reportService;
+    @Resource
+    private AppService appService;
+    @Resource
+    private ExpensesService expencesService;
+    private static Map<String, Map<String, String>> machines = ConstantsData
+            .getMachines();
+    private static String sgeHost = machines.get("158").get(Mod.HOST);
+    private static String sgePwd = machines.get("158").get(Mod.PWD);;
+    private static String sgeUserName = machines.get("158").get(Mod.USERNAME);
+    private static String sparkhost = machines.get("spark").get(Mod.HOST);
+    private static String sparkpwd = machines.get("spark").get(Mod.PWD);
+    private static String sparkuserName = machines.get("spark")
+            .get(Mod.USERNAME);
 
     /**
      * 任务运行结束
-     * perl端调用：http://www.celloud.cn/task!runOver?projectId=1&dataNames=data1
-     * .fastq,data2.fastq
+     * perl端调用：http://www.celloud.cn/task/taskRunOver.html?projectId=1&dataNames
+     * =data1 .fastq,data2.fastq
      * 
      * @return
+     * @author leamo
+     * @date 2016年1月14日 下午5:09:27
      */
-    public String runOver() {
-        log.info("任务运行结束，proId:" + projectId + ",运行数据dataKey：" + dataNames);
+    @RequestMapping("taskRunOver")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public String taskRunOver(String projectId, String dataNames) {
+        logger.info("任务运行结束，proId:{},运行数据dataKey：{}", projectId, dataNames);
         String[] dataArr = dataNames.split(",");
-        StringBuffer dataKeys = new StringBuffer();
-        String dataKey = "";
-        for (int i = 0; i < dataArr.length; i++) {
-            String dname = dataArr[i];
-            if (i == 0) {
-                dataKey = dname;
-            }
-            dataKeys.append(dname);
-            if (i < dataArr.length - 1) {
-                dataKeys.append(",");
-            }
-        }
+        String dataKey = FileTools.getArray(dataArr, 0);
         // 1. 数据库检索
         Map<String, Object> map = taskService
-.getTaskInfoByProId(Long
-                .valueOf(projectId));
-        Project pro = (Project) map.get("project");
-        App app = (App) map.get("app");
-        User user = (User) map.get("user");
-        Integer userId = user.getUserId();
-        Long appId = app.getSoftwareId();
-        List<Data> dataList = dataService
-                .getDataByDataKeys(dataKeys.toString());
+                .findTaskInfoByProId(Integer.parseInt(projectId));
+        if (map == null) {
+            logger.info("获取项目信息错误" + map);
+            return "run error";
+        }
+        Integer userId = (Integer) map.get("userId");
+        Integer appId = (Integer) map.get("appId");
+        String title = (String) map.get("title");
+        String method = (String) map.get("method");
+        List<DataFile> dataList = dataService.selectDataByKeys(dataNames);
         // 2. 利用 python将数据报告插入 mongodb
         StringBuffer command = new StringBuffer();
         command.append("python ").append(SparkPro.TASKOVERPY).append(" ")
                 .append(SparkPro.TOOLSPATH).append(" ").append(userId)
-                .append(" ").append(appId).append(" ").append(dataKeys)
+                .append(" ").append(appId).append(" ").append(dataNames)
                 .append(" ").append(projectId);
-        PerlUtils.executeGadgetsPerl(command.toString());
+        PerlUtils.excutePerl(command.toString());
         // 3. 创建项目结果文件
         StringBuffer basePath = new StringBuffer();
         basePath.append(SparkPro.TOOLSPATH).append(userId).append("/")
                 .append(appId).append("/");
-        StringBuffer projectFile = new StringBuffer();
-        projectFile.append(basePath).append(projectId).append("/")
+
+        StringBuffer projectFileBf = new StringBuffer();
+        projectFileBf.append(basePath).append(projectId).append("/")
                 .append(projectId).append(".txt");
+        String projectFile = projectFileBf.toString();
+        FileTools.createFile(projectFile);
+
         StringBuffer reportPath = new StringBuffer();
         reportPath.append(basePath).append(dataKey).append("/");
         // 4. 通过反射调用相应app的处理方法，传参格式如下：
         // String reportPath, String appName, String appTitle,String
-        // projectFile,String projectId, List<Data> dataList
-        RunOverService ros = new RunOverService();
+        // projectFile,String projectId, List<DataFile> dataList
+        RunOverUtil ros = new RunOverUtil();
         try {
-            ros.getClass()
-                    .getMethod(
-                            app.getMethod(),
-                            new Class[] { String.class, String.class,
-                                    String.class, String.class, String.class,
-                                    List.class })
-                    .invoke(ros, reportPath.toString(), dataKey,
-                            app.getTitle(), projectFile.toString(),
-                            projectId.toString(), dataList);
+            ros.getClass().getMethod(method,
+                    new Class[] { String.class, String.class, String.class,
+                            String.class, String.class, List.class })
+                    .invoke(ros, reportPath.toString(), dataKey, title,
+                            projectFile, projectId, dataList);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -163,13 +142,9 @@ public class TaskAction extends BaseAction {
         if (new File(projectFile.toString()).exists()) {
             xml = XmlUtil.writeXML(projectFile.toString());
         }
-        // 6. 项目报告插入mysql并修改项目运行状态
-        reportService.updateReportStateByProSoftId(userId,
-                Integer.valueOf(projectId),
-                Integer.valueOf(appId.toString()), 3, xml);
-        if (appId.toString().equals(AppNameIDConstant.split)) {
+        if (appId == 113) {
             String inPath = reportPath + "result/split/";
-            String outPath = PropertiesUtil.fileFinal;
+            String outPath = PropertiesUtil.bigFilePath;
             HashSet<String> resultFiles = FileTools.getFiles(inPath);
             Iterator<String> rFile = resultFiles.iterator();
             Long size = null;
@@ -180,74 +155,145 @@ public class TaskAction extends BaseAction {
                             .substring(fstr.lastIndexOf(".tar.gz"));
                     String resourcePath = inPath + fstr;
                     size = new File(resourcePath).length();
-                    Data data = new Data();
-                    data.setUserId(userId);
-                    data.setFileName(fstr);
-                    data.setState(DataState.DEELTED);
-                    int dataId = dataService.addData(data);
+                    DataFile DataFile = new DataFile();
+                    DataFile.setUserId(userId);
+                    DataFile.setFileName(fstr);
+                    DataFile.setState(DataState.DEELTED);
+                    int dataId = dataService.addDataInfo(DataFile);
                     String new_dataKey = DataUtil.getNewDataKey(dataId);
                     String filePath = outPath + new_dataKey + extName;
-                    boolean state = PerlUtils.excuteCopyPerl(resourcePath,
+                    boolean state = PerlUtils.excuteCopyFile(resourcePath,
                             filePath);
                     if (state) {
-                        data.setFileId((long) dataId);
-                        data.setDataKey(new_dataKey);
-                        data.setAnotherName("split:" + dataKey);
-                        data.setSize(size);
-                        data.setPath(filePath);
-                        data.setFileFormat(FileFormat.FQ);
-                        data.setState(DataState.ACTIVE);
-                        dataService.updateData(data);
+                        DataFile.setFileId(dataId);
+                        DataFile.setDataKey(new_dataKey);
+                        DataFile.setAnotherName("split:" + dataKey);
+                        DataFile.setSize(size);
+                        DataFile.setPath(filePath);
+                        DataFile.setFileFormat(FileFormat.FQ);
+                        DataFile.setState(DataState.ACTIVE);
+                        DataFile.setMd5(MD5Util.getFileMD5(filePath));
+                        dataService.updateDataInfoByFileId(DataFile);
                     }
                 }
             }
         }
-        // TODO 7.发送邮件
-        String param = "fileName=" + null + "&userId=" + userId + "&appId="
-                + appId + "&dataKey=" + dataKeys + "&projectId=" + projectId
-                + "&sampleList=" + null;
-        EmailProjectEnd.sendEndEmail(pro.getProjectName(), "" + appId,
-                DateUtil.nowCarefulTimeToString(pro.getCreateDate()),
-                user.getEmail(), param, true);
-
-        // 8.结束任务并开始执行等待任务
-        task = taskService.getTaskDataAppPro(dataKey, appId,
-                Long.valueOf(projectId));
+        // 6.结束任务修改项目报告状态
+        Task task = taskService.updateToDone(appId, Integer.parseInt(projectId),
+                dataKey, dataNames, xml);
         if (task != null) {
-            this.updateTaskState();
+            logger.info("任务{}执行完毕", task.getTaskId());
+            task = taskService.findFirstTask(appId);
+            if (task != null) {
+                logger.info("运行命令：{}", command);
+                SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+                ssh.sshSubmit(command.toString(), false);
+                taskService.updateToRunning(task.getTaskId());
+            }
         }
-        return SUCCESS;
+        return "run over";
     }
 
-    public Task getTask() {
-        return task;
+    /**
+     * 项目运行结束之后
+     * perl端调用：http://www.celloud.cn/task/projectRunOver.html?projectId=
+     * 
+     * @return
+     */
+    @RequestMapping("projectRunOver")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public String projectRunOver(String projectId) {
+        logger.info("项目运行结束，id:{}", projectId);
+        // 1. 利用 python 生成数据 pdf，并将数据报告插入 mongodb
+        String command = "python " + SparkPro.PYTHONPATH + " "
+                + SparkPro.TOOLSPATH + " " + projectId;
+        PerlUtils.excutePerl(command);
+        // 2. 数据库检索
+        int proId = Integer.parseInt(projectId);
+        Map<String, Object> map = projectService.findProjectInfoById(proId);
+        Integer userId = (Integer) map.get("userId");
+        Integer appId = (Integer) map.get("appId");
+        String appName = (String) map.get("appName");
+        String title = (String) map.get("title");
+        String method = (String) map.get("method");
+
+        List<DataFile> dataList = dataService.getDatasInProject(proId);
+
+        // 3. 创建项目结果文件
+        StringBuffer basePath = new StringBuffer();
+        basePath.append(SparkPro.TOOLSPATH).append(userId).append("/")
+                .append(appId).append("/");
+        StringBuffer projectFileBf = new StringBuffer();
+        projectFileBf.append(basePath).append(projectId).append("/")
+                .append(projectId).append(".txt");
+        String projectFile = projectFileBf.toString();
+        FileTools.createFile(projectFile);
+        // 4. 通过反射调用相应app的处理方法，传参格式如下：
+        // String appPath, String appName, String appTitle,String
+        // projectFile,String projectId, List<DataFile> proDataList
+        RunOverUtil ros = new RunOverUtil();
+        try {
+            // TODO 方法名称和title类型应该从数据库获取
+            ros.getClass().getMethod(method,
+                    new Class[] { String.class, String.class, String.class,
+                            String.class, String.class, List.class })
+                    .invoke(ros, basePath.toString(), appName, title,
+                            projectFile, projectId, dataList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // 5. 通过读取xml文件来生成项目报告
+        String xml = null;
+        if (new File(projectFile.toString()).exists()) {
+            xml = XmlUtil.writeXML(projectFile);
+        }
+        // 6. 项目报告插入mysql并修改项目运行状态
+        reportService.reportCompeleteByProId(proId, xml);
+
+        runQueue(projectId);
+        return "run over";
     }
 
-    public void setTask(Task task) {
-        this.task = task;
+    /**
+     * 运行队列里的命令
+     */
+    private void runQueue(String projectId) {
+        logger.info("{}运行结束，释放端口", projectId);
+        PortPool.setPort(projectId);
+        while (true) {
+            if (GlobalQueue.isEmpty()) {
+                logger.info("任务队列为空");
+                break;
+            }
+            String proId = GlobalQueue.peek();
+            if (proId != null) {
+            	TaskQueue tq = reportService.getTaskQueue(Integer.parseInt(proId));
+            	List<DataFile> list = tq.getDataList();
+                int need = list.size();
+                logger.info("需要节点 {}可使用节点 {}", need, PortPool.getSize());
+                if (PortPool.getSize() < need) {
+                    logger.info("节点不满足需要，暂缓投递任务");
+                    break;
+                }
+                String _dataFilePath = DataKeyListToFile.toSpark(proId, list);
+                Map<String, String> map = CommandKey.getMap(_dataFilePath, tq.getPath(),Integer.valueOf(proId));
+                StrSubstitutor sub = new StrSubstitutor(map);
+				String command = sub.replace(tq.getCommand());
+				logger.info("资源满足需求，投递任务！运行命令：" + command);
+                SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
+                ssh.sshSubmit(command, false);
+                GlobalQueue.poll();
+            }
+        }
     }
+    
+	@RequestMapping("toolsRunOver")
+    @ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
+	public String toolsRunOver(Integer userId, Integer appId, Integer projectId, Integer period, String context) {
+		Integer result = reportService.updateReportStateToTools(userId, appId, projectId, period, context);
+		return String.valueOf(result);
+	}
 
-    public Integer getConditionInt() {
-        return conditionInt;
-    }
-
-    public void setConditionInt(Integer conditionInt) {
-        this.conditionInt = conditionInt;
-    }
-
-    public String getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
-
-    public String getDataNames() {
-        return dataNames;
-    }
-
-    public void setDataNames(String dataNames) {
-        this.dataNames = dataNames;
-    }
 }

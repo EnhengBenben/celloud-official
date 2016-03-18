@@ -1,5 +1,7 @@
 package com.celloud.backstage.mapper;
 
+import java.util.List;
+
 import com.celloud.backstage.model.FeedbackAttachment;
 
 public interface FeedbackAttachmentMapper {
@@ -14,4 +16,6 @@ public interface FeedbackAttachmentMapper {
     int updateByPrimaryKeySelective(FeedbackAttachment record);
 
     int updateByPrimaryKey(FeedbackAttachment record);
+    
+    public List<FeedbackAttachment> findByFeedbackId(Integer feedbackId);
 }

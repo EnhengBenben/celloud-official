@@ -1,9 +1,17 @@
+$.ajaxSetup ({
+	  complete:function(request,textStatus){
+		  var sessionstatus=request.getResponseHeader("sessionstatus"); //通过XMLHttpRequest取得响应头，sessionstatus，  
+		  if(sessionstatus=="timeout"){
+			  jAlert("登录超时,请重新登录！","登录超时",function(){
+				  window.location.href="login";
+			  });
+		  }
+	  },
+	  cache: false //关闭AJAX相应的缓存
+  });
 /**
 *公司管理
 **/
-$.ajaxSetup ({
-	  cache: false //关闭AJAX相应的缓存
-  });
 var company=(function(company){
 	var self=company||{};
 	var uploader = null;
@@ -54,6 +62,11 @@ var company=(function(company){
 		uploader.init();
 	}
 	self.search=function(){
+		var keyword=$("#keyword").val();
+		if(!/[^%&',;<>/\\_!*=?$\x22]+/g.test(keyword)){
+			jAlert("搜索关键字不能包含特殊字符");
+			return;
+		}
 		self.keyword=$("#keyword").val();
 		self.getCompany(1);
 	}
@@ -231,6 +244,11 @@ var user=(function(user){
 	self.searchFiled="username";
 	self.keyword=null;
 	self.search=function(){
+		var keyword=$("#keyword").val();
+		if(!/[^%&',;<>/\\_!*=?$\x22]+/g.test(keyword)){
+			jAlert("搜索关键字不能包含特殊字符");
+			return;
+		}
 		self.searchFiled=$("#searchFiled").val();
 		self.keyword=$("#keyword").val();
 		self.getUserList(1);
@@ -298,8 +316,11 @@ var user=(function(user){
 			$("#main-menu li").removeClass("active").removeClass("opened");
 			$("#user-menu").addClass("active");
 		});
-	}
-	
+	};
+	self.showChangePwd=function(){
+		$("#main-content").load("./pages/user/user_pwd_reset.jsp");
+		$("#main-menu li").removeClass("active").removeClass("opened");
+	};
 	self.getUserList=function(currentPage){
 		$.post("user/userList",{currentPage:currentPage,searchFiled:self.searchFiled,keyword:self.keyword},function(responseText){
 			$("#main-content").html(responseText);
@@ -403,3 +424,330 @@ var client=(function(client){
 	}
 	return self;
 })(client);
+
+var dataFile=(function(dataFile){
+	var self=dataFile||{};
+	self.toDataFileUpload=function(){
+		$.post("dataFile/toDataFileUpload",function(responseText){
+			$("#main-content").html(responseText);
+			$("#main-menu li").removeClass("active").removeClass("opened").removeClass("expanded");
+			$("#file-upload-menu").addClass("active").parent().parent("li").addClass("active").addClass("opened").addClass("expanded");
+		});
+	}
+	self.toDataClean=function(){
+		$.post("dataFile/toDataClean",function(responseText){
+			$("#main-content").html(responseText);
+			$("#main-menu li").removeClass("active").removeClass("opened").removeClass("expanded");
+			$("#file-clean-menu").addClass("active").parent().parent("li").addClass("active").addClass("opened").addClass("expanded");
+		});
+	}
+	self.empty=function(){
+		$("#data-upload-set-panel").html('');
+		$("#DataAmountForm")[0].reset();
+	}
+	return self;
+})(dataFile);
+
+var app=(function(app){
+	var self=app||{};
+	self.currentPage = 1;
+	var pictureUploader = null;
+	var screenUploader=null;
+	
+	self.initPictureNameUploader = function(){
+		if(pictureUploader){
+			pictureUploader.destroy();
+		}
+		pictureUploader = new plupload.Uploader({
+			browse_button : 'uploadPictureNameBtn', 
+			url : "../app/upload",
+			container:'pictureNameContainer',
+	        chunk_size : "1mb",
+	        file_data_name:'file',
+	        filters : {
+				max_file_size : "2mb",
+				mime_types: [
+				    {title : "Image files", extensions : "jpg,jpeg,png" }
+				],
+				prevent_duplicates : true //不允许选取重复文件
+			},
+			multi_selection:false,
+	        flash_swf_url : '../plugins/plupload-2.1.2/Moxie.swf',
+	        init:{
+	        	PostInit: function() {
+	        		$("#appForm").find("#warning-group").hide();
+	            },
+	        	FilesAdded: function(up, files) {
+	        		$("#pictureNameUploading").show();
+	        		pictureUploader.start();
+	            },
+	            FileUploaded:function(up,file,response){
+	            	$("#pictureNameUploading").hide();
+	            	var $img = $("<img />");
+	            	$img.attr("src","app/icon/temp?file="+response.response);
+	            	$img.addClass("img-thumbnail");
+	            	$img.css("height","60px");
+	            	$img.css("margin-right","10px");
+	            	var $input = $('<input type="hidden" name="pictureName"/>');
+	            	$input.val(response.response);
+	            	$("#pictureNameUploading").siblings(".img-thumbnail-inline").html($img);
+	            	$("#appForm .pictureName-input-hidden").html($input);
+	            	pictureUploader.splice();
+	            }
+	        }
+	    });
+		pictureUploader.init();
+	}
+	
+	self.initScreenUploader = function(){
+		if(screenUploader){
+			screenUploader.destroy();
+		}
+		screenUploader = new plupload.Uploader({
+			browse_button : 'uploadScreenBtn', 
+			url : "../app/upload",
+			container:'screenContainer',
+	        chunk_size : "1mb",
+	        file_data_name:'file',
+	        filters : {
+				max_file_size : "2mb",
+				mime_types: [
+				    {title : "Image files", extensions : "jpg,jpeg,png" }
+				],
+				prevent_duplicates : true //不允许选取重复文件
+			},
+			multi_selection:false,
+	        flash_swf_url : '../plugins/plupload-2.1.2/Moxie.swf',
+	        init:{
+	        	PostInit: function() {
+	        		$("#appForm").find("#screen-group").removeClass("hide");
+	        		$("#appForm").find("#screen-group").show();
+	        		$("#appForm").find("#warning-group").hide();
+	            },
+	        	FilesAdded: function(up, files) {
+	        		$("#screenUploading").show();
+	        		screenUploader = up;
+	        		up.start();
+	            },
+	            QueueChanged:function(up){
+	            	screenUploader = up;
+	            	up.disableBrowse(up.files.length>=5);
+	            },
+	            FileUploaded:function(up,file,response){
+	            	screenUploader = up;
+	            	$("#screenUploading").hide();
+	            	var $input = $('<input type="hidden" name="screenName"/>');
+	            	$input.val(response.response);
+	            	var $imgdiv=$("<div class='inline'></div>")
+	            	var $img = $("<img style='height: 60px; margin-right: 10px;'/>");
+	            	$img.attr("src","app/icon/temp?file="+response.response);
+	            	$img.addClass("img-thumbnail");
+	            	$img.attr("name","screen_"+response.response)
+	            	$imgdiv.append($img);
+	            	var $imgdel=$('<a href="javascript:void(0)"><span style="position: relative; right: 18px; top: -25px;">×</span></a>');
+	            	$imgdel.click(function(){
+	            		$imgdiv.remove();
+	            		$input.remove();
+	            		screenUploader.removeFile(file);
+	            	});
+	            	$imgdiv.append($imgdel);
+	            	$("#screenUploading").before($imgdiv);
+	            	$("#appForm").append($input);
+	            }
+	        }
+	    });
+		screenUploader.init();
+	}
+	
+	self.toAppMain=function(){
+		$.post("app/appList",function(responseText){
+			$("#main-content").html(responseText);
+			$("#main-menu li").removeClass("active").removeClass("opened").removeClass("expanded");
+			$("#app-list-menu").addClass("active").parent().parent("li").addClass("active").addClass("opened").addClass("expanded");
+		});
+	}
+	self.getAppList=function(currentPage){
+		self.currentPage=currentPage;
+		$.post("app/appList",{currentPage:currentPage},function(responseText){
+			$("#main-content").html(responseText);
+		});
+	}
+	self.on=function(appId){
+		jConfirm("确定恢复该App上线吗？", '确认提示框', function(r) {
+			if(r){
+				$.post("app/on",{appId:appId},function(data){
+					if(data>0){
+						alert("app上线成功");
+						self.getAppList(self.currentPage);
+					}
+				});
+			}
+		});
+	}
+	self.off=function(appId){
+		jConfirm("确定下线该App吗？", '确认提示框', function(r) {
+			if(r){
+				$.post("app/off",{appId:appId},function(data){
+					if(data>0){
+						alert("app下线成功");
+						self.getAppList(self.currentPage);
+					}
+				});
+			}
+		});
+	}
+	self.toAddApp=function(){
+		$.post("app/toEditApp",function(responseText){
+			$("#main-content").html(responseText);
+			self.initPictureNameUploader();
+			self.initScreenUploader();
+			$("#main-menu li").removeClass("active").removeClass("opened").removeClass("expanded");
+			$("#app-add-menu").addClass("active").parent().parent("li").addClass("active").addClass("opened").addClass("expanded");
+		});
+	}
+	
+	self.toEditApp=function(appId){
+		$.post("app/toEditApp",{appId:appId},function(responseText){
+			$("#main-content").html(responseText);
+			$("#main-content .panel-heading").html("<h3 class='panel-title'>编辑应用</h3><div class='panel-options'><button type='button' class='btn btn-warning' onclick='javascript:app.getAppList("+self.currentPage+")' style='margin-bottom:0'>返回</button></div>");
+			self.initPictureNameUploader();
+			self.initScreenUploader();
+			CKEDITOR.instances.editordescription.setData($("#editordescription").val());
+			CKEDITOR.instances.editorappDoc.setData($("#editorappDoc").val());
+		});
+	}
+	self.delScreen=function(dom,screenName){
+		var $input = $('<input type="hidden" name="delScreenName"/>');
+		$input.val(screenName);
+		$("#appForm").append($input);
+		$(dom).parent().remove();
+	}
+	return self;
+})(app);
+
+var mailing=(function(mailing){
+	self=mailing||{};
+	self.toMailingMain=function(){
+		$.post("mailing",function(responseText){
+			$("#main-content").html(responseText);
+			$("#main-menu li").removeClass("active").removeClass("opened");
+			$("#mailing-menu").addClass("active");
+		});
+	}
+	self.checkedAll=function(flag){
+		if(flag==1){
+			/*$("input[name='emails']:checkbox").each(function(i,dom){
+				dom.checked=true;
+			});*/
+			$("input[name='emails']:checkbox").prop("checked",true);
+		}else if(flag==0){
+			/*$("input[name='emails']:checkbox").each(function(i,dom){
+				dom.checked=false;
+			});*/
+			$("input[name='emails']:checkbox").prop("checked",false);
+		}else{
+			$("input[name='emails']:checkbox").each(function(i,dom){
+				dom.checked=!(dom.checked);
+			});
+		}
+	}
+	
+	return self;
+})(mailing);
+
+var feedback=(function(feedback){
+	var self=feedback||{};
+	self.currentPage=1;
+	self.sortFiled=null;
+	self.sortType=null;
+	var uploader = null;
+	var validateReply = function(){
+		var value = $("#feedbackReplyContent").val();
+		if(!$.trim(value)){
+			$("#feedbackReplyBtn").attr("disabled","disabled");
+			return false;
+		}
+		return true;
+	}
+	self.tofeedbackMain=function(){
+		$.post("feedback/list",{sortFiled:self.sortFiled,sortType:self.sortType},function(responseText){
+			$("#main-content").html(responseText);
+			$("#main-menu li").removeClass("active").removeClass("opened");
+			$("#feedback-menu").addClass("active");
+		});
+	}
+	self.getFeedbackList=function(currentPage){
+		self.currentPage=currentPage;
+		$.post("feedback/list",{currentPage:currentPage,sortFiled:self.sortFiled,sortType:self.sortType},function(responseText){
+			$("#main-content").html(responseText);
+		});
+	}
+	self.listReplies = function(id){
+		$("#feedbackReplyList").load("feedback/replies/"+id);
+	}
+	self.detail=function(id){
+		$.get("feedback/"+id,function(responseText){
+			$("#feedback-Modal .modal-content").html(responseText);
+			self.listReplies(id);
+			$("#feedback-Modal").modal("show");
+		});
+	}
+	self.solve = function(id){
+		jConfirm('确认要关闭这个问题吗?', '问题反馈', function(result) {
+			if(!result){
+				return;
+			}
+			$.post('feedback/solve/'+id,function(data){
+				if(data>0){
+					$("#feedback-Modal").modal("hide");
+					$('#feedback-Modal').on('hidden.bs.modal', function (e) {//此事件在模态框被隐藏（并且同时在 CSS 过渡效果完成）之后被触发。
+						self.getFeedbackList(self.currentPage);
+					});
+				}else{
+					jAlert("系统繁忙，请您稍后再试！");
+				}
+			});
+		});
+	}
+	self.reply = function(id){
+		if(!validateReply()){
+			return;
+		}
+		var $form=$("#feedbackReplyForm");
+		var url = $form.attr("action");
+		$.post(url,$form.serialize(),function(data){
+			if(data>0){
+				self.listReplies(id);
+				$("#feedbackReplyBtn").attr("disabled","disabled");
+				$("#feedbackReplyContent").val('');
+			}
+		});
+	}
+	
+	self.sortFeedback=function(filed){
+		if(self.sortFiled!= filed){
+			self.sortType=null;
+			self.sortFiled= filed;
+		}
+        if(self.sortType == "desc"){
+        	self.sortType="asc";
+		}else{
+			self.sortType="desc";
+		}
+        self.getFeedbackList(1);
+	}
+	self.sortDefault=function(){
+		self.sortType=null;
+		self.sortFiled= null;
+		self.getFeedbackList(1);
+	}
+	$(document).on("keyup","#feedbackReplyContent",function(e){
+		var value = $(this).val();
+		if($.trim(value)){
+			$("#feedbackReplyBtn").removeAttr("disabled");
+		}else{
+			$("#feedbackReplyBtn").attr("disabled","disabled");
+		}
+	});
+	return self;
+})(feedback);

@@ -79,4 +79,7 @@
       notes = #{notes,jdbcType=VARCHAR}
     where classify_id = #{classifyId,jdbcType=INTEGER}
   </update>
+  <select id="getLeaf" resultMap="BaseResultMap" >
+    select * from tb_classify c where  (select count(classify_id) from tb_classify where classify_pid=c.classify_id )=0
+  </select>
 </mapper>

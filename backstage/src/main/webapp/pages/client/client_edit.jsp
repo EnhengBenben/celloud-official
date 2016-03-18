@@ -64,8 +64,8 @@ $(function(){
 		var version=$(this).val();
 		if(version.length>0){
 			var name="CelLoudClient";
-	        $("#nameX64").val(name+"_x64_"+$(this).val());
-	        $("#nameX86").val(name+"_x86_"+$(this).val());
+	        $("#nameX64").val(name+"_x64_"+$(this).val()+".exe");
+	        $("#nameX86").val(name+"_x86_"+$(this).val()+".exe");
 		}
 	});
 });

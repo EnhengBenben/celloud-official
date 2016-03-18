@@ -6,3 +6,70 @@
 .img-thumbnail-inline{
 	display:inline-block;
 }
+.feedback_list a.list-group-item>div{
+	overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.feedback_list a.list-group-item{
+    cursor:pointer;
+}
+.feedback-attachment{
+	cursor: pointer;
+    height: 60px;
+    margin: 5px 5px 5px 0;
+    padding: 0;
+    width: 60px;
+}
+
+
+.sort-list {
+    background: #fff none repeat scroll 0 0;
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 0px;
+    width: 100%;
+    border:1px solid #dddddd;
+}
+.sort-list li {
+    border-right: 1px solid #eae8e8;
+    color: #333;
+    cursor: pointer;
+    float: left;
+    font-size: 12px;
+    padding: 0 20px;
+    text-align: center;
+    list-style:outside none none;
+}
+.sort-list li.current a:link, .sort-list li.current a:visited {
+    color: #f60;
+}
+.sort-list li a {
+    display: block;
+    text-decoration:none;
+}
+.sort-list li i {
+    background: rgba(0, 0, 0, 0) url("../images/icon/arrow_up.jpg") no-repeat scroll 0 0;
+    display: inline-block;
+    height: 11px;
+    margin-left: 2px;
+    position: relative;
+    top: 1px;
+    width: 8px;
+}
+.sort-list li i.up {
+    background: rgba(0, 0, 0, 0) url("../images/icon/arrow_up_hide.jpg") no-repeat scroll 0 0;
+}
+.sort-list li i.down {
+    background: rgba(0, 0, 0, 0) url("../images/icon/arrow_down_hide.gif") no-repeat scroll 0 0;
+}
+.sort-list li.current i {
+    background: rgba(0, 0, 0, 0) url("../images/icon/arrow_down_hide.gif") no-repeat scroll 0 0;
+}
+.sort-list li.current i.up {
+    background: rgba(0, 0, 0, 0) url("../images/icon/arrow_up_hide.jpg") no-repeat scroll 0 0;
+}
+.sort-list li.current i.down {
+    background: rgba(0, 0, 0, 0) url("../images/icon/arrow_down_hide.gif") no-repeat scroll 0 0;
+}
+.sort-list li a:link, .sort-list li a:visited {
+    color: #333;
+}

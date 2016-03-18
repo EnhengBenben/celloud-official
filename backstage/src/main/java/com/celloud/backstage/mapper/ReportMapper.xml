@@ -206,4 +206,8 @@
       end_date = #{endDate,jdbcType=TIMESTAMP}
     where report_id = #{reportId,jdbcType=INTEGER}
   </update>
+  <delete id="deleteByUserId" parameterType="java.lang.Integer" >
+    delete from tb_report
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
 </mapper>

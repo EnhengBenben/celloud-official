@@ -3,6 +3,8 @@ package com.celloud.backstage.service;
 import java.util.List;
 
 import com.celloud.backstage.model.App;
+import com.celloud.backstage.page.Page;
+import com.celloud.backstage.page.PageList;
 
 public interface AppService {
     /**
@@ -26,4 +28,41 @@ public interface AppService {
      */
    
     List<App> getAppListPulbicAdded();
+    
+    /**
+     * app分页列表
+     *
+     * @param page
+     * @return
+     * @author han
+     * @date 2016年2月23日 下午1:08:22
+     */
+    PageList<App> getAppByPage(Page page);
+    
+    /**
+     * app上线
+     *
+     * @param appId
+     * @return
+     * @author han
+     * @date 2016年2月23日 下午2:07:15
+     */
+    public int updateAppOn(Integer appId);
+    
+    /**
+     * app下线
+     *
+     * @param appId
+     * @return
+     * @author han
+     * @date 2016年2月23日 下午2:08:19
+     */
+    public int updateAppOff(Integer appId);
+    
+    public int addApp(App app,String[]screenNames,Integer[] formatIds,Integer[] calssifyIds);
+    
+    public int updateApp(App app,String[]screenNames,String[] delScreenNames,Integer[] formatIds,Integer[] calssifyIds);
+    public int appNameExist(Integer appId,String appName);
+    
+    public App getAppById(Integer appId);
 }

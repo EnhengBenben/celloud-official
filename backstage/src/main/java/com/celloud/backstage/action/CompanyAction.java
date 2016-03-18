@@ -120,7 +120,7 @@ public class CompanyAction {
     public ResponseEntity<byte[]> companyIcon(String file) throws IOException {
         String path = CompanyConstants.getCompanyIconPath() + File.separator + file;
         File targetFile = new File(path);
-        logger.info("医院logo临时目录的绝对路径{}",targetFile.getAbsolutePath());
+        logger.info("医院logo绝对路径{}",targetFile.getAbsolutePath());
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
     }
     

@@ -8,7 +8,7 @@
 <meta name="keywords" content="celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico"/>
 <link rel="bookmark" href="<%=request.getContextPath()%>/favicon.ico"/>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/login.css" media="all" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/login.css?version=1.0" media="all" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/user-add.css" />
 <title>CelLoud 用户注册</title>
 </head>
@@ -29,27 +29,21 @@
                             <input type="hidden" name="appCompanyId" value="${appCompanyId }" />
 					        <input type="hidden" name="deptId" value="${user.deptId }" />
 					        <input type="hidden" name="companyId" value="${user.companyId }" />
+					        <input type="hidden" name="role" value="${user.role }">
 					        <input type="text" name="email" readonly="readonly" value="${user.email }" id="email"/>
 					        <input type="text" id="add_username" name="username" class="addUser" placeholder="用户名">
 					        <input type="password" name="password" class="addUser pwd" placeholder="密码（6-16位数字字母组合）" id="add_password"/>
 					        <input type="password" placeholder="确认密码" id="add_confirmPwd" name="confirmPwd" class="addUser pwd">
 					        <input type="text" placeholder="真实姓名" name="truename" class="addUser">
-					        <input type="text" placeholder="手机号码" id="add_cellphone" name="cellPhone" class="addUser" >
-					        <div class="autolog">
-					            <label class="role-label">角色：</label>
-                                <select name="role">
-                                    <option value="0">普通用户</option>
-                                    <option value="1">大客户</option>
-                                </select>
-                           </div>
+					        <input type="text" placeholder="手机号码" id="add_cellphone" name="cellphone" class="addUser" >
 					        <div class="autolog">
 					<%--                    <span id="remPass"><img src="images/login/nocheck.png"/></span> --%>
 					<!--                    <input id="isAllow" name="isRem" value="0" style="display: none"> -->
 					            <input type="checkbox" id="isAllow">
-					            我已阅读并同意<a href="<%=request.getContextPath() %>/service.html" target="_blank">《Celloud用户使用协议》</a></span>
+					            我已阅读并同意<a href="https://www.celloud.cn/service.html" target="_blank">《Celloud用户使用协议》</a></span>
 					        </div>
 					       <div class="autolog">
-					         <span class="error"></span>
+					         <span class="error" style="padding-left:0px;"></span>
 					       </div>
 					       <a href="javascript:void(0)" class="btn-email" id="save">注册</a>
 					       <a href="javascript:void(0);" id="cancle" class="return">重置</a>
@@ -61,7 +55,8 @@
         	   </c:when>
         	   <c:otherwise>
         	       <div class="main_f clearfix">
-	                    <span style="font-size:50px">对不起，您的链接已超时，请重新申请！</span>
+	                    <span style="font-size:22px">对不起，您的链接已超时，请重新申请！</span>
+	                    <br/><br/>
 	                    <a href="http://www.celloud.cn" class="error_return">返回首页</a>
 	                </div>
         	   </c:otherwise>
@@ -146,7 +141,7 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
 				return;
 			}else{
 				//验证用户名重复问题
-				var username = $.trim($("#add_username").val());
+				var username = $("#add_username").val();
 				$.post("<%=request.getContextPath() %>/addUser/checkUsername",{username:username},function(flag){
 					if(flag){
 						$(".error").html("该用户名已经存在！");
@@ -161,7 +156,7 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
 								var params = $("#userForm").serialize();
 								//服务协议
 								var isAllow = $("#isAllow").prop("checked");
-								if(isAllow=="true"){
+								if(isAllow==false){
 									$("#isAllowError").css("display","");
 									$(".error").html("请阅读并同意《Celloud用户使用协议》");
 									return;
@@ -203,15 +198,16 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
 	
 	//验证addForm
 	function validateAddForm(){
-		var username = $.trim($("#add_username").val());
+		$("#add_username").val($.trim($("#add_username").val()));
+		var username = $("#add_username").val();
 		if(username==""){
 			$(".error").html("请输入用户名！");
 			return false;
-		}else if(!/^([a-zA-z_]{1})([\w]*)$/g.test(username)){
-			$(".error").html("用户名只能由字母、数字、下划线组成，且只能以下划线或字母开头！");
+		}else if(!/^([a-zA-Z_]{1})([\w]{2,29})$/g.test(username)){
+			$(".error").html("用户名只能由字母、数字、下划线组成，长度在3~30，且以下划线或字母开头！");
 			return false;
 		}
-		var password = $.trim($("#add_password").val());
+		var password = $("#add_password").val();
 		if(password==""){
 			$(".error").html("请输入密码！");
 			return false;

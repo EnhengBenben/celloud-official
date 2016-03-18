@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.celloud.mapper.ReportMapper" >
+  <resultMap id="BaseResultMap" type="com.celloud.model.mysql.Report" >
+    <id column="report_id" property="reportId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="app_id" property="appId" jdbcType="INTEGER" />
+    <result column="file_id" property="fileId" jdbcType="INTEGER" />
+    <result column="project_id" property="projectId" jdbcType="INTEGER" />
+    <result column="period" property="period" jdbcType="INTEGER" />
+    <result column="flag" property="flag" jdbcType="INTEGER" />
+    <result column="readed" property="readed" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="print_context" property="printContext" jdbcType="LONGVARCHAR" />
+    <result column="context" property="context" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    report_id, user_id, app_id, file_id, project_id, period, flag, readed, create_date, 
+    state, end_date,print_context, context
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_report
+    where report_id = #{reportId,jdbcType=INTEGER}
+  </select>
+  <select id="getReport" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_report
+    where app_id = #{appId} and project_id = #{projectId} and file_id = #{fileId} and flag = #{flag}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_report
+    where report_id = #{reportId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.celloud.model.mysql.Report" >
+    insert into tb_report (report_id, user_id, app_id, 
+      file_id, project_id, period, 
+      flag, readed, create_date, 
+      state, end_date, print_context, 
+      context)
+    values (#{reportId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, 
+      #{fileId,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, #{period,jdbcType=INTEGER}, 
+      #{flag,jdbcType=INTEGER}, #{readed,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=INTEGER}, #{endDate,jdbcType=TIMESTAMP}, #{printContext,jdbcType=LONGVARCHAR}, 
+      #{context,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelectiveReturnKey" parameterType="com.celloud.model.mysql.Report" useGeneratedKeys="true" keyProperty="reportId" >
+    insert into tb_report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="reportId != null" >
+        report_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="fileId != null" >
+        file_id,
+      </if>
+      <if test="projectId != null" >
+        project_id,
+      </if>
+      <if test="period != null" >
+        period,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+      <if test="readed != null" >
+        readed,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="printContext != null" >
+        print_context,
+      </if>
+      <if test="context != null" >
+        context,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="reportId != null" >
+        #{reportId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="fileId != null" >
+        #{fileId,jdbcType=INTEGER},
+      </if>
+      <if test="projectId != null" >
+        #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="period != null" >
+        #{period,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="readed != null" >
+        #{readed,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="printContext != null" >
+        #{printContext,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="context != null" >
+        #{context,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertSelective" parameterType="com.celloud.model.mysql.Report" >
+    insert into tb_report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="reportId != null" >
+        report_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="fileId != null" >
+        file_id,
+      </if>
+      <if test="projectId != null" >
+        project_id,
+      </if>
+      <if test="period != null" >
+        period,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+      <if test="readed != null" >
+        readed,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="printContext != null" >
+        print_context,
+      </if>
+      <if test="context != null" >
+        context,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="reportId != null" >
+        #{reportId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="fileId != null" >
+        #{fileId,jdbcType=INTEGER},
+      </if>
+      <if test="projectId != null" >
+        #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="period != null" >
+        #{period,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="readed != null" >
+        #{readed,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="printContext != null" >
+        #{printContext,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="context != null" >
+        #{context,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.Report" >
+    update tb_report
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        app_id = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="fileId != null" >
+        file_id = #{fileId,jdbcType=INTEGER},
+      </if>
+      <if test="projectId != null" >
+        project_id = #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="period != null" >
+        period = #{period,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="readed != null" >
+        readed = #{readed,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="printContext != null" >
+        print_context = #{printContext,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="context != null" >
+        context = #{context,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where report_id = #{reportId,jdbcType=INTEGER}
+  </update>
+  <update id="updateReport" parameterType="com.celloud.model.mysql.Report" >
+    update tb_report
+    <set >
+      <if test="period != null" >
+        period = #{period,jdbcType=INTEGER},
+      </if>
+      <if test="readed != null" >
+        readed = #{readed,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="printContext != null" >
+        print_context = #{printContext,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="context != null" >
+        context = #{context,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where project_id = #{projectId,jdbcType=INTEGER}
+    <if test="userId != null" >
+    	and user_id = #{userId,jdbcType=INTEGER}
+    </if>
+    <if test="appId != null" >
+    	and app_id = #{appId,jdbcType=INTEGER}
+    </if>
+    <if test="flag != null and flag ==0" >
+	    and file_id = #{fileId,jdbcType=INTEGER}
+    </if>
+    <if test="flag != null" >
+    	and flag = #{flag,jdbcType=INTEGER}
+   	</if>
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.Report" >
+    update tb_report
+    set user_id = #{userId,jdbcType=INTEGER},
+      app_id = #{appId,jdbcType=INTEGER},
+      file_id = #{fileId,jdbcType=INTEGER},
+      project_id = #{projectId,jdbcType=INTEGER},
+      period = #{period,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=INTEGER},
+      readed = #{readed,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      print_context = #{printContext,jdbcType=LONGVARCHAR},
+      context = #{context,jdbcType=LONGVARCHAR}
+    where report_id = #{reportId,jdbcType=INTEGER}
+  </update>
+  <select id="countReport" resultType="java.lang.Integer" >
+    select sum(p.data_num) size  from tb_project p  left join tb_report r on  p.project_id= r.project_id where r.state=#{state } and p.state = #{state } and r.flag = #{flag } and r.user_id=#{userId } and r.period=#{period }
+  </select>
+  <select id="countReportByTime" resultType="map" >
+    select date_format(p.create_date,#{time }) time,sum(p.data_num) size  from tb_project p  left join tb_report r on  p.project_id= r.project_id where r.state=#{state } and p.state = #{state } and r.flag = #{flag } and r.user_id=#{userId } and r.period=#{period } group by time
+  </select>
+  
+  <select id="getReportList" resultType="map">
+	select p.*,r.end_date,r.context,r.period,s.app_id,s.app_name from (select project_id,project_name,create_date,data_num,data_size,share_num,user_id,'no_one' as userName from tb_project where user_id = #{userId} and state = 0 union all select p.project_id,project_name,p.create_date,data_num,data_size,0 as share,s.share_from as user_id,u.username as userName from tb_project p,tb_project_share s,tb_user u where p.state=0 and p.project_id=s.project_id and s.share_to = #{userId} and u.user_id = s.share_from ) as p,tb_report as r,tb_app s
+	where r.project_id = p.project_id and r.app_id = s.app_id and r.flag=#{flag}
+	<if test="condition != null and condition!=''" >
+		and r.context like CONCAT('%',#{condition},'%' )
+	</if>
+	<if test="start != null and start!=''">
+		and p.create_date&gt;=#{start}
+	</if>
+	<if test="end != null and end!=''">
+		and p.create_date&lt;=#{end}
+	</if>
+	<if test="appId != 0">
+		and s.app_id = #{appId}
+	</if>
+	order by p.create_date desc,s.app_name asc
+  </select>
+    <!-- 根据用户ID统计该用户各APP的运行次数 -->
+  <select id="countAppRunNumByUserId" resultType="map">
+    select count(r.report_id)as runNum, (select app_name from tb_app where app_id = r.app_id)as app_name from tb_report r where r.flag =0 and r.user_id = ${userId}  group by r.app_id
+  </select>
+  <select id="countReportWeekByUserId" resultType="map">
+	 select left(date_add(r.create_date ,INTERVAL -weekday(r.create_date ) day),10)time,count(r.report_id)as reportNum from tb_report r where r.state=0 and r.flag=0 and r.user_id=${userId}
+	group by time order by time asc
+  </select>
+  <select id="countReportMonthByUserId" resultType="map">
+  		 select left(r.create_date ,7)time,count(r.report_id)as reportNum from tb_report r where r.state=0 and r.flag=0 and r.user_id=${userId}
+  	group by time order by time asc
+  </select>
+  <update id="deleteByState" parameterType="java.lang.Integer">
+    update tb_report set state = #{state } where project_id = #{projectId,jdbcType=INTEGER}
+  </update>
+  <update id="updateReportPeriod" parameterType="com.celloud.model.mysql.Report">
+    update tb_report 
+    <set >
+      <if test="period != null" >
+        period = #{period,jdbcType=INTEGER},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="context != null" >
+        context = #{context,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where project_id = #{projectId,jdbcType=INTEGER} and state = #{state,jdbcType=INTEGER} and flag=#{flag,jdbcType=INTEGER}
+    <if test="fileId != null" >
+      and file_id = #{fileId,jdbcType=INTEGER}
+    </if>
+  </update>
+  <select id="selectRunNumByPro" resultType="java.lang.Integer">
+    select count(*) runNum from tb_report where project_id=#{projectId} and flag=#{flag} and state=#{state} and period!=#{period}
+  </select>
+  <select id="getReportByProjectId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from tb_report
+	where project_id=#{projectId} and flag=#{flag}
+  </select>
+  
+</mapper>
