@@ -1242,18 +1242,6 @@ var printReport = {
       return _param;
     }
 }
-function printMoreCMPReport(projectId,dataKey,appId){
-	printReport.main("report/printMoreCMPReport",printReport.mongoParam(projectId,dataKey,appId));
-}
-function printLessCMPReport(projectId,dataKey,appId){
-	printReport.main("report/printLessCMPReport",printReport.mongoParam(projectId,dataKey,appId));
-}
-function printGDD(projectId,dataKey,appId){
-  printReport.main("report/printGDDReport",printReport.mongoParam(projectId,dataKey,appId));
-}
-function printMIB(projectId,dataKey,appId){
-  printReport.main("report/printMIBReport",printReport.mongoParam(projectId,dataKey,appId));
-}
 function printSplit(projectId,dataKey,appId){
   printReport.main("report/printSplitReport",printReport.mongoParam(projectId,dataKey,appId));
 }

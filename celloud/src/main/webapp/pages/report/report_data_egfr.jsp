@@ -13,7 +13,7 @@
           <dd class="force-break">${egfr.fileName}(${egfr.dataKey})</dd>
         </dl>
         <div class="toolbar">
-            <a class="btn btn-celloud-success btn-flat" href='report/printPGS("${egfr.userId }/${egfr.appId }/${egfr.dataKey }")'><i class="fa fa-print"></i>打印报告</a>
+            <a class="btn btn-celloud-success btn-flat" target="_blank" href='report/printEGFR?appId=${egfr.appId }&dataKey=${egfr.dataKey }&projectId=${egfr.projectId }'><i class="fa fa-print"></i>打印报告</a>
             <c:if test="${egfr.pdf!=null && egfr.pdf!='' }">
                 <a class="btn btn-warning btn-flat" href="${toolsPath }Procedure!miRNADownload?userId=${egfr.userId }/${egfr.appId }/${egfr.dataKey }/${egfr.pdf }"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
             </c:if>

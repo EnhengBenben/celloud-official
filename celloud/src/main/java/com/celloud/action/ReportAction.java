@@ -796,6 +796,31 @@ public class ReportAction {
 		mv.addObject("hcv", hcv).addObject("report", report);
 		return mv;
 	}
+	
+	/**
+	 * 打印EGFR
+	 * 
+	 * @param appId
+	 * @param dataKey
+	 * @param projectId
+	 * @return
+	 * @author lin
+	 * @date 2016年3月21日下午2:51:25
+	 */
+	@RequestMapping("printEGFR")
+	public ModelAndView printEGFR(Integer appId, String dataKey, Integer projectId) {
+		ModelAndView mv = getModelAndView("print/print_egfr", projectId);
+		Integer userId = ConstantsData.getLoginUserId();
+		Integer fileId = dataService.getDataByKey(dataKey).getFileId();
+		Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
+		// 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
+		if (StringUtils.isNotEmpty(report.getPrintContext())) {
+			return mv.addObject("printContext", report.getPrintContext());
+		}
+		EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
+		mv.addObject("egfr", egfr).addObject("report", report);
+		return mv;
+	}
 
     // TODO 达安流程打印，需要拆分页面，拆分方法
     @RequestMapping("printDAAN")
