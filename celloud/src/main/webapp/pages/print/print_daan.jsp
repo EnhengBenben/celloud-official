@@ -311,15 +311,6 @@ function preview(obj){
 	$("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
 	$("input[type='radio'][value="+sex+"]").attr("checked",true); 
 }
-function hideDelete(obj){
-	$(obj).find("em").removeClass("new");
-}
-function showDelete(obj){
-	$(obj).find("em").addClass("new");
-}
-function deleteLi(obj){
-	$(obj).parent().remove();
-}
 $(document).ready(function(){
 	var browser = $.NV('name');
 	var allHeight;
@@ -384,12 +375,6 @@ $(document).ready(function(){
 			}
 		}
 	});
-	$(".snpLeft").each(function(){
-		$(this).css("text-align","center");
-	});
-	$("#picture_6").find("img").each(function(){
-		$(this).attr("style","width:600px");
-	})
 });
 var url = window.location.href.split("index")[0]+"report/";
 function savePage(){

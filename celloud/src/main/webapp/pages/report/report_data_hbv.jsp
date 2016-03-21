@@ -15,8 +15,8 @@
         </dl>
         <div class="toolbar">
             <c:if test="${hbv.dataKey!=null && hbv.dataKey!='' }">
-                <a class="btn btn-celloud-success btn-flat" href='javascript:toPrintHBV("${hbv.userId }/${hbv.appId }/${hbv.dataKey }",0)'><i class="fa fa-print"></i>详细报告</a>
-                <a class="btn btn-celloud-success btn-flat" href='javascript:toPrintHBV("${hbv.userId }/${hbv.appId }/${hbv.dataKey }",1)'><i class="fa fa-print"></i>简要报告</a>
+                <a class="btn btn-celloud-success btn-flat" target="_blank" href='report/printHBV?appId=${hbv.appId }&dataKey=${hbv.dataKey }&projectId=${hbv.projectId }&flag=0'><i class="fa fa-print"></i>详细报告</a>
+                <a class="btn btn-celloud-success btn-flat" target="_blank" href='report/printHBV?appId=${hbv.appId }&dataKey=${hbv.dataKey }&projectId=${hbv.projectId }&flag=1'><i class="fa fa-print"></i>简要报告</a>
             </c:if>
             <c:if test="${hbv.pdf!=null && hbv.pdf!='' }">
                 <a class="btn btn-warning btn-flat" href="${toolsPath }Procedure!miRNADownload?userId=${hbv.userId }/${hbv.appId }/${hbv.dataKey }/${hbv.pdf }"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
@@ -84,7 +84,7 @@
 				<div class="m-box">
 				 	<h2>
 				 		1.替诺福韦酯TDF突变检测
-				 		<span style="float:right;padding-right: 30px;padding-top: 8px;" title="帮助" onclick="showModal('helpModal',0,1)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
+				 		<span style="float:right;padding-right: 30px;" title="帮助" onclick="showModal('helpModal',0,1)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
 					    <c:if test="${hbv.known.containsKey('194_png') }">
@@ -102,7 +102,7 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>2.替比夫定 LDT 突变检测
-				 		<span style="float:right;padding-right: 30px;padding-top: 8px;" title="帮助" onclick="showModal('helpModal',0,2)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
+				 		<span style="float:right;padding-right: 30px;" title="帮助" onclick="showModal('helpModal',0,2)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
 				    	<c:if test="${hbv.known.containsKey('204_png') }">
@@ -120,7 +120,7 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>3.阿德福韦 ADV 突变检测
-				 		<span style="float:right;padding-right: 30px;padding-top: 8px;" title="帮助" onclick="showModal('helpModal',0,3)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
+				 		<span style="float:right;padding-right: 30px;" title="帮助" onclick="showModal('helpModal',0,3)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
 					    <c:if test="${hbv.known.containsKey('181_png') }">
@@ -148,7 +148,7 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>4.拉米夫定 LAM 突变检测
-				 		<span style="float:right;padding-right: 30px;padding-top: 8px;" title="帮助" onclick="showModal('helpModal',0,4)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
+				 		<span style="float:right;padding-right: 30px;" title="帮助" onclick="showModal('helpModal',0,4)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
 					    <c:if test="${hbv.known.containsKey('173_png') }">
@@ -186,7 +186,7 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>5.恩曲他滨 FTC 突变检测
-				 		<span style="float:right;padding-right: 30px;padding-top: 8px;" title="帮助" onclick="showModal('helpModal',0,5)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
+				 		<span style="float:right;padding-right: 30px;" title="帮助" onclick="showModal('helpModal',0,5)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
 					    <c:if test="${hbv.known.containsKey('173_png') }">
@@ -224,7 +224,7 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>6.恩替卡韦 ETV 突变检测
-				 		<span style="float:right;padding-right: 30px;padding-top: 8px;" title="帮助" onclick="showModal('helpModal',0,6)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
+				 		<span style="float:right;padding-right: 30px;" title="帮助" onclick="showModal('helpModal',0,6)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
 					    <c:if test="${hbv.known.containsKey('169_png') }">
@@ -294,7 +294,7 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	  <h2>7.其他突变位点（该位点目前没有已发表文献支持，无明确临床意义）
-				 	  	<span style="float:right;padding-right: 30px;padding-top: 8px;" title="帮助" onclick="showModal('helpModal',0,7)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
+				 	  	<span style="float:right;padding-right: 30px;" title="帮助" onclick="showModal('helpModal',0,7)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
 				 	  </h2>
 				    <div class="m-boxCon" id="otherPng">
 					    <c:if test="${hbv.imgString!='' }">
@@ -312,7 +312,7 @@
 		<!--结论-->
 		<div class="m-box">
 		 	  <h2>参考结论（根据已发表文献得出以下参考结论）
-		 	  <span style="float:right;padding-right: 30px;padding-top: 8px;" title="帮助" onclick="showModal('helpModal',2)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
+		 	  <span style="float:right;padding-right: 30px;" title="帮助" onclick="showModal('helpModal',2)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
 		 	  </h2>
 		    <div class="m-boxCon result" id="resultDiv">
 		    	${hbv.reporttxt.split('Other:')[0] }
@@ -331,7 +331,7 @@
 		<!--染色体序列点图-->
 		<div class="m-box" id="printDiv3">
 			<h2><i class="i-dna"></i>原始峰图
-				<span style="float:right;padding-right: 30px;padding-top: 8px;" title="帮助" onclick="showModal('helpModal',1)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
+				<span style="float:right;padding-right: 30px;" title="帮助" onclick="showModal('helpModal',1)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
 			</h2>
 			<c:if test="${hbv.original.containsKey('1_all_png') }">
 			    <div class="m-boxCon result">
