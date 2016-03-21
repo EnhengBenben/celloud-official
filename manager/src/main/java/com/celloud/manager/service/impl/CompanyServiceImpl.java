@@ -9,10 +9,15 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.celloud.manager.constants.AppOffline;
 import com.celloud.manager.constants.DataState;
+import com.celloud.manager.constants.ReportPeriod;
 import com.celloud.manager.constants.UserRole;
+import com.celloud.manager.mapper.AppMapper;
 import com.celloud.manager.mapper.CompanyMapper;
+import com.celloud.manager.mapper.ReportMapper;
 import com.celloud.manager.mapper.UserMapper;
+import com.celloud.manager.model.App;
 import com.celloud.manager.model.Company;
 import com.celloud.manager.service.CompanyService;
 import com.celloud.manager.utils.PropertiesUtil;
@@ -24,6 +29,12 @@ public class CompanyServiceImpl implements CompanyService{
     
     @Resource
     private CompanyMapper companyMapper;
+    
+    @Resource
+    private ReportMapper reportMapper;
+    
+    @Resource
+    private AppMapper appMapper;
     
     @Override
     public Map<String, Object> companyGuideCount(Integer companyId) {
@@ -69,6 +80,37 @@ public class CompanyServiceImpl implements CompanyService{
     @Override
     public List<Company> getCompany(Integer companyId) {
         return companyMapper.getCompany(companyId, DataState.ACTIVE, PropertiesUtil.testAccountIds);
+    }
+
+    @Override
+    public List<Map<String, Object>> getCompanyReport(Integer companyId) {
+        List<Map<String, Object>> list=reportMapper.countReportOfApp(companyId, DataState.ACTIVE,ReportPeriod.COMPLETE , PropertiesUtil.testAccountIds, AppOffline.ON);
+        List<Company> cms=companyMapper.getCompany(companyId, DataState.ACTIVE, PropertiesUtil.testAccountIds);
+        Map<Integer,Object> groups=new HashMap<Integer,Object>();
+        for(Company c:cms){
+            groups.put(c.getCompanyId(), new ArrayList<Object>());
+        }
+        for(Map<String, Object> map:list){
+            List<Map<String, Object>> groupData=(List<Map<String, Object>>) groups.get(map.get("companyId"));
+            groupData.add(map);
+        }
+        List<Map<String, Object>> result=new ArrayList<Map<String, Object>>();
+        for(Company c:cms){
+            List<Map<String, Object>> groupData=(List<Map<String, Object>>) groups.get(c.getCompanyId());
+            Map<String, Object> map=new HashMap<String,Object>();
+            map.put("companyId", c.getCompanyId());
+            map.put("companyName",c.getCompanyName());
+            for(Map<String, Object> temp:groupData){
+                map.put("appId"+temp.get("appId"), temp.get("reportNum"));
+            }
+            result.add(map);
+        }
+        return result;
+    }
+
+    @Override
+    public List<App> getAppOfBigCustomer(Integer companyId) {
+        return appMapper.getAppOfBigCustomer(companyId, AppOffline.ON);
     }
 
 }

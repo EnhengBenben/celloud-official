@@ -354,4 +354,10 @@
     ORDER BY runNum desc 
     limit 0,10;
     </select>
+    <select id="getAppOfBigCustomer" resultMap="BaseResultMap">
+    SELECT app.app_id,app.app_name from tb_app app where app.off_line=#{offLine}
+    <if test="companyId!=null">
+     and app.company_id=#{companyId}
+     </if>
+    </select>
 </mapper>

@@ -107,8 +107,8 @@
                                     <span class="title">医院数据统计</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">
+                            <li id="company-report-menu">
+                                <a href="javascript:companyCount.toCompanyReportCount();">
                                     <span class="title">医院报告统计</span>
                                 </a>
                             </li>

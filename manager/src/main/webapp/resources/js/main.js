@@ -60,15 +60,28 @@ var companyCount=(function(companyCount){
 			menu("company-guide-menu",responseText);
 		});
 	};
-	
+	/**
+	 * 医院基本信息
+	 */
 	self.toCompanyBaseInfo=function(){
 		$.post("company/baseInfo",function(responseText){
 			menu("company-baseInfo-menu",responseText);
 		});
 	};
+	/**
+	 * 医院数据统计
+	 */
 	self.toCompanyDataCount=function(){
 		$.post("companyDataCount",function(responseText){
 			menu("company-data-menu",responseText);
+		});
+	};
+	/**
+	 * 医院报告统计
+	 */
+	self.toCompanyReportCount=function(){
+		$.post("company/reportCount",function(responseText){
+			menu("company-report-menu",responseText);
 		});
 	};
 	return self;
