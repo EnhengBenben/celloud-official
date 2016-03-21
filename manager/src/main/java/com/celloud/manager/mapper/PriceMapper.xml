@@ -104,14 +104,26 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.celloud.manager.model.Price" >
+  <update id="updateByItemId" parameterType="com.celloud.manager.model.Price" >
     update tb_price
-    set item_id = #{itemId,jdbcType=INTEGER},
-      item_type = #{itemType,jdbcType=TINYINT},
-      price = #{price,jdbcType=DECIMAL},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      expire_date = #{expireDate,jdbcType=TIMESTAMP},
-      state = #{state,jdbcType=BIT}
-    where id = #{id,jdbcType=INTEGER}
+    <set >
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="expireDate != null" >
+        expire_date = #{expireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=BIT},
+      </if>
+    </set>
+    where item_id = #{itemId,jdbcType=INTEGER} and 
+    item_type = #{itemType,jdbcType=TINYINT}
   </update>
+  <select id="getPriceList" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_price
+    where  item_id = #{itemId} and item_type = #{itemType} and expire_date is not null
+  </select>
 </mapper>

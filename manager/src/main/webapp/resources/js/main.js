@@ -89,4 +89,7 @@ var companyCount=(function(companyCount){
 
 $(function(){
 	console.toConsole();
+	$("body").on("click","[data-click='to-app-price-list']",function(){
+	  $.appManager.price.list();
+	});
 });

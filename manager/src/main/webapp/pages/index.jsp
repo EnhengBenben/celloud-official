@@ -127,8 +127,8 @@
                             <span class="title">APP管理 </span>
                         </a>
                         <ul>
-                            <li id="">
-                                <a href="javascript:void();">
+                            <li id="app-price-menu">
+                                <a data-click="to-app-price-list" href="javascript:void(0);">
                                     <span class="title">价格管理</span>
                                 </a>
                             </li>
@@ -169,6 +169,43 @@
     <div class="page-loading-overlay">
         <div class="loader-2"></div>
     </div>
+    <div class="modal fade" id="update-app-price-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">修改APP价格</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="update-app-price-form" role="form" class="form-horizontal">
+                       <input id="update-app-price-itemid" type="hidden">
+                       <div class="form-group">
+                           <label class="col-sm-2 control-label">APP名称</label>
+                           <div class="col-sm-10">
+                             <input type="text" class="form-control" id="update-app-price-name" readonly="readonly">
+                           </div>
+                       </div>
+                       <div class="form-group">
+                           <label class="col-sm-2 control-label">当前价格</label>
+                           <div class="col-sm-10" >
+                             <input type="text" class="form-control" id="update-app-current-price" readonly="readonly">
+                           </div>
+                       </div>
+                       <div class="form-group">
+                           <label class="col-sm-2 control-label">新价格</label>
+                           <div class="col-sm-10">
+		                       <input type="text" class="form-control" id="update-app-new-price" placeholder="格式： 300.00 / 300">
+                           </div>
+                       </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-info" id="update-app-price-button">修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Bottom Scripts -->
     <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="plugins/bootstrap/js/TweenMax.min.js"></script>
@@ -190,6 +227,7 @@
     <script src="plugins/bootstrap/js/xenon-custom.js"></script>
     
     <script src="js/main.js"></script>
+    <script src="js/app.js"></script>
     
      <!-- echarts -->
     <script src="plugins/echarts-2.2.7/echarts-all.js"></script>

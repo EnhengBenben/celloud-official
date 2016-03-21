@@ -26,6 +26,14 @@
   <resultMap id="ResultMapWithBLOBs" type="com.celloud.manager.model.App" extends="BaseResultMap" >
     <result column="app_doc" property="appDoc" jdbcType="LONGVARCHAR" />
   </resultMap>
+  <resultMap id="extraResultMap" type="com.celloud.manager.model.App" extends="BaseResultMap" >
+    <result column="company_Name" property="companyName" jdbcType="VARCHAR" />
+    <result column="is_add" property="isAdded" jdbcType="VARCHAR" />
+    <result column="classifyNames" property="classifyNames" jdbcType="VARCHAR" />
+    <result column="app_doc" property="appDoc" jdbcType="LONGVARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="charge_time" property="chargeTime" jdbcType="TIMESTAMP" />
+  </resultMap>
   <sql id="Base_Column_List" >
     app_id, app_name, english_name, address, picture_name, create_date, intro, description, 
     company_id, attribute, run_type, flag, run_data, data_num, param, off_line, command, 
@@ -359,5 +367,14 @@
     <if test="companyId!=null">
      and app.company_id=#{companyId}
      </if>
+    </select>
+    <select id="appPriceList" resultMap="extraResultMap">
+    select a.app_id,a.app_name,p.price,p.create_date charge_time
+	from tb_app a
+	left join (select * from tb_price where item_type=#{priceType} and expire_date is null) p on p.item_id=a.app_id
+	where a.off_line=#{offLine}
+	<if test="companyId!=null">
+    and a.company_id=#{companyId}
+    </if>
     </select>
 </mapper>
