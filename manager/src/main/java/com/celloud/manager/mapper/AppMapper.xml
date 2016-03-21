@@ -376,6 +376,7 @@
 	<if test="companyId!=null">
     and a.company_id=#{companyId}
     </if>
+    </select>
     <select id="countAppRunNumByBigCustomer" resultType="java.util.Map">
     select sum(temp.data_num) runNum,temp.company_id companyId
     from (SELECT DISTINCT p.project_id,p.data_num,ucr.company_id from tb_app a
