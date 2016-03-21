@@ -376,5 +376,17 @@
 	<if test="companyId!=null">
     and a.company_id=#{companyId}
     </if>
+    <select id="countAppRunNumByBigCustomer" resultType="java.util.Map">
+    select sum(temp.data_num) runNum,temp.company_id companyId
+    from (SELECT DISTINCT p.project_id,p.data_num,ucr.company_id from tb_app a
+    left join tb_report r on a.app_id=r.app_id
+    left join tb_project p on p.project_id=r.project_id
+    left join tb_user u on u.user_id=p.user_id
+        LEFT JOIN tb_user_company_relat ucr on p.user_id=ucr.user_id
+    where  a.off_line=#{offLine}           
+            and p.user_id not in(${testAccountIds})
+            
+            and r.flag=#{flag} and r.period=#{period}) temp
+    GROUP BY temp.company_id 
     </select>
 </mapper>

@@ -84,6 +84,14 @@ var companyCount=(function(companyCount){
 			menu("company-report-menu",responseText);
 		});
 	};
+	/**
+	 * 大客户统计
+	 */
+	self.toBigCustomerCount=function(){
+		$.post("company/bigCustomer",function(responseText){
+			menu("company-bigcustomer-menu",responseText);
+		});
+	};
 	return self;
 })(companyCount);
 

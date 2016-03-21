@@ -16,4 +16,8 @@ public interface CompanyService {
     public List<Map<String,Object>> getCompanyReport(Integer companyId);
     
     public List<App> getAppOfBigCustomer(Integer companyId);
+    
+    public List<Map<String,Object>> bigCustomerDataCount();
+    
+    public List<Map<String ,Object>> getCompanyNumCount();
 }

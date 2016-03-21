@@ -108,4 +108,15 @@
         ) n on t.time=n.time
         ORDER BY time;
     </select>
+    
+    <select id="getUserNumCount" resultType="java.util.Map">
+        select count(DISTINCT ucr.user_id) userNum,ucr.company_id companyId
+        from tb_user_company_relat ucr LEFT JOIN tb_user u on u.user_id=ucr.user_id
+                LEFT JOIN tb_company c on c.company_id=ucr.company_id
+        where u.state=#{state}  and c.state=#{state} 
+        <if test="testAccountIds != null">
+        and ucr.user_id not in(${testAccountIds})
+        </if>
+        GROUP BY ucr.company_id
+    </select>
 </mapper>
