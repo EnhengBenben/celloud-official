@@ -64,7 +64,7 @@ public class ActionServiceImpl implements ActionLogService {
 
     @Override
     public PageList<ActionLog> findLogs(int userId, Page page) {
-        List<ActionLog> list = logMapper.findLogs(ConstantsData.getLoginUserId(), page);
+        List<ActionLog> list = logMapper.findLogs(userId, page);
         return new PageList<>(page, list);
     }
 }

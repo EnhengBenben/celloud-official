@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
+import com.celloud.constants.ConstantsData;
 import com.celloud.model.PrivateKey;
 import com.celloud.model.PublicKey;
 import com.celloud.model.mysql.RSAKey;
@@ -114,7 +115,7 @@ public class LoginAction {
         }
         // 验证码错误，直接返回到登录页面
         if (!checked && (kaptchaExpected == null || !kaptchaExpected.equalsIgnoreCase(kaptchaCode))) {
-            logger.info("用户登陆验证码错误：" + kaptchaCode + "---" + kaptchaExpected);
+            logger.info("用户登陆验证码错误：param : {} \t session : {}", kaptchaCode, kaptchaExpected);
             user.setPassword("");
             return mv.addObject("info", "验证码错误，请重新登录！").addObject("user", user).addObject("publicKey",
                     generatePublicKey(session));
@@ -135,6 +136,7 @@ public class LoginAction {
         if (password == null) {
             password = "";
         }
+        logger.info("password:{}", password);
         user.setPassword(MD5Util.getMD5(password));
         User loginUser = userService.login(user);
         if (loginUser == null) {
@@ -143,6 +145,7 @@ public class LoginAction {
             user.setPassword("");
             return mv.addObject("info", msg).addObject("user", user).addObject("publicKey", generatePublicKey(session));
         }
+        logger.info("用户({})登录成功！", loginUser.getUsername());
         saveUserToSession(loginUser, session);
         logService.log("用户登录", "用户" + loginUser.getUsername() + "登录成功");
         if (checked && key == null) {
@@ -166,13 +169,14 @@ public class LoginAction {
     @RequestMapping("logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
+        User user = ConstantsData.getLoginUser();
         session.removeAttribute(Constants.SESSION_LOGIN_USER);
-        @SuppressWarnings("unchecked")
         Enumeration<String> names = session.getAttributeNames();
         while (names.hasMoreElements()) {
             session.removeAttribute(names.nextElement());
         }
         deleteCookies(request, response);
+        logger.info("用户({})主动退出", user.getUsername());
         return "redirect:login";
     }
 

@@ -19,8 +19,12 @@
 		</dependency>
 		<!-- jsp-api的依赖，在配置到tomcat前，可以直接编译项目，scope设置为provided，不会被打包到war -->
 		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>jsp-api</artifactId>
+			<artifactId>javax.servlet-api</artifactId>
 		</dependency>
 		<!-- Spring核心依赖 -->
 		<dependency>
