@@ -63,4 +63,14 @@ public interface UserMapper {
      * @date 2016年3月16日 下午3:44:02
      */
     public List<Map<String,Object>> getUserNumOfMon(@Param("companyId")Integer companyId,@Param("state")Integer state,@Param("testAccountIds")String testAccountIds);
+    /**
+     * 所有大客户的用户数量统计
+     *
+     * @param state
+     * @param testAccountIds
+     * @return
+     * @author han
+     * @date 2016年3月21日 上午11:39:43
+     */
+    public List<Map<String,Integer>> getUserNumCount(@Param("state")Integer state,@Param("testAccountIds")String testAccountIds);
 }

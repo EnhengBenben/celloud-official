@@ -101,4 +101,33 @@ public class CompanyAction {
         mv.addObject("dataList", dataList);
         return mv;
     }
+    
+    @RequestMapping("company/bigCustomer")
+    public ModelAndView companyBigCustomerCount(){
+        ModelAndView mv=new ModelAndView("company/company_bigCustomer");
+        User user=ConstantsData.getLoginUser();
+        List<Map<String, Object>> dataList=null;
+        if(user!=null){
+            Integer role=user.getRole();
+            if(UserRole.ADMINISTRATOR.equals(role)){//超级管理员
+                dataList=companyService.bigCustomerDataCount();
+            }
+        }
+        mv.addObject("dataList", dataList);
+        return mv;
+    }
+    
+    @ResponseBody
+    @RequestMapping("company/companyNum")
+    public Object getCompanyNumCount(){
+        User user=ConstantsData.getLoginUser();
+        List<Map<String,Object>> resultMap=null;
+        if(user!=null){
+            Integer role=user.getRole();
+            if(UserRole.ADMINISTRATOR.equals(role)){//超级管理员
+                resultMap=companyService.getCompanyNumCount();
+            }
+        }
+        return resultMap;
+    }
 }

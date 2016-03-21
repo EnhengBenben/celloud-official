@@ -195,7 +195,7 @@ var drawCharts=(function(drawCharts){
         myChart.setOption(opt);
 	};
 	
-	self.pieChart=function(id,data,x,y,title,name,rad, centerX, centerY) {
+	self.pieChart=function(id,data,x,y,title,name,rad, centerX, centerY,legendPosition,theme) {
 		if (document.getElementById(id) == null)
 			return;
 		var vlist = new Array(data.length);
@@ -209,9 +209,14 @@ var drawCharts=(function(drawCharts){
 				"value" : data[i][y]
 			};
 		}
-		var opt = makePieOption(title, legendName, name, rad, centerX, centerY, vlist);
-		var myChart = echarts.init(document.getElementById(id), blue);
-		myChart.setOption(opt);
+		var opt = makePieOption(title, legendName, name, rad, centerX, centerY, vlist,legendPosition);
+		if(theme!=null){
+			var myChart = echarts.init(document.getElementById(id), theme);
+			myChart.setOption(opt);
+		}else{
+			var myChart = echarts.init(document.getElementById(id), blue);
+			myChart.setOption(opt);
+		}
 	}
 	
 	self.incrementCumulantLineChart=function(incrementId,cumulantId,data,x,y,incrementSeriesName,cumulantSeriesName,incrementSeriesShowItem,cumulantShowItem,theme){//新增和累积关系图

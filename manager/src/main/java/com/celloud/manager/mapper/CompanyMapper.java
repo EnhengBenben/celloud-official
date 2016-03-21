@@ -44,4 +44,14 @@ public interface CompanyMapper {
      * @date 2016年3月17日 下午4:32:42
      */
     public List<Company> getCompany(@Param("companyId")Integer companyId,@Param("state")Integer state,@Param("testAccountIds")String testAccountIds);
+    /**
+     * 所有大客户的医院数量统计
+     *
+     * @param state
+     * @param testAccountIds
+     * @return
+     * @author han
+     * @date 2016年3月21日 上午11:00:31
+     */
+    public List<Map<String,Object>> getCompanyNumCount(@Param("state")Integer state,@Param("testAccountIds")String testAccountIds);
 }

@@ -113,8 +113,8 @@
                                 </a>
                             </li>
                             <c:if test="${ loginUserInSession.role=='2'}">
-                            <li>
-                                <a href="#">
+                            <li id="company-bigcustomer-menu">
+                                <a href="javascript:companyCount.toBigCustomerCount();">
                                     <span class="title">大客户统计</span>
                                 </a>
                             </li>

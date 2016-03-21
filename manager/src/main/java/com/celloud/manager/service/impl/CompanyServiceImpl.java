@@ -12,9 +12,11 @@ import org.springframework.stereotype.Service;
 import com.celloud.manager.constants.AppOffline;
 import com.celloud.manager.constants.DataState;
 import com.celloud.manager.constants.ReportPeriod;
+import com.celloud.manager.constants.ReportType;
 import com.celloud.manager.constants.UserRole;
 import com.celloud.manager.mapper.AppMapper;
 import com.celloud.manager.mapper.CompanyMapper;
+import com.celloud.manager.mapper.DataFileMapper;
 import com.celloud.manager.mapper.ReportMapper;
 import com.celloud.manager.mapper.UserMapper;
 import com.celloud.manager.model.App;
@@ -35,6 +37,9 @@ public class CompanyServiceImpl implements CompanyService{
     
     @Resource
     private AppMapper appMapper;
+    
+    @Resource
+    private DataFileMapper dataFileMapper;
     
     @Override
     public Map<String, Object> companyGuideCount(Integer companyId) {
@@ -111,6 +116,54 @@ public class CompanyServiceImpl implements CompanyService{
     @Override
     public List<App> getAppOfBigCustomer(Integer companyId) {
         return appMapper.getAppOfBigCustomer(companyId, AppOffline.ON);
+    }
+
+    @Override
+    public List<Map<String, Object>> bigCustomerDataCount() {
+        List<Map<String, Object>> resultList=new ArrayList<Map<String, Object>>();
+        List<Company> list=companyMapper.getBigCustomerCompany(UserRole.BIG_CUSTOMER, DataState.ACTIVE);
+        List<Map<String, Integer>> userNumList=userMapper.getUserNumCount(DataState.ACTIVE, PropertiesUtil.testAccountIds);
+        List<Map<String, Object>> companyNumList=companyMapper.getCompanyNumCount(DataState.ACTIVE, PropertiesUtil.testAccountIds);
+        List<Map<String, Object>> dataFileSizeList=dataFileMapper.countDataFileByBigCustomer(DataState.ACTIVE, PropertiesUtil.testAccountIds);
+        List<Map<String, Integer>> appRunNumList=appMapper.countAppRunNumByBigCustomer( AppOffline.ON, ReportType.PROJECT, ReportPeriod.COMPLETE,PropertiesUtil.testAccountIds);
+        for(Company c:list){
+            Map<String, Object> result=new HashMap<String, Object>();
+            result.put("companyId", c.getCompanyId());
+            result.put("companyName", c.getCompanyName());
+            result.put("createDate", c.getCreateDate());
+            for(Map<String, Integer> map:userNumList){
+                if(map.get("companyId").equals(c.getCompanyId())){
+                    result.put("userNum", map.get("userNum"));
+                    break;
+                }
+            }
+            for(Map<String, Object> map:companyNumList){
+                if(map.get("companyId").equals(c.getCompanyId())){
+                    result.put("companyNum", map.get("companyNum"));
+                    break;
+                }
+            }
+            for(Map<String, Object> map:dataFileSizeList){
+                if(map.get("companyId").equals(c.getCompanyId())){
+                    result.put("dataNum", map.get("dataNum"));
+                    result.put("dataSize", map.get("dataSize"));
+                    break;
+                }
+            }
+            for(Map<String, Integer> map:appRunNumList){
+                if(map.get("companyId").equals(c.getCompanyId())){
+                    result.put("runNum", map.get("runNum"));
+                    break;
+                }
+            }
+            resultList.add(result);
+        }
+        return resultList;
+    }
+
+    @Override
+    public List<Map<String, Object>> getCompanyNumCount() {
+        return companyMapper.getCompanyNumCount(DataState.ACTIVE, PropertiesUtil.testAccountIds);
     }
 
 }
