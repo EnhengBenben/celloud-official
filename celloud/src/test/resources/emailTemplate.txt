@@ -1,0 +1,54 @@
+<center>
+		<table border="0" cellpadding="0" cellspacing="0"
+			style="border: none; font-family: Helvetica, sans-serif">
+			<tbody>
+				<tr style="background-color: #0b526f">
+					<td
+						style="vertical-align: top; min-height: 38px; padding: 10px; font-size: 18px; font-weight: bold; color: #ffffff; border: 1px #0b526f solid">
+						CelLoud #shareType共享通知</td>
+				</tr>
+				<tr>
+					<td
+						style="vertical-align: top; border: 1px #cccccc solid; padding: 20px 10px; font-size: 15px; color: #393939; background-color: #f9f9f9">
+						<p>
+							<strong>尊敬的用户#userName您好:</strong><br /> <span
+								style="padding-left: 30px;"> 用户#shareUserName共享给您一份#shareType，<br />
+							</span> <span style="padding-left: 30px;"> 您可以点击&nbsp;&nbsp;<a
+								href="
+http://www.celloud.org
+" style="color: #0081b0"
+								target="_blank">CelLoud</a>&nbsp;&nbsp;查看结果。<br />
+							</span>
+						</p>
+						<table border="0" cellpadding="0" cellspacing="0"
+							style="border: none; font-family: Helvetica, sans-serif; font-size: 15px; padding-left: 30px;">
+							<tbody>
+								<tr>
+									<td style="vertical-align: top; padding-right: 10px">
+										#shareType名称:</td>
+									<td style="vertical-align: top">#dataName</td>
+								</tr>
+								<tr>
+									<td style="vertical-align: top; padding-right: 10px">
+										#shareType编号:</td>
+									<td style="vertical-align: top">#dataKey</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+				</tr>
+				<tr>
+					<td
+						style="vertical-align: top; padding-top: 10px; font-size: 13px; font-style: italic; color: #a9a9a9">
+						本邮件来自 <a href="
+http://www.celloud.org
+" style="color: #0081b0"
+						target="_blank">CelLoud</a> 系统，请勿回复。
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</center>

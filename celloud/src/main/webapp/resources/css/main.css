@@ -824,17 +824,22 @@ a:focus {
 }
 .navbar-nav > .notifications-menu,
 .navbar-nav > .messages-menu,
+.navbar-nav > .expense-menu,
 .navbar-nav > .tasks-menu {
   position: relative;
 }
 
 .navbar-nav > .notifications-menu > .dropdown-menu,
 .navbar-nav > .messages-menu > .dropdown-menu,
+.navbar-nav > .expense-menu > .dropdown-menu,
 .navbar-nav > .tasks-menu > .dropdown-menu {
   width: 280px;
   padding: 0 0 0 0!important;
   margin: 0!important;
   top: 100%;
+}
+.navbar-nav > .expense-menu > .dropdown-menu{
+  width: 200px;
 }
 .navbar-nav > .notifications-menu > .dropdown-menu > li,
 .navbar-nav > .messages-menu > .dropdown-menu > li,

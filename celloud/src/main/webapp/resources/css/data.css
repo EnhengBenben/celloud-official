@@ -63,10 +63,13 @@
   min-width: 40px;
 }
 .data-table .data-size{
-  min-width: 64px;
+  min-width: 80px;
 }
 .data-table .create-date{
   min-width: 80px;
+}
+.data-table .run-state{
+  min-width:70px;
 }
 .data-search input[type="text"]{
   padding:0px 9px;

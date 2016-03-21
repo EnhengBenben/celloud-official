@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div>
 	<input type="hidden" value="${hcv.projectId }" id="_projectId">
 	<!--文件名称-->
@@ -88,36 +89,48 @@
 	</div>
 	<div class="m-box" id="printDiv3">
 		<h2><i class="i-dna"></i>原始峰图</h2>
-	    <div class="m-boxCon result">
-			<a href="javascript:showBg('${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['1_all_png'] }','listAll1Img');" >
-				<img class="imgtop" name="imgSrc" src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['1_all_png'] }" style="width: 750px;height: 150px;" id="listAll1Img">
-			</a>
-	    </div>
-	     <div class="m-boxCon result">
-			<a href="javascript:showBg('${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['2_all_png'] }','listAll2Img');" >
-				<img class="imgtop" name="imgSrc" src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['2_all_png'] }" style="width: 750px;height: 150px;" id="listAll2Img">
-			</a>
-	    </div>
+		<c:if test="${hcv.original.containsKey('1_all_png') }">
+		    <div class="m-boxCon result">
+				<a href="javascript:showBg('${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['1_all_png'] }','listAll1Img');" >
+					<img class="imgtop" name="imgSrc" src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['1_all_png'] }" style="width: 750px;height: 150px;" id="listAll1Img">
+				</a>
+		    </div>
+	    </c:if>
+	    <c:if test="${hcv.original.containsKey('2_all_png') }">
+		     <div class="m-boxCon result">
+				<a href="javascript:showBg('${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['2_all_png'] }','listAll2Img');" >
+					<img class="imgtop" name="imgSrc" src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['2_all_png'] }" style="width: 750px;height: 150px;" id="listAll2Img">
+				</a>
+		    </div>
+		</c:if>
+	    <c:if test="${hcv.original.containsKey('3_all_png') }">
 	     <div class="m-boxCon result">
 			<a href="javascript:showBg('${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['3_all_png'] }','listAll3Img');" >
 				<img class="imgtop" name="imgSrc" src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['3_all_png'] }" style="width: 750px;height: 150px;" id="listAll3Img">
 			</a>
-	    </div>
+	     </div>
+	    </c:if>
+	    <c:if test="${hcv.original.containsKey('4_all_png') }">
 	     <div class="m-boxCon result">
 			<a href="javascript:showBg('${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['4_all_png'] }','listAll4Img');" >
 				<img class="imgtop" name="imgSrc" src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['4_all_png'] }" style="width: 750px;height: 150px;" id="listAll4Img">
 			</a>
-	    </div>
-	    <div class="m-boxCon result">
-			<a href="javascript:showBg('${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['5_all_png'] }','listAll5Img');" >
-				<img class="imgtop" name="imgSrc" src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['5_all_png'] }" style="width: 750px;height: 150px;" id="listAll5Img">
-			</a>
-	    </div>
-	    <div class="m-boxCon result">
-			<a href="javascript:showBg('${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['6_all_png'] }','listAll6Img');" >
-				<img class="imgtop" name="imgSrc" src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['6_all_png'] }" style="width: 750px;height: 150px;" id="listAll6Img">
-			</a>
-	    </div>
+	     </div>
+	    </c:if>
+	    <c:if test="${hcv.original.containsKey('5_all_png') }">
+		    <div class="m-boxCon result">
+				<a href="javascript:showBg('${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['5_all_png'] }','listAll5Img');" >
+					<img class="imgtop" name="imgSrc" src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['5_all_png'] }" style="width: 750px;height: 150px;" id="listAll5Img">
+				</a>
+		    </div>
+		</c:if>
+	    <c:if test="${hcv.original.containsKey('6_all_png') }">
+		    <div class="m-boxCon result">
+				<a href="javascript:showBg('${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['6_all_png'] }','listAll6Img');" >
+					<img class="imgtop" name="imgSrc" src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['6_all_png'] }" style="width: 750px;height: 150px;" id="listAll6Img">
+				</a>
+		    </div>
+		</c:if>
 	</div>
 	<div class="bg-analysis">
 		<div class="m-box">

@@ -121,10 +121,21 @@
                             </c:if>
                         </ul>
                     </li>
+                    <li>
+                        <a href="#">
+                            <i class="linecons-mail"></i>
+                            <span class="title">APP管理 </span>
+                        </a>
+                        <ul>
+                            <li id="">
+                                <a href="javascript:void();">
+                                    <span class="title">价格管理</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
-                        
             </div>
-            
         </div>
         <div class="main-content">
         <!-- User Info, Notifications and Menu Bar -->
