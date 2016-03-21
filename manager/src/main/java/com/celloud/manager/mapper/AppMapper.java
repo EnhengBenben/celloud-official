@@ -91,8 +91,8 @@ public interface AppMapper {
      * @date 2016年3月18日 下午4:47:11
      */
     public List<App> appPriceList(@Param("companyId") Integer companyId,
-            @Param("offLine") int offLine,
-            @Param("priceType") Integer priceType);
+            @Param("offLine") int offLine, @Param("priceType") Byte priceType);
+
     /**
      * 按大客户统计app运行次数
      *
@@ -104,5 +104,8 @@ public interface AppMapper {
      * @author han
      * @date 2016年3月21日 下午2:04:36
      */
-    public List<Map<String,Integer>> countAppRunNumByBigCustomer(@Param("offLine") int offLine,@Param("flag") Integer flag,@Param("period") int period,@Param("testAccountIds")String testAccountIds);
+    public List<Map<String, Integer>> countAppRunNumByBigCustomer(
+            @Param("offLine") int offLine, @Param("flag") Integer flag,
+            @Param("period") int period,
+            @Param("testAccountIds") String testAccountIds);
 }
