@@ -676,11 +676,7 @@ $(document).ready(function(){
 	}else{
 		$("#lessDiv").remove();
 	}
-	var browser = $.NV('name');
-	var height;
-	var appId = $("#_appId").html();
 	var _flag = $("#_flag").html();
-	
 	if(_flag==0){
 	  	inputVal = $("#des").html();
 		if(inputVal){
@@ -688,10 +684,6 @@ $(document).ready(function(){
 			$("#des").html(inputVal);
 		}
 	}
-	$(".m-boxCon").find("a").each(function(){
-		$(this).parent().append($(this).html());
-		$(this).remove();
-	});
 	$(".table").find("td").each(function(){
 		$(this).css("vertical-align","middle");
 		$(this).css("word-break","break-all");

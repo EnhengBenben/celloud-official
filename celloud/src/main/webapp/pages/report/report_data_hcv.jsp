@@ -1,7 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div>
-	<input type="hidden" value="${hcv.projectId }" id="_projectId">
 	<!--文件名称-->
 	<div class="m-file">
 	    <dl class="dl-horizontal datareport-title">
@@ -13,7 +12,7 @@
           <dd class="force-break">${hcv.fileName}(${hcv.dataKey})</dd>
         </dl>
         <div class="toolbar">
-            <a class="btn btn-celloud-success btn-flat" href="report/printPGS('${hcv.userId }/${hcv.appId }/${hcv.dataKey }')"><i class="fa fa-print"></i>打印报告</a>
+            <a class="btn btn-celloud-success btn-flat" target="_blank" href="report/printHCV?appId=${hcv.appId }&dataKey=${hcv.dataKey }&projectId=${hcv.projectId }"><i class="fa fa-print"></i>打印报告</a>
             <a class="btn btn-warning btn-flat" style="display: none;" href="javascript:void(0)" onclick="change()"><i class="fa fa-folder-open-o"></i>显示更多</a>
         </div>
 	</div>

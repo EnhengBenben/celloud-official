@@ -746,24 +746,17 @@ public class ReportAction {
         return mv;
     }
 
-    /**
-     * 打印HBV等
-     * 
-     * @param appId
-     * @param dataKey
-     * @param projectId
-     * @param imgHtml
-     * @param sensitive
-     * @param context
-     * @param peakFigure
-     * @param allPic
-     * @param result
-     * @param table
-     * @param flag
-     * @return
-     * @author lin
-     * @date 2016年1月20日上午11:05:24
-     */
+	/**
+	 * 打印HBV
+	 * 
+	 * @param appId
+	 * @param dataKey
+	 * @param projectId
+	 * @param flag
+	 * @return
+	 * @author lin
+	 * @date 2016年3月21日下午2:51:25
+	 */
 	@RequestMapping("printHBV")
 	public ModelAndView printHBV(Integer appId, String dataKey, Integer projectId, Integer flag) {
 		ModelAndView mv = getModelAndView("print/print_hbv", projectId);
@@ -776,6 +769,31 @@ public class ReportAction {
 		}
 		HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
 		mv.addObject("hbv", hbv).addObject("flag", flag).addObject("report", report);
+		return mv;
+	}
+	
+	/**
+	 * 打印HCV
+	 * 
+	 * @param appId
+	 * @param dataKey
+	 * @param projectId
+	 * @return
+	 * @author lin
+	 * @date 2016年3月21日下午2:51:25
+	 */
+	@RequestMapping("printHCV")
+	public ModelAndView printHCV(Integer appId, String dataKey, Integer projectId) {
+		ModelAndView mv = getModelAndView("print/print_hcv", projectId);
+		Integer userId = ConstantsData.getLoginUserId();
+		Integer fileId = dataService.getDataByKey(dataKey).getFileId();
+		Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
+		// 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
+		if (StringUtils.isNotEmpty(report.getPrintContext())) {
+			return mv.addObject("printContext", report.getPrintContext());
+		}
+		HCV hcv = reportService.getHCVReport(dataKey, projectId, appId);
+		mv.addObject("hcv", hcv).addObject("report", report);
 		return mv;
 	}
 

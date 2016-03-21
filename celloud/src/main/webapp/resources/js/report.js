@@ -1178,23 +1178,7 @@ function toPrintHBV(pagePath,flag){
 	var userId = pagePath.split("/")[0];
 	var appId = pagePath.split("/")[1];
 	var dataKey = pagePath.split("/")[2];
-	if(appId == 80){
-		var imgHtml="";
-		$("img[name='imgSrc']").each(function(){ 
-			imgHtml+=$(this).attr("src")+",";
-		});
-		if(imgHtml!=""){
-			imgHtml = imgHtml.substring(0,imgHtml.length-1);
-		}
-		param = {
-				"appId" : appId,
-		        "dataKey":dataKey,
-		        "projectId":$("#_projectId").val(),
-				"context":$("#resultHcv2").html(),
-				"imgHtml" : imgHtml,
-				"seq":$("#seq").html()
-			};
-	}else if(appId == 90){
+	if(appId == 90){
 		var imgHtml="";
 		$("img[name='imgSrc']").each(function(){ 
 			imgHtml+=$(this).attr("src")+",";
@@ -1209,7 +1193,7 @@ function toPrintHBV(pagePath,flag){
 				"context":$("#report_tb").html(),
 				"imgHtml":imgHtml
 		};
-	}else if(appId == 89 || appId == 84){
+	}else if(appId == 89){
 		var imgHtml="";
 		$("img[name='imgSrc']").each(function(){ 
 			imgHtml+=$(this).attr("src")+",";

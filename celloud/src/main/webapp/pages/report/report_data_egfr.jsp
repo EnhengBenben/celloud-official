@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div>
 	<input type="hidden" value="${egfr.pos}" id="seq_length"/>
-	<input type="hidden" value="${egfr.projectId}" id="_projectId">
 	<!--文件名称-->
 	<div class="m-file">
 	   <dl class="dl-horizontal datareport-title">
