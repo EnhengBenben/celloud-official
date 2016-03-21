@@ -14,4 +14,5 @@ public interface ExpensesMapper {
     int updateByPrimaryKeySelective(Expenses record);
 
     int updateByPrimaryKey(Expenses record);
+
 }
