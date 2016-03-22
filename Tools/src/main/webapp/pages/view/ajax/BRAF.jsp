@@ -24,7 +24,7 @@
 		<h2>
 			<i class="i-edit"></i>SNP
 			<span class="filter">
-				<input type="text" value="5" id="_snum"><a href="javascript:void(0)" class="btn btn-orange" onclick="searchTable()"><i class="i-filter"></i>筛选</a>
+				<input type="text" value="5" id="_snum" style="padding: 0;height: 30px;"><a href="javascript:void(0)" class="btn btn-success" onclick="searchTable()"><i class="i-filter"></i>筛选</a>
 			</span>
 		</h2>
 	    <div class="m-boxCon result">
