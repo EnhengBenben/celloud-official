@@ -103,6 +103,7 @@ public class UserAction {
             page = new Page();
         }
         PageList<ActionLog> pageList = logService.findLogs(ConstantsData.getLoginUserId(), page);
+        pageList.getPage().setTotalPage(1);
         return new ModelAndView("user/user_log_list").addObject("pageList", pageList);
     }
 }

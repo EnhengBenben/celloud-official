@@ -1,5 +1,6 @@
 package com.celloud.exception;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,11 +19,13 @@ import com.celloud.mail.EmailUtils;
  */
 public class ExceptionHandler implements HandlerExceptionResolver {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Resource
+    private EmailUtils emailUtils;
 
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
             Exception exception) {
-        EmailUtils.sendError(request, exception);
+        emailUtils.sendError(request, exception);
         response.setHeader("exceptionstatus", "exception");
         if (exception instanceof BusinessException) {
             return new ModelAndView("errors/business").addObject("exception", exception);
