@@ -1178,98 +1178,7 @@ function toPrintHBV(pagePath,flag){
 	var userId = pagePath.split("/")[0];
 	var appId = pagePath.split("/")[1];
 	var dataKey = pagePath.split("/")[2];
-	if(appId == 82){
-		var sensitive="";
-		var rType="";
-		if($("#hasLDT").length>0){
-			sensitive += $("#hasLDT").val()+"，";
-		}else{
-			rType+="替比夫定LDT，";
-		}
-		if($("#hasLAM").length>0){
-			sensitive += $("#hasLAM").val()+"，";
-		}else{
-			rType+="拉米夫定LAM，";
-		}
-		if($("#hasFTC").length>0){
-			sensitive += $("#hasFTC").val()+"，";
-		}else{
-			rType+="恩曲他滨FTC，";
-		}
-		if($("#hasETV").length>0){
-			sensitive += $("#hasETV").val()+"，";
-		}else{
-			rType+="恩替卡韦ETV，";
-		}
-		if($("#hasADV").length>0){
-			sensitive += $("#hasADV").val()+"，";
-		}else{
-			rType+="阿德福韦ADV，";
-		}
-		if($("#hasTDF").length>0){
-			sensitive += $("#hasTDF").val()+"，";
-		}else{
-			rType+="替诺福韦酯TDF，";
-		}
-		if(sensitive!=""){
-			sensitive=sensitive.substring(0,sensitive.length-1);
-		}else{
-			sensitive="无";
-		}
-		if(rType!=""){
-			rType = rType.substring(0,rType.length-1);
-		}
-		var imgHtml="";
-		$("img[name='imgSrc']").each(function(){ 
-			imgHtml+=$(this).attr("src")+",";
-		});
-		if(imgHtml!=""){
-			imgHtml = imgHtml.substring(0,imgHtml.length-1);
-		}
-		var printDiv0 = $("#resultDiv").html().trim();
-		printDiv0 = printDiv0.replace(/<br>/g,"\n").trim();
-		var printDiv1 = $("#printDiv1").html().replace(new RegExp('style="padding-left: 30px;"',"gm"),'').replace(' height="170px;" width="150px;"',"").replace(new RegExp('<div style="float:right;padding-right: 30px" title="帮助" onclick="showModal(\'helpModal\',0,1)"><button class="clear button button-glow button-circle button-rounded button-primary button-tiny"><span class="fa fa-thumbs-up"></span></button></div>',"gm"),'');
-		var printDiv3 = "";
-		$("#printDiv3").find("a").each(function(){
-			printDiv3+=$(this).html();
-		});
-		var printDiv4 = $("#printDiv4").html();
-		param = {
-				"appId" : appId,
-				"dataKey":dataKey,
-				"projectId":$("#_projectId").val(),
-				"imgHtml" : imgHtml,
-		        "sensitive" : sensitive,
-		        "context" : rType,
-		        "peakFigure":printDiv1,
-		        "allPic":printDiv3,
-		        "result":printDiv0,
-		        "table":printDiv4,
-		        "flag":flag
-		 };
-		$.post("report/printHBV",param,function(responseText){
-			var obj = window.open("");
-			obj.document.write(responseText);
-			obj.document.close();
-		});
-		return;
-	}else if(appId == 80){
-		var imgHtml="";
-		$("img[name='imgSrc']").each(function(){ 
-			imgHtml+=$(this).attr("src")+",";
-		});
-		if(imgHtml!=""){
-			imgHtml = imgHtml.substring(0,imgHtml.length-1);
-		}
-		param = {
-				"appId" : appId,
-		        "dataKey":dataKey,
-		        "projectId":$("#_projectId").val(),
-				"context":$("#resultHcv2").html(),
-				"imgHtml" : imgHtml,
-				"seq":$("#seq").html()
-			};
-	}else if(appId == 90){
+	if(appId == 90){
 		var imgHtml="";
 		$("img[name='imgSrc']").each(function(){ 
 			imgHtml+=$(this).attr("src")+",";
@@ -1284,7 +1193,7 @@ function toPrintHBV(pagePath,flag){
 				"context":$("#report_tb").html(),
 				"imgHtml":imgHtml
 		};
-	}else if(appId == 89 || appId == 84){
+	}else if(appId == 89){
 		var imgHtml="";
 		$("img[name='imgSrc']").each(function(){ 
 			imgHtml+=$(this).attr("src")+",";
@@ -1332,18 +1241,6 @@ var printReport = {
       var _param = {"projectId":projectId,"dataKey":dataKey,"appId":appId};
       return _param;
     }
-}
-function printMoreCMPReport(projectId,dataKey,appId){
-	printReport.main("report/printMoreCMPReport",printReport.mongoParam(projectId,dataKey,appId));
-}
-function printLessCMPReport(projectId,dataKey,appId){
-	printReport.main("report/printLessCMPReport",printReport.mongoParam(projectId,dataKey,appId));
-}
-function printGDD(projectId,dataKey,appId){
-  printReport.main("report/printGDDReport",printReport.mongoParam(projectId,dataKey,appId));
-}
-function printMIB(projectId,dataKey,appId){
-  printReport.main("report/printMIBReport",printReport.mongoParam(projectId,dataKey,appId));
 }
 function printSplit(projectId,dataKey,appId){
   printReport.main("report/printSplitReport",printReport.mongoParam(projectId,dataKey,appId));

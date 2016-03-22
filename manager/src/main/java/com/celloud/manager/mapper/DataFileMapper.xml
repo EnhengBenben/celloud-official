@@ -318,7 +318,7 @@
     LEFT JOIN tb_user u on f.user_id=u.user_id 
     LEFT JOIN tb_user_company_relat ucr on ucr.user_id=u.user_id
     INNER JOIN tb_company c on c.company_id=u.company_id
-    where f.state=#{state}
+    where f.state=#{state} and u.state=#{state}
     <if test="companyId!=null">
     and ucr.company_id=#{companyId}
     </if>
@@ -331,13 +331,25 @@
   <select id="countBigCustomerDataFile" resultType="java.util.Map">
   select count(f.file_id) dataNum,sum(f.size) dataSize,c.company_name companyName,c.company_id companyId
     from tb_file f 
+    LEFT JOIN tb_user u on f.user_id=u.user_id 
     LEFT JOIN tb_user_company_relat ucr on ucr.user_id=f.user_id
     INNER JOIN tb_company c on c.company_id=ucr.company_id
-    where f.state=#{state} and c.state=#{state}
+    where f.state=#{state} and c.state=#{state} and u.state=#{state}
     <if test="testAccountIds!=null">
     and f.user_id not in(${testAccountIds }) 
     </if>
     GROUP BY ucr.company_id
     ORDER BY dataNum desc
+  </select>
+   <select id="countDataFileByBigCustomer" resultType="java.util.Map">
+  select count(f.file_id) dataNum,sum(f.size) dataSize,ucr.company_id companyId
+    from tb_file f 
+    LEFT JOIN tb_user u on f.user_id=u.user_id 
+    LEFT JOIN tb_user_company_relat ucr on ucr.user_id=u.user_id
+    where f.state=#{state} and u.state=#{state}
+    <if test="testAccountIds!=null">
+    and f.user_id not in(${testAccountIds }) 
+    </if>
+    GROUP BY ucr.company_id
   </select>
 </mapper>

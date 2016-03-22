@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.manager.constants.ConstantsData;
 import com.celloud.manager.constants.UserRole;
+import com.celloud.manager.model.App;
 import com.celloud.manager.model.Company;
 import com.celloud.manager.model.User;
 import com.celloud.manager.service.CompanyService;
@@ -78,5 +79,55 @@ public class CompanyAction {
         }
         mv.addObject("companyList", list);
         return mv;
+    }
+    @RequestMapping("company/reportCount")
+    public ModelAndView companyReportCount(){
+        ModelAndView mv=new ModelAndView("company/company_report");
+        User user=ConstantsData.getLoginUser();
+        List<App> list=null;
+        List<Map<String, Object>> dataList=null;
+        if(user!=null){
+            Integer role=user.getRole();
+            if(UserRole.ADMINISTRATOR.equals(role)){//超级管理员
+                list=companyService.getAppOfBigCustomer(null);
+                dataList=companyService.getCompanyReport(null);
+            }
+            if(UserRole.BIG_CUSTOMER.equals(role)){//大客户
+                list=companyService.getAppOfBigCustomer(user.getCompanyId());
+                dataList=companyService.getCompanyReport(null);
+            }
+        }
+        mv.addObject("appList", list);
+        mv.addObject("dataList", dataList);
+        return mv;
+    }
+    
+    @RequestMapping("company/bigCustomer")
+    public ModelAndView companyBigCustomerCount(){
+        ModelAndView mv=new ModelAndView("company/company_bigCustomer");
+        User user=ConstantsData.getLoginUser();
+        List<Map<String, Object>> dataList=null;
+        if(user!=null){
+            Integer role=user.getRole();
+            if(UserRole.ADMINISTRATOR.equals(role)){//超级管理员
+                dataList=companyService.bigCustomerDataCount();
+            }
+        }
+        mv.addObject("dataList", dataList);
+        return mv;
+    }
+    
+    @ResponseBody
+    @RequestMapping("company/companyNum")
+    public Object getCompanyNumCount(){
+        User user=ConstantsData.getLoginUser();
+        List<Map<String,Object>> resultMap=null;
+        if(user!=null){
+            Integer role=user.getRole();
+            if(UserRole.ADMINISTRATOR.equals(role)){//超级管理员
+                resultMap=companyService.getCompanyNumCount();
+            }
+        }
+        return resultMap;
     }
 }

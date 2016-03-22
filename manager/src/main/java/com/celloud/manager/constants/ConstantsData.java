@@ -75,6 +75,29 @@ public class ConstantsData {
         User user = getLoginUser();
         return user == null ? null : user.getEmail();
     }
+
+    /**
+     * 获取当前登录用户的role
+     * 
+     * @return
+     */
+    public static Integer getLoginCompanyId() {
+        User user = getLoginUser();
+        Integer companyId = null;
+        if (user == null) {
+            companyId = -1;
+        } else {
+            Integer role = user.getRole();
+            if (UserRole.ADMINISTRATOR.equals(role)) {// 超级管理员
+                companyId = null;
+            }
+            if (UserRole.BIG_CUSTOMER.equals(role)) {// 大客户
+                companyId = user.getCompanyId();
+            }
+        }
+        return companyId;
+    }
+
     /**
      * 获取当前的request对象
      * @return

@@ -54,6 +54,14 @@ public class App {
     private String classifyNames;
     /** APP单价 */
     private BigDecimal price;
+    /** 总毛利 */
+    private BigDecimal gross;
+    /** 计费次数 */
+    private Integer expenseNum;
+    /** 免费次数 */
+    private Integer freeNum;
+    /** 开始收费时间 */
+    private Date chargeTime;
 
     public Integer getAppId() {
         return appId;
@@ -254,4 +262,37 @@ public class App {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
+    public BigDecimal getGross() {
+        return gross;
+    }
+
+    public void setGross(BigDecimal gross) {
+        this.gross = gross;
+    }
+
+    public Integer getExpenseNum() {
+        return expenseNum;
+    }
+
+    public void setExpenseNum(Integer expenseNum) {
+        this.expenseNum = expenseNum;
+    }
+
+    public Integer getFreeNum() {
+        return freeNum;
+    }
+
+    public void setFreeNum(Integer freeNum) {
+        this.freeNum = freeNum;
+    }
+
+    public Date getChargeTime() {
+        return chargeTime;
+    }
+
+    public void setChargeTime(Date chargeTime) {
+        this.chargeTime = chargeTime;
+    }
+
 }

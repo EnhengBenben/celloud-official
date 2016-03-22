@@ -60,15 +60,36 @@ var companyCount=(function(companyCount){
 			menu("company-guide-menu",responseText);
 		});
 	};
-	
+	/**
+	 * 医院基本信息
+	 */
 	self.toCompanyBaseInfo=function(){
 		$.post("company/baseInfo",function(responseText){
 			menu("company-baseInfo-menu",responseText);
 		});
 	};
+	/**
+	 * 医院数据统计
+	 */
 	self.toCompanyDataCount=function(){
 		$.post("companyDataCount",function(responseText){
 			menu("company-data-menu",responseText);
+		});
+	};
+	/**
+	 * 医院报告统计
+	 */
+	self.toCompanyReportCount=function(){
+		$.post("company/reportCount",function(responseText){
+			menu("company-report-menu",responseText);
+		});
+	};
+	/**
+	 * 大客户统计
+	 */
+	self.toBigCustomerCount=function(){
+		$.post("company/bigCustomer",function(responseText){
+			menu("company-bigcustomer-menu",responseText);
 		});
 	};
 	return self;
@@ -76,4 +97,7 @@ var companyCount=(function(companyCount){
 
 $(function(){
 	console.toConsole();
+	$("body").on("click","[data-click='to-app-price-list']",function(){
+	  $.appManager.price.list();
+	});
 });

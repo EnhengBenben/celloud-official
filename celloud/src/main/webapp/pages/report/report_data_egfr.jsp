@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div>
 	<input type="hidden" value="${egfr.pos}" id="seq_length"/>
-	<input type="hidden" value="${egfr.projectId}" id="_projectId">
 	<!--文件名称-->
 	<div class="m-file">
 	   <dl class="dl-horizontal datareport-title">
@@ -14,7 +13,7 @@
           <dd class="force-break">${egfr.fileName}(${egfr.dataKey})</dd>
         </dl>
         <div class="toolbar">
-            <a class="btn btn-celloud-success btn-flat" href='javascript:toPrintHBV("${egfr.userId }/${egfr.appId }/${egfr.dataKey }")'><i class="fa fa-print"></i>打印报告</a>
+            <a class="btn btn-celloud-success btn-flat" target="_blank" href='report/printEGFR?appId=${egfr.appId }&dataKey=${egfr.dataKey }&projectId=${egfr.projectId }'><i class="fa fa-print"></i>打印报告</a>
             <c:if test="${egfr.pdf!=null && egfr.pdf!='' }">
                 <a class="btn btn-warning btn-flat" href="${toolsPath }Procedure!miRNADownload?userId=${egfr.userId }/${egfr.appId }/${egfr.dataKey }/${egfr.pdf }"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
             </c:if>
@@ -24,7 +23,7 @@
 	<div class="m-box">
 		<h2>
 			<i class="i-edit"></i>一、 已知突变位点（依据已发表文献，该突变位点有明确临床意义）
-			<span style="float:right;padding-right: 30px;padding-top: 8px;" title="帮助" onclick="showModal('helpModal')"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
+			<span style="float:right;padding-right: 30px;" title="帮助" onclick="showModal('helpModal')"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
 		</h2>
 	    <div class="m-boxCon result">
 	    	<div id="knowResult">
@@ -46,7 +45,7 @@
 	<div class="m-box">
 		<h2>
 			<i class="i-edit"></i>二、 未知突变位点（该突变位点目前没有已发表文献支持，无明确临床意义）
-			<div style="float:right;padding-right: 30px;padding-top: 8px;" title="帮助" onclick="showModal('helpModal')"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></div>
+			<div style="float:right;padding-right: 30px;" title="帮助" onclick="showModal('helpModal')"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></div>
 		</h2>
 	    <div class="m-boxCon result">
 	    	<c:if test="${egfr.mutationPosition!=null }">
