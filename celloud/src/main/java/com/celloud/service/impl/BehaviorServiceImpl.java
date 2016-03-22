@@ -2,6 +2,7 @@ package com.celloud.service.impl;
 
 import javax.annotation.Resource;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.celloud.dao.ReportDao;
@@ -14,6 +15,7 @@ public class BehaviorServiceImpl implements BehaviorService{
 	ReportDao reportDao;
 
 	@Override
+	@Async
 	public void saveUserBehavior(Behavior ub) {
 		reportDao.saveData(ub);;
 	}

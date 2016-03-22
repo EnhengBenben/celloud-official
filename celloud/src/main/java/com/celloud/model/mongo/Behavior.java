@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
 import com.celloud.model.mysql.ActionLog;
@@ -14,6 +15,7 @@ import com.celloud.model.mysql.ActionLog;
  * @author lin
  * @date 2016年3月16日 下午4:31:01
  */
+@Entity(noClassnameStored = true)
 public class Behavior extends ActionLog implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -22,6 +24,7 @@ public class Behavior extends ActionLog implements Serializable {
 
 	private String method;
 	private String action;
+	private Long consumeTime;
 	private Map<String, String[]> param;
 
 	public ObjectId getId() {
@@ -54,6 +57,14 @@ public class Behavior extends ActionLog implements Serializable {
 
 	public void setParam(Map<String, String[]> param) {
 		this.param = param;
+	}
+
+	public Long getConsumeTime() {
+		return consumeTime;
+	}
+
+	public void setConsumeTime(Long consumeTime) {
+		this.consumeTime = consumeTime;
 	}
 
 }
