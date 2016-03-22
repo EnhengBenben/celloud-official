@@ -136,7 +136,6 @@ public class LoginAction {
         if (password == null) {
             password = "";
         }
-        logger.info("password:{}", password);
         user.setPassword(MD5Util.getMD5(password));
         User loginUser = userService.login(user);
         if (loginUser == null) {
