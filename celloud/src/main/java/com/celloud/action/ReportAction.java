@@ -827,7 +827,7 @@ public class ReportAction {
     public ModelAndView printDAAN(Integer appId, String dataKey,
             Integer projectId, String context, String imgHtml, String seq,
             String result, String allPic, String table) {
-        ModelAndView mv = getModelAndView("print/print_hbv", projectId);
+        ModelAndView mv = getModelAndView("print/print_daan", projectId);
         Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
         Report report = reportService.getReport(userId, appId, projectId,
