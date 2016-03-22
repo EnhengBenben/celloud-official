@@ -38,6 +38,8 @@ import com.celloud.service.FeedbackService;
 @Service("feedbackServiceImpl")
 public class FeedbackServiceImpl implements FeedbackService {
     private Logger logger = LoggerFactory.getLogger(FeedbackServiceImpl.class);
+    @Resource
+    private EmailUtils emailUtils;
     private static final Page DEFAULT_PAGE = new Page(1, 5);
     @Resource
     private FeedbackMapper feedbackMapper;
@@ -79,7 +81,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         if (feedbackAttachments.size() > 0 && result <= 0) {
             feedbackMapper.updateAttachState();
         }
-        EmailUtils.sendFeedback(feedback, feedbackAttachments);
+        emailUtils.sendFeedback(feedback, feedbackAttachments);
         cleanAttachment();
         return result;
     }

@@ -2,14 +2,17 @@ package com.celloud.mail;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.celloud.constants.ConstantsData;
 import com.celloud.constants.FeedbackConstants;
 import com.celloud.model.mysql.Feedback;
 import com.celloud.model.mysql.FeedbackAttachment;
@@ -23,26 +26,23 @@ import com.celloud.utils.UserAgentUtil;
  */
 public class EmailUtils {
     private static Logger logger = LoggerFactory.getLogger(EmailUtils.class);
+    @Resource
+    private EmailService emailService;
+    private String errorMailTo;
+    private String[] errorMailTos;
+    private String errorTitle;
+    private String feedbackMailTo;
+    private String[] feedbackMailTos;
+    private String feedbackTitle;
 
-    /**
-     * 发送已组织成邮件正文的错误日志
-     * 
-     * @param errorMessage
-     */
-    public static void sendError(final String errorMessage) {
-        final EmailSender sender = EmailSender.getInstance();
-        if (EmailProperties.errorMailTo == null) {
-            logger.warn("系统出现异常，正在发送异常信息邮件，但是没有找到邮件接收者！");
-            return;
-        }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                sender.addTo(EmailProperties.errorMailTo).setTitle(EmailProperties.errorTitle).setContent(errorMessage)
-                        .send();
-            }
-        }).start();
+    public void sendWithTitle(String title, String content, String... to) {
+        Email email = new Email().addTo(to).setSubject(title).setContent(content);
+        emailService.send(email);
+    }
 
+    public void send(String content, String... to) {
+        Email email = new Email().addTo(to).setContent(content);
+        emailService.send(email);
     }
 
     /**
@@ -51,7 +51,11 @@ public class EmailUtils {
      * @param request
      * @param exception
      */
-    public static void sendError(HttpServletRequest request, Exception exception) {
+    public void sendError(HttpServletRequest request, Exception exception) {
+        if (this.errorMailTos == null) {
+            logger.warn("系统出现异常，正在发送异常信息邮件，但是没有找到邮件接收者！");
+            return;
+        }
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         exception.printStackTrace(pw);
@@ -70,30 +74,11 @@ public class EmailUtils {
         buffer.append("<pre>");
         buffer.append(sw.toString());
         buffer.append("</pre>");
+        // TODO 使用volecity模板渲染邮件内容
         String content = buffer.toString();
         pw.close();
-        sendError(content);
-    }
-
-    /**
-     * 发送已组织成邮件正文的问题反馈
-     * 
-     * @param content
-     */
-    public static void sendFeedback(final String content) {
-        final EmailSender sender = EmailSender.getInstance();
-        if (EmailProperties.feedbackMailTo == null) {
-            logger.warn("正在发送用户问题反馈邮件，但是没有找到邮件接收者！");
-            return;
-        }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                sender.addTo(EmailProperties.feedbackMailTo).setTitle(EmailProperties.feedbackTitle).setContent(content)
-                        .send();
-            }
-        }).start();
-
+        Email email = new Email().addTo(this.errorMailTos).setSubject(errorTitle).setContent(content);
+        emailService.send(email);
     }
 
     /**
@@ -101,26 +86,63 @@ public class EmailUtils {
      * 
      * @param feedback
      */
-    public static void sendFeedback(final Feedback feedback, final List<FeedbackAttachment> attachments) {
-        final EmailSender sender = EmailSender.getInstance();
+    public void sendFeedback(Feedback feedback, List<FeedbackAttachment> attachments) {
+        if (this.feedbackMailTos == null) {
+            logger.warn("用户提交了工单，正在发送工单信息邮件，但是没有找到邮件接收者！");
+            return;
+        }
+        Email email = new Email().addModel("feedback", feedback).addTo(this.feedbackMailTos).setSubject(feedbackTitle)
+                .setTemplate("feedback.vm");
         if (attachments != null && attachments.size() > 0) {
             for (FeedbackAttachment fa : attachments) {
                 String file = FeedbackConstants.getAttachment(fa.getFilePath());
-                // TODO fa.getFileName() 用户上传的文件名
-                sender.attachWithFileName(null, file);
+                email.attach(file, null);
             }
         }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (EmailProperties.feedbackMailTo == null) {
-                    logger.warn("用户提交了工单，正在发送工单信息邮件，但是没有找到邮件接收者！");
-                    return;
-                }
-                sender.addTo(EmailProperties.feedbackMailTo).setTitle(EmailProperties.feedbackTitle)
-                        .setTemplate("feedback.vm").addObject("feedback", feedback)
-                        .addObject("base", ConstantsData.getContextUrl()).send();
-            }
-        }).start();
+        emailService.send(email);
+    }
+
+    public String getErrorMailTo() {
+        return errorMailTo;
+    }
+
+    public void setErrorMailTo(String errorMailTo) {
+        this.errorMailTo = errorMailTo;
+        this.errorMailTos = this.getMails(this.errorMailTo);
+    }
+
+    public String getErrorTitle() {
+        return errorTitle;
+    }
+
+    public void setErrorTitle(String errorTitle) {
+        this.errorTitle = errorTitle;
+    }
+
+    public String getFeedbackMailTo() {
+        return feedbackMailTo;
+    }
+
+    public void setFeedbackMailTo(String feedbackMailTo) {
+        this.feedbackMailTo = feedbackMailTo;
+        this.feedbackMailTos = this.getMails(this.feedbackMailTo);
+    }
+
+    public String getFeedbackTitle() {
+        return feedbackTitle;
+    }
+
+    public void setFeedbackTitle(String feedbackTitle) {
+        this.feedbackTitle = feedbackTitle;
+    }
+
+    private String[] getMails(String mails) {
+        String[] result = null;
+        if (mails != null && !mails.trim().equals("")) {
+            result = mails.split(",");
+            List<String> list = new ArrayList<>(new HashSet<>(Arrays.asList(result)));
+            result = list.toArray(new String[list.size()]);
+        }
+        return result;
     }
 }

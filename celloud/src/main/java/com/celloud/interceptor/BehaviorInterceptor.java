@@ -7,10 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.core.NamedThreadLocal;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.celloud.model.mongo.Behavior;
 import com.celloud.service.BehaviorService;
+import com.celloud.utils.ActionLog;
 import com.celloud.utils.UserAgentUtil;
 
 /**
@@ -36,13 +38,17 @@ public class BehaviorInterceptor extends HandlerInterceptorAdapter {
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
 		Behavior behavior = UserAgentUtil.getUserBehavior(request);
-		// TODO 待积攒一定数据后下面两个字段用于绑定方法对应的按钮／功能
-		behavior.setOperate("");
-		behavior.setMessage("");
 		behavior.setLogDate(new Date());
 		behavior.setMethod(request.getMethod());
 		behavior.setAction(request.getRequestURI());
 		behavior.setParam(request.getParameterMap());
+		if (handler instanceof HandlerMethod) {
+            ActionLog log = ((HandlerMethod) handler).getMethodAnnotation(ActionLog.class);
+            if (log != null) {
+                behavior.setOperate(log.value());
+                behavior.setMessage(log.button());
+            }
+        }
 		long beginTime = startTimeThreadLocal.get();// 得到线程绑定的局部变量（开始时间）
 		long endTime = System.currentTimeMillis();// 2、结束时间
 		long consumeTime = endTime - beginTime;// 3、消耗的时间

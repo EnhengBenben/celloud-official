@@ -79,7 +79,7 @@ utils.checkPlaceholder = function(){
   if (!isPlaceholder) {//不支持placeholder 用jquery来完成
     $(document).ready(function() {
         if(!isPlaceholder){
-            $("input").not("input[name='password']").each(//把input绑定事件 排除password框
+            $("input").not("input[type='password']").each(//把input绑定事件 排除password框
                 function(){
                     if($(this).val()=="" && $(this).attr("placeholder")!=""){
                         $(this).val($(this).attr("placeholder"));
