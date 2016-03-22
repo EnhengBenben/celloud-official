@@ -352,4 +352,14 @@
     </if>
     GROUP BY ucr.company_id
   </select>
+  <select id="getExportData" resultType="java.util.Map">
+  select u.user_id,u.username,f.data_key,f.file_name,f.create_date,f.path,app.app_name from tb_file f
+	LEFT JOIN tb_user u on f.user_id=u.user_id
+	LEFT JOIN tb_report r on f.file_id=r.file_id
+	LEFT JOIN tb_app app on r.app_id=app.app_id
+	where f.user_id in (${userIds} ) 
+	<if test="start!=null and end!=null">
+	and f.create_date between #{start} and #{end}
+	</if>
+  </select>
 </mapper>

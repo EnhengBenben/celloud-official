@@ -47,6 +47,11 @@ var dataFile=(function(dataFile){
 			menu("data-bigCustomer-menu",responseText);
 		});
 	};
+	self.toDataExport=function(){
+		$.post("dataExport",function(responseText){
+			menu("data-export-menu",responseText);
+		});
+	};
 	return self;
 })(dataFile);
 

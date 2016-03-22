@@ -3,6 +3,8 @@ package com.celloud.manager.service;
 import java.util.List;
 import java.util.Map;
 
+import com.celloud.manager.model.User;
+
 public interface DataService {
     /**
      * 数据个数
@@ -70,6 +72,16 @@ public interface DataService {
      */
     public List<Map<String,Object>> getBigCustomerDataCount();
     
+    /**
+     * 大客户下的用户列表
+     *
+     * @param companyId
+     * @return
+     * @author han
+     * @date 2016年3月22日 上午11:28:21
+     */
+    public List<User> getUser(Integer companyId);
     
+    public List<Map<String,Object>> getUserData(String userIds,String start,String end);
     
 }

@@ -1,11 +1,20 @@
 package com.celloud.manager.action;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.io.FileUtils;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +26,7 @@ import com.celloud.manager.constants.ConstantsData;
 import com.celloud.manager.constants.UserRole;
 import com.celloud.manager.model.User;
 import com.celloud.manager.service.DataService;
+import com.celloud.manager.utils.PropertiesUtil;
 
 /**
  * 
@@ -219,6 +229,47 @@ public class DataAction {
         }
         return bigCustomerDataCount;
     }
+    @RequestMapping("dataExport")
+    public ModelAndView dataExport(){
+        ModelAndView mv=new ModelAndView("data/data_export");
+        User user=ConstantsData.getLoginUser();
+        List<User> userList=null;
+        if(user!=null){
+            Integer role=user.getRole();
+            mv.addObject("userRole", role);
+            if(UserRole.ADMINISTRATOR.equals(role)){//超级管理员
+                userList=dataService.getUser(null);
+            }
+            if(UserRole.BIG_CUSTOMER.equals(role)){//大客户
+                userList=dataService.getUser(user.getCompanyId());
+            }
+        }
+        mv.addObject("userList", userList);
+        return mv;
+    }
     
+    @RequestMapping("data/export")
+    public ResponseEntity<byte[]> download(String userIds,String start,String end) throws Exception {
+        List<Map<String,Object>> list=dataService.getUserData(userIds, start, end);
+        StringBuffer sb = new StringBuffer(
+                "user_id\tusername\tdata_key\tfile_name\tcreate_date\tpath\tapp\n");
+        for (Map<String, Object> data : list) {
+            sb.append(data.get("user_id")).append("\t").append(data.get("username")).append("\t")
+                    .append(data.get("data_key")).append("\t").append(data.get("file_name")).append("\t")
+                    .append(data.get("create_date").toString().substring(0, 10)).append("\t").append(data.get("path"))
+                    .append("\t").append(data.get("app_name")).append("\n");
+        }
+        String fileName = new Date().getTime() + ".xls";
+        String path = PropertiesUtil.outputPath + fileName;
+        File file = new File(path);
+        FileWriter fw = new FileWriter(file,true);
+        BufferedWriter bufferWritter = new BufferedWriter(fw);
+        bufferWritter.write(sb.toString());
+        bufferWritter.close();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", fileName);
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
+    }
     
 }

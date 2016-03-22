@@ -119,4 +119,15 @@
         </if>
         GROUP BY ucr.company_id
     </select>
+    <select id="getUser" resultMap="BaseResultMap">
+    select DISTINCT u.user_id,u.username from tb_user_company_relat ucr
+	INNER JOIN tb_user u on ucr.user_id=u.user_id
+	where u.state=#{state } 
+	<if test="companyId != null">
+    and ucr.company_id=#{companyId}
+    </if>
+	<if test="testAccountIds != null">
+    and ucr.user_id not in(${testAccountIds})
+    </if>
+    </select>
 </mapper>
