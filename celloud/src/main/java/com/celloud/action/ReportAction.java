@@ -42,6 +42,7 @@ import com.celloud.model.mongo.DrugResistanceSite;
 import com.celloud.model.mongo.EGFR;
 import com.celloud.model.mongo.HBV;
 import com.celloud.model.mongo.HCV;
+import com.celloud.model.mongo.KRAS;
 import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
@@ -674,6 +675,23 @@ public class ReportAction {
 		ModelAndView mv = getModelAndView("report/report_data_egfr", projectId);
 		return mv.addObject("egfr", egfr);
 	}
+	
+	/**
+	 * 获取KRAS数据报告
+	 * 
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 * @author lin
+	 * @date 2016年3月22日下午4:37:27
+	 */
+	@RequestMapping("getKRASReport")
+	public ModelAndView getKRASReport(String dataKey, Integer projectId, Integer appId) {
+		KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
+		ModelAndView mv = getModelAndView("report/report_data_kras", projectId);
+		return mv.addObject("kras", kras);
+	}
 
     /**
      * 点击数据报告列表查看上一页数据报告
@@ -819,6 +837,31 @@ public class ReportAction {
 		}
 		EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
 		mv.addObject("egfr", egfr).addObject("report", report);
+		return mv;
+	}
+	
+	/**
+	 * 打印KRAS
+	 * 
+	 * @param appId
+	 * @param dataKey
+	 * @param projectId
+	 * @return
+	 * @author lin
+	 * @date 2016年3月22日下午5:04:22
+	 */
+	@RequestMapping("printKRAS")
+	public ModelAndView printKRAS(Integer appId, String dataKey, Integer projectId) {
+		ModelAndView mv = getModelAndView("print/print_kras", projectId);
+		Integer userId = ConstantsData.getLoginUserId();
+		Integer fileId = dataService.getDataByKey(dataKey).getFileId();
+		Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
+		// 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
+		if (StringUtils.isNotEmpty(report.getPrintContext())) {
+			return mv.addObject("printContext", report.getPrintContext());
+		}
+		KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
+		mv.addObject("kras", kras).addObject("report", report);
 		return mv;
 	}
 

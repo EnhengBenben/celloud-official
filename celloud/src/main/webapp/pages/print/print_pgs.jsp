@@ -368,9 +368,7 @@ a:hover, a:focus{
 					<hr>
 				</c:if>
 				<div align="center">
-					<h3>
-						<c:if test="${company.companyId==10}">流产组织</c:if>染色体拷贝数变异检测报告
-					</h3>
+					<h3>染色体拷贝数变异检测报告</h3>
 				</div>
 				<div>
 					<h4>基本信息：</h4>

@@ -42,6 +42,7 @@ import com.celloud.model.mongo.GddDiseaseDict;
 import com.celloud.model.mongo.GeneDetectionResult;
 import com.celloud.model.mongo.HBV;
 import com.celloud.model.mongo.HCV;
+import com.celloud.model.mongo.KRAS;
 import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
@@ -159,6 +160,11 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public EGFR getEGFRReport(String dataKey, Integer projectId, Integer appId) {
 		return reportDao.getDataReport(EGFR.class, dataKey, projectId, appId);
+	}
+	
+	@Override
+	public KRAS getKRASReport(String dataKey, Integer projectId, Integer appId) {
+		return reportDao.getDataReport(KRAS.class, dataKey, projectId, appId);
 	}
 
     @Override

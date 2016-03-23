@@ -42,7 +42,7 @@ public class ExpensesServiceImpl implements ExpensesService {
                 ReportType.PROJECT);
         Integer appId = report.getAppId();
         Integer userId = report.getUserId();
-//        Price price = priceMapper.selectByItemId(appId, PriceType.isApp);
+        // Price price = priceMapper.selectByItemId(appId, PriceType.isApp);
         Expenses expense = new Expenses();
         expense.setItemId(appId);
         expense.setItemType(PriceType.isApp);
@@ -69,7 +69,7 @@ public class ExpensesServiceImpl implements ExpensesService {
     @Override
     public void saveRunExpenses(Integer projectId, Integer appId,
             Integer userId, List<DataFile> dataList) {
-//        Price price = priceMapper.selectByItemId(appId, PriceType.isApp);
+        // Price price = priceMapper.selectByItemId(appId, PriceType.isApp);
         Expenses expense = new Expenses();
         expense.setItemId(appId);
         expense.setItemType(PriceType.isApp);
@@ -110,6 +110,7 @@ public class ExpensesServiceImpl implements ExpensesService {
     @Override
     public BigDecimal getUserTotalExpenses(Integer userId) {
         BigDecimal total = expensesMapper.getTotalExpensesByUser(userId);
-        return total == null || total.equals("") ? new BigDecimal(0) : total;
+        return total == null || total.toString().equals("") ? new BigDecimal(0)
+                : total;
     }
 }
