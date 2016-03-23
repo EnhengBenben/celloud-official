@@ -83,6 +83,7 @@ var userCount=(function(userCount){
 		        
 		        var option = {
 		            tooltip: {
+		            	trigger: 'axis',
 		                show: true
 		            },
 		            legend: {
