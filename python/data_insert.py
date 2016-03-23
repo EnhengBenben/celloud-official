@@ -13,6 +13,7 @@ from app.NIPT import NIPT
 from app.HBV import HBV
 from app.HCV import HCV
 from app.EGFR import EGFR
+from app.KRAS import KRAS
 
 #command: python *.py basePath projectId
 #eg : python runover.py '/share/data/webapps/Tools/upload/' 4018
@@ -27,6 +28,7 @@ method_dic = {
 86:PGS,
 87:PGS,
 88:PGS,
+89:KRAS,
 91:PGS,
 92:PGS,
 93:PGS,
@@ -44,6 +46,7 @@ collection_dic = {
 86:"Pgs",
 87:"Pgs",
 88:"Pgs",
+89:"KRAS",
 91:"Pgs",
 92:"Pgs",
 93:"Pgs",
