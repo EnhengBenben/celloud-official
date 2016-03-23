@@ -206,16 +206,16 @@
                         </tr>
                     </tbody>
                 </table>
-                <table style="width:90%;">
+                <table style="width:100%;">
                   <tr>
                     <td style="width:50%;">
                       <c:if test="${not empty mib.qualityPath1 }">
-                        <img style="max-width:500px;" src="<c:if test="${!mib.qualityPath1.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.qualityPath1 }">
+                        <img style="width:100%;" src="<c:if test="${!mib.qualityPath1.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.qualityPath1 }">
                       </c:if>
                     </td>
                     <td>
                       <c:if test="${not empty mib.qualityPath2 }">
-                        <img style="max-width:500px;" src="<c:if test="${!mib.qualityPath2.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }/</c:if>${mib.qualityPath2 }">
+                        <img style="width:100%;" src="<c:if test="${!mib.qualityPath2.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }/</c:if>${mib.qualityPath2 }">
                       </c:if>
                     </td>
                   </tr>
