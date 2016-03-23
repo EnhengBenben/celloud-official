@@ -1,5 +1,9 @@
 $(function() {
 	$(".panel").css({"height":$(window).height()});
+	if($(".subMenu").outerWidth()<$(".animateDiv").outerWidth()){
+	  $(".panel").css({"width":$(".animateDiv").outerWidth()+6});
+	  $(".login").css({"right": "80px"});
+	}
 	$(".diary img").css({"height":$(window).height()-300});
 	$.scrollify({
 		section:".panel"
