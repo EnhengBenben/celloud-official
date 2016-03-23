@@ -175,8 +175,7 @@ function reset(){
 	if(confirm("确定要重置之前保存的报告吗？")){
 		$.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"printContext":""},function(result){
 			if(result==1){
-				alert("请重新打开页面");
-				window.close();
+			  	location=location ;
 			}else{
 				alert("信息重置失败！");
 			}

@@ -13,7 +13,7 @@ from mysql.mysqlpro import MySQLPro
 
 if len(sys.argv) != 2:
 	print 'Usage: *.py num'
-	print 'num:1－－备份；2－－重启tomcat；3-－配置文件回拷'
+	print 'num:1－－备份；2－－重启tomcat(删除之前的celloud文件夹)；3-－配置文件回拷；4－－仅重启tomcat；'
 	sys.exit(0)
 
 flag = sys.argv[1]
@@ -28,7 +28,7 @@ tomcatStopCommand = 'shutdown.sh'
 tomcatStartCommand = 'startup.sh'
 
 #source path
-celloudSource = '/home/celloud/server/apache-tomcat-7.0.56/webapps/celloud'
+celloudSource = os.path.join(tomcatPath,'webapps/celloud')
 toolsSource = '/share/data/webapps/Tools'
 pythonSource = '/share/biosoft/perl/PGS_MG/python'
 
@@ -69,6 +69,8 @@ elif flag=='2':
 	print stop
 	os.system(stop)
 	print '－－tomcat 已停止－－'
+	shutil.rmtree(celloudSource)
+	print '－－celloud 文件夹已删除－－'
 	temp = os.path.join(tomcatPath,'work','Catalina')
 	print temp
 	shutil.rmtree(temp)
@@ -88,6 +90,21 @@ elif flag=='3':
 	for x in pythonBack:
 		shutil.copyfile(os.path.join(pythonBak,x),os.path.join(pythonSource,x))
 	print '--python 回拷完毕－－'
+
+elif flag=='4':
+	
+	stop = os.path.join(tomcatPath,'bin',tomcatStopCommand)
+	print stop
+	os.system(stop)
+	print '－－tomcat 已停止－－'
+	temp = os.path.join(tomcatPath,'work','Catalina')
+	print temp
+	shutil.rmtree(temp)
+	print '－－tomcat 缓存已删除－－'
+	start = os.path.join(tomcatPath,'bin',tomcatStartCommand)
+	print start
+	os.system(start)
+	print '－－tomcat 已启动－－'
 
 else:
 	print '错误的执行参数'

@@ -14,6 +14,7 @@ from app.HBV import HBV
 from app.EGFR import EGFR
 from app.HCV import HCV
 from app.oncogene import oncogene
+from app.KRAS import KRAS
 
 #command: python *.py basePath projectId
 #eg : python runover.py '/share/data/webapps/Tools/upload/' 4018
