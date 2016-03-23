@@ -112,4 +112,16 @@ public interface DataFileMapper {
      */
     public List<Map<String,Object>> countDataFileByBigCustomer(@Param("state")int state,@Param("testAccountIds")String testAccountIds);
     
+    /**
+     * 数据导出的数据
+     *
+     * @param userIds
+     * @param start
+     * @param end
+     * @return
+     * @author han
+     * @date 2016年3月22日 下午3:32:42
+     */
+    public List<Map<String,Object>> getExportData(@Param("userIds")String userIds, @Param("start")String start,@Param("end") String end);
+    
 }

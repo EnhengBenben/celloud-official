@@ -7,13 +7,16 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.celloud.manager.constants.DataState;
 import com.celloud.manager.constants.UserRole;
 import com.celloud.manager.mapper.CompanyMapper;
 import com.celloud.manager.mapper.DataFileMapper;
+import com.celloud.manager.mapper.UserMapper;
 import com.celloud.manager.model.Company;
+import com.celloud.manager.model.User;
 import com.celloud.manager.service.DataService;
 import com.celloud.manager.utils.PropertiesUtil;
 
@@ -25,6 +28,8 @@ public class DataServiceImpl implements DataService{
     @Resource
     private CompanyMapper companyMapper;
     
+    @Resource
+    private UserMapper userMapper;
 
     @Override
     public int totalDataNum(Integer companyId) {
@@ -73,6 +78,22 @@ public class DataServiceImpl implements DataService{
     @Override
     public List<Map<String, Object>> getBigCustomerDataCount() {
         return dataFileMapper.countBigCustomerDataFile(DataState.ACTIVE, PropertiesUtil.testAccountIds);
+    }
+
+    @Override
+    public List<User> getUser(Integer companyId) {
+        return userMapper.getUser(companyId, DataState.ACTIVE, PropertiesUtil.testAccountIds);
+    }
+
+    @Override
+    public List<Map<String, Object>> getUserData(String userIds, String start, String end) {
+        if(StringUtils.isBlank(userIds)){
+            return null;
+        }
+        if(start!=null&&end!=null){
+            return dataFileMapper.getExportData(userIds, start, end);
+        }
+        return null;
     }
 
 }

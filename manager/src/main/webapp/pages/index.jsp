@@ -72,13 +72,13 @@
                             </li>
                             <c:if test="${loginUserInSession.role=='2'}">
                                 <li id="data-bigCustomer-menu">
-                                    <a href="javascript:dataFile.toBigCustomerDataCount()">
+                                    <a href="javascript:dataFile.toBigCustomerDataCount();">
                                         <span class="title">大客户统计</span>
                                     </a>
                                 </li>
                             </c:if>
-                            <li>
-                                <a href="javascript:gotoOutputData()">
+                            <li id="data-export-menu">
+                                <a href="javascript:dataFile.toDataExport();">
                                     <span class="title">数据导出</span>
                                 </a>
                             </li>

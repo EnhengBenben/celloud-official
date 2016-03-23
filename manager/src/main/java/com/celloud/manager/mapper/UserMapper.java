@@ -73,4 +73,6 @@ public interface UserMapper {
      * @date 2016年3月21日 上午11:39:43
      */
     public List<Map<String,Integer>> getUserNumCount(@Param("state")Integer state,@Param("testAccountIds")String testAccountIds);
+    
+    public List<User> getUser(@Param("companyId")Integer companyId,@Param("state")Integer state,@Param("testAccountIds")String testAccountIds);
 }

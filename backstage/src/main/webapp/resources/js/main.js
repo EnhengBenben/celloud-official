@@ -63,7 +63,7 @@ var company=(function(company){
 	}
 	self.search=function(){
 		var keyword=$("#keyword").val();
-		if(!/[^%&',;<>/\\_!*=?$\x22]+/g.test(keyword)){
+		if(!/^[a-zA-Z0-9_\u4e00-\u9fa5]+$/g.test(keyword)){
 			jAlert("搜索关键字不能包含特殊字符");
 			return;
 		}
@@ -245,7 +245,7 @@ var user=(function(user){
 	self.keyword=null;
 	self.search=function(){
 		var keyword=$("#keyword").val();
-		if(!/[^%&',;<>/\\_!*=?$\x22]+/g.test(keyword)){
+		if(!/^[a-zA-Z0-9_\u4e00-\u9fa5]+$/g.test(keyword)){
 			jAlert("搜索关键字不能包含特殊字符");
 			return;
 		}
