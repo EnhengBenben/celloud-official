@@ -129,12 +129,12 @@
                 
                 <div class="col-sm-10">
                     <label class="radio-inline">
-                        <input type="radio" name="attribute" value="1" checked data-rule-required="true">
+                        <input type="radio" name="attribute" value="1" <c:if test="${app.attribute==1 }"> checked</c:if> data-rule-required="true">
                         私有
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="attribute" value="0">
-                        共有
+                        <input type="radio" name="attribute" value="0" <c:if test="${app.attribute==0 }"> checked</c:if>>
+                        公有
                     </label>
                 </div>
             </div>
