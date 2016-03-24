@@ -27,16 +27,7 @@
 				<a href="javascript:void(0)" onclick="preview(this)" class="button btn-info" name="change" style="float:right;margin-top:10px;margin-right:-100px;"><i class=""></i>打印</a>
 				<a href="javascript:void(0)" onclick="reset()" class="button btn-info" name="change" style="float:right;margin-top:45px;margin-right:-100px;"><i class=""></i>重置</a>
 				<a href="javascript:void(0)" onclick="savePage()" class="button btn-info" name="change" style="float:right;margin-top:80px;margin-right:-100px;"><i class=""></i>保存</a>
-				<c:if test="${egfr.companyId==41 }">
-					<hr name="change" style="float:right;margin-top: 115px; margin-right: -150px;width: 130px;border: solid 1px #d7d7d7;">
-					<a href="javascript:void(0)" onclick="showGeneType()" class="a-green-normal" name="change" style="float:right;margin-top:125px;margin-right:-145px;"><i class=""></i>基因分型检测报告单</a>
-					<a href="javascript:void(0)" onclick="showResistance()" class="a-green-normal" name="change" style="float:right;margin-top:150px;margin-right:-145px;"><i class=""></i>耐药突变检测报告单</a>
-				</c:if>
 				<h1>${egfr.companyName }${egfr.appName }
-					<c:if test="${egfr.companyId==41 }">
-						<span name="geneType">基因分型检测</span>
-						<span name="resistanceType" class="hide">耐药突变检测</span><br>
-					</c:if>报告单
 				</h1>
 			    <hr />
 			    <div class="wrapper">
@@ -189,21 +180,5 @@ function radioClick(num){
 	}
 }
 
-function showResistance(){
-	$("div[name='resistanceType']").removeClass("hide");
-	$("span[name='resistanceType']").removeClass("hide");
-	$("h2[name='resistanceType']").removeClass("hide");
-	$("div[name='geneType']").addClass("hide");
-	$("span[name='geneType']").addClass("hide");
-	$("h2[name='geneType']").addClass("hide");
-}
-function showGeneType(){
-	$("div[name='geneType']").removeClass("hide");
-	$("span[name='geneType']").removeClass("hide");
-	$("h2[name='geneType']").removeClass("hide");
-	$("div[name='resistanceType']").addClass("hide");
-	$("span[name='resistanceType']").addClass("hide");
-	$("h2[name='resistanceType']").addClass("hide");
-}
 </script>
 </html>
