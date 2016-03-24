@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.manager.constants.Constants;
+import com.celloud.manager.constants.ConstantsData;
 import com.celloud.manager.model.PrivateKey;
 import com.celloud.manager.model.PublicKey;
 import com.celloud.manager.model.RSAKey;
@@ -94,6 +95,7 @@ public class LoginAction {
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public ModelAndView login(Model model, User user, String kaptchaCode, PublicKey publicKey, boolean checked,
             HttpServletRequest request, HttpServletResponse response) {
+        logger.info("用户正在登陆：" + user.getUsername());
         ModelAndView mv = new ModelAndView("login").addObject("checked",
                 CookieUtils.getCookieValue(request, Constants.COOKIE_MODULUS) != null && checked);
         HttpSession session = request.getSession();
@@ -106,6 +108,7 @@ public class LoginAction {
         }
         // 验证码错误，直接返回到登录页面
         if (!checked && (kaptchaExpected == null || !kaptchaExpected.equalsIgnoreCase(kaptchaCode))) {
+            logger.info("用户登陆验证码错误：param : {} \t session : {}", kaptchaCode, kaptchaExpected);
             return mv.addObject("info", "验证码错误，请重新登录！").addObject("publicKey", generatePublicKey(session));
         }
         // 如果cookie中存在公钥且和前台传过来的一致，则从数据库加载私钥，不管是否记住密码
@@ -129,6 +132,7 @@ public class LoginAction {
             user.setPassword("");
             return mv.addObject("info", msg).addObject("user", user).addObject("publicKey", generatePublicKey(session));
         }
+        logger.info("用户({})登录成功！", loginUser.getUsername());
         saveUserToSession(loginUser, session);
         logService.log("用户登录", "用户" + loginUser.getUsername() + "登录成功");
         if (checked && key == null) {
@@ -149,13 +153,14 @@ public class LoginAction {
     @RequestMapping("logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
+        User user = ConstantsData.getLoginUser();
         session.removeAttribute(Constants.SESSION_LOGIN_USER);
-        @SuppressWarnings("unchecked")
         Enumeration<String> names = session.getAttributeNames();
         while (names.hasMoreElements()) {
             session.removeAttribute(names.nextElement());
         }
         deleteCookies(request, response);
+        logger.info("用户({})主动退出", user.getUsername());
         return "redirect:login";
     }
 

@@ -138,7 +138,7 @@ var company=(function(company){
 })(company);
 
 var dept=(function(dept){
-	self=dept||{};
+	var self=dept||{};
 	
 	var uploader = null;
 	self.currentPage = 1;
