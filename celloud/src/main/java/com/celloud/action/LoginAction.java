@@ -177,7 +177,7 @@ public class LoginAction {
             session.removeAttribute(names.nextElement());
         }
         deleteCookies(request, response);
-        logger.info("用户({})主动退出", user.getUsername());
+        logger.info("用户({})主动退出", user == null ? "null..." : user.getUsername());
         return "redirect:login";
     }
 
