@@ -453,7 +453,7 @@ a:hover, a:focus{
 					</div>
 				</c:if>
 				<div class="notes">注：该检测对于&lt;
-				<c:if test="${appId==92||appId==93}">
+				<c:if test="${appId==92||appId==93||appId==116}">
 				15Mb
 				</c:if>
 				<c:if test="${appId==85}">
