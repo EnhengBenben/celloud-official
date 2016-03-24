@@ -351,10 +351,9 @@ var user=(function(user){
 		$.post("user/getAppList",{companyId:companyId},function(data){
 			var checkboxs="";
             for(var i in data){
-            	checkboxs+="<label class='checkbox-inline add'><input name='appIdArray' type='checkbox' checked='checked' value='"+data[i].appId+"'>"+data[i].appName+"</label>";
+            	checkboxs+="<label class='checkbox-inline'><input name='appIdArray' type='checkbox' checked='checked' value='"+data[i].appId+"'>"+data[i].appName+"</label>";
             }
-            $("#"+id).find('.add').remove();
-            $("#"+id).append(checkboxs).parent().removeClass("hide");
+            $("#"+id).html(checkboxs).parent().removeClass("hide");
 		});
 	}
 	return self;
