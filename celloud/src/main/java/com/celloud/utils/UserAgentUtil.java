@@ -86,7 +86,7 @@ public class UserAgentUtil {
         log.setOs(c.os.family);
         log.setOsVersion(getOsVersion(c));
         if (log.getOsVersion() == null) {
-            logger.warn("no os_version is found in userAgent:{}", userAgent);
+            logger.debug("no os_version is found in userAgent:{}", userAgent);
         }
         String ip = getIp(request);
         log.setIp(ip);
@@ -167,7 +167,7 @@ public class UserAgentUtil {
             result = ipzone.getMainInfo() + "-" + ipzone.getSubInfo();
         } catch (Exception e) {
             if (logger.isWarnEnabled()) {
-                logger.warn("不能识别的ip地址：{}", ip);
+                logger.debug("不能识别的ip地址：{}", ip);
             }
         }
         return result;
