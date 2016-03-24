@@ -86,7 +86,7 @@ public class UserAgentUtil {
         log.setOs(c.os.family);
         log.setOsVersion(getOsVersion(c));
         if (log.getOsVersion() == null) {
-            logger.warn("no os_version is found is userAgent:{}", userAgent);
+            logger.warn("no os_version is found in userAgent:{}", userAgent);
         }
         String ip = getIp(request);
         log.setIp(ip);

@@ -264,7 +264,6 @@ used as it is.
 					fileList[0].scrollTop = fileList[0].scrollHeight;
 
 					updateTotalProgress();
-
 					// Re-add drag message if there is no files
 					if (!uploader.files.length && uploader.features.dragdrop && uploader.settings.dragdrop) {
 						$('#' + id + '_filelist').append('<li class="plupload_droptext">' + _("Drag files here.") + '</li>');
@@ -370,6 +369,8 @@ used as it is.
 					// features are populated only after input components are fully instantiated
 					if (up.settings.dragdrop && up.features.dragdrop) {
 						$('#' + id + '_filelist').append('<li class="plupload_droptext">' + _("Drag files here.") + '</li>');
+					}else {
+					  $('#' + id + '_filelist').append('<li class="plupload_droptext">&nbsp;</li>');
 					}
 				});
 
