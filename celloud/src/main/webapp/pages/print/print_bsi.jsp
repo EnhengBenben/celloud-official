@@ -69,48 +69,54 @@
   </div>
   <div class="tests-content">
     <h4>检测结果：</h4>
+  <div class="tests-content">
+    <h4>检测结果：</h4>
     <div class="tests-info">
-       <p>检测到金黄色葡萄球菌。</p><br>
-       <p>注：从16S序列同源性考虑，该菌与溶血葡萄球菌，表皮葡萄球菌非常相似。</p>
+       <p>牛链球菌</p>
+       <p>葡萄球菌</p>
+        <table class="table table-bordered table-condensed">
+          <tr>
+            <td rowspan="2">G+</td>
+            <td><span class="positive">[有]</span>牛链球菌</td>
+            <td><span class="positive">[有]</span>葡萄球菌</td>
+            <td><span>[无]</span>肺炎链球菌</td>
+            <td><span>[无]</span>粪肠球菌</td>
+          </tr>
+          <tr>
+            <td><span>[无]</span>屎肠球菌</td>
+            <td><span>[无]</span>难辨梭状芽孢杆菌</td>
+            <td><span>[无]</span>溃疡棒状杆菌</td>
+            <td><span>[无]</span>结膜干燥杆菌</td>
+          </tr>
+          <tr>
+            <td rowspan="3">G-</td>
+            <td><span>[无]</span>大肠埃希菌</td>
+            <td><span>[无]</span>铜绿假单胞菌</td>
+            <td><span>[无]</span>鲍曼不动杆菌</td>
+            <td><span>[无]</span>肺炎克雷伯菌</td>
+          </tr>
+          <tr>
+            <td><span>[无]</span>嗜麦芽窄食单胞菌</td>
+            <td><span>[无]</span>粘质沙雷氏菌</td>
+            <td><span>[无]</span>阴沟肠杆菌</td>
+            <td><span>[无]</span>嗜水气单胞菌</td>
+          </tr>
+          <tr>
+            <td><span>[无]</span>产气肠杆菌</td>
+            <td><span>[无]</span>肠炎沙门菌</td>
+            <td><span>[无]</span>奇异变形杆菌</td>
+            <td><span>[无]</span>洋葱伯克霍尔德菌</td>
+          </tr>
+        </table>
     </div>
   </div>
   <div class="test-description">
-    <p>检测范围(20种)：</p>
-    <table class="table table-bordered table-condensed">
-      <tr>
-        <td rowspan="2"><span>G+</span></td>
-        <td><span>牛链球菌</span></td>
-        <td><span>葡萄球菌</span></td>
-        <td><span>肺炎链球菌</span></td>
-        <td><span>粪肠球菌</span></td>
-      </tr>
-      <tr>
-        <td><span>屎肠球菌</span></td>
-        <td><span>难辨梭状芽孢杆菌</span></td>
-        <td><span>溃疡棒状杆菌</span></td>
-        <td><span>结膜干燥杆菌</span></td>
-      </tr>
-      <tr>
-        <td rowspan="3"><span>G-</span></td>
-        <td><span>大肠埃希菌</span></td>
-        <td><span>铜绿假单胞菌</span></td>
-        <td><span>鲍曼不动杆菌</span></td>
-        <td><span>肺炎克雷伯菌</span></td>
-      </tr>
-      <tr>
-        <td><span>嗜麦芽窄食单胞菌</span></td>
-        <td><span>粘质沙雷氏菌</span></td>
-        <td><span>阴沟肠杆菌</span></td>
-        <td><span>嗜水气单胞菌</span></td>
-      </tr>
-      <tr>
-        <td><span>产气肠杆菌</span></td>
-        <td><span>肠炎沙门菌</span></td>
-        <td><span>奇异变形杆菌</span></td>
-        <td><span>洋葱伯克霍尔德菌</span></td>
-      </tr>
-    </table>
-    <p>检测方法：<span>基于16S rDNA高通量测序方法</span></p>
+    <h4>检测范围(20种)：</h4>
+    <p>牛链球菌、葡萄球菌、肺炎链球菌、粪肠球菌、屎肠球菌、难辨梭状芽孢杆菌、溃疡棒状杆菌、结膜干燥杆菌、大肠埃希菌、铜绿假单胞菌、
+鲍曼不动杆菌、肺炎克雷伯菌、嗜麦芽窄食单胞菌、粘质沙雷氏菌、阴沟肠杆菌、嗜水气单胞菌、产气肠杆菌、肠炎沙门菌、奇异变形杆菌、洋葱伯克霍尔德菌。
+     <br>此20种以外检测为阴性不代表没有
+    </p>
+    <h4>检测方法：<span>基于16S rDNA高通量测序方法</span></h4>
   </div>
   <div class="tests-footer">
     <ul>
