@@ -222,12 +222,12 @@
                   <tr>
                     <td>
                       <c:if test="${not empty mib.seqContentPath1 }">
-                        <img style="max-width:500px;" alt="" src="<c:if test="${!mib.seqContentPath1.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.seqContentPath1 }">
+                        <img style="width:100%;" alt="" src="<c:if test="${!mib.seqContentPath1.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.seqContentPath1 }">
                       </c:if>
                     </td>
                     <td>
                       <c:if test="${not empty mib.seqContentPath2 }">
-                        <img style="max-width:500px;" alt="" src="<c:if test="${!mib.seqContentPath2.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.seqContentPath2 }">
+                        <img style="width:100%;" alt="" src="<c:if test="${!mib.seqContentPath2.contains('Tools') }">${uploadPath }/${mib.userId }/${mib.appId }/${mib.dataKey }</c:if>${mib.seqContentPath2 }">
                       </c:if>
                     </td>
                   </tr>

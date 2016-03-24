@@ -42,7 +42,7 @@ public interface DataFileMapper {
      * @author han
      * @date 2016年3月10日 下午3:11:16
      */
-    public long countDataFileSize(@Param("companyId")Integer companyId,@Param("state")int state,@Param("testAccountIds")String testAccountIds);
+    public Long countDataFileSize(@Param("companyId")Integer companyId,@Param("state")int state,@Param("testAccountIds")String testAccountIds);
     
     /**
      * 按月份统计大客户数据
