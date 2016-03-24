@@ -10,11 +10,11 @@ from mysql.mysqlOperate import mysql
 from runover import *
 
 basePath = '/share/data/webapps/Tools/upload/'
-sql = "select user_id,software_id,project_id from tb_report where software_id in (85,86,87,88,91,92,93,94,104) and flag = 1;"
+sql = "select user_id,app_id,project_id from tb_report where app_id in (85,86,87,88,91,92,93,94,104) and flag = 1;"
 my=mysql.getInstance()
 if my:
 	result = my.query(sql)
 	for i in range(len(result)):
 		re = result[i]
-		path = os.path.join(basePath , str(re['user_id']) , str(re['software_id']))
-		runover(path,str(re['software_id']),str(re['project_id']))
+		path = os.path.join(basePath , str(re['user_id']) , str(re['app_id']))
+		runover(path,str(re['app_id']),str(re['project_id']))
