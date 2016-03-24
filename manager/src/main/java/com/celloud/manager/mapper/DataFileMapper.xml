@@ -242,6 +242,9 @@
   <if test="companyId!=null">
     and ucr.company_id=#{companyId}
   </if>
+  <if test="testAccountIds!=null">
+    and f.user_id not in(${testAccountIds }) 
+    </if>
   </select>
   <select id="countDataFileSize" resultType="java.lang.Long">
   select sum(f.size) 
@@ -252,5 +255,111 @@
   <if test="companyId!=null">
     and ucr.company_id=#{companyId}
   </if>
+  <if test="testAccountIds!=null">
+    and f.user_id not in(${testAccountIds }) 
+    </if>
+  </select>
+  <select id="countDataFileByMonth" resultType="java.util.Map">
+    select count(f.file_id) dataNum,c.company_name,date_format(f.create_date,'%Y-%m') time,c.company_id,sum(f.size) dataSize
+	from tb_file f 
+	LEFT JOIN tb_user u on f.user_id=u.user_id 
+	LEFT JOIN tb_user_company_relat ucr on ucr.user_id=u.user_id
+	INNER JOIN tb_company c on c.company_id=ucr.company_id
+	where f.state=#{state}
+	<if test="companyId!=null">
+    and ucr.company_id=#{companyId}
+    </if>
+    <if test="testAccountIds!=null">
+	and f.user_id not in(${testAccountIds }) 
+	</if>
+	GROUP BY time
+	ORDER BY time ${order}
+  </select>
+  <select id="countDataFileOfMonth" resultType="java.util.Map">
+    SELECT t.time,n.dataNum from(select DISTINCT date_format(f.create_date,'%Y-%m') time from tb_file f) t
+    LEFT JOIN (
+    select count(f.file_id) dataNum,c.company_name,date_format(f.create_date,'%Y-%m') time,c.company_id,sum(f.size) dataSize
+    from tb_file f 
+    LEFT JOIN tb_user u on f.user_id=u.user_id 
+    LEFT JOIN tb_user_company_relat ucr on ucr.user_id=u.user_id
+    INNER JOIN tb_company c on c.company_id=ucr.company_id
+    where f.state=#{state}
+    <if test="companyId!=null">
+    and ucr.company_id=#{companyId}
+    </if>
+    <if test="testAccountIds!=null">
+    and f.user_id not in(${testAccountIds }) 
+    </if>
+    GROUP BY time
+    )n on t.time=n.time
+    order by t.time
+  </select>
+  <select id="countDataFileByUser" resultType="java.util.Map">
+  select count(f.file_id) dataNum,sum(f.size) dataSize,u.username,c.company_name
+    from tb_file f 
+    LEFT JOIN tb_user u on f.user_id=u.user_id 
+    LEFT JOIN tb_user_company_relat ucr on ucr.user_id=u.user_id
+    INNER JOIN tb_company c on c.company_id=u.company_id
+    where f.state=#{state}
+    
+    <if test="companyId!=null">
+    and ucr.company_id=#{companyId}
+    </if>
+    <if test="testAccountIds!=null">
+    and f.user_id not in(${testAccountIds }) 
+    </if>
+    
+    GROUP BY f.user_id
+    ORDER BY dataNum desc
+  </select>
+  <select id="countDataFileByCompany" resultType="java.util.Map">
+  select count(f.file_id) dataNum,sum(f.size) dataSize,c.company_name companyName,c.address,c.tel,c.create_date createDate
+    from tb_file f 
+    LEFT JOIN tb_user u on f.user_id=u.user_id 
+    LEFT JOIN tb_user_company_relat ucr on ucr.user_id=u.user_id
+    INNER JOIN tb_company c on c.company_id=u.company_id
+    where f.state=#{state} and u.state=#{state}
+    <if test="companyId!=null">
+    and ucr.company_id=#{companyId}
+    </if>
+    <if test="testAccountIds!=null">
+    and f.user_id not in(${testAccountIds }) 
+    </if>
+    GROUP BY c.company_id
+    ORDER BY dataNum desc
+  </select>
+  <select id="countBigCustomerDataFile" resultType="java.util.Map">
+  select count(f.file_id) dataNum,sum(f.size) dataSize,c.company_name companyName,c.company_id companyId
+    from tb_file f 
+    LEFT JOIN tb_user u on f.user_id=u.user_id 
+    LEFT JOIN tb_user_company_relat ucr on ucr.user_id=f.user_id
+    INNER JOIN tb_company c on c.company_id=ucr.company_id
+    where f.state=#{state} and c.state=#{state} and u.state=#{state}
+    <if test="testAccountIds!=null">
+    and f.user_id not in(${testAccountIds }) 
+    </if>
+    GROUP BY ucr.company_id
+    ORDER BY dataNum desc
+  </select>
+   <select id="countDataFileByBigCustomer" resultType="java.util.Map">
+  select count(f.file_id) dataNum,sum(f.size) dataSize,ucr.company_id companyId
+    from tb_file f 
+    LEFT JOIN tb_user u on f.user_id=u.user_id 
+    LEFT JOIN tb_user_company_relat ucr on ucr.user_id=u.user_id
+    where f.state=#{state} and u.state=#{state}
+    <if test="testAccountIds!=null">
+    and f.user_id not in(${testAccountIds }) 
+    </if>
+    GROUP BY ucr.company_id
+  </select>
+  <select id="getExportData" resultType="java.util.Map">
+  select u.user_id,u.username,f.data_key,f.file_name,f.create_date,f.path,app.app_name from tb_file f
+	LEFT JOIN tb_user u on f.user_id=u.user_id
+	LEFT JOIN tb_report r on f.file_id=r.file_id
+	LEFT JOIN tb_app app on r.app_id=app.app_id
+	where f.user_id in (${userIds} ) 
+	<if test="start!=null and end!=null">
+	and f.create_date between #{start} and #{end}
+	</if>
   </select>
 </mapper>

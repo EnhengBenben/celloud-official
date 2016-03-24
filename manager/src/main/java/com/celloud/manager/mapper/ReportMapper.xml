@@ -211,10 +211,31 @@
   select DISTINCT p.project_id,p.data_num
   from tb_user_company_relat ucr LEFT JOIN tb_user u on u.user_id=ucr.user_id LEFT JOIN tb_project p on p.user_id=u.user_id
   LEFT JOIN tb_report r on r.project_id=p.project_id
-  where u.state=#{state} and r.state=#{state} and r.period=#{period}
+  where u.state=#{state} and r.state=#{state} and r.period=#{period} and p.state=#{state}
   <if test="companyId!=null">
     and ucr.company_id=#{companyId}
   </if>
+  <if test="testAccountIds!=null">
+    and p.user_id not in(${testAccountIds }) 
+    </if>
   ) a;
+  </select>
+  <select id="countReportOfApp" resultType="java.util.Map">
+  SELECT sum(a.data_num) reportNum,a.company_name companyName,a.app_id appId,a.company_id companyId from (
+  select DISTINCT p.project_id,p.data_num,c.company_id,c.company_name,app.app_id,app.app_name
+  from tb_user_company_relat ucr 
+    LEFT JOIN tb_user u on u.user_id=ucr.user_id 
+    LEFT JOIN tb_project p on p.user_id=u.user_id
+  LEFT JOIN tb_report r on r.project_id=p.project_id
+    LEFT JOIN tb_company c on c.company_id=u.company_id
+    LEFT JOIN tb_app app on app.app_id=r.app_id
+  where u.state=#{state} and r.state=#{state} and r.period=#{period} and p.state=#{state} and app.off_line=#{offLine} and c.state=#{state}
+  <if test="companyId!=null">
+    and ucr.company_id=#{companyId}
+  </if>
+  <if test="testAccountIds!=null">
+    and p.user_id not in(${testAccountIds }) 
+    </if>
+  ) a GROUP BY a.company_id,a.app_id;
   </select>
 </mapper>

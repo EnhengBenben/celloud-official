@@ -26,6 +26,14 @@
   <resultMap id="ResultMapWithBLOBs" type="com.celloud.manager.model.App" extends="BaseResultMap" >
     <result column="app_doc" property="appDoc" jdbcType="LONGVARCHAR" />
   </resultMap>
+  <resultMap id="extraResultMap" type="com.celloud.manager.model.App" extends="BaseResultMap" >
+    <result column="company_Name" property="companyName" jdbcType="VARCHAR" />
+    <result column="is_add" property="isAdded" jdbcType="VARCHAR" />
+    <result column="classifyNames" property="classifyNames" jdbcType="VARCHAR" />
+    <result column="app_doc" property="appDoc" jdbcType="LONGVARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="charge_time" property="chargeTime" jdbcType="TIMESTAMP" />
+  </resultMap>
   <sql id="Base_Column_List" >
     app_id, app_name, english_name, address, picture_name, create_date, intro, description, 
     company_id, attribute, run_type, flag, run_data, data_num, param, off_line, command, 
@@ -318,4 +326,68 @@
     and app.company_id=#{companyId}
   </if>
   </select>
+  
+  <select id="countAppRunNum" resultType="java.util.Map">
+    select sum(temp.data_num) runNum,temp.app_name app_name 
+	from (SELECT DISTINCT p.project_id,p.data_num,a.app_id,a.app_name from tb_app a
+	left join tb_report r on a.app_id=r.app_id
+	left join tb_project p on p.project_id=r.project_id
+	where  a.off_line=#{offLine} 
+		   <if test="companyId!=null">
+	       and a.company_id=#{companyId}
+	       </if>
+	       <if test="testAccountIds != null">
+	        and p.user_id not in(${testAccountIds})
+	        </if>
+            and r.flag=#{flag} and r.period=#{period}) temp
+	GROUP BY temp.app_id 
+	ORDER BY runNum desc 
+	limit 0,10;
+    </select>
+    <select id="countAppRunNumByUser" resultType="java.util.Map">
+    select sum(temp.data_num) runNum,temp.username userName 
+    from (SELECT DISTINCT p.project_id,p.data_num,u.username,u.user_id from tb_app a
+    left join tb_report r on a.app_id=r.app_id
+    left join tb_project p on p.project_id=r.project_id
+    left join tb_user u on u.user_id=p.user_id
+    where  a.off_line=#{offLine} 
+           <if test="companyId!=null">
+           and a.company_id=#{companyId}
+           </if>
+           <if test="testAccountIds != null">
+            and p.user_id not in(${testAccountIds})
+            </if>
+            and r.flag=#{flag} and r.period=#{period}) temp
+    GROUP BY temp.user_id 
+    ORDER BY runNum desc 
+    limit 0,10;
+    </select>
+    <select id="getAppOfBigCustomer" resultMap="BaseResultMap">
+    SELECT app.app_id,app.app_name from tb_app app where app.off_line=#{offLine}
+    <if test="companyId!=null">
+     and app.company_id=#{companyId}
+     </if>
+    </select>
+    <select id="appPriceList" resultMap="extraResultMap">
+    select a.app_id,a.app_name,p.price,p.create_date charge_time
+	from tb_app a
+	left join (select * from tb_price where item_type=#{priceType} and expire_date is null) p on p.item_id=a.app_id
+	where a.off_line=#{offLine}
+	<if test="companyId!=null">
+    and a.company_id=#{companyId}
+    </if>
+    </select>
+    <select id="countAppRunNumByBigCustomer" resultType="java.util.Map">
+    select sum(temp.data_num) runNum,temp.company_id companyId
+    from (SELECT DISTINCT p.project_id,p.data_num,ucr.company_id from tb_app a
+    left join tb_report r on a.app_id=r.app_id
+    left join tb_project p on p.project_id=r.project_id
+    left join tb_user u on u.user_id=p.user_id
+        LEFT JOIN tb_user_company_relat ucr on p.user_id=ucr.user_id
+    where  a.off_line=#{offLine}           
+            and p.user_id not in(${testAccountIds})
+            
+            and r.flag=#{flag} and r.period=#{period}) temp
+    GROUP BY temp.company_id 
+    </select>
 </mapper>

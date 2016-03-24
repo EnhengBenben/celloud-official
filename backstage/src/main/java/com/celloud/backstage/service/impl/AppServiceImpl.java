@@ -132,7 +132,7 @@ public class AppServiceImpl implements AppService{
             
             a.setAddress(app.getAddress());
             a.setAppDoc(app.getAppDoc());
-            a.setAppName(a.getAppName());
+            a.setAppName(app.getAppName());
             a.setAttribute(app.getAttribute());
             a.setCommand(app.getCommand());
             a.setCompanyId(app.getCompanyId());

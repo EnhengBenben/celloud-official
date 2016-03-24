@@ -1,11 +1,17 @@
 package com.celloud.utils;
 
+import java.math.BigInteger;
+import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.Provider;
 import java.security.SecureRandom;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.RSAPublicKeySpec;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -38,7 +44,7 @@ public class RSAUtil {
                 keyPairGen = KeyPairGenerator.getInstance(ALGORITHOM, DEFAULT_PROVIDER);
             }
         } catch (NoSuchAlgorithmException e) {
-            logger.error(e.getMessage());
+            logger.error("初始化RSAUtils失败！", e);
         }
 
     }
@@ -62,7 +68,89 @@ public class RSAUtil {
             ci.init(Cipher.DECRYPT_MODE, privateKey);
             return ci.doFinal(data);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            logger.error("使用私钥解密数据失败！", e);
+        }
+        return null;
+    }
+
+    /**
+     * 拆分字符串
+     */
+    public static String[] splitString(String string, int len) {
+        int x = string.length() / len;
+        int y = string.length() % len;
+        int z = 0;
+        if (y != 0) {
+            z = 1;
+        }
+        String[] strings = new String[x + z];
+        String str = "";
+        for (int i = 0; i < x + z; i++) {
+            if (i == x + z - 1 && y != 0) {
+                str = string.substring(i * len, i * len + y);
+            } else {
+                str = string.substring(i * len, i * len + len);
+            }
+            strings[i] = str;
+        }
+        return strings;
+    }
+
+    /**
+     * BCD转字符串
+     */
+    public static String bcd2Str(byte[] bytes) {
+        char temp[] = new char[bytes.length * 2], val;
+
+        for (int i = 0; i < bytes.length; i++) {
+            val = (char) (((bytes[i] & 0xf0) >> 4) & 0x0f);
+            temp[i * 2] = (char) (val > 9 ? val + 'A' - 10 : val + '0');
+
+            val = (char) (bytes[i] & 0x0f);
+            temp[i * 2 + 1] = (char) (val > 9 ? val + 'A' - 10 : val + '0');
+        }
+        return new String(temp);
+    }
+
+    /**
+     * 使用公钥加密数据
+     * 
+     * @param key
+     * @param str
+     * @return
+     */
+    public static String encryptedString(RSAPublicKey key, String str) {
+        Cipher cipher;
+        try {
+            cipher = Cipher.getInstance(ALGORITHOM, DEFAULT_PROVIDER);
+            cipher.init(Cipher.ENCRYPT_MODE, key);
+            // 模长
+            int key_len = key.getModulus().bitLength() / 8;
+            // 加密数据长度 <= 模长-11
+            String[] datas = splitString(str, key_len - 11);
+            String mi = "";
+            // 如果明文长度大于模长-11则要分组加密
+            for (String s : datas) {
+                mi += bcd2Str(cipher.doFinal(s.getBytes()));
+            }
+            return mi;
+        } catch (Exception e) {
+            logger.error("使用公钥加密数据失败！", e);
+        }
+        return null;
+    }
+
+    public static String encryptedString(String modulus, String pubExponent, String str) {
+        try {
+            KeyFactory factory = KeyFactory.getInstance(ALGORITHOM);
+            RSAPublicKeySpec keySpec = new RSAPublicKeySpec(new BigInteger(modulus, 16),
+                    new BigInteger(pubExponent, 16));
+            RSAPublicKey key = (RSAPublicKey) factory.generatePublic(keySpec);
+            return encryptedString(key, str);
+        } catch (NoSuchAlgorithmException e) {
+            logger.error("使用公钥加密数据失败！", e);
+        } catch (InvalidKeySpecException e) {
+            logger.error("使用公钥加密数据失败！", e);
         }
         return null;
     }
@@ -80,7 +168,7 @@ public class RSAUtil {
                 result = new String(data);
             }
         } catch (DecoderException e) {
-            logger.error(e.getMessage());
+            logger.error("使用私钥解密数据失败！", e);
         }
         return result;
     }
@@ -92,5 +180,22 @@ public class RSAUtil {
             return StringUtils.reverse(result);
         }
         return null;
+    }
+
+    public static void main(String[] args) {
+        String password = "123";
+        KeyPair keyPair = RSAUtil.generateKeyPair();
+        RSAPublicKey rsaPublicKey = (RSAPublicKey) keyPair.getPublic();
+        RSAPrivateKey rsaPrivateKey = (RSAPrivateKey) keyPair.getPrivate();
+        System.out.println("pub_m:"+rsaPublicKey.getModulus().toString(16));
+        System.out.println("pup_e:"+rsaPublicKey.getPublicExponent().toString(16));
+        System.out.println("pri_m:"+rsaPrivateKey.getModulus().toString(16));
+        System.out.println("pri_e:"+rsaPrivateKey.getPrivateExponent().toString(16));
+        // String temp = RSAUtil.encryptedString(rsaPublicKey, password);
+        String temp = RSAUtil.encryptedString(rsaPublicKey.getModulus().toString(16),
+                rsaPublicKey.getPublicExponent().toString(16), password);
+        System.out.println(temp);
+        temp = RSAUtil.decryptString(keyPair.getPrivate(), temp);
+        System.out.println(temp);
     }
 }

@@ -19,7 +19,7 @@
 		    <c:forEach items="${expensePageList.datas }" var="expense" varStatus="status">
 		       <tr>
                   <td><fmt:formatDate value="${expense.createDate }" type="both"/></td>
-                  <td>数据<span title="${expense.fileInfos }"><c:choose><c:when test="${fn:length(expense.fileInfos)>80 }"><c:out value="${fn:substring(expense.fileInfos, 0, 80) }"/>...</c:when><c:otherwise>${expense.fileInfos }</c:otherwise></c:choose></span>
+                  <td>数据<span title="${expense.fileInfos }"><c:choose><c:when test="${fn:length(expense.fileInfos)>70 }"><c:out value="${fn:substring(expense.fileInfos, 0, 70) }"/>...</c:when><c:otherwise>${expense.fileInfos }</c:otherwise></c:choose></span>
                                                       运行${expense.appName }
                   </td>
 <%--                   <td>${expense.price }C</td> --%>

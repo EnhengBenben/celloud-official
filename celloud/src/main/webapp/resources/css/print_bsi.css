@@ -1,12 +1,12 @@
 @CHARSET "UTF-8";
 input,select{
-	font-size: 12px;
+    font-size: 12px;
     color: #999999;
 }
 section h3{
-	padding: 10px;
-	font-size: 16px;
-	font-weight: 600; 
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 600; 
 }
 .title {
     position: relative;
@@ -26,18 +26,18 @@ section h3{
 }
 .title .title-logo {
     height: 60px;
-	position: relative;
+    position: relative;
     float: right;
     text-align: center;
 }
 
 .base-info{
-	border-top: 2px solid #79bb26;
-	margin-top: 10px;
-	padding-top: 5px;
+    border-top: 2px solid #79bb26;
+    margin-top: 10px;
+    padding-top: 5px;
 }
 .base-info ul{
-	padding-left: 10px;
+    padding-left: 10px;
 }
 .base-info ul>li{
     display: inline-block;
@@ -46,8 +46,8 @@ section h3{
     line-height:2em;
 }
 .base-info lable{
-	display: inline-block;
-	width: 70px;
+    display: inline-block;
+    width: 70px;
 }
 section h2,
 .tests-content h4{
@@ -56,31 +56,45 @@ section h2,
     padding: 16px 0px;
 }
 .tests-content{
-	border-top: 3px solid #79bb26;
-	margin: 10px 0px;
-	min-height:520px;
+    border-top: 3px solid #79bb26;
+    margin: 10px 0px;
+    min-height:580px;
 }
 .tests-info{
-	border: 1px solid #dddddd;
-	padding: 10px;
-	font-size: 16px;
+    border: 2px solid #dfdfdf;
+    padding: 10px;
+    font-size: 16px;
+}
+.tests-info table{
+    margin:30px 0px 10px 0px;
+}
+.tests-info table td{
+    vertical-align: middle;
+    font-size: 12px;
+}
+.tests-info table td span{
+    display: inline-block;
+    padding: 0px 10px;
+}
+.tests-info table td .positive{
+    color: #FC8337;
 }
 .test-description{
-	font-size: 12px;
+    font-size: 12px;
 }
-.test-description table td span{
-	 display: inline-block;
-    *display: inline-block; 
-    -webkit-transform:scale(0.8);
-    -moz-transform:scale(1);
-    -o-transform:scale(1);
+.test-description h4{
+    font-weight: bold;
+}
+.test-description span{
+    font-weight: normal;
 }
 .test-description p{
     padding: 8px 0px;
+    padding-left:2em;
 }
 .tests-footer{
-	border-top: 3px solid #79bb26;
-	margin-top: 10px;
+    border-top: 3px solid #79bb26;
+    margin-top: 10px;
 }
 .tests-footer  ul>li{
     display:inline-block;
@@ -89,18 +103,18 @@ section h2,
     line-height:2.5em;
 }
 .tests-footer input[type="text"]{
-	border-radius: 0px;
-	border: 0px;
-	border-bottom: 1px solid #D4D4D4;
-	box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075);
-	background-color: #d4f3f7;
+    border-radius: 0px;
+    border: 0px;
+    border-bottom: 1px solid #D4D4D4;
+    box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075);
+    background-color: #d4f3f7;
 }
 .statement span{
-	 display: inline-block;
+     display: inline-block;
     *display: inline-block; 
     margin-left: -36px;
-	-webkit-transform:scale(0.8);
-	-moz-transform:scale(0.8);
+    -webkit-transform:scale(0.8);
+    -moz-transform:scale(0.8);
     -o-transform:scale(1);
 }
 @media print{
@@ -108,7 +122,6 @@ section h2,
     
 }
 .title{
-	margin-top:0px;
+    margin-top:0px;
 }
 }
-

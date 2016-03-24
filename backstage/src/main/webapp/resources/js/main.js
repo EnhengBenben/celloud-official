@@ -63,7 +63,7 @@ var company=(function(company){
 	}
 	self.search=function(){
 		var keyword=$("#keyword").val();
-		if(!/[^%&',;<>/\\_!*=?$\x22]+/g.test(keyword)){
+		if(!/^[a-zA-Z0-9_\u4e00-\u9fa5]+$/g.test(keyword)){
 			jAlert("搜索关键字不能包含特殊字符");
 			return;
 		}
@@ -138,7 +138,7 @@ var company=(function(company){
 })(company);
 
 var dept=(function(dept){
-	self=dept||{};
+	var self=dept||{};
 	
 	var uploader = null;
 	self.currentPage = 1;
@@ -245,7 +245,7 @@ var user=(function(user){
 	self.keyword=null;
 	self.search=function(){
 		var keyword=$("#keyword").val();
-		if(!/[^%&',;<>/\\_!*=?$\x22]+/g.test(keyword)){
+		if(!/^[a-zA-Z0-9_\u4e00-\u9fa5]+$/g.test(keyword)){
 			jAlert("搜索关键字不能包含特殊字符");
 			return;
 		}
@@ -351,10 +351,9 @@ var user=(function(user){
 		$.post("user/getAppList",{companyId:companyId},function(data){
 			var checkboxs="";
             for(var i in data){
-            	checkboxs+="<label class='checkbox-inline add'><input name='appIdArray' type='checkbox' checked='checked' value='"+data[i].appId+"'>"+data[i].appName+"</label>";
+            	checkboxs+="<label class='checkbox-inline'><input name='appIdArray' type='checkbox' checked='checked' value='"+data[i].appId+"'>"+data[i].appName+"</label>";
             }
-            $("#"+id).find('.add').remove();
-            $("#"+id).append(checkboxs).parent().removeClass("hide");
+            $("#"+id).html(checkboxs).parent().removeClass("hide");
 		});
 	}
 	return self;

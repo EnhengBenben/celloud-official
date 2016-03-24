@@ -3,15 +3,18 @@ package com.celloud.utils;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.celloud.constants.ConstantsData;
+import com.celloud.model.mongo.Behavior;
 import com.celloud.model.mysql.ActionLog;
 import com.github.jarod.qqwry.IPZone;
 import com.github.jarod.qqwry.QQWry;
@@ -83,7 +86,7 @@ public class UserAgentUtil {
         log.setOs(c.os.family);
         log.setOsVersion(getOsVersion(c));
         if (log.getOsVersion() == null) {
-            logger.warn("no os_version is found is userAgent:{}", userAgent);
+            logger.debug("no os_version is found in userAgent:{}", userAgent);
         }
         String ip = getIp(request);
         log.setIp(ip);
@@ -91,6 +94,27 @@ public class UserAgentUtil {
         log.setUserId(ConstantsData.getLoginUserId());
         log.setUsername(ConstantsData.getLoginUserName());
         return log;
+    }
+    
+    /**
+     * 获取用户行为基本信息
+     * 
+     * @param request
+     * @return
+     * @author lin
+     * @date 2016年3月17日上午10:14:02
+     */
+    public static Behavior getUserBehavior(HttpServletRequest request) {
+		ActionLog al = getActionLog(request);
+		Behavior ub = new Behavior();
+		try {
+			BeanUtils.copyProperties(ub, al);
+		} catch (IllegalAccessException e) {
+			logger.error("ActionLog转UserBehavior失败：" + e);
+		} catch (InvocationTargetException e) {
+			logger.error("ActionLog转UserBehavior失败：" + e);
+		}
+		return ub;
     }
 
     public static String getBrowserVersion(Client c) {
@@ -143,7 +167,7 @@ public class UserAgentUtil {
             result = ipzone.getMainInfo() + "-" + ipzone.getSubInfo();
         } catch (Exception e) {
             if (logger.isWarnEnabled()) {
-                logger.warn("不能识别的ip地址：{}", ip);
+                logger.debug("不能识别的ip地址：{}", ip);
             }
         }
         return result;

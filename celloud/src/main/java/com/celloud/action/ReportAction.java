@@ -746,73 +746,88 @@ public class ReportAction {
         return mv;
     }
 
-    /**
-     * 打印HBV等
-     * 
-     * @param appId
-     * @param dataKey
-     * @param projectId
-     * @param imgHtml
-     * @param sensitive
-     * @param context
-     * @param peakFigure
-     * @param allPic
-     * @param result
-     * @param table
-     * @param flag
-     * @return
-     * @author lin
-     * @date 2016年1月20日上午11:05:24
-     */
-    @RequestMapping("printHBV")
-    public ModelAndView printHBV(Integer appId, String dataKey,
-            Integer projectId, String imgHtml, String sensitive, String context,
-            String peakFigure, String allPic, String result, String table,
-            Integer flag) {
-        ModelAndView mv = getModelAndView("print/print_hbv", projectId);
-        Integer userId = ConstantsData.getLoginUserId();
-        Integer fileId = dataService.getDataByKey(dataKey).getFileId();
-        Report report = reportService.getReport(userId, appId, projectId,
-                fileId, ReportType.DATA);
-        // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
-        if (StringUtils.isNotEmpty(report.getPrintContext())) {
-            return mv.addObject("printContext", report.getPrintContext())
-                    .addObject("report", report);
-        }
-        Integer deptId = ConstantsData.getLoginUser().getDeptId();
-        Dept dept = deptService.selectByPrimaryKey(deptId);
-        Company company = companyService
-                .selectByPrimaryKey(dept.getCompanyId());
-        if (StringUtils.isNotEmpty(imgHtml)) {
-            String[] imgArr = imgHtml.split(",");
-            ArrayList<String> imgList = new ArrayList<String>();
-            for (String s : imgArr) {
-                imgList.add(s);
-            }
-            mv.addObject("imgList", imgList);
-        }
-        HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
-        App app = appService.selectByPrimaryKey(appId);
-        // TODO 传递HBV之后，很多参数已经不需要传递了，修改时需要改动页面接收参数的方法
-        // 为了兼容下面的方法，需要等每个流程一个打印页面之后再修改
-        mv.addObject("app", app).addObject("hbv", hbv);
-        mv.addObject("userId", userId).addObject("appId", appId)
-                .addObject("sensitive", sensitive);
-        mv.addObject("context", context).addObject("peakFigure", peakFigure)
-                .addObject("allPic", allPic);
-        mv.addObject("result", result).addObject("table", table)
-                .addObject("flag", flag);
-        mv.addObject("company", company).addObject("dept", dept)
-                .addObject("report", report);
-        return mv;
-    }
+	/**
+	 * 打印HBV
+	 * 
+	 * @param appId
+	 * @param dataKey
+	 * @param projectId
+	 * @param flag
+	 * @return
+	 * @author lin
+	 * @date 2016年3月21日下午2:51:25
+	 */
+	@RequestMapping("printHBV")
+	public ModelAndView printHBV(Integer appId, String dataKey, Integer projectId, Integer flag) {
+		ModelAndView mv = getModelAndView("print/print_hbv", projectId);
+		Integer userId = ConstantsData.getLoginUserId();
+		Integer fileId = dataService.getDataByKey(dataKey).getFileId();
+		Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
+		// 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
+		if (StringUtils.isNotEmpty(report.getPrintContext())) {
+			return mv.addObject("printContext", report.getPrintContext());
+		}
+		HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
+		mv.addObject("hbv", hbv).addObject("flag", flag).addObject("report", report);
+		return mv;
+	}
+	
+	/**
+	 * 打印HCV
+	 * 
+	 * @param appId
+	 * @param dataKey
+	 * @param projectId
+	 * @return
+	 * @author lin
+	 * @date 2016年3月21日下午2:51:25
+	 */
+	@RequestMapping("printHCV")
+	public ModelAndView printHCV(Integer appId, String dataKey, Integer projectId) {
+		ModelAndView mv = getModelAndView("print/print_hcv", projectId);
+		Integer userId = ConstantsData.getLoginUserId();
+		Integer fileId = dataService.getDataByKey(dataKey).getFileId();
+		Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
+		// 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
+		if (StringUtils.isNotEmpty(report.getPrintContext())) {
+			return mv.addObject("printContext", report.getPrintContext());
+		}
+		HCV hcv = reportService.getHCVReport(dataKey, projectId, appId);
+		mv.addObject("hcv", hcv).addObject("report", report);
+		return mv;
+	}
+	
+	/**
+	 * 打印EGFR
+	 * 
+	 * @param appId
+	 * @param dataKey
+	 * @param projectId
+	 * @return
+	 * @author lin
+	 * @date 2016年3月21日下午2:51:25
+	 */
+	@RequestMapping("printEGFR")
+	public ModelAndView printEGFR(Integer appId, String dataKey, Integer projectId) {
+		ModelAndView mv = getModelAndView("print/print_egfr", projectId);
+		Integer userId = ConstantsData.getLoginUserId();
+		Integer fileId = dataService.getDataByKey(dataKey).getFileId();
+		Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
+		// 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
+		if (StringUtils.isNotEmpty(report.getPrintContext())) {
+			return mv.addObject("printContext", report.getPrintContext());
+		}
+		EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
+		mv.addObject("egfr", egfr).addObject("report", report);
+		return mv;
+	}
 
     // TODO 达安流程打印，需要拆分页面，拆分方法
     @RequestMapping("printDAAN")
     public ModelAndView printDAAN(Integer appId, String dataKey,
             Integer projectId, String context, String imgHtml, String seq,
             String result, String allPic, String table) {
-        ModelAndView mv = getModelAndView("print/print_hbv", projectId);
+        ModelAndView mv = getModelAndView("print/print_daan", projectId);
         Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
         Report report = reportService.getReport(userId, appId, projectId,
@@ -879,7 +894,7 @@ public class ReportAction {
     public ResponseEntity<byte[]> companyIcon(String file) throws IOException {
         String path = CompanyConstants.getCompanyIconPath() + File.separator + file;
         File targetFile = new File(path);
-        log.info("医院logo绝对路径{}",targetFile.getAbsolutePath());
+        //log.info("医院logo绝对路径{}",targetFile.getAbsolutePath());
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
     }
     /**
@@ -893,7 +908,7 @@ public class ReportAction {
     public ResponseEntity<byte[]> deptIcon(String file) throws IOException {
         String path = DeptConstants.getDeptIconPath() + File.separator + file;
         File targetFile = new File(path);
-        log.info("部门logo目录的绝对路径{}",targetFile.getAbsolutePath());
+        //log.info("部门logo目录的绝对路径{}",targetFile.getAbsolutePath());
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
     }
 }

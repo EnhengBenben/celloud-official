@@ -368,9 +368,7 @@ a:hover, a:focus{
 					<hr>
 				</c:if>
 				<div align="center">
-					<h3>
-						<c:if test="${company.companyId==10}">流产组织</c:if>染色体拷贝数变异检测报告
-					</h3>
+					<h3>染色体拷贝数变异检测报告</h3>
 				</div>
 				<div>
 					<h4>基本信息：</h4>
@@ -455,7 +453,7 @@ a:hover, a:focus{
 					</div>
 				</c:if>
 				<div class="notes">注：该检测对于&lt;
-				<c:if test="${appId==92||appId==93}">
+				<c:if test="${appId==92||appId==93||appId==116}">
 				15Mb
 				</c:if>
 				<c:if test="${appId==85}">

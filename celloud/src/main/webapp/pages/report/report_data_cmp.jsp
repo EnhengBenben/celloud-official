@@ -231,14 +231,14 @@
 						</tr>
 					</tbody>
 				</table>
-				<table style="width:90%;">
+				<table style="width:100%;">
 			      <tr>
-			    	<td style="width:50%;"><img style="max-width:500px;" src="<c:if test="${!cmpReport.qualityPath1.contains('Tools') }">${uploadPath}${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.qualityPath1 }"></td>
-			    	<td><img style="max-width:500px;" src="<c:if test="${!cmpReport.qualityPath2.contains('Tools') }">${uploadPath}${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }/</c:if>${cmpReport.qualityPath2 }"></td>
+			    	<td style="width:50%;"><img style="width:100%;" src="<c:if test="${!cmpReport.qualityPath1.contains('Tools') }">${uploadPath}${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.qualityPath1 }"></td>
+			    	<td><img style="width:100%;" src="<c:if test="${!cmpReport.qualityPath2.contains('Tools') }">${uploadPath}${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }/</c:if>${cmpReport.qualityPath2 }"></td>
 			      </tr>
 			      <tr>
-			    	<td><img style="max-width:500px;" alt="" src="<c:if test="${!cmpReport.seqContentPath1.contains('Tools') }">${uploadPath}${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.seqContentPath1 }"></td>
-			    	<td><img style="max-width:500px;" alt="" src="<c:if test="${!cmpReport.seqContentPath2.contains('Tools') }">${uploadPath}${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.seqContentPath2 }"></td>
+			    	<td><img style="width:100%;" alt="" src="<c:if test="${!cmpReport.seqContentPath1.contains('Tools') }">${uploadPath}${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.seqContentPath1 }"></td>
+			    	<td><img style="width:100%;" alt="" src="<c:if test="${!cmpReport.seqContentPath2.contains('Tools') }">${uploadPath}${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.seqContentPath2 }"></td>
 			      </tr>
 			    </table>
 			</div>

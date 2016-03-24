@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>报告打印</title>
-<link rel="stylesheet" href="css/print_hbv.css?version=1.16">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/print_hbv.css?version=1.16">
 </head>
 <body>
 	<div>
@@ -19,16 +19,16 @@
 	</div>
 	<div id="printMain">
 		<c:if test="${empty printContext}">
-			<input type="hidden" value="${report.projectId }" id="_projectId">
-			<div style="display: none;" id="_userId">${report.userId }</div>
-			<div style="display: none;" id="_appId">${appId }</div>
+			<input type="hidden" value="${hbv.projectId }" id="_projectId">
+			<div style="display: none;" id="_userId">${hbv.userId }</div>
+			<div style="display: none;" id="_appId">${hbv.appId }</div>
 			<div style="display: none;" id="_fileId">${report.fileId }</div>
 			<div style="display: none;" id="_flag">${flag }</div>
 			<div>
 				<a href="javascript:void(0)" onclick="preview(this)" class="button btn-info" name="change" style="float:right;margin-top:10px;margin-right:-100px;"><i class=""></i>打印</a>
 				<a href="javascript:void(0)" onclick="reset()" class="button btn-info" name="change" style="float:right;margin-top:45px;margin-right:-100px;"><i class=""></i>重置</a>
 				<a href="javascript:void(0)" onclick="savePage()" class="button btn-info" name="change" style="float:right;margin-top:80px;margin-right:-100px;"><i class=""></i>保存</a>
-				<c:if test="${company.companyId==41 }">
+				<c:if test="${hbv.companyId==41 }">
 					<hr name="change" style="float:right;margin-top: 115px; margin-right: -150px;width: 130px;border: solid 1px #d7d7d7;">
 					<a href="javascript:void(0)" onclick="showGeneType()" class="a-green-normal" name="change" style="float:right;margin-top:125px;margin-right:-145px;"><i class=""></i>基因分型检测报告单</a>
 					<a href="javascript:void(0)" onclick="showResistance()" class="a-green-normal" name="change" style="float:right;margin-top:150px;margin-right:-145px;"><i class=""></i>耐药突变检测报告单</a>
@@ -36,8 +36,8 @@
 				<c:if test="${flag==0 }">
 					<div class="container" style="display: none;"></div>
 				</c:if>
-				<h1>${company.companyName }${app.appName }
-					<c:if test="${company.companyId==41 }">
+				<h1>${hbv.companyName }${hbv.appName }
+					<c:if test="${hbv.companyId==41 }">
 						<span name="geneType">基因分型检测</span>
 						<span name="resistanceType" class="hide">耐药突变检测</span><br>
 					</c:if>报告单
@@ -57,157 +57,226 @@
 			            <li>床号：<span><input type="text"></span></li>
 			            <li>住院号：<span><input type="text"></span></li>
 			        </ul>
-			        <c:if test="${appId==82 }">
-			        	<c:choose>
-			        		<c:when test="${company.companyId==41 }">
-			        			<div class="gray">送检目的：<span name="geneType">HBV基因分型</span><span name="resistanceType" class="hide">拉米夫定LAM，阿德福韦ADV，恩替卡韦ETV，替比夫定LDT，替诺福韦酯TDF，恩曲他滨FTC</span></div>
-					        	<div name="resistanceType" class="gray hide">相关位点：rt169，rt173，rt180，rt181，rt184，rt194，rt202，rt204，rt215，rt233，rt236，rt250</div>
-			        		</c:when>
-			        		<c:otherwise>
-			        		<div class="gray">送检目的：HBV基因分型，拉米夫定LAM，阿德福韦ADV，恩替卡韦ETV，替比夫定LDT，替诺福韦酯TDF，恩曲他滨FTC</div>
-					        <div class="gray">相关位点：rt169，rt173，rt180，rt181，rt184，rt194，rt202，rt204，rt215，rt233，rt236，rt250</div>
-			        		</c:otherwise>
-			        	</c:choose>
-					</c:if>
+		        	<c:choose>
+		        		<c:when test="${hbv.companyId==41 }">
+		        			<div class="gray">送检目的：<span name="geneType">HBV基因分型</span><span name="resistanceType" class="hide">拉米夫定LAM，阿德福韦ADV，恩替卡韦ETV，替比夫定LDT，替诺福韦酯TDF，恩曲他滨FTC</span></div>
+				        	<div name="resistanceType" class="gray hide">相关位点：rt169，rt173，rt180，rt181，rt184，rt194，rt202，rt204，rt215，rt233，rt236，rt250</div>
+		        		</c:when>
+		        		<c:otherwise>
+		        			<div class="gray">送检目的：HBV基因分型，拉米夫定LAM，阿德福韦ADV，恩替卡韦ETV，替比夫定LDT，替诺福韦酯TDF，恩曲他滨FTC</div>
+				        	<div class="gray">相关位点：rt169，rt173，rt180，rt181，rt184，rt194，rt202，rt204，rt215，rt233，rt236，rt250</div>
+		        		</c:otherwise>
+		        	</c:choose>
 			    </div>
 			    <hr class="hr-bold mt5" />
 			    <div class="wrapper" style="min-height:800px;" id="mainDIv">
-			    	<c:choose>
-			    	   <c:when test="${appId==89 || appId==84 }">
-			    		<!-- KRAS || EGFR -->
-				    	    <h2 class="mt20">已知位点：</h2>
-				    	    <p>${table }</p>
-				    	    <c:if test="${allPic!=null }">
-					    	    <p><img src="${allPic }" style="width: 900px;height: 136px;"></p>
-				    	    </c:if>
-				    	    <c:if test="${result!=null && result.trim()!=''}">
-					    	    <h2 class="mt20">结论：</h2>
-					    	    <p>${result }</p>
-				    	    </c:if>
-				    	    <c:if test="${seq!=null && seq.trim()!='' }">
-					    	    <h2 class="mt20">原始序列：</h2>
-					    	    <p style="word-break: break-all;">${seq }</p>
-				    	    </c:if>
-				    	    <div class="w3cbbs"></div>
-				    	    <h2 class="mt20">原始峰图：</h2>
-				    	    <p style="width:750px;">
-						       	<c:if test="${imgList.size()>0}">
-						   			<c:forEach items="${imgList}" var="imgHtml">
-						   				<img src="${imgHtml }" style="width:100%"/>
-						   				<br/><br/>
-						   			</c:forEach>
-					   			</c:if>
-					   			<c:if test="${imgList==null}">
-					   				样本异常，无法检测
-					   			</c:if>
-				    	    </p>
-					   </c:when>
-			    	   <c:when test="${appId==90 }">
-			    	    <h2 class="mt20">报告：</h2>
-			    	    <p>${context }</p>
-			    	    <br>
-			    	    <h2 class="mt20">原始峰图：</h2>
-			    	    <p style="width:750px;">
-					       	<c:if test="${imgList.size()>0}">
-					   			<c:forEach items="${imgList}" var="imgHtml">
-					   				<img src="${imgHtml }" style="width:100%"/>
-					   				<br/><br/>
-					   			</c:forEach>
-				   			</c:if>
-			    	    </p>
-					   </c:when>
-			    	   <c:when test="${appId==80 }">
-			    	   <div>
-						   	<h2 class="mt20">检测结果：</h2>
-					        <div class="r_seq">
-					        ${context }
+		   			<c:choose>
+		        		<c:when test="${hbv.companyId==41 }">
+		        			<h2 name="geneType" class="mt10">基因分型结果：</h2>
+		        			<div name="geneType" class="m-box_1">
+		        				${hbv.type.replace('Type','基因型') }
+		        			</div>
+		        			<h2 name="resistanceType" class="mt10 hide">一、耐药突变位点检测结果：</h2>
+		        			<div name="resistanceType" class="m-box_1 hide">
+					        	${hbv.clinical }
+						        <p class="annotation">注：深背景色<span class="_hard colorspan">&nbsp;</span>表示发生了耐药突变<br>
+						        	浅背景色<span class="_light colorspan">&nbsp;</span>表示发生了突变，但是暂无文献支持其和耐药相关<br>
+						       		 红色字体表示在样本中未找到该位点
+						        </p>
 					        </div>
-					        <br/>
-					        <h2 class="mt10">原始序列：</h2>
-							<div style="word-break: break-all;">${seq }</div>
-							<br/>
-							<c:if test="${imgList.size()>0}">
-					    	    <h2 class="mt20">原始峰图：</h2>
-					    	    <div id="_allDiv">
-						   			<c:forEach items="${imgList}" var="imgHtml">
-						   				<img src="${imgHtml }" style="width:100%"/>
-						   				<br/><br/>
-						   			</c:forEach>
-					    	    </div>
-				    	    </c:if>
-			    	   </div>
-					   </c:when>
-					   <c:when test="${appId==82 }">
-			   			<c:choose>
-			        		<c:when test="${company.companyId==41 }">
-			        			<h2 name="geneType" class="mt10">基因分型结果：</h2>
-			        			<div name="geneType" class="m-box_1">
-			        				${hbv.type.replace('Type','基因型') }
-			        			</div>
-			        			<h2 name="resistanceType" class="mt10 hide">一、耐药突变位点检测结果：</h2>
-			        			<div name="resistanceType" class="m-box_1 hide">
-						        	${table }
-							        <p class="annotation">注：深背景色<span class="_hard colorspan">&nbsp;</span>表示发生了耐药突变<br>
-							        	浅背景色<span class="_light colorspan">&nbsp;</span>表示发生了突变，但是暂无文献支持其和耐药相关<br>
-							       		 红色字体表示在样本中未找到该位点
-							        </p>
-						        </div>
-						        <c:choose>
-			        				<c:when test="${flag==0 }">
-							          <div name="resistanceType" class="hide">
-							        	<div class="w3cbbs" style="display: none;"></div>
-										<div class="container" style="display: none;"></div>
-									   	<h2 class="mt10">二、耐药位点突变检测结果：</h2>
-								   		<div class="clearCss_3">${peakFigure }</div>
-									   	<p class="annotation m-box_1">注：1. 突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V，{A-G}：碱基由A变为G<br>
-									   		2. Wild Type: GCT;表示该位点的野生型为GCT<br>3. 峰图中的*号，表示该位置发生了突变
-									   	</p>
-									   	<div id="lessDiv">
-											<div class="w3cbbs" style="display: none;"></div>
-											<div class="container" style="display: none;"></div>
-									   	</div>
-								        <h2 class="mt10">三、参考结论（根据已发表文献得出以下参考结论）：</h2>
-								        <div class="m-box_1" id="des">
-											<textarea rows="6">${result }</textarea>
-								        </div>
-									   	<h2 class="mt10">四、测序序列结果：</h2>
-									   	<p style="word-break: break-all;" class="m-box_1">${hbv.seq }</p>
-									   	<div id="moreDiv">
-											<div class="w3cbbs" style="display: none;"></div>
-											<div class="container" style="display: none;"></div>
-									   	</div>
-										<div id="SNPEND">
-										   	<h2 class="mt10">五、测序峰图结果：</h2>
-										   	<div class="m-box_1 clearCss_6" id="picture_6">
-											   	<p>${allPic }</p>
-											   	<p class="annotation">注：峰图中的*号表示该位点发生了突变</p>
-										   	</div>
-										</div>
-									  </div>
-						        	</c:when>
-						        	<c:otherwise>
-						        		<h2 class="mt10">二、参考结论（根据已发表文献得出以下参考结论）：</h2>
-								        <div class="m-box_1" id="des">
-											<textarea rows="6">${result }</textarea>
-								        </div>
-						        	</c:otherwise>
-						        </c:choose>
-			        		</c:when>
-			        		<c:otherwise>
-			        			<h2 class="mt10">一、基因分型结果：<span style="font-size:12px;font-weight: normal">${hbv.type.replace('Type','基因型') }</span></h2>
-			        			<h2 class="mt10">二、耐药突变位点检测结果：</h2>
-			        			<div class="m-box_1">
-						        	${table }
-							        <p class="annotation">注：深背景色<span class="_hard colorspan">&nbsp;</span>表示发生了耐药突变<br>
-							        	浅背景色<span class="_light colorspan">&nbsp;</span>表示发生了突变，但是暂无文献支持其和耐药相关<br>
-							       		 红色字体表示在样本中未找到该位点
-							        </p>
-						        </div>
-						        <c:if test="${flag==0 }">
+					        <c:choose>
+		        				<c:when test="${flag==0 }">
+						          <div name="resistanceType" class="hide">
 						        	<div class="w3cbbs" style="display: none;"></div>
 									<div class="container" style="display: none;"></div>
-								   	<h2 class="mt10">三、耐药位点突变检测结果：</h2>
-							   		<div class="clearCss_3">${peakFigure }</div>
+								   	<h2 class="mt10">二、耐药位点突变检测结果：</h2>
+							   		<div class="clearCss_3">
+								   		<div class="m-box">
+										 	<h2>
+										 		1.替诺福韦酯TDF突变检测
+										 	</h2>
+										    <div class="m-boxCon">
+											    <c:if test="${hbv.known.containsKey('194_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['194_png'] }" height="170px;" width="150px;">
+												</c:if>
+												<c:if test="${not hbv.known.containsKey('194_png') }">
+													<div class="imgmiss">
+														194位点测序失败，建议重测。
+													</div>
+												</c:if>
+										    </div>
+										</div>
+										<!--位点突变-->
+										<div class="m-box">
+										 	<h2>2.替比夫定 LDT 突变检测
+										 	</h2>
+										    <div class="m-boxCon">
+										    	<c:if test="${hbv.known.containsKey('204_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_png'] }" height="170px;" width="150px;">
+										    	</c:if>
+										    	<c:if test="${not hbv.known.containsKey('204_png') }">
+													<div class="imgmiss">
+														204位点测序失败，建议重测。
+													</div>
+												</c:if>
+										    </div>
+										</div>
+										<!--位点突变-->
+										<div class="m-box">
+										 	<h2>3.阿德福韦 ADV 突变检测
+										 	</h2>
+										    <div class="m-boxCon">
+											    <c:if test="${hbv.known.containsKey('181_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['181_png'] }" height="170px;" width="150px;">
+												</c:if>
+												<c:if test="${not hbv.known.containsKey('181_png') }">
+													<div class="imgmiss">
+														181位点测序失败，建议重测。
+													</div>
+												</c:if>
+												<c:if test="${hbv.known.containsKey('236_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['236_png'] }" height="170px;" width="150px;">
+												</c:if>
+												<c:if test="${not hbv.known.containsKey('236_png') }">
+													<div class="imgmiss">
+														236位点测序失败，建议重测。
+													</div>
+												</c:if>
+										    </div>
+										</div>
+										<!--位点突变-->
+										<div class="m-box">
+										 	<h2>4.拉米夫定 LAM 突变检测
+										 	</h2>
+										    <div class="m-boxCon">
+											    <c:if test="${hbv.known.containsKey('173_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['173_png'] }" height="170px;" width="150px;">
+												</c:if>
+												<c:if test="${not hbv.known.containsKey('173_png') }">
+													<div class="imgmiss">
+														173位点测序失败，建议重测。
+													</div>
+												</c:if>
+												<c:if test="${hbv.known.containsKey('180_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['180_png'] }" height="170px;" width="150px;">
+												</c:if>
+												<c:if test="${not hbv.known.containsKey('180_png') }">
+													<div class="imgmiss">
+														180位点测序失败，建议重测。
+													</div>
+												</c:if>
+										    	<c:if test="${hbv.known.containsKey('204_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_png'] }" height="170px;" width="150px;">
+												</c:if>
+												<c:if test="${not hbv.known.containsKey('204_png') }">
+													<div class="imgmiss">
+														204位点测序失败，建议重测。
+													</div>
+												</c:if>
+										    </div>
+										</div>
+										<!--位点突变-->
+										<div class="m-box">
+										 	<h2>5.恩曲他滨 FTC 突变检测
+										 	</h2>
+										    <div class="m-boxCon">
+											    <c:if test="${hbv.known.containsKey('173_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['173_png'] }" height="170px;" width="150px;">
+												</c:if>
+												<c:if test="${not hbv.known.containsKey('173_png') }">
+													<div class="imgmiss">
+														173位点测序失败，建议重测。
+													</div>
+												</c:if>
+												<c:if test="${hbv.known.containsKey('180_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['180_png'] }" height="170px;" width="150px;">
+												</c:if>
+												<c:if test="${not hbv.known.containsKey('180_png') }">
+													<div class="imgmiss">
+														180位点测序失败，建议重测。
+													</div>
+												</c:if>
+												<c:if test="${hbv.known.containsKey('204_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_png'] }" height="170px;" width="150px;">
+												</c:if>
+												<c:if test="${not hbv.known.containsKey('204_png') }">
+													<div class="imgmiss">
+														204位点测序失败，建议重测。
+													</div>
+												</c:if>
+										    </div>
+										</div>
+										<!--位点突变-->
+										<div class="m-box">
+										 	<h2>6.恩替卡韦 ETV 突变检测
+										 	</h2>
+										    <div class="m-boxCon">
+											    <c:if test="${hbv.known.containsKey('169_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['169_png'] }" height="170px;" width="150px;">
+												</c:if>
+												<c:if test="${not hbv.known.containsKey('169_png') }">
+													<div class="imgmiss">
+														169位点测序失败，建议重测。
+													</div>
+												</c:if>
+												<c:if test="${hbv.known.containsKey('180_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['180_png'] }" height="170px;" width="150px;">
+												</c:if>
+												<c:if test="${not hbv.known.containsKey('180_png') }">
+													<div class="imgmiss">
+														180位点测序失败，建议重测。
+													</div>
+												</c:if>
+												<c:if test="${hbv.known.containsKey('184_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['184_png'] }" height="170px;" width="150px;">
+												</c:if>
+												<c:if test="${not hbv.known.containsKey('184_png') }">
+													<div class="imgmiss">
+														184位点测序失败，建议重测。
+													</div>
+												</c:if>
+												<c:if test="${hbv.known.containsKey('202_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['202_png'] }" height="170px;" width="150px;">
+												</c:if>
+												<c:if test="${not hbv.known.containsKey('202_png') }">
+													<div class="imgmiss">
+														202位点测序失败，建议重测。
+													</div>
+												</c:if>
+												<c:if test="${hbv.known.containsKey('204_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_png'] }" height="170px;" width="150px;">
+												</c:if>
+												<c:if test="${not hbv.known.containsKey('204_png') }">
+													<div class="imgmiss">
+														204位点测序失败，建议重测。
+													</div>
+												</c:if>
+												<c:if test="${hbv.known.containsKey('250_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['250_png'] }" height="170px;" width="150px;">
+												</c:if>
+												<c:if test="${not hbv.known.containsKey('250_png') }">
+													<div class="imgmiss">
+														250位点测序失败，建议重测。
+													</div>
+												</c:if>
+										    </div>
+										</div>
+										<div class="w3cbbs" style="display: none;"></div>
+										<div class="container" style="display: none;"></div>
+										<!--位点突变-->
+										<div class="m-box">
+										 	  <h2>7.其他突变位点（该位点目前没有已发表文献支持，无明确临床意义）
+										 	  </h2>
+										    <div class="m-boxCon" id="otherPng">
+											    <c:if test="${hbv.imgString!='' }">
+											    	<c:set value="${fn:split(hbv.imgString, ',') }" var="imgs" />
+											    	<c:forEach var="img" items="${imgs }">
+														<img title="${img }" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${img }" height="170px;" width="150px;">
+											    	</c:forEach>
+											    </c:if>
+										    </div>
+										</div>
+							   		</div>
 								   	<p class="annotation m-box_1">注：1. 突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V，{A-G}：碱基由A变为G<br>
 								   		2. Wild Type: GCT;表示该位点的野生型为GCT<br>3. 峰图中的*号，表示该位置发生了突变
 								   	</p>
@@ -215,29 +284,303 @@
 										<div class="w3cbbs" style="display: none;"></div>
 										<div class="container" style="display: none;"></div>
 								   	</div>
-							        <h2 class="mt10">四、参考结论（根据已发表文献得出以下参考结论）：</h2>
+							        <h2 class="mt10">三、参考结论（根据已发表文献得出以下参考结论）：</h2>
 							        <div class="m-box_1" id="des">
 										<textarea rows="6">${result }</textarea>
 							        </div>
-								   	<h2 class="mt10">五、测序序列结果：</h2>
+								   	<h2 class="mt10">四、测序序列结果：</h2>
 								   	<p style="word-break: break-all;" class="m-box_1">${hbv.seq }</p>
 								   	<div id="moreDiv">
 										<div class="w3cbbs" style="display: none;"></div>
 										<div class="container" style="display: none;"></div>
 								   	</div>
 									<div id="SNPEND">
-									   	<h2 class="mt10">六、测序峰图结果：</h2>
-									   	<div class="m-box_1 clearCss_6" id="picture_6">
-										   	<p>${allPic }</p>
+									   	<h2 class="mt10">五、测序峰图结果：</h2>
+									   	<div class="m-box_1 clearCss_6">
+										   	<p>
+											   	<c:if test="${hbv.original.containsKey('1_all_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['1_all_png'] }" style="width:600px;">
+											    	<br/>
+											    </c:if>
+											    <c:if test="${hbv.original.containsKey('2_all_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['2_all_png'] }" style="width:600px;">
+													<br/>
+											    </c:if>
+											    <c:if test="${hbv.original.containsKey('3_all_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['3_all_png'] }" style="width:600px;">
+													<br/>
+											   	</c:if>
+											    <c:if test="${hbv.original.containsKey('4_all_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['4_all_png'] }" style="width:600px;">
+													<br/>
+											    </c:if>
+											    <c:if test="${hbv.original.containsKey('5_all_png') }">
+													<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['5_all_png'] }" style="width:600px;">
+													<br/>
+											    </c:if>
+										    </p>
 										   	<p class="annotation">注：峰图中的*号表示该位点发生了突变</p>
 									   	</div>
 									</div>
-						        </c:if>
-			        		</c:otherwise>
-			        	</c:choose>     
-				       
-					   </c:when>
-					</c:choose>	
+								  </div>
+					        	</c:when>
+					        	<c:otherwise>
+					        		<h2 class="mt10">二、参考结论（根据已发表文献得出以下参考结论）：</h2>
+							        <div class="m-box_1" id="des">
+										<textarea rows="6">${hbv.reporttxt.split('Other:')[0] }</textarea>
+							        </div>
+					        	</c:otherwise>
+					        </c:choose>
+		        		</c:when>
+		        		<c:otherwise>
+		        			<h2 class="mt10">一、基因分型结果：<span style="font-size:12px;font-weight: normal">${hbv.type.replace('Type','基因型') }</span></h2>
+		        			<h2 class="mt10">二、耐药突变位点检测结果：</h2>
+		        			<div class="m-box_1">
+					        	${hbv.clinical }
+						        <p class="annotation">注：深背景色<span class="_hard colorspan">&nbsp;</span>表示发生了耐药突变<br>
+						        	浅背景色<span class="_light colorspan">&nbsp;</span>表示发生了突变，但是暂无文献支持其和耐药相关<br>
+						       		 红色字体表示在样本中未找到该位点
+						        </p>
+					        </div>
+					        <c:if test="${flag==0 }">
+					        	<div class="w3cbbs" style="display: none;"></div>
+								<div class="container" style="display: none;"></div>
+							   	<h2 class="mt10">三、耐药位点突变检测结果：</h2>
+						   		<div class="clearCss_3">
+							   		<div class="m-box">
+									 	<h2>
+									 		1.替诺福韦酯TDF突变检测
+									 	</h2>
+									    <div class="m-boxCon">
+										    <c:if test="${hbv.known.containsKey('194_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['194_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('194_png') }">
+												<div class="imgmiss">
+													194位点测序失败，建议重测。
+												</div>
+											</c:if>
+									    </div>
+									</div>
+									<!--位点突变-->
+									<div class="m-box">
+									 	<h2>2.替比夫定 LDT 突变检测
+									 	</h2>
+									    <div class="m-boxCon">
+									    	<c:if test="${hbv.known.containsKey('204_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_png'] }" height="170px;" width="150px;">
+									    	</c:if>
+									    	<c:if test="${not hbv.known.containsKey('204_png') }">
+												<div class="imgmiss">
+													204位点测序失败，建议重测。
+												</div>
+											</c:if>
+									    </div>
+									</div>
+									<!--位点突变-->
+									<div class="m-box">
+									 	<h2>3.阿德福韦 ADV 突变检测
+									 	</h2>
+									    <div class="m-boxCon">
+										    <c:if test="${hbv.known.containsKey('181_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['181_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('181_png') }">
+												<div class="imgmiss">
+													181位点测序失败，建议重测。
+												</div>
+											</c:if>
+											<c:if test="${hbv.known.containsKey('236_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['236_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('236_png') }">
+												<div class="imgmiss">
+													236位点测序失败，建议重测。
+												</div>
+											</c:if>
+									    </div>
+									</div>
+									<!--位点突变-->
+									<div class="m-box">
+									 	<h2>4.拉米夫定 LAM 突变检测
+									 	</h2>
+									    <div class="m-boxCon">
+										    <c:if test="${hbv.known.containsKey('173_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['173_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('173_png') }">
+												<div class="imgmiss">
+													173位点测序失败，建议重测。
+												</div>
+											</c:if>
+											<c:if test="${hbv.known.containsKey('180_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['180_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('180_png') }">
+												<div class="imgmiss">
+													180位点测序失败，建议重测。
+												</div>
+											</c:if>
+									    	<c:if test="${hbv.known.containsKey('204_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('204_png') }">
+												<div class="imgmiss">
+													204位点测序失败，建议重测。
+												</div>
+											</c:if>
+									    </div>
+									</div>
+									<!--位点突变-->
+									<div class="m-box">
+									 	<h2>5.恩曲他滨 FTC 突变检测
+									 	</h2>
+									    <div class="m-boxCon">
+										    <c:if test="${hbv.known.containsKey('173_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['173_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('173_png') }">
+												<div class="imgmiss">
+													173位点测序失败，建议重测。
+												</div>
+											</c:if>
+											<c:if test="${hbv.known.containsKey('180_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['180_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('180_png') }">
+												<div class="imgmiss">
+													180位点测序失败，建议重测。
+												</div>
+											</c:if>
+											<c:if test="${hbv.known.containsKey('204_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('204_png') }">
+												<div class="imgmiss">
+													204位点测序失败，建议重测。
+												</div>
+											</c:if>
+									    </div>
+									</div>
+									<!--位点突变-->
+									<div class="m-box">
+									 	<h2>6.恩替卡韦 ETV 突变检测
+									 	</h2>
+									    <div class="m-boxCon">
+										    <c:if test="${hbv.known.containsKey('169_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['169_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('169_png') }">
+												<div class="imgmiss">
+													169位点测序失败，建议重测。
+												</div>
+											</c:if>
+											<c:if test="${hbv.known.containsKey('180_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['180_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('180_png') }">
+												<div class="imgmiss">
+													180位点测序失败，建议重测。
+												</div>
+											</c:if>
+											<c:if test="${hbv.known.containsKey('184_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['184_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('184_png') }">
+												<div class="imgmiss">
+													184位点测序失败，建议重测。
+												</div>
+											</c:if>
+											<c:if test="${hbv.known.containsKey('202_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['202_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('202_png') }">
+												<div class="imgmiss">
+													202位点测序失败，建议重测。
+												</div>
+											</c:if>
+											<c:if test="${hbv.known.containsKey('204_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('204_png') }">
+												<div class="imgmiss">
+													204位点测序失败，建议重测。
+												</div>
+											</c:if>
+											<c:if test="${hbv.known.containsKey('250_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['250_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('250_png') }">
+												<div class="imgmiss">
+													250位点测序失败，建议重测。
+												</div>
+											</c:if>
+									    </div>
+									</div>
+									<div class="w3cbbs" style="display: none;"></div>
+									<div class="container" style="display: none;"></div>
+									<!--位点突变-->
+									<div class="m-box">
+									 	  <h2>7.其他突变位点（该位点目前没有已发表文献支持，无明确临床意义）
+									 	  </h2>
+									    <div class="m-boxCon" id="otherPng">
+										    <c:if test="${hbv.imgString!='' }">
+										    	<c:set value="${fn:split(hbv.imgString, ',') }" var="imgs" />
+										    	<c:forEach var="img" items="${imgs }">
+													<img title="${img }" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${img }" height="170px;" width="150px;">
+										    	</c:forEach>
+										    </c:if>
+									    </div>
+									</div>
+						   		</div>
+							   	<p class="annotation m-box_1">注：1. 突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V，{A-G}：碱基由A变为G<br>
+							   		2. Wild Type: GCT;表示该位点的野生型为GCT<br>3. 峰图中的*号，表示该位置发生了突变
+							   	</p>
+							   	<div id="lessDiv">
+									<div class="w3cbbs" style="display: none;"></div>
+									<div class="container" style="display: none;"></div>
+							   	</div>
+						        <h2 class="mt10">四、参考结论（根据已发表文献得出以下参考结论）：</h2>
+						        <div class="m-box_1" id="des">
+									<textarea rows="6">${hbv.reporttxt.split('Other:')[0] }</textarea>
+						        </div>
+							   	<h2 class="mt10">五、测序序列结果：</h2>
+							   	<p style="word-break: break-all;" class="m-box_1">${hbv.seq }</p>
+							   	<div id="moreDiv">
+									<div class="w3cbbs" style="display: none;"></div>
+									<div class="container" style="display: none;"></div>
+							   	</div>
+								<div id="SNPEND">
+								   	<h2 class="mt10">六、测序峰图结果：</h2>
+								   	<div class="m-box_1 clearCss_6">
+									   	<p>
+										   	<c:if test="${hbv.original.containsKey('1_all_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['1_all_png'] }" style="width:600px;">
+										    	<br/>
+										    </c:if>
+										    <c:if test="${hbv.original.containsKey('2_all_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['2_all_png'] }" style="width:600px;">
+												<br/>
+										    </c:if>
+										    <c:if test="${hbv.original.containsKey('3_all_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['3_all_png'] }" style="width:600px;">
+												<br/>
+										   	</c:if>
+										    <c:if test="${hbv.original.containsKey('4_all_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['4_all_png'] }" style="width:600px;">
+												<br/>
+										    </c:if>
+										    <c:if test="${hbv.original.containsKey('5_all_png') }">
+												<img src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['5_all_png'] }" style="width:600px;">
+												<br/>
+										    </c:if>
+									   	</p>
+									   	<p class="annotation">注：峰图中的*号表示该位点发生了突变</p>
+								   	</div>
+								</div>
+					        </c:if>
+		        		</c:otherwise>
+		        	</c:choose>     
 			    </div>
 			    <hr/>
 			    <div class="wrapper">
@@ -311,15 +654,6 @@ function preview(obj){
 	$("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
 	$("input[type='radio'][value="+sex+"]").attr("checked",true); 
 }
-function hideDelete(obj){
-	$(obj).find("em").removeClass("new");
-}
-function showDelete(obj){
-	$(obj).find("em").addClass("new");
-}
-function deleteLi(obj){
-	$(obj).parent().remove();
-}
 $(document).ready(function(){
 	var browser = $.NV('name');
 	var allHeight;
@@ -333,7 +667,6 @@ $(document).ready(function(){
 		allHeight = 1600;
 	}
 	$("#_allDiv").height(allHeight);
-	$("div[title='帮助']").remove();
 	var num = 0;
 	$("#otherPng").find("img").each(function(){
 		num++;
@@ -343,30 +676,14 @@ $(document).ready(function(){
 	}else{
 		$("#lessDiv").remove();
 	}
-	var browser = $.NV('name');
-	var height;
-	var appId = $("#_appId").html();
 	var _flag = $("#_flag").html();
-	if(appId==80){
-		$("#hcvTable").find("thead").html("<tr><th>File Name<br>(文件名)</th><th>Subtype<br>(亚型)</th><th style='min-width: 90px;'>Subject Name<br>(参考序列名)</th><th style='min-width: 50px;'>Identity<br>(相似度)</th><th style='min-width: 170px;'>Overlap/total<br>(比对上的长度/比对的总长度)</th><th style='min-width: 60px;'>E_value<br>(期望值)</th><th  style='min-width: 50px;'>Score<br>(比分)</th></tr>");
-		$("#hcvTable").css('width','800px')
+	if(_flag==0){
+	  	inputVal = $("#des").html();
+		if(inputVal){
+			inputVal = inputVal.replace(/&lt;br\/&gt;/g,"\n");
+			$("#des").html(inputVal);
+		}
 	}
-	if(appId==82&&_flag==0){
-		$("button").remove();
-		$(".imgtop").each(function(){
-			$(this).removeClass("imgtop");
-		});
-		$("span[title='帮助']").each(function(){
-		  $(this).remove();
-		});
-	}else if(_flag==1){
-
-	}else if($("#mainDIv").height()>1000){
-	}
-	$(".m-boxCon").find("a").each(function(){
-		$(this).parent().append($(this).html());
-		$(this).remove();
-	});
 	$(".table").find("td").each(function(){
 		$(this).css("vertical-align","middle");
 		$(this).css("word-break","break-all");
@@ -384,14 +701,8 @@ $(document).ready(function(){
 			}
 		}
 	});
-	$(".snpLeft").each(function(){
-		$(this).css("text-align","center");
-	});
-	$("#picture_6").find("img").each(function(){
-		$(this).attr("style","width:600px");
-	})
 });
-var url = window.location.href.split("index")[0]+"report/";
+var url = window.location.href.split("printHBV")[0];
 function savePage(){
 	$("body").find("input").each(function(){
 		$(this).attr("value",$(this).val());
@@ -410,8 +721,7 @@ function reset(){
 	if(confirm("确定要重置之前保存的报告吗？")){
 		$.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"printContext":""},function(result){
 			if(result==1){
-				alert("请重新打开页面");
-				window.close();
+				location=location ;
 			}else{
 				alert("信息重置失败！");
 			}

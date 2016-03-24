@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="plugins/bootstrap/js/datatables/dataTables.bootstrap.css">
 
 <script src="plugins/bootstrap/js/jquery-1.11.1.min.js"></script>
+<script src="plugins/jquery.alerts.js"></script>
 
 </head>
 <body class="page-body">
@@ -54,30 +55,30 @@
                             <span class="title">数据统计</span>
                         </a>
                         <ul>
-                            <li>
-                                <a href="app_list.html">
+                            <li id="data-count-menu">
+                                <a href="javascript:dataFile.toDataCount();">
                                     <span class="title">数据总览</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="add_app.html">
+                            <li id="data-user-menu">
+                                <a href="javascript:dataFile.toUserDataCount();">
                                     <span class="title">用户数据统计</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="add_app.html">
+                            <li id="data-company-menu">
+                                <a href="javascript:dataFile.toCompanyDataCount();">
                                     <span class="title">医院数据统计</span>
                                 </a>
                             </li>
                             <c:if test="${loginUserInSession.role=='2'}">
-                                <li>
-                                    <a href="javascript:bigUserCount()">
+                                <li id="data-bigCustomer-menu">
+                                    <a href="javascript:dataFile.toBigCustomerDataCount();">
                                         <span class="title">大客户统计</span>
                                     </a>
                                 </li>
                             </c:if>
-                            <li>
-                                <a href="javascript:gotoOutputData()">
+                            <li id="data-export-menu">
+                                <a href="javascript:dataFile.toDataExport();">
                                     <span class="title">数据导出</span>
                                 </a>
                             </li>
@@ -89,41 +90,52 @@
                             <span class="title">医院统计 </span>
                         </a>
                         <ul>
-                            <li>
-                                <a href="#">
+                            <li id="company-guide-menu">
+                                <a href="javascript:companyCount.toCompanyGuideCount();">
                                     <span class="title">医院总览</span>
                                 </a>
                             </li>
-                            <c:if test="${loginUserInSession.role=='2'}">
-                                <li>
-                                    <a href="javascript:toCompanyBaseInfo()">
-                                        <span class="title">医院基本信息</span>
-                                    </a>
-                                </li>
-                            </c:if>
-                            <li>
-                                <a href="#">
+                            
+                            <li id="company-baseInfo-menu">
+                                <a href="javascript:companyCount.toCompanyBaseInfo()">
+                                    <span class="title">医院基本信息</span>
+                                </a>
+                            </li>
+                            
+                            <li id="company-data-menu">
+                                <a href="javascript:companyCount.toCompanyDataCount();">
                                     <span class="title">医院数据统计</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">
+                            <li id="company-report-menu">
+                                <a href="javascript:companyCount.toCompanyReportCount();">
                                     <span class="title">医院报告统计</span>
                                 </a>
                             </li>
                             <c:if test="${ loginUserInSession.role=='2'}">
-                            <li>
-                                <a href="#">
+                            <li id="company-bigcustomer-menu">
+                                <a href="javascript:companyCount.toBigCustomerCount();">
                                     <span class="title">大客户统计</span>
                                 </a>
                             </li>
                             </c:if>
                         </ul>
                     </li>
+                    <li>
+                        <a href="#">
+                            <i class="linecons-mail"></i>
+                            <span class="title">APP管理 </span>
+                        </a>
+                        <ul>
+                            <li id="app-price-menu">
+                                <a data-click="to-app-price-list" href="javascript:void(0);">
+                                    <span class="title">价格管理</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
-                        
             </div>
-            
         </div>
         <div class="main-content">
         <!-- User Info, Notifications and Menu Bar -->
@@ -157,6 +169,43 @@
     <div class="page-loading-overlay">
         <div class="loader-2"></div>
     </div>
+    <div class="modal fade" id="update-app-price-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">修改APP价格</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="update-app-price-form" role="form" class="form-horizontal">
+                       <input id="update-app-price-itemid" type="hidden">
+                       <div class="form-group">
+                           <label class="col-sm-2 control-label">APP名称</label>
+                           <div class="col-sm-10">
+                             <input type="text" class="form-control" id="update-app-price-name" readonly="readonly">
+                           </div>
+                       </div>
+                       <div class="form-group">
+                           <label class="col-sm-2 control-label">当前价格</label>
+                           <div class="col-sm-10" >
+                             <input type="text" class="form-control" id="update-app-current-price" readonly="readonly">
+                           </div>
+                       </div>
+                       <div class="form-group">
+                           <label class="col-sm-2 control-label">新价格</label>
+                           <div class="col-sm-10">
+		                       <input type="text" class="form-control" id="update-app-new-price" placeholder="格式： 300.00 / 300">
+                           </div>
+                       </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-info" id="update-app-price-button">修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Bottom Scripts -->
     <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="plugins/bootstrap/js/TweenMax.min.js"></script>
@@ -178,5 +227,10 @@
     <script src="plugins/bootstrap/js/xenon-custom.js"></script>
     
     <script src="js/main.js"></script>
+    <script src="js/app.js"></script>
+    
+     <!-- echarts -->
+    <script src="plugins/echarts-2.2.7/echarts-all.js"></script>
+    <script src="plugins/echarts-2.2.7/theme.js"></script>
 </body>
 </html>
