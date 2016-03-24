@@ -41,7 +41,7 @@ public class BehaviorInterceptor extends HandlerInterceptorAdapter {
 		behavior.setLogDate(new Date());
 		behavior.setMethod(request.getMethod());
 		behavior.setAction(request.getRequestURI());
-		behavior.setParam(request.getParameterMap());
+		behavior.setQueryString(request.getQueryString());
 		if (handler instanceof HandlerMethod) {
             ActionLog log = ((HandlerMethod) handler).getMethodAnnotation(ActionLog.class);
             if (log != null) {
