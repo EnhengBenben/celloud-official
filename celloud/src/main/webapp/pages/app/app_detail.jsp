@@ -108,4 +108,10 @@
     </div>
   </div>
 </div>
-
+<script type="text/javascript">
+<!--
+$(function(){
+	$('.carousel').carousel();
+});
+//-->
+</script>
