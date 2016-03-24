@@ -200,6 +200,12 @@
 					org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
 				</prop>
 				<prop key="velocimacro.library"></prop>
+				<prop key="file.resource.loader.cache">true</prop>
+                <prop key="userdirective">
+                    com.celloud.velocity.BlockDirective,
+                    com.celloud.velocity.OverrideDirective,
+                    com.celloud.velocity.ExtendsDirective
+                </prop>
 			</props>
 		</property>
 	</bean>

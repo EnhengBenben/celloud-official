@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <title>
+        </title>
+            #block("head")   
+                base_head  
+             #end
+    </head>
+    <body>
+        #block("body")   
+            base_body
+        #end   
+    </body>
+</html>

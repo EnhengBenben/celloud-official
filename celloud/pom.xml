@@ -185,11 +185,10 @@
 			<artifactId>json-lib</artifactId>
 			<classifier>jdk15</classifier>
 		</dependency>
-		<dependency>  
-            <groupId>org.springframework</groupId>  
-            <artifactId>spring-context-support</artifactId>  
-            <version>4.2.2.RELEASE</version>  
-        </dependency>  
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
 	</dependencies>
 	<profiles>
 		<profile>

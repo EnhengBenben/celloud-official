@@ -12,6 +12,7 @@ import com.celloud.model.mongo.EGFR;
 import com.celloud.model.mongo.GddDiseaseDict;
 import com.celloud.model.mongo.HBV;
 import com.celloud.model.mongo.HCV;
+import com.celloud.model.mongo.KRAS;
 import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
@@ -135,6 +136,18 @@ public interface ReportService {
 	 * @date 2016年3月10日下午2:46:20
 	 */
 	public EGFR getEGFRReport(String dataKey, Integer projectId, Integer appId);
+	
+	/**
+	 * 获取KRAS报告
+	 * 
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 * @author lin
+	 * @date 2016年3月22日下午4:36:17
+	 */
+	public KRAS getKRASReport(String dataKey, Integer projectId, Integer appId);
 
     /**
      * 获取 MIB 报告
