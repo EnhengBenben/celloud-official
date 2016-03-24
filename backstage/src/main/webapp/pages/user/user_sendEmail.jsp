@@ -21,13 +21,12 @@
                </div>
            </div>
            <div class="form-group hide">
+                <c:forEach items="${publicApp }" var="app">
+                  <label class="checkbox-inline hide">
+                     <input type="checkbox" value="${app.appId }" checked='checked' name="appIdArray">${app.appName }
+                   </label>
+                 </c:forEach>
                <div class="col-sm-10 col-sm-offset-2 " id="email-appIds">
-                   <c:forEach items="${publicApp }" var="app">
-                   <label class="checkbox-inline">
-					  <input type="checkbox" value="${app.appId }" checked='checked' name="appIdArray">${app.appName }
-					</label>
-                       
-                   </c:forEach>
                </div>
            </div>
            
