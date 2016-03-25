@@ -45,6 +45,9 @@ celloudBack = ['email.properties','file_path.properties','jdbc.properties',
 'machine.xml','mongodb.properties','ResetPwd.properties','system.properties']
 pythonBack = ['app/PDFPro.py','mysql/mysqlpro.py','mongo/mongopro.py']
 
+#celloud static
+celloudStaticAppend = 'resources'
+staticResultPath = '/share/data/celloud/resources'
 
 if flag=='1':
 
@@ -87,6 +90,11 @@ elif flag=='3':
 	for x in celloudBack:
 		shutil.copyfile(os.path.join(cfrom,x),os.path.join(cto,x))
 	print '--celloud 回拷完毕－－'
+	shutil.rmtree(staticResultPath)
+	staticFrom = os.path.join(celloudSource,celloudStaticAppend)
+	shutil.copytree(staticFrom,staticResultPath)
+	shutil.copytree(os.path.join(staticResultPath,'img'),os.path.join(staticResultPath,'images'))
+	print '--celloud 静态资源拷贝完毕－－'
 	for x in pythonBack:
 		shutil.copyfile(os.path.join(pythonBak,x),os.path.join(pythonSource,x))
 	print '--python 回拷完毕－－'
