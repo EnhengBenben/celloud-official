@@ -6,18 +6,18 @@
           <dt>项目名称：</dt>
           <dd>${project.projectName}</dd>
           <dt>应用名称：</dt>
-          <dd>${kras.appName}</dd>
+          <dd>${dpd.appName}</dd>
           <dt>文件名称：</dt>
-          <dd class="force-break">${kras.fileName}(${kras.dataKey})</dd>
+          <dd class="force-break">${dpd.fileName}(${dpd.dataKey})</dd>
         </dl>
 	</div>
 	<div class="m-box">
 		<h2><i class="i-edit"></i>突变类型</h2>
 	    <div class="m-boxCon result">
-			<c:if test="${kras.position!=null && kras.position!='' }">
-	    		${kras.position }
+			<c:if test="${dpd.position!=null && dpd.position!='' }">
+	    		${dpd.position }
     		</c:if>
-    		<c:if test="${kras.position==null || kras.position=='' }">
+    		<c:if test="${dpd.position==null || dpd.position=='' }">
     			未检测到突变
     		</c:if>
 	    </div>
@@ -35,31 +35,31 @@
 	    </div>
 	</div>
 	<div id="egfrTable" style="display: none;">
-		<c:if test="${kras.mutationPosition!=null }">
-	    	${kras.mutationPosition }
+		<c:if test="${dpd.mutationPosition!=null }">
+	    	${dpd.mutationPosition }
     	</c:if>
-    	<c:if test="${kras.mutationPosition==null }">
+    	<c:if test="${dpd.mutationPosition==null }">
     		数据正常，未找到其他突变。
     	</c:if>
 	</div>
 	<div class="m-box">
 		<h2><i class="i-edit"></i>原始序列</h2>
 	    <div class="m-boxCon result" id="_seq">
-			${kras.seq }
+			${dpd.seq }
 	    </div>
 	</div>
 	<div class="m-box">
 		<h2><i class="i-dna"></i>原始峰图</h2>
-		<c:if test="${kras.original!=null }">
-	    	<c:forEach var="original" items="${kras.original }" varStatus="st">
+		<c:if test="${dpd.original!=null }">
+	    	<c:forEach var="original" items="${dpd.original }" varStatus="st">
 				<div class="m-boxCon result">
-						<a href="javascript:showBg('${uploadPath}${kras.userId }/${kras.appId }/${kras.dataKey }/SVG/${original }','original${st.count }');" >
-							<img name="imgSrc" src="${uploadPath}${kras.userId }/${kras.appId }/${kras.dataKey }/SVG/${original }" style="width: 85%;" id="original${st.count }">
+						<a href="javascript:showBg('${uploadPath}${dpd.userId }/${dpd.appId }/${dpd.dataKey }/SVG/${original }','original${st.count }');" >
+							<img name="imgSrc" src="${uploadPath}${dpd.userId }/${dpd.appId }/${dpd.dataKey }/SVG/${original }" style="width: 85%;" id="original${st.count }">
 						</a>
 			    </div>
 	    	</c:forEach>
 		</c:if>
-     	<c:if test="${kras.original==null }">
+     	<c:if test="${dpd.original==null }">
 		    <div class="m-boxCon result">
 		    样本异常，无法检测
 		    </div>

@@ -709,7 +709,7 @@ public class ReportAction {
 	public ModelAndView getDPDReport(String dataKey, Integer projectId, Integer appId) {
 		DPD dpd = reportService.getDPDReport(dataKey, projectId, appId);
 		String mp = dpd.getMutationPosition();
-		if(StringUtils.isNotBlank(mp)){
+		if (StringUtils.isNotBlank(mp)) {
 			String context[] = mp.split("\n");
 			StringBuffer sb = new StringBuffer("<table>");
 			for (String st : context) {
@@ -717,6 +717,10 @@ public class ReportAction {
 			}
 			sb.append("</table>");
 			dpd.setMutationPosition(sb.toString());
+		}
+		String postion = dpd.getPosition();
+		if (StringUtils.isNotBlank(postion)) {
+			dpd.setPosition(CustomStringUtils.htmlbr(postion));
 		}
 		ModelAndView mv = getModelAndView("report/report_data_dpd", projectId);
 		return mv.addObject("dpd", dpd);
@@ -735,6 +739,14 @@ public class ReportAction {
 	@RequestMapping("getUGTReport")
 	public ModelAndView getUGTReport(String dataKey, Integer projectId, Integer appId) {
 		UGT ugt = reportService.getUGTReport(dataKey, projectId, appId);
+		String position = ugt.getPosition();
+		if (StringUtils.isNotBlank(position)) {
+			ugt.setPosition(CustomStringUtils.htmlbr(position));
+		}
+		String mutationPosition = ugt.getMutationPosition();
+		if (StringUtils.isNotBlank(mutationPosition)) {
+			ugt.setMutationPosition(CustomStringUtils.htmlbr(mutationPosition));
+		}
 		ModelAndView mv = getModelAndView("report/report_data_ugt", projectId);
 		return mv.addObject("ugt", ugt);
 	}
