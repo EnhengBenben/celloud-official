@@ -38,6 +38,7 @@ import com.celloud.model.mongo.CmpFilling;
 import com.celloud.model.mongo.CmpGeneDetectionDetail;
 import com.celloud.model.mongo.CmpGeneSnpResult;
 import com.celloud.model.mongo.CmpReport;
+import com.celloud.model.mongo.DPD;
 import com.celloud.model.mongo.DrugResistanceSite;
 import com.celloud.model.mongo.EGFR;
 import com.celloud.model.mongo.HBV;
@@ -48,6 +49,7 @@ import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
 import com.celloud.model.mongo.RecommendDrug;
 import com.celloud.model.mongo.Split;
+import com.celloud.model.mongo.UGT;
 import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.Company;
 import com.celloud.model.mysql.DataFile;
@@ -691,6 +693,50 @@ public class ReportAction {
 		KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
 		ModelAndView mv = getModelAndView("report/report_data_kras", projectId);
 		return mv.addObject("kras", kras);
+	}
+	
+	/**
+	 * 获取DPD数据报告
+	 * 
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 * @author lin
+	 * @date 2016年3月25日下午4:00:38
+	 */
+	@RequestMapping("getDPDReport")
+	public ModelAndView getDPDReport(String dataKey, Integer projectId, Integer appId) {
+		DPD dpd = reportService.getDPDReport(dataKey, projectId, appId);
+		String mp = dpd.getMutationPosition();
+		if(StringUtils.isNotBlank(mp)){
+			String context[] = mp.split("\n");
+			StringBuffer sb = new StringBuffer("<table>");
+			for (String st : context) {
+				sb.append("<tr><td>" + st + "</td></tr>");
+			}
+			sb.append("</table>");
+			dpd.setMutationPosition(sb.toString());
+		}
+		ModelAndView mv = getModelAndView("report/report_data_dpd", projectId);
+		return mv.addObject("dpd", dpd);
+	}
+
+	/**
+	 * 获取UGT数据报告
+	 * 
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 * @author lin
+	 * @date 2016年3月25日下午4:00:51
+	 */
+	@RequestMapping("getUGTReport")
+	public ModelAndView getUGTReport(String dataKey, Integer projectId, Integer appId) {
+		UGT ugt = reportService.getUGTReport(dataKey, projectId, appId);
+		ModelAndView mv = getModelAndView("report/report_data_ugt", projectId);
+		return mv.addObject("ugt", ugt);
 	}
 
     /**
