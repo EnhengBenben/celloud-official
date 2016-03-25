@@ -27,8 +27,6 @@ $(function(){
 			iDisplayLength : 10
 		});
 	$.post("data/dataCompany",function(data){
-		if(data.length>0){
-			drawCharts.barChart("fileNumView",data,'数据个数','companyName','dataNum',null,20);
-		}
+		drawCharts.barChart("fileNumView",data,'数据个数','companyName','dataNum',null,20);
 	});
 });

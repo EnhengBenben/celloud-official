@@ -23,10 +23,6 @@ $(function(){
 	    		"aaSorting":[[2,"desc"]]
      });
 	$.post("data/dataUser",function(data){
-		if(data.length>0){
-			drawCharts.barChart("userFileNum",data,'数据个数','username','dataNum',themes.green,20);
-		}else{
-			$("#userFileNum").parent().parent().hide();
-		}
+		drawCharts.barChart("userFileNum",data,'数据个数','username','dataNum',themes.green,20);
 	});
 });
