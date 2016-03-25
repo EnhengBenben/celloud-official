@@ -180,7 +180,6 @@ var feedbacks = (function(feedbacks) {
 			var id = $item.attr('feedback_id');
 			if(id){
 				self.detail(id);
-				self.initUploader();
 			}
 		});
 	}
@@ -234,4 +233,5 @@ var feedbacks = (function(feedbacks) {
 	});
 	return self;
 })(feedbacks);
+feedbacks.initUploader();
 feedbacks.page(1);
