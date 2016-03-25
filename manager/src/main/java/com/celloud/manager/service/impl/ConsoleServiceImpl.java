@@ -44,7 +44,7 @@ public class ConsoleServiceImpl implements ConsoleService{
         int appNum=appMapper.countApp(companyId, AppOffline.ON);//大客户下的app数量
         int dataNum=dataFileMapper.countDataFile(companyId, DataState.ACTIVE,PropertiesUtil.testAccountIds);
         Long dataSize=dataFileMapper.countDataFileSize(companyId, DataState.ACTIVE,PropertiesUtil.testAccountIds);
-        int reportNum=reportMapper.countReport(companyId, DataState.ACTIVE,ReportPeriod.COMPLETE,PropertiesUtil.testAccountIds);
+        Integer reportNum=reportMapper.countReport(companyId, DataState.ACTIVE,ReportPeriod.COMPLETE,PropertiesUtil.testAccountIds);
         map.put("userNum", userNum);
         map.put("companyNum", companyNum);
         map.put("appNum", appNum);

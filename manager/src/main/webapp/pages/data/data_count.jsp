@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <script src="js/drawCharts.js"></script>
 <script src="js/data.js"></script>
+<link rel="stylesheet" href="css/data.css">
 <div class="breadcrumbs" id="breadcrumbs">
 	<ul class="breadcrumb">
 		<li>
@@ -38,7 +39,7 @@
 					<div class="xe-upper">
 						<div class="xe-label">
 							<strong>数据大小:</strong>
-							<strong class="num"> ${dataSize}${unit} </strong>
+							<strong class="num"> ${empty dataSize?0:dataSize}${unit} </strong>
 						</div>
 					</div>
 					<div class="xe-lower">
@@ -48,12 +49,28 @@
 			</div>
 		</div>
 		<c:if test="${ userRole=='2'}">
-			<h3 class="header smaller lighter green">大客户数据增量曲线图</h3>
-			<div class="col-xs-12" style="height: 350px;" id="bigUserFileNumView"></div>
+		    <div class="col-xs-12 data">
+	            <div class="row">
+	                <div class="widget-box transparent">
+	                    <div class="widget-header widget-header-flat">
+	                       <h3 class="header smaller lighter green">大客户数据增量曲线图</h3>
+	                     </div>
+	                    <div class="col-xs-12" style="height: 350px;" id="bigUserFileNumView"></div>
+	                </div>
+	            </div>
+	        </div>
 		</c:if>
-		<h3 class="header smaller lighter green">数据个数统计</h3>
-		<div class="col-xs-12" style="height: 250px;" id="fileNumView"></div>
-		<div class="col-xs-12" style="height: 250px;" id="fileTotalNum"></div>
+		<div class="col-xs-12 data">
+		    <div class="row">
+		        <div class="widget-box transparent">
+		            <div class="widget-header widget-header-flat">
+		               <h3 class="header smaller lighter green">数据个数统计</h3>
+		             </div>
+		            <div class="col-xs-12" style="height: 250px;" id="fileNumView"></div>
+                    <div class="col-xs-12" style="height: 250px;" id="fileTotalNum"></div>
+		        </div>
+		    </div>
+		</div>
 		<div class="col-xs-12">
 			<div class="table-header hide" id="_companyName"></div>
 			<c:if test="${monData!=null && fn:length(monData) > 0}">

@@ -23,6 +23,6 @@ $(function(){
 	    		"aaSorting":[[2,"desc"]]
      });
 	$.post("data/dataUser",function(data){
-		drawCharts.barChart("userFileNum",data,'数据个数',20,'username','dataNum',themes.green);
+		drawCharts.barChart("userFileNum",data,'数据个数','username','dataNum',themes.green,20);
 	});
 });

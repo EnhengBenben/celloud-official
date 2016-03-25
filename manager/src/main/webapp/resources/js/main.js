@@ -14,7 +14,7 @@ function menu(id,content){
 	$("#main-menu li").removeClass("active");
 	$("#"+id).addClass("active").parent("ul").parent("li").addClass("active");
 }
-var console=(function(console){
+var consoleModel=(function(console){
 	var self=console||{};
 	self.toConsole=function(){
 		$.post("console",function(responseText){
@@ -22,7 +22,7 @@ var console=(function(console){
 		});
 	};
 	return self;
-})(console);
+})(consoleModel);
 
 var dataFile=(function(dataFile){
 	var self=dataFile||{};
@@ -101,7 +101,7 @@ var companyCount=(function(companyCount){
 })(companyCount);
 
 $(function(){
-	console.toConsole();
+	consoleModel.toConsole();
 	$("body").on("click","[data-click='to-app-price-list']",function(){
 	  $.appManager.price.list();
 	});

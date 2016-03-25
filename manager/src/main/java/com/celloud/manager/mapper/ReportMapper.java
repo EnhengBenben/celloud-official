@@ -23,7 +23,7 @@ public interface ReportMapper {
 
     int updateByPrimaryKey(Report record);
     
-    public int countReport(@Param("companyId") Integer companyId,@Param("state")int state,@Param("period")int period,@Param("testAccountIds")String testAccountIds);
+    public Integer countReport(@Param("companyId") Integer companyId,@Param("state")int state,@Param("period")int period,@Param("testAccountIds")String testAccountIds);
     
     public List<Map<String,Object>> countReportOfApp(@Param("companyId") Integer companyId,@Param("state")int state,@Param("period")int period,@Param("testAccountIds")String testAccountIds,@Param("offLine") int offLine);
 }
