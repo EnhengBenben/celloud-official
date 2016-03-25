@@ -14,11 +14,12 @@
 	</ul>
 	<!-- .breadcrumb -->
 </div>
-
 <div class="page-content">
-	<div class="col-xs-12">
+	<div class="col-xs-12 data">
 		<div class='row'>
-			<h3 class="header smaller lighter green">用户数据个数统计</h3>
+		    <div class="widget-header widget-header-flat">
+		         <h3 class="header smaller lighter green">用户数据个数统计</h3>
+			</div>
 			<div class="col-xs-12" style="height: 350px;" id="userFileNum"></div>
 			<div class="col-xs-11 table-div">
 				<div class="table-header hide" id="_companyName"></div>

@@ -141,7 +141,7 @@ var drawCharts=(function(drawCharts){
 		myChart.setOption(option);
 	}
 	
-	self.barChart=function(id,data,title,length,x,y,theme) {
+	self.barChart=function(id,data,title,x,y,theme,showNum) {
 		var xAxis = new Array(data.length);
 		var yAxis = new Array(data.length);
 		var t;
@@ -149,7 +149,50 @@ var drawCharts=(function(drawCharts){
 			xAxis[i] = data[i][x];
 			yAxis[i] = data[i][y];
 		}
-		var option = makeOptionScrollUnit(xAxis, yAxis, title, 'bar', 0, length);
+		option = {
+			    tooltip : {
+			        trigger: 'axis',
+			        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+			            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+			        }
+			    },
+			    legend: {
+			        data:[title]
+			    },
+			    grid: {
+			        left: '3%',
+			        right: '4%',
+			        bottom: '3%',
+			        containLabel: true
+			    },
+			    xAxis : [
+			        {
+			            type : 'category',
+			            data : xAxis
+			        }
+			    ],
+			    yAxis : [
+			        {
+			            type : 'value'
+			        }
+			    ],
+			    series : [
+			        {
+			            name:title,
+			            type:'bar',
+			            data:yAxis
+			        }
+			    ]
+			};
+		if(!(typeof(showNum) == "undefined" ||showNum==null)&&data.length>0){
+			var len =(showNum / data.length) * 100;
+			option.dataZoom = {
+					show : true,
+					realtime : true,
+					start : 0,
+					end : len
+				};
+		}
 		if (typeof(theme) == "undefined" ||theme==null) {
 			var myChart = echarts.init(document.getElementById(id));
 			myChart.setOption(option);
