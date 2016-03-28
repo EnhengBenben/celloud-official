@@ -7,6 +7,7 @@ public class KRAS extends Base {
 	private String fileName;// 文件名
 	private String report;// report.txt
 	private String position;// wz1
+	private String pos;// length
 	private String mutationPosition;// wz2
 	private String conclusion;// report
 	private String seq;// seq
@@ -84,6 +85,14 @@ public class KRAS extends Base {
 
 	public void setOut(List<String> out) {
 		this.out = out;
+	}
+
+	public String getPos() {
+		return pos;
+	}
+
+	public void setPos(String pos) {
+		this.pos = pos;
 	}
 
 }
