@@ -51,7 +51,7 @@ class KRAS:
 		if (os.path.exists(report)):
 			context = readAllChinese(report)
 			result['report'] = context
-			result['pos'] = context.replace('KRAS exon number is ','').strip()
+			result['pos'] = context.split('\n')[0].replace('KRAS exon number is ','').strip()
 
 		#report.txt.wz.1
 		wz1 = os.path.join(path,'report.txt.wz.1')
