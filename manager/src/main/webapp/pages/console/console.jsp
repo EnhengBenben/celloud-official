@@ -58,10 +58,10 @@
                         </div>
                     </li>
                     <li>
-                        <a class="number">${resultMap.reportNum }</a>
+                        <a class="number">${empty resultMap.reportNum?0:resultMap.reportNum }</a>
                         <div class="info">
                             <b>
-                                ${resultMap.reportNum }
+                                ${empty resultMap.reportNum?0:resultMap.reportNum }
                                 <span class="unit">(个)</span>
                             </b>
                             报告数量:
@@ -132,31 +132,34 @@
     </div>
 </div>
 <!-- /.row -->
-<div class="row">
-    <div class="col-xs-12">
-        <h3 class="header smaller lighter green">浏览器统计</h3>
-    </div>
-
-    <div class="col-xs-4 table-responsiv " style="height: 350px; overflow-y: scroll">
-        <table id="allUserDataList" class="table table-striped table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th>浏览器</th>
-                    <th class="hidden-180">使用数量</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${browserData }" var="data">
-                    <tr>
-
-                        <td>${data.browser }</td>
-                        <td>${data.logNum }</td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-xs-8">
-        <div class="col-sm-12" style="height: 350px" id="browserDistribute"></div>
+<div class="col-xs-12 console">
+    <div class="row">
+        <div class="widget-box transparent">
+            <div class="widget-header widget-header-flat">
+               <h3 class="header smaller lighter green">浏览器统计</h3>
+            </div>
+            <div class="col-xs-4 table-responsiv " style="height: 350px; overflow-y: scroll">
+		        <table id="allUserDataList" class="table table-striped table-bordered table-hover">
+		            <thead>
+		                <tr>
+		                    <th>浏览器</th>
+		                    <th class="hidden-180">使用数量</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		                <c:forEach items="${browserData }" var="data">
+		                    <tr>
+		
+		                        <td>${data.browser }</td>
+		                        <td>${data.logNum }</td>
+		                    </tr>
+		                </c:forEach>
+		            </tbody>
+		        </table>
+		    </div>
+		    <div class="col-xs-8">
+		        <div class="col-sm-12" style="height: 350px" id="browserDistribute"></div>
+		    </div>
+        </div>
     </div>
 </div>

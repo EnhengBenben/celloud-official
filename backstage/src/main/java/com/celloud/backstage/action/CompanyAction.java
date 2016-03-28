@@ -50,7 +50,7 @@ public class CompanyAction {
              @RequestParam(defaultValue = "10") int size,@RequestParam("keyword") String keyword){
          ModelAndView mv=new ModelAndView("company/company_main");
          Page page = new Page(currentPage, size);
-         PageList<Company> pageList=companyService.getCompanyByPage(page,keyword);
+         PageList<Company> pageList=companyService.getCompanyByPage(page,keyword!=null?keyword.trim():keyword);
          mv.addObject("pageList",pageList);
          mv.addObject("keyword",keyword);
          return mv;

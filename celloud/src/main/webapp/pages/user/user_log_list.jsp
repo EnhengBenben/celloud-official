@@ -37,50 +37,131 @@
 		</c:if>
 	</tbody>
 </table>
+<!-- users.searchLogInfo -->
 <div class="pagination text-center">
-	<ul class="pages">
-		<li class="${page.hasPrev?'':'active' }">
-			<a href="javascript:users.searchLogInfo('${page.hasPrev?(page.currentPage-1):'' }');">&lt;</a>
-		</li>
-		<li class="${page.hasPrev?'':'active' }">
-			<a href="javascript:users.searchLogInfo('${page.hasPrev?1:'' }');">1</a>
-		</li>
-		<c:if test="${page.currentPage > 4 && page.totalPage>10}">
-			<li>...</li>
-		</c:if>
-		<c:choose>
-			<c:when test="${ page.currentPage <= 4}">
-				<c:set var="maxPage" value="${page.totalPage > 9 ? 9 : page.totalPage-1 }" />
-				<c:forEach begin="2" end="${maxPage }" step="1" var="pageNum">
-					<li class="${pageNum != page.currentPage?'':'active' }">
-						<a href="javascript:users.searchLogInfo('${pageNum != page.currentPage?pageNum:'' }');">${pageNum }</a>
-					</li>
-				</c:forEach>
-			</c:when>
-			<c:when test="${page.currentPage > 4 && page.currentPage < page.totalPage - 6 }">
-				<c:forEach begin="${page.currentPage-1 }" end="${page.currentPage+6 }" step="1" var="pageNum">
-					<li class="${pageNum != page.currentPage?'':'active' }">
-						<a href="javascript:users.searchLogInfo('${pageNum != page.currentPage?pageNum:'' }');">${pageNum }</a>
-					</li>
-				</c:forEach>
-			</c:when>
-			<c:when test="${page.currentPage > 4 && page.currentPage >= page.totalPage -  6 }">
-				<c:forEach begin="${page.totalPage-8>=1?page.totalPage-8:2 }" end="${page.totalPage-1 }" step="1" var="pageNum">
-					<li class="${pageNum != page.currentPage?'':'active'}">
-						<a href="javascript:users.searchLogInfo('${pageNum != page.currentPage?pageNum:'' }');">${pageNum }</a>
-					</li>
-				</c:forEach>
-			</c:when>
-		</c:choose>
-		<c:if test="${page.totalPage>10 && page.totalPage- page.currentPage > 7}">
-			<li>...</li>
-		</c:if>
-		<li class="${page.hasNext?'':'active' }">
-			<a href="javascript:users.searchLogInfo('${page.hasNext?page.totalPage:'' }');">${page.totalPage }</a>
-		</li>
-		<li class="${page.hasNext?'':'active' }">
-			<a href="javascript:users.searchLogInfo('${page.hasNext?page.currentPage+1:'' }');">&gt;</a>
-		</li>
-		<li>共 ${page.totalPage } 页&nbsp;|&nbsp;合计 ${page.rowCount} 条</li>
-	</ul>
+  <c:if test="${pageList.datas.size()>0}">
+    <input id="data-current-page-hide" value="${pageList.page.currentPage }" type="hidden" >
+    <ul class="pages" id="pagination-data">
+      <!-- 显示prev -->
+      <c:if test="${pageList.page.hasPrev}">
+          <li><a href="javascript:users.searchLogInfo(${pageList.page.currentPage-1 })">&lt;</a></li>
+      </c:if>
+      <!-- 显示第一页 -->
+      <c:choose>
+        <c:when test="${pageList.page.currentPage==1}"><li class="active"><a href="javascript:users.searchLogInfo(1)">1</a></li></c:when>
+        <c:otherwise><li><a href="javascript:users.searchLogInfo(1)">1</a></li></c:otherwise>
+      </c:choose>
+      
+      <c:if test="${pageList.page.currentPage>4&&pageList.page.totalPage>10}">
+          <li>...</li>
+      </c:if>
+      <c:choose>
+        <c:when test="${pageList.page.totalPage-pageList.page.currentPage>=7}">
+          <c:if test="${pageList.page.currentPage==3}">
+              <li><a href="javascript:users.searchLogInfo(${pageList.page.currentPage-1 })">${pageList.page.currentPage-1 }</a></li>
+          </c:if>
+          <c:if test="${pageList.page.currentPage==4}">
+              <li><a href="javascript:users.searchLogInfo(${pageList.page.currentPage-2 })">${pageList.page.currentPage-2 }</a></li>
+          </c:if>
+          <c:if test="${pageList.page.currentPage>3}">
+              <li><a href="javascript:users.searchLogInfo(${pageList.page.currentPage-1 })">${pageList.page.currentPage-1 }</a></li>
+          </c:if>
+          <c:if test="${pageList.page.currentPage>1&&pageList.page.currentPage<pageList.page.totalPage}">
+              <li class="active"><a href="javascript:users.searchLogInfo(${pageList.page.currentPage })">${pageList.page.currentPage }</a></li>
+          </c:if>
+          <c:if test="${pageList.page.totalPage-pageList.page.currentPage>1}">
+              <li><a href="javascript:users.searchLogInfo(${pageList.page.currentPage+1 })">${pageList.page.currentPage+1 }</a></li>
+          </c:if>
+          <c:if test="${pageList.page.totalPage-pageList.page.currentPage>2}">
+              <li><a href="javascript:users.searchLogInfo(${pageList.page.currentPage+2 })">${pageList.page.currentPage+2 }</a></li>
+          </c:if>
+          <c:if test="${pageList.page.totalPage-pageList.page.currentPage>3}">
+              <li><a href="javascript:users.searchLogInfo(${pageList.page.currentPage+3 })">${pageList.page.currentPage+3 }</a></li>
+          </c:if>
+          <c:if test="${pageList.page.totalPage-pageList.page.currentPage>4}">
+              <li><a href="javascript:users.searchLogInfo(${pageList.page.currentPage+4 })">${pageList.page.currentPage+4 }</a></li>
+          </c:if>
+          <c:if test="${pageList.page.totalPage-pageList.page.currentPage>5}">
+              <li><a href="javascript:users.searchLogInfo(${pageList.page.currentPage+5 })">${pageList.page.currentPage+5 }</a></li>
+          </c:if>
+          <c:if test="${pageList.page.currentPage<4}">
+              <c:if test="%{pageList.page.totalPage-pageList.page.currentPage>6}">
+                  <li><a href="javascript:users.searchLogInfo(${pageList.page.currentPage+6 })">${pageList.page.currentPage+6 }</a></li>
+              </c:if>
+          </c:if>
+          <c:choose>
+            <c:when test="${pageList.page.currentPage==1}">
+              <c:if test="%{pageList.page.totalPage-pageList.page.currentPage>7}">
+                  <li><a href="javascript:users.searchLogInfo(${pageList.page.currentPage+7 })">${pageList.page.currentPage+7 }</a></li>
+              </c:if>
+              <c:if test="%{pageList.page.totalPage-pageList.page.currentPage>8}">
+                  <li><a href="javascript:users.searchLogInfo(${pageList.page.currentPage+8 })">${pageList.page.currentPage+8 }</a></li>
+              </c:if>
+            </c:when>
+            <c:otherwise>
+              <c:choose>
+                <c:when test="${pageList.page.currentPage==2}">
+                  <c:if test="${pageList.page.totalPage-pageList.page.currentPage>7}">
+                      <li><a href="javascript:users.searchLogInfo(${pageList.page.currentPage+7 })">${pageList.page.currentPage+7 }</a></li>
+                  </c:if>
+                </c:when>
+                <c:otherwise>
+                  <c:if test="${pageList.page.currentPage>4 && (pageList.page.totalPage-pageList.page.currentPage>6)}">
+                      <li><a href="javascript:users.searchLogInfo(${pageList.page.currentPage+6 })">${pageList.page.currentPage+6 }</a></li>
+                  </c:if>
+                </c:otherwise>
+              </c:choose>
+            </c:otherwise>
+          </c:choose>
+        </c:when>
+        <c:otherwise>
+          <c:choose>
+            <c:when test="${pageList.page.totalPage-8>0}">
+              <c:forEach begin="${pageList.page.totalPage-8}" step="1" end="${pageList.page.totalPage-1}" var="step">
+                <c:choose>
+                  <c:when test="${step==pageList.page.currentPage}">   
+                      <li class="active"><a href="javascript:users.searchLogInfo(${step })">${step }</a></li>
+                  </c:when>
+                  <c:otherwise>
+                      <li><a href="javascript:users.searchLogInfo(${step })">${step }</a></li>
+                  </c:otherwise>
+                </c:choose>
+              </c:forEach>
+            </c:when>
+            <c:otherwise>
+              <c:forEach begin="2" step="1" end="${pageList.page.totalPage-1}" var="step">
+                <c:choose>
+                  <c:when test="${step==pageList.page.currentPage}">   
+                      <li class="active"><a href="javascript:users.searchLogInfo(${step })">${step }</a></li>
+                  </c:when>
+                  <c:otherwise>
+                      <li><a href="javascript:users.searchLogInfo(${step })">${step }</a></li>
+                  </c:otherwise>
+                </c:choose>
+              </c:forEach>
+            </c:otherwise>
+          </c:choose>
+        </c:otherwise>
+      </c:choose>
+      <c:if test="${pageList.page.totalPage-pageList.page.currentPage>=8&&pageList.page.totalPage>10}">
+          <li>...</li>
+      </c:if>
+      <c:choose>
+        <c:when test="${pageList.page.currentPage==pageList.page.totalPage&&pageList.page.totalPage>1}"> 
+          <li class="active"><a href="javascript:users.searchLogInfo(${pageList.page.totalPage })">${pageList.page.totalPage }</a></li>
+        </c:when>
+        <c:otherwise>
+          <c:if test="${pageList.page.totalPage>1}">   
+            <li><a href="javascript:users.searchLogInfo(${pageList.page.totalPage })">${pageList.page.totalPage }</a></li>
+          </c:if>
+        </c:otherwise>
+      </c:choose>
+      <c:if test="${pageList.page.hasNext}">
+          <li><a href="javascript:users.searchLogInfo(${pageList.page.currentPage+1 })">&gt;</a></li>
+      </c:if>
+      <li>
+                  共${pageList.page.totalPage }页&nbsp;|&nbsp;合计${pageList.page.rowCount }条
+      </li>
+    </ul>
+  </c:if>
 </div>

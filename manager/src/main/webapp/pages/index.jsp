@@ -44,7 +44,7 @@
                         
                 <ul id="main-menu" class="main-menu">
                     <li class="active opened active" id="console-menu">
-                        <a href="javascript:console.toConsole();">
+                        <a href="javascript:consoleModel.toConsole();">
                             <i class="linecons-cog"></i>
                             <span class="title">控制台</span>
                         </a>

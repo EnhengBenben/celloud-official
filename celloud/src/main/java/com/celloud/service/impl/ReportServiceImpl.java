@@ -37,6 +37,7 @@ import com.celloud.model.mongo.CmpFilling;
 import com.celloud.model.mongo.CmpGeneDetectionDetail;
 import com.celloud.model.mongo.CmpGeneSnpResult;
 import com.celloud.model.mongo.CmpReport;
+import com.celloud.model.mongo.DPD;
 import com.celloud.model.mongo.EGFR;
 import com.celloud.model.mongo.GddDiseaseDict;
 import com.celloud.model.mongo.GeneDetectionResult;
@@ -48,6 +49,7 @@ import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
 import com.celloud.model.mongo.Split;
 import com.celloud.model.mongo.TaskQueue;
+import com.celloud.model.mongo.UGT;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Report;
 import com.celloud.page.Page;
@@ -165,6 +167,16 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public KRAS getKRASReport(String dataKey, Integer projectId, Integer appId) {
 		return reportDao.getDataReport(KRAS.class, dataKey, projectId, appId);
+	}
+	
+	@Override
+	public UGT getUGTReport(String dataKey, Integer projectId, Integer appId) {
+		return reportDao.getDataReport(UGT.class, dataKey, projectId, appId);
+	}
+
+	@Override
+	public DPD getDPDReport(String dataKey, Integer projectId, Integer appId) {
+		return reportDao.getDataReport(DPD.class, dataKey, projectId, appId);
 	}
 
     @Override

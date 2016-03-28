@@ -54,7 +54,7 @@ public class UserAction {
          if(!"username".equals(searchFiled)&&!"email".equals(searchFiled)){
              searchFiled="username";
          }
-         PageList<User> pageList=userService.getUserByPage(page,searchFiled,keyword);
+         PageList<User> pageList=userService.getUserByPage(page,searchFiled,keyword!=null?keyword.trim():keyword);
          mv.addObject("pageList",pageList);
          mv.addObject("searchFiled",searchFiled);
          mv.addObject("keyword",keyword);
