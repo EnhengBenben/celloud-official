@@ -51,22 +51,26 @@ utils.setDocSize = function(){
 	//设置宽度
 	if(winWidth >= docWidth){
 		$(".bgContainer").width(winWidth);
+		$(".longbackground").width(winWidth);
 		$("#bg").width(winWidth);
-		$(".wrapper").width(winWidth);
+//		$(".wrapper").width(winWidth);
 	}else{
 		$(".bgContainer").width(docWidth);
+		$(".longbackground").width(docWidth);
 		$("#bg").width(docWidth);
-		$(".wrapper").width(docWidth);
+//		$(".wrapper").width(docWidth);
 	}
 	//设置高度
 	if(winHeight >= docHeight){
 		$(".bgContainer").height(winHeight);
+		$(".longbackground").height(winHeight);
 		$("#bg").height(winHeight);
-		$(".wrapper").height(winHeight);
+//		$(".wrapper").height(winHeight);
 	}else{
 		$(".bgContainer").height(docHeight);
+		$(".longbackground").height(docHeight);
 		$("#bg").height(docHeight);
-		$(".wrapper").height(docHeight);
+//		$(".wrapper").height(docHeight);
 	}
 	$(".bgContainer").css("overflow","hidden");
 }
@@ -147,7 +151,7 @@ utils.splitDataByInfo = function(data,splitStr,number){
 utils.loadBaiduTongji = function(){
   //获取域名
   var host = window.location.host;
-  if(host.indexOf("https://www.celloud.cn")>=0){
+  if(host.indexOf("www.celloud.cn")>=0){
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
@@ -159,6 +163,5 @@ utils.loadBaiduTongji = function(){
     })();
   }
 }
-$(document).ready(function(){
-  utils.loadBaiduTongji();
-})
+utils.loadBaiduTongji();
+utils.setDocSize();
