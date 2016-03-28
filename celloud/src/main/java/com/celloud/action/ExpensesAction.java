@@ -17,6 +17,7 @@ import com.celloud.model.mysql.Expenses;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.ExpensesService;
+import com.celloud.utils.ActionLog;
 
 /**
  * 费用管理
@@ -40,6 +41,7 @@ public class ExpensesAction {
      * @author leamo
      * @date 2016年2月29日 下午2:20:24
      */
+    @ActionLog(value = "打开消费记录页面", button = "消费记录查看详情")
     @RequestMapping("toRunExpenseList")
     public ModelAndView toRunExpenseList(
             @RequestParam(defaultValue = "1") int page,
@@ -63,6 +65,7 @@ public class ExpensesAction {
      * @author leamo
      * @date 2016年3月8日 上午11:31:22
      */
+    @ActionLog(value = "查看用户总消费金额", button = "消费记录")
     @RequestMapping("getTotalConsumption")
     @ResponseBody
     public BigDecimal getTotalConsumption() {

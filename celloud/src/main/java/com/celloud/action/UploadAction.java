@@ -30,6 +30,7 @@ import com.celloud.model.mysql.DataFile;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.ReportService;
+import com.celloud.utils.ActionLog;
 import com.celloud.utils.CheckFileTypeUtil;
 import com.celloud.utils.DataUtil;
 import com.celloud.utils.FileTools;
@@ -68,6 +69,7 @@ public class UploadAction {
      * @return
      * @date 2015年12月28日 下午3:22:38
      */
+    @ActionLog(value = "上传数据", button = "开始上传")
     @ResponseBody
     @RequestMapping("uploadManyFile")
     public String uploadManyFile(String name, String onlyName, String md5,
@@ -125,6 +127,7 @@ public class UploadAction {
      * @author han
      * @date 2016年1月13日 上午10:04:06
      */
+    @ActionLog(value = "将缓存的数据读取到共享存储", button = "开始上传")
     private void copy(MultipartFile file, File dst) {
         InputStream in = null;
         OutputStream out = null;
@@ -168,6 +171,7 @@ public class UploadAction {
      * 
      * @return
      */
+    @ActionLog(value = "上传完成的数据保存数据库", button = "开始上传")
     private int addFileInfo(String fileName) {
         Integer userId = ConstantsData.getLoginUserId();
         DataFile data = new DataFile();
@@ -187,6 +191,7 @@ public class UploadAction {
      * 
      * @return
      */
+    @ActionLog(value = "检查上传页面是否超时", button = "开始上传")
     @ResponseBody
     @RequestMapping("checkAdminSessionTimeOut")
     public String checkAdminSessionTimeOut() {
@@ -201,6 +206,7 @@ public class UploadAction {
      * @param newName
      * @return
      */
+    @ActionLog(value = "修改文件详细信息", button = "开始上传")
     private int updateFileInfo(int dataId, String dataKey, String newName, String perlPath, String outPath) {
         DataFile data = new DataFile();
         data.setFileId(dataId);

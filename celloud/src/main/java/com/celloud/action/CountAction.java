@@ -21,6 +21,7 @@ import com.celloud.model.mongo.Pgs;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.ReportService;
+import com.celloud.utils.ActionLog;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.PropertiesUtil;
 
@@ -46,6 +47,7 @@ public class CountAction {
 	 * 
 	 * @return
 	 */
+    @ActionLog(value = "打开celloud控制台首页，获取统计信息", button = "总览")
 	@RequestMapping("loginCount")
 	public ModelAndView loginCount() {
 		ModelAndView mv = new ModelAndView("count/count_user");
@@ -66,6 +68,7 @@ public class CountAction {
 	 * 
 	 * @return
 	 */
+    @ActionLog(value = "打开celloud控制台首页", button = "")
 	@ResponseBody
 	@RequestMapping("fileMonthCount")
 	public List<Map<String, String>> fileMonthCount() {

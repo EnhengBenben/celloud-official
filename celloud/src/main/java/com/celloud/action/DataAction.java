@@ -43,6 +43,7 @@ import com.celloud.service.DataService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
+import com.celloud.utils.ActionLog;
 import com.celloud.utils.DataKeyListToFile;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.PropertiesUtil;
@@ -91,6 +92,7 @@ public class DataAction {
      * @return
      * @date 2016-1-9 上午3:43:01
      */
+    @ActionLog(value = "检索某个项目下的所有数据（用于数据报告页面右侧菜单）", button = "数据报告")
     @RequestMapping("getDatasInProject")
     @ResponseBody
     public List<DataFile> getDatasInProject(Integer projectId) {
@@ -105,6 +107,7 @@ public class DataAction {
      * @param size
      * @return
      */
+    @ActionLog(value = "打开数据管理页面", button = "数据管理")
     @RequestMapping("dataAllList.action")
     public ModelAndView dataAllList(@RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size) {
@@ -133,6 +136,7 @@ public class DataAction {
      *            排序类型
      * @return
      */
+    @ActionLog(value = "条件检索数据列表", button = "数据管理搜索/分页")
     @RequestMapping("dataList.action")
     public ModelAndView dataList(@RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size, String condition,
@@ -164,6 +168,7 @@ public class DataAction {
      * @param dataIds
      * @return -1:所选类型大于一种
      */
+    @ActionLog(value = "获取数据类型", button = "运行")
     @RequestMapping("getFormatByDataIds.action")
     @ResponseBody
     public Integer getFormatByDataIds(String dataIds) {
@@ -178,6 +183,7 @@ public class DataAction {
      * @param formatId
      * @return
      */
+    @ActionLog(value = "获取可运行的app", button = "运行")
     @RequestMapping("getRunApp.action")
     @ResponseBody
     public List<App> getRunApp(
@@ -196,6 +202,7 @@ public class DataAction {
      * @param appId
      * @return
      */
+    @ActionLog(value = "验证数据是否正在运行APP", button = "运行")
     @RequestMapping("checkDataRunningApp.action")
     @ResponseBody
     public List<Integer> checkDataRunningApp(String dataIds, Integer appId) {
@@ -214,6 +221,7 @@ public class DataAction {
      * @author leamo
      * @date 2016-1-10 下午9:49:10
      */
+    @ActionLog(value = "删除所选数据", button = "数据删除")
     @RequestMapping("delete.action")
     @ResponseBody
     public Response delete(String dataIds) {
@@ -231,6 +239,7 @@ public class DataAction {
      * @author leamo
      * @date 2016-1-10 下午10:04:24
      */
+    @ActionLog(value = "打开分别修改数据列表Modal", button = "数据编辑")
     @RequestMapping("toEachEditDatas.action")
     public ModelAndView toEachEditDatas(String dataIds) {
         ModelAndView mv = new ModelAndView("data/data_all_update");
@@ -248,6 +257,7 @@ public class DataAction {
      * @author leamo
      * @date 2016-1-10 下午10:21:13
      */
+    @ActionLog(value = "获取物种列表", button = "数据编辑")
     @RequestMapping("getStrainList.action")
     @ResponseBody
     public List<Map<String, String>> getStrainList() {
@@ -265,6 +275,7 @@ public class DataAction {
      * @author leamo
      * @date 2016-1-10 下午11:04:34
      */
+    @ActionLog(value = "批量保存修改数据", button = "保存批量编辑")
     @RequestMapping("batchEditDataByIds.action")
     @ResponseBody
     public Integer batchEditDataByIds(String dataIds, DataFile data) {
@@ -282,6 +293,7 @@ public class DataAction {
      * @author leamo
      * @date 2016-1-10 下午11:04:34
      */
+    @ActionLog(value = "分别保存所修改的数据", button = "保存单个编辑")
     @RequestMapping("eachEditDataByIds.action")
     @ResponseBody
     public Integer eachEditDataByIds(DataFileEditForm dataFileEditForm) {
@@ -298,6 +310,7 @@ public class DataAction {
      * @param appIds
      * @return
      */
+    @ActionLog(value = "开始运行方法，调用perl，保存任务信息", button = "开始运行")
     @RequestMapping("run.action")
     @ResponseBody
     public String run(String dataIds, String appIds) {
