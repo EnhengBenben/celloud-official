@@ -1,7 +1,6 @@
 package com.celloud.model.mongo;
 
 import java.io.Serializable;
-import java.util.Map;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
@@ -25,7 +24,7 @@ public class Behavior extends ActionLog implements Serializable {
 	private String method;
 	private String action;
 	private Long consumeTime;
-	private Map<String, String[]> param;
+	private String queryString;
 
 	public ObjectId getId() {
 		return id;
@@ -51,20 +50,20 @@ public class Behavior extends ActionLog implements Serializable {
 		this.action = action;
 	}
 
-	public Map<String, String[]> getParam() {
-		return param;
-	}
-
-	public void setParam(Map<String, String[]> param) {
-		this.param = param;
-	}
-
 	public Long getConsumeTime() {
 		return consumeTime;
 	}
 
 	public void setConsumeTime(Long consumeTime) {
 		this.consumeTime = consumeTime;
+	}
+
+	public String getQueryString() {
+		return queryString;
+	}
+
+	public void setQueryString(String queryString) {
+		this.queryString = queryString;
 	}
 
 }

@@ -142,3 +142,4 @@ table [class*=span],.row-fluid table [class*=span] { display: table-cell;  float
   border-style: solid;
   border-width: 7px;
 }
+.break-page { page-break-after:always;}
