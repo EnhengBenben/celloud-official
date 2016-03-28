@@ -27,7 +27,7 @@
   </div>
   <div id="toc" class="tocify fixed"></div>
   <div class="title">
-    <span class="title-text">细菌性血流感染检测报告</span>
+    <span class="title-text">细菌性血流感染检测报告--分析报告</span>
     <img class="title-logo" src="<%=request.getContextPath() %>/images/hospitalIcon/demo-logo.png"></div>
   </div>
   <form id="print-form">
@@ -70,53 +70,178 @@
         <li><lable>送检日期：</lable><span><input class="width-80" type="text" name=""></span></li>
     </ul>
   </section>
-  <section>
-    <h2>2.1 检测结果</h2>
+  <section class="break-page">
+    <h2>2 检测结果</h2>
     <div class="tests-info">
-       <p>金黄色葡萄球菌。</p>
-       <p class="statement"><span>说明：从16S序列同源性考虑，该菌与溶血葡萄球菌，表皮葡萄球菌非常相似。</span></p>
-	   <p>牛链杆菌。</p>
+       <p>牛链球菌</p>
+       <p>葡萄球菌</p>
+       <table class="table table-bordered table-condensed gray-table">
+         <tr>
+           <td rowspan="2">G+</td>
+           <td class="positive"><span>[✔]</span>牛链球菌</td>
+           <td class="positive"><span>[✔]</span>葡萄球菌</td>
+           <td><span>[✘]</span>肺炎链球菌</td>
+           <td><span>[✘]</span>粪肠球菌</td>
+         </tr>
+         <tr>
+           <td><span>[✘]</span>屎肠球菌</td>
+           <td><span>[✘]</span>难辨梭状芽孢杆菌</td>
+           <td><span>[✘]</span>溃疡棒状杆菌</td>
+           <td><span>[✘]</span>结膜干燥杆菌</td>
+         </tr>
+         <tr>
+           <td rowspan="3">G-</td>
+           <td><span>[✘]</span>大肠埃希菌</td>
+           <td><span>[✘]</span>铜绿假单胞菌</td>
+           <td><span>[✘]</span>鲍曼不动杆菌</td>
+           <td><span>[✘]</span>肺炎克雷伯菌</td>
+         </tr>
+         <tr>
+           <td><span>[✘]</span>嗜麦芽窄食单胞菌</td>
+           <td><span>[✘]</span>粘质沙雷氏菌</td>
+           <td><span>[✘]</span>阴沟肠杆菌</td>
+           <td><span>[✘]</span>嗜水气单胞菌</td>
+         </tr>
+         <tr>
+           <td><span>[✘]</span>产气肠杆菌</td>
+           <td><span>[✘]</span>肠炎沙门菌</td>
+           <td><span>[✘]</span>奇异变形杆菌</td>
+           <td><span>[✘]</span>洋葱伯克霍尔德菌</td>
+         </tr>
+       </table>
+       <table id="test-seq-table" class="table table-bordered table-condensed">
+         <thead>
+           <tr>
+             <th style="min-width: 90px;">菌名(属-种)</th>
+             <th>#</th>
+             <th width="470">序列 (5'-3')</th>
+             <th name="opera-seq" width="53">操作</th>
+             <th>其它信息</th>
+           </tr>
+	     </thead>
+         <tbody>
+	         <tr>
+	           <td rowspan="4" style="text-align:center;">葡萄球菌</td>
+	           <td>1</td>
+	           <td>
+	             <div id="seq1" class="seq">TCATGGAGAG&nbsp;&nbsp;TTCGATCCTG&nbsp;&nbsp;GCTCAGGATG&nbsp;&nbsp;AACGCTGGCG&nbsp;&nbsp;GCATGCTTAA&nbsp;&nbsp;CACATGCAAG&nbsp;&nbsp;TCGGACGGGG<br>AGTGGTGTTT&nbsp;&nbsp;CCAGTGGCGG&nbsp;&nbsp;ACGGGTGAGT&nbsp;&nbsp;ATACGCGTAA&nbsp;&nbsp;GAACCTGCCC&nbsp;&nbsp;TTGGGAGGGG&nbsp;&nbsp;AACAACAGCT&nbsp;&nbsp;<br>GGAAACGGCT&nbsp;&nbsp;GCTAATACCC&nbsp;&nbsp;CGTAGGCTGA&nbsp;&nbsp;GGAGCAAAAG&nbsp;&nbsp;GAGGAATCCG&nbsp;&nbsp;CCTGAGGAGG&nbsp;&nbsp;GGCTTGCGTC</div>
+	           </td>
+	           <td name="opera-seq"><span id="copy-seq1"></span></td>
+	           <td></td>
+	         </tr>
+	         <tr>
+	           <td>2</td>
+	           <td>
+                 <div id="seq2" class="seq">TCATGGAGAG&nbsp;&nbsp;TTCGATCCTG&nbsp;&nbsp;GCTCAGGATG&nbsp;&nbsp;AACGCTGGCG&nbsp;&nbsp;GCATGCTTAA&nbsp;&nbsp;CACATGCAAG&nbsp;&nbsp;TCGGACGGGG<br>AGTGGTGTTT&nbsp;&nbsp;CCAGTGGCGG&nbsp;&nbsp;ACGGGTGAGT&nbsp;&nbsp;ATACGCGTAA&nbsp;&nbsp;GAACCTGCCC&nbsp;&nbsp;TTGGGAGGGG&nbsp;&nbsp;AACAACAGCT&nbsp;&nbsp;<br>GGAAACGGCT&nbsp;&nbsp;GCTAATACCC&nbsp;&nbsp;CGTAGGCTGA&nbsp;&nbsp;GGAGCAAAAG&nbsp;&nbsp;GAGGAATCCG&nbsp;&nbsp;CCTGAGGAGG&nbsp;&nbsp;GGCTTGCGTC</div>
+               </td>
+               <td name="opera-seq"><span id="copy-seq2"></span></td>
+               <td></td>
+	         </tr>
+	         <tr>
+	           <td>3</td>
+	           <td>
+                 <div id="seq3" class="seq">TCATGGAGAG&nbsp;&nbsp;TTCGATCCTG&nbsp;&nbsp;GCTCAGGATG&nbsp;&nbsp;AACGCTGGCG&nbsp;&nbsp;GCATGCTTAA&nbsp;&nbsp;CACATGCAAG&nbsp;&nbsp;TCGGACGGGG<br>AGTGGTGTTT&nbsp;&nbsp;CCAGTGGCGG&nbsp;&nbsp;ACGGGTGAGT&nbsp;&nbsp;ATACGCGTAA&nbsp;&nbsp;GAACCTGCCC&nbsp;&nbsp;TTGGGAGGGG&nbsp;&nbsp;AACAACAGCT&nbsp;&nbsp;<br>GGAAACGGCT&nbsp;&nbsp;GCTAATACCC&nbsp;&nbsp;CGTAGGCTGA&nbsp;&nbsp;GGAGCAAAAG&nbsp;&nbsp;GAGGAATCCG&nbsp;&nbsp;CCTGAGGAGG&nbsp;&nbsp;GGCTTGCGTC</div>
+               </td>
+               <td name="opera-seq"><span id="copy-seq3"></span></td>
+               <td></td>
+	         </tr>
+	         <tr>
+	           <td>4</td>
+	           <td>
+                 <div id="seq4" class="seq">TCATGGAGAG&nbsp;&nbsp;TTCGATCCTG&nbsp;&nbsp;GCTCAGGATG&nbsp;&nbsp;AACGCTGGCG&nbsp;&nbsp;GCATGCTTAA&nbsp;&nbsp;CACATGCAAG&nbsp;&nbsp;TCGGACGGGG<br>AGTGGTGTTT&nbsp;&nbsp;CCAGTGGCGG&nbsp;&nbsp;ACGGGTGAGT&nbsp;&nbsp;ATACGCGTAA&nbsp;&nbsp;GAACCTGCCC&nbsp;&nbsp;TTGGGAGGGG&nbsp;&nbsp;AACAACAGCT&nbsp;&nbsp;<br>GGAAACGGCT&nbsp;&nbsp;GCTAATACCC&nbsp;&nbsp;CGTAGGCTGA&nbsp;&nbsp;GGAGCAAAAG&nbsp;&nbsp;GAGGAATCCG&nbsp;&nbsp;CCTGAGGAGG&nbsp;&nbsp;GGCTTGCGTC</div>
+               </td>
+               <td name="opera-seq"><span id="copy-seq4"></span></td>
+	           <td></td>
+	         </tr>
+	         <tr>
+	           <td rowspan="4" style="text-align:center;">牛链杆菌</td>
+	           <td>1</td>
+	           <td>
+                 <div id="seq5" class="seq">TCATGGAGAG&nbsp;&nbsp;TTCGATCCTG&nbsp;&nbsp;GCTCAGGATG&nbsp;&nbsp;AACGCTGGCG&nbsp;&nbsp;GCATGCTTAA&nbsp;&nbsp;CACATGCAAG&nbsp;&nbsp;TCGGACGGGG<br>AGTGGTGTTT&nbsp;&nbsp;CCAGTGGCGG&nbsp;&nbsp;ACGGGTGAGT&nbsp;&nbsp;ATACGCGTAA&nbsp;&nbsp;GAACCTGCCC&nbsp;&nbsp;TTGGGAGGGG&nbsp;&nbsp;AACAACAGCT&nbsp;&nbsp;<br>GGAAACGGCT&nbsp;&nbsp;GCTAATACCC&nbsp;&nbsp;CGTAGGCTGA&nbsp;&nbsp;GGAGCAAAAG&nbsp;&nbsp;GAGGAATCCG&nbsp;&nbsp;CCTGAGGAGG&nbsp;&nbsp;GGCTTGCGTC</div>
+               </td>
+               <td name="opera-seq"><span id="copy-seq5"></span></td>
+	           <td></td>
+	         </tr>
+	         <tr>
+	           <td>2</td>
+	           <td>
+                 <div id="seq6" class="seq">TCATGGAGAG&nbsp;&nbsp;TTCGATCCTG&nbsp;&nbsp;GCTCAGGATG&nbsp;&nbsp;AACGCTGGCG&nbsp;&nbsp;GCATGCTTAA&nbsp;&nbsp;CACATGCAAG&nbsp;&nbsp;TCGGACGGGG<br>AGTGGTGTTT&nbsp;&nbsp;CCAGTGGCGG&nbsp;&nbsp;ACGGGTGAGT&nbsp;&nbsp;ATACGCGTAA&nbsp;&nbsp;GAACCTGCCC&nbsp;&nbsp;TTGGGAGGGG&nbsp;&nbsp;AACAACAGCT&nbsp;&nbsp;<br>GGAAACGGCT&nbsp;&nbsp;GCTAATACCC&nbsp;&nbsp;CGTAGGCTGA&nbsp;&nbsp;GGAGCAAAAG&nbsp;&nbsp;GAGGAATCCG&nbsp;&nbsp;CCTGAGGAGG&nbsp;&nbsp;GGCTTGCGTC</div>
+               </td>
+               <td name="opera-seq"><span id="copy-seq6"></span></td>
+	           <td></td>
+	         </tr>
+	         <tr>
+	           <td>3</td>
+	           <td>
+                 <div id="seq7" class="seq">TCATGGAGAG&nbsp;&nbsp;TTCGATCCTG&nbsp;&nbsp;GCTCAGGATG&nbsp;&nbsp;AACGCTGGCG&nbsp;&nbsp;GCATGCTTAA&nbsp;&nbsp;CACATGCAAG&nbsp;&nbsp;TCGGACGGGG<br>AGTGGTGTTT&nbsp;&nbsp;CCAGTGGCGG&nbsp;&nbsp;ACGGGTGAGT&nbsp;&nbsp;ATACGCGTAA&nbsp;&nbsp;GAACCTGCCC&nbsp;&nbsp;TTGGGAGGGG&nbsp;&nbsp;AACAACAGCT&nbsp;&nbsp;<br>GGAAACGGCT&nbsp;&nbsp;GCTAATACCC&nbsp;&nbsp;CGTAGGCTGA&nbsp;&nbsp;GGAGCAAAAG&nbsp;&nbsp;GAGGAATCCG&nbsp;&nbsp;CCTGAGGAGG&nbsp;&nbsp;GGCTTGCGTC</div>
+               </td>
+               <td name="opera-seq"><span id="copy-seq7"></span></td>
+	           <td></td>
+	         </tr>
+	         <tr>
+	           <td>4</td>
+	           <td>
+                 <div id="seq8" class="seq">TCATGGAGAG&nbsp;&nbsp;TTCGATCCTG&nbsp;&nbsp;GCTCAGGATG&nbsp;&nbsp;AACGCTGGCG&nbsp;&nbsp;GCATGCTTAA&nbsp;&nbsp;CACATGCAAG&nbsp;&nbsp;TCGGACGGGG<br>AGTGGTGTTT&nbsp;&nbsp;CCAGTGGCGG&nbsp;&nbsp;ACGGGTGAGT&nbsp;&nbsp;ATACGCGTAA&nbsp;&nbsp;GAACCTGCCC&nbsp;&nbsp;TTGGGAGGGG&nbsp;&nbsp;AACAACAGCT&nbsp;&nbsp;<br>GGAAACGGCT&nbsp;&nbsp;GCTAATACCC&nbsp;&nbsp;CGTAGGCTGA&nbsp;&nbsp;GGAGCAAAAG&nbsp;&nbsp;GAGGAATCCG&nbsp;&nbsp;CCTGAGGAGG&nbsp;&nbsp;GGCTTGCGTC</div>
+               </td>
+               <td name="opera-seq"><span id="copy-seq8"></span></td>
+	           <td></td>
+	         </tr>
+	     </tbody>
+       </table>
+       <div class="test-description"> 快速序列验证及比对(NCBI Blast): <a href="http://www.ncbi.nlm.nih.gov/genomes/16S/search16S.html">http://www.ncbi.nlm.nih.gov/genomes/16S/search16S.html</a></div>
     </div>
-    <h2>2.2 检测结果详述</h2>
-    <table class="table table-bordered table-condensed table-text-center">
-        <tr>
-          <td>菌信息（属、种）</td>
-          <td>生化特性</td>
-          <td>用药参考</td>
-        </tr>
-        <tr>
-          <td><span class="strain-name">Halomonas mongoliensis</span></td>
-          <td>光滑型： 菌落边缘整齐，表面有光泽 </td>
-	      <td>最常用的是阿莫西林，再就是甲硝唑</td>
-        </tr>
-        <tr>
-          <td><span class="strain-name">Staphylococcus aureus</span></td>
-          <td>湿润、光滑、呈灰色，革兰氏染色阳性 </td>
-          <td>大环内酯类：红霉素、白霉素</td>
-        </tr>
-    </table>
   </section>
   <section>
     <h2>3. 其它可能病原菌</h2>
-    <table class="table table-bordered table-condensed table-text-center">
-        <tr>
-          <td>菌信息（属、种）</td>
-          <td>生化特性</td>
-          <td>用药参考</td>
-        </tr>
-        <tr>
-          <td><span class="strain-name">Aeribacillus pallidus</span></td>
-          <td>培养管理光合细菌的培养 </td>
-          <td>氨基糖苷类：包括链霉素、庆大霉素、卡那霉素</td>
-        </tr>
-        <tr>
-          <td><span class="strain-name">Bacillus alveayuensis</span></td>
-          <td>培养基配制根据所培养种类 </td>
-          <td>大环内酯类：红霉素、白霉素</td>
-        </tr>
-    </table>
+    <div class="tests-info other-info">
+      <table id="other-seq-table" class="table table-bordered table-condensed seq-table">
+        <thead>
+	      <tr>
+            <th style="min-width: 90px;">菌名(属-种)</th>
+            <th>#</th>
+            <th width="470">序列 (5'-3')</th>
+            <th name="opera-seq" width="53">操作</th>
+            <th>参考信息</th>
+          </tr>
+         </thead>
+         <tbody>
+	         <tr>
+	           <td rowspan="2" style="text-align:center;">Aeribacillus<br>pallidus</td>
+	           <td>1</td>
+	           <td>
+                 <div id="seq9" class="seq">TCATGGAGAG&nbsp;&nbsp;TTCGATCCTG&nbsp;&nbsp;GCTCAGGATG&nbsp;&nbsp;AACGCTGGCG&nbsp;&nbsp;GCATGCTTAA&nbsp;&nbsp;CACATGCAAG&nbsp;&nbsp;TCGGACGGGG<br>AGTGGTGTTT&nbsp;&nbsp;CCAGTGGCGG&nbsp;&nbsp;ACGGGTGAGT&nbsp;&nbsp;ATACGCGTAA&nbsp;&nbsp;GAACCTGCCC&nbsp;&nbsp;TTGGGAGGGG&nbsp;&nbsp;AACAACAGCT&nbsp;&nbsp;<br>GGAAACGGCT&nbsp;&nbsp;GCTAATACCC&nbsp;&nbsp;CGTAGGCTGA&nbsp;&nbsp;GGAGCAAAAG&nbsp;&nbsp;GAGGAATCCG&nbsp;&nbsp;CCTGAGGAGG&nbsp;&nbsp;GGCTTGCGTC</div>
+               </td>
+               <td name="opera-seq"><span id="copy-seq9"></span></td>
+	           <td rowspan="2">[1] 夏鲁惠.医院感染微生物16S分型与分析[J].临床医学教育，2004(1):46-52.</td>
+	         </tr>
+	         <tr>
+	           <td>2</td>
+	           <td>
+                 <div id="seq10" class="seq">TCATGGAGAG&nbsp;&nbsp;TTCGATCCTG&nbsp;&nbsp;GCTCAGGATG&nbsp;&nbsp;AACGCTGGCG&nbsp;&nbsp;GCATGCTTAA&nbsp;&nbsp;CACATGCAAG&nbsp;&nbsp;TCGGACGGGG<br>AGTGGTGTTT&nbsp;&nbsp;CCAGTGGCGG&nbsp;&nbsp;ACGGGTGAGT&nbsp;&nbsp;ATACGCGTAA&nbsp;&nbsp;GAACCTGCCC&nbsp;&nbsp;TTGGGAGGGG&nbsp;&nbsp;AACAACAGCT&nbsp;&nbsp;<br>GGAAACGGCT&nbsp;&nbsp;GCTAATACCC&nbsp;&nbsp;CGTAGGCTGA&nbsp;&nbsp;GGAGCAAAAG&nbsp;&nbsp;GAGGAATCCG&nbsp;&nbsp;CCTGAGGAGG&nbsp;&nbsp;GGCTTGCGTC</div>
+               </td>
+               <td name="opera-seq"><span id="copy-seq10"></span></td>
+	         </tr>
+	         <tr>
+	           <td rowspan="2" style="text-align:center;">Bacillus<br>alveayuensis</td>
+	           <td>1</td>
+	           <td>
+                 <div id="seq11" class="seq">TCATGGAGAG&nbsp;&nbsp;TTCGATCCTG&nbsp;&nbsp;GCTCAGGATG&nbsp;&nbsp;AACGCTGGCG&nbsp;&nbsp;GCATGCTTAA&nbsp;&nbsp;CACATGCAAG&nbsp;&nbsp;TCGGACGGGG<br>AGTGGTGTTT&nbsp;&nbsp;CCAGTGGCGG&nbsp;&nbsp;ACGGGTGAGT&nbsp;&nbsp;ATACGCGTAA&nbsp;&nbsp;GAACCTGCCC&nbsp;&nbsp;TTGGGAGGGG&nbsp;&nbsp;AACAACAGCT&nbsp;&nbsp;<br>GGAAACGGCT&nbsp;&nbsp;GCTAATACCC&nbsp;&nbsp;CGTAGGCTGA&nbsp;&nbsp;GGAGCAAAAG&nbsp;&nbsp;GAGGAATCCG&nbsp;&nbsp;CCTGAGGAGG&nbsp;&nbsp;GGCTTGCGTC</div>
+               </td>
+               <td name="opera-seq"><span id="copy-seq11"></span></td>
+	           <td rowspan="2">[2]辛希孟.传染病学论文集:A集[C].北京:中国社会科学出版社，2014.</td>
+	         </tr>
+	         <tr>
+	           <td>2</td>
+	           <td>
+                 <div id="seq12" class="seq">TCATGGAGAG&nbsp;&nbsp;TTCGATCCTG&nbsp;&nbsp;GCTCAGGATG&nbsp;&nbsp;AACGCTGGCG&nbsp;&nbsp;GCATGCTTAA&nbsp;&nbsp;CACATGCAAG&nbsp;&nbsp;TCGGACGGGG<br>AGTGGTGTTT&nbsp;&nbsp;CCAGTGGCGG&nbsp;&nbsp;ACGGGTGAGT&nbsp;&nbsp;ATACGCGTAA&nbsp;&nbsp;GAACCTGCCC&nbsp;&nbsp;TTGGGAGGGG&nbsp;&nbsp;AACAACAGCT&nbsp;&nbsp;<br>GGAAACGGCT&nbsp;&nbsp;GCTAATACCC&nbsp;&nbsp;CGTAGGCTGA&nbsp;&nbsp;GGAGCAAAAG&nbsp;&nbsp;GAGGAATCCG&nbsp;&nbsp;CCTGAGGAGG&nbsp;&nbsp;GGCTTGCGTC</div>
+               </td>
+               <td name="opera-seq"><span id="copy-seq12"></span></td>
+	         </tr>
+	     </tbody>
+       </table>
+    </div>
   </section>
-  <section>
+  <section class="break-page">
     <h2>4. 统计信息</h2>
     <table class="table table-bordered table-condensed table-text-center">
         <tr>
@@ -207,12 +332,12 @@
           <td>Column 3</td>
         </tr>
         <tr>
-          <td>&nbsp;</td>
+          <td>&nbsp;&nbsp;</td>
           <td></td>
           <td></td>
         </tr>
         <tr>
-          <td>&nbsp;</td>
+          <td>&nbsp;&nbsp;</td>
           <td></td>
           <td></td>
         </tr>
@@ -229,8 +354,22 @@
   <script src="//cdn.bootcss.com/jqueryui/1.11.4/jquery-ui.min.js"></script>
   <script src="//cdn.bootcss.com/scrollmonitor/1.0.12/scrollMonitor.min.js"></script>
   <script src="//cdn.bootcss.com/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js"></script>
+  <script src="//cdn.bootcss.com/swfobject/2.2/swfobject.min.js"></script>
   <script type="text/javascript">
     $(document).ready(function(){
+      var params = {
+          wmode: "transparent",
+          allowScriptAccess: "always"
+      };
+      var flashBtnUri = '<%=request.getContextPath() %>/images/icon/copy_seq_btn.png';
+      for(var i = 1;i<=12; i++){
+	      var flashvars1 = {
+	          content: encodeURIComponent($("#seq"+i).text()),
+	          uri: flashBtnUri
+	      };
+	      swfobject.embedSWF("<%=request.getContextPath() %>/plugins/clipboard.swf", 'copy-seq'+i, "52", "25", "9.0.0", null, flashvars1, params);
+      }
+      
       $("#print").on("click",function(){
         $(".base-info").find("input[type='text']").each(function(){
            $(this).parent().html("<input type='hidden' value='"+$(this).attr("class")+"'><span name='print-input'>"+$(this).val()+"</span>");
@@ -243,7 +382,11 @@
         $("#sex").addClass("hide");
         $(".buttons").hide();
         $("#toc").hide();
+        $("th[name='opera-seq']").addClass("hide");
+        $("td[name='opera-seq']").addClass("hide");
         window.print();
+        $("th[name='opera-seq']").removeClass("hide");
+        $("td[name='opera-seq']").removeClass("hide");
         $("#department-text").text("");
         $("#department").removeClass("hide");
         $("#sample-type-text").text("");

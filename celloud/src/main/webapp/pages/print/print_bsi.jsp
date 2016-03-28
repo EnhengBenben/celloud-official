@@ -26,7 +26,7 @@
     <a id="print" class="btn btn-default" href="javascript:void(0)">打印</a>
   </div>
   <div class="title">
-    <span class="title-text">细菌性血流感染检测报告</span>
+    <span class="title-text">细菌性血流感染检测报告--患者报告</span>
     <img class="title-logo" src="<%=request.getContextPath() %>/images/hospitalIcon/demo-logo.png"></div>
   </div>
   <form id="print-form">
@@ -69,43 +69,41 @@
   </div>
   <div class="tests-content">
     <h4>检测结果：</h4>
-  <div class="tests-content">
-    <h4>检测结果：</h4>
     <div class="tests-info">
        <p>牛链球菌</p>
        <p>葡萄球菌</p>
-        <table class="table table-bordered table-condensed">
+        <table class="table table-bordered table-condensed gray-table">
           <tr>
             <td rowspan="2">G+</td>
-            <td><span class="positive">[有]</span>牛链球菌</td>
-            <td><span class="positive">[有]</span>葡萄球菌</td>
-            <td><span>[无]</span>肺炎链球菌</td>
-            <td><span>[无]</span>粪肠球菌</td>
+            <td class="positive"><span>[✔]</span>牛链球菌</td>
+            <td class="positive"><span>[✔]</span>葡萄球菌</td>
+            <td><span>[✘]</span>肺炎链球菌</td>
+            <td><span>[✘]</span>粪肠球菌</td>
           </tr>
           <tr>
-            <td><span>[无]</span>屎肠球菌</td>
-            <td><span>[无]</span>难辨梭状芽孢杆菌</td>
-            <td><span>[无]</span>溃疡棒状杆菌</td>
-            <td><span>[无]</span>结膜干燥杆菌</td>
+            <td><span>[✘]</span>屎肠球菌</td>
+            <td><span>[✘]</span>难辨梭状芽孢杆菌</td>
+            <td><span>[✘]</span>溃疡棒状杆菌</td>
+            <td><span>[✘]</span>结膜干燥杆菌</td>
           </tr>
           <tr>
             <td rowspan="3">G-</td>
-            <td><span>[无]</span>大肠埃希菌</td>
-            <td><span>[无]</span>铜绿假单胞菌</td>
-            <td><span>[无]</span>鲍曼不动杆菌</td>
-            <td><span>[无]</span>肺炎克雷伯菌</td>
+            <td><span>[✘]</span>大肠埃希菌</td>
+            <td><span>[✘]</span>铜绿假单胞菌</td>
+            <td><span>[✘]</span>鲍曼不动杆菌</td>
+            <td><span>[✘]</span>肺炎克雷伯菌</td>
           </tr>
           <tr>
-            <td><span>[无]</span>嗜麦芽窄食单胞菌</td>
-            <td><span>[无]</span>粘质沙雷氏菌</td>
-            <td><span>[无]</span>阴沟肠杆菌</td>
-            <td><span>[无]</span>嗜水气单胞菌</td>
+            <td><span>[✘]</span>嗜麦芽窄食单胞菌</td>
+            <td><span>[✘]</span>粘质沙雷氏菌</td>
+            <td><span>[✘]</span>阴沟肠杆菌</td>
+            <td><span>[✘]</span>嗜水气单胞菌</td>
           </tr>
           <tr>
-            <td><span>[无]</span>产气肠杆菌</td>
-            <td><span>[无]</span>肠炎沙门菌</td>
-            <td><span>[无]</span>奇异变形杆菌</td>
-            <td><span>[无]</span>洋葱伯克霍尔德菌</td>
+            <td><span>[✘]</span>产气肠杆菌</td>
+            <td><span>[✘]</span>肠炎沙门菌</td>
+            <td><span>[✘]</span>奇异变形杆菌</td>
+            <td><span>[✘]</span>洋葱伯克霍尔德菌</td>
           </tr>
         </table>
     </div>

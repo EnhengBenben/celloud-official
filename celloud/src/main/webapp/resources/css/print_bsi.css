@@ -66,18 +66,36 @@ section h2,
     font-size: 16px;
 }
 .tests-info table{
-    margin:30px 0px 10px 0px;
+    margin:20px 0px 10px 0px;
 }
-.tests-info table td{
+.tests-info table td,
+.tests-info table thead th{
     vertical-align: middle;
     font-size: 12px;
+    font-weight: normal;
+}
+.tests-info table thead th{
+	text-align: center;
+}
+.tests-info .gray-table{
+	color: #999999;
 }
 .tests-info table td span{
     display: inline-block;
     padding: 0px 10px;
 }
-.tests-info table td .positive{
-    color: #FC8337;
+.tests-info table .positive{
+    color: #232323;
+}
+.tests-info .seq{
+	margin-left: -90px;
+	margin-right: -90px;
+	margin-top: -5px;
+	margin-bottom: -5px;
+	-webkit-transform:scale(0.7);
+    -moz-transform:scale(0.7);
+    -o-transform:scale(0.7);
+    cursor: pointer;
 }
 .test-description{
     font-size: 12px;
@@ -117,6 +135,14 @@ section h2,
     -moz-transform:scale(0.8);
     -o-transform:scale(1);
 }
+.other-info{
+	border: none;
+	padding: 0px;
+}
+.other-info table{
+	margin: 0px 0px;
+}
+
 @media print{
 .tests-info{
     
