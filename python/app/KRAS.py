@@ -49,7 +49,9 @@ class KRAS:
 		#report.txt
 		report = os.path.join(path,'report.txt')
 		if (os.path.exists(report)):
-			result['report'] = readAllChinese(report)
+			context = readAllChinese(report)
+			result['report'] = context
+			result['pos'] = context.replace('KRAS exon number is ','').strip()
 
 		#report.txt.wz.1
 		wz1 = os.path.join(path,'report.txt.wz.1')
@@ -100,6 +102,7 @@ if __name__ == '__main__':
 	KRAS = KRAS.getInstance()
 	re = KRAS.getResult('/Users/lin/23/89/20150515173271','KRAS','a.ab1',None)
 	print '1'+re['report']
+	print '1.5'+re['pos']
 	print '2'+re['position']#wz1
 	print '3'+re['mutationPosition']#wz2
 	print '4'+re['conclusion']#report
