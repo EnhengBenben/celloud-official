@@ -340,6 +340,14 @@ function showUpload(){
 }
 
 /**
+ * 实验管理
+ */
+function showExperiment(){
+  $.main.show.mainDIV();
+  $("#mainDIV").load("pages/experiment/experiment_main.jsp");
+}
+
+/**
  * 报告
  */
 function showReport(){

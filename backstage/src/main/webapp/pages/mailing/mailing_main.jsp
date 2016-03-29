@@ -56,6 +56,8 @@ $(function(){
             error.appendTo($(element).closest("div.col-sm-10"));
        },
         submitHandler:function(form) {
+          alert(CKEDITOR.instances.emailContent.getData());
+          return;
             $("#emailContent").val(CKEDITOR.instances.emailContent.getData());
             $(form).ajaxSubmit({
                 url:"mailing/send",
