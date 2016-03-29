@@ -68,7 +68,7 @@ public class CountAction {
 	 * 
 	 * @return
 	 */
-    @ActionLog(value = "打开celloud控制台首页", button = "")
+    @ActionLog(value = "获取按月份统计的数据量曲线图", button = "数据量每月")
 	@ResponseBody
 	@RequestMapping("fileMonthCount")
 	public List<Map<String, String>> fileMonthCount() {
@@ -82,6 +82,7 @@ public class CountAction {
 	 * 
 	 * @return
 	 */
+    @ActionLog(value = "获取按月份统计的数据大小曲线图", button = "总资源每月")
 	@ResponseBody
 	@RequestMapping("fileSizeMonthCount")
 	public List<Map<String, String>> fileSizeMonthCount() {
@@ -95,6 +96,7 @@ public class CountAction {
 	 * 
 	 * @return
 	 */
+    @ActionLog(value = "获取按天统计的数据量曲线图", button = "数据量每天")
 	@ResponseBody
 	@RequestMapping("fileDayCount")
 	public List<Map<String, String>> fileDayCount() {
@@ -108,6 +110,7 @@ public class CountAction {
 	 * 
 	 * @return
 	 */
+    @ActionLog(value = "获取按天统计的数据大小曲线图", button = "总资源每天")
 	@ResponseBody
 	@RequestMapping("fileSizeDayCount")
 	public List<Map<String, String>> fileSizeDayCount() {
@@ -121,6 +124,7 @@ public class CountAction {
 	 * 
 	 * @return
 	 */
+    @ActionLog(value = "获取按月份统计的报告量曲线图", button = "报告量每月")
 	@ResponseBody
 	@RequestMapping("reportMonthCount")
 	public List<Map<String, String>> reportMonthCount() {
@@ -134,6 +138,7 @@ public class CountAction {
 	 * 
 	 * @return
 	 */
+    @ActionLog(value = "获取按天统计的报告量曲线图", button = "报告量每天")
 	@ResponseBody
 	@RequestMapping("reportDayCount")
 	public List<Map<String, String>> reportDayCount() {
@@ -147,6 +152,7 @@ public class CountAction {
 	 * 
 	 * @return
 	 */
+    @ActionLog(value = "获取按月份统计的已添加APP数量曲线图", button = "已添加APP每月")
 	@ResponseBody
 	@RequestMapping("appMonthCount")
 	public List<Map<String, String>> appMonthCount() {
@@ -160,6 +166,7 @@ public class CountAction {
 	 * 
 	 * @return
 	 */
+    @ActionLog(value = "获取按天统计的已添加APP数量曲线图", button = "已添加APP每天")
 	@ResponseBody
 	@RequestMapping("appDayCount")
 	public List<Map<String, String>> appDayCount() {
@@ -199,6 +206,7 @@ public class CountAction {
 	 * @return
 	 * @date 2016-1-9 下午2:55:57
 	 */
+    @ActionLog(value = "获取HBV数据参数同比信息", button = "HBV数据报告")
 	@ResponseBody
 	@RequestMapping("hbvCompare")
 	public String hbvCompare(Integer appId, String path) {
@@ -213,6 +221,7 @@ public class CountAction {
 	 * @return
 	 * @date 2016-1-9 下午3:16:01
 	 */
+    @ActionLog(value = "获取TB数据参数同比信息", button = "TB数据报告")
 	@ResponseBody
 	@RequestMapping("tbCompare")
 	public String tbCompare(Integer appId, String path) {
@@ -228,6 +237,7 @@ public class CountAction {
 	 * @return
 	 * @date 2016-1-9 下午3:09:58
 	 */
+    @ActionLog(value = "获取EGFR/KRAS数据参数同比信息", button = "EGFR/KRAS数据报告")
 	@ResponseBody
 	@RequestMapping("egfrCompare")
 	public String egfrCompare(Integer appId, String path, String length) {
@@ -242,6 +252,7 @@ public class CountAction {
 	 * @return
 	 * @date 2016-1-9 下午3:20:50
 	 */
+    @ActionLog(value = "获取HCV数据参数同比信息", button = "HCV数据报告")
 	@ResponseBody
 	@RequestMapping("hcvCompare")
 	public String hcvCompare(Integer appId, String path) {
@@ -257,6 +268,7 @@ public class CountAction {
 	 * @return
 	 * @date 2016-1-9 下午3:27:25
 	 */
+    @ActionLog(value = "获取PGS数据参数同比信息", button = "PGS数据报告")
 	@ResponseBody
 	@RequestMapping("pgsCompare")
 	public String pgsCompare(Integer appId, String path, String columns) {
@@ -271,6 +283,7 @@ public class CountAction {
      * @author leamo
      * @date 2016年1月17日 下午1:55:50
      */
+    @ActionLog(value = "获取split数据参数同比信息", button = "split数据报告")
     @ResponseBody
     @RequestMapping("splitCompare")
     public Map<String, List<List<Float>>> splitCompare(String id) {
@@ -285,6 +298,7 @@ public class CountAction {
 	 * @return
 	 * @date 2016-1-10 上午12:26:32
 	 */
+    @ActionLog(value = "达安旗下用户获取HBV流程统计信息", button = "统计模块")
 	@RequestMapping("hbvCount")
 	public ModelAndView hbvCount() {
 		Integer userId = ConstantsData.getLoginUserId();
@@ -298,6 +312,7 @@ public class CountAction {
 	 * @return
 	 * @date 2016-1-10 上午12:44:21
 	 */
+    @ActionLog(value = "嘉宝旗下用户获取PGS流程统计信息", button = "统计模块")
 	@RequestMapping("pgsCount")
 	public ModelAndView pgsCount() {
 		Integer userId = ConstantsData.getLoginUserId();
@@ -311,6 +326,7 @@ public class CountAction {
 	 * @return
 	 * @date 2016-1-10 上午1:00:07
 	 */
+    @ActionLog(value = "燕达旗下用户获取CMP流程统计信息", button = "统计模块")
 	@RequestMapping("cmpCount")
 	public ModelAndView cmpCount() {
 		Integer userId = ConstantsData.getLoginUserId();
@@ -325,6 +341,7 @@ public class CountAction {
 	 * @param fileName
 	 * @date 2016-1-10 下午10:18:26
 	 */
+    @ActionLog(value = "统计模块Excel文件下载", button = "下载统计信息")
 	@RequestMapping("download")
 	public void download(HttpServletResponse response, String fileName) {
 		if (StringUtils.isNotEmpty(fileName))
