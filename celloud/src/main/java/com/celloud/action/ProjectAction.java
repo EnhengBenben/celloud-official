@@ -16,6 +16,7 @@ import com.celloud.model.mysql.Project;
 import com.celloud.model.mysql.User;
 import com.celloud.service.ProjectService;
 import com.celloud.service.UserService;
+import com.celloud.utils.ActionLog;
 
 /**
  * 项目操作类
@@ -38,6 +39,7 @@ public class ProjectAction {
      * @return
      * @date 2016-1-8 下午1:43:28
      */
+    @ActionLog(value = "修改项目信息（项目名）", button = "修改项目")
     @RequestMapping("update")
     @ResponseBody
     public Integer update(Project project) {
@@ -51,6 +53,7 @@ public class ProjectAction {
      * @return
      * @date 2016-1-8 下午3:24:30
      */
+    @ActionLog(value = "项目软删除", button = "删除项目")
     @RequestMapping("deleteByState")
     @ResponseBody
     public Integer deleteByState(Integer projectId) {
@@ -67,6 +70,7 @@ public class ProjectAction {
      * @return
      * @date 2016-1-7 下午7:00:10
      */
+    @ActionLog(value = "将项目共享给其他用户", button = "共享项目")
     @RequestMapping(value = "shareProject", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String share(String userNames, Integer projectId) {
@@ -103,6 +107,7 @@ public class ProjectAction {
      * @return
      * @date 2016-1-7 下午5:01:59
      */
+    @ActionLog(value = "删除一条共享来的项目记录，项目本身不删除", button = "删除共享项目")
     @RequestMapping("deleteShare")
     @ResponseBody
     public boolean deleteShare(Integer projectId) {
@@ -120,6 +125,7 @@ public class ProjectAction {
 	 * @author lin
 	 * @date 2016年1月25日下午3:24:00
 	 */
+    @ActionLog(value = "查询项目共享给了哪些用户", button = "共享项目")
 	@RequestMapping("getShareTo")
 	@ResponseBody
 	public List<Map<String, Object>> getShareTo(Integer projectId) {

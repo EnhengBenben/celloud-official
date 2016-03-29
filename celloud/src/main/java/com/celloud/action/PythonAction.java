@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.celloud.service.PythonService;
+import com.celloud.utils.ActionLog;
 
 @Controller
 @RequestMapping("api/python")
@@ -23,6 +24,7 @@ public class PythonAction {
 	 * 
 	 * @return
 	 */
+    @ActionLog(value = "python 客户端登录", button = "客户端登录")
 	@ResponseBody
 	@RequestMapping(value = "/login/{username}/{pwd}")
 	public String login(@PathVariable("username") String username, @PathVariable("pwd") String pwd) {
@@ -34,6 +36,7 @@ public class PythonAction {
 	 * 
 	 * @return
 	 */
+    @ActionLog(value = "获取用户上传文件的总大小", button = "客户端上传")
 	@ResponseBody
 	@RequestMapping(value = "/getSize/{userId}")
 	public Long getSize(@PathVariable("userId") Integer userId) {
@@ -45,6 +48,7 @@ public class PythonAction {
 	 * 
 	 * @return
 	 */
+    @ActionLog(value = "获取用户上传文件的总个数", button = "客户端上传")
 	@ResponseBody
 	@RequestMapping(value = "/getNumber/{userId}")
 	public Long getNumber(@PathVariable("userId") Integer userId) {
@@ -56,6 +60,7 @@ public class PythonAction {
 	 * 
 	 * @return
 	 */
+    @ActionLog(value = "文件上传前获取 DataKey", button = "客户端上传")
 	@ResponseBody
 	@RequestMapping(value = "/initDataKey/{userId}/{fileName}/{md5}")
 	public String initDataKey(@PathVariable("userId") Integer userId, @PathVariable("fileName") String fileName,

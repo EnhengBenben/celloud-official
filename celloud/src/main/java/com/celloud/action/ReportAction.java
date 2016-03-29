@@ -64,6 +64,7 @@ import com.celloud.service.DataService;
 import com.celloud.service.DeptService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
+import com.celloud.utils.ActionLog;
 import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.HttpURLUtils;
 import com.celloud.utils.PropertiesUtil;
@@ -101,6 +102,7 @@ public class ReportAction {
      * @return
      * @date 2016-1-10 下午10:36:57
      */
+    @ActionLog(value = "获取报告模块项目报告列表", button = "报告模块")
     @RequestMapping("getReportPageList")
     public ModelAndView reportPages(
             @RequestParam(defaultValue = "1") Integer page,
@@ -123,6 +125,7 @@ public class ReportAction {
      * @return
      * @date 2016-1-10 下午11:37:40
      */
+    @ActionLog(value = "从 Tools 端获取数据报告", button = "数据报告")
     @ResponseBody
     @RequestMapping(value = "getReportFromTools", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public String getReportFromTools(String dataKey, String url,
@@ -183,6 +186,7 @@ public class ReportAction {
      * @return
      * @date 2016-1-10 下午10:57:24
      */
+    @ActionLog(value = "查看CMP数据报告", button = "数据报告")
     @RequestMapping("getCMPReport")
     public ModelAndView getCMPReport(String dataKey, Integer projectId,
             Integer appId) {
@@ -200,6 +204,7 @@ public class ReportAction {
      * @author leamo
      * @date 2016年1月18日 上午11:20:57
      */
+    @ActionLog(value = "打印 CMP简要报告", button = "打印报告")
     @RequestMapping("printLessCMPReport")
     public ModelAndView printLessCMPReport(String dataKey, Integer projectId,
             Integer appId) {
@@ -217,6 +222,7 @@ public class ReportAction {
      * @author leamo
      * @date 2016年1月18日 上午11:20:57
      */
+    @ActionLog(value = "打印 CMP详细报告", button = "打印报告")
     @RequestMapping("printMoreCMPReport")
     public ModelAndView printMoreCMPReport(String dataKey, Integer projectId,
             Integer appId) {
@@ -233,6 +239,7 @@ public class ReportAction {
      * @return
      * @date 2016-1-10 下午10:57:13
      */
+    @ActionLog(value = "查看GDD数据报告", button = "数据报告")
     @RequestMapping("getGDDReport")
     public ModelAndView getGDDReport(String dataKey, Integer projectId,
             Integer appId) {
@@ -240,6 +247,7 @@ public class ReportAction {
                 appId);
     }
 
+    @ActionLog(value = "打印GDD数据报告", button = "打印报告")
     @RequestMapping("printGDDReport")
     public ModelAndView printGDDReport(String dataKey, Integer projectId,
             Integer appId) {
@@ -389,6 +397,7 @@ public class ReportAction {
      * @author leamo
      * @date 2016年2月1日 下午7:51:52
      */
+    @ActionLog(value = "打印报告时修改燕达流程用户填写信息", button = "修改数据报告")
     @RequestMapping("updateYANDAFilling")
     @ResponseStatus(value = HttpStatus.OK)
     public void updateYANDAFilling(CmpFilling cmpFill, String cmpId) {
@@ -476,6 +485,7 @@ public class ReportAction {
      * @return
      * @date 2016-1-10 下午10:44:45
      */
+    @ActionLog(value = "查看split数据报告", button = "数据报告")
     @RequestMapping("getSplitReport")
     public ModelAndView getSplitReport(String dataKey, Integer projectId,
             Integer appId) {
@@ -492,6 +502,7 @@ public class ReportAction {
      * @return
      * @date 2016-1-10 下午10:44:45
      */
+    @ActionLog(value = "打印split数据报告", button = "打印数据报告")
     @RequestMapping("printSplitReport")
     public ModelAndView printSplitReport(String dataKey, Integer projectId,
             Integer appId) {
@@ -536,6 +547,7 @@ public class ReportAction {
      * @return
      * @date 2016-1-10 下午10:40:40
      */
+    @ActionLog(value = "查看MIB数据报告", button = "数据报告")
     @RequestMapping("getMIBReport")
     public ModelAndView getMIBReport(String dataKey, Integer projectId,
             Integer appId) {
@@ -553,6 +565,7 @@ public class ReportAction {
      * @author leamo
      * @date 2016年1月17日 下午1:02:09
      */
+    @ActionLog(value = "打印MIB数据报告", button = "打印数据报告")
     @RequestMapping("printMIBReport")
     public ModelAndView printMIBReport(String dataKey, Integer projectId,
             Integer appId) {
@@ -567,6 +580,7 @@ public class ReportAction {
      * @author leamo
      * @date 2016年2月18日 上午10:54:53
      */
+    @ActionLog(value = "打印MIB数据报告时修改用户填写的信息", button = "修改数据报告")
     @RequestMapping("updateMIBFilling")
     @ResponseStatus(value = HttpStatus.OK)
     public void updateMIBFilling(MIB mib) {
@@ -582,6 +596,7 @@ public class ReportAction {
      * @return
      * @date 2016-1-8 下午4:49:31
      */
+    @ActionLog(value = "查看HBV数据报告", button = "数据报告")
     @RequestMapping("getHBVReport")
     public ModelAndView getHBVReport(String dataKey, Integer projectId,
             Integer appId) {
@@ -599,6 +614,7 @@ public class ReportAction {
      * @return
      * @date 2016-1-9 上午2:57:38
      */
+    @ActionLog(value = "查看PGS数据报告", button = "数据报告")
     @RequestMapping("getPgsReport")
     public ModelAndView getPgsReport(String dataKey, Integer projectId,
             Integer appId) {
@@ -617,6 +633,7 @@ public class ReportAction {
      * @author lin
      * @date 2016年1月28日下午7:18:01
      */
+    @ActionLog(value = "查看Oncogene数据报告", button = "数据报告")
     @RequestMapping("getOncogeneReport")
     public ModelAndView getOncogeneReport(String dataKey, Integer projectId,
             Integer appId) {
@@ -654,6 +671,7 @@ public class ReportAction {
 	 * @author lin
 	 * @date 2016年3月7日下午5:07:31
 	 */
+    @ActionLog(value = "查看HCV数据报告", button = "数据报告")
 	@RequestMapping("getHCVReport")
 	public ModelAndView getHCVReport(String dataKey, Integer projectId, Integer appId) {
 		HCV hcv = reportService.getHCVReport(dataKey, projectId, appId);
@@ -671,6 +689,7 @@ public class ReportAction {
 	 * @author lin
 	 * @date 2016年3月10日下午2:47:57
 	 */
+    @ActionLog(value = "查看EGFR数据报告", button = "数据报告")
 	@RequestMapping("getEGFRReport")
 	public ModelAndView getEGFRReport(String dataKey, Integer projectId, Integer appId) {
 		EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
@@ -688,6 +707,7 @@ public class ReportAction {
 	 * @author lin
 	 * @date 2016年3月22日下午4:37:27
 	 */
+    @ActionLog(value = "查看KRAS数据报告", button = "数据报告")
 	@RequestMapping("getKRASReport")
 	public ModelAndView getKRASReport(String dataKey, Integer projectId, Integer appId) {
 		KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
@@ -705,6 +725,7 @@ public class ReportAction {
 	 * @author lin
 	 * @date 2016年3月25日下午4:00:38
 	 */
+    @ActionLog(value = "查看DPD数据报告", button = "数据报告")
 	@RequestMapping("getDPDReport")
 	public ModelAndView getDPDReport(String dataKey, Integer projectId, Integer appId) {
 		DPD dpd = reportService.getDPDReport(dataKey, projectId, appId);
@@ -736,6 +757,7 @@ public class ReportAction {
 	 * @author lin
 	 * @date 2016年3月25日下午4:00:51
 	 */
+    @ActionLog(value = "查看UGT数据报告", button = "数据报告")
 	@RequestMapping("getUGTReport")
 	public ModelAndView getUGTReport(String dataKey, Integer projectId, Integer appId) {
 		UGT ugt = reportService.getUGTReport(dataKey, projectId, appId);
@@ -757,6 +779,7 @@ public class ReportAction {
      * @author lin
      * @date 2016年1月17日上午12:53:22
      */
+    @ActionLog(value = "点击数据报告列表查看上一页数据报告", button = "数据报告")
     @RequestMapping("prevDataReport")
     @ResponseStatus(value = HttpStatus.OK)
     public void prevDataReport() {
@@ -769,6 +792,7 @@ public class ReportAction {
      * @author lin
      * @date 2016年1月17日上午12:53:33
      */
+    @ActionLog(value = "点击数据报告列表查看下一页数据报告", button = "数据报告")
     @RequestMapping("nextDataReport")
     @ResponseStatus(value = HttpStatus.OK)
     public void nextDataReport() {
@@ -781,6 +805,7 @@ public class ReportAction {
      * @author lin
      * @date 2016年1月17日上午1:03:30
      */
+    @ActionLog(value = "点击数据报告列表查看报告", button = "数据报告")
     @RequestMapping("clickItemDataReport")
     @ResponseStatus(value = HttpStatus.OK)
     public void clickItemDataReport() {
@@ -796,6 +821,7 @@ public class ReportAction {
      * @author lin
      * @date 2016年1月17日下午4:47:37
      */
+    @ActionLog(value = "打印PGS数据报告", button = "打印数据报告")
     @RequestMapping("printPGS")
     public ModelAndView printPGS(Integer appId, Integer projectId,
             String dataKey, String miniPng, String txt, String splitPng) {
@@ -833,6 +859,7 @@ public class ReportAction {
 	 * @author lin
 	 * @date 2016年3月21日下午2:51:25
 	 */
+    @ActionLog(value = "打印HBV数据报告", button = "打印数据报告")
 	@RequestMapping("printHBV")
 	public ModelAndView printHBV(Integer appId, String dataKey, Integer projectId, Integer flag) {
 		ModelAndView mv = getModelAndView("print/print_hbv", projectId);
@@ -858,6 +885,7 @@ public class ReportAction {
 	 * @author lin
 	 * @date 2016年3月21日下午2:51:25
 	 */
+    @ActionLog(value = "打印HCV数据报告", button = "打印数据报告")
 	@RequestMapping("printHCV")
 	public ModelAndView printHCV(Integer appId, String dataKey, Integer projectId) {
 		ModelAndView mv = getModelAndView("print/print_hcv", projectId);
@@ -883,6 +911,7 @@ public class ReportAction {
 	 * @author lin
 	 * @date 2016年3月21日下午2:51:25
 	 */
+    @ActionLog(value = "打印EGFR数据报告", button = "打印数据报告")
 	@RequestMapping("printEGFR")
 	public ModelAndView printEGFR(Integer appId, String dataKey, Integer projectId) {
 		ModelAndView mv = getModelAndView("print/print_egfr", projectId);
@@ -908,6 +937,7 @@ public class ReportAction {
 	 * @author lin
 	 * @date 2016年3月22日下午5:04:22
 	 */
+    @ActionLog(value = "打印KRAS数据报告", button = "打印数据报告")
 	@RequestMapping("printKRAS")
 	public ModelAndView printKRAS(Integer appId, String dataKey, Integer projectId) {
 		ModelAndView mv = getModelAndView("print/print_kras", projectId);
@@ -924,6 +954,7 @@ public class ReportAction {
 	}
 
     // TODO 达安流程打印，需要拆分页面，拆分方法
+    @ActionLog(value = "打印DAAN数据报告", button = "打印数据报告")
     @RequestMapping("printDAAN")
     public ModelAndView printDAAN(Integer appId, String dataKey,
             Integer projectId, String context, String imgHtml, String seq,
@@ -961,12 +992,14 @@ public class ReportAction {
         return mv;
     }
 
+    @ActionLog(value = "打印数据报告时点击保存按钮修改数据报告", button = "修改数据报告")
     @RequestMapping("updateContext")
     @ResponseBody
     public Integer updateContext(Report report) {
         return reportService.updateReport(report);
     }
 
+    @ActionLog(value = "下载PDF报告", button = "下载PDF报告")
     @RequestMapping("downPdf")
     @ResponseBody
     public String downPdf(Integer appId, Integer projectId) {
@@ -991,6 +1024,7 @@ public class ReportAction {
      * @return
      * @throws IOException
      */
+    @ActionLog(value = "获取用户所属医院logo", button = "打印数据报告")
     @RequestMapping(value = "company/icon", method = RequestMethod.GET)
     public ResponseEntity<byte[]> companyIcon(String file) throws IOException {
         String path = CompanyConstants.getCompanyIconPath() + File.separator + file;
@@ -1005,6 +1039,7 @@ public class ReportAction {
      * @return
      * @throws IOException
      */
+    @ActionLog(value = "获取用户所属部门logo", button = "打印数据报告")
     @RequestMapping(value = "dept/icon", method = RequestMethod.GET)
     public ResponseEntity<byte[]> deptIcon(String file) throws IOException {
         String path = DeptConstants.getDeptIconPath() + File.separator + file;
