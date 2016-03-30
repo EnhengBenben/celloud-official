@@ -28,16 +28,17 @@
 				<td>
 					<fmt:formatDate value="${exp.createDate }" pattern="yyyyMMdd" />
 				</td>
-				<td>${exp.sampleType }</td>
-				<td>${exp.amplificationMethod }</td>
+				<td>${exp.sampleTypeName }</td>
+				<td>${exp.amplificationMethodName }</td>
 				<td>${exp.concentration }</td>
 				<td>${exp.quality }</td>
 				<td>${exp.seqIndex }</td>
 				<td>${exp.libraryConcentration }</td>
-				<td>${exp.sequenator }</td>
-				<td>${exp.step }</td>
+				<td>${exp.sequenatorName }</td>
+				<td>${exp.stepName }</td>
 				<td>${exp.other }</td>
-				<td>${exp.index }</td>
+				<td>${exp.qualified }</td>
+				<td><a onclick="experiment.toEditExp(${exp.id })" href="javascript:void(0)">编辑</a></td>
 			</tr>
 		</c:forEach>
 		<c:if test="${datas.size()==0 }">

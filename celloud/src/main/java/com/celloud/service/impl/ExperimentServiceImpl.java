@@ -26,12 +26,23 @@ public class ExperimentServiceImpl implements ExperimentService {
 
 	@Override
 	public int updateByPrimaryKeySelective(Experiment record) {
-		return experimentMapper.updateByPrimaryKey(record);
+		return experimentMapper.updateByPrimaryKeySelective(record);
 	}
 
 	@Override
 	public int insertSelective(Experiment exp) {
 		return experimentMapper.insertSelective(exp);
+	}
+
+	@Override
+	public PageList<Experiment> getExpDonePageList(Integer userId, Page page) {
+		List<Experiment> list = experimentMapper.getExpDonePageList(userId, ExperimentState.OPEN, page);
+		return new PageList<>(page, list);
+	}
+
+	@Override
+	public Experiment selectByPrimaryKey(Integer id) {
+		return experimentMapper.selectByPrimaryKey(id);
 	}
 
 }

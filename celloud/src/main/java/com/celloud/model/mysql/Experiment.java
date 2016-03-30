@@ -14,12 +14,20 @@ public class Experiment {
     private Double libraryConcentration;
 
     private Integer step;
+    
+    private String stepName;
 
     private Integer sampleType;
+    
+    private String sampleTypeName;
 
     private Integer amplificationMethod;
+    
+    private String amplificationMethodName;
 
     private Integer sequenator;
+    
+    private String sequenatorName;
 
     private String seqIndex;
 
@@ -39,7 +47,7 @@ public class Experiment {
 
     private Date reportDate;
 
-    private Boolean qualified;
+    private Byte qualified;
 
     private String remarks;
 
@@ -187,11 +195,11 @@ public class Experiment {
         this.reportDate = reportDate;
     }
 
-    public Boolean getQualified() {
+    public Byte getQualified() {
         return qualified;
     }
 
-    public void setQualified(Boolean qualified) {
+    public void setQualified(Byte qualified) {
         this.qualified = qualified;
     }
 
@@ -202,4 +210,38 @@ public class Experiment {
     public void setRemarks(String remarks) {
         this.remarks = remarks == null ? null : remarks.trim();
     }
+
+	public String getStepName() {
+		return stepName;
+	}
+
+	public void setStepName(String stepName) {
+		this.stepName = stepName;
+	}
+
+	public String getSampleTypeName() {
+		return sampleTypeName;
+	}
+
+	public void setSampleTypeName(String sampleTypeName) {
+		this.sampleTypeName = sampleTypeName;
+	}
+
+	public String getAmplificationMethodName() {
+		return amplificationMethodName;
+	}
+
+	public void setAmplificationMethodName(String amplificationMethodName) {
+		this.amplificationMethodName = amplificationMethodName;
+	}
+
+	public String getSequenatorName() {
+		return sequenatorName;
+	}
+
+	public void setSequenatorName(String sequenatorName) {
+		this.sequenatorName = sequenatorName;
+	}
+    
+    
 }

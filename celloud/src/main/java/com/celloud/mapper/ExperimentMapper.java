@@ -21,4 +21,7 @@ public interface ExperimentMapper {
 	int updateByPrimaryKey(Experiment record);
 
 	List<Experiment> getExperimentPageList(@Param("userId") Integer userId, @Param("state") Integer state, Page page);
+
+	List<Experiment> getExpDonePageList(@Param("userId") Integer userId, @Param("state") Integer state, Page page);
+
 }

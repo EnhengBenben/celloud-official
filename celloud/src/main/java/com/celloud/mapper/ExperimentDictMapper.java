@@ -1,5 +1,7 @@
 package com.celloud.mapper;
 
+import java.util.List;
+
 import com.celloud.model.mysql.ExperimentDict;
 
 public interface ExperimentDictMapper {
@@ -14,4 +16,6 @@ public interface ExperimentDictMapper {
     int updateByPrimaryKeySelective(ExperimentDict record);
 
     int updateByPrimaryKey(ExperimentDict record);
+    
+    List<ExperimentDict> getExperimentDictList();
 }

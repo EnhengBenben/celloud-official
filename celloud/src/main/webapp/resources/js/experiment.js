@@ -7,7 +7,7 @@ var experiment = (function(experiment) {
     $("#doingTab").addClass("active");
 		$("#subtitle").html("Doing");
 		$.get("experiment/getPageList",function(response){
-		  $("#doingExp").html(response);
+		  $("#doingLoadDiv").html(response);
 		})
 	}
 	self.getDonePageList = function() {
@@ -16,14 +16,37 @@ var experiment = (function(experiment) {
     $("#doingExp").addClass("hide");
     $("#doingTab").removeClass("active");
     $("#subtitle").html("Done");
-    $.get("experiment/getPageList",function(response){
-      $("#doingExp").html(response);
+    $.get("experiment/getDonePageList",function(response){
+      $("#doneLoadDiv").html(response);
     })
   }
 	self.toAddExp = function(){
-	  //TODO 请求后台初始化动态菜单
-	  $("#addExp").modal('show');
+	  $.get("experiment/toAddExp",function(response){
+	    $("#addExp").html(response);
+	    $("#addExp").modal('show');
+	  });
 	}
+	self.toEditExp = function(id){
+    $.get("experiment/toEditExp",{"expId":id},function(response){
+      $("#addExp").html(response);
+      $("#addExp").modal('show');
+    });
+  }
+	self.closeExperiment = function(){
+	  $("#expState").val(1);
+	  self.updateExperiment();
+	}
+	self.updateExperiment = function(){
+	  $.get("experiment/updateExperiment",$("#exp-add-form").serialize(),function(flag){
+      if(flag == 1){
+        $("#addExp").modal('hide');
+        self.getPageList();
+      }else{
+        //TODO error info
+        $("#doingExp").html(flag);
+      }
+    })
+  }
 	self.validateBaseInfo = function() {
 	  //TODO 加校验
     return false;
@@ -33,10 +56,14 @@ var experiment = (function(experiment) {
 	    alert("error");
 	    return;
 	  }
-	  alert("xx");
-	  $.get("experiment/addExperiment",$("#exp-form").serialize(),function(response){
-	    alert(response);
-      $("#doingExp").html(response);
+	  $.get("experiment/addExperiment",$("#exp-add-form").serialize(),function(flag){
+	    if(flag == 1){
+	      $("#addExp").modal('hide');
+	      self.getPageList();
+	    }else{
+	      //TODO error info
+	      $("#doingExp").html(response);
+	    }
     })
   }
 	self.validateBaseInfo = function() {
