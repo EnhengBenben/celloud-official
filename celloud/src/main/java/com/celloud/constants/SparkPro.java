@@ -52,9 +52,9 @@ public class SparkPro {
      */
     public static final String SPARKKILL = "perl /share/biosoft/perl/PGS_MG/bin/spark_kill.pl";
     
-    /**
-     * celloud端直接投递到SGE的appId
-     */
-	public static final List<String> SGEAPPS = Arrays.asList("80", "82", "84", "85", "87", "88", "91", "94", "104",
-			"116", "117");
+	/**
+	 * celloud端直接投递到SGE的appId
+	 */
+	public static final List<String> SGEAPPS = Arrays.asList("80", "82", "84", "85", "87", "88", "89", "91", "94",
+			"104", "106", "108", "116", "117");
 }

@@ -25,7 +25,7 @@
 
 		<div class="login" style="position: absolute;">
 			<div class="logo" id="logo">
-				<a href="<%=request.getContextPath()%>/">
+				<a href="<%=request.getContextPath()%>/" style="color:transparent;">
 					<img src="<%=request.getContextPath() %>/images/icon/login_logo.png" />
 				</a>
 			</div>
@@ -96,6 +96,7 @@
 		}
 		//根据视口和文档的宽高设置背景图片的尺寸
 		utils.setDocSize();
+		utils.checkPlaceholder();
 	</script>
 </body>
 </html>

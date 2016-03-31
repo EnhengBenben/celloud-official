@@ -16,6 +16,97 @@ import com.celloud.model.mysql.DataFile;
  * @description :项目运行结束后的后续操作
  */
 public class RunOverUtil {
+	
+	/**
+	 * UGT流程运行结束后的数据处理
+	 * 
+	 * @param reportPath
+	 * @param dataKey
+	 * @param appTitle
+	 * @param projectFile
+	 * @param projectId
+	 * @param dataList
+	 * @return
+	 * @author lin
+	 * @date 2016年3月25日下午4:28:44
+	 */
+	public boolean UGT(String reportPath, String dataKey, String appTitle, String projectFile, String projectId,
+			List<DataFile> dataList) {
+		// 1. 追加表头
+		StringBuffer resultArray = new StringBuffer();
+		resultArray.append(appTitle);
+		// 2. 遍历数据列表
+		for (DataFile data : dataList) {
+			String finalPath = reportPath + data.getDataKey() + File.separator + "report.txt.wz.1";
+			String context = FileTools.readAppoint(finalPath);
+			if (context != null && context.contains("The type is ")) {
+				context = context.split("<br />")[0].replace("The type is ", "");
+			} else {
+				context = "no result";
+			}
+			resultArray.append(data.getDataKey() + "\t" + data.getFileName() + "\t" + context + "\n");
+		}
+		FileTools.appendWrite(projectFile, resultArray.toString());
+		return true;
+	}
+	
+	/**
+	 * DPD流程运行结束后的数据处理
+	 * 
+	 * @param reportPath
+	 * @param dataKey
+	 * @param appTitle
+	 * @param projectFile
+	 * @param projectId
+	 * @param dataList
+	 * @return
+	 * @author lin
+	 * @date 2016年3月25日下午4:26:00
+	 */
+	public boolean DPD(String reportPath, String dataKey, String appTitle, String projectFile, String projectId,
+			List<DataFile> dataList) {
+		// 1. 追加表头
+		StringBuffer resultArray = new StringBuffer();
+		resultArray.append(appTitle);
+		// 2. 遍历数据列表
+		for (DataFile data : dataList) {
+			String finalPath = reportPath + data.getDataKey() + File.separator + "report.txt.wz.1";
+			String context = FileTools.readAppoint(finalPath).replace("<br />", ";");
+			resultArray.append(data.getDataKey() + "\t" + data.getFileName() + "\t" + context + "\n");
+		}
+		FileTools.appendWrite(projectFile, resultArray.toString());
+		return true;
+	}
+	
+	/**
+	 * KRAS流程运行结束后的数据处理
+	 * 
+	 * @param reportPath
+	 * @param dataKey
+	 * @param appTitle
+	 * @param projectFile
+	 * @param projectId
+	 * @param dataList
+	 * @return
+	 * @author lin
+	 * @date 2016年3月22日下午4:31:03
+	 */
+	public boolean KRAS(String reportPath, String dataKey, String appTitle, String projectFile, String projectId,
+			List<DataFile> dataList) {
+		// 1. 追加表头
+		StringBuffer resultArray = new StringBuffer();
+		resultArray.append(appTitle);
+		// 2. 遍历数据列表
+		for (DataFile data : dataList) {
+			String finalPath = reportPath + data.getDataKey();
+			String first = FileTools.getFirstLine(finalPath + "/report.txt");
+			String conclusion = FileTools.readAppoint(finalPath + "/report.txt.Report");
+			resultArray.append(data.getDataKey() + "\t" + data.getFileName() + "\t" + first + "\t" + conclusion + "\n");
+		}
+		FileTools.appendWrite(projectFile, resultArray.toString());
+		return true;
+	}
+	
 	/**
 	 * EGFR流程运行结束后的数据处理
 	 * 

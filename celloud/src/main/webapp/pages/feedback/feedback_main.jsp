@@ -48,7 +48,7 @@
 					<div class="form-group hide" id="attachment-group">
 						<div class="col-sm-12">
 							<img id="attachmentUploading" class="img-thumbnail hide" style="height: 60px; margin-right: 10px;"
-								src="images/icon/loading.jpg">
+								src="<%=request.getContextPath() %>/images/icon/loading.jpg">
 							<a class="btn btn-default btn-lg" id="uploadAttachmentBtn">
 								<i class="fa fa-plus"></i>
 							</a>

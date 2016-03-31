@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:aop="http://www.springframework.org/schema/aop"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
          http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd">
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task.xsd">
 	<!--主动扫描Controller的配置，使得控制器能够扫描到相关的类 -->
 	<context:component-scan base-package="com.celloud" />
 	<mvc:annotation-driven />
 	<!--避免IE执行AJAX时，返回JSON出现下载文件 -->
-	<bean id="mappingJacksonHttpMessageConverter"
-		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+	<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 		<property name="supportedMediaTypes">
 			<list>
 				<value>text/html;charset=UTF-8</value>
 			</list>
 		</property>
 	</bean>
-
+	<!-- 允许异步运行的配置 -->
+	<task:annotation-driven executor="asyncExecutor" />
+	<task:executor id="asyncExecutor" pool-size="100-10000" queue-capacity="10" />
 	<mvc:resources mapping="/js/**" location="/resources/js/" />
 	<mvc:resources mapping="/css/**" location="/resources/css/" />
 	<mvc:resources mapping="/images/**" location="/resources/img/" />
 	<mvc:resources mapping="/plugins/**" location="/resources/plugins/" />
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<!--配置一个返回视图用的bean，下面的这个class整合了jstl技术 -->
-	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/pages/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
 	<!-- 引入配置文件 -->
-	<bean id="propertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
 				<value>classpath:jdbc.properties</value>
@@ -44,8 +44,7 @@
 		</property>
 	</bean>
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close">
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="${driver}" />
 		<property name="url" value="${url}" />
 		<property name="username" value="${username}" />
@@ -83,8 +82,7 @@
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 	<!-- 文件上传配置 -->
-	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="defaultEncoding" value="utf-8"></property>
 		<property name="maxUploadSize" value="10485760000"></property>
 		<property name="maxInMemorySize" value="40960"></property>
@@ -109,12 +107,25 @@
 			<mvc:exclude-mapping path="/logout/**" />
 			<bean class="com.celloud.interceptor.SecurityInterceptor" />
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/js/**" />
+			<mvc:exclude-mapping path="/images/**" />
+			<mvc:exclude-mapping path="/css/**" />
+			<mvc:exclude-mapping path="/plugins/**" />
+			<mvc:exclude-mapping path="/resources/**" />
+			<mvc:exclude-mapping path="/home/**" />
+			<mvc:exclude-mapping path="/home**" />
+			<mvc:exclude-mapping path="/feedback/save" />
+			<mvc:exclude-mapping path="/**/*.html" />
+			<mvc:exclude-mapping path="/api/**" />
+			<bean class="com.celloud.interceptor.BehaviorInterceptor" />
+		</mvc:interceptor>
 	</mvc:interceptors>
 	<!-- 启动面向切面的自动代理 -->
 	<aop:aspectj-autoproxy />
 	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	<!-- 拦截器方式配置事物 -->
@@ -135,10 +146,8 @@
 		</tx:attributes>
 	</tx:advice>
 	<aop:config>
-		<aop:pointcut id="transactionPointcut"
-			expression="execution(* com.celloud.service.*.*(..))" />
-		<aop:advisor pointcut-ref="transactionPointcut"
-			advice-ref="transactionAdvice" />
+		<aop:pointcut id="transactionPointcut" expression="execution(* com.celloud.service.*.*(..))" />
+		<aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />
 	</aop:config>
 
 	<bean id="mongoServerAddress" class="com.mongodb.ServerAddress">
@@ -146,19 +155,61 @@
 		<constructor-arg value="${mongo.port}" />
 	</bean>
 	<!-- 如果没有启用mongodb的用户验证，可不使用此配置 -->
-	<!-- <bean id="mongoCredential" class="com.mongodb.MongoCredential" factory-method="createCredential"> 
-		构造Credential的方法的参数，顺序不能改变 <constructor-arg value="${mongo.username}" /> <constructor-arg 
-		value="${mongo.database}" /> <constructor-arg value="${mongo.password}" /> 
-		</bean> -->
-	<bean id="mongoClient" class="com.mongodb.MongoClient"
-		destroy-method="close">
+	<!-- <bean id="mongoCredential" class="com.mongodb.MongoCredential" factory-method="createCredential"> 构造Credential的方法的参数，顺序不能改变 
+		<constructor-arg value="${mongo.username}" /> <constructor-arg value="${mongo.database}" /> <constructor-arg value="${mongo.password}" 
+		/> </bean> -->
+	<bean id="mongoClient" class="com.mongodb.MongoClient" destroy-method="close">
 		<constructor-arg ref="mongoServerAddress" />
 		<!-- <constructor-arg> <list> <ref bean="mongoCredential" /> </list> </constructor-arg> -->
 	</bean>
 	<bean id="morphia" class="org.mongodb.morphia.Morphia" />
-	<bean id="datastore" class="org.mongodb.morphia.Datastore"
-		factory-bean="morphia" factory-method="createDatastore">
+	<bean id="datastore" class="org.mongodb.morphia.Datastore" factory-bean="morphia" factory-method="createDatastore">
 		<constructor-arg ref="mongoClient" />
 		<constructor-arg value="${mongo.database}" />
+	</bean>
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mail.smtp}" />
+		<property name="username" value="${mail.username}" />
+		<property name="password" value="${mail.password}" />
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+				<prop key="mail.smtp.timeout">${mail.smtp.timeout}</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="emailService" class="com.celloud.mail.EmailService">
+		<property name="mailSender" ref="mailSender" />
+		<property name="velocityUtil" ref="velocityUtil" />
+		<property name="defaultFrom" value="${mail.default.from}" />
+		<property name="emailName" value="${mail.emailName}" />
+		<property name="defaultTitle" value="${mail.default.title}" />
+	</bean>
+	<bean id="emailUtil" class="com.celloud.mail.EmailUtils">
+		<property name="errorTitle" value="${mail.error.title}" />
+		<property name="errorMailTo" value="${mail.error.mailTo}" />
+		<property name="feedbackTitle" value="${mail.feedback.title}" />
+		<property name="feedbackMailTo" value="${mail.feedback.mailTo}" />
+	</bean>
+	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+		<property name="velocityProperties">
+			<props>
+				<prop key="resource.loader">class</prop>
+				<prop key="class.resource.loader.class">
+					org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+				</prop>
+				<prop key="velocimacro.library"></prop>
+				<prop key="file.resource.loader.cache">true</prop>
+				<prop key="userdirective">
+					com.celloud.velocity.BlockDirective,
+					com.celloud.velocity.OverrideDirective,
+					com.celloud.velocity.ExtendsDirective
+				</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="velocityUtil" class="com.celloud.utils.VelocityUtil">
+		<property name="velocityEngine" ref="velocityEngine" />
 	</bean>
 </beans>

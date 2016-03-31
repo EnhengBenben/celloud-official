@@ -37,7 +37,7 @@ public class DataServiceImpl implements DataService{
     }
 
     @Override
-    public long totalDataSize(Integer companyId) {
+    public Long totalDataSize(Integer companyId) {
         return dataFileMapper.countDataFileSize(companyId, DataState.ACTIVE,PropertiesUtil.testAccountIds);
     }
 

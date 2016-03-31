@@ -23,7 +23,7 @@ public interface DataService {
      * @author han
      * @date 2016年3月14日 下午4:23:23
      */
-    public long totalDataSize(Integer companyId);
+    public Long totalDataSize(Integer companyId);
     
     /**
      * 获取所有大客户数据按月份统计

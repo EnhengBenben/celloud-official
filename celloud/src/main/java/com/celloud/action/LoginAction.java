@@ -29,6 +29,7 @@ import com.celloud.model.mysql.User;
 import com.celloud.service.ActionLogService;
 import com.celloud.service.RSAKeyService;
 import com.celloud.service.UserService;
+import com.celloud.utils.ActionLog;
 import com.celloud.utils.CookieUtils;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.RSAUtil;
@@ -99,6 +100,7 @@ public class LoginAction {
      * @param response
      * @return
      */
+    @ActionLog(value = "用户登录",button  = "登录")
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public ModelAndView login(Model model, User user, String kaptchaCode, PublicKey publicKey, boolean checked,
             HttpServletRequest request, HttpServletResponse response) {

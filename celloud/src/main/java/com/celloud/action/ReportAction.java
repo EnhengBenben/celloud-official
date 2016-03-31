@@ -38,15 +38,18 @@ import com.celloud.model.mongo.CmpFilling;
 import com.celloud.model.mongo.CmpGeneDetectionDetail;
 import com.celloud.model.mongo.CmpGeneSnpResult;
 import com.celloud.model.mongo.CmpReport;
+import com.celloud.model.mongo.DPD;
 import com.celloud.model.mongo.DrugResistanceSite;
 import com.celloud.model.mongo.EGFR;
 import com.celloud.model.mongo.HBV;
 import com.celloud.model.mongo.HCV;
+import com.celloud.model.mongo.KRAS;
 import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
 import com.celloud.model.mongo.RecommendDrug;
 import com.celloud.model.mongo.Split;
+import com.celloud.model.mongo.UGT;
 import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.Company;
 import com.celloud.model.mysql.DataFile;
@@ -674,6 +677,83 @@ public class ReportAction {
 		ModelAndView mv = getModelAndView("report/report_data_egfr", projectId);
 		return mv.addObject("egfr", egfr);
 	}
+	
+	/**
+	 * 获取KRAS数据报告
+	 * 
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 * @author lin
+	 * @date 2016年3月22日下午4:37:27
+	 */
+	@RequestMapping("getKRASReport")
+	public ModelAndView getKRASReport(String dataKey, Integer projectId, Integer appId) {
+		KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
+		String mp = kras.getMutationPosition();
+		if (StringUtils.isNotBlank(mp)) {
+			kras.setMutationPosition(CustomStringUtils.htmlbr(mp));
+		}
+		ModelAndView mv = getModelAndView("report/report_data_kras", projectId);
+		return mv.addObject("kras", kras);
+	}
+	
+	/**
+	 * 获取DPD数据报告
+	 * 
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 * @author lin
+	 * @date 2016年3月25日下午4:00:38
+	 */
+	@RequestMapping("getDPDReport")
+	public ModelAndView getDPDReport(String dataKey, Integer projectId, Integer appId) {
+		DPD dpd = reportService.getDPDReport(dataKey, projectId, appId);
+		String mp = dpd.getMutationPosition();
+		if (StringUtils.isNotBlank(mp)) {
+			String context[] = mp.split("\n");
+			StringBuffer sb = new StringBuffer("<table>");
+			for (String st : context) {
+				sb.append("<tr><td>" + st + "</td></tr>");
+			}
+			sb.append("</table>");
+			dpd.setMutationPosition(sb.toString());
+		}
+		String postion = dpd.getPosition();
+		if (StringUtils.isNotBlank(postion)) {
+			dpd.setPosition(CustomStringUtils.htmlbr(postion));
+		}
+		ModelAndView mv = getModelAndView("report/report_data_dpd", projectId);
+		return mv.addObject("dpd", dpd);
+	}
+
+	/**
+	 * 获取UGT数据报告
+	 * 
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 * @author lin
+	 * @date 2016年3月25日下午4:00:51
+	 */
+	@RequestMapping("getUGTReport")
+	public ModelAndView getUGTReport(String dataKey, Integer projectId, Integer appId) {
+		UGT ugt = reportService.getUGTReport(dataKey, projectId, appId);
+		String position = ugt.getPosition();
+		if (StringUtils.isNotBlank(position)) {
+			ugt.setPosition(CustomStringUtils.htmlbr(position));
+		}
+		String mutationPosition = ugt.getMutationPosition();
+		if (StringUtils.isNotBlank(mutationPosition)) {
+			ugt.setMutationPosition(CustomStringUtils.htmlbr(mutationPosition));
+		}
+		ModelAndView mv = getModelAndView("report/report_data_ugt", projectId);
+		return mv.addObject("ugt", ugt);
+	}
 
     /**
      * 点击数据报告列表查看上一页数据报告
@@ -819,6 +899,31 @@ public class ReportAction {
 		}
 		EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
 		mv.addObject("egfr", egfr).addObject("report", report);
+		return mv;
+	}
+	
+	/**
+	 * 打印KRAS
+	 * 
+	 * @param appId
+	 * @param dataKey
+	 * @param projectId
+	 * @return
+	 * @author lin
+	 * @date 2016年3月22日下午5:04:22
+	 */
+	@RequestMapping("printKRAS")
+	public ModelAndView printKRAS(Integer appId, String dataKey, Integer projectId) {
+		ModelAndView mv = getModelAndView("print/print_kras", projectId);
+		Integer userId = ConstantsData.getLoginUserId();
+		Integer fileId = dataService.getDataByKey(dataKey).getFileId();
+		Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
+		// 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
+		if (StringUtils.isNotEmpty(report.getPrintContext())) {
+			return mv.addObject("printContext", report.getPrintContext());
+		}
+		KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
+		mv.addObject("kras", kras).addObject("report", report);
 		return mv;
 	}
 

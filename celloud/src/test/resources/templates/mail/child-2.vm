@@ -1,0 +1,7 @@
+#override("body")  
+    child-2
+#end 
+#override("test")  
+    child-2
+#end 
+#extends("/templates/mail/child-1.vm")  
