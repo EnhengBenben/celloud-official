@@ -691,6 +691,10 @@ public class ReportAction {
 	@RequestMapping("getKRASReport")
 	public ModelAndView getKRASReport(String dataKey, Integer projectId, Integer appId) {
 		KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
+		String mp = kras.getMutationPosition();
+		if (StringUtils.isNotBlank(mp)) {
+			kras.setMutationPosition(CustomStringUtils.htmlbr(mp));
+		}
 		ModelAndView mv = getModelAndView("report/report_data_kras", projectId);
 		return mv.addObject("kras", kras);
 	}
