@@ -340,6 +340,16 @@ function showUpload(){
 }
 
 /**
+ * 实验管理
+ */
+function showExperiment(){
+  $.main.show.mainDIV();
+  $.get("experiment/getExperimentDict",function(response){
+    $("#mainDIV").html(response);
+  });
+}
+
+/**
  * 报告
  */
 function showReport(){

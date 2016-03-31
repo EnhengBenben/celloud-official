@@ -99,6 +99,14 @@
 							<span>总览</span>
 						</a>
 					</li>
+					<c:if test="${companyId == 6 }">
+						<li class="treeview">
+							<a href="javascript:void(0)" onclick="showExperiment();">
+								<i class="fa fa-stack-overflow"></i>
+								<span>实验管理</span>
+							</a>
+						</li>
+					</c:if>
 					<li class="treeview" id="toUploadMenu" data-step="4" data-position="right" data-intro="" data-img="toupload.png">
 						<a href="javascript:void(0)" onclick="showUpload();">
 							<i class="fa fa-sellsy"></i>

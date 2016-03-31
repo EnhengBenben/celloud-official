@@ -1,0 +1,10 @@
+@CHARSET "UTF-8";
+
+.manage-btn {
+	float: right;
+	height: 40px;
+}
+
+.exp-form input[type="text"] {
+	width: 100%;
+}
