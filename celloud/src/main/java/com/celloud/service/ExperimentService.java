@@ -21,11 +21,17 @@ public interface ExperimentService {
 	 * 
 	 * @param userId
 	 * @param page
+	 * @param sampleId
+	 * @param methodId
+	 * @param stepId
+	 * @param start
+	 * @param end
 	 * @return
 	 * @author lin
-	 * @date 2016年3月29日下午5:22:10
+	 * @date 2016年3月31日下午3:33:53
 	 */
-	public PageList<Experiment> getExpDonePageList(Integer userId, Page page);
+	public PageList<Experiment> getExpDonePageList(Integer userId, Page page, Integer sampleId, Integer methodId,
+			Integer stepId, String start, String end);
 
 	/**
 	 * 修改

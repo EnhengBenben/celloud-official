@@ -59,11 +59,30 @@
   	left join tb_experiment_dict d4 on e.sequenator = d4.id
     where user_id = #{userId,jdbcType=INTEGER} and e.state = #{state,jdbcType=INTEGER}
   </select>
-  <select id="getExpDonePageList" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from tb_experiment
-    where user_id = #{userId,jdbcType=INTEGER} and state > #{state,jdbcType=INTEGER}
+  <select id="getExpDonePageList" resultMap="ContainNameMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="contain_name" />
+  	from tb_experiment e 
+  	left join tb_experiment_dict d1 on e.step = d1.id 
+  	left join tb_experiment_dict d2 on e.sample_type = d2.id 
+  	left join tb_experiment_dict d3 on e.amplification_method = d3.id 
+  	left join tb_experiment_dict d4 on e.sequenator = d4.id
+    where user_id = #{userId,jdbcType=INTEGER} and e.state > #{state,jdbcType=INTEGER}
+    <if test="stepId != 0" >
+    and step = #{stepId}
+    </if>
+    <if test="sampleId != 0" >
+    and sample_type = #{sampleId}
+    </if>
+    <if test="methodId != 0" >
+    and amplification_method = #{methodId}
+    </if>
+    <if test="start != null and start!=''" >
+    and create_date &gt; #{start}
+    </if>
+    <if test="end != null and end!=''" >
+    and create_date &lt; #{end}
+    </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_experiment

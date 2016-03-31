@@ -22,6 +22,8 @@ public interface ExperimentMapper {
 
 	List<Experiment> getExperimentPageList(@Param("userId") Integer userId, @Param("state") Integer state, Page page);
 
-	List<Experiment> getExpDonePageList(@Param("userId") Integer userId, @Param("state") Integer state, Page page);
+	List<Experiment> getExpDonePageList(@Param("userId") Integer userId, @Param("state") Integer state, Page page,
+			@Param("sampleId") Integer sampleId, @Param("methodId") Integer methodId, @Param("stepId") Integer stepId,
+			@Param("start") String start, @Param("end") String end);
 
 }

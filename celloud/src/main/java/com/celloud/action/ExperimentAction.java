@@ -45,7 +45,7 @@ public class ExperimentAction {
 		int userId = ConstantsData.getLoginUserId();
 		Page pager = new Page(page, size);
 		PageList<Experiment> pl = es.getExperimentPageList(userId, pager);
-		return new ModelAndView("experiment/experiment_list").addObject("pageList", pl);
+		return new ModelAndView("experiment/experiment_doing_list").addObject("pageList", pl);
 	}
 
 	/**
@@ -60,11 +60,12 @@ public class ExperimentAction {
 	@ActionLog(value = "获取done状态的实验流程", button = "Done")
 	@RequestMapping("getDonePageList")
 	public ModelAndView getDonePageList(@RequestParam(defaultValue = "1") Integer page,
-			@RequestParam(defaultValue = Constants.DEFAULT_PAGE_SIZE + "") Integer size) {
+			@RequestParam(defaultValue = Constants.DEFAULT_PAGE_SIZE + "") Integer size, Integer sampleId,
+			Integer methodId, Integer stepId, String start, String end) {
 		int userId = ConstantsData.getLoginUserId();
 		Page pager = new Page(page, size);
-		PageList<Experiment> pl = es.getExpDonePageList(userId, pager);
-		return new ModelAndView("experiment/experiment_list").addObject("pageList", pl);
+		PageList<Experiment> pl = es.getExpDonePageList(userId, pager, sampleId, methodId, stepId, start, end);
+		return new ModelAndView("experiment/experiment_done_list").addObject("pageList", pl);
 	}
 
 	/**
@@ -96,6 +97,20 @@ public class ExperimentAction {
 	public ModelAndView toAddExp() {
 		List<ExperimentDict> list = eds.getExperimentDictList();
 		return new ModelAndView("experiment/experiment_add").addObject("list", list);
+	}
+
+	/**
+	 * 获取实验流程动态菜单
+	 * 
+	 * @return
+	 * @author lin
+	 * @date 2016年3月30日下午5:13:55
+	 */
+	@ActionLog(value = "获取实验流程动态菜单", button = "实验管理")
+	@RequestMapping("getExperimentDict")
+	public ModelAndView getExperimentDict() {
+		List<ExperimentDict> list = eds.getExperimentDictList();
+		return new ModelAndView("experiment/experiment_main").addObject("list", list);
 	}
 
 	@ActionLog(value = "跳转实验流程编辑", button = "编辑")

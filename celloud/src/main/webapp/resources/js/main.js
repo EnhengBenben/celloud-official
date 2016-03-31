@@ -344,7 +344,9 @@ function showUpload(){
  */
 function showExperiment(){
   $.main.show.mainDIV();
-  $("#mainDIV").load("pages/experiment/experiment_main.jsp");
+  $.get("experiment/getExperimentDict",function(response){
+    $("#mainDIV").html(response);
+  });
 }
 
 /**

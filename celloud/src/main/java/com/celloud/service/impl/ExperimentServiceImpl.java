@@ -35,8 +35,10 @@ public class ExperimentServiceImpl implements ExperimentService {
 	}
 
 	@Override
-	public PageList<Experiment> getExpDonePageList(Integer userId, Page page) {
-		List<Experiment> list = experimentMapper.getExpDonePageList(userId, ExperimentState.OPEN, page);
+	public PageList<Experiment> getExpDonePageList(Integer userId, Page page, Integer sampleId, Integer methodId,
+			Integer stepId, String start, String end) {
+		List<Experiment> list = experimentMapper.getExpDonePageList(userId, ExperimentState.OPEN, page, sampleId,
+				methodId, stepId, start, end);
 		return new PageList<>(page, list);
 	}
 

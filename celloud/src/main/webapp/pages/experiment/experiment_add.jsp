@@ -103,10 +103,10 @@
 		</div>
        </div>
       </form>
-      <div id="batch-editdata-error" class="alert alert-warning-cel alert-dismissable hide">
-   <button type="button" class="close"><i class="fa fa-close"></i></button>
-   <h5><i class="icon fa fa-warning"></i>保存失败！</h5>
-</div>
+		<div id="batch-editdata-error" class="alert alert-warning-cel alert-dismissable hide">
+			<button type="button" class="close"><i class="fa fa-close"></i></button>
+			<h5><i class="icon fa fa-warning"></i>保存失败！</h5>
+		</div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-celloud-close btn-flat pull-left" data-dismiss="modal">关闭</button>
