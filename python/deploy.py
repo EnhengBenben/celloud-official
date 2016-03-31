@@ -5,15 +5,13 @@
 __author__='lin'
 
 #自动部署脚本
-#需要备份:python deploy.py 1
-#不需要备份:python deploy.py 0
 
 import os,shutil,time,sys
 from mysql.mysqlpro import MySQLPro
 
 if len(sys.argv) != 2:
 	print 'Usage: *.py num'
-	print 'num:1－－备份；2－－重启tomcat(删除之前的celloud文件夹)；3-－配置文件回拷；4－－仅重启tomcat；'
+	print 'num:1－－备份；2－－重启tomcat(删除celloud/ROOT文件夹)；3-－文件回拷；4－－仅重启tomcat；'
 	sys.exit(0)
 
 flag = sys.argv[1]
@@ -29,6 +27,7 @@ tomcatStartCommand = 'startup.sh'
 
 #source path
 celloudSource = os.path.join(tomcatPath,'webapps/celloud')
+ROOT = os.path.join(tomcatPath,'webapps/ROOT')
 toolsSource = '/share/data/webapps/Tools'
 pythonSource = '/share/biosoft/perl/PGS_MG/python'
 
@@ -40,9 +39,6 @@ pythonBak = os.path.join(bakPath,today+'Python')
 sqlBak = os.path.join(bakPath,today+'celloud.sql')
 
 #copy back
-celloudBackAppend = 'WEB-INF/classes'
-celloudBack = ['email.properties','file_path.properties','jdbc.properties',
-'machine.xml','mongodb.properties','ResetPwd.properties','system.properties']
 pythonBack = ['app/PDFPro.py','mysql/mysqlpro.py','mongo/mongopro.py']
 
 #celloud static
@@ -69,27 +65,21 @@ if flag=='1':
 elif flag=='2':
 	
 	stop = os.path.join(tomcatPath,'bin',tomcatStopCommand)
-	print stop
 	os.system(stop)
 	print '－－tomcat 已停止－－'
 	shutil.rmtree(celloudSource)
 	print '－－celloud 文件夹已删除－－'
+	shutil.rmtree(ROOT)
+	print '－－ROOT 文件夹已删除－－'
 	temp = os.path.join(tomcatPath,'work','Catalina')
-	print temp
 	shutil.rmtree(temp)
 	print '－－tomcat 缓存已删除－－'
 	start = os.path.join(tomcatPath,'bin',tomcatStartCommand)
-	print start
 	os.system(start)
 	print '－－tomcat 已启动－－'
 
 elif flag=='3':
 
-	cfrom = os.path.join(celloudBak,celloudBackAppend)
-	cto = os.path.join(celloudSource,celloudBackAppend)
-	for x in celloudBack:
-		shutil.copyfile(os.path.join(cfrom,x),os.path.join(cto,x))
-	print '--celloud 回拷完毕－－'
 	shutil.rmtree(staticResultPath)
 	staticFrom = os.path.join(celloudSource,celloudStaticAppend)
 	shutil.copytree(staticFrom,staticResultPath)
@@ -102,15 +92,12 @@ elif flag=='3':
 elif flag=='4':
 	
 	stop = os.path.join(tomcatPath,'bin',tomcatStopCommand)
-	print stop
 	os.system(stop)
 	print '－－tomcat 已停止－－'
 	temp = os.path.join(tomcatPath,'work','Catalina')
-	print temp
 	shutil.rmtree(temp)
 	print '－－tomcat 缓存已删除－－'
 	start = os.path.join(tomcatPath,'bin',tomcatStartCommand)
-	print start
 	os.system(start)
 	print '－－tomcat 已启动－－'
 
