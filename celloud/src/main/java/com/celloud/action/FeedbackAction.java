@@ -35,6 +35,7 @@ import com.celloud.constants.FeedbackConstants;
 import com.celloud.model.mysql.Feedback;
 import com.celloud.model.mysql.FeedbackAttachment;
 import com.celloud.model.mysql.FeedbackReply;
+import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.FeedbackService;
@@ -83,8 +84,8 @@ public class FeedbackAction {
      */
     @RequestMapping(value = "save", method = RequestMethod.PUT)
     @ResponseBody
-    public boolean save(Feedback feedback) {
-        return feedbackService.inserte(feedback, null) >= 0;
+    public boolean save(Feedback feedback, User user) {
+        return feedbackService.inserte(user, feedback, null) >= 0;
     }
 
     /**
@@ -97,7 +98,7 @@ public class FeedbackAction {
     @ResponseBody
     public Response create(Feedback feedback, String[] attachments) {
         List<String> list = attachments == null || attachments.length <= 0 ? null : Arrays.asList(attachments);
-        int result = feedbackService.inserte(feedback, list);
+        int result = feedbackService.inserte(null, feedback, list);
         if (result > 0) {
             return Response.SAVE_SUCCESS;
         }
