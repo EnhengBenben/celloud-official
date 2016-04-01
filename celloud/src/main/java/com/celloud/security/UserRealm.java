@@ -48,17 +48,19 @@ public class UserRealm extends AuthorizingRealm {
         Set<String> roles = (Set<String>) session.getAttribute(Constants.SESSION_LOGIN_USER_ROLES);
         if (roles == null) {
             roles = userService.findRoles(user.getUserId());
-            session.setAttribute(Constants.SESSION_LOGIN_USER_ROLES, roles == null ? new HashSet<>() : roles);
+            roles = roles == null ? new HashSet<String>() : roles;
+            logger.info("初始化用户{}的角色信息：共{}个角色", user.getUsername(), roles.size());
+            session.setAttribute(Constants.SESSION_LOGIN_USER_ROLES, roles);
         }
         Set<String> permissions = (Set<String>) session.getAttribute(Constants.SESSION_LOGIN_USER_PERMISSIONS);
         if (permissions == null) {
             permissions = userService.findPermissions(user.getUserId());
-            session.setAttribute(Constants.SESSION_LOGIN_USER_PERMISSIONS,
-                    permissions == null ? new HashSet<>() : permissions);
+            permissions = permissions == null ? new HashSet<String>() : permissions;
+            logger.info("初始化用户{}的权限信息：共{}个权限", user.getUsername(), permissions.size());
+            session.setAttribute(Constants.SESSION_LOGIN_USER_PERMISSIONS, permissions);
         }
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         authorizationInfo.setRoles(roles);
-        logger.debug("用户{}共有{}个权限！", user.getUsername(), permissions.size());
         authorizationInfo.setStringPermissions(permissions);
         return authorizationInfo;
     }

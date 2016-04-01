@@ -1,5 +1,7 @@
 package com.celloud.mapper;
 
+import java.util.List;
+
 import com.celloud.model.mysql.SecRole;
 
 public interface SecRoleMapper {
@@ -14,4 +16,6 @@ public interface SecRoleMapper {
     int updateByPrimaryKeySelective(SecRole record);
 
     int updateByPrimaryKey(SecRole record);
+
+    List<SecRole> findRolesByUserId(Integer userId);
 }
