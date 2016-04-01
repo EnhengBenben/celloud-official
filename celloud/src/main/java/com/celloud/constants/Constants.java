@@ -12,6 +12,14 @@ public class Constants {
      */
     public static final String SESSION_LOGIN_USER = "loginUserInSession";
     /**
+     * 已登录用户的角色
+     */
+    public static final String SESSION_LOGIN_USER_ROLES = "loginUsersRolesInSession";
+    /**
+     * 已登录用户的权限
+     */
+    public static final String SESSION_LOGIN_USER_PERMISSIONS = "loginUsersPermissionsInSession";
+    /**
      * session中当前登录用户私钥
      */
     public static final String SESSION_RSA_PRIVATEKEY = "rsaPrivateKeyInSession";
@@ -49,5 +57,8 @@ public class Constants {
      * 默认的用户头像
      */
     public static final String DELAULT_AVATAR = "01";
+    /**
+     * 系统配置文件
+     */
     public static final String SYSTEM_PROPERTIES_FILE = "system.properties";
 }

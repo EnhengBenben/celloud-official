@@ -24,11 +24,11 @@
 		icon,
 		role,
 		remark, navigation,
-		truename, state, dept_id, login_uuid,
+		truename, state, dept_id,
+		login_uuid,
 		company_id, sign
 	</sql>
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
-		parameterType="java.lang.Integer">
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
 		<include refid="Base_Column_List" />
 		from tb_user
@@ -47,7 +47,8 @@
 		navigation, truename, state,
 		dept_id, login_uuid, company_id,
 		sign)
-		values (#{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR},
+		values
+		(#{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR},
 		#{password,jdbcType=VARCHAR},
 		#{email,jdbcType=VARCHAR},
 		#{cellphone,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
@@ -217,20 +218,24 @@
 		update tb_user
 		set
 		username = #{username,jdbcType=VARCHAR},
-		password =
+		password
+		=
 		#{password,jdbcType=VARCHAR},
 		email = #{email,jdbcType=VARCHAR},
 		cellphone = #{cellphone,jdbcType=VARCHAR},
-		create_date =
+		create_date
+		=
 		#{createDate,jdbcType=TIMESTAMP},
 		icon = #{icon,jdbcType=VARCHAR},
 		role
 		= #{role,jdbcType=INTEGER},
-		remark = #{remark,jdbcType=VARCHAR},
+		remark =
+		#{remark,jdbcType=VARCHAR},
 		navigation = #{navigation,jdbcType=INTEGER},
 		truename =
 		#{truename,jdbcType=VARCHAR},
-		state = #{state,jdbcType=INTEGER},
+		state =
+		#{state,jdbcType=INTEGER},
 		dept_id = #{deptId,jdbcType=INTEGER},
 		login_uuid =
 		#{loginUuid,jdbcType=VARCHAR},
@@ -245,10 +250,10 @@
 		<include refid="Base_Column_List" />
 		from tb_user
 		where state = 0
-		AND  (
-		      username = #{username,jdbcType=VARCHAR}
-		      OR email = #{username,jdbcType=VARCHAR}
-		      )
+		AND (
+		username = #{username,jdbcType=VARCHAR}
+		OR email = #{username,jdbcType=VARCHAR}
+		)
 		AND password = #{password,jdbcType=VARCHAR}
 		AND role=0
 	</select>
@@ -305,10 +310,16 @@
 		from tb_user
 		where username = #{username}
 	</select>
+	<select id="findByUsernameOrEmail" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />,password
+		from tb_user
+		where (username = #{username} or email = #{username}) and state = 0
+	</select>
 	<select id="isEmailInUse" resultType="int">
-        select count(1) from tb_user where email=#{email} and user_id != #{userId}
-    </select>
-    <select id="getCompanyIdByUserId" resultType="java.lang.Integer">
-    	select company_id from tb_user_company_relat where user_id = #{userId}
-    </select>
+		select count(1) from tb_user where email=#{email} and user_id != #{userId}
+	</select>
+	<select id="getCompanyIdByUserId" resultType="java.lang.Integer">
+		select company_id from tb_user_company_relat where user_id = #{userId}
+	</select>
 </mapper>

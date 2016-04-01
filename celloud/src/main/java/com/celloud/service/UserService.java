@@ -1,6 +1,7 @@
 package com.celloud.service;
 
 import java.util.Date;
+import java.util.Set;
 
 import com.celloud.model.mysql.User;
 
@@ -66,7 +67,7 @@ public interface UserService {
      * 
      * @param username
      * @param password
-     * @return 
+     * @return
      */
     public int updatePassword(int userId, String password);
 
@@ -113,5 +114,29 @@ public interface UserService {
      * @date 2016-1-9 下午10:35:29
      */
     public Integer getCompanyIdByUserId(Integer userId);
+
+    /**
+     * 根据用户名查询用户
+     * 
+     * @param username
+     * @return
+     */
+    public User findByUsernameOrEmail(String username);
+
+    /**
+     * 查询用户所有的角色
+     * 
+     * @param userId
+     * @return
+     */
+    public Set<String> findRoles(Integer userId);
+
+    /**
+     * 查询用户所有的权限
+     * 
+     * @param userId
+     * @return
+     */
+    public Set<String> findPermissions(Integer userId);
 
 }

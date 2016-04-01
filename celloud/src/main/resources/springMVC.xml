@@ -43,7 +43,6 @@
 			</list>
 		</property>
 	</bean>
-
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="${driver}" />
 		<property name="url" value="${url}" />
@@ -91,22 +90,6 @@
 	<bean id="exceptionHandler" class="com.celloud.exception.ExceptionHandler" />
 	<!-- 拦截器配置 -->
 	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/**" />
-			<mvc:exclude-mapping path="/js/**" />
-			<mvc:exclude-mapping path="/images/**" />
-			<mvc:exclude-mapping path="/css/**" />
-			<mvc:exclude-mapping path="/plugins/**" />
-			<mvc:exclude-mapping path="/resources/**" />
-			<mvc:exclude-mapping path="/home/**" />
-			<mvc:exclude-mapping path="/home**" />
-			<mvc:exclude-mapping path="/feedback/save" />
-			<mvc:exclude-mapping path="/**/*.html" />
-			<mvc:exclude-mapping path="/api/**" />
-			<mvc:exclude-mapping path="/login/**" />
-			<mvc:exclude-mapping path="/logout/**" />
-			<bean class="com.celloud.interceptor.SecurityInterceptor" />
-		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<mvc:exclude-mapping path="/js/**" />
@@ -201,15 +184,46 @@
 				</prop>
 				<prop key="velocimacro.library"></prop>
 				<prop key="file.resource.loader.cache">true</prop>
-                <prop key="userdirective">
-                    com.celloud.velocity.BlockDirective,
-                    com.celloud.velocity.OverrideDirective,
-                    com.celloud.velocity.ExtendsDirective
-                </prop>
+				<prop key="userdirective">
+					com.celloud.velocity.BlockDirective,
+					com.celloud.velocity.OverrideDirective,
+					com.celloud.velocity.ExtendsDirective
+				</prop>
 			</props>
 		</property>
 	</bean>
 	<bean id="velocityUtil" class="com.celloud.utils.VelocityUtil">
 		<property name="velocityEngine" ref="velocityEngine" />
+	</bean>
+	<!-- shiro权限管理相关配置 -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/login" />
+		<property name="filterChainDefinitions">
+			<value>
+				/js/** = anon
+				/images/** = anon
+				/css/** = anon
+				/plugins/** = anon
+				/resources/** = anon
+				/kaptcha.jpg = anon
+				/home/** = anon
+				/home** = anon
+				/feedback/save = anon
+				/**/*.html = anon
+				/api/** = anon
+				/login/** = anon
+				/logout/** = anon
+				/ = anon
+				/pages/** = user
+				/** = user
+			</value>
+		</property>
+	</bean>
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="userRealm" />
+	</bean>
+	<bean id="userRealm" class="com.celloud.security.UserRealm" >
+	<property name="cachingEnabled" value="false"/>
 	</bean>
 </beans>

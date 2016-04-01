@@ -45,4 +45,6 @@ public interface UserMapper {
      * @date 2016-1-9 下午10:37:35
      */
     public Integer getCompanyIdByUserId(@Param("userId") Integer userId);
+
+    public User findByUsernameOrEmail(@Param("username") String username);
 }

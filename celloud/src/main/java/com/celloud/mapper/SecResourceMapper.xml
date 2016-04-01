@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.celloud.mapper.SecResourceMapper">
+	<resultMap id="BaseResultMap" type="com.celloud.model.mysql.SecResource">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="priority" property="priority" jdbcType="INTEGER" />
+		<result column="parent_id" property="parentId" jdbcType="INTEGER" />
+		<result column="permission" property="permission" jdbcType="VARCHAR" />
+		<result column="disabled" property="disabled" jdbcType="BIT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, type, priority, parent_id, permission, disabled
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from tb_sec_resource
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="findPermissionResourcesByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from tb_sec_resource where
+		exists (
+		select resource_id from tb_sec_permission where
+		tb_sec_resource.id=tb_sec_permission.resource_id and
+		exists (
+		select role_id from tb_sec_user_role_relat where
+		tb_sec_permission.role_id=tb_sec_user_role_relat.role_id
+		and user_id=#{id,jdbcType=INTEGER}
+		)
+		)
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tb_sec_resource
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.celloud.model.mysql.SecResource">
+		insert into tb_sec_resource (id, name, type,
+		priority, parent_id, permission,
+		disabled)
+		values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+		#{priority,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{permission,jdbcType=VARCHAR},
+		#{disabled,jdbcType=BIT})
+	</insert>
+	<insert id="insertSelective" parameterType="com.celloud.model.mysql.SecResource">
+		insert into tb_sec_resource
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="priority != null">
+				priority,
+			</if>
+			<if test="parentId != null">
+				parent_id,
+			</if>
+			<if test="permission != null">
+				permission,
+			</if>
+			<if test="disabled != null">
+				disabled,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="priority != null">
+				#{priority,jdbcType=INTEGER},
+			</if>
+			<if test="parentId != null">
+				#{parentId,jdbcType=INTEGER},
+			</if>
+			<if test="permission != null">
+				#{permission,jdbcType=VARCHAR},
+			</if>
+			<if test="disabled != null">
+				#{disabled,jdbcType=BIT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.SecResource">
+		update tb_sec_resource
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="priority != null">
+				priority = #{priority,jdbcType=INTEGER},
+			</if>
+			<if test="parentId != null">
+				parent_id = #{parentId,jdbcType=INTEGER},
+			</if>
+			<if test="permission != null">
+				permission = #{permission,jdbcType=VARCHAR},
+			</if>
+			<if test="disabled != null">
+				disabled = #{disabled,jdbcType=BIT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.SecResource">
+		update tb_sec_resource
+		set name = #{name,jdbcType=VARCHAR},
+		type =
+		#{type,jdbcType=VARCHAR},
+		priority = #{priority,jdbcType=INTEGER},
+		parent_id = #{parentId,jdbcType=INTEGER},
+		permission =
+		#{permission,jdbcType=VARCHAR},
+		disabled = #{disabled,jdbcType=BIT}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

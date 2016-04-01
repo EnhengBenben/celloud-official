@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
@@ -21,8 +22,9 @@
 <link href="<%=request.getContextPath()%>/css/font.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/main.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/css/app.css?version=1.0" rel="stylesheet" type="text/css" />
-<link href="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
-<link href="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet"
+	type="text/css" media="screen" />
+<link href="<%=request.getContextPath()%>/plugins/backToTop/toTop.1.0.css" rel="stylesheet">
 </head>
 <body class="skin-green sidebar-mini">
 	<div class="fixed wrapper">
@@ -43,21 +45,23 @@
 				</a>
 				<div class="navbar-custom-menu">
 					<ul class="nav navbar-nav">
-					<!-- Messages: style can be found in dropdown.less-->
-			            <li class="dropdown messages-menu expense-menu">
-			                <a id="to-expense-model" href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-			                  <i class="fa fa-rmb"></i>
-			                  <span class="hidden-xs">消费记录</span>
-			                </a>
-			                <div class="dropdown-menu">
-			                  <div class="dropdown-menu-inner">
-                                <p>总消费金额: <small class="pull-right"><span id="total-consumption"></span>C</small></p>
-                                <div class="text-center">
-                                  <a id="to-expense-main" class="btn btn-sm btn-celloud-success btn-flat" href="javascript:void(0)">查看详情</a>
-                                </div>
-			                  </div>
-			                </div>
-			            </li>
+						<!-- Messages: style can be found in dropdown.less-->
+						<li class="dropdown messages-menu expense-menu">
+							<a id="to-expense-model" href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+								<i class="fa fa-rmb"></i>
+								<span class="hidden-xs">消费记录</span>
+							</a>
+							<div class="dropdown-menu">
+								<div class="dropdown-menu-inner">
+									<p>
+										总消费金额: <small class="pull-right"><span id="total-consumption"></span>C</small>
+									</p>
+									<div class="text-center">
+										<a id="to-expense-main" class="btn btn-sm btn-celloud-success btn-flat" href="javascript:void(0)">查看详情</a>
+									</div>
+								</div>
+							</div>
+						</li>
 						<li class="dropdown user user-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 								<img src="${sessionScope.loginUserInSession.avatar}" class="user-image" alt="User Image" id="userImageSmall" />
@@ -99,14 +103,14 @@
 							<span>总览</span>
 						</a>
 					</li>
-					<c:if test="${companyId == 6 }">
+					<shiro:hasPermission name="experiment:menu">
 						<li class="treeview">
 							<a href="javascript:void(0)" onclick="showExperiment();">
 								<i class="fa fa-stack-overflow"></i>
 								<span>实验管理</span>
 							</a>
 						</li>
-					</c:if>
+					</shiro:hasPermission>
 					<li class="treeview" id="toUploadMenu" data-step="4" data-position="right" data-intro="" data-img="toupload.png">
 						<a href="javascript:void(0)" onclick="showUpload();">
 							<i class="fa fa-sellsy"></i>
@@ -131,14 +135,14 @@
 							<span>应用市场</span>
 						</a>
 					</li>
-				<c:if test="${companyId == 3 or companyId == 6 or companyId == 33 }">
-					<li class="treeview">
-						<a href="javascript:void(0)" onclick="showCount()">
-							<i class="fa fa-heartbeat"></i>
-							<span>统计</span>
-						</a>
-					</li>
-				</c:if>
+					<c:if test="${companyId == 3 or companyId == 6 or companyId == 33 }">
+						<li class="treeview">
+							<a href="javascript:void(0)" onclick="showCount()">
+								<i class="fa fa-heartbeat"></i>
+								<span>统计</span>
+							</a>
+						</li>
+					</c:if>
 					<li class="header">
 						<span>用户中心</span>
 					</li>
@@ -155,7 +159,8 @@
 						</a>
 					</li>
 					<li class="treeview" id="toHelpMenu">
-					   <a href="javascript:void(0);" onclick="showHelp()"><i class="fa fa-question-circle text-aqua"></i>
+						<a href="javascript:void(0);" onclick="showHelp()">
+							<i class="fa fa-question-circle text-aqua"></i>
 							<span>帮助</span>
 						</a>
 					</li>
