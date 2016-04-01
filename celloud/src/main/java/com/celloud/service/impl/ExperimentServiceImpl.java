@@ -47,4 +47,9 @@ public class ExperimentServiceImpl implements ExperimentService {
 		return experimentMapper.selectByPrimaryKey(id);
 	}
 
+	@Override
+	public Integer checkoutNumber(Integer userId, String num) {
+		return experimentMapper.checkoutNumber(userId, ExperimentState.OPEN, num);
+	}
+
 }

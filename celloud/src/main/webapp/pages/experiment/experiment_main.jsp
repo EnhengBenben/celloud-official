@@ -27,7 +27,7 @@
 					</div>
 					<ul>
 						<li id="doingTab" class="active">
-							<a href="javascript:experiment.getPageList();">Doing</a>
+							<a href="javascript:experiment.getDoingPageList(1);">Doing</a>
 						</li>
 						<li id="doneTab">
 							<a href="javascript:experiment.clearDoneCondition();">Done</a>

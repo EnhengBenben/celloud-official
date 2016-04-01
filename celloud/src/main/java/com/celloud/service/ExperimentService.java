@@ -34,7 +34,7 @@ public interface ExperimentService {
 			Integer stepId, String start, String end);
 
 	/**
-	 * 修改
+	 * 修改非空字段
 	 * 
 	 * @param record
 	 * @return
@@ -44,7 +44,7 @@ public interface ExperimentService {
 	int updateByPrimaryKeySelective(Experiment record);
 
 	/**
-	 * 修改非空字段
+	 * 新增
 	 * 
 	 * @param exp
 	 * @return
@@ -52,6 +52,17 @@ public interface ExperimentService {
 	 * @date 2016年3月30日下午1:29:10
 	 */
 	int insertSelective(Experiment exp);
+
+	/**
+	 * 校验number是否重复
+	 * 
+	 * @param state
+	 * @param num
+	 * @return
+	 * @author lin
+	 * @date 2016年4月1日上午11:26:08
+	 */
+	Integer checkoutNumber(Integer userId, String num);
 
 	/**
 	 * 根据主键单查

@@ -26,4 +26,13 @@ public interface ExperimentMapper {
 			@Param("sampleId") Integer sampleId, @Param("methodId") Integer methodId, @Param("stepId") Integer stepId,
 			@Param("start") String start, @Param("end") String end);
 
+	/**
+	 * 校验编号是否重复
+	 * 
+	 * @return
+	 * @author lin
+	 * @date 2016年4月1日上午11:20:58
+	 */
+	Integer checkoutNumber(@Param("userId") Integer userId, @Param("state") Integer state, @Param("num") String num);
+
 }
