@@ -33,7 +33,7 @@
                         <c:forEach items="${companyList}" var="item">
                             <tr>
                                 <td>${item.companyId }</td>
-                                <td>${item.companyName }</td>
+                                <td><a href="javascript:void(0)" onclick="toCompanyDetail(${item.companyId })">${item.companyName }</a></td>
                                 <td><fmt:formatDate value="${item.createDate }" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                                 <c:if test="${loginUserInSession.role=='2'}">
 	                              <td>${item.bigCustomerName }</td>
@@ -69,4 +69,9 @@ $(function(){
         "aaSorting" : [ [ 2, "desc" ] ],
     });
 });
+function toCompanyDetail(id){
+  $.get("company/getCompanyById",{"companyId":id},function(responseText){
+    menu("company-baseInfo-menu",responseText);
+  })
+}
 </script>

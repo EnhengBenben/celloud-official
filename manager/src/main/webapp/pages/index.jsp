@@ -226,6 +226,7 @@
     <!-- echarts -->
     <script src="plugins/echarts-2.2.7/echarts-all.js"></script>
     <script src="plugins/echarts-2.2.7/theme.js"></script>
+    <script src="plugins/jquery.media.js"></script>
     
     <script src="js/main.js"></script>
     <script src="js/app.js"></script>
