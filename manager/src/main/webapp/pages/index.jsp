@@ -151,7 +151,7 @@
                                 <i class="fa-angle-down"></i>
                             </span>
                         </a>
-                        
+                        <input id="user-role-hidden" type="hidden" value="${loginUserInSession.role }">
                         <ul class="dropdown-menu user-profile-menu list-unstyled">
                             <li class="last">
                                 <a  href="logout">

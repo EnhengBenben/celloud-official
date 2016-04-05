@@ -22,7 +22,9 @@
                             <th class="min-w-50">医院编码</th>
                             <th class="min-w-200 ">医院名称</th>
                             <th class="min-w-100 ">入驻时间</th>
-                            <th class="min-w-200 ">所属大客户</th>
+                            <c:if test="${loginUserInSession.role=='2'}">
+                              <th class="min-w-200 ">所属大客户</th>
+                            </c:if>
                             <th class="min-w-200 ">医院地址</th>
                             <th class="min-w-50 ">账号数量</th>
                         </tr>
@@ -33,7 +35,9 @@
                                 <td>${item.companyId }</td>
                                 <td>${item.companyName }</td>
                                 <td><fmt:formatDate value="${item.createDate }" pattern="yyyy-MM-dd hh:mm:ss"/></td>
-                                <td>${item.bigCustomerName }</td>
+                                <c:if test="${loginUserInSession.role=='2'}">
+	                              <td>${item.bigCustomerName }</td>
+	                            </c:if>
                                 <td>${item.address }</td>
                                 <td>${item.userNum }</td>
                             </tr>
@@ -60,9 +64,9 @@ $(function(){
            "sLast": "尾页"
            },
         },
-           "aoColumns" : [ null, null,null,null,null,null ],
-           iDisplayLength : 10,
-           "aaSorting" : [ [ 2, "desc" ] ],
-       });
-	});
+        "aoColumns" : $("#user-role-hidden").val()==2?[ null, null,null,null,null,null ]:[ null, null,null,null,null ],
+        iDisplayLength : 10,
+        "aaSorting" : [ [ 2, "desc" ] ],
+    });
+});
 </script>
