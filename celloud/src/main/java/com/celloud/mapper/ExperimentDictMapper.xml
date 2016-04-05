@@ -21,6 +21,7 @@
     select 
     <include refid="Base_Column_List" />
     from tb_experiment_dict
+    where state = #{state,jdbcType=INTEGER}
     order by flag,order_num
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

@@ -52,4 +52,15 @@ public class ExperimentServiceImpl implements ExperimentService {
 		return experimentMapper.checkoutNumber(userId, ExperimentState.OPEN, num);
 	}
 
+	@Override
+	public List<Experiment> getUnRelatList(Integer userId, String number) {
+		return experimentMapper.getUnRelatList(userId, ExperimentState.OPEN, number, ExperimentState.RELAT_STEP,
+				ExperimentState.UN_RELAT_FILEID);
+	}
+
+	@Override
+	public List<Experiment> getRelatList(Integer userId, String number, String dataKey) {
+		return experimentMapper.getRelatList(userId, ExperimentState.OPEN, number, ExperimentState.RELAT_STEP, dataKey);
+	}
+
 }

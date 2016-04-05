@@ -4,10 +4,20 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.celloud.constants.ExperimentState;
+import com.celloud.constants.ReportType;
 import com.celloud.itext.PGSProjectPDF;
 import com.celloud.model.mysql.DataFile;
+import com.celloud.model.mysql.Experiment;
+import com.celloud.model.mysql.Report;
+import com.celloud.service.ExperimentService;
+import com.celloud.service.ReportService;
 
 /**
  * 
@@ -16,6 +26,11 @@ import com.celloud.model.mysql.DataFile;
  * @description :项目运行结束后的后续操作
  */
 public class RunOverUtil {
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	@Resource
+	private ExperimentService expService;
+	@Resource
+	private ReportService reportService;
 	
 	/**
 	 * UGT流程运行结束后的数据处理
@@ -303,8 +318,24 @@ public class RunOverUtil {
         for (DataFile d : proDataList) {
             String filename = d.getFileName();
             String datakey = d.getDataKey();
+            Integer userId = d.getUserId();
+            Integer dataId = d.getFileId();
             String anotherName = d.getAnotherName() == null ? ""
                     : d.getAnotherName();
+            // TODO 报告绑定实验流程，在这里结束时间应该获取不到，需要验证
+            List<Experiment> expList= expService.getRelatList(userId, anotherName, datakey);
+            if (expList != null && expList.size() == 1) {
+            	Integer appId = Integer.valueOf(appPath.split("/")[1]);
+            	Report report = reportService.getReport(userId, appId, Integer.valueOf(projectId), dataId, ReportType.DATA);
+				Experiment exp = expList.get(0);
+				exp.setStep(ExperimentState.RELAT_STEP);
+				exp.setReportId(report.getReportId());
+				exp.setReportDate(report.getEndDate());
+				expService.updateByPrimaryKeySelective(exp);
+				logger.info("用户{}数据{}自动绑定报告成功", userId, dataId);
+			} else {
+				logger.error("用户{}数据{}自动绑定报告失败", userId, dataId);
+			}
             // 3. 为项目PDF生成数据
             sb.append(datakey).append(",")
                     .append(CustomStringUtils.getBarcode(filename)).append(",")

@@ -18,6 +18,7 @@
 	          </dd>
 	        </dl>
 	        <div class="toolbar">
+	        
                 <a class="btn btn-celloud-success btn-flat" target="_blank" href="report/printPGS?appId=${pgs.appId }&projectId=${pgs.projectId }&dataKey=${pgs.dataKey }&miniPng=${pgs.miniPng }&txt=${pgs.report.replace('+','@').replace('    ','&nbsp;&nbsp;&nbsp;&nbsp;') }&splitPng=null"><i class="fa fa-print"></i>打印报告</a>
                 <c:if test="${pgs.splitPng!=null }">
                     <a class="btn btn-celloud-success btn-flat" target="_blank" href="report/printPGS?appId=${pgs.appId }&projectId=${pgs.projectId }&dataKey=${pgs.dataKey }&miniPng=${pgs.miniPng }&txt=${pgs.report.replace('+','@').replace('    ','&nbsp;&nbsp;&nbsp;&nbsp;') }&splitPng=${pgs.splitPng }"><i class="fa fa-print"></i>点图报告</a>                  
@@ -28,6 +29,25 @@
 	            <c:if test="${pgs.finalPng!=null && pgs.finalPng!='' }">
                     <a class="btn btn-info btn-flat" href="${toolsPath }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" class="btn btn-default"><i class="fa fa-cloud-download"></i>报告下载</a>
                 </c:if>
+		        <c:if test="${experiment!=null }">
+			        <br/>
+			        <div style="padding-top: 5px;">
+			        	<c:if test="${experiment.qualified==null }">
+				        	<a class="btn btn-celloud-success btn-flat" href="javascript:void(0)" onclick="showConclusion()"><i class="fa fa-edit"></i>结果判定</a>
+			        	</c:if>
+			        	<c:if test="${experiment.qualified==0 || experiment.qualified==1}">
+				        	<a class="btn btn-celloud-success btn-flat" href="javascript:void(0)">
+					        	<c:if test="${experiment.qualified==1 }">
+					        	无效
+								</c:if>				        	
+					        	<c:if test="${experiment.qualified==0 }">
+					        	有效
+								</c:if>				        	
+				        	</a>
+				        	<a class="btn btn-celloud-success btn-flat" href="javascript:void(0)" onclick="editShowConclusion()"><i class="fa fa-edit"></i>结果修改</a>
+			        	</c:if>
+			        </div>
+		        </c:if>
 	        </div>
 		</div>
 		<!--报告图示一-->
@@ -256,6 +276,76 @@
 	</div>
   </div>
  </div>
+</div>
+<div id="reportConclusion" class="modal modal-green-header">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">结果判定</h4>
+      </div>
+      <div class="modal-body row">
+        <form id="reportConclusionForm" class="form-horizontal form-cel">
+          <div class="form-group">
+         	<div class="control-label form-label col-xs-3" style="margin-top: -9px;">是否合格</div>
+         	<div class="col-xs-9">
+         		<input type="radio" name="qualified" value="0"/> 有效
+         		<input type="radio" name="qualified" value="1"/> 无效
+	         	<input type="hidden" name="id" value="${experiment.id }"/>
+         	</div>
+          </div>
+          <div class="form-group">
+         	<div class="control-label form-label col-xs-3">备注</div>
+         	<div class="col-xs-9">
+         		<textarea rows="3" cols="40" name="remarks"></textarea>
+         	</div>
+          </div>
+        </form>
+      </div>
+      <div id="conclusion-error" class="alert alert-warning-cel alert-dismissable hide">
+		<h5 style="text-align: center;" id="conclusionErrorInfo"></h5>
+	  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-celloud-close btn-flat pull-left" data-dismiss="modal">关闭</button>
+        <button onclick="saveConclusion()" type="button" class="btn btn-celloud-success btn-flat">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="editReportConclusion" class="modal modal-green-header">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">结果修改</h4>
+      </div>
+      <div class="modal-body row">
+        <form id="editReportConclusionForm" class="form-horizontal form-cel">
+          <div class="form-group">
+         	<div class="control-label form-label col-xs-3" style="margin-top: -9px;">是否合格</div>
+         	<div class="col-xs-9">
+         		<input type="radio" name="qualified" value="0" <c:if test="${experiment.qualified==0 }">checked="checked"</c:if>/> 有效
+         		<input type="radio" name="qualified" value="1" <c:if test="${experiment.qualified==1 }">checked="checked"</c:if>/> 无效
+	         	<input type="hidden" name="id" value="${experiment.id }"/>
+         	</div>
+          </div>
+          <div class="form-group">
+         	<div class="control-label form-label col-xs-3">备注</div>
+         	<div class="col-xs-9">
+         		<textarea rows="3" cols="40" name="remarks">${experiment.remarks }</textarea>
+         	</div>
+          </div>
+        </form>
+      </div>
+      <div id="edit-conclusion-error" class="alert alert-warning-cel alert-dismissable hide">
+		<h5 style="text-align: center;" id="edit-conclusionErrorInfo"></h5>
+	  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-celloud-close btn-flat pull-left" data-dismiss="modal">关闭</button>
+        <button onclick="editSaveConclusion()" type="button" class="btn btn-celloud-success btn-flat">保存</button>
+      </div>
+    </div>
+  </div>
 </div>
 <script>
 $(function() {

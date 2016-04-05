@@ -131,6 +131,61 @@ $.ajaxSetup ({
 				}
 			});
 		}
+		function showConclusion(){
+		  $("#conclusion-error").addClass("hide");
+		  $("#reportConclusion").find("input:radio[name='qualified']:checked").attr('checked',false);
+		  $("#reportConclusion").find("textarea[name='remarks']").val("");
+		  $("#reportConclusion").modal("show");
+		}
+		function saveConclusion(){
+		  var qualified = $("#reportConclusion").find("input:radio[name='qualified']:checked").val();
+		  if(!qualified){
+		    showAddError("请选择是否合格！");
+		    return;
+		  }
+		  $.get("experiment/updateExperiment",$("#reportConclusionForm").serialize(),function(flag){
+		    if(flag == 1){
+		      showAddError("保存成功，请重新打开数据报告！");
+		      setTimeout("hidModal('reportConclusion')",5000);
+		    }else{
+		      showAddError("保存失败！");
+		    }
+		  });
+		}
+		
+		function hidModal(id){
+		  $("#"+id).modal("hide");
+		}
+		
+		function showAddError(info){
+		  $("#conclusionErrorInfo").html(info);
+      $("#conclusion-error").removeClass("hide");
+		}
+		
+		function editShowConclusion(){
+		  $("#edit-conclusion-error").addClass("hide");
+		  $("#editReportConclusion").modal("show");
+		}
+		function editSaveConclusion(){
+		  var qualified = $("#editReportConclusion").find("input:radio[name='qualified']:checked").val();
+		  if(!qualified){
+		    showEdditError("请选择是否合格！");
+		    return;
+		  }
+		  $.get("experiment/updateExperiment",$("#editReportConclusionForm").serialize(),function(flag){
+		    if(flag == 1){
+		      showEdditError("保存成功，请重新打开数据报告！");
+          setTimeout("hidModal('editReportConclusion')",5000);
+		    }else{
+		      showEdditError("保存失败！");
+		    }
+		  });
+		}
+		
+		function showEdditError(info){
+		  $("#edit-conclusionErrorInfo").html(info);
+		  $("#edit-conclusion-error").removeClass("hide");
+		}
 		
 		var START = null;		//检索开始时间
 		var END = null;	//检索结束时间
