@@ -135,14 +135,14 @@
 							<span>应用市场</span>
 						</a>
 					</li>
-					<c:if test="${companyId == 3 or companyId == 6 or companyId == 33 }">
+					<shiro:hasPermission name="count:menu">
 						<li class="treeview">
 							<a href="javascript:void(0)" onclick="showCount()">
 								<i class="fa fa-heartbeat"></i>
 								<span>统计</span>
 							</a>
 						</li>
-					</c:if>
+					</shiro:hasPermission>
 					<li class="header">
 						<span>用户中心</span>
 					</li>

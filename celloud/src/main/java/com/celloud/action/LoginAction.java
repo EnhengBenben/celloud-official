@@ -193,8 +193,8 @@ public class LoginAction {
         while (names.hasMoreElements()) {
             session.removeAttribute(names.nextElement());
         }
-        SecurityUtils.getSubject().logout();
         deleteCookies(request, response);
+        SecurityUtils.getSubject().logout();
         logger.info("用户({})主动退出", user == null ? "null..." : user.getUsername());
         return "redirect:login";
     }
