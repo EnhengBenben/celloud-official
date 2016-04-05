@@ -34,6 +34,7 @@ import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DeptConstants;
 import com.celloud.constants.ReportType;
+import com.celloud.model.mongo.BRAF;
 import com.celloud.model.mongo.CmpFilling;
 import com.celloud.model.mongo.CmpGeneDetectionDetail;
 import com.celloud.model.mongo.CmpGeneSnpResult;
@@ -108,12 +109,12 @@ public class ReportAction {
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = Constants.DEFAULT_PAGE_SIZE
                     + "") Integer size,
-            String condition, String start, String end, Integer appId) {
+            String condition, String start, String end, Integer appId, Integer belongs) {
         Integer userId = ConstantsData.getLoginUserId();
         ModelAndView mv = new ModelAndView("report/report_list");
         Page pager = new Page(page, size);
         PageList<Map<String, Object>> pageList = reportService
-                .getReportPageList(userId, pager, condition, start, end, appId);
+                .getReportPageList(userId, pager, condition, start, end, appId, belongs);
         return mv.addObject("pageList", pageList);
     }
 
@@ -789,6 +790,33 @@ public class ReportAction {
     public void prevDataReport() {
         log.info("点击数据报告列表查看上一页数据报告");
     }
+
+
+    /**
+     * 获取BRAF数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author MQ
+     */
+    @ActionLog(value = "查看BRAF数据报告", button = "数据报告")
+    @RequestMapping("getBRAFReport")
+    public ModelAndView getBRAFReport(String dataKey, Integer projectId, Integer appId) {
+        BRAF braf = reportService.getBRAFReport(dataKey, projectId, appId);
+        String position = braf.getPosition();
+        if (StringUtils.isNotBlank(position)) {
+            braf.setPosition(CustomStringUtils.htmlbr(position));
+        }
+        String mutationPosition = braf.getMutationPosition();
+        if (StringUtils.isNotBlank(mutationPosition)) {
+            braf.setMutationPosition(CustomStringUtils.htmlbr(mutationPosition));
+        }
+        ModelAndView mv = getModelAndView("report/report_data_braf", projectId);
+        return mv.addObject("braf", braf);
+    }
+
 
     /**
      * 点击数据报告列表查看下一页数据报告

@@ -192,6 +192,15 @@ $.ajaxSetup ({
 			currentPage = 1;
 			submitSearch();
 		}
+		//所属人
+		var BELONGS = 1;
+		function changeBelongs(belongs,obj){
+		  $(".belongs").removeClass("_datered");
+		  $(obj).addClass("_datered");
+		  BELONGS = belongs;
+		  currentPage = 1;
+		  submitSearch();
+		}
 		
 		// 切换每页显示的记录数
 		function changePageSize(){
@@ -230,7 +239,7 @@ $.ajaxSetup ({
 			spinner = new Spinner(opts);
 			var target = document.getElementById('reportLoading');
 			spinner.spin(target);
-			$.get("report/getReportPageList",{"appId":APP,"start":START,"end":END,"condition":FILENAME,"size":pageSize,"page":currentPage},function(responseText){
+			$.get("report/getReportPageList",{"belongs":BELONGS,"appId":APP,"start":START,"end":END,"condition":FILENAME,"size":pageSize,"page":currentPage},function(responseText){
 				$("#selfReportDiv").html(responseText);
 				loadReportList();
 				spinner.stop();
@@ -640,6 +649,10 @@ $.ajaxSetup ({
         });
       }else if(softwareId == 106){
         $.get("report/getDPDReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
+          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+        });
+      }else if(softwareId == 107){
+    	$.get("report/getBRAFReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
           toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
         });
       }else if(softwareId == 108){
