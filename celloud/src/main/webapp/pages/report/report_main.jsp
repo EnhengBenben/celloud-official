@@ -19,6 +19,12 @@
 <!--         </div> -->
         <div class="box-body report-search-div">
           <div class="form-inline">
+              <label class="form-inline">所属：</label>
+              <a href="javascript:void(0)" onclick="changeBelongs(1,this)" class="belongs _datered">全部</a>&nbsp;&nbsp;&nbsp;&nbsp;
+      		  <a href="javascript:void(0)" onclick="changeBelongs(2,this)" class="belongs">我的</a>&nbsp;&nbsp;&nbsp;&nbsp;
+      		  <a href="javascript:void(0)" onclick="changeBelongs(3,this)" class="belongs">共享来的</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+          <div class="form-inline">
               <label class="form-inline">时间：</label>
               <a href="javascript:void(0)" onclick="changeDate('allTime',this)" class="cdate _datered">全部</a>&nbsp;&nbsp;&nbsp;&nbsp;
       		  <a href="javascript:void(0)" onclick="changeDate(-1,this)" class="cdate">24小时</a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -28,7 +34,7 @@
        		  <label>From：</label><input type="text" onchange="changeDate(0,obj)" id="_searchDate" class="Wdate input" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;width: 90px;"/>
        		  <label>To：</label><input type="text" onchange="changeDate(0,obj)" id="_endDate" class="input Wdate" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;width: 90px;"/>
        		  <span id="_alertSpan" style="color:red;display:none;"></span>
-          </div><!-- /.form group -->
+          </div>
           <div class="form-inline">
               <label class="form-inline">应用：</label>
            		<a href="javascript:void(0)" class="capp _appred" onclick="changeApp(0,this)">全部</a>
@@ -40,7 +46,7 @@
            		<div id="appList" class="none">
            		
            		</div>
-          </div><!-- /.form group -->
+          </div>
 		  <div class="form-inline">
 			<label class="form-inline">数据：</label>
 			<div class="input-group" style="width:330px;height:20px;">
@@ -49,18 +55,18 @@
 					<button class="btn btn-info btn-flat" type="button" onclick="submitSearch()" style="height:20px;font-size:14px;padding-top:0px;background-color: #85c540;border-color: #85c540;">Go!</button>
 				</span>
 			</div>
-		  </div><!-- /.form group -->
-        </div><!-- /.box-body -->
-      </div><!-- /.box -->
-      <!-- COLOR PALETTE -->
+		  </div>
+        </div>
+      </div>
+      
       <div id="reportLoading" style="padding-left: 500px;"></div>
       <div class="box color-palette-box">
         <div class="box-body" id="selfReportDiv">
         
-        </div><!-- /.box-body -->
-      </div><!-- /.box -->
+        </div>
+      </div>
     </div>
-  </div><!--/.row-->
+  </div>
 </section>
 <!--项目共享-->
 <div class="modal modal-green-header in" id="shareProjectModal" >
@@ -92,7 +98,7 @@
 
 <script src="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/calendar/WdatePicker.js"></script>
-<script src="<%=request.getContextPath() %>/js/report.js?version=1.3"></script>
+<script src="<%=request.getContextPath() %>/js/report.js?version=1.4"></script>
 <script src="<%=request.getContextPath() %>/js/report_codon.js"></script>
 <script type="text/javascript">
 var session_userId = <%=session.getAttribute("userId")%>;

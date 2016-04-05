@@ -39,6 +39,7 @@ import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.FeedbackService;
+import com.celloud.utils.ActionLog;
 /**
  * 
  * 
@@ -59,6 +60,7 @@ public class FeedbackAction {
      * 
      * @return
      */
+    @ActionLog(value = "跳转到工单菜单", button = "问题反馈")
     @RequestMapping("main")
     public ModelAndView index() {
         return new ModelAndView("feedback/feedback_main");
@@ -70,6 +72,7 @@ public class FeedbackAction {
      * @param page
      * @return
      */
+    @ActionLog(value = "工单列表", button = "分页")
     @RequestMapping("/list")
     public ModelAndView list(Page page) {
         PageList<Feedback> feedbacks = feedbackService.findFeedbacks(page);
@@ -82,6 +85,7 @@ public class FeedbackAction {
      * @param feedback
      * @return
      */
+    @ActionLog(value = "新增问题反馈", button = "提交")
     @RequestMapping(value = "save", method = RequestMethod.PUT)
     @ResponseBody
     public boolean save(Feedback feedback, User user) {
@@ -94,6 +98,7 @@ public class FeedbackAction {
      * @param feedback
      * @return
      */
+    @ActionLog(value = "创建工单", button = "保存")
     @RequestMapping(value = "create", method = RequestMethod.PUT)
     @ResponseBody
     public Response create(Feedback feedback, String[] attachments) {
@@ -110,6 +115,7 @@ public class FeedbackAction {
      * 
      * @return
      */
+    @ActionLog(value = "获取单个工单", button = "工单")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ModelAndView getById(@PathVariable int id) {
         Feedback feedback = feedbackService.selectFeedbackById(id);
@@ -126,6 +132,7 @@ public class FeedbackAction {
      * 
      * @return
      */
+    @ActionLog(value = "获取工单回复", button = "")
     @RequestMapping(value = "replies/{id}", method = RequestMethod.GET)
     public ModelAndView listReplies(@PathVariable int id) {
         List<FeedbackReply> replies = feedbackService.findReplies(id);
@@ -139,6 +146,7 @@ public class FeedbackAction {
      * @param content
      * @return
      */
+    @ActionLog(value = "回复工单", button = "回复")
     @RequestMapping(value = "reply/{feedbackId}", method = RequestMethod.PUT)
     @ResponseBody
     public Response reply(@PathVariable int feedbackId, String content) {
@@ -152,6 +160,7 @@ public class FeedbackAction {
      * @param feedbackId
      * @return
      */
+    @ActionLog(value = "关闭工单", button = "问题已解决")
     @RequestMapping(value = "solve/{feedbackId}", method = RequestMethod.POST)
     @ResponseBody
     public Response solve(@PathVariable int feedbackId) {
@@ -166,6 +175,7 @@ public class FeedbackAction {
      * @param session
      * @return
      */
+    @ActionLog(value = "上传工单附件", button = "+")
     @RequestMapping(value = "attach", method = RequestMethod.POST)
     @ResponseBody
     public String attach(@RequestParam("file") CommonsMultipartFile file, HttpSession session) {
@@ -190,6 +200,7 @@ public class FeedbackAction {
      * @return
      * @throws IOException
      */
+    @ActionLog(value = "获取已保存工单的附件", button = "")
     @RequestMapping(value = "attach", method = RequestMethod.GET)
     public ResponseEntity<byte[]> attach(String file) throws IOException {
         String path = FeedbackConstants.getAttachment(file);
@@ -206,6 +217,7 @@ public class FeedbackAction {
      * @return
      * @throws IOException
      */
+    @ActionLog(value = "获取未保存工单的附件", button = "")
     @RequestMapping(value = "attach/temp", method = RequestMethod.GET)
     public ResponseEntity<byte[]> attachTemp(String file) throws IOException {
         String path = FeedbackConstants.getAttachmentTempPath() + File.separator + file;

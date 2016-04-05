@@ -320,7 +320,19 @@
   </select>
   
   <select id="getReportList" resultType="map">
-	select p.*,r.end_date,r.context,r.period,s.app_id,s.app_name from (select project_id,project_name,create_date,data_num,data_size,share_num,user_id,'no_one' as userName from tb_project where user_id = #{userId} and state = 0 union all select p.project_id,project_name,p.create_date,data_num,data_size,0 as share,s.share_from as user_id,u.username as userName from tb_project p,tb_project_share s,tb_user u where p.state=0 and p.project_id=s.project_id and s.share_to = #{userId} and u.user_id = s.share_from ) as p,tb_report as r,tb_app s
+	select p.*,r.end_date,r.context,r.period,s.app_id,s.app_name from (
+	<if test="belongs == 1">
+		select project_id,project_name,create_date,data_num,data_size,share_num,user_id,'no_one' as userName from tb_project where user_id = #{userId} and state = 0 
+		union all 
+		select p.project_id,project_name,p.create_date,data_num,data_size,0 as share,s.share_from as user_id,u.username as userName from tb_project p,tb_project_share s,tb_user u where p.state=0 and p.project_id=s.project_id and s.share_to = #{userId} and u.user_id = s.share_from
+	</if>
+	<if test="belongs == 2">
+		select project_id,project_name,create_date,data_num,data_size,share_num,user_id,'no_one' as userName from tb_project where user_id = #{userId} and state = 0 
+	</if>
+	<if test="belongs == 3">
+		select p.project_id,project_name,p.create_date,data_num,data_size,0 as share,s.share_from as user_id,u.username as userName from tb_project p,tb_project_share s,tb_user u where p.state=0 and p.project_id=s.project_id and s.share_to = #{userId} and u.user_id = s.share_from
+	</if>
+	) as p,tb_report as r,tb_app s
 	where r.project_id = p.project_id and r.app_id = s.app_id and r.flag=#{flag}
 	<if test="condition != null and condition!=''" >
 		and r.context like CONCAT('%',#{condition},'%' )
