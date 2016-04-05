@@ -17,8 +17,6 @@ import com.celloud.backstage.model.UserSelect;
 import com.celloud.backstage.service.UserService;
 import com.celloud.backstage.utils.EmailUtils;
 
-import net.sf.json.JSONArray;
-
 /**
  * 
  *
@@ -53,7 +51,7 @@ public class MailingAction {
 		List<User> userList = userService.getAllUserList();
 		List<UserSelect> userSelectList = new ArrayList<>();
 		for (User user : userList) {
-			if (null != user.getEmail() && user.getEmail() != "") {
+            if (null != user.getEmail() && !"".equals(user.getEmail())) {
 				UserSelect us = new UserSelect();
 				us.setId(user.getEmail());
 				us.setText(user.getUsername());
