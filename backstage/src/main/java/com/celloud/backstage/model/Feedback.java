@@ -86,7 +86,7 @@ public class Feedback {
     }
 
     public boolean hasAttachment() {
-        return hasAttachment != 0;
+        return hasAttachment != null && hasAttachment != 0;
     }
 
     public void setHasAttachment(Byte hasAttachment) {
