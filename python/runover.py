@@ -17,6 +17,7 @@ from app.oncogene import oncogene
 from app.KRAS import KRAS
 from app.DPD import DPD
 from app.UGT import UGT
+from app.BRAF import BRAF
 
 #command: python *.py basePath projectId
 #eg : python runover.py '/share/data/webapps/Tools/upload/' 4018
@@ -40,6 +41,7 @@ method_dic = {
 116:PGS,
 95:NIPT,
 106:DPD,
+107:BRAF,
 108:UGT,
 117:oncogene
 }
@@ -62,6 +64,7 @@ collection_dic = {
 116:"Pgs",
 95:"NIPT",
 106:"DPD",
+107:"BRAF",
 108:"UGT",
 117:"Oncogene"
 }

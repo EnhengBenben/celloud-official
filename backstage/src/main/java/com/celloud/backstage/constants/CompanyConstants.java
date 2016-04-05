@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,13 +15,14 @@ import org.slf4j.LoggerFactory;
  * @date 2016年1月26日 下午4:30:09
  */
 public class CompanyConstants {
-    private static Logger logger=LoggerFactory.getLogger(CompanyConstants.class);
+    private static Logger logger = LoggerFactory.getLogger(CompanyConstants.class);
     private static Properties properties = null;
     private static String companyIconPath;
     /**
      * 配置文件的地址
      */
     private static final String PROPERTIES_PATH = "file_path.properties";
+
     public static Properties loadProperties() {
         properties = new Properties();
         InputStream inputStream = CompanyConstants.class.getClassLoader().getResourceAsStream("file_path.properties");
@@ -33,7 +33,7 @@ public class CompanyConstants {
         }
         return properties;
     }
-    
+
     public static String getProperty(String name) {
         if (properties == null) {
             loadProperties();
@@ -59,7 +59,7 @@ public class CompanyConstants {
         }
         return companyIconPath + File.separator + "temp";
     }
-    
+
     /**
      * 根据文件名获取医院logo路径
      * 
@@ -67,8 +67,6 @@ public class CompanyConstants {
      * @return
      */
     public static String getCompanyIconPath(String nameWithSuffix) {
-        int index = nameWithSuffix.indexOf(".");
-        ObjectId id = new ObjectId(nameWithSuffix.substring(0, index));
         return getCompanyIconPath() + File.separator + nameWithSuffix;
     }
 }

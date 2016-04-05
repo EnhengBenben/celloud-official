@@ -8,12 +8,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -27,8 +29,10 @@ import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
 import com.celloud.model.mysql.DataFile;
+import com.celloud.model.mysql.Experiment;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
+import com.celloud.service.ExperimentService;
 import com.celloud.service.ReportService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.CheckFileTypeUtil;
@@ -55,6 +59,8 @@ public class UploadAction {
     private ReportService reportService;
     @Resource
     private DataService dataService;
+    @Resource
+    private ExperimentService expService;
     private String realPath = PropertiesUtil.bigFilePath;
 
     /**
@@ -220,6 +226,20 @@ public class UploadAction {
         if (fileFormat == FileFormat.BAM) {
             String anotherName = getAnotherName(filePath, dataKey, perlPath, outPath);
             data.setAnotherName(anotherName);
+			// 绑定实验流程
+			if (!StringUtils.isBlank(anotherName)) {
+				Integer userId = ConstantsData.getLoginUserId();
+				List<Experiment> expList = expService.getUnRelatList(userId, anotherName);
+				if (expList != null && expList.size() == 1) {
+					Experiment exp = expList.get(0);
+					exp.setFileId(dataId);
+					exp.setDataKey(dataKey);
+					expService.updateByPrimaryKeySelective(exp);
+					logger.info("用户{}数据{}自动绑定成功", userId, dataId);
+				} else {
+					logger.error("用户{}数据{}自动绑定失败", userId, dataId);
+				}
+			}
         }
         data.setState(DataState.ACTIVE);
         return dataService.updateDataInfoByFileId(data);

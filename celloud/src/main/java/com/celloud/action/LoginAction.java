@@ -62,6 +62,7 @@ public class LoginAction {
      * @param response
      * @return
      */
+    @ActionLog(value = "跳转到登录页面", button = "登录")
     @RequestMapping("login")
     public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndView("login");
@@ -184,6 +185,7 @@ public class LoginAction {
      * @param response
      * @return
      */
+    @ActionLog(value = "用户退出", button = "退出")
     @RequestMapping("logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();

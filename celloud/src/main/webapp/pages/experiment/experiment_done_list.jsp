@@ -39,7 +39,10 @@
 				<td>${exp.sequenatorName }</td>
 				<td>${exp.stepName }</td>
 				<td>${exp.other }</td>
-				<td>${exp.qualified }</td>
+				<td title="${exp.remarks }">
+					<c:if test="${exp.qualified==0 }">有效</c:if>
+					<c:if test="${exp.qualified==1 }">无效</c:if>
+				</td>
 			</tr>
 		</c:forEach>
 		<c:if test="${datas.size()==0 }">

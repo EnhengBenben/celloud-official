@@ -131,6 +131,61 @@ $.ajaxSetup ({
 				}
 			});
 		}
+		function showConclusion(){
+		  $("#conclusion-error").addClass("hide");
+		  $("#reportConclusion").find("input:radio[name='qualified']:checked").attr('checked',false);
+		  $("#reportConclusion").find("textarea[name='remarks']").val("");
+		  $("#reportConclusion").modal("show");
+		}
+		function saveConclusion(){
+		  var qualified = $("#reportConclusion").find("input:radio[name='qualified']:checked").val();
+		  if(!qualified){
+		    showAddError("请选择是否合格！");
+		    return;
+		  }
+		  $.get("experiment/updateExperiment",$("#reportConclusionForm").serialize(),function(flag){
+		    if(flag == 1){
+		      showAddError("保存成功，请重新打开数据报告！");
+		      setTimeout("hidModal('reportConclusion')",5000);
+		    }else{
+		      showAddError("保存失败！");
+		    }
+		  });
+		}
+		
+		function hidModal(id){
+		  $("#"+id).modal("hide");
+		}
+		
+		function showAddError(info){
+		  $("#conclusionErrorInfo").html(info);
+      $("#conclusion-error").removeClass("hide");
+		}
+		
+		function editShowConclusion(){
+		  $("#edit-conclusion-error").addClass("hide");
+		  $("#editReportConclusion").modal("show");
+		}
+		function editSaveConclusion(){
+		  var qualified = $("#editReportConclusion").find("input:radio[name='qualified']:checked").val();
+		  if(!qualified){
+		    showEdditError("请选择是否合格！");
+		    return;
+		  }
+		  $.get("experiment/updateExperiment",$("#editReportConclusionForm").serialize(),function(flag){
+		    if(flag == 1){
+		      showEdditError("保存成功，请重新打开数据报告！");
+          setTimeout("hidModal('editReportConclusion')",5000);
+		    }else{
+		      showEdditError("保存失败！");
+		    }
+		  });
+		}
+		
+		function showEdditError(info){
+		  $("#edit-conclusionErrorInfo").html(info);
+		  $("#edit-conclusion-error").removeClass("hide");
+		}
 		
 		var START = null;		//检索开始时间
 		var END = null;	//检索结束时间
@@ -192,6 +247,15 @@ $.ajaxSetup ({
 			currentPage = 1;
 			submitSearch();
 		}
+		//所属人
+		var BELONGS = 1;
+		function changeBelongs(belongs,obj){
+		  $(".belongs").removeClass("_datered");
+		  $(obj).addClass("_datered");
+		  BELONGS = belongs;
+		  currentPage = 1;
+		  submitSearch();
+		}
 		
 		// 切换每页显示的记录数
 		function changePageSize(){
@@ -230,7 +294,7 @@ $.ajaxSetup ({
 			spinner = new Spinner(opts);
 			var target = document.getElementById('reportLoading');
 			spinner.spin(target);
-			$.get("report/getReportPageList",{"appId":APP,"start":START,"end":END,"condition":FILENAME,"size":pageSize,"page":currentPage},function(responseText){
+			$.get("report/getReportPageList",{"belongs":BELONGS,"appId":APP,"start":START,"end":END,"condition":FILENAME,"size":pageSize,"page":currentPage},function(responseText){
 				$("#selfReportDiv").html(responseText);
 				loadReportList();
 				spinner.stop();
@@ -640,6 +704,10 @@ $.ajaxSetup ({
         });
       }else if(softwareId == 106){
         $.get("report/getDPDReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
+          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+        });
+      }else if(softwareId == 107){
+    	$.get("report/getBRAFReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
           toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
         });
       }else if(softwareId == 108){

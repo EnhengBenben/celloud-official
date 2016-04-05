@@ -1,5 +1,7 @@
 package com.celloud.service;
 
+import java.util.List;
+
 import com.celloud.model.mysql.Experiment;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
@@ -73,4 +75,27 @@ public interface ExperimentService {
 	 * @date 2016年3月30日下午1:29:26
 	 */
 	Experiment selectByPrimaryKey(Integer id);
+
+	/**
+	 * 获取未绑定数据的实验流程列表
+	 * 
+	 * @param userId
+	 * @param number
+	 * @return
+	 * @author lin
+	 * @date 2016年4月5日上午5:05:43
+	 */
+	List<Experiment> getUnRelatList(Integer userId, String number);
+	
+	/**
+	 * 获取已绑定数据的实验流程列表
+	 * 
+	 * @param userId
+	 * @param number
+	 * @param dataKey
+	 * @return
+	 * @author lin
+	 * @date 2016年4月5日上午5:10:32
+	 */
+	List<Experiment> getRelatList(Integer userId, String number, String dataKey);
 }
