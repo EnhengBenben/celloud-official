@@ -70,7 +70,7 @@ public interface ReportService {
      * @date 2016-1-5 下午3:26:05
      */
     PageList<Map<String, Object>> getReportPageList(Integer userId, Page pager,
-            String condition, String start, String end, Integer appId);
+            String condition, String start, String end, Integer appId,Integer belongs);
 
     /**
      * 统计用户使用各App的次数

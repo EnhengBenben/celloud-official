@@ -100,9 +100,9 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public PageList<Map<String, Object>> getReportPageList(Integer userId,
             Page pager, String condition, String start, String end,
-            Integer appId) {
+            Integer appId,Integer belongs) {
         List<Map<String, Object>> list = reportMapper.getReportList(userId,
-                pager, condition, start, end, appId, ReportType.PROJECT);
+                pager, condition, start, end, appId, ReportType.PROJECT,belongs);
         return new PageList<>(pager, list);
     }
 
