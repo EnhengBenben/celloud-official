@@ -14,6 +14,7 @@ from app.HBV import HBV
 from app.HCV import HCV
 from app.EGFR import EGFR
 from app.KRAS import KRAS
+from app.BRAF import BRAF
 
 #command: python *.py basePath projectId
 #eg : python runover.py '/share/data/webapps/Tools/upload/' 4018
@@ -34,7 +35,8 @@ method_dic = {
 93:PGS,
 94:PGS,
 104:PGS,
-95:NIPT
+95:NIPT,
+107:BRAF
 }
 
 #对应database名
@@ -52,7 +54,8 @@ collection_dic = {
 93:"Pgs",
 94:"Pgs",
 104:"Pgs",
-95:"NIPT"
+95:"NIPT",
+107:"BRAF"
 }
 
 def datainsert(path,projectId):
