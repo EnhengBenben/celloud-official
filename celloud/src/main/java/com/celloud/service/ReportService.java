@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.bson.types.ObjectId;
 
+import com.celloud.model.mongo.BRAF;
 import com.celloud.model.mongo.CmpFilling;
 import com.celloud.model.mongo.CmpGeneSnpResult;
 import com.celloud.model.mongo.CmpReport;
@@ -31,6 +32,19 @@ import com.celloud.page.PageList;
  * @date 2015年12月25日 下午3:47:07
  */
 public interface ReportService {
+
+    /**
+     * 获取BRAF报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author MQ
+     * @date 2016年3月25日下午3:58:15
+     */
+    public BRAF getBRAFReport(String dataKey, Integer projectId, Integer appId);
+
     /**
      * 
      * 统计个人报告数量

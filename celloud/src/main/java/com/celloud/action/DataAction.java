@@ -60,6 +60,7 @@ import com.celloud.utils.SSHUtil;
 @Controller
 @RequestMapping("data")
 public class DataAction {
+
     Logger logger = LoggerFactory.getLogger(DataAction.class);
     @Resource
     private DataService dataService;
