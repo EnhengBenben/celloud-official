@@ -5,6 +5,7 @@ import java.util.List;
 import com.celloud.model.mysql.Feedback;
 import com.celloud.model.mysql.FeedbackAttachment;
 import com.celloud.model.mysql.FeedbackReply;
+import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 
@@ -23,7 +24,7 @@ public interface FeedbackService {
      * @param feedback
      * @return
      */
-    public int inserte(Feedback feedback,List<String> attachments);
+    public int inserte(User user, Feedback feedback, List<String> attachments);
 
     /**
      * 获取当前用户的问题反馈（工单）

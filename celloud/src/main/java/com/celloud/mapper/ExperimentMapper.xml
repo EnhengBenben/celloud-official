@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.celloud.mapper.ExperimentMapper" >
+  <resultMap id="BaseResultMap" type="com.celloud.model.mysql.Experiment" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="number" property="number" jdbcType="VARCHAR" />
+    <result column="concentration" property="concentration" jdbcType="DOUBLE" />
+    <result column="quality" property="quality" jdbcType="INTEGER" />
+    <result column="library_concentration" property="libraryConcentration" jdbcType="DOUBLE" />
+    <result column="step" property="step" jdbcType="INTEGER" />
+    <result column="sample_type" property="sampleType" jdbcType="INTEGER" />
+    <result column="amplification_method" property="amplificationMethod" jdbcType="INTEGER" />
+    <result column="sequenator" property="sequenator" jdbcType="INTEGER" />
+    <result column="seq_index" property="seqIndex" jdbcType="VARCHAR" />
+    <result column="other" property="other" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="file_id" property="fileId" jdbcType="INTEGER" />
+    <result column="data_key" property="dataKey" jdbcType="VARCHAR" />
+    <result column="report_id" property="reportId" jdbcType="INTEGER" />
+    <result column="report_date" property="reportDate" jdbcType="TIMESTAMP" />
+    <result column="qualified" property="qualified" jdbcType="TINYINT" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ContainNameMap" type="com.celloud.model.mysql.Experiment" extends="BaseResultMap">
+  	<result column="step_name" property="stepName" jdbcType="VARCHAR" />
+  	<result column="sample_type_name" property="sampleTypeName" jdbcType="VARCHAR" />
+  	<result column="amplification_method_name" property="amplificationMethodName" jdbcType="VARCHAR" />
+    <result column="sequenator_name" property="sequenatorName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, number, concentration, quality, library_concentration, step, sample_type, amplification_method, 
+    sequenator, seq_index, other, state, create_date, user_id, file_id, data_key, report_id, 
+    report_date, qualified, remarks
+  </sql>
+  <sql id="contain_name" >
+    e.id as id, number, concentration, quality, library_concentration,
+    step, d1.name as step_name,
+    sample_type,d2.name as sample_type_name,
+    amplification_method, d3.name as amplification_method_name,
+    sequenator, d4.name as sequenator_name,
+    seq_index, other, e.state as state, create_date, user_id, file_id, data_key, report_id, 
+    report_date, qualified, remarks
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_experiment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getExperimentPageList" resultMap="ContainNameMap" parameterType="java.lang.Integer" >
+  	select
+    <include refid="contain_name" />
+  	from tb_experiment e 
+  	left join tb_experiment_dict d1 on e.step = d1.id 
+  	left join tb_experiment_dict d2 on e.sample_type = d2.id 
+  	left join tb_experiment_dict d3 on e.amplification_method = d3.id 
+  	left join tb_experiment_dict d4 on e.sequenator = d4.id
+    where user_id = #{userId,jdbcType=INTEGER} and e.state = #{state,jdbcType=INTEGER} order by create_date desc
+  </select>
+  <select id="checkoutNumber" resultType="java.lang.Integer">
+  	select count(number) from tb_experiment where state = #{state,jdbcType=INTEGER} and number = #{num} and user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <select id="getExpDonePageList" resultMap="ContainNameMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="contain_name" />
+  	from tb_experiment e 
+  	left join tb_experiment_dict d1 on e.step = d1.id 
+  	left join tb_experiment_dict d2 on e.sample_type = d2.id 
+  	left join tb_experiment_dict d3 on e.amplification_method = d3.id 
+  	left join tb_experiment_dict d4 on e.sequenator = d4.id
+    where user_id = #{userId,jdbcType=INTEGER} and e.state > #{state,jdbcType=INTEGER}
+    <if test="stepId != 0" >
+    and step = #{stepId}
+    </if>
+    <if test="sampleId != 0" >
+    and sample_type = #{sampleId}
+    </if>
+    <if test="methodId != 0" >
+    and amplification_method = #{methodId}
+    </if>
+    <if test="start != null and start!=''" >
+    and create_date &gt; #{start}
+    </if>
+    <if test="end != null and end!=''" >
+    and create_date &lt; #{end}
+    order by create_date desc
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_experiment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.celloud.model.mysql.Experiment" >
+    insert into tb_experiment (id, number, concentration, 
+      quality, library_concentration, step, 
+      sample_type, amplification_method, sequenator, 
+      seq_index, other, state, 
+      create_date, user_id, file_id, 
+      data_key, report_id, report_date, 
+      qualified, remarks)
+    values (#{id,jdbcType=INTEGER}, #{number,jdbcType=VARCHAR}, #{concentration,jdbcType=DOUBLE}, 
+      #{quality,jdbcType=INTEGER}, #{libraryConcentration,jdbcType=DOUBLE}, #{step,jdbcType=INTEGER}, 
+      #{sampleType,jdbcType=INTEGER}, #{amplificationMethod,jdbcType=INTEGER}, #{sequenator,jdbcType=INTEGER}, 
+      #{seqIndex,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, #{fileId,jdbcType=INTEGER}, 
+      #{dataKey,jdbcType=VARCHAR}, #{reportId,jdbcType=INTEGER}, #{reportDate,jdbcType=TIMESTAMP}, 
+      #{qualified,jdbcType=TINYINT}, #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.celloud.model.mysql.Experiment" >
+    insert into tb_experiment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="concentration != null" >
+        concentration,
+      </if>
+      <if test="quality != null" >
+        quality,
+      </if>
+      <if test="libraryConcentration != null" >
+        library_concentration,
+      </if>
+      <if test="step != null" >
+        step,
+      </if>
+      <if test="sampleType != null" >
+        sample_type,
+      </if>
+      <if test="amplificationMethod != null" >
+        amplification_method,
+      </if>
+      <if test="sequenator != null" >
+        sequenator,
+      </if>
+      <if test="seqIndex != null" >
+        seq_index,
+      </if>
+      <if test="other != null" >
+        other,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+        create_date,
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="fileId != null" >
+        file_id,
+      </if>
+      <if test="dataKey != null" >
+        data_key,
+      </if>
+      <if test="reportId != null" >
+        report_id,
+      </if>
+      <if test="reportDate != null" >
+        report_date,
+      </if>
+      <if test="qualified != null" >
+        qualified,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="concentration != null" >
+        #{concentration,jdbcType=DOUBLE},
+      </if>
+      <if test="quality != null" >
+        #{quality,jdbcType=INTEGER},
+      </if>
+      <if test="libraryConcentration != null" >
+        #{libraryConcentration,jdbcType=DOUBLE},
+      </if>
+      <if test="step != null" >
+        #{step,jdbcType=INTEGER},
+      </if>
+      <if test="sampleType != null" >
+        #{sampleType,jdbcType=INTEGER},
+      </if>
+      <if test="amplificationMethod != null" >
+        #{amplificationMethod,jdbcType=INTEGER},
+      </if>
+      <if test="sequenator != null" >
+        #{sequenator,jdbcType=INTEGER},
+      </if>
+      <if test="seqIndex != null" >
+        #{seqIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="other != null" >
+        #{other,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate == null" >
+        now(),
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="fileId != null" >
+        #{fileId,jdbcType=INTEGER},
+      </if>
+      <if test="dataKey != null" >
+        #{dataKey,jdbcType=VARCHAR},
+      </if>
+      <if test="reportId != null" >
+        #{reportId,jdbcType=INTEGER},
+      </if>
+      <if test="reportDate != null" >
+        #{reportDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qualified != null" >
+        #{qualified,jdbcType=TINYINT},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.Experiment" >
+    update tb_experiment
+    <set >
+      <if test="number != null" >
+        number = #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="concentration != null" >
+        concentration = #{concentration,jdbcType=DOUBLE},
+      </if>
+      <if test="quality != null" >
+        quality = #{quality,jdbcType=INTEGER},
+      </if>
+      <if test="libraryConcentration != null" >
+        library_concentration = #{libraryConcentration,jdbcType=DOUBLE},
+      </if>
+      <if test="step != null" >
+        step = #{step,jdbcType=INTEGER},
+      </if>
+      <if test="sampleType != null" >
+        sample_type = #{sampleType,jdbcType=INTEGER},
+      </if>
+      <if test="amplificationMethod != null" >
+        amplification_method = #{amplificationMethod,jdbcType=INTEGER},
+      </if>
+      <if test="sequenator != null" >
+        sequenator = #{sequenator,jdbcType=INTEGER},
+      </if>
+      <if test="seqIndex != null" >
+        seq_index = #{seqIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="other != null" >
+        other = #{other,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="fileId != null" >
+        file_id = #{fileId,jdbcType=INTEGER},
+      </if>
+      <if test="dataKey != null" >
+        data_key = #{dataKey,jdbcType=VARCHAR},
+      </if>
+      <if test="reportId != null" >
+        report_id = #{reportId,jdbcType=INTEGER},
+      </if>
+      <if test="reportDate != null" >
+        report_date = #{reportDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qualified != null" >
+        qualified = #{qualified,jdbcType=TINYINT},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.Experiment" >
+    update tb_experiment
+    set number = #{number,jdbcType=VARCHAR},
+      concentration = #{concentration,jdbcType=DOUBLE},
+      quality = #{quality,jdbcType=INTEGER},
+      library_concentration = #{libraryConcentration,jdbcType=DOUBLE},
+      step = #{step,jdbcType=INTEGER},
+      sample_type = #{sampleType,jdbcType=INTEGER},
+      amplification_method = #{amplificationMethod,jdbcType=INTEGER},
+      sequenator = #{sequenator,jdbcType=INTEGER},
+      seq_index = #{seqIndex,jdbcType=VARCHAR},
+      other = #{other,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=INTEGER},
+      file_id = #{fileId,jdbcType=INTEGER},
+      data_key = #{dataKey,jdbcType=VARCHAR},
+      report_id = #{reportId,jdbcType=INTEGER},
+      report_date = #{reportDate,jdbcType=TIMESTAMP},
+      qualified = #{qualified,jdbcType=TINYINT},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -2,6 +2,7 @@ package com.celloud.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -11,11 +12,17 @@ import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.mapper.UserMapper;
 import com.celloud.model.mysql.User;
+import com.celloud.service.SecResourceService;
+import com.celloud.service.SecRoleService;
 import com.celloud.service.UserService;
 import com.celloud.utils.MD5Util;
 
 @Service("userServiceImpl")
 public class UserServiceImpl implements UserService {
+    @Resource
+    private SecResourceService resourceService;
+    @Resource
+    private SecRoleService roleService;
     @Resource
     private UserMapper userMapper;
 
@@ -90,6 +97,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer getCompanyIdByUserId(Integer userId) {
         return userMapper.getCompanyIdByUserId(userId);
+    }
+
+    @Override
+    public User findByUsernameOrEmail(String username) {
+        return userMapper.findByUsernameOrEmail(username);
+    }
+
+    @Override
+    public Set<String> findRoles(Integer userId) {
+        return roleService.findRolesByUserId(userId);
+    }
+
+    @Override
+    public Set<String> findPermissions(Integer userId) {
+        return resourceService.findPermissionResourcesByUserId(userId);
     }
 
 }

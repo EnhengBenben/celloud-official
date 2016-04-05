@@ -633,21 +633,23 @@ var mailing=(function(mailing){
 			$("#mailing-menu").addClass("active");
 		});
 	}
-	self.checkedAll=function(flag){
-		if(flag==1){
-			/*$("input[name='emails']:checkbox").each(function(i,dom){
-				dom.checked=true;
-			});*/
-			$("input[name='emails']:checkbox").prop("checked",true);
-		}else if(flag==0){
-			/*$("input[name='emails']:checkbox").each(function(i,dom){
-				dom.checked=false;
-			});*/
-			$("input[name='emails']:checkbox").prop("checked",false);
-		}else{
-			$("input[name='emails']:checkbox").each(function(i,dom){
-				dom.checked=!(dom.checked);
+	self.checkAll=function(flag){
+		var checkArray = new Array();
+		if (flag == 1) {
+			$("#userList option").each(function() {
+				checkArray.push($(this).val());
 			});
+			$("#userList").val(checkArray).trigger("change");
+		} else if (flag == 0) {
+			$("#userList").val(null).trigger("change");
+		} else if (flag == 2) {
+			$("#userList option").each(function() {
+				if ($(this).prop("selected") == false) {
+					checkArray.push($(this).val());
+				}
+			});
+			$("#userList").val(null).trigger("change");
+			$("#userList").val(checkArray).trigger("change");
 		}
 	}
 	

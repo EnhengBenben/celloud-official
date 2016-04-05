@@ -49,8 +49,10 @@ public class FeedbackServiceImpl implements FeedbackService {
     private FeedbackReplyMapper replyMapper;
 
     @Override
-    public int inserte(Feedback feedback, List<String> attachments) {
-        User user = ConstantsData.getLoginUser();
+    public int inserte(User user, Feedback feedback, List<String> attachments) {
+        if (user == null) {
+            user = ConstantsData.getLoginUser();
+        }
         feedback.setCreateDate(new Date());
         feedback.setHasAttachment(attachments != null && attachments.size() > 0
                 ? FeedbackConstants.HASATTACHMENT.byteValue() : FeedbackConstants.NOT_HAS_ATTACHMENT.byteValue());
