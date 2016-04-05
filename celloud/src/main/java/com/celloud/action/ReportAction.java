@@ -109,12 +109,12 @@ public class ReportAction {
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = Constants.DEFAULT_PAGE_SIZE
                     + "") Integer size,
-            String condition, String start, String end, Integer appId) {
+            String condition, String start, String end, Integer appId, Integer belongs) {
         Integer userId = ConstantsData.getLoginUserId();
         ModelAndView mv = new ModelAndView("report/report_list");
         Page pager = new Page(page, size);
         PageList<Map<String, Object>> pageList = reportService
-                .getReportPageList(userId, pager, condition, start, end, appId);
+                .getReportPageList(userId, pager, condition, start, end, appId, belongs);
         return mv.addObject("pageList", pageList);
     }
 
