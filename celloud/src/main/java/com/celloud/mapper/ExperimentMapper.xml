@@ -14,12 +14,12 @@
     <result column="seq_index" property="seqIndex" jdbcType="VARCHAR" />
     <result column="other" property="other" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="INTEGER" />
-    <result column="create_date" property="createDate" jdbcType="DATE" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="file_id" property="fileId" jdbcType="INTEGER" />
     <result column="data_key" property="dataKey" jdbcType="VARCHAR" />
     <result column="report_id" property="reportId" jdbcType="INTEGER" />
-    <result column="report_date" property="reportDate" jdbcType="DATE" />
+    <result column="report_date" property="reportDate" jdbcType="TIMESTAMP" />
     <result column="qualified" property="qualified" jdbcType="TINYINT" />
     <result column="remarks" property="remarks" jdbcType="VARCHAR" />
   </resultMap>
@@ -57,7 +57,10 @@
   	left join tb_experiment_dict d2 on e.sample_type = d2.id 
   	left join tb_experiment_dict d3 on e.amplification_method = d3.id 
   	left join tb_experiment_dict d4 on e.sequenator = d4.id
-    where user_id = #{userId,jdbcType=INTEGER} and e.state = #{state,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=INTEGER} and e.state = #{state,jdbcType=INTEGER} order by create_date desc
+  </select>
+  <select id="checkoutNumber" resultType="java.lang.Integer">
+  	select count(number) from tb_experiment where state = #{state,jdbcType=INTEGER} and number = #{num} and user_id = #{userId,jdbcType=INTEGER}
   </select>
   <select id="getExpDonePageList" resultMap="ContainNameMap" parameterType="java.lang.Integer" >
     select
@@ -82,6 +85,7 @@
     </if>
     <if test="end != null and end!=''" >
     and create_date &lt; #{end}
+    order by create_date desc
     </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
@@ -100,8 +104,8 @@
       #{quality,jdbcType=INTEGER}, #{libraryConcentration,jdbcType=DOUBLE}, #{step,jdbcType=INTEGER}, 
       #{sampleType,jdbcType=INTEGER}, #{amplificationMethod,jdbcType=INTEGER}, #{sequenator,jdbcType=INTEGER}, 
       #{seqIndex,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
-      #{createDate,jdbcType=DATE}, #{userId,jdbcType=INTEGER}, #{fileId,jdbcType=INTEGER}, 
-      #{dataKey,jdbcType=VARCHAR}, #{reportId,jdbcType=INTEGER}, #{reportDate,jdbcType=DATE}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, #{fileId,jdbcType=INTEGER}, 
+      #{dataKey,jdbcType=VARCHAR}, #{reportId,jdbcType=INTEGER}, #{reportDate,jdbcType=TIMESTAMP}, 
       #{qualified,jdbcType=TINYINT}, #{remarks,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.celloud.model.mysql.Experiment" >
@@ -204,7 +208,7 @@
         #{state,jdbcType=INTEGER},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+        #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="createDate == null" >
         now(),
@@ -222,7 +226,7 @@
         #{reportId,jdbcType=INTEGER},
       </if>
       <if test="reportDate != null" >
-        #{reportDate,jdbcType=DATE},
+        #{reportDate,jdbcType=TIMESTAMP},
       </if>
       <if test="qualified != null" >
         #{qualified,jdbcType=TINYINT},
@@ -268,9 +272,6 @@
       <if test="state != null" >
         state = #{state,jdbcType=INTEGER},
       </if>
-      <if test="createDate != null" >
-        create_date = #{createDate,jdbcType=DATE},
-      </if>
       <if test="userId != null" >
         user_id = #{userId,jdbcType=INTEGER},
       </if>
@@ -284,7 +285,7 @@
         report_id = #{reportId,jdbcType=INTEGER},
       </if>
       <if test="reportDate != null" >
-        report_date = #{reportDate,jdbcType=DATE},
+        report_date = #{reportDate,jdbcType=TIMESTAMP},
       </if>
       <if test="qualified != null" >
         qualified = #{qualified,jdbcType=TINYINT},
@@ -308,12 +309,12 @@
       seq_index = #{seqIndex,jdbcType=VARCHAR},
       other = #{other,jdbcType=VARCHAR},
       state = #{state,jdbcType=INTEGER},
-      create_date = #{createDate,jdbcType=DATE},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
       user_id = #{userId,jdbcType=INTEGER},
       file_id = #{fileId,jdbcType=INTEGER},
       data_key = #{dataKey,jdbcType=VARCHAR},
       report_id = #{reportId,jdbcType=INTEGER},
-      report_date = #{reportDate,jdbcType=DATE},
+      report_date = #{reportDate,jdbcType=TIMESTAMP},
       qualified = #{qualified,jdbcType=TINYINT},
       remarks = #{remarks,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
