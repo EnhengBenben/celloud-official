@@ -23,7 +23,7 @@
 			<i class="i-edit"></i>报告 
 			<span class="filter"> 
 			     <input type="text" value="5" id="_snum">
-			     <a href="javascript:void(0)" class="btn btn-orange" onclick="searchTable()"><i class="i-filter"></i>筛选</a>
+			     <a href="javascript:void(0)" class="btn btn-success" onclick="searchTable()"><i class="i-filter"></i>筛选</a>
 			</span>
 		</h2>
 		<div class="m-boxCon result" id="report_tb">
