@@ -33,17 +33,45 @@ public class RunOverUtil {
 	private ReportService reportService;
 	
 	/**
-	 * BRAF流程运行结束后的数据处理
-	 * 
-	 * @param reportPath
-	 * @param dataKey
-	 * @param appTitle
-	 * @param projectFile
-	 * @param projectId
-	 * @param dataList
-	 * @return
-	 * @author MQ
-	 */
+     * TBRifampicin流程运行结束后的数据处理
+     * 
+     * @param reportPath
+     * @param dataKey
+     * @param appTitle
+     * @param projectFile
+     * @param projectId
+     * @param dataList
+     * @return
+     * @author MQ
+     */
+    public boolean TBRifampicin(String reportPath, String dataKey, String appTitle, String projectFile,
+            String projectId,
+            List<DataFile> dataList) {
+        // 1. 追加表头
+        StringBuffer resultArray = new StringBuffer();
+        resultArray.append(appTitle);
+        // 2. 遍历数据列表
+        for (DataFile data : dataList) {
+            String finalPath = reportPath + data.getDataKey();
+            resultArray.append(data.getDataKey() + "\t" + data.getFileName() + "\t"
+                    + ScreeningUtil.screen(finalPath + "/report.txt") + "\n");
+        }
+        FileTools.appendWrite(projectFile, resultArray.toString());
+        return true;
+    }
+
+    /**
+     * BRAF流程运行结束后的数据处理
+     * 
+     * @param reportPath
+     * @param dataKey
+     * @param appTitle
+     * @param projectFile
+     * @param projectId
+     * @param dataList
+     * @return
+     * @author MQ
+     */
 	public boolean BRAF(String reportPath, String dataKey, String appTitle, String projectFile, String projectId,
 			List<DataFile> dataList) {
 		// 1. 追加表头
