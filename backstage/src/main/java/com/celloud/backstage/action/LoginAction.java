@@ -160,7 +160,6 @@ public class LoginAction {
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         session.removeAttribute(Constants.SESSION_LOGIN_USER);
-        @SuppressWarnings("unchecked")
         Enumeration<String> names = session.getAttributeNames();
         while (names.hasMoreElements()) {
             session.removeAttribute(names.nextElement());

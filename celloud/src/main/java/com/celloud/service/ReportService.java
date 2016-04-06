@@ -19,6 +19,7 @@ import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
 import com.celloud.model.mongo.Split;
+import com.celloud.model.mongo.TBRifampicin;
 import com.celloud.model.mongo.TaskQueue;
 import com.celloud.model.mongo.UGT;
 import com.celloud.model.mysql.Report;
@@ -165,6 +166,16 @@ public interface ReportService {
 	 */
 	public KRAS getKRASReport(String dataKey, Integer projectId, Integer appId);
 	
+    /**
+     * 获取TBRifampicin报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     */
+    public TBRifampicin getTBRifampicinReport(String dataKey, Integer projectId, Integer appId);
+
 	/**
 	 * 获取UGT报告
 	 * 
@@ -457,4 +468,5 @@ public interface ReportService {
      * @date 2016年2月26日下午1:51:09
      */
     public TaskQueue getTaskQueue(Integer projectId);
+
 }

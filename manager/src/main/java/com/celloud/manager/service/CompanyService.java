@@ -20,4 +20,6 @@ public interface CompanyService {
     public List<Map<String,Object>> bigCustomerDataCount();
     
     public List<Map<String ,Object>> getCompanyNumCount();
+
+    public Company getCompanyById(Integer companyId);
 }
