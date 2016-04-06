@@ -125,7 +125,7 @@ $(document).ready(function(){
         $(this).css("word-wrap","break-word");
     });
 });
-var url = window.location.href.split("printEGFR")[0];
+var url = window.location.href.split("printTBRifampicin")[0];
 function savePage(){
     $("body").find("input").each(function(){
         $(this).attr("value",$(this).val());
