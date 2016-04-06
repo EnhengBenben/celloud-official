@@ -261,23 +261,26 @@ public class TaskAction {
         }
         // 6. 项目报告插入mysql并修改项目运行状态
         reportService.reportCompeleteByProId(proId, xml);
-
-		for (DataFile dataFile : dataList) {
-			if (dataFile.getFileFormat() == FileFormat.BAM) {
+		if (appId == ExperimentState.MDA_MR || appId == ExperimentState.SurePlex || appId == ExperimentState.gDNA_MR) {
+			for (DataFile dataFile : dataList) {
 				String anotherName = dataFile.getAnotherName() == null ? "" : dataFile.getAnotherName();
 				int dataId = dataFile.getFileId();
-				System.out.println("userId:" + userId);
-				System.out.println("anotherName:" + anotherName);
 				List<Experiment> expList = expService.getRelatList(userId, anotherName, dataFile.getDataKey());
 				if (expList != null && expList.size() == 1) {
 					Report report = reportService.getReport(userId, appId, Integer.valueOf(projectId), dataId,
 							ReportType.DATA);
 					Experiment exp = expList.get(0);
-					exp.setReportId(report.getReportId());
-					exp.setReportDate(report.getEndDate());
-					exp.setStep(ExperimentState.REPORT_STEP);
-					expService.updateByPrimaryKeySelective(exp);
-					logger.info("用户{}数据{}自动绑定报告成功", userId, dataId);
+					Integer am = exp.getAmplificationMethod();
+					if (am == null) {
+						continue;
+					}
+					if (ExperimentState.map.get(am) == appId) {
+						exp.setReportId(report.getReportId());
+						exp.setReportDate(report.getEndDate());
+						exp.setStep(ExperimentState.REPORT_STEP);
+						expService.updateByPrimaryKeySelective(exp);
+						logger.info("用户{}数据{}自动绑定报告成功", userId, dataId);
+					}
 				} else {
 					logger.error("用户{}数据{}自动绑定报告失败", userId, dataId);
 				}
