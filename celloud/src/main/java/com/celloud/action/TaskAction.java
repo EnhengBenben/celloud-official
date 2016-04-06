@@ -273,7 +273,7 @@ public class TaskAction {
 					if (am == null) {
 						continue;
 					}
-					if (ExperimentState.map.get(am) == appId) {
+					if (ExperimentState.map.get(am).equals(appId)) {
 						exp.setReportId(report.getReportId());
 						exp.setReportDate(report.getEndDate());
 						exp.setStep(ExperimentState.REPORT_STEP);
