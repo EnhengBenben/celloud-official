@@ -20,17 +20,22 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.celloud.constants.CommandKey;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
+import com.celloud.constants.ExperimentState;
 import com.celloud.constants.FileFormat;
 import com.celloud.constants.GlobalQueue;
 import com.celloud.constants.Mod;
 import com.celloud.constants.PortPool;
+import com.celloud.constants.ReportType;
 import com.celloud.constants.SparkPro;
 import com.celloud.model.mongo.TaskQueue;
 import com.celloud.model.mysql.DataFile;
+import com.celloud.model.mysql.Experiment;
+import com.celloud.model.mysql.Report;
 import com.celloud.model.mysql.Task;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.ExpensesService;
+import com.celloud.service.ExperimentService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
@@ -67,6 +72,9 @@ public class TaskAction {
     private AppService appService;
     @Resource
     private ExpensesService expencesService;
+	@Resource
+	private ExperimentService expService;
+	
     private static Map<String, Map<String, String>> machines = ConstantsData
             .getMachines();
     private static String sgeHost = machines.get("158").get(Mod.HOST);
@@ -235,17 +243,17 @@ public class TaskAction {
         // 4. 通过反射调用相应app的处理方法，传参格式如下：
         // String appPath, String appName, String appTitle,String
         // projectFile,String projectId, List<DataFile> proDataList
-        RunOverUtil ros = new RunOverUtil();
-        try {
-            // TODO 方法名称和title类型应该从数据库获取
-            ros.getClass().getMethod(method,
-                    new Class[] { String.class, String.class, String.class,
-                            String.class, String.class, List.class })
-                    .invoke(ros, basePath.toString(), appName, title,
-                            projectFile, projectId, dataList);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		RunOverUtil rou = new RunOverUtil();
+		try {
+			// TODO 方法名称和title类型应该从数据库获取
+			rou.getClass()
+					.getMethod(method,
+							new Class[] { String.class, String.class, String.class, String.class, String.class,
+									List.class })
+					.invoke(rou, basePath.toString(), appName, title, projectFile, projectId, dataList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         // 5. 通过读取xml文件来生成项目报告
         String xml = null;
         if (new File(projectFile.toString()).exists()) {
@@ -253,7 +261,31 @@ public class TaskAction {
         }
         // 6. 项目报告插入mysql并修改项目运行状态
         reportService.reportCompeleteByProId(proId, xml);
-
+		if (appId == ExperimentState.MDA_MR || appId == ExperimentState.SurePlex || appId == ExperimentState.gDNA_MR) {
+			for (DataFile dataFile : dataList) {
+				String anotherName = dataFile.getAnotherName() == null ? "" : dataFile.getAnotherName();
+				int dataId = dataFile.getFileId();
+				List<Experiment> expList = expService.getRelatList(userId, anotherName, dataFile.getDataKey());
+				if (expList != null && expList.size() == 1) {
+					Report report = reportService.getReport(userId, appId, Integer.valueOf(projectId), dataId,
+							ReportType.DATA);
+					Experiment exp = expList.get(0);
+					Integer am = exp.getAmplificationMethod();
+					if (am == null) {
+						continue;
+					}
+					if (ExperimentState.map.get(am) == appId) {
+						exp.setReportId(report.getReportId());
+						exp.setReportDate(report.getEndDate());
+						exp.setStep(ExperimentState.REPORT_STEP);
+						expService.updateByPrimaryKeySelective(exp);
+						logger.info("用户{}数据{}自动绑定报告成功", userId, dataId);
+					}
+				} else {
+					logger.error("用户{}数据{}自动绑定报告失败", userId, dataId);
+				}
+			}
+		}
         runQueue(projectId);
         return "run over";
     }
