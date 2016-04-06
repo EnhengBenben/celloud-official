@@ -252,4 +252,15 @@ public interface DataFileMapper {
      */
     public List<Map<String, String>> countDataFileWeek(
             @Param("userId") Integer userId);
+    
+	/**
+	 * 根据别名检索数据
+	 * 
+	 * @param userId
+	 * @param anotherName
+	 * @return
+	 * @author lin
+	 * @date 2016年4月6日下午4:22:30
+	 */
+	List<DataFile> getDataByAnotherName(@Param("userId") Integer userId, @Param("anotherName") String anotherName);
 }

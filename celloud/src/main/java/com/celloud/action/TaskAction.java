@@ -245,7 +245,6 @@ public class TaskAction {
         // projectFile,String projectId, List<DataFile> proDataList
 		RunOverUtil rou = new RunOverUtil();
 		try {
-			// TODO 方法名称和title类型应该从数据库获取
 			rou.getClass()
 					.getMethod(method,
 							new Class[] { String.class, String.class, String.class, String.class, String.class,
@@ -282,7 +281,7 @@ public class TaskAction {
 						logger.info("用户{}数据{}自动绑定报告成功", userId, dataId);
 					}
 				} else {
-					logger.error("用户{}数据{}自动绑定报告失败", userId, dataId);
+					logger.error("用户{}未能检索到与{}匹配的实验流程", userId, dataId);
 				}
 			}
 		}

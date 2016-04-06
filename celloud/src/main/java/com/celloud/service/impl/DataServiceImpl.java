@@ -191,4 +191,9 @@ public class DataServiceImpl implements DataService {
 	public int updateByPrimaryKeySelective(DataFile record) {
 		return dataFileMapper.updateByPrimaryKeySelective(record);
 	}
+
+	@Override
+	public List<DataFile> getDataByAnotherName(Integer userId, String anotherName) {
+		return dataFileMapper.getDataByAnotherName(userId, anotherName);
+	}
 }
