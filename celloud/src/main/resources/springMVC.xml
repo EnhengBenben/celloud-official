@@ -224,6 +224,6 @@
 		<property name="realm" ref="userRealm" />
 	</bean>
 	<bean id="userRealm" class="com.celloud.security.UserRealm" >
-	<property name="cachingEnabled" value="false"/>
+	    <property name="cachingEnabled" value="false"/>
 	</bean>
 </beans>

@@ -29,6 +29,9 @@ public class UserRealm extends AuthorizingRealm {
     @Resource
     private UserService userService;
 
+    /**
+     * 提供给shiro的用户授权信息
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         logger.debug("doGetAuthorizationInfo。。。");
@@ -38,8 +41,12 @@ public class UserRealm extends AuthorizingRealm {
         if (user == null) {
             throw new UnknownAccountException();// 没找到帐号
         }
-
-        return loadAuthorizationInfo(user);
+        Set<String> roles = userService.findRoles(user.getUserId());
+        Set<String> permissions = userService.findPermissions(user.getUserId());
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        authorizationInfo.setRoles(roles);
+        authorizationInfo.setStringPermissions(permissions);
+        return authorizationInfo;
     }
 
     @SuppressWarnings("unchecked")
@@ -65,6 +72,9 @@ public class UserRealm extends AuthorizingRealm {
         return authorizationInfo;
     }
 
+    /**
+     * 提供给shiro的用户认证信息
+     */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         logger.debug("doGetAuthenticationInfo...");
@@ -79,4 +89,5 @@ public class UserRealm extends AuthorizingRealm {
         SecurityUtils.getSubject().getSession().setAttribute(Constants.SESSION_LOGIN_USER, user);
         return new SimpleAuthenticationInfo(user.getUsername(), password, getName());
     }
+
 }
