@@ -59,8 +59,8 @@
 		<c:if test="${not empty tbrifampicin.original }">
 			<c:forEach items="${tbrifampicin.original }" var="tbrifampicin" varStatus="st">
 				<div class="m-boxCon">
-					<a href="javascript:showBg('${uploadPath}${tbrifampicin.userId }/${tbrifampicin.appId }/${tbrifampicin.dataKey }/SVG/${original }','original${st.count }');">
-						<img name="imgSrc" src="${uploadPath}${tbrifampicin.userId }/${tbrifampicin.appId }/${tbrifampicin.dataKey }/SVG/${original }" style="width: 85%;" id="original${st.count }">
+					<a href="javascript:showBg('${uploadPath}${tbrifampicin.userId }/${tbrifampicin.appId }/${tbrifampicin.dataKey }/SVG/${tbrifampicin }','original${st.count }');">
+						<img name="imgSrc" src="${uploadPath}${tbrifampicin.userId }/${tbrifampicin.appId }/${tbrifampicin.dataKey }/SVG/${tbrifampicin }" style="width: 85%;" id="original${st.count }">
 					</a>
 				</div>
 			</c:forEach>
