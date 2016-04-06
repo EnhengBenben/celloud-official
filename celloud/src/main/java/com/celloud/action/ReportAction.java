@@ -882,6 +882,10 @@ public class ReportAction {
             return mv.addObject("printContext", report.getPrintContext());
         }
         TBRifampicin tbrifampicin = reportService.getTBRifampicinReport(dataKey, projectId, appId);
+        if (StringUtils.isNotBlank(tbrifampicin.getReport())) {
+            tbrifampicin.setReport(CustomStringUtils.htmlbr(tbrifampicin.getReport()));
+        }
+
         mv.addObject("tbrifampicin", tbrifampicin).addObject("flag", flag).addObject("report", report);
         return mv;
     }
