@@ -861,6 +861,32 @@ public class ReportAction {
     }
 
     /**
+     * 打印TBRifampicin
+     * 
+     * @param appId
+     * @param dataKey
+     * @param projectId
+     * @param flag
+     * @return
+     * @author mq
+     */
+    @ActionLog(value = "打印TBRifampicin数据报告", button = "打印数据报告")
+    @RequestMapping("printTBRifampicin")
+    public ModelAndView printTBRifampicin(Integer appId, String dataKey, Integer projectId, Integer flag) {
+        ModelAndView mv = getModelAndView("print/print_tbrifampicin", projectId);
+        Integer userId = ConstantsData.getLoginUserId();
+        Integer fileId = dataService.getDataByKey(dataKey).getFileId();
+        Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
+        // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
+        if (StringUtils.isNotEmpty(report.getPrintContext())) {
+            return mv.addObject("printContext", report.getPrintContext());
+        }
+        TBRifampicin tbrifampicin = reportService.getTBRifampicinReport(dataKey, projectId, appId);
+        mv.addObject("tbrifampicin", tbrifampicin).addObject("flag", flag).addObject("report", report);
+        return mv;
+    }
+
+    /**
      * 打印HBV
      * 
      * @param appId
