@@ -327,6 +327,8 @@
          		<input type="radio" name="qualified" value="0" <c:if test="${experiment.qualified==0 }">checked="checked"</c:if>/> 有效
          		<input type="radio" name="qualified" value="1" <c:if test="${experiment.qualified==1 }">checked="checked"</c:if>/> 无效
 	         	<input type="hidden" name="id" value="${experiment.id }"/>
+	         	<!-- 状态修改为正常关闭 -->
+	         	<input type="hidden" name="state" value="2"/>
          	</div>
           </div>
           <div class="form-group">
