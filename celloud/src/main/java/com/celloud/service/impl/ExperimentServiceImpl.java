@@ -63,4 +63,10 @@ public class ExperimentServiceImpl implements ExperimentService {
 		return experimentMapper.getRelatList(userId, ExperimentState.OPEN, number, ExperimentState.RELAT_STEP, dataKey);
 	}
 
+	@Override
+	public List<Experiment> getReportList(Integer userId, String number, String dataKey) {
+		return experimentMapper.getRelatList(userId, ExperimentState.OPEN, number, ExperimentState.REPORT_STEP,
+				dataKey);
+	}
+
 }
