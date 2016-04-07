@@ -19,7 +19,6 @@ public class CompanyConstants {
     private static Logger logger=LoggerFactory.getLogger(CompanyConstants.class);
     private static Properties properties = null;
     private static String companyIconPath;
-    private static String templatePath;
     /**
      * 配置文件的地址
      */
@@ -71,19 +70,5 @@ public class CompanyConstants {
         int index = nameWithSuffix.indexOf(".");
         ObjectId id = new ObjectId(nameWithSuffix.substring(0, index));
         return getCompanyIconPath() + File.separator + nameWithSuffix;
-    }
-
-    /**
-     * 获取报告模板路径
-     * 
-     * @return
-     * @author leamo
-     * @date 2016年4月5日 下午1:48:25
-     */
-    public static String getReportTemplatePath() {
-        if (templatePath == null) {
-            templatePath = getProperty("templatePath");
-        }
-        return templatePath;
     }
 }

@@ -150,7 +150,10 @@ public class CompanyAction {
         ModelAndView mv = new ModelAndView("company/company_detail");
         Company company = companyService.getCompanyById(companyId);
         mv.addObject("company", company);
-        String path = CompanyConstants.getReportTemplatePath() + companyId;
+        // XXX 需修改为流读取PDF文件
+        String path = this.getClass().getResource("").getPath()
+                .split("WEB-INF")[0] + "resources/templates/report/"
+                + companyId;
         HashSet<String> pdfPathList = FileTools.getFiles(path, ".pdf");
         mv.addObject("pdfPathList", pdfPathList);
         return mv;
