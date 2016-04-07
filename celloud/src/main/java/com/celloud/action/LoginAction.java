@@ -147,9 +147,6 @@ public class LoginAction {
         }
         password = MD5Util.getMD5(password);
         Subject subject = SecurityUtils.getSubject();
-        if (subject.isAuthenticated()) {
-            subject.logout();
-        }
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), password);
         try {
             subject.login(token);
