@@ -41,12 +41,7 @@ public class UserRealm extends AuthorizingRealm {
         if (user == null) {
             throw new UnknownAccountException();// 没找到帐号
         }
-        Set<String> roles = userService.findRoles(user.getUserId());
-        Set<String> permissions = userService.findPermissions(user.getUserId());
-        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        authorizationInfo.setRoles(roles);
-        authorizationInfo.setStringPermissions(permissions);
-        return authorizationInfo;
+        return loadAuthorizationInfo(user);
     }
 
     @SuppressWarnings("unchecked")
@@ -86,7 +81,10 @@ public class UserRealm extends AuthorizingRealm {
         }
         String password = user.getPassword();
         user.setPassword("");
-        SecurityUtils.getSubject().getSession().setAttribute(Constants.SESSION_LOGIN_USER, user);
+        Session session =  SecurityUtils.getSubject().getSession();
+        session.setAttribute(Constants.SESSION_LOGIN_USER, user);
+        session.removeAttribute(Constants.SESSION_LOGIN_USER_ROLES);
+        session.removeAttribute(Constants.SESSION_LOGIN_USER_PERMISSIONS);
         return new SimpleAuthenticationInfo(user.getUsername(), password, getName());
     }
 

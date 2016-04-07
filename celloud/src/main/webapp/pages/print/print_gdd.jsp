@@ -40,11 +40,11 @@
 <section class="section1 border1 w3cbbs">
 	<h3>受检者信息</h3>
     <ul>
-    	<li>母亲姓名：<span><input type="text" name="motherName" value="${cmpReport.cmpFilling.motherName }"></span></li>
-    	<li>病历号：<span><input type="text" name="medicalRecord" value="${cmpReport.cmpFilling.medicalRecord }"></span></li>
-    	<li style="width:90%">项目编号：<span><input type="text" name="projectNo" value="${cmpReport.cmpFilling.projectNo }"></span></li>
-        <li>新生儿姓名：<span><input id="patientName" type="text" name="patientName" value="${cmpReport.cmpFilling.patientName }"></span></li>
-        <li>出生日期：<span><input type="text" name="birthday" value="${cmpReport.cmpFilling.birthday }"></span></li>
+    	<li>母亲姓名：<span><input type="text" name="motherName" value="${cmpReport.cmpFilling.motherName }" ></span></li>
+    	<li>病历号：<span><input type="text" name="medicalRecord" value="${cmpReport.cmpFilling.medicalRecord }" ></span></li>
+    	<li style="width:90%">项目编号：<span><input type="text" name="projectNo" value="${cmpReport.cmpFilling.projectNo }" ></span></li>
+        <li>新生儿姓名：<span><input id="patientName" type="text" name="patientName" value="${cmpReport.cmpFilling.patientName }" ></span></li>
+        <li>出生日期：<span><input type="text" name="birthday" value="${cmpReport.cmpFilling.birthday }" ></span></li>
         <li>受检者性别： <span id="_sex"><input type="radio" name="patientSex" value="男" <c:if test="${cmpReport.cmpFilling.patientSex eq '男' }">checked="checked"</c:if>>男<input type="radio" name="patientSex" value="女" <c:if test="${cmpReport.cmpFilling.patientSex eq '女' }">checked="checked"</c:if>>女</span></li>
         <li>指导医生：<span><input type="text" name="doctorName" value="${cmpReport.cmpFilling.doctorName }"></span></li>
         <li>送检单位：<span><input type="text" name="inspectionUnit" value="${cmpReport.cmpFilling.inspectionUnit }"></span></li>
@@ -387,6 +387,7 @@
     $("#samplingDate1").val(name);
   }
 function preview(obj){
+	save();
 	var inputVal;
 	var textareaVal;
 	var classname;
@@ -413,7 +414,6 @@ function preview(obj){
 		$("#noDrug").css("display","");
 	}
 	$("a").css("display","none");
-	save();
 	window.print();
 	$("#change").show();
 	$("body").find("section").each(function(){

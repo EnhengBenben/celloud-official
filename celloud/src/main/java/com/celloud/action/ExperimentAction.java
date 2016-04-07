@@ -63,7 +63,8 @@ public class ExperimentAction {
 		Integer userId = ConstantsData.getLoginUserId();
 		Page pager = new Page(page, size);
 		PageList<Experiment> pl = es.getExperimentPageList(userId, pager);
-		return new ModelAndView("experiment/experiment_doing_list").addObject("pageList", pl);
+		return new ModelAndView("experiment/experiment_doing_list").addObject("pageList", pl).addObject("dataStep",
+				ExperimentState.RELAT_STEP);
 	}
 
 	/**

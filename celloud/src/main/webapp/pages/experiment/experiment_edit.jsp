@@ -108,8 +108,8 @@
        </div>
        <input type="hidden" name="state" value="${experiment.state }" id="expState"/>
        <input type="hidden" name="id" value="${experiment.id }"/>
-       <input type="hidden" name="fileId" id="expFileId"/>
-       <input type="hidden" name="dataKey" id="expDataKey"/>
+       <input type="hidden" name="fileId" id="expFileId" value="${experiment.fileId }"/>
+       <input type="hidden" name="dataKey" id="expDataKey" value="${experiment.dataKey }"/>
       </form>
     </div>
     <div id="exp-add-error" class="alert alert-warning-cel alert-dismissable hide">

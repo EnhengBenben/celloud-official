@@ -24,13 +24,16 @@
 		<include refid="Base_Column_List" />
 		from tb_sec_resource where
 		exists (
-		select resource_id from tb_sec_permission where
-		tb_sec_resource.id=tb_sec_permission.resource_id and
-		exists (
-		select role_id from tb_sec_user_role_relat where
-		tb_sec_permission.role_id=tb_sec_user_role_relat.role_id
-		and user_id=#{id,jdbcType=INTEGER}
-		)
+			select resource_id from tb_sec_permission where
+			tb_sec_resource.id=tb_sec_permission.resource_id and 
+			tb_sec_permission.role_id in (
+			     select id from tb_sec_role where 
+			     exists (
+                    select role_id from tb_sec_user_role_relat where
+                    tb_sec_role.id=tb_sec_user_role_relat.role_id
+                    and tb_sec_user_role_relat.user_id=#{id,jdbcType=INTEGER}
+                )
+			)
 		)
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
