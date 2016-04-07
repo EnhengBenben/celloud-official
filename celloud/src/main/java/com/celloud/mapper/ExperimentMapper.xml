@@ -108,6 +108,17 @@
     and step = #{stepId}
     and data_key = #{dataKey}
   </select>
+  <select id="getReportList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+  	from tb_experiment
+    where user_id = #{userId,jdbcType=INTEGER} 
+    and number = #{number}
+    and step = #{stepId}
+    and data_key = #{dataKey}
+    order by create_date desc 
+    limit 1
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_experiment
     where id = #{id,jdbcType=INTEGER}
