@@ -65,10 +65,10 @@ $(document).ready(function(){
 		$(".error").html("");
 		//校验用户名是否为空
 		var username = $.trim($("#username").val());
-		if(username==""){
+		if(username==""||username==$.trim($("#username").attr("placeholder"))){
 			$(".error").html("请输入用户名！");
 			$(".error").show();
-			$("#username").focus();
+			$("#username").val('').focus();
 			return false;
 		}
 		//校验密码是否为空
@@ -85,10 +85,10 @@ $(document).ready(function(){
 		}
 		//校验验证码是否为空
 		var captcha = $.trim($("#captcha").val());
-		if(captcha==""){
+		if(captcha==""||$.trim($("#captcha").attr("placeholder"))){
 			$(".error").html("请输入验证码！");
 			$(".error").show();
-			$("#captcha").focus();
+			$("#captcha").val().focus();
 			return false;
 		}
 		//全部校验已通过
