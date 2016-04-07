@@ -85,7 +85,7 @@ $(document).ready(function(){
 		}
 		//校验验证码是否为空
 		var captcha = $.trim($("#captcha").val());
-		if(captcha==""||$.trim($("#captcha").attr("placeholder"))){
+		if(captcha==""||captcha==$.trim($("#captcha").attr("placeholder"))){
 			$(".error").html("请输入验证码！");
 			$(".error").show();
 			$("#captcha").val().focus();
