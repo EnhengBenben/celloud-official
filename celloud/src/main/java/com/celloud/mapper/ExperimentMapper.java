@@ -60,18 +60,14 @@ public interface ExperimentMapper {
 	 * 获取已有报告的实验流程列表
 	 * 
 	 * @param userId
-	 * @param doing
-	 * @param number
 	 * @param stepId
 	 * @param dataKey
-	 * @param done
 	 * @return
 	 * @author lin
-	 * @date 2016年4月7日下午2:23:01
+	 * @date 2016年4月7日下午5:06:12
 	 */
-	List<Experiment> getReportList(@Param("userId") Integer userId, @Param("doing") Integer doing,
-			@Param("number") String number, @Param("stepId") Integer stepId, @Param("dataKey") String dataKey,
-			@Param("done") Integer done);
+	List<Experiment> getReportList(@Param("userId") Integer userId, @Param("stepId") Integer stepId,
+			@Param("dataKey") String dataKey);
 
 	/**
 	 * 校验编号是否重复
