@@ -23,7 +23,7 @@
       <div class="m-box">
         <h2><i class="i-report1"></i>数据统计</h2>
         <div class="m-boxCon">
-          <div style="display:flex;">
+          <div style="display:flex;min-height:260px;">
               <div class="quota-left">
                 <div class="quota-inner">
                   <h5 class="quota-title">源数据统计</h5>
