@@ -37,6 +37,7 @@ import com.celloud.backstage.service.FeedbackService;
 
 @Controller
 public class FeedbackAction {
+    @SuppressWarnings("unused")
     private static Logger logger = LoggerFactory.getLogger(FeedbackAction.class);
     @Resource
     private FeedbackService feedbackService;

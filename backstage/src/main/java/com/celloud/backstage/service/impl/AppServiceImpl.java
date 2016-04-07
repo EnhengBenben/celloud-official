@@ -148,6 +148,7 @@ public class AppServiceImpl implements AppService{
             a.setRunData(app.getRunData());
             a.setRunType(app.getRunType());
             a.setTitle(app.getTitle());
+            @SuppressWarnings("unused")
             int result=appMapper.updateApp(a);
             if(StringUtils.isNotBlank(oldPictureName)&&!oldPictureName.equals(newPictureName)){
                 File delFile=new File(AppConstants.geAppPicturePath(oldPictureName));
@@ -208,6 +209,9 @@ public class AppServiceImpl implements AppService{
             return;
         }
         File[] tempFiles = tempDir.listFiles();
+        if(tempFiles==null||tempFiles.length==0){
+            return ;
+        }
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, -7);
         Date date = calendar.getTime();

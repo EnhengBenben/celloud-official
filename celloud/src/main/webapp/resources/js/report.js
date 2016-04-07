@@ -706,6 +706,10 @@ $.ajaxSetup ({
         $.get("report/getOncogeneReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
           toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
         });
+      }else if(softwareId == 105){
+	    $.get("report/getTBINHReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
+	      toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+	    });
       }else if(softwareId == 106){
         $.get("report/getDPDReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
           toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);

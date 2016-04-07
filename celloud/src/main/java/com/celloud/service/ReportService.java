@@ -19,6 +19,7 @@ import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
 import com.celloud.model.mongo.Split;
+import com.celloud.model.mongo.TBINH;
 import com.celloud.model.mongo.TBRifampicin;
 import com.celloud.model.mongo.TaskQueue;
 import com.celloud.model.mongo.UGT;
@@ -35,6 +36,17 @@ import com.celloud.page.PageList;
 public interface ReportService {
 
     /**
+     * 获取TBINH报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author MQ
+     */
+    public TBINH getTBINHReport(String dataKey, Integer projectId, Integer appId);
+
+    /**
      * 获取BRAF报告
      * 
      * @param dataKey
@@ -42,7 +54,6 @@ public interface ReportService {
      * @param appId
      * @return
      * @author MQ
-     * @date 2016年3月25日下午3:58:15
      */
     public BRAF getBRAFReport(String dataKey, Integer projectId, Integer appId);
 
@@ -84,8 +95,8 @@ public interface ReportService {
      * @return
      * @date 2016-1-5 下午3:26:05
      */
-    PageList<Map<String, Object>> getReportPageList(Integer userId, Page pager,
-            String condition, String start, String end, Integer appId,Integer belongs);
+    PageList<Map<String, Object>> getReportPageList(Integer userId, Page pager, String condition, String start,
+            String end, Integer appId, Integer belongs);
 
     /**
      * 统计用户使用各App的次数
@@ -127,9 +138,8 @@ public interface ReportService {
      * @author lin
      * @date 2016年1月28日下午7:15:48
      */
-    public Oncogene getOncogeneReport(String dataKey, Integer projectId,
-            Integer appId);
-    
+    public Oncogene getOncogeneReport(String dataKey, Integer projectId, Integer appId);
+
     /**
      * 获取HCV数据报告
      * 
@@ -140,32 +150,32 @@ public interface ReportService {
      * @author lin
      * @date 2016年3月7日下午5:06:00
      */
-	public HCV getHCVReport(String dataKey, Integer projectId, Integer appId);
-	
-	/**
-	 * 获取EGFR报告
-	 * 
-	 * @param dataKey
-	 * @param projectId
-	 * @param appId
-	 * @return
-	 * @author lin
-	 * @date 2016年3月10日下午2:46:20
-	 */
-	public EGFR getEGFRReport(String dataKey, Integer projectId, Integer appId);
-	
-	/**
-	 * 获取KRAS报告
-	 * 
-	 * @param dataKey
-	 * @param projectId
-	 * @param appId
-	 * @return
-	 * @author lin
-	 * @date 2016年3月22日下午4:36:17
-	 */
-	public KRAS getKRASReport(String dataKey, Integer projectId, Integer appId);
-	
+    public HCV getHCVReport(String dataKey, Integer projectId, Integer appId);
+
+    /**
+     * 获取EGFR报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author lin
+     * @date 2016年3月10日下午2:46:20
+     */
+    public EGFR getEGFRReport(String dataKey, Integer projectId, Integer appId);
+
+    /**
+     * 获取KRAS报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author lin
+     * @date 2016年3月22日下午4:36:17
+     */
+    public KRAS getKRASReport(String dataKey, Integer projectId, Integer appId);
+
     /**
      * 获取TBRifampicin报告
      * 
@@ -176,29 +186,29 @@ public interface ReportService {
      */
     public TBRifampicin getTBRifampicinReport(String dataKey, Integer projectId, Integer appId);
 
-	/**
-	 * 获取UGT报告
-	 * 
-	 * @param dataKey
-	 * @param projectId
-	 * @param appId
-	 * @return
-	 * @author lin
-	 * @date 2016年3月25日下午3:58:15
-	 */
-	public UGT getUGTReport(String dataKey, Integer projectId, Integer appId);
+    /**
+     * 获取UGT报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author lin
+     * @date 2016年3月25日下午3:58:15
+     */
+    public UGT getUGTReport(String dataKey, Integer projectId, Integer appId);
 
-	/**
-	 * 获取DPD报告
-	 * 
-	 * @param dataKey
-	 * @param projectId
-	 * @param appId
-	 * @return
-	 * @author lin
-	 * @date 2016年3月25日下午3:58:26
-	 */
-	public DPD getDPDReport(String dataKey, Integer projectId, Integer appId);
+    /**
+     * 获取DPD报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author lin
+     * @date 2016年3月25日下午3:58:26
+     */
+    public DPD getDPDReport(String dataKey, Integer projectId, Integer appId);
 
     /**
      * 获取 MIB 报告
@@ -229,8 +239,7 @@ public interface ReportService {
      * @return
      * @date 2016-1-10 下午10:42:22
      */
-    public Split getSplitReport(String dataKey, Integer projectId,
-            Integer appId);
+    public Split getSplitReport(String dataKey, Integer projectId, Integer appId);
 
     /**
      * 获取 CMP 和 GDD 数据报告
@@ -241,8 +250,7 @@ public interface ReportService {
      * @return
      * @date 2016-1-10 下午10:51:50
      */
-    public CmpReport getCMPReport(String dataKey, Integer projectId,
-            Integer appId);
+    public CmpReport getCMPReport(String dataKey, Integer projectId, Integer appId);
 
     /**
      * 修改CMP用户填写信息
@@ -270,8 +278,8 @@ public interface ReportService {
      * @author leamo
      * @date 2016年1月18日 下午3:08:01
      */
-    public List<GddDiseaseDict> getGddDiseaseDictNormal(String[] fields,
-            Map<String, List<String>> conditionMap, String sortField);
+    public List<GddDiseaseDict> getGddDiseaseDictNormal(String[] fields, Map<String, List<String>> conditionMap,
+            String sortField);
 
     /**
      * 获取GDD总表检测突变数统计
@@ -281,8 +289,7 @@ public interface ReportService {
      * @param appId
      * @return
      */
-    public List<CmpGeneSnpResult> getGddResult(String dataKey, Integer proId,
-            Integer appId);
+    public List<CmpGeneSnpResult> getGddResult(String dataKey, Integer proId, Integer appId);
 
     /**
      * 新增项目报告
@@ -303,8 +310,7 @@ public interface ReportService {
      * @author leamo
      * @date 2016年1月14日 下午2:11:52
      */
-    public List<Integer> insertMultipleProReport(Report report,
-            Map<Integer, Integer> appProId, String[] dataIds);
+    public List<Integer> insertMultipleProReport(Report report, Map<Integer, Integer> appProId, String[] dataIds);
 
     /**
      * 新增数据报告
@@ -419,8 +425,7 @@ public interface ReportService {
      * @author lin
      * @date 2016年1月18日上午11:19:09
      */
-    Report getReport(Integer userId, Integer appId, Integer projectId,
-            Integer fileId, Integer flag);
+    Report getReport(Integer userId, Integer appId, Integer projectId, Integer fileId, Integer flag);
 
     /**
      * 根据外键组合修改非外键字段<br>
@@ -447,9 +452,9 @@ public interface ReportService {
      * @author lin
      * @date 2016年1月20日下午6:14:55
      */
-    public Integer updateReportStateToTools(Integer userId, Integer appId,
-            Integer projectId, Integer period, String context);
-    
+    public Integer updateReportStateToTools(Integer userId, Integer appId, Integer projectId, Integer period,
+            String context);
+
     /**
      *  保存spark排队任务
      * 
@@ -458,7 +463,7 @@ public interface ReportService {
      * @date 2016年2月26日下午1:45:27
      */
     public void saveTask(TaskQueue tq);
-    
+
     /**
      * 根据项目ID检索任务信息
      * 
