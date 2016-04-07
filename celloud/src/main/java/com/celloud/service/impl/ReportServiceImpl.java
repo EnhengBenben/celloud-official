@@ -49,6 +49,7 @@ import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
 import com.celloud.model.mongo.Split;
+import com.celloud.model.mongo.TBINH;
 import com.celloud.model.mongo.TBRifampicin;
 import com.celloud.model.mongo.TaskQueue;
 import com.celloud.model.mongo.UGT;
@@ -176,6 +177,11 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public BRAF getBRAFReport(String dataKey, Integer projectId, Integer appId) {
         return reportDao.getDataReport(BRAF.class, dataKey, projectId, appId);
+    }
+
+    @Override
+    public TBINH getTBINHReport(String dataKey, Integer projectId, Integer appId) {
+        return reportDao.getDataReport(TBINH.class, dataKey, projectId, appId);
     }
 
     @Override

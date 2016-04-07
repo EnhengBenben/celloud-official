@@ -50,6 +50,7 @@ import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
 import com.celloud.model.mongo.RecommendDrug;
 import com.celloud.model.mongo.Split;
+import com.celloud.model.mongo.TBINH;
 import com.celloud.model.mongo.TBRifampicin;
 import com.celloud.model.mongo.UGT;
 import com.celloud.model.mysql.App;
@@ -746,6 +747,56 @@ public class ReportAction {
     @ResponseStatus(value = HttpStatus.OK)
     public void prevDataReport() {
         log.info("点击数据报告列表查看上一页数据报告");
+    }
+
+    /**
+     * 获取TBINH数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author MQ
+     */
+    @ActionLog(value = "查看TBINH数据报告", button = "数据报告")
+    @RequestMapping("getTBINHReport")
+    public ModelAndView getTBINHReport(String dataKey, Integer projectId, Integer appId) {
+        TBINH tbinh = reportService.getTBINHReport(dataKey, projectId, appId);
+
+        String position = tbinh.getPosition();
+        if (StringUtils.isNotBlank(position)) {
+            String[] positions = position.split("\n");
+            StringBuffer sb = new StringBuffer("<table>");
+            for (String p : positions) {
+                sb.append("<tr><td>" + p + "</td></tr>");
+            }
+            sb.append("</table>");
+            tbinh.setPosition(sb.toString());
+        }
+
+        String report = tbinh.getReport();
+        if (StringUtils.isNotBlank(report)) {
+            String first = tbinh.getReport().split("\n")[0];
+            if (first == null) {
+                tbinh.setReport("no result");
+            } else {
+                tbinh.setReport(first);
+            }
+        }
+
+        String mutationPosition = tbinh.getMutationPosition();
+        if (StringUtils.isNotBlank(mutationPosition)) {
+            String[] mps = mutationPosition.split("\n");
+            StringBuffer sb = new StringBuffer("<table>");
+            for (String mp : mps) {
+                sb.append("<tr><td>" + mp + "</td></tr>");
+            }
+            sb.append("</table>");
+            tbinh.setMutationPosition(sb.toString());
+        }
+
+        ModelAndView mv = getModelAndView("report/report_data_tbinh", projectId);
+        return mv.addObject("tbinh", tbinh);
     }
 
     /**
