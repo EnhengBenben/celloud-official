@@ -10,10 +10,10 @@
 			<th>日期</th>
 			<th>样本类型</th>
 			<th>扩增方法</th>
-			<th>浓度</th>
+			<th>浓度(ng/ul)</th>
 			<th>质控</th>
 			<th>Index</th>
-			<th>库浓度</th>
+			<th>库浓度(ng/ul)</th>
 			<th>测序仪</th>
 			<th>阶段</th>
 			<th>其他</th>

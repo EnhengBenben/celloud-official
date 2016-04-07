@@ -156,8 +156,7 @@ public class DataAction {
         Page pager = new Page(page, size);
         PageList<DataFile> dataList = dataService.dataLists(pager,
                 ConstantsData.getLoginUserId(), con_sb.toString(), sort,
-                sortDateType,
-                sortNameType);
+                sortDateType, sortNameType);
         mv.addObject("dataList", dataList);
         logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
         return mv;
@@ -173,7 +172,10 @@ public class DataAction {
     @RequestMapping("getFormatByDataIds.action")
     @ResponseBody
     public Integer getFormatByDataIds(String dataIds) {
-        Integer result = dataService.getFormatByIds(dataIds);
+        Integer result = 0;
+        if (dataIds == null || dataIds.equals(""))
+            return result;
+        result = dataService.getFormatByIds(dataIds);
         logger.info("用户{}获取{}数据类型", ConstantsData.getLoginUserName(), dataIds);
         return result;
     }
@@ -207,8 +209,10 @@ public class DataAction {
     @RequestMapping("checkDataRunningApp.action")
     @ResponseBody
     public List<Integer> checkDataRunningApp(String dataIds, Integer appId) {
-        List<Integer> dataIdList = dataService.findRunningAppData(dataIds,
-                appId);
+        List<Integer> dataIdList = new ArrayList<>();
+        if (dataIds == null || dataIds.equals(""))
+            return dataIdList;
+        dataIdList = dataService.findRunningAppData(dataIds, appId);
         logger.info("用户{}验证数据{}是否正在运行APP{}", ConstantsData.getLoginUserName(),
                 dataIds, appId);
         return dataIdList;
@@ -226,7 +230,9 @@ public class DataAction {
     @RequestMapping("delete.action")
     @ResponseBody
     public Response delete(String dataIds) {
-        int result = dataService.delete(dataIds);
+        Integer result = 0;
+        if (dataIds != null && !dataIds.equals(""))
+            result = dataService.delete(dataIds);
         logger.info("用户{}删除数据{}{}", ConstantsData.getLoginUserName(), dataIds,
                 result);
         return result > 0 ? Response.DELETE_SUCCESS : DELETE_DATA_FAIL;
@@ -303,7 +309,7 @@ public class DataAction {
         logger.info("用户{}分别修改{}个数据", ConstantsData.getLoginUserName(), result);
         return result;
     }
-    
+
     /**
      * 数据运行
      * 
@@ -387,7 +393,6 @@ public class DataAction {
             return result;
         }
 
-
         // TODO 向tools端传参 优化tools投递后删除
         StringBuffer dataResult = new StringBuffer();
         for (DataFile d : dataList) {
@@ -401,7 +406,7 @@ public class DataAction {
             Integer appId = app.getAppId();
             String appName = app.getAppName();
             Integer proId = appProMap.get(appId);
-			String appPath = bp + appId + "/";
+            String appPath = bp + appId + "/";
             if (!FileTools.checkPath(appPath)) {
                 new File(appPath).mkdirs();
             }
@@ -411,23 +416,25 @@ public class DataAction {
                 int running = dataService.dataRunning(select);
                 logger.info("spark 正在运行的任务数：{}", running);
                 if (SparkPro.NODES >= running) {
-	                String _dataFilePath = DataKeyListToFile
-	                        .toSpark(proId.toString(), dataList);
-	                Map<String, String> map = CommandKey.getMap(_dataFilePath, appPath,proId);
-	                StrSubstitutor sub = new StrSubstitutor(map);
-					String command = sub.replace(app.getCommand());
-					logger.info("资源满足需求，投递任务！运行命令：" + command);
-                    SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
+                    String _dataFilePath = DataKeyListToFile
+                            .toSpark(proId.toString(), dataList);
+                    Map<String, String> map = CommandKey.getMap(_dataFilePath,
+                            appPath, proId);
+                    StrSubstitutor sub = new StrSubstitutor(map);
+                    String command = sub.replace(app.getCommand());
+                    logger.info("资源满足需求，投递任务！运行命令：" + command);
+                    SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName,
+                            sparkpwd);
                     ssh.sshSubmit(command, false);
                 } else {
-                	TaskQueue tq = new TaskQueue();
-                	tq.setAppId(0);
-                	tq.setDataKey("");
-                	tq.setProjectId(proId);
-                	tq.setDataList(dataList);
-                	tq.setPath(appPath);
-                	tq.setCommand(app.getCommand());
-                	reportService.saveTask(tq);
+                    TaskQueue tq = new TaskQueue();
+                    tq.setAppId(0);
+                    tq.setDataKey("");
+                    tq.setProjectId(proId);
+                    tq.setDataList(dataList);
+                    tq.setPath(appPath);
+                    tq.setCommand(app.getCommand());
+                    reportService.saveTask(tq);
                     logger.info("资源不满足需求，进入队列等待");
                     GlobalQueue.offer(proId.toString());
                 }
@@ -443,9 +450,10 @@ public class DataAction {
                     task.setUserId(userId);
                     task.setAppId(appId);
                     task.setDataKey(dataKey);
-                    Map<String, String> map = CommandKey.getMap(dataListFile, appPath, proId);
+                    Map<String, String> map = CommandKey.getMap(dataListFile,
+                            appPath, proId);
                     StrSubstitutor sub = new StrSubstitutor(map);
-                    String command = sub.replace( app.getCommand());
+                    String command = sub.replace(app.getCommand());
                     task.setCommand(command);
                     taskService.create(task);
                     Integer taskId = task.getTaskId();
@@ -464,9 +472,10 @@ public class DataAction {
                     // TODO 所有向Tools端投递任务的流程都向这里集中
                     // 最终判断删除，非spark就是SGE
                     logger.info("celloud 直接向 SGE 投递任务");
-                    Map<String, String> map = CommandKey.getMap(dataFilePath, appPath, proId);
-    				StrSubstitutor sub = new StrSubstitutor(map);
-    				String command = sub.replace(app.getCommand());
+                    Map<String, String> map = CommandKey.getMap(dataFilePath,
+                            appPath, proId);
+                    StrSubstitutor sub = new StrSubstitutor(map);
+                    String command = sub.replace(app.getCommand());
                     logger.info("运行命令:{}", command);
                     SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
                     ssh.sshSubmit(command, false);
@@ -483,7 +492,7 @@ public class DataAction {
         }
         return result;
     }
-    
+
     /**
      * 运行所需信息
      * 
@@ -501,7 +510,7 @@ public class DataAction {
         String ext = FileTools.getExtName(filename);
         sb.append(datakey).append(",").append(datakey).append(ext).append(",")
                 .append(filename).append(",")
-                //TODO 这个三目有必要么？
+                // TODO 这个三目有必要么？
                 .append(StringUtils.isEmpty(anotherName) ? null : anotherName)
                 .append(";");
         return sb;
