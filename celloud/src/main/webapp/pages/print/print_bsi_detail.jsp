@@ -112,9 +112,9 @@
        <table id="test-seq-table" class="table table-bordered table-condensed">
          <thead>
            <tr>
-             <th style="min-width: 90px;">菌名(属-种)</th>
-             <th>#</th>
-             <th width="470">序列 (5'-3')</th>
+             <th style="max-width: 119px;">菌名(属-种)</th>
+             <th width="10">#</th>
+             <th width="380">序列 (5'-3')</th>
              <th name="opera-seq" width="53">操作</th>
              <th>其它信息</th>
            </tr>
@@ -199,7 +199,7 @@
 	      <tr>
             <th style="min-width: 90px;">菌名(属-种)</th>
             <th>#</th>
-            <th width="470">序列 (5'-3')</th>
+            <th width="380">序列 (5'-3')</th>
             <th name="opera-seq" width="53">操作</th>
             <th>参考信息</th>
           </tr>
