@@ -292,6 +292,8 @@
          		<input type="radio" name="qualified" value="0"/> 有效
          		<input type="radio" name="qualified" value="1"/> 无效
 	         	<input type="hidden" name="id" value="${experiment.id }"/>
+	         	<!-- 状态修改为正常关闭 -->
+	         	<input type="hidden" name="state" value="2"/>
          	</div>
           </div>
           <div class="form-group">
