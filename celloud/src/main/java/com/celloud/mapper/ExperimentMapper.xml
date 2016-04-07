@@ -85,8 +85,8 @@
     </if>
     <if test="end != null and end!=''" >
     and create_date &lt; #{end}
-    order by create_date desc
     </if>
+    order by create_date desc
   </select>
   <select id="getUnRelatList" resultMap="BaseResultMap">
     select
