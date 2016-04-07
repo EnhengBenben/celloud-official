@@ -144,7 +144,7 @@ public class DataAction {
             @RequestParam(defaultValue = "0") int sort,
             @RequestParam(defaultValue = "desc") String sortDateType,
             @RequestParam(defaultValue = "asc") String sortNameType) {
-        Pattern p = Pattern.compile("\\_|\\%|\\\\|\\'|\"");
+        Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
         Matcher m = p.matcher(condition);
         StringBuffer con_sb = new StringBuffer();
         while (m.find()) {
