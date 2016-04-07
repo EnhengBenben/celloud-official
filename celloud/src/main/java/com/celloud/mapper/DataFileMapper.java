@@ -262,5 +262,6 @@ public interface DataFileMapper {
 	 * @author lin
 	 * @date 2016年4月6日下午4:22:30
 	 */
-	List<DataFile> getDataByAnotherName(@Param("userId") Integer userId, @Param("anotherName") String anotherName);
+	List<DataFile> getDataByAnotherName(@Param("userId") Integer userId, @Param("anotherName") String anotherName,
+			@Param("state") int state);
 }

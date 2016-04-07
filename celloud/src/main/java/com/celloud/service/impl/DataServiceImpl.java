@@ -194,6 +194,6 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public List<DataFile> getDataByAnotherName(Integer userId, String anotherName) {
-		return dataFileMapper.getDataByAnotherName(userId, anotherName);
+		return dataFileMapper.getDataByAnotherName(userId, anotherName, DataState.ACTIVE);
 	}
 }
