@@ -116,6 +116,9 @@ public class CompanyServiceImpl implements CompanyService {
             return;
         }
         File[] tempFiles = tempDir.listFiles();
+        if(tempFiles==null||tempFiles.length==0){
+            return ;
+        }
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, -7);
         Date date = calendar.getTime();

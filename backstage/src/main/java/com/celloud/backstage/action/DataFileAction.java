@@ -118,7 +118,9 @@ public class DataFileAction {
                 // 构造新路径
                 String path = realPath + newName;
                 FileTools.renameFile(realPath, fileName[i], newName);
+                @SuppressWarnings("unused")
                 long fileSize = new File(path).length();
+                @SuppressWarnings("unused")
                 int fileType = checkFileType.checkFileType(newName);
                 String perlPath = request.getSession().getServletContext().getRealPath("/resources")
                         + "/plugins/getAliases.pl";
