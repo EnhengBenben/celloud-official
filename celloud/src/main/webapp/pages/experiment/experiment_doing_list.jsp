@@ -38,7 +38,14 @@
 				<td>${exp.seqIndex }</td>
 				<td>${exp.libraryConcentration }</td>
 				<td>${exp.sequenatorName }</td>
-				<td>${exp.stepName }</td>
+				<td>
+					<c:if test="${exp.step==dataStep&&exp.fileId!=0 }">
+						数据
+					</c:if>
+					<c:if test="${exp.step!=dataStep||exp.fileId==0 }">
+						${exp.stepName }
+					</c:if>
+				</td>
 				<td>${exp.other }</td>
 				<td title="${exp.remarks }">
 					<c:if test="${exp.qualified==0 }">有效</c:if>
