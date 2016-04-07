@@ -18,28 +18,28 @@ var feedbacks = (function(feedbacks) {
 		$form.find(".form-group").removeClass("has-error");
 		$form.find(".help-block").html("");
 		var $title = $form.find("[name=title]");
-		var title = $title.val();
+		var title = $.trim($title.val());
 		var $titleGroup = $title.parent(".form-group");
 		var $content = $form.find("[name=content]");
-		var content = $content.val();
+		var content = $.trim($content.val());
 		if(!title){
 			//输入标题
 			$title.parents(".form-group:first").addClass("has-error");
 			$title.parents(".form-group:first").find(".help-block").html("请输入标题！");
-			$title.focus();
+			$title.focus().val(title);
 			return false;
 		}
 		if(title.length>30||title.length<4){
 			//4-30字符
 			$title.parents(".form-group:first").addClass("has-error");
 			$title.parents(".form-group:first").find(".help-block").html("请输入4-30字符的标题！");
-			$title.focus();
+			$title.focus().val(title);
 			return false;
 		}
 		if(!content){
 			$content.parents(".form-group:first").addClass("has-error");
 			$content.parents(".form-group:first").find(".help-block").html("请输入内容！");
-			$content.focus();
+			$content.focus().val(content);
 			return false;
 			//输入内容
 		}
@@ -47,7 +47,7 @@ var feedbacks = (function(feedbacks) {
 			//10-1000字符
 			$content.parents(".form-group:first").addClass("has-error");
 			$content.parents(".form-group:first").find(".help-block").html("请输入10-1000字符的内容！");
-			$content.focus();
+			$content.focus().val(content);
 			return false;
 		}
 		return true;
