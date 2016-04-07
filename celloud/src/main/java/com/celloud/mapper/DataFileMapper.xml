@@ -39,6 +39,13 @@
     from tb_file
     where file_id = #{fileId,jdbcType=INTEGER}
   </select>
+  <select id="getDataByAnotherName" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_file
+    where user_id = #{userId } and another_name = #{anotherName } and state = #{state}
+    order by create_date desc
+  </select>
   <select id="selectByDataKey" resultMap="ResultMapWithBLOBs" >
     select 
     <include refid="Base_Column_List" />

@@ -13,10 +13,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.ExperimentState;
+import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Experiment;
 import com.celloud.model.mysql.ExperimentDict;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
+import com.celloud.service.DataService;
 import com.celloud.service.ExperimentDictService;
 import com.celloud.service.ExperimentService;
 import com.celloud.utils.ActionLog;
@@ -28,6 +30,8 @@ public class ExperimentAction {
 	private ExperimentService es;
 	@Resource
 	private ExperimentDictService eds;
+	@Resource
+	private DataService ds;
 
 	/**
 	 * 初始化实验管理模块，获取实验流程动态菜单
@@ -95,6 +99,21 @@ public class ExperimentAction {
 		List<ExperimentDict> list = eds.getExperimentDictList();
 		return new ModelAndView("experiment/experiment_add").addObject("list", list);
 	}
+	
+	/**
+	 * 根据别名获取数据
+	 * 
+	 * @param anotherName
+	 * @return
+	 * @author lin
+	 * @date 2016年4月6日下午4:29:47
+	 */
+	@RequestMapping("getDataByAnotherName")
+	public ModelAndView getDataByAnotherName(String anotherName) {
+		Integer userId = ConstantsData.getLoginUserId();
+		List<DataFile> list = ds.getDataByAnotherName(userId, anotherName);
+		return new ModelAndView("experiment/experiment_data_list").addObject("list", list);
+	}
 
 	/**
 	 * 校验实验编号是否存在
@@ -143,7 +162,7 @@ public class ExperimentAction {
 		List<ExperimentDict> list = eds.getExperimentDictList();
 		Experiment experiment = es.selectByPrimaryKey(expId);
 		return new ModelAndView("experiment/experiment_edit").addObject("list", list).addObject("experiment",
-				experiment);
+				experiment).addObject("dataStep", ExperimentState.RELAT_STEP);
 	}
 
 	/**

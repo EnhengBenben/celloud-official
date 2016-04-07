@@ -12,7 +12,7 @@
 		<div class="form-group">
 			<div class="control-label form-label col-xs-4">编号</div>
 			<div class="col-xs-8">
-				<input type="text" name="number" value="${experiment.number }" id="expnumber"/>
+				<input type="text" name="number" value="${experiment.number }" id="expnumber" onchange="experiment.changeName()"/>
 			</div>
 		</div>
 		<div class="form-group">
@@ -34,12 +34,13 @@
 			<div class="control-label form-label col-xs-4">库浓度</div>
 			<div class="col-xs-8">
 				<input type="text" name="libraryConcentration" value="${experiment.libraryConcentration }" id="expLibCon"/>
+				<input type="hidden" value="${dataStep }" id="dataStep"/>
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="control-label form-label col-xs-4">阶段</div>
 			<div class="col-xs-8">
-				<select name="step">
+				<select name="step" id="stepSelect">
 					<option value="0">--请选择--</option>
 					<c:forEach items="${list }" var="dict">
 						<c:if test="${dict.flag==0 }">
@@ -107,15 +108,20 @@
        </div>
        <input type="hidden" name="state" value="${experiment.state }" id="expState"/>
        <input type="hidden" name="id" value="${experiment.id }"/>
+       <input type="hidden" name="fileId" id="expFileId"/>
+       <input type="hidden" name="dataKey" id="expDataKey"/>
       </form>
     </div>
     <div id="exp-add-error" class="alert alert-warning-cel alert-dismissable hide">
 		<h5 style="text-align: center;" id="expErrorInfo">保存失败！</h5>
 	</div>
+    <div id="showData" class="hide">
+	</div>
     <div class="modal-footer">
       <button type="button" class="btn btn-celloud-close btn-flat pull-left" data-dismiss="modal">关闭</button>
       <button onclick="javascript:experiment.closeExperiment()" type="button" class="btn btn-celloud-success btn-flat">关闭实验</button>
-      <button onclick="javascript:experiment.updateExperiment()" type="button" class="btn btn-celloud-success btn-flat">保存</button>
+      <button onclick="javascript:experiment.updateExperiment()" id="expEditSubmit" type="button" class="btn btn-celloud-success btn-flat">保存</button>
+      <button onclick="javascript:experiment.expBindData()" id="expBindDataSubmit" type="button" class="btn btn-celloud-success btn-flat hide">保存</button>
     </div>
   </div><!-- /.modal-content -->
 </div>

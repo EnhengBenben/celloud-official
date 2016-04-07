@@ -88,7 +88,12 @@ var experiment = (function(experiment) {
 	    $("#addExp").modal('show');
 	  });
 	}
+	var isChangeName = false;
+  self.changeName = function(){
+    isChangeName = true;
+  }
 	self.toEditExp = function(id){
+	  isChangeName = false;
     $.get("experiment/toEditExp",{"expId":id},function(response){
       $("#addExp").html(response);
       $("#addExp").modal('show');
@@ -110,26 +115,70 @@ var experiment = (function(experiment) {
       })
     });
 	}
+	self.hideEditError = function(){
+    $("#expErrorInfo").html("");
+    $("#exp-add-error").addClass("hide");
+  }
 	self.updateExperiment = function(){
 	  if(!self.validateBaseInfo()){
-      return;
-    }
+	    return;
+	  }
 	  var number = $("#expnumber").val().trim();
-    $.get("experiment/checkNumber",{"num":number},function(flag){
-      if(flag==1){
-    	  $.get("experiment/updateExperiment",$("#exp-add-form").serialize(),function(flag){
-          if(flag == 1){
-            $("#addExp").modal('hide');
-            self.getDoingPageList(PAGE);
-          }else{
-            self.showError("修改失败！");
-          }
-        })
-      }else{
-        self.showError("编号不能和已有的doing状态的编号相同！");
-      }
-    });
-  }
+	  $.get("experiment/checkNumber",{"num":number},function(flag){
+	    if((isChangeName&&flag==0)||(!isChangeName&&flag==1)){
+	      $.get("experiment/updateExperiment",$("#exp-add-form").serialize(),function(flag){
+	        if(flag == 1){
+	          if(true){//是否已经绑定数据
+	            if($("#dataStep").val()==$("#stepSelect").val()){
+	              self.showError("保存成功！正在检索与本实验相匹配的数据，请稍等！");
+	              $.get("experiment/getDataByAnotherName",{"anotherName":number},function(response){
+	                $("#showData").html(response);
+	                $("#showData").removeClass("hide");
+	                $("#expEditSubmit").addClass("hide");
+	                $("#expBindDataSubmit").removeClass("hide");
+	                self.showError("保存成功！请选择数据后再点击一次保存！");
+	              });
+	            }else{
+	              $("#addExp").modal('hide');
+	              self.getDoingPageList(PAGE);
+	            }
+	          }else{
+	            $("#addExp").modal('hide');
+	            self.getDoingPageList(PAGE);
+	          }
+	        }else{
+	          self.showError("修改失败！");
+	        }
+	      })
+	    }else{
+	      self.showError("编号不能和已有的doing状态的编号相同！");
+	    }
+	  });
+	}
+	self.expBindData = function(){
+	  if(!self.validateBaseInfo()){
+	    return;
+	  }
+	  var number = $("#expnumber").val().trim();
+	  $.get("experiment/checkNumber",{"num":number},function(flag){
+	    if(flag<=1){
+	      var file_id = $("input[type='radio']:checked").val();
+	      var dataKey = $("input[type='radio']:checked").next().val();
+	      $("#expFileId").val(file_id);
+	      $("#expDataKey").val(dataKey);
+	      $.get("experiment/updateExperiment",$("#exp-add-form").serialize(),function(flag){
+	        if(flag == 1){
+	          $("#addExp").modal('hide');
+	          self.getDoingPageList(PAGE);
+	        }else{
+	          self.showError("修改失败！");
+	        }
+	      })
+	    }else{
+	      self.showError("编号不能和已有的doing状态的编号相同！");
+	    }
+	  });
+	}
 	self.validateBaseInfo = function() {
 	  var number = $("#expnumber").val().trim();
 	  if(!number){

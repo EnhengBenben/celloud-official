@@ -39,8 +39,7 @@ public class SparkPro {
     /**
      * 需要投递到spark集群的appId
      */
-    public static final List<String> apps = Arrays.asList("86", "92", "93",
-            "99", "100", "101");
+    public static final List<String> apps = Arrays.asList("86", "92", "93", "99", "100", "101");
 
     /**
      * SGE 杀任务
@@ -51,10 +50,10 @@ public class SparkPro {
      * spark 杀任务
      */
     public static final String SPARKKILL = "perl /share/biosoft/perl/PGS_MG/bin/spark_kill.pl";
-    
-	/**
-	 * celloud端直接投递到SGE的appId
-	 */
-	public static final List<String> SGEAPPS = Arrays.asList("80", "82", "84", "85", "87", "88", "89", "91", "94",
+
+    /**
+     * celloud端直接投递到SGE的appId
+     */
+    public static final List<String> SGEAPPS = Arrays.asList("80", "82", "84", "85", "87", "88", "89", "90", "91", "94",
             "104", "106", "107", "108", "116", "117");
 }

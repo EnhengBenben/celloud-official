@@ -10,14 +10,15 @@
 			<th>日期</th>
 			<th>样本类型</th>
 			<th>扩增方法</th>
-			<th>浓度</th>
+			<th>浓度(ng/ul)</th>
 			<th>质控</th>
 			<th>Index</th>
-			<th>库浓度</th>
+			<th>库浓度(ng/ul)</th>
 			<th>测序仪</th>
 			<th>阶段</th>
 			<th>其他</th>
 			<th>报告</th>
+			<th>报告时间</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -42,6 +43,9 @@
 				<td title="${exp.remarks }">
 					<c:if test="${exp.qualified==0 }">有效</c:if>
 					<c:if test="${exp.qualified==1 }">无效</c:if>
+				</td>
+				<td>
+					<fmt:formatDate value="${exp.reportDate }" pattern="yyyyMMdd" />
 				</td>
 			</tr>
 		</c:forEach>
