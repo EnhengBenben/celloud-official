@@ -577,7 +577,7 @@ public class ReportAction {
         Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
         // TODO 查询实验流程
         Integer userId = ConstantsData.getLoginUserId();
-        List<Experiment> expList = expService.getRelatList(userId, pgs.getAnotherName(), dataKey);
+        List<Experiment> expList = expService.getReportList(userId, pgs.getAnotherName(), dataKey);
         if (expList != null && expList.size() > 0) {
             mv.addObject("experiment", expList.get(0));
         }

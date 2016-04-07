@@ -128,7 +128,8 @@ var experiment = (function(experiment) {
 	    if((isChangeName&&flag==0)||(!isChangeName&&flag==1)){
 	      $.get("experiment/updateExperiment",$("#exp-add-form").serialize(),function(flag){
 	        if(flag == 1){
-	          if(true){//是否已经绑定数据
+	          var fileId = $("#expFileId").val();
+	          if(fileId==0){//是否已经绑定数据
 	            if($("#dataStep").val()==$("#stepSelect").val()){
 	              self.showError("保存成功！正在检索与本实验相匹配的数据，请稍等！");
 	              $.get("experiment/getDataByAnotherName",{"anotherName":number},function(response){
