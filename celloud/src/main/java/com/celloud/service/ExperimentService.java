@@ -98,4 +98,15 @@ public interface ExperimentService {
 	 * @date 2016年4月5日上午5:10:32
 	 */
 	List<Experiment> getRelatList(Integer userId, String number, String dataKey);
+	/**
+	 * 获取已有报告的实验流程列表
+	 * 
+	 * @param userId
+	 * @param number
+	 * @param dataKey
+	 * @return
+	 * @author lin
+	 * @date 2016年4月7日下午1:37:43
+	 */
+	List<Experiment> getReportList(Integer userId, String number, String dataKey);
 }
