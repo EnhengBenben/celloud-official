@@ -41,24 +41,45 @@ public class FileTools {
 	 * 文件重命名
 	 * 
 	 * @param path
-	 * @param oldname
-	 * @param newname
+	 * @param oldName
+	 * @param newName
+	 * @return
+	 * @author lin
+	 * @date 2016年4月8日下午3:58:48
 	 */
-	public static void renameFile(String path, String oldname, String newname) {
-		if (!oldname.equals(newname)) {// 新的文件名和以前文件名不同时,才有必要进行重命名
-			File oldfile = new File(path + "/" + oldname);
-			File newfile = new File(path + "/" + newname);
-			if (!oldfile.exists()) {
-				return;// 重命名文件不存在
-			}
-			if (newfile.exists())// 若在该目录下已经有一个文件和新文件名相同，则不允许重命名
-				log.error(newname + "已经存在！");
-			else {
-				oldfile.renameTo(newfile);
-			}
+	public static boolean renameFile(String path, String oldName, String newName) {
+		if (!oldName.equals(newName)) {// 新的文件名和以前文件名不同时,才有必要进行重命名
+			return mvFile(path, oldName, path, newName);
 		} else {
-			log.error("新文件名和旧文件名相同...");
+			log.error("新文件名和旧文件名相同");
+			return false;
 		}
+	}
+
+	/**
+	 * 移动文件
+	 * 
+	 * @param oldPath
+	 * @param oldName
+	 * @param newPath
+	 * @param newName
+	 * @return
+	 * @author lin
+	 * @date 2016年4月8日下午4:15:12
+	 */
+	public static boolean mvFile(String oldPath, String oldName, String newPath, String newName) {
+		File oldFile = new File(oldPath + File.separator + oldName);
+		if (!oldFile.exists()) {
+			log.error("旧文件{}不存在" + oldFile.getAbsolutePath());
+			return false;
+		}
+		File newFile = new File(newPath + File.separator + newName);
+		if (newFile.exists()) {
+			log.error("新文件{}已存在" + newFile.getAbsolutePath());
+			return false;
+		}
+		oldFile.renameTo(newFile);
+		return true;
 	}
 
 	/**
@@ -722,7 +743,6 @@ public class FileTools {
 	}
 
 	public static void main(String[] args) {
-		int i = countLines("/Users/lin/1.txt");
-		System.out.println(i);
+		mvFile("/Users/lin/xxx", "t.sql", "/Users/lin", "sql.txt");
 	}
 }
