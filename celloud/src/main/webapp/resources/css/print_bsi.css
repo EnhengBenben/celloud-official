@@ -73,6 +73,7 @@ section h2,
     vertical-align: middle;
     font-size: 12px;
     font-weight: normal;
+    padding:2px;
 }
 .tests-info table thead th{
 	text-align: center;
@@ -88,13 +89,13 @@ section h2,
     color: #232323;
 }
 .tests-info .seq{
-	margin-left: -90px;
-	margin-right: -90px;
-	margin-top: -5px;
-	margin-bottom: -5px;
-	-webkit-transform:scale(0.7);
-    -moz-transform:scale(0.7);
-    -o-transform:scale(0.7);
+	margin-left: -140px;
+	margin-right: -200px;
+	margin-top: -15px;
+	margin-bottom: -15px;
+	-webkit-transform:scale(0.6);
+    -moz-transform:scale(0.6);
+    -o-transform:scale(0.6);
     cursor: pointer;
 }
 .test-description{

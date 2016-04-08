@@ -166,4 +166,9 @@ public class CompanyServiceImpl implements CompanyService{
         return companyMapper.getCompanyNumCount(DataState.ACTIVE, PropertiesUtil.testAccountIds);
     }
 
+    @Override
+    public Company getCompanyById(Integer companyId) {
+        return companyMapper.selectByPrimaryKey(companyId);
+    }
+
 }

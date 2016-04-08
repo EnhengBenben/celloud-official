@@ -17,6 +17,8 @@ from app.oncogene import oncogene
 from app.KRAS import KRAS
 from app.DPD import DPD
 from app.UGT import UGT
+from app.BRAF import BRAF
+from app.TBRifampicin import TBRifampicin
 
 #command: python *.py basePath projectId
 #eg : python runover.py '/share/data/webapps/Tools/upload/' 4018
@@ -32,6 +34,7 @@ method_dic = {
 87:PGS,
 88:PGS,
 89:KRAS,
+90:TBRifampicin,
 91:PGS,
 92:PGS,
 93:PGS,
@@ -40,6 +43,7 @@ method_dic = {
 116:PGS,
 95:NIPT,
 106:DPD,
+107:BRAF,
 108:UGT,
 117:oncogene
 }
@@ -54,6 +58,7 @@ collection_dic = {
 87:"Pgs",
 88:"Pgs",
 89:"KRAS",
+90:"TBRifampicin",
 91:"Pgs",
 92:"Pgs",
 93:"Pgs",
@@ -62,6 +67,7 @@ collection_dic = {
 116:"Pgs",
 95:"NIPT",
 106:"DPD",
+107:"BRAF",
 108:"UGT",
 117:"Oncogene"
 }

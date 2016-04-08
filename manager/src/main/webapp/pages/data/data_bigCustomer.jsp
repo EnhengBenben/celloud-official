@@ -3,7 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="js/drawCharts.js"></script>
 <script src="js/data_bigCustomer.js"></script>
-<link rel="stylesheet" href="css/main.css">
 <div class="breadcrumbs" id="breadcrumbs">
 	<ul class="breadcrumb">
 		<li>

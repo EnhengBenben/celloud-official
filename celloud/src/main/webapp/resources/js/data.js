@@ -57,6 +57,8 @@ $(function(){
     $.dataManager.run.removeToRunData($(this));
   });
   $("#apps-data-ul").on("click","li",function(e){
+    if($(this).text()=="没有可运行的APP")
+      return;
     $.dataManager.run.updateRunApp($(this));
   });
 });
@@ -209,6 +211,8 @@ function _init_data(){
         for (var i=0;i<checkedIds.length;i++){
           dataIds.push(checkedIds[i]);
         }
+        if(dataIds.length==0)
+          return;
         $.get("data/checkDataRunningApp.action",{"dataIds":dataIds.toString(),"appId":appId},function(dataIdList){
           if(dataIdList.length>0){
             var dataNames = "";

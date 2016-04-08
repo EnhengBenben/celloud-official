@@ -2,8 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<link rel="stylesheet" href="css/home.css">
-<link rel="stylesheet" href="css/console.css">
 <script src="js/drawCharts.js"></script>
 <script src="js/console.js"></script>
 <div class="col-xs-12 console">

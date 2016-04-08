@@ -8,6 +8,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ActionLog {
-    public String value();
-    public String button() default "";
+	public String value();
+
+	public String button() default "";
+
 }

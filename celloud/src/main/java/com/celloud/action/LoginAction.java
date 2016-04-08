@@ -12,6 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -57,6 +62,7 @@ public class LoginAction {
      * @param response
      * @return
      */
+    @ActionLog(value = "跳转到登录页面", button = "登录")
     @RequestMapping("login")
     public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndView("login");
@@ -100,14 +106,17 @@ public class LoginAction {
      * @param response
      * @return
      */
-    @ActionLog(value = "用户登录",button  = "登录")
+    @ActionLog(value = "用户登录", button = "登录")
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public ModelAndView login(Model model, User user, String kaptchaCode, PublicKey publicKey, boolean checked,
             HttpServletRequest request, HttpServletResponse response) {
         logger.info("用户正在登陆：" + user.getUsername());
-        ModelAndView mv = new ModelAndView("login").addObject("checked",
-                CookieUtils.getCookieValue(request, Constants.COOKIE_MODULUS) != null && checked);
+        String password = user.getPassword();
+        user.setPassword("");
         HttpSession session = request.getSession();
+        ModelAndView mv = new ModelAndView("login")
+                .addObject("checked", CookieUtils.getCookieValue(request, Constants.COOKIE_MODULUS) != null && checked)
+                .addObject("user", user);
         String kaptchaExpected = (String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
         PrivateKey privateKey = null;
         RSAKey key = null;
@@ -118,9 +127,7 @@ public class LoginAction {
         // 验证码错误，直接返回到登录页面
         if (!checked && (kaptchaExpected == null || !kaptchaExpected.equalsIgnoreCase(kaptchaCode))) {
             logger.info("用户登陆验证码错误：param : {} \t session : {}", kaptchaCode, kaptchaExpected);
-            user.setPassword("");
-            return mv.addObject("info", "验证码错误，请重新登录！").addObject("user", user).addObject("publicKey",
-                    generatePublicKey(session));
+            return mv.addObject("info", "验证码错误，请重新登录！").addObject("publicKey", generatePublicKey(session));
         }
         // 如果cookie中存在公钥且和前台传过来的一致，则从数据库加载私钥，不管是否记住密码
         if (modulus != null && modulus.equals(publicKey.getModulus())) {
@@ -130,28 +137,36 @@ public class LoginAction {
             privateKey = (PrivateKey) session.getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
         }
         if (checked) {
-            addCookies(request, response, user.getUsername(), user.getPassword(), publicKey.getModulus());
+            addCookies(request, response, user.getUsername(), password, publicKey.getModulus());
         } else if (key != null && key.isExpires()) {
             rsaKeyService.deleteByModulus(publicKey.getModulus());
         }
-        String password = RSAUtil.decryptStringByJs(privateKey, user.getPassword());
+        password = RSAUtil.decryptStringByJs(privateKey, password);
         if (password == null) {
             password = "";
         }
-        user.setPassword(MD5Util.getMD5(password));
-        User loginUser = userService.login(user);
-        if (loginUser == null) {
+        password = MD5Util.getMD5(password);
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), password);
+        try {
+            subject.login(token);
+        } catch (IncorrectCredentialsException | UnknownAccountException e) {
             String msg = "用户名或密码错误，请重新登录！";
             logger.warn("用户（{}）登录失败，用户名或密码错误！", user.getUsername());
-            user.setPassword("");
-            return mv.addObject("info", msg).addObject("user", user).addObject("publicKey", generatePublicKey(session));
+            return mv.addObject("info", msg).addObject("publicKey", generatePublicKey(session));
+        } catch (Exception e) {
+            logger.error("登录失败！", e);
+            return mv.addObject("info", "登录失败！").addObject("publicKey", generatePublicKey(session));
         }
-        logger.info("用户({})登录成功！", loginUser.getUsername());
-        saveUserToSession(loginUser, session);
-        logService.log("用户登录", "用户" + loginUser.getUsername() + "登录成功");
+        if (!subject.isAuthenticated()) {
+            return mv.addObject("info", "登录失败！").addObject("publicKey", generatePublicKey(session));
+        }
+        User loginUser = ConstantsData.getLoginUser();
         if (checked && key == null) {
             saveRSAKey(publicKey, privateKey, loginUser);
         }
+        logger.info("用户({})登录成功！", loginUser.getUsername());
+        logService.log("用户登录", "用户" + loginUser.getUsername() + "登录成功");
         session.removeAttribute(Constants.SESSION_RSA_PRIVATEKEY);
         // 获取用户所属的大客户，决定是否有统计菜单
         Integer companyId = userService.getCompanyIdByUserId(loginUser.getUserId());
@@ -167,6 +182,7 @@ public class LoginAction {
      * @param response
      * @return
      */
+    @ActionLog(value = "用户退出", button = "退出")
     @RequestMapping("logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
@@ -177,24 +193,9 @@ public class LoginAction {
             session.removeAttribute(names.nextElement());
         }
         deleteCookies(request, response);
+        SecurityUtils.getSubject().logout();
         logger.info("用户({})主动退出", user == null ? "null..." : user.getUsername());
         return "redirect:login";
-    }
-
-    /**
-     * 将已登录的用户信息保存到session中
-     * 
-     * @param user
-     */
-    private void saveUserToSession(User user, HttpSession session) {
-        session.setAttribute(Constants.SESSION_LOGIN_USER, user);
-        // session.setAttribute("userName", user.getUsername());
-        // session.setAttribute("userId", user.getUserId());
-        // session.setAttribute("userRole", user.getRole());
-        // session.setAttribute("userNav", user.getNavigation());
-        // session.setAttribute("deptId", user.getDeptId());
-        // session.setAttribute("email", user.getEmail());
-        // session.setAttribute("companyId", user.getCompanyId());
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.celloud.backstage.action;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.backstage.model.User;
+import com.celloud.backstage.model.UserSelect;
 import com.celloud.backstage.service.UserService;
 import com.celloud.backstage.utils.EmailUtils;
 
@@ -23,29 +25,51 @@ import com.celloud.backstage.utils.EmailUtils;
  */
 @Controller
 public class MailingAction {
-    Logger logger=LoggerFactory.getLogger(MailingAction.class);
-    @Resource
-    private UserService userService;
-    
-    
-  
-    @RequestMapping("mailing")
-    public ModelAndView toMailing(){
-        ModelAndView mv=new ModelAndView("mailing/mailing_main");
-        List<User> userList=userService.getAllUserList();
-        mv.addObject("userList", userList);
-        return mv;
-    }
-    
-    @ResponseBody
-    @RequestMapping("mailing/send")
-    public int sendEmail(String[]emails,String emailContent){
-        logger.info("邮件群发");
-        try {
-            EmailUtils.send(emailContent, emails);
-        } catch (Exception e) {
-            return 0;
-        }
-        return 1;
-    }
+	Logger logger = LoggerFactory.getLogger(MailingAction.class);
+	@Resource
+	private UserService userService;
+
+	/**
+	 * 跳转到邮件邮件群发页面
+	 * 
+	 * @return
+	 */
+	@RequestMapping("mailing")
+	public ModelAndView toMailing() {
+		ModelAndView mv = new ModelAndView("mailing/mailing_main");
+		return mv;
+	}
+
+	/**
+	 * 获取用户列表
+	 * 
+	 * @return
+	 */
+	@RequestMapping("mailing/getUser")
+	@ResponseBody
+	public List<UserSelect> getUser() {
+		List<User> userList = userService.getAllUserList();
+		List<UserSelect> userSelectList = new ArrayList<>();
+		for (User user : userList) {
+            if (null != user.getEmail() && !"".equals(user.getEmail())) {
+				UserSelect us = new UserSelect();
+				us.setId(user.getEmail());
+				us.setText(user.getUsername());
+				userSelectList.add(us);
+			}
+		}
+		return userSelectList;
+	}
+
+	@ResponseBody
+	@RequestMapping("mailing/send")
+	public int sendEmail(String[] emails, String emailContent,String emailTitle) {
+		logger.info("邮件群发");
+		try {
+			EmailUtils.sendWithTitle(emailTitle, emailContent, emails);
+		} catch (Exception e) {
+			return 0;
+		}
+		return 1;
+	}
 }

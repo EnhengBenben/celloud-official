@@ -33,6 +33,7 @@ import com.celloud.page.PageList;
 import com.celloud.service.AppService;
 import com.celloud.service.ClassifyService;
 import com.celloud.service.ScreenService;
+import com.celloud.utils.ActionLog;
 
 /**
  * 应用市场
@@ -51,12 +52,14 @@ public class AppAction {
     @Resource
     private ScreenService screenService;
 
+    @ActionLog(value = "获取用户已经运行过数据的APP列表（项目报告页面检索框用）", button = "报告管理")
     @ResponseBody
     @RequestMapping("getRanAPP")
     public List<Map<String, String>> getRanAPP() {
         return appService.getRanAPP(ConstantsData.getLoginUserId());
     }
 
+    @ActionLog(value = "打开应用市场首页", button = "应用市场")
     @RequestMapping("toAppStore")
     public ModelAndView toAppStore() {
         log.info("用户{}查看应用市场", ConstantsData.getLoginUserName());
@@ -67,6 +70,7 @@ public class AppAction {
         return mv;
     }
 
+    @ActionLog(value = "APP首页查看指定一级分类的子分类", button = "APP一级分类按钮")
     @RequestMapping("toSclassifyApp")
     public ModelAndView toSclassifyApp(Integer paramId) {
         log.info("{}在APP首页查看{}的子分类", ConstantsData.getLoginUserName(), paramId);
@@ -94,6 +98,7 @@ public class AppAction {
         return mv;
     }
 
+    @ActionLog(value = "查看分类指定分类下的所有APP列表页面", button = "APP获取更多")
     @RequestMapping("toMoreAppList")
     public ModelAndView toMoreAppList(Integer classifyId, Integer classifyPid, String condition, String type,
             Integer classifyFloor, @RequestParam(defaultValue = "1") int page,
@@ -126,6 +131,7 @@ public class AppAction {
         return mv;
     }
 
+    @ActionLog(value = "查看指定APP详细信息", button = "APP详细")
     @RequestMapping("appDetail")
     public ModelAndView getAppById(Integer paramId) {
         log.info("用户{}查看APP{}详细信息", ConstantsData.getLoginUserName(), paramId);
@@ -138,6 +144,7 @@ public class AppAction {
         return mv;
     }
 
+    @ActionLog(value = "查看用户已添加的APP", button = "应用市场")
     @RequestMapping("myApps")
     public ModelAndView getMyApp() {
         log.info("用户{}查看已添加的APP", ConstantsData.getLoginUserName());
@@ -148,6 +155,7 @@ public class AppAction {
         return mv;
     }
 
+    @ActionLog(value = "用户添加APP，即允许在数据管理运行中显示", button = "添加APP")
     @ResponseBody
     @RequestMapping("addApp")
     public Object userAddApp(Integer paramId, HttpServletResponse response) {
@@ -156,6 +164,7 @@ public class AppAction {
         return appService.userAddApp(userId, paramId);
     }
 
+    @ActionLog(value = "用户取消添加APP，即不允许在数据管理运行中显示", button = "删除APP")
     @ResponseBody
     @RequestMapping("removeApp")
     public Object userRemoveApp(Integer paramId, HttpServletResponse response) {

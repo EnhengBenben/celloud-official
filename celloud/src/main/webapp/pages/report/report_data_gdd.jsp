@@ -232,7 +232,7 @@
 				</table>
 				<table style="width:100%;">
 			      <tr>
-			    	<td style="width:100%;"><img style="width:100%;" src="<c:if test="${!cmpReport.qualityPath1.contains('Tools') }">${uploadPath}${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.qualityPath1 }"></td>
+			    	<td style="width:50%;"><img style="width:100%;" src="<c:if test="${!cmpReport.qualityPath1.contains('Tools') }">${uploadPath}${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }</c:if>${cmpReport.qualityPath1 }"></td>
 			    	<td><img style="width:100%;" src="<c:if test="${!cmpReport.qualityPath2.contains('Tools') }">${uploadPath}${cmpReport.userId }/${cmpReport.appId }/${cmpReport.dataKey }/</c:if>${cmpReport.qualityPath2 }"></td>
 			      </tr>
 			      <tr>

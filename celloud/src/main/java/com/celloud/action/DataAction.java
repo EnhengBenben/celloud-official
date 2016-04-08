@@ -43,6 +43,7 @@ import com.celloud.service.DataService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
+import com.celloud.utils.ActionLog;
 import com.celloud.utils.DataKeyListToFile;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.PropertiesUtil;
@@ -59,6 +60,7 @@ import com.celloud.utils.SSHUtil;
 @Controller
 @RequestMapping("data")
 public class DataAction {
+
     Logger logger = LoggerFactory.getLogger(DataAction.class);
     @Resource
     private DataService dataService;
@@ -91,6 +93,7 @@ public class DataAction {
      * @return
      * @date 2016-1-9 上午3:43:01
      */
+    @ActionLog(value = "检索某个项目下的所有数据（用于数据报告页面右侧菜单）", button = "数据报告")
     @RequestMapping("getDatasInProject")
     @ResponseBody
     public List<DataFile> getDatasInProject(Integer projectId) {
@@ -105,6 +108,7 @@ public class DataAction {
      * @param size
      * @return
      */
+    @ActionLog(value = "打开数据管理页面", button = "数据管理")
     @RequestMapping("dataAllList.action")
     public ModelAndView dataAllList(@RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size) {
@@ -133,13 +137,14 @@ public class DataAction {
      *            排序类型
      * @return
      */
+    @ActionLog(value = "条件检索数据列表", button = "数据管理搜索/分页")
     @RequestMapping("dataList.action")
     public ModelAndView dataList(@RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size, String condition,
             @RequestParam(defaultValue = "0") int sort,
             @RequestParam(defaultValue = "desc") String sortDateType,
             @RequestParam(defaultValue = "asc") String sortNameType) {
-        Pattern p = Pattern.compile("\\_|\\%|\\\\|\\'|\"");
+        Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
         Matcher m = p.matcher(condition);
         StringBuffer con_sb = new StringBuffer();
         while (m.find()) {
@@ -151,8 +156,7 @@ public class DataAction {
         Page pager = new Page(page, size);
         PageList<DataFile> dataList = dataService.dataLists(pager,
                 ConstantsData.getLoginUserId(), con_sb.toString(), sort,
-                sortDateType,
-                sortNameType);
+                sortDateType, sortNameType);
         mv.addObject("dataList", dataList);
         logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
         return mv;
@@ -164,10 +168,14 @@ public class DataAction {
      * @param dataIds
      * @return -1:所选类型大于一种
      */
+    @ActionLog(value = "获取数据类型", button = "运行")
     @RequestMapping("getFormatByDataIds.action")
     @ResponseBody
     public Integer getFormatByDataIds(String dataIds) {
-        Integer result = dataService.getFormatByIds(dataIds);
+        Integer result = 0;
+        if (dataIds == null || dataIds.equals(""))
+            return result;
+        result = dataService.getFormatByIds(dataIds);
         logger.info("用户{}获取{}数据类型", ConstantsData.getLoginUserName(), dataIds);
         return result;
     }
@@ -178,6 +186,7 @@ public class DataAction {
      * @param formatId
      * @return
      */
+    @ActionLog(value = "获取可运行的app", button = "运行")
     @RequestMapping("getRunApp.action")
     @ResponseBody
     public List<App> getRunApp(
@@ -196,11 +205,14 @@ public class DataAction {
      * @param appId
      * @return
      */
+    @ActionLog(value = "验证数据是否正在运行APP", button = "运行")
     @RequestMapping("checkDataRunningApp.action")
     @ResponseBody
     public List<Integer> checkDataRunningApp(String dataIds, Integer appId) {
-        List<Integer> dataIdList = dataService.findRunningAppData(dataIds,
-                appId);
+        List<Integer> dataIdList = new ArrayList<>();
+        if (dataIds == null || dataIds.equals(""))
+            return dataIdList;
+        dataIdList = dataService.findRunningAppData(dataIds, appId);
         logger.info("用户{}验证数据{}是否正在运行APP{}", ConstantsData.getLoginUserName(),
                 dataIds, appId);
         return dataIdList;
@@ -214,10 +226,13 @@ public class DataAction {
      * @author leamo
      * @date 2016-1-10 下午9:49:10
      */
+    @ActionLog(value = "删除所选数据", button = "数据删除")
     @RequestMapping("delete.action")
     @ResponseBody
     public Response delete(String dataIds) {
-        int result = dataService.delete(dataIds);
+        Integer result = 0;
+        if (dataIds != null && !dataIds.equals(""))
+            result = dataService.delete(dataIds);
         logger.info("用户{}删除数据{}{}", ConstantsData.getLoginUserName(), dataIds,
                 result);
         return result > 0 ? Response.DELETE_SUCCESS : DELETE_DATA_FAIL;
@@ -231,6 +246,7 @@ public class DataAction {
      * @author leamo
      * @date 2016-1-10 下午10:04:24
      */
+    @ActionLog(value = "打开分别修改数据列表Modal", button = "数据编辑")
     @RequestMapping("toEachEditDatas.action")
     public ModelAndView toEachEditDatas(String dataIds) {
         ModelAndView mv = new ModelAndView("data/data_all_update");
@@ -248,6 +264,7 @@ public class DataAction {
      * @author leamo
      * @date 2016-1-10 下午10:21:13
      */
+    @ActionLog(value = "获取物种列表", button = "数据编辑")
     @RequestMapping("getStrainList.action")
     @ResponseBody
     public List<Map<String, String>> getStrainList() {
@@ -265,6 +282,7 @@ public class DataAction {
      * @author leamo
      * @date 2016-1-10 下午11:04:34
      */
+    @ActionLog(value = "批量保存修改数据", button = "保存批量编辑")
     @RequestMapping("batchEditDataByIds.action")
     @ResponseBody
     public Integer batchEditDataByIds(String dataIds, DataFile data) {
@@ -282,6 +300,7 @@ public class DataAction {
      * @author leamo
      * @date 2016-1-10 下午11:04:34
      */
+    @ActionLog(value = "分别保存所修改的数据", button = "保存单个编辑")
     @RequestMapping("eachEditDataByIds.action")
     @ResponseBody
     public Integer eachEditDataByIds(DataFileEditForm dataFileEditForm) {
@@ -290,7 +309,7 @@ public class DataAction {
         logger.info("用户{}分别修改{}个数据", ConstantsData.getLoginUserName(), result);
         return result;
     }
-    
+
     /**
      * 数据运行
      * 
@@ -298,6 +317,7 @@ public class DataAction {
      * @param appIds
      * @return
      */
+    @ActionLog(value = "开始运行方法，调用perl，保存任务信息", button = "开始运行")
     @RequestMapping("run.action")
     @ResponseBody
     public String run(String dataIds, String appIds) {
@@ -373,7 +393,6 @@ public class DataAction {
             return result;
         }
 
-
         // TODO 向tools端传参 优化tools投递后删除
         StringBuffer dataResult = new StringBuffer();
         for (DataFile d : dataList) {
@@ -387,7 +406,7 @@ public class DataAction {
             Integer appId = app.getAppId();
             String appName = app.getAppName();
             Integer proId = appProMap.get(appId);
-			String appPath = bp + appId + "/";
+            String appPath = bp + appId + "/";
             if (!FileTools.checkPath(appPath)) {
                 new File(appPath).mkdirs();
             }
@@ -397,23 +416,25 @@ public class DataAction {
                 int running = dataService.dataRunning(select);
                 logger.info("spark 正在运行的任务数：{}", running);
                 if (SparkPro.NODES >= running) {
-	                String _dataFilePath = DataKeyListToFile
-	                        .toSpark(proId.toString(), dataList);
-	                Map<String, String> map = CommandKey.getMap(_dataFilePath, appPath,proId);
-	                StrSubstitutor sub = new StrSubstitutor(map);
-					String command = sub.replace(app.getCommand());
-					logger.info("资源满足需求，投递任务！运行命令：" + command);
-                    SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
+                    String _dataFilePath = DataKeyListToFile
+                            .toSpark(proId.toString(), dataList);
+                    Map<String, String> map = CommandKey.getMap(_dataFilePath,
+                            appPath, proId);
+                    StrSubstitutor sub = new StrSubstitutor(map);
+                    String command = sub.replace(app.getCommand());
+                    logger.info("资源满足需求，投递任务！运行命令：" + command);
+                    SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName,
+                            sparkpwd);
                     ssh.sshSubmit(command, false);
                 } else {
-                	TaskQueue tq = new TaskQueue();
-                	tq.setAppId(0);
-                	tq.setDataKey("");
-                	tq.setProjectId(proId);
-                	tq.setDataList(dataList);
-                	tq.setPath(appPath);
-                	tq.setCommand(app.getCommand());
-                	reportService.saveTask(tq);
+                    TaskQueue tq = new TaskQueue();
+                    tq.setAppId(0);
+                    tq.setDataKey("");
+                    tq.setProjectId(proId);
+                    tq.setDataList(dataList);
+                    tq.setPath(appPath);
+                    tq.setCommand(app.getCommand());
+                    reportService.saveTask(tq);
                     logger.info("资源不满足需求，进入队列等待");
                     GlobalQueue.offer(proId.toString());
                 }
@@ -429,9 +450,10 @@ public class DataAction {
                     task.setUserId(userId);
                     task.setAppId(appId);
                     task.setDataKey(dataKey);
-                    Map<String, String> map = CommandKey.getMap(dataListFile, appPath, proId);
+                    Map<String, String> map = CommandKey.getMap(dataListFile,
+                            appPath, proId);
                     StrSubstitutor sub = new StrSubstitutor(map);
-                    String command = sub.replace( app.getCommand());
+                    String command = sub.replace(app.getCommand());
                     task.setCommand(command);
                     taskService.create(task);
                     Integer taskId = task.getTaskId();
@@ -450,9 +472,10 @@ public class DataAction {
                     // TODO 所有向Tools端投递任务的流程都向这里集中
                     // 最终判断删除，非spark就是SGE
                     logger.info("celloud 直接向 SGE 投递任务");
-                    Map<String, String> map = CommandKey.getMap(dataFilePath, appPath, proId);
-    				StrSubstitutor sub = new StrSubstitutor(map);
-    				String command = sub.replace(app.getCommand());
+                    Map<String, String> map = CommandKey.getMap(dataFilePath,
+                            appPath, proId);
+                    StrSubstitutor sub = new StrSubstitutor(map);
+                    String command = sub.replace(app.getCommand());
                     logger.info("运行命令:{}", command);
                     SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
                     ssh.sshSubmit(command, false);
@@ -469,7 +492,7 @@ public class DataAction {
         }
         return result;
     }
-    
+
     /**
      * 运行所需信息
      * 
@@ -487,7 +510,7 @@ public class DataAction {
         String ext = FileTools.getExtName(filename);
         sb.append(datakey).append(",").append(datakey).append(ext).append(",")
                 .append(filename).append(",")
-                //TODO 这个三目有必要么？
+                // TODO 这个三目有必要么？
                 .append(StringUtils.isEmpty(anotherName) ? null : anotherName)
                 .append(";");
         return sb;

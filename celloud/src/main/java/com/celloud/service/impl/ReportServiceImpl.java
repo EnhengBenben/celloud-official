@@ -33,6 +33,7 @@ import com.celloud.mapper.AppMapper;
 import com.celloud.mapper.DataFileMapper;
 import com.celloud.mapper.PriceMapper;
 import com.celloud.mapper.ReportMapper;
+import com.celloud.model.mongo.BRAF;
 import com.celloud.model.mongo.CmpFilling;
 import com.celloud.model.mongo.CmpGeneDetectionDetail;
 import com.celloud.model.mongo.CmpGeneSnpResult;
@@ -48,6 +49,7 @@ import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
 import com.celloud.model.mongo.Split;
+import com.celloud.model.mongo.TBRifampicin;
 import com.celloud.model.mongo.TaskQueue;
 import com.celloud.model.mongo.UGT;
 import com.celloud.model.mysql.DataFile;
@@ -70,6 +72,7 @@ import com.celloud.utils.PropertiesUtil;
  */
 @Service("reportService")
 public class ReportServiceImpl implements ReportService {
+
     @Resource
     ReportMapper reportMapper;
     @Resource
@@ -87,22 +90,20 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public Integer countReport(Integer userId) {
-        return reportMapper.countReport(userId, DataState.ACTIVE,
-                ReportType.PROJECT, ReportPeriod.COMPLETE);
+        return reportMapper.countReport(userId, DataState.ACTIVE, ReportType.PROJECT, ReportPeriod.COMPLETE);
     }
 
     @Override
     public List<Map<String, String>> countReport(Integer userId, String time) {
-        return reportMapper.countReportByTime(userId, time, DataState.ACTIVE,
-                ReportType.PROJECT, ReportPeriod.COMPLETE);
+        return reportMapper.countReportByTime(userId, time, DataState.ACTIVE, ReportType.PROJECT,
+                ReportPeriod.COMPLETE);
     }
 
     @Override
-    public PageList<Map<String, Object>> getReportPageList(Integer userId,
-            Page pager, String condition, String start, String end,
-            Integer appId) {
-        List<Map<String, Object>> list = reportMapper.getReportList(userId,
-                pager, condition, start, end, appId, ReportType.PROJECT);
+    public PageList<Map<String, Object>> getReportPageList(Integer userId, Page pager, String condition, String start,
+            String end, Integer appId, Integer belongs) {
+        List<Map<String, Object>> list = reportMapper.getReportList(userId, pager, condition, start, end, appId,
+                ReportType.PROJECT, belongs);
         return new PageList<>(pager, list);
     }
 
@@ -148,56 +149,59 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Oncogene getOncogeneReport(String dataKey, Integer projectId,
-            Integer appId) {
-        return reportDao.getDataReport(Oncogene.class, dataKey, projectId,
-                appId);
+    public Oncogene getOncogeneReport(String dataKey, Integer projectId, Integer appId) {
+        return reportDao.getDataReport(Oncogene.class, dataKey, projectId, appId);
     }
-    
-	@Override
-	public HCV getHCVReport(String dataKey, Integer projectId, Integer appId) {
-		return reportDao.getDataReport(HCV.class, dataKey, projectId, appId);
-	}
-	
-	@Override
-	public EGFR getEGFRReport(String dataKey, Integer projectId, Integer appId) {
-		return reportDao.getDataReport(EGFR.class, dataKey, projectId, appId);
-	}
-	
-	@Override
-	public KRAS getKRASReport(String dataKey, Integer projectId, Integer appId) {
-		return reportDao.getDataReport(KRAS.class, dataKey, projectId, appId);
-	}
-	
-	@Override
-	public UGT getUGTReport(String dataKey, Integer projectId, Integer appId) {
-		return reportDao.getDataReport(UGT.class, dataKey, projectId, appId);
-	}
 
-	@Override
-	public DPD getDPDReport(String dataKey, Integer projectId, Integer appId) {
-		return reportDao.getDataReport(DPD.class, dataKey, projectId, appId);
-	}
+    @Override
+    public HCV getHCVReport(String dataKey, Integer projectId, Integer appId) {
+        return reportDao.getDataReport(HCV.class, dataKey, projectId, appId);
+    }
+
+    @Override
+    public EGFR getEGFRReport(String dataKey, Integer projectId, Integer appId) {
+        return reportDao.getDataReport(EGFR.class, dataKey, projectId, appId);
+    }
+
+    @Override
+    public KRAS getKRASReport(String dataKey, Integer projectId, Integer appId) {
+        return reportDao.getDataReport(KRAS.class, dataKey, projectId, appId);
+    }
+
+    @Override
+    public UGT getUGTReport(String dataKey, Integer projectId, Integer appId) {
+        return reportDao.getDataReport(UGT.class, dataKey, projectId, appId);
+    }
+
+    @Override
+    public BRAF getBRAFReport(String dataKey, Integer projectId, Integer appId) {
+        return reportDao.getDataReport(BRAF.class, dataKey, projectId, appId);
+    }
+
+    @Override
+    public TBRifampicin getTBRifampicinReport(String dataKey, Integer projectId, Integer appId) {
+        return reportDao.getDataReport(TBRifampicin.class, dataKey, projectId, appId);
+    }
+
+    @Override
+    public DPD getDPDReport(String dataKey, Integer projectId, Integer appId) {
+        return reportDao.getDataReport(DPD.class, dataKey, projectId, appId);
+    }
 
     @Override
     public Map<String, Object> systemCount(Integer userId) {
         Map<String, Object> map = new HashMap<String, Object>();
         /*** 按月统计的每月上传的:数据量\数据大小\报告数量\APP运行次数 ***/
-        List<Map<String, String>> monthData = dataMapper.countDataByTime(userId,
-                TimeState.MONTH, DataState.ACTIVE);
-        List<Map<String, String>> monthSize = dataMapper.sumDataByTime(userId,
-                TimeState.MONTH, DataState.ACTIVE);
+        List<Map<String, String>> monthData = dataMapper.countDataByTime(userId, TimeState.MONTH, DataState.ACTIVE);
+        List<Map<String, String>> monthSize = dataMapper.sumDataByTime(userId, TimeState.MONTH, DataState.ACTIVE);
 
-        List<Map<String, String>> monthReport = reportMapper
-                .countReportMonthByUserId(userId);
+        List<Map<String, String>> monthReport = reportMapper.countReportMonthByUserId(userId);
 
-        List<Map<String, String>> monthApp = appMapper.countMyAppByTime(userId,
-                TimeState.MONTH, DataState.ACTIVE, DataState.ACTIVE);
+        List<Map<String, String>> monthApp = appMapper.countMyAppByTime(userId, TimeState.MONTH, DataState.ACTIVE,
+                DataState.ACTIVE);
         /**** 按周统计每周上传:数据量\数据大小\报告数量\APP数量 *****/
-        List<Map<String, String>> weekData = dataMapper
-                .countDataFileWeek(userId);
-        List<Map<String, String>> weekReport = reportMapper
-                .countReportWeekByUserId(userId);
+        List<Map<String, String>> weekData = dataMapper.countDataFileWeek(userId);
+        List<Map<String, String>> weekReport = reportMapper.countReportWeekByUserId(userId);
         List<Map<String, String>> weekApp = appMapper.countWeekByUserId(userId);
 
         // 用户上传数据
@@ -205,8 +209,7 @@ public class ReportServiceImpl implements ReportService {
         // 已运行、未运行
         Map<String, String> fileNum = dataMapper.countFileNumByUserId(userId);
         // 已添加App使用次数
-        List<Map<String, String>> appRum = reportMapper
-                .countAppRunNumByUserId(userId);
+        List<Map<String, String>> appRum = reportMapper.countAppRunNumByUserId(userId);
 
         map.put("monthData", monthData);
         map.put("weekData", weekData);
@@ -244,8 +247,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public List<Integer> insertMultipleProReport(Report report,
-            Map<Integer, Integer> appProId, String[] dataIds) {
+    public List<Integer> insertMultipleProReport(Report report, Map<Integer, Integer> appProId, String[] dataIds) {
         List<Integer> failAppId = new ArrayList<>();
         report.setCreateDate(new Date());
         for (Entry<Integer, Integer> entry : appProId.entrySet()) {
@@ -284,8 +286,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public String hbvCompare(Integer appId, String path) {
-        List<String> list = FileTools.fileSearch(path, String.valueOf(appId),
-                "startWith");
+        List<String> list = FileTools.fileSearch(path, String.valueOf(appId), "startWith");
         StringBuffer sb = new StringBuffer();
         StringBuffer type = new StringBuffer();
         String[] sl = new String[list.size()];
@@ -293,8 +294,7 @@ public class ReportServiceImpl implements ReportService {
         Arrays.sort(sl);
         for (int i = 0; i < sl.length; i++) {
             for (int j = sl.length - 1; j > i; j--) {
-                if ((sl[i].length() > sl[j].length()) && (sl[i].length() > 4)
-                        && (sl[j].length() > 4)) {
+                if ((sl[i].length() > sl[j].length()) && (sl[i].length() > 4) && (sl[j].length() > 4)) {
                     String temp = sl[i];
                     sl[i] = sl[j];
                     sl[j] = temp;
@@ -310,8 +310,7 @@ public class ReportServiceImpl implements ReportService {
         int[] hbvType = new int[10];
         for (int i = 0; i < list.size(); i++) {
             String name = list.get(i);
-            String column = name.substring(name.indexOf("_") + 1,
-                    name.length());
+            String column = name.substring(name.indexOf("_") + 1, name.length());
             String val = FileTools.getFirstLine(path + name);
             int val_i = Integer.valueOf(val);
             if (name.equals("82_A")) {
@@ -339,8 +338,7 @@ public class ReportServiceImpl implements ReportService {
                 type.append(column).append(",").append(val).append(";");
             } else if (name.equals("82_")) {
                 type.append("none").append(",").append(val).append(";");
-            } else if (name.length() > 4 && !name.endsWith("yes")
-                    && !name.endsWith("no")) {
+            } else if (name.length() > 4 && !name.endsWith("yes") && !name.endsWith("no")) {
                 sb.append(column).append(",").append(val).append(";");
             } else if (name.equals("82")) {
                 sb.append("none").append(",").append(val).append(";");
@@ -360,14 +358,12 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public String hcvCompare(Integer appId, String path) {
-        List<String> list = FileTools.fileSearch(path, String.valueOf(appId),
-                "startWith");
+        List<String> list = FileTools.fileSearch(path, String.valueOf(appId), "startWith");
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < list.size(); i++) {
             String name = list.get(i);
             String val = FileTools.getFirstLine(path + name);
-            sb.append(name.substring(name.lastIndexOf("_") + 1) + "," + val
-                    + ";");
+            sb.append(name.substring(name.lastIndexOf("_") + 1) + "," + val + ";");
         }
         return sb.toString();
     }
@@ -417,8 +413,7 @@ public class ReportServiceImpl implements ReportService {
     public Map<String, List<List<Float>>> splitCompare(ObjectId id) {
         Map<String, List<List<Float>>> map = new HashMap<>();
         String[] retrievedFields = { "resultList", "totalReads", "avgQuality" };
-        List<Split> slist = reportDao.getAllAppList(Split.class,
-                retrievedFields);
+        List<Split> slist = reportDao.getAllAppList(Split.class, retrievedFields);
         Split split = reportDao.getDataById(Split.class, id);
         List<List<Float>> totalSourceList = new ArrayList<>();
         List<List<Float>> totalSampleList = new ArrayList<>();
@@ -484,9 +479,9 @@ public class ReportServiceImpl implements ReportService {
         // 去重规则是，每个datakey只保留最近运行的那一次
         // 1. 查询
         List<HBV> hbvList = reportDao.getAppList(HBV.class, userId);
-        if(hbvList == null){
-        	result.put("data", hbvList);
-        	return result;
+        if (hbvList == null) {
+            result.put("data", hbvList);
+            return result;
         }
         // 2.筛选
         Map<String, HBV> map = new HashMap<String, HBV>();
@@ -495,8 +490,7 @@ public class ReportServiceImpl implements ReportService {
             String dataKey = hbv.getDataKey();
             if (map.containsKey(dataKey)) {
                 HBV before = map.get(dataKey);
-                if (before.getCreateDate().getTime() < hbv.getCreateDate()
-                        .getTime()) {
+                if (before.getCreateDate().getTime() < hbv.getCreateDate().getTime()) {
                     map.put(dataKey, hbv);
                 }
             } else {
@@ -508,8 +502,8 @@ public class ReportServiceImpl implements ReportService {
         Long time[] = new Long[map.size()];
         int count = 0;
         for (Entry<String, HBV> hbv : map.entrySet()) {
-            long e = hbv.getValue().getCreateDate().getTime() + Long
-                    .parseLong((Math.random() * 1000 + "").split("\\.")[0]);
+            long e = hbv.getValue().getCreateDate().getTime()
+                    + Long.parseLong((Math.random() * 1000 + "").split("\\.")[0]);
             time[count] = e;
             count++;
             sort.put(e, hbv.getValue());
@@ -532,16 +526,14 @@ public class ReportServiceImpl implements ReportService {
         FileTools.appendWrite(path,
                 "文件名\tI169T\tV173L\tL180M\tA181V/T\tT184A/G/S/I/L/F\tA194T\tS202G/I\tM204V\tN236T\tM250V/L/I\t序列\n");
         for (HBV hbv : hbvList) {
-            StringBuffer line = new StringBuffer(hbv.getFileName())
-                    .append("\t");
+            StringBuffer line = new StringBuffer(hbv.getFileName()).append("\t");
             if (hbv.getSite() == null) {
                 line.append("由于分析流程的升级，2015年8月1日之前的分析结果无法提取到该信息，若需要请重新运行。");
                 for (int i = 0; i < 10; i++) {
                     line.append("\t");
                 }
             } else {
-                int site[] = { 169, 173, 180, 181, 184, 194, 202, 204, 236,
-                        250 };
+                int site[] = { 169, 173, 180, 181, 184, 194, 202, 204, 236, 250 };
                 for (int i : site) {
                     String w = hbv.getSite().get(i + "_wild");
                     String m = hbv.getSite().get(i + "_mutation");
@@ -588,8 +580,7 @@ public class ReportServiceImpl implements ReportService {
             String dataKey = cmp.getDataKey();
             if (map.containsKey(dataKey)) {
                 CmpReport before = map.get(dataKey);
-                if (before.getCreateDate().getTime() < cmp.getCreateDate()
-                        .getTime()) {
+                if (before.getCreateDate().getTime() < cmp.getCreateDate().getTime()) {
                     map.put(dataKey, cmp);
                 }
             } else {
@@ -600,8 +591,8 @@ public class ReportServiceImpl implements ReportService {
         Long time[] = new Long[map.size()];
         int count = 0;
         for (Entry<String, CmpReport> cmp : map.entrySet()) {
-            long e = cmp.getValue().getCreateDate().getTime() + Long
-                    .parseLong((Math.random() * 1000 + "").split("\\.")[0]);
+            long e = cmp.getValue().getCreateDate().getTime()
+                    + Long.parseLong((Math.random() * 1000 + "").split("\\.")[0]);
             time[count] = e;
             count++;
             sort.put(e, cmp.getValue());
@@ -620,8 +611,7 @@ public class ReportServiceImpl implements ReportService {
         result.put("fileName", fileName);
         result.put("data", cmpList);
         FileTools.createFile(path);
-        FileTools.appendWrite(path,
-                "数据编号\t原始文件名1\t原始文件名2\t应用名称\t共获得有效片段\t可用片段\t平均测序深度\t基因检测结果\n");
+        FileTools.appendWrite(path, "数据编号\t原始文件名1\t原始文件名2\t应用名称\t共获得有效片段\t可用片段\t平均测序深度\t基因检测结果\n");
         for (CmpReport cmp : cmpList) {
             StringBuffer line = new StringBuffer(cmp.getDataKey()).append("\t");
             List<DataFile> dataList = cmp.getData();
@@ -629,24 +619,17 @@ public class ReportServiceImpl implements ReportService {
                 continue;
             }
             for (DataFile d : dataList) {
-                line.append(d.getFileName()).append("(").append(d.getDataKey())
-                        .append(")").append("\t");
+                line.append(d.getFileName()).append("(").append(d.getDataKey()).append(")").append("\t");
             }
-            line.append(cmp.getAppName() == null ? "" : cmp.getAppName())
+            line.append(cmp.getAppName() == null ? "" : cmp.getAppName()).append("\t");
+            line.append(cmp.getAllFragment() == null ? "" : cmp.getAllFragment().replaceAll("\n", "")).append("\t");
+            line.append(cmp.getUsableFragment() == null ? "" : cmp.getUsableFragment().replaceAll("\n", ""))
                     .append("\t");
-            line.append(cmp.getAllFragment() == null ? ""
-                    : cmp.getAllFragment().replaceAll("\n", "")).append("\t");
-            line.append(cmp.getUsableFragment() == null ? ""
-                    : cmp.getUsableFragment().replaceAll("\n", ""))
-                    .append("\t");
-            line.append(cmp.getAvgCoverage() == null ? ""
-                    : cmp.getAvgCoverage().replaceAll("\n", "")).append("\t");
+            line.append(cmp.getAvgCoverage() == null ? "" : cmp.getAvgCoverage().replaceAll("\n", "")).append("\t");
             if (cmp.getCmpGeneResult() != null) {
                 for (GeneDetectionResult gene : cmp.getCmpGeneResult()) {
-                    if (gene.getKnownMSNum() != null
-                            && Integer.valueOf(gene.getKnownMSNum()) > 0) {
-                        line.append(gene.getGeneName()).append(":")
-                                .append(gene.getKnownMSNum()).append(";");
+                    if (gene.getKnownMSNum() != null && Integer.valueOf(gene.getKnownMSNum()) > 0) {
+                        line.append(gene.getGeneName()).append(":").append(gene.getKnownMSNum()).append(";");
                     }
                 }
             }
@@ -664,21 +647,17 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public void updateMIBFilling(MIB mib) {
-        reportDao.editData(MIB.class, mib.getId(), "baseInfo",
-                mib.getBaseInfo());
+        reportDao.editData(MIB.class, mib.getId(), "baseInfo", mib.getBaseInfo());
     }
 
     @Override
-    public Split getSplitReport(String dataKey, Integer projectId,
-            Integer appId) {
+    public Split getSplitReport(String dataKey, Integer projectId, Integer appId) {
         return reportDao.getDataReport(Split.class, dataKey, projectId, appId);
     }
 
     @Override
-    public CmpReport getCMPReport(String dataKey, Integer projectId,
-            Integer appId) {
-        return reportDao.getDataReport(CmpReport.class, dataKey, projectId,
-                appId);
+    public CmpReport getCMPReport(String dataKey, Integer projectId, Integer appId) {
+        return reportDao.getDataReport(CmpReport.class, dataKey, projectId, appId);
     }
 
     @Override
@@ -687,21 +666,17 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public List<GddDiseaseDict> getGddDiseaseDictNormal(String[] fields,
-            Map<String, List<String>> conditionMap, String sortField) {
-        return reportDao.getDataFieldInAndOrder(GddDiseaseDict.class, fields,
-                conditionMap, sortField);
+    public List<GddDiseaseDict> getGddDiseaseDictNormal(String[] fields, Map<String, List<String>> conditionMap,
+            String sortField) {
+        return reportDao.getDataFieldInAndOrder(GddDiseaseDict.class, fields, conditionMap, sortField);
     }
 
     @Override
-    public List<CmpGeneSnpResult> getGddResult(String dataKey,
-            Integer projectId, Integer appId) {
+    public List<CmpGeneSnpResult> getGddResult(String dataKey, Integer projectId, Integer appId) {
         List<CmpGeneSnpResult> resultList = new ArrayList<>();
         String[] retrievedFields = { "geneDetectionDetail" };
-        CmpReport cr = reportDao.getDataFileds(CmpReport.class, dataKey,
-                projectId, appId, retrievedFields);
-        Map<String, CmpGeneDetectionDetail> map_gene = cr
-                .getGeneDetectionDetail();
+        CmpReport cr = reportDao.getDataFileds(CmpReport.class, dataKey, projectId, appId, retrievedFields);
+        Map<String, CmpGeneDetectionDetail> map_gene = cr.getGeneDetectionDetail();
         if (map_gene != null) {
             CmpGeneDetectionDetail gdd = map_gene.get("all");
             if (gdd != null) {
@@ -713,40 +688,33 @@ public class ReportServiceImpl implements ReportService {
                 for (CmpGeneSnpResult gsr : list) {
                     CmpGeneSnpResult gsr_tmp = new CmpGeneSnpResult();
                     gsr_tmp.setDiseaseName(gsr.getDiseaseName());
-                    gsr_tmp.setDiseaseEngName(p.matcher(gsr.getDiseaseEngName())
-                            .replaceAll("").trim());
+                    gsr_tmp.setDiseaseEngName(p.matcher(gsr.getDiseaseEngName()).replaceAll("").trim());
                     gsr_tmp.setGene(gsr.getGene());
                     list_tmp.add(gsr_tmp);
                 }
                 for (int i = 0; i < list_tmp.size(); i++) {
                     int num = 1;
                     for (int j = list_tmp.size() - 1; j > i; j--) {
-                        if (list_tmp.get(j).getDiseaseEngName()
-                                .equals(list_tmp.get(i).getDiseaseEngName())
-                                && list_tmp.get(j).getGene()
-                                        .equals(list_tmp.get(i).getGene())) {
+                        if (list_tmp.get(j).getDiseaseEngName().equals(list_tmp.get(i).getDiseaseEngName())
+                                && list_tmp.get(j).getGene().equals(list_tmp.get(i).getGene())) {
                             list_tmp.remove(j);
                             num++;
                         }
                     }
                     CmpGeneSnpResult gsr_tmp = new CmpGeneSnpResult();
                     gsr_tmp.setDiseaseName(list_tmp.get(i).getDiseaseName());
-                    gsr_tmp.setDiseaseEngName(
-                            list_tmp.get(i).getDiseaseEngName());
+                    gsr_tmp.setDiseaseEngName(list_tmp.get(i).getDiseaseEngName());
                     gsr_tmp.setGene(list_tmp.get(i).getGene());
                     gsr_tmp.setMutNum(num);
                     resultList.add(gsr_tmp);
                 }
                 // 将结果根据疾病类型排序
-                Collections.sort(resultList,
-                        new Comparator<CmpGeneSnpResult>() {
-                            @Override
-                            public int compare(CmpGeneSnpResult gsr1,
-                                    CmpGeneSnpResult gsr2) {
-                                return gsr1.getDiseaseName()
-                                        .compareTo(gsr2.getDiseaseName());
-                            }
-                        });
+                Collections.sort(resultList, new Comparator<CmpGeneSnpResult>() {
+                    @Override
+                    public int compare(CmpGeneSnpResult gsr1, CmpGeneSnpResult gsr2) {
+                        return gsr1.getDiseaseName().compareTo(gsr2.getDiseaseName());
+                    }
+                });
             }
         }
         return resultList;
@@ -772,8 +740,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Report getReport(Integer userId, Integer appId, Integer projectId,
-            Integer fileId, Integer flag) {
+    public Report getReport(Integer userId, Integer appId, Integer projectId, Integer fileId, Integer flag) {
         return reportMapper.getReport(userId, appId, projectId, fileId, flag);
     }
 
@@ -783,8 +750,8 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Integer updateReportStateToTools(Integer userId, Integer appId,
-            Integer projectId, Integer period, String context) {
+    public Integer updateReportStateToTools(Integer userId, Integer appId, Integer projectId, Integer period,
+            String context) {
         if (context != null) {
             context = context.replaceAll(" ", "+");
             context = Base64Util.decrypt(context);
@@ -811,13 +778,14 @@ public class ReportServiceImpl implements ReportService {
         return result;
     }
 
-	@Override
-	public void saveTask(TaskQueue tq) {
-		reportDao.saveData(tq);
-	}
+    @Override
+    public void saveTask(TaskQueue tq) {
+        reportDao.saveData(tq);
+    }
 
-	@Override
-	public TaskQueue getTaskQueue(Integer projectId) {
-		return reportDao.getDataReport(TaskQueue.class, "", projectId, 0);
-	}
+    @Override
+    public TaskQueue getTaskQueue(Integer projectId) {
+        return reportDao.getDataReport(TaskQueue.class, "", projectId, 0);
+    }
+
 }

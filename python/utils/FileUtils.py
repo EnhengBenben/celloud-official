@@ -32,9 +32,10 @@ def readAllChinese(path):
 ##未完成，待续
 def fileSearch(path,regulation,mate):
 	files = []
-	for x in os.listdir(path):
-		if(x.endswith(regulation)):
-			files.append(x)
+	if os.path.exists(path):
+		for x in os.listdir(path):
+			if(x.endswith(regulation)):
+				files.append(x)
 	return files
 
 def zip_dir(dirname,zipfilename):

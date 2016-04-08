@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.bson.types.ObjectId;
 
+import com.celloud.model.mongo.BRAF;
 import com.celloud.model.mongo.CmpFilling;
 import com.celloud.model.mongo.CmpGeneSnpResult;
 import com.celloud.model.mongo.CmpReport;
@@ -18,6 +19,7 @@ import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
 import com.celloud.model.mongo.Split;
+import com.celloud.model.mongo.TBRifampicin;
 import com.celloud.model.mongo.TaskQueue;
 import com.celloud.model.mongo.UGT;
 import com.celloud.model.mysql.Report;
@@ -31,6 +33,19 @@ import com.celloud.page.PageList;
  * @date 2015年12月25日 下午3:47:07
  */
 public interface ReportService {
+
+    /**
+     * 获取BRAF报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author MQ
+     * @date 2016年3月25日下午3:58:15
+     */
+    public BRAF getBRAFReport(String dataKey, Integer projectId, Integer appId);
+
     /**
      * 
      * 统计个人报告数量
@@ -70,7 +85,7 @@ public interface ReportService {
      * @date 2016-1-5 下午3:26:05
      */
     PageList<Map<String, Object>> getReportPageList(Integer userId, Page pager,
-            String condition, String start, String end, Integer appId);
+            String condition, String start, String end, Integer appId,Integer belongs);
 
     /**
      * 统计用户使用各App的次数
@@ -151,6 +166,16 @@ public interface ReportService {
 	 */
 	public KRAS getKRASReport(String dataKey, Integer projectId, Integer appId);
 	
+    /**
+     * 获取TBRifampicin报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     */
+    public TBRifampicin getTBRifampicinReport(String dataKey, Integer projectId, Integer appId);
+
 	/**
 	 * 获取UGT报告
 	 * 
@@ -443,4 +468,5 @@ public interface ReportService {
      * @date 2016年2月26日下午1:51:09
      */
     public TaskQueue getTaskQueue(Integer projectId);
+
 }
