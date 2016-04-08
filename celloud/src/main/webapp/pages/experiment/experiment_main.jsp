@@ -8,7 +8,7 @@
 	<ol class="breadcrumb">
 		<li>
 			<a href="javascript:void(0)">
-				<i class="fa fa-user"></i> 实验流程
+				<i class="fa fa-stack-overflow"></i> 实验流程
 			</a>
 		</li>
 		<li class="active">
