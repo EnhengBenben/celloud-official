@@ -8,7 +8,7 @@
 	<ol class="breadcrumb">
 		<li>
 			<a href="javascript:void(0)">
-				<i class="fa fa-user"></i> 实验流程
+				<i class="fa fa-stack-overflow"></i> 实验流程
 			</a>
 		</li>
 		<li class="active">
@@ -94,7 +94,7 @@
 		</div>
 	</div>
 </section>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/experiment.js?version=3.0"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/experiment.js?version=3.1"></script>
 <script language="javascript" src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
 <div id="addExp" class="modal modal-green-header">
 </div>

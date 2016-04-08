@@ -16,6 +16,7 @@ from app.EGFR import EGFR
 from app.KRAS import KRAS
 from app.BRAF import BRAF
 from app.TBRifampicin import TBRifampicin
+from app.TBINH import TBINH
 
 #command: python *.py basePath projectId
 #eg : python runover.py '/share/data/webapps/Tools/upload/' 4018
@@ -37,6 +38,7 @@ method_dic = {
 93:PGS,
 94:PGS,
 104:PGS,
+105:TBINH,
 95:NIPT,
 107:BRAF
 }
@@ -57,6 +59,7 @@ collection_dic = {
 93:"Pgs",
 94:"Pgs",
 104:"Pgs",
+105:"TBINH",
 95:"NIPT",
 107:"BRAF"
 }

@@ -46,6 +46,9 @@ var experiment = (function(experiment) {
       $("#_alertSpan").css("display","");
       $("#_alertSpan").html("起始日期不能大于结束日期");
       return ;
+    }else{
+      $("#_alertSpan").css("display","none");
+      $("#_alertSpan").html("");
     }
     if(START != null && START != ""){
       START = START+" 00:00:00";
