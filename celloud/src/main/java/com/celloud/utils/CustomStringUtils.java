@@ -78,7 +78,36 @@ public class CustomStringUtils extends StringUtils {
         return fileName;
     }
     
+    /**
+     * \n转<br/>
+     * 
+     * @param txt
+     * @return
+     * @author lin
+     * @date 2016年4月11日下午5:57:48
+     */
     public static String htmlbr(String txt) {
 		return txt == null ? null : txt.replace("\n", "<br/>");
+	}
+    
+	/**
+	 * 每个\n作为一个tr转化为table
+	 * 
+	 * @param context
+	 * @return
+	 * @author lin
+	 * @date 2016年4月11日下午5:56:41
+	 */
+	public static String toTable(String context) {
+		if (StringUtils.isBlank(context)) {
+			return context;
+		}
+		StringBuffer sb = new StringBuffer("<table>");
+		String con[] = context.split("\n");
+		for (String st : con) {
+			sb.append("<tr><td>" + st + "</td></tr>");
+		}
+		sb.append("</table>");
+		return sb.toString();
 	}
 }

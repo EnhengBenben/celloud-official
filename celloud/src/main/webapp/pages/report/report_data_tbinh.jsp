@@ -15,7 +15,7 @@
 		<h2>
 			<i class="i-edit"></i>Gene Name
 		</h2>
-		<div class="m-boxCon result">${tbihn.report }</div>
+		<div class="m-boxCon result">${tbinh.geneName }</div>
 	</div>
 	<!--位点突变-->
 	<div class="m-box m-box-yc">

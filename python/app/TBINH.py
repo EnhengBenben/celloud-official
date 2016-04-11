@@ -48,7 +48,9 @@ class TBINH:
 		#report.txt
 		report = os.path.join(path,'report.txt')
 		if (os.path.exists(report)):
-			result['report'] = readAllChinese(report)
+			info = readAllChinese(report)
+			result['report'] = info
+			result['geneName'] = info.split('\n')[0].strip()
 
 		#report.txt.wz.1
 		wz1 = os.path.join(path,'report.txt.1')
@@ -81,13 +83,11 @@ class TBINH:
 
 		return result
 if __name__ == '__main__':
-	print list
-	print list.sort()
-	print sorted(list)
 	TBINH = TBINH.getInstance()
 	re = TBINH.getResult('/Users/lin/23/105/15121702128377','TBINH','a.ab1',None)
 	print '1'+re['report']
-	print '2'+re['position']#report.txt.1
+	print '2'+re['geneName']
+	print '3'+re['position']#report.txt.1
 	print '4'+re['conclusion']#report.txt.Report
 	print '5'+re['seq']#seq
 	print '7'+re['mutationPosition']#wz2

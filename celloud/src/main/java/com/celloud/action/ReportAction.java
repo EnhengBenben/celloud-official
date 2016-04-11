@@ -696,15 +696,7 @@ public class ReportAction {
     public ModelAndView getDPDReport(String dataKey, Integer projectId, Integer appId) {
         DPD dpd = reportService.getDPDReport(dataKey, projectId, appId);
         String mp = dpd.getMutationPosition();
-        if (StringUtils.isNotBlank(mp)) {
-            String context[] = mp.split("\n");
-            StringBuffer sb = new StringBuffer("<table>");
-            for (String st : context) {
-                sb.append("<tr><td>" + st + "</td></tr>");
-            }
-            sb.append("</table>");
-            dpd.setMutationPosition(sb.toString());
-        }
+        dpd.setMutationPosition(CustomStringUtils.toTable(mp));
         String postion = dpd.getPosition();
         if (StringUtils.isNotBlank(postion)) {
             dpd.setPosition(CustomStringUtils.htmlbr(postion));
@@ -765,39 +757,10 @@ public class ReportAction {
     @RequestMapping("getTBINHReport")
     public ModelAndView getTBINHReport(String dataKey, Integer projectId, Integer appId) {
         TBINH tbinh = reportService.getTBINHReport(dataKey, projectId, appId);
-
         String position = tbinh.getPosition();
-        if (StringUtils.isNotBlank(position)) {
-            String[] positions = position.split("\n");
-            StringBuffer sb = new StringBuffer("<table>");
-            for (String p : positions) {
-                sb.append("<tr><td>" + p + "</td></tr>");
-            }
-            sb.append("</table>");
-            tbinh.setPosition(sb.toString());
-        }
-
-        String report = tbinh.getReport();
-        if (StringUtils.isNotBlank(report)) {
-            String first = tbinh.getReport().split("\n")[0];
-            if (first == null) {
-                tbinh.setReport("no result");
-            } else {
-                tbinh.setReport(first);
-            }
-        }
-
+        tbinh.setPosition(CustomStringUtils.toTable(position));
         String mutationPosition = tbinh.getMutationPosition();
-        if (StringUtils.isNotBlank(mutationPosition)) {
-            String[] mps = mutationPosition.split("\n");
-            StringBuffer sb = new StringBuffer("<table>");
-            for (String mp : mps) {
-                sb.append("<tr><td>" + mp + "</td></tr>");
-            }
-            sb.append("</table>");
-            tbinh.setMutationPosition(sb.toString());
-        }
-
+        tbinh.setMutationPosition(CustomStringUtils.toTable(mutationPosition));
         ModelAndView mv = getModelAndView("report/report_data_tbinh", projectId);
         return mv.addObject("tbinh", tbinh);
     }
@@ -816,16 +779,7 @@ public class ReportAction {
     public ModelAndView getTBRifampicinReport(String dataKey, Integer projectId, Integer appId) {
         TBRifampicin tbrifampicin = reportService.getTBRifampicinReport(dataKey, projectId, appId);
         String report = tbrifampicin.getReport();
-        if (StringUtils.isNotBlank(report)) {
-            String reports[] = report.split("\n");
-            StringBuffer sb = new StringBuffer("<table>");
-            for (String r : reports) {
-                sb.append("<tr><td>" + r + "</td></tr>");
-            }
-            sb.append("</table>");
-            tbrifampicin.setReport(sb.toString());
-        }
-
+        tbrifampicin.setReport(CustomStringUtils.toTable(report));
         ModelAndView mv = getModelAndView("report/report_data_tbrifampicin", projectId);
         return mv.addObject("tbrifampicin", tbrifampicin);
     }
@@ -844,16 +798,7 @@ public class ReportAction {
     public ModelAndView getBRAFReport(String dataKey, Integer projectId, Integer appId) {
         BRAF braf = reportService.getBRAFReport(dataKey, projectId, appId);
         String mp = braf.getMutationPosition();
-        if (StringUtils.isNotBlank(mp)) {
-            String mps[] = mp.split("\n");
-            StringBuffer sb = new StringBuffer("<table>");
-            for (String m : mps) {
-                sb.append("<tr><td>" + m + "</td></tr>");
-            }
-            sb.append("</table>");
-            braf.setMutationPosition(sb.toString());
-        }
-
+        braf.setMutationPosition(CustomStringUtils.toTable(mp));
         ModelAndView mv = getModelAndView("report/report_data_braf", projectId);
         return mv.addObject("braf", braf);
     }
