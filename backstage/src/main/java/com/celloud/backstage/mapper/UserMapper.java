@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.celloud.backstage.model.User;
+import com.celloud.backstage.model.UserSelect;
 import com.celloud.backstage.page.Page;
 
 public interface UserMapper {
@@ -100,4 +101,11 @@ public interface UserMapper {
      */
     public List<User> getAllUserList(@Param("state") Integer state);
     
+    /**
+     * 获取select2用户信息
+     * 
+     * @param state
+     * @return
+     */
+    public List<UserSelect> getAllUserSelectList(@Param("state") Integer state);
 }

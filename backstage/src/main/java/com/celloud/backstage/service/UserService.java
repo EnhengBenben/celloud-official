@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.celloud.backstage.model.User;
+import com.celloud.backstage.model.UserSelect;
 import com.celloud.backstage.page.Page;
 import com.celloud.backstage.page.PageList;
 
@@ -176,5 +177,13 @@ public interface UserService {
      * @date 2016年2月18日 下午5:17:39
      */
     public List<User> getAllUserList();
+    
+    /**
+     * 获取所有select2用户列表
+     * 
+     * @author mq
+     * @return
+     */
+    public List<UserSelect> getAllUserSelectList();
 
 }
