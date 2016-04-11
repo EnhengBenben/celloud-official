@@ -37,6 +37,7 @@ import com.celloud.service.ReportService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.CheckFileTypeUtil;
 import com.celloud.utils.DataUtil;
+import com.celloud.utils.DateUtil;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.PerlUtils;
@@ -102,17 +103,24 @@ public class UploadAction {
                         File localFile = new File(fileName);
                         try {
                             this.copy(file, localFile);
-                            if (chunk == chunks || (chunk == chunks - 1)) {
-                                int dataId = addFileInfo(originalName);
-                                String fileDataKey = DataUtil.getNewDataKey(dataId);
-                                String newName = fileDataKey + FileTools.getExtName(originalName);
-                                FileTools.renameFile(realPath, name, newName);
-                                String perlPath = request.getSession().getServletContext().getRealPath("/resources")
-                                        + "/plugins/getAliases.pl";
-                                String outPath = request.getSession().getServletContext().getRealPath("/temp") + "/"
-                                        + fileDataKey;
-                                updateFileInfo(dataId, fileDataKey, newName, perlPath, outPath);
-                            }
+							if (chunk == chunks || (chunk == chunks - 1)) {
+								int dataId = addFileInfo(originalName);
+								String fileDataKey = DataUtil.getNewDataKey(dataId);
+								String newName = fileDataKey + FileTools.getExtName(originalName);
+								Integer userId = ConstantsData.getLoginUserId();
+								String today = DateUtil.getDateToString("yyyyMMdd");
+								String folderByDay = realPath + userId + File.separator + today;
+								File pf = new File(folderByDay);
+								if(!pf.exists()){
+									pf.mkdirs();
+								}
+								FileTools.mvFile(realPath, name, folderByDay, newName);
+								String perlPath = request.getSession().getServletContext().getRealPath("/resources")
+										+ "/plugins/getAliases.pl";
+								String outPath = request.getSession().getServletContext().getRealPath("/temp") + "/"
+										+ fileDataKey;
+								updateFileInfo(dataId, fileDataKey, newName, perlPath, outPath,folderByDay);
+							}
                         } catch (Exception e) {
                             logger.error(e.getMessage());
                         }
@@ -213,15 +221,15 @@ public class UploadAction {
      * @return
      */
     @ActionLog(value = "修改文件详细信息", button = "开始上传")
-    private int updateFileInfo(int dataId, String dataKey, String newName, String perlPath, String outPath) {
+    private int updateFileInfo(int dataId, String dataKey, String newName, String perlPath, String outPath,String folderByDay) {
         DataFile data = new DataFile();
         data.setFileId(dataId);
-        String filePath = realPath + newName;
+		String filePath = folderByDay + File.separator + newName;
         data.setSize(FileTools.getFileSize(filePath));
         data.setDataKey(dataKey);
         data.setPath(filePath);
         data.setMd5(MD5Util.getFileMD5(filePath));
-        int fileFormat = checkFileType.checkFileType(newName);
+		int fileFormat = checkFileType.checkFileType(newName, folderByDay);
         data.setFileFormat(fileFormat);
         if (fileFormat == FileFormat.BAM) {
             String anotherName = getAnotherName(filePath, dataKey, perlPath, outPath);
