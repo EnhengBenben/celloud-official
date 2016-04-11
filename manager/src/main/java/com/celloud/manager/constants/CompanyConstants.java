@@ -19,6 +19,8 @@ public class CompanyConstants {
     private static Logger logger=LoggerFactory.getLogger(CompanyConstants.class);
     private static Properties properties = null;
     private static String companyIconPath;
+    private static String reportTemplatePath;
+
     /**
      * 配置文件的地址
      */
@@ -70,5 +72,12 @@ public class CompanyConstants {
         int index = nameWithSuffix.indexOf(".");
         ObjectId id = new ObjectId(nameWithSuffix.substring(0, index));
         return getCompanyIconPath() + File.separator + nameWithSuffix;
+    }
+
+    public static String getReportTemplatePath() {
+        if (reportTemplatePath == null) {
+            reportTemplatePath = getProperty("reportTemplatePath");
+        }
+        return reportTemplatePath;
     }
 }

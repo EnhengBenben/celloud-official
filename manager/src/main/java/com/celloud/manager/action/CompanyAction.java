@@ -1,12 +1,16 @@
 package com.celloud.manager.action;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpStatus;
@@ -157,6 +161,31 @@ public class CompanyAction {
         HashSet<String> pdfPathList = FileTools.getFiles(path, ".pdf");
         mv.addObject("pdfPathList", pdfPathList);
         return mv;
+    }
+
+    @RequestMapping("printReport.pdf")
+    public void reportPdf(HttpServletResponse response, Integer companyId,
+            String pdfName) {
+        response.setContentType("application/pdf");
+        String path = CompanyConstants.getReportTemplatePath() + File.separator
+                + companyId + File.separator + pdfName;
+        FileInputStream in = null;
+        ServletOutputStream out = null;
+        try {
+            in = new FileInputStream(new File(path));
+            out = response.getOutputStream();
+            byte[] b = new byte[1024 * 1024];
+            int length = 0;
+            while ((length = in.read(b)) != -1) {
+                out.write(b, 0, length);
+            }
+            in.close();
+            out.flush();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
