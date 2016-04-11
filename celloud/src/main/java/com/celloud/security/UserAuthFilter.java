@@ -7,13 +7,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.filter.authc.UserFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.celloud.utils.UserAgentUtil;
 
-public class UserFilter extends org.apache.shiro.web.filter.authc.UserFilter {
-    private static Logger logger = LoggerFactory.getLogger(UserFilter.class);
+public class UserAuthFilter extends UserFilter {
+    private static Logger logger = LoggerFactory.getLogger(UserAuthFilter.class);
 
     @Override
     protected boolean onAccessDenied(ServletRequest req, ServletResponse res) throws Exception {

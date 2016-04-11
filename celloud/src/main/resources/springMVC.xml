@@ -202,7 +202,7 @@
 		<property name="filters">
 			<map>
 				<entry key="user">
-					<bean class="com.celloud.security.UserFilter"></bean>
+					<bean class="com.celloud.security.UserAuthFilter"></bean>
 				</entry>
 			</map>
 		</property>
