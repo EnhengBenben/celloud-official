@@ -10,6 +10,7 @@ public class TBINH extends Base {
     private String conclusion; // report.txt.Report
     private String seq; // Report.txt.seq.txt
     private List<String> original; // *_all.png
+    private String fileName;
 
     public String getReport() {
         return report;
@@ -58,5 +59,14 @@ public class TBINH extends Base {
     public void setOriginal(List<String> original) {
         this.original = original;
     }
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+    
 
 }
