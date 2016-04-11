@@ -1,16 +1,16 @@
 var DATAPATH = "/share/data/count/";
 //var DATAPATH = "D:\\count\\";
 var charMap = {};
-charMap[81] = "Total_Reads,Duplicate";
-charMap[83] = "Total_Reads,Duplicate";
-charMap[85] = "Total_Reads,Duplicate(%),GC_Count(%)";
-charMap[86] = "Total_Reads,Duplicate(%),GC_Count(%)";
-charMap[87] = "Total_Reads,Duplicate(%),*SD";
-charMap[88] = "Total_Reads,Duplicate(%),*SD";
-charMap[91] = "Total_Reads,Duplicate(%),GC_Count(%)";
-charMap[92] = "Total_Reads,Duplicate(%),*SD";
-charMap[93] = "Total_Reads,Duplicate(%),*SD";
-charMap[94] = "Total_Reads,Duplicate(%),GC_Count(%)";
+charMap[81] = "totalReads,duplicate";
+charMap[83] = "totalReads,duplicate";
+charMap[85] = "totalReads,duplicate,gcCount";
+charMap[86] = "totalReads,duplicate,gcCount";
+charMap[87] = "totalReads,duplicate,sd";
+charMap[88] = "totalReads,duplicate,sd";
+charMap[91] = "totalReads,duplicate,gcCount";
+charMap[92] = "totalReads,duplicate,sd";
+charMap[93] = "totalReads,duplicate,sd";
+charMap[94] = "totalReads,duplicate,gcCount";
 
 function showChar(id, title, data, single) {
 	$("#" + id).highcharts({
