@@ -370,4 +370,11 @@
         where state=#{state }
         order by username
     </select>
+    <select id="getAllUserSelectList" resultType="com.celloud.backstage.model.UserSelect">
+        select 
+        email as id, username as text 
+        from tb_user 
+        where state = #{state } 
+        order by username
+    </select>
 </mapper>
