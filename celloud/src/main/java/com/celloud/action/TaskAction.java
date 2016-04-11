@@ -42,6 +42,7 @@ import com.celloud.service.TaskService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.DataKeyListToFile;
 import com.celloud.utils.DataUtil;
+import com.celloud.utils.DateUtil;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.PerlUtils;
@@ -154,7 +155,6 @@ public class TaskAction {
         }
         if (appId == 113) {
             String inPath = reportPath + "result/split/";
-            String outPath = PropertiesUtil.bigFilePath;
             HashSet<String> resultFiles = FileTools.getFiles(inPath);
             Iterator<String> rFile = resultFiles.iterator();
             Long size = null;
@@ -171,7 +171,8 @@ public class TaskAction {
                     DataFile.setState(DataState.DEELTED);
                     int dataId = dataService.addDataInfo(DataFile);
                     String new_dataKey = DataUtil.getNewDataKey(dataId);
-                    String filePath = outPath + new_dataKey + extName;
+					String filePath = PropertiesUtil.bigFilePath + userId + File.separatorChar
+							+ DateUtil.getDateToString("yyyyMMdd") + File.pathSeparatorChar + new_dataKey + extName;
                     boolean state = PerlUtils.excuteCopyFile(resourcePath,
                             filePath);
                     if (state) {

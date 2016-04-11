@@ -139,7 +139,7 @@ public class PythonServiceImpl implements PythonService {
         DataFile data = dataService.getDataByKey(key);
         data.setSize(FileTools.getFileSize(absPath));
         CheckFileTypeUtil checkFileType = new CheckFileTypeUtil();
-        int fileFormat = checkFileType.checkFileType(dataKey);
+		int fileFormat = checkFileType.checkFileType(dataKey, path);
         data.setFileFormat(fileFormat);
         if (fileFormat == FileFormat.BAM) {
             StringBuffer command = new StringBuffer();
