@@ -52,7 +52,6 @@
 		    	${egfr.mutationPosition }
 		    	<br/>
 		    	<c:forEach var="out" items="${egfr.out }">
-		    		<br/>
 		    		<a href="javascript:showBgTwo('${uploadPath}${egfr.userId }/${egfr.appId }/${egfr.dataKey }/SVG/${out }');" style="padding-right: 20px">
 		    			<img src="${uploadPath}${egfr.userId }/${egfr.appId }/${egfr.dataKey }/SVG/${out}" style="width: 156px;height: 177px;">
 		    		</a>

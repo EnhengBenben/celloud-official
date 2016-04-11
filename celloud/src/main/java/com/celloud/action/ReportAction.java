@@ -651,6 +651,10 @@ public class ReportAction {
     @RequestMapping("getEGFRReport")
     public ModelAndView getEGFRReport(String dataKey, Integer projectId, Integer appId) {
         EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
+		String mp = egfr.getMutationPosition();
+		if (StringUtils.isNotEmpty(mp)) {
+			egfr.setMutationPosition(CustomStringUtils.htmlbr(mp));
+		}
         ModelAndView mv = getModelAndView("report/report_data_egfr", projectId);
         return mv.addObject("egfr", egfr);
     }
