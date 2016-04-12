@@ -677,6 +677,10 @@ public class ReportAction {
         if (StringUtils.isNotBlank(mp)) {
             kras.setMutationPosition(CustomStringUtils.htmlbr(mp));
         }
+		String pos = kras.getPosition();
+		if (StringUtils.isNotBlank(pos)) {
+			kras.setPosition(CustomStringUtils.htmlbr(pos));
+		}
         ModelAndView mv = getModelAndView("report/report_data_kras", projectId);
         return mv.addObject("kras", kras);
     }

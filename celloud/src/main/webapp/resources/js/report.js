@@ -74,7 +74,7 @@ $.ajaxSetup ({
 					}
 					context += "</div>";
 					$("#showAppDiv").html(context);
-					context ="<div class='moreApp' style='margin-top:-20px'>";
+					context ="<div class='moreApp' style='margin-top:-20px;margin-left: 80px;'>";
 					_num = 0;
 					for ( var i = 8; i < appList.length; i++) {
 						var id = appList[i]['app_id'];
