@@ -740,7 +740,8 @@ $.ajaxSetup ({
 				var mutant = $("#_hidMutant").val();
 				var wild = $("#_hidWild").val();
 				var neither = $("#_hidNeither").val();
-				var data = "[['Mutant strain',"+ mutant+"], ['Wild type',"+wild+"], ['No Result',"+neither+"]]";
+//				var data = "[['Mutant strain',"+ mutant+"], ['Wild type',"+wild+"], ['No Result',"+neither+"]]";
+				var data = "[{name:'Mutant strain',value:"+parseInt(mutant)+"},{name:'Wild type',value:"+parseInt(wild)+"},{name:'No Result',value:"+parseInt(neither)+"}]";
 				showPie("_showPie","Samples Statistic",eval(data));
 			}
 			if(appId==81||appId==83||appId==85||appId==86||appId==87||appId==88||appId==91||appId==92||appId==93||appId==94){
