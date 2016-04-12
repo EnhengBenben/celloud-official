@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>报告打印</title>
-<link rel="stylesheet" href="<%=request.getContextPath() %>/css/print_hbv.css?version=1.16">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/print_hbv.css?version=1.17">
 </head>
 <body>
 	<div>
@@ -289,7 +289,7 @@
 										<textarea rows="6">${result }</textarea>
 							        </div>
 								   	<h2 class="mt10">四、测序序列结果：</h2>
-								   	<p style="word-break: break-all;" class="m-box_1">${hbv.seq }</p>
+								   	<p class="m-box_1 force_break">${hbv.seq }</p>
 								   	<div id="moreDiv">
 										<div class="w3cbbs" style="display: none;"></div>
 										<div class="container" style="display: none;"></div>
