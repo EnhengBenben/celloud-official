@@ -545,7 +545,7 @@
 									<textarea rows="6">${hbv.reporttxt.split('Other:')[0] }</textarea>
 						        </div>
 							   	<h2 class="mt10">五、测序序列结果：</h2>
-							   	<p style="word-break: break-all;" class="m-box_1">${hbv.seq }</p>
+							   	<p class="m-box_1 force_break">${hbv.seq }</p>
 							   	<div id="moreDiv">
 									<div class="w3cbbs" style="display: none;"></div>
 									<div class="container" style="display: none;"></div>
