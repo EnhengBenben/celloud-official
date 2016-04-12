@@ -48,9 +48,24 @@ class TBINH:
 		#report.txt
 		report = os.path.join(path,'report.txt')
 		if (os.path.exists(report)):
+			# isWild: 0代表既不是野生也不是非野生即报告内容为空 1代表是野生 2代表非野生
 			info = readAllChinese(report)
-			result['report'] = info
-			result['geneName'] = info.split('\n')[0].strip()
+			if (info.strip() == ''):
+				result['report'] = 'no result'
+				result['isWild'] = 0
+			else:
+				result['report'] = info
+				infoSplit = info.split('\n')
+				# 第一行
+				result['geneName'] = infoSplit[0].strip()
+				# 第一行的最后一个单词
+				result['simpleGeneName'] = infoSplit[0].split(' ')[len(infoSplit[0].split(' '))-1].strip()
+				# 第二行以SNP开头的是非野生
+				if(infoSplit[1].startswith('SNP')):
+					result['isWild'] = 2
+				else:
+					result['isWild'] = 1
+				
 
 		#report.txt.wz.1
 		wz1 = os.path.join(path,'report.txt.1')

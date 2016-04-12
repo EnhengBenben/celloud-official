@@ -577,7 +577,7 @@ public class ReportAction {
         ModelAndView mv = getModelAndView("report/report_data_pgs", projectId);
         Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
         Integer userId = ConstantsData.getLoginUserId();
-		List<Experiment> expList = expService.getReportList(userId, dataKey);
+        List<Experiment> expList = expService.getReportList(userId, dataKey);
         if (expList != null && expList.size() > 0) {
             mv.addObject("experiment", expList.get(0));
         }
@@ -651,10 +651,10 @@ public class ReportAction {
     @RequestMapping("getEGFRReport")
     public ModelAndView getEGFRReport(String dataKey, Integer projectId, Integer appId) {
         EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
-		String mp = egfr.getMutationPosition();
-		if (StringUtils.isNotEmpty(mp)) {
-			egfr.setMutationPosition(CustomStringUtils.htmlbr(mp));
-		}
+        String mp = egfr.getMutationPosition();
+        if (StringUtils.isNotEmpty(mp)) {
+            egfr.setMutationPosition(CustomStringUtils.htmlbr(mp));
+        }
         ModelAndView mv = getModelAndView("report/report_data_egfr", projectId);
         return mv.addObject("egfr", egfr);
     }
@@ -761,8 +761,18 @@ public class ReportAction {
         tbinh.setPosition(CustomStringUtils.toTable(position));
         String mutationPosition = tbinh.getMutationPosition();
         tbinh.setMutationPosition(CustomStringUtils.toTable(mutationPosition));
+        // 获取userId下野生型,非野生型,两者都不是的数量
+        Integer userId = tbinh.getUserId();
+        String simpleGeneName = tbinh.getSimpleGeneName();
+        // 两者都不是
+        Integer neither = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 0);
+        // 野生型
+        Integer wild = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 1);
+        // 非野生型
+        Integer mutant = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 2);
         ModelAndView mv = getModelAndView("report/report_data_tbinh", projectId);
-        return mv.addObject("tbinh", tbinh);
+        return mv.addObject("tbinh", tbinh).addObject("wild", wild).addObject("mutant", mutant).addObject("neither",
+                neither);
     }
 
     /**

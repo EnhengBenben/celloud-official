@@ -12,6 +12,8 @@ public class TBINH extends Base {
 	private List<String> original; // *_all.png
 	private String fileName;
 	private String geneName;
+	private Integer isWild; // 0:都不是 1:野生型 2:非野生型
+	private String simpleGeneName; // 第一行最后个单词
 
 	public String getReport() {
 		return report;
@@ -76,5 +78,21 @@ public class TBINH extends Base {
 	public void setGeneName(String geneName) {
 		this.geneName = geneName;
 	}
+
+    public Integer getIsWild() {
+        return isWild;
+    }
+
+    public void setIsWild(Integer isWild) {
+        this.isWild = isWild;
+    }
+
+    public String getSimpleGeneName() {
+        return simpleGeneName;
+    }
+
+    public void setSimpleGeneName(String simpleGeneName) {
+        this.simpleGeneName = simpleGeneName;
+    }
 
 }
