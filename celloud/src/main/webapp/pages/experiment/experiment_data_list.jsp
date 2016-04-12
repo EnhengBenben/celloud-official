@@ -4,9 +4,9 @@
 <table class="table_" style="text-align: center;">
 	<thead>
 		<tr>
-			<th>请选择</th>
-			<th style="max-width: 436px;">文件名</th>
-			<th>上传时间</th>
+			<th style="min-width: 60px">请选择</th>
+			<th>文件名</th>
+			<th style="min-width: 80px">上传时间</th>
 		</tr>
 	</thead>
 	<tbody>
