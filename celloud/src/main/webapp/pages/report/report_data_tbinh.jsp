@@ -55,7 +55,7 @@
 		<h2>
 			<i class="i-edit"></i>Samples Statistic
 		</h2>
-		<div class="m-boxCon" id="_showPie"></div>
+		<div class="m-boxCon" id="_showPie" style="width: 400px;height:200px;"></div>
 	</div>
 	<!--检测结果-->
 	<div class="m-box">
