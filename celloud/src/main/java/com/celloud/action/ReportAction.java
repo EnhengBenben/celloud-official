@@ -852,26 +852,22 @@ public class ReportAction {
      * @author lin
      * @date 2016年1月17日下午4:47:37
      */
-    @ActionLog(value = "打印PGS数据报告", button = "打印数据报告")
-    @RequestMapping("printPGS")
-    public ModelAndView printPGS(Integer appId, Integer projectId, String dataKey, String miniPng, String txt,
-            String splitPng) {
-        ModelAndView mv = getModelAndView("print/print_pgs", projectId);
-        Integer userId = ConstantsData.getLoginUserId();
-        DataFile data = dataService.getDataByKey(dataKey);
-        Integer fileId = data.getFileId();
-        Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
-        if (StringUtils.isEmpty(report.getPrintContext())) {
-            Dept dept = deptService.selectByPrimaryKey(ConstantsData.getLoginUser().getDeptId());
-            Company company = companyService.selectByPrimaryKey(dept.getCompanyId());
-            mv.addObject("userId", userId).addObject("appId", appId).addObject("data", data);
-            mv.addObject("miniPng", miniPng).addObject("txt", txt).addObject("splitPng", splitPng);
-            mv.addObject("company", company).addObject("dept", dept).addObject("report", report);
-        } else {
-            mv.addObject("printContext", report.getPrintContext());
-        }
-        return mv;
-    }
+	@ActionLog(value = "打印PGS数据报告", button = "打印数据报告")
+	@RequestMapping("printPGS")
+	public ModelAndView printPGS(Integer appId, Integer projectId, String dataKey, Integer flag) {
+		ModelAndView mv = getModelAndView("print/print_pgs", projectId);
+		Integer userId = ConstantsData.getLoginUserId();
+		DataFile data = dataService.getDataByKey(dataKey);
+		Integer fileId = data.getFileId();
+		Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
+		if (StringUtils.isEmpty(report.getPrintContext())) {
+			Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
+			mv.addObject("pgs", pgs).addObject("report", report).addObject("flag", flag);
+		} else {
+			mv.addObject("printContext", report.getPrintContext());
+		}
+		return mv;
+	}
 
     /**
      * 打印TBRifampicin
