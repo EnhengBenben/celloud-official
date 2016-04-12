@@ -277,10 +277,10 @@ a:hover, a:focus{
 				<c:if test="${pgs.companyId==42}">
 					<div>
 						<h4 class="smallh4">检测结果:</h4>
-						<c:if test="${flag=0}">
+						<c:if test="${flag==0}">
 							<img src='${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.miniPng}' style="width:90%;max-height:245px;">
 						</c:if>
-						<c:if test="${flag=1}">
+						<c:if test="${flag==1}">
 							<img src='${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.splitPng}' style="width:90%;max-height:245px;">
 						</c:if>
 					</div>
