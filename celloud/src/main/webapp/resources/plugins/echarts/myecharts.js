@@ -1,4 +1,5 @@
 function showPie(id,title,data) {
+	console.log("2" + ", id:" + id + ", title:" + title + ", data:" + data);
     	var echartsPie = echarts.init(document.getElementById(id));
         var option = {
             title : {
@@ -25,5 +26,6 @@ function showPie(id,title,data) {
                 }
             ]
         }
+        console.log("3" + ", id:" + id + ", title:" + title + ", data:" + data);
         echartsPie.setOption(option);
     }
