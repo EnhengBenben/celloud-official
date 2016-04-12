@@ -194,7 +194,7 @@
 	<script src="<%=request.getContextPath()%>/plugins/highcharts/char.js?version=20150526"></script>
 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/plugins/echarts/echarts.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/plugins/echarts/myecharts.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/echarts/echarts.min.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/echarts/myecharts.js"></script>
 </body>
 </html>
