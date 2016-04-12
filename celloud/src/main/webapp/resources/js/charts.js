@@ -76,6 +76,36 @@ $.reportChar.draw = {
       };
       $.reportChar.draw._require('pie',option,id);
   },
+  
+  echartsShowPie : function (id,title,data) {
+        var option = {
+            title : {
+                text: title,
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            series : [
+                {
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:data,
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        }
+        $.reportChar.draw._require('pie',option,id);
+  	},
+  
   /**
    * ===============
    * 单根渐变色柱状图

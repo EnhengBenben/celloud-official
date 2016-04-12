@@ -740,10 +740,8 @@ $.ajaxSetup ({
 				var mutant = $("#_hidMutant").val();
 				var wild = $("#_hidWild").val();
 				var neither = $("#_hidNeither").val();
-//				var data = "[['Mutant strain',"+ mutant+"], ['Wild type',"+wild+"], ['No Result',"+neither+"]]";
 				var data = [{name:'Mutant strain',value:mutant},{name:'Wild type',value:wild},{name:'No Result',value:neither}];
-				console.log("1, data:" + data);
-				echartsShowPie("_showPie","Samples Statistic",data);
+				$.reportChar.draw.echartsShowPie("_showPie","Samples Statistic",data);
 			}
 			if(appId==81||appId==83||appId==85||appId==86||appId==87||appId==88||appId==91||appId==92||appId==93||appId==94){
 				var T = 0,M = 0;
