@@ -1,4 +1,4 @@
-function showPie(id,title,data) {
+function echartsShowPie(id,title,data) {
 	console.log("2" + ", id:" + id + ", title:" + title + ", data:" + data);
     	var echartsPie = echarts.init(document.getElementById(id));
         var option = {
