@@ -8,12 +8,11 @@ import os
 import sys
 from mysql.mysqlOperate import mysql
 from mongo.mongoOperate import mongo
-from app.PGS import PGS
+from app.ABINJ import ABINJ
 from utils.FileUtils import *
 
-#command: python *.py basePath projectId
-#eg : python runover.py '/share/data/webapps/Tools/upload/' 4018
-#eg : python /home/lin/work/git/celloud/python/runover.py /home/lin/work/ 4018
+#command: python *.py projectId
+#eg : python /share/biosoft/perl/PGS_MG/python/project_run_over.py 4018
 
 #对应class名
 method_dic = {
@@ -52,8 +51,10 @@ if my:
 				print objId
 			projectContext += re['dataKey']+'\t'+re['fileName']+'\n'
 
-		projectTxt = os.path.join(p,re['projectId']+'.txt')
+		projectTxt = os.path.join(p,str(re['projectId'])+'.txt')
 		appendWrite(projectTxt,projectContext)
 		table = sampleToTable(projectTxt)
-		updateSql = 'update tb_report set context = "'+table+'" where flag = 1 and project_id = '+re['projectId']
-		my.execute(sql)
+		updateSql = 'update tb_report set context = "'+table+'",period = 3,end_date=now() where flag = 1 and project_id = '+str(re['projectId'])
+		my=mysql.getInstance()
+		if my:
+			my.execute(updateSql)
