@@ -77,7 +77,7 @@ $.reportChar.draw = {
       $.reportChar.draw._require('pie',option,id);
   },
   
-  echartsShowPie : function (id,title,data) {
+  echartsShowPie : function(id,title,data) {
         var option = {
             title : {
                 text: title,
