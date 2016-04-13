@@ -367,6 +367,7 @@ public interface ReportService {
 
     /**
      * PGS 数据参数同比
+     * 对dao层返回的数据进行拼接返回到页面
      * 
      * @param appId
      * @param path
@@ -374,7 +375,7 @@ public interface ReportService {
      * @return
      * @date 2016-1-9 下午3:25:22
      */
-    public String pgsCompare(Integer appId, String path, String columns);
+    public String pgsCompare(Integer appId, String columns);
 
     /**
      * split数据参数同比

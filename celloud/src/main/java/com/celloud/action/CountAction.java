@@ -271,8 +271,8 @@ public class CountAction {
     @ActionLog(value = "获取PGS数据参数同比信息", button = "PGS数据报告")
 	@ResponseBody
 	@RequestMapping("pgsCompare")
-	public String pgsCompare(Integer appId, String path, String columns) {
-		return reportService.pgsCompare(appId, path, columns);
+	public String pgsCompare(Integer appId, String columns) {
+		return reportService.pgsCompare(appId, columns);
 	}
 
     /**

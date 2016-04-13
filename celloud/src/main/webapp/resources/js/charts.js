@@ -188,10 +188,10 @@ $.reportChar.draw = {
   /**
    * 使用echarts绘制散点图
    */
-  echartsShowScatter: function(id,single,multi){
+  echartsShowScatter: function(id,title,multi,single){
 	  var option = {
 		    title : {
-		        text: 'Total_Readers',
+		        text: title,
 		        left: 85
 		    },
 		    grid : {
@@ -233,7 +233,7 @@ $.reportChar.draw = {
 		            type : 'value',
 		            scale:true,
 		            axisLabel : {
-		                formatter: '{value} k'
+		                formatter: '{value}'
 		            },
 		            name : '值',
 		        }

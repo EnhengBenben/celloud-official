@@ -109,4 +109,9 @@ public class ReportDaoImpl implements ReportDao {
         return pageList;
     }
 
+    @Override
+    public <T> List<T> getDataFieldsByAppId(Class<T> clazz, Integer appId, String[] columns) {
+        return dataStore.createQuery(clazz).filter("appId =", appId).retrievedFields(true, columns).asList();
+    }
+
 }

@@ -761,7 +761,7 @@ $.ajaxSetup ({
 						}
 					}
 				});
-				$.get("count/pgsCompare",{"appId":appId,"columns":columns,"path":DATAPATH},function(data){
+				$.get("count/pgsCompare",{"appId":appId,"columns":columns},function(data){
 					var sp = data.split(";");
 					$("#charResult").html("");
 					for ( var i = 1; i < sp.length; i++) {
@@ -787,7 +787,7 @@ $.ajaxSetup ({
 						}
 						$("#charResult").append("本数据的 "+ev[0]+" 打败了 <span class='green'>"+percent+"%</span> 的数据；");
 						var single = "[[2,"+one+"]]";
-						showChar("char" + i, ev[0], eval(context),eval(single));
+						$.reportChar.draw.echartsShowScatter("char" + i, ev[0], eval(context),eval(single));
 					}
 				});
 			}

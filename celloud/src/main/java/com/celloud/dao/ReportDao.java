@@ -15,6 +15,14 @@ import com.celloud.page.PageList;
  * @date 2016-1-8 下午4:12:24
  */
 public interface ReportDao {
+    
+    /**
+     * 根据appid获取某几列的字段值
+     * @param appId
+     * @param columns
+     * @return
+     */
+    public <T> List<T> getDataFieldsByAppId(Class<T> clazz, Integer appId, String[] columns);
 
     /**
      * 从mongodb中查询数据报告的通用方法

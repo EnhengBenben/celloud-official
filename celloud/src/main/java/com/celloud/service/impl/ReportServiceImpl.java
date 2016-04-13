@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -143,10 +145,10 @@ public class ReportServiceImpl implements ReportService {
         hbv.setReporttxt(CustomStringUtils.htmlbr(hbv.getReporttxt()));
         return hbv;
     }
-    
+
     @Override
     public Integer getTBINHisWildByGeneNameAndUserId(Integer userId, String simpleGeneName, Integer isWild) {
-        return reportDao.getTBINHisWild( userId, simpleGeneName, isWild);
+        return reportDao.getTBINHisWild(userId, simpleGeneName, isWild);
     }
 
     @Override
@@ -380,44 +382,55 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public String pgsCompare(Integer appId, String path, String columns) {
+    public String pgsCompare(Integer appId, String columns) {
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("totalReads", "Total_Reads");
+        map.put("duplicate", "Duplicate(%)");
+        map.put("gcCount", "GC_Count(%)");
+        map.put("sd", "SD");
+        // 对比列为null
         if (columns == null) {
             return null;
         }
+        // 分割对比列[totalReads,duplicate,gcCount]
         String column[] = columns.split(",");
+        // 拼接最终返回的字符串:
+        // ;Total_Reads:477319,470293,410200,;Duplicate(%):3.50,0.52,0.14,;GC_Count(%):40.02,36.26,39.90,
         StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < column.length; i++) {
-            String fileName = path + appId + "_" + column[i];
-            File file = new File(fileName);
-            if (file.exists()) {
-                sb.append(";" + column[i] + ":");
-                BufferedReader br = null;
+        // 根据appId查询某些列的字段
+        List<Pgs> pgs = reportDao.getDataFieldsByAppId(Pgs.class, appId, column);
+        if (pgs != null && pgs.size() > 0) {
+            for (int i = 0; i < column.length; i++) {
+                // 拼接方法名, 根绝field
+                StringBuilder methodName = new StringBuilder();
+                methodName.append("get");
+                methodName.append(column[i].substring(0, 1).toUpperCase());
+                methodName.append(column[i].substring(1));
+                // 开始拼接
+                sb.append(";" + map.get(column[i]) + ":");
                 try {
-                    br = new BufferedReader(new FileReader(file));
-                } catch (FileNotFoundException e) {
-                    log.error(fileName + "文件不存在");
-                }
-                if (br == null)
-                    continue;
-                String line = null;
-                try {
-                    while ((line = br.readLine()) != null) {
-                        sb.append(line + ",");
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    try {
-                        if (br != null) {
-                            br.close();
+                    // 获取getXxx方法:p.getTotalReads();p.getSd();p.getGcCount();p.getDuplicate();
+                    Method getMethod = pgs.get(0).getClass().getMethod(methodName.toString(), (Class<?>[]) null);
+                    // 可暴力访问
+                    getMethod.setAccessible(true);
+                    // 遍历每一个Pgs对象
+                    for (Pgs p : pgs) {
+                        // 用当前的对象执行getXxx方法获取值
+                        String value = (String) getMethod.invoke(p, (Object[]) null);
+                        // 新老数据的字段有可能不一致, 所以判断非空
+                        if (value != null && !"".equals(value)) {
+                            // 拼接到sb中
+                            sb.append(value + ",");
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
+            return sb.toString();
+        } else {
+            return null;
         }
-        return sb.toString();
     }
 
     @Override
