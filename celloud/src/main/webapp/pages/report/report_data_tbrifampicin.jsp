@@ -22,7 +22,7 @@
 		<h2>
 			<i class="i-edit"></i>报告 
 			<span class="filter"> 
-			     <input type="text" value="5" id="_snum">
+			     <input type="text" value="5" id="_snum" style="padding: 0; height: 35px;">
 			     <a href="javascript:void(0)" class="btn btn-success" onclick="searchTable()"><i class="i-filter"></i>筛选</a>
 			</span>
 		</h2>

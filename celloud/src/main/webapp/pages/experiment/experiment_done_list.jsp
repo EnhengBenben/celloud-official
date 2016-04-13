@@ -6,19 +6,19 @@
 	<c:set var="page" value="${pageList.page }"></c:set>
 	<thead>
 		<tr>
-			<th>编号</th>
-			<th>日期</th>
-			<th>样本类型</th>
-			<th>扩增方法</th>
-			<th>浓度(ng/ul)</th>
-			<th>质控</th>
-			<th>Index</th>
-			<th>库浓度(ng/ul)</th>
-			<th>测序仪</th>
-			<th>阶段</th>
+			<th style="min-width: 60px">编号</th>
+			<th style="min-width: 80px">日期</th>
+			<th style="min-width: 100px">样本类型</th>
+			<th style="min-width: 80px">扩增方法</th>
+			<th style="min-width: 90px">浓度(ng/ul)</th>
+			<th style="min-width: 60px">质控</th>
+			<th style="min-width: 55px">Index</th>
+			<th style="min-width: 110px">库浓度(ng/ul)</th>
+			<th style="min-width: 110px">测序仪</th>
+			<th style="min-width: 65px">阶段</th>
 			<th>其他</th>
-			<th>报告</th>
-			<th>报告时间</th>
+			<th style="min-width: 40px">报告</th>
+			<th style="min-width: 80px">报告时间</th>
 		</tr>
 	</thead>
 	<tbody>

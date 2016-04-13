@@ -143,6 +143,11 @@ public class ReportServiceImpl implements ReportService {
         hbv.setReporttxt(CustomStringUtils.htmlbr(hbv.getReporttxt()));
         return hbv;
     }
+    
+    @Override
+    public Integer getTBINHisWildByGeneNameAndUserId(Integer userId, String simpleGeneName, Integer isWild) {
+        return reportDao.getTBINHisWild( userId, simpleGeneName, isWild);
+    }
 
     @Override
     public Pgs getPgsReport(String dataKey, Integer projectId, Integer appId) {

@@ -51,27 +51,9 @@ public class RunOverUtil {
                 String first = FileTools.getFirstLine(report);
                 String genes[] = first.split(" ");
                 gene = genes[genes.length - 1];
-                // 构建统计文件
-                String countTxt = reportPath + "/" + gene + ".txt";
-                if (!new File(countTxt).exists()) {
-                    FileTools.createFile(countTxt);
-                    FileTools.appendWrite(countTxt, "0\n0");
-                }
-                int countSNP = Integer.parseInt(FileTools.getFirstLine(countTxt));
-                int countWild = Integer.parseInt(FileTools.getLineByNum(countTxt, 2));
-                String isWild = FileTools.getLineByNum(report, 2);// 根据第二行判断是否是野生型
-                if (isWild.startsWith("SNP")) {// 不是野生型
-                    countSNP++;
-                } else {// 是野生型
-                    countWild++;
-                }
-                new File(countTxt).delete();
-                FileTools.createFile(countTxt);
-                FileTools.appendWrite(countTxt, countSNP + "\n" + countWild);
             }
             boolean isKatG = gene.equals("KatG");
             String position = ScreeningUtil.unitColumn(finalPath + "/report.txt.1", isKatG);
-
             resultArray.append(data.getDataKey() + "\t" + data.getFileName() + "\t" + gene + "\t" + position + "\n");
         }
         FileTools.appendWrite(projectFile, resultArray.toString());
@@ -615,7 +597,6 @@ public class RunOverUtil {
             if (CustomStringUtils.isEmpty(geneName)) {
                 geneName = "no result";
             }
-            System.out.println(result);
             resultArray.append(data.getDataKey()).append("\t").append(data.getFileName()).append("\t").append(geneName)
                     .append("\t").append(result).append("\t").append(re).append("\n");
         }

@@ -74,7 +74,7 @@ $.ajaxSetup ({
 					}
 					context += "</div>";
 					$("#showAppDiv").html(context);
-					context ="<div class='moreApp' style='margin-top:-20px'>";
+					context ="<div class='moreApp' style='margin-top:-20px;margin-left: 80px;'>";
 					_num = 0;
 					for ( var i = 8; i < appList.length; i++) {
 						var id = appList[i]['app_id'];
@@ -739,8 +739,9 @@ $.ajaxSetup ({
 			if(appId==105){
 				var mutant = $("#_hidMutant").val();
 				var wild = $("#_hidWild").val();
-				var data = "[['Mutant strain',"+ mutant+"], ['Wild type',"+wild+"]]";
-				showPie("_showPie","Samples Statistic",eval(data));
+				var neither = $("#_hidNeither").val();
+				var data = [{name:'Mutant strain',value:mutant},{name:'Wild type',value:wild},{name:'No Result',value:neither}];
+				$.reportChar.draw.echartsShowPie("_showPie","Samples Statistic",data);
 			}
 			if(appId==81||appId==83||appId==85||appId==86||appId==87||appId==88||appId==91||appId==92||appId==93||appId==94){
 				var T = 0,M = 0;

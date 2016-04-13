@@ -6,19 +6,18 @@
 	<c:set var="page" value="${pageList.page }"></c:set>
 	<thead>
 		<tr>
-			<th>编号</th>
-			<th>日期</th>
-			<th>样本类型</th>
-			<th>扩增方法</th>
-			<th>浓度(ng/ul)</th>
-			<th>质控</th>
-			<th>Index</th>
-			<th>库浓度(ng/ul)</th>
-			<th>测序仪</th>
-			<th>阶段</th>
+			<th style="min-width: 60px">编号</th>
+			<th style="min-width: 80px">日期</th>
+			<th style="min-width: 100px">样本类型</th>
+			<th style="min-width: 80px">扩增方法</th>
+			<th style="min-width: 90px">浓度(ng/ul)</th>
+			<th style="min-width: 60px">质控</th>
+			<th style="min-width: 55px">Index</th>
+			<th style="min-width: 110px">库浓度(ng/ul)</th>
+			<th style="min-width: 110px">测序仪</th>
+			<th style="min-width: 65px">阶段</th>
 			<th>其他</th>
-			<th>报告</th>
-			<th>操作</th>
+			<th style="min-width: 60px">操作</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -47,10 +46,6 @@
 					</c:if>
 				</td>
 				<td>${exp.other }</td>
-				<td title="${exp.remarks }">
-					<c:if test="${exp.qualified==0 }">有效</c:if>
-					<c:if test="${exp.qualified==1 }">无效</c:if>
-				</td>
 				<td><a onclick="experiment.toEditExp(${exp.id })" href="javascript:void(0)">编辑</a></td>
 			</tr>
 		</c:forEach>

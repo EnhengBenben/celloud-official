@@ -15,13 +15,17 @@
 		<h2>
 			<i class="i-edit"></i>Gene Name
 		</h2>
-		<div class="m-boxCon result">${tbihn.report }</div>
+		<div class="m-boxCon result">${tbinh.geneName }</div>
+		<input type="hidden" id="_hidName" value="${tbinh.simpleGeneName }">
+        <input type="hidden" id="_hidMutant" value="${mutant }">
+        <input type="hidden" id="_hidWild" value="${wild }">
+        <input type="hidden" id="_hidNeither" value="${neither }">
 	</div>
 	<!--位点突变-->
 	<div class="m-box m-box-yc">
 		<h2>
 			<i class="i-edit"></i>Known mutation <span class="filter"> <input
-				type="text" value="5" id="_snum1"><a
+				type="text" value="5" id="_snum1" style="padding: 0; height: 35px;"><a
 				href="javascript:void(0)" class="btn btn-success"
 				onclick="searchTable('_snum1','r1','_sr1')"><i class="i-filter"></i>筛选</a>
 			</span>
@@ -35,7 +39,7 @@
 	<div class="m-box m-box-yc">
 		<h2>
 			<i class="i-edit"></i>Unknown mutation <span class="filter"> <input
-				type="text" value="5" id="_snum2"><a
+				type="text" value="5" id="_snum2" style="padding: 0; height: 35px;"><a
 				href="javascript:void(0)" class="btn btn-success"
 				onclick="searchTable('_snum2','r2','_sr2')"><i class="i-filter"></i>筛选</a>
 			</span>
@@ -51,7 +55,7 @@
 		<h2>
 			<i class="i-edit"></i>Samples Statistic
 		</h2>
-		<div class="m-boxCon" id="_showPie"></div>
+		<div class="m-boxCon" id="_showPie" style="width: 400px;height:200px;"></div>
 	</div>
 	<!--检测结果-->
 	<div class="m-box">
