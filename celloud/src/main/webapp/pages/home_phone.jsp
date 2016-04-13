@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="baidu-site-verification" content="IsldTuHqik" />
-<meta name="keywords" content="celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
+<meta name="keywords" content="celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据,上海华点云生物科技有限公司网站首页,上海华点云生物科技有限公司官网,上海华点云生物科技有限公司北京分公司" />
 <title>CelLoud 平台</title>
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico"/>
 <link rel="bookmark" href="<%=request.getContextPath()%>/images/favicon.ico"/>
@@ -22,8 +22,6 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
     } 
 } 
 </script>
-<meta name="keywords" content="SMINT jQuery Plugin, SMINT, jQuery Plugin, One Page Website, Sticky Navigation" />
-<meta name="description" content="SMINT is a simple plugin for lovers of one page websites, which helps with sticky menus and page scrolling." />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, minimum-scale=1,user-scalable=yes">
 <link href="<%=request.getContextPath()%>/css/homePhone.css" rel="stylesheet" type="text/css">
 </head>
