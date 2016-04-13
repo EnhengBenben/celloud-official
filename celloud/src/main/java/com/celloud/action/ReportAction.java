@@ -34,6 +34,7 @@ import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DeptConstants;
 import com.celloud.constants.ReportType;
+import com.celloud.model.mongo.ABINJ;
 import com.celloud.model.mongo.BRAF;
 import com.celloud.model.mongo.CmpFilling;
 import com.celloud.model.mongo.CmpGeneDetectionDetail;
@@ -561,7 +562,25 @@ public class ReportAction {
         ModelAndView mv = getModelAndView("report/report_data_hbv", projectId);
         return mv.addObject("hbv", hbv);
     }
-
+    
+    /**
+     * 获取ABINJ的数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author lin
+     * @date 2016年4月13日下午3:59:57
+     */
+    @ActionLog(value = "查看ABINJ数据报告", button = "数据报告")
+    @RequestMapping("getABINJReport")
+    public ModelAndView getABINJReport(String dataKey, Integer projectId, Integer appId) {
+    	ABINJ abinj = reportService.getABINJReport(dataKey, projectId, appId);
+    	ModelAndView mv = getModelAndView("report/report_data_abinj", projectId);
+    	return mv.addObject("abinj", abinj);
+    }
+    
     /**
      * 获取PGS的数据报告
      * 
