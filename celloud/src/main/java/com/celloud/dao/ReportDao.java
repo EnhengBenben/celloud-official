@@ -141,4 +141,14 @@ public interface ReportDao {
      */
     public <T> PageList<T> getDataPageListAndOrder(Class<T> T,
             Map<String, Object> conditionMap, String sortField, Page page);
+
+    /**
+     * 根据条件查询TBINH报告的数量
+     * 
+     * @param integer
+     * @param geneName
+     * @param isWild
+     * @return
+     */
+    public Integer getTBINHisWild(Integer userId, String simpleGeneName, Integer isWild);
 }

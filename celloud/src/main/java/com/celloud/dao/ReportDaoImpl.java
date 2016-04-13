@@ -10,6 +10,7 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.springframework.stereotype.Service;
 
+import com.celloud.model.mongo.TBINH;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 
@@ -25,16 +26,20 @@ public class ReportDaoImpl implements ReportDao {
     private Datastore dataStore;
 
     @Override
-    public <T> T getDataReport(Class<T> T, String dataKey, Integer projectId,
-            Integer appId) {
-        return dataStore.createQuery(T).filter("dataKey", dataKey)
-                .filter("projectId", projectId).filter("appId", appId).get();
+    public Integer getTBINHisWild(Integer userId, String simpleGeneName, Integer isWild) {
+        return dataStore.createQuery(TBINH.class).filter("userId =", userId).filter("simpleGeneName =", simpleGeneName)
+                .filter("isWild =", isWild).asList().size();
+    }
+
+    @Override
+    public <T> T getDataReport(Class<T> T, String dataKey, Integer projectId, Integer appId) {
+        return dataStore.createQuery(T).filter("dataKey", dataKey).filter("projectId", projectId).filter("appId", appId)
+                .get();
     }
 
     @Override
     public <T> List<T> getAppList(Class<T> T, Integer userId) {
-        return dataStore.createQuery(T).filter("userId", userId)
-                .order("-createDate").asList();
+        return dataStore.createQuery(T).filter("userId", userId).order("-createDate").asList();
     }
 
     @Override
@@ -44,21 +49,18 @@ public class ReportDaoImpl implements ReportDao {
 
     @Override
     public <T> List<T> getAllAppList(Class<T> T, String[] retrievedFields) {
-        return dataStore.createQuery(T).retrievedFields(true, retrievedFields)
-                .asList();
+        return dataStore.createQuery(T).retrievedFields(true, retrievedFields).asList();
     }
 
     @Override
-    public <T> T getDataFileds(Class<T> T, String dataKey, Integer projectId,
-            Integer appId, String[] retrievedFields) {
-        return dataStore.createQuery(T).retrievedFields(true, retrievedFields)
-                .filter("dataKey", dataKey).filter("projectId", projectId)
-                .filter("appId", appId).get();
+    public <T> T getDataFileds(Class<T> T, String dataKey, Integer projectId, Integer appId, String[] retrievedFields) {
+        return dataStore.createQuery(T).retrievedFields(true, retrievedFields).filter("dataKey", dataKey)
+                .filter("projectId", projectId).filter("appId", appId).get();
     }
 
     @Override
-    public <T> List<T> getDataFieldInAndOrder(Class<T> T, String[] fields,
-            Map<String, List<String>> conditionMap, String sortField) {
+    public <T> List<T> getDataFieldInAndOrder(Class<T> T, String[] fields, Map<String, List<String>> conditionMap,
+            String sortField) {
         Query<T> q = dataStore.createQuery(T);
         for (String s : fields) {
             q.filter(s + " nin", conditionMap.get(s));
@@ -67,8 +69,7 @@ public class ReportDaoImpl implements ReportDao {
     }
 
     @Override
-    public <T> void editData(Class<T> T, ObjectId id, String field,
-            Object obj) {
+    public <T> void editData(Class<T> T, ObjectId id, String field, Object obj) {
         dataStore.update(dataStore.createQuery(T).filter("_id", id),
                 dataStore.createUpdateOperations(T).set(field, obj));
     }
@@ -79,8 +80,7 @@ public class ReportDaoImpl implements ReportDao {
     }
 
     @Override
-    public <T> List<T> getDataListAndOrder(Class<T> T,
-            Map<String, Object> conditionMap, String sortField) {
+    public <T> List<T> getDataListAndOrder(Class<T> T, Map<String, Object> conditionMap, String sortField) {
         Query<T> q = dataStore.createQuery(T);
         if (conditionMap != null) {
             for (Map.Entry<String, Object> entry : conditionMap.entrySet()) {
@@ -91,8 +91,8 @@ public class ReportDaoImpl implements ReportDao {
     }
 
     @Override
-    public <T> PageList<T> getDataPageListAndOrder(Class<T> T,
-            Map<String, Object> conditionMap, String sortField, Page page) {
+    public <T> PageList<T> getDataPageListAndOrder(Class<T> T, Map<String, Object> conditionMap, String sortField,
+            Page page) {
         PageList<T> pageList = new PageList<T>();
         Query<T> q = dataStore.find(T);
         if (conditionMap != null) {
@@ -102,11 +102,11 @@ public class ReportDaoImpl implements ReportDao {
         }
         List<T> list_all = q.asList();
         page.make(list_all.size());
-        List<T> list = q.order(sortField)
-                .offset((page.getCurrentPage() - 1) * page.getPageSize())
+        List<T> list = q.order(sortField).offset((page.getCurrentPage() - 1) * page.getPageSize())
                 .limit(page.getPageSize()).asList();
         pageList.setDatas(list);
         pageList.setPage(page);
         return pageList;
     }
+
 }

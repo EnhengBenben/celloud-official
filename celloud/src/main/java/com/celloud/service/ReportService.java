@@ -34,6 +34,17 @@ import com.celloud.page.PageList;
  * @date 2015年12月25日 下午3:47:07
  */
 public interface ReportService {
+    
+    
+    /**
+     * 获取TBINH下是否是野生型的数量, 0:都不是1:是野生2:不是野生
+     * 
+     * @param userId
+     * @param geneName
+     * @param isWild
+     * @return
+     */
+    public Integer getTBINHisWildByGeneNameAndUserId(Integer userId, String simpleGeneName, Integer isWild);
 
     /**
      * 获取TBINH报告
