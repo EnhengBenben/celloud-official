@@ -154,7 +154,77 @@ $.reportChar.draw = {
         ]
     };
     $.reportChar.draw._require('bar',option,id);
+  },
+  /**
+   * 使用echarts绘制散点图
+   */
+  echartsShowScatter: function(id,single,multi){
+	  var option = {
+		    title : {
+		        text: 'Total_Readers',
+		        left: 85
+		    },
+		    grid : {
+		    	width : 220
+		    },
+		    tooltip : {
+		        trigger: 'item',
+		        axisPointer:{
+		            show: true,
+		            type : 'cross',
+		            lineStyle: {
+		                type : 'dashed',
+		                width : 1
+		            }
+		        }
+		    },
+		    legend: {
+		        data: ['All data','This one'],
+		        left: 260,
+		        top: 180,
+		    },
+		    xAxis : [
+		        {
+		            type : 'value',
+		            scale:true,
+		            min : 0,
+		            max : 2,
+		            splitNumber : 2,
+		            name : '序号',
+		            nameLocation : 'middle',
+		            nameGap : 20,
+		            splitLine : {
+		            	show : false
+		            }
+		        }
+		    ],
+		    yAxis : [
+		        {
+		            type : 'value',
+		            scale:true,
+		            axisLabel : {
+		                formatter: '{value} k'
+		            },
+		            name : '值',
+		        }
+		    ],
+		    series : [
+		        {
+		            name:'All data',
+		            type:'scatter',
+		            data: multi
+		        },
+		        {
+		            name:'This one',
+		            type:'scatter',
+		            data: single
+		        }
+		    ]
+		};
+		$.reportChar.draw._require('scatter',option,id);
   }
+  
+  
 };
 /**
  * 环形图数据参数
