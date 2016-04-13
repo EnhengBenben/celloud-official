@@ -362,7 +362,7 @@ a:hover, a:focus{
 							<span class="secTitle">${pgs.companyEngName}</span>
 						</h2>
 						<c:if test="${pgs.companyId!=12&&pgs.companyId!=10&&pgs.companyId!=22}">
-							<img id="_imgShow" src="<%=request.getContextPath() %>/report/dept/icon?file=${dept.deptIcon}" style="width:95px">
+							<img id="_imgShow" src="<%=request.getContextPath() %>/report/dept/icon?file=${pgs.deptIcon}" style="width:95px">
 						</c:if>
 					</div>
 					<hr>
