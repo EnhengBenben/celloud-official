@@ -577,7 +577,7 @@ public class ReportAction {
         ModelAndView mv = getModelAndView("report/report_data_pgs", projectId);
         Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
         Integer userId = ConstantsData.getLoginUserId();
-		List<Experiment> expList = expService.getReportList(userId, dataKey);
+        List<Experiment> expList = expService.getReportList(userId, dataKey);
         if (expList != null && expList.size() > 0) {
             mv.addObject("experiment", expList.get(0));
         }
@@ -651,6 +651,10 @@ public class ReportAction {
     @RequestMapping("getEGFRReport")
     public ModelAndView getEGFRReport(String dataKey, Integer projectId, Integer appId) {
         EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
+        String mp = egfr.getMutationPosition();
+        if (StringUtils.isNotEmpty(mp)) {
+            egfr.setMutationPosition(CustomStringUtils.htmlbr(mp));
+        }
         ModelAndView mv = getModelAndView("report/report_data_egfr", projectId);
         return mv.addObject("egfr", egfr);
     }
@@ -673,6 +677,10 @@ public class ReportAction {
         if (StringUtils.isNotBlank(mp)) {
             kras.setMutationPosition(CustomStringUtils.htmlbr(mp));
         }
+		String pos = kras.getPosition();
+		if (StringUtils.isNotBlank(pos)) {
+			kras.setPosition(CustomStringUtils.htmlbr(pos));
+		}
         ModelAndView mv = getModelAndView("report/report_data_kras", projectId);
         return mv.addObject("kras", kras);
     }
@@ -692,15 +700,7 @@ public class ReportAction {
     public ModelAndView getDPDReport(String dataKey, Integer projectId, Integer appId) {
         DPD dpd = reportService.getDPDReport(dataKey, projectId, appId);
         String mp = dpd.getMutationPosition();
-        if (StringUtils.isNotBlank(mp)) {
-            String context[] = mp.split("\n");
-            StringBuffer sb = new StringBuffer("<table>");
-            for (String st : context) {
-                sb.append("<tr><td>" + st + "</td></tr>");
-            }
-            sb.append("</table>");
-            dpd.setMutationPosition(sb.toString());
-        }
+        dpd.setMutationPosition(CustomStringUtils.toTable(mp));
         String postion = dpd.getPosition();
         if (StringUtils.isNotBlank(postion)) {
             dpd.setPosition(CustomStringUtils.htmlbr(postion));
@@ -761,41 +761,22 @@ public class ReportAction {
     @RequestMapping("getTBINHReport")
     public ModelAndView getTBINHReport(String dataKey, Integer projectId, Integer appId) {
         TBINH tbinh = reportService.getTBINHReport(dataKey, projectId, appId);
-
         String position = tbinh.getPosition();
-        if (StringUtils.isNotBlank(position)) {
-            String[] positions = position.split("\n");
-            StringBuffer sb = new StringBuffer("<table>");
-            for (String p : positions) {
-                sb.append("<tr><td>" + p + "</td></tr>");
-            }
-            sb.append("</table>");
-            tbinh.setPosition(sb.toString());
-        }
-
-        String report = tbinh.getReport();
-        if (StringUtils.isNotBlank(report)) {
-            String first = tbinh.getReport().split("\n")[0];
-            if (first == null) {
-                tbinh.setReport("no result");
-            } else {
-                tbinh.setReport(first);
-            }
-        }
-
+        tbinh.setPosition(CustomStringUtils.toTable(position));
         String mutationPosition = tbinh.getMutationPosition();
-        if (StringUtils.isNotBlank(mutationPosition)) {
-            String[] mps = mutationPosition.split("\n");
-            StringBuffer sb = new StringBuffer("<table>");
-            for (String mp : mps) {
-                sb.append("<tr><td>" + mp + "</td></tr>");
-            }
-            sb.append("</table>");
-            tbinh.setMutationPosition(sb.toString());
-        }
-
+        tbinh.setMutationPosition(CustomStringUtils.toTable(mutationPosition));
+        // 获取userId下野生型,非野生型,两者都不是的数量
+        Integer userId = tbinh.getUserId();
+        String simpleGeneName = tbinh.getSimpleGeneName();
+        // 两者都不是
+        Integer neither = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 0);
+        // 野生型
+        Integer wild = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 1);
+        // 非野生型
+        Integer mutant = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 2);
         ModelAndView mv = getModelAndView("report/report_data_tbinh", projectId);
-        return mv.addObject("tbinh", tbinh);
+        return mv.addObject("tbinh", tbinh).addObject("wild", wild).addObject("mutant", mutant).addObject("neither",
+                neither);
     }
 
     /**
@@ -812,16 +793,7 @@ public class ReportAction {
     public ModelAndView getTBRifampicinReport(String dataKey, Integer projectId, Integer appId) {
         TBRifampicin tbrifampicin = reportService.getTBRifampicinReport(dataKey, projectId, appId);
         String report = tbrifampicin.getReport();
-        if (StringUtils.isNotBlank(report)) {
-            String reports[] = report.split("\n");
-            StringBuffer sb = new StringBuffer("<table>");
-            for (String r : reports) {
-                sb.append("<tr><td>" + r + "</td></tr>");
-            }
-            sb.append("</table>");
-            tbrifampicin.setReport(sb.toString());
-        }
-
+        tbrifampicin.setReport(CustomStringUtils.toTable(report));
         ModelAndView mv = getModelAndView("report/report_data_tbrifampicin", projectId);
         return mv.addObject("tbrifampicin", tbrifampicin);
     }
@@ -840,16 +812,7 @@ public class ReportAction {
     public ModelAndView getBRAFReport(String dataKey, Integer projectId, Integer appId) {
         BRAF braf = reportService.getBRAFReport(dataKey, projectId, appId);
         String mp = braf.getMutationPosition();
-        if (StringUtils.isNotBlank(mp)) {
-            String mps[] = mp.split("\n");
-            StringBuffer sb = new StringBuffer("<table>");
-            for (String m : mps) {
-                sb.append("<tr><td>" + m + "</td></tr>");
-            }
-            sb.append("</table>");
-            braf.setMutationPosition(sb.toString());
-        }
-
+        braf.setMutationPosition(CustomStringUtils.toTable(mp));
         ModelAndView mv = getModelAndView("report/report_data_braf", projectId);
         return mv.addObject("braf", braf);
     }
@@ -889,26 +852,22 @@ public class ReportAction {
      * @author lin
      * @date 2016年1月17日下午4:47:37
      */
-    @ActionLog(value = "打印PGS数据报告", button = "打印数据报告")
-    @RequestMapping("printPGS")
-    public ModelAndView printPGS(Integer appId, Integer projectId, String dataKey, String miniPng, String txt,
-            String splitPng) {
-        ModelAndView mv = getModelAndView("print/print_pgs", projectId);
-        Integer userId = ConstantsData.getLoginUserId();
-        DataFile data = dataService.getDataByKey(dataKey);
-        Integer fileId = data.getFileId();
-        Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
-        if (StringUtils.isEmpty(report.getPrintContext())) {
-            Dept dept = deptService.selectByPrimaryKey(ConstantsData.getLoginUser().getDeptId());
-            Company company = companyService.selectByPrimaryKey(dept.getCompanyId());
-            mv.addObject("userId", userId).addObject("appId", appId).addObject("data", data);
-            mv.addObject("miniPng", miniPng).addObject("txt", txt).addObject("splitPng", splitPng);
-            mv.addObject("company", company).addObject("dept", dept).addObject("report", report);
-        } else {
-            mv.addObject("printContext", report.getPrintContext());
-        }
-        return mv;
-    }
+	@ActionLog(value = "打印PGS数据报告", button = "打印数据报告")
+	@RequestMapping("printPGS")
+	public ModelAndView printPGS(Integer appId, Integer projectId, String dataKey, Integer flag) {
+		ModelAndView mv = getModelAndView("print/print_pgs", projectId);
+		Integer userId = ConstantsData.getLoginUserId();
+		DataFile data = dataService.getDataByKey(dataKey);
+		Integer fileId = data.getFileId();
+		Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
+		if (StringUtils.isEmpty(report.getPrintContext())) {
+			Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
+			mv.addObject("pgs", pgs).addObject("report", report).addObject("flag", flag);
+		} else {
+			mv.addObject("printContext", report.getPrintContext());
+		}
+		return mv;
+	}
 
     /**
      * 打印TBRifampicin

@@ -20,6 +20,7 @@ import com.celloud.backstage.mapper.UserMapper;
 import com.celloud.backstage.mapper.UserRegisterMapper;
 import com.celloud.backstage.model.User;
 import com.celloud.backstage.model.UserRegister;
+import com.celloud.backstage.model.UserSelect;
 import com.celloud.backstage.page.Page;
 import com.celloud.backstage.page.PageList;
 import com.celloud.backstage.service.UserService;
@@ -175,6 +176,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUserList() {
         return userMapper.getAllUserList(DataState.ACTIVE);
+    }
+
+    @Override
+    public List<UserSelect> getAllUserSelectList() {
+        return userMapper.getAllUserSelectList(DataState.ACTIVE);
     }
 
 }

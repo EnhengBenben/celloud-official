@@ -19,9 +19,9 @@
 	        </dl>
 	        <div class="toolbar">
 	        
-                <a class="btn btn-celloud-success btn-flat" target="_blank" href="report/printPGS?appId=${pgs.appId }&projectId=${pgs.projectId }&dataKey=${pgs.dataKey }&miniPng=${pgs.miniPng }&txt=${pgs.report.replace('+','@').replace('    ','&nbsp;&nbsp;&nbsp;&nbsp;') }&splitPng=null"><i class="fa fa-print"></i>打印报告</a>
+                <a class="btn btn-celloud-success btn-flat" target="_blank" href="report/printPGS?appId=${pgs.appId }&projectId=${pgs.projectId }&dataKey=${pgs.dataKey }&flag=0"><i class="fa fa-print"></i>打印报告</a>
                 <c:if test="${pgs.splitPng!=null }">
-                    <a class="btn btn-celloud-success btn-flat" target="_blank" href="report/printPGS?appId=${pgs.appId }&projectId=${pgs.projectId }&dataKey=${pgs.dataKey }&miniPng=${pgs.miniPng }&txt=${pgs.report.replace('+','@').replace('    ','&nbsp;&nbsp;&nbsp;&nbsp;') }&splitPng=${pgs.splitPng }"><i class="fa fa-print"></i>点图报告</a>                  
+                    <a class="btn btn-celloud-success btn-flat" target="_blank" href="report/printPGS?appId=${pgs.appId }&projectId=${pgs.projectId }&dataKey=${pgs.dataKey }&flag=1"><i class="fa fa-print"></i>点图报告</a>                  
                 </c:if>
                 <c:if test="${pgs.pdf!=null }">
                     <a class="btn btn-warning btn-flat" href="${toolsPath }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.pdf }" class="btn btn-default"><i class="fa fa-file-pdf-o"></i>PDF下载</a>

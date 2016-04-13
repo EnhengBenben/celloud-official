@@ -48,16 +48,7 @@ public class MailingAction {
 	@RequestMapping("mailing/getUser")
 	@ResponseBody
 	public List<UserSelect> getUser() {
-		List<User> userList = userService.getAllUserList();
-		List<UserSelect> userSelectList = new ArrayList<>();
-		for (User user : userList) {
-            if (null != user.getEmail() && !"".equals(user.getEmail())) {
-				UserSelect us = new UserSelect();
-				us.setId(user.getEmail());
-				us.setText(user.getUsername());
-				userSelectList.add(us);
-			}
-		}
+		List<UserSelect> userSelectList = userService.getAllUserSelectList();
 		return userSelectList;
 	}
 
