@@ -58,3 +58,7 @@ if my:
 		my=mysql.getInstance()
 		if my:
 			my.execute(updateSql)
+		updateSql = 'update tb_report set period = 3,end_date=now() where flag = 0 and project_id = '+str(re['projectId'])
+		my=mysql.getInstance()
+		if my:
+			my.execute(updateSql)
