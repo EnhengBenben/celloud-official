@@ -469,36 +469,33 @@ public class DataAction {
                     }
                 }
             } else {
-            	//XXX id动态配置
-            	if(appId.equals(11)){
+				if (SparkPro.RSHAPPS.contains(String.valueOf(appId))) {
 					logger.info("RSH 向 SGE 投递任务");
 					Map<String, String> map = CommandKey.getMap(dataFilePath, appPath, proId);
 					StrSubstitutor sub = new StrSubstitutor(map);
 					String command = sub.replace(app.getCommand());
-					logger.info("运行命令:{}", "rsh manager " + command);
-					PerlUtils.excutePerl("rsh manager " + command);
-            	}else{
-            		if (SparkPro.SGEAPPS.contains(String.valueOf(appId))) {
-            			// TODO 所有向Tools端投递任务的流程都向这里集中
-            			// 最终判断删除，非spark就是SGE
-            			logger.info("celloud 直接向 SGE 投递任务");
-            			Map<String, String> map = CommandKey.getMap(dataFilePath,
-            					appPath, proId);
-            			StrSubstitutor sub = new StrSubstitutor(map);
-            			String command = sub.replace(app.getCommand());
-            			logger.info("运行命令:{}", command);
-            			SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-            			ssh.sshSubmit(command, false);
-            		} else {
-            			String newPath = PropertiesUtil.toolsPath
-            					+ "Procedure!runApp?userId=" + userId + "&appId="
-            					+ appId + "&appName=" + appName + "&projectName="
-            					+ proName + "&dataKeyList=" + dataResult.toString()
-            					+ "&projectId=" + proId;
-            			RemoteRequests rr = new RemoteRequests();
-            			rr.run(newPath);
-            		}
-            	}
+					logger.info("运行命令:{}", command);
+					String rsh = "rsh " + sgeHost + " " + command;
+					logger.info("RSH投递命令:{}", rsh);
+					PerlUtils.excutePerl(rsh);
+				} else if (SparkPro.SGEAPPS.contains(String.valueOf(appId))) {
+					// TODO 所有向Tools端投递任务的流程都向这里集中
+					// 最终判断删除，非spark就是SGE
+					logger.info("celloud 直接向 SGE 投递任务");
+					Map<String, String> map = CommandKey.getMap(dataFilePath, appPath, proId);
+					StrSubstitutor sub = new StrSubstitutor(map);
+					String command = sub.replace(app.getCommand());
+					logger.info("运行命令:{}", command);
+					SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+					ssh.sshSubmit(command, false);
+				} else {
+					//TODO 还有 TRANSLATE／_16S／VSP 三个流程需要从Toold端删除
+					String newPath = PropertiesUtil.toolsPath + "Procedure!runApp?userId=" + userId + "&appId=" + appId
+							+ "&appName=" + appName + "&projectName=" + proName + "&dataKeyList="
+							+ dataResult.toString() + "&projectId=" + proId;
+					RemoteRequests rr = new RemoteRequests();
+					rr.run(newPath);
+				}
             }
         }
         return result;
