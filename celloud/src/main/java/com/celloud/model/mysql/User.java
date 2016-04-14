@@ -81,7 +81,6 @@ public class User implements Serializable {
     public void setCellphone(String cellphone) {
         this.cellphone = cellphone == null ? null : cellphone.trim();
     }
-
     public Date getCreateDate() {
         return createDate;
     }

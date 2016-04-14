@@ -174,6 +174,9 @@
 		<div class="content-wrapper" id="dataReportDIV"></div>
 	</div>
 	<input type="hidden" id="user-navigation-hide" value="${sessionScope.loginUserInSession.navigation }">
+	<script type="text/javascript">
+       window.CONTEXT_PATH = '<%=request.getContextPath()%>'
+    </script>
 	<script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 	<script src="//cdn.bootcss.com/jqueryui/1.11.4/jquery-ui.min.js"></script>
@@ -186,6 +189,7 @@
 	<script src="//cdn.bootcss.com/highcharts/4.2.1/modules/exporting.js"></script>
 	<script src="<%=request.getContextPath()%>/plugins/select/select2.min.js"></script>
 	<script src="<%=request.getContextPath()%>/plugins/select/select2_locale_zh-CN.js"></script>
+	<script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
 	<!--   <script src="//cdn.bootcss.com/select2/4.0.1/js/i18n/zh-CN.js"></script> -->
 	<script src="<%=request.getContextPath()%>/js/utils.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/main_init.js" type="text/javascript"></script>
