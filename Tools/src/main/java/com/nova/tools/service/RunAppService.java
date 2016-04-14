@@ -65,6 +65,10 @@ public class RunAppService {
         if (AppNameIDConstant.TRANSLATE.equals(appId)) {
             runApp.translate(appPath, projectId, dataKeyList);
         }
+        
+        /**
+         *下面的流程全部迁移到了celloud中
+         */
 
         // HCV
         if (AppNameIDConstant.HCV.equals(appId)) {

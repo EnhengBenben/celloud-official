@@ -67,7 +67,7 @@ public interface ExperimentMapper {
 	 * @date 2016年4月7日下午5:06:12
 	 */
 	List<Experiment> getReportList(@Param("userId") Integer userId, @Param("stepId") Integer stepId,
-			@Param("dataKey") String dataKey);
+			@Param("dataKey") String dataKey, @Param("appId") Integer appId);
 
 	/**
 	 * 校验编号是否重复

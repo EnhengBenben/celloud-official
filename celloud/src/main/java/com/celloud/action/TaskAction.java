@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,6 +102,10 @@ public class TaskAction {
     @ResponseBody
     public String taskRunOver(String projectId, String dataNames) {
         logger.info("任务运行结束，proId:{},运行数据dataKey：{}", projectId, dataNames);
+		if (StringUtils.isEmpty(projectId) || StringUtils.isEmpty(dataNames)) {
+			logger.info("任务运行结束信息不全");
+			return "run error";
+		}
         String[] dataArr = dataNames.split(",");
         String dataKey = FileTools.getArray(dataArr, 0);
         // 1. 数据库检索
@@ -217,6 +222,10 @@ public class TaskAction {
     @ResponseBody
     public String projectRunOver(String projectId) {
         logger.info("项目运行结束，id:{}", projectId);
+		if (StringUtils.isEmpty(projectId)) {
+			logger.info("任务运行结束信息不全");
+			return "run error";
+		}
         // 1. 利用 python 生成数据 pdf，并将数据报告插入 mongodb
         String command = "python " + SparkPro.PYTHONPATH + " "
                 + SparkPro.TOOLSPATH + " " + projectId;
