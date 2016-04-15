@@ -77,6 +77,7 @@ class EGFR:
 				resultCount['dataKey'] = paths[len(paths)-1];
 				#截取length
 				resultCount['length'] = int(firstLines[len(firstLines) - 1]);
+				result['pos'] = int(firstLines[len(firstLines) - 1]);
 				list = [];
 				#循环读取剩余的行
 				while True:
@@ -115,7 +116,6 @@ class EGFR:
 		if (os.path.exists(wz1)):
 			info = readAllChinese(wz1)
 			result['position'] = info
-			result['pos'] = info.replace('Exon','').strip()
 
 		#report.txt.wz.2
 		wz2 = os.path.join(path,'report.txt.wz.2')
