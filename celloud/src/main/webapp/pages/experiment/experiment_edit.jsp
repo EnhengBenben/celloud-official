@@ -13,6 +13,7 @@
 			<div class="control-label form-label col-xs-4">编号</div>
 			<div class="col-xs-8">
 				<input type="text" name="number" value="${experiment.number }" id="expnumber" onchange="experiment.changeName()"/>
+				<input type="hidden" value="${experiment.number }" id="expOriginNum"/>
 			</div>
 		</div>
 		<div class="form-group">
