@@ -79,7 +79,8 @@
 							<div class="form-group">
 								<div class="control-label form-label col-xs-2">邮箱地址</div>
 								<div class="col-xs-10">
-									<input name="email" class="readonly" type="text" value="${user.email}" id="inputEmail" placeholder="Email" disabled="disabled"/>
+									<input class="readonly" type="text" value="${user.email}" id="inputEmail" placeholder="Email" disabled="disabled"/>
+									<input class="readonly" type="hidden" value="${user.email}" name="email" />
 									<span id="emailSpanInfo" class="baseInfo"></span>
 								</div>
 							</div>
