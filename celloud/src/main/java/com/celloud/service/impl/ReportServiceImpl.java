@@ -29,6 +29,7 @@ import com.celloud.mapper.AppMapper;
 import com.celloud.mapper.DataFileMapper;
 import com.celloud.mapper.PriceMapper;
 import com.celloud.mapper.ReportMapper;
+import com.celloud.model.mongo.ABINJ;
 import com.celloud.model.mongo.BRAF;
 import com.celloud.model.mongo.BSI;
 import com.celloud.model.mongo.CmpFilling;
@@ -812,4 +813,8 @@ public class ReportServiceImpl implements ReportService {
         return reportDao.getDataReport(BSI.class, dataKey, projectId, appId);
     }
 
+    @Override
+	public ABINJ getABINJReport(String dataKey, Integer projectId, Integer appId) {
+		return reportDao.getDataReport(ABINJ.class, dataKey, projectId, appId);
+	}
 }

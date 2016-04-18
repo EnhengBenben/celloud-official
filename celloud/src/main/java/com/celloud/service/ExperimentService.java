@@ -108,5 +108,5 @@ public interface ExperimentService {
 	 * @author lin
 	 * @date 2016年4月7日下午1:37:43
 	 */
-	List<Experiment> getReportList(Integer userId, String dataKey);
+	List<Experiment> getReportList(Integer userId, String dataKey, Integer appId);
 }

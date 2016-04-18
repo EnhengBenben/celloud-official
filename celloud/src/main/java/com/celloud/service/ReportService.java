@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.bson.types.ObjectId;
 
+import com.celloud.model.mongo.ABINJ;
 import com.celloud.model.mongo.BRAF;
 import com.celloud.model.mongo.BSI;
 import com.celloud.model.mongo.CmpFilling;
@@ -128,6 +129,18 @@ public interface ReportService {
      * @date 2016-1-8 下午4:40:37
      */
     public HBV getHBVReport(String dataKey, Integer projectId, Integer appId);
+    
+    /**
+     * 获取ABINJ数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author lin
+     * @date 2016年4月13日下午4:15:29
+     */
+    public ABINJ getABINJReport(String dataKey, Integer projectId, Integer appId);
 
     /**
      * 获取PGS报告

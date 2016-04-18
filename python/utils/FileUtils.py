@@ -54,10 +54,34 @@ def zip_dir(dirname,zipfilename):
         zf.write(tar,arcname)
     zf.close()
 
+def appendWrite(path,context):
+	if not os.path.isdir(path):
+		f = open(path, 'a')
+		f.write(context)
+		f.close()
+	else:
+		print 'not a file'
+
+def sampleToTable(path):
+	if not os.path.isfile(path):
+		print '文件不存在：' + path
+	else:
+		context = '<table>'
+		for line in open(path,'rU'):
+			context += '<tr>'
+			for l in line.split('\t'):
+				context += '<td>'+l.replace('\n','')+'</td>'
+			context += '</tr>'
+		context += '</table>'
+		return context
+
+
 if __name__ == '__main__':
 	#print countLines('/home/lin/20150817151721/SVG/Report.txt')
 	#print readAll('/Users/lin/9/82/20151029437617/SVG/Report.txt')
 	#print '--------'
-	print readAllChinese('/Users/lin/9/82/20151029437617/SVG/Report.txt').replace('Other:	Y','')
+	#print readAllChinese('/Users/lin/9/82/20151029437617/SVG/Report.txt').replace('Other:	Y','')
 	#print fileSearch('/Users/lin/9/82/20151029437617/SVG','_new.png','endswith')
 	#print fileSearch('/Users/lin/9/82/20151029437617/SVG','_all.png','endswith')
+	#appendWrite('/Users/lin/test3','a\tb\tc\td\na\tb\tc\td\na\tb\tc\td\n')
+	print sampleToTable('/Users/lin/test3')

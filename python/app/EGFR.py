@@ -6,12 +6,16 @@ __des__ = 'EGFR的操作类'
 __author__ = 'lin'
 
 import os
+import codecs
 import threading
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 from utils.FileUtils import *
 from EGFR_PDF import *
+from mongo.mongoOperate import mongo
+
+userList = ['6', '9', '12', '13', '15', '16', '17', '18', '20', '21', '23', '24', '27', '28', 'Gadgets'];
 
 class EGFR:
 	path = None
@@ -50,13 +54,68 @@ class EGFR:
 		report = os.path.join(path,'report.txt')
 		if (os.path.exists(report)):
 			result['report'] = readAllChinese(report)
+			#截取数据报告路径
+			paths = path.split(os.sep);
+			#首先判断用户id是否为测试用户
+			if(paths[len(paths) - 3] not in userList):
+				#判断mongo中是否有对应dataKey的数据, 如果有则都删除
+				#获取mongo操作类实例
+				mo = mongo.getInstance();
+				if(len(list(mo.findAllByCondition({'dataKey':paths[len(paths)-1]},'EGFRCount'))) > 0):
+					mo.deleteAllByCondition({'dataKey':paths[len(paths)-1]},'EGFRCount');
+				#打开报告
+				f = codecs.open(report,'r','gbk');
+				#位点的dict
+				resultCount = {};
+				#读取第一行将\n替换,并将空格替换为\t方便统一操作
+				firstLine = f.readline().replace('\n','').replace(' ','\t');
+				#使用\t分割
+				firstLines = firstLine.split('\t');
+				#截取userId
+				resultCount['userId'] = paths[len(paths)-3];
+				#截取dataKey
+				resultCount['dataKey'] = paths[len(paths)-1];
+				#截取length
+				resultCount['length'] = int(firstLines[len(firstLines) - 1]);
+				result['pos'] = int(firstLines[len(firstLines) - 1]);
+				list = [];
+				#循环读取剩余的行
+				while True:
+					line = f.readline().strip();
+					if line:
+						resultCount['site'] = 0;
+						lines = line.split('\t');
+						target = lines[len(lines) - 2]
+						try:
+							l = int(target.index('-'));
+							before = target[l - 2:l - 1].strip();
+							after = target[l + 2:l + 3].strip();
+							if(before == after):
+								try:
+									d = int(target.index(','));
+									k = int(target.index(')'));
+									result = float(target[d + 1:k]);
+									if(result < 5):
+										resultCount['site'] = int(lines[1]);
+								except ValueError:
+									resultCount['site'] = int(lines[1]);
+							else:
+								resultCount['site'] = int(lines[1]);
+						except ValueError:
+							resultCount['site'] = int(lines[1]);
+						if('site' in resultCount.keys() and resultCount['site'] != 0):
+							list.append(resultCount.copy());
+					else:
+						break;
+				# 执行批量插入操作
+				mo.insertBatch(list,'EGFRCount');
+				f.close();
 
 		#report.txt.wz.1
 		wz1 = os.path.join(path,'report.txt.wz.1')
 		if (os.path.exists(wz1)):
 			info = readAllChinese(wz1)
 			result['position'] = info
-			result['pos'] = info.replace('Exon','').strip()
 
 		#report.txt.wz.2
 		wz2 = os.path.join(path,'report.txt.wz.2')

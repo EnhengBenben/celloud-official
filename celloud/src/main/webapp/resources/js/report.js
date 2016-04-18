@@ -479,7 +479,7 @@ $.ajaxSetup ({
 		                        	fileName = fileName.substring(0,30) + "...";
 		                        }
 			                    $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
-			                    $(this).find("span").bind("click",param,viewProReport);
+			                    $(this).find("span").bind("click",param,viewDataReport);
 			                    $(this).find("span").addClass("link");
 			                }
 			                if(i==0){
@@ -721,6 +721,10 @@ $.ajaxSetup ({
         });
       }else if(softwareId == 108){
         $.get("report/getUGTReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
+          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+        });
+      }else if(softwareId == 11){
+        $.get("report/getABINJReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
           toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
         });
       }else{
@@ -1005,127 +1009,6 @@ $.ajaxSetup ({
 				}
 			});
 			return val;
-		}
-		
-		//查看项目报告（目前只有 ABI_NJ 流程用）
-		function viewProReport(event){
-			if(typeof spinner != "undefined"){
-				spinner.stop();
-			}
-			dataReportParam = event;
-			var	fileName = event.data.fileName;
-			var projectId = event.data.projectId;
-			var softwareId = event.data.softwareId;
-			var softwareName = event.data.softwareName;
-			var userId = event.data.userId;
-			var obj = event.data.obj;
-			var proId = event.data.proId;
-			var proName = event.data.proName;
-			var dataKey = event.data.dataKey;
-			obj.children(":first").addClass("link_visited");
-			$("#reportResultDiv").html("");
-			$("#fileNameH4").html("APP：" + softwareName);
-			$("#proforReport").html(proName);
-			$("#fileListUl").html("");
-			
-			spinner = new Spinner(opts);
-			var target = document.getElementById('reportLoading');
-			spinner.spin(target);
-			$.get("getDataInfoListByProjectId.action",{"projectId":proId},function(fileList){
-				$("#fileListUl").append("<li id='prevLi'><a href='javascript:void(0)' id='prevA' class='forward'>prev</a></li>");
-				$.each(fileList,function(index,item){
-					var inner = "";
-					var seq = index+1;
-					var obj1 = $("#dataSpan"+proId+item.dataKey);
-					if(index == 0){
-						dataItem0 = item;
-						obj1 = $("#dataSpan"+proId+dataItem0.dataKey);
-					}
-					if(item.dataKey == dataKey){
-						if(index>0){
-							var state = index-1;
-							if(state == 0){
-								$("#prevLi").after(inner);
-							}else {
-								$("#dataLi"+state).after($("#dataLi0"));
-							}
-							$("#dataLi0").find("span").html(seq);
-							$("#dataLi0").attr("id","dataLi" + index);
-							$("#dataLi"+index).find("a").bind("click", function() {
-								viewAbiNjReport(userId,softwareId,projectId,dataItem0.fileId,obj1,dataItem0.dataKey,dataItem0.fileName);
-								$.get("report/clickItemDataReport",{},function(state){});
-							});
-						}
-						inner += "<li class='active' id='dataLi0'>";
-						inner += "<a href='javascript:void(0)' id='fileA"+item.fileId+"' title='"+item.fileName+"'><span>"+1+"</span>"+(item.fileName.length>15?(item.fileName.substring(0,15)+"..."):item.fileName)+"</a></li>";
-						$("#prevLi").after(inner);
-						$("#fileA"+item.fileId).bind("click", function() {
-							viewAbiNjReport(userId,softwareId,projectId,item.fileId,obj1,item.dataKey,item.fileName);
-							$.get("report/clickItemDataReport",{},function(state){});
-						});
-					}else{
-						inner +="<li id='dataLi"+index+"'>";
-						inner += "<a href='javascript:void(0)' id='fileA"+item.fileId+"' title="+item.fileName+"><span>"+seq+"</span>"+(item.fileName.length>15?(item.fileName.substring(0,15)+"..."):item.fileName)+"</a></li>";
-						$("#fileListUl").append(inner);
-						$("#fileA"+item.fileId).bind("click", function() {
-							viewAbiNjReport(userId,softwareId,projectId,item.fileId,obj1,item.dataKey,item.fileName);
-							$.get("report/clickItemDataReport",{},function(state){});
-						});
-					}
-					if(index>5){
-						$("#dataLi"+index).attr("style","display:none;");
-					}
-				});
-				$("#fileListUl").append("<li><a href='javascript:void(0)' id='nextA' class='backward'>prev</a></li>");
-				$("#prevA").bind("click",function(){
-					$("#fileListUl").find(".active").prev().find("a:first").trigger("click");
-					$.get("report/prevDataReport",{},function(state){});
-				});
-				$("#nextA").bind("click",function(){
-					$("#fileListUl").find(".active").next().find("a:first").trigger("click");
-					$.get("report/nextDataReport",{},function(state){});
-				});
-				viewAbiNjReport(userId,softwareId,projectId,0,obj.children(":first"),dataKey,fileName);
-			});
-			
-		}
-		function viewAbiNjReport(userId,softwareId,projectId,fileId,obj,dataKey,fileName){
-			obj.addClass("link_visited");
-			if(fileId != 0){
-				$("#fileListUl").find(".active").removeClass("active");
-				$("#fileA"+fileId).parent().addClass("active");
-			}
-			$.get("getPath.action",function(responseText){
-				var toolsPath = responseText.split(",")[0];
-				var newPath = toolsPath + "Procedure!readReport" + "?userId=" + userId + "&appId=" + softwareId + "&projectId=" + projectId;
-				$.get("getDataReport.action",{"url":newPath},function(responseText){
-					toProReport(responseText);
-					$("#treeDataKey").html(dataKey);
-					$("#treeFileName").html(fileName);
-				});
-			});
-		}
-		
-		function toProReport(responseText){
-			$("#reportResultDiv").html(responseText);
-			spinner.stop();
-		}
-		
-		//关闭报告视图
-		function closeDataReport(e){
-			var click = $("#reportTab").attr("onclick");
-			$("#reportTab").attr("onclick","");
-			$("#reportTab").attr("onclick",click);
-			close = 1;
-			var e=e||window.event;
-			stopBubble(e);
-		}
-		//阻止事件冒泡函数
-		function stopBubble(e){
-		    if (e && e.stopPropagation)
-		        e.stopPropagation();
-		    else
-		        window.event.cancelBubble=true;
 		}
 		
 		/** 

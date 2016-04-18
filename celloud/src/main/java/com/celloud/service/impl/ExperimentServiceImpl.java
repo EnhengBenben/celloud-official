@@ -64,8 +64,8 @@ public class ExperimentServiceImpl implements ExperimentService {
 	}
 
 	@Override
-	public List<Experiment> getReportList(Integer userId, String dataKey) {
-		return experimentMapper.getReportList(userId, ExperimentState.REPORT_STEP, dataKey);
+	public List<Experiment> getReportList(Integer userId, String dataKey, Integer appId) {
+		return experimentMapper.getReportList(userId, ExperimentState.REPORT_STEP, dataKey, appId);
 	}
 
 }
