@@ -628,6 +628,21 @@ public class ReportAction {
     }
 
     /**
+     * 修改
+     * 
+     * @param cmpFill
+     * @param cmpId
+     * @author leamo
+     * @date 2016年2月18日 上午10:54:53
+     */
+    @ActionLog(value = "修改BSI数据报告用户填写的信息", button = "修改数据报告")
+    @RequestMapping("updateBSIFilling")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void updateBSIFilling(BSI bsi) {
+        reportService.updateBSIFilling(bsi);
+    }
+
+    /**
      * 获取HBV的数据报告
      * 
      * @param dataKey

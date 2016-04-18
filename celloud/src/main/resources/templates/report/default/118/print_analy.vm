@@ -123,6 +123,22 @@
                  <tr>
                    <td rowspan="4" style="text-align:center;">
                       $!species_other.species
+                      <br>
+                      <svg width="120" height="8">
+                        <rect x="0" y="0" width="120" height="8" fill="#ddd"/>
+                        #if(!$species_20.site1.equals("0,0"))
+                        <rect x="10" y="0" width="10" height="8" fill="#57d2d3"/>
+                        #end
+                        #if(!$species_20.site2.equals("0,0"))
+                        <rect x="30" y="0" width="10" height="8" fill="#57d2d3"/>
+                        #end
+                        #if(!$species_20.site3.equals("0,0"))
+                        <rect x="50" y="0" width="10" height="8" fill="#57d2d3"/>
+                        #end
+                        #if(!$species_20.site4.equals("0,0"))
+                        <rect x="70" y="0" width="10" height="8" fill="#57d2d3"/>
+                        #end
+                      </svg>
                    </td>
                    <td rowspan="4" style="text-align:center;">$!species_other.unique_reads_num</td>
                    <td>1</td>
@@ -438,5 +454,8 @@
               watcher = scrollMonitor.create($this.get(0));
           watcher.lock();
       }
+      $("#save").on("click",function(){
+        $.post("../report/updateBSIFilling",$("#print-form").serialize());
+      })
     });
   </script>

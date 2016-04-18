@@ -19,6 +19,5 @@
     <a id="reset" class="btn btn-default" href="javascript:void(0)">重置</a>
 </div>
 $screen_content
-
 </body>
 </html>
