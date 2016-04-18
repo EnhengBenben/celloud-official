@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
+import com.celloud.mail.EmailService;
 import com.celloud.model.mysql.ActionLog;
 import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
@@ -104,5 +105,12 @@ public class UserAction {
         }
         PageList<ActionLog> pageList = logService.findLogs(ConstantsData.getLoginUserId(), page);
         return new ModelAndView("user/user_log_list").addObject("pageList", pageList);
+    }
+    
+    @RequestMapping("sendOldEmail")
+    @ResponseBody
+    public Integer sendOldEmail(String email) {
+        User user = ConstantsData.getLoginUser();
+        return 0;
     }
 }

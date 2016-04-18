@@ -34,6 +34,9 @@
 						<li id="operlogTab">
 							<a href="javascript:users.showOperaLog()">操作日志</a>
 						</li>
+						<li id="changeEmailTab">
+							<a href="javascript:users.showChangeEmail()">更换邮箱</a>
+						</li>
 					</ul>
 				</div>
 				<div class="y-row" style="padding: 20px 10px; background-color: #fff;" data-spm="17">
@@ -55,13 +58,6 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<div class="control-label form-label col-xs-2">邮箱地址</div>
-								<div class="col-xs-10">
-									<input name="email" type="text" value="${user.email}" id="inputEmail" placeholder="Email" />
-									<span id="emailSpanInfo" class="baseInfo"></span>
-								</div>
-							</div>
-							<div class="form-group">
 								<div class="control-label form-label col-xs-2">手机号码</div>
 								<div class="col-xs-10">
 									<input name="cellphone" type="text" id="inputPhone" placeholder="phone" value="${user.cellphone }" />
@@ -73,6 +69,24 @@
 									<button type="button" class="btn btn-success btn-flat" style="width: 150px; height: 60"
 										onclick="users.saveBaseInfo()">修改</button>
 									<span id="updateBaseInfoDiv" class="baseInfoSucc" style="display: none;"></span>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="common-normal common-slide common-normals hide" id="changeEmail">
+						<form class="form-horizontal form-cel" id="updateEmailForm"
+							action="<%=request.getContextPath()%>/user/sendOldEmail">
+							<div class="form-group">
+								<div class="control-label form-label col-xs-2">邮箱地址</div>
+								<div class="col-xs-10">
+									<input name="email" class="readonly" type="text" value="${user.email}" id="inputEmail" placeholder="Email" disabled="disabled"/>
+									<span id="emailSpanInfo" class="baseInfo"></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-10">
+									<button type="button" class="btn btn-success btn-flat" style="width: 150px; height: 60" onclick="users.updateEmail()">修改</button>
+									<span id="updateEmailDiv" class="baseInfoSucc" style="display: none;"></span>
 								</div>
 							</div>
 						</form>
