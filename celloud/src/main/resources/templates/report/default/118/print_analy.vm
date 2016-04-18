@@ -45,20 +45,20 @@
                             #set ($havestrain=[$!species_20.species_zh])
                         #end
                       #end
-                     <br>
-                      <svg width="120" height="8">
-                        <rect x="0" y="0" width="120" height="8" fill="#ddd"/>
+                      <br>
+                      <svg width="139.9" height="8">
+                        <rect x="0" y="0" width="139.9" height="8" fill="#fff" style="stroke:#B0DF2B;fill-opacity:0.1;stroke-opacity:0.9"/>
                         #if(!$species_20.site1.equals("0,0"))
-                        <rect x="10" y="0" width="10" height="8" fill="#57d2d3"/>
+                        <rect x="0" y="0" width="34.9" height="8" fill="#B0DF2B" style="fill-opacity:0.4;stroke-opacity:0.9"/>
                         #end
                         #if(!$species_20.site2.equals("0,0"))
-                        <rect x="30" y="0" width="10" height="8" fill="#57d2d3"/>
+                        <rect x="33.1" y="0" width="46.3" height="8" fill="#17BABF" style="fill-opacity:0.4;stroke-opacity:0.9"/>
                         #end
                         #if(!$species_20.site3.equals("0,0"))
-                        <rect x="50" y="0" width="10" height="8" fill="#57d2d3"/>
+                        <rect x="77.6" y="0" width="31.5" height="8" fill="#FEAA20" style="fill-opacity:0.4;stroke-opacity:0.9"/>
                         #end
                         #if(!$species_20.site4.equals("0,0"))
-                        <rect x="70" y="0" width="10" height="8" fill="#57d2d3"/>
+                        <rect x="105.6" y="0" width="34.3" height="8" fill="#AE98DA" style="fill-opacity:0.4;stroke-opacity:0.9"/>
                         #end
                       </svg>
                    </td>
@@ -124,19 +124,19 @@
                    <td rowspan="4" style="text-align:center;">
                       $!species_other.species
                       <br>
-                      <svg width="120" height="8">
-                        <rect x="0" y="0" width="120" height="8" fill="#ddd"/>
-                        #if(!$species_20.site1.equals("0,0"))
-                        <rect x="10" y="0" width="10" height="8" fill="#57d2d3"/>
+                      <svg width="139.9" height="8">
+                        <rect x="0" y="0" width="139.9" height="8" fill="#fff" style="stroke:#B0DF2B;fill-opacity:0.1;stroke-opacity:0.9"/>
+                        #if(!$species_other.site1.equals("0,0"))
+                        <rect x="0" y="0" width="34.9" height="8" fill="#B0DF2B" style="fill-opacity:0.4;stroke-opacity:0.9"/>
                         #end
-                        #if(!$species_20.site2.equals("0,0"))
-                        <rect x="30" y="0" width="10" height="8" fill="#57d2d3"/>
+                        #if(!$species_other.site2.equals("0,0"))
+                        <rect x="33.1" y="0" width="46.3" height="8" fill="#17BABF" style="fill-opacity:0.4;stroke-opacity:0.9"/>
                         #end
-                        #if(!$species_20.site3.equals("0,0"))
-                        <rect x="50" y="0" width="10" height="8" fill="#57d2d3"/>
+                        #if(!$species_other.site3.equals("0,0"))
+                        <rect x="77.6" y="0" width="31.5" height="8" fill="#FEAA20" style="fill-opacity:0.4;stroke-opacity:0.9"/>
                         #end
-                        #if(!$species_20.site4.equals("0,0"))
-                        <rect x="70" y="0" width="10" height="8" fill="#57d2d3"/>
+                        #if(!$species_other.site4.equals("0,0"))
+                        <rect x="105.6" y="0" width="34.3" height="8" fill="#AE98DA" style="fill-opacity:0.4;stroke-opacity:0.9"/>
                         #end
                       </svg>
                    </td>
@@ -414,36 +414,6 @@
       if(min_genusDisInfo != ""){
           $.reportChar.draw.singleBar("genus-distribution-char","Top 10 genus distribution","",eval("("+min_genusDisInfo+")"),"Depth","Depth");
       }
-      $("#print").on("click",function(){
-        $(".base-info").find("input[type='text']").each(function(){
-           $(this).parent().html("<input type='hidden' value='"+$(this).attr("class")+"'><span name='print-input'>"+$(this).val()+"</span>");
-        });
-        $("#department-text").text($("#department").val());
-        $("#department").addClass("hide");
-        $("#sample-type-text").text($("#sample-type").val());
-        $("#sample-type").addClass("hide");
-        $("#sex-text").html($("input[type='radio'][name='sex']:checked").val());
-        $("#sex").addClass("hide");
-        $(".buttons").hide();
-        $("#toc").hide();
-        $("th[name='opera-seq']").addClass("hide");
-        $("td[name='opera-seq']").addClass("hide");
-        $(".tocify-extend-page").remove();
-        window.print();
-        $("th[name='opera-seq']").removeClass("hide");
-        $("td[name='opera-seq']").removeClass("hide");
-        $("#department-text").text("");
-        $("#department").removeClass("hide");
-        $("#sample-type-text").text("");
-        $("#sample-type").removeClass("hide");
-        $("#sex-text").html("");
-        $("#sex").removeClass("hide");
-        $(".buttons").show();
-        $("#toc").show();
-        $("span[name='print-input']").each(function(){
-            $(this).parent().html("<input class='"+$(this).prev().val()+"' type='text' value='"+$(this).html()+"'>");
-        });
-      });
       // Tocify Table
       if($.isFunction($.fn.tocify) && $("#toc").length){
           $("#toc").tocify({ 
@@ -454,8 +424,5 @@
               watcher = scrollMonitor.create($this.get(0));
           watcher.lock();
       }
-      $("#save").on("click",function(){
-        $.post("../report/updateBSIFilling",$("#print-form").serialize());
-      })
     });
   </script>
