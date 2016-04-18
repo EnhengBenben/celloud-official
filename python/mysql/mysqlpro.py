@@ -6,8 +6,7 @@ __des__='mysql数据库配置文件'
 __author__='lin'
 
 class MySQLPro:
-	#host='192.168.253.52'
-	host='127.0.0.1'
+	host='192.168.253.52'
 	user='root'
-	password='celloud'
+	password='novacloud'
 	db='celloud'

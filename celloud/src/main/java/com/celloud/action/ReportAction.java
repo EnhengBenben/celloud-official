@@ -596,16 +596,20 @@ public class ReportAction {
      * @author leamo
      * @date 2016年1月17日 下午1:02:09
      */
-    @ActionLog(value = "打印MIB数据报告", button = "打印数据报告")
+    @ActionLog(value = "打印BSI报告", button = "打印数据报告")
     @RequestMapping("printBSIReport")
     public ModelAndView printBSIReport(String dataKey, Integer projectId,
-            Integer appId) {
-        String path = ConstantsData.getLoginCompanyId() + File.separator + appId
-                + "/print_analy.vm";
+            Integer appId, String templateType) {
+        StringBuffer path = new StringBuffer();
+        path.append(ConstantsData.getLoginCompanyId()).append(File.separator)
+                .append(appId).append(File.separator).append(templateType)
+                .append(".vm");
         if (!new File("templates/report/" + path).exists()) {
-            path = "default/" + appId + "/print_analy.vm";
+            path.setLength(0);
+            path.append("default").append(File.separator).append(appId)
+                    .append(File.separator).append(templateType).append(".vm");
         }
-        return getBSIModelAndView(path, dataKey, projectId, appId);
+        return getBSIModelAndView(path.toString(), dataKey, projectId, appId);
     }
 
     /**

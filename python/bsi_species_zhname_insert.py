@@ -16,6 +16,6 @@ def insert(path):
             print objId
 
 if __name__ == '__main__':
-	insert("e:/document/pairs_eng_chin.txt")
+	insert("share/data/celloud/pairs_eng_chin.txt")
 
 

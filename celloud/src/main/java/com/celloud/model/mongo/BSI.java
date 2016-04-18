@@ -16,7 +16,7 @@ public class BSI extends MIB {
      * 继承MIB baseInfo填写信息不同：
      * 用户填写信息,报告基本信息——姓名[name],性别[sex],年龄[age],科室[department],住院编号[inpatientNo],
      * 床号[bedNo],ID号[idNo],样本种类[sampleType],样本编号[sampleNo],送检医生[doctor],送检日期[
-     * inspectionDate]
+     * inspectionDate],检测人[inspector],复核人[compounder],报告时间[reportDate]
      */
     /**
      * 20种菌的检测结果。包括：species——菌株名，species_zh——菌株中文名，

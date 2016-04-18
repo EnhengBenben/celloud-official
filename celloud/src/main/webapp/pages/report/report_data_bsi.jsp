@@ -12,7 +12,8 @@
         </span><br>
         检测结果： ${bsi.conclusion }
         <div class="toolbar">
-            <a class="btn btn-celloud-success btn-flat" target="_blank" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }"><i class="fa fa-print"></i>打印报告</a>
+            <a class="btn btn-celloud-success btn-flat" target="_blank" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }&templateType=print_patient"><i class="fa fa-print"></i>打印患者报告</a>
+            <a class="btn btn-celloud-success btn-flat" target="_blank" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }&templateType=print_analy"><i class="fa fa-print"></i>打印分析报告</a>
         </div>
     </div>
     <div>
