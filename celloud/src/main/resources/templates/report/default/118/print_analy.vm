@@ -33,8 +33,27 @@
            #set ($i=0)
            #if($bsi.species_20)
              #foreach($species_20 in $!bsi.species_20) 
+                 #set($rowspan = 1)
+                 #if($species_20.seq2 && !$!species_20.seq2.equals(""))
+                   #set($rowspan=$rowspan+1)
+                   #set($seq20_2 = 0)
+                 #else
+                   #set($seq20_2 = 1)
+                 #end
+                 #if($species_20.seq3 && !$!species_20.seq3.equals(""))
+                   #set($rowspan=$rowspan+1)
+                   #set($seq20_3 = 0)
+                 #else
+                   #set($seq20_3 = 1)
+                 #end
+                 #if($species_20.seq4 && !$!species_20.seq4.equals(""))
+                   #set($rowspan=$rowspan+1)
+                   #set($seq20_4 = 0)
+                 #else
+                   #set($seq20_4 = 1)
+                 #end
                  <tr>
-                   <td rowspan="4" style="text-align:center;">
+                   <td rowspan="$!rowspan" style="text-align:center;">
                       #if($species_20.species_zh.equals("未知") || !$species_20.species_zh)
                         $!species_20.species
                       #else
@@ -62,7 +81,7 @@
                         #end
                       </svg>
                    </td>
-                   <td rowspan="4" style="text-align:center;">$!species_20.unique_reads_num</td>
+                   <td rowspan="$!rowspan" style="text-align:center;">$!species_20.unique_reads_num</td>
                    <td>1</td>
                    <td>
                      <div class="seq">$!species_20.seq1</div>
@@ -70,7 +89,7 @@
                    <td name="opera-seq"><span id="copy-seq$i#set($i=$i+1)"></span></td>
                    <td rowspan="4" style="text-align:center;">#if($species_20.cross_species)$species_20.cross_species #else 无  #end</td>
                  </tr>
-                 #if($species_20.seq2)
+                 #if($seq20_2==0)
                  <tr>
                    <td>2</td>
                    <td>
@@ -79,7 +98,7 @@
                    <td name="opera-seq"><span id="copy-seq$i#set($i=$i+1)"></span></td>
                  </tr>
                  #end
-                 #if($species_20.seq3)
+                 #if($seq20_3==0)
                  <tr>
                    <td>3</td>
                    <td>
@@ -88,7 +107,7 @@
                    <td name="opera-seq"><span id="copy-seq$i#set($i=$i+1)"></span></td>
                  </tr>
                  #end
-                 #if($species_20.seq4)
+                 #if($seq20_4==0)
                  <tr>
                    <td>4</td>
                    <td>
@@ -120,8 +139,27 @@
          <tbody>
            #if($bsi.species_other)
              #foreach($species_other in $!bsi.species_other) 
+                 #set($rowspan = 1)
+                 #if($species_other.seq2 && !$!species_other.seq2.equals(""))
+                   #set($rowspan=$rowspan+1)
+                   #set($other_seq2 = 0)
+                 #else
+                   #set($other_seq2 = 1)
+                 #end
+                 #if($species_other.seq3 && !$!species_other.seq3.equals(""))
+                   #set($rowspan=$rowspan+1)
+                   #set($other_seq3 = 0)
+                 #else
+                   #set($other_seq3 = 1)
+                 #end
+                 #if($species_other.seq4 && !$!species_other.seq4.equals(""))
+                   #set($rowspan=$rowspan+1)
+                   #set($other_seq4 = 0)
+                 #else
+                   #set($other_seq4 = 1)
+                 #end
                  <tr>
-                   <td rowspan="4" style="text-align:center;">
+                   <td rowspan="$!rowspan" style="text-align:center;">
                       $!species_other.species
                       <br>
                       <svg width="139.9" height="8">
@@ -140,14 +178,14 @@
                         #end
                       </svg>
                    </td>
-                   <td rowspan="4" style="text-align:center;">$!species_other.unique_reads_num</td>
+                   <td rowspan="$!rowspan" style="text-align:center;">$!species_other.unique_reads_num</td>
                    <td>1</td>
                    <td>
                      <div class="seq">$!species_other.seq1</div>
                    </td>
                    <td name="opera-seq"><span id="copy-seq$i#set($i=$i+1)"></span></td>
                  </tr>
-                 #if($species_other.seq2)
+                 #if($other_seq2==0)
                  <tr>
                    <td>2</td>
                    <td>
@@ -156,7 +194,7 @@
                    <td name="opera-seq"><span id="copy-seq$i#set($i=$i+1)"></span></td>
                  </tr>
                  #end
-                 #if($species_other.seq3)
+                 #if($other_seq3==0)
                  <tr>
                    <td>3</td>
                    <td>
@@ -165,7 +203,7 @@
                    <td name="opera-seq"><span id="copy-seq$i#set($i=$i+1)"></span></td>
                  </tr>
                  #end
-                 #if($species_other.seq4)
+                 #if($other_seq4==0)
                  <tr>
                    <td>4</td>
                    <td>
@@ -173,7 +211,7 @@
                    </td>
                    <td name="opera-seq"><span id="copy-seq$i#set($i=$i+1)"></span></td>
                  </tr>
-                 #end
+                #end
              #end
            #end
          </tbody>
