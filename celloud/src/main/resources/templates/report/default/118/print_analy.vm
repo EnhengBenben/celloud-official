@@ -2,7 +2,11 @@
 <div id="toc" class="tocify fixed"></div>
 <div class="title">
   <span class="title-text">细菌性血流感染检测报告--分析报告</span>
-  <img class="title-logo" src="$link.getContextPath()/report/company/icon?file=${bsi.companyIcon}" style="width:60px">
+  #if($bsi.companyIcon)
+  <img class="title-logo" src="$link.getContextPath()/report/company/icon?file=$!bsi.companyIcon" style="width:60px">
+  #else
+  <img class="title-logo" src="$link.getContextPath()/images/hospitalIcon/demo-logo.png"></div>
+  #end
 </div>
 <form id="print-form">
   <div id="tocify-content">
@@ -13,8 +17,8 @@
   <section class="break-page">
     <h2>2 检测结果</h2>
     <div class="tests-info">
-    #parse("/default/118/tests_info.vm")
-       <table id="test-seq-table" class="table table-bordered table-condensed">
+       #parse("/default/118/tests_info.vm")
+        <table id="test-seq-table" class="table table-bordered table-condensed">
          <thead>
            <tr>
              <th style="max-width: 119px;">菌名(属-种)</th>
@@ -408,6 +412,7 @@
         $("#toc").hide();
         $("th[name='opera-seq']").addClass("hide");
         $("td[name='opera-seq']").addClass("hide");
+        $(".tocify-extend-page").remove();
         window.print();
         $("th[name='opera-seq']").removeClass("hide");
         $("td[name='opera-seq']").removeClass("hide");

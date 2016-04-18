@@ -1,8 +1,11 @@
 <link href="$link.getContextPath()/css/print_bsi.css" rel="stylesheet">
 <div class="title">
   <span class="title-text">细菌性血流感染检测报告--分析报告</span>
-  <img class="title-logo" src="$link.getContextPath()/report/company/icon?file=${bsi.companyIcon}" style="width:60px">
-</div>
+  #if($bsi.companyIcon)
+  <img class="title-logo" src="$link.getContextPath()/report/company/icon?file=$!bsi.companyIcon" style="width:60px">
+  #else
+  <img class="title-logo" src="$link.getContextPath()/images/hospitalIcon/demo-logo.png"></div>
+  #end</div>
 <form id="print-form">
   <div class="base-info">
     #parse("/default/118/base_info.vm")
