@@ -73,6 +73,7 @@ var users = (function(users) {
 	    $("#inputEmail").focus();
 	    return false;
 	  }
+	  return true;
 	}
 	self.validateBaseInfo = function() {
 		var telphone = $("#inputPhone").val();
@@ -165,9 +166,9 @@ var users = (function(users) {
 	  var url = $("#updateEmailForm").attr("action");
 	  $.post(url, $("#updateEmailForm").serialize(), function(data) {
 	    if (data == 0) {
-	      $("#emailSpanInfo").html("邮件已发送，请进入邮箱处理");
+	      $("#emailSpanInfo").html("邮件已发送，请进入邮箱处理。");
 	    } else {
-	      $("#emailSpanInfo").html("邮件发送失败，请坚持邮箱");
+	      $("#emailSpanInfo").html("邮件发送失败，请检查邮箱是否正确。");
 	    }
 	  });
 	}
