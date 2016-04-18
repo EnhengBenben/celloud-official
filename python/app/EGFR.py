@@ -72,7 +72,7 @@ class EGFR:
 				#使用\t分割
 				firstLines = firstLine.split('\t');
 				#截取userId
-				resultCount['userId'] = paths[len(paths)-3];
+				resultCount['userId'] = int(paths[len(paths)-3]);
 				#截取dataKey
 				resultCount['dataKey'] = paths[len(paths)-1];
 				#截取length
