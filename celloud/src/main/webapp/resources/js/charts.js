@@ -77,6 +77,9 @@ $.reportChar.draw = {
       $.reportChar.draw._require('pie',option,id);
   },
   
+  /**
+   * 饼状图
+   */
   echartsShowPie : function(id,title,data) {
         var option = {
             title : {
@@ -102,8 +105,50 @@ $.reportChar.draw = {
                     }
                 }
             ]
-        }
+        };
         $.reportChar.draw._require('pie',option,id);
+  	},
+  	
+  	/**
+  	 * 柱状图
+  	 */
+  	echartsShowBar : function(id,X,Y) {
+        var option = {
+        		tooltip : {
+        	        trigger: 'axis'
+        	    },
+        	    legend: {
+        	        data:['位点'],
+        	        top : 15
+        	    },
+        	    calculable : true,
+        	    xAxis : [
+        	        {
+        	            type : 'category',
+        	            data : X,
+        	            position : 'bottom'
+        	        }
+        	    ],
+        	    yAxis : [
+        	        {
+        	            type : 'value',
+        	            name : '样本数量'
+        	        }
+        	    ],
+        	    series : [
+        	        {
+        	            name:'位点',
+        	            type:'bar',
+        	            data:Y,
+        	            barWidth:20
+        	        }
+        	    ],
+                color : ['#feabac'],
+                grid : {
+                	width : 380
+                },
+        };
+        $.reportChar.draw._require('bar',option,id);
   	},
   
   /**

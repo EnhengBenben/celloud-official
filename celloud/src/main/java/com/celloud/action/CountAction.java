@@ -240,8 +240,8 @@ public class CountAction {
     @ActionLog(value = "获取EGFR/KRAS数据参数同比信息", button = "EGFR/KRAS数据报告")
 	@ResponseBody
 	@RequestMapping("egfrCompare")
-	public String egfrCompare(Integer appId, String path, String length) {
-		return reportService.egfrCompare(appId, path, length);
+	public String egfrCompare(Integer length) {
+		return reportService.egfrCompare(length);
 	}
 
 	/**

@@ -356,7 +356,7 @@ public interface ReportService {
      * @date 2016-1-9 下午2:57:29
      */
     public String hbvCompare(Integer appId, String path);
-
+    
     /**
      * EGFR 和 KRAS 数据参数同比
      * 
@@ -366,7 +366,7 @@ public interface ReportService {
      * @return
      * @date 2016-1-9 下午3:07:38
      */
-    public String egfrCompare(Integer appId, String path, String length);
+    public String egfrCompare(Integer length);
 
     /**
      * HCV 数据参数同比

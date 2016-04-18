@@ -1,11 +1,5 @@
 package com.celloud.service.impl;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,6 +37,7 @@ import com.celloud.model.mongo.CmpGeneSnpResult;
 import com.celloud.model.mongo.CmpReport;
 import com.celloud.model.mongo.DPD;
 import com.celloud.model.mongo.EGFR;
+import com.celloud.model.mongo.EGFRCount;
 import com.celloud.model.mongo.GddDiseaseDict;
 import com.celloud.model.mongo.GeneDetectionResult;
 import com.celloud.model.mongo.HBV;
@@ -66,6 +61,7 @@ import com.celloud.utils.Base64Util;
 import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.ExcelUtil;
 import com.celloud.utils.FileTools;
+import com.celloud.utils.MapSort;
 import com.celloud.utils.PropertiesUtil;
 
 /**
@@ -362,12 +358,36 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public String egfrCompare(Integer appId, String path, String length) {
-        path = path + appId + "_" + length;
-        if (FileTools.checkPath(path)) {
-            return FileTools.getLimitLines(path, 1, 10);
+    public String egfrCompare(Integer length) {
+        List<EGFRCount> egfrCounts = reportDao.getEGFRCountByLength(EGFRCount.class, length);
+        // 存储位点与位点的出现次数
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        for (EGFRCount count : egfrCounts) {
+            String site = count.getSite() + "";
+            if (!map.containsKey(site)) {
+                map.put(site, 1);
+            } else {
+                map.put(site, map.get(site) + 1);
+            }
         }
-        return null;
+        String str = MapSort.sort(map);
+        if (str != null && !"".equals(str)) {
+            // 取前10行数据
+            // 取第几次
+            int i = 0;
+            // 目标位置下标
+            int s = -1;
+            while (i++ < 10) {
+                s = str.indexOf("\n", s + 1);
+                // 少于10行就直接退出循环
+                if (s == -1) {
+                    break;
+                }
+            }
+            return str.substring(0, s);
+        } else {
+            return str;
+        }
     }
 
     @Override
@@ -384,7 +404,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public String pgsCompare(Integer appId, String columns) {
-        Map<String,String> map = new HashMap<String,String>();
+        Map<String, String> map = new HashMap<String, String>();
         map.put("totalReads", "Total_Reads");
         map.put("duplicate", "Duplicate(%)");
         map.put("gcCount", "GC_Count(%)");
@@ -813,9 +833,9 @@ public class ReportServiceImpl implements ReportService {
         return reportDao.getDataReport(TaskQueue.class, "", projectId, 0);
     }
 
-	@Override
-	public ABINJ getABINJReport(String dataKey, Integer projectId, Integer appId) {
-		return reportDao.getDataReport(ABINJ.class, dataKey, projectId, appId);
-	}
+    @Override
+    public ABINJ getABINJReport(String dataKey, Integer projectId, Integer appId) {
+        return reportDao.getDataReport(ABINJ.class, dataKey, projectId, appId);
+    }
 
 }

@@ -10,6 +10,7 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.springframework.stereotype.Service;
 
+import com.celloud.model.mongo.EGFRCount;
 import com.celloud.model.mongo.TBINH;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
@@ -24,6 +25,11 @@ import com.celloud.page.PageList;
 public class ReportDaoImpl implements ReportDao {
     @Resource
     private Datastore dataStore;
+    
+    @Override
+    public <T> List<T> getEGFRCountByLength(Class<T> clazz, Integer length) {
+        return dataStore.createQuery(clazz).filter("length =", length).asList();
+    }
 
     @Override
     public Integer getTBINHisWild(Integer userId, String simpleGeneName, Integer isWild) {

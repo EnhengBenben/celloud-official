@@ -17,6 +17,12 @@ import com.celloud.page.PageList;
 public interface ReportDao {
     
     /**
+     * 根据长度获取EGFRCount统计数据
+     */
+    public <T> List<T> getEGFRCountByLength(Class<T> clazz, Integer length);
+    
+    
+    /**
      * 根据appid获取某几列的字段值
      * @param appId
      * @param columns
