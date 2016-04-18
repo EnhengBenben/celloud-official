@@ -112,13 +112,13 @@ $.reportChar.draw = {
   	/**
   	 * 柱状图
   	 */
-  	echartsShowBar : function(id,X,Y) {
+  	echartsShowBar : function(id, title, X, Y) {
         var option = {
         		tooltip : {
         	        trigger: 'axis'
         	    },
         	    legend: {
-        	        data:['位点'],
+        	        data:[title],
         	        top : 15
         	    },
         	    calculable : true,
