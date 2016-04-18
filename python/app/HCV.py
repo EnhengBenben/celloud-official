@@ -6,10 +6,14 @@ __des__ = 'HCV的操作类'
 __author__ = 'lin'
 
 import os
+import codecs
 import threading
 from model import *
 from utils.FileUtils import *
 from mongo.mongoOperate import mongo
+
+# 不统计的用户id
+userList = ['6', '9', '12', '13', '15', '16', '17', '18', '20', '21', '23', '24', '27', '28', 'Gadgets'];
 
 class HCV:
 	path = None
@@ -55,6 +59,33 @@ class HCV:
 					result[hcvmodel[titles[i]]] = values[i]
 				else:
 					result[hcvmodel[titles[i]]] = ''
+			# 数据参数同比
+			# 截取数据报告路径
+			paths = path.split(os.sep);
+			# 判断该用户是否为测试用户
+			if(paths[len(paths) - 3] not in userList):
+				# 读取文件最后一行内容
+				f = codecs.open(txt,'r','gbk');
+				targetLine = '';
+				while True:
+					line = f.readline();
+					if not line:
+						break;
+					targetLine = line;
+				# 分割最后一行数据
+				types = targetLine.split('\t');
+				if(len(types) > 2):
+					# 判断mongodb中是否存在相同的datakey
+					#获取mongo操作类实例
+					mo = mongo.getInstance();
+					if(len(list(mo.findAllByCondition({'dataKey':paths[len(paths)-1]},'HCVCount'))) > 0):
+						mo.deleteAllByCondition({'dataKey':paths[len(paths)-1]},'HCVCount');
+					resultCount = {};
+					resultCount['userId'] = int(paths[len(paths) - 3]);
+					resultCount['dataKey'] = paths[len(paths) - 1];
+					resultCount['subtype'] = types[1];
+					mo.insertBatch(resultCount,'HCVCount');
+				f.close();
 		#seq
 		fasta = fileSearch(os.path.join(path,'Fasta'),'.ab1','endswith')
 		if(len(fasta)>0):
@@ -71,6 +102,6 @@ class HCV:
 		return result
 if __name__ == '__main__':
 	hcv = HCV.getInstance()
-	re = hcv.getResult('/Users/lin/Documents/apache-tomcat-7.0.65/webapps/Tools/upload/23/80/20151109502832','HCV','a.ab1',None)
+	re = hcv.getResult('G:\23\80\20151119393725','HCV','a.ab1',None)
 	for i in re:
 		print re[i]

@@ -43,6 +43,7 @@ import com.celloud.model.mongo.GddDiseaseDict;
 import com.celloud.model.mongo.GeneDetectionResult;
 import com.celloud.model.mongo.HBV;
 import com.celloud.model.mongo.HCV;
+import com.celloud.model.mongo.HCVCount;
 import com.celloud.model.mongo.KRAS;
 import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
@@ -392,13 +393,21 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public String hcvCompare(Integer appId, String path) {
-        List<String> list = FileTools.fileSearch(path, String.valueOf(appId), "startWith");
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < list.size(); i++) {
-            String name = list.get(i);
-            String val = FileTools.getFirstLine(path + name);
-            sb.append(name.substring(name.lastIndexOf("_") + 1) + "," + val + ";");
+    public String hcvCompare() {
+        List<HCVCount> hcvCounts = reportDao.getAllByClass(HCVCount.class);
+        // 存储subtype与subtype出现的次数
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        for (HCVCount count : hcvCounts) {
+            String subtype = count.getSubtype();
+            if (!map.containsKey(subtype)) {
+                map.put(subtype, 1);
+            } else {
+                map.put(subtype, map.get(subtype) + 1);
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Entry<String, Integer> entry : map.entrySet()) {
+            sb.append(entry.getKey() + "," + entry.getValue() + ";");
         }
         return sb.toString();
     }
@@ -840,7 +849,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-	public ABINJ getABINJReport(String dataKey, Integer projectId, Integer appId) {
-		return reportDao.getDataReport(ABINJ.class, dataKey, projectId, appId);
-	}
+    public ABINJ getABINJReport(String dataKey, Integer projectId, Integer appId) {
+        return reportDao.getDataReport(ABINJ.class, dataKey, projectId, appId);
+    }
 }

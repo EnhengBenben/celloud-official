@@ -255,8 +255,8 @@ public class CountAction {
     @ActionLog(value = "获取HCV数据参数同比信息", button = "HCV数据报告")
 	@ResponseBody
 	@RequestMapping("hcvCompare")
-	public String hcvCompare(Integer appId, String path) {
-		return reportService.hcvCompare(appId, path);
+	public String hcvCompare() {
+		return reportService.hcvCompare();
 	}
 
 	/**

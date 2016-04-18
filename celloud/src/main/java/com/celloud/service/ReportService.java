@@ -388,7 +388,7 @@ public interface ReportService {
      * @return
      * @date 2016-1-9 下午3:18:39
      */
-    public String hcvCompare(Integer appId, String path);
+    public String hcvCompare();
 
     /**
      * PGS 数据参数同比

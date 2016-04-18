@@ -815,7 +815,8 @@ $.ajaxSetup ({
 						}
 						X = X.substring(0,X.length-1)+"]";
 						Y = Y.substring(0,Y.length-1)+"]";
-						showCharHCV("char0", "Subtype", eval(X),eval(Y),0);
+//						showCharHCV("char0", "Subtype", eval(X),eval(Y),0);
+						$.reportChar.draw.echartsShowBar("char0", "Subtype", X, Y);
 				});
 			}
 			if(appId==82){

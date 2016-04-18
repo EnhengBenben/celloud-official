@@ -165,4 +165,11 @@ public interface ReportDao {
      * @return
      */
     public Integer getTBINHisWild(Integer userId, String simpleGeneName, Integer isWild);
+    
+    /**
+     * 根据bena从mongo中获取全部数据
+     * @param clazz
+     * @return
+     */
+    public <T> List<T> getAllByClass(Class<T> clazz);
 }

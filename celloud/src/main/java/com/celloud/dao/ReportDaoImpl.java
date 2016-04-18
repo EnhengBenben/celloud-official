@@ -10,7 +10,6 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.springframework.stereotype.Service;
 
-import com.celloud.model.mongo.EGFRCount;
 import com.celloud.model.mongo.TBINH;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
@@ -118,6 +117,11 @@ public class ReportDaoImpl implements ReportDao {
     @Override
     public <T> List<T> getDataFieldsByAppId(Class<T> clazz, Integer appId, String[] columns) {
         return dataStore.createQuery(clazz).filter("appId =", appId).retrievedFields(true, columns).asList();
+    }
+
+    @Override
+    public <T> List<T> getAllByClass(Class<T> clazz) {
+        return dataStore.createQuery(clazz).asList();
     }
 
 }
