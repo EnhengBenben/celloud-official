@@ -2,7 +2,7 @@
 <div id="toc" class="tocify fixed"></div>
 <div class="title">
   <span class="title-text">细菌性血流感染检测报告--分析报告</span>
-  #if($bsi.companyIcon)
+  #if($bsi.companyIcon || !$!bsi.companyIcon.equals(""))
   <img class="title-logo" src="$link.getContextPath()/report/company/icon?file=$!bsi.companyIcon" style="width:60px">
   #else
   <img class="title-logo" src="$link.getContextPath()/images/hospitalIcon/demo-logo.png"></div>
@@ -101,7 +101,7 @@
            #end
          </tbody>
        </table>
-       <div class="test-description"> 快速序列验证及比对(NCBI Blast): <a href="http://www.ncbi.nlm.nih.gov/genomes/16S/search16S.html">http://www.ncbi.nlm.nih.gov/genomes/16S/search16S.html</a></div>
+       <div class="test-description"> 快速序列验证及比对(NCBI Blast): <a href="http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome">http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome</a></div>
     </div>
   </section>
   <section>
