@@ -364,7 +364,7 @@ $.ajaxSetup ({
 			                    }
 			                }
 			            }
-			            if(appId=="117"||appId=="114"||appId=="113"||appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
+			            if(appId=="118"||appId=="117"||appId=="114"||appId=="113"||appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
 			                param = {"fileName":$.trim($(this).html()),"dataKey":$.trim($(this).prev().html()),"softwareId":appId,"softwareName":appName,"userId":userId,"obj":$(this),"proId":proId,"proName":proName};
 			                if(j>0&&i==1){
 			                    $(this).addClass("sub");
@@ -372,7 +372,7 @@ $.ajaxSetup ({
 		                        if(fileName.length>30&&appId!="113"&&appId!="112"&&appId!="111"&&appId!="110"){
 		                        	fileName = fileName.substring(0,30) + "...";
 		                        }
-		                        if(appId!="114"){
+		                        if(appId!="114"&&appId!="118"){
 		                        	$(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
 		                        }else{
 		                        	$(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+fileName+"</span>");
@@ -501,7 +501,7 @@ $.ajaxSetup ({
 			    	minTdNum = 4;
 			    }
 			    var rdataNum = $("#rdataNum"+proId).html();
-			    if(appId=="114" && tr_size-1<rdataNum){
+			    if((appId=="114"||appId=="118") && tr_size-1<rdataNum){
 			    	var num = Number(rdataNum)-tr_size+1;
 			    	var height = 30*(5-tr_size);
 		    		var adHtml = "<tr><td colspan='"+th_size+"' style='border-left-style: none;vertical-align: middle;height:"+height+"px' align='center'><img src='/celloud/images/report/running.png' title='正在运行...'/><br>"+num+"个数据正在运行...</td></tr>";
@@ -662,8 +662,9 @@ $.ajaxSetup ({
 				$.get("report/getSplitReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
-			}else if(softwareId == 114){
-				$.get("report/getMIBReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
+			}else if(softwareId == 114 || softwareId == 118){
+			  var method = softwareId == 114 ? "getMIBReport" : "getBSIReport";
+				$.get("report/"+method,{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 					var mib_readsDisInfo = $("#reads-distribution-char").text();
           var mib_familyDisInfo = $("#family-distribution-char").text();

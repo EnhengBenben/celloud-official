@@ -36,6 +36,7 @@ import com.celloud.constants.DeptConstants;
 import com.celloud.constants.ReportType;
 import com.celloud.model.mongo.ABINJ;
 import com.celloud.model.mongo.BRAF;
+import com.celloud.model.mongo.BSI;
 import com.celloud.model.mongo.CmpFilling;
 import com.celloud.model.mongo.CmpGeneDetectionDetail;
 import com.celloud.model.mongo.CmpGeneSnpResult;
@@ -74,6 +75,7 @@ import com.celloud.utils.ActionLog;
 import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.HttpURLUtils;
 import com.celloud.utils.PropertiesUtil;
+import com.celloud.utils.VelocityUtil;
 
 import net.sf.cglib.core.CollectionUtils;
 import net.sf.cglib.core.Predicate;
@@ -97,6 +99,8 @@ public class ReportAction {
     private ProjectService projectService;
     @Resource
     private ExperimentService expService;
+    @Resource
+    private VelocityUtil velocityUtil;
 
     /**
      * 获取报告模块列表
@@ -528,7 +532,84 @@ public class ReportAction {
     @ActionLog(value = "打印MIB数据报告", button = "打印数据报告")
     @RequestMapping("printMIBReport")
     public ModelAndView printMIBReport(String dataKey, Integer projectId, Integer appId) {
-        return getMIBModelAndView("print/print_mib", dataKey, projectId, appId);
+        String path = ConstantsData.getLoginCompanyId() + File.separator + appId
+                + "/print.vm";
+        if (!new File("templates/report/" + path).exists()) {
+            path = "default/" + appId + "/print.vm";
+        }
+        return getMIBModelAndView(path, dataKey, projectId,
+                appId);
+    }
+
+    /**
+     * 用于 ModelAndView 加载BSI信息
+     * 
+     * @param path
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author leamo
+     * @date 2016年1月17日 下午1:10:57
+     */
+    private ModelAndView getBSIModelAndView(String path, String dataKey,
+            Integer projectId, Integer appId) {
+        BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
+        Map<String, JSONArray> mibCharList = new HashMap<>();
+        ModelAndView mv = getModelAndView(path, projectId);
+        if (bsi == null)
+            return mv;
+        mibCharList.put("readsDistributionInfo",
+                JSONArray.fromObject(bsi.getReadsDistributionInfo()));
+        mibCharList.put("familyDistributionInfo",
+                JSONArray.fromObject(bsi.getFamilyDistributionInfo()));
+        mibCharList.put("genusDistributionInfo",
+                JSONArray.fromObject(bsi.getGenusDistributionInfo()));
+        mv.addObject("bsiCharList", mibCharList);
+        return mv.addObject("bsi", bsi);
+    }
+
+    /**
+     * 获取 BSI 的数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @date 2016-1-10 下午10:40:40
+     */
+    @ActionLog(value = "查看BSI数据报告", button = "数据报告")
+    @RequestMapping("getBSIReport")
+    public ModelAndView getBSIReport(String dataKey, Integer projectId,
+            Integer appId) {
+        return getBSIModelAndView("report/report_data_bsi", dataKey, projectId,
+                appId);
+    }
+
+    /**
+     * 打印MIB报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author leamo
+     * @date 2016年1月17日 下午1:02:09
+     */
+    @ActionLog(value = "打印BSI报告", button = "打印数据报告")
+    @RequestMapping("printBSIReport")
+    public ModelAndView printBSIReport(String dataKey, Integer projectId,
+            Integer appId, String templateType) {
+        StringBuffer path = new StringBuffer();
+        path.append(ConstantsData.getLoginCompanyId()).append(File.separator)
+                .append(appId).append(File.separator).append(templateType)
+                .append(".vm");
+        if (!new File("templates/report/" + path).exists()) {
+            path.setLength(0);
+            path.append("default").append(File.separator).append(appId)
+                    .append(File.separator).append(templateType).append(".vm");
+        }
+        return getBSIModelAndView(path.toString(), dataKey, projectId, appId);
     }
 
     /**

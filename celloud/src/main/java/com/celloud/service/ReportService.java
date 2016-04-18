@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 
 import com.celloud.model.mongo.ABINJ;
 import com.celloud.model.mongo.BRAF;
+import com.celloud.model.mongo.BSI;
 import com.celloud.model.mongo.CmpFilling;
 import com.celloud.model.mongo.CmpGeneSnpResult;
 import com.celloud.model.mongo.CmpReport;
@@ -285,6 +286,17 @@ public interface ReportService {
      * @date 2016年2月1日 下午6:08:35
      */
     public void updateCmpFilling(ObjectId id, CmpFilling cmpFill);
+
+    /**
+     * 获取 BSI 报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @date 2016-1-10 下午10:33:49
+     */
+    public BSI getBSIReport(String dataKey, Integer projectId, Integer appId);
 
     /**
      * 系统统计业务

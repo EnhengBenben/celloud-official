@@ -287,7 +287,9 @@ public class DataAction {
     @RequestMapping("batchEditDataByIds.action")
     @ResponseBody
     public Integer batchEditDataByIds(String dataIds, DataFile data) {
-        Integer result = dataService.updateDataByIds(dataIds, data);
+        Integer result = 0;
+        if (dataIds != null && !dataIds.equals(""))
+            result = dataService.updateDataByIds(dataIds, data);
         logger.info("用户{}批量修改数据{}", ConstantsData.getLoginUserName(), dataIds);
         return result;
     }

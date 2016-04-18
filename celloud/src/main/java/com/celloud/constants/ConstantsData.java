@@ -138,6 +138,16 @@ public class ConstantsData {
     }
 
     /**
+     * 获取当前登录用户所属医院
+     * 
+     * @return
+     */
+    public static Integer getLoginCompanyId() {
+        User user = getLoginUser();
+        return user == null ? null : user.getCompanyId();
+    }
+
+    /**
      * 获取当前的request对象
      * 
      * @return

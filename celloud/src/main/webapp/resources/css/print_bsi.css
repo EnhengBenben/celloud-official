@@ -89,10 +89,10 @@ section h2,
     color: #232323;
 }
 .tests-info .seq{
-	margin-left: -140px;
-	margin-right: -200px;
-	margin-top: -15px;
-	margin-bottom: -15px;
+	margin-left: -120px;
+	margin-right: -120px;
+	margin-top: -12px;
+	margin-bottom: -12px;
 	-webkit-transform:scale(0.6);
     -moz-transform:scale(0.6);
     -o-transform:scale(0.6);

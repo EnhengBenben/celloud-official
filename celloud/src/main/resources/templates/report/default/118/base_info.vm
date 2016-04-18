@@ -1,0 +1,36 @@
+<input type="hidden" name="id" value="$!bsi.id">
+<ul>
+    <li><lable>姓名：</lable><span><input class="width-80" type="text" name="baseInfo['name']" value="$!bsi.baseInfo.name" placeholder="患者姓名"></span></li>
+    <li><lable>性别：</lable><span id="sex-text"></span><span id="sex"><input type="radio" name="baseInfo['sex']" value="男" #if($!bsi.baseInfo.sex.equals("男")) checked="checked" #end>男<input type="radio" name="baseInfo['sex']" value="女" #if($!bsi.baseInfo.sex.equals("女")) checked="checked" #end >女<input type="radio" name="baseInfo['sex']" value="不详" #if($!bsi.baseInfo.sex.equals("不详")) checked="checked" #end >不详</span></li>
+    <li><lable>年龄：</lable><span><input class="width-80" type="text"  name="baseInfo['age']" value="$!bsi.baseInfo.age" placeholder="19"></span>岁</li>
+    <li></li>
+    <li><lable>科室：</lable>
+       <span id="department-text"></span>
+       <select id="department" class="width-80" name="baseInfo['department']">
+          <option value="ICU病房">ICU病房</option>
+          <option value="呼吸科">呼吸科</option>
+          <option value="儿科">儿科</option>
+          <option value="感染科">感染科</option>
+          <option value="产科">产科</option>
+        </select>
+    </li>
+    <li><lable>住院号：</lable><span><input class="width-120" type="text" name="baseInfo['inpatientNo']" value="$!bsi.baseInfo.inpatientNo" placeholder="83947536"></span></li>
+    <li><lable>床号：</lable><span><input class="width-80" type="text" name="baseInfo['bedNo']" value="$!bsi.baseInfo.bedNo" placeholder="ab0302"></span></li>
+    <li><lable>ID号：</lable><span><input class="width-80" type="text" name="baseInfo['idNo']" value="$!bsi.baseInfo.idNo" placeholder="az00888"></span></li>
+    <li><lable>样本种类：</lable>
+        <span id="sample-type-text"></span>
+        <select id="sample-type" class="width-80" name="baseInfo['sampleType']">
+          <option value="血液">血液</option>
+          <option value="尿">尿</option>
+          <option value="腹水">腹水</option>
+          <option value="阴道拭子">阴道拭子</option>
+          <option value="脑脊液">脑脊液</option>
+          <option value="分泌物">分泌物</option>
+          <option value="大便">大便</option>
+          <option value="鼻咽拭子">鼻咽拭子</option>
+        </select>
+    </li>
+    <li><lable>样本编号：</lable><span><input class="width-120" type="text" name="baseInfo['sampleNo']" value="$!bsi.baseInfo.sampleNo" placeholder="88484"></span></li>
+    <li><lable>送检医生：</lable><span><input class="width-80" type="text" name="baseInfo['doctor']" value="$!bsi.baseInfo.doctor" placeholder="ab0302"></span></li>
+    <li><lable>送检日期：</lable><span><input class="width-80" type="text" name="baseInfo['inspectionDate']" value="$!bsi.baseInfo.inspectionDate"></span></li>
+</ul>
