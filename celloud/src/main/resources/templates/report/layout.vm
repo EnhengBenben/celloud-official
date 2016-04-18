@@ -1,0 +1,24 @@
+<html lang="zh-cmn-Hans">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="baidu-site-verification" content="IsldTuHqik" />
+<title>CelLoud报告打印</title>
+<meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
+<meta name="description" content="一站式高通量基因检测数据分析系统">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="bookmark" href="$link.getContextPath()/images/favicon.ico" />
+<link rel="shortcut icon" href="$link.getContextPath()/images/favicon.ico" />
+<link href="$link.getContextPath()/css/print.css" rel="stylesheet">
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+</head>
+<body>
+<div class="buttons">
+    <a id="print" class="btn btn-default" href="javascript:void(0)">打印</a>
+    <a id="save" class="btn btn-default" href="javascript:void(0)">保存</a>
+    <a id="reset" class="btn btn-default" href="javascript:void(0)">重置</a>
+</div>
+$screen_content
+
+</body>
+</html>

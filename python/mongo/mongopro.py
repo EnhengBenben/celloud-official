@@ -6,6 +6,7 @@ __des__='mongo数据库配置文件'
 __author__='lin'
 
 class MongoPro:
-	host='192.168.253.53'
+	#host='192.168.253.53'
+	host='127.0.0.1'
 	port=27017
 	db='celloud'

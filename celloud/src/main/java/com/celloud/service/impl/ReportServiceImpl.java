@@ -1,11 +1,5 @@
 package com.celloud.service.impl;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,6 +30,7 @@ import com.celloud.mapper.DataFileMapper;
 import com.celloud.mapper.PriceMapper;
 import com.celloud.mapper.ReportMapper;
 import com.celloud.model.mongo.BRAF;
+import com.celloud.model.mongo.BSI;
 import com.celloud.model.mongo.CmpFilling;
 import com.celloud.model.mongo.CmpGeneDetectionDetail;
 import com.celloud.model.mongo.CmpGeneSnpResult;
@@ -810,6 +805,11 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public TaskQueue getTaskQueue(Integer projectId) {
         return reportDao.getDataReport(TaskQueue.class, "", projectId, 0);
+    }
+
+    @Override
+    public BSI getBSIReport(String dataKey, Integer projectId, Integer appId) {
+        return reportDao.getDataReport(BSI.class, dataKey, projectId, appId);
     }
 
 }
