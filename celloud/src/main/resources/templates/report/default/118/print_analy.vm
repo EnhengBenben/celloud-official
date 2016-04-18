@@ -2,7 +2,7 @@
 <div id="toc" class="tocify fixed"></div>
 <div class="title">
   <span class="title-text">细菌性血流感染检测报告--分析报告</span>
-  #if($bsi.companyIcon || !$!bsi.companyIcon.equals(""))
+  #if($bsi.companyIcon && !$!bsi.companyIcon.equals(""))
   <img class="title-logo" src="$link.getContextPath()/report/company/icon?file=$!bsi.companyIcon" style="width:60px">
   #else
   <img class="title-logo" src="$link.getContextPath()/images/hospitalIcon/demo-logo.png"></div>
