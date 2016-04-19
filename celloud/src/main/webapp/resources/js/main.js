@@ -352,9 +352,11 @@ var messageUtils = (function(messageUtils){
 	var openWebSocket = function(){
 		var contextPath = window.CONTEXT_PATH||"";
 		// window.location.protocol
+		var protocols = {"http:":"ws:","https:":"wss:"};
 		var hostname = window.location.hostname;
 		var port = window.location.port||80;
-		var wsUrl = "ws://" + hostname + ":" + port + contextPath + "/websocket/message";
+		var wsProtocol = protocols[window.location.protocol.toLowerCase()];
+		var wsUrl = wsProtocol+"//" + hostname + ":" + port + contextPath + "/websocket/message";
 		var ws = null;
 		if ('WebSocket' in window) {
 			ws = new WebSocket(wsUrl);
