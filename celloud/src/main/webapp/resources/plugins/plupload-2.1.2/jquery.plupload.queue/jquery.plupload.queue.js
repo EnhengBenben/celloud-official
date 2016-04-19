@@ -267,6 +267,8 @@ used as it is.
 					// Re-add drag message if there is no files
 					if (!uploader.files.length && uploader.features.dragdrop && uploader.settings.dragdrop) {
 						$('#' + id + '_filelist').append('<li class="plupload_droptext">' + _("Drag files here.") + '</li>');
+					}else if(!uploader.files.length){
+					  $('#' + id + '_filelist').append('<li class="plupload_droptext">&nbsp;</li>');
 					}
 				}
 
