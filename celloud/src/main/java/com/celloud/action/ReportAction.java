@@ -54,6 +54,7 @@ import com.celloud.model.mongo.RecommendDrug;
 import com.celloud.model.mongo.Split;
 import com.celloud.model.mongo.TBINH;
 import com.celloud.model.mongo.TBRifampicin;
+import com.celloud.model.mongo.Translate;
 import com.celloud.model.mongo.UGT;
 import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.Company;
@@ -73,6 +74,7 @@ import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.CustomStringUtils;
+import com.celloud.utils.FileTools;
 import com.celloud.utils.HttpURLUtils;
 import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.VelocityUtil;
@@ -751,6 +753,17 @@ public class ReportAction {
         ModelAndView mv = getModelAndView("report/report_data_hcv", projectId);
         return mv.addObject("hcv", hcv);
     }
+    
+	@ActionLog(value = "查看Translate数据报告", button = "数据报告")
+	@RequestMapping("getTranslateReport")
+	public ModelAndView getTranslateReport(String dataKey, Integer projectId, Integer appId) {
+		DataFile data = dataService.getDataByKey(dataKey);
+		Translate translate = reportService.getTranslateReport(dataKey, projectId, appId);
+		String source = FileTools.readFileToString(data.getPath());
+		translate.setSource(source);
+		ModelAndView mv = getModelAndView("report/report_data_translate", projectId);
+		return mv.addObject("translate", translate);
+	}
 
     /**
      * 获取EGFR数据报告

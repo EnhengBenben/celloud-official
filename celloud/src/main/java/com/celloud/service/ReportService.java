@@ -24,6 +24,7 @@ import com.celloud.model.mongo.Split;
 import com.celloud.model.mongo.TBINH;
 import com.celloud.model.mongo.TBRifampicin;
 import com.celloud.model.mongo.TaskQueue;
+import com.celloud.model.mongo.Translate;
 import com.celloud.model.mongo.UGT;
 import com.celloud.model.mysql.Report;
 import com.celloud.page.Page;
@@ -176,6 +177,18 @@ public interface ReportService {
      * @date 2016年3月7日下午5:06:00
      */
     public HCV getHCVReport(String dataKey, Integer projectId, Integer appId);
+    
+    /**
+     * 获取Translate数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author lin
+     * @date 2016年4月19日下午5:45:22
+     */
+    public Translate getTranslateReport(String dataKey, Integer projectId, Integer appId);
 
     /**
      * 获取EGFR报告

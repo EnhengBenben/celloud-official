@@ -52,6 +52,7 @@ import com.celloud.model.mongo.TBINH;
 import com.celloud.model.mongo.TBRifampicin;
 import com.celloud.model.mongo.TBRifampicinCount;
 import com.celloud.model.mongo.TaskQueue;
+import com.celloud.model.mongo.Translate;
 import com.celloud.model.mongo.UGT;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Report;
@@ -163,6 +164,11 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public HCV getHCVReport(String dataKey, Integer projectId, Integer appId) {
         return reportDao.getDataReport(HCV.class, dataKey, projectId, appId);
+    }
+    
+    @Override
+    public Translate getTranslateReport(String dataKey, Integer projectId, Integer appId) {
+        return reportDao.getDataReport(Translate.class, dataKey, projectId, appId);
     }
 
     @Override
