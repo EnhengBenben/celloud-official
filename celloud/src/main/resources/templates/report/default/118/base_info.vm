@@ -68,9 +68,9 @@ $(document).ready(function(){
       });
     $("#save").on("click",function(){
         $.post("../report/updateBSIFilling",$("#print-form").serialize());
-    })
+    });
     $("#reset").on("click",function(){
          $("#print-form")[0].reset();
-    })
+    });
 });
 </script>
