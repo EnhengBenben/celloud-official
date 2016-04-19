@@ -14,8 +14,7 @@ sys.setdefaultencoding('utf8')
 from utils.FileUtils import *
 from EGFR_PDF import *
 from mongo.mongoOperate import mongo
-
-userList = ['6', '9', '12', '13', '15', '16', '17', '18', '20', '21', '23', '24', '27', '28', 'Gadgets'];
+from PDFPro import PDFPro
 
 class EGFR:
 	path = None
@@ -57,7 +56,7 @@ class EGFR:
 			#截取数据报告路径
 			paths = path.split(os.sep);
 			#首先判断用户id是否为测试用户
-			if(paths[len(paths) - 3] not in userList):
+			if(paths[len(paths) - 3] not in PDFPro.userList):
 				#判断mongo中是否有对应dataKey的数据, 如果有则都删除
 				#获取mongo操作类实例
 				mo = mongo.getInstance();
@@ -68,7 +67,7 @@ class EGFR:
 				#位点的dict
 				resultCount = {};
 				#读取第一行将\n替换,并将空格替换为\t方便统一操作
-				firstLine = f.readline().replace('\n','').replace(' ','\t');
+				firstLine = f.readline().replace('\n','').replace(' ','\t').strip();
 				#使用\t分割
 				firstLines = firstLine.split('\t');
 				#截取userId

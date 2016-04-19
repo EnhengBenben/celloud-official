@@ -38,7 +38,6 @@ import com.celloud.model.mongo.CmpGeneSnpResult;
 import com.celloud.model.mongo.CmpReport;
 import com.celloud.model.mongo.DPD;
 import com.celloud.model.mongo.EGFR;
-import com.celloud.model.mongo.EGFRCount;
 import com.celloud.model.mongo.GddDiseaseDict;
 import com.celloud.model.mongo.GeneDetectionResult;
 import com.celloud.model.mongo.HBV;
@@ -360,36 +359,45 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public String egfrCompare(Integer length) {
-        List<EGFRCount> egfrCounts = reportDao.getEGFRCountByLength(EGFRCount.class, length);
+    public <T> String egfrCompare(Class<T> clazz, Integer length) {
+        List<T> counts = reportDao.getCountByLength(clazz, length);
         // 存储位点与位点的出现次数
         Map<String, Integer> map = new HashMap<String, Integer>();
-        for (EGFRCount count : egfrCounts) {
-            String site = count.getSite() + "";
-            if (!map.containsKey(site)) {
-                map.put(site, 1);
-            } else {
-                map.put(site, map.get(site) + 1);
-            }
-        }
-        String str = MapSort.sort(map);
-        if (str != null && !"".equals(str)) {
-            // 取前10行数据
-            // 取第几次
-            int i = 0;
-            // 目标位置下标
-            int s = -1;
-            while (i++ < 10) {
-                s = str.indexOf("\n", s + 1);
-                // 少于10行就直接退出循环
-                if (s == -1) {
-                    break;
+        try {
+            Method getSiteMethod = clazz.getMethod("getSite", (Class<?>[]) null);
+            getSiteMethod.setAccessible(true);
+            for (int i = 0; counts != null && i < counts.size(); i++) {
+                T target = counts.get(i);
+                String site = String.valueOf(getSiteMethod.invoke(target, (Object[]) null));
+                if (!map.containsKey(site)) {
+                    map.put(site, 1);
+                } else {
+                    map.put(site, map.get(site) + 1);
                 }
             }
-            return str.substring(0, s);
-        } else {
-            return str;
+            String str = MapSort.sort(map);
+            if (str != null && !"".equals(str)) {
+                // 取前10行数据
+                // 取第几次
+                int i = 0;
+                // 目标位置下标
+                int s = -1;
+                while (i++ < 10) {
+                    s = str.indexOf("\n", s + 1);
+                    // 少于10行就直接退出循环
+                    if (s == -1) {
+                        break;
+                    }
+                }
+                return str.substring(0, s);
+            } else {
+                return str;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
     @Override

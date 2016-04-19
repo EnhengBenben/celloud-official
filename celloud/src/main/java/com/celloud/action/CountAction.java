@@ -17,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.TimeState;
+import com.celloud.model.mongo.EGFRCount;
+import com.celloud.model.mongo.KRASCount;
 import com.celloud.model.mongo.Pgs;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
@@ -240,8 +242,12 @@ public class CountAction {
     @ActionLog(value = "获取EGFR/KRAS数据参数同比信息", button = "EGFR/KRAS数据报告")
 	@ResponseBody
 	@RequestMapping("egfrCompare")
-	public String egfrCompare(Integer length) {
-		return reportService.egfrCompare(length);
+	public String egfrCompare(Integer appId, Integer length) {
+        if (appId == 84) {
+            return reportService.egfrCompare(EGFRCount.class, length);
+        } else {
+            return reportService.egfrCompare(KRASCount.class, length);
+        }
 	}
 
 	/**

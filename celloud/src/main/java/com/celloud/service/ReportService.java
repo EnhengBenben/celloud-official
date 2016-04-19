@@ -373,12 +373,11 @@ public interface ReportService {
      * EGFR 和 KRAS 数据参数同比
      * 
      * @param appId
-     * @param path
      * @param length
      * @return
      * @date 2016-1-9 下午3:07:38
      */
-    public String egfrCompare(Integer length);
+    public <T> String egfrCompare(Class<T> clazz, Integer length);
 
     /**
      * HCV 数据参数同比
