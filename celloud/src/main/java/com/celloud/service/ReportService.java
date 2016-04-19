@@ -256,6 +256,15 @@ public interface ReportService {
     public void updateMIBFilling(MIB mib);
 
     /**
+     * 修改BSI报告用户填写部分
+     * 
+     * @param bsi
+     * @author leamo
+     * @date 2016年4月18日 下午4:33:55
+     */
+    public void updateBSIFilling(BSI bsi);
+
+    /**
      * 获取 Split 报告
      * 
      * @param dataKey

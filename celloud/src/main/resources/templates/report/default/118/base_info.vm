@@ -1,17 +1,17 @@
 <input type="hidden" name="id" value="$!bsi.id">
 <ul>
     <li><lable>姓名：</lable><span><input class="width-80" type="text" name="baseInfo['name']" value="$!bsi.baseInfo.name" placeholder="患者姓名"></span></li>
-    <li><lable>性别：</lable><span id="sex-text"></span><span id="sex"><input type="radio" name="baseInfo['sex']" value="男" #if($!bsi.baseInfo.sex.equals("男")) checked="checked" #end>男<input type="radio" name="baseInfo['sex']" value="女" #if($!bsi.baseInfo.sex.equals("女")) checked="checked" #end >女<input type="radio" name="baseInfo['sex']" value="不详" #if($!bsi.baseInfo.sex.equals("不详")) checked="checked" #end >不详</span></li>
+    <li><lable>性别：</lable><span id="sex-text"></span><span id="sex"><input id="sex-radio" type="radio" name="baseInfo['sex']" value="男" #if($!bsi.baseInfo.sex.equals("男")) checked="checked" #end>男<input type="radio" name="baseInfo['sex']" value="女" #if($!bsi.baseInfo.sex.equals("女")) checked="checked" #end >女<input type="radio" name="baseInfo['sex']" value="不详" #if($!bsi.baseInfo.sex.equals("不详")) checked="checked" #end >不详</span></li>
     <li><lable>年龄：</lable><span><input class="width-80" type="text"  name="baseInfo['age']" value="$!bsi.baseInfo.age" placeholder="19"></span>岁</li>
     <li></li>
     <li><lable>科室：</lable>
        <span id="department-text"></span>
        <select id="department" class="width-80" name="baseInfo['department']">
-          <option value="ICU病房">ICU病房</option>
-          <option value="呼吸科">呼吸科</option>
-          <option value="儿科">儿科</option>
-          <option value="感染科">感染科</option>
-          <option value="产科">产科</option>
+          <option value="ICU病房" #if($bsi.baseInfo.sampleType.equals('ICU病房')) selected#end>ICU病房</option>
+          <option value="呼吸科" #if($bsi.baseInfo.sampleType.equals('呼吸科')) selected#end>呼吸科</option>
+          <option value="儿科" #if($bsi.baseInfo.sampleType.equals('儿科')) selected#end>儿科</option>
+          <option value="感染科" #if($bsi.baseInfo.sampleType.equals('感染科')) selected#end>感染科</option>
+          <option value="产科" #if($bsi.baseInfo.sampleType.equals('产科')) selected#end>产科</option>
         </select>
     </li>
     <li><lable>住院号：</lable><span><input class="width-120" type="text" name="baseInfo['inpatientNo']" value="$!bsi.baseInfo.inpatientNo" placeholder="83947536"></span></li>
@@ -20,17 +20,57 @@
     <li><lable>样本种类：</lable>
         <span id="sample-type-text"></span>
         <select id="sample-type" class="width-80" name="baseInfo['sampleType']">
-          <option value="血液">血液</option>
-          <option value="尿">尿</option>
-          <option value="腹水">腹水</option>
-          <option value="阴道拭子">阴道拭子</option>
-          <option value="脑脊液">脑脊液</option>
-          <option value="分泌物">分泌物</option>
-          <option value="大便">大便</option>
-          <option value="鼻咽拭子">鼻咽拭子</option>
+          <option value="血液" #if($bsi.baseInfo.sampleType.equals('血液')) selected#end >血液</option>
+          <option value="尿" #if($bsi.baseInfo.sampleType.equals('尿')) selected#end>尿</option>
+          <option value="腹水" #if($bsi.baseInfo.sampleType.equals('腹水')) selected#end>腹水</option>
+          <option value="阴道拭子" #if($bsi.baseInfo.sampleType.equals('血液')) selected#end>阴道拭子</option>
+          <option value="脑脊液" #if($bsi.baseInfo.sampleType.equals('阴道拭子')) selected#end>脑脊液</option>
+          <option value="分泌物" #if($bsi.baseInfo.sampleType.equals('分泌物')) selected#end>分泌物</option>
+          <option value="大便" #if($bsi.baseInfo.sampleType.equals('大便')) selected#end>大便</option>
+          <option value="鼻咽拭子" #if($$bsi.baseInfo.sampleType.equals('鼻咽拭子')) selected#end>鼻咽拭子</option>
         </select>
     </li>
     <li><lable>样本编号：</lable><span><input class="width-120" type="text" name="baseInfo['sampleNo']" value="$!bsi.baseInfo.sampleNo" placeholder="88484"></span></li>
     <li><lable>送检医生：</lable><span><input class="width-80" type="text" name="baseInfo['doctor']" value="$!bsi.baseInfo.doctor" placeholder="ab0302"></span></li>
     <li><lable>送检日期：</lable><span><input class="width-80" type="text" name="baseInfo['inspectionDate']" value="$!bsi.baseInfo.inspectionDate"></span></li>
 </ul>
+<script>
+$(document).ready(function(){
+    $("#print").on("click",function(){
+        $(".base-info").find("input[type='text']").each(function(){
+           $(this).parent().html("<input type='hidden' value='"+$(this).attr("class")+"'><span name='print-input'>"+$(this).val()+"</span>");
+        });
+        $("#department-text").text($("#department").val());
+        $("#department").addClass("hide");
+        $("#sample-type-text").text($("#sample-type").val());
+        $("#sample-type").addClass("hide");
+        $("#sex-text").html($("input[type='radio'][id='sex-radio']:checked").val());
+        $("#sex").addClass("hide");
+        $(".buttons").hide();
+        $("#toc").hide();
+        $("th[name='opera-seq']").addClass("hide");
+        $("td[name='opera-seq']").addClass("hide");
+        $(".tocify-extend-page").remove();
+        window.print();
+        $("th[name='opera-seq']").removeClass("hide");
+        $("td[name='opera-seq']").removeClass("hide");
+        $("#department-text").text("");
+        $("#department").removeClass("hide");
+        $("#sample-type-text").text("");
+        $("#sample-type").removeClass("hide");
+        $("#sex-text").html("");
+        $("#sex").removeClass("hide");
+        $(".buttons").show();
+        $("#toc").show();
+        $("span[name='print-input']").each(function(){
+            $(this).parent().html("<input class='"+$(this).prev().val()+"' type='text' value='"+$(this).html()+"'>");
+        });
+      });
+    $("#save").on("click",function(){
+        $.post("../report/updateBSIFilling",$("#print-form").serialize());
+    })
+    $("#reset").on("click",function(){
+         $("#print-form")[0].reset();
+    })
+});
+</script>
