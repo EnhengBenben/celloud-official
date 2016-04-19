@@ -108,7 +108,7 @@ class KRAS:
 					else:
 						break;
 				# 执行批量插入操作
-				mo.insertBatch(list,'EGFRCount');
+				mo.insertBatch(list,'KRASCount');
 				f.close();
 
 		#report.txt.wz.1

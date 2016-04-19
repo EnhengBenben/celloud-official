@@ -226,8 +226,8 @@ public class CountAction {
     @ActionLog(value = "获取TB数据参数同比信息", button = "TB数据报告")
 	@ResponseBody
 	@RequestMapping("tbCompare")
-	public String tbCompare(Integer appId, String path) {
-		return FileTools.getLimitLines(path + appId, 1, 10);
+	public String tbCompare() {
+        return reportService.tbrifampicinCompare();
 	}
 
 	/**

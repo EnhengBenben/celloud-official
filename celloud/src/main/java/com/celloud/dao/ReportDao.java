@@ -167,7 +167,7 @@ public interface ReportDao {
     public Integer getTBINHisWild(Integer userId, String simpleGeneName, Integer isWild);
     
     /**
-     * 根据bena从mongo中获取全部数据
+     * 根据bean从mongo中获取全部数据
      * @param clazz
      * @return
      */

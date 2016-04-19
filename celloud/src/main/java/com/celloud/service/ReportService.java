@@ -378,6 +378,8 @@ public interface ReportService {
      * @date 2016-1-9 下午3:07:38
      */
     public <T> String egfrCompare(Class<T> clazz, Integer length);
+    
+    public String tbrifampicinCompare();
 
     /**
      * HCV 数据参数同比
