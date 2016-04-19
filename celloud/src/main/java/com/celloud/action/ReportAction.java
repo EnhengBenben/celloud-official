@@ -759,8 +759,9 @@ public class ReportAction {
 	public ModelAndView getTranslateReport(String dataKey, Integer projectId, Integer appId) {
 		DataFile data = dataService.getDataByKey(dataKey);
 		Translate translate = reportService.getTranslateReport(dataKey, projectId, appId);
-		String source = FileTools.readFileToString(data.getPath());
+		String source = FileTools.readAppoint(data.getPath());
 		translate.setSource(source);
+		translate.setResult(CustomStringUtils.htmlbr(translate.getResult()));
 		ModelAndView mv = getModelAndView("report/report_data_translate", projectId);
 		return mv.addObject("translate", translate);
 	}

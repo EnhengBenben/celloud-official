@@ -11,6 +11,7 @@ public class Translate extends Base {
 
 	private String result;
 	private String source;
+	private String fileName;
 
 	public String getResult() {
 		return result;
@@ -26,6 +27,14 @@ public class Translate extends Base {
 
 	public void setSource(String source) {
 		this.source = source;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 }

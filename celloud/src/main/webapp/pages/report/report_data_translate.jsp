@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="row">
+<div>
 	<div class="m-file">
 		<dl class="dl-horizontal datareport-title">
           <dt>项目名称：</dt>
@@ -22,7 +22,7 @@
 		<div class="m-box">
 			<h2><i class="i-report1"></i>输入序列</h2>
 			<div class="m-boxCon">
-				<s:property value="resultMap.source" escape="false"/>
+				${translate.source }
 			</div>
 		</div>
 		<div class="m-box m-box-yc">
