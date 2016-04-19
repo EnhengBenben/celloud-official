@@ -4,7 +4,6 @@ import java.math.BigInteger;
 import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.util.Date;
 import java.util.Enumeration;
 
 import javax.annotation.Resource;
@@ -110,6 +109,7 @@ public class LoginAction {
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public ModelAndView login(Model model, User user, String kaptchaCode, PublicKey publicKey, boolean checked,
             HttpServletRequest request, HttpServletResponse response) {
+
         logger.info("用户正在登陆：" + user.getUsername());
         String password = user.getPassword();
         user.setPassword("");
@@ -121,6 +121,7 @@ public class LoginAction {
         PrivateKey privateKey = null;
         RSAKey key = null;
         String modulus = CookieUtils.getCookieValue(request, Constants.COOKIE_MODULUS);
+        logger.info("modulus={}", modulus);
         if (!checked) {
             deleteCookies(request, response);
         }
@@ -132,8 +133,10 @@ public class LoginAction {
         // 如果cookie中存在公钥且和前台传过来的一致，则从数据库加载私钥，不管是否记住密码
         if (modulus != null && modulus.equals(publicKey.getModulus())) {
             key = rsaKeyService.getByModulus(publicKey.getModulus());
+            logger.info("从数据库加载私钥");
             privateKey = new PrivateKey(new BigInteger(key.getModulus(), 16), new BigInteger(key.getPriExponent(), 16));
         } else {
+            logger.info("从session加载私钥");
             privateKey = (PrivateKey) session.getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
         }
         if (checked) {
@@ -141,11 +144,14 @@ public class LoginAction {
         } else if (key != null && key.isExpires()) {
             rsaKeyService.deleteByModulus(publicKey.getModulus());
         }
+        logger.info(password);
         password = RSAUtil.decryptStringByJs(privateKey, password);
+        logger.info(password);
         if (password == null) {
             password = "";
         }
         password = MD5Util.getMD5(password);
+        logger.info(password);
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), password);
         try {
@@ -163,7 +169,7 @@ public class LoginAction {
         }
         User loginUser = ConstantsData.getLoginUser();
         if (checked && key == null) {
-            saveRSAKey(publicKey, privateKey, loginUser);
+            rsaKeyService.saveRSAKey(publicKey, privateKey, loginUser);
         }
         logger.info("用户({})登录成功！", loginUser.getUsername());
         logService.log("用户登录", "用户" + loginUser.getUsername() + "登录成功");
@@ -196,24 +202,6 @@ public class LoginAction {
         SecurityUtils.getSubject().logout();
         logger.info("用户({})主动退出", user == null ? "null..." : user.getUsername());
         return "redirect:login";
-    }
-
-    /**
-     * 创建一个rsaKey
-     * 
-     * @param publicKey
-     * @param privateKey
-     * @param user
-     */
-    private void saveRSAKey(PublicKey publicKey, PrivateKey privateKey, User user) {
-        RSAKey key = new RSAKey();
-        key.setCreateTime(new Date());
-        key.setModulus(privateKey.getModulus().toString(16));
-        key.setPriExponent(privateKey.getPrivateExponent().toString(16));
-        key.setPubExponent(publicKey.getExponent());
-        key.setUserId(user.getUserId());
-        key.setState(0);
-        rsaKeyService.insert(key);
     }
 
     /**

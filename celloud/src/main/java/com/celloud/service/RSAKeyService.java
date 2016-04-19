@@ -1,6 +1,9 @@
 package com.celloud.service;
 
+import com.celloud.model.PrivateKey;
+import com.celloud.model.PublicKey;
 import com.celloud.model.mysql.RSAKey;
+import com.celloud.model.mysql.User;
 
 /**
  * 用户记住密码使用的公钥私钥管理接口
@@ -15,7 +18,7 @@ public interface RSAKeyService {
      * @param rsaKey
      * @return
      */
-    public boolean insert(RSAKey rsaKey);
+    public boolean saveRSAKey(PublicKey publicKey, PrivateKey privateKey, User user);
 
     /**
      * 根据系数获取公钥私钥对
@@ -40,7 +43,12 @@ public interface RSAKeyService {
      *            有效期的天数
      * @return
      */
-    public int deleteExpiresKeys(int days);
+    public int deleteExpiresKeys(Integer days);
+
+    /**
+     * 删除过期的公钥私钥对,过期时间为7天，自动执行
+     */
+    public void deleteExpireKeys();
 
     /**
      * 删除某个用户对应的所有私钥，用在用户修改密码之后
