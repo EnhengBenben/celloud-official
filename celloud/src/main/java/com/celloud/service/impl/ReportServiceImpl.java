@@ -752,6 +752,12 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
+    public void updateBSIFilling(BSI bsi) {
+        reportDao.editData(BSI.class, bsi.getId(), "baseInfo",
+                bsi.getBaseInfo());
+    }
+
+    @Override
     public Split getSplitReport(String dataKey, Integer projectId, Integer appId) {
         return reportDao.getDataReport(Split.class, dataKey, projectId, appId);
     }

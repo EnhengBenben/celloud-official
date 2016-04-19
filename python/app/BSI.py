@@ -69,7 +69,7 @@ class BSI:
             species_other = []
             for line in f.readlines():
                 st = line.strip().split("\t")
-                species = {"species": list_value(st, 0), "species_zh": species_zh, "site1": list_value(st, 1),
+                species = {"species": list_value(st, 0), "site1": list_value(st, 1),
                            "site2": list_value(st, 2), "site3": list_value(st, 3), "site4": list_value(st, 4),
                            "unique_reads_num": list_value(st, 5), "seq1": list_value(st, 6), "seq2": list_value(st, 7),
                            "seq3": list_value(st, 8), "seq4": list_value(st, 9)

@@ -74,9 +74,9 @@ public class TaskAction {
     private AppService appService;
     @Resource
     private ExpensesService expencesService;
-	@Resource
-	private ExperimentService expService;
-	
+    @Resource
+    private ExperimentService expService;
+
     private static Map<String, Map<String, String>> machines = ConstantsData
             .getMachines();
     private static String sgeHost = machines.get("158").get(Mod.HOST);
@@ -102,10 +102,10 @@ public class TaskAction {
     @ResponseBody
     public String taskRunOver(String projectId, String dataNames) {
         logger.info("任务运行结束，proId:{},运行数据dataKey：{}", projectId, dataNames);
-		if (StringUtils.isEmpty(projectId) || StringUtils.isEmpty(dataNames)) {
-			logger.info("任务运行结束信息不全");
-			return "run error";
-		}
+        if (StringUtils.isEmpty(projectId) || StringUtils.isEmpty(dataNames)) {
+            logger.info("任务运行结束信息不全");
+            return "run error";
+        }
         String[] dataArr = dataNames.split(",");
         String dataKey = FileTools.getArray(dataArr, 0);
         // 1. 数据库检索
@@ -176,8 +176,10 @@ public class TaskAction {
                     DataFile.setState(DataState.DEELTED);
                     int dataId = dataService.addDataInfo(DataFile);
                     String new_dataKey = DataUtil.getNewDataKey(dataId);
-					String filePath = PropertiesUtil.bigFilePath + userId + File.separatorChar
-							+ DateUtil.getDateToString("yyyyMMdd") + File.pathSeparatorChar + new_dataKey + extName;
+                    String filePath = PropertiesUtil.bigFilePath + userId
+                            + File.separatorChar
+                            + DateUtil.getDateToString("yyyyMMdd")
+                            + File.separatorChar + new_dataKey + extName;
                     boolean state = PerlUtils.excuteCopyFile(resourcePath,
                             filePath);
                     if (state) {
@@ -222,10 +224,10 @@ public class TaskAction {
     @ResponseBody
     public String projectRunOver(String projectId) {
         logger.info("项目运行结束，id:{}", projectId);
-		if (StringUtils.isEmpty(projectId)) {
-			logger.info("任务运行结束信息不全");
-			return "run error";
-		}
+        if (StringUtils.isEmpty(projectId)) {
+            logger.info("任务运行结束信息不全");
+            return "run error";
+        }
         // 1. 利用 python 生成数据 pdf，并将数据报告插入 mongodb
         String command = "python " + SparkPro.PYTHONPATH + " "
                 + SparkPro.TOOLSPATH + " " + projectId;
@@ -253,16 +255,16 @@ public class TaskAction {
         // 4. 通过反射调用相应app的处理方法，传参格式如下：
         // String appPath, String appName, String appTitle,String
         // projectFile,String projectId, List<DataFile> proDataList
-		RunOverUtil rou = new RunOverUtil();
-		try {
-			rou.getClass()
-					.getMethod(method,
-							new Class[] { String.class, String.class, String.class, String.class, String.class,
-									List.class })
-					.invoke(rou, basePath.toString(), appName, title, projectFile, projectId, dataList);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        RunOverUtil rou = new RunOverUtil();
+        try {
+            rou.getClass().getMethod(method,
+                    new Class[] { String.class, String.class, String.class,
+                            String.class, String.class, List.class })
+                    .invoke(rou, basePath.toString(), appName, title,
+                            projectFile, projectId, dataList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         // 5. 通过读取xml文件来生成项目报告
         String xml = null;
         if (new File(projectFile.toString()).exists()) {
@@ -270,31 +272,35 @@ public class TaskAction {
         }
         // 6. 项目报告插入mysql并修改项目运行状态
         reportService.reportCompeleteByProId(proId, xml);
-		if (appId == ExperimentState.MDA_MR || appId == ExperimentState.SurePlex || appId == ExperimentState.gDNA_MR) {
-			for (DataFile dataFile : dataList) {
-				String anotherName = dataFile.getAnotherName() == null ? "" : dataFile.getAnotherName();
-				int dataId = dataFile.getFileId();
-				List<Experiment> expList = expService.getRelatList(userId, anotherName, dataFile.getDataKey());
-				if (expList != null && expList.size() == 1) {
-					Report report = reportService.getReport(userId, appId, Integer.valueOf(projectId), dataId,
-							ReportType.DATA);
-					Experiment exp = expList.get(0);
-					Integer am = exp.getAmplificationMethod();
-					if (am == null) {
-						continue;
-					}
-					if (ExperimentState.map.get(am).equals(appId)) {
-						exp.setReportId(report.getReportId());
-						exp.setReportDate(report.getEndDate());
-						exp.setStep(ExperimentState.REPORT_STEP);
-						expService.updateByPrimaryKeySelective(exp);
-						logger.info("用户{}数据{}自动绑定报告成功", userId, dataId);
-					}
-				} else {
-					logger.error("用户{}未能检索到与{}匹配的实验流程", userId, dataId);
-				}
-			}
-		}
+        if (appId == ExperimentState.MDA_MR || appId == ExperimentState.SurePlex
+                || appId == ExperimentState.gDNA_MR) {
+            for (DataFile dataFile : dataList) {
+                String anotherName = dataFile.getAnotherName() == null ? ""
+                        : dataFile.getAnotherName();
+                int dataId = dataFile.getFileId();
+                List<Experiment> expList = expService.getRelatList(userId,
+                        anotherName, dataFile.getDataKey());
+                if (expList != null && expList.size() == 1) {
+                    Report report = reportService.getReport(userId, appId,
+                            Integer.valueOf(projectId), dataId,
+                            ReportType.DATA);
+                    Experiment exp = expList.get(0);
+                    Integer am = exp.getAmplificationMethod();
+                    if (am == null) {
+                        continue;
+                    }
+                    if (ExperimentState.map.get(am).equals(appId)) {
+                        exp.setReportId(report.getReportId());
+                        exp.setReportDate(report.getEndDate());
+                        exp.setStep(ExperimentState.REPORT_STEP);
+                        expService.updateByPrimaryKeySelective(exp);
+                        logger.info("用户{}数据{}自动绑定报告成功", userId, dataId);
+                    }
+                } else {
+                    logger.error("用户{}未能检索到与{}匹配的实验流程", userId, dataId);
+                }
+            }
+        }
         runQueue(projectId);
         return "run over";
     }
@@ -313,8 +319,9 @@ public class TaskAction {
             }
             String proId = GlobalQueue.peek();
             if (proId != null) {
-            	TaskQueue tq = reportService.getTaskQueue(Integer.parseInt(proId));
-            	List<DataFile> list = tq.getDataList();
+                TaskQueue tq = reportService
+                        .getTaskQueue(Integer.parseInt(proId));
+                List<DataFile> list = tq.getDataList();
                 int need = list.size();
                 logger.info("需要节点 {}可使用节点 {}", need, PortPool.getSize());
                 if (PortPool.getSize() < need) {
@@ -322,24 +329,27 @@ public class TaskAction {
                     break;
                 }
                 String _dataFilePath = DataKeyListToFile.toSpark(proId, list);
-                Map<String, String> map = CommandKey.getMap(_dataFilePath, tq.getPath(),Integer.valueOf(proId));
+                Map<String, String> map = CommandKey.getMap(_dataFilePath,
+                        tq.getPath(), Integer.valueOf(proId));
                 StrSubstitutor sub = new StrSubstitutor(map);
-				String command = sub.replace(tq.getCommand());
-				logger.info("资源满足需求，投递任务！运行命令：" + command);
+                String command = sub.replace(tq.getCommand());
+                logger.info("资源满足需求，投递任务！运行命令：" + command);
                 SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
                 ssh.sshSubmit(command, false);
                 GlobalQueue.poll();
             }
         }
     }
-    
+
     @ActionLog(value = "调用Tools端运行结束方法", button = "运行结束")
-	@RequestMapping("toolsRunOver")
+    @RequestMapping("toolsRunOver")
     @ResponseStatus(value = HttpStatus.OK)
-	@ResponseBody
-	public String toolsRunOver(Integer userId, Integer appId, Integer projectId, Integer period, String context) {
-		Integer result = reportService.updateReportStateToTools(userId, appId, projectId, period, context);
-		return String.valueOf(result);
-	}
+    @ResponseBody
+    public String toolsRunOver(Integer userId, Integer appId, Integer projectId,
+            Integer period, String context) {
+        Integer result = reportService.updateReportStateToTools(userId, appId,
+                projectId, period, context);
+        return String.valueOf(result);
+    }
 
 }
