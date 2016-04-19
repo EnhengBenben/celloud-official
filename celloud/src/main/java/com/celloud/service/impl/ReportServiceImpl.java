@@ -38,7 +38,6 @@ import com.celloud.model.mongo.CmpGeneSnpResult;
 import com.celloud.model.mongo.CmpReport;
 import com.celloud.model.mongo.DPD;
 import com.celloud.model.mongo.EGFR;
-import com.celloud.model.mongo.EGFRCount;
 import com.celloud.model.mongo.GddDiseaseDict;
 import com.celloud.model.mongo.GeneDetectionResult;
 import com.celloud.model.mongo.HBV;
@@ -51,6 +50,7 @@ import com.celloud.model.mongo.Pgs;
 import com.celloud.model.mongo.Split;
 import com.celloud.model.mongo.TBINH;
 import com.celloud.model.mongo.TBRifampicin;
+import com.celloud.model.mongo.TBRifampicinCount;
 import com.celloud.model.mongo.TaskQueue;
 import com.celloud.model.mongo.UGT;
 import com.celloud.model.mysql.DataFile;
@@ -360,12 +360,56 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public String egfrCompare(Integer length) {
-        List<EGFRCount> egfrCounts = reportDao.getEGFRCountByLength(EGFRCount.class, length);
+    public <T> String egfrCompare(Class<T> clazz, Integer length) {
+        List<T> counts = reportDao.getCountByLength(clazz, length);
         // 存储位点与位点的出现次数
         Map<String, Integer> map = new HashMap<String, Integer>();
-        for (EGFRCount count : egfrCounts) {
-            String site = count.getSite() + "";
+        try {
+            Method getSiteMethod = clazz.getMethod("getSite", (Class<?>[]) null);
+            getSiteMethod.setAccessible(true);
+            for (int i = 0; counts != null && i < counts.size(); i++) {
+                T target = counts.get(i);
+                String site = String.valueOf(getSiteMethod.invoke(target, (Object[]) null));
+                if (!map.containsKey(site)) {
+                    map.put(site, 1);
+                } else {
+                    map.put(site, map.get(site) + 1);
+                }
+            }
+            String str = MapSort.sort(map);
+            if (str != null && !"".equals(str)) {
+                // 取前10行数据
+                // 取第几次
+                int i = 0;
+                // 目标位置下标
+                int s = -1;
+                int k = 0;
+                while (i++ < 10) {
+                    s = str.indexOf("\n", s + 1);
+                    // 少于10行就直接退出循环
+                    if (s == -1) {
+                        break;
+                    }
+                    k = s;
+                }
+                return str.substring(0, k);
+            } else {
+                return str;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    @Override
+    public String tbrifampicinCompare() {
+        List<TBRifampicinCount> counts = reportDao.getAllByClass(TBRifampicinCount.class);
+        // 存储位点与位点的出现次数
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        for(TBRifampicinCount count : counts){
+            String site = String.valueOf(count.getSite());
             if (!map.containsKey(site)) {
                 map.put(site, 1);
             } else {
@@ -379,14 +423,16 @@ public class ReportServiceImpl implements ReportService {
             int i = 0;
             // 目标位置下标
             int s = -1;
+            int k = 0;
             while (i++ < 10) {
                 s = str.indexOf("\n", s + 1);
                 // 少于10行就直接退出循环
                 if (s == -1) {
                     break;
                 }
+                k = s;
             }
-            return str.substring(0, s);
+            return str.substring(0, k);
         } else {
             return str;
         }
@@ -706,6 +752,12 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
+    public void updateBSIFilling(BSI bsi) {
+        reportDao.editData(BSI.class, bsi.getId(), "baseInfo",
+                bsi.getBaseInfo());
+    }
+
+    @Override
     public Split getSplitReport(String dataKey, Integer projectId, Integer appId) {
         return reportDao.getDataReport(Split.class, dataKey, projectId, appId);
     }
@@ -852,4 +904,5 @@ public class ReportServiceImpl implements ReportService {
     public ABINJ getABINJReport(String dataKey, Integer projectId, Integer appId) {
         return reportDao.getDataReport(ABINJ.class, dataKey, projectId, appId);
     }
+
 }

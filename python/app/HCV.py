@@ -11,9 +11,7 @@ import threading
 from model import *
 from utils.FileUtils import *
 from mongo.mongoOperate import mongo
-
-# 不统计的用户id
-userList = ['6', '9', '12', '13', '15', '16', '17', '18', '20', '21', '23', '24', '27', '28', 'Gadgets'];
+from PDFPro import PDFPro
 
 class HCV:
 	path = None
@@ -63,7 +61,7 @@ class HCV:
 			# 截取数据报告路径
 			paths = path.split(os.sep);
 			# 判断该用户是否为测试用户
-			if(paths[len(paths) - 3] not in userList):
+			if(paths[len(paths) - 3] not in PDFPro.userList):
 				# 读取文件最后一行内容
 				f = codecs.open(txt,'r','gbk');
 				targetLine = '';

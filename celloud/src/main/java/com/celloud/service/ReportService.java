@@ -256,6 +256,15 @@ public interface ReportService {
     public void updateMIBFilling(MIB mib);
 
     /**
+     * 修改BSI报告用户填写部分
+     * 
+     * @param bsi
+     * @author leamo
+     * @date 2016年4月18日 下午4:33:55
+     */
+    public void updateBSIFilling(BSI bsi);
+
+    /**
      * 获取 Split 报告
      * 
      * @param dataKey
@@ -373,12 +382,13 @@ public interface ReportService {
      * EGFR 和 KRAS 数据参数同比
      * 
      * @param appId
-     * @param path
      * @param length
      * @return
      * @date 2016-1-9 下午3:07:38
      */
-    public String egfrCompare(Integer length);
+    public <T> String egfrCompare(Class<T> clazz, Integer length);
+    
+    public String tbrifampicinCompare();
 
     /**
      * HCV 数据参数同比

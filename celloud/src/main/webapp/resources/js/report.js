@@ -945,7 +945,7 @@ $.ajaxSetup ({
 				});
 			}
 			if(appId==90){
-				$.get("count/tbCompare",{"appId":appId,"path":DATAPATH},function(data){
+				$.get("count/tbCompare",{},function(data){
 						var div = $("<div id='char0' class='col-lg-6'></div>");
 						$("#charDiv").append(div);
 						var X = "[";
@@ -958,7 +958,8 @@ $.ajaxSetup ({
 						}
 						X = X.substring(0,X.length-1)+"]";
 						Y = Y.substring(0,Y.length-1)+"]";
-						showCharHCV("char0", "位点", eval(X),eval(Y),0);
+//						showCharHCV("char0", "位点", eval(X),eval(Y),0);
+						$.reportChar.draw.echartsShowBar("char0", "位点", X, Y);
 				});
 			}
 			if(appId==84||appId==89){
@@ -966,7 +967,7 @@ $.ajaxSetup ({
 				if(length==0 || isNaN(length)){
 					$("#charDiv").html("<p style=\"color: red;\">数据异常，没有同比结果</p>");
 				}else{  
-					$.get("count/egfrCompare",{"appId":appId,"path":DATAPATH,"length":length},function(data){
+					$.get("count/egfrCompare",{"appId":appId,"length":length},function(data){
 							var div = $("<div id='char0' class='col-lg-6'></div>");
 							$("#charDiv").append(div);
 							var X = "[";
