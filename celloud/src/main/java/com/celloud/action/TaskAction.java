@@ -286,9 +286,9 @@ public class TaskAction {
                             ReportType.DATA);
                     Experiment exp = expList.get(0);
                     Integer am = exp.getAmplificationMethod();
-                    if (am == null) {
-                        continue;
-                    }
+					if (am == null || am.equals(0)) {
+						continue;
+					}
                     if (ExperimentState.map.get(am).equals(appId)) {
                         exp.setReportId(report.getReportId());
                         exp.setReportDate(report.getEndDate());
