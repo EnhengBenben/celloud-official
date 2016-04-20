@@ -759,9 +759,20 @@ public class ReportAction {
 	public ModelAndView getTranslateReport(String dataKey, Integer projectId, Integer appId) {
 		DataFile data = dataService.getDataByKey(dataKey);
 		Translate translate = reportService.getTranslateReport(dataKey, projectId, appId);
-		String source = FileTools.readAppoint(data.getPath());
-		translate.setSource(source);
-		translate.setResult(CustomStringUtils.htmlbr(translate.getResult()));
+		String path = data.getPath();
+		int MAX = 256 * 1024;
+		if (FileTools.getFileSize(path) > MAX) {
+			translate.setSource("输入序列超过256k，不再显示！");
+		} else {
+			String source = FileTools.readAppoint(data.getPath());
+			translate.setSource(source);
+		}
+		String result = translate.getResult();
+		if (result != null && result.length() > MAX) {
+			translate.setResult("输出序列超过256k，不再显示，请下载查看！");
+		} else {
+			translate.setResult(CustomStringUtils.htmlbr(result));
+		}
 		ModelAndView mv = getModelAndView("report/report_data_translate", projectId);
 		return mv.addObject("translate", translate);
 	}

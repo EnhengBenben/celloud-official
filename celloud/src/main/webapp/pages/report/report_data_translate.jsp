@@ -10,6 +10,9 @@
           <dt>文件名称：</dt>
           <dd class="force-break">${translate.fileName}(${translate.dataKey})</dd>
         </dl>
+        <div class="toolbar">
+        	<a class="btn btn-warning btn-flat" href="${toolsPath }Procedure!miRNADownload?userId=${translate.userId }/${translate.appId }/${translate.dataKey }/result.txt" class="btn btn-default"><i class="fa fa-file-pdf-o"></i>结果下载</a>
+	    </div>
 	</div>
 	<c:if test="${empty translate.result }">
 		<div class="m-box">
@@ -21,7 +24,7 @@
 	<c:if test="${not empty translate.result }">
 		<div class="m-box">
 			<h2><i class="i-report1"></i>输入序列</h2>
-			<div class="m-boxCon">
+			<div class="m-boxCon result">
 				${translate.source }
 			</div>
 		</div>
