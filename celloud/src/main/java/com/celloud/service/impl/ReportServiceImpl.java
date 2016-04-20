@@ -378,14 +378,16 @@ public class ReportServiceImpl implements ReportService {
             int i = 0;
             // 目标位置下标
             int s = -1;
+            int k = 0;
             while (i++ < 10) {
                 s = str.indexOf("\n", s + 1);
                 // 少于10行就直接退出循环
                 if (s == -1) {
                     break;
                 }
+                k = s;
             }
-            return str.substring(0, s);
+            return str.substring(0, k);
         } else {
             return str;
         }
