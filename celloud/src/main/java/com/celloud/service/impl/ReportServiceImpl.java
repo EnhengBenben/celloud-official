@@ -18,6 +18,7 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.query.UpdateResults;
 import org.springframework.stereotype.Service;
 
 import com.celloud.constants.DataState;
@@ -703,14 +704,18 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public void updateMIBFilling(MIB mib) {
-        reportDao.editData(MIB.class, mib.getId(), "baseInfo", mib.getBaseInfo());
+    public Integer updateMIBFilling(MIB mib) {
+        UpdateResults ur = reportDao.editData(MIB.class, mib.getId(),
+                "baseInfo", mib.getBaseInfo());
+        return ur != null ? 1 : 0;
     }
 
     @Override
-    public void updateBSIFilling(BSI bsi) {
-        reportDao.editData(BSI.class, bsi.getId(), "baseInfo",
+    public Integer updateBSIFilling(BSI bsi) {
+        UpdateResults ur = reportDao.editData(BSI.class, bsi.getId(),
+                "baseInfo",
                 bsi.getBaseInfo());
+        return ur != null ? 1 : 0;
     }
 
     @Override

@@ -245,9 +245,9 @@ $(function(){
         });
         var sex = $("input[type='radio']:checked").val();
         $("#_sex").html(sex);
-        $("#change").hide();
+        $(".buttons").hide();
         window.print();
-        $("#change").show();
+        $(".buttons").show();
         $("body").find("section").each(function(){
             $(this).addClass("border1");
         });
@@ -261,7 +261,13 @@ $(function(){
         $("input[type='radio'][value="+sex+"]").prop("checked",true); 
     });
     $("#save").on("click",function(){
-        $.post("../report/updateMIBFilling",$("#print-form").serialize());
+        $.post("../report/updateMIBFilling",$("#print-form").serialize(),function(result){
+            if(result == 1){
+                alert("修改成功");
+            }else{
+                alert("修改失败");
+            }
+        });
     });
     $("#reset").on("click",function(){
          $("#print-form")[0].reset();
