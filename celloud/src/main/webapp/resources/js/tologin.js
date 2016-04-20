@@ -84,12 +84,14 @@ $(document).ready(function(){
 			return true;
 		}
 		//校验验证码是否为空
-		var captcha = $.trim($("#captcha").val());
-		if(captcha==""||captcha==$.trim($("#captcha").attr("placeholder"))){
-			$(".error").html("请输入验证码！");
-			$(".error").show();
-			$("#captcha").val().focus();
-			return false;
+		if($("#captcha").length>=1){
+			var captcha = $.trim($("#captcha").val());
+			if(captcha==""||captcha==$.trim($("#captcha").attr("placeholder"))){
+				$(".error").html("请输入验证码！");
+				$(".error").show();
+				$("#captcha").val().focus();
+				return false;
+			}
 		}
 		//全部校验已通过
 		$("input[name='password']").val(secPWD(password));
@@ -111,10 +113,7 @@ $(document).ready(function(){
 			tmpRem=0;
 			document.getElementById("isRem").value=0;
 			$("#checked").val(false);
-			if($(".yzm").attr("style")){
-				$("#password").val("");
-			}
-			$(".yzm").css("display","");
+			$("#password").val("");
 			checked = $("#checked").val();
 		}
 	});

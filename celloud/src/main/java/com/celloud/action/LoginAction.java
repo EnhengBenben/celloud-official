@@ -1,10 +1,8 @@
 package com.celloud.action;
 
-import java.math.BigInteger;
 import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.util.Date;
 import java.util.Enumeration;
 
 import javax.annotation.Resource;
@@ -16,11 +14,11 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,13 +27,11 @@ import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.model.PrivateKey;
 import com.celloud.model.PublicKey;
-import com.celloud.model.mysql.RSAKey;
 import com.celloud.model.mysql.User;
 import com.celloud.service.ActionLogService;
 import com.celloud.service.RSAKeyService;
 import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
-import com.celloud.utils.CookieUtils;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.RSAUtil;
 
@@ -64,34 +60,16 @@ public class LoginAction {
      */
     @ActionLog(value = "跳转到登录页面", button = "登录")
     @RequestMapping("login")
-    public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView login() {
         ModelAndView mv = new ModelAndView("login");
         User user = new User();
-        String username = CookieUtils.getCookieValue(request, Constants.COOKIE_USERNAME);
-        String password = CookieUtils.getCookieValue(request, Constants.COOKIE_PASSWORD);
-        String modulus = CookieUtils.getCookieValue(request, Constants.COOKIE_MODULUS);
-        boolean checked = modulus != null;
-        PublicKey publicKey = null;
-        if (checked) {
-            RSAKey key = rsaKeyService.getByModulus(modulus);
-            if (key != null && !key.isExpires()) {
-                publicKey = new PublicKey();
-                publicKey.setExponent(key.getPubExponent());
-                publicKey.setModulus(key.getModulus());
-                user.setUsername(username);
-                user.setPassword(password);
-            } else {
-                rsaKeyService.deleteByModulus(modulus);
-                deleteCookies(request, response);
-                mv.addObject("info", "记住密码已过期，请重新使用密码登录！");
-            }
-        } else {
-            deleteCookies(request, response);
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isRemembered()) {
+            user = userService.findByUsernameOrEmail(String.valueOf(subject.getPrincipal()));
         }
-        if (publicKey == null) {
-            publicKey = generatePublicKey(request.getSession());
-        }
-        return mv.addObject("checked", checked).addObject("user", user).addObject("publicKey", publicKey);
+        return mv.addObject("checked", subject.isRemembered()).addObject("user", user)
+                .addObject("publicKey", generatePublicKey(subject.getSession()))
+                .addObject("showKaptchaCode", getFailedlogins() >= 3);
     }
 
     /**
@@ -108,63 +86,43 @@ public class LoginAction {
      */
     @ActionLog(value = "用户登录", button = "登录")
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public ModelAndView login(Model model, User user, String kaptchaCode, PublicKey publicKey, boolean checked,
-            HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView login(User user, String kaptchaCode, PublicKey publicKey, boolean checked) {
         logger.info("用户正在登陆：" + user.getUsername());
+        Subject subject = SecurityUtils.getSubject();
+        String username = String.valueOf(subject.getPrincipal());
         String password = user.getPassword();
         user.setPassword("");
-        HttpSession session = request.getSession();
-        ModelAndView mv = new ModelAndView("login")
-                .addObject("checked", CookieUtils.getCookieValue(request, Constants.COOKIE_MODULUS) != null && checked)
-                .addObject("user", user);
-        String kaptchaExpected = (String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
-        PrivateKey privateKey = null;
-        RSAKey key = null;
-        String modulus = CookieUtils.getCookieValue(request, Constants.COOKIE_MODULUS);
-        if (!checked) {
-            deleteCookies(request, response);
+        Session session = subject.getSession();
+        PrivateKey privateKey = (PrivateKey) session.getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
+        ModelAndView mv = new ModelAndView("login").addObject("user", user).addObject("checked", subject.isRemembered())
+                .addObject("publicKey", generatePublicKey(session))
+                .addObject("showKaptchaCode", getFailedlogins() >= 3);
+        if (!checkKaptcha(kaptchaCode, session)) {
+            return mv.addObject("info", "验证码错误，请重新登录！");
         }
-        // 验证码错误，直接返回到登录页面
-        if (!checked && (kaptchaExpected == null || !kaptchaExpected.equalsIgnoreCase(kaptchaCode))) {
-            logger.info("用户登陆验证码错误：param : {} \t session : {}", kaptchaCode, kaptchaExpected);
-            return mv.addObject("info", "验证码错误，请重新登录！").addObject("publicKey", generatePublicKey(session));
-        }
-        // 如果cookie中存在公钥且和前台传过来的一致，则从数据库加载私钥，不管是否记住密码
-        if (modulus != null && modulus.equals(publicKey.getModulus())) {
-            key = rsaKeyService.getByModulus(publicKey.getModulus());
-            privateKey = new PrivateKey(new BigInteger(key.getModulus(), 16), new BigInteger(key.getPriExponent(), 16));
+        if (user.getUsername().equals(username)) {
+            password = userService.findByUsernameOrEmail(username).getPassword();
         } else {
-            privateKey = (PrivateKey) session.getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
+            password = RSAUtil.decryptStringByJs(privateKey, password);
+            password = password == null ? "" : MD5Util.getMD5(password);
         }
-        if (checked) {
-            addCookies(request, response, user.getUsername(), password, publicKey.getModulus());
-        } else if (key != null && key.isExpires()) {
-            rsaKeyService.deleteByModulus(publicKey.getModulus());
-        }
-        password = RSAUtil.decryptStringByJs(privateKey, password);
-        if (password == null) {
-            password = "";
-        }
-        password = MD5Util.getMD5(password);
-        Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), password);
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), password, checked);
         try {
             subject.login(token);
         } catch (IncorrectCredentialsException | UnknownAccountException e) {
             String msg = "用户名或密码错误，请重新登录！";
+            addFailedlogins();
             logger.warn("用户（{}）登录失败，用户名或密码错误！", user.getUsername());
-            return mv.addObject("info", msg).addObject("publicKey", generatePublicKey(session));
+            return mv.addObject("info", msg).addObject("showKaptchaCode", getFailedlogins() >= 3);
         } catch (Exception e) {
             logger.error("登录失败！", e);
-            return mv.addObject("info", "登录失败！").addObject("publicKey", generatePublicKey(session));
+            return mv.addObject("info", "登录失败！");
         }
         if (!subject.isAuthenticated()) {
-            return mv.addObject("info", "登录失败！").addObject("publicKey", generatePublicKey(session));
+            return mv.addObject("info", "登录失败！");
         }
         User loginUser = ConstantsData.getLoginUser();
-        if (checked && key == null) {
-            saveRSAKey(publicKey, privateKey, loginUser);
-        }
+        session.removeAttribute(Constants.SESSION_FAILED_LOGIN_TIME);
         logger.info("用户({})登录成功！", loginUser.getUsername());
         logService.log("用户登录", "用户" + loginUser.getUsername() + "登录成功");
         session.removeAttribute(Constants.SESSION_RSA_PRIVATEKEY);
@@ -173,6 +131,50 @@ public class LoginAction {
         session.setAttribute("companyId", companyId);
         mv.setViewName("loading");
         return mv;
+    }
+
+    /**
+     * 获取用户登录的账号密码错误次数
+     * 
+     * @return
+     */
+    public int getFailedlogins() {
+        Object failedlogins = SecurityUtils.getSubject().getSession().getAttribute(Constants.SESSION_FAILED_LOGIN_TIME);
+        int time = 0;
+        try {
+            time = Integer.parseInt((String) failedlogins);
+        } catch (Exception e) {
+        }
+        return time;
+    }
+
+    /**
+     * 增加用户登录的账号密码错误次数
+     */
+    public void addFailedlogins() {
+        int time = getFailedlogins();
+        SecurityUtils.getSubject().getSession().setAttribute(Constants.SESSION_FAILED_LOGIN_TIME, (time + 1) + "");
+    }
+
+    /**
+     * 校验验证码，在用户错误三次及以上时，需要校验验证码
+     * 
+     * @param kaptcha
+     * @param session
+     * @return
+     */
+    public boolean checkKaptcha(String kaptcha, Session session) {
+        int time = getFailedlogins();
+        if (time < 3) {
+            return true;
+        }
+        String kaptchaExpected = (String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
+        // 验证码错误，直接返回到登录页面
+        if (kaptchaExpected == null || !kaptchaExpected.equalsIgnoreCase(kaptcha)) {
+            logger.info("用户登陆验证码错误：param : {} \t session : {}", kaptcha, kaptchaExpected);
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -192,28 +194,9 @@ public class LoginAction {
         while (names.hasMoreElements()) {
             session.removeAttribute(names.nextElement());
         }
-        deleteCookies(request, response);
         SecurityUtils.getSubject().logout();
         logger.info("用户({})主动退出", user == null ? "null..." : user.getUsername());
         return "redirect:login";
-    }
-
-    /**
-     * 创建一个rsaKey
-     * 
-     * @param publicKey
-     * @param privateKey
-     * @param user
-     */
-    private void saveRSAKey(PublicKey publicKey, PrivateKey privateKey, User user) {
-        RSAKey key = new RSAKey();
-        key.setCreateTime(new Date());
-        key.setModulus(privateKey.getModulus().toString(16));
-        key.setPriExponent(privateKey.getPrivateExponent().toString(16));
-        key.setPubExponent(publicKey.getExponent());
-        key.setUserId(user.getUserId());
-        key.setState(0);
-        rsaKeyService.insert(key);
     }
 
     /**
@@ -222,7 +205,7 @@ public class LoginAction {
      * @param session
      * @return
      */
-    private PublicKey generatePublicKey(HttpSession session) {
+    private PublicKey generatePublicKey(Session session) {
         KeyPair keyPair = RSAUtil.generateKeyPair();
         RSAPublicKey rsaPublicKey = (RSAPublicKey) keyPair.getPublic();
         RSAPrivateKey rsaPrivateKey = (RSAPrivateKey) keyPair.getPrivate();
@@ -232,44 +215,6 @@ public class LoginAction {
         publicKey.setModulus(rsaPublicKey.getModulus().toString(16));
         publicKey.setExponent(rsaPublicKey.getPublicExponent().toString(16));
         return publicKey;
-    }
-
-    /**
-     * 删除记住密码对应的cookie
-     * 
-     * @param request
-     * @param response
-     */
-    private void deleteCookies(HttpServletRequest request, HttpServletResponse response) {
-        CookieUtils.deleteCookie(request, response, Constants.COOKIE_USERNAME);
-        CookieUtils.deleteCookie(request, response, Constants.COOKIE_PASSWORD);
-        CookieUtils.deleteCookie(request, response, Constants.COOKIE_MODULUS);
-    }
-
-    /**
-     * 添加记住密码对应的cookie
-     * 
-     * @param request
-     * @param response
-     * @param username
-     * @param password
-     * @param modulus
-     */
-    private void addCookies(HttpServletRequest request, HttpServletResponse response, String username, String password,
-            String modulus) {
-        // cookie不为空时才会重建cookie，否则会将cookie的过期时间重置
-        if (CookieUtils.getCookie(request, Constants.COOKIE_USERNAME) == null) {
-            CookieUtils.setCookie(request, response, Constants.COOKIE_USERNAME, username,
-                    Constants.COOKIE_MAX_AGE_DAY * 24 * 60 * 60);
-        }
-        if (CookieUtils.getCookie(request, Constants.COOKIE_PASSWORD) == null) {
-            CookieUtils.setCookie(request, response, Constants.COOKIE_PASSWORD, password,
-                    Constants.COOKIE_MAX_AGE_DAY * 24 * 60 * 60);
-        }
-        if (CookieUtils.getCookie(request, Constants.COOKIE_MODULUS) == null) {
-            CookieUtils.setCookie(request, response, Constants.COOKIE_MODULUS, modulus,
-                    Constants.COOKIE_MAX_AGE_DAY * 24 * 60 * 60);
-        }
     }
 
 }
