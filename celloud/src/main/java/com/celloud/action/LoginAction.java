@@ -64,7 +64,9 @@ public class LoginAction {
         ModelAndView mv = new ModelAndView("login");
         User user = new User();
         Subject subject = SecurityUtils.getSubject();
-        if (subject.isRemembered()) {
+        Object isRemembered = subject.getSession().getAttribute("isRemembered");
+        boolean isRem = isRemembered == null ? false : ((boolean) isRemembered);
+        if (subject.isRemembered() || isRem) {
             user = userService.findByUsernameOrEmail(String.valueOf(subject.getPrincipal()));
         }
         return mv.addObject("checked", subject.isRemembered()).addObject("user", user)
@@ -93,6 +95,7 @@ public class LoginAction {
         String password = user.getPassword();
         user.setPassword("");
         Session session = subject.getSession();
+        session.setAttribute("isRemembered", checked);
         PrivateKey privateKey = (PrivateKey) session.getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
         ModelAndView mv = new ModelAndView("login").addObject("user", user).addObject("checked", subject.isRemembered())
                 .addObject("publicKey", generatePublicKey(session))
@@ -122,13 +125,10 @@ public class LoginAction {
             return mv.addObject("info", "登录失败！");
         }
         User loginUser = ConstantsData.getLoginUser();
-        session.removeAttribute(Constants.SESSION_FAILED_LOGIN_TIME);
         logger.info("用户({})登录成功！", loginUser.getUsername());
         logService.log("用户登录", "用户" + loginUser.getUsername() + "登录成功");
         session.removeAttribute(Constants.SESSION_RSA_PRIVATEKEY);
-        // 获取用户所属的大客户，决定是否有统计菜单
-        Integer companyId = userService.getCompanyIdByUserId(loginUser.getUserId());
-        session.setAttribute("companyId", companyId);
+        session.removeAttribute(Constants.SESSION_FAILED_LOGIN_TIME);
         mv.setViewName("loading");
         return mv;
     }
