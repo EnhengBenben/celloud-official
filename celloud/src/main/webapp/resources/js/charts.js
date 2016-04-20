@@ -464,7 +464,12 @@ var macarons_theme = {
         textStyle: {
             fontWeight: 'normal',
             color: '#008acd'          // 主标题文字颜色
-        }
+        },
+        left:10
+    },
+    
+    legend: {
+    	left: 200
     },
     
     // 值域
