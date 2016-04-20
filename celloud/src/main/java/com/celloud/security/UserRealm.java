@@ -39,7 +39,13 @@ public class UserRealm extends AuthorizingRealm {
         logger.debug("doGetAuthorizationInfo username:{}", username);
         User user = ConstantsData.getLoginUser();
         if (user == null) {
-            throw new UnknownAccountException();// 没找到帐号
+            if (SecurityUtils.getSubject().isRemembered()) {
+                System.out.println(username);
+                user = userService.findByUsernameOrEmail(username);
+                SecurityUtils.getSubject().getSession().setAttribute(Constants.SESSION_LOGIN_USER, user);
+            } else {
+                throw new UnknownAccountException();// 没找到帐号
+            }
         }
         return loadAuthorizationInfo(user);
     }
@@ -81,7 +87,7 @@ public class UserRealm extends AuthorizingRealm {
         }
         String password = user.getPassword();
         user.setPassword("");
-        Session session =  SecurityUtils.getSubject().getSession();
+        Session session = SecurityUtils.getSubject().getSession();
         session.setAttribute(Constants.SESSION_LOGIN_USER, user);
         session.removeAttribute(Constants.SESSION_LOGIN_USER_ROLES);
         session.removeAttribute(Constants.SESSION_LOGIN_USER_PERMISSIONS);

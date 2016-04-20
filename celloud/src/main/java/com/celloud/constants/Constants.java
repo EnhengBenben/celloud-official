@@ -12,6 +12,10 @@ public class Constants {
      */
     public static final String SESSION_LOGIN_USER = "loginUserInSession";
     /**
+     * session中记录的账号密码错误次数
+     */
+    public static final String SESSION_FAILED_LOGIN_TIME = "failedLoginTimeInSession";
+    /**
      * 已登录用户的角色
      */
     public static final String SESSION_LOGIN_USER_ROLES = "loginUsersRolesInSession";

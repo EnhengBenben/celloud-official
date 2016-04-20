@@ -68,46 +68,48 @@ class EGFR:
 				resultCount = {};
 				#读取第一行将\n替换,并将空格替换为\t方便统一操作
 				firstLine = f.readline().replace('\n','').replace(' ','\t').strip();
-				#使用\t分割
-				firstLines = firstLine.split('\t');
-				#截取userId
-				resultCount['userId'] = int(paths[len(paths)-3]);
-				#截取dataKey
-				resultCount['dataKey'] = paths[len(paths)-1];
-				#截取length
-				resultCount['length'] = int(firstLines[len(firstLines) - 1]);
-				result['pos'] = int(firstLines[len(firstLines) - 1]);
-				list = [];
-				#循环读取剩余的行
-				while True:
-					line = f.readline().strip();
-					if line:
-						resultCount['site'] = 0;
-						lines = line.split('\t');
-						target = lines[len(lines) - 2]
-						try:
-							l = int(target.index('-'));
-							before = target[l - 2:l - 1].strip();
-							after = target[l + 2:l + 3].strip();
-							if(before == after):
-								try:
-									d = int(target.index(','));
-									k = int(target.index(')'));
-									result = float(target[d + 1:k]);
-									if(result < 5):
+				if((firstLine.startswith('Exon') and firstLine.split('\t') == 2) or (firstLine.startswith('EGFR') and firstLine.split('\t') == 5)):
+					#使用\t分割
+					firstLines = firstLine.split('\t');
+					#截取userId
+					resultCount['userId'] = int(paths[len(paths)-4]);
+					#截取dataKey
+					resultCount['dataKey'] = paths[len(paths)-2];
+					#截取length
+					resultCount['length'] = int(firstLines[len(firstLines) - 1]);
+					result['pos'] = int(firstLines[len(firstLines) - 1]);
+					list = [];
+					#循环读取剩余的行
+					while True:
+						line = f.readline().strip();
+						print(line);
+						if line:
+							resultCount['site'] = 0;
+							lines = line.split('\t');
+							target = lines[len(lines) - 2]
+							try:
+								l = int(target.index('-'));
+								before = target[l - 2:l - 1].strip();
+								after = target[l + 2:l + 3].strip();
+								if(before == after):
+									try:
+										d = int(target.index(','));
+										k = int(target.index(')'));
+										resultSize = float(target[d + 1:k]);
+										if(resultSize < 5):
+											resultCount['site'] = int(lines[1]);
+									except ValueError:
 										resultCount['site'] = int(lines[1]);
-								except ValueError:
+								else:
 									resultCount['site'] = int(lines[1]);
-							else:
+							except ValueError:
 								resultCount['site'] = int(lines[1]);
-						except ValueError:
-							resultCount['site'] = int(lines[1]);
-						if('site' in resultCount.keys() and resultCount['site'] != 0):
-							list.append(resultCount.copy());
-					else:
-						break;
-				# 执行批量插入操作
-				mo.insertBatch(list,'EGFRCount');
+							if('site' in resultCount.keys() and resultCount['site'] != 0):
+								list.append(resultCount.copy());
+						else:
+							break;
+					# 执行批量插入操作
+					mo.insertBatch(list,'EGFRCount');
 				f.close();
 
 		#report.txt.wz.1

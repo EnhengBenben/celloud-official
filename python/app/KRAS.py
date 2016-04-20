@@ -73,9 +73,9 @@ class KRAS:
 				#使用\t分割
 				firstLines = firstLine.split('\t');
 				#截取userId
-				resultCount['userId'] = int(paths[len(paths)-3]);
+				resultCount['userId'] = int(paths[len(paths)-4]);
 				#截取dataKey
-				resultCount['dataKey'] = paths[len(paths)-1];
+				resultCount['dataKey'] = paths[len(paths)-2];
 				#截取length
 				resultCount['length'] = int(firstLines[len(firstLines) - 1]);
 				list = [];
@@ -94,8 +94,8 @@ class KRAS:
 								try:
 									d = int(target.index(','));
 									k = int(target.index(')'));
-									result = float(target[d + 1:k]);
-									if(result < 5):
+									resultSize = float(target[d + 1:k]);
+									if(resultSize < 5):
 										resultCount['site'] = int(lines[1]);
 								except ValueError:
 									resultCount['site'] = int(lines[1]);
