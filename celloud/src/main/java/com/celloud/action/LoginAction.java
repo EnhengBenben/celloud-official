@@ -64,12 +64,12 @@ public class LoginAction {
         ModelAndView mv = new ModelAndView("login");
         User user = new User();
         Subject subject = SecurityUtils.getSubject();
-        Object isRemembered = subject.getSession().getAttribute("isRemembered");
-        boolean isRem = isRemembered == null ? false : ((boolean) isRemembered);
-        if (subject.isRemembered() || isRem) {
+        Object isRem = subject.getSession().getAttribute("isRemembered");
+        boolean isRemembered = isRem == null ? subject.isRemembered() : ((boolean) isRem);
+        if (isRemembered) {
             user = userService.findByUsernameOrEmail(String.valueOf(subject.getPrincipal()));
         }
-        return mv.addObject("checked", subject.isRemembered()).addObject("user", user)
+        return mv.addObject("checked", isRemembered).addObject("user", user)
                 .addObject("publicKey", generatePublicKey(subject.getSession()))
                 .addObject("showKaptchaCode", getFailedlogins() >= 3);
     }
