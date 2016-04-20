@@ -68,7 +68,7 @@ class EGFR:
 				resultCount = {};
 				#读取第一行将\n替换,并将空格替换为\t方便统一操作
 				firstLine = f.readline().replace('\n','').replace(' ','\t').strip();
-				if((firstLine.startswith('Exon') and firstLine.split('\t') == 2) or (firstLine.startswith('EGFR') and firstLine.split('\t') == 5)):
+				if((firstLine.startswith('Exon') and len(firstLine.split('\t')) == 2) or (firstLine.startswith('EGFR') and len(firstLine.split('\t')) == 5)):
 					#使用\t分割
 					firstLines = firstLine.split('\t');
 					#截取userId
@@ -82,7 +82,6 @@ class EGFR:
 					#循环读取剩余的行
 					while True:
 						line = f.readline().strip();
-						print(line);
 						if line:
 							resultCount['site'] = 0;
 							lines = line.split('\t');
