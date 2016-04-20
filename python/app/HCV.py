@@ -79,8 +79,8 @@ class HCV:
 					if(mo.findAllByCondition({'dataKey':paths[len(paths)-1]},'HCVCount').count() > 0):
 						mo.deleteAllByCondition({'dataKey':paths[len(paths)-1]},'HCVCount');
 					resultCount = {};
-					resultCount['userId'] = int(paths[len(paths) - 3]);
-					resultCount['dataKey'] = paths[len(paths) - 1];
+					resultCount['userId'] = int(paths[len(paths) - 4]);
+					resultCount['dataKey'] = paths[len(paths) - 2];
 					resultCount['subtype'] = types[1];
 					mo.insertBatch(resultCount,'HCVCount');
 				f.close();
