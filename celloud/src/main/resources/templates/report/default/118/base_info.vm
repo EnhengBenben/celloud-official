@@ -67,7 +67,13 @@ $(document).ready(function(){
         });
       });
     $("#save").on("click",function(){
-        $.post("../report/updateBSIFilling",$("#print-form").serialize());
+        $.post("../report/updateBSIFilling",$("#print-form").serialize(),function(result){
+            if(result == 1){
+                alert("修改成功");
+            }else{
+                alert("修改失败");
+            }
+        });
     });
     $("#reset").on("click",function(){
          $("#print-form")[0].reset();

@@ -253,7 +253,7 @@ public interface ReportService {
      * @author leamo
      * @date 2016年2月18日 上午11:05:37
      */
-    public void updateMIBFilling(MIB mib);
+    public Integer updateMIBFilling(MIB mib);
 
     /**
      * 修改BSI报告用户填写部分
@@ -262,7 +262,7 @@ public interface ReportService {
      * @author leamo
      * @date 2016年4月18日 下午4:33:55
      */
-    public void updateBSIFilling(BSI bsi);
+    public Integer updateBSIFilling(BSI bsi);
 
     /**
      * 获取 Split 报告

@@ -8,9 +8,9 @@ import javax.annotation.Resource;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateResults;
 import org.springframework.stereotype.Service;
 
-import com.celloud.model.mongo.EGFRCount;
 import com.celloud.model.mongo.TBINH;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
@@ -75,8 +75,9 @@ public class ReportDaoImpl implements ReportDao {
     }
 
     @Override
-    public <T> void editData(Class<T> T, ObjectId id, String field, Object obj) {
-        dataStore.update(dataStore.createQuery(T).filter("_id", id),
+    public <T> UpdateResults editData(Class<T> T, ObjectId id, String field,
+            Object obj) {
+        return dataStore.update(dataStore.createQuery(T).filter("_id", id),
                 dataStore.createUpdateOperations(T).set(field, obj));
     }
 
