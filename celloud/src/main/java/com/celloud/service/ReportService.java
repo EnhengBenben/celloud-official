@@ -379,10 +379,19 @@ public interface ReportService {
     public String hbvCompare(Integer appId, String path);
     
     /**
-     * EGFR 和 KRAS 数据参数同比
+     * KRAS 数据参数同比
      * 
      * @param appId
      * @param path
+     * @param length
+     * @return
+     * @date 2016-1-9 下午3:07:38
+     */
+    public String krasCompare(Integer appId, String path, Integer length);
+    
+    /**
+     * EGFR 数据参数同比
+     * 
      * @param length
      * @return
      * @date 2016-1-9 下午3:07:38
