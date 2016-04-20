@@ -62,7 +62,7 @@ class KRAS:
 				#判断mongo中是否有对应dataKey的数据, 如果有则都删除
 				#获取mongo操作类实例
 				mo = mongo.getInstance();
-				if(len(list(mo.findAllByCondition({'dataKey':paths[len(paths)-1]},'KRASCount'))) > 0):
+				if(mo.findAllByCondition({'dataKey':paths[len(paths)-1]},'KRASCount').count() > 0):
 					mo.deleteAllByCondition({'dataKey':paths[len(paths)-1]},'KRASCount');
 				#打开报告
 				f = codecs.open(report,'r','gbk');

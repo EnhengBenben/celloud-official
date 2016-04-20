@@ -76,7 +76,7 @@ class HCV:
 					# 判断mongodb中是否存在相同的datakey
 					#获取mongo操作类实例
 					mo = mongo.getInstance();
-					if(len(list(mo.findAllByCondition({'dataKey':paths[len(paths)-1]},'HCVCount'))) > 0):
+					if(mo.findAllByCondition({'dataKey':paths[len(paths)-1]},'HCVCount').count() > 0):
 						mo.deleteAllByCondition({'dataKey':paths[len(paths)-1]},'HCVCount');
 					resultCount = {};
 					resultCount['userId'] = int(paths[len(paths) - 3]);
