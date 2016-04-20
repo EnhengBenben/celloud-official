@@ -65,7 +65,7 @@ public class LoginAction {
         User user = new User();
         Subject subject = SecurityUtils.getSubject();
         Object isRem = subject.getSession().getAttribute("isRemembered");
-        boolean isRemembered = isRem == null ? subject.isRemembered() : ((boolean) isRem);
+        boolean isRemembered = isRem != null ? ((boolean) isRem) : subject.isRemembered();
         if (isRemembered) {
             user = userService.findByUsernameOrEmail(String.valueOf(subject.getPrincipal()));
         }
