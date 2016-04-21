@@ -771,7 +771,7 @@ $.ajaxSetup ({
 					$("#charResult").html("");
 					for ( var i = 1; i < sp.length; i++) {
 						var big = 0;
-						var div = $("<div id='char"+i+"' class='col-lg-5'></div>");
+						var div = $("<div id='char"+i+"' class='col-lg-5' style='width: 410px;height:400px;'></div>");
 						$("#charDiv").append(div);
 						var ev = sp[i].split(":");
 						var one = getCountValue(ev[0],"_table");
@@ -960,13 +960,14 @@ $.ajaxSetup ({
 						showCharHCV("char0", "位点", eval(X),eval(Y),0);
 				});
 			}
-			if(appId==84||appId==89){
+			
+			if(appId == 89){//kras
 				var length = $("#seq_length").val();
 				if(length==0 || isNaN(length)){
 					$("#charDiv").html("<p style=\"color: red;\">数据异常，没有同比结果</p>");
 				}else{  
-					$.get("count/egfrCompare",{"appId":appId,"path":DATAPATH,"length":length},function(data){
-							var div = $("<div id='char0' class='col-lg-6' style='width: 500px;height:400px;'></div>");
+					$.get("count/krasCompare",{"appId":appId,"path":DATAPATH,"length":length},function(data){
+							var div = $("<div id='char0' class='col-lg-6'></div>");
 							$("#charDiv").append(div);
 							var X = "[";
 							var Y = "[";
@@ -978,8 +979,37 @@ $.ajaxSetup ({
 							}
 							X = X.substring(0,X.length-1)+"]";
 							Y = Y.substring(0,Y.length-1)+"]";
-//							showCharHCV("char0", "位点", eval(X),eval(Y),0);
-							$.reportChar.draw.echartsShowBar("char0", "位点", X, Y);
+							showCharHCV("char0", "位点", eval(X),eval(Y),0);
+					});
+				}
+			}
+			
+			if(appId==84){//egfr
+				var length = $("#seq_length").val();
+				if(length==0 || isNaN(length)){
+					$("#charDiv").html("<p style=\"color: red;\">数据异常，没有同比结果</p>");
+				}else{  
+					$.get("count/egfrCompare",{"length":length},function(data){
+							var div = $("<div id='char0' class='col-lg-6' style='width: 500px;height:400px;'></div>");
+							$("#charDiv").append(div);
+							var X = "[";
+							var Y = "[";
+							var value = data.split("\n");
+							if(value.length > 1){
+								for(var k=0;k<value.length-1;k++){
+									var n = value[k].split("\t");
+									X+="'"+n[0]+"',";
+									Y+=n[1]+",";
+								}
+							}else{
+								var n = data.split("\t");
+								X+="'"+n[0]+"',";
+								Y+=n[1]+",";
+							}
+							
+							X = X.substring(0,X.length-1)+"]";
+							Y = Y.substring(0,Y.length-1)+"]";
+							$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y));
 					});
 				}
 			}

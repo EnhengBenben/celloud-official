@@ -360,6 +360,15 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
+    public String krasCompare(Integer appId, String path, Integer length) {
+        path = path + appId + "_" + length;
+        if (FileTools.checkPath(path)) {
+            return FileTools.getLimitLines(path, 1, 10);
+        }
+        return null;
+    }
+    
+    @Override
     public String egfrCompare(Integer length) {
         List<EGFRCount> egfrCounts = reportDao.getEGFRCountByLength(EGFRCount.class, length);
         // 存储位点与位点的出现次数
@@ -856,4 +865,5 @@ public class ReportServiceImpl implements ReportService {
 	public ABINJ getABINJReport(String dataKey, Integer projectId, Integer appId) {
 		return reportDao.getDataReport(ABINJ.class, dataKey, projectId, appId);
 	}
+
 }
