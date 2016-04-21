@@ -56,12 +56,12 @@ class EGFR:
 			#截取数据报告路径
 			paths = path.split(os.sep);
 			#首先判断用户id是否为测试用户
-			if(paths[len(paths) - 3] not in PDFPro.userList):
+			if(paths[len(paths) - 4] not in PDFPro.userList):
 				#判断mongo中是否有对应dataKey的数据, 如果有则都删除
 				#获取mongo操作类实例
 				mo = mongo.getInstance();
-				if(mo.findAllByCondition({'dataKey':paths[len(paths)-1]},'EGFRCount').count() > 0):
-					mo.deleteAllByCondition({'dataKey':paths[len(paths)-1]},'EGFRCount');
+				if(mo.findAllByCondition({'dataKey':paths[len(paths)-2]},'EGFRCount').count() > 0):
+					mo.deleteAllByCondition({'dataKey':paths[len(paths)-2]},'EGFRCount');
 				#打开报告
 				f = codecs.open(report,'r','gbk');
 				#位点的dict
