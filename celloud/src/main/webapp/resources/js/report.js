@@ -771,7 +771,7 @@ $.ajaxSetup ({
 					$("#charResult").html("");
 					for ( var i = 1; i < sp.length; i++) {
 						var big = 0;
-						var div = $("<div id='char"+i+"' class='col-lg-5' style='width: 400px;height:400px;'></div>");
+						var div = $("<div id='char"+i+"' class='col-lg-5' style='width: 410px;height:400px;'></div>");
 						$("#charDiv").append(div);
 						var ev = sp[i].split(":");
 						var one = getCountValue(ev[0],"_table");
