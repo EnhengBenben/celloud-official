@@ -35,10 +35,6 @@ $(document).ready(function(){
 		document.getElementById("remPass").innerHTML="<img src='images/icon/checked.png'/>";
 		tmpRem=1;
 		document.getElementById("isRem").value=1;
-		if(error==""){
-			//若记住密码，则没有验证码
-			$(".yzm").css("display","none");
-		}
 	}else{
 		document.getElementById("remPass").innerHTML="<img src='images/icon/nocheck.png'/>";
 		tmpRem=0;
@@ -47,7 +43,9 @@ $(document).ready(function(){
 	
 	var tmpRem=0;
 	$("#submit").click(function(){
-		$("#loginForm").submit();
+		if(checkForm()){
+			$("#loginForm").submit();
+		}
 	});
 	$('#submit').keydown(function(e){
 		if(e.keyCode==13){
@@ -60,8 +58,7 @@ $(document).ready(function(){
 	    	$("#submit").click();
 	     }
 	};
-	
-	$("#loginForm").submit(function(){
+	function checkForm(){
 		$(".error").html("");
 		//校验用户名是否为空
 		var username = $.trim($("#username").val());
@@ -79,10 +76,6 @@ $(document).ready(function(){
 			$("#password").focus();
 			return false;
 		}
-		//记住密码，不需要校验验证码
-		if(checked=="true"&&error==""){
-			return true;
-		}
 		//校验验证码是否为空
 		if($("#captcha").length>=1){
 			var captcha = $.trim($("#captcha").val());
@@ -94,12 +87,22 @@ $(document).ready(function(){
 			}
 		}
 		//全部校验已通过
-		$("input[name='password']").val(secPWD(password));
+		var oldPassword = $("input[name='password']").val();
+		$("input[name='password']").val(secPWD(oldPassword));
+		var newPassword = $("input[name='newPassword']").val();
+		if(newPassword){
+			$("input[name='newPassword']").val(secPWD(newPassword));
+		}
 		delCookie("username");
 		delCookie("password");
 		return true;
+	}
+	$("#password").keyup(function(event){
+		$("#tempPassword").val($("#password").val());
 	});
-
+	$("#password").change(function(){
+		$("#tempPassword").val($("#password").val());
+	});
 	$("#remPass").click(function(){
 		if(tmpRem==0){
 			//之前未勾选，现在勾选
