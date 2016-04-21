@@ -82,7 +82,7 @@ class EGFR:
 					#循环读取剩余的行
 					while True:
 						line = f.readline().strip();
-						if line:
+						if line and line.startswith('SNP'):
 							resultCount['site'] = 0;
 							lines = line.split('\t');
 							target = lines[len(lines) - 2]
@@ -105,10 +105,15 @@ class EGFR:
 								resultCount['site'] = int(lines[1]);
 							if('site' in resultCount.keys() and resultCount['site'] != 0):
 								list.append(resultCount.copy());
+						elif line and line.startswith('Indel'):
+							lines = line.split('\t');
+							resultCount['site'] = int(lines[3]);
+							list.append(resultCount.copy());
 						else:
 							break;
 					# 执行批量插入操作
-					mo.insertBatch(list,'EGFRCount');
+					if(len(list) > 0):
+						mo.insertBatch(list,'EGFRCount');
 				f.close();
 
 		#report.txt.wz.1
