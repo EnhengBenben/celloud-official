@@ -426,13 +426,18 @@ public class ReportServiceImpl implements ReportService {
         if (columns == null) {
             return null;
         }
+        String queryColumns = columns.replace("Total_Reads", "totalReads").
+                replace("Duplicate(%)", "duplicate").
+                replace("GC_Count(%)", "gcCount").
+                replace("SD", "sd");
+        String[] queryColumn = queryColumns.split(",");
         // 分割对比列[totalReads,duplicate,gcCount]
         String column[] = columns.split(",");
         // 拼接最终返回的字符串:
         // ;Total_Reads:477319,470293,410200,;Duplicate(%):3.50,0.52,0.14,;GC_Count(%):40.02,36.26,39.90,
         StringBuffer sb = new StringBuffer();
         // 根据appId查询某些列的字段
-        List<Pgs> pgs = reportDao.getDataFieldsByAppId(Pgs.class, appId, column);
+        List<Pgs> pgs = reportDao.getDataFieldsByAppId(Pgs.class, appId, queryColumn);
         if (pgs != null && pgs.size() > 0) {
             for (int i = 0; i < column.length; i++) {
                 // 拼接方法名, 根绝field
