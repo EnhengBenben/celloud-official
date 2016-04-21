@@ -61,12 +61,12 @@ class HCV:
 			# 截取数据报告路径
 			paths = path.split(os.sep);
 			# 判断该用户是否为测试用户
-			if(paths[len(paths) - 3] not in PDFPro.userList):
+			if(paths[len(paths) - 4] not in PDFPro.userList):
 				# 读取文件最后一行内容
 				f = codecs.open(txt,'r','gbk');
 				targetLine = '';
 				while True:
-					line = f.readline();
+					line = f.readline().strip();
 					if not line:
 						break;
 					targetLine = line;
@@ -76,8 +76,8 @@ class HCV:
 					# 判断mongodb中是否存在相同的datakey
 					#获取mongo操作类实例
 					mo = mongo.getInstance();
-					if(mo.findAllByCondition({'dataKey':paths[len(paths)-1]},'HCVCount').count() > 0):
-						mo.deleteAllByCondition({'dataKey':paths[len(paths)-1]},'HCVCount');
+					if(mo.findAllByCondition({'dataKey':paths[len(paths)-2]},'HCVCount').count() > 0):
+						mo.deleteAllByCondition({'dataKey':paths[len(paths)-2]},'HCVCount');
 					resultCount = {};
 					resultCount['userId'] = int(paths[len(paths) - 4]);
 					resultCount['dataKey'] = paths[len(paths) - 2];
