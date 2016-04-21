@@ -36,7 +36,7 @@
 				<c:if test="${flag==0 }">
 					<div class="container" style="display: none;"></div>
 				</c:if>
-				<h1>${hbv.companyName }${hbv.appName }
+				<h1>${hbv.companyName }<c:if test="${hbv.companyId!=57 }">${hbv.appName }</c:if>
 					<c:if test="${hbv.companyId==41 }">
 						<span name="geneType">基因分型检测</span>
 						<span name="resistanceType" class="hide">耐药突变检测</span><br>

@@ -87,7 +87,7 @@ $(document).ready(function(){
 			}
 		}
 		//全部校验已通过
-		var newPassword = $("input[name='newPassword']").val();
+		var newPassword =$("#tempPassword").val();
 		if(newPassword){
 			$("input[name='newPassword']").val(secPWD(newPassword));
 		}
