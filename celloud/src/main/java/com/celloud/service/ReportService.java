@@ -37,8 +37,7 @@ import com.celloud.page.PageList;
  * @date 2015年12月25日 下午3:47:07
  */
 public interface ReportService {
-    
-    
+
     /**
      * 获取TBINH下是否是野生型的数量, 0:都不是1:是野生2:不是野生
      * 
@@ -130,7 +129,7 @@ public interface ReportService {
      * @date 2016-1-8 下午4:40:37
      */
     public HBV getHBVReport(String dataKey, Integer projectId, Integer appId);
-    
+
     /**
      * 获取ABINJ数据报告
      * 
@@ -177,7 +176,7 @@ public interface ReportService {
      * @date 2016年3月7日下午5:06:00
      */
     public HCV getHCVReport(String dataKey, Integer projectId, Integer appId);
-    
+
     /**
      * 获取Translate数据报告
      * 
@@ -390,7 +389,7 @@ public interface ReportService {
      * @date 2016-1-9 下午2:57:29
      */
     public String hbvCompare(Integer appId, String path);
-    
+
     /**
      * KRAS 数据参数同比
      * 
@@ -399,8 +398,8 @@ public interface ReportService {
      * @return
      * @date 2016-1-9 下午3:07:38
      */
-    public String krasCompare(Integer appId, String path, Integer length);
-    
+    public String krasCompare(Integer length);
+
     /**
      * EGFR 数据参数同比
      * 
@@ -409,7 +408,12 @@ public interface ReportService {
      * @date 2016-1-9 下午3:07:38
      */
     public String egfrCompare(Integer length);
-    
+
+    /**
+     * TBRifampicin 数据参数同比
+     * 
+     * @return
+     */
     public String tbrifampicinCompare();
 
     /**
@@ -423,8 +427,7 @@ public interface ReportService {
     public String hcvCompare();
 
     /**
-     * PGS 数据参数同比
-     * 对dao层返回的数据进行拼接返回到页面
+     * PGS 数据参数同比 对dao层返回的数据进行拼接返回到页面
      * 
      * @param appId
      * @param path

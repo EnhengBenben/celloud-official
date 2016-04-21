@@ -72,7 +72,6 @@ class EGFR:
 					mo.deleteAllByCondition({'dataKey':paths[len(paths)-2]},'EGFRCount');
 				#位点的dict
 				resultCount = {};
-				
 				if((firstLine.startswith('Exon') and len(firstLines) == 2) or (firstLine.startswith('EGFR') and len(firstLines) == 5)):
 					#截取userId
 					resultCount['userId'] = int(paths[len(paths)-4]);

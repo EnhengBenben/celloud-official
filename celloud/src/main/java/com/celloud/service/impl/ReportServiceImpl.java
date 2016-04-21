@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
@@ -46,6 +47,7 @@ import com.celloud.model.mongo.HBV;
 import com.celloud.model.mongo.HCV;
 import com.celloud.model.mongo.HCVCount;
 import com.celloud.model.mongo.KRAS;
+import com.celloud.model.mongo.KRASCount;
 import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
@@ -368,17 +370,43 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public String krasCompare(Integer appId, String path, Integer length) {
-        path = path + appId + "_" + length;
-        if (FileTools.checkPath(path)) {
-            return FileTools.getLimitLines(path, 1, 10);
+    public String krasCompare(Integer length) {
+        List<KRASCount> krasCounts = reportDao.getCountByLength(KRASCount.class, length);
+        // 存储位点与位点的出现次数
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        for (KRASCount count : krasCounts) {
+            String site = count.getSite() + "";
+            if (!map.containsKey(site)) {
+                map.put(site, 1);
+            } else {
+                map.put(site, map.get(site) + 1);
+            }
         }
-        return null;
+        String str = MapSort.sort(map);
+        if (str != null && !"".equals(str)) {
+            // 取前10行数据
+            // 取第几次
+            int i = 0;
+            // 目标位置下标
+            int s = -1;
+            int k = 0;
+            while (i++ < 10) {
+                s = str.indexOf("\n", s + 1);
+                // 少于10行就直接退出循环
+                if (s == -1) {
+                    break;
+                }
+                k = s;
+            }
+            return str.substring(0, k);
+        } else {
+            return str;
+        }
     }
     
     @Override
     public String egfrCompare(Integer length) {
-        List<EGFRCount> egfrCounts = reportDao.getEGFRCountByLength(EGFRCount.class, length);
+        List<EGFRCount> egfrCounts = reportDao.getCountByLength(EGFRCount.class, length);
         // 存储位点与位点的出现次数
         Map<String, Integer> map = new HashMap<String, Integer>();
         for (EGFRCount count : egfrCounts) {

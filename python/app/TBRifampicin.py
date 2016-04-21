@@ -97,7 +97,7 @@ class TBRifampicin:
 								resultCount['site'] = int(lines[1]);
 							if('site' in resultCount.keys() and resultCount['site'] != 0):
 								list.append(resultCount.copy());
-					elif line:
+					elif line and not line.startswith('SNP'):
 						continue;
 					else:
 						break;

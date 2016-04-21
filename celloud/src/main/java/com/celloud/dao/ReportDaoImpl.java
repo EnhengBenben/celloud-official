@@ -27,7 +27,7 @@ public class ReportDaoImpl implements ReportDao {
     private Datastore dataStore;
     
     @Override
-    public <T> List<T> getEGFRCountByLength(Class<T> clazz, Integer length) {
+    public <T> List<T> getCountByLength(Class<T> clazz, Integer length) {
         return dataStore.createQuery(clazz).filter("length =", length).asList();
     }
 
