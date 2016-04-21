@@ -34,10 +34,8 @@ class MIB:
     def getResult(self, path, appId, dataKey):
         result = {}
         path = os.path.join(path, dataKey)
-        print path
         if not os.path.exists(path):
             return result
-        print 33
         # 样品中属层次上reads的比例数据信息（前10）
         genusTop10Path = os.path.join(path, 'all.fastq.genus.top15')
         if os.path.exists(genusTop10Path):
