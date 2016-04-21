@@ -481,7 +481,7 @@ public class DataAction {
 					SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
 					ssh.sshSubmit(command, false);
 				} else {
-					//TODO 还有 _16S／VSP 两个流程需要从Toold端删除
+					//TODO 还有 _16S 流程需要从Toold端删除
 					String newPath = PropertiesUtil.toolsPath + "Procedure!runApp?userId=" + userId + "&appId=" + appId
 							+ "&appName=" + appName + "&projectName=" + proName + "&dataKeyList="
 							+ dataResult.toString() + "&projectId=" + proId;

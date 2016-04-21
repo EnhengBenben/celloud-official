@@ -27,7 +27,7 @@
 				<a href="javascript:void(0)" onclick="preview(this)" class="button btn-info" name="change" style="float:right;margin-top:10px;margin-right:-100px;"><i class=""></i>打印</a>
 				<a href="javascript:void(0)" onclick="reset()" class="button btn-info" name="change" style="float:right;margin-top:45px;margin-right:-100px;"><i class=""></i>重置</a>
 				<a href="javascript:void(0)" onclick="savePage()" class="button btn-info" name="change" style="float:right;margin-top:80px;margin-right:-100px;"><i class=""></i>保存</a>
-				<h1>${egfr.companyName }${egfr.appName }
+				<h1>${egfr.companyName }<c:if test="${egfr.companyId!=57 }">${egfr.appName }</c:if>
 				</h1>
 			    <hr />
 			    <div class="wrapper">
