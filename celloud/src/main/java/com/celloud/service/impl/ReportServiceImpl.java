@@ -459,7 +459,12 @@ public class ReportServiceImpl implements ReportService {
                         // 新老数据的字段有可能不一致, 所以判断非空
                         if (value != null && !"".equals(value)) {
                             // 拼接到sb中
-                            sb.append(value + ",");
+                            try{
+                                Float.parseFloat(value);
+                                sb.append(value + ",");
+                            }catch(Exception e){
+                                continue;
+                            }
                         }
                     }
                 } catch (Exception e) {
