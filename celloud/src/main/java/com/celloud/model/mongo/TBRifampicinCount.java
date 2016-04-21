@@ -8,7 +8,6 @@ public class TBRifampicinCount {
     private ObjectId id;
     private Integer userId;
     private String dataKey;
-    private Integer length;
     private Integer site;
 
     public Integer getUserId() {
@@ -27,14 +26,6 @@ public class TBRifampicinCount {
         this.dataKey = dataKey;
     }
 
-    public Integer getLength() {
-        return length;
-    }
-
-    public void setLength(Integer length) {
-        this.length = length;
-    }
-
     public Integer getSite() {
         return site;
     }
@@ -49,12 +40,6 @@ public class TBRifampicinCount {
 
     public void setId(ObjectId id) {
         this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "EGFRCount [id=" + id + ", userId=" + userId + ", dataKey=" + dataKey + ", length=" + length + ", site="
-                + site + "]";
     }
 
 }

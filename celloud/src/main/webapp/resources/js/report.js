@@ -950,7 +950,7 @@ $.ajaxSetup ({
 			}
 			if(appId==90){
 				$.get("count/tbCompare",{},function(data){
-						var div = $("<div id='char0' class='col-lg-6'></div>");
+						var div = $("<div id='char0' class='col-lg-6' style='width: 500px;height:400px;'></div>");
 						$("#charDiv").append(div);
 						var X = "[";
 						var Y = "[";
@@ -973,7 +973,7 @@ $.ajaxSetup ({
 					$("#charDiv").html("<p style=\"color: red;\">数据异常，没有同比结果</p>");
 				}else{  
 					$.get("count/krasCompare",{"appId":appId,"path":DATAPATH,"length":length},function(data){
-							var div = $("<div id='char0' class='col-lg-6'></div>");
+							var div = $("<div id='char0' class='col-lg-6' style='width: 500px;height:400px;'></div>");
 							$("#charDiv").append(div);
 							var X = "[";
 							var Y = "[";

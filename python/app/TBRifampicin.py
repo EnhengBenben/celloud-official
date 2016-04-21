@@ -56,33 +56,25 @@ class TBRifampicin:
 			#截取数据报告路径
 			paths = path.split(os.sep);
 			#首先判断用户id是否为测试用户
-			if(paths[len(paths) - 3] not in PDFPro.userList):
+			if(paths[len(paths) - 4] not in PDFPro.userList):
 				#判断mongo中是否有对应dataKey的数据, 如果有则都删除
 				#获取mongo操作类实例
 				mo = mongo.getInstance();
-				if(mo.findAllByCondition({'dataKey':paths[len(paths)-1]},'TBRifampicinCount').count() > 0):
-					mo.deleteAllByCondition({'dataKey':paths[len(paths)-1]},'TBRifampicinCount');
+				if(mo.findAllByCondition({'dataKey':paths[len(paths)-2]},'TBRifampicinCount').count() > 0):
+					mo.deleteAllByCondition({'dataKey':paths[len(paths)-2]},'TBRifampicinCount');
 				#打开报告
 				f = codecs.open(report,'r','gbk');
 				#位点的dict
 				resultCount = {};
-				#读取第一行将\n替换,并将空格替换为\t方便统一操作
-				firstLine = f.readline().replace('\n','').replace(' ','\t').strip();
-				#使用\t分割
-				firstLines = firstLine.split('\t');
 				#截取userId
 				resultCount['userId'] = int(paths[len(paths)-4]);
 				#截取dataKey
 				resultCount['dataKey'] = paths[len(paths)-2];
-				#截取length
-				resultCount['length'] = int(firstLines[len(firstLines) - 1]);
-				result['pos'] = int(firstLines[len(firstLines) - 1]);
 				list = [];
 				#循环读取剩余的行
 				while True:
 					line = f.readline().strip();
-					if line:
-						if(len(line.split('\t')) == 6):
+					if (line and line.startswith('SNP') and len(line.split('\t')) == 6):
 							resultCount['site'] = 0;
 							lines = line.split('\t');
 							target = lines[len(lines) - 3];
@@ -105,12 +97,13 @@ class TBRifampicin:
 								resultCount['site'] = int(lines[1]);
 							if('site' in resultCount.keys() and resultCount['site'] != 0):
 								list.append(resultCount.copy());
-						else:
-							continue;
+					elif line:
+						continue;
 					else:
 						break;
 				# 执行批量插入操作
-				mo.insertBatch(list,'TBRifampicinCount');
+				if(len(list) > 0):
+					mo.insertBatch(list,'TBRifampicinCount');
 				f.close();
 
 		#report.txt.wz.1
