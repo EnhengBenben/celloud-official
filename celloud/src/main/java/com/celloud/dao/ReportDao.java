@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.query.UpdateResults;
 
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
@@ -19,7 +20,7 @@ public interface ReportDao {
     /**
      * 根据长度获取EGFRCount统计数据
      */
-    public <T> List<T> getCountByLength(Class<T> clazz, Integer length);
+    public <T> List<T> getEGFRCountByLength(Class<T> clazz, Integer length);
     
     
     /**
@@ -116,7 +117,8 @@ public interface ReportDao {
      * @author leamo
      * @date 2016年2月1日 下午6:05:02
      */
-    public <T> void editData(Class<T> T, ObjectId id, String field, Object obj);
+    public <T> UpdateResults editData(Class<T> T, ObjectId id, String field,
+            Object obj);
 
     /**
      * 保存数据

@@ -625,8 +625,9 @@ public class ReportAction {
     @ActionLog(value = "打印MIB数据报告时修改用户填写的信息", button = "修改数据报告")
     @RequestMapping("updateMIBFilling")
     @ResponseStatus(value = HttpStatus.OK)
-    public void updateMIBFilling(MIB mib) {
-        reportService.updateMIBFilling(mib);
+    @ResponseBody
+    public Integer updateMIBFilling(MIB mib) {
+        return reportService.updateMIBFilling(mib);
     }
 
     /**
@@ -640,8 +641,9 @@ public class ReportAction {
     @ActionLog(value = "修改BSI数据报告用户填写的信息", button = "修改数据报告")
     @RequestMapping("updateBSIFilling")
     @ResponseStatus(value = HttpStatus.OK)
-    public void updateBSIFilling(BSI bsi) {
-        reportService.updateBSIFilling(bsi);
+    @ResponseBody
+    public Integer updateBSIFilling(BSI bsi) {
+        return reportService.updateBSIFilling(bsi);
     }
 
     /**

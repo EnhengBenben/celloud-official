@@ -229,26 +229,38 @@ public class CountAction {
 	public String tbCompare() {
         return reportService.tbrifampicinCompare();
 	}
+    
+    /**
+     * KRAS 数据参数同比
+     * 
+     * @param appId
+     * @param path
+     * @param length
+     * @return
+     * @date 2016-1-9 下午3:09:58
+     */
+    @ActionLog(value = "获取KRAS数据参数同比信息", button = "EGFR/KRAS数据报告")
+    @ResponseBody
+    @RequestMapping("krasCompare")
+    public String krasCompare(Integer appId, String path, Integer length) {
+        return reportService.krasCompare(appId, path, length);
+    }
 
-	/**
-	 * EGFR 和 KRAS 数据参数同比
-	 * 
-	 * @param appId
-	 * @param path
-	 * @param length
-	 * @return
-	 * @date 2016-1-9 下午3:09:58
-	 */
-    @ActionLog(value = "获取EGFR/KRAS数据参数同比信息", button = "EGFR/KRAS数据报告")
-	@ResponseBody
-	@RequestMapping("egfrCompare")
-	public String egfrCompare(Integer appId, Integer length) {
-        if (appId == 84) {
-            return reportService.egfrCompare(EGFRCount.class, length);
-        } else {
-            return reportService.egfrCompare(KRASCount.class, length);
-        }
-	}
+    /**
+     * EGFR 数据参数同比
+     * 
+     * @param appId
+     * @param path
+     * @param length
+     * @return
+     * @date 2016-1-9 下午3:09:58
+     */
+    @ActionLog(value = "获取EGFR数据参数同比信息", button = "EGFR/KRAS数据报告")
+    @ResponseBody
+    @RequestMapping("egfrCompare")
+    public String egfrCompare(Integer length) {
+        return reportService.egfrCompare(length);
+    }
 
 	/**
 	 * HCV 数据参数同比

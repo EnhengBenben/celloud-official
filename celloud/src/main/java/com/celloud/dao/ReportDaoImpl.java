@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateResults;
 import org.springframework.stereotype.Service;
 
 import com.celloud.model.mongo.TBINH;
@@ -26,7 +27,7 @@ public class ReportDaoImpl implements ReportDao {
     private Datastore dataStore;
     
     @Override
-    public <T> List<T> getCountByLength(Class<T> clazz, Integer length) {
+    public <T> List<T> getEGFRCountByLength(Class<T> clazz, Integer length) {
         return dataStore.createQuery(clazz).filter("length =", length).asList();
     }
 
@@ -74,8 +75,9 @@ public class ReportDaoImpl implements ReportDao {
     }
 
     @Override
-    public <T> void editData(Class<T> T, ObjectId id, String field, Object obj) {
-        dataStore.update(dataStore.createQuery(T).filter("_id", id),
+    public <T> UpdateResults editData(Class<T> T, ObjectId id, String field,
+            Object obj) {
+        return dataStore.update(dataStore.createQuery(T).filter("_id", id),
                 dataStore.createUpdateOperations(T).set(field, obj));
     }
 

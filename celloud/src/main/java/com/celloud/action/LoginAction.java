@@ -66,11 +66,14 @@ public class LoginAction {
         Subject subject = SecurityUtils.getSubject();
         Object isRem = subject.getSession().getAttribute("isRemembered");
         boolean isRemembered = isRem != null ? ((boolean) isRem) : subject.isRemembered();
+        PublicKey key = generatePublicKey(subject.getSession());
         if (isRemembered) {
-            user = userService.findByUsernameOrEmail(String.valueOf(subject.getPrincipal()));
+            User temp = userService.findByUsernameOrEmail(String.valueOf(subject.getPrincipal()));
+            user.setUsername(temp.getUsername());
+            String password = RSAUtil.encryptedString(key.getModulus(), key.getExponent(), temp.getPassword());
+            user.setPassword(password);
         }
-        return mv.addObject("checked", isRemembered).addObject("user", user)
-                .addObject("publicKey", generatePublicKey(subject.getSession()))
+        return mv.addObject("checked", isRemembered).addObject("user", user).addObject("publicKey", key)
                 .addObject("showKaptchaCode", getFailedlogins() >= 3);
     }
 
@@ -88,10 +91,9 @@ public class LoginAction {
      */
     @ActionLog(value = "用户登录", button = "登录")
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public ModelAndView login(User user, String kaptchaCode, PublicKey publicKey, boolean checked) {
+    public ModelAndView login(User user, String kaptchaCode, String newPassword, boolean checked) {
         logger.info("用户正在登陆：" + user.getUsername());
         Subject subject = SecurityUtils.getSubject();
-        String username = String.valueOf(subject.getPrincipal());
         String password = user.getPassword();
         user.setPassword("");
         Session session = subject.getSession();
@@ -103,10 +105,10 @@ public class LoginAction {
         if (!checkKaptcha(kaptchaCode, session)) {
             return mv.addObject("info", "验证码错误，请重新登录！");
         }
-        if (user.getUsername().equals(username)) {
-            password = userService.findByUsernameOrEmail(username).getPassword();
+        if (newPassword == null || newPassword.trim().length() <= 0) {
+            password = RSAUtil.decryptString(privateKey, password);
         } else {
-            password = RSAUtil.decryptStringByJs(privateKey, password);
+            password = RSAUtil.decryptStringByJs(privateKey, newPassword);
             password = password == null ? "" : MD5Util.getMD5(password);
         }
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), password, checked);
@@ -129,6 +131,9 @@ public class LoginAction {
         logService.log("用户登录", "用户" + loginUser.getUsername() + "登录成功");
         session.removeAttribute(Constants.SESSION_RSA_PRIVATEKEY);
         session.removeAttribute(Constants.SESSION_FAILED_LOGIN_TIME);
+        // 获取用户所属的大客户，决定是否有统计菜单
+        Integer companyId = userService.getCompanyIdByUserId(loginUser.getUserId());
+        session.setAttribute("companyId", companyId);
         mv.setViewName("loading");
         return mv;
     }
