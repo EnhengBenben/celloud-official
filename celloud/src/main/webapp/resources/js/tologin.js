@@ -87,8 +87,6 @@ $(document).ready(function(){
 			}
 		}
 		//全部校验已通过
-		var oldPassword = $("input[name='password']").val();
-		$("input[name='password']").val(secPWD(oldPassword));
 		var newPassword = $("input[name='newPassword']").val();
 		if(newPassword){
 			$("input[name='newPassword']").val(secPWD(newPassword));

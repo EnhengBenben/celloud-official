@@ -66,13 +66,14 @@ public class LoginAction {
         Subject subject = SecurityUtils.getSubject();
         Object isRem = subject.getSession().getAttribute("isRemembered");
         boolean isRemembered = isRem != null ? ((boolean) isRem) : subject.isRemembered();
+        PublicKey key = generatePublicKey(subject.getSession());
         if (isRemembered) {
             User temp = userService.findByUsernameOrEmail(String.valueOf(subject.getPrincipal()));
             user.setUsername(temp.getUsername());
-            user.setPassword(temp.getPassword());
+            String password = RSAUtil.encryptedString(key.getModulus(), key.getExponent(), temp.getPassword());
+            user.setPassword(password);
         }
-        return mv.addObject("checked", isRemembered).addObject("user", user)
-                .addObject("publicKey", generatePublicKey(subject.getSession()))
+        return mv.addObject("checked", isRemembered).addObject("user", user).addObject("publicKey", key)
                 .addObject("showKaptchaCode", getFailedlogins() >= 3);
     }
 
@@ -105,7 +106,7 @@ public class LoginAction {
             return mv.addObject("info", "验证码错误，请重新登录！");
         }
         if (newPassword == null || newPassword.trim().length() <= 0) {
-            password = RSAUtil.decryptStringByJs(privateKey, password);
+            password = RSAUtil.decryptString(privateKey, password);
         } else {
             password = RSAUtil.decryptStringByJs(privateKey, newPassword);
             password = password == null ? "" : MD5Util.getMD5(password);
