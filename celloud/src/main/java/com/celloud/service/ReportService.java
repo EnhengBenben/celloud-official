@@ -253,7 +253,7 @@ public interface ReportService {
      * @author leamo
      * @date 2016年2月18日 上午11:05:37
      */
-    public void updateMIBFilling(MIB mib);
+    public Integer updateMIBFilling(MIB mib);
 
     /**
      * 修改BSI报告用户填写部分
@@ -262,7 +262,7 @@ public interface ReportService {
      * @author leamo
      * @date 2016年4月18日 下午4:33:55
      */
-    public void updateBSIFilling(BSI bsi);
+    public Integer updateBSIFilling(BSI bsi);
 
     /**
      * 获取 Split 报告
@@ -379,10 +379,19 @@ public interface ReportService {
     public String hbvCompare(Integer appId, String path);
     
     /**
-     * EGFR 和 KRAS 数据参数同比
+     * KRAS 数据参数同比
      * 
      * @param appId
      * @param path
+     * @param length
+     * @return
+     * @date 2016-1-9 下午3:07:38
+     */
+    public String krasCompare(Integer appId, String path, Integer length);
+    
+    /**
+     * EGFR 数据参数同比
+     * 
      * @param length
      * @return
      * @date 2016-1-9 下午3:07:38

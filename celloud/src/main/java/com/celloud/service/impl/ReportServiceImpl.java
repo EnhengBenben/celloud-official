@@ -18,6 +18,7 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.query.UpdateResults;
 import org.springframework.stereotype.Service;
 
 import com.celloud.constants.DataState;
@@ -359,6 +360,15 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
+    public String krasCompare(Integer appId, String path, Integer length) {
+        path = path + appId + "_" + length;
+        if (FileTools.checkPath(path)) {
+            return FileTools.getLimitLines(path, 1, 10);
+        }
+        return null;
+    }
+    
+    @Override
     public String egfrCompare(Integer length) {
         List<EGFRCount> egfrCounts = reportDao.getEGFRCountByLength(EGFRCount.class, length);
         // 存储位点与位点的出现次数
@@ -378,14 +388,16 @@ public class ReportServiceImpl implements ReportService {
             int i = 0;
             // 目标位置下标
             int s = -1;
+            int k = 0;
             while (i++ < 10) {
                 s = str.indexOf("\n", s + 1);
                 // 少于10行就直接退出循环
                 if (s == -1) {
                     break;
                 }
+                k = s;
             }
-            return str.substring(0, s);
+            return str.substring(0, k);
         } else {
             return str;
         }
@@ -692,14 +704,18 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public void updateMIBFilling(MIB mib) {
-        reportDao.editData(MIB.class, mib.getId(), "baseInfo", mib.getBaseInfo());
+    public Integer updateMIBFilling(MIB mib) {
+        UpdateResults ur = reportDao.editData(MIB.class, mib.getId(),
+                "baseInfo", mib.getBaseInfo());
+        return ur != null ? 1 : 0;
     }
 
     @Override
-    public void updateBSIFilling(BSI bsi) {
-        reportDao.editData(BSI.class, bsi.getId(), "baseInfo",
+    public Integer updateBSIFilling(BSI bsi) {
+        UpdateResults ur = reportDao.editData(BSI.class, bsi.getId(),
+                "baseInfo",
                 bsi.getBaseInfo());
+        return ur != null ? 1 : 0;
     }
 
     @Override
@@ -849,4 +865,5 @@ public class ReportServiceImpl implements ReportService {
 	public ABINJ getABINJReport(String dataKey, Integer projectId, Integer appId) {
 		return reportDao.getDataReport(ABINJ.class, dataKey, projectId, appId);
 	}
+
 }
