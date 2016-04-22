@@ -93,7 +93,13 @@ var experiment = (function(experiment) {
 	}
 	var isChangeName = false;
   self.changeName = function(){
-    isChangeName = true;
+    var originNum = $("#expOriginNum").val();
+    var expnumber = $("#expnumber").val();
+    if(expnumber == originNum){
+      isChangeName = false;
+    }else{
+      isChangeName = true;
+    }
   }
 	self.toEditExp = function(id){
 	  isChangeName = false;

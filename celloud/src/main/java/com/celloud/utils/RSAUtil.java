@@ -140,6 +140,14 @@ public class RSAUtil {
         return null;
     }
 
+    /**
+     * 加密数据
+     * 
+     * @param modulus
+     * @param pubExponent
+     * @param str
+     * @return
+     */
     public static String encryptedString(String modulus, String pubExponent, String str) {
         try {
             KeyFactory factory = KeyFactory.getInstance(ALGORITHOM);
@@ -156,7 +164,7 @@ public class RSAUtil {
     }
 
     /* 使用私钥解密给定的字符串 */
-    private static String decryptString(PrivateKey privateKey, String encryptStr) {
+    public static String decryptString(PrivateKey privateKey, String encryptStr) {
         if (encryptStr == null || encryptStr.equals("")) {
             return null;
         }
@@ -187,10 +195,10 @@ public class RSAUtil {
         KeyPair keyPair = RSAUtil.generateKeyPair();
         RSAPublicKey rsaPublicKey = (RSAPublicKey) keyPair.getPublic();
         RSAPrivateKey rsaPrivateKey = (RSAPrivateKey) keyPair.getPrivate();
-        System.out.println("pub_m:"+rsaPublicKey.getModulus().toString(16));
-        System.out.println("pup_e:"+rsaPublicKey.getPublicExponent().toString(16));
-        System.out.println("pri_m:"+rsaPrivateKey.getModulus().toString(16));
-        System.out.println("pri_e:"+rsaPrivateKey.getPrivateExponent().toString(16));
+        System.out.println("pub_m:" + rsaPublicKey.getModulus().toString(16));
+        System.out.println("pup_e:" + rsaPublicKey.getPublicExponent().toString(16));
+        System.out.println("pri_m:" + rsaPrivateKey.getModulus().toString(16));
+        System.out.println("pri_e:" + rsaPrivateKey.getPrivateExponent().toString(16));
         // String temp = RSAUtil.encryptedString(rsaPublicKey, password);
         String temp = RSAUtil.encryptedString(rsaPublicKey.getModulus().toString(16),
                 rsaPublicKey.getPublicExponent().toString(16), password);

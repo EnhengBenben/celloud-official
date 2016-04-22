@@ -1,10 +1,6 @@
 package com.celloud.service.impl;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -22,6 +18,7 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.query.UpdateResults;
 import org.springframework.stereotype.Service;
 
 import com.celloud.constants.DataState;
@@ -35,12 +32,14 @@ import com.celloud.mapper.PriceMapper;
 import com.celloud.mapper.ReportMapper;
 import com.celloud.model.mongo.ABINJ;
 import com.celloud.model.mongo.BRAF;
+import com.celloud.model.mongo.BSI;
 import com.celloud.model.mongo.CmpFilling;
 import com.celloud.model.mongo.CmpGeneDetectionDetail;
 import com.celloud.model.mongo.CmpGeneSnpResult;
 import com.celloud.model.mongo.CmpReport;
 import com.celloud.model.mongo.DPD;
 import com.celloud.model.mongo.EGFR;
+import com.celloud.model.mongo.EGFRCount;
 import com.celloud.model.mongo.GddDiseaseDict;
 import com.celloud.model.mongo.GeneDetectionResult;
 import com.celloud.model.mongo.HBV;
@@ -64,6 +63,7 @@ import com.celloud.utils.Base64Util;
 import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.ExcelUtil;
 import com.celloud.utils.FileTools;
+import com.celloud.utils.MapSort;
 import com.celloud.utils.PropertiesUtil;
 
 /**
@@ -144,10 +144,10 @@ public class ReportServiceImpl implements ReportService {
         hbv.setReporttxt(CustomStringUtils.htmlbr(hbv.getReporttxt()));
         return hbv;
     }
-    
+
     @Override
     public Integer getTBINHisWildByGeneNameAndUserId(Integer userId, String simpleGeneName, Integer isWild) {
-        return reportDao.getTBINHisWild( userId, simpleGeneName, isWild);
+        return reportDao.getTBINHisWild(userId, simpleGeneName, isWild);
     }
 
     @Override
@@ -360,12 +360,47 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public String egfrCompare(Integer appId, String path, String length) {
+    public String krasCompare(Integer appId, String path, Integer length) {
         path = path + appId + "_" + length;
         if (FileTools.checkPath(path)) {
             return FileTools.getLimitLines(path, 1, 10);
         }
         return null;
+    }
+    
+    @Override
+    public String egfrCompare(Integer length) {
+        List<EGFRCount> egfrCounts = reportDao.getEGFRCountByLength(EGFRCount.class, length);
+        // 存储位点与位点的出现次数
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        for (EGFRCount count : egfrCounts) {
+            String site = count.getSite() + "";
+            if (!map.containsKey(site)) {
+                map.put(site, 1);
+            } else {
+                map.put(site, map.get(site) + 1);
+            }
+        }
+        String str = MapSort.sort(map);
+        if (str != null && !"".equals(str)) {
+            // 取前10行数据
+            // 取第几次
+            int i = 0;
+            // 目标位置下标
+            int s = -1;
+            int k = 0;
+            while (i++ < 10) {
+                s = str.indexOf("\n", s + 1);
+                // 少于10行就直接退出循环
+                if (s == -1) {
+                    break;
+                }
+                k = s;
+            }
+            return str.substring(0, k);
+        } else {
+            return str;
+        }
     }
 
     @Override
@@ -381,44 +416,66 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public String pgsCompare(Integer appId, String path, String columns) {
+    public String pgsCompare(Integer appId, String columns) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("totalReads", "Total_Reads");
+        map.put("duplicate", "Duplicate(%)");
+        map.put("gcCount", "GC_Count(%)");
+        map.put("sd", "*SD");
+        // 对比列为null
         if (columns == null) {
             return null;
         }
+        String queryColumns = columns.replace("Total_Reads", "totalReads").
+                replace("Duplicate(%)", "duplicate").
+                replace("GC_Count(%)", "gcCount").
+                replace("*SD", "sd");
+        String[] queryColumn = queryColumns.split(",");
+        // 分割对比列[totalReads,duplicate,gcCount]
         String column[] = columns.split(",");
+        // 拼接最终返回的字符串:
+        // ;Total_Reads:477319,470293,410200,;Duplicate(%):3.50,0.52,0.14,;GC_Count(%):40.02,36.26,39.90,
         StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < column.length; i++) {
-            String fileName = path + appId + "_" + column[i];
-            File file = new File(fileName);
-            if (file.exists()) {
-                sb.append(";" + column[i] + ":");
-                BufferedReader br = null;
+        // 根据appId查询某些列的字段
+        List<Pgs> pgs = reportDao.getDataFieldsByAppId(Pgs.class, appId, queryColumn);
+        if (pgs != null && pgs.size() > 0) {
+            for (int i = 0; i < column.length; i++) {
+                // 拼接方法名, 根绝field
+                StringBuilder methodName = new StringBuilder();
+                methodName.append("get");
+                methodName.append(column[i].substring(0, 1).toUpperCase());
+                methodName.append(column[i].substring(1));
+                // 开始拼接
+                sb.append(";" + map.get(column[i]) + ":");
                 try {
-                    br = new BufferedReader(new FileReader(file));
-                } catch (FileNotFoundException e) {
-                    log.error(fileName + "文件不存在");
-                }
-                if (br == null)
-                    continue;
-                String line = null;
-                try {
-                    while ((line = br.readLine()) != null) {
-                        sb.append(line + ",");
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    try {
-                        if (br != null) {
-                            br.close();
+                    // 获取getXxx方法:p.getTotalReads();p.getSd();p.getGcCount();p.getDuplicate();
+                    Method getMethod = pgs.get(0).getClass().getMethod(methodName.toString(), (Class<?>[]) null);
+                    // 可暴力访问
+                    getMethod.setAccessible(true);
+                    // 遍历每一个Pgs对象
+                    for (Pgs p : pgs) {
+                        // 用当前的对象执行getXxx方法获取值
+                        String value = (String) getMethod.invoke(p, (Object[]) null);
+                        // 新老数据的字段有可能不一致, 所以判断非空
+                        if (value != null && !"".equals(value)) {
+                        	value = value.trim();
+                            // 拼接到sb中
+                            try{
+                                Float.parseFloat(value);
+                                sb.append(value + ",");
+                            }catch(Exception e){
+                                continue;
+                            }
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
+            return sb.toString();
+        } else {
+            return null;
         }
-        return sb.toString();
     }
 
     @Override
@@ -658,8 +715,18 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public void updateMIBFilling(MIB mib) {
-        reportDao.editData(MIB.class, mib.getId(), "baseInfo", mib.getBaseInfo());
+    public Integer updateMIBFilling(MIB mib) {
+        UpdateResults ur = reportDao.editData(MIB.class, mib.getId(),
+                "baseInfo", mib.getBaseInfo());
+        return ur != null ? 1 : 0;
+    }
+
+    @Override
+    public Integer updateBSIFilling(BSI bsi) {
+        UpdateResults ur = reportDao.editData(BSI.class, bsi.getId(),
+                "baseInfo",
+                bsi.getBaseInfo());
+        return ur != null ? 1 : 0;
     }
 
     @Override
@@ -800,7 +867,12 @@ public class ReportServiceImpl implements ReportService {
         return reportDao.getDataReport(TaskQueue.class, "", projectId, 0);
     }
 
-	@Override
+    @Override
+    public BSI getBSIReport(String dataKey, Integer projectId, Integer appId) {
+        return reportDao.getDataReport(BSI.class, dataKey, projectId, appId);
+    }
+
+    @Override
 	public ABINJ getABINJReport(String dataKey, Integer projectId, Integer appId) {
 		return reportDao.getDataReport(ABINJ.class, dataKey, projectId, appId);
 	}

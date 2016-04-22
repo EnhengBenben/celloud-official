@@ -101,15 +101,18 @@ utils.checkPlaceholder = function(){
             var pwdVal      = pwdField.attr('placeholder');
             pwdField.after('<input id="pwdPlaceholder" type="text" class="pwd" value='+pwdVal+' autocomplete="off" />');
             var pwdPlaceholder = $('#pwdPlaceholder');
-            pwdPlaceholder.show();
-            pwdField.hide();
-            
+            if(pwdField.val()){
+            	 pwdPlaceholder.hide();
+                 pwdField.show();
+            }else{
+            	 pwdPlaceholder.show();
+                 pwdField.hide();
+            }
             pwdPlaceholder.focus(function(){
                 pwdPlaceholder.hide();
                 pwdField.show();
                 pwdField.focus();
             });
-            
             pwdField.blur(function(){
                 if(pwdField.val() == '') {
                     pwdPlaceholder.show();

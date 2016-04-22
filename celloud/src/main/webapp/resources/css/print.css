@@ -30,9 +30,9 @@ body{font-family:Arial,'Hiragino Sans GB','Microsoft YaHei',微软雅黑, STHeit
     text-align: center;
     display: block;
 }
-table {max-width: 100%;background-color: transparent;border-collapse: collapse;border-spacing: 0;}
+table {max-width: 100%;background-color: transparent;border-collapse: collapse;border-spacing: 0;font-size:12px;}
 .table {width: 100%;}
-.table th,.table td { max-width:230px; word-break:break-all;word-wrap:break-word; padding: 2px;line-height: 15px; text-align: left; vertical-align: top; border-top: 1px solid #dddddd;}
+.table th,.table td { max-width:230px; word-break:break-word;word-wrap:break-word; padding: 2px;line-height: 15px; text-align: left; vertical-align: top; border-top: 1px solid #dddddd;}
 .table th {font-weight: bold;}
 .table thead th { vertical-align: bottom;}
 .table caption + thead tr:first-child th,.table caption + thead tr:first-child td,.table colgroup + thead tr:first-child th,.table colgroup + thead tr:first-child td,.table thead:first-child tr:first-child th,.table thead:first-child tr:first-child td { border-top: 0;}

@@ -364,7 +364,7 @@ $.ajaxSetup ({
 			                    }
 			                }
 			            }
-			            if(appId=="117"||appId=="114"||appId=="113"||appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
+			            if(appId=="118"||appId=="117"||appId=="114"||appId=="113"||appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
 			                param = {"fileName":$.trim($(this).html()),"dataKey":$.trim($(this).prev().html()),"softwareId":appId,"softwareName":appName,"userId":userId,"obj":$(this),"proId":proId,"proName":proName};
 			                if(j>0&&i==1){
 			                    $(this).addClass("sub");
@@ -372,7 +372,7 @@ $.ajaxSetup ({
 		                        if(fileName.length>30&&appId!="113"&&appId!="112"&&appId!="111"&&appId!="110"){
 		                        	fileName = fileName.substring(0,30) + "...";
 		                        }
-		                        if(appId!="114"){
+		                        if(appId!="114"&&appId!="118"){
 		                        	$(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
 		                        }else{
 		                        	$(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+fileName+"</span>");
@@ -501,7 +501,7 @@ $.ajaxSetup ({
 			    	minTdNum = 4;
 			    }
 			    var rdataNum = $("#rdataNum"+proId).html();
-			    if(appId=="114" && tr_size-1<rdataNum){
+			    if((appId=="114"||appId=="118") && tr_size-1<rdataNum){
 			    	var num = Number(rdataNum)-tr_size+1;
 			    	var height = 30*(5-tr_size);
 		    		var adHtml = "<tr><td colspan='"+th_size+"' style='border-left-style: none;vertical-align: middle;height:"+height+"px' align='center'><img src='/celloud/images/report/running.png' title='正在运行...'/><br>"+num+"个数据正在运行...</td></tr>";
@@ -662,8 +662,9 @@ $.ajaxSetup ({
 				$.get("report/getSplitReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
-			}else if(softwareId == 114){
-				$.get("report/getMIBReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
+			}else if(softwareId == 114 || softwareId == 118){
+			  var method = softwareId == 114 ? "getMIBReport" : "getBSIReport";
+				$.get("report/"+method,{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 					var mib_readsDisInfo = $("#reads-distribution-char").text();
           var mib_familyDisInfo = $("#family-distribution-char").text();
@@ -765,12 +766,12 @@ $.ajaxSetup ({
 						}
 					}
 				});
-				$.get("count/pgsCompare",{"appId":appId,"columns":columns,"path":DATAPATH},function(data){
+				$.get("count/pgsCompare",{"appId":appId,"columns":columns},function(data){
 					var sp = data.split(";");
 					$("#charResult").html("");
 					for ( var i = 1; i < sp.length; i++) {
 						var big = 0;
-						var div = $("<div id='char"+i+"' class='col-lg-5'></div>");
+						var div = $("<div id='char"+i+"' class='col-lg-5' style='width: 410px;height:400px;'></div>");
 						$("#charDiv").append(div);
 						var ev = sp[i].split(":");
 						var one = getCountValue(ev[0],"_table");
@@ -791,7 +792,7 @@ $.ajaxSetup ({
 						}
 						$("#charResult").append("本数据的 "+ev[0]+" 打败了 <span class='green'>"+percent+"%</span> 的数据；");
 						var single = "[[2,"+one+"]]";
-						showChar("char" + i, ev[0], eval(context),eval(single));
+						$.reportChar.draw.echartsShowScatter("char" + i, ev[0], eval(context),eval(single));
 					}
 				});
 			}
@@ -959,12 +960,13 @@ $.ajaxSetup ({
 						showCharHCV("char0", "位点", eval(X),eval(Y),0);
 				});
 			}
-			if(appId==84||appId==89){
+			
+			if(appId == 89){//kras
 				var length = $("#seq_length").val();
 				if(length==0 || isNaN(length)){
 					$("#charDiv").html("<p style=\"color: red;\">数据异常，没有同比结果</p>");
 				}else{  
-					$.get("count/egfrCompare",{"appId":appId,"path":DATAPATH,"length":length},function(data){
+					$.get("count/krasCompare",{"appId":appId,"path":DATAPATH,"length":length},function(data){
 							var div = $("<div id='char0' class='col-lg-6'></div>");
 							$("#charDiv").append(div);
 							var X = "[";
@@ -978,6 +980,36 @@ $.ajaxSetup ({
 							X = X.substring(0,X.length-1)+"]";
 							Y = Y.substring(0,Y.length-1)+"]";
 							showCharHCV("char0", "位点", eval(X),eval(Y),0);
+					});
+				}
+			}
+			
+			if(appId==84){//egfr
+				var length = $("#seq_length").val();
+				if(length==0 || isNaN(length)){
+					$("#charDiv").html("<p style=\"color: red;\">数据异常，没有同比结果</p>");
+				}else{  
+					$.get("count/egfrCompare",{"length":length},function(data){
+							var div = $("<div id='char0' class='col-lg-6' style='width: 500px;height:400px;'></div>");
+							$("#charDiv").append(div);
+							var X = "[";
+							var Y = "[";
+							var value = data.split("\n");
+							if(value.length > 1){
+								for(var k=0;k<value.length-1;k++){
+									var n = value[k].split("\t");
+									X+="'"+n[0]+"',";
+									Y+=n[1]+",";
+								}
+							}else{
+								var n = data.split("\t");
+								X+="'"+n[0]+"',";
+								Y+=n[1]+",";
+							}
+							
+							X = X.substring(0,X.length-1)+"]";
+							Y = Y.substring(0,Y.length-1)+"]";
+							$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y));
 					});
 				}
 			}

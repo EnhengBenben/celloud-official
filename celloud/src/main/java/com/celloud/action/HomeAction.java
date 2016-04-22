@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -58,6 +59,18 @@ public class HomeAction {
         session.setAttribute(Constants.RESET_PASSWORD_USER_ID, user.getUserId());
         return mv.addObject("user", user).addObject("randomCode", randomCode);
     }
+    
+    @RequestMapping(value = "resetEmail/{username}/{randomCode}.html", method = RequestMethod.GET)
+	public ModelAndView resetEmail(HttpSession session, @PathVariable String username,
+			@PathVariable String randomCode) {
+		ModelAndView mv = new ModelAndView("user/user_email_reset");
+		User user = userService.getUserByFindPwd(username, randomCode);
+		if (user == null) {
+			return mv.addObject("info", "修改邮箱的链接错误或已过期");
+		}
+		logger.info("用户正在修改邮箱：userId={},username={},randomCode={}", user.getUserId(), username, randomCode);
+		return mv.addObject("user", user).addObject("randomCode", randomCode);
+	}
 
     /**
      * 用户重置密码--保存
@@ -177,13 +190,19 @@ public class HomeAction {
         return "home_phone";
     }
 
-    @RequestMapping({ "bsi.html" })
+    @RequestMapping("bsi.html")
     public String bsi() {
         return "print/print_bsi";
     }
 
-    @RequestMapping({ "bsianaly.html" })
+    @RequestMapping("bsianaly.html")
     public String bsianaly() {
         return "print/print_bsi_detail";
+    }
+
+    @RequestMapping({ "template.html" })
+    public ModelAndView template(Model model) {
+        ModelAndView mv = new ModelAndView("child-1.vm");
+        return mv;
     }
 }

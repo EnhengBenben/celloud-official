@@ -8,10 +8,12 @@
 <!-- 优先使用最新版本的IE 和 Chrome 内核 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="baidu-site-verification" content="IsldTuHqik" />
-<title>CelLoud 平台</title>
-<meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
-<meta name="description" content="一站式高通量基因检测数据分析系统">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CelLoud 生物信息云平台</title>
+<meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据,上海华点云生物科技有限公司网站首页,上海华点云生物科技有限公司官网,上海华点云生物科技有限公司北京分公司" />
+<meta name="description" content="一站式高通量基因检测数据分析系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- <meta name="baidu-site-verification" content="1fI6fRe9op" /> -->
+<meta name="baidu-site-verification" content="ZvlzkAOdsB" />
 <link rel="bookmark" href="<%=request.getContextPath()%>/images/favicon.ico"/>
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico"/>
 <script type="text/javascript">
@@ -49,8 +51,6 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
     DD_belatedPNG.fix('.s4 .content, background');
 </script>
 <![endif]-->
-<meta name="keywords" content="SMINT jQuery Plugin, SMINT, jQuery Plugin, One Page Website, Sticky Navigation" />
-<meta name="description" content="SMINT is a simple plugin for lovers of one page websites, which helps with sticky menus and page scrolling." />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, minimum-scale=1,user-scalable=yes">
 <link href="<%=request.getContextPath() %>/plugins/animate.min.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath() %>/css/font.css" rel="stylesheet" type="text/css">

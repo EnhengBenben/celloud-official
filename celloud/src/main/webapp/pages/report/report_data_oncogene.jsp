@@ -53,7 +53,7 @@
 		    	${oncogene.wz2 }
 		    	<br/>
 		    	<c:forEach var="img" items="${oncogene.out }">
-		    		<a href="javascript:showBgTwo('${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img.replace('png','10.png') }');" >
+		    		<a href="javascript:showBgTwo('${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img.replace('3.png','10.png') }');" >
 						<img class="imgtop" title="${img }" name="imgSrc" style="padding-left: 30px;" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img }" height="170px;" width="150px;">
 					</a>
 		    	</c:forEach>

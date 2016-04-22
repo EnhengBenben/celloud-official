@@ -36,7 +36,6 @@ class MIB:
         path = os.path.join(path, dataKey)
         if not os.path.exists(path):
             return result
-
         # 样品中属层次上reads的比例数据信息（前10）
         genusTop10Path = os.path.join(path, 'all.fastq.genus.top15')
         if os.path.exists(genusTop10Path):
@@ -46,6 +45,7 @@ class MIB:
                 reads = line.strip().split("\t")
                 genusDistributionInfo.append(reads)
             result['genusDistributionInfo'] = genusDistributionInfo
+            print genusDistributionInfo
             f.close()
         # result
         resultPath = os.path.join(path, 'result')

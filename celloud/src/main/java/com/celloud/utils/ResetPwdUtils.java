@@ -16,6 +16,14 @@ public class ResetPwdUtils {
     public static String userPath;
     public static String userTitle;
     public static String userContent;
+    
+    public static String updateEmailPath;
+    public static String updateEmailTitle;
+    public static String updateEmailContent;
+    
+    public static String toActiveEmailPath;
+    public static String toActiveEmailTitle;
+    public static String toActiveEmailContent;
 
     public static Properties prop = null;
 
@@ -32,6 +40,14 @@ public class ResetPwdUtils {
             userPath = prop.getProperty("userPath");
             userTitle = prop.getProperty("userTitle");
             userContent = prop.getProperty("userContent");
+            
+            updateEmailPath = prop.getProperty("updateEmailPath");
+            updateEmailTitle = prop.getProperty("updateEmailTitle");
+            updateEmailContent = prop.getProperty("updateEmailContent");
+            
+            toActiveEmailPath = prop.getProperty("toActiveEmailPath");
+            toActiveEmailTitle = prop.getProperty("toActiveEmailTitle");
+            toActiveEmailContent = prop.getProperty("toActiveEmailContent");
         } catch (IOException e) {
             logger.info("读取ResetPwd配置文件失败");
         }

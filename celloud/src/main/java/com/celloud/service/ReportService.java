@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 
 import com.celloud.model.mongo.ABINJ;
 import com.celloud.model.mongo.BRAF;
+import com.celloud.model.mongo.BSI;
 import com.celloud.model.mongo.CmpFilling;
 import com.celloud.model.mongo.CmpGeneSnpResult;
 import com.celloud.model.mongo.CmpReport;
@@ -252,7 +253,16 @@ public interface ReportService {
      * @author leamo
      * @date 2016年2月18日 上午11:05:37
      */
-    public void updateMIBFilling(MIB mib);
+    public Integer updateMIBFilling(MIB mib);
+
+    /**
+     * 修改BSI报告用户填写部分
+     * 
+     * @param bsi
+     * @author leamo
+     * @date 2016年4月18日 下午4:33:55
+     */
+    public Integer updateBSIFilling(BSI bsi);
 
     /**
      * 获取 Split 报告
@@ -285,6 +295,17 @@ public interface ReportService {
      * @date 2016年2月1日 下午6:08:35
      */
     public void updateCmpFilling(ObjectId id, CmpFilling cmpFill);
+
+    /**
+     * 获取 BSI 报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @date 2016-1-10 下午10:33:49
+     */
+    public BSI getBSIReport(String dataKey, Integer projectId, Integer appId);
 
     /**
      * 系统统计业务
@@ -356,9 +377,9 @@ public interface ReportService {
      * @date 2016-1-9 下午2:57:29
      */
     public String hbvCompare(Integer appId, String path);
-
+    
     /**
-     * EGFR 和 KRAS 数据参数同比
+     * KRAS 数据参数同比
      * 
      * @param appId
      * @param path
@@ -366,7 +387,16 @@ public interface ReportService {
      * @return
      * @date 2016-1-9 下午3:07:38
      */
-    public String egfrCompare(Integer appId, String path, String length);
+    public String krasCompare(Integer appId, String path, Integer length);
+    
+    /**
+     * EGFR 数据参数同比
+     * 
+     * @param length
+     * @return
+     * @date 2016-1-9 下午3:07:38
+     */
+    public String egfrCompare(Integer length);
 
     /**
      * HCV 数据参数同比
@@ -380,6 +410,7 @@ public interface ReportService {
 
     /**
      * PGS 数据参数同比
+     * 对dao层返回的数据进行拼接返回到页面
      * 
      * @param appId
      * @param path
@@ -387,7 +418,7 @@ public interface ReportService {
      * @return
      * @date 2016-1-9 下午3:25:22
      */
-    public String pgsCompare(Integer appId, String path, String columns);
+    public String pgsCompare(Integer appId, String columns);
 
     /**
      * split数据参数同比
