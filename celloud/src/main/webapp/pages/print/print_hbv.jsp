@@ -40,7 +40,7 @@
 					<c:if test="${hbv.companyId==41 }">
 						<span name="geneType">基因分型检测</span>
 						<span name="resistanceType" class="hide">耐药突变检测</span><br>
-					</c:if>报告单
+					</c:if><c:if test="${hbv.companyId!=57 }">报告单</c:if>
 				</h1>
 			    <hr />
 			    <div class="wrapper">
