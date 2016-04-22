@@ -15,7 +15,14 @@ var users = (function(users) {
 		$("#userinfo").addClass("hide");
 		$("#changePwd").addClass("hide");
 		$("#operlog").addClass("hide");
+		$("#changeEmail").addClass("hide");
 		$("#userOperaUl li").removeClass("active");
+	}
+	self.showChangeEmail = function(){
+	  self.clearActive();
+    $("#changeEmailTab").addClass("active");
+    $("#changeEmail").removeClass("hide");
+    $("#subtitle").html("更换邮箱");
 	}
 	self.showUserInfo = function() {
 		self.clearActive();
@@ -50,23 +57,26 @@ var users = (function(users) {
 			'currentPage' : page
 		});
 	}
+	self.validateEmail = function(){
+	  // 邮箱为必输项
+	  var email = $("#inputEmail").val();
+	  if (email == "") {
+	    $("#emailSpanInfo").html("请输入邮箱");
+	    $("#inputEmail").focus();
+	    return false;
+	  }
+	  $("#emailSpanInfo").html("");
+	  var emailregex = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+	  if (!emailregex.test(email)) {
+	    flag = false;
+	    $("#emailSpanInfo").html("邮箱格式不正确");
+	    $("#inputEmail").focus();
+	    return false;
+	  }
+	  return true;
+	}
 	self.validateBaseInfo = function() {
-		// 邮箱为必输项
-		var email = $("#inputEmail").val();
 		var telphone = $("#inputPhone").val();
-		if (email == "") {
-			$("#emailSpanInfo").html("请输入邮箱");
-			$("#inputEmail").focus();
-			return false;
-		}
-		$("#emailSpanInfo").html("");
-		var emailregex = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-		if (!emailregex.test(email)) {
-			flag = false;
-			$("#emailSpanInfo").html("邮箱格式不正确");
-			$("#inputEmail").focus();
-			return false;
-		}
 		if (telphone == "") {
 			return true;
 		}
@@ -147,6 +157,20 @@ var users = (function(users) {
 				}
 			}
 		});
+	}
+	self.updateEmail = function() {
+	  $("#updateEmailDiv").hide();
+	  if (!self.validateEmail()) {
+	    return;
+	  }
+	  var url = $("#updateEmailForm").attr("action");
+	  $.post(url, $("#updateEmailForm").serialize(), function(data) {
+	    if (data == 0) {
+	      $("#emailSpanInfo").html("邮件已发送，请进入邮箱处理。");
+	    } else {
+	      $("#emailSpanInfo").html("邮件发送失败，请检查邮箱是否正确。");
+	    }
+	  });
 	}
 	self.updatePassword = function() {
 		$("#resetPwdSpanInfo").html("");

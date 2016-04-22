@@ -51,6 +51,16 @@ class mongo:
 		finally:
 			mongo.client = None
 
+	#批量写入
+	def insertBatch(self, result , collection):
+		self.collection = self.db[collection]; #连接到具体的collection中
+		try:
+			self.collection.insert(result);
+		except Exception as e:
+			print "mongo insertBatch Exception ==>> %s " % e;
+		finally:
+			mongo.client = None;
+
 	#查询
 	def get(self, condition , collection):
 		self.collection = self.db[collection] #连接到具体的collection中
@@ -61,3 +71,28 @@ class mongo:
 			print "mongo find Exception ==>> %s " % e
 		finally:
 			mongo.client = None
+
+	#根据条件查询所有
+	def findAllByCondition(self, condition, collection):
+		self.collection = self.db[collection]; #连接到具体的collection中
+		try:
+			result = self.collection.find(condition);
+			return result;
+		except Exception as e:
+			print "mongo findAllByCondition Exception ==>> %s " % e;
+		finally:
+			mongo.client = None;
+
+	#根据条件删除所有
+	def deleteAllByCondition(self, condition, collection):
+		self.collection = self.db[collection]; #连接到具体的collection中
+		try:
+			self.collection.remove(condition);
+		except Exception as e:
+			print "mongo delete Exception ==>> %s " % e;
+		finally:
+			self.client = None;
+	
+	#删除
+	def delete(self, condition, collection):
+		self.collection = self.db[collection] #连接到具体的collection中

@@ -87,10 +87,10 @@
                         ${report.app_id},${report.app_name},${report.project_id},${report.user_id}
                     </td>
                     <td class="no">
-                    	<c:if test="${report.period==3 }">
+                    	<c:if test="${report.period>=2}">
                     		${report.context }
                     	</c:if>
-                    	<c:if test="${report.period!=3 }">
+                    	<c:if test="${empty report.context }">
                         	<img src="<%=request.getContextPath() %>/images/report/running.png" title="正在运行..."/>
                     	</c:if>
                     </td>

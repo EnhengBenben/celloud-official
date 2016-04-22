@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateResults;
 import org.springframework.stereotype.Service;
 
 import com.celloud.model.mongo.TBINH;
@@ -24,6 +25,11 @@ import com.celloud.page.PageList;
 public class ReportDaoImpl implements ReportDao {
     @Resource
     private Datastore dataStore;
+    
+    @Override
+    public <T> List<T> getEGFRCountByLength(Class<T> clazz, Integer length) {
+        return dataStore.createQuery(clazz).filter("length =", length).asList();
+    }
 
     @Override
     public Integer getTBINHisWild(Integer userId, String simpleGeneName, Integer isWild) {
@@ -69,8 +75,9 @@ public class ReportDaoImpl implements ReportDao {
     }
 
     @Override
-    public <T> void editData(Class<T> T, ObjectId id, String field, Object obj) {
-        dataStore.update(dataStore.createQuery(T).filter("_id", id),
+    public <T> UpdateResults editData(Class<T> T, ObjectId id, String field,
+            Object obj) {
+        return dataStore.update(dataStore.createQuery(T).filter("_id", id),
                 dataStore.createUpdateOperations(T).set(field, obj));
     }
 
@@ -107,6 +114,11 @@ public class ReportDaoImpl implements ReportDao {
         pageList.setDatas(list);
         pageList.setPage(page);
         return pageList;
+    }
+
+    @Override
+    public <T> List<T> getDataFieldsByAppId(Class<T> clazz, Integer appId, String[] columns) {
+        return dataStore.createQuery(clazz).filter("appId =", appId).retrievedFields(true, columns).asList();
     }
 
 }

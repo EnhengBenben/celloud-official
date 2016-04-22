@@ -27,7 +27,7 @@ public class Response {
     /**
      * 数据
      */
-    private Object data;
+    private Object data ;
 
     public Response() {
     }

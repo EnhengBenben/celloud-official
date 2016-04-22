@@ -77,6 +77,9 @@ $.reportChar.draw = {
       $.reportChar.draw._require('pie',option,id);
   },
   
+  /**
+   * 饼状图
+   */
   echartsShowPie : function(id,title,data) {
         var option = {
             title : {
@@ -102,8 +105,50 @@ $.reportChar.draw = {
                     }
                 }
             ]
-        }
+        };
         $.reportChar.draw._require('pie',option,id);
+  	},
+  	
+  	/**
+  	 * 柱状图
+  	 */
+  	echartsShowBar : function(id, title, X, Y) {
+        var option = {
+        		tooltip : {
+        	        trigger: 'axis'
+        	    },
+        	    legend: {
+        	        data:[title],
+        	        top : 15
+        	    },
+        	    calculable : true,
+        	    xAxis : [
+        	        {
+        	            type : 'category',
+        	            data : X,
+        	            position : 'bottom'
+        	        }
+        	    ],
+        	    yAxis : [
+        	        {
+        	            type : 'value',
+        	            name : '样本数量'
+        	        }
+        	    ],
+        	    series : [
+        	        {
+        	            name:'位点',
+        	            type:'bar',
+        	            data:Y,
+        	            barWidth:20
+        	        }
+        	    ],
+                color : ['#feabac'],
+                grid : {
+                	width : 380
+                },
+        };
+        $.reportChar.draw._require('bar',option,id);
   	},
   
   /**
@@ -184,7 +229,77 @@ $.reportChar.draw = {
         ]
     };
     $.reportChar.draw._require('bar',option,id);
+  },
+  /**
+   * 使用echarts绘制散点图
+   */
+  echartsShowScatter: function(id,title,multi,single){
+	  var option = {
+		    title : {
+		        text: title,
+		        x:'center'
+		    },
+		    grid : {
+		    	width : 220
+		    },
+		    tooltip : {
+		        trigger: 'item',
+		        axisPointer:{
+		            show: true,
+		            type : 'cross',
+		            lineStyle: {
+		                type : 'dashed',
+		                width : 1
+		            }
+		        }
+		    },
+		    legend: {
+		        data: ['All data','This one'],
+		        x: 300,
+		        y: 180
+		    },
+		    xAxis : [
+		        {
+		            type : 'value',
+		            scale:true,
+		            min : 0,
+		            max : 2,
+		            splitNumber : 2,
+		            name : '序号',
+		            nameLocation : 'middle',
+		            nameGap : 20,
+		            splitLine : {
+		            	show : false
+		            }
+		        }
+		    ],
+		    yAxis : [
+		        {
+		            type : 'value',
+		            scale:true,
+		            axisLabel : {
+		                formatter: '{value}'
+		            },
+		            name : '值',
+		        }
+		    ],
+		    series : [
+		        {
+		            name:'All data',
+		            type:'scatter',
+		            data: multi
+		        },
+		        {
+		            name:'This one',
+		            type:'scatter',
+		            data: single
+		        }
+		    ]
+		};
+		$.reportChar.draw._require('scatter',option,id);
   }
+  
+  
 };
 /**
  * 环形图数据参数

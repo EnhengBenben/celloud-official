@@ -9,9 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="baidu-site-verification" content="IsldTuHqik" />
 <title>CelLoud 控制台</title>
-<meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
-<meta name="description" content="一站式高通量基因检测数据分析系统">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据,上海华点云生物科技有限公司网站首页,上海华点云生物科技有限公司官网,上海华点云生物科技有限公司北京分公司" />
+<meta name="description" content="一站式高通量基因检测数据分析系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- <meta name="baidu-site-verification" content="1fI6fRe9op" /> -->
+<meta name="baidu-site-verification" content="ZvlzkAOdsB" />
 <link rel="bookmark" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -174,6 +176,9 @@
 		<div class="content-wrapper" id="dataReportDIV"></div>
 	</div>
 	<input type="hidden" id="user-navigation-hide" value="${sessionScope.loginUserInSession.navigation }">
+	<script type="text/javascript">
+       window.CONTEXT_PATH = '<%=request.getContextPath()%>'
+    </script>
 	<script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 	<script src="//cdn.bootcss.com/jqueryui/1.11.4/jquery-ui.min.js"></script>
@@ -186,12 +191,13 @@
 	<script src="//cdn.bootcss.com/highcharts/4.2.1/modules/exporting.js"></script>
 	<script src="<%=request.getContextPath()%>/plugins/select/select2.min.js"></script>
 	<script src="<%=request.getContextPath()%>/plugins/select/select2_locale_zh-CN.js"></script>
+	<script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
 	<!--   <script src="//cdn.bootcss.com/select2/4.0.1/js/i18n/zh-CN.js"></script> -->
 	<script src="<%=request.getContextPath()%>/js/utils.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/main_init.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/main.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/charts.js?version=1.0"></script>
-	<script src="<%=request.getContextPath()%>/plugins/highcharts/char.js?version=20150526"></script>
+	<script src="<%=request.getContextPath()%>/plugins/highcharts/char.js?version=20160421"></script>
 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
 </body>

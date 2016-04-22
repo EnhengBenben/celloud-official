@@ -9,4 +9,5 @@ class PDFPro:
 	logo='/share/data/webapps/Tools/resource/img/portrait.png'
 	ttc='/share/biosoft/perl/PGS_MG/python/app/ttc'
 	html='/home/celloud/server/apache-tomcat-7.0.56/webapps/celloud/HBV_SNP'
+	userList = ['6', '9', '12', '13', '15', '16', '17', '18', '20', '21', '23', '24', '27', '28', 'Gadgets'];
 	

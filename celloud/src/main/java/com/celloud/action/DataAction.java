@@ -46,7 +46,6 @@ import com.celloud.service.TaskService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.DataKeyListToFile;
 import com.celloud.utils.FileTools;
-import com.celloud.utils.PerlUtils;
 import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.RemoteRequests;
 import com.celloud.utils.Response;
@@ -287,7 +286,9 @@ public class DataAction {
     @RequestMapping("batchEditDataByIds.action")
     @ResponseBody
     public Integer batchEditDataByIds(String dataIds, DataFile data) {
-        Integer result = dataService.updateDataByIds(dataIds, data);
+        Integer result = 0;
+        if (dataIds != null && !dataIds.equals(""))
+            result = dataService.updateDataByIds(dataIds, data);
         logger.info("用户{}批量修改数据{}", ConstantsData.getLoginUserName(), dataIds);
         return result;
     }
@@ -469,16 +470,7 @@ public class DataAction {
                     }
                 }
             } else {
-				if (SparkPro.RSHAPPS.contains(String.valueOf(appId))) {
-					logger.info("RSH 向 SGE 投递任务");
-					Map<String, String> map = CommandKey.getMap(dataFilePath, appPath, proId);
-					StrSubstitutor sub = new StrSubstitutor(map);
-					String command = sub.replace(app.getCommand());
-					logger.info("运行命令:{}", command);
-					String rsh = "rsh " + sgeHost + " " + command;
-					logger.info("RSH投递命令:{}", rsh);
-					PerlUtils.excutePerl(rsh);
-				} else if (SparkPro.SGEAPPS.contains(String.valueOf(appId))) {
+				if (SparkPro.SGEAPPS.contains(String.valueOf(appId))) {
 					// TODO 所有向Tools端投递任务的流程都向这里集中
 					// 最终判断删除，非spark就是SGE
 					logger.info("celloud 直接向 SGE 投递任务");
@@ -489,7 +481,7 @@ public class DataAction {
 					SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
 					ssh.sshSubmit(command, false);
 				} else {
-					//TODO 还有 TRANSLATE／_16S／VSP 三个流程需要从Toold端删除
+					//TODO 还有 _16S 流程需要从Toold端删除
 					String newPath = PropertiesUtil.toolsPath + "Procedure!runApp?userId=" + userId + "&appId=" + appId
 							+ "&appName=" + appName + "&projectName=" + proName + "&dataKeyList="
 							+ dataResult.toString() + "&projectId=" + proId;
