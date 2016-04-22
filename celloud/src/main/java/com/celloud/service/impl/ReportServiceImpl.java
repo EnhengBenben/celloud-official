@@ -500,7 +500,7 @@ public class ReportServiceImpl implements ReportService {
         map.put("totalReads", "Total_Reads");
         map.put("duplicate", "Duplicate(%)");
         map.put("gcCount", "GC_Count(%)");
-        map.put("sd", "SD");
+        map.put("sd", "*SD");
         // 对比列为null
         if (columns == null) {
             return null;
@@ -508,7 +508,7 @@ public class ReportServiceImpl implements ReportService {
         String queryColumns = columns.replace("Total_Reads", "totalReads").
                 replace("Duplicate(%)", "duplicate").
                 replace("GC_Count(%)", "gcCount").
-                replace("SD", "sd");
+                replace("*SD", "sd");
         String[] queryColumn = queryColumns.split(",");
         // 分割对比列[totalReads,duplicate,gcCount]
         String column[] = columns.split(",");
