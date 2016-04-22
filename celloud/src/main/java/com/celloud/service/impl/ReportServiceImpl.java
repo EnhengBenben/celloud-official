@@ -458,6 +458,7 @@ public class ReportServiceImpl implements ReportService {
                         String value = (String) getMethod.invoke(p, (Object[]) null);
                         // 新老数据的字段有可能不一致, 所以判断非空
                         if (value != null && !"".equals(value)) {
+                        	value = value.trim();
                             // 拼接到sb中
                             try{
                                 Float.parseFloat(value);
