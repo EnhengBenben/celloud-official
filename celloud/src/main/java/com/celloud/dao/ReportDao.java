@@ -18,10 +18,18 @@ import com.celloud.page.PageList;
 public interface ReportDao {
     
     /**
+     * 从数据库中直接进行分组排序
+     * @param clazz
+     * @param length
+     * @return
+     */
+    @SuppressWarnings("rawtypes")
+    public <T> Iterable getEGFROrKRASCompare(Class<T> clazz, Integer length);
+    
+    /**
      * 根据长度获取EGFRCount统计数据
      */
     public <T> List<T> getCountByLength(Class<T> clazz, Integer length);
-    
     
     /**
      * 根据appid获取某几列的字段值

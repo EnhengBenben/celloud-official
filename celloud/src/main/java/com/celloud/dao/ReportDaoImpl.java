@@ -1,19 +1,21 @@
 package com.celloud.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.Resource;
-
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateResults;
 import org.springframework.stereotype.Service;
-
 import com.celloud.model.mongo.TBINH;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
+import com.mongodb.AggregationOutput;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
 
 /**
  * mongodb 操作实现
@@ -25,6 +27,24 @@ import com.celloud.page.PageList;
 public class ReportDaoImpl implements ReportDao {
     @Resource
     private Datastore dataStore;
+    
+    @SuppressWarnings("rawtypes")
+    @Override
+    public <T> Iterable getEGFROrKRASCompare(Class<T> clazz, Integer length) {
+        BasicDBObject group = new BasicDBObject();
+        group.put("_id", new BasicDBObject("site","$site"));
+        group.put("siteTotal", new BasicDBObject("$sum", "$site"));
+
+        List<DBObject> aggParam = new ArrayList<DBObject>();
+        aggParam.add(new BasicDBObject("$match", new BasicDBObject("length",length)));
+        aggParam.add(new BasicDBObject("$group",group));
+        aggParam.add(new BasicDBObject("$sort", new BasicDBObject("siteTotal",-1)));
+        aggParam.add(new BasicDBObject("$limit", 10));
+        
+        DBCollection collection = dataStore.getCollection(clazz);
+        AggregationOutput output = collection.aggregate(aggParam);
+        return output.results();
+    }
     
     @Override
     public <T> List<T> getCountByLength(Class<T> clazz, Integer length) {

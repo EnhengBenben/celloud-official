@@ -8,11 +8,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
@@ -40,7 +40,6 @@ import com.celloud.model.mongo.CmpGeneSnpResult;
 import com.celloud.model.mongo.CmpReport;
 import com.celloud.model.mongo.DPD;
 import com.celloud.model.mongo.EGFR;
-import com.celloud.model.mongo.EGFRCount;
 import com.celloud.model.mongo.GddDiseaseDict;
 import com.celloud.model.mongo.GeneDetectionResult;
 import com.celloud.model.mongo.HBV;
@@ -70,6 +69,8 @@ import com.celloud.utils.ExcelUtil;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.MapSort;
 import com.celloud.utils.PropertiesUtil;
+
+import net.sf.json.JSONObject;
 
 /**
  * 报告接口 实现类
@@ -404,39 +405,19 @@ public class ReportServiceImpl implements ReportService {
         }
     }
     
+    @SuppressWarnings("rawtypes")
     @Override
     public String egfrCompare(Integer length) {
-        List<EGFRCount> egfrCounts = reportDao.getCountByLength(EGFRCount.class, length);
-        // 存储位点与位点的出现次数
-        Map<String, Integer> map = new HashMap<String, Integer>();
-        for (EGFRCount count : egfrCounts) {
-            String site = count.getSite() + "";
-            if (!map.containsKey(site)) {
-                map.put(site, 1);
-            } else {
-                map.put(site, map.get(site) + 1);
-            }
+        Iterable list = reportDao.getEGFROrKRASCompare(EGFR.class, length);
+        Iterator it = list.iterator();
+        StringBuilder sb = new StringBuilder();
+        while(it.hasNext()){
+            JSONObject i = JSONObject.fromObject(it.next());
+            Integer siteTotal = Integer.parseInt(i.get("siteTotal").toString());
+            Integer site = Integer.parseInt(JSONObject.fromObject(i.get("_id")).get("site").toString());
+            sb.append(site).append("\t").append(siteTotal/site).append("\n");
         }
-        String str = MapSort.sort(map);
-        if (str != null && !"".equals(str)) {
-            // 取前10行数据
-            // 取第几次
-            int i = 0;
-            // 目标位置下标
-            int s = -1;
-            int k = 0;
-            while (i++ < 10) {
-                s = str.indexOf("\n", s + 1);
-                // 少于10行就直接退出循环
-                if (s == -1) {
-                    break;
-                }
-                k = s;
-            }
-            return str.substring(0, k);
-        } else {
-            return str;
-        }
+        return sb.toString();
     }
 
     @Override
