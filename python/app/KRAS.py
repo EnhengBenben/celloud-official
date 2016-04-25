@@ -80,6 +80,7 @@ class KRAS:
 					resultCount['dataKey'] = paths[len(paths)-2];
 					#截取length
 					resultCount['length'] = int(firstLines[len(firstLines) - 1]);
+					resultCount['count'] = 1;
 					list = [];
 					#循环读取剩余的行
 					while True:

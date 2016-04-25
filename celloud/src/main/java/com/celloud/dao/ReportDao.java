@@ -18,6 +18,14 @@ import com.celloud.page.PageList;
 public interface ReportDao {
     
     /**
+     * HCV数据参数同比直接在mongo中分组
+     * @param clazz
+     * @return
+     */
+    @SuppressWarnings("rawtypes")
+    public <T> Iterable getHCVCompare(Class<T> clazz);
+    
+    /**
      * TBRifampicin数据参数同比直接在mongo中分组排序
      * @param clazz
      * @return

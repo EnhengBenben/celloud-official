@@ -9,6 +9,7 @@ public class TBRifampicinCount {
     private Integer userId;
     private String dataKey;
     private Integer site;
+    private Integer count;
 
     public Integer getUserId() {
         return userId;
@@ -40,6 +41,14 @@ public class TBRifampicinCount {
 
     public void setId(ObjectId id) {
         this.id = id;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
 }

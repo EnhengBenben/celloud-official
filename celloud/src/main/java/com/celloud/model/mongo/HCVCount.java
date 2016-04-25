@@ -9,6 +9,7 @@ public class HCVCount {
     private Integer userId;
     private String dataKey;
     private String subtype;
+    private Integer count;
 
     public ObjectId getId() {
         return id;
@@ -40,6 +41,14 @@ public class HCVCount {
 
     public void setSubtype(String subtype) {
         this.subtype = subtype;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
 }

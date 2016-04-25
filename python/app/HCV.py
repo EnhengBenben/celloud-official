@@ -82,6 +82,7 @@ class HCV:
 					resultCount['userId'] = int(paths[len(paths) - 4]);
 					resultCount['dataKey'] = paths[len(paths) - 2];
 					resultCount['subtype'] = types[1];
+					resultCount['count'] = 1;
 					mo.insertBatch(resultCount,'HCVCount');
 				f.close();
 		#seq

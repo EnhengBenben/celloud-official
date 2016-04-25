@@ -70,6 +70,7 @@ class TBRifampicin:
 				resultCount['userId'] = int(paths[len(paths)-4]);
 				#截取dataKey
 				resultCount['dataKey'] = paths[len(paths)-2];
+				resultCount['count'] = 1;
 				list = [];
 				#循环读取剩余的行
 				while True:

@@ -378,9 +378,9 @@ public class ReportServiceImpl implements ReportService {
         StringBuilder sb = new StringBuilder();
         while(it.hasNext()){
             JSONObject i = JSONObject.fromObject(it.next());
-            Integer siteTotal = Integer.parseInt(i.get("siteTotal").toString());
+            Integer count = Integer.parseInt(i.get("count").toString());
             Integer site = Integer.parseInt(JSONObject.fromObject(i.get("_id")).get("site").toString());
-            sb.append(site).append("\t").append(siteTotal/site).append("\n");
+            sb.append(site).append("\t").append(count).append("\n");
         }
         return sb.toString();
     }
@@ -393,9 +393,9 @@ public class ReportServiceImpl implements ReportService {
         StringBuilder sb = new StringBuilder();
         while(it.hasNext()){
             JSONObject i = JSONObject.fromObject(it.next());
-            Integer siteTotal = Integer.parseInt(i.get("siteTotal").toString());
+            Integer count = Integer.parseInt(i.get("count").toString());
             Integer site = Integer.parseInt(JSONObject.fromObject(i.get("_id")).get("site").toString());
-            sb.append(site).append("\t").append(siteTotal/site).append("\n");
+            sb.append(site).append("\t").append(count).append("\n");
         }
         return sb.toString();
     }
@@ -408,31 +408,27 @@ public class ReportServiceImpl implements ReportService {
         StringBuilder sb = new StringBuilder();
         while(it.hasNext()){
             JSONObject i = JSONObject.fromObject(it.next());
-            Integer siteTotal = Integer.parseInt(i.get("siteTotal").toString());
+            Integer count = Integer.parseInt(i.get("count").toString());
             Integer site = Integer.parseInt(JSONObject.fromObject(i.get("_id")).get("site").toString());
-            sb.append(site).append("\t").append(siteTotal/site).append("\n");
+            sb.append(site).append("\t").append(count).append("\n");
         }
         return sb.toString();
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public String hcvCompare() {
-        List<HCVCount> hcvCounts = reportDao.getAllByClass(HCVCount.class);
-        // 存储subtype与subtype出现的次数
-        Map<String, Integer> map = new HashMap<String, Integer>();
-        for (HCVCount count : hcvCounts) {
-            String subtype = count.getSubtype();
-            if (!map.containsKey(subtype)) {
-                map.put(subtype, 1);
-            } else {
-                map.put(subtype, map.get(subtype) + 1);
-            }
-        }
+        Iterable list = reportDao.getTBRifampicinCompare(HCVCount.class);
+        Iterator it = list.iterator();
         StringBuilder sb = new StringBuilder();
-        for (Entry<String, Integer> entry : map.entrySet()) {
-            sb.append(entry.getKey() + "," + entry.getValue() + ";");
+        while(it.hasNext()){
+            JSONObject i = JSONObject.fromObject(it.next());
+            Integer count = Integer.parseInt(i.get("count").toString());
+            Integer subtype = Integer.parseInt(JSONObject.fromObject(i.get("_id")).get("subtype").toString());
+            sb.append(subtype + "," + count + ";");
         }
         return sb.toString();
+        
     }
 
     @Override

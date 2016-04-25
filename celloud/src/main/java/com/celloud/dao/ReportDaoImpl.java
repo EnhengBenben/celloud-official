@@ -30,14 +30,29 @@ public class ReportDaoImpl implements ReportDao {
     
     @SuppressWarnings("rawtypes")
     @Override
-    public <T> Iterable getTBRifampicinCompare(Class<T> clazz) {
+    public <T> Iterable getHCVCompare(Class<T> clazz) {
         BasicDBObject group = new BasicDBObject();
-        group.put("_id", new BasicDBObject("site","$site"));
-        group.put("siteTotal", new BasicDBObject("$sum", "$site"));
+        group.put("_id", new BasicDBObject("subtype","$subtype"));
+        group.put("count", new BasicDBObject("$sum", "$count"));
 
         List<DBObject> aggParam = new ArrayList<DBObject>();
         aggParam.add(new BasicDBObject("$group",group));
-        aggParam.add(new BasicDBObject("$sort", new BasicDBObject("siteTotal",-1)));
+        
+        DBCollection collection = dataStore.getCollection(clazz);
+        AggregationOutput output = collection.aggregate(aggParam);
+        return output.results();
+    }
+    
+    @SuppressWarnings("rawtypes")
+    @Override
+    public <T> Iterable getTBRifampicinCompare(Class<T> clazz) {
+        BasicDBObject group = new BasicDBObject();
+        group.put("_id", new BasicDBObject("site","$site"));
+        group.put("count", new BasicDBObject("$sum", "$count"));
+
+        List<DBObject> aggParam = new ArrayList<DBObject>();
+        aggParam.add(new BasicDBObject("$group",group));
+        aggParam.add(new BasicDBObject("$sort", new BasicDBObject("count",-1)));
         aggParam.add(new BasicDBObject("$limit", 10));
         
         DBCollection collection = dataStore.getCollection(clazz);
@@ -50,12 +65,12 @@ public class ReportDaoImpl implements ReportDao {
     public <T> Iterable getEGFROrKRASCompare(Class<T> clazz, Integer length) {
         BasicDBObject group = new BasicDBObject();
         group.put("_id", new BasicDBObject("site","$site"));
-        group.put("siteTotal", new BasicDBObject("$sum", "$site"));
+        group.put("count", new BasicDBObject("$sum", "$count"));
 
         List<DBObject> aggParam = new ArrayList<DBObject>();
         aggParam.add(new BasicDBObject("$match", new BasicDBObject("length",length)));
         aggParam.add(new BasicDBObject("$group",group));
-        aggParam.add(new BasicDBObject("$sort", new BasicDBObject("siteTotal",-1)));
+        aggParam.add(new BasicDBObject("$sort", new BasicDBObject("count",-1)));
         aggParam.add(new BasicDBObject("$limit", 10));
         
         DBCollection collection = dataStore.getCollection(clazz);
