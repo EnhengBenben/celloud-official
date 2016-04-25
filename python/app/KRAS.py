@@ -54,62 +54,65 @@ class KRAS:
 		if (os.path.exists(report)):
 			context = readAllChinese(report)
 			result['report'] = context
-			result['pos'] = context.split('\n')[0].replace('KRAS exon number is ','').strip()
+			#打开报告
+			f = codecs.open(report,'r','gbk');
+			#读取第一行将\n替换,并将空格替换为\t方便统一操作
+			firstLine = f.readline().replace('\n','').replace(' ','\t').strip();
+			#使用\t分割
+			firstLines = firstLine.split('\t');
+			if(firstLine.startswith('KRAS') and len(firstLines) == 5):
+				result['pos'] = int(firstLines[len(firstLines) - 1]);
 			#截取数据报告路径
 			paths = path.split(os.sep);
 			#首先判断用户id是否为测试用户
-			if(paths[len(paths) - 3] not in PDFPro.userList):
+			if(paths[len(paths) - 4] not in PDFPro.userList):
 				#判断mongo中是否有对应dataKey的数据, 如果有则都删除
 				#获取mongo操作类实例
 				mo = mongo.getInstance();
-				if(mo.findAllByCondition({'dataKey':paths[len(paths)-1]},'KRASCount').count() > 0):
-					mo.deleteAllByCondition({'dataKey':paths[len(paths)-1]},'KRASCount');
-				#打开报告
-				f = codecs.open(report,'r','gbk');
+				if(mo.findAllByCondition({'dataKey':paths[len(paths)-2]},'KRASCount').count() > 0):
+					mo.deleteAllByCondition({'dataKey':paths[len(paths)-2]},'KRASCount');
 				#位点的dict
 				resultCount = {};
-				#读取第一行将\n替换,并将空格替换为\t方便统一操作
-				firstLine = f.readline().replace('\n','').replace(' ','\t').strip();
-				#使用\t分割
-				firstLines = firstLine.split('\t');
-				#截取userId
-				resultCount['userId'] = int(paths[len(paths)-4]);
-				#截取dataKey
-				resultCount['dataKey'] = paths[len(paths)-2];
-				#截取length
-				resultCount['length'] = int(firstLines[len(firstLines) - 1]);
-				list = [];
-				#循环读取剩余的行
-				while True:
-					line = f.readline().strip();
-					if line:
-						resultCount['site'] = 0;
-						lines = line.split('\t');
-						target = lines[len(lines) - 2]
-						try:
-							l = int(target.index('-'));
-							before = target[l - 2:l - 1].strip();
-							after = target[l + 2:l + 3].strip();
-							if(before == after):
-								try:
-									d = int(target.index(','));
-									k = int(target.index(')'));
-									resultSize = float(target[d + 1:k]);
-									if(resultSize < 5):
+				if(firstLine.startswith('KRAS') and len(firstLines) == 5):
+					#截取userId
+					resultCount['userId'] = int(paths[len(paths)-4]);
+					#截取dataKey
+					resultCount['dataKey'] = paths[len(paths)-2];
+					#截取length
+					resultCount['length'] = int(firstLines[len(firstLines) - 1]);
+					list = [];
+					#循环读取剩余的行
+					while True:
+						line = f.readline().strip();
+						if line and line.startswith('SNP'):
+							resultCount['site'] = 0;
+							lines = line.split('\t');
+							target = lines[len(lines) - 2]
+							try:
+								l = int(target.index('-'));
+								before = target[l - 2:l - 1].strip();
+								after = target[l + 2:l + 3].strip();
+								if(before == after):
+									try:
+										d = int(target.index(','));
+										k = int(target.index(')'));
+										resultSize = float(target[d + 1:k]);
+										if(resultSize < 5):
+											resultCount['site'] = int(lines[1]);
+									except ValueError:
 										resultCount['site'] = int(lines[1]);
-								except ValueError:
+								else:
 									resultCount['site'] = int(lines[1]);
-							else:
+							except ValueError:
 								resultCount['site'] = int(lines[1]);
-						except ValueError:
-							resultCount['site'] = int(lines[1]);
-						if('site' in resultCount.keys() and resultCount['site'] != 0):
-							list.append(resultCount.copy());
-					else:
-						break;
-				# 执行批量插入操作
-				mo.insertBatch(list,'KRASCount');
-				f.close();
+							if('site' in resultCount.keys() and resultCount['site'] != 0):
+								list.append(resultCount.copy());
+						else:
+							break;
+					# 执行批量插入操作
+					if(len(list) > 0):
+						mo.insertBatch(list,'KRASCount');
+			f.close();
 
 		#report.txt.wz.1
 		wz1 = os.path.join(path,'report.txt.wz.1')
