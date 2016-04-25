@@ -30,6 +30,23 @@ public class ReportDaoImpl implements ReportDao {
     
     @SuppressWarnings("rawtypes")
     @Override
+    public <T> Iterable getTBRifampicinCompare(Class<T> clazz) {
+        BasicDBObject group = new BasicDBObject();
+        group.put("_id", new BasicDBObject("site","$site"));
+        group.put("siteTotal", new BasicDBObject("$sum", "$site"));
+
+        List<DBObject> aggParam = new ArrayList<DBObject>();
+        aggParam.add(new BasicDBObject("$group",group));
+        aggParam.add(new BasicDBObject("$sort", new BasicDBObject("siteTotal",-1)));
+        aggParam.add(new BasicDBObject("$limit", 10));
+        
+        DBCollection collection = dataStore.getCollection(clazz);
+        AggregationOutput output = collection.aggregate(aggParam);
+        return output.results();
+    }
+    
+    @SuppressWarnings("rawtypes")
+    @Override
     public <T> Iterable getEGFROrKRASCompare(Class<T> clazz, Integer length) {
         BasicDBObject group = new BasicDBObject();
         group.put("_id", new BasicDBObject("site","$site"));
@@ -46,11 +63,6 @@ public class ReportDaoImpl implements ReportDao {
         return output.results();
     }
     
-    @Override
-    public <T> List<T> getCountByLength(Class<T> clazz, Integer length) {
-        return dataStore.createQuery(clazz).filter("length =", length).asList();
-    }
-
     @Override
     public Integer getTBINHisWild(Integer userId, String simpleGeneName, Integer isWild) {
         return dataStore.createQuery(TBINH.class).filter("userId =", userId).filter("simpleGeneName =", simpleGeneName)

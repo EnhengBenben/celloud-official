@@ -18,6 +18,14 @@ import com.celloud.page.PageList;
 public interface ReportDao {
     
     /**
+     * TBRifampicin数据参数同比直接在mongo中分组排序
+     * @param clazz
+     * @return
+     */
+    @SuppressWarnings("rawtypes")
+    public <T> Iterable getTBRifampicinCompare(Class<T> clazz);
+    
+    /**
      * 从数据库中直接进行分组排序
      * @param clazz
      * @param length
@@ -25,11 +33,6 @@ public interface ReportDao {
      */
     @SuppressWarnings("rawtypes")
     public <T> Iterable getEGFROrKRASCompare(Class<T> clazz, Integer length);
-    
-    /**
-     * 根据长度获取EGFRCount统计数据
-     */
-    public <T> List<T> getCountByLength(Class<T> clazz, Integer length);
     
     /**
      * 根据appid获取某几列的字段值
