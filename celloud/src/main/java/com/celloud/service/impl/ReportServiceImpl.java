@@ -418,7 +418,7 @@ public class ReportServiceImpl implements ReportService {
     @SuppressWarnings("rawtypes")
     @Override
     public String hcvCompare() {
-        Iterable list = reportDao.getTBRifampicinCompare(HCVCount.class);
+        Iterable list = reportDao.getHCVCompare(HCVCount.class);
         Iterator it = list.iterator();
         StringBuilder sb = new StringBuilder();
         while(it.hasNext()){
