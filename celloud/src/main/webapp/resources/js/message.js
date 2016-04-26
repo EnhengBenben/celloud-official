@@ -40,7 +40,7 @@ var messageUtils = (function(messageUtils) {
 		} else if (window.MozWebSocket) {
 			ws = new MozWebSocket(wsUrl);
 		} else {
-			ws = new SockJS(contextPath + "/sockjs/webSocketServer");
+			ws = new SockJS(contextPath + "/sockjs/message");
 		}
 		return ws;
 	}
