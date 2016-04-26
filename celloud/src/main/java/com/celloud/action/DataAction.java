@@ -320,7 +320,7 @@ public class DataAction {
      * @return
      */
     @ActionLog(value = "开始运行方法，调用perl，保存任务信息", button = "开始运行")
-    @RequestMapping("run.action")
+    @RequestMapping("run")
     @ResponseBody
     public String run(String dataIds, String appIds) {
         Integer userId = ConstantsData.getLoginUserId();
