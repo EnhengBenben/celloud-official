@@ -107,7 +107,7 @@ class EGFR:
 								resultCount['site'] = int(lines[1]);
 							if('site' in resultCount.keys() and resultCount['site'] != 0):
 								list.append(resultCount.copy());
-						elif line and line.startswith('Indel') and len(line.split('\t') == 6):
+						elif line and line.startswith('Indel') and len(line.split('\t')) == 6:
 							lines = line.split('\t');
 							resultCount['site'] = int(lines[3]);
 							list.append(resultCount.copy());
