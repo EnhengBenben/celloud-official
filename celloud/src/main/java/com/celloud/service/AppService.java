@@ -162,4 +162,14 @@ public interface AppService {
      * @date 2016年1月19日下午7:03:41
      */
     public App selectByPrimaryKey(Integer appId);
+
+    /**
+     * 根据标签获取APP列表
+     * 
+     * @param tagId
+     * @return
+     * @author leamo
+     * @date 2016年4月22日 上午10:32:45
+     */
+    public App findAppsByTag(@Param("tagId") Integer tagId);
 }

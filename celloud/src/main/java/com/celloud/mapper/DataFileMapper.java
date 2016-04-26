@@ -264,4 +264,14 @@ public interface DataFileMapper {
 	 */
 	List<DataFile> getDataByAnotherName(@Param("userId") Integer userId, @Param("anotherName") String anotherName,
 			@Param("state") int state);
+
+    /**
+     * 
+     * @param dataId
+     * @param tagId
+     * @return
+     * @author leamo
+     * @date 2016年4月21日 下午5:01:52
+     */
+    int insertDataTag(Integer dataId, Integer tagId);
 }

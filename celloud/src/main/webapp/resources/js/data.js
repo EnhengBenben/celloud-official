@@ -259,7 +259,7 @@ function _init_data(){
         appIds += addedApps[i] + ",";
       }
       appIds = appIds.substring(0, appIds.length-1);
-      $.get("data/run.action",{"dataIds":dataIds,"appIds":appIds},function(result){
+      $.get("data/run",{"dataIds":dataIds,"appIds":appIds},function(result){
         if(result != ""){
           $.dataManager.showTipModal("以下APP运行失败：<br>"+result);
         }else{

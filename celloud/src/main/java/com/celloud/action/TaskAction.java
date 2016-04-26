@@ -97,7 +97,7 @@ public class TaskAction {
      * @date 2016年1月14日 下午5:09:27
      */
     @ActionLog(value = "任务运行结束，修改项目报告、保存数据报告到mongo、修改报告运行状态、排队运行下一个任务", button = "运行结束")
-    @RequestMapping("taskRunOver")
+    @RequestMapping("api/task/taskRunOver")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public String taskRunOver(String projectId, String dataNames) {
@@ -351,5 +351,4 @@ public class TaskAction {
                 projectId, period, context);
         return String.valueOf(result);
     }
-
 }

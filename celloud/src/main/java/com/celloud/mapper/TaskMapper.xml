@@ -18,6 +18,9 @@
   <resultMap id="ResultMapWithBLOBs" type="com.celloud.model.mysql.Task" extends="BaseResultMap" >
     <result column="params" property="params" jdbcType="LONGVARCHAR" />
   </resultMap>
+  <resultMap id="ResultMapWithFileName" type="com.celloud.model.mysql.Task" extends="ResultMapWithBLOBs" >
+    <result column="file_name" property="fileName" jdbcType="INTEGER" />
+  </resultMap>
   <sql id="Base_Column_List" >
     task_id, user_id, app_id, data_key, command, period, create_date, start_date, end_date, 
     project_id, delete_date, state
@@ -242,4 +245,28 @@
     <include refid="Base_Column_List" />
     from tb_task WHERE project_id = #{projectId} and data_key = #{dataKey}
   </select>
+  <select id="findTasksByUser" resultMap="ResultMapWithFileName">
+    select f.file_name,t.* from tb_file f left join
+	(select * from (select * from tb_task where state=#{state} and user_id=#{userId} order by create_date desc) temp group by data_key)t 
+	 on f.data_key=t.data_key 
+	 where f.user_id=#{userId} and f.state=#{state}
+  </select>
+  <select id="findTasksByUserCondition" resultMap="ResultMapWithFileName">
+    select f.file_name,t.* from tb_file f left join
+	(select * from (select * from tb_task where state=#{state} and user_id=#{userId} order by create_date desc) temp group by data_key)t 
+	 on f.data_key=t.data_key 
+	 where f.user_id=#{userId} and f.state=#{state}
+    <if test="condition != null" >
+        and file_name like '%${condition}%' 
+    </if>
+    <choose>
+      <when test="sort == 0">
+        order by t.end_date ${sortDate},t.period ${sortPeriod}
+      </when>
+      <otherwise>
+        order by t.period ${sortPeriod},t.end_date ${sortDate}
+      </otherwise>
+    </choose>
+  </select>
+  
 </mapper>

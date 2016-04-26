@@ -1,0 +1,73 @@
+@CHARSET "UTF-8";
+html {
+    color: #333;
+    background: #fff;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+body, div, form, html, li, ol, span, ul, a 
+body, div, dl, dt, dd, ul, ol, li, 
+h1, h2, h3, h4, h5, h6, pre, code, 
+form, fieldset, legend, input, textarea, p, blockquote, 
+th, td, hr, button, article, footer, header, hgroup, menu, nav, section{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+}
+body, button, input, select, textarea {
+    font: 12px/1.5 "Microsoft Yahei","Hiragino Sans GB",tahoma,arial;
+}
+.page-layout{
+	
+}
+.global-topbar{
+    min-width: 1000px;
+    position: relative;
+    height: 28px;
+    font-size: 12px;
+    zoom: 1;
+    background-color: #000;
+    z-index: 109;
+}
+.global-topbar .y-topbar-row {
+    min-width: 1000px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    zoom: 1;	
+}
+.global-topbar .y-topbar-row .y-topbar-span3,
+.common-menu .common-menu-inner .common-menu-span3 {
+    width: 34.5%;
+}
+.global-topbar .y-topbar-row .y-topbar-span9,
+.common-menu .common-menu-inner .common-menu-span9 {
+    width: 63.5%;
+    margin-right: 0!important;
+}
+.global-topbar .y-topbar-row .y-topbar-span3,.y-topbar-row .y-topbar-span9 {
+    float: left;
+    display: inline;
+    margin-right: 2%;
+}
+.common-menu{
+	min-width: 1000px;
+    position: relative;
+    height: 45px;
+    zoom: 1;
+    background-color: #ccc;
+    z-index: 109;
+}
+.common-menu-inner{
+	min-width: 1000px;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
+.container{
+    min-width: 1000px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}

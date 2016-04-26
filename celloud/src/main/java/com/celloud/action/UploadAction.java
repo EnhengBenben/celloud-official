@@ -16,6 +16,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
+import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Experiment;
 import com.celloud.service.AppService;
@@ -81,7 +84,7 @@ public class UploadAction {
     @RequestMapping("uploadManyFile")
     public String uploadManyFile(String name, String onlyName, String md5,
             String originalName, Integer chunk, Integer chunks,
-            HttpServletRequest request) {
+            HttpServletRequest request, Integer tagId, String batch) {
         File f = new File(realPath);
         if (!f.exists()) {
             boolean isTrue = f.mkdir();
@@ -91,6 +94,7 @@ public class UploadAction {
         }
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
                 request.getSession().getServletContext());
+        Integer dataId = 0;
         if (multipartResolver.isMultipart(request)) {
             MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
             Iterator<String> iter = multiRequest.getFileNames();
@@ -104,7 +108,7 @@ public class UploadAction {
                         try {
                             this.copy(file, localFile);
 							if (chunk == chunks || (chunk == chunks - 1)) {
-								int dataId = addFileInfo(originalName);
+                                dataId = addFileInfo(originalName);
 								String fileDataKey = DataUtil.getNewDataKey(dataId);
 								String newName = fileDataKey + FileTools.getExtName(originalName);
 								Integer userId = ConstantsData.getLoginUserId();
@@ -119,7 +123,8 @@ public class UploadAction {
 										+ "/plugins/getAliases.pl";
 								String outPath = request.getSession().getServletContext().getRealPath("/temp") + "/"
 										+ fileDataKey;
-								updateFileInfo(dataId, fileDataKey, newName, perlPath, outPath,folderByDay);
+                                updateFileInfo(dataId, fileDataKey, newName,
+                                        perlPath, outPath, folderByDay, batch);
 							}
                         } catch (Exception e) {
                             logger.error(e.getMessage());
@@ -130,7 +135,14 @@ public class UploadAction {
 
             }
         }
-        return "uploadMSuc";
+        Subject sub = SecurityUtils.getSubject();
+        if (sub.hasRole("bsier")) {
+            App app = appService.findAppsByTag(tagId);
+            return "forward:data/run?dataId=" + dataId + "&appId="
+                    + app.getAppId();
+        } else {
+            return "uploadMSuc";
+        }
     }
 
     /**
@@ -221,7 +233,8 @@ public class UploadAction {
      * @return
      */
     @ActionLog(value = "修改文件详细信息", button = "开始上传")
-    private int updateFileInfo(int dataId, String dataKey, String newName, String perlPath, String outPath,String folderByDay) {
+    private int updateFileInfo(int dataId, String dataKey, String newName,
+            String perlPath, String outPath, String folderByDay, String batch) {
         DataFile data = new DataFile();
         data.setFileId(dataId);
 		String filePath = folderByDay + File.separator + newName;
@@ -229,6 +242,7 @@ public class UploadAction {
         data.setDataKey(dataKey);
         data.setPath(filePath);
         data.setMd5(MD5Util.getFileMD5(filePath));
+        data.setBatch(batch);
 		int fileFormat = checkFileType.checkFileType(newName, folderByDay);
         data.setFileFormat(fileFormat);
         if (fileFormat == FileFormat.BAM) {

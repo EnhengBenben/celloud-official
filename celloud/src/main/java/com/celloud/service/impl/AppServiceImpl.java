@@ -119,4 +119,9 @@ public class AppServiceImpl implements AppService {
         return appMapper.selectByPrimaryKey(appId);
     }
 
+    @Override
+    public App findAppsByTag(Integer tagId) {
+        return appMapper.findAppsByTag(tagId);
+    }
+
 }

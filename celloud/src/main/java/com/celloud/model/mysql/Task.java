@@ -29,6 +29,9 @@ public class Task {
 
     private String params;
 
+    // 显示的字段
+    private String fileName;
+
     public Integer getTaskId() {
         return taskId;
     }
@@ -131,5 +134,13 @@ public class Task {
 
     public void setParams(String params) {
         this.params = params == null ? null : params.trim();
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

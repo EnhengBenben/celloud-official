@@ -171,4 +171,14 @@ public interface AppMapper {
      * @date 2016年1月14日 下午1:49:46
      */
     public List<App> findAppsByIds(@Param("appIds") String appIds);
+
+    /**
+     * 根据标签获取APP列表
+     * 
+     * @param tagId
+     * @return
+     * @author leamo
+     * @date 2016年4月22日 上午10:32:45
+     */
+    public App findAppsByTag(@Param("tagId") Integer tagId);
 }

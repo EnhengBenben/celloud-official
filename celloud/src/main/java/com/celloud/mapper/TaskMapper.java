@@ -1,11 +1,13 @@
 package com.celloud.mapper;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.celloud.model.mysql.Task;
+import com.celloud.page.Page;
 
 public interface TaskMapper {
     int deleteByPrimaryKey(Integer taskId);
@@ -81,4 +83,35 @@ public interface TaskMapper {
      */
     Task findTaskByProData(@Param("projectId") Integer projectId,
             @Param("dataKey") String dataKey);
+
+    /**
+     * 查询用户数据任务列表
+     * 
+     * @param userId
+     * @return
+     * @author leamo
+     * @date 2016年4月21日 下午2:32:22
+     */
+    List<Task> findTasksByUser(Page page, @Param("userId") Integer userId,
+            @Param("state") Integer state);
+
+    /**
+     * 按条件检索数据列表
+     * 
+     * @param page
+     * @param userId
+     * @param condition
+     * @param sort
+     * @param sortDateType
+     * @param sortNameType
+     * @param state
+     * @param reportType
+     * @return
+     */
+    List<Task> findTasksByUserCondition(Page page,
+            @Param("userId") Integer userId,
+            @Param("condition") String condition, @Param("sort") Integer sort,
+            @Param("sortDate") String sortDate,
+            @Param("sortPeriod") String sortPeriod,
+            @Param("state") Integer state);
 }
