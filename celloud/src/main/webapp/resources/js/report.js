@@ -801,7 +801,7 @@ $.ajaxSetup ({
 				});
 			}
 			if(appId==80){
-				$.get("count/hcvCompare",{"appId":appId,"path":DATAPATH},function(data){
+				$.get("count/hcvCompare",{},function(data){
 						var div = $("<div id='char0' class='col-lg-6' style='width: 500px;height:400px;'></div>");
 						$("#charDiv").append(div);
 						var one = getCountValue("Subtype","nomal");
