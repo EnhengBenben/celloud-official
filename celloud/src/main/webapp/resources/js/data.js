@@ -17,6 +17,7 @@ $(function(){
     }
   });
   $("#run-app-btn").on("click",function(){
+    $("#run-btn").html("运行");
     $.dataManager.run.showModal();
   });
   $("#del-data-btn").on("click",function(){
@@ -35,6 +36,8 @@ $(function(){
     $.dataManager.run.confirmRunApp();
   });
   $("#run-btn").on("click",function(){
+    $("#run-btn").attr("disabled",true);
+    $("#run-btn").html("您已经运行，请耐心等待！");
     $.dataManager.run.beginRun();
   });
   
