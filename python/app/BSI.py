@@ -31,7 +31,6 @@ class BSI:
 
     # 执行
     def getResult(self, path, appId, dataKey):
-        print 22222
         result = {}
         result1 = MIB.getInstance().getResult(path, appId, dataKey)
         result = dict(result, **result1)
@@ -52,6 +51,7 @@ class BSI:
                 if strain_dict is not None:
                     species_zh = dict_value(strain_dict, "species_zh")
                 cross_species_dict = mo.get({"species": str(cross_species)}, "BSISpecies")
+                cross_species_zh = ""
                 if cross_species_dict is not None:
                     cross_species_zh = dict_value(cross_species_dict, "species_zh")
                 species = {"species": specie_name, "species_zh": species_zh, "site1": list_value(st, 1),

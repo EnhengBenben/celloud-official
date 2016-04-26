@@ -3,14 +3,21 @@ package com.celloud.model.mongo;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Id;
 
-public class EGFRCount {
+public class HCVCount {
     @Id
     private ObjectId id;
     private Integer userId;
     private String dataKey;
-    private Integer length;
-    private Integer site;
+    private String subtype;
     private Integer count;
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -28,28 +35,12 @@ public class EGFRCount {
         this.dataKey = dataKey;
     }
 
-    public Integer getLength() {
-        return length;
+    public String getSubtype() {
+        return subtype;
     }
 
-    public void setLength(Integer length) {
-        this.length = length;
-    }
-
-    public Integer getSite() {
-        return site;
-    }
-
-    public void setSite(Integer site) {
-        this.site = site;
-    }
-
-    public ObjectId getId() {
-        return id;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
+    public void setSubtype(String subtype) {
+        this.subtype = subtype;
     }
 
     public Integer getCount() {
@@ -58,12 +49,6 @@ public class EGFRCount {
 
     public void setCount(Integer count) {
         this.count = count;
-    }
-
-    @Override
-    public String toString() {
-        return "EGFRCount [id=" + id + ", userId=" + userId + ", dataKey=" + dataKey + ", length=" + length + ", site="
-                + site + "]";
     }
 
 }

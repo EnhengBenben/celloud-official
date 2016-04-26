@@ -40,7 +40,9 @@
 						value="${requestScope.user.username }" />
 					<input type="password" class="pwd" placeholder="密码" id="password"
 						value="${fn:substring(requestScope.user.password,0,16)}" />
-					<input type="hidden" name="password" value="${user.password }">
+					<input type="hidden" name="password" value="${user.password }" />
+					<input type="hidden" id="tempPassword" />
+					<input type="hidden" name="newPassword" />
 					<c:if test="${showKaptchaCode }">
 						<div class="yzm">
 							<input type="text" class="yzm" placeholder="验证码" id="captcha" name="kaptchaCode" value="${requestScope.kapcode }" />
@@ -82,7 +84,7 @@
 	<!--#E bgContainer-->
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/utils.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/tologin.js?version=1.0"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/tologin.js?version=1.1"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/md5.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/security.js"></script>
 	<script type="text/javascript">

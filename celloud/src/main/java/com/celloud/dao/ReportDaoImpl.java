@@ -1,19 +1,21 @@
 package com.celloud.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.Resource;
-
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateResults;
 import org.springframework.stereotype.Service;
-
 import com.celloud.model.mongo.TBINH;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
+import com.mongodb.AggregationOutput;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
 
 /**
  * mongodb 操作实现
@@ -26,11 +28,56 @@ public class ReportDaoImpl implements ReportDao {
     @Resource
     private Datastore dataStore;
     
+    @SuppressWarnings("rawtypes")
     @Override
-    public <T> List<T> getEGFRCountByLength(Class<T> clazz, Integer length) {
-        return dataStore.createQuery(clazz).filter("length =", length).asList();
-    }
+    public <T> Iterable getHCVCompare(Class<T> clazz) {
+        BasicDBObject group = new BasicDBObject();
+        group.put("_id", new BasicDBObject("subtype","$subtype"));
+        group.put("count", new BasicDBObject("$sum", "$count"));
 
+        List<DBObject> aggParam = new ArrayList<DBObject>();
+        aggParam.add(new BasicDBObject("$group",group));
+        
+        DBCollection collection = dataStore.getCollection(clazz);
+        AggregationOutput output = collection.aggregate(aggParam);
+        return output.results();
+    }
+    
+    @SuppressWarnings("rawtypes")
+    @Override
+    public <T> Iterable getTBRifampicinCompare(Class<T> clazz) {
+        BasicDBObject group = new BasicDBObject();
+        group.put("_id", new BasicDBObject("site","$site"));
+        group.put("count", new BasicDBObject("$sum", "$count"));
+
+        List<DBObject> aggParam = new ArrayList<DBObject>();
+        aggParam.add(new BasicDBObject("$group",group));
+        aggParam.add(new BasicDBObject("$sort", new BasicDBObject("count",-1)));
+        aggParam.add(new BasicDBObject("$limit", 10));
+        
+        DBCollection collection = dataStore.getCollection(clazz);
+        AggregationOutput output = collection.aggregate(aggParam);
+        return output.results();
+    }
+    
+    @SuppressWarnings("rawtypes")
+    @Override
+    public <T> Iterable getEGFROrKRASCompare(Class<T> clazz, Integer length) {
+        BasicDBObject group = new BasicDBObject();
+        group.put("_id", new BasicDBObject("site","$site"));
+        group.put("count", new BasicDBObject("$sum", "$count"));
+
+        List<DBObject> aggParam = new ArrayList<DBObject>();
+        aggParam.add(new BasicDBObject("$match", new BasicDBObject("length",length)));
+        aggParam.add(new BasicDBObject("$group",group));
+        aggParam.add(new BasicDBObject("$sort", new BasicDBObject("count",-1)));
+        aggParam.add(new BasicDBObject("$limit", 10));
+        
+        DBCollection collection = dataStore.getCollection(clazz);
+        AggregationOutput output = collection.aggregate(aggParam);
+        return output.results();
+    }
+    
     @Override
     public Integer getTBINHisWild(Integer userId, String simpleGeneName, Integer isWild) {
         return dataStore.createQuery(TBINH.class).filter("userId =", userId).filter("simpleGeneName =", simpleGeneName)
@@ -119,6 +166,11 @@ public class ReportDaoImpl implements ReportDao {
     @Override
     public <T> List<T> getDataFieldsByAppId(Class<T> clazz, Integer appId, String[] columns) {
         return dataStore.createQuery(clazz).filter("appId =", appId).retrievedFields(true, columns).asList();
+    }
+
+    @Override
+    public <T> List<T> getAllByClass(Class<T> clazz) {
+        return dataStore.createQuery(clazz).asList();
     }
 
 }

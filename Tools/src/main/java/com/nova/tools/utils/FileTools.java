@@ -643,7 +643,16 @@ public class FileTools {
     }
 
     public static String getExt(String fileName) {
-        String extName = fileName.substring(fileName.lastIndexOf("."));
-        return extName;
+    	String extName = "";
+		if (fileName.lastIndexOf(".") > 0) {
+			if (fileName.toLowerCase().indexOf(".fastq.") > 0 || fileName.toLowerCase().indexOf(".fq.") > 0) {
+				extName = fileName.substring(fileName.lastIndexOf(".fastq."));
+			} else if (fileName.toLowerCase().endsWith(".tar.gz")) {
+				extName = fileName.substring(fileName.lastIndexOf(".tar.gz"));
+			} else {
+				extName = fileName.substring(fileName.lastIndexOf("."));
+			}
+		}
+		return extName;
     }
 }

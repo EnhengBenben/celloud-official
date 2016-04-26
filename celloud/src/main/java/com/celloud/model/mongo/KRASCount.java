@@ -3,7 +3,7 @@ package com.celloud.model.mongo;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Id;
 
-public class EGFRCount {
+public class KRASCount {
     @Id
     private ObjectId id;
     private Integer userId;

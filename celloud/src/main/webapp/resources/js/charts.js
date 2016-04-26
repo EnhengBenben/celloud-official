@@ -237,7 +237,7 @@ $.reportChar.draw = {
 	  var option = {
 		    title : {
 		        text: title,
-		        left: 85
+		        x:'center'
 		    },
 		    grid : {
 		    	width : 220
@@ -255,8 +255,8 @@ $.reportChar.draw = {
 		    },
 		    legend: {
 		        data: ['All data','This one'],
-		        left: 260,
-		        top: 180,
+		        x: 300,
+		        y: 180
 		    },
 		    xAxis : [
 		        {

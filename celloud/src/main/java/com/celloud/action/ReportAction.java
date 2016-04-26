@@ -54,6 +54,7 @@ import com.celloud.model.mongo.RecommendDrug;
 import com.celloud.model.mongo.Split;
 import com.celloud.model.mongo.TBINH;
 import com.celloud.model.mongo.TBRifampicin;
+import com.celloud.model.mongo.Translate;
 import com.celloud.model.mongo.UGT;
 import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.Company;
@@ -73,6 +74,7 @@ import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.CustomStringUtils;
+import com.celloud.utils.FileTools;
 import com.celloud.utils.HttpURLUtils;
 import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.VelocityUtil;
@@ -753,6 +755,29 @@ public class ReportAction {
         ModelAndView mv = getModelAndView("report/report_data_hcv", projectId);
         return mv.addObject("hcv", hcv);
     }
+    
+	@ActionLog(value = "查看Translate数据报告", button = "数据报告")
+	@RequestMapping("getTranslateReport")
+	public ModelAndView getTranslateReport(String dataKey, Integer projectId, Integer appId) {
+		DataFile data = dataService.getDataByKey(dataKey);
+		Translate translate = reportService.getTranslateReport(dataKey, projectId, appId);
+		String path = data.getPath();
+		int MAX = 256 * 1024;
+		if (FileTools.getFileSize(path) > MAX) {
+			translate.setSource("输入序列超过256k，不再显示！");
+		} else {
+			String source = FileTools.readAppoint(data.getPath());
+			translate.setSource(source);
+		}
+		String result = translate.getResult();
+		if (result != null && result.length() > MAX) {
+			translate.setResult("输出序列超过256k，不再显示，请下载查看！");
+		} else {
+			translate.setResult(CustomStringUtils.htmlbr(result));
+		}
+		ModelAndView mv = getModelAndView("report/report_data_translate", projectId);
+		return mv.addObject("translate", translate);
+	}
 
     /**
      * 获取EGFR数据报告

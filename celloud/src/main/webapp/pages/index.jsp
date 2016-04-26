@@ -195,9 +195,10 @@
 	<!--   <script src="//cdn.bootcss.com/select2/4.0.1/js/i18n/zh-CN.js"></script> -->
 	<script src="<%=request.getContextPath()%>/js/utils.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/main_init.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/message.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/main.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/charts.js?version=1.0"></script>
-	<script src="<%=request.getContextPath()%>/plugins/highcharts/char.js?version=20150526"></script>
+	<script src="<%=request.getContextPath()%>/plugins/highcharts/char.js?version=20160421"></script>
 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
 </body>

@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<div class="row">
+<div>
 	<div class="m-file">
 		文件名称：
 		<span class="file-name">

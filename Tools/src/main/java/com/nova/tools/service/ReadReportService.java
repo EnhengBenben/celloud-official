@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 
 import com.nova.tools.constant.AppNameIDConstant;
 import com.nova.tools.service.impl.ReadReportServiceImpl;
@@ -112,30 +113,17 @@ public class ReadReportService {
         }
 
         // Translate
-        if (AppNameIDConstant.TRANSLATE.equals(appId)) {
-            String translate = basePath + "/" + userId + "/" + appId + "/"
-                    + dataKey + "/" + dataKey + ".txt";
-            String dataPath = PropertiesUtils.dataPath;
-            if (new File(translate).exists()) {
-                String extName = "";
-                if (fileName.toLowerCase().indexOf(".fastq.") > 0) {
-                    extName = fileName.substring(fileName
-                            .lastIndexOf(".fastq."));
-                } else if (fileName.toLowerCase().indexOf(".fq.") > 0) {
-                    extName = fileName.substring(fileName
-                            .lastIndexOf(".fastq."));
-                } else {
-                    extName = fileName.substring(fileName.lastIndexOf("."));
-                }
-                reportMap.put("source",
-                        FileTools.readAppoint(dataPath + dataKey + extName));
-                reportMap.put("result", FileTools.readAppoint(translate));
-            }
-            reportMap.put("fileName",
-                    ("null".equals(anotherName) || anotherName == null || ""
-                            .equals(anotherName)) ? fileName : anotherName);
-            return reportMap;
-        }
+		if (AppNameIDConstant.TRANSLATE.equals(appId)) {
+			String translate = basePath + "/" + userId + "/" + appId + "/" + dataKey + "/" + dataKey + ".txt";
+			String dataPath = PropertiesUtils.dataPath;
+			if (new File(translate).exists()) {
+				String extName = FileTools.getExt(fileName);
+				reportMap.put("source", FileTools.readAppoint(dataPath + dataKey + extName));
+				reportMap.put("result", FileTools.readAppoint(translate));
+			}
+			reportMap.put("fileName", StringUtils.isEmpty(anotherName) ? fileName : anotherName);
+			return reportMap;
+		}
 
         // HCV
         if (AppNameIDConstant.HCV.equals(appId)) {

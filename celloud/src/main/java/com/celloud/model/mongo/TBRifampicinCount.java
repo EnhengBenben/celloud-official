@@ -3,12 +3,11 @@ package com.celloud.model.mongo;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Id;
 
-public class EGFRCount {
+public class TBRifampicinCount {
     @Id
     private ObjectId id;
     private Integer userId;
     private String dataKey;
-    private Integer length;
     private Integer site;
     private Integer count;
 
@@ -26,14 +25,6 @@ public class EGFRCount {
 
     public void setDataKey(String dataKey) {
         this.dataKey = dataKey;
-    }
-
-    public Integer getLength() {
-        return length;
-    }
-
-    public void setLength(Integer length) {
-        this.length = length;
     }
 
     public Integer getSite() {
@@ -58,12 +49,6 @@ public class EGFRCount {
 
     public void setCount(Integer count) {
         this.count = count;
-    }
-
-    @Override
-    public String toString() {
-        return "EGFRCount [id=" + id + ", userId=" + userId + ", dataKey=" + dataKey + ", length=" + length + ", site="
-                + site + "]";
     }
 
 }
