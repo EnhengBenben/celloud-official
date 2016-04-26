@@ -819,8 +819,7 @@ $.ajaxSetup ({
 						}
 						X = X.substring(0,X.length-1)+"]";
 						Y = Y.substring(0,Y.length-1)+"]";
-//						showCharHCV("char0", "Subtype", eval(X),eval(Y),0);
-						$.reportChar.draw.echartsShowBar("char0", "Subtype", X, Y);
+						$.reportChar.draw.echartsShowBar("char0", "Subtype", eval(X), eval(Y));
 				});
 			}
 			if(appId==82){
@@ -955,15 +954,20 @@ $.ajaxSetup ({
 						var X = "[";
 						var Y = "[";
 						var value = data.split("\n");
-						for(var k=0;k<value.length-1;k++){
-							var n = value[k].split("\t");
+						if(value.length > 1){
+							for(var k=0;k<value.length-1;k++){
+								var n = value[k].split("\t");
+								X+="'"+n[0]+"',";
+								Y+=n[1]+",";
+							}
+						}else{
+							var n = data.split("\t");
 							X+="'"+n[0]+"',";
 							Y+=n[1]+",";
 						}
 						X = X.substring(0,X.length-1)+"]";
 						Y = Y.substring(0,Y.length-1)+"]";
-//						showCharHCV("char0", "位点", eval(X),eval(Y),0);
-						$.reportChar.draw.echartsShowBar("char0", "位点", X, Y);
+						$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y));
 				});
 			}
 			

@@ -424,7 +424,7 @@ public class ReportServiceImpl implements ReportService {
         while(it.hasNext()){
             JSONObject i = JSONObject.fromObject(it.next());
             Integer count = Integer.parseInt(i.get("count").toString());
-            Integer subtype = Integer.parseInt(JSONObject.fromObject(i.get("_id")).get("subtype").toString());
+            String subtype = JSONObject.fromObject(i.get("_id")).get("subtype").toString();
             sb.append(subtype + "," + count + ";");
         }
         return sb.toString();
