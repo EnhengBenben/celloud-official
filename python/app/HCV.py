@@ -63,7 +63,7 @@ class HCV:
 			# 判断该用户是否为测试用户
 			if(paths[len(paths) - 4] not in PDFPro.userList):
 				# 读取文件最后一行内容
-				f = codecs.open(txt,'r','gbk');
+				f = codecs.open(txt,'r','utf-8');
 				targetLine = '';
 				while True:
 					line = f.readline().strip();
