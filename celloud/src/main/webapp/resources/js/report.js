@@ -172,6 +172,11 @@ $.ajaxSetup ({
 		    showEdditError("请选择是否合格！");
 		    return;
 		  }
+		  var remarks = $("#editReportConclusion").find("input[name='remarks']").val();
+      if(remarks.length>125){
+        showEdditError("备注长度不能大于125个字符！！");
+        return;
+      }
 		  $.get("experiment/updateExperiment",$("#editReportConclusionForm").serialize(),function(flag){
 		    if(flag == 1){
 		      showEdditError("保存成功，请重新打开数据报告！");
