@@ -1,12 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<section class="content-header">
+  <h1>
+    血流感染检测
+  </h1>
+  <ol class="breadcrumb">
+    <li>CelLoud平台</li>
+    <li class="active">我的报告</li>
+  </ol>
+</section>
+<div class="box-tools data-select">
+  <div class="form-cel input-group data-search">
+    <input id="report-condition-input" class="form-control input-sm pull-right" type="text" placeholder="搜索文件名/数据标签/文件别名"/>
+    <div class="input-group-btn">
+      <button id="report-condition-find" class="btn btn-sm btn-celloud-success btn-flat" type="button"><i class="fa fa-search"></i></button>
+    </div>
+  </div>
+</div>
 <table class="table">
   <thead>
     <tr>
       <td>文件名</td>
-      <td id="sort-period">状态</td>
-      <td id="end-date">生成时间</td>
+      <td>状态<a id="sort-period" href="javascript:void(0);"><i id="sort-period-icon" class="fa fa-sort-desc" aria-hidden="true"></i></a></td>
+      <td>生成时间<a id="sort-date" href="javascript:void(0);"><i id="sort-date-icon" class="fa fa-sort-amount-asc"></i></a></td>
       <td>操作</td>
     </tr>
   </thead>
@@ -15,11 +33,14 @@
       <c:forEach var="task" items="${pageList.datas }">
 	    <tr>
 	      <td title="${task.fileName }" name="data-name-td" >
+	        <a href="javascript:$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId})">
               <c:choose><c:when test="${fn:length(task.fileName)>60 }"><c:out value="${fn:substring(task.fileName, 0, 60) }"/>...</c:when><c:otherwise>${task.fileName }</c:otherwise></c:choose>
+            </a>
+            ${task.dataKey },${task.projectId },${task.appId }
           </td>
 	      <td>${task.period }</td>
-	      <td>${task.endDate }</td>
-	      <td>dd</td>
+	      <td><fmt:formatDate type="date" value="${task.endDate }"/></td>
+	      <td>wait</td>
 	    </tr>
       </c:forEach>
     </c:if>
@@ -149,3 +170,4 @@
     </ul>
   </c:if>
 </div>
+<script src="<%=request.getContextPath()%>/js/bsi_report.js"></script>

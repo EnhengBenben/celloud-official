@@ -137,7 +137,7 @@ $.reportChar.draw = {
         	    ],
         	    series : [
         	        {
-        	            name:'位点',
+        	            name:title,
         	            type:'bar',
         	            data:Y,
         	            barWidth:20

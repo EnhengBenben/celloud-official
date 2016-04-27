@@ -418,13 +418,13 @@ public class ReportServiceImpl implements ReportService {
     @SuppressWarnings("rawtypes")
     @Override
     public String hcvCompare() {
-        Iterable list = reportDao.getTBRifampicinCompare(HCVCount.class);
+        Iterable list = reportDao.getHCVCompare(HCVCount.class);
         Iterator it = list.iterator();
         StringBuilder sb = new StringBuilder();
         while(it.hasNext()){
             JSONObject i = JSONObject.fromObject(it.next());
             Integer count = Integer.parseInt(i.get("count").toString());
-            Integer subtype = Integer.parseInt(JSONObject.fromObject(i.get("_id")).get("subtype").toString());
+            String subtype = JSONObject.fromObject(i.get("_id")).get("subtype").toString();
             sb.append(subtype + "," + count + ";");
         }
         return sb.toString();
