@@ -17,9 +17,11 @@
             <c:if test="${egfr.pdf!=null && egfr.pdf!='' }">
                 <a class="btn btn-warning btn-flat" href="#" onclick="downloadPDF();"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
                 <script type="text/javascript">
-                $.get("${toolsPath }Procedure!miRNADownload?userId=${egfr.userId }/${egfr.appId }/${egfr.dataKey }/${egfr.pdf }",{},function(){
-                	 
-                });
+                function downloadPDF(){
+	                $.get("${toolsPath }Procedure!miRNADownload?userId=${egfr.userId }/${egfr.appId }/${egfr.dataKey }/${egfr.pdf }",{},function(){
+	                	 
+	                });
+                }
                 </script>
             </c:if>
         </div>
