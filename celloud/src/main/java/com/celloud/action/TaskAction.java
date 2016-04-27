@@ -211,6 +211,22 @@ public class TaskAction {
         }
         return "run over";
     }
+    
+	/**
+	 * 项目运行结束，由python进行全部的后续处理
+	 * perl端调用：http://www.celloud.cn/task/pythonRunOver.html?projectId=
+	 * 
+	 * @return
+	 */
+	@ActionLog(value = "项目运行结束，python进行全部后续处理", button = "运行结束")
+	@RequestMapping("pythonRunOver")
+	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
+	public String pythonRunOver(String projectId) {
+		String command = SparkPro.PYTHONRUNOVER + " " + projectId;
+		PerlUtils.excutePerl(command);
+		return "run over";
+	}
 
     /**
      * 项目运行结束之后

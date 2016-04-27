@@ -50,7 +50,7 @@ def createPDF(path,appName,fileName):
 	total.append(Spacer(1, 12))
 
 	# FileName:
-	t1 = '<font size=12 name="hei">FileName:</font><font size=10>'+fileName+'</font>'
+	t1 = '<font size=12 name="hei">FileName:</font><font size=10 name="hei">'+fileName+'</font>'
 	total.append(Paragraph(t1, styleTitle))
 	total.append(Spacer(1, 10))
 
