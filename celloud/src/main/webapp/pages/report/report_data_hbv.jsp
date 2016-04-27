@@ -87,7 +87,7 @@
 				 	</h2>
 				    <div class="m-boxCon">
 					    <c:if test="${hbv.known.containsKey('194_png') }">
-					    	<a href="javascript:showBgOne('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['194_10_png'] }');" >
+					    	<a href="javascript:bigFigure('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['194_10_png'] }');" >
 								<img style="padding-left: 30px;" name="imgSrc" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['194_png'] }" height="170px;" width="150px;">
 							</a>
 						</c:if>
@@ -105,7 +105,7 @@
 				 	</h2>
 				    <div class="m-boxCon">
 				    	<c:if test="${hbv.known.containsKey('204_png') }">
-					    	<a href="javascript:showBgOne('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_10_png']}');" >
+					    	<a href="javascript:bigFigure('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_10_png']}');" >
 								<img style="padding-left: 30px;" name="imgSrc" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_png'] }" height="170px;" width="150px;">
 							</a>
 				    	</c:if>
@@ -123,7 +123,7 @@
 				 	</h2>
 				    <div class="m-boxCon">
 					    <c:if test="${hbv.known.containsKey('181_png') }">
-					    	<a href="javascript:showBgOne('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['181_10_png'] }');" >
+					    	<a href="javascript:bigFigure('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['181_10_png'] }');" >
 								<img style="padding-left: 30px;" name="imgSrc" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['181_png'] }" height="170px;" width="150px;">
 							</a>
 						</c:if>
@@ -133,7 +133,7 @@
 							</div>
 						</c:if>
 						<c:if test="${hbv.known.containsKey('236_png') }">
-							<a href="javascript:showBgOne('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['236_10_png'] }');" >
+							<a href="javascript:bigFigure('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['236_10_png'] }');" >
 								<img style="padding-left: 30px;" name="imgSrc" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['236_png'] }" height="170px;" width="150px;">
 							</a>
 						</c:if>
@@ -151,7 +151,7 @@
 				 	</h2>
 				    <div class="m-boxCon">
 					    <c:if test="${hbv.known.containsKey('173_png') }">
-							<a href="javascript:showBgOne('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['173_10_png'] }');" >
+							<a href="javascript:bigFigure('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['173_10_png'] }');" >
 								<img style="padding-left: 30px;" name="imgSrc" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['173_png'] }" height="170px;" width="150px;">
 							</a>
 						</c:if>
@@ -161,7 +161,7 @@
 							</div>
 						</c:if>
 						<c:if test="${hbv.known.containsKey('180_png') }">
-							<a href="javascript:showBgOne('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['180_10_png'] }');" >
+							<a href="javascript:bigFigure('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['180_10_png'] }');" >
 								<img style="padding-left: 30px;" name="imgSrc" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['180_png'] }" height="170px;" width="150px;">
 							</a>
 						</c:if>
@@ -171,7 +171,7 @@
 							</div>
 						</c:if>
 				    	<c:if test="${hbv.known.containsKey('204_png') }">
-					    	<a href="javascript:showBgOne('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_10_png']}');" >
+					    	<a href="javascript:bigFigure('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_10_png']}');" >
 								<img style="padding-left: 30px;" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_png'] }" height="170px;" width="150px;">
 							</a>
 						</c:if>
@@ -189,7 +189,7 @@
 				 	</h2>
 				    <div class="m-boxCon">
 					    <c:if test="${hbv.known.containsKey('173_png') }">
-							<a href="javascript:showBgOne('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['173_10_png'] }');" >
+							<a href="javascript:bigFigure('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['173_10_png'] }');" >
 								<img style="padding-left: 30px;" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['173_png'] }" height="170px;" width="150px;">
 							</a>
 						</c:if>
@@ -199,7 +199,7 @@
 							</div>
 						</c:if>
 						<c:if test="${hbv.known.containsKey('180_png') }">
-							<a href="javascript:showBgOne('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['180_10_png'] }');" >
+							<a href="javascript:bigFigure('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['180_10_png'] }');" >
 								<img style="padding-left: 30px;" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['180_png'] }" height="170px;" width="150px;">
 							</a>
 						</c:if>
@@ -209,7 +209,7 @@
 							</div>
 						</c:if>
 						<c:if test="${hbv.known.containsKey('204_png') }">
-					    	<a href="javascript:showBgOne('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_10_png']}');" >
+					    	<a href="javascript:bigFigure('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_10_png']}');" >
 								<img style="padding-left: 30px;" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_png'] }" height="170px;" width="150px;">
 							</a>
 						</c:if>
@@ -227,7 +227,7 @@
 				 	</h2>
 				    <div class="m-boxCon">
 					    <c:if test="${hbv.known.containsKey('169_png') }">
-							<a href="javascript:showBgOne('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['169_10_png'] }');" >
+							<a href="javascript:bigFigure('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['169_10_png'] }');" >
 								<img class="imgtop" style="padding-left: 30px;" name="imgSrc" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['169_png'] }" height="170px;" width="150px;">
 							</a>
 						</c:if>
@@ -237,7 +237,7 @@
 							</div>
 						</c:if>
 						<c:if test="${hbv.known.containsKey('180_png') }">
-							<a href="javascript:showBgOne('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['180_10_png'] }');" >
+							<a href="javascript:bigFigure('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['180_10_png'] }');" >
 								<img class="imgtop" style="padding-left: 30px;" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['180_png'] }" height="170px;" width="150px;">
 							</a>
 						</c:if>
@@ -247,7 +247,7 @@
 							</div>
 						</c:if>
 						<c:if test="${hbv.known.containsKey('184_png') }">
-							<a href="javascript:showBgOne('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['184_10_png'] }');" >
+							<a href="javascript:bigFigure('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['184_10_png'] }');" >
 								<img class="imgtop" style="padding-left: 30px;" name="imgSrc" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['184_png'] }" height="170px;" width="150px;">
 							</a>
 						</c:if>
@@ -257,7 +257,7 @@
 							</div>
 						</c:if>
 						<c:if test="${hbv.known.containsKey('202_png') }">
-							<a href="javascript:showBgOne('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['202_10_png'] }');" >
+							<a href="javascript:bigFigure('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['202_10_png'] }');" >
 								<img class="imgtop" style="padding-left: 30px;" name="imgSrc" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['202_png'] }" height="170px;" width="150px;">
 							</a>
 						</c:if>
@@ -267,7 +267,7 @@
 							</div>
 						</c:if>
 						<c:if test="${hbv.known.containsKey('204_png') }">
-					    	<a href="javascript:showBgOne('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_10_png']}');" >
+					    	<a href="javascript:bigFigure('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_10_png']}');" >
 								<img class="imgtop" style="padding-left: 30px;" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_png'] }" height="170px;" width="150px;">
 							</a>
 						</c:if>
@@ -277,7 +277,7 @@
 							</div>
 						</c:if>
 						<c:if test="${hbv.known.containsKey('250_png') }">
-					    	<a href="javascript:showBgOne('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['250_10_png']}');" >
+					    	<a href="javascript:bigFigure('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['250_10_png']}');" >
 								<img class="imgtop" style="padding-left: 30px;" name="imgSrc" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['250_png'] }" height="170px;" width="150px;">
 							</a>
 						</c:if>
@@ -299,7 +299,7 @@
 					    <c:if test="${hbv.imgString!='' }">
 					    	<c:set value="${fn:split(hbv.imgString, ',') }" var="imgs" />
 					    	<c:forEach var="img" items="${imgs }">
-					    		<a href="javascript:showBgTwo('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${img.replace('png','10.png') }');" >
+					    		<a href="javascript:bigFigure('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${img.replace('png','10.png') }');" >
 									<img class="imgtop" title="${img }" name="imgSrc" style="padding-left: 30px;" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${img }" height="170px;" width="150px;">
 								</a>
 					    	</c:forEach>
@@ -334,36 +334,36 @@
 			</h2>
 			<c:if test="${hbv.original.containsKey('1_all_png') }">
 			    <div class="m-boxCon result">
-					<a href="javascript:showBg('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['1_all_png'] }','listAll1Img');" >
-						<img class="imgtop" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['1_all_png'] }" style="width: 750px;height: 150px;" id="listAll1Img">
+					<a href="javascript:bigOrigin('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['1_all_png'] }','listAll1Img');" >
+						<img class="imgtop originImg" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['1_all_png'] }" id="listAll1Img">
 					</a>
 			    </div>
 		    </c:if>
 		    <c:if test="${hbv.original.containsKey('2_all_png') }">
 			    <div class="m-boxCon result">
-					<a href="javascript:showBg('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['2_all_png'] }','listAll2Img');" >
-						<img class="imgtop" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['2_all_png'] }" style="width: 750px;height: 150px;" id="listAll2Img">
+					<a href="javascript:bigOrigin('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['2_all_png'] }','listAll2Img');" >
+						<img class="imgtop originImg" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['2_all_png'] }" id="listAll2Img">
 					</a>
 			    </div>
 		    </c:if>
 		    <c:if test="${hbv.original.containsKey('3_all_png') }">
 			    <div class="m-boxCon result">
-					<a href="javascript:showBg('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['3_all_png'] }','listAll3Img');" >
-						<img class="imgtop" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['3_all_png'] }" style="width: 750px;height: 150px;" id="listAll3Img">
+					<a href="javascript:bigOrigin('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['3_all_png'] }','listAll3Img');" >
+						<img class="imgtop originImg" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['3_all_png'] }" id="listAll3Img">
 					</a>
 			    </div>
 		   	</c:if>
 		    <c:if test="${hbv.original.containsKey('4_all_png') }">
 			     <div class="m-boxCon result">
-					<a href="javascript:showBg('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['4_all_png'] }','listAll4Img');" >
-						<img class="imgtop" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['4_all_png'] }" style="width: 750px;height: 150px;" id="listAll4Img">
+					<a href="javascript:bigOrigin('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['4_all_png'] }','listAll4Img');" >
+						<img class="imgtop originImg" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['4_all_png'] }" id="listAll4Img">
 					</a>
 			    </div>
 		    </c:if>
 		    <c:if test="${hbv.original.containsKey('5_all_png') }">
 			    <div class="m-boxCon result">
-					<a href="javascript:showBg('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['5_all_png'] }','listAll5Img');" >
-						<img class="imgtop" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['5_all_png'] }" style="width: 750px;height: 150px;" id="listAll5Img">
+					<a href="javascript:bigOrigin('${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['5_all_png'] }','listAll5Img');" >
+						<img class="imgtop originImg" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['5_all_png'] }" id="listAll5Img">
 					</a>
 			    </div>
 		    </c:if>
@@ -458,23 +458,6 @@ $(function() {
                 speed : 1000
         });
 });
-function showBgTwo(src){
-	$("img[id='imageFullScreen']").css("width",1260);
-	$("img[id='imageFullScreen']").css("height",156);
-	showZoom(src);
-}
-function showBgOne(src){
-	$("img[id='imageFullScreen']").css("width",1260);
-	$("img[id='imageFullScreen']").css("height",156);
-	showZoom(src);
-}
-function showBg(src,id) { 
-	var width = $("#" + id).width();
-	var height = $("#" + id).height();
-	$("img[id='imageFullScreen']").css("width",width*1.5);
-	$("img[id='imageFullScreen']").css("height",height*1.5);
-	showZoom(src);
-}
 function change1(){
 	$("#nomal").css("display","");
 	$("#cfda").css("display","none");

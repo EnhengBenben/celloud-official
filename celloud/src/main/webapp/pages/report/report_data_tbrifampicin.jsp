@@ -59,8 +59,8 @@
 		<c:if test="${not empty tbrifampicin.original }">
 			<c:forEach items="${tbrifampicin.original }" var="original" varStatus="st">
 				<div class="m-boxCon">
-					<a href="javascript:showBg('${uploadPath}${tbrifampicin.userId }/${tbrifampicin.appId }/${tbrifampicin.dataKey }/SVG/${original }','original${st.count }');">
-						<img name="imgSrc" src="${uploadPath}${tbrifampicin.userId }/${tbrifampicin.appId }/${tbrifampicin.dataKey }/SVG/${original }" style="width: 85%;" id="original${st.count }">
+					<a href="javascript:bigOrigin('${uploadPath}${tbrifampicin.userId }/${tbrifampicin.appId }/${tbrifampicin.dataKey }/SVG/${original }','original${st.count }');">
+						<img name="imgSrc" src="${uploadPath}${tbrifampicin.userId }/${tbrifampicin.appId }/${tbrifampicin.dataKey }/SVG/${original }" class="originImg" id="original${st.count }">
 					</a>
 				</div>
 			</c:forEach>
@@ -86,13 +86,6 @@
 		});
 		searchTable();
 	});
-	function showBg(src, id) {
-		var width = $("#" + id).width();
-		var height = $("#" + id).height();
-		$("img[id='imageFullScreen']").css("width", width * 1.5);
-		$("img[id='imageFullScreen']").css("height", height * 1.5);
-		showZoom(src);
-	}
 	function searchTable() {
 		var search = $("#_snum").val();
 		$("#_sr").html("");

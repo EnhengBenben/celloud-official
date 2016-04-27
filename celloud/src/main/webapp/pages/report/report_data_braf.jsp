@@ -67,11 +67,8 @@
 		<c:if test="${braf.original!=null }">
 			<c:forEach var="original" items="${braf.original }" varStatus="st">
 				<div class="m-boxCon result">
-					<a
-						href="javascript:showBg('${uploadPath}${braf.userId }/${braf.appId }/${braf.dataKey }/SVG/${original }','original${st.count }');">
-						<img
-						src="${uploadPath}${braf.userId }/${braf.appId }/${braf.dataKey }/SVG/${original }"
-						style="width: 85%;" id="original${st.count }">
+					<a href="javascript:bigOrigin('${uploadPath}${braf.userId }/${braf.appId }/${braf.dataKey }/SVG/${original }','original${st.count }');">
+						<img class="originImg" src="${uploadPath}${braf.userId }/${braf.appId }/${braf.dataKey }/SVG/${original }" id="original${st.count }">
 					</a>
 				</div>
 			</c:forEach>
@@ -89,13 +86,6 @@
 		});
 		searchTable();
 	});
-	function showBg(src, id) {
-		var width = $("#" + id).width();
-		var height = $("#" + id).height();
-		$("img[id='imageFullScreen']").css("width", width * 1.5);
-		$("img[id='imageFullScreen']").css("height", height * 1.5);
-		showZoom(src);
-	}
 	function searchTable() {
 		var result = "";
 		$("#report_tb").find("td").each(function() {

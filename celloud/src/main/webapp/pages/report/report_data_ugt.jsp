@@ -46,8 +46,8 @@
 		<c:if test="${ugt.original!=null }">
 	    	<c:forEach var="original" items="${ugt.original }" varStatus="st">
 				<div class="m-boxCon result">
-						<a href="javascript:showBg('${uploadPath}${ugt.userId }/${ugt.appId }/${ugt.dataKey }/SVG/${original }','original${st.count }');" >
-							<img src="${uploadPath}${ugt.userId }/${ugt.appId }/${ugt.dataKey }/SVG/${original }" style="width: 85%;" id="original${st.count }">
+						<a href="javascript:bigOrigin('${uploadPath}${ugt.userId }/${ugt.appId }/${ugt.dataKey }/SVG/${original }','original${st.count }');" >
+							<img src="${uploadPath}${ugt.userId }/${ugt.appId }/${ugt.dataKey }/SVG/${original }" class="originImg" id="original${st.count }">
 						</a>
 			    </div>
 	    	</c:forEach>
@@ -66,11 +66,4 @@ $(function() {
             speed : 1000
     });
 });
-function showBg(src,id) {
-	var width = $("#" + id).width();
-	var height = $("#" + id).height();
-	$("img[id='imageFullScreen']").css("width",width*1.5);
-	$("img[id='imageFullScreen']").css("height",height*1.5);
-	showZoom(src);
-}
 </script>

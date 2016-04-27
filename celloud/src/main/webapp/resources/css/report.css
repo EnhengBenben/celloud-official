@@ -218,3 +218,4 @@ only screen and (min-device-pixel-ratio: 2) {
 .lineheight{
     line-height: 30px;
 }
+.originImg{	width: 500px;height: 125px;}
