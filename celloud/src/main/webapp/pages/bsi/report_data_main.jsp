@@ -1,20 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<section class="content-header">
-  <h1>
-    <small>&nbsp;</small>
-  </h1>
+<div class="content-header">
+  <div class="header">
+    <h4>血流感染检测 </h4>
+  </div>
   <ol class="breadcrumb">
-    <li><a href="javascript:void(0)"><i class="fa fa-files-o"></i> 报告</a></li>
-    <li class="active">数据报告</li>
-    <li><a href="javascript:void(0)" onclick="toProjectReport()">返回</a></li>
+    <li>CelLoud平台</li>
+    <li>我的报告</li>
+    <li>数据报告</li>
   </ol>
-</section>
+</div>
 <section class="content">
   <ul id="myTabs" class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#patient-report" id="patient-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">患者报告</a></li>
     <li role="presentation"><a href="#analy-report" role="tab" id="analy-tab" data-toggle="tab" aria-controls="profile">分析报告</a></li>
+    <li>文件名：
+        <c:forEach items="${bsi.data}" var="data">
+            ${data.fileName}&nbsp;&nbsp;&nbsp;
+        </c:forEach>
+    </li>
   </ul>
   <div id="myTabContent" class="tab-content">
     <div role="tabpanel" class="tab-pane fade active in" id="patient-report" aria-labelledby="patient-tab">

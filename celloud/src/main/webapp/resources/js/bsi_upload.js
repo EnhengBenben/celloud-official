@@ -43,7 +43,8 @@ var fileUpload=(function(fileUpload){
     uploader.bind("Browse", function() {
       $.get("upload/checkAdminSessionTimeOut",function(response){
         if(response){//session超时则执行下两步
-          $("#plupload-content").removeClass("hide");
+          $("#batch-div").addClass("hide");
+          $("#upload-content").removeClass("upload-step-one");
         }else{
           //销毁uploader，间接取消选择文件弹窗
           uploader.destroy();
@@ -71,8 +72,9 @@ var fileUpload=(function(fileUpload){
       $("[data-toggle='tooltip']").tooltip();
     });
     uploader.bind("UploadComplete",function(uploader,files){
-      $("#plupload-content").addClass("hide");
       $("#batch-info").val("");
+      $("#batch-div").removeClass("hide");
+      $("#upload-content").addClass("upload-step-one");
       uploader.splice();
       $("#upload-modal").modal("hide");
     });

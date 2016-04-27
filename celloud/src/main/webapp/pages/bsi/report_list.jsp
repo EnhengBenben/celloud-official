@@ -2,30 +2,30 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<section class="content-header">
-  <h1>
-    血流感染检测
-  </h1>
+<div class="content-header">
+  <div class="header">
+    <h4>血流感染检测 </h4>
+  </div>
   <ol class="breadcrumb">
     <li>CelLoud平台</li>
-    <li class="active">我的报告</li>
+    <li>我的报告</li>
   </ol>
-</section>
-<div class="box-tools data-select">
-  <div class="form-cel input-group data-search">
-    <input id="report-condition-input" class="form-control input-sm pull-right" type="text" placeholder="搜索文件名/数据标签/文件别名"/>
+</div>
+<div class="box-tools">
+  <div class="data-search">
+    <input id="report-condition-input" class="input-sm" type="text"/>
     <div class="input-group-btn">
-      <button id="report-condition-find" class="btn btn-sm btn-celloud-success btn-flat" type="button"><i class="fa fa-search"></i></button>
+      <button id="report-condition-find" class="btn btn-sm" type="button"><i class="fa fa-search"></i>搜索</button>
     </div>
   </div>
 </div>
-<table class="table">
+<table class="table table-main">
   <thead>
     <tr>
-      <td>文件名</td>
-      <td>状态<a id="sort-period" href="javascript:void(0);"><i id="sort-period-icon" class="fa fa-sort-desc" aria-hidden="true"></i></a></td>
-      <td>生成时间<a id="sort-date" href="javascript:void(0);"><i id="sort-date-icon" class="fa fa-sort-amount-asc"></i></a></td>
-      <td>操作</td>
+      <th>文件名</th>
+      <th>状态<a id="sort-period" href="javascript:void(0);"><i id="sort-period-icon" class="fa fa-sort-asc" aria-hidden="true"></i></a></th>
+      <th>生成时间<a id="sort-date" href="javascript:void(0);"><i id="sort-date-icon" class="fa fa-sort-amount-asc"></i></a></th>
+      <th>操作</th>
     </tr>
   </thead>
   <tbody id="data-list-tbody">
@@ -36,11 +36,18 @@
 	        <a href="javascript:$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId})">
               <c:choose><c:when test="${fn:length(task.fileName)>60 }"><c:out value="${fn:substring(task.fileName, 0, 60) }"/>...</c:when><c:otherwise>${task.fileName }</c:otherwise></c:choose>
             </a>
-            ${task.dataKey },${task.projectId },${task.appId }
           </td>
-	      <td>${task.period }</td>
-	      <td><fmt:formatDate type="date" value="${task.endDate }"/></td>
-	      <td>wait</td>
+	      <td>
+	        <c:if test="${task.period==0 }">等待运行</c:if>
+	        <c:if test="${task.period==1 }">正在运行</c:if>
+	        <c:if test="${task.period==2 }">完成</c:if>
+	        <c:if test="${empty task.period }"><span class="wrong">运行异常</span></c:if>
+	      </td>
+	      <td><fmt:formatDate type="both" value="${task.endDate }"/></td>
+	      <td>
+            <a class="" id="to-upload-a" href="javascript:void(0)"><i class="celicon show-icon"></i></a>
+	        <a class="edit-icon" id="to-report-a" href="javascript:void(0)"><i class="celicon rerun-icon"></i></a>
+	      </td>
 	    </tr>
       </c:forEach>
     </c:if>
@@ -49,7 +56,9 @@
 <div class="pagination text-center">
   <c:if test="${pageList.datas.size()>0}">
     <input id="current-page-hide" value="${pageList.page.currentPage }" type="hidden" >
+    <input id="total-page-hide" value="${pageList.page.totalPage }" type="hidden" >
     <ul id="pagination-task" class="pages">
+      <li><a id="first-page-task" href="javascript:void(0);">首页</a></li>
       <!-- 显示prev -->
       <c:if test="${pageList.page.hasPrev}">
           <li><a id="prev-page-task" href="javascript:void(0);">上一页</a></li>
@@ -152,7 +161,7 @@
         </c:otherwise>
       </c:choose>
       <c:if test="${pageList.page.totalPage-pageList.page.currentPage>=8&&pageList.page.totalPage>10}">
-          <li>...</li>
+          <li>……</li>
       </c:if>
       <c:choose>
         <c:when test="${pageList.page.currentPage==pageList.page.totalPage&&pageList.page.totalPage>1}"> 
@@ -167,6 +176,7 @@
       <c:if test="${pageList.page.hasNext}">
           <li><a id="next-page-task" href="javascript:void(0)">下一页</a></li>
       </c:if>
+      <li><a id="last-page-task" href="javascript:void(0);">尾页</a></li>
     </ul>
   </c:if>
 </div>

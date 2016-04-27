@@ -16,9 +16,9 @@
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/css/bsi_main.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath() %>/plugins/plupload-2.1.2/jquery.plupload.queue/css/jquery.plupload.queue.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath() %>/css/upload.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/css/bsi_main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
   <div class="page-layout page-main-content">
@@ -26,26 +26,24 @@
       <div class="global-topbar">
         <div class="y-topbar-row" style="position: static; opacity: 1;">
           <div class="y-topbar-span3">
-            <a class="" href="#">首页</a>
+            <a class="celicon home-icon" href="#"></a>
           </div>
-          <div class="y-topbar-span9 y-last pull-right">
-            <a href="#">用户</a>
+          <div class="y-topbar-span9 y-last">
+            <a class="celicon user-icon" href="#"></a>
           </div>
         </div>
       </div>
       <div class="common-menu">
         <div class="common-menu-inner">
           <div class="common-menu-span3 pull-left">
-            <a href="javascript:void(0)" class="logo">
-              <span class="logo">
-                <img src="<%=request.getContextPath()%>/images/icon/logo.png">
-              </span>
+            <a href="javascript:void(0)" class="bio-logo">
+              <img src="<%=request.getContextPath()%>/images/icon/login_logo.png">
 	        </a>
           </div>
           <div class="common-menu-span9 pull-right">
-            <a id="to-report-a" href="javascript:void(0)">我的报告</a>
-            <a id="to-upload-a" href="javascript:void(0)">上传数据</a>
-            <a href="javascript:void(0)">我的数据</a>
+            <a class="item-btn" id="to-report-a" href="javascript:void(0)"><i class="celicon my-report-icon"></i>我的报告</a>
+            <a class="item-btn" id="to-upload-a" href="javascript:void(0)"><i class="celicon my-upload-icon"></i>上传数据</a>
+            <a class="item-btn" id="to-data-a" href="javascript:void(0)"><i class="celicon my-data-icon"></i>我的数据</a>
           </div>
         </div>
       </div>
@@ -54,19 +52,22 @@
      
     </div>
   </div>
-  <div id="upload-modal" class="modal">
+  <div id="upload-modal" class="modal upload-modal">
 	<div class="modal-dialog">
 	  <div class="modal-content">
 	    <div class="modal-header">
-	      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="celicon minus-icon"></i></span></button>
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="celicon close-icon"></i></span></button>
 	      <h4 class="modal-title">添加数据</h4>
 	    </div>
 	    <div class="modal-body row">
-	      <div id="batch-div" class="">
+	      <div id="batch-div" class="input-div">
 	        <input id="batch-info" type="text" placeholder="请输入批次" value=""/>
+	        <p>输入数据批次可以更好享受数据查询和统计等服务</p>
+<!-- 	        <a href="javascript:void(0)" class="celicon addfile" id="upload-content_browse"></a> -->
 	        <input id="tag-info" type="hidden" value="1"/>
 	      </div>
-	      <div id="upload-content">
+	      <div id="upload-content" class="upload-content upload-step-one">
 	      </div>
 	    </div>
 	  </div><!-- /.modal-content -->
