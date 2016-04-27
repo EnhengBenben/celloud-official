@@ -62,6 +62,8 @@ var experiment = (function(experiment) {
 	  $(".samples").removeClass("_datered");
 	  $(".methods").removeClass("_datered");
 	  $(".steps").removeClass("_datered");
+	  $("#_alertSpan").css("display","none");
+    $("#_alertSpan").html("");
 	  SAMPLE = 0;
 	  METHOD = 0;
 	  STEP = 0;

@@ -75,8 +75,8 @@
 				          </div>
 				          <div class="form-inline">
 				            <label class="form-inline">建库时间：</label>
-				           	<label>From：</label><input type="text" id="_startDate" class="Wdate input" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;width: 90px;">
-				       		<label>To：</label><input type="text" id="_endDate" class="Wdate input" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;width: 90px;">
+				           	<label>From：</label><input type="text" id="_startDate" class="Wdate input" onchange="javascript:experiment.changeDate()" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;width: 90px;">
+				       		<label>To：</label><input type="text" id="_endDate" class="Wdate input" onchange="javascript:experiment.changeDate()" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;width: 90px;">
 				       		<label><button class="btn btn-info btn-flat" type="button" onclick="javascript:experiment.changeDate()" style="height:20px;font-size:14px;padding-top:0px;background-color: #85c540;border-color: #85c540;">Go!</button></label>
 				       		<span id="_alertSpan" style="color:red;display:none;"></span>
 				          </div>
@@ -94,7 +94,7 @@
 		</div>
 	</div>
 </section>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/experiment.js?version=3.1"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/experiment.js?version=3.1.8"></script>
 <script language="javascript" src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
 <div id="addExp" class="modal modal-green-header">
 </div>
