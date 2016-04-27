@@ -76,6 +76,7 @@
 <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
 <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
+<script src="//cdn.bootcss.com/swfobject/2.2/swfobject.min.js"></script>
 <script src="<%=request.getContextPath()%>/plugins/select/select2.min.js"></script>
 <script src="<%=request.getContextPath()%>/plugins/select/select2_locale_zh-CN.js"></script>
 <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
@@ -86,5 +87,6 @@
 <script src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/plupload.dev.js?version=1.7"></script>
 <script src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/i18n/zh_CN.js"></script>
 <script src="<%=request.getContextPath() %>/js/bsi_upload.js"></script>
+<script src="<%=request.getContextPath()%>/js/charts.js"></script>
 </body>
 </html>

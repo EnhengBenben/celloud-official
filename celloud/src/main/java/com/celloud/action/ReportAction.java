@@ -572,6 +572,40 @@ public class ReportAction {
     }
 
     /**
+     * 获取 BSI 的患者报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @date 2016-1-10 下午10:40:40
+     */
+    @ActionLog(value = "查看BSI患者报告", button = "数据报告")
+    @RequestMapping("getBSIPatientReport")
+    public ModelAndView getBSIPatientReport(String dataKey, Integer projectId,
+            Integer appId) {
+        return getBSIModelAndView("bsi/report_data_main", dataKey,
+                projectId, appId);
+    }
+    
+    /**
+     * 获取 BSI 的患者报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @date 2016-1-10 下午10:40:40
+     */
+    @ActionLog(value = "查看BSI分析报告", button = "数据报告")
+    @RequestMapping("getBSIAnalyReport")
+    public ModelAndView getBSIAnalyReport(String dataKey, Integer projectId,
+            Integer appId) {
+        return getBSIModelAndView("bsi/report_data_bsi_analy", dataKey,
+                projectId, appId);
+    }
+
+    /**
      * 获取 BSI 的数据报告
      * 
      * @param dataKey
