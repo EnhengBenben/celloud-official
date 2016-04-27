@@ -16,10 +16,16 @@ def createHTML(path,fileName,type,other,result):
 	folder = os.path.join(path,'HBV_SNP')
 	# 1. 拷贝模版
 	shutil.copytree(PDFPro.html,folder)
-	# 2. 拷贝结果
-	shutil.copytree(os.path.join(path,'SVG'),os.path.join(path,'HBV_SNP','result'))
-	# 3. 读取 HTML 模板
+	# 2. 读取 HTML 模板
 	context = readAll(template)
+	# 3. 拷贝结果
+	shutil.copytree(os.path.join(path,'SVG'),os.path.join(path,'HBV_SNP','result'))
+	know = ['169.png','173.png','180.png','181.png','184.png','194.png','202.png','204.png','236.png','250.png']
+	for png in know:
+		if not os.path.exists(os.path.join(path,'HBV_SNP','result',png)):
+			htmlPath = '<img style="padding-left: 30px;" src="./result/'+png+'" height="150px;" width="150px;">'
+			context = context.replace(htmlPath,'')
+
 	# 4. 替换需要替换的内容
 	imgs = ''
 	for key in other:
