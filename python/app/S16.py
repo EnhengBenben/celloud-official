@@ -34,14 +34,14 @@ class S16:
 			S16.locker.release()
 
 	#执行
-	def getResult(self,path):
+	def getResult(self,path,appName,fileName,anotherName):
 		result = {}
 		if(not os.path.exists(path)):
 			return result
 
 		resultPath = os.path.join(path,'result.txt')
 		if(os.path.exists(resultPath)):
-			result['resultTable'] = sampleToTable(resultPath)
+			result['resultTable'] = simpleToTable(resultPath,True)
 
 		return result
 
