@@ -21,6 +21,7 @@ from app.BRAF import BRAF
 from app.TBRifampicin import TBRifampicin
 from app.TBINH import TBINH
 from app.Translate import Translate
+from app.S16 import S16
 
 #command: python *.py basePath projectId
 #eg : python runover.py '/share/data/webapps/Tools/upload/' 4018
@@ -28,6 +29,7 @@ from app.Translate import Translate
 
 #对应class名
 method_dic = {
+1:S16,
 73:Translate,
 80:HCV,
 82:HBV,
@@ -54,6 +56,7 @@ method_dic = {
 
 #对应database名
 collection_dic = {
+1:"S16",
 73:"Translate",
 80:"HCV",
 82:"HBV",

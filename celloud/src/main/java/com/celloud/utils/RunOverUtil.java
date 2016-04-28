@@ -117,6 +117,38 @@ public class RunOverUtil {
 		FileTools.appendWrite(projectFile, resultArray.toString());
 		return true;
 	}
+	
+	/**
+	 * 16S流程运行结束后的数据处理
+	 * 
+	 * @param reportPath
+	 * @param dataKey
+	 * @param appTitle
+	 * @param projectFile
+	 * @param projectId
+	 * @param dataList
+	 * @return
+	 * @author lin
+	 * @date 2016年4月28日上午11:21:01
+	 */
+	public boolean S16(String reportPath, String dataKey, String appTitle, String projectFile, String projectId,
+			List<DataFile> dataList) {
+		// 1. 追加表头
+		StringBuffer resultArray = new StringBuffer();
+		resultArray.append(appTitle);
+		// 2. 遍历数据列表
+		for (DataFile data : dataList) {
+			String resultPath = reportPath + data.getDataKey() + File.separatorChar + "report.txt";
+			if (new File(resultPath).exists()) {
+				String line = FileTools.getFirstLine(resultPath);
+				FileTools.appendWrite(projectFile, data.getDataKey() + "\t" + data.getFileName() + "\t" + line);
+			} else {
+				FileTools.appendWrite(projectFile, data.getDataKey() + "\t" + data.getFileName() + "\tno result\n");
+			}
+		}
+		FileTools.appendWrite(projectFile, resultArray.toString());
+		return true;
+	}
 
     /**
      * BRAF流程运行结束后的数据处理
