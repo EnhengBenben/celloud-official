@@ -35,7 +35,9 @@
               <c:choose><c:when test="${fn:length(data.fileName)>60 }"><c:out value="${fn:substring(data.fileName, 0, 60) }"/>...</c:when><c:otherwise>${data.fileName }</c:otherwise></c:choose>
           </td>
           <td>${data.dataKey }</td>
-          <td>${data.size }</td>
+          <td>
+            <c:choose><c:when test="${data.size>1048576 }"><fmt:formatNumber pattern="0.00" value="${data.size/1048576 }"/>MB</c:when><c:otherwise><fmt:formatNumber pattern="0.00" value="${data.size/1024 }"/>KB</c:otherwise></c:choose>
+          </td>
 	      <td><fmt:formatDate type="both" value="${data.createDate }"/></td>
           <td>${data.batch }</td>
 	    </tr>

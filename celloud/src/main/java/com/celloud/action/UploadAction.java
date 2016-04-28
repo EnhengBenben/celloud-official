@@ -80,6 +80,7 @@ public class UploadAction {
      * @date 2015年12月28日 下午3:22:38
      */
     @ActionLog(value = "上传数据", button = "开始上传")
+    @ResponseBody
     @RequestMapping("uploadManyFile")
     public String uploadManyFile(String name, String onlyName, String md5,
             String originalName, Integer chunk, Integer chunks,
@@ -127,9 +128,7 @@ public class UploadAction {
                                 Subject sub = SecurityUtils.getSubject();
                                 if (sub.hasRole("bsier")) {
                                     App app = appService.findAppsByTag(tagId);
-                                    return "redirect:../data/run?dataIds="
-                                            + dataId + "&appIds="
-                                            + app.getAppId();
+                                    return dataId + "," + app.getAppId();
                                 }
 							}
                         } catch (Exception e) {
