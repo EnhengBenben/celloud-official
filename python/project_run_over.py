@@ -53,7 +53,7 @@ if my:
 
 		projectTxt = os.path.join(p,str(re['projectId'])+'.txt')
 		appendWrite(projectTxt,projectContext)
-		table = sampleToTable(projectTxt)
+		table = simpleToTable(projectTxt,False)
 		updateSql = 'update tb_report set context = "'+table+'",period = 3,end_date=now() where flag = 1 and project_id = '+str(re['projectId'])
 		my=mysql.getInstance()
 		if my:
