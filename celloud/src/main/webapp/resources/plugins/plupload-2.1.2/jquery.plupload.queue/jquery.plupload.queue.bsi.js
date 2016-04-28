@@ -96,13 +96,13 @@ used as it is.
 							'<div class="plupload_header_content">' +
 								'<div class="plupload_file_name">' +
 									'<div class="box-title plupload_buttons">' +
-										'<a href="javascript:void(0)" class="addfile btn btn-success btn-flat" id="' + id + '_browse"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;添加文件</a>' +
+										'<a href="javascript:void(0)" class="celicon addfile" id="' + id + '_browse"></a>' +
 									'</div>' +
 								'</div>' +
 							'</div>' +
 						'</div>' +
-						'<div id="plupload-content" class="box-body plupload_content new_content hide">' +
-							'<ul id="' + id + '_filelist" class="plupload_filelist plupload_filelist_new"></ul>' +
+						'<div id="plupload-content" class="box-body plupload_content">' +
+							'<ul id="' + id + '_filelist" class="plupload_filelist"></ul>' +
 						'</div>' +
 				'</div>' +
 				'<input type="hidden" id="' + id + '_count" name="' + id + '_count" value="0" />'
@@ -198,7 +198,7 @@ used as it is.
 								'<div class="plupload_file_action"><a href="#"></a></div>' +
 								'<div class="plupload_file_status">' + file.percent + '%</div>' +
 								'<div class="plupload_file_surplus">' + 0 +'</div>' +
-								'<div class="plupload_file_speed">' + plupload.formatSize(file.speedDetail)+"/s" +'</div>' +
+//								'<div class="plupload_file_speed">' + plupload.formatSize(file.speedDetail)+"/s" +'</div>' +
 //								'<div class="plupload_file_start">' + file.showStartTime +'</div>' +
 								'<div class="plupload_file_size">' + plupload.formatSize(file.size) + '</div>' +
 								'<div class="plupload_clearer">&nbsp;</div>' +

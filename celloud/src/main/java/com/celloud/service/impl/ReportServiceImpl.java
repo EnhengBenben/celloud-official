@@ -51,6 +51,7 @@ import com.celloud.model.mongo.KRASCount;
 import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
+import com.celloud.model.mongo.S16;
 import com.celloud.model.mongo.Split;
 import com.celloud.model.mongo.TBINH;
 import com.celloud.model.mongo.TBRifampicin;
@@ -891,5 +892,10 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public ABINJ getABINJReport(String dataKey, Integer projectId, Integer appId) {
         return reportDao.getDataReport(ABINJ.class, dataKey, projectId, appId);
+    }
+    
+    @Override
+    public S16 get16SReport(String dataKey, Integer projectId, Integer appId) {
+    	return reportDao.getDataReport(S16.class, dataKey, projectId, appId);
     }
 }

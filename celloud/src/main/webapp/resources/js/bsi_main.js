@@ -2,7 +2,13 @@
  * 血流用户主页事件
  */
 $(function () {
+  $.report.find.all();
   $("#to-upload-a").on("click",function(){
+    if($(".plupload_filelist li").hasClass("plupload_droptext")){
+      $("#batch-info").val("");
+      $("#batch-div").removeClass("hide");
+      $("#upload-content").addClass("upload-step-one");
+    }
     $("#upload-modal").modal("show");
   });
   $("#to-report-a").on("click",function(){
@@ -49,9 +55,19 @@ $.report.loadlist = function(response){
   $.base.sortIcon($.report.options.sortPeriod,$.report.options.sortDate);
   $("#pagination-task").on("click","a",function(e){
     var id = $(this).attr("id");
-    var currentPage = parseInt($("#data-current-page-hide").val());
-    var page = id == null ? 
-        $(this).html() : (id == "prev-page-data" ? currentPage-1 : currentPage+1);
+    var currentPage = parseInt($("#current-page-hide").val());
+    var page;
+    if(id == null){
+      page = $(this).html();
+    }else if(id.indexof("prev")>0){
+      page = currentPage-1;
+    }else if(id.indexof("next")>0){
+      page = currentPage+1;
+    }else if(id.indexof("first")>0){
+      page = 1;
+    }else if(id.indexof("last")>0){
+      page = parseInt($("#total-page-hide").val());
+    }
     $.report.find.pagination(page);
   });
   $("#sort-period").on("click",function(e){

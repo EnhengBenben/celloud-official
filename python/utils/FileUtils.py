@@ -62,11 +62,13 @@ def appendWrite(path,context):
 	else:
 		print 'not a file'
 
-def sampleToTable(path):
+normalClass = ' class="table table-bordered table-condensed"'
+
+def simpleToTable(path,isClass):
 	if not os.path.isfile(path):
 		print '文件不存在：' + path
 	else:
-		context = '<table>'
+		context = '<table'+ (normalClass if isClass else '') +'>'
 		for line in open(path,'rU'):
 			context += '<tr>'
 			for l in line.split('\t'):
@@ -84,4 +86,7 @@ if __name__ == '__main__':
 	#print fileSearch('/Users/lin/9/82/20151029437617/SVG','_new.png','endswith')
 	#print fileSearch('/Users/lin/9/82/20151029437617/SVG','_all.png','endswith')
 	#appendWrite('/Users/lin/test3','a\tb\tc\td\na\tb\tc\td\na\tb\tc\td\n')
-	print sampleToTable('/Users/lin/test3')
+	print simpleToTable('/Users/lin/test3.txt',True)
+	print simpleToTable('/Users/lin/test3.txt',False)
+	p = False
+	print isinstance(p,(int,float))
