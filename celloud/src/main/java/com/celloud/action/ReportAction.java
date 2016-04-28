@@ -51,6 +51,7 @@ import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
 import com.celloud.model.mongo.RecommendDrug;
+import com.celloud.model.mongo.S16;
 import com.celloud.model.mongo.Split;
 import com.celloud.model.mongo.TBINH;
 import com.celloud.model.mongo.TBRifampicin;
@@ -713,6 +714,24 @@ public class ReportAction {
     	ABINJ abinj = reportService.getABINJReport(dataKey, projectId, appId);
     	ModelAndView mv = getModelAndView("report/report_data_abinj", projectId);
     	return mv.addObject("abinj", abinj);
+    }
+    
+    /**
+     * 获取16S的数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author lin
+     * @date 2016年4月28日下午12:15:32
+     */
+    @ActionLog(value = "查看16S数据报告", button = "数据报告")
+    @RequestMapping("get16SReport")
+    public ModelAndView get16SReport(String dataKey, Integer projectId, Integer appId) {
+    	S16 s16 = reportService.get16SReport(dataKey, projectId, appId);
+    	ModelAndView mv = getModelAndView("report/report_data_16s", projectId);
+    	return mv.addObject("s16", s16);
     }
     
     /**

@@ -20,6 +20,7 @@ import com.celloud.model.mongo.KRAS;
 import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
+import com.celloud.model.mongo.S16;
 import com.celloud.model.mongo.Split;
 import com.celloud.model.mongo.TBINH;
 import com.celloud.model.mongo.TBRifampicin;
@@ -141,6 +142,18 @@ public interface ReportService {
      * @date 2016年4月13日下午4:15:29
      */
     public ABINJ getABINJReport(String dataKey, Integer projectId, Integer appId);
+    
+    /**
+     * 获取16S数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author lin
+     * @date 2016年4月28日下午12:14:18
+     */
+    public S16 get16SReport(String dataKey, Integer projectId, Integer appId);
 
     /**
      * 获取PGS报告

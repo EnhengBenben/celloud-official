@@ -736,6 +736,10 @@ $.ajaxSetup ({
         $.get("report/getABINJReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
           toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
         });
+      }else if(softwareId == 1){
+        $.get("report/get16SReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
+          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+        });
       }else{
 				var newPath = "Procedure!readReport" + "?fileName="+fileName+"&userId=" + userId + "&appId=" + softwareId + "&dataKey=" + dataKey + "&projectId="+proId;
 				$.get("report/getReportFromTools",{"dataKey":dataKey,"url":newPath,"projectId":proId},function(responseText){
