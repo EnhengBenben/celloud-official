@@ -136,17 +136,17 @@ public class RunOverUtil {
 		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
 		resultArray.append(appTitle);
+		FileTools.appendWrite(projectFile, resultArray.toString());
 		// 2. 遍历数据列表
 		for (DataFile data : dataList) {
 			String resultPath = reportPath + data.getDataKey() + File.separatorChar + "report.txt";
 			if (new File(resultPath).exists()) {
 				String line = FileTools.getFirstLine(resultPath);
-				FileTools.appendWrite(projectFile, data.getDataKey() + "\t" + data.getFileName() + "\t" + line);
+				FileTools.appendWrite(projectFile, data.getDataKey() + "\t" + data.getFileName() + "\t" + line + "\n");
 			} else {
 				FileTools.appendWrite(projectFile, data.getDataKey() + "\t" + data.getFileName() + "\tno result\n");
 			}
 		}
-		FileTools.appendWrite(projectFile, resultArray.toString());
 		return true;
 	}
 
