@@ -6,6 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>报告打印</title>
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/browser.js"></script>
+<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
+<link href="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/print_hbv.css?version=1.17">
 </head>
 <body>
@@ -598,8 +603,6 @@
 		</c:if>
 	</div>
 </body>
-<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/browser.js"></script>
 <script type="text/javascript">
 function preview(obj){
 	var inputVal;
@@ -711,22 +714,22 @@ function savePage(){
 	$("#des").children().html(inputVal);
 	$.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"printContext":$("#printMain").html()},function(result){
 		if(result==1){
-			alert("信息保存成功！");
+		  jAlert("信息保存成功！");
 		}else{
-			alert("信息保存失败！");
+		  jAlert("信息保存失败！");
 		}
 	});
 }
 function reset(){
-	if(confirm("确定要重置之前保存的报告吗？")){
+  jConfirm('确定要重置之前保存的报告吗？', '重置报告', function(result) {
 		$.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"printContext":""},function(result){
 			if(result==1){
 				location=location ;
 			}else{
-				alert("信息重置失败！");
+				jAlert("信息重置失败！");
 			}
 		});
-	}
+	});
 }
 function radioClick(num){
 	if(num==0){
