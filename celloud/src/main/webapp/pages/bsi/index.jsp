@@ -29,7 +29,7 @@
             <a class="celicon home-icon" href="#"></a>
           </div>
           <div class="y-topbar-span9 y-last">
-            <a class="celicon user-icon" href="#"></a>
+            <a class="celicon user-icon" href="logout" title="点击退出"></a>
           </div>
         </div>
       </div>
