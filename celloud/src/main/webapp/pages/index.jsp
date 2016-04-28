@@ -22,7 +22,7 @@
 <link href="<%=request.getContextPath()%>/plugins/select/select2.css" rel="stylesheet" />
 <link href="<%=request.getContextPath()%>/plugins/intro/introjs.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/css/font.css" rel="stylesheet" type="text/css">
-<link href="<%=request.getContextPath()%>/css/main.css" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/css/main.css?version=3.1.9" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/css/app.css?version=1.0" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet"
 	type="text/css" media="screen" />

@@ -2874,6 +2874,7 @@ table.text-center th {
 }
 .report-data-content{
   min-width: 970px;
+  padding-bottom: 5px;
 }
 .report-data-titlelist{
   float: right;
