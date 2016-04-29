@@ -78,6 +78,12 @@ var fileUpload=(function(fileUpload){
       uploader.splice();
       $("#upload-modal").modal("hide");
     });
+    uploader.bind("FileUploaded", function(uploader, file, response) {
+      var res = response.response.split(",");
+      $.get("data/run",{"dataIds":res[0],"appIds":res[1]},function(result){
+        $.report.find.condition();
+      });
+    });
     window.onbeforeunload=function(){
       var qp=uploader.total;
       var percent=qp.percent;

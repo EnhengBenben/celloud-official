@@ -748,8 +748,7 @@ public class ReportAction {
     public ModelAndView getPgsReport(String dataKey, Integer projectId, Integer appId) {
         ModelAndView mv = getModelAndView("report/report_data_pgs", projectId);
         Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
-        Integer userId = ConstantsData.getLoginUserId();
-		List<Experiment> expList = expService.getReportList(userId, dataKey, appId);
+		List<Experiment> expList = expService.getReportList(pgs.getUserId(), dataKey, appId);
         if (expList != null && expList.size() > 0) {
             mv.addObject("experiment", expList.get(0));
         }

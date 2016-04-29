@@ -3,19 +3,16 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="content-header">
-  <div class="header">
-    <h4>血流感染检测 </h4>
-  </div>
   <ol class="breadcrumb">
     <li>CelLoud平台</li>
-    <li>我的报告</li>
+    <li>我的数据</li>
   </ol>
 </div>
 <div class="box-tools">
   <div class="data-search">
-    <input id="report-condition-input" class="input-sm" type="text"/>
+    <input id="data-condition-input" class="input-sm" type="text"/>
     <div class="input-group-btn">
-      <button id="report-condition-find" class="btn btn-sm" type="button"><i class="fa fa-search"></i>搜索</button>
+      <button id="data-condition-find" class="btn btn-sm" type="button"><i class="fa fa-search"></i>搜索</button>
     </div>
   </div>
 </div>
@@ -23,31 +20,26 @@
   <thead>
     <tr>
       <th>文件名</th>
-      <th>状态<a id="sort-period" href="javascript:void(0);"><i id="sort-period-icon" class="fa fa-sort-asc" aria-hidden="true"></i></a></th>
-      <th>生成时间<a id="sort-date" href="javascript:void(0);"><i id="sort-date-icon" class="fa fa-sort-amount-asc"></i></a></th>
-      <th>操作</th>
+      <th>文件编号</th>
+      <th>文件大小</th>
+      <th>上传时间<a id="data-sort-date" href="javascript:void(0);"><i id="sort-date-icon" class="fa fa-sort-amount-asc"></i></a></th>
+      <th>批次</th>
+<!--       <th>操作</th> -->
     </tr>
   </thead>
   <tbody id="data-list-tbody">
     <c:if test="${pageList.datas.size()>0 }">
-      <c:forEach var="task" items="${pageList.datas }">
+      <c:forEach var="data" items="${pageList.datas }">
 	    <tr>
-	      <td title="${task.fileName }" name="data-name-td" >
-	        <a href="javascript:$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId})">
-              <c:choose><c:when test="${fn:length(task.fileName)>60 }"><c:out value="${fn:substring(task.fileName, 0, 60) }"/>...</c:when><c:otherwise>${task.fileName }</c:otherwise></c:choose>
-            </a>
+	      <td title="${data.fileName }" name="data-name-td" >
+              <c:choose><c:when test="${fn:length(data.fileName)>60 }"><c:out value="${fn:substring(data.fileName, 0, 60) }"/>...</c:when><c:otherwise>${data.fileName }</c:otherwise></c:choose>
           </td>
-	      <td>
-	        <c:if test="${task.period==0 }">等待运行</c:if>
-	        <c:if test="${task.period==1 }">正在运行</c:if>
-	        <c:if test="${task.period==2 }">完成</c:if>
-	        <c:if test="${empty task.period }"><span class="wrong">运行异常</span></c:if>
-	      </td>
-	      <td><fmt:formatDate type="both" value="${task.endDate }"/></td>
-	      <td>
-            <a class="edit-icon" id="to-upload-a" href="javascript:void(0)"><i class="celicon show-icon"></i></a>
-	        <a class="edit-icon" id="to-rerun-a" href="javascript:$.report.run(${task.fileId },${task.appId })"><i class="celicon rerun-icon"></i></a>
-	      </td>
+          <td>${data.dataKey }</td>
+          <td>
+            <c:choose><c:when test="${data.size>1048576 }"><fmt:formatNumber pattern="0.00" value="${data.size/1048576 }"/>MB</c:when><c:otherwise><fmt:formatNumber pattern="0.00" value="${data.size/1024 }"/>KB</c:otherwise></c:choose>
+          </td>
+	      <td><fmt:formatDate type="both" value="${data.createDate }"/></td>
+          <td>${data.batch }</td>
 	    </tr>
       </c:forEach>
     </c:if>
@@ -57,7 +49,7 @@
   <c:if test="${pageList.datas.size()>0}">
     <input id="current-page-hide" value="${pageList.page.currentPage }" type="hidden" >
     <input id="total-page-hide" value="${pageList.page.totalPage }" type="hidden" >
-    <ul id="pagination-task" class="pages">
+    <ul id="pagination-data" class="pages">
       <li><a id="first-page-task" href="javascript:void(0);">首页</a></li>
       <!-- 显示prev -->
       <c:if test="${pageList.page.hasPrev}">
@@ -180,4 +172,4 @@
     </ul>
   </c:if>
 </div>
-<script src="<%=request.getContextPath()%>/js/bsi_report.js"></script>
+<script src="<%=request.getContextPath()%>/js/bsi_data.js"></script>

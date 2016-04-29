@@ -29,7 +29,7 @@
             <a class="celicon home-icon" href="#"></a>
           </div>
           <div class="y-topbar-span9 y-last">
-            <a class="celicon user-icon" href="#"></a>
+            <a class="celicon user-icon" href="logout" title="点击退出"></a>
           </div>
         </div>
       </div>
@@ -41,7 +41,7 @@
 	        </a>
           </div>
           <div class="common-menu-span9 pull-right">
-            <a class="item-btn" id="to-report-a" href="javascript:void(0)"><i class="celicon my-report-icon"></i>我的报告</a>
+            <a class="item-btn active" id="to-report-a" href="javascript:void(0)"><i class="celicon my-report-icon"></i>我的报告</a>
             <a class="item-btn" id="to-upload-a" href="javascript:void(0)"><i class="celicon my-upload-icon"></i>上传数据</a>
             <a class="item-btn" id="to-data-a" href="javascript:void(0)"><i class="celicon my-data-icon"></i>我的数据</a>
           </div>
@@ -76,17 +76,17 @@
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-<script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
 <script src="//cdn.bootcss.com/swfobject/2.2/swfobject.min.js"></script>
+<script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
 <script src="<%=request.getContextPath()%>/plugins/select/select2.min.js"></script>
 <script src="<%=request.getContextPath()%>/plugins/select/select2_locale_zh-CN.js"></script>
 <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
-<script src="<%=request.getContextPath()%>/js/utils.js" type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/js/bsi_main.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/plupload.full.min.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/jquery.plupload.queue/jquery.plupload.queue.bsi.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/plupload.dev.js?version=1.7"></script>
 <script src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/i18n/zh_CN.js"></script>
+<script src="<%=request.getContextPath()%>/js/utils.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/bsi_main.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath() %>/js/bsi_upload.js"></script>
 <script src="<%=request.getContextPath()%>/js/charts.js"></script>
 </body>

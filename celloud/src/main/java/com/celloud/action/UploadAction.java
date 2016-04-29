@@ -125,6 +125,11 @@ public class UploadAction {
 										+ fileDataKey;
                                 updateFileInfo(dataId, fileDataKey, newName,
                                         perlPath, outPath, folderByDay, batch);
+                                Subject sub = SecurityUtils.getSubject();
+                                if (sub.hasRole("bsier")) {
+                                    App app = appService.findAppsByTag(tagId);
+                                    return dataId + "," + app.getAppId();
+                                }
 							}
                         } catch (Exception e) {
                             logger.error(e.getMessage());
@@ -135,14 +140,7 @@ public class UploadAction {
 
             }
         }
-        Subject sub = SecurityUtils.getSubject();
-        if (sub.hasRole("bsier")) {
-            App app = appService.findAppsByTag(tagId);
-            return "forward:data/run?dataId=" + dataId + "&appId="
-                    + app.getAppId();
-        } else {
-            return "uploadMSuc";
-        }
+        return "uploadMSuc";
     }
 
     /**

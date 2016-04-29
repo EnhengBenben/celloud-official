@@ -7,45 +7,56 @@
   </div>
   <ol class="breadcrumb">
     <li>CelLoud平台</li>
-    <li>我的报告</li>
+    <li data-link="to-my-report">我的报告</li>
     <li>数据报告</li>
   </ol>
 </div>
-<section class="content">
+<div class="content">
   <ul id="myTabs" class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#patient-report" id="patient-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">患者报告</a></li>
     <li role="presentation"><a href="#analy-report" role="tab" id="analy-tab" data-toggle="tab" aria-controls="profile">分析报告</a></li>
-    <li>文件名：
+    <li class="nav-pub">
+      <ul>
+        <li class="nav-fname"> 文件名称:
         <c:forEach items="${bsi.data}" var="data">
             ${data.fileName}&nbsp;&nbsp;&nbsp;
         </c:forEach>
+        </li>
+        <li class="nav-print">
+          <a class="print-btn" id="print-patient-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }&templateType=print_patient" target="_blank"><i class="celicon print-icon"></i>我的数据</a>
+          <a class="print-btn hide" id="print-analy-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }&templateType=print_analy" target="_blank"><i class="celicon print-icon"></i>我的数据</a>
+        </li>
+      </ul>
     </li>
   </ul>
   <div id="myTabContent" class="tab-content">
     <div role="tabpanel" class="tab-pane fade active in" id="patient-report" aria-labelledby="patient-tab">
       <h4>检测结果：</h4>
-	  <table class="table table-bordered table-condensed gray-table">
-	    <tr>
-	      <td colspan="5">
-	        <c:if test="${not empty bsi.species_20}">检测到
-	          <c:forEach items="${bsi.species_20 }" var="species20">
-	            <c:choose>
-	              <c:when test='${species20.species_zh.equals("未知") || empty species20.species_zh}'>species20.species&nbsp;</c:when>
-	              <c:otherwise>${species20.species_zh }
-	                <c:choose>
-	                  <c:when test="${empty havestrain}">
-	                    <c:set var="havestrain" scope="page" value="${species20.species_zh }"/>
-	                  </c:when>
-	                  <c:otherwise>
-	                    <c:set var="havestrain" scope="page" value="${havestrain },${species20.species_zh }"/>
-	                  </c:otherwise>
-	                </c:choose>
-	              </c:otherwise>
-	            </c:choose>
-	          </c:forEach>
-	        </c:if>
-	      </td>
-	    </tr>
+	  <table class="table">
+	    <thead>
+		    <tr>
+		      <th colspan="5">
+		        <c:if test="${not empty bsi.species_20}">检测到
+		          <c:forEach items="${bsi.species_20 }" var="species20">
+		            <c:choose>
+		              <c:when test='${species20.species_zh.equals("未知") || empty species20.species_zh}'>species20.species&nbsp;</c:when>
+		              <c:otherwise>${species20.species_zh }
+		                <c:choose>
+		                  <c:when test="${empty havestrain}">
+		                    <c:set var="havestrain" scope="page" value="${species20.species_zh }"/>
+		                  </c:when>
+		                  <c:otherwise>
+		                    <c:set var="havestrain" scope="page" value="${havestrain },${species20.species_zh }"/>
+		                  </c:otherwise>
+		                </c:choose>
+		              </c:otherwise>
+		            </c:choose>
+		          </c:forEach>
+		        </c:if>
+		      </td>
+		    </th>
+	    </thead>
+	    <tbody>
 	    <tr>
 	      <td>G+</td>
 	      <td>
@@ -141,19 +152,21 @@
 	                       洋葱伯克霍尔德菌
 	       </td>
 	     </tr>
+	     </tbody>
 	   </table>
-	   <h4>检测范围(20种)：</h4>
-        <p>牛链球菌、葡萄球菌、肺炎链球菌、粪肠球菌、屎肠球菌、难辨梭状芽孢杆菌、溃疡棒状杆菌、结膜干燥杆菌、大肠埃希菌、铜绿假单胞菌、
+	  <h5>检测范围(20种)：</h5>
+      <p>牛链球菌、葡萄球菌、肺炎链球菌、粪肠球菌、屎肠球菌、难辨梭状芽孢杆菌、溃疡棒状杆菌、结膜干燥杆菌、大肠埃希菌、铜绿假单胞菌、
     鲍曼不动杆菌、肺炎克雷伯菌、嗜麦芽窄食单胞菌、粘质沙雷氏菌、阴沟肠杆菌、嗜水气单胞菌、产气肠杆菌、肠炎沙门菌、奇异变形杆菌、洋葱伯克霍尔德菌。
          <br>此20种以外检测为阴性不代表没有
-        </p>
-        <h4>检测方法：<span>基于16S rDNA高通量测序方法</span></h4>
+      </p>
+      <h5>检测方法：<span>基于16S rDNA高通量测序方法</span></h5>
 	</div>
     <div role="tabpanel" class="tab-pane fade" id="analy-report" aria-labelledby="analy-tab">
 	  <h4>1. 检测结果：</h4>
-	  <table class="table table-bordered table-condensed gray-table">
+	  <table class="table">
+	    <thead>
 	     <tr>
-	       <td colspan="5">
+	       <th colspan="5">
 	         <c:if test="${not empty bsi.species_20}">
 	           检测到
 	           <c:forEach items="${bsi.species_20 }" var="species20">
@@ -172,8 +185,10 @@
 	             </c:choose>
 	           </c:forEach>
 	         </c:if>
-	       </td>
+	       </th>
 	     </tr>
+	    </thead>
+	    <tbody>
 	     <tr>
 	       <td>G+</td>
 	       <td>
@@ -269,13 +284,14 @@
 	                       洋葱伯克霍尔德菌
 	       </td>
 	     </tr>
+	    </tbody>
 	  </table>
-	  <table id="test-seq-table" class="table table-bordered table-condensed">
+	  <table id="test-seq-table" class="table seq-table">
 	    <thead>
 	      <tr>
 	        <th style="max-width: 119px;">菌名(属-种)</th>
-	        <th width="85">唯一识别序列数</th>
-	        <th width="10">#</th>
+	        <th width="85">唯一识别<br>序列数</th>
+	        <th class="no">#</th>
 	        <th width="380">序列 (5'-3')</th>
 	        <th name="opera-seq" width="53">操作</th>
 	        <th>覆盖交叉菌</th>
@@ -303,74 +319,81 @@
 	               <br>
 	               <svg width="139.9" height="8">
 	                 <rect x="0" y="0" width="139.9" height="8" fill="#fff" style="stroke:#B0DF2B;fill-opacity:0.1;stroke-opacity:0.9"/>
-	                 <c:if test="${species20.site1=='0,0'}">
+	                 <c:if test="${species20.site1!='0,0'}">
 	                 <rect x="0" y="0" width="34.9" height="8" fill="#B0DF2B" style="fill-opacity:0.4;stroke-opacity:0.9"/>
 	                 </c:if>
-	                 <c:if test="${species20.site2=='0,0'}">
+	                 <c:if test="${species20.site2!='0,0'}">
 	                 <rect x="33.1" y="0" width="46.3" height="8" fill="#17BABF" style="fill-opacity:0.4;stroke-opacity:0.9"/>
 	                 </c:if>
-	                 <c:if test="${species20.site3=='0,0'}">
+	                 <c:if test="${species20.site3!='0,0'}">
 	                 <rect x="77.6" y="0" width="31.5" height="8" fill="#FEAA20" style="fill-opacity:0.4;stroke-opacity:0.9"/>
 	                 </c:if>
-	                 <c:if test="${species20.site4=='0,0'}">
+	                 <c:if test="${species20.site4!='0,0'}">
 	                 <rect x="105.6" y="0" width="34.3" height="8" fill="#AE98DA" style="fill-opacity:0.4;stroke-opacity:0.9"/>
 	                 </c:if>
 	               </svg>
 	             </td>
 	             <td style="text-align:center;">${species20.unique_reads_num }</td>
-	             <td>1</td>
+	             <td class="no">1</td>
 	             <td>
 	               <div class="seq">${species20.seq1 }</div>
 	             </td>
 	             <td name="opera-seq"><span id="copy-seq${seqNum }<c:set var="seqNum" scope="page" value="${seqNum+1 }"/>"></span></td>
-	             <td rowspan="4" style="text-align:center;">
+	             <td style="text-align:center;">
 	               <c:choose>
 	                 <c:when test="${empty species20.cross_species }">无</c:when>
 	                 <c:otherwise>${species20.cross_species }</c:otherwise>
 	               </c:choose>
 	             </td>
 	           </tr>
-	<%--            <c:if test="${not empty species20.seq2}"> --%>
-	           <tr>
-	             <td></td>
-	             <td></td>
-	             <td>2</td>
-	             <td>
-	               <div class="seq">${species20.seq2}</div>
-	             </td>
-	             <td name="opera-seq"><span id="copy-seq${seqNum }<c:set var="seqNum" scope="page" value="${seqNum+1 }"/>"></span></td>
-	           </tr>
-	<%--            </c:if> --%>
-	           <tr>
-	             <td></td>
-	             <td></td>
-	             <td>3</td>
-	             <td>
-	               <div class="seq">${species20.seq3}</div>
-	             </td>
-	             <td name="opera-seq"><span id="copy-seq${seqNum }<c:set var="seqNum" scope="page" value="${seqNum+1 }"/>"></span></td>
-	           </tr>
-	           <tr>
-	             <td></td>
-	             <td></td>
-	             <td>4</td>
-	             <td>
-	               <div class="seq">${species20.seq4}</div>
-	             </td>
-	             <td name="opera-seq"><span id="copy-seq${seqNum }<c:set var="seqNum" scope="page" value="${seqNum+1 }"/>"></span></td>
-	           </tr>
+	           <c:if test="${not empty species20.seq2 }">
+		           <tr>
+		             <td></td>
+		             <td></td>
+		             <td class="no">2</td>
+		             <td>
+		               <div class="seq">${species20.seq2}</div>
+		             </td>
+		             <td name="opera-seq"><span id="copy-seq${seqNum }<c:set var="seqNum" scope="page" value="${seqNum+1 }"/>"></span></td>
+		             <td></td>
+		           </tr>
+	           </c:if>
+               <c:if test="${not empty species20.seq3 }">
+                   <tr>
+                     <td></td>
+                     <td></td>
+                     <td class="no">3</td>
+                     <td>
+                       <div class="seq">${species20.seq3}</div>
+                     </td>
+                     <td name="opera-seq"><span id="copy-seq${seqNum }<c:set var="seqNum" scope="page" value="${seqNum+1 }"/>"></span></td>
+                     <td></td>
+                   </tr>
+               </c:if>
+               <c:if test="${not empty species20.seq4 }">
+                   <tr>
+                     <td></td>
+                     <td></td>
+                     <td class="no">4</td>
+                     <td>
+                       <div class="seq">${species20.seq4}</div>
+                     </td>
+                     <td name="opera-seq"><span id="copy-seq${seqNum }<c:set var="seqNum" scope="page" value="${seqNum+1 }"/>"></span></td>
+                     <td></td>
+                   </tr>
+               </c:if>
 	         </c:forEach>
 	       </c:if>
 	    </tbody>
 	  </table>
 	  <div class="test-description"> 快速序列验证及比对(NCBI Blast): <a href="http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome">http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome</a></div>
-	  <h2>2. 其它可能病原菌</h2>
-	  <table id="other-seq-table" class="table table-bordered table-condensed seq-table">
+	  <h4>2. 其它可能病原菌</h4>
+	  <table id="other-seq-table" class="table  seq-table">
 	      <thead>
 	         <tr>
 	           <th style="max-width: 119px;">菌名(属-种)</th>
-	           <th width="85">唯一识别序列数</th>
-	           <th width="10">#</th>
+	           <th width="85">唯一识别<br>序列数</th>
+	           <th class="no">#</th>
 	           <th width="380">序列 (5'-3')</th>
 	           <th name="opera-seq" width="53">操作</th>
 	         </tr>
@@ -384,62 +407,66 @@
 	               <br>
 	               <svg width="139.9" height="8">
 	                 <rect x="0" y="0" width="139.9" height="8" fill="#fff" style="stroke:#B0DF2B;fill-opacity:0.1;stroke-opacity:0.9"/>
-	                 <c:if test="${species20.site1=='0,0'}">
+	                 <c:if test="${species20.site1!='0,0'}">
 	                 <rect x="0" y="0" width="34.9" height="8" fill="#B0DF2B" style="fill-opacity:0.4;stroke-opacity:0.9"/>
 	                 </c:if>
-	                 <c:if test="${species20.site2=='0,0'}">
+	                 <c:if test="${species20.site2!='0,0'}">
 	                 <rect x="33.1" y="0" width="46.3" height="8" fill="#17BABF" style="fill-opacity:0.4;stroke-opacity:0.9"/>
 	                 </c:if>
-	                 <c:if test="${species20.site3=='0,0'}">
+	                 <c:if test="${species20.site3!='0,0'}">
 	                 <rect x="77.6" y="0" width="31.5" height="8" fill="#FEAA20" style="fill-opacity:0.4;stroke-opacity:0.9"/>
 	                 </c:if>
-	                 <c:if test="${species20.site4=='0,0'}">
+	                 <c:if test="${species20.site4!='0,0'}">
 	                 <rect x="105.6" y="0" width="34.3" height="8" fill="#AE98DA" style="fill-opacity:0.4;stroke-opacity:0.9"/>
 	                 </c:if>
 	               </svg>
 	             </td>
 	             <td style="text-align:center;">${species20.unique_reads_num }</td>
-	             <td>1</td>
+	             <td class="no">1</td>
 	             <td>
 	               <div class="seq">${species20.seq1 }</div>
 	             </td>
 	             <td name="opera-seq"><span id="copy-seq${seqNum }<c:set var="seqNum" scope="page" value="${seqNum+1 }"/>"></span></td>
 	           </tr>
-	<%--            <c:if test="${not empty species20.seq2}"> --%>
-	           <tr>
-	             <td></td>
-	             <td></td>
-	             <td>2</td>
-	             <td>
-	               <div class="seq">${species20.seq2}</div>
-	             </td>
-	             <td name="opera-seq"><span id="copy-seq${seqNum }<c:set var="seqNum" scope="page" value="${seqNum+1 }"/>"></span></td>
-	           </tr>
-	<%--            </c:if> --%>
-	           <tr>
-	             <td></td>
-	             <td></td>
-	             <td>3</td>
-	             <td>
-	               <div class="seq">${species20.seq3}</div>
-	             </td>
-	             <td name="opera-seq"><span id="copy-seq${seqNum }<c:set var="seqNum" scope="page" value="${seqNum+1 }"/>"></span></td>
-	           </tr>
-	           <tr>
-	             <td></td>
-	             <td></td>
-	             <td>4</td>
-	             <td>
-	               <div class="seq">${species20.seq4}</div>
-	             </td>
-	             <td name="opera-seq"><span id="copy-seq${seqNum }<c:set var="seqNum" scope="page" value="${seqNum+1 }"/>"></span></td>
-	           </tr>
+               <c:if test="${not empty species20.seq2 }">
+                   <tr>
+                     <td></td>
+                     <td></td>
+                     <td class="no">2</td>
+                     <td>
+                       <div class="seq">${species20.seq2}</div>
+                     </td>
+                     <td name="opera-seq"><span id="copy-seq${seqNum }<c:set var="seqNum" scope="page" value="${seqNum+1 }"/>"></span></td>
+                   </tr>
+               </c:if>
+               <c:if test="${not empty species20.seq3 }">
+                   <tr>
+                     <td></td>
+                     <td></td>
+                     <td class="no">3</td>
+                     <td>
+                       <div class="seq">${species20.seq3}</div>
+                     </td>
+                     <td name="opera-seq"><span id="copy-seq${seqNum }<c:set var="seqNum" scope="page" value="${seqNum+1 }"/>"></span></td>
+                   </tr>
+               </c:if>
+               <c:if test="${not empty species20.seq4 }">
+                   <tr>
+                     <td></td>
+                     <td></td>
+                     <td class="no">4</td>
+                     <td>
+                       <div class="seq">${species20.seq4}</div>
+                     </td>
+                     <td name="opera-seq"><span id="copy-seq${seqNum }<c:set var="seqNum" scope="page" value="${seqNum+1 }"/>"></span></td>
+                   </tr>
+               </c:if>
 	         </c:forEach>
 	       </c:if>
 	     </tbody>
 	   </table>
-	    <h2>3. 统计信息</h2>
-	    <table class="table table-bordered table-condensed table-text-center">
+	    <h4>3. 统计信息</h4>
+	    <table class="table">
 	        <tr>
 	          <td>序列总数</td>
 	          <td>平均质量</td>
@@ -451,66 +478,66 @@
 	          <td>${bsi.avgGCContent }</td>
 	        </tr>
 	    </table>
-	    <table>
-	        <tr>
-	          <tr>
-	            <td style="width:50%;">
-	             <c:choose>
-	               <c:when test="${empty bsi.readsDistributionInfo}">
-	                 <c:if test="${not empty bsi.readsDistribution}">
-	                   <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.readsDistribution }" style="width:100%;">
-	                 </c:if>
-	               </c:when>
-	               <c:otherwise>
-	                 <div id="reads-distribution-char" style="width:100%;height:330px;">${bsiCharList.readsDistributionInfo }</div>
-	               </c:otherwise>
-	             </c:choose>
-	            </td>
-	            <td style="width:50%;">
-	              <c:choose>
-	                <c:when test="${empty bsi.familyDistributionInfo}">
-	                  <c:if test="${not empty bsi.familyDistribution}">
-	                    <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.familyDistribution }" style="width:100%;">
-	                  </c:if>
-	                </c:when>
-	                <c:otherwise>
-	                  <div id="family-distribution-char" style="width:100%;height:330px;">${bsiCharList.familyDistributionInfo }</div>
-	                </c:otherwise>
-	              </c:choose>
-	            </td>
-	          </tr>
-	        </tr>
-	        <tr>
-	          <td colspan="2">
-	            <c:choose>
-	              <c:when test="${empty bsi.genusDistributionInfo}">
-	                  <c:if test="${not empty bsi.genusDistribution}">
-	                    <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.genusDistribution }" style="width:90%;">
-	                  </c:if>
-	              </c:when>
-	              <c:otherwise>
-	                <div id="genus-distribution-char" style="width:100%;height:330px;">${bsiCharList.genusDistributionInfo }</div>
-	              </c:otherwise>
-	            </c:choose>
-	          </td>
-	        </tr>
+	    <table class="char-table">
+          <tr>
+            <td style="width:50%;" class="char-td">
+             <c:choose>
+               <c:when test="${empty bsi.readsDistributionInfo}">
+                 <c:if test="${not empty bsi.readsDistribution}">
+                   <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.readsDistribution }" style="width:100%;">
+                 </c:if>
+               </c:when>
+               <c:otherwise>
+                 <div id="reads-distribution-char" style="width:420px;height:330px;background-color:#fff;">${bsiCharList.readsDistributionInfo }</div>
+               </c:otherwise>
+             </c:choose>
+            </td>
+            <td style="width:50%;" class="char-td">
+              <c:choose>
+                <c:when test="${empty bsi.familyDistributionInfo}">
+                  <c:if test="${not empty bsi.familyDistribution}">
+                    <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.familyDistribution }" style="width:100%;">
+                  </c:if>
+                </c:when>
+                <c:otherwise>
+                  <div class="char-div" id="family-distribution-char" style="width:420px;height:330px;background-color:#fff;">${bsiCharList.familyDistributionInfo }</div>
+                </c:otherwise>
+              </c:choose>
+            </td>
+	      </tr>
 	    </table>
-	    <h2>4. 附件</h2>
-	    <h3>4.1 生物信息数据分析</h3>
-	    <table class="table table-bordered table-condensed table-text-center">
+	    <table class="char-table">
+	      <tr>
+            <td class="char-td">
+              <c:choose>
+                <c:when test="${empty bsi.genusDistributionInfo}">
+                  <c:if test="${not empty bsi.genusDistribution}">
+                    <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.genusDistribution }" style="width:90%;">
+                  </c:if>
+                </c:when>
+                <c:otherwise>
+                  <div id="genus-distribution-char" style="width:850px;height:330px;background-color:#fff;">${bsiCharList.genusDistributionInfo }</div>
+                </c:otherwise>
+              </c:choose>
+          </td>
+	     </tr>
+	    </table>
+	    <h4>4. 附件</h4>
+	    <h4 class="second-title">4.1 生物信息数据分析</h4>
+	    <table class="table data-analy-table" style="font-size:12px;">
 	      <thead>
 	        <tr>
-	          <th style="line-height: 12px;vertical-align: middle;">种<br><span style="font-size:12px;color: #9A9999;">Species</span></th>
-	          <th style="line-height: 12px;vertical-align: middle;min-width:110px;">属<br><span style="font-size:12px;color: #9A9999;">Genus</span></th>
-	          <th style="line-height: 12px;vertical-align: middle;min-width:80px;">GI号<br><span style="font-size:12px;color: #9A9999;">GI</span></th>
-	          <th style="line-height: 12px;vertical-align: middle;min-width:90px;">覆盖长度%<br><span style="font-size:12px;color: #9A9999;">%Coverage</span></th>
-	          <th style="line-height: 12px;vertical-align: middle;min-width:130px;">种比对上的序列数<br><span style="font-size:12px;color: #9A9999;">Reads_hit</span></th>
-	          <th style="line-height: 12px;vertical-align: middle;min-width:130px;">属比对上的序列数<br><span style="font-size:12px;color: #9A9999;">Reads_num</span></th>
-	          <th style="line-height: 12px;vertical-align: middle;min-width:130px;">种序列百分比<br><span style="font-size:12px;color: #9A9999;">%Reads_Ratio</span></th>
-	          <th style="line-height: 12px;vertical-align: middle;min-width:170px;">平均覆盖深度<br><span style="font-size:12px;color: #9A9999;">Average depth of coverage</span></th>
+	          <th>种</th>
+	          <th>属</th>
+	          <th>GI号</th>
+	          <th>覆盖长度%</th>
+	          <th>种比对上<br>的序列数</th>
+	          <th>属比对上<br>的序列数</th>
+	          <th>种序列<br>百分比</th>
+	          <th>平均覆盖<br>深度</th>
 	        </tr>
 	      </thead>
-	      <tbody style="font-size:12px">
+	      <tbody>
 	        <c:if test="${fn:length(bsi.summaryTable)>0}">
 	          <c:forEach items="${bsi.summaryTable }" var="summary" varStatus="s">
 	            <tr>
@@ -527,7 +554,7 @@
 	        </c:if>
 	      </tbody>
 	    </table>
-	    <h3>4.2 16S rRNA序列覆盖分布图</h3>
+	    <h4 class="second-title">4.2 16S rRNA序列覆盖分布图</h4>
 	    <table>
 	        <tr>
 	          <td style="width:49%">
@@ -590,8 +617,8 @@
 	          </td>
 	        </tr>
 	    </table>
-	    <h3>4.3 序列质量分析（QC）</h3>
-	    <table class="table table-bordered table-condensed table-text-center">
+	    <h4 class="second-title">4.3 序列质量分析（QC）</h4>
+	    <table class="table">
 	      <thead>
 	        <tr>
 	            <th>#Measure</th>
@@ -665,7 +692,7 @@
 	  </div>
     </div>
   </div>
-</section>
+</div>
 <script type="text/javascript">
   $(document).ready(function(){
       var params = {
@@ -694,5 +721,13 @@
       if(min_genusDisInfo != ""){
           $.reportChar.draw.singleBar("genus-distribution-char","Top 10 genus distribution","",eval("("+min_genusDisInfo+")"),"Depth","Depth");
       }
+      $("#analy-tab").on("click",function(){
+        $("#print-patient-a").addClass("hide");
+        $("#print-analy-a").removeClass("hide");
+      });
+      $("#patient-tab").on("click",function(){
+        $("#print-analy-a").addClass("hide");
+        $("#print-patient-a").removeClass("hide");
+      });
   });
 </script>
