@@ -22,6 +22,8 @@ import com.celloud.mapper.UserMapper;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Report;
 import com.celloud.model.mysql.Task;
+import com.celloud.page.Page;
+import com.celloud.page.PageList;
 import com.celloud.service.ExpensesService;
 import com.celloud.service.TaskService;
 
@@ -134,4 +136,19 @@ public class TaskServiceImpl implements TaskService {
         return null;
     }
 
+    @Override
+    public PageList<Task> findTasksByUser(Page page, Integer userId) {
+        List<Task> list = taskMapper.findTasksByUser(page, userId,
+                DataState.ACTIVE);
+        return new PageList<>(page, list);
+    }
+
+    @Override
+    public PageList<Task> findTasksByUserCondition(Page page,
+            Integer userId, String condition, Integer sort, String sortDate,
+            String sortPeriod) {
+        List<Task> list = taskMapper.findTasksByUserCondition(page, userId,
+                condition, sort, sortDate, sortPeriod, DataState.ACTIVE);
+        return new PageList<>(page, list);
+    }
 }

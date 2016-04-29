@@ -72,7 +72,6 @@ class EGFR:
 					mo.deleteAllByCondition({'dataKey':paths[len(paths)-2]},'EGFRCount');
 				#位点的dict
 				resultCount = {};
-				
 				if((firstLine.startswith('Exon') and len(firstLines) == 2) or (firstLine.startswith('EGFR') and len(firstLines) == 5)):
 					#截取userId
 					resultCount['userId'] = int(paths[len(paths)-4]);
@@ -80,6 +79,7 @@ class EGFR:
 					resultCount['dataKey'] = paths[len(paths)-2];
 					#截取length
 					resultCount['length'] = int(firstLines[len(firstLines) - 1]);
+					resultCount['count'] = 1;
 					list = [];
 					#循环读取剩余的行
 					while True:
@@ -107,7 +107,7 @@ class EGFR:
 								resultCount['site'] = int(lines[1]);
 							if('site' in resultCount.keys() and resultCount['site'] != 0):
 								list.append(resultCount.copy());
-						elif line and line.startswith('Indel'):
+						elif line and line.startswith('Indel') and len(line.split('\t')) == 6:
 							lines = line.split('\t');
 							resultCount['site'] = int(lines[3]);
 							list.append(resultCount.copy());

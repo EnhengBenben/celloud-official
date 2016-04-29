@@ -5,10 +5,15 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.celloud.mapper.RSAKeyMapper;
+import com.celloud.model.PrivateKey;
+import com.celloud.model.PublicKey;
 import com.celloud.model.mysql.RSAKey;
+import com.celloud.model.mysql.User;
 import com.celloud.service.RSAKeyService;
 
 /**
@@ -19,12 +24,20 @@ import com.celloud.service.RSAKeyService;
  */
 @Service("rsaKeyServiceImpl")
 public class RSAKeyServiceImpl implements RSAKeyService {
+    private static Logger logger = LoggerFactory.getLogger(RSAKeyServiceImpl.class);
     @Resource
     private RSAKeyMapper rsaKeyMapper;
 
     @Override
-    public boolean insert(RSAKey rsaKey) {
-        return rsaKeyMapper.insertSelective(rsaKey) >= 0;
+    public boolean saveRSAKey(PublicKey publicKey, PrivateKey privateKey, User user) {
+        RSAKey key = new RSAKey();
+        key.setCreateTime(new Date());
+        key.setModulus(privateKey.getModulus().toString(16));
+        key.setPriExponent(privateKey.getPrivateExponent().toString(16));
+        key.setPubExponent(publicKey.getExponent());
+        key.setUserId(user.getUserId());
+        key.setState(0);
+        return rsaKeyMapper.insertSelective(key) >= 0;
     }
 
     @Override
@@ -33,11 +46,17 @@ public class RSAKeyServiceImpl implements RSAKeyService {
     }
 
     @Override
-    public int deleteExpiresKeys(int days) {
+    public int deleteExpiresKeys(Integer days) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, 0 - days);
         Date lastTime = calendar.getTime();
         return rsaKeyMapper.deleteExpiresKeys(lastTime);
+    }
+
+    @Override
+    public void deleteExpireKeys() {
+        int result = deleteExpiresKeys(7);
+        logger.info("清理掉{}个过期的key！", result);
     }
 
     @Override

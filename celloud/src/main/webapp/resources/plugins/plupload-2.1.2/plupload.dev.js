@@ -1384,7 +1384,7 @@ plupload.Uploader = function(options) {
 //				md5 = spark.end();
 //				$("._uploadAlert").html("");
 // 	            up.settings.multipart_params = {'originalName': file.name,'onlyName':onlyName,"md5":md5};
-				up.settings.multipart_params = {'originalName': file.name};
+				up.settings.multipart_params = {'originalName': file.name,'tagId':$("#tag-info").val(),'batch': $("#batch-info").val()};
  	            // TODO 将来可以在这里做：如果MD5相同就秒传
 //				$.get("file!initUpload", { "onlyName":onlyName }, function(flag) {
 //					file.loaded = flag*chunkSize;

@@ -14,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.celloud.mapper.RSAKeyMapper;
 import com.celloud.model.mysql.RSAKey;
 import com.celloud.service.RSAKeyService;
 
@@ -26,6 +27,8 @@ public class RSAKeyServiceImplTest extends TestCase {
     private static Logger logger = LoggerFactory.getLogger(RSAKeyServiceImplTest.class);
     @Resource
     private RSAKeyService service;
+    @Resource
+    private RSAKeyMapper mapper;
     private RSAKey key;
     private String modulus = "8aecf6008ecb1ba5345030b97fd9094372348fad541f69a16ded4ccdb6968afdc48aebb9fd9eafcf8b170ec84c6e0ba367b22a06c481353c17a90ee096c43d2b7276d7d263e687f70c72f4441acad050d86d663b428e994680938f8c7602bd3cc153fbe4a761cc6e389cf2ea105299f3409ca03699e8af77c165dd96d103d3ab";
     private String priExponent = "3bdb5f1edc675c90f09a40741c4699fc2a5fc52bec1be0ba420fc550b903e1fcf6cad847f9a37ea2908e2dbb555af0bec5f5f8af93c90bf3c949f8f40161a9ecc4cf81af946fc8d935271170c78912d7748e35444ad53dc23e15298fcfa7c424bece3b8b59179b176d3a0d747c152860ffe215b1644245842cee7c1d7578eda9";
@@ -45,28 +48,28 @@ public class RSAKeyServiceImplTest extends TestCase {
         calendar.add(Calendar.DAY_OF_YEAR, -8);
         expiresDate = calendar.getTime();
         for (int i = 0; i < 1; i++) {
-            service.insert(key);
+            mapper.insert(key);
         }
         key.setCreateTime(expiresDate);
         for (int i = 0; i < 1; i++) {
-            service.insert(key);
+            mapper.insert(key);
         }
         key.setCreateTime(createTime);
     }
 
     @Test
     public void testInsert() {
-        boolean result = service.insert(key);
-        assertTrue(result);
-        service.insert(key);
-        assertTrue(result);
+        long result = mapper.insert(key);
+        assertTrue(result > 0);
+        mapper.insert(key);
+        assertTrue(result > 0);
     }
 
     @Test
     public void testGetByModulus() {
-        service.insert(key);
+        mapper.insert(key);
         RSAKey rsaKey = service.getByModulus(modulus);
-        service.insert(key);
+        mapper.insert(key);
         assertNotNull(rsaKey);
         assertEquals(rsaKey.getModulus(), modulus);
         rsaKey = service.getByModulus(modulus);

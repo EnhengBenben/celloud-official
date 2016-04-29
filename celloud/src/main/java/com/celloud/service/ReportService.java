@@ -20,10 +20,12 @@ import com.celloud.model.mongo.KRAS;
 import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
+import com.celloud.model.mongo.S16;
 import com.celloud.model.mongo.Split;
 import com.celloud.model.mongo.TBINH;
 import com.celloud.model.mongo.TBRifampicin;
 import com.celloud.model.mongo.TaskQueue;
+import com.celloud.model.mongo.Translate;
 import com.celloud.model.mongo.UGT;
 import com.celloud.model.mysql.Report;
 import com.celloud.page.Page;
@@ -36,8 +38,7 @@ import com.celloud.page.PageList;
  * @date 2015年12月25日 下午3:47:07
  */
 public interface ReportService {
-    
-    
+
     /**
      * 获取TBINH下是否是野生型的数量, 0:都不是1:是野生2:不是野生
      * 
@@ -129,7 +130,7 @@ public interface ReportService {
      * @date 2016-1-8 下午4:40:37
      */
     public HBV getHBVReport(String dataKey, Integer projectId, Integer appId);
-    
+
     /**
      * 获取ABINJ数据报告
      * 
@@ -141,6 +142,18 @@ public interface ReportService {
      * @date 2016年4月13日下午4:15:29
      */
     public ABINJ getABINJReport(String dataKey, Integer projectId, Integer appId);
+    
+    /**
+     * 获取16S数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author lin
+     * @date 2016年4月28日下午12:14:18
+     */
+    public S16 get16SReport(String dataKey, Integer projectId, Integer appId);
 
     /**
      * 获取PGS报告
@@ -176,6 +189,18 @@ public interface ReportService {
      * @date 2016年3月7日下午5:06:00
      */
     public HCV getHCVReport(String dataKey, Integer projectId, Integer appId);
+
+    /**
+     * 获取Translate数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author lin
+     * @date 2016年4月19日下午5:45:22
+     */
+    public Translate getTranslateReport(String dataKey, Integer projectId, Integer appId);
 
     /**
      * 获取EGFR报告
@@ -377,18 +402,17 @@ public interface ReportService {
      * @date 2016-1-9 下午2:57:29
      */
     public String hbvCompare(Integer appId, String path);
-    
+
     /**
      * KRAS 数据参数同比
      * 
      * @param appId
-     * @param path
      * @param length
      * @return
      * @date 2016-1-9 下午3:07:38
      */
-    public String krasCompare(Integer appId, String path, Integer length);
-    
+    public String krasCompare(Integer length);
+
     /**
      * EGFR 数据参数同比
      * 
@@ -399,6 +423,13 @@ public interface ReportService {
     public String egfrCompare(Integer length);
 
     /**
+     * TBRifampicin 数据参数同比
+     * 
+     * @return
+     */
+    public String tbrifampicinCompare();
+
+    /**
      * HCV 数据参数同比
      * 
      * @param appId
@@ -406,11 +437,10 @@ public interface ReportService {
      * @return
      * @date 2016-1-9 下午3:18:39
      */
-    public String hcvCompare(Integer appId, String path);
+    public String hcvCompare();
 
     /**
-     * PGS 数据参数同比
-     * 对dao层返回的数据进行拼接返回到页面
+     * PGS 数据参数同比 对dao层返回的数据进行拼接返回到页面
      * 
      * @param appId
      * @param path

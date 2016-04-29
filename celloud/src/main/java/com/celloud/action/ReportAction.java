@@ -51,9 +51,11 @@ import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
 import com.celloud.model.mongo.RecommendDrug;
+import com.celloud.model.mongo.S16;
 import com.celloud.model.mongo.Split;
 import com.celloud.model.mongo.TBINH;
 import com.celloud.model.mongo.TBRifampicin;
+import com.celloud.model.mongo.Translate;
 import com.celloud.model.mongo.UGT;
 import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.Company;
@@ -73,6 +75,7 @@ import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.CustomStringUtils;
+import com.celloud.utils.FileTools;
 import com.celloud.utils.HttpURLUtils;
 import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.VelocityUtil;
@@ -570,6 +573,40 @@ public class ReportAction {
     }
 
     /**
+     * 获取 BSI 的患者报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @date 2016-1-10 下午10:40:40
+     */
+    @ActionLog(value = "查看BSI患者报告", button = "数据报告")
+    @RequestMapping("getBSIPatientReport")
+    public ModelAndView getBSIPatientReport(String dataKey, Integer projectId,
+            Integer appId) {
+        return getBSIModelAndView("bsi/report_data_main", dataKey,
+                projectId, appId);
+    }
+    
+    /**
+     * 获取 BSI 的患者报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @date 2016-1-10 下午10:40:40
+     */
+    @ActionLog(value = "查看BSI分析报告", button = "数据报告")
+    @RequestMapping("getBSIAnalyReport")
+    public ModelAndView getBSIAnalyReport(String dataKey, Integer projectId,
+            Integer appId) {
+        return getBSIModelAndView("bsi/report_data_bsi_analy", dataKey,
+                projectId, appId);
+    }
+
+    /**
      * 获取 BSI 的数据报告
      * 
      * @param dataKey
@@ -680,6 +717,24 @@ public class ReportAction {
     }
     
     /**
+     * 获取16S的数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author lin
+     * @date 2016年4月28日下午12:15:32
+     */
+    @ActionLog(value = "查看16S数据报告", button = "数据报告")
+    @RequestMapping("get16SReport")
+    public ModelAndView get16SReport(String dataKey, Integer projectId, Integer appId) {
+    	S16 s16 = reportService.get16SReport(dataKey, projectId, appId);
+    	ModelAndView mv = getModelAndView("report/report_data_16s", projectId);
+    	return mv.addObject("s16", s16);
+    }
+    
+    /**
      * 获取PGS的数据报告
      * 
      * @param dataKey
@@ -693,8 +748,7 @@ public class ReportAction {
     public ModelAndView getPgsReport(String dataKey, Integer projectId, Integer appId) {
         ModelAndView mv = getModelAndView("report/report_data_pgs", projectId);
         Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
-        Integer userId = ConstantsData.getLoginUserId();
-		List<Experiment> expList = expService.getReportList(userId, dataKey, appId);
+		List<Experiment> expList = expService.getReportList(pgs.getUserId(), dataKey, appId);
         if (expList != null && expList.size() > 0) {
             mv.addObject("experiment", expList.get(0));
         }
@@ -753,6 +807,29 @@ public class ReportAction {
         ModelAndView mv = getModelAndView("report/report_data_hcv", projectId);
         return mv.addObject("hcv", hcv);
     }
+    
+	@ActionLog(value = "查看Translate数据报告", button = "数据报告")
+	@RequestMapping("getTranslateReport")
+	public ModelAndView getTranslateReport(String dataKey, Integer projectId, Integer appId) {
+		DataFile data = dataService.getDataByKey(dataKey);
+		Translate translate = reportService.getTranslateReport(dataKey, projectId, appId);
+		String path = data.getPath();
+		int MAX = 256 * 1024;
+		if (FileTools.getFileSize(path) > MAX) {
+			translate.setSource("输入序列超过256k，不再显示！");
+		} else {
+			String source = FileTools.readAppoint(data.getPath());
+			translate.setSource(source);
+		}
+		String result = translate.getResult();
+		if (result != null && result.length() > MAX) {
+			translate.setResult("输出序列超过256k，不再显示，请下载查看！");
+		} else {
+			translate.setResult(CustomStringUtils.htmlbr(result));
+		}
+		ModelAndView mv = getModelAndView("report/report_data_translate", projectId);
+		return mv.addObject("translate", translate);
+	}
 
     /**
      * 获取EGFR数据报告

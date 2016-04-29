@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -44,14 +45,19 @@ import com.celloud.model.mongo.GddDiseaseDict;
 import com.celloud.model.mongo.GeneDetectionResult;
 import com.celloud.model.mongo.HBV;
 import com.celloud.model.mongo.HCV;
+import com.celloud.model.mongo.HCVCount;
 import com.celloud.model.mongo.KRAS;
+import com.celloud.model.mongo.KRASCount;
 import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
+import com.celloud.model.mongo.S16;
 import com.celloud.model.mongo.Split;
 import com.celloud.model.mongo.TBINH;
 import com.celloud.model.mongo.TBRifampicin;
+import com.celloud.model.mongo.TBRifampicinCount;
 import com.celloud.model.mongo.TaskQueue;
+import com.celloud.model.mongo.Translate;
 import com.celloud.model.mongo.UGT;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Report;
@@ -63,8 +69,9 @@ import com.celloud.utils.Base64Util;
 import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.ExcelUtil;
 import com.celloud.utils.FileTools;
-import com.celloud.utils.MapSort;
 import com.celloud.utils.PropertiesUtil;
+
+import net.sf.json.JSONObject;
 
 /**
  * 报告接口 实现类
@@ -163,6 +170,11 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public HCV getHCVReport(String dataKey, Integer projectId, Integer appId) {
         return reportDao.getDataReport(HCV.class, dataKey, projectId, appId);
+    }
+    
+    @Override
+    public Translate getTranslateReport(String dataKey, Integer projectId, Integer appId) {
+        return reportDao.getDataReport(Translate.class, dataKey, projectId, appId);
     }
 
     @Override
@@ -359,60 +371,65 @@ public class ReportServiceImpl implements ReportService {
         return sb.toString() + "@" + Arrays.toString(hbvType);
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
-    public String krasCompare(Integer appId, String path, Integer length) {
-        path = path + appId + "_" + length;
-        if (FileTools.checkPath(path)) {
-            return FileTools.getLimitLines(path, 1, 10);
-        }
-        return null;
-    }
-    
-    @Override
-    public String egfrCompare(Integer length) {
-        List<EGFRCount> egfrCounts = reportDao.getEGFRCountByLength(EGFRCount.class, length);
-        // 存储位点与位点的出现次数
-        Map<String, Integer> map = new HashMap<String, Integer>();
-        for (EGFRCount count : egfrCounts) {
-            String site = count.getSite() + "";
-            if (!map.containsKey(site)) {
-                map.put(site, 1);
-            } else {
-                map.put(site, map.get(site) + 1);
-            }
-        }
-        String str = MapSort.sort(map);
-        if (str != null && !"".equals(str)) {
-            // 取前10行数据
-            // 取第几次
-            int i = 0;
-            // 目标位置下标
-            int s = -1;
-            int k = 0;
-            while (i++ < 10) {
-                s = str.indexOf("\n", s + 1);
-                // 少于10行就直接退出循环
-                if (s == -1) {
-                    break;
-                }
-                k = s;
-            }
-            return str.substring(0, k);
-        } else {
-            return str;
-        }
-    }
-
-    @Override
-    public String hcvCompare(Integer appId, String path) {
-        List<String> list = FileTools.fileSearch(path, String.valueOf(appId), "startWith");
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < list.size(); i++) {
-            String name = list.get(i);
-            String val = FileTools.getFirstLine(path + name);
-            sb.append(name.substring(name.lastIndexOf("_") + 1) + "," + val + ";");
+    public String krasCompare(Integer length) {
+        Iterable list = reportDao.getEGFROrKRASCompare(KRASCount.class, length);
+        Iterator it = list.iterator();
+        StringBuilder sb = new StringBuilder();
+        while(it.hasNext()){
+            JSONObject i = JSONObject.fromObject(it.next());
+            Integer count = Integer.parseInt(i.get("count").toString());
+            Integer site = Integer.parseInt(JSONObject.fromObject(i.get("_id")).get("site").toString());
+            sb.append(site).append("\t").append(count).append("\n");
         }
         return sb.toString();
+    }
+    
+    @SuppressWarnings("rawtypes")
+    @Override
+    public String egfrCompare(Integer length) {
+        Iterable list = reportDao.getEGFROrKRASCompare(EGFRCount.class, length);
+        Iterator it = list.iterator();
+        StringBuilder sb = new StringBuilder();
+        while(it.hasNext()){
+            JSONObject i = JSONObject.fromObject(it.next());
+            Integer count = Integer.parseInt(i.get("count").toString());
+            Integer site = Integer.parseInt(JSONObject.fromObject(i.get("_id")).get("site").toString());
+            sb.append(site).append("\t").append(count).append("\n");
+        }
+        return sb.toString();
+    }
+
+    @SuppressWarnings("rawtypes")
+    @Override
+    public String tbrifampicinCompare() {
+        Iterable list = reportDao.getTBRifampicinCompare(TBRifampicinCount.class);
+        Iterator it = list.iterator();
+        StringBuilder sb = new StringBuilder();
+        while(it.hasNext()){
+            JSONObject i = JSONObject.fromObject(it.next());
+            Integer count = Integer.parseInt(i.get("count").toString());
+            Integer site = Integer.parseInt(JSONObject.fromObject(i.get("_id")).get("site").toString());
+            sb.append(site).append("\t").append(count).append("\n");
+        }
+        return sb.toString();
+    }
+
+    @SuppressWarnings("rawtypes")
+    @Override
+    public String hcvCompare() {
+        Iterable list = reportDao.getHCVCompare(HCVCount.class);
+        Iterator it = list.iterator();
+        StringBuilder sb = new StringBuilder();
+        while(it.hasNext()){
+            JSONObject i = JSONObject.fromObject(it.next());
+            Integer count = Integer.parseInt(i.get("count").toString());
+            String subtype = JSONObject.fromObject(i.get("_id")).get("subtype").toString();
+            sb.append(subtype + "," + count + ";");
+        }
+        return sb.toString();
+        
     }
 
     @Override
@@ -873,8 +890,12 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-	public ABINJ getABINJReport(String dataKey, Integer projectId, Integer appId) {
-		return reportDao.getDataReport(ABINJ.class, dataKey, projectId, appId);
-	}
-
+    public ABINJ getABINJReport(String dataKey, Integer projectId, Integer appId) {
+        return reportDao.getDataReport(ABINJ.class, dataKey, projectId, appId);
+    }
+    
+    @Override
+    public S16 get16SReport(String dataKey, Integer projectId, Integer appId) {
+    	return reportDao.getDataReport(S16.class, dataKey, projectId, appId);
+    }
 }

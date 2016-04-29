@@ -3,6 +3,8 @@ package com.celloud.service;
 import java.util.Map;
 
 import com.celloud.model.mysql.Task;
+import com.celloud.page.Page;
+import com.celloud.page.PageList;
 
 /**
  * 运行任务服务类
@@ -49,8 +51,8 @@ public interface TaskService {
      * @author leamo
      * @date 2016年1月14日 下午7:43:46
      */
-    public Task updateToDone(Integer appId, Integer projectId,
-            String dataKey, String dataKeys, String context);
+    public Task updateToDone(Integer appId, Integer projectId, String dataKey,
+            String dataKeys, String context);
 
     /**
      * 指定app正在运行的任务数
@@ -86,4 +88,30 @@ public interface TaskService {
      * @return
      */
     public Integer deleteTask(Integer projectId);
+
+    /**
+     * 查询用户数据任务列表
+     * 
+     * @param userId
+     * @return
+     * @author leamo
+     * @date 2016年4月21日 下午2:32:22
+     */
+    public PageList<Task> findTasksByUser(Page page, Integer userId);
+
+    /**
+     * 按条件检索数据列表
+     * 
+     * @param page
+     * @param userId
+     * @param condition
+     * @param sort
+     * @param sortDateType
+     * @param sortNameType
+     * @param state
+     * @param reportType
+     * @return
+     */
+    public PageList<Task> findTasksByUserCondition(Page page, Integer userId,
+            String condition, Integer sort, String sortDate, String sortPeriod);
 }

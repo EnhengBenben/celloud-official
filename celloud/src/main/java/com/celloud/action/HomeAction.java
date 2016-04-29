@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -164,7 +166,12 @@ public class HomeAction {
 
     @RequestMapping("index")
     public String index() {
-        return "index";
+        Subject sub = SecurityUtils.getSubject();
+        if (sub.hasRole("bsier")) {
+            return "bsi/index";
+        } else {
+            return "index";
+        }
     }
 
     @RequestMapping("download.html")

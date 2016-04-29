@@ -18,10 +18,29 @@ import com.celloud.page.PageList;
 public interface ReportDao {
     
     /**
-     * 根据长度获取EGFRCount统计数据
+     * HCV数据参数同比直接在mongo中分组
+     * @param clazz
+     * @return
      */
-    public <T> List<T> getEGFRCountByLength(Class<T> clazz, Integer length);
+    @SuppressWarnings("rawtypes")
+    public <T> Iterable getHCVCompare(Class<T> clazz);
     
+    /**
+     * TBRifampicin数据参数同比直接在mongo中分组排序
+     * @param clazz
+     * @return
+     */
+    @SuppressWarnings("rawtypes")
+    public <T> Iterable getTBRifampicinCompare(Class<T> clazz);
+    
+    /**
+     * 从数据库中直接进行分组排序
+     * @param clazz
+     * @param length
+     * @return
+     */
+    @SuppressWarnings("rawtypes")
+    public <T> Iterable getEGFROrKRASCompare(Class<T> clazz, Integer length);
     
     /**
      * 根据appid获取某几列的字段值
@@ -167,4 +186,11 @@ public interface ReportDao {
      * @return
      */
     public Integer getTBINHisWild(Integer userId, String simpleGeneName, Integer isWild);
+    
+    /**
+     * 根据bean从mongo中获取全部数据
+     * @param clazz
+     * @return
+     */
+    public <T> List<T> getAllByClass(Class<T> clazz);
 }

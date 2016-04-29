@@ -35,6 +35,8 @@ public class DataFile implements Serializable{
     private String md5;
 
     private String dataTags;
+
+    private String batch;
     /** 是否正在运行，0 否，>0 是 */
     private Integer isRunning;
     /** 报告数量 */
@@ -175,5 +177,12 @@ public class DataFile implements Serializable{
     public void setReportNum(Integer reportNum) {
         this.reportNum = reportNum;
     }
-    
+
+    public String getBatch() {
+        return batch;
+    }
+
+    public void setBatch(String batch) {
+        this.batch = batch;
+    }
 }

@@ -172,6 +172,11 @@ $.ajaxSetup ({
 		    showEdditError("请选择是否合格！");
 		    return;
 		  }
+		  var remarks = $("#editReportConclusion").find("textarea[name='remarks']").val();
+      if(remarks.length>125){
+        showEdditError("备注长度不能大于125个字符！！");
+        return;
+      }
 		  $.get("experiment/updateExperiment",$("#editReportConclusionForm").serialize(),function(flag){
 		    if(flag == 1){
 		      showEdditError("保存成功，请重新打开数据报告！");
@@ -691,6 +696,10 @@ $.ajaxSetup ({
 				$.get("report/getHCVReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
 					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
 				});
+			}else if(softwareId == 73){
+        $.get("report/getTranslateReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
+          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+        });
 			}else if(softwareId == 84){
         $.get("report/getEGFRReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
           toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
@@ -725,6 +734,10 @@ $.ajaxSetup ({
         });
       }else if(softwareId == 11){
         $.get("report/getABINJReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
+          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+        });
+      }else if(softwareId == 1){
+        $.get("report/get16SReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
           toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
         });
       }else{
@@ -797,8 +810,8 @@ $.ajaxSetup ({
 				});
 			}
 			if(appId==80){
-				$.get("count/hcvCompare",{"appId":appId,"path":DATAPATH},function(data){
-						var div = $("<div id='char0' class='col-lg-6'></div>");
+				$.get("count/hcvCompare",{},function(data){
+						var div = $("<div id='char0' class='col-lg-6' style='width: 500px;height:400px;'></div>");
 						$("#charDiv").append(div);
 						var one = getCountValue("Subtype","nomal");
 						var X = "[";
@@ -815,7 +828,7 @@ $.ajaxSetup ({
 						}
 						X = X.substring(0,X.length-1)+"]";
 						Y = Y.substring(0,Y.length-1)+"]";
-						showCharHCV("char0", "Subtype", eval(X),eval(Y),0);
+						$.reportChar.draw.echartsShowBar("char0", "Subtype", eval(X), eval(Y));
 				});
 			}
 			if(appId==82){
@@ -944,20 +957,26 @@ $.ajaxSetup ({
 				});
 			}
 			if(appId==90){
-				$.get("count/tbCompare",{"appId":appId,"path":DATAPATH},function(data){
-						var div = $("<div id='char0' class='col-lg-6'></div>");
+				$.get("count/tbCompare",{},function(data){
+						var div = $("<div id='char0' class='col-lg-6' style='width: 500px;height:400px;'></div>");
 						$("#charDiv").append(div);
 						var X = "[";
 						var Y = "[";
 						var value = data.split("\n");
-						for(var k=0;k<value.length-1;k++){
-							var n = value[k].split("\t");
+						if(value.length > 1){
+							for(var k=0;k<value.length-1;k++){
+								var n = value[k].split("\t");
+								X+="'"+n[0]+"',";
+								Y+=n[1]+",";
+							}
+						}else{
+							var n = data.split("\t");
 							X+="'"+n[0]+"',";
 							Y+=n[1]+",";
 						}
 						X = X.substring(0,X.length-1)+"]";
 						Y = Y.substring(0,Y.length-1)+"]";
-						showCharHCV("char0", "位点", eval(X),eval(Y),0);
+						$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y));
 				});
 			}
 			
@@ -966,20 +985,26 @@ $.ajaxSetup ({
 				if(length==0 || isNaN(length)){
 					$("#charDiv").html("<p style=\"color: red;\">数据异常，没有同比结果</p>");
 				}else{  
-					$.get("count/krasCompare",{"appId":appId,"path":DATAPATH,"length":length},function(data){
-							var div = $("<div id='char0' class='col-lg-6'></div>");
+					$.get("count/krasCompare",{"length":length},function(data){
+							var div = $("<div id='char0' class='col-lg-6' style='width: 500px;height:400px;'></div>");
 							$("#charDiv").append(div);
 							var X = "[";
 							var Y = "[";
 							var value = data.split("\n");
-							for(var k=0;k<value.length-1;k++){
-								var n = value[k].split("\t");
+							if(value.length > 1){
+								for(var k=0;k<value.length-1;k++){
+									var n = value[k].split("\t");
+									X+="'"+n[0]+"',";
+									Y+=n[1]+",";
+								}
+							}else{
+								var n = data.split("\t");
 								X+="'"+n[0]+"',";
 								Y+=n[1]+",";
 							}
 							X = X.substring(0,X.length-1)+"]";
 							Y = Y.substring(0,Y.length-1)+"]";
-							showCharHCV("char0", "位点", eval(X),eval(Y),0);
+							$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y));
 					});
 				}
 			}
@@ -1006,7 +1031,6 @@ $.ajaxSetup ({
 								X+="'"+n[0]+"',";
 								Y+=n[1]+",";
 							}
-							
 							X = X.substring(0,X.length-1)+"]";
 							Y = Y.substring(0,Y.length-1)+"]";
 							$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y));

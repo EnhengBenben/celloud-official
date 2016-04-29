@@ -224,15 +224,13 @@ public class CountAction {
     @ActionLog(value = "获取TB数据参数同比信息", button = "TB数据报告")
 	@ResponseBody
 	@RequestMapping("tbCompare")
-	public String tbCompare(Integer appId, String path) {
-		return FileTools.getLimitLines(path + appId, 1, 10);
+	public String tbCompare() {
+        return reportService.tbrifampicinCompare();
 	}
     
     /**
      * KRAS 数据参数同比
      * 
-     * @param appId
-     * @param path
      * @param length
      * @return
      * @date 2016-1-9 下午3:09:58
@@ -240,25 +238,23 @@ public class CountAction {
     @ActionLog(value = "获取KRAS数据参数同比信息", button = "EGFR/KRAS数据报告")
     @ResponseBody
     @RequestMapping("krasCompare")
-    public String krasCompare(Integer appId, String path, Integer length) {
-        return reportService.krasCompare(appId, path, length);
+    public String krasCompare(Integer length) {
+        return reportService.krasCompare(length);
     }
 
-	/**
-	 * EGFR 数据参数同比
-	 * 
-	 * @param appId
-	 * @param path
-	 * @param length
-	 * @return
-	 * @date 2016-1-9 下午3:09:58
-	 */
+    /**
+     * EGFR 数据参数同比
+     * 
+     * @param length
+     * @return
+     * @date 2016-1-9 下午3:09:58
+     */
     @ActionLog(value = "获取EGFR数据参数同比信息", button = "EGFR/KRAS数据报告")
-	@ResponseBody
-	@RequestMapping("egfrCompare")
-	public String egfrCompare(Integer length) {
-		return reportService.egfrCompare(length);
-	}
+    @ResponseBody
+    @RequestMapping("egfrCompare")
+    public String egfrCompare(Integer length) {
+        return reportService.egfrCompare(length);
+    }
 
 	/**
 	 * HCV 数据参数同比
@@ -271,8 +267,8 @@ public class CountAction {
     @ActionLog(value = "获取HCV数据参数同比信息", button = "HCV数据报告")
 	@ResponseBody
 	@RequestMapping("hcvCompare")
-	public String hcvCompare(Integer appId, String path) {
-		return reportService.hcvCompare(appId, path);
+	public String hcvCompare() {
+		return reportService.hcvCompare();
 	}
 
 	/**

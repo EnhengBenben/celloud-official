@@ -16,6 +16,7 @@
     <result column="sample" property="sample" jdbcType="VARCHAR" />
     <result column="another_name" property="anotherName" jdbcType="VARCHAR" />
     <result column="md5" property="md5" jdbcType="VARCHAR" />
+    <result column="batch" property="batch" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.celloud.model.mysql.DataFile" extends="BaseResultMap" >
     <result column="data_tags" property="dataTags" jdbcType="LONGVARCHAR" />
@@ -26,7 +27,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     file_id, user_id, data_key, file_name, strain, size, create_date, update_date, path, 
-    state, file_format, sample, another_name, md5
+    state, file_format, sample, another_name, md5, batch
   </sql>
   <sql id="Blob_Column_List" >
     data_tags
@@ -74,13 +75,13 @@
       file_name, strain, size, 
       create_date, update_date, path, 
       state, file_format, sample, 
-      another_name, md5, data_tags
+      another_name, md5, data_tags, batch
       )
     values (#{fileId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{dataKey,jdbcType=VARCHAR}, 
       #{fileName,jdbcType=VARCHAR}, #{strain,jdbcType=VARCHAR}, #{size,jdbcType=DOUBLE}, 
       #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{path,jdbcType=VARCHAR}, 
       #{state,jdbcType=INTEGER}, #{fileFormat,jdbcType=INTEGER}, #{sample,jdbcType=VARCHAR}, 
-      #{anotherName,jdbcType=VARCHAR}, #{md5,jdbcType=VARCHAR}, #{dataTags,jdbcType=LONGVARCHAR}
+      #{anotherName,jdbcType=VARCHAR}, #{md5,jdbcType=VARCHAR}, #{dataTags,jdbcType=LONGVARCHAR}, #{batch,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.celloud.model.mysql.DataFile" >
@@ -131,6 +132,9 @@
       <if test="dataTags != null" >
         data_tags,
       </if>
+      <if test="batch != null" >
+        batch,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="fileId != null" >
@@ -177,6 +181,9 @@
       </if>
       <if test="dataTags != null" >
         #{dataTags,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="batch != null" >
+        #{batch,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -225,6 +232,9 @@
       <if test="dataTags != null" >
         data_tags = #{dataTags,jdbcType=LONGVARCHAR},
       </if>
+      <if test="batch != null" >
+        batch = #{batch,jdbcType=LONGVARCHAR},
+      </if>
     </set>
     where file_id = #{fileId,jdbcType=INTEGER}
   </update>
@@ -243,7 +253,8 @@
       sample = #{sample,jdbcType=VARCHAR},
       another_name = #{anotherName,jdbcType=VARCHAR},
       md5 = #{md5,jdbcType=VARCHAR},
-      data_tags = #{dataTags,jdbcType=LONGVARCHAR}
+      data_tags = #{dataTags,jdbcType=LONGVARCHAR},
+      batch = #{batch,jdbcType=VARCHAR}
     where file_id = #{fileId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.DataFile" >
@@ -260,7 +271,8 @@
       file_format = #{fileFormat,jdbcType=INTEGER},
       sample = #{sample,jdbcType=VARCHAR},
       another_name = #{anotherName,jdbcType=VARCHAR},
-      md5 = #{md5,jdbcType=VARCHAR}
+      md5 = #{md5,jdbcType=VARCHAR},
+      batch = #{batch,jdbcType=VARCHAR}
     where file_id = #{fileId,jdbcType=INTEGER}
   </update>
   <select id="countData" resultType="java.lang.Integer">
@@ -287,7 +299,7 @@
     )
   </insert>
   <update id="updateDataInfoByFileId" parameterType="com.celloud.model.mysql.DataFile" >
-    update tb_file set data_key=#{dataKey },size=#{size },path=#{path },another_name=#{anotherName },file_format=#{fileFormat },state=#{state },md5=#{md5 } where file_id=#{fileId }
+    update tb_file set data_key=#{dataKey },size=#{size },path=#{path },another_name=#{anotherName },file_format=#{fileFormat },state=#{state },md5=#{md5 },batch=#{batch } where file_id=#{fileId }
   </update>
   <select id="findAllDataLists" resultMap="ResultMapWithRunState" parameterType="java.lang.Integer">
     select
@@ -317,7 +329,8 @@
         or another_name like '%${condition}%'  
         or data_tags like '%${condition}%'  
         or strain like '%${condition}%' 
-        or sample like '%${condition}%')
+        or sample like '%${condition}%'
+        or batch like '%${condition}%')
     </if>
     <choose>
       <when test="sort == 0">

@@ -163,6 +163,69 @@ public class DataAction {
     }
 
     /**
+     * 获取全部数据列表
+     * 
+     * @param session
+     * @param page
+     * @param size
+     * @return
+     */
+    @ActionLog(value = "打开BSI我的数据页面", button = "我的数据")
+    @RequestMapping("bsiDataAllList")
+    public ModelAndView bsiDataAllList(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        ModelAndView mv = new ModelAndView("bsi/data_list");
+        Page pager = new Page(page, size);
+        PageList<DataFile> dataList = dataService.dataAllList(pager,
+                ConstantsData.getLoginUserId());
+        mv.addObject("pageList", dataList);
+        logger.info("用户{}打开我的数据", ConstantsData.getLoginUserName());
+        return mv;
+    }
+
+    /**
+     * 根据条件获取数据列表
+     * 
+     * @param session
+     * @param page
+     *            当前页
+     * @param size
+     *            每页行数
+     * @param condition
+     *            检索条件
+     * @param sort
+     *            排序字段 0:create_date 1:file_name
+     * @param sortType
+     *            排序类型
+     * @return
+     */
+    @ActionLog(value = "条件检索bsi数据列表", button = "我的搜索/分页")
+    @RequestMapping("bsiDataList")
+    public ModelAndView bsiDataList(@RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size, String condition,
+            @RequestParam(defaultValue = "0") int sort,
+            @RequestParam(defaultValue = "desc") String sortDateType,
+            @RequestParam(defaultValue = "asc") String sortNameType) {
+        Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
+        Matcher m = p.matcher(condition);
+        StringBuffer con_sb = new StringBuffer();
+        while (m.find()) {
+            String rep = "\\\\" + m.group(0);
+            m.appendReplacement(con_sb, rep);
+        }
+        m.appendTail(con_sb);
+        ModelAndView mv = new ModelAndView("bsi/data_list");
+        Page pager = new Page(page, size);
+        PageList<DataFile> dataList = dataService.dataLists(pager,
+                ConstantsData.getLoginUserId(), con_sb.toString(), sort,
+                sortDateType, sortNameType);
+        mv.addObject("pageList", dataList);
+        logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
+        return mv;
+    }
+
+    /**
      * 根据数据编号获取数据类型
      * 
      * @param dataIds
@@ -320,7 +383,7 @@ public class DataAction {
      * @return
      */
     @ActionLog(value = "开始运行方法，调用perl，保存任务信息", button = "开始运行")
-    @RequestMapping("run.action")
+    @RequestMapping("run")
     @ResponseBody
     public String run(String dataIds, String appIds) {
         Integer userId = ConstantsData.getLoginUserId();
@@ -516,4 +579,57 @@ public class DataAction {
         return sb;
     }
 
+    @ActionLog(value = "获取所有数据任务列表", button = "我的报告")
+    @RequestMapping("taskAllList")
+    public ModelAndView taskAllList(@RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        ModelAndView mv = new ModelAndView("bsi/report_list");
+        Page pager = new Page(page, size);
+        PageList<Task> pageList = taskService.findTasksByUser(pager,
+                ConstantsData.getLoginUserId());
+        mv.addObject("pageList", pageList);
+        logger.info("血流用户{}查看我的报告列表", ConstantsData.getLoginUserName());
+        return mv;
+    }
+
+    /**
+     * 根据条件获取数据列表
+     * 
+     * @param session
+     * @param page
+     *            当前页
+     * @param size
+     *            每页行数
+     * @param condition
+     *            检索条件
+     * @param sort
+     *            排序字段 0:create_date 1:file_name
+     * @param sortType
+     *            排序类型
+     * @return
+     */
+    @ActionLog(value = "条件检数据索数据列表", button = "数据管理搜索/分页")
+    @RequestMapping("taskList")
+    public ModelAndView taskList(@RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size, String condition,
+            @RequestParam(defaultValue = "0") int sort,
+            @RequestParam(defaultValue = "desc") String sortDate,
+            @RequestParam(defaultValue = "asc") String sortPeriod) {
+        Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
+        Matcher m = p.matcher(condition);
+        StringBuffer con_sb = new StringBuffer();
+        while (m.find()) {
+            String rep = "\\\\" + m.group(0);
+            m.appendReplacement(con_sb, rep);
+        }
+        m.appendTail(con_sb);
+        ModelAndView mv = new ModelAndView("bsi/report_list");
+        Page pager = new Page(page, size);
+        PageList<Task> pageList = taskService.findTasksByUserCondition(pager,
+                ConstantsData.getLoginUserId(), condition, sort, sortDate,
+                sortPeriod);
+        mv.addObject("pageList", pageList);
+        logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
+        return mv;
+    }
 }

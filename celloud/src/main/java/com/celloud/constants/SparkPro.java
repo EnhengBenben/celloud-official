@@ -30,6 +30,11 @@ public class SparkPro {
      * 配置python路径
      */
     public static final String PYTHONPATH = "/share/biosoft/perl/PGS_MG/python/runover.py";
+    
+    /**
+     * 由python进行全部的后续处理
+     */
+    public static final String PYTHONRUNOVER = "python /share/biosoft/perl/PGS_MG/python/project_run_over.py";
 
     /**
      * 任务运行结束的python路径
@@ -54,6 +59,6 @@ public class SparkPro {
 	/**
 	 * celloud端通过SSH投递到SGE的appId
 	 */
-	public static final List<String> SGEAPPS = Arrays.asList("11", "80", "82", "84", "85", "87", "88", "89", "90", "91",
-			"94", "104", "105", "106", "107", "108", "116", "117");
+	public static final List<String> SGEAPPS = Arrays.asList("1", "11", "73", "80", "82", "84", "85", "87", "88", "89",
+			"90", "91", "94", "104", "105", "106", "107", "108", "116", "117");
 }

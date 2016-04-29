@@ -62,6 +62,8 @@ var experiment = (function(experiment) {
 	  $(".samples").removeClass("_datered");
 	  $(".methods").removeClass("_datered");
 	  $(".steps").removeClass("_datered");
+	  $("#_alertSpan").css("display","none");
+    $("#_alertSpan").html("");
 	  SAMPLE = 0;
 	  METHOD = 0;
 	  STEP = 0;
@@ -195,8 +197,8 @@ var experiment = (function(experiment) {
 	    self.showError("编号不能为空！");
 	    return;
 	  }
-	  if(number.length>45){
-	    self.showError("编号长度不能大于45个字符！");
+	  if(number.length>22){
+	    self.showError("编号长度不能大于22个字符！");
 	    return;
 	  }
 	  var expCon = $("#expCon").val();
@@ -210,13 +212,13 @@ var experiment = (function(experiment) {
       return;
     }
 	  var expSeqIndex = $("#expSeqIndex").val().trim();
-	  if(expSeqIndex.length>45){
-      self.showError("Index长度不能大于45个字符！");
+	  if(expSeqIndex.length>22){
+      self.showError("Index长度不能大于22个字符！");
       return;
     }
 	  var other = $("#expOther").val().trim();
-    if(other.length>255){
-      self.showError("其他长度不能大于255个字符！");
+    if(other.length>125){
+      self.showError("其他长度不能大于125个字符！");
       return;
     }
 	  $("#exp-add-error").addClass("hide");

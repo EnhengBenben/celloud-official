@@ -10,6 +10,7 @@ public class EGFRCount {
     private String dataKey;
     private Integer length;
     private Integer site;
+    private Integer count;
 
     public Integer getUserId() {
         return userId;
@@ -49,6 +50,14 @@ public class EGFRCount {
 
     public void setId(ObjectId id) {
         this.id = id;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
     @Override

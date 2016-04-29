@@ -17,6 +17,7 @@ $(function(){
     }
   });
   $("#run-app-btn").on("click",function(){
+    $("#run-btn").html("运行");
     $.dataManager.run.showModal();
   });
   $("#del-data-btn").on("click",function(){
@@ -35,6 +36,8 @@ $(function(){
     $.dataManager.run.confirmRunApp();
   });
   $("#run-btn").on("click",function(){
+    $("#run-btn").attr("disabled",true);
+    $("#run-btn").html("您已经运行，请耐心等待！");
     $.dataManager.run.beginRun();
   });
   
@@ -259,7 +262,7 @@ function _init_data(){
         appIds += addedApps[i] + ",";
       }
       appIds = appIds.substring(0, appIds.length-1);
-      $.get("data/run.action",{"dataIds":dataIds,"appIds":appIds},function(result){
+      $.get("data/run",{"dataIds":dataIds,"appIds":appIds},function(result){
         if(result != ""){
           $.dataManager.showTipModal("以下APP运行失败：<br>"+result);
         }else{
