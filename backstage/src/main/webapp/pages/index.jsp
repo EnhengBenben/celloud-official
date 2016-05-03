@@ -110,6 +110,29 @@
                             <span class="title">邮件群发</span>
                         </a>
                     </li>
+                    <li id="task-menu">
+                        <a href="#">
+                            <i class="linecons-wallet"></i>
+                            <span class="title">任务统计</span>
+                        </a>
+                        <ul>
+                            <li id="queuing-time-menu">
+                                <a href="javascript:task.toQueuingTime();">
+                                    <span class="title">排队时间</span>
+                                </a>
+                            </li>
+                            <li id="running-time-menu">
+                                <a href="javascript:task.toRunningTime(1);">
+                                    <span class="title">运行时间</span>
+                                </a>
+                            </li>
+                            <li id="quantity-statistics-menu">
+                                <a href="javascript:task.toQuantityStatistics();">
+                                    <span class="title">数量统计</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li id="client-menu">
                         <a href="javascript:client.toClientMain();">
                             <i class="linecons-cloud"></i>
