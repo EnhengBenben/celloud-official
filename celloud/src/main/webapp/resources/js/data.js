@@ -251,18 +251,19 @@ function _init_data(){
       var o = $.dataManager.options;
       var checkedIds = o.checkedIds;
       var addedApps = o.runAppIds;
-      var dataIds = "";
       var appIds = "";
-      for (var i=0;i<checkedIds.length;i++){
-        dataIds += checkedIds[i] + ",";
-      }
-      dataIds = dataIds.substring(0, dataIds.length-1);
+      var dataIds = [];
+      $.each(checkedIds, function(i, el){
+          if($.inArray(el, dataIds) === -1) dataIds.push(el);
+      });
+      if(dataIds.length==0)
+        return;
       $("#run-error-text").html("");
       for (var i=0;i<addedApps.length;i++){
         appIds += addedApps[i] + ",";
       }
       appIds = appIds.substring(0, appIds.length-1);
-      $.get("data/run",{"dataIds":dataIds,"appIds":appIds},function(result){
+      $.get("data/run",{"dataIds":dataIds.toString(),"appIds":appIds},function(result){
         if(result != ""){
           $.dataManager.showTipModal("以下APP运行失败：<br>"+result);
         }else{
