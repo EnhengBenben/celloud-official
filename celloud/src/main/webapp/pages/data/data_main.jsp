@@ -192,4 +192,4 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- /All Modal-->
-<script src="<%=request.getContextPath()%>/js/data.js?version=1.1" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/data.js?version=1.2" type="text/javascript"></script>
