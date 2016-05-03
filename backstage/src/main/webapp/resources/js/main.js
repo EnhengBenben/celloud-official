@@ -752,3 +752,34 @@ var feedback=(function(feedback){
 	});
 	return self;
 })(feedback);
+
+var task = (function(task){
+	var self = task || {};
+	
+	self.toQuantityStatistics = function(){
+		$.post("task/getQuantityStatistics",{},function(responseText){
+			$("#main-content").html(responseText);
+		});
+	}
+	
+	self.toQueuingTime = function(){
+		$.post("task/getQueuingTime",{},function(responseText){
+			$("#main-content").html(responseText);
+		});
+	}
+	
+	self.toRunningTime = function(currentPage){
+		var keyword = $("#keyword").val();
+		if(!keyword){
+			keyword = "";
+		}
+		if(keyword.length>0&&(!/^[a-zA-Z0-9_\u4e00-\u9fa5]+$/g.test(keyword))){
+			jAlert("搜索关键字不能包含特殊字符");
+			return;
+		}
+		$.post("task/getRunningTime",{"currentPage":currentPage,"keyword":keyword},function(responseText){
+			$("#main-content").html(responseText);
+		});
+	}
+	return self;
+})(task);
