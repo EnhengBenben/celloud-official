@@ -248,6 +248,29 @@ var experiment = (function(experiment) {
 	    }
 	  });
   }
+	self.selectSeqIndex = function(val){
+		$("#expSeqIndex").children().remove();
+		$("#expSeqIndex").append("<option value='0'>--请选择--</option>");
+		if(val == 14 || val == 15){
+			for(var i = 1; i <= 96; i++){
+				$("#expSeqIndex").append("<option value='"+ i +"'>"+ i +"</option>")
+			}
+		}else if(val == 16){
+			for(var i = 1; i <= 9; i++){
+				$("#expSeqIndex").append("<option value='S503N70"+ i +"'>S503N70"+ i +"</option>")
+			}
+			$("#expSeqIndex").append("<option value='S503N710'>S503N710</option>")
+			$("#expSeqIndex").append("<option value='S503N711'>S503N711</option>")
+			$("#expSeqIndex").append("<option value='S503N712'>S503N712</option>")
+			
+			for(var i = 1; i <= 9; i++){
+				$("#expSeqIndex").append("<option value='S504N70"+ i +"'>S504N70"+ i +"</option>")
+			}
+			$("#expSeqIndex").append("<option value='S504N710'>S504N710</option>")
+			$("#expSeqIndex").append("<option value='S504N711'>S504N711</option>")
+			$("#expSeqIndex").append("<option value='S504N712'>S504N712</option>")
+		}
+	}
 	return self;
 })(experiment);
 
