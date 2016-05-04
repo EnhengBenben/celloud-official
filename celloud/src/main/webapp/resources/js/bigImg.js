@@ -3,8 +3,8 @@
  * @param src
  */
 function bigFigure(src){
-  $("img[id='imageFullScreen']").css("width",1260);
-  $("img[id='imageFullScreen']").css("height",156);
+  $("img[id='imageFullScreen']").css("width",960);
+  $("img[id='imageFullScreen']").css("height",144);
   showZoom(src);
 }
 /**

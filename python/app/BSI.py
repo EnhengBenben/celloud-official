@@ -48,6 +48,7 @@ class BSI:
                 specie_name = list_value(st, 0)
                 cross_species = list_value(st, 10)
                 strain_dict = mo.get({"species": str(specie_name)}, "BSISpecies")
+                species_zh = ""
                 if strain_dict is not None:
                     species_zh = dict_value(strain_dict, "species_zh")
                 cross_species_dict = mo.get({"species": str(cross_species)}, "BSISpecies")
