@@ -100,7 +100,7 @@
 <script src="<%=request.getContextPath() %>/plugins/calendar/WdatePicker.js"></script>
 <script src="<%=request.getContextPath() %>/js/report.js?version=3.1.8.3"></script>
 <script src="<%=request.getContextPath() %>/js/report_codon.js"></script>
-<script src="<%=request.getContextPath() %>/js/bigImg.js?version=3.1.9"></script>
+<script src="<%=request.getContextPath() %>/js/bigImg.js?version=3.1.9.1"></script>
 <script type="text/javascript">
 var session_userId = <%=session.getAttribute("userId")%>;
 var sessionUserName = "<%=((User)session.getAttribute("loginUserInSession")).getUsername() %>";
