@@ -16,7 +16,6 @@
 					<c:if test="${oncogene.pdf!=null && oncogene.pdf!='' }">
 						<a href="${down }${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/${oncogene.pdf }" class="btn btn-default"><i class="i-pdf"></i>PDF下载</a>
 					</c:if>
-<%-- 					<a href='javascript:toPrintHBV("${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }")' class="btn btn-default"><i class="i-printback i-print"></i>打印报告</a> --%>
 				</div>
 			</div>
 		</div>

@@ -57,10 +57,7 @@ import com.celloud.model.mongo.TBINH;
 import com.celloud.model.mongo.TBRifampicin;
 import com.celloud.model.mongo.Translate;
 import com.celloud.model.mongo.UGT;
-import com.celloud.model.mysql.App;
-import com.celloud.model.mysql.Company;
 import com.celloud.model.mysql.DataFile;
-import com.celloud.model.mysql.Dept;
 import com.celloud.model.mysql.Experiment;
 import com.celloud.model.mysql.Project;
 import com.celloud.model.mysql.Report;
@@ -1195,39 +1192,6 @@ public class ReportAction {
         }
         KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
         mv.addObject("kras", kras).addObject("report", report);
-        return mv;
-    }
-
-    // TODO 达安流程打印，需要拆分页面，拆分方法
-    @ActionLog(value = "打印DAAN数据报告", button = "打印数据报告")
-    @RequestMapping("printDAAN")
-    public ModelAndView printDAAN(Integer appId, String dataKey, Integer projectId, String context, String imgHtml,
-            String seq, String result, String allPic, String table) {
-        ModelAndView mv = getModelAndView("print/print_daan", projectId);
-        Integer userId = ConstantsData.getLoginUserId();
-        Integer fileId = dataService.getDataByKey(dataKey).getFileId();
-        Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
-        // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
-        if (StringUtils.isNotEmpty(report.getPrintContext())) {
-            return mv.addObject("printContext", report.getPrintContext()).addObject("report", report);
-        }
-        Integer deptId = ConstantsData.getLoginUser().getDeptId();
-        Dept dept = deptService.selectByPrimaryKey(deptId);
-        Company company = companyService.selectByPrimaryKey(dept.getCompanyId());
-        if (StringUtils.isNotEmpty(imgHtml)) {
-            String[] imgArr = imgHtml.split(",");
-            ArrayList<String> imgList = new ArrayList<String>();
-            for (String s : imgArr) {
-                imgList.add(s);
-            }
-            mv.addObject("imgList", imgList);
-        }
-        App app = appService.selectByPrimaryKey(appId);
-        mv.addObject("app", app);
-        mv.addObject("userId", userId).addObject("appId", appId);
-        mv.addObject("context", context).addObject("allPic", allPic);
-        mv.addObject("result", result).addObject("table", table).addObject("seq", seq);
-        mv.addObject("company", company).addObject("dept", dept).addObject("report", report);
         return mv;
     }
 

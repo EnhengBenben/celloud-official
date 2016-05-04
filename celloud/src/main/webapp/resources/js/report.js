@@ -1223,62 +1223,6 @@ $.ajaxSetup ({
 		    }
 		}
 		
-function toPrintHBV(pagePath,flag){
-	var param = {};
-	var userId = pagePath.split("/")[0];
-	var appId = pagePath.split("/")[1];
-	var dataKey = pagePath.split("/")[2];
-	if(appId == 90){
-		var imgHtml="";
-		$("img[name='imgSrc']").each(function(){ 
-			imgHtml+=$(this).attr("src")+",";
-		});
-		if(imgHtml!=""){
-			imgHtml = imgHtml.substring(0,imgHtml.length-1);
-		}
-		param = {
-				"appId" : appId,
-		        "dataKey":dataKey,
-		        "projectId":$("#_projectId").val(),
-				"context":$("#report_tb").html(),
-				"imgHtml":imgHtml
-		};
-	}else if(appId == 89){
-		var imgHtml="";
-		$("img[name='imgSrc']").each(function(){ 
-			imgHtml+=$(this).attr("src")+",";
-		});
-		if(imgHtml!=""){
-			imgHtml = imgHtml.substring(0,imgHtml.length-1);
-		}
-		var _result = $("#_result").html().trim();
-		var table = $("#knowResult").html().trim();
-		var knowPic = $("img[name='know']").attr("src"); 
-		param = {
-				"appId" : appId,
-		        "dataKey":dataKey,
-		        "projectId":$("#_projectId").val(),
-				"context":$("#report_tb").html(),
-				"imgHtml":imgHtml,
-				"seq":$("#_seq").html(),
-				"result":_result,
-				"allPic":knowPic,
-		        "table":table
-		};
-	}
-	$.post("report/printDAAN",param,function(responseText){
-		var obj = window.open("");
-		obj.document.write(responseText);
-		obj.document.close();
-	});
-}
-function toPrintVSP(){
-	$.post("../../print!printVSP",{"context":$("#printDiv").html()},function(responseText){
-		var obj = window.open("");
-		obj.document.write(responseText);
-		obj.document.close();
-	});
-}
 var printReport = {
     main: function(method,param){
       $.get(method,param,function(responseText){
