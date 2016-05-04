@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,8 +45,6 @@ import com.celloud.service.TaskService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.DataKeyListToFile;
 import com.celloud.utils.FileTools;
-import com.celloud.utils.PropertiesUtil;
-import com.celloud.utils.RemoteRequests;
 import com.celloud.utils.Response;
 import com.celloud.utils.SSHUtil;
 
@@ -458,18 +455,11 @@ public class DataAction {
             return result;
         }
 
-        // TODO 向tools端传参 优化tools投递后删除
-        StringBuffer dataResult = new StringBuffer();
-        for (DataFile d : dataList) {
-            dataResult.append(getDataResult(d));
-        }
-
         // 运行APP详细信息
         List<App> appList = appService.findAppsByIds(appIds);
         String bp = basePath + userId + "/";
         for (App app : appList) {
             Integer appId = app.getAppId();
-            String appName = app.getAppName();
             Integer proId = appProMap.get(appId);
             String appPath = bp + appId + "/";
             if (!FileTools.checkPath(appPath)) {
@@ -533,50 +523,17 @@ public class DataAction {
                     }
                 }
             } else {
-				if (SparkPro.SGEAPPS.contains(String.valueOf(appId))) {
-					// TODO 所有向Tools端投递任务的流程都向这里集中
-					// 最终判断删除，非spark就是SGE
-					logger.info("celloud 直接向 SGE 投递任务");
-					Map<String, String> map = CommandKey.getMap(dataFilePath, appPath, proId);
-					StrSubstitutor sub = new StrSubstitutor(map);
-					String command = sub.replace(app.getCommand());
-					logger.info("运行命令:{}", command);
-					SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-					ssh.sshSubmit(command, false);
-				} else {
-					//TODO 还有 _16S 流程需要从Toold端删除
-					String newPath = PropertiesUtil.toolsPath + "Procedure!runApp?userId=" + userId + "&appId=" + appId
-							+ "&appName=" + appName + "&projectName=" + proName + "&dataKeyList="
-							+ dataResult.toString() + "&projectId=" + proId;
-					RemoteRequests rr = new RemoteRequests();
-					rr.run(newPath);
-				}
+				// SGE
+				logger.info("celloud 直接向 SGE 投递任务");
+				Map<String, String> map = CommandKey.getMap(dataFilePath, appPath, proId);
+				StrSubstitutor sub = new StrSubstitutor(map);
+				String command = sub.replace(app.getCommand());
+				logger.info("运行命令:{}", command);
+				SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+				ssh.sshSubmit(command, false);
             }
         }
         return result;
-    }
-
-    /**
-     * 运行所需信息
-     * 
-     * @param d
-     * @return
-     * @author leamo
-     * @date 2016-1-10 下午8:44:38
-     */
-    // TODO 待删
-    private StringBuffer getDataResult(DataFile d) {
-        StringBuffer sb = new StringBuffer();
-        String filename = d.getFileName();
-        String datakey = d.getDataKey();
-        String anotherName = d.getAnotherName();
-        String ext = FileTools.getExtName(filename);
-        sb.append(datakey).append(",").append(datakey).append(ext).append(",")
-                .append(filename).append(",")
-                // TODO 这个三目有必要么？
-                .append(StringUtils.isEmpty(anotherName) ? null : anotherName)
-                .append(";");
-        return sb;
     }
 
     @ActionLog(value = "获取所有数据任务列表", button = "我的报告")
