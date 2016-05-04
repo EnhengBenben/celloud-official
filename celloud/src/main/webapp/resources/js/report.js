@@ -828,12 +828,12 @@ $.ajaxSetup ({
 						}
 						X = X.substring(0,X.length-1)+"]";
 						Y = Y.substring(0,Y.length-1)+"]";
-						$.reportChar.draw.echartsShowBar("char0", "Subtype", eval(X), eval(Y));
+						$.reportChar.draw.echartsShowBar("char0", "Subtype", eval(X), eval(Y), 0);
 				});
 			}
 			if(appId==82){
 				$.get("count/hbvCompare",{"appId":appId,"path":DATAPATH},function(data){
-					var div0 = $("<div id='char0' class='col-lg-12' style='max-width: 1000px;'></div>");
+					var div0 = $("<div id='char0' class='col-lg-12' style='width: 1000px;height: 450px;'></div>");
 					$("#charDiv").append(div0);
 					var sType = $("#snpType").html();
 					if(!sType){
@@ -842,36 +842,57 @@ $.ajaxSetup ({
 					var hbvtype=eval(data.split("@")[1]);
 					var aType=new Array();
 					if(sType.indexOf("A")>=0){
-						aType.push([0,hbvtype[0]/2]);
+						aType.push([hbvtype[0]/2]);
 					}
 					if(sType.indexOf("B")>=0){
-						aType.push([1,hbvtype[1]/2]);
+						aType.push([null,hbvtype[1]/2]);
 					}
 					if(sType.indexOf("C")>=0){
-						aType.push([2,hbvtype[2]/2]);
+						aType.push([null,null,hbvtype[2]/2]);
 					}
 					if(sType.indexOf("D")>=0){
-						aType.push([3,hbvtype[3]/2]);
+						for(var i = 0;i < 3;i++){
+							aType.push(null);
+						}
+						aType.push(hbvtype[3]/2);
 					}
 					if(sType.indexOf("E")>=0){
-						aType.push([4,hbvtype[4]/2]);
+						for(var i = 0;i < 4;i++){
+							aType.push(null);
+						}
+						aType.push(hbvtype[4]/2);
 					}
 					if(sType.indexOf("F")>=0){
-						aType.push([5,hbvtype[5]/2]);
+						for(var i = 0;i < 5;i++){
+							aType.push(null);
+						}
+						aType.push(hbvtype[5]/2);
 					}
 					if(sType.indexOf("G")>=0){
-						aType.push([6,hbvtype[6]/2]);
+						for(var i = 0;i < 6;i++){
+							aType.push(null);
+						}
+						aType.push(hbvtype[6]/2);
 					}
 					if(sType.indexOf("H")>=0){
-						aType.push([7,hbvtype[7]/2]);
+						for(var i = 0;i < 7;i++){
+							aType.push(null);
+						}
+						aType.push(hbvtype[7]/2);
 					}
 					if(sType.indexOf("no match")>=0){
-						aType.push([8,hbvtype[8]/2]);
+						for(var i = 0;i < 8;i++){
+							aType.push(null);
+						}
+						aType.push(hbvtype[8]/2);
 					}
 					if(sType==""){
-						aType.push([9,hbvtype[9]/2]);
+						for(var i = 0;i < 9;i++){
+							aType.push(null);
+						}
+						aType.push(hbvtype[9]/2);
 					}
-					showHBVType("char0",hbvtype,aType);
+					$.reportChar.draw.echartsShowHBVType('char0',hbyType,aType,45);
 					
 					
 					var result = $("#resultDiv").html();
@@ -898,14 +919,14 @@ $.ajaxSetup ({
 						}
 					}
 					
-					var div1 = $("<div id='char1' class='col-lg-12' style='max-width: 1000px;'></div>");
+					var div1 = $("<div id='char1' class='col-lg-12' style='width: 1000px;height: 450px;'></div>");
 					$("#charDiv").append(div1);
 					var one = getCountValue("Subtype","nomal");
 					var X = "[";
 					var Y = "[";
 					var value = data.split("@")[0].split(";");
 					var num = value.length;
-					var ay=new Array();
+					//var ay=new Array();
 					for(var k=0;k<value.length-1;k++){
 						var n = value[k].split(",");
 						X+="'"+n[0]+"',";
@@ -920,21 +941,21 @@ $.ajaxSetup ({
 								}
 							}
 							if(isOne){
-								Y+="{ dataLabels: { enabled: true, y: -5, crop: false },color:'rgba(0, 204, 204, .5)', y:"+ n[1]+"},";
-								ay.push([k,n[1]/2]);
+								Y+="{value : "+ n[1] +", itemStyle : {normal : {color : '#00cccc'}}},";
+								//ay.push([k,n[1]/2]);
 							}else{
+								Y+="'" + n[1] + "',";
 							}
-							Y+=n[1]+",";
 						}else if(rType.length==0&&n[0]=="none"){
-							Y+="{ dataLabels: { enabled: true, y: -5, crop: false },color:'rgba(0, 204, 204, .5)', y:"+ n[1]+"},";
-							ay.push([0,n[1]/2]);
+							Y+="{value : "+ n[1] +", itemStyle : {normal : {color : '#00cccc'}}},";
+							//ay.push([0,n[1]/2]);
 						}else{
+							Y+="'" + n[1] + "',";
 						}
-						Y+=n[1]+",";
 					}
 					X = X.substring(0,X.length-1)+"]";
 					Y = Y.substring(0,Y.length-1)+"]";
-					if(num>=20&&num<25){
+					/*if(num>=20&&num<25){
 						$("#char1").css({"width":500+"px"});
 					}else if(num>=25&&num<30){
 						$("#char1").css({"width":570+"px"});
@@ -951,9 +972,10 @@ $.ajaxSetup ({
 					}else if(num>=55){
 						$("#char0").css({"width":300+"px"});
 						$("#char1").css({"width":880+"px"});
-					}
-					showHBVny("char1",eval(Y),ay,eval(X));
-					showCharHCV("char1", "耐药类型", eval(X),eval(Y),-45);
+					}*/
+					// showHBVny("char1",eval(Y),ay,eval(X));
+					// showCharHCV("char1", "耐药类型", eval(X),eval(Y),-45);
+					$.reportChar.draw.echartsShowBar("char1", "耐药类型", eval(X), eval(Y), -45);
 				});
 			}
 			if(appId==90){
@@ -976,7 +998,7 @@ $.ajaxSetup ({
 						}
 						X = X.substring(0,X.length-1)+"]";
 						Y = Y.substring(0,Y.length-1)+"]";
-						$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y));
+						$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y), 0);
 				});
 			}
 			
@@ -1004,7 +1026,7 @@ $.ajaxSetup ({
 							}
 							X = X.substring(0,X.length-1)+"]";
 							Y = Y.substring(0,Y.length-1)+"]";
-							$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y));
+							$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y), 0);
 					});
 				}
 			}
@@ -1033,7 +1055,7 @@ $.ajaxSetup ({
 							}
 							X = X.substring(0,X.length-1)+"]";
 							Y = Y.substring(0,Y.length-1)+"]";
-							$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y));
+							$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y), 0);
 					});
 				}
 			}
