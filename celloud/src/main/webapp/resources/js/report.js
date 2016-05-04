@@ -655,23 +655,10 @@ $.ajaxSetup ({
 				$("#fileListUl").removeClass("active");
 				$("#"+reportIdNow).addClass("active");
 			}
-			if(softwareId ==112){
-				$.get("report/getGDDReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-				});
-			}else if(softwareId ==110 || softwareId ==111){
-				$.get("report/getCMPReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-				});
-			}else if(softwareId == 113){
-				$.get("report/getSplitReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-				});
-			}else if(softwareId == 114 || softwareId == 118){
-			  var method = softwareId == 114 ? "getMIBReport" : "getBSIReport";
-				$.get("report/"+method,{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-					var mib_readsDisInfo = $("#reads-distribution-char").text();
+      $.get("report/"+appMethod[softwareId],{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
+        toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+        if(softwareId == 114 || softwareId == 118){
+          var mib_readsDisInfo = $("#reads-distribution-char").text();
           var mib_familyDisInfo = $("#family-distribution-char").text();
           var min_genusDisInfo = $("#genus-distribution-char").text();
           if(mib_readsDisInfo != ""){
@@ -683,73 +670,8 @@ $.ajaxSetup ({
           if(min_genusDisInfo != ""){
             $.reportChar.draw.singleBar("genus-distribution-char","Top 10 genus distribution","",eval("("+min_genusDisInfo+")"),"Depth","Depth");
           }
-				});
-			}else if(softwareId == 85 || softwareId == 86 || softwareId == 87 || softwareId == 88 || softwareId == 91 || softwareId == 92 || softwareId == 93 || softwareId == 94 || softwareId == 104|| softwareId == 116){
-				$.get("report/getPgsReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-				});
-			}else if(softwareId == 82){
-				$.get("report/getHBVReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-				});
-			}else if(softwareId == 80){
-				$.get("report/getHCVReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-				});
-			}else if(softwareId == 73){
-        $.get("report/getTranslateReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-        });
-			}else if(softwareId == 84){
-        $.get("report/getEGFRReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-        });
-      }else if(softwareId == 89){
-        $.get("report/getKRASReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-        });
-      }else if(softwareId == 90){
-        $.get("report/getTBRifampicinReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-           toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-        });
-      }else if(softwareId == 117){
-        $.get("report/getOncogeneReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-        });
-      }else if(softwareId == 105){
-	    $.get("report/getTBINHReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-	      toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-	    });
-      }else if(softwareId == 106){
-        $.get("report/getDPDReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-        });
-      }else if(softwareId == 107){
-    	$.get("report/getBRAFReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-        });
-      }else if(softwareId == 108){
-        $.get("report/getUGTReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-        });
-      }else if(softwareId == 11){
-        $.get("report/getABINJReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-        });
-      }else if(softwareId == 1){
-        $.get("report/get16SReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-        });
-      }else{
-				var newPath = "Procedure!readReport" + "?fileName="+fileName+"&userId=" + userId + "&appId=" + softwareId + "&dataKey=" + dataKey + "&projectId="+proId;
-				$.get("report/getReportFromTools",{"dataKey":dataKey,"url":newPath,"projectId":proId},function(responseText){
-					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-					spinner.stop();
-					if(softwareId==73){
-						$("#translateDataKey").html(dataKey);
-					}
-				});
-			}
+        }
+      });
 		}
 		
 		function toDataReport(responseText,appId,columns,DATAPATH){
