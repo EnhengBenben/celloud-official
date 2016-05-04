@@ -33,7 +33,7 @@
       <c:forEach var="task" items="${pageList.datas }">
 	    <tr>
 	      <td title="${task.fileName }" name="data-name-td" >
-	        <a href="javascript:$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId})">
+	        <a href="javascript:<c:choose><c:when test="${task.period==2 }">$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId})</c:when><c:otherwise>void(0)</c:otherwise></c:choose>">
               <c:choose><c:when test="${fn:length(task.fileName)>60 }"><c:out value="${fn:substring(task.fileName, 0, 60) }"/>...</c:when><c:otherwise>${task.fileName }</c:otherwise></c:choose>
             </a>
           </td>
@@ -45,7 +45,7 @@
 	      </td>
 	      <td><fmt:formatDate type="both" value="${task.endDate }"/></td>
 	      <td>
-            <a class="edit-icon" id="to-upload-a" href="javascript:void(0)"><i class="celicon show-icon"></i></a>
+            <a class="edit-icon" id="to-upload-a" href="javascript:<c:choose><c:when test="${task.period==2 }">$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId})</c:when><c:otherwise>void(0)</c:otherwise></c:choose>"><i class="celicon show-icon"></i></a>
 	        <a class="edit-icon" id="to-rerun-a" href="javascript:$.report.run(${task.fileId },${task.appId })"><i class="celicon rerun-icon"></i></a>
 	      </td>
 	    </tr>
