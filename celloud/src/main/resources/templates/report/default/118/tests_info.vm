@@ -6,9 +6,9 @@
       #else
         $!species_20.species_zh
         #if($havestrain)
-            #set ($havestrain=$!havestrain,$!species_20.species_zh)
+            #set ($havestrain="$!havestrain,$!species_20.species_zh")
         #else
-            #set ($havestrain=$!species_20.species_zh)
+            #set ($havestrain="$!species_20.species_zh")
         #end
       #end
     </p>
