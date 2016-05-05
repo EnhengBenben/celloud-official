@@ -46,7 +46,8 @@
 	      <td><fmt:formatDate type="both" value="${task.endDate }"/></td>
 	      <td>
             <a class="edit-icon" id="to-upload-a" href="javascript:<c:choose><c:when test="${task.period==2 }">$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId})</c:when><c:otherwise>void(0)</c:otherwise></c:choose>"><i class="celicon show-icon"></i></a>
-	        <a class="edit-icon" id="to-rerun-a" href="javascript:$.report.run(${task.fileId },${task.appId })"><i class="celicon rerun-icon"></i></a>
+	        <a class="edit-icon" id="to-rerun-a" href="javascript:$.report.run(${task.fileId },118)"><i class="celicon rerun-icon"></i></a>
+<%-- 	        <a class="edit-icon" id="to-rerun-a" href="javascript:$.report.run(${task.fileId },${task.appId })"><i class="celicon rerun-icon"></i></a> --%>
 	      </td>
 	    </tr>
       </c:forEach>
