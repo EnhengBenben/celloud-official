@@ -88,13 +88,13 @@ $.report.loadlist = function(response){
     var page;
     if(id == null){
       page = $(this).html();
-    }else if(id.indexof("prev")>0){
+    }else if(id.indexOf("prev")>0){
       page = currentPage-1;
-    }else if(id.indexof("next")>0){
+    }else if(id.indexOf("next")>0){
       page = currentPage+1;
-    }else if(id.indexof("first")>0){
+    }else if(id.indexOf("first")>0){
       page = 1;
-    }else if(id.indexof("last")>0){
+    }else if(id.indexOf("last")>0){
       page = parseInt($("#total-page-hide").val());
     }
     $.report.find.pagination(page);
@@ -165,13 +165,13 @@ $.data_.loadlist = function(response){
     var page;
     if(id == null){
       page = $(this).html();
-    }else if(id.indexof("prev")>0){
+    }else if(id.indexOf("prev")>0){
       page = currentPage-1;
-    }else if(id.indexof("next")>0){
+    }else if(id.indexOf("next")>0){
       page = currentPage+1;
-    }else if(id.indexof("first")>0){
+    }else if(id.indexOf("first")>0){
       page = 1;
-    }else if(id.indexof("last")>0){
+    }else if(id.indexOf("last")>0){
       page = parseInt($("#total-page-hide").val());
     }
     $.data_.find.pagination(page);
