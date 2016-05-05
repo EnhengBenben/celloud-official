@@ -69,9 +69,11 @@ public class LoginAction {
         PublicKey key = generatePublicKey(subject.getSession());
         if (isRemembered) {
             User temp = userService.findByUsernameOrEmail(String.valueOf(subject.getPrincipal()));
-            user.setUsername(temp.getUsername());
-            String password = RSAUtil.encryptedString(key.getModulus(), key.getExponent(), temp.getPassword());
-            user.setPassword(password);
+            if (temp != null) {
+                user.setUsername(temp.getUsername());
+                String password = RSAUtil.encryptedString(key.getModulus(), key.getExponent(), temp.getPassword());
+                user.setPassword(password);
+            }
         }
         return mv.addObject("checked", isRemembered).addObject("user", user).addObject("publicKey", key)
                 .addObject("showKaptchaCode", getFailedlogins() >= 3);
