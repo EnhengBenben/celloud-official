@@ -319,7 +319,7 @@
         select
         <include refid="Base_Column_List" />
         from tb_user
-        where state=#{state } and role=#{role }
+        where state=#{state } and role != 2
         <if test="keyword!=null and keyword!=''">
             and ${searchField} like '%${keyword }%'
         </if>
