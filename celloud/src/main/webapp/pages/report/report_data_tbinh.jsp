@@ -75,11 +75,8 @@
 		<c:if test="${not empty tbinh.original }">
 			<c:forEach items="${tbinh.original }" var="original" varStatus="st">
 				<div class="m-boxCon">
-					<a
-						href="javascript:showBg('${uploadPath}${tbinh.userId }/${tbinh.appId }/${tbinh.dataKey }/SVG/${original }','original${st.count }');">
-						<img name="imgSrc"
-						src="${uploadPath}${tbinh.userId }/${tbinh.appId }/${tbinh.dataKey }/SVG/${original }"
-						style="width: 85%;" id="original${st.count }">
+					<a href="javascript:bigOrigin('${uploadPath}${tbinh.userId }/${tbinh.appId }/${tbinh.dataKey }/SVG/${original }','original${st.count }');">
+						<img name="imgSrc" src="${uploadPath}${tbinh.userId }/${tbinh.appId }/${tbinh.dataKey }/SVG/${original }" class="originImg" id="original${st.count }">
 					</a>
 				</div>
 			</c:forEach>
@@ -95,13 +92,6 @@
 		searchTable("_snum1", "r1", "_sr1");
 		searchTable("_snum2", "r2", "_sr2");
 	});
-	function showBg(src, id) {
-		var width = $("#" + id).width();
-		var height = $("#" + id).height();
-		$("img[id='imageFullScreen']").css("width", width * 1.5);
-		$("img[id='imageFullScreen']").css("height", height * 1.5);
-		showZoom(src);
-	}
 	function searchTable(numId, sourceId, resultId) {
 		var search = $("#" + numId).val();
 		$("#" + resultId).html("");

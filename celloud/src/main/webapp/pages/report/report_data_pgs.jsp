@@ -172,7 +172,7 @@
         	<h2><i class="i-dna"></i>染色体</h2>
             <div class="m-boxCon">
             	<c:if test="${pgs.miniPng!=null && pgs.miniPng!='' }">
-					<a href="javascript:showBg('${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }','miniPngImg');" >
+					<a href="javascript:bigOrigin('${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }','miniPngImg');" >
 						<img src="${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }" style="width: 700px;" id="miniPngImg">
 					</a>
 				</c:if>
@@ -186,7 +186,7 @@
         	<h2><i class="i-dna"></i>染色体点图</h2>
             <div class="m-boxCon">
             	<c:if test="${pgs.testPng!=null && pgs.testPng!='' }">
-					<a href="javascript:showBg('${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.testPng }','testPngImg');" >
+					<a href="javascript:bigOrigin('${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.testPng }','testPngImg');" >
 						<img src="${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.testPng }" style="width: 700px;height: 220px" id="testPngImg">
 					</a>
 				</c:if>
@@ -200,7 +200,7 @@
         	<h2><i class="i-dna"></i>染色体位置图</h2>
             <div class="m-boxCon">
 	            <c:if test="${pgs.finalPng!=null && pgs.finalPng!='' }">
-					<a href="javascript:showBg('${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }','finalPngImg');" >
+					<a href="javascript:bigOrigin('${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }','finalPngImg');" >
 						<img src="${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" style="height: 1000px;" id="finalPngImg">
 					</a>
 				</c:if>
@@ -388,13 +388,6 @@ $(function() {
 		num ++;
 	});
 });
-function showBg(src,id) {
-	var width = $("#" + id).width();
-	var height = $("#" + id).height();
-	$("img[id='imageFullScreen']").css("width",width*1.5);
-	$("img[id='imageFullScreen']").css("height",height*1.5);
-	showZoom(src);
-}
 function showModal(id){
 	$("#"+id).modal("show");
 }

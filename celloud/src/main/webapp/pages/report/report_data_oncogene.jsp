@@ -53,7 +53,7 @@
 		    	${oncogene.wz2 }
 		    	<br/>
 		    	<c:forEach var="img" items="${oncogene.out }">
-		    		<a href="javascript:showBgTwo('${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img.replace('3.png','10.png') }');" >
+		    		<a href="javascript:bigReplace('${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img.replace('3.png','10.png') }');" >
 						<img class="imgtop" title="${img }" name="imgSrc" style="padding-left: 30px;" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img }" height="170px;" width="150px;">
 					</a>
 		    	</c:forEach>
@@ -83,36 +83,36 @@
 		<h2><i class="i-dna"></i>五、 测序峰图结果</h2>
 	    <c:if test="${oncogene.original.containsKey('1_all_png') }">
 		    <div class="m-boxCon result">
-					<a href="javascript:showBg('${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.original['1_all_png'] }','listAll1Img');" >
-						<img name="imgSrc" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.original['1_all_png'] }" style="width: 85%;" id="listAll1Img">
+					<a href="javascript:bigOrigin('${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.original['1_all_png'] }','listAll1Img');" >
+						<img name="imgSrc" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.original['1_all_png'] }" class="originImg" id="listAll1Img">
 					</a>
 		    </div>
 		</c:if>
 	    <c:if test="${oncogene.original.containsKey('2_all_png') }">
 		    <div class="m-boxCon result">
-					<a href="javascript:showBg('${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.original['2_all_png'] }','listAll2Img');" >
-						<img name="imgSrc" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.original['2_all_png'] }" style="width: 85%;" id="listAll2Img">
+					<a href="javascript:bigOrigin('${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.original['2_all_png'] }','listAll2Img');" >
+						<img name="imgSrc" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.original['2_all_png'] }" class="originImg" id="listAll2Img">
 					</a>
 		    </div>
 		</c:if>
 		<c:if test="${oncogene.original.containsKey('3_all_png') }">
 			<div class="m-boxCon result">
-				<a href="javascript:showBg('${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.original['3_all_png'] }','listAll3Img');" >
-					<img name="imgSrc" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.original['3_all_png'] }" style="width: 85%;" id="listAll3Img">
+				<a href="javascript:bigOrigin('${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.original['3_all_png'] }','listAll3Img');" >
+					<img name="imgSrc" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.original['3_all_png'] }" class="originImg" id="listAll3Img">
 				</a>
 			</div>
 		</c:if>
 	     <c:if test="${oncogene.original.containsKey('4_all_png') }">
 		     <div class="m-boxCon result">
-					<a href="javascript:showBg('${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.original['4_all_png'] }','listAll4Img');" >
-						<img name="imgSrc" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.original['4_all_png'] }" style="width: 85%;" id="listAll4Img">
+					<a href="javascript:bigOrigin('${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.original['4_all_png'] }','listAll4Img');" >
+						<img name="imgSrc" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.original['4_all_png'] }" class="originImg" id="listAll4Img">
 					</a>
 		    </div>
 	     </c:if>
      	<c:if test="${oncogene.original.containsKey('5_all_png') }">
 		     <div class="m-boxCon result">
-					<a href="javascript:showBg('${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.original['5_all_png'] }','listAll5Img');" >
-						<img name="imgSrc" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.original['5_all_png'] }" style="width: 85%;" id="listAll5Img">
+					<a href="javascript:bigOrigin('${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.original['5_all_png'] }','listAll5Img');" >
+						<img name="imgSrc" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${oncogene.original['5_all_png'] }" class="originImg" id="listAll5Img">
 					</a>
 		    </div>
      	</c:if>
@@ -126,16 +126,4 @@ $(function() {
             speed : 1000
     });
 });
-function showBgTwo(src){
-	$("img[id='imageFullScreen']").css("width",1050);
-	$("img[id='imageFullScreen']").css("height",157.5);
-	showZoom(src);
-}
-function showBg(src,id) { 
-	var width = $("#" + id).width();
-	var height = $("#" + id).height();
-	$("img[id='imageFullScreen']").css("width",width*1.5);
-	$("img[id='imageFullScreen']").css("height",height*1.5);
-	showZoom(src);
-}
 </script>

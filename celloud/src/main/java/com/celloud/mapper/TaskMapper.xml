@@ -251,6 +251,7 @@
 	(select * from tb_task where task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} group by data_key))t
 	 on f.data_key=t.data_key 
 	 where f.user_id=#{userId} and f.state=#{state}
+	 order by t.end_date desc,t.period asc
   </select>
   <select id="findTasksByUserCondition" resultMap="ResultMapWithFileName">
     select f.file_name,f.file_id,t.* from tb_file f left join

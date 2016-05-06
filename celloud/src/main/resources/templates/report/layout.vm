@@ -10,6 +10,7 @@
 <link rel="bookmark" href="$link.getContextPath()/images/favicon.ico" />
 <link rel="shortcut icon" href="$link.getContextPath()/images/favicon.ico" />
 <link href="$link.getContextPath()/css/print.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 </head>
 <body>

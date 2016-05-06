@@ -597,7 +597,7 @@ a:hover, a:focus{
 		});
 	}
 	function reset(){
-		if(confirm("确定要重置之前保存的报告吗？")){
+	  jConfirm('确定要重置之前保存的报告吗？', '重置报告', function(result) {
 			var url = window.location.href.split("printPGS")[0];
 			$.post(url+"updateContext",{"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"projectId":$("#_projectId").html(),"printContext":""},function(result){
 				if(result==1){
@@ -606,7 +606,7 @@ a:hover, a:focus{
 					jAlert("信息重置失败！");
 				}
 			});
-		}
+		});
 	}
 </script>
 </html>

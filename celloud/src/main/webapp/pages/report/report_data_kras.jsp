@@ -71,8 +71,8 @@
 	    <c:if test="${kras.original!=null }">
 	    	<c:forEach var="original" items="${kras.original }" varStatus="st">
 				<div class="m-boxCon result">
-						<a href="javascript:showBg('${uploadPath}${kras.userId }/${kras.appId }/${kras.dataKey }/SVG/${original }','original${st.count }');" >
-							<img name="imgSrc" src="${uploadPath}${kras.userId }/${kras.appId }/${kras.dataKey }/SVG/${original }" style="width: 85%;" id="original${st.count }">
+						<a href="javascript:bigOrigin('${uploadPath}${kras.userId }/${kras.appId }/${kras.dataKey }/SVG/${original }','original${st.count }');" >
+							<img name="imgSrc" src="${uploadPath}${kras.userId }/${kras.appId }/${kras.dataKey }/SVG/${original }" class="originImg" id="original${st.count }">
 						</a>
 			    </div>
 	    	</c:forEach>
@@ -128,13 +128,6 @@ $(function() {
             speed : 1000
     });
 });
-function showBg(src,id) { 
-	var width = $("#" + id).width();
-	var height = $("#" + id).height();
-	$("img[id='imageFullScreen']").css("width",width*1.5);
-	$("img[id='imageFullScreen']").css("height",height*1.5);
-	showZoom(src);
-}
 function showModal(id){
 	$("#"+id).modal("show");
 	$("#"+id).find(".modal-body").scrollTop(0);

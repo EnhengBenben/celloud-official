@@ -19,9 +19,6 @@ $(function () {
     $("#to-upload-a").removeClass("active");
     $("#to-data-a").removeClass("active");
   });
-  $("#to-my-report").on("click",function(){
-    $.report.find.condition();
-  });
   $("#to-data-a").on("click",function(){
     $.data_.find.condition();
     $(this).addClass("active");
@@ -91,13 +88,13 @@ $.report.loadlist = function(response){
     var page;
     if(id == null){
       page = $(this).html();
-    }else if(id.indexof("prev")>0){
+    }else if(id.indexOf("prev")>0){
       page = currentPage-1;
-    }else if(id.indexof("next")>0){
+    }else if(id.indexOf("next")>0){
       page = currentPage+1;
-    }else if(id.indexof("first")>0){
+    }else if(id.indexOf("first")>0){
       page = 1;
-    }else if(id.indexof("last")>0){
+    }else if(id.indexOf("last")>0){
       page = parseInt($("#total-page-hide").val());
     }
     $.report.find.pagination(page);
@@ -112,6 +109,18 @@ $.report.loadlist = function(response){
     $.report.options.sortDate = $.report.options.sortDate=="desc"?"asc":"desc";
     $.report.find.condition();
   });
+}
+$.report.detail = {
+    patient: function(dataKey,projectId,appId){
+      $.get("report/getBSIPatientReport",{"dataKey":dataKey,"projectId":projectId,"appId":appId},function(response){
+        $("#container").html(response);
+      });
+    },
+    analy: function(dataKey,projectId,appId){
+      $.get("report/getBSIAnalyReport",{"dataKey":dataKey,"projectId":projectId,"appId":appId},function(response){
+        $("#myTabContent").html(response);
+      });
+    }
 }
 
 $.data_ = {
@@ -156,13 +165,13 @@ $.data_.loadlist = function(response){
     var page;
     if(id == null){
       page = $(this).html();
-    }else if(id.indexof("prev")>0){
+    }else if(id.indexOf("prev")>0){
       page = currentPage-1;
-    }else if(id.indexof("next")>0){
+    }else if(id.indexOf("next")>0){
       page = currentPage+1;
-    }else if(id.indexof("first")>0){
+    }else if(id.indexOf("first")>0){
       page = 1;
-    }else if(id.indexof("last")>0){
+    }else if(id.indexOf("last")>0){
       page = parseInt($("#total-page-hide").val());
     }
     $.data_.find.pagination(page);

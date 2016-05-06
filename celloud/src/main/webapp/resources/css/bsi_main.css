@@ -457,6 +457,19 @@ a, a:link, a:hover, a:active, a:visited {
 	color: #323232;
 	min-height: 400px;
 	margin-bottom: 10px;
+	position: relative;
+}
+.tab-content .tab-temp{
+	width:900px;
+	height:600px;
+	z-index:99999;
+	background-color:#e0f7f9;
+	position:absolute;
+	margin-right: 25px;
+}
+.tab-content .tab-absolute{
+	position:absolute;
+    margin-right: 25px;
 }
 .tab-content h4{
 	font-size: 14px;
@@ -561,7 +574,20 @@ a, a:link, a:hover, a:active, a:visited {
 }
 .char-table{
 	margin-bottom: 20px;
+	
+}
+.char-table>tbody>tr>td:first-child{
+	border-right:20px solid #e0f7f9;
+}
+.char-table>tbody>tr>td:last-child{
+    border-left:20px solid #e0f7f9;
 }
 .char-td{
 	background-color: #fff;
+}
+.img-table>tbody>tr{
+    border-bottom: 10px solid #e0f7f9;
+}
+.img-table>tbody>tr>td:first-child{
+    border-right:10px solid #e0f7f9;
 }

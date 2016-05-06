@@ -52,7 +52,7 @@
 		    	${egfr.mutationPosition }
 		    	<br/>
 		    	<c:forEach var="out" items="${egfr.out }">
-		    		<a href="javascript:showBgTwo('${uploadPath}${egfr.userId }/${egfr.appId }/${egfr.dataKey }/SVG/${out }');" style="padding-right: 20px">
+		    		<a href="javascript:bigReplace('${uploadPath}${egfr.userId }/${egfr.appId }/${egfr.dataKey }/SVG/${out.replace('png','10.png') }');" style="padding-right: 20px">
 		    			<img src="${uploadPath}${egfr.userId }/${egfr.appId }/${egfr.dataKey }/SVG/${out}" style="width: 156px;height: 177px;">
 		    		</a>
 		    	</c:forEach>
@@ -83,8 +83,8 @@
 	    <c:if test="${egfr.original!=null }">
 	    	<c:forEach var="original" items="${egfr.original }" varStatus="st">
 				<div class="m-boxCon result">
-						<a href="javascript:showBg('${uploadPath}${egfr.userId }/${egfr.appId }/${egfr.dataKey }/SVG/${original }','original${st.count }');" >
-							<img name="imgSrc" src="${uploadPath}${egfr.userId }/${egfr.appId }/${egfr.dataKey }/SVG/${original }" style="width: 85%;" id="original${st.count }">
+						<a href="javascript:bigOrigin('${uploadPath}${egfr.userId }/${egfr.appId }/${egfr.dataKey }/SVG/${original }','original${st.count }');" >
+							<img name="imgSrc" class="originImg" src="${uploadPath}${egfr.userId }/${egfr.appId }/${egfr.dataKey }/SVG/${original }" id="original${st.count }">
 						</a>
 			    </div>
 	    	</c:forEach>
@@ -140,18 +140,6 @@ $(function() {
             speed : 1000
     });
 });
-function showBgTwo(src){
-	$("img[id='imageFullScreen']").css("width",1050);
-	$("img[id='imageFullScreen']").css("height",157.5);
-	showZoom(src.replace("png","10.png"));
-}
-function showBg(src,id) { 
-	var width = $("#" + id).width();
-	var height = $("#" + id).height();
-	$("img[id='imageFullScreen']").css("width",width*1.5);
-	$("img[id='imageFullScreen']").css("height",height*1.5);
-	showZoom(src);
-}
 function showModal(id){
 	$("#"+id).modal("show");
 	$("#"+id).find(".modal-body").scrollTop(0);
