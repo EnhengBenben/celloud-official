@@ -17,6 +17,7 @@
             <param-name>targetFilterLifecycle</param-name>
             <param-value>true</param-value>
         </init-param>
+        <async-supported>true</async-supported>
     </filter>
     <filter-mapping>
         <filter-name>shiroFilter</filter-name>
@@ -25,6 +26,7 @@
 	<filter>
 		<filter-name>HiddenHttpMethodFilter</filter-name>
 		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+		<async-supported>true</async-supported>
 	</filter>
 	<filter-mapping>
 		<filter-name>HiddenHttpMethodFilter</filter-name>
@@ -38,6 +40,7 @@
 			<param-value>classpath*:/springMVC.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>springMVC</servlet-name>
@@ -55,6 +58,7 @@
 			<param-name>forceEncoding</param-name>
 			<param-value>true</param-value>
 		</init-param>
+		<async-supported>true</async-supported>
 	</filter>
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
@@ -64,6 +68,7 @@
 	<servlet>
 		<servlet-name>Kaptcha</servlet-name>
 		<servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
+		<async-supported>true</async-supported>
 		<init-param>
 			<param-name>kaptcha.border</param-name>
 			<param-value>no</param-value>
