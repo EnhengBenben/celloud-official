@@ -7,14 +7,14 @@
   </div>
   <ol class="breadcrumb">
     <li>CelLoud平台</li>
-    <li data-link="to-my-report">我的报告</li>
+    <li id="to-my-report">我的报告</li>
     <li>数据报告</li>
   </ol>
 </div>
 <div class="content">
   <ul id="myTabs" class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#patient-report" id="patient-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">患者报告</a></li>
-    <li role="presentation"><a href="#analy-report" role="tab" id="analy-tab" data-toggle="tab" aria-controls="profile">分析报告</a></li>
+    <li role="presentation" class="active"><a href="javascript:void(0)" id="patient-tab">患者报告</a></li>
+    <li role="presentation"><a href="javascript:void(0)" id="analy-tab">分析报告</a></li>
     <li class="nav-pub">
       <ul>
         <li class="nav-fname"> 文件名称:
@@ -23,14 +23,15 @@
         </c:forEach>
         </li>
         <li class="nav-print">
-          <a class="print-btn" id="print-patient-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }&templateType=print_patient" target="_blank"><i class="celicon print-icon"></i>我的数据</a>
-          <a class="print-btn hide" id="print-analy-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }&templateType=print_analy" target="_blank"><i class="celicon print-icon"></i>我的数据</a>
+          <a class="print-btn" id="print-patient-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }&templateType=print_patient" target="_blank"><i class="celicon print-icon"></i>打印报告</a>
+          <a class="print-btn hide" id="print-analy-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }&templateType=print_analy" target="_blank"><i class="celicon print-icon"></i>打印报告</a>
         </li>
       </ul>
     </li>
   </ul>
   <div id="myTabContent" class="tab-content">
-    <div role="tabpanel" class="tab-pane fade active in" id="patient-report" aria-labelledby="patient-tab">
+    <div id="tab-temp" style="" class="tab-temp hide"></div>
+    <div role="tabpanel" class="tab-pane active in tab-absolute" id="patient-report" aria-labelledby="patient-tab">
       <h4>检测结果：</h4>
 	  <table class="table">
 	    <thead>
@@ -161,7 +162,7 @@
       </p>
       <h5>检测方法：<span>基于16S rDNA高通量测序方法</span></h5>
 	</div>
-    <div role="tabpanel" class="tab-pane fade" id="analy-report" aria-labelledby="analy-tab">
+    <div role="tabpanel" class="tab-pane" id="analy-report" aria-labelledby="analy-tab">
 	  <h4>1. 检测结果：</h4>
 	  <table class="table">
 	    <thead>
@@ -465,54 +466,54 @@
 	       </c:if>
 	     </tbody>
 	   </table>
-	    <h4>3. 统计信息</h4>
-	    <table class="table">
-	        <tr>
-	          <td>序列总数</td>
-	          <td>平均质量</td>
-	          <td>平均GC含量</td>
-	        </tr>
-	        <tr>
-	          <td>${bsi.totalReads }</td>
-	          <td>${bsi.avgQuality }</td>
-	          <td>${bsi.avgGCContent }</td>
-	        </tr>
-	    </table>
-	    <table class="char-table">
-          <tr>
-            <td style="width:50%;" class="char-td">
-             <c:choose>
-               <c:when test="${empty bsi.readsDistributionInfo}">
-                 <c:if test="${not empty bsi.readsDistribution}">
-                   <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.readsDistribution }" style="width:100%;">
-                 </c:if>
-               </c:when>
-               <c:otherwise>
-                 <div id="reads-distribution-char" style="width:420px;height:330px;background-color:#fff;">${bsiCharList.readsDistributionInfo }</div>
-               </c:otherwise>
-             </c:choose>
-            </td>
-            <td style="width:50%;" class="char-td">
-              <c:choose>
-                <c:when test="${empty bsi.familyDistributionInfo}">
-                  <c:if test="${not empty bsi.familyDistribution}">
-                    <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.familyDistribution }" style="width:100%;">
-                  </c:if>
-                </c:when>
-                <c:otherwise>
-                  <div class="char-div" id="family-distribution-char" style="width:420px;height:330px;background-color:#fff;">${bsiCharList.familyDistributionInfo }</div>
-                </c:otherwise>
-              </c:choose>
-            </td>
-	      </tr>
-	    </table>
-	    <table class="char-table">
+	  <h4>3. 统计信息</h4>
+	  <table class="table">
+        <tr>
+          <td>序列总数</td>
+          <td>平均质量</td>
+          <td>平均GC含量</td>
+        </tr>
+        <tr>
+          <td>${bsi.totalReads }</td>
+          <td>${bsi.avgQuality }</td>
+          <td>${bsi.avgGCContent }</td>
+        </tr>
+      </table>
+	  <table class="char-table">
+        <tr>
+          <td style="width:50%;" class="char-td">
+            <c:choose>
+              <c:when test="${empty bsi.readsDistributionInfo}">
+                <c:if test="${not empty bsi.readsDistribution}">
+                  <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.readsDistribution }" style="width:100%;">
+                </c:if>
+              </c:when>
+              <c:otherwise>
+                 <div id="reads-distribution-char" style="width:400px;height:330px;">${bsiCharList.readsDistributionInfo }</div>
+              </c:otherwise>
+            </c:choose>
+          </td>
+          <td style="width:50%;" class="char-td">
+            <c:choose>
+              <c:when test="${empty bsi.familyDistributionInfo}">
+                <c:if test="${not empty bsi.familyDistribution}">
+                  <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.familyDistribution }" style="width:100%;">
+                </c:if>
+              </c:when>
+              <c:otherwise>
+                 <div id="family-distribution-char" style="width:400px;height:330px;">${bsiCharList.familyDistributionInfo }</div>
+              </c:otherwise>
+            </c:choose>
+          </td>
+        </tr>
+      </table>
+	  <table>
 	      <tr>
             <td class="char-td">
               <c:choose>
                 <c:when test="${empty bsi.genusDistributionInfo}">
                   <c:if test="${not empty bsi.genusDistribution}">
-                    <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.genusDistribution }" style="width:90%;">
+                    <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.genusDistribution }" style="width:100%;">
                   </c:if>
                 </c:when>
                 <c:otherwise>
@@ -555,64 +556,64 @@
 	      </tbody>
 	    </table>
 	    <h4 class="second-title">4.2 16S rRNA序列覆盖分布图</h4>
-	    <table>
+	    <table class="img-table">
 	        <tr>
-	          <td style="width:49%">
+	          <td style="width:50%">
 	            <c:if test="${not empty bsi.pngPath.top1png }">
-	              <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.pngPath.top1png }" style="width:90%;">
+	              <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.pngPath.top1png }" style="width:100%;">
 	            </c:if>
 	          </td>
-	          <td style="width:49%">
+	          <td style="width:50%">
 	            <c:if test="${not empty bsi.pngPath.top2png }">
-	              <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.pngPath.top2png }" style="width:90%;">
+	              <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.pngPath.top2png }" style="width:100%;">
 	            </c:if>
 	          </td>
 	        </tr>
 	        <tr>
-	          <td style="width:49%">
+	          <td style="width:50%">
 	            <c:if test="${not empty bsi.pngPath.top3png }">
-	              <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.pngPath.top3png }" style="width:90%;">
+	              <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.pngPath.top3png }" style="width:100%;">
 	            </c:if>
 	          </td>
-	          <td style="width:49%">
+	          <td style="width:50%">
 	            <c:if test="${not empty bsi.pngPath.top4png }">
-	              <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.pngPath.top4png }" style="width:90%;">
+	              <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.pngPath.top4png }" style="width:100%;">
 	            </c:if>
 	          </td>
 	        </tr>
 	        <tr>
-	          <td style="width:49%">
+	          <td style="width:50%">
 	            <c:if test="${not empty bsi.pngPath.top5png }">
-	              <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.pngPath.top5png }" style="width:90%;">
+	              <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.pngPath.top5png }" style="width:100%;">
 	            </c:if>
 	          </td>
-	          <td style="width:49%">
+	          <td style="width:50%">
 	            <c:if test="${not empty bsi.pngPath.top6png }">
-	              <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.pngPath.top6png }" style="width:90%;">
+	              <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.pngPath.top6png }" style="width:100%;">
 	            </c:if>
 	          </td>
 	        </tr>
 	        <tr>
-	          <td style="width:49%">
+	          <td style="width:50%">
 	            <c:if test="${not empty bsi.pngPath.top7png }">
-	              <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.pngPath.top7png }" style="width:90%;">
+	              <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.pngPath.top7png }" style="width:100%;">
 	            </c:if>
 	          </td>
-	          <td style="width:49%">
+	          <td style="width:50%">
 	            <c:if test="${not empty bsi.pngPath.top8png }">
-	              <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.pngPath.top8png }" style="width:90%;">
+	              <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.pngPath.top8png }" style="width:100%;">
 	            </c:if>
 	          </td>
 	        </tr>
 	        <tr>
-	          <td style="width:49%">
+	          <td style="width:50%">
 	            <c:if test="${not empty bsi.pngPath.top9png }">
-	              <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.pngPath.top9png }" style="width:90%;">
+	              <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.pngPath.top9png }" style="width:100%;">
 	            </c:if>
 	          </td>
-	          <td style="width:49%">
+	          <td style="width:50%">
 	            <c:if test="${not empty bsi.pngPath.top10png }">
-	              <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.pngPath.top10png }" style="width:90%;">
+	              <img src="${uploadPath }/${bsi.userId }/${bsi.appId }/${bsi.dataKey }${bsi.pngPath.top10png }" style="width:100%;">
 	            </c:if>
 	          </td>
 	        </tr>
@@ -663,7 +664,7 @@
 	          </tr>
 	      </tbody>
 	    </table>
-	    <table style="width:100%;">
+	    <table>
 	      <tr>
 	        <td style="width:50%;">
 	          <c:if test="${not empty bsi.qualityPath1 }">
@@ -693,6 +694,8 @@
     </div>
   </div>
 </div>
+<script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
+<script src="<%=request.getContextPath()%>/js/charts.js"></script>
 <script type="text/javascript">
   $(document).ready(function(){
       var params = {
@@ -722,12 +725,33 @@
           $.reportChar.draw.singleBar("genus-distribution-char","Top 10 genus distribution","",eval("("+min_genusDisInfo+")"),"Depth","Depth");
       }
       $("#analy-tab").on("click",function(){
-        $("#print-patient-a").addClass("hide");
+        $("#analy-tab").parent("li").addClass("active");
+        $("#patient-tab").parent("li").removeClass("active");
+        $("#tab-temp").removeClass("hide");
+        $("#analy-report").css("z-index","99999");
+        $("#analy-report").addClass("active").addClass("in");
+        $("#patient-report").css("z-index","");
+        $("#patient-report").removeClass("active").removeClass("in");
         $("#print-analy-a").removeClass("hide");
+        $("#print-patient-a").addClass("hide");
+        $("#tab-temp").addClass("hide");
+      });
+      $("#patient-tab").on("mousedown",function(){
+        $("#patient-tab").parent("li").addClass("active");
+        $("#analy-tab").parent("li").removeClass("active");
+        $("#tab-temp").removeClass("hide");
+        $("#analy-report").css("z-index","");
+        $("#patient-report").css("z-index","99999");
+        $("#patient-report").addClass("active").addClass("in");
+        $("#print-patient-a").removeClass("hide");
+        $("#print-analy-a").addClass("hide");
       });
       $("#patient-tab").on("click",function(){
-        $("#print-analy-a").addClass("hide");
-        $("#print-patient-a").removeClass("hide");
+        $("#analy-report").removeClass("active");
+        $("#tab-temp").addClass("hide");
+      });
+      $("#to-my-report").on("click",function(){
+        $.report.find.condition();
       });
   });
 </script>

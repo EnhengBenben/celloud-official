@@ -86,7 +86,7 @@ $.reportChar.draw = {
           },
           legend: {
               orient : 'vertical',
-              x : document.getElementById(id).offsetWidth / 2-10,
+              x : $("#"+id).width() / 2-10,
               y : 30,
               itemGap:6,
               data: $.reportChar.draw.circularGraphDataOptions.legendData //['','','']要与series data的name对应

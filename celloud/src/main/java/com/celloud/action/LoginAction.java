@@ -68,11 +68,15 @@ public class LoginAction {
         boolean isRemembered = isRem != null ? ((boolean) isRem) : subject.isRemembered();
         PublicKey key = generatePublicKey(subject.getSession());
         if (isRemembered) {
-            User temp = userService.findByUsernameOrEmail(String.valueOf(subject.getPrincipal()));
+            String username = String.valueOf(subject.getPrincipal());
+            User temp = userService.findByUsernameOrEmail(username);
             if (temp != null) {
                 user.setUsername(temp.getUsername());
                 String password = RSAUtil.encryptedString(key.getModulus(), key.getExponent(), temp.getPassword());
                 user.setPassword(password);
+            } else {
+                logger.info("用户使用记住密码登录，但根据用户名(" + username + ")未找到用户");
+                isRemembered = false;
             }
         }
         return mv.addObject("checked", isRemembered).addObject("user", user).addObject("publicKey", key)
@@ -99,7 +103,6 @@ public class LoginAction {
         String password = user.getPassword();
         user.setPassword("");
         Session session = subject.getSession();
-        session.setAttribute("isRemembered", checked);
         PrivateKey privateKey = (PrivateKey) session.getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
         ModelAndView mv = new ModelAndView("login").addObject("user", user).addObject("checked", subject.isRemembered())
                 .addObject("publicKey", generatePublicKey(session))
@@ -133,6 +136,7 @@ public class LoginAction {
         logService.log("用户登录", "用户" + loginUser.getUsername() + "登录成功");
         session.removeAttribute(Constants.SESSION_RSA_PRIVATEKEY);
         session.removeAttribute(Constants.SESSION_FAILED_LOGIN_TIME);
+        session.setAttribute("isRemembered", checked);
         // 获取用户所属的大客户，决定是否有统计菜单
         Integer companyId = userService.getCompanyIdByUserId(loginUser.getUserId());
         session.setAttribute("companyId", companyId);
