@@ -733,7 +733,7 @@ $.ajaxSetup ({
 			}
 			if(appId==80){
 				$.get("count/hcvCompare",{},function(data){
-						var div = $("<div id='char0' class='col-lg-6' style='width: 500px;height:400px;'></div>");
+						var div = $("<div id='char0' class='col-lg-6' style='width: 1000px;height:400px;'></div>");
 						$("#charDiv").append(div);
 						var one = getCountValue("Subtype","nomal");
 						var X = "[";
@@ -750,7 +750,7 @@ $.ajaxSetup ({
 						}
 						X = X.substring(0,X.length-1)+"]";
 						Y = Y.substring(0,Y.length-1)+"]";
-						$.reportChar.draw.echartsShowBar("char0", "Subtype", eval(X), eval(Y), 0);
+						$.reportChar.draw.echartsShowBar("char0", "Subtype", eval(X), eval(Y), 0, 500, 300);
 				});
 			}
 			if(appId==82){
@@ -762,58 +762,59 @@ $.ajaxSetup ({
 						sType = "";
 					}
 					var hbvtype=eval(data.split("@")[1]);
-					var aType=new Array();
+					var aType = "[";
 					if(sType.indexOf("A")>=0){
-						aType.push([hbvtype[0]/2]);
+						aType += "['A'," + hbvtype[0]/2 + "]";
 					}
 					if(sType.indexOf("B")>=0){
-						aType.push([null,hbvtype[1]/2]);
+						aType += ("'null',['B'," + hbvtype[1]/2 + "]");
 					}
 					if(sType.indexOf("C")>=0){
-						aType.push([null,null,hbvtype[2]/2]);
+						aType += ("'null','null',['C'," + hbvtype[2]/2 + "]");
 					}
 					if(sType.indexOf("D")>=0){
 						for(var i = 0;i < 3;i++){
-							aType.push(null);
+							aType += 'null';
 						}
-						aType.push(hbvtype[3]/2);
+						aType += ("['D'," + hbvtype[3]/2 + "]");
 					}
 					if(sType.indexOf("E")>=0){
 						for(var i = 0;i < 4;i++){
-							aType.push(null);
+							aType += 'null';
 						}
-						aType.push(hbvtype[4]/2);
+						aType += ("['E'," + hbvtype[4]/2 + "]");
 					}
 					if(sType.indexOf("F")>=0){
 						for(var i = 0;i < 5;i++){
-							aType.push(null);
+							aType += 'null';
 						}
-						aType.push(hbvtype[5]/2);
+						aType += ("['F'," + hbvtype[5]/2 + "]");
 					}
 					if(sType.indexOf("G")>=0){
 						for(var i = 0;i < 6;i++){
-							aType.push(null);
+							aType += 'null';
 						}
-						aType.push(hbvtype[6]/2);
+						aType += ("['G'," + hbvtype[6]/2 + "G");
 					}
 					if(sType.indexOf("H")>=0){
 						for(var i = 0;i < 7;i++){
-							aType.push(null);
+							aType += 'null';
 						}
-						aType.push(hbvtype[7]/2);
+						aType += ("['H'," + hbvtype[7]/2 + "H");
 					}
 					if(sType.indexOf("no match")>=0){
 						for(var i = 0;i < 8;i++){
-							aType.push(null);
+							aType += 'null';
 						}
-						aType.push(hbvtype[8]/2);
+						aType += ("['比对失败'," + hbvtype[8]/2 + "]");
 					}
 					if(sType==""){
 						for(var i = 0;i < 9;i++){
-							aType.push(null);
+							aType += 'null';
 						}
-						aType.push(hbvtype[9]/2);
+						aType += ("['异常数据'," + hbvtype[9]/2 + "]");
 					}
+					aType += "]";
 					$.reportChar.draw.echartsShowHBVType('char0',hbvtype,aType,45);
 					
 					
@@ -841,7 +842,7 @@ $.ajaxSetup ({
 						}
 					}
 					
-					var div1 = $("<div id='char1' class='col-lg-12' style='width: 1000px;height: 450px;'></div>");
+					var div1 = $("<div id='char1' class='col-lg-12' style='width: 1000px;height: 500px;'></div>");
 					$("#charDiv").append(div1);
 					var one = getCountValue("Subtype","nomal");
 					var X = "[";
@@ -897,12 +898,12 @@ $.ajaxSetup ({
 					}*/
 					// showHBVny("char1",eval(Y),ay,eval(X));
 					// showCharHCV("char1", "耐药类型", eval(X),eval(Y),-45);
-					$.reportChar.draw.echartsShowBar("char1", "耐药类型", eval(X), eval(Y), -45);
+					$.reportChar.draw.echartsShowBar("char1", "耐药类型", eval(X), eval(Y), -45, 800, 350);
 				});
 			}
 			if(appId==90){
 				$.get("count/tbCompare",{},function(data){
-						var div = $("<div id='char0' class='col-lg-6' style='width: 500px;height:400px;'></div>");
+						var div = $("<div id='char0' class='col-lg-6' style='width: 1000px;height:400px;'></div>");
 						$("#charDiv").append(div);
 						var X = "[";
 						var Y = "[";
@@ -920,7 +921,7 @@ $.ajaxSetup ({
 						}
 						X = X.substring(0,X.length-1)+"]";
 						Y = Y.substring(0,Y.length-1)+"]";
-						$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y), 0);
+						$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y), 0, 500, 300);
 				});
 			}
 			
@@ -930,7 +931,7 @@ $.ajaxSetup ({
 					$("#charDiv").html("<p style=\"color: red;\">数据异常，没有同比结果</p>");
 				}else{  
 					$.get("count/krasCompare",{"length":length},function(data){
-							var div = $("<div id='char0' class='col-lg-6' style='width: 500px;height:400px;'></div>");
+							var div = $("<div id='char0' class='col-lg-6' style='width: 1000px;height:400px;'></div>");
 							$("#charDiv").append(div);
 							var X = "[";
 							var Y = "[";
@@ -948,7 +949,7 @@ $.ajaxSetup ({
 							}
 							X = X.substring(0,X.length-1)+"]";
 							Y = Y.substring(0,Y.length-1)+"]";
-							$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y), 0);
+							$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y), 0, 500, 300);
 					});
 				}
 			}
@@ -959,7 +960,7 @@ $.ajaxSetup ({
 					$("#charDiv").html("<p style=\"color: red;\">数据异常，没有同比结果</p>");
 				}else{  
 					$.get("count/egfrCompare",{"length":length},function(data){
-							var div = $("<div id='char0' class='col-lg-6' style='width: 500px;height:400px;'></div>");
+							var div = $("<div id='char0' class='col-lg-6' style='width: 1000px;height:400px;'></div>");
 							$("#charDiv").append(div);
 							var X = "[";
 							var Y = "[";
@@ -977,7 +978,7 @@ $.ajaxSetup ({
 							}
 							X = X.substring(0,X.length-1)+"]";
 							Y = Y.substring(0,Y.length-1)+"]";
-							$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y), 0);
+							$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y), 0, 500, 300);
 					});
 				}
 			}
