@@ -814,7 +814,7 @@ $.ajaxSetup ({
 						}
 						aType.push(hbvtype[9]/2);
 					}
-					$.reportChar.draw.echartsShowHBVType('char0',hbyType,aType,45);
+					$.reportChar.draw.echartsShowHBVType('char0',hbvtype,aType,45);
 					
 					
 					var result = $("#resultDiv").html();
