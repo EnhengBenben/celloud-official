@@ -100,6 +100,42 @@ var companyCount=(function(companyCount){
 	return self;
 })(companyCount);
 
+var company=(function(company){
+	var self=company||{};
+	self.currentPage = 1;
+	self.keyword=null;
+	self.search=function(){
+		var keyword=$.trim($("#keyword").val());
+		if(keyword.length>0&&(!/^[a-zA-Z0-9_\u4e00-\u9fa5]+$/g.test(keyword))){
+			jAlert("搜索关键字不能包含特殊字符");
+			return;
+		}
+		self.keyword=$("#keyword").val();
+		self.getCompany(1);
+	}
+	self.toCompanyMain=function(){
+		self.keyword=null;
+		$.post("company/companyMain",{keyword:self.keyword},function(responseText){
+			$("#main-content").html(responseText);
+			$("#main-menu li").removeClass("active").removeClass("opened");
+			$("#company-menu").addClass("active");
+		});
+	}
+	self.getCompany=function(currentPage){
+		self.currentPage=currentPage;
+		$.post("company/companyMain",{currentPage:currentPage,keyword:self.keyword},function(responseText){
+			$("#main-content").html(responseText);
+		});
+	};
+	self.toEditName = function(currentName){
+		$.post("company/toEditName",{currentName:currentName},function(responseText){
+			$("#company-editModal .modal-content").html(responseText);
+			$("#company-editModal").modal("show");
+		});
+	}
+	return self;
+})(company);
+
 $(function(){
 	consoleModel.toConsole();
 	$("body").on("click","[data-click='to-app-price-list']",function(){

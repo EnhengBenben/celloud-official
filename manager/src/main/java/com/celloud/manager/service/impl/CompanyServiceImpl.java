@@ -1,15 +1,23 @@
 package com.celloud.manager.service.impl;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 import com.celloud.manager.constants.AppOffline;
+import com.celloud.manager.constants.CompanyConstants;
 import com.celloud.manager.constants.DataState;
 import com.celloud.manager.constants.ReportPeriod;
 import com.celloud.manager.constants.ReportType;
@@ -21,6 +29,8 @@ import com.celloud.manager.mapper.ReportMapper;
 import com.celloud.manager.mapper.UserMapper;
 import com.celloud.manager.model.App;
 import com.celloud.manager.model.Company;
+import com.celloud.manager.page.Page;
+import com.celloud.manager.page.PageList;
 import com.celloud.manager.service.CompanyService;
 import com.celloud.manager.utils.PropertiesUtil;
 
@@ -169,6 +179,51 @@ public class CompanyServiceImpl implements CompanyService{
     @Override
     public Company getCompanyById(Integer companyId) {
         return companyMapper.selectByPrimaryKey(companyId);
+    }
+    
+    @Override
+    public PageList<Company> getCompanyByPage(Page page,String keyword) {
+        List<Company> list=companyMapper.getComanyByPage(DataState.ACTIVE, page,keyword);
+        return new PageList<Company>(page,list);
+    }
+
+
+    @Override
+    public Company getCompanyByIdAndState(Integer companyId) {
+        if(companyId==null){
+            return null;
+        }
+        return companyMapper.getCompanyByIdAndState(companyId,DataState.ACTIVE);
+    }
+    
+    private void cleanCompanyIconTemp(){
+        String path = CompanyConstants.getCompanyIconTempPath();
+        File tempDir = new File(path);
+        if (tempDir == null || !tempDir.exists()) {
+            return;
+        }
+        if (tempDir.isFile()) {
+            tempDir.delete();
+            return;
+        }
+        File[] tempFiles = tempDir.listFiles();
+        if(tempFiles==null||tempFiles.length==0){
+            return ;
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, -7);
+        Date date = calendar.getTime();
+        for (File file : tempFiles) {
+            ObjectId id = new ObjectId(file.getName().substring(0, file.getName().indexOf(".")));
+            if (date.after(id.getDate())) {
+                file.delete();
+            }
+        }
+    }
+
+    @Override
+    public List<Company> getAllCompany() {
+        return companyMapper.getComanyList(DataState.ACTIVE);
     }
 
 }

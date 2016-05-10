@@ -21,7 +21,6 @@
 <link rel="stylesheet" href="css/console.css">
 <script src="plugins/bootstrap/js/jquery-1.11.1.min.js"></script>
 <script src="plugins/jquery.alerts.js"></script>
-
 </head>
 <body class="page-body">
     <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
@@ -122,6 +121,12 @@
                             </c:if>
                         </ul>
                     </li>
+                    <li id="company-menu">
+                        <a href="javascript:company.toCompanyMain();">
+                            <i class="linecons-note"></i>
+                            <span class="title">公司管理</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="#">
                             <i class="linecons-mail"></i>
@@ -138,7 +143,7 @@
                 </ul>
             </div>
         </div>
-        <div class="main-content">
+        <div id="index-main-div" class="main-content">
         <!-- User Info, Notifications and Menu Bar -->
             <nav class="navbar user-info-navbar" role="navigation">
                 
@@ -227,7 +232,10 @@
     <script src="plugins/echarts-2.2.7/echarts-all.js"></script>
     <script src="plugins/echarts-2.2.7/theme.js"></script>
     <script src="plugins/jquery.media.js"></script>
-    
+    <!-- validate -->
+    <script type="text/javascript" src="${pageContext.request.contextPath }/resources/plugins/jQuery/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/validate.extend.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery.form.js"></script>
     <script src="js/main.js"></script>
     <script src="js/app.js"></script>
 </body>

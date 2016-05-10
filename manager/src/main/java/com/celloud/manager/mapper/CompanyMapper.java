@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.celloud.manager.model.Company;
+import com.celloud.manager.page.Page;
 
 public interface CompanyMapper {
     int deleteByPrimaryKey(Integer companyId);
@@ -54,4 +55,19 @@ public interface CompanyMapper {
      * @date 2016年3月21日 上午11:00:31
      */
     public List<Map<String,Object>> getCompanyNumCount(@Param("state")Integer state,@Param("testAccountIds")String testAccountIds);
+    
+    /**
+     * 公司分页列表
+     *
+     * @return
+     * @author han
+     * @date 2016年1月25日 下午1:44:53
+     */
+    public List<Company> getComanyByPage(@Param("state") int state,Page page,@Param("keyword") String keyword);
+    
+    public List<Company> getComanyList(@Param("state") int state);
+    
+    public int updateCompany(Company company);
+    
+    public Company getCompanyByIdAndState(@Param("companyId") int companyId,@Param("state") int state);
 }

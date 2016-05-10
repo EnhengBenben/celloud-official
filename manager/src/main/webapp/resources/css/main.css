@@ -3,6 +3,11 @@ body{
   font-family: Arial,'Hiragino Sans GB','Microsoft YaHei',微软雅黑, STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif;
   font-weight: 400;
 }
+
+#index-main-div{
+    position:static;
+    z-index:auto;
+}
 a{
     color: #337ab7;
     text-decoration: none;
