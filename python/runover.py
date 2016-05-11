@@ -80,7 +80,7 @@ collection_dic = {
 107:"BRAF",
 108:"UGT",
 117:"Oncogene",
-122:"PGS"
+122:"Pgs"
 }
 
 if len(sys.argv) != 3:

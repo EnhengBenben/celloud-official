@@ -683,7 +683,7 @@ $.ajaxSetup ({
 				var data = [{name:'Mutant strain',value:mutant},{name:'Wild type',value:wild},{name:'No Result',value:neither}];
 				$.reportChar.draw.echartsShowPie("_showPie","Samples Statistic",data);
 			}
-			if(appId==81||appId==83||appId==85||appId==86||appId==87||appId==88||appId==91||appId==92||appId==93||appId==94){
+			if(appId==81||appId==83||appId==85||appId==86||appId==87||appId==88||appId==91||appId==92||appId==93||appId==94||appId==122){
 				var T = 0,M = 0;
 				$("#_table").find("th").each(function(i){
 					if($(this).html()=="Total_Reads"){
