@@ -51,7 +51,7 @@ method_dic = {
 106:DPD,
 107:BRAF,
 108:UGT,
-117:oncogene
+117:oncogene,
 122:PGS
 }
 
