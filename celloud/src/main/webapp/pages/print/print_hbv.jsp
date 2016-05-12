@@ -10,8 +10,8 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/browser.js"></script>
 <script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/plugins/imgRemove/imgRemove.0.1.js?version=0.1" type="text/javascript"></script>
-<link href="<%=request.getContextPath()%>/plugins/imgRemove/imgRemove.0.1.css?version=0.1" rel="stylesheet" type="text/css" media="screen">
+<script src="<%=request.getContextPath()%>/plugins/imgRemove/imgRemove.0.1.js?version=0.2" type="text/javascript"></script>
+<link href="<%=request.getContextPath()%>/plugins/imgRemove/imgRemove.0.1.css?version=0.2" rel="stylesheet" type="text/css" media="screen">
 <link href="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/print_hbv.css?version=1.18">
 </head>
@@ -29,6 +29,7 @@
 			<input type="hidden" value="${hbv.projectId }" id="_projectId">
 			<div style="display: none;" id="_userId">${hbv.userId }</div>
 			<div style="display: none;" id="_appId">${hbv.appId }</div>
+			<div style="display: none;" id="_companyId">${hbv.companyId }</div>
 			<div style="display: none;" id="_fileId">${report.fileId }</div>
 			<div style="display: none;" id="_flag">${flag }</div>
 			<div>
@@ -857,13 +858,21 @@
 	</div>
 </body>
 <script type="text/javascript">
+var companyId = $("#_companyId").html();
 function preview(obj){
+  if(companyId==57){
+    imgRemove.hideRemove();
+  }
 	var inputVal;
 	$("body").find("input[type='text']").each(function(){
 		inputVal = $(this).val();
 		var cl = $(this).attr("class"); 
-		if(cl&&cl.indexOf('havebefore')>0){
+		if(cl){
+		  if(cl.indexOf('havebefore')>0){
 			$(this).parent().html("突变型:<span name='print' class='"+cl+"'>"+inputVal+"</span>");
+		  }else{
+			$(this).parent().html("<span name='print' class='"+cl+"'>"+inputVal+"</span>");
+		  }
 		}else{
 			$(this).parent().html("<span name='print'>"+inputVal+"</span>");
 		}
@@ -872,8 +881,10 @@ function preview(obj){
 	$("#_sex").html(sex);
 	$("a[name='change']").hide();
 	$("hr[name='change']").hide();
-	$(".w3cbbs").css("display","");
-	$(".container").css("display","");
+	if(companyId!=57){
+		$(".w3cbbs").css("display","");
+		$(".container").css("display","");
+	}
 	var _flag = $("#_flag").html();
 	if(_flag==1){
 		$("h1").css("padding","0 0 5px 0");
@@ -904,15 +915,21 @@ function preview(obj){
 	if(_flag==1){
 		$("h1").css("padding","40px 0 5px 0");
 	}
-	$(".w3cbbs").css("display","none");
-	$(".container").css("display","none");
+	if(companyId!=57){
+		$(".w3cbbs").css("display","none");
+		$(".container").css("display","none");
+	}
 	$("a[name='change']").show();
 	$("hr[name='change']").show();
 	$("body").find("span[name='print']").each(function(){
 		inputVal = $(this).html();
 		var cl = $(this).attr("class");
 		if(cl){
+		  if(cl.indexOf('havebefore')>0){
 			$(this).parent().html("突变型:<input type='text' class='"+cl+"' value='"+inputVal+"'>");
+		  }else{
+			$(this).parent().html("<input type='text' class='"+cl+"' value='"+inputVal+"'>");
+		  }
 		}else{
 			$(this).parent().html("<input type='text' value='"+inputVal+"'>");
 		}
@@ -970,6 +987,9 @@ $(document).ready(function(){
 });
 var url = window.location.href.split("printHBV")[0];
 function savePage(){
+  if(companyId==57){
+    imgRemove.hideRemove();
+  }
 	$("body").find("input").each(function(){
 		$(this).attr("value",$(this).val());
 	});
@@ -987,6 +1007,7 @@ function savePage(){
 }
 function reset(){
   jConfirm('确定要重置之前保存的报告吗？', '重置报告', function(result) {
+    if(result){
 		$.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"printContext":""},function(result){
 			if(result==1){
 				location=location ;
@@ -994,6 +1015,7 @@ function reset(){
 				jAlert("信息重置失败！");
 			}
 		});
+    }
 	});
 }
 function radioClick(num){

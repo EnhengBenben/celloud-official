@@ -23,6 +23,9 @@ var imgRemove = (function(imgRemove) {
         $("img[class='wait_remove']").remove();
         $("._img_remove").remove()
     };
+    self.hideRemove = function() {
+      $("._img_remove").remove()
+    };
     self.setOptions = function(options) {
         $.extend(defaults, options);
         return self
