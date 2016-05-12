@@ -85,17 +85,27 @@ $.report.loadlist = function(response){
   $("#pagination-task").on("click","a",function(e){
     var id = $(this).attr("id");
     var currentPage = parseInt($("#current-page-hide").val());
+    var totalPage = parseInt($("#total-page-hide").val());
     var page;
-    if(id == null){
+    if(id == undefined){
       page = $(this).html();
-    }else if(id.indexOf("prev")>0){
-      page = currentPage-1;
-    }else if(id.indexOf("next")>0){
+    }else if(id.indexOf("prev")>=0){
+      if(currentPage == 1){
+        page = 1;
+      }else{
+        page = currentPage-1;
+      }
+    }else if(id.indexOf("next")>=0){
       page = currentPage+1;
-    }else if(id.indexOf("first")>0){
+      if(currentPage == totalPage){
+        page = currentPage;
+      }else{
+        page = currentPage+1;
+      }
+    }else if(id.indexOf("first")>=0){
       page = 1;
-    }else if(id.indexOf("last")>0){
-      page = parseInt($("#total-page-hide").val());
+    }else if(id.indexOf("last")>=0){
+      page = totalPage;
     }
     $.report.find.pagination(page);
   });
@@ -162,17 +172,27 @@ $.data_.loadlist = function(response){
   $("#pagination-data").on("click","a",function(e){
     var id = $(this).attr("id");
     var currentPage = parseInt($("#current-page-hide").val());
+    var totalPage = parseInt($("#total-page-hide").val());
     var page;
-    if(id == null){
+    if(id == undefined){
       page = $(this).html();
-    }else if(id.indexOf("prev")>0){
-      page = currentPage-1;
-    }else if(id.indexOf("next")>0){
+    }else if(id.indexOf("prev")>=0){
+      if(currentPage == 1){
+        page = 1;
+      }else{
+        page = currentPage-1;
+      }
+    }else if(id.indexOf("next")>=0){
       page = currentPage+1;
-    }else if(id.indexOf("first")>0){
+      if(currentPage == totalPage){
+        page = currentPage;
+      }else{
+        page = currentPage+1;
+      }
+    }else if(id.indexOf("first")>=0){
       page = 1;
-    }else if(id.indexOf("last")>0){
-      page = parseInt($("#total-page-hide").val());
+    }else if(id.indexOf("last")>=0){
+      page = totalPage;
     }
     $.data_.find.pagination(page);
   });

@@ -94,6 +94,7 @@ def createPDF(path,appName,fileName,anotherName):
 	finalPng1 = os.path.join(path,datakey+".gc.cnt.each.txt.hmm.final.png")
 	finalPng2 = os.path.join(path,datakey+".gc.cnt.avg.txt.final.png")
 	finalPng3 = os.path.join(path,datakey+".gc.cnt.each.txt.kde.gcheck.final.png")
+	finalPng4 = os.path.join(path,datakey+".final.txt.final.png");
 	if os.path.exists(finalPng1):
 		im = Image(finalPng1, 440, 586)
 		total.append(im)
@@ -102,6 +103,9 @@ def createPDF(path,appName,fileName,anotherName):
 		total.append(im)
 	elif os.path.exists(finalPng3):
 		im = Image(finalPng3, 440, 586)
+		total.append(im)
+	elif os.path.exists(finalPng4):
+		im = Image(finalPng4, 440, 586)
 		total.append(im)
 
 	doc.build(total)

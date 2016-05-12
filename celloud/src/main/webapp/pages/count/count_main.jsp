@@ -76,4 +76,4 @@
   </div>
  </div>
 </div>
-<script src="<%=request.getContextPath()%>/js/count.js?version=1.1" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/count.js?version=1.2" type="text/javascript"></script>

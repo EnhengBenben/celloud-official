@@ -197,7 +197,7 @@
 	<script src="<%=request.getContextPath()%>/js/main_init.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/message.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/main.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/charts.js?version=3.1.8"></script>
+	<script src="<%=request.getContextPath()%>/js/charts.js?version=3.1.10"></script>
 	<script src="<%=request.getContextPath()%>/plugins/highcharts/char.js?version=20160421"></script>
 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>

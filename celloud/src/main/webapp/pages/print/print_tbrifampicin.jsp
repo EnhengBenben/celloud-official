@@ -143,6 +143,7 @@ function savePage(){
 }
 function reset(){
   jConfirm('确定要重置之前保存的报告吗？', '重置报告', function(result) {
+    if(result){
         $.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"printContext":""},function(result){
             if(result==1){
                 location=location ;
@@ -150,6 +151,7 @@ function reset(){
                 jAlert("信息重置失败！");
             }
         });
+    }
   });
 }
 function radioClick(num){

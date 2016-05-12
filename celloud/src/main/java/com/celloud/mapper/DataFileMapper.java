@@ -266,12 +266,15 @@ public interface DataFileMapper {
 			@Param("state") int state);
 
     /**
+     * 获取同一批次的成对数据
      * 
-     * @param dataId
-     * @param tagId
+     * @param batch
+     * @param fileName
      * @return
      * @author leamo
-     * @date 2016年4月21日 下午5:01:52
+     * @date 2016年5月10日 下午2:08:49
      */
-    int insertDataTag(Integer dataId, Integer tagId);
+    List<DataFile> getDataByBatchAndFileName(@Param("userId") Integer userId,
+            @Param("batch") String batch,
+            @Param("fileName") String fileName, @Param("state") int state);
 }

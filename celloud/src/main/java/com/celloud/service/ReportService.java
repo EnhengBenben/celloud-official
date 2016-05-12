@@ -369,7 +369,7 @@ public interface ReportService {
      * @author leamo
      * @date 2016-1-10 下午5:00:12
      */
-    public Integer insertProReport(Report report);
+    public Integer insertProReport(Report report, Integer dataId);
 
     /**
      * 为多个APP添加报告
@@ -381,17 +381,6 @@ public interface ReportService {
      * @date 2016年1月14日 下午2:11:52
      */
     public List<Integer> insertMultipleProReport(Report report, Map<Integer, Integer> appProId, String[] dataIds);
-
-    /**
-     * 新增数据报告
-     * 
-     * @param report
-     * @param dataIds
-     * @return
-     * @author leamo
-     * @date 2016-1-10 下午5:01:31
-     */
-    public Integer insertDataReport(Report report, String[] dataIds);
 
     /**
      * HBV 数据参数同比

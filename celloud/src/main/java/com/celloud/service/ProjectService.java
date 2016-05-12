@@ -73,7 +73,7 @@ public interface ProjectService {
      * @author leamo
      * @date 2016-1-10 下午4:07:16
      */
-    public Integer insertProject(Project project);
+    public Integer insertProject(Project project, Integer dataId);
 
     /**
      * 批量运行新增报告

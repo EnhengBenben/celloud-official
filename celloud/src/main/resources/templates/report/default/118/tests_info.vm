@@ -68,8 +68,8 @@
                        鲍曼不动杆菌
        </td>
        <td>
-         <i class="fa #if($havestrain.contains('肺炎克雷伯菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
-                       肺炎克雷伯菌
+         <i class="fa #if($havestrain.contains('肺炎克雷伯氏菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                       肺炎克雷伯氏菌
        </td>
      </tr>
      <tr>

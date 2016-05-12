@@ -80,7 +80,7 @@
 	    <div class="form-group">
 			<div class="control-label form-label col-xs-4">测序仪</div>
 			<div class="col-xs-8">
-				<select name="sequenator">
+				<select name="sequenator" onchange="experiment.selectSeqIndex(this.value)">
 					<option value="0">--请选择--</option>
 					<c:forEach items="${list }" var="dict">
 						<c:if test="${dict.flag==3 }">
@@ -93,7 +93,9 @@
 	    <div class="form-group">
 			<div class="control-label form-label col-xs-4">Index</div>
 			<div class="col-xs-8">
-				<input type="text" name="seqIndex" id="expSeqIndex"/>
+			    <select name="seqIndex" id="expSeqIndex" >
+			         <option value="0">--请选择--</option>
+			    </select>
 			</div>
 		</div>
        </div>

@@ -19,6 +19,25 @@ $.reportChar.draw = {
       }
       );
     },
+    
+    _requireMulti: function(chartName,option,id){
+        require.config({
+          paths: {
+              echarts: '//cdn.bootcss.com/echarts/2.2.7/'
+          }
+        });
+        var chartArr = new Array();
+        chartArr.push("echarts");
+        for(var i = 0; i < chartName.length; i++){
+        	chartArr.push("echarts/chart/" + chartName[i]);
+        }
+        require(chartArr,function (ec) {
+              var myChart = ec.init(document.getElementById(id),macarons_theme); 
+              myChart.setOption(option, true); 
+        	}
+        );
+      },
+    
     /** 
      * ========
      * 环形图 
@@ -112,7 +131,7 @@ $.reportChar.draw = {
   	/**
   	 * 柱状图
   	 */
-  	echartsShowBar : function(id, title, X, Y) {
+  	echartsShowBar : function(id, title, X, Y, rotate, width, height) {
         var option = {
         		tooltip : {
         	        trigger: 'axis'
@@ -126,7 +145,10 @@ $.reportChar.draw = {
         	        {
         	            type : 'category',
         	            data : X,
-        	            position : 'bottom'
+        	            position : 'bottom',
+        	            axisLabel : {
+        		        	rotate : rotate		        	
+        		        }
         	        }
         	    ],
         	    yAxis : [
@@ -145,10 +167,69 @@ $.reportChar.draw = {
         	    ],
                 color : ['#feabac'],
                 grid : {
-                	width : 380
-                },
+                	width : width,
+                	height : height
+                }
         };
         $.reportChar.draw._require('bar',option,id);
+  	},
+  	
+  	/**
+  	 * HBV基因型分类总览
+  	 */
+  	echartsShowHBVType : function(id, hbvType, currentType, rotate) {
+        var option = {
+    		title : {
+    			text : '基因型分类总览表',
+    			subtext : '数据来源:CelLoud全部HBV数据',
+    			x : 'center'
+    		},
+    		tooltip : {
+    		    trigger: 'axis'
+    		},
+    		legend: {
+    		    data:['HBV基因型','当前数据基因型'],
+    		    y : 340
+    		},
+    		calculable : true,
+    		xAxis : [
+    		    {
+    		        type : 'category',
+    		        data : ['A','B','C','D','E','F','G','H','比对失败','异常数据'],
+    		        position : 'bottom',
+    		        axisLabel : {
+    		        	rotate : rotate		        	
+    		        }
+    		    }
+    		],
+    		yAxis : [
+    		    {
+    		        type : 'value',
+    		        name : '基因型数量(个)'
+    		    }
+    		],
+    		series : [
+    		    {
+    		        name:'HBV基因型',
+    		        type:'bar',
+    		        data:eval(hbvType),
+    		        barWidth:30
+    		    },
+    		    {
+                    name:'当前数据基因型',
+                    type:'scatter',
+                    data:eval(currentType),
+                    barWidth:30,
+                    symbol : 'triangle'
+                }
+    		],
+    		grid : {
+    		    width : 800,
+    		    height : 250
+    		},
+            color : ['#00cccc','#ff0000']
+        };
+        $.reportChar.draw._requireMulti(['scatter','bar'],option,id);
   	},
   
   /**

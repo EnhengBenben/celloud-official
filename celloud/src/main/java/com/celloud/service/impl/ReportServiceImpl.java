@@ -264,9 +264,13 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Integer insertProReport(Report report) {
+    public Integer insertProReport(Report report, Integer dataId) {
         report.setFlag(ReportType.PROJECT);
         report.setCreateDate(new Date());
+        reportMapper.insertSelective(report);
+        report.setFlag(ReportType.DATA);
+        report.setCreateDate(new Date());
+        report.setFileId(dataId);
         return reportMapper.insertSelectiveReturnKey(report);
     }
 
@@ -294,18 +298,6 @@ public class ReportServiceImpl implements ReportService {
             }
         }
         return failAppId;
-    }
-
-    @Override
-    public Integer insertDataReport(Report report, String[] dataIds) {
-        int index = 0;
-        report.setFlag(ReportType.DATA);
-        report.setCreateDate(new Date());
-        for (String dataId : dataIds) {
-            report.setFileId(Integer.parseInt(dataId));
-            index += reportMapper.insertSelective(report);
-        }
-        return index;
     }
 
     @Override

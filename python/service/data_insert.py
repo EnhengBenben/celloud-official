@@ -40,7 +40,8 @@ method_dic = {
 104:PGS,
 105:TBINH,
 95:NIPT,
-107:BRAF
+107:BRAF,
+122:PGS
 }
 
 #对应database名
@@ -61,7 +62,8 @@ collection_dic = {
 104:"Pgs",
 105:"TBINH",
 95:"NIPT",
-107:"BRAF"
+107:"BRAF",
+122:"PGS"
 }
 
 def datainsert(path,projectId):

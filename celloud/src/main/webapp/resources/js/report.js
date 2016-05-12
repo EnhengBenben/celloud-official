@@ -397,7 +397,7 @@ $.ajaxSetup ({
 			                    }
 			                }
 			            }
-			            if(appId=="91"||appId=="95"||appId=="92"||appId=="93"||appId=="94"||appId=="86"||appId=="87"||appId=="88"||appId=="81"||appId=="83"||appId=="85"||appId=="96"||appId=="97"||appId=="98"||appId=="99"||appId=="100"||appId=="101"||appId=="102"||appId=="103"||appId=="104"||appId=="116"){
+			            if(appId=="91"||appId=="95"||appId=="92"||appId=="93"||appId=="94"||appId=="86"||appId=="87"||appId=="88"||appId=="81"||appId=="83"||appId=="85"||appId=="96"||appId=="97"||appId=="98"||appId=="99"||appId=="100"||appId=="101"||appId=="102"||appId=="103"||appId=="104"||appId=="116"||appId=="119"){
 			                if(j>0&&i==0){
 			                    param = {"fileName":$.trim($(this).html()),"dataKey":$.trim($(this).next().html()),"softwareId":appId,"softwareName":appName,"userId":userId,"obj":$(this),"proId":proId,"proName":proName};
 			                    $(this).addClass("sub");
@@ -655,23 +655,10 @@ $.ajaxSetup ({
 				$("#fileListUl").removeClass("active");
 				$("#"+reportIdNow).addClass("active");
 			}
-			if(softwareId ==112){
-				$.get("report/getGDDReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-				});
-			}else if(softwareId ==110 || softwareId ==111){
-				$.get("report/getCMPReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-				});
-			}else if(softwareId == 113){
-				$.get("report/getSplitReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-				});
-			}else if(softwareId == 114 || softwareId == 118){
-			  var method = softwareId == 114 ? "getMIBReport" : "getBSIReport";
-				$.get("report/"+method,{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-					var mib_readsDisInfo = $("#reads-distribution-char").text();
+      $.get("report/"+appMethod[softwareId],{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
+        toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
+        if(softwareId == 114 || softwareId == 118){
+          var mib_readsDisInfo = $("#reads-distribution-char").text();
           var mib_familyDisInfo = $("#family-distribution-char").text();
           var min_genusDisInfo = $("#genus-distribution-char").text();
           if(mib_readsDisInfo != ""){
@@ -683,73 +670,8 @@ $.ajaxSetup ({
           if(min_genusDisInfo != ""){
             $.reportChar.draw.singleBar("genus-distribution-char","Top 10 genus distribution","",eval("("+min_genusDisInfo+")"),"Depth","Depth");
           }
-				});
-			}else if(softwareId == 85 || softwareId == 86 || softwareId == 87 || softwareId == 88 || softwareId == 91 || softwareId == 92 || softwareId == 93 || softwareId == 94 || softwareId == 104|| softwareId == 116){
-				$.get("report/getPgsReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-				});
-			}else if(softwareId == 82){
-				$.get("report/getHBVReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-				});
-			}else if(softwareId == 80){
-				$.get("report/getHCVReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-				});
-			}else if(softwareId == 73){
-        $.get("report/getTranslateReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-        });
-			}else if(softwareId == 84){
-        $.get("report/getEGFRReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-        });
-      }else if(softwareId == 89){
-        $.get("report/getKRASReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-        });
-      }else if(softwareId == 90){
-        $.get("report/getTBRifampicinReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-           toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-        });
-      }else if(softwareId == 117){
-        $.get("report/getOncogeneReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-        });
-      }else if(softwareId == 105){
-	    $.get("report/getTBINHReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-	      toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-	    });
-      }else if(softwareId == 106){
-        $.get("report/getDPDReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-        });
-      }else if(softwareId == 107){
-    	$.get("report/getBRAFReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-        });
-      }else if(softwareId == 108){
-        $.get("report/getUGTReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-        });
-      }else if(softwareId == 11){
-        $.get("report/getABINJReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-        });
-      }else if(softwareId == 1){
-        $.get("report/get16SReport",{"projectId":proId,"dataKey":dataKey,"appId":softwareId},function(responseText){
-          toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-        });
-      }else{
-				var newPath = "Procedure!readReport" + "?fileName="+fileName+"&userId=" + userId + "&appId=" + softwareId + "&dataKey=" + dataKey + "&projectId="+proId;
-				$.get("report/getReportFromTools",{"dataKey":dataKey,"url":newPath,"projectId":proId},function(responseText){
-					toDataReport(responseText,softwareId,charMap[softwareId],DATAPATH);
-					spinner.stop();
-					if(softwareId==73){
-						$("#translateDataKey").html(dataKey);
-					}
-				});
-			}
+        }
+      });
 		}
 		
 		function toDataReport(responseText,appId,columns,DATAPATH){
@@ -761,7 +683,7 @@ $.ajaxSetup ({
 				var data = [{name:'Mutant strain',value:mutant},{name:'Wild type',value:wild},{name:'No Result',value:neither}];
 				$.reportChar.draw.echartsShowPie("_showPie","Samples Statistic",data);
 			}
-			if(appId==81||appId==83||appId==85||appId==86||appId==87||appId==88||appId==91||appId==92||appId==93||appId==94){
+			if(appId==81||appId==83||appId==85||appId==86||appId==87||appId==88||appId==91||appId==92||appId==93||appId==94||appId==119){
 				var T = 0,M = 0;
 				$("#_table").find("th").each(function(i){
 					if($(this).html()=="Total_Reads"){
@@ -811,7 +733,7 @@ $.ajaxSetup ({
 			}
 			if(appId==80){
 				$.get("count/hcvCompare",{},function(data){
-						var div = $("<div id='char0' class='col-lg-6' style='width: 500px;height:400px;'></div>");
+						var div = $("<div id='char0' class='col-lg-6' style='width: 1000px;height:400px;'></div>");
 						$("#charDiv").append(div);
 						var one = getCountValue("Subtype","nomal");
 						var X = "[";
@@ -828,50 +750,72 @@ $.ajaxSetup ({
 						}
 						X = X.substring(0,X.length-1)+"]";
 						Y = Y.substring(0,Y.length-1)+"]";
-						$.reportChar.draw.echartsShowBar("char0", "Subtype", eval(X), eval(Y));
+						$.reportChar.draw.echartsShowBar("char0", "Subtype", eval(X), eval(Y), 0, 500, 300);
 				});
 			}
 			if(appId==82){
 				$.get("count/hbvCompare",{"appId":appId,"path":DATAPATH},function(data){
-					var div0 = $("<div id='char0' class='col-lg-12' style='max-width: 1000px;'></div>");
+					var div0 = $("<div id='char0' class='col-lg-12' style='width: 1000px;height: 450px;'></div>");
 					$("#charDiv").append(div0);
 					var sType = $("#snpType").html();
 					if(!sType){
 						sType = "";
 					}
 					var hbvtype=eval(data.split("@")[1]);
-					var aType=new Array();
+					var aType = "[";
 					if(sType.indexOf("A")>=0){
-						aType.push([0,hbvtype[0]/2]);
+						aType += "['A'," + hbvtype[0]/2 + "]";
 					}
 					if(sType.indexOf("B")>=0){
-						aType.push([1,hbvtype[1]/2]);
+						aType += ("'null',['B'," + hbvtype[1]/2 + "]");
 					}
 					if(sType.indexOf("C")>=0){
-						aType.push([2,hbvtype[2]/2]);
+						aType += ("'null','null',['C'," + hbvtype[2]/2 + "]");
 					}
 					if(sType.indexOf("D")>=0){
-						aType.push([3,hbvtype[3]/2]);
+						for(var i = 0;i < 3;i++){
+							aType += 'null';
+						}
+						aType += ("['D'," + hbvtype[3]/2 + "]");
 					}
 					if(sType.indexOf("E")>=0){
-						aType.push([4,hbvtype[4]/2]);
+						for(var i = 0;i < 4;i++){
+							aType += 'null';
+						}
+						aType += ("['E'," + hbvtype[4]/2 + "]");
 					}
 					if(sType.indexOf("F")>=0){
-						aType.push([5,hbvtype[5]/2]);
+						for(var i = 0;i < 5;i++){
+							aType += 'null';
+						}
+						aType += ("['F'," + hbvtype[5]/2 + "]");
 					}
 					if(sType.indexOf("G")>=0){
-						aType.push([6,hbvtype[6]/2]);
+						for(var i = 0;i < 6;i++){
+							aType += 'null';
+						}
+						aType += ("['G'," + hbvtype[6]/2 + "G");
 					}
 					if(sType.indexOf("H")>=0){
-						aType.push([7,hbvtype[7]/2]);
+						for(var i = 0;i < 7;i++){
+							aType += 'null';
+						}
+						aType += ("['H'," + hbvtype[7]/2 + "H");
 					}
 					if(sType.indexOf("no match")>=0){
-						aType.push([8,hbvtype[8]/2]);
+						for(var i = 0;i < 8;i++){
+							aType += 'null';
+						}
+						aType += ("['比对失败'," + hbvtype[8]/2 + "]");
 					}
 					if(sType==""){
-						aType.push([9,hbvtype[9]/2]);
+						for(var i = 0;i < 9;i++){
+							aType += 'null';
+						}
+						aType += ("['异常数据'," + hbvtype[9]/2 + "]");
 					}
-					showHBVType("char0",hbvtype,aType);
+					aType += "]";
+					$.reportChar.draw.echartsShowHBVType('char0',hbvtype,aType,45);
 					
 					
 					var result = $("#resultDiv").html();
@@ -898,14 +842,14 @@ $.ajaxSetup ({
 						}
 					}
 					
-					var div1 = $("<div id='char1' class='col-lg-12' style='max-width: 1000px;'></div>");
+					var div1 = $("<div id='char1' class='col-lg-12' style='width: 1000px;height: 500px;'></div>");
 					$("#charDiv").append(div1);
 					var one = getCountValue("Subtype","nomal");
 					var X = "[";
 					var Y = "[";
 					var value = data.split("@")[0].split(";");
 					var num = value.length;
-					var ay=new Array();
+					//var ay=new Array();
 					for(var k=0;k<value.length-1;k++){
 						var n = value[k].split(",");
 						X+="'"+n[0]+"',";
@@ -920,21 +864,21 @@ $.ajaxSetup ({
 								}
 							}
 							if(isOne){
-								Y+="{ dataLabels: { enabled: true, y: -5, crop: false },color:'rgba(0, 204, 204, .5)', y:"+ n[1]+"},";
-								ay.push([k,n[1]/2]);
+								Y+="{value : "+ n[1] +", itemStyle : {normal : {color : '#00cccc'}}},";
+								//ay.push([k,n[1]/2]);
 							}else{
+								Y+="'" + n[1] + "',";
 							}
-							Y+=n[1]+",";
 						}else if(rType.length==0&&n[0]=="none"){
-							Y+="{ dataLabels: { enabled: true, y: -5, crop: false },color:'rgba(0, 204, 204, .5)', y:"+ n[1]+"},";
-							ay.push([0,n[1]/2]);
+							Y+="{value : "+ n[1] +", itemStyle : {normal : {color : '#00cccc'}}},";
+							//ay.push([0,n[1]/2]);
 						}else{
+							Y+="'" + n[1] + "',";
 						}
-						Y+=n[1]+",";
 					}
 					X = X.substring(0,X.length-1)+"]";
 					Y = Y.substring(0,Y.length-1)+"]";
-					if(num>=20&&num<25){
+					/*if(num>=20&&num<25){
 						$("#char1").css({"width":500+"px"});
 					}else if(num>=25&&num<30){
 						$("#char1").css({"width":570+"px"});
@@ -951,14 +895,15 @@ $.ajaxSetup ({
 					}else if(num>=55){
 						$("#char0").css({"width":300+"px"});
 						$("#char1").css({"width":880+"px"});
-					}
-					showHBVny("char1",eval(Y),ay,eval(X));
-					showCharHCV("char1", "耐药类型", eval(X),eval(Y),-45);
+					}*/
+					// showHBVny("char1",eval(Y),ay,eval(X));
+					// showCharHCV("char1", "耐药类型", eval(X),eval(Y),-45);
+					$.reportChar.draw.echartsShowBar("char1", "耐药类型", eval(X), eval(Y), -45, 800, 350);
 				});
 			}
 			if(appId==90){
 				$.get("count/tbCompare",{},function(data){
-						var div = $("<div id='char0' class='col-lg-6' style='width: 500px;height:400px;'></div>");
+						var div = $("<div id='char0' class='col-lg-6' style='width: 1000px;height:400px;'></div>");
 						$("#charDiv").append(div);
 						var X = "[";
 						var Y = "[";
@@ -976,7 +921,7 @@ $.ajaxSetup ({
 						}
 						X = X.substring(0,X.length-1)+"]";
 						Y = Y.substring(0,Y.length-1)+"]";
-						$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y));
+						$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y), 0, 500, 300);
 				});
 			}
 			
@@ -986,7 +931,7 @@ $.ajaxSetup ({
 					$("#charDiv").html("<p style=\"color: red;\">数据异常，没有同比结果</p>");
 				}else{  
 					$.get("count/krasCompare",{"length":length},function(data){
-							var div = $("<div id='char0' class='col-lg-6' style='width: 500px;height:400px;'></div>");
+							var div = $("<div id='char0' class='col-lg-6' style='width: 1000px;height:400px;'></div>");
 							$("#charDiv").append(div);
 							var X = "[";
 							var Y = "[";
@@ -1004,7 +949,7 @@ $.ajaxSetup ({
 							}
 							X = X.substring(0,X.length-1)+"]";
 							Y = Y.substring(0,Y.length-1)+"]";
-							$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y));
+							$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y), 0, 500, 300);
 					});
 				}
 			}
@@ -1015,7 +960,7 @@ $.ajaxSetup ({
 					$("#charDiv").html("<p style=\"color: red;\">数据异常，没有同比结果</p>");
 				}else{  
 					$.get("count/egfrCompare",{"length":length},function(data){
-							var div = $("<div id='char0' class='col-lg-6' style='width: 500px;height:400px;'></div>");
+							var div = $("<div id='char0' class='col-lg-6' style='width: 1000px;height:400px;'></div>");
 							$("#charDiv").append(div);
 							var X = "[";
 							var Y = "[";
@@ -1033,7 +978,7 @@ $.ajaxSetup ({
 							}
 							X = X.substring(0,X.length-1)+"]";
 							Y = Y.substring(0,Y.length-1)+"]";
-							$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y));
+							$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y), 0, 500, 300);
 					});
 				}
 			}
@@ -1201,62 +1146,6 @@ $.ajaxSetup ({
 		    }
 		}
 		
-function toPrintHBV(pagePath,flag){
-	var param = {};
-	var userId = pagePath.split("/")[0];
-	var appId = pagePath.split("/")[1];
-	var dataKey = pagePath.split("/")[2];
-	if(appId == 90){
-		var imgHtml="";
-		$("img[name='imgSrc']").each(function(){ 
-			imgHtml+=$(this).attr("src")+",";
-		});
-		if(imgHtml!=""){
-			imgHtml = imgHtml.substring(0,imgHtml.length-1);
-		}
-		param = {
-				"appId" : appId,
-		        "dataKey":dataKey,
-		        "projectId":$("#_projectId").val(),
-				"context":$("#report_tb").html(),
-				"imgHtml":imgHtml
-		};
-	}else if(appId == 89){
-		var imgHtml="";
-		$("img[name='imgSrc']").each(function(){ 
-			imgHtml+=$(this).attr("src")+",";
-		});
-		if(imgHtml!=""){
-			imgHtml = imgHtml.substring(0,imgHtml.length-1);
-		}
-		var _result = $("#_result").html().trim();
-		var table = $("#knowResult").html().trim();
-		var knowPic = $("img[name='know']").attr("src"); 
-		param = {
-				"appId" : appId,
-		        "dataKey":dataKey,
-		        "projectId":$("#_projectId").val(),
-				"context":$("#report_tb").html(),
-				"imgHtml":imgHtml,
-				"seq":$("#_seq").html(),
-				"result":_result,
-				"allPic":knowPic,
-		        "table":table
-		};
-	}
-	$.post("report/printDAAN",param,function(responseText){
-		var obj = window.open("");
-		obj.document.write(responseText);
-		obj.document.close();
-	});
-}
-function toPrintVSP(){
-	$.post("../../print!printVSP",{"context":$("#printDiv").html()},function(responseText){
-		var obj = window.open("");
-		obj.document.write(responseText);
-		obj.document.close();
-	});
-}
 var printReport = {
     main: function(method,param){
       $.get(method,param,function(responseText){
