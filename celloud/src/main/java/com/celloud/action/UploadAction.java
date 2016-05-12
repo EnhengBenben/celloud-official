@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -84,7 +85,8 @@ public class UploadAction {
     @RequestMapping("uploadManyFile")
     public String uploadManyFile(String name, String onlyName, String md5,
             String originalName, Integer chunk, Integer chunks,
-            HttpServletRequest request, Integer tagId, String batch) {
+            HttpServletRequest request, Integer tagId, String batch,
+            Integer needSplit) {
         File f = new File(realPath);
         if (!f.exists()) {
             boolean isTrue = f.mkdir();
@@ -123,12 +125,16 @@ public class UploadAction {
 										+ "/plugins/getAliases.pl";
 								String outPath = request.getSession().getServletContext().getRealPath("/temp") + "/"
 										+ fileDataKey;
+                                int fileFormat = checkFileType
+                                        .checkFileType(newName, folderByDay);
                                 updateFileInfo(dataId, fileDataKey, newName,
-                                        perlPath, outPath, folderByDay, batch);
+                                        perlPath, outPath, folderByDay, batch,
+                                        fileFormat);
                                 Subject sub = SecurityUtils.getSubject();
                                 if (sub.hasRole("bsier")) {
-                                    App app = appService.findAppsByTag(tagId);
-                                    return dataId + "," + app.getAppId();
+                                    return bsierCheckRun(tagId, batch, dataId,
+                                            needSplit, newName, folderByDay,
+                                            originalName, userId, fileFormat);
                                 }
 							}
                         } catch (Exception e) {
@@ -140,7 +146,77 @@ public class UploadAction {
 
             }
         }
-        return "uploadMSuc";
+        return "1";
+    }
+
+    /**
+     * 判断是否上传完即刻运行
+     * 
+     * @param tagId
+     * @param batch
+     * @param dataId
+     * @param needSplit
+     * @param newName
+     * @param folderByDay
+     * @param originalName
+     * @param userId
+     * @param fileFormat
+     * @return
+     * @author leamo
+     * @date 2016年5月10日 下午3:41:08
+     */
+    private String bsierCheckRun(Integer tagId, String batch, Integer dataId,
+            Integer needSplit, String newName, String folderByDay,
+            String originalName, Integer userId, Integer fileFormat) {
+        App app = appService.findAppsByTag(tagId);
+        Integer appId = app.getAppId();
+        String pubName = "";
+        List<Integer> dataIds;
+        if (fileFormat == FileFormat.FQ) {
+            if (originalName.contains("R1")) {
+                pubName = originalName.substring(0,
+                        originalName.lastIndexOf("R1"));
+            } else if (originalName.contains("R2")) {
+                pubName = originalName.substring(0,
+                        originalName.lastIndexOf("R2"));
+            } else if (originalName.contains(".txt")
+                    || originalName.contains(".lis")) {
+                pubName = originalName.substring(0,
+                        originalName.lastIndexOf("."));
+            }
+            List<DataFile> dlist = dataService.getDataByBatchAndFileName(userId,
+                    batch, pubName);
+            boolean hasR1 = false;
+            boolean hasR2 = false;
+            boolean hasIndex = false;
+            dataIds = new ArrayList<>();
+            for (DataFile d : dlist) {
+                String name_tmp = d.getFileName();
+                if (name_tmp.contains("R1")) {
+                    hasR1 = true;
+                } else if (name_tmp.contains("R2")) {
+                    hasR2 = true;
+                } else if (name_tmp.contains(".txt")
+                        || name_tmp.contains(".lis")) {
+                    hasIndex = true;
+                }
+                dataIds.add(d.getFileId());
+            }
+            System.out.println(String.valueOf(dataIds));
+            if (needSplit == 1 && hasR1 && hasR2 && hasIndex) {
+                appId = 113;
+                return "{\"dataIds\":\""
+                        + StringUtils.join(dataIds.toArray(), ",")
+                        + "\",\"appIds\":\"" + appId + "\"}";
+            } else if (needSplit != 1 && hasR1 && hasR2) {
+                return "{\"dataIds\":\""
+                        + StringUtils.join(dataIds.toArray(), ",")
+                        + "\",\"appIds\":\"" + appId + "\"}";
+            }
+        } else if (fileFormat == FileFormat.YASUO) {
+            return "\"dataIds\":" + dataId + ",\"appIds\":" + appId;
+        }
+        return "1";
     }
 
     /**
@@ -232,7 +308,8 @@ public class UploadAction {
      */
     @ActionLog(value = "修改文件详细信息", button = "开始上传")
     private int updateFileInfo(int dataId, String dataKey, String newName,
-            String perlPath, String outPath, String folderByDay, String batch) {
+            String perlPath, String outPath, String folderByDay, String batch,
+            int fileFormat) {
         DataFile data = new DataFile();
         data.setFileId(dataId);
 		String filePath = folderByDay + File.separator + newName;
@@ -241,7 +318,6 @@ public class UploadAction {
         data.setPath(filePath);
         data.setMd5(MD5Util.getFileMD5(filePath));
         data.setBatch(batch);
-		int fileFormat = checkFileType.checkFileType(newName, folderByDay);
         data.setFileFormat(fileFormat);
         if (fileFormat == FileFormat.BAM) {
             String anotherName = getAnotherName(filePath, dataKey, perlPath, outPath);
