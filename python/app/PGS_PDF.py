@@ -83,15 +83,18 @@ def createPDF(path,appName,fileName,anotherName):
 	t2 = '<font size=10 name="hei">Result:</font>'
 	total.append(Paragraph(t2, styleTitle))
 	total.append(Spacer(1, 5))
-	with open(os.path.join(path,"report.txt"), 'r') as f:
-		t2 = '<font size=8 name="hei">'+f.read()+'</font>'
-		total.append(Paragraph(t2, styleTitle))
-		total.append(Spacer(1, 5))
+	reportTxt = os.path.join(path,"report.txt")
+	if os.path.exists(reportTxt):
+		with open(os.path.join(path,"report.txt"), 'r') as f:
+			t2 = '<font size=8 name="hei">'+f.read()+'</font>'
+			total.append(Paragraph(t2, styleTitle))
+			total.append(Spacer(1, 5))
 
 	# Pic
 	finalPng1 = os.path.join(path,datakey+".gc.cnt.each.txt.hmm.final.png")
 	finalPng2 = os.path.join(path,datakey+".gc.cnt.avg.txt.final.png")
 	finalPng3 = os.path.join(path,datakey+".gc.cnt.each.txt.kde.gcheck.final.png")
+	finalPng4 = os.path.join(path,datakey+".final.txt.final.png");
 	if os.path.exists(finalPng1):
 		im = Image(finalPng1, 440, 586)
 		total.append(im)
@@ -100,6 +103,9 @@ def createPDF(path,appName,fileName,anotherName):
 		total.append(im)
 	elif os.path.exists(finalPng3):
 		im = Image(finalPng3, 440, 586)
+		total.append(im)
+	elif os.path.exists(finalPng4):
+		im = Image(finalPng4, 440, 586)
 		total.append(im)
 
 	doc.build(total)
