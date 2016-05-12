@@ -27,9 +27,8 @@ ISOTIMEFORMAT='%Y-%m-%d %X'
 print 'start:'+time.strftime(ISOTIMEFORMAT)
 endTime = time.strftime(ISOTIMEFORMAT)[0:8]+'00'
 toPath = '/share/data1/DAAN/'
-fromPath = '/share/data/file/'
 ids = '9,12,15,16,18,20,21,23,24,27,28,71'
-sql= 'select distinct f.data_key,f.file_name,f.create_date,r.app_id,c.company_name from tb_report r,tb_file f ,tb_user u,tb_company c,tb_user_company_relat ucr where r.file_id = f.file_id and f.user_id = u.user_id and u.company_id = c.company_id and  u.user_id=ucr.user_id and ucr.company_id =3 and u.user_id not in ('+ids+') and f.create_date<"'+endTime+'"'
+sql= 'select distinct f.data_key,f.file_name,f.create_date,f.path,r.app_id,c.company_name from tb_report r,tb_file f ,tb_user u,tb_company c,tb_user_company_relat ucr where r.file_id = f.file_id and f.user_id = u.user_id and u.company_id = c.company_id and  u.user_id=ucr.user_id and ucr.company_id =3 and u.user_id not in ('+ids+') and f.create_date<"'+endTime+'"'
 print sql
 my=mysql.getInstance()
 if my:
@@ -42,9 +41,7 @@ if my:
 			if not os.path.exists(p):
 				os.makedirs(p)
 
-			fn = d['file_name']
-			ext =  fn[fn.rfind('.'):len(fn)]
-			fpath = os.path.join(fromPath,d['data_key']+ext)
+			fpath = d['path']
 			if os.path.exists(fpath):
 				shutil.copy(fpath,p)
 			else:
