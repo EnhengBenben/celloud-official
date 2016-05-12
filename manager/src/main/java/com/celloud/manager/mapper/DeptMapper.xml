@@ -114,4 +114,42 @@
       state = #{state,jdbcType=INTEGER}
     where dept_id = #{deptId,jdbcType=INTEGER}
   </update>
+   <select id="getDeptByPage" resultMap="BaseResultMap" >
+    select dept_id,dept_name
+    from tb_dept
+    where state=#{state } and company_id=#{companyId }
+  </select>
+  <update id="updateDept" parameterType="com.celloud.manager.model.Dept" >
+    update tb_dept
+    set dept_name = #{deptName },
+      english_name = #{englishName },
+      tel = #{tel },
+      dept_icon = #{deptIcon }
+    where dept_id = #{deptId }
+  </update>
+  <update id="updateDeptState" >
+    update tb_dept
+    set state = #{state }
+    where dept_id = #{deptId }
+  </update>
+  
+  <insert id="addDept" parameterType="com.celloud.manager.model.Dept" >
+    insert into tb_dept (dept_name, english_name, 
+      tel, dept_icon, company_id, 
+      state)
+    values (#{deptName }, #{englishName }, 
+      #{tel }, #{deptIcon }, #{companyId }, 
+      #{state })
+  </insert>
+  <select id="getDeptById" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_dept
+    where dept_id = #{deptId } and state=#{state }
+  </select>
+  <select id="getDeptByCompanyId" resultMap="BaseResultMap" >
+    select dept_id,dept_name
+    from tb_dept
+    where state=#{state } and company_id=#{companyId }
+  </select>
 </mapper>

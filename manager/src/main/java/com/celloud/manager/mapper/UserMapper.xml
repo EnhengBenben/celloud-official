@@ -8,6 +8,7 @@
 		<result column="email" property="email" jdbcType="VARCHAR" />
 		<result column="cellphone" property="cellphone" jdbcType="VARCHAR" />
 		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="icon" property="icon" jdbcType="VARCHAR" />
 		<result column="role" property="role" jdbcType="INTEGER" />
 		<result column="remark" property="remark" jdbcType="VARCHAR" />
 		<result column="navigation" property="navigation" jdbcType="INTEGER" />
@@ -129,5 +130,137 @@
 	<if test="testAccountIds != null">
     and ucr.user_id not in(${testAccountIds})
     </if>
+    </select>
+    <select id="getUserByEmail" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_user
+        where state = 0
+        AND email = #{email,jdbcType=VARCHAR}
+    </select>
+    <insert id="insertFindPwdInfo">
+        insert into tb_user_find_pwd (user_id, expire_date,
+        md5)
+        values (#{userId,jdbcType=INTEGER},
+        #{expireDate,jdbcType=TIMESTAMP},
+        #{randomCode,jdbcType=VARCHAR})
+    </insert>
+    <delete id="cleanFindPwdByUserId">
+        delete from tb_user_find_pwd
+        where
+        user_id=#{userId,jdbcType=INTEGER}
+        OR expire_date &lt;=
+        #{expireDate,jdbcType=TIMESTAMP}
+    </delete>
+    <delete id="cleanFindPwdByUsername">
+        delete from tb_user_find_pwd
+        where
+        <if test="username != null">
+            user_id=(
+            select
+            user_id from tb_user where
+            username=#{username,jdbcType=VARCHAR}
+            ) OR
+        </if>
+        expire_date &lt;= #{expireDate,jdbcType=TIMESTAMP}
+    </delete>
+    <select id="getUserByFindPwd" resultMap="BaseResultMap">
+        select
+        tb_user.*
+        from
+        tb_user,tb_user_find_pwd
+        where tb_user.state = 0
+        AND
+        tb_user.username =
+        #{username,jdbcType=VARCHAR}
+        AND
+        tb_user.user_id=tb_user_find_pwd.user_id
+        AND
+        tb_user_find_pwd.md5=#{randomCode,jdbcType=VARCHAR}
+    </select>
+    <select id="getUserByName" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_user
+        where username = #{username}
+    </select>
+    <select id="isEmailInUse" resultType="int">
+        select count(1) from tb_user where email=#{email} and user_id != #{userId}
+    </select>
+    <select id="isUsernameInUse" resultType="int">
+        select count(1) from tb_user where username=#{username } and user_id != #{userId}
+    </select>
+    <select id="getCompanyIdByUserId" resultType="java.lang.Integer">
+        select company_id from tb_user_company_relat where user_id = #{userId}
+    </select>
+    
+    <select id="getUserByPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_user
+        where 
+        state=#{state }
+        <if test="companyId != 0">
+         and role = 0 and company_id = #{companyId }
+        </if>
+        <if test="companyId == 0">
+         and role = 0 or role = 1
+        </if>
+        <if test="keyword!=null and keyword!=''">
+            and ${searchField} like '%${keyword }%'
+        </if>
+        order by create_date desc
+    </select>
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="userId" parameterType="com.celloud.manager.model.User" >
+        insert into tb_user (
+        username, password,
+        email, cellphone, create_date,
+        icon, role, remark,
+         truename, state,
+        dept_id, login_uuid, company_id,
+        sign)
+        values (#{username,jdbcType=VARCHAR},
+        #{password,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR},
+        #{cellphone,jdbcType=VARCHAR},now(),
+        #{icon,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER},
+        #{remark,jdbcType=VARCHAR},
+        #{truename,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER},
+        #{deptId,jdbcType=INTEGER}, #{loginUuid,jdbcType=VARCHAR},
+        #{companyId,jdbcType=INTEGER},
+        #{sign,jdbcType=VARCHAR})
+    </insert>
+    <insert id="addUserAppRight"  useGeneratedKeys="true">
+         <selectKey resultType="long" keyProperty="id" order="AFTER">  
+            SELECT  
+            LAST_INSERT_ID()  
+        </selectKey>  
+        insert into tb_user_app_right (
+        user_id, app_id,
+        is_add)
+        values
+        <foreach collection="appIds" item="appId" index="index" separator="," >
+            (#{userId},${appId},#{isAdded})
+        </foreach>
+    </insert>
+    <insert id="addUserCompanyRelat">
+        insert into tb_user_company_relat (
+        user_id, company_id)
+        values
+        (#{userId},#{companyId})
+    </insert>
+    <select id="getAllUserList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_user
+        where state=#{state }
+        order by username
+    </select>
+    <select id="getAllUserSelectList" resultType="com.celloud.manager.model.UserSelect">
+        select 
+        email as id, username as text 
+        from tb_user 
+        where state = #{state } 
+        order by username
     </select>
 </mapper>

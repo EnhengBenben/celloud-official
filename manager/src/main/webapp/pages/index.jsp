@@ -127,6 +127,12 @@
                             <span class="title">公司管理</span>
                         </a>
                     </li>
+                    <li id="user-menu">
+                        <a href="javascript:user.toUserMain();">
+                            <i class="linecons-note"></i>
+                            <span class="title">用户管理</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="#">
                             <i class="linecons-mail"></i>

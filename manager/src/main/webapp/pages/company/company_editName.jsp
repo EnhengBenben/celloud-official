@@ -33,7 +33,7 @@
             <div class="form-group-separator"></div>
             <div class="form-group">
                 <div class="col-sm-10 text-center">
-                    <button type="submit" class="btn btn-success">保存</button>
+                    <button type="submit" class="btn btn-success">发送</button>
                     <button type="reset" class="btn btn-white">重置</button>
                 </div>
             </div>
