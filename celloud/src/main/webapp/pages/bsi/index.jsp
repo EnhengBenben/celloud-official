@@ -61,7 +61,7 @@
 	    </div>
 	    <div class="modal-body row">
 	      <div id="batch-div" class="input-div">
-	        <input id="batch-info" type="text" placeholder="请输入批次" value=""/>
+	        <input id="batch-info" type="text" placeholder="请输入批次" value=""/><br>
 	        <input id="need-split" type="checkbox" value="1">需要数据拆分 (run: Split)
 	        <p>输入数据批次可以更好享受数据查询和统计等服务</p>
 <!-- 	        <a href="javascript:void(0)" class="celicon addfile" id="upload-content_browse"></a> -->
