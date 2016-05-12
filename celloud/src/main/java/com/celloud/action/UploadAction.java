@@ -132,6 +132,7 @@ public class UploadAction {
                                         fileFormat);
                                 Subject sub = SecurityUtils.getSubject();
                                 if (sub.hasRole("bsier")) {
+                                    logger.info("{}拥有百菌探权限", userId);
                                     return bsierCheckRun(tagId, batch, dataId,
                                             needSplit, newName, folderByDay,
                                             originalName, userId, fileFormat);
@@ -165,9 +166,11 @@ public class UploadAction {
      * @author leamo
      * @date 2016年5月10日 下午3:41:08
      */
+    @ActionLog(value = "判断是否上传完即刻运行", button = "上传完即刻运行")
     private String bsierCheckRun(Integer tagId, String batch, Integer dataId,
             Integer needSplit, String newName, String folderByDay,
             String originalName, Integer userId, Integer fileFormat) {
+        logger.info("判断是否上传完即刻运行");
         App app = appService.findAppsByTag(tagId);
         Integer appId = app.getAppId();
         String pubName = "";
