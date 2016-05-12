@@ -111,8 +111,8 @@
 	                       鲍曼不动杆菌
 	       </td>
 	       <td>
-	         <i class="fa <c:choose><c:when test="${havestrain.contains('肺炎克雷伯菌') }">fa-circle</c:when><c:otherwise>fa-circle-o</c:otherwise></c:choose>" aria-hidden="true"></i>
-	                       肺炎克雷伯菌
+	         <i class="fa <c:choose><c:when test="${havestrain.contains('肺炎克雷伯氏菌') }">fa-circle</c:when><c:otherwise>fa-circle-o</c:otherwise></c:choose>" aria-hidden="true"></i>
+	                       肺炎克雷伯氏菌
 	       </td>
 	     </tr>
 	     <tr>
@@ -172,7 +172,7 @@
 	           检测到
 	           <c:forEach items="${bsi.species_20 }" var="species20">
 	             <c:choose>
-	               <c:when test='${species20.species_zh.equals("未知") || empty species20.species_zh}'>species20.species&nbsp;</c:when>
+	               <c:when test='${species20.species_zh.equals("未知") || species20.species_zh.equals("") || empty species20.species_zh}'>species20.species&nbsp;</c:when>
 	               <c:otherwise>${species20.species_zh }
 	                 <c:choose>
 	                    <c:when test="${empty havestrain}">

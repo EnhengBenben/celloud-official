@@ -62,10 +62,13 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Integer insertProject(Project project) {
+    public Integer insertProject(Project project, Integer dataId) {
         project.setProjectId(null);
         project.setCreateDate(new Date());
-        return projectMapper.insertSelective(project);
+        projectMapper.insertSelective(project);
+        Integer projectId = project.getProjectId();
+        projectMapper.insertDataProjectRelat(dataId, projectId);
+        return projectId;
     }
 
     @Override

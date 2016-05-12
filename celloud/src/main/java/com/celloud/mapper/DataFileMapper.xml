@@ -391,4 +391,13 @@
         data_tags = #{dataTags}
     where file_id in (${dataIds})
   </update>
+  <select id="getDataByBatchAndFileName" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_file
+    where file_name like '${fileName}%'
+    and batch = #{batch} 
+    and state = #{state} 
+    and user_id= #{userId}
+  </select>
 </mapper>

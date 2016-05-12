@@ -131,7 +131,7 @@ $.reportChar.draw = {
   	/**
   	 * 柱状图
   	 */
-  	echartsShowBar : function(id, title, X, Y, rotate) {
+  	echartsShowBar : function(id, title, X, Y, rotate, width, height) {
         var option = {
         		tooltip : {
         	        trigger: 'axis'
@@ -167,7 +167,8 @@ $.reportChar.draw = {
         	    ],
                 color : ['#feabac'],
                 grid : {
-                	width : 380
+                	width : width,
+                	height : height
                 }
         };
         $.reportChar.draw._require('bar',option,id);
@@ -211,13 +212,13 @@ $.reportChar.draw = {
     		    {
     		        name:'HBV基因型',
     		        type:'bar',
-    		        data:hbvType,
+    		        data:eval(hbvType),
     		        barWidth:30
     		    },
     		    {
                     name:'当前数据基因型',
                     type:'scatter',
-                    data:currentType,
+                    data:eval(currentType),
                     barWidth:30,
                     symbol : 'triangle'
                 }
@@ -226,9 +227,9 @@ $.reportChar.draw = {
     		    width : 800,
     		    height : 250
     		},
-            color : ['#00cccc','#ff4040']
+            color : ['#00cccc','#ff0000']
         };
-        $.reportChar.draw._requireMulti(['bar','scatter'],option,id);
+        $.reportChar.draw._requireMulti(['scatter','bar'],option,id);
   	},
   
   /**

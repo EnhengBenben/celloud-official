@@ -52,9 +52,7 @@
     <ul id="pagination-data" class="pages">
       <li><a id="first-page-task" href="javascript:void(0);">首页</a></li>
       <!-- 显示prev -->
-      <c:if test="${pageList.page.hasPrev}">
-          <li><a id="prev-page-task" href="javascript:void(0);">上一页</a></li>
-      </c:if>
+      <li><a id="prev-page-task" href="javascript:void(0);">上一页</a></li>
       <!-- 显示第一页 -->
       <c:choose>
         <c:when test="${pageList.page.currentPage==1}"><li class="active"><a href="#">1</a></li></c:when>
@@ -165,9 +163,7 @@
           </c:if>
         </c:otherwise>
       </c:choose>
-      <c:if test="${pageList.page.hasNext}">
-          <li><a id="next-page-task" href="javascript:void(0)">下一页</a></li>
-      </c:if>
+      <li><a id="next-page-task" href="javascript:void(0)">下一页</a></li>
       <li><a id="last-page-task" href="javascript:void(0);">尾页</a></li>
     </ul>
   </c:if>

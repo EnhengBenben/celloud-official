@@ -22,6 +22,39 @@ utils._stopDefault = function(e){
   return false;  
 }
 /**
+ * 时间格式化
+ *
+ * @method formatDate
+ * @static
+ * @param {Number} size Size to format as string.
+ * @return {String} Formatted size string.
+ */
+utils.formatDate =function(size) {
+  var ss = parseInt(size);// 秒
+  if (ss === 0 || /\D/.test(ss)) {
+    return 'N/A';
+  }
+  var radix = 60;
+    var mm = 0;// 分
+    var hh = 0;// 小时
+    if(ss > radix) {
+        mm = parseInt(ss/radix);
+        ss = parseInt(ss%radix);
+        if(mm > radix) {
+            hh = parseInt(mm/radix);
+            mm = parseInt(mm%radix);
+        }
+    }
+    var result = ""+parseInt(ss)+" 秒";
+    if(mm > 0) {
+        result = ""+parseInt(mm)+" 分 "+result;
+    }
+    if(hh > 0) {
+        result = ""+parseInt(hh)+" 小时 "+result;
+    }
+    return result;
+},
+/**
  * 获取文件后缀
  */
 utils.getExt = function(fileName){

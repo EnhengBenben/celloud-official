@@ -109,9 +109,8 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public Integer dataRunning(String appIds) {
-        return dataFileMapper.queryDataRunning(appIds,
-                ReportPeriod.NOT_RUN, DataState.ACTIVE,
-                ReportType.DATA);
+        return dataFileMapper.queryDataRunning(appIds, ReportPeriod.NOT_RUN,
+                DataState.ACTIVE, ReportType.DATA);
     }
 
     @Override
@@ -187,13 +186,22 @@ public class DataServiceImpl implements DataService {
         return dataFileMapper.selectByDataKeys(dataKeys);
     }
 
-	@Override
-	public int updateByPrimaryKeySelective(DataFile record) {
-		return dataFileMapper.updateByPrimaryKeySelective(record);
-	}
+    @Override
+    public int updateByPrimaryKeySelective(DataFile record) {
+        return dataFileMapper.updateByPrimaryKeySelective(record);
+    }
 
-	@Override
-	public List<DataFile> getDataByAnotherName(Integer userId, String anotherName) {
-		return dataFileMapper.getDataByAnotherName(userId, anotherName, DataState.ACTIVE);
-	}
+    @Override
+    public List<DataFile> getDataByAnotherName(Integer userId,
+            String anotherName) {
+        return dataFileMapper.getDataByAnotherName(userId, anotherName,
+                DataState.ACTIVE);
+    }
+
+    @Override
+    public List<DataFile> getDataByBatchAndFileName(Integer userId,
+            String batch, String fileName) {
+        return dataFileMapper.getDataByBatchAndFileName(userId, batch, fileName,
+                DataState.ACTIVE);
+    }
 }

@@ -87,17 +87,17 @@ public interface DataService {
      */
     PageList<DataFile> dataLists(Page page, Integer userId, String condition,
             int sort, String sortDateType, String sortNameType);
-    
-	/**
-	 * 根据别名检索数据
-	 * 
-	 * @param userId
-	 * @param anotherName
-	 * @return
-	 * @author lin
-	 * @date 2016年4月6日下午4:19:41
-	 */
-	List<DataFile> getDataByAnotherName(Integer userId, String anotherName);
+
+    /**
+     * 根据别名检索数据
+     * 
+     * @param userId
+     * @param anotherName
+     * @return
+     * @author lin
+     * @date 2016年4月6日下午4:19:41
+     */
+    List<DataFile> getDataByAnotherName(Integer userId, String anotherName);
 
     /**
      * 根据数据编号获取数据类型
@@ -237,7 +237,7 @@ public interface DataService {
      * @date 2016年1月14日 下午6:15:30
      */
     public List<DataFile> selectDataByKeys(String dataKeys);
-    
+
     /**
      * 根据主键修改非空字段
      * 
@@ -248,4 +248,15 @@ public interface DataService {
      */
     public int updateByPrimaryKeySelective(DataFile record);
 
+    /**
+     * 获取同一批次的成对数据
+     * 
+     * @param batch
+     * @param fileName
+     * @return
+     * @author leamo
+     * @date 2016年5月10日 下午2:08:49
+     */
+    public List<DataFile> getDataByBatchAndFileName(Integer userId,
+            String batch, String fileName);
 }
