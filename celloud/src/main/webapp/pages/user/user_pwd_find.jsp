@@ -29,10 +29,6 @@
                             <p>您的申请已提交成功，请查看您的${requestScope.email }邮箱</p>
                             <br>
                             <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
                             <a href="${requestScope.emailAddress }" class="btn-email" target="_blank">查看邮箱</a>
                             <a href="<%=request.getContextPath()%>/login" class="return">返回登录</a>
                         </div>
