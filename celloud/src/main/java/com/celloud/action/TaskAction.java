@@ -389,6 +389,7 @@ public class TaskAction {
     @ActionLog(value = "bsi运行split分数据", button = "运行split分数据")
     private String toRunSplitData(Integer userId,
             DataFile data) {
+        logger.info("bsi自动运行split分数据");
         String result;
         // XXX 运行完split只能运行bsi
         Integer appId = 118;

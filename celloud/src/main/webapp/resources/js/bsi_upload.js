@@ -126,13 +126,19 @@ var fileUpload=(function(fileUpload){
     });
     uploader.bind("FileUploaded", function(uploader, file, response) {
       var res = response.response;
-      alert(response.response);
       if(res != "1"){
         $.get("data/run",JSON.parse(res),function(result){
           $.report.find.condition();
         });
       }
       handleStatus(file);
+    });
+    uploader.bind("UploadComplete",function(uploader,files){
+      $("#batch-info").val("");
+      $("#batch-div").removeClass("hide");
+      $("#upload-content").addClass("upload-step-one");
+      uploader.splice();
+      $("#upload-modal").modal("hide");
     });
     uploader.bind("BeforeUpload", function(uploader, file) {
        uploader.setOption("multipart_params",{'originalName': file.name,'tagId':$("#tag-info").val(),'batch': $("#batch-info").val(),'needSplit':$("#need-split:checked").val()});
