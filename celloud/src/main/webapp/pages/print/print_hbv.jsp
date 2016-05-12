@@ -10,7 +10,7 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/browser.js"></script>
 <script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/plugins/imgRemove/imgRemove.0.1.js?version=0.1" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/plugins/imgRemove/imgRemove.0.1.js?version=0.2" type="text/javascript"></script>
 <link href="<%=request.getContextPath()%>/plugins/imgRemove/imgRemove.0.1.css?version=0.2" rel="stylesheet" type="text/css" media="screen">
 <link href="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/print_hbv.css?version=1.18">
@@ -881,8 +881,10 @@ function preview(obj){
 	$("#_sex").html(sex);
 	$("a[name='change']").hide();
 	$("hr[name='change']").hide();
-	$(".w3cbbs").css("display","");
-	$(".container").css("display","");
+	if(companyId!=57){
+		$(".w3cbbs").css("display","");
+		$(".container").css("display","");
+	}
 	var _flag = $("#_flag").html();
 	if(_flag==1){
 		$("h1").css("padding","0 0 5px 0");
@@ -913,8 +915,10 @@ function preview(obj){
 	if(_flag==1){
 		$("h1").css("padding","40px 0 5px 0");
 	}
-	$(".w3cbbs").css("display","none");
-	$(".container").css("display","none");
+	if(companyId!=57){
+		$(".w3cbbs").css("display","none");
+		$(".container").css("display","none");
+	}
 	$("a[name='change']").show();
 	$("hr[name='change']").show();
 	$("body").find("span[name='print']").each(function(){
