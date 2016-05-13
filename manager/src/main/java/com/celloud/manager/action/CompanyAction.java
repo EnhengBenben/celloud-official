@@ -198,14 +198,14 @@ public class CompanyAction {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * 发送新的公司名字
      */
     @RequestMapping("sendName")
     @ResponseBody
-    public int sendName(String currentName, String newName, String reason){
-        String[] emails = new String[]{"miaoqi@celloud.cn"};
+    public int sendName(String currentName, String newName, String reason) {
+        String[] emails = new String[] { "miaoqi@celloud.cn" };
         EmailUtils.sendWithTitle("公司名称有异", "旧名称:" + currentName + " 新名称:" + newName + " 原因:" + reason, emails);
         return 1;
     }
@@ -224,6 +224,12 @@ public class CompanyAction {
         logger.info("医院logo绝对路径{}", targetFile.getAbsolutePath());
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
 
+    }
+
+    @RequestMapping("getAllToSelect")
+    @ResponseBody
+    public List<Map<String, String>> getAllToSelect() {
+        return companyService.getAllToSelect();
     }
 
     @RequestMapping("companyMain")

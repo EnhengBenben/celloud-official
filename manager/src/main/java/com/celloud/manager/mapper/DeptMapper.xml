@@ -133,7 +133,7 @@
     where dept_id = #{deptId }
   </update>
   
-  <insert id="addDept" parameterType="com.celloud.manager.model.Dept" >
+  <insert id="addDept" parameterType="com.celloud.manager.model.Dept" useGeneratedKeys="true" keyProperty="deptId" >
     insert into tb_dept (dept_name, english_name, 
       tel, dept_icon, company_id, 
       state)
@@ -151,5 +151,12 @@
     select dept_id,dept_name
     from tb_dept
     where state=#{state } and company_id=#{companyId }
+  </select>
+  <select id="getDeptToSelectByCompanyId" resultType="java.util.HashMap">
+    select
+    dept_id as id, dept_name as text
+    from tb_dept
+    where company_id = #{companyId} and state = 0
+    
   </select>
 </mapper>

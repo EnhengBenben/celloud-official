@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="plugins/bootstrap/css/xenon-components.css">
 <link rel="stylesheet" href="plugins/bootstrap/css/xenon-skins.css">
 <link rel="stylesheet" href="plugins/bootstrap/js/datatables/dataTables.bootstrap.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/console.css">
 <script src="plugins/bootstrap/js/jquery-1.11.1.min.js"></script>
@@ -242,6 +243,8 @@
     <script type="text/javascript" src="${pageContext.request.contextPath }/resources/plugins/jQuery/jquery.validate.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/validate.extend.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery.form.js"></script>
+    <!-- select2 -->
+    <script type="text/javascript" src="${pageContext.request.contextPath }/resources/plugins/select2/js/select2.full.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/app.js"></script>
 </body>

@@ -1,6 +1,7 @@
 package com.celloud.manager.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -40,4 +41,6 @@ public interface DeptMapper {
     public Dept getDeptById(@Param("deptId") int deptId, @Param("state") int state);
 
     public List<Dept> getDeptByCompanyId(@Param("state") int state, @Param("companyId") int companyId);
+
+    public List<Map<String, String>> getDeptToSelectByCompanyId(@Param("companyId") Integer companyId);
 }

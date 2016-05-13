@@ -1,6 +1,7 @@
 package com.celloud.manager.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.celloud.manager.model.Dept;
 import com.celloud.manager.page.Page;
@@ -25,5 +26,7 @@ public interface DeptService {
     public Dept getDeptById(Integer deptId);
 
     public List<Dept> getDeptByCompanyId(int companyId);
+
+    public List<Map<String, String>> getDeptToSelectByCompanyId(Integer companyId);
 
 }
