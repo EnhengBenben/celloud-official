@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -741,6 +742,42 @@ public class FileTools {
 		}
 		return context;
 	}
+
+    public static boolean nioTransferCopy(File source, File target) {
+        FileChannel in = null;
+        FileChannel out = null;
+        FileInputStream inStream = null;
+        FileOutputStream outStream = null;
+        boolean result = true;
+        try {
+            inStream = new FileInputStream(source);
+            outStream = new FileOutputStream(target);
+            in = inStream.getChannel();
+            out = outStream.getChannel();
+            in.transferTo(0, in.size(), out);
+        } catch (IOException e) {
+            e.printStackTrace();
+            result = false;
+        } finally {
+            try {
+                if (inStream != null) {
+                    inStream.close();
+                }
+                if (in != null) {
+                    in.close();
+                }
+                if (outStream != null) {
+                    outStream.close();
+                }
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
 
 	public static void main(String[] args) {
 		mvFile("/Users/lin/xxx", "t.sql", "/Users/lin", "sql.txt");

@@ -1,10 +1,14 @@
 package com.celloud.action;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -29,8 +33,10 @@ import com.celloud.constants.PortPool;
 import com.celloud.constants.ReportType;
 import com.celloud.constants.SparkPro;
 import com.celloud.model.mongo.TaskQueue;
+import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Experiment;
+import com.celloud.model.mysql.Project;
 import com.celloud.model.mysql.Report;
 import com.celloud.model.mysql.Task;
 import com.celloud.service.AppService;
@@ -39,6 +45,7 @@ import com.celloud.service.ExpensesService;
 import com.celloud.service.ExperimentService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
+import com.celloud.service.SecRoleService;
 import com.celloud.service.TaskService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.DataKeyListToFile;
@@ -76,6 +83,8 @@ public class TaskAction {
     private ExpensesService expencesService;
     @Resource
     private ExperimentService expService;
+    @Resource
+    private SecRoleService secService;
 
     private static Map<String, Map<String, String>> machines = ConstantsData
             .getMachines();
@@ -137,7 +146,6 @@ public class TaskAction {
                 .append(projectId).append(".txt");
         String projectFile = projectFileBf.toString();
         FileTools.createFile(projectFile);
-
         StringBuffer reportPath = new StringBuffer();
         reportPath.append(basePath).append(dataKey).append("/");
         // 4. 通过反射调用相应app的处理方法，传参格式如下：
@@ -158,11 +166,17 @@ public class TaskAction {
         if (new File(projectFile.toString()).exists()) {
             xml = XmlUtil.writeXML(projectFile.toString());
         }
+
         if (appId == 113) {
+            String batch = "";
+            for (DataFile d_tmp : dataList) {
+                batch = d_tmp.getBatch();
+            }
             String inPath = reportPath + "result/split/";
             HashSet<String> resultFiles = FileTools.getFiles(inPath);
             Iterator<String> rFile = resultFiles.iterator();
             Long size = null;
+            Set<String> secs = secService.findRolesByUserId(userId);
             while (rFile.hasNext()) {
                 String fstr = rFile.next();
                 if (!fstr.equals("...tar.gz") && !fstr.equals("..tar.gz")) {
@@ -170,28 +184,32 @@ public class TaskAction {
                             .substring(fstr.lastIndexOf(".tar.gz"));
                     String resourcePath = inPath + fstr;
                     size = new File(resourcePath).length();
-                    DataFile DataFile = new DataFile();
-                    DataFile.setUserId(userId);
-                    DataFile.setFileName(fstr);
-                    DataFile.setState(DataState.DEELTED);
-                    int dataId = dataService.addDataInfo(DataFile);
+                    DataFile data = new DataFile();
+                    data.setUserId(userId);
+                    data.setFileName(fstr);
+                    data.setState(DataState.DEELTED);
+                    int dataId = dataService.addDataInfo(data);
                     String new_dataKey = DataUtil.getNewDataKey(dataId);
                     String filePath = PropertiesUtil.bigFilePath + userId
                             + File.separatorChar
                             + DateUtil.getDateToString("yyyyMMdd")
                             + File.separatorChar + new_dataKey + extName;
-                    boolean state = PerlUtils.excuteCopyFile(resourcePath,
-                            filePath);
+                    boolean state = FileTools.nioTransferCopy(
+                            new File(resourcePath), new File(filePath));
                     if (state) {
-                        DataFile.setFileId(dataId);
-                        DataFile.setDataKey(new_dataKey);
-                        DataFile.setAnotherName("split:" + dataKey);
-                        DataFile.setSize(size);
-                        DataFile.setPath(filePath);
-                        DataFile.setFileFormat(FileFormat.FQ);
-                        DataFile.setState(DataState.ACTIVE);
-                        DataFile.setMd5(MD5Util.getFileMD5(filePath));
-                        dataService.updateDataInfoByFileId(DataFile);
+                        data.setFileId(dataId);
+                        data.setDataKey(new_dataKey);
+                        data.setAnotherName("split:" + dataKey);
+                        data.setSize(size);
+                        data.setPath(filePath);
+                        data.setFileFormat(FileFormat.FQ);
+                        data.setState(DataState.ACTIVE);
+                        data.setBatch(batch);
+                        data.setMd5(MD5Util.getFileMD5(filePath));
+                        dataService.updateDataInfoByFileId(data);
+                        if (secs.contains("bsier")) {
+                            toRunSplitData(userId, data);
+                        }
                     }
                 }
             }
@@ -366,5 +384,82 @@ public class TaskAction {
         Integer result = reportService.updateReportStateToTools(userId, appId,
                 projectId, period, context);
         return String.valueOf(result);
+    }
+
+    @ActionLog(value = "bsi运行split分数据", button = "运行split分数据")
+    private String toRunSplitData(Integer userId,
+            DataFile data) {
+        logger.info("bsi自动运行split分数据");
+        String result;
+        // XXX 运行完split只能运行bsi
+        Integer appId = 118;
+        Integer dataId = data.getFileId();
+        // 公共项目信息
+        Project project = new Project();
+        String proName = new Date().getTime() + "";
+        project.setUserId(userId);
+        project.setProjectName(proName);
+        project.setDataNum(1);
+        project.setDataSize(data.getSize().toString());
+
+        // 公共报告信息
+        Report report = new Report();
+        report.setUserId(userId);
+
+        // 构建运行所需dataListFile文件路径
+
+        List<DataFile> dataList = new ArrayList<>();
+        dataList.add(data);
+        Map<String, String> dataFilePathMap = DataKeyListToFile
+                .onlyFastqPath(dataList);
+        project.setDataNum(
+                Integer.parseInt(dataFilePathMap.get("dataReportNum")));
+        dataFilePathMap.remove("dataReportNum");
+        // 批量创建项目
+        Integer proId = projectService.insertProject(project, dataId);
+        if (proId == null) {
+            result = "血流项目创建失败";
+            return result;
+        }
+        // 批量创建报告
+        Integer reportId = reportService.insertProReport(report, dataId);
+        if (reportId == 0) {
+            result = "血流项目创建报告失败";
+            return result;
+        }
+
+        // 运行APP详细信息
+        App app = appService.findAppById(appId);
+        String bp = SparkPro.TOOLSPATH + userId + "/";
+        String appPath = bp + appId + "/";
+        if (!FileTools.checkPath(appPath)) {
+            new File(appPath).mkdirs();
+        }
+        for (Entry<String, String> entry : dataFilePathMap.entrySet()) {
+            String dataKey = entry.getKey();
+            String dataListFile = entry.getValue();
+            int runningNum = taskService.findRunningNumByAppId(appId);
+            Task task = new Task();
+            task.setProjectId(proId);
+            task.setUserId(userId);
+            task.setAppId(appId);
+            task.setDataKey(dataKey);
+            Map<String, String> map = CommandKey.getMap(dataListFile, appPath,
+                    proId);
+            StrSubstitutor sub = new StrSubstitutor(map);
+            String command = sub.replace(app.getCommand());
+            task.setCommand(command);
+            taskService.create(task);
+            Integer taskId = task.getTaskId();
+            if (runningNum < app.getMaxTask() || app.getMaxTask() == 0) {
+                logger.info("任务{}运行命令：{}", taskId, command);
+                SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+                ssh.sshSubmit(command, false);
+                taskService.updateToRunning(taskId);
+            } else {
+                logger.info("数据{}排队运行{}", dataKey, app.getAppName());
+            }
+        }
+        return "begin run:bsi";
     }
 }

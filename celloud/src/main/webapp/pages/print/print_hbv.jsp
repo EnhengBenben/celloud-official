@@ -10,8 +10,10 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/browser.js"></script>
 <script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/plugins/imgRemove/imgRemove.0.1.js?version=0.2" type="text/javascript"></script>
+<link href="<%=request.getContextPath()%>/plugins/imgRemove/imgRemove.0.1.css?version=0.2" rel="stylesheet" type="text/css" media="screen">
 <link href="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
-<link rel="stylesheet" href="<%=request.getContextPath() %>/css/print_hbv.css?version=1.17">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/print_hbv.css?version=1.18">
 </head>
 <body>
 	<div>
@@ -27,6 +29,7 @@
 			<input type="hidden" value="${hbv.projectId }" id="_projectId">
 			<div style="display: none;" id="_userId">${hbv.userId }</div>
 			<div style="display: none;" id="_appId">${hbv.appId }</div>
+			<div style="display: none;" id="_companyId">${hbv.companyId }</div>
 			<div style="display: none;" id="_fileId">${report.fileId }</div>
 			<div style="display: none;" id="_flag">${flag }</div>
 			<div>
@@ -337,6 +340,257 @@
 					        	</c:otherwise>
 					        </c:choose>
 		        		</c:when>
+		        		<c:when test="${hbv.companyId==57 }">
+		        			<h2 class="mt10">一、基因分型结果：<span style="font-size:12px;font-weight: normal"><input type="text" value="${hbv.type.replace('Type','基因型') }"/></span></h2>
+		        			<h2 class="mt10">二、耐药突变位点检测结果：</h2>
+		        			<div class="m-box_1">
+					        	${hbv.clinical }
+						        <p class="annotation">注：深背景色<span class="_hard colorspan">&nbsp;</span>表示发生了耐药突变<br>
+						        	浅背景色<span class="_light colorspan">&nbsp;</span>表示发生了突变，但是暂无文献支持其和耐药相关<br>
+						       		 红色字体表示在样本中未找到该位点
+						        </p>
+					        </div>
+					        <c:if test="${flag==0 }">
+					        	<div class="w3cbbs" style="display: none;"></div>
+								<div class="container" style="display: none;"></div>
+							   	<h2 class="mt10"><input type="text" class="long_input" value="三、耐药位点突变检测结果："></h2>
+						   		<div class="clearCss_3">
+							   		<div class="m-box">
+									 	<h2>
+									 		<input type="text" class="long_input" value="1.替诺福韦酯TDF突变检测"/>
+									 	</h2>
+									    <div class="m-boxCon">
+										    <c:if test="${hbv.known.containsKey('194_png') }">
+												<img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['194_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('194_png') }">
+												<div class="imgmiss">
+													194位点测序失败，建议重测。
+												</div>
+											</c:if>
+									    </div>
+									</div>
+									<!--位点突变-->
+									<div class="m-box">
+									 	<h2>
+									 	<input type="text" class="long_input" value="2.替比夫定 LDT 突变检测"/>
+									 	</h2>
+									    <div class="m-boxCon">
+									    	<c:if test="${hbv.known.containsKey('204_png') }">
+												<img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_png'] }" height="170px;" width="150px;">
+									    	</c:if>
+									    	<c:if test="${not hbv.known.containsKey('204_png') }">
+												<div class="imgmiss">
+													204位点测序失败，建议重测。
+												</div>
+											</c:if>
+									    </div>
+									</div>
+									<!--位点突变-->
+									<div class="m-box">
+									 	<h2>
+									 	<input type="text" class="long_input" value="3.阿德福韦 ADV 突变检测"/>
+									 	</h2>
+									    <div class="m-boxCon">
+										    <c:if test="${hbv.known.containsKey('181_png') }">
+												<img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['181_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('181_png') }">
+												<div class="imgmiss">
+													181位点测序失败，建议重测。
+												</div>
+											</c:if>
+											<c:if test="${hbv.known.containsKey('236_png') }">
+												<img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['236_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('236_png') }">
+												<div class="imgmiss">
+													236位点测序失败，建议重测。
+												</div>
+											</c:if>
+									    </div>
+									</div>
+									<!--位点突变-->
+									<div class="m-box">
+									 	<h2>
+									 	<input type="text" class="long_input" value="4.拉米夫定 LAM 突变检测"/>
+									 	</h2>
+									    <div class="m-boxCon">
+										    <c:if test="${hbv.known.containsKey('173_png') }">
+												<img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['173_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('173_png') }">
+												<div class="imgmiss">
+													173位点测序失败，建议重测。
+												</div>
+											</c:if>
+											<c:if test="${hbv.known.containsKey('180_png') }">
+												<img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['180_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('180_png') }">
+												<div class="imgmiss">
+													180位点测序失败，建议重测。
+												</div>
+											</c:if>
+									    	<c:if test="${hbv.known.containsKey('204_png') }">
+												<img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('204_png') }">
+												<div class="imgmiss">
+													204位点测序失败，建议重测。
+												</div>
+											</c:if>
+									    </div>
+									</div>
+									<!--位点突变-->
+									<div class="m-box">
+									 	<h2>
+									 	<input type="text" class="long_input" value="5.恩曲他滨 FTC 突变检测"/>
+									 	</h2>
+									    <div class="m-boxCon">
+										    <c:if test="${hbv.known.containsKey('173_png') }">
+												<img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['173_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('173_png') }">
+												<div class="imgmiss">
+													173位点测序失败，建议重测。
+												</div>
+											</c:if>
+											<c:if test="${hbv.known.containsKey('180_png') }">
+												<img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['180_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('180_png') }">
+												<div class="imgmiss">
+													180位点测序失败，建议重测。
+												</div>
+											</c:if>
+											<c:if test="${hbv.known.containsKey('204_png') }">
+												<img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('204_png') }">
+												<div class="imgmiss">
+													204位点测序失败，建议重测。
+												</div>
+											</c:if>
+									    </div>
+									</div>
+									<!--位点突变-->
+									<div class="m-box">
+									 	<h2>
+									 	<input type="text" class="long_input" value="6.恩替卡韦 ETV 突变检测"/>
+									 	</h2>
+									    <div class="m-boxCon">
+										    <c:if test="${hbv.known.containsKey('169_png') }">
+												<img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['169_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('169_png') }">
+												<div class="imgmiss">
+													169位点测序失败，建议重测。
+												</div>
+											</c:if>
+											<c:if test="${hbv.known.containsKey('180_png') }">
+												<img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['180_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('180_png') }">
+												<div class="imgmiss">
+													180位点测序失败，建议重测。
+												</div>
+											</c:if>
+											<c:if test="${hbv.known.containsKey('184_png') }">
+												<img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['184_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('184_png') }">
+												<div class="imgmiss">
+													184位点测序失败，建议重测。
+												</div>
+											</c:if>
+											<c:if test="${hbv.known.containsKey('202_png') }">
+												<img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['202_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('202_png') }">
+												<div class="imgmiss">
+													202位点测序失败，建议重测。
+												</div>
+											</c:if>
+											<c:if test="${hbv.known.containsKey('204_png') }">
+												<img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['204_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('204_png') }">
+												<div class="imgmiss">
+													204位点测序失败，建议重测。
+												</div>
+											</c:if>
+											<c:if test="${hbv.known.containsKey('250_png') }">
+												<img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.known['250_png'] }" height="170px;" width="150px;">
+											</c:if>
+											<c:if test="${not hbv.known.containsKey('250_png') }">
+												<div class="imgmiss">
+													250位点测序失败，建议重测。
+												</div>
+											</c:if>
+									    </div>
+									</div>
+									<div class="w3cbbs" style="display: none;"></div>
+									<div class="container" style="display: none;"></div>
+									<!--位点突变-->
+									<div class="m-box">
+									 	  <h2>
+									 	  <input type="text" class="super_long_input" value="7.其他突变位点（该位点目前没有已发表文献支持，无明确临床意义）"/>
+									 	  </h2>
+									    <div class="m-boxCon" id="otherPng">
+										    <c:if test="${hbv.imgString!='' }">
+										    	<c:set value="${fn:split(hbv.imgString, ',') }" var="imgs" />
+										    	<c:forEach var="img" items="${imgs }">
+													<img onmouseover="imgRemove.setOptions({left:120}).show(this)" title="${img }" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${img }" height="170px;" width="150px;">
+										    	</c:forEach>
+										    </c:if>
+									    </div>
+									</div>
+						   		</div>
+							   	<div class="m-box_1" id="des1">
+									<textarea rows="5">注：1. 突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V，{A-G}：碱基由A变为G
+2. Wild Type: GCT;表示该位点的野生型为GCT
+3. 峰图中的*号，表示该位置发生了突变</textarea>
+								</div>
+							   	<div id="lessDiv">
+									<div class="w3cbbs" style="display: none;"></div>
+									<div class="container" style="display: none;"></div>
+							   	</div>
+						        <h2 class="mt10"><input type="text" class="super_long_input" value="四、参考结论（根据已发表文献得出以下参考结论）："></h2>
+						        <div class="m-box_1" id="des">
+									<textarea rows="6">${hbv.reporttxt.split('Other:')[0] }</textarea>
+						        </div>
+							   	<h2 class="mt10"><input type="text" class="long_input" value="五、测序序列结果："></h2>
+							   	<p class="m-box_1 force_break">${hbv.seq }</p>
+							   	<div id="moreDiv">
+									<div class="w3cbbs" style="display: none;"></div>
+									<div class="container" style="display: none;"></div>
+							   	</div>
+								<div id="SNPEND">
+								   	<h2 class="mt10"><input type="text" class="long_input" value="六、测序峰图结果："></h2>
+								   	<div class="m-box_1 clearCss_6">
+									   	<p>
+										   	<c:if test="${hbv.original.containsKey('1_all_png') }">
+												<img onmouseover="imgRemove.setOptions({left:600}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['1_all_png'] }" style="width:600px;padding-top: 10px;">
+										    </c:if>
+										    <c:if test="${hbv.original.containsKey('2_all_png') }">
+												<img onmouseover="imgRemove.setOptions({left:600}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['2_all_png'] }" style="width:600px;padding-top: 10px;">
+										    </c:if>
+										    <c:if test="${hbv.original.containsKey('3_all_png') }">
+												<img onmouseover="imgRemove.setOptions({left:600}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['3_all_png'] }" style="width:600px;padding-top: 10px;">
+										   	</c:if>
+										    <c:if test="${hbv.original.containsKey('4_all_png') }">
+												<img onmouseover="imgRemove.setOptions({left:600}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['4_all_png'] }" style="width:600px;padding-top: 10px;">
+										    </c:if>
+										    <c:if test="${hbv.original.containsKey('5_all_png') }">
+												<img onmouseover="imgRemove.setOptions({left:600}).show(this)" src="${uploadPath}${hbv.userId }/${hbv.appId }/${hbv.dataKey }/SVG/${hbv.original['5_all_png'] }" style="width:600px;padding-top: 10px;">
+										    </c:if>
+									   	</p>
+									   	<p class="annotation"><input type="text" class="super_long_input" value="注：峰图中的*号表示该位点发生了突变"></p>
+								   	</div>
+								</div>
+					        </c:if>
+		        		</c:when>
 		        		<c:otherwise>
 		        			<h2 class="mt10">一、基因分型结果：<span style="font-size:12px;font-weight: normal">${hbv.type.replace('Type','基因型') }</span></h2>
 		        			<h2 class="mt10">二、耐药突变位点检测结果：</h2>
@@ -604,13 +858,21 @@
 	</div>
 </body>
 <script type="text/javascript">
+var companyId = $("#_companyId").html();
 function preview(obj){
+  if(companyId==57){
+    imgRemove.hideRemove();
+  }
 	var inputVal;
 	$("body").find("input[type='text']").each(function(){
 		inputVal = $(this).val();
 		var cl = $(this).attr("class"); 
 		if(cl){
+		  if(cl.indexOf('havebefore')>0){
 			$(this).parent().html("突变型:<span name='print' class='"+cl+"'>"+inputVal+"</span>");
+		  }else{
+			$(this).parent().html("<span name='print' class='"+cl+"'>"+inputVal+"</span>");
+		  }
 		}else{
 			$(this).parent().html("<span name='print'>"+inputVal+"</span>");
 		}
@@ -619,8 +881,10 @@ function preview(obj){
 	$("#_sex").html(sex);
 	$("a[name='change']").hide();
 	$("hr[name='change']").hide();
-	$(".w3cbbs").css("display","");
-	$(".container").css("display","");
+	if(companyId!=57){
+		$(".w3cbbs").css("display","");
+		$(".container").css("display","");
+	}
 	var _flag = $("#_flag").html();
 	if(_flag==1){
 		$("h1").css("padding","0 0 5px 0");
@@ -630,6 +894,11 @@ function preview(obj){
 		inputVal = inputVal.replace(/\n/g,"<br>");
 		$("#des").html(inputVal);
 	}
+	inputVal = $("#des1").children().val();
+	if(inputVal){
+		inputVal = inputVal.replace(/\n/g,"<br>");
+		$("#des1").html(inputVal);
+	}
 	$(".imgmiss").addClass("imgmissprint");
 	window.print();
 	$(".imgmiss").removeClass("imgmissprint");
@@ -638,18 +907,29 @@ function preview(obj){
 		inputVal = inputVal.replace(/<br>/g,"\n");
 		$("#des").html("<textarea rows=\"6\">"+inputVal+"</textarea>");
 	}
+	inputVal = $("#des1").html();
+	if(inputVal){
+		inputVal = inputVal.replace(/<br>/g,"\n");
+		$("#des1").html("<textarea rows=\"5\">"+inputVal+"</textarea>");
+	}
 	if(_flag==1){
 		$("h1").css("padding","40px 0 5px 0");
 	}
-	$(".w3cbbs").css("display","none");
-	$(".container").css("display","none");
+	if(companyId!=57){
+		$(".w3cbbs").css("display","none");
+		$(".container").css("display","none");
+	}
 	$("a[name='change']").show();
 	$("hr[name='change']").show();
 	$("body").find("span[name='print']").each(function(){
 		inputVal = $(this).html();
 		var cl = $(this).attr("class");
 		if(cl){
+		  if(cl.indexOf('havebefore')>0){
 			$(this).parent().html("突变型:<input type='text' class='"+cl+"' value='"+inputVal+"'>");
+		  }else{
+			$(this).parent().html("<input type='text' class='"+cl+"' value='"+inputVal+"'>");
+		  }
 		}else{
 			$(this).parent().html("<input type='text' value='"+inputVal+"'>");
 		}
@@ -707,11 +987,16 @@ $(document).ready(function(){
 });
 var url = window.location.href.split("printHBV")[0];
 function savePage(){
+  if(companyId==57){
+    imgRemove.hideRemove();
+  }
 	$("body").find("input").each(function(){
 		$(this).attr("value",$(this).val());
 	});
 	inputVal = $("#des").children().val();
 	$("#des").children().html(inputVal);
+	inputVal = $("#des1").children().val();
+	$("#des1").children().html(inputVal);
 	$.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"printContext":$("#printMain").html()},function(result){
 		if(result==1){
 		  jAlert("信息保存成功！");
@@ -722,6 +1007,7 @@ function savePage(){
 }
 function reset(){
   jConfirm('确定要重置之前保存的报告吗？', '重置报告', function(result) {
+    if(result){
 		$.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"printContext":""},function(result){
 			if(result==1){
 				location=location ;
@@ -729,6 +1015,7 @@ function reset(){
 				jAlert("信息重置失败！");
 			}
 		});
+    }
 	});
 }
 function radioClick(num){

@@ -10,7 +10,7 @@ from mysql.mysqlOperate import mysql
 from runover import *
 
 basePath = '/share/data/webapps/Tools/upload/'
-sql = "select user_id,app_id,project_id from tb_report where app_id in (85,86,87,88,91,92,93,94,104) and flag = 1;"
+sql = "select user_id,app_id,project_id from tb_report where app_id in (85,86,87,88,91,92,93,94,104,122) and flag = 1;"
 my=mysql.getInstance()
 if my:
 	result = my.query(sql)

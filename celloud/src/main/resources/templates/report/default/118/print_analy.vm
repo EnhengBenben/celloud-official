@@ -54,7 +54,7 @@
                  #end
                  <tr>
                    <td rowspan="$!rowspan" style="text-align:center;">
-                      #if($species_20.species_zh.equals("未知") || !$species_20.species_zh)
+                      #if($species_20.species_zh.equals("未知") || !$species_20.species_zh|| $species_20.species_zh.trim().equals(""))
                         $!species_20.species
                       #else
                         $!species_20.species_zh
