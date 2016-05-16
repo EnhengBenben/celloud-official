@@ -131,10 +131,10 @@ public class TaskServiceImpl implements TaskService {
         return null;
     }
 
-    @Override
-    public Integer deleteTask(Integer projectId) {
-        return null;
-    }
+	@Override
+	public Integer deleteTask(Integer projectId) {
+		return taskMapper.deleteTask(projectId, DataState.DEELTED);
+	}
 
     @Override
     public PageList<Task> findTasksByUser(Page page, Integer userId) {

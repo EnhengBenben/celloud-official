@@ -196,6 +196,11 @@
       params = #{params,jdbcType=LONGVARCHAR}
     where task_id = #{taskId,jdbcType=INTEGER}
   </update>
+  <update id="deleteTask" parameterType="com.celloud.model.mysql.Task" >
+    update tb_task
+    set state = #{state,jdbcType=INTEGER},
+    where project_id = #{projectId,jdbcType=INTEGER}
+  </update>
   <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.Task" >
     update tb_task
     set user_id = #{userId,jdbcType=INTEGER},
