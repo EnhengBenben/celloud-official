@@ -190,4 +190,15 @@ public interface UserMapper {
      * @return
      */
     public List<UserSelect> getAllUserSelectList(@Param("state") Integer state);
+
+    /**
+     * 根据用户id获取已授权的app
+     */
+    public List<Map<String, String>> getAppListByUserId(Integer userId);
+
+    /**
+     * 为置顶的用户授权
+     */
+    public void grantUserApp(@Param("userId") Integer userId,
+            @Param("appAddList") List<Map<String, String>> appAddList);
 }

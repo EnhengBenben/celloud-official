@@ -78,6 +78,43 @@ public class UserAction {
         return mv;
     }
 
+    @RequestMapping("user/toGrantApp")
+    public ModelAndView toGrantApp(Integer userId) {
+        ModelAndView mv = new ModelAndView("user/user_grantApp");
+        // 获取当前大客户的app列表
+        Integer companyId = ConstantsData.getLoginCompanyId();
+        List<App> companyApps = appService.getAppListByCompany(companyId);
+        // 获取当前用户已授权的app列表
+        List<Map<String, String>> userApps = userService.getAppListByUserId(userId);
+        mv.addObject("companyApps", companyApps);
+        mv.addObject("userApps", userApps);
+        mv.addObject("userId", userId);
+        return mv;
+    }
+
+    @RequestMapping("user/grantApp")
+    @ResponseBody
+    public int grantApp(String[] appIdArray, Integer userId) {
+        // 删除用户在当前大客户下的所有授权app
+        // 1. 获取当前大客户的app列表
+        Integer companyId = ConstantsData.getLoginCompanyId();
+        List<App> apps = appService.getAppListByCompany(companyId);
+        // 2. 删除该用户的所有授权app
+        appService.deleteAppRightByAppIdsAndUserId(apps, userId);
+        // 将新的app授权给该用户
+        List<Map<String, String>> appAddList = new ArrayList<Map<String, String>>();
+        if (appIdArray != null && appIdArray.length > 0) {
+            for (String appId : appIdArray) {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("appId", appId.split(",")[0]);
+                map.put("isAdd", appId.split(",")[1]);
+                appAddList.add(map);
+            }
+            userService.grantUserApp(userId, appAddList);
+        }
+        return 1;
+    }
+
     @ResponseBody
     @RequestMapping("user/getAppList")
     public List<App> getAppList(@RequestParam("companyId") int companyId) {

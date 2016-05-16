@@ -2,6 +2,7 @@ package com.celloud.manager.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.celloud.manager.model.User;
 import com.celloud.manager.model.UserSelect;
@@ -191,5 +192,12 @@ public interface UserService {
      * @return
      */
     public List<UserSelect> getAllUserSelectList();
+
+    /**
+     * 根据用户id获取已授权的app
+     */
+    public List<Map<String, String>> getAppListByUserId(Integer userId);
+
+    public void grantUserApp(Integer userId, List<Map<String, String>> appAddList);
 
 }

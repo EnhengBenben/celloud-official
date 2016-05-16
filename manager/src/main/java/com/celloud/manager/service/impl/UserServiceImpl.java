@@ -3,6 +3,7 @@ package com.celloud.manager.service.impl;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -180,5 +181,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserSelect> getAllUserSelectList() {
         return userMapper.getAllUserSelectList(DataState.ACTIVE);
+    }
+
+    @Override
+    public List<Map<String, String>> getAppListByUserId(Integer userId) {
+        return userMapper.getAppListByUserId(userId);
+    }
+
+    @Override
+    public void grantUserApp(Integer userId, List<Map<String, String>> appAddList) {
+        userMapper.grantUserApp(userId, appAddList);
     }
 }

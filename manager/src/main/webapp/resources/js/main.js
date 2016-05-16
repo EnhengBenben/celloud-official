@@ -223,15 +223,14 @@ var user=(function(user){
 		$.post("user/userList",{currentPage:currentPage,searchFiled:self.searchFiled,keyword:self.keyword},function(responseText){
 			$("#main-content").html(responseText);
 		});
-	}
+	};
 	
 	self.toSendEmail=function(){
 		$.post("user/toSendEmail",function(responseText){
 			$("#user-sendEmailModal .modal-content").html(responseText);
 			$("#user-sendEmailModal").modal("show");
 		});
-			
-	}
+	};
 	self.changeDeptByCompanyId = function(option){
 		var oldWidth = $("#dept .select2-search__field").attr("style");
 		$("#dept li.select2-selection__choice").remove();
@@ -264,7 +263,30 @@ var user=(function(user){
 		          }
 		      });
 		}
+	};
+	self.toGrantApp = function(userId){
+		$.post("user/toGrantApp",{userId,userId},function(responseText){
+			$("#user-sendEmailModal .modal-content").html(responseText);
+			$("#user-sendEmailModal").modal("show");
+		});
+	};
+	self.grantApp = function(){
+		var params = $("#grantForm").serialize();
+		$.post("user/grantApp",params,function(){
+			jAlert("授权成功");
+			$("#user-sendEmailModal").modal("hide");
+		});
 	}
+	self.grantTip = function(currentInput,isAdd){
+		// 取消选中并且已添加过该app
+		if($(currentInput).prop("checked") == false && isAdd == 1){
+			jConfirm("该用户已添加过该App,确定取消授权码?","取消授权",function(r){
+				if(!r){
+					$(currentInput).prop("checked",true);
+				}
+			});
+		}
+	};
 	return self;
 })(user);
 
