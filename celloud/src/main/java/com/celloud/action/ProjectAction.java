@@ -106,13 +106,15 @@ public class ProjectAction {
 				ssh.sshSubmit(command, false);
 				if (AppDataListType.FASTQ_PATH.contains(appId) || AppDataListType.SPLIT.contains(appId)) {
 					taskService.deleteTask(projectId);
-					int runningNum = taskService.findRunningNumByAppId(intAppId);
-					App app = appService.selectByPrimaryKey(intAppId);
-					if (runningNum < app.getMaxTask() || app.getMaxTask() == 0) {
-						Task task = taskService.findFirstTask(intAppId);
-						ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-						ssh.sshSubmit(task.getCommand(), false);
-						taskService.updateToRunning(task.getTaskId());
+					Task task = taskService.findFirstTask(intAppId);
+					if (task != null) {
+						int runningNum = taskService.findRunningNumByAppId(intAppId);
+						App app = appService.selectByPrimaryKey(intAppId);
+						if (runningNum < app.getMaxTask() || app.getMaxTask() == 0) {
+							ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+							ssh.sshSubmit(task.getCommand(), false);
+							taskService.updateToRunning(task.getTaskId());
+						}
 					}
 				}
 			}
