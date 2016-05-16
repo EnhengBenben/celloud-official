@@ -114,4 +114,31 @@ public interface TaskMapper {
             @Param("sortDate") String sortDate,
             @Param("sortPeriod") String sortPeriod,
             @Param("state") Integer state);
+
+    /**
+     * 按照运行状态和参数查找任务
+     * 
+     * @param userId
+     * @param state
+     * @param period
+     * @param params
+     * @return
+     * @author leamo
+     * @date 2016年5月16日 下午3:27:39
+     */
+    Task findTaskByParamsAndPeriod(@Param("userId") Integer userId,
+            @Param("state") Integer state, @Param("period") Integer period,
+            @Param("params") String params);
+
+    /**
+     * 根据数据编号获取任务信息
+     * 
+     * @param state
+     * @param dataKey
+     * @return
+     * @author leamo
+     * @date 2016年5月16日 下午4:03:13
+     */
+    Task findTaskByDataKeyAndApp(@Param("state") Integer state,
+            @Param("dataKey") String dataKey, @Param("appId") Integer appId);
 }

@@ -32,6 +32,7 @@ public class Task {
     // 显示的字段
     private String fileName;
     private String fileId;
+    private String batch;
 
     public Integer getTaskId() {
         return taskId;
@@ -151,5 +152,13 @@ public class Task {
 
     public void setFileId(String fileId) {
         this.fileId = fileId;
+    }
+
+    public String getBatch() {
+        return batch;
+    }
+
+    public void setBatch(String batch) {
+        this.batch = batch;
     }
 }

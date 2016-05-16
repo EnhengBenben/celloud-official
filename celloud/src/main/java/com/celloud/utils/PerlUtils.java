@@ -23,7 +23,6 @@ public class PerlUtils{
             BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
             while (reader.readLine() != null) {
             }
-            System.out.println("============");
         } catch (IOException e) {
             log.error("命令command=" + command + " 执行失败，错误：" + e);
             return "error";

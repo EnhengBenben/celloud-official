@@ -22,6 +22,7 @@
 <table class="table table-main">
   <thead>
     <tr>
+      <th>批次/标签</th>
       <th>文件名</th>
       <th>状态<a id="sort-period" href="javascript:void(0);"><i id="sort-period-icon" class="fa fa-sort-asc" aria-hidden="true"></i></a></th>
       <th>生成时间<a id="sort-date" href="javascript:void(0);"><i id="sort-date-icon" class="fa fa-sort-amount-asc"></i></a></th>
@@ -32,6 +33,7 @@
     <c:if test="${pageList.datas.size()>0 }">
       <c:forEach var="task" items="${pageList.datas }">
 	    <tr>
+	      <td>${task.batch }</td>
 	      <td title="${task.fileName }" name="data-name-td" >
 	        <a href="javascript:<c:choose><c:when test="${task.period==2 }">$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId})</c:when><c:otherwise>void(0)</c:otherwise></c:choose>">
               <c:choose><c:when test="${fn:length(task.fileName)>60 }"><c:out value="${fn:substring(task.fileName, 0, 60) }"/>...</c:when><c:otherwise>${task.fileName }</c:otherwise></c:choose>
@@ -41,9 +43,10 @@
 	        <c:if test="${task.period==0 }">等待运行</c:if>
 	        <c:if test="${task.period==1 }">正在运行</c:if>
 	        <c:if test="${task.period==2 }">完成</c:if>
+	        <c:if test="${task.period==3 }">数据上传中</c:if>
 	        <c:if test="${empty task.period }"><span class="wrong">运行异常</span></c:if>
 	      </td>
-	      <td><fmt:formatDate type="both" value="${task.endDate }"/></td>
+	      <td><fmt:formatDate type="both" value="${task.createDate }"/></td>
 	      <td>
             <a class="edit-icon" id="to-upload-a" href="javascript:<c:choose><c:when test="${task.period==2 }">$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId})</c:when><c:otherwise>void(0)</c:otherwise></c:choose>"><i class="celicon show-icon"></i></a>
 	        <a class="edit-icon" id="to-rerun-a" href="javascript:$.report.run(${task.fileId },118)"><i class="celicon rerun-icon"></i></a>

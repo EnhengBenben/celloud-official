@@ -31,13 +31,16 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
+import com.celloud.constants.TaskPeriod;
 import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Experiment;
+import com.celloud.model.mysql.Task;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.ExperimentService;
 import com.celloud.service.ReportService;
+import com.celloud.service.TaskService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.CheckFileTypeUtil;
 import com.celloud.utils.DataUtil;
@@ -66,6 +69,8 @@ public class UploadAction {
     private DataService dataService;
     @Resource
     private ExperimentService expService;
+    @Resource
+    private TaskService taskService;
     private String realPath = PropertiesUtil.bigFilePath;
 
     /**
@@ -109,7 +114,8 @@ public class UploadAction {
                         File localFile = new File(fileName);
                         try {
                             this.copy(file, localFile);
-							if (chunk == chunks || (chunk == chunks - 1)) {
+                            if (chunk.equals(chunks)
+                                    || chunk.equals(chunks - 1)) {
                                 dataId = addFileInfo(originalName);
 								String fileDataKey = DataUtil.getNewDataKey(dataId);
 								String newName = fileDataKey + FileTools.getExtName(originalName);
@@ -134,6 +140,7 @@ public class UploadAction {
                                 if (sub.hasRole("bsier")) {
                                     logger.info("{}拥有百菌探权限", userId);
                                     return bsierCheckRun(tagId, batch, dataId,
+                                            fileDataKey,
                                             needSplit, newName, folderByDay,
                                             originalName, userId, fileFormat);
                                 }
@@ -168,17 +175,20 @@ public class UploadAction {
      */
     @ActionLog(value = "判断是否上传完即刻运行", button = "上传完即刻运行")
     private String bsierCheckRun(Integer tagId, String batch, Integer dataId,
+            String dataKey,
             Integer needSplit, String newName, String folderByDay,
             String originalName, Integer userId, Integer fileFormat) {
-        logger.info("判断是否上传完即刻运行");
+        logger.info("判断是否数据{}上传完即刻运行", originalName);
         App app = appService.findAppsByTag(tagId);
-        Integer appId = app.getAppId();
+        Integer appId = needSplit == 1 ? 113 : app.getAppId();
         String pubName = "";
         List<Integer> dataIds;
         if (fileFormat == FileFormat.FQ) {
+            Boolean isR1 = false;
             if (originalName.contains("R1")) {
                 pubName = originalName.substring(0,
                         originalName.lastIndexOf("R1"));
+                isR1 = true;
             } else if (originalName.contains("R2")) {
                 pubName = originalName.substring(0,
                         originalName.lastIndexOf("R2"));
@@ -205,13 +215,21 @@ public class UploadAction {
                 }
                 dataIds.add(d.getFileId());
             }
-            System.out.println(String.valueOf(dataIds));
+            Task task = new Task();
+            task.setUserId(userId);
+            task.setDataKey(dataKey);
+            task.setPeriod(TaskPeriod.UPLOADING);
+            task.setParams(pubName);
+            task.setAppId(appId);
+            System.out.println("file is ....R1: " + isR1);
+            taskService.addOrUpdateUploadTaskByParam(task, isR1);
             if (needSplit == 1 && hasR1 && hasR2 && hasIndex) {
-                appId = 113;
                 return "{\"dataIds\":\""
                         + StringUtils.join(dataIds.toArray(), ",")
                         + "\",\"appIds\":\"" + appId + "\"}";
             } else if (needSplit != 1 && hasR1 && hasR2) {
+                task.setAppId(appId);
+                taskService.addOrUpdateUploadTaskByParam(task, isR1);
                 return "{\"dataIds\":\""
                         + StringUtils.join(dataIds.toArray(), ",")
                         + "\",\"appIds\":\"" + appId + "\"}";

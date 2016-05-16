@@ -157,7 +157,7 @@
 	   </table>
 	  <h5>检测范围(20种)：</h5>
       <p>牛链球菌、葡萄球菌、肺炎链球菌、粪肠球菌、屎肠球菌、难辨梭状芽孢杆菌、溃疡棒状杆菌、结膜干燥杆菌、大肠埃希菌、铜绿假单胞菌、
-    鲍曼不动杆菌、肺炎克雷伯菌、嗜麦芽窄食单胞菌、粘质沙雷氏菌、阴沟肠杆菌、嗜水气单胞菌、产气肠杆菌、肠炎沙门菌、奇异变形杆菌、洋葱伯克霍尔德菌。
+    鲍曼不动杆菌、肺炎克雷伯氏菌、嗜麦芽窄食单胞菌、粘质沙雷氏菌、阴沟肠杆菌、嗜水气单胞菌、产气肠杆菌、肠炎沙门菌、奇异变形杆菌、洋葱伯克霍尔德菌。
          <br>此20种以外检测为阴性不代表没有
       </p>
       <h5>检测方法：<span>基于16S rDNA高通量测序方法</span></h5>
@@ -243,8 +243,8 @@
 	                       鲍曼不动杆菌
 	       </td>
 	       <td>
-	         <i class="fa <c:choose><c:when test="${havestrain.contains('肺炎克雷伯菌') }">fa-circle</c:when><c:otherwise>fa-circle-o</c:otherwise></c:choose>" aria-hidden="true"></i>
-	                       肺炎克雷伯菌
+	         <i class="fa <c:choose><c:when test="${havestrain.contains('肺炎克雷伯氏菌') }">fa-circle</c:when><c:otherwise>fa-circle-o</c:otherwise></c:choose>" aria-hidden="true"></i>
+	                       肺炎克雷伯氏菌
 	       </td>
 	     </tr>
 	     <tr>

@@ -114,4 +114,37 @@ public interface TaskService {
      */
     public PageList<Task> findTasksByUserCondition(Page page, Integer userId,
             String condition, Integer sort, String sortDate, String sortPeriod);
+
+    /**
+     * 新增或修改上传任务数据
+     * 
+     * @param userId
+     * @param period
+     * @param params
+     * @return
+     * @author leamo
+     * @date 2016年5月16日 下午3:33:18
+     */
+    public Integer addOrUpdateUploadTaskByParam(Task task, Boolean isUpdate);
+
+    /**
+     * 根据数据编号获取任务信息
+     * 
+     * @param state
+     * @param dataKey
+     * @return
+     * @author leamo
+     * @date 2016年5月16日 下午4:03:13
+     */
+    public Task findTaskByDataKeyAndApp(String dataKey, Integer appId);
+
+    /**
+     * 修改任务
+     * 
+     * @param task
+     * @return
+     * @author leamo
+     * @date 2016年5月16日 下午4:12:17
+     */
+    public Integer updateTask(Task task);
 }

@@ -31,9 +31,13 @@ utils._stopDefault = function(e){
  */
 utils.formatDate =function(size) {
   var ss = parseInt(size);// 秒
-  if (ss === 0 || /\D/.test(ss)) {
+  if (ss === 0){
+    return "<1秒";
+  } 
+  if (/\D/.test(ss)) {
     return 'N/A';
   }
+  ss = parseInt(size)
   var radix = 60;
     var mm = 0;// 分
     var hh = 0;// 小时

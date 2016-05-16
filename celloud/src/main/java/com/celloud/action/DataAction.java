@@ -500,17 +500,25 @@ public class DataAction {
                     String dataKey = entry.getKey();
                     String dataListFile = entry.getValue();
                     int runningNum = taskService.findRunningNumByAppId(appId);
-                    Task task = new Task();
-                    task.setProjectId(proId);
-                    task.setUserId(userId);
-                    task.setAppId(appId);
-                    task.setDataKey(dataKey);
                     Map<String, String> map = CommandKey.getMap(dataListFile,
                             appPath, proId);
                     StrSubstitutor sub = new StrSubstitutor(map);
                     String command = sub.replace(app.getCommand());
-                    task.setCommand(command);
-                    taskService.create(task);
+                    Task task = taskService.findTaskByDataKeyAndApp(dataKey,
+                            appId);
+                    if (task == null) {
+                        task = new Task();
+                        task.setProjectId(proId);
+                        task.setUserId(userId);
+                        task.setAppId(appId);
+                        task.setDataKey(dataKey);
+                        task.setCommand(command);
+                        taskService.create(task);
+                    } else {
+                        task.setProjectId(proId);
+                        task.setCommand(command);
+                        taskService.updateTask(task);
+                    }
                     Integer taskId = task.getTaskId();
                     if (runningNum < app.getMaxTask()
                             || app.getMaxTask() == 0) {

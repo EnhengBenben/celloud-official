@@ -61,10 +61,9 @@
 	    </div>
 	    <div class="modal-body row">
 	      <div id="batch-div" class="input-div">
-	        <input id="batch-info" type="text" placeholder="请输入批次" value=""/><br>
-	        <input id="need-split" type="checkbox" value="1">需要数据拆分 (run: Split)
+	        <input id="batch-info" type="text" placeholder="请输入标签" value=""/><br>
+	        <input id="need-split" type="checkbox" value="1" checked="checked">需要数据拆分 (run: Split)
 	        <p>输入数据批次可以更好享受数据查询和统计等服务</p>
-<!-- 	        <a href="javascript:void(0)" class="celicon addfile" id="upload-content_browse"></a> -->
 	        <input id="tag-info" type="hidden" value="1"/>
 	      </div>
 	      <div id="upload-content" class="upload-content upload-step-one">
@@ -95,10 +94,6 @@
 <script src="//cdn.bootcss.com/swfobject/2.2/swfobject.min.js"></script>
 <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
 <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
-<%-- <script src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/plupload.full.min.js"></script> --%>
-<%-- <script src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/jquery.plupload.queue/jquery.plupload.queue.bsi.js"></script> --%>
-<%-- <script src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/plupload.dev.js?version=1.7"></script> --%>
-<%-- <script src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/i18n/zh_CN.js"></script> --%>
 <script src="<%=request.getContextPath()%>/js/utils.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/js/bsi_main.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath() %>/js/bsi_upload.js"></script>

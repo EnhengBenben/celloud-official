@@ -151,4 +151,33 @@ public class TaskServiceImpl implements TaskService {
                 condition, sort, sortDate, sortPeriod, DataState.ACTIVE);
         return new PageList<>(page, list);
     }
+
+    @Override
+    public Integer addOrUpdateUploadTaskByParam(Task task, Boolean isUpdate) {
+        Task task1 = taskMapper.findTaskByParamsAndPeriod(task.getUserId(),
+                DataState.ACTIVE, task.getPeriod(), task.getParams());
+        Integer result = 0;
+        if (task1 == null) {
+            task.setState(DataState.ACTIVE);
+            task.setCreateDate(new Date());
+            result = taskMapper.insert(task);
+        } else {
+            if (isUpdate) {
+                task1.setDataKey(task.getDataKey());
+                result = taskMapper.updateByPrimaryKeySelective(task1);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public Task findTaskByDataKeyAndApp(String dataKey, Integer appId) {
+        return taskMapper.findTaskByDataKeyAndApp(DataState.ACTIVE, dataKey,
+                appId);
+    }
+
+    @Override
+    public Integer updateTask(Task task) {
+        return taskMapper.updateByPrimaryKeySelective(task);
+    }
 }
