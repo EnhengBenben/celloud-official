@@ -890,4 +890,9 @@ public class ReportServiceImpl implements ReportService {
     public S16 get16SReport(String dataKey, Integer projectId, Integer appId) {
     	return reportDao.getDataReport(S16.class, dataKey, projectId, appId);
     }
+
+	@Override
+	public Report getReportByProjectId(Integer projectId) {
+		return reportMapper.getReportByProjectId(projectId, ReportType.PROJECT);
+	}
 }

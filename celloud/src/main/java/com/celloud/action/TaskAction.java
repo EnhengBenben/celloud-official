@@ -343,7 +343,7 @@ public class TaskAction {
      * 运行队列里的命令
      */
     @ActionLog(value = "运行结束，释放端口，执行正在排队的命令", button = "运行结束")
-    private void runQueue(String projectId) {
+    public void runQueue(String projectId) {
         logger.info("{}运行结束，释放端口", projectId);
         PortPool.setPort(projectId);
         while (true) {
