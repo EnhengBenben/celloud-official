@@ -37,6 +37,16 @@ public interface TaskMapper {
     int updateByPrimaryKeySelective(Task record);
 
     int updateByPrimaryKeyWithBLOBs(Task record);
+    
+	/**
+	 * 根据projectId删除任务
+	 * 
+	 * @param projectId
+	 * @return
+	 * @author lin
+	 * @date 2016年5月16日下午5:01:03
+	 */
+	public Integer deleteTask(@Param("projectId") Integer projectId, @Param("state") Integer state);
 
     int updateByPrimaryKey(Task record);
 

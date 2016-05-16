@@ -1,6 +1,10 @@
 package com.celloud.manager.action;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -15,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.manager.constants.ConstantsData;
 import com.celloud.manager.model.App;
+import com.celloud.manager.model.Company;
 import com.celloud.manager.model.Dept;
 import com.celloud.manager.model.User;
 import com.celloud.manager.page.Page;
@@ -66,13 +71,10 @@ public class UserAction {
     @RequestMapping("user/toSendEmail")
     public ModelAndView toSendEmail() {
         ModelAndView mv = new ModelAndView("user/user_sendEmail");
-        // List<Company> companyList = companyService.getAllCompany();
-        // List<App> appPublicList = appService.getAppListPulbicAdded();
-        // mv.addObject("companyList", companyList);
-        // mv.addObject("publicApp", appPublicList);
-        Integer companyId = ConstantsData.getLoginUser().getCompanyId();
-        List<App> appList = appService.getAppListByCompany(companyId);
+        Integer appCompanyId = ConstantsData.getLoginUser().getCompanyId();
+        List<App> appList = appService.getAppListByCompany(appCompanyId);
         mv.addObject("appList", appList);
+        mv.addObject("appCompanyId", appCompanyId);
         return mv;
     }
 
@@ -117,10 +119,31 @@ public class UserAction {
      */
     @ResponseBody
     @RequestMapping("user/sendEmail")
-    public void sendEmail(@RequestParam("emailArray") String[] emailArray, @RequestParam("deptId") Integer deptId,
-            @RequestParam("companyId") Integer companyId, @RequestParam("appCompanyId") Integer appCompanyId,
+    public void sendEmail(@RequestParam("emailArray") String[] emailArray, @RequestParam("deptId") String deptId,
+            @RequestParam("companyId") String companyId, @RequestParam("appCompanyId") Integer appCompanyId,
             @RequestParam("appIdArray") Integer[] appIdArray, @RequestParam("role") Integer role) {
-        userService.sendRegisterEmail(emailArray, deptId, companyId, appCompanyId, appIdArray, role);
+        // companyId和deptId是字符串代表新增的医院和部门
+        Integer sendCompanyId = null;
+        Integer sendDeptId = null;
+        try {
+            sendCompanyId = Integer.parseInt(companyId);
+        } catch (Exception e) {
+            Company company = new Company();
+            company.setCompanyName(companyId);
+            company.setCreateDate(new Date());
+            companyService.addCompany(company);
+            sendCompanyId = company.getCompanyId();
+        }
+        try {
+            sendDeptId = Integer.parseInt(deptId);
+        } catch (Exception e) {
+            Dept dept = new Dept();
+            dept.setDeptName(deptId);
+            dept.setCompanyId(sendCompanyId);
+            deptService.addDept(dept);
+            sendDeptId = dept.getDeptId();
+        }
+        userService.sendRegisterEmail(emailArray, sendDeptId, sendCompanyId, appCompanyId, appIdArray, role);
     }
 
     /**
@@ -133,6 +156,7 @@ public class UserAction {
     @RequestMapping("addUser/{email}")
     public ModelAndView register(@PathVariable String email) {
         ModelAndView mv = new ModelAndView("user/user_add");
+        System.out.println("email:" + email);
         String param = Base64Util.decrypt(email);
         System.out.println(param);
         logger.info("注册邮件{}", param);
@@ -202,5 +226,28 @@ public class UserAction {
         }
         int result = userService.updatePassword(user.getUserId(), newPassword);
         return result;
+    }
+
+    @RequestMapping("user/getDeptByCompanyId")
+    @ResponseBody
+    public List<Map<String, String>> getDeptByCompanyId(Integer companyId) {
+        if (companyId == null) {
+            List<Map<String, String>> deptList = new ArrayList<Map<String, String>>();
+            Map<String, String> m1 = new HashMap<String, String>();
+            m1.put("id", "生殖中心");
+            m1.put("text", "生殖中心");
+            Map<String, String> m2 = new HashMap<String, String>();
+            m2.put("id", "检验科");
+            m2.put("text", "检验科");
+            Map<String, String> m3 = new HashMap<String, String>();
+            m3.put("id", "技术部");
+            m3.put("text", "技术部");
+            deptList.add(m1);
+            deptList.add(m2);
+            deptList.add(m3);
+            return deptList;
+        } else {
+            return deptService.getDeptToSelectByCompanyId(companyId);
+        }
     }
 }

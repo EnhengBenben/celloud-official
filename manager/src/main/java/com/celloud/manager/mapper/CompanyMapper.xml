@@ -257,4 +257,19 @@
   <select id="getCompanyByIdAndState" resultMap="BaseResultMap">
     select * from tb_company where state=#{state } and company_id=#{companyId }
   </select>
+  <select id="getAllToSelect" resultType="java.util.HashMap">
+    select company_id as id, company_name as text from tb_company where state = 0;
+  </select>
+  <insert id="addCompany" parameterType="com.celloud.manager.model.Company" useGeneratedKeys="true" keyProperty="companyId" >
+    insert into tb_company (company_name, english_name, 
+      company_icon, address, address_en, 
+      zip_code, tel, state, 
+      create_date, province, 
+      city, address_detail)
+    values (#{companyName }, #{englishName }, 
+      #{companyIcon }, #{address }, #{addressEn }, 
+      #{zipCode }, #{tel }, #{state }, 
+      now(), #{province }, 
+      #{city }, #{addressDetail })
+  </insert>
 </mapper>

@@ -178,7 +178,7 @@ var user=(function(user){
 			}
 		});
 		$("#emailForm").find("select").each(function(){
-			var value = $(this).val();
+			value = $(this).val() == null ? "" : $(this).val();
 			if(value.length>0){
 				$(this).parent().parent().removeClass("error");
 				$(this).parent().parent().find(".help-inline").html("");
@@ -232,27 +232,38 @@ var user=(function(user){
 		});
 			
 	}
-	self.changeCompany=function(dom,eleId){
-		var companyId=$(dom).val();
-		if(companyId!=''){
-			$.post("user/getDept",{companyId:companyId},function(data){
-				var options="<option value=''>--请选择--</option>";
-	            for(var i in data){
-	                options+="<option value='"+data[i].deptId+"'>"+data[i].deptName+"</option>";
-	            }
-	            $("#"+eleId).html(options);
-			});
+	self.changeDeptByCompanyId = function(option){
+		var oldWidth = $("#dept .select2-search__field").attr("style");
+		$("#dept li.select2-selection__choice").remove();
+		$("#dept span.select2-selection__clear").remove();
+		$("#dept .select2-search__field").attr("placeholder","请选择部门");
+		$("#dept .select2-search__field").attr("style","oldWidth");
+		$("#deptList option").remove();
+        var companyId = null;
+		var optionVal = $(option).val();
+		if(optionVal != null){
+	        if(!isNaN(optionVal)){
+	        	companyId = parseInt(optionVal);
+	        }
+			$.ajax({
+				  url : "user/getDeptByCompanyId",
+		          type : 'post',
+		          data:{
+		        	  'companyId' : companyId
+		          },
+		          success : function(data) {
+		              // 从后台获取json数据
+		              var json = eval(data);
+		              $("#deptList").select2({
+		                  data : json,
+		                  tags : true,
+		                  placeholder : '请选择部门',
+		                  allowClear : true,
+		                  maximumSelectionLength: 1
+		              })
+		          }
+		      });
 		}
-	}
-	self.changeAppCompany=function(dom,id){
-		var companyId=$(dom).val();
-		$.post("user/getAppList",{companyId:companyId},function(data){
-			var checkboxs="";
-            for(var i in data){
-            	checkboxs+="<label class='checkbox-inline'><input name='appIdArray' type='checkbox' checked='checked' value='"+data[i].appId+"'>"+data[i].appName+"</label>";
-            }
-            $("#"+id).html(checkboxs).parent().removeClass("hide");
-		});
 	}
 	return self;
 })(user);

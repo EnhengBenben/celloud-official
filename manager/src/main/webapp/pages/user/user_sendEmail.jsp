@@ -8,25 +8,11 @@
     </div>
   <div class="panel-body">
       <form role="form" class="form-horizontal" id="emailForm">
-           <%-- <div class="form-group">
-               <label class="col-sm-2 control-label" for="deptName">App提供者<font color="red">*</font></label>
-               <div class="col-sm-10">
-	               <select class="form-control" name="appCompanyId" onchange="user.changeAppCompany(this,'email-appIds')">
-	                  <option value=''>--请选择--</option>
-	                   <c:forEach items="${companyList }" var="company">
-	                       <option value="${company.companyId }" >${company.companyName }</option>
-	                   </c:forEach>
-	               </select>
-	               <span class="help-inline text-danger"></span>
-               </div>
-           </div> --%>
            <div class="form-group">
-                <%-- <c:forEach items="${publicApp }" var="app">
-                  <label class="checkbox-inline hide">
-                     <input type="checkbox" value="${app.appId }" checked='checked' name="appIdArray">${app.appName }
-                   </label>
-                 </c:forEach> --%>
-                 <label class="col-sm-2 control-label" for="deptName">App<font color="red">*</font></label>
+               <input type="hidden" name="appCompanyId" value="${appCompanyId }">
+           </div>
+           <div class="form-group">
+               <label class="col-sm-2 control-label" for="deptName">App<font color="red">*</font></label>
                <div class="col-sm-10" id="email-appIds">
                 <c:forEach items="${appList }" var="app">
 	                <label class='checkbox-inline'><input name='appIdArray' type='checkbox' checked='checked' value='${app.appId }'>${app.appName }</label>
@@ -37,20 +23,15 @@
            <div class="form-group">
                <label class="col-sm-2 control-label" for="englishName">公司<font color="red">*</font> </label>
                <div class="col-sm-10">
-	               <select class="form-control" onChange="user.changeCompany(this,'user-deptId')" name="companyId">
-	                   <option value=''>--请选择--</option>
-	                   <c:forEach items="${companyList }" var="company">
-	                       <option value="${company.companyId }" >${company.companyName }</option>
-	                   </c:forEach>
+	               <select class="form-control" id="companyList" name="companyId" style="width: 100%" multiple="multiple" onchange="user.changeDeptByCompanyId(this)" >
 	               </select>
 	               <span class="help-inline text-danger"></span>
                </div>
            </div>
-           <div class="form-group">
+           <div class="form-group" id="dept">
                <label class="col-sm-2 control-label" for="deptId">部门<font color="red">*</font> </label>
                <div class="col-sm-10">
-                   <select class="form-control" name="deptId" id="user-deptId">
-                       <option value=''>--请选择--</option>
+                   <select class="form-control" name="deptId" id="deptList" style="width: 100%" multiple="multiple" >
                    </select>
                    <span class="help-inline text-danger"></span>
                </div>
@@ -74,4 +55,33 @@
            </div>
        </form>
   </div>
+  <script type="text/javascript">
+  $(function(){
+	  $.ajax({
+          url : "${pageContext.request.contextPath }/company/getAllToSelect",
+          type : 'post',
+          dataType : 'text',
+          success : function(data) {
+              // 从后台获取json数据
+              var json = eval('(' + data + ')');
+              $("#companyList").select2({
+                  data : json,
+                  tags : true,
+                  placeholder : '请选择公司',
+                  allowClear : true,
+                  maximumSelectionLength: 1
+              })
+          },
+          error : function(data) {
+
+          }
+      });
+	  $("#deptList").select2({
+          tags : true,
+          placeholder : '请选择部门',
+          allowClear : true,
+          maximumSelectionLength: 1
+      })
+  });
+  </script>
 </div>

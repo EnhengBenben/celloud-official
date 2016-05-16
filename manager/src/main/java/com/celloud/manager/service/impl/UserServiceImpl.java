@@ -155,7 +155,6 @@ public class UserServiceImpl implements UserService {
             userRegisterMapper.deleteUserRegisterInfo(email);
             String randomCode = MD5Util.getMD5(String.valueOf(new Date().getTime()));
             StringBuffer appIds = new StringBuffer();
-            ;
             if (appIdArray != null && appIdArray.length > 0) {
                 for (Integer appId : appIdArray) {
                     appIds.append(appId + ",");

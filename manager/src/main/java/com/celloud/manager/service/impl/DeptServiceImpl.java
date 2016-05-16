@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -127,6 +128,11 @@ public class DeptServiceImpl implements DeptService {
     @Override
     public List<Dept> getDeptByCompanyId(int companyId) {
         return deptMapper.getDeptByCompanyId(DataState.ACTIVE, companyId);
+    }
+
+    @Override
+    public List<Map<String, String>> getDeptToSelectByCompanyId(Integer companyId) {
+        return deptMapper.getDeptToSelectByCompanyId(companyId);
     }
 
 }
