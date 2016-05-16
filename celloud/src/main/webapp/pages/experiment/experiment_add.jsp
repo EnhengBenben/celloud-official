@@ -24,7 +24,7 @@
 		<div class="form-group">
 			<div class="control-label form-label col-xs-4">质控</div>
 			<div class="col-xs-8">
-				<select name="quality">
+				<select name="quality" id="quality" style="width:60%;">
 					<option value="0">合格</option>
 					<option value="1">不合格</option>
 				</select>
@@ -39,7 +39,7 @@
 		<div class="form-group">
 			<div class="control-label form-label col-xs-4">阶段</div>
 			<div class="col-xs-8">
-				<select name="step">
+				<select name="step" id="step" style="width:80%;">
 					<option value="0">--请选择--</option>
 					<c:forEach items="${list }" var="dict">
 						<c:if test="${dict.flag==0 }">
@@ -54,7 +54,7 @@
 	    <div class="form-group">
 			<div class="control-label form-label col-xs-4">样本类型</div>
 			<div class="col-xs-8">
-				<select name="sampleType">
+				<select name="sampleType" id="sampleType" style="width:80%;">
 					<option value="0">--请选择--</option>
 					<c:forEach items="${list }" var="dict">
 						<c:if test="${dict.flag==1 }">
@@ -67,7 +67,7 @@
 	    <div class="form-group">
 			<div class="control-label form-label col-xs-4">扩增方法</div>
 			<div class="col-xs-8">
-				<select name="amplificationMethod">
+				<select name="amplificationMethod" id="amplificationMethod" style="width:80%;">
 					<option value="0">--请选择--</option>
 					<c:forEach items="${list }" var="dict">
 						<c:if test="${dict.flag==2 }">
@@ -80,7 +80,7 @@
 	    <div class="form-group">
 			<div class="control-label form-label col-xs-4">测序仪</div>
 			<div class="col-xs-8">
-				<select name="sequenator" onchange="experiment.selectSeqIndex(this.value)">
+				<select name="sequenator" onchange="experiment.selectSeqIndex(this.value)" id="sequenator" style="width:80%;">
 					<option value="0">--请选择--</option>
 					<c:forEach items="${list }" var="dict">
 						<c:if test="${dict.flag==3 }">
@@ -93,7 +93,7 @@
 	    <div class="form-group">
 			<div class="control-label form-label col-xs-4">Index</div>
 			<div class="col-xs-8">
-			    <select name="seqIndex" id="expSeqIndex" >
+			    <select name="seqIndex" id="expSeqIndex" style="width:80%;" >
 			         <option value="0">--请选择--</option>
 			    </select>
 			</div>
@@ -117,4 +117,14 @@
       <button onclick="javascript:experiment.addExperiment()" type="button" class="btn btn-celloud-success btn-flat">保存</button>
     </div>
   </div><!-- /.modal-content -->
+  <script type="text/javascript">
+  $(function(){
+	  $("#sequenator").select2();
+	  $("#expSeqIndex").select2();
+	  $("#quality").select2();
+	  $("#step").select2();
+	  $("#amplificationMethod").select2();
+	  $("#sampleType").select2();
+  });
+  </script>
 </div>
