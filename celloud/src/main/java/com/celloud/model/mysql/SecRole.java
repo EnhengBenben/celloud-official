@@ -3,6 +3,8 @@ package com.celloud.model.mysql;
 public class SecRole {
     private Integer id;
 
+    private String code;
+
     private String name;
 
     private String description;
@@ -39,5 +41,13 @@ public class SecRole {
 
     public void setDisabled(Boolean disabled) {
         this.disabled = disabled;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }
