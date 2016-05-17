@@ -83,6 +83,11 @@ public class UserServiceImpl implements UserService {
         temp.setNavigation(user.getNavigation());
         return userMapper.updateByPrimaryKeySelective(temp);
     }
+    
+    @Override
+    public Integer updateUserEmail(User user) {
+    	return userMapper.updateByPrimaryKeySelective(user);
+    }
 
     @Override
     public boolean isEmailInUse(String email, Integer userId) {

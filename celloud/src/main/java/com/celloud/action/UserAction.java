@@ -207,7 +207,7 @@ public class UserAction {
 		}
 		userService.cleanFindPwd(user.getUserId(), new Date());
 		user.setEmail(email);
-		userService.updateUserInfo(user);
+		userService.updateUserEmail(user);
 		return mv.addObject("info", "邮箱修改成功");
 	}
 }
