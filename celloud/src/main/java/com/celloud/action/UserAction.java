@@ -175,7 +175,6 @@ public class UserAction {
 		}
 		userService.cleanFindPwd(user.getUserId(), new Date());
 		randomCode = MD5Util.getMD5(String.valueOf(new Date().getTime()));
-		user = ConstantsData.getLoginUser();
 		userService.insertFindPwdInfo(user.getUserId(), randomCode);
 		emailUtils
 				.sendWithTitle(ResetPwdUtils.toActiveEmailTitle,
