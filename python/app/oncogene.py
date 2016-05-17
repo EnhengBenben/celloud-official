@@ -78,42 +78,6 @@ class oncogene:
 		#SVG
 		svgPath = os.path.join(path,'SVG')
 		if os.path.exists(svgPath):
-			# 所有已知图片
-			allKnown = ['1_all.png', '2_all.png', '3_all.png', '4_all.png','5_all.png',
-				'ERCC1.118.3.png',
-				'EGFR.719.3.png', 'EGFR.768.3.png', 'EGFR.790.3.png', 'EGFR.858.3.png',
-				'EGFR.861.3.png' ,'KRAS.12.3.png','KRAS.13.3.png','UGT1A1.71.3.png',
-				'ERCC1.118.10.png',
-				'EGFR.719.10.png','EGFR.768.10.png','EGFR.790.10.png','EGFR.858.10.png',
-				'EGFR.861.10.png', 'KRAS.12.10.png','KRAS.13.10.png','UGT1A1.71.10.png',
-				'Indel.30.png',
-				"GJB2.24.3.png","GJB2.24.10.png","GJB3.180.3.png","GJB3.180.10.png",
-				"GJB3.183.3.png","GJB3.183.10.png","GJB3.256.3.png","GJB3.256.10.png",
-				"GJB3.266.3.png","GJB3.266.10.png","SLC26A4.94.3.png","SLC26A4.94.10.png",
-				"SLC26A4.197.3.png","SLC26A4.197.10.png","SLC26A4.392.3.png","SLC26A4.392.10.png",
-				"SLC26A4.409.3.png","SLC26A4.409.10.png","SLC26A4.410.3.png","SLC26A4.410.10.png",
-				"SLC26A4.659.3.png","SLC26A4.659.10.png","SLC26A4.676.3.png","SLC26A4.676.10.png",
-				"SLC26A4.721.3.png","SLC26A4.721.10.png","SLC26A4.723.3.png","SLC26A4.723.10.png",
-				"OTOF.1341.3.png","OTOF.1341.10.png","OTOF.1607.3.png","OTOF.1607.10.png",
-				"SLC17A8.275.3.png","SLC17A8.275.10.png",
-				"MT-12SrRNA.365.3.png","MT-12SrRNA.365.10.png","MT-12SrRNA.528.3.png",
-				"MT-12SrRNA.528.10.png","MT-12SrRNA.498.3.png","MT-12SrRNA.498.10.png",
-				"MT-12SrRNA.518.3.png","MT-12SrRNA.518.10.png","MT-12SrRNA.349.3.png",
-				"MT-12SrRNA.349.10.png"
-				]
-			# 已知突变位点
-			know_mutation = ['Indel.30.png','ERCC1.118.10.png','EGFR.719.10.png',
-				'EGFR.768.10.png','EGFR.790.10.png','EGFR.858.10.png','EGFR.861.10.png',
-				'KRAS.12.10.png','KRAS.13.10.png','UGT1A1.71.10.png',
-				"GJB2.24.10.png","GJB3.180.10.png","GJB3.183.10.png",
-				"GJB3.256.10.png","GJB3.266.10.png","SLC26A4.94.10.png",
-				"SLC26A4.197.10.png","SLC26A4.392.10.png","SLC26A4.409.10.png",
-				"SLC26A4.410.10.png","SLC26A4.659.10.png","SLC26A4.676.10.png",
-				"SLC26A4.721.10.png","SLC26A4.723.10.png","OTOF.1341.10.png",
-				"OTOF.1607.10.png","SLC17A8.275.10.png",
-				"MT-12SrRNA.365.10.png","MT-12SrRNA.528.10.png",
-				"MT-12SrRNA.498.10.png","MT-12SrRNA.518.10.png","MT-12SrRNA.349.10.png"
-				]
 			km = []
 			original = {} # 原始峰图
 			out = [] # 其它图片
@@ -123,9 +87,9 @@ class oncogene:
 				#以下处理所有png
 				elif(x.endswith('_all.png')):
 					original[x.replace('.','_')] = x
-				elif(x in know_mutation):
+				elif(('else' in x) and ('3.else' not in x) and x.endswith('.png')):
 					km.append(x)
-				elif(x not in allKnown and (not x.endswith('.10.png')) and x.endswith('.png')):
+				elif(('else' not in x) and x.endswith('.png')):
 					out.append(x)
 			result['knowMutation'] = km
 			result['original'] = original
@@ -134,12 +98,16 @@ class oncogene:
 		return result
 if __name__ == '__main__':
 	oncogene = oncogene.getInstance()
-	re = oncogene.getResult('/Users/lin/15122400418712','oncogene','a.ab1',None)
+	re = oncogene.getResult('/Users/lin/23/117/16051200182383','oncogene','a.ab1',None)
 	print '1'+re['wz1']
 	print '2'+re['wz2']
 	print '3'+re['report']
 	print '4'+re['length']
 	print '5'+re['conclusion']
 	print '6'+re['seq']
+	print '---'
 	print re['original']
+	print '---'
 	print re['out']
+	print '---'
+	print re['knowMutation']
