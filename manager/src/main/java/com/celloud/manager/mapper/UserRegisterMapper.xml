@@ -10,12 +10,13 @@
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.celloud.manager.model.UserRegister" extends="BaseResultMap" >
     <result column="app_ids" property="appIds" jdbcType="LONGVARCHAR" />
+    <result column="role_ids" property="roleIds" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, user_id, expire_date, md5, email
   </sql>
   <sql id="Blob_Column_List" >
-    app_ids
+    app_ids, role_ids
   </sql>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
@@ -31,10 +32,10 @@
   </delete>
   <insert id="insert" parameterType="com.celloud.manager.model.UserRegister" >
     insert into tb_user_register (id, user_id, expire_date, 
-      md5, email, app_ids
+      md5, email, app_ids, role_ids
       )
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{expireDate,jdbcType=TIMESTAMP}, 
-      #{md5,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{appIds,jdbcType=LONGVARCHAR}
+      #{md5,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{appIds,jdbcType=LONGVARCHAR}, #{roleIds, jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.celloud.manager.model.UserRegister" >
@@ -58,6 +59,9 @@
       <if test="appIds != null" >
         app_ids,
       </if>
+      <if test="roleIds != null" >
+        role_ids,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -77,6 +81,9 @@
       </if>
       <if test="appIds != null" >
         #{appIds,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="roleIds != null" >
+        #{roleIds,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -98,6 +105,9 @@
       <if test="appIds != null" >
         app_ids = #{appIds,jdbcType=LONGVARCHAR},
       </if>
+      <if test="roleIds != null" >
+        role_ids = #{roleIds,jdbcType=LONGVARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -107,7 +117,8 @@
       expire_date = #{expireDate,jdbcType=TIMESTAMP},
       md5 = #{md5,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
-      app_ids = #{appIds,jdbcType=LONGVARCHAR}
+      app_ids = #{appIds,jdbcType=LONGVARCHAR},
+      role_ids = #{roleIds,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.celloud.manager.model.UserRegister" >
@@ -120,11 +131,12 @@
   </update>
   <insert id="insertUserRegisterInfo">
         insert into tb_user_register (email, expire_date,
-        md5,app_ids)
+        md5,app_ids, role_ids)
         values (#{email,jdbcType=VARCHAR},
         DATE_ADD(now(),INTERVAL 1 DAY),
         #{randomCode,jdbcType=VARCHAR},
-        #{appIds,jdbcType=VARCHAR})
+        #{appIds,jdbcType=VARCHAR},
+        #{roleIds,jdbcType=VARCHAR})
     </insert>
     
     <select id="getValidate" resultType="java.lang.Integer">

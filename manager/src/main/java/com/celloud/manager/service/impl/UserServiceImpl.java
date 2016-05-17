@@ -135,9 +135,14 @@ public class UserServiceImpl implements UserService {
         int addNum = userMapper.addUser(user);
         if (addNum > 0) {
             String appIdStr = ur != null ? ur.getAppIds() : null;
+            String roleIdStr = ur != null ? ur.getRoleIds() : null;
             if (StringUtils.isNotBlank(appIdStr)) {
                 String[] appIds = appIdStr.split(",");
                 userMapper.addUserAppRight(user.getUserId(), appIds, AppIsAdd.NOT_ADDED);
+            }
+            if (StringUtils.isNotBlank(roleIdStr)) {
+                String[] roleIds = roleIdStr.split(",");
+                userMapper.addUserRoleRight(user.getUserId(), roleIds);
             }
             if (appCompanyId != null) {
                 userMapper.addUserCompanyRelat(user.getUserId(), appCompanyId);
@@ -151,18 +156,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void sendRegisterEmail(String[] emailArray, Integer deptId, Integer companyId, Integer appCompanyId,
-            Integer[] appIdArray, Integer role) {
+            Integer[] appIdArray, Integer[] roleIdArray, Integer role) {
         for (String email : emailArray) {
             userRegisterMapper.deleteUserRegisterInfo(email);
             String randomCode = MD5Util.getMD5(String.valueOf(new Date().getTime()));
             StringBuffer appIds = new StringBuffer();
+            StringBuilder roleIds = new StringBuilder();
             if (appIdArray != null && appIdArray.length > 0) {
                 for (Integer appId : appIdArray) {
                     appIds.append(appId + ",");
                 }
                 appIds.deleteCharAt(appIds.length() - 1);
             }
-            userRegisterMapper.insertUserRegisterInfo(email, randomCode, appIds.toString());
+            if (roleIdArray != null && roleIdArray.length > 0) {
+                for (Integer roleId : roleIdArray) {
+                    roleIds.append(roleId + ",");
+                }
+                roleIds.deleteCharAt(roleIds.length() - 1);
+            }
+            userRegisterMapper.insertUserRegisterInfo(email, randomCode, appIds.toString(), roleIds.toString());
             String param = Base64Util.encrypt(
                     email + "/" + randomCode + "/" + deptId + "/" + companyId + "/" + appCompanyId + "/" + role);
             String context = ResetPwdUtils.userContent.replaceAll("url",
@@ -191,5 +203,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void grantUserApp(Integer userId, List<Map<String, String>> appAddList) {
         userMapper.grantUserApp(userId, appAddList);
+    }
+
+    @Override
+    public void grantUserRole(Integer userId, String[] roleIds) {
+        userMapper.addUserRoleRight(userId, roleIds);
     }
 }

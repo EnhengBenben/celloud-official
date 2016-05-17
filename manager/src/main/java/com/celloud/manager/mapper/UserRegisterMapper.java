@@ -20,7 +20,7 @@ public interface UserRegisterMapper {
     int updateByPrimaryKey(UserRegister record);
 
     public void insertUserRegisterInfo(@Param("email") String email, @Param("randomCode") String randomCode,
-            @Param("appIds") String appIds);
+            @Param("appIds") String appIds, @Param("roleIds") String roleIds);
 
     /**
      * 删除验证码

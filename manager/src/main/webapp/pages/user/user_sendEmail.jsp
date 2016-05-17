@@ -12,6 +12,14 @@
                <input type="hidden" name="appCompanyId" value="${appCompanyId }">
            </div>
            <div class="form-group">
+               <label class="col-sm-2 control-label" for="role">模块<font color="red">*</font></label>
+               <div class="col-sm-10" id="email-appIds">
+                <c:forEach items="${roleList }" var="role">
+                    <label class='checkbox-inline'><input name='roleIdArray' type='checkbox' checked='checked' value='${role.id }'>${role.name }</label>
+                </c:forEach>
+               </div>
+           </div>
+           <div class="form-group">
                <label class="col-sm-2 control-label" for="deptName">App<font color="red">*</font></label>
                <div class="col-sm-10" id="email-appIds">
                 <c:forEach items="${appList }" var="app">

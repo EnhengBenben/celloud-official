@@ -270,9 +270,22 @@ var user=(function(user){
 			$("#user-sendEmailModal").modal("show");
 		});
 	};
+	self.toGrantRole = function(userId){
+		$.post("user/toGrantRole",{userId,userId},function(responseText){
+			$("#user-sendEmailModal .modal-content").html(responseText);
+			$("#user-sendEmailModal").modal("show");
+		});
+	};
 	self.grantApp = function(){
 		var params = $("#grantForm").serialize();
 		$.post("user/grantApp",params,function(){
+			jAlert("授权成功");
+			$("#user-sendEmailModal").modal("hide");
+		});
+	}
+	self.grantRole = function(){
+		var params = $("#grantForm").serialize();
+		$.post("user/grantRole",params,function(){
 			jAlert("授权成功");
 			$("#user-sendEmailModal").modal("hide");
 		});
