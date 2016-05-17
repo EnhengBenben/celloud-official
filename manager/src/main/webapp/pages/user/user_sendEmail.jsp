@@ -11,14 +11,20 @@
            <div class="form-group">
                <input type="hidden" name="appCompanyId" value="${appCompanyId }">
            </div>
-           <div class="form-group">
-               <label class="col-sm-2 control-label" for="role">模块<font color="red">*</font></label>
-               <div class="col-sm-10" id="email-appIds">
-                <c:forEach items="${roleList }" var="role">
-                    <label class='checkbox-inline'><input name='roleIdArray' type='checkbox' checked='checked' value='${role.id }'>${role.name }</label>
-                </c:forEach>
-               </div>
-           </div>
+           
+	           <div class="form-group">
+	               <label class="col-sm-2 control-label" for="role">模块<font color="red">*</font></label>
+	               <div class="col-sm-10" id="email-appIds">
+	                   <c:if test="${not empty roleList }">
+			                <c:forEach items="${roleList }" var="role">
+			                    <label class='checkbox-inline'><input name='roleIdArray' type='checkbox' checked='checked' value='${role.id }'>${role.name }</label>
+			                </c:forEach>
+			           </c:if>
+			           <c:if test="${empty roleList }">
+			                 <label class='text-inline'>暂无模块</label>
+			           </c:if>
+	               </div>
+	           </div>
            <div class="form-group">
                <label class="col-sm-2 control-label" for="deptName">App<font color="red">*</font></label>
                <div class="col-sm-10" id="email-appIds">

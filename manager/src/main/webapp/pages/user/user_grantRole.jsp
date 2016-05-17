@@ -14,16 +14,21 @@
            <div class="form-group">
                <label class="col-sm-2 control-label" for="deptName">模块<font color="red">*</font></label>
                <div class="col-sm-10" id="email-appIds">
-                <c:forEach items="${companyRoleList }" var="companyRole">
-                    <c:set value="false" var="b" />
-                    <c:set value="0" var="isAdd" />
-                    <c:forEach items="${userRoleList }" var="userRole">
-                        <c:if test="${companyRole.id == userRole.id }">
-	                        <c:set value="true" var="b" />
-                        </c:if>
-                    </c:forEach>
-                    <label class='checkbox-inline'><input name='roleIdArray' type='checkbox' ${b?'checked':'' } value='${companyRole.id }' >${companyRole.name }</label>
-                </c:forEach>
+               <c:if test="${not empty companyRoleList }">
+	               <c:forEach items="${companyRoleList }" var="companyRole">
+	                    <c:set value="false" var="b" />
+	                    <c:set value="0" var="isAdd" />
+	                    <c:forEach items="${userRoleList }" var="userRole">
+	                        <c:if test="${companyRole.id == userRole.id }">
+	                            <c:set value="true" var="b" />
+	                        </c:if>
+	                    </c:forEach>
+	                    <label class='checkbox-inline'><input name='roleIdArray' type='checkbox' ${b?'checked':'' } value='${companyRole.id }' >${companyRole.name }</label>
+	                </c:forEach>
+               </c:if>
+               <c:if test="${empty companyRoleList }">
+                    <label class='text-inline'>暂无模块</label>              
+               </c:if>
                </div>
            </div>
            <div class="form-group-separator"></div>
