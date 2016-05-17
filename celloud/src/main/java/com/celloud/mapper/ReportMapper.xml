@@ -14,11 +14,12 @@
     <result column="state" property="state" jdbcType="INTEGER" />
     <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
     <result column="print_context" property="printContext" jdbcType="LONGVARCHAR" />
+    <result column="print_simple" property="printSimple" jdbcType="LONGVARCHAR" />
     <result column="context" property="context" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     report_id, user_id, app_id, file_id, project_id, period, flag, readed, create_date, 
-    state, end_date,print_context, context
+    state, end_date,print_context,print_simple, context
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -40,7 +41,7 @@
     insert into tb_report (report_id, user_id, app_id, 
       file_id, project_id, period, 
       flag, readed, create_date, 
-      state, end_date, print_context, 
+      state, end_date, print_context, print_simple
       context)
     values (#{reportId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, 
       #{fileId,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, #{period,jdbcType=INTEGER}, 
@@ -86,6 +87,9 @@
       </if>
       <if test="printContext != null" >
         print_context,
+      </if>
+      <if test="printSimple != null" >
+        print_simple,
       </if>
       <if test="context != null" >
         context,
@@ -172,6 +176,9 @@
       <if test="printContext != null" >
         print_context,
       </if>
+      <if test="printSimple != null" >
+        print_simple,
+      </if>
       <if test="context != null" >
         context,
       </if>
@@ -254,6 +261,9 @@
       <if test="printContext != null" >
         print_context = #{printContext,jdbcType=LONGVARCHAR},
       </if>
+      <if test="printSimple != null" >
+        print_simple = #{printSimple,jdbcType=LONGVARCHAR},
+      </if>
       <if test="context != null" >
         context = #{context,jdbcType=LONGVARCHAR},
       </if>
@@ -277,6 +287,9 @@
       </if>
       <if test="printContext != null" >
         print_context = #{printContext,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="printSimple != null" >
+        print_simple = #{printSimple,jdbcType=LONGVARCHAR},
       </if>
       <if test="context != null" >
         context = #{context,jdbcType=LONGVARCHAR},
@@ -309,6 +322,7 @@
       state = #{state,jdbcType=INTEGER},
       end_date = #{endDate,jdbcType=TIMESTAMP},
       print_context = #{printContext,jdbcType=LONGVARCHAR},
+      print_simple = #{printSimple,jdbcType=LONGVARCHAR},
       context = #{context,jdbcType=LONGVARCHAR}
     where report_id = #{reportId,jdbcType=INTEGER}
   </update>
