@@ -38,7 +38,7 @@
 	    	<c:if test="${oncogene.knowMutation!=null}">
 		    	<c:forEach var="img" items="${oncogene.knowMutation }">
 		    		<br/>
-			    	<img name="know" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img}" style="width: 100%;">
+			    	<img name="know" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img}" style="width: 900px;">
 		    	</c:forEach>
 	    	</c:if>
 	    </div>
@@ -52,9 +52,7 @@
 		    	${oncogene.wz2 }
 		    	<br/>
 		    	<c:forEach var="img" items="${oncogene.out }">
-		    		<a href="javascript:bigReplace('${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img.replace('3.png','10.png') }');" >
-						<img class="imgtop" title="${img }" name="imgSrc" style="padding-left: 30px;" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img }" height="170px;" width="150px;">
-					</a>
+					<img class="imgtop" title="${img }" name="imgSrc" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img }" style="width: 900px;">
 		    	</c:forEach>
 	    	</c:if>
 	    	<c:if test="${oncogene.wz2==null || oncogene.wz2=='' }">

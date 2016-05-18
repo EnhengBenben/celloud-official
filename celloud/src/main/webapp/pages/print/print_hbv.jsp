@@ -997,7 +997,14 @@ function savePage(){
 	$("#des").children().html(inputVal);
 	inputVal = $("#des1").children().val();
 	$("#des1").children().html(inputVal);
-	$.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"printContext":$("#printMain").html()},function(result){
+	var _flag = $("#_flag").html();
+	var param = null;
+	if(_flag == 0){//详细报告
+	  param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"printContext":$("#printMain").html()}
+	}else{//简要报告
+	  param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"printSimple":$("#printMain").html()}
+	}
+	$.post(url+"updateContext",param,function(result){
 		if(result==1){
 		  jAlert("信息保存成功！");
 		}else{
@@ -1008,7 +1015,14 @@ function savePage(){
 function reset(){
   jConfirm('确定要重置之前保存的报告吗？', '重置报告', function(result) {
     if(result){
-		$.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"printContext":""},function(result){
+    	var _flag = $("#_flag").html();
+   		var param = null;
+   		if(_flag == 0){//详细报告
+   	  		param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"printContext":""}
+   		}else{//简要报告
+   	  		param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"printSimple":""}
+   		}
+		$.post(url+"updateContext",param,function(result){
 			if(result==1){
 				location=location ;
 			}else{
