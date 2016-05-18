@@ -66,7 +66,7 @@
       </c:choose>
       
       <c:if test="${pageList.page.currentPage>4&&pageList.page.totalPage>10}">
-          <li>...</li>
+          <li><a href="javascript:void(0)">…</a></li>
       </c:if>
       <c:choose>
         <c:when test="${pageList.page.totalPage-pageList.page.currentPage>=7}">
@@ -157,7 +157,7 @@
         </c:otherwise>
       </c:choose>
       <c:if test="${pageList.page.totalPage-pageList.page.currentPage>=8&&pageList.page.totalPage>10}">
-          <li>……</li>
+          <li><a href="javascript:void(0)">…</a></li>
       </c:if>
       <c:choose>
         <c:when test="${pageList.page.currentPage==pageList.page.totalPage&&pageList.page.totalPage>1}"> 

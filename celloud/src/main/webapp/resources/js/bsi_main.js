@@ -167,7 +167,10 @@ $.data_ = {
     options: {
         condition: null,
         sort: 0,
-        sortDate: "desc"
+        sortBatch: "asc",
+        sortName: "asc",
+        sortDate: "desc",
+        pageSize: $("#page-size-sel").val()
     },
     find : {
         all: function(){
@@ -177,13 +180,13 @@ $.data_ = {
         },
         condition: function(){
           var options = $.data_.options;
-          $.get("data/bsiDataList",{"condition":options.condition,"sort":options.sort,"sortDateType":options.sortDate},function(response){
+          $.get("data/bsiDataList",{"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
             $.data_.loadlist(response);
           });
         },
         pagination: function(currentPage){
           var options = $.data_.options;
-          $.get("data/bsiDataList",{"page":currentPage,"condition":options.condition,"sort":options.sort,"sortDateType":options.sortDate},function(response){
+          $.get("data/bsiDataList",{"page":currentPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
             $.data_.loadlist(response);
           });
         }
@@ -198,7 +201,8 @@ $.data_.loadlist = function(response){
       $(this).attr("title",newData);
     }
   });
-  $.base.sortIcon($.data_.options.sortPeriod,$.data_.options.sortDate);
+  var options = $.data_.options;
+  $.base.sortIcon(options.sortDate,options.sortBatch,options.sortName,null);
   $("#pagination-data").on("click","a",function(e){
     var id = $(this).attr("id");
     var currentPage = parseInt($("#current-page-hide").val());
@@ -226,14 +230,19 @@ $.data_.loadlist = function(response){
     }
     $.data_.find.pagination(page);
   });
-  $("#sort-period").on("click",function(e){
-    $.data_.options.sort = 1;
-    $.data_.options.sortPeriod = $.data_.options.sortPeriod=="desc"?"asc":"desc";
-    $.data_.find.condition();
-  });
-  $("#data-sort-date").on("click",function(e){
+  $("#sort-date").on("click",function(e){
     $.data_.options.sort = 0;
     $.data_.options.sortDate = $.data_.options.sortDate=="desc"?"asc":"desc";
+    $.data_.find.condition();
+  });
+  $("#sort-batch").on("click",function(e){
+    $.data_.options.sort = 1;
+    $.data_.options.sortBatch = $.data_.options.sortBatch=="desc"?"asc":"desc";
+    $.data_.find.condition();
+  });
+  $("#sort-name").on("click",function(e){
+    $.data_.options.sort = 2;
+    $.data_.options.sortName = $.data_.options.sortName=="desc"?"asc":"desc";
     $.data_.find.condition();
   });
 }

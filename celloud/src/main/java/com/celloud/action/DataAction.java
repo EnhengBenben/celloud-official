@@ -192,7 +192,7 @@ public class DataAction {
      * @param condition
      *            检索条件
      * @param sort
-     *            排序字段 0:create_date 1:file_name
+     *            排序字段 0:create_date 1:批次 2:file_name
      * @param sortType
      *            排序类型
      * @return
@@ -202,8 +202,9 @@ public class DataAction {
     public ModelAndView bsiDataList(@RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size, String condition,
             @RequestParam(defaultValue = "0") int sort,
-            @RequestParam(defaultValue = "desc") String sortDateType,
-            @RequestParam(defaultValue = "asc") String sortNameType) {
+            @RequestParam(defaultValue = "desc") String sortDate,
+            @RequestParam(defaultValue = "asc") String sortBatch,
+            @RequestParam(defaultValue = "asc") String sortName) {
         Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
         Matcher m = p.matcher(condition);
         StringBuffer con_sb = new StringBuffer();
@@ -216,7 +217,7 @@ public class DataAction {
         Page pager = new Page(page, size);
         PageList<DataFile> dataList = dataService.dataLists(pager,
                 ConstantsData.getLoginUserId(), con_sb.toString(), sort,
-                sortDateType, sortNameType);
+                sortDate, sortBatch, sortName);
         mv.addObject("pageList", dataList);
         logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
         return mv;

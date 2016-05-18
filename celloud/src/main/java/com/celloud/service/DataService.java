@@ -89,6 +89,21 @@ public interface DataService {
             int sort, String sortDateType, String sortNameType);
 
     /**
+     * 按条件检索数据列表
+     * 
+     * @param page
+     * @param userId
+     * @param condition
+     * @param sort
+     * @param sortDate
+     * @param sortBatch
+     * @param sortName
+     * @return
+     */
+    PageList<DataFile> dataLists(Page page, Integer userId, String condition,
+            int sort, String sortDate, String sortBatch, String sortName);
+
+    /**
      * 根据别名检索数据
      * 
      * @param userId

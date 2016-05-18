@@ -341,7 +341,36 @@
       </otherwise>
     </choose>
   </select>
-    <select id="countFileNumByUserId" resultType="map">
+  <select id="findDataListsSortMore" resultMap="ResultMapWithRunState" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,
+    (select count(*) reportNum from tb_report r where r.period = #{period } and r.flag = #{reportType } and r.state = #{state } and r.file_id=f.file_id) reportNum,
+    (select count(*) isRunning from tb_report r where r.period != #{period } and r.flag = #{reportType } and r.state = #{state } and r.file_id=f.file_id) isRunning
+    from tb_file f
+    where user_id = #{userId } and state = #{state }
+    <if test="condition != null" >
+        and (data_key like '%${condition}%' 
+        or file_name like '%${condition}%' 
+        or another_name like '%${condition}%'  
+        or data_tags like '%${condition}%'  
+        or strain like '%${condition}%' 
+        or sample like '%${condition}%'
+        or batch like '%${condition}%')
+    </if>
+    <if test="sort == 0" >
+         order by f.create_date ${sortDate},f.batch ${sortBatch},f.file_name ${sortName}
+    </if>
+    <if test="sort == 1" >
+         order by f.batch ${sortBatch},f.create_date ${sortDate},f.file_name ${sortName}
+    </if>
+    <if test="sort == 2" >
+         order by f.file_name ${sortName},f.batch ${sortBatch},f.create_date ${sortDate}
+    </if>
+  </select>
+  <select id="countFileNumByUserId" resultType="map">
     select count(f.file_id)as fileNum,(select count(distinct(file_id))from tb_report where user_id = f.user_id)as runFileNum from tb_file f where f.user_id = ${userId}
   </select>
   <select id="getDatasInProject" resultMap="BaseResultMap">

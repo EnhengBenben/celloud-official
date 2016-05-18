@@ -49,7 +49,7 @@
           <div class="common-menu-btn pull-left">
             <a class="item-btn active" id="to-report-a" href="javascript:void(0)"><i class="celicon my-report-icon"></i><br>报告</a>
             <a class="item-btn" id="to-data-a" href="javascript:void(0)"><i class="celicon my-data-icon"></i><br>数据</a>
-            <a class="item-btn" id="to-upload-a" href="javascript:void(0)"><i class="celicon my-upload-icon"></i><br>上传</a>
+            <a class="item-btn upload-btn" id="to-upload-a" href="javascript:void(0)"><span><i class="celicon my-upload-icon"></i><br>上传</span></a>
           </div>
           <hr>
           <div class="common-menu-search pull-right">
