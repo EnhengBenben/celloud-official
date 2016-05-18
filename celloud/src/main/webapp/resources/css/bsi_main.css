@@ -298,6 +298,7 @@ a, a:link, a:hover, a:active, a:visited {
     margin-left: auto;
     margin-right: auto;
     padding: 0px 0px;
+    padding-bottom: 10px;
 }
 .content-header{
 	padding-top: 10px;
@@ -536,87 +537,116 @@ a, a:link, a:hover, a:active, a:visited {
     font-size: 14px;
     color: #969696;
 }
-.upload-modal .step-one-content p{
+.upload-modal p{
 	text-align: left;
 }
-.upload-modal .step-one-content p span{
+.upload-modal p span{
     font-size:12px;
     color:#c8c8c8;
-    -webkit-transform:scale(0.8);
-    -moz-transform:scale(0.8);
-    -o-transform:scale(0.8);
+    -webkit-transform:scale(0.85);
+    -moz-transform:scale(0.85);
+    -o-transform:scale(0.85);
+    display: block;
+    margin: -3px -50px 0px -37px;
 }
-.upload-modal .modal-body .input-div{
-	margin-top: 120px;
-}
-.upload-modal .modal-body .input-div input{
+.upload-modal .btn{
+	width: 100px;
 	height: 30px;
-	width: 220px;
-    border: 1px solid #c8c8c8;
-    border-radius: 3px;
-    padding: 0px 10px;
-    font-size: 14px;
-    color: #969696;
+	background-color: rgb(29,210,175);
+	color: #fff;
+	text-align: center;
+	vertical-align: middle;
 }
-
-.upload-modal .modal-body .input-div a{
-	margin-top: 20px;
-	left: 245px;
+.upload-modal .step-one-content .btn{
+	margin-top: 60px;
 }
-.addfile{
-	background-position: -807px -335px;
-	width: 110px;
-	height: 30px;
-}
-.upload-content .wholeheight{
-    margin: 20px 45px;
+.upload-modal .upload-container{
+    margin-top: 10px;
     background-color: #fff;
-    padding: 20px 10px;
-    min-height:400px;
+    height:120px;
+    width: 100%;
+    border: 1px solid #dcdcdc;
 }
-.upload-content .plupload_header_content{
-	padding-left: 10px;
+.upload-container .plupload-content {
+    text-align: center;
+    width: 100%;
+    height: 100px;
+    cursor: pointer;
 }
-.upload-content .plupload_content {
-	margin-top: 40px;
+.upload-container .plupload-content .upload-text{
+    color: #c8c8c8;
+    font-size: 14px;
 }
-.upload-content .plupload_filelist {
-	border-top: none;
-    height: 100%;
-    margin: 14px;
+.upload-container .plupload-filelist {
+	border: none;
+    height: 100px;
+    margin: 0;
     padding: 0;
     list-style: none;
-    border: 1px solid #c8c8c8;
+    overflow-y: auto;
 }
-.upload-content .plupload_filelist li {
+.upload-container .plupload-filelist li {
 	font-size: 12px;
-    padding: 3px 1px;
-    border-bottom: 1px solid #c8c8c8;
+	color: #323232;
+	height: 20px;
+	width: 100%;
 }
-.upload-content .plupload_filelist .plupload_file_name{
-	max-width: 200px;
-    text-align: left;
+.upload-container .plupload-filelist>li:nth-of-type(even) {
+    background: rgb(248,248,248);
 }
-.upload-content .plupload_filelist .plupload_file_status,
-.upload-content .plupload_filelist .plupload_file_surplus,
-.upload-content .plupload_filelist .plupload_file_size{
+.upload-container .plupload-filelist>li:nth-of-type(odd) {
+    background: rgb(255,255,255);
+}
+.upload-container .plupload-filelist>li>div{
+	 float: left;
+	 text-align: left;
+	 padding-left: 5px;
+}
+.upload-container .plupload-filelist>li .plupload-file-name{
+	width: 190px;
+    word-break:keep-all;/* 不换行 */
+    white-space:nowrap;/* 不换行 */
+    overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
+    text-overflow:ellipsis;
+}
+.upload-container .plupload-filelist>li .plupload-file-surplus,
+.upload-container .plupload-filelist>li .plupload-file-size{
 	width: 60px;
+	text-align: center;
 }
-.upload-step-one .plupload_file_name{
-	left: 245px;
-    position: absolute;
-    top: 10px;
-    z-index: 99;
+.upload-container .plupload-filelist>li .plupload-file-status{
+	width: 40px;
+	text-align: center;
 }
-.upload-step-one .wholeheight{
-	background: none;
-	min-height:0;
+.upload-container .plupload-filelist>li .plupload-file-action{
+	width: 30px;
+	float: right;
+	text-align: center;
 }
-.upload-step-one .plupload_content{
-	display: none;
+.plupload-file-action a,
+.plupload-file-action a:hover,
+.plupload-file-action a:active{
+	color: #323232;
 }
-
-
+.step-three-content .upload-container .plupload-filelist{
+	height: 120px;
+}
+.step-three-content .plupload-filelist>li:first-child{
+    background: #dddddd;
+    color:#323232;
+    font-weight: bold;
+}
+.step-three-content .plupload-filelist>li:first-child div{
+    text-align: center;
+}
+.step-three-content .upload-status{
+	font-size: 14px;
+	color: #2c3e50;
+	text-align: left;
+}
+.step-three-content .btn{
+    margin-top: 26px;
+}
 .nav-tabs{
 	border: none;
 }

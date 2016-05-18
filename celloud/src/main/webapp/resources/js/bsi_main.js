@@ -25,6 +25,13 @@ $(function () {
     $("#to-upload-a").removeClass("active");
     $("#to-report-a").removeClass("active");
   });
+  $("#next-step").on("click",function(){
+    $(".step-one-content").addClass("hide");
+    $(".step-two-content").removeClass("hide");
+    $("#one-to-two").addClass("active");
+    $(".step-two").addClass("active");
+  });
+  
 });
 $.base = {
   sortIcon : function(sortDate,sortBatch,sortName,sortPeriod){

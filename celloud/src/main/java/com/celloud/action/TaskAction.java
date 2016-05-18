@@ -179,41 +179,43 @@ public class TaskAction {
             }
             String inPath = reportPath + "result/split/";
             HashSet<String> resultFiles = FileTools.getFiles(inPath);
-            Iterator<String> rFile = resultFiles.iterator();
-            Long size = null;
-            Set<String> secs = secService.findRolesByUserId(userId);
-            while (rFile.hasNext()) {
-                String fstr = rFile.next();
-                if (!fstr.equals("...tar.gz") && !fstr.equals("..tar.gz")) {
-                    String extName = fstr
-                            .substring(fstr.lastIndexOf(".tar.gz"));
-                    String resourcePath = inPath + fstr;
-                    size = new File(resourcePath).length();
-                    DataFile data = new DataFile();
-                    data.setUserId(userId);
-                    data.setFileName(fstr);
-                    data.setState(DataState.DEELTED);
-                    int dataId = dataService.addDataInfo(data);
-                    String new_dataKey = DataUtil.getNewDataKey(dataId);
-                    String filePath = PropertiesUtil.bigFilePath + userId
-                            + File.separatorChar
-                            + DateUtil.getDateToString("yyyyMMdd")
-                            + File.separatorChar + new_dataKey + extName;
-                    boolean state = FileTools.nioTransferCopy(
-                            new File(resourcePath), new File(filePath));
-                    if (state) {
-                        data.setFileId(dataId);
-                        data.setDataKey(new_dataKey);
-                        data.setAnotherName(pubName);
-                        data.setSize(size);
-                        data.setPath(filePath);
-                        data.setFileFormat(FileFormat.FQ);
-                        data.setState(DataState.ACTIVE);
-                        data.setBatch(batch);
-                        data.setMd5(MD5Util.getFileMD5(filePath));
-                        dataService.updateDataInfoByFileId(data);
-                        if (secs.contains("bsier")) {
-                            toRunSplitData(userId, data);
+            if (resultFiles != null) {
+                Iterator<String> rFile = resultFiles.iterator();
+                Long size = null;
+                Set<String> secs = secService.findRolesByUserId(userId);
+                while (rFile.hasNext()) {
+                    String fstr = rFile.next();
+                    if (!fstr.equals("...tar.gz") && !fstr.equals("..tar.gz")) {
+                        String extName = fstr
+                                .substring(fstr.lastIndexOf(".tar.gz"));
+                        String resourcePath = inPath + fstr;
+                        size = new File(resourcePath).length();
+                        DataFile data = new DataFile();
+                        data.setUserId(userId);
+                        data.setFileName(fstr);
+                        data.setState(DataState.DEELTED);
+                        int dataId = dataService.addDataInfo(data);
+                        String new_dataKey = DataUtil.getNewDataKey(dataId);
+                        String filePath = PropertiesUtil.bigFilePath + userId
+                                + File.separatorChar
+                                + DateUtil.getDateToString("yyyyMMdd")
+                                + File.separatorChar + new_dataKey + extName;
+                        boolean state = FileTools.nioTransferCopy(
+                                new File(resourcePath), new File(filePath));
+                        if (state) {
+                            data.setFileId(dataId);
+                            data.setDataKey(new_dataKey);
+                            data.setAnotherName(pubName);
+                            data.setSize(size);
+                            data.setPath(filePath);
+                            data.setFileFormat(FileFormat.FQ);
+                            data.setState(DataState.ACTIVE);
+                            data.setBatch(batch);
+                            data.setMd5(MD5Util.getFileMD5(filePath));
+                            dataService.updateDataInfoByFileId(data);
+                            if (secs.contains("bsier")) {
+                                toRunSplitData(userId, data);
+                            }
                         }
                     }
                 }
