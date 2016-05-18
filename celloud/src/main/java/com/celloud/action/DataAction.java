@@ -568,7 +568,7 @@ public class DataAction {
      * @param condition
      *            检索条件
      * @param sort
-     *            排序字段 0:create_date 1:file_name
+     *            排序字段 0:sortDate 1:sortBatch 2:sortName 3:sortPeriod
      * @param sortType
      *            排序类型
      * @return
@@ -579,6 +579,8 @@ public class DataAction {
             @RequestParam(defaultValue = "20") int size, String condition,
             @RequestParam(defaultValue = "0") int sort,
             @RequestParam(defaultValue = "desc") String sortDate,
+            @RequestParam(defaultValue = "asc") String sortBatch,
+            @RequestParam(defaultValue = "asc") String sortName,
             @RequestParam(defaultValue = "asc") String sortPeriod) {
         Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
         Matcher m = p.matcher(condition);
@@ -592,7 +594,7 @@ public class DataAction {
         Page pager = new Page(page, size);
         PageList<Task> pageList = taskService.findTasksByUserCondition(pager,
                 ConstantsData.getLoginUserId(), condition, sort, sortDate,
-                sortPeriod);
+                sortBatch, sortName, sortPeriod);
         mv.addObject("pageList", pageList);
         logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
         return mv;

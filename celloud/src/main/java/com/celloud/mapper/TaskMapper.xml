@@ -11,6 +11,7 @@
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
     <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
     <result column="project_id" property="projectId" jdbcType="INTEGER" />
     <result column="delete_date" property="deleteDate" jdbcType="TIMESTAMP" />
     <result column="state" property="state" jdbcType="INTEGER" />
@@ -22,9 +23,10 @@
     <result column="file_id" property="fileId" jdbcType="INTEGER" />
     <result column="file_name" property="fileName" jdbcType="VARCHAR" />
     <result column="batch" property="batch" jdbcType="VARCHAR" />
+    <result column="another_name" property="anotherName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    task_id, user_id, app_id, data_key, command, period, create_date, start_date, end_date, 
+    task_id, user_id, app_id, data_key, command, period, create_date, start_date, end_date, update_date,
     project_id, delete_date, state
   </sql>
   <sql id="Blob_Column_List" >
@@ -45,12 +47,12 @@
   <insert id="insert" parameterType="com.celloud.model.mysql.Task" >
     insert into tb_task (task_id, user_id, app_id, 
       data_key, command, period, 
-      create_date, start_date, end_date, 
+      create_date, start_date, end_date, update_date,
       project_id, delete_date, state, 
       params)
     values (#{taskId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, 
       #{dataKey,jdbcType=VARCHAR}, #{command,jdbcType=VARCHAR}, #{period,jdbcType=INTEGER}, 
-      #{createDate,jdbcType=TIMESTAMP}, #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
       #{projectId,jdbcType=INTEGER}, #{deleteDate,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, 
       #{params,jdbcType=LONGVARCHAR})
   </insert>
@@ -90,6 +92,9 @@
       <if test="deleteDate != null" >
         delete_date,
       </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
       <if test="state != null" >
         state,
       </if>
@@ -124,6 +129,9 @@
       </if>
       <if test="endDate != null" >
         #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
       </if>
       <if test="projectId != null" >
         #{projectId,jdbcType=INTEGER},
@@ -166,6 +174,9 @@
       <if test="endDate != null" >
         end_date = #{endDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
       <if test="projectId != null" >
         project_id = #{projectId,jdbcType=INTEGER},
       </if>
@@ -193,6 +204,7 @@
       end_date = #{endDate,jdbcType=TIMESTAMP},
       project_id = #{projectId,jdbcType=INTEGER},
       delete_date = #{deleteDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
       state = #{state,jdbcType=INTEGER},
       params = #{params,jdbcType=LONGVARCHAR}
     where task_id = #{taskId,jdbcType=INTEGER}
@@ -212,6 +224,7 @@
       create_date = #{createDate,jdbcType=TIMESTAMP},
       start_date = #{startDate,jdbcType=TIMESTAMP},
       end_date = #{endDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
       project_id = #{projectId,jdbcType=INTEGER},
       delete_date = #{deleteDate,jdbcType=TIMESTAMP},
       state = #{state,jdbcType=INTEGER}
@@ -244,6 +257,9 @@
       <if test="endDate != null" >
         end_date = #{endDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where project_id = #{projectId} and data_key = #{dataKey}
   </update>
@@ -253,15 +269,15 @@
     from tb_task WHERE project_id = #{projectId} and data_key = #{dataKey}
   </select>
   <select id="findTasksByUser" resultMap="ResultMapWithFileName">
-	 select  f.file_name,f.file_id,f.batch,t.* from 
+	 select  f.file_name,f.file_id,f.batch,f.another_name,t.* from 
 	(select * from tb_task where task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and (app_id=118 or period!=2) group by data_key))t
 	left join tb_file f
 	on f.data_key=t.data_key 
 	where f.user_id=#{userId} and f.state=#{state}
-	order by f.batch desc,t.end_date desc
+	order by t.update_date desc,f.batch asc
   </select>
   <select id="findTasksByUserCondition" resultMap="ResultMapWithFileName">
-    select  f.file_name,f.file_id,f.batch,t.* from 
+    select  f.file_name,f.file_id,f.batch,f.another_name,t.* from 
     (select * from tb_task where task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and (app_id=118 or period!=2) group by data_key))t
     left join tb_file f
     on f.data_key=t.data_key 
@@ -269,14 +285,18 @@
     <if test="condition != null" >
         and (file_name like '%${condition}%' or f.batch like '%${condition}%')
     </if>
-    <choose>
-      <when test="sort == 0">
-         order by f.batch ${sortPeriod},t.end_date ${sortDate}
-      </when>
-      <otherwise>
-         order by f.end_date ${sortDate},t.batch ${sortPeriod}
-      </otherwise>
-    </choose>
+    <if test="sort == 0" >
+         order by t.update_date ${sortDate},f.batch ${sortBatch},f.file_name ${sortName},t.period ${sortPeriod}
+    </if>
+    <if test="sort == 1" >
+         order by f.batch ${sortBatch},t.update_date ${sortDate},f.file_name ${sortName},t.period ${sortPeriod}
+    </if>
+    <if test="sort == 2" >
+         order by f.file_name ${sortName},t.update_date ${sortDate},f.batch ${sortBatch},t.period ${sortPeriod}
+    </if>
+    <if test="sort == 3" >
+         order by t.period ${sortPeriod},t.update_date ${sortDate},f.batch ${sortBatch},f.file_name ${sortName}
+    </if>
   </select>
   <select id="findTaskByParamsAndPeriod" resultMap="BaseResultMap">
     select 

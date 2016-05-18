@@ -221,7 +221,6 @@ public class UploadAction {
             task.setPeriod(TaskPeriod.UPLOADING);
             task.setParams(pubName);
             task.setAppId(appId);
-            System.out.println("file is ....R1: " + isR1);
             taskService.addOrUpdateUploadTaskByParam(task, isR1);
             if (needSplit == 1 && hasR1 && hasR2 && hasIndex) {
                 return "{\"dataIds\":\""

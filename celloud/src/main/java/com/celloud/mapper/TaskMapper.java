@@ -122,6 +122,8 @@ public interface TaskMapper {
             @Param("userId") Integer userId,
             @Param("condition") String condition, @Param("sort") Integer sort,
             @Param("sortDate") String sortDate,
+            @Param("sortBatch") String sortBatch,
+            @Param("sortName") String sortName,
             @Param("sortPeriod") String sortPeriod,
             @Param("state") Integer state);
 

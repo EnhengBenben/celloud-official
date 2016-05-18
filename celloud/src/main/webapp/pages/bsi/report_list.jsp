@@ -3,29 +3,21 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="content-header">
-  <div class="header">
-    <h4>血流感染检测 </h4>
-  </div>
   <ol class="breadcrumb">
-    <li>CelLoud平台</li>
-    <li>我的报告</li>
+    <li>主页</li>
+    <li>应用</li>
+    <li>百菌探</li>
+    <li>报告</li>
+    <li id="to-my-report">报告列表</li>
   </ol>
-</div>
-<div class="box-tools">
-  <div class="data-search">
-    <input id="report-condition-input" class="input-sm" type="text"/>
-    <div class="input-group-btn">
-      <button id="report-condition-find" class="btn btn-sm" type="button"><i class="fa fa-search"></i>搜索</button>
-    </div>
-  </div>
 </div>
 <table class="table table-main">
   <thead>
     <tr>
-      <th>批次/标签</th>
-      <th>文件名</th>
+      <th>批次/标签<a id="sort-batch" href="javascript:void(0);"><i id="sort-batch-icon" class="fa fa-sort-asc" aria-hidden="true"></i></a></th>
+      <th>文件名<a id="sort-name" href="javascript:void(0);"><i id="sort-name-icon" class="fa fa-sort-asc" aria-hidden="true"></i></a></th>
       <th>状态<a id="sort-period" href="javascript:void(0);"><i id="sort-period-icon" class="fa fa-sort-asc" aria-hidden="true"></i></a></th>
-      <th>生成时间<a id="sort-date" href="javascript:void(0);"><i id="sort-date-icon" class="fa fa-sort-amount-asc"></i></a></th>
+      <th>更新时间<a id="sort-date" href="javascript:void(0);"><i id="sort-date-icon" class="fa fa-sort-amount-asc"></i></a></th>
       <th>操作</th>
     </tr>
   </thead>
@@ -38,6 +30,7 @@
 	        <a href="javascript:<c:choose><c:when test="${task.period==2 }">$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId})</c:when><c:otherwise>void(0)</c:otherwise></c:choose>">
               <c:choose><c:when test="${fn:length(task.fileName)>60 }"><c:out value="${fn:substring(task.fileName, 0, 60) }"/>...</c:when><c:otherwise>${task.fileName }</c:otherwise></c:choose>
             </a>
+            <c:if test="${not empty task.anotherName }">(${task.anotherName })</c:if>
           </td>
 	      <td>
 	        <c:if test="${task.period==0 }">等待运行</c:if>
@@ -61,10 +54,10 @@
   <c:if test="${pageList.datas.size()>0}">
     <input id="current-page-hide" value="${pageList.page.currentPage }" type="hidden" >
     <input id="total-page-hide" value="${pageList.page.totalPage }" type="hidden" >
-    <ul id="pagination-task" class="pages">
-      <li><a id="first-page-task" href="javascript:void(0);">首页</a></li>
+    <ul id="pagination-task" class="pages pull-left">
+<!--       <li><a id="first-page-task" href="javascript:void(0);">首页</a></li> -->
       <!-- 显示prev -->
-      <li><a id="prev-page-task" href="javascript:void(0);">上一页</a></li>
+      <li><a id="prev-page-task" class="ends" href="javascript:void(0);">&lt;&lt;</a></li>
       
       <!-- 显示第一页 -->
       <c:choose>
@@ -176,8 +169,20 @@
           </c:if>
         </c:otherwise>
       </c:choose>
-      <li><a id="next-page-task" href="javascript:void(0)">下一页</a></li>
-      <li><a id="last-page-task" href="javascript:void(0);">尾页</a></li>
+      <li><a id="next-page-task" class="ends" href="javascript:void(0)">&gt;&gt;</a></li>
+<!--       <li><a id="last-page-task" href="javascript:void(0);">尾页</a></li> -->
+    </ul>
+    <ul class="pagination-data pull-right">
+      <li><span>共${pageList.page.rowCount }条</span></li>
+      <li>每页
+        <select id="page-size-sel">
+          <option value="10" <c:if test="${pageList.page.pageSize==10}">selected</c:if>>10</option>
+          <option value="20" <c:if test="${pageList.page.pageSize==20}">selected</c:if>>20</option>
+          <option value="30" <c:if test="${pageList.page.pageSize==30}">selected</c:if>>30</option>
+          <option value="50" <c:if test="${pageList.page.pageSize==50}">selected</c:if>>50</option>
+          <option value="100" <c:if test="${pageList.page.pageSize==100}">selected</c:if>>100</option>
+        </select>条
+      </li>
     </ul>
   </c:if>
 </div>

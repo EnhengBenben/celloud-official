@@ -27,16 +27,26 @@ $(function () {
   });
 });
 $.base = {
-  sortIcon : function(sortType1,sortType2){
-    if(sortType1=="asc"){
-      $("#sort-period-icon").removeClass("fa-sort-desc").addClass("fa-sort-asc");
-    }else if(sortType1=="desc"){
-      $("#sort-period-icon").removeClass("fa-sort-asc").addClass("fa-sort-desc");
-    }
-    if(sortType2=="asc"){
+  sortIcon : function(sortDate,sortBatch,sortName,sortPeriod){
+    if(sortDate=="asc"){
       $("#sort-date-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-    }else if(sortType2=="desc"){
+    }else if(sortDate=="desc"){
       $("#sort-date-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+    }
+    if(sortBatch=="asc"){
+      $("#sort-batch-icon").removeClass("fa-sort-desc").addClass("fa-sort-asc");
+    }else if(sortBatch=="desc"){
+      $("#sort-batch-icon").removeClass("fa-sort-asc").addClass("fa-sort-desc");
+    }
+    if(sortName=="asc"){
+      $("#sort-name-icon").removeClass("fa-sort-desc").addClass("fa-sort-asc");
+    }else if(sortName=="desc"){
+      $("#sort-name-icon").removeClass("fa-sort-asc").addClass("fa-sort-desc");
+    }
+    if(sortPeriod=="asc"){
+      $("#sort-period-icon").removeClass("fa-sort-desc").addClass("fa-sort-asc");
+    }else if(sortPeriod=="desc"){
+      $("#sort-period-icon").removeClass("fa-sort-asc").addClass("fa-sort-desc");
     }
   }
 };
@@ -45,8 +55,11 @@ $.report = {};
 $.report.options = {
     condition: null,
     sort: 0,
-    sortDate: "desc",
+    sortBatch: "asc",
+    sortName: "asc",
     sortPeriod: "asc",
+    sortDate: "desc",
+    pageSize: $("#page-size-sel").val()
 };
 $.report.run = function(dataIds,appIds){
   $.get("data/run",{"dataIds":dataIds,"appIds":appIds},function(result){
@@ -61,13 +74,13 @@ $.report.find = {
   },
   condition: function(){
     var options = $.report.options;
-    $.get("data/taskList",{"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod},function(response){
+    $.get("data/taskList",{"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
       $.report.loadlist(response);
     });
   },
   pagination: function(currentPage){
     var options = $.report.options;
-    $.get("data/taskList",{"page":currentPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod},function(response){
+    $.get("data/taskList",{"page":currentPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
       $.report.loadlist(response);
     });
   }
@@ -81,7 +94,7 @@ $.report.loadlist = function(response){
       $(this).attr("title",newData);
     }
   });
-  $.base.sortIcon($.report.options.sortPeriod,$.report.options.sortDate);
+  $.base.sortIcon($.report.options.sortDate,$.report.options.sortBatch,$.report.options.sortName,$.report.options.sortPeriod);
   $("#pagination-task").on("click","a",function(e){
     var id = $(this).attr("id");
     var currentPage = parseInt($("#current-page-hide").val());
@@ -109,14 +122,24 @@ $.report.loadlist = function(response){
     }
     $.report.find.pagination(page);
   });
-  $("#sort-period").on("click",function(e){
-    $.report.options.sort = 1;
-    $.report.options.sortPeriod = $.report.options.sortPeriod=="desc"?"asc":"desc";
-    $.report.find.condition();
-  });
   $("#sort-date").on("click",function(e){
     $.report.options.sort = 0;
     $.report.options.sortDate = $.report.options.sortDate=="desc"?"asc":"desc";
+    $.report.find.condition();
+  });
+  $("#sort-batch").on("click",function(e){
+    $.report.options.sort = 1;
+    $.report.options.sortBatch = $.report.options.sortBatch=="desc"?"asc":"desc";
+    $.report.find.condition();
+  });
+  $("#sort-name").on("click",function(e){
+    $.report.options.sort = 2;
+    $.report.options.sortName = $.report.options.sortName=="desc"?"asc":"desc";
+    $.report.find.condition();
+  });
+  $("#sort-period").on("click",function(e){
+    $.report.options.sort = 3;
+    $.report.options.sortPeriod = $.report.options.sortPeriod=="desc"?"asc":"desc";
     $.report.find.condition();
   });
 }

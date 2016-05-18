@@ -25,24 +25,38 @@
       <div class="global-topbar">
         <div class="y-topbar-row" style="position: static; opacity: 1;">
           <div class="y-topbar-span3">
-            <a class="celicon home-icon" href="#"></a>
+            <a href="/"><i class="celicon home-icon"></i><span>首页</span></a>
+            <hr>
           </div>
           <div class="y-topbar-span9 y-last">
-            <a class="celicon user-icon" href="logout" title="点击退出"></a>
+            <a href="logout" title="点击退出"><i class="celicon user-icon"></i></a>
           </div>
         </div>
       </div>
       <div class="common-menu">
         <div class="common-menu-inner">
-          <div class="common-menu-span3 pull-left">
+          <div class="common-menu-logo pull-left">
             <a href="javascript:void(0)" class="bio-logo">
-              <img src="<%=request.getContextPath()%>/images/icon/login_logo.png">
+              <img src="<%=request.getContextPath()%>/images/app/bactive.png">
 	        </a>
+	        <div class="bio-name">
+	          <div>百菌探</div>
+	          <div>Bactive</div>
+	          <a href="javascript:void(0)">详情>>></a>
+	        </div>
           </div>
-          <div class="common-menu-span9 pull-right">
-            <a class="item-btn active" id="to-report-a" href="javascript:void(0)"><i class="celicon my-report-icon"></i>我的报告</a>
-            <a class="item-btn" id="to-upload-a" href="javascript:void(0)"><i class="celicon my-upload-icon"></i>上传数据</a>
-            <a class="item-btn" id="to-data-a" href="javascript:void(0)"><i class="celicon my-data-icon"></i>我的数据</a>
+          <hr>
+          <div class="common-menu-btn pull-left">
+            <a class="item-btn active" id="to-report-a" href="javascript:void(0)"><i class="celicon my-report-icon"></i><br>报告</a>
+            <a class="item-btn" id="to-data-a" href="javascript:void(0)"><i class="celicon my-data-icon"></i><br>数据</a>
+            <a class="item-btn" id="to-upload-a" href="javascript:void(0)"><i class="celicon my-upload-icon"></i><br>上传</a>
+          </div>
+          <hr>
+          <div class="common-menu-search pull-right">
+			<div class="data-search">
+			  <input id="condition-input" class="input-sm" type="text" placeholder="搜索"/>
+			  <div id="condition-find" class="input-group-btn"><i class="fa fa-search"></i></div>
+			</div>
           </div>
         </div>
       </div>
@@ -55,18 +69,25 @@
 	<div class="modal-dialog">
 	  <div class="modal-content">
 	    <div class="modal-header">
-	      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="celicon minus-icon"></i></span></button>
-	      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="celicon close-icon"></i></span></button>
-	      <h4 class="modal-title">添加数据</h4>
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+	      <h4 class="modal-title">数据上传</h4>
 	    </div>
 	    <div class="modal-body row">
-	      <div id="batch-div" class="input-div">
-	        <input id="batch-info" type="text" placeholder="请输入标签" value=""/><br>
-	        <input id="need-split" type="checkbox" value="1" checked="checked">需要数据拆分 (run: Split)
-	        <p>输入数据批次可以更好享受数据查询和统计等服务</p>
-	        <input id="tag-info" type="hidden" value="1"/>
+	      <div class="step-item">
+		    <div class="step-one active">1</div><hr class="active">
+		    <div class="step-two">2</div><hr>
+		    <div class="step-three">3</div>
 	      </div>
-	      <div id="upload-content" class="upload-content upload-step-one">
+	      <div class="step-one-content">
+	        <input id="batch-info" type="text" placeholder="请输入标签" value=""/><br>
+	        <p><span>为每次上传数据按输入加入标签，提升后续报告查询、数据管理、分类汇总提供快捷服务。<span></p>
+	        <p><span>示例：外科5月；ICU-9床；急诊发热<span></p>
+	      </div>
+	      <div class="step-two-content hide">
+		      <input id="need-split" type="checkbox" value="1" checked="checked">需要数据拆分 (run: Split)
+		      <input id="tag-info" type="hidden" value="1"/>
+	      </div>
+	      <div id="upload-content" class="upload-content upload-step-one hide">
 	        <div id="upload_container" class="wholeheight">
               <div class="box-header">
                 <div class="plupload_header_content">

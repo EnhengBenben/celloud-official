@@ -71,7 +71,9 @@ public class TaskServiceImpl implements TaskService {
         Task task = new Task();
         task.setTaskId(taskId);
         task.setPeriod(TaskPeriod.RUNNING);
-        task.setStartDate(new Date());
+        Date d = new Date();
+        task.setStartDate(d);
+        task.setUpdateDate(d);
         return taskMapper.updateByPrimaryKeySelective(task);
     }
 
@@ -82,6 +84,7 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskMapper.findTaskByProData(projectId, dataKey);
         Date endDate = new Date();
         task.setEndDate(endDate);
+        task.setUpdateDate(endDate);
         task.setPeriod(TaskPeriod.DONE);
         taskMapper.updateByPrimaryKeySelective(task);
         // 修改数据报告运行状态
@@ -131,10 +134,10 @@ public class TaskServiceImpl implements TaskService {
         return null;
     }
 
-	@Override
-	public Integer deleteTask(Integer projectId) {
-		return taskMapper.deleteTask(projectId, DataState.DEELTED);
-	}
+    @Override
+    public Integer deleteTask(Integer projectId) {
+        return taskMapper.deleteTask(projectId, DataState.DEELTED);
+    }
 
     @Override
     public PageList<Task> findTasksByUser(Page page, Integer userId) {
@@ -144,11 +147,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public PageList<Task> findTasksByUserCondition(Page page,
-            Integer userId, String condition, Integer sort, String sortDate,
-            String sortPeriod) {
+    public PageList<Task> findTasksByUserCondition(Page page, Integer userId,
+            String condition, Integer sort, String sortDate, String sortBatch,
+            String sortName, String sortPeriod) {
         List<Task> list = taskMapper.findTasksByUserCondition(page, userId,
-                condition, sort, sortDate, sortPeriod, DataState.ACTIVE);
+                condition, sort, sortDate, sortBatch, sortName, sortPeriod,
+                DataState.ACTIVE);
         return new PageList<>(page, list);
     }
 
@@ -159,7 +163,9 @@ public class TaskServiceImpl implements TaskService {
         Integer result = 0;
         if (task1 == null) {
             task.setState(DataState.ACTIVE);
-            task.setCreateDate(new Date());
+            Date d = new Date();
+            task.setCreateDate(d);
+            task.setUpdateDate(d);
             result = taskMapper.insert(task);
         } else {
             if (isUpdate) {

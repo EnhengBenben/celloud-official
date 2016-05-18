@@ -113,7 +113,8 @@ public interface TaskService {
      * @return
      */
     public PageList<Task> findTasksByUserCondition(Page page, Integer userId,
-            String condition, Integer sort, String sortDate, String sortPeriod);
+            String condition, Integer sort, String sortDate, String sortBatch,
+            String sortName, String sortPeriod);
 
     /**
      * 新增或修改上传任务数据

@@ -169,7 +169,12 @@ public class TaskAction {
 
         if (appId == 113) {
             String batch = "";
+            String pubName = "";
             for (DataFile d_tmp : dataList) {
+                String filename = d_tmp.getFileName();
+                if (filename.endsWith(".txt") || filename.endsWith(".lis")) {
+                    pubName = filename.substring(0, filename.lastIndexOf("."));
+                }
                 batch = d_tmp.getBatch();
             }
             String inPath = reportPath + "result/split/";
@@ -199,7 +204,7 @@ public class TaskAction {
                     if (state) {
                         data.setFileId(dataId);
                         data.setDataKey(new_dataKey);
-                        data.setAnotherName("split:" + dataKey);
+                        data.setAnotherName(pubName);
                         data.setSize(size);
                         data.setPath(filePath);
                         data.setFileFormat(FileFormat.FQ);
