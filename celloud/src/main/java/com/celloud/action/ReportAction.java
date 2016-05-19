@@ -161,7 +161,7 @@ public class ReportAction {
     private ModelAndView getModelAndView(String path, Integer projectId) {
         ModelAndView mv = new ModelAndView(path);
         mv.addObject("toolsPath", PropertiesUtil.toolsOutPath);
-        mv.addObject("uploadPath", "upload/");
+        mv.addObject("uploadPath", "/upload/");
         Project project = projectService.selectByPrimaryKey(projectId);
         mv.addObject("project", project);
         return mv;
