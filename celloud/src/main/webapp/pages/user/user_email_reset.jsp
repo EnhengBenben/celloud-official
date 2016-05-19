@@ -8,7 +8,7 @@
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link rel="bookmark" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/login.css" media="all" />
-<title>CelLoud 用户重置密码</title>
+<title>CelLoud 用户重置邮箱</title>
 </head>
 <body onselectstart="return false;">
     <!--#S bgContainer-->
@@ -125,7 +125,7 @@
                 }else{
 	              $.get("<%=request.getContextPath()%>/user/email/sendNewEmail",$("#resetEmailForm").serialize(),function(flag){
 	                if(flag == 1){
-	                  $(".error").html("发送邮件失败");
+	                  $(".error").html("发送邮件失败，请重新申请链接。");
 	                }else{
 	                  $(".error").html("发送邮件成功，请到新邮箱激活链接，完成邮箱修改操作。");
 	                }

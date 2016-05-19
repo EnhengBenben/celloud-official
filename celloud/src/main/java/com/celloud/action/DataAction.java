@@ -192,7 +192,7 @@ public class DataAction {
      * @param condition
      *            检索条件
      * @param sort
-     *            排序字段 0:create_date 1:file_name
+     *            排序字段 0:create_date 1:批次 2:file_name
      * @param sortType
      *            排序类型
      * @return
@@ -202,8 +202,9 @@ public class DataAction {
     public ModelAndView bsiDataList(@RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size, String condition,
             @RequestParam(defaultValue = "0") int sort,
-            @RequestParam(defaultValue = "desc") String sortDateType,
-            @RequestParam(defaultValue = "asc") String sortNameType) {
+            @RequestParam(defaultValue = "desc") String sortDate,
+            @RequestParam(defaultValue = "asc") String sortBatch,
+            @RequestParam(defaultValue = "asc") String sortName) {
         Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
         Matcher m = p.matcher(condition);
         StringBuffer con_sb = new StringBuffer();
@@ -216,7 +217,7 @@ public class DataAction {
         Page pager = new Page(page, size);
         PageList<DataFile> dataList = dataService.dataLists(pager,
                 ConstantsData.getLoginUserId(), con_sb.toString(), sort,
-                sortDateType, sortNameType);
+                sortDate, sortBatch, sortName);
         mv.addObject("pageList", dataList);
         logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
         return mv;
@@ -500,17 +501,25 @@ public class DataAction {
                     String dataKey = entry.getKey();
                     String dataListFile = entry.getValue();
                     int runningNum = taskService.findRunningNumByAppId(appId);
-                    Task task = new Task();
-                    task.setProjectId(proId);
-                    task.setUserId(userId);
-                    task.setAppId(appId);
-                    task.setDataKey(dataKey);
                     Map<String, String> map = CommandKey.getMap(dataListFile,
                             appPath, proId);
                     StrSubstitutor sub = new StrSubstitutor(map);
                     String command = sub.replace(app.getCommand());
-                    task.setCommand(command);
-                    taskService.create(task);
+                    Task task = taskService.findTaskByDataKeyAndApp(dataKey,
+                            appId);
+                    if (task == null) {
+                        task = new Task();
+                        task.setProjectId(proId);
+                        task.setUserId(userId);
+                        task.setAppId(appId);
+                        task.setDataKey(dataKey);
+                        task.setCommand(command);
+                        taskService.create(task);
+                    } else {
+                        task.setProjectId(proId);
+                        task.setCommand(command);
+                        taskService.updateTask(task);
+                    }
                     Integer taskId = task.getTaskId();
                     if (runningNum < app.getMaxTask()
                             || app.getMaxTask() == 0) {
@@ -560,7 +569,7 @@ public class DataAction {
      * @param condition
      *            检索条件
      * @param sort
-     *            排序字段 0:create_date 1:file_name
+     *            排序字段 0:sortDate 1:sortBatch 2:sortName 3:sortPeriod
      * @param sortType
      *            排序类型
      * @return
@@ -571,6 +580,8 @@ public class DataAction {
             @RequestParam(defaultValue = "20") int size, String condition,
             @RequestParam(defaultValue = "0") int sort,
             @RequestParam(defaultValue = "desc") String sortDate,
+            @RequestParam(defaultValue = "asc") String sortBatch,
+            @RequestParam(defaultValue = "asc") String sortName,
             @RequestParam(defaultValue = "asc") String sortPeriod) {
         Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
         Matcher m = p.matcher(condition);
@@ -584,7 +595,7 @@ public class DataAction {
         Page pager = new Page(page, size);
         PageList<Task> pageList = taskService.findTasksByUserCondition(pager,
                 ConstantsData.getLoginUserId(), condition, sort, sortDate,
-                sortPeriod);
+                sortBatch, sortName, sortPeriod);
         mv.addObject("pageList", pageList);
         logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
         return mv;

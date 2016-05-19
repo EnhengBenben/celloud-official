@@ -548,4 +548,14 @@ public interface ReportService {
      */
     public TaskQueue getTaskQueue(Integer projectId);
 
+	/**
+	 * 根据projectId检索项目报告
+	 * 
+	 * @param projectId
+	 * @return
+	 * @author lin
+	 * @date 2016年5月16日上午11:29:35
+	 */
+	public Report getReportByProjectId(Integer projectId);
+
 }

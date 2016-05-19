@@ -79,6 +79,16 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
+    public PageList<DataFile> dataLists(Page page, Integer userId,
+            String condition, int sort, String sortDate, String sortBatch,
+            String sortName) {
+        List<DataFile> lists = dataFileMapper.findDataListsSortMore(page,
+                userId, condition, sort, sortDate, sortBatch, sortName,
+                DataState.ACTIVE, ReportType.DATA, ReportPeriod.COMPLETE);
+        return new PageList<>(page, lists);
+    }
+
+    @Override
     public Integer getFormatByIds(String dataIds) {
         Map<String, Object> map = dataFileMapper.findFormatByIds(dataIds);
         Integer result = null;
