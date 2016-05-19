@@ -34,10 +34,10 @@
           </td>
 	      <td>
 	        <c:if test="${task.period==0 }">等待运行</c:if>
-	        <c:if test="${task.period==1 }">正在运行</c:if>
+	        <c:if test="${task.period==1 }"><a href="javascript:void(0)" data-toggle="modal" data-target="#running-modal">正在运行</a></c:if>
 	        <c:if test="${task.period==2 }">完成</c:if>
 	        <c:if test="${task.period==3 }">数据上传中</c:if>
-	        <c:if test="${empty task.period }"><span class="wrong">运行异常</span></c:if>
+	        <c:if test="${empty task.period }"><a href="javascript:void(0)" onclick="$.report.period.error('${task.fileName }')" class="wrong">运行异常</a></c:if>
 	      </td>
 	      <td><fmt:formatDate type="both" value="${task.createDate }"/></td>
 	      <td>

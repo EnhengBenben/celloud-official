@@ -16,6 +16,7 @@
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/css/upload.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/bsi_main.css" rel="stylesheet" type="text/css" />
 </head>
@@ -49,7 +50,10 @@
           <div class="common-menu-btn pull-left">
             <a class="item-btn active" id="to-report-a" href="javascript:void(0)"><i class="celicon my-report-icon"></i><br>报告</a>
             <a class="item-btn" id="to-data-a" href="javascript:void(0)"><i class="celicon my-data-icon"></i><br>数据</a>
-            <a class="item-btn upload-btn" id="to-upload-a" href="javascript:void(0)"><span><i class="celicon my-upload-icon"></i><br>上传</span></a>
+            <a class="item-btn upload-btn" id="to-upload-a" href="javascript:void(0)">
+              <i class="celicon my-upload-icon"></i><br>上传
+              <canvas id="upload-progress" class="upload-progress" width="64" height="64"></canvas>
+            </a>
           </div>
           <hr>
           <div class="common-menu-search pull-right">
@@ -88,7 +92,7 @@
 		    <div class="upload-container">
               <div id="plupload-content" class="box-body plupload-content">
                 <ul id="upload-filelist" class="plupload-filelist"></ul>
-                <div class="upload-text">拖拽文件到此或者点击选择文件上传</div>
+                <div class="upload-text"><i class="celicon grey-upload-icon"></i>拖拽文件到此或者点击选择文件上传</div>
               </div>
             </div>
             <p><span><input id="need-split" type="checkbox" value="1" checked="checked">需要数据拆分 (run: Split)</span></p>
@@ -120,6 +124,39 @@
 	  </div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
+  <div id="running-modal" class="modal running-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+          <h4 class="modal-title">数据分析中</h4>
+        </div>
+        <div class="modal-body row">
+          <img alt="" src="<%=request.getContextPath()%>/images/icon/in-analysis.gif">
+          <h4>报告生成中</h4>
+          <div>请<span class="highlight-text">稍后</span>刷新查看</div>
+          <a class="btn" href="javascript:void(0)" data-dismiss="modal" aria-label="Close">OK,再等等</a>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  <div id="running-error-modal" class="modal running-error-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+          <h4 class="modal-title">异常终止</h4>
+        </div>
+        <div class="modal-body row">
+          <i class="celicon run-error-icon"></i>
+          <h4>我们抱歉的通知，数据： <span id="run-error-data" class="highlight-text"></span></h4>
+          <h4>上传（分析）过程中出错</h4>
+          <div>请重传（联系service@celloud.cn获取帮助）</div>
+          <a class="btn" href="javascript:void(0)" data-dismiss="modal" aria-label="Close">知道了</a>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
@@ -128,6 +165,7 @@
 <script src="//cdn.bootcss.com/swfobject/2.2/swfobject.min.js"></script>
 <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
 <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
+<script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/utils.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/js/bsi_main.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath() %>/js/bsi_upload.js"></script>
