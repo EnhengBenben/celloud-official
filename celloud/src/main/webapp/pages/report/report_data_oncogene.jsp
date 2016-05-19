@@ -23,7 +23,7 @@
 	<!--位点突变-->
 	<div class="m-box">
 		<h2>
-			<i class="i-edit"></i>一、 已知突变位点（依据已发表文献，该突变位点有明确临床意义）
+			<i class="i-edit"></i>一、突变点位
 		</h2>
 	    <div class="m-boxCon result">
 	    	<div id="knowResult">
@@ -45,7 +45,7 @@
 	</div>
 	<div class="m-box">
 		<h2>
-			<i class="i-edit"></i>二、 未知突变位点（该突变位点目前没有已发表文献支持，无明确临床意义）
+			<i class="i-edit"></i>二、未突变点位
 		</h2>
 	    <div class="m-boxCon result">
 	    	<c:if test="${oncogene.wz2!=null && oncogene.wz2!='' }">
