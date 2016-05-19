@@ -11,6 +11,8 @@ $(function () {
     }
     
     $("#upload-modal").modal("show");
+    if(waveLoading.getProgress()>=100)
+      waveLoading.resetProgress();
   });
   
   $("#to-report-a").on("click",function(){
@@ -160,6 +162,12 @@ $.report.detail = {
       $.get("report/getBSIAnalyReport",{"dataKey":dataKey,"projectId":projectId,"appId":appId},function(response){
         $("#myTabContent").html(response);
       });
+    }
+}
+$.report.period = {
+    error: function(dataName){
+      $("#run-error-data").html(dataName);
+      $("#running-error-modal").modal("show");
     }
 }
 

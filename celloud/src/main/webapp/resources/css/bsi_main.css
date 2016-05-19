@@ -124,8 +124,17 @@ a, a:link, a:hover, a:active, a:visited {
 .my-upload-icon{
     background-position: -45px -58px;
 }
+.grey-upload-icon{
+    background-position: -303px -58px;
+    height: 20px;
+}
 .my-data-icon{
     background-position: -92px -58px;
+}
+.run-error-icon{
+	height: 45px;
+	width: 50px;
+	background-position: 0px -469px;
 }
 .common-menu-btn .item-btn:hover .my-report-icon,
 .common-menu-btn .active .my-report-icon{
@@ -231,6 +240,22 @@ a, a:link, a:hover, a:active, a:visited {
     background-color: rgb(44,62,80);
     color: #fff;
     
+}
+.common-menu-btn .upload-btn{
+	position: relative;
+	overflow: hidden;
+}
+.common-menu-btn .upload-btn .upload-progress{
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    text-align: center;
+    display: block;
+}
+.common-menu-btn .item-btn:hover span{
+	color: #fff;
 }
 .item-btn .celicon{
     margin-top: 15px;
@@ -458,26 +483,25 @@ a, a:link, a:hover, a:active, a:visited {
     font-size: 12px;
 }
 /*-----------------------*/
-.upload-modal{
+.modal{
 	margin-top: 130px;
 }
-.upload-modal .modal-dialog{
+.modal .modal-dialog{
     margin: 60px auto;
 }
-.upload-modal .modal-content{
-	height: 348px;
+.modal .modal-content{
 	width: 500px;
     border: none;
 	background-color: #f8f8f8;
 }
-.upload-modal .modal-content .modal-header{
+.modal .modal-content .modal-header{
 	height: 40px;
 	background-color: #2c3e5c;
     border-radius: 5px 5px 0px 0px;
     color: #dcdcdc;
-    padding: 10px 15px;
+    padding: 15px 15px;
 }
-.upload-modal .modal-content .modal-header h4{
+.modal .modal-content .modal-header h4{
     line-height: 0.5;
     font-size: 14px;
 }
@@ -486,6 +510,18 @@ a, a:link, a:hover, a:active, a:visited {
     width:20px;
     height: 20px;
     color: #dcdcdc;
+    opacity: 1;
+}
+.modal .btn{
+    width: 100px;
+    height: 30px;
+    background-color: rgb(29,210,175);
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+}
+.upload-modal .modal-content{
+	height: 348px;
 }
 .upload-modal .modal-body{
     text-align: center;
@@ -548,14 +584,6 @@ a, a:link, a:hover, a:active, a:visited {
     -o-transform:scale(0.85);
     display: block;
     margin: -3px -50px 0px -37px;
-}
-.upload-modal .btn{
-	width: 100px;
-	height: 30px;
-	background-color: rgb(29,210,175);
-	color: #fff;
-	text-align: center;
-	vertical-align: middle;
 }
 .upload-modal .step-one-content .btn{
 	margin-top: 60px;
@@ -646,6 +674,36 @@ a, a:link, a:hover, a:active, a:visited {
 }
 .step-three-content .btn{
     margin-top: 26px;
+}
+
+.running-modal .modal-body,
+.running-error-modal .modal-body{
+	padding: 30px 0px;
+	margin: 0px;
+	text-align: center;
+}
+.running-modal .modal-body img{
+	margin-bottom: 15px;
+	height: 54px;
+}
+.running-modal .modal-body h4,
+.running-error-modal .modal-body h4{
+	color: #323232;
+	font-size: 14px;
+	padding: 5px 0px;
+}
+.running-modal .modal-body div,
+.running-error-modal .modal-body div{
+	font-size: 12px;
+	color: #969696;
+	padding: 5px 0px 20px 0px;
+}
+.running-modal .modal-body .highlight-text,
+.running-error-modal .modal-body .highlight-text{
+	color: #2c3e50
+}
+.running-error-modal .modal-content .modal-header{
+	background-color: #e60012;
 }
 .nav-tabs{
 	border: none;

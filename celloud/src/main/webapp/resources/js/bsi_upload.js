@@ -48,7 +48,8 @@ var fileUpload=(function(fileUpload){
     uploader.bind("UploadProgress", function(uploader, file) {
       $("#uploading-" + file.id +" .plupload-file-status").html(file.percent+"%");
       $("#uploading-" + file.id + " .plupload-file-surplus").html(utils.formatDate((file.size-file.loaded)/uploader.total.bytesPerSec));
-      handleStatus(file);
+      waveLoading.setProgress(uploader.total.percent);
+      handleStatus(uploader.total.percent);
     });
     function getSize(fileSize){
       var unit = "b";
@@ -173,6 +174,14 @@ var fileUpload=(function(fileUpload){
       $("#two-to-three").addClass("active");
       $(".step-three").addClass("active");
       $("#tags-review").html($("#batch-info").val());
+      waveLoading.init({
+          target: document.querySelector('#upload-progress'),
+          color: 'rgba(40, 230, 200, 0.6)',
+          showText: false
+      });
+      waveLoading.draw();
+      waveLoading.resetProgress(0);
+      
     });
   });
 
