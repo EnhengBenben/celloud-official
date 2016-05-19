@@ -14,4 +14,8 @@ public class TaskPeriod {
     public static final int RUNNING = 1;
     /** 运行完成 */
     public static final int DONE = 2;
+    /** 正在上传 */
+    public static final int UPLOADING = 3;
+    /** 异常中止 */
+    public static final int ERROR = 4;
 }

@@ -86,6 +86,16 @@ public interface UserService {
      * @return
      */
     public Integer updateUserInfo(User user);
+    
+    /**
+     * 修改用户邮箱
+     * 
+     * @param user
+     * @return
+     * @author lin
+     * @date 2016年5月17日下午3:25:03
+     */
+    public Integer updateUserEmail(User user);
 
     /**
      * 校验邮箱是否存在(排除userId本身的email，如userId不存在，则默认为0，表示校验email在全局范围内是否已存在)

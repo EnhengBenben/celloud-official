@@ -164,6 +164,30 @@ public interface DataFileMapper {
             @Param("period") Integer period);
 
     /**
+     * 按条件检索数据列表
+     * 
+     * @param page
+     * @param userId
+     * @param condition
+     * @param sort
+     * @param sortDateType
+     * @param sortNameType
+     * @param state
+     * @param reportType
+     * @param period
+     * @return
+     */
+    List<DataFile> findDataListsSortMore(Page page,
+            @Param("userId") Integer userId,
+            @Param("condition") String condition, @Param("sort") Integer sort,
+            @Param("sortDate") String sortDate,
+            @Param("sortBatch") String sortBatch,
+            @Param("sortName") String sortName,
+            @Param("state") Integer state,
+            @Param("reportType") Integer reportType,
+            @Param("period") Integer period);
+
+    /**
      * 根据数据id获取数据文件类型及各类型数量
      * 
      * @param dataIds

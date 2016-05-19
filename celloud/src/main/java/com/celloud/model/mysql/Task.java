@@ -21,6 +21,8 @@ public class Task {
 
     private Date endDate;
 
+    private Date updateDate;
+
     private Integer projectId;
 
     private Date deleteDate;
@@ -31,7 +33,9 @@ public class Task {
 
     // 显示的字段
     private String fileName;
+    private String anotherName;
     private String fileId;
+    private String batch;
 
     public Integer getTaskId() {
         return taskId;
@@ -151,5 +155,29 @@ public class Task {
 
     public void setFileId(String fileId) {
         this.fileId = fileId;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public String getBatch() {
+        return batch;
+    }
+
+    public void setBatch(String batch) {
+        this.batch = batch;
+    }
+
+    public String getAnotherName() {
+        return anotherName;
+    }
+
+    public void setAnotherName(String anotherName) {
+        this.anotherName = anotherName;
     }
 }

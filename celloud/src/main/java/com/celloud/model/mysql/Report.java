@@ -28,6 +28,8 @@ public class Report {
     private String printContext;
 
     private String context;
+    
+    private String printSimple;
 
     public Integer getReportId() {
         return reportId;
@@ -132,5 +134,14 @@ public class Report {
     public void setContext(String context) {
         this.context = context == null ? null : context.trim();
     }
+
+	public String getPrintSimple() {
+		return printSimple;
+	}
+
+	public void setPrintSimple(String printSimple) {
+		this.printSimple = printSimple;
+	}
+    
 
 }

@@ -1095,9 +1095,12 @@ public class ReportAction {
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
         // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
-        if (StringUtils.isNotEmpty(report.getPrintContext())) {
-            return mv.addObject("printContext", report.getPrintContext());
-        }
+		if (flag == 0 && StringUtils.isNotEmpty(report.getPrintContext())) {// 详细报告
+			return mv.addObject("printContext", report.getPrintContext());
+		}
+		if (flag == 1 && StringUtils.isNotEmpty(report.getPrintSimple())) {// 简要报告
+			return mv.addObject("printContext", report.getPrintSimple());
+		}
         HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
         mv.addObject("hbv", hbv).addObject("flag", flag).addObject("report", report);
         return mv;
