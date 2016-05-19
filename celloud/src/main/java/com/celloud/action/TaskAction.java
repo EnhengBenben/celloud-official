@@ -169,46 +169,53 @@ public class TaskAction {
 
         if (appId == 113) {
             String batch = "";
+            String pubName = "";
             for (DataFile d_tmp : dataList) {
+                String filename = d_tmp.getFileName();
+                if (filename.endsWith(".txt") || filename.endsWith(".lis")) {
+                    pubName = filename.substring(0, filename.lastIndexOf("."));
+                }
                 batch = d_tmp.getBatch();
             }
             String inPath = reportPath + "result/split/";
             HashSet<String> resultFiles = FileTools.getFiles(inPath);
-            Iterator<String> rFile = resultFiles.iterator();
-            Long size = null;
-            Set<String> secs = secService.findRolesByUserId(userId);
-            while (rFile.hasNext()) {
-                String fstr = rFile.next();
-                if (!fstr.equals("...tar.gz") && !fstr.equals("..tar.gz")) {
-                    String extName = fstr
-                            .substring(fstr.lastIndexOf(".tar.gz"));
-                    String resourcePath = inPath + fstr;
-                    size = new File(resourcePath).length();
-                    DataFile data = new DataFile();
-                    data.setUserId(userId);
-                    data.setFileName(fstr);
-                    data.setState(DataState.DEELTED);
-                    int dataId = dataService.addDataInfo(data);
-                    String new_dataKey = DataUtil.getNewDataKey(dataId);
-                    String filePath = PropertiesUtil.bigFilePath + userId
-                            + File.separatorChar
-                            + DateUtil.getDateToString("yyyyMMdd")
-                            + File.separatorChar + new_dataKey + extName;
-                    boolean state = FileTools.nioTransferCopy(
-                            new File(resourcePath), new File(filePath));
-                    if (state) {
-                        data.setFileId(dataId);
-                        data.setDataKey(new_dataKey);
-                        data.setAnotherName("split:" + dataKey);
-                        data.setSize(size);
-                        data.setPath(filePath);
-                        data.setFileFormat(FileFormat.FQ);
-                        data.setState(DataState.ACTIVE);
-                        data.setBatch(batch);
-                        data.setMd5(MD5Util.getFileMD5(filePath));
-                        dataService.updateDataInfoByFileId(data);
-                        if (secs.contains("bsier")) {
-                            toRunSplitData(userId, data);
+            if (resultFiles != null) {
+                Iterator<String> rFile = resultFiles.iterator();
+                Long size = null;
+                Set<String> secs = secService.findRolesByUserId(userId);
+                while (rFile.hasNext()) {
+                    String fstr = rFile.next();
+                    if (!fstr.equals("...tar.gz") && !fstr.equals("..tar.gz")) {
+                        String extName = fstr
+                                .substring(fstr.lastIndexOf(".tar.gz"));
+                        String resourcePath = inPath + fstr;
+                        size = new File(resourcePath).length();
+                        DataFile data = new DataFile();
+                        data.setUserId(userId);
+                        data.setFileName(fstr);
+                        data.setState(DataState.DEELTED);
+                        int dataId = dataService.addDataInfo(data);
+                        String new_dataKey = DataUtil.getNewDataKey(dataId);
+                        String filePath = PropertiesUtil.bigFilePath + userId
+                                + File.separatorChar
+                                + DateUtil.getDateToString("yyyyMMdd")
+                                + File.separatorChar + new_dataKey + extName;
+                        boolean state = FileTools.nioTransferCopy(
+                                new File(resourcePath), new File(filePath));
+                        if (state) {
+                            data.setFileId(dataId);
+                            data.setDataKey(new_dataKey);
+                            data.setAnotherName(pubName);
+                            data.setSize(size);
+                            data.setPath(filePath);
+                            data.setFileFormat(FileFormat.FQ);
+                            data.setState(DataState.ACTIVE);
+                            data.setBatch(batch);
+                            data.setMd5(MD5Util.getFileMD5(filePath));
+                            dataService.updateDataInfoByFileId(data);
+                            if (secs.contains("bsier")) {
+                                toRunSplitData(userId, data);
+                            }
                         }
                     }
                 }
@@ -343,7 +350,7 @@ public class TaskAction {
      * 运行队列里的命令
      */
     @ActionLog(value = "运行结束，释放端口，执行正在排队的命令", button = "运行结束")
-    private void runQueue(String projectId) {
+    public void runQueue(String projectId) {
         logger.info("{}运行结束，释放端口", projectId);
         PortPool.setPort(projectId);
         while (true) {

@@ -49,6 +49,7 @@
                 <td>${user.cellphone }</td>
                 <td>
                     <c:if test="${user.role==0 }">普通用户</c:if>
+                    <c:if test="${user.role==1 }">大客户</c:if>
                 </td>
                 <td>
                    

@@ -3,7 +3,6 @@ package com.celloud.manager.model;
 import java.io.Serializable;
 import java.util.Date;
 
-
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -18,6 +17,8 @@ public class User implements Serializable {
     private String cellphone;
 
     private Date createDate;
+
+    private String icon;
 
     private Integer role;
 
@@ -156,4 +157,13 @@ public class User implements Serializable {
     public void setSign(String sign) {
         this.sign = sign == null ? null : sign.trim();
     }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
 }

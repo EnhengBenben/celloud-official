@@ -17,11 +17,11 @@
 <link rel="stylesheet" href="plugins/bootstrap/css/xenon-components.css">
 <link rel="stylesheet" href="plugins/bootstrap/css/xenon-skins.css">
 <link rel="stylesheet" href="plugins/bootstrap/js/datatables/dataTables.bootstrap.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/console.css">
 <script src="plugins/bootstrap/js/jquery-1.11.1.min.js"></script>
 <script src="plugins/jquery.alerts.js"></script>
-
 </head>
 <body class="page-body">
     <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
@@ -122,6 +122,18 @@
                             </c:if>
                         </ul>
                     </li>
+                    <li id="company-menu">
+                        <a href="javascript:company.toCompanyMain();">
+                            <i class="linecons-note"></i>
+                            <span class="title">公司管理</span>
+                        </a>
+                    </li>
+                    <li id="user-menu">
+                        <a href="javascript:user.toUserMain();">
+                            <i class="linecons-note"></i>
+                            <span class="title">用户管理</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="#">
                             <i class="linecons-mail"></i>
@@ -138,7 +150,7 @@
                 </ul>
             </div>
         </div>
-        <div class="main-content">
+        <div id="index-main-div" class="main-content">
         <!-- User Info, Notifications and Menu Bar -->
             <nav class="navbar user-info-navbar" role="navigation">
                 
@@ -227,7 +239,12 @@
     <script src="plugins/echarts-2.2.7/echarts-all.js"></script>
     <script src="plugins/echarts-2.2.7/theme.js"></script>
     <script src="plugins/jquery.media.js"></script>
-    
+    <!-- validate -->
+    <script type="text/javascript" src="${pageContext.request.contextPath }/resources/plugins/jQuery/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/validate.extend.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery.form.js"></script>
+    <!-- select2 -->
+    <script type="text/javascript" src="${pageContext.request.contextPath }/resources/plugins/select2/js/select2.full.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/app.js"></script>
 </body>

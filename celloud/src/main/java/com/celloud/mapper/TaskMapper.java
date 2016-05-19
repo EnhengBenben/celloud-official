@@ -37,6 +37,16 @@ public interface TaskMapper {
     int updateByPrimaryKeySelective(Task record);
 
     int updateByPrimaryKeyWithBLOBs(Task record);
+    
+	/**
+	 * 根据projectId删除任务
+	 * 
+	 * @param projectId
+	 * @return
+	 * @author lin
+	 * @date 2016年5月16日下午5:01:03
+	 */
+	public Integer deleteTask(@Param("projectId") Integer projectId, @Param("state") Integer state);
 
     int updateByPrimaryKey(Task record);
 
@@ -112,6 +122,35 @@ public interface TaskMapper {
             @Param("userId") Integer userId,
             @Param("condition") String condition, @Param("sort") Integer sort,
             @Param("sortDate") String sortDate,
+            @Param("sortBatch") String sortBatch,
+            @Param("sortName") String sortName,
             @Param("sortPeriod") String sortPeriod,
             @Param("state") Integer state);
+
+    /**
+     * 按照运行状态和参数查找任务
+     * 
+     * @param userId
+     * @param state
+     * @param period
+     * @param params
+     * @return
+     * @author leamo
+     * @date 2016年5月16日 下午3:27:39
+     */
+    Task findTaskByParamsAndPeriod(@Param("userId") Integer userId,
+            @Param("state") Integer state, @Param("period") Integer period,
+            @Param("params") String params);
+
+    /**
+     * 根据数据编号获取任务信息
+     * 
+     * @param state
+     * @param dataKey
+     * @return
+     * @author leamo
+     * @date 2016年5月16日 下午4:03:13
+     */
+    Task findTaskByDataKeyAndApp(@Param("state") Integer state,
+            @Param("dataKey") String dataKey, @Param("appId") Integer appId);
 }

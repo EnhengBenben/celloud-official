@@ -7,7 +7,7 @@ var fileUpload=(function(fileUpload){
   $(function() {
     var uploader = new plupload.Uploader({
       runtimes : 'html5,flash,silverlight,html4',
-      browse_button : 'addfile_browse',
+      browse_button : ['plupload-content','upload-more'],
       url : "../upload/uploadManyFile",
       // Maximum file size
       chunk_size : '1mb',
@@ -46,9 +46,11 @@ var fileUpload=(function(fileUpload){
       }
     });
     uploader.bind("UploadProgress", function(uploader, file) {
-      $("#" + file.id +" .plupload_file_status").html(file.percent+"%");
-      $("#" + file.id + " .plupload_file_surplus").html(utils.formatDate((file.size-file.loaded)/uploader.total.bytesPerSec));
-      handleStatus(file);
+      $("#uploading-" + file.id +" .plupload-file-status").html(file.percent+"%");
+      $("#uploading-" + file.id + " .plupload-file-surplus").html(utils.formatDate((file.size-file.loaded)/uploader.total.bytesPerSec));
+      waveLoading.setProgress(uploader.total.percent);
+      uploadProgress = uploader.total.percent
+      handleStatus(uploader.total.percent);
     });
     function getSize(fileSize){
       var unit = "b";
@@ -89,9 +91,9 @@ var fileUpload=(function(fileUpload){
 
       if (file.status == plupload.QUEUED || file.status == plupload.UPLOADING) {
         actionClass = 'plupload_delete';
-        iconClass = 'fa fa-times';
+        iconClass = 'fa fa-times-circle-o';
       }
-      var icon = $('#' + file.id).attr('class', actionClass).find('i').attr('class', iconClass);
+      var icon = $('#uploading-' + file.id).attr('class', actionClass).find('i').attr('class', iconClass);
       if (file.hint) {
         icon.attr('title', file.hint);  
       }
@@ -99,8 +101,7 @@ var fileUpload=(function(fileUpload){
     uploader.bind("FilesAdded", function(uploader, files) {
       $.get("upload/checkAdminSessionTimeOut",function(response){
         if(response){//session超时则执行下两步
-          $("#batch-div").addClass("hide");
-          $("#upload-content").removeClass("upload-step-one");
+          
         }else{
           //销毁uploader，间接取消选择文件弹窗
           uploader.destroy();
@@ -108,20 +109,32 @@ var fileUpload=(function(fileUpload){
       });
       $.each(files, function(index, item) {
         var $fileDom = $('<li id="' + item.id + '">');
-        $fileDom.append($('<div class="plupload_file_name"><span>' + item.name + '</span></div>'));
-        $fileDom.append($('<div class="plupload_file_status">' + item.percent + '%</div>'));
-        $fileDom.append($('<div class="plupload_file_size">'+getSize(item.size)+'</div>'));
-        $fileDom.append($('<div class="plupload_file_surplus">-</div>'));
-        $fileDom.append($('<div class="plupload_file_action"><a href="#" style="display: block;"><i class="fa fa-times" aria-hidden="true"></i></a></div>'));
-        $fileDom.append($('<div class="plupload_clearer"></div>&nbsp;</li>'));
-        $("#upload_filelist").append($fileDom);
+        $fileDom.append($('<div class="plupload-file-name"><span>' + item.name + '</span></div>'));
+        $fileDom.append($('<div class="plupload-file-size">'+getSize(item.size)+'</div>'));
+        $fileDom.append($('<div class="plupload-file-action"><a href="#" style="display: block;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></div>'));
+        $fileDom.append($('<div class="plupload-clearer"></div>&nbsp;</li>'));
+        $("#upload-filelist").append($fileDom);
+        var $fileDom_uploading = $('<li id="uploading-' + item.id + '">');
+        $fileDom_uploading.append($('<div class="plupload-file-name"><span title="' + item.name + '">' + item.name + '</span></div>'));
+        $fileDom_uploading.append($('<div class="plupload-file-size">'+getSize(item.size)+'</div>'));
+        $fileDom_uploading.append($('<div class="plupload-file-surplus">_</div>'));
+        $fileDom_uploading.append($('<div class="plupload-file-status">_</div>'));
+        $fileDom_uploading.append($('<div class="plupload-file-action"><a href="#" style="display: block;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></div>'));
+        $fileDom_uploading.append($('<div class="plupload-clearer"></div>&nbsp;</li>'));
+        $("#uploading-filelist").append($fileDom_uploading);
         handleStatus(item);
         $('#' + item.id + '.plupload_delete a').click(function(e) {
           $('#' + item.id).remove();
           uploader.removeFile(item);
           e.preventDefault();
+          utils.stopBubble(e);
         });
-        uploader.start();
+        $('#uploading-' + item.id + '.plupload_delete a').click(function(e) {
+          $('#uploading-' + item.id).remove();
+          uploader.removeFile(item);
+          e.preventDefault();
+          utils.stopBubble(e);
+        });
       }); 
     });
     uploader.bind("FileUploaded", function(uploader, file, response) {
@@ -134,9 +147,14 @@ var fileUpload=(function(fileUpload){
       handleStatus(file);
     });
     uploader.bind("UploadComplete",function(uploader,files){
-      $("#batch-info").val("");
-      $("#batch-div").removeClass("hide");
-      $("#upload-content").addClass("upload-step-one");
+      $(".step-one-content").removeClass("hide");
+      $(".step-two-content").addClass("hide");
+      $(".step-three-content").addClass("hide");
+      $("#one-to-two").removeClass("active");
+      $("#two-to-three").removeClass("active");
+      $(".step-two").removeClass("active");
+      $(".step-three").removeClass("active");
+      $("#batch-info").val("")
       uploader.splice();
       $("#upload-modal").modal("hide");
     });
@@ -147,6 +165,24 @@ var fileUpload=(function(fileUpload){
        if(error.code=='-602'){
          alert("当前队列已存在文件【"+error.file.name+"】，请勿重复添加！");
        }
+    });
+    $("#begin-upload").on("click",function(){
+      $("#upload-filelist").html("");
+      uploader.start();
+      $(".step-three-content").removeClass("hide");
+      $(".step-one-content").addClass("hide");
+      $(".step-two-content").addClass("hide");
+      $("#two-to-three").addClass("active");
+      $(".step-three").addClass("active");
+      $("#tags-review").html($("#batch-info").val());
+      waveLoading.init({
+          target: document.querySelector('#upload-progress'),
+          color: 'rgba(40, 230, 200, 0.6)',
+          showText: false
+      });
+      waveLoading.draw();
+      waveLoading.setProgress(0);
+      
     });
   });
 
