@@ -24,7 +24,7 @@
   <tbody id="data-list-tbody">
     <c:if test="${pageList.datas.size()>0 }">
       <c:forEach var="task" items="${pageList.datas }">
-	    <tr>
+	    <tr id="report${task.dataKey}${task.projectId}${task.appId}">
 	      <td>${task.batch }</td>
 	      <td title="${task.fileName }" name="data-name-td" >
 	        <a href="javascript:<c:choose><c:when test="${task.period==2 }">$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId})</c:when><c:otherwise>void(0)</c:otherwise></c:choose>">
@@ -36,13 +36,13 @@
 	        <c:if test="${task.period==0 }">等待运行</c:if>
 	        <c:if test="${task.period==1 }"><a href="javascript:void(0)" data-toggle="modal" data-target="#running-modal">正在运行</a></c:if>
 	        <c:if test="${task.period==2 }">完成</c:if>
-	        <c:if test="${task.period==3 }">数据上传中</c:if>
+	        <c:if test="${task.period==3 }"><a href="javascript:void(0)" onclick="$.report.period.error('${task.fileName }')" class="wrong">数据上传中</a></c:if>
 	        <c:if test="${empty task.period }"><a href="javascript:void(0)" onclick="$.report.period.error('${task.fileName }')" class="wrong">运行异常</a></c:if>
 	      </td>
 	      <td><fmt:formatDate type="both" value="${task.createDate }"/></td>
 	      <td>
-            <a class="edit-icon" id="to-upload-a" href="javascript:<c:choose><c:when test="${task.period==2 }">$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId})</c:when><c:otherwise>void(0)</c:otherwise></c:choose>"><i class="celicon show-icon"></i></a>
-	        <a class="edit-icon" id="to-rerun-a" href="javascript:$.report.run(${task.fileId },118)"><i class="celicon rerun-icon"></i></a>
+            <a class="edit-icon" name="to-report-a" href="javascript:<c:choose><c:when test="${task.period==2 }">$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId})</c:when><c:otherwise>void(0)</c:otherwise></c:choose>"><i class="celicon show-icon"></i></a>
+	        <a class="edit-icon" href="javascript:$.report.run(${task.fileId },118)"><i class="celicon rerun-icon"></i></a>
 <%-- 	        <a class="edit-icon" id="to-rerun-a" href="javascript:$.report.run(${task.fileId },${task.appId })"><i class="celicon rerun-icon"></i></a> --%>
 	      </td>
 	    </tr>

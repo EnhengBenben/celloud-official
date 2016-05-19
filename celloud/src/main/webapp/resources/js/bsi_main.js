@@ -162,6 +162,12 @@ $.report.detail = {
       $.get("report/getBSIAnalyReport",{"dataKey":dataKey,"projectId":projectId,"appId":appId},function(response){
         $("#myTabContent").html(response);
       });
+    },
+    prev: function(dataKey,projectId,appId){
+      $("#report"+dataKey+projectId+appId).prev().find("a[name='to-report-a']").click();
+    },
+    next: function(dataKey,projectId,appId){
+      $("#report"+dataKey+projectId+appId).next().find("a[name='to-report-a']").click();
     }
 }
 $.report.period = {

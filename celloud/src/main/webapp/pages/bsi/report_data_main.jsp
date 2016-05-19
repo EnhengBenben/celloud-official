@@ -2,13 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="content-header">
-  <div class="header">
-    <h4>血流感染检测 </h4>
-  </div>
   <ol class="breadcrumb">
-    <li>CelLoud平台</li>
-    <li id="to-my-report">我的报告</li>
-    <li>数据报告</li>
+    <li>主页</li>
+    <li>应用</li>
+    <li>百菌探</li>
+    <li>报告</li>
+    <li>
+      <c:forEach items="${bsi.data}" var="data">
+          ${data.fileName}&nbsp;&nbsp;&nbsp;
+      </c:forEach>
+    </li>
   </ol>
 </div>
 <div class="content">
@@ -16,24 +19,22 @@
     <li role="presentation" class="active"><a href="javascript:void(0)" id="patient-tab">患者报告</a></li>
     <li role="presentation"><a href="javascript:void(0)" id="analy-tab">分析报告</a></li>
     <li class="nav-pub">
-      <ul>
-        <li class="nav-fname"> 文件名称:
-        <c:forEach items="${bsi.data}" var="data">
-            ${data.fileName}&nbsp;&nbsp;&nbsp;
-        </c:forEach>
-        </li>
-        <li class="nav-print">
-          <a class="print-btn" id="print-patient-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }&templateType=print_patient" target="_blank"><i class="celicon print-icon"></i>打印报告</a>
-          <a class="print-btn hide" id="print-analy-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }&templateType=print_analy" target="_blank"><i class="celicon print-icon"></i>打印报告</a>
-        </li>
-      </ul>
+      <div class="pull-right">
+<%--           <a class="prev-btn" href="javascript:$.report.detail.prev('${bsi.dataKey }',${bsi.projectId },${bsi.appId })"><i class="fa fa-chevron-circle-left"></i>上一份</a> --%>
+<%--           <a class="next-btn" href="javascript:$.report.detail.next('${bsi.dataKey }',${bsi.projectId },${bsi.appId })">下一份<i class="fa fa-chevron-circle-right"></i></a> --%>
+      </div>
     </li>
   </ul>
-  <div id="myTabContent" class="tab-content">
+  <div class="report-btn-group pull-right">
+    <a class="btn" id="print-patient-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }&templateType=print_patient" target="_blank"><i class="fa fa-print"></i>打印</a>
+    <a class="btn hide" id="print-analy-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }&templateType=print_analy" target="_blank"><i class="fa fa-print"></i>打印</a>
+  </div>
+  
+  <div id="myTabContent" class="tab-content pull-left">
     <div id="tab-temp" style="" class="tab-temp hide"></div>
     <div role="tabpanel" class="tab-pane active in tab-absolute" id="patient-report" aria-labelledby="patient-tab">
       <h4>检测结果：</h4>
-	  <table class="table">
+	  <table class="table table-main">
 	    <thead>
 		    <tr>
 		      <th colspan="5">
@@ -164,7 +165,7 @@
 	</div>
     <div role="tabpanel" class="tab-pane" id="analy-report" aria-labelledby="analy-tab">
 	  <h4>1. 检测结果：</h4>
-	  <table class="table">
+	  <table class="table table-main">
 	    <thead>
 	     <tr>
 	       <th colspan="5">
@@ -287,7 +288,7 @@
 	     </tr>
 	    </tbody>
 	  </table>
-	  <table id="test-seq-table" class="table seq-table">
+	  <table id="test-seq-table" class="table table-main seq-table">
 	    <thead>
 	      <tr>
 	        <th style="max-width: 119px;">菌名(属-种)</th>
@@ -693,7 +694,6 @@
 	  </div>
     </div>
   </div>
-</div>
 <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
 <script src="<%=request.getContextPath()%>/js/charts.js"></script>
 <script type="text/javascript">
