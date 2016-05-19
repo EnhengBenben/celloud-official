@@ -196,17 +196,12 @@
     
     <select id="getUserByPage" resultMap="BaseResultMap">
         select
-        u.user_id as userId, username, email, cellphone, create_date as createDate,
-        icon,
-        role,
-        remark, navigation,
-        truename, state, dept_id as deptId, login_uuid as loginUuid,
-        u.company_id as companyId, sign
-        from tb_user u, tb_user_company_relat ucr
+        <include refid="Base_Column_List" />
+        from tb_user
         where 
         state=#{state }
         <if test="companyId != 0">
-         and role = 0 and u.user_id = ucr.user_id and ucr.company_id = #{companyId }
+         and role = 0 and company_id = #{companyId }
         </if>
         <if test="companyId == 0">
          and role = 0 or role = 1
