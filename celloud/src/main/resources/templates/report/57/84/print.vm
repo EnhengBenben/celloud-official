@@ -1,0 +1,15 @@
+#parse("/default/${egfr.appId}/reference.vm")
+<div id="printMain">
+    #if(${printContext})
+        ${printContext}
+    #end
+    #if(!${printContext})
+        <div>
+            #parse("/57/${egfr.appId}/title.vm")
+            #parse("/default/${egfr.appId}/content.vm")
+            #parse("/default/${egfr.appId}/foot.vm")
+            </form>
+        </div>
+    #end
+</div>  
+#parse("/default/${egfr.appId}/js.vm")
