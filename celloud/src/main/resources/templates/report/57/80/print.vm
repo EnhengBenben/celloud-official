@@ -11,7 +11,7 @@
     <div style="display: none;" id="_appId">${hcv.appId}</div>
     <div style="display: none;" id="_fileId">${report.fileId}</div>
     <div>
-        #parse("/default/${hcv.appId}/title.vm")
+        #parse("/57/${hcv.appId}/title.vm")
         #parse("/default/${hcv.appId}/content.vm")
         #parse("/default/${hcv.appId}/foot.vm")
         </form>

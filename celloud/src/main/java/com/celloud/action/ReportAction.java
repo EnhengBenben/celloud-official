@@ -1116,8 +1116,8 @@ public class ReportAction {
     @ActionLog(value = "打印HCV数据报告", button = "打印数据报告")
     @RequestMapping("printHCV")
     public ModelAndView printHCV(Integer appId, String dataKey, Integer projectId) {
-        String path = ConstantsData.getLoginCompanyId() + File.separator + appId + "/print.vm";
-        if (!new File("templates/report/" + path).exists()) {
+        String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print.vm";
+        if (ReportAction.class.getResource("/templates/report/" + path) == null) {
             path = "default/" + appId + "/print.vm";
         }
         ModelAndView mv = new ModelAndView(path);
