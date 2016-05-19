@@ -1,17 +1,15 @@
 #parse("/default/${hcv.appId}/reference.vm")
 <div id="printMain">
-<form id="print-form">
     #if(${printContext})
-    ${printContext}
+        ${printContext}
     #end
     #if(!${printContext})
-    <div>
-        #parse("/default/${hcv.appId}/title.vm")
-        #parse("/default/${hcv.appId}/content.vm")
-        #parse("/default/${hcv.appId}/foot.vm")
-        </form>
-    </div>
+        <div>
+            #parse("/default/${hcv.appId}/title.vm")
+            #parse("/default/${hcv.appId}/content.vm")
+            #parse("/default/${hcv.appId}/foot.vm")
+            </form>
+        </div>
     #end
-</div>
-</div>
+</div>  
 #parse("/default/${hcv.appId}/js.vm")
