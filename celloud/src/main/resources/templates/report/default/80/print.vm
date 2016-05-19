@@ -1,18 +1,22 @@
+<link href="$link.getContextPath()/css/print_hbv.css" rel="stylesheet">
 <div id="printMain">
-    <input type="hidden" value="${hcv.projectId }" id="_projectId">
-    <div style="display: none;" id="_userId">${hcv.userId }</div>
-    <div style="display: none;" id="_appId">${hcv.appId }</div>
-    <div style="display: none;" id="_fileId">${report.fileId }</div>
+<form id="print-form">
+    #if(${printContext})
+    ${printContext}
+    #end
+    #if(!${printContext})
+    <input type="hidden" value="${hcv.projectId}" id="_projectId">
+    <div style="display: none;" id="_userId">${hcv.userId}</div>
+    <div style="display: none;" id="_appId">${hcv.appId}</div>
+    <div style="display: none;" id="_fileId">${report.fileId}</div>
     <div>
-        <a href="javascript:void(0)" onclick="preview(this)" class="button btn-info" name="change" style="float:right;margin-top:10px;margin-right:-100px;"><i class=""></i>打印</a>
-        <a href="javascript:void(0)" onclick="reset()" class="button btn-info" name="change" style="float:right;margin-top:45px;margin-right:-100px;"><i class=""></i>重置</a>
-        <a href="javascript:void(0)" onclick="savePage()" class="button btn-info" name="change" style="float:right;margin-top:80px;margin-right:-100px;"><i class=""></i>保存</a>
-        <h1>${hcv.companyName }${hcv.appName }
+        <h1>${hcv.companyName}${hcv.appName}
         </h1>
         <hr />
+        <form id="print-form">
         <div class="wrapper">
             <ul class="info mt5">
-                <li>姓名：<span><input type="text"></span></li>
+                <li>姓名：<span><input type="text" id="nnn" value="sss"></span></li>
                 <li>ID号：<span><input type="text"></span></li>
                 <li>样本编号：<span><input type="text"></span></li>
                 <li>样本种类：<span><input type="text"></span></li>
@@ -44,56 +48,57 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>${hcv.fileName }</td>
-                                <td>${hcv.subtype }</td>
-                                <td>${hcv.subjectName }</td>
-                                <td>${hcv.identity }</td>
-                                <td>${hcv.total }</td>
-                                <td>${hcv.evalue }</td>
-                                <td>${hcv.score }</td>
+                                <td>${hcv.fileName}</td>
+                                <td>${hcv.subtype}</td>
+                                <td>${hcv.subjectName}</td>
+                                <td>${hcv.identity}</td>
+                                <td>${hcv.total}</td>
+                                <td>${hcv.evalue}</td>
+                                <td>${hcv.score}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <br/>
                 <h2 class="mt10">原始序列：</h2>
-                <div style="word-break: break-all;">${hcv.seq }</div>
+                <div style="word-break: break-all;">${hcv.seq}</div>
                 <br/>
-                <c:if test="${hcv.original.size()>0}">
+                
+                #if(${hcv.original.size()}>0)
                     <h2 class="mt20">原始峰图：</h2>
                     <div id="_allDiv">
-                        <c:if test="${hcv.original.containsKey('1_all_png') }">
-                            <img src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['1_all_png'] }" style="width:100%">
+                        #if(${hcv.original.containsKey('1_all_png')})
+                            <img src="${uploadPath}${hcv.userId}/${hcv.appId}/${hcv.dataKey}/SVG/${hcv.original['1_all_png']}" style="width:100%">
                             <br/>
                             <br/>
-                        </c:if>
-                        <c:if test="${hcv.original.containsKey('2_all_png') }">
-                            <img src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['2_all_png'] }" style="width:100%">
+                        #end
+                        #if(${hcv.original.containsKey('2_all_png')})
+                            <img src="${uploadPath}${hcv.userId}/${hcv.appId}/${hcv.dataKey}/SVG/${hcv.original['2_all_png']}" style="width:100%">
                             <br/>
                             <br/>
-                        </c:if>
-                        <c:if test="${hcv.original.containsKey('3_all_png') }">
-                            <img src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['3_all_png'] }" style="width:100%">
+                        #end
+                        #if(${hcv.original.containsKey('3_all_png')})
+                            <img src="${uploadPath}${hcv.userId}/${hcv.appId}/${hcv.dataKey}/SVG/${hcv.original['3_all_png']}" style="width:100%">
                             <br/>
                             <br/>
-                        </c:if>
-                        <c:if test="${hcv.original.containsKey('4_all_png') }">
-                            <img src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['4_all_png'] }" style="width:100%">
+                        #end
+                        #if(${hcv.original.containsKey('4_all_png')})
+                            <img src="${uploadPath}${hcv.userId}/${hcv.appId}/${hcv.dataKey}/SVG/${hcv.original['4_all_png']}" style="width:100%">
                             <br/>
                             <br/>
-                        </c:if>
-                        <c:if test="${hcv.original.containsKey('5_all_png') }">
-                            <img src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['5_all_png'] }" style="width:100%">
+                        #end
+                        #if(${hcv.original.containsKey('5_all_png')})
+                            <img src="${uploadPath}${hcv.userId}/${hcv.appId}/${hcv.dataKey}/SVG/${hcv.original['5_all_png']}" style="width:100%">
                             <br/>
                             <br/>
-                        </c:if>
-                        <c:if test="${hcv.original.containsKey('6_all_png') }">
-                            <img src="${uploadPath}${hcv.userId }/${hcv.appId }/${hcv.dataKey }/SVG/${hcv.original['6_all_png'] }" style="width:100%">
+                        #end
+                        #if(${hcv.original.containsKey('6_all_png')})
+                            <img src="${uploadPath}${hcv.userId}/${hcv.appId}/${hcv.dataKey}/SVG/${hcv.original['6_all_png']}" style="width:100%">
                             <br/>
                             <br/>
-                        </c:if>
+                        #end
                     </div>
-                </c:if>
+                #end
            </div>
         </div>
         <hr/>
@@ -105,5 +110,67 @@
                 <li class="right">审核者：<span><input type="text"></span></li>
             </ul>
         </div>
+        </form>
     </div>
+    #end
 </div>
+</div>
+<script type="text/javascript">
+$(function(){
+    var url = window.location.href.split("printHCV")[0];
+    var sex = $("#men").prop("checked");
+    
+    $("#print").on("click",function(){
+        var inputVal;
+        $("#printMain").find("input[type='text']").each(function(){
+            inputVal = $(this).val();
+            $(this).parent().html("<span name='print'>"+inputVal+"</span>");
+        });
+        var sex = $("input[type='radio']:checked").val();
+        $("#_sex").html(sex);
+        $(".buttons").hide();
+        window.print();
+        $(".buttons").show();
+        $("body").find("span[name='print']").each(function(){
+            inputVal = $(this).html();
+            $(this).parent().html("<input type='text' value='"+inputVal+"'>");
+        });
+        $("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
+        $("input[type='radio'][value="+sex+"]").attr("checked",true);  
+    });
+    
+    $("#save").on("click",function(){
+        $("#printMain").find("input").each(function(){
+            $(this).attr("value",$(this).val());
+        });
+        $.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printContext":$("#printMain").html()},function(result){
+            if(result==1){
+                alert("信息保存成功！");
+            }else{
+                alert("信息保存失败！");
+            }
+        });
+    });
+
+    $("#reset").on("click",function(){
+         $("#print-form")[0].reset();
+         if(sex){
+            $("#men").attr("checked","checked");
+            $("#women").removeAttr("checked");
+         }else{
+            $("#women").attr("checked","checked");
+            $("#men").removeAttr("checked");
+         }
+    });
+    
+});
+function radioClick(num){
+    if(num==0){
+        $("#men").attr("checked","checked");
+        $("#women").removeAttr("checked");
+    }else{
+        $("#women").attr("checked","checked");
+        $("#men").removeAttr("checked");
+    }
+};
+</script>
