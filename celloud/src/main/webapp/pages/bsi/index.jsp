@@ -124,6 +124,24 @@
 	  </div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
+  <div id="report-uploading-modal" class="modal running-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+          <h4 class="modal-title">数据上传中</h4>
+        </div>
+        <div class="modal-body row">
+          <h4>数据不完整，来检查您缺哪个数据吧！</h4>
+          <div>数据运行所需文件如下：<br>
+            <span class="highlight-text">public_name_</span>R1.fastq<br>
+            <span class="highlight-text">public_name_</span>R2.fastq<br>
+            <span class="highlight-text">public_name_</span>R1.txt
+          </div>
+          <a class="btn" href="javascript:void(0)" data-dismiss="modal" aria-label="Close">知道了</a>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
   <div id="running-modal" class="modal running-modal">
     <div class="modal-dialog">
       <div class="modal-content">

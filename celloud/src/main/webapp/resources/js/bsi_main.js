@@ -1,6 +1,7 @@
 /**
  * 血流用户主页事件
  */
+var uploadProgress = 0;
 $(function () {
   $.report.find.all();
   $("#to-upload-a").on("click",function(){
@@ -9,10 +10,12 @@ $(function () {
       $("#batch-div").removeClass("hide");
       $("#upload-content").addClass("upload-step-one");
     }
-    
     $("#upload-modal").modal("show");
-    if(waveLoading.getProgress()>=100)
-      waveLoading.resetProgress();
+    if(uploadProgress >= 100){
+      waveLoading.setProgress(0);
+      $("#upload-progress").html("");
+      document.querySelector("#upload-progress").getContext('2d').clearRect(-64 / 2, -64 / 2, 64, 64);
+    }
   });
   
   $("#to-report-a").on("click",function(){

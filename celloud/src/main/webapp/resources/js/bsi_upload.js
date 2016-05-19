@@ -49,6 +49,7 @@ var fileUpload=(function(fileUpload){
       $("#uploading-" + file.id +" .plupload-file-status").html(file.percent+"%");
       $("#uploading-" + file.id + " .plupload-file-surplus").html(utils.formatDate((file.size-file.loaded)/uploader.total.bytesPerSec));
       waveLoading.setProgress(uploader.total.percent);
+      uploadProgress = uploader.total.percent
       handleStatus(uploader.total.percent);
     });
     function getSize(fileSize){
@@ -180,7 +181,7 @@ var fileUpload=(function(fileUpload){
           showText: false
       });
       waveLoading.draw();
-      waveLoading.resetProgress(0);
+      waveLoading.setProgress(0);
       
     });
   });
