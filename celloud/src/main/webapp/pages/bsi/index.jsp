@@ -142,6 +142,7 @@
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
   <div id="running-modal" class="modal running-modal">
     <div class="modal-dialog">
       <div class="modal-content">
