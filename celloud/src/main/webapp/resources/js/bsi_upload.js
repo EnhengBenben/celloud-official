@@ -8,7 +8,7 @@ var fileUpload=(function(fileUpload){
     var uploader = new plupload.Uploader({
       runtimes : 'html5,flash,silverlight,html4',
       browse_button : ['plupload-content','upload-more'],
-      url : "../upload/uploadManyFile",
+      url : "../uploadFile/uploadManyFile",
       // Maximum file size
       chunk_size : '1mb',
       // Specify what files to browse for

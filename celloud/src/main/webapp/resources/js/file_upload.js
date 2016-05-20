@@ -32,7 +32,7 @@ var datafileUpload=(function(datafileUpload){
 	$(function() {
 		$("#fileUploadDiv").html("<p>您的浏览器未安装 Flash, Silverlight, Gears, BrowserPlus 或者支持 HTML5 .</p>");
 		$("#fileUploadDiv").pluploadQueue({
-			url : "../upload/uploadManyFile",
+			url : "../uploadFile/uploadManyFile",
 			chunk_size : "1mb",
 			file_data_name : "file",
 			filters : {
