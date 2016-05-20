@@ -90,13 +90,13 @@ utils.setDocSize = function(){
 		$(".bgContainer").width(winWidth);
 		$(".longbackground").width(winWidth);
 		$("#bg").width(winWidth);
-		$(".page-layout").css("min-width",winWidth);
+//		$(".page-layout").css("min-width",winWidth);
 //		$(".wrapper").width(winWidth);
 	}else{
 		$(".bgContainer").width(docWidth);
 		$(".longbackground").width(docWidth);
 		$("#bg").width(docWidth);
-		$(".page-layout").css("min-width",docWidth);
+//		$(".page-layout").css("min-width",docWidth);
 //		$(".wrapper").width(docWidth);
 	}
 	//设置高度
@@ -113,7 +113,6 @@ utils.setDocSize = function(){
 		$(".page-layout").css("min-height",docHeight);
 //		$(".wrapper").height(docHeight);
 	}
-	alert();
 	$(".bgContainer").css("overflow","hidden");
 }
 
