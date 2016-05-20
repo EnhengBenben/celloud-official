@@ -34,6 +34,7 @@ import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DeptConstants;
 import com.celloud.constants.ReportType;
+import com.celloud.constants.SparkPro;
 import com.celloud.model.mongo.ABINJ;
 import com.celloud.model.mongo.BRAF;
 import com.celloud.model.mongo.BSI;
@@ -73,8 +74,6 @@ import com.celloud.service.ReportService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.FileTools;
-import com.celloud.utils.HttpURLUtils;
-import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.VelocityUtil;
 
 import net.sf.cglib.core.CollectionUtils;
@@ -101,6 +100,20 @@ public class ReportAction {
     private ExperimentService expService;
     @Resource
     private VelocityUtil velocityUtil;
+    
+	@ActionLog(value = "下载", button = "下载")
+	@RequestMapping("down")
+	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
+	public Integer down(String path) {
+		Integer userId = ConstantsData.getLoginUserId();
+		String filePath = SparkPro.TOOLSPATH + userId + "/" + path;
+		if (new File(filePath).exists()) {
+			FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
+			return 0;
+		}
+		return 1;
+	}
 
     /**
      * 获取报告模块列表
@@ -128,29 +141,6 @@ public class ReportAction {
     }
 
     /**
-     * 从 Tools 端获取数据报告
-     * 
-     * @param dataKey
-     * @param url
-     * @return
-     * @date 2016-1-10 下午11:37:40
-     */
-    @ActionLog(value = "从 Tools 端获取数据报告", button = "数据报告")
-    @ResponseBody
-    @RequestMapping(value = "getReportFromTools", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String getReportFromTools(String dataKey, String url, Integer projectId) {
-        url = PropertiesUtil.toolsPath + url;
-        DataFile data = dataService.getDataByKey(dataKey);
-        String anotherName = data.getAnotherName();
-        if (StringUtils.isNotEmpty(anotherName)) {
-            url += "&anotherName=" + anotherName;
-        }
-        Project project = projectService.selectByPrimaryKey(projectId);
-        url += "&projectName=" + project.getProjectName();
-        return HttpURLUtils.getHTTPResult(url);
-    }
-
-    /**
      * 用于 ModelAndView 加载共有参数
      * 
      * @param path
@@ -160,8 +150,7 @@ public class ReportAction {
      */
     private ModelAndView getModelAndView(String path, Integer projectId) {
         ModelAndView mv = new ModelAndView(path);
-        mv.addObject("toolsPath", PropertiesUtil.toolsOutPath);
-        mv.addObject("uploadPath", PropertiesUtil.toolsOutPath + "upload/");
+        mv.addObject("uploadPath", "/upload/");
         Project project = projectService.selectByPrimaryKey(projectId);
         mv.addObject("project", project);
         return mv;
@@ -1198,22 +1187,6 @@ public class ReportAction {
     @ResponseBody
     public Integer updateContext(Report report) {
         return reportService.updateReport(report);
-    }
-
-    @ActionLog(value = "下载PDF报告", button = "下载PDF报告")
-    @RequestMapping("downPdf")
-    @ResponseBody
-    public String downPdf(Integer appId, Integer projectId) {
-        StringBuffer sb = new StringBuffer();
-        Integer userId = ConstantsData.getLoginUserId();
-        sb.append(userId).append(";").append(appId).append(";").append(projectId).append(";");
-        List<DataFile> list = dataService.getDatasInProject(projectId);
-        for (DataFile data : list) {
-            sb.append(data.getDataKey()).append(",");
-        }
-        String requestUrl = PropertiesUtil.toolsPath + "Procedure!downPDF?dataKeyList=" + sb.toString();
-        log.info("requestUrl:" + requestUrl);
-        return HttpURLUtils.getHTTPResult(requestUrl);
     }
 
     /**

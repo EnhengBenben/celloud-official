@@ -26,7 +26,7 @@ public class UploadActionTest extends BaseActionTest {
     public void testUploadManyFile() throws Exception {
         MockMultipartFile file = new MockMultipartFile("test", "test", null,
                 new FileInputStream(new File("/Users/sun8wd/Downloads/CS1.6CH.dmg")));
-        MockHttpServletRequestBuilder builders = MockMvcRequestBuilders.fileUpload("/upload/uploadManyFile").file(file)
+        MockHttpServletRequestBuilder builders = MockMvcRequestBuilders.fileUpload("/uploadFile/uploadManyFile").file(file)
                 .param("chunk", "1").param("chunks", "1").header("user-agent", ua).param("name", "testName")
                 .param("originalName", "testOriginalName").param("onlyName", "testOnlyName").param("md5", "md5")
                 .sessionAttr(Constants.SESSION_LOGIN_USER, user);

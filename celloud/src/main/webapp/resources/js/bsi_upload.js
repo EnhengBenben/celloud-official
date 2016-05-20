@@ -2,13 +2,13 @@ var fileUpload=(function(fileUpload){
   var self=fileUpload||{};
   self.refreshSession=function(){
       //为了防止上传过程中session超时而随便请求的一个方法
-      $.get("upload/checkAdminSessionTimeOut");
+      $.get("uploadFile/checkAdminSessionTimeOut");
   }
   $(function() {
     var uploader = new plupload.Uploader({
       runtimes : 'html5,flash,silverlight,html4',
       browse_button : ['plupload-content','upload-more'],
-      url : "../upload/uploadManyFile",
+      url : "../uploadFile/uploadManyFile",
       // Maximum file size
       chunk_size : '1mb',
       dragdrop : true,
@@ -101,7 +101,7 @@ var fileUpload=(function(fileUpload){
       }
     }
     uploader.bind("FilesAdded", function(uploader, files) {
-      $.get("upload/checkAdminSessionTimeOut",function(response){
+      $.get("uploadFile/checkAdminSessionTimeOut",function(response){
         if(response){//session超时则执行下两步
           
         }else{

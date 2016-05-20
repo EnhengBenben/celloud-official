@@ -57,7 +57,7 @@ import com.celloud.utils.PropertiesUtil;
  * @date 2015年12月28日 下午3:12:11
  */
 @Controller
-@RequestMapping("upload")
+@RequestMapping("uploadFile")
 public class UploadAction {
     Logger logger = LoggerFactory.getLogger(UploadAction.class);
     private static final int BUFFER_SIZE = 2 * 1024;

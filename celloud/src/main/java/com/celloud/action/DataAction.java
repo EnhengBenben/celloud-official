@@ -70,8 +70,6 @@ public class DataAction {
     @Resource
     private TaskService taskService;
 
-    private static String basePath = SparkPro.TOOLSPATH;
-
     private static Map<String, Map<String, String>> machines = ConstantsData
             .getMachines();
     private static String sparkhost = machines.get("spark").get(Mod.HOST);
@@ -458,7 +456,7 @@ public class DataAction {
 
         // 运行APP详细信息
         List<App> appList = appService.findAppsByIds(appIds);
-        String bp = basePath + userId + "/";
+        String bp = SparkPro.TOOLSPATH + userId + "/";
         for (App app : appList) {
             Integer appId = app.getAppId();
             Integer proId = appProMap.get(appId);

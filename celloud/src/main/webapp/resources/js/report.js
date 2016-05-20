@@ -25,13 +25,13 @@ $.ajaxSetup ({
 		//---------------------------------------------------------------------
 		var param = null;
 		function downPDF(appId,projectId){
-			$.get("report/downPdf",{"appId":appId,"projectId":projectId},function(userNames){
-				userNames = userNames.replace(/"/g ,"").replace(/\\/g ,"");
-				if(userNames){
-					var url = window.location.href.split("index")[0];
-					window.location.href=url+"Tools/Procedure!miRNADownload?userId="+userNames;
+		  var path = appId + "/" + projectId + "/" + projectId + ".pdf";
+			$.get("report/down",{"path":path},function(flag){
+				if(flag==1){
+				  jAlert("没有可以下载的pdf文件");
 				}else{
-					jAlert("没有可以下载的pdf文件");
+				  var url = window.location.href.split("index")[0];
+				  window.location.href=url+"report/down?path="+path;
 				}
 			});
 		}
