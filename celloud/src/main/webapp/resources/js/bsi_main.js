@@ -36,7 +36,12 @@ $(function () {
     $("#one-to-two").addClass("active");
     $(".step-two").addClass("active");
   });
-  
+  $("#condition-input").on("keyup",function(e){
+    e = e || window.event;
+    if (e.keyCode == "13") {//keyCode=13是回车键
+      $("#condition-find").click();
+    }
+  });
 });
 $.base = {
   sortIcon : function(sortDate,sortBatch,sortName,sortPeriod){
@@ -86,13 +91,13 @@ $.report.find = {
   },
   condition: function(){
     var options = $.report.options;
-    $.get("data/taskList",{"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
+    $.get("data/taskList",{"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
       $.report.loadlist(response);
     });
   },
   pagination: function(currentPage){
     var options = $.report.options;
-    $.get("data/taskList",{"page":currentPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
+    $.get("data/taskList",{"page":currentPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
       $.report.loadlist(response);
     });
   }
@@ -154,6 +159,10 @@ $.report.loadlist = function(response){
     $.report.options.sortPeriod = $.report.options.sortPeriod=="desc"?"asc":"desc";
     $.report.find.condition();
   });
+  $("#page-size-sel").on("change",function(e){
+    $.report.options.pageSize = $("#page-size-sel").val()
+    $.report.find.condition();
+  });
 }
 $.report.detail = {
     patient: function(dataKey,projectId,appId){
@@ -197,13 +206,13 @@ $.data_ = {
         },
         condition: function(){
           var options = $.data_.options;
-          $.get("data/bsiDataList",{"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
+          $.get("data/bsiDataList",{"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
             $.data_.loadlist(response);
           });
         },
         pagination: function(currentPage){
           var options = $.data_.options;
-          $.get("data/bsiDataList",{"page":currentPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
+          $.get("data/bsiDataList",{"page":currentPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
             $.data_.loadlist(response);
           });
         }
@@ -260,6 +269,10 @@ $.data_.loadlist = function(response){
   $("#sort-name").on("click",function(e){
     $.data_.options.sort = 2;
     $.data_.options.sortName = $.data_.options.sortName=="desc"?"asc":"desc";
+    $.data_.find.condition();
+  });
+  $("#page-size-sel").on("change",function(e){
+    $.data_.options.pageSize = $("#page-size-sel").val()
     $.data_.find.condition();
   });
 }
