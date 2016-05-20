@@ -34,9 +34,9 @@
           </td>
 	      <td>
 	        <c:if test="${task.period==0 }">等待运行</c:if>
-	        <c:if test="${task.period==1 }"><a href="javascript:void(0)" data-toggle="modal" data-target="#running-modal">正在运行</a></c:if>
+	        <c:if test="${task.period==1 }"><a data-toggle="modal" data-target="#running-modal">正在运行</a></c:if>
 	        <c:if test="${task.period==2 }">完成</c:if>
-	        <c:if test="${task.period==3 }"><a href="javascript:void(0)" data-toggle="modal" data-target="#report-uploading-modal">数据上传中</a></c:if>
+	        <c:if test="${task.period==3 }"><a data-toggle="modal" data-target="#report-uploading-modal">数据上传中</a></c:if>
 	        <c:if test="${empty task.period }"><a href="javascript:void(0)" onclick="$.report.period.error('${task.fileName }')" class="wrong">运行异常</a></c:if>
 	      </td>
 	      <td><fmt:formatDate type="both" value="${task.createDate }"/></td>
@@ -186,4 +186,4 @@
     </ul>
   </c:if>
 </div>
-<script src="<%=request.getContextPath()%>/js/bsi_report.js"></script>
+<script src="<%=request.getContextPath()%>/js/bsi_report.js?version=1.0"></script>
