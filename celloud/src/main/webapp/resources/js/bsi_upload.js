@@ -110,7 +110,7 @@ var fileUpload=(function(fileUpload){
         }
       });
       $.each(files, function(index, item) {
-        var $fileDom = $('<li id="' + item.id + '">');
+        var $fileDom = $('<li class="plupload_delete" id="' + item.id + '">');
         $fileDom.append($('<div class="plupload-file-name"><span>' + item.name + '</span></div>'));
         $fileDom.append($('<div class="plupload-file-size">'+getSize(item.size)+'</div>'));
         $fileDom.append($('<div class="plupload-file-action"><a href="#" style="display: block;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></div>'));
@@ -127,11 +127,13 @@ var fileUpload=(function(fileUpload){
         handleStatus(item);
         $('#' + item.id + '.plupload_delete a').click(function(e) {
           $('#' + item.id).remove();
+          $('#uploading-' + item.id).remove();
           uploader.removeFile(item);
           e.preventDefault();
           utils.stopBubble(e);
         });
         $('#uploading-' + item.id + '.plupload_delete a').click(function(e) {
+          $('#' + item.id).remove();
           $('#uploading-' + item.id).remove();
           uploader.removeFile(item);
           e.preventDefault();
@@ -158,6 +160,7 @@ var fileUpload=(function(fileUpload){
       $(".step-three").removeClass("active");
       $("#batch-info").val("")
       uploader.splice();
+      $("#uploading-filelist .plupload_done").remove();
       $("#upload-modal").modal("hide");
     });
     uploader.bind("BeforeUpload", function(uploader, file) {
