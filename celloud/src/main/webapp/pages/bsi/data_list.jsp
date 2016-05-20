@@ -176,4 +176,4 @@
     </ul>
   </c:if>
 </div>
-<script src="<%=request.getContextPath()%>/js/bsi_data.js"></script>
+<script src="<%=request.getContextPath()%>/js/bsi_data.js?version=1.0"></script>
