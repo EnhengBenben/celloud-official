@@ -185,9 +185,9 @@
 <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
 <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
 <script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js"></script>
-<script src="<%=request.getContextPath()%>/js/utils.js" type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/js/bsi_main.js" type="text/javascript"></script>
-<script src="<%=request.getContextPath() %>/js/bsi_upload.js"></script>
+<script src="<%=request.getContextPath()%>/js/utils.js?version=1.0" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/bsi_main.js?version=1.0" type="text/javascript"></script>
+<script src="<%=request.getContextPath() %>/js/bsi_upload.js?version=1.0"></script>
 <script src="<%=request.getContextPath()%>/js/charts.js"></script>
 </body>
 </html>
