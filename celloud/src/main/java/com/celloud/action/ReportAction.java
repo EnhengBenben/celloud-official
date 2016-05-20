@@ -103,14 +103,16 @@ public class ReportAction {
     
 	@ActionLog(value = "下载", button = "下载")
 	@RequestMapping("down")
-	public boolean down(String path) {
+	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
+	public Integer down(String path) {
 		Integer userId = ConstantsData.getLoginUserId();
 		String filePath = SparkPro.TOOLSPATH + userId + "/" + path;
 		if (new File(filePath).exists()) {
 			FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
-			return true;
+			return 0;
 		}
-		return false;
+		return 1;
 	}
 
     /**
