@@ -187,7 +187,7 @@
 <script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/utils.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/js/bsi_main.js" type="text/javascript"></script>
-<script src="<%=request.getContextPath() %>/js/bsi_upload.js"></script>
+<script src="<%=request.getContextPath() %>/js/bsi_upload.js?version=0.1"></script>
 <script src="<%=request.getContextPath()%>/js/charts.js"></script>
 </body>
 </html>

@@ -2,7 +2,7 @@ var fileUpload=(function(fileUpload){
   var self=fileUpload||{};
   self.refreshSession=function(){
       //为了防止上传过程中session超时而随便请求的一个方法
-      $.get("upload/checkAdminSessionTimeOut");
+      $.get("uploadFile/checkAdminSessionTimeOut");
   }
   $(function() {
     var uploader = new plupload.Uploader({
@@ -99,7 +99,7 @@ var fileUpload=(function(fileUpload){
       }
     }
     uploader.bind("FilesAdded", function(uploader, files) {
-      $.get("upload/checkAdminSessionTimeOut",function(response){
+      $.get("uploadFile/checkAdminSessionTimeOut",function(response){
         if(response){//session超时则执行下两步
           
         }else{
