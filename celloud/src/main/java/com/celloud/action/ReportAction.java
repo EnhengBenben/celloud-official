@@ -1084,12 +1084,12 @@ public class ReportAction {
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
         // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
-		if (flag == 0 && StringUtils.isNotEmpty(report.getPrintContext())) {// 详细报告
-			return mv.addObject("printContext", report.getPrintContext());
-		}
-		if (flag == 1 && StringUtils.isNotEmpty(report.getPrintSimple())) {// 简要报告
-			return mv.addObject("printContext", report.getPrintSimple());
-		}
+        if (flag == 0 && StringUtils.isNotEmpty(report.getPrintContext())) {// 详细报告
+            return mv.addObject("printContext", report.getPrintContext());
+        }
+        if (flag == 1 && StringUtils.isNotEmpty(report.getPrintSimple())) {// 简要报告
+            return mv.addObject("printContext", report.getPrintSimple());
+        }
         HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
         mv.addObject("hbv", hbv).addObject("flag", flag).addObject("report", report);
         return mv;
@@ -1169,15 +1169,19 @@ public class ReportAction {
     @ActionLog(value = "打印KRAS数据报告", button = "打印数据报告")
     @RequestMapping("printKRAS")
     public ModelAndView printKRAS(Integer appId, String dataKey, Integer projectId) {
-        ModelAndView mv = getModelAndView("print/print_kras", projectId);
+        String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print.vm";
+        if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+            path = "default/" + appId + "/print.vm";
+        }
+        ModelAndView mv = new ModelAndView(path);
+        KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
         Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
         // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
         if (StringUtils.isNotEmpty(report.getPrintContext())) {
-            return mv.addObject("printContext", report.getPrintContext());
+            mv.addObject("printContext", report.getPrintContext());
         }
-        KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
         mv.addObject("kras", kras).addObject("report", report);
         return mv;
     }
