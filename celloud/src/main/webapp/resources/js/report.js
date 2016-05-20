@@ -25,11 +25,8 @@ $.ajaxSetup ({
 		//---------------------------------------------------------------------
 		var param = null;
 		function downPDF(appId,projectId){
-			$.get("report/downPdf",{"appId":appId,"projectId":projectId},function(userNames){
-				userNames = userNames.replace(/"/g ,"").replace(/\\/g ,"");
-				if(userNames){
-					var url = window.location.href.split("index")[0];
-					window.location.href=url+"Tools/Procedure!miRNADownload?userId="+userNames;
+			$.get("report/down",{"path":appId+"/"+projectId+"/"+projectId+".pdf"},function(flag){
+				if(flag){
 				}else{
 					jAlert("没有可以下载的pdf文件");
 				}

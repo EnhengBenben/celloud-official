@@ -24,10 +24,10 @@
                     <a class="btn btn-celloud-success btn-flat" target="_blank" href="report/printPGS?appId=${pgs.appId }&projectId=${pgs.projectId }&dataKey=${pgs.dataKey }&flag=1"><i class="fa fa-print"></i>点图报告</a>                  
                 </c:if>
                 <c:if test="${pgs.pdf!=null }">
-                    <a class="btn btn-warning btn-flat" href="${toolsPath }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.pdf }" class="btn btn-default"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
+                    <a class="btn btn-warning btn-flat" href="/report/down?path=${pgs.appId }/${pgs.dataKey }/${pgs.pdf }" class="btn btn-default"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
                 </c:if>
 	            <c:if test="${pgs.finalPng!=null && pgs.finalPng!='' }">
-                    <a class="btn btn-info btn-flat" href="${toolsPath }Procedure!miRNADownload?userId=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" class="btn btn-default"><i class="fa fa-cloud-download"></i>报告下载</a>
+                    <a class="btn btn-info btn-flat" href="/report/down?path=${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" class="btn btn-default"><i class="fa fa-cloud-download"></i>报告下载</a>
                 </c:if>
 		        <c:if test="${experiment!=null }">
 			        <br/>
@@ -249,7 +249,7 @@
 		<c:if test="${pgs.appId==81||pgs.appId==88||pgs.appId==91||pgs.appId==93 }">
 			<div class="lineheight">MT_Ratio：样本测序序列中线粒体序列百分比。数据统计表明染色体拷贝数异常胚胎线粒体比例高。</div>
 			<div>
-				<img alt="" src="${toolsPath }/resource/img/pgs.png" width="100%">
+				<img alt="" src="<%=request.getContextPath()%>/images/report/pgs.png" width="100%">
 			</div>
 		</c:if>
 	</div>
