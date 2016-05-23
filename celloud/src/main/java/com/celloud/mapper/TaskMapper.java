@@ -152,5 +152,6 @@ public interface TaskMapper {
      * @date 2016年5月16日 下午4:03:13
      */
     Task findTaskByDataKeyAndApp(@Param("state") Integer state,
-            @Param("dataKey") String dataKey, @Param("appId") Integer appId);
+            @Param("dataKey") String dataKey, @Param("appId") Integer appId,
+            @Param("period") Integer period);
 }
