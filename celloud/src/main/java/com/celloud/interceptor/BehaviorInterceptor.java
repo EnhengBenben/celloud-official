@@ -15,7 +15,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.celloud.model.mongo.Behavior;
 import com.celloud.service.BehaviorService;
 import com.celloud.utils.ActionLog;
-import com.celloud.utils.StringUtils;
+import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.UserAgentUtil;
 
 /**
@@ -47,7 +47,7 @@ public class BehaviorInterceptor extends HandlerInterceptorAdapter {
         Behavior behavior = UserAgentUtil.getUserBehavior(request);
         behavior.setLogDate(new Date());
         behavior.setMethod(request.getMethod());
-        behavior.setAction(StringUtils.substringBefore(request.getRequestURI(), ";jsessionid"));
+        behavior.setAction(CustomStringUtils.substringBefore(request.getRequestURI(), ";jsessionid"));
         behavior.setQueryString(request.getQueryString());
         userBehavior.set(behavior);
         return super.preHandle(request, response, handler);
