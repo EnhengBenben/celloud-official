@@ -179,7 +179,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task findTaskByDataKeyAndApp(String dataKey, Integer appId) {
         return taskMapper.findTaskByDataKeyAndApp(DataState.ACTIVE, dataKey,
-                appId);
+                appId, TaskPeriod.UPLOADING);
     }
 
     @Override

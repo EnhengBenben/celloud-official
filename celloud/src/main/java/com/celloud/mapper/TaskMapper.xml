@@ -306,6 +306,7 @@
   <select id="findTaskByDataKeyAndApp" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from tb_task WHERE data_key = #{dataKey} and state=#{state} and app_id=#{appId}
+    from tb_task WHERE data_key = #{dataKey} and state=#{state} and app_id=#{appId} 
+    and period = #{period} and project_id is null
   </select>
 </mapper>
