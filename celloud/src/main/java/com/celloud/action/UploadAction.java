@@ -183,7 +183,8 @@ public class UploadAction {
         Integer appId = needSplit == 1 ? 113 : app.getAppId();
         String pubName = "";
         List<Integer> dataIds;
-        if (fileFormat == FileFormat.FQ) {
+        if (fileFormat == FileFormat.FQ || originalName.contains(".txt")
+                || originalName.contains(".lis")) {
             Boolean isR1 = false;
             if (originalName.contains("R1")) {
                 pubName = originalName.substring(0,
