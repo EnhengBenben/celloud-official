@@ -1,0 +1,7 @@
+#override("input")
+	#parse("/9/PGS/input.vm")
+#end
+#override("footer")
+	#parse("/9/PGS/footer.vm")
+#end
+#extends("/default/PGS/base.vm")

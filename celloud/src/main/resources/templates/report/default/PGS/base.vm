@@ -1,0 +1,46 @@
+#parse("/default/PGS/reference.vm")
+#block("card")
+	#parse("/default/PGS/card.vm")
+#end
+<div class="row" style="margin:0px auto;" id="mainDiv">
+	#block("title")
+		#parse("/default/PGS/company.vm")
+	#end
+	#block("subtitle")
+		<div align="center">
+			<h3>染色体拷贝数变异检测报告</h3>
+		</div>
+	#end
+	<div>
+		<h4>基本信息：</h4>
+		<table class="table table-bordered table-condensed">
+			#block("input")
+				#parse("/default/PGS/input.vm")
+			#end
+		</table>
+	</div>
+	#block("method")
+		<div>
+			<h4>检测方法:</h4>
+			<div>
+				NGS
+			</div>
+		</div>
+	#end
+	<div>
+		#parse("/default/PGS/img.vm")
+	</div>
+	<div>
+		#parse("/default/PGS/explain.vm")
+	</div>
+	#block("context")
+	#end
+	<div class="notes">#parse("/default/${pgs.appId}/note.vm")</div>
+</div>
+<ul class="footer">
+	#parse("/default/PGS/footer.vm")
+</ul>
+#block("bottom")
+	#parse("/default/PGS/bottom.vm")
+#end
+#parse("/default/PGS/js.vm")

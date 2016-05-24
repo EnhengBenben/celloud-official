@@ -1,0 +1,14 @@
+#if($pgs.companyIcon)
+	<div align="center" class="clearfix">
+		<img src="$link.getContextPath()/report/company/icon?file=$!pgs.companyIcon" style="width:90px">
+		<h2 class="shotH3">
+			${pgs.companyName}
+			<br />
+			<span class="secTitle">$!pgs.companyEngName</span>
+		</h2>
+		#block("dept")
+			#parse("/default/PGS/dept.vm")
+		#end
+	</div>
+	<hr>
+#end

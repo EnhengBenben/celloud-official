@@ -1,0 +1,122 @@
+<script type="text/javascript">
+$(function(){
+	if($(".end").html()){
+		$("#mainDiv").css("min-height",(960-64-38-38-20)+"px");
+	}else{
+		$("#mainDiv").css("min-height",(980-38-38-20)+"px");
+	}
+	$("#print").on("click",function(){
+		var inputVal;
+		inputVal = $("#jzkh").val();
+		if(!inputVal){
+			$("#jzkp").html("<span name='print' style='padding-right:100px;'>"+inputVal+"</span>");
+		}
+		$("#mainDiv").find("input").each(function(){
+			inputVal = $(this).val();
+			$(this).parent().html("<span name='print'>"+inputVal+"</span>");
+		});
+		$(".miniTable_").find("input").each(function(){
+			inputVal = $(this).val();
+			$(this).parent().html("<span name='miniPrint'>"+inputVal+"</span>");
+		});
+		$(".opinion").find("input").each(function(){
+			inputVal = $(this).val();
+			$(this).parent().html("<span name='print'>"+inputVal+"</span>");
+		});
+		inputVal = $("#des").children().val();
+		if(inputVal){
+			inputVal = inputVal.replace(/\n/g,"<br>");
+			$("#des").html(inputVal);
+		}
+		var des1 = $("#des1").children().val();
+		if (des1){
+			inputVal = des1.replace(/\n/g,"<br>");
+		}else{
+			inputVal = "";
+		}
+		$("#des1").html(inputVal);
+		var des2 = $("#des2").children().val();
+		if (des2){
+			inputVal = des2.replace(/\n/g,"<br>");
+		}else{
+			inputVal = "";
+		}
+		$("#des2").html(inputVal);
+		var des3 = $("#des3").children().val();
+		if (des3){
+			inputVal = des3.replace(/\n/g,"<br>");
+		}else{
+			inputVal = "";
+		}
+		$("#des3").html(inputVal);
+		$("#p2footer").css("margin-top",(300-$("#page2").height())+"px");
+		window.print();
+		$("body").find("span[name='print']").each(function(){
+			inputVal = $(this).html();
+			if($(this).parent().attr("id")=="jzkp"){
+				$(this).parent().html("<input type=\"text\"  class=\"input-mini\" value=\""+inputVal+"\" id=\"jzkh\" />");
+			}else{
+				$(this).parent().html("<input type=\"text\" class=\"input-mini\" value=\""+inputVal+"\" />");
+			}
+		});
+		$("body").find("span[name='miniPrint']").each(function(){
+			inputVal = $(this).html();
+			$(this).parent().html("<input type=\"text\" class=\"input-mini onlybotton\" style=\"height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px\" value=\""+inputVal+"\"/>");
+		});
+		inputVal = $("#des").html();
+		if(inputVal){
+			inputVal = inputVal.replace(/<br>/g,"\n");
+			$("#des").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
+		}
+		if (des1){
+			inputVal = $("#des1").html().replace(/<br>/g,"\n");
+		}else{
+			inputVal = "";
+		}
+		$("#des1").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
+		if (des2){
+			inputVal = $("#des2").html().replace(/<br>/g,"\n");
+		}else{
+			inputVal = "";
+		}
+		$("#des2").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
+		if (des3){
+			inputVal = $("#des3").html().replace(/<br>/g,"\n");
+		}else{
+			inputVal = "";
+		}
+		$("#des3").html("<textarea rows=\"8\">"+inputVal+"</textarea>");
+	});
+	$("#save").on("click",function(){
+		$("body").find("input").each(function(){
+			$(this).attr("value",$(this).val());
+		});
+		$("#des").children().html($("#des").children().val());
+		$("#des1").children().html($("#des1").children().val());
+		$("#des2").children().html($("#des2").children().val());
+		$("#des3").children().html($("#des3").children().val());
+		var url = window.location.href.split("printPGS")[0];
+		$.post(url+"updateContext",{"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"projectId":$("#_projectId").html(),"printContext":$("body").html()},function(result){
+			if(result==1){
+				jAlert("信息保存成功！");
+			}else{
+				jAlert("信息保存失败！");
+			}
+		});
+	});
+	$("#reset").on("click",function(){
+	  jConfirm('确定要重置之前保存的报告吗？', '重置报告', function(result) {
+	    if(result){
+			var url = window.location.href.split("printPGS")[0];
+			$.post(url+"updateContext",{"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"projectId":$("#_projectId").html(),"printContext":""},function(result){
+				if(result==1){
+					location=location ;
+				}else{
+					jAlert("信息重置失败！");
+				}
+			});
+	     }
+		});
+	});
+});
+</script>

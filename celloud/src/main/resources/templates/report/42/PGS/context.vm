@@ -1,0 +1,12 @@
+<div>
+	#parse("/default/PGS/$result.vm")
+</div>
+<br/>
+<h4 class="smallh4">结果解释：</h4>
+<div>
+	报告名称：<span><input type="text" value="${pgs.fileName }(${pgs.anotherName })" class="onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;width:400px"/></span><br>
+	样本报告：
+    <div id="des" style="margin:0px">
+		<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px">${pgs.report}</textarea>
+	</div>
+</div>

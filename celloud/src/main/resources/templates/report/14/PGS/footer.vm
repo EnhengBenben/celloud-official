@@ -1,0 +1,7 @@
+<ul class="footer" style="margin-bottom: 0px;font-size:12px;/* margin-top: 450px; */">
+	<li class="left" style="font-size:12px;">报告者：<span><input type="text" class="input-mini" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></li>
+	<li class="left" style="font-size:12px;">审核者：<span><input type="text" class="input-mini" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></li>
+	<li class="right pull-right opinion" style="font-size:12px;">报告日期：<span id="jzkp"><input type="text" class="input-mini" id="jzkh" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></li>
+</ul>
+<hr>
+<h4 class="smallh4" style="font-size:12px;">临床意见：<span class="opinion"><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></span></h4>

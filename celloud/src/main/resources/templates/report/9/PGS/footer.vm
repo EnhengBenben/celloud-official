@@ -1,0 +1,3 @@
+<li class="left">检测人：<span><input type="text" class="input-mini" /></span></li>
+<li class="left">复核人：<span><input type="text" class="input-mini" /></span></li>
+<li class="right pull-right">日期：<span><input type="text" class="input-small" /></span></li>

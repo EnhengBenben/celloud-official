@@ -1,0 +1,10 @@
+#override("input")
+	#parse("/42/PGS/input.vm")
+#end
+#override("context")
+	#parse("/42/PGS/context.vm")
+#end
+#override("footer")
+	#parse("/42/PGS/footer.vm")
+#end
+#extends("/default/PGS/base.vm")
