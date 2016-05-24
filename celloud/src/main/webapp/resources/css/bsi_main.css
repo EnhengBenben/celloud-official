@@ -432,13 +432,13 @@ a, a:link, a:hover, a:active, a:visited {
 .pagination ul > li > a {
     float: left;
     padding: 0;
-    color: rgb(50,50,50);
+    color: #a0a0a0;
     width: 40px;
     height: 20px;
     text-align: center;
     text-decoration: none;
     background-color: #fff;
-    border: 1px solid rgb(220,220,220);
+    border: 1px solid #a0a0a0;
     border-left: none;
 }
 .pagination ul > li > span{
@@ -448,7 +448,7 @@ a, a:link, a:hover, a:active, a:visited {
     line-height: 20px;
 }
 .pagination ul > li:first-child > a{
-	border-left: 1px solid rgb(220,220,220);
+	border-left: 1px solid #a0a0a0;
 	-webkit-border-radius: 10px 0px 0px 10px;
     -moz-border-radius: 10px 0px 0px 10px;
     border-radius: 10px 0px 0px 10px;
@@ -462,12 +462,12 @@ a, a:link, a:hover, a:active, a:visited {
 .pagination ul > li > a:hover,
 .pagination ul > .active > a{
 	color: #fff;
-    background-color: rgb(29,210,175);
-    border: 1px solid rgb(29,210,175);
+    background-color: #a0a0a0;
+    border: 1px solid #a0a0a0;;
 }
 
 .pagination ul > li>.ends{
-	color: rgb(29,210,175);
+	color: #a0a0a0;
 	letter-spacing: -3px;
 }
 .pagination-data{
