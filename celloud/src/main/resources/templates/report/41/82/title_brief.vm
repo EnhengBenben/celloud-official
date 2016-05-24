@@ -1,0 +1,9 @@
+<hr name="change" style="float:right;margin-top: 115px; margin-right: -150px;width: 130px;border: solid 1px #d7d7d7;">
+<a href="javascript:void(0)" onclick="showGeneType()" class="a-green-normal" name="change" style="float:right;margin-top:125px;margin-right:-145px;"><i class=""></i>基因分型检测报告单</a>
+<a href="javascript:void(0)" onclick="showResistance()" class="a-green-normal" name="change" style="float:right;margin-top:150px;margin-right:-145px;"><i class=""></i>耐药突变检测报告单</a>
+<h1>${hbv.companyName}${hbv.appName}
+<span name="geneType">基因分型检测</span>
+<span name="resistanceType" class="hide">耐药突变检测</span><br>
+    报告单
+</h1>
+<hr />

@@ -1,0 +1,15 @@
+#parse("/default/${hbv.appId}/reference.vm")
+<div id="printMain">
+    #if(${report.printContext})
+        ${report.printContext}
+    #end
+    #if(!${report.printContext})
+        <div>
+            #parse("/default/${hbv.appId}/title_detail.vm")
+            #parse("/default/${hbv.appId}/content_detail.vm")
+            #parse("/default/${hbv.appId}/foot.vm")
+            </form>
+        </div>
+    #end
+</div>  
+#parse("/default/${hbv.appId}/js.vm")
