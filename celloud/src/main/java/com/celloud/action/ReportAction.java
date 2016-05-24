@@ -105,15 +105,14 @@ public class ReportAction {
     @RequestMapping("down")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public Integer down(String path) {
-        Integer userId = ConstantsData.getLoginUserId();
-        String filePath = SparkPro.TOOLSPATH + userId + "/" + path;
-        if (new File(filePath).exists()) {
-            FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
-            return 0;
-        }
-        return 1;
-    }
+	public Integer down(String path) {
+		String filePath = SparkPro.TOOLSPATH + path;
+		if (new File(filePath).exists()) {
+			FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
+			return 0;
+		}
+		return 1;
+	}
 
     /**
      * 获取报告模块列表
