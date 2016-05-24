@@ -1,10 +1,29 @@
-#override("input")
+#override("card")
+#end
+#override("head")
+	#parse("/default/PGS/head.vm")
+#end
+#override("subtitle")
+#end
+#override("baseinfo")
 	#parse("/42/PGS/input.vm")
 #end
-#override("context")
-	#parse("/42/PGS/context.vm")
+#override("explain")
+	#parse("/42/PGS/explain.vm")
 #end
 #override("footer")
 	#parse("/42/PGS/footer.vm")
+#end
+#override("dept")
+#end
+#override("method")
+	#parse("/default/PGS/method.vm")
+#end
+#override("notes")
+#end
+#override("footer")
+	#parse("/42/PGS/footer.vm")
+#end
+#override("bottom")
 #end
 #extends("/default/PGS/base.vm")

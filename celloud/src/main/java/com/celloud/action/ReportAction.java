@@ -1021,7 +1021,7 @@ public class ReportAction {
     @ActionLog(value = "打印PGS数据报告", button = "打印数据报告")
     @RequestMapping("printPGS")
     public ModelAndView printPGS(Integer appId, Integer projectId, String dataKey, Integer flag) {
-    	String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print.vm";
+    	String path = ConstantsData.getLoginCompanyId() + "/PGS/print.vm";
         if (ReportAction.class.getResource("/templates/report/" + path) == null) {
             path = "default/PGS/print.vm";
         }

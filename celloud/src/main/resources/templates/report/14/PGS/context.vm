@@ -1,6 +1,3 @@
-<div>
-	#parse("/default/PGS/$result.vm")
-</div>
 <br/>
 <div id="des" style="margin:0px">
 	<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px">${pgs.report}</textarea>
