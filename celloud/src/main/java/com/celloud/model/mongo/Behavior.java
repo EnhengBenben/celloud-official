@@ -25,6 +25,7 @@ public class Behavior extends ActionLog implements Serializable {
 	private String action;
 	private Long consumeTime;
 	private String queryString;
+	private String handler;
 
 	public ObjectId getId() {
 		return id;
@@ -65,5 +66,13 @@ public class Behavior extends ActionLog implements Serializable {
 	public void setQueryString(String queryString) {
 		this.queryString = queryString;
 	}
+
+    public String getHandler() {
+        return handler;
+    }
+
+    public void setHandler(String handler) {
+        this.handler = handler;
+    }
 
 }

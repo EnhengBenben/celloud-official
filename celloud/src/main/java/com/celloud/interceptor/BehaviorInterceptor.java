@@ -15,6 +15,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.celloud.model.mongo.Behavior;
 import com.celloud.service.BehaviorService;
 import com.celloud.utils.ActionLog;
+import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.UserAgentUtil;
 
 /**
@@ -46,7 +47,7 @@ public class BehaviorInterceptor extends HandlerInterceptorAdapter {
         Behavior behavior = UserAgentUtil.getUserBehavior(request);
         behavior.setLogDate(new Date());
         behavior.setMethod(request.getMethod());
-        behavior.setAction(request.getRequestURI());
+        behavior.setAction(CustomStringUtils.substringBefore(request.getRequestURI(), ";jsessionid"));
         behavior.setQueryString(request.getQueryString());
         userBehavior.set(behavior);
         return super.preHandle(request, response, handler);
@@ -71,6 +72,11 @@ public class BehaviorInterceptor extends HandlerInterceptorAdapter {
                 behavior.setMessage(log.button());
                 logger.debug("operate={};button={}", log.value(), log.button());
             }
+            String beanName = ((HandlerMethod) handler).getBeanType().getName();
+            String methodName = ((HandlerMethod) handler).getMethod().getName();
+            behavior.setHandler(beanName + "." + methodName + "()");
+        } else {
+            behavior.setHandler(handler.toString());
         }
         long beginTime = startTimeThreadLocal.get();// 得到线程绑定的局部变量（开始时间）
         long endTime = System.currentTimeMillis();// 2、结束时间
