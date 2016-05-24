@@ -27,10 +27,18 @@
 	    <tr id="report${task.dataKey}${task.projectId}${task.appId}">
 	      <td>${task.batch }</td>
 	      <td title="${task.fileName }" name="data-name-td" >
-	        <a href="javascript:<c:choose><c:when test="${task.period==2 }">$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId})</c:when><c:otherwise>void(0)</c:otherwise></c:choose>">
-              <c:choose><c:when test="${fn:length(task.fileName)>60 }"><c:out value="${fn:substring(task.fileName, 0, 60) }"/>...</c:when><c:otherwise>${task.fileName }</c:otherwise></c:choose>
-            </a>
-            <c:if test="${not empty task.anotherName }">(${task.anotherName })</c:if>
+	        <c:choose>
+	          <c:when test="${task.period==2 }">
+	             <a href="javascript:<c:choose><c:when test="${task.period==2 }">$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId})</c:when><c:otherwise>void(0)</c:otherwise></c:choose>">
+	               <c:choose><c:when test="${fn:length(task.fileName)>60 }"><c:out value="${fn:substring(task.fileName, 0, 60) }"/>...</c:when><c:otherwise>${task.fileName }</c:otherwise></c:choose>
+	               <c:if test="${not empty task.anotherName }">(${task.anotherName })</c:if>
+	             </a>
+	          </c:when>
+	          <c:otherwise>
+	            <c:choose><c:when test="${fn:length(task.fileName)>60 }"><c:out value="${fn:substring(task.fileName, 0, 60) }"/>...</c:when><c:otherwise>${task.fileName }</c:otherwise></c:choose>
+                <c:if test="${not empty task.anotherName }">(${task.anotherName })</c:if>
+	          </c:otherwise>
+	        </c:choose>
           </td>
 	      <td>
 	        <c:if test="${task.period==0 }">等待运行</c:if>
@@ -42,7 +50,9 @@
 	      <td><fmt:formatDate type="both" value="${task.createDate }"/></td>
 	      <td>
             <a class="edit-icon" name="to-report-a" href="javascript:<c:choose><c:when test="${task.period==2 }">$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId})</c:when><c:otherwise>void(0)</c:otherwise></c:choose>"><i class="celicon show-icon"></i></a>
-	        <a class="edit-icon" href="javascript:$.report.run(${task.fileId },118)"><i class="celicon rerun-icon"></i></a>
+	        <c:if test="${task.period==1||task.period==2||task.period==3 }">
+	          <a class="edit-icon" href="javascript:$.report.reRun(${task.dataKey },${task.appId },${task.projectId })"><i class="celicon rerun-icon"></i></a>
+            </c:if>
 <%-- 	        <a class="edit-icon" id="to-rerun-a" href="javascript:$.report.run(${task.fileId },${task.appId })"><i class="celicon rerun-icon"></i></a> --%>
 	      </td>
 	    </tr>

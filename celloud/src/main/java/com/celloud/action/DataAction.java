@@ -543,6 +543,29 @@ public class DataAction {
         return result;
     }
 
+    /**
+     * 重新运行
+     * 
+     * @param dataIds
+     * @param command
+     * @return
+     * @author leamo
+     * @date 2016年5月24日 下午6:17:04
+     */
+    @ActionLog(value = "重新运行数据", button = " ")
+    @RequestMapping("reRun")
+    @ResponseBody
+    public String reRun(String dataKey, Integer appId, Integer projectId) {
+        Task task = taskService.findTaskDataAppPro(dataKey, appId, projectId);
+        String param = SparkPro.TOOLSPATH + task.getUserId() + "/" + appId
+                + " ProjectID" + projectId;
+        String killCommand = SparkPro.SGEKILL + " " + param;
+        SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+        ssh.sshSubmit(killCommand, false);
+        Boolean istrue = ssh.sshSubmit(task.getCommand(), false);
+        return istrue.toString();
+    }
+
     @ActionLog(value = "获取所有数据任务列表", button = "我的报告")
     @RequestMapping("taskAllList")
     public ModelAndView taskAllList(@RequestParam(defaultValue = "1") int page,
