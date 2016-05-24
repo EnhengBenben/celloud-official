@@ -49,8 +49,6 @@
 		</h2>
 	    <div class="m-boxCon result">
 	    	<c:if test="${oncogene.wz2!=null && oncogene.wz2!='' }">
-		    	${oncogene.wz2 }
-		    	<br/>
 		    	<c:forEach var="img" items="${oncogene.out }">
 					<img class="imgtop" title="${img }" name="imgSrc" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img }" style="width: 900px;">
 		    	</c:forEach>
