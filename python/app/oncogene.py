@@ -89,7 +89,7 @@ class oncogene:
 					original[x.replace('.','_')] = x
 				elif(('else' in x) and ('3.else' not in x) and x.endswith('.png')):
 					out.append(x)
-				elif(('else' not in x) and x.endswith('.png')):
+				elif(('else' not in x) and x.endswith('.png') and ('3.png' not in x)):
 					km.append(x)
 			result['knowMutation'] = km
 			result['original'] = original
