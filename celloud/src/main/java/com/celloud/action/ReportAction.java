@@ -100,20 +100,20 @@ public class ReportAction {
     private ExperimentService expService;
     @Resource
     private VelocityUtil velocityUtil;
-    
-	@ActionLog(value = "下载", button = "下载")
-	@RequestMapping("down")
-	@ResponseStatus(value = HttpStatus.OK)
-	@ResponseBody
-	public Integer down(String path) {
-		Integer userId = ConstantsData.getLoginUserId();
-		String filePath = SparkPro.TOOLSPATH + userId + "/" + path;
-		if (new File(filePath).exists()) {
-			FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
-			return 0;
-		}
-		return 1;
-	}
+
+    @ActionLog(value = "下载", button = "下载")
+    @RequestMapping("down")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public Integer down(String path) {
+        Integer userId = ConstantsData.getLoginUserId();
+        String filePath = SparkPro.TOOLSPATH + userId + "/" + path;
+        if (new File(filePath).exists()) {
+            FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
+            return 0;
+        }
+        return 1;
+    }
 
     /**
      * 获取报告模块列表
@@ -1112,7 +1112,7 @@ public class ReportAction {
         if (ReportAction.class.getResource("/templates/report/" + path) == null) {
             path = "default/" + appId + "/print.vm";
         }
-        ModelAndView mv = new ModelAndView(path);
+        ModelAndView mv = getModelAndView(path, projectId);
         HCV hcv = reportService.getHCVReport(dataKey, projectId, appId);
         Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
@@ -1142,7 +1142,7 @@ public class ReportAction {
         if (ReportAction.class.getResource("/templates/report/" + path) == null) {
             path = "default/" + appId + "/print.vm";
         }
-        ModelAndView mv = new ModelAndView(path);
+        ModelAndView mv = getModelAndView(path, projectId);
         EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
         Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
@@ -1173,7 +1173,7 @@ public class ReportAction {
         if (ReportAction.class.getResource("/templates/report/" + path) == null) {
             path = "default/" + appId + "/print.vm";
         }
-        ModelAndView mv = new ModelAndView(path);
+        ModelAndView mv = getModelAndView(path, projectId);
         KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
         Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
