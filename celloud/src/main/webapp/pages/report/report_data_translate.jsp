@@ -11,7 +11,7 @@
           <dd class="force-break">${translate.fileName}(${translate.dataKey})</dd>
         </dl>
         <div class="toolbar">
-        	<a class="btn btn-warning btn-flat" href="/report/down?path=${translate.appId }/${translate.dataKey }/result.txt" class="btn btn-default"><i class="fa fa-file-pdf-o"></i>结果下载</a>
+        	<a class="btn btn-warning btn-flat" href="/report/down?path=${translate.userId }/${translate.appId }/${translate.dataKey }/result.txt" class="btn btn-default"><i class="fa fa-file-pdf-o"></i>结果下载</a>
 	    </div>
 	</div>
 	<c:if test="${empty translate.result }">

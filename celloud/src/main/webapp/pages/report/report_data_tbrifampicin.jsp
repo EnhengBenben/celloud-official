@@ -13,7 +13,7 @@
 		<div class="toolbar">
 			<a class="btn btn-celloud-success btn-flat" target="_blank" href='report/printTBRifampicin?appId=${tbrifampicin.appId }&dataKey=${tbrifampicin.dataKey }&projectId=${tbrifampicin.projectId }'><i class="fa fa-print"></i>打印报告</a>
 			<c:if test="${tbrifampicin.pdf!=null && tbrifampicin.pdf!='' }">
-				<a class="btn btn-warning btn-flat" href="/report/down?path=${tbrifampicin.appId }/${tbrifampicin.dataKey }/${tbrifampicin.pdf }"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
+				<a class="btn btn-warning btn-flat" href="/report/down?path=${tbrifampicin.userId }/${tbrifampicin.appId }/${tbrifampicin.dataKey }/${tbrifampicin.pdf }"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
 			</c:if>
 		</div>
 	</div>

@@ -18,10 +18,10 @@
                 <a class="btn btn-celloud-success btn-flat" target="_blank" href='report/printHBV?appId=${hbv.appId }&dataKey=${hbv.dataKey }&projectId=${hbv.projectId }&flag=1'><i class="fa fa-print"></i>简要报告</a>
             </c:if>
             <c:if test="${hbv.pdf!=null && hbv.pdf!='' }">
-                <a class="btn btn-warning btn-flat" href="/report/down?path=${hbv.appId }/${hbv.dataKey }/${hbv.pdf }"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
+                <a class="btn btn-warning btn-flat" href="/report/down?path=${hbv.userId }/${hbv.appId }/${hbv.dataKey }/${hbv.pdf }"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
             </c:if>
             <c:if test="${hbv.pdf!=zip && hbv.zip!='' }">
-                <a class="btn btn-info btn-flat" href="/report/down?path=${hbv.appId }/${hbv.dataKey }/${hbv.zip }"><i class="fa fa-cloud-download"></i>报告下载</a>
+                <a class="btn btn-info btn-flat" href="/report/down?path=${hbv.userId }/${hbv.appId }/${hbv.dataKey }/${hbv.zip }"><i class="fa fa-cloud-download"></i>报告下载</a>
             </c:if>
         </div>
 	</div>

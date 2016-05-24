@@ -24,8 +24,8 @@ $.ajaxSetup ({
 		var spinnerTotal;
 		//---------------------------------------------------------------------
 		var param = null;
-		function downPDF(appId,projectId){
-		  var path = appId + "/" + projectId + "/" + projectId + ".pdf";
+		function downPDF(userId,appId,projectId){
+		  var path = userId + "/" + appId + "/" + projectId + "/" + projectId + ".pdf";
 			$.get("report/down",{"path":path},function(flag){
 				if(flag==1){
 				  jAlert("没有可以下载的pdf文件");
