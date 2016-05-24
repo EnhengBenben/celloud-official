@@ -1052,20 +1052,16 @@ public class ReportAction {
     @ActionLog(value = "打印TBRifampicin数据报告", button = "打印数据报告")
     @RequestMapping("printTBRifampicin")
     public ModelAndView printTBRifampicin(Integer appId, String dataKey, Integer projectId, Integer flag) {
-        ModelAndView mv = getModelAndView("print/print_tbrifampicin", projectId);
+        String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print.vm";
+        if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+            path = "default/" + appId + "/print.vm";
+        }
+        ModelAndView mv = new ModelAndView(path);
+        TBRifampicin tbrifampicin = reportService.getTBRifampicinReport(dataKey, projectId, appId);
         Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
-        // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
-        if (StringUtils.isNotEmpty(report.getPrintContext())) {
-            return mv.addObject("printContext", report.getPrintContext());
-        }
-        TBRifampicin tbrifampicin = reportService.getTBRifampicinReport(dataKey, projectId, appId);
-        if (StringUtils.isNotBlank(tbrifampicin.getReport())) {
-            tbrifampicin.setReport(CustomStringUtils.htmlbr(tbrifampicin.getReport()));
-        }
-
-        mv.addObject("tbrifampicin", tbrifampicin).addObject("flag", flag).addObject("report", report);
+        mv.addObject("tbrifampicin", tbrifampicin).addObject("report", report);
         return mv;
     }
 
