@@ -1,9 +1,9 @@
 #parse("/default/${tbrifampicin.appId}/reference.vm")
 <div id="printMain">
-    #if(${report.printContext})
-        ${report.printContext}
+    #if(${printContext})
+        ${printContext}
     #end
-    #if(!${report.printContext})
+    #if(!${printContext})
         <div>
             #parse("/default/${tbrifampicin.appId}/title.vm")
             #parse("/default/${tbrifampicin.appId}/content.vm")
