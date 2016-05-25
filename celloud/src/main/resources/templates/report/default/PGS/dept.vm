@@ -1,1 +1,0 @@
-<img id="_imgShow" src="$link.getContextPath()/report/dept/icon?file=${pgs.deptIcon}" style="width:95px">
