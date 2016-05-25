@@ -552,7 +552,7 @@ public class DataAction {
      * @author leamo
      * @date 2016年5月24日 下午6:17:04
      */
-    @ActionLog(value = "重新运行数据", button = " ")
+    @ActionLog(value = "重新运行数据", button = "重复运行")
     @RequestMapping("reRun")
     @ResponseBody
     public String reRun(String dataKey, Integer appId, Integer projectId) {
@@ -563,6 +563,8 @@ public class DataAction {
         SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
         ssh.sshSubmit(killCommand, false);
         Boolean istrue = ssh.sshSubmit(task.getCommand(), false);
+        taskService.updateToRunning(task.getTaskId());
+        logger.info("{}重复运行数据：{}", task.getUserId(), dataKey);
         return istrue.toString();
     }
 

@@ -78,7 +78,7 @@ $.report.options = {
     sortDate: "desc",
     pageSize: $("#page-size-sel").val()
 };
-$.report.run = function(dataKey,appId,projectId){
+$.report.reRun = function(dataKey,appId,projectId){
   $.get("data/reRun",{"dataKey":dataKey,"appId":appId,"projectId":projectId},function(result){
     $.report.find.condition();
   });
