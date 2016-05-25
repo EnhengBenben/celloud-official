@@ -1,5 +1,11 @@
-#override("dept")
+#parse("/default/PGS/reference.vm")
+#if($printContext)
+	$printContext
+#else
+	#override("dept")
+	#end
+	#override("bottom")
+	#end
+	#extends("/default/PGS/base.vm")
 #end
-#override("bottom")
-#end
-#extends("/default/PGS/base.vm")
+#parse("/default/PGS/js.vm")

@@ -1,16 +1,22 @@
-#override("card")
+#parse("/default/PGS/reference.vm")
+#if($printContext)
+	$printContext
+#else
+	#override("card")
+	#end
+	#override("dept")
+	#end
+	#override("input")
+		#parse("/10/PGS/input.vm")
+	#end
+	#override("explain")
+		#parse("/10/PGS/explain.vm")
+	#end
+	#override("footer")
+		#parse("/10/PGS/footer.vm")
+	#end
+	#override("bottom")
+	#end
+	#extends("/default/PGS/base.vm")
 #end
-#override("dept")
-#end
-#override("input")
-	#parse("/10/PGS/input.vm")
-#end
-#override("explain")
-	#parse("/10/PGS/explain.vm")
-#end
-#override("footer")
-	#parse("/10/PGS/footer.vm")
-#end
-#override("bottom")
-#end
-#extends("/default/PGS/base.vm")
+#parse("/default/PGS/js.vm")
