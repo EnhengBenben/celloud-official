@@ -50,7 +50,9 @@ $(function(){
 		}
 		$("#des3").html(inputVal);
 		$("#p2footer").css("margin-top",(300-$("#page2").height())+"px");
+		$(".buttons").hide();
 		window.print();
+		$(".buttons").show();
 		$("body").find("span[name='print']").each(function(){
 			inputVal = $(this).html();
 			if($(this).parent().attr("id")=="jzkp"){
@@ -96,7 +98,7 @@ $(function(){
 		$("#des2").children().html($("#des2").children().val());
 		$("#des3").children().html($("#des3").children().val());
 		var url = window.location.href.split("printPGS")[0];
-		$.post(url+"updateContext",{"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"projectId":$("#_projectId").html(),"printContext":$("body").html()},function(result){
+		$.post(url+"updateContext",{"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"projectId":$("#_projectId").html(),"printContext":$("#pgsSave").prop("outerHTML")},function(result){
 			if(result==1){
 				jAlert("信息保存成功！");
 			}else{

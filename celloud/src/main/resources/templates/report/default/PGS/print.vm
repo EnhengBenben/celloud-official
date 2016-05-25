@@ -1,1 +1,7 @@
-#extends("/default/PGS/base.vm")
+#parse("/default/PGS/reference.vm")
+#if($printContext)
+	$printContext
+#else
+	#extends("/default/PGS/base.vm")
+#end
+#parse("/default/PGS/js.vm")
