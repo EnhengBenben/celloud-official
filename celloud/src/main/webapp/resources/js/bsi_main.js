@@ -1,7 +1,7 @@
 /**
  * 血流用户主页事件
  */
-var uploadProgress = 0;
+var uploadPercent = 0;
 $(function () {
   $.report.find.all();
   $("#to-upload-a").on("click",function(){
@@ -11,7 +11,7 @@ $(function () {
       $("#upload-content").addClass("upload-step-one");
     }
     $("#upload-modal").modal("show");
-    if(uploadProgress >= 100){
+    if(uploadPercent >= 100){
       waveLoading.setProgress(0);
       document.querySelector("#upload-progress").height = document.querySelector("#upload-progress").height;
     }

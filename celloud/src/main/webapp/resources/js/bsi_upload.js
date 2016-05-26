@@ -48,10 +48,10 @@ var fileUpload=(function(fileUpload){
       }
     });
     uploader.bind("UploadProgress", function(uploader, file) {
+      waveLoading.setProgress(uploader.total.percent);
+      uploadPercent = uploader.total.percent;
       $("#uploading-" + file.id +" .plupload-file-status").html(file.percent+"%");
       $("#uploading-" + file.id + " .plupload-file-surplus").html(utils.formatDate((file.size-file.loaded)/uploader.total.bytesPerSec));
-      waveLoading.setProgress(uploader.total.percent);
-      uploadProgress = uploader.total.percent
       handleStatus(uploader.total.percent);
     });
     function getSize(fileSize){
@@ -155,6 +155,7 @@ var fileUpload=(function(fileUpload){
     uploader.bind("UploadComplete",function(uploader,files){
       if(files.length>0){
         waveLoading.setProgress(100);
+        uploadPercent = 100;
       }else{
         waveLoading.init({
           haveInited: false
