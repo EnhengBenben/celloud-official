@@ -136,7 +136,7 @@
           <div>数据运行所需文件如下：<br>
             <span class="highlight-text">public_name_</span>R1.fastq<br>
             <span class="highlight-text">public_name_</span>R2.fastq<br>
-            <span class="highlight-text">public_name_</span>R1.txt
+            <span class="highlight-text">public_name_</span>.txt
           </div>
           <a class="btn" href="javascript:void(0)" data-dismiss="modal" aria-label="Close">知道了</a>
         </div>
