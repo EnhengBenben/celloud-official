@@ -14,7 +14,7 @@
 <table class="table table-main">
   <thead>
     <tr>
-      <th>批次</th>
+      <th>批次/标签</th>
       <th>文件名</th>
       <th>文件编号</th>
       <th>文件大小</th>
