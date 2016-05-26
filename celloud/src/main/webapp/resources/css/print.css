@@ -7,9 +7,9 @@ img {border:0;}
 li {list-style:none;}
 body{font-family:Arial,'Hiragino Sans GB','Microsoft YaHei',微软雅黑, STHeiti; font-size:14px; max-width: 850px; margin:auto; color:#232323}
 .hide {display: none !important;}
-.btn{ display:inline-block;*display:inline;*zoom:1; padding:5px 11px; border:1px solid #cbd4e0; border-radius:4px; background-image:url(../images/report/_btn.png); background-repeat:repeat-x; text-shadow:1px 1px 2px rgba(255,255,255,1)}
-.btn-default{ background-position:0 0; color:#6e88ac; border:1px solid #cbd4e0;} 
-.btn-default:hover{ background-position:0 -40px; border:1px solid #aab8cc;}
+.pbtn{ display:inline-block;*display:inline;*zoom:1; padding:5px 11px; border:1px solid #cbd4e0; border-radius:4px; background-image:url(../images/report/_btn.png); background-repeat:repeat-x; text-shadow:1px 1px 2px rgba(255,255,255,1)}
+.pbtn-default{ background-position:0 0; color:#6e88ac; border:1px solid #cbd4e0;} 
+.pbtn-default:hover{ background-position:0 -40px; border:1px solid #aab8cc;}
 .width-80{width: 80px;}
 .width-120{width: 120px;}
 .buttons {
@@ -22,9 +22,9 @@ body{font-family:Arial,'Hiragino Sans GB','Microsoft YaHei',微软雅黑, STHeit
 }
 .buttons > a {
     margin-bottom: 5px;
-    top: 10px;
-    width: 50px;
-    height: 18px;
+    top: 15px;
+    width: 70px;
+    height: 30px;
     font-size: 12px;
     text-decoration: none;
     text-align: center;

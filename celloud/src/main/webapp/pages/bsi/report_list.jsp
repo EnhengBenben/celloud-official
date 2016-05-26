@@ -23,13 +23,13 @@
   </thead>
   <tbody id="data-list-tbody">
     <c:if test="${pageList.datas.size()>0 }">
-      <c:forEach var="task" items="${pageList.datas }">
+      <c:forEach var="task" items="${pageList.datas }" varStatus="size">
 	    <tr id="report${task.dataKey}${task.projectId}${task.appId}">
 	      <td>${task.batch }</td>
 	      <td title="${task.fileName }" name="data-name-td" >
 	        <c:choose>
 	          <c:when test="${task.period==2 }">
-	             <a href="javascript:<c:choose><c:when test="${task.period==2 }">$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId})</c:when><c:otherwise>void(0)</c:otherwise></c:choose>">
+	             <a href="javascript:<c:choose><c:when test="${task.period==2 }">$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId},${size.count},${pageList.page.currentPage })</c:when><c:otherwise>void(0)</c:otherwise></c:choose>">
 	               <c:choose><c:when test="${fn:length(task.fileName)>60 }"><c:out value="${fn:substring(task.fileName, 0, 60) }"/>...</c:when><c:otherwise>${task.fileName }</c:otherwise></c:choose>
 	               <c:if test="${not empty task.anotherName }">(${task.anotherName })</c:if>
 	             </a>
@@ -50,7 +50,7 @@
 	      <td><fmt:formatDate type="both" value="${task.updateDate }"/></td>
 	      <td>
 	        <c:if test="${task.period==2 }">
-	            <a class="edit-icon" name="to-report-a" href="javascript:<c:choose><c:when test="${task.period==2 }">$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId})</c:when><c:otherwise>void(0)</c:otherwise></c:choose>"><i class="celicon show-icon"></i></a>
+	            <a class="edit-icon" name="to-report-a" href="javascript:<c:choose><c:when test="${task.period==2 }">$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId},,${size.index})</c:when><c:otherwise>void(0)</c:otherwise></c:choose>"><i class="celicon show-icon"></i></a>
 	        </c:if>
 	        <c:if test="${task.period==1||task.period==2||empty task.period }">
 	          <a class="edit-icon" href="javascript:$.report.reRun(${task.dataKey },${task.appId },${task.projectId })"><i class="celicon rerun-icon"></i></a>

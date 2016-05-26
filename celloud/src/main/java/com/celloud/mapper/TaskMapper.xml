@@ -211,7 +211,8 @@
   </update>
   <update id="deleteTask" parameterType="com.celloud.model.mysql.Task" >
     update tb_task
-    set state = #{state,jdbcType=INTEGER}
+    set state = #{state,jdbcType=INTEGER},
+    delete_date = #{deleteDate,jdbcType=TIMESTAMP},
     where project_id = #{projectId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.Task" >
@@ -276,7 +277,7 @@
 	where f.user_id=#{userId} and f.state=#{state}
 	order by t.update_date desc,f.batch asc
   </select>
-  <select id="findTasksByUserCondition" resultMap="ResultMapWithFileName">
+  <select id="findTasksByUserCondition" resultMap="ResultMapWithFileName" flushCache="true">
     select  f.file_name,f.file_id,f.batch,f.another_name,t.* from 
     (select * from tb_task where task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and (app_id=118 or period!=2) group by data_key))t
     left join tb_file f
@@ -308,5 +309,11 @@
     <include refid="Base_Column_List" />
     from tb_task WHERE data_key = #{dataKey} and state=#{state} and app_id=#{appId} 
     and period = #{period} and project_id is null
+  </select>
+  <select id="findTaskDataAppPro" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_task WHERE data_key = #{dataKey} and state=#{state} and app_id=#{appId} 
+    and project_id=#{projectId}
   </select>
 </mapper>

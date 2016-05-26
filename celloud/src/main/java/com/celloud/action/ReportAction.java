@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
@@ -62,6 +63,7 @@ import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Experiment;
 import com.celloud.model.mysql.Project;
 import com.celloud.model.mysql.Report;
+import com.celloud.model.mysql.Task;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.AppService;
@@ -71,6 +73,7 @@ import com.celloud.service.DeptService;
 import com.celloud.service.ExperimentService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
+import com.celloud.service.TaskService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.FileTools;
@@ -100,6 +103,8 @@ public class ReportAction {
     private ExperimentService expService;
     @Resource
     private VelocityUtil velocityUtil;
+    @Resource
+    private TaskService taskService;
 
     @ActionLog(value = "下载", button = "下载")
     @RequestMapping("down")
@@ -562,10 +567,78 @@ public class ReportAction {
      */
     @ActionLog(value = "查看BSI患者报告", button = "数据报告")
     @RequestMapping("getBSIPatientReport")
-    public ModelAndView getBSIPatientReport(String dataKey, Integer projectId, Integer appId) {
-        return getBSIModelAndView("bsi/report_data_main", dataKey, projectId, appId);
+    public ModelAndView getBSIPatientReport(String dataKey, Integer projectId,
+            Integer appId, Integer reportIndex,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size, String condition,
+            @RequestParam(defaultValue = "0") int sort,
+            @RequestParam(defaultValue = "desc") String sortDate,
+            @RequestParam(defaultValue = "asc") String sortBatch,
+            @RequestParam(defaultValue = "asc") String sortName,
+            @RequestParam(defaultValue = "asc") String sortPeriod) {
+        Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
+        Matcher m = p.matcher(condition);
+        StringBuffer con_sb = new StringBuffer();
+        while (m.find()) {
+            String rep = "\\\\" + m.group(0);
+            m.appendReplacement(con_sb, rep);
+        }
+        m.appendTail(con_sb);
+        Page pager = new Page((page - 1) * size + reportIndex, 1);
+        PageList<Task> pageList = taskService.findTasksByUserCondition(pager,
+                ConstantsData.getLoginUserId(), condition, sort, sortDate,
+                sortBatch, sortName, sortPeriod);
+        ModelAndView mv = getBSIModelAndView("bsi/report_data_main", dataKey,
+                projectId, appId);
+        mv.addObject("pageList", pageList);
+        return mv;
     }
 
+    @ActionLog(value = "查看BSI患者报告", button = "数据报告")
+    @RequestMapping("getPrevOrNextBSIReport")
+    public ModelAndView getPrevOrNextBSIReport(
+            @RequestParam(defaultValue = "1") int page, String condition,
+            @RequestParam(defaultValue = "0") int totalPage,
+            @RequestParam(defaultValue = "0") int sort,
+            @RequestParam(defaultValue = "desc") String sortDate,
+            @RequestParam(defaultValue = "asc") String sortBatch,
+            @RequestParam(defaultValue = "asc") String sortName,
+            @RequestParam(defaultValue = "asc") String sortPeriod,
+            Boolean isPrev) {
+        Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
+        Matcher m = p.matcher(condition);
+        StringBuffer con_sb = new StringBuffer();
+        while (m.find()) {
+            String rep = "\\\\" + m.group(0);
+            m.appendReplacement(con_sb, rep);
+        }
+        m.appendTail(con_sb);
+        Page pager = new Page(page, 1);
+        PageList<Task> pageList = taskService.findNextOrPrevTasks(pager,
+                ConstantsData.getLoginUserId(), condition, sort, sortDate,
+                sortBatch, sortName, sortPeriod, isPrev, totalPage);
+        if (pageList != null) {
+            List<Task> list = pageList.getDatas();
+            if (list != null) {
+                Task task = list.get(0);
+                if (task != null) {
+                    System.out.println(task.getFileName());
+                    ModelAndView mv = getBSIModelAndView("bsi/report_data_main",
+                            task.getDataKey(), task.getProjectId(),
+                            task.getAppId());
+                    mv.addObject("pageList", pageList);
+                    return mv;
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+
+    }
     /**
      * 获取 BSI 的患者报告
      * 
