@@ -239,7 +239,11 @@ public class ReportAction {
     @RequestMapping("printGDDReport")
     public ModelAndView printGDDReport(String dataKey, Integer projectId, Integer appId) {
         CmpReport cmpReport = reportService.getCMPReport(dataKey, projectId, appId);
-        ModelAndView mv = getModelAndView("print/print_gdd", projectId);
+        String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print.vm";
+        if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+            path = "default/" + appId + "/print.vm";
+        }
+        ModelAndView mv = getModelAndView(path, projectId);
         if (cmpReport == null)
             return mv;
         Map<String, CmpGeneDetectionDetail> geneMap = cmpReport.getGeneDetectionDetail();
