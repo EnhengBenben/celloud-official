@@ -1,0 +1,4 @@
+#parse("/default/${split.appId}/reference.vm")
+#parse("/default/${split.appId}/title.vm")
+#parse("/default/${split.appId}/content.vm")
+#parse("/default/${split.appId}/js.vm")

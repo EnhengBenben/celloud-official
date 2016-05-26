@@ -470,7 +470,14 @@ public class ReportAction {
     @ActionLog(value = "打印split数据报告", button = "打印数据报告")
     @RequestMapping("printSplitReport")
     public ModelAndView printSplitReport(String dataKey, Integer projectId, Integer appId) {
-        return getSplitModelAndView("print/print_split", dataKey, projectId, appId);
+        String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print.vm";
+        if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+            path = "default/" + appId + "/print.vm";
+        }
+        ModelAndView mv = getModelAndView(path, projectId);
+        Split split = reportService.getSplitReport(dataKey, projectId, appId);
+        mv.addObject("split", split);
+        return mv;
     }
 
     /**
@@ -623,6 +630,15 @@ public class ReportAction {
                     .append(".vm");
         }
         return getBSIModelAndView(path.toString(), dataKey, projectId, appId);
+    }
+
+    /**
+     * 修改Split的数据报告
+     */
+    @RequestMapping("updateSplitReport")
+    @ResponseBody
+    public Integer updateSplitReport(Split split) {
+        return reportService.updateSplitReport(split);
     }
 
     /**

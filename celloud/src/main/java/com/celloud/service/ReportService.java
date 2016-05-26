@@ -142,7 +142,7 @@ public interface ReportService {
      * @date 2016年4月13日下午4:15:29
      */
     public ABINJ getABINJReport(String dataKey, Integer projectId, Integer appId);
-    
+
     /**
      * 获取16S数据报告
      * 
@@ -534,14 +534,16 @@ public interface ReportService {
      */
     public TaskQueue getTaskQueue(Integer projectId);
 
-	/**
-	 * 根据projectId检索项目报告
-	 * 
-	 * @param projectId
-	 * @return
-	 * @author lin
-	 * @date 2016年5月16日上午11:29:35
-	 */
-	public Report getReportByProjectId(Integer projectId);
+    /**
+     * 根据projectId检索项目报告
+     * 
+     * @param projectId
+     * @return
+     * @author lin
+     * @date 2016年5月16日上午11:29:35
+     */
+    public Report getReportByProjectId(Integer projectId);
+
+    public Integer updateSplitReport(Split split);
 
 }

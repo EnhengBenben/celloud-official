@@ -857,4 +857,10 @@ public class ReportServiceImpl implements ReportService {
     public Report getReportByProjectId(Integer projectId) {
         return reportMapper.getReportByProjectId(projectId, ReportType.PROJECT);
     }
+
+    @Override
+    public Integer updateSplitReport(Split split) {
+        UpdateResults ur = reportDao.editData(Split.class, split.getId(), "baseInfo", split.getBaseInfo());
+        return ur != null ? 1 : 0;
+    }
 }
