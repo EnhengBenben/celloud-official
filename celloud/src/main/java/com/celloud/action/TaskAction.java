@@ -228,9 +228,10 @@ public class TaskAction {
             logger.info("任务{}执行完毕", task.getTaskId());
             task = taskService.findFirstTask(appId);
             if (task != null) {
-                logger.info("运行命令：{}", command);
+                String toRunCommand = task.getCommand();
+                logger.info("运行命令：{}", toRunCommand);
                 SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-                ssh.sshSubmit(command.toString(), false);
+                ssh.sshSubmit(toRunCommand.toString(), false);
                 taskService.updateToRunning(task.getTaskId());
             }
         }

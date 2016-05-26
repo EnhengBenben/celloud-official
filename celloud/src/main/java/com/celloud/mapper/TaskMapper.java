@@ -46,7 +46,9 @@ public interface TaskMapper {
 	 * @author lin
 	 * @date 2016年5月16日下午5:01:03
 	 */
-	public Integer deleteTask(@Param("projectId") Integer projectId, @Param("state") Integer state);
+    public Integer deleteTask(@Param("projectId") Integer projectId,
+            @Param("state") Integer state,
+            @Param("deleteDate") Date deleteDate);
 
     int updateByPrimaryKey(Task record);
 
@@ -152,5 +154,21 @@ public interface TaskMapper {
      * @date 2016年5月16日 下午4:03:13
      */
     Task findTaskByDataKeyAndApp(@Param("state") Integer state,
-            @Param("dataKey") String dataKey, @Param("appId") Integer appId);
+            @Param("dataKey") String dataKey, @Param("appId") Integer appId,
+            @Param("period") Integer period);
+
+    /**
+     * 根据数据编号、appId、projectId获取任务信息
+     * 
+     * @param state
+     * @param dataKey
+     * @param appId
+     * @param projectId
+     * @return
+     * @author leamo
+     * @date 2016年5月26日 上午11:51:16
+     */
+    Task findTaskDataAppPro(@Param("state") Integer state,
+            @Param("dataKey") String dataKey, @Param("appId") Integer appId,
+            @Param("projectId") Integer projectId);
 }

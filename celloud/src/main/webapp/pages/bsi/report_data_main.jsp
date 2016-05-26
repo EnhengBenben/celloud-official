@@ -20,8 +20,11 @@
     <li role="presentation"><a href="javascript:void(0)" id="analy-tab">分析报告</a></li>
     <li class="nav-pub">
       <div class="pull-right">
-<%--           <a class="prev-btn" href="javascript:$.report.detail.prev('${bsi.dataKey }',${bsi.projectId },${bsi.appId })"><i class="fa fa-chevron-circle-left"></i>上一份</a> --%>
-<%--           <a class="next-btn" href="javascript:$.report.detail.next('${bsi.dataKey }',${bsi.projectId },${bsi.appId })">下一份<i class="fa fa-chevron-circle-right"></i></a> --%>
+        <c:if test="${pageList.datas.size()>0}">
+          <input id="total-page-hide" value="${pageList.page.totalPage }" type="hidden" >
+          <a class="prev-btn" href="javascript:$.report.detail.prev(${pageList.page.currentPage })"><i class="fa fa-chevron-circle-left"></i>上一份</a>
+          <a class="next-btn" href="javascript:$.report.detail.next(${pageList.page.currentPage })">下一份<i class="fa fa-chevron-circle-right"></i></a>
+        </c:if>
       </div>
     </li>
   </ul>

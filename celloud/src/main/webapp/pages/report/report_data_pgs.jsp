@@ -24,10 +24,10 @@
                     <a class="btn btn-celloud-success btn-flat" target="_blank" href="report/printPGS?appId=${pgs.appId }&projectId=${pgs.projectId }&dataKey=${pgs.dataKey }&flag=1"><i class="fa fa-print"></i>点图报告</a>                  
                 </c:if>
                 <c:if test="${pgs.pdf!=null }">
-                    <a class="btn btn-warning btn-flat" href="/report/down?path=${pgs.appId }/${pgs.dataKey }/${pgs.pdf }" class="btn btn-default"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
+                    <a class="btn btn-warning btn-flat" href="/report/down?path=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.pdf }" class="btn btn-default"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
                 </c:if>
 	            <c:if test="${pgs.finalPng!=null && pgs.finalPng!='' }">
-                    <a class="btn btn-info btn-flat" href="/report/down?path=${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" class="btn btn-default"><i class="fa fa-cloud-download"></i>报告下载</a>
+                    <a class="btn btn-info btn-flat" href="/report/down?path=${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" class="btn btn-default"><i class="fa fa-cloud-download"></i>报告下载</a>
                 </c:if>
 		        <c:if test="${experiment!=null }">
 			        <br/>

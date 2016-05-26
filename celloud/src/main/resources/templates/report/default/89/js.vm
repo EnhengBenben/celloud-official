@@ -28,22 +28,23 @@ $(function(){
         });
         $.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printContext":$("#printMain").html()},function(result){
             if(result==1){
-                alert("信息保存成功！");
+                $.lAlert("信息保存成功！");
             }else{
-                alert("信息保存失败！");
+                $.lAlert("信息保存失败！");
             }
         });
     });
 
     $("#reset").on("click",function(){
-         $("#print-form")[0].reset();
-         if(sex){
-            $("#men").attr("checked","checked");
-            $("#women").removeAttr("checked");
-         }else{
-            $("#women").attr("checked","checked");
-            $("#men").removeAttr("checked");
-         }
+         $.lConfirm("确认重置?",function(){
+            $.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"printContext":""},function(result){
+                if(result==1){
+                    location=location ;
+                }else{
+                    $.lAlert("信息重置失败！");
+                }
+            });
+        });
     });
     
 });

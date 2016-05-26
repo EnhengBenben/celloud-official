@@ -14,11 +14,11 @@
 <table class="table table-main">
   <thead>
     <tr>
-      <th>批次</th>
+      <th>批次/标签</th>
       <th>文件名</th>
       <th>文件编号</th>
       <th>文件大小</th>
-      <th>上传时间<a id="data-sort-date" href="javascript:void(0);"><i id="sort-date-icon" class="fa fa-sort-amount-asc"></i></a></th>
+      <th>上传时间<a id="sort-date" href="javascript:void(0);"><i id="sort-date-icon" class="fa fa-sort-amount-asc"></i></a></th>
 <!--       <th>操作</th> -->
     </tr>
   </thead>

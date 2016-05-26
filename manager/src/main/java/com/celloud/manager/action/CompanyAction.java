@@ -206,7 +206,7 @@ public class CompanyAction {
     @ResponseBody
     public int sendName(String currentName, String newName, String reason) {
         String[] emails = new String[] { "miaoqi@celloud.cn" };
-        EmailUtils.sendWithTitle("公司名称有异", "旧名称:" + currentName + " 新名称:" + newName + " 原因:" + reason, emails);
+        EmailUtils.sendWithTitle("公司名称有异", "旧名称:" + currentName + "\n\n新名称:" + newName + "\n\n原因:" + reason, emails);
         return 1;
     }
 

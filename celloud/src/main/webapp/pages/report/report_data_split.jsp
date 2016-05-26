@@ -16,7 +16,7 @@
         </dl>
         <div class="toolbar">
             <a class="btn btn-celloud-success btn-flat" href="javascript:printSplit(${split.projectId },${split.dataKey },${split.appId })"><i class="fa fa-print"></i>打印报告</a>
-            <a class="btn btn-warning btn-flat" href="/report/down?path=${split.appId }/${split.dataKey }/result/split_reads.tar.gz"><i class="fa fa-cloud-download"></i> 下载全部</a>
+            <a class="btn btn-warning btn-flat" href="/report/down?path=${split.userId }/${split.appId }/${split.dataKey }/result/split_reads.tar.gz"><i class="fa fa-cloud-download"></i> 下载全部</a>
         </div>
     </div>
     <div>
@@ -88,7 +88,7 @@
                               <c:if test="${!(data.name=='total' ||data.name=='useful'||data.name=='unknown')}">
                                 <tr>
                                   <td>
-                                        <a class="link" href="/report/down?path=${split.appId }/${split.dataKey }/result/split/${data.name }.tar.gz">${data.name }</a>  
+                                        <a class="link" href="/report/down?path=${split.userId }/${split.appId }/${split.dataKey }/result/split/${data.name }.tar.gz">${data.name }</a>  
                                   </td>
                                   <td>${data.number }</td>
                                   <td>${data.avgQuality }</td>
