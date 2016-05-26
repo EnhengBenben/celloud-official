@@ -27,7 +27,7 @@ ISOTIMEFORMAT='%Y%m%d'
 today = time.strftime(ISOTIMEFORMAT)
 
 #tomcat
-tomcatPath = '/home/celloud/server/apache-tomcat-7.0.56/webapps'
+tomcatPath = '/home/celloud/server/apache-tomcat-7.0.56'
 webappsPath = os.path.join(tomcatPath,'webapps')
 tomcatStopCommand = 'shutdown.sh'
 tomcatStartCommand = 'startup.sh'
