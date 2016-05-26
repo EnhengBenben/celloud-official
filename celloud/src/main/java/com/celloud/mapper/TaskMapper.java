@@ -46,7 +46,9 @@ public interface TaskMapper {
 	 * @author lin
 	 * @date 2016年5月16日下午5:01:03
 	 */
-	public Integer deleteTask(@Param("projectId") Integer projectId, @Param("state") Integer state);
+    public Integer deleteTask(@Param("projectId") Integer projectId,
+            @Param("state") Integer state,
+            @Param("deleteDate") Date deleteDate);
 
     int updateByPrimaryKey(Task record);
 

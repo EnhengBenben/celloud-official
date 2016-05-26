@@ -58,6 +58,7 @@ public class TaskServiceImpl implements TaskService {
     public Integer create(Task task) {
         task.setPeriod(TaskPeriod.WAITTING);
         task.setCreateDate(new Date());
+        task.setUpdateDate(new Date());
         return taskMapper.insertSelective(task);
     }
 
@@ -138,7 +139,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Integer deleteTask(Integer projectId) {
-        return taskMapper.deleteTask(projectId, DataState.DEELTED);
+        return taskMapper.deleteTask(projectId, DataState.DEELTED, new Date());
     }
 
     @Override
