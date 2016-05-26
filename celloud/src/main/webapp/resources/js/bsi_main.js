@@ -34,6 +34,7 @@ $(function () {
     $(".step-two-content").removeClass("hide");
     $("#one-to-two").addClass("active");
     $(".step-two").addClass("active");
+    $.upload.uploadTextType();
   });
   $("#condition-input").on("keyup",function(e){
     e = e || window.event;
@@ -66,7 +67,15 @@ $.base = {
     }
   }
 };
-
+$.upload = {
+    uploadTextType : function(){
+      if($("#uploading-filelist").children().length> 2){
+        $(".upload-text").addClass("hide");
+      }else{
+        $(".upload-text").removeClass("hide");
+      }
+    }
+}
 $.report = {};
 $.report.options = {
     condition: null,

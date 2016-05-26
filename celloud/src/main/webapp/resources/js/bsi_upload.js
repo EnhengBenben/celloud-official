@@ -131,6 +131,7 @@ var fileUpload=(function(fileUpload){
           uploader.removeFile(item);
           e.preventDefault();
           utils.stopBubble(e);
+          $.upload.uploadTextType();
         });
         $('#uploading-' + item.id + '.plupload_delete a').click(function(e) {
           $('#' + item.id).remove();
@@ -140,6 +141,7 @@ var fileUpload=(function(fileUpload){
           utils.stopBubble(e);
         });
       }); 
+      $.upload.uploadTextType();
     });
     uploader.bind("FileUploaded", function(uploader, file, response) {
       var res = response.response;
