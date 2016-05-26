@@ -13,7 +13,6 @@ $(function () {
     $("#upload-modal").modal("show");
     if(uploadProgress >= 100){
       waveLoading.setProgress(0);
-//      document.querySelector("#upload-progress").getContext('2d').clearRect(-64, -64, 64*2, 64*2);
       document.querySelector("#upload-progress").height = document.querySelector("#upload-progress").height;
     }
   });
