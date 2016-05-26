@@ -41,7 +41,7 @@
 		<div class="form-group">
 			<div class="control-label form-label col-xs-4">阶段</div>
 			<div class="col-xs-8">
-				<select name="step" id="step" style="width:80%;">
+				<select name="step" id="stepSelect" style="width:80%;">
 					<option value="0">--请选择--</option>
 					<c:forEach items="${list }" var="dict">
 						<c:if test="${dict.flag==0 }">
@@ -130,7 +130,7 @@
   $(function(){
       $("#sequenator").select2();
       $("#quality").select2();
-      $("#step").select2();
+      $("#stepSelect").select2();
       $("#amplificationMethod").select2();
       $("#sampleType").select2();
       
