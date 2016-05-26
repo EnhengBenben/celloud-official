@@ -151,6 +151,16 @@ var fileUpload=(function(fileUpload){
       handleStatus(file);
     });
     uploader.bind("UploadComplete",function(uploader,files){
+      if(files.length>0){
+        waveLoading.setProgress(100);
+      }else{
+//        waveLoading.setProgress(0);
+        waveLoading.init({
+          haveInited: false
+        });
+        waveLoading.draw();
+        document.querySelector("#upload-progress").height = document.querySelector("#upload-progress").height;
+      }
       $(".step-one-content").removeClass("hide");
       $(".step-two-content").addClass("hide");
       $(".step-three-content").addClass("hide");
@@ -181,6 +191,7 @@ var fileUpload=(function(fileUpload){
       $(".step-three").addClass("active");
       $("#tags-review").html($("#batch-info").val());
       waveLoading.init({
+          haveInited: true,
           target: document.querySelector('#upload-progress'),
           color: 'rgba(40, 230, 200, 0.6)',
           showText: false
