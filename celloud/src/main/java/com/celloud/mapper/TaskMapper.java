@@ -154,4 +154,19 @@ public interface TaskMapper {
     Task findTaskByDataKeyAndApp(@Param("state") Integer state,
             @Param("dataKey") String dataKey, @Param("appId") Integer appId,
             @Param("period") Integer period);
+
+    /**
+     * 根据数据编号、appId、projectId获取任务信息
+     * 
+     * @param state
+     * @param dataKey
+     * @param appId
+     * @param projectId
+     * @return
+     * @author leamo
+     * @date 2016年5月26日 上午11:51:16
+     */
+    Task findTaskDataAppPro(@Param("state") Integer state,
+            @Param("dataKey") String dataKey, @Param("appId") Integer appId,
+            @Param("projectId") Integer projectId);
 }

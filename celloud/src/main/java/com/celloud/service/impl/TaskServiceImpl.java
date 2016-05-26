@@ -132,7 +132,8 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task findTaskDataAppPro(String dataKey, Integer appId,
             Integer projectId) {
-        return null;
+        return taskMapper.findTaskDataAppPro(DataState.ACTIVE, dataKey, appId,
+                projectId);
     }
 
     @Override

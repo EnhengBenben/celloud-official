@@ -558,16 +558,19 @@ public class DataAction {
     public String reRun(String dataKey, Integer appId, Integer projectId) {
         Task task = taskService.findTaskDataAppPro(dataKey, appId, projectId);
         SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-        if (task.getPeriod() == 1) {
-            String param = SparkPro.TOOLSPATH + task.getUserId() + "/" + appId
-                    + " ProjectID" + projectId;
-            String killCommand = SparkPro.SGEKILL + " " + param;
-            ssh.sshSubmit(killCommand, false);
+        if (task != null) {
+            if (task.getPeriod() == 1) {
+                String param = SparkPro.TOOLSPATH + task.getUserId() + "/"
+                        + appId + " ProjectID" + projectId;
+                String killCommand = SparkPro.SGEKILL + " " + param;
+                ssh.sshSubmit(killCommand, false);
+            }
+            Boolean istrue = ssh.sshSubmit(task.getCommand(), false);
+            taskService.updateToRunning(task.getTaskId());
+            logger.info("{}重复运行数据：{}", task.getUserId(), dataKey);
+            return istrue.toString();
         }
-        Boolean istrue = ssh.sshSubmit(task.getCommand(), false);
-        taskService.updateToRunning(task.getTaskId());
-        logger.info("{}重复运行数据：{}", task.getUserId(), dataKey);
-        return istrue.toString();
+        return "reRun failed";
     }
 
     @ActionLog(value = "获取所有数据任务列表", button = "我的报告")
