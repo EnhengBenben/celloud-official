@@ -207,7 +207,7 @@ public class UploadAction {
             }
             m.appendTail(sb);
             List<DataFile> dlist = dataService.getDataByBatchAndFileName(userId,
-                    batch, pubName);
+                    batch, sb.toString());
             boolean hasR1 = false;
             boolean hasR2 = false;
             boolean hasIndex = false;
