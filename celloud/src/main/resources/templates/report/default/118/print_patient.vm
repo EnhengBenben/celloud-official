@@ -33,30 +33,3 @@
     <div class="statement"><span>声明：1.报告仅对本次送检样品负责;2.检测结果仅供医师参考</span></div>
   </div>
   </form>
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $("#print").on("click",function(){
-        $(".base-info").find("input[type='text']").each(function(){
-           $(this).parent().html("<input type='hidden' value='"+$(this).attr("class")+"'><span name='print-input'>"+$(this).val()+"</span>");
-        });
-        $("#department-text").text($("#department").val());
-        $("#department").addClass("hide");
-        $("#sample-type-text").text($("#sample-type").val());
-        $("#sample-type").addClass("hide");
-        $("#sex-text").html($("input[type='radio'][name='sex']:checked").val());
-        $("#sex").addClass("hide");
-        $(".buttons").hide();
-        window.print();
-        $("#department-text").text("");
-        $("#department").removeClass("hide");
-        $("#sample-type-text").text("");
-        $("#sample-type").removeClass("hide");
-        $("#sex-text").html("");
-        $("#sex").removeClass("hide");
-        $(".buttons").show();
-        $("span[name='print-input']").each(function(){
-            $(this).parent().html("<input class='"+$(this).prev().val()+"' type='text' value='"+$(this).html()+"'>");
-        });
-      });
-    });
-  </script>
