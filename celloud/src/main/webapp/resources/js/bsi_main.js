@@ -165,8 +165,9 @@ $.report.loadlist = function(response){
   });
 }
 $.report.detail = {
-    patient: function(dataKey,projectId,appId){
-      $.get("report/getBSIPatientReport",{"dataKey":dataKey,"projectId":projectId,"appId":appId},function(response){
+    patient: function(dataKey,projectId,appId,reportIndex,currentPage){
+      var options = $.report.options;
+      $.post("report/getBSIPatientReport",{"reportIndex":reportIndex,"dataKey":dataKey,"projectId":projectId,"appId":appId,"page":currentPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
         $("#container").html(response);
       });
     },
@@ -175,11 +176,27 @@ $.report.detail = {
         $("#myTabContent").html(response);
       });
     },
-    prev: function(dataKey,projectId,appId){
-      $("#report"+dataKey+projectId+appId).prev().find("a[name='to-report-a']").click();
+    prev: function(currentPage){
+      if(currentPage > 1){
+        var options = $.report.options;
+        $.post("report/getPrevOrNextBSIReport",{"isPrev":true,"page":currentPage-1,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
+          if(response != null &&response !=""){
+            $("#container").html(response);
+          }
+        });
+      }
     },
-    next: function(dataKey,projectId,appId){
-      $("#report"+dataKey+projectId+appId).next().find("a[name='to-report-a']").click();
+    next: function(currentPage){
+      var totalPage = $("#total-page-hide").val();
+      currentPage = parseInt(currentPage);
+      if(currentPage < totalPage){
+        var options = $.report.options;
+        $.post("report/getPrevOrNextBSIReport",{"isPrev":false,"page":currentPage+1,"totalPage":totalPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
+          if(response != null &&response !=""){
+            $("#container").html(response);
+          }
+        });
+      }
     }
 }
 $.report.period = {

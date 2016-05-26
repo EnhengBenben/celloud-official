@@ -557,11 +557,13 @@ public class DataAction {
     @ResponseBody
     public String reRun(String dataKey, Integer appId, Integer projectId) {
         Task task = taskService.findTaskDataAppPro(dataKey, appId, projectId);
-        String param = SparkPro.TOOLSPATH + task.getUserId() + "/" + appId
-                + " ProjectID" + projectId;
-        String killCommand = SparkPro.SGEKILL + " " + param;
         SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-        ssh.sshSubmit(killCommand, false);
+        if (task.getPeriod() == 1) {
+            String param = SparkPro.TOOLSPATH + task.getUserId() + "/" + appId
+                    + " ProjectID" + projectId;
+            String killCommand = SparkPro.SGEKILL + " " + param;
+            ssh.sshSubmit(killCommand, false);
+        }
         Boolean istrue = ssh.sshSubmit(task.getCommand(), false);
         taskService.updateToRunning(task.getTaskId());
         logger.info("{}重复运行数据：{}", task.getUserId(), dataKey);

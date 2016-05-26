@@ -117,6 +117,26 @@ public interface TaskService {
             String sortName, String sortPeriod);
 
     /**
+     * 数据报告上一个/下一个
+     * 
+     * @param page
+     * @param userId
+     * @param condition
+     * @param sort
+     * @param sortDate
+     * @param sortBatch
+     * @param sortName
+     * @param sortPeriod
+     * @return
+     * @author leamo
+     * @date 2016年5月25日 下午1:56:54
+     */
+    public PageList<Task> findNextOrPrevTasks(Page page, Integer userId,
+            String condition, Integer sort, String sortDate, String sortBatch,
+            String sortName, String sortPeriod, Boolean isPrev,
+            Integer totalPage);
+    
+    /**
      * 新增或修改上传任务数据
      * 
      * @param userId

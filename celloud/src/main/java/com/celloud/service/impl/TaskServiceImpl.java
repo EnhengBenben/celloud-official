@@ -1,5 +1,6 @@
 package com.celloud.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -154,6 +155,51 @@ public class TaskServiceImpl implements TaskService {
                 condition, sort, sortDate, sortBatch, sortName, sortPeriod,
                 DataState.ACTIVE);
         return new PageList<>(page, list);
+    }
+
+    @Override
+    public PageList<Task> findNextOrPrevTasks(Page page, Integer userId,
+            String condition, Integer sort, String sortDate, String sortBatch,
+            String sortName, String sortPeriod, Boolean isPrev,
+            Integer totalPage) {
+        List<Task> list = this.findTaskListByCondition(page, userId, condition,
+                sort, sortDate, sortBatch, sortName, sortPeriod, isPrev,
+                totalPage);
+        if (list != null) {
+            return new PageList<>(page, list);
+        } else {
+            return null;
+        }
+    }
+
+    private List<Task> findTaskListByCondition(Page pager, Integer userId,
+            String condition, Integer sort, String sortDate, String sortBatch,
+            String sortName, String sortPeriod, Boolean isPrev,
+            Integer totalPage) {
+        Integer currentPage = pager.getCurrentPage();
+        List<Task> list = new ArrayList<>();
+        // 查询报告
+        list = taskMapper.findTasksByUserCondition(pager, userId,
+                condition, sort, sortDate, sortBatch, sortName, sortPeriod,
+                DataState.ACTIVE);
+        if (list != null) {
+            Task t = list.get(0);
+            if (t != null && t.getPeriod() == 2) {// 如果找到符合条件的返回
+                return list;
+            }
+            if (isPrev && currentPage > 1) {// 向前翻页 取上一份报告 并且当前页码 大于1 向上还有元素
+                Page pager1 = new Page(--currentPage, 1);
+                return this.findTaskListByCondition(pager1, userId, condition,
+                        sort, sortDate, sortBatch, sortName, sortPeriod, isPrev,
+                        totalPage);
+            } else if (!isPrev && currentPage < totalPage) {// 向后翻页 取下一份报告
+                Page pager1 = new Page(++currentPage, 1);
+                return this.findTaskListByCondition(pager1, userId, condition,
+                        sort, sortDate, sortBatch, sortName, sortPeriod, isPrev,
+                        totalPage);
+            }
+        }
+        return null;
     }
 
     @Override
