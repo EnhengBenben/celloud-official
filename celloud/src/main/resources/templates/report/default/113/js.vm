@@ -14,7 +14,8 @@ $(function(){
         $("body").find("input[type='text']").each(function(){
             inputVal = $(this).val();
             classname = $(this).attr("class");
-            $(this).parent().html("<input type='hidden' value='"+classname+"'><span name='print'>"+inputVal+"</span>");
+            name = $(this).attr("name");
+            $(this).parent().html("<input type='hidden' name='"+name+"' value='"+classname+"'><span name='print'>"+inputVal+"</span>");
         });
         var sex = $("input[type='radio']:checked").val();
         $("#_sex").html(sex);
@@ -27,9 +28,10 @@ $(function(){
         $("body").find("span[name='print']").each(function(){
             inputVal = $(this).html();
             classname = $(this).prev().val();
-            $(this).parent().html("<input type='text' class='"+classname+"' value='"+inputVal+"'>");
+            name = $(this).prev().attr("name");
+            $(this).parent().html("<input type='text' name='" + name + "' class='"+classname+"' value='"+inputVal+"'>");
         });
-        $("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
+        $("#_sex").html("<input type='radio' name='"+'baseInfo["sex"]'+"' value='男'>男<input type='radio' name='"+'baseInfo["sex"]'+"' value='女'>女");
         $("input[type='radio'][value="+sex+"]").prop("checked",true); 
         
     });
