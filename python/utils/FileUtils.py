@@ -10,11 +10,25 @@ import zipfile
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
+
 #统计文件行数
 def countLines(path):
 	for count,line in enumerate(open(path,'rU')):
 		pass
 	return count + 1
+
+#按行读取文件内容
+def readAllByLines(path):
+	context = []
+	if not os.path.exists(path):
+		return context
+	with open(path,'r') as f:
+		while 1:
+			line = f.readline().strip()
+			if not line:
+				break
+			context.append(line)
+	return context
 
 #读取文件内容
 def readAll(path):
