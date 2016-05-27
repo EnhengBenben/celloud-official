@@ -28,6 +28,7 @@ import com.celloud.constants.ConstantsData;
 import com.celloud.constants.GlobalQueue;
 import com.celloud.constants.Mod;
 import com.celloud.constants.SparkPro;
+import com.celloud.constants.TaskPeriod;
 import com.celloud.model.DataFileEditForm;
 import com.celloud.model.mongo.TaskQueue;
 import com.celloud.model.mysql.App;
@@ -552,12 +553,14 @@ public class DataAction {
      * @author leamo
      * @date 2016年5月24日 下午6:17:04
      */
-    @ActionLog(value = "重新运行数据", button = "重复运行")
+    @ActionLog(value = "重新运行数据", button = "百菌探重复运行")
     @RequestMapping("reRun")
     @ResponseBody
     public String reRun(String dataKey, Integer appId, Integer projectId) {
         Task task = taskService.findTaskDataAppPro(dataKey, appId, projectId);
         SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+        App app = appService.findAppById(appId);
+        int runningNum = taskService.findRunningNumByAppId(appId);
         if (task != null) {
             if (task.getPeriod() == 1) {
                 String param = SparkPro.TOOLSPATH + task.getUserId() + "/"
@@ -565,10 +568,19 @@ public class DataAction {
                 String killCommand = SparkPro.SGEKILL + " " + param;
                 ssh.sshSubmit(killCommand, false);
             }
-            Boolean istrue = ssh.sshSubmit(task.getCommand(), false);
-            taskService.updateToRunning(task.getTaskId());
-            logger.info("{}重复运行数据：{}", task.getUserId(), dataKey);
-            return istrue.toString();
+            if (runningNum < app.getMaxTask() || app.getMaxTask() == 0) {
+                ssh.sshSubmit(task.getCommand(), false);
+                taskService.updateToRunning(task.getTaskId());
+                logger.info("{}重复运行任务：{}", task.getUserId(), task.getTaskId());
+            } else {
+                task.setPeriod(TaskPeriod.WAITTING);
+                task.setUpdateDate(new Date());
+                taskService.updateTask(task);
+                logger.info("{}排队重新运行任务：{}", task.getUserId(),
+                        task.getTaskId());
+
+            }
+            return "true";
         }
         return "reRun failed";
     }
