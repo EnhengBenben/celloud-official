@@ -27,12 +27,12 @@ var datafileUpload=(function(datafileUpload){
 	};
 	self.refreshSession=function(){
 	    //为了防止上传过程中session超时而随便请求的一个方法
-	    $.get("upload/checkAdminSessionTimeOut");
+	    $.get("uploadFile/checkAdminSessionTimeOut");
 	}
 	$(function() {
 		$("#fileUploadDiv").html("<p>您的浏览器未安装 Flash, Silverlight, Gears, BrowserPlus 或者支持 HTML5 .</p>");
 		$("#fileUploadDiv").pluploadQueue({
-			url : "../upload/uploadManyFile",
+			url : "../uploadFile/uploadManyFile",
 			chunk_size : "1mb",
 			file_data_name : "file",
 			filters : {
@@ -83,7 +83,7 @@ var datafileUpload=(function(datafileUpload){
 		});
 		//绑定选择文件事件
 		uploader.bind("Browse", function() {
-			$.get("upload/checkAdminSessionTimeOut",function(response){
+			$.get("uploadFile/checkAdminSessionTimeOut",function(response){
 				if(!response){//session超时则执行下两步
 					//销毁uploader，间接取消选择文件弹窗
 					uploader.destroy();
@@ -111,7 +111,7 @@ var datafileUpload=(function(datafileUpload){
 	    });
 		//自定义上传按钮，先进行session超时校验，再决定是执行上传还是跳转登陆页面操作
 		$("._start_custom").click(function(){
-			$.get("upload/checkAdminSessionTimeOut",function(response){
+			$.get("uploadFile/checkAdminSessionTimeOut",function(response){
 				if(response){
 					uploader.start();
 				}else{

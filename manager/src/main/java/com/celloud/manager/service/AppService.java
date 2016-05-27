@@ -107,4 +107,6 @@ public interface AppService {
     public int appNameExist(Integer appId, String appName);
 
     public App getAppById(Integer appId);
+
+    public void deleteAppRightByAppIdsAndUserId(List<App> apps, Integer userId);
 }

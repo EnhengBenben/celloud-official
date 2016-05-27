@@ -65,7 +65,6 @@ import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.ExpensesService;
 import com.celloud.service.ReportService;
-import com.celloud.utils.Base64Util;
 import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.ExcelUtil;
 import com.celloud.utils.FileTools;
@@ -835,35 +834,6 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public int updateReport(Report report) {
         return reportMapper.updateReport(report);
-    }
-
-    @Override
-    public Integer updateReportStateToTools(Integer userId, Integer appId, Integer projectId, Integer period,
-            String context) {
-        if (context != null) {
-            context = context.replaceAll(" ", "+");
-            context = Base64Util.decrypt(context);
-        }
-        Report report = new Report();
-        report.setUserId(userId);
-        report.setAppId(appId);
-        report.setProjectId(projectId);
-        report.setPeriod(period);
-
-        List<DataFile> list = dataMapper.getDatasInProject(projectId);
-        for (DataFile data : list) {
-            report.setFileId(data.getFileId());
-            report.setFlag(ReportType.DATA);
-            report.setEndDate(new Date());
-            reportMapper.updateReport(report);
-        }
-        report.setFlag(ReportType.PROJECT);
-        report.setContext(context);
-        report.setEndDate(new Date());
-        int result = reportMapper.updateReport(report);
-        // 保存消费记录
-        expenseService.saveProRunExpenses(projectId, list);
-        return result;
     }
 
     @Override

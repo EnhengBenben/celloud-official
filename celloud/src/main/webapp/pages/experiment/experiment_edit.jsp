@@ -25,7 +25,7 @@
 		<div class="form-group">
 			<div class="control-label form-label col-xs-4">质控</div>
 			<div class="col-xs-8">
-				<select name="quality">
+				<select name="quality" id="quality" style="width:60%;">
 					<option value="0" <c:if test="${experiment.quality==0 }">selected="selected"</c:if>>合格</option>
 					<option value="1" <c:if test="${experiment.quality==1 }">selected="selected"</c:if>>不合格</option>
 				</select>
@@ -41,7 +41,7 @@
 		<div class="form-group">
 			<div class="control-label form-label col-xs-4">阶段</div>
 			<div class="col-xs-8">
-				<select name="step" id="stepSelect">
+				<select name="step" id="stepSelect" style="width:80%;">
 					<option value="0">--请选择--</option>
 					<c:forEach items="${list }" var="dict">
 						<c:if test="${dict.flag==0 }">
@@ -56,7 +56,7 @@
 	    <div class="form-group">
 			<div class="control-label form-label col-xs-4">样本类型</div>
 			<div class="col-xs-8">
-				<select name="sampleType">
+				<select name="sampleType" id="sampleType" style="width:80%;">
 					<option value="0">--请选择--</option>
 					<c:forEach items="${list }" var="dict">
 						<c:if test="${dict.flag==1 }">
@@ -69,7 +69,7 @@
 	    <div class="form-group">
 			<div class="control-label form-label col-xs-4">扩增方法</div>
 			<div class="col-xs-8">
-				<select name="amplificationMethod">
+				<select name="amplificationMethod" id="amplificationMethod" style="width:80%;">
 					<option value="0">--请选择--</option>
 					<c:forEach items="${list }" var="dict">
 						<c:if test="${dict.flag==2 }">
@@ -82,7 +82,7 @@
 	    <div class="form-group">
 			<div class="control-label form-label col-xs-4">测序仪</div>
 			<div class="col-xs-8">
-				<select name="sequenator">
+				<select name="sequenator" onchange="experiment.selectSeqIndex(this.value)" id="sequenator" style="width:80%;">
 					<option value="0">--请选择--</option>
 					<c:forEach items="${list }" var="dict">
 						<c:if test="${dict.flag==3 }">
@@ -95,7 +95,8 @@
 	    <div class="form-group">
 			<div class="control-label form-label col-xs-4">Index</div>
 			<div class="col-xs-8">
-				<input type="text" name="seqIndex" value="${experiment.seqIndex }" id="expSeqIndex"/>
+				<select name="seqIndex" id="expSeqIndex" style="width:80%;" >
+                </select>
 			</div>
 		</div>
        </div>
@@ -125,4 +126,43 @@
       <button onclick="javascript:experiment.expBindData()" id="expBindDataSubmit" type="button" class="btn btn-celloud-success btn-flat hide">保存</button>
     </div>
   </div><!-- /.modal-content -->
+  <script type="text/javascript">
+  $(function(){
+      $("#sequenator").select2();
+      $("#quality").select2();
+      $("#stepSelect").select2();
+      $("#amplificationMethod").select2();
+      $("#sampleType").select2();
+      
+      var val = $("#sequenator").val();
+      $("#expSeqIndex").append("<option value='0'>--请选择--</option>");
+      if(val == 14 || val == 15){
+          for(var i = 1; i <= 96; i++){
+        	  var s = ("${experiment.seqIndex }" == i)?"selected":"";
+              $("#expSeqIndex").append("<option value='"+ i +"' "+s+">"+ i +"</option>");
+          }
+      }else if(val == 16){
+          for(var i = 1; i <= 9; i++){
+        	  var s = ("${experiment.seqIndex }" == "S503N70" + i)?"selected":"";
+              $("#expSeqIndex").append("<option value='S503N70"+ i +"' "+ s +">S503N70"+ i +"</option>");
+          }
+          for(var i = 10; i <= 12; i++){
+              var s = ("${experiment.seqIndex }" == "S503N7" + i)?"selected":"";
+              $("#expSeqIndex").append("<option value='S503N7"+ i +"' "+ s +">S503N7"+ i +"</option>");
+          }
+          
+          for(var i = 1; i <= 9; i++){
+        	  var s = ("${experiment.seqIndex }" == "S504N70" + i)?"selected":"";
+              $("#expSeqIndex").append("<option value='S504N70"+ i +"' " + s + ">S504N70"+ i +"</option>");
+          }
+          for(var i = 10; i <= 12; i++){
+              var s = ("${experiment.seqIndex }" == "S504N7" + i)?"selected":"";
+              $("#expSeqIndex").append("<option value='S504N7"+ i +"' "+ s +">S504N7"+ i +"</option>");
+          }
+      }
+
+      $("#expSeqIndex").select2();
+      
+  });
+  </script>
 </div>

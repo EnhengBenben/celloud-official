@@ -21,12 +21,14 @@ import com.celloud.manager.constants.ConstantsData;
 import com.celloud.manager.model.App;
 import com.celloud.manager.model.Company;
 import com.celloud.manager.model.Dept;
+import com.celloud.manager.model.SecRole;
 import com.celloud.manager.model.User;
 import com.celloud.manager.page.Page;
 import com.celloud.manager.page.PageList;
 import com.celloud.manager.service.AppService;
 import com.celloud.manager.service.CompanyService;
 import com.celloud.manager.service.DeptService;
+import com.celloud.manager.service.SecRoleService;
 import com.celloud.manager.service.UserService;
 import com.celloud.manager.utils.Base64Util;
 import com.celloud.manager.utils.MD5Util;
@@ -49,6 +51,8 @@ public class UserAction {
     private AppService appService;
     @Resource
     private DeptService deptService;
+    @Resource
+    private SecRoleService secRoleService;
 
     @RequestMapping("user/userList")
     public ModelAndView getUserByPage(@RequestParam(defaultValue = "1") int currentPage,
@@ -71,11 +75,79 @@ public class UserAction {
     @RequestMapping("user/toSendEmail")
     public ModelAndView toSendEmail() {
         ModelAndView mv = new ModelAndView("user/user_sendEmail");
-        Integer appCompanyId = ConstantsData.getLoginUser().getCompanyId();
+        Integer appCompanyId = ConstantsData.getLoginCompanyId();
+        Integer userId = ConstantsData.getLoginUserId();
+        // 获取当前大客户下的app列表
         List<App> appList = appService.getAppListByCompany(appCompanyId);
+        // 获取当前大客户下的role列表
+        List<SecRole> roleList = secRoleService.findRoleListByUserId(userId);
         mv.addObject("appList", appList);
         mv.addObject("appCompanyId", appCompanyId);
+        mv.addObject("roleList", roleList);
         return mv;
+    }
+
+    @RequestMapping("user/toGrantApp")
+    public ModelAndView toGrantApp(Integer userId) {
+        ModelAndView mv = new ModelAndView("user/user_grantApp");
+        // 获取当前大客户的app列表
+        Integer companyId = ConstantsData.getLoginCompanyId();
+        List<App> companyApps = appService.getAppListByCompany(companyId);
+        // 获取当前用户已授权的app列表
+        List<Map<String, String>> userApps = userService.getAppListByUserId(userId);
+        mv.addObject("companyApps", companyApps);
+        mv.addObject("userApps", userApps);
+        mv.addObject("userId", userId);
+        return mv;
+    }
+
+    @RequestMapping("user/toGrantRole")
+    public ModelAndView toGrantRole(Integer userId) {
+        ModelAndView mv = new ModelAndView("user/user_grantRole");
+        // 获取当前大客户的role列表
+        Integer companyId = ConstantsData.getLoginUserId();
+        List<SecRole> companyRoleList = secRoleService.findRoleListByUserId(companyId);
+        // 获取当前用户已授权的app列表
+        List<SecRole> userRoleList = secRoleService.findRoleListByUserId(userId);
+        mv.addObject("companyRoleList", companyRoleList);
+        mv.addObject("userRoleList", userRoleList);
+        mv.addObject("userId", userId);
+        return mv;
+    }
+
+    @RequestMapping("user/grantApp")
+    @ResponseBody
+    public int grantApp(String[] appIdArray, Integer userId) {
+        // 删除用户在当前大客户下的所有授权app
+        // 1. 获取当前大客户的app列表
+        Integer companyId = ConstantsData.getLoginCompanyId();
+        List<App> apps = appService.getAppListByCompany(companyId);
+        // 2. 删除该用户的所有授权app
+        appService.deleteAppRightByAppIdsAndUserId(apps, userId);
+        // 将新的app授权给该用户
+        List<Map<String, String>> appAddList = new ArrayList<Map<String, String>>();
+        if (appIdArray != null && appIdArray.length > 0) {
+            for (String appId : appIdArray) {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("appId", appId.split(",")[0]);
+                map.put("isAdd", appId.split(",")[1]);
+                appAddList.add(map);
+            }
+            userService.grantUserApp(userId, appAddList);
+        }
+        return 1;
+    }
+
+    @RequestMapping("user/grantRole")
+    @ResponseBody
+    public int grantRole(String[] roleIdArray, Integer userId) {
+        // 1. 删除该用户的所有授权role
+        secRoleService.deleteUserRoleByUserId(userId);
+        // 2. 将新的role授权给该用户
+        if (roleIdArray != null && roleIdArray.length > 0) {
+            userService.grantUserRole(userId, roleIdArray);
+        }
+        return 1;
     }
 
     @ResponseBody
@@ -121,7 +193,8 @@ public class UserAction {
     @RequestMapping("user/sendEmail")
     public void sendEmail(@RequestParam("emailArray") String[] emailArray, @RequestParam("deptId") String deptId,
             @RequestParam("companyId") String companyId, @RequestParam("appCompanyId") Integer appCompanyId,
-            @RequestParam("appIdArray") Integer[] appIdArray, @RequestParam("role") Integer role) {
+            @RequestParam("appIdArray") Integer[] appIdArray, @RequestParam("roleIdArray") Integer[] roleIdArray,
+            @RequestParam("role") Integer role) {
         // companyId和deptId是字符串代表新增的医院和部门
         Integer sendCompanyId = null;
         Integer sendDeptId = null;
@@ -143,7 +216,8 @@ public class UserAction {
             deptService.addDept(dept);
             sendDeptId = dept.getDeptId();
         }
-        userService.sendRegisterEmail(emailArray, sendDeptId, sendCompanyId, appCompanyId, appIdArray, role);
+        userService.sendRegisterEmail(emailArray, sendDeptId, sendCompanyId, appCompanyId, appIdArray, roleIdArray,
+                role);
     }
 
     /**

@@ -502,4 +502,13 @@
     delete from tb_app_classify_relat
     where app_id = #{appId,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteAppRightByAppIdsAndUserId" >
+    delete from 
+    tb_user_app_right
+    where user_id = #{userId}
+    and app_id in
+    <foreach collection="apps" open="(" close=")" item="app" separator=",">
+    #{app.appId}
+    </foreach>
+  </delete>
 </mapper>

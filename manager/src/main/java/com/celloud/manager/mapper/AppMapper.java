@@ -157,4 +157,7 @@ public interface AppMapper {
     public int deleteAppClassify(@Param("appId") Integer appId);
 
     public int updateApp(App app);
+
+    public void deleteAppRightByAppIdsAndUserId(@Param("apps") List<App> apps, @Param("userId") Integer userId);
+
 }

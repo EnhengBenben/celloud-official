@@ -26,5 +26,5 @@
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/jquery.plupload.queue/jquery.plupload.queue.js?version=1.3"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/plupload.dev.js?version=1.7"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/plugins/plupload-2.1.2/i18n/zh_CN.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/upload.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/file_upload.js?version=1.1"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/upload.js?version=3.1.12"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/file_upload.js?version=3.1.12"></script>

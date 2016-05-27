@@ -94,7 +94,7 @@
 		</div>
 	</div>
 </section>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/experiment.js?version=3.1.8.1"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/experiment.js?version=3.1.12"></script>
 <script language="javascript" src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
 <div id="addExp" class="modal modal-green-header">
 </div>

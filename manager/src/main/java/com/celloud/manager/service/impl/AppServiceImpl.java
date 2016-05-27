@@ -266,4 +266,9 @@ public class AppServiceImpl implements AppService {
         return appMapper.getAppById(appId);
     }
 
+    @Override
+    public void deleteAppRightByAppIdsAndUserId(List<App> apps, Integer userId) {
+        appMapper.deleteAppRightByAppIdsAndUserId(apps, userId);
+    }
+
 }

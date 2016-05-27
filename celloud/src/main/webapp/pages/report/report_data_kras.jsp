@@ -15,7 +15,7 @@
         <div class="toolbar">
             <a class="btn btn-celloud-success btn-flat" target="_blank" href='report/printKRAS?appId=${kras.appId }&dataKey=${kras.dataKey }&projectId=${kras.projectId }'><i class="fa fa-print"></i>打印报告</a>
             <c:if test="${kras.pdf!=null && kras.pdf!='' }">
-                <a class="btn btn-warning btn-flat" href="${toolsPath }Procedure!miRNADownload?userId=${kras.userId }/${kras.appId }/${kras.dataKey }/${kras.pdf }"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
+                <a class="btn btn-warning btn-flat" href="/report/down?path=${kras.userId }/${kras.appId }/${kras.dataKey }/${kras.pdf }"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
             </c:if>
         </div>
 	</div>

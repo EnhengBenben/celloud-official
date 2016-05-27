@@ -36,6 +36,7 @@
 </ul>
 <script>
 $(document).ready(function(){
+    $("input[type='radio'][id='sex-radio']:checked").val()
     $("#print").on("click",function(){
         $(".base-info").find("input[type='text']").each(function(){
            $(this).parent().html("<input type='hidden' name='"+$(this).attr("name")+"' value='"+$(this).attr("class")+"'><span name='print-input'>"+$(this).val()+"</span>");
@@ -44,7 +45,7 @@ $(document).ready(function(){
         $("#department").addClass("hide");
         $("#sample-type-text").text($("#sample-type").val());
         $("#sample-type").addClass("hide");
-        $("#sex-text").html($("input[type='radio'][id='sex-radio']:checked").val());
+        $("#sex-text").html($("input[type='radio'][name='baseInfo[\"sex\"]']:checked").val());
         $("#sex").addClass("hide");
         $(".buttons").hide();
         $("#toc").hide();
@@ -65,7 +66,7 @@ $(document).ready(function(){
         $("span[name='print-input']").each(function(){
             $(this).parent().html("<input class='"+$(this).prev().val()+"' name='"+$(this).prev().attr("name")+"' type='text' value='"+$(this).html()+"'>");
         });
-      });
+    });
     $("#save").on("click",function(){
         $.post("../report/updateBSIFilling",$("#print-form").serialize(),function(result){
             if(result == 1){

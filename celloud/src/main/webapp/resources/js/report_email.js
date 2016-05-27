@@ -57,6 +57,7 @@ function viewDataReport(userId,dataKey,softwareName,softwareId){
 	$.get("getPath.action",{},function(responseText){
 		var toolsPath = responseText.split(",")[0];
 		$.get("getFileNameByDataKey.action",{"dataKey":dataKey},function(rFileName){
+		  //TODO 邮箱查看报告方法待重做
 			var newPath = toolsPath + "Procedure!readReport" + "?fileName="+rFileName+"&userId=" + userId + "&appId=" + softwareId + "&dataKey=" + dataKey + "&projectId=";
 			$.get("getDataReport.action",{"url":newPath},function(responseText){
 				$("#tab2").html(responseText);

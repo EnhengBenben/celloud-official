@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
@@ -34,6 +35,7 @@ import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DeptConstants;
 import com.celloud.constants.ReportType;
+import com.celloud.constants.SparkPro;
 import com.celloud.model.mongo.ABINJ;
 import com.celloud.model.mongo.BRAF;
 import com.celloud.model.mongo.BSI;
@@ -61,6 +63,7 @@ import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Experiment;
 import com.celloud.model.mysql.Project;
 import com.celloud.model.mysql.Report;
+import com.celloud.model.mysql.Task;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.AppService;
@@ -70,11 +73,10 @@ import com.celloud.service.DeptService;
 import com.celloud.service.ExperimentService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
+import com.celloud.service.TaskService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.FileTools;
-import com.celloud.utils.HttpURLUtils;
-import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.VelocityUtil;
 
 import net.sf.cglib.core.CollectionUtils;
@@ -101,6 +103,21 @@ public class ReportAction {
     private ExperimentService expService;
     @Resource
     private VelocityUtil velocityUtil;
+    @Resource
+    private TaskService taskService;
+
+    @ActionLog(value = "下载", button = "下载")
+    @RequestMapping("down")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+	public Integer down(String path) {
+		String filePath = SparkPro.TOOLSPATH + path;
+		if (new File(filePath).exists()) {
+			FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
+			return 0;
+		}
+		return 1;
+	}
 
     /**
      * 获取报告模块列表
@@ -128,29 +145,6 @@ public class ReportAction {
     }
 
     /**
-     * 从 Tools 端获取数据报告
-     * 
-     * @param dataKey
-     * @param url
-     * @return
-     * @date 2016-1-10 下午11:37:40
-     */
-    @ActionLog(value = "从 Tools 端获取数据报告", button = "数据报告")
-    @ResponseBody
-    @RequestMapping(value = "getReportFromTools", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String getReportFromTools(String dataKey, String url, Integer projectId) {
-        url = PropertiesUtil.toolsPath + url;
-        DataFile data = dataService.getDataByKey(dataKey);
-        String anotherName = data.getAnotherName();
-        if (StringUtils.isNotEmpty(anotherName)) {
-            url += "&anotherName=" + anotherName;
-        }
-        Project project = projectService.selectByPrimaryKey(projectId);
-        url += "&projectName=" + project.getProjectName();
-        return HttpURLUtils.getHTTPResult(url);
-    }
-
-    /**
      * 用于 ModelAndView 加载共有参数
      * 
      * @param path
@@ -160,8 +154,7 @@ public class ReportAction {
      */
     private ModelAndView getModelAndView(String path, Integer projectId) {
         ModelAndView mv = new ModelAndView(path);
-        mv.addObject("toolsPath", PropertiesUtil.toolsOutPath);
-        mv.addObject("uploadPath", PropertiesUtil.toolsOutPath + "upload/");
+        mv.addObject("uploadPath", "/upload/");
         Project project = projectService.selectByPrimaryKey(projectId);
         mv.addObject("project", project);
         return mv;
@@ -532,13 +525,11 @@ public class ReportAction {
     @ActionLog(value = "打印MIB数据报告", button = "打印数据报告")
     @RequestMapping("printMIBReport")
     public ModelAndView printMIBReport(String dataKey, Integer projectId, Integer appId) {
-        String path = ConstantsData.getLoginCompanyId() + File.separator + appId
-                + "/print.vm";
+        String path = ConstantsData.getLoginCompanyId() + File.separator + appId + "/print.vm";
         if (!new File("templates/report/" + path).exists()) {
             path = "default/" + appId + "/print.vm";
         }
-        return getMIBModelAndView(path, dataKey, projectId,
-                appId);
+        return getMIBModelAndView(path, dataKey, projectId, appId);
     }
 
     /**
@@ -552,19 +543,15 @@ public class ReportAction {
      * @author leamo
      * @date 2016年1月17日 下午1:10:57
      */
-    private ModelAndView getBSIModelAndView(String path, String dataKey,
-            Integer projectId, Integer appId) {
+    private ModelAndView getBSIModelAndView(String path, String dataKey, Integer projectId, Integer appId) {
         BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
         Map<String, JSONArray> mibCharList = new HashMap<>();
         ModelAndView mv = getModelAndView(path, projectId);
         if (bsi == null)
             return mv;
-        mibCharList.put("readsDistributionInfo",
-                JSONArray.fromObject(bsi.getReadsDistributionInfo()));
-        mibCharList.put("familyDistributionInfo",
-                JSONArray.fromObject(bsi.getFamilyDistributionInfo()));
-        mibCharList.put("genusDistributionInfo",
-                JSONArray.fromObject(bsi.getGenusDistributionInfo()));
+        mibCharList.put("readsDistributionInfo", JSONArray.fromObject(bsi.getReadsDistributionInfo()));
+        mibCharList.put("familyDistributionInfo", JSONArray.fromObject(bsi.getFamilyDistributionInfo()));
+        mibCharList.put("genusDistributionInfo", JSONArray.fromObject(bsi.getGenusDistributionInfo()));
         mv.addObject("bsiCharList", mibCharList);
         return mv.addObject("bsi", bsi);
     }
@@ -581,11 +568,77 @@ public class ReportAction {
     @ActionLog(value = "查看BSI患者报告", button = "数据报告")
     @RequestMapping("getBSIPatientReport")
     public ModelAndView getBSIPatientReport(String dataKey, Integer projectId,
-            Integer appId) {
-        return getBSIModelAndView("bsi/report_data_main", dataKey,
+            Integer appId, Integer reportIndex,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size, String condition,
+            @RequestParam(defaultValue = "0") int sort,
+            @RequestParam(defaultValue = "desc") String sortDate,
+            @RequestParam(defaultValue = "asc") String sortBatch,
+            @RequestParam(defaultValue = "asc") String sortName,
+            @RequestParam(defaultValue = "asc") String sortPeriod) {
+        Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
+        Matcher m = p.matcher(condition);
+        StringBuffer con_sb = new StringBuffer();
+        while (m.find()) {
+            String rep = "\\\\" + m.group(0);
+            m.appendReplacement(con_sb, rep);
+        }
+        m.appendTail(con_sb);
+        Page pager = new Page((page - 1) * size + reportIndex, 1);
+        PageList<Task> pageList = taskService.findTasksByUserCondition(pager,
+                ConstantsData.getLoginUserId(), condition, sort, sortDate,
+                sortBatch, sortName, sortPeriod);
+        ModelAndView mv = getBSIModelAndView("bsi/report_data_main", dataKey,
                 projectId, appId);
+        mv.addObject("pageList", pageList);
+        return mv;
     }
-    
+
+    @ActionLog(value = "查看BSI患者报告", button = "数据报告")
+    @RequestMapping("getPrevOrNextBSIReport")
+    public ModelAndView getPrevOrNextBSIReport(
+            @RequestParam(defaultValue = "1") int page, String condition,
+            @RequestParam(defaultValue = "0") int totalPage,
+            @RequestParam(defaultValue = "0") int sort,
+            @RequestParam(defaultValue = "desc") String sortDate,
+            @RequestParam(defaultValue = "asc") String sortBatch,
+            @RequestParam(defaultValue = "asc") String sortName,
+            @RequestParam(defaultValue = "asc") String sortPeriod,
+            Boolean isPrev) {
+        Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
+        Matcher m = p.matcher(condition);
+        StringBuffer con_sb = new StringBuffer();
+        while (m.find()) {
+            String rep = "\\\\" + m.group(0);
+            m.appendReplacement(con_sb, rep);
+        }
+        m.appendTail(con_sb);
+        Page pager = new Page(page, 1);
+        PageList<Task> pageList = taskService.findNextOrPrevTasks(pager,
+                ConstantsData.getLoginUserId(), condition, sort, sortDate,
+                sortBatch, sortName, sortPeriod, isPrev, totalPage);
+        if (pageList != null) {
+            List<Task> list = pageList.getDatas();
+            if (list != null) {
+                Task task = list.get(0);
+                if (task != null) {
+                    System.out.println(task.getFileName());
+                    ModelAndView mv = getBSIModelAndView("bsi/report_data_main",
+                            task.getDataKey(), task.getProjectId(),
+                            task.getAppId());
+                    mv.addObject("pageList", pageList);
+                    return mv;
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+
+    }
     /**
      * 获取 BSI 的患者报告
      * 
@@ -597,10 +650,8 @@ public class ReportAction {
      */
     @ActionLog(value = "查看BSI分析报告", button = "数据报告")
     @RequestMapping("getBSIAnalyReport")
-    public ModelAndView getBSIAnalyReport(String dataKey, Integer projectId,
-            Integer appId) {
-        return getBSIModelAndView("bsi/report_data_bsi_analy", dataKey,
-                projectId, appId);
+    public ModelAndView getBSIAnalyReport(String dataKey, Integer projectId, Integer appId) {
+        return getBSIModelAndView("bsi/report_data_bsi_analy", dataKey, projectId, appId);
     }
 
     /**
@@ -614,10 +665,8 @@ public class ReportAction {
      */
     @ActionLog(value = "查看BSI数据报告", button = "数据报告")
     @RequestMapping("getBSIReport")
-    public ModelAndView getBSIReport(String dataKey, Integer projectId,
-            Integer appId) {
-        return getBSIModelAndView("report/report_data_bsi", dataKey, projectId,
-                appId);
+    public ModelAndView getBSIReport(String dataKey, Integer projectId, Integer appId) {
+        return getBSIModelAndView("report/report_data_bsi", dataKey, projectId, appId);
     }
 
     /**
@@ -632,16 +681,14 @@ public class ReportAction {
      */
     @ActionLog(value = "打印BSI报告", button = "打印数据报告")
     @RequestMapping("printBSIReport")
-    public ModelAndView printBSIReport(String dataKey, Integer projectId,
-            Integer appId, String templateType) {
+    public ModelAndView printBSIReport(String dataKey, Integer projectId, Integer appId, String templateType) {
         StringBuffer path = new StringBuffer();
-        path.append(ConstantsData.getLoginCompanyId()).append(File.separator)
-                .append(appId).append(File.separator).append(templateType)
-                .append(".vm");
+        path.append(ConstantsData.getLoginCompanyId()).append(File.separator).append(appId).append(File.separator)
+                .append(templateType).append(".vm");
         if (!new File("templates/report/" + path).exists()) {
             path.setLength(0);
-            path.append("default").append(File.separator).append(appId)
-                    .append(File.separator).append(templateType).append(".vm");
+            path.append("default").append(File.separator).append(appId).append(File.separator).append(templateType)
+                    .append(".vm");
         }
         return getBSIModelAndView(path.toString(), dataKey, projectId, appId);
     }
@@ -694,7 +741,7 @@ public class ReportAction {
         ModelAndView mv = getModelAndView("report/report_data_hbv", projectId);
         return mv.addObject("hbv", hbv);
     }
-    
+
     /**
      * 获取ABINJ的数据报告
      * 
@@ -708,11 +755,11 @@ public class ReportAction {
     @ActionLog(value = "查看ABINJ数据报告", button = "数据报告")
     @RequestMapping("getABINJReport")
     public ModelAndView getABINJReport(String dataKey, Integer projectId, Integer appId) {
-    	ABINJ abinj = reportService.getABINJReport(dataKey, projectId, appId);
-    	ModelAndView mv = getModelAndView("report/report_data_abinj", projectId);
-    	return mv.addObject("abinj", abinj);
+        ABINJ abinj = reportService.getABINJReport(dataKey, projectId, appId);
+        ModelAndView mv = getModelAndView("report/report_data_abinj", projectId);
+        return mv.addObject("abinj", abinj);
     }
-    
+
     /**
      * 获取16S的数据报告
      * 
@@ -726,11 +773,11 @@ public class ReportAction {
     @ActionLog(value = "查看16S数据报告", button = "数据报告")
     @RequestMapping("get16SReport")
     public ModelAndView get16SReport(String dataKey, Integer projectId, Integer appId) {
-    	S16 s16 = reportService.get16SReport(dataKey, projectId, appId);
-    	ModelAndView mv = getModelAndView("report/report_data_16s", projectId);
-    	return mv.addObject("s16", s16);
+        S16 s16 = reportService.get16SReport(dataKey, projectId, appId);
+        ModelAndView mv = getModelAndView("report/report_data_16s", projectId);
+        return mv.addObject("s16", s16);
     }
-    
+
     /**
      * 获取PGS的数据报告
      * 
@@ -745,7 +792,7 @@ public class ReportAction {
     public ModelAndView getPgsReport(String dataKey, Integer projectId, Integer appId) {
         ModelAndView mv = getModelAndView("report/report_data_pgs", projectId);
         Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
-		List<Experiment> expList = expService.getReportList(pgs.getUserId(), dataKey, appId);
+        List<Experiment> expList = expService.getReportList(pgs.getUserId(), dataKey, appId);
         if (expList != null && expList.size() > 0) {
             mv.addObject("experiment", expList.get(0));
         }
@@ -804,29 +851,29 @@ public class ReportAction {
         ModelAndView mv = getModelAndView("report/report_data_hcv", projectId);
         return mv.addObject("hcv", hcv);
     }
-    
-	@ActionLog(value = "查看Translate数据报告", button = "数据报告")
-	@RequestMapping("getTranslateReport")
-	public ModelAndView getTranslateReport(String dataKey, Integer projectId, Integer appId) {
-		DataFile data = dataService.getDataByKey(dataKey);
-		Translate translate = reportService.getTranslateReport(dataKey, projectId, appId);
-		String path = data.getPath();
-		int MAX = 256 * 1024;
-		if (FileTools.getFileSize(path) > MAX) {
-			translate.setSource("输入序列超过256k，不再显示！");
-		} else {
-			String source = FileTools.readAppoint(data.getPath());
-			translate.setSource(source);
-		}
-		String result = translate.getResult();
-		if (result != null && result.length() > MAX) {
-			translate.setResult("输出序列超过256k，不再显示，请下载查看！");
-		} else {
-			translate.setResult(CustomStringUtils.htmlbr(result));
-		}
-		ModelAndView mv = getModelAndView("report/report_data_translate", projectId);
-		return mv.addObject("translate", translate);
-	}
+
+    @ActionLog(value = "查看Translate数据报告", button = "数据报告")
+    @RequestMapping("getTranslateReport")
+    public ModelAndView getTranslateReport(String dataKey, Integer projectId, Integer appId) {
+        DataFile data = dataService.getDataByKey(dataKey);
+        Translate translate = reportService.getTranslateReport(dataKey, projectId, appId);
+        String path = data.getPath();
+        int MAX = 256 * 1024;
+        if (FileTools.getFileSize(path) > MAX) {
+            translate.setSource("输入序列超过256k，不再显示！");
+        } else {
+            String source = FileTools.readAppoint(data.getPath());
+            translate.setSource(source);
+        }
+        String result = translate.getResult();
+        if (result != null && result.length() > MAX) {
+            translate.setResult("输出序列超过256k，不再显示，请下载查看！");
+        } else {
+            translate.setResult(CustomStringUtils.htmlbr(result));
+        }
+        ModelAndView mv = getModelAndView("report/report_data_translate", projectId);
+        return mv.addObject("translate", translate);
+    }
 
     /**
      * 获取EGFR数据报告
@@ -868,10 +915,10 @@ public class ReportAction {
         if (StringUtils.isNotBlank(mp)) {
             kras.setMutationPosition(CustomStringUtils.htmlbr(mp));
         }
-		String pos = kras.getPosition();
-		if (StringUtils.isNotBlank(pos)) {
-			kras.setPosition(CustomStringUtils.htmlbr(pos));
-		}
+        String pos = kras.getPosition();
+        if (StringUtils.isNotBlank(pos)) {
+            kras.setPosition(CustomStringUtils.htmlbr(pos));
+        }
         ModelAndView mv = getModelAndView("report/report_data_kras", projectId);
         return mv.addObject("kras", kras);
     }
@@ -1043,22 +1090,22 @@ public class ReportAction {
      * @author lin
      * @date 2016年1月17日下午4:47:37
      */
-	@ActionLog(value = "打印PGS数据报告", button = "打印数据报告")
-	@RequestMapping("printPGS")
-	public ModelAndView printPGS(Integer appId, Integer projectId, String dataKey, Integer flag) {
-		ModelAndView mv = getModelAndView("print/print_pgs", projectId);
-		Integer userId = ConstantsData.getLoginUserId();
-		DataFile data = dataService.getDataByKey(dataKey);
-		Integer fileId = data.getFileId();
-		Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
-		if (StringUtils.isEmpty(report.getPrintContext())) {
-			Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
-			mv.addObject("pgs", pgs).addObject("report", report).addObject("flag", flag);
-		} else {
-			mv.addObject("printContext", report.getPrintContext());
-		}
-		return mv;
-	}
+    @ActionLog(value = "打印PGS数据报告", button = "打印数据报告")
+    @RequestMapping("printPGS")
+    public ModelAndView printPGS(Integer appId, Integer projectId, String dataKey, Integer flag) {
+        ModelAndView mv = getModelAndView("print/print_pgs", projectId);
+        Integer userId = ConstantsData.getLoginUserId();
+        DataFile data = dataService.getDataByKey(dataKey);
+        Integer fileId = data.getFileId();
+        Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
+        if (StringUtils.isEmpty(report.getPrintContext())) {
+            Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
+            mv.addObject("pgs", pgs).addObject("report", report).addObject("flag", flag);
+        } else {
+            mv.addObject("printContext", report.getPrintContext());
+        }
+        return mv;
+    }
 
     /**
      * 打印TBRifampicin
@@ -1109,12 +1156,12 @@ public class ReportAction {
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
         // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
-		if (flag == 0 && StringUtils.isNotEmpty(report.getPrintContext())) {// 详细报告
-			return mv.addObject("printContext", report.getPrintContext());
-		}
-		if (flag == 1 && StringUtils.isNotEmpty(report.getPrintSimple())) {// 简要报告
-			return mv.addObject("printContext", report.getPrintSimple());
-		}
+        if (flag == 0 && StringUtils.isNotEmpty(report.getPrintContext())) {// 详细报告
+            return mv.addObject("printContext", report.getPrintContext());
+        }
+        if (flag == 1 && StringUtils.isNotEmpty(report.getPrintSimple())) {// 简要报告
+            return mv.addObject("printContext", report.getPrintSimple());
+        }
         HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
         mv.addObject("hbv", hbv).addObject("flag", flag).addObject("report", report);
         return mv;
@@ -1133,15 +1180,19 @@ public class ReportAction {
     @ActionLog(value = "打印HCV数据报告", button = "打印数据报告")
     @RequestMapping("printHCV")
     public ModelAndView printHCV(Integer appId, String dataKey, Integer projectId) {
-        ModelAndView mv = getModelAndView("print/print_hcv", projectId);
+        String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print.vm";
+        if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+            path = "default/" + appId + "/print.vm";
+        }
+        ModelAndView mv = getModelAndView(path, projectId);
+        HCV hcv = reportService.getHCVReport(dataKey, projectId, appId);
         Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
         // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
         if (StringUtils.isNotEmpty(report.getPrintContext())) {
-            return mv.addObject("printContext", report.getPrintContext());
+            mv.addObject("printContext", report.getPrintContext());
         }
-        HCV hcv = reportService.getHCVReport(dataKey, projectId, appId);
         mv.addObject("hcv", hcv).addObject("report", report);
         return mv;
     }
@@ -1159,17 +1210,22 @@ public class ReportAction {
     @ActionLog(value = "打印EGFR数据报告", button = "打印数据报告")
     @RequestMapping("printEGFR")
     public ModelAndView printEGFR(Integer appId, String dataKey, Integer projectId) {
-        ModelAndView mv = getModelAndView("print/print_egfr", projectId);
+        String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print.vm";
+        if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+            path = "default/" + appId + "/print.vm";
+        }
+        ModelAndView mv = getModelAndView(path, projectId);
+        EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
         Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
         // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
         if (StringUtils.isNotEmpty(report.getPrintContext())) {
-            return mv.addObject("printContext", report.getPrintContext());
+            mv.addObject("printContext", report.getPrintContext());
         }
-        EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
         mv.addObject("egfr", egfr).addObject("report", report);
         return mv;
+
     }
 
     /**
@@ -1185,15 +1241,19 @@ public class ReportAction {
     @ActionLog(value = "打印KRAS数据报告", button = "打印数据报告")
     @RequestMapping("printKRAS")
     public ModelAndView printKRAS(Integer appId, String dataKey, Integer projectId) {
-        ModelAndView mv = getModelAndView("print/print_kras", projectId);
+        String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print.vm";
+        if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+            path = "default/" + appId + "/print.vm";
+        }
+        ModelAndView mv = getModelAndView(path, projectId);
+        KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
         Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
         // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
         if (StringUtils.isNotEmpty(report.getPrintContext())) {
-            return mv.addObject("printContext", report.getPrintContext());
+            mv.addObject("printContext", report.getPrintContext());
         }
-        KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
         mv.addObject("kras", kras).addObject("report", report);
         return mv;
     }
@@ -1203,22 +1263,6 @@ public class ReportAction {
     @ResponseBody
     public Integer updateContext(Report report) {
         return reportService.updateReport(report);
-    }
-
-    @ActionLog(value = "下载PDF报告", button = "下载PDF报告")
-    @RequestMapping("downPdf")
-    @ResponseBody
-    public String downPdf(Integer appId, Integer projectId) {
-        StringBuffer sb = new StringBuffer();
-        Integer userId = ConstantsData.getLoginUserId();
-        sb.append(userId).append(";").append(appId).append(";").append(projectId).append(";");
-        List<DataFile> list = dataService.getDatasInProject(projectId);
-        for (DataFile data : list) {
-            sb.append(data.getDataKey()).append(",");
-        }
-        String requestUrl = PropertiesUtil.toolsPath + "Procedure!downPDF?dataKeyList=" + sb.toString();
-        log.info("requestUrl:" + requestUrl);
-        return HttpURLUtils.getHTTPResult(requestUrl);
     }
 
     /**

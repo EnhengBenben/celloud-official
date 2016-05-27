@@ -383,17 +383,6 @@ public class TaskAction {
         }
     }
 
-    @ActionLog(value = "调用Tools端运行结束方法", button = "运行结束")
-    @RequestMapping("toolsRunOver")
-    @ResponseStatus(value = HttpStatus.OK)
-    @ResponseBody
-    public String toolsRunOver(Integer userId, Integer appId, Integer projectId,
-            Integer period, String context) {
-        Integer result = reportService.updateReportStateToTools(userId, appId,
-                projectId, period, context);
-        return String.valueOf(result);
-    }
-
     @ActionLog(value = "bsi运行split分数据", button = "运行split分数据")
     private String toRunSplitData(Integer userId,
             DataFile data) {

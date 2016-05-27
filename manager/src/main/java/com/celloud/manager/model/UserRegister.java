@@ -15,6 +15,8 @@ public class UserRegister {
 
     private String appIds;
 
+    private String roleIds;
+
     public Integer getId() {
         return id;
     }
@@ -61,5 +63,13 @@ public class UserRegister {
 
     public void setAppIds(String appIds) {
         this.appIds = appIds == null ? null : appIds.trim();
+    }
+
+    public String getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(String roleIds) {
+        this.roleIds = roleIds;
     }
 }

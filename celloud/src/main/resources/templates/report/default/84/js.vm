@@ -1,0 +1,59 @@
+<script type="text/javascript">
+$(function(){
+    var url = window.location.href.split("print")[0];
+    var sex = $("#men").prop("checked");
+    
+    $("#print").on("click",function(){
+        var inputVal;
+        $("#printMain").find("input[type='text']").each(function(){
+            inputVal = $(this).val();
+            $(this).parent().html("<span name='print'>"+inputVal+"</span>");
+        });
+        var sex = $("input[type='radio']:checked").val();
+        $("#_sex").html(sex);
+        $(".buttons").hide();
+        window.print();
+        $(".buttons").show();
+        $("body").find("span[name='print']").each(function(){
+            inputVal = $(this).html();
+            $(this).parent().html("<input type='text' value='"+inputVal+"'>");
+        });
+        $("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
+        $("input[type='radio'][value="+sex+"]").attr("checked",true);  
+    });
+    
+    $("#save").on("click",function(){
+        $("#printMain").find("input").each(function(){
+            $(this).attr("value",$(this).val());
+        });
+        $.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printContext":$("#printMain").html()},function(result){
+            if(result==1){
+                $.lAlert("信息保存成功！");
+            }else{
+                jAlert("信息保存失败！");
+            }
+        });
+    });
+
+    $("#reset").on("click",function(){
+       $.lConfirm("确认重置?",function(){
+           $.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"printContext":""},function(result){
+               if(result==1){
+                   location=location ;
+               }else{
+                   jAlert("信息重置失败！");
+               }
+           });
+       });
+    });
+});
+function radioClick(num){
+    if(num==0){
+        $("#men").attr("checked","checked");
+        $("#women").removeAttr("checked");
+    }else{
+        $("#women").attr("checked","checked");
+        $("#men").removeAttr("checked");
+    }
+};
+</script>

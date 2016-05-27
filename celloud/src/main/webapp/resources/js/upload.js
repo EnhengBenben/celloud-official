@@ -120,5 +120,5 @@ if (!hasFlashVersion('10.0.124')) {
 }
 function refreshSession(){
     //为了防止上传过程中session超时而随便请求的一个方法
-    $.get("upload/checkAdminSessionTimeOut");
+    $.get("uploadFile/checkAdminSessionTimeOut");
 }

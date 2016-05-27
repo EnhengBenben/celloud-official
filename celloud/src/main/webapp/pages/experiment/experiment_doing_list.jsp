@@ -34,7 +34,7 @@
 					<c:if test="${exp.quality==0 }">合格</c:if>
 					<c:if test="${exp.quality==1 }">不合格</c:if>
 				</td>
-				<td>${exp.seqIndex }</td>
+				<td>${exp.seqIndex=='0'?'':exp.seqIndex }</td>
 				<td>${exp.libraryConcentration }</td>
 				<td>${exp.sequenatorName }</td>
 				<td>

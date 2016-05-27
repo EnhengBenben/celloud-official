@@ -15,7 +15,7 @@
         <div class="toolbar">
             <a class="btn btn-celloud-success btn-flat" target="_blank" href='report/printEGFR?appId=${egfr.appId }&dataKey=${egfr.dataKey }&projectId=${egfr.projectId }'><i class="fa fa-print"></i>打印报告</a>
             <c:if test="${egfr.pdf!=null && egfr.pdf!='' }">
-                <a class="btn btn-warning btn-flat" href="${toolsPath }Procedure!miRNADownload?userId=${egfr.userId }/${egfr.appId }/${egfr.dataKey }/${egfr.pdf }"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
+                <a class="btn btn-warning btn-flat" href="/report/down?path=${egfr.userId }/${egfr.appId }/${egfr.dataKey }/${egfr.pdf }"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
             </c:if>
         </div>
 	</div>

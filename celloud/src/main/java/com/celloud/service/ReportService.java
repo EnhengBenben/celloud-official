@@ -516,20 +516,6 @@ public interface ReportService {
     int updateReport(Report report);
 
     /**
-     * Tools端项目运行完成后修改状态
-     * 
-     * @param userId
-     * @param appId
-     * @param projectId
-     * @param period：运行阶段
-     * @param context：项目报告
-     * @author lin
-     * @date 2016年1月20日下午6:14:55
-     */
-    public Integer updateReportStateToTools(Integer userId, Integer appId, Integer projectId, Integer period,
-            String context);
-
-    /**
      *  保存spark排队任务
      * 
      * @param tq

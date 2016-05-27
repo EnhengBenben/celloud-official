@@ -57,7 +57,7 @@ import com.celloud.utils.PropertiesUtil;
  * @date 2015年12月28日 下午3:12:11
  */
 @Controller
-@RequestMapping("upload")
+@RequestMapping("uploadFile")
 public class UploadAction {
     Logger logger = LoggerFactory.getLogger(UploadAction.class);
     private static final int BUFFER_SIZE = 2 * 1024;
@@ -198,8 +198,16 @@ public class UploadAction {
                 pubName = originalName.substring(0,
                         originalName.lastIndexOf("."));
             }
+            Pattern p = Pattern.compile("\\_|\\%");
+            Matcher m = p.matcher(pubName);
+            StringBuffer sb = new StringBuffer();
+            while (m.find()) {
+                String rep = "\\\\" + m.group(0);
+                m.appendReplacement(sb, rep);
+            }
+            m.appendTail(sb);
             List<DataFile> dlist = dataService.getDataByBatchAndFileName(userId,
-                    batch, pubName);
+                    batch, sb.toString());
             boolean hasR1 = false;
             boolean hasR2 = false;
             boolean hasIndex = false;

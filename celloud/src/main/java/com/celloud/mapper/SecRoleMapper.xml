@@ -3,12 +3,13 @@
 <mapper namespace="com.celloud.mapper.SecRoleMapper">
 	<resultMap id="BaseResultMap" type="com.celloud.model.mysql.SecRole">
 		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="description" property="description" jdbcType="VARCHAR" />
 		<result column="disabled" property="disabled" jdbcType="BIT" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, name, description, disabled
+		id, code, name, description, disabled
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
@@ -32,9 +33,9 @@
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
 	<insert id="insert" parameterType="com.celloud.model.mysql.SecRole">
-		insert into tb_sec_role (id, name, description,
+		insert into tb_sec_role (id, code, name, description,
 		disabled)
-		values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+		values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
 		#{disabled,jdbcType=BIT})
 	</insert>
 	<insert id="insertSelective" parameterType="com.celloud.model.mysql.SecRole">
@@ -43,6 +44,9 @@
 			<if test="id != null">
 				id,
 			</if>
+			<if test="code != null">
+                code,
+            </if>
 			<if test="name != null">
 				name,
 			</if>
@@ -57,6 +61,9 @@
 			<if test="id != null">
 				#{id,jdbcType=INTEGER},
 			</if>
+			<if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
 			</if>
@@ -71,6 +78,9 @@
 	<update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.SecRole">
 		update tb_sec_role
 		<set>
+		    <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
 			<if test="name != null">
 				name = #{name,jdbcType=VARCHAR},
 			</if>
@@ -85,7 +95,8 @@
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.SecRole">
 		update tb_sec_role
-		set name = #{name,jdbcType=VARCHAR},
+		set code = #{code,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
 		description = #{description,jdbcType=VARCHAR},
 		disabled = #{disabled,jdbcType=BIT}
 		where id = #{id,jdbcType=INTEGER}

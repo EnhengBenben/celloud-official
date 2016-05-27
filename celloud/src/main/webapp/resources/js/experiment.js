@@ -250,6 +250,7 @@ var experiment = (function(experiment) {
   }
 	self.selectSeqIndex = function(val){
 		$("#expSeqIndex").children().remove();
+		$("#s2id_expSeqIndex span").text("--请选择--")
 		$("#expSeqIndex").append("<option value='0'>--请选择--</option>");
 		if(val == 14 || val == 15){
 			for(var i = 1; i <= 96; i++){
@@ -279,4 +280,5 @@ $(document).ready(function() {
     cache : false// 关闭AJAX相应的缓存
   });
   experiment.getDoingPageList(1);
+  
 });

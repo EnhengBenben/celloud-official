@@ -73,7 +73,7 @@
 	<div class="modal-dialog">
 	  <div class="modal-content">
 	    <div class="modal-header">
-	      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+	      <button id="close-upload-modal" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
 	      <h4 class="modal-title">数据上传</h4>
 	    </div>
 	    <div class="modal-body row">
@@ -136,7 +136,7 @@
           <div>数据运行所需文件如下：<br>
             <span class="highlight-text">public_name_</span>R1.fastq<br>
             <span class="highlight-text">public_name_</span>R2.fastq<br>
-            <span class="highlight-text">public_name_</span>R1.txt
+            <span class="highlight-text">public_name_</span>.txt
           </div>
           <a class="btn" href="javascript:void(0)" data-dismiss="modal" aria-label="Close">知道了</a>
         </div>
@@ -184,10 +184,10 @@
 <script src="//cdn.bootcss.com/swfobject/2.2/swfobject.min.js"></script>
 <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
 <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
-<script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js"></script>
-<script src="<%=request.getContextPath()%>/js/utils.js?version=1.0" type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/js/bsi_main.js?version=1.0" type="text/javascript"></script>
-<script src="<%=request.getContextPath() %>/js/bsi_upload.js?version=1.1"></script>
+<script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js?version=1.1"></script>
+<script src="<%=request.getContextPath()%>/js/utils.js?version=1.1" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/bsi_main.js?version=1.1" type="text/javascript"></script>
+<script src="<%=request.getContextPath() %>/js/bsi_upload.js?version=3.1.12"></script>
 <script src="<%=request.getContextPath()%>/js/charts.js"></script>
 </body>
 </html>

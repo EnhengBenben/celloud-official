@@ -2,6 +2,7 @@ package com.celloud.manager.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.celloud.manager.model.User;
 import com.celloud.manager.model.UserSelect;
@@ -173,7 +174,7 @@ public interface UserService {
      * @date 2016年1月29日 上午11:12:39
      */
     public void sendRegisterEmail(String[] emailArray, Integer deptId, Integer companyId, Integer appCompanyId,
-            Integer[] appIdArray, Integer role);
+            Integer[] appIdArray, Integer[] roleIdArray, Integer role);
 
     /**
      * 获取所有用户列表
@@ -191,5 +192,20 @@ public interface UserService {
      * @return
      */
     public List<UserSelect> getAllUserSelectList();
+
+    /**
+     * 根据用户id获取已授权的app
+     */
+    public List<Map<String, String>> getAppListByUserId(Integer userId);
+
+    /**
+     * 授权普通用户App权限
+     */
+    public void grantUserApp(Integer userId, List<Map<String, String>> appAddList);
+
+    /**
+     * 授权普通用户模块角色
+     */
+    public void grantUserRole(Integer userId, String[] roleIds);
 
 }

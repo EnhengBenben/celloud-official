@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/console.css">
+<link rel="stylesheet" href="plugins/jquery.alerts.css">
 <script src="plugins/bootstrap/js/jquery-1.11.1.min.js"></script>
 <script src="plugins/jquery.alerts.js"></script>
 </head>

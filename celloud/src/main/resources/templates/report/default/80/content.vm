@@ -1,0 +1,92 @@
+<form id="print-form">
+    <input type="hidden" value="${hcv.projectId}" id="_projectId">
+    <div style="display: none;" id="_userId">${hcv.userId}</div>
+    <div style="display: none;" id="_appId">${hcv.appId}</div>
+    <div style="display: none;" id="_fileId">${report.fileId}</div>
+    <div class="wrapper">
+        <ul class="info mt5">
+            <li>姓名：<span><input type="text"></span></li>
+            <li>ID号：<span><input type="text"></span></li>
+            <li>样本编号：<span><input type="text"></span></li>
+            <li>样本种类：<span><input type="text"></span></li>
+            <li>性别：<span id="_sex"><input type="radio" name="sex" value="男" checked="checked" onclick="radioClick(0)" id="men">男<input type="radio" name="sex" value="女" onclick="radioClick(1)" id="women">女</span></li>
+            <li>科室：<span><input type="text"></span></li>
+            <li>送检日期：<span><input type="text"></span></li>
+            <li>送检医生：<span><input type="text"></span></li>
+            <li>年龄：<span><input type="text"></span>岁</li>
+            <li>床号：<span><input type="text"></span></li>
+            <li>住院号：<span><input type="text"></span></li>
+        </ul>
+    </div>
+    <hr class="hr-bold mt5" />
+    <div class="wrapper" style="min-height:800px;" id="mainDIv">
+       <div>
+            <h2 class="mt20">检测结果：</h2>
+            <div class="r_seq">
+                <table class="table table-bordered table-condensed" id="hcvTable" style="width: 800px;">
+                    <thead>
+                        <tr>
+                            <th>File Name<br>(文件名)</th>
+                            <th style="min-width: 70px;">Subtype<br>(亚型)</th>
+                            <th style="min-width: 100px;">Subject Name<br>(参考序列名)</th>
+                            <th style="min-width: 80px;">Identity<br>(相似度)</th>
+                            <th style="min-width: 200px;">Overlap/total<br>(比对上的长度/比对的总长度)</th>
+                            <th style="min-width: 70px;">E_value<br>(期望值)</th>
+                            <th style="min-width: 50px;">Score<br>(比分)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>${hcv.fileName}</td>
+                            <td>${hcv.subtype}</td>
+                            <td>${hcv.subjectName}</td>
+                            <td>${hcv.identity}</td>
+                            <td>${hcv.total}</td>
+                            <td>${hcv.evalue}</td>
+                            <td>${hcv.score}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br/>
+            <h2 class="mt10">原始序列：</h2>
+            <div style="word-break: break-all;">${hcv.seq}</div>
+            <br/>
+            
+            #if(${hcv.original.size()}>0)
+                <h2 class="mt20">原始峰图：</h2>
+                <div id="_allDiv">
+                    #if(${hcv.original.containsKey('1_all_png')})
+                        <img src="${uploadPath}${hcv.userId}/${hcv.appId}/${hcv.dataKey}/SVG/${hcv.original['1_all_png']}" style="width:100%">
+                        <br/>
+                        <br/>
+                    #end
+                    #if(${hcv.original.containsKey('2_all_png')})
+                        <img src="${uploadPath}${hcv.userId}/${hcv.appId}/${hcv.dataKey}/SVG/${hcv.original['2_all_png']}" style="width:100%">
+                        <br/>
+                        <br/>
+                    #end
+                    #if(${hcv.original.containsKey('3_all_png')})
+                        <img src="${uploadPath}${hcv.userId}/${hcv.appId}/${hcv.dataKey}/SVG/${hcv.original['3_all_png']}" style="width:100%">
+                        <br/>
+                        <br/>
+                    #end
+                    #if(${hcv.original.containsKey('4_all_png')})
+                        <img src="${uploadPath}${hcv.userId}/${hcv.appId}/${hcv.dataKey}/SVG/${hcv.original['4_all_png']}" style="width:100%">
+                        <br/>
+                        <br/>
+                    #end
+                    #if(${hcv.original.containsKey('5_all_png')})
+                        <img src="${uploadPath}${hcv.userId}/${hcv.appId}/${hcv.dataKey}/SVG/${hcv.original['5_all_png']}" style="width:100%">
+                        <br/>
+                        <br/>
+                    #end
+                    #if(${hcv.original.containsKey('6_all_png')})
+                        <img src="${uploadPath}${hcv.userId}/${hcv.appId}/${hcv.dataKey}/SVG/${hcv.original['6_all_png']}" style="width:100%">
+                        <br/>
+                        <br/>
+                    #end
+                </div>
+            #end
+       </div>
+    </div>

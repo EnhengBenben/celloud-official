@@ -23,7 +23,7 @@ public class SecRoleServiceImpl implements SecRoleService {
         Set<String> roleNames = new HashSet<>();
         if (roles != null && !roles.isEmpty()) {
             for (SecRole role : roles) {
-                roleNames.add(role.getName());
+                roleNames.add(role.getCode());
             }
         }
         return roleNames;

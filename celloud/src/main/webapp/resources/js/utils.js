@@ -32,7 +32,7 @@ utils._stopDefault = function(e){
 utils.formatDate =function(size) {
   var ss = parseInt(size);// 秒
   if (ss === 0){
-    return "<1秒";
+    return "00:00:00";
   } 
   if (/\D/.test(ss)) {
     return 'N/A';
@@ -49,12 +49,28 @@ utils.formatDate =function(size) {
             mm = parseInt(mm%radix);
         }
     }
-    var result = ""+parseInt(ss)+" 秒";
-    if(mm > 0) {
-        result = ""+parseInt(mm)+" 分 "+result;
+    if(hh > 0 && hh <10) {
+      result = "0"+parseInt(hh);
+    }else if(hh>=10){
+      result = parseInt(hh);
+    }else if(hh<=0){
+      result = "00";
     }
-    if(hh > 0) {
-        result = ""+parseInt(hh)+" 小时 "+result;
+    result += ":";
+    if(mm > 0 && mm <10) {
+      result += "0"+parseInt(mm);
+    }else if(mm>=10){
+      result += parseInt(mm);
+    }else if(mm<=0){
+      result += "00";
+    }
+    result += ":";
+    if(ss>0 && ss<10){
+      result += "0"+parseInt(ss);
+    }else if(ss>=10){
+      result += parseInt(ss);
+    }else if(ss<=0){
+      result += "00";
     }
     return result;
 },

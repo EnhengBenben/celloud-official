@@ -248,6 +248,15 @@
             (#{userId},${appId},#{isAdded})
         </foreach>
     </insert>
+    <insert id="addUserRoleRight" useGeneratedKeys="true">
+        insert into 
+        tb_sec_user_role_relat (
+        user_id, role_id)
+        values
+        <foreach collection="roleIds" item="roleId" separator=",">
+            (#{userId}, #{roleId})
+        </foreach>
+    </insert>
     <insert id="addUserCompanyRelat">
         insert into tb_user_company_relat (
         user_id, company_id)
@@ -268,4 +277,20 @@
         where state = #{state } 
         order by username
     </select>
+    <select id="getAppListByUserId" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+        select
+        id as id, user_id as userId, app_id as appId, is_add as isAdd
+        from tb_user_app_right
+        where
+        user_id = #{id}
+    </select>
+    <insert id="grantUserApp">
+        insert into tb_user_app_right (
+        user_id, app_id,
+        is_add)
+        values
+        <foreach collection="appAddList" item="appAdd" index="index" separator="," >
+            (#{userId},#{appAdd.appId},#{appAdd.isAdd})
+        </foreach> 
+    </insert>
 </mapper>

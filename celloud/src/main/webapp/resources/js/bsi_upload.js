@@ -2,13 +2,13 @@ var fileUpload=(function(fileUpload){
   var self=fileUpload||{};
   self.refreshSession=function(){
       //为了防止上传过程中session超时而随便请求的一个方法
-      $.get("upload/checkAdminSessionTimeOut");
+      $.get("uploadFile/checkAdminSessionTimeOut");
   }
   $(function() {
     var uploader = new plupload.Uploader({
       runtimes : 'html5,flash,silverlight,html4',
       browse_button : ['plupload-content','upload-more'],
-      url : "../upload/uploadManyFile",
+      url : "../uploadFile/uploadManyFile",
       // Maximum file size
       chunk_size : '1mb',
       dragdrop : true,
@@ -48,10 +48,10 @@ var fileUpload=(function(fileUpload){
       }
     });
     uploader.bind("UploadProgress", function(uploader, file) {
+      waveLoading.setProgress(uploader.total.percent);
+      uploadPercent = uploader.total.percent;
       $("#uploading-" + file.id +" .plupload-file-status").html(file.percent+"%");
       $("#uploading-" + file.id + " .plupload-file-surplus").html(utils.formatDate((file.size-file.loaded)/uploader.total.bytesPerSec));
-      waveLoading.setProgress(uploader.total.percent);
-      uploadProgress = uploader.total.percent
       handleStatus(uploader.total.percent);
     });
     function getSize(fileSize){
@@ -101,7 +101,7 @@ var fileUpload=(function(fileUpload){
       }
     }
     uploader.bind("FilesAdded", function(uploader, files) {
-      $.get("upload/checkAdminSessionTimeOut",function(response){
+      $.get("uploadFile/checkAdminSessionTimeOut",function(response){
         if(response){//session超时则执行下两步
           
         }else{
@@ -131,6 +131,7 @@ var fileUpload=(function(fileUpload){
           uploader.removeFile(item);
           e.preventDefault();
           utils.stopBubble(e);
+          $.upload.uploadTextType();
         });
         $('#uploading-' + item.id + '.plupload_delete a').click(function(e) {
           $('#' + item.id).remove();
@@ -140,6 +141,7 @@ var fileUpload=(function(fileUpload){
           utils.stopBubble(e);
         });
       }); 
+      $.upload.uploadTextType();
     });
     uploader.bind("FileUploaded", function(uploader, file, response) {
       var res = response.response;
@@ -151,6 +153,16 @@ var fileUpload=(function(fileUpload){
       handleStatus(file);
     });
     uploader.bind("UploadComplete",function(uploader,files){
+      if(files.length>0){
+        waveLoading.setProgress(100);
+        uploadPercent = 100;
+      }else{
+        waveLoading.init({
+          haveInited: false
+        });
+        waveLoading.draw();
+        document.querySelector("#upload-progress").height = document.querySelector("#upload-progress").height;
+      }
       $(".step-one-content").removeClass("hide");
       $(".step-two-content").addClass("hide");
       $(".step-three-content").addClass("hide");
@@ -172,22 +184,35 @@ var fileUpload=(function(fileUpload){
        }
     });
     $("#begin-upload").on("click",function(){
-      $("#upload-filelist").html("");
-      uploader.start();
-      $(".step-three-content").removeClass("hide");
-      $(".step-one-content").addClass("hide");
-      $(".step-two-content").addClass("hide");
-      $("#two-to-three").addClass("active");
-      $(".step-three").addClass("active");
-      $("#tags-review").html($("#batch-info").val());
-      waveLoading.init({
+      if(uploader.files.length>0){
+        $("#upload-filelist").html("");
+        uploader.start();
+        $(".step-three-content").removeClass("hide");
+        $(".step-one-content").addClass("hide");
+        $(".step-two-content").addClass("hide");
+        $("#two-to-three").addClass("active");
+        $(".step-three").addClass("active");
+        $("#tags-review").html($("#batch-info").val());
+        waveLoading.init({
+          haveInited: true,
           target: document.querySelector('#upload-progress'),
           color: 'rgba(40, 230, 200, 0.6)',
           showText: false
-      });
-      waveLoading.draw();
-      waveLoading.setProgress(0);
-      
+        });
+        waveLoading.draw();
+        waveLoading.setProgress(0);
+      }
+    });
+    $("#close-upload-modal").on("click",function(){
+      if(uploader.files.length<=0){
+        $(".step-one-content").removeClass("hide");
+        $(".step-two-content").addClass("hide");
+        $("#one-to-two").removeClass("active");
+        $(".step-two").removeClass("active");
+        $(".step-three-content").addClass("hide");
+        $("#two-to-three").removeClass("active");
+        $(".step-three").removeClass("active");
+      }
     });
   });
 

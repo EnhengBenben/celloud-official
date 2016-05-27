@@ -44,7 +44,8 @@
                     <c:if test="${user.role==1 }">大客户</c:if>
                 </td>
                 <td>
-                   <a href="javascript:user.toPR?userId=${user.userId }">授权</a>
+                   <a href="javascript:user.toGrantApp(${user.userId })">App授权</a>
+                   <a href="javascript:user.toGrantRole(${user.userId })">模块授权</a>
                 </td>
             </tr>
             </c:forEach>
