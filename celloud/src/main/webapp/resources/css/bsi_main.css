@@ -612,8 +612,7 @@ a, a:link, a:hover, a:active, a:visited {
     font-size: 14px;
     position: absolute;
     top: 50px;
-    left: 40px;
-    padding-left: 90px;
+    left: 70px;
 }
 .upload-container .plupload-filelist {
 	border: none;

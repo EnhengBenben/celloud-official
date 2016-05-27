@@ -546,4 +546,16 @@ public interface ReportService {
 
     public Integer updateSplitReport(Split split);
 
+    /**
+     * 删除bsi报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @author leamo
+     * @date 2016年5月27日 上午11:42:08
+     */
+    public void deleteBSIReport(String dataKey, Integer projectId,
+            Integer appId);
+
 }

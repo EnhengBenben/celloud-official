@@ -862,5 +862,11 @@ public class ReportServiceImpl implements ReportService {
     public Integer updateSplitReport(Split split) {
         UpdateResults ur = reportDao.editData(Split.class, split.getId(), "baseInfo", split.getBaseInfo());
         return ur != null ? 1 : 0;
+	}
+
+    @Override
+    public void deleteBSIReport(String dataKey, Integer projectId,
+            Integer appId) {
+        reportDao.delete(BSI.class, dataKey, projectId, appId);
     }
 }

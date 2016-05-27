@@ -3,12 +3,15 @@ package com.celloud.dao;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Resource;
+
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateResults;
 import org.springframework.stereotype.Service;
+
 import com.celloud.model.mongo.TBINH;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
@@ -171,6 +174,13 @@ public class ReportDaoImpl implements ReportDao {
     @Override
     public <T> List<T> getAllByClass(Class<T> clazz) {
         return dataStore.createQuery(clazz).asList();
+    }
+
+    @Override
+    public <T> void delete(Class<T> T, String dataKey, Integer projectId,
+            Integer appId) {
+        dataStore.delete(dataStore.createQuery(T).filter("dataKey", dataKey)
+                .filter("projectId", projectId).filter("appId", appId));
     }
 
 }
