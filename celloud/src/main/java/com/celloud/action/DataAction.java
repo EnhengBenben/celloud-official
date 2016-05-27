@@ -568,6 +568,7 @@ public class DataAction {
                 String killCommand = SparkPro.SGEKILL + " " + param;
                 ssh.sshSubmit(killCommand, false);
             }
+            reportService.deleteBSIReport(dataKey, projectId, appId);
             if (runningNum < app.getMaxTask() || app.getMaxTask() == 0) {
                 ssh.sshSubmit(task.getCommand(), false);
                 taskService.updateToRunning(task.getTaskId());
@@ -578,7 +579,6 @@ public class DataAction {
                 taskService.updateTask(task);
                 logger.info("{}排队重新运行任务：{}", task.getUserId(),
                         task.getTaskId());
-
             }
             return "true";
         }

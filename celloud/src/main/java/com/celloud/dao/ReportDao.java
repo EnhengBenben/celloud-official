@@ -193,4 +193,18 @@ public interface ReportDao {
      * @return
      */
     public <T> List<T> getAllByClass(Class<T> clazz);
+
+    /**
+     * 删除数据
+     * 
+     * @param T
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author leamo
+     * @date 2016年5月27日 上午11:34:15
+     */
+    public <T> void delete(Class<T> T, String dataKey, Integer projectId,
+            Integer appId);
 }

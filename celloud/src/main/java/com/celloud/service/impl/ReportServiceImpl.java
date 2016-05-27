@@ -865,4 +865,10 @@ public class ReportServiceImpl implements ReportService {
 	public Report getReportByProjectId(Integer projectId) {
 		return reportMapper.getReportByProjectId(projectId, ReportType.PROJECT);
 	}
+
+    @Override
+    public void deleteBSIReport(String dataKey, Integer projectId,
+            Integer appId) {
+        reportDao.delete(BSI.class, dataKey, projectId, appId);
+    }
 }
