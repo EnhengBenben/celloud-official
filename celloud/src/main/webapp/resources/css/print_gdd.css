@@ -9,7 +9,7 @@ li {list-style:none;}
 body{ font-family:"Times New Roman","微软雅黑"; font-size:12px; max-width: 900px;margin:auto;color:#232323}
 /* h3{ font-size:22px;  padding:10px 0px 10px 0px;background-color: #b0d73d; margin:0px -15px 10px -15px; padding-left: 20px; color: #fff;} */
 h3{ font-size: 18px; color: #79bb26;padding-bottom:6px}
-h4[class!="modal-title"]{ color: #79bb26;font-size:16px; padding-bottom:10px;}
+h4.title{ color: #79bb26;font-size:16px; padding-bottom:10px;}
 h5{ font-size:14px; line-height: 1.3em}
 h6{ font-size:14px;}
 section{margin:0px auto;}
