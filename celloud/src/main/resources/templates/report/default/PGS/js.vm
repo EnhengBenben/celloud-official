@@ -49,7 +49,6 @@ $(function(){
 			inputVal = "";
 		}
 		$("#des3").html(inputVal);
-		$("#p2footer").css("margin-top",(300-$("#page2").height())+"px");
 		$(".buttons").hide();
 		window.print();
 		$(".buttons").show();

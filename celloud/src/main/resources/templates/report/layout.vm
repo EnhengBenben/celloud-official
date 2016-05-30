@@ -9,7 +9,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="bookmark" href="$link.getContextPath()/images/favicon.ico" />
 <link rel="shortcut icon" href="$link.getContextPath()/images/favicon.ico" />
-<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="$link.getContextPath()/css/print.css" rel="stylesheet">
 <link href="$link.getContextPath()/css/layout.css" rel="stylesheet">
 <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
