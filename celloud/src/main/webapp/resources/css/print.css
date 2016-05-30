@@ -12,6 +12,7 @@ body{font-family:Arial,'Hiragino Sans GB','Microsoft YaHei',微软雅黑, STHeit
 .pbtn-default:hover{ background-position:0 -40px; border:1px solid #aab8cc;}
 .width-80{width: 80px;}
 .width-120{width: 120px;}
+
 .buttons {
     position: fixed;
     top: 10px;
