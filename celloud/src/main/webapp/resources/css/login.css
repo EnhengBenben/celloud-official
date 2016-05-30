@@ -122,19 +122,30 @@ input[type=text], input[type=password] {
 	display: inline-block;
     *display: inline;
     *zoom: 1;
-    width: 18px;
-    height: 18px;
     text-indent: -9999em; *+
     text-indent: 0; *+
     font-size: 0; *+
-    line-height: 18px; *+
     overflow: hidden;
 }
-.btn-login {
+.sign-in {
 	width: 320px;
 	height: 40px;
 	margin: 20px auto;
 	background-position: -418px -330px;
+}
+.checkbox-un,
+.checkbox-ed{
+	display: inline-block;
+    width: 16px;
+    height: 18px;
+    float: left;
+    margin-right: 5px;
+}
+.checkbox-un{
+    background-position: -418px -388px;
+}
+.checkbox-ed{
+    background-position: -453px -388px;
 }
 
 .register {
@@ -242,10 +253,7 @@ input:focus {
 	font-size: 14px;
 	color: #a0a0a0;
 	text-align: left;
-}
-
-.autolog img {
-	vertical-align: middle
+	line-height: 16px;
 }
 
 .forget {
