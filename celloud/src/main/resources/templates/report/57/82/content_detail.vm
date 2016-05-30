@@ -1,4 +1,5 @@
 <form id="print-form">
+    <input type="hidden" value="1" id="isSaved"/>
     <input type="hidden" value="${hbv.projectId}" id="_projectId">
     <div style="display: none;" id="_userId">${hbv.userId}</div>
     <div style="display: none;" id="_appId">${hbv.appId}</div>
