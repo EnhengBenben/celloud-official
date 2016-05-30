@@ -1118,7 +1118,7 @@ public class ReportAction {
         if (ReportAction.class.getResource("/templates/report/" + path) == null) {
             path = "default/PGS/print.vm";
         }
-        ModelAndView mv = new ModelAndView(path);
+        ModelAndView mv = getModelAndView(path, projectId);
         Integer userId = ConstantsData.getLoginUserId();
         DataFile data = dataService.getDataByKey(dataKey);
         Integer fileId = data.getFileId();
