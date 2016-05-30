@@ -1,7 +1,7 @@
 <script src="$link.getContextPath()/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
 <script src="$link.getContextPath()/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
 <link href="$link.getContextPath()/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
-<link href="$link.getContextPath()/css/print_pgs.css" rel="stylesheet" type="text/css"/>
+<link href="$link.getContextPath()/css/print_pgs.css?version=3.1.13" rel="stylesheet" type="text/css"/>
 <!--[if IE]>
 <style>
 @media Print {
