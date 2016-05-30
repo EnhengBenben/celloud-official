@@ -95,20 +95,24 @@ $(function(){
     $("#save").on("click",function(){
         var _id = $("#cmpId").val();
         if(_id != "" && _id != undefined){
-            $.post(url + "updateYANDAFilling",$("#gdd-form").serialize());
+            $.post(url + "updateYANDAFilling",$("#gdd-form").serialize(),function(){
+                $.lAlert("信息保存成功！");
+            });
         }
     });
 
     $("#reset").on("click",function(){
-         $(':input','#gdd-form')  
-         .not(':button, :submit, :reset, :hidden')  
-         .val('')  
-         .removeAttr('checked')  
-         .removeAttr('selected');
-         var _id = $("#cmpId").val();
-         if(_id != "" && _id != undefined){
-             $.post(url + "updateYANDAFilling",$("#gdd-form").serialize());
-         }
+        $.lConfirm("确认重置?",function(){
+            $(':input','#gdd-form')  
+             .not(':button, :submit, :reset, :hidden')  
+             .val('')  
+             .removeAttr('checked')  
+             .removeAttr('selected');
+             var _id = $("#cmpId").val();
+             if(_id != "" && _id != undefined){
+                 $.post(url + "updateYANDAFilling",$("#gdd-form").serialize());
+             }
+        });
     });
     
 });

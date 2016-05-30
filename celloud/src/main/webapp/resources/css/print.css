@@ -21,9 +21,9 @@ body{font-family:Arial,'Hiragino Sans GB','Microsoft YaHei',微软雅黑, STHeit
 	opacity:0.8;
 }
 .buttons > a {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     top: 15px;
-    width: 70px;
+    width: 50px;
     font-size: 12px;
     text-decoration: none;
     text-align: center;
