@@ -50,10 +50,10 @@
 	      <td><fmt:formatDate type="both" value="${task.updateDate }"/></td>
 	      <td>
 	        <c:if test="${task.period==2 }">
-	            <a class="edit-icon" name="to-report-a" href="javascript:<c:choose><c:when test="${task.period==2 }">$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId},,${size.index})</c:when><c:otherwise>void(0)</c:otherwise></c:choose>"><i class="celicon show-icon"></i></a>
+	            <a class="edit-icon" title="查看报告" name="to-report-a" href="javascript:<c:choose><c:when test="${task.period==2 }">$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId},,${size.index})</c:when><c:otherwise>void(0)</c:otherwise></c:choose>"><i class="celicon show-icon"></i></a>
 	        </c:if>
 	        <c:if test="${task.period==1||task.period==2||empty task.period }">
-	          <a class="edit-icon" href="javascript:$.report.reRun(${task.dataKey },${task.appId },${task.projectId })"><i class="celicon rerun-icon"></i></a>
+	          <a class="edit-icon" title="重新运行" href="javascript:$.report.reRun(${task.dataKey },${task.appId },${task.projectId })"><i class="celicon rerun-icon"></i></a>
             </c:if>
 <%-- 	        <a class="edit-icon" id="to-rerun-a" href="javascript:$.report.run(${task.fileId },${task.appId })"><i class="celicon rerun-icon"></i></a> --%>
 	      </td>
