@@ -11,7 +11,10 @@ $.lConfirm = function(text, callback){
 		$("#confirm-modal").hide();
 	});
 	if(typeof callback == 'function'){
-		$("#confirm-true").one("click",callback);
+		$("#confirm-true").one("click",function(){
+			$("#confirm-modal").hide();
+			callback();
+		});
 	}
 	$("#confirm-modal").show();
 }
