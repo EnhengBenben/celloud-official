@@ -1,4 +1,9 @@
 <script type="text/javascript">
+function attrTransfer(obj,name){
+	inputVal = $(obj).val();
+	inputClass = $(obj).attr("class");
+	$(obj).parent().html("<span name='miniPrint' _hideClass='"+inputClass+"'>"+inputVal+"</span>");
+}
 $(function(){
 	if($(".end").html()){
 		$("#mainDiv").css("min-height",(960-64-38-38-20)+"px");
@@ -11,17 +16,14 @@ $(function(){
 		if(!inputVal){
 			$("#jzkp").html("<span name='print' style='padding-right:100px;'>"+inputVal+"</span>");
 		}
-		$("#mainDiv").find("input").each(function(){
-			inputVal = $(this).val();
-			$(this).parent().html("<span name='print'>"+inputVal+"</span>");
-		});
 		$(".miniTable_").find("input").each(function(){
-			inputVal = $(this).val();
-			$(this).parent().html("<span name='miniPrint'>"+inputVal+"</span>");
+			attrTransfer(this,'miniPrint');
+		});
+		$("#mainDiv").find("input").each(function(){
+			attrTransfer(this,'print');
 		});
 		$(".opinion").find("input").each(function(){
-			inputVal = $(this).val();
-			$(this).parent().html("<span name='print'>"+inputVal+"</span>");
+			attrTransfer(this,'print');
 		});
 		inputVal = $("#des").children().val();
 		if(inputVal){
@@ -54,15 +56,17 @@ $(function(){
 		$(".buttons").show();
 		$("body").find("span[name='print']").each(function(){
 			inputVal = $(this).html();
+			inputClass = $(this).attr('_hideClass');
 			if($(this).parent().attr("id")=="jzkp"){
-				$(this).parent().html("<input type=\"text\"  class=\"input-mini\" value=\""+inputVal+"\" id=\"jzkh\" />");
+				$(this).parent().html("<input type=\"text\" class=\""+inputClass+"\" value=\""+inputVal+"\" id=\"jzkh\" />");
 			}else{
-				$(this).parent().html("<input type=\"text\" class=\"input-mini\" value=\""+inputVal+"\" />");
+				$(this).parent().html("<input type=\"text\" class=\""+inputClass+"\" value=\""+inputVal+"\" />");
 			}
 		});
 		$("body").find("span[name='miniPrint']").each(function(){
 			inputVal = $(this).html();
-			$(this).parent().html("<input type=\"text\" class=\"input-mini onlybotton\" style=\"height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px\" value=\""+inputVal+"\"/>");
+			inputClass = $(this).attr('_hideClass');
+			$(this).parent().html("<input type=\"text\" class=\""+inputClass+"\" style=\"height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px\" value=\""+inputVal+"\"/>");
 		});
 		inputVal = $("#des").html();
 		if(inputVal){
