@@ -35,3 +35,9 @@
 	#extends("/default/PGS/base.vm")
 #end
 #parse("/default/PGS/js.vm")
+<script type="text/javascript">
+$(function(){
+	$("#mainDiv").css("min-height","500px");
+	$(".notes").css("margin-top","0px");
+});
+</script>
