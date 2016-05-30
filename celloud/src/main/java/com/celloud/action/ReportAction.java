@@ -110,14 +110,14 @@ public class ReportAction {
     @RequestMapping("down")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-	public Integer down(String path) {
-		String filePath = SparkPro.TOOLSPATH + path;
-		if (new File(filePath).exists()) {
-			FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
-			return 0;
-		}
-		return 1;
-	}
+    public Integer down(String path) {
+        String filePath = SparkPro.TOOLSPATH + path;
+        if (new File(filePath).exists()) {
+            FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
+            return 0;
+        }
+        return 1;
+    }
 
     /**
      * 获取报告模块列表
@@ -578,14 +578,10 @@ public class ReportAction {
      */
     @ActionLog(value = "查看BSI患者报告", button = "数据报告")
     @RequestMapping("getBSIPatientReport")
-    public ModelAndView getBSIPatientReport(String dataKey, Integer projectId,
-            Integer appId, Integer reportIndex,
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "20") int size, String condition,
-            @RequestParam(defaultValue = "0") int sort,
-            @RequestParam(defaultValue = "desc") String sortDate,
-            @RequestParam(defaultValue = "asc") String sortBatch,
-            @RequestParam(defaultValue = "asc") String sortName,
+    public ModelAndView getBSIPatientReport(String dataKey, Integer projectId, Integer appId, Integer reportIndex,
+            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int size, String condition,
+            @RequestParam(defaultValue = "0") int sort, @RequestParam(defaultValue = "desc") String sortDate,
+            @RequestParam(defaultValue = "asc") String sortBatch, @RequestParam(defaultValue = "asc") String sortName,
             @RequestParam(defaultValue = "asc") String sortPeriod) {
         Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
         Matcher m = p.matcher(condition);
@@ -596,25 +592,19 @@ public class ReportAction {
         }
         m.appendTail(con_sb);
         Page pager = new Page((page - 1) * size + reportIndex, 1);
-        PageList<Task> pageList = taskService.findTasksByUserCondition(pager,
-                ConstantsData.getLoginUserId(), condition, sort, sortDate,
-                sortBatch, sortName, sortPeriod);
-        ModelAndView mv = getBSIModelAndView("bsi/report_data_main", dataKey,
-                projectId, appId);
+        PageList<Task> pageList = taskService.findTasksByUserCondition(pager, ConstantsData.getLoginUserId(), condition,
+                sort, sortDate, sortBatch, sortName, sortPeriod);
+        ModelAndView mv = getBSIModelAndView("bsi/report_data_main", dataKey, projectId, appId);
         mv.addObject("pageList", pageList);
         return mv;
     }
 
     @ActionLog(value = "查看BSI患者报告", button = "数据报告")
     @RequestMapping("getPrevOrNextBSIReport")
-    public ModelAndView getPrevOrNextBSIReport(
-            @RequestParam(defaultValue = "1") int page, String condition,
-            @RequestParam(defaultValue = "0") int totalPage,
-            @RequestParam(defaultValue = "0") int sort,
-            @RequestParam(defaultValue = "desc") String sortDate,
-            @RequestParam(defaultValue = "asc") String sortBatch,
-            @RequestParam(defaultValue = "asc") String sortName,
-            @RequestParam(defaultValue = "asc") String sortPeriod,
+    public ModelAndView getPrevOrNextBSIReport(@RequestParam(defaultValue = "1") int page, String condition,
+            @RequestParam(defaultValue = "0") int totalPage, @RequestParam(defaultValue = "0") int sort,
+            @RequestParam(defaultValue = "desc") String sortDate, @RequestParam(defaultValue = "asc") String sortBatch,
+            @RequestParam(defaultValue = "asc") String sortName, @RequestParam(defaultValue = "asc") String sortPeriod,
             Boolean isPrev) {
         Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
         Matcher m = p.matcher(condition);
@@ -625,17 +615,15 @@ public class ReportAction {
         }
         m.appendTail(con_sb);
         Page pager = new Page(page, 1);
-        PageList<Task> pageList = taskService.findNextOrPrevTasks(pager,
-                ConstantsData.getLoginUserId(), condition, sort, sortDate,
-                sortBatch, sortName, sortPeriod, isPrev, totalPage);
+        PageList<Task> pageList = taskService.findNextOrPrevTasks(pager, ConstantsData.getLoginUserId(), condition,
+                sort, sortDate, sortBatch, sortName, sortPeriod, isPrev, totalPage);
         if (pageList != null) {
             List<Task> list = pageList.getDatas();
             if (list != null) {
                 Task task = list.get(0);
                 if (task != null) {
                     System.out.println(task.getFileName());
-                    ModelAndView mv = getBSIModelAndView("bsi/report_data_main",
-                            task.getDataKey(), task.getProjectId(),
+                    ModelAndView mv = getBSIModelAndView("bsi/report_data_main", task.getDataKey(), task.getProjectId(),
                             task.getAppId());
                     mv.addObject("pageList", pageList);
                     return mv;
@@ -650,6 +638,7 @@ public class ReportAction {
         }
 
     }
+
     /**
      * 获取 BSI 的患者报告
      * 
