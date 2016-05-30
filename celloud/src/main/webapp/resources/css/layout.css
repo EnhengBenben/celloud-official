@@ -113,7 +113,7 @@
 
 .modal-footer {
     border-top-color: #f4f4f4;
-    padding: 15px;
+    padding: 10px;
     text-align: right;
     border-top: 1px solid #e5e5e5
 }
@@ -491,13 +491,9 @@
  * -----------------
  */
 #check-true{
-	margin-right:40%;
+	margin-right:41%;
 } 
 
-.modal-footer{
-	padding:10px;
-}
- 
 .btn {
   border-radius: 3px;
   -webkit-box-shadow: none;

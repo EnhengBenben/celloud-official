@@ -135,7 +135,7 @@ a, a:link, a:hover, a:active, a:visited {
 .run-error-icon{
 	height: 45px;
 	width: 50px;
-	background-position: 0px -469px;
+	background-position: -475px -200px;
 }
 .common-menu-btn .item-btn:hover .my-report-icon,
 .common-menu-btn .active .my-report-icon{

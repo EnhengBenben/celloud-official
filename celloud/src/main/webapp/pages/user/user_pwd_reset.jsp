@@ -13,14 +13,16 @@
 <body onselectstart="return false;">
     <!--#S bgContainer-->
     <div class="bgContainer">
-        <img src="<%=request.getContextPath()%>/images/home/login_bg.png" id="bg" />
         <!--#S wrapper-->
         <div class="wrapper">
             <div class="login">
-                <div class="logo" id="logo">
-                    <img src="<%=request.getContextPath()%>/images/home/logo@2x.png" />
+                <div class="login-icon" id="logo">
+                    <a href="<%=request.getContextPath()%>/" style="color: transparent;">
+                        <img src="<%=request.getContextPath()%>/images/icon/login_logo_187.png" />
+                    </a>
                 </div>
-                <div class="main_f clearfix">
+                <div class="logo-name">生物信息云平台</div>
+                <div class="login-main clearfix">
                     <c:choose>
                         <c:when test="${! empty forbidden || empty user }">
                             <br>
@@ -52,20 +54,17 @@
                             <form id="resetPasswordForm" action="<%=request.getContextPath()%>/resetPassword.html" method="post">
                                 <input type="hidden" id="userNameHidden" name="username" value="${user.username}">
                                 <input type="hidden" id="userCodeHidden" name="randomCode" value="${randomCode}">
-                                <div class="autolog">用户名：${user.username }</div>
+                                <div class="error">&nbsp;</div>
+                                <input type="text" class="input-top" value="用户名：${user.username }" readonly="readonly"/>
                                 <input type="password" class="pwd" name="password" id="inputPassword" placeholder="新密码(字母数字及下划线组合)"
                                     name="password" />
-                                <input type="password" class="pwd" id="inputConfirmPassword" placeholder="确认密码" />
-                                <div class="autolog">
-                                    <span class="error"></span>
-                                </div>
-                                <a href="javascript:void()" class="btn-confirm" onclick="javascript:submitPassword();"></a>
-                                <a href="<%=request.getContextPath()%>/login" class="btn-cancle"></a>
+                                <input type="password" class="pwd input-bottom" id="inputConfirmPassword" placeholder="确认密码" />
+                                <a href="javascript:void()" class="btn-login btn-update-pwd" onclick="javascript:submitPassword();"></a>
+                                <a href="<%=request.getContextPath()%>/login" class="btn-login btn-return"></a>
                             </form>
                         </c:otherwise>
                     </c:choose>
                 </div>
-                <div class="view-tips">最佳浏览体验：Chrome / Firefox 8.0+ / IE 9.0+</div>
             </div>
             <jsp:useBean id="_now" class="java.util.Date" />
             <div class="footer">
