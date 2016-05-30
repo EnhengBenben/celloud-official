@@ -106,31 +106,29 @@ $(function(){
         }
         $.post(url+"updateContext",param,function(result){
             if(result==1){
-                jAlert("信息保存成功！");
+                $.lAlert("信息保存成功！");
             }else{
-                jAlert("信息保存失败！");
+                $.lAlert("信息保存失败！");
             }
         });
     });
 
     $("#reset").on("click",function(){
-        jConfirm('确定要重置之前保存的报告吗？', '重置报告', function(result) {
-            if(result){
-                var _flag = $("#_flag").html();
-                var param = null;
-                if(_flag == 0){//详细报告
-                    param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printContext":""}
-                }else{//简要报告
-                    param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printSimple":""}
-                }
-                $.post(url+"updateContext",param,function(result){
-                    if(result==1){
-                        location=location ;
-                    }else{
-                        jAlert("信息重置失败！");
-                    }
-                });
+        $.lConfirm('确认重置？', function() {
+            var _flag = $("#_flag").html();
+            var param = null;
+            if(_flag == 0){//详细报告
+                param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printContext":""}
+            }else{//简要报告
+                param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printSimple":""}
             }
+            $.post(url+"updateContext",param,function(result){
+                if(result==1){
+                    location=location ;
+                }else{
+                    $.lAlert("信息重置失败！");
+                }
+            });
         });
     });
 });
