@@ -13,14 +13,17 @@
 <body onselectstart="return false;">
     <!--#S bgContainer-->
     <div class="bgContainer">
-        <img src="<%=request.getContextPath()%>/images/home/login_bg.png" id="bg" />
+<%--         <img src="<%=request.getContextPath()%>/images/home/login_bg.png" id="bg" /> --%>
         <!--#S wrapper-->
         <div class="wrapper">
             <div class="login">
-                <div class="logo" id="logo">
-                    <img src="<%=request.getContextPath()%>/images/home/logo@2x.png" />
+                <div class="login-icon" id="logo">
+                    <a href="<%=request.getContextPath()%>/" style="color: transparent;">
+                        <img src="<%=request.getContextPath()%>/images/icon/login_logo_187.png" />
+                    </a>
                 </div>
-                <div class="main_f clearfix">
+                <div class="logo-name">生物信息云平台</div>
+                <div class="login-main clearfix">
                     <c:choose>
                         <c:when test="${! empty forbidden || empty user }">
                             <br>
@@ -54,19 +57,16 @@
                                 <input type="hidden" id="userIdHidden" name="userId" value="${user.userId}">
                                 <input type="hidden" id="userCodeHidden" name="randomCode" value="${randomCode}">
                                 <input type="hidden" id="userEmailHidden" name="oldEmail" value="${user.email}">
-                                <div class="autolog">用户名：${user.username }</div>
-                                <div class="autolog">旧邮箱：${user.email }</div>
-                                <div class="autolog"><input type="text" class="email" name="email" id="inputEmail" placeholder="请输入新邮箱" /></div>
-                                <div class="autolog">
-                                    <span class="error"></span>
-                                </div>
-                                <a href="javascript:void()" class="btn-confirm" onclick="javascript:sendToNewEmail();"></a>
-                                <a href="<%=request.getContextPath()%>/login" class="btn-cancle"></a>
+                                <div class="error">&nbsp;</div>
+                                <input type="text" class="input-top" value="用户名：${user.username }" readonly="readonly"/>
+                                <input type="text" class="" value="旧邮箱：${user.email }" readonly="readonly"/>
+                                <input type="text" class="email input-bottom" name="email" id="inputEmail" placeholder="请输入新邮箱" />
+                                <a href="javascript:void()" class="btn-login btn-email" onclick="javascript:sendToNewEmail();"></a>
+                                <a href="<%=request.getContextPath()%>/login" class="btn-login btn-return"></a>
                             </form>
                         </c:otherwise>
                     </c:choose>
                 </div>
-                <div class="view-tips">最佳浏览体验：Chrome / Firefox 8.0+ / IE 9.0+</div>
             </div>
             <jsp:useBean id="_now" class="java.util.Date" />
             <div class="footer">

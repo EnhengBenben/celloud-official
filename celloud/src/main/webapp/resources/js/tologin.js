@@ -20,14 +20,14 @@ $(document).ready(function(){
 	$('#kaptchaImage').click(function() {
 		$(this).hide().attr('src','kaptcha.jpg?' + Math.floor(Math.random() * 100)).fadeIn();
 	});
-	$(".error").hide();
+//	$(".error").hide();
 	error = $("#info").val();
 	if(error!=""){
 		$(".error").html(error);
-		$(".error").show();
+//		$(".error").show();
 	}else{
 		$(".error").html("");
-		$(".error").hide();
+//		$(".error").hide();
 	}
 
 	var checked = $("#checked").val();
@@ -64,7 +64,7 @@ $(document).ready(function(){
 		var username = $.trim($("#username").val());
 		if(username==""||username==$.trim($("#username").attr("placeholder"))){
 			$(".error").html("请输入用户名！");
-			$(".error").show();
+//			$(".error").show();
 			$("#username").val('').focus();
 			return false;
 		}
@@ -72,7 +72,7 @@ $(document).ready(function(){
 		var password = $.trim($("#password").val());
 		if(password==""){
 			$(".error").html("请输入密码！");
-			$(".error").show();
+//			$(".error").show();
 			$("#password").focus();
 			return false;
 		}
@@ -81,7 +81,7 @@ $(document).ready(function(){
 			var captcha = $.trim($("#captcha").val());
 			if(captcha==""||captcha==$.trim($("#captcha").attr("placeholder"))){
 				$(".error").html("请输入验证码！");
-				$(".error").show();
+//				$(".error").show();
 				$("#captcha").val().focus();
 				return false;
 			}
