@@ -13,7 +13,7 @@
         </dl>
         <div class="toolbar">
             <a class="btn btn-celloud-success btn-flat" target="_blank" href="report/printHCV?appId=${hcv.appId }&dataKey=${hcv.dataKey }&projectId=${hcv.projectId }"><i class="fa fa-print"></i>打印报告</a>
-            <a class="btn btn-warning btn-flat" style="display: none;" href="javascript:void(0)" onclick="change()"><i class="fa fa-folder-open-o"></i>显示更多</a>
+            <a class="btn btn-warning btn-flat" style="display: none;" href="javascript:void(0)" onclick="change()"><i class="fa fa-folder-open-o"></i><span id="_change">显示更多</span></a>
         </div>
 	</div>
 	<div id="cfda">
@@ -148,21 +148,21 @@ $(document).ready(function(){
 			var val = $(this).html();
 			if(val!="1b"&&val!="2a"&&val!="3a"&&val!="3b"&&val!="6a"){
 				$(this).html("其他");
-				$("#change").css("display","");
+				$("#_change").parent().css("display","");
 			}
 		}
 	});
 });
 function change(){
-	var val = $("#change").html();
+	var val = $("#_change").html();
 	if(val=="显示更多"){
 		$("#nomal").css("display","");
 		$("#cfda").css("display","none");
-		$("#change").html("返回");
+		$("#_change").html("返回");
 	}else{
 		$("#nomal").css("display","none");
 		$("#cfda").css("display","");
-		$("#change").html("显示更多");
+		$("#_change").html("显示更多");
 	}
 }
 </script>
