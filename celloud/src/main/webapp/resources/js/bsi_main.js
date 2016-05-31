@@ -95,6 +95,15 @@ $.report.find = {
   all: function(){
     $.get("data/taskAllList",function(response){
       $.report.loadlist(response);
+      $.report.options = {
+          condition: null,
+          sort: 0,
+          sortBatch: "asc",
+          sortName: "asc",
+          sortPeriod: "asc",
+          sortDate: "desc",
+          pageSize: $("#page-size-sel").val()
+      };
     });
   },
   condition: function(){
