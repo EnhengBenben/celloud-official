@@ -206,7 +206,14 @@ public class ReportAction {
     @ActionLog(value = "打印 CMP简要报告", button = "打印报告")
     @RequestMapping("printLessCMPReport")
     public ModelAndView printLessCMPReport(String dataKey, Integer projectId, Integer appId) {
-        return getCMPModelAndView("print/print_cmp_less", dataKey, projectId, appId);
+        String path = ConstantsData.getLoginCompanyId() + "/" + appId + "print_less.vm";
+        if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+            path = "default/" + appId + "/print_less.vm";
+        }
+        ModelAndView mv = getModelAndView(path, projectId);
+        CmpReport cmpReport = reportService.getCMPReport(dataKey, projectId, appId);
+        mv.addObject("cmpReport", cmpReport);
+        return mv;
     }
 
     /**
@@ -222,7 +229,14 @@ public class ReportAction {
     @ActionLog(value = "打印 CMP详细报告", button = "打印报告")
     @RequestMapping("printMoreCMPReport")
     public ModelAndView printMoreCMPReport(String dataKey, Integer projectId, Integer appId) {
-        return getCMPModelAndView("print/print_cmp_more", dataKey, projectId, appId);
+        String path = ConstantsData.getLoginCompanyId() + "/" + appId + "print_more.vm";
+        if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+            path = "default/" + appId + "/print_more.vm";
+        }
+        ModelAndView mv = getModelAndView(path, projectId);
+        CmpReport cmpReport = reportService.getCMPReport(dataKey, projectId, appId);
+        mv.addObject("cmpReport", cmpReport);
+        return mv;
     }
 
     /**
@@ -579,14 +593,10 @@ public class ReportAction {
      */
     @ActionLog(value = "查看BSI患者报告", button = "数据报告")
     @RequestMapping("getBSIPatientReport")
-    public ModelAndView getBSIPatientReport(String dataKey, Integer projectId,
-            Integer appId, Integer reportIndex,
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "20") int size, String condition,
-            @RequestParam(defaultValue = "0") int sort,
-            @RequestParam(defaultValue = "desc") String sortDate,
-            @RequestParam(defaultValue = "asc") String sortBatch,
-            @RequestParam(defaultValue = "asc") String sortName,
+    public ModelAndView getBSIPatientReport(String dataKey, Integer projectId, Integer appId, Integer reportIndex,
+            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int size, String condition,
+            @RequestParam(defaultValue = "0") int sort, @RequestParam(defaultValue = "desc") String sortDate,
+            @RequestParam(defaultValue = "asc") String sortBatch, @RequestParam(defaultValue = "asc") String sortName,
             @RequestParam(defaultValue = "asc") String sortPeriod) {
         Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
         Matcher m = p.matcher(condition);
@@ -597,25 +607,19 @@ public class ReportAction {
         }
         m.appendTail(con_sb);
         Page pager = new Page((page - 1) * size + reportIndex, 1);
-        PageList<Task> pageList = taskService.findTasksByUserCondition(pager,
-                ConstantsData.getLoginUserId(), condition, sort, sortDate,
-                sortBatch, sortName, sortPeriod);
-        ModelAndView mv = getBSIModelAndView("bsi/report_data_main", dataKey,
-                projectId, appId);
+        PageList<Task> pageList = taskService.findTasksByUserCondition(pager, ConstantsData.getLoginUserId(), condition,
+                sort, sortDate, sortBatch, sortName, sortPeriod);
+        ModelAndView mv = getBSIModelAndView("bsi/report_data_main", dataKey, projectId, appId);
         mv.addObject("pageList", pageList);
         return mv;
     }
 
     @ActionLog(value = "查看BSI患者报告", button = "数据报告")
     @RequestMapping("getPrevOrNextBSIReport")
-    public ModelAndView getPrevOrNextBSIReport(
-            @RequestParam(defaultValue = "1") int page, String condition,
-            @RequestParam(defaultValue = "0") int totalPage,
-            @RequestParam(defaultValue = "0") int sort,
-            @RequestParam(defaultValue = "desc") String sortDate,
-            @RequestParam(defaultValue = "asc") String sortBatch,
-            @RequestParam(defaultValue = "asc") String sortName,
-            @RequestParam(defaultValue = "asc") String sortPeriod,
+    public ModelAndView getPrevOrNextBSIReport(@RequestParam(defaultValue = "1") int page, String condition,
+            @RequestParam(defaultValue = "0") int totalPage, @RequestParam(defaultValue = "0") int sort,
+            @RequestParam(defaultValue = "desc") String sortDate, @RequestParam(defaultValue = "asc") String sortBatch,
+            @RequestParam(defaultValue = "asc") String sortName, @RequestParam(defaultValue = "asc") String sortPeriod,
             Boolean isPrev) {
         Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
         Matcher m = p.matcher(condition);
@@ -626,17 +630,15 @@ public class ReportAction {
         }
         m.appendTail(con_sb);
         Page pager = new Page(page, 1);
-        PageList<Task> pageList = taskService.findNextOrPrevTasks(pager,
-                ConstantsData.getLoginUserId(), condition, sort, sortDate,
-                sortBatch, sortName, sortPeriod, isPrev, totalPage);
+        PageList<Task> pageList = taskService.findNextOrPrevTasks(pager, ConstantsData.getLoginUserId(), condition,
+                sort, sortDate, sortBatch, sortName, sortPeriod, isPrev, totalPage);
         if (pageList != null) {
             List<Task> list = pageList.getDatas();
             if (list != null) {
                 Task task = list.get(0);
                 if (task != null) {
                     System.out.println(task.getFileName());
-                    ModelAndView mv = getBSIModelAndView("bsi/report_data_main",
-                            task.getDataKey(), task.getProjectId(),
+                    ModelAndView mv = getBSIModelAndView("bsi/report_data_main", task.getDataKey(), task.getProjectId(),
                             task.getAppId());
                     mv.addObject("pageList", pageList);
                     return mv;
@@ -651,6 +653,7 @@ public class ReportAction {
         }
 
     }
+
     /**
      * 获取 BSI 的患者报告
      * 

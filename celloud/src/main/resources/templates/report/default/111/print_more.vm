@@ -1,0 +1,4 @@
+#parse("/default/${cmpReport.appId}/reference.vm")
+#parse("/default/${cmpReport.appId}/title_more.vm")
+#parse("/default/${cmpReport.appId}/content_more.vm")
+#parse("/default/${cmpReport.appId}/js_more.vm")

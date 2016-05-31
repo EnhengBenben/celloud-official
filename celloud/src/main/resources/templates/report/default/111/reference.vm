@@ -1,0 +1,2 @@
+<link rel="stylesheet" href="$link.getContextPath()/css/font.css">
+<link rel="stylesheet" href="$link.getContextPath()/css/print_cmp.css?version=1.0">
