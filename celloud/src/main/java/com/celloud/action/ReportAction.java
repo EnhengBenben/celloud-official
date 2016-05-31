@@ -14,6 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -1246,27 +1247,32 @@ public class ReportAction {
      * @param projectId
      * @return
      * @author lin
+     * @throws IOException
      * @date 2016年3月21日下午2:51:25
      */
     @ActionLog(value = "打印EGFR数据报告", button = "打印数据报告")
     @RequestMapping("printEGFR")
-    public ModelAndView printEGFR(Integer appId, String dataKey, Integer projectId) {
+    @ResponseBody
+    public void printEGFR(Integer appId, String dataKey, Integer projectId) throws IOException {
         String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print.vm";
         if (ReportAction.class.getResource("/templates/report/" + path) == null) {
             path = "default/" + appId + "/print.vm";
         }
-        ModelAndView mv = getModelAndView(path, projectId);
+        Map<String, Object> context = new HashMap<String, Object>();
+        context.put("uploadPath", "/upload/");
+        Project project = projectService.selectByPrimaryKey(projectId);
         EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
         Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
         // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
         if (StringUtils.isNotEmpty(report.getPrintContext())) {
-            mv.addObject("printContext", report.getPrintContext());
+            context.put("printContext", report.getPrintContext());
         }
-        mv.addObject("egfr", egfr).addObject("report", report);
-        return mv;
-
+        context.put("egfr", egfr);
+        context.put("report", report);
+        context.put("project", project);
+        returnToVelocity(path, context);
     }
 
     /**
@@ -1336,5 +1342,18 @@ public class ReportAction {
         File targetFile = new File(path);
         // log.info("部门logo目录的绝对路径{}",targetFile.getAbsolutePath());
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
+    }
+
+    /**
+     * 将Map中的数据返回到velocity模板中
+     */
+    public void returnToVelocity(String path, Map<String, Object> context) {
+        try {
+            HttpServletResponse response = ConstantsData.getResponse();
+            response.setContentType("text/html;charset=UTF-8");
+            response.getWriter().println(velocityUtil.mergeReportTemplate(path, context));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
