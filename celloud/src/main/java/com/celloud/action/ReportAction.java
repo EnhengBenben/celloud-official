@@ -1259,8 +1259,6 @@ public class ReportAction {
             path = "default/" + appId + "/print.vm";
         }
         Map<String, Object> context = new HashMap<String, Object>();
-        context.put("uploadPath", "/upload/");
-        Project project = projectService.selectByPrimaryKey(projectId);
         EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
         Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
@@ -1271,8 +1269,7 @@ public class ReportAction {
         }
         context.put("egfr", egfr);
         context.put("report", report);
-        context.put("project", project);
-        returnToVelocity(path, context);
+        returnToVelocity(path, context, projectId);
     }
 
     /**
@@ -1287,22 +1284,24 @@ public class ReportAction {
      */
     @ActionLog(value = "打印KRAS数据报告", button = "打印数据报告")
     @RequestMapping("printKRAS")
-    public ModelAndView printKRAS(Integer appId, String dataKey, Integer projectId) {
+    @ResponseBody
+    public void printKRAS(Integer appId, String dataKey, Integer projectId) {
         String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print.vm";
         if (ReportAction.class.getResource("/templates/report/" + path) == null) {
             path = "default/" + appId + "/print.vm";
         }
-        ModelAndView mv = getModelAndView(path, projectId);
+        Map<String, Object> context = new HashMap<String, Object>();
         KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
         Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
         // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
         if (StringUtils.isNotEmpty(report.getPrintContext())) {
-            mv.addObject("printContext", report.getPrintContext());
+            context.put("printContext", report.getPrintContext());
         }
-        mv.addObject("kras", kras).addObject("report", report);
-        return mv;
+        context.put("kras", kras);
+        context.put("report", report);
+        returnToVelocity(path, context, projectId);
     }
 
     @ActionLog(value = "打印数据报告时点击保存按钮修改数据报告", button = "修改数据报告")
@@ -1347,8 +1346,11 @@ public class ReportAction {
     /**
      * 将Map中的数据返回到velocity模板中
      */
-    public void returnToVelocity(String path, Map<String, Object> context) {
+    public void returnToVelocity(String path, Map<String, Object> context, Integer projectId) {
         try {
+            Project project = projectService.selectByPrimaryKey(projectId);
+            context.put("uploadPath", "/upload/");
+            context.put("project", project);
             HttpServletResponse response = ConstantsData.getResponse();
             response.setContentType("text/html;charset=UTF-8");
             response.getWriter().println(velocityUtil.mergeReportTemplate(path, context));

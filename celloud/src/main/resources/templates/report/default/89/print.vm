@@ -1,15 +1,16 @@
-#parse("/default/${kras.appId}/reference.vm")
+#parse("templates/report/layout.vm")
+#parse("templates/report/default/${kras.appId}/reference.vm")
 <div id="printMain">
     #if(${printContext})
         ${printContext}
     #end
     #if(!${printContext})
         <div>
-            #parse("/default/${kras.appId}/title.vm")
-            #parse("/default/${kras.appId}/content.vm")
-            #parse("/default/${kras.appId}/foot.vm")
+            #parse("templates/report/default/${kras.appId}/title.vm")
+            #parse("templates/report/default/${kras.appId}/content.vm")
+            #parse("templates/report/default/${kras.appId}/foot.vm")
             </form>
         </div>
     #end
 </div>  
-#parse("/default/${kras.appId}/js.vm")
+#parse("templates/report/default/${kras.appId}/js.vm")
