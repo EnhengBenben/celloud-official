@@ -36,6 +36,12 @@ $(function () {
     $(".step-two").addClass("active");
     $.upload.uploadTextType();
   });
+  $("#batch-info").on("keyup",function(e){
+    e = e || window.event;
+    if (e.keyCode == "13") {//keyCode=13是回车键
+      $("#next-step").click();
+    }
+  });
   $("#condition-input").on("keyup",function(e){
     e = e || window.event;
     if (e.keyCode == "13") {//keyCode=13是回车键
