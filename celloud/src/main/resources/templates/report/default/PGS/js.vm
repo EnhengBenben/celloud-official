@@ -6,9 +6,9 @@ function attrTransfer(obj,name){
 }
 $(function(){
 	if($(".end").html()){
-		$("#mainDiv").css("min-height",(960-64-38-38-20)+"px");
+		$("#mainDiv").css("min-height","760px");
 	}else{
-		$("#mainDiv").css("min-height",(980-38-38-20)+"px");
+		$("#mainDiv").css("min-height","850px");
 	}
 	$("#print").on("click",function(){
 		var inputVal;

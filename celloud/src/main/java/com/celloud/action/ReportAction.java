@@ -1102,7 +1102,9 @@ public class ReportAction {
     @ActionLog(value = "打印PGS数据报告", button = "打印数据报告")
     @RequestMapping("printPGS")
     public ModelAndView printPGS(Integer appId, Integer projectId, String dataKey, Integer flag) {
-        String path = ConstantsData.getLoginCompanyId() + "/PGS/print.vm";
+		Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
+		// 涉及共享，此处不能取登陆者的companyId
+        String path = pgs.getCompanyId() + "/PGS/print.vm";
         if (ReportAction.class.getResource("/templates/report/" + path) == null) {
             path = "default/PGS/print.vm";
         }
@@ -1112,7 +1114,6 @@ public class ReportAction {
         Integer fileId = data.getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
         if (StringUtils.isEmpty(report.getPrintContext())) {
-            Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
             mv.addObject("pgs", pgs).addObject("report", report).addObject("flag", flag);
         } else {
             mv.addObject("printContext", report.getPrintContext());
