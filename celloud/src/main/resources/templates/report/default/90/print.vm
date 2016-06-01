@@ -1,15 +1,16 @@
-#parse("/default/${tbrifampicin.appId}/reference.vm")
+#parse("templates/report/layout.vm")
+#parse("templates/report/default/${tbrifampicin.appId}/reference.vm")
 <div id="printMain">
     #if(${printContext})
         ${printContext}
     #end
     #if(!${printContext})
         <div>
-            #parse("/default/${tbrifampicin.appId}/title.vm")
-            #parse("/default/${tbrifampicin.appId}/content.vm")
-            #parse("/default/${tbrifampicin.appId}/foot.vm")
+            #parse("templates/report/default/${tbrifampicin.appId}/title.vm")
+            #parse("templates/report/default/${tbrifampicin.appId}/content.vm")
+            #parse("templates/report/default/${tbrifampicin.appId}/foot.vm")
             </form>
         </div>
     #end
 </div>  
-#parse("/default/${tbrifampicin.appId}/js.vm")
+#parse("templates/report/default/${tbrifampicin.appId}/js.vm")
