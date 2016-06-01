@@ -257,15 +257,18 @@ public class ReportAction {
 
     @ActionLog(value = "打印GDD数据报告", button = "打印报告")
     @RequestMapping("printGDDReport")
-    public ModelAndView printGDDReport(String dataKey, Integer projectId, Integer appId) {
+    @ResponseBody
+    public void printGDDReport(String dataKey, Integer projectId, Integer appId) {
         CmpReport cmpReport = reportService.getCMPReport(dataKey, projectId, appId);
         String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print.vm";
         if (ReportAction.class.getResource("/templates/report/" + path) == null) {
             path = "default/" + appId + "/print.vm";
         }
-        ModelAndView mv = getModelAndView(path, projectId);
-        if (cmpReport == null)
-            return mv;
+        Map<String, Object> context = new HashMap<String, Object>();
+        if (cmpReport == null) {
+            returnToVelocity(path, context, projectId);
+            return;
+        }
         Map<String, CmpGeneDetectionDetail> geneMap = cmpReport.getGeneDetectionDetail();
         // 需要排除的疾病
         final List<String> noDiseaseName = Arrays.asList("", "改变一碳代谢", "活力减少", "降低表达", "表型改变相关", "改变高半胱氨酸水平");
@@ -273,9 +276,10 @@ public class ReportAction {
         conditionMap.put("name", noDiseaseName);
         if (geneMap == null) {
             String[] fields = { "name" };
-            mv.addObject("cmpReport", cmpReport);
-            mv.addObject("gddDiseaseList", reportService.getGddDiseaseDictNormal(fields, conditionMap, "gene"));
-            return mv;
+            context.put("cmpReport", cmpReport);
+            context.put("gddDiseaseList", reportService.getGddDiseaseDictNormal(fields, conditionMap, "gene"));
+            returnToVelocity(path, context, projectId);
+            return;
         }
         // 过滤疾病英文名称只允许字母和数字
         String regEx = "[^\\w\\.\\_\\-\u4e00-\u9fa5]";
@@ -353,8 +357,8 @@ public class ReportAction {
         cmpReport.setGeneDetectionDetail(treeMap);
         if (unnormalGene == null || unnormalGene.size() == 0)
             unnormalGene.add("");
-        mv.addObject("gsrList", gsrList);
-        mv.addObject("cmpReport", cmpReport);
+        context.put("gsrList", gsrList);
+        context.put("cmpReport", cmpReport);
         List<CmpGeneSnpResult> allGsrListNew = new ArrayList<>();
         for (CmpGeneSnpResult gsr_tmp : allGsrList) {
             String name_tmp = gsr_tmp.getDiseaseName();
@@ -375,11 +379,11 @@ public class ReportAction {
                 }
             }
         });
-        mv.addObject("allGsr", allGsrListNew);
+        context.put("allGsr", allGsrListNew);
         String[] fields = { "gene", "name" };
         conditionMap.put("gene", unnormalGene);
-        mv.addObject("gddDiseaseList", reportService.getGddDiseaseDictNormal(fields, conditionMap, "gene"));
-        return mv;
+        context.put("gddDiseaseList", reportService.getGddDiseaseDictNormal(fields, conditionMap, "gene"));
+        returnToVelocity(path, context, projectId);
     }
 
     /**
