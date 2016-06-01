@@ -489,15 +489,16 @@ public class ReportAction {
      */
     @ActionLog(value = "打印split数据报告", button = "打印数据报告")
     @RequestMapping("printSplitReport")
-    public ModelAndView printSplitReport(String dataKey, Integer projectId, Integer appId) {
+    @ResponseBody
+    public void printSplitReport(String dataKey, Integer projectId, Integer appId) {
         String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print.vm";
         if (ReportAction.class.getResource("/templates/report/" + path) == null) {
             path = "default/" + appId + "/print.vm";
         }
-        ModelAndView mv = getModelAndView(path, projectId);
+        Map<String, Object> context = new HashMap<String, Object>();
         Split split = reportService.getSplitReport(dataKey, projectId, appId);
-        mv.addObject("split", split);
-        return mv;
+        context.put("split", split);
+        returnToVelocity(path, context, projectId);
     }
 
     /**

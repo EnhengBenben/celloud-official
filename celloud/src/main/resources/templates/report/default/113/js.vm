@@ -39,7 +39,7 @@ $(function(){
     $("#save").on("click",function(){
         var _id = $("#id").val();
         if(_id != "" && _id != undefined){
-            $.post("$link.getContextPath()/report/updateSplitReport",$("#split-form").serialize());
+            $.post("${base}/report/updateSplitReport",$("#split-form").serialize());
         }
     });
 
@@ -51,7 +51,7 @@ $(function(){
          .removeAttr('selected');
           var _id = $("#id").val();
           if(_id != "" && _id != undefined){
-              $.post("$link.getContextPath()/report/updateSplitReport",$("#split-form").serialize());
+              $.post("${base}/report/updateSplitReport",$("#split-form").serialize());
           }
     });
     
