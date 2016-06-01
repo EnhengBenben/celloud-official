@@ -52,6 +52,17 @@ var dataFile=(function(dataFile){
 			menu("data-export-menu",responseText);
 		});
 	};
+	self.selectAll = function(){
+		$("input[name=userList]").prop("checked",true);
+	};
+	self.selectNone = function(){
+		$("input[name=userList]").prop("checked",false);
+	};
+	self.selectOthers = function(){
+		$("input[name=userList]").each(function(){
+			$(this).prop("checked",!$(this).prop("checked"));
+		});
+	}
 	return self;
 })(dataFile);
 

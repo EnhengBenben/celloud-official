@@ -20,9 +20,9 @@
 				<span>用户列表</span>
 			</h3>
 			<div>
-				<a class="btn btn-info" onclick="selectAll();">全&nbsp;选</a>
-				<a class="btn btn-info" onclick="selectNone();">取&nbsp;消</a>
-				<a class="btn btn-info" onclick="selectOthers();">反&nbsp;选</a>
+				<a class="btn btn-info" onclick="dataFile.selectAll();">全&nbsp;选</a>
+				<a class="btn btn-info" onclick="dataFile.selectNone();">取&nbsp;消</a>
+				<a class="btn btn-info" onclick="dataFile.selectOthers();">反&nbsp;选</a>
 			</div>
 			<div class="col-sm-12" >
                 <c:forEach items="${userList }" var="user">
