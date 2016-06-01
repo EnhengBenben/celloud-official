@@ -1221,22 +1221,24 @@ public class ReportAction {
      */
     @ActionLog(value = "打印HCV数据报告", button = "打印数据报告")
     @RequestMapping("printHCV")
-    public ModelAndView printHCV(Integer appId, String dataKey, Integer projectId) {
+    @ResponseBody
+    public void printHCV(Integer appId, String dataKey, Integer projectId) {
         String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print.vm";
         if (ReportAction.class.getResource("/templates/report/" + path) == null) {
             path = "default/" + appId + "/print.vm";
         }
-        ModelAndView mv = getModelAndView(path, projectId);
+        Map<String, Object> context = new HashMap<String, Object>();
         HCV hcv = reportService.getHCVReport(dataKey, projectId, appId);
         Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
         // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
         if (StringUtils.isNotEmpty(report.getPrintContext())) {
-            mv.addObject("printContext", report.getPrintContext());
+            context.put("printContext", report.getPrintContext());
         }
-        mv.addObject("hcv", hcv).addObject("report", report);
-        return mv;
+        context.put("hcv", hcv);
+        context.put("report", report);
+        returnToVelocity(path, context, projectId);
     }
 
     /**
