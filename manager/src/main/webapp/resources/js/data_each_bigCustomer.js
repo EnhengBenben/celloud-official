@@ -15,7 +15,7 @@ $(function(){
             	},
             },
 		"aoColumns" : [ null, null, { "sType": "filesize" }  ],
-		iDisplayLength : 12,
+		iDisplayLength : 10,
 		"aaSorting" : [ [ 0, "desc" ] ],
 	});
 });
