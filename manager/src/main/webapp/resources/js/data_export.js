@@ -27,7 +27,8 @@ $(function(){
 	 $('input[name=date-picker]').daterangepicker({
 		    "locale": {
 		        "format": "YYYY-MM-DD"
-		     }
+		     },
+		     autoApply:true
 	 }).prev().on("click", function(){
         $(this).next().focus();
     });
