@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="$link.getContextPath()/css/font.css">
-<link rel="stylesheet" href="$link.getContextPath()/css/print_cmp.css?version=1.0">
-<script language="javascript" src="$link.getContextPath()/plugins/calendar/WdatePicker.js"></script>
-<script type="text/javascript" src="$link.getContextPath()/js/browser.js"></script>
+<link rel="stylesheet" href="${base}/css/font.css">
+<link rel="stylesheet" href="${base}/css/print_cmp.css?version=1.0">
+<script language="javascript" src="${base}/plugins/calendar/WdatePicker.js"></script>
+<script type="text/javascript" src="${base}/js/browser.js"></script>

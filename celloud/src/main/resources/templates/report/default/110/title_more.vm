@@ -1,7 +1,7 @@
 <form id="cmp-form">
     <section class="section0 border1 w3cbbs">
         <div class="header">
-            <img src="$link.getContextPath()/images/report/yanda_print.png">
+            <img src="${base}/images/report/yanda_print.png">
             <h1>肿瘤样本基因检测与个体化治疗分析报告</h1>
         </div>
         <div class="titletype">

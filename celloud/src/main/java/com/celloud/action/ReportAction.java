@@ -206,15 +206,16 @@ public class ReportAction {
      */
     @ActionLog(value = "打印 CMP简要报告", button = "打印报告")
     @RequestMapping("printLessCMPReport")
-    public ModelAndView printLessCMPReport(String dataKey, Integer projectId, Integer appId) {
+    @ResponseBody
+    public void printLessCMPReport(String dataKey, Integer projectId, Integer appId) {
         String path = ConstantsData.getLoginCompanyId() + "/" + appId + "print_less.vm";
         if (ReportAction.class.getResource("/templates/report/" + path) == null) {
             path = "default/" + appId + "/print_less.vm";
         }
-        ModelAndView mv = getModelAndView(path, projectId);
+        Map<String, Object> context = new HashMap<String, Object>();
         CmpReport cmpReport = reportService.getCMPReport(dataKey, projectId, appId);
-        mv.addObject("cmpReport", cmpReport);
-        return mv;
+        context.put("cmpReport", cmpReport);
+        returnToVelocity(path, context, projectId);
     }
 
     /**
@@ -229,15 +230,16 @@ public class ReportAction {
      */
     @ActionLog(value = "打印 CMP详细报告", button = "打印报告")
     @RequestMapping("printMoreCMPReport")
-    public ModelAndView printMoreCMPReport(String dataKey, Integer projectId, Integer appId) {
+    @ResponseBody
+    public void printMoreCMPReport(String dataKey, Integer projectId, Integer appId) {
         String path = ConstantsData.getLoginCompanyId() + "/" + appId + "print_more.vm";
         if (ReportAction.class.getResource("/templates/report/" + path) == null) {
             path = "default/" + appId + "/print_more.vm";
         }
-        ModelAndView mv = getModelAndView(path, projectId);
+        Map<String, Object> context = new HashMap<String, Object>();
         CmpReport cmpReport = reportService.getCMPReport(dataKey, projectId, appId);
-        mv.addObject("cmpReport", cmpReport);
-        return mv;
+        context.put("cmpReport", cmpReport);
+        returnToVelocity(path, context, projectId);
     }
 
     /**

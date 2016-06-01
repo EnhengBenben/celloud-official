@@ -1,3 +1,4 @@
-#parse("/default/${cmpReport.appId}/reference.vm")
-#parse("/default/${cmpReport.appId}/content_less.vm")
-#parse("/default/${cmpReport.appId}/js_less.vm")
+#parse("templates/report/layout.vm")
+#parse("templates/report/default/${cmpReport.appId}/reference.vm")
+#parse("templates/report/default/${cmpReport.appId}/content_less.vm")
+#parse("templates/report/default/${cmpReport.appId}/js_less.vm")
