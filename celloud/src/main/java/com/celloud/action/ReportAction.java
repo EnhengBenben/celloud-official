@@ -1188,7 +1188,8 @@ public class ReportAction {
      */
     @ActionLog(value = "打印HBV数据报告", button = "打印数据报告")
     @RequestMapping("printHBV")
-    public ModelAndView printHBV(Integer appId, String dataKey, Integer projectId, Integer flag) {
+    @ResponseBody
+    public void printHBV(Integer appId, String dataKey, Integer projectId, Integer flag) {
         // 获取结果视图路径
         String path = null;
         if (flag == 0) { // 详细报告
@@ -1202,20 +1203,21 @@ public class ReportAction {
                 path = "default/" + appId + "/print_brief.vm";
             }
         }
-        ModelAndView mv = getModelAndView(path, projectId);
+        Map<String, Object> context = new HashMap<String, Object>();
         HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
         Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
         // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
         if (flag == 0 && StringUtils.isNotEmpty(report.getPrintContext())) {
-            mv.addObject("printContext", report.getPrintContext());
+            context.put("printContext", report.getPrintContext());
         }
         if (flag == 1 && StringUtils.isNotEmpty(report.getPrintSimple())) {
-            mv.addObject("printSimple", report.getPrintSimple());
+            context.put("printSimple", report.getPrintSimple());
         }
-        mv.addObject("hbv", hbv).addObject("report", report);
-        return mv;
+        context.put("hbv", hbv);
+        context.put("report", report);
+        returnToVelocity(path, context, projectId);
     }
 
     /**

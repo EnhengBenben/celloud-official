@@ -1,7 +1,4 @@
-<script type="text/javascript" src="$link.getContextPath()/js/browser.js"></script>
-<script src="$link.getContextPath()/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
-<script src="$link.getContextPath()/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
-<link href="$link.getContextPath()/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
-<script src="$link.getContextPath()/plugins/imgRemove/imgRemove.0.1.js?version=0.2" type="text/javascript"></script>
-<link rel="stylesheet" href="$link.getContextPath()/plugins/imgRemove/imgRemove.0.1.css?version=0.2" >
-<link rel="stylesheet" href="$link.getContextPath()/css/print_hbv.css?version=1.16">
+<script type="text/javascript" src="${base}/js/browser.js"></script>
+<script src="${base}/plugins/imgRemove/imgRemove.0.1.js?version=0.2" type="text/javascript"></script>
+<link rel="stylesheet" href="${base}/plugins/imgRemove/imgRemove.0.1.css?version=0.2" >
+<link rel="stylesheet" href="${base}/css/print_hbv.css?version=1.16">
