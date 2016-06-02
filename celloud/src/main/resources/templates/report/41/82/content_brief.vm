@@ -40,3 +40,4 @@
     <div class="m-box_1" id="des">
         <textarea rows="6">${hbv.reporttxt.split('Other:')[0]}</textarea>
     </div>
+    <br/>
