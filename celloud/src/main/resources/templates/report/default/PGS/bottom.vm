@@ -1,0 +1,11 @@
+#if($pgs.companyIcon)
+	<div style="margin:0px auto;">
+		<hr>
+		<div class="end">
+			地址：$!pgs.companyAddr
+			邮编：$!pgs.zipCode
+			电话：$!pgs.companyTel
+			<br/>$!pgs.companyEnAddr
+		</div>
+	</div>
+#end

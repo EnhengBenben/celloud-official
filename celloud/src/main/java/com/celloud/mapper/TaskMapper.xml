@@ -277,6 +277,14 @@
 	where f.user_id=#{userId} and f.state=#{state}
 	order by t.update_date desc,f.batch asc
   </select>
+  <select id="findTasksByBatch" resultMap="ResultMapWithFileName">
+	 select  f.file_name,f.file_id,f.batch,t.* from 
+	(select * from tb_task where task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and app_id=#{appId} and data_key != #{dataKey} group by data_key))t
+	left join tb_file f
+	on f.data_key=t.data_key 
+	where f.user_id=#{userId} and f.state=#{state} and f.batch=#{batch} and t.period=#{period}
+	order by t.update_date desc
+  </select>
   <select id="findTasksByUserCondition" resultMap="ResultMapWithFileName" flushCache="true">
     select  f.file_name,f.file_id,f.batch,f.another_name,t.* from 
     (select * from tb_task where task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and (app_id=118 or period!=2) group by data_key))t

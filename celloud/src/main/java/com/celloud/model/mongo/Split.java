@@ -65,6 +65,12 @@ public class Split extends Base {
     private String qualityPath2;
     private String seqContentPath2;
 
+    /**
+     * 用户填写信息,报告基本信息——编号[number],样本类型[sampleType],姓名[name],申请日期[applicationDate]
+     * , 性别[sex],接收日期[receivedDate],年龄[age],样本状态[status]
+     */
+    private Map<String, String> baseInfo;
+
     public List<DataFile> getData() {
         return data;
     }
@@ -247,6 +253,14 @@ public class Split extends Base {
 
     public void setUnknownReads(String unknownReads) {
         this.unknownReads = unknownReads;
+    }
+
+    public Map<String, String> getBaseInfo() {
+        return baseInfo;
+    }
+
+    public void setBaseInfo(Map<String, String> baseInfo) {
+        this.baseInfo = baseInfo;
     }
 
 }

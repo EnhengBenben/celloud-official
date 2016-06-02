@@ -110,14 +110,14 @@ public class ReportAction {
     @RequestMapping("down")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-	public Integer down(String path) {
-		String filePath = SparkPro.TOOLSPATH + path;
-		if (new File(filePath).exists()) {
-			FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
-			return 0;
-		}
-		return 1;
-	}
+    public Integer down(String path) {
+        String filePath = SparkPro.TOOLSPATH + path;
+        if (new File(filePath).exists()) {
+            FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
+            return 0;
+        }
+        return 1;
+    }
 
     /**
      * 获取报告模块列表
@@ -243,7 +243,11 @@ public class ReportAction {
     @RequestMapping("printGDDReport")
     public ModelAndView printGDDReport(String dataKey, Integer projectId, Integer appId) {
         CmpReport cmpReport = reportService.getCMPReport(dataKey, projectId, appId);
-        ModelAndView mv = getModelAndView("print/print_gdd", projectId);
+        String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print.vm";
+        if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+            path = "default/" + appId + "/print.vm";
+        }
+        ModelAndView mv = getModelAndView(path, projectId);
         if (cmpReport == null)
             return mv;
         Map<String, CmpGeneDetectionDetail> geneMap = cmpReport.getGeneDetectionDetail();
@@ -470,7 +474,14 @@ public class ReportAction {
     @ActionLog(value = "打印split数据报告", button = "打印数据报告")
     @RequestMapping("printSplitReport")
     public ModelAndView printSplitReport(String dataKey, Integer projectId, Integer appId) {
-        return getSplitModelAndView("print/print_split", dataKey, projectId, appId);
+        String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print.vm";
+        if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+            path = "default/" + appId + "/print.vm";
+        }
+        ModelAndView mv = getModelAndView(path, projectId);
+        Split split = reportService.getSplitReport(dataKey, projectId, appId);
+        mv.addObject("split", split);
+        return mv;
     }
 
     /**
@@ -567,14 +578,10 @@ public class ReportAction {
      */
     @ActionLog(value = "查看BSI患者报告", button = "数据报告")
     @RequestMapping("getBSIPatientReport")
-    public ModelAndView getBSIPatientReport(String dataKey, Integer projectId,
-            Integer appId, Integer reportIndex,
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "20") int size, String condition,
-            @RequestParam(defaultValue = "0") int sort,
-            @RequestParam(defaultValue = "desc") String sortDate,
-            @RequestParam(defaultValue = "asc") String sortBatch,
-            @RequestParam(defaultValue = "asc") String sortName,
+    public ModelAndView getBSIPatientReport(String dataKey, Integer projectId, Integer appId, Integer reportIndex,
+            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int size, String condition,
+            @RequestParam(defaultValue = "0") int sort, @RequestParam(defaultValue = "desc") String sortDate,
+            @RequestParam(defaultValue = "asc") String sortBatch, @RequestParam(defaultValue = "asc") String sortName,
             @RequestParam(defaultValue = "asc") String sortPeriod) {
         Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
         Matcher m = p.matcher(condition);
@@ -585,25 +592,21 @@ public class ReportAction {
         }
         m.appendTail(con_sb);
         Page pager = new Page((page - 1) * size + reportIndex, 1);
-        PageList<Task> pageList = taskService.findTasksByUserCondition(pager,
-                ConstantsData.getLoginUserId(), condition, sort, sortDate,
-                sortBatch, sortName, sortPeriod);
-        ModelAndView mv = getBSIModelAndView("bsi/report_data_main", dataKey,
-                projectId, appId);
+        PageList<Task> pageList = taskService.findTasksByUserCondition(pager, ConstantsData.getLoginUserId(), condition,
+                sort, sortDate, sortBatch, sortName, sortPeriod);
+        ModelAndView mv = getBSIModelAndView("bsi/report_data_new", dataKey, projectId, appId);
+        DataFile df = dataService.getDataByKey(dataKey);
         mv.addObject("pageList", pageList);
+        mv.addObject("data", df);
         return mv;
     }
 
     @ActionLog(value = "查看BSI患者报告", button = "数据报告")
     @RequestMapping("getPrevOrNextBSIReport")
-    public ModelAndView getPrevOrNextBSIReport(
-            @RequestParam(defaultValue = "1") int page, String condition,
-            @RequestParam(defaultValue = "0") int totalPage,
-            @RequestParam(defaultValue = "0") int sort,
-            @RequestParam(defaultValue = "desc") String sortDate,
-            @RequestParam(defaultValue = "asc") String sortBatch,
-            @RequestParam(defaultValue = "asc") String sortName,
-            @RequestParam(defaultValue = "asc") String sortPeriod,
+    public ModelAndView getPrevOrNextBSIReport(@RequestParam(defaultValue = "1") int page, String condition,
+            @RequestParam(defaultValue = "0") int totalPage, @RequestParam(defaultValue = "0") int sort,
+            @RequestParam(defaultValue = "desc") String sortDate, @RequestParam(defaultValue = "asc") String sortBatch,
+            @RequestParam(defaultValue = "asc") String sortName, @RequestParam(defaultValue = "asc") String sortPeriod,
             Boolean isPrev) {
         Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
         Matcher m = p.matcher(condition);
@@ -614,18 +617,18 @@ public class ReportAction {
         }
         m.appendTail(con_sb);
         Page pager = new Page(page, 1);
-        PageList<Task> pageList = taskService.findNextOrPrevTasks(pager,
-                ConstantsData.getLoginUserId(), condition, sort, sortDate,
-                sortBatch, sortName, sortPeriod, isPrev, totalPage);
+        PageList<Task> pageList = taskService.findNextOrPrevTasks(pager, ConstantsData.getLoginUserId(), condition,
+                sort, sortDate, sortBatch, sortName, sortPeriod, isPrev, totalPage);
         if (pageList != null) {
             List<Task> list = pageList.getDatas();
             if (list != null) {
                 Task task = list.get(0);
                 if (task != null) {
-                    System.out.println(task.getFileName());
-                    ModelAndView mv = getBSIModelAndView("bsi/report_data_main",
-                            task.getDataKey(), task.getProjectId(),
+                    String dataKey = task.getDataKey();
+                    ModelAndView mv = getBSIModelAndView("bsi/report_data_main", dataKey, task.getProjectId(),
                             task.getAppId());
+                    DataFile df = dataService.getDataByKey(dataKey);
+                    mv.addObject("data", df);
                     mv.addObject("pageList", pageList);
                     return mv;
                 } else {
@@ -639,6 +642,7 @@ public class ReportAction {
         }
 
     }
+
     /**
      * 获取 BSI 的患者报告
      * 
@@ -694,6 +698,15 @@ public class ReportAction {
     }
 
     /**
+     * 修改Split的数据报告
+     */
+    @RequestMapping("updateSplitReport")
+    @ResponseBody
+    public Integer updateSplitReport(Split split) {
+        return reportService.updateSplitReport(split);
+    }
+
+    /**
      * 修改
      * 
      * @param cmpFill
@@ -738,6 +751,7 @@ public class ReportAction {
     @RequestMapping("getHBVReport")
     public ModelAndView getHBVReport(String dataKey, Integer projectId, Integer appId) {
         HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
+        hbv.setReporttxt(CustomStringUtils.htmlbr(hbv.getReporttxt()));
         ModelAndView mv = getModelAndView("report/report_data_hbv", projectId);
         return mv.addObject("hbv", hbv);
     }
@@ -1093,13 +1107,18 @@ public class ReportAction {
     @ActionLog(value = "打印PGS数据报告", button = "打印数据报告")
     @RequestMapping("printPGS")
     public ModelAndView printPGS(Integer appId, Integer projectId, String dataKey, Integer flag) {
-        ModelAndView mv = getModelAndView("print/print_pgs", projectId);
+        Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
+        // 涉及共享，此处不能取登陆者的companyId
+        String path = pgs.getCompanyId() + "/PGS/print.vm";
+        if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+            path = "default/PGS/print.vm";
+        }
+        ModelAndView mv = getModelAndView(path, projectId);
         Integer userId = ConstantsData.getLoginUserId();
         DataFile data = dataService.getDataByKey(dataKey);
         Integer fileId = data.getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
         if (StringUtils.isEmpty(report.getPrintContext())) {
-            Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
             mv.addObject("pgs", pgs).addObject("report", report).addObject("flag", flag);
         } else {
             mv.addObject("printContext", report.getPrintContext());
@@ -1120,20 +1139,21 @@ public class ReportAction {
     @ActionLog(value = "打印TBRifampicin数据报告", button = "打印数据报告")
     @RequestMapping("printTBRifampicin")
     public ModelAndView printTBRifampicin(Integer appId, String dataKey, Integer projectId, Integer flag) {
-        ModelAndView mv = getModelAndView("print/print_tbrifampicin", projectId);
+        String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print.vm";
+        if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+            path = "default/" + appId + "/print.vm";
+        }
+        ModelAndView mv = getModelAndView(path, projectId);
+        TBRifampicin tbrifampicin = reportService.getTBRifampicinReport(dataKey, projectId, appId);
+        tbrifampicin.setReport(CustomStringUtils.htmlbr(tbrifampicin.getReport()));
         Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
         // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
         if (StringUtils.isNotEmpty(report.getPrintContext())) {
-            return mv.addObject("printContext", report.getPrintContext());
+            mv.addObject("printContext", report.getPrintContext());
         }
-        TBRifampicin tbrifampicin = reportService.getTBRifampicinReport(dataKey, projectId, appId);
-        if (StringUtils.isNotBlank(tbrifampicin.getReport())) {
-            tbrifampicin.setReport(CustomStringUtils.htmlbr(tbrifampicin.getReport()));
-        }
-
-        mv.addObject("tbrifampicin", tbrifampicin).addObject("flag", flag).addObject("report", report);
+        mv.addObject("tbrifampicin", tbrifampicin).addObject("report", report);
         return mv;
     }
 
@@ -1151,19 +1171,32 @@ public class ReportAction {
     @ActionLog(value = "打印HBV数据报告", button = "打印数据报告")
     @RequestMapping("printHBV")
     public ModelAndView printHBV(Integer appId, String dataKey, Integer projectId, Integer flag) {
-        ModelAndView mv = getModelAndView("print/print_hbv", projectId);
+        // 获取结果视图路径
+        String path = null;
+        if (flag == 0) { // 详细报告
+            path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print_detail.vm";
+            if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+                path = "default/" + appId + "/print_detail.vm";
+            }
+        } else { // 简要报告
+            path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print_brief.vm";
+            if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+                path = "default/" + appId + "/print_brief.vm";
+            }
+        }
+        ModelAndView mv = getModelAndView(path, projectId);
+        HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
         Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
         // 首先检索该报告是否保存过，若保存过，则直接将保存内容返回
-        if (flag == 0 && StringUtils.isNotEmpty(report.getPrintContext())) {// 详细报告
-            return mv.addObject("printContext", report.getPrintContext());
+        if (flag == 0 && StringUtils.isNotEmpty(report.getPrintContext())) {
+            mv.addObject("printContext", report.getPrintContext());
         }
-        if (flag == 1 && StringUtils.isNotEmpty(report.getPrintSimple())) {// 简要报告
-            return mv.addObject("printContext", report.getPrintSimple());
+        if (flag == 1 && StringUtils.isNotEmpty(report.getPrintSimple())) {
+            mv.addObject("printSimple", report.getPrintSimple());
         }
-        HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
-        mv.addObject("hbv", hbv).addObject("flag", flag).addObject("report", report);
+        mv.addObject("hbv", hbv).addObject("report", report);
         return mv;
     }
 

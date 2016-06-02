@@ -1,0 +1,76 @@
+<div id="pgsSave">
+	<div style="display: none;" id="_appId">${pgs.appId}</div>
+	<div style="display: none;" id="_fileId">${pgs.fileId}</div>
+	<div style="display: none;" id="_projectId">${pgs.projectId}</div>
+	#block("card")
+		#parse("/default/PGS/card.vm")
+	#end
+	<div class="row" style="margin:0px auto;" id="mainDiv">
+		#block("head")
+			#if($pgs.companyIcon)
+				<div align="center" class="clearfix">
+					#block("company")
+						<img src="$link.getContextPath()/report/company/icon?file=$!pgs.companyIcon" style="width:90px">
+					#end
+					#block("title")
+						<h2 class="shotH3">
+							${pgs.companyName}
+							<br />
+							<span class="secTitle">$!pgs.companyEngName</span>
+						</h2>
+					#end
+					#block("dept")
+						<img id="_imgShow" src="$link.getContextPath()/report/dept/icon?file=${pgs.deptIcon}" style="width:95px">
+					#end
+				</div>
+				<hr>
+			#end
+		#end
+		#block("subtitle")
+			<div align="center">
+				<h3>染色体拷贝数变异检测报告</h3>
+			</div>
+		#end
+		#block("baseinfo")
+			<div>
+				<h4>基本信息：</h4>
+				<table class="table table-bordered table-condensed">
+					#block("input")
+						#parse("/default/PGS/input.vm")
+					#end
+				</table>
+			</div>
+		#end
+		#block("method")
+			<div>
+				<h4>检测方法:</h4>
+				<div>
+					NGS
+				</div>
+			</div>
+		#end
+		<div>
+			#parse("/default/PGS/img.vm")
+		</div>
+		#block("explain")
+			<div>
+				#parse("/default/PGS/explain.vm")
+			</div>
+		#end
+		#block("context")
+		#end
+		<div class="notes">
+			#block("notes")
+				#parse("/default/${pgs.appId}/note.vm")
+			#end
+		</div>
+	</div>
+	<ul class="footer">
+		#block("footer")
+			#parse("/default/PGS/footer.vm")
+		#end
+	</ul>
+	#block("bottom")
+		#parse("/default/PGS/bottom.vm")
+	#end
+</div>

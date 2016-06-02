@@ -1,0 +1,15 @@
+#parse("/default/${tbrifampicin.appId}/reference.vm")
+<div id="printMain">
+    #if(${printContext})
+        ${printContext}
+    #end
+    #if(!${printContext})
+        <div>
+            #parse("/default/${tbrifampicin.appId}/title.vm")
+            #parse("/default/${tbrifampicin.appId}/content.vm")
+            #parse("/default/${tbrifampicin.appId}/foot.vm")
+            </form>
+        </div>
+    #end
+</div>  
+#parse("/default/${tbrifampicin.appId}/js.vm")

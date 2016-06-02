@@ -55,11 +55,51 @@ class BSI:
                 cross_species_zh = ""
                 if cross_species_dict is not None:
                     cross_species_zh = dict_value(cross_species_dict, "species_zh")
-                species = {"species": specie_name, "species_zh": species_zh, "site1": list_value(st, 1),
-                           "site2": list_value(st, 2), "site3": list_value(st, 3), "site4": list_value(st, 4),
-                           "unique_reads_num": list_value(st, 5), "seq1": list_value(st, 7), "seq2": list_value(st, 8),
-                           "seq3": list_value(st, 9), "seq4": list_value(st, 10), "cross_species": cross_species,
-                           "cross_species_zh": cross_species_zh
+                seq1 = list_value(st, 7)
+                seq1_name = ""
+                seq1_no = ""
+                seq1_text = ""
+                if seq1 is not None:
+                    seq1list = seq1.split(" ")
+                    seq1_name = list_value(seq1list, 0)
+                    seq1_no = list_value(seq1list, 1)
+                    seq1_text = list_value(seq1list, 2)
+                seq2 = list_value(st, 8)
+                seq2_name = ""
+                seq2_no = ""
+                seq2_text = ""
+                if seq2 is not None:
+                    seq2list = seq2.split(" ")
+                    seq2_name = list_value(seq2list, 0)
+                    seq2_no = list_value(seq2list, 1)
+                    seq2_text = list_value(seq2list, 2)
+                seq3 = list_value(st, 9)
+                seq3_name = ""
+                seq3_no = ""
+                seq3_text = ""
+                if seq3 is not None:
+                    seq3list = seq3.split(" ")
+                    seq3_name = list_value(seq3list, 0)
+                    seq3_no = list_value(seq3list, 1)
+                    seq3_text = list_value(seq3list, 2)
+                seq4 = list_value(st, 10)
+                seq4_name = ""
+                seq4_no = ""
+                seq4_text = ""
+                if seq4 is not None:
+                    seq4list = seq4.split(" ")
+                    seq4_name = list_value(seq4list, 0)
+                    seq4_no = list_value(seq4list, 1)
+                    seq4_text = list_value(seq4list, 2)
+                species = {"species": specie_name, "species_zh": species_zh,
+                           "site1": list_value(st, 1), "site2": list_value(st, 2),
+                           "site3": list_value(st, 3), "site4": list_value(st, 4),
+                           "seq_proportion": list_value(st, 5),
+                           "seq1_name": seq1_name, "seq1_no": seq1_no, "seq1": seq1_text,
+                           "seq2_name": seq2_name, "seq2_no": seq2_no, "seq2": seq2_text,
+                           "seq3_name": seq3_name, "seq3_no": seq3_no, "seq3": seq3_text,
+                           "seq4_name": seq4_name, "seq4_no": seq4_no, "seq4": seq4_text,
+                           "cross_species": cross_species,"cross_species_zh": cross_species_zh
                            }
                 species_20.append(species)
             result["species_20"] = species_20

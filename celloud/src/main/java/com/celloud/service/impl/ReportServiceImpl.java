@@ -65,7 +65,6 @@ import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.ExpensesService;
 import com.celloud.service.ReportService;
-import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.ExcelUtil;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.PropertiesUtil;
@@ -146,8 +145,6 @@ public class ReportServiceImpl implements ReportService {
                 hbv.setImgString("");
             }
         }
-        // jstl 处理 \n 很困难，就在 java 端处理
-        hbv.setReporttxt(CustomStringUtils.htmlbr(hbv.getReporttxt()));
         return hbv;
     }
 
@@ -170,7 +167,7 @@ public class ReportServiceImpl implements ReportService {
     public HCV getHCVReport(String dataKey, Integer projectId, Integer appId) {
         return reportDao.getDataReport(HCV.class, dataKey, projectId, appId);
     }
-    
+
     @Override
     public Translate getTranslateReport(String dataKey, Integer projectId, Integer appId) {
         return reportDao.getDataReport(Translate.class, dataKey, projectId, appId);
@@ -368,7 +365,7 @@ public class ReportServiceImpl implements ReportService {
         Iterable list = reportDao.getEGFROrKRASCompare(KRASCount.class, length);
         Iterator it = list.iterator();
         StringBuilder sb = new StringBuilder();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             JSONObject i = JSONObject.fromObject(it.next());
             Integer count = Integer.parseInt(i.get("count").toString());
             Integer site = Integer.parseInt(JSONObject.fromObject(i.get("_id")).get("site").toString());
@@ -376,14 +373,14 @@ public class ReportServiceImpl implements ReportService {
         }
         return sb.toString();
     }
-    
+
     @SuppressWarnings("rawtypes")
     @Override
     public String egfrCompare(Integer length) {
         Iterable list = reportDao.getEGFROrKRASCompare(EGFRCount.class, length);
         Iterator it = list.iterator();
         StringBuilder sb = new StringBuilder();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             JSONObject i = JSONObject.fromObject(it.next());
             Integer count = Integer.parseInt(i.get("count").toString());
             Integer site = Integer.parseInt(JSONObject.fromObject(i.get("_id")).get("site").toString());
@@ -398,7 +395,7 @@ public class ReportServiceImpl implements ReportService {
         Iterable list = reportDao.getTBRifampicinCompare(TBRifampicinCount.class);
         Iterator it = list.iterator();
         StringBuilder sb = new StringBuilder();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             JSONObject i = JSONObject.fromObject(it.next());
             Integer count = Integer.parseInt(i.get("count").toString());
             Integer site = Integer.parseInt(JSONObject.fromObject(i.get("_id")).get("site").toString());
@@ -413,14 +410,14 @@ public class ReportServiceImpl implements ReportService {
         Iterable list = reportDao.getHCVCompare(HCVCount.class);
         Iterator it = list.iterator();
         StringBuilder sb = new StringBuilder();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             JSONObject i = JSONObject.fromObject(it.next());
             Integer count = Integer.parseInt(i.get("count").toString());
             String subtype = JSONObject.fromObject(i.get("_id")).get("subtype").toString();
             sb.append(subtype + "," + count + ";");
         }
         return sb.toString();
-        
+
     }
 
     @Override
@@ -434,10 +431,8 @@ public class ReportServiceImpl implements ReportService {
         if (columns == null) {
             return null;
         }
-        String queryColumns = columns.replace("Total_Reads", "totalReads").
-                replace("Duplicate(%)", "duplicate").
-                replace("GC_Count(%)", "gcCount").
-                replace("*SD", "sd");
+        String queryColumns = columns.replace("Total_Reads", "totalReads").replace("Duplicate(%)", "duplicate")
+                .replace("GC_Count(%)", "gcCount").replace("*SD", "sd");
         String[] queryColumn = queryColumns.split(",");
         // 分割对比列[totalReads,duplicate,gcCount]
         String column[] = columns.split(",");
@@ -466,12 +461,12 @@ public class ReportServiceImpl implements ReportService {
                         String value = (String) getMethod.invoke(p, (Object[]) null);
                         // 新老数据的字段有可能不一致, 所以判断非空
                         if (value != null && !"".equals(value)) {
-                        	value = value.trim();
+                            value = value.trim();
                             // 拼接到sb中
-                            try{
+                            try {
                                 Float.parseFloat(value);
                                 sb.append(value + ",");
-                            }catch(Exception e){
+                            } catch (Exception e) {
                                 continue;
                             }
                         }
@@ -724,16 +719,13 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public Integer updateMIBFilling(MIB mib) {
-        UpdateResults ur = reportDao.editData(MIB.class, mib.getId(),
-                "baseInfo", mib.getBaseInfo());
+        UpdateResults ur = reportDao.editData(MIB.class, mib.getId(), "baseInfo", mib.getBaseInfo());
         return ur != null ? 1 : 0;
     }
 
     @Override
     public Integer updateBSIFilling(BSI bsi) {
-        UpdateResults ur = reportDao.editData(BSI.class, bsi.getId(),
-                "baseInfo",
-                bsi.getBaseInfo());
+        UpdateResults ur = reportDao.editData(BSI.class, bsi.getId(), "baseInfo", bsi.getBaseInfo());
         return ur != null ? 1 : 0;
     }
 
@@ -855,15 +847,21 @@ public class ReportServiceImpl implements ReportService {
     public ABINJ getABINJReport(String dataKey, Integer projectId, Integer appId) {
         return reportDao.getDataReport(ABINJ.class, dataKey, projectId, appId);
     }
-    
+
     @Override
     public S16 get16SReport(String dataKey, Integer projectId, Integer appId) {
-    	return reportDao.getDataReport(S16.class, dataKey, projectId, appId);
+        return reportDao.getDataReport(S16.class, dataKey, projectId, appId);
     }
 
-	@Override
-	public Report getReportByProjectId(Integer projectId) {
-		return reportMapper.getReportByProjectId(projectId, ReportType.PROJECT);
+    @Override
+    public Report getReportByProjectId(Integer projectId) {
+        return reportMapper.getReportByProjectId(projectId, ReportType.PROJECT);
+    }
+
+    @Override
+    public Integer updateSplitReport(Split split) {
+        UpdateResults ur = reportDao.editData(Split.class, split.getId(), "baseInfo", split.getBaseInfo());
+        return ur != null ? 1 : 0;
 	}
 
     @Override

@@ -1,0 +1,73 @@
+<script type="text/javascript">
+$(function(){
+    var url = window.location.href.split("print")[0];
+    var sex = $("#men").prop("checked");
+    
+    $("#print").on("click",function(){
+        var inputVal;
+        var textareaVal;
+        var classname;
+        var cmpDrug = "";
+        $("body").find("section").each(function(){
+            $(this).removeClass("border1");
+        });
+        $("body").find("input[type='text']").each(function(){
+            inputVal = $(this).val();
+            classname = $(this).attr("class");
+            name = $(this).attr("name");
+            $(this).parent().html("<input type='hidden' name='"+name+"' value='"+classname+"'><span name='print'>"+inputVal+"</span>");
+        });
+        var sex = $("input[type='radio']:checked").val();
+        $("#_sex").html(sex);
+        $("#change").hide();
+        $(".buttons").hide();
+        window.print();
+        $(".buttons").show();
+        $("#change").show();
+        $("body").find("section").each(function(){
+            $(this).addClass("border1");
+        });
+        $("body").find("span[name='print']").each(function(){
+            inputVal = $(this).html();
+            classname = $(this).prev().val();
+            name = $(this).prev().attr("name");
+            $(this).parent().html("<input type='text' name='" + name + "' class='"+classname+"' value='"+inputVal+"'>");
+        });
+        $("#_sex").html("<input type='radio' name='"+'baseInfo["sex"]'+"' value='男'>男<input type='radio' name='"+'baseInfo["sex"]'+"' value='女'>女");
+        $("input[type='radio'][value="+sex+"]").prop("checked",true); 
+        
+    });
+    
+    $("#save").on("click",function(){
+        var _id = $("#id").val();
+        if(_id != "" && _id != undefined){
+            $.post("$link.getContextPath()/report/updateSplitReport",$("#split-form").serialize(),function(result){
+                if(result==1){
+                    $.lAlert("信息保存成功！");
+                }else{
+                    $.lAlert("信息保存失败！");
+                }
+            });
+        }
+    });
+
+    $("#reset").on("click",function(){
+        $.lConfirm("确认重置?",function(){
+            $(':input','#split-form')  
+         .not(':button, :submit, :reset, :hidden')  
+         .val('')  
+         .removeAttr('checked')  
+         .removeAttr('selected');
+          var _id = $("#id").val();
+          if(_id != "" && _id != undefined){
+              $.post("$link.getContextPath()/report/updateSplitReport",$("#split-form").serialize(),function(result){
+                if(result!=1){
+                    $.lAlert("信息重置失败！");
+                }
+              });
+          }
+        });
+    });
+});
+
+</script>

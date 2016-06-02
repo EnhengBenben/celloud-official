@@ -1,0 +1,4 @@
+<h4>结果解释：</h4>
+<div id="des">
+	<textarea rows="3">${pgs.report}</textarea>
+</div>

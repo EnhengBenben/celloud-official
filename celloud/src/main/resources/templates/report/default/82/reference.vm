@@ -1,0 +1,4 @@
+<script type="text/javascript" src="$link.getContextPath()/js/browser.js"></script>
+<script src="$link.getContextPath()/plugins/imgRemove/imgRemove.0.1.js?version=0.2" type="text/javascript"></script>
+<link rel="stylesheet" href="$link.getContextPath()/plugins/imgRemove/imgRemove.0.1.css?version=0.2" >
+<link rel="stylesheet" href="$link.getContextPath()/css/print_hbv.css?version=1.16">

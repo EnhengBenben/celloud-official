@@ -30,7 +30,7 @@ $(function(){
             if(result==1){
                 $.lAlert("信息保存成功！");
             }else{
-                jAlert("信息保存失败！");
+                $.lAlert("信息保存失败！");
             }
         });
     });

@@ -48,13 +48,10 @@
 			<i class="i-edit"></i>二、未突变点位
 		</h2>
 	    <div class="m-boxCon result">
-	    	<c:if test="${oncogene.wz2!=null && oncogene.wz2!='' }">
+	    	<c:if test="${oncogene.out!=null}">
 		    	<c:forEach var="img" items="${oncogene.out }">
 					<img class="imgtop" title="${img }" name="imgSrc" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img }" style="width: 900px;">
 		    	</c:forEach>
-	    	</c:if>
-	    	<c:if test="${oncogene.wz2==null || oncogene.wz2=='' }">
-	    		数据正常，未找到其他突变。
 	    	</c:if>
 	    </div>
 	</div>
