@@ -1,5 +1,7 @@
 <script type="text/javascript">
+var companyId = $("#_companyId").html();
 $(function(){
+    var companyId = $("#_companyId").html();
     var browser = $.NV('name');
     var allHeight;
     if(browser=='firefox'){
@@ -49,9 +51,10 @@ $(function(){
 
     var url = window.location.href.split("print")[0];
     var sex = $("#men").prop("checked");
-    var companyId = $("#_companyId").html();
     $("#print").on("click",function(){
-        imgRemove.hideRemove();
+        if(companyId==57){
+            imgRemove.hideRemove();
+        }
         var inputVal;
         $("#printMain").find("input[type='text']").each(function(){
             inputVal = $(this).val();
