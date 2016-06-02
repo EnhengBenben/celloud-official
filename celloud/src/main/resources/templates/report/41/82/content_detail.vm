@@ -23,6 +23,7 @@
         <div class="gray">送检目的：<span name="geneType">HBV基因分型</span><span name="resistanceType" class="hide">拉米夫定LAM，阿德福韦ADV，恩替卡韦ETV，替比夫定LDT，替诺福韦酯TDF，恩曲他滨FTC</span></div>
         <div name="resistanceType" class="gray hide">相关位点：rt169，rt173，rt180，rt181，rt184，rt194，rt202，rt204，rt215，rt233，rt236，rt250</div>
     </div>
+    <hr class="hr-bold mt5" />
     <h2 name="geneType" class="mt10">基因分型结果：</h2>
     <div name="geneType" class="m-box_1">
         ${hbv.type.replace('Type','基因型')}
