@@ -47,7 +47,7 @@
 	        <c:if test="${task.period==3 }"><a data-toggle="modal" data-target="#report-uploading-modal">数据上传中</a></c:if>
 	        <c:if test="${empty task.period }"><a href="javascript:void(0)" onclick="$.report.period.error('${task.fileName }')" class="wrong">运行异常</a></c:if>
 	      </td>
-	      <td><fmt:formatDate type="both" value="${task.updateDate }"/></td>
+	      <td><fmt:formatDate value="${task.updateDate }" type="both" dateStyle="long" pattern="yyyy-MM-dd" /></td>
 	      <td>
 	        <c:if test="${task.period==2 }">
 	            <a class="edit-icon" title="查看报告" name="to-report-a" href="javascript:<c:choose><c:when test="${task.period==2 }">$.report.detail.patient('${task.dataKey}',${task.projectId},${task.appId},${size.count},${pageList.page.currentPage })</c:when><c:otherwise>void(0)</c:otherwise></c:choose>"><i class="celicon show-icon"></i></a>
@@ -197,4 +197,10 @@
     </ul>
   </c:if>
 </div>
-<script src="<%=request.getContextPath()%>/js/bsi_report.js?version=1.1"></script>
+<script type="text/javascript">
+$("#condition-find").unbind("click");
+$("#condition-find").on("click",function(){
+  $.report.options.condition = $("#condition-input").val();
+  $.report.find.condition();
+});
+</script>

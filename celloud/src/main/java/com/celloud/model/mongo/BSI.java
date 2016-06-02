@@ -21,8 +21,10 @@ public class BSI extends MIB {
     /**
      * 20种菌的检测结果。包括：species——菌株名，species_zh——菌株中文名，
      * site1——突变位点1信息，site2——突变位点2信息，site3——突变位点3信息，site4——突变位点4信息，
-     * unique_reads_num——唯一识别序列数，seq1——代表序列1，seq2——代表序列2，seq3——代表序列3，seq4——
-     * 代表序列4， cross_species——覆盖区域交叉菌
+     * unique_reads_num——唯一识别序列数，seq_proportion——序列比重
+     * seq1_name——序列1名称，seq1——代表序列1， seq2_name——序列2名称，seq2——代表序列2，
+     * seq3_name——序列3名称，seq3——代表序列3， seq4_name——序列4名称，seq4——代表序列4，
+     * cross_species——覆盖区域交叉菌
      */
     private List<Map<String, String>> species_20;
     /**
@@ -32,7 +34,12 @@ public class BSI extends MIB {
      * 代表序列4
      */
     private List<Map<String, String>> species_other;
-
+    /** 人序列总量 */
+    private String human_reads;
+    /** 16S序列数 */
+    private String reads_16s;
+    /** 低质量序列总数 */
+    private String low_quality_reads;
     public List<Map<String, String>> getSpecies_20() {
         return species_20;
     }
@@ -47,5 +54,29 @@ public class BSI extends MIB {
 
     public void setSpecies_other(List<Map<String, String>> species_other) {
         this.species_other = species_other;
+    }
+
+    public String getHuman_reads() {
+        return human_reads;
+    }
+
+    public void setHuman_reads(String human_reads) {
+        this.human_reads = human_reads;
+    }
+
+    public String getReads_16s() {
+        return reads_16s;
+    }
+
+    public void setReads_16s(String reads_16s) {
+        this.reads_16s = reads_16s;
+    }
+
+    public String getLow_quality_reads() {
+        return low_quality_reads;
+    }
+
+    public void setLow_quality_reads(String low_quality_reads) {
+        this.low_quality_reads = low_quality_reads;
     }
 }
