@@ -28,7 +28,7 @@
 	        <c:if test="${not empty bsi.species_20}">
 	          <c:forEach items="${bsi.species_20 }" var="species20">
 	            <c:choose>
-	              <c:when test='${species20.species_zh.equals("未知") || empty species20.species_zh}'>species20.species<br></c:when>
+	              <c:when test='${species20.species_zh.equals("未知") || empty species20.species_zh}'>${species20.species }<br></c:when>
 	              <c:otherwise>${species20.species_zh }
 	                <c:choose>
 	                  <c:when test="${empty havestrain}">
@@ -127,7 +127,7 @@
 	        <c:if test="${not empty bsi.species_20}">
 	          <c:forEach items="${bsi.species_20 }" var="species20">
 	            <c:choose>
-	              <c:when test='${species20.species_zh.equals("未知") || empty species20.species_zh}'>species20.species<br></c:when>
+	              <c:when test='${species20.species_zh.equals("未知") || empty species20.species_zh}'>${species20.species }<br></c:when>
 	              <c:otherwise>${species20.species_zh }
 	                <c:choose>
 	                  <c:when test="${empty havestrain}">
@@ -384,7 +384,7 @@
 	               <tr>
 	                 <td class="title" rowspan="${srowspan }">
 	                   <c:choose>
-	                   <c:when test='${species20.species_zh.equals("未知") || empty species20.species_zh}'>species20.species&nbsp;</c:when>
+	                   <c:when test='${species20.species_zh.equals("未知") || empty species20.species_zh}'>${species20.species }</c:when>
 	                   <c:otherwise>${species20.species_zh }
 	                     <c:choose>
 	                        <c:when test="${empty havestrain}">
