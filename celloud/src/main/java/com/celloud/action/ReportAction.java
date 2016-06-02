@@ -594,8 +594,7 @@ public class ReportAction {
         Page pager = new Page((page - 1) * size + reportIndex, 1);
         PageList<Task> pageList = taskService.findTasksByUserCondition(pager, ConstantsData.getLoginUserId(), condition,
                 sort, sortDate, sortBatch, sortName, sortPeriod);
-        ModelAndView mv = getBSIModelAndView("bsi/report_data_new", dataKey,
-                projectId, appId);
+        ModelAndView mv = getBSIModelAndView("bsi/report_data_new", dataKey, projectId, appId);
         mv.addObject("pageList", pageList);
         return mv;
     }
@@ -748,6 +747,7 @@ public class ReportAction {
     @RequestMapping("getHBVReport")
     public ModelAndView getHBVReport(String dataKey, Integer projectId, Integer appId) {
         HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
+        hbv.setReporttxt(CustomStringUtils.htmlbr(hbv.getReporttxt()));
         ModelAndView mv = getModelAndView("report/report_data_hbv", projectId);
         return mv.addObject("hbv", hbv);
     }
@@ -1103,8 +1103,8 @@ public class ReportAction {
     @ActionLog(value = "打印PGS数据报告", button = "打印数据报告")
     @RequestMapping("printPGS")
     public ModelAndView printPGS(Integer appId, Integer projectId, String dataKey, Integer flag) {
-		Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
-		// 涉及共享，此处不能取登陆者的companyId
+        Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
+        // 涉及共享，此处不能取登陆者的companyId
         String path = pgs.getCompanyId() + "/PGS/print.vm";
         if (ReportAction.class.getResource("/templates/report/" + path) == null) {
             path = "default/PGS/print.vm";
