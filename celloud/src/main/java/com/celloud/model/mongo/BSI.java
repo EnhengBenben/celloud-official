@@ -39,8 +39,6 @@ public class BSI extends MIB {
     private String human_reads;
     /** 16S序列数 */
     private String reads_16s;
-    /** 低质量序列总数 */
-    private String low_quality_reads;
     public List<Map<String, String>> getSpecies_20() {
         return species_20;
     }
@@ -71,13 +69,5 @@ public class BSI extends MIB {
 
     public void setReads_16s(String reads_16s) {
         this.reads_16s = reads_16s;
-    }
-
-    public String getLow_quality_reads() {
-        return low_quality_reads;
-    }
-
-    public void setLow_quality_reads(String low_quality_reads) {
-        this.low_quality_reads = low_quality_reads;
     }
 }

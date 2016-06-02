@@ -65,8 +65,6 @@ class MIB:
                             result['human_reads'] = line
                         elif index == 4:
                             result['reads_16s'] = line
-                        elif index == 5:
-                            result['low_quality_reads'] = line
                         index += 1
                     f.close()
                 # 测序结果

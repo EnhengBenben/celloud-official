@@ -256,7 +256,7 @@
                          </g>
                        </svg>
                      </td>
-                     <td class="sub-title" rowspan="$!srowspan">$!species_20.unique_reads_num </td>
+                     <td class="sub-title" rowspan="$!srowspan">$!species_20.seq_proportion </td>
                      <td>$!species_20.seq1_name </td>
                      <td>
                        <div class="seq">$!species_20.seq1_no <br>$!species_20.seq1 </div>
@@ -300,7 +300,6 @@
               <td>平均GC含量</td>
               <td>human序列总数</td>
               <td>16S序列总数</td>
-              <td>低质量序列总数</td>
             </tr>
             <tr>
               <td>$!bsi.totalReads</td>
@@ -308,7 +307,6 @@
               <td>$!bsi.avgGCContent</td>
               <td>$!bsi.human_reads</td>
               <td>$!bsi.reads_16s</td>
-              <td>$!bsi.low_quality_reads</td>
             </tr>
           </table>
           <p>
