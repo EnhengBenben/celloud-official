@@ -1,4 +1,4 @@
-<link href="$link.getContextPath()/css/print_bsi.css" rel="stylesheet">
+<link href="$link.getContextPath()/css/print_bsi.css?version=3.1.13" rel="stylesheet">
 <div class="content">
   <div class="print-button">
     <a id="print-report" class="btn" href="javascript:void(0)"><i class="fa fa-print"></i></a>

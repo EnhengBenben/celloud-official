@@ -95,7 +95,7 @@ a, a:link, a:hover, a:active, a:visited {
 .base-info ul>li{
     display: inline-block;
     *display: inline-block; 
-    margin-right: 49px;
+    margin-right: 30px;
     margin-bottom: 15px;
     position: relative;
     float: left;
