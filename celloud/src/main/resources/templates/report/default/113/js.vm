@@ -20,7 +20,9 @@ $(function(){
         var sex = $("input[type='radio']:checked").val();
         $("#_sex").html(sex);
         $("#change").hide();
+        $(".buttons").hide();
         window.print();
+        $(".buttons").show();
         $("#change").show();
         $("body").find("section").each(function(){
             $(this).addClass("border1");

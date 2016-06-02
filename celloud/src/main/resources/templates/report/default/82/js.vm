@@ -1,5 +1,7 @@
 <script type="text/javascript">
+var companyId = $("#_companyId").html();
 $(function(){
+    var companyId = $("#_companyId").html();
     var browser = $.NV('name');
     var allHeight;
     if(browser=='firefox'){
@@ -49,9 +51,10 @@ $(function(){
 
     var url = window.location.href.split("print")[0];
     var sex = $("#men").prop("checked");
-    var companyId = $("#_companyId").html();
     $("#print").on("click",function(){
-        imgRemove.hideRemove();
+        if(companyId==57){
+            imgRemove.hideRemove();
+        }
         var inputVal;
         $("#printMain").find("input[type='text']").each(function(){
             inputVal = $(this).val();
@@ -81,12 +84,13 @@ $(function(){
         }
         inputVal = $("#des").children().val();
         if(inputVal){
-            inputVal = inputVal.replace(/\n/g,"\n");
+            inputVal = inputVal.replace(/\n/g,"<br/>");
             $("#des").html(inputVal);
         }
         inputVal = $("#des1").children().val();
+        var oldInputVal = inputVal
         if(inputVal){
-            inputVal = inputVal.replace(/\n/g,"\n");
+            inputVal = inputVal.replace(/\n/g,"<br/>&nbsp;&nbsp;&nbsp;");
             $("#des1").html(inputVal);
         }
         $(".imgmiss").addClass("imgmissprint");
@@ -100,8 +104,7 @@ $(function(){
         }
         inputVal = $("#des1").html();
         if(inputVal){
-            inputVal = inputVal.replace(/<br>/g,"\n");
-            $("#des1").html("<textarea rows=\"5\">"+inputVal+"</textarea>");
+            $("#des1").html("<textarea rows=\"5\">"+oldInputVal+"</textarea>");
         }
         if(_flag==1){
             $("h1").css("padding","40px 0 5px 0");

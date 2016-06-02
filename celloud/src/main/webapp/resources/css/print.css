@@ -39,7 +39,7 @@ table {max-width: 100%;background-color: transparent;border-collapse: collapse;b
 .table tbody + tbody {border-top: 1px solid #dddddd;}
 
 .table-condensed th,.table-condensed td { padding: 4px 3px;}
-.table-bordered { border: 1px solid #dddddd; border-collapse: separate; *border-collapse: collapse; border-left: 0;}
+.table-bordered { border: 1px solid #dddddd; *border-collapse: collapse; border-left: 0;}
 .table-bordered th,.table-bordered td { border-left: 1px solid #dddddd;}
 .table-bordered caption + thead tr:first-child th,.table-bordered caption + tbody tr:first-child th,.table-bordered caption + tbody tr:first-child td,.table-bordered colgroup + thead tr:first-child th,.table-bordered colgroup + tbody tr:first-child th,.table-bordered colgroup + tbody tr:first-child td,.table-bordered thead:first-child tr:first-child th,.table-bordered tbody:first-child tr:first-child th,.table-bordered tbody:first-child tr:first-child td {  border-top: 0;}
 .table-striped tbody tr:nth-child(odd) td,.table-striped tbody tr:nth-child(odd) th {  background-color: #f9f9f9;}

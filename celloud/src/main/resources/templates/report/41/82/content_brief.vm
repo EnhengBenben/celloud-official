@@ -24,19 +24,22 @@
         <div name="resistanceType" class="gray hide">相关位点：rt169，rt173，rt180，rt181，rt184，rt194，rt202，rt204，rt215，rt233，rt236，rt250</div>
     </div>
     <hr class="hr-bold mt5" />
-    <h2 name="geneType" class="mt10">基因分型结果：</h2>
-    <div name="geneType" class="m-box_1">
-        ${hbv.type.replace('Type','基因型')}
+    <div style="min-height:800px;">
+        <h2 name="geneType" class="mt10">基因分型结果：</h2>
+        <div name="geneType" class="m-box_1">
+            ${hbv.type.replace('Type','基因型')}
+        </div>
+        <h2 name="resistanceType" class="mt10 hide">一、耐药突变位点检测结果：</h2>
+        <div name="resistanceType" class="m-box_1 hide">
+            ${hbv.clinical}
+            <p class="annotation">注：深背景色<span class="_hard colorspan">&nbsp;</span>表示发生了耐药突变<br>
+                浅背景色<span class="_light colorspan">&nbsp;</span>表示发生了突变，但是暂无文献支持其和耐药相关<br>
+                 红色字体表示在样本中未找到该位点
+            </p>
+        </div>
+        <h2 class="mt10">二、参考结论（根据已发表文献得出以下参考结论）：</h2>
+        <div class="m-box_1" id="des">
+            <textarea rows="6">${hbv.reporttxt.split('Other:')[0]}</textarea>
+        </div>
     </div>
-    <h2 name="resistanceType" class="mt10 hide">一、耐药突变位点检测结果：</h2>
-    <div name="resistanceType" class="m-box_1 hide">
-        ${hbv.clinical}
-        <p class="annotation">注：深背景色<span class="_hard colorspan">&nbsp;</span>表示发生了耐药突变<br>
-            浅背景色<span class="_light colorspan">&nbsp;</span>表示发生了突变，但是暂无文献支持其和耐药相关<br>
-             红色字体表示在样本中未找到该位点
-        </p>
-    </div>
-    <h2 class="mt10">二、参考结论（根据已发表文献得出以下参考结论）：</h2>
-    <div class="m-box_1" id="des">
-        <textarea rows="6">${hbv.reporttxt.split('Other:')[0]}</textarea>
-    </div>
+    <br/>

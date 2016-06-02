@@ -1,9 +1,9 @@
 #parse("/default/${hbv.appId}/reference.vm")
 <div id="printMain">
-    #if(${report.printContext})
-        ${report.printContext}
+    #if(${printContext})
+        ${printContext}
     #end
-    #if(!${report.printContext})
+    #if(!${printContext})
         <div>
             #parse("/41/${hbv.appId}/title_detail.vm")
             #parse("/41/${hbv.appId}/content_detail.vm")
