@@ -61,6 +61,12 @@ class MIB:
                             result['avgQuality'] = line
                         elif index == 2:
                             result['avgGCContent'] = line
+                        elif index == 3:
+                            result['human_reads'] = line
+                        elif index == 4:
+                            result['reads_16s'] = line
+                        elif index == 5:
+                            result['low_quality_reads'] = line
                         index += 1
                     f.close()
                 # 测序结果

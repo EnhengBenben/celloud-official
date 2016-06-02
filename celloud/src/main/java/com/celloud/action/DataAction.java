@@ -531,14 +531,15 @@ public class DataAction {
                     }
                 }
             } else {
-				// SGE
-				logger.info("celloud 直接向 SGE 投递任务");
-				Map<String, String> map = CommandKey.getMap(dataFilePath, appPath, proId);
-				StrSubstitutor sub = new StrSubstitutor(map);
-				String command = sub.replace(app.getCommand());
-				logger.info("运行命令:{}", command);
-				SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-				ssh.sshSubmit(command, false);
+                // SGE
+                logger.info("celloud 直接向 SGE 投递任务");
+                Map<String, String> map = CommandKey.getMap(dataFilePath,
+                        appPath, proId);
+                StrSubstitutor sub = new StrSubstitutor(map);
+                String command = sub.replace(app.getCommand());
+                logger.info("运行命令:{}", command);
+                SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+                ssh.sshSubmit(command, false);
             }
         }
         return result;
@@ -638,6 +639,21 @@ public class DataAction {
                 sortBatch, sortName, sortPeriod);
         mv.addObject("pageList", pageList);
         logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
+        return mv;
+    }
+
+    @ActionLog(value = "获取所有数据任务列表", button = "我的报告翻页")
+    @RequestMapping("taskBatchList")
+    public ModelAndView taskBatchList(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size, String batch,
+            String dataKey, Integer appId) {
+        ModelAndView mv = new ModelAndView("bsi/report_data_pagination");
+        Page pager = new Page(page, size);
+        PageList<Task> pageList = taskService.findTasksByBatch(pager,
+                ConstantsData.getLoginUserId(), appId, batch, dataKey);
+        mv.addObject("pageList", pageList);
+        logger.info("血流用户{}获取所有数据任务列表", ConstantsData.getLoginUserName());
         return mv;
     }
 }

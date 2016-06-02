@@ -594,8 +594,11 @@ public class ReportAction {
         Page pager = new Page((page - 1) * size + reportIndex, 1);
         PageList<Task> pageList = taskService.findTasksByUserCondition(pager, ConstantsData.getLoginUserId(), condition,
                 sort, sortDate, sortBatch, sortName, sortPeriod);
-        ModelAndView mv = getBSIModelAndView("bsi/report_data_new", dataKey, projectId, appId);
+        ModelAndView mv = getBSIModelAndView("bsi/report_data_new", dataKey,
+                projectId, appId);
+        DataFile df = dataService.getDataByKey(dataKey);
         mv.addObject("pageList", pageList);
+        mv.addObject("data", df);
         return mv;
     }
 
@@ -622,9 +625,12 @@ public class ReportAction {
             if (list != null) {
                 Task task = list.get(0);
                 if (task != null) {
-                    System.out.println(task.getFileName());
-                    ModelAndView mv = getBSIModelAndView("bsi/report_data_main", task.getDataKey(), task.getProjectId(),
+                    String dataKey = task.getDataKey();
+                    ModelAndView mv = getBSIModelAndView("bsi/report_data_main",
+                            dataKey, task.getProjectId(),
                             task.getAppId());
+                    DataFile df = dataService.getDataByKey(dataKey);
+                    mv.addObject("data", df);
                     mv.addObject("pageList", pageList);
                     return mv;
                 } else {

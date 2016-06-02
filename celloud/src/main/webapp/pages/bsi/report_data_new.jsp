@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="content-header">
   <ol class="breadcrumb">
     <li>主页</li>
@@ -431,16 +432,15 @@
 	                     </g>
 	                   </svg>
 	                 </td>
-	                 <td style="text-align:center;">${species20.unique_reads_num }</td>
-	                 <td class="no">1</td>
+	                 <td class="sub-title" rowspan="${srowspan }">${species20.unique_reads_num }</td>
+	                 <td>${species20.seq1_name }</td>
 	                 <td>
 	                   <div class="seq">${species20.seq1 }</div>
 	                 </td>
 	               </tr>
 	               <c:if test="${not empty species20.seq2 }">
 	                   <tr>
-	                     <td></td>
-	                     <td class="no">2</td>
+	                     <td>${species20.seq2_name }</td>
 	                     <td>
 	                       <div class="seq">${species20.seq2}</div>
 	                     </td>
@@ -448,8 +448,7 @@
 	               </c:if>
 	               <c:if test="${not empty species20.seq3 }">
 	                   <tr>
-	                     <td></td>
-	                     <td class="no">3</td>
+	                     <td>${species20.seq3_name }</td>
 	                     <td>
 	                       <div class="seq">${species20.seq3}</div>
 	                     </td>
@@ -457,8 +456,7 @@
 	               </c:if>
 	               <c:if test="${not empty species20.seq4 }">
 	                   <tr>
-	                     <td></td>
-	                     <td class="no">4</td>
+	                     <td>${species20.seq4_name }</td>
 	                     <td>
 	                       <div class="seq">${species20.seq4}</div>
 	                     </td>
@@ -476,41 +474,50 @@
 	          <td>序列总数</td>
 	          <td>平均质量</td>
 	          <td>平均GC含量</td>
+	          <td>human序列总数</td>
+	          <td>16S序列总数</td>
+	          <td>低质量序列总数</td>
 	        </tr>
 	        <tr>
 	          <td>${bsi.totalReads }</td>
 	          <td>${bsi.avgQuality }</td>
 	          <td>${bsi.avgGCContent }</td>
+	          <td>${bsi.human_reads }</td>
+	          <td>${bsi.reads_16s }</td>
+	          <td>${bsi.low_quality_reads }</td>
 	        </tr>
 	      </table>
 	    </div>
 	  </div>
 	  <div class="data-content-footer">
+	    <h4>更多信息： </h4>
+	    <span>标签：<span id="data-batch">${data.batch }</span> </span>
+	    <span>生成时间：<fmt:formatDate value="${bsi.createDate }" type="both" dateStyle="long" pattern="yyyyMMdd" /> </span>
+	    <span>原始数据：
+	    <c:forEach items="${bsi.data}" var="data">
+          ${data.fileName}&nbsp;&nbsp;
+        </c:forEach>
+<!--                 （点击查看原始数据信息） -->
+	    </span>
 	  </div>
   </div>
-  <div class="pull-right">
-    <div class="report-btn-group pull-right">
-        <div class="nav-pub">
-          <div >
-            <c:if test="${pageList.datas.size()>0}">
-              <input id="total-page-hide" value="${pageList.page.totalPage }" type="hidden" >
-              <a class="prev-btn" href="javascript:$.report.detail.prev(${pageList.page.currentPage })"><i class="fa fa-chevron-circle-left"></i>上一份</a>
-              <a class="next-btn" href="javascript:$.report.detail.next(${pageList.page.currentPage })">下一份<i class="fa fa-chevron-circle-right"></i></a>
-            </c:if>
-          </div>
-        </div>
-        <a class="btn" id="print-patient-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }&templateType=print_patient" target="_blank"><i class="fa fa-print"></i>打印</a>
-        <a class="btn hide" id="print-analy-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }&templateType=print_analy" target="_blank"><i class="fa fa-print"></i>打印</a>
+  <div class="report-opera pull-right">
+    <div class="nav-pub">
+      <div >
+        <c:if test="${pageList.datas.size()>0}">
+          <input id="total-page-hide" value="${pageList.page.totalPage }" type="hidden" >
+          <a class="prev-btn" href="javascript:$.report.detail.prev(${pageList.page.currentPage })"><i class="fa fa-chevron-circle-left"></i>上一份</a>
+          <a class="next-btn" href="javascript:$.report.detail.next(${pageList.page.currentPage })">下一份<i class="fa fa-chevron-circle-right"></i></a>
+        </c:if>
       </div>
+    </div>
+    <div id="report-pagination" class="report-pagination"></div>
+    <div class="report-btn-group pull-right">
+       <a class="btn" id="print-patient-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }&templateType=print_patient" target="_blank"><i class="fa fa-print"></i>打印</a>
+       <a class="btn hide" id="print-analy-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }&templateType=print_analy" target="_blank"><i class="fa fa-print"></i>打印</a>
+     </div>
   </div>
+  <input id="appid-hide" type="hidden" value="${bsi.appId }">
+  <input id="datakey-hide" type="hidden" value="${bsi.dataKey }">
 </div>
-<script>
-$('#patient-tab').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show');
-});
-$('#analy-tab').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show');
-})
-</script>
+<script src="<%=request.getContextPath()%>/js/bsi_report.js?version=1.2"></script>
