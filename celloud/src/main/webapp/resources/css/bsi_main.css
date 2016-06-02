@@ -799,6 +799,9 @@ a, a:link, a:hover, a:active, a:visited {
 .report-btn-group{
 	width: 70px;
 	text-align: right;
+    position: fixed;
+    margin-top: -92px;
+    margin-left: 165px;
 }
 .report-btn-group .btn{
     width: 70px;

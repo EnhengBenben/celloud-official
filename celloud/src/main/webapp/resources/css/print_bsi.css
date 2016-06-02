@@ -27,12 +27,15 @@ a, a:link, a:hover, a:active, a:visited {
 .print-button a{
 	display: block;
     width: 29px;
-    color: #fff;
+    color: #dcdcdc;
     text-align: center;
     vertical-align: middle;
     font-size: 16px;
     padding: 10px 0px;
     background-color: #2c3e50;
+}
+.print-button a>svg{
+	fill: #dcdcdc;
 }
 .print-button a:first-child{
     -webkit-border-radius: 6px 6px 0px 0px;
@@ -50,6 +53,11 @@ a, a:link, a:hover, a:active, a:visited {
 .print-button>a:focus,
 .print-button>a:hover{
     color: rgb(29,210,175);
+}
+.print-button>a:active>svg,
+.print-button>a:focus>svg,
+.print-button>a:hover>svg{
+    fill: rgb(29,210,175);
 }
 .content{
 	margin: 10px auto;
