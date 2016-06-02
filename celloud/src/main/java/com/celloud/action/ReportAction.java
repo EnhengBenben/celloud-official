@@ -594,8 +594,7 @@ public class ReportAction {
         Page pager = new Page((page - 1) * size + reportIndex, 1);
         PageList<Task> pageList = taskService.findTasksByUserCondition(pager, ConstantsData.getLoginUserId(), condition,
                 sort, sortDate, sortBatch, sortName, sortPeriod);
-        ModelAndView mv = getBSIModelAndView("bsi/report_data_new", dataKey,
-                projectId, appId);
+        ModelAndView mv = getBSIModelAndView("bsi/report_data_new", dataKey, projectId, appId);
         DataFile df = dataService.getDataByKey(dataKey);
         mv.addObject("pageList", pageList);
         mv.addObject("data", df);
@@ -626,8 +625,7 @@ public class ReportAction {
                 Task task = list.get(0);
                 if (task != null) {
                     String dataKey = task.getDataKey();
-                    ModelAndView mv = getBSIModelAndView("bsi/report_data_main",
-                            dataKey, task.getProjectId(),
+                    ModelAndView mv = getBSIModelAndView("bsi/report_data_main", dataKey, task.getProjectId(),
                             task.getAppId());
                     DataFile df = dataService.getDataByKey(dataKey);
                     mv.addObject("data", df);
@@ -1147,6 +1145,7 @@ public class ReportAction {
         }
         ModelAndView mv = getModelAndView(path, projectId);
         TBRifampicin tbrifampicin = reportService.getTBRifampicinReport(dataKey, projectId, appId);
+        tbrifampicin.setReport(CustomStringUtils.htmlbr(tbrifampicin.getReport()));
         Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
