@@ -84,12 +84,13 @@ $(function(){
         }
         inputVal = $("#des").children().val();
         if(inputVal){
-            inputVal = inputVal.replace(/\n/g,"\n");
+            inputVal = inputVal.replace(/\n/g,"<br/>");
             $("#des").html(inputVal);
         }
         inputVal = $("#des1").children().val();
+        var oldInputVal = inputVal
         if(inputVal){
-            inputVal = inputVal.replace(/\n/g,"\n");
+            inputVal = inputVal.replace(/\n/g,"<br/>&nbsp;&nbsp;&nbsp;");
             $("#des1").html(inputVal);
         }
         $(".imgmiss").addClass("imgmissprint");
@@ -103,8 +104,7 @@ $(function(){
         }
         inputVal = $("#des1").html();
         if(inputVal){
-            inputVal = inputVal.replace(/<br>/g,"\n");
-            $("#des1").html("<textarea rows=\"5\">"+inputVal+"</textarea>");
+            $("#des1").html("<textarea rows=\"5\">"+oldInputVal+"</textarea>");
         }
         if(_flag==1){
             $("h1").css("padding","40px 0 5px 0");
