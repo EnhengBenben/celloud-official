@@ -8,6 +8,7 @@ __author__='lin'
 
 import os,shutil,time,sys
 from mysql.mysqlpro import MySQLPro
+from mysql.mysqlOperate import mysql
 from utils.FileUtils import *
 
 if len(sys.argv) != 3:
