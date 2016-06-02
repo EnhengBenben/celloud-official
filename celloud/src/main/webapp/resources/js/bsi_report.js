@@ -44,10 +44,14 @@ $(function () {
   $("#patient-tab").click(function (e) {
     e.preventDefault()
     $(this).tab('show');
+    $("#print-patient-a").removeClass("hide");
+    $("#print-analy-a").addClass("hide");
   });
   $("#analy-tab").click(function (e) {
     e.preventDefault()
     $(this).tab('show');
+    $("#print-analy-a").removeClass("hide");
+    $("#print-patient-a").addClass("hide");
   });
   $.dataReport.navList();
 });

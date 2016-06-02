@@ -21,7 +21,6 @@
 	    <li role="presentation" class="active"><a href="#patient-report" id="patient-tab" aria-controls="patient-report" role="tab" data-toggle="tab">患者报告</a></li>
 	    <li role="presentation"><a href="#analy-report" id="analy-tab" aria-controls="analy-report" role="tab" data-toggle="tab">分析报告</a></li>
 	  </ul>
-	  
 	  <div id="myTabContent" class="tab-content">
 	    <div role="tabpanel" class="tab-pane active in" id="patient-report" aria-labelledby="patient-tab">
 	      <h4>检测结果：</h4>
@@ -435,14 +434,17 @@
 	                 <td class="sub-title" rowspan="${srowspan }">${species20.unique_reads_num }</td>
 	                 <td>${species20.seq1_name }</td>
 	                 <td>
-	                   <div class="seq">${species20.seq1 }</div>
+	                   <div class="seq">
+	                   ${species20.seq1_no }<br>
+	                   ${species20.seq1 }
+	                   </div>
 	                 </td>
 	               </tr>
 	               <c:if test="${not empty species20.seq2 }">
 	                   <tr>
 	                     <td>${species20.seq2_name }</td>
 	                     <td>
-	                       <div class="seq">${species20.seq2}</div>
+	                       <div class="seq">${species20.seq2_no }<br>${species20.seq2}</div>
 	                     </td>
 	                   </tr>
 	               </c:if>
@@ -450,7 +452,7 @@
 	                   <tr>
 	                     <td>${species20.seq3_name }</td>
 	                     <td>
-	                       <div class="seq">${species20.seq3}</div>
+	                       <div class="seq">${species20.seq3_no }<br>${species20.seq3}</div>
 	                     </td>
 	                   </tr>
 	               </c:if>
@@ -458,7 +460,7 @@
 	                   <tr>
 	                     <td>${species20.seq4_name }</td>
 	                     <td>
-	                       <div class="seq">${species20.seq4}</div>
+	                       <div class="seq">${species20.seq4_no }<br>${species20.seq4}</div>
 	                     </td>
 	                   </tr>
 	               </c:if>

@@ -896,9 +896,11 @@ a, a:link, a:hover, a:active, a:visited {
 	font-size: 16px;
 }
 .tab-content .table>tbody>tr>td{
-    height: 30px;
+    height: 29px;
     word-break: break-word;
     word-wrap: break-word;
+    padding: 0 10px;
+    line-height: 29px;
 }
 .tab-content .seq-table>thead>tr>th{
 	height: 30px;
@@ -930,6 +932,12 @@ a, a:link, a:hover, a:active, a:visited {
 .tab-content .seq-table .no{
 	width: 10px;
 	
+}
+.tab-content p{
+    font-size: 12px;
+    word-break: break-all;
+    padding-left: 5px;
+    margin-top:10px;
 }
 .test-description{
 	width: 100%;
