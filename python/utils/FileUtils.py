@@ -50,6 +50,7 @@ def fileSearch(path,regulation,mate):
 		for x in os.listdir(path):
 			if(x.endswith(regulation)):
 				files.append(x)
+	files.sort()
 	return files
 
 def zip_dir(dirname,zipfilename):
