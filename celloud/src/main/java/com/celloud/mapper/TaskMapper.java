@@ -128,6 +128,24 @@ public interface TaskMapper {
             @Param("sortName") String sortName,
             @Param("sortPeriod") String sortPeriod,
             @Param("state") Integer state);
+    
+    /**
+     * 检索某批次下的运行完的任务列表
+     * 
+     * @param page
+     * @param userId
+     * @param condition
+     * @param sort
+     * @param sortDateType
+     * @param sortNameType
+     * @param state
+     * @param reportType
+     * @return
+     */
+    List<Task> findTasksByBatch(Page page, @Param("userId") Integer userId,
+            @Param("appId") Integer appId, @Param("period") Integer period,
+            @Param("state") Integer state, @Param("batch") String batch,
+            @Param("dataKey") String dataKey);
 
     /**
      * 按照运行状态和参数查找任务

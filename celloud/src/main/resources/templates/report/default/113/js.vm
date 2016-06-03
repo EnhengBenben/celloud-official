@@ -20,7 +20,9 @@ $(function(){
         var sex = $("input[type='radio']:checked").val();
         $("#_sex").html(sex);
         $("#change").hide();
+        $(".buttons").hide();
         window.print();
+        $(".buttons").show();
         $("#change").show();
         $("body").find("section").each(function(){
             $(this).addClass("border1");
@@ -44,7 +46,8 @@ $(function(){
     });
 
     $("#reset").on("click",function(){
-         $(':input','#split-form')  
+        $.lConfirm("确认重置?",function(){
+            $(':input','#split-form')  
          .not(':button, :submit, :reset, :hidden')  
          .val('')  
          .removeAttr('checked')  
@@ -53,8 +56,8 @@ $(function(){
           if(_id != "" && _id != undefined){
               $.post("${base}/report/updateSplitReport",$("#split-form").serialize());
           }
+        });
     });
-    
 });
 
 </script>

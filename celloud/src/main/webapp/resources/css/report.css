@@ -183,7 +183,7 @@ only screen and (min-device-pixel-ratio: 2) {
     margin-bottom: 3px;
 }
 .quota-usage dt {
-    width: 160px;
+    width: 170px;
     float: left;
     line-height: 28px;
     vertical-align: middle;

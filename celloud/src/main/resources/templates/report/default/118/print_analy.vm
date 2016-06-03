@@ -1,466 +1,328 @@
-<link href="$link.getContextPath()/css/print_bsi.css" rel="stylesheet">
-<div id="toc" class="tocify fixed"></div>
-<div class="title">
-  <span class="title-text">细菌性血流感染检测报告--分析报告</span>
-  #if($bsi.companyIcon && !$!bsi.companyIcon.equals(""))
-  <img class="title-logo" src="$link.getContextPath()/report/company/icon?file=$!bsi.companyIcon" style="width:60px">
-  #else
-  <img class="title-logo" src="$link.getContextPath()/images/hospitalIcon/demo-logo.png"></div>
-  #end
-</div>
-<form id="print-form">
-  <div id="tocify-content">
-  <section class="base-info">
-    <h2>1. 样本信息</h2>
-    #parse("/default/118/base_info.vm")
-  </section>
-  <section class="break-page">
-    <h2>2 检测结果</h2>
-    <div class="tests-info">
-       #parse("/default/118/tests_info.vm")
-        <table id="test-seq-table" class="table table-bordered table-condensed">
-         <thead>
-           <tr>
-             <th style="max-width: 119px;">菌名(属-种)</th>
-             <th width="85">唯一识别序列数</th>
-             <th width="10">#</th>
-             <th width="380">序列 (5'-3')</th>
-             <th name="opera-seq" width="53">操作</th>
-             <th>覆盖交叉菌</th>
-           </tr>
-         </thead>
-         <tbody>
-           #set ($i=0)
-           #if($bsi.species_20)
-             #foreach($species_20 in $!bsi.species_20) 
-                 #set($rowspan = 1)
-                 #if($species_20.seq2 && !$!species_20.seq2.equals(""))
-                   #set($rowspan=$rowspan+1)
-                   #set($seq20_2 = 0)
-                 #else
-                   #set($seq20_2 = 1)
-                 #end
-                 #if($species_20.seq3 && !$!species_20.seq3.equals(""))
-                   #set($rowspan=$rowspan+1)
-                   #set($seq20_3 = 0)
-                 #else
-                   #set($seq20_3 = 1)
-                 #end
-                 #if($species_20.seq4 && !$!species_20.seq4.equals(""))
-                   #set($rowspan=$rowspan+1)
-                   #set($seq20_4 = 0)
-                 #else
-                   #set($seq20_4 = 1)
-                 #end
-                 <tr>
-                   <td rowspan="$!rowspan" style="text-align:center;">
-                      #if($species_20.species_zh.equals("未知") || !$species_20.species_zh|| $species_20.species_zh.trim().equals(""))
-                        $!species_20.species
-                      #else
-                        $!species_20.species_zh
-                        #if($havestrain)
-                            #set ($havestrain=[$!havestrain,$!species_20.species_zh])
-                        #else
-                            #set ($havestrain=[$!species_20.species_zh])
-                        #end
-                      #end
-                      <br>
-                      <svg width="139.9" height="8">
-                        <rect x="0" y="0" width="139.9" height="8" fill="#fff" style="stroke:#B0DF2B;fill-opacity:0.1;stroke-opacity:0.9"/>
-                        #if(!$species_20.site1.equals("0,0"))
-                        <rect x="0" y="0" width="34.9" height="8" fill="#B0DF2B" style="fill-opacity:0.4;stroke-opacity:0.9"/>
-                        #end
-                        #if(!$species_20.site2.equals("0,0"))
-                        <rect x="33.1" y="0" width="46.3" height="8" fill="#17BABF" style="fill-opacity:0.4;stroke-opacity:0.9"/>
-                        #end
-                        #if(!$species_20.site3.equals("0,0"))
-                        <rect x="77.6" y="0" width="31.5" height="8" fill="#FEAA20" style="fill-opacity:0.4;stroke-opacity:0.9"/>
-                        #end
-                        #if(!$species_20.site4.equals("0,0"))
-                        <rect x="105.6" y="0" width="34.3" height="8" fill="#AE98DA" style="fill-opacity:0.4;stroke-opacity:0.9"/>
-                        #end
-                      </svg>
-                   </td>
-                   <td rowspan="$!rowspan" style="text-align:center;">$!species_20.unique_reads_num</td>
-                   <td>1</td>
-                   <td>
-                     <div class="seq">$!species_20.seq1</div>
-                   </td>
-                   <td name="opera-seq"><span id="copy-seq$i#set($i=$i+1)"></span></td>
-                   <td rowspan="4" style="text-align:center;">#if($species_20.cross_species)$species_20.cross_species #else 无  #end</td>
-                 </tr>
-                 #if($seq20_2==0)
-                 <tr>
-                   <td>2</td>
-                   <td>
-                     <div class="seq">$!species_20.seq2</div>
-                   </td>
-                   <td name="opera-seq"><span id="copy-seq$i#set($i=$i+1)"></span></td>
-                 </tr>
-                 #end
-                 #if($seq20_3==0)
-                 <tr>
-                   <td>3</td>
-                   <td>
-                     <div class="seq">$!species_20.seq3</div>
-                   </td>
-                   <td name="opera-seq"><span id="copy-seq$i#set($i=$i+1)"></span></td>
-                 </tr>
-                 #end
-                 #if($seq20_4==0)
-                 <tr>
-                   <td>4</td>
-                   <td>
-                     <div class="seq">$!species_20.seq4</div>
-                   </td>
-                   <td name="opera-seq"><span id="copy-seq$i#set($i=$i+1)"></span></td>
-                 </tr>
-                 #end
-             #end
-           #end
-         </tbody>
-       </table>
-       <div class="test-description"> 快速序列验证及比对(NCBI Blast): <a href="http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome">http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome</a></div>
-    </div>
-  </section>
-  <section>
-    <h2>3. 其它可能病原菌</h2>
-    <div class="tests-info other-info">
-      <table id="other-seq-table" class="table table-bordered table-condensed seq-table">
-        <thead>
-           <tr>
-             <th style="max-width: 119px;">菌名(属-种)</th>
-             <th width="85">唯一识别序列数</th>
-             <th width="10">#</th>
-             <th width="380">序列 (5'-3')</th>
-             <th name="opera-seq" width="53">操作</th>
-           </tr>
-         </thead>
-         <tbody>
-           #if($bsi.species_other)
-             #foreach($species_other in $!bsi.species_other) 
-                 #set($rowspan = 1)
-                 #if($species_other.seq2 && !$!species_other.seq2.equals(""))
-                   #set($rowspan=$rowspan+1)
-                   #set($other_seq2 = 0)
-                 #else
-                   #set($other_seq2 = 1)
-                 #end
-                 #if($species_other.seq3 && !$!species_other.seq3.equals(""))
-                   #set($rowspan=$rowspan+1)
-                   #set($other_seq3 = 0)
-                 #else
-                   #set($other_seq3 = 1)
-                 #end
-                 #if($species_other.seq4 && !$!species_other.seq4.equals(""))
-                   #set($rowspan=$rowspan+1)
-                   #set($other_seq4 = 0)
-                 #else
-                   #set($other_seq4 = 1)
-                 #end
-                 <tr>
-                   <td rowspan="$!rowspan" style="text-align:center;">
-                      $!species_other.species
-                      <br>
-                      <svg width="139.9" height="8">
-                        <rect x="0" y="0" width="139.9" height="8" fill="#fff" style="stroke:#B0DF2B;fill-opacity:0.1;stroke-opacity:0.9"/>
-                        #if(!$species_other.site1.equals("0,0"))
-                        <rect x="0" y="0" width="34.9" height="8" fill="#B0DF2B" style="fill-opacity:0.4;stroke-opacity:0.9"/>
-                        #end
-                        #if(!$species_other.site2.equals("0,0"))
-                        <rect x="33.1" y="0" width="46.3" height="8" fill="#17BABF" style="fill-opacity:0.4;stroke-opacity:0.9"/>
-                        #end
-                        #if(!$species_other.site3.equals("0,0"))
-                        <rect x="77.6" y="0" width="31.5" height="8" fill="#FEAA20" style="fill-opacity:0.4;stroke-opacity:0.9"/>
-                        #end
-                        #if(!$species_other.site4.equals("0,0"))
-                        <rect x="105.6" y="0" width="34.3" height="8" fill="#AE98DA" style="fill-opacity:0.4;stroke-opacity:0.9"/>
-                        #end
-                      </svg>
-                   </td>
-                   <td rowspan="$!rowspan" style="text-align:center;">$!species_other.unique_reads_num</td>
-                   <td>1</td>
-                   <td>
-                     <div class="seq">$!species_other.seq1</div>
-                   </td>
-                   <td name="opera-seq"><span id="copy-seq$i#set($i=$i+1)"></span></td>
-                 </tr>
-                 #if($other_seq2==0)
-                 <tr>
-                   <td>2</td>
-                   <td>
-                     <div class="seq">$!species_other.seq2</div>
-                   </td>
-                   <td name="opera-seq"><span id="copy-seq$i#set($i=$i+1)"></span></td>
-                 </tr>
-                 #end
-                 #if($other_seq3==0)
-                 <tr>
-                   <td>3</td>
-                   <td>
-                     <div class="seq">$!species_other.seq3</div>
-                   </td>
-                   <td name="opera-seq"><span id="copy-seq$i#set($i=$i+1)"></span></td>
-                 </tr>
-                 #end
-                 #if($other_seq4==0)
-                 <tr>
-                   <td>4</td>
-                   <td>
-                     <div class="seq">$!species_other.seq4</div>
-                   </td>
-                   <td name="opera-seq"><span id="copy-seq$i#set($i=$i+1)"></span></td>
-                 </tr>
-                #end
-             #end
-           #end
-         </tbody>
-       </table>
-    </div>
-  </section>
-  <section class="break-page">
-    <h2>4. 统计信息</h2>
-    <table class="table table-bordered table-condensed table-text-center">
-        <tr>
-          <td>序列总数</td>
-          <td>平均质量</td>
-          <td>平均GC含量</td>
-        </tr>
-        <tr>
-          <td>$!bsi.totalReads</td>
-          <td>$!bsi.avgQuality</td>
-          <td>$!bsi.avgGCContent</td>
-        </tr>
-    </table>
-    <table>
-        <tr>
-          <tr>
-            <td style="width:50%;">
-               #if($bsi.readsDistributionInfo)
-                   <div id="reads-distribution-char" style="width:100%;height:330px;">$!bsiCharList.readsDistributionInfo</div>
-               #end
-            </td>
-            <td style="width:50%;">
-               #if($bsi.familyDistributionInfo)
-                   <div id="family-distribution-char" style="width:100%;height:330px;">$!bsiCharList.familyDistributionInfo</div>
-               #end
-            </td>
-          </tr>
-        </tr>
-        <tr>
-           <td colspan="2">
-           #if($bsi.genusDistributionInfo)
-             <div id="genus-distribution-char" style="width:100%;height:330px;">$!bsiCharList.genusDistributionInfo</div>
-           #end
-           </td>
-        </tr>
-    </table>
-  </section>
-  <section>
-    <h2>5. 附件</h2>
-    <h3>5.1 生物信息数据分析</h3>
-    <table class="table table-bordered table-condensed table-text-center">
-        <tr>
-          <td>种</td>
-          <td>属</td>
-          <td>GI号</td>
-          <td>覆盖长度%</td>
-          <td>种比对上的序列数</td>
-          <td>属比对上的序列数</td>
-          <td>种序列百分比%</td>
-          <td>平均覆盖深度</td>
-        </tr>
-        #if($bsi.summaryTable)
-           #foreach($summary in $!bsi.summaryTable) 
-             <tr>
-                 <td>$!summary.Species</td>
-                 <td>$!summary.Genus</td>
-                 <td>$!summary.GI</td>
-                 <td>$!summary.Coverage</td>
-                 <td>$!summary.Reads_hit</td>
-                 <td>$!summary.Reads_num</td>
-                 <td>$!summary.Reads_Ratio</td>
-                 <td>$!summary.avgCoverage</td>
-             </tr>
-           #end
-       #else
-           <tr><td colspan="7">无结果</td></tr>
-       #end
-    </table>
-    <h3>5.2 16S rRNA序列覆盖分布图</h3>
-    <table>
-        <tr>
-          <td style="width:49%">
-          #if($bsi.pngPath.top1png)
-            <img src="$!uploadPath/$!bsi.userId/$!bsi.appId/$!bsi.dataKey$!bsi.pngPath.top1png" style="width:90%;">
-          #end
-          </td>
-          <td style="width:49%">
-          #if($bsi.pngPath.top2png)
-            <img src="$!uploadPath/$!bsi.userId/$!bsi.appId/$!bsi.dataKey$!bsi.pngPath.top2png" style="width:90%;">
-          #end
-          </td>
-        </tr>
-        <tr>
-          <td style="width:49%">
-          #if($bsi.pngPath.top3png)
-            <img src="$!uploadPath/$!bsi.userId/$!bsi.appId/$!bsi.dataKey$!bsi.pngPath.top3png" style="width:90%;">
-          #end
-          </td>
-          <td style="width:49%">
-          #if($bsi.pngPath.top4png)
-            <img src="$!uploadPath/$!bsi.userId/$!bsi.appId/$!bsi.dataKey$!bsi.pngPath.top4png" style="width:90%;">
-          #end
-          </td>
-        </tr>
-        <tr>
-          <td style="width:49%">
-          #if($bsi.pngPath.top5png)
-            <img src="$!uploadPath/$!bsi.userId/$!bsi.appId/$!bsi.dataKey$!bsi.pngPath.top5png" style="width:90%;">
-          #end
-          </td>
-          <td style="width:49%">
-          #if($bsi.pngPath.top6png)
-            <img src="$!uploadPath/$!bsi.userId/$!bsi.appId/$!bsi.dataKey$!bsi.pngPath.top6png" style="width:90%;">
-          #end
-          </td>
-        </tr>
-        <tr>
-          <td style="width:49%">
-          #if($bsi.pngPath.top7png)
-            <img src="$!uploadPath/$!bsi.userId/$!bsi.appId/$!bsi.dataKey$!bsi.pngPath.top7png" style="width:90%;">
-          #end
-          </td>
-          <td style="width:49%">
-          #if($bsi.pngPath.top8png)
-            <img src="$!uploadPath/$!bsi.userId/$!bsi.appId/$!bsi.dataKey$!bsi.pngPath.top8png" style="width:90%;">
-          #end
-          </td>
-        </tr>
-        <tr>
-          <td style="width:49%">
-          #if($bsi.pngPath.top9png)
-            <img src="$!uploadPath/$!bsi.userId/$!bsi.appId/$!bsi.dataKey$!bsi.pngPath.top9png" style="width:90%;">
-          #end
-          </td>
-          <td style="width:49%">
-          #if($bsi.pngPath.top10png)
-            <img src="$!uploadPath/$!bsi.userId/$!bsi.appId/$!bsi.dataKey$!bsi.pngPath.top10png" style="width:90%;">
-          #end
-          </td>
-        </tr>
-    </table>
-    <h3>5.3 序列质量分析（QC）</h3>
-    <table class="table table-bordered table-condensed table-text-center">
-        <tr>
-                <td>Filename</td>
-                <td>$!bsi.basicStatistics1.Filename</td>
-                <td>$!bsi.basicStatistics2.Filename</td>
-            </tr>
-            <tr>
-                <td>File type</td>
-                <td>$!bsi.basicStatistics1.FileType</td>
-                <td>$!bsi.basicStatistics2.FileType</td>
-            </tr>
-            <tr>
-                <td>Encoding</td>
-                <td>$!bsi.basicStatistics1.Encoding</td>
-                <td>$!bsi.basicStatistics2.Encoding</td>
-            </tr>
-            <tr>
-                <td>Total Sequences</td>
-                <td>$!bsi.basicStatistics1.TotalSeq</td>
-                <td>$!bsi.basicStatistics2.TotalSeq</td>
-            </tr>
-            <tr>
-                <td>Filtered Sequences</td>
-                <td>$!bsi.basicStatistics1.FilteredSeq</td>
-                <td>$!bsi.basicStatistics2.FilteredSeq</td>
-            </tr>
-            <tr>
-                <td>Sequence length</td>
-                <td>$!bsi.basicStatistics1.SeqLength</td>
-                <td>$!bsi.basicStatistics2.SeqLength</td>
-            </tr>
-            <tr>
-                <td>%GC</td>
-                <td>$!bsi.basicStatistics1.gc</td>
-                <td>$!bsi.basicStatistics2.gc</td>
-            </tr>
-        </tbody>
-    </table>
-    <table style="width:100%;">
-      <tr>
-        <td style="width:50%;">
-          #if($bsi.qualityPath1)
-            <img style="width: 100%;" src="$!uploadPath/$!bsi.userId/$!bsi.appId/$!bsi.dataKey$!bsi.qualityPath1">
-          #end
-        </td>
-        <td>
-          #if($bsi.qualityPath2)
-            <img style="width: 100%;" src="$!uploadPath/$!bsi.userId/$!bsi.appId/$!bsi.dataKey$!bsi.qualityPath2">
-          #end
-        </td>
-      </tr>
-      <tr>
-        <td>
-          #if($bsi.seqContentPath1)
-            <img style="width: 100%;" src="$!uploadPath$!bsi.userId/$!bsi.appId/$!bsi.dataKey$!bsi.seqContentPath1">
-          #end
-        </td>
-        <td>
-          #if($bsi.seqContentPath2)
-            <img style="width: 100%;" src="$!uploadPath$!bsi.userId/$!bsi.appId/$!bsi.dataKey$!bsi.seqContentPath2">
-          #end
-        </td>
-      </tr>
-    </table>
-  </section>
+<link href="$link.getContextPath()/css/print_bsi.css?version=3.1.13" rel="stylesheet">
+<div class="content">
+  <div class="print-button">
+    <a id="print-report" class="btn" href="javascript:void(0)"><i class="fa fa-print"></i></a>
+    <a id="reset-info" class="btn" href="javascript:void(0)">
+    <svg width="16" height="16" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g class="transform-group">
+    <g transform="scale(0.1953125, 0.1953125)">
+    <path id="reset-icon-path" d="M204.21559 574.738903l27.238364 0 4.136204 0 594.510202 0 11.30344 0 11.79872 0c21.462824 0 31.564903-15.896038 22.414499-35.320437l-76.54842-162.779364c-9.149381-19.423375-34.195823-35.320437-55.658647-35.320437L609.165482 341.318666 609.165482 219.938178 609.165482 102.82897c0-21.482267-17.574261-39.037085-39.036062-39.037085l-78.073146 0c-21.462824 0-39.037085 17.554818-39.037085 39.037085l0 117.110231 0 121.380488L314.007135 341.319689c-21.481244 0-46.508243 15.897062-55.639205 35.320437L181.781648 539.418466C172.65171 558.841841 182.734346 574.738903 204.21559 574.738903zM834.942645 632.531144 236.848824 632.531144c3.25923 60.175521 1.849114 132.6256-48.090275 175.608553-69.934792 60.175521-46.356794 126.030391 3.25923 152.067394l101.537558 0c9.987468-13.628392 65.036225-91.625814 81.237209-170.443927 2.51631-16.353456 4.060479-27.181059 4.060479-27.181059-0.705058 8.996908-2.211365 18.088984-4.060479 27.181059-7.757684 50.130747-25.007557 153.440671-37.606503 170.443927l73.479525 0c9.988492-13.628392 65.036225-91.625814 81.238232-170.443927 2.515287-16.353456 4.059456-27.181059 4.059456-27.181059-0.705058 8.996908-2.211365 18.088984-4.059456 27.181059-7.758708 50.130747-25.007557 153.440671-37.607526 170.443927l92.597955 0c9.968026-13.628392 65.036225-91.625814 81.217766-170.443927 2.535753-16.353456 4.078899-27.181059 4.078899-27.181059-0.685615 8.996908-2.210341 18.088984-4.078899 27.181059-7.739265 50.130747-24.968671 153.440671-37.58706 170.443927l92.998067 0c9.969049-13.628392 65.036225-91.625814 81.21879-170.443927 2.535753-16.353456 4.078899-27.181059 4.078899-27.181059-0.686638 8.996908-2.211365 18.088984-4.078899 27.181059-7.739265 50.130747-24.989137 153.440671-37.607526 170.443927l93.53121 0c0 0 61.701271-22.13002 52.055586-93.513814C858.958618 764.910127 853.469604 708.336644 834.942645 632.531144z"></path>
+    </g>
+    </g>
+    </svg>
+    </a>
   </div>
-</form>
-<script src="//cdn.bootcss.com/jqueryui/1.11.4/jquery-ui.min.js"></script>
-<script src="//cdn.bootcss.com/scrollmonitor/1.0.12/scrollMonitor.min.js"></script>
-<script src="//cdn.bootcss.com/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js"></script>
-<script src="//cdn.bootcss.com/swfobject/2.2/swfobject.min.js"></script>
-<script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
-<script src="$link.getContextPath()/js/charts.js"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-      var params = {
-          wmode: "transparent",
-          allowScriptAccess: "always"
-      };
-      var flashBtnUri = '$link.getContextPath()/images/icon/copy_seq_btn.png';
-      $(".seq").each(function(){
-        var seqText = $(this).text();
-        var btnId = $(this).parent().next().find("span").attr("id");
-        var flashvars1 = {
-          content: encodeURIComponent(seqText),
-          uri: flashBtnUri
-        };
-        swfobject.embedSWF("$link.getContextPath()/plugins/clipboard.swf", btnId, "52", "25", "9.0.0", null, flashvars1, params);
-      });
-      var mib_readsDisInfo = $("#reads-distribution-char").text();
-      var mib_familyDisInfo = $("#family-distribution-char").text();
-      var min_genusDisInfo = $("#genus-distribution-char").text();
-      if(mib_readsDisInfo != ""){
-          $.reportChar.draw.circularGraph("reads-distribution-char","Reads","Distribution",eval("("+mib_readsDisInfo+")"));
-      }
-      if(mib_familyDisInfo != ""){
-          $.reportChar.draw.circularGraph("family-distribution-char","Family","Distribution",eval("("+mib_familyDisInfo+")"));
-      }
-      if(min_genusDisInfo != ""){
-          $.reportChar.draw.singleBar("genus-distribution-char","Top 10 genus distribution","",eval("("+min_genusDisInfo+")"),"Depth","Depth");
-      }
-      // Tocify Table
-      if($.isFunction($.fn.tocify) && $("#toc").length){
-          $("#toc").tocify({ 
-              context: '#tocify-content', 
-              selectors: "h2,h3" 
-          });
-          var $this = $(".tocify"),
-              watcher = scrollMonitor.create($this.get(0));
-          watcher.lock();
-      }
-    });
-  </script>
+    <div class="title-content">
+      <div class="title">细菌性血流感染检测报告</div>
+      <div class="sub-title">分析报告</div>
+    </div>
+    <form id="print-form">
+      <div class="base-info">
+        #parse("/default/118/base_info.vm")
+      </div>
+      <div class="tests-content">
+        <h4>检测结果：</h4>
+        <div class="tests-info">
+           #if($bsi.species_20)
+              #foreach($species_20 in $!bsi.species_20) 
+                <p>
+                  #if($species_20.species_zh.equals("未知") || !$species_20.species_zh)
+                    $!species_20.species
+                  #else
+                    $!species_20.species_zh
+                    #if($havestrain)
+                        #set ($havestrain="$!havestrain,$!species_20.species_zh")
+                    #else
+                        #set ($havestrain="$!species_20.species_zh")
+                    #end
+                  #end
+                </p>
+              #end
+            #end
+        </div>
+        <table class="table table-20species">
+            <tbody>
+             <tr>
+               <td class="title" rowspan="2">革兰氏阳性$havestrain</td>
+               #if($havestrain.contains('牛链球菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               牛链球菌
+               </td>
+               #if($havestrain.contains('葡萄球菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                                     葡萄球菌
+               </td>
+               #if($havestrain.contains('肺炎链球菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               肺炎链球菌
+               </td>
+               #if($havestrain.contains('粪肠球菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               粪肠球菌
+               </td>
+             </tr>
+             <tr>
+               #if($havestrain.contains('屎肠球菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               屎肠球菌
+               </td>
+               #if($havestrain.contains('难辨梭状芽孢杆菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               难辨梭状芽孢杆菌
+               </td>
+               #if($havestrain.contains('溃疡棒状杆菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                              溃疡棒状杆菌
+               </td>
+               #if($havestrain.contains('结膜干燥杆菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               结膜干燥杆菌
+               </td>
+             </tr>
+             <tr>
+               <td class="title" rowspan="3">革兰氏阴性</td>
+               #if($havestrain.contains('大肠埃希菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               大肠埃希菌
+               </td>
+               #if($havestrain.contains('铜绿假单胞菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                              铜绿假单胞菌
+               </td>
+               #if($havestrain.contains('鲍曼不动杆菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               鲍曼不动杆菌
+               </td>
+               #if($havestrain.contains('肺炎克雷伯氏菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               肺炎克雷伯氏菌
+               </td>
+             </tr>
+             <tr>
+               #if($havestrain.contains('嗜麦芽窄食单胞菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               嗜麦芽窄食单胞菌
+               </td>
+               #if($havestrain.contains('粘质沙雷氏菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               粘质沙雷氏菌
+               </td>
+               #if($havestrain.contains('阴沟肠杆菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                              阴沟肠杆菌
+               </td>
+               #if($havestrain.contains('嗜水气单胞菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               嗜水气单胞菌
+               </td>
+             </tr>
+             <tr>
+               #if($havestrain.contains('产气肠杆菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               产气肠杆菌
+               </td>
+               #if($havestrain.contains('肠炎沙门菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               肠炎沙门菌
+               </td>
+               #if($havestrain.contains('奇异变形杆菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                              奇异变形杆菌
+               </td>
+               #if($havestrain.contains('洋葱伯克霍尔德菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               洋葱伯克霍尔德菌
+               </td>
+             </tr>
+            </tbody>
+          </table>
+          <table id="test-seq-table" class="table seq-table">
+            <thead>
+              <tr>
+                <th style="max-width: 119px;">菌名</th>
+                <th width="85">序列比重</th>
+                <th width="85">检出区域</th>
+                <th width="380">序列 (5'-3')</th>
+              </tr>
+            </thead>
+            <tbody>
+              #set ($seqNum=0)
+              #if($bsi.species_20)
+                  #foreach($species_20 in $!bsi.species_20) 
+                     #set($srowspan = 1)
+                     #if($species_20.seq2 && !$!species_20.seq2.equals(""))
+                       #set($srowspan=$srowspan+1)
+                     #end
+                     #if($species_20.seq3 && !$!species_20.seq3.equals(""))
+                       #set($srowspan=$srowspan+1)
+                     #end
+                     #if($species_20.seq4 && !$!species_20.seq4.equals(""))
+                      #set($srowspan=$srowspan+1)
+                     #end
+                   <tr>
+                     <td class="title" rowspan="$!srowspan">
+                       #if($species_20.species_zh.equals("未知") || !$species_20.species_zh|| $species_20.species_zh.trim().equals(""))
+                        $!species_20.species
+                       #else
+                        $!species_20.species_zh
+                      #end
+                       <br>
+                       <svg width="120" height="20">
+                         <g>
+                           <rect x="0" y="0" width="30" height="20" fill="
+                             #if(!$species_20.site1.equals("0,0"))
+                                #dcdcdc
+                             #else
+                                #fff
+                             #end "
+                             style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
+                           <text x="8" y="15">V1</text>
+                           <rect x="30" y="0" width="30" height="20" fill="
+                             #if(!$species_20.site2.equals("0,0"))
+                                #dcdcdc
+                             #else
+                                #fff
+                             #end "
+                             style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
+                           <text x="38" y="15">V2</text>
+                           <rect x="60" y="0" width="30" height="20" fill="
+                             #if(!$species_20.site3.equals("0,0"))
+                                #dcdcdc
+                             #else
+                                #fff
+                             #end "
+                             style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
+                           <text x="68" y="15">V3</text>
+                           <rect x="90" y="0" width="30" height="20" fill="
+                             #if(!$species_20.site4.equals("0,0"))
+                                #dcdcdc
+                             #else
+                                #fff
+                             #end "
+                             style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
+                           <text x="98" y="15">V4</text>
+                         </g>
+                       </svg>
+                     </td>
+                     <td class="sub-title" rowspan="$!srowspan">$!species_20.seq_proportion </td>
+                     <td>$!species_20.seq1_name </td>
+                     <td>
+                       <div class="seq">$!species_20.seq1_no <br>$!species_20.seq1 </div>
+                     </td>
+                   </tr>
+                   #if(!$species_20.seq2|| $species_20.seq2.trim().equals(""))
+                   <tr>
+                     <td>$!species_20.seq2_name </td>
+                     <td>
+                        <div class="seq">$!species_20.seq2_no <br>$!species_20.seq2 </div>
+                     </td>
+                   </tr>
+                   #end
+                   #if(!$species_20.seq3|| $species_20.seq3.trim().equals(""))
+                   <tr>
+                     <td>$!species_20.seq3_name </td>
+                     <td>
+                        <div class="seq">$!species_20.seq3_no <br>$!species_20.seq3 </div>
+                     </td>
+                   </tr>
+                   #end
+                   #if(!$species_20.seq4|| $species_20.seq4.trim().equals(""))
+                   <tr>
+                     <td>$!species_20.seq4_name </td>
+                     <td>
+                        <div class="seq">$!species_20.seq4_no <br>$!species_20.seq4 </div>
+                     </td>
+                   </tr>
+                   #end
+                 #end
+               #end    
+            </tbody>
+          </table>
+          <p>序列比重：需要增加一个公式...> 10 reads时为检出<br>
+                            快速序列验证及比对(NCBI Blast): <a href="http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome" target="_blank">http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome</a></p>
+          <h4>统计信息</h4>
+          <table class="table table-count">
+            <tr>
+              <td>序列总数</td>
+              <td>平均质量</td>
+              <td>平均GC含量</td>
+              <td>human序列总数</td>
+              <td>16S序列总数</td>
+            </tr>
+            <tr>
+              <td>$!bsi.totalReads</td>
+              <td>$!bsi.avgQuality</td>
+              <td>$!bsi.avgGCContent</td>
+              <td>$!bsi.human_reads</td>
+              <td>$!bsi.reads_16s</td>
+            </tr>
+          </table>
+          <p>
+            序列总数：测序出来的总的DNA片段数<br>
+            平均质量：本地测序的所有片段质量平均数，高于25时为高质量序列
+          </p>
+      </div>
+      <div class="tests-footer">
+      </div>
+    </form>
+</div>

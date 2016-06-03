@@ -117,6 +117,20 @@ public interface TaskService {
             String sortName, String sortPeriod);
 
     /**
+     * 获取统一批次下的报告列表
+     * 
+     * @param page
+     * @param userId
+     * @param appId
+     * @param condition
+     * @return
+     * @author leamo
+     * @date 2016年6月1日 下午5:38:50
+     */
+    public PageList<Task> findTasksByBatch(Page page, Integer userId,
+            Integer appId, String batch, String dataKey);
+
+    /**
      * 数据报告上一个/下一个
      * 
      * @param page
@@ -135,7 +149,7 @@ public interface TaskService {
             String condition, Integer sort, String sortDate, String sortBatch,
             String sortName, String sortPeriod, Boolean isPrev,
             Integer totalPage);
-    
+
     /**
      * 新增或修改上传任务数据
      * 

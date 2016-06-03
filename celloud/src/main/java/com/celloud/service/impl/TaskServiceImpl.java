@@ -181,8 +181,8 @@ public class TaskServiceImpl implements TaskService {
         Integer currentPage = pager.getCurrentPage();
         List<Task> list = new ArrayList<>();
         // 查询报告
-        list = taskMapper.findTasksByUserCondition(pager, userId,
-                condition, sort, sortDate, sortBatch, sortName, sortPeriod,
+        list = taskMapper.findTasksByUserCondition(pager, userId, condition,
+                sort, sortDate, sortBatch, sortName, sortPeriod,
                 DataState.ACTIVE);
         if (list != null) {
             Task t = list.get(0);
@@ -233,5 +233,13 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Integer updateTask(Task task) {
         return taskMapper.updateByPrimaryKeySelective(task);
+    }
+
+    @Override
+    public PageList<Task> findTasksByBatch(Page page, Integer userId,
+            Integer appId, String batch, String dataKey) {
+        List<Task> list = taskMapper.findTasksByBatch(page, userId, appId,
+                TaskPeriod.DONE, DataState.ACTIVE, batch, dataKey);
+        return new PageList<>(page, list);
     }
 }

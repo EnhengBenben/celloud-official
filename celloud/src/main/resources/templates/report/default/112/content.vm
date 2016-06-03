@@ -22,7 +22,7 @@
         <li>报告日期：<span><input id="reportDate" type="text" name="reportDate" value="$!{cmpReport.cmpFilling.reportDate}"></span></li>
     </ul>
     <h3>检测结果</h3>
-    <h4>一. 致病性明确的基因检测结果</h4>
+    <h4 class="title">一. 致病性明确的基因检测结果</h4>
     <p class="font10">
     （注：本栏结果有明确研究和文献支持；或者是明确致病基因会引起相关蛋白功能改变）
     </p>
@@ -55,7 +55,7 @@
     </p>
   </section>
   <section class="section2 border1 w3cbbs" id="section2">
-    <h4>二. 检测结果详述</h4>
+    <h4 class="title">二. 检测结果详述</h4>
     #if(${cmpReport.geneDetectionDetail}=={})
       <div class="info">没有发现突变基因</div>
     #else
@@ -113,7 +113,7 @@
   </section>
 </form>
 <section class="section2 border1 w3cbbs" id="section3">
-    <h4>三. 其他检测结果</h4>
+    <h4 class="title">三. 其他检测结果</h4>
     <table class="table table-text-center">
         <thead>
           <tr>
@@ -139,7 +139,7 @@
       </table>
   </section>
   <section class="section2 border1 w3cbbs" id="section4">
-    <h4>四. 结果说明</h4>
+    <h4 class="title">四. 结果说明</h4>
     <div class="info">
         <h6>1.&nbsp;&nbsp;关于遗传方式的解释：</h6>
         <p><span>AR</span>，常染色体隐性遗传：理论上存在2个突变位点才可能致病，在只发现一个杂合突变点的时候，虽然为高危致病基因，但定义为致病基因携带者，并不发病。</p>

@@ -1,6 +1,6 @@
 <h4>检测结果:</h4>
 #if($flag==0)
-	<img src='${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.miniPng}' style="width:100%;">
+	<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.miniPng}" style="width:100%;">
 #elseif($flag==1)
-	<img src='${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.splitPng}' style="width:100%;">
+	<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.splitPng}" style="width:100%;">
 #end

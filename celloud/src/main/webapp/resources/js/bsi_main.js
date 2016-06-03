@@ -36,6 +36,12 @@ $(function () {
     $(".step-two").addClass("active");
     $.upload.uploadTextType();
   });
+  $("#batch-info").on("keyup",function(e){
+    e = e || window.event;
+    if (e.keyCode == "13") {//keyCode=13是回车键
+      $("#next-step").click();
+    }
+  });
   $("#condition-input").on("keyup",function(e){
     e = e || window.event;
     if (e.keyCode == "13") {//keyCode=13是回车键
@@ -95,6 +101,15 @@ $.report.find = {
   all: function(){
     $.get("data/taskAllList",function(response){
       $.report.loadlist(response);
+      $.report.options = {
+          condition: null,
+          sort: 0,
+          sortBatch: "asc",
+          sortName: "asc",
+          sortPeriod: "asc",
+          sortDate: "desc",
+          pageSize: $("#page-size-sel").val()
+      };
     });
   },
   condition: function(){

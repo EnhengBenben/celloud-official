@@ -1,4 +1,5 @@
 <form id="print-form">
+    <input type="hidden" value="1" id="isSaved"/>
     <input type="hidden" value="${hbv.projectId}" id="_projectId">
     <div style="display: none;" id="_userId">${hbv.userId}</div>
     <div style="display: none;" id="_appId">${hbv.appId}</div>
@@ -19,9 +20,10 @@
             <li>床号：<span><input type="text"></span></li>
             <li>住院号：<span><input type="text"></span></li>
         </ul>
-        <div class="gray">送检目的：<span name="geneType">HBV基因分型</span><span name="resistanceType" class="hide">拉米夫定LAM，阿德福韦ADV，恩替卡韦ETV，替比夫定LDT，替诺福韦酯TDF，恩曲他滨FTC</span></div>
-        <div name="resistanceType" class="gray hide">相关位点：rt169，rt173，rt180，rt181，rt184，rt194，rt202，rt204，rt215，rt233，rt236，rt250</div>
+        <div class="gray">送检目的：HBV基因分型，拉米夫定LAM，阿德福韦ADV，恩替卡韦ETV，替比夫定LDT，替诺福韦酯TDF，恩曲他滨FTC</div>
+        <div class="gray">相关位点：rt169，rt173，rt180，rt181，rt184，rt194，rt202，rt204，rt215，rt233，rt236，rt250</div>
     </div>
+    <hr class="hr-bold mt5" />
     <h2 class="mt10">一、基因分型结果：<span style="font-size:12px;font-weight: normal"><input type="text" value="${hbv.type.replace('Type','基因型')}"/></span></h2>
     <h2 class="mt10">二、耐药突变位点检测结果：</h2>
     <div class="m-box_1">
@@ -213,8 +215,8 @@
     </div>
     <div class="m-box_1" id="des1">
         <textarea rows="5">注：1. 突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V，{A-G}：碱基由A变为G
-2. Wild Type: GCT;表示该位点的野生型为GCT
-3. 峰图中的*号，表示该位置发生了突变</textarea>
+    2. Wild Type: GCT;表示该位点的野生型为GCT
+    3. 峰图中的*号，表示该位置发生了突变</textarea>
     </div>
     <div id="lessDiv">
         <div class="w3cbbs" style="display: none;"></div>
@@ -225,7 +227,7 @@
         <textarea rows="6">${hbv.reporttxt.split('Other:')[0]}</textarea>
     </div>
     <h2 class="mt10"><input type="text" class="long_input" value="五、测序序列结果："></h2>
-    <p class="m-box_1 force_break">${hbv.seq}</p>
+    <p class="m-box_1 force_break">$!{hbv.seq}</p>
     <div id="moreDiv">
         <div class="w3cbbs" style="display: none;"></div>
         <div class="container" style="display: none;"></div>

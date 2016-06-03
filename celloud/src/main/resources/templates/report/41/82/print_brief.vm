@@ -1,10 +1,10 @@
 #parse("templates/report/layout.vm")
 #parse("templates/report/default/${hbv.appId}/reference.vm")
 <div id="printMain">
-    #if(${report.printSimple})
-        ${report.printSimple}
+    #if(${printSimple})
+        ${printSimple}
     #end
-    #if(!${report.printSimple})
+    #if(!${printSimple})
         <div>
             #parse("templates/report/41/${hbv.appId}/title_brief.vm")
             #parse("templates/report/41/${hbv.appId}/content_brief.vm")

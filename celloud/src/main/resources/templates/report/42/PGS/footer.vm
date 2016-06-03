@@ -1,4 +1,4 @@
-<ul class="footer" style="margin-bottom: 0px;font-size:12px;margin-top:150px;" id="p2footer">
+<ul class="footer" style="margin-bottom: 0px;font-size:12px;margin-top:150px;">
 	<li class="left" style="font-size:12px;">报告者：<span><input type="text" class="input-mini" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>
 	<li class="left" style="font-size:12px;">审核者：<span><input type="text" class="input-mini" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>
 	<li class="right pull-right opinion" style="font-size:12px;">报告日期：<span id="jzkp"><input type="text" class="input-mini" id="jzkh" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></li>

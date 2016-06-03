@@ -1,10 +1,60 @@
 <script type="text/javascript">
+var companyId = $("#_companyId").html();
 $(function(){
+    var companyId = $("#_companyId").html();
+    var browser = $.NV('name');
+    var allHeight;
+    if(browser=='firefox'){
+        allHeight = 1900;
+    }else if(browser=='chrome'){
+        allHeight = 2000;
+    }else if(browser=='safari'){
+        allHeight = 1500;
+    }else {
+        allHeight = 1600;
+    }
+    $("#_allDiv").height(allHeight);
+    var num = 0;
+    $("#otherPng").find("img").each(function(){
+        num++;
+    });
+    if(num>24){
+        $("#moreDiv").remove();
+    }else{
+        $("#lessDiv").remove();
+    }
+    var _flag = $("#_flag").html();
+    if(_flag==0){
+        inputVal = $("#des").html();
+        if(inputVal){
+            inputVal = inputVal.replace(/&lt;br\/&gt;/g,"\n");
+            $("#des").html(inputVal);
+        }
+    }
+    $(".table").find("td").each(function(){
+        $(this).css("vertical-align","middle");
+        $(this).css("word-break","break-all");
+        $(this).css("word-wrap","break-word");
+        var isSaved = $("#isSaved").val();
+        if(isSaved==1){
+            var text= $(this).text();
+            if(text.indexOf('突变型:')>=0){
+                var cl = $(this).attr("class");
+                if(cl){
+                    $(this).html("突变型:<input type='text' class='"+cl+" havebefore' value='"+text.replace('突变型:','')+"'/>");
+                }else{
+                    $(this).html("突变型:<input type='text' class='havebefore' value='"+text.replace('突变型:','')+"'/>");
+                }
+            }
+        }
+    });
+
     var url = window.location.href.split("print")[0];
     var sex = $("#men").prop("checked");
-    var companyId = $("#_companyId").html();
     $("#print").on("click",function(){
-        imgRemove.hideRemove();
+        if(companyId==57){
+            imgRemove.hideRemove();
+        }
         var inputVal;
         $("#printMain").find("input[type='text']").each(function(){
             inputVal = $(this).val();
@@ -34,12 +84,13 @@ $(function(){
         }
         inputVal = $("#des").children().val();
         if(inputVal){
-            inputVal = inputVal.replace(/\n/g,"\n");
+            inputVal = inputVal.replace(/\n/g,"<br/>");
             $("#des").html(inputVal);
         }
         inputVal = $("#des1").children().val();
+        var oldInputVal = inputVal
         if(inputVal){
-            inputVal = inputVal.replace(/\n/g,"\n");
+            inputVal = inputVal.replace(/\n/g,"<br/>&nbsp;&nbsp;&nbsp;");
             $("#des1").html(inputVal);
         }
         $(".imgmiss").addClass("imgmissprint");
@@ -53,8 +104,7 @@ $(function(){
         }
         inputVal = $("#des1").html();
         if(inputVal){
-            inputVal = inputVal.replace(/<br>/g,"\n");
-            $("#des1").html("<textarea rows=\"5\">"+inputVal+"</textarea>");
+            $("#des1").html("<textarea rows=\"5\">"+oldInputVal+"</textarea>");
         }
         if(_flag==1){
             $("h1").css("padding","40px 0 5px 0");
@@ -99,6 +149,7 @@ $(function(){
         $("#des1").children().html(inputVal);
         var _flag = $("#_flag").html();
         var param = null;
+        $("#isSaved").attr("value","0");
         if(_flag==0){
             param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printContext":$("#printMain").html()}
         }else{
@@ -106,31 +157,30 @@ $(function(){
         }
         $.post(url+"updateContext",param,function(result){
             if(result==1){
-                jAlert("信息保存成功！");
+                $.lAlert("信息保存成功！");
             }else{
-                jAlert("信息保存失败！");
+                $.lAlert("信息保存失败！");
+                $("#isSaved").attr("value","1");
             }
         });
     });
 
     $("#reset").on("click",function(){
-        jConfirm('确定要重置之前保存的报告吗？', '重置报告', function(result) {
-            if(result){
-                var _flag = $("#_flag").html();
-                var param = null;
-                if(_flag == 0){//详细报告
-                    param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printContext":""}
-                }else{//简要报告
-                    param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printSimple":""}
-                }
-                $.post(url+"updateContext",param,function(result){
-                    if(result==1){
-                        location=location ;
-                    }else{
-                        jAlert("信息重置失败！");
-                    }
-                });
+        $.lConfirm('确认重置？', function() {
+            var _flag = $("#_flag").html();
+            var param = null;
+            if(_flag == 0){//详细报告
+                param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printContext":""}
+            }else{//简要报告
+                param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printSimple":""}
             }
+            $.post(url+"updateContext",param,function(result){
+                if(result==1){
+                    location=location ;
+                }else{
+                    $.lAlert("信息重置失败！");
+                }
+            });
         });
     });
 });

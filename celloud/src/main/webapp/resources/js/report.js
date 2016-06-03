@@ -842,14 +842,13 @@ $.ajaxSetup ({
 						}
 					}
 					
-					var div1 = $("<div id='char1' class='col-lg-12' style='width: 1000px;height: 500px;'></div>");
+					var div1 = $("<div id='char1' class='col-lg-12' style='width: 1000px;height: 535px;margin-left:-15px;'></div>");
 					$("#charDiv").append(div1);
 					var one = getCountValue("Subtype","nomal");
 					var X = "[";
 					var Y = "[";
 					var value = data.split("@")[0].split(";");
 					var num = value.length;
-					//var ay=new Array();
 					for(var k=0;k<value.length-1;k++){
 						var n = value[k].split(",");
 						X+="'"+n[0]+"',";
@@ -865,39 +864,17 @@ $.ajaxSetup ({
 							}
 							if(isOne){
 								Y+="{value : "+ n[1] +", itemStyle : {normal : {color : '#00cccc'}}},";
-								//ay.push([k,n[1]/2]);
 							}else{
 								Y+="'" + n[1] + "',";
 							}
 						}else if(rType.length==0&&n[0]=="none"){
 							Y+="{value : "+ n[1] +", itemStyle : {normal : {color : '#00cccc'}}},";
-							//ay.push([0,n[1]/2]);
 						}else{
 							Y+="'" + n[1] + "',";
 						}
 					}
 					X = X.substring(0,X.length-1)+"]";
 					Y = Y.substring(0,Y.length-1)+"]";
-					/*if(num>=20&&num<25){
-						$("#char1").css({"width":500+"px"});
-					}else if(num>=25&&num<30){
-						$("#char1").css({"width":570+"px"});
-					}else if(num>=35&&num<40){
-						$("#char1").css({"width":650+"px"});
-					}else if(num>=40&&num<45){
-						$("#char1").css({"width":710+"px"});
-					}else if(num>=45&&num<50){
-						$("#char0").css({"width":300+"px"});
-						$("#char1").css({"width":770+"px"});
-					}else if(num>=50&&num<55){
-						$("#char0").css({"width":300+"px"});
-						$("#char1").css({"width":820+"px"});
-					}else if(num>=55){
-						$("#char0").css({"width":300+"px"});
-						$("#char1").css({"width":880+"px"});
-					}*/
-					// showHBVny("char1",eval(Y),ay,eval(X));
-					// showCharHCV("char1", "耐药类型", eval(X),eval(Y),-45);
 					$.reportChar.draw.echartsShowBar("char1", "耐药类型", eval(X), eval(Y), -45, 800, 350);
 				});
 			}
