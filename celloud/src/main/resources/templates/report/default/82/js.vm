@@ -60,13 +60,13 @@ $(function(){
             inputVal = $(this).val();
             var cl = $(this).attr("class"); 
             if(cl){
-                if(cl.indexOf('havebefore')>0){
+                if(cl.indexOf('havebefore')>-1){
                     $(this).parent().html("突变型:<span name='print' class='"+cl+"'>"+inputVal+"</span>");
                 }else{
-                    $(this).parent().html("突变型:<span name='print' class='"+cl+"'>"+inputVal+"</span>");
+                    $(this).parent().html("<span name='print' class='"+cl+"'>"+inputVal+"</span>");
                 }
             }else{
-                $(this).parent().html("突变型:<span name='print'>"+inputVal+"</span>");
+                $(this).parent().html("<span name='print'>"+inputVal+"</span>");
             }
         });
         var sex = $("input[type='radio']:checked").val();
@@ -120,13 +120,13 @@ $(function(){
             inputVal = $(this).html();
             var cl = $(this).attr("class");
             if(cl){
-              if(cl.indexOf('havebefore')>0){
+              if(cl.indexOf('havebefore')>-1){
                 $(this).parent().html("突变型:<input type='text' class='"+cl+"' value='"+inputVal+"'>");
               }else{
-                $(this).parent().html("突变型:<input type='text' class='"+cl+"' value='"+inputVal+"'>");
+                $(this).parent().html("<input type='text' class='"+cl+"' value='"+inputVal+"'>");
               }
             }else{
-                $(this).parent().html("突变型:<input type='text' value='"+inputVal+"'>");
+                $(this).parent().html("<input type='text' value='"+inputVal+"'>");
             }
         });
         
