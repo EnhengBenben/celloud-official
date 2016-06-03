@@ -646,9 +646,10 @@ public class ReportAction {
             if (list != null) {
                 Task task = list.get(0);
                 if (task != null) {
-					String dataKey = task.getDataKey();
-					ModelAndView mv = getBSIModelAndView("bsi/report_data_main", dataKey, task.getProjectId(),
-							task.getAppId());
+                    String dataKey = task.getDataKey();
+                    ModelAndView mv = getBSIModelAndView("bsi/report_data_new",
+                            dataKey, task.getProjectId(),
+                            task.getAppId());
                     DataFile df = dataService.getDataByKey(dataKey);
                     mv.addObject("data", df);
                     mv.addObject("pageList", pageList);
