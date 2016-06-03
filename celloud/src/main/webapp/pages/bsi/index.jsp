@@ -18,7 +18,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/css/upload.css" rel="stylesheet" type="text/css">
-<link href="<%=request.getContextPath()%>/css/bsi_main.css" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/css/bsi_main.css?version=1.0" rel="stylesheet" type="text/css" />
 </head>
 <body>
   <div class="page-layout page-main-content">

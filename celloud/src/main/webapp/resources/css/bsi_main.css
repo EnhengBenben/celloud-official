@@ -919,9 +919,6 @@ a, a:link, a:hover, a:active, a:visited {
     vertical-align: middle;
     padding: 4px 4px;
 }
-.tab-content .seq-table>tbody>tr>td:first-child{
-	font-weight: bold;
-}
 .tab-content .seq-table .seq{
     margin-left: -120px;
     margin-right: -120px;

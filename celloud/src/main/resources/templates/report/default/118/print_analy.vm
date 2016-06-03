@@ -270,7 +270,7 @@
                        <div class="seq">$!species_20.seq1_no <br>$!species_20.seq1 </div>
                      </td>
                    </tr>
-                   #if(!$species_20.seq2|| $species_20.seq2.trim().equals(""))
+                   #if(!$species_20.seq2|| !$species_20.seq2.trim().equals(""))
                    <tr>
                      <td>$!species_20.seq2_name </td>
                      <td>
@@ -278,7 +278,7 @@
                      </td>
                    </tr>
                    #end
-                   #if(!$species_20.seq3|| $species_20.seq3.trim().equals(""))
+                   #if(!$species_20.seq3|| !$species_20.seq3.trim().equals(""))
                    <tr>
                      <td>$!species_20.seq3_name </td>
                      <td>
@@ -286,7 +286,7 @@
                      </td>
                    </tr>
                    #end
-                   #if(!$species_20.seq4|| $species_20.seq4.trim().equals(""))
+                   #if(!$species_20.seq4|| !$species_20.seq4.trim().equals(""))
                    <tr>
                      <td>$!species_20.seq4_name </td>
                      <td>
