@@ -143,7 +143,29 @@ var company=(function(company){
 			$("#company-editModal .modal-content").html(responseText);
 			$("#company-editModal").modal("show");
 		});
-	}
+	};
+	self.sendName = function(){
+		var flag = true;
+		$("#companyForm").find("input:text").each(function(){
+			var value = $(this).val() == null ? "" : $(this).val().trim();
+			if(value.length>0){
+				$(this).parent().parent().removeClass("error");
+				$(this).parent().parent().find(".help-inline").html("");
+			}else{
+				flag = false;
+				$(this).parent().parent().addClass("error");
+				$(this).parent().parent().find(".help-inline").html("该项为必选项!");
+			}
+		});
+		if(flag){
+			$.post("company/sendName",$("#companyForm").serialize(),function(responseText){
+				if(responseText>0){
+	                $("#company-editModal").modal("hide");
+	                alert("成功");
+	            }
+			})
+		}
+	};
 	return self;
 })(company);
 
