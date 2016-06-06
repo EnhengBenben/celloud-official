@@ -41,7 +41,13 @@ $(function(){
     $("#save").on("click",function(){
         var _id = $("#id").val();
         if(_id != "" && _id != undefined){
-            $.post("${base}/report/updateSplitReport",$("#split-form").serialize());
+            $.post("${base}/report/updateSplitReport",$("#split-form").serialize(),function(result){
+                if(result==1){
+                    $.lAlert("保存成功!");
+                }else{
+                    $.lAlert("保存失败!");
+                }
+            });
         }
     });
 

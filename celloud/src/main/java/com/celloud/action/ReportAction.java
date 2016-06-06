@@ -1325,6 +1325,7 @@ public class ReportAction {
         }
         Map<String, Object> context = new HashMap<String, Object>();
         KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
+        kras.setPosition(CustomStringUtils.htmlbr(kras.getPosition()));
         Integer userId = ConstantsData.getLoginUserId();
         Integer fileId = dataService.getDataByKey(dataKey).getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);

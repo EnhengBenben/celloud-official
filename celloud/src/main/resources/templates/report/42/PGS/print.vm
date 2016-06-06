@@ -1,3 +1,4 @@
+#parse("templates/report/layout.vm")
 #parse("templates/report/default/PGS/reference.vm")
 #if($printContext)
 	$printContext
