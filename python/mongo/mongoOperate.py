@@ -94,5 +94,11 @@ class mongo:
 			self.client = None;
 	
 	#删除
-	def delete(self, condition, collection):
+	def delete(self, collection):
 		self.collection = self.db[collection] #连接到具体的collection中
+		try:
+			self.collection.remove();
+		except Exception as e:
+			print "mongo delete Exception ==>> %s " % e;
+		finally:
+			self.client = None;
