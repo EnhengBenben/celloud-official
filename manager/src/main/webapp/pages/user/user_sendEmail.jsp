@@ -84,6 +84,7 @@
                   data : json,
                   tags : true,
                   placeholder : '请选择公司',
+                  language : 'zh-CN',
                   allowClear : true,
                   maximumSelectionLength: 1
               })
@@ -95,6 +96,7 @@
 	  $("#deptList").select2({
           tags : true,
           placeholder : '请选择部门',
+          language : 'zh-CN',
           allowClear : true,
           maximumSelectionLength: 1
       })

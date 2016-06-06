@@ -300,6 +300,7 @@ var user=(function(user){
 		                  data : json,
 		                  tags : true,
 		                  placeholder : '请选择部门',
+		                  language : 'zh-CN',
 		                  allowClear : true,
 		                  maximumSelectionLength: 1
 		              })

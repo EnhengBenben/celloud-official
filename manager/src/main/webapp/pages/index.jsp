@@ -246,6 +246,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery.form.js"></script>
     <!-- select2 -->
     <script type="text/javascript" src="${pageContext.request.contextPath }/resources/plugins/select2/js/select2.full.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/resources/plugins/select2/js/zh-CN.js"></script>
     <script src="js/main.js"></script>
     <script src="js/app.js"></script>
 </body>
