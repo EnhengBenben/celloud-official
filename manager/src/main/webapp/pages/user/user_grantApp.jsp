@@ -23,8 +23,10 @@
 	                        <c:set value="${userApp.isAdd }" var="isAdd" />
                         </c:if>
                     </c:forEach>
-                    <label class='checkbox-inline'><input name='appIdArray' type='checkbox' ${b?'checked':'' } value='${companyApp.appId },${isAdd }' onclick="user.grantTip(this,${isAdd})">${companyApp.appName }</label>
+                    <label class='checkbox-inline'><input name='appIdArray' type='checkbox' ${b?'checked':'' } value="${companyApp.appId }-${isAdd }" onclick="user.grantTip(this,${isAdd})">${companyApp.appName }</label>
                 </c:forEach>
+                <br/>
+                <span class="help-inline text-danger"></span>
                </div>
            </div>
            <div class="form-group-separator"></div>
