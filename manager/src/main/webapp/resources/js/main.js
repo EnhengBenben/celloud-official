@@ -195,6 +195,16 @@ var user=(function(user){
 	}
 	self.sendEmail=function(){
 		var isPass = true;
+		var checkbox = $("#emailForm").find("input[name=appIdArray]:checked");
+		if(checkbox.size()<1){
+			isPass = false;
+			$("input[name=appIdArray]").parent().parent().parent().addClass("error");
+			$("input[name=appIdArray]").parent().parent().parent().find(".help-inline").html("至少选择一个App！");
+		}else{
+			$("input[name=appIdArray]").parent().parent().parent().removeClass("error");
+			$("input[name=appIdArray]").parent().parent().parent().find(".help-inline").html("");
+		}
+		
 		$("#emailForm").find("input:text").each(function(){
 			var email = $(this).val();
 			if(self.checkEmail(email)){
