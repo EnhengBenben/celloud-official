@@ -12,6 +12,7 @@ import org.springframework.core.NamedThreadLocal;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.celloud.message.MessageReceiver;
 import com.celloud.model.mongo.Behavior;
 import com.celloud.service.BehaviorService;
 import com.celloud.utils.ActionLog;
@@ -42,6 +43,7 @@ public class BehaviorInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
+        openMessageReceiver(request);
         long beginTime = System.currentTimeMillis();// 1、开始时间
         startTimeThreadLocal.set(beginTime);// 线程绑定变量（该数据只有当前请求的线程可见）
         Behavior behavior = UserAgentUtil.getUserBehavior(request);
@@ -51,6 +53,19 @@ public class BehaviorInterceptor extends HandlerInterceptorAdapter {
         behavior.setQueryString(request.getQueryString());
         userBehavior.set(behavior);
         return super.preHandle(request, response, handler);
+    }
+
+    private void openMessageReceiver(final HttpServletRequest request) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                MessageReceiver receiver = MessageReceiver
+                        .getInstance(request.getLocalAddr() + " : " + request.getLocalPort());
+                if (!receiver.isRunning()) {
+                    receiver.subscribe("test");
+                }
+            }
+        }).start();
     }
 
     /**

@@ -15,6 +15,7 @@
 		<mysql.version>5.1.30</mysql.version>
 		<aspectj.version>1.7.3</aspectj.version>
 		<shiro.version>1.2.4</shiro.version>
+		<kafka.version>0.9.0.1</kafka.version>
 	</properties>
 
 	<dependencyManagement>
@@ -260,6 +261,11 @@
 				<groupId>org.apache.shiro</groupId>
 				<artifactId>shiro-spring</artifactId>
 				<version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.kafka</groupId>
+				<artifactId>kafka-clients</artifactId>
+				<version>${kafka.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
