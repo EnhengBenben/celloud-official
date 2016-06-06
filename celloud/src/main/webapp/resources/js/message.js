@@ -47,7 +47,7 @@ var messageUtils = (function(messageUtils) {
 	}
 	function bindEvents(){
 		self.ws.onopen = function() {
-			console.log("websocket connect is opened");
+			console.log("websocket connect is opened.");
 			clearTimeouts();
 			for ( var listener in self.openListeners) {
 				if ($.isFunction(self.openListeners[listener])) {
@@ -93,6 +93,7 @@ var messageUtils = (function(messageUtils) {
 		for(var i = 0;i<timeouts.length;i++){
 			self.timeouts[i] = setTimeout(function(){
 				console.log("retring open websocket ...");
+				self.ws.close();
 				self.ws = openWebSocket();
 				bindEvents();
 			},timeouts[i]);

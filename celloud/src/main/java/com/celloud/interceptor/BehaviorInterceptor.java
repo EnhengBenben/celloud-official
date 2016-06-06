@@ -12,6 +12,7 @@ import org.springframework.core.NamedThreadLocal;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.celloud.constants.Constants;
 import com.celloud.message.MessageReceiver;
 import com.celloud.model.mongo.Behavior;
 import com.celloud.service.BehaviorService;
@@ -55,17 +56,17 @@ public class BehaviorInterceptor extends HandlerInterceptorAdapter {
         return super.preHandle(request, response, handler);
     }
 
-    private void openMessageReceiver(final HttpServletRequest request) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                MessageReceiver receiver = MessageReceiver
-                        .getInstance(request.getLocalAddr() + " : " + request.getLocalPort());
-                if (!receiver.isRunning()) {
-                    receiver.subscribe("test");
-                }
-            }
-        }).start();
+    private void openMessageReceiver(HttpServletRequest request) {
+        String localAddr = request.getLocalAddr();
+        if ("0:0:0:0:0:0:0:1".equals(localAddr)) {
+            localAddr = "127.0.0.1";
+        }
+        String groupId = localAddr + ":" + request.getLocalPort();
+        MessageReceiver receiver = MessageReceiver.getInstance(groupId);
+        if (receiver.isRunning()) {
+            return;
+        }
+        new Thread(receiver.subscribe(Constants.MESSAGE_USER_TOPIC)).start();
     }
 
     /**
