@@ -557,12 +557,23 @@ public class ReportAction {
      */
     @ActionLog(value = "打印MIB数据报告", button = "打印数据报告")
     @RequestMapping("printMIBReport")
-    public ModelAndView printMIBReport(String dataKey, Integer projectId, Integer appId) {
+    @ResponseBody
+    public void printMIBReport(String dataKey, Integer projectId, Integer appId) {
         String path = ConstantsData.getLoginCompanyId() + File.separator + appId + "/print.vm";
         if (!new File("templates/report/" + path).exists()) {
             path = "default/" + appId + "/print.vm";
         }
-        return getMIBModelAndView(path, dataKey, projectId, appId);
+
+        MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
+        // Map<String, JSONArray> mibCharList = new HashMap<>();
+        Map<String, Object> context = new HashMap<String, Object>();
+        if (mib == null)
+            returnToVelocity(path, context, projectId);
+        context.put("readsDistributionInfo", JSONArray.fromObject(mib.getReadsDistributionInfo()));
+        context.put("familyDistributionInfo", JSONArray.fromObject(mib.getFamilyDistributionInfo()));
+        context.put("genusDistributionInfo", JSONArray.fromObject(mib.getGenusDistributionInfo()));
+        context.put("mib", mib);
+        returnToVelocity(path, context, projectId);
     }
 
     /**
@@ -646,9 +657,9 @@ public class ReportAction {
             if (list != null) {
                 Task task = list.get(0);
                 if (task != null) {
-					String dataKey = task.getDataKey();
-					ModelAndView mv = getBSIModelAndView("bsi/report_data_main", dataKey, task.getProjectId(),
-							task.getAppId());
+                    String dataKey = task.getDataKey();
+                    ModelAndView mv = getBSIModelAndView("bsi/report_data_main", dataKey, task.getProjectId(),
+                            task.getAppId());
                     DataFile df = dataService.getDataByKey(dataKey);
                     mv.addObject("data", df);
                     mv.addObject("pageList", pageList);
@@ -1128,24 +1139,27 @@ public class ReportAction {
      */
     @ActionLog(value = "打印PGS数据报告", button = "打印数据报告")
     @RequestMapping("printPGS")
-    public ModelAndView printPGS(Integer appId, Integer projectId, String dataKey, Integer flag) {
+    @ResponseBody
+    public void printPGS(Integer appId, Integer projectId, String dataKey, Integer flag) {
         Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
         // 涉及共享，此处不能取登陆者的companyId
         String path = pgs.getCompanyId() + "/PGS/print.vm";
         if (ReportAction.class.getResource("/templates/report/" + path) == null) {
             path = "default/PGS/print.vm";
         }
-        ModelAndView mv = getModelAndView(path, projectId);
+        Map<String, Object> context = new HashMap<String, Object>();
         Integer userId = ConstantsData.getLoginUserId();
         DataFile data = dataService.getDataByKey(dataKey);
         Integer fileId = data.getFileId();
         Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
         if (StringUtils.isEmpty(report.getPrintContext())) {
-            mv.addObject("pgs", pgs).addObject("report", report).addObject("flag", flag);
+            context.put("pgs", pgs);
+            context.put("report", report);
+            context.put("flag", flag);
         } else {
-            mv.addObject("printContext", report.getPrintContext());
+            context.put("printContext", report.getPrintContext());
         }
-        return mv;
+        returnToVelocity(path, context, projectId);
     }
 
     /**

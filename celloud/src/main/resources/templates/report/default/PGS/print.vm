@@ -1,7 +1,8 @@
-#parse("/default/PGS/reference.vm")
+#parse("templates/report/layout.vm")
+#parse("templates/report/default/PGS/reference.vm")
 #if($printContext)
 	$printContext
 #else
-	#extends("/default/PGS/base.vm")
+	#extends("templates/report/default/PGS/base.vm")
 #end
-#parse("/default/PGS/js.vm")
+#parse("templates/report/default/PGS/js.vm")
