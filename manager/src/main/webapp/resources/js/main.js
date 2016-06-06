@@ -320,11 +320,23 @@ var user=(function(user){
 		});
 	};
 	self.grantApp = function(){
-		var params = $("#grantForm").serialize();
-		$.post("user/grantApp",params,function(){
-			jAlert("授权成功");
-			$("#user-sendEmailModal").modal("hide");
-		});
+		var flag = true;
+		var checkbox = $("#grantForm").find("input[name=appIdArray]:checked");
+		if(checkbox.size()<1){
+			flag = false;
+			$("input[name=appIdArray]").parent().parent().parent().addClass("error");
+			$("input[name=appIdArray]").parent().parent().parent().find(".help-inline").html("至少选择一个App！");
+		}else{
+			$("input[name=appIdArray]").parent().parent().parent().removeClass("error");
+			$("input[name=appIdArray]").parent().parent().parent().find(".help-inline").html("");
+		}
+		if(flag){
+			var params = $("#grantForm").serialize();
+			$.post("user/grantApp",params,function(){
+				jAlert("授权成功");
+				$("#user-sendEmailModal").modal("hide");
+			});
+		};
 	}
 	self.grantRole = function(){
 		var params = $("#grantForm").serialize();

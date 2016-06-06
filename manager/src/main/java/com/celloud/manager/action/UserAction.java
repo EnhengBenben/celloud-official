@@ -129,8 +129,8 @@ public class UserAction {
         if (appIdArray != null && appIdArray.length > 0) {
             for (String appId : appIdArray) {
                 Map<String, String> map = new HashMap<String, String>();
-                map.put("appId", appId.split(",")[0]);
-                map.put("isAdd", appId.split(",")[1]);
+                map.put("appId", appId.split("-")[0]);
+                map.put("isAdd", appId.split("-")[1]);
                 appAddList.add(map);
             }
             userService.grantUserApp(userId, appAddList);
