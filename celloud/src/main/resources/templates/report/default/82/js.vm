@@ -120,7 +120,11 @@ $(function(){
             inputVal = $(this).html();
             var cl = $(this).attr("class");
             if(cl){
+<<<<<<< HEAD
+              if(cl.indexOf('havebefore')>=0){
+=======
               if(cl.indexOf('havebefore')>-1){
+>>>>>>> c77de6e31ab719553b0532073b5bc2e2f95180b1
                 $(this).parent().html("突变型:<input type='text' class='"+cl+"' value='"+inputVal+"'>");
               }else{
                 $(this).parent().html("<input type='text' class='"+cl+"' value='"+inputVal+"'>");

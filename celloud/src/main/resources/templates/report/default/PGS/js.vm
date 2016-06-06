@@ -103,24 +103,22 @@ $(function(){
 		var url = window.location.href.split("printPGS")[0];
 		$.post(url+"updateContext",{"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"projectId":$("#_projectId").html(),"printContext":$("#pgsSave").prop("outerHTML")},function(result){
 			if(result==1){
-				jAlert("信息保存成功！");
+				$.lAlert("信息保存成功！");
 			}else{
-				jAlert("信息保存失败！");
+				$.lAlert("信息保存失败！");
 			}
 		});
 	});
 	$("#reset").on("click",function(){
-	  jConfirm('确定要重置之前保存的报告吗？', '重置报告', function(result) {
-	    if(result){
+	  $.lConfirm('确定重置？', function() {
 			var url = window.location.href.split("printPGS")[0];
 			$.post(url+"updateContext",{"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"projectId":$("#_projectId").html(),"printContext":""},function(result){
 				if(result==1){
 					location=location ;
 				}else{
-					jAlert("信息重置失败！");
+					$.lAlert("信息重置失败！");
 				}
 			});
-	     }
 		});
 	});
 });

@@ -1,4 +1,4 @@
-#parse("/default/PGS/reference.vm")
+#parse("templates/report/default/PGS/reference.vm")
 #if($printContext)
 	$printContext
 #else
@@ -7,16 +7,16 @@
 	#override("dept")
 	#end
 	#override("input")
-		#parse("/10/PGS/input.vm")
+		#parse("templates/report/10/PGS/input.vm")
 	#end
 	#override("explain")
-		#parse("/10/PGS/explain.vm")
+		#parse("templates/report/10/PGS/explain.vm")
 	#end
 	#override("footer")
-		#parse("/10/PGS/footer.vm")
+		#parse("templates/report/10/PGS/footer.vm")
 	#end
 	#override("bottom")
 	#end
-	#extends("/default/PGS/base.vm")
+	#extends("templates/report/default/PGS/base.vm")
 #end
-#parse("/default/PGS/js.vm")
+#parse("templates/report/default/PGS/js.vm")

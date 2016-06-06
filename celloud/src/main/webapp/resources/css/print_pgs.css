@@ -3,7 +3,12 @@ body {
   	font-size: 14px;
   	max-width:800px;
   	margin:auto;
-} 
+}
+
+p {
+    color: #535353;
+    line-height: 1.5em;
+}
 
 textarea{
 	width: 100%;
