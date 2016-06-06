@@ -126,7 +126,7 @@ public class CompanyAction {
             }
             if (UserRole.BIG_CUSTOMER.equals(role)) {// 大客户
                 list = companyService.getAppOfBigCustomer(user.getCompanyId());
-                dataList = companyService.getCompanyReport(null);
+                dataList = companyService.getCompanyReport(user.getCompanyId());
             }
         }
         mv.addObject("appList", list);
