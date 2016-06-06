@@ -708,7 +708,9 @@ public class ReportAction {
      */
     @ActionLog(value = "打印BSI报告", button = "打印数据报告")
     @RequestMapping("printBSIReport")
-    public ModelAndView printBSIReport(String dataKey, Integer projectId, Integer appId, String templateType) {
+    @ResponseBody
+    public void printBSIReport(String dataKey, Integer projectId, Integer appId,
+            String templateType) {
         StringBuffer path = new StringBuffer();
         path.append(ConstantsData.getLoginCompanyId()).append(File.separator).append(appId).append(File.separator)
                 .append(templateType).append(".vm");
@@ -717,7 +719,10 @@ public class ReportAction {
             path.append("default").append(File.separator).append(appId).append(File.separator).append(templateType)
                     .append(".vm");
         }
-        return getBSIModelAndView(path.toString(), dataKey, projectId, appId);
+        BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
+        Map<String, Object> context = new HashMap<String, Object>();
+        context.put("bsi", bsi);
+        returnToVelocity(path.toString(), context, projectId);
     }
 
     /**

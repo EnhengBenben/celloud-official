@@ -1,4 +1,5 @@
-<link href="$link.getContextPath()/css/print_bsi.css?version=3.1.13" rel="stylesheet">
+#parse("templates/report/layout.vm")
+<link href="${base}/css/print_bsi.css?version=3.1.13" rel="stylesheet">
 <div class="content">
   <div class="print-button">
     <a id="print-report" class="btn" href="javascript:void(0)"><i class="fa fa-print"></i></a>
@@ -18,52 +19,45 @@
     </div>
     <form id="print-form">
       <div class="base-info">
-        #parse("/default/118/base_info.vm")
+        #parse("templates/report/default/${bsi.appId}/base_info.vm")
       </div>
       <div class="tests-content">
         <h4>检测结果：</h4>
         <div class="tests-info">
+          <p>
            #if($bsi.species_20)
               #foreach($species_20 in $!bsi.species_20) 
-                <p>
                   #if($species_20.species_zh.equals("未知") || !$species_20.species_zh)
-                    $!species_20.species
+                    $!species_20.species<br>
                   #else
-                    $!species_20.species_zh
+                    $!species_20.species_zh<br>
                     #if($havestrain)
                         #set ($havestrain="$!havestrain,$!species_20.species_zh")
                     #else
                         #set ($havestrain="$!species_20.species_zh")
                     #end
                   #end
-                </p>
               #end
             #end
+          </p>
         </div>
         <table class="table table-20species">
             <tbody>
              <tr>
                <td class="title" rowspan="2">革兰氏阳性$havestrain</td>
-               #if($havestrain.contains('牛链球菌'))
+               #if($havestrain.contains('人葡萄球菌'))
                    <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
                #else
                    <td><i class="fa fa-circle-o" aria-hidden="true"></i>
                #end
-                               牛链球菌
-               </td>
-               #if($havestrain.contains('葡萄球菌'))
-                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
-               #else
-                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
-               #end
-                                     葡萄球菌
+                               人葡萄球菌
                </td>
                #if($havestrain.contains('肺炎链球菌'))
                    <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
                #else
                    <td><i class="fa fa-circle-o" aria-hidden="true"></i>
                #end
-                               肺炎链球菌
+                                     肺炎链球菌
                </td>
                #if($havestrain.contains('粪肠球菌'))
                    <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
@@ -72,8 +66,6 @@
                #end
                                粪肠球菌
                </td>
-             </tr>
-             <tr>
                #if($havestrain.contains('屎肠球菌'))
                    <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
                #else
@@ -81,6 +73,8 @@
                #end
                                屎肠球菌
                </td>
+             </tr>
+             <tr>
                #if($havestrain.contains('难辨梭状芽孢杆菌'))
                    <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
                #else
@@ -88,36 +82,30 @@
                #end
                                难辨梭状芽孢杆菌
                </td>
-               #if($havestrain.contains('溃疡棒状杆菌'))
+               #if($havestrain.contains('表皮葡萄球菌'))
                    <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
                #else
                    <td><i class="fa fa-circle-o" aria-hidden="true"></i>
                #end
-                              溃疡棒状杆菌
+                               表皮葡萄球菌
                </td>
-               #if($havestrain.contains('结膜干燥杆菌'))
+               #if($havestrain.contains('溶血性葡萄球菌'))
                    <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
                #else
                    <td><i class="fa fa-circle-o" aria-hidden="true"></i>
                #end
-                               结膜干燥杆菌
+                              溶血性葡萄球菌
                </td>
+               <td></td>
              </tr>
              <tr>
-               <td class="title" rowspan="3">革兰氏阴性</td>
-               #if($havestrain.contains('大肠埃希菌'))
+               <td class="title" rowspan="4">革兰氏阴性</td>
+               #if($havestrain.contains('溶血不动杆菌'))
                    <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
                #else
                    <td><i class="fa fa-circle-o" aria-hidden="true"></i>
                #end
-                               大肠埃希菌
-               </td>
-               #if($havestrain.contains('铜绿假单胞菌'))
-                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
-               #else
-                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
-               #end
-                              铜绿假单胞菌
+                               溶血不动杆菌
                </td>
                #if($havestrain.contains('鲍曼不动杆菌'))
                    <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
@@ -125,6 +113,13 @@
                    <td><i class="fa fa-circle-o" aria-hidden="true"></i>
                #end
                                鲍曼不动杆菌
+               </td>
+               #if($havestrain.contains('大肠埃希菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               大肠埃希菌
                </td>
                #if($havestrain.contains('肺炎克雷伯氏菌'))
                    <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
@@ -135,13 +130,6 @@
                </td>
              </tr>
              <tr>
-               #if($havestrain.contains('嗜麦芽窄食单胞菌'))
-                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
-               #else
-                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
-               #end
-                               嗜麦芽窄食单胞菌
-               </td>
                #if($havestrain.contains('粘质沙雷氏菌'))
                    <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
                #else
@@ -156,15 +144,43 @@
                #end
                               阴沟肠杆菌
                </td>
-               #if($havestrain.contains('嗜水气单胞菌'))
+               #if($havestrain.contains('洋葱伯克霍尔德菌'))
                    <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
                #else
                    <td><i class="fa fa-circle-o" aria-hidden="true"></i>
                #end
-                               嗜水气单胞菌
+                              洋葱伯克霍尔德菌
+               </td>
+               #if($havestrain.contains('奇异变形杆菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               奇异变形杆菌
                </td>
              </tr>
              <tr>
+               #if($havestrain.contains('铜绿假单胞菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               铜绿假单胞菌
+               </td>
+               #if($havestrain.contains('嗜麦芽窄食单胞菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                              嗜麦芽窄食单胞菌
+               </td>
+               #if($havestrain.contains('肠炎沙门氏菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                             肠炎沙门氏菌
+               </td>
                #if($havestrain.contains('产气肠杆菌'))
                    <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
                #else
@@ -172,27 +188,18 @@
                #end
                                产气肠杆菌
                </td>
-               #if($havestrain.contains('肠炎沙门菌'))
+             </tr>
+             <tr>
+               #if($havestrain.contains('金黄色酿脓葡萄球菌'))
                    <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
                #else
                    <td><i class="fa fa-circle-o" aria-hidden="true"></i>
                #end
-                               肠炎沙门菌
+                               金黄色酿脓葡萄球菌
                </td>
-               #if($havestrain.contains('奇异变形杆菌'))
-                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
-               #else
-                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
-               #end
-                              奇异变形杆菌
-               </td>
-               #if($havestrain.contains('洋葱伯克霍尔德菌'))
-                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
-               #else
-                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
-               #end
-                               洋葱伯克霍尔德菌
-               </td>
+               <td></td>
+               <td></td>
+               <td></td>
              </tr>
             </tbody>
           </table>
