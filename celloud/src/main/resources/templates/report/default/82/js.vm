@@ -48,12 +48,15 @@ $(function(){
             }
         }
     });
-	$("input[class='_hard havebefore']").each(function(){
-		$(this).parent().append("<i class=\"fa fa-star\" aria-hidden=\"true\"></i>");
-	});
-	$("input[class='_light havebefore']").each(function(){
-		$(this).parent().append("<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>");
-	});
+    var isSaved = $("#isSaved").val();
+	if(isSaved==1){
+		$("input[class='_hard havebefore']").each(function(){
+			$(this).parent().append("<i class=\"fa fa-star\" aria-hidden=\"true\"></i>");
+		});
+		$("input[class='_light havebefore']").each(function(){
+			$(this).parent().append("<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>");
+		});
+	}
     var url = window.location.href.split("print")[0];
     var sex = $("#men").prop("checked");
     $("#print").on("click",function(){
