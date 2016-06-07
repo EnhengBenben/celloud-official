@@ -125,9 +125,9 @@
                 }else{
 	              $.get("<%=request.getContextPath()%>/user/email/sendNewEmail",$("#resetEmailForm").serialize(),function(flag){
 	                if(flag == 1){
-	                  $(".error").html("发送邮件失败，请重新申请链接。");
+	                  $(".error").html("邮件发送失败，请重新点击发送！");
 	                }else{
-	                  $(".error").html("发送邮件成功，请到新邮箱激活链接，完成邮箱修改操作。");
+	                  $(".error").html("邮件发送成功，请到新邮箱激活验证链接！");
 	                }
 	              });
                 }
