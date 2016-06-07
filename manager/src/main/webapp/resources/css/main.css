@@ -4,6 +4,11 @@ body{
   font-weight: 400;
 }
 
+.panel-heading a {
+    color: #979898;
+    font-size: 13px;
+}
+
 #index-main-div{
     position:static;
     z-index:auto;

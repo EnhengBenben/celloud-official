@@ -243,7 +243,7 @@ var user=(function(user){
 							$("#emailArray").parent().parent().find(".help-inline").html("");
 						}
 				}else{
-					alert("邮件发送成功");
+					jAlert("邮件发送成功");
 					$("#sendEmail").modal("hide");
 					$.get("user/sendEmail",params);
 					$("#user-sendEmailModal").modal("hide");
@@ -300,6 +300,7 @@ var user=(function(user){
 		                  data : json,
 		                  tags : true,
 		                  placeholder : '请选择部门',
+		                  language : 'zh-CN',
 		                  allowClear : true,
 		                  maximumSelectionLength: 1
 		              })
