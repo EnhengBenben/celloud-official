@@ -2,9 +2,11 @@ $.ajaxSetup ({
 	  complete:function(request,textStatus){
 		  var sessionstatus=request.getResponseHeader("sessionstatus"); //通过XMLHttpRequest取得响应头，sessionstatus，  
 		  if(sessionstatus=="timeout"){
+			  $(".modal-content").hide();
 			  jAlert("登录超时,请重新登录！","登录超时",function(){
 				  window.location.href="login";
 			  });
+			  return false;
 		  }
 	  },
 	  cache: false //关闭AJAX相应的缓存
@@ -276,9 +278,9 @@ var user=(function(user){
 	};
 	
 	self.toSendEmail=function(){
-		$.post("user/toSendEmail",function(responseText){
-			$("#user-sendEmailModal .modal-content").html(responseText);
+		$.get("user/toSendEmail",function(responseText){
 			$("#user-sendEmailModal").modal("show");
+			$("#user-sendEmailModal .modal-content").html(responseText);
 		});
 	};
 	self.changeDeptByCompanyId = function(option){
