@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="panel panel-default">
 <div class="panel-heading">
-    <h3 class="panel-title">用户管理</h3>
+    <a href="#" >用户管理</a>
     <div class="panel-options">
         <form class="form-inline">
          <div class="form-group">

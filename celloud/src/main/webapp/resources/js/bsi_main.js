@@ -23,6 +23,12 @@ $(function () {
     $("#to-upload-a").removeClass("active");
     $("#to-data-a").removeClass("active");
   });
+  $("body").on("click",'[data-click="report-list"]',function(){
+    $.report.find.pagination();
+    $(this).addClass("active");
+    $("#to-upload-a").removeClass("active");
+    $("#to-data-a").removeClass("active");
+  });
   $("#to-data-a").on("click",function(){
     $.data_.find.condition();
     $(this).addClass("active");
@@ -48,6 +54,7 @@ $(function () {
       $("#condition-find").click();
     }
   });
+  
 });
 $.base = {
   sortIcon : function(sortDate,sortBatch,sortName,sortPeriod){

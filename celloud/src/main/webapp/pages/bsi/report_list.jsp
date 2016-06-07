@@ -7,7 +7,7 @@
     <li>主页</li>
     <li>应用</li>
     <li>百菌探</li>
-    <li>报告</li>
+    <li><a data-click="report-list" href="javascript:void(0)">报告</a></li>
     <li id="to-my-report">报告列表</li>
   </ol>
 </div>

@@ -12,7 +12,7 @@
                <input type="hidden" name="userId" value="${userId }">
            </div>
            <div class="form-group">
-               <label class="col-sm-2 control-label" for="deptName">模块<font color="red">*</font></label>
+               <label class="col-sm-2 control-label" for="deptName">模块</label>
                <div class="col-sm-10" id="email-appIds">
                <c:if test="${not empty companyRoleList }">
 	               <c:forEach items="${companyRoleList }" var="companyRole">

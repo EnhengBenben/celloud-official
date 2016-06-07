@@ -143,7 +143,29 @@ var company=(function(company){
 			$("#company-editModal .modal-content").html(responseText);
 			$("#company-editModal").modal("show");
 		});
-	}
+	};
+	self.sendName = function(){
+		var flag = true;
+		$("#companyForm").find("input:text").each(function(){
+			var value = $(this).val() == null ? "" : $(this).val().trim();
+			if(value.length>0){
+				$(this).parent().parent().removeClass("error");
+				$(this).parent().parent().find(".help-inline").html("");
+			}else{
+				flag = false;
+				$(this).parent().parent().addClass("error");
+				$(this).parent().parent().find(".help-inline").html("该项为必选项!");
+			}
+		});
+		if(flag){
+			$.post("company/sendName",$("#companyForm").serialize(),function(responseText){
+				if(responseText>0){
+	                $("#company-editModal").modal("hide");
+	                alert("成功");
+	            }
+			})
+		}
+	};
 	return self;
 })(company);
 
@@ -173,6 +195,16 @@ var user=(function(user){
 	}
 	self.sendEmail=function(){
 		var isPass = true;
+		var checkbox = $("#emailForm").find("input[name=appIdArray]:checked");
+		if(checkbox.size()<1){
+			isPass = false;
+			$("input[name=appIdArray]").parent().parent().parent().addClass("error");
+			$("input[name=appIdArray]").parent().parent().parent().find(".help-inline").html("至少选择一个App！");
+		}else{
+			$("input[name=appIdArray]").parent().parent().parent().removeClass("error");
+			$("input[name=appIdArray]").parent().parent().parent().find(".help-inline").html("");
+		}
+		
 		$("#emailForm").find("input:text").each(function(){
 			var email = $(this).val();
 			if(self.checkEmail(email)){
@@ -268,6 +300,7 @@ var user=(function(user){
 		                  data : json,
 		                  tags : true,
 		                  placeholder : '请选择部门',
+		                  language : 'zh-CN',
 		                  allowClear : true,
 		                  maximumSelectionLength: 1
 		              })
@@ -288,11 +321,23 @@ var user=(function(user){
 		});
 	};
 	self.grantApp = function(){
-		var params = $("#grantForm").serialize();
-		$.post("user/grantApp",params,function(){
-			jAlert("授权成功");
-			$("#user-sendEmailModal").modal("hide");
-		});
+		var flag = true;
+		var checkbox = $("#grantForm").find("input[name=appIdArray]:checked");
+		if(checkbox.size()<1){
+			flag = false;
+			$("input[name=appIdArray]").parent().parent().parent().addClass("error");
+			$("input[name=appIdArray]").parent().parent().parent().find(".help-inline").html("至少选择一个App！");
+		}else{
+			$("input[name=appIdArray]").parent().parent().parent().removeClass("error");
+			$("input[name=appIdArray]").parent().parent().parent().find(".help-inline").html("");
+		}
+		if(flag){
+			var params = $("#grantForm").serialize();
+			$.post("user/grantApp",params,function(){
+				jAlert("授权成功");
+				$("#user-sendEmailModal").modal("hide");
+			});
+		};
 	}
 	self.grantRole = function(){
 		var params = $("#grantForm").serialize();

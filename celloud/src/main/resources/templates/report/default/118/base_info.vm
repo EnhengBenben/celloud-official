@@ -68,7 +68,7 @@
         <input class="width-80 Wdate" type="text" name='baseInfo["inspectionDate"]' onclick="WdatePicker()" readonly="readonly">
     </li>
 </ul>
-<script>
+<script type="text/javascript">
 $(document).ready(function(){
     $("input[type='radio'][id='sex-radio']:checked").val()
     $("#print-report").on("click",function(){

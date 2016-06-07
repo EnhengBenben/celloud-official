@@ -30,10 +30,10 @@ var messageUtils = (function(messageUtils) {
 	};
 	var openWebSocket = function() {
 		var contextPath = window.CONTEXT_PATH || "";
-		var protocol = window.location.protocol=='http:'?'ws://':'wss://';
+		var protocol= window.location.protocol=="https:"?"wss://":"ws://";
 		var hostname = window.location.hostname;
-		var port = window.location.port || 80;
-		var wsUrl = protocol + hostname + ":" + port + contextPath
+		var port = window.location.port?":"+window.location.port:"";
+		var wsUrl = protocol + hostname +  port + contextPath
 				+ "/websocket/message";
 		var ws = null;
 		if ('WebSocket' in window) {
