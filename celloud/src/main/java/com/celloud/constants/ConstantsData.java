@@ -1,7 +1,5 @@
 package com.celloud.constants;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -175,12 +173,21 @@ public class ConstantsData {
     }
 
     public static Properties loadProperties(String filepath) {
-        String path = (ConstantsData.class.getClassLoader().getResource("") + filepath).replace("file:", "");
         Properties properties = new Properties();
+        InputStream inputStream = null;
         try {
-            properties.load(new FileInputStream(new File(path)));
+            inputStream = ConstantsData.class.getClassLoader().getResourceAsStream(filepath);
+            properties.load(inputStream);
         } catch (IOException e) {
             logger.error("加载properties文件失败：{}", filepath, e);
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    logger.error("关闭properties文件读取流失败： {}", filepath, e);
+                }
+            }
         }
         return properties;
     }
@@ -190,7 +197,7 @@ public class ConstantsData {
     }
 
     public static Object getContextUrl() {
-        if(systemProperties==null){
+        if (systemProperties == null) {
             loadSystemProperties();
         }
         return systemProperties.getProperty("context_url");

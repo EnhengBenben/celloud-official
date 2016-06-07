@@ -65,4 +65,12 @@ public class Constants {
      * 系统配置文件
      */
     public static final String SYSTEM_PROPERTIES_FILE = "system.properties";
+    /**
+     * kafka中，给所有用户发送消息时消息的key
+     */
+    public static final String MESSAGE_ALLUSER_KEY = "__message-alluser-key-in-kafka__";
+    /**
+     * kafka中，给用户发送消息的topic
+     */
+    public static final String MESSAGE_USER_TOPIC = "user-message";
 }
