@@ -97,7 +97,8 @@ $.report.options = {
     sortName: "asc",
     sortPeriod: "asc",
     sortDate: "desc",
-    pageSize: $("#page-size-sel").val()
+    pageSize: $("#page-size-sel").val(),
+    reportType: 0  //0:患者报告  1：分析报告
 };
 $.report.reRun = function(dataKey,appId,projectId){
   $.get("data/reRun",{"dataKey":dataKey,"appId":appId,"projectId":projectId},function(result){

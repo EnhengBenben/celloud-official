@@ -2,8 +2,8 @@
 <link href="${base}/css/print_bsi.css?version=3.1.13" rel="stylesheet">
 <div class="content">
   <div class="print-button">
-    <a id="print-report" class="btn" href="javascript:void(0)"><i class="fa fa-print"></i></a>
-    <a id="reset-info" class="btn" href="javascript:void(0)">
+    <a id="print-report" class="btn" title="打印" href="javascript:void(0)"><i class="fa fa-print"></i></a>
+    <a id="reset-info" class="btn" title="清空" href="javascript:void(0)">
     <svg width="16" height="16" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g class="transform-group">
     <g transform="scale(0.1953125, 0.1953125)">
