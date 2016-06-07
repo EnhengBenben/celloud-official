@@ -7,7 +7,7 @@
 	#end
 	<div class="row" style="margin:0px auto;" id="mainDiv">
 		#block("head")
-			#if($pgs.companyIcon)
+			#if($pgs.companyIcon && "" != $pgs.companyIcon)
 				<div align="center" class="clearfix">
 					#block("company")
 						<img src="${base}/report/company/icon?file=$!pgs.companyIcon" style="width:90px">
