@@ -48,7 +48,12 @@ $(function(){
             }
         }
     });
-
+	$("input[class='_hard havebefore']").each(function(){
+		$(this).parent().append("<i class=\"fa fa-star\" aria-hidden=\"true\"></i>");
+	});
+	$("input[class='_light havebefore']").each(function(){
+		$(this).parent().append("<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>");
+	});
     var url = window.location.href.split("print")[0];
     var sex = $("#men").prop("checked");
     $("#print").on("click",function(){
@@ -61,7 +66,14 @@ $(function(){
             var cl = $(this).attr("class"); 
             if(cl){
                 if(cl.indexOf('havebefore')>-1){
-                    $(this).parent().html("突变型:<span name='print' class='"+cl+"'>"+inputVal+"</span>");
+                	append = '';
+                	if(cl.indexOf('_hard')>-1){
+                		append = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class=\"fa fa-star\" aria-hidden=\"true\"></i>";
+                	}
+                	if(cl.indexOf('_light')>-1){
+                		append = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>";
+                	}
+                    $(this).parent().html("突变型:<span name='print' class='"+cl+"'>"+inputVal+"</span>"+append);
                 }else{
                     $(this).parent().html("<span name='print' class='"+cl+"'>"+inputVal+"</span>");
                 }
@@ -121,7 +133,14 @@ $(function(){
             var cl = $(this).attr("class");
             if(cl){
               if(cl.indexOf('havebefore')>=0){
-                $(this).parent().html("突变型:<input type='text' class='"+cl+"' value='"+inputVal+"'>");
+              	append = '';
+              	if(cl.indexOf('_hard')>-1){
+            		append = "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>";
+            	}
+            	if(cl.indexOf('_light')>-1){
+            		append = "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>";
+            	}
+                $(this).parent().html("突变型:<input type='text' class='"+cl+"' value='"+inputVal+"'>"+append);
               }else{
                 $(this).parent().html("<input type='text' class='"+cl+"' value='"+inputVal+"'>");
               }

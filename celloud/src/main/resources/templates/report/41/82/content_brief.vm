@@ -32,8 +32,8 @@
         <h2 name="resistanceType" class="mt10 hide">一、耐药突变位点检测结果：</h2>
         <div name="resistanceType" class="m-box_1 hide">
             ${hbv.clinical}
-            <p class="annotation">注：深背景色<span class="_hard colorspan">&nbsp;</span>表示发生了耐药突变<br>
-                浅背景色<span class="_light colorspan">&nbsp;</span>表示发生了突变，但是暂无文献支持其和耐药相关<br>
+            <p class="annotation">注：实心五星 <i class="fa fa-star" aria-hidden="true"></i> 表示发生了耐药突变<br>
+                空心五星 <i class="fa fa-star-o" aria-hidden="true"></i> 表示发生了突变，但是暂无文献支持其和耐药相关<br>
                  红色字体表示在样本中未找到该位点
             </p>
         </div>
