@@ -1,4 +1,4 @@
-#if($pgs.companyIcon)
+#if($pgs.companyIcon && "" != $pgs.companyIcon)
 	<div style="margin:0px auto;">
 		<hr>
 		<div class="end">
