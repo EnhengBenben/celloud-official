@@ -75,14 +75,13 @@ var messageUtils = (function(messageUtils) {
 					self.closeListeners[listener]();
 				}
 			}
-			reOpenWebsocket();
+			//reOpenWebsocket();
 		};
 	}
 	self.ws = openWebSocket();
 	bindEvents();
 	function clearTimeouts(){
 		for(var t in self.timeouts){
-			console.log("clear ... "+self.timeouts[t]);
 			clearTimeout(self.timeouts[t]);
 		}
 		self.timeouts = [];
