@@ -293,24 +293,24 @@
       <tr>
         <td style="width:50%;">
           #if(${cmpReport.qualityPath1})
-            <img style="max-width:500px;" src="#if($!{cmpReport.qualityPath1.contains('Tools')})${uploadPath}/${cmpReport.userId}/${cmpReport.appId}/${cmpReport.dataKey}/#end${cmpReport.qualityPath1}">
+            <img style="max-width:500px;" src="#if(!${cmpReport.qualityPath1.contains('Tools')})${uploadPath}/${cmpReport.userId}/${cmpReport.appId}/${cmpReport.dataKey}/#end${cmpReport.qualityPath1}">
           #end
         </td>
         <td>
           #if(${cmpReport.qualityPath2})
-            <img style="max-width:500px;" src="#if($!{cmpReport.qualityPath2.contains('Tools')})${uploadPath}/${cmpReport.userId}/${cmpReport.appId}/${cmpReport.dataKey}/#end${cmpReport.qualityPath2}">
+            <img style="max-width:500px;" src="#if(!${cmpReport.qualityPath2.contains('Tools')})${uploadPath}/${cmpReport.userId}/${cmpReport.appId}/${cmpReport.dataKey}/#end${cmpReport.qualityPath2}">
           #end
         </td>
       </tr>
       <tr>
         <td>
           #if(${cmpReport.seqContentPath1})
-            <img style="max-width:500px;" src="#if($!{cmpReport.seqContentPath1.contains('Tools')})${uploadPath}/${cmpReport.userId}/${cmpReport.appId}/${cmpReport.dataKey}/#end${cmpReport.seqContentPath1}">
+            <img style="max-width:500px;" src="#if(!${cmpReport.seqContentPath1.contains('Tools')})${uploadPath}/${cmpReport.userId}/${cmpReport.appId}/${cmpReport.dataKey}/#end${cmpReport.seqContentPath1}">
           #end
         </td>
         <td>
           #if(${cmpReport.seqContentPath2})
-            <img style="max-width:500px;" src="#if($!{cmpReport.seqContentPath2.contains('Tools')})${uploadPath}/${cmpReport.userId}/${cmpReport.appId}/${cmpReport.dataKey}/#end${cmpReport.seqContentPath2}">
+            <img style="max-width:500px;" src="#if(!${cmpReport.seqContentPath2.contains('Tools')})${uploadPath}/${cmpReport.userId}/${cmpReport.appId}/${cmpReport.dataKey}/#end${cmpReport.seqContentPath2}">
           #end
         </td>
       </tr>
