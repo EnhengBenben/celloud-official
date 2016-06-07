@@ -38,16 +38,9 @@
       <li><a id="prev-page-task" class="ends pull-left" href="javascript:void(0);">&lt;&lt;</a></li>
       <!-- 显示第一页 -->
       <c:choose>
-        <c:when test="${pageList.page.currentPage<=3}">
-          <c:forEach begin="1" step="1" end="${pageList.page.totalPage}" var="step">
-            <c:choose>
-              <c:when test="${step==pageList.page.currentPage}">   
-                  <li class="active"><a href="#">${step }</a></li>
-              </c:when>
-              <c:otherwise>
-                  <li><a name="pagination-task" href="javascript:void(0)">${step }</a></li>
-              </c:otherwise>
-            </c:choose>
+        <c:when test="${pageList.page.totalPage<=3}">
+          <c:forEach begin="1" end="${pageList.page.totalPage}" step="1" var="step">
+            <li <c:if test="${step==pageList.page.currentPage }">class="active"</c:if>><a name="pagination-task" href="javascript:void(0);">${step }</a></li>
           </c:forEach>
         </c:when>
         <c:otherwise>

@@ -4,8 +4,8 @@ $.dataReport = {
         $.dataReport.loadNavList(response);
       });
     },
-    paginNavList: function(){
-      $.get("data/taskBatchList",{"batch":$("#data-batch").html(),"appId": $("#appid-hide").val(),"dataKey":$("#datakey-hide").val(),"page":currentPage},function(response){
+    paginNavList: function(currentPage){
+      $.post("data/taskBatchList",{"batch":$("#data-batch").html(),"appId": $("#appid-hide").val(),"dataKey":$("#datakey-hide").val(),"page":currentPage},function(response){
         $.dataReport.loadNavList(response);
       });
     },
@@ -13,6 +13,7 @@ $.dataReport = {
       $("#report-pagination").html(response);
       $("#pagination-data-report").on("click","a",function(e){
         var id = $(this).attr("id");
+        alert(id);
         var currentPage = parseInt($("#current-page-hide").val());
         var totalPage = parseInt($("#total-page-hide").val());
         var page;
@@ -36,7 +37,7 @@ $.dataReport = {
         }else if(id.indexOf("last")>=0){
           page = totalPage;
         }
-        $.dataReport.paginNavList();
+        $.dataReport.paginNavList(page);
       });
     }
 }
