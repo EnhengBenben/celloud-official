@@ -42,17 +42,22 @@ $.dataReport = {
     }
 }
 $(function () {
+  if($.report.options.reportType == 1){
+    $("#analy-tab").tab("show");
+  }
   $("#patient-tab").click(function (e) {
     e.preventDefault()
     $(this).tab('show');
     $("#print-patient-a").removeClass("hide");
     $("#print-analy-a").addClass("hide");
+    $.report.options.reportType = 0;
   });
   $("#analy-tab").click(function (e) {
     e.preventDefault()
     $(this).tab('show');
     $("#print-analy-a").removeClass("hide");
     $("#print-patient-a").addClass("hide");
+    $.report.options.reportType = 1;
   });
   $.dataReport.navList();
 });
