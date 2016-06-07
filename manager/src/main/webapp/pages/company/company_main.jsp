@@ -4,7 +4,7 @@
 <!-- Basic Setup -->
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">公司管理</h3>
+        <a href="#" >公司管理</a>
         <div class="panel-options">
         <form class="form-inline" onsubmit="return false;">
           <div class="form-group">
