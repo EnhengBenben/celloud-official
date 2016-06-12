@@ -9,55 +9,55 @@
     <div class="wrapper">
         <table border='1' cellspacing="0" cellpadding="0">
             <tr>
-                <td>姓名</td>
-                <td><input type="text"></td>
-                <td>性别</td>
-                <td><input type="text"></td>
-                <td>年龄</td>
-                <td><input type="text"></td>
-                <td>住院号/门诊号</td>
-                <td><input type="text"></td>
+                <td class="label">姓名</td>
+                <td><input type="text" class="tdInput"></td>
+                <td class="label">性别</td>
+                <td><input type="text" class="tdInput"></td>
+                <td class="label">年龄</td>
+                <td><input type="text" class="tdInput"></td>
+                <td class="label">住院号/门诊号</td>
+                <td><input type="text" class="tdInput"></td>
             </tr>
             <tr>
-                <td>科别</td>
-                <td><input type="text"></td>
-                <td>床号</td>
-                <td><input type="text"></td>
-                <td>送检医师</td>
-                <td><input type="text"></td>
-                <td>送检日期</td>
-                <td><input type="text"></td>
+                <td class="label">科别</td>
+                <td><input type="text" class="tdInput"></td>
+                <td class="label">床号</td>
+                <td><input type="text" class="tdInput"></td>
+                <td class="label">送检医师</td>
+                <td><input type="text" class="tdInput"></td>
+                <td class="label">送检日期</td>
+                <td><input type="text" class="tdInput"></td>
             </tr>
             <tr>
-                <td rowspan="2">样品类型</td>
+                <td rowspan="2" class="label">样品类型</td>
                 <td rowspan="2">EDTA抗凝血</td>
-                <td>检测方法</td>
+                <td class="label">检测方法</td>
                 <td colspan="3">Sanger测序法</td>
-                <td rowspan="2">报告编号</td>
-                <td rowspan="2"><input type="text"></td>
+                <td rowspan="2" class="label">报告编号</td>
+                <td rowspan="2"><input type="text" class="tdInput"></td>
             </tr>
             <tr>
-                <td>检测仪器</td>
+                <td class="label">检测仪器</td>
                 <td colspan="3">ABI 3130XL 基因分析仪</td>
             </tr>
             <tr>
-                <td>序号</td>
-                <td colspan="3">项目</td>
-                <td colspan="4">结果</td>
+                <td class="label">序号</td>
+                <td colspan="3" class="label">项目</td>
+                <td colspan="4" class="label">结果</td>
             </tr>
             <tr>
                 <td>1</td>
                 <td colspan="3">基因分型</td>
-                <td colspan="4">${hbv.type.replace('Type: ','')}型</td>
+                <td colspan="4"><input type="text" class="tdCenterInput" value="${hbv.type.replace('Type: ','')}型" /></td>
             </tr>
             <tr>
                 <td>2</td>
                 <td colspan="3">恩替卡韦ETV突变耐药株检测</td>
                 <td colspan="4">
                     #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到恩替卡韦')}>-1)
-                        未检测到恩替卡韦ETV突变耐药株
+                        <input type="text" class="tdCenterInput" value="未检测到恩替卡韦ETV突变耐药株" />
                     #else
-                        检测到恩替卡韦ETV突变耐药株
+                        <input type="text" class="tdCenterInput" value="检测到恩替卡韦ETV突变耐药株" />
                     #end
                 </td>
             </tr>
@@ -66,9 +66,9 @@
                 <td colspan="3">阿德福韦ADV突变耐药株检测</td>
                 <td colspan="4">
                     #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到阿德福韦')}>-1)
-                        未检测到阿德福韦ADV突变耐药株
+                        <input type="text" class="tdCenterInput" value="未检测到阿德福韦ADV突变耐药株" />
                     #else
-                        检测到阿德福韦ADV突变耐药株
+                        <input type="text" class="tdCenterInput" value="检测到阿德福韦ADV突变耐药株" />
                     #end
                 </td>
             </tr>
@@ -77,9 +77,9 @@
                 <td colspan="3">恩曲他滨FTC突变耐药株检测</td>
                 <td colspan="4">
                     #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到恩曲他滨')}>-1)
-                        未检测到恩曲他滨FTC突变耐药株
+                        <input type="text" class="tdCenterInput" value="未检测到恩曲他滨FTC突变耐药株" />
                     #else
-                        检测到恩曲他滨FTC突变耐药株
+                        <input type="text" class="tdCenterInput" value="检测到恩曲他滨FTC突变耐药株" />
                     #end
                 </td>
             </tr>
@@ -88,9 +88,9 @@
                 <td colspan="3">拉米夫定LAM突变耐药株检测</td>
                 <td colspan="4">
                     #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到拉米夫定')}>-1)
-                        未检测到拉米夫定LAM突变耐药株
+                        <input type="text" class="tdCenterInput" value="未检测到拉米夫定LAM突变耐药株" />
                     #else
-                        检测到拉米夫定LAM突变耐药株
+                        <input type="text" class="tdCenterInput" value="检测到拉米夫定LAM突变耐药株" />
                     #end
                 </td>
             </tr>
@@ -99,9 +99,9 @@
                 <td colspan="3">替比夫定LDT突变耐药株检测</td>
                 <td colspan="4">
                     #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到替比夫定')}>-1)
-                        未检测到替比夫定LDT突变耐药株
+                        <input type="text" class="tdCenterInput" value="未检测到替比夫定LDT突变耐药株" />
                     #else
-                        检测到替比夫定LDT突变耐药株
+                        <input type="text" class="tdCenterInput" value="检测到替比夫定LDT突变耐药株" />
                     #end
                 </td>
             </tr>
@@ -110,9 +110,9 @@
                 <td colspan="3">替诺福韦酯TDF突变耐药株检测</td>
                 <td colspan="4">
                     #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到替诺福韦酯')}>-1)
-                        未检测到替诺福韦酯TDF突变耐药株
+                        <input type="text" class="tdCenterInput" value="未检测到替诺福韦酯TDF突变耐药株" />
                     #else
-                        检测到替诺福韦酯TDF突变耐药株
+                        <input type="text" class="tdCenterInput" value="检测到替诺福韦酯TDF突变耐药株" />
                     #end
                 </td>
             </tr>
@@ -135,9 +135,9 @@
             <tr>
                 <td colspan="8">
                     <ul class="info mt5">
-                        <li>报告日期<span><input type="text"></span></li>
-                        <li>检验者<span><input type="text"></span></li>
-                        <li>审核者<span><input type="text"></span></li>
+                        <li>报告日期<span><input type="text" class="liInput"></span></li>
+                        <li>检验者<span><input type="text" class="liInput"></span></li>
+                        <li>审核者<span><input type="text" class="liInput"></span></li>
                     </ul>
                 </td>
             </tr>

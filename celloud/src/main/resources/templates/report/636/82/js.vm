@@ -4,14 +4,33 @@ $(function(){
     var url = window.location.href.split("print")[0];
     $("#print").on("click",function(){
         $(".buttons").hide();
-        $("#printMain").find("input[type='text']").each(function(){
-            $(this).css("border-bottom","0px");
+        $("#printMain").find("input[class='tdInput']").each(function(){
+            var inputVal = $(this).val();
+            var width = $(this).width() - 10;
+            $(this).parent().html("<span class='tdSpan' style='width:" + width + "px'>" + inputVal + "</span>");
+        });
+        $("#printMain").find("input[class='tdCenterInput']").each(function(){
+            var inputVal = $(this).val();
+            $(this).parent().html("<span class='tdCenterSpan'>" + inputVal + "</span>");
+        });
+        $("#printMain").find("input[class='liInput']").each(function(){
+            var inputVal = $(this).val();
+            $(this).parent().html("<span class='liSpan'>" + inputVal + "</span>");
         });
         
         window.print();
         
-        $("#printMain").find("input[type='text']").each(function(){
-            $(this).css("border-bottom","1px solid #D4D4D4");
+        $("#printMain").find("span[class='liSpan']").each(function(){
+            var inputVal = $(this).html();
+            $(this).parent().html("<input type='text' class='liInput' value='" + inputVal + "'>");
+        });
+        $("#printMain").find("span[class='tdCenterSpan']").each(function(){
+            var inputVal = $(this).html();
+            $(this).parent().html("<input type='text' class='tdCenterInput' value='" + inputVal + "'>");
+        });
+        $("#printMain").find("span[class='tdSpan']").each(function(){
+            var inputVal = $(this).html();
+            $(this).parent().html("<input type='text' class='tdInput' value='" + inputVal + "'>");
         });
         $(".buttons").show();
     });
