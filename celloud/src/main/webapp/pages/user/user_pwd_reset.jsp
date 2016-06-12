@@ -7,7 +7,7 @@
 <meta name="keywords" content="celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link rel="bookmark" href="<%=request.getContextPath()%>/images/favicon.ico" />
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/login.css" media="all" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/login.css?version=3.1.14" media="all" />
 <title>CelLoud 用户重置密码</title>
 </head>
 <body onselectstart="return false;">
