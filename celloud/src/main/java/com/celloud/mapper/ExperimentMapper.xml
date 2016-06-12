@@ -62,6 +62,9 @@
   <select id="checkoutNumber" resultType="java.lang.Integer">
   	select count(number) from tb_experiment where state = #{state,jdbcType=INTEGER} and number = #{num} and user_id = #{userId,jdbcType=INTEGER}
   </select>
+  <select id="getApp" resultType="java.lang.Integer">
+  	select app_id from tb_experiment_app_relat where sample = #{sample,jdbcType=INTEGER} and method = #{method,jdbcType=INTEGER} and sequenator = #{sequenator,jdbcType=INTEGER} and state = #{state,jdbcType=INTEGER}
+  </select>
   <select id="getExpDonePageList" resultMap="ContainNameMap" parameterType="java.lang.Integer" >
     select
     <include refid="contain_name" />
