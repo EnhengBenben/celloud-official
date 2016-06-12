@@ -214,16 +214,11 @@ section h2,
     margin-bottom: 20px;
 }
 .test-description{
-    width: 100%;
-    font-size: 12px;
-    margin-top: -20px;
+	padding: 10px 28px;
+	font-size: 12px;
 }
 .test-description a{
     color:#323232;
-}
-.test-description{
-	padding: 10px 28px;
-	font-size: 12px;
 }
 .test-description span{
     font-weight: normal;
@@ -271,9 +266,9 @@ section h2,
 	   padding: 0px;
 	   background: none;
 	}
-	input,select,.button{
+	input,select,.button,#sex{
 	  display: none;
-	},
+	}
 	.print{
       display: inline-block;
     }
