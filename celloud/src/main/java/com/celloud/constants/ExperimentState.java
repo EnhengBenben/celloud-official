@@ -36,9 +36,9 @@ public class ExperimentState {
 	public static final int Sureplex = 12;
 	public static final int gDNA = 13;
 	// app
-	public static final int MDA_MR = 120;
-	public static final int SurePlex = 122;
-	public static final int gDNA_MR = 121;
+	public static final int MDA_MR = 88;
+	public static final int SurePlex = 94;
+	public static final int gDNA_MR = 87;
 	public static final HashMap<Integer, Integer> map = new HashMap<Integer, Integer>() {
 		private static final long serialVersionUID = 1L;
 
