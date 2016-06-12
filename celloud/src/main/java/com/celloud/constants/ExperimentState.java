@@ -32,7 +32,6 @@ public class ExperimentState {
 	 * 报告产生后的实验阶段
 	 */
 	public static final int REPORT_STEP = 6;
-
 	/**
 	 * 需要处理的嘉宝流程
 	 */

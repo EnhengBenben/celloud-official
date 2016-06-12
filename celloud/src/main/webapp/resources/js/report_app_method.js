@@ -29,3 +29,6 @@ appMethod[116] = "getPgsReport";
 appMethod[117] = "getOncogeneReport";
 appMethod[118] = "getBSIReport";
 appMethod[119] = "getPgsReport";
+appMethod[120] = "getPgsReport";
+appMethod[121] = "getPgsReport";
+appMethod[122] = "getPgsReport";

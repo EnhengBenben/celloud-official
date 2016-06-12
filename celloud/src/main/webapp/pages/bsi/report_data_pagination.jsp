@@ -32,8 +32,8 @@
 </table>
 <div class="pagination text-center">
   <c:if test="${pageList.datas.size()>0}">
-    <input id="current-page-hide" value="${pageList.page.currentPage }" type="hidden" >
-    <input id="total-page-hide" value="${pageList.page.totalPage }" type="hidden" >
+    <input id="batch-current-page-hide" value="${pageList.page.currentPage }" type="hidden" >
+    <input id="batch-total-page-hide" value="${pageList.page.totalPage }" type="hidden" >
     <ul id="pagination-data-report" class="pages">
       <li><a id="prev-page-task" class="ends pull-left" href="javascript:void(0);">&lt;&lt;</a></li>
       <!-- 显示第一页 -->
@@ -44,9 +44,21 @@
           </c:forEach>
         </c:when>
         <c:otherwise>
-          <li><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage-1}</a></li>
-          <li class="active"><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage}</a></li>
-          <li><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage+1}</a></li>
+          <c:if test="${pageList.page.currentPage==1}">
+            <li class="active"><a name="pagination-task" href="javascript:void(0);">1</a></li>
+            <li><a name="pagination-task" href="javascript:void(0);">2</a></li>
+            <li><a name="pagination-task" href="javascript:void(0);">3</a></li>
+          </c:if>
+          <c:if test="${pageList.page.currentPage==pageList.page.totalPage}">
+            <li><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage-2}</a></li>
+            <li><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage-1}</a></li>
+            <li class="active"><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage}</a></li>
+          </c:if>
+          <c:if test="${pageList.page.currentPage>1 && pageList.page.currentPage<pageList.page.totalPage}">
+	        <li><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage-1}</a></li>
+	        <li class="active"><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage}</a></li>
+	        <li><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage+1}</a></li>
+          </c:if>
         </c:otherwise>
       </c:choose>
       <li><a id="next-page-task" class="ends pull-right" href="javascript:void(0)">&gt;&gt;</a></li>

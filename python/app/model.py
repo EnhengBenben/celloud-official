@@ -25,9 +25,10 @@ pgs = {"*SD": "sd",
        "note": "note",
        "detail": "detail",
        "report": "report",
-	   "600kPng": "600kPng",
-	   "gc_rawPng": "gc_rawPng",
-	   "gc_correctPng": "gc_correctPng"
+	"600kPng": "600kPng",
+	"gc_rawPng": "gc_rawPng",
+	"gc_correctPng": "gc_correctPng",
+       "HRPng":"HRPng"
        }
 nipt = {"Total_Reads": "totalReads",
        "Reads_Length>50bp": "readsLength",
