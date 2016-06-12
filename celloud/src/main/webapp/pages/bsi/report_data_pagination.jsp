@@ -44,9 +44,21 @@
           </c:forEach>
         </c:when>
         <c:otherwise>
-          <li><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage-1}</a></li>
-          <li class="active"><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage}</a></li>
-          <li><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage+1}</a></li>
+          <c:if test="${pageList.page.currentPage==1}">
+            <li class="active"><a name="pagination-task" href="javascript:void(0);">1</a></li>
+            <li><a name="pagination-task" href="javascript:void(0);">2</a></li>
+            <li><a name="pagination-task" href="javascript:void(0);">3</a></li>
+          </c:if>
+          <c:if test="${pageList.page.currentPage==pageList.page.totalPage}">
+            <li><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage-2}</a></li>
+            <li><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage-1}</a></li>
+            <li class="active"><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage}</a></li>
+          </c:if>
+          <c:if test="${pageList.page.currentPage>1 && pageList.page.currentPage<pageList.page.totalPage}">
+	        <li><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage-1}</a></li>
+	        <li class="active"><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage}</a></li>
+	        <li><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage+1}</a></li>
+          </c:if>
         </c:otherwise>
       </c:choose>
       <li><a id="next-page-task" class="ends pull-right" href="javascript:void(0)">&gt;&gt;</a></li>
