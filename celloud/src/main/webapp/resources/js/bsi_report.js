@@ -13,9 +13,8 @@ $.dataReport = {
       $("#report-pagination").html(response);
       $("#pagination-data-report").on("click","a",function(e){
         var id = $(this).attr("id");
-        alert(id);
-        var currentPage = parseInt($("#current-page-hide").val());
-        var totalPage = parseInt($("#total-page-hide").val());
+        var currentPage = parseInt($("#batch-current-page-hide").val());
+        var totalPage = parseInt($("#batch-total-page-hide").val());
         var page;
         if(id == undefined){
           page = $(this).html();

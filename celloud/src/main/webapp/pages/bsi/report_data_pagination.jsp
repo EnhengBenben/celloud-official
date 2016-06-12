@@ -32,8 +32,8 @@
 </table>
 <div class="pagination text-center">
   <c:if test="${pageList.datas.size()>0}">
-    <input id="current-page-hide" value="${pageList.page.currentPage }" type="hidden" >
-    <input id="total-page-hide" value="${pageList.page.totalPage }" type="hidden" >
+    <input id="batch-current-page-hide" value="${pageList.page.currentPage }" type="hidden" >
+    <input id="batch-total-page-hide" value="${pageList.page.totalPage }" type="hidden" >
     <ul id="pagination-data-report" class="pages">
       <li><a id="prev-page-task" class="ends pull-left" href="javascript:void(0);">&lt;&lt;</a></li>
       <!-- 显示第一页 -->
