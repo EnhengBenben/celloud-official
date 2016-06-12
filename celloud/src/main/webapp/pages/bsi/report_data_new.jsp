@@ -71,7 +71,7 @@
 	                          溶血性葡萄球菌
 	           </td>
 	           <td>
-	                           溶血不动杆菌
+	                           结核分枝杆菌
 	           </td>
 	         </tr>
 	         <tr>
@@ -218,20 +218,19 @@
 	           </c:choose>
 	                          溶血性葡萄球菌
 	           </td>
-	           <td></td>
+	           <c:choose>
+                 <c:when test="${havestrain.contains('结核分枝杆菌') }">
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+                 </c:when>
+                 <c:otherwise>
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+                 </c:otherwise>
+               </c:choose>
+                             结核分枝杆菌
+               </td>
 	         </tr>
 	         <tr>
-	           <td class="title" rowspan="4">革兰氏阴性</td>
-	           <c:choose>
-	             <c:when test="${havestrain.contains('溶血不动杆菌') }">
-	               <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
-	             </c:when>
-	             <c:otherwise>
-	               <td><i class="fa fa-circle-o" aria-hidden="true"></i>
-	             </c:otherwise>
-	           </c:choose>
-	                           溶血不动杆菌
-	           </td>
+	           <td class="title" rowspan="3">革兰氏阴性</td>
 	           <c:choose>
 	             <c:when test="${havestrain.contains('鲍曼不动杆菌') }">
 	               <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
@@ -262,6 +261,16 @@
 	           </c:choose>
 	                           肺炎克雷伯氏菌
 	           </td>
+	           <c:choose>
+                 <c:when test="${havestrain.contains('金黄色酿脓葡萄球菌') }">
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+                 </c:when>
+                 <c:otherwise>
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+                 </c:otherwise>
+               </c:choose>
+                              金黄色酿脓葡萄球菌
+               </td>
 	         </tr>
 	         <tr>
 	           <c:choose>
@@ -347,21 +356,6 @@
                               产气肠杆菌
                </td>
 	         </tr>
-	         <tr>
-               <c:choose>
-                 <c:when test="${havestrain.contains('金黄色酿脓葡萄球菌') }">
-                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
-                 </c:when>
-                 <c:otherwise>
-                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
-                 </c:otherwise>
-               </c:choose>
-                              金黄色酿脓葡萄球菌
-               </td>
-               <td></td>
-               <td></td>
-               <td></td>
-             </tr>
 	        </tbody>
 	      </table>
 	      <table id="test-seq-table" class="table seq-table">
