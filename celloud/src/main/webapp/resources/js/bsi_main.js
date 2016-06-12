@@ -23,6 +23,12 @@ $(function () {
     $("#to-upload-a").removeClass("active");
     $("#to-data-a").removeClass("active");
   });
+  $("body").on("click",'[data-click="report-list"]',function(){
+    $.report.find.pagination();
+    $(this).addClass("active");
+    $("#to-upload-a").removeClass("active");
+    $("#to-data-a").removeClass("active");
+  });
   $("#to-data-a").on("click",function(){
     $.data_.find.condition();
     $(this).addClass("active");
@@ -48,6 +54,7 @@ $(function () {
       $("#condition-find").click();
     }
   });
+  
 });
 $.base = {
   sortIcon : function(sortDate,sortBatch,sortName,sortPeriod){
@@ -90,7 +97,8 @@ $.report.options = {
     sortName: "asc",
     sortPeriod: "asc",
     sortDate: "desc",
-    pageSize: $("#page-size-sel").val()
+    pageSize: $("#page-size-sel").val(),
+    reportType: 0  //0:患者报告  1：分析报告
 };
 $.report.reRun = function(dataKey,appId,projectId){
   $.get("data/reRun",{"dataKey":dataKey,"appId":appId,"projectId":projectId},function(result){

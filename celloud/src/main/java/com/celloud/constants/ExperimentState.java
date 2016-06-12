@@ -32,7 +32,7 @@ public class ExperimentState {
 	 */
 	public static final int REPORT_STEP = 6;
 	// method
-	public static final Integer MDA = 11;
+	public static final int MDA = 11;
 	public static final int Sureplex = 12;
 	public static final int gDNA = 13;
 	// app

@@ -41,11 +41,11 @@ $(function(){
     $("#save").on("click",function(){
         var _id = $("#id").val();
         if(_id != "" && _id != undefined){
-            $.post("$link.getContextPath()/report/updateSplitReport",$("#split-form").serialize(),function(result){
+            $.post("${base}/report/updateSplitReport",$("#split-form").serialize(),function(result){
                 if(result==1){
-                    $.lAlert("信息保存成功！");
+                    $.lAlert("保存成功!");
                 }else{
-                    $.lAlert("信息保存失败！");
+                    $.lAlert("保存失败!");
                 }
             });
         }
@@ -60,11 +60,7 @@ $(function(){
          .removeAttr('selected');
           var _id = $("#id").val();
           if(_id != "" && _id != undefined){
-              $.post("$link.getContextPath()/report/updateSplitReport",$("#split-form").serialize(),function(result){
-                if(result!=1){
-                    $.lAlert("信息重置失败！");
-                }
-              });
+              $.post("${base}/report/updateSplitReport",$("#split-form").serialize());
           }
         });
     });

@@ -1,16 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!-- Basic Setup -->
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">公司管理</h3>
+        <a href="#" >公司管理</a>
         <div class="panel-options">
-        <form class="form-inline" onsubmit="return false;">
+        <form class="form-inline">
           <div class="form-group">
            <input type="text" class="form-control" data-rule-required="true" id="keyword" name="keyword" value="${keyword }" placeholder="医院中文名称">
           </div>
-          <button type="button" class="btn btn-warning" onclick="javascript:company.search()" style="margin-bottom:0">检索</button>
+          <button id="search" type="button" class="btn btn-warning" onclick="javascript:company.search()" style="margin-bottom:0">检索</button>
         </form>
         </div>
     </div>
@@ -110,15 +109,14 @@
   </div>
 </div>
 <script type="text/javascript">
-<!--
 $(function(){
     $("#keyword").keydown(function(e){
         if(e.keyCode==13){
-            company.search();
+            $("#search").click();
+            return false;
         }
     });
 })
-//-->
 </script>
 
 

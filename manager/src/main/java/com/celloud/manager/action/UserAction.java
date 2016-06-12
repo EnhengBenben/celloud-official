@@ -129,8 +129,8 @@ public class UserAction {
         if (appIdArray != null && appIdArray.length > 0) {
             for (String appId : appIdArray) {
                 Map<String, String> map = new HashMap<String, String>();
-                map.put("appId", appId.split(",")[0]);
-                map.put("isAdd", appId.split(",")[1]);
+                map.put("appId", appId.split("-")[0]);
+                map.put("isAdd", appId.split("-")[1]);
                 appAddList.add(map);
             }
             userService.grantUserApp(userId, appAddList);
@@ -193,7 +193,8 @@ public class UserAction {
     @RequestMapping("user/sendEmail")
     public void sendEmail(@RequestParam("emailArray") String[] emailArray, @RequestParam("deptId") String deptId,
             @RequestParam("companyId") String companyId, @RequestParam("appCompanyId") Integer appCompanyId,
-            @RequestParam("appIdArray") Integer[] appIdArray, @RequestParam("roleIdArray") Integer[] roleIdArray,
+            @RequestParam("appIdArray") Integer[] appIdArray,
+            @RequestParam(value = "roleIdArray", required = false) Integer[] roleIdArray,
             @RequestParam("role") Integer role) {
         // companyId和deptId是字符串代表新增的医院和部门
         Integer sendCompanyId = null;

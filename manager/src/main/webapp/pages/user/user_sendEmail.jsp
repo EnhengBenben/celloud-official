@@ -13,8 +13,8 @@
            </div>
            
 	           <div class="form-group">
-	               <label class="col-sm-2 control-label" for="role">模块<font color="red">*</font></label>
-	               <div class="col-sm-10" id="email-appIds">
+	               <label class="col-sm-2 control-label" for="role">模块</label>
+	               <div class="col-sm-10" id="email-roleIds">
 	                   <c:if test="${not empty roleList }">
 			                <c:forEach items="${roleList }" var="role">
 			                    <label class='checkbox-inline'><input name='roleIdArray' type='checkbox' checked='checked' value='${role.id }'>${role.name }</label>
@@ -31,6 +31,8 @@
                 <c:forEach items="${appList }" var="app">
 	                <label class='checkbox-inline'><input name='appIdArray' type='checkbox' checked='checked' value='${app.appId }'>${app.appName }</label>
                 </c:forEach>
+                <br/>
+               <span class="help-inline text-danger"></span>
                </div>
            </div>
            
@@ -67,6 +69,14 @@
                    <button type="reset" class="btn btn-white" data-dismiss="modal" aria-label="Close">取消</button>
                </div>
            </div>
+           <div class="form-group">
+               <label class="col-sm-2 control-label"></label>
+               <div class="col-sm-10">
+                   <input type="hidden" class="form-control">
+                   <span class="help-inline text-success" id="sendEmailTip"></span>
+               </div>
+           </div>
+           
        </form>
   </div>
   <script type="text/javascript">
@@ -82,6 +92,7 @@
                   data : json,
                   tags : true,
                   placeholder : '请选择公司',
+                  language : 'zh-CN',
                   allowClear : true,
                   maximumSelectionLength: 1
               })
@@ -93,6 +104,7 @@
 	  $("#deptList").select2({
           tags : true,
           placeholder : '请选择部门',
+          language : 'zh-CN',
           allowClear : true,
           maximumSelectionLength: 1
       })

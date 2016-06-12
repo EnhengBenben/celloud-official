@@ -2,9 +2,11 @@ $.ajaxSetup ({
 	  complete:function(request,textStatus){
 		  var sessionstatus=request.getResponseHeader("sessionstatus"); //通过XMLHttpRequest取得响应头，sessionstatus，  
 		  if(sessionstatus=="timeout"){
+			  $(".modal-content").hide();
 			  jAlert("登录超时,请重新登录！","登录超时",function(){
 				  window.location.href="login";
 			  });
+			  return false;
 		  }
 	  },
 	  cache: false //关闭AJAX相应的缓存
@@ -52,6 +54,17 @@ var dataFile=(function(dataFile){
 			menu("data-export-menu",responseText);
 		});
 	};
+	self.selectAll = function(){
+		$("input[name=userList]").prop("checked",true);
+	};
+	self.selectNone = function(){
+		$("input[name=userList]").prop("checked",false);
+	};
+	self.selectOthers = function(){
+		$("input[name=userList]").each(function(){
+			$(this).prop("checked",!$(this).prop("checked"));
+		});
+	}
 	return self;
 })(dataFile);
 
@@ -132,7 +145,29 @@ var company=(function(company){
 			$("#company-editModal .modal-content").html(responseText);
 			$("#company-editModal").modal("show");
 		});
-	}
+	};
+	self.sendName = function(){
+		var flag = true;
+		$("#companyForm").find("input:text").each(function(){
+			var value = $(this).val() == null ? "" : $(this).val().trim();
+			if(value.length>0){
+				$(this).parent().parent().removeClass("error");
+				$(this).parent().parent().find(".help-inline").html("");
+			}else{
+				flag = false;
+				$(this).parent().parent().addClass("error");
+				$(this).parent().parent().find(".help-inline").html("该项为必选项!");
+			}
+		});
+		if(flag){
+			$.post("company/sendName",$("#companyForm").serialize(),function(responseText){
+				if(responseText>0){
+	                $("#company-editModal").modal("hide");
+	                alert("成功");
+	            }
+			})
+		}
+	};
 	return self;
 })(company);
 
@@ -161,7 +196,18 @@ var user=(function(user){
 		}
 	}
 	self.sendEmail=function(){
+		$("#send").prop("disabled","disabled");
 		var isPass = true;
+		var checkbox = $("#emailForm").find("input[name=appIdArray]:checked");
+		if(checkbox.size()<1){
+			isPass = false;
+			$("input[name=appIdArray]").parent().parent().parent().addClass("error");
+			$("input[name=appIdArray]").parent().parent().parent().find(".help-inline").html("至少选择一个App！");
+		}else{
+			$("input[name=appIdArray]").parent().parent().parent().removeClass("error");
+			$("input[name=appIdArray]").parent().parent().parent().find(".help-inline").html("");
+		}
+		
 		$("#emailForm").find("input:text").each(function(){
 			var email = $(this).val();
 			if(self.checkEmail(email)){
@@ -199,13 +245,19 @@ var user=(function(user){
 							$("#emailArray").parent().parent().removeClass("error");
 							$("#emailArray").parent().parent().find(".help-inline").html("");
 						}
+						$("#send").removeAttr("disabled");
 				}else{
-					alert("邮件发送成功");
-					$("#sendEmail").modal("hide");
-					$.get("user/sendEmail",params);
-					$("#user-sendEmailModal").modal("hide");
+					$.get("user/sendEmail",params,function(){
+						$("#sendEmailTip").html("邮件发送成功!");
+						$("#user-sendEmailModal").fadeOut("slow",function(){
+							$("#user-sendEmailModal").modal("hide");
+							$("#send").removeAttr("disabled");
+						});
+					});
 				}
 			});
+		}else{
+			$("#send").removeAttr("disabled");
 		}
 	};
 	self.toUserMain=function(){
@@ -226,9 +278,9 @@ var user=(function(user){
 	};
 	
 	self.toSendEmail=function(){
-		$.post("user/toSendEmail",function(responseText){
-			$("#user-sendEmailModal .modal-content").html(responseText);
+		$.get("user/toSendEmail",function(responseText){
 			$("#user-sendEmailModal").modal("show");
+			$("#user-sendEmailModal .modal-content").html(responseText);
 		});
 	};
 	self.changeDeptByCompanyId = function(option){
@@ -257,6 +309,7 @@ var user=(function(user){
 		                  data : json,
 		                  tags : true,
 		                  placeholder : '请选择部门',
+		                  language : 'zh-CN',
 		                  allowClear : true,
 		                  maximumSelectionLength: 1
 		              })
@@ -277,11 +330,23 @@ var user=(function(user){
 		});
 	};
 	self.grantApp = function(){
-		var params = $("#grantForm").serialize();
-		$.post("user/grantApp",params,function(){
-			jAlert("授权成功");
-			$("#user-sendEmailModal").modal("hide");
-		});
+		var flag = true;
+		var checkbox = $("#grantForm").find("input[name=appIdArray]:checked");
+		if(checkbox.size()<1){
+			flag = false;
+			$("input[name=appIdArray]").parent().parent().parent().addClass("error");
+			$("input[name=appIdArray]").parent().parent().parent().find(".help-inline").html("至少选择一个App！");
+		}else{
+			$("input[name=appIdArray]").parent().parent().parent().removeClass("error");
+			$("input[name=appIdArray]").parent().parent().parent().find(".help-inline").html("");
+		}
+		if(flag){
+			var params = $("#grantForm").serialize();
+			$.post("user/grantApp",params,function(){
+				jAlert("授权成功");
+				$("#user-sendEmailModal").modal("hide");
+			});
+		};
 	}
 	self.grantRole = function(){
 		var params = $("#grantForm").serialize();
@@ -293,7 +358,7 @@ var user=(function(user){
 	self.grantTip = function(currentInput,isAdd){
 		// 取消选中并且已添加过该app
 		if($(currentInput).prop("checked") == false && isAdd == 1){
-			jConfirm("该用户已添加过该App,确定取消授权码?","取消授权",function(r){
+			jConfirm("该用户已添加过该App,确定取消授权吗?","取消授权",function(r){
 				if(!r){
 					$(currentInput).prop("checked",true);
 				}

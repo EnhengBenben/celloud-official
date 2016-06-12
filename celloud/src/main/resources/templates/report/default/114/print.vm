@@ -1,4 +1,5 @@
-<link href="$link.getContextPath()/css/print_gdd.css" rel="stylesheet">
+#parse("templates/report/layout.vm")
+<link href="${base}/css/print_gdd.css" rel="stylesheet">
 <section class="section2 border1 w3cbbs">
     <div class="header">
         <h1 style="font-size:32px;padding:0 0 5 0px;">细菌感染检测分析报告</h1>
@@ -79,7 +80,7 @@
           <tr>
             <td style="width:49%;">
                #if($mib.readsDistributionInfo)
-                   <div id="reads-distribution-char" style="width:100%;height:330px;">$!mibCharList.readsDistributionInfo</div>
+                   <div id="reads-distribution-char" style="width:100%;height:330px;">$!readsDistributionInfo</div>
                #else
                 #if($mib.readsDistributionInfo)
                     <img src="#if(!$mib.readsDistribution.contains('Tools'))$!uploadPath/$!mib.userId/$!mib.appId/$!mib.dataKey#end$!mib.readsDistribution }" style="width:100%;">
@@ -88,7 +89,7 @@
             </td>
             <td>
                #if($mib.familyDistributionInfo)
-                   <div id="family-distribution-char" style="width:100%;height:330px;">$!mibCharList.familyDistributionInfo</div>
+                   <div id="family-distribution-char" style="width:100%;height:330px;">$!familyDistributionInfo</div>
                #else
                 #if($mib.readsDistributionInfo)
                     <img src="#if(!$!mib.familyDistribution.contains('Tools'))$!uploadPath/$!mib.userId/$!mib.appId/$!mib.dataKey#end$!mib.familyDistribution }" style="width:100%;">
@@ -101,7 +102,7 @@
     <h4>6.&nbsp;&nbsp;属分布图</h4>
     <div class="info">
       #if($mib.genusDistributionInfo)
-        <div id="genus-distribution-char" style="width:100%;height:330px;">$!mibCharList.genusDistributionInfo</div>
+        <div id="genus-distribution-char" style="width:100%;height:330px;">$!genusDistributionInfo</div>
       #else
         #if($mib.readsDistributionInfo)
             <img src="#if(!$mib.genusDistribution.contains('Tools'))$!uploadPath/$!mib.userId/$!mib.appId/$!mib.dataKey#end$!mib.genusDistribution" style="width:100%;">
@@ -218,7 +219,7 @@
     </table>
 </section>
 <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
-<script src="$link.getContextPath()/js/charts.js"></script>
+<script src="${base}/js/charts.js"></script>
 <script type="text/javascript">
 $(function(){
     var mib_readsDisInfo = $("#reads-distribution-char").text();
@@ -263,14 +264,16 @@ $(function(){
     $("#save").on("click",function(){
         $.post("../report/updateMIBFilling",$("#print-form").serialize(),function(result){
             if(result == 1){
-                alert("修改成功");
+                $.lAlert("修改成功");
             }else{
-                alert("修改失败");
+                $.lAlert("修改失败");
             }
         });
     });
     $("#reset").on("click",function(){
-         $("#print-form")[0].reset();
+        $.lConfirm("确认重置?", function(){
+            $("#print-form")[0].reset();
+        });
     });
 });
 </script>

@@ -1,40 +1,41 @@
-#parse("/default/PGS/reference.vm")
+#parse("templates/report/layout.vm")
+#parse("templates/report/default/PGS/reference.vm")
 #if($printContext)
 	$printContext
 #else
 	#override("card")
 	#end
 	#override("head")
-		#parse("/default/PGS/head.vm")
+		#parse("templates/report/default/PGS/head.vm")
 	#end
 	#override("subtitle")
 	#end
 	#override("baseinfo")
-		#parse("/14/PGS/input.vm")
+		#parse("templates/report/14/PGS/input.vm")
 	#end
 	#override("explain")
 	#end
 	#override("context")
-		#parse("/14/PGS/context.vm")
+		#parse("templates/report/14/PGS/context.vm")
 	#end
 	#override("footer")
-		#parse("/14/PGS/footer.vm")
+		#parse("templates/report/14/PGS/footer.vm")
 	#end
 	#override("dept")
 	#end
 	#override("method")
-		#parse("/default/PGS/method.vm")
+		#parse("templates/report/default/PGS/method.vm")
 	#end
 	#override("notes")
 	#end
 	#override("footer")
-		#parse("/42/PGS/footer.vm")
+		#parse("templates/report/42/PGS/footer.vm")
 	#end
 	#override("bottom")
 	#end
-	#extends("/default/PGS/base.vm")
+	#extends("templates/report/default/PGS/base.vm")
 #end
-#parse("/default/PGS/js.vm")
+#parse("templates/report/default/PGS/js.vm")
 <script type="text/javascript">
 $(function(){
 	$("#mainDiv").css("min-height","500px");

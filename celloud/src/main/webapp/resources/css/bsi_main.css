@@ -355,6 +355,9 @@ a, a:link, a:hover, a:active, a:visited {
     padding: 0px;
     color: #979797;
 }
+.content-header .breadcrumb a {
+    color: #979797;
+}
 .content-header .breadcrumb>li+li:before{
 	padding: 0 1px 0px 0px;
     color: rgb(150,150,150);

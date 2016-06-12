@@ -163,7 +163,9 @@ var drawCharts=(function(drawCharts){
 			        left: '3%',
 			        right: '4%',
 			        bottom: '3%',
-			        containLabel: true
+			        containLabel: true,
+			        width:'75%',
+			        x:100
 			    },
 			    xAxis : [
 			        {

@@ -52,7 +52,10 @@ method_dic = {
 107:BRAF,
 108:UGT,
 117:oncogene,
-119:PGS
+119:PGS,
+120:PGS,
+121:PGS,
+122:PGS
 }
 
 #对应database名
@@ -80,7 +83,10 @@ collection_dic = {
 107:"BRAF",
 108:"UGT",
 117:"Oncogene",
-119:"Pgs"
+119:"Pgs",
+120:"Pgs",
+121:"Pgs",
+122:"Pgs"
 }
 
 if len(sys.argv) != 3:

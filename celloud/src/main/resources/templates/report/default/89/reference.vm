@@ -1,1 +1,1 @@
-<link rel="stylesheet" href="$link.getContextPath()/css/print_hbv.css?version=1.16">
+<link rel="stylesheet" href="${base}/css/print_hbv.css?version=1.16">

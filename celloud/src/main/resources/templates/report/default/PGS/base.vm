@@ -3,14 +3,14 @@
 	<div style="display: none;" id="_fileId">${pgs.fileId}</div>
 	<div style="display: none;" id="_projectId">${pgs.projectId}</div>
 	#block("card")
-		#parse("/default/PGS/card.vm")
+		#parse("templates/report/default/PGS/card.vm")
 	#end
 	<div class="row" style="margin:0px auto;" id="mainDiv">
 		#block("head")
 			#if($pgs.companyIcon && "" != $pgs.companyIcon)
 				<div align="center" class="clearfix">
 					#block("company")
-						<img src="$link.getContextPath()/report/company/icon?file=$!pgs.companyIcon" style="width:90px">
+						<img src="${base}/report/company/icon?file=$!pgs.companyIcon" style="width:90px">
 					#end
 					#block("title")
 						<h2 class="shotH3">
@@ -20,7 +20,7 @@
 						</h2>
 					#end
 					#block("dept")
-						<img id="_imgShow" src="$link.getContextPath()/report/dept/icon?file=${pgs.deptIcon}" style="width:95px">
+						<img id="_imgShow" src="${base}/report/dept/icon?file=${pgs.deptIcon}" style="width:95px">
 					#end
 				</div>
 				<hr>
@@ -36,7 +36,7 @@
 				<h4>基本信息：</h4>
 				<table class="table table-bordered table-condensed">
 					#block("input")
-						#parse("/default/PGS/input.vm")
+						#parse("templates/report/default/PGS/input.vm")
 					#end
 				</table>
 			</div>
@@ -50,27 +50,27 @@
 			</div>
 		#end
 		<div>
-			#parse("/default/PGS/img.vm")
+			#parse("templates/report/default/PGS/img.vm")
 		</div>
 		#block("explain")
 			<div>
-				#parse("/default/PGS/explain.vm")
+				#parse("templates/report/default/PGS/explain.vm")
 			</div>
 		#end
 		#block("context")
 		#end
 		<div class="notes">
 			#block("notes")
-				#parse("/default/${pgs.appId}/note.vm")
+				#parse("templates/report/default/${pgs.appId}/note.vm")
 			#end
 		</div>
 	</div>
 	<ul class="footer">
 		#block("footer")
-			#parse("/default/PGS/footer.vm")
+			#parse("templates/report/default/PGS/footer.vm")
 		#end
 	</ul>
 	#block("bottom")
-		#parse("/default/PGS/bottom.vm")
+		#parse("templates/report/default/PGS/bottom.vm")
 	#end
 </div>
