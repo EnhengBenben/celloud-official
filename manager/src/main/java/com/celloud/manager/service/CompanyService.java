@@ -49,4 +49,6 @@ public interface CompanyService {
      * 增加公司
      */
     public int addCompany(Company company);
+
+    public List<Map<String, Object>> getCompanyCount();
 }
