@@ -5,10 +5,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <meta name="keywords" content="celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据,统计系统" />
-<link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico" />
-<link rel="bookmark" href="<%=request.getContextPath()%>/favicon.ico" />
 <title>CelLoud统计系统</title>
-
+<link rel="bookmark" href="<%=request.getContextPath()%>/img/favicon.ico" />
+<link rel="shortcut icon" href="<%=request.getContextPath()%>/img/favicon.ico" />
 <link rel="stylesheet" href="plugins/bootstrap/css/fonts/linecons/css/linecons.css">
 <link rel="stylesheet" href="plugins/bootstrap/css/fonts/fontawesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.css">
