@@ -2,9 +2,11 @@ $.ajaxSetup ({
 	  complete:function(request,textStatus){
 		  var sessionstatus=request.getResponseHeader("sessionstatus"); //通过XMLHttpRequest取得响应头，sessionstatus，  
 		  if(sessionstatus=="timeout"){
+			  $(".modal-content").hide();
 			  jAlert("登录超时,请重新登录！","登录超时",function(){
 				  window.location.href="login";
 			  });
+			  return false;
 		  }
 	  },
 	  cache: false //关闭AJAX相应的缓存
@@ -194,6 +196,7 @@ var user=(function(user){
 		}
 	}
 	self.sendEmail=function(){
+		$("#send").prop("disabled","disabled");
 		var isPass = true;
 		var checkbox = $("#emailForm").find("input[name=appIdArray]:checked");
 		if(checkbox.size()<1){
@@ -242,13 +245,19 @@ var user=(function(user){
 							$("#emailArray").parent().parent().removeClass("error");
 							$("#emailArray").parent().parent().find(".help-inline").html("");
 						}
+						$("#send").removeAttr("disabled");
 				}else{
-					alert("邮件发送成功");
-					$("#sendEmail").modal("hide");
-					$.get("user/sendEmail",params);
-					$("#user-sendEmailModal").modal("hide");
+					$.get("user/sendEmail",params,function(){
+						$("#sendEmailTip").html("邮件发送成功!");
+						$("#user-sendEmailModal").fadeOut("slow",function(){
+							$("#user-sendEmailModal").modal("hide");
+							$("#send").removeAttr("disabled");
+						});
+					});
 				}
 			});
+		}else{
+			$("#send").removeAttr("disabled");
 		}
 	};
 	self.toUserMain=function(){
@@ -269,9 +278,9 @@ var user=(function(user){
 	};
 	
 	self.toSendEmail=function(){
-		$.post("user/toSendEmail",function(responseText){
-			$("#user-sendEmailModal .modal-content").html(responseText);
+		$.get("user/toSendEmail",function(responseText){
 			$("#user-sendEmailModal").modal("show");
+			$("#user-sendEmailModal .modal-content").html(responseText);
 		});
 	};
 	self.changeDeptByCompanyId = function(option){
@@ -349,7 +358,7 @@ var user=(function(user){
 	self.grantTip = function(currentInput,isAdd){
 		// 取消选中并且已添加过该app
 		if($(currentInput).prop("checked") == false && isAdd == 1){
-			jConfirm("该用户已添加过该App,确定取消授权码?","取消授权",function(r){
+			jConfirm("该用户已添加过该App,确定取消授权吗?","取消授权",function(r){
 				if(!r){
 					$(currentInput).prop("checked",true);
 				}

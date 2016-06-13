@@ -78,4 +78,18 @@ public interface ExperimentMapper {
 	 */
 	Integer checkoutNumber(@Param("userId") Integer userId, @Param("state") Integer state, @Param("num") String num);
 
+	/**
+	 * 根据样本类型、扩增方法、测序仪检索对应的APP
+	 * 
+	 * @param sample
+	 * @param method
+	 * @param sequenator
+	 * @param state
+	 * @return
+	 * @author lin
+	 * @date 2016年6月12日下午2:38:19
+	 */
+	public Integer getApp(@Param("sample") Integer sample, @Param("method") Integer method,
+			@Param("sequenator") Integer sequenator, @Param("state") Integer state);
+
 }

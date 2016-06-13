@@ -7,7 +7,7 @@
 <meta name="keywords" content="celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link rel="bookmark" href="<%=request.getContextPath()%>/images/favicon.ico" />
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/login.css" media="all" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/login.css?version=3.1.14" media="all" />
 <title>CelLoud 用户重置邮箱</title>
 </head>
 <body onselectstart="return false;">
@@ -125,9 +125,9 @@
                 }else{
 	              $.get("<%=request.getContextPath()%>/user/email/sendNewEmail",$("#resetEmailForm").serialize(),function(flag){
 	                if(flag == 1){
-	                  $(".error").html("发送邮件失败，请重新申请链接。");
+	                  $(".error").html("邮件发送失败，请重新点击发送！");
 	                }else{
-	                  $(".error").html("发送邮件成功，请到新邮箱激活链接，完成邮箱修改操作。");
+	                  $(".error").html("邮件发送成功，请到新邮箱激活验证链接！");
 	                }
 	              });
                 }

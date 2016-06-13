@@ -19,6 +19,18 @@ public interface ExperimentService {
 	public PageList<Experiment> getExperimentPageList(Integer userId, Page page);
 
 	/**
+	 * 根据样本类型、扩增方法、测序仪检索对应的APP
+	 * 
+	 * @param sample
+	 * @param method
+	 * @param sequenator
+	 * @return
+	 * @author lin
+	 * @date 2016年6月12日下午2:32:20
+	 */
+	public Integer getApp(Integer sample, Integer method, Integer sequenator);
+
+	/**
 	 * 分页检索done状态的实验流程
 	 * 
 	 * @param userId

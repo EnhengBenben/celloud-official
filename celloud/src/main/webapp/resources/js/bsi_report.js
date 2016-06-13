@@ -4,8 +4,8 @@ $.dataReport = {
         $.dataReport.loadNavList(response);
       });
     },
-    paginNavList: function(){
-      $.get("data/taskBatchList",{"batch":$("#data-batch").html(),"appId": $("#appid-hide").val(),"dataKey":$("#datakey-hide").val(),"page":currentPage},function(response){
+    paginNavList: function(currentPage){
+      $.post("data/taskBatchList",{"batch":$("#data-batch").html(),"appId": $("#appid-hide").val(),"dataKey":$("#datakey-hide").val(),"page":currentPage},function(response){
         $.dataReport.loadNavList(response);
       });
     },
@@ -13,8 +13,8 @@ $.dataReport = {
       $("#report-pagination").html(response);
       $("#pagination-data-report").on("click","a",function(e){
         var id = $(this).attr("id");
-        var currentPage = parseInt($("#current-page-hide").val());
-        var totalPage = parseInt($("#total-page-hide").val());
+        var currentPage = parseInt($("#batch-current-page-hide").val());
+        var totalPage = parseInt($("#batch-total-page-hide").val());
         var page;
         if(id == undefined){
           page = $(this).html();
@@ -36,22 +36,27 @@ $.dataReport = {
         }else if(id.indexOf("last")>=0){
           page = totalPage;
         }
-        $.dataReport.paginNavList();
+        $.dataReport.paginNavList(page);
       });
     }
 }
 $(function () {
+  if($.report.options.reportType == 1){
+    $("#analy-tab").tab("show");
+  }
   $("#patient-tab").click(function (e) {
     e.preventDefault()
     $(this).tab('show');
     $("#print-patient-a").removeClass("hide");
     $("#print-analy-a").addClass("hide");
+    $.report.options.reportType = 0;
   });
   $("#analy-tab").click(function (e) {
     e.preventDefault()
     $(this).tab('show');
     $("#print-analy-a").removeClass("hide");
     $("#print-patient-a").addClass("hide");
+    $.report.options.reportType = 1;
   });
   $.dataReport.navList();
 });

@@ -69,6 +69,14 @@
                    <button type="reset" class="btn btn-white" data-dismiss="modal" aria-label="Close">取消</button>
                </div>
            </div>
+           <div class="form-group">
+               <label class="col-sm-2 control-label"></label>
+               <div class="col-sm-10">
+                   <input type="hidden" class="form-control">
+                   <span class="help-inline text-success" id="sendEmailTip"></span>
+               </div>
+           </div>
+           
        </form>
   </div>
   <script type="text/javascript">

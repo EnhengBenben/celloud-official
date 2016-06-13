@@ -1,0 +1,15 @@
+#parse("templates/report/layout.vm")
+#parse("templates/report/636/${hbv.appId}/reference.vm")
+<div id="printMain">
+    #if(${printSimple})
+        ${printSimple}
+    #end
+    #if(!${printSimple})
+        <div>
+            #parse("templates/report/636/${hbv.appId}/title_brief.vm")
+            #parse("templates/report/636/${hbv.appId}/content_brief.vm")
+            </form>
+        </div>
+    #end
+</div>  
+#parse("templates/report/636/${hbv.appId}/js.vm")

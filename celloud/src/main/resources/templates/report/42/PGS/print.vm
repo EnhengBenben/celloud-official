@@ -33,7 +33,7 @@
 	#end
 	#extends("templates/report/default/PGS/base.vm")
 #end
-#parse("/default/PGS/js.vm")
+#parse("templates/report/default/PGS/js.vm")
 <script type="text/javascript">
 $(function(){
 	$("#mainDiv").css("min-height","500px");

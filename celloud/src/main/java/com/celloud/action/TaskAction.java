@@ -196,10 +196,15 @@ public class TaskAction {
                         data.setState(DataState.DEELTED);
                         int dataId = dataService.addDataInfo(data);
                         String new_dataKey = DataUtil.getNewDataKey(dataId);
-                        String filePath = PropertiesUtil.bigFilePath + userId
-                                + File.separatorChar
-                                + DateUtil.getDateToString("yyyyMMdd")
-                                + File.separatorChar + new_dataKey + extName;
+                        String folderByDay = PropertiesUtil.bigFilePath + userId
+                                + File.separator
+                                + DateUtil.getDateToString("yyyyMMdd");
+                        File pf = new File(folderByDay);
+                        if (!pf.exists()) {
+                            pf.mkdirs();
+                        }
+                        String filePath = folderByDay + File.separatorChar
+                                + new_dataKey + extName;
                         boolean state = FileTools.nioTransferCopy(
                                 new File(resourcePath), new File(filePath));
                         if (state) {
@@ -237,22 +242,22 @@ public class TaskAction {
         }
         return "run over";
     }
-    
-	/**
-	 * 项目运行结束，由python进行全部的后续处理
-	 * perl端调用：http://www.celloud.cn/task/pythonRunOver.html?projectId=
-	 * 
-	 * @return
-	 */
-	@ActionLog(value = "项目运行结束，python进行全部后续处理", button = "运行结束")
-	@RequestMapping("pythonRunOver")
-	@ResponseStatus(value = HttpStatus.OK)
-	@ResponseBody
-	public String pythonRunOver(String projectId) {
-		String command = SparkPro.PYTHONRUNOVER + " " + projectId;
-		PerlUtils.excutePerl(command);
-		return "run over";
-	}
+
+    /**
+     * 项目运行结束，由python进行全部的后续处理
+     * perl端调用：http://www.celloud.cn/task/pythonRunOver.html?projectId=
+     * 
+     * @return
+     */
+    @ActionLog(value = "项目运行结束，python进行全部后续处理", button = "运行结束")
+    @RequestMapping("pythonRunOver")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public String pythonRunOver(String projectId) {
+        String command = SparkPro.PYTHONRUNOVER + " " + projectId;
+        PerlUtils.excutePerl(command);
+        return "run over";
+    }
 
     /**
      * 项目运行结束之后
@@ -314,8 +319,7 @@ public class TaskAction {
         }
         // 6. 项目报告插入mysql并修改项目运行状态
         reportService.reportCompeleteByProId(proId, xml);
-        if (appId == ExperimentState.MDA_MR || appId == ExperimentState.SurePlex
-                || appId == ExperimentState.gDNA_MR) {
+		if (ExperimentState.apps.contains(appId)) {
             for (DataFile dataFile : dataList) {
                 String anotherName = dataFile.getAnotherName() == null ? ""
                         : dataFile.getAnotherName();
@@ -331,7 +335,16 @@ public class TaskAction {
 					if (am == null || am.equals(0)) {
 						continue;
 					}
-                    if (ExperimentState.map.get(am).equals(appId)) {
+					Integer sample = exp.getSampleType();
+					if (sample == null || sample.equals(0)) {
+						continue;
+					}
+					Integer sequenator = exp.getSequenator();
+					if (sequenator == null || sequenator.equals(0)) {
+						continue;
+					}
+					Integer expAPPId = expService.getApp(sample, am, sequenator);
+					if (expAPPId != null && expAPPId.equals(appId)) {
                         exp.setReportId(report.getReportId());
                         exp.setReportDate(report.getEndDate());
                         exp.setStep(ExperimentState.REPORT_STEP);
@@ -384,8 +397,7 @@ public class TaskAction {
     }
 
     @ActionLog(value = "bsi运行split分数据", button = "运行split分数据")
-    private String toRunSplitData(Integer userId,
-            DataFile data) {
+    private String toRunSplitData(Integer userId, DataFile data) {
         logger.info("bsi自动运行split分数据");
         String result;
         // XXX 运行完split只能运行bsi
