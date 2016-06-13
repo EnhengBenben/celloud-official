@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1397,4 +1398,96 @@ public class ReportAction {
             e.printStackTrace();
         }
     }
+
+    @ActionLog(value = "打开报告列表", button = "百菌探报告")
+    @RequestMapping("bsi/reportMain")
+    public ModelAndView reportMain() {
+        ModelAndView mv = new ModelAndView("bsi/report_main");
+        Integer userId = ConstantsData.getLoginUserId();
+        Map<String, Object> periodMap = taskService.findTaskPeriodNum(118,
+                userId);
+        List<String> batchList = dataService.getBatchList(userId);
+        periodMap.put("uploaded", batchList.size());
+        mv.addObject("periodMap", periodMap);
+        mv.addObject("batchList", batchList);
+        mv.addObject("nowDate", new Date());
+        log.info("血流用户{}查看我的报告列表", ConstantsData.getLoginUserName());
+        return mv;
+    }
+
+    @ActionLog(value = "获取所有数据任务列表", button = "百菌探报告")
+    @RequestMapping("bsi/reportList")
+    public ModelAndView reportList(@RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        ModelAndView mv = new ModelAndView("bsi/report_list");
+        Page pager = new Page(page, size);
+        Integer userId = ConstantsData.getLoginUserId();
+        PageList<Task> pageList = taskService.findTasksByUser(pager, userId);
+        Map<String, Object> periodMap = taskService.findTaskPeriodNum(118,
+                userId);
+        mv.addObject("pageList", pageList);
+        mv.addObject("periodMap", periodMap);
+        mv.addObject("nowDate", new Date());
+        log.info("血流用户{}查看我的报告列表", ConstantsData.getLoginUserName());
+        return mv;
+    }
+
+    /**
+     * 根据条件获取数据列表
+     * 
+     * @param session
+     * @param page
+     *            当前页
+     * @param size
+     *            每页行数
+     * @param condition
+     *            检索条件
+     * @param sort
+     *            排序字段 0:sortDate 1:sortBatch 2:sortName 3:sortPeriod
+     * @param sortType
+     *            排序类型
+     * @return
+     */
+    @ActionLog(value = "条件检索任务列表", button = "报告搜索/分页")
+    @RequestMapping("bsi/searchReportList")
+    public ModelAndView reportList(@RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size, String condition,
+            @RequestParam(defaultValue = "0") int sort,
+            @RequestParam(defaultValue = "desc") String sortDate,
+            @RequestParam(defaultValue = "asc") String sortBatch,
+            @RequestParam(defaultValue = "asc") String sortName,
+            @RequestParam(defaultValue = "asc") String sortPeriod) {
+        Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
+        Matcher m = p.matcher(condition);
+        StringBuffer con_sb = new StringBuffer();
+        while (m.find()) {
+            String rep = "\\\\" + m.group(0);
+            m.appendReplacement(con_sb, rep);
+        }
+        m.appendTail(con_sb);
+        ModelAndView mv = new ModelAndView("bsi/report_list");
+        Page pager = new Page(page, size);
+        PageList<Task> pageList = taskService.findTasksByUserCondition(pager,
+                ConstantsData.getLoginUserId(), condition, sort, sortDate,
+                sortBatch, sortName, sortPeriod);
+        mv.addObject("pageList", pageList);
+        log.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
+        return mv;
+    }
+
+    @ActionLog(value = "获取所有数据任务列表", button = "报告详情翻页")
+    @RequestMapping("bsi/batchReportList")
+    public ModelAndView batchReportList(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size, String batch,
+            String dataKey, Integer appId) {
+        ModelAndView mv = new ModelAndView("bsi/report_data_pagination");
+        Page pager = new Page(page, size);
+        PageList<Task> pageList = taskService.findTasksByBatch(pager,
+                ConstantsData.getLoginUserId(), appId, batch, dataKey);
+        mv.addObject("pageList", pageList);
+        log.info("血流用户{}获取所有数据任务列表", ConstantsData.getLoginUserName());
+        return mv;
+    }
+
 }

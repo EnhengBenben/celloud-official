@@ -182,4 +182,17 @@ public interface TaskService {
      * @date 2016年5月16日 下午4:12:17
      */
     public Integer updateTask(Task task);
+
+    /**
+     * 统计用户报告任务种类数量
+     * 
+     * @param state
+     * @param appId
+     * @param userId
+     * @return
+     * @author leamo
+     * @date 2016年6月13日 上午10:20:15
+     */
+    public Map<String, Object> findTaskPeriodNum(Integer appId,
+            Integer userId);
 }

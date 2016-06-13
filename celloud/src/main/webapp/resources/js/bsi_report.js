@@ -1,11 +1,11 @@
 $.dataReport = {
     navList: function(){
-      $.post("data/taskBatchList",{"batch":$("#data-batch").html(),"appId": $("#appid-hide").val(),"dataKey":$("#datakey-hide").val()},function(response){
+      $.post("report/bsi/batchReportList",{"batch":$("#data-batch").html(),"appId": $("#appid-hide").val(),"dataKey":$("#datakey-hide").val()},function(response){
         $.dataReport.loadNavList(response);
       });
     },
     paginNavList: function(currentPage){
-      $.post("data/taskBatchList",{"batch":$("#data-batch").html(),"appId": $("#appid-hide").val(),"dataKey":$("#datakey-hide").val(),"page":currentPage},function(response){
+      $.post("report/bsi/batchReportList",{"batch":$("#data-batch").html(),"appId": $("#appid-hide").val(),"dataKey":$("#datakey-hide").val(),"page":currentPage},function(response){
         $.dataReport.loadNavList(response);
       });
     },

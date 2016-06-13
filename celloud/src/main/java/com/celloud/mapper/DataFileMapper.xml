@@ -429,4 +429,7 @@
     and state = #{state} 
     and user_id= #{userId}
   </select>
+  <select id="getBatchList" resultType="java.lang.String">
+    select batch from tb_file where user_id=#{userId} and state=#{state} group by batch
+  </select>
 </mapper>

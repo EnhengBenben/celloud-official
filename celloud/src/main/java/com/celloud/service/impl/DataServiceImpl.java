@@ -214,4 +214,9 @@ public class DataServiceImpl implements DataService {
         return dataFileMapper.getDataByBatchAndFileName(userId, batch, fileName,
                 DataState.ACTIVE);
     }
+
+    @Override
+    public List<String> getBatchList(Integer userId) {
+        return dataFileMapper.getBatchList(userId, DataState.ACTIVE);
+    }
 }

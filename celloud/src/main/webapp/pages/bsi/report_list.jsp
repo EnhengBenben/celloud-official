@@ -2,15 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<div class="content-header">
-  <ol class="breadcrumb">
-    <li>主页</li>
-    <li>应用</li>
-    <li>百菌探</li>
-    <li><a data-click="report-list" href="javascript:void(0)">报告</a></li>
-    <li id="to-my-report">报告列表</li>
-  </ol>
-</div>
 <table class="table table-main">
   <thead>
     <tr>
@@ -181,7 +172,6 @@
         </c:otherwise>
       </c:choose>
       <li><a id="next-page-task" class="ends" href="javascript:void(0)">&gt;&gt;</a></li>
-<!--       <li><a id="last-page-task" href="javascript:void(0);">尾页</a></li> -->
     </ul>
     <ul class="pagination-data pull-right">
       <li><span>共${pageList.page.rowCount }条</span></li>
@@ -197,10 +187,3 @@
     </ul>
   </c:if>
 </div>
-<script type="text/javascript">
-$("#condition-find").unbind("click");
-$("#condition-find").on("click",function(){
-  $.report.options.condition = $("#condition-input").val();
-  $.report.find.condition();
-});
-</script>
