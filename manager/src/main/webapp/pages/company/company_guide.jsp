@@ -46,7 +46,9 @@
 			</div>
 		</div>
 		<h3 class="header smaller lighter green ">新增用户统计</h3>
-		<div id="newCmpBigUser" style="height: 300px;"></div>
+		<c:if test="${sessionScope.loginUserInSession.role == 2 }">
+			<div id="newCmpBigUser" style="height: 300px;"></div>
+		</c:if>
 		<div id="main" style="height: 300px"></div>
 		<div id="newCompany" style="height: 300px"></div>
 
