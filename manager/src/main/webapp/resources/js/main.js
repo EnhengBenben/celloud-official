@@ -261,7 +261,7 @@ var user=(function(user){
 		}
 	};
 	self.toUserMain=function(){
-		$.post("user/userList",{searchFiled:self.searchFiled,keyword:self.keyword},function(responseText){
+		$.post("user/userList",{searchFiled:self.searchFiled,keyword:""},function(responseText){
 			$("#main-content").html(responseText);
 			$("#main-menu li").removeClass("active").removeClass("opened");
 			$("#user-menu").addClass("active");
