@@ -30,10 +30,11 @@ var messageUtils = (function(messageUtils) {
 	};
 	var openWebSocket = function() {
 		var contextPath = window.CONTEXT_PATH || "";
-		var protocol= window.location.protocol=="https:"?"wss://":"ws://";
+		var protocol = window.location.protocol == "https:" ? "wss://"
+				: "ws://";
 		var hostname = window.location.hostname;
-		var port = window.location.port?":"+window.location.port:"";
-		var wsUrl = protocol + hostname +  port + contextPath
+		var port = window.location.port ? ":" + window.location.port : "";
+		var wsUrl = protocol + hostname + port + contextPath
 				+ "/websocket/message";
 		var ws = null;
 		if ('WebSocket' in window) {
@@ -45,7 +46,7 @@ var messageUtils = (function(messageUtils) {
 		}
 		return ws;
 	}
-	function bindEvents(){
+	function bindEvents() {
 		self.ws.onopen = function() {
 			console.log("websocket connect is opened.");
 			clearTimeouts();
@@ -75,31 +76,78 @@ var messageUtils = (function(messageUtils) {
 					self.closeListeners[listener]();
 				}
 			}
-			//reOpenWebsocket();
+			// reOpenWebsocket();
 		};
 	}
 	self.ws = openWebSocket();
 	bindEvents();
-	function clearTimeouts(){
-		for(var t in self.timeouts){
+	function clearTimeouts() {
+		for ( var t in self.timeouts) {
 			clearTimeout(self.timeouts[t]);
 		}
 		self.timeouts = [];
 	}
-	function reOpenWebsocket(){
-		var timeouts = [1000,1000*10,1000*30,1000*60,1000*60*5,1000*60*10,1000*60*15,1000*60*20];
+	function reOpenWebsocket() {
+		var timeouts = [ 1000, 1000 * 10, 1000 * 30, 1000 * 60, 1000 * 60 * 5,
+				1000 * 60 * 10, 1000 * 60 * 15, 1000 * 60 * 20 ];
 		clearTimeouts();
-		for(var i = 0;i<timeouts.length;i++){
-			self.timeouts[i] = setTimeout(function(){
+		for (var i = 0; i < timeouts.length; i++) {
+			self.timeouts[i] = setTimeout(function() {
 				console.log("retring open websocket ...");
 				self.ws.close();
 				self.ws = openWebSocket();
 				bindEvents();
-			},timeouts[i]);
+			}, timeouts[i]);
 		}
 	}
+	var createNotification = function(title, message, options) {
+		var defaultOptions = {
+			"icon" : CONTEXT_PATH + "/images/icon/portrait.png"
+		};
+		options = $.extend({}, defaultOptions, options);
+		options.body = message;
+		return new Notification(title, options);
+	};
+	self.notify = function(title, message, options, events) {
+		if (!("Notification" in window)) {
+			console.log("This browser does not support desktop notification");
+			return;
+		}
+		var notification = null;
+		if (Notification.permission === "granted") {
+			notification = createNotification(title, message, options);
+		} else if (Notification.permission === 'default') {
+			Notification.requestPermission(function(permission) {
+				if (permission === "granted") {
+					notification = createNotification(title, message, options);
+				}
+			});
+		}
+		if (notification == null) {
+			return;
+		}
+		var defaultEvents = {
+			"onclick" : function() {
+				notification.close();
+			}
+		};
+		events = $.extend({}, defaultEvents, events);
+		if ($.isFunction(events.onclick)) {
+			notification.onclick = events.onclick
+		}
+	}
+
 	return self;
 })(messageUtils);
 messageUtils.subscribe("test", function(data) {
 	console.log("接收到test频道的消息：" + JSON.stringify(data));
+});
+messageUtils.subscribe("userMessage", function(data) {
+	console.log("接收到userMessage频道的消息：" + JSON.stringify(data));
+	messageUtils.notify(data.title, data.message, {}, {
+		"onclick" : function() {
+			var notification = this;
+			notification.close();
+		}
+	});
 });
