@@ -23,7 +23,6 @@ public class SystemWebSocketHandler implements WebSocketHandler {
     private static final Map<String, WebSocketSession> userSessions = new ConcurrentHashMap<>();
     private static Logger logger = LoggerFactory.getLogger(SystemWebSocketHandler.class);
 
-
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         String username = getUsernameFromSession(session);
@@ -63,6 +62,15 @@ public class SystemWebSocketHandler implements WebSocketHandler {
         return false;
     }
 
+    /**
+     * 获取username对应的WebSocketSession <br>
+     * WebSocketSession可能有多个，也就是说，同一个用户可能在多个地方同时登录，故每个都要发送消息。 <br>
+     * 这里的username必须能唯一确定一个用户，否则消息可能发给错误的人，此时应该使用userId代替。
+     * 此处使用username而不用userId是因为方便日志输出。
+     * 
+     * @param username
+     * @return
+     */
     public static List<WebSocketSession> getSessions(String username) {
         List<WebSocketSession> sessions = new ArrayList<>();
         for (WebSocketSession wss : userSessions.values()) {

@@ -13,6 +13,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.celloud.constants.Constants;
+import com.celloud.message.KafkaUtils;
 import com.celloud.message.MessageReceiver;
 import com.celloud.model.mongo.Behavior;
 import com.celloud.service.BehaviorService;
@@ -44,7 +45,7 @@ public class BehaviorInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-		openMessageReceiver(request);
+        openMessageReceiver(request);
         long beginTime = System.currentTimeMillis();// 1、开始时间
         startTimeThreadLocal.set(beginTime);// 线程绑定变量（该数据只有当前请求的线程可见）
         Behavior behavior = UserAgentUtil.getUserBehavior(request);
@@ -57,6 +58,9 @@ public class BehaviorInterceptor extends HandlerInterceptorAdapter {
     }
 
     private void openMessageReceiver(HttpServletRequest request) {
+        if (!KafkaUtils.useKafka()) {
+            return;
+        }
         String localAddr = request.getLocalAddr();
         if ("0:0:0:0:0:0:0:1".equals(localAddr)) {
             localAddr = "127.0.0.1";

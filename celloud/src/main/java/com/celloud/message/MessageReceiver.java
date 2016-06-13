@@ -35,6 +35,7 @@ public class MessageReceiver implements Runnable {
         MessageReceiver receiver = new MessageReceiver();
         receiver.consumer = KafkaUtils.createConsumer(group);
         maps.put(group, receiver);
+        logger.info("getInstance..............isRunning={}",receiver.isRunning());
         return receiver;
     }
 

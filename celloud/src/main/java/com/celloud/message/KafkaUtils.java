@@ -1,6 +1,7 @@
 package com.celloud.message;
 
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.kafka.clients.consumer.Consumer;
@@ -14,6 +15,7 @@ public class KafkaUtils {
     private static final String KAFKA_PROPERTIES_PATH = "kafka.properties";
     private static Properties props = ConstantsData.loadProperties(KAFKA_PROPERTIES_PATH);
     private static String defaultGroupId = "celloud-task-message";
+    private static AtomicBoolean useKafka = null;
     private static Properties consumerProps = null;
     private static Properties producerProps = null;
 
@@ -36,7 +38,8 @@ public class KafkaUtils {
             group = defaultGroupId;
         }
         consumerProps.put("group.id", group);
-        return new KafkaConsumer<>(consumerProps);
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(consumerProps);
+        return consumer;
     }
 
     public static Producer<String, String> createProducer() {
@@ -59,6 +62,21 @@ public class KafkaUtils {
 
     public static void closeConsumer(Consumer<String, String> consumer) {
         consumer.close();
+    }
+
+    public static boolean useKafka() {
+        if (useKafka != null) {
+            return useKafka.get();
+        }
+        useKafka = new AtomicBoolean(true);
+        try {
+            String kafkaOpen = props.getProperty("kafka.open");
+            if (!"true".equals(kafkaOpen.trim().toLowerCase())) {
+                useKafka.set(false);
+            }
+        } catch (Exception e) {
+        }
+        return useKafka.get();
     }
 
     public static void main(String[] args) {

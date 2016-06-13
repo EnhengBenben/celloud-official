@@ -148,6 +148,7 @@ messageUtils.subscribe("userMessage", function(data) {
 		"onclick" : function() {
 			var notification = this;
 			notification.close();
+			$("#messages-menu").addClass("open");
 		}
 	});
 });

@@ -29,13 +29,19 @@
     delete from tb_notice
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.celloud.model.mysql.Notice" >
+  <insert id="insert" parameterType="com.celloud.model.mysql.Notice" useGeneratedKeys="true" keyProperty="notice_id">
     insert into tb_notice (notice_id, notice_title, create_date, 
       expire_date, state, notice_context
       )
     values (#{noticeId,jdbcType=INTEGER}, #{noticeTitle,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
       #{expireDate,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{noticeContext,jdbcType=LONGVARCHAR}
       )
+  </insert>
+  <insert id="insertNoticeUser">
+    insert into tb_notice_user (notice_id,user_id,) 
+    <foreach collection="#{userIds}" item="userId" separator=",">
+        (#{noticeId},#{userId})
+    </foreach>
   </insert>
   <insert id="insertSelective" parameterType="com.celloud.model.mysql.Notice" >
     insert into tb_notice
