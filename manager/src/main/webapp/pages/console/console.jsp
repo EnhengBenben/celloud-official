@@ -8,10 +8,7 @@
     <div class="row">
         <div class="widget-box transparent">
             <div class="widget-header widget-header-flat">
-                <h3 class="lighter">
-                    <i class="fa-signal"></i>
-                    总量统计
-                </h3>
+                <h3 class="header smaller lighter green">总量统计</h3>
             </div>
             <div class="col-sm-12 col-md-12 home-numbers">
                 <ul style='margin-left: 15px'>
