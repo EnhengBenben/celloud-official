@@ -44,7 +44,7 @@ public class BehaviorInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        openMessageReceiver(request);
+		openMessageReceiver(request);
         long beginTime = System.currentTimeMillis();// 1、开始时间
         startTimeThreadLocal.set(beginTime);// 线程绑定变量（该数据只有当前请求的线程可见）
         Behavior behavior = UserAgentUtil.getUserBehavior(request);
