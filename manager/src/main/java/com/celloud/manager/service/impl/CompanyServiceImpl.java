@@ -255,4 +255,9 @@ public class CompanyServiceImpl implements CompanyService {
         return companyMapper.addCompany(company);
     }
 
+    @Override
+    public List<Map<String, Object>> getCompanyCount() {
+        return companyMapper.getCompanyCount(DataState.ACTIVE, PropertiesUtil.testAccountIds);
+    }
+
 }
