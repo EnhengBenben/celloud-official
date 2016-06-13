@@ -214,7 +214,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
                     <button type="button" class="btn btn-info" id="update-app-price-button">修改</button>
                 </div>
             </div>
