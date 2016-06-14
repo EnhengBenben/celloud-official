@@ -103,20 +103,17 @@ $(document).ready(function(){
 	$("#remPass").click(function(){
 		if(tmpRem==0){
 			//之前未勾选，现在勾选
-			document.getElementById("remPass").innerHTML="<img src='images/icon/checked.png'/>";
+			document.getElementById("remPass").className="btn-login checkbox-ed";
 			tmpRem=1;
 			document.getElementById("isRem").value=1;
 			$("#checked").val(true);
 		}else{
 			//之前勾选，现在取消勾选，则清空之前的密码，显示验证码
-			document.getElementById("remPass").innerHTML="<img src='images/icon/nocheck.png'/>";
+			document.getElementById("remPass").className="btn-login checkbox-un";
 			tmpRem=0;
 			document.getElementById("isRem").value=0;
 			$("#checked").val(false);
-			if($(".yzm").attr("style")){
-				$("#password").val("");
-			}
-			$(".yzm").css("display","");
+			$("#password").val("");
 			checked = $("#checked").val();
 		}
 	});
