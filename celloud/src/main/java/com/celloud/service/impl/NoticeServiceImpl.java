@@ -31,7 +31,6 @@ public class NoticeServiceImpl implements NoticeService {
         noticeMapper.insertNoticeUser(notice.getNoticeId(), userIds);
     }
 
-    @Async
     @Override
     public void insertNotice(Notice notice, String... usernames) {
         List<Integer> userIds = userMapper.getUserIdsByName(Arrays.asList(usernames));

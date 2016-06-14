@@ -143,7 +143,6 @@ messageUtils.addOpenListener(function() {
 	$("#messages-menu").load(CONTEXT_PATH+"/notice/lastUnread");
 });
 messageUtils.subscribe("userMessage", function(data) {
-	console.log("接收到userMessage频道的消息：" + JSON.stringify(data));
 	$("#messages-menu").load(CONTEXT_PATH+"/notice/lastUnread");
 	messageUtils.notify(data.noticeTitle, data.noticeContext, {}, {
 		"onclick" : function() {

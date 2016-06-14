@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import com.celloud.constants.Constants;
@@ -62,6 +63,7 @@ public class MessageUtils {
      * 
      * @param usernames
      */
+    @Async
     public void to(String... usernames) {
         if (usernames == null || usernames.length <= 0) {
             throw new BusinessException("发送消息没有指定接收者:" + message.toJson());
@@ -72,26 +74,17 @@ public class MessageUtils {
         for (String username : usernames) {
             messages.put(username, jsonMessage);
         }
-        new Thread(new Runnable() {
-            public void run() {
-                MessageSender.send(Constants.MESSAGE_USER_TOPIC, messages);
-            }
-        }).start();
-
+        MessageSender.send(Constants.MESSAGE_USER_TOPIC, messages);
     }
 
     /**
      * 发送给所有用户
      */
+    @Async
     public void toAll() {
         final Map<String, String> messages = new HashMap<>();
         messages.put(Constants.MESSAGE_ALLUSER_KEY, this.message.toJson());
-        new Thread(new Runnable() {
-            public void run() {
-                MessageSender.send(Constants.MESSAGE_USER_TOPIC, messages);
-            }
-        }).start();
-
+        MessageSender.send(Constants.MESSAGE_USER_TOPIC, messages);
     }
 
     /**
