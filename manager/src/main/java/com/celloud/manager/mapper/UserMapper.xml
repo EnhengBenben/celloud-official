@@ -211,11 +211,11 @@
         <if test="companyId != 0">
          and role = 0 and u.user_id = ucr.user_id and ucr.company_id = #{companyId }
         </if>
-        <if test="companyId == 0">
-         and role = 0 or role = 1
-        </if>
         <if test="keyword!=null and keyword!=''">
             and ${searchField} like '%${keyword }%'
+        </if>
+        <if test="companyId == 0">
+         and (role = 0 or role = 1)
         </if>
         order by create_date desc
     </select>
