@@ -419,7 +419,6 @@ a, a:link, a:hover, a:active, a:visited {
 
 /*-----------翻页---------------*/
 .pagination{
-	float: left;
 	width: 100%;
 	margin: 0;
 }
@@ -1067,4 +1066,69 @@ a, a:link, a:hover, a:active, a:visited {
     color: #1dd2af;
     background-color: #fff;
     border: none;
+}
+
+.report-statistics{
+	font-size: 12px;
+	color: #323232;
+	margin-top: 10px;
+}
+.report-statistics span{
+    margin-left: 20px;
+}
+.selector{
+	position: relative;
+	width: 100%;
+	background-color: rgb(248,248,248);
+	margin-bottom: 10px;
+	font-size: 12px;
+}
+.selector .selector-line{
+    width: 100%;
+    min-height: 34px;
+    line-height: 34px;
+    padding: 0px 10px;
+    border-top: 1px solid #dcdcdc;
+}
+.selector .sl-key{
+	float: left;
+    width: 100px;
+    color: #323232;
+}
+.selector .sl-val{
+    margin-left: 100px;
+    margin-right: 100px;
+    height: 34px;
+    overflow: hidden;
+}
+.selector .show-more{
+	height: auto;
+}
+.selector .sl-val span{
+	padding-right: 35px;
+}
+.selector .sl-val a{
+    color: #025e9e;
+}
+.selector .sl-ext{
+	position: absolute;
+    top: 5px;
+    right: 10px;
+    width: 140px;
+}
+.selector .sl-ext a{
+	position: relative;
+	display: inline-block;
+	color: #a0a0a0;
+    background-color: #fff;	
+	border: 1px solid #dcdcdc;
+	border-radius: 10px;
+	width: 60px;
+	height: 25px;
+	text-align: center;
+	line-height: 25px;
+	float: left;
+}
+.selector .sl-ext a:last-child{
+	float: right;
 }

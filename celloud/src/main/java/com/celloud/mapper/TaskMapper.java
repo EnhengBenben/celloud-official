@@ -189,4 +189,17 @@ public interface TaskMapper {
     Task findTaskDataAppPro(@Param("state") Integer state,
             @Param("dataKey") String dataKey, @Param("appId") Integer appId,
             @Param("projectId") Integer projectId);
+
+    /**
+     * 统计用户报告任务种类数量
+     * 
+     * @param state
+     * @param appId
+     * @param userId
+     * @return
+     * @author leamo
+     * @date 2016年6月13日 上午10:20:15
+     */
+    List<Map<String, Object>> findTaskPeriodNum(@Param("state") Integer state,
+            @Param("appId") Integer appId, @Param("userId") Integer userId);
 }

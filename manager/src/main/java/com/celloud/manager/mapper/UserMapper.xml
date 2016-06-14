@@ -202,7 +202,10 @@
         remark, navigation,
         truename, state, dept_id as deptId, login_uuid as loginUuid,
         u.company_id as companyId, sign
-        from tb_user u, tb_user_company_relat ucr
+        from tb_user u
+        <if test="companyId != 0">
+        , tb_user_company_relat ucr
+        </if>
         where 
         state=#{state }
         <if test="companyId != 0">
