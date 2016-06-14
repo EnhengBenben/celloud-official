@@ -1,6 +1,7 @@
 package com.celloud.mapper;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -31,10 +32,12 @@ public interface UserMapper {
     public void cleanFindPwdByUsername(@Param("username") String username, @Param("expireDate") Date expireDate);
 
     public User getUserByFindPwd(@Param("username") String username, @Param("randomCode") String randomCode);
-    
-    public Integer isEmailInUse(@Param("email")String email,@Param("userId") int userId);
+
+    public Integer isEmailInUse(@Param("email") String email, @Param("userId") int userId);
 
     public User getUserByName(@Param("username") String username);
+
+    public List<Integer> getUserIdsByName(@Param("usernames") List<String> usernames);
 
     // TODO 返回值将来也许需要改成List<Integer>
     /**

@@ -15,6 +15,15 @@ public class Notice {
 
     private String noticeContext;
 
+    public Notice() {
+    }
+
+    public Notice(String noticeTitle, String noticeContext) {
+        this.noticeTitle = noticeTitle;
+        this.noticeContext = noticeContext;
+        this.createDate = new Date();
+    }
+
     public Integer getNoticeId() {
         return noticeId;
     }

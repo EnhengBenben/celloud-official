@@ -139,12 +139,13 @@ var messageUtils = (function(messageUtils) {
 
 	return self;
 })(messageUtils);
-messageUtils.subscribe("test", function(data) {
-	console.log("接收到test频道的消息：" + JSON.stringify(data));
+messageUtils.addOpenListener(function() {
+	$("#messages-menu").load(CONTEXT_PATH+"/notice/lastUnread");
 });
 messageUtils.subscribe("userMessage", function(data) {
 	console.log("接收到userMessage频道的消息：" + JSON.stringify(data));
-	messageUtils.notify(data.title, data.message, {}, {
+	$("#messages-menu").load(CONTEXT_PATH+"/notice/lastUnread");
+	messageUtils.notify(data.noticeTitle, data.noticeContext, {}, {
 		"onclick" : function() {
 			var notification = this;
 			notification.close();

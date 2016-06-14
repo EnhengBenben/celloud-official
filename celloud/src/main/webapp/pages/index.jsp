@@ -52,7 +52,7 @@
 						<li class="dropdown notifications-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 								<i class="fa fa-envelope-o"></i>
-								<span class="label label-success">4</span>
+								<span class="label label-success"></span>
 							</a>
 							<ul class="dropdown-menu">
 								<li class="header">站内消息提醒</li>
@@ -84,50 +84,13 @@
 						<li class="dropdown messages-menu" id="messages-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 								<i class="fa fa-bell-o"></i>
-								<span class="label label-warning">10</span>
+								<span class="label label-warning"></span>
 							</a>
 							<ul class="dropdown-menu">
-								<li class="header">您有4条新消息</li>
+								<li class="header">您有0条新消息</li>
 								<li>
 									<!-- inner menu: contains the actual data -->
 									<ul class="menu">
-										<li>
-											<!-- start message -->
-											<a href="data.html">
-												<div class="pull-left">
-													<i class="fa fa-sellsy fa-2x"></i>
-												</div>
-													<h4>
-														数据上传完成 <small><i class="fa fa-clock-o"></i> 5 分钟</small>
-													</h4>
-													<p style="word-wrap: break-word; word-break: normal;">【D-3-M4_G12_21.ab1】</p>
-											</a>
-										</li>
-										<!-- end message -->
-										<li>
-											<a href="task.html">
-												<div class="pull-left">
-													<i class="fa fa-tasks fa-2x"></i>
-												</div>
-
-												<h4>
-													任务投递成功 <small><i class="fa fa-clock-o"></i> 2 小时</small>
-												</h4>
-												<p style="word-wrap: break-word; word-break: normal;">【D-3-M4_G12_21.ab1】</p>
-											</a>
-										</li>
-										<li>
-											<a href="#">
-												<div class="pull-left">
-													<i class="fa fa-files-o fa-2x"></i>
-												</div>
-
-												<h4>
-													未读报告 <small><i class="fa fa-clock-o"></i> 今天</small>
-												</h4>
-												<p>您有4条未读报告，请查看</p>
-											</a>
-										</li>
 									</ul>
 								</li>
 								<li class="footer">
