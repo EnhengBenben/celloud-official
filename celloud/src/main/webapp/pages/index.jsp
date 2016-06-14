@@ -77,7 +77,7 @@
 									</ul>
 								</li>
 								<li class="footer">
-									<a href="#">查看所有</a>
+									<a href="javascript:showNotice()">查看所有</a>
 								</li>
 							</ul>
 						</li>
@@ -94,7 +94,7 @@
 									</ul>
 								</li>
 								<li class="footer">
-									<a href="#">查看所有</a>
+									<a href="javascript:showMessage()">查看所有</a>
 								</li>
 							</ul>
 						</li>

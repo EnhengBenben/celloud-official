@@ -391,9 +391,15 @@ function showAppStore(){
  */
 function showCount(){
   $.main.show.mainDIV();
-	$("#mainDIV").load("pages/count/count_main.jsp");
+  $("#mainDIV").load("pages/count/count_main.jsp");
 }
-
+function showNotice(){
+	 $.main.show.mainDIV();
+}
+function showMessage(){
+	 $.main.show.mainDIV();
+	 $("#mainDIV").load(CONTEXT_PATH+"/notice/list/message");
+}
 /**
  * 帐号管理
  */

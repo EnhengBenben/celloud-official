@@ -14,6 +14,7 @@ public class Notice {
     private Integer state;
 
     private String noticeContext;
+    private Integer readState;
 
     public Notice() {
     }
@@ -71,4 +72,13 @@ public class Notice {
     public void setNoticeContext(String noticeContext) {
         this.noticeContext = noticeContext == null ? null : noticeContext.trim();
     }
+
+    public Integer getReadState() {
+        return readState;
+    }
+
+    public void setReadState(Integer readState) {
+        this.readState = readState;
+    }
+    
 }

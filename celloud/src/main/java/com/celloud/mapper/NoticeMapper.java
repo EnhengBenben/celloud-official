@@ -22,8 +22,9 @@ public interface NoticeMapper {
 
     public int updateByPrimaryKey(Notice record);
 
-    public int insertNoticeUser(@Param("noticeId") Integer noticeId, @Param("userIds") Integer... userIds);
+    public int insertNoticeUser(@Param("noticeId") Integer noticeId, @Param("usernames") String... usernames);
 
-    public List<Notice> pageUserUnreadNotices(@Param("userId") Integer userId, @Param("state") Integer state,
-            Page page);
+    public List<Notice> pageUserUnreadNotices(@Param("userId") Integer userId, Page page);
+
+    public List<Notice> pageUserNotices(@Param("userId") Integer userId, Page page);
 }
