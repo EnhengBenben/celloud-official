@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
@@ -44,13 +45,15 @@
 					<input type="password" class="pwd" placeholder="密码" id="password"
 						value="${fn:substring(requestScope.user.password,0,16)}" />
 					<input type="hidden" name="password" value="${user.password }">
-					<div class="yzm">
-						<input type="text" class="yzm" placeholder="验证码" id="captcha"
-							name="kaptchaCode" value="${requestScope.kapcode }" />
-						<img title="看不清，换一张"
-							src="<%=request.getContextPath()%>/kaptcha.jpg" id="kaptchaImage"
-							alt="验证码" class="validateCode" style="cursor: pointer;" />
-					</div>
+					<c:if test="${showKaptchaCode }">
+						<div class="yzm">
+							<input type="text" class="yzm" placeholder="验证码" id="captcha"
+								name="kaptchaCode" value="${requestScope.kapcode }" />
+							<img title="看不清，换一张"
+								src="<%=request.getContextPath()%>/kaptcha.jpg" id="kaptchaImage"
+								alt="验证码" class="validateCode" style="cursor: pointer;" />
+						</div>
+					</c:if>
 					<div class="autolog">
 						<span id="remPass">
 							<img src="<%=request.getContextPath()%>/images/icon/nocheck.png" />

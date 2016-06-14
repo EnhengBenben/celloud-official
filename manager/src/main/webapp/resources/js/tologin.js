@@ -84,12 +84,14 @@ $(document).ready(function(){
 			return true;
 		}
 		//校验验证码是否为空
-		var captcha = $.trim($("#captcha").val());
-		if(captcha==""){
-			$(".error").html("请输入验证码！");
-			$(".error").show();
-			$("#captcha").focus();
-			return false;
+		if($("#captcha").length>=1){
+			var captcha = $.trim($("#captcha").val());
+			if(captcha==""){
+				$(".error").html("请输入验证码！");
+				$(".error").show();
+				$("#captcha").focus();
+				return false;
+			}
 		}
 		//全部校验已通过
 		$("input[name='password']").val(secPWD(password));
