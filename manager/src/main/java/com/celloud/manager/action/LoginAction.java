@@ -77,7 +77,8 @@ public class LoginAction {
         if (publicKey == null) {
             publicKey = generatePublicKey(request.getSession());
         }
-        return mv.addObject("checked", checked).addObject("user", user).addObject("publicKey", publicKey);
+        return mv.addObject("checked", checked).addObject("user", user).addObject("publicKey", publicKey)
+                .addObject("showKaptchaCode", getFailedlogins() >= 3);
     }
     
     /**
@@ -97,9 +98,9 @@ public class LoginAction {
             HttpServletRequest request, HttpServletResponse response) {
         logger.info("用户正在登陆：" + user.getUsername());
         ModelAndView mv = new ModelAndView("login").addObject("checked",
-                CookieUtils.getCookieValue(request, Constants.COOKIE_MODULUS) != null && checked);
+                CookieUtils.getCookieValue(request, Constants.COOKIE_MODULUS) != null && checked)
+                .addObject("showKaptchaCode", getFailedlogins() >= 3);
         HttpSession session = request.getSession();
-        String kaptchaExpected = (String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
         PrivateKey privateKey = null;
         RSAKey key = null;
         String modulus = CookieUtils.getCookieValue(request, Constants.COOKIE_MODULUS);
@@ -107,8 +108,7 @@ public class LoginAction {
             deleteCookies(request, response);
         }
         // 验证码错误，直接返回到登录页面
-        if (!checked && (kaptchaExpected == null || !kaptchaExpected.equalsIgnoreCase(kaptchaCode))) {
-            logger.info("用户登陆验证码错误：param : {} \t session : {}", kaptchaCode, kaptchaExpected);
+        if (!checkKaptcha(kaptchaCode, session)) {
             user.setPassword("");
             return mv.addObject("info", "验证码错误，请重新登录！").addObject("publicKey", generatePublicKey(session));
         }
@@ -129,9 +129,11 @@ public class LoginAction {
         User loginUser = userService.login(user);
         if (loginUser == null) {
             String msg = "用户名或密码错误，请重新登录！";
+            addFailedlogins();
             logger.warn("用户（{}）登录失败，用户名或密码错误！", user.getUsername());
             user.setPassword("");
-            return mv.addObject("info", msg).addObject("user", user).addObject("publicKey", generatePublicKey(session));
+            return mv.addObject("info", msg).addObject("user", user).addObject("publicKey", generatePublicKey(session))
+                    .addObject("showKaptchaCode", getFailedlogins() >= 3);
         }
         logger.info("用户({})登录成功！", loginUser.getUsername());
         saveUserToSession(loginUser, session);
@@ -144,6 +146,50 @@ public class LoginAction {
         return mv;
     }
     
+    /**
+     * 校验验证码，在用户错误三次及以上时，需要校验验证码
+     * 
+     * @param kaptcha
+     * @param session
+     * @return
+     */
+    public boolean checkKaptcha(String kaptcha, HttpSession session) {
+        int time = getFailedlogins();
+        if (time < 3) {
+            return true;
+        }
+        String kaptchaExpected = (String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
+        // 验证码错误，直接返回到登录页面
+        if (kaptchaExpected == null || !kaptchaExpected.equalsIgnoreCase(kaptcha)) {
+            logger.info("用户登陆验证码错误：param : {} \t session : {}", kaptcha, kaptchaExpected);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 获取用户登录的账号密码错误次数
+     * 
+     * @return
+     */
+    public int getFailedlogins() {
+        Object failedlogins = ConstantsData.getSession().getAttribute(Constants.SESSION_FAILED_LOGIN_TIME);
+        int time = 0;
+        try {
+            time = Integer.parseInt((String) failedlogins);
+        } catch (Exception e) {
+        }
+        return time;
+    }
+
+    /**
+     * 增加用户登录的账号密码错误次数
+     */
+    public void addFailedlogins() {
+        int time = getFailedlogins();
+        ConstantsData.getSession().setAttribute(Constants.SESSION_FAILED_LOGIN_TIME, (time + 1) + "");
+    }
+
     /**
      * 用户退出操作
      * 

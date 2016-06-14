@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
@@ -18,71 +19,60 @@
 </head>
 <body onselectstart="return false;">
 	<!--#S bgContainer-->
-	<div class="bgContainer">
-		<img src="images/home/login_bg.png" id="bg" />
-		<!--#S wrapper-->
-		<!--    <div class="wrapper"> -->
-
-		<div class="login" style="position: absolute;">
-			<div class="logo" id="logo">
-				<a href="<%=request.getContextPath()%>/">
-					<img src="<%=request.getContextPath() %>/images/icon/login_logo.png" />
-				</a>
-			</div>
-			<form action="login" method="post" id="loginForm">
-				<div class="main clearfix">
-					<input type="hidden" id="modulusHidden" name="modulus"
-						value="${publicKey.modulus }" />
-					<input type="hidden" id="exponentHidden" name="exponent"
-						value="${publicKey.exponent }" />
-					<input type="hidden" name="checked" id="checked"
-						value="${requestScope.checked }" />
-					<input type="hidden" name="info" id="info"
-						value="${requestScope.info }" />
-					<input type="text" class="username" placeholder="用户名或邮箱"
-						id="username" name="username" value="${requestScope.user.username }" />
-					<input type="password" class="pwd" placeholder="密码" id="password"
-						value="${fn:substring(requestScope.user.password,0,16)}" />
-					<input type="hidden" name="password" value="${user.password }">
-					<div class="yzm">
-						<input type="text" class="yzm" placeholder="验证码" id="captcha"
-							name="kaptchaCode" value="${requestScope.kapcode }" />
-						<img title="看不清，换一张"
-							src="<%=request.getContextPath()%>/kaptcha.jpg" id="kaptchaImage"
-							alt="验证码" class="validateCode" style="cursor: pointer;" />
-					</div>
-					<div class="autolog">
-						<span id="remPass">
-							<img src="<%=request.getContextPath()%>/images/icon/nocheck.png" />
-						</span>
-						<input id="isRem" name="isRem" value="0" style="display: none">
-						记住密码
-						<span class="error"></span>
-					</div>
-					<a href="javascript:void(0);" class="btn-login" id="submit">登录</a>
-					<a href="forgot.html" class="forget">忘记密码</a>
-					<a href="download.html" class="download" target="_blank">下载客户端</a>
-				</div>
-			</form>
-			<div class="view-tips">最佳浏览体验：Chrome / Firefox 8.0+ / IE 9.0+</div>
-		</div>
-		<jsp:useBean id="_now" class="java.util.Date" />
-		<div class="footer">
-			©
-			<fmt:formatDate value="${_now}" type="both" dateStyle="long"
-				pattern="yyyy" />
-			CelLoud，Inc. All Rights reserved.
-			<a href="#">生物信息云平台</a>
-			·
-			<a href="javascript:void();">沪ICP备14035977号</a>
-			·
-			<a href="service.html" target="_blank">服务与支持</a>
-			·
-			<a href="feedback.html" target="_blank">意见反馈</a>
-		</div>
-		<!--     </div> -->
-		<!--#E wrapper-->
-	</div>
+    <div class="bgContainer">
+    <div class="login">
+        <div class="login-icon" id="logo">
+            <a href="<%=request.getContextPath()%>/" style="color: transparent;">
+                <img src="<%=request.getContextPath()%>/images/icon/login_logo_187.png" />
+            </a>
+        </div>
+        <div class="logo-name">生物信息云平台</div>
+            <form action="login" method="post" id="loginForm">
+                <div class="login-main clearfix">
+                    <div class="error">&nbsp;</div>
+                    <input type="hidden" id="modulusHidden" name="modulus" value="${publicKey.modulus }" />
+                    <input type="hidden" id="exponentHidden" name="exponent" value="${publicKey.exponent }" />
+                    <input type="hidden" name="checked" id="checked" value="${requestScope.checked }" />
+                    <input type="hidden" name="info" id="info" value="${requestScope.info }" />
+                    <input type="text" class="username input-top" placeholder="用户名或邮箱" id="username" name="username" value="${requestScope.user.username }" />
+                    <input type="password" class="pwd <c:if test="${!showKaptchaCode }">input-bottom</c:if>" placeholder="密码" id="password"
+                        value="${fn:substring(requestScope.user.password,0,16)}" />
+                    <input type="hidden" name="password" value="${user.password }">
+                    <c:if test="${showKaptchaCode }">
+                        <div class="yzm">
+                            <input type="text" class="yzm input-bottom" placeholder="验证码" id="captcha"
+                                name="kaptchaCode" value="${requestScope.kapcode }" />
+                            <img title="看不清，换一张"
+                                src="<%=request.getContextPath()%>/kaptcha.jpg" id="kaptchaImage"
+                                alt="验证码" class="validateCode" style="cursor: pointer;" />
+                        </div>
+                    </c:if>
+                    <a id="submit" class="btn-login sign-in" href="javascript:void(0);">登录</a>
+                    <div class="autolog">
+                        <span class="btn-login checkbox-un" id="remPass"></span>
+                        <input id="isRem" name="isRem" value="0" type="hidden">
+                                            记住密码
+                        <a href="forgot.html" class="forget">忘记密码</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <jsp:useBean id="_now" class="java.util.Date" />
+        <div class="footer">
+            ©
+            <fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" />
+            CelLoud，Inc. All Rights reserved.
+            <a href="#">生物信息云平台</a>
+            ·
+            <a href="javascript:void();">沪ICP备14035977号</a>
+            ·
+            <a href="service.html" target="_blank">服务与支持</a>
+            ·
+            <a href="feedback.html" target="_blank">意见反馈</a>
+        </div>
+        <!--     </div> -->
+        <!--#E wrapper-->
+    </div>
 	<!--#E bgContainer-->
 	<script type="text/javascript" src="plugins/jQuery/jquery-1.11.3.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/utils.js"></script>
