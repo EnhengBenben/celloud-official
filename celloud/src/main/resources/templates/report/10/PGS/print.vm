@@ -21,3 +21,8 @@
 	#extends("templates/report/default/PGS/base.vm")
 #end
 #parse("templates/report/default/PGS/js.vm")
+<style type="text/css">
+td, th {
+    min-width: 40px;
+}
+</style>
