@@ -1,2 +1,2 @@
-<img src="${base}/report/company/icon?file=$!pgs.companyIcon">
+<img src="${base}/report/company/icon?file=$!hbv.companyIcon">
 <h1>乙型肝炎病毒耐药基因突变和分型检测报告单</h1>

@@ -3,7 +3,7 @@
  */
 var uploadPercent = 0;
 $(function () {
-  $.report.find.all();
+  $.report.find.main(0);
   $("#to-upload-a").on("click",function(){
     if($(".plupload_filelist li").hasClass("plupload_droptext")){
       $("#batch-info").val("");
@@ -18,13 +18,13 @@ $(function () {
   });
   
   $("#to-report-a").on("click",function(){
-    $.report.find.all();
+    $.report.find.main(0);
     $(this).addClass("active");
     $("#to-upload-a").removeClass("active");
     $("#to-data-a").removeClass("active");
   });
   $("body").on("click",'[data-click="report-list"]',function(){
-    $.report.find.pagination();
+    $.report.find.main(1);
     $(this).addClass("active");
     $("#to-upload-a").removeClass("active");
     $("#to-data-a").removeClass("active");
@@ -106,8 +106,23 @@ $.report.reRun = function(dataKey,appId,projectId){
   });
 };
 $.report.find = {
+  main: function(type){
+    $.get("report/bsi/reportMain",function(response){
+      $("#container").html(response);
+      if(type==0){
+        $.report.find.all();
+      }else{
+        $.report.find.pagination();
+      }
+      $("#condition-find").unbind("click");
+      $("#condition-find").on("click",function(){
+        $.report.options.condition = $("#condition-input").val();
+        $.report.find.condition();
+      });
+    });
+  },
   all: function(){
-    $.get("data/taskAllList",function(response){
+    $.get("report/bsi/reportList",function(response){
       $.report.loadlist(response);
       $.report.options = {
           condition: null,
@@ -122,19 +137,19 @@ $.report.find = {
   },
   condition: function(){
     var options = $.report.options;
-    $.get("data/taskList",{"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
+    $.get("report/bsi/searchReportList",{"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
       $.report.loadlist(response);
     });
   },
   pagination: function(currentPage){
     var options = $.report.options;
-    $.get("data/taskList",{"page":currentPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
+    $.get("report/bsi/searchReportList",{"page":currentPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
       $.report.loadlist(response);
     });
   }
 };
 $.report.loadlist = function(response){
-  $("#container").html(response);
+  $("#report-list").html(response);
   $("#data-list-tbody").find("td[name='data-name-td']").each(function(){
     var _data = $(this).attr("title");
     if(_data.length>40){

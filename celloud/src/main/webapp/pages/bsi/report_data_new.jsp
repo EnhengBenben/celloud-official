@@ -497,7 +497,7 @@
 	    <c:forEach items="${bsi.data}" var="data">
           ${data.fileName}&nbsp;&nbsp;
         </c:forEach>
-<!--                 （点击查看原始数据信息） -->
+                （点击查看原始数据信息）
 	    </span>
 	  </div>
   </div>

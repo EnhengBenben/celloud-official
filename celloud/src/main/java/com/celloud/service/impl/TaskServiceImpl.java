@@ -2,6 +2,7 @@ package com.celloud.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -241,5 +242,31 @@ public class TaskServiceImpl implements TaskService {
         List<Task> list = taskMapper.findTasksByBatch(page, userId, appId,
                 TaskPeriod.DONE, DataState.ACTIVE, batch, dataKey);
         return new PageList<>(page, list);
+    }
+
+    @Override
+    public Map<String, Object> findTaskPeriodNum(Integer appId,
+            Integer userId) {
+        List<Map<String, Object>> periodList = taskMapper
+                .findTaskPeriodNum(DataState.ACTIVE, appId, userId);
+        Map<String, Object> map = new HashMap<>();
+        map.put("done", 0l);
+        map.put("wait", 0l);
+        map.put("uploading", 0l);
+        map.put("error", 0l);
+        for (Map<String, Object> m : periodList) {
+            Object period = m.get("period");
+            Object periodNum = m.get("periodNum");
+            if ((Integer) period == TaskPeriod.DONE) {
+                map.put("done", periodNum);
+            } else if (period == null) {
+                map.put("error", periodNum);
+            } else if ((Integer) period == TaskPeriod.UPLOADING) {
+                map.put("uploading", periodNum);
+            } else {
+                map.put("wait", (Long) map.get("wait") + (Long) periodNum);
+            }
+        }
+        return map;
     }
 }
