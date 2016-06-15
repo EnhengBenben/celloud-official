@@ -54,6 +54,10 @@ $(function () {
       $("#condition-find").click();
     }
   });
+  $("body").on("click",".table .checkbox,.pagination .checkbox",function(){
+    $(this).toggleClass("checkbox-un");
+    $(this).toggleClass("checkbox-ed");
+  });
 });
 $.base = {
   sortIcon : function(sortDate,sortBatch,sortName,sortPeriod){
@@ -125,7 +129,7 @@ $.report.find = {
       });
       $("body").on("click","[data-click='report-batch-search']",function(){
         if(!$("#batch-lists").hasClass("show-more"))
-          $.report.options.batch = $(this).text();
+          $.report.options.batch = "'"+$(this).text()+"'";
           $.report.find.condition();
       });
       $("body").on("click","[data-click='report-period-search']",function(){
@@ -194,7 +198,6 @@ $.report.find = {
           $("#report-multiperiod-search").attr("disabled",false);
       });
       $("#report-multiperiod-search").on("click",function(){
-        var period = $.report.options.period;
         $.report.find.condition();
       });
       $("body").on("click","[data-click='reset-multiselect']",function(){

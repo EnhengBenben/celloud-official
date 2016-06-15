@@ -24,6 +24,9 @@ ul, ol {
 a, a:link, a:hover, a:active, a:visited {
     text-decoration: none;
 }
+.disabled{
+    opacity: 0.3;
+}
 .page-layout{
 	background-color: rgb(240,240,240);
 }
@@ -373,12 +376,24 @@ a, a:link, a:hover, a:active, a:visited {
 .table-main>thead>tr>th{
 	height: 40px;
 	background: rgb(220,220,220);
-	padding-left: 30px;
+	padding-left: 20px;
 	color: rgb(50,50,50);
 	text-align: left;
 }
 .table-main>thead>tr>th>a{
 	color: #323232;
+}
+.table-main>thead>tr>th>input[type="text"]{
+	width: 140px;
+	height: 28px;
+	margin: 0;
+	font-size: 14px;
+	color: #a0a0a0;
+	padding: 0px 10px;
+	-webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -o-border-radius: 6px;
+    border-radius: 6px;
 }
 .table-main>tbody>tr:nth-of-type(even) {
     background: rgb(248,248,248);
@@ -392,10 +407,17 @@ a, a:link, a:hover, a:active, a:visited {
     text-align: left;
     height: 30px;
     border: none;
-    padding: 4px 8px;
-    padding-left: 30px;
-    line-height:16px;
+    padding: 0px;
+    padding-left: 20px;
+    line-height:30px;
     color: rgb(50,50,50);
+    max-width: 240px;
+    -webkit-text-overflow: ellipsis;/*兼容opera*/
+    -moz-text-overflow: ellipsis;/*兼容opera*/
+    -o-text-overflow: ellipsis;/*兼容opera*/
+    text-overflow: ellipsis;/*这就是省略号喽*/       
+    overflow: hidden;/*设置超过的隐藏*/
+    white-space: nowrap;/*设置不折行*/
 }
 .table-main>tbody>tr>td .wrong {
     color:#ff0000;
@@ -404,9 +426,12 @@ a, a:link, a:hover, a:active, a:visited {
     margin-right: 5px;
     color: rgb(50,50,50);
 }
-
+.table-main>tbody>tr>td>a>i{
+	font-size: 16px;
+	color: rgb(160,160,160);
+}
 .table-main>tbody>tr:hover>td,
-.table-main>tbody>tr:hover>td>a{
+.table-main>tbody>tr:hover>td>a>i{
 	background-color: rgb(29,210,175);
 	color: #ffffff;
 }
@@ -416,16 +441,25 @@ a, a:link, a:hover, a:active, a:visited {
 .table-main>tbody>tr:hover .show-icon{
     background-position: -516px -257px;
 }
-
+.table-main .checkbox{
+	margin: 6px 0px;
+}
+.table-main .date-td{
+	text-align: center
+}
 /*-----------翻页---------------*/
 .pagination{
 	width: 100%;
 	margin: 0;
+	
 }
 .pagination ul{
 	display: inline-block;
     *display: inline;
     *zoom: 1;
+}
+.pages{
+    margin-right: 20px;
 }
 .pagination ul > li {
 	display: inline;
@@ -435,13 +469,13 @@ a, a:link, a:hover, a:active, a:visited {
 .pagination ul > li > a {
     float: left;
     padding: 0;
-    color: #a0a0a0;
+    color: rgb(150,150,150);
     width: 40px;
     height: 20px;
     text-align: center;
     text-decoration: none;
     background-color: #fff;
-    border: 1px solid #a0a0a0;
+    border: 1px solid rgb(220,220,220);
     border-left: none;
 }
 .pagination ul > li > span{
@@ -451,37 +485,37 @@ a, a:link, a:hover, a:active, a:visited {
     line-height: 20px;
 }
 .pagination ul > li:first-child > a{
-	border-left: 1px solid #a0a0a0;
+	border-left: 1px solid rgb(220,220,220);
 	-webkit-border-radius: 10px 0px 0px 10px;
     -moz-border-radius: 10px 0px 0px 10px;
+    -o-border-radius: 10px 0px 0px 10px;
     border-radius: 10px 0px 0px 10px;
 }
 .pagination ul > li:last-child > a{
 	-webkit-border-radius: 0px 10px 10px 0px;
     -moz-border-radius: 0px 10px 10px 0px;
+    -o-border-radius: 0px 10px 10px 0px;
     border-radius: 0px 10px 10px 0px;
 }
 
 .pagination ul > li > a:hover,
 .pagination ul > .active > a{
 	color: #fff;
-    background-color: #a0a0a0;
-    border: 1px solid #a0a0a0;;
+    background-color: rgb(220,220,220);
+    border: 1px solid rgb(220,220,220);
 }
 
 .pagination ul > li>.ends{
-	color: #a0a0a0;
+	color: rgb(220,220,220);
 	letter-spacing: -3px;
 }
-.pagination-data{
-	float: right;
-}
-.pagination-data> li{
+.pagination-data> li,
+.pagination-check> li{
 	color: rgb(150,150,150);
 	display: inline-block;
 }
 .pagination-data> li+li:before{
-    padding: 0 1px 0px 0px;
+    padding: 0 6px 0px 5px;
     color: rgb(150,150,150);
     content: "|";
 }
@@ -490,7 +524,29 @@ a, a:link, a:hover, a:active, a:visited {
 	width: 65px;
 	-webkit-border-radius: 10px;
     -moz-border-radius: 10px;
+    -o-border-radius: 10px;
     border-radius: 10px;
+    border:1px solid rgb(150,150,150);
+    font-size: 12px;
+}
+.pagination-check li{
+	line-height: 24px;
+	padding: 0px 10px;
+}
+.pagination-check .checkbox-li{
+	padding-left: 20px;
+	padding-top: 4px;
+}
+.pagination-check .checkbox{
+	margin: 0
+}
+.pagination-check select{
+    height: 24px;
+    width: 90px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -o-border-radius: 6px;
+    border-radius: 6px;
     border:1px solid rgb(150,150,150);
     font-size: 12px;
 }
@@ -509,6 +565,9 @@ a, a:link, a:hover, a:active, a:visited {
 .modal .modal-content .modal-header{
 	height: 40px;
 	background-color: #2c3e5c;
+	webkit-border-radius: 5px 5px 0px 0px;
+    -moz-border-radius: 5px 5px 0px 0px;
+    -o-border-radius: 5px 5px 0px 0px;
     border-radius: 5px 5px 0px 0px;
     color: #dcdcdc;
     padding: 15px 15px;
@@ -1045,6 +1104,9 @@ a, a:link, a:hover, a:active, a:visited {
 .content .report-pagination .pagination{
 	border: 1px solid rgb(220,220,220);
 	border-top: none;
+	webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    -o-border-radius: 0px;
 	border-radius: 0;
     background: #fff;
     height: 20px;
@@ -1057,6 +1119,9 @@ a, a:link, a:hover, a:active, a:visited {
     text-align: center;
     text-decoration: none;
     background-color: #fff;
+    webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    -o-border-radius: 0px;
     border-radius: 0;
     border: none;
 }
@@ -1126,6 +1191,9 @@ a, a:link, a:hover, a:active, a:visited {
 }
 .selector .sl-val input[type='text']{
 	display: inline;
+	webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -o-border-radius: 6px;
 	border-radius: 6px;
 	border: 1px solid #dcdcdc;
 	color: #a0a0a0;
@@ -1140,6 +1208,9 @@ a, a:link, a:hover, a:active, a:visited {
     text-align: center;
     background-color: #e6e6e6; 
     border: 1px solid #dcdcdc;
+    webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -o-border-radius: 10px;
     border-radius: 10px;
     width: 50px;
     height: 24px;
@@ -1150,9 +1221,6 @@ a, a:link, a:hover, a:active, a:visited {
 	width: 100%;
 	text-align: center;
 }
-.selector .multisl-btns .disabled{
-	opacity: 0.3;
-}
 .selector .sl-judge{
 	position: relative;
 	display: inline-block;
@@ -1160,6 +1228,9 @@ a, a:link, a:hover, a:active, a:visited {
 	height: 24px;
 	background-color: #e6e6e6; 
 	border: 1px solid #dcdcdc;
+	webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -o-border-radius: 6px;
     border-radius: 6px;
     margin: 5px 0px;
 }
@@ -1169,6 +1240,9 @@ a, a:link, a:hover, a:active, a:visited {
     line-height: 22px;
     color:#fff;
     border: 1px solid #dcdcdc;
+    webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -o-border-radius: 6px;
     border-radius: 6px;
     text-align: center;
     display: inline-block;
@@ -1196,6 +1270,9 @@ a, a:link, a:hover, a:active, a:visited {
 	color: #969696;
     background-color: #fff;	
 	border: 1px solid #dcdcdc;
+	webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -o-border-radius: 10px;
 	border-radius: 10px;
 	width: 60px;
 	height: 24px;

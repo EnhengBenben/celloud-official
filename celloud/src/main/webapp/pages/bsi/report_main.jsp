@@ -18,9 +18,7 @@
       <c:forEach items="${batchList }" var="batch">
         <c:if test="${not empty batch}">
           <div class="sl-val-content">
-	        <div class="celicon checkbox checkbox-un hide">
-	          <input name="report-batch" type="checkbox" class="checkbox-body" value="${batch}">
-	        </div>
+	        <div class="celicon checkbox checkbox-un hide"></div>
 	        <a data-click="report-batch-search" href="javascript:void(0)"><span>${batch}</span></a>
           </div>
         </c:if>
@@ -39,45 +37,31 @@
     <div class="sl-key">状态：</div>
     <div id="period-lists" class="sl-val">
       <div class="sl-val-content">
-        <div class="celicon on_check checkbox checkbox-un hide">
-          <input name="report-batch" type="checkbox" class="checkbox-body" value="${batch}">
-        </div>
+        <div class="celicon on_check checkbox checkbox-un hide"></div>
         <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="2"><span>完成</span></a>
       </div>
       <div class="sl-val-content">
-        <div class="celicon on_check checkbox checkbox-un hide">
-          <input name="report-batch" type="checkbox" class="checkbox-body" value="${batch}">
-        </div>
+        <div class="celicon on_check checkbox checkbox-un hide"></div>
         <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="1"><span>分析中</span></a>
       </div>
       <div class="sl-val-content">
-        <div class="celicon on_check checkbox checkbox-un hide">
-          <input name="report-batch" type="checkbox" class="checkbox-body" value="${batch}">
-        </div>
+        <div class="celicon on_check checkbox checkbox-un hide"></div>
         <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="0"><span>等待分析</span></a>
       </div>
       <div class="sl-val-content">
-        <div class="celicon on_check checkbox checkbox-un hide">
-          <input name="report-batch" type="checkbox" class="checkbox-body" value="${batch}">
-        </div>
+        <div class="celicon on_check checkbox checkbox-un hide"></div>
         <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="3"><span>数据上传中</span></a>
       </div>
       <div class="sl-val-content">
-        <div class="celicon on_check checkbox checkbox-un hide">
-          <input name="report-batch" type="checkbox" class="checkbox-body" value="${batch}">
-        </div>
+        <div class="celicon on_check checkbox checkbox-un hide"></div>
         <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="4"><span>异常终止</span></a>
       </div>
       <div class="sl-val-content">
-        <div class="celicon on_check checkbox checkbox-un hide">
-          <input name="report-batch" type="checkbox" class="checkbox-body" value="${batch}">
-        </div>
+        <div class="celicon on_check checkbox checkbox-un hide"></div>
         <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="6"><span>实验处理中</span></a>
       </div>
       <div class="sl-val-content">
-        <div class="celicon on_check checkbox checkbox-un hide">
-          <input name="report-batch" type="checkbox" class="checkbox-body" value="${batch}">
-        </div>
+        <div class="celicon on_check checkbox checkbox-un hide"></div>
         <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="5"><span>送样中</span></a>
       </div>
       <div class="multisl-btns hide">
