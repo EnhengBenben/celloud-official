@@ -295,7 +295,7 @@
         and (file_name like '%${condition}%' or f.batch like '%${condition}%')
     </if>
     <if test="batch != null and batch != ''" >
-        and f.batch=#{batch}
+        and f.batch in (${batch})
     </if>
     <if test="period != null and period != ''" >
         and t.period in (${period})

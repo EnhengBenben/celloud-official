@@ -164,21 +164,49 @@ $.report.find = {
         $(".selector-line").find(".multisl-btns").addClass("hide");
         var selectorline = $(this).parent().parent();
         $(selectorline).addClass("select-more");
+        $(selectorline).find(".sl-val").addClass("show-more");
         $(selectorline).find(".checkbox").removeClass("hide");
         $(selectorline).find(".multisl-btns").removeClass("hide");
       });
       $("#batch-multiselect").on("click",function(){
         $("#batch-lists").addClass("show-more");
         $("#batch-more i").removeClass("fa-chevron-down").addClass("fa-chevron-up");
-        $("body").on("click","[data-click='report-batch-search']",function(){
-          
-        });
       });
       $("#batch-lists .sl-val-content").on("click",function(){
         $(this).find(".checkbox").toggleClass("checkbox-un");
         $(this).find(".checkbox").toggleClass("checkbox-ed");
         if($(this).find(".checkbox").hasClass("checkbox-ed"))
-          $.report.options.batch == null? $.report.options.batch = $(this).find("a").text() +"," : $.report.options.batch += ($(this).find("a").text() + ",");
+          $.report.options.batch == null? $.report.options.batch = "'"+$(this).find("a").text()+"'" : $.report.options.batch += ",'"+$(this).find("a").text() + "'";
+        if($.report.options.batch != null)
+          $("#report-multibatch-search").removeClass("disabled");
+          $("#report-multibatch-search").attr("disabled",false);
+      });
+      $("#report-multibatch-search").on("click",function(){
+        $.report.find.condition();
+      });
+      $("#period-lists .sl-val-content").on("click",function(){
+        $(this).find(".checkbox").toggleClass("checkbox-un");
+        $(this).find(".checkbox").toggleClass("checkbox-ed");
+        if($(this).find(".checkbox").hasClass("checkbox-ed"))
+          $.report.options.period == null? $.report.options.period = $(this).find("input[type='hidden']").val() : $.report.options.period += ","+$(this).find("input[type='hidden']").val();
+        if($.report.options.period != null)
+          $("#report-multiperiod-search").removeClass("disabled");
+          $("#report-multiperiod-search").attr("disabled",false);
+      });
+      $("#report-multiperiod-search").on("click",function(){
+        var period = $.report.options.period;
+        $.report.find.condition();
+      });
+      $("body").on("click","[data-click='reset-multiselect']",function(){
+        var selectorline = $(this).parent().parent().parent();
+        $(selectorline).removeClass("select-more");
+        $(selectorline).find(".sl-val").removeClass("show-more");
+        $(selectorline).find(".checkbox").addClass("hide").addClass("checkbox-un").removeClass("checkbox-ed");
+        $(selectorline).find(".multisl-btns").addClass("hide");
+        $(".multisl-btns").first().addClass("disabled");
+        $(".multisl-btns").first().attr("disabled",true);
+        $.report.options.batch = null;
+        $.report.options.period = null;
       });
     });
   },

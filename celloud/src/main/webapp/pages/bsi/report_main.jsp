@@ -26,8 +26,8 @@
         </c:if>
       </c:forEach>
       <div class="multisl-btns hide">
-        <a data-click="report-date-search" class="sl-btn disabled" href="javascript:void(0)">确定</a>
-        <a data-click="report-date-search" class="sl-btn" href="javascript:void(0)">取消</a>
+        <a id="report-multibatch-search" class="sl-btn disabled" href="javascript:void(0)" disabled="disabled">确定</a>
+        <a data-click="reset-multiselect" class="sl-btn" href="javascript:void(0)">取消</a>
       </div>
     </div>
     <div class="sl-ext">
@@ -37,7 +37,7 @@
   </div>
   <div class="selector-line">
     <div class="sl-key">状态：</div>
-    <div class="sl-val">
+    <div id="period-lists" class="sl-val">
       <div class="sl-val-content">
         <div class="celicon on_check checkbox checkbox-un hide">
           <input name="report-batch" type="checkbox" class="checkbox-body" value="${batch}">
@@ -79,6 +79,10 @@
           <input name="report-batch" type="checkbox" class="checkbox-body" value="${batch}">
         </div>
         <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="5"><span>送样中</span></a>
+      </div>
+      <div class="multisl-btns hide">
+        <a id="report-multiperiod-search" class="sl-btn disabled" href="javascript:void(0)" disabled="disabled">确定</a>
+        <a data-click="reset-multiselect" class="sl-btn" href="javascript:void(0)">取消</a>
       </div>
     </div>
     <div class="sl-ext">
