@@ -9,6 +9,11 @@ li {list-style:none;}
 .border1{border:1px solid #ccc;padding:50px 50px;}
 .font-bold{font-weight: bold;}
 /* base -chrome*/
+#printMain{
+    max-width: 830px;
+    min-width: 830px;
+    margin: 0 auto;
+}
 body{ font-family:"Times New Roman","微软雅黑"; font-size:16px; max-width: 900px;margin:auto;}
 h1{ text-align:center; font-size:30px; padding:50px 0 20px 0;}
 h2{ text-align:center; font-size:25px; font-weight: bolder; padding-top:20px}
@@ -16,7 +21,7 @@ h3{ font-size:22px;  padding:10px 0px 10px 0px;background-color: #b0d73d; margin
 h4{ font-size:20px; padding-bottom:10px;}
 footer{ font-size:22px;width:100%; position:relative;margin-top: 60px;text-align: center;}
 section{margin:0px auto;}
-p{text-align: justify;}
+p{text-align: justify;color:#535353;}
 .header{font-size:32px; text-align:center; }
 .header img{width:100%;margin:0px auto}
 .titletype{width:100%; position:relative; padding-top: 300px;padding-left:155px;font-size:20px; }
@@ -31,7 +36,7 @@ p{text-align: justify;}
 /*btn*/
 .i-print{ display:inline-block;*display:inline;*zoom:1; width:17px; height:16px; vertical-align:middle; margin-right:3px; background-position:-120px -20px;}
 a{ text-decoration:none; color:#666;font-size: 14px;}
-.btn{ display:inline-block;*display:inline;*zoom:1; padding:5px 11px; border:1px solid #cbd4e0; border-radius:4px; background-image:url(../images/report/_btn.png); background-repeat:repeat-x; text-shadow:1px 1px 2px rgba(255,255,255,1)}
+.btn{ display:inline-block;*display:inline;*zoom:1; padding:5px 11px; border:1px solid #cbd4e0; border-radius:4px; background-repeat:repeat-x;}
 .btn-default{ background-position:0 0; color:#6e88ac; border:1px solid #cbd4e0;} 
 .btn-default:hover{ background-position:0 -40px; border:1px solid #aab8cc;}
 

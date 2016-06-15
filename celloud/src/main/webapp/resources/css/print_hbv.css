@@ -9,6 +9,11 @@ h1, h2, h3, h4, h5, h6 {font-size:100%;font-weight:normal;}
 .mt10{ margin-top:10px;}
 .mt5{ margin-top:5px;}
 /* base */
+#printMain{
+    max-width: 830px;
+    min-width: 830px;
+    margin: 0 auto;
+}
 body{ font-family:"黑体","宋体"; font-size:14px; color:#353535;max-width: 900px;margin:auto;}
 .container{ border-top:4px solid #00a88c;}
 .wrapper{margin:auto 10px;}

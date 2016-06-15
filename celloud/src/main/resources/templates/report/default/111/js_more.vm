@@ -39,7 +39,9 @@ $(function(){
         }
         $("#checkboxdiv").css("display","none");
         $("a").css("display","none");
+        $(".buttons").hide();
         window.print();
+        $(".buttons").show();
         $("#change").show();
         $("body").find("section").each(function(){
             $(this).addClass("border1");
