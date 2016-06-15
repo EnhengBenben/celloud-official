@@ -54,7 +54,7 @@ $(function () {
       $("#condition-find").click();
     }
   });
-  $("body").on("click",".table .checkbox",function(){
+  $("body").on("click",".table .checkbox,.pagination .checkbox",function(){
     $(this).toggleClass("checkbox-un");
     $(this).toggleClass("checkbox-ed");
   });
@@ -129,7 +129,7 @@ $.report.find = {
       });
       $("body").on("click","[data-click='report-batch-search']",function(){
         if(!$("#batch-lists").hasClass("show-more"))
-          $.report.options.batch = $(this).text();
+          $.report.options.batch = "'"+$(this).text()+"'";
           $.report.find.condition();
       });
       $("body").on("click","[data-click='report-period-search']",function(){
