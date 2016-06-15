@@ -7,7 +7,7 @@
 
 img {
 	border: 0;
-	width: 100%;
+	width: 96%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -44,8 +44,8 @@ h1 {
 }
 
 table {
-	max-width: 100%;
-	min-width: 900px;
+	max-width: 97%;
+	min-width: 800px;
 	background-color: transparent;
 	border-collapse: collapse;
 	border-spacing: 0;

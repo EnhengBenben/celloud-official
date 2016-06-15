@@ -1500,8 +1500,11 @@ public class ReportAction {
                 + file;
         File targetFile = new File(path);
         // log.info("医院logo绝对路径{}",targetFile.getAbsolutePath());
-        return new ResponseEntity<byte[]>(
-                FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
+        if (targetFile.isFile()) {
+            return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
+        } else {
+            return null;
+        }
     }
 
     /**

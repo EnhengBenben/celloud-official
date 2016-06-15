@@ -287,7 +287,7 @@ var drawCharts=(function(drawCharts){
 		option.series[1] = demo.series[0]; //图一显示图二的legend
 		newoption.grid = {
 			x : 80,
-			y : 0,
+			y : 20,
 			x2 : 80,
 			y2 : 100
 		}; //两图距离
