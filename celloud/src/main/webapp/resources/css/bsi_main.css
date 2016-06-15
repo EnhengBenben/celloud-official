@@ -818,10 +818,16 @@ a, a:link, a:hover, a:active, a:visited {
     border: none;
     padding-bottom: -2px;
 }
+.report-opera{
+	position: relative;
+    width: 160px;
+}
+
 .report-opera .nav-pub{
 	width: 160px;
 	height: 40px;
 	padding-top:4px;
+	position: absolute;
 }
 .nav-pub .prev-btn,
 .nav-pub .next-btn{
@@ -861,8 +867,8 @@ a, a:link, a:hover, a:active, a:visited {
 	width: 70px;
 	text-align: right;
     position: fixed;
-    margin-top: -92px;
     margin-left: 165px;
+    top: 208px;
 }
 .report-btn-group .btn{
     width: 70px;
@@ -1093,6 +1099,7 @@ a, a:link, a:hover, a:active, a:visited {
 }
 .content .report-pagination{
 	width: 160px;
+	margin-top:40px;
 }
 .content .report-pagination table{
     margin-bottom: 0px;
