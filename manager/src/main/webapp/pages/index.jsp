@@ -165,6 +165,12 @@
                         </a>
                         <input id="user-role-hidden" type="hidden" value="${loginUserInSession.role }">
                         <ul class="dropdown-menu user-profile-menu list-unstyled">
+                            <li>
+                                <a href="javascript:user.showChangePwd();">
+                                    <i class="fa-wrench"></i>
+                                   修改密码
+                                </a>
+                            </li>
                             <li class="last">
                                 <a  href="logout">
                                     <i class="fa-lock"></i>
