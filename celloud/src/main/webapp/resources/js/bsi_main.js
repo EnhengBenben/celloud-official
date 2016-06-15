@@ -54,7 +54,6 @@ $(function () {
       $("#condition-find").click();
     }
   });
-  
 });
 $.base = {
   sortIcon : function(sortDate,sortBatch,sortName,sortPeriod){
@@ -98,7 +97,12 @@ $.report.options = {
     sortPeriod: "asc",
     sortDate: "desc",
     pageSize: $("#page-size-sel").val(),
-    reportType: 0  //0:患者报告  1：分析报告
+    reportType: 0,  //0:患者报告  1：分析报告
+    batch: null,
+    period: null,
+    beginDate: null,
+    endDate: null,
+    distributed: null //0:是   1： 否
 };
 $.report.reRun = function(dataKey,appId,projectId){
   $.get("data/reRun",{"dataKey":dataKey,"appId":appId,"projectId":projectId},function(result){
@@ -119,6 +123,63 @@ $.report.find = {
         $.report.options.condition = $("#condition-input").val();
         $.report.find.condition();
       });
+      $("body").on("click","[data-click='report-batch-search']",function(){
+        if(!$("#batch-lists").hasClass("show-more"))
+          $.report.options.batch = $(this).text();
+          $.report.find.condition();
+      });
+      $("body").on("click","[data-click='report-period-search']",function(){
+        $.report.options.period = $(this).find("input").val();
+        $.report.find.condition();
+      });
+      $("body").on("click","[data-click='report-date-search']",function(){
+        $.report.options.beginDate = $("#report-begindate-search").val();
+        $.report.options.endDate = $("#report-enddate-search").val();
+        $.report.find.condition();
+      });
+      $("body").on("click","[data-click='report-distributed-search']",function(){
+        if($(this).find(".sl-judge-no").hasClass("hide")){
+          $(this).find(".sl-judge-no").removeClass("hide");
+          $(this).find(".sl-judge-yes").addClass("hide");
+          $.report.options.distributed = 1;
+        }else{
+          $(this).find(".sl-judge-yes").removeClass("hide");
+          $(this).find(".sl-judge-no").addClass("hide");
+          $.report.options.distributed = 0;
+        }
+        $.report.find.condition();
+      });
+      $("#batch-more").on("click",function(){
+        if($("#batch-lists").hasClass("show-more")){
+          $("#batch-lists").removeClass("show-more");
+          $("#batch-more i").removeClass("fa-chevron-up").addClass("fa-chevron-down");
+        }else{
+          $("#batch-lists").addClass("show-more");
+          $("#batch-more i").removeClass("fa-chevron-down").addClass("fa-chevron-up");
+        }
+      });
+      $("body").on("click","[data-click='report-select-more']",function(){
+        $(".selector-line").removeClass("select-more");
+        $(".selector-line").find(".checkbox").addClass("hide");
+        $(".selector-line").find(".multisl-btns").addClass("hide");
+        var selectorline = $(this).parent().parent();
+        $(selectorline).addClass("select-more");
+        $(selectorline).find(".checkbox").removeClass("hide");
+        $(selectorline).find(".multisl-btns").removeClass("hide");
+      });
+      $("#batch-multiselect").on("click",function(){
+        $("#batch-lists").addClass("show-more");
+        $("#batch-more i").removeClass("fa-chevron-down").addClass("fa-chevron-up");
+        $("body").on("click","[data-click='report-batch-search']",function(){
+          
+        });
+      });
+      $("#batch-lists .sl-val-content").on("click",function(){
+        $(this).find(".checkbox").toggleClass("checkbox-un");
+        $(this).find(".checkbox").toggleClass("checkbox-ed");
+        if($(this).find(".checkbox").hasClass("checkbox-ed"))
+          $.report.options.batch == null? $.report.options.batch = $(this).find("a").text() +"," : $.report.options.batch += ($(this).find("a").text() + ",");
+      });
     });
   },
   all: function(){
@@ -131,19 +192,25 @@ $.report.find = {
           sortName: "asc",
           sortPeriod: "asc",
           sortDate: "desc",
-          pageSize: $("#page-size-sel").val()
+          pageSize: $("#page-size-sel").val(),
+          reportType: 0,  //0:患者报告  1：分析报告
+          batch: null,
+          period: null,
+          beginDate: null,
+          endDate: null,
+          distributed: null //0:是   1： 否
       };
     });
   },
   condition: function(){
     var options = $.report.options;
-    $.get("report/bsi/searchReportList",{"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
+    $.get("report/bsi/searchReportList",{"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
       $.report.loadlist(response);
     });
   },
   pagination: function(currentPage){
     var options = $.report.options;
-    $.get("report/bsi/searchReportList",{"page":currentPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
+    $.get("report/bsi/searchReportList",{"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"page":currentPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
       $.report.loadlist(response);
     });
   }
@@ -225,7 +292,7 @@ $.report.detail = {
     prev: function(currentPage){
       if(currentPage > 1){
         var options = $.report.options;
-        $.post("report/getPrevOrNextBSIReport",{"isPrev":true,"page":currentPage-1,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
+        $.post("report/getPrevOrNextBSIReport",{"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"isPrev":true,"page":currentPage-1,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
           if(response != null &&response !=""){
             $("#container").html(response);
           }
@@ -237,7 +304,7 @@ $.report.detail = {
       currentPage = parseInt(currentPage);
       if(currentPage < totalPage){
         var options = $.report.options;
-        $.post("report/getPrevOrNextBSIReport",{"isPrev":false,"page":currentPage+1,"totalPage":totalPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
+        $.post("report/getPrevOrNextBSIReport",{"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"isPrev":false,"page":currentPage+1,"totalPage":totalPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
           if(response != null &&response !=""){
             $("#container").html(response);
           }
@@ -269,7 +336,7 @@ $.data_ = {
         },
         condition: function(){
           var options = $.data_.options;
-          $.get("data/bsiDataList",{"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
+          $.get("data/bsiDataList",{"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
             $.data_.loadlist(response);
           });
         },

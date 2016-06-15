@@ -5,6 +5,7 @@
 <table class="table table-main">
   <thead>
     <tr>
+      <th></th>
       <th>批次/标签<a id="sort-batch" href="javascript:void(0);"><i id="sort-batch-icon" class="fa fa-sort-asc" aria-hidden="true"></i></a></th>
       <th>文件名<a id="sort-name" href="javascript:void(0);"><i id="sort-name-icon" class="fa fa-sort-asc" aria-hidden="true"></i></a></th>
       <th>状态<a id="sort-period" href="javascript:void(0);"><i id="sort-period-icon" class="fa fa-sort-asc" aria-hidden="true"></i></a></th>
@@ -16,6 +17,7 @@
     <c:if test="${pageList.datas.size()>0 }">
       <c:forEach var="task" items="${pageList.datas }" varStatus="size">
 	    <tr id="report${task.dataKey}${task.projectId}${task.appId}">
+	      <td></td>
 	      <td>${task.batch }</td>
 	      <td title="${task.fileName }" name="data-name-td" >
 	        <c:choose>

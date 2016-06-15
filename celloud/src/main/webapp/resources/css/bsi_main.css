@@ -1084,11 +1084,19 @@ a, a:link, a:hover, a:active, a:visited {
 	font-size: 12px;
 }
 .selector .selector-line{
+	position: relative;
     width: 100%;
     min-height: 34px;
     line-height: 34px;
     padding: 0px 10px;
     border-top: 1px solid #dcdcdc;
+}
+.selector .selector-line:first-child{
+	border-top: none;
+}
+.selector .select-more{
+	border: solid;
+    border: 1px solid rgb(29,210,175); 
 }
 .selector .sl-key{
 	float: left;
@@ -1104,11 +1112,77 @@ a, a:link, a:hover, a:active, a:visited {
 .selector .show-more{
 	height: auto;
 }
-.selector .sl-val span{
-	padding-right: 35px;
+.selector .sl-val-content{
+	display: inline-block;
+    padding-right: 35px;
+    position: relative;
 }
-.selector .sl-val a{
+.selector .sl-val-content .sl-val span{
+	float: left;
+}
+.selector .sl-val-content .sl-val a{
     color: #025e9e;
+    float: left;
+}
+.selector .sl-val input[type='text']{
+	display: inline;
+	border-radius: 6px;
+	border: 1px solid #dcdcdc;
+	color: #a0a0a0;
+	font-size: 12px;
+	height: 24px;
+	width: 100px;
+	padding: 0px 10px;
+}
+.selector .sl-val .sl-btn{
+	display: inline-block;
+    color: #323232;
+    text-align: center;
+    background-color: #e6e6e6; 
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    width: 50px;
+    height: 24px;
+    line-height: 22px;
+    margin-left: 12px;
+}
+.selector .multisl-btns{
+	width: 100%;
+	text-align: center;
+}
+.selector .multisl-btns .disabled{
+	opacity: 0.3;
+}
+.selector .sl-judge{
+	position: relative;
+	display: inline-block;
+	width: 70px;
+	height: 24px;
+	background-color: #e6e6e6; 
+	border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    margin: 5px 0px;
+}
+.selector .sl-judge span{
+	width: 35px;
+    height: 24px;
+    line-height: 22px;
+    color:#fff;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    text-align: center;
+    display: inline-block;
+    padding: 0px;
+}
+.selector .sl-judge .sl-judge-yes{ 
+	margin: -1px 0px 0px -1px;
+	background-color: rgb(29,210,175); 
+	float: left;
+}
+.selector .sl-judge .sl-judge-no{ 
+	margin: -1px -1px 0px 0px;
+	background-color: #ff587d; 
+	float: right;
 }
 .selector .sl-ext{
 	position: absolute;
@@ -1119,16 +1193,42 @@ a, a:link, a:hover, a:active, a:visited {
 .selector .sl-ext a{
 	position: relative;
 	display: inline-block;
-	color: #a0a0a0;
+	color: #969696;
     background-color: #fff;	
 	border: 1px solid #dcdcdc;
 	border-radius: 10px;
 	width: 60px;
-	height: 25px;
+	height: 24px;
 	text-align: center;
-	line-height: 25px;
+	line-height: 22px;
 	float: left;
+}
+.selector .sl-ext a i{
+	color: #a0a0a0;
+	padding-left: 5px;
+	font-weight: lighter;
 }
 .selector .sl-ext a:last-child{
 	float: right;
+}
+.checkbox {
+	background-position: 0 0;
+	display: inline-block;
+    width: 16px;
+    height: 18px;
+    float: left;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.checkbox-un{
+    background-position: -418px -429px;
+}
+.checkbox-ed{
+    background-position: -453px -429px;
+}
+.checkbox-body {
+	opacity: 0;
+	cursor: pointer;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity=0);
 }

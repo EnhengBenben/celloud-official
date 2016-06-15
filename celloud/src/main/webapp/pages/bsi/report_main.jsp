@@ -14,35 +14,92 @@
 <div class="selector">
   <div class="selector-line">
     <div class="sl-key">标签：</div>
-    <div class="sl-val show-more">
+    <div id="batch-lists" class="sl-val">
       <c:forEach items="${batchList }" var="batch">
-        <a href=""><c:if test="${not empty batch}"><span>${batch}</span></c:if></a>
+        <c:if test="${not empty batch}">
+          <div class="sl-val-content">
+	        <div class="celicon checkbox checkbox-un hide">
+	          <input name="report-batch" type="checkbox" class="checkbox-body" value="${batch}">
+	        </div>
+	        <a data-click="report-batch-search" href="javascript:void(0)"><span>${batch}</span></a>
+          </div>
+        </c:if>
       </c:forEach>
+      <div class="multisl-btns hide">
+        <a data-click="report-date-search" class="sl-btn disabled" href="javascript:void(0)">确定</a>
+        <a data-click="report-date-search" class="sl-btn" href="javascript:void(0)">取消</a>
+      </div>
     </div>
     <div class="sl-ext">
-      <a class="sl-more" href="javascript:void(0)">更多<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-      <a class="sl-multiple" href="javascript:void(0)">多选<i class="fa fa-plus" aria-hidden="true"></i></a>
+      <a id="batch-more" class="sl-more" href="javascript:void(0)">更多<i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+      <a id="batch-multiselect" data-click="report-select-more" class="sl-multiple" href="javascript:void(0)">多选<i class="fa fa-plus" aria-hidden="true"></i></a>
     </div>
   </div>
   <div class="selector-line">
     <div class="sl-key">状态：</div>
     <div class="sl-val">
-      <span>ddd</span>
+      <div class="sl-val-content">
+        <div class="celicon on_check checkbox checkbox-un hide">
+          <input name="report-batch" type="checkbox" class="checkbox-body" value="${batch}">
+        </div>
+        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="2"><span>完成</span></a>
+      </div>
+      <div class="sl-val-content">
+        <div class="celicon on_check checkbox checkbox-un hide">
+          <input name="report-batch" type="checkbox" class="checkbox-body" value="${batch}">
+        </div>
+        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="1"><span>分析中</span></a>
+      </div>
+      <div class="sl-val-content">
+        <div class="celicon on_check checkbox checkbox-un hide">
+          <input name="report-batch" type="checkbox" class="checkbox-body" value="${batch}">
+        </div>
+        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="0"><span>等待分析</span></a>
+      </div>
+      <div class="sl-val-content">
+        <div class="celicon on_check checkbox checkbox-un hide">
+          <input name="report-batch" type="checkbox" class="checkbox-body" value="${batch}">
+        </div>
+        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="3"><span>数据上传中</span></a>
+      </div>
+      <div class="sl-val-content">
+        <div class="celicon on_check checkbox checkbox-un hide">
+          <input name="report-batch" type="checkbox" class="checkbox-body" value="${batch}">
+        </div>
+        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="4"><span>异常终止</span></a>
+      </div>
+      <div class="sl-val-content">
+        <div class="celicon on_check checkbox checkbox-un hide">
+          <input name="report-batch" type="checkbox" class="checkbox-body" value="${batch}">
+        </div>
+        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="6"><span>实验处理中</span></a>
+      </div>
+      <div class="sl-val-content">
+        <div class="celicon on_check checkbox checkbox-un hide">
+          <input name="report-batch" type="checkbox" class="checkbox-body" value="${batch}">
+        </div>
+        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="5"><span>送样中</span></a>
+      </div>
     </div>
     <div class="sl-ext">
-      <a class="sl-multiple" href="javascript:void(0)">多选<i class="fa fa-plus" aria-hidden="true"></i></a>
+      <a data-click="report-select-more" class="sl-multiple" href="javascript:void(0)">多选<i class="fa fa-plus" aria-hidden="true"></i></a>
     </div>
   </div>
   <div class="selector-line">
     <div class="sl-key">时间：</div>
     <div class="sl-val">
-      <span>ddd</span>
+      <input id="report-begindate-search" type="text" class="Wdate" onclick="WdatePicker()" readonly="readonly" placeholder="  年    月    日"> - 
+      <input id="report-enddate-search" type="text" class="Wdate" onclick="WdatePicker()" readonly="readonly" placeholder="  年    月    日">
+      <a data-click="report-date-search" class="sl-btn" href="javascript:void(0)">确定</a>
     </div>
   </div>
   <div class="selector-line">
     <div class="sl-key">是否分发：</div>
     <div class="sl-val">
-      <span>ddd</span>
+      <a data-click="report-distributed-search" class="sl-judge" href="javascript:void(0)">
+        <span class="sl-judge-yes">是</span>
+        <span class="sl-judge-no hide">否</span>
+      </a>
     </div>
   </div>
 </div>
