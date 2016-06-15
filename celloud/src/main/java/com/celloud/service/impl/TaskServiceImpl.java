@@ -153,10 +153,11 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public PageList<Task> findTasksByUserCondition(Page page, Integer userId,
             String condition, Integer sort, String sortDate, String sortBatch,
-            String sortName, String sortPeriod) {
+            String sortName, String sortPeriod, String batch, String period,
+            String beginDate, String endDate) {
         List<Task> list = taskMapper.findTasksByUserCondition(page, userId,
                 condition, sort, sortDate, sortBatch, sortName, sortPeriod,
-                DataState.ACTIVE);
+                DataState.ACTIVE, batch, period, beginDate, endDate);
         return new PageList<>(page, list);
     }
 
@@ -164,10 +165,12 @@ public class TaskServiceImpl implements TaskService {
     public PageList<Task> findNextOrPrevTasks(Page page, Integer userId,
             String condition, Integer sort, String sortDate, String sortBatch,
             String sortName, String sortPeriod, Boolean isPrev,
-            Integer totalPage) {
+            Integer totalPage, String batch, String period,
+ String beginDate,
+            String endDate) {
         List<Task> list = this.findTaskListByCondition(page, userId, condition,
                 sort, sortDate, sortBatch, sortName, sortPeriod, isPrev,
-                totalPage);
+                totalPage, batch, period, beginDate, endDate);
         if (list != null) {
             return new PageList<>(page, list);
         } else {
@@ -178,13 +181,15 @@ public class TaskServiceImpl implements TaskService {
     private List<Task> findTaskListByCondition(Page pager, Integer userId,
             String condition, Integer sort, String sortDate, String sortBatch,
             String sortName, String sortPeriod, Boolean isPrev,
-            Integer totalPage) {
+            Integer totalPage, String batch, String period,
+ String beginDate,
+            String endDate) {
         Integer currentPage = pager.getCurrentPage();
         List<Task> list = new ArrayList<>();
         // 查询报告
         list = taskMapper.findTasksByUserCondition(pager, userId, condition,
                 sort, sortDate, sortBatch, sortName, sortPeriod,
-                DataState.ACTIVE);
+                DataState.ACTIVE, batch, period, beginDate, endDate);
         if (list != null) {
             Task t = list.get(0);
             if (t != null && t.getPeriod() == 2) {// 如果找到符合条件的返回
@@ -194,12 +199,12 @@ public class TaskServiceImpl implements TaskService {
                 Page pager1 = new Page(--currentPage, 1);
                 return this.findTaskListByCondition(pager1, userId, condition,
                         sort, sortDate, sortBatch, sortName, sortPeriod, isPrev,
-                        totalPage);
+                        totalPage, batch, period, beginDate, endDate);
             } else if (!isPrev && currentPage < totalPage) {// 向后翻页 取下一份报告
                 Page pager1 = new Page(++currentPage, 1);
                 return this.findTaskListByCondition(pager1, userId, condition,
                         sort, sortDate, sortBatch, sortName, sortPeriod, isPrev,
-                        totalPage);
+                        totalPage, batch, period, beginDate, endDate);
             }
         }
         return null;
