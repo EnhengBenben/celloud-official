@@ -136,7 +136,8 @@ public class UploadAction {
                                         fileFormat);
                                 Subject sub = SecurityUtils.getSubject();
                                 MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
-                                        .send(new Notice("文件上传完成", originalName)).to(sub.getPrincipal().toString());
+                                        .send(new Notice("文件上传完成", "您的文件【" + originalName + "】已经上传完成。"))
+                                        .to(sub.getPrincipal().toString());
                                 if (sub.hasRole("bsier")) {
                                     logger.info("{}拥有百菌探权限", userId);
                                     return bsierCheckRun(tagId, batch, dataId, fileDataKey, needSplit, newName,

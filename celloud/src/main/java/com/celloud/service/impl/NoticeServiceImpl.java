@@ -39,7 +39,7 @@ public class NoticeServiceImpl implements NoticeService {
         if (page == null) {
             page = new Page();
         }
-        List<Notice> list = noticeMapper.pageUserUnreadNotices(ConstantsData.getLoginUserId(), page);
+        List<Notice> list = noticeMapper.pageUserNotices(ConstantsData.getLoginUserId(), page);
         return new PageList<>(page, list);
     }
 
@@ -53,6 +53,22 @@ public class NoticeServiceImpl implements NoticeService {
     public PageList<Notice> findUnreadNotice(Page page) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public void readMessage(Integer[] noticeIds) {
+        noticeMapper.readMessage(ConstantsData.getLoginUserId(), noticeIds);
+    }
+
+    @Override
+    public void readAllMessage() {
+        noticeMapper.readAllMessage(ConstantsData.getLoginUserId());
+    }
+
+    @Override
+    public void deleteMessages(Integer[] noticeIds) {
+        noticeMapper.deleteMessageRelat(ConstantsData.getLoginUserId(), noticeIds);
+        noticeMapper.deleteMessages(noticeIds);
     }
 
 }

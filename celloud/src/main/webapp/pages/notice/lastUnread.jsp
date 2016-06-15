@@ -4,7 +4,7 @@
 	<c:when test="${type=='message' }">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 			<i class="fa fa-bell-o"></i>
-			<span class="label label-warning">${pageList.page.rowCount }</span>
+			<span class="label label-warning">${pageList.page.rowCount==0?'':pageList.page.rowCount }</span>
 		</a>
 		<ul class="dropdown-menu">
 			<li class="header">您有${pageList.page.rowCount }条新消息</li>

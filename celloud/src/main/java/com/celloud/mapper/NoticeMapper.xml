@@ -15,7 +15,7 @@
 	</sql>
 	<sql id="Join_Column_List">
 		tb_notice.notice_id, tb_notice.notice_title, tb_notice.create_date, tb_notice.expire_date,
-		 tb_notice.state,tb_notice.notice_context,tb_notice_user.state as read_state
+		tb_notice.state,tb_notice.notice_context,tb_notice_user.state as read_state
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
@@ -134,23 +134,70 @@
 		state = #{state,jdbcType=INTEGER}
 		where notice_id = #{noticeId,jdbcType=INTEGER}
 	</update>
+	<update id="readMessage">
+		update tb_notice_user
+		set state = 1
+		where
+		notice_id in (
+		<foreach collection="noticeIds" item="noticeId" separator=",">
+			#{noticeId,jdbcType=INTEGER}
+		</foreach>
+		)
+		and user_id = #{userId,jdbcType=INTEGER}
+	</update>
+	<update id="readAllMessage">
+		update tb_notice_user
+		set state = 1
+		where user_id = #{userId,jdbcType=INTEGER}
+	</update>
 	<select id="pageUserUnreadNotices" resultMap="BaseResultMap">
 		select
 		<include refid="Join_Column_List" />
 		from tb_notice
 		left join tb_notice_user on
-        tb_notice_user.notice_id=tb_notice.notice_id and tb_notice_user.user_id=#{userId,jdbcType=INTEGER}
-		where tb_notice.notice_id in ( select notice_id from tb_notice_user where user_id = #{userId,jdbcType=INTEGER})
+		tb_notice_user.notice_id=tb_notice.notice_id and
+		tb_notice_user.user_id=#{userId,jdbcType=INTEGER}
+		where tb_notice.notice_id in ( select notice_id from
+		tb_notice_user
+		where user_id = #{userId,jdbcType=INTEGER})
 		and
-		tb_notice.state = 0
-		order by tb_notice_user.state asc, tb_notice.create_date desc
+		tb_notice_user.state = 0
+		order by tb_notice_user.state
+		asc,
+		tb_notice.create_date desc
 	</select>
 	<select id="pageUserNotices" resultMap="BaseResultMap">
 		select
-		<include refid="Base_Column_List" />
+		<include refid="Join_Column_List" />
 		from tb_notice
-		where notice_id in ( select notice_id from tb_notice_user where user_id = #{userId,jdbcType=INTEGER})
-		and state = 0
-		order by create_date desc
+		left join tb_notice_user on
+		tb_notice_user.notice_id=tb_notice.notice_id and
+		tb_notice_user.user_id=#{userId,jdbcType=INTEGER}
+		where tb_notice.notice_id in ( select notice_id from
+		tb_notice_user
+		where user_id = #{userId,jdbcType=INTEGER})
+		order by tb_notice_user.state asc,
+		tb_notice.create_date desc
 	</select>
+	<delete id="deleteMessageRelat">
+		delete from tb_notice_user
+		where notice_id in (
+		<foreach collection="noticeIds" item="noticeId" separator=",">
+			#{noticeId,jdbcType=INTEGER}
+		</foreach>
+		)
+		and user_id =
+		#{userId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteMessages">
+		delete from tb_notice
+		where (not exists
+		(select notice_id from tb_notice_user where
+		tb_notice_user.notice_id=tb_notice.notice_id))
+		and notice_id in (
+		<foreach collection="noticeIds" item="noticeId" separator=",">
+			#{noticeId,jdbcType=INTEGER}
+		</foreach>
+		)
+	</delete>
 </mapper>

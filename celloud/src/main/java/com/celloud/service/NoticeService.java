@@ -16,4 +16,10 @@ public interface NoticeService {
 
     public PageList<Notice> findLastMessage(Page page);
 
+    public void readMessage(Integer[] noticeIds);
+
+    public void readAllMessage();
+
+    public void deleteMessages(Integer[] noticeIds);
+
 }

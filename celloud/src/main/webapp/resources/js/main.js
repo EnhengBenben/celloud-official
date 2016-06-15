@@ -395,6 +395,7 @@ function showCount(){
 }
 function showNotice(){
 	 $.main.show.mainDIV();
+	 $("#mainDIV").load(CONTEXT_PATH+"/notice/list/notice");
 }
 function showMessage(){
 	 $.main.show.mainDIV();

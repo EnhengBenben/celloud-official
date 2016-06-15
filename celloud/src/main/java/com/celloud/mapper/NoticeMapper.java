@@ -27,4 +27,12 @@ public interface NoticeMapper {
     public List<Notice> pageUserUnreadNotices(@Param("userId") Integer userId, Page page);
 
     public List<Notice> pageUserNotices(@Param("userId") Integer userId, Page page);
+
+    public void readMessage(@Param("userId") Integer userId, @Param("noticeIds") Integer[] noticeIds);
+
+    public void readAllMessage(@Param("userId") Integer userId);
+
+    public void deleteMessages(@Param("noticeIds") Integer[] noticeIds);
+
+    public void deleteMessageRelat(@Param("userId") Integer userId, @Param("noticeIds") Integer[] noticeIds);
 }
