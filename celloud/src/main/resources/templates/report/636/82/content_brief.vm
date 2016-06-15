@@ -45,77 +45,111 @@
                 <td colspan="3" class="label">项目</td>
                 <td colspan="4" class="label">结果</td>
             </tr>
-            <tr>
-                <td>1</td>
-                <td colspan="3">基因分型</td>
-                <td colspan="4"><input type="text" class="tdCenterInput" value="${hbv.type.replace('Type: ','')}型" /></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td colspan="3">恩替卡韦ETV突变耐药株检测</td>
-                <td colspan="4">
-                    #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到恩替卡韦')}>-1)
-                        <input type="text" class="tdCenterInput" value="未检测到恩替卡韦ETV突变耐药株" />
-                    #else
-                        <input type="text" class="tdCenterInput" value="检测到恩替卡韦ETV突变耐药株" />
-                    #end
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td colspan="3">阿德福韦ADV突变耐药株检测</td>
-                <td colspan="4">
-                    #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到阿德福韦')}>-1)
-                        <input type="text" class="tdCenterInput" value="未检测到阿德福韦ADV突变耐药株" />
-                    #else
-                        <input type="text" class="tdCenterInput" value="检测到阿德福韦ADV突变耐药株" />
-                    #end
-                </td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td colspan="3">恩曲他滨FTC突变耐药株检测</td>
-                <td colspan="4">
-                    #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到恩曲他滨')}>-1)
-                        <input type="text" class="tdCenterInput" value="未检测到恩曲他滨FTC突变耐药株" />
-                    #else
-                        <input type="text" class="tdCenterInput" value="检测到恩曲他滨FTC突变耐药株" />
-                    #end
-                </td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td colspan="3">拉米夫定LAM突变耐药株检测</td>
-                <td colspan="4">
-                    #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到拉米夫定')}>-1)
-                        <input type="text" class="tdCenterInput" value="未检测到拉米夫定LAM突变耐药株" />
-                    #else
-                        <input type="text" class="tdCenterInput" value="检测到拉米夫定LAM突变耐药株" />
-                    #end
-                </td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td colspan="3">替比夫定LDT突变耐药株检测</td>
-                <td colspan="4">
-                    #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到替比夫定')}>-1)
-                        <input type="text" class="tdCenterInput" value="未检测到替比夫定LDT突变耐药株" />
-                    #else
-                        <input type="text" class="tdCenterInput" value="检测到替比夫定LDT突变耐药株" />
-                    #end
-                </td>
-            </tr>
-            <tr>
-                <td>7</td>
-                <td colspan="3">替诺福韦酯TDF突变耐药株检测</td>
-                <td colspan="4">
-                    #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到替诺福韦酯')}>-1)
-                        <input type="text" class="tdCenterInput" value="未检测到替诺福韦酯TDF突变耐药株" />
-                    #else
-                        <input type="text" class="tdCenterInput" value="检测到替诺福韦酯TDF突变耐药株" />
-                    #end
-                </td>
-            </tr>
+            #if(${hbv.reporttxt.indexOf('测序失败')}>-1)
+                <tr>
+                    <td>1</td>
+                    <td colspan="3">基因分型</td>
+                    <td colspan="4" rowspan="7">
+                        <input type="text" class="tdCenterInput" value="测序失败,建议重测" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td colspan="3">恩替卡韦ETV突变耐药株检测</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td colspan="3">阿德福韦ADV突变耐药株检测</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td colspan="3">恩曲他滨FTC突变耐药株检测</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td colspan="3">拉米夫定LAM突变耐药株检测</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td colspan="3">替比夫定LDT突变耐药株检测</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td colspan="3">替诺福韦酯TDF突变耐药株检测</td>
+                </tr>
+            #else
+                <tr>
+                    <td>1</td>
+                    <td colspan="3">基因分型</td>
+                    <td colspan="4"><input type="text" class="tdCenterInput" value="${hbv.type.replace('Type: ','')}型" /></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td colspan="3">恩替卡韦ETV突变耐药株检测</td>
+                    <td colspan="4">
+                        #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到恩替卡韦')}>-1)
+                            <input type="text" class="tdCenterInput" value="未检测到恩替卡韦ETV突变耐药株" />
+                        #else
+                            <input type="text" class="tdCenterInput" value="检测到恩替卡韦ETV突变耐药株" />
+                        #end
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td colspan="3">阿德福韦ADV突变耐药株检测</td>
+                    <td colspan="4">
+                        #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到阿德福韦')}>-1)
+                            <input type="text" class="tdCenterInput" value="未检测到阿德福韦ADV突变耐药株" />
+                        #else
+                            <input type="text" class="tdCenterInput" value="检测到阿德福韦ADV突变耐药株" />
+                        #end
+                    </td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td colspan="3">恩曲他滨FTC突变耐药株检测</td>
+                    <td colspan="4">
+                        #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到恩曲他滨')}>-1)
+                            <input type="text" class="tdCenterInput" value="未检测到恩曲他滨FTC突变耐药株" />
+                        #else
+                            <input type="text" class="tdCenterInput" value="检测到恩曲他滨FTC突变耐药株" />
+                        #end
+                    </td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td colspan="3">拉米夫定LAM突变耐药株检测</td>
+                    <td colspan="4">
+                        #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到拉米夫定')}>-1)
+                            <input type="text" class="tdCenterInput" value="未检测到拉米夫定LAM突变耐药株" />
+                        #else
+                            <input type="text" class="tdCenterInput" value="检测到拉米夫定LAM突变耐药株" />
+                        #end
+                    </td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td colspan="3">替比夫定LDT突变耐药株检测</td>
+                    <td colspan="4">
+                        #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到替比夫定')}>-1)
+                            <input type="text" class="tdCenterInput" value="未检测到替比夫定LDT突变耐药株" />
+                        #else
+                            <input type="text" class="tdCenterInput" value="检测到替比夫定LDT突变耐药株" />
+                        #end
+                    </td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td colspan="3">替诺福韦酯TDF突变耐药株检测</td>
+                    <td colspan="4">
+                        #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到替诺福韦酯')}>-1)
+                            <input type="text" class="tdCenterInput" value="未检测到替诺福韦酯TDF突变耐药株" />
+                        #else
+                            <input type="text" class="tdCenterInput" value="检测到替诺福韦酯TDF突变耐药株" />
+                        #end
+                    </td>
+                </tr>
+            #end    
             <tr>
                 <td colspan="8" style="height:230px;text-align:left;">
  备注：<br/>
