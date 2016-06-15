@@ -12,14 +12,10 @@ $(function(){
         var textareaVal;
         var classname;
         var cmpDrug = "";
-        $("body").find("section").each(function(){
-            $(this).removeClass("border1");
-        });
+        $("#print").hide();
         window.print();
+        $("#print").show();
         $("#change").show();
-        $("body").find("section").each(function(){
-            $(this).addClass("border1");
-        });
     });
     
 });

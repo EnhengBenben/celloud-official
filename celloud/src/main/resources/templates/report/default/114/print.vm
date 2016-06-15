@@ -1,5 +1,6 @@
 #parse("templates/report/layout.vm")
 <link href="${base}/css/print_gdd.css" rel="stylesheet">
+<div id="printMain">
 <section class="section2 border1 w3cbbs">
     <div class="header">
         <h1 style="font-size:32px;padding:0 0 5 0px;">细菌感染检测分析报告</h1>
@@ -218,6 +219,7 @@
       </tr>
     </table>
 </section>
+</div>
 <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
 <script src="${base}/js/charts.js"></script>
 <script type="text/javascript">

@@ -1,3 +1,4 @@
+<div id="printMain">
 <section class="section2 border1 w3cbbs">
     <h3>基因检测结果简述</h3>
     <h4>1.&nbsp;&nbsp; 检测文件</h4>
@@ -240,3 +241,4 @@
       </tr>
     </table>
 </section>
+<div>

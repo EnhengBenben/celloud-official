@@ -5,6 +5,12 @@ body {
   	margin:auto;
 }
 
+#pgsSave{
+	max-width: 830px;
+    min-width: 830px;
+    margin: 0 auto;
+}
+
 p {
     color: #535353;
     line-height: 1.5em;

@@ -28,11 +28,15 @@ body {
 	font-family: "黑体", "宋体";
 	font-size: 14px;
 	color: #353535;
-	max-width: 900px;
+}
+
+#printMain{
+	max-width: 850px;
+	min-width: 850px;
+	margin: 0 auto;
 }
 
 .wrapper {
-	margin: auto 10px;
 	padding-bottom: 25px;
 }
 
@@ -51,6 +55,7 @@ table {
 	border-spacing: 0;
 	font-size: 13px;
 	background-color: transparent;
+	margin: 0 auto;
 }
 
 table td {

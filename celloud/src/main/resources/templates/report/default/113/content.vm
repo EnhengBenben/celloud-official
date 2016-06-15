@@ -7,7 +7,7 @@
             <li>样本类型：<span><input type="text" name='baseInfo["sampleType"]' value="$!{split.baseInfo.sampleType}"></span></li>
             <li>姓名：<span><input type="text" name='baseInfo["name"]' value="$!{split.baseInfo.name}"></span></li>
             <li>申请日期：<span><input type="text" name='baseInfo["applicationDate"]' value="$!{split.baseInfo.applicationDate}"></span></li>
-            <li>性别： <span id="_sex"><input type="radio" name='baseInfo["sex"]' value="男" #if(${split.baseInfo.sex}=='男')checked="checked"#end>男<input type="radio" name='baseInfo["sex"]' value="女" #if(${split.baseInfo.sex}=='女')checked="checked"#end>女</span></li>
+            <li>性别： <span id="_sex"><input type="radio" name='baseInfo["sex"]' value="男" #if(${split.baseInfo.sex}!='女')checked="checked"#end>男<input type="radio" name='baseInfo["sex"]' value="女" #if(${split.baseInfo.sex}=='女')checked="checked"#end>女</span></li>
             <li>接收日期：<span><input type="text" name='baseInfo["receivedDate"]' value="$!{split.baseInfo.receivedDate}"></span></li>
             <li>年龄：<span><input type="text" id="patientAge" name='baseInfo["age"]' value="$!{split.baseInfo.age}"></span>岁</li>
             <li>样本状态：<span><input type="text" name='baseInfo["status"]' value="$!{split.baseInfo.status}"></span></li>
@@ -165,3 +165,4 @@
       </tr>
     </table>
 </section>
+</div>
