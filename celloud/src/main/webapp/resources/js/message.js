@@ -139,16 +139,3 @@ var messageUtils = (function(messageUtils) {
 
 	return self;
 })(messageUtils);
-messageUtils.addOpenListener(function() {
-	$("#messages-menu").load(CONTEXT_PATH + "/notice/lastUnread/message");
-});
-messageUtils.subscribe("userMessage", function(data) {
-	$("#messages-menu").load(CONTEXT_PATH + "/notice/lastUnread/message");
-	messageUtils.notify(data.noticeTitle, data.noticeContext, {}, {
-		"onclick" : function() {
-			var notification = this;
-			notification.close();
-			$("#messages-menu").addClass("open");
-		}
-	});
-});

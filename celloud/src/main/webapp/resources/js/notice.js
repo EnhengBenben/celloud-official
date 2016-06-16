@@ -1,9 +1,31 @@
 var notices = (function(object) {
 	var self = object || {};
+	/**
+	 * 监听websocket的open事件，在已经建立好websocket之后，直接刷新页面右上角的提醒。
+	 */
+	messageUtils.addOpenListener(function() {
+		$("#messages-menu").load(CONTEXT_PATH + "/notice/lastUnread/message");
+	});
+	/**
+	 * 监听userMessage频道，有新消息时，刷新右上角提醒
+	 */
+	messageUtils.subscribe("userMessage", function(data) {
+		$("#messages-menu").load(CONTEXT_PATH + "/notice/lastUnread/message");
+		messageUtils.notify(data.noticeTitle, data.noticeContext, {}, {
+			"onclick" : function() {
+				var notification = this;
+				notification.close();
+				$("#messages-menu").addClass("open");
+			}
+		});
+	});
 	var page = {
 			'message':{'currentPage':1,'pageSize':10},
 			'notice':{'currentPage':1,'pageSize':10}
 	};
+	/**
+	 * 分页查询所有消息提醒
+	 */
 	self.pageMessage = function(currentPage, pageSize) {
 		page.message.currentPage = currentPage;
 		page.message.pageSize = pageSize;
@@ -24,6 +46,9 @@ var notices = (function(object) {
 			"pageSize" : pageSize
 		});
 	};
+	/**
+	 * 切换页签到消息提醒
+	 */
 	self.showUserMessage = function(){
 		$("#userMessageTab").siblings().removeClass("active");
 		$("#userMessageTab").addClass("active");
@@ -31,6 +56,9 @@ var notices = (function(object) {
 		$("#userMessage").removeClass("hide");
 		$("#subtitle").html("消息提醒");
 	};
+	/**
+	 * 切换页签到系统公告
+	 */
 	self.showUserNotice = function(){
 		$("#userNoticeTab").siblings().removeClass("active");
 		$("#userNoticeTab").addClass("active");
@@ -38,14 +66,21 @@ var notices = (function(object) {
 		$("#userNotice").removeClass("hide");
 		$("#subtitle").html("系统公告");
 	};
+	/**
+	 * 列表check all 的checkbox事件
+	 */
 	$(".mainpage").on("click","#messageListCheckAll",function(){
 		if($(this).is(":checked")){
 			$("#messageListForm [name='noticeIds']").prop('checked',true);
 		}else{
 			$("#messageListForm [name='noticeIds']").removeAttr("checked");
 		}
-		$("#messageListForm [name='noticeIds']").change();
+		//手动触发一下每个checkbox的change事件，用来改变按钮状态，不加first过滤，会触发多次，这里触发一次就够了。
+		$("#messageListForm [name='noticeIds']:first").change();
 	});
+	/**
+	 * 列表中每个checkbox的事件
+	 */
 	$(".mainpage").on("click","#messageListForm [name='noticeIds']",function(){
 		if(!$(this).is(":checked")){
 			$("#messageListCheckAll").removeAttr("checked");
@@ -55,6 +90,9 @@ var notices = (function(object) {
 			}
 		}
 	});
+	/**
+	 * 监听每个checkbox的cheng事件，用来判断【已读】【删除】两个按钮的disabled状态
+	 */
 	$(".mainpage").on("change","#messageListForm [name='noticeIds']",function(){
 		if($("#messageListForm input[name='noticeIds']:checked").length != 0){
 			$("#messageDeleteBtn").removeAttr("disabled");
@@ -67,6 +105,9 @@ var notices = (function(object) {
 			$("#messageReadBtn").attr("disabled","disabled");
 		}
 	});
+	/**
+	 * 将选中的消息置为已读
+	 */
 	self.readMessage = function(){
 		$.post(CONTEXT_PATH+"/notice/read",$("#messageListForm").serialize(),function(response){
 			if(response.success){
@@ -75,6 +116,9 @@ var notices = (function(object) {
 			}
 		});
 	};
+	/**
+	 * 将全部消息置为已读
+	 */
 	self.readAllMessage = function(){
 		$.post(CONTEXT_PATH+"/notice/readAll",{},function(response){
 			if(response.success){
@@ -83,6 +127,9 @@ var notices = (function(object) {
 			}
 		});
 	};
+	/**
+	 * 删除选中的消息，无论是否已读，都可以直接删除
+	 */
 	self.deleteMessage = function(){
 		$.post(CONTEXT_PATH+"/notice/delete",$("#messageListForm").serialize(),function(response){
 			if(response.success){
