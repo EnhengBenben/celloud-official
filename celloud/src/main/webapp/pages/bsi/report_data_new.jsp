@@ -29,7 +29,7 @@
 	          <c:forEach items="${bsi.species_20 }" var="species20">
 	            <c:choose>
 	              <c:when test='${species20.species_zh.equals("未知") || empty species20.species_zh}'>${species20.species }<br></c:when>
-	              <c:otherwise>${species20.species_zh }
+	              <c:otherwise>${species20.species_zh }<br>
 	                <c:choose>
 	                  <c:when test="${empty havestrain}">
 	                    <c:set var="havestrain" scope="page" value="${species20.species_zh }"/>
