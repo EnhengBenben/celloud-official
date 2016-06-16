@@ -186,6 +186,7 @@ $.report.find = {
       });
       $("#batch-multiselect").on("click",function(){
         $("#batch-lists").addClass("show-more");
+        $("#batch-more span").html("收起");
         $("#batch-more i").removeClass("fa-chevron-down").addClass("fa-chevron-up");
       });
       $("#batch-lists .sl-val-content").on("click",function(){
@@ -204,6 +205,11 @@ $.report.find = {
           $.report.options.batch == null? $.report.options.batch = "'"+$(this).next().text()+"'" : $.report.options.batch += ",'"+$(this).next().text() + "'";
         });
         $.report.find.condition();
+        $("#batch-sl").removeClass("select-more");
+        $("#batch-lists").removeClass("show-more");
+        $("#batch-lists").find(".checkbox").addClass("hide");
+        $("#batch-more span").html("更多");
+        $("#batch-more i").removeClass("fa-chevron-up").addClass("fa-chevron-down");
       });
       $("#period-lists .sl-val-content").on("click",function(){
         $(this).find(".checkbox").toggleClass("checkbox-un");
@@ -221,6 +227,9 @@ $.report.find = {
           $.report.options.period == null? $.report.options.period = $(this).next().find("input[type='hidden']").val() : $.report.options.period += ","+$(this).next().find("input[type='hidden']").val();
         });
         $.report.find.condition();
+        $("#period-sl").removeClass("select-more");
+        $("#period-sl").find(".checkbox").addClass("hide");
+        $("#period-sl").find(".multisl-btns").addClass("hide");
       });
       $("body").on("click","[data-click='reset-multiselect']",function(){
         var selectorline = $(this).parent().parent().parent();
@@ -257,6 +266,8 @@ $.report.find = {
     var options = $.report.options;
     $.get("report/bsi/searchReportList",{"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
       $.report.loadlist(response);
+      $.report.options.batch = null;
+      $.report.options.period = null;
     });
   },
   pagination: function(currentPage){

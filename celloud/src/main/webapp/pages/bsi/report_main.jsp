@@ -12,7 +12,7 @@
   </ol>
 </div>
 <div class="selector">
-  <div class="selector-line">
+  <div id="batch-sl" class="selector-line">
     <div class="sl-key">标签：</div>
     <div id="batch-lists" class="sl-val">
       <c:forEach items="${batchList }" var="batch">
@@ -33,7 +33,7 @@
       <a id="batch-multiselect" data-click="report-select-more" class="sl-multiple" href="javascript:void(0)">多选<i class="fa fa-plus" aria-hidden="true"></i></a>
     </div>
   </div>
-  <div class="selector-line">
+  <div id="period-sl" class="selector-line">
     <div class="sl-key">状态：</div>
     <div id="period-lists" class="sl-val">
       <div class="sl-val-content">
