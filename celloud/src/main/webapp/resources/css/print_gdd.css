@@ -6,11 +6,6 @@ img {border:0;}
 li {list-style:none;}
 .border1{border:1px solid #ccc;padding:50px 50px;}
 /* base -chrome*/
-#printMain{
-	max-width: 830px;
-	min-width: 830px;
-	margin: 0 auto;
-}
 body{ font-family:"Times New Roman","微软雅黑"; font-size:12px; max-width: 900px;margin:auto;color:#232323}
 /* h3{ font-size:22px;  padding:10px 0px 10px 0px;background-color: #b0d73d; margin:0px -15px 10px -15px; padding-left: 20px; color: #fff;} */
 h3{ font-size: 18px; color: #79bb26;padding-bottom:6px}
