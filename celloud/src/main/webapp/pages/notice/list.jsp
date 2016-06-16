@@ -51,7 +51,7 @@
 								</thead>
 								<tbody>
 									<c:forEach items="${messageList.datas }" var="message">
-										<tr style="font-weight: ${message.readState==0?'bold':'normal'};">
+										<tr style="font-weight: ${message.readState==0?'bold':'normal'};" read-state="${message.readState }">
 											<td class="text-center">
 												<input type="checkbox" name="noticeIds" value="${message.noticeId }">
 											</td>
@@ -66,7 +66,7 @@
 												</c:choose>
 											</td>
 											<td>
-												<i class="fa fa-sellsy"></i> ${message.noticeTitle }
+												<i class="${message.icon }"></i> ${message.noticeTitle }
 											</td>
 											<td>${message.noticeContext }</td>
 											<td class="text-center">

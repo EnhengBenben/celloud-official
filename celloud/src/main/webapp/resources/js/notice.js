@@ -58,9 +58,12 @@ var notices = (function(object) {
 	$(".mainpage").on("change","#messageListForm [name='noticeIds']",function(){
 		if($("#messageListForm input[name='noticeIds']:checked").length != 0){
 			$("#messageDeleteBtn").removeAttr("disabled");
-			$("#messageReadBtn").removeAttr("disabled");
 		}else{
 			$("#messageDeleteBtn").attr("disabled","disabled");
+		}
+		if($("#messageListForm tr[read-state='0'] input[name='noticeIds']:checked").length != 0){
+			$("#messageReadBtn").removeAttr("disabled");
+		}else{
 			$("#messageReadBtn").attr("disabled","disabled");
 		}
 	});

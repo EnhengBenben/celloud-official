@@ -32,12 +32,12 @@ import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
+import com.celloud.constants.NoticeConstants;
 import com.celloud.constants.TaskPeriod;
 import com.celloud.message.MessageUtils;
 import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Experiment;
-import com.celloud.model.mysql.Notice;
 import com.celloud.model.mysql.Task;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
@@ -135,8 +135,9 @@ public class UploadAction {
                                 updateFileInfo(dataId, fileDataKey, newName, perlPath, outPath, folderByDay, batch,
                                         fileFormat);
                                 Subject sub = SecurityUtils.getSubject();
-                                MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
-                                        .send(new Notice("文件上传完成", "您的文件【" + originalName + "】已经上传完成。"))
+                                MessageUtils.get()
+                                        .on(Constants.MESSAGE_USER_CHANNEL).send(NoticeConstants.createMessage("upload",
+                                                "文件上传完成", "您的文件【" + originalName + "】已经上传完成。"))
                                         .to(sub.getPrincipal().toString());
                                 if (sub.hasRole("bsier")) {
                                     logger.info("{}拥有百菌探权限", userId);

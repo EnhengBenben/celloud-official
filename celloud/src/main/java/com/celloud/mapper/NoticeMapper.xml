@@ -4,6 +4,8 @@
 	<resultMap id="BaseResultMap" type="com.celloud.model.mysql.Notice">
 		<id column="notice_id" property="noticeId" jdbcType="INTEGER" />
 		<result column="notice_title" property="noticeTitle" jdbcType="VARCHAR" />
+		<result column="category" property="category" jdbcType="VARCHAR" />
+		<result column="notice_title" property="noticeTitle" jdbcType="VARCHAR" />
 		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
 		<result column="expire_date" property="expireDate" jdbcType="TIMESTAMP" />
 		<result column="notice_context" property="noticeContext" jdbcType="LONGVARCHAR" />
@@ -11,11 +13,11 @@
 		<result column="read_state" property="readState" jdbcType="INTEGER" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		notice_id, notice_title, create_date, expire_date, state,notice_context
+		notice_id, notice_title, create_date, expire_date, state,notice_context,type,category
 	</sql>
 	<sql id="Join_Column_List">
 		tb_notice.notice_id, tb_notice.notice_title, tb_notice.create_date, tb_notice.expire_date,
-		tb_notice.state,tb_notice.notice_context,tb_notice_user.state as read_state
+		tb_notice.state,tb_notice.notice_context, tb_notice.type, tb_notice.category,tb_notice_user.state as read_state
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
@@ -31,12 +33,13 @@
 	<insert id="insert" parameterType="com.celloud.model.mysql.Notice" useGeneratedKeys="true" keyProperty="noticeId">
 		insert
 		into tb_notice (notice_id, notice_title, create_date,
-		expire_date, notice_context
+		expire_date, notice_context,type,category
 		)
-		values (#{noticeId,jdbcType=INTEGER},
+		values
+		(#{noticeId,jdbcType=INTEGER},
 		#{noticeTitle,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
 		#{expireDate,jdbcType=TIMESTAMP},
-		#{noticeContext,jdbcType=LONGVARCHAR}
+		#{noticeContext,jdbcType=LONGVARCHAR},#{type,jdbcType=VARCHAR},,#{category,jdbcType=VARCHAR},
 		)
 	</insert>
 	<insert id="insertNoticeUser">
@@ -69,6 +72,12 @@
 			<if test="noticeContext != null">
 				notice_context,
 			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="category != null">
+				category,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="noticeId != null">
@@ -88,6 +97,12 @@
 			</if>
 			<if test="noticeContext != null">
 				#{noticeContext,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="category != null">
+				#{category,jdbcType=LONGVARCHAR},
 			</if>
 		</trim>
 	</insert>

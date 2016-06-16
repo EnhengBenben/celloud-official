@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
+	import="com.celloud.model.mysql.Notice,com.celloud.utils.DateUtil"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:choose>
 	<c:when test="${type=='message' }">
@@ -11,13 +12,14 @@
 			<li>
 				<ul class="menu">
 					<c:forEach items="${pageList.datas }" var="notice">
+						<c:set scope="request" var="notice" value="${notice }"></c:set>
 						<li>
 							<a href="javascript:;">
 								<div class="pull-left">
-									<i class="fa fa-sellsy fa-2x"></i>
+									<i class="${notice.icon } fa-2x" ></i>
 								</div>
 								<h4>
-									${notice.noticeTitle } <small><i class="fa fa-clock-o"></i> 5 分钟</small>
+									${notice.noticeTitle } <small><i class="fa fa-clock-o"></i> <%=DateUtil.formatPastTime(((Notice) request.getAttribute("notice")).getCreateDate())%></small>
 								</h4>
 								<p style="word-wrap: break-word; word-break: normal;">${notice.noticeContext }</p>
 							</a>
