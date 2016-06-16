@@ -140,11 +140,16 @@ $.report.find = {
         if(!$("#batch-lists").hasClass("select-more"))
           $.report.options.batch = "'"+$(this).text()+"'";
           $.report.find.condition();
-          $.report.options.batch = null;
+          $("#selected-batch span").html($(this).text());
+          $("#selected-batch").removeClass("hide");
+          $("#to-sl-batch").addClass("hide");
       });
       $("body").on("click","[data-click='report-period-search']",function(){
         $.report.options.period = $(this).find("input").val();
         $.report.find.condition();
+        $("#selected-period span").html($(this).find("input").val());
+        $("#selected-period").removeClass("hide");
+        $("#to-sl-period").addClass("hide");
       });
       $("body").on("click","[data-click='report-date-search']",function(){
         $.report.options.beginDate = $("#report-begindate-search").val();
@@ -201,15 +206,25 @@ $.report.find = {
         }
       });
       $("#report-multibatch-search").on("click",function(){
+        var show_val = [];
         $("#batch-lists .checkbox-ed").each(function(){
           $.report.options.batch == null? $.report.options.batch = "'"+$(this).next().text()+"'" : $.report.options.batch += ",'"+$(this).next().text() + "'";
+          show_val.push($(this).next().text());
         });
         $.report.find.condition();
+        $("#selected-batch span").html(show_val.toString());
+        $("#selected-batch").removeClass("hide");
+        $("#to-sl-batch").addClass("hide");
         $("#batch-sl").removeClass("select-more");
         $("#batch-lists").removeClass("show-more");
         $("#batch-lists").find(".checkbox").addClass("hide");
         $("#batch-more span").html("更多");
         $("#batch-more i").removeClass("fa-chevron-up").addClass("fa-chevron-down");
+      });
+      $("#clear-sl-batch").on("click",function(){
+        $("#selected-batch").addClass("hide");
+        $("#to-sl-batch").removeClass("hide");
+        $.report.find.condition();
       });
       $("#period-lists .sl-val-content").on("click",function(){
         $(this).find(".checkbox").toggleClass("checkbox-un");
@@ -223,13 +238,23 @@ $.report.find = {
         }
       });
       $("#report-multiperiod-search").on("click",function(){
+        var show_val = [];
         $("#period-lists .checkbox-ed").each(function(){
           $.report.options.period == null? $.report.options.period = $(this).next().find("input[type='hidden']").val() : $.report.options.period += ","+$(this).next().find("input[type='hidden']").val();
+          show_val.push($(this).next().find("span").html());
         });
         $.report.find.condition();
+        $("#selected-period span").html(show_val);
+        $("#selected-period").removeClass("hide");
+        $("#to-sl-period").addClass("hide");
         $("#period-sl").removeClass("select-more");
         $("#period-sl").find(".checkbox").addClass("hide");
         $("#period-sl").find(".multisl-btns").addClass("hide");
+      });
+      $("#clear-sl-period").on("click",function(){
+        $("#selected-period").addClass("hide");
+        $("#to-sl-period").removeClass("hide");
+        $.report.find.condition();
       });
       $("body").on("click","[data-click='reset-multiselect']",function(){
         var selectorline = $(this).parent().parent().parent();

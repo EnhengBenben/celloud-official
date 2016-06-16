@@ -14,63 +14,75 @@
 <div class="selector">
   <div id="batch-sl" class="selector-line">
     <div class="sl-key">标签：</div>
-    <div id="batch-lists" class="sl-val">
-      <c:forEach items="${batchList }" var="batch">
-        <c:if test="${not empty batch}">
-          <div class="sl-val-content">
-	        <div class="celicon checkbox checkbox-un hide"></div>
-	        <a data-click="report-batch-search" href="javascript:void(0)"><span>${batch}</span></a>
-          </div>
-        </c:if>
-      </c:forEach>
-      <div class="multisl-btns hide">
-        <a id="report-multibatch-search" class="sl-btn disabled" href="javascript:void(0)" disabled="disabled">确定</a>
-        <a data-click="reset-multiselect" class="sl-btn" href="javascript:void(0)">取消</a>
-      </div>
+    <div id="selected-batch" class="sl-val selected-val hide">
+      <span></span>
+      <a id="clear-sl-batch"><i class="fa fa-times"></i></a>
     </div>
-    <div class="sl-ext">
-      <a id="batch-more" class="sl-more" href="javascript:void(0)"><span>更多</span><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
-      <a id="batch-multiselect" data-click="report-select-more" class="sl-multiple" href="javascript:void(0)">多选<i class="fa fa-plus" aria-hidden="true"></i></a>
+    <div id="to-selected">
+      <div id="batch-lists" class="sl-val">
+        <c:forEach items="${batchList }" var="batch">
+          <c:if test="${not empty batch}">
+            <div class="sl-val-content">
+	          <div class="celicon checkbox checkbox-un hide"></div>
+	          <a data-click="report-batch-search" href="javascript:void(0)"><span>${batch}</span></a>
+            </div>
+          </c:if>
+        </c:forEach>
+        <div class="multisl-btns hide">
+          <a id="report-multibatch-search" class="sl-btn disabled" href="javascript:void(0)" disabled="disabled">确定</a>
+          <a data-click="reset-multiselect" class="sl-btn" href="javascript:void(0)">取消</a>
+        </div>
+      </div>
+      <div class="sl-ext">
+        <a id="batch-more" class="sl-more" href="javascript:void(0)"><span>更多</span><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+        <a id="batch-multiselect" data-click="report-select-more" class="sl-multiple" href="javascript:void(0)">多选<i class="fa fa-plus" aria-hidden="true"></i></a>
+      </div>
     </div>
   </div>
   <div id="period-sl" class="selector-line">
     <div class="sl-key">状态：</div>
-    <div id="period-lists" class="sl-val">
-      <div class="sl-val-content">
-        <div class="celicon on_check checkbox checkbox-un hide"></div>
-        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="2"><span>完成</span></a>
-      </div>
-      <div class="sl-val-content">
-        <div class="celicon on_check checkbox checkbox-un hide"></div>
-        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="1"><span>分析中</span></a>
-      </div>
-      <div class="sl-val-content">
-        <div class="celicon on_check checkbox checkbox-un hide"></div>
-        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="0"><span>等待分析</span></a>
-      </div>
-      <div class="sl-val-content">
-        <div class="celicon on_check checkbox checkbox-un hide"></div>
-        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="3"><span>数据上传中</span></a>
-      </div>
-      <div class="sl-val-content">
-        <div class="celicon on_check checkbox checkbox-un hide"></div>
-        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="4"><span>异常终止</span></a>
-      </div>
-      <div class="sl-val-content">
-        <div class="celicon on_check checkbox checkbox-un hide"></div>
-        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="6"><span>实验中</span></a>
-      </div>
-      <div class="sl-val-content">
-        <div class="celicon on_check checkbox checkbox-un hide"></div>
-        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="5"><span>送样中</span></a>
-      </div>
-      <div class="multisl-btns hide">
-        <a id="report-multiperiod-search" class="sl-btn disabled" href="javascript:void(0)" disabled="disabled">确定</a>
-        <a data-click="reset-multiselect" class="sl-btn" href="javascript:void(0)">取消</a>
-      </div>
+    <div id="selected-period" class="sl-val selected-val hide">
+      <span></span>
+      <a id="clear-sl-period"><i class="fa fa-times"></i></a>
     </div>
-    <div class="sl-ext">
-      <a data-click="report-select-more" class="sl-multiple" href="javascript:void(0)">多选<i class="fa fa-plus" aria-hidden="true"></i></a>
+    <div id="to-sl-period">
+	    <div id="period-lists" class="sl-val">
+	      <div class="sl-val-content">
+	        <div class="celicon on_check checkbox checkbox-un hide"></div>
+	        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="2"><span>完成</span></a>
+	      </div>
+	      <div class="sl-val-content">
+	        <div class="celicon on_check checkbox checkbox-un hide"></div>
+	        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="1"><span>分析中</span></a>
+	      </div>
+	      <div class="sl-val-content">
+	        <div class="celicon on_check checkbox checkbox-un hide"></div>
+	        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="0"><span>等待分析</span></a>
+	      </div>
+	      <div class="sl-val-content">
+	        <div class="celicon on_check checkbox checkbox-un hide"></div>
+	        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="3"><span>数据上传中</span></a>
+	      </div>
+	      <div class="sl-val-content">
+	        <div class="celicon on_check checkbox checkbox-un hide"></div>
+	        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="4"><span>异常终止</span></a>
+	      </div>
+	      <div class="sl-val-content">
+	        <div class="celicon on_check checkbox checkbox-un hide"></div>
+	        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="6"><span>实验中</span></a>
+	      </div>
+	      <div class="sl-val-content">
+	        <div class="celicon on_check checkbox checkbox-un hide"></div>
+	        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="5"><span>送样中</span></a>
+	      </div>
+	      <div class="multisl-btns hide">
+	        <a id="report-multiperiod-search" class="sl-btn disabled" href="javascript:void(0)" disabled="disabled">确定</a>
+	        <a data-click="reset-multiselect" class="sl-btn" href="javascript:void(0)">取消</a>
+	      </div>
+	    </div>
+	    <div class="sl-ext">
+	      <a data-click="report-select-more" class="sl-multiple" href="javascript:void(0)">多选<i class="fa fa-plus" aria-hidden="true"></i></a>
+	    </div>
     </div>
   </div>
   <div class="selector-line">
