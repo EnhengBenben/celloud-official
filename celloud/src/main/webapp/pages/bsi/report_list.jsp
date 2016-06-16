@@ -6,7 +6,7 @@
   <thead>
     <tr>
       <th width="40">
-        <div class="celicon checkbox checkbox-un"></div>
+        <div data-click="report-check-all" class="celicon checkbox checkbox-un"></div>
       </th>
       <th width="140">
         <input id="" type="text" placeholder="样本编号/病历号">
@@ -48,7 +48,7 @@
 	        <c:if test="${task.period==3 }"><a data-toggle="modal" data-target="#report-uploading-modal">数据上传中</a></c:if>
             <c:if test="${task.period==4 }">异常终止</c:if>
             <c:if test="${task.period==5 }">送样中</c:if>
-            <c:if test="${task.period==6 }">实验处理中</c:if>
+            <c:if test="${task.period==6 }">实验中</c:if>
 	        <c:if test="${empty task.period }"><a href="javascript:void(0)" onclick="$.report.period.error('${task.fileName }')" class="wrong">运行异常</a></c:if>
 	      </td>
 	      <td class="date-td"><fmt:formatDate value="${task.updateDate }" type="both" dateStyle="long" pattern="yyyy-MM-dd HH:mm:ss" /></td>
@@ -93,7 +93,7 @@
     <input id="current-page-hide" value="${pageList.page.currentPage }" type="hidden" >
     <input id="total-page-hide" value="${pageList.page.totalPage }" type="hidden" >
     <ul class="pagination-check pull-left">
-      <li class="checkbox-li"><div class="celicon checkbox checkbox-un"></div></li>
+      <li class="checkbox-li"><div data-click="report-check-all" class="celicon checkbox checkbox-un"></div></li>
       <li>全选</li>
       <li>
         <select>
@@ -126,7 +126,7 @@
         <c:otherwise><li><a name="pagination-task" href="javascript:void(0);">1</a></li></c:otherwise>
       </c:choose>
       
-      <c:if test="${pageList.page.currentPage>4&&pageList.page.totalPage>10}">
+      <c:if test="${pageList.page.currentPage>3&&pageList.page.totalPage>6}">
           <li><a href="javascript:void(0)">…</a></li>
       </c:if>
       <c:choose>
@@ -149,34 +149,34 @@
           <c:if test="${pageList.page.totalPage-pageList.page.currentPage>2}">
               <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+2 }</a></li>
           </c:if>
-          <c:if test="${pageList.page.totalPage-pageList.page.currentPage>3}">
-              <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+3 }</a></li>
-          </c:if>
-          <c:if test="${pageList.page.totalPage-pageList.page.currentPage>4}">
-              <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+4 }</a></li>
-          </c:if>
-          <c:if test="${pageList.page.totalPage-pageList.page.currentPage>5}">
-              <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+5 }</a></li>
-          </c:if>
+<%--           <c:if test="${pageList.page.totalPage-pageList.page.currentPage>3}"> --%>
+<%--               <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+3 }</a></li> --%>
+<%--           </c:if> --%>
+<%--           <c:if test="${pageList.page.totalPage-pageList.page.currentPage>4}"> --%>
+<%--               <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+4 }</a></li> --%>
+<%--           </c:if> --%>
+<%--           <c:if test="${pageList.page.totalPage-pageList.page.currentPage>5}"> --%>
+<%--               <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+5 }</a></li> --%>
+<%--           </c:if> --%>
           <c:if test="${pageList.page.currentPage<4}">
-              <c:if test="%{pageList.page.totalPage-pageList.page.currentPage>6}">
-                  <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+6 }</a></li>
+              <c:if test="%{pageList.page.totalPage-pageList.page.currentPage>3}">
+                  <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+3 }</a></li>
               </c:if>
           </c:if>
           <c:choose>
             <c:when test="${pageList.page.currentPage==1}">
-              <c:if test="%{pageList.page.totalPage-pageList.page.currentPage>7}">
-                  <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+7 }</a></li>
+              <c:if test="%{pageList.page.totalPage-pageList.page.currentPage>4}">
+                  <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+4 }</a></li>
               </c:if>
-              <c:if test="%{pageList.page.totalPage-pageList.page.currentPage>8}">
-                  <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+8 }</a></li>
+              <c:if test="%{pageList.page.totalPage-pageList.page.currentPage>5}">
+                  <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+5 }</a></li>
               </c:if>
             </c:when>
             <c:otherwise>
               <c:choose>
                 <c:when test="${pageList.page.currentPage==2}">
-                  <c:if test="${pageList.page.totalPage-pageList.page.currentPage>7}">
-                      <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+7 }</a></li>
+                  <c:if test="${pageList.page.totalPage-pageList.page.currentPage>4}">
+                      <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+4 }</a></li>
                   </c:if>
                 </c:when>
                 <c:otherwise>

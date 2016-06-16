@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="sl-ext">
-      <a id="batch-more" class="sl-more" href="javascript:void(0)">更多<i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+      <a id="batch-more" class="sl-more" href="javascript:void(0)"><span>更多</span><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
       <a id="batch-multiselect" data-click="report-select-more" class="sl-multiple" href="javascript:void(0)">多选<i class="fa fa-plus" aria-hidden="true"></i></a>
     </div>
   </div>
@@ -58,7 +58,7 @@
       </div>
       <div class="sl-val-content">
         <div class="celicon on_check checkbox checkbox-un hide"></div>
-        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="6"><span>实验处理中</span></a>
+        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="6"><span>实验中</span></a>
       </div>
       <div class="sl-val-content">
         <div class="celicon on_check checkbox checkbox-un hide"></div>

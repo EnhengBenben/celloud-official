@@ -1171,8 +1171,8 @@ a, a:link, a:hover, a:active, a:visited {
 	border-top: none;
 }
 .selector .select-more{
-	border: solid;
     border: 1px solid rgb(29,210,175); 
+    border-top: 1px solid rgb(29,210,175) !important; 
 }
 .selector .sl-key{
 	float: left;

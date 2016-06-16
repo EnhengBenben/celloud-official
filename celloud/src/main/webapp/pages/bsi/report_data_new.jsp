@@ -177,27 +177,27 @@
 	                          粪肠球菌
 	           </td>
 	           <c:choose>
-	             <c:when test="${havestrain.contains('屎肠球菌') }">
-	               <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
-	             </c:when>
-	             <c:otherwise>
-	               <td><i class="fa fa-circle-o" aria-hidden="true"></i>
-	             </c:otherwise>
-	           </c:choose>
-	                           屎肠球菌
-	           </td>
+                 <c:when test="${havestrain.contains('艰难梭状芽胞杆菌') }">
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+                 </c:when>
+                 <c:otherwise>
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+                 </c:otherwise>
+               </c:choose>
+                               艰难梭状芽胞杆菌
+               </td>
 	         </tr>
 	         <tr>
 	           <c:choose>
-	             <c:when test="${havestrain.contains('艰难梭状芽胞杆菌') }">
-	               <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
-	             </c:when>
-	             <c:otherwise>
-	               <td><i class="fa fa-circle-o" aria-hidden="true"></i>
-	             </c:otherwise>
-	           </c:choose>
-	                           艰难梭状芽胞杆菌
-	           </td>
+                 <c:when test="${havestrain.contains('屎肠球菌') }">
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+                 </c:when>
+                 <c:otherwise>
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+                 </c:otherwise>
+               </c:choose>
+                               屎肠球菌
+               </td>
 	           <c:choose>
 	             <c:when test="${havestrain.contains('表皮葡萄球菌') }">
 	               <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
@@ -294,16 +294,6 @@
 	                          阴沟肠杆菌
 	           </td>
 	           <c:choose>
-	             <c:when test="${havestrain.contains('洋葱伯克霍尔德菌') }">
-	               <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
-	             </c:when>
-	             <c:otherwise>
-	               <td><i class="fa fa-circle-o" aria-hidden="true"></i>
-	             </c:otherwise>
-	           </c:choose>
-	                           洋葱伯克霍尔德菌
-	           </td>
-	           <c:choose>
                  <c:when test="${havestrain.contains('奇异变形杆菌') }">
                    <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
                  </c:when>
@@ -313,8 +303,28 @@
                </c:choose>
                                奇异变形杆菌
                </td>
+               <c:choose>
+                 <c:when test="${havestrain.contains('洋葱伯克霍尔德菌') }">
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+                 </c:when>
+                 <c:otherwise>
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+                 </c:otherwise>
+               </c:choose>
+                               洋葱伯克霍尔德菌
+               </td>
 	         </tr>
 	         <tr>
+	           <c:choose>
+                 <c:when test="${havestrain.contains('产气肠杆菌') }">
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+                 </c:when>
+                 <c:otherwise>
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+                 </c:otherwise>
+               </c:choose>
+                              产气肠杆菌
+               </td>
 	           <c:choose>
 	             <c:when test="${havestrain.contains('铜绿假单胞菌') }">
 	               <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
@@ -326,16 +336,6 @@
 	                           铜绿假单胞菌
 	           </td>
 	           <c:choose>
-	             <c:when test="${havestrain.contains('嗜麦芽窄食单胞菌') }">
-	               <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
-	             </c:when>
-	             <c:otherwise>
-	               <td><i class="fa fa-circle-o" aria-hidden="true"></i>
-	             </c:otherwise>
-	           </c:choose>
-	                          嗜麦芽窄食单胞菌
-	           </td>
-	           <c:choose>
 	             <c:when test="${havestrain.contains('肠炎沙门氏菌') }">
 	               <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
 	             </c:when>
@@ -345,15 +345,15 @@
 	           </c:choose>
 	                           肠炎沙门氏菌
 	           </td>
-	           <c:choose>
-                 <c:when test="${havestrain.contains('产气肠杆菌') }">
+	            <c:choose>
+                 <c:when test="${havestrain.contains('嗜麦芽窄食单胞菌') }">
                    <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
                  </c:when>
                  <c:otherwise>
                    <td><i class="fa fa-circle-o" aria-hidden="true"></i>
                  </c:otherwise>
                </c:choose>
-                              产气肠杆菌
+                              嗜麦芽窄食单胞菌
                </td>
 	         </tr>
 	        </tbody>
