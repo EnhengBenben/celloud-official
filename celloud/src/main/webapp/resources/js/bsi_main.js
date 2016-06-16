@@ -137,19 +137,22 @@ $.report.find = {
         }
       });
       $("body").on("click","[data-click='report-batch-search']",function(){
-        if(!$("#batch-lists").hasClass("select-more"))
+        if(!$("#batch-sl").hasClass("select-more")){
           $.report.options.batch = "'"+$(this).text()+"'";
           $.report.find.condition();
           $("#selected-batch span").html($(this).text());
           $("#selected-batch").removeClass("hide");
           $("#to-sl-batch").addClass("hide");
+        }
       });
       $("body").on("click","[data-click='report-period-search']",function(){
-        $.report.options.period = $(this).find("input").val();
-        $.report.find.condition();
-        $("#selected-period span").html($(this).find("input").val());
-        $("#selected-period").removeClass("hide");
-        $("#to-sl-period").addClass("hide");
+        if(!$("#period-sl").hasClass("select-more")){
+          $.report.options.period = $(this).find("input").val();
+          $.report.find.condition();
+          $("#selected-period span").html($(this).find("span").html());
+          $("#selected-period").removeClass("hide");
+          $("#to-sl-period").addClass("hide");
+        }
       });
       $("body").on("click","[data-click='report-date-search']",function(){
         $.report.options.beginDate = $("#report-begindate-search").val();
@@ -183,7 +186,7 @@ $.report.find = {
         $(".selector-line").removeClass("select-more");
         $(".selector-line").find(".checkbox").addClass("hide");
         $(".selector-line").find(".multisl-btns").addClass("hide");
-        var selectorline = $(this).parent().parent();
+        var selectorline = $(this).parent().parent().parent();
         $(selectorline).addClass("select-more");
         $(selectorline).find(".sl-val").addClass("show-more");
         $(selectorline).find(".checkbox").removeClass("hide");
@@ -257,7 +260,7 @@ $.report.find = {
         $.report.find.condition();
       });
       $("body").on("click","[data-click='reset-multiselect']",function(){
-        var selectorline = $(this).parent().parent().parent();
+        var selectorline = $(this).parent().parent().parent().parent();
         $(selectorline).removeClass("select-more");
         $(selectorline).find(".sl-val").removeClass("show-more");
         $(selectorline).find(".checkbox").addClass("hide").addClass("checkbox-un").removeClass("checkbox-ed");

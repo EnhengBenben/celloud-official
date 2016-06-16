@@ -18,7 +18,7 @@
       <span></span>
       <a id="clear-sl-batch"><i class="fa fa-times"></i></a>
     </div>
-    <div id="to-selected">
+    <div id="to-sl-batch">
       <div id="batch-lists" class="sl-val">
         <c:forEach items="${batchList }" var="batch">
           <c:if test="${not empty batch}">
