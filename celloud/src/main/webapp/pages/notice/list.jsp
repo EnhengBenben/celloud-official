@@ -98,7 +98,7 @@
 					<div class="common-normal common-slide common-normals ${type=='notice'?'':'hide' }" id="userNotice">
 						<table class="table_" style="text-align: center;">
 							<tr>
-								<td>数据加载中。。。</td>
+								<td>还没有系统公告</td>
 							</tr>
 						</table>
 						<div class="row">

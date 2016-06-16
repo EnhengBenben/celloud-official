@@ -1,24 +1,5 @@
 var notices = (function(object) {
 	var self = object || {};
-	/**
-	 * 监听websocket的open事件，在已经建立好websocket之后，直接刷新页面右上角的提醒。
-	 */
-	messageUtils.addOpenListener(function() {
-		$("#messages-menu").load(CONTEXT_PATH + "/notice/lastUnread/message");
-	});
-	/**
-	 * 监听userMessage频道，有新消息时，刷新右上角提醒
-	 */
-	messageUtils.subscribe("userMessage", function(data) {
-		$("#messages-menu").load(CONTEXT_PATH + "/notice/lastUnread/message");
-		messageUtils.notify(data.noticeTitle, data.noticeContext, {}, {
-			"onclick" : function() {
-				var notification = this;
-				notification.close();
-				$("#messages-menu").addClass("open");
-			}
-		});
-	});
 	var page = {
 			'message':{'currentPage':1,'pageSize':10},
 			'notice':{'currentPage':1,'pageSize':10}

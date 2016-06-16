@@ -139,3 +139,26 @@ var messageUtils = (function(messageUtils) {
 
 	return self;
 })(messageUtils);
+/**
+ * 两个事件，一个订阅。
+ * 如果要使用messageUtils，当然首先要在你的js之前加载本js。
+ */
+/**
+ * websocket的open事件，当websocket链接打开时执行，websocket在页面加载时打开。
+ * 每次刷新页面都会关闭、打开websocket一次。
+ */
+messageUtils.addOpenListener(function() {
+});
+/**
+ * websocket的close事件，当websocket链接关闭时执行，websocket在页面关闭或者服务器重启时关闭。
+ * 每次刷新页面都会关闭、打开websocket一次。
+ * 
+ * 每次重启tomcat，都需要刷新一次页面，才会再次建立websocket链接，否则接收不到消息。
+ */
+messageUtils.addCloseListener(function() {
+});
+/**
+ * 订阅某频道的消息，当有消息发到这个频道时执行。
+ */
+messageUtils.subscribe("", function() {
+});

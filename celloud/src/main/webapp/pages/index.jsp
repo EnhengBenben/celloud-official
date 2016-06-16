@@ -56,8 +56,7 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li class="header">站内消息提醒</li>
-								<li>
-									<!-- inner menu: contains the actual data -->
+								<!-- li>
 									<ul class="menu">
 										<li>
 											<a href="#">
@@ -75,7 +74,7 @@
 											</a>
 										</li>
 									</ul>
-								</li>
+								</li-->
 								<li class="footer">
 									<a href="javascript:showNotice()">查看所有</a>
 								</li>
@@ -244,8 +243,8 @@
 	<script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
 	<!--   <script src="//cdn.bootcss.com/select2/4.0.1/js/i18n/zh-CN.js"></script> -->
 	<script src="<%=request.getContextPath()%>/js/utils.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/main_init.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/message.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/main_init.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/main.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/charts.js?version=3.1.10"></script>
 	<script src="<%=request.getContextPath()%>/plugins/highcharts/char.js?version=20160421"></script>
