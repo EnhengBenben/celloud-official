@@ -136,6 +136,7 @@ $.report.find = {
         if(!$("#batch-lists").hasClass("show-more"))
           $.report.options.batch = "'"+$(this).text()+"'";
           $.report.find.condition();
+          $.report.options.batch = null;
       });
       $("body").on("click","[data-click='report-period-search']",function(){
         $.report.options.period = $(this).find("input").val();
@@ -161,9 +162,11 @@ $.report.find = {
       $("#batch-more").on("click",function(){
         if($("#batch-lists").hasClass("show-more")){
           $("#batch-lists").removeClass("show-more");
+          $("#batch-more span").html("更多");
           $("#batch-more i").removeClass("fa-chevron-up").addClass("fa-chevron-down");
         }else{
           $("#batch-lists").addClass("show-more");
+          $("#batch-more span").html("收起");
           $("#batch-more i").removeClass("fa-chevron-down").addClass("fa-chevron-up");
         }
       });
@@ -221,8 +224,6 @@ $.report.find = {
         $(selectorline).find(".sl-val").removeClass("show-more");
         $(selectorline).find(".checkbox").addClass("hide").addClass("checkbox-un").removeClass("checkbox-ed");
         $(selectorline).find(".multisl-btns").addClass("hide");
-        $(".multisl-btns").first().addClass("disabled");
-        $(".multisl-btns").first().attr("disabled",true);
         $.report.options.batch = null;
         $.report.options.period = null;
       });
