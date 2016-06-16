@@ -48,7 +48,7 @@
 	        <c:if test="${task.period==3 }"><a data-toggle="modal" data-target="#report-uploading-modal">数据上传中</a></c:if>
             <c:if test="${task.period==4 }">异常终止</c:if>
             <c:if test="${task.period==5 }">送样中</c:if>
-            <c:if test="${task.period==6 }">实验处理中</c:if>
+            <c:if test="${task.period==6 }">实验中</c:if>
 	        <c:if test="${empty task.period }"><a href="javascript:void(0)" onclick="$.report.period.error('${task.fileName }')" class="wrong">运行异常</a></c:if>
 	      </td>
 	      <td class="date-td"><fmt:formatDate value="${task.updateDate }" type="both" dateStyle="long" pattern="yyyy-MM-dd HH:mm:ss" /></td>

@@ -184,25 +184,35 @@ $.report.find = {
       $("#batch-lists .sl-val-content").on("click",function(){
         $(this).find(".checkbox").toggleClass("checkbox-un");
         $(this).find(".checkbox").toggleClass("checkbox-ed");
-        if($(this).find(".checkbox").hasClass("checkbox-ed"))
-          $.report.options.batch == null? $.report.options.batch = "'"+$(this).find("a").text()+"'" : $.report.options.batch += ",'"+$(this).find("a").text() + "'";
-        if($.report.options.batch != null)
+        if($("#batch-lists .checkbox-ed").size() > 0){
           $("#report-multibatch-search").removeClass("disabled");
           $("#report-multibatch-search").attr("disabled",false);
+        }else{
+          $("#report-multibatch-search").addClass("disabled");
+          $("#report-multibatch-search").attr("disabled",true);
+        }
       });
       $("#report-multibatch-search").on("click",function(){
+        $("#batch-lists .checkbox-ed").each(function(){
+          $.report.options.batch == null? $.report.options.batch = "'"+$(this).next().text()+"'" : $.report.options.batch += ",'"+$(this).next().text() + "'";
+        });
         $.report.find.condition();
       });
       $("#period-lists .sl-val-content").on("click",function(){
         $(this).find(".checkbox").toggleClass("checkbox-un");
         $(this).find(".checkbox").toggleClass("checkbox-ed");
-        if($(this).find(".checkbox").hasClass("checkbox-ed"))
-          $.report.options.period == null? $.report.options.period = $(this).find("input[type='hidden']").val() : $.report.options.period += ","+$(this).find("input[type='hidden']").val();
-        if($.report.options.period != null)
+        if($("#period-lists .checkbox-ed").size() > 0){
           $("#report-multiperiod-search").removeClass("disabled");
           $("#report-multiperiod-search").attr("disabled",false);
+        }else{
+          $("#report-multiperiod-search").addClass("disabled");
+          $("#report-multiperiod-search").attr("disabled",true);
+        }
       });
       $("#report-multiperiod-search").on("click",function(){
+        $("#period-lists .checkbox-ed").each(function(){
+          $.report.options.period == null? $.report.options.period = $(this).next().find("input[type='hidden']").val() : $.report.options.period += ","+$(this).next().find("input[type='hidden']").val();
+        });
         $.report.find.condition();
       });
       $("body").on("click","[data-click='reset-multiselect']",function(){

@@ -58,7 +58,7 @@
       </div>
       <div class="sl-val-content">
         <div class="celicon on_check checkbox checkbox-un hide"></div>
-        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="6"><span>实验处理中</span></a>
+        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="6"><span>实验中</span></a>
       </div>
       <div class="sl-val-content">
         <div class="celicon on_check checkbox checkbox-un hide"></div>
