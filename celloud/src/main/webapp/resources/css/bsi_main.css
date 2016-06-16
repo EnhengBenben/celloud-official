@@ -1143,7 +1143,9 @@ a, a:link, a:hover, a:active, a:visited {
     background-color: #fff;
     border: none;
 }
-
+.content .report-pagination .pagination .pages{
+    margin-right: 0px;
+}
 .report-statistics{
 	font-size: 12px;
 	color: #323232;
