@@ -45,6 +45,8 @@ $.dataReport = {
 $(function () {
   if($.report.options.reportType == 1){
     $("#analy-tab").tab("show");
+    $("#print-analy-a").removeClass("hide");
+    $("#print-patient-a").addClass("hide");
   }
   $("#patient-tab").click(function (e) {
     e.preventDefault()
