@@ -431,6 +431,7 @@ a, a:link, a:hover, a:active, a:visited {
 	color: rgb(160,160,160);
 }
 .table-main>tbody>tr:hover>td,
+.table-main>tbody>tr:hover>td>a,
 .table-main>tbody>tr:hover>td>a>i{
 	background-color: rgb(29,210,175);
 	color: #ffffff;
@@ -440,6 +441,9 @@ a, a:link, a:hover, a:active, a:visited {
 }
 .table-main>tbody>tr:hover .show-icon{
     background-position: -516px -257px;
+}
+.table-main .active a{
+	color: rgb(29,210,175);
 }
 .table-main .checkbox{
 	margin: 6px 0px;

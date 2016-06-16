@@ -5,12 +5,14 @@ $.dataReport = {
       });
     },
     paginNavList: function(currentPage){
+      $.report.detail.option.batchPage = currentPage;
       $.post("report/bsi/batchReportList",{"batch":$("#data-batch").html(),"appId": $("#appid-hide").val(),"dataKey":$("#datakey-hide").val(),"page":currentPage},function(response){
         $.dataReport.loadNavList(response);
       });
     },
     loadNavList: function(response){
       $("#report-pagination").html(response);
+      $("#reportbatch"+$("#datakey-hide").val()).addClass("active");
       $("#pagination-data-report").on("click","a",function(e){
         var id = $(this).attr("id");
         var currentPage = parseInt($("#batch-current-page-hide").val());
@@ -58,5 +60,5 @@ $(function () {
     $("#print-patient-a").addClass("hide");
     $.report.options.reportType = 1;
   });
-  $.dataReport.navList();
+  $.dataReport.paginNavList($.report.detail.option.batchPage);
 });

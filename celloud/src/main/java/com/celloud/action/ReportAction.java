@@ -1625,11 +1625,11 @@ public class ReportAction {
     public ModelAndView batchReportList(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size, String batch,
-            String dataKey, Integer appId) {
+            Integer appId) {
         ModelAndView mv = new ModelAndView("bsi/report_data_pagination");
         Page pager = new Page(page, size);
         PageList<Task> pageList = taskService.findTasksByBatch(pager,
-                ConstantsData.getLoginUserId(), appId, batch, dataKey);
+                ConstantsData.getLoginUserId(), appId, batch);
         mv.addObject("pageList", pageList);
         log.info("血流用户{}获取所有数据任务列表", ConstantsData.getLoginUserName());
         return mv;

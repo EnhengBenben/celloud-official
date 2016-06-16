@@ -309,6 +309,9 @@ $.report.loadlist = function(response){
   });
 }
 $.report.detail = {
+    option: {
+      batchPage: 1
+    },
     patient: function(dataKey,projectId,appId,reportIndex,currentPage){
       var options = $.report.options;
       $.post("report/getBSIPatientReport",{"reportIndex":reportIndex,"dataKey":dataKey,"projectId":projectId,"appId":appId,"page":currentPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){

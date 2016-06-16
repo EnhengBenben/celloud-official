@@ -147,8 +147,7 @@ public interface TaskMapper {
      */
     List<Task> findTasksByBatch(Page page, @Param("userId") Integer userId,
             @Param("appId") Integer appId, @Param("period") Integer period,
-            @Param("state") Integer state, @Param("batch") String batch,
-            @Param("dataKey") String dataKey);
+            @Param("state") Integer state, @Param("batch") String batch);
 
     /**
      * 按照运行状态和参数查找任务

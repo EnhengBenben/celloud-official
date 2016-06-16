@@ -129,7 +129,7 @@ public interface TaskService {
      * @date 2016年6月1日 下午5:38:50
      */
     public PageList<Task> findTasksByBatch(Page page, Integer userId,
-            Integer appId, String batch, String dataKey);
+            Integer appId, String batch);
 
     /**
      * 数据报告上一个/下一个

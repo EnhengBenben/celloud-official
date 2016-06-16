@@ -279,7 +279,7 @@
   </select>
   <select id="findTasksByBatch" resultMap="ResultMapWithFileName">
 	 select  f.file_name,f.file_id,f.batch,t.* from 
-	(select * from tb_task where task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and app_id=#{appId} and data_key != #{dataKey} group by data_key))t
+	(select * from tb_task where task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and app_id=#{appId} group by data_key))t
 	left join tb_file f
 	on f.data_key=t.data_key 
 	where f.user_id=#{userId} and f.state=#{state} and f.batch=#{batch} and t.period=#{period}

@@ -243,9 +243,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public PageList<Task> findTasksByBatch(Page page, Integer userId,
-            Integer appId, String batch, String dataKey) {
+            Integer appId, String batch) {
         List<Task> list = taskMapper.findTasksByBatch(page, userId, appId,
-                TaskPeriod.DONE, DataState.ACTIVE, batch, dataKey);
+                TaskPeriod.DONE, DataState.ACTIVE, batch);
         return new PageList<>(page, list);
     }
 
