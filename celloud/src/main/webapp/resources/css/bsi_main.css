@@ -1228,6 +1228,23 @@ a, a:link, a:hover, a:active, a:visited {
     line-height: 22px;
     margin-left: 12px;
 }
+.selector .selected-val{
+	display: inline-block; 
+	border: 1px solid rgb(29,210,175);
+	min-width: 100px;
+	padding: 5px 20px;
+	margin: 2px 0px;
+	height: 30px;
+	line-height: 20px;
+	float: left;
+}
+.selector .selected-val a{
+	color:rgb(29,210,175);
+	font-size: 16px;
+	cursor: pointer;
+	float: right;
+    margin-left: 20px;
+}
 .selector .multisl-btns{
 	width: 100%;
 	text-align: center;

@@ -116,10 +116,8 @@
       </li>
     </ul>
     <ul id="pagination-task" class="pages pull-right">
-<!--       <li><a id="first-page-task" href="javascript:void(0);">首页</a></li> -->
       <!-- 显示prev -->
       <li><a id="prev-page-task" class="ends" href="javascript:void(0);">&lt;&lt;</a></li>
-      
       <!-- 显示第一页 -->
       <c:choose>
         <c:when test="${pageList.page.currentPage==1}"><li class="active"><a href="#">1</a></li></c:when>
