@@ -30,12 +30,6 @@ body {
 	color: #353535;
 }
 
-#printMain{
-	max-width: 850px;
-	min-width: 850px;
-	margin: 0 auto;
-}
-
 .wrapper {
 	padding-bottom: 25px;
 }

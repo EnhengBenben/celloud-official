@@ -32,7 +32,7 @@
             #foreach(${kmb} in ${egfr.knowMutationBig})
                 <p>
                     <br/>
-                    <img src="${uploadPath}${egfr.userId}/${egfr.appId}/${egfr.dataKey}/SVG/${kmb}" style="width: 820px;height: 136px;">
+                    <img src="${uploadPath}${egfr.userId}/${egfr.appId}/${egfr.dataKey}/SVG/${kmb}" style="width: 900px;height: 136px;">
                 </p>
             #end
         #end
