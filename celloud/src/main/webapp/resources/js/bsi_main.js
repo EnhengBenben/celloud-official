@@ -54,7 +54,7 @@ $(function () {
       $("#condition-find").click();
     }
   });
-  $("body").on("click",".table .checkbox,.pagination .checkbox",function(){
+  $("body").on("click",".table>tbody .checkbox,.pagination .checkbox",function(){
     $(this).toggleClass("checkbox-un");
     $(this).toggleClass("checkbox-ed");
   });
@@ -128,12 +128,16 @@ $.report.find = {
         $.report.find.condition();
       });
       $("body").on("click","[data-click='report-check-all']",function(){
-        $(this).toggleClass("checkbox-un").toggleClass("checkbox-ed");
-        $(".table .checkbox,.pagination .checkbox").toggleClass("checkbox-un");
-        $(".table .checkbox,.pagination .checkbox").toggleClass("checkbox-ed");
+        if($(this).hasClass("checkbox-ed")){
+          $(this).removeClass("checkbox-ed").addClass("checkbox-un");
+          $(".table>tbody .checkbox,.pagination .checkbox").removeClass("checkbox-ed").addClass("checkbox-un");
+        }else{
+          $(this).removeClass("checkbox-un").addClass("checkbox-ed");
+          $(".table>tbody .checkbox,.pagination .checkbox").addClass("checkbox-ed").removeClass("checkbox-un");
+        }
       });
       $("body").on("click","[data-click='report-batch-search']",function(){
-        if(!$("#batch-lists").hasClass("show-more"))
+        if(!$("#batch-lists").hasClass("select-more"))
           $.report.options.batch = "'"+$(this).text()+"'";
           $.report.find.condition();
           $.report.options.batch = null;
