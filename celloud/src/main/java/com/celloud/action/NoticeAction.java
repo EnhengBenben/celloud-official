@@ -15,6 +15,7 @@ import com.celloud.model.mysql.Notice;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.NoticeService;
+import com.celloud.utils.ActionLog;
 import com.celloud.utils.Response;
 
 @Controller
@@ -23,6 +24,7 @@ public class NoticeAction {
     @Resource
     private NoticeService noticeService;
 
+    @ActionLog(value = "获取未读消息")
     @RequestMapping("lastUnread/{type}")
     public String lastUnread(@PathVariable String type, Model model) {
         if (NoticeConstants.TYPE_MESSAGE.equals(type)) {
@@ -35,6 +37,7 @@ public class NoticeAction {
         return "notice/lastUnread";
     }
 
+    @ActionLog(value = "获取消息", button = "查看所有")
     @RequestMapping("list/{type}")
     public ModelAndView list(@PathVariable String type, Page page) {
         ModelAndView mv = new ModelAndView("notice/list");
@@ -48,6 +51,7 @@ public class NoticeAction {
         return mv;
     }
 
+    @ActionLog(value = "删除消息", button = "删除")
     @RequestMapping(value = "delete", method = RequestMethod.POST)
     @ResponseBody
     public Response delete(Integer[] noticeIds) {
@@ -55,6 +59,7 @@ public class NoticeAction {
         return Response.DELETE_SUCCESS;
     }
 
+    @ActionLog(value = "读消息", button = "已读")
     @RequestMapping(value = "read", method = RequestMethod.POST)
     @ResponseBody
     public Response read(Integer[] noticeIds) {
@@ -62,6 +67,7 @@ public class NoticeAction {
         return Response.UPDATE_SUCCESS;
     }
 
+    @ActionLog(value = "获所有消息", button = "全部置为已读")
     @RequestMapping(value = "readAll", method = RequestMethod.POST)
     @ResponseBody
     public Response readAll() {
