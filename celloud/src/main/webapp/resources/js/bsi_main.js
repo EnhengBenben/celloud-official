@@ -127,6 +127,11 @@ $.report.find = {
         $.report.options.condition = $("#condition-input").val();
         $.report.find.condition();
       });
+      $("body").on("click","[data-click='report-check-all']",function(){
+        $(this).toggleClass("checkbox-un").toggleClass("checkbox-ed");
+        $(".table .checkbox,.pagination .checkbox").toggleClass("checkbox-un");
+        $(".table .checkbox,.pagination .checkbox").toggleClass("checkbox-ed");
+      });
       $("body").on("click","[data-click='report-batch-search']",function(){
         if(!$("#batch-lists").hasClass("show-more"))
           $.report.options.batch = "'"+$(this).text()+"'";

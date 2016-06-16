@@ -6,7 +6,7 @@
   <thead>
     <tr>
       <th width="40">
-        <div class="celicon checkbox checkbox-un"></div>
+        <div data-click="report-check-all" class="celicon checkbox checkbox-un"></div>
       </th>
       <th width="140">
         <input id="" type="text" placeholder="样本编号/病历号">
@@ -93,7 +93,7 @@
     <input id="current-page-hide" value="${pageList.page.currentPage }" type="hidden" >
     <input id="total-page-hide" value="${pageList.page.totalPage }" type="hidden" >
     <ul class="pagination-check pull-left">
-      <li class="checkbox-li"><div class="celicon checkbox checkbox-un"></div></li>
+      <li class="checkbox-li"><div data-click="report-check-all" class="celicon checkbox checkbox-un"></div></li>
       <li>全选</li>
       <li>
         <select>
