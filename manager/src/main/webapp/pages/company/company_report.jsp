@@ -22,9 +22,9 @@
 					<thead>
 						<tr>
 							<th class="min-w-50">编码</th>
-							<th class="min-w-200 ">医院名称</th>
+							<th class="min-w-200">医院名称</th>
 							<c:forEach items="${appList}" var="item">
-								<th style="max-width:100px;word-wrap:break-word;">${item.appName}</th>
+								<th class="min-w-170" style="word-wrap:break-word;">${item.appName}</th>
 							</c:forEach>
 						</tr>
 					</thead>

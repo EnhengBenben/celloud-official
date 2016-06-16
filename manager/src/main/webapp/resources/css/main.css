@@ -105,3 +105,19 @@ ul, menu, dir {
     transform: scale(1);
     opacity: .9
 }
+
+.min-w-50{
+	min-width: 50px;
+}
+
+.min-w-100{
+    min-width: 100px;
+}
+
+.min-w-170{
+    min-width: 170px;
+}
+
+.min-w-200{
+    min-width: 200px;
+}
