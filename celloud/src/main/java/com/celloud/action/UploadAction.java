@@ -231,8 +231,8 @@ public class UploadAction {
                 return "{\"dataIds\":\"" + StringUtils.join(dataIds.toArray(), ",") + "\",\"appIds\":\"" + appId
                         + "\"}";
             }
-        } else if (fileFormat == FileFormat.YASUO) {
-            return "{\"dataIds\":" + dataId + ",\"appIds\":" + appId + "\"}";
+        } else if (fileFormat == FileFormat.YASUO && needSplit != 1) {
+            return "{\"dataIds\":" + dataId + ",\"appIds\":\"" + appId + "\"}";
         }
         return "1";
     }
