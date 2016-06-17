@@ -40,12 +40,14 @@ public class Pgs extends Base {
     private String testPng;
     private String miniPng;
     private String finalPng;
+	private String HRPng;
     private String note;
     private List<List<String>> detail;
     private String report;
     private String pdf;
     private String mapReads;
     private String winSize;
+	private String mosaic;
 
     public Integer getFileId() {
         return fileId;
@@ -262,5 +264,21 @@ public class Pgs extends Base {
     public void setWinSize(String winSize) {
         this.winSize = winSize;
     }
+
+	public String getMosaic() {
+		return mosaic;
+	}
+
+	public void setMosaic(String mosaic) {
+		this.mosaic = mosaic;
+	}
+
+	public String getHRPng() {
+		return HRPng;
+	}
+
+	public void setHRPng(String hRPng) {
+		HRPng = hRPng;
+	}
 
 }
