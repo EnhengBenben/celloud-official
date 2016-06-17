@@ -241,6 +241,15 @@
   <select id="findAppRunningNum" resultType="java.lang.Integer">
     select count(command) runNum from tb_task where period=#{period} and app_id=#{appId} and state=#{state}
   </select>
+  <select id="findAppsRunningNum" resultType="java.lang.Integer">
+    select count(command) runNum from tb_task where period=#{period} 
+    and app_id in(
+    <foreach item="appId" collection="appIds" separator=",">
+       #{appId,jdbcType=INTEGER}
+    </foreach>
+    )
+    and state=#{state}
+  </select>
   <select id="findTaskInfoByProId" resultType="map" parameterType="java.lang.Integer">
     select t.app_id appId,t.user_id userId,a.title,a.method
 	from tb_task t left join tb_app a on t.app_id=a.app_id 

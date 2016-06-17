@@ -89,35 +89,39 @@ public class ProjectAction {
 	public Integer deleteByState(Integer projectId) {
 		Report report = reportService.getReportByProjectId(projectId);
 		if (report != null && report.getPeriod() != ReportPeriod.COMPLETE) {
-			Integer intAppId = report.getAppId();
-			String appId = String.valueOf(intAppId);
+            Integer appId = report.getAppId();
 			String param = SparkPro.TOOLSPATH + report.getUserId() + "/" + appId + " ProjectID" + projectId;
 			String command = null;
 			SSHUtil ssh = null;
-			if (SparkPro.apps.contains(appId)) {
+            if (AppDataListType.SPARK.contains(appId)) {
 				command = SparkPro.SPARKKILL + " " + param;
 				ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
 				ssh.sshSubmit(command, false);
-				TaskAction ta = new TaskAction();
-				ta.runQueue(String.valueOf(projectId));
 			} else {
 				command = SparkPro.SGEKILL + " " + param;
 				ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
 				ssh.sshSubmit(command, false);
-				if (AppDataListType.FASTQ_PATH.contains(appId) || AppDataListType.SPLIT.contains(appId)) {
-					taskService.deleteTask(projectId);
-					Task task = taskService.findFirstTask(intAppId);
-					if (task != null) {
-						int runningNum = taskService.findRunningNumByAppId(intAppId);
-						App app = appService.selectByPrimaryKey(intAppId);
-						if (runningNum < app.getMaxTask() || app.getMaxTask() == 0) {
-							ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-							ssh.sshSubmit(task.getCommand(), false);
-							taskService.updateToRunning(task.getTaskId());
-						}
-					}
-				}
 			}
+            if (AppDataListType.FASTQ_PATH.contains(appId)
+                    || AppDataListType.SPLIT.contains(appId)) {
+                taskService.deleteTask(projectId);
+                Task task = taskService.findFirstTask(appId);
+                if (task != null) {
+                    int runningNum = taskService.findRunningNumByAppId(appId);
+                    App app = appService.selectByPrimaryKey(appId);
+                    if (runningNum < app.getMaxTask()
+                            || app.getMaxTask() == 0) {
+                        if (AppDataListType.SPARK.contains(appId)) {
+                            ssh = new SSHUtil(sparkhost, sparkuserName,
+                                    sparkpwd);
+                        } else {
+                            ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+                        }
+                        ssh.sshSubmit(task.getCommand(), false);
+                        taskService.updateToRunning(task.getTaskId());
+                    }
+                }
+            }
 		}
 		return projectService.deleteByState(projectId);
 	}

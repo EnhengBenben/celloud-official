@@ -75,6 +75,19 @@ public interface TaskMapper {
             @Param("period") Integer period, @Param("state") Integer state);
 
     /**
+     * 获取多个APP正在运行的任务数
+     * 
+     * @param appIds
+     * @param period
+     * @param state
+     * @return
+     * @author leamo
+     * @date 2016年6月17日 上午10:53:56
+     */
+    Integer findAppsRunningNum(@Param("appIds") List<Integer> appIds,
+            @Param("period") Integer period, @Param("state") Integer state);
+
+    /**
      * 根据项目编号获取任务信息
      * 
      * @param projectId

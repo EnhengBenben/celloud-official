@@ -22,17 +22,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.celloud.constants.AppDataListType;
 import com.celloud.constants.CommandKey;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.ExperimentState;
 import com.celloud.constants.FileFormat;
-import com.celloud.constants.GlobalQueue;
 import com.celloud.constants.Mod;
-import com.celloud.constants.PortPool;
 import com.celloud.constants.ReportType;
 import com.celloud.constants.SparkPro;
-import com.celloud.model.mongo.TaskQueue;
 import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Experiment;
@@ -235,7 +233,12 @@ public class TaskAction {
             if (task != null) {
                 String toRunCommand = task.getCommand();
                 logger.info("运行命令：{}", toRunCommand);
-                SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+                SSHUtil ssh;
+                if (AppDataListType.SPARK.contains(appId)) {
+                    ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
+                } else {
+                    ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+                }
                 ssh.sshSubmit(toRunCommand.toString(), false);
                 taskService.updateToRunning(task.getTaskId());
             }
@@ -356,44 +359,7 @@ public class TaskAction {
                 }
             }
         }
-        runQueue(projectId);
         return "run over";
-    }
-
-    /**
-     * 运行队列里的命令
-     */
-    @ActionLog(value = "运行结束，释放端口，执行正在排队的命令", button = "运行结束")
-    public void runQueue(String projectId) {
-        logger.info("{}运行结束，释放端口", projectId);
-        PortPool.setPort(projectId);
-        while (true) {
-            if (GlobalQueue.isEmpty()) {
-                logger.info("任务队列为空");
-                break;
-            }
-            String proId = GlobalQueue.peek();
-            if (proId != null) {
-                TaskQueue tq = reportService
-                        .getTaskQueue(Integer.parseInt(proId));
-                List<DataFile> list = tq.getDataList();
-                int need = list.size();
-                logger.info("需要节点 {}可使用节点 {}", need, PortPool.getSize());
-                if (PortPool.getSize() < need) {
-                    logger.info("节点不满足需要，暂缓投递任务");
-                    break;
-                }
-                String _dataFilePath = DataKeyListToFile.toSpark(proId, list);
-                Map<String, String> map = CommandKey.getMap(_dataFilePath,
-                        tq.getPath(), Integer.valueOf(proId));
-                StrSubstitutor sub = new StrSubstitutor(map);
-                String command = sub.replace(tq.getCommand());
-                logger.info("资源满足需求，投递任务！运行命令：" + command);
-                SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
-                ssh.sshSubmit(command, false);
-                GlobalQueue.poll();
-            }
-        }
     }
 
     @ActionLog(value = "bsi运行split分数据", button = "运行split分数据")

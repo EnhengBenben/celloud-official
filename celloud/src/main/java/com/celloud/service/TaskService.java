@@ -1,5 +1,6 @@
 package com.celloud.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.celloud.model.mysql.Task;
@@ -61,6 +62,14 @@ public interface TaskService {
      * @return
      */
     public Integer findRunningNumByAppId(Integer appId);
+
+    /**
+     * 指定app正在运行的任务数
+     * 
+     * @param appId
+     * @return
+     */
+    public Integer findRunningNumByAppId(List<Integer> appId);
 
     /**
      * 根据proId获取报告信息、任务编号、app信息、数据个数

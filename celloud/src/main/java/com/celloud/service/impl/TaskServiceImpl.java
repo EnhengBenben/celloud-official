@@ -127,6 +127,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public Integer findRunningNumByAppId(List<Integer> appIds) {
+        return taskMapper.findAppsRunningNum(appIds, TaskPeriod.RUNNING,
+                DataState.ACTIVE);
+    }
+
+    @Override
     public Map<String, Object> findTaskInfoByProId(Integer projectId) {
         return taskMapper.findTaskInfoByProId(projectId);
     }
@@ -262,10 +268,10 @@ public class TaskServiceImpl implements TaskService {
         for (Map<String, Object> m : periodList) {
             Object period = m.get("period");
             Object periodNum = m.get("periodNum");
-            if ((Integer) period == TaskPeriod.DONE) {
-                map.put("done", periodNum);
-            } else if (period == null) {
+            if (period == null) {
                 map.put("error", periodNum);
+            } else if ((Integer) period == TaskPeriod.DONE) {
+                map.put("done", periodNum);
             } else if ((Integer) period == TaskPeriod.UPLOADING) {
                 map.put("uploading", periodNum);
             } else {
