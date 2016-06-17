@@ -475,6 +475,7 @@ public class DataAction {
                             .findRunningNumByAppId(AppDataListType.SPARK);
                     ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
                     iswait = runningNum < SparkPro.MAXTASK;
+                    logger.info("APP{}任务投递到spark", appId);
                 } else {
                     runningNum = taskService.findRunningNumByAppId(appId);
                     ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
