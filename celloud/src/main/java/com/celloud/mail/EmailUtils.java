@@ -4,18 +4,26 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.celloud.constants.FeedbackConstants;
 import com.celloud.model.mysql.Feedback;
 import com.celloud.model.mysql.FeedbackAttachment;
+import com.celloud.utils.HttpURLUtils;
 import com.celloud.utils.UserAgentUtil;
 
 /**
@@ -26,23 +34,93 @@ import com.celloud.utils.UserAgentUtil;
  */
 public class EmailUtils {
     private static Logger logger = LoggerFactory.getLogger(EmailUtils.class);
-    @Resource
-    private EmailService emailService;
+	@Resource
+	private EmailService emailService;
     private String errorMailTo;
     private String[] errorMailTos;
     private String errorTitle;
     private String feedbackMailTo;
     private String[] feedbackMailTos;
     private String feedbackTitle;
+	private String apiUser;
+	private String apiKey;
+	private String url;
+	private String username;
+	private String emailName;
+
+	/**
+	 * 调用SendCloud模板发送邮件
+	 * 
+	 * @param templateName
+	 * @param map:Map<email,TreeMap<param,value>>
+	 * @return
+	 * @author lin
+	 * @date 2016年6月16日下午2:45:51
+	 */
+	public String sendWithTemplate(String templateName, Map<String, TreeMap<String, String>> map) {
+		String to = paramTransfer(map);
+		List<NameValuePair> param = getParams(templateName, to);
+		return HttpURLUtils.httpPostRequest(url, param);
+	}
+
+	/**
+	 * 封装发送所需属性
+	 * 
+	 * @param templateName
+	 * @param to
+	 * @return
+	 * @author lin
+	 * @date 2016年6月16日下午2:51:10
+	 */
+	private List<NameValuePair> getParams(String templateName, String to) {
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("api_user", apiUser));
+		params.add(new BasicNameValuePair("api_key", apiKey));
+		params.add(new BasicNameValuePair("substitution_vars", to));
+		params.add(new BasicNameValuePair("template_invoke_name", templateName));
+		params.add(new BasicNameValuePair("from", username));
+		params.add(new BasicNameValuePair("fromname", emailName));
+		params.add(new BasicNameValuePair("resp_email_id", "true"));
+		return params;
+	}
+
+	/**
+	 * 将参数封装成API要求的格式
+	 * 
+	 * @param map
+	 * @return
+	 * @author lin
+	 * @date 2016年6月16日下午2:50:40
+	 */
+	private String paramTransfer(Map<String, TreeMap<String, String>> map) {
+		Map<String, List<String>> sub = new HashMap<>();
+		List<String> to = new ArrayList<>();
+		for (Entry<String, TreeMap<String, String>> entry : map.entrySet()) {
+			to.add(entry.getKey());
+			for (Entry<String, String> attribute : entry.getValue().entrySet()) {
+				List<String> name = sub.get(attribute.getKey());
+				if (name == null) {
+					name = new ArrayList<>();
+				}
+				name.add(attribute.getValue());
+				sub.put(attribute.getKey(), name);
+			}
+		}
+		Map<String, Object> result = new HashMap<>();
+		result.put("to", to);
+		result.put("sub", sub);
+		JSONObject jsonResult = new JSONObject(result);
+		return jsonResult.toString();
+	}
 
     public void sendWithTitle(String title, String content, String... to) {
         Email email = new Email().addTo(to).setSubject(title).setContent(content);
-        emailService.send(email);
+		emailService.send(email);
     }
 
     public void send(String content, String... to) {
         Email email = new Email().addTo(to).setContent(content);
-        emailService.send(email);
+		emailService.send(email);
     }
 
     /**
@@ -78,7 +156,7 @@ public class EmailUtils {
         String content = buffer.toString();
         pw.close();
         Email email = new Email().addTo(this.errorMailTos).setSubject(errorTitle).setContent(content);
-        emailService.send(email);
+		emailService.send(email);
     }
 
     /**
@@ -99,7 +177,7 @@ public class EmailUtils {
                 email.attach(file, null);
             }
         }
-        emailService.send(email);
+		emailService.send(email);
     }
 
     public String getErrorMailTo() {
@@ -145,4 +223,45 @@ public class EmailUtils {
         }
         return result;
     }
+
+	public String getApiUser() {
+		return apiUser;
+	}
+
+	public void setApiUser(String apiUser) {
+		this.apiUser = apiUser;
+	}
+
+	public String getApiKey() {
+		return apiKey;
+	}
+
+	public void setApiKey(String apiKey) {
+		this.apiKey = apiKey;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getEmailName() {
+		return emailName;
+	}
+
+	public void setEmailName(String emailName) {
+		this.emailName = emailName;
+	}
+
 }
