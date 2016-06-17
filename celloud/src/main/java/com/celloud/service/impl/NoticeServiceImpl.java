@@ -7,6 +7,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.celloud.constants.ConstantsData;
+import com.celloud.constants.NoticeConstants;
+import com.celloud.exception.BusinessException;
 import com.celloud.mapper.NoticeMapper;
 import com.celloud.mapper.UserMapper;
 import com.celloud.model.mysql.Notice;
@@ -22,15 +24,24 @@ public class NoticeServiceImpl implements NoticeService {
     private UserMapper userMapper;
 
     @Override
-    public void insertNotice(Notice notice, String... usernames) {
+    public void insertMessage(Notice notice, String... usernames) {
         noticeMapper.insertSelective(notice);
-        noticeMapper.insertNoticeUser(notice.getNoticeId(), usernames);
+        int result = 0;
+        if (usernames == null || usernames.length == 0) {
+            result = noticeMapper.insertNoticeAllUser(notice.getNoticeId());
+        } else {
+            result = noticeMapper.insertNoticeUser(notice.getNoticeId(), usernames);
+        }
+        if (result == 0) {
+            throw new BusinessException("消息没有接收者！");
+        }
     }
 
     @Override
     public PageList<Notice> findLastUnreadMessage() {
         Page page = new Page(1, 5);
-        List<Notice> list = noticeMapper.pageUserUnreadNotices(ConstantsData.getLoginUserId(), page);
+        List<Notice> list = noticeMapper.pageUserUnreadNotices(ConstantsData.getLoginUserId(),
+                NoticeConstants.TYPE_MESSAGE, page);
         return new PageList<>(page, list);
     }
 
@@ -39,7 +50,8 @@ public class NoticeServiceImpl implements NoticeService {
         if (page == null) {
             page = new Page();
         }
-        List<Notice> list = noticeMapper.pageUserNotices(ConstantsData.getLoginUserId(), page);
+        List<Notice> list = noticeMapper.pageUserNotices(ConstantsData.getLoginUserId(), NoticeConstants.TYPE_MESSAGE,
+                page);
         return new PageList<>(page, list);
     }
 
