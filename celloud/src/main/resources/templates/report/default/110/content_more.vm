@@ -7,7 +7,7 @@
     <ul class="info">
         <li>姓名：<span><input type="text" id="patientName" name="patientName" value="$!{cmpReport.cmpFilling.patientName}"></span></li>
         <li>取样日期：<span><input type="text" id="samplingDate" name="samplingDate" value="$!{cmpReport.cmpFilling.samplingDate}"></span></li>
-        <li>性别： <span id="_sex"><input type="radio" name="patientSex" value="男" #if(${cmpReport.cmpFilling.patientSex}=='男')checked="checked"#end>男<input type="radio" name="patientSex" value="女" #if(${cmpReport.cmpFilling.patientSex}=='女')checked="checked"#end>女</span></li>
+        <li>性别： <span id="_sex"><input type="radio" name="patientSex" value="男" #if(${cmpReport.cmpFilling.patientSex}!='女')checked="checked"#end>男<input type="radio" name="patientSex" value="女" #if(${cmpReport.cmpFilling.patientSex}=='女')checked="checked"#end>女</span></li>
         <li>样本来源：<span><input type="text" id="sampleSource" name="sampleSource" value="$!{cmpReport.cmpFilling.sampleSource}"></span></li>
         <li>年龄：<span><input type="text" id="patientAge" name="patientAge" value="$!{cmpReport.cmpFilling.patientAge}"></span>岁</li>
         <li>临床诊断：<span><input type="text" id="clinicalDiagnosis" name="clinicalDiagnosis" value="$!{cmpReport.cmpFilling.clinicalDiagnosis}"></span></li>

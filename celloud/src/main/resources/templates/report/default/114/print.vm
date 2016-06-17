@@ -1,5 +1,5 @@
 #parse("templates/report/layout.vm")
-<link href="${base}/css/print_gdd.css" rel="stylesheet">
+<link href="${base}/css/print_gdd.css?version=3.1.15" rel="stylesheet">
 <section class="section2 border1 w3cbbs">
     <div class="header">
         <h1 style="font-size:32px;padding:0 0 5 0px;">细菌感染检测分析报告</h1>
