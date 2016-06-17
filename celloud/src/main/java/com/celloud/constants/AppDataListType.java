@@ -21,7 +21,7 @@ public class AppDataListType {
      * 投递fastq文件
      */
     public static final List<Integer> FASTQ_PATH = Arrays.asList(110, 111, 112,
-            114);
+            114, 118);
 
     /**
      * 向split投递
