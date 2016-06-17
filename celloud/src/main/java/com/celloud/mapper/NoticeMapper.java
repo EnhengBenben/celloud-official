@@ -24,9 +24,11 @@ public interface NoticeMapper {
 
     public int insertNoticeUser(@Param("noticeId") Integer noticeId, @Param("usernames") String... usernames);
 
-    public List<Notice> pageUserUnreadNotices(@Param("userId") Integer userId, Page page);
+    public int insertNoticeAllUser(@Param("noticeId") Integer noticeId);
 
-    public List<Notice> pageUserNotices(@Param("userId") Integer userId, Page page);
+    public List<Notice> pageUserUnreadNotices(@Param("userId") Integer userId, @Param("type") String type, Page page);
+
+    public List<Notice> pageUserNotices(@Param("userId") Integer userId, @Param("type") String type, Page page);
 
     public void readMessage(@Param("userId") Integer userId, @Param("noticeIds") Integer[] noticeIds);
 

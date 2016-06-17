@@ -34,6 +34,7 @@ public class MessageUtils {
     @Autowired
     private NoticeService noticeService;
     private Message message = new Message();
+    private boolean save;
     private Notice notice;
 
     /**
@@ -52,10 +53,15 @@ public class MessageUtils {
      * @param message
      * @return
      */
-    public MessageUtils send(Notice notice) {
+    public MessageUtils send(Notice notice, boolean save) {
         this.message.setMessage(notice);
         this.notice = notice;
+        this.save = save;
         return this;
+    }
+
+    public MessageUtils send(Notice notice) {
+        return send(notice, true);
     }
 
     /**
@@ -68,7 +74,9 @@ public class MessageUtils {
         if (usernames == null || usernames.length <= 0) {
             throw new BusinessException("发送消息没有指定接收者:" + message.toJson());
         }
-        noticeService.insertNotice(this.notice, usernames);
+        if (save) {
+            noticeService.insertMessage(this.notice, usernames);
+        }
         final Map<String, String> messages = new HashMap<>();
         String jsonMessage = this.message.toJson();
         for (String username : usernames) {
@@ -84,6 +92,9 @@ public class MessageUtils {
     public void toAll() {
         final Map<String, String> messages = new HashMap<>();
         messages.put(Constants.MESSAGE_ALLUSER_KEY, this.message.toJson());
+        if (save) {
+            noticeService.insertMessage(this.notice);
+        }
         MessageSender.send(Constants.MESSAGE_USER_TOPIC, messages);
     }
 
