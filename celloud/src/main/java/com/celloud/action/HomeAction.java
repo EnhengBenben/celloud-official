@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
+import com.celloud.constants.NoticeConstants;
 import com.celloud.mail.EmailUtils;
+import com.celloud.message.MessageUtils;
 import com.celloud.model.mysql.Client;
 import com.celloud.model.mysql.User;
 import com.celloud.service.ClientService;
@@ -61,18 +63,18 @@ public class HomeAction {
         session.setAttribute(Constants.RESET_PASSWORD_USER_ID, user.getUserId());
         return mv.addObject("user", user).addObject("randomCode", randomCode);
     }
-    
+
     @RequestMapping(value = "resetEmail/{username}/{randomCode}.html", method = RequestMethod.GET)
-	public ModelAndView resetEmail(HttpSession session, @PathVariable String username,
-			@PathVariable String randomCode) {
-		ModelAndView mv = new ModelAndView("user/user_email_reset");
-		User user = userService.getUserByFindPwd(username, randomCode);
-		if (user == null) {
-			return mv.addObject("info", "修改邮箱的链接错误或已过期");
-		}
-		logger.info("用户正在修改邮箱：userId={},username={},randomCode={}", user.getUserId(), username, randomCode);
-		return mv.addObject("user", user).addObject("randomCode", randomCode);
-	}
+    public ModelAndView resetEmail(HttpSession session, @PathVariable String username,
+            @PathVariable String randomCode) {
+        ModelAndView mv = new ModelAndView("user/user_email_reset");
+        User user = userService.getUserByFindPwd(username, randomCode);
+        if (user == null) {
+            return mv.addObject("info", "修改邮箱的链接错误或已过期");
+        }
+        logger.info("用户正在修改邮箱：userId={},username={},randomCode={}", user.getUserId(), username, randomCode);
+        return mv.addObject("user", user).addObject("randomCode", randomCode);
+    }
 
     /**
      * 用户重置密码--保存

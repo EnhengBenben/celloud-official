@@ -51,6 +51,10 @@
 		</foreach>
 		)
 	</insert>
+	<insert id="insertNoticeAllUser">
+		insert into tb_notice_user (notice_id,user_id)
+		select ${noticeId},user_id from tb_user
+	</insert>
 	<insert id="insertSelective" parameterType="com.celloud.model.mysql.Notice" useGeneratedKeys="true" keyProperty="noticeId">
 		insert into tb_notice
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -177,6 +181,7 @@
 		where user_id = #{userId,jdbcType=INTEGER})
 		and
 		tb_notice_user.state = 0
+		and tb_notice.type=#{type,jdbcType=VARCHAR}
 		order by tb_notice_user.state
 		asc,
 		tb_notice.create_date desc
@@ -191,7 +196,9 @@
 		where tb_notice.notice_id in ( select notice_id from
 		tb_notice_user
 		where user_id = #{userId,jdbcType=INTEGER})
-		order by tb_notice_user.state asc,
+		and type=#{type,jdbcType=VARCHAR}
+		order by
+		tb_notice_user.state asc,
 		tb_notice.create_date desc
 	</select>
 	<delete id="deleteMessageRelat">

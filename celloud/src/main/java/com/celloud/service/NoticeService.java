@@ -6,7 +6,7 @@ import com.celloud.page.PageList;
 
 public interface NoticeService {
 
-    public void insertNotice(Notice notice, String... usernames);
+    public void insertMessage(Notice notice, String... usernames);
 
     public PageList<Notice> findLastUnreadNotice();
 
