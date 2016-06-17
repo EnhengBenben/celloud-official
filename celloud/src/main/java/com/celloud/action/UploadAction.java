@@ -232,7 +232,7 @@ public class UploadAction {
                         + "\"}";
             }
         } else if (fileFormat == FileFormat.YASUO) {
-            return "\"dataIds\":" + dataId + ",\"appIds\":" + appId;
+            return "{\"dataIds\":" + dataId + ",\"appIds\":" + appId + "\"}";
         }
         return "1";
     }
