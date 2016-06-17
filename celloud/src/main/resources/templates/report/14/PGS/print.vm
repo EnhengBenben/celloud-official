@@ -40,5 +40,6 @@
 $(function(){
 	$("#mainDiv").css("min-height","500px");
 	$(".notes").css("margin-top","0px");
+	$("#companyIcon").css("margin-bottom","7px");
 });
 </script>

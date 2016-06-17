@@ -7,7 +7,7 @@
 
 img {
 	border: 0;
-	width: 100%;
+	width: 96%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -28,11 +28,9 @@ body {
 	font-family: "黑体", "宋体";
 	font-size: 14px;
 	color: #353535;
-	max-width: 900px;
 }
 
 .wrapper {
-	margin: auto 10px;
 	padding-bottom: 25px;
 }
 
@@ -44,13 +42,14 @@ h1 {
 }
 
 table {
-	max-width: 100%;
-	min-width: 900px;
+	max-width: 97%;
+	min-width: 800px;
 	background-color: transparent;
 	border-collapse: collapse;
 	border-spacing: 0;
 	font-size: 13px;
 	background-color: transparent;
+	margin: 0 auto;
 }
 
 table td {

@@ -51,9 +51,9 @@
       </div>
       <div class="tests-footer">
         <ul>
-            <li>检测人：<span><input class="width-120" type="text" name='baseInfo["inspector"]' value="$!bsi.baseInfo.inspector"></span></li>
-            <li>复核人：<span><input class="width-120" type="text" name='baseInfo["compounder"]' value="$!bsi.baseInfo.compounder"></span></li>
-            <li>报告时间：<span><input class="width-120 Wdate" onclick="WdatePicker()" readonly="readonly" type="text" name='baseInfo["reportDate"]' value="$!bsi.baseInfo.reportDate"></span></li>
+            <li>检测人：<span class="print"></span><input class="width-120" type="text" name='baseInfo["inspector"]' value=""></li>
+            <li>复核人：<span class="print"></span><input class="width-120" type="text" name='baseInfo["compounder"]' value=""></li>
+            <li>报告时间：<span class="print"></span><input class="width-120 Wdate" onclick="WdatePicker()" readonly="readonly" type="text" name='baseInfo["reportDate"]' value=""></li>
         </ul>
         <div class="statement"><span>声明：1.报告仅对本次送检样品负责;2.检测结果仅供医师参考</span></div>
       </div>

@@ -127,7 +127,10 @@ public interface TaskMapper {
             @Param("sortBatch") String sortBatch,
             @Param("sortName") String sortName,
             @Param("sortPeriod") String sortPeriod,
-            @Param("state") Integer state);
+            @Param("state") Integer state, @Param("batch") String batch,
+            @Param("period") String period,
+            @Param("beginDate") String beginDate,
+            @Param("endDate") String endDate);
     
     /**
      * 检索某批次下的运行完的任务列表
@@ -144,8 +147,7 @@ public interface TaskMapper {
      */
     List<Task> findTasksByBatch(Page page, @Param("userId") Integer userId,
             @Param("appId") Integer appId, @Param("period") Integer period,
-            @Param("state") Integer state, @Param("batch") String batch,
-            @Param("dataKey") String dataKey);
+            @Param("state") Integer state, @Param("batch") String batch);
 
     /**
      * 按照运行状态和参数查找任务

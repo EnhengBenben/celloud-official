@@ -179,6 +179,7 @@ public class CompanyAction {
     @RequestMapping("printReport.pdf")
     public void reportPdf(HttpServletResponse response, Integer companyId, String pdfName) {
         response.setContentType("application/pdf");
+        pdfName = pdfName.replaceAll("`", "&");
         String path = CompanyConstants.getReportTemplatePath() + File.separator + companyId + File.separator + pdfName;
         FileInputStream in = null;
         ServletOutputStream out = null;

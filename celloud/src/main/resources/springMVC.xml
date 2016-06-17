@@ -166,26 +166,18 @@
 		<constructor-arg ref="mongoClient" />
 		<constructor-arg value="${mongo.database}" />
 	</bean>
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="${mail.smtp}" />
-		<property name="username" value="${mail.username}" />
-		<property name="password" value="${mail.password}" />
-		<property name="defaultEncoding" value="UTF-8"></property>
-		<property name="javaMailProperties">
-			<props>
-				<prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
-				<prop key="mail.smtp.timeout">${mail.smtp.timeout}</prop>
-			</props>
-		</property>
-	</bean>
 	<bean id="emailService" class="com.celloud.mail.EmailService">
-		<property name="mailSender" ref="mailSender" />
 		<property name="velocityUtil" ref="velocityUtil" />
 		<property name="defaultFrom" value="${mail.default.from}" />
 		<property name="emailName" value="${mail.emailName}" />
 		<property name="defaultTitle" value="${mail.default.title}" />
 	</bean>
 	<bean id="emailUtil" class="com.celloud.mail.EmailUtils">
+		<property name="apiUser" value="${mail.apiUser}" />
+		<property name="apiKey" value="${mail.apiKey}" />
+		<property name="url" value="${mail.url}" />
+		<property name="username" value="${mail.username}" />
+		<property name="emailName" value="${mail.emailName}" />
 		<property name="errorTitle" value="${mail.error.title}" />
 		<property name="errorMailTo" value="${mail.error.mailTo}" />
 		<property name="feedbackTitle" value="${mail.feedback.title}" />

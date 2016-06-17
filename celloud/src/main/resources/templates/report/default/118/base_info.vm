@@ -73,7 +73,7 @@ $(document).ready(function(){
     $("input[type='radio'][id='sex-radio']:checked").val()
     $("#print-report").on("click",function(){
         $.post("../report/updateBSIFilling",$("#print-form").serialize(),function(result){});
-        $(".base-info").find("input[type='text']").each(function(){
+        $("body").find("input[type='text']").each(function(){
            $(this).prev().text($(this).val());
         });
         $("#department-text").text($("#department").val());
