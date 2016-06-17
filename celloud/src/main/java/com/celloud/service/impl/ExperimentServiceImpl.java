@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.celloud.constants.DataState;
 import com.celloud.constants.ExperimentState;
 import com.celloud.mapper.ExperimentMapper;
 import com.celloud.model.mysql.Experiment;
@@ -66,6 +67,11 @@ public class ExperimentServiceImpl implements ExperimentService {
 	@Override
 	public List<Experiment> getReportList(Integer userId, String dataKey, Integer appId) {
 		return experimentMapper.getReportList(userId, ExperimentState.REPORT_STEP, dataKey, appId);
+	}
+
+	@Override
+	public Integer getApp(Integer sample, Integer method, Integer sequenator) {
+		return experimentMapper.getApp(sample, method, sequenator, DataState.ACTIVE);
 	}
 
 }

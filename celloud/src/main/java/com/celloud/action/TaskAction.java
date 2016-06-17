@@ -319,8 +319,7 @@ public class TaskAction {
         }
         // 6. 项目报告插入mysql并修改项目运行状态
         reportService.reportCompeleteByProId(proId, xml);
-        if (appId == ExperimentState.MDA_MR || appId == ExperimentState.SurePlex
-                || appId == ExperimentState.gDNA_MR) {
+		if (ExperimentState.apps.contains(appId)) {
             for (DataFile dataFile : dataList) {
                 String anotherName = dataFile.getAnotherName() == null ? ""
                         : dataFile.getAnotherName();
@@ -333,10 +332,19 @@ public class TaskAction {
                             ReportType.DATA);
                     Experiment exp = expList.get(0);
                     Integer am = exp.getAmplificationMethod();
-                    if (am == null || am.equals(0)) {
-                        continue;
-                    }
-                    if (ExperimentState.map.get(am).equals(appId)) {
+					if (am == null || am.equals(0)) {
+						continue;
+					}
+					Integer sample = exp.getSampleType();
+					if (sample == null || sample.equals(0)) {
+						continue;
+					}
+					Integer sequenator = exp.getSequenator();
+					if (sequenator == null || sequenator.equals(0)) {
+						continue;
+					}
+					Integer expAPPId = expService.getApp(sample, am, sequenator);
+					if (expAPPId != null && expAPPId.equals(appId)) {
                         exp.setReportId(report.getReportId());
                         exp.setReportDate(report.getEndDate());
                         exp.setStep(ExperimentState.REPORT_STEP);

@@ -70,7 +70,7 @@
                 <div class="col-sm-10">
                     <c:forEach items="${pdfPathList }" var="pdfPath">
 <%-- 	                    <a href="<%=request.getContextPath()%>/templates/report/${company.companyId }/${pdfPath }" target="_blank">${pdfPath }</a><br> --%>
-	                    <a href="company/printReport.pdf?companyId=${company.companyId }&pdfName=${pdfPath }" target="_blank">${pdfPath }</a><br>
+	                    <a href="company/printReport.pdf?companyId=${company.companyId }&pdfName=${pdfPath.replace('&','`') }" target="_blank">${pdfPath }</a><br>
                     </c:forEach>
                 </div>
             </div>

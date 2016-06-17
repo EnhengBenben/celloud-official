@@ -301,4 +301,15 @@ public interface DataFileMapper {
     List<DataFile> getDataByBatchAndFileName(@Param("userId") Integer userId,
             @Param("batch") String batch,
             @Param("fileName") String fileName, @Param("state") int state);
+
+    /**
+     * 获取上传批次列表
+     * 
+     * @param userId
+     * @return
+     * @author leamo
+     * @date 2016年6月13日 下午3:19:51
+     */
+    List<String> getBatchList(@Param("userId") Integer userId,
+            @Param("state") int state);
 }

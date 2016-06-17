@@ -1,17 +1,10 @@
 package com.celloud.message;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.celloud.constants.Constants;
 import com.celloud.exception.BusinessException;
-import com.celloud.model.mysql.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -30,13 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @date 2016年4月14日 下午2:58:15
  */
 public class MessageUtils {
-    private static Logger logger = LoggerFactory.getLogger(MessageUtils.class);
     private Message message = new Message();
-
-    private User getUserFromSession(WebSocketSession session) {
-        User user = (User) session.getAttributes().get(Constants.SESSION_LOGIN_USER);
-        return user;
-    }
 
     /**
      * 获取工具类实体
@@ -63,30 +50,23 @@ public class MessageUtils {
      * 
      * @param usernames
      */
-    @SuppressWarnings("unchecked")
     public void to(String... usernames) {
         if (usernames == null || usernames.length <= 0) {
             throw new BusinessException("发送消息没有指定接收者:" + message.toJson());
         }
-        List<Object> sessions = new ArrayList<>();
+        Map<String, String> messages = new HashMap<>();
+        String jsonMessage = this.message.toJson();
         for (String username : usernames) {
-            sessions.addAll(SystemWebSocketHandler.userSessions.getCollection(username));
+            messages.put(username, jsonMessage);
         }
-        TextMessage tm = new TextMessage(message.toJson());
-        for (Object session : sessions) {
-            sendMessage((WebSocketSession) session, tm);
-        }
-        return;
+        MessageSender.send(Constants.MESSAGE_USER_TOPIC, messages);
     }
 
     /**
      * 发送给所有用户
      */
     public void toAll() {
-        TextMessage tm = new TextMessage(message.toJson());
-        for (Object session : SystemWebSocketHandler.userSessions.values()) {
-            sendMessage((WebSocketSession) session, tm);
-        }
+        MessageSender.send(Constants.MESSAGE_USER_TOPIC, Constants.MESSAGE_ALLUSER_KEY, this.message.toJson());
     }
 
     /**
@@ -98,22 +78,6 @@ public class MessageUtils {
     public MessageUtils on(String channel) {
         this.message.setChannel(channel);
         return this;
-    }
-
-    /**
-     * 给用户发送消息
-     * 
-     * @param session
-     * @param message
-     */
-    private void sendMessage(WebSocketSession session, TextMessage message) {
-        if (session.isOpen()) {
-            try {
-                session.sendMessage(message);
-            } catch (IOException e) {
-                logger.error("发送消息给【{}】失败：{}", getUserFromSession(session).getUsername(), message.getPayload(), e);
-            }
-        }
     }
 
     /**
@@ -148,7 +112,7 @@ public class MessageUtils {
             try {
                 m = mapper.writeValueAsString(this);
             } catch (JsonProcessingException e) {
-                e.printStackTrace();
+                throw new BusinessException("转化消息到json失败！", e);
             }
             return m;
         }

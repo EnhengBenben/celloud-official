@@ -10,7 +10,7 @@
   <tbody id="data-list-tbody">
     <c:if test="${pageList.datas.size()>0 }">
       <c:forEach var="task" items="${pageList.datas }" varStatus="size">
-        <tr id="report${task.dataKey}${task.projectId}${task.appId}">
+        <tr id="reportbatch${task.dataKey}" >
           <td title="${task.fileName }" name="data-name-td" >
             <c:choose>
               <c:when test="${task.period==2 }">

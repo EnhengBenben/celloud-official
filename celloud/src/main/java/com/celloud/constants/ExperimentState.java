@@ -1,6 +1,7 @@
 package com.celloud.constants;
 
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 实验流程状态
@@ -31,23 +32,10 @@ public class ExperimentState {
 	 * 报告产生后的实验阶段
 	 */
 	public static final int REPORT_STEP = 6;
-	// method
-	public static final int MDA = 11;
-	public static final int Sureplex = 12;
-	public static final int gDNA = 13;
-	// app
-	public static final int MDA_MR = 88;
-	public static final int SurePlex = 94;
-	public static final int gDNA_MR = 87;
-	public static final HashMap<Integer, Integer> map = new HashMap<Integer, Integer>() {
-		private static final long serialVersionUID = 1L;
-
-		{
-			put(MDA, MDA_MR);
-			put(Sureplex, SurePlex);
-			put(gDNA, gDNA_MR);
-		}
-	};
+	/**
+	 * 需要处理的嘉宝流程
+	 */
+	public static final List<Integer> apps = Arrays.asList(119, 120, 121, 122);
 
 	/**
 	 * 未绑定数据的file_id

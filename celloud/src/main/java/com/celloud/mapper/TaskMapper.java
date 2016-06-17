@@ -127,7 +127,10 @@ public interface TaskMapper {
             @Param("sortBatch") String sortBatch,
             @Param("sortName") String sortName,
             @Param("sortPeriod") String sortPeriod,
-            @Param("state") Integer state);
+            @Param("state") Integer state, @Param("batch") String batch,
+            @Param("period") String period,
+            @Param("beginDate") String beginDate,
+            @Param("endDate") String endDate);
     
     /**
      * 检索某批次下的运行完的任务列表
@@ -144,8 +147,7 @@ public interface TaskMapper {
      */
     List<Task> findTasksByBatch(Page page, @Param("userId") Integer userId,
             @Param("appId") Integer appId, @Param("period") Integer period,
-            @Param("state") Integer state, @Param("batch") String batch,
-            @Param("dataKey") String dataKey);
+            @Param("state") Integer state, @Param("batch") String batch);
 
     /**
      * 按照运行状态和参数查找任务
@@ -189,4 +191,17 @@ public interface TaskMapper {
     Task findTaskDataAppPro(@Param("state") Integer state,
             @Param("dataKey") String dataKey, @Param("appId") Integer appId,
             @Param("projectId") Integer projectId);
+
+    /**
+     * 统计用户报告任务种类数量
+     * 
+     * @param state
+     * @param appId
+     * @param userId
+     * @return
+     * @author leamo
+     * @date 2016年6月13日 上午10:20:15
+     */
+    List<Map<String, Object>> findTaskPeriodNum(@Param("state") Integer state,
+            @Param("appId") Integer appId, @Param("userId") Integer userId);
 }

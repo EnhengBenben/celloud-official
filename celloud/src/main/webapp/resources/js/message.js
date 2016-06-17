@@ -9,6 +9,7 @@ var messageUtils = (function(messageUtils) {
 	self.closeListeners = {
 		'listenerNumbers' : 0
 	};
+	self.timeouts = {};
 	self.addOpenListener = function(listener) {
 		self.openListeners[self.openListeners.listenerNumbers] = listener;
 		self.openListeners.listenerNumbers = self.openListeners.listenerNumbers + 1;
@@ -44,47 +45,61 @@ var messageUtils = (function(messageUtils) {
 		}
 		return ws;
 	}
-	ws = openWebSocket();
-	ws.onopen = function() {
-		console.log("websocket connect is opened");
-		for ( var listener in self.openListeners) {
-			if ($.isFunction(self.openListeners[listener])) {
-				self.openListeners[listener]();
+	function bindEvents(){
+		self.ws.onopen = function() {
+			console.log("websocket connect is opened.");
+			clearTimeouts();
+			for ( var listener in self.openListeners) {
+				if ($.isFunction(self.openListeners[listener])) {
+					self.openListeners[listener]();
+				}
 			}
-		}
-	};
-	ws.onmessage = function(e) {
-		var message = JSON.parse(e.data);
-		var channels = self.messageChannels[message.channel] || [];
-		if (channels.length <= 0) {
-			console.log("no listener for channel: " + message.channel);
-			return;
-		}
-		for ( var channel in channels) {
-			if ($.isFunction(channels[channel])) {
-				channels[channel](message.message);
+		};
+		self.ws.onmessage = function(e) {
+			var message = JSON.parse(e.data);
+			var channels = self.messageChannels[message.channel] || [];
+			if (channels.length <= 0) {
+				console.log("no listener for channel: " + message.channel);
+				return;
 			}
-		}
-	};
-	ws.onclose = function() {
-		console.log("websocket connect is closed");
-		for ( var listener in self.closeListeners) {
-			if ($.isFunction(self.closeListeners[listener])) {
-				self.closeListeners[listener]();
+			for ( var channel in channels) {
+				if ($.isFunction(channels[channel])) {
+					channels[channel](message.message);
+				}
 			}
+		};
+		self.ws.onclose = function() {
+			console.log("websocket connect is closed");
+			for ( var listener in self.closeListeners) {
+				if ($.isFunction(self.closeListeners[listener])) {
+					self.closeListeners[listener]();
+				}
+			}
+			//reOpenWebsocket();
+		};
+	}
+	self.ws = openWebSocket();
+	bindEvents();
+	function clearTimeouts(){
+		for(var t in self.timeouts){
+			clearTimeout(self.timeouts[t]);
 		}
-	};
+		self.timeouts = [];
+	}
+	function reOpenWebsocket(){
+		var timeouts = [1000,1000*10,1000*30,1000*60,1000*60*5,1000*60*10,1000*60*15,1000*60*20];
+		clearTimeouts();
+		for(var i = 0;i<timeouts.length;i++){
+			self.timeouts[i] = setTimeout(function(){
+				console.log("retring open websocket ...");
+				self.ws.close();
+				self.ws = openWebSocket();
+				bindEvents();
+			},timeouts[i]);
+		}
+	}
 	return self;
 })(messageUtils);
 messageUtils.subscribe("test", function(data) {
 	console.log("接收到test频道的消息：" + JSON.stringify(data));
-});
-messageUtils.addOpenListener(function() {
-	console.log("aaaaa");
-});
-messageUtils.addOpenListener(function() {
-	console.log("bbbbb");
-});
-messageUtils.addCloseListener(function() {
-	console.log("bbbbbccccc");
 });

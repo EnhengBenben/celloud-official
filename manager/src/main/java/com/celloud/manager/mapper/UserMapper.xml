@@ -202,17 +202,20 @@
         remark, navigation,
         truename, state, dept_id as deptId, login_uuid as loginUuid,
         u.company_id as companyId, sign
-        from tb_user u, tb_user_company_relat ucr
+        from tb_user u
+        <if test="companyId != 0">
+        , tb_user_company_relat ucr
+        </if>
         where 
         state=#{state }
         <if test="companyId != 0">
          and role = 0 and u.user_id = ucr.user_id and ucr.company_id = #{companyId }
         </if>
-        <if test="companyId == 0">
-         and role = 0 or role = 1
-        </if>
         <if test="keyword!=null and keyword!=''">
             and ${searchField} like '%${keyword }%'
+        </if>
+        <if test="companyId == 0">
+         and (role = 0 or role = 1)
         </if>
         order by create_date desc
     </select>

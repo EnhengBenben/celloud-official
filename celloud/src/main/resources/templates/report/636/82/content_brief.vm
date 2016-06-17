@@ -1,0 +1,179 @@
+<form id="print-form">
+    <input type="hidden" value="1" id="isSaved"/>
+    <input type="hidden" value="${hbv.projectId}" id="_projectId">
+    <div style="display: none;" id="_userId">${hbv.userId}</div>
+    <div style="display: none;" id="_appId">${hbv.appId}</div>
+    <div style="display: none;" id="_companyId">${hbv.companyId}</div>
+    <div style="display: none;" id="_fileId">${report.fileId}</div>
+    <div style="display: none;" id="_flag">1</div>
+    <div class="wrapper">
+        <table border='1' cellspacing="0" cellpadding="0">
+            <tr>
+                <td class="label">姓名</td>
+                <td><input type="text" class="tdInput"></td>
+                <td class="label">性别</td>
+                <td><input type="text" class="tdInput"></td>
+                <td class="label">年龄</td>
+                <td><input type="text" class="tdInput"></td>
+                <td class="label">住院号/门诊号</td>
+                <td><input type="text" class="tdInput"></td>
+            </tr>
+            <tr>
+                <td class="label">科别</td>
+                <td><input type="text" class="tdInput"></td>
+                <td class="label">床号</td>
+                <td><input type="text" class="tdInput"></td>
+                <td class="label">送检医师</td>
+                <td><input type="text" class="tdInput"></td>
+                <td class="label">送检日期</td>
+                <td><input type="text" class="tdInput"></td>
+            </tr>
+            <tr>
+                <td rowspan="2" class="label">样品类型</td>
+                <td rowspan="2">EDTA抗凝血</td>
+                <td class="label">检测方法</td>
+                <td colspan="3">Sanger测序法</td>
+                <td rowspan="2" class="label">报告编号</td>
+                <td rowspan="2"><input type="text" class="tdInput"></td>
+            </tr>
+            <tr>
+                <td class="label">检测仪器</td>
+                <td colspan="3">ABI 3130XL 基因分析仪</td>
+            </tr>
+            <tr>
+                <td class="label">序号</td>
+                <td colspan="3" class="label">项目</td>
+                <td colspan="4" class="label">结果</td>
+            </tr>
+            #if(${hbv.reporttxt.indexOf('测序失败')}>-1)
+                <tr>
+                    <td>1</td>
+                    <td colspan="3">基因分型</td>
+                    <td colspan="4" rowspan="7">
+                        <input type="text" class="tdCenterInput" value="测序失败,建议重测" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td colspan="3">恩替卡韦ETV突变耐药株检测</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td colspan="3">阿德福韦ADV突变耐药株检测</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td colspan="3">恩曲他滨FTC突变耐药株检测</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td colspan="3">拉米夫定LAM突变耐药株检测</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td colspan="3">替比夫定LDT突变耐药株检测</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td colspan="3">替诺福韦酯TDF突变耐药株检测</td>
+                </tr>
+            #else
+                <tr>
+                    <td>1</td>
+                    <td colspan="3">基因分型</td>
+                    <td colspan="4"><input type="text" class="tdCenterInput" value="${hbv.type.replace('Type: ','')}型" /></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td colspan="3">恩替卡韦ETV突变耐药株检测</td>
+                    <td colspan="4">
+                        #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到恩替卡韦')}>-1)
+                            <input type="text" class="tdCenterInput" value="未检测到恩替卡韦ETV突变耐药株" />
+                        #else
+                            <input type="text" class="tdCenterInput" value="检测到恩替卡韦ETV突变耐药株" />
+                        #end
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td colspan="3">阿德福韦ADV突变耐药株检测</td>
+                    <td colspan="4">
+                        #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到阿德福韦')}>-1)
+                            <input type="text" class="tdCenterInput" value="未检测到阿德福韦ADV突变耐药株" />
+                        #else
+                            <input type="text" class="tdCenterInput" value="检测到阿德福韦ADV突变耐药株" />
+                        #end
+                    </td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td colspan="3">恩曲他滨FTC突变耐药株检测</td>
+                    <td colspan="4">
+                        #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到恩曲他滨')}>-1)
+                            <input type="text" class="tdCenterInput" value="未检测到恩曲他滨FTC突变耐药株" />
+                        #else
+                            <input type="text" class="tdCenterInput" value="检测到恩曲他滨FTC突变耐药株" />
+                        #end
+                    </td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td colspan="3">拉米夫定LAM突变耐药株检测</td>
+                    <td colspan="4">
+                        #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到拉米夫定')}>-1)
+                            <input type="text" class="tdCenterInput" value="未检测到拉米夫定LAM突变耐药株" />
+                        #else
+                            <input type="text" class="tdCenterInput" value="检测到拉米夫定LAM突变耐药株" />
+                        #end
+                    </td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td colspan="3">替比夫定LDT突变耐药株检测</td>
+                    <td colspan="4">
+                        #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到替比夫定')}>-1)
+                            <input type="text" class="tdCenterInput" value="未检测到替比夫定LDT突变耐药株" />
+                        #else
+                            <input type="text" class="tdCenterInput" value="检测到替比夫定LDT突变耐药株" />
+                        #end
+                    </td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td colspan="3">替诺福韦酯TDF突变耐药株检测</td>
+                    <td colspan="4">
+                        #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到替诺福韦酯')}>-1)
+                            <input type="text" class="tdCenterInput" value="未检测到替诺福韦酯TDF突变耐药株" />
+                        #else
+                            <input type="text" class="tdCenterInput" value="检测到替诺福韦酯TDF突变耐药株" />
+                        #end
+                    </td>
+                </tr>
+            #end    
+            <tr>
+                <td colspan="8" style="height:230px;text-align:left;">
+ 备注：<br/>
+&nbsp;&nbsp;1.同时获得RT逆转录区的多个耐药突变位点，包括有文献支持的YMDD突变M204V/I，A181V/T，N236T，I169T，L180M，T184A/G/S/I/L/F，S202G/I，M250V/L/I，V173L，A194T，对六种主要乙肝药物的耐药以及乙肝病毒分型。<br/>
+&nbsp;&nbsp;2.本方法可检测出1000IU/ml及以上的DNA标本。<br/>
+&nbsp;&nbsp;3.本检测结果仅供临床参考，不能作为确诊或排除的唯一依据。<br/>
+&nbsp;&nbsp;4.声明：本报告仅对本次检测结果负责，如有疑问，请于报告日期三天内提出。<br/>
+参考文献：<br/>
+&nbsp;&nbsp;1.Lok et al., 2007, Antiviral drug-resistant HBV: Standardization of nomenclature and assays and recommendations for management，Hepatology, 46(1) :254–65.<br/>
+&nbsp;&nbsp;2.Papatheodoridis, Deutsch, 2008, Resistance Issues in Treating Chronic Hepatitis B, Future Microbiol. 3(5):525-38.<br/>
+&nbsp;&nbsp;3.庄辉,翁心华,核苷和核苷酸类药物治疗慢性乙型肝炎的耐药及其管理.中国病毒病杂志,2013,3(1)：1-11.<br/>
+&nbsp;&nbsp;4.分型参考标准：<br/>
+&nbsp;&nbsp;<a href="http://www.ncbi.nlm.nih.gov/projects/genotyping/formpage.cgi" target="_blank">http://www.ncbi.nlm.nih.gov/projects/genotyping/formpage.cgi</a><br/>
+&nbsp;&nbsp;<a href="http://hivdb.stanford.edu/HBV/HBVseq/development/hbvseq.pl?action=showSequenceForm" target="_blank">http://hivdb.stanford.edu/HBV/HBVseq/development/hbvseq.pl?action=showSequenceForm</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8">
+                    <ul class="info mt5">
+                        <li>报告日期<span><input type="text" class="liInput"></span></li>
+                        <li>检验者<span><input type="text" class="liInput"></span></li>
+                        <li>审核者<span><input type="text" class="liInput"></span></li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>

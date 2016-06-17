@@ -114,7 +114,8 @@ public interface TaskService {
      */
     public PageList<Task> findTasksByUserCondition(Page page, Integer userId,
             String condition, Integer sort, String sortDate, String sortBatch,
-            String sortName, String sortPeriod);
+            String sortName, String sortPeriod, String batch, String period,
+            String beginDate, String endDate);
 
     /**
      * 获取统一批次下的报告列表
@@ -128,7 +129,7 @@ public interface TaskService {
      * @date 2016年6月1日 下午5:38:50
      */
     public PageList<Task> findTasksByBatch(Page page, Integer userId,
-            Integer appId, String batch, String dataKey);
+            Integer appId, String batch);
 
     /**
      * 数据报告上一个/下一个
@@ -148,7 +149,8 @@ public interface TaskService {
     public PageList<Task> findNextOrPrevTasks(Page page, Integer userId,
             String condition, Integer sort, String sortDate, String sortBatch,
             String sortName, String sortPeriod, Boolean isPrev,
-            Integer totalPage);
+            Integer totalPage, String batch, String period, String beginDate,
+            String endDate);
 
     /**
      * 新增或修改上传任务数据
@@ -182,4 +184,16 @@ public interface TaskService {
      * @date 2016年5月16日 下午4:12:17
      */
     public Integer updateTask(Task task);
+
+    /**
+     * 统计用户报告任务种类数量
+     * 
+     * @param state
+     * @param appId
+     * @param userId
+     * @return
+     * @author leamo
+     * @date 2016年6月13日 上午10:20:15
+     */
+    public Map<String, Object> findTaskPeriodNum(Integer appId, Integer userId);
 }

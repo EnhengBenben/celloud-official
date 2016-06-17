@@ -2,6 +2,7 @@ package com.celloud.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -152,10 +153,11 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public PageList<Task> findTasksByUserCondition(Page page, Integer userId,
             String condition, Integer sort, String sortDate, String sortBatch,
-            String sortName, String sortPeriod) {
+            String sortName, String sortPeriod, String batch, String period,
+            String beginDate, String endDate) {
         List<Task> list = taskMapper.findTasksByUserCondition(page, userId,
                 condition, sort, sortDate, sortBatch, sortName, sortPeriod,
-                DataState.ACTIVE);
+                DataState.ACTIVE, batch, period, beginDate, endDate);
         return new PageList<>(page, list);
     }
 
@@ -163,10 +165,12 @@ public class TaskServiceImpl implements TaskService {
     public PageList<Task> findNextOrPrevTasks(Page page, Integer userId,
             String condition, Integer sort, String sortDate, String sortBatch,
             String sortName, String sortPeriod, Boolean isPrev,
-            Integer totalPage) {
+            Integer totalPage, String batch, String period,
+ String beginDate,
+            String endDate) {
         List<Task> list = this.findTaskListByCondition(page, userId, condition,
                 sort, sortDate, sortBatch, sortName, sortPeriod, isPrev,
-                totalPage);
+                totalPage, batch, period, beginDate, endDate);
         if (list != null) {
             return new PageList<>(page, list);
         } else {
@@ -177,13 +181,15 @@ public class TaskServiceImpl implements TaskService {
     private List<Task> findTaskListByCondition(Page pager, Integer userId,
             String condition, Integer sort, String sortDate, String sortBatch,
             String sortName, String sortPeriod, Boolean isPrev,
-            Integer totalPage) {
+            Integer totalPage, String batch, String period,
+ String beginDate,
+            String endDate) {
         Integer currentPage = pager.getCurrentPage();
         List<Task> list = new ArrayList<>();
         // 查询报告
         list = taskMapper.findTasksByUserCondition(pager, userId, condition,
                 sort, sortDate, sortBatch, sortName, sortPeriod,
-                DataState.ACTIVE);
+                DataState.ACTIVE, batch, period, beginDate, endDate);
         if (list != null) {
             Task t = list.get(0);
             if (t != null && t.getPeriod() == 2) {// 如果找到符合条件的返回
@@ -193,12 +199,12 @@ public class TaskServiceImpl implements TaskService {
                 Page pager1 = new Page(--currentPage, 1);
                 return this.findTaskListByCondition(pager1, userId, condition,
                         sort, sortDate, sortBatch, sortName, sortPeriod, isPrev,
-                        totalPage);
+                        totalPage, batch, period, beginDate, endDate);
             } else if (!isPrev && currentPage < totalPage) {// 向后翻页 取下一份报告
                 Page pager1 = new Page(++currentPage, 1);
                 return this.findTaskListByCondition(pager1, userId, condition,
                         sort, sortDate, sortBatch, sortName, sortPeriod, isPrev,
-                        totalPage);
+                        totalPage, batch, period, beginDate, endDate);
             }
         }
         return null;
@@ -237,9 +243,35 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public PageList<Task> findTasksByBatch(Page page, Integer userId,
-            Integer appId, String batch, String dataKey) {
+            Integer appId, String batch) {
         List<Task> list = taskMapper.findTasksByBatch(page, userId, appId,
-                TaskPeriod.DONE, DataState.ACTIVE, batch, dataKey);
+                TaskPeriod.DONE, DataState.ACTIVE, batch);
         return new PageList<>(page, list);
+    }
+
+    @Override
+    public Map<String, Object> findTaskPeriodNum(Integer appId,
+            Integer userId) {
+        List<Map<String, Object>> periodList = taskMapper
+                .findTaskPeriodNum(DataState.ACTIVE, appId, userId);
+        Map<String, Object> map = new HashMap<>();
+        map.put("done", 0l);
+        map.put("wait", 0l);
+        map.put("uploading", 0l);
+        map.put("error", 0l);
+        for (Map<String, Object> m : periodList) {
+            Object period = m.get("period");
+            Object periodNum = m.get("periodNum");
+            if ((Integer) period == TaskPeriod.DONE) {
+                map.put("done", periodNum);
+            } else if (period == null) {
+                map.put("error", periodNum);
+            } else if ((Integer) period == TaskPeriod.UPLOADING) {
+                map.put("uploading", periodNum);
+            } else {
+                map.put("wait", (Long) map.get("wait") + (Long) periodNum);
+            }
+        }
+        return map;
     }
 }
