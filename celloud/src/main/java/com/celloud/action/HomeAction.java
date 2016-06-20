@@ -192,6 +192,11 @@ public class HomeAction {
         return "user/user_pwd_find";
     }
 
+	@RequestMapping("browser.html")
+	public String browser() {
+		return "browser";
+	}
+
     @RequestMapping("home_phone.html")
     public String homePhone() {
         return "home_phone";
