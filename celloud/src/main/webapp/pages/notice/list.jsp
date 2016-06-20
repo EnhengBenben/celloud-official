@@ -12,7 +12,7 @@
 			</a>
 		</li>
 		<li class="active">
-			<span id="subtitle">${type=='message'?'消息提醒':'系统公告' }</span>
+			<span id="subtitle">${type=='message'?'系统消息':'站内消息' }</span>
 		</li>
 	</ol>
 </section>
@@ -27,10 +27,10 @@
 					</div>
 					<ul id="userOperaUl">
 						<li class="${type=='message'?'active':'' }" id="userMessageTab">
-							<a href="javascript:notices.showUserMessage()">消息提醒</a>
+							<a href="javascript:notices.showUserMessage()">系统消息</a>
 						</li>
 						<li class="${type=='notice'?'active':'' }" id="userNoticeTab">
-							<a href="javascript:notices.showUserNotice()">系统公告</a>
+							<a href="javascript:notices.showUserNotice()">站内消息</a>
 						</li>
 					</ul>
 				</div>
@@ -98,7 +98,7 @@
 					<div class="common-normal common-slide common-normals ${type=='notice'?'':'hide' }" id="userNotice">
 						<div class="row">
 							<div class="col-xs-4" style="padding-right: 0px;">
-								<div class="list-group">
+								<!--div class="list-group">
 									<div class="list-group-item">
 										<button onclick="feedbacks.showForm()" class="btn btn-success">
 											<span aria-hidden="true" class="glyphicon glyphicon-inbox"></span>
@@ -149,9 +149,9 @@
 										<p class="feedback-date">发布时间：2016-06-17 14:37:22</p>
 									</button>
 								</div>
-							</div>
+							</div-->
 							<div class="col-xs-8 pull-right" style="padding-left: 0px;">
-								<div class="box box-success">
+								<!--div class="box box-success">
 									<div class="box-header with-border" style="">
 										<div class="row">
 											<div class="col-xs-10">
@@ -170,7 +170,7 @@
 										<pre>新功能上线了~~~新功能上线了~~~新功能上线了~~~新功能上线了~~~新功能上线了~~~
 新功能上线了~~~新功能上线了~~~新功能上线了~~~新功能上线了~~~新功能上线了~~~</pre>
 									</div>
-								</div>
+								</div-->
 							</div>
 						</div>
 					</div>
