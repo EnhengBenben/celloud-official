@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
-import com.celloud.constants.NoticeConstants;
 import com.celloud.mail.EmailUtils;
-import com.celloud.message.MessageUtils;
 import com.celloud.model.mysql.Client;
 import com.celloud.model.mysql.User;
 import com.celloud.service.ClientService;
