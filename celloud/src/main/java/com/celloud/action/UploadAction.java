@@ -35,7 +35,6 @@ import com.celloud.constants.FileFormat;
 import com.celloud.constants.NoticeConstants;
 import com.celloud.constants.TaskPeriod;
 import com.celloud.message.MessageUtils;
-import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Experiment;
 import com.celloud.model.mysql.Task;
@@ -177,8 +176,12 @@ public class UploadAction {
     private String bsierCheckRun(Integer tagId, String batch, Integer dataId, String dataKey, Integer needSplit,
             String newName, String folderByDay, String originalName, Integer userId, Integer fileFormat) {
         logger.info("判断是否数据{}上传完即刻运行", originalName);
-        App app = appService.findAppsByTag(tagId);
-        Integer appId = needSplit == 1 ? 113 : app.getAppId();
+        Integer appId;
+        if (needSplit == null) {
+            appId = 118;
+        } else {
+            appId = 113;
+        }
         String pubName = "";
         List<Integer> dataIds;
         if (fileFormat == FileFormat.FQ || originalName.contains(".txt") || originalName.contains(".lis")) {
@@ -231,8 +234,8 @@ public class UploadAction {
                 return "{\"dataIds\":\"" + StringUtils.join(dataIds.toArray(), ",") + "\",\"appIds\":\"" + appId
                         + "\"}";
             }
-        } else if (fileFormat == FileFormat.YASUO) {
-            return "\"dataIds\":" + dataId + ",\"appIds\":" + appId;
+        } else if (fileFormat == FileFormat.YASUO && needSplit == null) {
+            return "{\"dataIds\":" + dataId + ",\"appIds\":\"" + appId + "\"}";
         }
         return "1";
     }
