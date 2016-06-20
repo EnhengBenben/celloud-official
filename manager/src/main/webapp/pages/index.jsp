@@ -235,6 +235,7 @@
     <!-- Imported scripts on this page -->
     <script src="plugins/bootstrap/js/xenon-widgets.js"></script>
     <script src="plugins/bootstrap/js/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/plug-ins/1.10.12/sorting/file-size.js"></script>
     <!-- Imported scripts on this page -->
     <script src="plugins/bootstrap/js/datatables/dataTables.bootstrap.js"></script>
     <script src="plugins/bootstrap/js/datatables/yadcf/jquery.dataTables.yadcf.js"></script>
