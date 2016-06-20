@@ -406,9 +406,9 @@ $(function() {
 	  if(tdVal.toLowerCase().indexOf("chr") == -1){
 	    $(this).children('td').eq(2).remove();
 	    $(this).children('td').eq(2).remove();
+	    tr = trTotal-count;
 	    count ++;
 	    need = true;
-	    tr = trTotal-1;
 	  }else if(need){
 	    var rowTr = $("#reportTable tr").eq(tr);
 	    $(rowTr).children("td").eq(0).attr("rowspan",count);
