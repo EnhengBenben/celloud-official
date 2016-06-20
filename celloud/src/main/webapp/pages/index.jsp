@@ -52,11 +52,11 @@
 						<li class="dropdown notifications-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 								<i class="fa fa-envelope-o"></i>
-								<span class="label label-success">3</span>
+								<span class="label label-success"></span>
 							</a>
 							<ul class="dropdown-menu">
 								<li class="header">站内消息提醒</li>
-								<li>
+								<!--li>
 									<ul class="menu">
 										<li>
 											<a href="#">
@@ -74,7 +74,7 @@
 											</a>
 										</li>
 									</ul>
-								</li>
+								</li -->
 								<li class="footer">
 									<a href="javascript:showNotice()">查看所有</a>
 								</li>
