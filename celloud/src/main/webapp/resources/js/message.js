@@ -160,5 +160,6 @@ messageUtils.addCloseListener(function() {
 /**
  * 订阅某频道的消息，当有消息发到这个频道时执行。
  */
-messageUtils.subscribe("", function() {
+messageUtils.subscribe("userMessage", function(data) {
+	
 });

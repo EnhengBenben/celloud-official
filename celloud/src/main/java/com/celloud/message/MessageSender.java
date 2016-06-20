@@ -20,4 +20,8 @@ public class MessageSender {
         producer.flush();
     }
 
+    public static void shutdown() {
+        producer.close();
+    }
+
 }

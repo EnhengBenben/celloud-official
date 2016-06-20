@@ -35,7 +35,8 @@ var notices = (function(object) {
 		$("#userMessageTab").addClass("active");
 		$("#userMessage").siblings().addClass("hide");
 		$("#userMessage").removeClass("hide");
-		$("#subtitle").html("消息提醒");
+		$("#subtitle").html("系统消息");
+		self.pageMessage();
 	};
 	/**
 	 * 切换页签到系统公告
@@ -45,7 +46,7 @@ var notices = (function(object) {
 		$("#userNoticeTab").addClass("active");
 		$("#userNotice").siblings().addClass("hide");
 		$("#userNotice").removeClass("hide");
-		$("#subtitle").html("系统公告");
+		$("#subtitle").html("站内消息");
 	};
 	/**
 	 * 列表check all 的checkbox事件

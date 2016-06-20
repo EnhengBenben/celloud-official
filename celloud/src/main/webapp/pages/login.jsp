@@ -78,13 +78,23 @@
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/tologin.js?version=1.1"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/md5.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/security.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/browser.js?version=1.0"></script>
 	<script type="text/javascript">
-		//根据视口和文档的宽高设置背景图片的尺寸
-		utils.setDocSize();
-		utils.checkPlaceholder();
-		$(window).resize(function(){  
-		  utils.setDocSize();
-		});
+		var browser = $.NV();
+		alert(browser.ua);
+		alert(browser.name);
+		alert(browser.version);
+		alert(browser.shell);
+		if(browser.name=='firefox'||browser.name=='chrome'||(browser.name=='ie'&&browser.version>8)){
+			//根据视口和文档的宽高设置背景图片的尺寸
+			utils.setDocSize();
+			utils.checkPlaceholder();
+			$(window).resize(function(){  
+			  utils.setDocSize();
+			});
+		}else{
+		  $("#loginForm").load("<%=request.getContextPath()%>/browser.html");
+		}
 	</script>
 </body>
 </html>

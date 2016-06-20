@@ -88,7 +88,7 @@ public interface ProjectService {
      * @date 2016年1月14日 下午1:12:51
      */
     public Map<Integer, Integer> insertMultipleProject(Project project,
-            String[] appIdArr, String[] dataIdArr);
+            List<Integer> appIds, String[] dataIdArr);
 
     public Map<String, Object> findProjectInfoById(Integer projectId);
     
