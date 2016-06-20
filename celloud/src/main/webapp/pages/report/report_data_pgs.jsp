@@ -142,7 +142,7 @@
 						${pgs.report }
 					</c:if>
 					<c:if test="${pgs.detail!=null && pgs.detail.size()>0 }">
-						<table class='table table-bordered table-condensed'>
+						<table class='table table-bordered table-condensed' id="reportTable">
 							<c:forEach items="${pgs.detail }" var="info">
 								<tr>
 									<c:forEach var="ss" items="${info}" varStatus="st">  
@@ -166,6 +166,11 @@
 					</c:if>
 				</c:if>
 			</div>
+			<c:if test="${pgs.mosaic!=null && pgs.mosaic!='' }">
+				<div class="m-boxCon result">
+					${pgs.mosaic }
+				</div>
+			</c:if>
 		</div>
         <!--染色体图示一-->
         <div class="m-box">
@@ -192,6 +197,11 @@
 				</c:if>
 				<c:if test="${pgs.testPng==null || pgs.testPng=='' }">
 					<span style="color: red;">运行异常，未产生图片！</span>
+				</c:if>
+            	<c:if test="${pgs.HRPng!=null && pgs.HRPng!='' }">
+					<a href="javascript:bigOrigin('${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.HRPng }','HRPngImg');" >
+						<img src="${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.HRPng }" style="width: 700px;height: 220px" id="HRPngImg">
+					</a>
 				</c:if>
             </div>
         </div>
@@ -386,6 +396,29 @@ $(function() {
 		$(this).css("padding-left","20px");
 		$(this).css("text-align","left");
 		num ++;
+	});
+	var trTotal = 0;//记录总共遍历了多少个 tr
+	var tr = 0;//记录需要在第几个加rowspan
+	var count = 1;//记录需要rowspan的数目
+	var need = false;
+	$("#reportDiv").find("tr").each(function(){
+	  var tdVal = $(this).children('td').eq(0).html();
+	  if(tdVal.toLowerCase().indexOf("chr") == -1){
+	    $(this).children('td').eq(2).remove();
+	    $(this).children('td').eq(2).remove();
+	    tr = trTotal-count;
+	    count ++;
+	    need = true;
+	  }else if(need){
+	    var rowTr = $("#reportTable tr").eq(tr);
+	    $(rowTr).children("td").eq(0).attr("rowspan",count);
+	    $(rowTr).children("td").eq(0).css("vertical-align","middle");
+	    $(rowTr).children("td").eq(1).attr("rowspan",count);
+	    $(rowTr).children("td").eq(1).css("vertical-align","middle");
+	    count =  1;
+	    need = false;
+	  }
+	  trTotal++;
 	});
 });
 function showModal(id){

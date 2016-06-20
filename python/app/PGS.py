@@ -89,6 +89,9 @@ class PGS:
 						detail.append(line.strip().split("\t"))
 					f.close()
 					result['detail'] = detail
+				elif(x == 'report.mosaic.txt'):
+					mosaic = readAll(os.path.join(path,"report.mosaic.txt"))
+					result['mosaic'] = mosaic
 				elif(x.endswith('.png')):
 					##此处处理所有png
 					result[pgs[x.split('.')[-2] + 'Png']] = x

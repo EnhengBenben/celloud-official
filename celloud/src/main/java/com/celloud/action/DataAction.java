@@ -2,7 +2,6 @@ package com.celloud.action;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -25,12 +24,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.celloud.constants.AppDataListType;
 import com.celloud.constants.CommandKey;
 import com.celloud.constants.ConstantsData;
-import com.celloud.constants.GlobalQueue;
 import com.celloud.constants.Mod;
 import com.celloud.constants.SparkPro;
 import com.celloud.constants.TaskPeriod;
 import com.celloud.model.DataFileEditForm;
-import com.celloud.model.mongo.TaskQueue;
 import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Project;
@@ -387,7 +384,6 @@ public class DataAction {
         String userName = ConstantsData.getLoginUserName();
         String result = "";
         logger.info("用户{}使用数据{}运行APP{}", userName, dataIds, appIds);
-        String[] appIdArr = appIds.split(",");
         String[] dataIdArr = dataIds.split(",");
 
         // 公共项目信息
@@ -408,8 +404,12 @@ public class DataAction {
         Map<String, String> dataFilePathMap = new HashMap<>();// 针对按数据投递APP
         String dataFilePath = "";// 针对按项目投递APP
 
-        List<String> appIdList = new ArrayList<>(Arrays.asList(appIdArr));
-        List<String> list_tmp = new ArrayList<>(appIdList);
+        String[] appIdArrs = appIds.split(",");
+        List<Integer> appIdList = new ArrayList<>();
+        for (String s : appIdArrs) {
+            appIdList.add(Integer.parseInt(s));
+        }
+        List<Integer> list_tmp = new ArrayList<>(appIdList);
         list_tmp.retainAll(AppDataListType.FASTQ_PATH);
         if (list_tmp.size() > 0) {
             dataFilePathMap = DataKeyListToFile.onlyFastqPath(dataList);
@@ -438,7 +438,7 @@ public class DataAction {
         }
         // 批量创建项目
         Map<Integer, Integer> appProMap = projectService
-                .insertMultipleProject(project, appIdArr, dataIdArr);
+                .insertMultipleProject(project, appIdList, dataIdArr);
         if (appProMap == null) {
             result = "项目创建失败";
             logger.info("{}{}", userName, result);
@@ -465,41 +465,26 @@ public class DataAction {
             if (!FileTools.checkPath(appPath)) {
                 new File(appPath).mkdirs();
             }
-            if (AppDataListType.SPARK.contains(String.valueOf(appId))) {// 判断是否需要进队列
-                String select = SparkPro.apps.toString().substring(1,
-                        SparkPro.apps.toString().length() - 1);
-                int running = dataService.dataRunning(select);
-                logger.info("spark 正在运行的任务数：{}", running);
-                if (SparkPro.NODES >= running) {
-                    String _dataFilePath = DataKeyListToFile
-                            .toSpark(proId.toString(), dataList);
-                    Map<String, String> map = CommandKey.getMap(_dataFilePath,
-                            appPath, proId);
-                    StrSubstitutor sub = new StrSubstitutor(map);
-                    String command = sub.replace(app.getCommand());
-                    logger.info("资源满足需求，投递任务！运行命令：" + command);
-                    SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName,
-                            sparkpwd);
-                    ssh.sshSubmit(command, false);
+            if (AppDataListType.FASTQ_PATH.contains(appId)
+                    || AppDataListType.SPLIT.contains(appId)) {
+                int runningNum;
+                SSHUtil ssh = null;
+                Boolean iswait;
+                if (AppDataListType.SPARK.contains(appId)) {
+                    runningNum = taskService
+                            .findRunningNumByAppId(AppDataListType.SPARK);
+                    ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
+                    iswait = runningNum < SparkPro.MAXTASK;
+                    logger.info("APP{}任务投递到spark", appId);
                 } else {
-                    TaskQueue tq = new TaskQueue();
-                    tq.setAppId(0);
-                    tq.setDataKey("");
-                    tq.setProjectId(proId);
-                    tq.setDataList(dataList);
-                    tq.setPath(appPath);
-                    tq.setCommand(app.getCommand());
-                    reportService.saveTask(tq);
-                    logger.info("资源不满足需求，进入队列等待");
-                    GlobalQueue.offer(proId.toString());
+                    runningNum = taskService.findRunningNumByAppId(appId);
+                    ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+                    iswait = runningNum < app.getMaxTask()
+                            || app.getMaxTask() == 0;
                 }
-            } else if (AppDataListType.FASTQ_PATH
-                    .contains(String.valueOf(appId))
-                    || AppDataListType.SPLIT.contains(String.valueOf(appId))) {
                 for (Entry<String, String> entry : dataFilePathMap.entrySet()) {
                     String dataKey = entry.getKey();
                     String dataListFile = entry.getValue();
-                    int runningNum = taskService.findRunningNumByAppId(appId);
                     Map<String, String> map = CommandKey.getMap(dataListFile,
                             appPath, proId);
                     StrSubstitutor sub = new StrSubstitutor(map);
@@ -520,10 +505,8 @@ public class DataAction {
                         taskService.updateTask(task);
                     }
                     Integer taskId = task.getTaskId();
-                    if (runningNum < app.getMaxTask()
-                            || app.getMaxTask() == 0) {
+                    if (iswait) {
                         logger.info("任务{}运行命令：{}", taskId, command);
-                        SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
                         ssh.sshSubmit(command, false);
                         taskService.updateToRunning(taskId);
                     } else {
@@ -559,9 +542,9 @@ public class DataAction {
     @ResponseBody
     public String reRun(String dataKey, Integer appId, Integer projectId) {
         Task task = taskService.findTaskDataAppPro(dataKey, appId, projectId);
-        SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-        App app = appService.findAppById(appId);
-        int runningNum = taskService.findRunningNumByAppId(appId);
+        SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
+        int runningNum = taskService
+                .findRunningNumByAppId(AppDataListType.SPARK);
         if (task != null) {
             if (task.getPeriod() == 1) {
                 String param = SparkPro.TOOLSPATH + task.getUserId() + "/"
@@ -570,7 +553,7 @@ public class DataAction {
                 ssh.sshSubmit(killCommand, false);
             }
             reportService.deleteBSIReport(dataKey, projectId, appId);
-            if (runningNum < app.getMaxTask() || app.getMaxTask() == 0) {
+            if (runningNum < SparkPro.MAXTASK) {
                 ssh.sshSubmit(task.getCommand(), false);
                 taskService.updateToRunning(task.getTaskId());
                 logger.info("{}重复运行任务：{}", task.getUserId(), task.getTaskId());

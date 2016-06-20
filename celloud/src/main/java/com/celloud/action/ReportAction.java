@@ -623,17 +623,18 @@ public class ReportAction {
         }
 
         MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
-        // Map<String, JSONArray> mibCharList = new HashMap<>();
         Map<String, Object> context = new HashMap<String, Object>();
-        if (mib == null)
-            returnToVelocity(path, context, projectId);
-        context.put("readsDistributionInfo",
-                JSONArray.fromObject(mib.getReadsDistributionInfo()));
-        context.put("familyDistributionInfo",
-                JSONArray.fromObject(mib.getFamilyDistributionInfo()));
-        context.put("genusDistributionInfo",
-                JSONArray.fromObject(mib.getGenusDistributionInfo()));
-        context.put("mib", mib);
+        if (mib != null) {
+            context.put("readsDistributionInfo",
+                    JSONArray.fromObject(
+                                    mib.getReadsDistributionInfo()));
+            context.put("familyDistributionInfo",
+                    JSONArray.fromObject(
+                                    mib.getFamilyDistributionInfo()));
+            context.put("genusDistributionInfo",
+                    JSONArray.fromObject(mib.getGenusDistributionInfo()));
+            context.put("mib", mib);
+        }
         returnToVelocity(path, context, projectId);
     }
 
