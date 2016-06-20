@@ -47,7 +47,6 @@ var notices = (function(object) {
 		$("#userNotice").siblings().addClass("hide");
 		$("#userNotice").removeClass("hide");
 		$("#subtitle").html("站内消息");
-		self.pageNotice()
 	};
 	/**
 	 * 列表check all 的checkbox事件
