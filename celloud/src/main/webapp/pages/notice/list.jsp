@@ -96,30 +96,86 @@
 						</div>
 					</div>
 					<div class="common-normal common-slide common-normals ${type=='notice'?'':'hide' }" id="userNotice">
-						<table class="table_" style="text-align: center;">
-							<tr>
-								<td>还没有系统公告</td>
-							</tr>
-						</table>
 						<div class="row">
-							<div class="col-xs-4" style="padding-top: 10px;">
-								<input type="button" class="btn btn-default" disabled="disabled" value="已读">
-								<input type="button" class="btn btn-default" disabled="disabled" value="删除">
-								<input type="button" class="btn btn-default" value="全部置为已读">
+							<div class="col-xs-4" style="padding-right: 0px;">
+								<div class="list-group">
+									<div class="list-group-item">
+										<button onclick="feedbacks.showForm()" class="btn btn-success">
+											<span aria-hidden="true" class="glyphicon glyphicon-inbox"></span>
+											全部置为已读
+										</button>
+										<div class="btn-group pull-right">
+											<button class="btn btn-success" onclick="feedbacks.page('${page.prevPage}')" style="margin-right: 5px;">&lt;</button>
+											<button class="btn btn-success" onclick="feedbacks.page(${page.nextPage})" style="margin-right: 5px;">&gt;</button>
+										</div>
+										<div class="pull-right" style="margin-right: 5px; line-height: 34px;">页数&nbsp;1/15</div>
+									</div>
+									<button class="list-group-item bg-gray" style="font-weight: bold;">
+										<span class="badge bg-danger fa fa-folder" aria-hidden="true"> </span>
+										<p>
+											<i class="fa fa-users text-aqua"></i> 新功能上线了~~~~
+										</p>
+										<p>&nbsp;</p>
+										<p class="feedback-date">发布时间：2016-06-17 14:37:22</p>
+									</button>
+									<button class="list-group-item" style="font-weight: bold;">
+										<span class="badge bg-danger fa fa-folder" aria-hidden="true"> </span>
+										<p>
+											<i class="fa fa-warning text-yellow"></i> 您的余额坚持不了多久了哦~
+										</p>
+										<p>&nbsp;</p>
+										<p class="feedback-date">发布时间：2016-06-17 14:37:22</p>
+									</button>
+									<button class="list-group-item" style="font-weight: bold;">
+										<span class="badge bg-danger fa fa-folder" aria-hidden="true"> </span>
+										<p>
+											<i class="fa fa-users text-red"></i> 发票已邮寄成功，请关注
+										</p>
+										<p>&nbsp;</p>
+										<p class="feedback-date">发布时间：2016-06-17 14:37:22</p>
+									</button>
+									<button class="list-group-item">
+										<p>
+											<i class="fa fa-users text-aqua"></i> 新功能上线了~~~~
+										</p>
+										<p>&nbsp;</p>
+										<p class="feedback-date">发布时间：2016-06-17 14:37:22</p>
+									</button>
+									<button class="list-group-item">
+										<p>
+											<i class="fa fa-users text-aqua"></i> 新功能上线了~~~~
+										</p>
+										<p>&nbsp;</p>
+										<p class="feedback-date">发布时间：2016-06-17 14:37:22</p>
+									</button>
+								</div>
 							</div>
-							<div class="col-xs-8">
-								<c:if test="${ noticeList!=null}">
-									<jsp:include page="page.jsp">
-										<jsp:param value="${noticeList.page }" name="page" />
-										<jsp:param value="notices.pageNotice" name="method" />
-									</jsp:include>
-								</c:if>
+							<div class="col-xs-8 pull-right" style="padding-left: 0px;">
+								<div class="box box-success">
+									<div class="box-header with-border" style="">
+										<div class="row">
+											<div class="col-xs-10">
+												<h4>
+													<i class="fa fa-users text-aqua"></i> 新功能上线了~~~~
+												</h4>
+												<p>&nbsp;</p>
+												<p>发布时间：2016-06-17 14:37:22</p>
+											</div>
+											<div class="col-xs-2">
+												<button class="btn btn-close pull-right">X</button>
+											</div>
+										</div>
+									</div>
+									<div class="box-body" style="min-height: 150px;">
+										<pre>新功能上线了~~~新功能上线了~~~新功能上线了~~~新功能上线了~~~新功能上线了~~~
+新功能上线了~~~新功能上线了~~~新功能上线了~~~新功能上线了~~~新功能上线了~~~</pre>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 </section>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/notice.js?version=3.0"></script>
