@@ -20,7 +20,7 @@ public interface SampleService {
      * @author leamo
      * @date 2016年6月20日 上午11:18:46
      */
-    public Integer saveSample(Sample sample, Integer userId);
+    public Integer saveSample(String sampleName, Integer userId);
 
     /**
      * 批量提交样本信息
@@ -51,5 +51,25 @@ public interface SampleService {
      * @author leamo
      * @date 2016年6月20日 下午3:22:53
      */
-    public Integer checkSample(String sampleName, Integer userId);
+    public Boolean checkSample(String sampleName, Integer userId);
+
+    /**
+     * 删除样本
+     * 
+     * @param sampleId
+     * @return
+     * @author leamo
+     * @date 2016年6月21日 下午2:47:16
+     */
+    public Integer delete(Integer sampleId);
+
+    /**
+     * 批量删除样本
+     * 
+     * @param sampleIds
+     * @return
+     * @author leamo
+     * @date 2016年6月21日 下午2:50:31
+     */
+    public Integer deleteList(List<Integer> sampleIds);
 }

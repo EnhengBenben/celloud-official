@@ -1467,6 +1467,16 @@ a, a:link, a:hover, a:active, a:visited {
     text-align: center;
     width: 140px;
 }
-.sample-list .sample-table>tbody>tr:first-child>td{
+.sample-list .sample-table>tbody>tr:first-child>td,
+.sample-list .sample-table>tbody>tr:first-child>td>a,
+.sample-list .sample-table>tbody>tr:first-child>td>a>i{
 	color: rgb(29,210,175);
+}
+.sample-list .sample-table>tbody>tr:first-child>.table-null{
+	color: rgb(160,160,160);
+}
+.sample-list .sample-table>tbody>tr:first-child:hover>td,
+.sample-list .sample-table>tbody>tr:first-child:hover>td>a,
+.sample-list .sample-table>tbody>tr:first-child:hover>td>a>i{
+    color: #ffffff;
 }

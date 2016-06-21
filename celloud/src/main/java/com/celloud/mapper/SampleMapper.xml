@@ -127,6 +127,7 @@
     <include refid="Base_Column_List" />
     from tb_sample
     where user_id = #{userId,jdbcType=INTEGER} and is_add = #{isAdd,jdbcType=BIT} and state = #{state,jdbcType=BIT}
+    order by create_date desc
   </select>
   <select id="selectByName" resultMap="BaseResultMap">
     select 
@@ -134,5 +135,11 @@
     from tb_sample
     where user_id = #{userId,jdbcType=INTEGER} and sample_name = #{sampleName,jdbcType=VARCHAR} and state = #{state,jdbcType=BIT}
   </select>
-  
+  <delete id="deleteList">
+    delete from tb_sample
+    where sample_id in(
+    <foreach item="sampleId" collection="sampleIds" separator=",">
+         #{sampleId,jdbcType=INTEGER}
+    </foreach>)
+  </delete>
 </mapper>

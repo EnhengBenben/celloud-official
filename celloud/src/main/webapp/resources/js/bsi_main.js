@@ -96,13 +96,72 @@ $.sample = {
     main: function(){
       $("#container").load("pages/bsi/sample_main.jsp",function(){
         $.sample.sampleList();
+        $("#sample-add-a").on("click",function(){
+          $.sample.addSample();
+        });
+        $("#sample-input").on("keyup",function(e){
+          e = e || window.event;
+          if (e.keyCode == "13") {//keyCode=13是回车键
+            $("#sample-add-a").click();
+          }
+        });
+        $("#close-s-error").on("click",function(){
+          $.sample.errorTips.hide();
+        });
+        $("#sample-commit-a").on("click",function(){
+          $.sample.commitSamples();
+        });
+        $("#sample-reset").on("click",function(){
+          $.sample.deleteList();
+        });
+        $("body").on("click","[data-click='del-sample']",function(){
+          $.sample.deleteOne($(this).data("id"));
+        });
       });
     },
     sampleList: function(){
       $.get("sample/bsi/sampleList",{},function(response){
         $("#sample-list-tbody").html(response);
       });
-    }
+    },
+    addSample: function(){
+      $.get("sample/bsi/addSample",{"sampleName": $("#sample-input").val()},function(result){
+        if(result == 1){
+          $.sample.sampleList();
+        }else if (result == 2){
+          $.sample.errorTips.show();
+        }
+      });
+    },
+    commitSamples: function(){
+      var param = {};
+      $("#sample-list-tbody tr").each(function(i){
+        param["sampleIds["+i+"]"] = $(this).data('id');
+      })
+      $.post("sample/bsi/commitSamples",$("#sample-form").serialize(),function(result){
+        $.sample.sampleList();
+      });
+    },
+    deleteOne: function(id){
+      $.post("sample/bsi/deleteOne",{"sampleId":id},function(result){
+        if(result>0)
+          $.sample.sampleList();
+      });
+    },
+    deleteList: function(){
+      $.post("sample/bsi/deleteList",$("#sample-form").serialize(),function(result){
+        if(result>0)
+          $.sample.sampleList();
+      });
+    },
+    errorTips: {
+      show: function(){
+        $("#sample-error").removeClass("hide");
+      },
+      hide: function(){
+        $("#sample-error").addClass("hide");
+      }
+    } 
 }
 $.upload = {
     uploadTextType : function(){

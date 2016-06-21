@@ -25,12 +25,12 @@ public class SampleServiceImple implements SampleService {
     SampleMapper sampleMapper;
 
     @Override
-    public Integer saveSample(Sample sample, Integer userId) {
-        if (sample != null) {
-            sample.setCreateDate(new Date());
-            sample.setUserId(userId);
-        }
-        return sampleMapper.insertSelective(sample);
+    public Integer saveSample(String sampleName, Integer userId) {
+        Sample s = new Sample();
+        s.setSampleName(sampleName);
+        s.setCreateDate(new Date());
+        s.setUserId(userId);
+        return sampleMapper.insertSelective(s);
     }
 
     @Override
@@ -46,9 +46,19 @@ public class SampleServiceImple implements SampleService {
     }
 
     @Override
-    public Integer checkSample(String sampleName, Integer userId) {
+    public Boolean checkSample(String sampleName, Integer userId) {
         return sampleMapper.selectByName(userId, sampleName,
-                DataState.ACTIVE) != null ? 0 : 1;
+                DataState.ACTIVE) != null;
+    }
+
+    @Override
+    public Integer delete(Integer sampleId) {
+        return sampleMapper.deleteByPrimaryKey(sampleId);
+    }
+
+    @Override
+    public Integer deleteList(List<Integer> sampleIds) {
+        return sampleMapper.deleteList(sampleIds);
     }
 
 }
