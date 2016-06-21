@@ -13,27 +13,14 @@ import com.celloud.constants.ConstantsData;
 
 public class KafkaUtils {
     private static final String KAFKA_PROPERTIES_PATH = "kafka.properties";
-    private static Properties props = ConstantsData.loadProperties(KAFKA_PROPERTIES_PATH);
+    private static Properties props = null;
     private static String defaultGroupId = "celloud-task-message";
     private static AtomicBoolean useKafka = null;
     private static Properties consumerProps = null;
     private static Properties producerProps = null;
 
     public static Consumer<String, String> createConsumer(String group) {
-        if (consumerProps == null) {
-            consumerProps = new Properties();
-            for (String key : props.stringPropertyNames()) {
-                if (key.startsWith("public.")) {
-                    consumerProps.put(key.substring("public.".length()), props.get(key));
-                } else if (key.startsWith("consumer.")) {
-                    consumerProps.put(key.substring("consumer.".length()), props.get(key));
-                }
-            }
-            String groupId = consumerProps.getProperty("group.id");
-            if (!StringUtils.isBlank(groupId)) {
-                defaultGroupId = groupId.trim();
-            }
-        }
+        loadProps();
         if (StringUtils.isBlank(group)) {
             group = defaultGroupId;
         }
@@ -43,16 +30,7 @@ public class KafkaUtils {
     }
 
     public static Producer<String, String> createProducer() {
-        if (producerProps == null) {
-            producerProps = new Properties();
-            for (String key : props.stringPropertyNames()) {
-                if (key.startsWith("public.")) {
-                    producerProps.put(key.substring("public.".length()), props.get(key));
-                } else if (key.startsWith("producer.")) {
-                    producerProps.put(key.substring("producer.".length()), props.get(key));
-                }
-            }
-        }
+        loadProps();
         return new KafkaProducer<>(producerProps);
     }
 
@@ -65,20 +43,39 @@ public class KafkaUtils {
     }
 
     public static boolean useKafka() {
-        if (useKafka != null) {
-            return useKafka.get();
-        }
-        useKafka = new AtomicBoolean(true);
-        try {
-            String kafkaOpen = props.getProperty("kafka.open");
-            if (!"true".equals(kafkaOpen.trim().toLowerCase())) {
-                useKafka.set(false);
-            }
-        } catch (Exception e) {
-        }
+        loadProps();
         return useKafka.get();
     }
 
-    public static void main(String[] args) {
+    private static synchronized void loadProps() {
+        if (consumerProps == null || producerProps == null || useKafka == null) {
+            props = ConstantsData.loadProperties(KAFKA_PROPERTIES_PATH);
+            consumerProps = new Properties();
+            producerProps = new Properties();
+            for (String key : props.stringPropertyNames()) {
+                if (key.startsWith("public.")) {
+                    String pro = key.substring("public.".length());
+                    Object value = props.get(key);
+                    consumerProps.put(pro, value);
+                    producerProps.put(pro, value);
+                } else if (key.startsWith("consumer.")) {
+                    consumerProps.put(key.substring("consumer.".length()), props.get(key));
+                } else if (key.startsWith("producer.")) {
+                    producerProps.put(key.substring("producer.".length()), props.get(key));
+                }
+            }
+            String groupId = consumerProps.getProperty("group.id");
+            if (!StringUtils.isBlank(groupId)) {
+                defaultGroupId = groupId.trim();
+            }
+            useKafka = new AtomicBoolean(true);
+            try {
+                String kafkaOpen = props.getProperty("kafka.open");
+                if (!"true".equals(kafkaOpen.trim().toLowerCase())) {
+                    useKafka.set(false);
+                }
+            } catch (Exception e) {
+            }
+        }
     }
 }
