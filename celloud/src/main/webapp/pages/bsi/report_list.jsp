@@ -9,7 +9,7 @@
         <div data-click="report-check-all" class="celicon checkbox checkbox-un"></div>
       </th>
       <th width="140">
-        <input id="" type="text" placeholder="样本编号/病历号">
+        <input id="sample-selector" type="text" placeholder="样本编号/病历号">
       </th>
       <th>批次/标签<a id="sort-batch" href="javascript:void(0);"><i id="sort-batch-icon" class="fa fa-sort" aria-hidden="true"></i></a></th>
       <th>文件名<a id="sort-name" href="javascript:void(0);"><i id="sort-name-icon" class="fa fa-sort" aria-hidden="true"></i></a></th>
@@ -25,7 +25,7 @@
 	      <td>
 	        <div class="celicon checkbox checkbox-un"></div>
 	      </td>
-	      <td>doing</td>
+	      <td>${task.sampleName }</td>
 	      <td>${task.batch }</td>
 	      <td title="${task.fileName }" name="data-name-td" >
 	        <c:choose>

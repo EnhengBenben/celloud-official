@@ -48,7 +48,7 @@
           </div>
           <hr>
           <div id="common-menu" class="common-menu-btn pull-left">
-            <a class="item-btn" id="to-sample-a" href="javascript:void(0)"><i class="celicon my-data-icon"></i><br>收样</a>
+            <a class="item-btn" id="to-sample-a" href="javascript:void(0)"><i class="celicon my-sample-icon"></i><br>收样</a>
             <a class="item-btn upload-btn" id="to-upload-a" href="javascript:void(0)">
               <i class="celicon my-upload-icon"></i><br>上传
               <canvas id="upload-progress" class="upload-progress" width="64" height="64"></canvas>

@@ -686,7 +686,8 @@ public class ReportAction {
             @RequestParam(defaultValue = "asc") String sortBatch,
             @RequestParam(defaultValue = "asc") String sortName,
             @RequestParam(defaultValue = "asc") String sortPeriod, String batch,
-            String period, String beginDate, String endDate) {
+            String period, String beginDate, String endDate,
+            String sampleName) {
         Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
         Matcher m = p.matcher(condition);
         StringBuffer con_sb = new StringBuffer();
@@ -699,7 +700,7 @@ public class ReportAction {
         PageList<Task> pageList = taskService.findTasksByUserCondition(pager,
                 ConstantsData.getLoginUserId(), condition, sort, sortDate,
                 sortBatch, sortName, sortPeriod, batch, period, beginDate,
-                endDate);
+                endDate, appId, sampleName);
         ModelAndView mv = getBSIModelAndView("bsi/report_data_new", dataKey,
                 projectId, appId);
         DataFile df = dataService.getDataByKey(dataKey);
@@ -719,7 +720,7 @@ public class ReportAction {
             @RequestParam(defaultValue = "asc") String sortName,
             @RequestParam(defaultValue = "asc") String sortPeriod,
             Boolean isPrev, String batch, String period, String beginDate,
-            String endDate) {
+            String endDate, String sampleName) {
         Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
         Matcher m = p.matcher(condition);
         StringBuffer con_sb = new StringBuffer();
@@ -732,7 +733,7 @@ public class ReportAction {
         PageList<Task> pageList = taskService.findNextOrPrevTasks(pager,
                 ConstantsData.getLoginUserId(), condition, sort, sortDate,
                 sortBatch, sortName, sortPeriod, isPrev, totalPage, batch,
-                period, beginDate, endDate);
+                period, beginDate, endDate, 118, sampleName);
         if (pageList != null) {
             List<Task> list = pageList.getDatas();
             if (list != null) {
@@ -1566,7 +1567,8 @@ public class ReportAction {
         ModelAndView mv = new ModelAndView("bsi/report_list");
         Page pager = new Page(page, size);
         Integer userId = ConstantsData.getLoginUserId();
-        PageList<Task> pageList = taskService.findTasksByUser(pager, userId);
+        PageList<Task> pageList = taskService.findTasksByUser(pager, userId,
+                118);
         Map<String, Object> periodMap = taskService.findTaskPeriodNum(118,
                 userId);
         mv.addObject("pageList", pageList);
@@ -1601,7 +1603,8 @@ public class ReportAction {
             @RequestParam(defaultValue = "asc") String sortBatch,
             @RequestParam(defaultValue = "asc") String sortName,
             @RequestParam(defaultValue = "asc") String sortPeriod, String batch,
-            String period, String beginDate, String endDate) {
+            String period, String beginDate, String endDate,
+            String sampleName) {
         Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
         Matcher m = p.matcher(condition);
         StringBuffer con_sb = new StringBuffer();
@@ -1615,7 +1618,7 @@ public class ReportAction {
         PageList<Task> pageList = taskService.findTasksByUserCondition(pager,
                 ConstantsData.getLoginUserId(), condition, sort, sortDate,
                 sortBatch, sortName, sortPeriod, batch, period, beginDate,
-                endDate);
+                endDate, 118, sampleName);
         mv.addObject("pageList", pageList);
         log.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
         return mv;

@@ -126,7 +126,11 @@ a, a:link, a:hover, a:active, a:visited {
 	background-position: 0 -58px;
 }
 .my-upload-icon{
-    background-position: -45px -58px;
+    background-position: -43px -58px;
+}
+.my-sample-icon{
+    background-position: -392px -58px;
+    width: 24px;
 }
 .grey-upload-icon{
     background-position: -303px -58px;
@@ -152,6 +156,10 @@ a, a:link, a:hover, a:active, a:visited {
 .common-menu-btn .item-btn:hover .my-data-icon,
 .common-menu-btn .active .my-data-icon{
     background-position: -262px -58px;
+}
+.common-menu-btn .item-btn:hover .my-sample-icon,
+.common-menu-btn .active .my-sample-icon{
+    background-position: -351px -58px;
 }
 .rerun-icon{
     background-position: -185px -257px;

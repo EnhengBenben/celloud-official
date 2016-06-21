@@ -150,9 +150,10 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public PageList<Task> findTasksByUser(Page page, Integer userId) {
+    public PageList<Task> findTasksByUser(Page page, Integer userId,
+            Integer appId) {
         List<Task> list = taskMapper.findTasksByUser(page, userId,
-                DataState.ACTIVE);
+                DataState.ACTIVE, appId);
         return new PageList<>(page, list);
     }
 
@@ -160,10 +161,12 @@ public class TaskServiceImpl implements TaskService {
     public PageList<Task> findTasksByUserCondition(Page page, Integer userId,
             String condition, Integer sort, String sortDate, String sortBatch,
             String sortName, String sortPeriod, String batch, String period,
-            String beginDate, String endDate) {
+            String beginDate, String endDate, Integer appId,
+            String sampleName) {
         List<Task> list = taskMapper.findTasksByUserCondition(page, userId,
                 condition, sort, sortDate, sortBatch, sortName, sortPeriod,
-                DataState.ACTIVE, batch, period, beginDate, endDate);
+                DataState.ACTIVE, batch, period, beginDate, endDate, appId,
+                sampleName);
         return new PageList<>(page, list);
     }
 
@@ -171,12 +174,12 @@ public class TaskServiceImpl implements TaskService {
     public PageList<Task> findNextOrPrevTasks(Page page, Integer userId,
             String condition, Integer sort, String sortDate, String sortBatch,
             String sortName, String sortPeriod, Boolean isPrev,
-            Integer totalPage, String batch, String period,
- String beginDate,
-            String endDate) {
+            Integer totalPage, String batch, String period, String beginDate,
+            String endDate, Integer appId, String sampleName) {
         List<Task> list = this.findTaskListByCondition(page, userId, condition,
                 sort, sortDate, sortBatch, sortName, sortPeriod, isPrev,
-                totalPage, batch, period, beginDate, endDate);
+                totalPage, batch, period, beginDate, endDate, appId,
+                sampleName);
         if (list != null) {
             return new PageList<>(page, list);
         } else {
@@ -187,15 +190,15 @@ public class TaskServiceImpl implements TaskService {
     private List<Task> findTaskListByCondition(Page pager, Integer userId,
             String condition, Integer sort, String sortDate, String sortBatch,
             String sortName, String sortPeriod, Boolean isPrev,
-            Integer totalPage, String batch, String period,
- String beginDate,
-            String endDate) {
+            Integer totalPage, String batch, String period, String beginDate,
+            String endDate, Integer appId, String sampleName) {
         Integer currentPage = pager.getCurrentPage();
         List<Task> list = new ArrayList<>();
         // 查询报告
         list = taskMapper.findTasksByUserCondition(pager, userId, condition,
                 sort, sortDate, sortBatch, sortName, sortPeriod,
-                DataState.ACTIVE, batch, period, beginDate, endDate);
+                DataState.ACTIVE, batch, period, beginDate, endDate, appId,
+                sampleName);
         if (list != null) {
             Task t = list.get(0);
             if (t != null && t.getPeriod() == 2) {// 如果找到符合条件的返回
@@ -205,12 +208,14 @@ public class TaskServiceImpl implements TaskService {
                 Page pager1 = new Page(--currentPage, 1);
                 return this.findTaskListByCondition(pager1, userId, condition,
                         sort, sortDate, sortBatch, sortName, sortPeriod, isPrev,
-                        totalPage, batch, period, beginDate, endDate);
+                        totalPage, batch, period, beginDate, endDate, appId,
+                        sampleName);
             } else if (!isPrev && currentPage < totalPage) {// 向后翻页 取下一份报告
                 Page pager1 = new Page(++currentPage, 1);
                 return this.findTaskListByCondition(pager1, userId, condition,
                         sort, sortDate, sortBatch, sortName, sortPeriod, isPrev,
-                        totalPage, batch, period, beginDate, endDate);
+                        totalPage, batch, period, beginDate, endDate, appId,
+                        sampleName);
             }
         }
         return null;

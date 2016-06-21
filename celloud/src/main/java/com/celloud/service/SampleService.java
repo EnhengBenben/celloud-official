@@ -30,7 +30,7 @@ public interface SampleService {
      * @author leamo
      * @date 2016年6月20日 上午11:18:46
      */
-    public Integer commitSamples(List<Integer> sampleIds);
+    public Integer commitSamples(List<Integer> sampleIds, Integer userId);
 
     /**
      * 获取所有未添加的样本编号信息

@@ -293,29 +293,44 @@
     from tb_task WHERE project_id = #{projectId} and data_key = #{dataKey}
   </select>
   <select id="findTasksByUser" resultMap="ResultMapWithFileName">
-	 select  f.file_name,f.file_id,f.batch,f.another_name,t.* from 
-	(select * from tb_task where task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and (app_id=118 or period!=2) group by data_key))t
-	left join tb_file f
-	on f.data_key=t.data_key 
-	where f.user_id=#{userId} and f.state=#{state}
-	order by t.update_date desc,f.batch asc
+	select  f.file_name,f.file_id,f.batch,f.another_name,s.sample_name,t.* from 
+    (select * from tb_task where 
+      (task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and (app_id=#{appId} or period!=2) group by data_key))
+      or (data_key is null and state=#{state} and user_id=#{userId} and app_id=#{appId})
+    )t
+    left join 
+    (select * from tb_file where user_id=#{userId} and state=#{state}) f
+    on f.data_key=t.data_key 
+    left join 
+    (select * from tb_sample where user_id=#{userId} and state=#{state}) s
+    on s.sample_id=t.sample_id
+    order by t.update_date desc,f.batch asc
   </select>
   <select id="findTasksByBatch" resultMap="ResultMapWithFileName">
-	 select  f.file_name,f.file_id,f.batch,t.* from 
+	select  f.file_name,f.file_id,f.batch,s.sample_name,t.* from 
 	(select * from tb_task where task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and app_id=#{appId} group by data_key))t
 	left join tb_file f
 	on f.data_key=t.data_key 
+	left join tb_sample s
+    on s.sample_id=t.sample_id
 	where f.user_id=#{userId} and f.state=#{state} and f.batch=#{batch} and t.period=#{period}
 	order by t.update_date desc
   </select>
   <select id="findTasksByUserCondition" resultMap="ResultMapWithFileName" flushCache="true">
-    select  f.file_name,f.file_id,f.batch,f.another_name,t.* from 
-    (select * from tb_task where task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and (app_id=118 or period!=2) group by data_key))t
-    left join tb_file f
+    select  f.file_name,f.file_id,f.batch,f.another_name,s.sample_name,t.* from 
+    (select * from tb_task where 
+      (task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and (app_id=#{appId} or period!=2) group by data_key))
+      or (data_key is null and state=#{state} and user_id=#{userId} and app_id=#{appId})
+    )t
+    left join 
+    (select * from tb_file where user_id=#{userId} and state=#{state}) f
     on f.data_key=t.data_key 
-    where f.user_id=#{userId} and f.state=#{state}
+    left join 
+    (select * from tb_sample where user_id=#{userId} and state=#{state}) s
+    on s.sample_id=t.sample_id
+    where 1=1 
     <if test="condition != null" >
-        and (file_name like '%${condition}%' or f.batch like '%${condition}%')
+        and (file_name like '%${condition}%' or f.batch like '%${condition}%' or s.sample_name like '%${condition}%')
     </if>
     <if test="batch != null and batch != ''" >
         and f.batch in (${batch})
@@ -328,6 +343,9 @@
     </if>
     <if test="endDate != null and endDate != ''" >
         and t.update_date &lt;= #{endDate}
+    </if>
+    <if test="sampleName != null and sampleName != ''" >
+        and s.sample_name like '%${sampleName}%'
     </if>
     <if test="sort == 0" >
          order by t.update_date ${sortDate},f.batch ${sortBatch},f.file_name ${sortName},t.period ${sortPeriod}
@@ -363,7 +381,7 @@
     select count(t.period) periodNum,t.period from 
     (select * from tb_task where task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and app_id=#{appId} group by data_key))t
     left join tb_file f
-    on f.data_key=t.data_key 
+    on f.data_key=t.data_key
     where f.user_id=#{userId} and f.state=#{state}
 	group by t.period;
   </select>

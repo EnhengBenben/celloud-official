@@ -56,7 +56,8 @@ public class SampleAction {
     @RequestMapping("bsi/commitSamples")
     @ResponseBody
     public Integer commitSamples(Integer[] sampleIds) {
-        return sampleService.commitSamples(Arrays.asList(sampleIds));
+        return sampleService.commitSamples(Arrays.asList(sampleIds),
+                ConstantsData.getLoginUserId());
     }
 
     @ActionLog(value = "删除暂存的样本", button = "删除样品")
