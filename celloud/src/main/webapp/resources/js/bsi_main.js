@@ -96,13 +96,72 @@ $.sample = {
     main: function(){
       $("#container").load("pages/bsi/sample_main.jsp",function(){
         $.sample.sampleList();
+        $("#sample-add-a").on("click",function(){
+          $.sample.addSample();
+        });
+        $("#sample-input").on("keyup",function(e){
+          e = e || window.event;
+          if (e.keyCode == "13") {//keyCode=13是回车键
+            $("#sample-add-a").click();
+          }
+        });
+        $("#close-s-error").on("click",function(){
+          $.sample.errorTips.hide();
+        });
+        $("#sample-commit-a").on("click",function(){
+          $.sample.commitSamples();
+        });
+        $("#sample-reset").on("click",function(){
+          $.sample.deleteList();
+        });
+        $("body").on("click","[data-click='del-sample']",function(){
+          $.sample.deleteOne($(this).data("id"));
+        });
       });
     },
     sampleList: function(){
       $.get("sample/bsi/sampleList",{},function(response){
         $("#sample-list-tbody").html(response);
       });
-    }
+    },
+    addSample: function(){
+      $.get("sample/bsi/addSample",{"sampleName": $("#sample-input").val()},function(result){
+        if(result == 1){
+          $.sample.sampleList();
+        }else if (result == 2){
+          $.sample.errorTips.show();
+        }
+      });
+    },
+    commitSamples: function(){
+      var param = {};
+      $("#sample-list-tbody tr").each(function(i){
+        param["sampleIds["+i+"]"] = $(this).data('id');
+      })
+      $.post("sample/bsi/commitSamples",$("#sample-form").serialize(),function(result){
+        $.sample.sampleList();
+      });
+    },
+    deleteOne: function(id){
+      $.post("sample/bsi/deleteOne",{"sampleId":id},function(result){
+        if(result>0)
+          $.sample.sampleList();
+      });
+    },
+    deleteList: function(){
+      $.post("sample/bsi/deleteList",$("#sample-form").serialize(),function(result){
+        if(result>0)
+          $.sample.sampleList();
+      });
+    },
+    errorTips: {
+      show: function(){
+        $("#sample-error").removeClass("hide");
+      },
+      hide: function(){
+        $("#sample-error").addClass("hide");
+      }
+    } 
 }
 $.upload = {
     uploadTextType : function(){
@@ -128,7 +187,8 @@ $.report = {
       period: null,
       beginDate: null,
       endDate: null,
-      distributed: null //0:是   1： 否
+      distributed: null, //0:是   1： 否
+      sampleName: null
   },
   find: {
     main: function(type){
@@ -303,13 +363,14 @@ $.report = {
             period: null,
             beginDate: null,
             endDate: null,
-            distributed: null //0:是   1： 否
+            distributed: null, //是否分发  0:是   1： 否 
+            sampleName: null
         };
       });
     },
     condition: function(){
       var options = $.report.options;
-      $.get("report/bsi/searchReportList",{"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
+      $.get("report/bsi/searchReportList",{"sampleName":options.sampleName,"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
         $.report.loadlist(response);
         $.report.options.batch = null;
         $.report.options.period = null;
@@ -317,13 +378,20 @@ $.report = {
     },
     pagination: function(currentPage){
       var options = $.report.options;
-      $.get("report/bsi/searchReportList",{"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"page":currentPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
+      $.get("report/bsi/searchReportList",{"sampleName":options.sampleName,"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"page":currentPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
         $.report.loadlist(response);
       });
     }
   },
   loadlist: function(response){
     $("#report-list").html(response);
+    $("#sample-selector").on("keyup",function(e){
+      e = e || window.event;
+      if (e.keyCode == "13") {//keyCode=13是回车键
+        $.report.options.sampleName = $("#sample-selector").val();
+        $.report.find.condition();
+      }
+    });
     $("#data-list-tbody").find("td[name='data-name-td']").each(function(){
       var _data = $(this).attr("title");
       if(_data.length>40){
@@ -395,7 +463,7 @@ $.report = {
     },
     patient: function(dataKey,projectId,appId,reportIndex,currentPage){
       var options = $.report.options;
-      $.post("report/getBSIPatientReport",{"reportIndex":reportIndex,"dataKey":dataKey,"projectId":projectId,"appId":appId,"page":currentPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
+      $.post("report/getBSIPatientReport",{"sampleName":options.sampleName,"reportIndex":reportIndex,"dataKey":dataKey,"projectId":projectId,"appId":appId,"page":currentPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
         $("#container").html(response);
       });
     },
@@ -407,7 +475,7 @@ $.report = {
     prev: function(currentPage){
       if(currentPage > 1){
         var options = $.report.options;
-        $.post("report/getPrevOrNextBSIReport",{"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"isPrev":true,"page":currentPage-1,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
+        $.post("report/getPrevOrNextBSIReport",{"sampleName":options.sampleName,"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"isPrev":true,"page":currentPage-1,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
           if(response != null &&response !=""){
             $("#container").html(response);
           }
@@ -419,7 +487,7 @@ $.report = {
       currentPage = parseInt(currentPage);
       if(currentPage < totalPage){
         var options = $.report.options;
-        $.post("report/getPrevOrNextBSIReport",{"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"isPrev":false,"page":currentPage+1,"totalPage":totalPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
+        $.post("report/getPrevOrNextBSIReport",{"sampleName":options.sampleName,"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"isPrev":false,"page":currentPage+1,"totalPage":totalPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
           if(response != null &&response !=""){
             $("#container").html(response);
           }

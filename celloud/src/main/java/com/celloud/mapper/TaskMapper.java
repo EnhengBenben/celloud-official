@@ -118,7 +118,7 @@ public interface TaskMapper {
      * @date 2016年4月21日 下午2:32:22
      */
     List<Task> findTasksByUser(Page page, @Param("userId") Integer userId,
-            @Param("state") Integer state);
+            @Param("state") Integer state, @Param("appId") Integer appId);
 
     /**
      * 按条件检索数据列表
@@ -143,7 +143,8 @@ public interface TaskMapper {
             @Param("state") Integer state, @Param("batch") String batch,
             @Param("period") String period,
             @Param("beginDate") String beginDate,
-            @Param("endDate") String endDate);
+            @Param("endDate") String endDate, @Param("appId") Integer appId,
+            @Param("sampleName") String sampleName);
     
     /**
      * 检索某批次下的运行完的任务列表

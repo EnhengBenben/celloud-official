@@ -26,29 +26,30 @@
 </div>
 <div class="sample-right">
   <div class="sample-opera">
-    <div class="error-tips">
+    <div id="sample-error" class="error-tips hide">
       <p> 此样品信息已经收集过，请核查或者采集下一管样品信息！
-         <a href="javascript:void(0)"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+         <a id="close-s-error" href="javascript:void(0)"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
       </p>
     </div>
     <div class="btns">
-      <a id="reset" class="btn btn-cancel">取消</a>
+      <a id="sample-reset" class="btn btn-cancel">取消</a>
       <a id="sample-commit-a" class="btn btn-confirm">提交样本信息</a>
     </div>
   </div>
   <div class="sample-list">
-    <table class="table table-main sample-table">
-	  <thead>
-	    <tr>
-	      <th>序号</th>
-	      <th>样品编号</th>
-	      <th>更新时间</th>
-	      <th>操作</th>
-	    </tr>
-	  </thead>
-	  <tbody id="sample-list-tbody">
-	    
-	  </tbody>
-    </table>
+    <form id="sample-form" method="post">
+      <table class="table table-main sample-table">
+	    <thead>
+	      <tr>
+	        <th>序号</th>
+	        <th>样品编号</th>
+	        <th>更新时间</th>
+	        <th>操作</th>
+	      </tr>
+	    </thead>
+	    <tbody id="sample-list-tbody">
+	    </tbody>
+      </table>
+    </form>
   </div>
 </div>

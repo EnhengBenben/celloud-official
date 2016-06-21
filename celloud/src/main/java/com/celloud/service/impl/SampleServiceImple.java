@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.celloud.constants.DataState;
 import com.celloud.constants.SampleType;
+import com.celloud.constants.TaskPeriod;
 import com.celloud.mapper.SampleMapper;
+import com.celloud.mapper.TaskMapper;
 import com.celloud.model.mysql.Sample;
+import com.celloud.model.mysql.Task;
 import com.celloud.service.SampleService;
 
 /**
@@ -23,20 +26,35 @@ import com.celloud.service.SampleService;
 public class SampleServiceImple implements SampleService {
     @Resource
     SampleMapper sampleMapper;
+    @Resource
+    TaskMapper taskMapper;
 
     @Override
-    public Integer saveSample(Sample sample, Integer userId) {
-        if (sample != null) {
-            sample.setCreateDate(new Date());
-            sample.setUserId(userId);
-        }
-        return sampleMapper.insertSelective(sample);
+    public Integer saveSample(String sampleName, Integer userId) {
+        Sample s = new Sample();
+        s.setSampleName(sampleName);
+        s.setCreateDate(new Date());
+        s.setUserId(userId);
+        return sampleMapper.insertSelective(s);
     }
 
     @Override
-    public Integer commitSamples(List<Integer> sampleIds) {
-        return sampleMapper.updateAddTypeById(sampleIds, SampleType.ISADD,
+    public Integer commitSamples(List<Integer> sampleIds, Integer userId) {
+        Integer result = sampleMapper.updateAddTypeById(sampleIds,
+                SampleType.ISADD,
                 new Date());
+        for (Integer sampleId : sampleIds) {
+            Task task = new Task();
+            // TODO 暂时写死appId
+            task.setAppId(118);
+            task.setUserId(userId);
+            task.setSampleId(sampleId);
+            task.setPeriod(TaskPeriod.SAMPLING);
+            task.setCreateDate(new Date());
+            task.setUpdateDate(new Date());
+            taskMapper.insertSelective(task);
+        }
+        return result;
     }
 
     @Override
@@ -46,9 +64,19 @@ public class SampleServiceImple implements SampleService {
     }
 
     @Override
-    public Integer checkSample(String sampleName, Integer userId) {
+    public Boolean checkSample(String sampleName, Integer userId) {
         return sampleMapper.selectByName(userId, sampleName,
-                DataState.ACTIVE) != null ? 0 : 1;
+                DataState.ACTIVE) != null;
+    }
+
+    @Override
+    public Integer delete(Integer sampleId) {
+        return sampleMapper.deleteByPrimaryKey(sampleId);
+    }
+
+    @Override
+    public Integer deleteList(List<Integer> sampleIds) {
+        return sampleMapper.deleteList(sampleIds);
     }
 
 }

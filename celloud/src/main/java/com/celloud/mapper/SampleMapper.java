@@ -10,8 +10,6 @@ import com.celloud.model.mysql.Sample;
 public interface SampleMapper {
     int deleteByPrimaryKey(Integer sampleId);
 
-    int insert(Sample record);
-
     int insertSelective(Sample record);
 
     Sample selectByPrimaryKey(Integer sampleId);
@@ -21,7 +19,7 @@ public interface SampleMapper {
     int updateByPrimaryKey(Sample record);
 
     int updateAddTypeById(@Param("sampleIds") List<Integer> sampleIds,
-            @Param("isadd") Integer isadd,
+            @Param("isAdd") Integer isAdd,
             @Param("updateDate") Date updateDate);
 
     List<Sample> selectAllByUser(@Param("userId") Integer userId,
@@ -30,4 +28,6 @@ public interface SampleMapper {
     Sample selectByName(@Param("userId") Integer userId,
             @Param("sampleName") String sampleName,
             @Param("state") Integer state);
+
+    int deleteList(@Param("sampleIds") List<Integer> sampleIds);
 }
