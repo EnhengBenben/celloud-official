@@ -8,23 +8,28 @@ var notices = (function(object) {
 	 * 分页查询所有消息提醒
 	 */
 	self.pageMessage = function(currentPage, pageSize) {
+		pageSize = pageSize||10;
 		page.message.currentPage = currentPage;
 		page.message.pageSize = pageSize;
-		pageSize = pageSize||10;
 		var url = CONTEXT_PATH + "/notice/list/message";
 		$("#userMessage").load(url + " #userMessage", {
 			"currentPage" : currentPage,
 			"pageSize" : pageSize
 		});
 	};
+	/**
+	 * 分页查询所有站内消息
+	 */
 	self.pageNotice = function(currentPage, pageSize) {
+		pageSize = pageSize||5;
 		page.notice.currentPage = currentPage;
 		page.notice.pageSize = pageSize;
-		pageSize = pageSize||10;
 		var url = CONTEXT_PATH + "/notice/list/notice";
 		$("#userNotice").load(url + " #userNotice", {
-			"currentPage" : page,
+			"currentPage" : currentPage,
 			"pageSize" : pageSize
+		},function(){
+			self.showNotice();
 		});
 	};
 	/**
@@ -47,6 +52,69 @@ var notices = (function(object) {
 		$("#userNotice").siblings().addClass("hide");
 		$("#userNotice").removeClass("hide");
 		$("#subtitle").html("站内消息");
+		self.pageNotice();
+	};
+	/**
+	 * 展示单个站内消息
+	 */
+	self.showNotice = function(noticeId) {
+		var $noticeBtn = null;
+		if(noticeId){
+			$noticeBtn = $("#userNotice .list-group button.list-group-item[_data_notice_id='"+noticeId+"']");
+		}else{
+			$noticeBtn = $("#userNotice .list-group button.list-group-item:first");
+			noticeId = $noticeBtn.attr("_data_notice_id");
+		}
+		$noticeBtn.addClass("bg-gray");
+		var $badge = $noticeBtn.find(".badge");
+		$badge.removeClass("fa-folder-o");
+		$badge.addClass("fa-folder-open-o");
+		$badge.addClass("bg-gray");
+		$noticeBtn.removeClass("unread");
+		$noticeBtn.siblings().removeClass("bg-gray");
+		$("#noticeDetail").load(CONTEXT_PATH+"/notice/detail",{"noticeId":noticeId},function(data){
+			$("#notices-menu").load(CONTEXT_PATH + "/notice/lastUnread/notice");
+		});
+	};
+	self.deleteNotice = function(noticeId){
+		$.post(CONTEXT_PATH+"/notice/delete",{"noticeIds":noticeId},function(response){
+			if(response.success){
+				self.pageNotice(page.notice.currentPage,page.notice.pageSize);
+			}
+		});
+	};
+	/**
+	 * 将选中的消息置为已读
+	 */
+	self.readMessage = function(){
+		$.post(CONTEXT_PATH+"/notice/read",$("#messageListForm").serialize(),function(response){
+			if(response.success){
+				self.pageMessage(page.message.currentPage,page.message.pageSize);
+				$("#messages-menu").load(CONTEXT_PATH + "/notice/lastUnread/message");
+			}
+		});
+	};
+	/**
+	 * 将全部消息置为已读
+	 */
+	self.readAllMessage = function(){
+		$.post(CONTEXT_PATH+"/notice/readAll",{},function(response){
+			if(response.success){
+				self.pageMessage(page.message.currentPage,page.message.pageSize);
+				$("#messages-menu").load(CONTEXT_PATH + "/notice/lastUnread/message");
+			}
+		});
+	};
+	/**
+	 * 删除选中的消息，无论是否已读，都可以直接删除
+	 */
+	self.deleteMessage = function(){
+		$.post(CONTEXT_PATH+"/notice/delete",$("#messageListForm").serialize(),function(response){
+			if(response.success){
+				self.pageMessage(page.message.currentPage,page.message.pageSize);
+				$("#messages-menu").load(CONTEXT_PATH + "/notice/lastUnread/message");
+			}
+		});
 	};
 	/**
 	 * 列表check all 的checkbox事件
@@ -87,38 +155,5 @@ var notices = (function(object) {
 			$("#messageReadBtn").attr("disabled","disabled");
 		}
 	});
-	/**
-	 * 将选中的消息置为已读
-	 */
-	self.readMessage = function(){
-		$.post(CONTEXT_PATH+"/notice/read",$("#messageListForm").serialize(),function(response){
-			if(response.success){
-				self.pageMessage(page.message.currentPage,page.message.pageSize);
-				$("#messages-menu").load(CONTEXT_PATH + "/notice/lastUnread/message");
-			}
-		});
-	};
-	/**
-	 * 将全部消息置为已读
-	 */
-	self.readAllMessage = function(){
-		$.post(CONTEXT_PATH+"/notice/readAll",{},function(response){
-			if(response.success){
-				self.pageMessage(page.message.currentPage,page.message.pageSize);
-				$("#messages-menu").load(CONTEXT_PATH + "/notice/lastUnread/message");
-			}
-		});
-	};
-	/**
-	 * 删除选中的消息，无论是否已读，都可以直接删除
-	 */
-	self.deleteMessage = function(){
-		$.post(CONTEXT_PATH+"/notice/delete",$("#messageListForm").serialize(),function(response){
-			if(response.success){
-				self.pageMessage(page.message.currentPage,page.message.pageSize);
-				$("#messages-menu").load(CONTEXT_PATH + "/notice/lastUnread/message");
-			}
-		});
-	};
 	return self;
 })(notices);

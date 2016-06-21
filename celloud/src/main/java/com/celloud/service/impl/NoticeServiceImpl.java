@@ -57,14 +57,10 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public PageList<Notice> findLastUnreadNotice() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public PageList<Notice> findUnreadNotice(Page page) {
-        // TODO Auto-generated method stub
-        return null;
+        Page page = new Page(1, 5);
+        List<Notice> list = noticeMapper.pageUserUnreadNotices(ConstantsData.getLoginUserId(),
+                NoticeConstants.TYPE_NOTICE, page);
+        return new PageList<>(page, list);
     }
 
     @Override
@@ -81,6 +77,25 @@ public class NoticeServiceImpl implements NoticeService {
     public void deleteMessages(Integer[] noticeIds) {
         noticeMapper.deleteMessageRelat(ConstantsData.getLoginUserId(), noticeIds);
         noticeMapper.deleteMessages(noticeIds);
+    }
+
+    @Override
+    public PageList<Notice> findLastNotice(Page page) {
+        if (page == null) {
+            page = new Page(1, 5);
+        }
+        List<Notice> list = noticeMapper.pageUserNotices(ConstantsData.getLoginUserId(), NoticeConstants.TYPE_NOTICE,
+                page);
+        return new PageList<>(page, list);
+    }
+
+    @Override
+    public Notice getNoticeById(Integer noticeId) {
+        Notice notice = noticeMapper.selectByPrimaryKey(noticeId);
+        if (notice != null && notice.getReadState() != NoticeConstants.READAD) {
+            noticeMapper.readMessage(ConstantsData.getLoginUserId(), new Integer[] { noticeId });
+        }
+        return notice;
     }
 
 }
