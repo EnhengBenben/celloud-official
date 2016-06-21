@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.celloud.mapper.SampleMapper">
+  <resultMap id="BaseResultMap" type="com.celloud.model.mysql.Sample">
+    <id column="sample_id" jdbcType="INTEGER" property="sampleId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="sample_name" jdbcType="VARCHAR" property="sampleName" />
+    <result column="is_add" jdbcType="BIT" property="isAdd" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="state" jdbcType="BIT" property="state" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sample_id, user_id, sample_name, is_add, create_date, update_date, state
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_sample
+    where sample_id = #{sampleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_sample
+    where sample_id = #{sampleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.celloud.model.mysql.Sample">
+    insert into tb_sample (sample_id, user_id, sample_name, 
+      is_add, create_date, update_date, 
+      state)
+    values (#{sampleId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{sampleName,jdbcType=VARCHAR}, 
+      #{isAdd,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.celloud.model.mysql.Sample">
+    insert into tb_sample
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sampleId != null">
+        sample_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="sampleName != null">
+        sample_name,
+      </if>
+      <if test="isAdd != null">
+        is_add,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sampleId != null">
+        #{sampleId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="sampleName != null">
+        #{sampleName,jdbcType=VARCHAR},
+      </if>
+      <if test="isAdd != null">
+        #{isAdd,jdbcType=BIT},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.Sample">
+    update tb_sample
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="sampleName != null">
+        sample_name = #{sampleName,jdbcType=VARCHAR},
+      </if>
+      <if test="isAdd != null">
+        is_add = #{isAdd,jdbcType=BIT},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=BIT},
+      </if>
+    </set>
+    where sample_id = #{sampleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.Sample">
+    update tb_sample
+    set user_id = #{userId,jdbcType=INTEGER},
+      sample_name = #{sampleName,jdbcType=VARCHAR},
+      is_add = #{isAdd,jdbcType=BIT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=BIT}
+    where sample_id = #{sampleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateAddTypeById">
+    update tb_sample
+    set is_add = #{isAdd,jdbcType=BIT}, update_date=#{updateDate, jdbcType=TIMESTAMP}
+    where sample_id in(
+    <foreach item="sampleId" collection="sampleIds" separator=",">
+	     #{sampleId,jdbcType=INTEGER}
+    </foreach>)
+  </update>
+  <select id="selectAllByUser" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_sample
+    where user_id = #{userId,jdbcType=INTEGER} and is_add = #{isAdd,jdbcType=BIT} and state = #{state,jdbcType=BIT}
+  </select>
+  <select id="selectByName" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_sample
+    where user_id = #{userId,jdbcType=INTEGER} and sample_name = #{sampleName,jdbcType=VARCHAR} and state = #{state,jdbcType=BIT}
+  </select>
+  
+</mapper>

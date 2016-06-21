@@ -31,11 +31,14 @@ public class Task {
 
     private String params;
 
+    private Integer sampleId;
+
     // 显示的字段
     private String fileName;
     private String anotherName;
     private String fileId;
     private String batch;
+    private String sampleName;
 
     public Integer getTaskId() {
         return taskId;
@@ -179,5 +182,21 @@ public class Task {
 
     public void setAnotherName(String anotherName) {
         this.anotherName = anotherName;
+    }
+
+    public Integer getSampleId() {
+        return sampleId;
+    }
+
+    public void setSampleId(Integer sampleId) {
+        this.sampleId = sampleId;
+    }
+
+    public String getSampleName() {
+        return sampleName;
+    }
+
+    public void setSampleName(String sampleName) {
+        this.sampleName = sampleName;
     }
 }
