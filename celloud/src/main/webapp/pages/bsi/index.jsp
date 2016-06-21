@@ -30,7 +30,20 @@
             <hr>
           </div>
           <div class="y-topbar-span9 y-last">
-            <a href="logout" title="点击退出"><i class="celicon user-icon"></i></a>
+            <div class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="celicon user-icon"></i>
+                <span>${sessionScope.loginUserInSession.username }</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="#"><i class="fa fa-cogs" aria-hidden="true"></i>设置</a>
+                </li>
+                <li>
+                  <a href="logout"><i class="fa fa-sign-out" aria-hidden="true"></i>退出</a>
+                </li>
+	          </ul>
+	        </div>
           </div>
         </div>
       </div>

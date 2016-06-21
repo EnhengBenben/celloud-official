@@ -30,12 +30,13 @@ a, a:link, a:hover, a:active, a:visited {
 }
 .page-layout{
 	background-color: rgb(240,240,240);
+	min-width: 980px;
 }
 .topbar-menu{
 	
 }
 .global-topbar{
-    min-width: 1000px;
+    min-width: 980px;
     position: relative;
     height: 40px;
     font-size: 12px;
@@ -66,6 +67,9 @@ a, a:link, a:hover, a:active, a:visited {
 .global-topbar a i{
     float: left;
 }
+.global-topbar a span{
+    padding-left: 10px;
+}
 .global-topbar hr{
 	border-left:1px solid rgb(37,53,70);
 	border-right:1px solid rgb(53,74,95);
@@ -91,6 +95,41 @@ a, a:link, a:hover, a:active, a:visited {
 .global-topbar .y-topbar-row .y-topbar-span9{
 	float: right;
 	text-align:right;
+}
+.global-topbar .y-last .dropdown{
+	float: right;
+	height: 28px;
+	width: 45px;
+}
+.global-topbar .y-last .dropdown .dropdown-menu{
+    left: -58px;
+    min-width: 100px;
+    background: none;
+    padding: 0px;
+    margin: 0px;
+}
+.global-topbar .y-last .dropdown .dropdown-menu>li{
+	height: 30px;
+}
+.global-topbar .y-last .dropdown .dropdown-menu>li>a,
+.global-topbar .y-last .dropdown .dropdown-menu>li>a:hover{
+	background-color: rgb(44,62,80);
+	border:1px solid rgb(160,160,160);
+	color: #fff;
+	padding: 0;
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 30px;
+}
+.global-topbar .y-last .dropdown .dropdown-menu>li>a>i{
+	float:none;
+	font-size:14px;
+	margin-right: 4px;
+}
+.global-topbar .y-last .dropdown .dropdown-menu>li>a:hover{
+	color: #26aa38;
 }
 .celicon{
 	background-image: url(../images/icon/global_icon.png);
@@ -179,7 +218,6 @@ a, a:link, a:hover, a:active, a:visited {
     height: 90px;
     zoom: 1;
     background-color: rgb(248,248,248);
-    z-index: 1030;
 }
 .common-menu-inner{
     width: 980px;
