@@ -19,6 +19,8 @@ public interface PriceMapper {
 
     int updateByItemId(Price record);
 
+    int updateExpireDate(Price record);
+
     /**
      * 获取产品的历史价格列表
      * 

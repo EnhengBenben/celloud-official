@@ -120,6 +120,23 @@
     where item_id = #{itemId,jdbcType=INTEGER} and 
     item_type = #{itemType,jdbcType=TINYINT}
   </update>
+  <update id="updateExpireDate" parameterType="com.celloud.manager.model.Price" >
+    update tb_price
+    <set >
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="expireDate != null" >
+        expire_date = #{expireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=BIT},
+      </if>
+    </set>
+    where item_id = #{itemId,jdbcType=INTEGER} and 
+    item_type = #{itemType,jdbcType=TINYINT} and
+    expire_date is NULL
+  </update>
   <select id="getPriceList" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />
