@@ -1,16 +1,23 @@
-package com.celloud.mail;
+package com.celloud.sendcloud;
 
+/**
+ * SendCloud邮件模板参数
+ * 
+ * @author lin
+ * @date 2016年6月21日 下午5:41:06
+ */
 public class EmailParams {
 
-	public static final String URL = "%url%";
-	public static final String EMAIL_TO = "%userName%";
-	public static final String SHARE_FROM = "%shareUserName%";
-	public static final String DATE_NAME = "%dataName%";
-	public static final String DATE_KEY = "%dataKey%";
-	public static final String PROJECT_NAME = "%projectName%";
-	public static final String APP = "%app%";
-	public static final String START = "%start%";
-	public static final String END = "%end%";
+	public static final String URL = "url";
+	public static final String EMAIL_TO = "userName";
+	public static final String SHARE_FROM = "shareUserName";
+	public static final String DATE_NAME = "dataName";
+	public static final String DATE_KEY = "dataKey";
+	public static final String PROJECT_NAME = "projectName";
+	public static final String APP = "app";
+	public static final String START = "start";
+	public static final String END = "end";
+	public static final String CONTEXT = "context";
 
 	/**
 	 * 用户注册
@@ -110,6 +117,19 @@ public class EmailParams {
 		public String param;
 
 		private UPLOAD_OVER(String param) {
+			this.param = param;
+		}
+
+		public String getParam() {
+			return this.param;
+		}
+	}
+
+	public static enum EXCEPTION {
+		CONTEXT(EmailParams.CONTEXT);
+		public String param;
+
+		private EXCEPTION(String param) {
 			this.param = param;
 		}
 
