@@ -56,7 +56,7 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li class="header">站内消息提醒</li>
-								<!-- li>
+								<!--li>
 									<ul class="menu">
 										<li>
 											<a href="#">
@@ -74,7 +74,7 @@
 											</a>
 										</li>
 									</ul>
-								</li-->
+								</li -->
 								<li class="footer">
 									<a href="javascript:showNotice()">查看所有</a>
 								</li>

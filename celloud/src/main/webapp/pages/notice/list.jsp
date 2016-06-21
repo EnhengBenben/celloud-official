@@ -12,7 +12,7 @@
 			</a>
 		</li>
 		<li class="active">
-			<span id="subtitle">${type=='message'?'消息提醒':'系统公告' }</span>
+			<span id="subtitle">${type=='message'?'系统消息':'站内消息' }</span>
 		</li>
 	</ol>
 </section>
@@ -27,10 +27,10 @@
 					</div>
 					<ul id="userOperaUl">
 						<li class="${type=='message'?'active':'' }" id="userMessageTab">
-							<a href="javascript:notices.showUserMessage()">消息提醒</a>
+							<a href="javascript:notices.showUserMessage()">系统消息</a>
 						</li>
 						<li class="${type=='notice'?'active':'' }" id="userNoticeTab">
-							<a href="javascript:notices.showUserNotice()">系统公告</a>
+							<a href="javascript:notices.showUserNotice()">站内消息</a>
 						</li>
 					</ul>
 				</div>
@@ -74,6 +74,13 @@
 											</td>
 										</tr>
 									</c:forEach>
+									<c:if test="${ messageList.datas.size() == 0  }">
+										<tr height="250px">
+											<td colspan="5" class="text-center" style="vertical-align: middle; font-size: 18px;">
+												<i class="glyphicon glyphicon-exclamation-sign text-yellow"></i> 您好，还没有消息哦！
+											</td>
+										</tr>
+									</c:if>
 								</tbody>
 							</table>
 						</form>
@@ -83,7 +90,8 @@
 									disabled="disabled" value="已读">
 								<input type="button" id="messageDeleteBtn" onclick="notices.deleteMessage()" class="btn btn-default"
 									disabled="disabled" value="删除">
-								<input type="button" class="btn btn-default" onclick="notices.readAllMessage()" value="全部置为已读">
+								<input type="button" class="btn btn-default" onclick="notices.readAllMessage()"
+									${messageList.datas.size() == 0?'disabled':''  } value="全部置为已读">
 							</div>
 							<div class="col-xs-8">
 								<c:if test="${ messageList!=null}">
@@ -96,30 +104,28 @@
 						</div>
 					</div>
 					<div class="common-normal common-slide common-normals ${type=='notice'?'':'hide' }" id="userNotice">
-						<table class="table_" style="text-align: center;">
-							<tr>
-								<td>还没有系统公告</td>
-							</tr>
-						</table>
 						<div class="row">
-							<div class="col-xs-4" style="padding-top: 10px;">
-								<input type="button" class="btn btn-default" disabled="disabled" value="已读">
-								<input type="button" class="btn btn-default" disabled="disabled" value="删除">
-								<input type="button" class="btn btn-default" value="全部置为已读">
-							</div>
-							<div class="col-xs-8">
-								<c:if test="${ noticeList!=null}">
-									<jsp:include page="page.jsp">
-										<jsp:param value="${noticeList.page }" name="page" />
-										<jsp:param value="notices.pageNotice" name="method" />
-									</jsp:include>
-								</c:if>
-							</div>
+							<c:if test="${noticeList==null || noticeList.datas.size() == 0  }">
+								<div class="col-xs-12">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>&nbsp;</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td class="text-center" style="height: 250px; font-size: 18px; vertical-align: middle;">
+													<i class="glyphicon glyphicon-exclamation-sign text-yellow"></i> 您好，还没有消息哦！
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</c:if>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
 </section>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/notice.js?version=3.0"></script>

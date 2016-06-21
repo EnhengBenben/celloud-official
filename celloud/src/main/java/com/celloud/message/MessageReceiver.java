@@ -86,8 +86,7 @@ public class MessageReceiver implements Runnable {
         consumer.subscribe(Arrays.asList(topic));
     }
 
-    @SuppressWarnings("unused")
-    private void shutdown() {
+    public void shutdown() {
         running.set(false);
         consumer.close();
     }
