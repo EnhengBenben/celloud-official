@@ -134,30 +134,44 @@ public class EmailUtils {
             logger.warn("系统出现异常，正在发送异常信息邮件，但是没有找到邮件接收者！");
             return;
         }
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        exception.printStackTrace(pw);
-        StringBuffer buffer = new StringBuffer("");
-        buffer.append("<h3>异常地址：</h3>");
-        buffer.append(request.getMethod() + "   ");
-        buffer.append(request.getRequestURL());
-        if (request.getQueryString() != null) {
-            buffer.append("?" + request.getQueryString());
-        }
-        buffer.append("<h3>用户信息：</h3>");
-        buffer.append(UserAgentUtil.getActionLog(request).toResume());
-        buffer.append("<h3>异常信息：</h3>");
-        buffer.append(exception.toString());
-        buffer.append("<h3>异常描述：</h3>");
-        buffer.append("<pre>");
-        buffer.append(sw.toString());
-        buffer.append("</pre>");
-        // TODO 使用volecity模板渲染邮件内容
-        String content = buffer.toString();
-        pw.close();
+		String content = getError(request, exception);
         Email email = new Email().addTo(this.errorMailTos).setSubject(errorTitle).setContent(content);
 		emailService.send(email);
     }
+
+	/**
+	 * 将错误日志组织成邮件正文
+	 * 
+	 * @param request
+	 * @param exception
+	 * @return
+	 * @author lin
+	 * @date 2016年6月21日下午3:48:25
+	 */
+	public String getError(HttpServletRequest request, Exception exception) {
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+		exception.printStackTrace(pw);
+		StringBuffer buffer = new StringBuffer("");
+		buffer.append("<h3>异常地址：</h3>");
+		buffer.append(request.getMethod() + "   ");
+		buffer.append(request.getRequestURL());
+		if (request.getQueryString() != null) {
+			buffer.append("?" + request.getQueryString());
+		}
+		buffer.append("<h3>用户信息：</h3>");
+		buffer.append(UserAgentUtil.getActionLog(request).toResume());
+		buffer.append("<h3>异常信息：</h3>");
+		buffer.append(exception.toString());
+		buffer.append("<h3>异常描述：</h3>");
+		buffer.append("<pre>");
+		buffer.append(sw.toString());
+		buffer.append("</pre>");
+		// TODO 使用volecity模板渲染邮件内容
+		String content = buffer.toString();
+		pw.close();
+		return content;
+	}
 
     /**
      * 将送问题反馈组织成邮件正文并发送

@@ -18,9 +18,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
-import com.celloud.mail.EmailUtils;
 import com.celloud.model.mysql.Client;
 import com.celloud.model.mysql.User;
+import com.celloud.sendcloud.EmailParams;
+import com.celloud.sendcloud.EmailType;
+import com.celloud.sendcloud.SendCloudUtils;
+import com.celloud.sendcloud.mail.Email;
+import com.celloud.sendcloud.mail.Substitution;
 import com.celloud.service.ClientService;
 import com.celloud.service.UserService;
 import com.celloud.utils.MD5Util;
@@ -39,7 +43,7 @@ public class HomeAction {
     @Resource
     private UserService userService;
     @Resource
-    private EmailUtils emailUtils;
+	private SendCloudUtils sendCloud;
     @Resource
     private ClientService clientService;
 
@@ -134,14 +138,12 @@ public class HomeAction {
         }
         String randomCode = MD5Util.getMD5(String.valueOf(new Date().getTime()));
         userService.insertFindPwdInfo(user.getUserId(), randomCode);
-        emailUtils.sendWithTitle(ResetPwdUtils.title,
-                ResetPwdUtils.content.replaceAll("username", user.getUsername()).replaceAll("url",
-                        ResetPwdUtils.celloudPath.replaceAll("resetpwduname", user.getUsername())
-                                .replaceAll("resetpwdcode", randomCode)),
-                user.getEmail());
-        email = email.substring(0, 1) + "***" + email.substring(email.lastIndexOf("@"));
-        String emailAddress = "http://mail." + email.substring(email.lastIndexOf("@") + 1);
-        return mv.addObject("success", "ok").addObject("email", email).addObject("emailAddress", emailAddress);
+		String url = ResetPwdUtils.celloudPath.replaceAll("resetpwduname", user.getUsername())
+				.replaceAll("resetpwdcode", randomCode);
+		Email<?> context = Email.template(EmailType.PWD_FIND)
+				.substitutionVars(Substitution.sub().set(EmailParams.PWD_FIND.URL.getParam(), url)).to(email);
+		sendCloud.sendTemplate(context);
+		return mv.addObject("success", "ok").addObject("email", email);
     }
 
     @RequestMapping(value = "findPassword.html", method = RequestMethod.GET)
