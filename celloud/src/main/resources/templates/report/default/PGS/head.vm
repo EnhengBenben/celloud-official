@@ -1,5 +1,5 @@
 <div align="center" class="clearfix">
-    <img src="/report/company/icon?file=${pgs.companyIcon}" style="width:60px">
+    <img id="companyIcon" src="/report/company/icon?file=${pgs.companyIcon}" style="width:60px">
 	<h2 class="shotH3 smallTitle" style="line-height: 20px;margin-top:0px">
 		${pgs.companyName}
 		<br />染色体拷贝数变异检测报告

@@ -10,7 +10,7 @@
 			#if($pgs.companyIcon && "" != $pgs.companyIcon)
 				<div align="center" class="clearfix">
 					#block("company")
-						<img id="companyIcon" src="${base}/report/company/icon?file=$!pgs.companyIcon" style="width:90px">
+						<img src="${base}/report/company/icon?file=$!pgs.companyIcon" style="width:90px">
 					#end
 					#block("title")
 						<h2 class="shotH3">
