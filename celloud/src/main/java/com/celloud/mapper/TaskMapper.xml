@@ -339,10 +339,10 @@
         and t.period in (${period})
     </if>
     <if test="beginDate != null and beginDate != ''" >
-        and t.update_date &gt;= #{beginDate}
+        and t.update_date &gt;= '${beginDate} 00:00:00'
     </if>
     <if test="endDate != null and endDate != ''" >
-        and t.update_date &lt;= #{endDate}
+        and t.update_date &lt;= '${endDate} 23:59:59'
     </if>
     <if test="sampleName != null and sampleName != ''" >
         and s.sample_name like '%${sampleName}%'
