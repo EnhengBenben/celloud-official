@@ -18,6 +18,7 @@ public class EmailParams {
 	public static final String START = "start";
 	public static final String END = "end";
 	public static final String CONTEXT = "context";
+	public static final String TITLE = "title";
 
 	/**
 	 * 用户注册
@@ -130,6 +131,20 @@ public class EmailParams {
 		public String param;
 
 		private EXCEPTION(String param) {
+			this.param = param;
+		}
+
+		public String getParam() {
+			return this.param;
+		}
+	}
+
+	public static enum FEADBACK {
+		TITLE(EmailParams.TITLE), CREATEDATE(EmailParams.START), USERNAME(EmailParams.EMAIL_TO), CONTEXT(
+				EmailParams.CONTEXT), COPYDATE(EmailParams.END);
+		public String param;
+
+		private FEADBACK(String param) {
 			this.param = param;
 		}
 
