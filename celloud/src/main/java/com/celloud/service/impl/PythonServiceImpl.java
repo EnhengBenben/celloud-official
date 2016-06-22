@@ -167,8 +167,8 @@ public class PythonServiceImpl implements PythonService {
 		log.info("Python客户端，用户：" + userId + "上传文件" + fileName + "完成，发送邮件。");
 		User user = userService.selectUserById(userId);
 		Email<?> context = Email.template(EmailType.UPLOAD_OVER)
-				.substitutionVars(Substitution.sub().set(EmailParams.UPLOAD_OVER.DATE_NAME.getParam(), fileName)
-						.set(EmailParams.UPLOAD_OVER.EMAIL_TO.getParam(), user.getUsername()))
+				.substitutionVars(Substitution.sub().set(EmailParams.UPLOAD_OVER.dataName.name(), fileName)
+						.set(EmailParams.UPLOAD_OVER.userName.name(), user.getUsername()))
 				.to(user.getEmail());
 		sendCloud.sendTemplate(context);
 	}
