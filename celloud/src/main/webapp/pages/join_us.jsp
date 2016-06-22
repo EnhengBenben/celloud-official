@@ -236,5 +236,7 @@
     <jsp:useBean id="_now" class="java.util.Date" />
     <div class="footer">© <fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" /> CelLoud，Inc. All Rights reserved. <a  href="#">生物信息云平台</a> · <a  href="javascript:void();">沪ICP备14035977号</a> · <a href="<%=request.getContextPath() %>/service.html" target="_blank">服务与支持</a> · <a href="<%=request.getContextPath() %>/feedback.html" target="_blank">意见反馈</a></div>
 </div>
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="<%=request.getContextPath() %>/js/utils.js"></script>
 </body>
 </html>
