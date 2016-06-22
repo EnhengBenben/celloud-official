@@ -18,7 +18,7 @@
 	<div class="row col-xs-12">
 		<c:if test="${appList!=null && fn:length(appList)>0 }">
 			<div class="table-responsive" id="dataDiv" style="overflow:auto;">
-				<table id="allUserDataList" class="table table-striped table-bordered table-hover">
+				<table id="allUserDataList" class="display nowrap">
 					<thead>
 						<tr>
 							<th class="min-w-50">编码</th>
