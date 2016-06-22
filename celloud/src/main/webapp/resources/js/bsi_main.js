@@ -58,7 +58,7 @@ $(function () {
       $("#condition-find").click();
     }
   });
-  $("body").on("click",".table>tbody .checkbox,.pagination .checkbox",function(){
+  $("body").on("click",".table>tbody .checkbox",function(){
     $(this).toggleClass("checkbox-un");
     $(this).toggleClass("checkbox-ed");
   });
