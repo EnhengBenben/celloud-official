@@ -1,7 +1,7 @@
-package com.celloud.mail;
+package com.celloud.sendcloud;
 
 /**
- * SendCloud邮件模板
+ * SendCloud邮件模板种类
  * 
  * @author lin
  * @date 2016年6月15日 下午3:25:50
@@ -35,5 +35,13 @@ public class EmailType {
 	 * 上传结束
 	 */
 	public static final String UPLOAD_OVER = "upload_over";
+	/**
+	 * 异常
+	 */
+	public static final String EXCEPTION = "exception";
+	/**
+	 * 意见反馈
+	 */
+	public static final String FEADBACK = "feadback";
 
 }

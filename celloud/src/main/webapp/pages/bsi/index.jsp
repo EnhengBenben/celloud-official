@@ -30,7 +30,20 @@
             <hr>
           </div>
           <div class="y-topbar-span9 y-last">
-            <a href="logout" title="点击退出"><i class="celicon user-icon"></i></a>
+            <div class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="celicon user-icon"></i>
+                <span>${sessionScope.loginUserInSession.username }</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="#"><i class="fa fa-cogs" aria-hidden="true"></i>设置</a>
+                </li>
+                <li>
+                  <a href="logout"><i class="fa fa-sign-out" aria-hidden="true"></i>退出</a>
+                </li>
+	          </ul>
+	        </div>
           </div>
         </div>
       </div>
@@ -47,19 +60,20 @@
 	        </div>
           </div>
           <hr>
-          <div class="common-menu-btn pull-left">
-            <a class="item-btn active" id="to-report-a" href="javascript:void(0)"><i class="celicon my-report-icon"></i><br>报告</a>
-            <a class="item-btn" id="to-data-a" href="javascript:void(0)"><i class="celicon my-data-icon"></i><br>数据</a>
+          <div id="common-menu" class="common-menu-btn pull-left">
+            <a class="item-btn" id="to-sample-a" href="javascript:void(0)"><i class="celicon my-sample-icon"></i><br>收样</a>
             <a class="item-btn upload-btn" id="to-upload-a" href="javascript:void(0)">
               <i class="celicon my-upload-icon"></i><br>上传
               <canvas id="upload-progress" class="upload-progress" width="64" height="64"></canvas>
             </a>
+            <a class="item-btn" id="to-data-a" href="javascript:void(0)"><i class="celicon my-data-icon"></i><br>数据</a>
+            <a class="item-btn active" id="to-report-a" href="javascript:void(0)"><i class="celicon my-report-icon"></i><br>报告</a>
           </div>
           <hr>
           <div class="common-menu-search pull-right">
 			<div class="data-search">
 			  <input id="condition-input" class="input-sm" type="text" placeholder="搜索"/>
-			  <div id="condition-find" class="input-group-btn"><i class="fa fa-search"></i></div>
+			  <a id="condition-find" class="input-group-btn"><i class="fa fa-search"></i></a>
 			</div>
           </div>
         </div>

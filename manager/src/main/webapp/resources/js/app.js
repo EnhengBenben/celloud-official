@@ -18,7 +18,7 @@ $.appManager.price = {
     $("#update-app-price-name").val(name);
     $("#update-app-current-price").val(price);
     $("#update-app-new-price").val('');
-    $("#update-app-price-button").on("click",function(){
+    $("#update-app-price-button").one("click",function(){
       $.appManager.price.update();
     });
     $("#update-app-price-modal").modal("show");

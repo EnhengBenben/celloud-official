@@ -27,7 +27,13 @@ import com.celloud.model.mysql.FeedbackReply;
 import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
+import com.celloud.sendcloud.EmailParams;
+import com.celloud.sendcloud.EmailType;
+import com.celloud.sendcloud.SendCloudUtils;
+import com.celloud.sendcloud.mail.Email;
+import com.celloud.sendcloud.mail.Substitution;
 import com.celloud.service.FeedbackService;
+import com.celloud.utils.DateUtil;
 
 /**
  * 投诉与建议service实现类
@@ -40,6 +46,8 @@ public class FeedbackServiceImpl implements FeedbackService {
     private Logger logger = LoggerFactory.getLogger(FeedbackServiceImpl.class);
     @Resource
     private EmailUtils emailUtils;
+	@Resource
+	private SendCloudUtils sendCloud;
     private static final Page DEFAULT_PAGE = new Page(1, 5);
     @Resource
     private FeedbackMapper feedbackMapper;
@@ -83,10 +91,34 @@ public class FeedbackServiceImpl implements FeedbackService {
         if (feedbackAttachments.size() > 0 && result <= 0) {
             feedbackMapper.updateAttachState();
         }
-        emailUtils.sendFeedback(feedback, feedbackAttachments);
+		sendEmail(feedback, feedbackAttachments);
         cleanAttachment();
         return result;
     }
+
+	private void sendEmail(Feedback feedback, List<FeedbackAttachment> attachments) {
+		if (emailUtils.getFeedbackMailTo() == null) {
+			logger.warn("用户提交了工单，正在发送工单信息邮件，但是没有找到邮件接收者！");
+			return;
+		}
+		Email<?> context = Email
+				.template(
+						EmailType.FEADBACK)
+				.substitutionVars(Substitution.sub().set(EmailParams.FEADBACK.TITLE.getParam(), feedback.getTitle())
+						.set(EmailParams.FEADBACK.CREATEDATE.getParam(),
+								DateUtil.getDateToString(feedback.getCreateDate(), "yyyy-MM-dd HH:mm:ss"))
+				.set(EmailParams.FEADBACK.USERNAME.getParam(), feedback.getUsername())
+				.set(EmailParams.FEADBACK.CONTEXT.getParam(), feedback.getContent())
+				.set(EmailParams.FEADBACK.COPYDATE.getParam(), DateUtil.getDateToString("yyyy")))
+				.to(emailUtils.getFeedbackMailTo());
+		if (attachments != null && attachments.size() > 0) {
+			for (FeedbackAttachment fa : attachments) {
+				String file = FeedbackConstants.getAttachment(fa.getFilePath());
+				context.attachment(new File(file));
+			}
+		}
+		sendCloud.sendTemplate(context);
+	}
 
     /**
      * 清理工单附件的临时目录

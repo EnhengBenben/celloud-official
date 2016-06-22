@@ -36,6 +36,20 @@ public class DateUtil {
         return simpleFormat.format(date);
     }
 
+	/**
+	 * 自定义格式化输入时间
+	 * 
+	 * @param date
+	 * @param format
+	 * @return
+	 * @author lin
+	 * @date 2016年6月22日上午10:15:00
+	 */
+	public static String getDateToString(Date date, String format) {
+		SimpleDateFormat simpleFormat = new SimpleDateFormat(format);
+		return simpleFormat.format(date);
+	}
+
     public static String formatPastTime(Date date) {
         long pastTime = new Date().getTime() - date.getTime();
         if (pastTime < 1000 * 60) {

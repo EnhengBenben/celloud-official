@@ -490,15 +490,28 @@
 	    </div>
 	  </div>
 	  <div class="data-content-footer">
-	    <h4>更多信息： </h4>
-	    <span>标签：<span id="data-batch">${data.batch }</span> </span>
-	    <span>生成时间：<fmt:formatDate value="${bsi.createDate }" type="both" dateStyle="long" pattern="yyyyMMdd" /> </span>
-	    <span>原始数据：
-	    <c:forEach items="${bsi.data}" var="data">
-          ${data.fileName}&nbsp;&nbsp;
-        </c:forEach>
-                （点击查看原始数据信息）
-	    </span>
+	    <ul>
+	      <li><h4>更多信息： </h4></li>
+	      <li>
+	        <label>标签：</label>
+	        <span id="data-batch">${data.batch }</span>
+	      </li>
+	      <li>
+	        <label>生成时间：</label>
+	        <span>
+              <fmt:formatDate value="${bsi.createDate }" type="both" dateStyle="long" pattern="yyyyMMdd" />
+            </span>
+	      </li>
+	      <li>
+	        <label>原始数据：</label>
+            <span>
+	            <c:forEach items="${bsi.data}" var="data">
+	              ${data.fileName}&nbsp;&nbsp;
+	            </c:forEach>
+	        </span>
+	        <a href="javascript:void(0)">（查看原始数据信息）</a>
+	      </li>
+	    </ul>
 	  </div>
   </div>
   <div class="report-opera pull-right">

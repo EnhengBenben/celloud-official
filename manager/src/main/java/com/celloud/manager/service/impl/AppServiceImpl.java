@@ -62,7 +62,7 @@ public class AppServiceImpl implements AppService {
         priceObjcx.setItemId(appId);
         priceObjcx.setItemType(PriceType.isApp);
         priceObjcx.setExpireDate(new Date());
-        priceMapper.updateByItemId(priceObjcx);
+        priceMapper.updateExpireDate(priceObjcx);
         priceObjcx.setId(null);
         priceObjcx.setCreateDate(new Date());
         priceObjcx.setExpireDate(null);

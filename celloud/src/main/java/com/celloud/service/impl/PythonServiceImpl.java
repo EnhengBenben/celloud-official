@@ -1,7 +1,6 @@
 package com.celloud.service.impl;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -9,16 +8,19 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
-import com.celloud.mail.EmailUtils;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.User;
+import com.celloud.sendcloud.EmailParams;
+import com.celloud.sendcloud.EmailType;
+import com.celloud.sendcloud.SendCloudUtils;
+import com.celloud.sendcloud.mail.Email;
+import com.celloud.sendcloud.mail.Substitution;
 import com.celloud.service.ActionLogService;
 import com.celloud.service.ClientService;
 import com.celloud.service.DataService;
@@ -32,12 +34,13 @@ import com.celloud.utils.MD5Util;
 import com.celloud.utils.PerlUtils;
 import com.celloud.utils.PropertiesUtil;
 
+
 @Service("pythonServiceImpl")
 public class PythonServiceImpl implements PythonService {
     Logger log = LoggerFactory.getLogger(PythonServiceImpl.class);
     private String path = PropertiesUtil.bigFilePath;
     @Resource
-    private EmailUtils emailUtils;
+	private SendCloudUtils sendCloud;
     @Resource
     private UserService userService;
     @Resource
@@ -160,24 +163,15 @@ public class PythonServiceImpl implements PythonService {
     }
 
     @Override
-    public void sendEmail(Integer userId, String fileName, String dataKey) {
-        log.info("Python客户端，用户：" + userId + "上传文件" + fileName + "完成，发送邮件。");
-        String email = userService.selectUserById(userId).getEmail();
-        String path = this.getClass().getResource("/DataUploaded.txt").getPath();
-        File file = new File(path);
-        String source = null;
-        try {
-            source = FileUtils.readFileToString(file, "UTF-8");
-        } catch (IOException e) {
-            log.error("读取邮件模板失败" + e);
-        }
-        if (source == null) {
-            log.error("读取邮件模板失败");
-        } else {
-            String context = source.replace("#dataName", fileName);
-            emailUtils.send(context, email);
-        }
-    }
+	public void sendEmail(Integer userId, String fileName, String dataKey) {
+		log.info("Python客户端，用户：" + userId + "上传文件" + fileName + "完成，发送邮件。");
+		User user = userService.selectUserById(userId);
+		Email<?> context = Email.template(EmailType.UPLOAD_OVER)
+				.substitutionVars(Substitution.sub().set(EmailParams.UPLOAD_OVER.DATE_NAME.getParam(), fileName)
+						.set(EmailParams.UPLOAD_OVER.EMAIL_TO.getParam(), user.getUsername()))
+				.to(user.getEmail());
+		sendCloud.sendTemplate(context);
+	}
 
     @Override
     public long saveDataSize(String dataKey, long size) {

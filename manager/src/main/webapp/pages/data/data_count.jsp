@@ -39,7 +39,19 @@
 					<div class="xe-upper">
 						<div class="xe-label">
 							<strong>数据大小:</strong>
-							<strong class="num"> ${empty dataSize?0:dataSize}${unit} </strong>
+							<strong class="num"> 
+                                <c:if test="${empty dataSize }">0(KB)</c:if>
+                                <c:if test="${not empty dataSize }">
+                                    <c:choose>
+                                        <c:when test="${dataSize>1073741824 }">
+                                            <fmt:formatNumber pattern="0.00" value="${(dataSize-(dataSize%1048576))/1048576 + dataSize%1048576/1048576 }" />(GB)</c:when>
+                                        <c:when test="${dataSize>1048576 }">
+                                            <fmt:formatNumber pattern="0.00" value="${(dataSize-(dataSize%1048576))/1048576 + dataSize%1048576/1048576 }" />(MB)</c:when>
+                                        <c:otherwise>
+                                            <fmt:formatNumber pattern="0.00" value="${(dataSize-(dataSize%1048576))/1048576 + dataSize%1048576/1048576 }" />(KB)</c:otherwise>
+                                    </c:choose>
+                                </c:if>
+                            </strong>
 						</div>
 					</div>
 					<div class="xe-lower">
@@ -95,11 +107,11 @@
 										<td>
 											<c:choose>
 												<c:when test="${data.dataSize>1073741824 }">
-													<fmt:formatNumber pattern="0.00" value="${data.dataSize/1073741824 }" />GB</c:when>
+													<fmt:formatNumber pattern="0.00" value="${(data.dataSize-(data.dataSize%1048576))/1048576 + data.dataSize%1048576/1048576 }" />GB</c:when>
 												<c:when test="${data.dataSize>1048576 }">
-													<fmt:formatNumber pattern="0.00" value="${data.dataSize/1048576 }" />MB</c:when>
+													<fmt:formatNumber pattern="0.00" value="${(data.dataSize-(data.dataSize%1048576))/1048576 + data.dataSize%1048576/1048576 }" />MB</c:when>
 												<c:otherwise>
-													<fmt:formatNumber pattern="0.00" value="${data.dataSize/1024 }" />KB</c:otherwise>
+													<fmt:formatNumber pattern="0.00" value="${(data.dataSize-(data.dataSize%1048576))/1048576 + data.dataSize%1048576/1048576 }" />KB</c:otherwise>
 											</c:choose>
 										</td>
 									</tr>
