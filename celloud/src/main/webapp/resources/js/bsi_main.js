@@ -334,7 +334,7 @@ $.report = {
             show_val.push($(this).next().find("span").html());
           });
           $.report.find.condition();
-          $("#selected-period span").html(show_val);
+          $("#selected-period span").html(show_val.toString());
           $("#selected-period").removeClass("hide");
           $("#to-sl-period").addClass("hide");
           $("#period-sl").removeClass("select-more");
