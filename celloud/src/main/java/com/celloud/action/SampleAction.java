@@ -56,7 +56,9 @@ public class SampleAction {
     @RequestMapping("bsi/commitSamples")
     @ResponseBody
     public Integer commitSamples(Integer[] sampleIds) {
-        return sampleService.commitSamples(Arrays.asList(sampleIds),
+        List<Integer> list = sampleIds == null || sampleIds.length <= 0 ? null
+                : Arrays.asList(sampleIds);
+        return sampleService.commitSamples(list,
                 ConstantsData.getLoginUserId());
     }
 
@@ -71,6 +73,8 @@ public class SampleAction {
     @RequestMapping("bsi/deleteList")
     @ResponseBody
     public Integer deleteList(Integer[] sampleIds) {
-        return sampleService.deleteList(Arrays.asList(sampleIds));
+        List<Integer> list = sampleIds == null || sampleIds.length <= 0 ? null
+                : Arrays.asList(sampleIds);
+        return sampleService.deleteList(list);
     }
 }
