@@ -1136,17 +1136,39 @@ a, a:link, a:hover, a:active, a:visited {
 	font-size: 14px;
 	padding: 0px 30px;
 }
-.content .data-content-footer h4{
+.content .data-content-footer ul>li{
+	display: inline-block;
+	height: 30px;
+	padding: 0px 20px 0px 0px;
+}
+.content .data-content-footer ul>li>label{
+	font-weight: normal;
+	float: left;
+    line-height: 30px;
+}
+.content .data-content-footer ul>li>h4{
 	color: #323232;
 	font-size: 14px;
 	font-weight: bold;
 	display: inline-block;
+    float: left;
+    line-height: 30px;
 }
-.content .data-content-footer span{
+.content .data-content-footer ul>li>span{
 	display: inline-block;
-	padding-left: 10px;
-	padding-right: 20px;
 	line-height: 30px;
+	max-width: 80px;
+	float: left;
+    -webkit-text-overflow: ellipsis;
+    -moz-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.content .data-content-footer ul>li>a{
+    line-height: 30px;
+    float: left;
 }
 .content .report-pagination{
 	width: 160px;
