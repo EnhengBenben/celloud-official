@@ -104,12 +104,12 @@ public class FeedbackServiceImpl implements FeedbackService {
 		Email<?> context = Email
 				.template(
 						EmailType.FEADBACK)
-				.substitutionVars(Substitution.sub().set(EmailParams.FEADBACK.TITLE.getParam(), feedback.getTitle())
-						.set(EmailParams.FEADBACK.CREATEDATE.getParam(),
+				.substitutionVars(Substitution.sub().set(EmailParams.FEADBACK.title.name(), feedback.getTitle())
+						.set(EmailParams.FEADBACK.start.name(),
 								DateUtil.getDateToString(feedback.getCreateDate(), "yyyy-MM-dd HH:mm:ss"))
-				.set(EmailParams.FEADBACK.USERNAME.getParam(), feedback.getUsername())
-				.set(EmailParams.FEADBACK.CONTEXT.getParam(), feedback.getContent())
-				.set(EmailParams.FEADBACK.COPYDATE.getParam(), DateUtil.getDateToString("yyyy")))
+				.set(EmailParams.FEADBACK.userName.name(), feedback.getUsername())
+				.set(EmailParams.FEADBACK.context.name(), feedback.getContent())
+				.set(EmailParams.FEADBACK.end.name(), DateUtil.getDateToString("yyyy")))
 				.to(emailUtils.getFeedbackMailTo());
 		if (attachments != null && attachments.size() > 0) {
 			for (FeedbackAttachment fa : attachments) {
