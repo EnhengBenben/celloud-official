@@ -44,7 +44,7 @@ public class DataAction {
         ModelAndView mv=new ModelAndView("data/data_count");
         User user=ConstantsData.getLoginUser();
         Integer dataNum=null;
-        Long dataSize=null;
+        Long dataSize = null;
         List<Map<String,Object>> monData=null;
         if(user!=null){
             Integer role=user.getRole();
@@ -58,18 +58,6 @@ public class DataAction {
                 dataNum=dataService.totalDataNum(user.getCompanyId());
                 dataSize=dataService.totalDataSize(user.getCompanyId());
                 monData=dataService.getBigCustomerDataCountByMon(user.getCompanyId(),"desc");
-            }
-        }
-        if(dataSize!=null){
-            if ((dataSize >> 30) > 0) {
-                dataSize=dataSize / (1024 * 1024 * 1024);
-                mv.addObject("unit", "(GB)");
-            } else if ((dataSize >> 20) > 0) {
-                dataSize=dataSize / (1024 * 1024);
-                mv.addObject("unit", "(MB)");
-            } else if ((dataSize >> 20) > 0) {
-                dataSize=dataSize / (1024);
-                mv.addObject("unit", "(KB)");
             }
         }
         mv.addObject("monData", monData);
