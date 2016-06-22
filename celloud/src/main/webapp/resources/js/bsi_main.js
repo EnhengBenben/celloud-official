@@ -125,22 +125,23 @@ $.sample = {
       });
     },
     addSample: function(){
-      $.get("sample/bsi/addSample",{"sampleName": $("#sample-input").val()},function(result){
-        if(result == 1){
-          $.sample.sampleList();
-        }else if (result == 2){
-          $.sample.errorTips.show();
-        }
-      });
+      var sampleName = $("#sample-input").val();
+      if(sampleName.trim() != ""){
+        $.get("sample/bsi/addSample",{"sampleName": sampleName},function(result){
+          if(result == 1){
+            $.sample.sampleList();
+          }else if (result == 2){
+            $.sample.errorTips.show();
+          }
+        });
+      }
     },
     commitSamples: function(){
-      var param = {};
-      $("#sample-list-tbody tr").each(function(i){
-        param["sampleIds["+i+"]"] = $(this).data('id');
-      })
-      $.post("sample/bsi/commitSamples",$("#sample-form").serialize(),function(result){
-        $.sample.sampleList();
-      });
+      var param = $("#sample-form").serialize();
+      if(param.size()>0)
+        $.post("sample/bsi/commitSamples",param,function(result){
+          $.sample.sampleList();
+        });
     },
     deleteOne: function(id){
       $.post("sample/bsi/deleteOne",{"sampleId":id},function(result){
@@ -149,10 +150,12 @@ $.sample = {
       });
     },
     deleteList: function(){
-      $.post("sample/bsi/deleteList",$("#sample-form").serialize(),function(result){
-        if(result>0)
-          $.sample.sampleList();
-      });
+      var param = $("#sample-form").serialize();
+      if(param.size()>0)
+        $.post("sample/bsi/deleteList",param,function(result){
+          if(result>0)
+            $.sample.sampleList();
+        });
     },
     errorTips: {
       show: function(){
