@@ -249,7 +249,6 @@ a, a:link, a:hover, a:active, a:visited {
 }
 .bio-logo img{
 	width: 50px;
-	height: 62px;
 }
 .common-menu-logo .bio-name{
 	width: 90px;
@@ -707,7 +706,7 @@ a, a:link, a:hover, a:active, a:visited {
 	margin-top: 60px;
 }
 .upload-modal .upload-container{
-    margin-top: 10px;
+    margin: 10px 0px 5px 0px;
     background-color: #fff;
     height:120px;
     width: 100%;
@@ -1281,7 +1280,7 @@ a, a:link, a:hover, a:active, a:visited {
 	color: #a0a0a0;
 	font-size: 12px;
 	height: 24px;
-	width: 100px;
+	width: 110px;
 	padding: 0px 10px;
 }
 .selector .sl-val .sl-btn{

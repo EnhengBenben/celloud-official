@@ -261,7 +261,11 @@ $.report = {
         });
         $("body").on("click","[data-click='report-select-more']",function(){
           $(".selector-line").removeClass("select-more");
-          $(".selector-line").find(".checkbox").addClass("hide");
+          $("#report-multibatch-search").addClass("disabled");
+          $("#report-multibatch-search").attr("disabled",true);
+          $(".selector-line .checkbox").removeClass("checkbox-ed").addClass("checkbox-un").addClass("hide");
+          $(".selector-line").find("[name='sl-confirm']").addClass("disabled");
+          $(".selector-line").find("[name='sl-confirm']").attr("disabled",true);
           $(".selector-line").find(".multisl-btns").addClass("hide");
           var selectorline = $(this).parent().parent().parent();
           $(selectorline).addClass("select-more");
@@ -273,6 +277,9 @@ $.report = {
           $("#batch-lists").addClass("show-more");
           $("#batch-more span").html("收起");
           $("#batch-more i").removeClass("fa-chevron-down").addClass("fa-chevron-up");
+          $("#batch-lists .checkbox").removeClass("checkbox-ed").addClass("checkbox-un");
+          $("#report-multibatch-search").addClass("disabled");
+          $("#report-multibatch-search").attr("disabled",true);
         });
         $("#batch-lists .sl-val-content").on("click",function(){
           $(this).find(".checkbox").toggleClass("checkbox-un");
@@ -330,6 +337,7 @@ $.report = {
           $("#period-sl").removeClass("select-more");
           $("#period-sl").find(".checkbox").addClass("hide");
           $("#period-sl").find(".multisl-btns").addClass("hide");
+          $("#period-lists .checkbox").removeClass("checkbox-ed").addClass("checkbox-un");
         });
         $("#clear-sl-period").on("click",function(){
           $("#selected-period").addClass("hide");

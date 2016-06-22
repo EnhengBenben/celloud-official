@@ -29,7 +29,7 @@
           </c:if>
         </c:forEach>
         <div class="multisl-btns hide">
-          <button id="report-multibatch-search" class="sl-btn disabled" href="javascript:void(0)" disabled="disabled">确定</button>
+          <button id="report-multibatch-search" name="sl-confirm" class="sl-btn disabled" href="javascript:void(0)" disabled="disabled">确定</button>
           <button data-click="reset-multiselect" class="sl-btn" href="javascript:void(0)">取消</button>
         </div>
       </div>
@@ -76,7 +76,7 @@
 	        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="5"><span>送样中</span></a>
 	      </div>
 	      <div class="multisl-btns hide">
-	        <button id="report-multiperiod-search" class="sl-btn disabled" href="javascript:void(0)" disabled="disabled">确定</button>
+	        <button id="report-multiperiod-search" name="sl-confirm" class="sl-btn disabled" href="javascript:void(0)" disabled="disabled">确定</button>
 	        <button data-click="reset-multiselect" class="sl-btn" href="javascript:void(0)">取消</button>
 	      </div>
 	    </div>
