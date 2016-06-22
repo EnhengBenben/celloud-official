@@ -141,9 +141,11 @@ public class HomeAction {
 		String url = ResetPwdUtils.celloudPath.replaceAll("resetpwduname", user.getUsername())
 				.replaceAll("resetpwdcode", randomCode);
 		Email<?> context = Email.template(EmailType.PWD_FIND)
-				.substitutionVars(Substitution.sub().set(EmailParams.PWD_FIND.URL.getParam(), url)).to(email);
+				.substitutionVars(Substitution.sub().set(EmailParams.PWD_FIND.url.name(), url)).to(email);
 		sendCloud.sendTemplate(context);
-		return mv.addObject("success", "ok").addObject("email", email);
+		email = email.substring(0, 1) + "***" + email.substring(email.lastIndexOf("@"));
+		String emailAddress = "http://mail." + email.substring(email.lastIndexOf("@") + 1);
+		return mv.addObject("success", "ok").addObject("email", email).addObject("emailAddress", emailAddress);
     }
 
     @RequestMapping(value = "findPassword.html", method = RequestMethod.GET)

@@ -34,7 +34,7 @@ public class ExceptionHandler implements HandlerExceptionResolver {
             Exception exception) {
 		String errorInfo = emailUtils.getError(request, exception);
 		Email<?> context = Email.template(EmailType.EXCEPTION)
-				.substitutionVars(Substitution.sub().set(EmailParams.EXCEPTION.CONTEXT.getParam(), errorInfo))
+				.substitutionVars(Substitution.sub().set(EmailParams.EXCEPTION.context.name(), errorInfo))
 				.to(emailUtils.getErrorMailTo());
 		sendCloud.sendTemplate(context);
         response.setHeader("exceptionstatus", "exception");

@@ -140,7 +140,7 @@ public class UserAction {
 		String url = ResetPwdUtils.updateEmailPath.replaceAll("resetEmailUsername", user.getUsername())
 				.replaceAll("resetcode", randomCode);
 		Email<?> context = Email.template(EmailType.CONFIRM_OLD_EMAIL)
-				.substitutionVars(Substitution.sub().set(EmailParams.CONFIRM_OLD_EMAIL.URL.getParam(), url)).to(email);
+				.substitutionVars(Substitution.sub().set(EmailParams.CONFIRM_OLD_EMAIL.url.name(), url)).to(email);
 		sendCloud.sendTemplate(context);
 		return 0;
 	}
@@ -186,7 +186,7 @@ public class UserAction {
 		String url = ResetPwdUtils.toActiveEmailPath.replaceAll("username", user.getUsername())
 				.replaceAll("resetcode", randomCode).replaceAll("newemail", email);
 		Email<?> context = Email.template(EmailType.CONFIRM_NEW_EMAIL)
-				.substitutionVars(Substitution.sub().set(EmailParams.CONFIRM_NEW_EMAIL.URL.getParam(), url)).to(email);
+				.substitutionVars(Substitution.sub().set(EmailParams.CONFIRM_NEW_EMAIL.url.name(), url)).to(email);
 		sendCloud.sendTemplate(context);
 		return 0;
 	}
