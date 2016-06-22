@@ -32,8 +32,8 @@
       </p>
     </div>
     <div class="btns">
-      <a id="sample-reset" class="btn btn-cancel">取消</a>
-      <a id="sample-commit-a" class="btn btn-confirm">提交样本信息</a>
+      <button id="sample-reset" class="btn btn-cancel">取消</button>
+      <button id="sample-commit-a" class="btn btn-confirm">提交样本信息</button>
     </div>
   </div>
   <div class="sample-list">
