@@ -121,3 +121,15 @@ ul, menu, dir {
 .min-w-200{
     min-width: 200px;
 }
+
+.mt5{
+	margin-top: 5px;
+}
+
+.mt7{
+    margin-top: 7px;
+}
+
+.mt10{
+    margin-top: 10px;
+}
