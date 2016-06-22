@@ -39,5 +39,9 @@ public class EmailType {
 	 * 异常
 	 */
 	public static final String EXCEPTION = "exception";
+	/**
+	 * 意见反馈
+	 */
+	public static final String FEADBACK = "feadback";
 
 }
