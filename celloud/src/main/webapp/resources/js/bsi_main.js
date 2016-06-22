@@ -9,6 +9,7 @@ $(function () {
     $.sample.main();
   });
   $("#to-upload-a").on("click",function(){
+    $.base.itemBtnToggleActive($(this));
     if($(".plupload_filelist li").hasClass("plupload_droptext")){
       $("#batch-info").val("");
       $("#batch-div").removeClass("hide");
@@ -23,21 +24,16 @@ $(function () {
   
   $("#to-report-a").on("click",function(){
     $.report.find.main(0);
-    $(this).addClass("active");
-    $("#to-upload-a").removeClass("active");
-    $("#to-data-a").removeClass("active");
+    $.base.itemBtnToggleActive($(this));
   });
   $("body").on("click",'[data-click="report-list"]',function(){
     $.report.find.main(1);
     $(this).addClass("active");
-    $("#to-upload-a").removeClass("active");
-    $("#to-data-a").removeClass("active");
+    $.base.itemBtnToggleActive($(this));
   });
   $("#to-data-a").on("click",function(){
     $.data_.find.condition();
-    $(this).addClass("active");
-    $("#to-upload-a").removeClass("active");
-    $("#to-report-a").removeClass("active");
+    $.base.itemBtnToggleActive($(this));
   });
   $("#next-step").on("click",function(){
     $(".step-one-content").addClass("hide");
