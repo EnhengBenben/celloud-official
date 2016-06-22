@@ -138,10 +138,11 @@ $.sample = {
     },
     commitSamples: function(){
       var param = $("#sample-form").serialize();
-      if(param.size()>0)
+      if(param.length>0){
         $.post("sample/bsi/commitSamples",param,function(result){
           $.sample.sampleList();
         });
+      }
     },
     deleteOne: function(id){
       $.post("sample/bsi/deleteOne",{"sampleId":id},function(result){
@@ -151,7 +152,7 @@ $.sample = {
     },
     deleteList: function(){
       var param = $("#sample-form").serialize();
-      if(param.size()>0)
+      if(param.length>0)
         $.post("sample/bsi/deleteList",param,function(result){
           if(result>0)
             $.sample.sampleList();
