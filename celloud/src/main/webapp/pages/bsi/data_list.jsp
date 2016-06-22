@@ -46,121 +46,60 @@
     <input id="current-page-hide" value="${pageList.page.currentPage }" type="hidden" >
     <input id="total-page-hide" value="${pageList.page.totalPage }" type="hidden" >
     <ul id="pagination-data" class="pages pull-left">
-<!--       <li><a id="first-page-task" href="javascript:void(0);">首页</a></li> -->
       <!-- 显示prev -->
       <li><a id="prev-page-task" class="ends" href="javascript:void(0);">&lt;&lt;</a></li>
-      <!-- 显示第一页 -->
       <c:choose>
-        <c:when test="${pageList.page.currentPage==1}"><li class="active"><a href="#">1</a></li></c:when>
-        <c:otherwise><li><a name="pagination-task" href="javascript:void(0);">1</a></li></c:otherwise>
-      </c:choose>
-      
-      <c:if test="${pageList.page.currentPage>4&&pageList.page.totalPage>10}">
-          <li><a href="javascript:void(0)">…</a></li>
-      </c:if>
-      <c:choose>
-        <c:when test="${pageList.page.totalPage-pageList.page.currentPage>=7}">
-          <c:if test="${pageList.page.currentPage==3}">
-              <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage-1 }</a></li>
+        <c:when test="${pageList.page.totalPage<=5}">   
+          <c:forEach begin="1" step="1" end="${pageList.page.totalPage}" var="step">
+            <c:choose>
+              <c:when test="${step==pageList.page.currentPage}">   
+                <li class="active"><a href="#">${step }</a></li>
+              </c:when>
+              <c:otherwise>
+                <li><a name="pagination-task" href="javascript:void(0)">${step }</a></li>
+              </c:otherwise>
+            </c:choose>
+          </c:forEach>
+        </c:when>
+        <c:otherwise>
+          <c:if test="${pageList.page.currentPage<=2}">   
+              <c:forEach begin="1" step="1" end="3" var="step">
+                <c:choose>
+                  <c:when test="${step==pageList.page.currentPage}">   
+                    <li class="active"><a href="#">${step }</a></li>
+                  </c:when>
+                  <c:otherwise>
+                    <li><a name="pagination-task" href="javascript:void(0)">${step }</a></li>
+                  </c:otherwise>
+                </c:choose>
+              </c:forEach>
+              <li><a href="javascript:void(0)">…</a></li>
+              <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.totalPage }</a></li>
           </c:if>
-          <c:if test="${pageList.page.currentPage==4}">
-              <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage-2 }</a></li>
-          </c:if>
-          <c:if test="${pageList.page.currentPage>3}">
-              <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage-1 }</a></li>
-          </c:if>
-          <c:if test="${pageList.page.currentPage>1&&pageList.page.currentPage<pageList.page.totalPage}">
+          <c:if test="${pageList.page.currentPage>2 && pageList.page.currentPage<pageList.page.totalPage-1}">
+              <li><a name="pagination-task" href="javascript:void(0)">1</a></li>
+              <li><a href="javascript:void(0)">…</a></li>
               <li class="active"><a href="#">${pageList.page.currentPage }</a></li>
+              <li><a href="javascript:void(0)">…</a></li>
+              <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.totalPage }</a></li>
           </c:if>
-          <c:if test="${pageList.page.totalPage-pageList.page.currentPage>1}">
-              <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+1 }</a></li>
-          </c:if>
-          <c:if test="${pageList.page.totalPage-pageList.page.currentPage>2}">
-              <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+2 }</a></li>
-          </c:if>
-          <c:if test="${pageList.page.totalPage-pageList.page.currentPage>3}">
-              <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+3 }</a></li>
-          </c:if>
-          <c:if test="${pageList.page.totalPage-pageList.page.currentPage>4}">
-              <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+4 }</a></li>
-          </c:if>
-          <c:if test="${pageList.page.totalPage-pageList.page.currentPage>5}">
-              <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+5 }</a></li>
-          </c:if>
-          <c:if test="${pageList.page.currentPage<4}">
-              <c:if test="%{pageList.page.totalPage-pageList.page.currentPage>6}">
-                  <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+6 }</a></li>
-              </c:if>
-          </c:if>
-          <c:choose>
-            <c:when test="${pageList.page.currentPage==1}">
-              <c:if test="%{pageList.page.totalPage-pageList.page.currentPage>7}">
-                  <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+7 }</a></li>
-              </c:if>
-              <c:if test="%{pageList.page.totalPage-pageList.page.currentPage>8}">
-                  <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+8 }</a></li>
-              </c:if>
-            </c:when>
-            <c:otherwise>
-              <c:choose>
-                <c:when test="${pageList.page.currentPage==2}">
-                  <c:if test="${pageList.page.totalPage-pageList.page.currentPage>7}">
-                      <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+7 }</a></li>
-                  </c:if>
-                </c:when>
-                <c:otherwise>
-                  <c:if test="${pageList.page.currentPage>4 && (pageList.page.totalPage-pageList.page.currentPage>6)}">
-                      <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.currentPage+6 }</a></li>
-                  </c:if>
-                </c:otherwise>
-              </c:choose>
-            </c:otherwise>
-          </c:choose>
-        </c:when>
-        <c:otherwise>
-          <c:choose>
-            <c:when test="${pageList.page.totalPage-8>0}">
-              <c:forEach begin="${pageList.page.totalPage-8}" step="1" end="${pageList.page.totalPage-1}" var="step">
+          <c:if test="${pageList.page.currentPage>=pageList.page.totalPage-1}">   
+              <li><a name="pagination-task" href="javascript:void(0)">1</a></li>
+              <li><a href="javascript:void(0)">…</a></li>
+              <c:forEach begin="${pageList.page.totalPage-2}" step="1" end="${pageList.page.totalPage}" var="step">
                 <c:choose>
                   <c:when test="${step==pageList.page.currentPage}">   
-                      <li class="active"><a href="#">${step }</a></li>
+                    <li class="active"><a href="#">${step }</a></li>
                   </c:when>
                   <c:otherwise>
-                      <li><a name="pagination-task" href="javascript:void(0)">${step }</a></li>
+                    <li><a name="pagination-task" href="javascript:void(0)">${step }</a></li>
                   </c:otherwise>
                 </c:choose>
               </c:forEach>
-            </c:when>
-            <c:otherwise>
-              <c:forEach begin="2" step="1" end="${pageList.page.totalPage-1}" var="step">
-                <c:choose>
-                  <c:when test="${step==pageList.page.currentPage}">   
-                      <li class="active"><a href="#">${step }</a></li>
-                  </c:when>
-                  <c:otherwise>
-                      <li><a name="pagination-task" href="javascript:void(0)">${step }</a></li>
-                  </c:otherwise>
-                </c:choose>
-              </c:forEach>
-            </c:otherwise>
-          </c:choose>
-        </c:otherwise>
-      </c:choose>
-      <c:if test="${pageList.page.totalPage-pageList.page.currentPage>=8&&pageList.page.totalPage>10}">
-          <li><a href="javascript:void(0)">…</a></li>
-      </c:if>
-      <c:choose>
-        <c:when test="${pageList.page.currentPage==pageList.page.totalPage&&pageList.page.totalPage>1}"> 
-          <li class="active"><a href="#">${pageList.page.totalPage }</a></li>
-        </c:when>
-        <c:otherwise>
-          <c:if test="${pageList.page.totalPage>1}">   
-            <li><a name="pagination-task" href="javascript:void(0)">${pageList.page.totalPage }</a></li>
           </c:if>
         </c:otherwise>
       </c:choose>
       <li><a id="next-page-task" class="ends" href="javascript:void(0)">&gt;&gt;</a></li>
-<!--       <li><a id="last-page-task" href="javascript:void(0);">尾页</a></li> -->
     </ul>
     <ul class="pagination-data pull-right">
       <li><span>共${pageList.page.rowCount }条</span></li>
