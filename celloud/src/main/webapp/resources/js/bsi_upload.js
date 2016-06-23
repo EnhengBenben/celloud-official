@@ -213,6 +213,16 @@ var fileUpload=(function(fileUpload){
         $("#two-to-three").removeClass("active");
         $(".step-three").removeClass("active");
       }
+      var text = $("body .breadcrumb").text();
+      if(text.indexOf("收样")>=0){
+        $.base.itemBtnToggleActive($("#to-sample-a"));
+      }
+      if(text.indexOf("数据")>=0){
+        $.base.itemBtnToggleActive($("#to-data-a"));
+      }
+      if(text.indexOf("报告")>=0){
+        $.base.itemBtnToggleActive($("#to-report-a"));
+      }
     });
   });
 

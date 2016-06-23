@@ -21,7 +21,6 @@ $(function () {
       document.querySelector("#upload-progress").height = document.querySelector("#upload-progress").height;
     }
   });
-  
   $("#to-report-a").on("click",function(){
     $.report.find.main(0);
     $.base.itemBtnToggleActive($(this));
