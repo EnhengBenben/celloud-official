@@ -134,10 +134,10 @@ public class UploadAction {
                                 updateFileInfo(dataId, fileDataKey, newName, perlPath, outPath, folderByDay, batch,
                                         fileFormat);
                                 Subject sub = SecurityUtils.getSubject();
-                                MessageUtils.get()
-                                        .on(Constants.MESSAGE_USER_CHANNEL).send(NoticeConstants.createMessage("upload",
-                                                "文件上传完成", "您的文件【" + originalName + "】已经上传完成。"))
-                                        .to(sub.getPrincipal().toString());
+//                                MessageUtils.get()
+//                                        .on(Constants.MESSAGE_USER_CHANNEL).send(NoticeConstants.createMessage("upload",
+//                                                "文件上传完成", "您的文件【" + originalName + "】已经上传完成。"))
+//                                        .to(sub.getPrincipal().toString());
                                 if (sub.hasRole("bsier")) {
                                     logger.info("{}拥有百菌探权限", userId);
                                     return bsierCheckRun(tagId, batch, dataId, fileDataKey, needSplit, newName,
