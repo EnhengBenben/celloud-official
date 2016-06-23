@@ -125,6 +125,7 @@ $.sample = {
         $.get("sample/bsi/addSample",{"sampleName": sampleName},function(result){
           if(result == 1){
             $.sample.sampleList();
+            $("#sample-input").val("");
           }else if (result == 2){
             $.sample.errorTips.show();
           }
