@@ -549,7 +549,7 @@ public class DataAction {
             if (task.getPeriod() == 1) {
                 String param = SparkPro.TOOLSPATH + task.getUserId() + "/"
                         + appId + " ProjectID" + projectId;
-                String killCommand = SparkPro.SGEKILL + " " + param;
+                String killCommand = SparkPro.SPARKKILL + " " + param;
                 ssh.sshSubmit(killCommand, false);
             }
             reportService.deleteBSIReport(dataKey, projectId, appId);
