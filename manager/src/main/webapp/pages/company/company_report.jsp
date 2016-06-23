@@ -68,5 +68,6 @@
 			"lengthChange": true,
 			"scrollX": true
 		});
+		$('#allUserDataList').css("width","100%");
 	});
 </script>
