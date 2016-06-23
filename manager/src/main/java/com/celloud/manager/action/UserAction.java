@@ -64,7 +64,7 @@ public class UserAction {
             searchFiled = "username";
         }
         Integer companyId = ConstantsData.getLoginUser().getCompanyId();
-        PageList<User> pageList = userService.getUserByPage(companyId, page, searchFiled,
+        PageList<Map<String, String>> pageList = userService.getUserByPage(companyId, page, searchFiled,
                 keyword != null ? keyword.trim() : keyword);
         mv.addObject("pageList", pageList);
         mv.addObject("searchFiled", searchFiled);

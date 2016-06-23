@@ -111,10 +111,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageList<User> getUserByPage(Integer companyId, Page page, String searchField, String keyword) {
-        List<User> list = userMapper.getUserByPage(companyId, DataState.ACTIVE, page, searchField, keyword.trim(),
+    public PageList<Map<String, String>> getUserByPage(Integer companyId, Page page, String searchField,
+            String keyword) {
+        List<Map<String, String>> list = userMapper.getUserByPage(companyId, DataState.ACTIVE, page, searchField,
+                keyword.trim(),
                 PropertiesUtil.testAccountIds);
-        return new PageList<User>(page, list);
+        return new PageList<Map<String, String>>(page, list);
     }
 
     @Override

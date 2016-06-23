@@ -28,6 +28,7 @@
 	                <th>真实姓名 </th>
 	                <th>邮箱 </th>
 	                <th>手机号码 </th>
+	                <th>单位 </th>
 	                <th>角色 </th>
 	                <th>操作</th>
 	            </tr>
@@ -39,6 +40,7 @@
 	                <td>${user.truename }</td>
 	                <td>${user.email }</td>
 	                <td>${user.cellphone }</td>
+	                <td>${user.companyName }</td>
 	                <td>
 	                    <c:if test="${user.role==0 }">普通用户</c:if>
 	                    <c:if test="${user.role==1 }">大客户</c:if>

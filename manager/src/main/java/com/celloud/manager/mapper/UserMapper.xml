@@ -245,20 +245,21 @@
         select company_id from tb_user_company_relat where user_id = #{userId}
     </select>
     
-    <select id="getUserByPage" resultMap="BaseResultMap">
+    <select id="getUserByPage" resultType="java.util.HashMap">
         select
-        u.user_id as userId, username, email, cellphone, create_date as createDate,
+        u.user_id as userId, username, email, cellphone, u.create_date as createDate,
         icon,
         role,
         remark, navigation,
-        truename, state, dept_id as deptId, login_uuid as loginUuid,
-        u.company_id as companyId, sign
-        from tb_user u
+        truename, u.state, u.dept_id as deptId, login_uuid as loginUuid,
+        u.company_id as companyId, sign, c.company_name as companyName
+        from tb_user u, tb_company c
         <if test="companyId != 0">
         , tb_user_company_relat ucr
         </if>
-        where 
-        state=#{state }
+        where
+        u.company_id = c.company_id and
+        u.state=#{state }
         <if test="companyId != 0">
          and role = 0 and u.user_id = ucr.user_id and ucr.company_id = #{companyId } and u.user_id not in (${testAccountIds})
         </if>
@@ -268,7 +269,7 @@
         <if test="companyId == 0">
          and (role = 0 or role = 1)
         </if>
-        order by create_date desc
+        order by u.create_date desc
     </select>
     <insert id="addUser" useGeneratedKeys="true" keyProperty="userId" parameterType="com.celloud.manager.model.User" >
         insert into tb_user (
