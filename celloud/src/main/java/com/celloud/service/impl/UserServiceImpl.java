@@ -2,6 +2,7 @@ package com.celloud.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -117,6 +118,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Set<String> findPermissions(Integer userId) {
         return resourceService.findPermissionResourcesByUserId(userId);
+    }
+
+    @Override
+    public List<String> selectUserUserById(String userIds) {
+        return userMapper.selectByIds(userIds);
     }
 
 }

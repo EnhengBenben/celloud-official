@@ -50,4 +50,6 @@ public interface UserMapper {
     public Integer getCompanyIdByUserId(@Param("userId") Integer userId);
 
     public User findByUsernameOrEmail(@Param("username") String username);
+
+    public List<String> selectByIds(@Param("userIds") String userIds);
 }
