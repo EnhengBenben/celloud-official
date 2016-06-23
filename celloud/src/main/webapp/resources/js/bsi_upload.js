@@ -216,11 +216,9 @@ var fileUpload=(function(fileUpload){
       var text = $("body .breadcrumb").text();
       if(text.indexOf("收样")>=0){
         $.base.itemBtnToggleActive($("#to-sample-a"));
-      }
-      if(text.indexOf("数据")>=0){
+      }else if(text.indexOf("数据")>=0){
         $.base.itemBtnToggleActive($("#to-data-a"));
-      }
-      if(text.indexOf("报告")>=0){
+      }else if(text.indexOf("报告")>=0){
         $.base.itemBtnToggleActive($("#to-report-a"));
       }
     });
