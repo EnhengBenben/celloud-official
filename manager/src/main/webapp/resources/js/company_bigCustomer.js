@@ -25,7 +25,7 @@ $(function(){
 			"aaSorting" : [ [ 3, "desc" ] ],
 		});
 	$.post("company/companyNum",function(data){
-		drawCharts.pieChart("companyNum",data,'companyName','companyNum','','医院数量统计', '70%', '45%', '45%',{
+		drawCharts.pieChart("companyNum",data,'companyName','companyNum','','医院数量统计', '45%', '50%', '50%',{
 			x : 'left',
 			y : 'center',
 			orient : 'vertical'

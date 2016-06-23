@@ -474,7 +474,6 @@ function makePieOption(title, legenName, name, rad, centerX, centerY, value, leg
 			radius : rad,// '70%',
 			center : [ centerX, centerY ],// [ '40%', '40%' ],
 			data : value,
-	
 		} ]
 	};
 	return opt;
