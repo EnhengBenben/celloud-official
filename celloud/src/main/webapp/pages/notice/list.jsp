@@ -46,7 +46,7 @@
 										<th style="width: 30px;"></th>
 										<th width="15%">标题</th>
 										<th>内容</th>
-										<th style="width: 150px;">时间</th>
+										<th style="width: 155px;">时间</th>
 									</tr>
 								</thead>
 								<tbody>
