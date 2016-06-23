@@ -9,6 +9,7 @@ $(function () {
     $.sample.main();
   });
   $("#to-upload-a").on("click",function(){
+    $.base.itemBtnToggleActive($(this));
     if($(".plupload_filelist li").hasClass("plupload_droptext")){
       $("#batch-info").val("");
       $("#batch-div").removeClass("hide");
@@ -20,24 +21,18 @@ $(function () {
       document.querySelector("#upload-progress").height = document.querySelector("#upload-progress").height;
     }
   });
-  
   $("#to-report-a").on("click",function(){
     $.report.find.main(0);
-    $(this).addClass("active");
-    $("#to-upload-a").removeClass("active");
-    $("#to-data-a").removeClass("active");
+    $.base.itemBtnToggleActive($(this));
   });
   $("body").on("click",'[data-click="report-list"]',function(){
     $.report.find.main(1);
     $(this).addClass("active");
-    $("#to-upload-a").removeClass("active");
-    $("#to-data-a").removeClass("active");
+    $.base.itemBtnToggleActive($(this));
   });
   $("#to-data-a").on("click",function(){
     $.data_.find.condition();
-    $(this).addClass("active");
-    $("#to-upload-a").removeClass("active");
-    $("#to-report-a").removeClass("active");
+    $.base.itemBtnToggleActive($(this));
   });
   $("#next-step").on("click",function(){
     $(".step-one-content").addClass("hide");
@@ -138,10 +133,11 @@ $.sample = {
     },
     commitSamples: function(){
       var param = $("#sample-form").serialize();
-      if(param.size()>0)
+      if(param.length>0){
         $.post("sample/bsi/commitSamples",param,function(result){
           $.sample.sampleList();
         });
+      }
     },
     deleteOne: function(id){
       $.post("sample/bsi/deleteOne",{"sampleId":id},function(result){
@@ -151,7 +147,7 @@ $.sample = {
     },
     deleteList: function(){
       var param = $("#sample-form").serialize();
-      if(param.size()>0)
+      if(param.length>0)
         $.post("sample/bsi/deleteList",param,function(result){
           if(result>0)
             $.sample.sampleList();
@@ -314,6 +310,7 @@ $.report = {
         $("#clear-sl-batch").on("click",function(){
           $("#selected-batch").addClass("hide");
           $("#to-sl-batch").removeClass("hide");
+          $.report.options.batch = null;
           $.report.find.condition();
         });
         $("#period-lists .sl-val-content").on("click",function(){
@@ -345,6 +342,7 @@ $.report = {
         $("#clear-sl-period").on("click",function(){
           $("#selected-period").addClass("hide");
           $("#to-sl-period").removeClass("hide");
+          $.report.options.period = null;
           $.report.find.condition();
         });
         $("body").on("click","[data-click='reset-multiselect']",function(){
@@ -383,8 +381,6 @@ $.report = {
       var options = $.report.options;
       $.get("report/bsi/searchReportList",{"sampleName":options.sampleName,"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
         $.report.loadlist(response);
-        $.report.options.batch = null;
-        $.report.options.period = null;
       });
     },
     pagination: function(currentPage){

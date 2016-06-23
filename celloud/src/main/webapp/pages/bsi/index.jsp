@@ -79,7 +79,7 @@
         </div>
       </div>
     </div>
-    <div id="container" class="container-fluid container">
+    <div id="container" class="container-fluid">
      
     </div>
   </div>

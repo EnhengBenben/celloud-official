@@ -61,9 +61,6 @@ public interface CompanyMapper {
     public List<Map<String, Object>> getCompanyNumCount(@Param("state") Integer state,
             @Param("testAccountIds") String testAccountIds);
 
-    public List<Map<String, Object>> getCompanyCount(@Param("state") Integer state,
-            @Param("testAccountIds") String testAccountIds);
-
     /**
      * 公司分页列表
      *

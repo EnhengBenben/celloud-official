@@ -164,7 +164,7 @@ var drawCharts=(function(drawCharts){
 			        right: '4%',
 			        bottom: '3%',
 			        containLabel: true,
-			        width:'75%',
+			        width:'70%',
 			        x:100
 			    },
 			    xAxis : [
@@ -191,8 +191,7 @@ var drawCharts=(function(drawCharts){
 			option.dataZoom = {
 					show : true,
 					realtime : true,
-					start : 0,
-					end : len
+					start : 0
 				};
 		}
 		if (typeof(theme) == "undefined" ||theme==null) {
@@ -474,7 +473,6 @@ function makePieOption(title, legenName, name, rad, centerX, centerY, value, leg
 			radius : rad,// '70%',
 			center : [ centerX, centerY ],// [ '40%', '40%' ],
 			data : value,
-	
 		} ]
 	};
 	return opt;

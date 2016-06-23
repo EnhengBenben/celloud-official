@@ -157,7 +157,7 @@ public class CompanyAction {
         if (user != null) {
             Integer role = user.getRole();
             if (UserRole.ADMINISTRATOR.equals(role)) {// 超级管理员
-                resultMap = companyService.getCompanyCount();
+                resultMap = companyService.getCompanyNumCount();
             }
         }
         return resultMap;
