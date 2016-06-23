@@ -24,13 +24,16 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.celloud.constants.AppDataListType;
 import com.celloud.constants.CommandKey;
+import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.ExperimentState;
 import com.celloud.constants.FileFormat;
 import com.celloud.constants.Mod;
+import com.celloud.constants.NoticeConstants;
 import com.celloud.constants.ReportType;
 import com.celloud.constants.SparkPro;
+import com.celloud.message.MessageUtils;
 import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Experiment;
@@ -124,6 +127,8 @@ public class TaskAction {
         }
         Integer userId = (Integer) map.get("userId");
         Integer appId = (Integer) map.get("appId");
+        String appName = (String) map.get("appName");
+        String username = (String) map.get("username");
         String title = (String) map.get("title");
         String method = (String) map.get("method");
         List<DataFile> dataList = dataService.selectDataByKeys(dataNames);
@@ -165,16 +170,18 @@ public class TaskAction {
             xml = XmlUtil.writeXML(projectFile.toString());
         }
 
-        if (appId == 113) {
-            String batch = "";
-            String pubName = "";
-            for (DataFile d_tmp : dataList) {
-                String filename = d_tmp.getFileName();
-                if (filename.endsWith(".txt") || filename.endsWith(".lis")) {
-                    pubName = filename.substring(0, filename.lastIndexOf("."));
-                }
-                batch = d_tmp.getBatch();
+        String pubName = "";
+        String batch = "";
+        String fname = "";
+        for (DataFile d_tmp : dataList) {
+            String filename = d_tmp.getFileName();
+            fname = d_tmp.getFileName();
+            if (filename.endsWith(".txt") || filename.endsWith(".lis")) {
+                pubName = filename.substring(0, filename.lastIndexOf("."));
             }
+            batch = d_tmp.getBatch();
+        }
+        if (appId == 113) {
             String inPath = reportPath + "result/split/";
             HashSet<String> resultFiles = FileTools.getFiles(inPath);
             if (resultFiles != null) {
@@ -243,6 +250,11 @@ public class TaskAction {
                 taskService.updateToRunning(task.getTaskId());
             }
         }
+        MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
+                .send(NoticeConstants.createMessage("task", "运行完成",
+                        "文件【" + (pubName.equals("") ? fname : pubName)
+                                        + "】运行应用【" + appName + "】完成"))
+                .to(username);
         return "run over";
     }
 
@@ -288,8 +300,10 @@ public class TaskAction {
         Integer userId = (Integer) map.get("userId");
         Integer appId = (Integer) map.get("appId");
         String appName = (String) map.get("appName");
+        String username = (String) map.get("username");
         String title = (String) map.get("title");
         String method = (String) map.get("method");
+        String projectName = (String) map.get("projectName");
 
         List<DataFile> dataList = dataService.getDatasInProject(proId);
 
@@ -322,7 +336,7 @@ public class TaskAction {
         }
         // 6. 项目报告插入mysql并修改项目运行状态
         reportService.reportCompeleteByProId(proId, xml);
-		if (ExperimentState.apps.contains(appId)) {
+        if (ExperimentState.apps.contains(appId)) {
             for (DataFile dataFile : dataList) {
                 String anotherName = dataFile.getAnotherName() == null ? ""
                         : dataFile.getAnotherName();
@@ -335,19 +349,20 @@ public class TaskAction {
                             ReportType.DATA);
                     Experiment exp = expList.get(0);
                     Integer am = exp.getAmplificationMethod();
-					if (am == null || am.equals(0)) {
-						continue;
-					}
-					Integer sample = exp.getSampleType();
-					if (sample == null || sample.equals(0)) {
-						continue;
-					}
-					Integer sequenator = exp.getSequenator();
-					if (sequenator == null || sequenator.equals(0)) {
-						continue;
-					}
-					Integer expAPPId = expService.getApp(sample, am, sequenator);
-					if (expAPPId != null && expAPPId.equals(appId)) {
+                    if (am == null || am.equals(0)) {
+                        continue;
+                    }
+                    Integer sample = exp.getSampleType();
+                    if (sample == null || sample.equals(0)) {
+                        continue;
+                    }
+                    Integer sequenator = exp.getSequenator();
+                    if (sequenator == null || sequenator.equals(0)) {
+                        continue;
+                    }
+                    Integer expAPPId = expService.getApp(sample, am,
+                            sequenator);
+                    if (expAPPId != null && expAPPId.equals(appId)) {
                         exp.setReportId(report.getReportId());
                         exp.setReportDate(report.getEndDate());
                         exp.setStep(ExperimentState.REPORT_STEP);
@@ -359,6 +374,10 @@ public class TaskAction {
                 }
             }
         }
+        MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
+                .send(NoticeConstants.createMessage("task", "运行完成",
+                        "项目【" + projectName + "】运行【" + appName + "】完成。"))
+                .to(username);
         return "run over";
     }
 
