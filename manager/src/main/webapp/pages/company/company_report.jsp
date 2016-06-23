@@ -69,5 +69,7 @@
 			"scrollX": true
 		});
 		$('#allUserDataList').css("width","100%");
+		$(".dataTables_scrollHeadInner").css("width","100%");
+		$(".dataTables_scrollHead table").css("width","100%");
 	});
 </script>
