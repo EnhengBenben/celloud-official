@@ -164,7 +164,7 @@ var drawCharts=(function(drawCharts){
 			        right: '4%',
 			        bottom: '3%',
 			        containLabel: true,
-			        width:'75%',
+			        width:'70%',
 			        x:100
 			    },
 			    xAxis : [
@@ -191,8 +191,7 @@ var drawCharts=(function(drawCharts){
 			option.dataZoom = {
 					show : true,
 					realtime : true,
-					start : 0,
-					end : len
+					start : 0
 				};
 		}
 		if (typeof(theme) == "undefined" ||theme==null) {
