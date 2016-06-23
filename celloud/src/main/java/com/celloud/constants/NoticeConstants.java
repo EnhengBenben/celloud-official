@@ -4,8 +4,9 @@ import com.celloud.model.mysql.Notice;
 
 public class NoticeConstants {
     public static enum MessageCategory {
-        none("fa fa-comments-o"), upload("fa fa-sellsy"), data("fa fa-tasks"), task("fa fa-tasks"), app(
-                "fa fa-cubes"), report("fa fa-files-o");
+        none("fa fa-comments-o"), upload("fa fa-sellsy"), data(
+                "fa fa-tasks"), task("fa fa-tasks"), app("fa fa-cubes"), report(
+                        "fa fa-files-o"), share("fa fa-share-square-o");
         private String icon;
 
         private MessageCategory(String icon) {
@@ -29,7 +30,8 @@ public class NoticeConstants {
 
     }
 
-    public static Notice createMessage(String category, String noticeTitle, String noticeContext) {
+    public static Notice createMessage(String category, String noticeTitle,
+            String noticeContext) {
         Notice notice = new Notice(category, noticeTitle, noticeContext);
         notice.setType(TYPE_MESSAGE);
         return notice;
