@@ -37,7 +37,7 @@
            </div>
            
            <div class="form-group">
-               <label class="col-sm-2 control-label" for="englishName">公司<font color="red">*</font> </label>
+               <label class="col-sm-2 control-label" for="englishName">单位<font color="red">*</font> </label>
                <div class="col-sm-10">
 	               <select class="form-control" id="companyList" name="companyId" style="width: 100%" multiple="multiple" onchange="user.changeDeptByCompanyId(this)" >
 	               </select>
@@ -91,7 +91,7 @@
               $("#companyList").select2({
                   data : json,
                   tags : true,
-                  placeholder : '请选择公司',
+                  placeholder : '请选择单位',
                   language : 'zh-CN',
                   allowClear : true,
                   maximumSelectionLength: 1

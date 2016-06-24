@@ -73,9 +73,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Map<Integer, Integer> insertMultipleProject(Project project,
-            String[] appIdArr, String[] dataIdArr) {
+            List<Integer> appIds, String[] dataIdArr) {
         Map<Integer, Integer> map = new HashMap<>();
-        for (String appId : appIdArr) {
+        for (Integer appId : appIds) {
             project.setProjectId(null);
             project.setCreateDate(new Date());
             projectMapper.insertSelective(project);
@@ -84,7 +84,7 @@ public class ProjectServiceImpl implements ProjectService {
                 projectMapper.insertDataProjectRelat(Integer.valueOf(dataId),
                         projectId);
             }
-            map.put(Integer.valueOf(appId), projectId);
+            map.put(appId, projectId);
         }
         return map;
     }

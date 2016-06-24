@@ -9,7 +9,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="baidu-site-verification" content="IsldTuHqik" />
 <title>CelLoud 控制台</title>
-<meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据,上海华点云生物科技有限公司网站首页,上海华点云生物科技有限公司官网,上海华点云生物科技有限公司北京分公司" />
+<meta name="keywords"
+	content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据,上海华点云生物科技有限公司网站首页,上海华点云生物科技有限公司官网,上海华点云生物科技有限公司北京分公司" />
 <meta name="description" content="一站式高通量基因检测数据分析系统" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <!-- <meta name="baidu-site-verification" content="1fI6fRe9op" /> -->
@@ -48,6 +49,54 @@
 				<div class="navbar-custom-menu">
 					<ul class="nav navbar-nav">
 						<!-- Messages: style can be found in dropdown.less-->
+						<li class="dropdown notifications-menu">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+								<i class="fa fa-envelope-o"></i>
+								<span class="label label-success"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li class="header">站内消息提醒</li>
+								<!--li>
+									<ul class="menu">
+										<li>
+											<a href="#">
+												<i class="fa fa-users text-aqua"></i> 新功能上线啦~~~~
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												<i class="fa fa-warning text-yellow"></i> 您的余额坚持不了多久了哦~
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												<i class="fa fa-users text-red"></i> 发票已邮寄成功，请关注
+											</a>
+										</li>
+									</ul>
+								</li -->
+								<li class="footer">
+									<a href="javascript:showNotice()">查看所有</a>
+								</li>
+							</ul>
+						</li>
+						<li class="dropdown messages-menu" id="messages-menu">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+								<i class="fa fa-bell-o"></i>
+								<span class="label label-warning"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li class="header">您有0条新消息</li>
+								<li>
+									<!-- inner menu: contains the actual data -->
+									<ul class="menu">
+									</ul>
+								</li>
+								<li class="footer">
+									<a href="javascript:showMessage()">查看所有</a>
+								</li>
+							</ul>
+						</li>
 						<li class="dropdown messages-menu expense-menu">
 							<a id="to-expense-model" href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
 								<i class="fa fa-rmb"></i>
@@ -177,8 +226,8 @@
 	</div>
 	<input type="hidden" id="user-navigation-hide" value="${sessionScope.loginUserInSession.navigation }">
 	<script type="text/javascript">
-       window.CONTEXT_PATH = '<%=request.getContextPath()%>'
-    </script>
+       window.CONTEXT_PATH = '<%=request.getContextPath()%>';
+	</script>
 	<script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 	<script src="//cdn.bootcss.com/jqueryui/1.11.4/jquery-ui.min.js"></script>
@@ -194,8 +243,8 @@
 	<script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
 	<!--   <script src="//cdn.bootcss.com/select2/4.0.1/js/i18n/zh-CN.js"></script> -->
 	<script src="<%=request.getContextPath()%>/js/utils.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/main_init.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/message.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/main_init.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/main.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/charts.js?version=3.1.10"></script>
 	<script src="<%=request.getContextPath()%>/plugins/highcharts/char.js?version=20160421"></script>

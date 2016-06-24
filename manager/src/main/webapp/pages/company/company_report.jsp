@@ -18,13 +18,13 @@
 	<div class="row col-xs-12">
 		<c:if test="${appList!=null && fn:length(appList)>0 }">
 			<div class="table-responsive" id="dataDiv" style="overflow:auto;">
-				<table id="allUserDataList" class="table table-striped table-bordered table-hover">
+				<table id="allUserDataList" class="display nowrap">
 					<thead>
 						<tr>
 							<th class="min-w-50">编码</th>
-							<th class="min-w-200 ">医院名称</th>
+							<th class="min-w-200">医院名称</th>
 							<c:forEach items="${appList}" var="item">
-								<th style="max-width:100px;word-wrap:break-word;">${item.appName}</th>
+								<th class="min-w-170" style="word-wrap:break-word;">${item.appName}</th>
 							</c:forEach>
 						</tr>
 					</thead>
@@ -49,21 +49,27 @@
 	jQuery(function($) {
 		$('#allUserDataList').dataTable({
 			"oLanguage": {
-		        "sSearch": "搜索",
-		        "sLengthMenu": "每页显示 _MENU_ 条记录",
-		        "sZeroRecords": "Nothing found - 没有记录",
-		        "sInfo": "显示第  _START_ 条到第  _END_ 条记录,共  _TOTAL_ 条记录",
-		           "sInfoEmpty": "没有数据",   
-		        "sProcessing": "正在加载数据...",
-		        "oPaginate": {
-		           "sFirst": "首页",
-		           "sPrevious": "上一页",
-		           "sNext": "下一页",
-		           "sLast": "尾页"
-		           },
-		        },
+				"sSearch": "搜索",
+				"sLengthMenu": "每页显示 _MENU_ 条记录",
+				"sZeroRecords": "Nothing found - 没有记录",
+				"sInfo": "显示第  _START_ 条到第  _END_ 条记录,共  _TOTAL_ 条记录",
+				"sInfoEmpty": "没有数据",   
+				"sProcessing": "正在加载数据...",
+				"oPaginate": {
+					"sFirst": "首页",
+					"sPrevious": "上一页",
+					"sNext": "下一页",
+					"sLast": "尾页"
+				},
+			},
+			autoFill: true,
 			iDisplayLength : 10,
 			"aaSorting" : [ [ 2, "desc" ] ],
+			"lengthChange": true,
+			"scrollX": true
 		});
+		$('#allUserDataList').css("width","100%");
+		$(".dataTables_scrollHeadInner").css("width","100%");
+		$(".dataTables_scrollHead table").css("width","100%");
 	});
 </script>

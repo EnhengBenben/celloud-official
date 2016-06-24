@@ -30,25 +30,25 @@
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<!--配置一个返回视图用的bean，下面的这个class整合了jstl技术 -->
 	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="order" value="1"/>
+		<property name="order" value="1" />
 		<property name="prefix" value="/pages/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
 	<bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
-        <property name="order" value="0"/>
-        <property name="cache" value="true"/>
-        <property name="contentType" value="text/html;charset=UTF-8"/>
-        <property name="exposeSpringMacroHelpers" value="true" />
-        <property name="toolboxConfigLocation" value="/WEB-INF/classes/velocityTool.xml"/>
-        <property name="layoutUrl" value="layout.vm"/>
-        <property name="screenContentKey" value="screen_content"/>
-    </bean>
+		<property name="order" value="0" />
+		<property name="cache" value="true" />
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		<property name="exposeSpringMacroHelpers" value="true" />
+		<property name="toolboxConfigLocation" value="/WEB-INF/classes/velocityTool.xml" />
+		<property name="layoutUrl" value="layout.vm" />
+		<property name="screenContentKey" value="screen_content" />
+	</bean>
 	<bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
-        <!-- velocity配置文件路径 -->
-        <property name="configLocation" value="classpath:velocity.properties"/>
-        <!-- velocity模板路径 -->
-        <property name="resourceLoaderPath" value="classpath:templates/report/"/>
-    </bean>
+		<!-- velocity配置文件路径 -->
+		<property name="configLocation" value="classpath:velocity.properties" />
+		<!-- velocity模板路径 -->
+		<property name="resourceLoaderPath" value="classpath:templates/report/" />
+	</bean>
 	<!-- 引入配置文件 -->
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -166,30 +166,28 @@
 		<constructor-arg ref="mongoClient" />
 		<constructor-arg value="${mongo.database}" />
 	</bean>
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="${mail.smtp}" />
-		<property name="username" value="${mail.username}" />
-		<property name="password" value="${mail.password}" />
-		<property name="defaultEncoding" value="UTF-8"></property>
-		<property name="javaMailProperties">
-			<props>
-				<prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
-				<prop key="mail.smtp.timeout">${mail.smtp.timeout}</prop>
-			</props>
-		</property>
-	</bean>
 	<bean id="emailService" class="com.celloud.mail.EmailService">
-		<property name="mailSender" ref="mailSender" />
 		<property name="velocityUtil" ref="velocityUtil" />
 		<property name="defaultFrom" value="${mail.default.from}" />
 		<property name="emailName" value="${mail.emailName}" />
 		<property name="defaultTitle" value="${mail.default.title}" />
 	</bean>
 	<bean id="emailUtil" class="com.celloud.mail.EmailUtils">
+		<property name="apiUser" value="${mail.apiUser}" />
+		<property name="apiKey" value="${mail.apiKey}" />
+		<property name="url" value="${mail.url}" />
+		<property name="username" value="${mail.username}" />
+		<property name="emailName" value="${mail.emailName}" />
 		<property name="errorTitle" value="${mail.error.title}" />
 		<property name="errorMailTo" value="${mail.error.mailTo}" />
 		<property name="feedbackTitle" value="${mail.feedback.title}" />
 		<property name="feedbackMailTo" value="${mail.feedback.mailTo}" />
+	</bean>
+	<bean id="sendCloudEmailUtil" class="com.celloud.sendcloud.SendCloudUtils">
+		<property name="apiUser" value="${mail.apiUser}" />
+		<property name="apiKey" value="${mail.apiKey}" />
+		<property name="username" value="${mail.username}" />
+		<property name="emailName" value="${mail.emailName}" />
 	</bean>
 	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
 		<property name="velocityProperties">
@@ -250,4 +248,6 @@
 	<bean id="userRealm" class="com.celloud.security.UserRealm">
 		<property name="cachingEnabled" value="false" />
 	</bean>
+	<bean id="springTool" class="com.celloud.utils.SpringTool"></bean>
+	<bean id="messageUtils" class="com.celloud.message.MessageUtils" scope="prototype"></bean>
 </beans>

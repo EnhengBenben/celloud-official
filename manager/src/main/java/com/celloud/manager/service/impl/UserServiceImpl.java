@@ -27,6 +27,7 @@ import com.celloud.manager.service.UserService;
 import com.celloud.manager.utils.Base64Util;
 import com.celloud.manager.utils.EmailUtils;
 import com.celloud.manager.utils.MD5Util;
+import com.celloud.manager.utils.PropertiesUtil;
 import com.celloud.manager.utils.ResetPwdUtils;
 
 @Service("userServiceImpl")
@@ -111,7 +112,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PageList<User> getUserByPage(Integer companyId, Page page, String searchField, String keyword) {
-        List<User> list = userMapper.getUserByPage(companyId, DataState.ACTIVE, page, searchField, keyword.trim());
+        List<User> list = userMapper.getUserByPage(companyId, DataState.ACTIVE, page, searchField, keyword.trim(),
+                PropertiesUtil.testAccountIds);
         return new PageList<User>(page, list);
     }
 

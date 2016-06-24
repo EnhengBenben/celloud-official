@@ -98,10 +98,38 @@ ul, menu, dir {
 
 .home-numbers .info b {
     display: block;
-    font-size: 24px
+    font-size: 23px
 }
 
 .home-numbers li:hover .info {
     transform: scale(1);
     opacity: .9
+}
+
+.min-w-50{
+	min-width: 50px;
+}
+
+.min-w-100{
+    min-width: 100px;
+}
+
+.min-w-170{
+    min-width: 170px;
+}
+
+.min-w-200{
+    min-width: 200px;
+}
+
+.mt5{
+	margin-top: 5px;
+}
+
+.mt7{
+    margin-top: 7px;
+}
+
+.mt10{
+    margin-top: 10px;
 }

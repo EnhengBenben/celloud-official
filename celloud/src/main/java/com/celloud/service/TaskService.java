@@ -1,5 +1,6 @@
 package com.celloud.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.celloud.model.mysql.Task;
@@ -63,6 +64,14 @@ public interface TaskService {
     public Integer findRunningNumByAppId(Integer appId);
 
     /**
+     * 指定app正在运行的任务数
+     * 
+     * @param appId
+     * @return
+     */
+    public Integer findRunningNumByAppId(List<Integer> appId);
+
+    /**
      * 根据proId获取报告信息、任务编号、app信息、数据个数
      * 
      * @param proId
@@ -97,7 +106,8 @@ public interface TaskService {
      * @author leamo
      * @date 2016年4月21日 下午2:32:22
      */
-    public PageList<Task> findTasksByUser(Page page, Integer userId);
+    public PageList<Task> findTasksByUser(Page page, Integer userId,
+            Integer appId);
 
     /**
      * 按条件检索数据列表
@@ -115,7 +125,7 @@ public interface TaskService {
     public PageList<Task> findTasksByUserCondition(Page page, Integer userId,
             String condition, Integer sort, String sortDate, String sortBatch,
             String sortName, String sortPeriod, String batch, String period,
-            String beginDate, String endDate);
+            String beginDate, String endDate, Integer appId, String sampleName);
 
     /**
      * 获取统一批次下的报告列表
@@ -150,7 +160,7 @@ public interface TaskService {
             String condition, Integer sort, String sortDate, String sortBatch,
             String sortName, String sortPeriod, Boolean isPrev,
             Integer totalPage, String batch, String period, String beginDate,
-            String endDate);
+            String endDate, Integer appId, String sampleName);
 
     /**
      * 新增或修改上传任务数据

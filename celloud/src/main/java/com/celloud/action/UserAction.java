@@ -15,11 +15,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
-import com.celloud.mail.EmailUtils;
 import com.celloud.model.mysql.ActionLog;
 import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
+import com.celloud.sendcloud.EmailParams;
+import com.celloud.sendcloud.EmailType;
+import com.celloud.sendcloud.SendCloudUtils;
+import com.celloud.sendcloud.mail.Email;
+import com.celloud.sendcloud.mail.Substitution;
 import com.celloud.service.ActionLogService;
 import com.celloud.service.UserService;
 import com.celloud.utils.MD5Util;
@@ -40,7 +44,7 @@ public class UserAction {
     @Resource
     private ActionLogService logService;
     @Resource
-    private EmailUtils emailUtils;
+	private SendCloudUtils sendCloud;
     private static final Response EMAIL_IN_USE = new Response("202", "邮箱已存在");
     private static final Response UPDATE_BASEINFO_FAIL = new Response("修改用户信息失败");
     private static final Response UPDATE_PASSWORD_FAIL = new Response("修改用户密码失败");
@@ -132,10 +136,12 @@ public class UserAction {
 		String randomCode = MD5Util.getMD5(String.valueOf(new Date().getTime()));
 		User user = ConstantsData.getLoginUser();
 		userService.insertFindPwdInfo(user.getUserId(), randomCode);
-		emailUtils.sendWithTitle(ResetPwdUtils.updateEmailTitle,
-				ResetPwdUtils.updateEmailContent.replaceAll("url", ResetPwdUtils.updateEmailPath
-						.replaceAll("resetEmailUsername", user.getUsername()).replaceAll("resetcode", randomCode)),
-				email);
+
+		String url = ResetPwdUtils.updateEmailPath.replaceAll("resetEmailUsername", user.getUsername())
+				.replaceAll("resetcode", randomCode);
+		Email<?> context = Email.template(EmailType.CONFIRM_OLD_EMAIL)
+				.substitutionVars(Substitution.sub().set(EmailParams.CONFIRM_OLD_EMAIL.url.name(), url)).to(email);
+		sendCloud.sendTemplate(context);
 		return 0;
 	}
 
@@ -176,13 +182,12 @@ public class UserAction {
 		userService.cleanFindPwd(user.getUserId(), new Date());
 		randomCode = MD5Util.getMD5(String.valueOf(new Date().getTime()));
 		userService.insertFindPwdInfo(user.getUserId(), randomCode);
-		emailUtils
-				.sendWithTitle(ResetPwdUtils.toActiveEmailTitle,
-						ResetPwdUtils.toActiveEmailContent
-								.replaceAll("url",
-										ResetPwdUtils.toActiveEmailPath.replaceAll("username", user.getUsername())
-												.replaceAll("resetcode", randomCode).replaceAll("newemail", email)),
-						email);
+
+		String url = ResetPwdUtils.toActiveEmailPath.replaceAll("username", user.getUsername())
+				.replaceAll("resetcode", randomCode).replaceAll("newemail", email);
+		Email<?> context = Email.template(EmailType.CONFIRM_NEW_EMAIL)
+				.substitutionVars(Substitution.sub().set(EmailParams.CONFIRM_NEW_EMAIL.url.name(), url)).to(email);
+		sendCloud.sendTemplate(context);
 		return 0;
 	}
 

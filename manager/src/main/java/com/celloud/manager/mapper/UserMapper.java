@@ -137,7 +137,8 @@ public interface UserMapper {
      * @date 2016年1月27日 下午4:15:48
      */
     public List<User> getUserByPage(@Param("companyId") Integer companyId, @Param("state") Integer state, Page page,
-            @Param("searchField") String searchField, @Param("keyword") String keyword);
+            @Param("searchField") String searchField, @Param("keyword") String keyword,
+            @Param("testAccountIds") String testAccountIds);
 
     /**
      * 添加用户

@@ -254,7 +254,8 @@
 		username = #{username,jdbcType=VARCHAR}
 		OR email = #{username,jdbcType=VARCHAR}
 		)
-		AND password = #{password,jdbcType=VARCHAR}
+		AND
+		password = #{password,jdbcType=VARCHAR}
 		AND role=0
 	</select>
 	<select id="getUserByEmail" resultMap="BaseResultMap">
@@ -310,9 +311,19 @@
 		from tb_user
 		where username = #{username}
 	</select>
+	<select id="getUserIdsByName" resultType="int" parameterType="java.util.List">
+		select user_id from tb_user
+		where username in (
+		<foreach collection="usernames" item="username" separator=",">
+			#{username}
+		</foreach>
+		)
+
+	</select>
 	<select id="findByUsernameOrEmail" resultMap="BaseResultMap">
 		select
-		<include refid="Base_Column_List" />,password
+		<include refid="Base_Column_List" />
+		,password
 		from tb_user
 		where (username = #{username} or email = #{username}) and state = 0 AND role=0
 	</select>
@@ -320,6 +331,11 @@
 		select count(1) from tb_user where email=#{email} and user_id != #{userId}
 	</select>
 	<select id="getCompanyIdByUserId" resultType="java.lang.Integer">
-		select company_id from tb_user_company_relat where user_id = #{userId}
+		select company_id from tb_user_company_relat where user_id =
+		#{userId}
 	</select>
+	<select id="selectByIds" resultType="java.lang.String">
+        select username from tb_user
+        where user_id in (${userIds})
+    </select>
 </mapper>

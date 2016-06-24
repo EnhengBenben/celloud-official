@@ -1,6 +1,7 @@
 package com.celloud.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import com.celloud.model.mysql.User;
@@ -149,4 +150,11 @@ public interface UserService {
      */
     public Set<String> findPermissions(Integer userId);
 
+    /**
+     * 根据id获取user对象列表
+     * 
+     * @param userId
+     * @return
+     */
+    public List<String> selectUserUserById(String userIds);
 }

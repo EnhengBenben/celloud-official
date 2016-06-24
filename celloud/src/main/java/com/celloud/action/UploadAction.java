@@ -28,11 +28,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
+import com.celloud.constants.NoticeConstants;
 import com.celloud.constants.TaskPeriod;
-import com.celloud.model.mysql.App;
+import com.celloud.message.MessageUtils;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Experiment;
 import com.celloud.model.mysql.Task;
@@ -88,10 +90,8 @@ public class UploadAction {
     @ActionLog(value = "上传数据", button = "开始上传")
     @ResponseBody
     @RequestMapping("uploadManyFile")
-    public String uploadManyFile(String name, String onlyName, String md5,
-            String originalName, Integer chunk, Integer chunks,
-            HttpServletRequest request, Integer tagId, String batch,
-            Integer needSplit) {
+    public String uploadManyFile(String name, String onlyName, String md5, String originalName, Integer chunk,
+            Integer chunks, HttpServletRequest request, Integer tagId, String batch, Integer needSplit) {
         File f = new File(realPath);
         if (!f.exists()) {
             boolean isTrue = f.mkdir();
@@ -114,37 +114,36 @@ public class UploadAction {
                         File localFile = new File(fileName);
                         try {
                             this.copy(file, localFile);
-                            if (chunk.equals(chunks)
-                                    || chunk.equals(chunks - 1)) {
+                            if (chunk.equals(chunks) || chunk.equals(chunks - 1)) {
                                 dataId = addFileInfo(originalName);
-								String fileDataKey = DataUtil.getNewDataKey(dataId);
-								String newName = fileDataKey + FileTools.getExtName(originalName);
-								Integer userId = ConstantsData.getLoginUserId();
-								String today = DateUtil.getDateToString("yyyyMMdd");
-								String folderByDay = realPath + userId + File.separator + today;
-								File pf = new File(folderByDay);
-								if(!pf.exists()){
-									pf.mkdirs();
-								}
-								FileTools.mvFile(realPath, name, folderByDay, newName);
-								String perlPath = request.getSession().getServletContext().getRealPath("/resources")
-										+ "/plugins/getAliases.pl";
-								String outPath = request.getSession().getServletContext().getRealPath("/temp") + "/"
-										+ fileDataKey;
-                                int fileFormat = checkFileType
-                                        .checkFileType(newName, folderByDay);
-                                updateFileInfo(dataId, fileDataKey, newName,
-                                        perlPath, outPath, folderByDay, batch,
+                                String fileDataKey = DataUtil.getNewDataKey(dataId);
+                                String newName = fileDataKey + FileTools.getExtName(originalName);
+                                Integer userId = ConstantsData.getLoginUserId();
+                                String today = DateUtil.getDateToString("yyyyMMdd");
+                                String folderByDay = realPath + userId + File.separator + today;
+                                File pf = new File(folderByDay);
+                                if (!pf.exists()) {
+                                    pf.mkdirs();
+                                }
+                                FileTools.mvFile(realPath, name, folderByDay, newName);
+                                String perlPath = request.getSession().getServletContext().getRealPath("/resources")
+                                        + "/plugins/getAliases.pl";
+                                String outPath = request.getSession().getServletContext().getRealPath("/temp") + "/"
+                                        + fileDataKey;
+                                int fileFormat = checkFileType.checkFileType(newName, folderByDay);
+                                updateFileInfo(dataId, fileDataKey, newName, perlPath, outPath, folderByDay, batch,
                                         fileFormat);
                                 Subject sub = SecurityUtils.getSubject();
+//                                MessageUtils.get()
+//                                        .on(Constants.MESSAGE_USER_CHANNEL).send(NoticeConstants.createMessage("upload",
+//                                                "文件上传完成", "您的文件【" + originalName + "】已经上传完成。"))
+//                                        .to(sub.getPrincipal().toString());
                                 if (sub.hasRole("bsier")) {
                                     logger.info("{}拥有百菌探权限", userId);
-                                    return bsierCheckRun(tagId, batch, dataId,
-                                            fileDataKey,
-                                            needSplit, newName, folderByDay,
-                                            originalName, userId, fileFormat);
+                                    return bsierCheckRun(tagId, batch, dataId, fileDataKey, needSplit, newName,
+                                            folderByDay, originalName, userId, fileFormat);
                                 }
-							}
+                            }
                         } catch (Exception e) {
                             logger.error(e.getMessage());
                         }
@@ -174,29 +173,26 @@ public class UploadAction {
      * @date 2016年5月10日 下午3:41:08
      */
     @ActionLog(value = "判断是否上传完即刻运行", button = "上传完即刻运行")
-    private String bsierCheckRun(Integer tagId, String batch, Integer dataId,
-            String dataKey,
-            Integer needSplit, String newName, String folderByDay,
-            String originalName, Integer userId, Integer fileFormat) {
+    private String bsierCheckRun(Integer tagId, String batch, Integer dataId, String dataKey, Integer needSplit,
+            String newName, String folderByDay, String originalName, Integer userId, Integer fileFormat) {
         logger.info("判断是否数据{}上传完即刻运行", originalName);
-        App app = appService.findAppsByTag(tagId);
-        Integer appId = needSplit == 1 ? 113 : app.getAppId();
+        Integer appId;
+        if (needSplit == null) {
+            appId = 118;
+        } else {
+            appId = 113;
+        }
         String pubName = "";
         List<Integer> dataIds;
-        if (fileFormat == FileFormat.FQ || originalName.contains(".txt")
-                || originalName.contains(".lis")) {
+        if (fileFormat == FileFormat.FQ || originalName.contains(".txt") || originalName.contains(".lis")) {
             Boolean isR1 = false;
             if (originalName.contains("R1")) {
-                pubName = originalName.substring(0,
-                        originalName.lastIndexOf("R1"));
+                pubName = originalName.substring(0, originalName.lastIndexOf("R1"));
                 isR1 = true;
             } else if (originalName.contains("R2")) {
-                pubName = originalName.substring(0,
-                        originalName.lastIndexOf("R2"));
-            } else if (originalName.contains(".txt")
-                    || originalName.contains(".lis")) {
-                pubName = originalName.substring(0,
-                        originalName.lastIndexOf("."));
+                pubName = originalName.substring(0, originalName.lastIndexOf("R2"));
+            } else if (originalName.contains(".txt") || originalName.contains(".lis")) {
+                pubName = originalName.substring(0, originalName.lastIndexOf("."));
             }
             Pattern p = Pattern.compile("\\_|\\%");
             Matcher m = p.matcher(pubName);
@@ -206,8 +202,7 @@ public class UploadAction {
                 m.appendReplacement(sb, rep);
             }
             m.appendTail(sb);
-            List<DataFile> dlist = dataService.getDataByBatchAndFileName(userId,
-                    batch, sb.toString());
+            List<DataFile> dlist = dataService.getDataByBatchAndFileName(userId, batch, sb.toString());
             boolean hasR1 = false;
             boolean hasR2 = false;
             boolean hasIndex = false;
@@ -218,8 +213,7 @@ public class UploadAction {
                     hasR1 = true;
                 } else if (name_tmp.contains("R2")) {
                     hasR2 = true;
-                } else if (name_tmp.contains(".txt")
-                        || name_tmp.contains(".lis")) {
+                } else if (name_tmp.contains(".txt") || name_tmp.contains(".lis")) {
                     hasIndex = true;
                 }
                 dataIds.add(d.getFileId());
@@ -232,18 +226,16 @@ public class UploadAction {
             task.setAppId(appId);
             taskService.addOrUpdateUploadTaskByParam(task, isR1);
             if (needSplit == 1 && hasR1 && hasR2 && hasIndex) {
-                return "{\"dataIds\":\""
-                        + StringUtils.join(dataIds.toArray(), ",")
-                        + "\",\"appIds\":\"" + appId + "\"}";
+                return "{\"dataIds\":\"" + StringUtils.join(dataIds.toArray(), ",") + "\",\"appIds\":\"" + appId
+                        + "\"}";
             } else if (needSplit != 1 && hasR1 && hasR2) {
                 task.setAppId(appId);
                 taskService.addOrUpdateUploadTaskByParam(task, isR1);
-                return "{\"dataIds\":\""
-                        + StringUtils.join(dataIds.toArray(), ",")
-                        + "\",\"appIds\":\"" + appId + "\"}";
+                return "{\"dataIds\":\"" + StringUtils.join(dataIds.toArray(), ",") + "\",\"appIds\":\"" + appId
+                        + "\"}";
             }
-        } else if (fileFormat == FileFormat.YASUO) {
-            return "\"dataIds\":" + dataId + ",\"appIds\":" + appId;
+        } else if (fileFormat == FileFormat.YASUO && needSplit == null) {
+            return "{\"dataIds\":" + dataId + ",\"appIds\":\"" + appId + "\"}";
         }
         return "1";
     }
@@ -252,7 +244,8 @@ public class UploadAction {
      * 
      *
      * @param file原始文件
-     * @param dst 目标文件
+     * @param dst
+     *            目标文件
      * @author han
      * @date 2016年1月13日 上午10:04:06
      */
@@ -262,8 +255,7 @@ public class UploadAction {
         OutputStream out = null;
         try {
             if (dst.exists()) {
-                out = new BufferedOutputStream(new FileOutputStream(dst, true),
-                        BUFFER_SIZE);
+                out = new BufferedOutputStream(new FileOutputStream(dst, true), BUFFER_SIZE);
                 in = new BufferedInputStream(file.getInputStream(), BUFFER_SIZE);
                 byte[] buffer = new byte[BUFFER_SIZE];
                 int len = 0;
@@ -294,7 +286,6 @@ public class UploadAction {
         }
     }
 
-    
     /**
      * 将上传文件添加到数据库中
      * 
@@ -336,12 +327,11 @@ public class UploadAction {
      * @return
      */
     @ActionLog(value = "修改文件详细信息", button = "开始上传")
-    private int updateFileInfo(int dataId, String dataKey, String newName,
-            String perlPath, String outPath, String folderByDay, String batch,
-            int fileFormat) {
+    private int updateFileInfo(int dataId, String dataKey, String newName, String perlPath, String outPath,
+            String folderByDay, String batch, int fileFormat) {
         DataFile data = new DataFile();
         data.setFileId(dataId);
-		String filePath = folderByDay + File.separator + newName;
+        String filePath = folderByDay + File.separator + newName;
         data.setSize(FileTools.getFileSize(filePath));
         data.setDataKey(dataKey);
         data.setPath(filePath);
@@ -351,20 +341,20 @@ public class UploadAction {
         if (fileFormat == FileFormat.BAM) {
             String anotherName = getAnotherName(filePath, dataKey, perlPath, outPath);
             data.setAnotherName(anotherName);
-			// 绑定实验流程
-			if (!StringUtils.isBlank(anotherName)) {
-				Integer userId = ConstantsData.getLoginUserId();
-				List<Experiment> expList = expService.getUnRelatList(userId, anotherName);
-				if (expList != null && expList.size() == 1) {
-					Experiment exp = expList.get(0);
-					exp.setFileId(dataId);
-					exp.setDataKey(dataKey);
-					expService.updateByPrimaryKeySelective(exp);
-					logger.info("用户{}数据{}自动绑定成功", userId, dataId);
-				} else {
-					logger.error("用户{}数据{}自动绑定失败", userId, dataId);
-				}
-			}
+            // 绑定实验流程
+            if (!StringUtils.isBlank(anotherName)) {
+                Integer userId = ConstantsData.getLoginUserId();
+                List<Experiment> expList = expService.getUnRelatList(userId, anotherName);
+                if (expList != null && expList.size() == 1) {
+                    Experiment exp = expList.get(0);
+                    exp.setFileId(dataId);
+                    exp.setDataKey(dataKey);
+                    expService.updateByPrimaryKeySelective(exp);
+                    logger.info("用户{}数据{}自动绑定成功", userId, dataId);
+                } else {
+                    logger.error("用户{}数据{}自动绑定失败", userId, dataId);
+                }
+            }
         }
         data.setState(DataState.ACTIVE);
         return dataService.updateDataInfoByFileId(data);

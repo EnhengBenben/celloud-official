@@ -8,10 +8,7 @@
     <div class="row">
         <div class="widget-box transparent">
             <div class="widget-header widget-header-flat">
-                <h3 class="lighter">
-                    <i class="fa-signal"></i>
-                    总量统计
-                </h3>
+                <h3 class="header smaller lighter green">总量统计</h3>
             </div>
             <div class="col-sm-12 col-md-12 home-numbers">
                 <ul style='margin-left: 15px'>
@@ -67,12 +64,34 @@
                     </li>
                     <li>
                         <a class="number">
-                            <fmt:formatNumber pattern="0.00" value="${resultMap.dataSize/(1024*1024*1024) }"></fmt:formatNumber>
+                            <c:choose>
+                                <c:when test="${resultMap.dataSize>1073741824 }">
+                                    <fmt:formatNumber pattern="0.00" value="${(resultMap.dataSize-(resultMap.dataSize%1048576))/1048576 + resultMap.dataSize%1048576/1048576 }" />
+                                </c:when>
+                                <c:when test="${resultMap.dataSize>1048576 }">
+                                    <fmt:formatNumber pattern="0.00" value="${(resultMap.dataSize-(resultMap.dataSize%1048576))/1048576 + resultMap.dataSize%1048576/1048576 }" />
+                                </c:when>
+                                <c:otherwise>
+                                    <fmt:formatNumber pattern="0.00" value="${(resultMap.dataSize-(resultMap.dataSize%1048576))/1048576 + resultMap.dataSize%1048576/1048576 }" />
+                                </c:otherwise>
+                            </c:choose>
                         </a>
                         <div class="info">
                             <b>
-                                <fmt:formatNumber pattern="0.00" value="${resultMap.dataSize/(1024*1024*1024) }"></fmt:formatNumber>
-                                <span class="unit">(GB)</span>
+                                <c:choose>
+	                                <c:when test="${resultMap.dataSize>1073741824 }">
+	                                    <fmt:formatNumber pattern="0.00" value="${(resultMap.dataSize-(resultMap.dataSize%1048576))/1048576 + resultMap.dataSize%1048576/1048576 }" />
+                                        <span class="unit">(GB)</span>
+                                    </c:when>
+	                                <c:when test="${resultMap.dataSize>1048576 }">
+	                                    <fmt:formatNumber pattern="0.00" value="${(resultMap.dataSize-(resultMap.dataSize%1048576))/1048576 + resultMap.dataSize%1048576/1048576 }" />
+                                        <span class="unit">(MB)</span>
+                                    </c:when>
+	                                <c:otherwise>
+	                                    <fmt:formatNumber pattern="0.00" value="${(resultMap.dataSize-(resultMap.dataSize%1048576))/1048576 + resultMap.dataSize%1048576/1048576 }" />
+                                        <span class="unit">(KB)</span>
+                                    </c:otherwise>
+	                            </c:choose>
                             </b>
                             数据大小:
                         </div>

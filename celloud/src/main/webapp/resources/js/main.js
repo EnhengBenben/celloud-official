@@ -391,9 +391,16 @@ function showAppStore(){
  */
 function showCount(){
   $.main.show.mainDIV();
-	$("#mainDIV").load("pages/count/count_main.jsp");
+  $("#mainDIV").load("pages/count/count_main.jsp");
 }
-
+function showNotice(){
+	 $.main.show.mainDIV();
+	 $("#mainDIV").load(CONTEXT_PATH+"/notice/list/notice");
+}
+function showMessage(){
+	 $.main.show.mainDIV();
+	 $("#mainDIV").load(CONTEXT_PATH+"/notice/list/message");
+}
 /**
  * 帐号管理
  */
@@ -423,3 +430,22 @@ function showHelp(){
     $("#toHelpMenu").addClass('active');
 	$("#mainDIV").load("pages/help/help_question.jsp");
 }
+/**
+ * 监听websocket的open事件，在已经建立好websocket之后，直接刷新页面右上角的提醒。
+ */
+messageUtils.addOpenListener(function() {
+	$("#messages-menu").load(CONTEXT_PATH + "/notice/lastUnread/message");
+});
+/**
+ * 监听userMessage频道，有新消息时，刷新右上角提醒
+ */
+messageUtils.subscribe("userMessage", function(data) {
+	$("#messages-menu").load(CONTEXT_PATH + "/notice/lastUnread/message");
+	messageUtils.notify(data.noticeTitle, data.noticeContext, {}, {
+		"onclick" : function() {
+			var notification = this;
+			notification.close();
+			$("#messages-menu").addClass("open");
+		}
+	});
+});

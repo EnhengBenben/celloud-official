@@ -16,7 +16,7 @@
   <div class="col-sm-12">
     <div class="panel panel-default">
       <div class="panel-body">
-                            当前价格  ： ${currentPrice }   <button class="btn btn-success" data-click="to-update-app-price" data-id="${appId }" data-name="${appName }" data-price="${price }">修改价格</button>
+                            当前价格  ： ${currentPrice }   <button class="btn btn-success" data-click="to-update-app-price" data-id="${appId }" data-name="${appName }" data-price="${currentPrice }">修改价格</button>
       </div>
     </div>
     <c:if test="${appPriceList!=null && fn:length(appPriceList)>0 }">

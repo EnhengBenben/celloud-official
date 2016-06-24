@@ -73,4 +73,6 @@ public class Constants {
      * kafka中，给用户发送消息的topic
      */
     public static final String MESSAGE_USER_TOPIC = "user-message";
+    
+    public static final String MESSAGE_USER_CHANNEL = "userMessage";
 }

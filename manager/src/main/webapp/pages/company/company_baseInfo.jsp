@@ -19,14 +19,14 @@
                 <table id="allUserDataList" class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th class="min-w-50">医院编码</th>
+                            <th class="min-w-100">医院编码</th>
                             <th class="min-w-200 ">医院名称</th>
                             <th class="min-w-100 ">入驻时间</th>
                             <c:if test="${loginUserInSession.role=='2'}">
                               <th class="min-w-200 ">所属大客户</th>
                             </c:if>
                             <th class="min-w-200 ">医院地址</th>
-                            <th class="min-w-50 ">账号数量</th>
+                            <th class="min-w-100 ">账号数量</th>
                         </tr>
                     </thead>
                     <tbody>

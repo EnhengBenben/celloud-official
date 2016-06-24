@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.celloud.constants.PortPool;
+import com.celloud.constants.SparkPro;
 import com.celloud.model.mysql.DataFile;
 
 /**
@@ -33,11 +33,10 @@ public class DataKeyListToFile {
         String dataListFile = datalist + new Date().getTime() + "_"
                 + new Double(Math.random() * 1000).intValue() + ".txt";
         FileTools.createFile(dataListFile);
-        List<String> ports = PortPool.getPorts(dataList.size(), projectId);
         for (int i = 0; i < dataList.size(); i++) {
             DataFile data = dataList.get(i);
-            sb.append(data.getPath() + "\t" + data.getFileName() + "\t"
-                    + ports.get(i) + "\n");
+            sb.append(data.getPath()).append("\t").append(data.getFileName())
+                    .append("\t").append(SparkPro.START).append("");
         }
         FileTools.appendWrite(dataListFile, sb.toString());
         return dataListFile;

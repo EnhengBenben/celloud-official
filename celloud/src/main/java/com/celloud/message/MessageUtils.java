@@ -3,8 +3,15 @@ package com.celloud.message;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
+
 import com.celloud.constants.Constants;
 import com.celloud.exception.BusinessException;
+import com.celloud.model.mysql.Notice;
+import com.celloud.service.NoticeService;
+import com.celloud.utils.SpringTool;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -22,8 +29,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author <a href="sunwendong@celloud.cn">sun8wd</a>
  * @date 2016年4月14日 下午2:58:15
  */
+@Component
 public class MessageUtils {
+    @Autowired
+    private NoticeService noticeService;
     private Message message = new Message();
+    private boolean save;
+    private Notice notice;
 
     /**
      * 获取工具类实体
@@ -31,7 +43,8 @@ public class MessageUtils {
      * @return
      */
     public static MessageUtils get() {
-        return new MessageUtils();
+        MessageUtils utils = (MessageUtils) SpringTool.getBean("messageUtils");
+        return utils;
     }
 
     /**
@@ -40,9 +53,15 @@ public class MessageUtils {
      * @param message
      * @return
      */
-    public MessageUtils send(Object message) {
-        this.message.setMessage(message);
+    public MessageUtils send(Notice notice, boolean save) {
+        this.message.setMessage(notice);
+        this.notice = notice;
+        this.save = save;
         return this;
+    }
+
+    public MessageUtils send(Notice notice) {
+        return send(notice, true);
     }
 
     /**
@@ -50,11 +69,15 @@ public class MessageUtils {
      * 
      * @param usernames
      */
+    @Async
     public void to(String... usernames) {
         if (usernames == null || usernames.length <= 0) {
             throw new BusinessException("发送消息没有指定接收者:" + message.toJson());
         }
-        Map<String, String> messages = new HashMap<>();
+        if (save) {
+            noticeService.insertMessage(this.notice, usernames);
+        }
+        final Map<String, String> messages = new HashMap<>();
         String jsonMessage = this.message.toJson();
         for (String username : usernames) {
             messages.put(username, jsonMessage);
@@ -65,8 +88,14 @@ public class MessageUtils {
     /**
      * 发送给所有用户
      */
+    @Async
     public void toAll() {
-        MessageSender.send(Constants.MESSAGE_USER_TOPIC, Constants.MESSAGE_ALLUSER_KEY, this.message.toJson());
+        final Map<String, String> messages = new HashMap<>();
+        messages.put(Constants.MESSAGE_ALLUSER_KEY, this.message.toJson());
+        if (save) {
+            noticeService.insertMessage(this.notice);
+        }
+        MessageSender.send(Constants.MESSAGE_USER_TOPIC, messages);
     }
 
     /**

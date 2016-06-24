@@ -1,8 +1,5 @@
 package com.celloud.constants;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Spark 配置
  * 
@@ -12,9 +9,9 @@ import java.util.List;
 public class SparkPro {
 
     /**
-     * Spark节点数量及需要的端口数量
+     * Spark最大任务数
      */
-    public static final int NODES = 25;
+    public static final int MAXTASK = 12;
 
     /**
      * Spark 任务投递从哪个端口开始
@@ -42,11 +39,6 @@ public class SparkPro {
     public static final String TASKOVERPY = "/share/biosoft/perl/PGS_MG/python/task_over.py";
 
     /**
-     * 需要投递到spark集群的appId
-     */
-    public static final List<String> apps = Arrays.asList("86", "92", "93", "99", "100", "101");
-
-    /**
      * SGE 杀任务
      */
     public static final String SGEKILL = "perl /share/biosoft/perl/PGS_MG/bin/to_qdel.pl";
@@ -54,6 +46,6 @@ public class SparkPro {
     /**
      * spark 杀任务
      */
-    public static final String SPARKKILL = "perl /share/biosoft/perl/PGS_MG/bin/spark_kill.pl";
+    public static final String SPARKKILL = "perl /share/biosoft/perl/wangzhen/16s-meta-pipeline/spark_kill.pl";
 
 }

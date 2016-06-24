@@ -75,6 +75,19 @@ public interface TaskMapper {
             @Param("period") Integer period, @Param("state") Integer state);
 
     /**
+     * 获取多个APP正在运行的任务数
+     * 
+     * @param appIds
+     * @param period
+     * @param state
+     * @return
+     * @author leamo
+     * @date 2016年6月17日 上午10:53:56
+     */
+    Integer findAppsRunningNum(@Param("appIds") List<Integer> appIds,
+            @Param("period") Integer period, @Param("state") Integer state);
+
+    /**
      * 根据项目编号获取任务信息
      * 
      * @param projectId
@@ -105,7 +118,7 @@ public interface TaskMapper {
      * @date 2016年4月21日 下午2:32:22
      */
     List<Task> findTasksByUser(Page page, @Param("userId") Integer userId,
-            @Param("state") Integer state);
+            @Param("state") Integer state, @Param("appId") Integer appId);
 
     /**
      * 按条件检索数据列表
@@ -130,7 +143,8 @@ public interface TaskMapper {
             @Param("state") Integer state, @Param("batch") String batch,
             @Param("period") String period,
             @Param("beginDate") String beginDate,
-            @Param("endDate") String endDate);
+            @Param("endDate") String endDate, @Param("appId") Integer appId,
+            @Param("sampleName") String sampleName);
     
     /**
      * 检索某批次下的运行完的任务列表

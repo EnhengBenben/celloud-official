@@ -2,6 +2,8 @@ package com.celloud.model.mysql;
 
 import java.util.Date;
 
+import com.celloud.constants.NoticeConstants.MessageCategory;
+
 public class Notice {
     private Integer noticeId;
 
@@ -14,6 +16,24 @@ public class Notice {
     private Integer state;
 
     private String noticeContext;
+
+    private String type;
+
+    private String category;
+
+    private Integer readState;
+
+    private String icon;
+
+    public Notice() {
+    }
+
+    public Notice(String category, String noticeTitle, String noticeContext) {
+        this.category = category;
+        this.noticeTitle = noticeTitle;
+        this.noticeContext = noticeContext;
+        this.createDate = new Date();
+    }
 
     public Integer getNoticeId() {
         return noticeId;
@@ -62,4 +82,41 @@ public class Notice {
     public void setNoticeContext(String noticeContext) {
         this.noticeContext = noticeContext == null ? null : noticeContext.trim();
     }
+
+    public Integer getReadState() {
+        return readState;
+    }
+
+    public void setReadState(Integer readState) {
+        this.readState = readState;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+        setIcon(MessageCategory.getIcon(category));
+    }
+
+    public String getIcon() {
+        if (this.icon != null) {
+            return this.icon;
+        }
+        return MessageCategory.getIcon(this.category);
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
 }

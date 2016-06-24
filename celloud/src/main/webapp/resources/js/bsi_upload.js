@@ -213,6 +213,14 @@ var fileUpload=(function(fileUpload){
         $("#two-to-three").removeClass("active");
         $(".step-three").removeClass("active");
       }
+      var text = $("body .breadcrumb").text();
+      if(text.indexOf("收样")>=0){
+        $.base.itemBtnToggleActive($("#to-sample-a"));
+      }else if(text.indexOf("数据")>=0){
+        $.base.itemBtnToggleActive($("#to-data-a"));
+      }else if(text.indexOf("报告")>=0){
+        $.base.itemBtnToggleActive($("#to-report-a"));
+      }
     });
   });
 

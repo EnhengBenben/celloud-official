@@ -5,10 +5,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <meta name="keywords" content="celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据,统计系统" />
-<link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico" />
-<link rel="bookmark" href="<%=request.getContextPath()%>/favicon.ico" />
 <title>CelLoud统计系统</title>
-
+<link rel="bookmark" href="<%=request.getContextPath()%>/img/favicon.ico" />
+<link rel="shortcut icon" href="<%=request.getContextPath()%>/img/favicon.ico" />
 <link rel="stylesheet" href="plugins/bootstrap/css/fonts/linecons/css/linecons.css">
 <link rel="stylesheet" href="plugins/bootstrap/css/fonts/fontawesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.css">
@@ -16,13 +15,14 @@
 <link rel="stylesheet" href="plugins/bootstrap/css/xenon-forms.css">
 <link rel="stylesheet" href="plugins/bootstrap/css/xenon-components.css">
 <link rel="stylesheet" href="plugins/bootstrap/css/xenon-skins.css">
-<link rel="stylesheet" href="plugins/bootstrap/js/datatables/dataTables.bootstrap.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/console.css">
 <link rel="stylesheet" href="plugins/jquery.alerts.css">
 <script src="plugins/bootstrap/js/jquery-1.11.1.min.js"></script>
 <script src="plugins/jquery.alerts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 </head>
 <body class="page-body">
     <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
@@ -166,6 +166,12 @@
                         </a>
                         <input id="user-role-hidden" type="hidden" value="${loginUserInSession.role }">
                         <ul class="dropdown-menu user-profile-menu list-unstyled">
+                            <li>
+                                <a href="javascript:user.showChangePwd();">
+                                    <i class="fa-wrench"></i>
+                                   修改密码
+                                </a>
+                            </li>
                             <li class="last">
                                 <a  href="logout">
                                     <i class="fa-lock"></i>
@@ -214,7 +220,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
                     <button type="button" class="btn btn-info" id="update-app-price-button">修改</button>
                 </div>
             </div>
@@ -229,11 +235,6 @@
     <script src="plugins/bootstrap/js/xenon-toggles.js"></script>
     <!-- Imported scripts on this page -->
     <script src="plugins/bootstrap/js/xenon-widgets.js"></script>
-    <script src="plugins/bootstrap/js/datatables/js/jquery.dataTables.min.js"></script>
-    <!-- Imported scripts on this page -->
-    <script src="plugins/bootstrap/js/datatables/dataTables.bootstrap.js"></script>
-    <script src="plugins/bootstrap/js/datatables/yadcf/jquery.dataTables.yadcf.js"></script>
-    <script src="plugins/bootstrap/js/datatables/tabletools/dataTables.tableTools.min.js"></script>
     <!-- JavaScripts initializations and stuff -->
     <script src="plugins/bootstrap/js/xenon-custom.js"></script>
     <!-- echarts -->
