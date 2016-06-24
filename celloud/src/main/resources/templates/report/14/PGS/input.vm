@@ -1,35 +1,24 @@
 <table class="table table-condensed miniTable_ noborder" style="margin:0px">
 	<tr>
-		<th>姓名:</th>
-		<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
-		<th>门诊号:</th>
-		<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
-		<th>检验编号:</th>
-		<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:33%;"><strong>姓名:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:16%;"><strong>性别:</strong><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:17%;"><strong>年龄:</strong><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:33%;"><strong>孕周:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 	</tr>
 	<tr>
-		<th>性别:</th>
-		<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
-		<th>送检医师:</th>
-		<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
-		<th>采样日期:</th>
-		<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:33%;"><strong>门诊号/住院号:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:66%;" colspan="2"><strong>检验编号:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:33%;"><strong>临床诊断:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 	</tr>
 	<tr>
-		<th>年龄:</th>
-		<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
-		<th>送检材料:</th>
-		<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
-		<th>接收日期:</th>
-		<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:33%;"><strong>采样日期:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:33%;" colspan="2"><strong>接收日期:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:33%;"><strong>送检科室:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 	</tr>
 	<tr>
-		<th>孕周:</th>
-		<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
-		<th>临床诊断:</th>
-		<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
-		<th></th>
-		<td></td>
+		<td style="width:33%;"><strong>送检医师:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:33%;" colspan="2"><strong>送检材料:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span</td>
+		<td style="width:33%;"><strong>标本状态:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 	</tr>
 </table>
 <hr>

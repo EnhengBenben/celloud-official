@@ -1,7 +1,10 @@
-<ul class="footer" style="margin-bottom: 0px;font-size:12px;/* margin-top: 450px; */">
-	<li class="left" style="font-size:12px;">报告者：<span><input type="text" class="input-mini" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></li>
-	<li class="left" style="font-size:12px;">审核者：<span><input type="text" class="input-mini" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></li>
-	<li class="right pull-right opinion" style="font-size:12px;">报告日期：<span id="jzkp"><input type="text" class="input-mini" id="jzkh" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></li>
+<ul class="footer" style="padding-top:5px;margin-bottom: 0px;font-size:12px;/* margin-top: 450px; */">
+	<li class="left" style="font-size:12px;width:398px;">报告者：<span><input type="text" style="width:350px;height:12px;font-size:10px;line-height:12px;border:0px;"/></span></li>
+	<li id="audit" class="left" style="font-size:12px;margin-left:102px;">审核者：<span><input type="text" style="width:75px;height:12px;font-size:10px;line-height:12px;border:0px;"/></span></li>
+	<li class="left" style="font-size:12px;">报告日期：<span><input type="text" style="width:25px;height:12px;font-size:10px;line-height:12px;border:0px;"/></span></li>
+	<li class="left" style="font-size:12px;">年   <span><input type="text" style="width:15px;height:12px;font-size:10px;line-height:12px;border:0px;"/></span></li>
+	<li class="left" style="font-size:12px;">月   <span><input type="text" style="width:15px;height:12px;font-size:10px;line-height:12px;border:0px;"/></span></li>
+	<li class="left" style="font-size:12px;">日</li>
 </ul>
 <hr>
-<h4 class="smallh4" style="font-size:12px;">临床意见：<span class="opinion"><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></span></h4>
+<h4 class="smallh4" style="font-size:12px;">临床意见：<span class="opinion"><span><input type="text" class="input-big" style="height:12px;font-size:10px;line-height:12px;border:0px;"/></span></span></h4>

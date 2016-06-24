@@ -12,10 +12,7 @@ $(function(){
 	}
 	$("#print").on("click",function(){
 		var inputVal;
-		inputVal = $("#jzkh").val();
-		if(!inputVal){
-			$("#jzkp").html("<span name='print' style='padding-right:100px;'>"+inputVal+"</span>");
-		}
+		$("#audit").css("margin-left","10px");
 		$(".miniTable_").find("input").each(function(){
 			attrTransfer(this,'miniPrint');
 		});
@@ -91,6 +88,7 @@ $(function(){
 			inputVal = "";
 		}
 		$("#des3").html("<textarea rows=\"8\">"+inputVal+"</textarea>");
+		$("#audit").css("margin-left","102px");
 	});
 	$("#save").on("click",function(){
 		$("body").find("input").each(function(){
