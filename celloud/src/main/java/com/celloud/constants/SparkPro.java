@@ -46,6 +46,6 @@ public class SparkPro {
     /**
      * spark 杀任务
      */
-    public static final String SPARKKILL = "perl /share/biosoft/perl/PGS_MG/bin/spark_kill.pl";
+    public static final String SPARKKILL = "perl /share/biosoft/perl/wangzhen/16s-meta-pipeline/spark_kill.pl";
 
 }

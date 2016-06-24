@@ -16,7 +16,7 @@
 				</select>
 			 </div>
 	         <button id="search" class="btn btn-warning" type="button" onclick="javascript:user.search()" style="margin-bottom:0;">检索</button>
-	         <button class="btn btn-danger" type="button" onclick="user.toSendEmail();" style="margin-bottom:0;">发送邮件</button>
+	         <button class="btn btn-danger" type="button" onclick="user.toSendEmail();" style="margin-bottom:0;">新增用户</button>
 	       </form>
 	     </div>
 	</div>
