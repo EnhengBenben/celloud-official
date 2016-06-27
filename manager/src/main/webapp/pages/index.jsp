@@ -29,7 +29,7 @@
     <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
             
         <div class="sidebar-menu toggle-others fixed">
-            <div class="sidebar-menu-inner">
+            <div class="sidebar-menu-inner" style="background-color: #2c2e2f;">
                 <header class="logo-env">
                     <!-- logo -->
                     <div class="logo">
