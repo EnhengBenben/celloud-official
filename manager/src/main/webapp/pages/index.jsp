@@ -23,6 +23,7 @@
 <script src="plugins/bootstrap/js/jquery-1.11.1.min.js"></script>
 <script src="plugins/jquery.alerts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/plug-ins/1.10.12/sorting/file-size.js"></script>
 </head>
 <body class="page-body">
     <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
