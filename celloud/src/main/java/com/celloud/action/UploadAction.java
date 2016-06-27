@@ -84,7 +84,6 @@ public class UploadAction {
      * @return
      * @date 2015年12月28日 下午3:22:38
      */
-    @ActionLog(value = "上传数据", button = "开始上传")
     @ResponseBody
     @RequestMapping("uploadManyFile")
     public String uploadManyFile(String name, String onlyName, String md5, String originalName, Integer chunk,
