@@ -280,6 +280,8 @@ $.report = {
           $("#batch-lists .checkbox").removeClass("checkbox-ed").addClass("checkbox-un");
           $("#report-multibatch-search").addClass("disabled");
           $("#report-multibatch-search").attr("disabled",true);
+          $("#batch-more").addClass("disabled");
+          $("#batch-more").attr("disabled",true);
         });
         $("#batch-lists .sl-val-content").on("click",function(){
           $(this).find(".checkbox").toggleClass("checkbox-un");
@@ -352,6 +354,11 @@ $.report = {
           $(selectorline).find(".sl-val").removeClass("show-more");
           $(selectorline).find(".checkbox").addClass("hide").addClass("checkbox-un").removeClass("checkbox-ed");
           $(selectorline).find(".multisl-btns").addClass("hide");
+          if($("#batch-more").hasClass("disabled"))
+            $("#batch-more").removeClass("disabled");
+            $("#batch-more").attr("disabled",false);
+            $("#batch-more span").html("更多");
+            $("#batch-more i").removeClass("fa-chevron-up").addClass("fa-chevron-down");
           $.report.options.batch = null;
           $.report.options.period = null;
         });

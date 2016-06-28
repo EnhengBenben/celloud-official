@@ -34,8 +34,8 @@
         </div>
       </div>
       <div class="sl-ext">
-        <a id="batch-more" class="sl-more" href="javascript:void(0)"><span>更多</span><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
-        <a id="batch-multiselect" data-click="report-select-more" class="sl-multiple" href="javascript:void(0)">多选<i class="fa fa-plus" aria-hidden="true"></i></a>
+        <button id="batch-more" class="sl-more" href="javascript:void(0)"><span>更多</span><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+        <button id="batch-multiselect" data-click="report-select-more" class="sl-multiple" href="javascript:void(0)">多选<i class="fa fa-plus" aria-hidden="true"></i></button>
       </div>
     </div>
   </div>
@@ -81,7 +81,7 @@
 	      </div>
 	    </div>
 	    <div class="sl-ext">
-	      <a data-click="report-select-more" class="sl-multiple" href="javascript:void(0)">多选<i class="fa fa-plus" aria-hidden="true"></i></a>
+	      <button data-click="report-select-more" class="sl-multiple" href="javascript:void(0)">多选<i class="fa fa-plus" aria-hidden="true"></i></button>
 	    </div>
     </div>
   </div>
@@ -90,7 +90,7 @@
     <div class="sl-val">
       <input id="report-begindate-search" type="text" class="Wdate" onclick="WdatePicker()" readonly="readonly" placeholder="  年    月    日"> - 
       <input id="report-enddate-search" type="text" class="Wdate" onclick="WdatePicker()" readonly="readonly" placeholder="  年    月    日">
-      <a data-click="report-date-search" class="sl-btn" href="javascript:void(0)">确定</a>
+      <button data-click="report-date-search" class="sl-btn" href="javascript:void(0)">确定</button>
     </div>
   </div>
   <div class="selector-line">
