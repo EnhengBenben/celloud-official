@@ -65,10 +65,19 @@ a, a:link, a:hover, a:active, a:visited {
     float: right;
 }
 .global-topbar a i{
-    float: left;
+    float: right;
 }
 .global-topbar a span{
     padding-left: 10px;
+    padding-right: 10px;
+    width: 80px;
+    display: inline-block;
+    webkit-text-overflow: ellipsis;
+    -moz-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 .global-topbar hr{
 	border-left:1px solid rgb(37,53,70);
@@ -99,11 +108,12 @@ a, a:link, a:hover, a:active, a:visited {
 .global-topbar .y-last .dropdown{
 	float: right;
 	height: 28px;
-	width: 45px;
+	width: 100px;
 }
 .global-topbar .y-last .dropdown .dropdown-menu{
-    left: -58px;
+    left: 2px;
     min-width: 100px;
+    width: 100px;
     background: none;
     padding: 0px;
     margin: 0px;
