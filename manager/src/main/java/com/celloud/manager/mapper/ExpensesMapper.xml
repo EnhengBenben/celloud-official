@@ -6,12 +6,12 @@
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="item_id" property="itemId" jdbcType="INTEGER" />
     <result column="item_type" property="itemType" jdbcType="TINYINT" />
-    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_id, item_id, item_type, price, create_date, remark
+    id, user_id, item_id, item_type, amount, create_date, remark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -25,10 +25,10 @@
   </delete>
   <insert id="insert" parameterType="com.celloud.manager.model.Expenses" >
     insert into tb_expenses (id, user_id, item_id, 
-      item_type, price, create_date, 
+      item_type, amount, create_date, 
       remark)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, 
-      #{itemType,jdbcType=TINYINT}, #{price,jdbcType=DECIMAL}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{itemType,jdbcType=TINYINT}, #{amount,jdbcType=DECIMAL}, #{createDate,jdbcType=TIMESTAMP}, 
       #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.celloud.manager.model.Expenses" >
@@ -46,8 +46,8 @@
       <if test="itemType != null" >
         item_type,
       </if>
-      <if test="price != null" >
-        price,
+      <if test="amount != null" >
+        amount,
       </if>
       <if test="createDate != null" >
         create_date,
@@ -69,8 +69,8 @@
       <if test="itemType != null" >
         #{itemType,jdbcType=TINYINT},
       </if>
-      <if test="price != null" >
-        #{price,jdbcType=DECIMAL},
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
       </if>
       <if test="createDate != null" >
         #{createDate,jdbcType=TIMESTAMP},
@@ -92,8 +92,8 @@
       <if test="itemType != null" >
         item_type = #{itemType,jdbcType=TINYINT},
       </if>
-      <if test="price != null" >
-        price = #{price,jdbcType=DECIMAL},
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DECIMAL},
       </if>
       <if test="createDate != null" >
         create_date = #{createDate,jdbcType=TIMESTAMP},
@@ -109,7 +109,7 @@
     set user_id = #{userId,jdbcType=INTEGER},
       item_id = #{itemId,jdbcType=INTEGER},
       item_type = #{itemType,jdbcType=TINYINT},
-      price = #{price,jdbcType=DECIMAL},
+      amount = #{amount,jdbcType=DECIMAL},
       create_date = #{createDate,jdbcType=TIMESTAMP},
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
