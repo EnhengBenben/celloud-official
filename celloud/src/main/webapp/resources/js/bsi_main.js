@@ -28,7 +28,7 @@ $(function () {
   $("body").on("click",'[data-click="report-list"]',function(){
     $.report.find.main(1);
     $(this).addClass("active");
-    $.base.itemBtnToggleActive($(this));
+    $.base.itemBtnToggleActive($("#to-report-a"));
   });
   $("#to-data-a").on("click",function(){
     $.data_.find.condition();
