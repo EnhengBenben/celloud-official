@@ -1,4 +1,4 @@
-package com.celloud.model.mysql;
+package com.celloud.backstage.model;
 
 import java.math.BigDecimal;
 import java.util.Date;

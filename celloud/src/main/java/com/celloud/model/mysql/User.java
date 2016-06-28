@@ -1,6 +1,7 @@
 package com.celloud.model.mysql;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.celloud.utils.AvatarUtil;
@@ -41,6 +42,8 @@ public class User implements Serializable {
     private String avatar;
 
     private String sign;
+
+    private BigDecimal balances;
 
     public Integer getUserId() {
         return userId;
@@ -177,4 +180,13 @@ public class User implements Serializable {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+
+    public BigDecimal getBalances() {
+        return balances;
+    }
+
+    public void setBalances(BigDecimal balances) {
+        this.balances = balances;
+    }
+
 }
