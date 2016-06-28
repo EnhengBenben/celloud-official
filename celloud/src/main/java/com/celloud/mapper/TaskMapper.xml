@@ -379,7 +379,7 @@
   </select>
   <select id="findTaskPeriodNum" resultType="map">
     select count(t.period) periodNum,t.period from 
-    (select * from tb_task where task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and app_id=#{appId} group by data_key))t
+    (select * from tb_task where task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and (app_id=#{appId} or period!=2) group by data_key))t
     left join tb_file f
     on f.data_key=t.data_key
     where f.user_id=#{userId} and f.state=#{state}
