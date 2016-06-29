@@ -2,6 +2,8 @@ package com.celloud.service;
 
 import java.math.BigDecimal;
 
+import com.celloud.constants.RechargeType;
+
 /**
  * 账单管理接口
  * 
@@ -18,5 +20,5 @@ public interface RechargeService {
      * @date 2016年6月27日 下午2:17:01
      */
     public Integer saveRecharge(BigDecimal amount, Integer userId,
-            Integer rechargeType, Integer rechargeId);
+            RechargeType rechargeType, Integer rechargeId);
 }

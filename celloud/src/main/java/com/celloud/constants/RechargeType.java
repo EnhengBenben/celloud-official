@@ -24,7 +24,7 @@ public enum RechargeType {
         return this.invoice;
     }
 
-    public static boolean getIcon(Integer type) {
+    public static boolean getRechargeTypeInvoice(Integer type) {
         boolean invoice = true;
         for (RechargeType r : RechargeType.values()) {
             if (r.type().equals(type)) {

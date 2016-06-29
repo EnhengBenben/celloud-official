@@ -21,7 +21,7 @@ public class RechargeImpl implements RechargeService {
 
     @Override
     public Integer saveRecharge(BigDecimal amount, Integer userId,
-            Integer rechargeType, Integer rechargeId) {
+            RechargeType rechargeType, Integer rechargeId) {
         User user = userMapper.selectByPrimaryKey(userId);
         BigDecimal balances = user.getBalances().add(amount);
         user.setBalances(balances);
@@ -32,9 +32,9 @@ public class RechargeImpl implements RechargeService {
         recharge.setBalances(balances);
         recharge.setCreateDate(new Date());
         recharge.setUserId(userId);
-        recharge.setRechargeType(rechargeType);
+        recharge.setRechargeType(rechargeType.type());
         recharge.setRechargeId(rechargeId);
-        recharge.setInvoiceState(RechargeType.getIcon(rechargeType)
+        recharge.setInvoiceState(rechargeType.invoice()
                 ? InvoiceState.NO_INVOICE : InvoiceState.UN_INVOICE);
         return rechargeMapper.insertSelective(recharge);
     }
