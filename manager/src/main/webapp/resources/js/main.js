@@ -318,13 +318,13 @@ var user=(function(user){
 		}
 	};
 	self.toGrantApp = function(userId){
-		$.post("user/toGrantApp",{userId,userId},function(responseText){
+		$.post("user/toGrantApp",{userId:userId},function(responseText){
 			$("#user-sendEmailModal .modal-content").html(responseText);
 			$("#user-sendEmailModal").modal("show");
 		});
 	};
 	self.toGrantRole = function(userId){
-		$.post("user/toGrantRole",{userId,userId},function(responseText){
+		$.post("user/toGrantRole",{userId:userId},function(responseText){
 			$("#user-sendEmailModal .modal-content").html(responseText);
 			$("#user-sendEmailModal").modal("show");
 		});
