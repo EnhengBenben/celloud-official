@@ -26,6 +26,8 @@ public class Invoice {
 
     private Date updateDate;
 
+    private Integer userId;
+
     public Integer getId() {
         return id;
     }
@@ -112,6 +114,14 @@ public class Invoice {
 
     public void setInvoiceState(Integer invoiceState) {
         this.invoiceState = invoiceState;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
 }
