@@ -1,6 +1,7 @@
 package com.celloud.action;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -40,6 +41,11 @@ import com.celloud.model.mysql.Experiment;
 import com.celloud.model.mysql.Project;
 import com.celloud.model.mysql.Report;
 import com.celloud.model.mysql.Task;
+import com.celloud.sendcloud.EmailParams;
+import com.celloud.sendcloud.EmailType;
+import com.celloud.sendcloud.SendCloudUtils;
+import com.celloud.sendcloud.mail.Email;
+import com.celloud.sendcloud.mail.Substitution;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.ExpensesService;
@@ -86,6 +92,8 @@ public class TaskAction {
     private ExperimentService expService;
     @Resource
     private SecRoleService secService;
+    @Resource
+    private SendCloudUtils sendCloud;
 
     private static Map<String, Map<String, String>> machines = ConstantsData
             .getMachines();
@@ -129,6 +137,7 @@ public class TaskAction {
         Integer appId = (Integer) map.get("appId");
         String appName = (String) map.get("appName");
         String username = (String) map.get("username");
+        String email = (String) map.get("email");
         String title = (String) map.get("title");
         String method = (String) map.get("method");
         List<DataFile> dataList = dataService.selectDataByKeys(dataNames);
@@ -236,9 +245,9 @@ public class TaskAction {
                 dataKey, dataNames, xml);
         if (task != null) {
             logger.info("任务{}执行完毕", task.getTaskId());
-            task = taskService.findFirstTask(appId);
-            if (task != null) {
-                String toRunCommand = task.getCommand();
+            Task t = taskService.findFirstTask(appId);
+            if (t != null) {
+                String toRunCommand = t.getCommand();
                 logger.info("运行命令：{}", toRunCommand);
                 SSHUtil ssh;
                 if (AppDataListType.SPARK.contains(appId)) {
@@ -247,14 +256,26 @@ public class TaskAction {
                     ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
                 }
                 ssh.sshSubmit(toRunCommand.toString(), false);
-                taskService.updateToRunning(task.getTaskId());
+                taskService.updateToRunning(t.getTaskId());
             }
         }
+        String tipsName = pubName.equals("") ? fname : pubName;
         MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
                 .send(NoticeConstants.createMessage("task", "运行完成",
-                        "文件【" + (pubName.equals("") ? fname : pubName)
-                                        + "】运行应用【" + appName + "】完成"))
+                        "文件【" + tipsName + "】运行应用【" + appName + "】完成"))
                 .to(username);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String startDate = format.format(task.getStartDate());
+        String endDate = format.format(task.getEndDate());
+        Email<?> context = Email.template(EmailType.RUN_OVER)
+                .substitutionVars(Substitution.sub()
+                        .set(EmailParams.RUN_OVER.userName.name(), username)
+                        .set(EmailParams.RUN_OVER.projectName.name(), tipsName)
+                        .set(EmailParams.RUN_OVER.app.name(), appName)
+                        .set(EmailParams.RUN_OVER.start.name(), startDate)
+                        .set(EmailParams.RUN_OVER.end.name(), endDate))
+                .to(email);
+        sendCloud.sendTemplate(context);
         return "run over";
     }
 
