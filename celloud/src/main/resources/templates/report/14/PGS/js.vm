@@ -4,6 +4,35 @@ function attrTransfer(obj,name){
     inputClass = $(obj).attr("class");
     $(obj).parent().html("<span name='miniPrint' _hideClass='"+inputClass+"'>"+inputVal+"</span>");
 }
+
+function printCss(){
+    $("#reporterLi").css("width","52%");
+    $("#reporterInput").css("width","260px");
+    $("#auditLi").css("width","19%");
+    $("#auditInput").css("width","65px");
+    $("#dateLi").css("width","14%");
+    $("#dateInput").css("margin-left","0px");
+    $("#dateInput").css("width","25px");
+    $("#yearLi").css("margin-left","1px");
+    $("#monthLi").css("margin-left","-1px");
+    $("#dayLi").css("margin-left","-1px");
+    $(".syFooter input[type='text']").css("border-bottom","0px");
+}
+
+function lookCss(){
+    $("#reporterLi").css("width","55%");
+    $("#reporterInput").css("width","285px");
+    $("#auditLi").css("width","20%");
+    $("#auditInput").css("width","65px");
+    $("#dateLi").css("width","15%");
+    $("#dateInput").css("margin-left","5px");
+    $("#dateInput").css("width","26px");
+    $("#yearLi").css("margin-left","-21px");
+    $("#monthLi").css("margin-left","-8px");
+    $("#dayLi").css("margin-left","-8px");
+    $(".syFooter input[type='text']").css("border-bottom","1px solid #ccc");
+}
+
 $(function(){
     if($(".end").html()){
         $("#mainDiv").css("min-height","760px");
@@ -12,6 +41,7 @@ $(function(){
     }
     $("#print").on("click",function(){
         var inputVal;
+        printCss();
         $(".miniTable_").find("input").each(function(){
             attrTransfer(this,'miniPrint');
         });
@@ -87,6 +117,7 @@ $(function(){
             inputVal = "";
         }
         $("#des3").html("<textarea rows=\"6\" style=\"margin:0px;font-size:12px;line-height:12px;height:87px;\">"+inputVal+"</textarea>");
+        lookCss();
     });
     $("#save").on("click",function(){
         $("body").find("input").each(function(){
