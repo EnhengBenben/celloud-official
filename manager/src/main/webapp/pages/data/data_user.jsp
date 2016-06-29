@@ -45,13 +45,15 @@
 										<td>${data.dataNum }</td>
 										<td>
 											<c:choose>
-												<c:when test="${data.dataSize>1073741824 }">
-													<fmt:formatNumber pattern="0.00" value="${data.dataSize/1073741824 }" />GB</c:when>
-												<c:when test="${data.dataSize>1048576 }">
-													<fmt:formatNumber pattern="0.00" value="${data.dataSize/1048576 }" />MB</c:when>
-												<c:otherwise>
-													<fmt:formatNumber pattern="0.00" value="${data.dataSize/1024 }" />KB</c:otherwise>
-											</c:choose>
+	                                            <c:when test="${data.dataSize>1099511627776 }">
+	                                                <fmt:formatNumber pattern="0.00" value="${(data.dataSize-data.dataSize%1099511627776)/1099511627776 + data.dataSize%1099511627776/1099511627776 }" />TB</c:when>
+	                                            <c:when test="${data.dataSize>1073741824 }">
+	                                                <fmt:formatNumber pattern="0.00" value="${(data.dataSize-data.dataSize%1073741824)/1073741824 + data.dataSize%1073741824/1073741824 }" />GB</c:when>
+	                                            <c:when test="${data.dataSize>1048576 }">
+	                                                <fmt:formatNumber pattern="0.00" value="${(data.dataSize-data.dataSize%1048576)/1048576 + data.dataSize%1048576/1048576 }" />MB</c:when>
+	                                            <c:otherwise>
+	                                                <fmt:formatNumber pattern="0.00" value="${(data.dataSize-data.dataSize%1024)/1024 + data.dataSize%1024/1024 }" />KB</c:otherwise>
+	                                        </c:choose>
 										</td>
 									</tr>
 								</c:forEach>
