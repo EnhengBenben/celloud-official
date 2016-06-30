@@ -5,27 +5,27 @@ import java.util.Date;
 
 public class Invoice {
     private Integer id;
-
+    // 金额
     private BigDecimal money;
-
+    // 类型 0-普票 1-专票
     private Integer invoiceType;
-
+    // 抬头
     private String invoiceHeader;
-
+    // 联系人
     private String contacts;
-
+    // 联系方式
     private String cellphone;
-
+    // 收货地址
     private String address;
-
+    // 状态 0-已申请 1-已发出
     private Integer invoiceState;
-
+    // 备注 快递单号:快递公司:1111111111
     private String remark;
-
+    // 申请时间
     private Date createDate;
-
+    // 寄出时间
     private Date updateDate;
-
+    // 用户编号
     private Integer userId;
 
     public Integer getId() {

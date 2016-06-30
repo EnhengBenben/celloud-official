@@ -15,4 +15,6 @@ public interface InvoiceMapper {
     int updateByPrimaryKeySelective(Invoice record);
 
     int updateByPrimaryKey(Invoice record);
+
+    int insertAndSetId(Invoice invoice);
 }
