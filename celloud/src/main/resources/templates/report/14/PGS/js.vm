@@ -74,6 +74,13 @@ $(function(){
             inputVal = "";
         }
         $("#des3").html(inputVal);
+        var advice = $("#advice").children().val();
+        if(advice){
+            inputVal = advice.replace(/\n/g,"<br>");
+        }else{
+            inputVal = "";
+        }
+        $("#advice").html(advice);
         $(".buttons").hide();
         window.print();
         $(".buttons").show();
@@ -114,6 +121,12 @@ $(function(){
             inputVal = "";
         }
         $("#des3").html("<textarea rows=\"6\" style=\"margin:0px;font-size:12px;line-height:12px;height:87px;\">"+inputVal+"</textarea>");
+        if(advice){
+            inputVal = $("#advice").html().replace(/<br>/g,"\n");
+        }else{
+            inputVal = "";
+        }
+        $("#advice").html("<textarea rows=\"2\" style=\"margin:0px;font-size:10px;line-height:10px\">"+inputVal+"</textarea>");
         lookCss();
     });
     $("#save").on("click",function(){
