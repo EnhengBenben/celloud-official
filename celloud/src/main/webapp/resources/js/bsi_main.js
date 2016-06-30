@@ -314,6 +314,8 @@ $.report = {
           $("#selected-batch").addClass("hide");
           $("#to-sl-batch").removeClass("hide");
           $.report.options.batch = null;
+          $("#batch-more").removeClass("disabled");
+          $("#batch-more").attr("disabled",false);
           $.report.find.condition();
         });
         $("#period-lists .sl-val-content").on("click",function(){
