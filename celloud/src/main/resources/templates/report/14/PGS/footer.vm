@@ -8,4 +8,4 @@
 </ul>
 <br/>
 <hr style="margin-top:11px;">
-<h4 class="smallh4" style="font-size:12px"><font>临床意见：</font><span class="opinion"><span><input type="text" class="input-big" style="height:16px;font-size:10px;line-height:12px;"/></span></span></h4>
+<div style="overflow:hidden;width:300px;"><font style="font-size:12px;">临床意见：</font><span class="opinion"><input id="advice" type="text" class="input-big" style="width:200px;height:16px;font-size:10px;line-height:12px;"/></span></div>

@@ -48,9 +48,6 @@ $(function(){
         $("#mainDiv").find("input").each(function(){
             attrTransfer(this,'print');
         });
-        $(".opinion").find("input").each(function(){
-            attrTransfer(this,'print');
-        });
         inputVal = $("#des").children().val();
         if(inputVal){
             inputVal = inputVal.replace(/\n/g,"<br>");
