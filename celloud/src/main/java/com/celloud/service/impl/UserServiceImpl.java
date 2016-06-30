@@ -125,4 +125,11 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByIds(userIds);
     }
 
+    @Override
+    public Integer insertUserWechatInfo(Integer userId, String openId,
+            String unionId) {
+        return userMapper.insertUserWechatInfo(userId, openId, unionId,
+                new Date());
+    }
+
 }

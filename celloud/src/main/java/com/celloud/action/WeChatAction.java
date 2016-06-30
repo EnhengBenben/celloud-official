@@ -23,6 +23,7 @@ import com.celloud.model.mysql.User;
 import com.celloud.service.UserService;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.RSAUtil;
+import com.celloud.wechat.WechatUtils;
 
 @Controller
 @RequestMapping("api/wechat")
@@ -31,23 +32,29 @@ public class WeChatAction {
 
 	@Resource
 	private UserService us;
+    @Resource
+    private WechatUtils wechatUtils;
 
 	@RequestMapping(value = "getState", method = RequestMethod.GET)
-	public ModelAndView getState(String state) {
+    public ModelAndView getState(String state, String code) {
+        ModelAndView mv = new ModelAndView();
 		if ("out".equals(state)) {//关注后通过自动回复的链接进来，需要跳转登录页面
-			ModelAndView mv = new ModelAndView("wechat");
+            mv.setViewName("wechat");
 			Subject subject = SecurityUtils.getSubject();
 			PublicKey publicKey = generatePublicKey(subject.getSession());
-			return mv.addObject("publicKey", publicKey).addObject("isSuccess", "false");
+            mv.addObject("publicKey", publicKey).addObject("isSuccess",
+                    "false");
 		} else {
 			//state 就是 MD5，需要校验MD5是否合法
 			//合法则直接绑定
+
 		}
-		return null;
+        mv.addObject("code", code);
+        return mv;
 	}
 
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public ModelAndView login(User user) {
+    public ModelAndView login(User user, String code) {
 		log.info("用户微信登陆：" + user.getUsername());
 		Session session = SecurityUtils.getSubject().getSession();
 		PrivateKey privateKey = (PrivateKey) session.getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
@@ -63,6 +70,8 @@ public class WeChatAction {
 					"false");
 			return mv;
 		}
+        String openId = wechatUtils.getOpenId(code);
+        us.insertUserWechatInfo(user.getUserId(), openId, null);
 		String msg = "用户与微信号绑定成功！";
 		log.info("用户({})登录成功！", user.getUsername());
 		session.removeAttribute(Constants.SESSION_RSA_PRIVATEKEY);
