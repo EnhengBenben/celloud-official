@@ -125,7 +125,7 @@ public class PayServiceImpl implements PayService {
                     payOrderMapper.updateByPrimaryKey(order);
                     alipay = new RechargeAlipay();
                     alipay.setAliTradeNo(trade_no);
-                    alipay.setAmount(order.getAmount());
+                    alipay.setAmount(amount);
                     alipay.setBuyerEmail(params.get("buyer_email"));
                     alipay.setBuyerId(params.get("buyer_id"));
                     alipay.setCreateTime(new Date());
@@ -135,7 +135,7 @@ public class PayServiceImpl implements PayService {
                     alipay.setUserId(order.getUserId());
                     rechargeAlipayMapper.insert(alipay);
                     rechargeService.saveRecharge(amount, order.getUserId(), RechargeType.ALIPAY, alipay.getId());
-                }else{
+                } else {
                     alipay = rechargeAlipayMapper.selectByTradeNo(out_trade_no);
                 }
             }

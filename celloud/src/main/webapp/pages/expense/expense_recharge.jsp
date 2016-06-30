@@ -27,13 +27,13 @@
 			</div>
 		</form>
 		<div id="onlineRecharge">
-			<form action="<%=request.getContextPath() + "/pay/recharge/alipay"%>" class="form-horizontal" target="_blank"
+			<form action="<%=request.getContextPath() + "/pay/recharge/alipay"%>" class="form-horizontal" target="_blank" id="rechargeForm"
 				method="post">
 				<div class="form-group">
 					<label class="col-sm-1 control-label">金额(￥)</label>
-					<div class="col-sm-3">
+					<div class="col-sm-8">
 						<label class="checkbox-inline">
-							<input type="number" name="money" class="form-control" min="0.01" max="100000" value="10" step="10" />
+							<input type="number" name="money" class="form-control" min="0.01" max="100000" value="10.01" step="10" />
 						</label>
 					</div>
 				</div>
@@ -170,7 +170,7 @@
 				<div class="form-group">
 					<div class="col-xs-offset-1 col-xs-2">
 						<label class="checkbox-inline">
-							<button class="btn btn-success" data-toggle="modal" data-target="#tip-modal">现在充值</button>
+							<button class="btn btn-success">现在充值</button>
 						</label>
 					</div>
 				</div>

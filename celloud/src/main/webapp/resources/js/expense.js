@@ -76,4 +76,18 @@ function init_expense(){
 	  $("#companyTransfer").removeClass("hide");
 	  $("#onlineRecharge").addClass("hide");
   });
+  $("#expense-content").on("submit","#rechargeForm",function(){
+	 var $self = $("#rechargeForm");
+	 var money = $self.find("input[name='money']").val();
+	 var result = $.isNumeric(money);
+	 if(result){
+		 $("#tip-modal").modal("show");
+	 }else{
+		 $self.find("input[name='money']").parent().popover({
+			 content:"请正确输入充值金额！",
+		 }).popover('show');
+		 $self.find("input[name='money']").select();
+	 }
+	 return result;
+  });
 }
