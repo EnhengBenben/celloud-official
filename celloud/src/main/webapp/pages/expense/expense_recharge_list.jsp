@@ -183,7 +183,7 @@
 											</c:when>
 											<c:otherwise>
 												<li>
-													<a href="javascript:void(0)">${step }</a>
+													<a href="javascript:$.expense.pay.pageRechargeList('${step}')">${step }</a>
 												</li>
 											</c:otherwise>
 										</c:choose>
@@ -231,6 +231,14 @@
 								href="javascript:$.expense.pay.pageRechargeList('${recharges.page.currentPage+1>recharges.page.totalPage?recharges.page.totalPage:recharges.page.currentPage+1 }')">&gt;</a>
 						</li>
 					</c:if>
+					<li>
+					   <select onchange="$.expense.pay.pageRechargeList('1',this.value)">
+					       <option ${ recharges.page.pageSize==10?'selected':''}>10</option>
+					       <option ${ recharges.page.pageSize==20?'selected':''}>20</option>
+					       <option ${ recharges.page.pageSize==50?'selected':''}>50</option>
+					       <option ${ recharges.page.pageSize==100?'selected':''}>100</option>
+					   </select>
+					</li>
 					<li>共${recharges.page.totalPage }页&nbsp;|&nbsp;合计${recharges.page.rowCount }条</li>
 				</ul>
 			</c:if>

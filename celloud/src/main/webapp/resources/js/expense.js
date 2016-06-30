@@ -11,6 +11,12 @@ $(function(){
 });
 function init_expense(){
   $.expense.pay = {
+      page:{
+    	  recharge:{
+    		  currentPage:1,
+    		  pageSize:20
+    	  }
+      },
       expenseList: function(){
         $.get("expense/toRunExpenseList",{},function(response){
           $.expense.pay.loadlist(response);
@@ -21,9 +27,12 @@ function init_expense(){
           $.expense.pay.loadlist(response);
         });
       },
-      pageRechargeList:function(currentPage){
-    	  currentPage=currentPage||1;
-    	  $("#expense-content").load(CONTEXT_PATH+"/pay/recharge/list",{currentPage:currentPage});
+      pageRechargeList:function(currentPage,pageSize){
+    	  currentPage=currentPage|| $.expense.pay.page.recharge.currentPage;
+    	  pageSize=pageSize|| $.expense.pay.page.recharge.pageSize;
+    	  $.expense.pay.page.recharge.currentPage = currentPage;
+    	  $.expense.pay.page.recharge.pageSize=pageSize;
+    	  $("#expense-content").load(CONTEXT_PATH+"/pay/recharge/list",{currentPage:currentPage,pageSize:pageSize});
       },
       recharge:function(){
     	  $("#tip-modal").modal("hide");
