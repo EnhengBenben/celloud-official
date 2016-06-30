@@ -157,4 +157,17 @@ public interface UserService {
      * @return
      */
     public List<String> selectUserUserById(String userIds);
+
+    /**
+     * 新增用户与微信服务号绑定关系
+     * 
+     * @param userId
+     * @param openId
+     * @param unionId
+     * @return
+     * @author leamo
+     * @date 2016年6月30日 上午10:28:24
+     */
+    public Integer insertUserWechatInfo(Integer userId, String openId,
+            String unionId);
 }

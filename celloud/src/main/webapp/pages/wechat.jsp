@@ -30,6 +30,7 @@
 			<div class="login-main clearfix">
 			    <div class="error">&nbsp;</div>
 				<input type="hidden" name="info" id="info" value="${requestScope.info }" />
+				<input type="hidden" name="code" id="code" value="${code }" />
 			    <c:if test="${requestScope.isSuccess=='false' }">
 					<input type="hidden" id="modulusHidden" name="modulus" value="${publicKey.modulus }" />
 					<input type="hidden" id="exponentHidden" name="exponent" value="${publicKey.exponent }" />

@@ -1,5 +1,10 @@
 package com.celloud.wechat;
 
+import java.util.Map;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +29,7 @@ public class WechatUtils {
 	private String oAuth2Url = "https://open.weixin.qq.com/connect/oauth2/authorize?";
 	private String oAuth2TokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?";
 	private String tokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&";
+    private String templateUrl = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=";
 
 	/**
 	 * 获取生成二维码所需要的url
@@ -48,14 +54,21 @@ public class WechatUtils {
 	 * @date 2016年6月27日上午10:37:03
 	 */
 	public String getToken() {
-		String url = tokenUrl + "appid=" + appId + "&secret=" + appSecret;
-		String result = HttpURLUtils.httpGetRequest(url);
-		JSONObject t = new JSONObject(result);
-		if (t.has("access_token")) {
-			return t.getString("access_token");
-		}
-		logger.error(result);
-		return null;
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        if (session.getAttribute("WebchatToken") == null) {
+            String url = tokenUrl + "appid=" + appId + "&secret=" + appSecret;
+            String result = HttpURLUtils.httpGetRequest(url);
+            JSONObject t = new JSONObject(result);
+            if (t.has("access_token")) {
+                session.setAttribute("WebchatToken",
+                        t.getString("access_token"));
+
+            } else {
+                logger.error(result);
+            }
+        }
+        return session.getAttribute("WebchatToken").toString();
 	}
 
 	/**
@@ -71,21 +84,41 @@ public class WechatUtils {
 				+ "&code=" + code + "&grant_type=authorization_code";
 		String result = HttpURLUtils.httpGetRequest(url);
 		JSONObject t = new JSONObject(result);
-		if (t.has("access_token")) {
-			return t.getString("access_token");
+        if (t.has("access_token")) {
+            return t.getString("access_token");
 		}
 		logger.error(result);
 		return null;
 	}
 
 	/**
-	 * 获取用户信息
-	 * 
-	 * @param openId
-	 * @return
-	 * @author lin
-	 * @date 2016年6月27日上午10:49:17
-	 */
+     * 根据用户授权code获取openid
+     * 
+     * @param code
+     * @return
+     * @author leamo
+     * @date 2016年6月29日 下午11:14:31
+     */
+    public String getOpenId(String code) {
+        String url = oAuth2TokenUrl + "appid=" + appId + "&secret=" + appSecret
+                + "&code=" + code + "&grant_type=authorization_code";
+        String result = HttpURLUtils.httpGetRequest(url);
+        JSONObject t = new JSONObject(result);
+        if (t.has("openid")) {
+            return t.getString("openid");
+        }
+        logger.error(result);
+        return null;
+    }
+
+    /**
+     * 获取用户信息
+     * 
+     * @param openId
+     * @return
+     * @author lin
+     * @date 2016年6月27日上午10:49:17
+     */
 	public String getUserInfo(String openId) {
 		//TODO 需要验证token
 		String url = "https://api.weixin.qq.com/sns/userinfo?access_token=" + getToken() + "&openid=" + openId
@@ -95,6 +128,20 @@ public class WechatUtils {
 		return null;
 	}
 
+    /**
+     * 消息推送
+     * 
+     * @param map
+     * @param access_token
+     * @return
+     * @author leamo
+     * @date 2016年6月30日 下午4:13:04
+     */
+    public String pushMessage(Map<String, Object> map) {
+        String url = templateUrl + getToken();
+        JSONObject json = new JSONObject(map);
+        return HttpUtil.sendWeChatMessage(url, json.toString());
+    }
 
 	public void setAppId(String appId) {
 		this.appId = appId;
