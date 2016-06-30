@@ -3,12 +3,16 @@ package com.celloud.model.mysql;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.celloud.constants.RechargeType;
+
 public class Recharge {
     private Integer id;
 
     private Integer userId;
 
     private Integer rechargeType;
+
+    private String rechargeTypeName;
 
     private Integer rechargeId;
 
@@ -43,6 +47,7 @@ public class Recharge {
     }
 
     public void setRechargeType(Integer rechargeType) {
+        this.rechargeTypeName = RechargeType.getName(rechargeType);
         this.rechargeType = rechargeType;
     }
 
@@ -93,4 +98,14 @@ public class Recharge {
     public void setInvoiceId(Integer invoiceId) {
         this.invoiceId = invoiceId;
     }
+
+    public String getRechargeTypeName() {
+        this.rechargeTypeName = RechargeType.getName(rechargeType);
+        return rechargeTypeName;
+    }
+
+    public void setRechargeTypeName(String rechargeTypeName) {
+        this.rechargeTypeName = rechargeTypeName;
+    }
+
 }

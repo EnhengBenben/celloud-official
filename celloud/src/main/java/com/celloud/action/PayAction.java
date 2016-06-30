@@ -11,9 +11,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.celloud.constants.ConstantsData;
+import com.celloud.model.mysql.Recharge;
 import com.celloud.model.mysql.RechargeAlipay;
 import com.celloud.model.mysql.User;
+import com.celloud.page.Page;
+import com.celloud.page.PageList;
 import com.celloud.service.PayService;
+import com.celloud.service.RechargeService;
 import com.celloud.service.UserService;
 
 /**
@@ -29,6 +33,8 @@ public class PayAction {
     private UserService userService;
     @Resource
     private PayService payService;
+    @Resource
+    private RechargeService rechargeService;
 
     @RequestMapping("recharge")
     public String recharge(Model model) {
@@ -38,6 +44,13 @@ public class PayAction {
         }
         model.addAttribute("balance", balance);
         return "expense/expense_recharge";
+    }
+
+    @RequestMapping("recharge/list")
+    public String rechargeList(Page page, Model model) {
+        PageList<Recharge> recharges = rechargeService.listRecharges(page);
+        model.addAttribute("recharges", recharges);
+        return "expense/expense_recharge_list";
     }
 
     @RequestMapping("recharge/alipay")

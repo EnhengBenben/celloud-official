@@ -3,6 +3,9 @@ package com.celloud.service;
 import java.math.BigDecimal;
 
 import com.celloud.constants.RechargeType;
+import com.celloud.model.mysql.Recharge;
+import com.celloud.page.Page;
+import com.celloud.page.PageList;
 
 /**
  * 账单管理接口
@@ -21,4 +24,6 @@ public interface RechargeService {
      */
     public Integer saveRecharge(BigDecimal amount, Integer userId,
             RechargeType rechargeType, Integer rechargeId);
+
+    public PageList<Recharge> listRecharges(Page page);
 }

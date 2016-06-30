@@ -21,6 +21,10 @@ function init_expense(){
           $.expense.pay.loadlist(response);
         });
       },
+      pageRechargeList:function(currentPage){
+    	  currentPage=currentPage||1;
+    	  $("#expense-content").load(CONTEXT_PATH+"/pay/recharge/list",{currentPage:currentPage});
+      },
       recharge:function(){
     	  $("#tip-modal").modal("hide");
     	  $("#expense-content").load(CONTEXT_PATH+"/pay/recharge");
@@ -33,7 +37,7 @@ function init_expense(){
     		  $.expense.pay.recharge();
     	  },
     	  "to-recharge-record":function(){
-    		  $("#expense-content").html("充值记录");
+    		  $.expense.pay.pageRechargeList();
     	  },
     	  "to-invoice":function(){
     		  $("#expense-content").html("发票管理");
