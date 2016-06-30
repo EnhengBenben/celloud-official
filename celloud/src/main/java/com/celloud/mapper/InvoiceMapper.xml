@@ -118,6 +118,17 @@
       </if>
     </trim>
   </insert>
+  <!-- 插入一条记录并设置主键 -->
+  <insert id="insertAndSetId" keyProperty="id" useGeneratedKeys="true" parameterType="com.celloud.model.mysql.Invoice" >
+    insert into tb_invoice (money, invoice_type, 
+      invoice_header, contacts, cellphone, 
+      address, invoice_state, remark, 
+      create_date, update_date, user_id)
+    values (#{money,jdbcType=DECIMAL}, #{invoiceType,jdbcType=INTEGER}, 
+      #{invoiceHeader,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR}, #{cellphone,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{invoiceState,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER})
+  </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.Invoice" >
     update tb_invoice
     <set >
