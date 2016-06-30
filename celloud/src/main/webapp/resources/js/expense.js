@@ -7,11 +7,11 @@ $.ajaxSetup ({
 });
 $(function(){
   init_expense();
-  $.expense.pay.all();
+  $.expense.pay.expenseList();
 });
 function init_expense(){
   $.expense.pay = {
-      all: function(){
+      expenseList: function(){
         $.get("expense/toRunExpenseList",{},function(response){
           $.expense.pay.loadlist(response);
         });
@@ -20,6 +20,24 @@ function init_expense(){
         $.get("expense/toRunExpenseList",{"page":currentPage},function(response){
           $.expense.pay.loadlist(response);
         });
+      },
+      recharge:function(){
+    	  $("#tip-modal").modal("hide");
+    	  $("#expense-content").load(CONTEXT_PATH+"/pay/recharge");
+      },
+      tab:{
+    	  "to-pay-detail":function(){
+    		  $.expense.pay.expenseList();
+    	  },
+    	  "to-recharge":function(){
+    		  $.expense.pay.recharge();
+    	  },
+    	  "to-recharge-record":function(){
+    		  $("#expense-content").html("充值记录");
+    	  },
+    	  "to-invoice":function(){
+    		  $("#expense-content").html("发票管理");
+    	  }
       },
       loadlist: function(response){
         $("#expense-content").html(response);
@@ -41,5 +59,21 @@ function init_expense(){
               $.expense.pay.pagination(page);
         });
       }
-  }
+  };
+  $("#expense-box li").click(function(){
+	  var $self = $(this);
+	  $self.siblings().removeClass("active");
+	  $self.addClass("active");
+	  $("#secondClassifyName").html($self.text());
+	  var id = $self.attr("id");
+	  $.expense.pay.tab[id]();
+  });
+  $("#expense-content").on("click","#onlineRechargeRadio",function(){
+	  $("#onlineRecharge").removeClass("hide");
+	  $("#companyTransfer").addClass("hide");
+  });
+  $("#expense-content").on("click","#companyTransferRadio",function(){
+	  $("#companyTransfer").removeClass("hide");
+	  $("#onlineRecharge").addClass("hide");
+  });
 }

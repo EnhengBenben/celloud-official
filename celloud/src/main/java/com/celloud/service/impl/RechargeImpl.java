@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import com.celloud.constants.InvoiceState;
 import com.celloud.constants.RechargeType;
 import com.celloud.mapper.RechargeMapper;
@@ -12,7 +14,7 @@ import com.celloud.mapper.UserMapper;
 import com.celloud.model.mysql.Recharge;
 import com.celloud.model.mysql.User;
 import com.celloud.service.RechargeService;
-
+@Service("rechargeServiceImpl")
 public class RechargeImpl implements RechargeService {
     @Resource
     private RechargeMapper rechargeMapper;
@@ -25,7 +27,7 @@ public class RechargeImpl implements RechargeService {
         User user = userMapper.selectByPrimaryKey(userId);
         BigDecimal balances = user.getBalances().add(amount);
         user.setBalances(balances);
-        userMapper.updateByPrimaryKey(user);
+        userMapper.updateByPrimaryKeySelective(user);
 
         Recharge recharge = new Recharge();
         recharge.setAmount(amount);
@@ -34,8 +36,7 @@ public class RechargeImpl implements RechargeService {
         recharge.setUserId(userId);
         recharge.setRechargeType(rechargeType.type());
         recharge.setRechargeId(rechargeId);
-        recharge.setInvoiceState(rechargeType.invoice()
-                ? InvoiceState.NO_INVOICE : InvoiceState.UN_INVOICE);
+        recharge.setInvoiceState(rechargeType.invoice() ? InvoiceState.NO_INVOICE : InvoiceState.UN_INVOICE);
         return rechargeMapper.insertSelective(recharge);
     }
 

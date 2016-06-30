@@ -23,6 +23,7 @@ public class MessageReceiver implements Runnable {
     private static Map<String, MessageReceiver> maps = new ConcurrentHashMap<>();
     private static MessageHandler defaultHandler = new DefaultMessageHandler();
     private MessageHandler handler = null;
+    private String group;
     private List<String> topics = new ArrayList<>();
 
     private MessageReceiver() {
@@ -33,7 +34,7 @@ public class MessageReceiver implements Runnable {
             return maps.get(group);
         }
         MessageReceiver receiver = new MessageReceiver();
-        receiver.consumer = KafkaUtils.createConsumer(group);
+        receiver.group = group;
         maps.put(group, receiver);
         return receiver;
     }
@@ -57,6 +58,7 @@ public class MessageReceiver implements Runnable {
 
     public void run() {
         logger.debug("topics = {}", topics);
+        consumer = KafkaUtils.createConsumer(group);
         consumer.subscribe(topics);
         try {
             while (running.get()) {

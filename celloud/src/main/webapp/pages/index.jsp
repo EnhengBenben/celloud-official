@@ -24,6 +24,7 @@
 <link href="<%=request.getContextPath()%>/plugins/intro/introjs.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/css/font.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/main.css?version=3.1.9" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/css/pay.css?version=3.1.9" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/css/app.css?version=3.1.14" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet"
 	type="text/css" media="screen" />
