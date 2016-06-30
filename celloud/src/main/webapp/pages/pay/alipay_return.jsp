@@ -75,13 +75,13 @@
 									<td>${alipay.subject }</td>
 								</tr>
 								<tr>
-									<td>描述</td>
-									<td>${alipay.description }</td>
-								</tr>
-								<tr>
 									<td>订单号</td>
 									<td>${alipay.tradeNo }</td>
 								</tr>
+								<tr>
+                                    <td>支付宝账户</td>
+                                    <td>${alipay.buyerEmail }</td>
+                                </tr>
 								<tr>
 									<td>支付宝流水号</td>
 									<td>${alipay.aliTradeNo }</td>
@@ -92,6 +92,10 @@
 										<fmt:formatDate value="${alipay.createTime }" pattern="yyyy-MM-dd HH:mm:ss" />
 									</td>
 								</tr>
+								<tr>
+                                    <td>描述</td>
+                                    <td>${alipay.description }</td>
+                                </tr>
 							</tbody>
 						</table>
 					</div>

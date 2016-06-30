@@ -11,6 +11,12 @@ $(function(){
 });
 function init_expense(){
   $.expense.pay = {
+      page:{
+    	  recharge:{
+    		  currentPage:1,
+    		  pageSize:20
+    	  }
+      },
       expenseList: function(){
         $.get("expense/toRunExpenseList",{},function(response){
           $.expense.pay.loadlist(response);
@@ -20,6 +26,13 @@ function init_expense(){
         $.get("expense/toRunExpenseList",{"page":currentPage},function(response){
           $.expense.pay.loadlist(response);
         });
+      },
+      pageRechargeList:function(currentPage,pageSize){
+    	  currentPage=currentPage|| $.expense.pay.page.recharge.currentPage;
+    	  pageSize=pageSize|| $.expense.pay.page.recharge.pageSize;
+    	  $.expense.pay.page.recharge.currentPage = currentPage;
+    	  $.expense.pay.page.recharge.pageSize=pageSize;
+    	  $("#expense-content").load(CONTEXT_PATH+"/pay/recharge/list",{currentPage:currentPage,pageSize:pageSize});
       },
       recharge:function(){
     	  $("#tip-modal").modal("hide");
@@ -33,7 +46,7 @@ function init_expense(){
     		  $.expense.pay.recharge();
     	  },
     	  "to-recharge-record":function(){
-    		  $("#expense-content").html("充值记录");
+    		  $.expense.pay.pageRechargeList();
     	  },
     	  "to-invoice":function(){
     		  $("#expense-content").html("发票管理");
@@ -75,5 +88,19 @@ function init_expense(){
   $("#expense-content").on("click","#companyTransferRadio",function(){
 	  $("#companyTransfer").removeClass("hide");
 	  $("#onlineRecharge").addClass("hide");
+  });
+  $("#expense-content").on("submit","#rechargeForm",function(){
+	 var $self = $("#rechargeForm");
+	 var money = $self.find("input[name='money']").val();
+	 var result = $.isNumeric(money);
+	 if(result){
+		 $("#tip-modal").modal("show");
+	 }else{
+		 $self.find("input[name='money']").parent().popover({
+			 content:"请正确输入充值金额！",
+		 }).popover('show');
+		 $self.find("input[name='money']").select();
+	 }
+	 return result;
   });
 }

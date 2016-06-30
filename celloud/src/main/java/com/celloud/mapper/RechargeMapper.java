@@ -1,6 +1,11 @@
 package com.celloud.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.celloud.model.mysql.Recharge;
+import com.celloud.page.Page;
 
 public interface RechargeMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +19,6 @@ public interface RechargeMapper {
     int updateByPrimaryKeySelective(Recharge record);
 
     int updateByPrimaryKey(Recharge record);
+
+    List<Recharge> findRecharges(@Param("userId") Integer userId, Page page);
 }
