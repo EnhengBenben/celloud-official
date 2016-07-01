@@ -17,6 +17,10 @@ function init_expense(){
     		  pageSize:20
     	  }
       },
+      showTipModal:function(text){
+    	  $("#tip-text").html(text);
+    	  $("#invoice-tip-modal").modal("show");
+      },
       expenseList: function(){
         $.get("expense/toRunExpenseList",{},function(response){
           $.expense.pay.loadlist(response);
@@ -34,6 +38,10 @@ function init_expense(){
     	  $.expense.pay.page.recharge.pageSize=pageSize;
     	  $("#expense-content").load(CONTEXT_PATH+"/pay/recharge/list",{currentPage:currentPage,pageSize:pageSize});
       },
+      pageInvoiceList:function(currentPage){
+    	  currentPage=currentPage||1;
+    	  $("#expense-content").load(CONTEXT_PATH+"/invoice/list",{"currentPage":currentPage,"pageSize":20})
+      },
       recharge:function(){
     	  $("#tip-modal").modal("hide");
     	  $("#expense-content").load(CONTEXT_PATH+"/pay/recharge");
@@ -49,7 +57,7 @@ function init_expense(){
     		  $.expense.pay.pageRechargeList();
     	  },
     	  "to-invoice":function(){
-    		  $("#expense-content").html("发票管理");
+    		  $.expense.pay.pageInvoiceList();
     	  }
       },
       loadlist: function(response){

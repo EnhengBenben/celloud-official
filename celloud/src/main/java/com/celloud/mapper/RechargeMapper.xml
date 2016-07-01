@@ -139,6 +139,14 @@
 		invoice_id = #{invoiceId,jdbcType=INTEGER}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
+	<update id="updateRechargeInvoiceId">
+	   update tb_recharge set invoice_id = #{invoiceId}, invoice_state = 1
+	   where id in (
+	   <foreach collection="rechargeIds" item="id" separator=",">
+            #{id}
+        </foreach>
+	   )
+	</update>
 	<select id="findRecharges" parameterType="java.lang.Integer" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />

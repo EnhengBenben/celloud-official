@@ -21,4 +21,6 @@ public interface RechargeMapper {
     int updateByPrimaryKey(Recharge record);
 
     List<Recharge> findRecharges(@Param("userId") Integer userId, Page page);
+
+    void updateRechargeInvoiceId(@Param("invoiceId") Integer invoiceId, @Param("rechargeIds") Integer[] rechargeIds);
 }

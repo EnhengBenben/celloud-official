@@ -7,9 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.model.mysql.Invoice;
+import com.celloud.page.Page;
+import com.celloud.page.PageList;
 import com.celloud.service.InvoiceService;
 import com.celloud.utils.ActionLog;
 
@@ -27,12 +30,44 @@ public class InvoiceAction {
     @Resource
     private InvoiceService invoiceService;
 
+    /**
+     * @author MQ
+     * @date 2016年6月30日下午3:37:46
+     * @description 申请发票
+     * @return
+     *
+     */
     @ActionLog(value = "提交申请发票表单", button = "申请发票")
-    @RequestMapping("applyInvoice")
+    @RequestMapping("apply")
     @ResponseBody
-    public int applyInvoice(Invoice invoice, String[] ids) {
+    public int apply(Invoice invoice, Integer[] rechargeIds) {
         logger.info("用户{}申请发票", ConstantsData.getLoginUserName());
         invoice.setUserId(ConstantsData.getLoginUserId());
-        return invoiceService.applyInvoice(invoice, ids);
+        return invoiceService.applyInvoice(invoice, rechargeIds);
+    }
+
+    /**
+     * @author MQ
+     * @date 2016年6月30日下午3:37:34
+     * @description 分页查询发票
+     *
+     */
+    @ActionLog(value = "用户查看发票列表", button = "发票管理")
+    @RequestMapping("list")
+    public ModelAndView list(Page page) {
+        logger.info("用户{}查看发票列表", ConstantsData.getLoginUserName());
+        ModelAndView mv = new ModelAndView("expense/expense_invoice");
+        Integer userId = ConstantsData.getLoginUserId();
+        PageList<Invoice> invoicePageList = invoiceService.getInvoiceList(page, userId);
+        mv.addObject("invoicePageList", invoicePageList);
+        return mv;
+    }
+    
+    @ActionLog(value = "用户查看发票详情", button = "发票详情")
+    @RequestMapping("detail")
+    @ResponseBody
+    public Invoice detail(Integer id) {
+        logger.info("用户{}查看发票详情", ConstantsData.getLoginUserName());
+        return invoiceService.getInvoiceDetail(id);
     }
 }
