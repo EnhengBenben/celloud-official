@@ -349,7 +349,7 @@
 		select username from tb_user
 		where user_id in (${userIds})
 	</select>
-	<insert id="insertSelective" parameterType="com.celloud.model.mysql.User">
+	<insert id="insertUserWechatInfo">
         insert into tb_user_wechat
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userId != null">
