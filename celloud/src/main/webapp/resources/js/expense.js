@@ -28,7 +28,7 @@ function init_expense(){
         });
       },
       pageRechargeList:function(currentPage,pageSize){
-    	  currentPage=currentPage|| $.expense.pay.page.recharge.currentPage;
+    	  currentPage=currentPage|| 1;
     	  pageSize=pageSize|| $.expense.pay.page.recharge.pageSize;
     	  $.expense.pay.page.recharge.currentPage = currentPage;
     	  $.expense.pay.page.recharge.pageSize=pageSize;
