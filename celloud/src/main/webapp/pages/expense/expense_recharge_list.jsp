@@ -270,7 +270,7 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="control-label form-label col-xs-3">公司名称</div>
+            <div class="control-label form-label col-xs-3">发票抬头</div>
             <div class="col-xs-9">
                 <input type="text" id="invoiceHeader" name="invoiceHeader" maxlength="45"/><span class="invoice-modal-error"></span>
             </div>
