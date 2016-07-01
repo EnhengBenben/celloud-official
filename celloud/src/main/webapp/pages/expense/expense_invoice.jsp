@@ -9,7 +9,7 @@
             <th class="pay-money">金额</th>
             <th>类型</th>
             <th>抬头</th>
-            <th>地址</th>
+            <th width="250px;">地址</th>
             <th>状态</th>
             <th class="pay-remarks">备注</th>
             <th class="pay-date">创建时间</th>
@@ -185,6 +185,7 @@
       </div>
       <div class="modal-body row">
         <form id="applyInvoice-form" class="form-horizontal form-cel">
+          <h5 class="invoice-modal-title" style="float:left;">快递单号：</h5><div style="padding-top:8px;" id="remark"></div>
           <h5 class="invoice-modal-title">基本信息</h5>
           <hr class="invoice-modal-hr"/>
           <div class="form-group">
@@ -240,6 +241,7 @@ function showInvoiceDetail(id){
 		$("#address").html(data.address);
 		$("#contacts").html(data.contacts);
 		$("#cellphone").html(data.cellphone);
+		$("#remark").html(!data.remark?'暂无物流信息':data.remark);
 		var d = new Date(data.createDate);
 		$("#create_date").html(d.getFullYear() + "-" + (parseInt(d.getMonth())+1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + ((parseInt(d.getSeconds())<10)?'0'+d.getSeconds():d.getSeconds()));
 	});
