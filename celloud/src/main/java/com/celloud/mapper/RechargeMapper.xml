@@ -152,5 +152,6 @@
 		<include refid="Base_Column_List" />
 		from tb_recharge
 		where user_id = #{userId,jdbcType=INTEGER}
+		order by create_date desc
 	</select>
 </mapper>
