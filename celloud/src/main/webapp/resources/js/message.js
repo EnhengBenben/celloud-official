@@ -78,6 +78,11 @@ var messageUtils = (function(messageUtils) {
 			}
 			// reOpenWebsocket();
 		};
+		self.ws.onerror = function(event){
+			console.log('websocket error!');
+			console.log(event);
+			console.log(event.data);
+		};
 	}
 	self.ws = openWebSocket();
 	bindEvents();
