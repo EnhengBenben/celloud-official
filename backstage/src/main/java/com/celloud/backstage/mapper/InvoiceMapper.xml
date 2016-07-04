@@ -183,10 +183,10 @@
       user_id = #{userId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="pageQuery" resultMap="BaseResultMap">
+  <select id="pageQuery" resultType="java.util.HashMap">
     select i.id, i.money, i.invoice_type, i.invoice_header, i.address,
-        i.invoice_state, i.remark, i.create_date
-    from tb_invoice i 
+        i.invoice_state, i.remark, i.create_date, u.username
+    from tb_invoice i left join tb_user u on u.user_id = i.user_id
     <if test="keyword != '' and keyword != null">
     where i.invoice_header like '%${keyword}%' 
     or i.address like '%${keyword}%'
