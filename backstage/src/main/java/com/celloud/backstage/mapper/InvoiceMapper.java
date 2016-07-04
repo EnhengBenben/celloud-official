@@ -38,7 +38,7 @@ public interface InvoiceMapper {
      * @param userId
      *
      */
-    List<Invoice> pageQuery(Page page, @Param("userId") Integer userId, @Param("keyword") String keyword);
+    List<Map<String, String>> pageQuery(Page page, @Param("userId") Integer userId, @Param("keyword") String keyword);
 
     /**
      * @author MQ

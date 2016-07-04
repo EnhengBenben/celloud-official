@@ -21,8 +21,8 @@ public class InvoiceServiceImpl implements InvoiceService {
     private InvoiceMapper invoiceMapper;
 
     @Override
-    public PageList<Invoice> getInvoiceListByKeyword(Page page, Integer userId, String keyword) {
-        List<Invoice> list = invoiceMapper.pageQuery(page, userId, keyword);
+    public PageList<Map<String,String>> getInvoiceListByKeyword(Page page, Integer userId, String keyword) {
+        List<Map<String, String>> list = invoiceMapper.pageQuery(page, userId, keyword);
         return new PageList<>(page, list);
     }
 
