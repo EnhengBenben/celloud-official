@@ -132,4 +132,9 @@ public class UserServiceImpl implements UserService {
                 new Date());
     }
 
+    @Override
+    public String getOpenIdByUser(Integer userId) {
+        return userMapper.getOpenIdByUser(userId);
+    }
+
 }

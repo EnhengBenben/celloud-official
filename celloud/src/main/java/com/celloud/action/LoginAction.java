@@ -34,6 +34,10 @@ import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.RSAUtil;
+import com.celloud.wechat.ParamFormat;
+import com.celloud.wechat.TemplateId;
+import com.celloud.wechat.WebchatParams;
+import com.celloud.wechat.WechatUtils;
 
 /**
  * 登录action
@@ -50,6 +54,8 @@ public class LoginAction {
     private RSAKeyService rsaKeyService;
     @Resource
     private ActionLogService logService;
+    @Resource
+    private WechatUtils wechatUtils;
 
     /**
      * 跳转到登录页面
@@ -110,6 +116,8 @@ public class LoginAction {
         if (!checkKaptcha(kaptchaCode, session)) {
             return mv.addObject("info", "验证码错误，请重新登录！");
         }
+        System.out.println(password);
+        System.out.println(newPassword);
         if (newPassword == null || newPassword.trim().length() <= 0) {
             password = RSAUtil.decryptString(privateKey, password);
         } else {
@@ -141,6 +149,14 @@ public class LoginAction {
         Integer companyId = userService.getCompanyIdByUserId(loginUser.getUserId());
         session.setAttribute("companyId", companyId);
         mv.setViewName("loading");
+        wechatUtils
+                .pushMessage(
+                        ParamFormat.paramAll().toParamMap(
+                                ParamFormat.param()
+                                        .set(WebchatParams.LOGIN.username
+                                                .name(), user.getUsername()),
+                        userService.getOpenIdByUser(loginUser.getUserId()),
+                        TemplateId.LOGIN));
         return mv;
     }
 

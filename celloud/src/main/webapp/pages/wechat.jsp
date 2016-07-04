@@ -26,18 +26,31 @@
 			</a>
 		</div>
 		<div class="logo-name">生物信息云平台</div>
-		<form action="login" method="post" id="loginForm">
+		<form action="<%=request.getContextPath()%>/api/wechat/login" method="post" id="loginForm">
 			<div class="login-main clearfix">
-			    <div class="error">&nbsp;</div>
 				<input type="hidden" name="info" id="info" value="${requestScope.info }" />
 				<input type="hidden" name="code" id="code" value="${code }" />
-			    <c:if test="${requestScope.isSuccess=='false' }">
-					<input type="hidden" id="modulusHidden" name="modulus" value="${publicKey.modulus }" />
-					<input type="hidden" id="exponentHidden" name="exponent" value="${publicKey.exponent }" />
-					<input type="text" class="username input-top" placeholder="用户名或邮箱" id="username" name="username"/>
-					<input type="password" class="pwd" placeholder="密码" id="password" name="password"/>
-					<a id="submit" class="btn-login sign-in" href="javascript:void(0);">登录</a>
-			    </c:if>
+			    <c:choose>
+		            <c:when test="${requestScope.isSuccess=='true' }">
+		                <br>
+		                <br>
+		                <br>
+		                <br>
+		                <div class="autolog">
+		                    <span class="error" style="padding-left: 0; font-size: 16px;">${info }</span>
+		                </div>
+		            </c:when>
+		            <c:otherwise>
+		                <div class="error">&nbsp;test</div>
+		                <input type="hidden" id="modulusHidden" name="modulus" value="${publicKey.modulus }" />
+	                    <input type="hidden" id="exponentHidden" name="exponent" value="${publicKey.exponent }" />
+	                    <input type="text" class="username input-top" placeholder="用户名或邮箱" id="username" name="username"/>
+	                    <input type="password" class="pwd" placeholder="密码" id="password" name="password"/>
+	                    <input type="hidden" id="tempPassword" />
+                        <input type="hidden" name="newPassword" />
+	                    <a id="submit" class="btn-login sign-in" href="javascript:void(0);">登录</a>
+		            </c:otherwise>
+		        </c:choose>
 			</div>
 		</form>
 	</div>

@@ -45,7 +45,12 @@ public class ParamFormat {
             return this;
         }
 
-        public Map<String, Object> toSubsMap() {
+        public Map<String, Object> toParamMap(Param param, String openId,
+                String templateId) {
+            map.put("data", param);
+            map.put("touser", openId);
+            map.put("template_id", templateId);
+            map.put("url", "http://weixin.qq.com/download");
             return this.map;
         }
     }

@@ -170,4 +170,14 @@ public interface UserService {
      */
     public Integer insertUserWechatInfo(Integer userId, String openId,
             String unionId);
+
+    /**
+     * 获取用户绑定的微信openid
+     * 
+     * @param userId
+     * @return
+     * @author leamo
+     * @date 2016年7月4日 上午2:33:05
+     */
+    public String getOpenIdByUser(Integer userId);
 }

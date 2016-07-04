@@ -14,11 +14,6 @@ $(document).ready(function(){
 			$("#loginForm").submit();
 		}
 	});
-	$("#submit").click(function(){
-    if(checkForm()){
-      $("#loginForm").submit();
-    }
-  });
 	function checkForm(){
 		$(".error").html("");
 		//校验用户名是否为空
@@ -35,12 +30,12 @@ $(document).ready(function(){
 			$("#password").focus();
 			return false;
 		}
-		//全部校验已通过
-		var password =$("#password").val();
-		if(password){
-			$("input[name='password']").val(secPWD(password));
-		}
-		return true;
+	  //全部校验已通过
+    var newPassword =$("#tempPassword").val();
+    if(newPassword){
+      $("input[name='newPassword']").val(secPWD(newPassword));
+    }
+    return true;
 	}
 });
 function secPWD(password){
