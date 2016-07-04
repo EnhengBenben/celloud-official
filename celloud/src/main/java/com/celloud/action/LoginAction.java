@@ -3,7 +3,10 @@ package com.celloud.action;
 import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -71,21 +74,24 @@ public class LoginAction {
         User user = new User();
         Subject subject = SecurityUtils.getSubject();
         Object isRem = subject.getSession().getAttribute("isRemembered");
-        boolean isRemembered = isRem != null ? ((boolean) isRem) : subject.isRemembered();
+        boolean isRemembered = isRem != null ? ((boolean) isRem)
+                : subject.isRemembered();
         PublicKey key = generatePublicKey(subject.getSession());
         if (isRemembered) {
             String username = String.valueOf(subject.getPrincipal());
             User temp = userService.findByUsernameOrEmail(username);
             if (temp != null) {
                 user.setUsername(temp.getUsername());
-                String password = RSAUtil.encryptedString(key.getModulus(), key.getExponent(), temp.getPassword());
+                String password = RSAUtil.encryptedString(key.getModulus(),
+                        key.getExponent(), temp.getPassword());
                 user.setPassword(password);
             } else {
                 logger.info("用户使用记住密码登录，但根据用户名(" + username + ")未找到用户");
                 isRemembered = false;
             }
         }
-        return mv.addObject("checked", isRemembered).addObject("user", user).addObject("publicKey", key)
+        return mv.addObject("checked", isRemembered).addObject("user", user)
+                .addObject("publicKey", key)
                 .addObject("showKaptchaCode", getFailedlogins() >= 3);
     }
 
@@ -103,35 +109,39 @@ public class LoginAction {
      */
     @ActionLog(value = "用户登录", button = "登录")
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public ModelAndView login(User user, String kaptchaCode, String newPassword, boolean checked) {
+    public ModelAndView login(HttpServletRequest request, User user,
+            String kaptchaCode, String newPassword,
+            boolean checked) {
         logger.info("用户正在登陆：" + user.getUsername());
         Subject subject = SecurityUtils.getSubject();
         String password = user.getPassword();
         user.setPassword("");
         Session session = subject.getSession();
-        PrivateKey privateKey = (PrivateKey) session.getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
-        ModelAndView mv = new ModelAndView("login").addObject("user", user).addObject("checked", subject.isRemembered())
+        PrivateKey privateKey = (PrivateKey) session
+                .getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
+        ModelAndView mv = new ModelAndView("login").addObject("user", user)
+                .addObject("checked", subject.isRemembered())
                 .addObject("publicKey", generatePublicKey(session))
                 .addObject("showKaptchaCode", getFailedlogins() >= 3);
         if (!checkKaptcha(kaptchaCode, session)) {
             return mv.addObject("info", "验证码错误，请重新登录！");
         }
-        System.out.println(password);
-        System.out.println(newPassword);
         if (newPassword == null || newPassword.trim().length() <= 0) {
             password = RSAUtil.decryptString(privateKey, password);
         } else {
             password = RSAUtil.decryptStringByJs(privateKey, newPassword);
             password = password == null ? "" : MD5Util.getMD5(password);
         }
-        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), password, checked);
+        UsernamePasswordToken token = new UsernamePasswordToken(
+                user.getUsername(), password, checked);
         try {
             subject.login(token);
         } catch (IncorrectCredentialsException | UnknownAccountException e) {
             String msg = "用户名或密码错误，请重新登录！";
             addFailedlogins();
             logger.warn("用户（{}）登录失败，用户名或密码错误！", user.getUsername());
-            return mv.addObject("info", msg).addObject("showKaptchaCode", getFailedlogins() >= 3);
+            return mv.addObject("info", msg).addObject("showKaptchaCode",
+                    getFailedlogins() >= 3);
         } catch (Exception e) {
             logger.error("登录失败！", e);
             return mv.addObject("info", "登录失败！");
@@ -146,17 +156,27 @@ public class LoginAction {
         session.removeAttribute(Constants.SESSION_FAILED_LOGIN_TIME);
         session.setAttribute("isRemembered", checked);
         // 获取用户所属的大客户，决定是否有统计菜单
-        Integer companyId = userService.getCompanyIdByUserId(loginUser.getUserId());
+        Integer companyId = userService
+                .getCompanyIdByUserId(loginUser.getUserId());
         session.setAttribute("companyId", companyId);
         mv.setViewName("loading");
-        wechatUtils
-                .pushMessage(
-                        ParamFormat.paramAll().toParamMap(
-                                ParamFormat.param()
-                                        .set(WebchatParams.LOGIN.username
-                                                .name(), user.getUsername()),
-                        userService.getOpenIdByUser(loginUser.getUserId()),
-                        TemplateId.LOGIN));
+        SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String localAddr = request.getLocalAddr();
+        if ("0:0:0:0:0:0:0:1".equals(localAddr)) {
+            localAddr = "127.0.0.1";
+        }
+        Map<String, Object> map = ParamFormat.paramAll().toParamMap(
+                ParamFormat.param()
+                        .set(WebchatParams.LOGIN.first.name(),
+                                "您好，您的帐号" + user.getUsername() + " 被登录")
+                        .set(WebchatParams.LOGIN.time.name(),
+                                dformat.format(new Date()))
+                .set(WebchatParams.LOGIN.ip.name(), localAddr)
+                .set(WebchatParams.LOGIN.reason.name(),
+                        "备注：如果本次登录不是您本人所为，说明您的帐号已经被盗！为减少您的损失，请点击本条消息，立即锁定帐号。"),
+                userService.getOpenIdByUser(loginUser.getUserId()),
+                TemplateId.LOGIN);
+        wechatUtils.pushMessage(map);
         return mv;
     }
 
@@ -166,7 +186,8 @@ public class LoginAction {
      * @return
      */
     public int getFailedlogins() {
-        Object failedlogins = SecurityUtils.getSubject().getSession().getAttribute(Constants.SESSION_FAILED_LOGIN_TIME);
+        Object failedlogins = SecurityUtils.getSubject().getSession()
+                .getAttribute(Constants.SESSION_FAILED_LOGIN_TIME);
         int time = 0;
         try {
             time = Integer.parseInt((String) failedlogins);
@@ -180,7 +201,8 @@ public class LoginAction {
      */
     public void addFailedlogins() {
         int time = getFailedlogins();
-        SecurityUtils.getSubject().getSession().setAttribute(Constants.SESSION_FAILED_LOGIN_TIME, (time + 1) + "");
+        SecurityUtils.getSubject().getSession().setAttribute(
+                Constants.SESSION_FAILED_LOGIN_TIME, (time + 1) + "");
     }
 
     /**
@@ -195,10 +217,13 @@ public class LoginAction {
         if (time < 3) {
             return true;
         }
-        String kaptchaExpected = (String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
+        String kaptchaExpected = (String) session.getAttribute(
+                com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
         // 验证码错误，直接返回到登录页面
-        if (kaptchaExpected == null || !kaptchaExpected.equalsIgnoreCase(kaptcha)) {
-            logger.info("用户登陆验证码错误：param : {} \t session : {}", kaptcha, kaptchaExpected);
+        if (kaptchaExpected == null
+                || !kaptchaExpected.equalsIgnoreCase(kaptcha)) {
+            logger.info("用户登陆验证码错误：param : {} \t session : {}", kaptcha,
+                    kaptchaExpected);
             return false;
         }
         return true;
@@ -213,7 +238,8 @@ public class LoginAction {
      */
     @ActionLog(value = "用户退出", button = "退出")
     @RequestMapping("logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
+    public String logout(HttpServletRequest request,
+            HttpServletResponse response) {
         HttpSession session = request.getSession();
         User user = ConstantsData.getLoginUser();
         session.removeAttribute(Constants.SESSION_LOGIN_USER);
@@ -222,7 +248,8 @@ public class LoginAction {
             session.removeAttribute(names.nextElement());
         }
         SecurityUtils.getSubject().logout();
-        logger.info("用户({})主动退出", user == null ? "null..." : user.getUsername());
+        logger.info("用户({})主动退出",
+                user == null ? "null..." : user.getUsername());
         return "redirect:login";
     }
 
@@ -236,7 +263,8 @@ public class LoginAction {
         KeyPair keyPair = RSAUtil.generateKeyPair();
         RSAPublicKey rsaPublicKey = (RSAPublicKey) keyPair.getPublic();
         RSAPrivateKey rsaPrivateKey = (RSAPrivateKey) keyPair.getPrivate();
-        PrivateKey privateKey = new PrivateKey(rsaPrivateKey.getModulus(), rsaPrivateKey.getPrivateExponent());
+        PrivateKey privateKey = new PrivateKey(rsaPrivateKey.getModulus(),
+                rsaPrivateKey.getPrivateExponent());
         session.setAttribute(Constants.SESSION_RSA_PRIVATEKEY, privateKey);
         PublicKey publicKey = new PublicKey();
         publicKey.setModulus(rsaPublicKey.getModulus().toString(16));
