@@ -36,6 +36,8 @@
 		parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
 		from tb_pay_order
 		left join tb_user on
 		tb_pay_order.user_id=tb_user.user_id
