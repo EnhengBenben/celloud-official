@@ -48,7 +48,7 @@ var messageUtils = (function(messageUtils) {
 	}
 	function bindEvents() {
 		self.ws.onopen = function() {
-			console.log("websocket connect is opened.");
+			console.log("websocket connect is opened : "+new Date());
 			clearTimeouts();
 			for ( var listener in self.openListeners) {
 				if ($.isFunction(self.openListeners[listener])) {
@@ -70,13 +70,18 @@ var messageUtils = (function(messageUtils) {
 			}
 		};
 		self.ws.onclose = function() {
-			console.log("websocket connect is closed");
+			console.log("websocket connect is closed : "+new Date());
 			for ( var listener in self.closeListeners) {
 				if ($.isFunction(self.closeListeners[listener])) {
 					self.closeListeners[listener]();
 				}
 			}
 			// reOpenWebsocket();
+		};
+		self.ws.onerror = function(event){
+			console.log('websocket error : '+new Date());
+			console.log(event);
+			console.log(event.data);
 		};
 	}
 	self.ws = openWebSocket();

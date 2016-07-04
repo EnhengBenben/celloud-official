@@ -298,11 +298,9 @@
       (task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and (app_id=#{appId} or period!=2) group by data_key))
       or (data_key is null and state=#{state} and user_id=#{userId} and app_id=#{appId})
     )t
-    left join 
-    (select * from tb_file where user_id=#{userId} and state=#{state}) f
+    left join tb_file f
     on f.data_key=t.data_key 
-    left join 
-    (select * from tb_sample where user_id=#{userId} and state=#{state}) s
+    left join tb_sample s
     on s.sample_id=t.sample_id
     order by t.update_date desc,f.batch asc
   </select>
@@ -322,11 +320,9 @@
       (task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and (app_id=#{appId} or period!=2) group by data_key))
       or (data_key is null and state=#{state} and user_id=#{userId} and app_id=#{appId})
     )t
-    left join 
-    (select * from tb_file where user_id=#{userId} and state=#{state}) f
+    left join tb_file f
     on f.data_key=t.data_key 
-    left join 
-    (select * from tb_sample where user_id=#{userId} and state=#{state}) s
+    left join tb_sample s
     on s.sample_id=t.sample_id
     where 1=1 
     <if test="condition != null" >
@@ -379,7 +375,7 @@
   </select>
   <select id="findTaskPeriodNum" resultType="map">
     select count(t.period) periodNum,t.period from 
-    (select * from tb_task where task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and app_id=#{appId} group by data_key))t
+    (select * from tb_task where task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and (app_id=#{appId} or period!=2) group by data_key))t
     left join tb_file f
     on f.data_key=t.data_key
     where f.user_id=#{userId} and f.state=#{state}

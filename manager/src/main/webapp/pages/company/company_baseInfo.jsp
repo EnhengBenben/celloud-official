@@ -34,7 +34,7 @@
                             <tr>
                                 <td>${item.companyId }</td>
                                 <td><a href="javascript:void(0)" onclick="toCompanyDetail(${item.companyId })">${item.companyName }</a></td>
-                                <td><fmt:formatDate value="${item.createDate }" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+                                <td><fmt:formatDate value="${item.createDate }" pattern="yyyy-MM-dd"/></td>
                                 <c:if test="${loginUserInSession.role=='2'}">
 	                              <td>${item.bigCustomerName }</td>
 	                            </c:if>

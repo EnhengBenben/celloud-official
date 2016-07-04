@@ -65,22 +65,29 @@
                     <li>
                         <a class="number">
                             <c:choose>
+                                <c:when test="${resultMap.dataSize>1099511627776 }">
+                                    <fmt:formatNumber pattern="0.00" value="${(resultMap.dataSize-(resultMap.dataSize%1099511627776))/1099511627776 + resultMap.dataSize%1099511627776/1099511627776 }" />
+                                </c:when>
                                 <c:when test="${resultMap.dataSize>1073741824 }">
-                                    <fmt:formatNumber pattern="0.00" value="${(resultMap.dataSize-(resultMap.dataSize%1048576))/1048576 + resultMap.dataSize%1048576/1048576 }" />
+                                    <fmt:formatNumber pattern="0.00" value="${(resultMap.dataSize-(resultMap.dataSize%1073741824))/1073741824 + resultMap.dataSize%1073741824/1073741824 }" />
                                 </c:when>
                                 <c:when test="${resultMap.dataSize>1048576 }">
                                     <fmt:formatNumber pattern="0.00" value="${(resultMap.dataSize-(resultMap.dataSize%1048576))/1048576 + resultMap.dataSize%1048576/1048576 }" />
                                 </c:when>
                                 <c:otherwise>
-                                    <fmt:formatNumber pattern="0.00" value="${(resultMap.dataSize-(resultMap.dataSize%1048576))/1048576 + resultMap.dataSize%1048576/1048576 }" />
+                                    <fmt:formatNumber pattern="0.00" value="${(resultMap.dataSize-(resultMap.dataSize%1024))/1024 + resultMap.dataSize%1024/1024 }" />
                                 </c:otherwise>
                             </c:choose>
                         </a>
                         <div class="info">
                             <b>
                                 <c:choose>
+                                    <c:when test="${resultMap.dataSize>1099511627776 }">
+                                        <fmt:formatNumber pattern="0.00" value="${(resultMap.dataSize-(resultMap.dataSize%1099511627776))/1099511627776 + resultMap.dataSize%1099511627776/1099511627776 }" />
+                                        <span class="unit">(TB)</span>
+                                    </c:when>
 	                                <c:when test="${resultMap.dataSize>1073741824 }">
-	                                    <fmt:formatNumber pattern="0.00" value="${(resultMap.dataSize-(resultMap.dataSize%1048576))/1048576 + resultMap.dataSize%1048576/1048576 }" />
+	                                    <fmt:formatNumber pattern="0.00" value="${(resultMap.dataSize-(resultMap.dataSize%1073741824))/1073741824 + resultMap.dataSize%1073741824/1073741824 }" />
                                         <span class="unit">(GB)</span>
                                     </c:when>
 	                                <c:when test="${resultMap.dataSize>1048576 }">
@@ -88,7 +95,7 @@
                                         <span class="unit">(MB)</span>
                                     </c:when>
 	                                <c:otherwise>
-	                                    <fmt:formatNumber pattern="0.00" value="${(resultMap.dataSize-(resultMap.dataSize%1048576))/1048576 + resultMap.dataSize%1048576/1048576 }" />
+	                                    <fmt:formatNumber pattern="0.00" value="${(resultMap.dataSize-(resultMap.dataSize%1024))/1024 + resultMap.dataSize%1024/1024 }" />
                                         <span class="unit">(KB)</span>
                                     </c:otherwise>
 	                            </c:choose>
