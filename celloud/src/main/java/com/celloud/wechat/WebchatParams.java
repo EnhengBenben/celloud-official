@@ -8,11 +8,23 @@ package com.celloud.wechat;
  */
 public class WebchatParams {
     public static enum RUN_OVER {
-        app, startDate, endDate
+        first,
+        /**
+         * 运行APP
+         */
+        keyword1,
+        /**
+         * 开始时间
+         */
+        keyword2,
+        /**
+         * 结束时间
+         */
+        keyword3, remark
     }
 
     public static enum LOGIN {
-        username, ip
+        first, time, ip, reason
     }
 
     /**
@@ -22,17 +34,34 @@ public class WebchatParams {
      * @date 2016年6月30日 下午3:07:25
      */
     public static enum BALANCE_CHANGE {
+        first,
+        /**
+         * 变动时间
+         */
+        date,
         /**
          * 变动金额
          */
-        amount,
+        adCharge,
         /**
-         * 当前余额
+         * 资金类型
          */
-        balances
+        type,
+        /**
+         * 账户余额
+         */
+        cashBalance, remark
     }
 
     public static enum PWD_UPDATE {
-        username
+        first,
+        /**
+         * 邮箱类型
+         */
+        productName,
+        /**
+         * 修改时间
+         */
+        time, remark
     }
 }

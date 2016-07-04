@@ -26,11 +26,11 @@ public class ParamFormat {
         }
 
         public HashMap<String, String> get(String name) {
-            return param.get(name);
+            return this.param.get(name);
         }
 
         protected Map<String, HashMap<String, String>> get() {
-            return param;
+            return this.param;
         }
     }
 
@@ -38,14 +38,14 @@ public class ParamFormat {
         private Map<String, Object> map = new HashMap<>();
 
         public ParamAll add(Param param, String openId, String templateId) {
-            map.put("data", param);
+            map.put("data", param.get());
             map.put("touser", openId);
             map.put("template_id", templateId);
             map.put("url", "http://weixin.qq.com/download");
             return this;
         }
 
-        public Map<String, Object> toSubsMap() {
+        public Map<String, Object> get() {
             return this.map;
         }
     }

@@ -140,6 +140,7 @@ public class WechatUtils {
     public String pushMessage(Map<String, Object> map) {
         String url = templateUrl + getToken();
         JSONObject json = new JSONObject(map);
+        System.out.println(json.toString());
         return HttpUtil.sendWeChatMessage(url, json.toString());
     }
 

@@ -382,6 +382,6 @@
     </insert>
     <select id="getOpenIdByUser" resultType="java.lang.String">
         select open_id from tb_user_wechat
-        where user_id=#{userIds}
+        where user_id=#{userId}
     </select>
 </mapper>

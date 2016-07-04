@@ -60,7 +60,7 @@ public class WeChatAction {
 		PrivateKey privateKey = (PrivateKey) session.getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
 		ModelAndView mv = new ModelAndView("wechat").addObject("user", user);
 		String password = user.getPassword();
-		password = RSAUtil.decryptStringByJs(privateKey, password);
+        password = RSAUtil.decryptStringByJs(privateKey, password);
 		password = password == null ? "" : MD5Util.getMD5(password);
 		user.setPassword(password);
 		user = us.login(user);
@@ -72,7 +72,7 @@ public class WeChatAction {
 		}
         String openId = wechatUtils.getOpenId(code);
         us.insertUserWechatInfo(user.getUserId(), openId, null);
-		String msg = "用户与微信号绑定成功！";
+        String msg = "您的CelLoud账号与微信号绑定成功！";
 		log.info("用户({})登录成功！", user.getUsername());
 		session.removeAttribute(Constants.SESSION_RSA_PRIVATEKEY);
 		mv.addObject("info", msg).addObject("isSuccess", "true");
