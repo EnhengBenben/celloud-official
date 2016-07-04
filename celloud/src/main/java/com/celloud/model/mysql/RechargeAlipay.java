@@ -4,103 +4,114 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class RechargeAlipay {
-    private Integer id;
+	private Integer id;
 
-    private Integer userId;
+	private Integer userId;
 
-    private String buyerEmail;
+	private String username;
 
-    private String buyerId;
+	private String buyerEmail;
 
-    private String tradeNo;
+	private String buyerId;
 
-    private String aliTradeNo;
+	private String tradeNo;
 
-    private String subject;
+	private String aliTradeNo;
 
-    private String description;
+	private String subject;
 
-    private Date createTime;
+	private String description;
 
-    private BigDecimal amount;
+	private Date createTime;
 
-    public Integer getId() {
-        return id;
-    }
+	private BigDecimal amount;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public Integer getUserId() {
-        return userId;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+	public Integer getUserId() {
+		return userId;
+	}
 
-    public String getBuyerEmail() {
-        return buyerEmail;
-    }
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
-    public void setBuyerEmail(String buyerEmail) {
-        this.buyerEmail = buyerEmail == null ? null : buyerEmail.trim();
-    }
+	public String getBuyerEmail() {
+		return buyerEmail;
+	}
 
-    public String getBuyerId() {
-        return buyerId;
-    }
+	public void setBuyerEmail(String buyerEmail) {
+		this.buyerEmail = buyerEmail == null ? null : buyerEmail.trim();
+	}
 
-    public void setBuyerId(String buyerId) {
-        this.buyerId = buyerId == null ? null : buyerId.trim();
-    }
+	public String getBuyerId() {
+		return buyerId;
+	}
 
-    public String getTradeNo() {
-        return tradeNo;
-    }
+	public void setBuyerId(String buyerId) {
+		this.buyerId = buyerId == null ? null : buyerId.trim();
+	}
 
-    public void setTradeNo(String tradeNo) {
-        this.tradeNo = tradeNo == null ? null : tradeNo.trim();
-    }
+	public String getTradeNo() {
+		return tradeNo;
+	}
 
-    public String getAliTradeNo() {
-        return aliTradeNo;
-    }
+	public void setTradeNo(String tradeNo) {
+		this.tradeNo = tradeNo == null ? null : tradeNo.trim();
+	}
 
-    public void setAliTradeNo(String aliTradeNo) {
-        this.aliTradeNo = aliTradeNo == null ? null : aliTradeNo.trim();
-    }
+	public String getAliTradeNo() {
+		return aliTradeNo;
+	}
 
-    public String getSubject() {
-        return subject;
-    }
+	public void setAliTradeNo(String aliTradeNo) {
+		this.aliTradeNo = aliTradeNo == null ? null : aliTradeNo.trim();
+	}
 
-    public void setSubject(String subject) {
-        this.subject = subject == null ? null : subject.trim();
-    }
+	public String getSubject() {
+		return subject;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setSubject(String subject) {
+		this.subject = subject == null ? null : subject.trim();
+	}
 
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public void setDescription(String description) {
+		this.description = description == null ? null : description.trim();
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public BigDecimal getAmount() {
-        return amount;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 }

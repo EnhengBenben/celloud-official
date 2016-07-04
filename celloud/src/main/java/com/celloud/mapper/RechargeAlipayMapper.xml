@@ -4,6 +4,7 @@
 	<resultMap id="BaseResultMap" type="com.celloud.model.mysql.RechargeAlipay">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
 		<result column="buyer_email" property="buyerEmail" jdbcType="VARCHAR" />
 		<result column="buyer_id" property="buyerId" jdbcType="VARCHAR" />
 		<result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
@@ -14,19 +15,24 @@
 		<result column="amount" property="amount" jdbcType="DECIMAL" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, user_id, buyer_email, buyer_id, trade_no, ali_trade_no, subject, description,
+		id, tb_recharge_alipay.user_id, buyer_email, buyer_id, trade_no, ali_trade_no, subject, description,
 		create_time, amount
+	</sql>
+	<sql id="Join_Column_List">
+		tb_user.username as username
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
-		<include refid="Base_Column_List" />
+		<include refid="Base_Column_List" />,<include refid="Join_Column_List" />
 		from tb_recharge_alipay
+		left join tb_user on tb_recharge_alipay.user_id=tb_user.user_id
 		where id = #{id,jdbcType=INTEGER}
 	</select>
 	<select id="selectByTradeNo" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List" />,<include refid="Join_Column_List" />
         from tb_recharge_alipay
+        left join tb_user on tb_recharge_alipay.user_id=tb_user.user_id
         where trade_no = #{tradeNo,jdbcType=VARCHAR}
     </select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
