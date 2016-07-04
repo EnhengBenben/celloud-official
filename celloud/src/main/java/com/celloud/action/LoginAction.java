@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -110,8 +111,7 @@ public class LoginAction {
     @ActionLog(value = "用户登录", button = "登录")
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public ModelAndView login(HttpServletRequest request, User user,
-            String kaptchaCode, String newPassword,
-            boolean checked) {
+            String kaptchaCode, String newPassword, boolean checked) {
         logger.info("用户正在登陆：" + user.getUsername());
         Subject subject = SecurityUtils.getSubject();
         String password = user.getPassword();
@@ -160,23 +160,28 @@ public class LoginAction {
                 .getCompanyIdByUserId(loginUser.getUserId());
         session.setAttribute("companyId", companyId);
         mv.setViewName("loading");
-        SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        String localAddr = request.getLocalAddr();
-        if ("0:0:0:0:0:0:0:1".equals(localAddr)) {
-            localAddr = "127.0.0.1";
+        String openId = userService.getOpenIdByUser(loginUser.getUserId());
+        if (StringUtils.isNotEmpty(openId)) {
+            SimpleDateFormat dformat = new SimpleDateFormat(
+                    "yyyy-MM-dd hh:mm:ss");
+            String localAddr = request.getLocalAddr();
+            if ("0:0:0:0:0:0:0:1".equals(localAddr)) {
+                localAddr = "127.0.0.1";
+            }
+            Map<String, Object> map = ParamFormat
+                    .paramAll().add(
+                            ParamFormat.param()
+                                    .set(WebchatParams.LOGIN.first.name(),
+                                            "您好，您的帐号" + user.getUsername()
+                                                    + " 被登录")
+                            .set(WebchatParams.LOGIN.time.name(),
+                                    dformat.format(new Date()))
+                    .set(WebchatParams.LOGIN.ip.name(), localAddr)
+                    .set(WebchatParams.LOGIN.reason.name(),
+                            "备注：如果本次登录不是您本人所为，说明您的帐号已经被盗！为减少您的损失，请点击本条消息，立即锁定帐号。"),
+                    openId, TemplateId.LOGIN).get();
+            wechatUtils.pushMessage(map);
         }
-        Map<String, Object> map = ParamFormat.paramAll().toParamMap(
-                ParamFormat.param()
-                        .set(WebchatParams.LOGIN.first.name(),
-                                "您好，您的帐号" + user.getUsername() + " 被登录")
-                        .set(WebchatParams.LOGIN.time.name(),
-                                dformat.format(new Date()))
-                .set(WebchatParams.LOGIN.ip.name(), localAddr)
-                .set(WebchatParams.LOGIN.reason.name(),
-                        "备注：如果本次登录不是您本人所为，说明您的帐号已经被盗！为减少您的损失，请点击本条消息，立即锁定帐号。"),
-                userService.getOpenIdByUser(loginUser.getUserId()),
-                TemplateId.LOGIN);
-        wechatUtils.pushMessage(map);
         return mv;
     }
 
