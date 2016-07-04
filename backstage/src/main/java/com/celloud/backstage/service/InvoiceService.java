@@ -21,7 +21,7 @@ public interface InvoiceService {
      * @return
      *
      */
-    public PageList<Invoice> getInvoiceListByKeyword(Page page, Integer userId, String keyword);
+    public PageList<Map<String, String>> getInvoiceListByKeyword(Page page, Integer userId, String keyword);
 
     /**
      * @author MQ

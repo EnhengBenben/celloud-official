@@ -43,7 +43,7 @@ public class InvoiceAction {
         logger.info("用户{}查看发票列表", ConstantsData.getLoginUserName());
         ModelAndView mv = new ModelAndView("expense/invoice_main");
         Integer userId = ConstantsData.getLoginUserId();
-        PageList<Invoice> invoicePageList = invoiceService.getInvoiceListByKeyword(page, userId, keyword);
+        PageList<Map<String, String>> invoicePageList = invoiceService.getInvoiceListByKeyword(page, userId, keyword);
         mv.addObject("invoicePageList", invoicePageList);
         mv.addObject("keyword", keyword);
         return mv;

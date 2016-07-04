@@ -18,6 +18,7 @@
     <table class="table table-bordered table-striped" cellspacing="0" width="100%">
         <thead>
             <tr>
+                <th>用户名</th>
                 <th>金额</th>
                 <th>类型</th>
                 <th>抬头</th>
@@ -31,22 +32,23 @@
         <tbody>
             <c:forEach items="${invoicePageList.datas }" var="invoice">
                 <tr>
+                    <td>${invoice.username }</td>
 	                <td>${invoice.money }</td>
 	                <td>
-	                   <c:if test="${invoice.invoiceType == 0 }">公司普票</c:if>
-	                   <c:if test="${invoice.invoiceType == 1 }">公司专票</c:if>
+	                   <c:if test="${invoice.invoice_type == false }">公司普票</c:if>
+	                   <c:if test="${invoice.invoice_type == true }">公司专票</c:if>
 	                </td>
-	                <td>${invoice.invoiceHeader }</td>
+	                <td>${invoice.invoice_header }</td>
 	                <td>${invoice.address }</td>
 	                <td>
-	                   <c:if test="${invoice.invoiceState == 0 }">已申请</c:if>
-	                   <c:if test="${invoice.invoiceState == 1 }">已寄出</c:if>
+	                   <c:if test="${invoice.invoice_state == false }">已申请</c:if>
+	                   <c:if test="${invoice.invoice_state == true }">已寄出</c:if>
 	                </td>
 	                <td>
 	                   <c:if test="${empty invoice.remark }">无</c:if>
 	                   <c:if test="${not empty invoice.remark }">${invoice.remark }</c:if>
                     </td>
-	                <td><fmt:formatDate value="${invoice.createDate }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+	                <td><fmt:formatDate value="${invoice.create_date }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 	                <td><a href="javascript:expense.invoice.toInvoiceDdetail('${invoice.id }');">详情</a></td>
                 </tr>
             </c:forEach>
