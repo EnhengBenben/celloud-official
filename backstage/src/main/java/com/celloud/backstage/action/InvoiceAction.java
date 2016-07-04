@@ -68,6 +68,6 @@ public class InvoiceAction {
     @ResponseBody
     public int edit(Invoice invoice, String email, String postCompany, String postNumber) {
         logger.info("用户{}邮寄发票", ConstantsData.getLoginUserName());
-        return invoiceService.postInvoice(invoice, postCompany + ":" + postNumber, email);
+        return invoiceService.postInvoice(invoice, postCompany, postNumber, email);
     }
 }

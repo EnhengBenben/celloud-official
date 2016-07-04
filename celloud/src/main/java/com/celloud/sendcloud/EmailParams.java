@@ -98,4 +98,14 @@ public class EmailParams {
 		end;
 	}
 
+    /**
+     * 用户申请发票
+     */
+    public static enum INVOICE {
+        /**
+         * 用户名
+         */
+        username;
+    }
+
 }

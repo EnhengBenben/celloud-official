@@ -43,5 +43,9 @@ public class EmailType {
 	 * 意见反馈
 	 */
 	public static final String FEADBACK = "feadback";
+    /**
+     * 申请发票
+     */
+    public static final String INVOICE = "invoice";
 
 }
