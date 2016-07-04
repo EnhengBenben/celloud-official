@@ -783,3 +783,30 @@ var task = (function(task){
 	}
 	return self;
 })(task);
+
+var expense = (function(expense){
+	var self = expense || {};
+	self.invoice = {};
+	self.invoice.toInvoiceMain = function(currentPage,keyword){
+		var currentPage = currentPage || 1;
+		var keyword = keyword || $("#keyword").val();
+		$.post("invoice/list",{"currentPage":currentPage,"keyword":keyword},function(responseText){
+			$("#main-content").html(responseText);
+		});
+	};
+	self.invoice.toInvoiceDdetail = function(invoiceId){
+		$.post("invoice/detail",{"invoiceId":invoiceId},function(responseText){
+			$("#invoice-detailModal .modal-content").html(responseText);
+			$("#invoice-detailModal").modal("show");
+		});
+	};
+	return self;
+})(expense);
+
+
+
+
+
+
+
+

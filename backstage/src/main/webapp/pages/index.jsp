@@ -110,6 +110,12 @@
                             <span class="title">邮件群发</span>
                         </a>
                     </li>
+                    <li id="mailing-menu">
+                        <a href="javascript:expense.invoice.toInvoiceMain('1','');">
+                            <i class="linecons-globe"></i>
+                            <span class="title">发票管理</span>
+                        </a>
+                    </li>
                     <li id="task-menu">
                         <a href="#">
                             <i class="linecons-wallet"></i>
@@ -139,6 +145,7 @@
                             <span class="title">客户端</span>
                         </a>
                     </li>
+                    <li >
                 </ul>
                         
             </div>

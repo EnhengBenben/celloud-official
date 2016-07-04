@@ -1,11 +1,12 @@
-package com.celloud.mapper;
+package com.celloud.backstage.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.celloud.model.mysql.Invoice;
-import com.celloud.page.Page;
+import com.celloud.backstage.model.Invoice;
+import com.celloud.backstage.page.Page;
 
 public interface InvoiceMapper {
 
@@ -37,7 +38,7 @@ public interface InvoiceMapper {
      * @param userId
      *
      */
-    List<Invoice> pageQuery(Page page, @Param("userId") Integer userId);
+    List<Invoice> pageQuery(Page page, @Param("userId") Integer userId, @Param("keyword") String keyword);
 
     /**
      * @author MQ
@@ -46,5 +47,5 @@ public interface InvoiceMapper {
      * @param id
      *
      */
-    Invoice findById(Integer id);
+    Map<String, String> findById(Integer id);
 }

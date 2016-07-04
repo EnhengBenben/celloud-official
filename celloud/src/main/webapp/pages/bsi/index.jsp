@@ -32,8 +32,8 @@
           <div class="y-topbar-span9 y-last">
             <div class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="celicon user-icon"></i>
                 <span>${sessionScope.loginUserInSession.username }</span>
+                <i class="celicon user-icon"></i>
               </a>
               <ul class="dropdown-menu">
                 <li>

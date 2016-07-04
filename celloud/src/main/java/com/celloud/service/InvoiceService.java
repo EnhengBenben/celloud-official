@@ -1,6 +1,8 @@
 package com.celloud.service;
 
 import com.celloud.model.mysql.Invoice;
+import com.celloud.page.Page;
+import com.celloud.page.PageList;
 
 /**
  * @author MQ
@@ -17,5 +19,23 @@ public interface InvoiceService {
      * @param invoice
      * 
      */
-    public int applyInvoice(Invoice invoice, String[] ids);
+    public int applyInvoice(Invoice invoice, Integer[] ids);
+
+    /**
+     * @author MQ
+     * @date 2016年6月30日下午1:25:49
+     * @description 分页查询发票
+     * @return
+     *
+     */
+    public PageList<Invoice> getInvoiceList(Page page, Integer userId);
+
+    /**
+     * @author MQ
+     * @date 2016年6月30日下午3:30:20
+     * @description 根据id查询发票信息
+     * @param id
+     *
+     */
+    public Invoice getInvoiceDetail(Integer id);
 }

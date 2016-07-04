@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.celloud.mapper.InvoiceMapper" >
-  <resultMap id="BaseResultMap" type="com.celloud.model.mysql.Invoice" >
+<mapper namespace="com.celloud.backstage.mapper.InvoiceMapper" >
+  <resultMap id="BaseResultMap" type="com.celloud.backstage.model.Invoice" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="money" property="money" jdbcType="DECIMAL" />
     <result column="invoice_type" property="invoiceType" jdbcType="INTEGER" />
@@ -29,7 +29,7 @@
     delete from tb_invoice
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.celloud.model.mysql.Invoice" >
+  <insert id="insert" parameterType="com.celloud.backstage.model.Invoice" >
     insert into tb_invoice (id, money, invoice_type, 
       invoice_header, contacts, cellphone, 
       address, invoice_state, remark, 
@@ -39,7 +39,7 @@
       #{address,jdbcType=VARCHAR}, #{invoiceState,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
       #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.celloud.model.mysql.Invoice" >
+  <insert id="insertSelective" parameterType="com.celloud.backstage.model.Invoice" >
     insert into tb_invoice
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -119,7 +119,7 @@
     </trim>
   </insert>
   <!-- 插入一条记录并设置主键 -->
-  <insert id="insertAndSetId" keyProperty="id" useGeneratedKeys="true" parameterType="com.celloud.model.mysql.Invoice" >
+  <insert id="insertAndSetId" keyProperty="id" useGeneratedKeys="true" parameterType="com.celloud.backstage.model.Invoice" >
     insert into tb_invoice (money, invoice_type, 
       invoice_header, contacts, cellphone, 
       address, invoice_state, remark, 
@@ -129,19 +129,19 @@
       #{address,jdbcType=VARCHAR}, #{invoiceState,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
       #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER})
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.Invoice" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.backstage.model.Invoice" >
     update tb_invoice
     <set >
-      <if test="money != null" >
+      <if test="money != null and money != ''" >
         money = #{money,jdbcType=DECIMAL},
       </if>
-      <if test="invoiceType != null" >
+      <if test="invoiceType != null and invoiceType != ''" >
         invoice_type = #{invoiceType,jdbcType=INTEGER},
       </if>
-      <if test="invoiceHeader != null" >
+      <if test="invoiceHeader != null and invoiceHeader != ''" >
         invoice_header = #{invoiceHeader,jdbcType=VARCHAR},
       </if>
-      <if test="contacts != null" >
+      <if test="contacts != null and contacts != ''" >
         contacts = #{contacts,jdbcType=VARCHAR},
       </if>
       <if test="cellphone != null" >
@@ -168,7 +168,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.Invoice" >
+  <update id="updateByPrimaryKey" parameterType="com.celloud.backstage.model.Invoice" >
     update tb_invoice
     set money = #{money,jdbcType=DECIMAL},
       invoice_type = #{invoiceType,jdbcType=INTEGER},
@@ -187,13 +187,17 @@
     select i.id, i.money, i.invoice_type, i.invoice_header, i.address,
         i.invoice_state, i.remark, i.create_date
     from tb_invoice i 
-    where user_id = #{userId}
+    <if test="keyword != '' and keyword != null">
+    where i.invoice_header like '%${keyword}%' 
+    or i.address like '%${keyword}%'
+    or i.cellphone like '%${keyword}%'
+    </if>
     order by create_date desc  
   </select>
-  <select id="findById" resultMap="BaseResultMap">
+  <select id="findById" resultType="java.util.HashMap">
     select i.id, i.money, i.invoice_type, i.invoice_header, i.contacts, i.cellphone,
-        i.address, i.invoice_state, i.remark, i.create_date, i.update_date, i.user_id
-    from tb_invoice i
+        i.address, i.invoice_state, i.remark, i.create_date, i.update_date, i.user_id, u.email
+    from tb_invoice i left join tb_user u on u.user_id = i.user_id
     where i.id = #{id}
   </select>
 </mapper>

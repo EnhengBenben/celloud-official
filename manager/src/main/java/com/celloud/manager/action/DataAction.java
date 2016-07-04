@@ -2,7 +2,8 @@ package com.celloud.manager.action;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -250,8 +251,8 @@ public class DataAction {
         String fileName = new Date().getTime() + ".xls";
         String path = PropertiesUtil.outputPath + fileName;
         File file = new File(path);
-        FileWriter fw = new FileWriter(file,true);
-        BufferedWriter bufferWritter = new BufferedWriter(fw);
+        OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(file), "gbk");
+        BufferedWriter bufferWritter = new BufferedWriter(write);
         bufferWritter.write(sb.toString());
         bufferWritter.close();
         HttpHeaders headers = new HttpHeaders();
