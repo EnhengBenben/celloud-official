@@ -39,5 +39,5 @@ public interface InvoiceService {
      * @return
      *
      */
-    public int postInvoice(Invoice invoice, String remark, String email);
+    public int postInvoice(Invoice invoice, String postCompany, String postNumber, String email);
 }

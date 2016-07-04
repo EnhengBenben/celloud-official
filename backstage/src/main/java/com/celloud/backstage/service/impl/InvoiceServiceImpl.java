@@ -1,5 +1,6 @@
 package com.celloud.backstage.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,8 @@ import com.celloud.backstage.model.Invoice;
 import com.celloud.backstage.page.Page;
 import com.celloud.backstage.page.PageList;
 import com.celloud.backstage.service.InvoiceService;
+import com.celloud.backstage.utils.EmailUtils;
+import com.celloud.backstage.utils.ResetPwdUtils;
 
 @Service("invoiceService")
 public class InvoiceServiceImpl implements InvoiceService {
@@ -32,12 +35,18 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public int postInvoice(Invoice invoice, String remark, String email) {
+    public int postInvoice(Invoice invoice, String postCompany, String postNumber, String email) {
         invoice.setUpdateDate(new Date());
-        invoice.setRemark("快递单号:" + remark);
+        invoice.setRemark("快递单号:" + postCompany + ":" + postNumber);
         invoice.setInvoiceState(1);
         int num = invoiceMapper.updateByPrimaryKeySelective(invoice);
         // 向email发送邮件通知发票寄出
+        String invoiceContent = ResetPwdUtils.invoiceContent
+                .replaceAll("createDate", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(invoice.getCreateDate()))
+                .replaceAll("money", invoice.getMoney().toString()).replace("postCompany", postCompany)
+                .replace("postNumber", postNumber);
+        EmailUtils.sendWithTitle(ResetPwdUtils.invoiceTitle, invoiceContent, email);
+        System.out.println("aaa");
         return num;
     }
 

@@ -3,6 +3,8 @@ package com.celloud.backstage.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Invoice {
     private Integer id;
     // 金额
@@ -22,6 +24,7 @@ public class Invoice {
     // 备注 快递单号:快递公司:1111111111
     private String remark;
     // 申请时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     // 寄出时间
     private Date updateDate;

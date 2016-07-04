@@ -19,7 +19,7 @@ public interface InvoiceService {
      * @param invoice
      * 
      */
-    public int applyInvoice(Invoice invoice, Integer[] ids);
+    public int applyInvoice(String username, Invoice invoice, Integer[] ids);
 
     /**
      * @author MQ

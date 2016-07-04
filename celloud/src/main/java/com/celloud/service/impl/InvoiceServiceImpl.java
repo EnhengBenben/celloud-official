@@ -12,6 +12,11 @@ import com.celloud.mapper.RechargeMapper;
 import com.celloud.model.mysql.Invoice;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
+import com.celloud.sendcloud.EmailParams;
+import com.celloud.sendcloud.EmailType;
+import com.celloud.sendcloud.SendCloudUtils;
+import com.celloud.sendcloud.mail.Email;
+import com.celloud.sendcloud.mail.Substitution;
 import com.celloud.service.InvoiceService;
 
 @Service("invoiceService")
@@ -21,9 +26,11 @@ public class InvoiceServiceImpl implements InvoiceService {
     private InvoiceMapper invoiceMapper;
     @Resource
     private RechargeMapper rechargeMapper;
+    @Resource
+    private SendCloudUtils sendCloud;
 
     @Override
-    public int applyInvoice(Invoice invoice, Integer ids[]) {
+    public int applyInvoice(String username, Invoice invoice, Integer ids[]) {
         // 申请时间
         invoice.setCreateDate(new Date());
         // 插入数据库
@@ -31,7 +38,10 @@ public class InvoiceServiceImpl implements InvoiceService {
         // 更新充值记录表外键值
         rechargeMapper.updateRechargeInvoiceId(invoice.getId(), ids);
         // 向celloud发送邮件
-
+        Email<?> context = Email.template(EmailType.INVOICE)
+                .substitutionVars(Substitution.sub().set(EmailParams.INVOICE.username.name(), username))
+                .to("miaoqi@celloud.cn");
+        sendCloud.sendTemplate(context);
         return num;
     }
 

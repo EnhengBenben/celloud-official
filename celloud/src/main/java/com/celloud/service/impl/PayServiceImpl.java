@@ -133,6 +133,7 @@ public class PayServiceImpl implements PayService {
                     alipay.setSubject(params.get("subject"));
                     alipay.setTradeNo(out_trade_no);
                     alipay.setUserId(order.getUserId());
+                    alipay.setUsername(order.getUsername());
                     rechargeAlipayMapper.insert(alipay);
                     rechargeService.saveRecharge(amount, order.getUserId(), RechargeType.ALIPAY, alipay.getId());
                 } else {

@@ -43,7 +43,8 @@ public class InvoiceAction {
     public int apply(Invoice invoice, Integer[] rechargeIds) {
         logger.info("用户{}申请发票", ConstantsData.getLoginUserName());
         invoice.setUserId(ConstantsData.getLoginUserId());
-        return invoiceService.applyInvoice(invoice, rechargeIds);
+        String username = ConstantsData.getLoginUserName();
+        return invoiceService.applyInvoice(username, invoice, rechargeIds);
     }
 
     /**

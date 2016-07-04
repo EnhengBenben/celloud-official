@@ -57,7 +57,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="createDate">创建时间</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="createDate" value="<fmt:formatDate value="${invoice.create_date }" pattern="yyyy-MM-dd HH:mm:ss"/>" readonly="readonly" >
+                    <input type="text" class="form-control" id="createDate" name="createDate" value="<fmt:formatDate value="${invoice.create_date }" pattern="yyyy-MM-dd HH:mm:ss"/>" readonly="readonly" >
                 </div>
             </div>
             <div class="form-group">
