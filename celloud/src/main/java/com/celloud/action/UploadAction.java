@@ -28,13 +28,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
-import com.celloud.constants.NoticeConstants;
 import com.celloud.constants.TaskPeriod;
-import com.celloud.message.MessageUtils;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Experiment;
 import com.celloud.model.mysql.Task;
@@ -87,7 +84,6 @@ public class UploadAction {
      * @return
      * @date 2015年12月28日 下午3:22:38
      */
-    @ActionLog(value = "上传数据", button = "开始上传")
     @ResponseBody
     @RequestMapping("uploadManyFile")
     public String uploadManyFile(String name, String onlyName, String md5, String originalName, Integer chunk,

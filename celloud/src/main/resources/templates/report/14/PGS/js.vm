@@ -1,0 +1,162 @@
+<script type="text/javascript">
+function attrTransfer(obj,name){
+    inputVal = $(obj).val();
+    inputClass = $(obj).attr("class");
+    $(obj).parent().html("<span name='miniPrint' _hideClass='"+inputClass+"'>"+inputVal+"</span>");
+}
+
+function printCss(){
+    $("#reporterLi").css("width","52%");
+    $("#reporterInput").css("width","260px");
+    $("#auditLi").css("width","19%");
+    $("#auditInput").css("width","65px");
+    $("#dateLi").css("width","14%");
+    $("#dateInput").css("margin-left","0px");
+    $("#dateInput").css("width","25px");
+    $("#yearLi").css("margin-left","1px");
+    $("#monthLi").css("margin-left","-1px");
+    $("#dayLi").css("margin-left","-1px");
+    $(".syFooter input[type='text']").css("border-bottom","0px");
+}
+
+function lookCss(){
+    $("#reporterLi").css("width","55%");
+    $("#reporterInput").css("width","285px");
+    $("#auditLi").css("width","20%");
+    $("#auditInput").css("width","65px");
+    $("#dateLi").css("width","15%");
+    $("#dateInput").css("margin-left","5px");
+    $("#dateInput").css("width","26px");
+    $("#yearLi").css("margin-left","-21px");
+    $("#monthLi").css("margin-left","-8px");
+    $("#dayLi").css("margin-left","-8px");
+    $(".syFooter input[type='text']").css("border-bottom","1px solid #ccc");
+}
+
+$(function(){
+    if($(".end").html()){
+        $("#mainDiv").css("min-height","760px");
+    }else{
+        $("#mainDiv").css("min-height","850px");
+    }
+    $("#print").on("click",function(){
+        var inputVal;
+        printCss();
+        $(".miniTable_").find("input").each(function(){
+            attrTransfer(this,'miniPrint');
+        });
+        $("#mainDiv").find("input").each(function(){
+            attrTransfer(this,'print');
+        });
+        inputVal = $("#des").children().val();
+        if(inputVal){
+            inputVal = inputVal.replace(/\n/g,"<br>");
+            $("#des").html(inputVal);
+        }
+        var des1 = $("#des1").children().val();
+        if (des1){
+            inputVal = des1.replace(/\n/g,"<br>");
+        }else{
+            inputVal = "";
+        }
+        $("#des1").html(inputVal);
+        var des2 = $("#des2").children().val();
+        if (des2){
+            inputVal = des2.replace(/\n/g,"<br>");
+        }else{
+            inputVal = "";
+        }
+        $("#des2").html(inputVal);
+        var des3 = $("#des3").children().val();
+        if (des3){
+            inputVal = des3.replace(/\n/g,"<br>");
+        }else{
+            inputVal = "";
+        }
+        $("#des3").html(inputVal);
+        var advice = $("#advice").children().val();
+        if(advice){
+            inputVal = advice.replace(/\n/g,"<br>");
+        }else{
+            inputVal = "";
+        }
+        $("#advice").html(advice);
+        $(".buttons").hide();
+        window.print();
+        $(".buttons").show();
+        $("body").find("span[name='print']").each(function(){
+            inputVal = $(this).html();
+            inputClass = $(this).attr('_hideClass');
+            if($(this).parent().attr("id")=="jzkp"){
+                $(this).parent().html("<input type=\"text\" class=\""+inputClass+"\" value=\""+inputVal+"\" id=\"jzkh\" />");
+            }else{
+                $(this).parent().html("<input type=\"text\" class=\""+inputClass+"\" value=\""+inputVal+"\" />");
+            }
+        });
+        $("body").find("span[name='miniPrint']").each(function(){
+            inputVal = $(this).html();
+            inputClass = $(this).attr('_hideClass');
+            $(this).parent().html("<input type=\"text\" class=\""+inputClass+"\" style=\"height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px\" value=\""+inputVal+"\"/>");
+        });
+        inputVal = $("#des").html();
+        if(inputVal){
+            inputVal = inputVal.replace(/<br>/g,"\n");
+            $("#des").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
+        }
+        if (des1){
+            inputVal = $("#des1").html().replace(/<br>/g,"\n");
+        }else{
+            inputVal = "";
+        }
+        $("#des1").html("<textarea rows=\"3\"  style=\"margin:0px;font-size:10px;line-height:10px\">"+inputVal+"</textarea>");
+        if (des2){
+            inputVal = $("#des2").html().replace(/<br>/g,"\n");
+        }else{
+            inputVal = "";
+        }
+        $("#des2").html("<textarea rows=\"3\" style=\"margin:0px;font-size:10px;line-height:10px\">"+inputVal+"</textarea>");
+        if (des3){
+            inputVal = $("#des3").html().replace(/<br>/g,"\n");
+        }else{
+            inputVal = "";
+        }
+        $("#des3").html("<textarea rows=\"6\" style=\"margin:0px;font-size:12px;line-height:12px;height:87px;\">"+inputVal+"</textarea>");
+        if(advice){
+            inputVal = $("#advice").html().replace(/<br>/g,"\n");
+        }else{
+            inputVal = "";
+        }
+        $("#advice").html("<textarea rows=\"2\" style=\"margin:0px;font-size:10px;line-height:10px\">"+inputVal+"</textarea>");
+        lookCss();
+    });
+    $("#save").on("click",function(){
+        $("body").find("input").each(function(){
+            $(this).attr("value",$(this).val());
+        });
+        $("#des").children().html($("#des").children().val());
+        $("#des1").children().html($("#des1").children().val());
+        $("#des2").children().html($("#des2").children().val());
+        $("#des3").children().html($("#des3").children().val());
+        var url = window.location.href.split("printPGS")[0];
+        $.post(url+"updateContext",{"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"projectId":$("#_projectId").html(),"printContext":$("#pgsSave").prop("outerHTML")},function(result){
+            if(result==1){
+                $.lAlert("信息保存成功！");
+            }else{
+                $.lAlert("信息保存失败！");
+            }
+        });
+    });
+    $("#reset").on("click",function(){
+      $.lConfirm('确定重置？', function() {
+            var url = window.location.href.split("printPGS")[0];
+            $.post(url+"updateContext",{"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"projectId":$("#_projectId").html(),"printContext":""},function(result){
+                if(result==1){
+                    location=location ;
+                }else{
+                    $.lAlert("信息重置失败！");
+                }
+            });
+        });
+    });
+});
+</script>

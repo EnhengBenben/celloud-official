@@ -510,7 +510,10 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 			trigger : 'axis',
 			axisPointer : { // 坐标轴指示器，坐标轴触发有效
 				type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-			}
+			},
+			formatter: function (params,ticket,callback) {
+	            return params[0].name + '<br/>' + params[0].seriesName + ':' + params[0].data;
+	        }
 		},
 		legend : {
 			data : [ seriesName ],// [ '文件个数', '数据大小(GB)' ]

@@ -46,12 +46,12 @@
 										<th style="width: 30px;"></th>
 										<th width="15%">标题</th>
 										<th>内容</th>
-										<th style="width: 155px;">时间</th>
+										<th style="width: 170px;">时间</th>
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach items="${messageList.datas }" var="message">
-										<tr style="font-weight: ${message.readState==0?'bold':'normal'};" read-state="${message.readState }">
+										<tr class="${message.readState==0?'unread':''}" read-state="${message.readState }">
 											<td class="text-center">
 												<input type="checkbox" name="noticeIds" value="${message.noticeId }">
 											</td>
@@ -105,6 +105,40 @@
 					</div>
 					<div class="common-normal common-slide common-normals ${type=='notice'?'':'hide' }" id="userNotice">
 						<div class="row">
+							<c:if test="${noticeList!=null && noticeList.datas.size() > 0  }">
+								<div class="col-xs-4" style="padding-right: 0px;">
+									<div class="list-group">
+										<div class="list-group-item">
+											<button class="btn btn-success">
+												<i class="fa fa-folder-open-o"></i> 全部置为已读
+											</button>
+											<div class="btn-group pull-right">
+												<button class="btn btn-success" ${noticeList.page.isHasPrev()?'':'disabled' }
+													onclick="notices.pageNotice('${noticeList.page.prevPage}')" style="margin-right: 5px;">&lt;</button>
+												<button class="btn btn-success" ${noticeList.page.isHasNext()?'':'disabled' }
+													onclick="notices.pageNotice(${noticeList.page.nextPage})" style="margin-right: 5px;">&gt;</button>
+											</div>
+											<div class="pull-right" style="margin-right: 5px; line-height: 34px;">页数&nbsp;${noticeList.page.currentPage}/${noticeList.page.totalPage }</div>
+										</div>
+										<c:forEach items="${noticeList.datas }" var="notice">
+											<button class="list-group-item ${notice.readState==0?'unread':'' }" _data_notice_id="${notice.noticeId }"
+												onclick="notices.showNotice('${notice.noticeId}')">
+												<span class="badge fa ${notice.readState==0?'fa-folder-o':'fa-folder-open-o bg-gray' }" aria-hidden="true">
+												</span>
+												<p>
+													<i class="${notice.icon }"></i> ${notice.noticeTitle }
+												</p>
+												<p>&nbsp;</p>
+												<p class="feedback-date">
+													发布时间：
+													<fmt:formatDate value="${notice.createDate }" pattern="yyyy-MM-dd HH:mm:ss" />
+												</p>
+											</button>
+										</c:forEach>
+									</div>
+								</div>
+								<div class="col-xs-8" style="padding-left: 0px;" id="noticeDetail"></div>
+							</c:if>
 							<c:if test="${noticeList==null || noticeList.datas.size() == 0  }">
 								<div class="col-xs-12">
 									<table class="table">
@@ -127,5 +161,12 @@
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
 </section>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/notice.js?version=3.0"></script>
+<c:if test="${type=='notice'}">
+	<script type="text/javascript">
+    notices.showNotice();
+    </script>
+</c:if>

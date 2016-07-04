@@ -393,10 +393,16 @@ function showCount(){
   $.main.show.mainDIV();
   $("#mainDIV").load("pages/count/count_main.jsp");
 }
+/**
+ * 站内消息
+ */
 function showNotice(){
 	 $.main.show.mainDIV();
 	 $("#mainDIV").load(CONTEXT_PATH+"/notice/list/notice");
 }
+/**
+ * 系统消息 
+ */
 function showMessage(){
 	 $.main.show.mainDIV();
 	 $("#mainDIV").load(CONTEXT_PATH+"/notice/list/message");
@@ -435,6 +441,7 @@ function showHelp(){
  */
 messageUtils.addOpenListener(function() {
 	$("#messages-menu").load(CONTEXT_PATH + "/notice/lastUnread/message");
+	$("#notices-menu").load(CONTEXT_PATH + "/notice/lastUnread/notice");
 });
 /**
  * 监听userMessage频道，有新消息时，刷新右上角提醒
@@ -446,6 +453,19 @@ messageUtils.subscribe("userMessage", function(data) {
 			var notification = this;
 			notification.close();
 			$("#messages-menu").addClass("open");
+		}
+	});
+});
+/**
+ * 监听userNotice频道，有新消息时，刷新右上角提醒
+ */
+messageUtils.subscribe("userNotice", function(data) {
+	$("#notices-menu").load(CONTEXT_PATH + "/notice/lastUnread/notice");
+	messageUtils.notify(data.noticeTitle, data.noticeContext, {}, {
+		"onclick" : function() {
+			var notification = this;
+			notification.close();
+			$("#notices-menu").addClass("open");
 		}
 	});
 });

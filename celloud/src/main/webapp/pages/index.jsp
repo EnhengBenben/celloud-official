@@ -49,32 +49,13 @@
 				<div class="navbar-custom-menu">
 					<ul class="nav navbar-nav">
 						<!-- Messages: style can be found in dropdown.less-->
-						<li class="dropdown notifications-menu">
+						<li class="dropdown notifications-menu" id="notices-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 								<i class="fa fa-envelope-o"></i>
 								<span class="label label-success"></span>
 							</a>
 							<ul class="dropdown-menu">
 								<li class="header">站内消息提醒</li>
-								<!--li>
-									<ul class="menu">
-										<li>
-											<a href="#">
-												<i class="fa fa-users text-aqua"></i> 新功能上线啦~~~~
-											</a>
-										</li>
-										<li>
-											<a href="#">
-												<i class="fa fa-warning text-yellow"></i> 您的余额坚持不了多久了哦~
-											</a>
-										</li>
-										<li>
-											<a href="#">
-												<i class="fa fa-users text-red"></i> 发票已邮寄成功，请关注
-											</a>
-										</li>
-									</ul>
-								</li -->
 								<li class="footer">
 									<a href="javascript:showNotice()">查看所有</a>
 								</li>

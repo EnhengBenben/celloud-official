@@ -52,7 +52,7 @@ td,th {
 }
 
 .footer span input {
-	vertical-align: -1px;
+	margin-bottom: -5px;
 }
 
 hr {
@@ -148,6 +148,12 @@ input[type="text"], .onlybotton{
 }
 .input-small {
     width: 90px;
+}
+.input-middle{
+	width: 120px;
+}
+.input-big{
+	width: 240px;
 }
 .input-large{
 	height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;width:400px

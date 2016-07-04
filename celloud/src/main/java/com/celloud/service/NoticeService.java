@@ -12,8 +12,6 @@ public interface NoticeService {
 
     public PageList<Notice> findLastUnreadMessage();
 
-    public PageList<Notice> findUnreadNotice(Page page);
-
     public PageList<Notice> findLastMessage(Page page);
 
     public void readMessage(Integer[] noticeIds);
@@ -21,5 +19,9 @@ public interface NoticeService {
     public void readAllMessage();
 
     public void deleteMessages(Integer[] noticeIds);
+
+    public PageList<Notice> findLastNotice(Page page);
+
+    public Notice getNoticeById(Integer noticeId);
 
 }

@@ -1,6 +1,7 @@
 package com.celloud.message;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +84,20 @@ public class MessageUtils {
             messages.put(username, jsonMessage);
         }
         MessageSender.send(Constants.MESSAGE_USER_TOPIC, messages);
+    }
+
+    /**
+     * 发送给指定用户
+     * 
+     * @param usernames
+     */
+    @Async
+    public void to(List<String> usernames) {
+        if (usernames == null || usernames.size() <= 0) {
+            throw new BusinessException("发送消息没有指定接收者:" + message.toJson());
+        }
+        String[] strs = usernames.toArray(new String[] {});
+        to(strs);
     }
 
     /**

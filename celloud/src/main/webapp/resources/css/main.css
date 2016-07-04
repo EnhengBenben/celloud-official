@@ -2893,3 +2893,11 @@ table.text-center th {
 .pay-remarks{
 	width: 100px;
 }
+/*
+=============
+消息中心
+=============
+*/
+.unread {
+	font-weight: 900;
+}

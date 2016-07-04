@@ -1,7 +1,14 @@
-<ul class="footer" style="margin-bottom: 0px;font-size:12px;/* margin-top: 450px; */">
-	<li class="left" style="font-size:12px;">报告者：<span><input type="text" class="input-mini" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></li>
-	<li class="left" style="font-size:12px;">审核者：<span><input type="text" class="input-mini" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></li>
-	<li class="right pull-right opinion" style="font-size:12px;">报告日期：<span id="jzkp"><input type="text" class="input-mini" id="jzkh" style="height:10px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></li>
+<ul class="syFooter" style="display:block;padding-top:5px;margin-bottom: 0px;font-size:12px;/* margin-top: 450px; */">
+	<li id="reporterLi" class="left" style="float:left;font-size:12px;width:55%;"><font style="float:left;">报告者：</font><span><input id="reporterInput" type="text" style="width:285px;height:16px;font-size:10px;line-height:12px;"/></span></li>
+	<li id="audit" class="left" style="float:left;font-size:12px;width:20%;"><font style="float:left;">审核者：</font><span><input id="auditInput" type="text" style="width:65px;height:16px;font-size:10px;line-height:12px;"/></span></li>
+	<li id="dateLi" class="left" style="float:left;font-size:12px;width:15%;"><font style="float:left;">报告日期：</font><span><input id="dateInput" type="text" style="width:26px;height:16px;font-size:10px;line-height:12px;margin-left:5px;"/></span></li>
+	<li id="yearLi" class="left" style="float:left;font-size:12px;width:6%;margin-left:-21px;"><font style="float:left;">年&nbsp;&nbsp;</font><span><input type="text" style="width:16px;height:16px;font-size:10px;line-height:12px;"/></span></li>
+	<li id="monthLi" class="left" style="float:left;font-size:12px;width:6%;margin-left:-8px;"><font style="float:left;">月&nbsp;&nbsp;</font><span><input type="text" style="width:16px;height:16px;font-size:10px;line-height:12px;"/></span></li>
+	<li id="dayLi" class="left" style="float:left;font-size:12px;margin-left:-8px;"><font style="float:left;">日</font></li>
 </ul>
-<hr>
-<h4 class="smallh4" style="font-size:12px;">临床意见：<span class="opinion"><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px;border:0px;"/></span></span></h4>
+<br/>
+<hr style="margin-top:11px;">
+<font style="font-size:12px;">临床意见：</font>
+<div id="advice" style="min-height: 36px;">
+    <textarea rows="2" style="margin:0px;font-size:10px;line-height:10px"></textarea>
+</div>
