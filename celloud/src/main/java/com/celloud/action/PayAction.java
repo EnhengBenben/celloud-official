@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
+import com.celloud.constants.NoticeConstants;
 import com.celloud.message.MessageUtils;
-import com.celloud.model.mysql.Notice;
 import com.celloud.model.mysql.Recharge;
 import com.celloud.model.mysql.RechargeAlipay;
 import com.celloud.model.mysql.User;
@@ -73,8 +73,6 @@ public class PayAction {
 			BigDecimal balance = user.getBalances();
 			model.addAttribute("balance", balance);
 			model.addAttribute("alipay", alipay);
-			MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
-					.send(new Notice("recharge", "充值成功", alipay.getDescription())).to(alipay.getUsername());
 		}
 		return "pay/alipay_return";
 	}
