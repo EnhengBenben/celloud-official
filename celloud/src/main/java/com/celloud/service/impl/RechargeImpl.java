@@ -40,7 +40,7 @@ public class RechargeImpl implements RechargeService {
         recharge.setUserId(userId);
         recharge.setRechargeType(rechargeType.type());
         recharge.setRechargeId(rechargeId);
-        recharge.setInvoiceState(rechargeType.invoice() ? InvoiceState.NO_INVOICE : InvoiceState.UN_INVOICE);
+        recharge.setInvoiceState(!rechargeType.invoice() ? InvoiceState.NO_INVOICE : InvoiceState.UN_INVOICE);
         return rechargeMapper.insertSelective(recharge);
     }
 
