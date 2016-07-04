@@ -73,8 +73,6 @@ public class PayAction {
 			BigDecimal balance = user.getBalances();
 			model.addAttribute("balance", balance);
 			model.addAttribute("alipay", alipay);
-			MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
-					.send(new Notice("recharge", "充值成功", alipay.getDescription())).to(alipay.getUsername());
 		}
 		return "pay/alipay_return";
 	}
