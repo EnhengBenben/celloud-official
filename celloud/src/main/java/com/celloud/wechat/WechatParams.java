@@ -6,7 +6,7 @@ package com.celloud.wechat;
  * @author leamo
  * @date 2016年6月30日 下午3:00:11
  */
-public class WebchatParams {
+public class WechatParams {
     public static enum RUN_OVER {
         first,
         /**

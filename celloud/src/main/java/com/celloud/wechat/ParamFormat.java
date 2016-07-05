@@ -3,6 +3,8 @@ package com.celloud.wechat;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.util.StringUtils;
+
 public class ParamFormat {
 
     public static Param param() {
@@ -17,10 +19,10 @@ public class ParamFormat {
 
         private Map<String, HashMap<String, String>> param = new HashMap<String, HashMap<String, String>>();
 
-        public Param set(String name, String value) {
+        public Param set(String name, String value, String color) {
             HashMap<String, String> values = new HashMap<>();
             values.put("value", value);
-            values.put("color", "#173177");
+            values.put("color", StringUtils.isEmpty(color) ? "#173177" : color);
             param.put(name, values);
             return this;
         }
@@ -37,11 +39,24 @@ public class ParamFormat {
     public static class ParamAll {
         private Map<String, Object> map = new HashMap<>();
 
-        public ParamAll add(Param param, String openId, String templateId) {
-            map.put("data", param.get());
-            map.put("touser", openId);
+        public ParamAll template(String templateId) {
             map.put("template_id", templateId);
-            map.put("url", "http://weixin.qq.com/download");
+            return this;
+        }
+
+        public ParamAll openId(String openId) {
+            map.put("touser", openId);
+            return this;
+        }
+
+        public ParamAll url(String url) {
+            map.put("url", StringUtils.isEmpty(url)
+                    ? "https://www.celloud.cn/login" : url);
+            return this;
+        }
+
+        public ParamAll data(Param param) {
+            map.put("data", param.get());
             return this;
         }
 

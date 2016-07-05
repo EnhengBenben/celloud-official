@@ -180,4 +180,14 @@ public interface UserService {
      * @date 2016年7月4日 上午2:33:05
      */
     public String getOpenIdByUser(Integer userId);
+
+    /**
+     * 根据微信openid获取用户信息
+     * 
+     * @param openId
+     * @return
+     * @author leamo
+     * @date 2016年7月4日 下午4:36:16
+     */
+    public User getUserByOpenId(String openId);
 }

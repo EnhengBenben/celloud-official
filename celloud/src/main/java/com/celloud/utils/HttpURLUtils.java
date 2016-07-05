@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import org.apache.commons.httpclient.cookie.CookiePolicy;
+import org.apache.commons.httpclient.params.DefaultHttpParams;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -11,6 +13,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -24,6 +27,50 @@ import org.apache.log4j.Logger;
  */
 public class HttpURLUtils {
 	private static Logger log = Logger.getLogger(HttpURLUtils.class);
+
+    /**
+     * post请求http
+     * 
+     * @param url
+     * @param params
+     *            json格式数据
+     * @return
+     * @author leamo
+     * @date 2016年7月4日 下午4:29:28
+     */
+    public static String httpPostRequest(String url, String params) {
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost(url);
+        String result = null;
+        try {
+            if (params != null) {
+                StringEntity entity = new StringEntity(params, "utf-8");
+                entity.setContentType("application/json");
+                entity.setContentEncoding("utf-8");
+                // 设置策略，防止报cookie错误
+                DefaultHttpParams.getDefaultParams().setParameter(
+                        "http.protocol.cookie-policy",
+                        CookiePolicy.BROWSER_COMPATIBILITY);
+                httpPost.setEntity(entity);
+            }
+            HttpResponse response = httpClient.execute(httpPost);
+            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) { // 正常返回
+                result = EntityUtils.toString(response.getEntity());
+            } else {
+                result = String
+                        .valueOf(response.getStatusLine().getStatusCode());
+            }
+        } catch (UnsupportedEncodingException e) {
+            log.error("post请求异常：" + e);
+        } catch (ClientProtocolException e) {
+            log.error("post请求异常：" + e);
+        } catch (IOException e) {
+            log.error("post请求异常：" + e);
+        } finally {
+            httpPost.releaseConnection();
+        }
+        return result;
+    }
 
 	/**
 	 * post方式请求HTTP
