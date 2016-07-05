@@ -1,6 +1,6 @@
 package com.celloud.wechat;
 
-public class TemplateId {
+public class WechatType {
     /**
      * 运行结束
      */

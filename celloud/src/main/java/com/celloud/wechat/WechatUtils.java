@@ -26,10 +26,10 @@ public class WechatUtils {
 	private String loginHtml;
 
 	//wechat url
-	private String oAuth2Url = "https://open.weixin.qq.com/connect/oauth2/authorize?";
-	private String oAuth2TokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?";
-	private String tokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&";
-    private String templateUrl = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=";
+    private String oAuth2Url;
+    private String oAuth2TokenUrl;
+    private String tokenUrl;
+    private String templateUrl;
 
 	/**
 	 * 获取生成二维码所需要的url
@@ -140,7 +140,7 @@ public class WechatUtils {
     public String pushMessage(Map<String, Object> map) {
         String url = templateUrl + getToken();
         JSONObject json = new JSONObject(map);
-        return HttpUtil.sendWeChatMessage(url, json.toString());
+        return HttpURLUtils.httpPostRequest(url, json.toString());
     }
 
 	public void setAppId(String appId) {
@@ -154,5 +154,21 @@ public class WechatUtils {
 	public void setLoginHtml(String loginHtml) {
 		this.loginHtml = loginHtml;
 	}
+
+    public void setoAuth2Url(String oAuth2Url) {
+        this.oAuth2Url = oAuth2Url;
+    }
+
+    public void setoAuth2TokenUrl(String oAuth2TokenUrl) {
+        this.oAuth2TokenUrl = oAuth2TokenUrl;
+    }
+
+    public void setTokenUrl(String tokenUrl) {
+        this.tokenUrl = tokenUrl;
+    }
+
+    public void setTemplateUrl(String templateUrl) {
+        this.templateUrl = templateUrl;
+    }
 
 }

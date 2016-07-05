@@ -1,7 +1,6 @@
 package com.celloud.action;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -54,6 +53,7 @@ import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.SecRoleService;
 import com.celloud.service.TaskService;
+import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.DataKeyListToFile;
 import com.celloud.utils.DataUtil;
@@ -65,6 +65,7 @@ import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.RunOverUtil;
 import com.celloud.utils.SSHUtil;
 import com.celloud.utils.XmlUtil;
+import com.celloud.wechat.WechatUtils;
 
 /**
  * 投递任务管理
@@ -94,6 +95,10 @@ public class TaskAction {
     private SecRoleService secService;
     @Resource
     private SendCloudUtils sendCloud;
+    @Resource
+    private UserService userService;
+    @Resource
+    private WechatUtils wechatUtils;
 
     private static Map<String, Map<String, String>> machines = ConstantsData
             .getMachines();
@@ -264,9 +269,10 @@ public class TaskAction {
                 .send(NoticeConstants.createMessage("task", "运行完成",
                         "文件【" + tipsName + "】运行应用【" + appName + "】完成"))
                 .to(username);
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        String startDate = format.format(task.getStartDate());
-        String endDate = format.format(task.getEndDate());
+        String startDate = DateUtil.getDateToString(task.getStartDate(),
+                "yyyy-MM-dd hh:mm:ss");
+        String endDate = DateUtil.getDateToString(task.getEndDate(),
+                "yyyy-MM-dd hh:mm:ss");
         Email<?> context = Email.template(EmailType.RUN_OVER)
                 .substitutionVars(Substitution.sub()
                         .set(EmailParams.RUN_OVER.userName.name(), username)
