@@ -61,7 +61,7 @@ public class MessageCategoryAction {
     @RequestMapping("update")
     @ResponseBody
     public int update(String targetName, Integer targetVal, Integer relatId) {
-        return messageCategoryService.editUserMessageCategory(targetName, targetVal, relatId);
+        return messageCategoryService.editUserMessageSwitch(targetName, targetVal, relatId);
     }
 
 }

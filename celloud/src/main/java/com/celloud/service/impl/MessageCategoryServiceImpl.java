@@ -1,6 +1,5 @@
 package com.celloud.service.impl;
 
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +7,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.celloud.constants.MessageCategoryEnum;
+import com.celloud.constants.MessageWay;
 import com.celloud.mapper.MessageCategoryMapper;
 import com.celloud.model.mysql.MessageCategory;
 import com.celloud.service.MessageCategoryService;
@@ -39,17 +40,14 @@ public class MessageCategoryServiceImpl implements MessageCategoryService {
     }
 
     @Override
-    public int editUserMessageCategory(String targetName, Integer targetVal,
+    public int editUserMessageSwitch(String targetName, Integer targetVal,
             Integer relatId) {
-        try {
-            String methodName = "update" + targetName.substring(0, 1).toUpperCase() + targetName.substring(1);
-            Method targetMethod = messageCategoryMapper.getClass().getMethod(methodName, Integer.class,
-                    Integer.class);
-            return (int) targetMethod.invoke(messageCategoryMapper, targetVal, relatId);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 0;
+        return messageCategoryMapper.updateSwitch(targetName, targetVal, relatId);
+    }
+
+    @Override
+    public int getUserMessageSwitch(Integer userId, MessageCategoryEnum messageCategoryEnum, MessageWay messageWay) {
+        return messageCategoryMapper.getSwitch(userId, messageWay.name(), messageCategoryEnum.getId());
     }
 
 }

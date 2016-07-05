@@ -50,30 +50,21 @@ public interface MessageCategoryMapper {
     /**
      * @author MQ
      * @date 2016年7月5日下午12:36:31
-     * @description 更新用户邮箱消息设置(tb_user_message_category_relat)
+     * @description 更新用户的某个开关(tb_user_message_category_relat)
      * @return
      *
      */
-    int updateEmail(@Param("email") Integer email,
+    int updateSwitch(@Param("targetSwitch") String targetSwitch, @Param("targetVal") Integer targetVal,
             @Param("relatId") Integer relatId);
 
     /**
      * @author MQ
-     * @date 2016年7月5日下午12:36:31
-     * @description 更新用户桌面消息设置(tb_user_message_category_relat)
+     * @date 2016年7月5日下午2:19:58
+     * @description 获取用户的某个开关(tb_user_message_category_relat)
      * @return
      *
      */
-    int updateWindow(@Param("window") Integer window,
-            @Param("relatId") Integer relatId);
+    int getSwitch(@Param("userId") Integer userId, @Param("targetSwitch") String targetSwitch,
+            @Param("messageCategoryId") Integer messageCategoryId);
 
-    /**
-     * @author MQ
-     * @date 2016年7月5日下午12:36:31
-     * @description 更新用户微信消息设置(tb_user_message_category_relat)
-     * @return
-     *
-     */
-    int updateWechat(@Param("wechat") Integer wechat,
-            @Param("relatId") Integer relatId);
 }

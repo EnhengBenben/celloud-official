@@ -3,6 +3,8 @@ package com.celloud.service;
 import java.util.List;
 import java.util.Map;
 
+import com.celloud.constants.MessageCategoryEnum;
+import com.celloud.constants.MessageWay;
 import com.celloud.model.mysql.MessageCategory;
 
 
@@ -40,8 +42,17 @@ public interface MessageCategoryService {
     /**
      * @author MQ
      * @date 2016年7月5日上午11:22:47
-     * @description 编辑用户消息设置
+     * @description 更改用户消息开关
      *
      */
-    int editUserMessageCategory(String targetName, Integer targetVal, Integer relatId);
+    int editUserMessageSwitch(String targetName, Integer targetVal, Integer relatId);
+
+    /**
+     * @author MQ
+     * @date 2016年7月5日下午2:45:55
+     * @description 获取用户消息开关
+     * @return
+     *
+     */
+    int getUserMessageSwitch(Integer userId, MessageCategoryEnum messageCategoryEnum, MessageWay messageWay);
 }
