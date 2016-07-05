@@ -382,6 +382,12 @@
     </insert>
     <select id="getOpenIdByUser" resultType="java.lang.String">
         select open_id from tb_user_wechat
-        where user_id=#{userIds}
+        where user_id=#{userId}
+    </select>
+    <select id="getUserByOpenId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_user u,tb_user_wechat uw
+        where u.user_id=uw.user_id and uw.open_id = #{openId}
     </select>
 </mapper>
