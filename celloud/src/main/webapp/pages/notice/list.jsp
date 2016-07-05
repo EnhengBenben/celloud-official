@@ -32,6 +32,9 @@
 						<li class="${type=='notice'?'active':'' }" id="userNoticeTab">
 							<a href="javascript:notices.showUserNotice()">站内消息</a>
 						</li>
+						<li id="userSettingTab">
+                            <a href="javascript:showUserSetting()">消息设置</a>
+                        </li>
 					</ul>
 				</div>
 				<div class="y-row" style="padding: 20px 10px; background-color: #fff;" data-spm="17">
