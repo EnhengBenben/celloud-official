@@ -86,6 +86,9 @@
 		}
 		//根据视口和文档的宽高设置背景图片的尺寸
 		setDocSize();
+		$(window).resize(function(){  
+            setDocSize();
+        });
 	</script>
 </body>
 </html>
