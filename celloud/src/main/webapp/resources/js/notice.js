@@ -155,5 +155,37 @@ var notices = (function(object) {
 			$("#messageReadBtn").attr("disabled","disabled");
 		}
 	});
+	$('.create-switch').bootstrapSwitch({
+		onColor : 'primary',
+		offColor : 'danger',
+		onText : '开',
+		offText : '关',
+		onSwitchChange : function(event, state){
+			if($("#flag").val()==0){
+				var datas = new Array();
+				$("#userSettingForm tbody").find("tr").each(function(){
+					var email = $(this).find("input:eq(0)").prop("checked")==false?0:1;
+					var window = $(this).find("input:eq(1)").prop("checked")==false?0:1;
+					var wechat = $(this).find("input:eq(2)").prop("checked")==false?0:1;
+					var messageCategoryId = $(this).find("input:eq(3)").val();
+					datas.push(email + "," + window + "," + wechat + "," + messageCategoryId);
+				})
+				// 插入用户数据
+				$.post("message/category/insert",{"datas":datas.join(";")},function(data){
+					if(data>1){
+						$("#flag").val(1);
+					}
+				});
+			}else{
+				var targetName = $(this).attr("name");
+				var targetVal = $(this).prop("checked")==false?0:1;
+				var relatId = $(this).parents("tr").find("input:last").val();
+				// 更新用户数据
+				$.post("message/category/update",{"targetName":targetName, "targetVal" : targetVal, "relatId":relatId},function(data){
+					
+				});
+			}
+		}
+	});
 	return self;
 })(notices);
