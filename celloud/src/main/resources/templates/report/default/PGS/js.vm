@@ -26,9 +26,9 @@ $(function(){
 			inputVal = $(this).val();
 			inputClass = $(this).attr("class");
 			if(inputVal){
-				$(this).parent().html("<span name='"+name+"' _hideClass='"+inputClass+"'>"+inputVal+"</span>");
+				$(this).parent().html("<span name='print' _hideClass='"+inputClass+"'>"+inputVal+"</span>");
 			}else{
-				$(this).parent().html("<span style='padding-left:100px' name='"+name+"' _hideClass='"+inputClass+"'></span>");
+				$(this).parent().html("<span style='padding-left:100px' name='print' _hideClass='"+inputClass+"'></span>");
 			}
 		});
 		inputVal = $("#des").children().val();
