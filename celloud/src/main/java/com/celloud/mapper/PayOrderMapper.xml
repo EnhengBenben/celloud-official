@@ -4,6 +4,7 @@
 	<resultMap id="BaseResultMap" type="com.celloud.model.mysql.PayOrder">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
 		<result column="type" property="type" jdbcType="TINYINT" />
 		<result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
 		<result column="subject" property="subject" jdbcType="VARCHAR" />
@@ -13,32 +14,54 @@
 		<result column="state" property="state" jdbcType="BIT" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, user_id, type, trade_no, subject, description, amount, create_time, state
+		tb_pay_order.id, tb_pay_order.user_id, tb_pay_order.type,
+		tb_pay_order.trade_no, tb_pay_order.subject, tb_pay_order.description,
+		tb_pay_order.amount, tb_pay_order.create_time, tb_pay_order.state
 	</sql>
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	<sql id="Join_Column_List">
+		tb_user.username as username
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
 		select
 		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
 		from tb_pay_order
+		left join tb_user on
+		tb_pay_order.user_id=tb_user.user_id
 		where id = #{id,jdbcType=INTEGER}
 	</select>
-	<select id="selectByTradeNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+	<select id="selectByTradeNo" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
 		from tb_pay_order
-		where trade_no = #{tradeNo,jdbcType=VARCHAR}
+		left join tb_user on
+		tb_pay_order.user_id=tb_user.user_id
+		where trade_no =
+		#{tradeNo,jdbcType=VARCHAR}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from tb_pay_order
+		delete from
+		tb_pay_order
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
 	<insert id="insert" parameterType="com.celloud.model.mysql.PayOrder">
-		insert into tb_pay_order (id, user_id, type,
+		insert into tb_pay_order (id,
+		user_id, type,
 		trade_no, subject, description,
-		amount, create_time, state
+		amount, create_time,
+		state
 		)
-		values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT},
-		#{tradeNo,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
-		#{amount,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{state,jdbcType=BIT}
+		values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
+		#{type,jdbcType=TINYINT},
+		#{tradeNo,jdbcType=VARCHAR},
+		#{subject,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+		#{amount,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP},
+		#{state,jdbcType=BIT}
 		)
 	</insert>
 	<insert id="insertSelective" parameterType="com.celloud.model.mysql.PayOrder">
@@ -133,15 +156,19 @@
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.PayOrder">
-		update tb_pay_order
+		update
+		tb_pay_order
 		set user_id = #{userId,jdbcType=INTEGER},
-		type = #{type,jdbcType=TINYINT},
+		type =
+		#{type,jdbcType=TINYINT},
 		trade_no = #{tradeNo,jdbcType=VARCHAR},
 		subject = #{subject,jdbcType=VARCHAR},
-		description = #{description,jdbcType=VARCHAR},
+		description =
+		#{description,jdbcType=VARCHAR},
 		amount = #{amount,jdbcType=DECIMAL},
 		create_time = #{createTime,jdbcType=TIMESTAMP},
-		state = #{state,jdbcType=BIT}
+		state =
+		#{state,jdbcType=BIT}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 </mapper>

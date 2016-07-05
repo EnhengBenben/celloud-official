@@ -2,7 +2,7 @@
 function attrTransfer(obj,name){
 	inputVal = $(obj).val();
 	inputClass = $(obj).attr("class");
-	$(obj).parent().html("<span name='miniPrint' _hideClass='"+inputClass+"'>"+inputVal+"</span>");
+	$(obj).parent().html("<span name='"+name+"' _hideClass='"+inputClass+"'>"+inputVal+"</span>");
 }
 $(function(){
 	if($(".end").html()){
@@ -20,6 +20,9 @@ $(function(){
 			attrTransfer(this,'print');
 		});
 		$(".opinion").find("input").each(function(){
+			attrTransfer(this,'print');
+		});
+		$("#jzkp").find("input").each(function(){
 			attrTransfer(this,'print');
 		});
 		inputVal = $("#des").children().val();
