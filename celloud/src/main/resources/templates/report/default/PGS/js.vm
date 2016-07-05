@@ -23,7 +23,13 @@ $(function(){
 			attrTransfer(this,'print');
 		});
 		$("#jzkp").find("input").each(function(){
-			attrTransfer(this,'print');
+			inputVal = $(obj).val();
+			inputClass = $(obj).attr("class");
+			if(inputVal){
+				$(obj).parent().html("<span name='"+name+"' _hideClass='"+inputClass+"'>"+inputVal+"</span>");
+			}else{
+				$(obj).parent().html("<span style='padding-left:100px' name='"+name+"' _hideClass='"+inputClass+"'></span>");
+			}
 		});
 		inputVal = $("#des").children().val();
 		if(inputVal){
