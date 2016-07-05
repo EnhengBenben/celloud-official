@@ -7,7 +7,9 @@
 	<li id="dayLi" class="left" style="float:left;font-size:12px;margin-left:-8px;"><font style="float:left;">日</font></li>
 </ul>
 <br/>
-<hr style="margin-top:11px;">
+<div style="width:800px;">
+	<hr style="margin-top:11px;">
+</div>
 <font style="font-size:12px;">临床意见：</font>
 <div id="advice" style="min-height: 36px;">
     <textarea rows="2" style="margin:0px;font-size:10px;line-height:10px"></textarea>
