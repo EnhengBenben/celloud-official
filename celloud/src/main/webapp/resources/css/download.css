@@ -65,6 +65,7 @@ h1 a{ display:inline-block;*display:inline;*zoom:1;width:116px; height:46px; bac
 .join h2 span a{ color:#79B826; font-weight:bold}
 .join h2 span a:hover{ text-decoration:underline}
 .join .p-box{ margin-bottom:50px;}
+.join .p-box p{text-indent: 2em;}
 .join dl{ display:block;}
 .join dt{ width:100px; font-family:"微软雅黑"; text-align:right; font-weight:bold; color:#666;}
 .join dd{ margin-left:100px; font-family:"微软雅黑"; color:#999;}
