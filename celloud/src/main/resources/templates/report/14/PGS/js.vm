@@ -135,6 +135,7 @@ $(function(){
         $("#des1").children().html($("#des1").children().val());
         $("#des2").children().html($("#des2").children().val());
         $("#des3").children().html($("#des3").children().val());
+        $("#advice").children().html($("#advice").children().val());
         var url = window.location.href.split("printPGS")[0];
         $.post(url+"updateContext",{"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"projectId":$("#_projectId").html(),"printContext":$("#pgsSave").prop("outerHTML")},function(result){
             if(result==1){
