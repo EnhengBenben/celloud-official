@@ -54,5 +54,5 @@ public interface MessageCategoryService {
      * @return
      *
      */
-    int getUserMessageSwitch(Integer userId, MessageCategoryEnum messageCategoryEnum, MessageWay messageWay);
+    Integer getUserMessageSwitch(Integer userId, MessageCategoryEnum messageCategoryEnum, MessageWay messageWay);
 }
