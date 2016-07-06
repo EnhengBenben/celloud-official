@@ -1,0 +1,61 @@
+<table border='1' cellspacing="0" cellpadding="0" width="100%">
+    <tr>
+        <td style="height:30px">
+            <strong style="font-size:14px;">检测项目：</strong><span><input value="染色体拷贝数筛查" type="text" class="onlybotton" style="width:87%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px">
+            <strong style="font-size:14px;">样本编号：</strong><span><input value="$pgs.anotherName" type="text" class="onlybotton" style="width:38%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+            <strong style="font-size:14px;">实验编号：</strong><span><input type="text" class="onlybotton" style="width:38%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px">
+            <strong style="font-size:14px;">送检时间：</strong><span><input type="text" class="onlybotton" style="width:38%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+            <strong style="font-size:14px;">样本类型：</strong><span><input type="text" class="onlybotton" style="width:38%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px">
+            <strong style="font-size:14px;">检测内容：</strong><span><input value="23对染色体的非整倍体，及4Mb以上片段重复或缺失" type="text" class="onlybotton" style="width:87%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px">
+            <strong style="font-size:14px;">检测技术：</strong><span><input value="半导体高通测序" type="text" class="onlybotton" style="width:87%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px">
+            <strong style="font-size:14px;">运输状态：</strong><span><input value="正常" type="text" class="onlybotton" style="width:87%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px">
+            <strong style="font-size:14px;">内部质量控制：</strong><span><input value="正常" type="text" class="onlybotton" style="width:83.5%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px">
+            <strong style="font-size:14px;">检测结果：</strong><img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.middlePng}" style="width:100%;"><img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.splitPng}" style="width:100%;"><strong>该样本检测结果显示:</strong><br/>
+            <div id="result">
+                <textarea style="width:99%" id="resultArea">${pgs.report}</textarea>
+            <div>
+        </td>
+    </tr>
+    <tr>
+        <td><strong style="font-size:14px;">备注：<br/><br/>
+*上表中每一栏结果代表的含义请咨询送检医生；<br/>
+*本报告结果只对送检样本负责；<br/>
+*以上结论均为实验室检测数据，仅供科研使用，不代表最终诊断结果，仅供临床参考。</strong>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px">
+            <strong style="font-size:14px;">检测者：</strong><span><input type="text" class="onlybotton" style="width:23%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+            <strong style="font-size:14px;">审核者：</strong><span><input type="text" class="onlybotton" style="width:23%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+            <strong style="font-size:14px;">报告日期：</strong><span><input type="text" class="onlybotton" style="width:23%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+        </td>
+    </tr>
+</table>

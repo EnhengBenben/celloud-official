@@ -1,0 +1,34 @@
+#parse("templates/report/layout.vm")
+#parse("templates/report/default/PGS/reference.vm")
+#if($printContext)
+	$printContext
+#else
+	#override("card")
+	#end
+	#override("head")
+    #end
+	#override("dept")
+	#end
+	#override("baseinfo")
+		#parse("templates/report/6/PGS/input.vm")
+	#end
+	#override("method")
+	#end
+	#override("img")
+	#end
+	#override("explain")
+	#end
+	#override("notes")
+    #end
+    #override("footer")
+    #end
+    #override("bottom")
+    #end
+	#extends("templates/report/default/PGS/base.vm")
+#end
+#parse("templates/report/6/PGS/js.vm")
+<style type="text/css">
+td, th {
+    min-width: 40px;
+}
+</style>
