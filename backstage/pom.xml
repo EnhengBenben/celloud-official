@@ -205,6 +205,12 @@
 				<env>test</env>
 			</properties>
 		</profile>
+		<profile>
+			<id>qa</id>
+			<properties>
+				<env>qa</env>
+			</properties>
+		</profile>
 	</profiles>
 	<build>
 		<finalName>backstage</finalName>
