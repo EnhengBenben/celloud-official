@@ -202,4 +202,12 @@ public class ConstantsData {
         }
         return systemProperties.getProperty("context_url");
     }
+
+    public static String getLocalIp() {
+        String localAddr = getRequset().getLocalAddr();
+        if ("0:0:0:0:0:0:0:1".equals(localAddr)) {
+            localAddr = "127.0.0.1";
+        }
+        return localAddr;
+    }
 }

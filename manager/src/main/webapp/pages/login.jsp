@@ -79,6 +79,7 @@
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/tologin.js?version=1.0"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/md5.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/security.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/browser.js"></script>
 	<script type="text/javascript">
 		//session超时iframe完全退出
 		if(window.top!=window.self){
@@ -86,6 +87,9 @@
 		}
 		//根据视口和文档的宽高设置背景图片的尺寸
 		setDocSize();
+		$(window).resize(function(){  
+			setDocSize();
+        });
 	</script>
 </body>
 </html>

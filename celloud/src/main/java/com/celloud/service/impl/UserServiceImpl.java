@@ -137,4 +137,9 @@ public class UserServiceImpl implements UserService {
         return userMapper.getOpenIdByUser(userId);
     }
 
+    @Override
+    public User getUserByOpenId(String openId) {
+        return userMapper.getUserByOpenId(openId);
+    }
+
 }

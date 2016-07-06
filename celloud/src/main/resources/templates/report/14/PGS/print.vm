@@ -28,18 +28,8 @@
 	#end
 	#override("notes")
 	#end
-	#override("footer")
-		#parse("templates/report/42/PGS/footer.vm")
-	#end
 	#override("bottom")
 	#end
 	#extends("templates/report/default/PGS/base.vm")
 #end
 #parse("templates/report/14/PGS/js.vm")
-<script type="text/javascript">
-$(function(){
-	$("#mainDiv").css("min-height","500px");
-	$(".notes").css("margin-top","0px");
-	$("#companyIcon").css("margin-bottom","7px");
-});
-</script>

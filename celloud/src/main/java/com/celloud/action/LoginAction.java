@@ -3,10 +3,7 @@ package com.celloud.action;
 import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Enumeration;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -36,11 +33,12 @@ import com.celloud.service.ActionLogService;
 import com.celloud.service.RSAKeyService;
 import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
+import com.celloud.utils.DateUtil;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.RSAUtil;
 import com.celloud.wechat.ParamFormat;
-import com.celloud.wechat.TemplateId;
-import com.celloud.wechat.WebchatParams;
+import com.celloud.wechat.WechatParams;
+import com.celloud.wechat.WechatType;
 import com.celloud.wechat.WechatUtils;
 
 /**
@@ -110,8 +108,8 @@ public class LoginAction {
      */
     @ActionLog(value = "用户登录", button = "登录")
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public ModelAndView login(HttpServletRequest request, User user,
-            String kaptchaCode, String newPassword, boolean checked) {
+    public ModelAndView login(User user, String kaptchaCode, String newPassword,
+            boolean checked) {
         logger.info("用户正在登陆：" + user.getUsername());
         Subject subject = SecurityUtils.getSubject();
         String password = user.getPassword();
@@ -155,32 +153,32 @@ public class LoginAction {
         session.removeAttribute(Constants.SESSION_RSA_PRIVATEKEY);
         session.removeAttribute(Constants.SESSION_FAILED_LOGIN_TIME);
         session.setAttribute("isRemembered", checked);
+        Integer userId = loginUser.getUserId();
         // 获取用户所属的大客户，决定是否有统计菜单
-        Integer companyId = userService
-                .getCompanyIdByUserId(loginUser.getUserId());
+        Integer companyId = userService.getCompanyIdByUserId(userId);
         session.setAttribute("companyId", companyId);
         mv.setViewName("loading");
-        String openId = userService.getOpenIdByUser(loginUser.getUserId());
+        String openId = userService.getOpenIdByUser(userId);
         if (StringUtils.isNotEmpty(openId)) {
-            SimpleDateFormat dformat = new SimpleDateFormat(
-                    "yyyy-MM-dd hh:mm:ss");
-            String localAddr = request.getLocalAddr();
-            if ("0:0:0:0:0:0:0:1".equals(localAddr)) {
-                localAddr = "127.0.0.1";
-            }
-            Map<String, Object> map = ParamFormat
-                    .paramAll().add(
+            wechatUtils
+                    .pushMessage(ParamFormat.paramAll()
+                    .template(WechatType.LOGIN).openId(openId)
+                    .url(null).data(
                             ParamFormat.param()
-                                    .set(WebchatParams.LOGIN.first.name(),
+                                    .set(WechatParams.LOGIN.first.name(),
                                             "您好，您的帐号" + user.getUsername()
-                                                    + " 被登录")
-                            .set(WebchatParams.LOGIN.time.name(),
-                                    dformat.format(new Date()))
-                    .set(WebchatParams.LOGIN.ip.name(), localAddr)
-                    .set(WebchatParams.LOGIN.reason.name(),
-                            "备注：如果本次登录不是您本人所为，说明您的帐号已经被盗！为减少您的损失，请点击本条消息，立即锁定帐号。"),
-                    openId, TemplateId.LOGIN).get();
-            wechatUtils.pushMessage(map);
+                                                    + " 被登录",
+                                            "#222222")
+                                    .set(WechatParams.LOGIN.time.name(),
+                                            DateUtil.getDateToString(
+                                                    "yyyy-MM-dd hh:mm:ss"),
+                                            null)
+                            .set(WechatParams.LOGIN.ip.name(),
+                                    ConstantsData.getLocalIp(), null)
+                            .set(WechatParams.LOGIN.reason.name(),
+                                    "备注：如本次登录不是您本人授权，说明您的帐号存在安全隐患！为减少您的损失，请立即修改密码。",
+                                    "#222222"))
+                            .get());
         }
         return mv;
     }

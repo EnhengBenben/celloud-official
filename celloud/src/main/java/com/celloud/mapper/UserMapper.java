@@ -58,4 +58,6 @@ public interface UserMapper {
             @Param("createDate") Date createDate);
 
     public String getOpenIdByUser(@Param("userId") Integer userId);
+
+    public User getUserByOpenId(@Param("openId") String openId);
 }

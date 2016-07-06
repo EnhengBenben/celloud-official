@@ -421,7 +421,7 @@ function validateApplyForm(){
     //手机号
     var cellPhone = $.trim($("#cellphone").val());
     if(cellPhone!=""){
-        var mobileregex = /^[\d+]{11}$/;
+        var mobileregex = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
         if(!mobileregex.test(cellPhone)){
         	$("#cellphone").next().html("手机号格式不正确！");
         	flag = false;

@@ -71,9 +71,16 @@ public class WeChatAction {
 			return mv;
 		}
         String openId = wechatUtils.getOpenId(code);
-        us.insertUserWechatInfo(user.getUserId(), openId, null);
-        String msg = "您的CelLoud账号与微信号绑定成功！";
-		log.info("用户({})登录成功！", user.getUsername());
+        User wechatUser = us.getUserByOpenId(openId);
+        String msg = "";
+        if (wechatUser == null) {
+            us.insertUserWechatInfo(user.getUserId(), openId, null);
+            msg = "您的CelLoud账号与微信号绑定成功！";
+            log.info("用户({})登录成功！", user.getUsername());
+        } else {
+            msg = "您的微信号已绑定账户" + wechatUser.getUsername()
+                    + "，不可重复绑定，如有疑问请登录平台后在‘问题反馈’中联系我们";
+        }
 		session.removeAttribute(Constants.SESSION_RSA_PRIVATEKEY);
 		mv.addObject("info", msg).addObject("isSuccess", "true");
 		return mv;

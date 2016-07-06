@@ -1,7 +1,7 @@
 /*--添加用户余额--*/
 ALTER TABLE `tb_user`
 	ADD COLUMN `balances` DECIMAL(10,2) NULL DEFAULT '0.00' COMMENT '账户余额' AFTER `sign`;
-
+update tb_user set balances=0.00 where balances is null;
 /*--添加充值表--*/
 CREATE TABLE `tb_recharge` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,

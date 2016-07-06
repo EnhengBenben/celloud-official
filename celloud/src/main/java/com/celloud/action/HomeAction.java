@@ -226,4 +226,9 @@ public class HomeAction {
     public String test() {
         return "pay/alipay_return";
     }
+
+    @RequestMapping("about_us.html")
+    public String aboutUs() {
+        return "about_us";
+    }
 }

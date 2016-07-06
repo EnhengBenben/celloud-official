@@ -2,7 +2,7 @@
 function attrTransfer(obj,name){
     inputVal = $(obj).val();
     inputClass = $(obj).attr("class");
-    $(obj).parent().html("<span name='miniPrint' _hideClass='"+inputClass+"'>"+inputVal+"</span>");
+    $(obj).parent().html("<span name='"+name+"' _hideClass='"+inputClass+"'>"+inputVal+"</span>");
 }
 
 function printCss(){
@@ -34,11 +34,9 @@ function lookCss(){
 }
 
 $(function(){
-    if($(".end").html()){
-        $("#mainDiv").css("min-height","760px");
-    }else{
-        $("#mainDiv").css("min-height","850px");
-    }
+	$("#mainDiv").css("min-height","500px");
+	$(".notes").css("margin-top","0px");
+	$("#companyIcon").css("margin-bottom","7px");
     $("#print").on("click",function(){
         var inputVal;
         printCss();

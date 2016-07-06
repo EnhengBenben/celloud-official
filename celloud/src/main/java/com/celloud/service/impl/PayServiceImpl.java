@@ -16,12 +16,12 @@ import org.springframework.stereotype.Service;
 
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
+import com.celloud.constants.NoticeConstants;
 import com.celloud.constants.PayOrderState;
 import com.celloud.constants.RechargeType;
 import com.celloud.mapper.PayOrderMapper;
 import com.celloud.mapper.RechargeAlipayMapper;
 import com.celloud.message.MessageUtils;
-import com.celloud.model.mysql.Notice;
 import com.celloud.model.mysql.PayOrder;
 import com.celloud.model.mysql.RechargeAlipay;
 import com.celloud.pay.alipay.AlipayConfig;
@@ -140,7 +140,8 @@ public class PayServiceImpl implements PayService {
 					rechargeAlipayMapper.insert(alipay);
 					rechargeService.saveRecharge(amount, order.getUserId(), RechargeType.ALIPAY, alipay.getId());
 					MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
-							.send(new Notice("recharge", "充值成功", alipay.getDescription())).to(alipay.getUsername());
+							.send(NoticeConstants.createMessage("recharge", "充值成功", alipay.getDescription()))
+							.to(alipay.getUsername());
 				} else {
 					alipay = rechargeAlipayMapper.selectByTradeNo(out_trade_no);
 				}
