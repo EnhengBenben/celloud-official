@@ -1,1 +1,0 @@
-select * from tb_user limit 1 , 1
