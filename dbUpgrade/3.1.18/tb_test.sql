@@ -1,1 +1,1 @@
-select * from tb_user limit 1,1
+select * from tb_user limit 1 , 1
