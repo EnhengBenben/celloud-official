@@ -60,6 +60,8 @@ public class WeChatAction {
 		PrivateKey privateKey = (PrivateKey) session.getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
 		ModelAndView mv = new ModelAndView("wechat").addObject("user", user);
 		String password = user.getPassword();
+		log.info("password:" + password);
+		log.info("privateKey:" + privateKey);
         password = RSAUtil.decryptStringByJs(privateKey, password);
 		password = password == null ? "" : MD5Util.getMD5(password);
 		user.setPassword(password);
