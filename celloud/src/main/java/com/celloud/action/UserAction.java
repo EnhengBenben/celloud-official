@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.alimail.AliEmail;
+import com.celloud.alimail.AliEmailUtils;
+import com.celloud.alimail.AliSubstitution;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.model.mysql.ActionLog;
@@ -21,9 +24,6 @@ import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.sendcloud.EmailParams;
 import com.celloud.sendcloud.EmailType;
-import com.celloud.sendcloud.SendCloudUtils;
-import com.celloud.sendcloud.mail.Email;
-import com.celloud.sendcloud.mail.Substitution;
 import com.celloud.service.ActionLogService;
 import com.celloud.service.UserService;
 import com.celloud.utils.MD5Util;
@@ -43,8 +43,8 @@ public class UserAction {
     private UserService userService;
     @Resource
     private ActionLogService logService;
-    @Resource
-	private SendCloudUtils sendCloud;
+	@Resource
+	private AliEmailUtils emailUtils;
     private static final Response EMAIL_IN_USE = new Response("202", "邮箱已存在");
     private static final Response UPDATE_BASEINFO_FAIL = new Response("修改用户信息失败");
     private static final Response UPDATE_PASSWORD_FAIL = new Response("修改用户密码失败");
@@ -139,9 +139,10 @@ public class UserAction {
 
 		String url = ResetPwdUtils.updateEmailPath.replaceAll("resetEmailUsername", user.getUsername())
 				.replaceAll("resetcode", randomCode);
-		Email<?> context = Email.template(EmailType.CONFIRM_OLD_EMAIL)
-				.substitutionVars(Substitution.sub().set(EmailParams.CONFIRM_OLD_EMAIL.url.name(), url)).to(email);
-		sendCloud.sendTemplate(context);
+		
+		AliEmail aliEmail = AliEmail.template(EmailType.CONFIRM_OLD_EMAIL)
+				.substitutionVars(AliSubstitution.sub().set(EmailParams.CONFIRM_OLD_EMAIL.url.name(), url));
+		emailUtils.simpleSend(aliEmail, email);
 		return 0;
 	}
 
@@ -185,9 +186,9 @@ public class UserAction {
 
 		String url = ResetPwdUtils.toActiveEmailPath.replaceAll("username", user.getUsername())
 				.replaceAll("resetcode", randomCode).replaceAll("newemail", email);
-		Email<?> context = Email.template(EmailType.CONFIRM_NEW_EMAIL)
-				.substitutionVars(Substitution.sub().set(EmailParams.CONFIRM_NEW_EMAIL.url.name(), url)).to(email);
-		sendCloud.sendTemplate(context);
+		AliEmail aliEmail = AliEmail.template(EmailType.CONFIRM_NEW_EMAIL)
+				.substitutionVars(AliSubstitution.sub().set(EmailParams.CONFIRM_NEW_EMAIL.url.name(), url));
+		emailUtils.simpleSend(aliEmail, email);
 		return 0;
 	}
 

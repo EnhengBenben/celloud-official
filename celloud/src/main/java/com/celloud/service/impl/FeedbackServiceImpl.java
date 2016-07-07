@@ -15,6 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.celloud.alimail.AliEmail;
+import com.celloud.alimail.AliEmailUtils;
+import com.celloud.alimail.AliSubstitution;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.FeedbackConstants;
 import com.celloud.mail.EmailUtils;
@@ -29,9 +32,6 @@ import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.sendcloud.EmailParams;
 import com.celloud.sendcloud.EmailType;
-import com.celloud.sendcloud.SendCloudUtils;
-import com.celloud.sendcloud.mail.Email;
-import com.celloud.sendcloud.mail.Substitution;
 import com.celloud.service.FeedbackService;
 import com.celloud.utils.DateUtil;
 
@@ -47,7 +47,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Resource
     private EmailUtils emailUtils;
 	@Resource
-	private SendCloudUtils sendCloud;
+	private AliEmailUtils aliEmailUtils;
     private static final Page DEFAULT_PAGE = new Page(1, 5);
     @Resource
     private FeedbackMapper feedbackMapper;
@@ -101,23 +101,14 @@ public class FeedbackServiceImpl implements FeedbackService {
 			logger.warn("用户提交了工单，正在发送工单信息邮件，但是没有找到邮件接收者！");
 			return;
 		}
-		Email<?> context = Email
-				.template(
-						EmailType.FEADBACK)
-				.substitutionVars(Substitution.sub().set(EmailParams.FEADBACK.title.name(), feedback.getTitle())
+		AliEmail aliEmail = AliEmail.template(EmailType.FEADBACK)
+				.substitutionVars(AliSubstitution.sub().set(EmailParams.FEADBACK.title.name(), feedback.getTitle())
 						.set(EmailParams.FEADBACK.start.name(),
 								DateUtil.getDateToString(feedback.getCreateDate(), "yyyy-MM-dd HH:mm:ss"))
 				.set(EmailParams.FEADBACK.userName.name(), feedback.getUsername())
 				.set(EmailParams.FEADBACK.context.name(), feedback.getContent())
-				.set(EmailParams.FEADBACK.end.name(), DateUtil.getDateToString("yyyy")))
-				.to(emailUtils.getFeedbackMailTo());
-		if (attachments != null && attachments.size() > 0) {
-			for (FeedbackAttachment fa : attachments) {
-				String file = FeedbackConstants.getAttachment(fa.getFilePath());
-				context.attachment(new File(file));
-			}
-		}
-		sendCloud.sendTemplate(context);
+				.set(EmailParams.FEADBACK.end.name(), DateUtil.getDateToString("yyyy")));
+		aliEmailUtils.simpleSend(aliEmail, emailUtils.getFeedbackMailTo());
 	}
 
     /**
