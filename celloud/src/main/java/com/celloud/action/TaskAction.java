@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.celloud.alimail.AliEmail;
+import com.celloud.alimail.AliEmailUtils;
+import com.celloud.alimail.AliSubstitution;
 import com.celloud.constants.AppDataListType;
 import com.celloud.constants.CommandKey;
 import com.celloud.constants.Constants;
@@ -42,9 +45,6 @@ import com.celloud.model.mysql.Report;
 import com.celloud.model.mysql.Task;
 import com.celloud.sendcloud.EmailParams;
 import com.celloud.sendcloud.EmailType;
-import com.celloud.sendcloud.SendCloudUtils;
-import com.celloud.sendcloud.mail.Email;
-import com.celloud.sendcloud.mail.Substitution;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.ExpensesService;
@@ -94,11 +94,11 @@ public class TaskAction {
     @Resource
     private SecRoleService secService;
     @Resource
-    private SendCloudUtils sendCloud;
-    @Resource
     private UserService userService;
     @Resource
     private WechatUtils wechatUtils;
+	@Resource
+	private AliEmailUtils emailUtils;
 
     private static Map<String, Map<String, String>> machines = ConstantsData
             .getMachines();
@@ -273,15 +273,12 @@ public class TaskAction {
                 "yyyy-MM-dd hh:mm:ss");
         String endDate = DateUtil.getDateToString(task.getEndDate(),
                 "yyyy-MM-dd hh:mm:ss");
-        Email<?> context = Email.template(EmailType.RUN_OVER)
-                .substitutionVars(Substitution.sub()
-                        .set(EmailParams.RUN_OVER.userName.name(), username)
-                        .set(EmailParams.RUN_OVER.projectName.name(), tipsName)
-                        .set(EmailParams.RUN_OVER.app.name(), appName)
-                        .set(EmailParams.RUN_OVER.start.name(), startDate)
-                        .set(EmailParams.RUN_OVER.end.name(), endDate))
-                .to(email);
-        sendCloud.sendTemplate(context);
+		AliEmail aliEmail = AliEmail.template(EmailType.RUN_OVER)
+				.substitutionVars(AliSubstitution.sub().set(EmailParams.RUN_OVER.userName.name(), username)
+						.set(EmailParams.RUN_OVER.projectName.name(), tipsName)
+						.set(EmailParams.RUN_OVER.app.name(), appName).set(EmailParams.RUN_OVER.start.name(), startDate)
+						.set(EmailParams.RUN_OVER.end.name(), endDate));
+		emailUtils.simpleSend(aliEmail, email);
         return "run over";
     }
 

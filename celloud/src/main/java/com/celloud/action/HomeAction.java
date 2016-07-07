@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.alimail.AliEmail;
+import com.celloud.alimail.AliEmailUtils;
+import com.celloud.alimail.AliSubstitution;
 import com.celloud.constants.Constants;
 import com.celloud.model.mysql.Client;
 import com.celloud.model.mysql.User;
 import com.celloud.sendcloud.EmailParams;
 import com.celloud.sendcloud.EmailType;
-import com.celloud.sendcloud.SendCloudUtils;
-import com.celloud.sendcloud.mail.Email;
-import com.celloud.sendcloud.mail.Substitution;
 import com.celloud.service.ClientService;
 import com.celloud.service.UserService;
 import com.celloud.utils.MD5Util;
@@ -42,8 +42,8 @@ public class HomeAction {
     private static final Logger logger = LoggerFactory.getLogger(HomeAction.class);
     @Resource
     private UserService userService;
-    @Resource
-    private SendCloudUtils sendCloud;
+	@Resource
+	private AliEmailUtils emailUtils;
     @Resource
     private ClientService clientService;
 
@@ -140,9 +140,10 @@ public class HomeAction {
         userService.insertFindPwdInfo(user.getUserId(), randomCode);
         String url = ResetPwdUtils.celloudPath.replaceAll("resetpwduname", user.getUsername())
                 .replaceAll("resetpwdcode", randomCode);
-        Email<?> context = Email.template(EmailType.PWD_FIND)
-                .substitutionVars(Substitution.sub().set(EmailParams.PWD_FIND.url.name(), url)).to(email);
-        sendCloud.sendTemplate(context);
+		AliEmail aliEmail = AliEmail.template(EmailType.PWD_FIND)
+				.substitutionVars(AliSubstitution.sub().set(EmailParams.PWD_FIND.url.name(), url));
+		emailUtils.simpleSend(aliEmail, email);
+
         email = email.substring(0, 1) + "***" + email.substring(email.lastIndexOf("@"));
         String emailAddress = "http://mail." + email.substring(email.lastIndexOf("@") + 1);
         return mv.addObject("success", "ok").addObject("email", email).addObject("emailAddress", emailAddress);
