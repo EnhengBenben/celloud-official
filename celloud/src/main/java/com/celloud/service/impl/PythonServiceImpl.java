@@ -12,15 +12,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.celloud.alimail.AliEmail;
+import com.celloud.alimail.AliEmailUtils;
+import com.celloud.alimail.AliSubstitution;
 import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.User;
 import com.celloud.sendcloud.EmailParams;
 import com.celloud.sendcloud.EmailType;
-import com.celloud.sendcloud.SendCloudUtils;
-import com.celloud.sendcloud.mail.Email;
-import com.celloud.sendcloud.mail.Substitution;
 import com.celloud.service.ActionLogService;
 import com.celloud.service.ClientService;
 import com.celloud.service.DataService;
@@ -40,7 +40,7 @@ public class PythonServiceImpl implements PythonService {
     Logger log = LoggerFactory.getLogger(PythonServiceImpl.class);
     private String path = PropertiesUtil.bigFilePath;
     @Resource
-	private SendCloudUtils sendCloud;
+	private AliEmailUtils emailUtils;
     @Resource
     private UserService userService;
     @Resource
@@ -166,11 +166,11 @@ public class PythonServiceImpl implements PythonService {
 	public void sendEmail(Integer userId, String fileName, String dataKey) {
 		log.info("Python客户端，用户：" + userId + "上传文件" + fileName + "完成，发送邮件。");
 		User user = userService.selectUserById(userId);
-		Email<?> context = Email.template(EmailType.UPLOAD_OVER)
-				.substitutionVars(Substitution.sub().set(EmailParams.UPLOAD_OVER.dataName.name(), fileName)
-						.set(EmailParams.UPLOAD_OVER.userName.name(), user.getUsername()))
-				.to(user.getEmail());
-		sendCloud.sendTemplate(context);
+
+		AliEmail aliEmail = AliEmail.template(EmailType.UPLOAD_OVER)
+				.substitutionVars(AliSubstitution.sub().set(EmailParams.UPLOAD_OVER.dataName.name(), fileName)
+						.set(EmailParams.UPLOAD_OVER.userName.name(), user.getUsername()));
+		emailUtils.simpleSend(aliEmail, user.getEmail());
 	}
 
     @Override

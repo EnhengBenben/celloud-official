@@ -7,6 +7,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.celloud.alimail.AliEmail;
+import com.celloud.alimail.AliEmailUtils;
+import com.celloud.alimail.AliSubstitution;
 import com.celloud.mail.EmailUtils;
 import com.celloud.mapper.InvoiceMapper;
 import com.celloud.mapper.RechargeMapper;
@@ -15,9 +18,6 @@ import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.sendcloud.EmailParams;
 import com.celloud.sendcloud.EmailType;
-import com.celloud.sendcloud.SendCloudUtils;
-import com.celloud.sendcloud.mail.Email;
-import com.celloud.sendcloud.mail.Substitution;
 import com.celloud.service.InvoiceService;
 
 @Service("invoiceService")
@@ -28,9 +28,9 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Resource
     private RechargeMapper rechargeMapper;
     @Resource
-    private SendCloudUtils sendCloud;
-    @Resource
-    private EmailUtils emailUtils;
+	private AliEmailUtils aliEmailUtils;
+	@Resource
+	private EmailUtils emailUtils;
 
     @Override
     public int applyInvoice(String username, Invoice invoice, Integer ids[]) {
@@ -41,10 +41,9 @@ public class InvoiceServiceImpl implements InvoiceService {
         // 更新充值记录表外键值
         rechargeMapper.updateRechargeInvoiceId(invoice.getId(), ids);
         // 向celloud发送邮件
-        Email<?> context = Email.template(EmailType.INVOICE)
-                .substitutionVars(Substitution.sub().set(EmailParams.INVOICE.username.name(), username))
-                .to(emailUtils.getFeedbackMailTo());
-        sendCloud.sendTemplate(context);
+		AliEmail aliEmail = AliEmail.template(EmailType.INVOICE)
+				.substitutionVars(AliSubstitution.sub().set(EmailParams.INVOICE.username.name(), username));
+		aliEmailUtils.simpleSend(aliEmail, emailUtils.getFeedbackMailTo());
         return num;
     }
 
