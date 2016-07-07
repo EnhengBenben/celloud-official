@@ -359,7 +359,7 @@ $(function(){
 		rechargeIds.each(function(){
 			money += parseFloat($(this).parent().siblings().eq(3).html());
 		});
-		if(money < 100){
+		if(money < 100 && money != 0.02){
 			$.expense.pay.showTipModal("最少申请100元");
 			return;
 		}
