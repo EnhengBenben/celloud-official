@@ -336,7 +336,7 @@
 <script>
 $(function(){
 	$("input[name='rechargeIds']").click(function(){
-		if($("input[name='rechargeIds']").length == $("input[name='rechargeIds']:checked").length){
+		if($("input[name='rechargeIds'][type='checkbox']").length == $("input[name='rechargeIds'][type='checkbox']:checked").length){
 			$("#checkAll").prop("checked",true);
 		}else{
 			$("#checkAll").prop("checked",false);
