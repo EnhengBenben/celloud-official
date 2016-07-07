@@ -3,11 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="row" style="margin: 5px;">
 	<div class="col-xs-12">
-		<div class="alert alert-success" style="color: #fff">
-			<strong>充值优惠：</strong>凡单笔充值达到 5000 返现 5%，达到 1万 返现 10%，达到 10万 返现
-			15%，达到 100万 返现 20%。
-		</div>
-		<br>
 		<h3>
 			<strong>账户余额:</strong> <label class="text-success">￥${balance }</label>
 		</h3>
@@ -175,15 +170,15 @@
 						<th>开户银行</th>
 						<th>账户名</th>
 						<th>账户</th>
-						<th>银行电汇代码
+						<!-- th>银行电汇代码</th -->
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td>中国工商银行上海市临空支行</td>
+						<td>中国工商银行股份有限公司上海市临空支行</td>
 						<td>上海华点云生物科技有限公司</td>
-						<td>1000 1213 1314 5210</td>
-						<td>XXXXX
+						<td>1000 1288 3093 0029 7407</td>
+						<!-- td>XXXXX</td -->
 					</tr>
 				</tbody>
 			</table>
