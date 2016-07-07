@@ -122,7 +122,7 @@ function init_expense(){
 		 $group.addClass("has-error");
 		 return false;
 	 }
-	 if( (money*1)%1 >10000){
+	 if( money*1 >10000){
 		 $("#money-max").show();
 		 $group.addClass("has-error");
 		 return false;
