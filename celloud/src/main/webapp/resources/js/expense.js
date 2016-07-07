@@ -100,15 +100,19 @@ function init_expense(){
   $("#expense-content").on("submit","#rechargeForm",function(){
 	 var $self = $("#rechargeForm");
 	 var money = $self.find("input[name='money']").val();
-	 var result = $.isNumeric(money);
-	 if(result){
+	 if($.isNumeric(money) && money*1 == 0.01){//测试用的
 		 $("#tip-modal").modal("show");
-	 }else{
-		 $self.find("input[name='money']").parent().popover({
-			 content:"请正确输入充值金额！",
-		 }).popover('show');
-		 $self.find("input[name='money']").select();
+		 return true;
 	 }
-	 return result;
+	 if(!$.isNumeric(money) && money*1 >= 10 && (money*1)%1 == 0){
+		 $("#tip-modal").modal("show");
+		 return true;
+	 }
+	 $self.find("input[name='money']").select();
+	 $self.find("input[name='money']").parent().popover({
+		 content:'<i class="glyphicon glyphicon-exclamation-sign text-danger"></i> 单笔充值金额须大于10元，且不要输入小数哦！',
+		 html:true
+	 }).popover('show');
+	 return false;
   });
 }
