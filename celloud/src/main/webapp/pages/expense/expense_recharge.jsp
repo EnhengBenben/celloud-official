@@ -31,9 +31,9 @@
 				method="post">
 				<div class="form-group">
 					<label class="col-sm-1 control-label">金额(￥)</label>
-					<div class="col-sm-8">
+					<div class="col-sm-11">
 						<label class="checkbox-inline">
-							<input type="number" name="money" class="form-control" min="0.01" max="100000" value="10.01" step="10" />
+							<input type="text" name="money" class="form-control" value="10"  />
 						</label>
 					</div>
 				</div>
