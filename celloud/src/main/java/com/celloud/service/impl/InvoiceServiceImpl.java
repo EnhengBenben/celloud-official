@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.celloud.mail.EmailUtils;
 import com.celloud.mapper.InvoiceMapper;
 import com.celloud.mapper.RechargeMapper;
 import com.celloud.model.mysql.Invoice;
@@ -28,6 +29,8 @@ public class InvoiceServiceImpl implements InvoiceService {
     private RechargeMapper rechargeMapper;
     @Resource
     private SendCloudUtils sendCloud;
+    @Resource
+    private EmailUtils emailUtils;
 
     @Override
     public int applyInvoice(String username, Invoice invoice, Integer ids[]) {
@@ -40,7 +43,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         // 向celloud发送邮件
         Email<?> context = Email.template(EmailType.INVOICE)
                 .substitutionVars(Substitution.sub().set(EmailParams.INVOICE.username.name(), username))
-                .to("miaoqi@celloud.cn");
+                .to(emailUtils.getFeedbackMailTo());
         sendCloud.sendTemplate(context);
         return num;
     }
