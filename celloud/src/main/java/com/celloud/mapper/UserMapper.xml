@@ -386,7 +386,7 @@
     </select>
     <select id="getUserByOpenId" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        u.user_id, u.username, u.email, u.cellphone, u.create_date,   u.icon,   u.role,u.remark, u.navigation, u.truename, u.state, u.dept_id, u.login_uuid, u.company_id,u.sign,u.balances
         from tb_user u,tb_user_wechat uw
         where u.user_id=uw.user_id and uw.open_id = #{openId}
     </select>
