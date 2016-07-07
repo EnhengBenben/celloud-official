@@ -104,7 +104,7 @@ function init_expense(){
 		 $("#tip-modal").modal("show");
 		 return true;
 	 }
-	 if(!$.isNumeric(money) && money*1 >= 10 && (money*1)%1 == 0){
+	 if($.isNumeric(money) && money*1 >= 10 && (money*1)%1 == 0){
 		 $("#tip-modal").modal("show");
 		 return true;
 	 }
