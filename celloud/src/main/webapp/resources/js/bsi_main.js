@@ -402,6 +402,7 @@ $.report = {
   },
   loadlist: function(response){
     $("#report-list").html(response);
+    $("#sample-selector").val($.report.options.sampleName);
     $("#sample-selector").on("keyup",function(e){
       e = e || window.event;
       if (e.keyCode == "13") {//keyCode=13是回车键
