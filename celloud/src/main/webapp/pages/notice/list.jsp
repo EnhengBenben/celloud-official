@@ -47,9 +47,9 @@
 											<input type="checkbox" id="messageListCheckAll">
 										</th>
 										<th style="width: 30px;"></th>
-										<th width="15%">标题</th>
+										<th style="width:15%;">标题</th>
 										<th>内容</th>
-										<th style="width: 170px;">时间</th>
+										<th style="width: 170px;" class="text-center">时间</th>
 									</tr>
 								</thead>
 								<tbody>
