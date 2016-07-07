@@ -1,5 +1,6 @@
 package com.celloud.service.impl;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import com.celloud.mail.EmailUtils;
 import com.celloud.mapper.InvoiceMapper;
 import com.celloud.mapper.RechargeMapper;
 import com.celloud.model.mysql.Invoice;
+import com.celloud.model.mysql.Recharge;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.sendcloud.EmailParams;
@@ -33,9 +35,15 @@ public class InvoiceServiceImpl implements InvoiceService {
     private EmailUtils emailUtils;
 
     @Override
-    public int applyInvoice(String username, Invoice invoice, Integer ids[]) {
+    public int applyInvoice(Integer userId, String username, Invoice invoice, Integer[] ids) {
         // 申请时间
         invoice.setCreateDate(new Date());
+        List<Recharge> recharges = rechargeMapper.findRechargesInIds(userId, ids);
+        BigDecimal money = new BigDecimal(0.0);
+        for(Recharge recharge : recharges){
+            money.add(recharge.getAmount());
+        }
+        invoice.setMoney(money);
         // 插入数据库
         int num = invoiceMapper.insertAndSetId(invoice);
         // 更新充值记录表外键值
