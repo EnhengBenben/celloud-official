@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.ConstantsData;
+import com.celloud.constants.MessageCategoryEnum;
+import com.celloud.constants.MessageWay;
 import com.celloud.model.mysql.MessageCategory;
 import com.celloud.service.MessageCategoryService;
 import com.celloud.utils.ActionLog;
@@ -53,6 +55,8 @@ public class MessageCategoryAction {
     @RequestMapping("insert")
     @ResponseBody
     public int insert(String datas) {
+        messageCategoryService.getUserMessageSwitch(ConstantsData.getLoginUserId(), MessageCategoryEnum.REPORT,
+                MessageWay.email);
         Integer userId = ConstantsData.getLoginUserId();
         return messageCategoryService.initUserMessageCategory(userId, datas);
     }
@@ -61,6 +65,8 @@ public class MessageCategoryAction {
     @RequestMapping("update")
     @ResponseBody
     public int update(String targetName, Integer targetVal, Integer relatId) {
+        messageCategoryService.getUserMessageSwitch(ConstantsData.getLoginUserId(), MessageCategoryEnum.REPORT,
+                MessageWay.email);
         return messageCategoryService.editUserMessageSwitch(targetName, targetVal, relatId);
     }
 

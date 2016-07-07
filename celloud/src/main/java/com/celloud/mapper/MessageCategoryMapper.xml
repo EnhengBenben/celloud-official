@@ -114,8 +114,12 @@
     set ${targetSwitch} = #{targetVal}
     where id = #{relatId}
   </update>
-  <select id="getSwitch" resultType="int">
+  <select id="getUserSwitch" resultType="java.lang.Integer">
     select ${targetSwitch} from tb_user_message_category_relat
     where user_id = #{userId} and message_category_id = #{messageCategoryId}
+  </select>
+  <select id="getDefaultSwitch" resultType="java.lang.Integer">
+    select ${targetSwitch} from tb_message_category
+    where id = #{messageCategoryId}
   </select>
 </mapper>

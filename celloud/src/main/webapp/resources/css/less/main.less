@@ -1,0 +1,241 @@
+@import "param.less";
+html,body,div,section,ul {
+    padding: 0;
+    margin: 0;
+    font: 12px/1.5 "Microsoft Yahei","Hiragino Sans GB",tahoma,arial;
+}
+input,button,a,select,textarea {
+    outline: none;
+}
+a, a:link, a:hover, a:active, a:visited {
+    text-decoration: none;
+    cursor: pointer;
+}
+ul,ol{
+    list-style: none;
+}
+.container{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    background: #f0f0f0;
+}
+.main-header,
+.main-sidebar{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+}
+.main-header{
+    width: 100%;
+    height: 50px;
+    background: #fff;
+    z-index: 1030;
+    > .logo {
+        display: block;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        float: left;
+    }
+    > .logo img{
+        width: 30px;
+    }
+    > .navbar{
+        margin-left: 50px;
+        margin-bottom: 0px;
+        border: none;
+    }
+    > .navbar .menu{
+        height: 50px;
+        float: right;
+        > .nav{
+            height: 50px;
+            margin: 0px;
+            padding: 0px;
+            > li{
+               display: inline-block;
+            }
+        }
+    }
+    > .navbar .menu a{
+        width: 50px;
+        height: 50px;
+        padding: 0px;
+        line-height: 50px;
+        font-size: 16px;
+        color: @bg-gray;
+        text-align: center;
+        &:hover{
+            color: @font-gray;
+            background: @bg-gray;
+        }
+    }
+}
+.main-sidebar{
+    width: 50px;
+    min-height: 100%;
+    padding-top: 50px;
+    background: #222d32;
+    > .menu{
+        width: 100%;
+        min-height: 500px;
+        padding: 32px 0px;
+        background: #1a2226;
+    }
+    > .menu .treeview{
+        width: 100%;
+        height: 50px;
+        display: block;
+        &.-active>a {
+            border-left: 2px solid @bactive-color;
+            color: #fff;
+            background: #222d32;
+        }
+    }
+    > .menu .treeview>a{
+        width: 100%;
+        height: 50px;
+        display: block;
+        line-height: 50px;
+        padding: 0px 10px;
+    }
+}
+.main-container{
+    margin: 50px 0px 0px 50px;
+    padding: 0px 15px;
+    .header{
+        .breadcrumb {
+            margin-bottom: 0;
+            padding: 10px 0px;
+            color: @font-gray;
+            background: none;
+        }
+       .breadcrumb>li+li:before{
+            padding: 0 5px 0px 0px;
+            color: rgb(150,150,150);
+            content: "＞";
+        }
+    }
+    .content{
+        position: relative;
+        height: 100%;
+    }
+}
+/*banner */
+.common-menu { 
+    position: relative;
+    width: 100%;
+    height: 80px;
+    background: @main-color;
+    > .logo {
+        width: 170px;
+        padding: 10px 0px;
+        float: left;
+    }
+    > .logo img{
+        height: 60px;
+        display: block;
+        margin: auto auto;
+    }
+    hr{
+        &.-left{
+            float: left;
+        }
+        &.-right{
+            float: right;
+        }
+        height: 70px;
+        width: 0px;
+        margin: 5px 0px;
+        display: inline-block;
+        border-left:1px solid #fff;
+        border-right:1px solid #f2f2f2;
+    }
+    > .info{
+        height: 80px;
+        padding: 20px 18px;
+        float: left;
+        .info-form {
+            float: left;
+        }
+        .errortip{
+            height: 26px;
+            margin: 14px 0px 0px 20px;
+            padding: 0px 20px;
+            display: inline-block;
+            line-height: 26px;
+            color: @font-black;
+            font-size: 12px;
+            float: left;
+            .border-radius(6px);
+            background-color:@error-bg;
+        }
+        .errortip a {
+            padding-left: 20px;
+            color: @font-black;
+        }
+    }
+    > .searchs{
+        width: 240px;
+        display: block;
+        float: right;
+        padding: 20px;
+    }
+}
+.common-sidebar{
+    position: absolute;
+    width: 170px;
+    min-height: 100%;
+    background: @bg-gray;
+    > .menu{
+        width: 100%;
+        padding: 0px;
+        font-size: 14px;
+    }
+    > .menu .treeview{
+        width: 100%;
+        height: 40px;
+        display: block;
+        line-height: 40px;
+        padding-left: -2px;
+        text-align: center;
+        font-size: 14px;
+        &.-active>a {
+            border-left: 2px solid @rocky-color;
+            color: @rocky-color;
+            background: @main-color;
+        }
+    }
+    > .menu .treeview>a{
+        width: 100%;
+        height: 40px;
+        display: block;
+        color: @bg-black;
+    }
+}
+.common-container{
+    position: relative;
+    min-height: 100%;
+    margin-left: 170px;
+    padding: 20px;
+}
+.sample{
+    padding-left: 15px;
+    .info {
+        height: 260px;
+        display: block;
+        padding: 20px;
+        font-size: 12px;
+        color: @font-gray;
+        background-color: @main-color;
+        > img{
+            margin: 10px 0px 20px 0px;
+             width:100%;
+        }
+    }
+    .list {
+        padding-right: 0px;
+    }
+}

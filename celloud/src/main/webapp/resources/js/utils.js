@@ -107,13 +107,13 @@ utils.setDocSize = function(){
 		$(".longbackground").width(winWidth);
 		$("#bg").width(winWidth);
 		$(".page-layout").css("min-width",winWidth);
-		$(".container").width(winWidth);
+//		$(".container").width(winWidth);
 	}else{
 		$(".bgContainer").width(docWidth);
 		$(".longbackground").width(docWidth);
 		$("#bg").width(docWidth);
 		$(".page-layout").css("min-width",docWidth);
-		$(".container").width(docWidth);
+//		$(".container").width(docWidth);
 	}
 	//设置高度
 	if(winHeight >= docHeight){
@@ -121,13 +121,13 @@ utils.setDocSize = function(){
 		$(".longbackground").height(winHeight);
 		$("#bg").height(winHeight);
 		$(".page-layout").css("min-height",winHeight);
-		$(".container").height(winHeight);
+//		$(".container").height(winHeight);
 	}else{
 		$(".bgContainer").height(docHeight);
 		$(".longbackground").height(docHeight);
 		$("#bg").height(docHeight);
 		$(".page-layout").css("min-height",docHeight);
-		$(".container").height(docHeight);
+//		$(".container").height(docHeight);
 	}
 	$(".bgContainer").css("overflow","hidden");
 }

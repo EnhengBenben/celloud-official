@@ -46,8 +46,13 @@ public class MessageCategoryServiceImpl implements MessageCategoryService {
     }
 
     @Override
-    public int getUserMessageSwitch(Integer userId, MessageCategoryEnum messageCategoryEnum, MessageWay messageWay) {
-        return messageCategoryMapper.getSwitch(userId, messageWay.name(), messageCategoryEnum.getId());
+    public Integer getUserMessageSwitch(Integer userId, MessageCategoryEnum messageCategoryEnum,
+            MessageWay messageWay) {
+        Integer setting = messageCategoryMapper.getUserSwitch(userId, messageWay.name(), messageCategoryEnum.getId());
+        if (setting == null) {
+            setting = messageCategoryMapper.getDefaultSwitch(messageWay.name(), messageCategoryEnum.getId());
+        }
+        return setting;
     }
 
 }

@@ -174,6 +174,8 @@ public class HomeAction {
         Subject sub = SecurityUtils.getSubject();
         if (sub.hasRole("bsier")) {
             return "bsi/index";
+        } else if (sub.hasRole("rocky")) {
+            return "rocky/index";
         } else {
             return "index";
         }
