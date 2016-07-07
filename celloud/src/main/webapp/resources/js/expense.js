@@ -100,7 +100,7 @@ function init_expense(){
   $("#expense-content").on("submit","#rechargeForm",function(){
 	 var $self = $("#rechargeForm");
 	 var $group =  $self.find("#moneyGroup");
-	 $group.remove("has-error");
+	 $group.removeClass("has-error");
 	 $group.find(".text-danger").hide();
 	 var money = $self.find("input[name='money']").val();
 	 if($.isNumeric(money) && money*1 == 0.01){//测试用的
