@@ -316,6 +316,7 @@ $.report = {
           $.report.options.batch = null;
           $("#batch-more").removeClass("disabled");
           $("#batch-more").attr("disabled",false);
+          $("#batch-lists").find(".multisl-btns").addClass("hide");
           $.report.find.condition();
         });
         $("#period-lists .sl-val-content").on("click",function(){
