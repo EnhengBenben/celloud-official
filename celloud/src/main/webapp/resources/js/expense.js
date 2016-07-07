@@ -127,6 +127,7 @@ function init_expense(){
 		 $group.addClass("has-error");
 		 return false;
 	 }
+	 $("#tip-modal").modal('show');
 	 $self.find("input[name='money']").val(parseInt(money));
 	 return true;
   });
