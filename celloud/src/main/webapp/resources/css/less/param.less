@@ -1,0 +1,31 @@
+@bactive-color: #1dd2af;
+@rocky-color: #de4c95;
+@main-color: #f8f8f8;
+@bg-black: #2c3e50;
+@bg-gray: #dcdcdc;
+@font-black: #323232;
+@font-gray: #969696;
+@a-gray: #a0a0a0;
+@error-bg: rgba(255,88,125,0.5);
+
+/*边框圆角样式：  
+  1.  20px (四个角相同)
+  2.  20px 20px (对角相同)
+  2.  20px 20px 20px 20px  (分别定义)
+*/
+.border-radius(@style){
+    -webkit-border-radius: @style;
+    -moz-border-radius: @style;
+    -o-border-radius: @style;
+    border-radius: @style;
+}
+
+/*超过隐藏并替换指定符号  ellipsis-省略号*/
+.overflow(@sign){
+    -webkit-text-overflow: @sign;
+    -moz-text-overflow: @sign;
+    -o-text-overflow: @sign;
+    text-overflow: @sign;      
+    overflow: hidden;/*设置超过的隐藏*/
+    white-space: nowrap;/*设置不折行*/
+}
