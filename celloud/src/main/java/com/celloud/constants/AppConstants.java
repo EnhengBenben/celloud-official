@@ -47,7 +47,9 @@ public class AppConstants {
      */
     public static String getAppPicturePath() {
         if (AppPicturePath == null) {
-            AppPicturePath = getProperty("appPicturePath");
+        	synchronized (AppPicturePath) {
+        		AppPicturePath = getProperty("appPicturePath");
+			}
         }
         return AppPicturePath+File.separator+"icon";
     }
