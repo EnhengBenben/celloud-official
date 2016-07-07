@@ -99,16 +99,36 @@ function init_expense(){
   });
   $("#expense-content").on("submit","#rechargeForm",function(){
 	 var $self = $("#rechargeForm");
+	 var $group =  $self.find("#moneyGroup");
+	 $group.removeClass("has-error");
+	 $group.find(".text-danger").hide();
 	 var money = $self.find("input[name='money']").val();
-	 var result = $.isNumeric(money);
-	 if(result){
+	 if($.isNumeric(money) && money*1 == 0.01){//测试用的
 		 $("#tip-modal").modal("show");
-	 }else{
-		 $self.find("input[name='money']").parent().popover({
-			 content:"请正确输入充值金额！",
-		 }).popover('show');
-		 $self.find("input[name='money']").select();
+		 return true;
 	 }
-	 return result;
+	 if(!$.isNumeric(money)){
+		 $("#money-number").show();
+		 $group.addClass("has-error");
+		 return false;
+	 }
+	 if(money*1 < 10){
+		 $("#money-min").show();
+		 $group.addClass("has-error");
+		 return false;
+	 }
+	 if( (money*1)%1 != 0){
+		 $("#money-int").show();
+		 $group.addClass("has-error");
+		 return false;
+	 }
+	 if( money*1 >10000){
+		 $("#money-max").show();
+		 $group.addClass("has-error");
+		 return false;
+	 }
+	 $("#tip-modal").modal('show');
+	 $self.find("input[name='money']").val(parseInt(money));
+	 return true;
   });
 }

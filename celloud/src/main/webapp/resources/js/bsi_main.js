@@ -316,6 +316,7 @@ $.report = {
           $.report.options.batch = null;
           $("#batch-more").removeClass("disabled");
           $("#batch-more").attr("disabled",false);
+          $("#batch-lists").find(".multisl-btns").addClass("hide");
           $.report.find.condition();
         });
         $("#period-lists .sl-val-content").on("click",function(){
@@ -402,6 +403,7 @@ $.report = {
   },
   loadlist: function(response){
     $("#report-list").html(response);
+    $("#sample-selector").val($.report.options.sampleName);
     $("#sample-selector").on("keyup",function(e){
       e = e || window.event;
       if (e.keyCode == "13") {//keyCode=13是回车键
