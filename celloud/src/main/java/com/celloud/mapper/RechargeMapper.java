@@ -22,5 +22,7 @@ public interface RechargeMapper {
 
     List<Recharge> findRecharges(@Param("userId") Integer userId, Page page);
 
+    List<Recharge> findRechargesInIds(@Param("userId") Integer userId, @Param("ids") Integer[] ids);
+
     void updateRechargeInvoiceId(@Param("invoiceId") Integer invoiceId, @Param("rechargeIds") Integer[] rechargeIds);
 }

@@ -159,6 +159,11 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
+    public List<Pgs> getPgsProjectReport(Integer projectId) {
+        return reportDao.getDataByProjectId(Pgs.class, projectId);
+    }
+
+    @Override
     public Oncogene getOncogeneReport(String dataKey, Integer projectId, Integer appId) {
         return reportDao.getDataReport(Oncogene.class, dataKey, projectId, appId);
     }
@@ -869,4 +874,5 @@ public class ReportServiceImpl implements ReportService {
             Integer appId) {
         reportDao.delete(BSI.class, dataKey, projectId, appId);
     }
+
 }

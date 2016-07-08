@@ -1,0 +1,71 @@
+<script type="text/javascript">
+$(function(){
+    function lookCss(){
+        $(".saId").css("margin-left","0px");
+        $(".exId").css("margin-left","14px");
+        $(".exResult").css("margin-left","15px");
+        $(".exRemark").css("margin-left","11px");
+        
+        $(".saId").css("margin-top","13px");
+        $(".exId").css("margin-top","13px");
+        $(".exRemark").css("margin-top","11px");
+    };
+    function printCss(){
+        $(".saId").css("margin-left","2px");
+        $(".exId").css("margin-left","20px");
+        $(".exResult").css("margin-left","22px");
+        $(".exRemark").css("margin-left","47px");
+        
+        $(".saId").css("margin-top","7px");
+        $(".exId").css("margin-top","6px");
+        $(".exRemark").css("margin-top","6px");
+    };
+    $("#save").hide();
+	$("#print").on("click",function(){
+	    printCss();
+		var inputVal;
+		$("table").find("input").each(function(){
+            $(this).css("border-bottom","0");
+		});
+		$(".exResult").each(function(){
+    		inputVal = $(this).children().val();
+    		if(inputVal){
+    		    inputVal = inputVal.replace(/\n/g,"<br>");
+                $(this).html(inputVal);
+    		}
+		});
+		$(".buttons").hide();
+		window.print();
+		$(".buttons").show();
+		
+		$(".exResult").each(function(){
+		    inputVal = $(this).html();
+            if(inputVal){
+                inputVal = inputVal.replace(/<br>/g,"\n");
+                $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
+            }
+		});
+		$("table").find("input").each(function(){
+            $(this).css("border-bottom","1px solid #ccc");
+        });
+        lookCss();
+	});
+	$("#save").on("click",function(){
+		$("body").find("input").each(function(){
+			$(this).attr("value",$(this).val());
+		});
+		$("#resultArea").html($("#resultArea").val());
+		var url = window.location.href.split("printPGS")[0];
+		$.post(url+"updateContext",{"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"projectId":$("#_projectId").html(),"printContext":$("#pgsSave").prop("outerHTML")},function(result){
+			if(result==1){
+				$.lAlert("信息保存成功！");
+			}else{
+				$.lAlert("信息保存失败！");
+			}
+		});
+	});
+	$("#reset").on("click",function(){
+	   $("#projectForm")[0].reset();
+	});
+});
+</script>

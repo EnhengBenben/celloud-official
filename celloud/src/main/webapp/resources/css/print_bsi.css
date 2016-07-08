@@ -182,8 +182,13 @@ section h2,
     height: 70px;
 }
 .tests-content .seq-table svg{
+    margin: 0px -15px;
     font-weight: normal;
     font-size: 11px;
+    -webkit-transform:scale(0.8);
+    -moz-transform:scale(0.8);
+    -o-transform:scale(0.8);
+    transform:scale(0.8);
 }
 .tests-content .seq-table .seq{
     margin-left: -120px;

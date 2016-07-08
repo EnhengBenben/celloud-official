@@ -1271,8 +1271,7 @@ public class ReportAction {
         Integer userId = ConstantsData.getLoginUserId();
         DataFile data = dataService.getDataByKey(dataKey);
         Integer fileId = data.getFileId();
-        Report report = reportService.getReport(userId, appId, projectId,
-                fileId, ReportType.DATA);
+        Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
         if (StringUtils.isEmpty(report.getPrintContext())) {
             context.put("pgs", pgs);
             context.put("report", report);
@@ -1280,6 +1279,30 @@ public class ReportAction {
         } else {
             context.put("printContext", report.getPrintContext());
         }
+        returnToVelocity(path, context, projectId);
+    }
+
+    /**
+     * 打印Pgs项目报告
+     * 
+     * @param appId
+     * @param dataKey
+     * @return
+     * @author lin
+     * @date 2016年1月17日下午4:47:37
+     */
+    @ActionLog(value = "打印Pgs数据报告", button = "打印数据报告")
+    @RequestMapping("printPgsProject")
+    @ResponseBody
+    public void printPgsProject(Integer projectId) {
+        List<Pgs> pgsList = reportService.getPgsProjectReport(projectId);
+        // 涉及共享，此处不能取登陆者的companyId
+        String path = ConstantsData.getLoginUser().getCompanyId() + "/PGS/project/print.vm";
+        if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+            path = "default/PGS/print.vm";
+        }
+        Map<String, Object> context = new HashMap<String, Object>();
+        context.put("pgsList", pgsList);
         returnToVelocity(path, context, projectId);
     }
 

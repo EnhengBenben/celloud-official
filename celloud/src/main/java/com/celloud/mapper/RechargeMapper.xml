@@ -154,4 +154,12 @@
 		where user_id = #{userId,jdbcType=INTEGER}
 		order by create_date desc
 	</select>
+	<select id="findRechargesInIds" resultMap="BaseResultMap">
+	   select r.id, r.user_id, r.recharge_type, r.recharge_id, r.create_date, 
+	       r.amount, r.balances, r.invoice_state, r.invoice_id 
+       from tb_recharge r where r.invoice_state = 0 and user_id = #{userId} and r.id in 
+       <foreach collection="ids" item="id" open="(" close=")" separator=",">
+        ${id}
+       </foreach>
+	</select>
 </mapper>
