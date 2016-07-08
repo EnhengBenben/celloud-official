@@ -48,7 +48,7 @@ $(function () {
   });
   /** 消费记录 */
   $("#to-expense-model").on("click", function(){
-    $.get("expense/getTotalConsumption",{},function(result){
+    $.get("user/balances",{},function(result){
       $("#total-consumption").html(result);
     });
   });
