@@ -54,9 +54,16 @@ $(function () {
   });
   $("#to-expense-main").on("click", function(){
     $.main.show.mainDIV();
-    $("#mainDIV").load("pages/expense/expense_main.jsp");
+    $("#mainDIV").load("pages/expense/expense_main.jsp",function(){
+    	  $("#to-pay-detail").click();
+    });
   });
-  
+  $("#to-recharge-main").on("click",function(){
+	  $.main.show.mainDIV();
+	  $("#mainDIV").load("pages/expense/expense_main.jsp",function(){
+		  $("#to-recharge").click();
+	  });
+  });
 });
 /**
  * 总览
