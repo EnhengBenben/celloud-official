@@ -20,7 +20,7 @@ public class WebSocketConfig extends WebMvcConfigurerAdapter implements WebSocke
         registry.addHandler(systemWebSocketHandler(), "/websocket/message").addInterceptors(new HandshakeInterceptor()).setAllowedOrigins("*");
         registry.addHandler(systemWebSocketHandler(), "/sockjs/message").addInterceptors(new HandshakeInterceptor()).setAllowedOrigins("*")
                 .withSockJS();
-        logger.debug("registed websocket handlers!");
+        logger.info("registed websocket handlers!");
     }
 
     @Bean
