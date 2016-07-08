@@ -167,6 +167,17 @@ public interface ReportService {
     public Pgs getPgsReport(String dataKey, Integer projectId, Integer appId);
 
     /**
+     * 
+     * @author MQ
+     * @date 2016年7月7日下午2:59:35
+     * @description
+     * @param projectId
+     * @return
+     *
+     */
+    public List<Pgs> getPgsProjectReport(Integer projectId);
+
+    /**
      * 获取Oncogene报告
      * 
      * @param dataKey

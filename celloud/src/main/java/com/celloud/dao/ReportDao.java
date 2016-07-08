@@ -16,6 +16,17 @@ import com.celloud.page.PageList;
  * @date 2016-1-8 下午4:12:24
  */
 public interface ReportDao {
+
+    /**
+     * @author MQ
+     * @date 2016年7月7日下午3:02:47
+     * @description 根据项目id查询所有的数据报告
+     * @param clazz
+     * @param projectId
+     * @return
+     *
+     */
+    public <T> List<T> getDataByProjectId(Class<T> clazz, Integer projectId);
     
     /**
      * HCV数据参数同比直接在mongo中分组

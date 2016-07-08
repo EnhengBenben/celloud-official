@@ -137,7 +137,7 @@ only screen and (min-device-pixel-ratio: 2) {
 .no tr:nth-child(2n){ background: #fff;} 
 .no tr{ background-color: expression((this.sectionRowIndex % 2 == 0) ?   "#fbfbfb" : "#fff" );}
 .no tr:hover{background:#f6f6f6;}
-.delete,.share,.pdfdown,.shared,.sharefrom{background-image:url(../images/report/icon.png); background-repeat:no-repeat; width: 20px; height: 20px; cursor: pointer;}
+.delete,.share,.pdfdown,.shared,.sharefrom,.projectreport{background-image:url(../images/report/icon.png); background-repeat:no-repeat; width: 20px; height: 20px; cursor: pointer;}
 .changeImg{background-image:url(../images/report/icon_edit.png); background-repeat:no-repeat; width: 20px; height: 20px; cursor: pointer;}
 .changeImg{ position:absolute; background-position: -35px -38px;}
 .okImg{ width: 20px; height:16px; position:absolute; cursor: pointer;margin:4px 0px 0px -1px}
@@ -147,7 +147,7 @@ only screen and (min-device-pixel-ratio: 2) {
 .link_visited{color: #990099;}
 .link_hover{text-decoration: underline;}
 
-.operate{position:relative;float:right; width:140px;}
+.operate{position:relative;float:right; width:180px;}
 
 .delete{position:absolute;right:10px;background-position: -125px 0px;}
 .share{position:absolute;right:50px; background-position: -95px 0px;}
@@ -155,6 +155,7 @@ only screen and (min-device-pixel-ratio: 2) {
 .sharefrom{position:absolute;left:5px;background-position: -25px 0px;}
 .pdfdown{position:absolute;right:90px;  background-position: -70px 0px;}
 .shareU{position:absolute;left:25px;margin-top:-2px;color:#009aca;}
+.projectreport{position:absolute;right:130px;background-position: 0px 0px;}
 
 .title{ font-weight: bold; font-size: 18px;margin:10px;}
 .m-boxCon p{ padding-left: 20px; }

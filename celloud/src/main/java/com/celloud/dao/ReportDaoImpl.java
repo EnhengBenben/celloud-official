@@ -31,6 +31,11 @@ public class ReportDaoImpl implements ReportDao {
     @Resource
     private Datastore dataStore;
     
+    @Override
+    public <T> List<T> getDataByProjectId(Class<T> clazz, Integer projectId) {
+        return dataStore.createQuery(clazz).filter("projectId", projectId).asList();
+    }
+
     @SuppressWarnings("rawtypes")
     @Override
     public <T> Iterable getHCVCompare(Class<T> clazz) {
