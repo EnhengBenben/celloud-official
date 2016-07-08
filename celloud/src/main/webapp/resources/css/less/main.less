@@ -179,9 +179,13 @@ ul,ol{
     }
     > .searchs{
         width: 240px;
+        height: 80px;
         display: block;
         float: right;
         padding: 20px;
+        >.btns{
+            margin-top: 10px;
+        }
     }
 }
 .common-sidebar{
@@ -219,12 +223,31 @@ ul,ol{
     position: relative;
     min-height: 100%;
     margin-left: 170px;
-    padding: 20px;
+    padding: 20px 0px 0px 20px;
+    .content{
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        background-color: @main-color;
+    }
+    .upload-content{
+        margin: auto;
+        padding: 30px 0px;
+        max-width: 648px;
+        .form-inline{
+            margin-top: 30px;
+            text-align: left;
+            padding-left: 52px;
+        }
+        .form-control{
+            width: 300px;
+        }
+    }
 }
 .sample{
-    padding-left: 15px;
+    margin: 0px;
+    padding: 0px;
     .info {
-        height: 260px;
         display: block;
         padding: 20px;
         font-size: 12px;

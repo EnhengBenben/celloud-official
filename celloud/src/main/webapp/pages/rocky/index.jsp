@@ -73,8 +73,8 @@
 	        <a id="condition-find" class="action"><i class="fa fa-search"></i></a>
 	      </div>
 	      <div name="sample-condition" class="btns hide">
-		      <button id="info-reset" class="btn -cancel">取消</button>
-		      <button id="info-commit" class="btn -confirm">提交样本信息</button>
+		      <a id="info-reset" class="btn -cancel -lg">取消</a>
+		      <a id="info-commit" class="btn -confirm -lg">提交样本信息</a>
 		  </div>
 	    </div>
 	    <hr class="-right">
@@ -109,10 +109,9 @@
 <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
 <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
 <script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js?version=1.1"></script>
-<script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
 <script src="<%=request.getContextPath()%>/js/utils.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/js/base.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/js/rocky_main.js" type="text/javascript"></script>
-<script src="<%=request.getContextPath() %>/js/bsi_upload.js"></script>
+<script src="<%=request.getContextPath() %>/js/rocky_upload.js"></script>
 </body>
 </html>
