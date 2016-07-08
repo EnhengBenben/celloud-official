@@ -174,7 +174,7 @@ public class UserAction {
 	@RequestMapping("balances")
 	@ResponseBody
 	public BigDecimal getBalances() {
-		User user = userService.getUserByEmail(ConstantsData.getLoginEmail());
+		User user = userService.selectUserById(ConstantsData.getLoginUserId());
 		return user.getBalances();
 	}
 
