@@ -47,7 +47,7 @@ public class AppConstants {
      */
     public static String getAppPicturePath() {
         if (AppPicturePath == null) {
-        	synchronized (AppPicturePath) {
+        	synchronized (PROPERTIES_PATH) {
         		AppPicturePath = getProperty("appPicturePath");
 			}
         }
