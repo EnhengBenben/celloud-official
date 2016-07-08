@@ -336,7 +336,7 @@
 <script>
 $(function(){
 	$("input[name='rechargeIds']").click(function(){
-		if($("input[name='rechargeIds']").length == $("input[name='rechargeIds']:checked").length){
+		if($("input[name='rechargeIds'][type='checkbox']").length == $("input[name='rechargeIds'][type='checkbox']:checked").length){
 			$("#checkAll").prop("checked",true);
 		}else{
 			$("#checkAll").prop("checked",false);
@@ -359,7 +359,7 @@ $(function(){
 		rechargeIds.each(function(){
 			money += parseFloat($(this).parent().siblings().eq(3).html());
 		});
-		if(money < 0.02){
+		if(money < 100 && money != 0.02){
 			$.expense.pay.showTipModal("最少申请100元");
 			return;
 		}

@@ -31,9 +31,8 @@ $(document).ready(function(){
 			return false;
 		}
 	  //全部校验已通过
-    var newPassword =$("#tempPassword").val();
-    if(newPassword){
-      $("input[name='newPassword']").val(secPWD(newPassword));
+    if(password){
+      $("input[name='password']").val(secPWD(password));
     }
     return true;
 	}
