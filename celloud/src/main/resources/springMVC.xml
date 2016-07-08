@@ -233,6 +233,7 @@
 			<value>
 				/js/** = anon
 				/images/** = anon
+				/favicon.ico = anon
 				/css/** = anon
 				/plugins/** = anon
 				/resources/** = anon
