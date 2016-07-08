@@ -64,7 +64,17 @@ public interface MessageCategoryMapper {
      * @return
      *
      */
-    int getSwitch(@Param("userId") Integer userId, @Param("targetSwitch") String targetSwitch,
+    Integer getUserSwitch(@Param("userId") Integer userId, @Param("targetSwitch") String targetSwitch,
+            @Param("messageCategoryId") Integer messageCategoryId);
+
+    /**
+     * @author MQ
+     * @date 2016年7月6日下午4:00:28
+     * @description 获取默认的某个开关
+     * @return
+     *
+     */
+    Integer getDefaultSwitch(@Param("targetSwitch") String targetSwitch,
             @Param("messageCategoryId") Integer messageCategoryId);
 
 }

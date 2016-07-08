@@ -9,12 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.alimail.AliEmail;
+import com.celloud.alimail.AliEmailUtils;
+import com.celloud.alimail.AliSubstitution;
 import com.celloud.mail.EmailUtils;
 import com.celloud.sendcloud.EmailParams;
 import com.celloud.sendcloud.EmailType;
-import com.celloud.sendcloud.SendCloudUtils;
-import com.celloud.sendcloud.mail.Email;
-import com.celloud.sendcloud.mail.Substitution;
 
 /**
  * 全局异常处理器
@@ -27,16 +27,16 @@ public class ExceptionHandler implements HandlerExceptionResolver {
     @Resource
     private EmailUtils emailUtils;
 	@Resource
-	private SendCloudUtils sendCloud;
+	private AliEmailUtils aliEmailUtils;
 
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
             Exception exception) {
 		String errorInfo = emailUtils.getError(request, exception);
-		Email<?> context = Email.template(EmailType.EXCEPTION)
-				.substitutionVars(Substitution.sub().set(EmailParams.EXCEPTION.context.name(), errorInfo))
-				.to(emailUtils.getErrorMailTo());
-		sendCloud.sendTemplate(context);
+		AliEmail aliEmail = AliEmail.template(EmailType.EXCEPTION)
+				.substitutionVars(AliSubstitution.sub().set(EmailParams.EXCEPTION.context.name(), errorInfo));
+		aliEmailUtils.simpleSend(aliEmail, emailUtils.getErrorMailTo());
+
         response.setHeader("exceptionstatus", "exception");
         if (exception instanceof BusinessException) {
             return new ModelAndView("errors/business").addObject("exception", exception);

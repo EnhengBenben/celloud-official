@@ -10,10 +10,13 @@ function printCss(){
     $("#reporterInput").css("width","260px");
     $("#auditLi").css("width","19%");
     $("#auditInput").css("width","65px");
-    $("#dateLi").css("width","14%");
-    $("#dateInput").css("margin-left","0px");
-    $("#dateInput").css("width","25px");
+    $("#dateLi").css("width","12%");
     $("#yearLi").css("margin-left","1px");
+    $("#yearInput").css("width","25px");
+    $("#yearInput").css("margin-left","0px");
+    $("#yearInput").css("padding-left","7px");
+    $("#monthInput").css("padding-left","7px");
+    $("#dayInput").css("padding-left","7px");
     $("#monthLi").css("margin-left","-1px");
     $("#dayLi").css("margin-left","-1px");
     $(".syFooter input[type='text']").css("border-bottom","0px");
@@ -25,11 +28,14 @@ function lookCss(){
     $("#auditLi").css("width","20%");
     $("#auditInput").css("width","65px");
     $("#dateLi").css("width","15%");
-    $("#dateInput").css("margin-left","5px");
-    $("#dateInput").css("width","26px");
+    $("#dayLi").css("margin-left","-8px");
+    $("#yearInput").css("width","26px");
+    $("#yearInput").css("margin-left","5px");
+    $("#yearInput").css("padding-left","0px");
+    $("#monthInput").css("padding-left","0px");
+    $("#dayInput").css("padding-left","0px");
     $("#yearLi").css("margin-left","-21px");
     $("#monthLi").css("margin-left","-8px");
-    $("#dayLi").css("margin-left","-8px");
     $(".syFooter input[type='text']").css("border-bottom","1px solid #ccc");
 }
 
