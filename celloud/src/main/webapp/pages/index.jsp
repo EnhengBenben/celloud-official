@@ -83,16 +83,36 @@
 						<li class="dropdown messages-menu expense-menu">
 							<a id="to-expense-model" href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
 								<i class="fa fa-rmb"></i>
-								<span class="hidden-xs">消费记录</span>
 							</a>
 							<div class="dropdown-menu">
 								<div class="dropdown-menu-inner">
 									<p>
-										总消费金额: <small class="pull-right"><span id="total-consumption"></span>C</small>
+										账户余额:&nbsp;&nbsp;&nbsp; 
+										<span id="total-consumption" class="text-danger" style="font-size: 20px;"></span>
+										&nbsp;&nbsp;元
 									</p>
+									<p class="text-center">&nbsp;</p>
 									<div class="text-center">
-										<a id="to-expense-main" class="btn btn-sm btn-celloud-success btn-flat" href="javascript:void(0)">查看详情</a>
+										<a class="btn btn-celloud-success btn-flat" href="javascript:void(0)">
+											<span class="fa fa-money"></span> 立即充值
+										</a>
 									</div>
+									<p class="text-center">&nbsp;</p>
+									<p class="text-center">
+										<a id="to-expense-main" class="btn btn-sm btn-link" href="javascript:void(0)">查看消费记录</a>
+									</p>
+								</div>
+							</div>
+						</li>
+						<li class="dropdown messages-menu expense-menu">
+							<a id="to-expense-model" href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+								<i class="glyphicon glyphicon-qrcode"></i>
+							</a>
+							<div class="dropdown-menu">
+								<div class="dropdown-menu-inner">
+									<p>
+										微信公众号即将开放，敬请期待！
+									</p>
 								</div>
 							</div>
 						</li>
