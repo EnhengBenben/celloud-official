@@ -71,7 +71,7 @@
 	<!--#E bgContainer-->
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/utils.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/wechatlogin.js?version=0.1"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/wechatlogin.js?version=0.3"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/md5.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/security.js"></script>
 	<script type="text/javascript">

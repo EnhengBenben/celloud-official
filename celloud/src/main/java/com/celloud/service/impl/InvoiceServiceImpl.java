@@ -39,9 +39,9 @@ public class InvoiceServiceImpl implements InvoiceService {
         // 申请时间
         invoice.setCreateDate(new Date());
         List<Recharge> recharges = rechargeMapper.findRechargesInIds(userId, ids);
-        BigDecimal money = new BigDecimal(0.0);
+        BigDecimal money = BigDecimal.ZERO;
         for(Recharge recharge : recharges){
-            money.add(recharge.getAmount());
+            money = money.add(recharge.getAmount());
         }
         invoice.setMoney(money);
         // 插入数据库
