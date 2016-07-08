@@ -60,4 +60,6 @@ public interface UserMapper {
     public String getOpenIdByUser(@Param("userId") Integer userId);
 
     public User getUserByOpenId(@Param("openId") String openId);
+
+	public int checkWechatBind(@Param("openId") String openId, @Param("userId") Integer userId);
 }

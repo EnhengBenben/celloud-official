@@ -27,6 +27,10 @@ public class Constants {
      * session中当前登录用户私钥
      */
     public static final String SESSION_RSA_PRIVATEKEY = "rsaPrivateKeyInSession";
+	/**
+	 * 微信openID
+	 */
+	public static final String SESSION_WECHAT_OPENID = "wechatOpenId";
     /**
      * cookie中的用户名
      */

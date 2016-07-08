@@ -29,7 +29,6 @@
 		<form action="<%=request.getContextPath()%>/api/wechat/login" method="post" id="loginForm">
 			<div class="login-main clearfix">
 				<input type="hidden" name="info" id="info" value="${requestScope.info }" />
-				<input type="hidden" name="code" id="code" value="${code }" />
 			    <c:choose>
 		            <c:when test="${requestScope.isSuccess=='true' }">
 		                <br>

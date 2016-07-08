@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -40,21 +39,26 @@ public class WeChatAction {
         ModelAndView mv = new ModelAndView();
 		if ("out".equals(state)) {//关注后通过自动回复的链接进来，需要跳转登录页面
             mv.setViewName("wechat");
-			Subject subject = SecurityUtils.getSubject();
-			PublicKey publicKey = generatePublicKey(subject.getSession());
-            mv.addObject("publicKey", publicKey).addObject("isSuccess",
-                    "false");
+			String openId = wechatUtils.getOpenId(code);
+			int isBind = us.checkWechatBind(openId, null);
+			if (isBind > 0) {
+				String msg = "您的微信号已绑定平台账号，不可重复绑定，如有疑问请登录平台后在“问题反馈”中联系我们。";
+				mv.addObject("info", msg).addObject("isSuccess", "true");
+				return mv;
+			}
+			Session session = SecurityUtils.getSubject().getSession();
+			session.setAttribute(Constants.SESSION_WECHAT_OPENID, openId);
+			PublicKey publicKey = generatePublicKey(session);
+			mv.addObject("publicKey", publicKey).addObject("isSuccess", "false");
 		} else {
 			//state 就是 MD5，需要校验MD5是否合法
 			//合法则直接绑定
-
 		}
-        mv.addObject("code", code);
         return mv;
 	}
 
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-    public ModelAndView login(User user, String code) {
+	public ModelAndView login(User user) {
 		log.info("用户微信登陆：" + user.getUsername());
 		Session session = SecurityUtils.getSubject().getSession();
 		PrivateKey privateKey = (PrivateKey) session.getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
@@ -70,16 +74,15 @@ public class WeChatAction {
 					"false");
 			return mv;
 		}
-        String openId = wechatUtils.getOpenId(code);
-        User wechatUser = us.getUserByOpenId(openId);
+		String openId = session.getAttribute(Constants.SESSION_WECHAT_OPENID).toString();
+		int isBind = us.checkWechatBind(openId, user.getUserId());
         String msg = "";
-        if (wechatUser == null) {
+		if (isBind == 0) {
             us.insertUserWechatInfo(user.getUserId(), openId, null);
             msg = "您的CelLoud账号与微信号绑定成功！";
             log.info("用户({})登录成功！", user.getUsername());
         } else {
-            msg = "您的微信号已绑定账户" + wechatUser.getUsername()
-                    + "，不可重复绑定，如有疑问请登录平台后在‘问题反馈’中联系我们";
+			msg = "您的平台账号已绑定微信号，不可重复绑定，如有疑问请登录平台后在“问题反馈”中联系我们。";
         }
 		session.removeAttribute(Constants.SESSION_RSA_PRIVATEKEY);
 		mv.addObject("info", msg).addObject("isSuccess", "true");

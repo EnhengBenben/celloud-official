@@ -142,4 +142,9 @@ public class UserServiceImpl implements UserService {
         return userMapper.getUserByOpenId(openId);
     }
 
+	@Override
+	public int checkWechatBind(String openId, Integer userId) {
+		return userMapper.checkWechatBind(openId, userId);
+	}
+
 }

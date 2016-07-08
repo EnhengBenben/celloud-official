@@ -190,4 +190,15 @@ public interface UserService {
      * @date 2016年7月4日 下午4:36:16
      */
     public User getUserByOpenId(String openId);
+
+	/**
+	 * 校验用户或者微信是否已经绑定
+	 * 
+	 * @param openId
+	 * @param userId
+	 * @return 0 未绑定
+	 * @author lin
+	 * @date 2016年7月8日上午11:28:04
+	 */
+	public int checkWechatBind(String openId, Integer userId);
 }
