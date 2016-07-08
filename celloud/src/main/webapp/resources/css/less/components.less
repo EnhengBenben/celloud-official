@@ -71,6 +71,30 @@
     }
 }
 
+/*上传页面步骤*/
+.step{
+    position: relative;
+    height: 42px;
+    > .item {
+        width: 42px;
+        height: 42px;
+        float: left;
+        text-align: center;
+        line-height: 30px;
+        font-size: 14px;
+        border: 6px solid @bg-gray;
+        .border-radius(99em);
+        background-color: #fff;
+    }
+    > .info{
+        height: 42px;
+        padding-left: 10px;
+        line-height: 42px;
+        font-size: 14px;
+        color: @font-gray;
+        float:left;
+    }
+}
 /*主列表表格*/
 .table-main{
     *border-collapse: separate; /* IE7 and lower */
@@ -135,8 +159,8 @@
 
 /*按钮*/
 .btn{
-    height: 40px;
-    line-height: 28px;
+    height: 30px;
+    line-height: 18px;
     padding: 0px 20px;
     display: inline-block;
     color: #fff;
@@ -144,11 +168,35 @@
     font-weight: bold;
     text-align: center;
     .border-radius(6px);
-    
+    &:link,&:hover,&:active,&:visited{
+       color: #fff; 
+       outline: none;
+    }
     &.-cancel {
         background-color: @bg-gray;
     }
     &.-confirm {
         background-color: @bg-black;
+    }
+    &.-lg{
+        height: 30px;
+        line-height: 28px;
+    }
+}
+/*表单*/
+.form-inline{
+    >.form-group{
+        > label{
+            margin: 0px;
+            font-size: 14px;
+            font-weight: normal;
+        } 
+        > .form-control {
+            margin-left: 10px;
+            margin-right: 20px;
+            height: 30px;
+            border: 1px solid #dcdcdc;
+            color: #969696;
+        }
     }
 }

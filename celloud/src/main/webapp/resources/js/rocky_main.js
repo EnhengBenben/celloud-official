@@ -8,7 +8,11 @@ $(function () {
     });
   });
   $("#to-upload-a").on("click",function(){
-    $("#container").load("pages/rocky/sample_main.jsp");
+    $("#container").load("pages/rocky/upload.jsp",function(){
+      $("#upload-next").on("click",function(){
+        $upload.next();
+      })
+    });
   });
   $("#to-report-a").on("click",function(){
     $("#container").load("pages/rocky/sample_main.jsp");
@@ -16,6 +20,6 @@ $(function () {
   $("#to-data-a").on("click",function(){
     $("#container").load("pages/rocky/sample_main.jsp");
   });
-  
   $("#to-sample-a").trigger("click");
 });
+

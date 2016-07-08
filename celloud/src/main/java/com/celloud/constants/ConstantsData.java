@@ -204,7 +204,7 @@ public class ConstantsData {
     }
 
     public static String getLocalIp() {
-        String localAddr = getRequset().getLocalAddr();
+        String localAddr = getRequset().getRemoteAddr();
         if ("0:0:0:0:0:0:0:1".equals(localAddr)) {
             localAddr = "127.0.0.1";
         }
