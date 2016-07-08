@@ -93,7 +93,7 @@
 									</p>
 									<p class="text-center">&nbsp;</p>
 									<div class="text-center">
-										<a class="btn btn-celloud-success btn-flat" href="javascript:void(0)">
+										<a id="to-recharge-main" class="btn btn-celloud-success btn-flat" href="javascript:void(0)">
 											<span class="fa fa-money"></span> 立即充值
 										</a>
 									</div>
