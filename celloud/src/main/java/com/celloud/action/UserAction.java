@@ -1,5 +1,6 @@
 package com.celloud.action;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.annotation.Resource;
@@ -39,86 +40,86 @@ import com.celloud.utils.Response;
 @Controller
 @RequestMapping("user")
 public class UserAction {
-    @Resource
-    private UserService userService;
-    @Resource
-    private ActionLogService logService;
+	@Resource
+	private UserService userService;
+	@Resource
+	private ActionLogService logService;
 	@Resource
 	private AliEmailUtils emailUtils;
-    private static final Response EMAIL_IN_USE = new Response("202", "邮箱已存在");
-    private static final Response UPDATE_BASEINFO_FAIL = new Response("修改用户信息失败");
-    private static final Response UPDATE_PASSWORD_FAIL = new Response("修改用户密码失败");
-    private static final Response WRONG_PASSWORD = new Response("203", "原始密码错误");
+	private static final Response EMAIL_IN_USE = new Response("202", "邮箱已存在");
+	private static final Response UPDATE_BASEINFO_FAIL = new Response("修改用户信息失败");
+	private static final Response UPDATE_PASSWORD_FAIL = new Response("修改用户密码失败");
+	private static final Response WRONG_PASSWORD = new Response("203", "原始密码错误");
 
-    /**
-     * 跳转到账号管理菜单，并初始化数据
-     * 
-     * @return
-     */
-    @RequestMapping("info")
-    public ModelAndView info() {
-        int userId = ConstantsData.getLoginUserId();
-        User user = userService.selectUserById(userId);
-        return new ModelAndView("user/user_main").addObject("user", user);
-    }
+	/**
+	 * 跳转到账号管理菜单，并初始化数据
+	 * 
+	 * @return
+	 */
+	@RequestMapping("info")
+	public ModelAndView info() {
+		int userId = ConstantsData.getLoginUserId();
+		User user = userService.selectUserById(userId);
+		return new ModelAndView("user/user_main").addObject("user", user);
+	}
 
-    /**
-     * 修改用户基本信息
-     * 
-     * @param user
-     * @param request
-     * @return
-     */
-    @RequestMapping("updateInfo")
-    @ResponseBody
-    public Response updateInfo(User user, HttpServletRequest request) {
-        // 其他待修改字段可以在这里添加，不允许修改的字段一定要过滤掉
-        user.setUserId(ConstantsData.getLoginUserId());
-        if (userService.isEmailInUse(user.getEmail(), user.getUserId())) {
-            return EMAIL_IN_USE;
-        }
-        int result = userService.updateUserInfo(user);
-        if (result <= 0) {
-            return UPDATE_BASEINFO_FAIL;
-        }
-        user = userService.selectUserById(user.getUserId());
-        request.getSession().setAttribute(Constants.SESSION_LOGIN_USER, user);
-        return Response.SAVE_SUCCESS.setData(user);
-    }
+	/**
+	 * 修改用户基本信息
+	 * 
+	 * @param user
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("updateInfo")
+	@ResponseBody
+	public Response updateInfo(User user, HttpServletRequest request) {
+		// 其他待修改字段可以在这里添加，不允许修改的字段一定要过滤掉
+		user.setUserId(ConstantsData.getLoginUserId());
+		if (userService.isEmailInUse(user.getEmail(), user.getUserId())) {
+			return EMAIL_IN_USE;
+		}
+		int result = userService.updateUserInfo(user);
+		if (result <= 0) {
+			return UPDATE_BASEINFO_FAIL;
+		}
+		user = userService.selectUserById(user.getUserId());
+		request.getSession().setAttribute(Constants.SESSION_LOGIN_USER, user);
+		return Response.SAVE_SUCCESS.setData(user);
+	}
 
-    /**
-     * 用户修改密码
-     * 
-     * @param oldPassword
-     * @param newPassword
-     * @return
-     */
-    @RequestMapping("updatePassword")
-    @ResponseBody
-    public Response updatePassword(String oldPassword, String newPassword) {
-        User user = ConstantsData.getLoginUser();
-        user.setPassword(MD5Util.getMD5(oldPassword));
-        if (userService.login(user) == null) {
-            return WRONG_PASSWORD;
-        }
-        int result = userService.updatePassword(user.getUserId(), newPassword);
-        return result > 0 ? Response.SAVE_SUCCESS : UPDATE_PASSWORD_FAIL;
-    }
+	/**
+	 * 用户修改密码
+	 * 
+	 * @param oldPassword
+	 * @param newPassword
+	 * @return
+	 */
+	@RequestMapping("updatePassword")
+	@ResponseBody
+	public Response updatePassword(String oldPassword, String newPassword) {
+		User user = ConstantsData.getLoginUser();
+		user.setPassword(MD5Util.getMD5(oldPassword));
+		if (userService.login(user) == null) {
+			return WRONG_PASSWORD;
+		}
+		int result = userService.updatePassword(user.getUserId(), newPassword);
+		return result > 0 ? Response.SAVE_SUCCESS : UPDATE_PASSWORD_FAIL;
+	}
 
-    /**
-     * 获取用户操作日志
-     * 
-     * @return
-     */
-    @RequestMapping("logInfo")
-    public ModelAndView logInfo(Page page) {
-        if (page == null) {
-            page = new Page();
-        }
-        PageList<ActionLog> pageList = logService.findLogs(ConstantsData.getLoginUserId(), page);
-        return new ModelAndView("user/user_log_list").addObject("pageList", pageList);
-    }
-    
+	/**
+	 * 获取用户操作日志
+	 * 
+	 * @return
+	 */
+	@RequestMapping("logInfo")
+	public ModelAndView logInfo(Page page) {
+		if (page == null) {
+			page = new Page();
+		}
+		PageList<ActionLog> pageList = logService.findLogs(ConstantsData.getLoginUserId(), page);
+		return new ModelAndView("user/user_log_list").addObject("pageList", pageList);
+	}
+
 	/**
 	 * 修改邮箱时向旧邮箱发送邮件
 	 * 
@@ -139,7 +140,7 @@ public class UserAction {
 
 		String url = ResetPwdUtils.updateEmailPath.replaceAll("resetEmailUsername", user.getUsername())
 				.replaceAll("resetcode", randomCode);
-		
+
 		AliEmail aliEmail = AliEmail.template(EmailType.CONFIRM_OLD_EMAIL)
 				.substitutionVars(AliSubstitution.sub().set(EmailParams.CONFIRM_OLD_EMAIL.url.name(), url));
 		emailUtils.simpleSend(aliEmail, email);
@@ -164,7 +165,19 @@ public class UserAction {
 			return 1;
 		}
 	}
-	
+
+	/**
+	 * 获取当前用户的账户余额
+	 * 
+	 * @return
+	 */
+	@RequestMapping("balances")
+	@ResponseBody
+	public BigDecimal getBalances() {
+		User user = userService.getUserByEmail(ConstantsData.getLoginEmail());
+		return user.getBalances();
+	}
+
 	/**
 	 * 修改邮箱时向新邮箱发送邮件
 	 * 

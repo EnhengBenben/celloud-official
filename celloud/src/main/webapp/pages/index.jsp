@@ -105,7 +105,7 @@
 							</div>
 						</li>
 						<li class="dropdown messages-menu expense-menu">
-							<a id="to-expense-model" href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+							<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
 								<i class="glyphicon glyphicon-qrcode"></i>
 							</a>
 							<div class="dropdown-menu">
