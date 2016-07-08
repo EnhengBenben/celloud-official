@@ -17,24 +17,30 @@ public class ResetPwdUtils {
     public static String userTitle;
     public static String userContent;
 
+    public static String invoiceTitle;
+    public static String invoiceContent;
+
     public static Properties prop = null;
     static {
 	prop = new Properties();
 	InputStream inStream = ResetPwdUtils.class.getClassLoader()
 		.getResourceAsStream("ResetPwd.properties");
-	try {
-	    prop.load(inStream);
-	    password = prop.getProperty("password");
-	    title = prop.getProperty("title");
-	    content = prop.getProperty("content");
-	    celloudPath = prop.getProperty("celloudPath");
+        try {
+            prop.load(inStream);
+            password = prop.getProperty("password");
+            title = prop.getProperty("title");
+            content = prop.getProperty("content");
+            celloudPath = prop.getProperty("celloudPath");
 
-	    userPath = prop.getProperty("userPath");
-	    userTitle = prop.getProperty("userTitle");
-	    userContent = prop.getProperty("userContent");
-	} catch (IOException e) {
-	    logger.info("读取ResetPwd配置文件失败");
-	}
+            userPath = prop.getProperty("userPath");
+            userTitle = prop.getProperty("userTitle");
+            userContent = prop.getProperty("userContent");
+
+            invoiceTitle = prop.getProperty("invoiceTitle");
+            invoiceContent = prop.getProperty("invoiceContent");
+        } catch (IOException e) {
+            logger.info("读取ResetPwd配置文件失败");
+        }
     }
 
     /**

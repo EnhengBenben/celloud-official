@@ -18,12 +18,14 @@
 <link rel="bookmark" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link href="//cdn.bootcss.com/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet">
 <link href="//cdn.bootcss.com/Buttons/2.0.0/css/buttons.min.css" rel="stylesheet">
 <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/plugins/select/select2.css" rel="stylesheet" />
 <link href="<%=request.getContextPath()%>/plugins/intro/introjs.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/css/font.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/main.css?version=3.1.9" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/css/pay.css?version=3.1.9" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/css/app.css?version=3.1.14" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet"
 	type="text/css" media="screen" />
@@ -216,6 +218,8 @@
 	<script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
 	<script src="<%=request.getContextPath()%>/plugins/intro/intro.js?version=1.1"></script>
 	<script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
+	<!-- switch -->
+	<script src="//cdn.bootcss.com/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
 	<!-- TODO 数据参数同比有用，待统一为echarts -->
 	<script src="//cdn.bootcss.com/highcharts/4.2.1/highcharts.js"></script>
 	<script src="//cdn.bootcss.com/highcharts/4.2.1/modules/exporting.js"></script>

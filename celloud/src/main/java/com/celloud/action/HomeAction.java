@@ -43,7 +43,7 @@ public class HomeAction {
     @Resource
     private UserService userService;
     @Resource
-	private SendCloudUtils sendCloud;
+    private SendCloudUtils sendCloud;
     @Resource
     private ClientService clientService;
 
@@ -138,14 +138,14 @@ public class HomeAction {
         }
         String randomCode = MD5Util.getMD5(String.valueOf(new Date().getTime()));
         userService.insertFindPwdInfo(user.getUserId(), randomCode);
-		String url = ResetPwdUtils.celloudPath.replaceAll("resetpwduname", user.getUsername())
-				.replaceAll("resetpwdcode", randomCode);
-		Email<?> context = Email.template(EmailType.PWD_FIND)
-				.substitutionVars(Substitution.sub().set(EmailParams.PWD_FIND.url.name(), url)).to(email);
-		sendCloud.sendTemplate(context);
-		email = email.substring(0, 1) + "***" + email.substring(email.lastIndexOf("@"));
-		String emailAddress = "http://mail." + email.substring(email.lastIndexOf("@") + 1);
-		return mv.addObject("success", "ok").addObject("email", email).addObject("emailAddress", emailAddress);
+        String url = ResetPwdUtils.celloudPath.replaceAll("resetpwduname", user.getUsername())
+                .replaceAll("resetpwdcode", randomCode);
+        Email<?> context = Email.template(EmailType.PWD_FIND)
+                .substitutionVars(Substitution.sub().set(EmailParams.PWD_FIND.url.name(), url)).to(email);
+        sendCloud.sendTemplate(context);
+        email = email.substring(0, 1) + "***" + email.substring(email.lastIndexOf("@"));
+        String emailAddress = "http://mail." + email.substring(email.lastIndexOf("@") + 1);
+        return mv.addObject("success", "ok").addObject("email", email).addObject("emailAddress", emailAddress);
     }
 
     @RequestMapping(value = "findPassword.html", method = RequestMethod.GET)
@@ -196,10 +196,10 @@ public class HomeAction {
         return "user/user_pwd_find";
     }
 
-	@RequestMapping("browser.html")
-	public String browser() {
-		return "browser";
-	}
+    @RequestMapping("browser.html")
+    public String browser() {
+        return "browser";
+    }
 
     @RequestMapping("home_phone.html")
     public String homePhone() {
@@ -220,5 +220,15 @@ public class HomeAction {
     public ModelAndView template(Model model) {
         ModelAndView mv = new ModelAndView("child-1.vm");
         return mv;
+    }
+
+    @RequestMapping({ "test.html" })
+    public String test() {
+        return "pay/alipay_return";
+    }
+
+    @RequestMapping("about_us.html")
+    public String aboutUs() {
+        return "about_us";
     }
 }

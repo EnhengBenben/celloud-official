@@ -56,6 +56,7 @@
 				<value>classpath:jdbc.properties</value>
 				<value>classpath:mongodb.properties</value>
 				<value>classpath:email.properties</value>
+				<value>classpath:wechat.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -188,6 +189,15 @@
 		<property name="apiKey" value="${mail.apiKey}" />
 		<property name="username" value="${mail.username}" />
 		<property name="emailName" value="${mail.emailName}" />
+	</bean>
+	<bean id="wechatProperties" class="com.celloud.wechat.WechatUtils">
+		<property name="appId" value="${wechat.appId}" />
+		<property name="appSecret" value="${wechat.appSecret}" />
+		<property name="loginHtml" value="${wechat.loginHtml}" />
+		<property name="oAuth2Url" value="${wechat.oAuth2Url}" />
+        <property name="oAuth2TokenUrl" value="${wechat.oAuth2TokenUrl}" />
+        <property name="tokenUrl" value="${wechat.tokenUrl}" />
+        <property name="templateUrl" value="${wechat.templateUrl}" />
 	</bean>
 	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
 		<property name="velocityProperties">

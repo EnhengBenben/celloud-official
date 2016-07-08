@@ -397,37 +397,36 @@
 	                   </c:otherwise>
 	                   </c:choose>
 	                   <br>
-	                   <svg width="120" height="20">
+	                   <svg width="200" height="20">
 	                     <g>
-	                       <rect x="0" y="0" width="30" height="20" fill="
+	                       <rect x="0" y="0" width="50" height="20" fill="
 	                         <c:choose>
 	                           <c:when test="${species20.site1!='0,0'}">#dcdcdc</c:when>
 	                           <c:otherwise>#fff</c:otherwise>
 		                     </c:choose>"
 		                     style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
-		                   <text x="8" y="15">V1</text>
-		                 
-		                   <rect x="30" y="0" width="30" height="20" fill="
+		                   <text x="8" y="15">V1-V2</text>
+		                   <rect x="50" y="0" width="50" height="20" fill="
 	                         <c:choose>
 	                           <c:when test="${species20.site2!='0,0'}">#dcdcdc</c:when>
 	                           <c:otherwise>#fff</c:otherwise>
 	                         </c:choose>"
 	                         style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
-	                       <text x="38" y="15">V2</text>
-	                       <rect x="60" y="0" width="30" height="20" fill="
+	                       <text x="58" y="15">V3-V4</text>
+	                       <rect x="100" y="0" width="50" height="20" fill="
 	                         <c:choose>
 	                           <c:when test="${species20.site3!='0,0'}">#dcdcdc</c:when>
 	                           <c:otherwise>#fff</c:otherwise>
 	                         </c:choose>"
 	                         style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
-		                   <text x="68" y="15">V3</text>
-		                   <rect x="90" y="0" width="30" height="20" fill="
+		                   <text x="108" y="15">V5-V6</text>
+		                   <rect x="150" y="0" width="50" height="20" fill="
 	                         <c:choose>
 	                           <c:when test="${species20.site4!='0,0'}">#dcdcdc</c:when>
 	                           <c:otherwise>#fff</c:otherwise>
 	                         </c:choose>"
 	                         style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
-		                   <text x="98" y="15">V4</text>
+		                   <text x="158" y="15">V7-V8</text>
 	                     </g>
 	                   </svg>
 	                 </td>

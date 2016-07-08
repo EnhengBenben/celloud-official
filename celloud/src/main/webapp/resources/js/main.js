@@ -408,6 +408,13 @@ function showMessage(){
 	 $("#mainDIV").load(CONTEXT_PATH+"/notice/list/message");
 }
 /**
+ * 消息设置
+ */
+function showUserSetting(){
+	$.main.show.mainDIV();
+	$("#mainDIV").load(CONTEXT_PATH+"/message/category/setting");
+}
+/**
  * 帐号管理
  */
 function showUser(){

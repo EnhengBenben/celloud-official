@@ -12,7 +12,9 @@ public class Expenses {
 
     private Byte itemType;
 
-    private BigDecimal price;
+    private BigDecimal amount;
+
+    private BigDecimal balances;
 
     private Date createDate;
 
@@ -55,11 +57,11 @@ public class Expenses {
     }
 
     public BigDecimal getPrice() {
-        return price;
+        return amount;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setPrice(BigDecimal amount) {
+        this.amount = amount;
     }
 
     public Date getCreateDate() {
@@ -92,5 +94,13 @@ public class Expenses {
 
     public void setAppName(String appName) {
         this.appName = appName;
+    }
+
+    public BigDecimal getBalances() {
+        return balances;
+    }
+
+    public void setBalances(BigDecimal balances) {
+        this.balances = balances;
     }
 }

@@ -32,6 +32,9 @@
 						<li class="${type=='notice'?'active':'' }" id="userNoticeTab">
 							<a href="javascript:notices.showUserNotice()">站内消息</a>
 						</li>
+						<li id="userSettingTab">
+                            <a href="javascript:showUserSetting()">消息设置</a>
+                        </li>
 					</ul>
 				</div>
 				<div class="y-row" style="padding: 20px 10px; background-color: #fff;" data-spm="17">
@@ -44,9 +47,9 @@
 											<input type="checkbox" id="messageListCheckAll">
 										</th>
 										<th style="width: 30px;"></th>
-										<th width="15%">标题</th>
+										<th style="width:15%;">标题</th>
 										<th>内容</th>
-										<th style="width: 170px;">时间</th>
+										<th style="width: 170px;" class="text-center">时间</th>
 									</tr>
 								</thead>
 								<tbody>

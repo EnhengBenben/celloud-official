@@ -157,4 +157,37 @@ public interface UserService {
      * @return
      */
     public List<String> selectUserUserById(String userIds);
+
+    /**
+     * 新增用户与微信服务号绑定关系
+     * 
+     * @param userId
+     * @param openId
+     * @param unionId
+     * @return
+     * @author leamo
+     * @date 2016年6月30日 上午10:28:24
+     */
+    public Integer insertUserWechatInfo(Integer userId, String openId,
+            String unionId);
+
+    /**
+     * 获取用户绑定的微信openid
+     * 
+     * @param userId
+     * @return
+     * @author leamo
+     * @date 2016年7月4日 上午2:33:05
+     */
+    public String getOpenIdByUser(Integer userId);
+
+    /**
+     * 根据微信openid获取用户信息
+     * 
+     * @param openId
+     * @return
+     * @author leamo
+     * @date 2016年7月4日 下午4:36:16
+     */
+    public User getUserByOpenId(String openId);
 }

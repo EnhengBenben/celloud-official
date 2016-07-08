@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.celloud.mapper.PayOrderMapper">
+	<resultMap id="BaseResultMap" type="com.celloud.model.mysql.PayOrder">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="TINYINT" />
+		<result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
+		<result column="subject" property="subject" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="amount" property="amount" jdbcType="DECIMAL" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="state" property="state" jdbcType="BIT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		tb_pay_order.id, tb_pay_order.user_id, tb_pay_order.type,
+		tb_pay_order.trade_no, tb_pay_order.subject, tb_pay_order.description,
+		tb_pay_order.amount, tb_pay_order.create_time, tb_pay_order.state
+	</sql>
+	<sql id="Join_Column_List">
+		tb_user.username as username
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		from tb_pay_order
+		left join tb_user on
+		tb_pay_order.user_id=tb_user.user_id
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByTradeNo" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		from tb_pay_order
+		left join tb_user on
+		tb_pay_order.user_id=tb_user.user_id
+		where trade_no =
+		#{tradeNo,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		tb_pay_order
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.celloud.model.mysql.PayOrder">
+		insert into tb_pay_order (id,
+		user_id, type,
+		trade_no, subject, description,
+		amount, create_time,
+		state
+		)
+		values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
+		#{type,jdbcType=TINYINT},
+		#{tradeNo,jdbcType=VARCHAR},
+		#{subject,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+		#{amount,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP},
+		#{state,jdbcType=BIT}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.celloud.model.mysql.PayOrder">
+		insert into tb_pay_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="tradeNo != null">
+				trade_no,
+			</if>
+			<if test="subject != null">
+				subject,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="amount != null">
+				amount,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=TINYINT},
+			</if>
+			<if test="tradeNo != null">
+				#{tradeNo,jdbcType=VARCHAR},
+			</if>
+			<if test="subject != null">
+				#{subject,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				#{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=BIT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.PayOrder">
+		update tb_pay_order
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=TINYINT},
+			</if>
+			<if test="tradeNo != null">
+				trade_no = #{tradeNo,jdbcType=VARCHAR},
+			</if>
+			<if test="subject != null">
+				subject = #{subject,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				amount = #{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=BIT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.PayOrder">
+		update
+		tb_pay_order
+		set user_id = #{userId,jdbcType=INTEGER},
+		type =
+		#{type,jdbcType=TINYINT},
+		trade_no = #{tradeNo,jdbcType=VARCHAR},
+		subject = #{subject,jdbcType=VARCHAR},
+		description =
+		#{description,jdbcType=VARCHAR},
+		amount = #{amount,jdbcType=DECIMAL},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		state =
+		#{state,jdbcType=BIT}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

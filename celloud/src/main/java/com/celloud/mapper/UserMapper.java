@@ -52,4 +52,12 @@ public interface UserMapper {
     public User findByUsernameOrEmail(@Param("username") String username);
 
     public List<String> selectByIds(@Param("userIds") String userIds);
+
+    public int insertUserWechatInfo(@Param("userId") Integer userId,
+            @Param("openId") String openId, @Param("unionId") String unionId,
+            @Param("createDate") Date createDate);
+
+    public String getOpenIdByUser(@Param("userId") Integer userId);
+
+    public User getUserByOpenId(@Param("openId") String openId);
 }

@@ -2,7 +2,7 @@
 function attrTransfer(obj,name){
     inputVal = $(obj).val();
     inputClass = $(obj).attr("class");
-    $(obj).parent().html("<span name='miniPrint' _hideClass='"+inputClass+"'>"+inputVal+"</span>");
+    $(obj).parent().html("<span name='"+name+"' _hideClass='"+inputClass+"'>"+inputVal+"</span>");
 }
 
 function printCss(){
@@ -10,10 +10,13 @@ function printCss(){
     $("#reporterInput").css("width","260px");
     $("#auditLi").css("width","19%");
     $("#auditInput").css("width","65px");
-    $("#dateLi").css("width","14%");
-    $("#dateInput").css("margin-left","0px");
-    $("#dateInput").css("width","25px");
+    $("#dateLi").css("width","12%");
     $("#yearLi").css("margin-left","1px");
+    $("#yearInput").css("width","25px");
+    $("#yearInput").css("margin-left","0px");
+    $("#yearInput").css("padding-left","7px");
+    $("#monthInput").css("padding-left","7px");
+    $("#dayInput").css("padding-left","7px");
     $("#monthLi").css("margin-left","-1px");
     $("#dayLi").css("margin-left","-1px");
     $(".syFooter input[type='text']").css("border-bottom","0px");
@@ -25,20 +28,21 @@ function lookCss(){
     $("#auditLi").css("width","20%");
     $("#auditInput").css("width","65px");
     $("#dateLi").css("width","15%");
-    $("#dateInput").css("margin-left","5px");
-    $("#dateInput").css("width","26px");
+    $("#dayLi").css("margin-left","-8px");
+    $("#yearInput").css("width","26px");
+    $("#yearInput").css("margin-left","5px");
+    $("#yearInput").css("padding-left","0px");
+    $("#monthInput").css("padding-left","0px");
+    $("#dayInput").css("padding-left","0px");
     $("#yearLi").css("margin-left","-21px");
     $("#monthLi").css("margin-left","-8px");
-    $("#dayLi").css("margin-left","-8px");
     $(".syFooter input[type='text']").css("border-bottom","1px solid #ccc");
 }
 
 $(function(){
-    if($(".end").html()){
-        $("#mainDiv").css("min-height","760px");
-    }else{
-        $("#mainDiv").css("min-height","850px");
-    }
+	$("#mainDiv").css("min-height","500px");
+	$(".notes").css("margin-top","0px");
+	$("#companyIcon").css("margin-bottom","7px");
     $("#print").on("click",function(){
         var inputVal;
         printCss();
@@ -137,6 +141,7 @@ $(function(){
         $("#des1").children().html($("#des1").children().val());
         $("#des2").children().html($("#des2").children().val());
         $("#des3").children().html($("#des3").children().val());
+        $("#advice").children().html($("#advice").children().val());
         var url = window.location.href.split("printPGS")[0];
         $.post(url+"updateContext",{"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"projectId":$("#_projectId").html(),"printContext":$("#pgsSave").prop("outerHTML")},function(result){
             if(result==1){

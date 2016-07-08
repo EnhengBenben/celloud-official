@@ -265,7 +265,7 @@
     and state=#{state}
   </select>
   <select id="findTaskInfoByProId" resultType="map" parameterType="java.lang.Integer">
-    select t.app_id appId,t.user_id userId,a.title,a.method,a.app_name appName,u.username 
+    select t.app_id appId,t.user_id userId,a.title,a.method,a.app_name appName,u.username,u.email
 	from tb_task t left join tb_app a on t.app_id=a.app_id left join tb_user u on t.user_id=u.user_id
 	where project_id=#{projectId} group by project_id;
   </select>
