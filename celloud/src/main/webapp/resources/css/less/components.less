@@ -97,6 +97,7 @@
 }
 /*主列表表格*/
 .table-main{
+    width: 100%;
     *border-collapse: separate; /* IE7 and lower */
     border-collapse: separate;
     border-spacing: 0;
@@ -105,7 +106,9 @@
     >thead {
         >tr>th {
             height: 40px;
+            padding: 0px;
             padding-left: 20px;
+            line-height: 40px;
             text-align: center;
             font-size: 14px;
             font-weight: bold;
@@ -113,14 +116,20 @@
             background: @bg-gray;
             >a {
                 color: @font-black;
+                padding-left: 5px;
+                >i {
+                    font-size: 18px;
+                }
             }
             >input[type="text"]{
                 width: 140px;
                 height: 28px;
                 margin: 0;
                 font-size: 14px;
-                color: #a0a0a0;
+                font-weight: normal;
+                color: @font-gray;
                 padding: 0px 10px;
+                border: none;
                 .border-radius(6px);
             }
         }
@@ -155,6 +164,139 @@
     > .checkbox{
         margin: 6px 0px;
     }
+    &.-report >thead {
+        >tr>th{
+            height: 30px;
+            line-height: 30px;
+            padding: 0;
+            text-align: center;
+            font-size: 14px;
+            font-weight: normal;
+            color: @font-black;
+            background: @bg-gray;
+        }
+    }
+    &.-report >tbody{
+        >tr {
+            background: #fff;
+        }
+        >tr>td {
+            height: 140px;
+            padding: 4px 10px;
+            line-height: 20px;
+            white-space: normal;
+            word-break: break-word;
+            text-align: left;
+            vertical-align: middle;
+            border-right: 1px solid @bg-gray;
+            border-bottom: 1px solid @bg-gray;
+            &:last-child{
+                border-right: none;
+            }
+            &:first-child{
+                text-align: center;
+            }   
+        }
+        >tr:last-child>td{
+            border-bottom: none;
+        }
+    }
+}
+
+/*翻页*/
+.pagination{
+    width: 100%;
+    margin: 0;
+    .pages{
+        margin-right: 20px;
+    }
+    ul{
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+    }
+    ul > li {
+        display: inline;
+        font-size: 12px; 
+        float: left;
+        > a {
+            width: 40px;
+            height: 20px;
+            padding: 0;
+            float: left;
+            color: @font-gray;
+            text-align: center;
+            text-decoration: none;
+            .border-1(@bg-gray);
+            border-left: none;
+            background-color: #fff;
+        }
+        > span{
+            height: 20px;
+            line-height: 20px;
+            padding: 0;
+            float: left;
+        }
+        &:first-child > a{
+            border-left: 1px solid @bg-gray;
+            .border-radius(10px 0px 0px 10px);
+        }
+        &:last-child > a{
+            .border-radius(0px 10px 10px 0px);
+        }
+        &.active > a, >a:hover {
+            color: #fff;
+            background-color: @bg-gray;
+            .border-1(@bg-gray);
+        }
+        &.ends{
+            color: @bg-gray;
+            letter-spacing: -3px;
+        }
+    }
+    
+    .checkboxul {
+        > li {
+            line-height: 24px;
+            padding: 0px 10px;
+            color: @font-black;
+            display: inline-block;
+        }
+        .checkbox-li{
+            padding-left: 20px;
+            padding-top: 4px;
+        }
+        .checkbox{
+            margin: 0
+        }
+        select{
+            height: 24px;
+            width: 90px;
+            font-size: 12px;
+            .border-radius(6px);
+            .border-1(@font-gray);
+        }
+    }
+    .datanumul {
+        > li {
+            line-height: 24px;
+            padding: 0px 10px;
+            color: @font-black;
+            display: inline-block;
+        }
+        > li+li:before{
+            padding: 0 6px 0px 5px;
+            color: @font-gray;
+            content: "|";
+        }
+        select{
+            height: 20px;
+            width: 65px;
+            .border-radius(10px);
+            .border-1(@font-gray);
+            font-size: 12px;
+        }
+    }
 }
 
 /*按钮*/
@@ -183,6 +325,7 @@
         line-height: 28px;
     }
 }
+
 /*表单*/
 .form-inline{
     >.form-group{
@@ -198,5 +341,33 @@
             border: 1px solid #dcdcdc;
             color: #969696;
         }
+    }
+}
+
+/*复选框*/
+.checkbox-lable{
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    .checkbox{
+        display: none;
+    }
+    .info{
+        height: 16px;
+        width: 16px;
+        background-color: #fff;
+        display: inline-block;
+        color:#fff;
+        border: 1px solid rgba(0,0,0,0.15);
+        .border-radius(4px);
+        vertical-align: middle;
+        line-height: 1;
+    }
+    .checkbox:checked + .info:after{
+        width:12px
+        height:12px;
+        color: @rocky-color;
+        content: "✔";
+        display: inline-block;
     }
 }

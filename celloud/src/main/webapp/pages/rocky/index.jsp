@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" session="true"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <!DOCTYPE html>
@@ -10,23 +9,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="baidu-site-verification" content="IsldTuHqik" />
 <title>CelLoud</title>
-<meta name="keywords"
-	content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据,上海华点云生物科技有限公司网站首页,上海华点云生物科技有限公司官网,上海华点云生物科技有限公司北京分公司" />
+<meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据,上海华点云生物科技有限公司网站首页,上海华点云生物科技有限公司官网,上海华点云生物科技有限公司北京分公司" />
 <meta name="description" content="一站式高通量基因检测数据分析系统" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="bookmark"
-	href="<%=request.getContextPath()%>/images/favicon.ico" />
-<link rel="shortcut icon"
-	href="<%=request.getContextPath()%>/images/favicon.ico" />
-<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"
-	rel="stylesheet">
-<link href="<%=request.getContextPath()%>/css/less/main.less"
-	rel="stylesheet/less" type="text/css" />
-<link href="<%=request.getContextPath()%>/css/less/components.less"
-	rel="stylesheet/less" type="text/css" />
+<link rel="bookmark" href="<%=request.getContextPath()%>/images/favicon.ico" />
+<link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" />
+<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/less/main.less" rel="stylesheet/less" type="text/css" />
+<link href="<%=request.getContextPath()%>/css/less/components.less" rel="stylesheet/less" type="text/css" />
 <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script>
 </head>
 <body class="container">
@@ -70,14 +61,12 @@
 		<section class="content">
 			<header class="common-menu">
 				<div class="logo">
-					<img alt="华木兰"
-						src="<%=request.getContextPath()%>/images/app/breast_mulations_scan.png">
+					<img alt="华木兰" src="<%=request.getContextPath()%>/images/app/breast_mulations_scan.png">
 				</div>
 				<hr class="-left">
 				<div name="sample-condition" class="info hide">
 					<div class="info-form">
-						<input id="sampleInput" class="field" type="text"
-							placeholder="扫描样本编号/病历号" />
+						<input id="sampleInput" class="field" type="text" placeholder="扫描样本编号/病历号" />
 						<a id="sampleAddBtn" class="action">添加</a>
 					</div>
 					<div id="sample-error" class="errortip hide">
@@ -91,8 +80,7 @@
 				</div>
 				<div class="searchs">
 					<div class="search-form">
-						<input id="condition-input" class="field" type="text"
-							placeholder="搜索" />
+						<input id="condition-input" class="field" type="text" placeholder="搜索" />
 						<a id="condition-find" class="action">
 							<i class="fa fa-search"></i>
 						</a>
@@ -131,16 +119,12 @@
 	<script src="//cdn.bootcss.com/plupload/2.1.8/i18n/zh_CN.js"></script>
 	<script src="//cdn.bootcss.com/swfobject/2.2/swfobject.min.js"></script>
 	<script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/plugins/waveLoading.min.js?version=1.1"></script>
-	<script src="<%=request.getContextPath()%>/js/utils.js"
-		type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/base.js"
-		type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/rocky_main.js"
-		type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
+	<script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js?version=1.1"></script>
+	<script src="<%=request.getContextPath()%>/js/utils.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/base.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/rocky_main.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/rocky_upload.js"></script>
+	<script src="<%=request.getContextPath()%>/js/rocky_report.js"></script>
 </body>
 </html>
