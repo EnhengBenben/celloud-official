@@ -14,12 +14,12 @@ $(function () {
       })
     });
   });
-  $("#to-report-a").on("click",function(){
-    $("#container").load("pages/rocky/sample_main.jsp");
-  });
   $("#to-data-a").on("click",function(){
-    $("#container").load("pages/rocky/sample_main.jsp");
+    $("#container").load("pages/rocky/data_main.jsp");
   });
-  $("#to-sample-a").trigger("click");
+  $("#to-report-a").on("click",function(){
+    $("#container").load("pages/rocky/report_main.jsp");
+  });
+  $("#to-report-a").trigger("click");
 });
 
