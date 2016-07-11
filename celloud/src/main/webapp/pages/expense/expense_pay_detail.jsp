@@ -3,28 +3,28 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<table class="table data-table text-center">
+<table class="table data-table">
     <thead>
         <tr>
-            <th class="pay-date">消费时间</th>
-            <th class="pay-detail">消费明细</th>
-<!--             <th class="data-tags">应用单价</th> -->
-            <th class="pay-money">消费C币</th>
-            <th class="pay-remarks">备注</th>
+            <th class="pay-date text-center">消费时间</th>
+            <th class="pay-detail text-center">消费明细</th>
+<!--             <th class="data-tags text-center">应用单价</th> -->
+            <th class="pay-money text-center">消费C币</th>
+            <th class="pay-remarks text-center">备注</th>
         </tr>
     </thead>
-    <tbody id="pay-list-tbody" class="pay-tbody">
+    <tbody id="pay-list-tbody" class="pay-tbody text-left">
 		<c:choose>
 		  <c:when test="${expensePageList.datas.size()>0 }">
 		    <c:forEach items="${expensePageList.datas }" var="expense" varStatus="status">
 		       <tr>
-                  <td><fmt:formatDate value="${expense.createDate }" type="both"/></td>
-                  <td>数据<span title="${expense.fileInfos }"><c:choose><c:when test="${fn:length(expense.fileInfos)>70 }"><c:out value="${fn:substring(expense.fileInfos, 0, 70) }"/>...</c:when><c:otherwise>${expense.fileInfos }</c:otherwise></c:choose></span>
+                  <td class="text-center"><fmt:formatDate value="${expense.createDate }" type="both"/></td>
+                  <td class="text-left">数据<span title="${expense.fileInfos }"><c:choose><c:when test="${fn:length(expense.fileInfos)>50 }"><c:out value="${fn:substring(expense.fileInfos, 0, 50) }"/>...</c:when><c:otherwise>${expense.fileInfos }</c:otherwise></c:choose></span>
                                                       运行${expense.appName }
                   </td>
 <%--                   <td>${expense.price }C</td> --%>
-                  <td>${expense.price }</td>
-                  <td>
+                  <td class="text-center">${expense.price }</td>
+                  <td class="text-center">
                      <c:if test="${empty expense.remark }">无</c:if>
                      ${expense.remark }
                   </td>
