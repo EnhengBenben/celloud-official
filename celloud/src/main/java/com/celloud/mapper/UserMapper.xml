@@ -390,4 +390,21 @@
         from tb_user u,tb_user_wechat uw
         where u.user_id=uw.user_id and uw.open_id = #{openId}
     </select>
+    <select id="checkWechatBind" resultType="java.lang.Integer">
+        select count(*)
+        from tb_user_wechat
+        where open_id = #{openId}
+        <if test="userId != null">
+            or user_id=#{userId} 
+        </if>
+    </select>
+    <select id="checkWechatUnBind" resultType="java.lang.Integer">
+    	select count(*)
+        from tb_user_wechat uw,tb_user u
+        where uw.user_id = u.user_id and uw.open_id = #{openId} and password=#{pwd}
+    </select>
+    <select id="wechatUnBind" resultType="java.lang.Integer">
+        delete from tb_user_wechat
+        where open_id = #{openId} and password=#{pwd} 
+    </select>
 </mapper>

@@ -48,15 +48,22 @@ $(function () {
   });
   /** 消费记录 */
   $("#to-expense-model").on("click", function(){
-    $.get("expense/getTotalConsumption",{},function(result){
+    $.get("user/balances",{},function(result){
       $("#total-consumption").html(result);
     });
   });
   $("#to-expense-main").on("click", function(){
     $.main.show.mainDIV();
-    $("#mainDIV").load("pages/expense/expense_main.jsp");
+    $("#mainDIV").load("pages/expense/expense_main.jsp",function(){
+    	  $("#to-pay-detail").click();
+    });
   });
-  
+  $("#to-recharge-main").on("click",function(){
+	  $.main.show.mainDIV();
+	  $("#mainDIV").load("pages/expense/expense_main.jsp",function(){
+		  $("#to-recharge").click();
+	  });
+  });
 });
 /**
  * 总览

@@ -36,7 +36,7 @@
                     <c:if test="${empty invoice.remark }">无</c:if>
                     <c:if test="${not empty invoice.remark }">${invoice.remark }</c:if>
                   </td>
-                  <td><fmt:formatDate value="${invoice.createDate }" type="both"/></td>
+                  <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${invoice.createDate }" type="both"/></td>
                   <td><a href="javascript:showInvoiceDetail('${invoice.id }');">详情</a></td>
               </tr>
             </c:forEach>
@@ -243,7 +243,7 @@ function showInvoiceDetail(id){
 		$("#cellphone").html(data.cellphone);
 		$("#remark").html(!data.remark?'暂无物流信息':data.remark);
 		var d = new Date(data.createDate);
-		$("#create_date").html(d.getFullYear() + "-" + (parseInt(d.getMonth())+1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + ((parseInt(d.getSeconds())<10)?'0'+d.getSeconds():d.getSeconds()));
+		$("#create_date").html(d.getFullYear() + "-" + ((parseInt(d.getMonth())+1)<10?'0'+(parseInt(d.getMonth())+1):(parseInt(d.getMonth())+1)) + "-" + (parseInt(d.getDate())<10?'0'+d.getDate():d.getDate()) + " " + (parseInt(d.getHours())<10?'0'+d.getHours():d.getHours()) + ":" + (parseInt(d.getMinutes())<10?'0'+d.getMinutes():d.getMinutes()) + ":" + ((parseInt(d.getSeconds())<10)?'0'+d.getSeconds():d.getSeconds()));
 	});
 }
 </script>

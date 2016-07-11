@@ -7,7 +7,7 @@ $.ajaxSetup ({
 });
 $(function(){
   init_expense();
-  $.expense.pay.expenseList();
+ // $.expense.pay.expenseList();
 });
 function init_expense(){
   $.expense.pay = {

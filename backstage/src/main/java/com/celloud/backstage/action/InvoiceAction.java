@@ -55,8 +55,8 @@ public class InvoiceAction {
         ModelAndView mv = new ModelAndView("expense/invoice_detail");
         Map<String, String> invoice = invoiceService.getInvoiceDetail(invoiceId);
         if (StringUtils.isNotBlank(invoice.get("remark"))) {
-            String postCompany = invoice.get("remark").split(":")[1];
-            String postNumber = invoice.get("remark").split(":")[2];
+            String postCompany = invoice.get("remark").split(":")[0];
+            String postNumber = invoice.get("remark").split(":")[1];
             mv.addObject("postCompany", postCompany);
             mv.addObject("postNumber", postNumber);
         }
