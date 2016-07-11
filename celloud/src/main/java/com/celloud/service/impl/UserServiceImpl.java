@@ -147,4 +147,15 @@ public class UserServiceImpl implements UserService {
 		return userMapper.checkWechatBind(openId, userId);
 	}
 
+	@Override
+	public int checkWechatUnBind(String openId, String pwd) {
+		return userMapper.checkWechatUnBind(openId, pwd);
+	}
+
+	@Override
+	public int wechatUnBind(String openId, String pwd) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

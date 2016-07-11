@@ -62,4 +62,26 @@ public interface UserMapper {
     public User getUserByOpenId(@Param("openId") String openId);
 
 	public int checkWechatBind(@Param("openId") String openId, @Param("userId") Integer userId);
+
+	/**
+	 * 微信解除绑定时的校验
+	 * 
+	 * @param openId
+	 * @param pwd
+	 * @return
+	 * @author lin
+	 * @date 2016年7月11日下午1:25:08
+	 */
+	public int checkWechatUnBind(@Param("openId") String openId, @Param("pwd") String pwd);
+
+	/**
+	 * 微信解除绑定
+	 * 
+	 * @param openId
+	 * @param pwd
+	 * @return
+	 * @author lin
+	 * @date 2016年7月11日下午1:35:58
+	 */
+	public int wechatUnBind(@Param("openId") String openId, @Param("pwd") String pwd);
 }

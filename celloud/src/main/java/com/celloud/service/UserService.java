@@ -201,4 +201,26 @@ public interface UserService {
 	 * @date 2016年7月8日上午11:28:04
 	 */
 	public int checkWechatBind(String openId, Integer userId);
+
+	/**
+	 * 微信解除绑定时的校验
+	 * 
+	 * @param openId
+	 * @param pwd
+	 * @return
+	 * @author lin
+	 * @date 2016年7月11日下午1:24:17
+	 */
+	public int checkWechatUnBind(String openId, String pwd);
+
+	/**
+	 * 微信解除绑定
+	 * 
+	 * @param openId
+	 * @param pwd
+	 * @return
+	 * @author lin
+	 * @date 2016年7月11日下午1:35:15
+	 */
+	public int wechatUnBind(String openId, String pwd);
 }
