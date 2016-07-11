@@ -60,6 +60,27 @@
         border-color: @border-color;
     }
 }
+
 .rocky{
     .theme(@rocky-bg-color,@rocky-font-color,@rocky-text-color,@rocky-border-color);
+    .common-sidebar{
+        > .menu .treeview{
+            &.-active>a {
+                >.celicon{
+                    &.-sample{
+                        background-position: -351px -116px;
+                    }
+                    &.-upload{
+                        background-position: -394px -118px;
+                    }
+                    &.-data{
+                        background-position: -438px -118px;
+                    }
+                    &.-report{
+                        background-position: -476px -118px;
+                    }
+                }
+            }
+        }
+    }
 }

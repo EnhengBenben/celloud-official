@@ -23,7 +23,7 @@
         <div class="info">第二步：拖拽文件到下面指定区域或者点击指定位置的选择文件进行选择，后即可自动上传文件</div>
       </div>
       <div id="plupload-content" class="box-body plupload-content">
-        <div class="upload-text"><i class="celicon grey-upload-icon"></i>拖拽文件到此或者点击选择文件上传</div>
+        <div class="upload-text"><i class="celicon -uploadgray"></i>拖拽文件到此或者点击选择文件上传</div>
       </div>
       <table class="table table-main">
         <thead>

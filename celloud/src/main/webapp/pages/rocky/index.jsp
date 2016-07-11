@@ -73,16 +73,24 @@
 				<ul id="common-menu" class="menu">
 					<li class="treeview">产品功能</li>
 					<li class="treeview -active">
-						<a id="to-sample-a" href="javascript:void(0)" data-menu="收样">收样</a>
+						<a id="to-sample-a" href="javascript:void(0)" data-menu="收样">
+						  <i class="celicon -sample"></i>收样
+						</a>
 					</li>
 					<li class="treeview">
-						<a id="to-upload-a" href="javascript:void(0)" data-menu="上传">上传</a>
+						<a id="to-upload-a" href="javascript:void(0)" data-menu="上传">
+                          <i class="celicon -upload"></i> 上传
+                        </a>
 					</li>
 					<li class="treeview">
-						<a id="to-data-a" href="javascript:void(0)" data-menu="数据">数据</a>
+						<a id="to-data-a" href="javascript:void(0)" data-menu="数据">
+						  <i class="celicon -data"></i> 数据
+						</a>
 					</li>
 					<li class="treeview">
-						<a id="to-report-a" href="javascript:void(0)" data-menu="报告">报告</a>
+						<a id="to-report-a" href="javascript:void(0)" data-menu="报告">
+						  <i class="celicon -report"></i> 报告
+						</a>
 					</li>
 				</ul>
 			</aside>
