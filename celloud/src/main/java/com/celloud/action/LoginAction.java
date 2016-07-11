@@ -36,6 +36,7 @@ import com.celloud.utils.ActionLog;
 import com.celloud.utils.DateUtil;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.RSAUtil;
+import com.celloud.utils.UserAgentUtil;
 import com.celloud.wechat.ParamFormat;
 import com.celloud.wechat.WechatParams;
 import com.celloud.wechat.WechatType;
@@ -173,8 +174,7 @@ public class LoginAction {
                                             DateUtil.getDateToString(
                                                     "yyyy-MM-dd hh:mm:ss"),
                                             null)
-                            .set(WechatParams.LOGIN.ip.name(),
-                                    ConstantsData.getLocalIp(), null)
+							.set(WechatParams.LOGIN.ip.name(), UserAgentUtil.getIp(ConstantsData.getRequset()), null)
                             .set(WechatParams.LOGIN.reason.name(),
                                     "备注：如本次登录不是您本人授权，说明您的帐号存在安全隐患！为减少您的损失，请立即修改密码。",
                                     "#222222"))
