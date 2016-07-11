@@ -4,12 +4,7 @@
 <table class="table table-main">
   <thead>
     <tr>
-      <th width="40">
-        <label class="checkbox-lable">
-            <input class="checkbox" type="checkbox" name="demo-checkbox1">
-	        <span class="info"></span>
-	    </label>
-      </th>
+      <th width="40"></th>
       <th width="140">
         <input id="sample-selector" type="text" placeholder="样本编号/病历号">
       </th>
@@ -133,3 +128,4 @@
   </tbody>
 </table>
 <%@ include file="pagination.jsp" %>
+<%@ include file="statistic.jsp" %>

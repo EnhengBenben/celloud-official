@@ -18,6 +18,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/less/main.less" rel="stylesheet/less" type="text/css" />
 <link href="<%=request.getContextPath()%>/css/less/components.less" rel="stylesheet/less" type="text/css" />
+<link href="<%=request.getContextPath()%>/css/less/theme.less" rel="stylesheet/less" type="text/css" />
 <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script>
 </head>
 <body class="container">
@@ -50,33 +51,14 @@
 	    <li id="menu-name">收样</li>
 	  </ol>
 	</div>
-	<section class="content">
+	<section class="content rocky">
 	  <header class="common-menu">
 	    <div class="logo">
 	        <img alt="华木兰" src="<%=request.getContextPath()%>/images/app/breast_mulations_scan.png">
 	    </div>
 	    <hr class="-left">
-	    <div name="sample-condition" class="info hide">
-	      <div class="info-form">
-		    <input id="info-input" class="field" type="text" placeholder="扫描样本编号/病历号"/>
-		    <a id="info-add-a" class="action">添加</a>
-		  </div>
-		  <div id="sample-error" class="errortip hide">
-		    <p> 此样品信息已经收集过，请核查或者采集下一管样品信息！
-		      <a id="close-error" href="javascript:void(0)"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
-		    </p>
-		  </div>
-	    </div>
-	    <div class="searchs">
-	      <div class="search-form">
-	        <input id="condition-input" class="field" type="text" placeholder="搜索"/>
-	        <a id="condition-find" class="action"><i class="fa fa-search"></i></a>
-	      </div>
-	      <div name="sample-condition" class="btns hide">
-		      <a id="info-reset" class="btn -cancel -lg">取消</a>
-		      <a id="info-commit" class="btn -confirm -lg">提交样本信息</a>
-		  </div>
-	    </div>
+	    <div id="common-menu-center" class="info"></div>
+	    <div id="common-menu-right" class="searchs"></div>
 	    <hr class="-right">
 	  </header>
 	  <aside class="common-sidebar">

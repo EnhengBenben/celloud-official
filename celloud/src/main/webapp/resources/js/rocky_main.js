@@ -3,11 +3,15 @@ $(function () {
     $base.itemBtnToggleActive($(this));
   });
   $("#to-sample-a").on("click",function(){
+    $("#common-menu-center").load("pages/rocky/common_menu_sampleinfo.jsp");
+    $("#common-menu-right").load("pages/rocky/common_menu_btns.jsp");
     $("#container").load("pages/rocky/sample_main.jsp",function(){
       $("#sample-list-tbody").load("pages/rocky/sample_list.jsp");
     });
   });
   $("#to-upload-a").on("click",function(){
+    $("#common-menu-center").html("");
+    $("#common-menu-right").load("pages/rocky/common_menu_search.jsp");
     $("#container").load("pages/rocky/upload.jsp",function(){
       $("#upload-next").on("click",function(){
         $upload.next();
@@ -15,9 +19,13 @@ $(function () {
     });
   });
   $("#to-data-a").on("click",function(){
+    $("#common-menu-center").html("");
+    $("#common-menu-right").load("pages/rocky/common_menu_search.jsp");
     $("#container").load("pages/rocky/data_main.jsp");
   });
   $("#to-report-a").on("click",function(){
+    $("#common-menu-center").html("");
+    $("#common-menu-right").load("pages/rocky/common_menu_search.jsp");
     $("#container").load("pages/rocky/report_main.jsp");
   });
   $("#to-report-a").trigger("click");

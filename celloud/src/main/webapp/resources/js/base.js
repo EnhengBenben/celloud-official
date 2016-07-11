@@ -25,12 +25,5 @@ var $base = {
     $("#common-menu .treeview").removeClass("-active");
     $(obj).parent().addClass("-active");
     $("#menu-name").html($(obj).data("menu"));
-    if($(obj).attr("id").indexOf("sample")>=0){
-      $(".search-form").addClass("hide");
-      $("[name='sample-condition']").removeClass("hide");
-    }else{
-      $(".search-form").removeClass("hide");
-      $("[name='sample-condition']").addClass("hide");
-    }
   }
 };
