@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.celloud.utils.HttpURLUtils;
+import com.celloud.utils.PropertiesUtil;
+import com.celloud.utils.qrcode.QRCodeUtil;
 
 /**
  * 微信操作工具类
@@ -30,6 +32,26 @@ public class WechatUtils {
     private String oAuth2TokenUrl;
     private String tokenUrl;
     private String templateUrl;
+	private String qrcodePath;
+
+	/**
+	 * 
+	 * 
+	 * @param md5
+	 * @return:qrcode absolute path
+	 * @author lin
+	 * @date 2016年7月11日下午3:33:49
+	 */
+	public String createQRCode(String md5) {
+		String url = getQRUrl(md5);
+		String fileName = null;
+		try {
+			fileName = QRCodeUtil.encode(url, PropertiesUtil.img, qrcodePath, true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return qrcodePath + fileName;
+	}
 
 	/**
 	 * 获取生成二维码所需要的url
@@ -170,5 +192,9 @@ public class WechatUtils {
     public void setTemplateUrl(String templateUrl) {
         this.templateUrl = templateUrl;
     }
+
+	public void setQrcodePath(String qrcodePath) {
+		this.qrcodePath = qrcodePath;
+	}
 
 }

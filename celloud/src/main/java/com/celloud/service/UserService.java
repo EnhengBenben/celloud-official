@@ -38,6 +38,16 @@ public interface UserService {
      */
     public void insertFindPwdInfo(Integer userId, String randomCode);
 
+	/**
+	 * 保存随机生成的验证码，用来校验微信二维码
+	 * 
+	 * @param userId
+	 * @param randomCode
+	 * @author lin
+	 * @date 2016年7月12日上午11:03:25
+	 */
+	public void insertWechatCode(Integer userId, String randomCode);
+
     /**
      * 清理重置密码链接(指定用户的，或者已过期的)
      * 
