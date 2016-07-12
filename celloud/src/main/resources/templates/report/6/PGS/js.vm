@@ -10,6 +10,7 @@ $(function(){
 			inputVal = inputVal.replace(/\n/g,"<br>");
 			$("#result").html(inputVal);
 		}
+		$("#resultArea").html($("#resultArea").val());
 		$(".buttons").hide();
 		window.print();
 		$(".buttons").show();
