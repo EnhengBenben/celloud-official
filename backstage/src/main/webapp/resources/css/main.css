@@ -1,4 +1,9 @@
 @CHARSET "UTF-8";
+html,body,div,section,ul {
+    padding: 0;
+    margin: 0;
+    font: 14px/1.5 "Microsoft Yahei","Hiragino Sans GB",tahoma,arial;
+}
 #index-main-div{
     position:static;
     z-index:auto;

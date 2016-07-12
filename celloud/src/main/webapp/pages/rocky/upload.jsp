@@ -25,7 +25,7 @@
 			</div>
 			<div id="plupload-content" class="box-body plupload-content">
 				<div class="upload-text">
-					<i class="celicon grey-upload-icon"></i>拖拽文件到此或者点击选择文件上传
+					<i class="celicon -uploadgray"></i>拖拽文件到此或者点击选择文件上传
 				</div>
 			</div>
 			<table class="table table-main hide" id="upload-list-table">
