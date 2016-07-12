@@ -38,7 +38,7 @@
     </tr>
     <tr>
         <td style="height:30px">
-            <strong style="font-size:14px;">检测结果：</strong><img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.middlePng}" style="width:100%;"><img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.splitPng}" style="width:100%;"><strong>该样本检测结果显示:</strong><br/>
+            <strong style="font-size:14px;">检测结果：</strong><img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.miniPng}" style="width:100%;"><img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.splitPng}" style="width:100%;"><strong>该样本检测结果显示:</strong><br/>
             <div id="result">
                 <textarea style="width:99%" id="resultArea">${pgs.report}</textarea>
             <div>
