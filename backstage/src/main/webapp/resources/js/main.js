@@ -9,6 +9,36 @@ $.ajaxSetup ({
 	  },
 	  cache: false //关闭AJAX相应的缓存
   });
+var $base={
+    pageination: function(callback){
+      $(document).on("click","#pagination-ul a",function(e){
+        var id = $(this).attr("id");
+        var currentPage = parseInt($("#current-page-hide").val());
+        var totalPage = parseInt($("#total-page-hide").val());
+        if(id == undefined){
+          page = $(this).html();
+        }else if(id.indexOf("prev")>=0){
+          if(currentPage == 1){
+            page = 1;
+          }else{
+            page = currentPage-1;
+          }
+        }else if(id.indexOf("next")>=0){
+          page = currentPage+1;
+          if(currentPage == totalPage){
+            page = currentPage;
+          }else{
+            page = currentPage+1;
+          }
+        }else if(id.indexOf("first")>=0){
+          page = 1;
+        }else if(id.indexOf("last")>=0){
+          page = totalPage;
+        }
+        if( callback ) callback(page);
+      });
+    }
+}
 /**
 *公司管理
 **/
@@ -799,6 +829,54 @@ var expense = (function(expense){
 			$("#invoice-detailModal .modal-content").html(responseText);
 			$("#invoice-detailModal").modal("show");
 		});
+	};
+	self.recharge = {
+	    main: function(){
+	      $.post("recharge/main",{},function(responseText){
+	        self.recharge.load(responseText);
+	      });
+	    },
+	    condition: function(){
+        $.post("recharge/main",{"condition":$("#condition").val()},function(responseText){
+          self.recharge.load(responseText);
+        });
+      },
+      page: function(page){
+        $.post("recharge/main",{"condition":$("#condition").val(),"currentPage":page},function(responseText){
+          self.recharge.load(responseText);
+        });
+      },
+      load: function(responseText){
+        $("#main-content").html(responseText);
+        $base.pageination(function(result) {self.recharge.page(result)});
+        $(document).on("click","#search-btn",function(){
+          self.recharge.condition();
+        });
+        $(document).on("click","[data-click='to-recharge']",function(){
+          $("#userid-hide").val($(this).data("user"));
+          $("#recharge-modal").modal("show");
+          //变换随机验证码
+          $('#kaptchaImage').click(function() {
+            $(this).hide().attr('src','kaptcha.jpg?' + Math.floor(Math.random() * 100)).fadeIn();
+          });
+        });
+        $(document).on("click","#commit-recharge",function(){
+          self.recharge.transfer();
+        });
+      },
+      transfer: function(){
+        $.post("recharge/transfer",$("#rechargeForm").serialize(),function(result){
+          if(result.length>1){
+            $("#recharge-alert").removeClass("hide");
+            $("#recharge-info").html(result);
+          }else if(result == "1"){
+            $("#recharge-modal").modal("hide");
+            $("#recharge-modal").on('hidden.bs.modal', function (e) {//此事件在模态框被隐藏（并且同时在 CSS 过渡效果完成）之后被触发。
+              self.recharge.page($("#current-page-hide").val());
+            });
+          }
+        });
+      }
 	};
 	return self;
 })(expense);

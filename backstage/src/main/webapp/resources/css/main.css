@@ -78,3 +78,106 @@ html,body,div,section,ul {
 .sort-list li a:link, .sort-list li a:visited {
     color: #333;
 }
+
+/*翻页*/
+.pagination {
+  width: 100%;
+  margin: 0;
+}
+.pagination .pages {
+  margin-right: 20px;
+}
+.pagination ul {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+.pagination ul > li {
+  display: inline;
+  font-size: 12px;
+  float: left;
+}
+.pagination ul > li > a {
+  width: 40px;
+  height: 20px;
+  padding: 0;
+  float: left;
+  color: #969696;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid #dcdcdc;
+  border-left: none;
+  background-color: #fff;
+}
+.pagination ul > li > span {
+  height: 20px;
+  line-height: 20px;
+  padding: 0;
+  float: left;
+}
+.pagination ul > li:first-child > a {
+  border-left: 1px solid #dcdcdc;
+  -webkit-border-radius: 10px 0px 0px 10px;
+  -moz-border-radius: 10px 0px 0px 10px;
+  -o-border-radius: 10px 0px 0px 10px;
+  border-radius: 10px 0px 0px 10px;
+}
+.pagination ul > li:last-child > a {
+  -webkit-border-radius: 0px 10px 10px 0px;
+  -moz-border-radius: 0px 10px 10px 0px;
+  -o-border-radius: 0px 10px 10px 0px;
+  border-radius: 0px 10px 10px 0px;
+}
+.pagination ul > li.active > a,
+.pagination ul > li > a:hover {
+  color: #fff;
+  background-color: #dcdcdc;
+  border: 1px solid #dcdcdc;
+}
+.pagination ul > li.ends {
+  color: #dcdcdc;
+  letter-spacing: -3px;
+}
+.pagination .checkboxul > li {
+  line-height: 24px;
+  padding: 0px 10px;
+  color: #323232;
+  display: inline-block;
+}
+.pagination .checkboxul .checkbox-li {
+  padding-left: 20px;
+}
+.pagination .checkboxul .checkbox {
+  margin: 0;
+}
+.pagination .checkboxul select {
+  height: 24px;
+  width: 90px;
+  font-size: 12px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+  border: 1px solid #969696;
+}
+.pagination .datanumul > li {
+  line-height: 24px;
+  padding: 0px 10px;
+  color: #323232;
+  display: inline-block;
+}
+.pagination .datanumul > li + li:before {
+  padding: 0 6px 0px 5px;
+  color: #969696;
+  content: "|";
+}
+.pagination .datanumul select {
+  height: 20px;
+  width: 65px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  border: 1px solid #969696;
+  font-size: 12px;
+}

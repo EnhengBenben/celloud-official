@@ -186,4 +186,14 @@ public interface UserService {
      */
     public List<UserSelect> getAllUserSelectList();
 
+    /**
+     * 只有一个条件的用户分页列表
+     * 
+     * @param page
+     * @param condition
+     * @return 包含公司名称
+     * @author leamo
+     * @date 2016年7月12日 上午10:54:15
+     */
+    public PageList<User> getUserPageList(Page page, String condition);
 }

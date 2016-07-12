@@ -45,6 +45,9 @@ public class User implements Serializable {
 
     private BigDecimal balances;
 
+    // only show
+    private String companyName;
+
     public Integer getUserId() {
         return userId;
     }
@@ -188,6 +191,14 @@ public class User implements Serializable {
 
     public void setBalances(BigDecimal balances) {
         this.balances = balances;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
 }
