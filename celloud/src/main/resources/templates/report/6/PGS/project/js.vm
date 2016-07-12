@@ -78,10 +78,12 @@ $(function(){
 		$("table").find("input").each(function(){
             $(this).css("border-bottom","1px solid #ccc");
         });
-        if("FF"!=mb){
+        if("FF"==mb){
             $(".saId").css("margin-top","13px");
             $(".exId").css("margin-top","13px");
             $(".exRemark").css("margin-top","11px");
+        }else if("IE"==mb){
+        
         }else{
             lookCss();
         }
