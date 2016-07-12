@@ -30,28 +30,30 @@ $(function(){
 		$(".saId").each(function(){
             inputVal = $(this).children().val();
             if(inputVal){
-                inputVal = inputVal.replace(/\n/g,"<br>");
+                console.log(inputVal);
+                inputVal = inputVal.replace(/\r\n/g,"<br>");
+                console.log(inputVal);
             }
             $(this).html("<br/>" + inputVal);               
         });
         $(".exId").each(function(){
             inputVal = $(this).children().val();
             if(inputVal){
-                inputVal = inputVal.replace(/\n/g,"<br>");
+                inputVal = inputVal.replace(/\r\n/g,"<br>");
             }
             $(this).html("<br/>" + inputVal);               
         });
         $(".exResult").each(function(){
             inputVal = $(this).children().val();
             if(inputVal){
-                inputVal = inputVal.replace(/\n/g,"<br>");
+                inputVal = inputVal.replace(/\r\n/g,"<br>");
             }
             $(this).html("<br/>" + inputVal);               
         });
 		$(".exRemark").each(function(){
     		inputVal = $(this).children().val();
     		if(inputVal){
-    		    inputVal = inputVal.replace(/\n/g,"<br>");
+    		    inputVal = inputVal.replace(/\r\n/g,"<br>");
     		}
             $(this).html("<br/>" + inputVal);    		    
 		});
