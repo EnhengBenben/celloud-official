@@ -36,10 +36,10 @@
     
     <tr>
         <td style="height:30px">
-            <strong style="font-size:14px;">样本编号</strong>
-            <strong style="font-size:14px;margin-left:35px;">实验编号</strong>
-            <strong style="font-size:14px;margin-left:35px;">检测结果</strong>
-            <strong style="font-size:14px;margin-left:287px;">备注</strong>
+            <strong id="saId" style="font-size:14px;">样本编号</strong>
+            <strong id="exId" style="font-size:14px;margin-left:35px;">实验编号</strong>
+            <strong id="exResult" style="font-size:14px;margin-left:35px;">检测结果</strong>
+            <strong id="exRemark" style="font-size:14px;margin-left:287px;">备注</strong>
         </td>
     </tr>
     #foreach($pgs in $pgsList)
@@ -48,7 +48,7 @@
                 <div class="saId" style="width:10%;float:left;margin-top:13px;"><input value="$pgs.anotherName" type="text" class="onlybotton" style="width:100%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></div>
                 <div class="exId" style="width:10%;margin-left:14px;margin-top:13px;float:left;"><input type="text" class="onlybotton" style="width:100%;height:16px;padding:0px;font-size:12px;line-height:16px"/></div>
                 <div class="exResult" style="width:42%;margin-left:15px;float:left;"><textarea style="width:98%;font-size:12px;">$pgs.report</textarea></div>
-                <div class="exRemark" style="width:24%;margin-left:12px;margin-top:11px;float:left;"><input type="text" class="onlybotton" style="width:100%;height:16px;padding:0px;font-size:12px;line-height:16px"/></div>
+                <div class="exRemark" style="width:23%;margin-left:12px;margin-top:11px;float:left;"><input type="text" class="onlybotton" style="width:100%;height:16px;padding:0px;font-size:12px;line-height:16px"/></div>
             </td>
         </tr>
     #end
