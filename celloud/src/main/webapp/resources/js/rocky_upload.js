@@ -2,7 +2,6 @@ var $upload = {
 	next : function() {
 		$("#upload-step-one").addClass("hide");
 		$("#upload-step-two").removeClass("hide");
-		rockyUpload.init();
 	},
 	back : function(){
 		$("#upload-step-two").addClass("hide");
@@ -89,11 +88,13 @@ var rockyUpload = (function(rockyUpload) {
 			}
 		});
 		uploader.bind("UploadComplete",function(uploader,files){
-			uploader.splice();
+			uploader.splice(0,uploader.files.length);
+			$("#upload-list-tbody").html('');
 			$("#upload-list-table").addClass("hide");
 			$upload.back();
 		});
 	};
+	rockyUpload.init();
 	function getSize(fileSize){
 		if(!fileSize){
 			return "";
