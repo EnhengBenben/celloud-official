@@ -31,29 +31,29 @@ $(function(){
             inputVal = $(this).children().val();
             if(inputVal){
                 inputVal = inputVal.replace(/\n/g,"<br>");
-                $(this).html("<br/>" + inputVal);               
             }
+            $(this).html("<br/>" + inputVal);               
         });
         $(".exId").each(function(){
             inputVal = $(this).children().val();
             if(inputVal){
                 inputVal = inputVal.replace(/\n/g,"<br>");
-                $(this).html("<br/>" + inputVal);               
             }
+            $(this).html("<br/>" + inputVal);               
         });
         $(".exResult").each(function(){
             inputVal = $(this).children().val();
             if(inputVal){
                 inputVal = inputVal.replace(/\n/g,"<br>");
-                $(this).html("<br/>" + inputVal);               
             }
+            $(this).html("<br/>" + inputVal);               
         });
 		$(".exRemark").each(function(){
     		inputVal = $(this).children().val();
     		if(inputVal){
     		    inputVal = inputVal.replace(/\n/g,"<br>");
-                $(this).html("<br/>" + inputVal);    		    
     		}
+            $(this).html("<br/>" + inputVal);    		    
 		});
 		$(".buttons").hide();
 		window.print();
@@ -62,29 +62,29 @@ $(function(){
             inputVal = $(this).html();
             if(inputVal){
                 inputVal = inputVal.replace(/<br>/g,"\n");
-                $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
             }
+            $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
         });
         $(".exId").each(function(){
             inputVal = $(this).html();
             if(inputVal){
                 inputVal = inputVal.replace(/<br>/g,"\n");
-                $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
             }
+            $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
         });
         $(".exResult").each(function(){
             inputVal = $(this).html();
             if(inputVal){
                 inputVal = inputVal.replace(/<br>/g,"\n");
-                $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
             }
+            $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
         });
 		$(".exRemark").each(function(){
 		    inputVal = $(this).html();
             if(inputVal){
                 inputVal = inputVal.replace(/<br>/g,"\n");
-                $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
             }
+            $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
 		});
 		$("table").find("input[class!=notbottom]").each(function(){
             $(this).css("border-bottom","1px solid #ccc");
