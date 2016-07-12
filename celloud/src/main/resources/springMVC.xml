@@ -200,7 +200,6 @@
         <property name="oAuth2TokenUrl" value="${wechat.oAuth2TokenUrl}" />
         <property name="tokenUrl" value="${wechat.tokenUrl}" />
         <property name="templateUrl" value="${wechat.templateUrl}" />
-        <property name="qrcodePath" value="${wechat.qrcodePath}" />
 	</bean>
 	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
 		<property name="velocityProperties">

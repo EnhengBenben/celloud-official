@@ -1,28 +1,21 @@
 package com.celloud.action;
 
-import java.io.File;
-import java.io.IOException;
 import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.util.Date;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
-import com.celloud.constants.ConstantsData;
 import com.celloud.model.PrivateKey;
 import com.celloud.model.PublicKey;
 import com.celloud.model.mysql.User;
@@ -40,14 +33,6 @@ public class WeChatAction {
 	private UserService us;
     @Resource
     private WechatUtils wechatUtils;
-
-	@RequestMapping(value = "qrcode", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> appImage() throws IOException {
-		String randomCode = MD5Util.getMD5(String.valueOf(new Date().getTime()));
-		us.insertWechatCode(ConstantsData.getLoginUserId(), randomCode);
-		String path = wechatUtils.createQRCode(randomCode);
-		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(new File(path)), null, HttpStatus.OK);
-	}
 
 	@RequestMapping(value = "getState", method = RequestMethod.GET)
     public ModelAndView getState(String state, String code) {
@@ -67,16 +52,7 @@ public class WeChatAction {
 			PublicKey publicKey = generatePublicKey(session);
 			mv.addObject("publicKey", publicKey).addObject("isSuccess", "false");
 		} else {
-			String username = ConstantsData.getLoginUserName();
-			User user = us.getUserByFindPwd(username, state);
-			if (user == null) {
-				msg = "二维码已经超时，请刷新后再次尝试，如有疑问请登录平台后在“问题反馈”中联系我们。";
-				mv.addObject("info", msg).addObject("isSuccess", "true");
-				return mv;
-			}
-			us.insertUserWechatInfo(user.getUserId(), openId, null);
-			msg = "您的CelLoud账号与微信号绑定成功！";
-			mv.addObject("info", msg).addObject("isSuccess", "true");
+			//TODO
 		}
         return mv;
 	}
