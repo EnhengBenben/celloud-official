@@ -87,8 +87,14 @@
 				</ul>
 			</aside>
 			<div id="container" class="common-container"></div>
+			<div id="upload-container" class="common-container hide">
+				<jsp:include page="upload.jsp"></jsp:include>
+			</div>
 		</section>
 	</div>
+	<script type="text/javascript">
+		window.contextPath = '<%=request.getContextPath()%>';
+	</script>
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 	<script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
