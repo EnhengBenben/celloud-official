@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.constants.AppConstants;
 import com.celloud.constants.AppDataListType;
 import com.celloud.constants.CommandKey;
 import com.celloud.constants.ConstantsData;
@@ -209,7 +210,7 @@ public class DataAction {
 		return mv;
 	}
 
-	@ActionLog(value = "打开BSI我的数据页面", button = "我的数据")
+	@ActionLog(value = "打开rocky数据页面", button = "数据")
 	@RequestMapping("rocky/list")
 	public ModelAndView rockyDataAllList(@RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "20") int size) {
@@ -217,8 +218,7 @@ public class DataAction {
 		Page pager = new Page(page, size);
 		Integer userId = ConstantsData.getLoginUserId();
 		PageList<DataFile> dataList = dataService.dataAllList(pager, ConstantsData.getLoginUserId());
-		// TODO appId改成123
-		Map<String, Object> periodMap = taskService.findTaskPeriodNum(118, userId);
+		Map<String, Object> periodMap = taskService.findTaskPeriodNum(AppConstants.APP_ID_ROCKY, userId);
 		List<String> batchList = dataService.getBatchList(userId);
 		periodMap.put("uploaded", batchList.size());
 		mv.addObject("periodMap", periodMap);

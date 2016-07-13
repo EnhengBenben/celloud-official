@@ -22,6 +22,14 @@ public class AppConstants {
 	 * 配置文件的地址
 	 */
 	private static final String PROPERTIES_PATH = "file_path.properties";
+	/**
+	 * rocky乳腺癌产品的appid
+	 */
+	public static final Integer APP_ID_ROCKY = 123;
+	/**
+	 * bsi血流产品的appid
+	 */
+	public static final Integer APP_ID_BSI = 118;
 
 	public static synchronized Properties loadProperties() {
 		properties = new Properties();
