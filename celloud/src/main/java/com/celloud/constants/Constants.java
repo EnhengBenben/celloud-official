@@ -15,6 +15,10 @@ public class Constants {
      * session中记录的账号密码错误次数
      */
     public static final String SESSION_FAILED_LOGIN_TIME = "failedLoginTimeInSession";
+	/**
+	 * 消息中心设置
+	 */
+	public static final String MESSAGE_CATEGORY = "message_category";
     /**
      * 已登录用户的角色
      */

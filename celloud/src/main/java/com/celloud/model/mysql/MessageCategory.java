@@ -3,6 +3,8 @@ package com.celloud.model.mysql;
 public class MessageCategory {
     private Integer id;
 
+	private String code;
+
     private String name;
 
     private Integer email;
@@ -50,5 +52,13 @@ public class MessageCategory {
     public void setWechat(Integer wechat) {
         this.wechat = wechat;
     }
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
 
 }

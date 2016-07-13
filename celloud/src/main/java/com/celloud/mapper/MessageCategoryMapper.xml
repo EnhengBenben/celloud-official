@@ -3,13 +3,14 @@
 <mapper namespace="com.celloud.mapper.MessageCategoryMapper" >
   <resultMap id="BaseResultMap" type="com.celloud.model.mysql.MessageCategory" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="INTEGER" />
     <result column="window" property="window" jdbcType="INTEGER" />
     <result column="wechat" property="wechat" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, email, window, wechat
+    id, code, name, email, window, wechat
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -22,9 +23,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.celloud.model.mysql.MessageCategory" >
-    insert into tb_message_category (id, name, email, 
+    insert into tb_message_category (id, code, name, email, 
       window, wechat)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{email,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{email,jdbcType=INTEGER}, 
       #{window,jdbcType=INTEGER}, #{wechat,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.celloud.model.mysql.MessageCategory" >
@@ -32,6 +33,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="code != null" >
+        code,
       </if>
       <if test="name != null" >
         name,
@@ -50,6 +54,9 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="code != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
@@ -67,6 +74,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.MessageCategory" >
     update tb_message_category
     <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
@@ -85,6 +95,7 @@
   <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.MessageCategory" >
     update tb_message_category
     set name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
       email = #{email,jdbcType=INTEGER},
       window = #{window,jdbcType=INTEGER},
       wechat = #{wechat,jdbcType=INTEGER}
@@ -97,7 +108,15 @@
   </select>
   <select id="findUserMessageCategoryByUserId" resultType="java.util.HashMap">
     select umcr.id, umcr.email, umcr.window, umcr.wechat, umcr.user_id,
-        umcr.message_category_id, mc.name 
+        umcr.message_category_id, mc.name ,mc.code
+    from tb_user_message_category_relat umcr 
+    left join tb_message_category mc 
+    on mc.id = umcr.message_category_id
+    where user_id = #{userId}
+  </select>
+  <select id="getUserMessageCategory" resultType="com.celloud.model.mysql.MessageCategory">
+    select umcr.email, umcr.window, umcr.wechat, 
+        umcr.message_category_id, mc.name ,mc.code
     from tb_user_message_category_relat umcr 
     left join tb_message_category mc 
     on mc.id = umcr.message_category_id
