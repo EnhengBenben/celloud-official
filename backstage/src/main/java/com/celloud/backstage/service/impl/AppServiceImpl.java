@@ -237,5 +237,10 @@ public class AppServiceImpl implements AppService{
         }
         return appMapper.getAppById(appId);
     }
+
+    @Override
+    public List<App> getAllApp() {
+        return appMapper.getAllApp(AppOffline.ON);
+    }
     
 }

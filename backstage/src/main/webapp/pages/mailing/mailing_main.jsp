@@ -46,11 +46,6 @@
 	</div>
 </div>
 <script type="text/javascript"
-	src="${pageContext.request.contextPath }/resources/plugins/select2/js/select2.full.min.js"></script>
-<link
-	href="${pageContext.request.contextPath }/resources/plugins/select2/css/select2.min.css"
-	rel="stylesheet" />
-<script type="text/javascript"
 	src="<%=request.getContextPath()%>/plugins/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
 	$(function() {

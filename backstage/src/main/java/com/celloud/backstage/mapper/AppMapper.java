@@ -69,4 +69,6 @@ public interface AppMapper {
     public int deleteAppFileFormat(@Param("appId") Integer appId);
     public int deleteAppClassify(@Param("appId") Integer appId);
     public int updateApp(App app);
+
+    public List<App> getAllApp(@Param("offLine") Integer offLine);
 }
