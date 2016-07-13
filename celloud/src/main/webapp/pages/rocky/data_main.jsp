@@ -88,5 +88,8 @@
 		</c:forEach>
 	</tbody>
 </table>
-<jsp:include page="pagination.jsp"></jsp:include>
+<div id="rocky_data_page">
+	<jsp:include page="pagination.jsp"></jsp:include>
+</div>
 <jsp:include page="statistic.jsp"></jsp:include>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/rocky_data.js"></script>

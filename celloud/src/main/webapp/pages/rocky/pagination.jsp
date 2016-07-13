@@ -3,8 +3,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div class="pagination text-center">
 	<c:if test="${pageList.datas.size()>0}">
-		<input id="current-page-hide" value="${pageList.page.currentPage }" type="hidden">
-		<input id="total-page-hide" value="${pageList.page.totalPage }" type="hidden">
 		<ul class="checkboxul pull-left">
 			<li class="checkbox-li">
 				<label class="checkbox-lable"> <input class="checkbox" type="checkbox" name="demo-checkbox1"> <span class="info"></span>
@@ -36,7 +34,7 @@
 		<ul id="pagination-ul" class="pages pull-right">
 			<!-- 显示prev -->
 			<li>
-				<a id="prev-page" class="ends" href="javascript:void(0);">&lt;&lt;</a>
+				<a id="prev-page" class="ends" data-click="pagination-btn" data-page="${pageList.page.currentPage>1?pageList.page.currentPage-1:1 }" href="javascript:void(0);">&lt;&lt;</a>
 			</li>
 			<c:choose>
 				<c:when test="${pageList.page.totalPage<=7}">
@@ -44,12 +42,12 @@
 						<c:choose>
 							<c:when test="${step==pageList.page.currentPage}">
 								<li class="active">
-									<a href="#">${step }</a>
+									<a href="javascript:void(0);">${step }</a>
 								</li>
 							</c:when>
 							<c:otherwise>
 								<li>
-									<a name="pagination-info" href="javascript:void(0)">${step }</a>
+									<a name="pagination-info" data-click="pagination-btn" data-page="${step }" href="javascript:void(0)">${step }</a>
 								</li>
 							</c:otherwise>
 						</c:choose>
@@ -61,12 +59,12 @@
 							<c:choose>
 								<c:when test="${step==pageList.page.currentPage}">
 									<li class="active">
-										<a href="#">${step }</a>
+										<a href="javascript:void(0);">${step }</a>
 									</li>
 								</c:when>
 								<c:otherwise>
 									<li>
-										<a name="pagination-info" href="javascript:void(0)">${step }</a>
+										<a name="pagination-info" data-click="pagination-btn" data-page="${step }" href="javascript:void(0)">${step }</a>
 									</li>
 								</c:otherwise>
 							</c:choose>
@@ -75,35 +73,35 @@
 							<a href="javascript:void(0)">…</a>
 						</li>
 						<li>
-							<a name="pagination-info" href="javascript:void(0)">${pageList.page.totalPage }</a>
+							<a name="pagination-info" data-click="pagination-btn" data-page="${pageList.page.totalPage }" href="javascript:void(0)">${pageList.page.totalPage }</a>
 						</li>
 					</c:if>
 					<c:if test="${pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3}">
 						<li>
-							<a name="pagination-info" href="javascript:void(0)">1</a>
+							<a name="pagination-info"  data-click="pagination-btn" data-page="1" href="javascript:void(0)">1</a>
 						</li>
 						<li>
 							<a href="javascript:void(0)">…</a>
 						</li>
 						<li>
-							<a name="pagination-info" href="javascript:void(0)">${pageList.page.currentPage-1 }</a>
+							<a name="pagination-info"  data-click="pagination-btn" data-page="${pageList.page.currentPage-1  }" href="javascript:void(0)">${pageList.page.currentPage-1 }</a>
 						</li>
 						<li class="active">
-							<a href="#">${pageList.page.currentPage }</a>
+							<a href="javascript:void(0);">${pageList.page.currentPage }</a>
 						</li>
 						<li>
-							<a name="pagination-info" href="javascript:void(0)">${pageList.page.currentPage+1 }</a>
+							<a name="pagination-info" data-click="pagination-btn" data-page="${pageList.page.currentPage+1  }" href="javascript:void(0)">${pageList.page.currentPage+1 }</a>
 						</li>
 						<li>
 							<a href="javascript:void(0)">…</a>
 						</li>
 						<li>
-							<a name="pagination-info" href="javascript:void(0)">${pageList.page.totalPage }</a>
+							<a name="pagination-info" data-click="pagination-btn" data-page="${pageList.page.totalPage  }" href="javascript:void(0)">${pageList.page.totalPage }</a>
 						</li>
 					</c:if>
 					<c:if test="${pageList.page.currentPage>=pageList.page.totalPage-3}">
 						<li>
-							<a name="pagination-info" href="javascript:void(0)">1</a>
+							<a name="pagination-info" data-click="pagination-btn" data-page="1"  href="javascript:void(0)">1</a>
 						</li>
 						<li>
 							<a href="javascript:void(0)">…</a>
@@ -112,12 +110,12 @@
 							<c:choose>
 								<c:when test="${step==pageList.page.currentPage}">
 									<li class="active">
-										<a href="#">${step }</a>
+										<a href="javascript:void(0);">${step }</a>
 									</li>
 								</c:when>
 								<c:otherwise>
 									<li>
-										<a name="pagination-info" href="javascript:void(0)">${step }</a>
+										<a name="pagination-info" data-click="pagination-btn" data-page="${step }"  href="javascript:void(0)">${step }</a>
 									</li>
 								</c:otherwise>
 							</c:choose>
@@ -126,7 +124,7 @@
 				</c:otherwise>
 			</c:choose>
 			<li>
-				<a id="next-page" class="ends" href="javascript:void(0)">&gt;&gt;</a>
+				<a id="next-page" class="ends" data-click="pagination-btn" data-page="${pageList.page.currentPage < pageList.page.totalPage?pageList.page.currentPage+1:pageList.page.totalPage }" href="javascript:void(0)">&gt;&gt;</a>
 			</li>
 		</ul>
 	</c:if>

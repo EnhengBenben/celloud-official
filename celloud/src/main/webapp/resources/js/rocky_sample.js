@@ -15,8 +15,10 @@ var rockySamples = (function(samples) {
 	$(document).on("click", "#close-error", function() {
 		self.error.hide();
 	});
+	$(document).off("keyup", "#sampleInput");
 	$(document).on("keyup", "#sampleInput", function(event) {
 		if (event.keyCode == 13) {
+			console.log('sample input enter...');
 			self.add();
 		}
 	});
@@ -25,15 +27,8 @@ var rockySamples = (function(samples) {
 		sampleName = $.trim(sampleName);
 		if (sampleName == "") {
 			return
-
-			
-
-						
-
-			
-
 		}
-		$.get("sample/bsi/addSample", {
+		$.get("sample/rocky/addSample", {
 			"sampleName" : sampleName
 		}, function(result) {
 			if (result == 1) {
