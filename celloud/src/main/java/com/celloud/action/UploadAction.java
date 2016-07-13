@@ -33,6 +33,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.celloud.constants.AppConstants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
@@ -76,7 +77,6 @@ public class UploadAction {
 	@Resource
 	private TaskService taskService;
 	private String realPath = PropertiesUtil.bigFilePath;
-	private static final Integer APP_ROCKY_ID = 118;
 	/**
 	 * 用于判断数据格式
 	 */
@@ -96,7 +96,7 @@ public class UploadAction {
 			if (dataIds.size() > 0) {
 				model.put("run", "true");
 				model.put("dataIds", StringUtils.join(dataIds.toArray(), ","));
-				model.put("appIds", APP_ROCKY_ID.toString());
+				model.put("appIds", AppConstants.APP_ID_ROCKY.toString());
 			}
 		}
 		return model;
@@ -140,9 +140,9 @@ public class UploadAction {
 			Task task = new Task();
 			task.setUserId(data.getUserId());
 			task.setDataKey(data.getDataKey());
-			task.setPeriod(TaskPeriod.UPLOADING);
+			task.setPeriod(TaskPeriod.UPLOADING);// TODO 小心处理这个状态，将关系到数据的统计
 			task.setParams(pubName);
-			task.setAppId(APP_ROCKY_ID);
+			task.setAppId(AppConstants.APP_ID_ROCKY);
 			taskService.addOrUpdateUploadTaskByParam(task, isR1);
 			if (hasR1 && hasR2) {
 				return new ArrayList<>(dataIds.values());

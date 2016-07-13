@@ -49,3 +49,4 @@
 		</form>
 	</div>
 </div>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/rocky_sample.js"></script>
