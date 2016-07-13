@@ -84,4 +84,91 @@ public interface DataService {
     
     public List<Map<String,Object>> getUserData(String userIds,String start,String end);
     
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月11日下午4:56:01
+     * @description 获取一周的登录用户top10
+     * @param companyId
+     * @return
+     *
+     */
+    public List<Map<String, Object>> getWeekUserLogin(Integer companyId);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月11日下午6:15:16
+     * @description 获取每周App运行次数top10
+     * @param companyId
+     * @return
+     *
+     */
+    public List<Map<String, Object>> getWeekAppRun(Integer companyId);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月12日上午10:00:33
+     * @description 获取每周用户及数据大小top10
+     * @param companyId
+     * @return
+     *
+     */
+    public List<Map<String, Object>> getWeekDataSize(Integer companyId);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月13日上午9:46:24
+     * @description 获取历史每周登录次数
+     * @param companyId
+     * @return
+     *
+     */
+    public List<Map<String, Object>> getHistoryWeekUserLogin(Integer companyId);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月13日上午9:59:38
+     * @description 获取历史每周活跃用户
+     * @param companyId
+     * @return
+     *
+     */
+    public List<Map<String, Object>> getHistoryWeekActiveUser(Integer companyId);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月13日上午10:43:31
+     * @description 获取历史每周App运行次数
+     * @param companyId
+     * @return
+     *
+     */
+    public List<Map<String, Object>> getHistoryWeekAppRun(Integer companyId);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月13日上午11:16:36
+     * @description 获取历史周App活跃数
+     * @param companyId
+     * @return
+     *
+     */
+    public List<Map<String, Object>> getHistoryWeekAppActive(Integer companyId);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月13日下午1:02:32
+     * @description 获取历史周数据大小
+     * @param companyId
+     * @return
+     *
+     */
+    public List<Map<String, Object>> getHistoryWeekDataSize(Integer companyId);
 }

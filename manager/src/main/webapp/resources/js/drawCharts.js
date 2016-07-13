@@ -142,6 +142,16 @@ var drawCharts=(function(drawCharts){
 	}
 	
 	self.barChart=function(id,data,title,x,y,theme,showNum) {
+		if(id=="topDataSize" || id=="historyDataSize"){
+			for(var i=0;i<data.length;i++){
+				data[i].size_sum = parseInt(data[i].size_sum / 1024);
+			}
+		}
+		if(id=="historyUserLogin"||id=="historyUserActive"||id=="historyAppRun"||id=="historyAppActive"||id=="historyDataSize"){
+			for(var i=0;i<data.length;i++){
+				data[i].start_date = data[i].start_date.substr(0,10);
+			}
+		}
 		var xAxis = new Array(data.length);
 		var yAxis = new Array(data.length);
 		var t;

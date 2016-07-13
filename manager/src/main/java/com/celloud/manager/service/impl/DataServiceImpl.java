@@ -96,4 +96,44 @@ public class DataServiceImpl implements DataService{
         return null;
     }
 
+    @Override
+    public List<Map<String, Object>> getWeekUserLogin(Integer companyId) {
+        return dataFileMapper.getWeekUserLogin(companyId, PropertiesUtil.testAccountIds);
+    }
+
+    @Override
+    public List<Map<String, Object>> getWeekAppRun(Integer companyId) {
+        return dataFileMapper.getWeekAppRun(companyId, PropertiesUtil.testAccountIds);
+    }
+
+    @Override
+    public List<Map<String, Object>> getWeekDataSize(Integer companyId) {
+        return dataFileMapper.getWeekDataSize(companyId, PropertiesUtil.testAccountIds);
+    }
+
+    @Override
+    public List<Map<String, Object>> getHistoryWeekUserLogin(Integer companyId) {
+        return dataFileMapper.getHistoryWeekUserLogin(companyId, PropertiesUtil.testAccountIds);
+    }
+
+    @Override
+    public List<Map<String, Object>> getHistoryWeekActiveUser(Integer companyId) {
+        return dataFileMapper.getHistoryWeekActiveUser(companyId, PropertiesUtil.testAccountIds);
+    }
+
+    @Override
+    public List<Map<String, Object>> getHistoryWeekAppRun(Integer companyId) {
+        return dataFileMapper.getHistoryWeekAppRun(companyId, PropertiesUtil.testAccountIds);
+    }
+
+    @Override
+    public List<Map<String, Object>> getHistoryWeekAppActive(Integer companyId) {
+        return dataFileMapper.getHistoryWeekAppActive(companyId, PropertiesUtil.testAccountIds);
+    }
+
+    @Override
+    public List<Map<String, Object>> getHistoryWeekDataSize(Integer companyId) {
+        return dataFileMapper.getHistoryWeekDataSize(companyId, PropertiesUtil.testAccountIds);
+    }
+
 }
