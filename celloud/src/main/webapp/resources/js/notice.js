@@ -156,7 +156,7 @@ var notices = (function(object) {
 		}
 	});
 	$('.create-switch').bootstrapSwitch({
-		onColor : 'primary',
+		onColor : 'success',
 		offColor : 'danger',
 		onText : '开',
 		offText : '关',

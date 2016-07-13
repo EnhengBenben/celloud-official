@@ -52,36 +52,33 @@
 								</thead>
 								<tbody>
 									<c:forEach items="${messageCategoryList }" var="message">
-									    <c:if test="${flag == 0 }">
 											<tr>
-												<td>收到[${message.name }]通知</td>
+												<td>收到【${message.name }】通知</td>
 												<td>
-												    <div><input name="email" class="create-switch" type="checkbox" ${message.email=='0'?'':'checked' } /></div>
+													<c:choose>
+														<c:when test="${message.email=='2'}">
+														    <div><input name="email" class="create-switch" type="checkbox" disabled="disabled" /></div>
+														</c:when>
+														<c:otherwise>
+														    <div><input name="email" class="create-switch" type="checkbox" ${message.email=='0'?'':'checked' } /></div>
+														</c:otherwise>
+													</c:choose>
 											    </td>
 												<td>
-												    <div><input name="window" class="create-switch" type="checkbox" ${message.window=='0'?'':'checked' } /></div>
+													<c:choose>
+														<c:when test="${message.window=='2'}">
+														    <div><input name="window" class="create-switch" type="checkbox" disabled="disabled"/></div>
+														</c:when>
+														<c:otherwise>
+														    <div><input name="window" class="create-switch" type="checkbox" ${message.window=='0'?'':'checked' } /></div>
+														</c:otherwise>
+													</c:choose>
 												</td>
 	                                            <td>
 	                                                <div><input name="wechat" class="create-switch" type="checkbox" ${message.wechat=='0'?'':'checked' } /></div>
 	                                            </td>
 	                                            <td><input type="hidden" name="messageCategoryId" value="${message.id }" /></td>											
 											</tr>
-									    </c:if>
-									    <c:if test="${flag == 1 }">
-                                            <tr>
-                                                <td>收到[${message.name }]通知</td>
-                                                <td>
-                                                    <div><input name="email" class="create-switch" type="checkbox" ${message.email=='false'?'':'checked' } /></div>
-                                                </td>
-                                                <td>
-                                                    <div><input name="window" class="create-switch" type="checkbox" ${message.window=='false'?'':'checked' } /></div>
-                                                </td>
-                                                <td>
-                                                    <div><input name="wechat" class="create-switch" type="checkbox" ${message.wechat=='false'?'':'checked' } /></div>
-                                                </td>
-                                                <td><input type="hidden" name="messageCategoryId" value="${message.id }" /></td>                                            
-                                            </tr>
-                                        </c:if>
 									</c:forEach>
 								</tbody>
 							</table>
@@ -92,4 +89,4 @@
 		</div>
 	</div>
 </section>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/notice.js?version=3.0"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/notice.js?version=3.2.1"></script>
