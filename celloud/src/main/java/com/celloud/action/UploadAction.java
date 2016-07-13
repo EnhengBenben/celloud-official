@@ -140,7 +140,7 @@ public class UploadAction {
 			Task task = new Task();
 			task.setUserId(data.getUserId());
 			task.setDataKey(data.getDataKey());
-			task.setPeriod(TaskPeriod.UPLOADING);
+			task.setPeriod(TaskPeriod.UPLOADING);// TODO 小心处理这个状态，将关系到数据的统计
 			task.setParams(pubName);
 			task.setAppId(APP_ROCKY_ID);
 			taskService.addOrUpdateUploadTaskByParam(task, isR1);

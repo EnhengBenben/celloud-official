@@ -113,7 +113,7 @@
                         </a>
                         <ul>
                             <li id="queuing-time-menu">
-                                <a href="javascript:void(0);">
+                                <a href="javascript:expense.recharge.main();">
                                     <span class="title">账户充值</span>
                                 </a>
                             </li>

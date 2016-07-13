@@ -18,6 +18,10 @@
 		<result column="login_uuid" property="loginUuid" jdbcType="VARCHAR" />
 		<result column="company_id" property="companyId" jdbcType="INTEGER" />
 		<result column="sign" property="sign" jdbcType="VARCHAR" />
+		<result column="balances" property="balances" jdbcType="DECIMAL" />
+	</resultMap>
+	<resultMap id="otherResultMap" type="com.celloud.backstage.model.User" extends="BaseResultMap" >
+	    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		user_id, username, email, cellphone, create_date,
@@ -25,7 +29,7 @@
 		role,
 		remark, navigation,
 		truename, state, dept_id, login_uuid,
-		company_id, sign
+		company_id, sign, balances
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Integer">
@@ -210,6 +214,9 @@
 			<if test="sign != null">
 				sign = #{sign,jdbcType=VARCHAR},
 			</if>
+			<if test="balances != null">
+                balances = #{balances,jdbcType=DECIMAL},
+            </if>
 		</set>
 		where user_id = #{userId,jdbcType=INTEGER}
 	</update>
@@ -376,5 +383,21 @@
         from tb_user 
         where state = #{state } 
         order by username
+    </select>
+    <select id="getUserPageList" resultMap="otherResultMap">
+        select
+        u.user_id,
+        u.username,
+        u.email, u.cellphone, u.create_date,
+        u.icon, u.role, u.remark,
+        u.truename, u.state,
+        u.dept_id, u.company_id,
+        u.sign,u.balances,c.company_name
+        from tb_user u, tb_company c
+        where u.company_id=c.company_id and u.state=#{state } and u.role != 2
+        <if test="condition!=null and condition!=''">
+            and (u.username like '%${condition }%' or u.email like '%${condition }%' or c.company_name like '%${condition }%')
+        </if>
+        order by create_date desc
     </select>
 </mapper>

@@ -3,18 +3,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="panel panel-default">
-<div class="panel-heading">
+  <div class="panel-heading">
     <h3 class="panel-title">账户充值</h3>
     <div class="panel-options">
         <form class="form-inline">
          <div class="form-group">
-          <input type="text" class="form-control" data-rule-required="true" id="keyword" name="keyword" value="${keyword }" placeholder="请输入关键字">
+          <input type="text" class="form-control" data-rule-required="true" id="condition" name="condition" value="${condition }" placeholder="请输入关键字">
          </div>
-         <button class="btn btn-warning" type="button" onclick="javascript:expense.invoice.toInvoiceMain('1');" style="margin-bottom:0;">检索</button>
+         <button id="search-btn" class="btn btn-warning" type="button" style="margin-bottom:0;">检索</button>
        </form>
      </div>
-</div>
-<div class="panel-body">
+  </div>
+  <div class="panel-body">
     <table class="table table-bordered table-striped" cellspacing="0" width="100%">
         <thead>
             <tr>
@@ -26,83 +26,98 @@
             </tr>
         </thead>
         <tbody>
-            <c:forEach items="${invoicePageList.datas }" var="invoice">
+            <c:forEach items="${pageList.datas }" var="user">
                 <tr>
-                    <td>${invoice.username }</td>
-	                <td>${invoice.money }</td>
-	                <td> </td>
-	                <td>${invoice.invoice_header }</td>
-	                <td>${invoice.address }</td>
-	                <td><a href="javascript:expense.invoice.toInvoiceDdetail('${invoice.id }');">详情</a></td>
+                    <td>${user.username }</td>
+	                <td>${user.email }</td>
+	                <td>${user.companyName } </td>
+	                <td>${user.balances }</td>
+	                <td><a href="javascript:void(0)" data-user="${user.userId }" data-click="to-recharge">充值</a></td>
                 </tr>
             </c:forEach>
         </tbody>
     </table>
-    <c:if test="${invoicePageList.datas.size()>0}">
-        <div class="row-fluid">
-            <div class="col-md-6 keepRight">
-                <nav id="pageView">
-                    <ul class="pagination">
-                        <c:choose>
-                            <c:when test="${invoicePageList.page.hasPrev}">
-                                <li><a href="javascript:expense.invoice.toInvoiceMain('${invoicePageList.page.prevPage }')">&lt;</a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li><a href="javascript:void(0)">&lt;</a></li>
-                            </c:otherwise>
-                        </c:choose>
-                        <c:choose>
-                            <c:when test="${invoicePageList.page.currentPage==1}">
-                                <li class="active"><a href="javascript:void(0)">1</a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li><a href="javascript:expense.invoice.toInvoiceMain('1')">1</a></li>
-                            </c:otherwise>
-                        </c:choose>
-                        <c:if test="${invoicePageList.page.currentPage>3}">
-                            <li><a href="javascript:void(0)">..</a></li>
-                        </c:if>
-                        <c:if test="${invoicePageList.page.currentPage>2}">
-                            <li><a href="javascript:expense.invoice.toInvoiceMain('${invoicePageList.page.prevPage }')">${invoicePageList.page.prevPage }</a></li>
-                        </c:if>
-                        <c:if test="${invoicePageList.page.currentPage>1&&invoicePageList.page.currentPage<invoicePageList.page.totalPage}">
-                            <li class="active"><a href="javascript:void(0)">${invoicePageList.page.currentPage }</a></li>
-                        </c:if>
-                        <c:if test="${invoicePageList.page.totalPage-invoicePageList.page.currentPage>1}">
-                            <li><a href="javascript:expense.invoice.toInvoiceMain('${invoicePageList.page.nextPage }')">${invoicePageList.page.nextPage }</a></li>
-                        </c:if>
-                        <c:if test="${invoicePageList.page.totalPage-invoicePageList.page.currentPage>2}">
-                            <li><a href="javascript:void(0)">..</a></li>
-                        </c:if>
-                        <c:choose>
-                            <c:when test="${invoicePageList.page.currentPage==invoicePageList.page.totalPage&&invoicePageList.page.totalPage>1}">
-                                <li class="active"><a href="javascript:void(0)">${invoicePageList.page.totalPage }</a></li>
-                            </c:when>
-                            <c:when test="${invoicePageList.page.totalPage>1}">
-                                <li><a href="javascript:expense.invoice.toInvoiceMain('${invoicePageList.page.totalPage }')">${invoicePageList.page.totalPage }</a></li>
-                            </c:when>
-                        </c:choose>
-                        <c:choose>
-                            <c:when test="${invoicePageList.page.hasNext}">
-                                <li><a href="javascript:expense.invoice.toInvoiceMain('${invoicePageList.page.nextPage }')">&gt;</a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li><a href="javascript:void(0)">&gt;</a></li>
-                            </c:otherwise>
-                        </c:choose>
-                        <li>
-                            <a>共${invoicePageList.page.totalPage }页&nbsp;|&nbsp;合计${invoicePageList.page.rowCount }条</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </c:if>
+    <%@ include file="../pagination.jsp" %>
+  </div>
 </div>
-</div>
-<div class="modal fade bs-example-modal-lg" id="invoice-detailModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-	  <div class="modal-dialog modal-lg">
-	    <div class="modal-content">
-	    </div>
-	  </div>
+<div class="modal fade bs-example-modal-lg" id="recharge-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+		<div class="panel panel-default">
+		    <div class="panel-heading">
+		        <h3 class="panel-title">账户充值</h3>
+		        <div class="alert alert-warning hide" id="recharge-alert">
+                    <strong>Warning!</strong> <span id="recharge-info"></span>
+                </div>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		    </div>
+		    <div class="panel-body">
+		        <form class="form-horizontal" id="rechargeForm" >
+		            <input type="hidden" name="userId" id="userid-hide">
+		            <div class="form-group">
+		                <label class="col-sm-2 control-label">充值金额<font color="red">*</font></label>
+		                <div class="col-sm-10">
+		                   <input type="number" class="form-control" name="amount" required="required" >
+		                </div>
+		            </div>
+		            <div class="form-group">
+                        <label class="col-sm-2 control-label">户名<font color="red">*</font></label>
+                        <div class="col-sm-10">
+                           <input type="text" class="form-control" name="accountName" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">账户<font color="red">*</font></label>
+                        <div class="col-sm-10">
+                           <input type="text" class="form-control" name="accountNo" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">开户银行<font color="red">*</font></label>
+                        <div class="col-sm-10">
+                           <input type="text" class="form-control" name="bank" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">交易流水</label>
+                        <div class="col-sm-10">
+                           <input type="text" class="form-control" name="tradeNo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">电子回单</label>
+                        <div class="col-sm-10">
+                           <input type="text" class="form-control" name="backNo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">摘要</label>
+                        <div class="col-sm-10">
+                           <input type="text" class="form-control" name="summary">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">验证码<font color="red">*</font></label>
+                        <div class="col-sm-10">
+                           <div class="yzm">
+	                            <input type="text" class="yzm input-bottom" placeholder="验证码" id="captcha"
+	                                name="kaptchaCode" value="${requestScope.kapcode }" required="required"/>
+	                            <img title="看不清，换一张"
+	                                src="<%=request.getContextPath()%>/kaptcha.jpg" id="kaptchaImage"
+	                                alt="验证码" class="validateCode" style="cursor: pointer;" />
+	                        </div>
+                        </div>
+                    </div>
+		            <div class="form-group-separator"></div>
+		            <div class="form-group">
+		                <div class="col-sm-10 text-center">
+		                    <a id="commit-recharge" class="btn btn-success">充值</a>
+		                    <button type="reset" class="btn btn-white">重置</button>
+		                </div>
+		            </div>
+		        </form>
+		    </div>
+		</div>
+    </div>
+  </div>
 </div>
