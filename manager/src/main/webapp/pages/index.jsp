@@ -73,6 +73,11 @@
                                     <span class="title">医院数据统计</span>
                                 </a>
                             </li>
+                            <li id="data-week-menu">
+                                <a href="javascript:dataFile.toWeekDataCount();">
+                                    <span class="title">周统计</span>
+                                </a>
+                            </li>
                             <c:if test="${loginUserInSession.role=='2'}">
                                 <li id="data-bigCustomer-menu">
                                     <a href="javascript:dataFile.toBigCustomerDataCount();">
