@@ -164,9 +164,12 @@ var notices = (function(object) {
 			if($("#flag").val()==0){
 				var datas = new Array();
 				$("#userSettingForm tbody").find("tr").each(function(){
-					var email = $(this).find("input:eq(0)").prop("checked")==false?0:1;
-					var window = $(this).find("input:eq(1)").prop("checked")==false?0:1;
-					var wechat = $(this).find("input:eq(2)").prop("checked")==false?0:1;
+					var obj0 = $(this).find("input:eq(0)");
+					var email = obj0.prop("disabled")==true?2:(obj0.prop("checked")==false?0:1);
+					var obj1 = $(this).find("input:eq(1)");
+					var window = obj1.prop("disabled")==true?2:(obj1.prop("checked")==false?0:1);
+					var obj2 = $(this).find("input:eq(2)");
+					var wechat = obj2.prop("disabled")==true?2:(obj2.prop("checked")==false?0:1);
 					var messageCategoryId = $(this).find("input:eq(3)").val();
 					datas.push(email + "," + window + "," + wechat + "," + messageCategoryId);
 				})

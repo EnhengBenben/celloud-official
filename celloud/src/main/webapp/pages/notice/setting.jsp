@@ -89,4 +89,4 @@
 		</div>
 	</div>
 </section>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/notice.js?version=3.2.1"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/notice.js?version=3.2.1.1"></script>
