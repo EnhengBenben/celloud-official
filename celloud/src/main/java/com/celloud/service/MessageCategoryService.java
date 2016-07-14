@@ -47,7 +47,7 @@ public interface MessageCategoryService {
      * @description 初始化用户消息设置
      *
      */
-    int initUserMessageCategory(Integer userId, String datas);
+    int initUserMessageCategory(Integer userId, String data);
 
     /**
      * @author MQ
@@ -55,7 +55,7 @@ public interface MessageCategoryService {
      * @description 更改用户消息开关
      *
      */
-    int editUserMessageSwitch(String targetName, Integer targetVal, Integer relatId);
+    int editUserMessageSwitch(Integer userId, String targetName, Integer targetVal, Integer relatId);
 
     /**
      * @author MQ

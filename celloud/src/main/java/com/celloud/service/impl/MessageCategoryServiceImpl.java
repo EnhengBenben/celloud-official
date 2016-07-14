@@ -26,7 +26,21 @@ public class MessageCategoryServiceImpl implements MessageCategoryService {
 
     @Override
     public List<Map<String, String>> getMessageCategoryByUserId(Integer userId) {
-        return messageCategoryMapper.findUserMessageCategoryByUserId(userId);
+        // 1. 从关系表中查找设置过的开关
+        List<Map<String, String>> userMessageCategory = messageCategoryMapper.findUserMessageCategoryByUserId(userId);
+        // 2. 从分类表中查找没有更改过的开关
+        StringBuilder sb = new StringBuilder();
+        for(Map<String,String> map : userMessageCategory){
+            sb.append(String.valueOf(map.get("mcId")) + ",");
+        }
+        String ids = "0";
+        if (sb.length() > 0) {
+            ids = sb.substring(0, sb.length() - 1);
+        }
+        List<Map<String, String>> userMessageCategoryNotInIds = messageCategoryMapper
+                .findUserMessageCategoryNotInIds(ids);
+        userMessageCategory.addAll(userMessageCategoryNotInIds);
+        return userMessageCategory;
     }
 
     @Override
@@ -35,14 +49,14 @@ public class MessageCategoryServiceImpl implements MessageCategoryService {
     }
 
     @Override
-    public int initUserMessageCategory(Integer userId, String datas) {
-        return messageCategoryMapper.insertUserMessageCategoryRelat(userId, datas.split(";"));
+    public int initUserMessageCategory(Integer userId, String data) {
+        return messageCategoryMapper.insertUserMessageCategoryRelat(userId, data);
     }
 
     @Override
-    public int editUserMessageSwitch(String targetName, Integer targetVal,
+    public int editUserMessageSwitch(Integer userId, String targetName, Integer targetVal,
             Integer relatId) {
-        return messageCategoryMapper.updateSwitch(targetName, targetVal, relatId);
+        return messageCategoryMapper.updateSwitch(userId, targetName, targetVal, relatId);
     }
 
     @Override

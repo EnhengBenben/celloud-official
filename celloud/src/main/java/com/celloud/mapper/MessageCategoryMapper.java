@@ -46,7 +46,7 @@ public interface MessageCategoryMapper {
      * @return
      *
      */
-    int insertUserMessageCategoryRelat(@Param("userId") Integer userId, @Param("datas") String[] datas);
+    int insertUserMessageCategoryRelat(@Param("userId") Integer userId, @Param("data") String data);
 
 
     /**
@@ -56,7 +56,8 @@ public interface MessageCategoryMapper {
      * @return
      *
      */
-    int updateSwitch(@Param("targetSwitch") String targetSwitch, @Param("targetVal") Integer targetVal,
+    int updateSwitch(@Param("userId") Integer userId, @Param("targetSwitch") String targetSwitch,
+            @Param("targetVal") Integer targetVal,
             @Param("relatId") Integer relatId);
 
     /**
@@ -78,5 +79,15 @@ public interface MessageCategoryMapper {
      */
     Integer getDefaultSwitch(@Param("targetSwitch") String targetSwitch,
             @Param("messageCategoryId") Integer messageCategoryId);
+
+    /**
+     * @author MQ
+     * @date 2016年7月14日上午11:44:55
+     * @description 获取不在ids内的开关
+     * @param ids
+     * @return
+     *
+     */
+    List<Map<String, String>> findUserMessageCategoryNotInIds(@Param("ids") String ids);
 
 }
