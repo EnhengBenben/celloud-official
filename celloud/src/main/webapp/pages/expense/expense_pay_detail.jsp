@@ -9,7 +9,7 @@
             <th class="pay-date">消费时间</th>
             <th class="pay-detail">消费明细</th>
 <!--             <th class="data-tags">应用单价</th> -->
-            <th class="pay-money">消费C币</th>
+            <th class="pay-money">消费</th>
             <th class="pay-remarks">备注</th>
         </tr>
     </thead>
