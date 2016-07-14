@@ -164,6 +164,91 @@ var company=(function(company){
 		        }
 		    });
 	}
+	self.toUploadPdf = function(){
+	  $.get("company/toUploadPdf",{},function(responseText){
+	    $("#main-content").html(responseText);
+	    $("#company-id-select").select2({
+        placeholder: 'Choose your favorite US Countries',
+        allowClear: true
+      }).on('select2-open', function(){
+        $(this).data('select2').results.addClass('overflow-hidden').perfectScrollbar();
+      });
+
+	    var uploader = new plupload.Uploader({
+	      runtimes : 'html5,flash,silverlight,html4',
+	      browse_button : 'plupload-content',
+	      url : "../company/uploadPdf",
+	      chunk_size : '1mb',
+	      drop_element : 'plupload-content',
+	      filters : {
+	        max_file_size : '3gb',
+	        prevent_duplicates : true, // 不允许选取重复文件
+	        mime_types : [
+	          {title : "pdf", extensions : "pdf"}
+	        ]
+	      },
+	      max_retries : 5,
+	      multiple_queues : true,
+	      flash_swf_url : '//cdn.bootcss.com/plupload/2.1.8/Moxie.swf'
+	    });
+	    uploader.init();
+	    $(document).on("click", "[data-click='del-upload-file']", function() {
+	      var id = $(this).data("id");
+	      $("#"+id).remove();
+	      var file = uploader.getFile(id);
+	      uploader.removeFile(file);
+	    });
+	    uploader.bind("StateChanged", function() {
+	      if (uploader.state === plupload.STARTED) {
+	        window.parent.isUploading = true;
+	        refresh = setInterval("self.refreshSession()",600000);
+	      }else if(uploader.state === plupload.STOPPED){
+	        window.parent.isUploading = false;
+	        clearInterval(refresh);
+	      }
+	    });
+	    uploader.bind("UploadProgress", function(uploader, file) {
+	      $("#" + file.id +" .percent").html(file.percent+"%");
+	    });
+	    uploader.bind("FilesAdded", function(uploader, files) {
+	      $("#alert-tips").addClass("hide");
+	      $("#upload-list-table").removeClass("hide");
+	      $.each(files, function(index, item) {
+	        var $fileDom = $('<tr id="' + item.id + '"></tr>');
+	        $fileDom.append($('<td class="filename">' + item.name + '</td>'));
+	        $fileDom.append($('<td class="percent">0</td>'));
+	        $fileDom.append($('<td><a data-click="del-upload-file" data-id="'+item.id+'"  href="javascript:void(0)"><i class="fa fa-times-circle" aria-hidden="true"></i></a></td>'));
+	        $("#upload-list-tbody").append($fileDom);
+	      });
+	    });
+	    uploader.bind("BeforeUpload", function(uploader, file) {
+	      $("#" + file.id +" .percent").html("正在上传");
+	      var args = Array.from($("#company-id-select").val());
+	      var companyIds = {};
+	      for(i=0; i<args.length; i++){
+	        companyIds[i] = args[i];
+	      }
+	      uploader.setOption("multipart_params",{"ids":companyIds});
+	    });
+	    uploader.bind("FileUploaded", function(uploader, file, response) {
+	      var res = JSON.parse(response.response);
+	      alert(res);
+	      if(res == "1"){
+	        $("#alert-info").html("<strong>OK!</strong>上传完成");
+	      }else{
+	        $("#alert-info").html("<strong>warning!</strong>上传失败");
+	      }
+	      $("#alert-tips").removeClass("hide");
+	    });
+	    uploader.bind("UploadComplete",function(uploader,files,response){
+	      uploader.splice(0,uploader.files.length);
+	    });
+	    $("#upload-pdf-a").on("click",function(){
+	      uploader.start();
+	    });
+	  });
+	}
+	
 	return self;
 })(company);
 

@@ -101,7 +101,6 @@
         
     </div>
 </div>
-<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/plupload-2.1.2/plupload.full.min.js"></script>
 <script type="text/javascript">
 $(function(){
 	$("#companyForm").validate({
