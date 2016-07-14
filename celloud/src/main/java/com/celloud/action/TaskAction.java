@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.text.StrSubstitutor;
+import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -65,6 +66,9 @@ import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.RunOverUtil;
 import com.celloud.utils.SSHUtil;
 import com.celloud.utils.XmlUtil;
+import com.celloud.wechat.ParamFormat;
+import com.celloud.wechat.WechatParams;
+import com.celloud.wechat.WechatType;
 import com.celloud.wechat.WechatUtils;
 
 /**
@@ -279,6 +283,21 @@ public class TaskAction {
 						.set(EmailParams.RUN_OVER.app.name(), appName).set(EmailParams.RUN_OVER.start.name(), startDate)
 						.set(EmailParams.RUN_OVER.end.name(), endDate));
 		emailUtils.simpleSend(aliEmail, email);
+		//TODO 微信发送消息需要修改
+		Session session = ConstantsData.getShioSession();
+		Object openId = session.getAttribute(Constants.SESSION_WECHAT_OPENID);
+		if (openId != null && StringUtils.isNotEmpty(openId.toString())) {
+			wechatUtils
+					.pushMessage(
+							ParamFormat.paramAll().template(WechatType.RUN_OVER).openId(openId.toString()).url(null)
+									.data(ParamFormat.param()
+											.set(WechatParams.RUN_OVER.first.name(), "您好，您的数据" + tipsName + " 运行结束",
+													"#222222")
+											.set(WechatParams.RUN_OVER.keyword1.name(), appName, null)
+											.set(WechatParams.RUN_OVER.keyword2.name(), startDate, null)
+											.set(WechatParams.RUN_OVER.keyword3.name(), endDate, "#222222"))
+									.get());
+		}
         return "run over";
     }
 
@@ -402,6 +421,25 @@ public class TaskAction {
                 .send(NoticeConstants.createMessage("task", "运行完成",
                         "项目【" + projectName + "】运行【" + appName + "】完成。"))
                 .to(username);
+		//TODO 微信发送消息需要修改
+		Session session = ConstantsData.getShioSession();
+		Object openId = session.getAttribute(Constants.SESSION_WECHAT_OPENID);
+		if (openId != null && StringUtils.isNotEmpty(openId.toString())) {
+			Report report = reportService.getReportByProjectId(Integer.valueOf(projectId));
+			String startDate = DateUtil.getDateToString(report.getCreateDate(), "yyyy-MM-dd hh:mm:ss");
+			String endDate = report.getEndDate() == null ? null
+					: DateUtil.getDateToString(report.getEndDate(), "yyyy-MM-dd hh:mm:ss");
+			wechatUtils
+					.pushMessage(
+							ParamFormat.paramAll().template(WechatType.RUN_OVER).openId(openId.toString()).url(null)
+									.data(ParamFormat.param()
+									.set(WechatParams.RUN_OVER.first.name(), "您好，您的项目" + projectName + " 运行结束",
+													"#222222")
+											.set(WechatParams.RUN_OVER.keyword1.name(), appName, null)
+											.set(WechatParams.RUN_OVER.keyword2.name(), startDate, null)
+											.set(WechatParams.RUN_OVER.keyword3.name(), endDate, "#222222"))
+									.get());
+		}
         return "run over";
     }
 
