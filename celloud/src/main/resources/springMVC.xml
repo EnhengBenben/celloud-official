@@ -263,8 +263,7 @@
 				/logout/** = anon
 				/ = anon
 				/pages/** = user
-				/** =
-				user
+				/** = user
 			</value>
 		</property>
 	</bean>
