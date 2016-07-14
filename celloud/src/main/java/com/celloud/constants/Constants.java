@@ -15,6 +15,10 @@ public class Constants {
      * session中记录的账号密码错误次数
      */
     public static final String SESSION_FAILED_LOGIN_TIME = "failedLoginTimeInSession";
+	/**
+	 * 消息中心设置
+	 */
+	public static final String MESSAGE_CATEGORY = "message_category";
     /**
      * 已登录用户的角色
      */
@@ -54,8 +58,12 @@ public class Constants {
      */
     public static final int FIND_PASSWORD_EXPIRE_TIME = 1;
     /**
-     * 用户找回密码功能，根据链接重置密码时，需要校验session中的userid是否与要修改的用户名是否对应
-     */
+	 * 微信二维码过期时间（min）
+	 */
+	public static final int WECHAT_EXPIRE_TIME = 5;
+	/**
+	 * 用户找回密码功能，根据链接重置密码时，需要校验session中的userid是否与要修改的用户名是否对应
+	 */
     public static final String RESET_PASSWORD_USER_ID = "resetPasswordUserId";
     /**
      * 分页中，默认每页显示条数

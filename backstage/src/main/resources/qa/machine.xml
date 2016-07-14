@@ -2,7 +2,7 @@
 <machines>
     <machine>
         <NAME>158</NAME>
-        <HOST>192.168.100.200</HOST>
+        <HOST>192.168.100.100</HOST>
         <PORT>22</PORT>
         <USERNAME>celloud</USERNAME>
         <PWD>CelLoud1010</PWD>

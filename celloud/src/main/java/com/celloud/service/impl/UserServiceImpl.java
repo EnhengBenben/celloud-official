@@ -45,6 +45,14 @@ public class UserServiceImpl implements UserService {
         userMapper.insertFindPwdInfo(userId, calendar.getTime(), randomCode);
     }
 
+	@Override
+	public void insertWechatCode(Integer userId, String randomCode) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MINUTE, Constants.WECHAT_EXPIRE_TIME);
+		cleanFindPwd(userId, new Date());
+		userMapper.insertFindPwdInfo(userId, calendar.getTime(), randomCode);
+	}
+
     @Override
     public void cleanFindPwd(int userId, Date expireDate) {
         userMapper.cleanFindPwdByUserId(userId, expireDate);

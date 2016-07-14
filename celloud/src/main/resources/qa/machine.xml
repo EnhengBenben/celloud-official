@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <machines>
-	<machine>
-		<NAME>158</NAME>
-		<HOST>140.206.208.50</HOST>
-		<PORT>22</PORT>
-		<USERNAME>celloud</USERNAME>
-		<PWD>CelLoud@nova</PWD>
-	</machine>
-	<machine>
-		<NAME>spark</NAME>
-		<HOST>10.1.0.9</HOST>
-		<PORT>22</PORT>
-		<USERNAME>root</USERNAME>
-		<PWD>root@CelLoud_Hadoop</PWD>
-	</machine>
+    <machine>
+        <NAME>158</NAME>
+        <HOST>192.168.100.100</HOST>
+        <PORT>22</PORT>
+        <USERNAME>celloud</USERNAME>
+        <PWD>CelLoud1010</PWD>
+    </machine>
+    <machine>
+        <NAME>spark</NAME>
+        <HOST>192.168.100.7</HOST>
+        <PORT>22</PORT>
+        <USERNAME>root</USERNAME>
+        <PWD>CelLoud1010</PWD>
+    </machine>
 </machines>

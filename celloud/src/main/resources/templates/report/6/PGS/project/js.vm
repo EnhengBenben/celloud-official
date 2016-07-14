@@ -1,26 +1,6 @@
 <script type="text/javascript">
 $(function(){
     
-    function myBrowser(){
-        var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
-        var isOpera = userAgent.indexOf("Opera") > -1;
-        if (isOpera) {
-            return "Opera"
-        }; //判断是否Opera浏览器
-        if (userAgent.indexOf("Firefox") > -1) {
-            return "FF";
-        } //判断是否Firefox浏览器
-        if (userAgent.indexOf("Chrome") > -1){
-      return "Chrome";
-     }
-        if (userAgent.indexOf("Safari") > -1) {
-            return "Safari";
-        } //判断是否Safari浏览器
-        if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera) {
-            return "IE";
-        }; //判断是否IE浏览器
-    }
-
     function lookCss(){
         $(".saId").css("margin-left","0px");
         $(".exId").css("margin-left","14px");
@@ -43,46 +23,74 @@ $(function(){
     };
     $("#save").hide();
 	$("#print").on("click",function(){
-	    var mb = myBrowser();
-	    if("FF"!=mb){
-	       printCss();
-	    }else{
-	       $(".saId").css("margin-top","7px");
-           $(".exId").css("margin-top","6px");
-           $(".exRemark").css("margin-top","6px");
-	    }
 		var inputVal;
-		$("table").find("input").each(function(){
+		$("table").find("input[class!=notbottom]").each(function(){
             $(this).css("border-bottom","0");
 		});
-		$(".exResult").each(function(){
+		$(".saId").each(function(){
+            inputVal = $(this).children().val();
+            if(inputVal){
+                console.log(inputVal);
+                inputVal = inputVal.replace(/\r\n/g,"<br>");
+                console.log(inputVal);
+            }
+            $(this).html("<br/>" + inputVal);               
+        });
+        $(".exId").each(function(){
+            inputVal = $(this).children().val();
+            if(inputVal){
+                inputVal = inputVal.replace(/\r\n/g,"<br>");
+            }
+            $(this).html("<br/>" + inputVal);               
+        });
+        $(".exResult").each(function(){
+            inputVal = $(this).children().val();
+            if(inputVal){
+                inputVal = inputVal.replace(/\r\n/g,"<br>");
+            }
+            $(this).html("<br/>" + inputVal);               
+        });
+		$(".exRemark").each(function(){
     		inputVal = $(this).children().val();
     		if(inputVal){
-    		    inputVal = inputVal.replace(/\n/g,"<br>");
-                $(this).html(inputVal);
+    		    inputVal = inputVal.replace(/\r\n/g,"<br>");
     		}
+            $(this).html("<br/>" + inputVal);    		    
 		});
 		$(".buttons").hide();
 		window.print();
 		$(".buttons").show();
-		
-		$(".exResult").each(function(){
+		$(".saId").each(function(){
+            inputVal = $(this).html();
+            if(inputVal){
+                inputVal = inputVal.replace(/<br>/g,"\n");
+            }
+            $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
+        });
+        $(".exId").each(function(){
+            inputVal = $(this).html();
+            if(inputVal){
+                inputVal = inputVal.replace(/<br>/g,"\n");
+            }
+            $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
+        });
+        $(".exResult").each(function(){
+            inputVal = $(this).html();
+            if(inputVal){
+                inputVal = inputVal.replace(/<br>/g,"\n");
+            }
+            $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
+        });
+		$(".exRemark").each(function(){
 		    inputVal = $(this).html();
             if(inputVal){
                 inputVal = inputVal.replace(/<br>/g,"\n");
-                $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
             }
+            $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
 		});
-		$("table").find("input").each(function(){
+		$("table").find("input[class!=notbottom]").each(function(){
             $(this).css("border-bottom","1px solid #ccc");
         });
-        if("FF"!=mb){
-            lookCss();
-        }else{
-            $(".saId").css("margin-top","13px");
-            $(".exId").css("margin-top","13px");
-            $(".exRemark").css("margin-top","11px");
-        }
 	});
 	$("#save").on("click",function(){
 		$("body").find("input").each(function(){

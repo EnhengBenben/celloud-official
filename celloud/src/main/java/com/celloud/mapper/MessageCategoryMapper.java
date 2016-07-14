@@ -37,6 +37,8 @@ public interface MessageCategoryMapper {
      */
     List<Map<String, String>> findUserMessageCategoryByUserId(@Param("userId") Integer userId);
 
+	List<MessageCategory> getUserMessageCategory(@Param("userId") Integer userId);
+
     /**
      * @author MQ
      * @date 2016年7月4日下午4:08:23

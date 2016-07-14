@@ -37,12 +37,13 @@ public class WeChatAction {
 	@RequestMapping(value = "getState", method = RequestMethod.GET)
     public ModelAndView getState(String state, String code) {
         ModelAndView mv = new ModelAndView();
+		String openId = wechatUtils.getOpenId(code);
+		String msg = null;
 		if ("out".equals(state)) {//关注后通过自动回复的链接进来，需要跳转登录页面
 			mv.setViewName("wechat/bind");
-			String openId = wechatUtils.getOpenId(code);
 			int isBind = us.checkWechatBind(openId, null);
 			if (isBind > 0) {
-				String msg = "您的微信号已绑定平台账号，不可重复绑定，如有疑问请登录平台后在“问题反馈”中联系我们。";
+				msg = "您的微信号已绑定平台账号，不可重复绑定，如有疑问请登录平台后在“问题反馈”中联系我们。";
 				mv.addObject("info", msg).addObject("isSuccess", "true");
 				return mv;
 			}
@@ -51,8 +52,7 @@ public class WeChatAction {
 			PublicKey publicKey = generatePublicKey(session);
 			mv.addObject("publicKey", publicKey).addObject("isSuccess", "false");
 		} else {
-			//state 就是 MD5，需要校验MD5是否合法
-			//合法则直接绑定
+			//TODO
 		}
         return mv;
 	}

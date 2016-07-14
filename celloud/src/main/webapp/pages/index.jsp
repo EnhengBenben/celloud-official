@@ -105,13 +105,13 @@
 							</div>
 						</li>
 						<li class="dropdown messages-menu expense-menu">
-							<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+							<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" id="toShowQRCode">
 								<i class="glyphicon glyphicon-qrcode"></i>
 							</a>
 							<div class="dropdown-menu">
 								<div class="dropdown-menu-inner">
-									<p>
-										微信公众号即将开放，敬请期待！
+									<p id="showQRCode">
+										
 									</p>
 								</div>
 							</div>
@@ -255,5 +255,10 @@
 	<script src="<%=request.getContextPath()%>/plugins/highcharts/char.js?version=20160421"></script>
 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$("#toShowQRCode").click(function(){
+		  $("#showQRCode").load("<%=request.getContextPath()%>/pages/wechat/qrcode.jsp");
+		});
+	</script>
 </body>
 </html>

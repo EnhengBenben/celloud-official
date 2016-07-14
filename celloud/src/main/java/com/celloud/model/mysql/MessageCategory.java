@@ -1,7 +1,13 @@
 package com.celloud.model.mysql;
 
-public class MessageCategory {
-    private Integer id;
+import java.io.Serializable;
+
+public class MessageCategory implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	private Integer id;
+
+	private String code;
 
     private String name;
 
@@ -50,5 +56,13 @@ public class MessageCategory {
     public void setWechat(Integer wechat) {
         this.wechat = wechat;
     }
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
 
 }
