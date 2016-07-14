@@ -18,11 +18,6 @@ $(function(){
     $("#otherPng").find("img").each(function(){
         num++;
     });
-    if(num>24){
-        $("#moreDiv").remove();
-    }else{
-        $("#lessDiv").remove();
-    }
     var _flag = $("#_flag").html();
     if(_flag==0){
         inputVal = $("#des").html();
