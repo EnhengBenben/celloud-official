@@ -35,6 +35,12 @@ $(function(){
 		if(inputVal){
 			inputVal = inputVal.replace(/\n/g,"<br>");
 			$("#des").html(inputVal);
+			var desHeight = $("#des").height();
+			var resultHeight = $("#checkResult").height();
+			var totalHeight = desHeight + resultHeight;
+			if(totalHeight>=420 && totalHeight<=480){
+				$(".notes").css("margin-top","10px");
+			}
 		}
 		var des1 = $("#des1").children().val();
 		if (des1){
