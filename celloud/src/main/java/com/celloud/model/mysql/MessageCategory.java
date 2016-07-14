@@ -1,7 +1,11 @@
 package com.celloud.model.mysql;
 
-public class MessageCategory {
-    private Integer id;
+import java.io.Serializable;
+
+public class MessageCategory implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	private Integer id;
 
 	private String code;
 
