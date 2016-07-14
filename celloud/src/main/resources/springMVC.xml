@@ -258,8 +258,7 @@
 				/feedback/save = anon
 				/**/*.html = anon
 				/api/** = anon
-				/user/email/** =
-				anon
+				/user/email/** = anon
 				/login/** = anon
 				/logout/** = anon
 				/ = anon
