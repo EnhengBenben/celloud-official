@@ -161,28 +161,27 @@ var notices = (function(object) {
 		onText : '开',
 		offText : '关',
 		onSwitchChange : function(event, state){
-			if($("#flag").val()==0){
-				var datas = new Array();
-				$("#userSettingForm tbody").find("tr").each(function(){
-					var obj0 = $(this).find("input:eq(0)");
-					var email = obj0.prop("disabled")==true?2:(obj0.prop("checked")==false?0:1);
-					var obj1 = $(this).find("input:eq(1)");
-					var window = obj1.prop("disabled")==true?2:(obj1.prop("checked")==false?0:1);
-					var obj2 = $(this).find("input:eq(2)");
-					var wechat = obj2.prop("disabled")==true?2:(obj2.prop("checked")==false?0:1);
-					var messageCategoryId = $(this).find("input:eq(3)").val();
-					datas.push(email + "," + window + "," + wechat + "," + messageCategoryId);
-				})
+			var flag = $(this).parents("tr").find("input[name='flag']").val();
+			if(flag==0){
+				var $tr = $(this).parents("tr");
+				var obj0 = $tr.find("input:eq(0)");
+				var email = obj0.prop("disabled")==true?2:(obj0.prop("checked")==false?0:1);
+				var obj1 = $tr.find("input:eq(1)");
+				var window = obj1.prop("disabled")==true?2:(obj1.prop("checked")==false?0:1);
+				var obj2 = $tr.find("input:eq(2)");
+				var wechat = obj2.prop("disabled")==true?2:(obj2.prop("checked")==false?0:1);
+				var messageCategoryId = $tr.find("input:eq(3)").val();
+				var data = email + "," + window + "," + wechat + "," + messageCategoryId;
 				// 插入用户数据
-				$.post("message/category/insert",{"datas":datas.join(";")},function(data){
-					if(data>1){
-						$("#flag").val(1);
+				$.post("message/category/insert",{"data":data},function(data){
+					if(data>0){
+						$tr.find("input[name='flag']").val(1);
 					}
 				});
 			}else{
 				var targetName = $(this).attr("name");
 				var targetVal = $(this).prop("checked")==false?0:1;
-				var relatId = $(this).parents("tr").find("input:last").val();
+				var relatId = $(this).parents("tr").find("input[name='messageCategoryId']").val();
 				// 更新用户数据
 				$.post("message/category/update",{"targetName":targetName, "targetVal" : targetVal, "relatId":relatId},function(data){
 					

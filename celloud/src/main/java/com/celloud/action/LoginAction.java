@@ -27,7 +27,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
-import com.celloud.message.category.MessageCategoryCode;
 import com.celloud.message.category.MessageCategoryUtils;
 import com.celloud.model.PrivateKey;
 import com.celloud.model.PublicKey;
@@ -170,7 +169,7 @@ public class LoginAction {
 		}
 		Map<String, MessageCategory> map = mcu.initSetting(userMessage, allMessage);
 		session.setAttribute(Constants.MESSAGE_CATEGORY, map);
-		mcu.sendMessage(MessageCategoryCode.LOGIN, null);
+        // mcu.sendMessage(MessageCategoryCode.LOGIN, null);
         return mv;
     }
 
