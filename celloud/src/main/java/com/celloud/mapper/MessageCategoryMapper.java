@@ -35,9 +35,19 @@ public interface MessageCategoryMapper {
      * @description 根据用户id从关系表中查找(tb_user_message_category_relat)
      *
      */
-    List<Map<String, String>> findUserMessageCategoryByUserId(@Param("userId") Integer userId);
+    List<Map<String, Object>> findUserMessageCategoryByUserId(@Param("userId") Integer userId);
 
-	List<MessageCategory> getUserMessageCategory(@Param("userId") Integer userId);
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月14日下午5:02:44
+     * @description 返回JavaBean
+     * @param ids
+     * @return
+     *
+     */
+    List<MessageCategory> findUserMessageCategoryBeanByUserId(@Param("userId") Integer userId);
+
 
     /**
      * @author MQ
@@ -88,6 +98,17 @@ public interface MessageCategoryMapper {
      * @return
      *
      */
-    List<Map<String, String>> findUserMessageCategoryNotInIds(@Param("ids") String ids);
+    List<Map<String, Object>> findUserMessageCategoryNotInIds(@Param("ids") String ids);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月14日下午5:04:08
+     * @description 返回JavaBean
+     * @param ids
+     * @return
+     *
+     */
+    List<MessageCategory> findUserMessageCategoryBeanNotInIds(@Param("ids") String ids);
 
 }

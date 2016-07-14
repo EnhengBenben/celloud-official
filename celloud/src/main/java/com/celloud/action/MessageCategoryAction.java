@@ -36,7 +36,7 @@ public class MessageCategoryAction {
         logger.info("用户{}查看消息设置", ConstantsData.getLoginUserName());
         ModelAndView mv = new ModelAndView("notice/setting");
         Integer userId = ConstantsData.getLoginUserId();
-        List<Map<String, String>> userMessageCategoryList = messageCategoryService.getMessageCategoryByUserId(userId);
+        List<Map<String, Object>> userMessageCategoryList = messageCategoryService.getMessageCategoryByUserId(userId);
         mv.addObject("userMessageCategoryList", userMessageCategoryList);
         return mv;
     }

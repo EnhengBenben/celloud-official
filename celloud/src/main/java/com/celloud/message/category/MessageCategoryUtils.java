@@ -36,23 +36,13 @@ public class MessageCategoryUtils {
 	 * @date 2016年7月13日下午3:02:59
 	 */
 	public Map<String, MessageCategory> initSetting(Integer userId) {
-		List<MessageCategory> userMessage = mcs.getUserMessageCategory(userId);
-		List<MessageCategory> allMessage = null;
-		if (userMessage == null || userMessage.size() == 0) {
-			allMessage = mcs.getAllMessageCategory();
-		}
+        List<MessageCategory> userMessage = mcs.getBeanByUserId(userId);
 		Map<String, MessageCategory> result = new HashMap<>();
 		if (userMessage != null && userMessage.size() > 0) {
 			for (MessageCategory mc : userMessage) {
 				result.put(mc.getCode(), mc);
 			}
-		} else if (allMessage != null && allMessage.size() > 0) {
-			for (MessageCategory mc : allMessage) {
-				result.put(mc.getCode(), mc);
-			}
-		} else {
-			return null;
-		}
+        }
 		return result;
 	}
 
