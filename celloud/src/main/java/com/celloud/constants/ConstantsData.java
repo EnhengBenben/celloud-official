@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -101,7 +103,7 @@ public class ConstantsData {
      * @return
      */
     public static User getLoginUser() {
-        Object user = getSession().getAttribute(Constants.SESSION_LOGIN_USER);
+		Object user = getShioSession().getAttribute(Constants.SESSION_LOGIN_USER);
         return user == null ? null : (User) user;
     }
 
@@ -171,6 +173,10 @@ public class ConstantsData {
     public static HttpSession getSession() {
         return getRequset().getSession();
     }
+
+	public static Session getShioSession() {
+		return SecurityUtils.getSubject().getSession();
+	}
 
     public static Properties loadProperties(String filepath) {
         Properties properties = new Properties();

@@ -4,8 +4,6 @@ import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Enumeration;
-import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -27,13 +25,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
+import com.celloud.message.category.MessageCategoryCode;
 import com.celloud.message.category.MessageCategoryUtils;
 import com.celloud.model.PrivateKey;
 import com.celloud.model.PublicKey;
-import com.celloud.model.mysql.MessageCategory;
 import com.celloud.model.mysql.User;
 import com.celloud.service.ActionLogService;
-import com.celloud.service.MessageCategoryService;
 import com.celloud.service.RSAKeyService;
 import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
@@ -55,8 +52,6 @@ public class LoginAction {
     private RSAKeyService rsaKeyService;
     @Resource
     private ActionLogService logService;
-	@Resource
-	private MessageCategoryService mcs;
 	@Resource
 	private MessageCategoryUtils mcu;
 
@@ -162,14 +157,8 @@ public class LoginAction {
         String openId = userService.getOpenIdByUser(userId);
 		session.setAttribute(Constants.SESSION_WECHAT_OPENID, openId);
 		// 初始化消息中心
-		List<MessageCategory> userMessage = mcs.getUserMessageCategory(userId);
-		List<MessageCategory> allMessage = null;
-		if (userMessage == null || userMessage.size() == 0) {
-			allMessage = mcs.getAllMessageCategory();
-		}
-		Map<String, MessageCategory> map = mcu.initSetting(userMessage, allMessage);
-		session.setAttribute(Constants.MESSAGE_CATEGORY, map);
-        // mcu.sendMessage(MessageCategoryCode.LOGIN, null);
+		session.setAttribute(Constants.MESSAGE_CATEGORY, null);
+		mcu.sendMessage(MessageCategoryCode.LOGIN, null);
         return mv;
     }
 
