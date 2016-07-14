@@ -1,14 +1,18 @@
 var rockySamples = (function(samples) {
 	var self = samples || {};
+	$(document).off("click", "#sampleAddBtn");
 	$(document).on("click", "#sampleAddBtn", function() {
 		self.add();
 	});
+	$(document).off("click", "#sample-commit");
 	$(document).on('click', "#sample-commit", function() {
 		self.commit();
 	});
+	$(document).off("click", "#sample-cancel");
 	$(document).on('click', "#sample-cancel", function() {
 		self.cancel();
 	});
+	$(document).off("click", "[data-click='del-sample']");
 	$(document).on("click", "[data-click='del-sample']", function() {
 		self.del($(this).data("id"));
 	});

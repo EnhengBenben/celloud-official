@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.constants.AppConstants;
 import com.celloud.constants.CompanyConstants;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
@@ -1464,10 +1465,10 @@ public class ReportAction {
 			@RequestParam(defaultValue = "20") int size) {
 		ModelAndView mv = new ModelAndView("rocky/report_main");
 		Integer userId = ConstantsData.getLoginUserId();
-		Map<String, Object> periodMap = taskService.findTaskPeriodNum(118, userId);
+		Map<String, Object> periodMap = taskService.findTaskPeriodNum(AppConstants.APP_ID_ROCKY, userId);
 		List<String> batchList = dataService.getBatchList(userId);
 		Page pager = new Page(page, size);
-		PageList<Task> pageList = taskService.findTasksByUser(pager, userId, 118);
+		PageList<Task> pageList=taskService.findRockyTasks(pager);
 		mv.addObject("pageList", pageList);
 		periodMap.put("uploaded", batchList.size());
 		mv.addObject("periodMap", periodMap);

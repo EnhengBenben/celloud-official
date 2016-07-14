@@ -223,6 +223,7 @@ public class DataAction {
 		periodMap.put("uploaded", batchList.size());
 		mv.addObject("periodMap", periodMap);
 		mv.addObject("pageList", dataList);
+		mv.addObject("batchList", batchList);
 		logger.info("用户{}打开乳腺癌数据", ConstantsData.getLoginUserName());
 		return mv;
 	}

@@ -3,12 +3,12 @@ var rockyData = (function(rockyData) {
 	$(document).off("click", "#rocky_data_page [data-click='pagination-btn']");
 	$(document).off("change", "#rocky_data_page #page-size-sel");
 	$(document).on("change", "#rocky_data_page #page-size-sel",function(){
-		self.pageDatas(1,$("#page-size-sel").val());
+		self.pageDatas(1,$(this).val());
 	});
 	$(document).on("click", "#rocky_data_page [data-click='pagination-btn']",
 			function() {
 				var page = $(this).data("page");
-				var size = $("#page-size-sel").val();
+				var size = $("#rocky_data_page #page-size-sell").val();
 				self.pageDatas(page,size);
 			});
 	self.pageDatas = function(page, size) {

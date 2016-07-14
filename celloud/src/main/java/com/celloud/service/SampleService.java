@@ -28,9 +28,10 @@ public interface SampleService {
      * @param sample
      * @return
      * @author leamo
+     * @param integer 
      * @date 2016年6月20日 上午11:18:46
      */
-    public Integer commitSamples(List<Integer> sampleIds, Integer userId);
+    public Integer commitSamples(List<Integer> sampleIds, Integer appId, Integer userId);
 
     /**
      * 获取所有未添加的样本编号信息

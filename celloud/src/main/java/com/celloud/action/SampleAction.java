@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.constants.AppConstants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.model.mysql.Sample;
 import com.celloud.service.SampleService;
@@ -59,7 +60,11 @@ public class SampleAction {
 	@ResponseBody
 	public Integer commitSamples(@PathVariable String app, Integer[] sampleIds) {
 		List<Integer> list = sampleIds == null || sampleIds.length <= 0 ? null : Arrays.asList(sampleIds);
-		return sampleService.commitSamples(list, ConstantsData.getLoginUserId());
+		Integer appId = AppConstants.APP_ID_BSI;
+		if ("rocky".equals(app)) {
+			appId = AppConstants.APP_ID_ROCKY;
+		}
+		return sampleService.commitSamples(list,appId, ConstantsData.getLoginUserId());
 	}
 
 	@ActionLog(value = "删除暂存的样本", button = "删除样品")
