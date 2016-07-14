@@ -403,8 +403,8 @@
         from tb_user_wechat uw,tb_user u
         where uw.user_id = u.user_id and uw.open_id = #{openId} and password=#{pwd}
     </select>
-    <select id="wechatUnBind" resultType="java.lang.Integer">
-        delete from tb_user_wechat
-        where open_id = #{openId} and password=#{pwd} 
-    </select>
+    <delete id="wechatUnBind">
+        delete uw from tb_user_wechat uw, tb_user u
+ 		where uw.open_id = #{openId} and u.password=#{pwd} and u.user_id=uw.user_id
+    </delete>
 </mapper>

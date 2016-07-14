@@ -14,7 +14,6 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.text.StrSubstitutor;
-import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -284,9 +283,8 @@ public class TaskAction {
 						.set(EmailParams.RUN_OVER.end.name(), endDate));
 		emailUtils.simpleSend(aliEmail, email);
 		//TODO 微信发送消息需要修改
-		Session session = ConstantsData.getShioSession();
-		Object openId = session.getAttribute(Constants.SESSION_WECHAT_OPENID);
-		if (openId != null && StringUtils.isNotEmpty(openId.toString())) {
+		String openId = userService.getOpenIdByUser(userId);
+		if (StringUtils.isNotEmpty(openId)) {
 			wechatUtils
 					.pushMessage(
 							ParamFormat.paramAll().template(WechatType.RUN_OVER).openId(openId.toString()).url(null)
@@ -422,9 +420,8 @@ public class TaskAction {
                         "项目【" + projectName + "】运行【" + appName + "】完成。"))
                 .to(username);
 		//TODO 微信发送消息需要修改
-		Session session = ConstantsData.getShioSession();
-		Object openId = session.getAttribute(Constants.SESSION_WECHAT_OPENID);
-		if (openId != null && StringUtils.isNotEmpty(openId.toString())) {
+		String openId = userService.getOpenIdByUser(userId);
+		if (StringUtils.isNotEmpty(openId)) {
 			Report report = reportService.getReportByProjectId(Integer.valueOf(projectId));
 			String startDate = DateUtil.getDateToString(report.getCreateDate(), "yyyy-MM-dd hh:mm:ss");
 			String endDate = report.getEndDate() == null ? null
