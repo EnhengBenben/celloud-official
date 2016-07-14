@@ -73,7 +73,7 @@ public class LoginAction {
         ModelAndView mv = new ModelAndView("login");
         User user = new User();
         Subject subject = SecurityUtils.getSubject();
-        Object isRem = subject.getSession().getAttribute("isRemembered");
+        Object isRem = subject.getSession(true).getAttribute("isRemembered");
         boolean isRemembered = isRem != null ? ((boolean) isRem)
                 : subject.isRemembered();
         PublicKey key = generatePublicKey(subject.getSession());
