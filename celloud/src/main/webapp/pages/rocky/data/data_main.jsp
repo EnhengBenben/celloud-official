@@ -7,22 +7,80 @@
 		<tr>
 			<th width="40"></th>
 			<th width="140">
-				<input id="sample-selector" type="text" placeholder="样本编号/病历号">
+				<input id="data-sample-filter" type="text" placeholder="样本编号/病历号" value="${sampleFilter}">
 			</th>
-			<th>文件名</th>
-			<th>标签</th>
-			<th>文件大小</th>
 			<th>
-				状态
-				<a href="javascript:void(0);">
-					<i class="fa fa-sort" aria-hidden="true"></i>
-				</a>
+				文件名
+				<c:if test="${sidx=='filename'&&sord=='asc' }">
+					<a id="sortBtn-filename-desc" href="javascript:void(0);">
+						<i class="fa fa-sort-amount-asc"></i>
+					</a>
+				</c:if>
+				<c:if test="${sidx=='filename'&&sord=='desc' }">
+					<a id="sortBtn-filename-asc" href="javascript:void(0);">
+						<i class="fa fa-sort-amount-desc"></i>
+					</a>
+				</c:if>
+				<c:if test="${sidx!='filename' }">
+					<a id="sortBtn-filename" href="javascript:void(0);">
+						<i class="fa fa-sort" aria-hidden="true"></i>
+					</a>
+				</c:if>
 			</th>
+			<th>
+				标签
+				<c:if test="${sidx=='batch'&&sord=='asc' }">
+					<a id="sortBtn-batch-desc" href="javascript:void(0);">
+						<i class="fa fa-sort-amount-asc"></i>
+					</a>
+				</c:if>
+				<c:if test="${sidx=='batch'&&sord=='desc' }">
+					<a id="sortBtn-batch-asc" href="javascript:void(0);">
+						<i class="fa fa-sort-amount-desc"></i>
+					</a>
+				</c:if>
+				<c:if test="${sidx!='batch' }">
+					<a id="sortBtn-batch" href="javascript:void(0);">
+						<i class="fa fa-sort" aria-hidden="true"></i>
+					</a>
+				</c:if>
+			</th>
+			<th>
+				文件大小
+				<c:if test="${sidx=='filesize'&&sord=='asc' }">
+					<a id="sortBtn-filesize-desc" href="javascript:void(0);">
+						<i class="fa fa-sort-amount-asc"></i>
+					</a>
+				</c:if>
+				<c:if test="${sidx=='filesize'&&sord=='desc' }">
+					<a id="sortBtn-filesize-asc" href="javascript:void(0);">
+						<i class="fa fa-sort-amount-desc"></i>
+					</a>
+				</c:if>
+				<c:if test="${sidx!='filesize' }">
+					<a id="sortBtn-filesize" href="javascript:void(0);">
+						<i class="fa fa-sort" aria-hidden="true"></i>
+					</a>
+				</c:if>
+			</th>
+			<th>状态</th>
 			<th>
 				上传时间
-				<a id="sort-date" href="javascript:void(0);">
-					<i id="sort-date-icon" class="fa fa-sort-amount-asc"></i>
-				</a>
+				<c:if test="${sidx=='createDate'&&sord=='asc' }">
+					<a id="sortBtn-createDate-desc" href="javascript:void(0);">
+						<i class="fa fa-sort-amount-asc"></i>
+					</a>
+				</c:if>
+				<c:if test="${sidx=='createDate'&&sord=='desc' }">
+					<a id="sortBtn-createDate-asc" href="javascript:void(0);">
+						<i class="fa fa-sort-amount-desc"></i>
+					</a>
+				</c:if>
+				<c:if test="${sidx!='createDate' }">
+					<a id="sortBtn-createDate" href="javascript:void(0);">
+						<i class="fa fa-sort" aria-hidden="true"></i>
+					</a>
+				</c:if>
 			</th>
 			<c:if test="1=2">
 				<th>操作</th>
@@ -38,7 +96,7 @@
 						<span class="info"></span>
 					</label>
 				</td>
-				<td>${data.dataKey }</td>
+				<td>${data.sample }</td>
 				<td title="${data.fileName }" name="data-name-td">${data.fileName }</td>
 				<td>${data.batch }</td>
 				<td>
@@ -90,7 +148,6 @@
 	</tbody>
 </table>
 <div id="rocky_data_page">
-	<jsp:include page="pagination.jsp"></jsp:include>
+	<jsp:include page="../pagination.jsp"></jsp:include>
 </div>
-<jsp:include page="statistic.jsp"></jsp:include>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/rocky_data.js"></script>
+<jsp:include page="../statistic.jsp"></jsp:include>

@@ -90,6 +90,16 @@ public interface UserService {
      */
     public User selectUserById(int userId);
 
+	/**
+	 * 根据id获取user对象，但不包括其头像
+	 * 
+	 * @param userId
+	 * @return
+	 * @author lin
+	 * @date 2016年7月15日下午3:05:34
+	 */
+	public User selectUserByIdNotIcon(int userId);
+
     /**
      * 修改用户基本信息
      * 

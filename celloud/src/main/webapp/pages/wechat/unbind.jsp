@@ -43,10 +43,11 @@
 		                <div class="error">&nbsp;test</div>
 		                <input type="hidden" id="modulusHidden" name="modulus" value="${publicKey.modulus }" />
 	                    <input type="hidden" id="exponentHidden" name="exponent" value="${publicKey.exponent }" />
-	                    <input type="password" class="pwd" placeholder="平台账号密码" id="password" name="password"/>
+	                    <input type="text" name="username" readonly="readonly" value="${username }"/>
+	                    <input type="password" class="pwd" placeholder="密码" id="password" name="password"/>
 	                    <input type="hidden" id="tempPassword" />
                         <input type="hidden" name="newPassword" />
-	                    <a id="unBindSubmit" class="btn-login sign-in" href="javascript:void(0);">解除绑定</a>
+	                    <a id="unBindSubmit" class="unbind" href="javascript:void(0);">解除绑定</a>
 		            </c:otherwise>
 		        </c:choose>
 			</div>
@@ -80,5 +81,16 @@
 		  utils.setDocSize();
 		});
 	</script>
+	<style type="text/css">
+		.unbind{
+			width: 320px;
+		    height: 30px;
+		    margin: 20px auto;
+		    display: inline-block;
+	        background-color: #26aa38;
+		    color: #FDFCFD;
+		    padding-top: 10px;
+		}
+	</style>
 </body>
 </html>

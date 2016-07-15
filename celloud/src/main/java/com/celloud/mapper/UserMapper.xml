@@ -31,6 +31,17 @@
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
+		user_id, username, email, cellphone, create_date,
+		role,
+		remark, navigation,
+		truename, state, dept_id,
+		login_uuid,
+		company_id, sign,balances
+		from tb_user
+		where user_id = #{userId,jdbcType=INTEGER}
+	</select>
+	<select id="selectUserByIdNotIcon" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
 		<include refid="Base_Column_List" />
 		from tb_user
 		where user_id = #{userId,jdbcType=INTEGER}
@@ -403,8 +414,8 @@
         from tb_user_wechat uw,tb_user u
         where uw.user_id = u.user_id and uw.open_id = #{openId} and password=#{pwd}
     </select>
-    <select id="wechatUnBind" resultType="java.lang.Integer">
-        delete from tb_user_wechat
-        where open_id = #{openId} and password=#{pwd} 
-    </select>
+    <delete id="wechatUnBind">
+        delete uw from tb_user_wechat uw, tb_user u
+ 		where uw.open_id = #{openId} and u.password=#{pwd} and u.user_id=uw.user_id
+    </delete>
 </mapper>

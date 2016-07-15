@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.celloud.alimail.AliEmail;
-import com.celloud.alimail.AliEmailUtils;
 import com.celloud.alimail.AliSubstitution;
 import com.celloud.constants.AppDataListType;
 import com.celloud.constants.CommandKey;
@@ -37,6 +36,8 @@ import com.celloud.constants.NoticeConstants;
 import com.celloud.constants.ReportType;
 import com.celloud.constants.SparkPro;
 import com.celloud.message.MessageUtils;
+import com.celloud.message.category.MessageCategoryCode;
+import com.celloud.message.category.MessageCategoryUtils;
 import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Experiment;
@@ -65,7 +66,9 @@ import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.RunOverUtil;
 import com.celloud.utils.SSHUtil;
 import com.celloud.utils.XmlUtil;
-import com.celloud.wechat.WechatUtils;
+import com.celloud.wechat.ParamFormat;
+import com.celloud.wechat.ParamFormat.Param;
+import com.celloud.wechat.WechatParams;
 
 /**
  * 投递任务管理
@@ -96,9 +99,7 @@ public class TaskAction {
     @Resource
     private UserService userService;
     @Resource
-    private WechatUtils wechatUtils;
-	@Resource
-	private AliEmailUtils emailUtils;
+	private MessageCategoryUtils mcu;
 
     private static Map<String, Map<String, String>> machines = ConstantsData
             .getMachines();
@@ -142,7 +143,6 @@ public class TaskAction {
         Integer appId = (Integer) map.get("appId");
         String appName = (String) map.get("appName");
         String username = (String) map.get("username");
-        String email = (String) map.get("email");
         String title = (String) map.get("title");
         String method = (String) map.get("method");
         List<DataFile> dataList = dataService.selectDataByKeys(dataNames);
@@ -265,20 +265,25 @@ public class TaskAction {
             }
         }
         String tipsName = pubName.equals("") ? fname : pubName;
-        MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
-                .send(NoticeConstants.createMessage("task", "运行完成",
-                        "文件【" + tipsName + "】运行应用【" + appName + "】完成"))
-                .to(username);
-        String startDate = DateUtil.getDateToString(task.getStartDate(),
-                "yyyy-MM-dd hh:mm:ss");
-        String endDate = DateUtil.getDateToString(task.getEndDate(),
-                "yyyy-MM-dd hh:mm:ss");
+		//TODO need test
+		//构造桌面消息
+		MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
+				.send(NoticeConstants.createMessage("task", "运行完成", "文件【" + tipsName + "】运行应用【" + appName + "】完成"));
+		//构造邮件内容
+		String startDate = DateUtil.getDateToString(task.getStartDate(), "yyyy-MM-dd hh:mm:ss");
+		String endDate = DateUtil.getDateToString(task.getEndDate(), "yyyy-MM-dd hh:mm:ss");
 		AliEmail aliEmail = AliEmail.template(EmailType.RUN_OVER)
 				.substitutionVars(AliSubstitution.sub().set(EmailParams.RUN_OVER.userName.name(), username)
 						.set(EmailParams.RUN_OVER.projectName.name(), tipsName)
 						.set(EmailParams.RUN_OVER.app.name(), appName).set(EmailParams.RUN_OVER.start.name(), startDate)
 						.set(EmailParams.RUN_OVER.end.name(), endDate));
-		emailUtils.simpleSend(aliEmail, email);
+		//构造微信消息
+		Param params = ParamFormat.param()
+				.set(WechatParams.RUN_OVER.first.name(), "您好，您的数据" + tipsName + " 运行结束", "#222222")
+				.set(WechatParams.RUN_OVER.keyword1.name(), appName, null)
+				.set(WechatParams.RUN_OVER.keyword2.name(), startDate, null)
+				.set(WechatParams.RUN_OVER.keyword3.name(), endDate, "#222222");
+		mcu.sendMessage(userId, MessageCategoryCode.REPORT, aliEmail, params, mu);
         return "run over";
     }
 
@@ -315,9 +320,8 @@ public class TaskAction {
             return "run error";
         }
         // 1. 利用 python 生成数据 pdf，并将数据报告插入 mongodb
-        String command = "python " + SparkPro.PYTHONPATH + " "
-                + SparkPro.TOOLSPATH + " " + projectId;
-        PerlUtils.excutePerl(command);
+		String command = "python " + SparkPro.PYTHONPATH + " " + SparkPro.TOOLSPATH + " " + projectId;
+		PerlUtils.excutePerl(command);
         // 2. 数据库检索
         int proId = Integer.parseInt(projectId);
         Map<String, Object> map = projectService.findProjectInfoById(proId);
@@ -329,79 +333,89 @@ public class TaskAction {
         String method = (String) map.get("method");
         String projectName = (String) map.get("projectName");
 
-        List<DataFile> dataList = dataService.getDatasInProject(proId);
+		List<DataFile> dataList = dataService.getDatasInProject(proId);
 
-        // 3. 创建项目结果文件
-        StringBuffer basePath = new StringBuffer();
-        basePath.append(SparkPro.TOOLSPATH).append(userId).append("/")
-                .append(appId).append("/");
-        StringBuffer projectFileBf = new StringBuffer();
-        projectFileBf.append(basePath).append(projectId).append("/")
-                .append(projectId).append(".txt");
-        String projectFile = projectFileBf.toString();
-        FileTools.createFile(projectFile);
-        // 4. 通过反射调用相应app的处理方法，传参格式如下：
-        // String appPath, String appName, String appTitle,String
-        // projectFile,String projectId, List<DataFile> proDataList
-        RunOverUtil rou = new RunOverUtil();
-        try {
-            rou.getClass().getMethod(method,
-                    new Class[] { String.class, String.class, String.class,
-                            String.class, String.class, List.class })
-                    .invoke(rou, basePath.toString(), appName, title,
-                            projectFile, projectId, dataList);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        // 5. 通过读取xml文件来生成项目报告
-        String xml = null;
-        if (new File(projectFile.toString()).exists()) {
-            xml = XmlUtil.writeXML(projectFile);
-        }
-        // 6. 项目报告插入mysql并修改项目运行状态
-        reportService.reportCompeleteByProId(proId, xml);
-        if (ExperimentState.apps.contains(appId)) {
-            for (DataFile dataFile : dataList) {
-                String anotherName = dataFile.getAnotherName() == null ? ""
-                        : dataFile.getAnotherName();
-                int dataId = dataFile.getFileId();
-                List<Experiment> expList = expService.getRelatList(userId,
-                        anotherName, dataFile.getDataKey());
-                if (expList != null && expList.size() == 1) {
-                    Report report = reportService.getReport(userId, appId,
-                            Integer.valueOf(projectId), dataId,
-                            ReportType.DATA);
-                    Experiment exp = expList.get(0);
-                    Integer am = exp.getAmplificationMethod();
-                    if (am == null || am.equals(0)) {
-                        continue;
-                    }
-                    Integer sample = exp.getSampleType();
-                    if (sample == null || sample.equals(0)) {
-                        continue;
-                    }
-                    Integer sequenator = exp.getSequenator();
-                    if (sequenator == null || sequenator.equals(0)) {
-                        continue;
-                    }
-                    Integer expAPPId = expService.getApp(sample, am,
-                            sequenator);
-                    if (expAPPId != null && expAPPId.equals(appId)) {
-                        exp.setReportId(report.getReportId());
-                        exp.setReportDate(report.getEndDate());
-                        exp.setStep(ExperimentState.REPORT_STEP);
-                        expService.updateByPrimaryKeySelective(exp);
-                        logger.info("用户{}数据{}自动绑定报告成功", userId, dataId);
-                    }
-                } else {
-                    logger.error("用户{}未能检索到与{}匹配的实验流程", userId, dataId);
-                }
-            }
-        }
-        MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
-                .send(NoticeConstants.createMessage("task", "运行完成",
-                        "项目【" + projectName + "】运行【" + appName + "】完成。"))
-                .to(username);
+		// 3. 创建项目结果文件
+		StringBuffer basePath = new StringBuffer();
+		basePath.append(SparkPro.TOOLSPATH).append(userId).append("/").append(appId).append("/");
+		StringBuffer projectFileBf = new StringBuffer();
+		projectFileBf.append(basePath).append(projectId).append("/").append(projectId).append(".txt");
+		String projectFile = projectFileBf.toString();
+		FileTools.createFile(projectFile);
+		// 4. 通过反射调用相应app的处理方法，传参格式如下：
+		// String appPath, String appName, String appTitle,String
+		// projectFile,String projectId, List<DataFile> proDataList
+		RunOverUtil rou = new RunOverUtil();
+		try {
+			rou.getClass()
+					.getMethod(method,
+							new Class[] { String.class, String.class, String.class, String.class, String.class,
+									List.class })
+					.invoke(rou, basePath.toString(), appName, title, projectFile, projectId, dataList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// 5. 通过读取xml文件来生成项目报告
+		String xml = null;
+		if (new File(projectFile.toString()).exists()) {
+			xml = XmlUtil.writeXML(projectFile);
+		}
+		// 6. 项目报告插入mysql并修改项目运行状态
+		reportService.reportCompeleteByProId(proId, xml);
+		if (ExperimentState.apps.contains(appId)) {
+			for (DataFile dataFile : dataList) {
+				String anotherName = dataFile.getAnotherName() == null ? "" : dataFile.getAnotherName();
+				int dataId = dataFile.getFileId();
+				List<Experiment> expList = expService.getRelatList(userId, anotherName, dataFile.getDataKey());
+				if (expList != null && expList.size() == 1) {
+					Report report = reportService.getReport(userId, appId, Integer.valueOf(projectId), dataId,
+							ReportType.DATA);
+					Experiment exp = expList.get(0);
+					Integer am = exp.getAmplificationMethod();
+					if (am == null || am.equals(0)) {
+						continue;
+					}
+					Integer sample = exp.getSampleType();
+					if (sample == null || sample.equals(0)) {
+						continue;
+					}
+					Integer sequenator = exp.getSequenator();
+					if (sequenator == null || sequenator.equals(0)) {
+						continue;
+					}
+					Integer expAPPId = expService.getApp(sample, am, sequenator);
+					if (expAPPId != null && expAPPId.equals(appId)) {
+						exp.setReportId(report.getReportId());
+						exp.setReportDate(report.getEndDate());
+						exp.setStep(ExperimentState.REPORT_STEP);
+						expService.updateByPrimaryKeySelective(exp);
+						logger.info("用户{}数据{}自动绑定报告成功", userId, dataId);
+					}
+				} else {
+					logger.error("用户{}未能检索到与{}匹配的实验流程", userId, dataId);
+				}
+			}
+		}
+		//构造桌面消息
+		MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
+				.send(NoticeConstants.createMessage("task", "运行完成", "项目【" + projectName + "】运行【" + appName + "】完成。"));
+		//构造邮件内容
+		Report report = reportService.getReportByProjectId(Integer.valueOf(projectId));
+		String startDate = DateUtil.getDateToString(report.getCreateDate(), "yyyy-MM-dd hh:mm:ss");
+		String endDate = report.getEndDate() == null ? null
+				: DateUtil.getDateToString(report.getEndDate(), "yyyy-MM-dd hh:mm:ss");
+		AliEmail aliEmail = AliEmail.template(EmailType.RUN_OVER)
+				.substitutionVars(AliSubstitution.sub().set(EmailParams.RUN_OVER.userName.name(), username)
+						.set(EmailParams.RUN_OVER.projectName.name(), projectName)
+						.set(EmailParams.RUN_OVER.app.name(), appName).set(EmailParams.RUN_OVER.start.name(), startDate)
+						.set(EmailParams.RUN_OVER.end.name(), endDate));
+		//构造微信发送消息
+		Param params = ParamFormat.param()
+				.set(WechatParams.RUN_OVER.first.name(), "您好，您的项目" + projectName + " 运行结束", "#222222")
+				.set(WechatParams.RUN_OVER.keyword1.name(), appName, null)
+				.set(WechatParams.RUN_OVER.keyword2.name(), startDate, null)
+				.set(WechatParams.RUN_OVER.keyword3.name(), endDate, "#222222");
+		mcu.sendMessage(userId, MessageCategoryCode.REPORT, aliEmail, params, mu);
         return "run over";
     }
 

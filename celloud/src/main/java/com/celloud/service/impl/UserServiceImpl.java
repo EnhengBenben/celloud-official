@@ -82,6 +82,11 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByPrimaryKey(userId);
     }
 
+	@Override
+	public User selectUserByIdNotIcon(int userId) {
+		return userMapper.selectUserByIdNotIcon(userId);
+	}
+
     @Override
     public Integer updateUserInfo(User user) {
         User temp = new User();
@@ -162,8 +167,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int wechatUnBind(String openId, String pwd) {
-		// TODO Auto-generated method stub
-		return 0;
+		return userMapper.wechatUnBind(openId, pwd);
 	}
 
 }

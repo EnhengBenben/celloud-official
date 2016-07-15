@@ -19,6 +19,8 @@ import com.celloud.alimail.AliEmailUtils;
 import com.celloud.alimail.AliSubstitution;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
+import com.celloud.message.category.MessageCategoryCode;
+import com.celloud.message.category.MessageCategoryUtils;
 import com.celloud.model.mysql.ActionLog;
 import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
@@ -27,9 +29,14 @@ import com.celloud.sendcloud.EmailParams;
 import com.celloud.sendcloud.EmailType;
 import com.celloud.service.ActionLogService;
 import com.celloud.service.UserService;
+import com.celloud.utils.DateUtil;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.ResetPwdUtils;
 import com.celloud.utils.Response;
+import com.celloud.wechat.ParamFormat;
+import com.celloud.wechat.ParamFormat.Param;
+import com.celloud.wechat.WechatParams;
+import com.celloud.wechat.WechatUtils;
 
 /**
  * 用户管理
@@ -46,6 +53,10 @@ public class UserAction {
 	private ActionLogService logService;
 	@Resource
 	private AliEmailUtils emailUtils;
+	@Resource
+	private WechatUtils wechatUtils;
+	@Resource
+	private MessageCategoryUtils mcu;
 	private static final Response EMAIL_IN_USE = new Response("202", "邮箱已存在");
 	private static final Response UPDATE_BASEINFO_FAIL = new Response("修改用户信息失败");
 	private static final Response UPDATE_PASSWORD_FAIL = new Response("修改用户密码失败");
@@ -103,6 +114,13 @@ public class UserAction {
 			return WRONG_PASSWORD;
 		}
 		int result = userService.updatePassword(user.getUserId(), newPassword);
+		//TODO 微信发送消息需要修改
+		Param params = ParamFormat.param()
+				.set(WechatParams.PWD_UPDATE.first.name(), "您好，" + user.getUsername() + "：", "#222222")
+				.set(WechatParams.PWD_UPDATE.productName.name(), "平台账号", null)
+				.set(WechatParams.PWD_UPDATE.time.name(), DateUtil.getDateToString("yyyy-MM-dd HH:mm:ss"), null);
+		mcu.sendMessage(MessageCategoryCode.UPDATEPWD, null, params, null);
+
 		return result > 0 ? Response.SAVE_SUCCESS : UPDATE_PASSWORD_FAIL;
 	}
 

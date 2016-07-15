@@ -70,7 +70,7 @@
 							</a>
 						</c:when>
 						<c:otherwise>
-							<a title="打印患者报告" class="disabled" disabled="disabled">
+							<a title="打印患者报告" class="disabled bg-gray" disabled="disabled">
 								<i class="fa fa-print"></i>
 							</a>
 						</c:otherwise>
@@ -91,7 +91,6 @@
 	</div>
 </c:if>
 <div id="rocky_report_page">
-	<jsp:include page="pagination.jsp"></jsp:include>
+	<jsp:include page="../pagination.jsp"></jsp:include>
 </div>
-
-<jsp:include page="statistic.jsp"></jsp:include>
+<jsp:include page="../statistic.jsp"></jsp:include>

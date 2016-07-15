@@ -213,17 +213,21 @@ public class DataAction {
 	@ActionLog(value = "打开rocky数据页面", button = "数据")
 	@RequestMapping("rocky/list")
 	public ModelAndView rockyDataAllList(@RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "20") int size) {
-		ModelAndView mv = new ModelAndView("rocky/data_main");
+			@RequestParam(defaultValue = "20") int size, String sample, String condition,
+			@RequestParam(defaultValue = "createDate") String sidx, @RequestParam(defaultValue = "desc") String sord) {
+		ModelAndView mv = new ModelAndView("rocky/data/data_main");
 		Page pager = new Page(page, size);
 		Integer userId = ConstantsData.getLoginUserId();
-		PageList<DataFile> dataList = dataService.dataAllList(pager, ConstantsData.getLoginUserId());
+		PageList<DataFile> dataList = dataService.filterRockyList(pager, sample, condition, sidx, sord);
 		Map<String, Object> periodMap = taskService.findTaskPeriodNum(AppConstants.APP_ID_ROCKY, userId);
 		List<String> batchList = dataService.getBatchList(userId);
 		periodMap.put("uploaded", batchList.size());
 		mv.addObject("periodMap", periodMap);
 		mv.addObject("pageList", dataList);
 		mv.addObject("batchList", batchList);
+		mv.addObject("sampleFilter", sample);
+		mv.addObject("sidx", sidx);
+		mv.addObject("sord", sord);
 		logger.info("用户{}打开乳腺癌数据", ConstantsData.getLoginUserName());
 		return mv;
 	}

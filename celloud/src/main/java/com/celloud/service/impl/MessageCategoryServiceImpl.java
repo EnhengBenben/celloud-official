@@ -1,5 +1,7 @@
 package com.celloud.service.impl;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -25,21 +27,27 @@ public class MessageCategoryServiceImpl implements MessageCategoryService {
     private MessageCategoryMapper messageCategoryMapper;
 
     @Override
-    public List<Map<String, String>> getMessageCategoryByUserId(Integer userId) {
+    public List<Map<String, Object>> getMessageCategoryByUserId(Integer userId) {
         // 1. 从关系表中查找设置过的开关
-        List<Map<String, String>> userMessageCategory = messageCategoryMapper.findUserMessageCategoryByUserId(userId);
+        List<Map<String, Object>> userMessageCategory = messageCategoryMapper.findUserMessageCategoryByUserId(userId);
         // 2. 从分类表中查找没有更改过的开关
         StringBuilder sb = new StringBuilder();
-        for(Map<String,String> map : userMessageCategory){
+        for (Map<String, Object> map : userMessageCategory) {
             sb.append(String.valueOf(map.get("mcId")) + ",");
         }
         String ids = "0";
         if (sb.length() > 0) {
             ids = sb.substring(0, sb.length() - 1);
         }
-        List<Map<String, String>> userMessageCategoryNotInIds = messageCategoryMapper
+        List<Map<String, Object>> userMessageCategoryNotInIds = messageCategoryMapper
                 .findUserMessageCategoryNotInIds(ids);
         userMessageCategory.addAll(userMessageCategoryNotInIds);
+        Collections.sort(userMessageCategory, new Comparator<Map<String, Object>>() {
+            @Override
+            public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+                return Integer.parseInt(o1.get("mcId").toString()) - Integer.parseInt(o2.get("mcId").toString());
+            }
+        });
         return userMessageCategory;
     }
 
@@ -69,9 +77,24 @@ public class MessageCategoryServiceImpl implements MessageCategoryService {
         return setting;
     }
 
-	@Override
-	public List<MessageCategory> getUserMessageCategory(Integer userId) {
-		return messageCategoryMapper.getUserMessageCategory(userId);
-	}
+    @Override
+    public List<MessageCategory> getBeanByUserId(Integer userId) {
+        // 1. 从关系表中查找设置过的开关
+        List<MessageCategory> userMessageCategory = messageCategoryMapper
+                .findUserMessageCategoryBeanByUserId(userId);
+        // 2. 从分类表中查找没有更改过的开关
+        StringBuilder sb = new StringBuilder();
+        for (MessageCategory mc : userMessageCategory) {
+            sb.append(mc.getId() + ",");
+        }
+        String ids = "0";
+        if (sb.length() > 0) {
+            ids = sb.substring(0, sb.length() - 1);
+        }
+        List<MessageCategory> userMessageCategoryNotInIds = messageCategoryMapper
+                .findUserMessageCategoryBeanNotInIds(ids);
+        userMessageCategory.addAll(userMessageCategoryNotInIds);
+        return userMessageCategory;
+    }
 
 }
