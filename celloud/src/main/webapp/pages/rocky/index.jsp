@@ -96,7 +96,7 @@
 			</aside>
 			<div id="container" class="common-container"></div>
 			<div id="upload-container" class="common-container hide">
-				<jsp:include page="upload.jsp"></jsp:include>
+				<jsp:include page="upload/upload.jsp"></jsp:include>
 			</div>
 		</section>
 	</div>

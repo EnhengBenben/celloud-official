@@ -37,7 +37,7 @@ public class SampleAction {
 	public ModelAndView sampleList(@PathVariable String app) {
 		String view = "bsi/sample_list";
 		if ("rocky".equals(app)) {
-			view = "rocky/sample_main";
+			view = "rocky/sample/sample_main";
 		}
 		ModelAndView mv = new ModelAndView(view);
 		List<Sample> samples = sampleService.allUnaddSample(ConstantsData.getLoginUserId());

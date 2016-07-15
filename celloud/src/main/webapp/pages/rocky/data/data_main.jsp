@@ -7,7 +7,7 @@
 		<tr>
 			<th width="40"></th>
 			<th width="140">
-				<input id="sample-selector" type="text" placeholder="样本编号/病历号">
+				<input id="data-sample-filter" type="text" placeholder="样本编号/病历号">
 			</th>
 			<th>文件名</th>
 			<th>标签</th>
@@ -90,7 +90,7 @@
 	</tbody>
 </table>
 <div id="rocky_data_page">
-	<jsp:include page="pagination.jsp"></jsp:include>
+	<jsp:include page="../pagination.jsp"></jsp:include>
 </div>
-<jsp:include page="statistic.jsp"></jsp:include>
+<jsp:include page="../statistic.jsp"></jsp:include>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/rocky_data.js"></script>

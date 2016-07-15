@@ -1463,7 +1463,7 @@ public class ReportAction {
 	@RequestMapping("rocky/reportMain")
 	public ModelAndView rockyReportMain(@RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "20") int size) {
-		ModelAndView mv = new ModelAndView("rocky/report_main");
+		ModelAndView mv = new ModelAndView("rocky/report/report_main");
 		Integer userId = ConstantsData.getLoginUserId();
 		Map<String, Object> periodMap = taskService.findTaskPeriodNum(AppConstants.APP_ID_ROCKY, userId);
 		List<String> batchList = dataService.getBatchList(userId);

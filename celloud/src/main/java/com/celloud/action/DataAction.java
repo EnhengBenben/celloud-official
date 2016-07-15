@@ -214,7 +214,7 @@ public class DataAction {
 	@RequestMapping("rocky/list")
 	public ModelAndView rockyDataAllList(@RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "20") int size) {
-		ModelAndView mv = new ModelAndView("rocky/data_main");
+		ModelAndView mv = new ModelAndView("rocky/data/data_main");
 		Page pager = new Page(page, size);
 		Integer userId = ConstantsData.getLoginUserId();
 		PageList<DataFile> dataList = dataService.dataAllList(pager, ConstantsData.getLoginUserId());

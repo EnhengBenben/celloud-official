@@ -22,7 +22,6 @@ var rockySamples = (function(samples) {
 	$(document).off("keyup", "#sampleInput");
 	$(document).on("keyup", "#sampleInput", function(event) {
 		if (event.keyCode == 13) {
-			console.log('sample input enter...');
 			self.add();
 		}
 	});
@@ -32,7 +31,7 @@ var rockySamples = (function(samples) {
 		if (sampleName == "") {
 			return
 		}
-		$.get("sample/rocky/addSample", {
+		$.get(contextPath+"/sample/rocky/addSample", {
 			"sampleName" : sampleName
 		}, function(result) {
 			if (result == 1) {
@@ -57,7 +56,7 @@ var rockySamples = (function(samples) {
 		if (params.length <= 0) {
 			return;
 		}
-		$.post("sample/rocky/commitSamples", params, function(result) {
+		$.post(contextPath+"/sample/rocky/commitSamples", params, function(result) {
 			self.list();
 		});
 	};
@@ -71,7 +70,7 @@ var rockySamples = (function(samples) {
 		});
 	};
 	self.del = function(sampleId) {
-		$.post("sample/rockey/deleteList", {
+		$.post(contextPath+"/sample/rockey/deleteList", {
 			sampleIds : sampleId
 		}, function(result) {
 			self.list();
@@ -82,7 +81,7 @@ var rockySamples = (function(samples) {
 		if (param.length <= 0) {
 			return;
 		}
-		$.post("sample/rockey/deleteList", param, function(result) {
+		$.post(contextPath+"/sample/rockey/deleteList", param, function(result) {
 			self.list();
 		});
 	}
