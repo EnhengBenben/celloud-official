@@ -162,8 +162,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int wechatUnBind(String openId, String pwd) {
-		// TODO Auto-generated method stub
-		return 0;
+		return userMapper.wechatUnBind(openId, pwd);
 	}
 
 }

@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.session.Session;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.celloud.constants.Constants;
@@ -16,6 +15,7 @@ import com.celloud.constants.ConstantsData;
 import com.celloud.model.mysql.MessageCategory;
 import com.celloud.service.MessageCategoryService;
 import com.celloud.utils.DateUtil;
+import com.celloud.utils.UserAgentUtil;
 import com.celloud.wechat.ParamFormat;
 import com.celloud.wechat.WechatParams;
 import com.celloud.wechat.WechatType;
@@ -36,23 +36,13 @@ public class MessageCategoryUtils {
 	 * @date 2016年7月13日下午3:02:59
 	 */
 	public Map<String, MessageCategory> initSetting(Integer userId) {
-		List<MessageCategory> userMessage = mcs.getUserMessageCategory(userId);
-		List<MessageCategory> allMessage = null;
-		if (userMessage == null || userMessage.size() == 0) {
-			allMessage = mcs.getAllMessageCategory();
-		}
+        List<MessageCategory> userMessage = mcs.getBeanByUserId(userId);
 		Map<String, MessageCategory> result = new HashMap<>();
 		if (userMessage != null && userMessage.size() > 0) {
 			for (MessageCategory mc : userMessage) {
 				result.put(mc.getCode(), mc);
 			}
-		} else if (allMessage != null && allMessage.size() > 0) {
-			for (MessageCategory mc : allMessage) {
-				result.put(mc.getCode(), mc);
-			}
-		} else {
-			return null;
-		}
+        }
 		return result;
 	}
 
@@ -64,7 +54,6 @@ public class MessageCategoryUtils {
 	 * @author lin
 	 * @date 2016年7月13日下午4:56:18
 	 */
-	@Async
 	public void sendMessage(String code, String params) {
 		Session session = ConstantsData.getShioSession();
 		Object obj = session.getAttribute(Constants.MESSAGE_CATEGORY);
@@ -88,7 +77,7 @@ public class MessageCategoryUtils {
 														"#222222")
 								.set(WechatParams.LOGIN.time.name(), DateUtil.getDateToString("yyyy-MM-dd hh:mm:ss"),
 										null)
-								.set(WechatParams.LOGIN.ip.name(), session.getHost(),
+								.set(WechatParams.LOGIN.ip.name(), UserAgentUtil.getIp(ConstantsData.getRequset()),
 										null)
 								.set(WechatParams.LOGIN.reason.name(), "备注：如本次登录不是您本人授权，说明您的帐号存在安全隐患！为减少您的损失，请立即修改密码。",
 										"#222222"))

@@ -50,7 +50,7 @@
 			</div>
 		#end
 		#block("img")
-    		<div>
+    		<div id="checkResult">
     			#parse("templates/report/default/PGS/img.vm")
     		</div>
 		#end
