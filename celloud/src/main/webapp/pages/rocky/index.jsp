@@ -117,5 +117,6 @@
 	<script src="<%=request.getContextPath()%>/js/rocky_main.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/rocky_upload.js"></script>
 	<script src="<%=request.getContextPath()%>/js/rocky_report.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/rocky_data.js"></script>
 </body>
 </html>
