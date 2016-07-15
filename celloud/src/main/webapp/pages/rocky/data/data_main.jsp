@@ -12,17 +12,17 @@
 			<th>
 				文件名
 				<c:if test="${sidx=='filename'&&sord=='asc' }">
-					<a id="sort-filename-asc" href="javascript:void(0);">
+					<a id="sortBtn-filename-desc" href="javascript:void(0);">
 						<i class="fa fa-sort-amount-asc"></i>
 					</a>
 				</c:if>
 				<c:if test="${sidx=='filename'&&sord=='desc' }">
-					<a id="sort-filename-desc" href="javascript:void(0);">
+					<a id="sortBtn-filename-asc" href="javascript:void(0);">
 						<i class="fa fa-sort-amount-desc"></i>
 					</a>
 				</c:if>
 				<c:if test="${sidx!='filename' }">
-					<a id="sort-filename" href="javascript:void(0);">
+					<a id="sortBtn-filename" href="javascript:void(0);">
 						<i class="fa fa-sort" aria-hidden="true"></i>
 					</a>
 				</c:if>
@@ -30,17 +30,17 @@
 			<th>
 				标签
 				<c:if test="${sidx=='batch'&&sord=='asc' }">
-					<a id="sort-batch-asc" href="javascript:void(0);">
+					<a id="sortBtn-batch-desc" href="javascript:void(0);">
 						<i class="fa fa-sort-amount-asc"></i>
 					</a>
 				</c:if>
 				<c:if test="${sidx=='batch'&&sord=='desc' }">
-					<a id="sort-batch-desc" href="javascript:void(0);">
+					<a id="sortBtn-batch-asc" href="javascript:void(0);">
 						<i class="fa fa-sort-amount-desc"></i>
 					</a>
 				</c:if>
 				<c:if test="${sidx!='batch' }">
-					<a id="sort-batch" href="javascript:void(0);">
+					<a id="sortBtn-batch" href="javascript:void(0);">
 						<i class="fa fa-sort" aria-hidden="true"></i>
 					</a>
 				</c:if>
@@ -48,17 +48,17 @@
 			<th>
 				文件大小
 				<c:if test="${sidx=='filesize'&&sord=='asc' }">
-					<a id="sort-filesize-asc" href="javascript:void(0);">
+					<a id="sortBtn-filesize-desc" href="javascript:void(0);">
 						<i class="fa fa-sort-amount-asc"></i>
 					</a>
 				</c:if>
 				<c:if test="${sidx=='filesize'&&sord=='desc' }">
-					<a id="sort-filesize-desc" href="javascript:void(0);">
+					<a id="sortBtn-filesize-asc" href="javascript:void(0);">
 						<i class="fa fa-sort-amount-desc"></i>
 					</a>
 				</c:if>
 				<c:if test="${sidx!='filesize' }">
-					<a id="sort-filesize" href="javascript:void(0);">
+					<a id="sortBtn-filesize" href="javascript:void(0);">
 						<i class="fa fa-sort" aria-hidden="true"></i>
 					</a>
 				</c:if>
@@ -67,17 +67,17 @@
 			<th>
 				上传时间
 				<c:if test="${sidx=='createDate'&&sord=='asc' }">
-					<a id="sort-date-asc" href="javascript:void(0);">
+					<a id="sortBtn-createDate-desc" href="javascript:void(0);">
 						<i class="fa fa-sort-amount-asc"></i>
 					</a>
 				</c:if>
 				<c:if test="${sidx=='createDate'&&sord=='desc' }">
-					<a id="sort-date-desc" href="javascript:void(0);">
+					<a id="sortBtn-createDate-asc" href="javascript:void(0);">
 						<i class="fa fa-sort-amount-desc"></i>
 					</a>
 				</c:if>
 				<c:if test="${sidx!='createDate' }">
-					<a id="sort-date" href="javascript:void(0);">
+					<a id="sortBtn-createDate" href="javascript:void(0);">
 						<i class="fa fa-sort" aria-hidden="true"></i>
 					</a>
 				</c:if>
