@@ -37,7 +37,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public int postInvoice(Invoice invoice, String postCompany, String postNumber, String email) {
         invoice.setUpdateDate(new Date());
-        invoice.setRemark("快递单号:" + postCompany + ":" + postNumber);
+        invoice.setRemark(postCompany + ":" + postNumber);
         invoice.setInvoiceState(1);
         int num = invoiceMapper.updateByPrimaryKeySelective(invoice);
         // 向email发送邮件通知发票寄出

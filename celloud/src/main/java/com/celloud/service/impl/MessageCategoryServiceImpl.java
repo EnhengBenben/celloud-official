@@ -55,4 +55,9 @@ public class MessageCategoryServiceImpl implements MessageCategoryService {
         return setting;
     }
 
+	@Override
+	public List<MessageCategory> getUserMessageCategory(Integer userId) {
+		return messageCategoryMapper.getUserMessageCategory(userId);
+	}
+
 }

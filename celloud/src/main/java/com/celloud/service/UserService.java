@@ -38,6 +38,16 @@ public interface UserService {
      */
     public void insertFindPwdInfo(Integer userId, String randomCode);
 
+	/**
+	 * 保存随机生成的验证码，用来校验微信二维码
+	 * 
+	 * @param userId
+	 * @param randomCode
+	 * @author lin
+	 * @date 2016年7月12日上午11:03:25
+	 */
+	public void insertWechatCode(Integer userId, String randomCode);
+
     /**
      * 清理重置密码链接(指定用户的，或者已过期的)
      * 
@@ -190,4 +200,37 @@ public interface UserService {
      * @date 2016年7月4日 下午4:36:16
      */
     public User getUserByOpenId(String openId);
+
+	/**
+	 * 校验用户或者微信是否已经绑定
+	 * 
+	 * @param openId
+	 * @param userId
+	 * @return 0 未绑定
+	 * @author lin
+	 * @date 2016年7月8日上午11:28:04
+	 */
+	public int checkWechatBind(String openId, Integer userId);
+
+	/**
+	 * 微信解除绑定时的校验
+	 * 
+	 * @param openId
+	 * @param pwd
+	 * @return
+	 * @author lin
+	 * @date 2016年7月11日下午1:24:17
+	 */
+	public int checkWechatUnBind(String openId, String pwd);
+
+	/**
+	 * 微信解除绑定
+	 * 
+	 * @param openId
+	 * @param pwd
+	 * @return
+	 * @author lin
+	 * @date 2016年7月11日下午1:35:15
+	 */
+	public int wechatUnBind(String openId, String pwd);
 }

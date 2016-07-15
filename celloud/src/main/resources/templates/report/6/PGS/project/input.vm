@@ -1,0 +1,75 @@
+<form id="projectForm">
+<table border='1' cellspacing="0" cellpadding="0" width="100%">
+    <tr>
+        <td style="height:30px">
+            <strong style="font-size:14px;">检测项目：</strong><span><input value="染色体拷贝数筛查" type="text" class="onlybotton" style="width:87%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px">
+            <strong style="font-size:14px;">送检时间：</strong><span><input type="text" class="onlybotton" style="width:38%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+            <strong style="font-size:14px;">样本类型：</strong><span><input type="text" class="onlybotton" style="width:38%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px">
+            <strong style="font-size:14px;">检测内容：</strong><span><input value="23对染色体的非整倍体，及4Mb以上片段重复或缺失" type="text" class="onlybotton" style="width:87%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px">
+            <strong style="font-size:14px;">检测技术：</strong><span><input value="半导体高通量测序" type="text" class="onlybotton" style="width:87%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px">
+            <strong style="font-size:14px;">运输状态：</strong><span><input value="正常" type="text" class="onlybotton" style="width:87%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px">
+            <strong style="font-size:14px;">内部质量控制：</strong><span><input value="正常" type="text" class="onlybotton" style="width:83.5%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+        </td>
+    </tr>
+    
+    #foreach($pgs in $pgsList)
+        #if(${velocityCount}==1)
+        <tr>
+            <td style="height:30px">
+                <div style="width:10%;margin-left:1px;float:left;margin-top:10px;"><input class="notbottom" readonly="readonly" value="样本编号" type="text" style="width:100%;height:16px;padding:0px;margin:0px;font-size:14px;line-height:16px;border-bottom:0;font-weight:bold;"/></div>
+                <div style="width:10%;margin-left:14px;margin-top:10px;float:left;"><input class="notbottom" readonly="readonly" value="实验编号" type="text" style="width:100%;height:16px;padding:0px;font-size:14px;line-height:16px;border-bottom:0;font-weight:bold;"/></div>
+                <div style="width:40%;margin-left:15px;float:left;margin-top:10px;"><input class="notbottom" readonly="readonly" value="检测结果" type="text" style="width:100%;height:16px;padding:0px;margin:0px;font-size:14px;line-height:16px;border-bottom:0;font-weight:bold;"/></div>
+                <div style="width:23%;margin-left:12px;margin-top:10px;float:left;"><input class="notbottom" readonly="readonly" value="备注" type="text" style="width:100%;height:16px;padding:0px;font-size:14px;line-height:16px;border-bottom:0;font-weight:bold;"/></div>
+            </td>
+        </tr>
+        #end
+        <tr>
+            <td style="height:30px">
+                <div class="saId" style="width:10%;margin-left:2px;float:left;word-break: break-all;"><textarea style="width:98%;font-size:12px;">$pgs.anotherName</textarea></div>
+                <div class="exId" style="width:10%;margin-left:14px;float:left;word-break: break-all;"><textarea style="width:98%;font-size:12px;"></textarea></div>
+                <div class="exResult" style="width:40%;margin-left:15px;float:left;word-break: break-all;"><textarea style="width:98%;font-size:12px;">$pgs.report</textarea></div>
+                <div class="exRemark" style="width:23%;margin-left:12px;float:left;word-break: break-all;"><textarea style="width:98%;font-size:12px;"></textarea></div>
+            </td>
+        </tr>
+    #end
+    <tr>
+        <td style="height:30px"><strong style="font-size:14px;line-">上表中每一栏结果代表的含义请咨询送检医生。</strong>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:30px">
+            <strong style="font-size:14px;">检测者：</strong><span><input type="text" class="onlybotton" style="width:23%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+            <strong style="font-size:14px;">审核者：</strong><span><input type="text" class="onlybotton" style="width:23%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+            <strong style="font-size:14px;">报告日期：</strong><span><input type="text" class="onlybotton" style="width:23%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+        </td>
+    </tr>
+</table>
+<hr>
+风险说明：<br/>
+(1) 胚胎活检只能选择质量较好的胚胎进行，在活检过程中有可能胚胎损伤、死亡、退化。<br/>
+(2) 个别情况下所活检卵裂球无核物质而无法做出诊断。<br/>
+(3) 对24条染色体的倍性筛查后，可能发现所有的胚胎均不正常而没有可移植胚胎。<br/>
+(4) 由于胚胎存在嵌合体的情况，即活检胚胎细胞的诊断结果有时不能代表整个胚胎情况，可能导致诊断结果和胚胎实际情况不符。<br/>
+(5) 只能检测染色体水平拷贝数变化，无法区分正常与携带者样本。<br/>
+(6) 以上结论均为实验室检测数据，仅供科研使用，不代表最终诊断结果，仅供临床参考。
+</form>

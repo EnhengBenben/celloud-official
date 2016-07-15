@@ -1,0 +1,57 @@
+<script type="text/javascript">
+$(function(){
+	$("#print").on("click",function(){
+		var inputVal;
+		$("table").find("input").each(function(){
+            $(this).css("border-bottom","0");
+		});
+		inputVal = $("#result").children().val();
+		if(inputVal){
+			inputVal = inputVal.replace(/\n/g,"<br>");
+			$("#result").html(inputVal);
+		}
+		$("#resultArea").html($("#resultArea").val());
+		$(".buttons").hide();
+		window.print();
+		$(".buttons").show();
+		$("body").find("span[name='print']").each(function(){
+			inputVal = $(this).html();
+			$(this).parent().html("<input type=\"text\" class=\""+inputClass+"\" value=\""+inputVal+"\" />");
+		});
+		inputVal = $("#result").html();
+		if(inputVal){
+			inputVal = inputVal.replace(/<br>/g,"\n");
+			$("#result").html("<textarea  style='width:99%'>"+inputVal+"</textarea>");
+		}
+		$("table").find("input").each(function(){
+            $(this).css("border-bottom","1px solid #ccc");
+        });
+	});
+	$("#save").on("click",function(){
+		$("body").find("input").each(function(){
+			$(this).attr("value",$(this).val());
+		});
+		$("#resultArea").html($("#resultArea").val());
+		var url = window.location.href.split("printPGS")[0];
+		$.post(url+"updateContext",{"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"projectId":$("#_projectId").html(),"printContext":$("#pgsSave").prop("outerHTML")},function(result){
+			if(result==1){
+				$.lAlert("信息保存成功！");
+			}else{
+				$.lAlert("信息保存失败！");
+			}
+		});
+	});
+	$("#reset").on("click",function(){
+	  $.lConfirm('确定重置？', function() {
+			var url = window.location.href.split("printPGS")[0];
+			$.post(url+"updateContext",{"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"projectId":$("#_projectId").html(),"printContext":""},function(result){
+				if(result==1){
+					location=location ;
+				}else{
+					$.lAlert("信息重置失败！");
+				}
+			});
+		});
+	});
+});
+</script>

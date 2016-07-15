@@ -1,5 +1,5 @@
 $(function(){
-	 $('#allUserDataList').dataTable({
+	 $('#allUserDataList').DataTable({
 		 language: {
 		        processing: "正在加载数据...",
 		        search: "搜索",

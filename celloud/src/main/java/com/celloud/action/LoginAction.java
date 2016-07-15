@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -26,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
+import com.celloud.message.category.MessageCategoryCode;
+import com.celloud.message.category.MessageCategoryUtils;
 import com.celloud.model.PrivateKey;
 import com.celloud.model.PublicKey;
 import com.celloud.model.mysql.User;
@@ -33,13 +34,8 @@ import com.celloud.service.ActionLogService;
 import com.celloud.service.RSAKeyService;
 import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
-import com.celloud.utils.DateUtil;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.RSAUtil;
-import com.celloud.wechat.ParamFormat;
-import com.celloud.wechat.WechatParams;
-import com.celloud.wechat.WechatType;
-import com.celloud.wechat.WechatUtils;
 
 /**
  * 登录action
@@ -56,8 +52,8 @@ public class LoginAction {
     private RSAKeyService rsaKeyService;
     @Resource
     private ActionLogService logService;
-    @Resource
-    private WechatUtils wechatUtils;
+	@Resource
+	private MessageCategoryUtils mcu;
 
     /**
      * 跳转到登录页面
@@ -159,27 +155,10 @@ public class LoginAction {
         session.setAttribute("companyId", companyId);
         mv.setViewName("loading");
         String openId = userService.getOpenIdByUser(userId);
-        if (StringUtils.isNotEmpty(openId)) {
-            wechatUtils
-                    .pushMessage(ParamFormat.paramAll()
-                    .template(WechatType.LOGIN).openId(openId)
-                    .url(null).data(
-                            ParamFormat.param()
-                                    .set(WechatParams.LOGIN.first.name(),
-                                            "您好，您的帐号" + user.getUsername()
-                                                    + " 被登录",
-                                            "#222222")
-                                    .set(WechatParams.LOGIN.time.name(),
-                                            DateUtil.getDateToString(
-                                                    "yyyy-MM-dd hh:mm:ss"),
-                                            null)
-                            .set(WechatParams.LOGIN.ip.name(),
-                                    ConstantsData.getLocalIp(), null)
-                            .set(WechatParams.LOGIN.reason.name(),
-                                    "备注：如本次登录不是您本人授权，说明您的帐号存在安全隐患！为减少您的损失，请立即修改密码。",
-                                    "#222222"))
-                            .get());
-        }
+		session.setAttribute(Constants.SESSION_WECHAT_OPENID, openId);
+		// 初始化消息中心
+		session.setAttribute(Constants.MESSAGE_CATEGORY, null);
+		mcu.sendMessage(MessageCategoryCode.LOGIN, null);
         return mv;
     }
 

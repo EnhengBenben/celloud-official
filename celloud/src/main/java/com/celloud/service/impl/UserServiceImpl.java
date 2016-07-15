@@ -45,6 +45,14 @@ public class UserServiceImpl implements UserService {
         userMapper.insertFindPwdInfo(userId, calendar.getTime(), randomCode);
     }
 
+	@Override
+	public void insertWechatCode(Integer userId, String randomCode) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MINUTE, Constants.WECHAT_EXPIRE_TIME);
+		cleanFindPwd(userId, new Date());
+		userMapper.insertFindPwdInfo(userId, calendar.getTime(), randomCode);
+	}
+
     @Override
     public void cleanFindPwd(int userId, Date expireDate) {
         userMapper.cleanFindPwdByUserId(userId, expireDate);
@@ -141,5 +149,20 @@ public class UserServiceImpl implements UserService {
     public User getUserByOpenId(String openId) {
         return userMapper.getUserByOpenId(openId);
     }
+
+	@Override
+	public int checkWechatBind(String openId, Integer userId) {
+		return userMapper.checkWechatBind(openId, userId);
+	}
+
+	@Override
+	public int checkWechatUnBind(String openId, String pwd) {
+		return userMapper.checkWechatUnBind(openId, pwd);
+	}
+
+	@Override
+	public int wechatUnBind(String openId, String pwd) {
+		return userMapper.wechatUnBind(openId, pwd);
+	}
 
 }

@@ -49,9 +49,11 @@
 				</div>
 			</div>
 		#end
-		<div>
-			#parse("templates/report/default/PGS/img.vm")
-		</div>
+		#block("img")
+    		<div id="checkResult">
+    			#parse("templates/report/default/PGS/img.vm")
+    		</div>
+		#end
 		#block("explain")
 			<div>
 				#parse("templates/report/default/PGS/explain.vm")

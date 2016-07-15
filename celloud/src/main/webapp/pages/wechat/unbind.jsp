@@ -26,10 +26,9 @@
 			</a>
 		</div>
 		<div class="logo-name">生物信息云平台</div>
-		<form action="<%=request.getContextPath()%>/api/wechat/login" method="post" id="loginForm">
+		<form action="<%=request.getContextPath()%>/api/wechat/unBind" method="post" id="unBindForm">
 			<div class="login-main clearfix">
 				<input type="hidden" name="info" id="info" value="${requestScope.info }" />
-				<input type="hidden" name="code" id="code" value="${code }" />
 			    <c:choose>
 		            <c:when test="${requestScope.isSuccess=='true' }">
 		                <br>
@@ -44,11 +43,10 @@
 		                <div class="error">&nbsp;test</div>
 		                <input type="hidden" id="modulusHidden" name="modulus" value="${publicKey.modulus }" />
 	                    <input type="hidden" id="exponentHidden" name="exponent" value="${publicKey.exponent }" />
-	                    <input type="text" class="username input-top" placeholder="用户名或邮箱" id="username" name="username"/>
-	                    <input type="password" class="pwd" placeholder="密码" id="password" name="password"/>
+	                    <input type="password" class="pwd" placeholder="平台账号密码" id="password" name="password"/>
 	                    <input type="hidden" id="tempPassword" />
                         <input type="hidden" name="newPassword" />
-	                    <a id="submit" class="btn-login sign-in" href="javascript:void(0);">登录</a>
+	                    <a id="unBindSubmit" class="btn-login sign-in" href="javascript:void(0);">解除绑定</a>
 		            </c:otherwise>
 		        </c:choose>
 			</div>
@@ -71,7 +69,7 @@
 	<!--#E bgContainer-->
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/utils.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/wechatlogin.js?version=0.3"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/wechatlogin.js?version=3.2.1"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/md5.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/security.js"></script>
 	<script type="text/javascript">

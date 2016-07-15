@@ -36,7 +36,7 @@ var datafileUpload=(function(datafileUpload){
 			chunk_size : "1mb",
 			file_data_name : "file",
 			filters : {
-				max_file_size : "4gb",
+				max_file_size : "10gb",
 				mime_types: [
 					{title : "bam", extensions : "bam"},
 					{title : "ab1", extensions : "ab1"},

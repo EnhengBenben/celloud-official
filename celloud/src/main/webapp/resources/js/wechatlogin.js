@@ -14,15 +14,13 @@ $(document).ready(function(){
 			$("#loginForm").submit();
 		}
 	});
-	function checkForm(){
+	$("#unBindSubmit").click(function(){
+	  if(checkUnBindForm()){
+	    $("#unBindForm").submit();
+	  }
+	});
+	function checkUnBindForm(){
 		$(".error").html("");
-		//校验用户名是否为空
-		var username = $.trim($("#username").val());
-		if(username==""||username==$.trim($("#username").attr("placeholder"))){
-			$(".error").html("请输入用户名！");
-			$("#username").val('').focus();
-			return false;
-		}
 		//校验密码是否为空
 		var password = $.trim($("#password").val());
 		if(password==""){
@@ -35,6 +33,28 @@ $(document).ready(function(){
       $("input[name='password']").val(secPWD(password));
     }
     return true;
+	}
+	function checkForm(){
+	  $(".error").html("");
+	  //校验用户名是否为空
+	  var username = $.trim($("#username").val());
+	  if(username==""||username==$.trim($("#username").attr("placeholder"))){
+	    $(".error").html("请输入用户名！");
+	    $("#username").val('').focus();
+	    return false;
+	  }
+	  //校验密码是否为空
+	  var password = $.trim($("#password").val());
+	  if(password==""){
+	    $(".error").html("请输入密码！");
+	    $("#password").focus();
+	    return false;
+	  }
+	  //全部校验已通过
+	  if(password){
+	    $("input[name='password']").val(secPWD(password));
+	  }
+	  return true;
 	}
 });
 function secPWD(password){

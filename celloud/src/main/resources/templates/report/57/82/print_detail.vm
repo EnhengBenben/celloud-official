@@ -8,7 +8,7 @@
         <div>
             #parse("templates/report/57/${hbv.appId}/title_detail.vm")
             #parse("templates/report/57/${hbv.appId}/content_detail.vm")
-            #parse("templates/report/default/${hbv.appId}/foot.vm")
+            #parse("templates/report/57/${hbv.appId}/foot.vm")
             </form>
         </div>
     #end
