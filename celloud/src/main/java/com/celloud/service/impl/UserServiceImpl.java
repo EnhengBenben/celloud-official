@@ -82,6 +82,11 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByPrimaryKey(userId);
     }
 
+	@Override
+	public User selectUserByIdNotIcon(int userId) {
+		return userMapper.selectUserByIdNotIcon(userId);
+	}
+
     @Override
     public Integer updateUserInfo(User user) {
         User temp = new User();

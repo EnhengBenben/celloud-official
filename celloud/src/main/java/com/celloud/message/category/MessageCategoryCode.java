@@ -6,5 +6,6 @@ public class MessageCategoryCode {
 	public static final String BALANCES = "balances";
 	public static final String NOTICE = "notice";
 	public static final String LOGIN = "login";
+	public static final String UPDATEPWD = "updatePWD";
 
 }

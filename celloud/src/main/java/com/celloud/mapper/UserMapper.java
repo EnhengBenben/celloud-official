@@ -16,6 +16,8 @@ public interface UserMapper {
 
     public User selectByPrimaryKey(Integer userId);
 
+	public User selectUserByIdNotIcon(Integer userId);
+
     public int updateByPrimaryKeySelective(User record);
 
     public int updateByPrimaryKey(User record);
