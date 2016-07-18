@@ -17,4 +17,9 @@ public class WechatType {
      * 密码修改
      */
     public static final String PWD_UPDATE = "k9YQz5R6HhfiOYZL2Xmwwr6MUXZJDhrrGyjq9n2Vq8U";
+	/**
+	 * 项目共享
+	 */
+	//TODO
+	public static final String SHARE = "k9YQz5R6HhfiOYZL2Xmwwr6MUXZJDhrrGyjq9n2Vq8U";
 }

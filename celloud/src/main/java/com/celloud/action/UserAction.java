@@ -114,13 +114,11 @@ public class UserAction {
 			return WRONG_PASSWORD;
 		}
 		int result = userService.updatePassword(user.getUserId(), newPassword);
-		//TODO 微信发送消息需要修改
 		Param params = ParamFormat.param()
 				.set(WechatParams.PWD_UPDATE.first.name(), "您好，" + user.getUsername() + "：", "#222222")
 				.set(WechatParams.PWD_UPDATE.productName.name(), "平台账号", null)
 				.set(WechatParams.PWD_UPDATE.time.name(), DateUtil.getDateToString("yyyy-MM-dd HH:mm:ss"), null);
-		mcu.sendMessage(MessageCategoryCode.UPDATEPWD, null, params, null);
-
+		mcu.sendMessage(user.getUserId(), MessageCategoryCode.UPDATEPWD, null, params, null);
 		return result > 0 ? Response.SAVE_SUCCESS : UPDATE_PASSWORD_FAIL;
 	}
 

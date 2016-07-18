@@ -360,6 +360,12 @@
 		select username from tb_user
 		where user_id in (${userIds})
 	</select>
+	<select id="selectUserByIds" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" /> 
+		from tb_user
+		where user_id in (${userIds})
+	</select>
 	<insert id="insertUserWechatInfo">
         insert into tb_user_wechat
         <trim prefix="(" suffix=")" suffixOverrides=",">

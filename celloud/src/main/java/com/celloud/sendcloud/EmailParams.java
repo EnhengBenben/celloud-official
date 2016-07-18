@@ -36,6 +36,10 @@ public class EmailParams {
 		url;
 	}
 
+	public static enum RECHARGE {
+		date, adCharge, cashBalance;
+	}
+
 	public static enum PROJECT_SHARE {
 		/**
 		 * 被共享人

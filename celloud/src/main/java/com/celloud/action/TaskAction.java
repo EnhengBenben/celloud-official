@@ -265,7 +265,6 @@ public class TaskAction {
             }
         }
         String tipsName = pubName.equals("") ? fname : pubName;
-		//TODO need test
 		//构造桌面消息
 		MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
 				.send(NoticeConstants.createMessage("task", "运行完成", "文件【" + tipsName + "】运行应用【" + appName + "】完成"));
