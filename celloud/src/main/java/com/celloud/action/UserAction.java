@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.shiro.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +19,8 @@ import com.celloud.alimail.AliEmailUtils;
 import com.celloud.alimail.AliSubstitution;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
+import com.celloud.message.category.MessageCategoryCode;
+import com.celloud.message.category.MessageCategoryUtils;
 import com.celloud.model.mysql.ActionLog;
 import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
@@ -33,8 +34,8 @@ import com.celloud.utils.MD5Util;
 import com.celloud.utils.ResetPwdUtils;
 import com.celloud.utils.Response;
 import com.celloud.wechat.ParamFormat;
+import com.celloud.wechat.ParamFormat.Param;
 import com.celloud.wechat.WechatParams;
-import com.celloud.wechat.WechatType;
 import com.celloud.wechat.WechatUtils;
 
 /**
@@ -54,6 +55,8 @@ public class UserAction {
 	private AliEmailUtils emailUtils;
 	@Resource
 	private WechatUtils wechatUtils;
+	@Resource
+	private MessageCategoryUtils mcu;
 	private static final Response EMAIL_IN_USE = new Response("202", "邮箱已存在");
 	private static final Response UPDATE_BASEINFO_FAIL = new Response("修改用户信息失败");
 	private static final Response UPDATE_PASSWORD_FAIL = new Response("修改用户密码失败");
@@ -112,19 +115,12 @@ public class UserAction {
 		}
 		int result = userService.updatePassword(user.getUserId(), newPassword);
 		//TODO 微信发送消息需要修改
-		Session session = ConstantsData.getShioSession();
-		Object openId = session.getAttribute(Constants.SESSION_WECHAT_OPENID);
-		if (openId != null && StringUtils.isNotEmpty(openId.toString())) {
-			wechatUtils.pushMessage(
-					ParamFormat.paramAll().template(WechatType.PWD_UPDATE).openId(openId.toString()).url(null)
-							.data(ParamFormat.param()
-									.set(WechatParams.PWD_UPDATE.first.name(), "您好，" + user.getUsername() + "：",
-											"#222222")
-									.set(WechatParams.PWD_UPDATE.productName.name(), "平台账号", null)
-									.set(WechatParams.PWD_UPDATE.time.name(),
-											DateUtil.getDateToString("yyyy-MM-dd HH:mm:ss"), null))
-							.get());
-		}
+		Param params = ParamFormat.param()
+				.set(WechatParams.PWD_UPDATE.first.name(), "您好，" + user.getUsername() + "：", "#222222")
+				.set(WechatParams.PWD_UPDATE.productName.name(), "平台账号", null)
+				.set(WechatParams.PWD_UPDATE.time.name(), DateUtil.getDateToString("yyyy-MM-dd HH:mm:ss"), null);
+		mcu.sendMessage(MessageCategoryCode.UPDATEPWD, null, params, null);
+
 		return result > 0 ? Response.SAVE_SUCCESS : UPDATE_PASSWORD_FAIL;
 	}
 
