@@ -11,6 +11,7 @@ from app.CMP import CMP
 from app.split import split
 from app.MIB import MIB
 from app.BSI import BSI
+from app.Rocky import Rocky
 
 # command: python *.py basePath userId appId dataKey projectId
 # eg : python task_over.py '/share/data/webapps/Tools/upload/' 88 110 20151119290394,20151119898677 proID
@@ -18,10 +19,10 @@ from app.BSI import BSI
 # eg : python e:/git/celloud/python/task_over.py d:/share/data/webapps/Tools/upload/ 88 112 15112501860090,15112501860183
 
 # 对应class名
-method_dic = {110: CMP, 111: CMP, 112: CMP, 113: split, 114: MIB, 118: BSI}
+method_dic = {110: CMP, 111: CMP, 112: CMP, 113: split, 114: MIB, 118: BSI,123: Rocky}
 
 # 对应database名
-collection_dic = {110: "CmpReport", 111: "CmpReport", 112: "CmpReport", 113: "Split", 114: "MIB", 118: "BSI"}
+collection_dic = {110: "CmpReport", 111: "CmpReport", 112: "CmpReport", 113: "Split", 114: "MIB", 118: "BSI",123: "Rocky"}
 
 if len(sys.argv) != 6:
     print 'Usage: *.py path userId appId dataKeys projectId'
