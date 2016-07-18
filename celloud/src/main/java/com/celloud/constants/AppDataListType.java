@@ -14,7 +14,7 @@ public class AppDataListType {
 	/**
 	 * 向spark投递
 	 */
-	public static final List<Integer> SPARK = Arrays.asList(86, 92, 93, 99, 100, 101, 118, 123);
+	public static final List<Integer> SPARK = Arrays.asList(86, 92, 93, 99, 100, 101, 118);
 
 	/**
 	 * 投递fastq文件
