@@ -45,9 +45,7 @@
 					</a>
 				</c:if>
 			</th>
-			<th>
-				状态
-			</th>
+			<th>状态</th>
 			<th>操作</th>
 		</tr>
 	</thead>
@@ -83,7 +81,7 @@
 							</a>
 						</c:when>
 						<c:otherwise>
-							<a title="查看报告" class="disabled" disabled="disabled">
+							<a title="查看报告" class="disabled" href="javascript:$report.showReport();">
 								<i class="fa fa-eye"></i>
 							</a>
 						</c:otherwise>

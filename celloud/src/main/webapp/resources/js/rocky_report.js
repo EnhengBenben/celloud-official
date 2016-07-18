@@ -1,6 +1,6 @@
 var $report = {
 	showReport : function() {
-		$("#container").load("pages/rocky/report_data_main.jsp");
+		$("#container").load("pages/rocky/report/report_data_main.jsp");
 	}
 }
 var rockyReport = (function(rockyReport) {
