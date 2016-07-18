@@ -205,5 +205,5 @@ public interface TaskService {
 	 * 
 	 * @param pager
 	 */
-	public PageList<Task> findRockyTasks(Page pager);
+	public PageList<Task> findRockyTasks(Page pager, String sample, String condition, String sidx, String sord);
 }

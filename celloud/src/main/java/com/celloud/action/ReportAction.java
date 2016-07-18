@@ -1462,17 +1462,21 @@ public class ReportAction {
 	@ActionLog(value = "报告菜单", button = "乳腺癌报告")
 	@RequestMapping("rocky/reportMain")
 	public ModelAndView rockyReportMain(@RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "20") int size) {
+			@RequestParam(defaultValue = "20") int size, String sample, String condition,
+			@RequestParam(defaultValue = "createDate") String sidx, @RequestParam(defaultValue = "desc") String sord) {
 		ModelAndView mv = new ModelAndView("rocky/report/report_main");
 		Integer userId = ConstantsData.getLoginUserId();
 		Map<String, Object> periodMap = taskService.findTaskPeriodNum(AppConstants.APP_ID_ROCKY, userId);
 		List<String> batchList = dataService.getBatchList(userId);
 		Page pager = new Page(page, size);
-		PageList<Task> pageList=taskService.findRockyTasks(pager);
+		PageList<Task> pageList = taskService.findRockyTasks(pager, sample, condition, sidx, sord);
 		mv.addObject("pageList", pageList);
 		periodMap.put("uploaded", batchList.size());
 		mv.addObject("periodMap", periodMap);
 		mv.addObject("batchList", batchList);
+		mv.addObject("sampleFilter", sample);
+		mv.addObject("sidx", sidx);
+		mv.addObject("sord", sord);
 		log.info("血流用户{}查看我的报告列表", ConstantsData.getLoginUserName());
 		return mv;
 	}

@@ -7,20 +7,46 @@
 		<tr>
 			<th width="40"></th>
 			<th width="140">
-				<input id="sample-selector" type="text" placeholder="样本编号/病历号">
+				<input id="report-sample-filter" type="text" placeholder="样本编号/病历号" value="${sampleFilter }">
 			</th>
-			<th>文件名</th>
+			<th>
+				文件名
+				<c:if test="${sidx=='filename'&&sord=='asc' }">
+					<a id="reportSortBtn-filename-desc" href="javascript:void(0);">
+						<i class="fa fa-sort-amount-asc"></i>
+					</a>
+				</c:if>
+				<c:if test="${sidx=='filename'&&sord=='desc' }">
+					<a id="reportSortBtn-filename-asc" href="javascript:void(0);">
+						<i class="fa fa-sort-amount-desc"></i>
+					</a>
+				</c:if>
+				<c:if test="${sidx!='filename' }">
+					<a id="reportSortBtn-filename" href="javascript:void(0);">
+						<i class="fa fa-sort" aria-hidden="true"></i>
+					</a>
+				</c:if>
+			</th>
 			<th>
 				标签
-				<a href="javascript:void(0);">
-					<i class="fa fa-sort" aria-hidden="true"></i>
-				</a>
+				<c:if test="${sidx=='batch'&&sord=='asc' }">
+					<a id="reportSortBtn-batch-desc" href="javascript:void(0);">
+						<i class="fa fa-sort-amount-asc"></i>
+					</a>
+				</c:if>
+				<c:if test="${sidx=='batch'&&sord=='desc' }">
+					<a id="reportSortBtn-batch-asc" href="javascript:void(0);">
+						<i class="fa fa-sort-amount-desc"></i>
+					</a>
+				</c:if>
+				<c:if test="${sidx!='batch' }">
+					<a id="reportSortBtn-batch" href="javascript:void(0);">
+						<i class="fa fa-sort" aria-hidden="true"></i>
+					</a>
+				</c:if>
 			</th>
 			<th>
 				状态
-				<a href="javascript:void(0);">
-					<i class="fa fa-sort" aria-hidden="true"></i>
-				</a>
 			</th>
 			<th>操作</th>
 		</tr>

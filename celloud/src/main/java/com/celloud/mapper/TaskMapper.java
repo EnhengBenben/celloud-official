@@ -216,5 +216,6 @@ public interface TaskMapper {
 	 * @return
 	 */
 	List<Task> findRockyTasks(Page pager, @Param("userId") Integer userId, @Param("state") Integer state,
-			@Param("appId") Integer appId);
+			@Param("appId") Integer appId, @Param("sample") String sample, @Param("condition") String condition,
+			@Param("sidx") String sidx, @Param("sord") String sord);
 }
