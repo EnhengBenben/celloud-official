@@ -1,6 +1,7 @@
 package com.celloud.backstage.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.celloud.backstage.model.App;
 import com.celloud.backstage.page.Page;
@@ -72,4 +73,6 @@ public interface AppService {
     public App getAppById(Integer appId);
 
     public List<App> getAllApp();
+
+    public Map<String, Object> getAppMapById(Integer appId);
 }

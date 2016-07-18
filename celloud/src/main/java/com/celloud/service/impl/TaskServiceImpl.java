@@ -260,9 +260,9 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
-	public PageList<Task> findRockyTasks(Page pager) {
+	public PageList<Task> findRockyTasks(Page pager, String sample, String condition, String sidx, String sord) {
 		List<Task> list = taskMapper.findRockyTasks(pager, ConstantsData.getLoginUserId(), DataState.ACTIVE,
-				AppConstants.APP_ID_ROCKY);
+				AppConstants.APP_ID_ROCKY, sample, condition, sidx, sord);
 		return new PageList<>(pager, list);
 	}
 }

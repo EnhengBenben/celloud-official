@@ -3,6 +3,7 @@ package com.celloud.backstage.action;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -73,11 +74,13 @@ public class AppAction {
         ModelAndView mv=new ModelAndView("app/app_edit");
         String appId=request.getParameter("appId");
         if(StringUtils.isNotBlank(appId)){
-            App app=appService.getAppById(Integer.parseInt(appId));
-            if(app!=null){
-                app.setClassifyIds(";"+app.getClassifyIds()+";");
-                app.setFileFormatIds(";"+app.getFileFormatIds()+";");
-                mv.addObject("app", app);
+            Map<String, Object> appMap = appService
+                    .getAppMapById(Integer.parseInt(appId));
+            if (appMap != null) {
+                // app.setClassifyIds(";" + app.getClassifyIds() + ";");
+                // app.setFileFormatIds(";"+app.getFileFormatIds()+";");
+
+                mv.addObject("app", appMap);
             }
         }
         List<Company> companyList=companyService.getAllCompany();

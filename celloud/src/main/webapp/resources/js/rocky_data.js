@@ -5,8 +5,8 @@ var rockyData = (function(rockyData) {
 	$(document).off("keyup", "#data-sample-filter");
 	$(document).off("keyup", "#data-condition-input");
 	$(document).off("change", "#rocky_data_page #page-size-sel");
-	$(document).off("click", "a[id^='sortBtn-']");
-	$(document).on("click", "a[id^='sortBtn-']", function() {
+	$(document).off("click", "a[id^='dataSortBtn-']");
+	$(document).on("click", "a[id^='dataSortBtn-']", function() {
 		var id = $(this).attr("id");
 		var sort = id.split('-');
 		var sidx = sort[1];
@@ -59,6 +59,8 @@ var rockyData = (function(rockyData) {
 			self.filter.param = {
 				condition : condition
 			};
+		} else {
+			self.filter.param = {};
 		}
 		if (sidx && sord) {
 			params.sidx = sidx;
