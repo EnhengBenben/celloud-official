@@ -24,6 +24,8 @@ public interface UserMapper {
 
     public User checkLogin(User user);
 
+	public String getOpenIdByUser(@Param("userId") Integer userId);
+
     public User getUserByEmail(@Param("email") String email);
 
     public void insertFindPwdInfo(@Param("userId") Integer userId, @Param("expireDate") Date expireDate,

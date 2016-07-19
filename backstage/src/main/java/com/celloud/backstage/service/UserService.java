@@ -15,6 +15,7 @@ import com.celloud.backstage.page.PageList;
  * @date 2015年12月23日 下午12:53:35
  */
 public interface UserService {
+	public String getOpenIdByUser(Integer userId);
     /**
      * 用户登录校验
      * 

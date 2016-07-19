@@ -33,9 +33,14 @@ public class UserServiceImpl implements UserService {
     private Logger logger=LoggerFactory.getLogger(UserServiceImpl.class);
     @Resource
     private UserMapper userMapper;
-    
+
     @Resource
     private UserRegisterMapper userRegisterMapper;
+
+	@Override
+	public String getOpenIdByUser(Integer userId) {
+		return userMapper.getOpenIdByUser(userId);
+	}
 
     @Override
     public User login(User user) {

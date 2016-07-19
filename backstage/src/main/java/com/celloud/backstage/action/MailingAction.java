@@ -1,6 +1,5 @@
 package com.celloud.backstage.action;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.celloud.backstage.model.User;
 import com.celloud.backstage.model.UserSelect;
 import com.celloud.backstage.service.UserService;
 import com.celloud.backstage.utils.EmailUtils;
