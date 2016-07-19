@@ -76,7 +76,7 @@
 				<td>
 					<c:choose>
 						<c:when test="${report.period ==2 }">
-							<a title="查看报告" href="javascript:$.report.detail.patient('${report.dataKey}',${report.projectId},${report.appId},${size.count},${pageList.page.currentPage })">
+							<a title="查看报告" href="javascript:$report.showReport('${report.dataKey}',${report.projectId},${report.appId},${size.count},${pageList.page.currentPage })">
 								<i class="fa fa-eye"></i>
 							</a>
 						</c:when>
