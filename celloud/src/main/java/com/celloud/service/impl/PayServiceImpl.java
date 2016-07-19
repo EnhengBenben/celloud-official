@@ -22,6 +22,8 @@ import com.celloud.constants.RechargeType;
 import com.celloud.mapper.PayOrderMapper;
 import com.celloud.mapper.RechargeAlipayMapper;
 import com.celloud.message.MessageUtils;
+import com.celloud.message.category.MessageCategoryCode;
+import com.celloud.message.category.MessageCategoryUtils;
 import com.celloud.model.mysql.PayOrder;
 import com.celloud.model.mysql.RechargeAlipay;
 import com.celloud.pay.alipay.AlipayConfig;
@@ -39,6 +41,8 @@ public class PayServiceImpl implements PayService {
 	private RechargeService rechargeService;
 	@Resource
 	private RechargeAlipayMapper rechargeAlipayMapper;
+	@Resource
+	private MessageCategoryUtils mcu;
 
 	@Override
 	public Map<String, String> createAlipayOrder(String money) {
@@ -135,13 +139,16 @@ public class PayServiceImpl implements PayService {
 					alipay.setDescription(params.get("body"));
 					alipay.setSubject(params.get("subject"));
 					alipay.setTradeNo(out_trade_no);
-					alipay.setUserId(order.getUserId());
-					alipay.setUsername(order.getUsername());
+					Integer userId = order.getUserId();
+					String username = order.getUsername();
+					alipay.setUserId(userId);
+					alipay.setUsername(username);
 					rechargeAlipayMapper.insert(alipay);
-					rechargeService.saveRecharge(amount, order.getUserId(), RechargeType.ALIPAY, alipay.getId());
-					MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
-							.send(NoticeConstants.createMessage("recharge", "充值成功", alipay.getDescription()))
-							.to(alipay.getUsername());
+					rechargeService.saveRecharge(amount, userId, RechargeType.ALIPAY, alipay.getId());
+					//构造桌面消息
+					MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
+							.send(NoticeConstants.createMessage("recharge", "充值成功", alipay.getDescription()));
+					mcu.sendMessage(userId, MessageCategoryCode.BALANCES, null, null, mu);
 				} else {
 					alipay = rechargeAlipayMapper.selectByTradeNo(out_trade_no);
 				}

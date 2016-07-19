@@ -178,6 +178,8 @@ public interface UserService {
      */
     public List<String> selectUserUserById(String userIds);
 
+	public List<User> selectUserByIds(String userIds);
+
     /**
      * 新增用户与微信服务号绑定关系
      * 

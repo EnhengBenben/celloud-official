@@ -21,6 +21,20 @@ public class DateUtil {
         return simpleFormat.format(date);
     }
 
+	/**
+	 * 自定义格式化当前时间
+	 * 
+	 * @param format
+	 * @return
+	 * @author lin
+	 * @date 2016年7月19日下午1:59:23
+	 */
+	public static String getDateToString(String format) {
+		Date date = new Date();
+		SimpleDateFormat simpleFormat = new SimpleDateFormat(format);
+		return simpleFormat.format(date);
+	}
+
     /**
      * 秒转时:分:秒
      * 

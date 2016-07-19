@@ -47,5 +47,9 @@ public class EmailType {
      * 申请发票
      */
     public static final String INVOICE = "invoice";
+	/**
+	 * 充值
+	 */
+	public static final String RECHARGE = "recharge";
 
 }

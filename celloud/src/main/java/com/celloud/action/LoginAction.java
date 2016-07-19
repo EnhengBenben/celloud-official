@@ -171,7 +171,7 @@ public class LoginAction {
 		Param params = ParamFormat.param().set(WechatParams.LOGIN.first.name(), first, "#222222")
 				.set(WechatParams.LOGIN.time.name(), now, null).set(WechatParams.LOGIN.ip.name(), ip, null)
 				.set(WechatParams.LOGIN.reason.name(), reason, "#222222");
-		mcu.sendMessage(MessageCategoryCode.LOGIN, null, params, null);
+		mcu.sendMessage(userId, MessageCategoryCode.LOGIN, null, params, null);
         return mv;
     }
 

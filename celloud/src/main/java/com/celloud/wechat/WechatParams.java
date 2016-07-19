@@ -7,6 +7,17 @@ package com.celloud.wechat;
  * @date 2016年6月30日 下午3:00:11
  */
 public class WechatParams {
+	public static enum SHARE {
+		first,
+		/**
+		 * 项目名称
+		 */
+		keyword1,
+		/**
+		 * 项目编号
+		 */
+		keyword2, remark
+	}
     public static enum RUN_OVER {
         first,
         /**

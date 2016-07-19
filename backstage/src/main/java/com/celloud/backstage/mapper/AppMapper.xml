@@ -19,7 +19,7 @@
     <result column="param" property="param" jdbcType="INTEGER" />
     <result column="off_line" property="offLine" jdbcType="INTEGER" />
     <result column="command" property="command" jdbcType="VARCHAR" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="BLOB" />
     <result column="method" property="method" jdbcType="VARCHAR" />
     <result column="max_task" property="maxTask" jdbcType="INTEGER" />
   </resultMap>
@@ -392,6 +392,21 @@
 	where a.app_id=#{appId,jdbcType=INTEGER}
 	GROUP BY a.app_id 
 	order by a.off_line,a.app_id desc;
+  </select>
+  <select id="getAppMapById" resultType="map" >
+    SELECT group_concat(DISTINCT sc.screen_name separator ';') screenNames,
+    group_concat(DISTINCT acr.classify_id separator ';') classifyIds,
+    group_concat(DISTINCT afr.format_id separator ';') fileFormatIds ,
+    a.app_name appName,a.english_name englishName,a.address,a.picture_name pictureName,a.create_date createDate,
+    a.intro,a.description,a.company_id companyId,a.attribute,a.run_type runType,a.flag,a.run_data runData,
+    a.data_num dataNum,a.param,a.off_line offLine,a.command,a.title,a.method,a.max_task maxTask
+     from tb_app a 
+    LEFT JOIN tb_app_classify_relat acr on a.app_id=acr.app_id 
+    LEFT JOIN tb_screen sc on sc.app_id=a.app_id 
+    LEFT JOIN tb_app_format_relat afr on afr.app_id=a.app_id
+    where a.app_id=#{appId,jdbcType=INTEGER}
+    GROUP BY a.app_id 
+    order by a.off_line,a.app_id desc;
   </select>
   <update id="updateApp" parameterType="com.celloud.backstage.model.App" >
     update tb_app

@@ -57,15 +57,14 @@
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">APP分类<font color="red">*</font></label>
-                
                 <div class="col-sm-10">
-                <c:forEach items="${classifyList }" var="classify">
-                <c:set var="containClassifyId" value=";${classify.classifyId };" />
+                  <c:forEach items="${classifyList }" var="classify">
+                    <c:set var="containClassifyId" value="${classify.classifyId }" />
                     <label class="checkbox-inline">
                         <input type="checkbox" name="classifyIds" value="${classify.classifyId }" <c:if test="${fn:contains(app.classifyIds,containClassifyId)}">checked</c:if> data-rule-required="true">
-                                            ${classify.classifyName }
+                        ${classify.classifyName }
                     </label>
-                </c:forEach>
+                  </c:forEach>
                 </div>
             </div>
             <div class="form-group-separator"></div>
@@ -98,7 +97,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label" >报告标题</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="title" value="${app.title }" placeholder="dataKey\tfileName\t&hellip;">
+                    <textarea class="form-control" cols="5" name="title">${app.title }</textarea>
                 </div>
             </div>
             <div class="form-group">

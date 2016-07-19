@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.celloud.backstage.constants.DataState;
 import com.celloud.backstage.constants.NoticeConstants;
+import com.celloud.backstage.exception.BusinessException;
 import com.celloud.backstage.mapper.NoticeMapper;
 import com.celloud.backstage.model.Notice;
 import com.celloud.backstage.page.Page;
@@ -18,6 +19,20 @@ import com.celloud.backstage.service.NoticeService;
 public class NoticeServiceImpl implements NoticeService {
 	@Resource
 	private NoticeMapper noticeMapper;
+
+	@Override
+	public void insertMessage(Notice notice, String... usernames) {
+		noticeMapper.insertSelective(notice);
+		int result = 0;
+		if (usernames == null || usernames.length == 0) {
+			result = noticeMapper.insertNoticeAllUser(notice.getNoticeId());
+		} else {
+			result = noticeMapper.insertNoticeUser(notice.getNoticeId(), usernames);
+		}
+		if (result == 0) {
+			throw new BusinessException("消息没有接收者！");
+		}
+	}
 
 	@Override
 	public PageList<Notice> getNoticeByPage(Page page) {

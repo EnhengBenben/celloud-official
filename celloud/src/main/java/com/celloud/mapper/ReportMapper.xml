@@ -403,5 +403,4 @@
     from tb_report
 	where project_id=#{projectId} and flag=#{flag}
   </select>
-  
 </mapper>
