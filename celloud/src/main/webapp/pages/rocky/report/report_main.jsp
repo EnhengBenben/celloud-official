@@ -87,9 +87,9 @@
 						</c:otherwise>
 					</c:choose>
 					<c:choose>
-						<c:when test="${report.period ==2 }">
+						<c:when test="${report.period ==21 }">
 							<a title="打印患者报告" target="_blank"
-								href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${report.projectId }&dataKey=${report.dataKey }&appId=${report.appId }&templateType=print_patient">
+								href="<%=request.getContextPath()%>/report/printRockyReport?projectId=${report.projectId }&dataKey=${report.dataKey }&appId=${report.appId }&templateType=print_patient">
 								<i class="fa fa-print"></i>
 							</a>
 						</c:when>
