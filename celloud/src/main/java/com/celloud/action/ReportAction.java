@@ -56,6 +56,8 @@ import com.celloud.model.mongo.MIB;
 import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
 import com.celloud.model.mongo.RecommendDrug;
+import com.celloud.model.mongo.Rocky;
+import com.celloud.model.mongo.RockyRecord;
 import com.celloud.model.mongo.S16;
 import com.celloud.model.mongo.Split;
 import com.celloud.model.mongo.TBINH;
@@ -371,6 +373,7 @@ public class ReportAction {
 			}
 		}
 		CollectionUtils.filter(allGsrList, new Predicate() {
+
 			@Override
 			public boolean evaluate(Object obj) {
 				CmpGeneSnpResult gsr_tmp = (CmpGeneSnpResult) obj;
@@ -383,9 +386,11 @@ public class ReportAction {
 			}
 		});
 		context.put("allGsr", allGsrListNew);
+
 		String[] fields = { "gene", "name" };
 		conditionMap.put("gene", unnormalGene);
 		context.put("gddDiseaseList", reportService.getGddDiseaseDictNormal(fields, conditionMap, "gene"));
+
 		returnToVelocity(path, context, projectId);
 	}
 
@@ -734,6 +739,24 @@ public class ReportAction {
 		BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
 		Map<String, Object> context = new HashMap<String, Object>();
 		context.put("bsi", bsi);
+		returnToVelocity(path.toString(), context, projectId);
+	}
+
+	@ActionLog(value = "打印BSI报告", button = "打印数据报告")
+	@RequestMapping("printRockyReport")
+	@ResponseBody
+	public void printRockyReport(String dataKey, Integer projectId, Integer appId, String templateType) {
+		StringBuffer path = new StringBuffer();
+		path.append(ConstantsData.getLoginCompanyId()).append(File.separator).append(appId).append(File.separator)
+				.append(templateType).append(".vm");
+		if (!new File("templates/report/" + path).exists()) {
+			path.setLength(0);
+			path.append("default").append(File.separator).append(appId).append(File.separator).append(templateType)
+					.append(".vm");
+		}
+		Rocky rocky = reportService.getRockyReport(dataKey, projectId, appId);
+		Map<String, Object> context = new HashMap<String, Object>();
+		context.put("rocky", rocky);
 		returnToVelocity(path.toString(), context, projectId);
 	}
 
@@ -1477,7 +1500,20 @@ public class ReportAction {
 		mv.addObject("sampleFilter", sample);
 		mv.addObject("sidx", sidx);
 		mv.addObject("sord", sord);
-		log.info("血流用户{}查看我的报告列表", ConstantsData.getLoginUserName());
+		log.info("乳腺癌用户{}查看我的报告列表", ConstantsData.getLoginUserName());
+		return mv;
+	}
+
+	@ActionLog(value = "报告菜单", button = "乳腺癌报告")
+	@RequestMapping("rocky/data/report")
+	public ModelAndView rockyDataReport(String dataKey, Integer projectId, Integer appId) {
+		ModelAndView mv = new ModelAndView("rocky/report/report_data_main");
+		Rocky rocky = reportService.getRockyReport(dataKey, projectId, appId);
+		mv.addObject("rocky", rocky);
+		for (RockyRecord record : rocky.getRecords()) {
+			System.out.println(record.getBases());
+		}
+		log.info("乳腺癌用户{}查看数据报告", ConstantsData.getLoginUserName());
 		return mv;
 	}
 

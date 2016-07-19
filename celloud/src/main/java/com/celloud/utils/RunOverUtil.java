@@ -365,7 +365,7 @@ public class RunOverUtil {
 			resultArray.append(appTitle).append("\n");
 		}
 		try {
-			List<String> list = FileUtils.readLines(new File(reportPath + "/result/all.snp"));
+			List<String> list = FileUtils.readLines(new File(reportPath + "/result/all_.snp"));
 			for (String line : list) {
 				String[] cols = line.split("\t");
 				resultArray.append(FileTools.getArray(cols, 3)).append("\t");
