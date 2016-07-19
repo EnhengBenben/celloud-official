@@ -19,7 +19,7 @@ from app.Rocky import Rocky
 # eg : python e:/git/celloud/python/task_over.py d:/share/data/webapps/Tools/upload/ 88 112 15112501860090,15112501860183
 
 # 对应class名
-method_dic = {110: CMP, 111: CMP, 112: CMP, 113: split, 114: MIB, 118: BSI,123: Rocky}
+method_dic = {110: CMP, 111: CMP, 112: CMP, 113: split, 114: MIB, 118: BSI, 123: Rocky}
 
 # 对应database名
 collection_dic = {110: "CmpReport", 111: "CmpReport", 112: "CmpReport", 113: "Split", 114: "MIB", 118: "BSI",123: "Rocky"}
