@@ -12,6 +12,7 @@ import com.celloud.backstage.page.PageList;
  * @date 2016年2月16日 下午2:05:34
  */
 public interface NoticeService {
+	public void insertMessage(Notice notice, String... usernames);
     
     public PageList<Notice> getNoticeByPage(Page page);
     

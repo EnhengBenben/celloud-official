@@ -31,6 +31,10 @@
 		truename, state, dept_id, login_uuid,
 		company_id, sign, balances
 	</sql>
+	<select id="getOpenIdByUser" resultType="java.lang.String">
+        select open_id from tb_user_wechat
+        where user_id=#{userId}
+    </select>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Integer">
 		select
