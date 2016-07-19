@@ -124,6 +124,29 @@
                             </li>
                         </ul>
                     </li>
+                    <li id="permission-menu">
+                        <a href="#">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <span class="title">权限管理</span>
+                        </a>
+                        <ul>
+                            <li id="queuing-time-menu">
+                                <a href="javascript:permission.resource.pageQuery('1',10);">
+                                    <span class="title">资源管理</span>
+                                </a>
+                            </li>
+                            <li id="running-time-menu">
+                                <a href="javascript:void(0);">
+                                    <span class="title">角色管理</span>
+                                </a>
+                            </li>
+                            <li id="quantity-statistics-menu">
+                                <a href="javascript:void(0);">
+                                    <span class="title">授权</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li id="task-menu">
                         <a href="#">
                             <i class="fa fa-money" aria-hidden="true"></i>
