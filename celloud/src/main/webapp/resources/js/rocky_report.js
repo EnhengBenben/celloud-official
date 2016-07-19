@@ -1,7 +1,11 @@
 var $report = {
-	showReport : function() {
+	showReport : function(dataKey, appId, projectId) {
 		var url = contextPath + "/report/rocky/data/report";
-		$("#container").load(url,{dataKey:"16071803059790",appId:"123",projectId:"1990"});
+		$("#container").load(url, {
+			dataKey : dataKey,
+			appId : appId,
+			projectId : projectId
+		});
 	}
 }
 var rockyReport = (function(rockyReport) {
