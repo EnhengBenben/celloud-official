@@ -1,11 +1,9 @@
 package com.celloud.utils;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -360,25 +358,6 @@ public class RunOverUtil {
 	 */
 	public boolean rocky(String reportPath, String dataKey, String appTitle, String projectFile, String projectId,
 			List<DataFile> dataList) {
-		StringBuffer resultArray = new StringBuffer();
-		if (FileTools.countLines(projectFile) < 1) {
-			resultArray.append(appTitle).append("\n");
-		}
-		try {
-			List<String> list = FileUtils.readLines(new File(reportPath + "/result/all_.snp"));
-			for (String line : list) {
-				String[] cols = line.split("\t");
-				resultArray.append(FileTools.getArray(cols, 3)).append("\t");
-				resultArray.append("突变位置:").append(FileTools.getArray(cols, 8)).append(":")
-						.append(FileTools.getArray(cols, 9)).append("<br />");
-				resultArray.append("碱基变化:").append(FileTools.getArray(cols, 1)).append("<br />");
-				resultArray.append("氨基酸变化:").append(FileTools.getArray(cols, 2)).append("\t");
-				resultArray.append("说明:").append(FileTools.getArray(cols, 5));
-			}
-		} catch (IOException e) {
-			resultArray.append("运行结果异常").append("\t&nbsp;\t&nbsp;");
-		}
-		FileTools.appendWrite(projectFile, resultArray.toString() + "\n");
 		return true;
 	}
 

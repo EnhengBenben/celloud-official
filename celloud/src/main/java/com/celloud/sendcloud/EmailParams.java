@@ -91,7 +91,7 @@ public class EmailParams {
 		/**
 		 * 用户名
 		 */
-		userName,
+		userName, email,
 		/**
 		 * 正文
 		 */
