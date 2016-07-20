@@ -57,7 +57,6 @@ import com.celloud.model.mongo.Oncogene;
 import com.celloud.model.mongo.Pgs;
 import com.celloud.model.mongo.RecommendDrug;
 import com.celloud.model.mongo.Rocky;
-import com.celloud.model.mongo.RockyRecord;
 import com.celloud.model.mongo.S16;
 import com.celloud.model.mongo.Split;
 import com.celloud.model.mongo.TBINH;
@@ -1510,9 +1509,6 @@ public class ReportAction {
 		ModelAndView mv = new ModelAndView("rocky/report/report_data_main");
 		Rocky rocky = reportService.getRockyReport(dataKey, projectId, appId);
 		mv.addObject("rocky", rocky);
-		for (RockyRecord record : rocky.getRecords()) {
-			System.out.println(record.getBases());
-		}
 		log.info("乳腺癌用户{}查看数据报告", ConstantsData.getLoginUserName());
 		return mv;
 	}
