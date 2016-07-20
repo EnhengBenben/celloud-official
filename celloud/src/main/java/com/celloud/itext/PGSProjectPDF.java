@@ -123,7 +123,7 @@ public class PGSProjectPDF {
 						|| "MalBac".equals(appName)) {
 					widths = new float[] { 100f, 100f, 100f, 100f, 100f };
 				} else {
-					widths = new float[] { 120f, 110f, 130f, 120f, 130f, 60f };
+					widths = new float[] { 120f, 125f, 130f, 120f, 130f, 65f };
 				}
 				PdfPTable table = new PdfPTable(widths);// 建立一个pdf表格
 				table.getDefaultCell().setBorder(1);
