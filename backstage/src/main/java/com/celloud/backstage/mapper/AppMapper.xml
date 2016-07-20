@@ -396,7 +396,7 @@
   <select id="getAppMapById" resultType="map" >
     SELECT group_concat(DISTINCT sc.screen_name separator ';') screenNames,
     group_concat(DISTINCT acr.classify_id separator ';') classifyIds,
-    group_concat(DISTINCT afr.format_id separator ';') fileFormatIds ,
+    group_concat(DISTINCT afr.format_id separator ';') fileFormatIds ,a.app_id appId,
     a.app_name appName,a.english_name englishName,a.address,a.picture_name pictureName,a.create_date createDate,
     a.intro,a.description,a.company_id companyId,a.attribute,a.run_type runType,a.flag,a.run_data runData,
     a.data_num dataNum,a.param,a.off_line offLine,a.command,a.title,a.method,a.max_task maxTask
