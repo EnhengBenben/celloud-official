@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -29,8 +30,10 @@ import com.celloud.model.mysql.RechargeAlipay;
 import com.celloud.pay.alipay.AlipayConfig;
 import com.celloud.pay.alipay.AlipayNotify;
 import com.celloud.pay.alipay.AlipaySubmit;
+import com.celloud.pay.jdpay.JdpayConfig;
 import com.celloud.service.PayService;
 import com.celloud.service.RechargeService;
+import com.celloud.utils.MD5Util;
 
 @Service("payServiceImpl")
 public class PayServiceImpl implements PayService {
@@ -51,7 +54,7 @@ public class PayServiceImpl implements PayService {
 		time = time.substring(time.length() - 5);
 		tradeNo = tradeNo + time;
 		String subject = "CelLoud平台账户充值";
-		String body = "CelLoud平台账户充值【" + money + "】元";
+		String body = "使用【支付宝】充值【" + money + "】元";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("service", AlipayConfig.service);
 		params.put("partner", AlipayConfig.partner);
@@ -74,6 +77,45 @@ public class PayServiceImpl implements PayService {
 		order.setSubject(subject);
 		order.setTradeNo(tradeNo);
 		order.setType(RechargeType.ALIPAY.type());
+		order.setUserId(ConstantsData.getLoginUserId());
+		order.setState(PayOrderState.UNPAID);
+		payOrderMapper.insertSelective(order);
+		return params;
+	}
+
+	@Override
+	public Map<String, String> createJdpayOrder(String bank, String money) {
+		String subject = "CelLoud平台账户充值";
+		String body = "使用【招商银行】网银充值【" + money + "】元。";
+		String v_mid = JdpayConfig.v_mid;
+		String v_url = JdpayConfig.v_url;
+		String key = JdpayConfig.key;
+		Date currTime = new Date();
+		SimpleDateFormat sf = new SimpleDateFormat("yyyyMMdd-" + v_mid + "-hhmmss", Locale.US);
+		String v_oid = sf.format(currTime);
+		String v_amount = money;
+		String v_moneytype = "CNY";
+		String text = v_amount + v_moneytype + v_oid + v_mid + v_url + key;
+		String v_md5info = MD5Util.getMD5ofStr(text).toUpperCase();
+		String pmode_id = bank;
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("v_mid", v_mid);
+		params.put("v_url", v_url);
+		params.put("key", key);
+		params.put("v_oid", v_oid);
+		params.put("v_amount", v_amount);
+		params.put("v_moneytype", v_moneytype);
+		params.put("v_md5info", v_md5info);
+		params.put("pmode_id", pmode_id);
+		params.put("remark1", body);
+		params.put("remark2", JdpayConfig.remark2);
+		PayOrder order = new PayOrder();
+		order.setAmount(new BigDecimal(money));
+		order.setCreateTime(new Date());
+		order.setDescription(body);
+		order.setSubject(subject);
+		order.setTradeNo(v_oid);
+		order.setType(RechargeType.OnlineBanking.type());
 		order.setUserId(ConstantsData.getLoginUserId());
 		order.setState(PayOrderState.UNPAID);
 		payOrderMapper.insertSelective(order);
@@ -145,7 +187,7 @@ public class PayServiceImpl implements PayService {
 					alipay.setUsername(username);
 					rechargeAlipayMapper.insert(alipay);
 					rechargeService.saveRecharge(amount, userId, RechargeType.ALIPAY, alipay.getId());
-					//构造桌面消息
+					// 构造桌面消息
 					MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
 							.send(NoticeConstants.createMessage("recharge", "充值成功", alipay.getDescription()));
 					mcu.sendMessage(userId, MessageCategoryCode.BALANCES, null, null, mu);

@@ -59,6 +59,22 @@ public class PayAction {
 		return "pay/alipay";
 	}
 
+	@RequestMapping("recharge/jdpay")
+	public String jdpay(String pay_type, String money, Model model) {
+		model.addAttribute("params", payService.createJdpayOrder(pay_type, money));
+		return "pay/jdpay";
+	}
+
+	@RequestMapping("jdpay/receive.html")
+	public String jdpayReceive() {
+		return "pay/jdpay_receive";
+	}
+
+	@RequestMapping("jdpay/auto_receive.html")
+	public String jdpayAutoReceive() {
+		return "pay/jdpay_receive";
+	}
+
 	@RequestMapping("alipay/return.html")
 	public String alipayReturn(HttpServletRequest request, Model model) throws Exception {
 		RechargeAlipay alipay = payService.verifyAlipay(request);
