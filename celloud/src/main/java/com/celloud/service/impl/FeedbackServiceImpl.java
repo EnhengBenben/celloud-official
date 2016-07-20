@@ -106,6 +106,7 @@ public class FeedbackServiceImpl implements FeedbackService {
 						.set(EmailParams.FEADBACK.start.name(),
 								DateUtil.getDateToString(feedback.getCreateDate(), "yyyy-MM-dd HH:mm:ss"))
 				.set(EmailParams.FEADBACK.userName.name(), feedback.getUsername())
+				.set(EmailParams.FEADBACK.email.name(), feedback.getEmail())
 				.set(EmailParams.FEADBACK.context.name(), feedback.getContent())
 				.set(EmailParams.FEADBACK.end.name(), DateUtil.getDateToString("yyyy")));
 		aliEmailUtils.simpleSend(aliEmail, emailUtils.getFeedbackMailTo());
