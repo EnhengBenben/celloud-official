@@ -1,5 +1,5 @@
 var $report = {
-	showReport : function(dataKey, appId, projectId) {
+	showReport : function(dataKey,projectId, appId ) {
 		var url = contextPath + "/report/rocky/data/report";
 		$("#container").load(url, {
 			dataKey : dataKey,
