@@ -8,7 +8,7 @@
 	<ul class="breadcrumb">
 		<li>
 			<i class="icon-hospital"></i>
-			<a href="#">医院统计</a>
+			<a href="#">数据统计</a>
 		</li>
 		<li class="active" onclick="toHospitalList()">医院数据量统计</li>
 	</ul>
