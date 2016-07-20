@@ -26,7 +26,7 @@ import com.celloud.backstage.service.SecResourceService;
 @RequestMapping("resource")
 public class ResourceAction {
 
-    private Logger logger = LoggerFactory.getLogger(InvoiceAction.class);
+    private Logger logger = LoggerFactory.getLogger(ResourceAction.class);
 
     @Resource
     private SecResourceService resourceService;
@@ -109,6 +109,7 @@ public class ResourceAction {
     @RequestMapping("add")
     @ResponseBody
     public int add(SecResource resource) {
+        logger.info("用户{}查看增加一条资源", ConstantsData.getLoginUserName());
         return resourceService.addResource(resource);
     }
 
@@ -122,6 +123,7 @@ public class ResourceAction {
     @RequestMapping("edit")
     @ResponseBody
     public int edit(SecResource resource) {
+        logger.info("用户{}修改一条资源", ConstantsData.getLoginUserName());
         return resourceService.editResource(resource);
     }
 
@@ -134,12 +136,14 @@ public class ResourceAction {
     @RequestMapping("moveUp")
     @ResponseBody
     public int moveUp(Integer id, Integer parentId, Integer priority) {
+        logger.info("用户{}查看上移一条资源", ConstantsData.getLoginUserName());
         return resourceService.moveUp(id, parentId, priority);
     }
 
     @RequestMapping("moveDown")
     @ResponseBody
     public int moveDown(Integer id, Integer parentId, Integer priority) {
+        logger.info("用户{}查看下移一条资源", ConstantsData.getLoginUserName());
         return resourceService.moveDown(id, parentId, priority);
     }
 

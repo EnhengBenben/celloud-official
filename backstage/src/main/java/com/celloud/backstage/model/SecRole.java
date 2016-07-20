@@ -15,7 +15,7 @@ public class SecRole {
     private String description;
 
     // 是否启用
-    private Boolean disabled;
+    private Integer disabled;
 
     // 创建时间
     private Date createDate;
@@ -45,11 +45,11 @@ public class SecRole {
         this.description = description == null ? null : description.trim();
     }
 
-    public Boolean getDisabled() {
+    public Integer getDisabled() {
         return disabled;
     }
 
-    public void setDisabled(Boolean disabled) {
+    public void setDisabled(Integer disabled) {
         this.disabled = disabled;
     }
 

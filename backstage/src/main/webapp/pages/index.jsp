@@ -136,7 +136,7 @@
                                 </a>
                             </li>
                             <li id="running-time-menu">
-                                <a href="javascript:void(0);">
+                                <a href="javascript:permission.role.pageQuery('1',10);">
                                     <span class="title">角色管理</span>
                                 </a>
                             </li>

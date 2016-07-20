@@ -171,19 +171,19 @@
     <update id="moveUp">
         update tb_sec_resource set priority = 
 		(case 
-		when id=(select r2.id from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.priority &lt; #{priority} and r2.parent_id = #{parentId} order by r2.priority desc limit 1) then 
+		when (select min(r2.priority) from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.parent_id = #{parentId})!=#{priority} and id=(select r2.id from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.priority &lt; #{priority} and r2.parent_id = #{parentId} order by r2.priority desc limit 1) then 
 		(SELECT r2.priority FROM (select tb_sec_resource.* from tb_sec_resource) r2 WHERE r2.id=#{id}) 
-		when id=#{id} then 
+		when (select min(r2.priority) from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.parent_id = #{parentId})!=#{priority} and id=#{id} then 
 		(SELECT r2.priority FROM (select tb_sec_resource.* from tb_sec_resource) r2 WHERE r2.id=(select r2.id from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.priority &lt; #{priority} and r2.parent_id = #{parentId} order by r2.priority desc limit 1)) end) 
-		where id=#{id} or id=(select r2.id from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.priority &lt; #{priority} and r2.parent_id = #{parentId} order by r2.priority desc limit 1)
+		where (select min(r2.priority) from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.parent_id = #{parentId})!=#{priority} and (id=#{id} or id=(select r2.id from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.priority &lt; #{priority} and r2.parent_id = #{parentId} order by r2.priority desc limit 1))
     </update>
     <update id="moveDown">
         update tb_sec_resource set priority = 
 		(case 
-		when id=(select r2.id from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.priority &gt; #{priority} and r2.parent_id = #{parentId} order by r2.priority asc limit 1) then 
+		when (select max(r2.priority) from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.parent_id = #{parentId})!=#{priority} and id=(select r2.id from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.priority &gt; #{priority} and r2.parent_id = #{parentId} order by r2.priority asc limit 1) then 
 		(SELECT r2.priority FROM (select tb_sec_resource.* from tb_sec_resource) r2 WHERE r2.id=#{id}) 
-		when id=#{id} then 
+		when (select max(r2.priority) from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.parent_id = #{parentId})!=#{priority} and id=#{id} then 
 		(SELECT r2.priority FROM (select tb_sec_resource.* from tb_sec_resource) r2 WHERE r2.id=(select r2.id from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.priority &gt; #{priority} and r2.parent_id = #{parentId} order by r2.priority asc limit 1)) end) 
-		where id=#{id} or id=(select r2.id from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.priority &gt; #{priority} and r2.parent_id = #{parentId} order by r2.priority asc limit 1);
+		where (select max(r2.priority) from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.parent_id = #{parentId})!=#{priority} and (id=#{id} or id=(select r2.id from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.priority &gt; #{priority} and r2.parent_id = #{parentId} order by r2.priority asc limit 1));
     </update>
 </mapper>
