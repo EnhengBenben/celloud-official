@@ -2,6 +2,7 @@ package com.celloud.backstage.service;
 
 import java.util.List;
 
+import com.celloud.backstage.model.SecResource;
 import com.celloud.backstage.model.SecRole;
 import com.celloud.backstage.model.User;
 import com.celloud.backstage.page.Page;
@@ -84,4 +85,22 @@ public interface SecRoleService {
      *
      */
     public int distribute(Integer roleId, Integer[] bigCustomerIds);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月20日下午4:35:13
+     * @description 获取角色下的资源
+     *
+     */
+    public List<SecResource> getResourcesByRole(Integer roleId);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月20日下午4:43:37
+     * @description 为大客户授权
+     *
+     */
+    public int grant(Integer roleId, Integer[] resourceIds);
 }

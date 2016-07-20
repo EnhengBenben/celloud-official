@@ -143,4 +143,21 @@
             (${bigCustomerId},${roleId})
         </foreach>
     </insert>
+    <select id="findResourcesByRole" resultType="com.celloud.backstage.model.SecResource">
+        select p.resource_id id
+        from tb_sec_permission p
+        where p.role_id = #{roleId}
+    </select>
+    <delete id="deleteRoleResourceRelatByRoleId">
+        delete
+        from tb_sec_permission
+        where role_id = #{roleId}
+    </delete>
+    <insert id="insertRoleResourceRelat">
+        insert into tb_sec_permission(role_id,resource_id)
+        values
+        <foreach collection="resourceIds" separator="," item="resourceId">
+            (${roleId},${resourceId})
+        </foreach>
+    </insert>
 </mapper>
