@@ -124,4 +124,15 @@ public interface UserMapper {
      */
     public List<User> getUserPageList(@Param("state") Integer state, Page page,
             @Param("condition") String condition);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月20日下午1:07:24
+     * @description
+     * @param role
+     * @return
+     *
+     */
+    public List<User> findUserByRole(@Param("state") Integer state, @Param("role") Integer role);
 }

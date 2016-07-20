@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="panel panel-default">
 <div class="panel-heading">
-    <h3 class="panel-title">资源管理管理</h3>
+    <h3 class="panel-title">资源管理</h3>
     <div class="panel-options">
         <form class="form-inline">
         <%--  <div class="form-group">
@@ -233,7 +233,7 @@
 	                    <div class="form-group">
 	                        <div class="col-sm-10 text-center">
 	                            <a id="saveOrUpdate" class="btn btn-success">确定</a>
-	                            <button class="btn btn-white">重置</button>
+	                            <button type="reset" class="btn btn-white" data-dismiss="modal" aria-label="Close">取消</button>
 	                        </div>
 	                    </div>
 	                </form>

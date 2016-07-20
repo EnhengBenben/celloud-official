@@ -7,7 +7,7 @@
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="description" property="description" jdbcType="VARCHAR" />
 		<result column="disabled" property="disabled" jdbcType="INTEGER" />
-		<result column="create_date" property="createData" jdbcType="TIMESTAMP" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		id, code, name, description, disabled, create_date
@@ -18,17 +18,6 @@
 		from tb_sec_role
 		where id = #{id,jdbcType=INTEGER}
 	</select>
-	<select id="findRolesByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-		select
-		<include refid="Base_Column_List" />
-		from tb_sec_role
-		where exists (
-		select id from tb_sec_user_role_relat
-		where
-		tb_sec_role.id=tb_sec_user_role_relat.role_id and
-		tb_sec_user_role_relat.user_id=#{id,jdbcType=INTEGER}
-		)
-	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from tb_sec_role
 		where id = #{id,jdbcType=INTEGER}
@@ -37,7 +26,7 @@
 		insert into tb_sec_role (id, code, name, description,
 		disabled, create_date)
 		values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
-		#{disabled,jdbcType=BIT}, #{createData,jdbcType=TIMESTAMP})
+		#{disabled,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP})
 	</insert>
 	<insert id="insertSelective" parameterType="com.celloud.backstage.model.SecRole">
 		insert into tb_sec_role
@@ -57,7 +46,7 @@
 			<if test="disabled != null">
 				disabled,
 			</if>
-			<if test="createData != null">
+			<if test="createDate != null">
                 create_date,
             </if>
 		</trim>
@@ -97,8 +86,8 @@
 			<if test="disabled != null">
 				disabled = #{disabled,jdbcType=BIT},
 			</if>
-			<if test="createData != null">
-                create_date = #{createData,jdbcType=TIMESTAMP},
+			<if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
             </if>
 		</set>
 		where id = #{id,jdbcType=INTEGER}
@@ -112,4 +101,46 @@
 		create_date = #{createDate,jdbcType=TIMESTAMP}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
+	<select id="pageQuery" resultMap="BaseResultMap">
+	   select
+	   <include refid="Base_Column_List"/>
+	   from tb_sec_role
+	</select>
+	<select id="findByName" resultType="com.celloud.backstage.model.SecRole">
+       select
+       <include refid="Base_Column_List"/>
+       from tb_sec_role
+       where name = #{name}
+       <if test="id != 0">
+       and id != #{id}
+       </if>
+    </select>
+    <select id="findByCode" resultType="com.celloud.backstage.model.SecRole">
+       select
+       <include refid="Base_Column_List"/>
+       from tb_sec_role
+       where code = #{code}
+       <if test="id != 0">
+       and id != #{id}
+       </if>
+    </select>
+    <select id="findBigCustomersByRole" resultType="com.celloud.backstage.model.User">
+        select u.user_id userId 
+        from tb_sec_user_role_relat urr
+        left join tb_user u on urr.user_id = u.user_id
+        where u.role = 1 and u.state = #{state} and urr.role_id = #{roleId}
+    </select>
+    <delete id="deleteRoleBigCustomerRelatByRoleId">
+        delete urr.*
+        from tb_sec_user_role_relat urr left join tb_user u 
+        on urr.user_id = u.user_id
+        where u.role = 1 and urr.role_id = #{roleId}
+    </delete>
+    <insert id="insertRoleBigCustomerRelat">
+        insert into tb_sec_user_role_relat(user_id,role_id)
+        values
+        <foreach collection="bigCustomerIds" separator="," item="bigCustomerId">
+            (${bigCustomerId},${roleId})
+        </foreach>
+    </insert>
 </mapper>

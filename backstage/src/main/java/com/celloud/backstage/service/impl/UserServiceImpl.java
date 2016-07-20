@@ -194,4 +194,9 @@ public class UserServiceImpl implements UserService {
         return new PageList<User>(page, list);
     }
 
+    @Override
+    public List<User> getBigCustomers() {
+        return userMapper.findUserByRole(DataState.ACTIVE, 1);
+    }
+
 }

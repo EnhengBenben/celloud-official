@@ -404,4 +404,10 @@
         </if>
         order by create_date desc
     </select>
+    <select id="findUserByRole" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_user
+        where state = #{state} and role = #{role}        
+    </select>
 </mapper>
