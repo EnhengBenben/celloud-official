@@ -33,31 +33,50 @@ class Rocky:
     def getResult(self, path, appId, dataKey):
         result = {}
         rockyRecords = [];
-        result_path = os.path.join(path, 'result')
-        snp_path = os.path.join(result_path, "all.snp")
-        print snp_path
+        descriptions = self.getDescription()
+        result_path = os.path.join(path,dataKey, 'result','all.snp')
+        print result_path
         mo = mongo.getInstance()
-        if os.path.exists(snp_path):
-            f = open(snp_path, "r")
+        if os.path.exists(result_path):
+            f = open(result_path, "r")
             for line in f.readlines():
                 st = line.strip().split("\t")
-                bases = st[2]
-                acids = st[3]
-                gene = st[4]
-                description = st[6]
-                mutation_1 = st[9]
-                mutation_2 = st[10]
+                bases = st[19]
+                acids = st[20]
+                gene = st[0]
+                description = st[22]+st[24]
+                mutation_1 = st[1]
+                mutation_2 = st[2]
                 rockyRecord={
                     "bases":bases,
                     "acids":acids,
                     "gene":gene,
-                    "description":description,
+                    "description":"",
                     "chromosome":mutation_1,
                     "position":mutation_2
                 }
+                if bases in descriptions:
+                    rockyRecord['description'] = descriptions[bases]
                 rockyRecords.append(rockyRecord)
             f.close()
         result["records"] = rockyRecords
+        return result
+    def getDescription(self):
+        path = os.path.join(os.path.abspath('.'),'app','Rocky.txt')
+        f = open(path,'r')
+        result = {}
+        key = ''
+        value = ''
+        for line in f.readlines():
+            pos = line.find('>>')
+            if pos == 0:
+                result[key] = value
+                key = line[2:].strip()
+                value = ''
+            else:
+                value += line.strip()
+                value += '\n'
+        f.close()
         return result
 
 
