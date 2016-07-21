@@ -15,7 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.celloud.manager.constants.ConstantsData;
 import com.celloud.manager.model.App;
 import com.celloud.manager.model.Price;
+import com.celloud.manager.model.User;
 import com.celloud.manager.service.AppService;
+import com.celloud.manager.service.UserService;
 
 /**
  * APP管理类
@@ -29,6 +31,14 @@ public class AppAction {
     Logger logger = LoggerFactory.getLogger(DataAction.class);
     @Resource
     private AppService appService;
+    @Resource
+    private UserService userService;
+
+    @RequestMapping("getUsersByApp")
+    @ResponseBody
+    public List<Integer> getUsersByApp(Integer appId) {
+        return appService.getUserIdsByAppId(appId);
+    }
 
     @RequestMapping("priceList")
     public ModelAndView toAppPriceList() {
@@ -49,6 +59,22 @@ public class AppAction {
         mv.addObject("appName", appName);
         mv.addObject("currentPrice", price);
         return mv;
+    }
+
+    @RequestMapping("list")
+    public ModelAndView list() {
+        ModelAndView mv = new ModelAndView("app/app_grant_list");
+        List<App> appList = appService.getAppListByCompany(ConstantsData.getLoginCompanyId());
+        List<User> userList = userService.getAllUserByBigCustomer(ConstantsData.getLoginCompanyId());
+        mv.addObject("appList", appList);
+        mv.addObject("userList", userList);
+        return mv;
+    }
+
+    @RequestMapping("grant")
+    @ResponseBody
+    public int grant(Integer appId, Integer[] userIds) {
+        return appService.grant(appId, userIds);
     }
 
     @RequestMapping("updatePice")

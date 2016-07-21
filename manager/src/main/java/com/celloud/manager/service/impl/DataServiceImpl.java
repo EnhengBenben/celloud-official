@@ -82,7 +82,7 @@ public class DataServiceImpl implements DataService{
 
     @Override
     public List<User> getUser(Integer companyId) {
-        return userMapper.getUser(companyId, DataState.ACTIVE, PropertiesUtil.testAccountIds);
+        return userMapper.findUserByBigCustomer(companyId, DataState.ACTIVE, PropertiesUtil.testAccountIds);
     }
 
     @Override
