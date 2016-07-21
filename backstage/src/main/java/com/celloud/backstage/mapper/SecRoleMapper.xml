@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.celloud.backstage.mapper.SecRoleMapper">
+	<resultMap id="BaseResultMap" type="com.celloud.backstage.model.SecRole">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="disabled" property="disabled" jdbcType="INTEGER" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, code, name, description, disabled, create_date
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from tb_sec_role
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tb_sec_role
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.celloud.backstage.model.SecRole">
+		insert into tb_sec_role (id, code, name, description,
+		disabled, create_date)
+		values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+		#{disabled,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.celloud.backstage.model.SecRole">
+		insert into tb_sec_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="code != null">
+                code,
+            </if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="disabled != null">
+				disabled,
+			</if>
+			<if test="createDate != null">
+                create_date,
+            </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="disabled != null">
+				#{disabled,jdbcType=BIT},
+			</if>
+			<if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.celloud.backstage.model.SecRole">
+		update tb_sec_role
+		<set>
+		    <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="disabled != null">
+				disabled = #{disabled,jdbcType=BIT},
+			</if>
+			<if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.celloud.backstage.model.SecRole">
+		update tb_sec_role
+		set code = #{code,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		description = #{description,jdbcType=VARCHAR},
+		disabled = #{disabled,jdbcType=BIT},
+		create_date = #{createDate,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<select id="pageQuery" resultMap="BaseResultMap">
+	   select
+	   <include refid="Base_Column_List"/>
+	   from tb_sec_role
+	</select>
+	<select id="findByName" resultType="com.celloud.backstage.model.SecRole">
+       select
+       <include refid="Base_Column_List"/>
+       from tb_sec_role
+       where name = #{name}
+       <if test="id != 0">
+       and id != #{id}
+       </if>
+    </select>
+    <select id="findByCode" resultType="com.celloud.backstage.model.SecRole">
+       select
+       <include refid="Base_Column_List"/>
+       from tb_sec_role
+       where code = #{code}
+       <if test="id != 0">
+       and id != #{id}
+       </if>
+    </select>
+    <select id="findBigCustomersByRole" resultType="com.celloud.backstage.model.User">
+        select u.user_id userId 
+        from tb_sec_user_role_relat urr
+        left join tb_user u on urr.user_id = u.user_id
+        where u.role = 1 and u.state = #{state} and urr.role_id = #{roleId}
+    </select>
+    <delete id="deleteRoleBigCustomerRelatByRoleId">
+        delete urr.*
+        from tb_sec_user_role_relat urr left join tb_user u 
+        on urr.user_id = u.user_id
+        where u.role = 1 and urr.role_id = #{roleId}
+    </delete>
+    <insert id="insertRoleBigCustomerRelat">
+        insert into tb_sec_user_role_relat(user_id,role_id)
+        values
+        <foreach collection="bigCustomerIds" separator="," item="bigCustomerId">
+            (${bigCustomerId},${roleId})
+        </foreach>
+    </insert>
+    <select id="findResourcesByRole" resultType="com.celloud.backstage.model.SecResource">
+        select p.resource_id id
+        from tb_sec_permission p
+        where p.role_id = #{roleId}
+    </select>
+    <delete id="deleteRoleResourceRelatByRoleId">
+        delete
+        from tb_sec_permission
+        where role_id = #{roleId}
+    </delete>
+    <insert id="insertRoleResourceRelat">
+        insert into tb_sec_permission(role_id,resource_id)
+        values
+        <foreach collection="resourceIds" separator="," item="resourceId">
+            (${roleId},${resourceId})
+        </foreach>
+    </insert>
+</mapper>

@@ -76,7 +76,7 @@ public class MailingAction {
             @RequestParam(defaultValue = "10") int pageSize) {
         ModelAndView mv = new ModelAndView("mailing/mail_template_main");
         Page page = new Page(currentPage, pageSize);
-        PageList<EmailTemplate> pageList = emailTemplateService.getAll(page);
+        PageList<EmailTemplate> pageList = emailTemplateService.getEmailTemplates(page);
         return mv.addObject("pageList", pageList);
     }
 
@@ -91,7 +91,7 @@ public class MailingAction {
     public String editTemplate(EmailTemplate emailTemplate) {
         Integer id = emailTemplate.getId();
         EmailTemplate et = emailTemplateService
-                .getTemplate(emailTemplate.getMethod(), id);
+                .getTemplateByMethod(emailTemplate.getMethod(), id);
         if (et != null) {
             return "模板方法重复，请重新填写";
         }

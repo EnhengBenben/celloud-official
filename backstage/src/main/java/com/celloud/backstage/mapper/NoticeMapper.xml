@@ -43,7 +43,20 @@
 		#{noticeContext,jdbcType=LONGVARCHAR},#{type,jdbcType=VARCHAR},#{category,jdbcType=VARCHAR},
 		)
 	</insert>
-	<insert id="insertSelective" parameterType="com.celloud.backstage.model.Notice">
+	<insert id="insertNoticeUser">
+		insert into tb_notice_user (notice_id,user_id)
+		select ${noticeId},user_id from tb_user where username in
+		(
+		<foreach collection="usernames" item="username" separator=",">
+			#{username}
+		</foreach>
+		)
+	</insert>
+	<insert id="insertNoticeAllUser">
+		insert into tb_notice_user (notice_id,user_id)
+		select ${noticeId},user_id from tb_user
+	</insert>
+	<insert id="insertSelective" parameterType="com.celloud.backstage.model.Notice" useGeneratedKeys="true" keyProperty="noticeId">
 		insert into tb_notice
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="noticeId != null">

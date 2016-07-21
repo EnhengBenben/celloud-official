@@ -1005,6 +1005,489 @@ var expense = (function(expense){
 	return self;
 })(expense);
 
+var permission = (function(permission){
+	self = permission || {};
+	self.common = {
+		confirm : function(text,callback){
+			$("#confirm-text").html(text);
+			$("#confirm-flase").one("click",function(){
+				$("#confirm-modal").modal("hide");
+			});
+			if(typeof callback == 'function'){
+				$("#confirm-true").one("click",function(){
+					$("#confirm-modal").modal("hide");
+					callback();
+				});
+			}
+			$("#confirm-modal").modal("show");
+		}	
+	};
+	self.resource = {
+			moveUp : function(id,parentId,priority,currentPage){
+				$.post("resource/moveUp",{id:id,parentId:parentId,priority:priority},function(data){
+					if(data>0){
+						self.resource.pageQuery(currentPage);
+					}
+				});
+			},
+			moveDown : function(id,parentId,priority,currentPage){
+				$.post("resource/moveDown",{id:id,parentId:parentId,priority:priority},function(data){
+					if(data>0){
+						self.resource.pageQuery(currentPage);
+					}
+				});
+			},
+			onOrOff : function(id,disabled,currentPage){
+				if(disabled == 0){
+					self.common.confirm("您确认上线该资源吗?",function(){
+						$.post("resource/edit",{id:id,disabled:disabled},function(data){
+							if(data > 0){
+								self.resource.pageQuery(currentPage);
+							}
+						});
+					});
+				}else{
+					self.common.confirm("您确认下线该资源吗?",function(){
+						$.post("resource/edit",{id:id,disabled:disabled},function(data){
+							if(data > 0){
+								self.resource.pageQuery(currentPage);
+							}
+						});
+					});
+				}
+			},
+			pageQuery : function(currentPage,pageSize){
+				keyword = $("#keyword").val() || '';
+				currentPage = currentPage || 1;
+				pageSize = pageSize || $("#pageSize").val();
+				$.post("resource/pageQuery",{"currentPage":currentPage,"pageSize":pageSize,"keyword":keyword},function(responseText){
+					$("#main-content").html(responseText);
+					$("#saveOrUpdate").click(function(){
+						var f = $("#saveUpdateFlag").val();
+						if(f=='save'){
+							self.resource.doAdd();
+						}else{
+							self.resource.doEdit(currentPage);
+						}
+					});
+				});
+			},
+			toAdd : function(){
+				$("#resourceForm input").val("");
+				$(".help-inline").html("");
+				$("#saveUpdateFlag").val("save");
+				$("#type option:selected").removeAttr("selected");
+				$("#disabled option:selected").removeAttr("selected");
+				$("#parentId option:selected").removeAttr("selected");
+				$("#type").select2({
+					minimumResultsForSearch: Infinity
+				});
+				$("#disabled").select2({
+					minimumResultsForSearch: Infinity
+				});
+				$("#parentId").html("");
+				$("#parentId").append("<option value='0'>请选择</option>");
+				$.post("resource/findAllActive",{},function(data){
+					var jsonData = eval(data);
+					for(var i=0;i<jsonData.length;i++){
+						$("#parentId").append("<option value='"+jsonData[i].id+"'>"+jsonData[i].name+"</option>")
+					}
+					$("#parentId").select2({
+						minimumResultsForSearch: Infinity
+					});
+				});
+				$("#resource-addModal").modal("show");
+				$("#resource-addModal h3").html("新增资源");
+			},
+			doAdd : function(){
+				if(self.resource.checkForm()){
+					// 添加资源
+					$.post("resource/add",$("#resourceForm").serialize(),function(data){
+						if(data > 0){
+							$("#resource-addModal").modal("hide");
+				            $("#resource-addModal").on('hidden.bs.modal', function (e) {//此事件在模态框被隐藏（并且同时在 CSS 过渡效果完成）之后被触发。
+				              self.resource.pageQuery('1');
+				            });
+						}else{
+							$("#resource-alert").removeClass("hide");
+				            $("#resource-info").html("添加失败");
+						}
+					})
+				}else{
+					return false;
+				}
+			},
+			toEdit : function(id){
+				$("#saveUpdateFlag").val("update");
+				$.post("resource/findOne",{id,id},function(data){
+					data = eval(data);
+					$(".help-inline").html("");
+					$("#name").val(data.name);
+					$("#permission").val(data.permission);
+					$("#createDate").val(new Date(data.createDate));
+					$("#priority").val(data.priority);
+					$("#resourceId").val(data.id);	
+					$("#type option").each(function(){
+						if($(this).val()==data.type){
+							$(this).prop("selected","selected");
+						}
+					});
+					$("#disabled option").each(function(){
+						if($(this).val()==data.disabled){
+							$(this).prop("selected","selected");
+						}
+					});
+					$.post("resource/findAllActive",{},function(resourceData){
+						$("#parentId").html("");
+						$("#parentId").append("<option value='0'>请选择</option>");
+						var jsonData = eval(resourceData);
+						for(var i=0;i<jsonData.length;i++){
+							if(jsonData[i].id==data.parentId){
+								$("#parentId").append("<option value='"+jsonData[i].id+"' selected>"+jsonData[i].name+"</option>")
+							}else{
+								$("#parentId").append("<option value='"+jsonData[i].id+"'>"+jsonData[i].name+"</option>")
+							}
+						}
+						$("#parentId").select2({
+							minimumResultsForSearch: Infinity
+						});
+					});
+					$("#type").select2({
+						minimumResultsForSearch: Infinity
+					});
+					$("#disabled").select2({
+						minimumResultsForSearch: Infinity
+					});
+				});
+				$("#resource-addModal").modal("show");
+				$("#resource-addModal h3").html("编辑资源");
+			},
+			doEdit : function(currentPage){
+				if(self.resource.checkForm()){
+					// 添加资源
+					$.post("resource/edit",$("#resourceForm").serialize(),function(data){
+						if(data > 0){
+							$("#resource-addModal").modal("hide");
+				            $("#resource-addModal").on('hidden.bs.modal', function (e) {//此事件在模态框被隐藏（并且同时在 CSS 过渡效果完成）之后被触发。
+				            	self.resource.pageQuery(currentPage);
+				            });
+						}else{
+							$("#resource-alert").removeClass("hide");
+				            $("#resource-info").html("编辑失败");
+						}
+					})
+				}else{
+					return false;
+				}
+			},
+			checkForm : function(){
+				var flag = true;
+				var name = $("#name").val().trim();
+				var id = $("#resourceId").val() || 0;
+				if(name == ''){
+					$("#name").next().html("资源名称不能为空!");
+					flag = false;
+				}else{
+					// 校验名称是否重复
+					$.ajax({
+						url : "resource/checkName",
+						async : false,
+						type : "post",
+						data : {name:name,id:id},
+						success : function(data){
+							if(data > 0){
+								$("#name").next().html("资源名称重复!");
+								flag = false;
+							}else{
+								$("#name").next().html("");
+							}
+						}
+					});
+					var permission = $("#permission").val().trim();
+					if(permission == ''){
+						$("#permission").next().html("表达式不能为空!");
+						flag = false;
+					}else{
+						// 校验表达式是否重复
+						$.ajax({
+							url : "resource/checkPermission",
+							async : false,
+							type : "post",
+							data : {permission:permission,id:id},
+							success : function(data){
+								if(data > 0){
+									$("#permission").next().html("表达式重复!");
+									flag = false;
+								}else{
+									$("#permission").next().html("");
+								}
+							}
+						});
+					}
+					var priority = $("#priority").val().trim();
+					if(priority == ''){
+						$("#priority").next().html("顺序不能为空!");
+						flag = false;
+					}else{
+						if(isNaN(priority) || priority!=parseInt(priority)){
+							$("#priority").next().html("请输入整数顺序!");
+							flag = false;
+						}
+					}
+					
+					var type = $("#select2-type-container").html();
+					if(type == "请选择"){
+						$("#type").next().next().html("请选择资源类型!");
+						flag = false;
+					}else{
+						$("#type").next().next().html("");
+					}
+					
+					var disabled = $("#select2-disabled-container").html();
+					if(disabled == "请选择"){
+						$("#disabled").next().next().html("请选择资源状态!");
+						flag = false;
+					}else{
+						$("#disabled").next().next().html("");
+					}
+					return flag;
+				}
+			}
+	};
+	self.role = {
+			pageQuery : function(currentPage,pageSize){
+				currentPage = currentPage || 1;
+				pageSize = pageSize || $("#pageSize").val();
+				$.post("role/pageQuery",{"currentPage":currentPage,"pageSize":pageSize},function(responseText){
+					$("#main-content").html(responseText);
+					$("#saveOrUpdate").click(function(){
+						var f = $("#saveUpdateFlag").val();
+						if(f=='save'){
+							self.role.doAdd();
+						}else{
+							self.role.doEdit(currentPage);
+						}
+					});
+					$("#distribute").click(function(){
+						self.role.doDistribution(currentPage);
+					});
+					$("#grant").click(function(){
+						self.role.doGrant(currentPage);
+					})
+				});
+			},
+			doGrant : function(currentPage){
+				$.post("role/grant",$("#roleGrantForm").serialize(),function(data){
+					$("#role-grant").modal("hide");
+					$("#role-grant").on('hidden.bs.modal', function (e) {//此事件在模态框被隐藏（并且同时在 CSS 过渡效果完成）之后被触发。
+						self.role.pageQuery(currentPage);
+		            });
+				});
+			},
+			toGrant : function(roleId){
+				$("#roleIdGrant").val(roleId);
+				$.ajax({
+					url:"role/getResourcesByRole",
+					async : false,
+					type : "post",
+					data : {roleId:roleId},
+					success : function(data){
+						$("#resourceIds input[type='checkbox']").each(function(){
+							$(this).prop("checked",false);
+						});
+						$("#resourceIds input[type='checkbox']").each(function(){
+							for(var i in data){
+								if($(this).val()==data[i].id){
+									$(this).prop("checked",true);
+									break;
+								}else{
+									$(this).prop("checked",false);
+								}
+							}
+						});
+						$("#role-grant").modal("show");
+					}
+				});
+			},
+			doDistribution : function(currentPage){
+				$.post("role/distribute",$("#roleDistributionForm").serialize(),function(data){
+					$("#role-distribution").modal("hide");
+					$("#role-distribution").on('hidden.bs.modal', function (e) {//此事件在模态框被隐藏（并且同时在 CSS 过渡效果完成）之后被触发。
+						self.role.pageQuery(currentPage);
+		            });
+				});
+			},
+			toDistribution : function(roleId){
+				$("#roleIdDis").val(roleId);
+				$.ajax({
+					url:"role/getBigCustomersByRole",
+					async : false,
+					type : "post",
+					data : {roleId:roleId},
+					success : function(data){
+						$("#bigCustomerIds input[type='checkbox']").each(function(){
+							$(this).prop("checked",false);
+						});
+						$("#bigCustomerIds input[type='checkbox']").each(function(){
+							for(var i in data){
+								if($(this).val()==data[i].userId){
+									$(this).prop("checked",true);
+									break;
+								}else{
+									$(this).prop("checked",false);
+								}
+							}
+						});
+						$("#role-distribution").modal("show");
+					}
+				});
+			},
+			onOrOff : function(id,disabled,currentPage){
+				if(disabled == 0){
+					self.common.confirm("您确认启用该角色吗?",function(){
+						$.post("role/edit",{id:id,disabled:disabled},function(data){
+							if(data > 0){
+								self.role.pageQuery(currentPage);
+							}
+						});
+					});
+				}else{
+					self.common.confirm("您确认禁用该角色吗?",function(){
+						$.post("role/edit",{id:id,disabled:disabled},function(data){
+							if(data > 0){
+								self.role.pageQuery(currentPage);
+							}
+						});
+					});
+				}
+			},
+			toAdd : function(){
+				$("#roleForm input").val("");
+				$(".help-inline").html("");
+				$("#saveUpdateFlag").val("save");
+				$("#disabled option:selected").removeAttr("selected");
+				$("#disabled").select2({
+					minimumResultsForSearch: Infinity
+				});
+				$("#role-addModal").modal("show");
+				$("#role-addModal h3").html("新增角色");
+			},
+			doAdd : function(){
+				if(self.role.checkForm()){
+					// 添加资源
+					$.post("role/add",$("#roleForm").serialize(),function(data){
+						if(data > 0){
+							$("#role-addModal").modal("hide");
+				            $("#role-addModal").on('hidden.bs.modal', function (e) {//此事件在模态框被隐藏（并且同时在 CSS 过渡效果完成）之后被触发。
+				              self.role.pageQuery('1');
+				            });
+						}else{
+							$("#role-alert").removeClass("hide");
+				            $("#role-info").html("添加失败");
+						}
+					})
+				}else{
+					return false;
+				}
+			},
+			toEdit : function(id){
+				$("#saveUpdateFlag").val("update");
+				$.post("role/findOne",{id,id},function(data){
+					data = eval(data);
+					$(".help-inline").html("");
+					$("#name").val(data.name);
+					$("#code").val(data.code);
+					$("#description").val(data.description);
+					$("#roleId").val(data.id);	
+					$("#disabled option").each(function(){
+						if($(this).val()==data.disabled){
+							$(this).prop("selected","selected");
+						}
+					});
+					$("#disabled").select2({
+						minimumResultsForSearch: Infinity
+					});
+				});
+				$("#role-addModal").modal("show");
+				$("#role-addModal h3").html("编辑角色");
+			},
+			doEdit : function(currentPage){
+				if(self.role.checkForm()){
+					// 添加资源
+					$.post("role/edit",$("#roleForm").serialize(),function(data){
+						if(data > 0){
+							$("#role-addModal").modal("hide");
+				            $("#role-addModal").on('hidden.bs.modal', function (e) {//此事件在模态框被隐藏（并且同时在 CSS 过渡效果完成）之后被触发。
+				            	self.role.pageQuery(currentPage);
+				            });
+						}else{
+							$("#role-alert").removeClass("hide");
+				            $("#role-info").html("编辑失败");
+						}
+					})
+				}else{
+					return false;
+				}
+			},
+			checkForm : function(){
+				var flag = true;
+				var name = $("#name").val().trim();
+				var id = $("#roleId").val() || 0;
+				if(name == ''){
+					$("#name").next().html("角色名称不能为空!");
+					flag = false;
+				}else{
+					// 校验名称是否重复
+					$.ajax({
+						url : "role/checkName",
+						async : false,
+						type : "post",
+						data : {name:name,id:id},
+						success : function(data){
+							if(data > 0){
+								$("#name").next().html("角色名称重复!");
+								flag = false;
+							}else{
+								$("#name").next().html("");
+							}
+						}
+					});
+				}
+				var code = $("#code").val().trim();
+				if(code == ''){
+					$("#code").next().html("角色编码不能为空!");
+					flag = false;
+				}else{
+					// 校验表达式是否重复
+					$.ajax({
+						url : "role/checkCode",
+						async : false,
+						type : "post",
+						data : {code:code,id:id},
+						success : function(data){
+							if(data > 0){
+								$("#code").next().html("角色编码重复!");
+								flag = false;
+							}else{
+								$("#code").next().html("");
+							}
+						}
+					});
+				}
+				
+				var disabled = $("#select2-disabled-container").html();
+				if(disabled == "请选择"){
+					$("#disabled").next().next().html("请选择资源状态!");
+					flag = false;
+				}else{
+					$("#disabled").next().next().html("");
+				}
+				return flag;
+			}
+	};
+	return self;
+})(permission);
+
 
 
 

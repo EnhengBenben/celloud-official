@@ -163,6 +163,11 @@ public class HomeAction {
         return "feedback";
     }
 
+	@RequestMapping("feedback_for_phone.html")
+	public String feedBackForPhone() {
+		return "feedback_for_phone";
+	}
+
     @RequestMapping("home.html")
     public String home() {
         return "home";

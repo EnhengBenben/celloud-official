@@ -22,8 +22,14 @@ public interface EmailTemplateMapper {
 
     int updateByPrimaryKey(EmailTemplate record);
 
-    List<EmailTemplate> getAll(Page page, @Param("state") Integer state);
+    List<EmailTemplate> getEmailTemplates(Page page,
+            @Param("state") Integer state);
+
+    EmailTemplate getTemplateByMethod(@Param("method") String method,
+            @Param("id") Integer id, @Param("state") Integer state);
 
     EmailTemplate getTemplate(@Param("method") String method,
-            @Param("id") Integer id, @Param("state") Integer state);
+            @Param("state") Integer state);
+
+    List<EmailTemplate> getAll(@Param("state") Integer state);
 }

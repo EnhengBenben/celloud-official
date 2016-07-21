@@ -1,6 +1,11 @@
 var $report = {
-	showReport : function() {
-		$("#container").load("pages/rocky/report/report_data_main.jsp");
+	showReport : function(dataKey,projectId, appId ) {
+		var url = contextPath + "/report/rocky/data/report";
+		$("#container").load(url, {
+			dataKey : dataKey,
+			appId : appId,
+			projectId : projectId
+		});
 	}
 }
 var rockyReport = (function(rockyReport) {

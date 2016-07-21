@@ -1,5 +1,7 @@
 package com.celloud.backstage.service;
 
+import java.util.List;
+
 import com.celloud.backstage.model.EmailTemplate;
 import com.celloud.backstage.page.Page;
 import com.celloud.backstage.page.PageList;
@@ -13,7 +15,7 @@ public interface EmailTemplateService {
      * @author leamo
      * @date 2016年7月21日 上午11:25:32
      */
-    PageList<EmailTemplate> getAll(Page page);
+    PageList<EmailTemplate> getEmailTemplates(Page page);
 
     /**
      * 根据id获取模板信息
@@ -53,5 +55,24 @@ public interface EmailTemplateService {
      * @author leamo
      * @date 2016年7月21日 下午2:15:32
      */
-    EmailTemplate getTemplate(String method, Integer id);
+    EmailTemplate getTemplateByMethod(String method, Integer id);
+    
+    /**
+     * 获取所有的邮件模板
+     * 
+     * @return
+     * @author lin
+     * @date 2016年7月7日下午3:23:22
+     */
+    List<EmailTemplate> getAll();
+
+    /**
+     * 根据调用方法获取模板
+     * 
+     * @param method
+     * @return
+     * @author lin
+     * @date 2016年7月7日下午3:45:22
+     */
+    EmailTemplate getTemplate(String method);
 }

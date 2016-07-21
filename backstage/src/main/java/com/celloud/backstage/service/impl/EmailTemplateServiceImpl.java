@@ -22,8 +22,8 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
 	private EmailTemplateMapper emailTemplateMapper;
 
     @Override
-    public PageList<EmailTemplate> getAll(Page page) {
-        List<EmailTemplate> list = emailTemplateMapper.getAll(page,
+    public PageList<EmailTemplate> getEmailTemplates(Page page) {
+        List<EmailTemplate> list = emailTemplateMapper.getEmailTemplates(page,
                 DataState.ACTIVE);
         return new PageList<>(page, list);
     }
@@ -46,7 +46,18 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
     }
 
     @Override
-    public EmailTemplate getTemplate(String method, Integer id) {
-        return emailTemplateMapper.getTemplate(method, id, DataState.ACTIVE);
+    public EmailTemplate getTemplateByMethod(String method, Integer id) {
+        return emailTemplateMapper.getTemplateByMethod(method, id,
+                DataState.ACTIVE);
+    }
+
+    @Override
+    public List<EmailTemplate> getAll() {
+        return emailTemplateMapper.getAll(DataState.ACTIVE);
+    }
+
+    @Override
+    public EmailTemplate getTemplate(String method) {
+        return emailTemplateMapper.getTemplate(method, DataState.ACTIVE);
     }
 }

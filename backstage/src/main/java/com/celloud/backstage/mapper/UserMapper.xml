@@ -31,6 +31,10 @@
 		truename, state, dept_id, login_uuid,
 		company_id, sign, balances
 	</sql>
+	<select id="getOpenIdByUser" resultType="java.lang.String">
+        select open_id from tb_user_wechat
+        where user_id=#{userId}
+    </select>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Integer">
 		select
@@ -399,5 +403,11 @@
             and (u.username like '%${condition }%' or u.email like '%${condition }%' or c.company_name like '%${condition }%')
         </if>
         order by create_date desc
+    </select>
+    <select id="findUserByRole" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_user
+        where state = #{state} and role = #{role}        
     </select>
 </mapper>

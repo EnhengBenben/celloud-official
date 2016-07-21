@@ -9,7 +9,7 @@
          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd">
 	<!--主动扫描Controller的配置，使得控制器能够扫描到相关的类 -->
-	<context:component-scan base-package="com.celloud.backstage" />
+	<context:component-scan base-package="com.celloud" />
 	<mvc:annotation-driven />
 	<!--避免IE执行AJAX时，返回JSON出现下载文件 -->
 	<bean id="mappingJacksonHttpMessageConverter"
@@ -39,6 +39,8 @@
 			<list>
 				<value>classpath:jdbc.properties</value>
 				<value>classpath:mongodb.properties</value>
+				<value>classpath:email.properties</value>
+				<value>classpath:wechat.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -87,6 +89,21 @@
 		<property name="defaultEncoding" value="utf-8"></property>
 		<property name="maxUploadSize" value="10485760000"></property>
 		<property name="maxInMemorySize" value="40960"></property>
+	</bean>
+	<bean id="sendCloudEmailUtil" class="com.celloud.message.alimail.AliEmailUtils">
+		<property name="apiUser" value="${mail.apiUser}" />
+		<property name="apiKey" value="${mail.apiKey}" />
+		<property name="username" value="${mail.username}" />
+		<property name="emailName" value="${mail.emailName}" />
+	</bean>
+	<bean id="wechatProperties" class="com.celloud.message.wechat.WechatUtils">
+		<property name="appId" value="${wechat.appId}" />
+		<property name="appSecret" value="${wechat.appSecret}" />
+		<property name="loginHtml" value="${wechat.loginHtml}" />
+		<property name="oAuth2Url" value="${wechat.oAuth2Url}" />
+		<property name="oAuth2TokenUrl" value="${wechat.oAuth2TokenUrl}" />
+		<property name="tokenUrl" value="${wechat.tokenUrl}" />
+		<property name="templateUrl" value="${wechat.templateUrl}" />
 	</bean>
 	<!-- 异常处理配置 -->
 	<bean id="exceptionHandler" class="com.celloud.backstage.exception.ExceptionHandler" />
@@ -160,4 +177,7 @@
 		<constructor-arg ref="mongoClient" />
 		<constructor-arg value="${mongo.database}" />
 	</bean>
+	<bean id="springTool" class="com.celloud.backstage.utils.SpringTool"></bean>
+	<bean id="messageUtils" class="com.celloud.message.web.MessageUtils"
+		scope="prototype"></bean>
 </beans>
