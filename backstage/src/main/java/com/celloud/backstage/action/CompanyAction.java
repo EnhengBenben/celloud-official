@@ -196,7 +196,7 @@ public class CompanyAction {
                             + cid;
                     File f1 = new File(realPath);
                     if (!f1.exists()) {
-                        boolean isTrue = f.mkdir();
+                        boolean isTrue = f1.mkdir();
                         if (!isTrue) {
                             logger.error("路径创建失败：{}", realPath);
                         }
