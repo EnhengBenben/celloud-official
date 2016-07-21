@@ -56,13 +56,12 @@ def restartTomcat():
 	os.system(tomcatStopCommand)
 	time.sleep(5)
 	print '－－tomcat 已停止－－'
-	shutil.rmtree(celloudSource)
-	print '－－celloud 文件夹已删除－－'
-	os.remove(celloudWar)
-	print '－－celloud.war 已删除－－'
-	if os.path.exists(ROOT):
-		shutil.rmtree(ROOT)
-		print '－－ROOT 文件夹已删除－－'
+
+	for f in os.listdir(webappsPath):
+		if os.path.isdir(f):
+			shutil.rmtree(f)
+	print '－－项目目录已删除－－'
+
 	temp = os.path.join(tomcatPath,'work','Catalina')
 	if os.path.exists(temp):
 		shutil.rmtree(temp)
@@ -74,7 +73,7 @@ def restartTomcat():
 
 	os.system(tomcatStartCommand)
 	print '－－tomcat 正在启动－－'
-	time.sleep(40)
+	time.sleep(50)
 
 	print '－－－－－－－－tomcat 启动结束－－－－－－－－'
 

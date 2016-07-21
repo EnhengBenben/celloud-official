@@ -7,10 +7,13 @@ __author__='lin'
 
 import paramiko,sys,os,shutil,datetime
 
-if len(sys.argv) != 2:
-	print 'Usage: *.py version'
-	sys.exit(0)
+if len(sys.argv) != 4:
+    print 'isBackstage/isManager:0--不需要部署；1--需要部署'
+    print 'Usage: *.py version isBackstage isManager'
+    sys.exit(0)
 version = sys.argv[1]
+isBackstage = sys.argv[2]
+isManager = sys.argv[3]
 
 #服务器配置
 host = '112.64.18.106'
@@ -20,7 +23,9 @@ password = 'CelLoud@nova'
 resultPath = '/share/data/deploy/' + version
 
 #本地各项存储路径配置
-warPath = '/Users/lin/Documents/cleangit/celloud/celloud/target/celloud.war'
+celloudPath = '/Users/lin/Documents/cleangit/celloud/celloud/target/celloud.war'
+backstagePath = '/Users/lin/Documents/cleangit/celloud/backstage/target/backstage.war'
+managerPath = '/Users/lin/Documents/cleangit/celloud/manager/target/manager.war'
 pythonPath = '/Users/lin/Documents/cleangit/celloud/python'
 dbPath = os.path.join('/Users/lin/Documents/cleangit/celloud/dbUpgrade',version)
 parentPath = '/Users/lin'
@@ -57,7 +62,14 @@ def upload(local_dir,remote_dir):
 print '文件整合： %s ' % datetime.datetime.now()
 sourcePath = os.path.join(parentPath,version)
 os.mkdir(sourcePath)
-shutil.copy(warPath,sourcePath)
+shutil.copy(celloudPath,sourcePath)
+
+if(isBackstage=='1'):
+    shutil.copy(backstagePath,sourcePath)
+
+if(isManager=='1'):
+    shutil.copy(managerPath,sourcePath)
+
 shutil.copytree(pythonPath,os.path.join(sourcePath,'python'))
 shutil.copytree(dbPath,os.path.join(sourcePath,'db'))
 print '文件上传： %s ' % datetime.datetime.now()
