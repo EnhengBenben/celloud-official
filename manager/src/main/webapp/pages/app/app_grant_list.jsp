@@ -38,7 +38,7 @@
     </div>
 </div>
 <div class="modal fade" id="grant-app-modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width:800px;">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -47,7 +47,7 @@
             <div class="modal-body">
                 <form id="grantAppForm" role="form" class="form-horizontal">
                    <div class="form-group">
-                       <div class="col-sm-12 " id="userIds">
+                       <div class="col-sm-12" id="userIds">
                              <c:forEach items="${userList }" var="user">
 	                             <div class="col-sm-4">
 	                                 <label class="checkbox-inline"><input name="userIds" type="checkbox" value="${user.userId }">${user.username }</label>
