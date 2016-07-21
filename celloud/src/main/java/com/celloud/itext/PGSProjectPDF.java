@@ -123,7 +123,7 @@ public class PGSProjectPDF {
 						|| "MalBac".equals(appName)) {
 					widths = new float[] { 100f, 100f, 100f, 100f, 100f };
 				} else {
-					widths = new float[] { 120f, 125f, 130f, 120f, 130f, 65f };
+					widths = new float[] { 120f, 120f, 135f, 120f, 130f, 60f };
 				}
 				PdfPTable table = new PdfPTable(widths);// 建立一个pdf表格
 				table.getDefaultCell().setBorder(1);
@@ -266,5 +266,10 @@ public class PGSProjectPDF {
 			WatermarkUtil.addMark(path + projectId + "/temp.pdf", path + projectId + "/" + projectId + ".pdf",
 					PropertiesUtil.img, 1, posX, posY);
 		}
+	}
+
+	public static void main(String[] args) throws Exception {
+		PGSProjectPDF pdf = new PGSProjectPDF();
+		pdf.createPDF("/Users/lin", "JBRH-PGS", 100, 200, "16072100012030,test_t,;", "222");
 	}
 }
