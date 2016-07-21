@@ -140,11 +140,6 @@
                                     <span class="title">角色管理</span>
                                 </a>
                             </li>
-                            <li id="quantity-statistics-menu">
-                                <a href="javascript:void(0);">
-                                    <span class="title">授权</span>
-                                </a>
-                            </li>
                         </ul>
                     </li>
                     <li id="task-menu">

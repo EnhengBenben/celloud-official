@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.celloud.backstage.constants.DataState;
 import com.celloud.backstage.mapper.SecRoleMapper;
+import com.celloud.backstage.model.SecResource;
 import com.celloud.backstage.model.SecRole;
 import com.celloud.backstage.model.User;
 import com.celloud.backstage.page.Page;
@@ -65,10 +66,29 @@ public class SecRoleServiceImpl implements SecRoleService {
 
     @Override
     public int distribute(Integer roleId, Integer[] bigCustomerIds) {
-        // 首先删除该角色下的所有大客户关系
-        roleMapper.deleteRoleBigCustomerRelatByRoleId(roleId);
-        // 为该角色添加大客户
-        return roleMapper.insertRoleBigCustomerRelat(roleId, bigCustomerIds);
+        if (bigCustomerIds == null) {
+            // 首先删除该角色下的所有大客户关系
+            return roleMapper.deleteRoleBigCustomerRelatByRoleId(roleId);
+        } else {
+            roleMapper.deleteRoleBigCustomerRelatByRoleId(roleId);
+            // 为该角色添加大客户
+            return roleMapper.insertRoleBigCustomerRelat(roleId, bigCustomerIds);
+        }
+    }
+
+    @Override
+    public List<SecResource> getResourcesByRole(Integer roleId) {
+        return roleMapper.findResourcesByRole(roleId);
+    }
+
+    @Override
+    public int grant(Integer roleId, Integer[] resourceIds) {
+        if (resourceIds == null) {
+            return roleMapper.deleteRoleResourceRelatByRoleId(roleId);
+        } else {
+            roleMapper.deleteRoleResourceRelatByRoleId(roleId);
+            return roleMapper.insertRoleResourceRelat(roleId, resourceIds);
+        }
     }
 
 }

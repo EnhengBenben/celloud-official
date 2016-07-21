@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.backstage.constants.ConstantsData;
+import com.celloud.backstage.model.SecResource;
 import com.celloud.backstage.model.SecRole;
 import com.celloud.backstage.model.User;
 import com.celloud.backstage.page.Page;
 import com.celloud.backstage.page.PageList;
+import com.celloud.backstage.service.SecResourceService;
 import com.celloud.backstage.service.SecRoleService;
 import com.celloud.backstage.service.UserService;
 
@@ -33,6 +35,8 @@ public class RoleAction {
     private SecRoleService roleService;
     @Resource
     private UserService userService;
+    @Resource
+    private SecResourceService resourceService;
 
     @RequestMapping("pageQuery")
     public ModelAndView pageQuery(Page page) {
@@ -40,8 +44,10 @@ public class RoleAction {
         ModelAndView mv = new ModelAndView("permission/role_main");
         PageList<SecRole> pageList = roleService.pageQuery(page);
         List<User> bigCustomers = userService.getBigCustomers();
+        List<SecResource> resources = resourceService.findAll();
         mv.addObject("pageList", pageList);
         mv.addObject("bigCustomers", bigCustomers);
+        mv.addObject("resources", resources);
         return mv;
     }
 
@@ -88,6 +94,19 @@ public class RoleAction {
     public int distribute(Integer roleId, Integer[] bigCustomerIds) {
         logger.info("用户{}为大客户分配了角色", ConstantsData.getLoginUserName());
         return roleService.distribute(roleId, bigCustomerIds);
+    }
+
+    @RequestMapping("getResourcesByRole")
+    @ResponseBody
+    public List<SecResource> getResourcesByRole(Integer roleId) {
+        return roleService.getResourcesByRole(roleId);
+    }
+
+    @RequestMapping("grant")
+    @ResponseBody
+    public int grant(Integer roleId, Integer[] resourceIds) {
+        logger.info("用户{}为角色授权", ConstantsData.getLoginUserName());
+        return roleService.grant(roleId, resourceIds);
     }
 
 }

@@ -1232,6 +1232,42 @@ var permission = (function(permission){
 					$("#distribute").click(function(){
 						self.role.doDistribution(currentPage);
 					});
+					$("#grant").click(function(){
+						self.role.doGrant(currentPage);
+					})
+				});
+			},
+			doGrant : function(currentPage){
+				$.post("role/grant",$("#roleGrantForm").serialize(),function(data){
+					$("#role-grant").modal("hide");
+					$("#role-grant").on('hidden.bs.modal', function (e) {//此事件在模态框被隐藏（并且同时在 CSS 过渡效果完成）之后被触发。
+						self.role.pageQuery(currentPage);
+		            });
+				});
+			},
+			toGrant : function(roleId){
+				$("#roleIdGrant").val(roleId);
+				$.ajax({
+					url:"role/getResourcesByRole",
+					async : false,
+					type : "post",
+					data : {roleId:roleId},
+					success : function(data){
+						$("#resourceIds input[type='checkbox']").each(function(){
+							$(this).prop("checked",false);
+						});
+						$("#resourceIds input[type='checkbox']").each(function(){
+							for(var i in data){
+								if($(this).val()==data[i].id){
+									$(this).prop("checked",true);
+									break;
+								}else{
+									$(this).prop("checked",false);
+								}
+							}
+						});
+						$("#role-grant").modal("show");
+					}
 				});
 			},
 			doDistribution : function(currentPage){

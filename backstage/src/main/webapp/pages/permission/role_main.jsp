@@ -48,6 +48,7 @@
                             <a href="javascript:permission.role.onOrOff('${role.id }','1','${pageList.page.currentPage }');">禁用</a>
                        </c:if>
                        <a href="javascript:permission.role.toDistribution('${role.id }');">分配</a>
+                       <a href="javascript:permission.role.toGrant('${role.id }');">授权</a>
 	                </td>
                 </tr>
             </c:forEach>
@@ -224,6 +225,38 @@
                         <div class="form-group">
                             <div class="col-sm-10 text-center">
                                 <a id="distribute" class="btn btn-success">确定</a>
+                                <button type="reset" class="btn btn-white" data-dismiss="modal" aria-label="Close">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+</div>
+
+<div class="modal fade bs-example-modal-lg" id="role-grant" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="panel panel-default">
+                 <div class="panel-heading">
+                    <h3 class="panel-title">授权资源</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" id="roleGrantForm" >
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-2 " id="resourceIds">
+                                  <c:forEach items="${resources }" var="resource">
+                                      <label class="checkbox-inline"><input name="resourceIds" type="checkbox" value="${resource.id }">${resource.name }</label>
+                                  </c:forEach>
+                            </div>
+                            <input type="hidden" id="roleIdGrant" name="roleId">
+                        </div>
+                        <div class="form-group-separator"></div>
+                        <div class="form-group">
+                            <div class="col-sm-10 text-center">
+                                <a id="grant" class="btn btn-success">确定</a>
                                 <button type="reset" class="btn btn-white" data-dismiss="modal" aria-label="Close">取消</button>
                             </div>
                         </div>
