@@ -36,7 +36,7 @@ public interface SecResourceMapper {
      * @description 查询全部资源
      *
      */
-    List<SecResource> findAll();
+    List<SecResource> findAllActive(@Param("state") Integer state);
 
     /**
      * 
@@ -69,17 +69,19 @@ public interface SecResourceMapper {
      * 
      * @author MQ
      * @date 2016年7月19日下午1:26:40
-     * @description 与上一条记录交换数据
+     * @description 获取同一父类下的上一条记录
      *
      */
-    int moveUp(@Param("id") Integer id, @Param("parentId") Integer parentId, @Param("priority") Integer priority);
+    SecResource getPrePriority(@Param("parentId") Integer parentId,
+            @Param("priority") Integer priority);
 
     /**
      * 
      * @author MQ
      * @date 2016年7月19日下午1:26:40
-     * @description 与下一条记录交换数据
+     * @description 获取同一父类下的下一条记录
      *
      */
-    int moveDown(@Param("id") Integer id, @Param("parentId") Integer parentId, @Param("priority") Integer priority);
+    SecResource getNextPriority(@Param("parentId") Integer parentId,
+            @Param("priority") Integer priority);
 }

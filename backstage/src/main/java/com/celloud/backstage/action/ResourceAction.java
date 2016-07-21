@@ -54,10 +54,10 @@ public class ResourceAction {
      * @description 查询所有资源
      *
      */
-    @RequestMapping("findAll")
+    @RequestMapping("findAllActive")
     @ResponseBody()
-    public List<SecResource> findAll() {
-        return resourceService.findAll();
+    public List<SecResource> findAllActive() {
+        return resourceService.findAllActive();
     }
 
     /**
@@ -136,14 +136,14 @@ public class ResourceAction {
     @RequestMapping("moveUp")
     @ResponseBody
     public int moveUp(Integer id, Integer parentId, Integer priority) {
-        logger.info("用户{}查看上移一条资源", ConstantsData.getLoginUserName());
+        logger.info("用户{}上移一条资源", ConstantsData.getLoginUserName());
         return resourceService.moveUp(id, parentId, priority);
     }
 
     @RequestMapping("moveDown")
     @ResponseBody
     public int moveDown(Integer id, Integer parentId, Integer priority) {
-        logger.info("用户{}查看下移一条资源", ConstantsData.getLoginUserName());
+        logger.info("用户{}下移一条资源", ConstantsData.getLoginUserName());
         return resourceService.moveDown(id, parentId, priority);
     }
 

@@ -136,10 +136,10 @@
 	   </where>
 	   order by parent_id asc, priority asc
 	</select>
-	<select id="findAll" resultType="com.celloud.backstage.model.SecResource">
+	<select id="findAllActive" resultType="com.celloud.backstage.model.SecResource">
 	   select
 	   <include refid="Base_Column_List"/>
-	   from tb_sec_resource;
+	   from tb_sec_resource where disabled = #{state}
 	</select>
 	<select id="findByName" resultType="com.celloud.backstage.model.SecResource">
 	   select
@@ -168,22 +168,18 @@
        and id != #{id}
        </if>
     </select>
-    <update id="moveUp">
-        update tb_sec_resource set priority = 
-		(case 
-		when (select min(r2.priority) from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.parent_id = #{parentId})!=#{priority} and id=(select r2.id from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.priority &lt; #{priority} and r2.parent_id = #{parentId} order by r2.priority desc limit 1) then 
-		(SELECT r2.priority FROM (select tb_sec_resource.* from tb_sec_resource) r2 WHERE r2.id=#{id}) 
-		when (select min(r2.priority) from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.parent_id = #{parentId})!=#{priority} and id=#{id} then 
-		(SELECT r2.priority FROM (select tb_sec_resource.* from tb_sec_resource) r2 WHERE r2.id=(select r2.id from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.priority &lt; #{priority} and r2.parent_id = #{parentId} order by r2.priority desc limit 1)) end) 
-		where (select min(r2.priority) from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.parent_id = #{parentId})!=#{priority} and (id=#{id} or id=(select r2.id from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.priority &lt; #{priority} and r2.parent_id = #{parentId} order by r2.priority desc limit 1))
-    </update>
-    <update id="moveDown">
-        update tb_sec_resource set priority = 
-		(case 
-		when (select max(r2.priority) from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.parent_id = #{parentId})!=#{priority} and id=(select r2.id from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.priority &gt; #{priority} and r2.parent_id = #{parentId} order by r2.priority asc limit 1) then 
-		(SELECT r2.priority FROM (select tb_sec_resource.* from tb_sec_resource) r2 WHERE r2.id=#{id}) 
-		when (select max(r2.priority) from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.parent_id = #{parentId})!=#{priority} and id=#{id} then 
-		(SELECT r2.priority FROM (select tb_sec_resource.* from tb_sec_resource) r2 WHERE r2.id=(select r2.id from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.priority &gt; #{priority} and r2.parent_id = #{parentId} order by r2.priority asc limit 1)) end) 
-		where (select max(r2.priority) from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.parent_id = #{parentId})!=#{priority} and (id=#{id} or id=(select r2.id from (select tb_sec_resource.* from tb_sec_resource) r2 where r2.priority &gt; #{priority} and r2.parent_id = #{parentId} order by r2.priority asc limit 1));
-    </update>
+    <select id="getPrePriority" resultType="com.celloud.backstage.model.SecResource">
+        select r.id, r.priority 
+        from tb_sec_resource r
+        where r.parent_id = #{parentId}
+        and r.priority &lt; #{priority}
+        order by r.priority desc limit 1
+    </select>
+    <select id="getNextPriority" resultType="com.celloud.backstage.model.SecResource">
+        select r.id, r.priority 
+        from tb_sec_resource r
+        where r.parent_id = #{parentId}
+        and r.priority &gt; #{priority}
+        order by r.priority asc limit 1
+    </select>
 </mapper>

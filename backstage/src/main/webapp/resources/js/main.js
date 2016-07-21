@@ -1048,7 +1048,7 @@ var permission = (function(permission){
 				});
 				$("#parentId").html("");
 				$("#parentId").append("<option value='0'>请选择</option>");
-				$.post("resource/findAll",{},function(data){
+				$.post("resource/findAllActive",{},function(data){
 					var jsonData = eval(data);
 					for(var i=0;i<jsonData.length;i++){
 						$("#parentId").append("<option value='"+jsonData[i].id+"'>"+jsonData[i].name+"</option>")
@@ -1098,7 +1098,7 @@ var permission = (function(permission){
 							$(this).prop("selected","selected");
 						}
 					});
-					$.post("resource/findAll",{},function(resourceData){
+					$.post("resource/findAllActive",{},function(resourceData){
 						$("#parentId").html("");
 						$("#parentId").append("<option value='0'>请选择</option>");
 						var jsonData = eval(resourceData);

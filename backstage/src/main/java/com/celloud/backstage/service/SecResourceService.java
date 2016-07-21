@@ -46,7 +46,7 @@ public interface SecResourceService {
      * @description 查询全部资源
      *
      */
-    public List<SecResource> findAll();
+    public List<SecResource> findAllActive();
 
     /**
      * 
