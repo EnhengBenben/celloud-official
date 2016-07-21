@@ -1,3 +1,4 @@
+/*!40101 SET NAMES utf8 */;
 SELECT * FROM celloud.tb_app;
 
 INSERT INTO `celloud`.`tb_app`
