@@ -130,12 +130,12 @@
                             <span class="title">充值</span>
                         </a>
                         <ul>
-                            <li id="queuing-time-menu">
+                            <li>
                                 <a href="javascript:expense.recharge.main();">
                                     <span class="title">账户充值</span>
                                 </a>
                             </li>
-                            <li id="queuing-time-menu">
+                            <li>
                                 <a href="javascript:void(0);">
                                     <span class="title">充值记录</span>
                                 </a>
@@ -148,10 +148,22 @@
                         </ul>
                     </li>
                     <li id="mailing-menu">
-                        <a href="javascript:mailing.toMailingMain();">
-                            <i class="fa fa-send-o" aria-hidden="true"></i>
-                            <span class="title">邮件群发</span>
+                        <a href="#">
+                           <i class="fa fa-send-o" aria-hidden="true"></i>
+                            <span class="title">邮件管理</span>
                         </a>
+                        <ul>
+                            <li>
+                                <a href="javascript:mailing.toMailingMain();">
+		                            <span class="title">邮件群发</span>
+		                        </a>
+                            </li>
+                            <li>
+                                <a href="javascript:mailing.mailTemplate.main();">
+                                    <span class="title">邮件模板</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li id="notice-menu">
                         <a href="javascript:notice.toNoticeMain();">
@@ -239,6 +251,7 @@
     <script src="plugins/bootstrap/js/xenon-custom.js"></script>
 	<script src="plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
 	<script src="plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+	<script src="plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
     <!-- JavaScripts initializations and stuff -->
     <script src="js/validate.extend.js"></script>
 	<script src="js/jquery.form.js"></script>

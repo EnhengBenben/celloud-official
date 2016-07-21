@@ -237,11 +237,8 @@
                 </div>
             </div>
         </form>
-        
     </div>
 </div>
-<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/ckeditor/ckeditor.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/plupload-2.1.2/plupload.full.min.js"></script>
 <script type="text/javascript">
 $(function(){
     CKEDITOR.replace( 'editordescription');
@@ -259,7 +256,6 @@ $(function(){
                 success:function(responseText){
                     if(responseText>0){
                         alert("成功");
-                        
                     }
                 }
             });   

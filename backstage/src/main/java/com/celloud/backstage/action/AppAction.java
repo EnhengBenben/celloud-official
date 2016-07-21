@@ -158,7 +158,7 @@ public class AppAction {
     @ResponseBody
     @RequestMapping(value = "app/save", method = RequestMethod.POST)
     public int save(App app,Integer[]classifyIds,Integer[]fileFormatIds,String[]screenName,String[] delScreenName){
-        
+
         if(app.getAppId()!=null){
             logger.info("修改appId={}",app.getAppId());
             return appService.updateApp(app, screenName, delScreenName, fileFormatIds, classifyIds);
