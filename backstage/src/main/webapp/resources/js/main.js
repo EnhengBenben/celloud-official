@@ -232,7 +232,6 @@ var company=(function(company){
 	    });
 	    uploader.bind("FileUploaded", function(uploader, file, response) {
 	      var res = JSON.parse(response.response);
-	      alert(res);
 	      if(res == "1"){
 	        $("#alert-info").html("<strong>OK!</strong>上传完成");
 	      }else{
@@ -953,7 +952,7 @@ var expense = (function(expense){
         $.post("recharge/transfer",$("#rechargeForm").serialize(),function(result){
           if(result.length>1){
             $("#recharge-alert").removeClass("hide");
-            $("#recharge-info").html(result);
+            $("#recharge-info").html("验证码错误，请重新输入！");
           }else if(result == "1"){
             $("#recharge-modal").modal("hide");
             $("#recharge-modal").on('hidden.bs.modal', function (e) {//此事件在模态框被隐藏（并且同时在 CSS 过渡效果完成）之后被触发。
