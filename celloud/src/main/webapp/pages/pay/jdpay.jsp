@@ -6,10 +6,7 @@
 <title>CelLoud平台账户充值--网银支付</title>
 </head>
 <body>
-	<form action="https://tmapi.jdpay.com/PayGate" method="POST" name="jdpaysubmit" id="jdpaysubmit">
-		<c:forEach items="${params }" var="item">
-			<!-- input style="" type="text" name="${item.key }" value="${item.value }" -->
-		</c:forEach>
+	<form action="https://tmapi.jdpay.com/PayGate" method="POST" name="jdpaysubmit" id="jdpaysubmit" style="display: none;">
 		<input type="text" name="v_md5info" value="${params.v_md5info }" size="100"><br>
 		<input type="text" name="v_mid" value="${params.v_mid }"  size="100"><br>
 		<input type="text" name="v_oid" value="${params.v_oid }"  size="100"><br>
@@ -26,7 +23,7 @@
 		<input type="submit" value="确定" >
 	</form>
 	<script type="text/javascript">
-		//document.forms['jdpaysubmit'].submit();
+		document.forms['jdpaysubmit'].submit();
 	</script>
 </body>
 </html>
