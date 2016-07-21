@@ -4,7 +4,7 @@ public class JdpayConfig {
 	/**
 	 * 商户号
 	 */
-	public static final String v_mid = "110218499";
+	public static final String v_mid = "110218499002";
 	/**
 	 * 商户自定义返回接收支付结果的页面
 	 */
