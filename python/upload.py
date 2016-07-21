@@ -22,7 +22,7 @@ resultPath = '/share/data/deploy/' + version
 #本地各项存储路径配置
 warPath = '/Users/lin/Documents/cleangit/celloud/celloud/target/celloud.war'
 pythonPath = '/Users/lin/Documents/cleangit/celloud/python'
-dbPath = os.path.join('/Users/lin/Dropbox/db',version)
+dbPath = os.path.join('/Users/lin/Documents/cleangit/celloud/dbUpgrade',version)
 parentPath = '/Users/lin'
 
 def upload(local_dir,remote_dir):

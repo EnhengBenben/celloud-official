@@ -100,15 +100,15 @@ if flag=='106':
 	dbPath = os.path.join(resultPath,'db')
 	for f in os.listdir(dbPath):
 		if f.endswith('.sql'):
-			for sql in readAllByLines(os.path.join(dbPath,f)):
-				mysql = mysql.getInstance()
-				if mysql:
-					mysql.execute(sql)
-			print '－－'+ f + '导入完毕－－'
-			#使用source中文会乱码，原因不明
-			#command = 'source ' + os.path.join(dbPath,f)
-			#os.system('mysql -u'+MySQLPro.user+' -p'+MySQLPro.password+' -h'+MySQLPro.host+' '+MySQLPro.db+' -e "'+command+'"')
-			#print '－－'+ command + '导入完毕－－'
+			#for sql in readAllByLines(os.path.join(dbPath,f)):
+			#	mysql = mysql.getInstance()
+			#	if mysql:
+			#		mysql.execute(sql)
+			#print '－－'+ f + '导入完毕－－'
+			#在sql文件中增加参数，解决了中文乱码问题
+			command = 'source ' + os.path.join(dbPath,f)
+			os.system('mysql -u'+MySQLPro.user+' -p'+MySQLPro.password+' -h'+MySQLPro.host+' '+MySQLPro.db+' -e "'+command+'"')
+			print '－－'+ command + '导入完毕－－'
 
 	print '－－－－－－－－数据库导入结束－－－－－－－－'
 
