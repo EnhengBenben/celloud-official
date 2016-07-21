@@ -26,7 +26,7 @@ $(function(){
 		drawCharts.barChart("topAppRun",data,'前10App运行次数','app_name','app_count',themes.green,20);
 	});
 	$.post("data/topDataSize",function(data){
-		drawCharts.barChart("topDataSize",data,'前10用户数据大小(MB)','username','size_sum',themes.green,20);
+		drawCharts.barChart("topDataSize",data,'前10用户数据大小','username','size_sum',themes.green,20);
 	});
 	
 	$.post("data/historyUserLogin",function(data){
@@ -42,6 +42,6 @@ $(function(){
 		drawCharts.barChart("historyAppActive",data,'历史周活跃App','start_date','active_app',themes.green,20);
 	});
 	$.post("data/historyDataSize",function(data){
-		drawCharts.barChart("historyDataSize",data,'历史周数据大小(MB)','start_date','size_sum',themes.green,20);
+		drawCharts.barChart("historyDataSize",data,'历史周数据大小','start_date','size_sum',themes.green,20);
 	});
 });

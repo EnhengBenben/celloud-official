@@ -768,6 +768,45 @@ var mailing=(function(mailing){
 		}
 	}
 	
+	self.mailTemplate = {
+      main: function(){
+        $.post("mail/allTemplate",{},function(responseText){
+          self.mailTemplate.load(responseText);
+        });
+      },
+      page: function(page){
+        $.post("mail/allTemplate",{"currentPage":page},function(responseText){
+          self.mailTemplate.load(responseText);
+        });
+      },
+      load: function(responseText){
+        $("#main-content").html(responseText);
+        $base.pageination(function(result) {self.mailTemplate.page(result)});
+        $("[data-click='to-edit-mailtemplate']").on("click",function(){
+          self.mailTemplate.toEdit($(this).data("id"));
+        });
+      },
+      toEdit: function(id){
+        $.post("mail/toEditTemplate",{"id":id},function(responseText){
+          $("#main-content").html(responseText);
+          CKEDITOR.replace("editor-context");
+          $("#commit-emailtemplate").on("click",function(){
+            self.mailTemplate.edit();
+          });
+        });
+      },
+      edit: function(){
+        $.post("mail/editTemplate",$("#emailTemplateForm").serialize(),function(result){
+          if(result == "success"){
+            $("#mail-alert").addClass("alert-success");
+          }else{
+            $("#mail-alert").addClass("alert-danger");
+          }
+          $("#mail-info").html(result);
+          $("#mail-alert").removeClass("hide");
+        });
+      }
+  };
 	return self;
 })(mailing);
 
