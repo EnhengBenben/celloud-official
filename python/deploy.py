@@ -56,13 +56,12 @@ def restartTomcat():
 	os.system(tomcatStopCommand)
 	time.sleep(5)
 	print '－－tomcat 已停止－－'
-	shutil.rmtree(celloudSource)
-	print '－－celloud 文件夹已删除－－'
-	os.remove(celloudWar)
-	print '－－celloud.war 已删除－－'
-	if os.path.exists(ROOT):
-		shutil.rmtree(ROOT)
-		print '－－ROOT 文件夹已删除－－'
+
+	for f in os.listdir(webappsPath):
+		if os.path.isdir(f):
+			shutil.rmtree(f)
+	print '－－项目目录已删除－－'
+
 	temp = os.path.join(tomcatPath,'work','Catalina')
 	if os.path.exists(temp):
 		shutil.rmtree(temp)
@@ -74,7 +73,7 @@ def restartTomcat():
 
 	os.system(tomcatStartCommand)
 	print '－－tomcat 正在启动－－'
-	time.sleep(40)
+	time.sleep(50)
 
 	print '－－－－－－－－tomcat 启动结束－－－－－－－－'
 
@@ -100,15 +99,15 @@ if flag=='106':
 	dbPath = os.path.join(resultPath,'db')
 	for f in os.listdir(dbPath):
 		if f.endswith('.sql'):
-			for sql in readAllByLines(os.path.join(dbPath,f)):
-				mysql = mysql.getInstance()
-				if mysql:
-					mysql.execute(sql)
-			print '－－'+ f + '导入完毕－－'
-			#使用source中文会乱码，原因不明
-			#command = 'source ' + os.path.join(dbPath,f)
-			#os.system('mysql -u'+MySQLPro.user+' -p'+MySQLPro.password+' -h'+MySQLPro.host+' '+MySQLPro.db+' -e "'+command+'"')
-			#print '－－'+ command + '导入完毕－－'
+			#for sql in readAllByLines(os.path.join(dbPath,f)):
+			#	mysql = mysql.getInstance()
+			#	if mysql:
+			#		mysql.execute(sql)
+			#print '－－'+ f + '导入完毕－－'
+			#在sql文件中增加参数，解决了中文乱码问题
+			command = 'source ' + os.path.join(dbPath,f)
+			os.system('mysql -u'+MySQLPro.user+' -p'+MySQLPro.password+' -h'+MySQLPro.host+' '+MySQLPro.db+' -e "'+command+'"')
+			print '－－'+ command + '导入完毕－－'
 
 	print '－－－－－－－－数据库导入结束－－－－－－－－'
 
