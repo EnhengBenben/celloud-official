@@ -1203,55 +1203,72 @@ var permission = (function(permission){
 							}
 						}
 					});
-					var permission = $("#permission").val().trim();
-					if(permission == ''){
-						$("#permission").next().html("表达式不能为空!");
+				}
+				var permission = $("#permission").val().trim();
+				if(permission == ''){
+					$("#permission").next().html("表达式不能为空!");
+					flag = false;
+				}else{
+					// 校验表达式是否重复
+					$.ajax({
+						url : "resource/checkPermission",
+						async : false,
+						type : "post",
+						data : {permission:permission,id:id},
+						success : function(data){
+							if(data > 0){
+								$("#permission").next().html("表达式重复!");
+								flag = false;
+							}else{
+								$("#permission").next().html("");
+							}
+						}
+					});
+				}
+				var priority = $("#priority").val().trim();
+				var parentId = $("#parentId").val();
+				if(priority == ''){
+					$("#priority").next().html("优先级不能为空!");
+					flag = false;
+				}else{
+					if(isNaN(priority) || priority!=parseInt(priority)){
+						$("#priority").next().html("请输入整数优先级!");
 						flag = false;
 					}else{
 						// 校验表达式是否重复
 						$.ajax({
-							url : "resource/checkPermission",
+							url : "resource/checkPriority",
 							async : false,
 							type : "post",
-							data : {permission:permission,id:id},
+							data : {priority:priority,id:id,parentId:parentId},
 							success : function(data){
 								if(data > 0){
-									$("#permission").next().html("表达式重复!");
+									$("#priority").next().html("优先级重复!");
 									flag = false;
 								}else{
-									$("#permission").next().html("");
+									$("#priority").next().html("");
 								}
 							}
 						});
 					}
-					var priority = $("#priority").val().trim();
-					if(priority == ''){
-						$("#priority").next().html("顺序不能为空!");
-						flag = false;
-					}else{
-						if(isNaN(priority) || priority!=parseInt(priority)){
-							$("#priority").next().html("请输入整数顺序!");
-							flag = false;
-						}
-					}
-					
-					var type = $("#select2-type-container").html();
-					if(type == "请选择"){
-						$("#type").next().next().html("请选择资源类型!");
-						flag = false;
-					}else{
-						$("#type").next().next().html("");
-					}
-					
-					var disabled = $("#select2-disabled-container").html();
-					if(disabled == "请选择"){
-						$("#disabled").next().next().html("请选择资源状态!");
-						flag = false;
-					}else{
-						$("#disabled").next().next().html("");
-					}
-					return flag;
 				}
+				
+				var type = $("#select2-type-container").html();
+				if(type == "请选择"){
+					$("#type").next().next().html("请选择资源类型!");
+					flag = false;
+				}else{
+					$("#type").next().next().html("");
+				}
+				
+				var disabled = $("#select2-disabled-container").html();
+				if(disabled == "请选择"){
+					$("#disabled").next().next().html("请选择资源状态!");
+					flag = false;
+				}else{
+					$("#disabled").next().next().html("");
+				}
+				return flag;
 			}
 	};
 	self.role = {

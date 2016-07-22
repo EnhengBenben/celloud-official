@@ -163,7 +163,7 @@
        select
        <include refid="Base_Column_List"/>
        from tb_sec_resource
-       where priority = #{priority}
+       where priority = #{priority} and parent_id = #{parentId}
        <if test="id != 0">
        and id != #{id}
        </if>

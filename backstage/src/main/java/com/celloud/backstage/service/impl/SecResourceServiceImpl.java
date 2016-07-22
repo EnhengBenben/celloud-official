@@ -58,8 +58,8 @@ public class SecResourceServiceImpl implements SecResourceService {
     }
 
     @Override
-    public int checkPriorityRepeat(Integer priority, Integer id) {
-        return resourceMapper.findByPriority(priority, id).size();
+    public int checkPriorityRepeat(Integer priority, Integer id, Integer parentId) {
+        return resourceMapper.findByPriority(priority, id, parentId).size();
     }
 
     @Override

@@ -63,7 +63,8 @@ public interface SecResourceMapper {
      * @description 根据优先级查询资源
      *
      */
-    List<SecResource> findByPriority(@Param("priority") Integer priority, @Param("id") Integer id);
+    List<SecResource> findByPriority(@Param("priority") Integer priority, @Param("id") Integer id,
+            @Param("parentId") Integer parentId);
 
     /**
      * 
