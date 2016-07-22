@@ -8,7 +8,8 @@ import com.celloud.backstage.model.EmailTemplate;
 import com.celloud.backstage.page.Page;
 
 public interface EmailTemplateMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(@Param("id") Integer id,
+            @Param("state") Integer state);
 
     int insert(EmailTemplate record);
 

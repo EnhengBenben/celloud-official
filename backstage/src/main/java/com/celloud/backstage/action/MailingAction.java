@@ -106,4 +106,10 @@ public class MailingAction {
         }
 
     }
+
+    @ResponseBody
+    @RequestMapping("mail/deleteTemplate")
+    public Integer deleteTemplate(Integer id) {
+        return emailTemplateService.deleteTemplate(id);
+    }
 }

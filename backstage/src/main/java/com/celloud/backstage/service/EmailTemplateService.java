@@ -75,4 +75,14 @@ public interface EmailTemplateService {
      * @date 2016年7月7日下午3:45:22
      */
     EmailTemplate getTemplate(String method);
+
+    /**
+     * 删除模板
+     * 
+     * @param id
+     * @return
+     * @author leamo
+     * @date 2016年7月22日 上午10:16:52
+     */
+    int deleteTemplate(Integer id);
 }

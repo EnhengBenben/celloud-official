@@ -239,6 +239,7 @@
         </form>
     </div>
 </div>
+<script src="plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(function(){
     CKEDITOR.replace( 'editordescription');

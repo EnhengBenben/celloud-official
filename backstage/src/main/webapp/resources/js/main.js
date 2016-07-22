@@ -767,35 +767,40 @@ var mailing=(function(mailing){
 			$("#userList").val(checkArray).trigger("change");
 		}
 	}
-	
-	self.mailTemplate = {
+	var mailTemplate = {
+	    currentPage: 1,
       main: function(){
         $.post("mail/allTemplate",{},function(responseText){
-          self.mailTemplate.load(responseText);
+          mailTemplate.load(responseText);
         });
       },
       page: function(page){
         $.post("mail/allTemplate",{"currentPage":page},function(responseText){
-          self.mailTemplate.load(responseText);
+          mailTemplate.currentPage = page;
+          mailTemplate.load(responseText);
         });
       },
       load: function(responseText){
         $("#main-content").html(responseText);
-        $base.pageination(function(result) {self.mailTemplate.page(result)});
+        $base.pageination(function(result) {mailTemplate.page(result)});
         $("[data-click='to-edit-mailtemplate']").on("click",function(){
-          self.mailTemplate.toEdit($(this).data("id"));
+          mailTemplate.toEdit($(this).data("id"));
+        });
+        $("[data-click='to-del-mailtemplate']").on("click",function(){
+          mailTemplate.del($(this).data("id"));
         });
       },
       toEdit: function(id){
         $.post("mail/toEditTemplate",{"id":id},function(responseText){
           $("#main-content").html(responseText);
-          CKEDITOR.replace("editor-context");
+          CKEDITOR.replace("editorcontext");
           $("#commit-emailtemplate").on("click",function(){
-            self.mailTemplate.edit();
+            mailTemplate.edit();
           });
         });
       },
       edit: function(){
+        $("#editorcontext").val(CKEDITOR.instances.editorcontext.getData());
         $.post("mail/editTemplate",$("#emailTemplateForm").serialize(),function(result){
           if(result == "success"){
             $("#mail-alert").addClass("alert-success");
@@ -805,8 +810,21 @@ var mailing=(function(mailing){
           $("#mail-info").html(result);
           $("#mail-alert").removeClass("hide");
         });
+      },
+      del: function(id){
+        jConfirm("确定删除该邮件模板吗？", '确认提示框', function(r) {
+          if(r){
+            $.post("mail/deleteTemplate",{id:id},function(responseText){
+              if(responseText>0){
+                alert("成功");
+                mailTemplate.page(mailTemplate.currentPage);
+              }
+            });
+          }
+        });
       }
   };
+	self.mailTemplate = mailTemplate;
 	return self;
 })(mailing);
 

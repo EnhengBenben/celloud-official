@@ -30,6 +30,7 @@
                     <td><fmt:formatDate value="${template.createDate }" pattern="yyyy-MM-dd"/></td>
                     <td>
                         <a class="btn btn-secondary" href="javascript:void(0);" data-click="to-edit-mailtemplate" data-id="${template.id }">编辑</a>
+                        <a class="btn btn-secondary" href="javascript:void(0);" data-click="to-del-mailtemplate" data-id="${template.id }">删除</a>
                     </td>
                 </tr>
                 </c:forEach>

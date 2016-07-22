@@ -62,10 +62,10 @@
     and state = #{state,jdbcType=INTEGER}
     and id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from tb_email_template
+  <update id="deleteByPrimaryKey">
+    update tb_email_template set state= #{state,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
-  </delete>
+  </update>
   <insert id="insert" parameterType="com.celloud.backstage.model.EmailTemplate" >
     insert into tb_email_template (id, name, method, 
       title, create_date, state, 
