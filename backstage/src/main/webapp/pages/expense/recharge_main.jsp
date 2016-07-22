@@ -57,7 +57,7 @@
 		            <div class="form-group">
 		                <label class="col-sm-2 control-label">充值金额<font color="red">*</font></label>
 		                <div class="col-sm-10">
-		                   <input type="number" class="form-control" name="amount" required="required" >
+		                   <input type="text" class="form-control" name="amount" placeholder="请正确输入金额" required="required">
 		                </div>
 		            </div>
 		            <div class="form-group">

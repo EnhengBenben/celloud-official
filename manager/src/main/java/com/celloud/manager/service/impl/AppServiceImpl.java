@@ -271,4 +271,19 @@ public class AppServiceImpl implements AppService {
         appMapper.deleteAppRightByAppIdsAndUserId(apps, userId);
     }
 
+    @Override
+    public List<Integer> getUserIdsByAppId(Integer appId) {
+        return appMapper.findUserIdsByAppId(appId);
+    }
+
+    @Override
+    public int grant(Integer appId, Integer[] userIds) {
+        appMapper.deleteUserAppRight(appId);
+        if (userIds != null) {
+            return appMapper.insertUserAppRight(appId, userIds);
+        } else {
+            return 0;
+        }
+    }
+
 }

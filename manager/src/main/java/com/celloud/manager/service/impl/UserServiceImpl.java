@@ -213,4 +213,9 @@ public class UserServiceImpl implements UserService {
     public void grantUserRole(Integer userId, String[] roleIds) {
         userMapper.addUserRoleRight(userId, roleIds);
     }
+
+    @Override
+    public List<User> getAllUserByBigCustomer(Integer companyId) {
+        return userMapper.findUserByBigCustomer(companyId, DataState.ACTIVE, PropertiesUtil.testAccountIds);
+    }
 }

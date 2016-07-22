@@ -152,6 +152,11 @@
                                     <span class="title">价格管理</span>
                                 </a>
                             </li>
+                            <li id="app-grant-menu">
+                                <a data-click="to-app-grant-list" href="javascript:void(0);">
+                                    <span class="title">授权管理</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>

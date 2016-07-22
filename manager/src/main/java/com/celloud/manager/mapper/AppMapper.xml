@@ -405,7 +405,7 @@
     GROUP BY temp.company_id 
     </select>
     <select id="getAppListByCompany" resultMap="BaseResultMap">
-    select app_id,app_name from tb_app where company_id = #{companyId } and attribute = #{attribute } and off_line=#{offLine } and run_type != 0
+    select app_id,app_name,create_date from tb_app where company_id = #{companyId } and attribute = #{attribute } and off_line=#{offLine } and run_type != 0
   </select>
   <select id="getAppListAdded" resultMap="BaseResultMap">
     select app_id,app_name from tb_app where run_type != 0 and attribute = #{attribute } and off_line=#{offLine }
@@ -511,4 +511,22 @@
     #{app.appId}
     </foreach>
   </delete>
+  <select id="findUserIdsByAppId" resultType="java.lang.Integer">
+    select uar.user_id
+    from tb_user_app_right uar
+    where uar.app_id = #{appId}
+  </select>
+  <delete id="deleteUserAppRight">
+    delete
+    from tb_user_app_right
+    where app_id = #{appId}
+  </delete>
+  <insert id="insertUserAppRight">
+    insert into
+    tb_user_app_right(user_id,app_id,is_add)
+    values
+    <foreach collection="userIds" item="userId" separator=",">
+        (${userId},${appId},0)
+    </foreach>
+  </insert>
 </mapper>

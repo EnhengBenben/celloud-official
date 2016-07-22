@@ -214,9 +214,11 @@
                 <div class="panel-body">
                     <form class="form-horizontal" id="roleDistributionForm" >
 						<div class="form-group">
-						    <div class="col-sm-10 col-sm-offset-2 " id="bigCustomerIds">
+						    <div class="col-sm-12" id="bigCustomerIds">
 						          <c:forEach items="${bigCustomers }" var="bigCustomer">
-						              <label class="checkbox-inline"><input name="bigCustomerIds" type="checkbox" value="${bigCustomer.userId }">${bigCustomer.username }</label>
+						              <div class="col-sm-3">
+							              <label class="checkbox-inline"><input name="bigCustomerIds" type="checkbox" value="${bigCustomer.userId }">${bigCustomer.username }</label>
+						              </div>
 						          </c:forEach>
 						    </div>
 	                        <input type="hidden" id="roleIdDis" name="roleId">
@@ -246,9 +248,11 @@
                 <div class="panel-body">
                     <form class="form-horizontal" id="roleGrantForm" >
                         <div class="form-group">
-                            <div class="col-sm-10 col-sm-offset-2 " id="resourceIds">
+                            <div class="col-sm-12" id="resourceIds">
                                   <c:forEach items="${resources }" var="resource">
-                                      <label class="checkbox-inline"><input name="resourceIds" type="checkbox" value="${resource.id }">${resource.name }</label>
+                                    <div class="col-sm-3">
+	                                    <label class="checkbox-inline"><input name="resourceIds" type="checkbox" value="${resource.id }">${resource.name }</label>
+                                    </div>
                                   </c:forEach>
                             </div>
                             <input type="hidden" id="roleIdGrant" name="roleId">

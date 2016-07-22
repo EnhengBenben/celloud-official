@@ -109,4 +109,22 @@ public interface AppService {
     public App getAppById(Integer appId);
 
     public void deleteAppRightByAppIdsAndUserId(List<App> apps, Integer userId);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月21日下午3:50:16
+     * @description 根据appId从关系表中查找用户id
+     *
+     */
+    public List<Integer> getUserIdsByAppId(Integer appId);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月21日下午4:14:08
+     * @description 将app授权给用户
+     *
+     */
+    public int grant(Integer appId, Integer[] userIds);
 }

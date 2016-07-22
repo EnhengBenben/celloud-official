@@ -85,7 +85,7 @@ public interface UserMapper {
     public List<Map<String, Integer>> getUserNumCount(@Param("state") Integer state,
             @Param("testAccountIds") String testAccountIds);
 
-    public List<User> getUser(@Param("companyId") Integer companyId, @Param("state") Integer state,
+    public List<User> findUserByBigCustomer(@Param("companyId") Integer companyId, @Param("state") Integer state,
             @Param("testAccountIds") String testAccountIds);
 
     public int deleteByPrimaryKey(Integer userId);

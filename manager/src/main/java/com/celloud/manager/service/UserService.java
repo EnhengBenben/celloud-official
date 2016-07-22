@@ -16,6 +16,16 @@ import com.celloud.manager.page.PageList;
  * @date 2015年12月23日 下午12:53:35
  */
 public interface UserService {
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月21日下午3:28:39
+     * @description 根据大客户查询该大客户下的用户
+     *
+     */
+    public List<User> getAllUserByBigCustomer(Integer companyId);
+
     /**
      * 用户登录校验
      * 
