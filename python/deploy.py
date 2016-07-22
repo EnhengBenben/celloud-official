@@ -58,8 +58,9 @@ def restartTomcat():
 	print '－－tomcat 已停止－－'
 
 	for f in os.listdir(webappsPath):
-		if os.path.isdir(f):
-			shutil.rmtree(f)
+		rmFile = os.path.join(webappsPath,f)
+		if os.path.isdir(rmFile):
+			shutil.rmtree(rmFile)
 	print '－－项目目录已删除－－'
 
 	temp = os.path.join(tomcatPath,'work','Catalina')
