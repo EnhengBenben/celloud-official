@@ -60,4 +60,9 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
     public EmailTemplate getTemplate(String method) {
         return emailTemplateMapper.getTemplate(method, DataState.ACTIVE);
     }
+
+    @Override
+    public int deleteTemplate(Integer id) {
+        return emailTemplateMapper.deleteByPrimaryKey(id, DataState.DEELTED);
+    }
 }

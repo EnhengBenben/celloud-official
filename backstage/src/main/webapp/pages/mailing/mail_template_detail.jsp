@@ -36,7 +36,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label" >模板内容</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" cols="5" id="editor-context" name="context">${emailTemplate.context }</textarea>
+                    <textarea class="form-control" cols="5" id="editorcontext" name="context">${emailTemplate.context }</textarea>
                 </div>
             </div>
             <div class="form-group-separator"></div>
@@ -49,3 +49,4 @@
         </form>
     </div>
 </div>
+<script src="plugins/ckeditor/ckeditor.js" type="text/javascript"></script>

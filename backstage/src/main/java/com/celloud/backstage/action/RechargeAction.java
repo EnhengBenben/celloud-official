@@ -55,7 +55,7 @@ public class RechargeAction {
                 com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
         if (kaptchaExpected == null
                 || !kaptchaExpected.equalsIgnoreCase(kaptchaCode)) {
-            return "验证码错误，请重新登录！";
+            return "kaptcha error";
         }
         return rechargeService.createRechargeTransfer(transfer) > 0 ? "1" : "0";
     }
