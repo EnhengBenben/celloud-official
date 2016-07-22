@@ -49,7 +49,7 @@ public class RechargeImpl implements RechargeService {
         recharge.setAmount(amount);
         recharge.setBalances(balances);
 		Date date = new Date();
-		String stringDate = DateUtil.getDateToString(date, "yyyy-MM-dd HH:mm:ss");
+		String stringDate = DateUtil.getDateToString(date, DateUtil.YMDHMS);
         recharge.setCreateDate(new Date());
         recharge.setUserId(userId);
         recharge.setRechargeType(rechargeType.type());

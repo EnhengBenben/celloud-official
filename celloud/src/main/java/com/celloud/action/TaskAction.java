@@ -269,8 +269,8 @@ public class TaskAction {
 		MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
 				.send(NoticeConstants.createMessage("task", "运行完成", "文件【" + tipsName + "】运行应用【" + appName + "】完成"));
 		//构造邮件内容
-		String startDate = DateUtil.getDateToString(task.getStartDate(), "yyyy-MM-dd hh:mm:ss");
-		String endDate = DateUtil.getDateToString(task.getEndDate(), "yyyy-MM-dd hh:mm:ss");
+		String startDate = DateUtil.getDateToString(task.getStartDate(), DateUtil.YMDHMS);
+		String endDate = DateUtil.getDateToString(task.getEndDate(), DateUtil.YMDHMS);
 		AliEmail aliEmail = AliEmail.template(EmailType.RUN_OVER)
 				.substitutionVars(AliSubstitution.sub().set(EmailParams.RUN_OVER.userName.name(), username)
 						.set(EmailParams.RUN_OVER.projectName.name(), tipsName)
@@ -400,9 +400,9 @@ public class TaskAction {
 				.send(NoticeConstants.createMessage("task", "运行完成", "项目【" + projectName + "】运行【" + appName + "】完成。"));
 		//构造邮件内容
 		Report report = reportService.getReportByProjectId(Integer.valueOf(projectId));
-		String startDate = DateUtil.getDateToString(report.getCreateDate(), "yyyy-MM-dd hh:mm:ss");
+		String startDate = DateUtil.getDateToString(report.getCreateDate(), DateUtil.YMDHMS);
 		String endDate = report.getEndDate() == null ? null
-				: DateUtil.getDateToString(report.getEndDate(), "yyyy-MM-dd hh:mm:ss");
+				: DateUtil.getDateToString(report.getEndDate(), DateUtil.YMDHMS);
 		AliEmail aliEmail = AliEmail.template(EmailType.RUN_OVER)
 				.substitutionVars(AliSubstitution.sub().set(EmailParams.RUN_OVER.userName.name(), username)
 						.set(EmailParams.RUN_OVER.projectName.name(), projectName)
