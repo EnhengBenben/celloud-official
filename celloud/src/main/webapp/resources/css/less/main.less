@@ -1,5 +1,5 @@
 @import "param.less";
-html,body,div,section,ul {
+    html,body,div,section,ul {
     padding: 0;
     margin: 0;
     font: 12px/1.5 "Microsoft Yahei","Hiragino Sans GB",tahoma,arial;
@@ -10,6 +10,9 @@ input,button,a,select,textarea {
 a, a:link, a:hover, a:active, a:visited {
     text-decoration: none;
     cursor: pointer;
+    &.disabled {
+        cursor: default;
+    }
 }
 ul,ol{
     list-style: none;
@@ -103,8 +106,8 @@ ul,ol{
     }
 }
 .main-container{
-    margin: 50px 0px 0px 50px;
-    padding: 0px 15px;
+    height: 100%;
+    padding: 50px 15px 0px 65px;
     .header{
         .breadcrumb {
             margin-bottom: 0;
@@ -179,15 +182,19 @@ ul,ol{
     }
     > .searchs{
         width: 240px;
+        height: 80px;
         display: block;
         float: right;
         padding: 20px;
+        >.btns{
+            margin-top: 10px;
+        }
     }
 }
 .common-sidebar{
     position: absolute;
     width: 170px;
-    min-height: 100%;
+    height: 100%;
     background: @bg-gray;
     > .menu{
         width: 100%;
@@ -203,8 +210,8 @@ ul,ol{
         text-align: center;
         font-size: 14px;
         &.-active>a {
-            border-left: 2px solid @rocky-color;
-            color: @rocky-color;
+            border-left: 2px solid @font-gray;
+            color: @font-gray;
             background: @main-color;
         }
     }
@@ -213,18 +220,78 @@ ul,ol{
         height: 40px;
         display: block;
         color: @bg-black;
+        > i {
+            margin-right: 20px;
+        }
     }
 }
 .common-container{
     position: relative;
-    min-height: 100%;
+    height: 100%;
     margin-left: 170px;
-    padding: 20px;
+    padding: 20px 0px 0px 20px;
+    .content{
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        background-color: @main-color;
+    }
+    .statistic{
+        font-size: 12px;
+        color: #323232;
+        margin-top: 10px;
+        > span{
+            margin-left: 20px;
+        }
+    }
 }
+/*上传页面*/
+.upload-content{
+    margin: auto;
+    padding: 30px 0px;
+    max-width: 648px;
+    .form-inline{
+        margin-top: 30px;
+        text-align: left;
+        padding-left: 52px;
+    }
+    .form-control{
+        width: 300px;
+    }
+    
+    .upload-container{
+        
+    }
+    .plupload-content {
+        position: relative;
+        margin: 20px 0px 10px 0px;
+        width: 100%;
+        height:120px;
+        text-align: center;
+        border: 1px solid @bg-gray;
+        .border-radius(10px);
+        cursor: pointer;
+        background-color: #fff;
+        
+    }
+    .plupload-content .upload-text{
+        position: absolute;
+        width: 100%;
+        line-height: 20px;
+        font-size: 14px;
+        color: @font-s-gray;
+        margin: 37px auto;
+        .celicon {
+            margin-right: 5px;
+            margin-bottom: -3px;
+        }
+    }
+}
+/*收样*/
 .sample{
-    padding-left: 15px;
+    margin: 0px;
+    padding: 0px;
     .info {
-        height: 260px;
         display: block;
         padding: 20px;
         font-size: 12px;
@@ -237,5 +304,37 @@ ul,ol{
     }
     .list {
         padding-right: 0px;
+    }
+}
+
+.report-content{
+    padding: 30px;
+    text-align: left;
+    h4 {
+        margin: 0px;
+        padding-bottom: 10px;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: left;
+        color: @font-black;
+    }
+    .result-div{
+        margin-bottom: 10px;
+        width: 100%;
+        height: 100px;
+        padding: 30px;
+        .border-1(bg-gray);
+        background-color: #fff;
+        .main{
+            font-size: 18px;
+            strong{
+                padding: 0px 4px;
+            }
+        }
+    }
+    >.notice {
+        font-size: 12px;
+        color: @font-gray;
+        text-indent: 2em;
     }
 }

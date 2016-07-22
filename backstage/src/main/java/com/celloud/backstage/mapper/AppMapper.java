@@ -1,6 +1,7 @@
 package com.celloud.backstage.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -69,4 +70,8 @@ public interface AppMapper {
     public int deleteAppFileFormat(@Param("appId") Integer appId);
     public int deleteAppClassify(@Param("appId") Integer appId);
     public int updateApp(App app);
+
+    public List<App> getAllApp(@Param("offLine") Integer offLine);
+
+    public Map<String, Object> getAppMapById(@Param("appId") Integer appId);
 }

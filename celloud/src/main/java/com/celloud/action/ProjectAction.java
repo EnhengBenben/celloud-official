@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.celloud.alimail.AliEmail;
+import com.celloud.alimail.AliSubstitution;
 import com.celloud.constants.AppDataListType;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
@@ -21,11 +23,15 @@ import com.celloud.constants.NoticeConstants;
 import com.celloud.constants.ReportPeriod;
 import com.celloud.constants.SparkPro;
 import com.celloud.message.MessageUtils;
+import com.celloud.message.category.MessageCategoryCode;
+import com.celloud.message.category.MessageCategoryUtils;
 import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.Project;
 import com.celloud.model.mysql.Report;
 import com.celloud.model.mysql.Task;
 import com.celloud.model.mysql.User;
+import com.celloud.sendcloud.EmailParams;
+import com.celloud.sendcloud.EmailType;
 import com.celloud.service.AppService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
@@ -33,6 +39,9 @@ import com.celloud.service.TaskService;
 import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.SSHUtil;
+import com.celloud.wechat.ParamFormat;
+import com.celloud.wechat.ParamFormat.Param;
+import com.celloud.wechat.WechatParams;
 
 /**
  * 项目操作类
@@ -54,6 +63,8 @@ public class ProjectAction {
     private TaskService taskService;
     @Resource
     private AppService appService;
+	@Resource
+	private MessageCategoryUtils mcu;
 
     private static Map<String, Map<String, String>> machines = ConstantsData
             .getMachines();
@@ -164,23 +175,34 @@ public class ProjectAction {
         }
         Integer userId = ConstantsData.getLoginUserId();
         projectService.deleteShareFromMe(userId, projectId);
-        if (StringUtils.isNotEmpty(userIds)) {
-            projectService.addShare(userId, projectId, userIds);
-            User user = userService.selectUserById(userId);
-            List<String> usernameList = userService.selectUserUserById(
-                    userIds.substring(0, userIds.length() - 1));
-            String[] usernames = new String[usernameList.size()];
-            for (int i = 0; i < usernameList.size(); i++) {
-                usernames[i] = usernameList.get(i);
-            }
-            Project p = projectService.selectByPrimaryKey(projectId);
-            MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
-                    .send(NoticeConstants
-                            .createMessage("share", "项目共享",
-                                    "收到" + user.getUsername() + "共享的项目【"
-                                            + p.getProjectName() + "】"))
-                    .to(usernames);
-        }
+		if (StringUtils.isNotEmpty(userIds)) {
+			projectService.addShare(userId, projectId, userIds);
+			Project p = projectService.selectByPrimaryKey(projectId);
+			String projectName = p.getProjectName();
+			String projectID = p.getProjectId().toString();
+			User user = userService.selectUserById(userId);
+			String shareUserName = user.getUsername();
+			List<User> userList = userService.selectUserByIds(userIds.substring(0, userIds.length() - 1));
+			for (int i = 0; i < userList.size(); i++) {
+				User shareTo = userList.get(i);
+				//构造桌面消息
+				MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL).send(NoticeConstants
+						.createMessage("share", "项目共享", "收到" + shareUserName + "共享的项目【" + projectName + "】"));
+				//构造邮件内容
+				AliEmail aliEmail = AliEmail.template(EmailType.PROJECT_SHARE).substitutionVars(
+						AliSubstitution.sub().set(EmailParams.PROJECT_SHARE.shareUserName.name(), shareUserName)
+								.set(EmailParams.PROJECT_SHARE.userName.name(), shareTo.getUsername())
+								.set(EmailParams.PROJECT_SHARE.dataName.name(), projectName)
+								.set(EmailParams.PROJECT_SHARE.dataKey.name(), projectID));
+				//构造微信发送消息
+				Param params = ParamFormat.param()
+						.set(WechatParams.SHARE.first.name(), "您好，用户 " + shareUserName + " 分享给您一个项目", "#222222")
+						.set(WechatParams.SHARE.keyword1.name(), projectName, null)
+						.set(WechatParams.SHARE.keyword2.name(), projectID, null)
+						.set(WechatParams.SHARE.remark.name(), "您可以登录平台查看项目报告", "#222222");
+				mcu.sendMessage(shareTo.getUserId(), MessageCategoryCode.SHARE, aliEmail, params, mu);
+			}
+		}
         return error;
     }
 

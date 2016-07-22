@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -261,4 +262,184 @@ public class DataAction {
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
     }
     
+    @RequestMapping("weekDataCount")
+    public ModelAndView weekDataCount() {
+        ModelAndView mv = new ModelAndView("data/data_week");
+        Integer companyId = ConstantsData.getLoginUser().getCompanyId();
+        // 获取本周top10
+        List<Map<String, Object>> weekUserLogin = dataService.getWeekUserLogin(companyId);
+        List<Map<String, Object>> weekAppRun = dataService.getWeekAppRun(companyId);
+        List<Map<String, Object>> weekDataSize = dataService.getWeekDataSize(companyId);
+        List<Map<String, Object>> weekData = new ArrayList<Map<String, Object>>();
+        for (int i = 0; i < 10; i++) {
+            Map<String, Object> temp = new HashMap<String, Object>();
+            temp.put("logUsername", weekUserLogin.size() > i ? weekUserLogin.get(i).get("username") : "无");
+            temp.put("logCount", weekUserLogin.size() > i ? weekUserLogin.get(i).get("log_count") : 0);
+            temp.put("appName", weekAppRun.size() > i ? weekAppRun.get(i).get("app_name") : "无");
+            temp.put("appCount", weekAppRun.size() > i ? weekAppRun.get(i).get("app_count") : 0);
+            temp.put("sizeUsername", weekDataSize.size() > i ? weekDataSize.get(i).get("username") : "无");
+            temp.put("sizeSum", weekDataSize.size() > i ? weekDataSize.get(i).get("size_sum") : 0);
+            weekData.add(i, temp);
+        }
+        // 获取历史周统计
+        List<Map<String, Object>> historyWeekUserLogin = dataService.getHistoryWeekUserLogin(companyId);
+        List<Map<String, Object>> historyWeekActiveUser = dataService.getHistoryWeekActiveUser(companyId);
+        List<Map<String, Object>> historyWeekAppRun = dataService.getHistoryWeekAppRun(companyId);
+        List<Map<String, Object>> historyWeekAppActive = dataService.getHistoryWeekAppActive(companyId);
+        List<Map<String, Object>> historyWeekDataSize = dataService.getHistoryWeekDataSize(companyId);
+        List<Map<String, Object>> historyWeekData = new ArrayList<Map<String, Object>>();
+        // 构造临时map追加数据key为日期,value为list中的map
+        Map<String, Map<String, Object>> appendMap = new HashMap<String, Map<String, Object>>();
+        for (int i = historyWeekUserLogin.size() - 1; i >= 0; i--) {
+            String key = (String) historyWeekUserLogin.get(i).get("start_date");
+            Map<String, Object> listMap = new HashMap<String, Object>();
+            listMap.put("historyDate", key);
+            listMap.put("historyWeekUserLogin",
+                    historyWeekUserLogin.get(i).get("start_date").equals(key)
+                            ? historyWeekUserLogin.get(i).get("log_count")
+                            : 0);
+            if (historyWeekActiveUser.size() > i) {
+                if (historyWeekActiveUser.get(i).get("start_date").equals(key)) {
+                    listMap.put("historyWeekActiveUser", historyWeekActiveUser.get(i).get("active_user"));
+                } else {
+                    if (appendMap.get(historyWeekActiveUser.get(i).get("start_date")) == null) {
+                        Map<String, Object> newMap = new HashMap<String, Object>();
+                        newMap.put("historyDate", (String) historyWeekActiveUser.get(i).get("start_date"));
+                        newMap.put("historyWeekActiveUser", historyWeekActiveUser.get(i).get("active_user"));
+                        appendMap.put((String) historyWeekActiveUser.get(i).get("start_date"), newMap);
+                    } else {
+                        appendMap.get(historyWeekActiveUser.get(i).get("start_date")).put("historyWeekAppRun",
+                                historyWeekActiveUser.get(i).get("active_user"));
+                    }
+                    listMap.put("historyWeekActiveUser", 0);
+                }
+            } else {
+                listMap.put("historyWeekActiveUser", 0);
+            }
+            
+            if (historyWeekAppRun.size() > i) {
+                if (historyWeekAppRun.get(i).get("start_date").equals(key)) {
+                    listMap.put("historyWeekAppRun", historyWeekAppRun.get(i).get("run_app"));
+                } else {
+                    if (appendMap.get(historyWeekAppRun.get(i).get("start_date")) == null) {
+                        Map<String, Object> newMap = new HashMap<String, Object>();
+                        newMap.put("historyDate", (String) historyWeekAppRun.get(i).get("start_date"));
+                        newMap.put("historyWeekAppActive", historyWeekAppRun.get(i).get("run_app"));
+                        appendMap.put((String) historyWeekAppRun.get(i).get("start_date"), newMap);
+                    } else {
+                        appendMap.get(historyWeekAppRun.get(i).get("start_date")).put("historyWeekAppRun",
+                                historyWeekAppRun.get(i).get("run_app"));
+                    }
+                    listMap.put("historyWeekAppRun", 0);
+                }
+            } else {
+                listMap.put("historyWeekAppRun", 0);
+            }
+
+            if (historyWeekAppActive.size() > i) {
+                if (historyWeekAppActive.get(i).get("start_date").equals(key)) {
+                    listMap.put("historyWeekAppActive", historyWeekAppActive.get(i).get("active_app"));
+                } else {
+                    if (appendMap.get(historyWeekAppActive.get(i).get("start_date")) == null) {
+                        Map<String, Object> newMap = new HashMap<String, Object>();
+                        newMap.put("historyDate", (String) historyWeekAppActive.get(i).get("start_date"));
+                        newMap.put("historyWeekAppActive", historyWeekAppActive.get(i).get("active_app"));
+                        appendMap.put((String) historyWeekAppActive.get(i).get("start_date"), newMap);
+                    } else {
+                        appendMap.get(historyWeekAppActive.get(i).get("start_date")).put("historyWeekAppActive",
+                                historyWeekAppActive.get(i).get("active_app"));
+                    }
+                    listMap.put("historyWeekAppActive", 0);
+                }
+            } else {
+                listMap.put("historyWeekAppActive", 0);
+            }
+
+            if (historyWeekDataSize.size() > i) {
+                if (historyWeekDataSize.get(i).get("start_date").equals(key)) {
+                    listMap.put("historyWeekDataSize", historyWeekDataSize.get(i).get("size_sum"));
+                } else {
+                    if (appendMap.get(historyWeekDataSize.get(i).get("start_date")) == null) {
+                        Map<String, Object> newMap = new HashMap<String, Object>();
+                        newMap.put("historyDate", (String) historyWeekDataSize.get(i).get("start_date"));
+                        newMap.put("historyWeekDataSize", historyWeekDataSize.get(i).get("size_sum"));
+                        appendMap.put((String) historyWeekDataSize.get(i).get("start_date"), newMap);
+                    } else {
+                        appendMap.get(historyWeekDataSize.get(i).get("start_date")).put("historyWeekDataSize",
+                                historyWeekDataSize.get(i).get("size_sum"));
+                    }
+                    listMap.put("historyWeekDataSize", 0);
+                }
+            } else {
+                listMap.put("historyWeekDataSize", 0);
+            }
+            appendMap.put(key, listMap);
+        }
+
+        int i = 0;
+        for (Map.Entry<String, Map<String, Object>> entry : appendMap.entrySet()) {
+            historyWeekData.add(i++, entry.getValue());
+        }
+
+        mv.addObject("weekData", weekData);
+        mv.addObject("historyWeekData", historyWeekData);
+        return mv;
+    }
+    
+    @ResponseBody
+    @RequestMapping("data/topUserLogin")
+    public List<Map<String, Object>> topUserLogin() {
+        Integer companyId = ConstantsData.getLoginUser().getCompanyId();
+        return dataService.getWeekUserLogin(companyId);
+    }
+    
+    @ResponseBody
+    @RequestMapping("data/topAppRun")
+    public List<Map<String, Object>> topAppRun() {
+        Integer companyId = ConstantsData.getLoginUser().getCompanyId();
+        return dataService.getWeekAppRun(companyId);
+    }
+
+    @ResponseBody
+    @RequestMapping("data/topDataSize")
+    public List<Map<String, Object>> topDataSize() {
+        Integer companyId = ConstantsData.getLoginUser().getCompanyId();
+        return dataService.getWeekDataSize(companyId);
+    }
+
+    @ResponseBody
+    @RequestMapping("data/historyUserLogin")
+    public List<Map<String, Object>> historyUserLogin() {
+        Integer companyId = ConstantsData.getLoginUser().getCompanyId();
+        return dataService.getHistoryWeekUserLogin(companyId);
+    }
+
+    @ResponseBody
+    @RequestMapping("data/historyUserActive")
+    public List<Map<String, Object>> historyUserActive() {
+        Integer companyId = ConstantsData.getLoginUser().getCompanyId();
+        return dataService.getHistoryWeekActiveUser(companyId);
+    }
+
+    @ResponseBody
+    @RequestMapping("data/historyAppRun")
+    public List<Map<String, Object>> historyAppRun() {
+        Integer companyId = ConstantsData.getLoginUser().getCompanyId();
+        return dataService.getHistoryWeekAppRun(companyId);
+    }
+
+    @ResponseBody
+    @RequestMapping("data/historyAppActive")
+    public List<Map<String, Object>> historyAppActive() {
+        Integer companyId = ConstantsData.getLoginUser().getCompanyId();
+        return dataService.getHistoryWeekAppActive(companyId);
+    }
+
+    @ResponseBody
+    @RequestMapping("data/historyDataSize")
+    public List<Map<String, Object>> historyDataSize() {
+        Integer companyId = ConstantsData.getLoginUser().getCompanyId();
+        return dataService.getHistoryWeekDataSize(companyId);
+    }
+
 }

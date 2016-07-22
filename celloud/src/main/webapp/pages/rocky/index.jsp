@@ -8,7 +8,7 @@
 <!-- 优先使用最新版本的IE 和 Chrome 内核 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="baidu-site-verification" content="IsldTuHqik" />
-<title>CelLoud </title>
+<title>CelLoud</title>
 <meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据,上海华点云生物科技有限公司网站首页,上海华点云生物科技有限公司官网,上海华点云生物科技有限公司北京分公司" />
 <meta name="description" content="一站式高通量基因检测数据分析系统" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,101 +18,105 @@
 <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/less/main.less" rel="stylesheet/less" type="text/css" />
 <link href="<%=request.getContextPath()%>/css/less/components.less" rel="stylesheet/less" type="text/css" />
+<link href="<%=request.getContextPath()%>/css/less/theme.less" rel="stylesheet/less" type="text/css" />
 <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script>
 </head>
 <body class="container">
-  <header class="main-header">
-    <a href="javascript:void(0)" class="logo">
-      <img src="<%=request.getContextPath()%>/images/icon/logo-gray.png">
-    </a>
-    <nav class="navbar">
-      <div class="menu">
-        <ul class="nav navbar-nav">
-          <li><a href="#"><i class="fa fa-bell" aria-hidden="true"></i></a></li>
-          <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-  <aside class="main-sidebar">
-    <ul class="menu">
-      <li class="treeview -active">
-        <a href="javascript:void(0)"></a>
-      </li>
-    </ul>
-  </aside>
-  <div class="main-container">
-    <div class="header">
-	  <ol class="breadcrumb">
-	    <li>主页</li>
-	    <li>应用</li>
-	    <li id="app-name">华木兰</li>
-	    <li id="menu-name">收样</li>
-	  </ol>
+	<header class="main-header">
+		<a href="javascript:void(0)" class="logo">
+			<img src="<%=request.getContextPath()%>/images/icon/logo-gray.png">
+		</a>
+		<nav class="navbar">
+			<div class="menu">
+				<ul class="nav navbar-nav">
+					<li>
+						<a href="#">
+							<i class="fa fa-bell" aria-hidden="true"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fa fa-user" aria-hidden="true"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<aside class="main-sidebar">
+		<ul class="menu">
+			<li class="treeview -active">
+				<a href="javascript:void(0)"></a>
+			</li>
+		</ul>
+	</aside>
+	<div class="main-container">
+		<div class="header">
+			<ol class="breadcrumb">
+				<li>主页</li>
+				<li>应用</li>
+				<li id="app-name">华木兰</li>
+				<li id="menu-name">收样</li>
+			</ol>
+		</div>
+		<section class="content rocky">
+			<header class="common-menu">
+				<div class="logo">
+					<img alt="华木兰" src="<%=request.getContextPath()%>/images/app/breast_mulations_scan.png">
+				</div>
+				<hr class="-left">
+				<div id="common-menu-center" class="info"></div>
+				<div id="common-menu-right" class="searchs"></div>
+				<hr class="-right">
+			</header>
+			<aside class="common-sidebar">
+				<ul id="common-menu" class="menu">
+					<li class="treeview">产品功能</li>
+					<li class="treeview -active">
+						<a id="to-sample-a" href="javascript:void(0)" data-menu="收样">
+						  <i class="celicon -sample"></i>收样
+						</a>
+					</li>
+					<li class="treeview">
+						<a id="to-upload-a" href="javascript:void(0)" data-menu="上传">
+                          <i class="celicon -upload"></i> 上传
+                        </a>
+					</li>
+					<li class="treeview">
+						<a id="to-data-a" href="javascript:void(0)" data-menu="数据">
+						  <i class="celicon -data"></i> 数据
+						</a>
+					</li>
+					<li class="treeview">
+						<a id="to-report-a" href="javascript:void(0)" data-menu="报告">
+						  <i class="celicon -report"></i> 报告
+						</a>
+					</li>
+				</ul>
+			</aside>
+			<div id="container" class="common-container"></div>
+			<div id="upload-container" class="common-container hide">
+				<jsp:include page="upload/upload.jsp"></jsp:include>
+			</div>
+		</section>
 	</div>
-	<section class="content">
-	  <header class="common-menu">
-	    <div class="logo">
-	        <img alt="华木兰" src="<%=request.getContextPath()%>/images/app/breast_mulations_scan.png">
-	    </div>
-	    <hr class="-left">
-	    <div name="sample-condition" class="info hide">
-	      <div class="info-form">
-		    <input id="info-input" class="field" type="text" placeholder="扫描样本编号/病历号"/>
-		    <a id="info-add-a" class="action">添加</a>
-		  </div>
-		  <div id="sample-error" class="errortip hide">
-		    <p> 此样品信息已经收集过，请核查或者采集下一管样品信息！
-		      <a id="close-error" href="javascript:void(0)"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
-		    </p>
-		  </div>
-	    </div>
-	    <div class="searchs">
-	      <div class="search-form">
-	        <input id="condition-input" class="field" type="text" placeholder="搜索"/>
-	        <a id="condition-find" class="action"><i class="fa fa-search"></i></a>
-	      </div>
-	      <div name="sample-condition" class="btns hide">
-		      <button id="info-reset" class="btn -cancel">取消</button>
-		      <button id="info-commit" class="btn -confirm">提交样本信息</button>
-		  </div>
-	    </div>
-	    <hr class="-right">
-	  </header>
-	  <aside class="common-sidebar">
-	    <ul id="common-menu" class="menu">
-	      <li class="treeview">产品功能</li>
-	      <li class="treeview -active">
-	        <a id="to-sample-a" href="javascript:void(0)" data-menu="收样">收样</a>
-	      </li>
-	      <li class="treeview">
-            <a id="to-upload-a" href="javascript:void(0)" data-menu="上传">上传</a>
-          </li>
-          <li class="treeview">
-            <a id="to-data-a" href="javascript:void(0)" data-menu="数据">数据</a>
-          </li>
-          <li class="treeview">
-            <a id="to-report-a" href="javascript:void(0)" data-menu="报告">报告</a>
-          </li>
-	    </ul>
-	  </aside>
-	  <div id="container" class="common-container">
-	  </div>
-	</section>
-  </div>
-<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-<script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
-<script src="//cdn.bootcss.com/plupload/2.1.8/i18n/zh_CN.js"></script>
-<script src="//cdn.bootcss.com/swfobject/2.2/swfobject.min.js"></script>
-<script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
-<script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
-<script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js?version=1.1"></script>
-<script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
-<script src="<%=request.getContextPath()%>/js/utils.js" type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/js/base.js" type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/js/rocky_main.js" type="text/javascript"></script>
-<script src="<%=request.getContextPath() %>/js/bsi_upload.js"></script>
+	<script type="text/javascript">
+		window.contextPath = '<%=request.getContextPath()%>';
+	</script>
+	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+	<script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+	<script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
+	<script src="//cdn.bootcss.com/plupload/2.1.8/i18n/zh_CN.js"></script>
+	<script src="//cdn.bootcss.com/swfobject/2.2/swfobject.min.js"></script>
+	<script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
+	<script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
+	<script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js?version=1.1"></script>
+	<script src="<%=request.getContextPath()%>/js/utils.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/base.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/rocky_main.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/rocky_upload.js"></script>
+	<script src="<%=request.getContextPath()%>/js/rocky_report.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/rocky_data.js"></script>
 </body>
 </html>

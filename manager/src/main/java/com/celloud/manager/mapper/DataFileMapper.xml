@@ -362,4 +362,71 @@
 	and f.create_date between #{start} and #{end}
 	</if>
   </select>
+  <select id="getWeekUserLogin" resultType="java.util.HashMap">
+    select u.username,count(u.username) log_count from
+    (select date_format(date_sub(now(),interval WEEKDAY(now()) day),"%Y-%m-%d 00:00:00") start_date,date_format(date_add(date_sub(now(),interval WEEKDAY(now()) day),interval 6 day),"%Y-%m-%d 23:59:59") end_date) temp, tb_user u, tb_log l<if test="companyId!=0">, tb_user_company_relat ucr</if>
+    where u.user_id = l.user_id and l.log_date &gt;= start_date and l.log_date &lt;= end_date and u.user_id not in (${testAccountIds}) <if test="companyId!=0">and u.user_id = ucr.user_id and ucr.company_id = #{companyId}</if>
+    group by u.username 
+    order by log_count desc 
+    limit 10
+  </select>
+  <select id="getWeekAppRun" resultType="java.util.HashMap">
+    select a.app_name,count(a.app_name) app_count from
+      tb_report r,tb_user u,tb_app a,(select date_format(date_sub(now(),interval WEEKDAY(now()) day),"%Y-%m-%d 00:00:00") start_date,date_format(date_add(date_sub(now(),interval WEEKDAY(now()) day),interval 6 day),"%Y-%m-%d 23:59:59") end_date) temp<if test="companyId!=0">, tb_user_company_relat ucr</if> 
+      where r.create_date&gt;=temp.start_date and
+      r.create_date&lt;=temp.end_date and 
+      r.user_id=u.user_id and
+      r.app_id = a.app_id and 
+      r.flag = 0 and u.user_id not in(${testAccountIds}) <if test="companyId!=0">and u.user_id = ucr.user_id and ucr.company_id = #{companyId}</if>
+      group by a.app_name
+      order by app_count desc
+      limit 10
+  </select>
+  <select id="getWeekDataSize" resultType="java.util.HashMap">
+    select u.username,sum(f.size) size_sum 
+      from tb_file f,tb_user u,(select date_format(date_sub(now(),interval WEEKDAY(now()) day),"%Y-%m-%d 00:00:00") start_date,date_format(date_add(date_sub(now(),interval WEEKDAY(now()) day),interval 6 day),"%Y-%m-%d 23:59:59") end_date) temp<if test="companyId!=0">, tb_user_company_relat ucr</if> where
+      f.create_date&gt;=temp.start_date and 
+      f.create_date&lt;=temp.end_date and 
+      f.user_id = u.user_id  and u.user_id not in(${testAccountIds}) <if test="companyId!=0">and u.user_id = ucr.user_id and ucr.company_id = #{companyId}</if>
+      group by u.user_id
+      order by size_sum desc
+      limit 10
+  </select>
+  <select id="getHistoryWeekUserLogin" resultType="java.util.HashMap">
+    select count(log_date) log_count,date_format(date_sub(l.log_date,interval WEEKDAY(l.log_date) day),"%Y-%m-%d 00:00:00") start_date,date_format(date_add(date_sub(l.log_date,interval WEEKDAY(l.log_date) day),interval 6 day),"%Y-%m-%d 23:59:59") end_date 
+    from tb_log l<if test="companyId!=0">, tb_user_company_relat ucr</if>where 1 = 1 <if test="companyId!=0">and l.user_id = ucr.user_id and ucr.company_id = #{companyId}</if> and l.user_id not in(${testAccountIds}) 
+    group by start_date 
+    order by start_date desc
+  </select>
+  <select id="getHistoryWeekActiveUser" resultType="java.util.HashMap">
+    select count(distinct l.user_id) active_user,date_format(date_sub(l.log_date,interval WEEKDAY(l.log_date) day),"%Y-%m-%d 00:00:00") start_date,date_format(date_add(date_sub(l.log_date,interval WEEKDAY(l.log_date) day),interval 6 day),"%Y-%m-%d 23:59:59") end_date 
+    from tb_log l<if test="companyId!=0">, tb_user_company_relat ucr</if>where 1 = 1 <if test="companyId!=0">and l.user_id = ucr.user_id and ucr.company_id = #{companyId}</if> and l.user_id not in(${testAccountIds}) 
+    group by start_date 
+    order by start_date desc
+  </select>
+  <select id="getHistoryWeekAppRun" resultType="java.util.HashMap">
+    select count(a.app_name) run_app, date_format(date_sub(r.create_date,interval WEEKDAY(r.create_date) day),"%Y-%m-%d 00:00:00") start_date,date_format(date_add(date_sub(r.create_date,interval WEEKDAY(r.create_date) day),interval 6 day),"%Y-%m-%d 23:59:59") end_date 
+    from tb_report r,tb_app a<if test="companyId!=0">, tb_user_company_relat ucr</if> where
+    r.app_id = a.app_id and 
+    r.create_date is not null and
+    r.flag = 0 <if test="companyId!=0">and r.user_id = ucr.user_id and ucr.company_id = #{companyId}</if> and r.user_id not in(${testAccountIds}) 
+    group by start_date 
+    order by start_date desc
+  </select>
+  <select id="getHistoryWeekAppActive" resultType="java.util.HashMap">
+    select count(distinct a.app_name) active_app, date_format(date_sub(r.create_date,interval WEEKDAY(r.create_date) day),"%Y-%m-%d 00:00:00") start_date,date_format(date_add(date_sub(r.create_date,interval WEEKDAY(r.create_date) day),interval 6 day),"%Y-%m-%d 23:59:59") end_date 
+    from tb_report r,tb_app a<if test="companyId!=0">, tb_user_company_relat ucr</if> 
+    where r.app_id = a.app_id and 
+    r.create_date is not null and
+    r.flag = 0 <if test="companyId!=0">and r.user_id = ucr.user_id and ucr.company_id = #{companyId}</if> and r.user_id not in(${testAccountIds}) 
+    group by start_date
+    order by start_date desc
+  </select>
+  <select id="getHistoryWeekDataSize" resultType="java.util.HashMap">
+    select sum(f.size) size_sum,date_format(date_sub(f.create_date,interval WEEKDAY(f.create_date) day),"%Y-%m-%d 00:00:00") start_date,date_format(date_add(date_sub(f.create_date,interval WEEKDAY(f.create_date) day),interval 6 day),"%Y-%m-%d 23:59:59") end_date 
+    from tb_file f<if test="companyId!=0">, tb_user_company_relat ucr</if>
+    where 1 = 1 <if test="companyId!=0">and f.user_id = ucr.user_id and ucr.company_id = #{companyId}</if> and f.user_id not in(${testAccountIds}) 
+    group by start_date
+    order by start_date desc
+  </select>
 </mapper>

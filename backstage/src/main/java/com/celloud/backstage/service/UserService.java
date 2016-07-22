@@ -15,6 +15,7 @@ import com.celloud.backstage.page.PageList;
  * @date 2015年12月23日 下午12:53:35
  */
 public interface UserService {
+	public String getOpenIdByUser(Integer userId);
     /**
      * 用户登录校验
      * 
@@ -186,4 +187,14 @@ public interface UserService {
      */
     public List<UserSelect> getAllUserSelectList();
 
+    /**
+     * 只有一个条件的用户分页列表
+     * 
+     * @param page
+     * @param condition
+     * @return 包含公司名称
+     * @author leamo
+     * @date 2016年7月12日 上午10:54:15
+     */
+    public PageList<User> getUserPageList(Page page, String condition);
 }

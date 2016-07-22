@@ -16,6 +16,8 @@ public interface UserMapper {
 
     public User selectByPrimaryKey(Integer userId);
 
+	public User selectUserByIdNotIcon(Integer userId);
+
     public int updateByPrimaryKeySelective(User record);
 
     public int updateByPrimaryKey(User record);
@@ -52,6 +54,8 @@ public interface UserMapper {
     public User findByUsernameOrEmail(@Param("username") String username);
 
     public List<String> selectByIds(@Param("userIds") String userIds);
+
+	public List<User> selectUserByIds(@Param("userIds") String userIds);
 
     public int insertUserWechatInfo(@Param("userId") Integer userId,
             @Param("openId") String openId, @Param("unionId") String unionId,

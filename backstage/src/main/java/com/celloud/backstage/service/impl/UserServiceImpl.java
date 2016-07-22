@@ -15,7 +15,6 @@ import com.celloud.backstage.constants.AppIsAdd;
 import com.celloud.backstage.constants.Constants;
 import com.celloud.backstage.constants.ConstantsData;
 import com.celloud.backstage.constants.DataState;
-import com.celloud.backstage.constants.UserRole;
 import com.celloud.backstage.mapper.UserMapper;
 import com.celloud.backstage.mapper.UserRegisterMapper;
 import com.celloud.backstage.model.User;
@@ -34,9 +33,14 @@ public class UserServiceImpl implements UserService {
     private Logger logger=LoggerFactory.getLogger(UserServiceImpl.class);
     @Resource
     private UserMapper userMapper;
-    
+
     @Resource
     private UserRegisterMapper userRegisterMapper;
+
+	@Override
+	public String getOpenIdByUser(Integer userId) {
+		return userMapper.getOpenIdByUser(userId);
+	}
 
     @Override
     public User login(User user) {
@@ -181,6 +185,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserSelect> getAllUserSelectList() {
         return userMapper.getAllUserSelectList(DataState.ACTIVE);
+    }
+
+    @Override
+    public PageList<User> getUserPageList(Page page, String condition) {
+        List<User> list = userMapper.getUserPageList(DataState.ACTIVE, page,
+                condition);
+        return new PageList<User>(page, list);
     }
 
 }

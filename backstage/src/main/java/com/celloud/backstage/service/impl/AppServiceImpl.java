@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -236,6 +237,16 @@ public class AppServiceImpl implements AppService{
             return null;
         }
         return appMapper.getAppById(appId);
+    }
+
+    @Override
+    public List<App> getAllApp() {
+        return appMapper.getAllApp(AppOffline.ON);
+    }
+
+    @Override
+    public Map<String, Object> getAppMapById(Integer appId) {
+        return appMapper.getAppMapById(appId);
     }
     
 }

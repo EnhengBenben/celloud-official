@@ -9,6 +9,36 @@ $.ajaxSetup ({
 	  },
 	  cache: false //关闭AJAX相应的缓存
   });
+var $base={
+    pageination: function(callback){
+      $(document).on("click","#pagination-ul a",function(e){
+        var id = $(this).attr("id");
+        var currentPage = parseInt($("#current-page-hide").val());
+        var totalPage = parseInt($("#total-page-hide").val());
+        if(id == undefined){
+          page = $(this).html();
+        }else if(id.indexOf("prev")>=0){
+          if(currentPage == 1){
+            page = 1;
+          }else{
+            page = currentPage-1;
+          }
+        }else if(id.indexOf("next")>=0){
+          page = currentPage+1;
+          if(currentPage == totalPage){
+            page = currentPage;
+          }else{
+            page = currentPage+1;
+          }
+        }else if(id.indexOf("first")>=0){
+          page = 1;
+        }else if(id.indexOf("last")>=0){
+          page = totalPage;
+        }
+        if( callback ) callback(page);
+      });
+    }
+}
 /**
 *公司管理
 **/
@@ -134,6 +164,90 @@ var company=(function(company){
 		        }
 		    });
 	}
+	self.toUploadPdf = function(){
+	  $.get("company/toUploadPdf",{},function(responseText){
+	    $("#main-content").html(responseText);
+	    $("#company-id-select").select2({
+        placeholder: 'Choose your favorite US Countries',
+        allowClear: true
+      }).on('select2-open', function(){
+        $(this).data('select2').results.addClass('overflow-hidden').perfectScrollbar();
+      });
+
+	    var uploader = new plupload.Uploader({
+	      runtimes : 'html5,flash,silverlight,html4',
+	      browse_button : 'plupload-content',
+	      url : "../company/uploadPdf",
+	      chunk_size : '1mb',
+	      drop_element : 'plupload-content',
+	      filters : {
+	        max_file_size : '3gb',
+	        prevent_duplicates : true, // 不允许选取重复文件
+	        mime_types : [
+	          {title : "pdf", extensions : "pdf"}
+	        ]
+	      },
+	      max_retries : 5,
+	      multiple_queues : true,
+	      flash_swf_url : '//cdn.bootcss.com/plupload/2.1.8/Moxie.swf'
+	    });
+	    uploader.init();
+	    $(document).on("click", "[data-click='del-upload-file']", function() {
+	      var id = $(this).data("id");
+	      $("#"+id).remove();
+	      var file = uploader.getFile(id);
+	      uploader.removeFile(file);
+	    });
+	    uploader.bind("StateChanged", function() {
+	      if (uploader.state === plupload.STARTED) {
+	        window.parent.isUploading = true;
+	        refresh = setInterval("self.refreshSession()",600000);
+	      }else if(uploader.state === plupload.STOPPED){
+	        window.parent.isUploading = false;
+	        clearInterval(refresh);
+	      }
+	    });
+	    uploader.bind("UploadProgress", function(uploader, file) {
+	      $("#" + file.id +" .percent").html(file.percent+"%");
+	    });
+	    uploader.bind("FilesAdded", function(uploader, files) {
+	      $("#alert-tips").addClass("hide");
+	      $("#upload-list-table").removeClass("hide");
+	      $.each(files, function(index, item) {
+	        var $fileDom = $('<tr id="' + item.id + '"></tr>');
+	        $fileDom.append($('<td class="filename">' + item.name + '</td>'));
+	        $fileDom.append($('<td class="percent">0</td>'));
+	        $fileDom.append($('<td><a data-click="del-upload-file" data-id="'+item.id+'"  href="javascript:void(0)"><i class="fa fa-times-circle" aria-hidden="true"></i></a></td>'));
+	        $("#upload-list-tbody").append($fileDom);
+	      });
+	    });
+	    uploader.bind("BeforeUpload", function(uploader, file) {
+	      $("#" + file.id +" .percent").html("正在上传");
+	      var args = Array.from($("#company-id-select").val());
+	      var companyIds = {};
+	      for(i=0; i<args.length; i++){
+	        companyIds[i] = args[i];
+	      }
+	      uploader.setOption("multipart_params",{"ids":companyIds});
+	    });
+	    uploader.bind("FileUploaded", function(uploader, file, response) {
+	      var res = JSON.parse(response.response);
+	      if(res == "1"){
+	        $("#alert-info").html("<strong>OK!</strong>上传完成");
+	      }else{
+	        $("#alert-info").html("<strong>warning!</strong>上传失败");
+	      }
+	      $("#alert-tips").removeClass("hide");
+	    });
+	    uploader.bind("UploadComplete",function(uploader,files,response){
+	      uploader.splice(0,uploader.files.length);
+	    });
+	    $("#upload-pdf-a").on("click",function(){
+	      uploader.start();
+	    });
+	  });
+	}
+	
 	return self;
 })(company);
 
@@ -799,6 +913,54 @@ var expense = (function(expense){
 			$("#invoice-detailModal .modal-content").html(responseText);
 			$("#invoice-detailModal").modal("show");
 		});
+	};
+	self.recharge = {
+	    main: function(){
+	      $.post("recharge/main",{},function(responseText){
+	        self.recharge.load(responseText);
+	      });
+	    },
+	    condition: function(){
+        $.post("recharge/main",{"condition":$("#condition").val()},function(responseText){
+          self.recharge.load(responseText);
+        });
+      },
+      page: function(page){
+        $.post("recharge/main",{"condition":$("#condition").val(),"currentPage":page},function(responseText){
+          self.recharge.load(responseText);
+        });
+      },
+      load: function(responseText){
+        $("#main-content").html(responseText);
+        $base.pageination(function(result) {self.recharge.page(result)});
+        $(document).on("click","#search-btn",function(){
+          self.recharge.condition();
+        });
+        $(document).on("click","[data-click='to-recharge']",function(){
+          $("#userid-hide").val($(this).data("user"));
+          $("#recharge-modal").modal("show");
+          //变换随机验证码
+          $('#kaptchaImage').click(function() {
+            $(this).hide().attr('src','kaptcha.jpg?' + Math.floor(Math.random() * 100)).fadeIn();
+          });
+        });
+        $(document).on("click","#commit-recharge",function(){
+          self.recharge.transfer();
+        });
+      },
+      transfer: function(){
+        $.post("recharge/transfer",$("#rechargeForm").serialize(),function(result){
+          if(result.length>1){
+            $("#recharge-alert").removeClass("hide");
+            $("#recharge-info").html("验证码错误，请重新输入！");
+          }else if(result == "1"){
+            $("#recharge-modal").modal("hide");
+            $("#recharge-modal").on('hidden.bs.modal', function (e) {//此事件在模态框被隐藏（并且同时在 CSS 过渡效果完成）之后被触发。
+              self.recharge.page($("#current-page-hide").val());
+            });
+          }
+        });
+      }
 	};
 	return self;
 })(expense);

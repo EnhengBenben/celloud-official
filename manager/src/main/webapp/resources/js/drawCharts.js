@@ -142,6 +142,26 @@ var drawCharts=(function(drawCharts){
 	}
 	
 	self.barChart=function(id,data,title,x,y,theme,showNum) {
+//		if(id=="topDataSize" || id=="historyDataSize"){
+//			for(var i=0;i<data.length;i++){
+//				if(data[i].size_sum>1099511627776){
+//					data[i].size_sum = (data[i].size_sum-data[i].size_sum%1099511627776)/1099511627776 + data[i].size_sum%1099511627776/1099511627776;
+//				}else if(data[i].size_sum>1073741824){
+//					data[i].size_sum = (data[i].size_sum-data[i].size_sum%1073741824)/1073741824 + data[i].size_sum%1073741824/1073741824
+//				}else if(data[i].size_sum>1048576){
+//					data[i].size_sum = (data[i].size_sum-data[i].size_sum%1048576)/1048576 + data[i].size_sum%1048576/1048576
+//				}else{
+//					data[i].size_sum = (data[i].size_sum-data[i].size_sum%1024)/1024 + data[i].size_sum%1024/1024
+//				}
+//				data[i].size_sum = parseFloat(data[i].size_sum).toFixed(2);
+//			}
+//		}
+		
+		if(id=="historyUserLogin"||id=="historyUserActive"||id=="historyAppRun"||id=="historyAppActive"||id=="historyDataSize"){
+			for(var i=0;i<data.length;i++){
+				data[i].start_date = data[i].start_date.substr(0,10);
+			}
+		}
 		var xAxis = new Array(data.length);
 		var yAxis = new Array(data.length);
 		var t;
@@ -154,6 +174,23 @@ var drawCharts=(function(drawCharts){
 			        trigger: 'axis',
 			        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
 			            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+			        },
+			        formatter: function (params,ticket,callback) {
+			        	if(id=="topDataSize" || id=="historyDataSize"){
+			        		var str = "";
+			        		if(params[0].data>1099511627776){
+								str = parseFloat((params[0].data-params[0].data%1099511627776)/1099511627776 + params[0].data%1099511627776/1099511627776).toFixed(2) + "TB";
+							}else if(params[0].data>1073741824){
+								str = parseFloat((params[0].data-params[0].data%1073741824)/1073741824 + params[0].data%1073741824/1073741824).toFixed(2) + "GB";
+							}else if(params[0].data>1048576){
+								str = parseFloat((params[0].data-params[0].data%1048576)/1048576 + params[0].data%1048576/1048576).toFixed(2) + "MB";
+							}else{
+								str = parseFloat((params[0].data-params[0].data%1024)/1024 + params[0].data%1024/1024).toFixed(2) + "KB";
+							}
+							return params[0].name + '<br/>' + params[0].seriesName + ':' + str;
+			        	}else{
+			        		return params[0].name + '<br/>' + params[0].seriesName + ':' + params[0].data;
+			        	}
 			        }
 			    },
 			    legend: {

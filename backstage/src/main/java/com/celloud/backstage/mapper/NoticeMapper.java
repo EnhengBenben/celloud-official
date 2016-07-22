@@ -24,6 +24,10 @@ public interface NoticeMapper {
 
 	public List<Notice> getNoticeByPage(@Param("state") int state, @Param("type") String type, Page page);
 
+	public int insertNoticeUser(@Param("noticeId") Integer noticeId, @Param("usernames") String... usernames);
+
+	public int insertNoticeAllUser(@Param("noticeId") Integer noticeId);
+
 	public int updateNotice(Notice notice);
 
 	public int addNotice(Notice notice);

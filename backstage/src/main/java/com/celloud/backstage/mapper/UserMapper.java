@@ -24,6 +24,8 @@ public interface UserMapper {
 
     public User checkLogin(User user);
 
+	public String getOpenIdByUser(@Param("userId") Integer userId);
+
     public User getUserByEmail(@Param("email") String email);
 
     public void insertFindPwdInfo(@Param("userId") Integer userId, @Param("expireDate") Date expireDate,
@@ -108,4 +110,18 @@ public interface UserMapper {
      * @return
      */
     public List<UserSelect> getAllUserSelectList(@Param("state") Integer state);
+
+    /**
+     * 根据条件获取用户分页
+     * 
+     * @param state
+     * @param page
+     * @param searchField
+     * @param keyword
+     * @return
+     * @author leamo
+     * @date 2016年7月12日 上午10:44:58
+     */
+    public List<User> getUserPageList(@Param("state") Integer state, Page page,
+            @Param("condition") String condition);
 }

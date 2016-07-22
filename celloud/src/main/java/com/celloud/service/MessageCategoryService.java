@@ -21,17 +21,19 @@ public interface MessageCategoryService {
      * @description 根据用户id查询自定义消息设置
      *
      */
-    List<Map<String, String>> getMessageCategoryByUserId(Integer userId);
+    List<Map<String, Object>> getMessageCategoryByUserId(Integer userId);
 
-	/**
-	 * 获取用户消息设置
-	 * 
-	 * @param userId
-	 * @return
-	 * @author lin
-	 * @date 2016年7月13日下午3:53:35
-	 */
-	List<MessageCategory> getUserMessageCategory(Integer userId);
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月14日下午4:59:17
+     * @description
+     * @param userId
+     * @return
+     *
+     */
+    List<MessageCategory> getBeanByUserId(Integer userId);
+
 
     /**
      * @author MQ
@@ -47,7 +49,7 @@ public interface MessageCategoryService {
      * @description 初始化用户消息设置
      *
      */
-    int initUserMessageCategory(Integer userId, String datas);
+    int initUserMessageCategory(Integer userId, String data);
 
     /**
      * @author MQ
@@ -55,7 +57,7 @@ public interface MessageCategoryService {
      * @description 更改用户消息开关
      *
      */
-    int editUserMessageSwitch(String targetName, Integer targetVal, Integer relatId);
+    int editUserMessageSwitch(Integer userId, String targetName, Integer targetVal, Integer relatId);
 
     /**
      * @author MQ

@@ -82,6 +82,11 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByPrimaryKey(userId);
     }
 
+	@Override
+	public User selectUserByIdNotIcon(int userId) {
+		return userMapper.selectUserByIdNotIcon(userId);
+	}
+
     @Override
     public Integer updateUserInfo(User user) {
         User temp = new User();
@@ -132,6 +137,11 @@ public class UserServiceImpl implements UserService {
     public List<String> selectUserUserById(String userIds) {
         return userMapper.selectByIds(userIds);
     }
+
+	@Override
+	public List<User> selectUserByIds(String userIds) {
+		return userMapper.selectUserByIds(userIds);
+	}
 
     @Override
     public Integer insertUserWechatInfo(Integer userId, String openId,

@@ -40,7 +40,6 @@
 				<div class="y-row" style="padding: 20px 10px; background-color: #fff;" data-spm="17">
 					<div class="common-normal common-slide common-normals" id="userSetting">
 						<form id="userSettingForm" action="">
-						    <input type="hidden" value="${flag }" id="flag">
 							<table class="table">
 								<thead>
 									<tr>
@@ -51,7 +50,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${messageCategoryList }" var="message">
+									<c:forEach items="${userMessageCategoryList }" var="message">
 											<tr>
 												<td>收到【${message.name }】通知</td>
 												<td>
@@ -75,9 +74,17 @@
 													</c:choose>
 												</td>
 	                                            <td>
-	                                                <div><input name="wechat" class="create-switch" type="checkbox" ${message.wechat=='0'?'':'checked' } /></div>
+													<c:choose>
+														<c:when test="${message.wechat=='2'}">
+														    <div><input name="wechat" class="create-switch" type="checkbox" disabled="disabled"/></div>
+														</c:when>
+														<c:otherwise>
+			                                                <div><input name="wechat" class="create-switch" type="checkbox" ${message.wechat=='0'?'':'checked' } /></div>
+														</c:otherwise>
+													</c:choose>
 	                                            </td>
-	                                            <td><input type="hidden" name="messageCategoryId" value="${message.id }" /></td>											
+	                                            <td><input type="hidden" name="messageCategoryId" value="${message.mcId }" /></td>											
+	                                            <td><input type="hidden" name="flag" value="${message.flag }" /></td>
 											</tr>
 									</c:forEach>
 								</tbody>

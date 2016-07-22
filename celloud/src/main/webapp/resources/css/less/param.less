@@ -1,10 +1,17 @@
 @bactive-color: #1dd2af;
-@rocky-color: #de4c95;
+
+@rocky-font-color: #de4c95;
+@rocky-bg-color: #fff2f8;
+@rocky-text-color: #f3c8db;
+@rocky-border-color: #f7c8da;
+
+
 @main-color: #f8f8f8;
 @bg-black: #2c3e50;
 @bg-gray: #dcdcdc;
 @font-black: #323232;
 @font-gray: #969696;
+@font-s-gray: #c8c8c8;
 @a-gray: #a0a0a0;
 @error-bg: rgba(255,88,125,0.5);
 
@@ -19,6 +26,10 @@
     -o-border-radius: @style;
     border-radius: @style;
 }
+/*1像素边框*/
+.border-1(@color){
+    border: 1px solid @color;
+}
 
 /*超过隐藏并替换指定符号  ellipsis-省略号*/
 .overflow(@sign){
@@ -28,4 +39,11 @@
     text-overflow: @sign;      
     overflow: hidden;/*设置超过的隐藏*/
     white-space: nowrap;/*设置不折行*/
+}
+
+.transform-scale(@style){
+    -webkit-transform:scale(@style);
+    -moz-transform:scale(@style);
+    -o-transform:scale(@style);
+    transform:scale(@style);
 }

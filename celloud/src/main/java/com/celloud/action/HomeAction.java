@@ -11,7 +11,6 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -164,6 +163,11 @@ public class HomeAction {
         return "feedback";
     }
 
+	@RequestMapping("feedback_for_phone.html")
+	public String feedBackForPhone() {
+		return "feedback_for_phone";
+	}
+
     @RequestMapping("home.html")
     public String home() {
         return "home";
@@ -217,17 +221,6 @@ public class HomeAction {
     @RequestMapping("bsianaly.html")
     public String bsianaly() {
         return "print/print_bsi_detail";
-    }
-
-    @RequestMapping({ "template.html" })
-    public ModelAndView template(Model model) {
-        ModelAndView mv = new ModelAndView("child-1.vm");
-        return mv;
-    }
-
-    @RequestMapping({ "test.html" })
-    public String test() {
-        return "pay/alipay_return";
     }
 
     @RequestMapping("about_us.html")

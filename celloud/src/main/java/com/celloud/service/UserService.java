@@ -90,6 +90,16 @@ public interface UserService {
      */
     public User selectUserById(int userId);
 
+	/**
+	 * 根据id获取user对象，但不包括其头像
+	 * 
+	 * @param userId
+	 * @return
+	 * @author lin
+	 * @date 2016年7月15日下午3:05:34
+	 */
+	public User selectUserByIdNotIcon(int userId);
+
     /**
      * 修改用户基本信息
      * 
@@ -167,6 +177,8 @@ public interface UserService {
      * @return
      */
     public List<String> selectUserUserById(String userIds);
+
+	public List<User> selectUserByIds(String userIds);
 
     /**
      * 新增用户与微信服务号绑定关系

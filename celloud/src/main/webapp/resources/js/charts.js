@@ -438,7 +438,11 @@ function drawScatter(id,totaldata,thisdata,title,xAxisName,yAxisName){
           option = {
           title : {
               text: title,
-              subtext: '结果来自: CelLoud全部数据'
+              subtext: '结果来自: CelLoud全部数据',
+              y: 0
+          },
+          grid: {
+              y: 60
           },
           tooltip : {
               trigger: 'axis',

@@ -8,10 +8,12 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.constants.AppConstants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.model.mysql.Sample;
 import com.celloud.service.SampleService;
@@ -26,55 +28,57 @@ import com.celloud.utils.ActionLog;
 @Controller
 @RequestMapping("sample")
 public class SampleAction {
-    Logger logger = LoggerFactory.getLogger(SampleAction.class);
-    @Resource
-    private SampleService sampleService;
+	Logger logger = LoggerFactory.getLogger(SampleAction.class);
+	@Resource
+	private SampleService sampleService;
 
-    @ActionLog(value = "获取所有未保存样品列表", button = "样品")
-    @RequestMapping("bsi/sampleList")
-    public ModelAndView sampleList() {
-        ModelAndView mv = new ModelAndView("bsi/sample_list");
-        List<Sample> samples = sampleService
-                .allUnaddSample(ConstantsData.getLoginUserId());
-        return mv.addObject("samples", samples);
-    }
+	@ActionLog(value = "获取所有未保存样品列表", button = "样品")
+	@RequestMapping("{app}/sampleList")
+	public ModelAndView sampleList(@PathVariable String app) {
+		String view = "bsi/sample_list";
+		if ("rocky".equals(app)) {
+			view = "rocky/sample/sample_main";
+		}
+		ModelAndView mv = new ModelAndView(view);
+		List<Sample> samples = sampleService.allUnaddSample(ConstantsData.getLoginUserId());
+		return mv.addObject("samples", samples);
+	}
 
+	@ActionLog(value = "新增样品", button = "样品输入框")
+	@RequestMapping("{app}/addSample")
+	@ResponseBody
+	public Integer addSample(@PathVariable String app, String sampleName) {
+		Boolean check = sampleService.checkSample(sampleName, ConstantsData.getLoginUserId());
+		if (check) {
+			return 2; // 检测样品已添加
+		}
+		return sampleService.saveSample(sampleName, ConstantsData.getLoginUserId());
+	}
 
-    @ActionLog(value = "新增样品", button = "样品输入框")
-    @RequestMapping("bsi/addSample")
-    @ResponseBody
-    public Integer addSample(String sampleName) {
-        Boolean check = sampleService.checkSample(sampleName,
-                ConstantsData.getLoginUserId());
-        if (check) {
-            return 2; // 检测样品已添加
-        }
-        return sampleService.saveSample(sampleName, ConstantsData.getLoginUserId());
-    }
+	@ActionLog(value = "提交暂存的样品列表", button = "提交样品")
+	@RequestMapping("{app}/commitSamples")
+	@ResponseBody
+	public Integer commitSamples(@PathVariable String app, Integer[] sampleIds) {
+		List<Integer> list = sampleIds == null || sampleIds.length <= 0 ? null : Arrays.asList(sampleIds);
+		Integer appId = AppConstants.APP_ID_BSI;
+		if ("rocky".equals(app)) {
+			appId = AppConstants.APP_ID_ROCKY;
+		}
+		return sampleService.commitSamples(list,appId, ConstantsData.getLoginUserId());
+	}
 
-    @ActionLog(value = "提交暂存的样品列表", button = "提交样品")
-    @RequestMapping("bsi/commitSamples")
-    @ResponseBody
-    public Integer commitSamples(Integer[] sampleIds) {
-        List<Integer> list = sampleIds == null || sampleIds.length <= 0 ? null
-                : Arrays.asList(sampleIds);
-        return sampleService.commitSamples(list,
-                ConstantsData.getLoginUserId());
-    }
+	@ActionLog(value = "删除暂存的样本", button = "删除样品")
+	@RequestMapping("bsi/deleteOne")
+	@ResponseBody
+	public Integer deleteOne(Integer sampleId) {
+		return sampleService.delete(sampleId);
+	}
 
-    @ActionLog(value = "删除暂存的样本", button = "删除样品")
-    @RequestMapping("bsi/deleteOne")
-    @ResponseBody
-    public Integer deleteOne(Integer sampleId) {
-        return sampleService.delete(sampleId);
-    }
-
-    @ActionLog(value = "删除暂存的样本列表", button = "删除样品")
-    @RequestMapping("bsi/deleteList")
-    @ResponseBody
-    public Integer deleteList(Integer[] sampleIds) {
-        List<Integer> list = sampleIds == null || sampleIds.length <= 0 ? null
-                : Arrays.asList(sampleIds);
-        return sampleService.deleteList(list);
-    }
+	@ActionLog(value = "删除暂存的样本列表", button = "删除样品")
+	@RequestMapping("{app}/deleteList")
+	@ResponseBody
+	public Integer deleteList(@PathVariable String app, Integer[] sampleIds) {
+		List<Integer> list = sampleIds == null || sampleIds.length <= 0 ? null : Arrays.asList(sampleIds);
+		return sampleService.deleteList(list);
+	}
 }

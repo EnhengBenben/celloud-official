@@ -108,15 +108,7 @@
   </select>
   <select id="findUserMessageCategoryByUserId" resultType="java.util.HashMap">
     select umcr.id, umcr.email, umcr.window, umcr.wechat, umcr.user_id,
-        umcr.message_category_id, mc.name ,mc.code
-    from tb_user_message_category_relat umcr 
-    left join tb_message_category mc 
-    on mc.id = umcr.message_category_id
-    where user_id = #{userId}
-  </select>
-  <select id="getUserMessageCategory" resultType="com.celloud.model.mysql.MessageCategory">
-    select umcr.email, umcr.window, umcr.wechat, 
-        umcr.message_category_id, mc.name ,mc.code
+        umcr.message_category_id mcId, mc.name ,mc.code, 1 flag
     from tb_user_message_category_relat umcr 
     left join tb_message_category mc 
     on mc.id = umcr.message_category_id
@@ -124,14 +116,12 @@
   </select>
   <insert id="insertUserMessageCategoryRelat">
     insert into tb_user_message_category_relat(email, window, wechat, message_category_id, user_id) values 
-    <foreach collection="datas" item="data" separator=",">
         (${data},#{userId})
-    </foreach>
   </insert>
   <update id="updateSwitch">
     update tb_user_message_category_relat
     set ${targetSwitch} = #{targetVal}
-    where id = #{relatId}
+    where message_category_id = #{relatId} and user_id = #{userId}
   </update>
   <select id="getUserSwitch" resultType="java.lang.Integer">
     select ${targetSwitch} from tb_user_message_category_relat
@@ -140,5 +130,23 @@
   <select id="getDefaultSwitch" resultType="java.lang.Integer">
     select ${targetSwitch} from tb_message_category
     where id = #{messageCategoryId}
+  </select>
+  <select id="findUserMessageCategoryNotInIds" resultType="java.util.HashMap">
+    select mc.id mcId, mc.code, mc.name, mc.email, mc.window, mc.wechat, 0 flag
+    from tb_message_category mc 
+    where mc.id not in (${ids})
+  </select>
+  <select id="findUserMessageCategoryBeanByUserId" resultType="com.celloud.model.mysql.MessageCategory">
+    select umcr.email, umcr.window, umcr.wechat, umcr.user_id,
+        umcr.message_category_id id, mc.name ,mc.code, 1 flag
+    from tb_user_message_category_relat umcr 
+    left join tb_message_category mc 
+    on mc.id = umcr.message_category_id
+    where user_id = #{userId}
+  </select>
+  <select id="findUserMessageCategoryBeanNotInIds" resultType="com.celloud.model.mysql.MessageCategory">
+    select mc.id id, mc.code, mc.name, mc.email, mc.window, mc.wechat, 0 flag
+    from tb_message_category mc 
+    where mc.id not in (${ids})
   </select>
 </mapper>

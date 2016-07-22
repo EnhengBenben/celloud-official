@@ -35,9 +35,19 @@ public interface MessageCategoryMapper {
      * @description 根据用户id从关系表中查找(tb_user_message_category_relat)
      *
      */
-    List<Map<String, String>> findUserMessageCategoryByUserId(@Param("userId") Integer userId);
+    List<Map<String, Object>> findUserMessageCategoryByUserId(@Param("userId") Integer userId);
 
-	List<MessageCategory> getUserMessageCategory(@Param("userId") Integer userId);
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月14日下午5:02:44
+     * @description 返回JavaBean
+     * @param ids
+     * @return
+     *
+     */
+    List<MessageCategory> findUserMessageCategoryBeanByUserId(@Param("userId") Integer userId);
+
 
     /**
      * @author MQ
@@ -46,7 +56,7 @@ public interface MessageCategoryMapper {
      * @return
      *
      */
-    int insertUserMessageCategoryRelat(@Param("userId") Integer userId, @Param("datas") String[] datas);
+    int insertUserMessageCategoryRelat(@Param("userId") Integer userId, @Param("data") String data);
 
 
     /**
@@ -56,7 +66,8 @@ public interface MessageCategoryMapper {
      * @return
      *
      */
-    int updateSwitch(@Param("targetSwitch") String targetSwitch, @Param("targetVal") Integer targetVal,
+    int updateSwitch(@Param("userId") Integer userId, @Param("targetSwitch") String targetSwitch,
+            @Param("targetVal") Integer targetVal,
             @Param("relatId") Integer relatId);
 
     /**
@@ -78,5 +89,26 @@ public interface MessageCategoryMapper {
      */
     Integer getDefaultSwitch(@Param("targetSwitch") String targetSwitch,
             @Param("messageCategoryId") Integer messageCategoryId);
+
+    /**
+     * @author MQ
+     * @date 2016年7月14日上午11:44:55
+     * @description 获取不在ids内的开关
+     * @param ids
+     * @return
+     *
+     */
+    List<Map<String, Object>> findUserMessageCategoryNotInIds(@Param("ids") String ids);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月14日下午5:04:08
+     * @description 返回JavaBean
+     * @param ids
+     * @return
+     *
+     */
+    List<MessageCategory> findUserMessageCategoryBeanNotInIds(@Param("ids") String ids);
 
 }

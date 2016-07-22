@@ -54,6 +54,11 @@ var dataFile=(function(dataFile){
 			menu("data-export-menu",responseText);
 		});
 	};
+	self.toWeekDataCount=function(){
+		$.post("weekDataCount",function(responseText){
+			menu("data-week-menu",responseText);
+		});
+	};
 	self.selectAll = function(){
 		$("input[name=userList]").prop("checked",true);
 	};

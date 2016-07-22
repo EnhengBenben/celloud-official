@@ -68,10 +68,11 @@ public class WeChatAction {
 			mv.addObject("info", msg).addObject("isSuccess", "true");
 			return mv;
 		}
+		User user = us.getUserByOpenId(openId);
 		Session session = SecurityUtils.getSubject().getSession();
 		session.setAttribute(Constants.SESSION_WECHAT_OPENID, openId);
 		PublicKey publicKey = generatePublicKey(session);
-		mv.addObject("publicKey", publicKey).addObject("isSuccess", "false");
+		mv.addObject("publicKey", publicKey).addObject("isSuccess", "false").addObject("username", user.getUsername());
 		return mv;
 	}
 

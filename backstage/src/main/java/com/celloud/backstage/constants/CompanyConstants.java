@@ -18,6 +18,7 @@ public class CompanyConstants {
     private static Logger logger = LoggerFactory.getLogger(CompanyConstants.class);
     private static Properties properties = null;
     private static String companyIconPath;
+    private static String reportTemplatePath;
     /**
      * 配置文件的地址
      */
@@ -58,6 +59,13 @@ public class CompanyConstants {
             companyIconPath = getProperty("companyIconPath");
         }
         return companyIconPath + File.separator + "temp";
+    }
+
+    public static String getReportTemplatePath() {
+        if (reportTemplatePath == null) {
+            reportTemplatePath = getProperty("reportTemplatePath");
+        }
+        return reportTemplatePath;
     }
 
     /**
