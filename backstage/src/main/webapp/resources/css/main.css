@@ -209,7 +209,7 @@ html,body,div,section,ul {
 
 .panel-heading .alert{
 	position: absolute;
-    right: 0px;
+    left: 100px;
 	margin: 0px;
 	font-size: 12px;
 	padding: 4px 50px 4px 6px;
