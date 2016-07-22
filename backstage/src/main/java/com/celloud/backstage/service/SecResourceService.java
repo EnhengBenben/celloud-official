@@ -73,7 +73,7 @@ public interface SecResourceService {
      * @description 校验优先级是否重复
      *
      */
-    public int checkPriorityRepeat(Integer priority, Integer id);
+    public int checkPriorityRepeat(Integer priority, Integer id, Integer parentId);
 
     /**
      * 

@@ -95,8 +95,8 @@ public class ResourceAction {
      */
     @RequestMapping("checkPriority")
     @ResponseBody
-    public int checkPriority(Integer priority, Integer id) {
-        return resourceService.checkPriorityRepeat(priority, id);
+    public int checkPriority(Integer priority, Integer id, Integer parentId) {
+        return resourceService.checkPriorityRepeat(priority, id, parentId);
     }
 
     /**
