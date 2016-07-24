@@ -13,8 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.backstage.constants.ConstantsData;
 import com.celloud.backstage.model.SecResource;
-import com.celloud.backstage.page.Page;
-import com.celloud.backstage.page.PageList;
 import com.celloud.backstage.service.SecResourceService;
 
 /**
@@ -37,13 +35,12 @@ public class ResourceAction {
      * @description 分页查询
      *
      */
-    @RequestMapping("pageQuery")
-    public ModelAndView pageQuery(Page page, String keyword) {
+    @RequestMapping("list")
+    public ModelAndView pageQuery() {
         logger.info("用户{}查看资源列表", ConstantsData.getLoginUserName());
         ModelAndView mv = new ModelAndView("permission/resource_main");
-        PageList<SecResource> pageList = resourceService.pageQuery(page, keyword);
-        mv.addObject("pageList", pageList);
-        mv.addObject("keyword", keyword);
+        List<SecResource> resourceList = resourceService.list();
+        mv.addObject("resourceList", resourceList);
         return mv;
     }
     
@@ -109,7 +106,7 @@ public class ResourceAction {
     @RequestMapping("add")
     @ResponseBody
     public int add(SecResource resource) {
-        logger.info("用户{}查看增加一条资源", ConstantsData.getLoginUserName());
+        logger.info("用户{}增加一条资源", ConstantsData.getLoginUserName());
         return resourceService.addResource(resource);
     }
 

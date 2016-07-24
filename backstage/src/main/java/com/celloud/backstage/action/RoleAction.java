@@ -44,10 +44,10 @@ public class RoleAction {
         ModelAndView mv = new ModelAndView("permission/role_main");
         PageList<SecRole> pageList = roleService.pageQuery(page);
         List<User> bigCustomers = userService.getBigCustomers();
-        List<SecResource> resources = resourceService.findAllActive();
+        List<SecResource> resourceList = resourceService.findAllActive();
         mv.addObject("pageList", pageList);
         mv.addObject("bigCustomers", bigCustomers);
-        mv.addObject("resources", resources);
+        mv.addObject("resourceList", resourceList);
         return mv;
     }
 

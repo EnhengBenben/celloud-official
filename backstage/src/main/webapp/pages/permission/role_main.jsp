@@ -248,15 +248,24 @@
                 <div class="panel-body">
                     <form class="form-horizontal" id="roleGrantForm" >
                         <div class="form-group">
-                            <div class="col-sm-12" id="resourceIds">
-                                  <c:forEach items="${resources }" var="resource">
-                                    <div class="col-sm-3">
-	                                    <label class="checkbox-inline"><input name="resourceIds" type="checkbox" value="${resource.id }">${resource.name }</label>
-                                    </div>
-                                  </c:forEach>
-                            </div>
-                            <input type="hidden" id="roleIdGrant" name="roleId">
+	                        <table class="table table-bordered table-striped tree" cellspacing="0" width="100%">
+	                            <thead>
+	                                <tr>
+	                                    <th style="text-align: center;width: 80px;">选择</th>
+	                                    <th>资源名称</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+	                                <c:forEach items="${resourceList }" var="resource" varStatus="status">
+	                                    <tr class="treegrid-${resource.id } <c:if test="${resource.parentId != 0 }">treegrid-parent-${resource.parentId }</c:if>">
+	                                        <td style="text-align: center;"><input name="resourceIds" class="resourceCheck" type="checkbox" value="${resource.id }"></td>
+	                                        <td>${resource.name }</td>
+	                                    </tr>
+	                                </c:forEach>
+	                            </tbody>
+	                        </table>
                         </div>
+                        <input type="hidden" id="roleIdGrant" name="roleId">
                         <div class="form-group-separator"></div>
                         <div class="form-group">
                             <div class="col-sm-10 text-center">

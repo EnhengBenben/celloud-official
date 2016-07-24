@@ -125,18 +125,13 @@
 		create_date = #{createDate,jdbcType=TIMESTAMP}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
-	<select id="pageQuery" resultMap="BaseResultMap">
+	<select id="list" resultMap="BaseResultMap">
 	   select
 	   <include refid="Base_Column_List"/>
 	   from tb_sec_resource
-	   <where>
-	       <if test="keyword != null and keyword != ''">
-	           name like "%${keyword}%"
-	       </if>
-	   </where>
-	   order by parent_id asc, priority asc
+	   order by priority asc
 	</select>
-	<select id="findAllActive" resultType="com.celloud.backstage.model.SecResource">
+	<select id="findAllActive" resultMap="BaseResultMap">
 	   select
 	   <include refid="Base_Column_List"/>
 	   from tb_sec_resource where disabled = #{state}

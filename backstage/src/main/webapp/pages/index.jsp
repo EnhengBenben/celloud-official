@@ -21,6 +21,7 @@
 <link rel="stylesheet" href="plugins/bootstrap/css/xenon-components.css">
 <link rel="stylesheet" href="plugins/bootstrap/css/xenon-skins.css">
 <link rel="stylesheet" href="plugins/jquery_alert_dialogs/jquery.alerts.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/jquery.treegrid.css">
 <link rel="stylesheet" href="plugins/select2/css/select2.min.css"/>
 <link rel="stylesheet" href="css/main.css">
 </head>
@@ -131,7 +132,7 @@
                         </a>
                         <ul>
                             <li id="queuing-time-menu">
-                                <a href="javascript:permission.resource.pageQuery('1',10);">
+                                <a href="javascript:permission.resource.list();">
                                     <span class="title">资源管理</span>
                                 </a>
                             </li>
@@ -274,5 +275,8 @@
     <script src="js/validate.extend.js"></script>
 	<script src="js/jquery.form.js"></script>
 	<script src="js/main.js"></script>
+	<!-- jquery.treegrid -->
+	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery.treegrid.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery.treegrid.bootstrap3.js"></script>
 </body>
 </html>

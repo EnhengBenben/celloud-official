@@ -1037,29 +1037,36 @@ var permission = (function(permission){
 				});
 			}
 			$("#confirm-modal").modal("show");
-		}	
+		},
+		tip : function(text){
+			$("#tip-text").html(text);
+			$("#tip-true").one("click",function(){
+				$("#tip-modal").modal("hide");
+			});
+			$("#tip-modal").modal("show");
+		}
 	};
 	self.resource = {
-			moveUp : function(id,parentId,priority,currentPage){
+			moveUp : function(id,parentId,priority){
 				$.post("resource/moveUp",{id:id,parentId:parentId,priority:priority},function(data){
 					if(data>0){
-						self.resource.pageQuery(currentPage);
+						self.resource.list();
 					}
 				});
 			},
-			moveDown : function(id,parentId,priority,currentPage){
+			moveDown : function(id,parentId,priority){
 				$.post("resource/moveDown",{id:id,parentId:parentId,priority:priority},function(data){
 					if(data>0){
-						self.resource.pageQuery(currentPage);
+						self.resource.list();
 					}
 				});
 			},
-			onOrOff : function(id,disabled,currentPage){
+			onOrOff : function(id,disabled){
 				if(disabled == 0){
 					self.common.confirm("您确认上线该资源吗?",function(){
 						$.post("resource/edit",{id:id,disabled:disabled},function(data){
 							if(data > 0){
-								self.resource.pageQuery(currentPage);
+								self.resource.list();
 							}
 						});
 					});
@@ -1067,42 +1074,46 @@ var permission = (function(permission){
 					self.common.confirm("您确认下线该资源吗?",function(){
 						$.post("resource/edit",{id:id,disabled:disabled},function(data){
 							if(data > 0){
-								self.resource.pageQuery(currentPage);
+								self.resource.list();
 							}
 						});
 					});
 				}
 			},
-			pageQuery : function(currentPage,pageSize){
-				keyword = $("#keyword").val() || '';
-				currentPage = currentPage || 1;
-				pageSize = pageSize || $("#pageSize").val();
-				$.post("resource/pageQuery",{"currentPage":currentPage,"pageSize":pageSize,"keyword":keyword},function(responseText){
+			list : function(){
+				$.post("resource/list",{},function(responseText){
 					$("#main-content").html(responseText);
+					$('.tree').treegrid({
+						treeColumn: 1
+					});
 					$("#saveOrUpdate").click(function(){
 						var f = $("#saveUpdateFlag").val();
 						if(f=='save'){
 							self.resource.doAdd();
 						}else{
-							self.resource.doEdit(currentPage);
+							self.resource.doEdit();
 						}
 					});
 				});
 			},
 			toAdd : function(){
+				if($(".resourceCheck:checked").length>1){
+					self.common.tip("选择的记录数不能大于1");
+					return;
+				}
 				$("#resourceForm input").val("");
 				$(".help-inline").html("");
 				$("#saveUpdateFlag").val("save");
 				$("#type option:selected").removeAttr("selected");
 				$("#disabled option:selected").removeAttr("selected");
-				$("#parentId option:selected").removeAttr("selected");
+				/*$("#parentId option:selected").removeAttr("selected");*/
 				$("#type").select2({
 					minimumResultsForSearch: Infinity
 				});
 				$("#disabled").select2({
 					minimumResultsForSearch: Infinity
 				});
-				$("#parentId").html("");
+				/*$("#parentId").html("");
 				$("#parentId").append("<option value='0'>请选择</option>");
 				$.post("resource/findAllActive",{},function(data){
 					var jsonData = eval(data);
@@ -1112,7 +1123,8 @@ var permission = (function(permission){
 					$("#parentId").select2({
 						minimumResultsForSearch: Infinity
 					});
-				});
+				});*/
+				$("#parentId").val($(".resourceCheck:checked").length == 0 ? 0 : $(".resourceCheck:checked").val());
 				$("#resource-addModal").modal("show");
 				$("#resource-addModal h3").html("新增资源");
 			},
@@ -1123,7 +1135,7 @@ var permission = (function(permission){
 						if(data > 0){
 							$("#resource-addModal").modal("hide");
 				            $("#resource-addModal").on('hidden.bs.modal', function (e) {//此事件在模态框被隐藏（并且同时在 CSS 过渡效果完成）之后被触发。
-				              self.resource.pageQuery('1');
+				              self.resource.list();
 				            });
 						}else{
 							$("#resource-alert").removeClass("hide");
@@ -1143,7 +1155,8 @@ var permission = (function(permission){
 					$("#permission").val(data.permission);
 					$("#createDate").val(new Date(data.createDate));
 					$("#priority").val(data.priority);
-					$("#resourceId").val(data.id);	
+					$("#resourceId").val(data.id);
+					$("#parentId").val(data.parentId);
 					$("#type option").each(function(){
 						if($(this).val()==data.type){
 							$(this).prop("selected","selected");
@@ -1153,21 +1166,6 @@ var permission = (function(permission){
 						if($(this).val()==data.disabled){
 							$(this).prop("selected","selected");
 						}
-					});
-					$.post("resource/findAllActive",{},function(resourceData){
-						$("#parentId").html("");
-						$("#parentId").append("<option value='0'>请选择</option>");
-						var jsonData = eval(resourceData);
-						for(var i=0;i<jsonData.length;i++){
-							if(jsonData[i].id==data.parentId){
-								$("#parentId").append("<option value='"+jsonData[i].id+"' selected>"+jsonData[i].name+"</option>")
-							}else{
-								$("#parentId").append("<option value='"+jsonData[i].id+"'>"+jsonData[i].name+"</option>")
-							}
-						}
-						$("#parentId").select2({
-							minimumResultsForSearch: Infinity
-						});
 					});
 					$("#type").select2({
 						minimumResultsForSearch: Infinity
@@ -1179,14 +1177,14 @@ var permission = (function(permission){
 				$("#resource-addModal").modal("show");
 				$("#resource-addModal h3").html("编辑资源");
 			},
-			doEdit : function(currentPage){
+			doEdit : function(){
 				if(self.resource.checkForm()){
 					// 添加资源
 					$.post("resource/edit",$("#resourceForm").serialize(),function(data){
 						if(data > 0){
 							$("#resource-addModal").modal("hide");
 				            $("#resource-addModal").on('hidden.bs.modal', function (e) {//此事件在模态框被隐藏（并且同时在 CSS 过渡效果完成）之后被触发。
-				            	self.resource.pageQuery(currentPage);
+				            	self.resource.list();
 				            });
 						}else{
 							$("#resource-alert").removeClass("hide");
@@ -1307,7 +1305,10 @@ var permission = (function(permission){
 					});
 					$("#grant").click(function(){
 						self.role.doGrant(currentPage);
-					})
+					});
+					$('.tree').treegrid({
+						treeColumn: 1
+					});
 				});
 			},
 			doGrant : function(currentPage){
@@ -1326,10 +1327,10 @@ var permission = (function(permission){
 					type : "post",
 					data : {roleId:roleId},
 					success : function(data){
-						$("#resourceIds input[type='checkbox']").each(function(){
+						$(".resourceCheck").each(function(){
 							$(this).prop("checked",false);
 						});
-						$("#resourceIds input[type='checkbox']").each(function(){
+						$(".resourceCheck").each(function(){
 							for(var i in data){
 								if($(this).val()==data[i].id){
 									$(this).prop("checked",true);

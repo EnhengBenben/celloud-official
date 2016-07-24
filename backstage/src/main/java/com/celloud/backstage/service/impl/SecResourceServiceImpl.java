@@ -1,7 +1,10 @@
 package com.celloud.backstage.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -10,8 +13,6 @@ import org.springframework.stereotype.Service;
 import com.celloud.backstage.constants.DataState;
 import com.celloud.backstage.mapper.SecResourceMapper;
 import com.celloud.backstage.model.SecResource;
-import com.celloud.backstage.page.Page;
-import com.celloud.backstage.page.PageList;
 import com.celloud.backstage.service.SecResourceService;
 
 /** 
@@ -36,15 +37,60 @@ public class SecResourceServiceImpl implements SecResourceService {
         return resourceMapper.updateByPrimaryKeySelective(resource);
     }
 
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月24日下午3:08:42
+     * @description 方式一:在后台处理
+     *
+     */
     @Override
-    public PageList<SecResource> pageQuery(Page page, String keyword) {
-        List<SecResource> datas = resourceMapper.pageQuery(page, keyword);
-        return new PageList<>(page, datas);
+    public List<SecResource> list() {
+        List<SecResource> list = resourceMapper.list();
+        // 遍历集合, 根据parentId进行分组
+        Map<Integer, List<SecResource>> map = new HashMap<Integer, List<SecResource>>();
+        for (SecResource r : list) {
+            if (map.containsKey(r.getParentId())) {
+                map.get(r.getParentId()).add(r);
+            } else {
+                List<SecResource> temp = new ArrayList<SecResource>();
+                temp.add(r);
+                map.put(r.getParentId(), temp);
+            }
+        }
+        List<SecResource> pageList = new ArrayList<SecResource>();
+        recursionResource(map, pageList, 0);
+        return pageList;
+
+    }
+
+    public void recursionResource(Map<Integer, List<SecResource>> map, List<SecResource> pageList, Integer parentId) {
+        for (SecResource r : map.get(parentId)) {
+            pageList.add(r);
+            if (map.containsKey(r.getId())) {
+                recursionResource(map, pageList, r.getId());
+            }
+        }
     }
 
     @Override
     public List<SecResource> findAllActive() {
-        return resourceMapper.findAllActive(DataState.ACTIVE);
+        List<SecResource> list = resourceMapper.findAllActive(DataState.ACTIVE);
+        // 遍历集合, 根据parentId进行分组
+        Map<Integer, List<SecResource>> map = new HashMap<Integer, List<SecResource>>();
+        for (SecResource r : list) {
+            if (map.containsKey(r.getParentId())) {
+                map.get(r.getParentId()).add(r);
+            } else {
+                List<SecResource> temp = new ArrayList<SecResource>();
+                temp.add(r);
+                map.put(r.getParentId(), temp);
+            }
+        }
+        List<SecResource> pageList = new ArrayList<SecResource>();
+        recursionResource(map, pageList, 0);
+        return pageList;
+
     }
 
     @Override

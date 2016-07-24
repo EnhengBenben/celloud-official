@@ -3,8 +3,6 @@ package com.celloud.backstage.service;
 import java.util.List;
 
 import com.celloud.backstage.model.SecResource;
-import com.celloud.backstage.page.Page;
-import com.celloud.backstage.page.PageList;
 
 /**
  * @author MQ:
@@ -34,11 +32,11 @@ public interface SecResourceService {
     /**
      * 
      * @author MQ
-     * @date 2016年7月18日下午3:04:31
-     * @description 分页查询
+     * @date 2016年7月22日下午3:45:36
+     * @description 查询全部资源, 按优先级排序
      *
      */
-    public PageList<SecResource> pageQuery(Page page, String keyword);
+    public List<SecResource> list();
 
     /**
      * @author MQ

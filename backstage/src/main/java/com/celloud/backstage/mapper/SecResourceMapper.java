@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.celloud.backstage.model.SecResource;
-import com.celloud.backstage.page.Page;
 
 public interface SecResourceMapper {
     int deleteByPrimaryKey(Integer id);
@@ -23,11 +22,11 @@ public interface SecResourceMapper {
     /**
      * 
      * @author MQ
-     * @date 2016年7月18日下午3:05:54
-     * @description 分页查询
+     * @date 2016年7月22日下午3:43:36
+     * @description 查询全部资源, 按优先级排序
      *
      */
-    List<SecResource> pageQuery(Page page, @Param("keyword") String keyword);
+    List<SecResource> list();
 
     /**
      * 
