@@ -1,18 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-	import="com.celloud.pay.alipay.AlipayConfig"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="com.celloud.pay.alipay.AlipayConfig"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
-<title>CelLoud平台账户充值--支付宝</title>
+<title>CelLoud平台账户充值--网银支付</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- 优先使用最新版本的IE 和 Chrome 内核 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="baidu-site-verification" content="IsldTuHqik" />
 <title>CelLoud 控制台</title>
-<meta name="keywords"
-	content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据,上海华点云生物科技有限公司网站首页,上海华点云生物科技有限公司官网,上海华点云生物科技有限公司北京分公司" />
+<meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据,上海华点云生物科技有限公司网站首页,上海华点云生物科技有限公司官网,上海华点云生物科技有限公司北京分公司" />
 <meta name="description" content="一站式高通量基因检测数据分析系统" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <!-- <meta name="baidu-site-verification" content="1fI6fRe9op" /> -->
@@ -79,9 +77,9 @@
 									<td>${alipay.tradeNo }</td>
 								</tr>
 								<tr>
-                                    <td>支付宝账户</td>
-                                    <td>${alipay.buyerEmail }</td>
-                                </tr>
+									<td>支付宝账户</td>
+									<td>${alipay.buyerEmail }</td>
+								</tr>
 								<tr>
 									<td>支付宝流水号</td>
 									<td>${alipay.aliTradeNo }</td>
@@ -93,9 +91,9 @@
 									</td>
 								</tr>
 								<tr>
-                                    <td>描述</td>
-                                    <td>${alipay.description }</td>
-                                </tr>
+									<td>描述</td>
+									<td>${alipay.description }</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>

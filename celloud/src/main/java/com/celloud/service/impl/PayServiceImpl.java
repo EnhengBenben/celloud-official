@@ -22,11 +22,13 @@ import com.celloud.constants.PayOrderState;
 import com.celloud.constants.RechargeType;
 import com.celloud.mapper.PayOrderMapper;
 import com.celloud.mapper.RechargeAlipayMapper;
+import com.celloud.mapper.RechargeJdpayMapper;
 import com.celloud.message.MessageUtils;
 import com.celloud.message.category.MessageCategoryCode;
 import com.celloud.message.category.MessageCategoryUtils;
 import com.celloud.model.mysql.PayOrder;
 import com.celloud.model.mysql.RechargeAlipay;
+import com.celloud.model.mysql.RechargeJdpay;
 import com.celloud.pay.alipay.AlipayConfig;
 import com.celloud.pay.alipay.AlipayNotify;
 import com.celloud.pay.alipay.AlipaySubmit;
@@ -44,6 +46,8 @@ public class PayServiceImpl implements PayService {
 	private RechargeService rechargeService;
 	@Resource
 	private RechargeAlipayMapper rechargeAlipayMapper;
+	@Resource
+	private RechargeJdpayMapper rechargeJdpayMapper;
 	@Resource
 	private MessageCategoryUtils mcu;
 
@@ -195,10 +199,52 @@ public class PayServiceImpl implements PayService {
 					alipay = rechargeAlipayMapper.selectByTradeNo(out_trade_no);
 				}
 			}
-
-			//////////////////////////////////////////////////////////////////////////////////////////
 		}
 		return alipay;
+	}
+
+	public RechargeJdpay verifyJdpay(HttpServletRequest request) {
+		String key = JdpayConfig.key;
+		String v_oid = request.getParameter("v_oid"); // 订单号
+		String v_pmode = request.getParameter("v_pmode"); // 支付方式中文说明，如"中行长城信用卡"
+		String v_pstatus = request.getParameter("v_pstatus"); // 支付结果，20支付完成；30支付失败；
+		// String v_pstring = request.getParameter("v_pstring"); //
+		// 对支付结果的说明，成功时（v_pstatus=20）为"支付成功"，支付失败时（v_pstatus=30）为"支付失败"
+		String v_amount = request.getParameter("v_amount"); // 订单实际支付金额
+		String v_moneytype = request.getParameter("v_moneytype"); // 币种
+		String v_md5str = request.getParameter("v_md5str"); // MD5校验码
+		String remark1 = request.getParameter("remark1"); // 备注1
+		// String remark2 = request.getParameter("remark2"); // 备注2
+		String text = v_oid + v_pstatus + v_amount + v_moneytype + key; // 拼凑加密串
+		String v_md5text = MD5Util.getMD5ofStr(text).toUpperCase();
+		BigDecimal amount = new BigDecimal(v_amount);
+		RechargeJdpay pay = null;
+		if (v_md5str.equals(v_md5text) && "20".equals(v_pstatus)) {
+			// 支付成功
+			PayOrder order = payOrderMapper.selectByTradeNo(v_oid);
+			if (order.getState() == PayOrderState.UNPAID) {
+				order.setState(PayOrderState.PAID);
+				payOrderMapper.updateByPrimaryKey(order);
+				pay = new RechargeJdpay();
+				pay.setAmount(amount);
+				pay.setBankCode(order.getType().toString());
+				pay.setBankName(v_pmode);
+				pay.setCreateTime(new Date());
+				pay.setDescription(remark1);
+				pay.setMoneyType(v_moneytype);
+				pay.setSubject(order.getSubject());
+				pay.setTradeNo(v_oid);
+				pay.setUserId(order.getUserId());
+				rechargeJdpayMapper.insert(pay);
+				rechargeService.saveRecharge(amount, order.getUserId(), RechargeType.ALIPAY, pay.getId());
+			} else {
+				pay = rechargeJdpayMapper.selectByTradeNo(v_oid);
+			}
+		} else {
+			// 支付失败
+
+		}
+		return pay;
 	}
 
 }

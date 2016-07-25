@@ -8,7 +8,7 @@ public class JdpayConfig {
 	/**
 	 * 商户自定义返回接收支付结果的页面
 	 */
-	public static final String v_url = "http://localhost/chinabank/Receive.jsp";
+	public static final String v_url = "https://www.genecode.cn/pay/jdpay/receive.html";
 	/**
 	 * 密钥
 	 */
@@ -16,5 +16,5 @@ public class JdpayConfig {
 	/**
 	 * 服务器异步通知的接收地址
 	 */
-	public static final String remark2 = "[url:=http://domain/chinabank/AutoReceive.asp]";
+	public static final String remark2 = "[url:=https://www.genecode.cn/pay/jdpay/auto_receive.html]";
 }

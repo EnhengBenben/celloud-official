@@ -23,7 +23,7 @@
 			</div>
 		</form>
 		<div id="onlineRecharge">
-			<form action="<%=request.getContextPath() + "/pay/recharge/jdpay"%>" class="form-horizontal" target="_blank" id="rechargeForm" method="post">
+			<form action="<%=request.getContextPath() + "/pay/recharge/"%>" class="form-horizontal" target="_blank" id="rechargeForm" method="post">
 				<div class="form-group" id="moneyGroup">
 					<label class="col-sm-1 control-label">金额(￥)</label>
 					<div class="col-sm-11">
@@ -42,7 +42,7 @@
 						<div class="row">
 							<div class="col-xs-12">
 								<label class="checkbox-inline">
-									<input type="radio" checked="checked" name="pay_type" value="alipay">
+									<input type="radio" checked="checked" name="pay_type" value="alipay" id="pay_type_alipay">
 									<span class="pay-logo alipay" title="支付宝"></span>
 								</label>
 							</div>

@@ -100,6 +100,8 @@ function init_expense(){
   $("#expense-content").on("submit","#rechargeForm",function(){
 	 var $self = $("#rechargeForm");
 	 var $group =  $self.find("#moneyGroup");
+	 var payType = $self.find('#pay_type_alipay').is(":checked");
+	 $self.attr('action',$self.attr("action")+(payType?'alipay':'jdpay'));
 	 $group.removeClass("has-error");
 	 $group.find(".text-danger").hide();
 	 var money = $self.find("input[name='money']").val();
