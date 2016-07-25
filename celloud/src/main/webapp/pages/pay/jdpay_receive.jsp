@@ -81,10 +81,6 @@
 									<td>${pay.bankName }</td>
 								</tr>
 								<tr>
-									<td>支付宝流水号</td>
-									<td>${pay.aliTradeNo }</td>
-								</tr>
-								<tr>
 									<td>充值时间</td>
 									<td>
 										<fmt:formatDate value="${pay.createTime }" pattern="yyyy-MM-dd HH:mm:ss" />
