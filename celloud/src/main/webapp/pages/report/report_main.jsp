@@ -102,7 +102,7 @@
 <script src="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/calendar/WdatePicker.js"></script>
 <script src="<%=request.getContextPath() %>/js/report_app_method.js"></script>
-<script src="<%=request.getContextPath() %>/js/report.js?version=3.2.4"></script>
+<script src="<%=request.getContextPath() %>/js/report.js?version=3.2.4.1"></script>
 <script src="<%=request.getContextPath() %>/js/report_codon.js"></script>
 <script src="<%=request.getContextPath() %>/js/bigImg.js?version=3.1.9.1"></script>
 <script type="text/javascript">

@@ -310,6 +310,7 @@ $.ajaxSetup ({
 			spinner.spin(target);
 			$.get("report/getReportPageList",{"belongs":BELONGS,"appId":APP,"start":START,"end":END,"condition":FILENAME,"size":pageSize,"page":currentPage},function(responseText){
 				$("#selfReportDiv").html(responseText);
+				$("body").scrollTop(0);
 				loadReportList();
 				spinner.stop();
 			});
