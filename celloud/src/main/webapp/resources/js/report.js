@@ -296,6 +296,15 @@ $.ajaxSetup ({
 					END = END+" 23:59:59";
 				}
 			}
+			//匹配中文 数字 字母 下划线       
+      var pattern=/[`~!@#\$%\^\&\*\(\)_\+<>\?:"\{\},\.\\\/;'\[\]]/im;
+      if(pattern.test(FILENAME)){
+        $("#_dataAlertSpan").css("display","");
+        $("#_dataAlertSpan").html("输入框禁止输入特殊字符");
+        return ;
+      }
+      $("#_dataAlertSpan").css("display","none");
+      $("#_dataAlertSpan").html("");
 			spinner = new Spinner(opts);
 			var target = document.getElementById('reportLoading');
 			spinner.spin(target);
