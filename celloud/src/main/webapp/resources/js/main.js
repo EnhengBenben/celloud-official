@@ -344,6 +344,8 @@ function showUpload(){
 	if($("#uploadDIV").html()==""){
 		$("#uploadDIV").load("pages/upload/upload.jsp");
 	}
+	//为了防止切换到上传页面却无法发现session超时而随便请求的一个方法
+  $.get("uploadFile/checkAdminSessionTimeOut");
 }
 
 /**
