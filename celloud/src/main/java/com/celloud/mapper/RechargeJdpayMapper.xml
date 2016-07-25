@@ -38,7 +38,7 @@
     delete from tb_recharge_jdpay
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.celloud.model.mysql.RechargeJdpay" >
+  <insert id="insert" parameterType="com.celloud.model.mysql.RechargeJdpay" useGeneratedKeys="true" keyProperty="id">
     insert into tb_recharge_jdpay (id, user_id, trade_no, 
       bank_code, bank_name, subject, 
       description, create_time, money_type, 
@@ -48,7 +48,7 @@
       #{description,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{moneyType,jdbcType=VARCHAR}, 
       #{amount,jdbcType=DECIMAL})
   </insert>
-  <insert id="insertSelective" parameterType="com.celloud.model.mysql.RechargeJdpay" >
+  <insert id="insertSelective" parameterType="com.celloud.model.mysql.RechargeJdpay" useGeneratedKeys="true" keyProperty="id">
     insert into tb_recharge_jdpay
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
