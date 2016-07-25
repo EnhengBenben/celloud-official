@@ -70,29 +70,29 @@
 							<tbody>
 								<tr>
 									<td>名称</td>
-									<td>${alipay.subject }</td>
+									<td>${pay.subject }</td>
 								</tr>
 								<tr>
 									<td>订单号</td>
-									<td>${alipay.tradeNo }</td>
+									<td>${pay.tradeNo }</td>
 								</tr>
 								<tr>
-									<td>支付宝账户</td>
-									<td>${alipay.buyerEmail }</td>
+									<td>支付方式</td>
+									<td>${pay.bankName }</td>
 								</tr>
 								<tr>
 									<td>支付宝流水号</td>
-									<td>${alipay.aliTradeNo }</td>
+									<td>${pay.aliTradeNo }</td>
 								</tr>
 								<tr>
 									<td>充值时间</td>
 									<td>
-										<fmt:formatDate value="${alipay.createTime }" pattern="yyyy-MM-dd HH:mm:ss" />
+										<fmt:formatDate value="${pay.createTime }" pattern="yyyy-MM-dd HH:mm:ss" />
 									</td>
 								</tr>
 								<tr>
 									<td>描述</td>
-									<td>${alipay.description }</td>
+									<td>${pay.description }</td>
 								</tr>
 							</tbody>
 						</table>

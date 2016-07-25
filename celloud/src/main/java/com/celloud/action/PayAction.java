@@ -97,7 +97,7 @@ public class PayAction {
 			model.addAttribute("username", user.getUsername());
 			BigDecimal balance = user.getBalances();
 			model.addAttribute("balance", balance);
-			model.addAttribute("alipay", pay);
+			model.addAttribute("pay", pay);
 		}
 		return "pay/jdpay_receive";
 	}
