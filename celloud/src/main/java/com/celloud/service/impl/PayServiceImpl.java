@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -53,8 +52,9 @@ public class PayServiceImpl implements PayService {
 
 	@Override
 	public Map<String, String> createAlipayOrder(String money) {
-		String tradeNo = "CelLoud-" + new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
-		String time = new Long(System.currentTimeMillis()).toString();
+		Date currDate = new Date();
+		String tradeNo = "CelLoud-" + new SimpleDateFormat("yyyyMMddhhmmss").format(currDate);
+		String time = new Long(currDate.getTime()).toString();
 		time = time.substring(time.length() - 5);
 		tradeNo = tradeNo + time;
 		String subject = "CelLoud平台账户充值";
@@ -94,9 +94,11 @@ public class PayServiceImpl implements PayService {
 		String v_mid = JdpayConfig.v_mid;
 		String v_url = JdpayConfig.v_url;
 		String key = JdpayConfig.key;
-		Date currTime = new Date();
-		SimpleDateFormat sf = new SimpleDateFormat("yyyyMMdd-" + v_mid + "-hhmmss", Locale.US);
-		String v_oid = sf.format(currTime);
+		Date currDate = new Date();
+		String v_oid = "CelLoud-" + new SimpleDateFormat("yyyyMMddhhmmss").format(currDate);
+		String time = new Long(currDate.getTime()).toString();
+		time = time.substring(time.length() - 5);
+		v_oid = v_oid + time;
 		String v_amount = money;
 		String v_moneytype = "CNY";
 		String text = v_amount + v_moneytype + v_oid + v_mid + v_url + key;
@@ -213,7 +215,7 @@ public class PayServiceImpl implements PayService {
 		String v_amount = request.getParameter("v_amount"); // 订单实际支付金额
 		String v_moneytype = request.getParameter("v_moneytype"); // 币种
 		String v_md5str = request.getParameter("v_md5str"); // MD5校验码
-		String remark1 = request.getParameter("remark1"); // 备注1
+		// String remark1 = request.getParameter("remark1"); // 备注1
 		// String remark2 = request.getParameter("remark2"); // 备注2
 		String text = v_oid + v_pstatus + v_amount + v_moneytype + key; // 拼凑加密串
 		String v_md5text = MD5Util.getMD5ofStr(text).toUpperCase();
@@ -230,7 +232,7 @@ public class PayServiceImpl implements PayService {
 				pay.setBankCode(order.getType().toString());
 				pay.setBankName(v_pmode);
 				pay.setCreateTime(new Date());
-				pay.setDescription(remark1);
+				pay.setDescription(order.getDescription());
 				pay.setMoneyType(v_moneytype);
 				pay.setSubject(order.getSubject());
 				pay.setTradeNo(v_oid);
