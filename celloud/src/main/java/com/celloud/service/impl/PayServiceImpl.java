@@ -213,7 +213,7 @@ public class PayServiceImpl implements PayService {
 		String v_amount = request.getParameter("v_amount"); // 订单实际支付金额
 		String v_moneytype = request.getParameter("v_moneytype"); // 币种
 		String v_md5str = request.getParameter("v_md5str"); // MD5校验码
-		String remark1 = request.getParameter("remark1"); // 备注1
+		//String remark1 = request.getParameter("remark1"); // 备注1
 		// String remark2 = request.getParameter("remark2"); // 备注2
 		String text = v_oid + v_pstatus + v_amount + v_moneytype + key; // 拼凑加密串
 		String v_md5text = MD5Util.getMD5ofStr(text).toUpperCase();
@@ -230,7 +230,7 @@ public class PayServiceImpl implements PayService {
 				pay.setBankCode(order.getType().toString());
 				pay.setBankName(v_pmode);
 				pay.setCreateTime(new Date());
-				pay.setDescription(remark1);
+				pay.setDescription(order.getDescription());
 				pay.setMoneyType(v_moneytype);
 				pay.setSubject(order.getSubject());
 				pay.setTradeNo(v_oid);
