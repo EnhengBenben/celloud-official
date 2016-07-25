@@ -1094,6 +1094,11 @@ var permission = (function(permission){
 							self.resource.doEdit();
 						}
 					});
+					$(".resourceCheck").click(function(){
+						var currentVal = $(this).prop("checked");
+						$(".resourceCheck").prop("checked",false);
+						$(this).prop("checked",currentVal);
+					});
 				});
 			},
 			toAdd : function(){

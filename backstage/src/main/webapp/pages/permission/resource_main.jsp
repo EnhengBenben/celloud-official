@@ -19,7 +19,6 @@
                 <th>资源名称</th>
                 <th>资源类型</th>
                 <th>表达式</th>
-                <th>顺序</th>
                 <th>状态</th>
                 <th>创建时间</th>
                 <th>操作</th>
@@ -32,7 +31,6 @@
                     <td>${resource.name }</td>
 	                <td>${resource.type }</td>
 	                <td>${resource.permission }</td>
-	                <td>${resource.priority }</td>
 	                <td>
 	                   <c:if test="${resource.disabled==0 }">正常</c:if>
 	                   <c:if test="${resource.disabled==1 }">下线</c:if>
