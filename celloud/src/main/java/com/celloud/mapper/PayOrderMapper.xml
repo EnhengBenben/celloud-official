@@ -7,6 +7,7 @@
 		<result column="username" property="username" jdbcType="VARCHAR" />
 		<result column="type" property="type" jdbcType="TINYINT" />
 		<result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
+		<result column="bank_code" property="bankCode" jdbcType="VARCHAR" />
 		<result column="subject" property="subject" jdbcType="VARCHAR" />
 		<result column="description" property="description" jdbcType="VARCHAR" />
 		<result column="amount" property="amount" jdbcType="DECIMAL" />
@@ -14,7 +15,7 @@
 		<result column="state" property="state" jdbcType="BIT" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		tb_pay_order.id, tb_pay_order.user_id, tb_pay_order.type,
+		tb_pay_order.id, tb_pay_order.user_id, tb_pay_order.type,tb_pay_order.bank_code,
 		tb_pay_order.trade_no, tb_pay_order.subject, tb_pay_order.description,
 		tb_pay_order.amount, tb_pay_order.create_time, tb_pay_order.state
 	</sql>
@@ -51,13 +52,13 @@
 	</delete>
 	<insert id="insert" parameterType="com.celloud.model.mysql.PayOrder">
 		insert into tb_pay_order (id,
-		user_id, type,
+		user_id, type,bank_code
 		trade_no, subject, description,
 		amount, create_time,
 		state
 		)
 		values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
-		#{type,jdbcType=TINYINT},
+		#{type,jdbcType=TINYINT},#{bankCode,jdbcType=TINYINT},
 		#{tradeNo,jdbcType=VARCHAR},
 		#{subject,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
 		#{amount,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP},
@@ -75,6 +76,9 @@
 			</if>
 			<if test="type != null">
 				type,
+			</if>
+			<if test="bankCode != null">
+				bank_code,
 			</if>
 			<if test="tradeNo != null">
 				trade_no,
@@ -104,6 +108,9 @@
 			</if>
 			<if test="type != null">
 				#{type,jdbcType=TINYINT},
+			</if>
+			<if test="bankCode != null">
+				#{bankCode,jdbcType=VARCHAR},
 			</if>
 			<if test="tradeNo != null">
 				#{tradeNo,jdbcType=VARCHAR},
@@ -137,6 +144,9 @@
 			<if test="tradeNo != null">
 				trade_no = #{tradeNo,jdbcType=VARCHAR},
 			</if>
+			<if test="bankCode != null">
+				bank_code = #{bankCode,jdbcType=VARCHAR},
+			</if>
 			<if test="subject != null">
 				subject = #{subject,jdbcType=VARCHAR},
 			</if>
@@ -162,6 +172,7 @@
 		type =
 		#{type,jdbcType=TINYINT},
 		trade_no = #{tradeNo,jdbcType=VARCHAR},
+		bank_code = #{bankCode,jdbcType=VARCHAR},
 		subject = #{subject,jdbcType=VARCHAR},
 		description =
 		#{description,jdbcType=VARCHAR},

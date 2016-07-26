@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="com.celloud.constants.Bank"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="row" style="margin: 5px;">
 	<div class="col-xs-12">
@@ -37,132 +37,24 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-1 control-label">支付方式</label>
+					<label class="col-sm-1 control-label" style="line-height: 52px;">支付方式</label>
 					<div class="col-sm-11">
-						<div class="row">
-							<div class="col-xs-12">
+						<ul class="pay-banks">
+							<li class="pay-item alone">
 								<label class="checkbox-inline">
 									<input type="radio" checked="checked" name="pay_type" value="alipay" id="pay_type_alipay">
-									<span class="pay-logo alipay" title="支付宝"></span>
-								</label>
-							</div>
-						</div>
-						<ul class="pay-banks ">
-							<li class="pay-item">
-								<label class="checkbox-inline disabled">
-									<input disabled="disabled" type="radio" name="pay_type" value="BOCB2C">
-									<span class="pay-logo disabled BOCB2C" title="暂不支持中国银行"></span>
+									<img alt="支付宝" src="<%=request.getContextPath()%>/images/pay/alipay.png">
 								</label>
 							</li>
-							<li class="pay-item disabled">
-								<label class="checkbox-inline disabled">
-									<input disabled="disabled" type="radio" name="pay_type" value="ICBCB2C">
-									<span class="pay-logo disabled ICBCB2C" title="暂不支持中国工商银行"></span>
-								</label>
-							</li>
-							<li class="pay-item">
-								<label class="checkbox-inline">
-									<input type="radio" name="pay_type" value="3080">
-									<span class="pay-logo CMB" title="暂不支持招商银行"></span>
-								</label>
-							</li>
-							<li class="pay-item disabled">
-								<label class="checkbox-inline disabled">
-									<input disabled="disabled" type="radio" name="pay_type" value="CCB">
-									<span class="pay-logo disabled CCB" title="暂不支持中国建设银行"></span>
-								</label>
-							</li>
-							<li class="pay-item disabled">
-								<label class="checkbox-inline disabled">
-									<input disabled="disabled" type="radio" name="pay_type" value="ABC">
-									<span class="pay-logo disabled ABC" title="暂不支持中国农业银行"></span>
-								</label>
-							</li>
-							<li class="pay-item disabled">
-								<label class="checkbox-inline disabled">
-									<input disabled="disabled" type="radio" name="pay_type" value="SPDB">
-									<span class="pay-logo disabled SPDB" title="暂不支持上海浦东发展银行"></span>
-								</label>
-							</li>
-							<li class="pay-item disabled">
-								<label class="checkbox-inline disabled">
-									<input disabled="disabled" type="radio" name="pay_type" value="CIB">
-									<span class="pay-logo disabled CIB" title="暂不支持兴业银行"></span>
-								</label>
-							</li>
-							<li class="pay-item disabled">
-								<label class="checkbox-inline disabled">
-									<input disabled="disabled" type="radio" name="pay_type" value="GDB">
-									<span class="pay-logo disabled GDB" title="暂不支持广东发展银行"></span>
-								</label>
-							</li>
-							<li class="pay-item disabled">
-								<label class="checkbox-inline disabled">
-									<input disabled="disabled" type="radio" name="pay_type" value="SDB">
-									<span class="pay-logo disabled SDB" title="暂不支持深圳发展银行"></span>
-								</label>
-							</li>
-							<li class="pay-item disabled">
-								<label class="checkbox-inline disabled">
-									<input disabled="disabled" type="radio" name="pay_type" value="CMBC">
-									<span class="pay-logo disabled CMBC" title="暂不支持中国民生银行"></span>
-								</label>
-							</li>
-							<li class="pay-item disabled">
-								<label class="checkbox-inline disabled">
-									<input disabled="disabled" type="radio" name="pay_type" value="COMM">
-									<span class="pay-logo disabled COMM" title="暂不支持中国交通银行"></span>
-								</label>
-							</li>
-							<li class="pay-item disabled">
-								<label class="checkbox-inline disabled">
-									<input disabled="disabled" type="radio" name="pay_type" value="CITIC">
-									<span class="pay-logo disabled CITIC" title="暂不支持中信银行"></span>
-								</label>
-							</li>
-							<li class="pay-item disabled">
-								<label class="checkbox-inline disabled">
-									<input disabled="disabled" type="radio" name="pay_type" value="HZCBB2C">
-									<span class="pay-logo disabled HZCBB2C" title="暂不支持杭州银行"></span>
-								</label>
-							</li>
-							<li class="pay-item disabled">
-								<label class="checkbox-inline disabled">
-									<input disabled="disabled" type="radio" name="pay_type" value="CEB-DEBIT">
-									<span class="pay-logo disabled CEB-DEBIT" title="暂不支持中国光大银行"></span>
-								</label>
-							</li>
-							<li class="pay-item disabled">
-								<label class="checkbox-inline disabled">
-									<input disabled="disabled" type="radio" name="pay_type" value="SHBANK">
-									<span class="pay-logo disabled SHBANK" title="暂不支持上海银行"></span>
-								</label>
-							</li>
-							<li class="pay-item disabled">
-								<label class="checkbox-inline disabled">
-									<input disabled="disabled" type="radio" name="pay_type" value="NBBANK">
-									<span class="pay-logo disabled NBBANK" title="暂不支持宁波银行"></span>
-								</label>
-							</li>
-
-							<li class="pay-item disabled">
-								<label class="checkbox-inline disabled">
-									<input disabled="disabled" type="radio" name="pay_type" value="SPABANK">
-									<span class="pay-logo disabled SPABANK" title="暂不支持平安银行"></span>
-								</label>
-							</li>
-							<li class="pay-item">
-								<label class="checkbox-inline disabled">
-									<input disabled="disabled" type="radio" name="pay_type" value="BJRCB">
-									<span class="pay-logo disabled BJRCB" title="暂不支持北京农村商业银行"></span>
-								</label>
-							</li>
-							<li class="pay-item">
-								<label class="checkbox-inline disabled">
-									<input disabled="disabled" type="radio" name="pay_type" value="FDB">
-									<span class="pay-logo disabled FDB" title="暂不支持富滇银行"></span>
-								</label>
-							</li>
+							<c:set var="banks" value="<%=Bank.values()%>"></c:set>
+							<c:forEach items="${banks}" var="bank">
+								<li class="pay-item">
+									<label class="checkbox-inline">
+										<input type="radio" name="pay_type" value="${bank.bankCode }">
+										<img alt="${bank.bankName }" src="<%=request.getContextPath()%>/images/bank/${bank.bankCode }.gif">
+									</label>
+								</li>
+							</c:forEach>
 						</ul>
 					</div>
 				</div>
