@@ -62,7 +62,9 @@ class Rocky:
         result["records"] = rockyRecords
         return result
     def getDescription(self):
-        path = os.path.join(os.path.abspath('.'),'app','Rocky.txt')
+        path = os.path.split(os.path.realpath(__file__))[0]
+        path = os.path.join(path,'Rocky.txt')
+        print path
         f = open(path,'r')
         result = {}
         key = ''
