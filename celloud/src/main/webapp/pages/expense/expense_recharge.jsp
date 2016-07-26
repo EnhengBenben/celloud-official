@@ -34,28 +34,62 @@
 						<span id="money-min" class="text-danger" style="display: none;">充值金额要大于10元哦！</span>
 						<span id="money-max" class="text-danger" style="display: none;">大于10000元的充值金额，请使用公司转账方式充值！</span>
 						<span id="money-number" class="text-danger" style="display: none;">请正确输入充值金额！</span>
+						<span id="pay_type" class="text-danger" style="display: none;">请选择您需要的付款方式！</span>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-1 control-label" style="line-height: 52px;">支付方式</label>
 					<div class="col-sm-11">
-						<ul class="pay-banks">
-							<li class="pay-item alone">
-								<label class="checkbox-inline">
-									<input type="radio" checked="checked" name="pay_type" value="alipay" id="pay_type_alipay">
-									<img alt="支付宝" src="<%=request.getContextPath()%>/images/pay/alipay.png">
-								</label>
-							</li>
-							<c:set var="banks" value="<%=Bank.values()%>"></c:set>
-							<c:forEach items="${banks}" var="bank">
-								<li class="pay-item">
-									<label class="checkbox-inline">
-										<input type="radio" name="pay_type" value="${bank.bankCode }">
-										<img alt="${bank.bankName }" src="<%=request.getContextPath()%>/images/bank/${bank.bankCode }.gif">
-									</label>
+						<div>
+							<ul class="nav nav-tabs" role="tablist">
+								<li role="presentation" class="active">
+									<a href="#pay_tab_alipay" aria-controls="pay_tab_alipay" role="tab" data-toggle="tab">支付宝</a>
 								</li>
-							</c:forEach>
-						</ul>
+								<li role="presentation">
+									<a href="#pay_tab_b2b" aria-controls="pay_tab_b2b" role="tab" data-toggle="tab">企业网银</a>
+								</li>
+								<li role="presentation">
+									<a href="#pay_tab_b2c" aria-controls="pay_tab_b2c" role="tab" data-toggle="tab">个人网银</a>
+								</li>
+							</ul>
+							<div class="tab-content">
+								<div role="tabpanel" class="tab-pane active" id="pay_tab_alipay">
+									<ul class="pay-banks">
+										<li class="pay-item alone">
+											<label class="checkbox-inline">
+												<input type="radio" name="pay_type" value="alipay" checked="checked" id="pay_type_alipay">
+												<img alt="支付宝" src="<%=request.getContextPath()%>/images/bank/alipay.gif" />
+											</label>
+										</li>
+									</ul>
+								</div>
+								<div role="tabpanel" class="tab-pane" id="pay_tab_b2b">
+									<ul class="pay-banks">
+										<c:set var="b2bBanks" value="<%=Bank.listB2B()%>"></c:set>
+										<c:forEach items="${b2bBanks}" var="bank">
+											<li class="pay-item">
+												<label class="checkbox-inline">
+													<input type="radio" name="pay_type" value="${bank.bankCode }">
+													<img alt="${bank.bankName }" title="${bank.bankName }" src="<%=request.getContextPath()%>/images/bank/${bank.bankLogo }.gif">
+												</label>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+								<div role="tabpanel" class="tab-pane" id="pay_tab_b2c">
+									<ul class="pay-banks">
+										<c:set var="b2cBanks" value="<%=Bank.listB2C()%>"></c:set>
+										<c:forEach items="${b2cBanks}" var="bank">
+											<li class="pay-item">
+												<label class="checkbox-inline">
+													<input type="radio" name="pay_type" value="${bank.bankCode }">
+													<img alt="${bank.bankName }" title="${bank.bankName }" src="<%=request.getContextPath()%>/images/bank/${bank.bankLogo }.gif">
+												</label>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="form-group">
