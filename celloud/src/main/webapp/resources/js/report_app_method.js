@@ -32,3 +32,5 @@ appMethod[119] = "getPgsReport";
 appMethod[120] = "getPgsReport";
 appMethod[121] = "getPgsReport";
 appMethod[122] = "getPgsReport";
+appMethod[124] = "getPgsReport";
+appMethod[125] = "getPgsReport";
