@@ -91,7 +91,7 @@ public class PayServiceImpl implements PayService {
 	@Override
 	public Map<String, String> createJdpayOrder(String bank, String money) {
 		String subject = "CelLoud平台账户充值";
-		String body = "使用【招商银行】网银充值【" + money + "】元。";
+		String body = "使用【" + Bank.findBankNameByBankCode(bank) + "】网银充值【" + money + "】元。";
 		String v_mid = JdpayConfig.v_mid;
 		String v_url = JdpayConfig.v_url;
 		String key = JdpayConfig.key;
