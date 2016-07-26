@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.celloud.constants.Bank;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.NoticeConstants;
@@ -117,6 +118,7 @@ public class PayServiceImpl implements PayService {
 		params.put("remark2", JdpayConfig.remark2);
 		PayOrder order = new PayOrder();
 		order.setAmount(new BigDecimal(money));
+		order.setBankCode(bank);
 		order.setCreateTime(new Date());
 		order.setDescription(body);
 		order.setSubject(subject);
@@ -229,8 +231,8 @@ public class PayServiceImpl implements PayService {
 				payOrderMapper.updateByPrimaryKey(order);
 				pay = new RechargeJdpay();
 				pay.setAmount(amount);
-				pay.setBankCode(order.getType().toString());
-				pay.setBankName(v_pmode);
+				pay.setBankCode(v_pmode);
+				pay.setBankName(Bank.findBankNameByBankCode(order.getBankCode()));
 				pay.setCreateTime(new Date());
 				pay.setDescription(order.getDescription());
 				pay.setMoneyType(v_moneytype);
@@ -238,7 +240,7 @@ public class PayServiceImpl implements PayService {
 				pay.setTradeNo(v_oid);
 				pay.setUserId(order.getUserId());
 				rechargeJdpayMapper.insert(pay);
-				rechargeService.saveRecharge(amount, order.getUserId(), RechargeType.ALIPAY, pay.getId());
+				rechargeService.saveRecharge(amount, order.getUserId(), RechargeType.OnlineBanking, pay.getId());
 			} else {
 				pay = rechargeJdpayMapper.selectByTradeNo(v_oid);
 			}
