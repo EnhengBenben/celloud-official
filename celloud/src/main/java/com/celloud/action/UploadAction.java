@@ -147,6 +147,8 @@ public class UploadAction {
 			if (hasR1 && hasR2) {
 				return new ArrayList<>(dataIds.values());
 			}
+		} else if (data.getFileFormat() == FileFormat.YASUO) {
+			return new ArrayList<>(data.getFileId());
 		}
 		return new ArrayList<>();
 	}
