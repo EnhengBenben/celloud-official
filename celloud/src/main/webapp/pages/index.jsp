@@ -252,7 +252,7 @@
 	<script src="<%=request.getContextPath()%>/js/main_init.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/main.js?v=3.2.4" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/charts.js?version=3.1.10"></script>
-	<script src="<%=request.getContextPath()%>/plugins/highcharts/char.js?version=20160421"></script>
+	<script src="<%=request.getContextPath()%>/plugins/highcharts/char.js?version=3.2.4"></script>
 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
 	<script type="text/javascript">
