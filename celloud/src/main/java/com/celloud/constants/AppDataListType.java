@@ -35,6 +35,6 @@ public class AppDataListType {
 	 * 需要路径和文件名
 	 */
 	public static final List<Integer> PATH_AND_NAME = Arrays.asList(11, 80, 85, 87, 88, 91, 94, 104, 109, 116, 119, 120,
-			121, 122);
+			121, 122, 124, 125);
 
 }
