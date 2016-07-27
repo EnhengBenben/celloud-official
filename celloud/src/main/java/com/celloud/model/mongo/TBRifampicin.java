@@ -1,6 +1,7 @@
 package com.celloud.model.mongo;
 
 import java.util.List;
+import java.util.Map;
 
 public class TBRifampicin extends Base {
 
@@ -13,6 +14,7 @@ public class TBRifampicin extends Base {
     private String pdf; // pdf
     private String seq; // seq
     private List<String> original;// *_png
+    private Map<String, String> baseInfo;
 
     public String getFileName() {
         return fileName;
@@ -76,6 +78,14 @@ public class TBRifampicin extends Base {
 
     public void setOriginal(List<String> original) {
         this.original = original;
+    }
+
+    public Map<String, String> getBaseInfo() {
+        return baseInfo;
+    }
+
+    public void setBaseInfo(Map<String, String> baseInfo) {
+        this.baseInfo = baseInfo;
     }
 
 }

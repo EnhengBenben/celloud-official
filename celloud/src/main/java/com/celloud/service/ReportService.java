@@ -638,5 +638,19 @@ public interface ReportService {
      */
     public Integer updateKrasFilling(KRAS kras);
 
+    /**
+     * 取出所有的tbrifampicin报告, 上线后可删
+     */
+    public List<Report> getAllTBRifampicinReport();
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月27日上午11:27:21
+     * @description 修改TBRifampicin报告用户填写部分
+     *
+     */
+    public Integer updateTBRifampicinFilling(TBRifampicin tbRifampicin);
+
 
 }

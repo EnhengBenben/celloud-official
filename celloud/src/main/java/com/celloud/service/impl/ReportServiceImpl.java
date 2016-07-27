@@ -949,4 +949,21 @@ public class ReportServiceImpl implements ReportService {
         return ur != null ? 1 : 0;
     }
 
+    @Override
+    public List<Report> getAllTBRifampicinReport() {
+        return reportMapper.getAllTBRifampicinReport();
+    }
+
+    @Override
+    public Integer updateTBRifampicinFilling(TBRifampicin tbRifampicin) {
+        UpdateResults ur = null;
+        if (tbRifampicin.getBaseInfo() == null) {
+            ur = reportDao.editData(TBRifampicin.class, tbRifampicin.getId(), "baseInfo",
+                    new HashMap<String, String>());
+        } else {
+            ur = reportDao.editData(TBRifampicin.class, tbRifampicin.getId(), "baseInfo", tbRifampicin.getBaseInfo());
+        }
+        return ur != null ? 1 : 0;
+    }
+
 }

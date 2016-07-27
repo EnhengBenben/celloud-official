@@ -200,4 +200,9 @@ public interface ReportMapper {
      * 取出所有kras报告
      */
     public List<Report> getAllKrasReport();
+
+    /**
+     * 取出所有rbrifampicin报告
+     */
+    public List<Report> getAllTBRifampicinReport();
 }
