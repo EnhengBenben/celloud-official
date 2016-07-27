@@ -576,6 +576,17 @@ public interface ReportService {
 	 * @return
 	 */
 	public Rocky getRockyReport(String dataKey, Integer projectId, Integer appId);
+
+    /**
+     * 根据file_id获取datakey
+     */
+    public String getDataKey(Integer fileId);
+
+    /**
+     * 取出所有的pgs报告, 上线后可删
+     */
+    public List<Report> getAllPgsReport();
+
     /**
      * 
      * @author MQ
@@ -586,13 +597,18 @@ public interface ReportService {
     public Integer updatePgsFilling(Pgs pgs);
 
     /**
-     * 根据file_id获取datakey
+     * 取出所有的hcv报告, 上线后可删
      */
-    public String getDataKey(Integer fileId);
+    public List<Report> getAllHcvReport();
 
     /**
-     * 取出所有的pgs报告
+     * 
+     * @author MQ
+     * @date 2016年7月27日上午11:27:21
+     * @description 修改hcv报告用户填写部分
+     *
      */
-    public List<Report> getAllPgsReport();
+    public Integer updateHcvFilling(HCV hcv);
+
 
 }

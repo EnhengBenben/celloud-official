@@ -881,6 +881,16 @@ public class ReportServiceImpl implements ReportService {
 	}
 
     @Override
+    public String getDataKey(Integer fileId) {
+        return reportMapper.getDataKey(fileId);
+    }
+
+    @Override
+    public List<Report> getAllPgsReport() {
+        return reportMapper.getAllPgsReport();
+    }
+
+    @Override
     public Integer updatePgsFilling(Pgs pgs) {
         UpdateResults ur = null;
         if (pgs.getBaseInfo() == null) {
@@ -892,13 +902,20 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public List<Report> getAllPgsReport() {
-        return reportMapper.getAllPgsReport();
+    public List<Report> getAllHcvReport() {
+        return reportMapper.getAllHcvReport();
     }
 
     @Override
-    public String getDataKey(Integer fileId) {
-        return reportMapper.getDataKey(fileId);
+    public Integer updateHcvFilling(HCV hcv) {
+        UpdateResults ur = null;
+        if (hcv.getBaseInfo() == null) {
+            ur = reportDao.editData(HCV.class, hcv.getId(), "baseInfo", new HashMap<String, String>());
+        } else {
+            ur = reportDao.editData(HCV.class, hcv.getId(), "baseInfo", hcv.getBaseInfo());
+        }
+        return ur != null ? 1 : 0;
     }
+
 
 }

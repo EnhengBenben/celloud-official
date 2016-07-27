@@ -185,4 +185,9 @@ public interface ReportMapper {
      * 取出所有Pgs报告
      */
     public List<Report> getAllPgsReport();
+
+    /**
+     * 取出所有Hcv报告
+     */
+    public List<Report> getAllHcvReport();
 }
