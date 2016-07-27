@@ -1744,8 +1744,8 @@ public class ReportAction {
 
     @RequestMapping("egfrMysqlToMongo")
     public void egfrMysqlToMongo() {
-        List<Report> hcvList = reportService.getAllEgfrReport();
-        for (Report report : hcvList) {
+        List<Report> egfrList = reportService.getAllEgfrReport();
+        for (Report report : egfrList) {
             if (report.getPrintContext() != null) {
                 User user = userService.selectUserById(report.getUserId());
                 if (user.getUserId() != 23) {
@@ -1813,6 +1813,55 @@ public class ReportAction {
                         }
                         egfr.setBaseInfo(baseInfo);
                         reportService.updateEgfrFilling(egfr);
+                    }
+                }
+            }
+        }
+    }
+
+    @RequestMapping("krasMysqlToMongo")
+    public void krasMysqlToMongo() {
+        List<Report> krasList = reportService.getAllKrasReport();
+        for (Report report : krasList) {
+            if (report.getPrintContext() != null) {
+                User user = userService.selectUserById(report.getUserId());
+                if (user.getUserId() != 23) {
+                    Integer companyId = user.getCompanyId();
+                    String dataKey = reportService.getDataKey(report.getFileId());
+                    KRAS kras = reportService.getKRASReport(dataKey, report.getProjectId(), report.getAppId());
+                    String printContext = report.getPrintContext();
+                    Document document = Jsoup.parse(printContext);
+                    Elements inputEles = document.select("input[type=text]");
+                    Map<String, String> baseInfo = new HashMap<String, String>();
+                    Elements textareaEles = document.select("textarea");
+                    if (kras != null) {
+                        if (inputEles.size() == 14) {
+                            baseInfo.put("name", inputEles.get(0).val());
+                            baseInfo.put("id", inputEles.get(1).val());
+                            baseInfo.put("sampleNumber", inputEles.get(2).val());
+                            baseInfo.put("sampleType", inputEles.get(3).val());
+                            baseInfo.put("dept", inputEles.get(4).val());
+                            baseInfo.put("submissionDate", inputEles.get(5).val());
+                            baseInfo.put("doctor", inputEles.get(6).val());
+                            baseInfo.put("age", inputEles.get(7).val());
+                            baseInfo.put("bedNo", inputEles.get(8).val());
+                            baseInfo.put("inpatientNumber", inputEles.get(9).val());
+                            baseInfo.put("inspectionDate", inputEles.get(10).val());
+                            baseInfo.put("reportDate", inputEles.get(11).val());
+                            baseInfo.put("inspectionPerson", inputEles.get(12).val());
+                            baseInfo.put("review", inputEles.get(13).val());
+
+                            Elements radioEles = document.select("input[type=radio]");
+                            if (radioEles.get(1).attr("checked").equals("checked")) {
+                                baseInfo.put("sex", "女");
+                            } else {
+                                baseInfo.put("sex", "男");
+                            }
+                        } else {
+                            System.out.println("aaaaaaaaaaaaa");
+                        }
+                        kras.setBaseInfo(baseInfo);
+                        reportService.updateKrasFilling(kras);
                     }
                 }
             }
@@ -2054,9 +2103,9 @@ public class ReportAction {
 	 * @date 2016年3月22日下午5:04:22
 	 */
 	@ActionLog(value = "打印KRAS数据报告", button = "打印数据报告")
-	@RequestMapping("printKRAS")
+    @RequestMapping("printKRAS_bak")
 	@ResponseBody
-	public void printKRAS(Integer appId, String dataKey, Integer projectId) {
+    public void printKRAS_bak(Integer appId, String dataKey, Integer projectId) {
 		String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print.vm";
 		if (ReportAction.class.getResource("/templates/report/" + path) == null) {
 			path = "default/" + appId + "/print.vm";
@@ -2075,6 +2124,35 @@ public class ReportAction {
 		context.put("report", report);
 		returnToVelocity(path, context, projectId);
 	}
+
+    /**
+     * 打印KRAS
+     * 
+     * @param appId
+     * @param dataKey
+     * @param projectId
+     * @return
+     * @author lin
+     * @date 2016年3月22日下午5:04:22
+     */
+    @ActionLog(value = "打印KRAS数据报告", button = "打印数据报告")
+    @RequestMapping("printKRAS")
+    @ResponseBody
+    public void printKRAS(Integer appId, String dataKey, Integer projectId) {
+        String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print.vm";
+        if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+            path = "default/" + appId + "/print.vm";
+        }
+        Map<String, Object> context = new HashMap<String, Object>();
+        KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
+        kras.setPosition(CustomStringUtils.htmlbr(kras.getPosition()));
+        Integer userId = ConstantsData.getLoginUserId();
+        Integer fileId = dataService.getDataByKey(dataKey).getFileId();
+        Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
+        context.put("kras", kras);
+        context.put("report", report);
+        returnToVelocity(path, context, projectId);
+    }
 
 	@ActionLog(value = "打印数据报告时点击保存按钮修改数据报告", button = "修改数据报告")
 	@RequestMapping("updateContext")
@@ -2116,8 +2194,8 @@ public class ReportAction {
     /**
      * 
      * @author MQ
-     * @date 2016年7月27日上午14:07:56
-     * @description 修改hcv打印报告填写内容
+     * @date 2016年7月27日下午14:07:56
+     * @description 修改egfr打印报告填写内容
      *
      */
     @ActionLog(value = "打印Egfr数据报告时修改用户填写的信息", button = "修改数据报告")
@@ -2126,6 +2204,21 @@ public class ReportAction {
     @ResponseBody
     public Integer updateEgfrFilling(EGFR egfr) {
         return reportService.updateEgfrFilling(egfr);
+    }
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月27日下午14:07:56
+     * @description 修改kras打印报告填写内容
+     *
+     */
+    @ActionLog(value = "打印Kras数据报告时修改用户填写的信息", button = "修改数据报告")
+    @RequestMapping("updateKrasFilling")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public Integer updateKrasFilling(KRAS kras) {
+        return reportService.updateKrasFilling(kras);
     }
 
 	/**

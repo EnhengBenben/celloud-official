@@ -624,5 +624,19 @@ public interface ReportService {
      */
     public Integer updateEgfrFilling(EGFR egfr);
 
+    /**
+     * 取出所有的kras报告, 上线后可删
+     */
+    public List<Report> getAllKrasReport();
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月27日上午11:27:21
+     * @description 修改kras报告用户填写部分
+     *
+     */
+    public Integer updateKrasFilling(KRAS kras);
+
 
 }

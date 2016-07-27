@@ -195,4 +195,9 @@ public interface ReportMapper {
      * 取出所有Egfr报告
      */
     public List<Report> getAllEgfrReport();
+
+    /**
+     * 取出所有kras报告
+     */
+    public List<Report> getAllKrasReport();
 }
