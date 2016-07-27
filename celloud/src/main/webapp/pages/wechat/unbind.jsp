@@ -8,7 +8,7 @@
 <!-- 优先使用最新版本的IE 和 Chrome 内核 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="baidu-site-verification" content="IsldTuHqik" />
-<title>CelLoud 用户登录</title>
+<title>CelLoud 用户解绑微信账号</title>
 <meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
 <meta name="description" content="一站式高通量基因检测数据分析系统">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,7 +40,7 @@
 		                </div>
 		            </c:when>
 		            <c:otherwise>
-		                <div class="error">&nbsp;test</div>
+		                <div class="error"></div>
 		                <input type="hidden" id="modulusHidden" name="modulus" value="${publicKey.modulus }" />
 	                    <input type="hidden" id="exponentHidden" name="exponent" value="${publicKey.exponent }" />
 	                    <input type="text" name="username" readonly="readonly" value="${username }"/>
@@ -54,7 +54,7 @@
 		</form>
 	</div>
 	<jsp:useBean id="_now" class="java.util.Date" />
-	<div class="footer">
+	<div class="footer" style="position: absolute;">
 		©
 		<fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" />
 		CelLoud，Inc. All Rights reserved.

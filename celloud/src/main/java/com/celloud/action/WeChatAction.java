@@ -93,7 +93,14 @@ public class WeChatAction {
 					"false");
 			return mv;
 		}
-		String openId = session.getAttribute(Constants.SESSION_WECHAT_OPENID).toString();
+		Object openID = session.getAttribute(Constants.SESSION_WECHAT_OPENID);
+		if (openID == null) {
+			String msg = "绑定失败，请重新点击绑定链接后再次绑定账号！";
+			mv.addObject("publicKey", generatePublicKey(session)).addObject("info", msg).addObject("isSuccess",
+					"false");
+			return mv;
+		}
+		String openId = openID.toString();
 		int isBind = us.checkWechatBind(openId, user.getUserId());
         String msg = "";
 		if (isBind == 0) {
@@ -121,8 +128,8 @@ public class WeChatAction {
 		int num = us.checkWechatUnBind(openId, password);
 		if (num == 0) {
 			String msg = "密码错误，请重新输入！";
-			mv.addObject("publicKey", generatePublicKey(session)).addObject("info", msg).addObject("isSuccess",
-					"false");
+			mv.addObject("publicKey", generatePublicKey(session)).addObject("info", msg).addObject("isSuccess", "false")
+					.addObject("username", user.getUsername());
 			return mv;
 		}
 		us.wechatUnBind(openId, password);

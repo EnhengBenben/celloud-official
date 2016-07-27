@@ -128,7 +128,7 @@
         select u.user_id userId 
         from tb_sec_user_role_relat urr
         left join tb_user u on urr.user_id = u.user_id
-        where u.role = 1 and u.state = #{state} and urr.role_id = #{roleId}
+        where (u.role = 1 or u.role = 2) and u.state = #{state} and urr.role_id = #{roleId}
     </select>
     <delete id="deleteRoleBigCustomerRelatByRoleId">
         delete urr.*
