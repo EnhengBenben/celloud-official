@@ -25,6 +25,7 @@
 		select id from tb_sec_user_role_relat
 		where
 		tb_sec_role.id=tb_sec_user_role_relat.role_id and
+		tb_sec_role.disabled = 0 and
 		tb_sec_user_role_relat.user_id=#{id,jdbcType=INTEGER}
 		)
 	</select>

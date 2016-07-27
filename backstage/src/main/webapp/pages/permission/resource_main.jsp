@@ -32,7 +32,7 @@
 	                <td>${resource.type }</td>
 	                <td>${resource.permission }</td>
 	                <td>
-	                   <c:if test="${resource.disabled==0 }">正常</c:if>
+	                   <c:if test="${resource.disabled==0 }">上线</c:if>
 	                   <c:if test="${resource.disabled==1 }">下线</c:if>
 	                </td>
 	                <td><fmt:formatDate value="${resource.createDate }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
@@ -130,7 +130,7 @@
 	  </div>
 </div>
 <div id="confirm-modal" class="modal modal-celloud-green">
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="width: 450px;">
     <div id="confirm-modal-content" class="modal-content confirmModal">
       <div id="confirm-modal-head" class="modal-header" id="">
         <h4 class="modal-title"><i class="icon fa fa-warning"></i>提示</h4>
