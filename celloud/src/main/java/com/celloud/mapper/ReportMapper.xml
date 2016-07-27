@@ -415,4 +415,7 @@
   <select id="getAllEgfrReport" resultMap="BaseResultMap">
     select r.* from tb_report r where r.app_id = 84 and r.print_context is not null and r.print_context != ''
   </select>
+  <select id="getAllKrasReport" resultMap="BaseResultMap">
+    select r.* from tb_report r where r.app_id = 89 and r.print_context is not null and r.print_context != ''
+  </select>
 </mapper>

@@ -933,4 +933,20 @@ public class ReportServiceImpl implements ReportService {
         return ur != null ? 1 : 0;
     }
 
+    @Override
+    public List<Report> getAllKrasReport() {
+        return reportMapper.getAllKrasReport();
+    }
+
+    @Override
+    public Integer updateKrasFilling(KRAS kras) {
+        UpdateResults ur = null;
+        if (kras.getBaseInfo() == null) {
+            ur = reportDao.editData(KRAS.class, kras.getId(), "baseInfo", new HashMap<String, String>());
+        } else {
+            ur = reportDao.editData(KRAS.class, kras.getId(), "baseInfo", kras.getBaseInfo());
+        }
+        return ur != null ? 1 : 0;
+    }
+
 }
