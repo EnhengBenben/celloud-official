@@ -81,7 +81,7 @@
 							</a>
 						</c:when>
 						<c:otherwise>
-							<a title="查看报告" class="disabled" href="javascript:$report.showReport();">
+							<a title="查看报告" class="disabled bg-gray" href="javascript:;">
 								<i class="fa fa-eye"></i>
 							</a>
 						</c:otherwise>

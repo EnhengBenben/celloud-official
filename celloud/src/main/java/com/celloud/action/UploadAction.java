@@ -106,7 +106,7 @@ public class UploadAction {
 		String originalName = data.getFileName();
 		logger.info("判断是否数据{}上传完即刻运行", originalName);
 		String pubName = "";
-		if (data.getFileFormat() == FileFormat.FQ) {
+		if (data.getFileFormat() == FileFormat.FQ || data.getFileFormat() == FileFormat.GZ) {
 			Map<String, Integer> dataIds = new HashMap<String, Integer>();
 			Boolean isR1 = false;
 			if (originalName.contains("R1")) {
@@ -129,9 +129,9 @@ public class UploadAction {
 			boolean hasR2 = false;
 			for (DataFile d : dlist) {
 				String name_tmp = d.getFileName();
-				if (name_tmp.contains("R1")) {
+				if (name_tmp.contains("R1") && data.getFileFormat() == d.getFileFormat()) {
 					hasR1 = true;
-				} else if (name_tmp.contains("R2")) {
+				} else if (name_tmp.contains("R2") && data.getFileFormat() == d.getFileFormat()) {
 					hasR2 = true;
 				}
 				// 排除同一个文件多次上传的问题

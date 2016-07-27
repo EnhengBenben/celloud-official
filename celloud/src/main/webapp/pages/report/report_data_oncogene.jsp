@@ -38,7 +38,7 @@
 	    	<c:if test="${oncogene.knowMutation!=null}">
 		    	<c:forEach var="img" items="${oncogene.knowMutation }">
 		    		<br/>
-			    	<img name="know" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img}" style="width: 900px;">
+			    	<img name="know" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img}" style="width: 100%;">
 		    	</c:forEach>
 	    	</c:if>
 	    </div>
@@ -50,7 +50,7 @@
 	    <div class="m-boxCon result">
 	    	<c:if test="${oncogene.out!=null}">
 		    	<c:forEach var="img" items="${oncogene.out }">
-					<img class="imgtop" title="${img }" name="imgSrc" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img }" style="width: 900px;">
+					<img class="imgtop" title="${img }" name="imgSrc" src="${uploadPath }/${oncogene.userId }/${oncogene.appId }/${oncogene.dataKey }/SVG/${img }" style="width: 100%;">
 		    	</c:forEach>
 	    	</c:if>
 	    </div>
