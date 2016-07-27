@@ -130,7 +130,7 @@
 	  </div>
 </div>
 <div id="confirm-modal" class="modal modal-celloud-green">
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="width: 450px;">
     <div id="confirm-modal-content" class="modal-content confirmModal">
       <div id="confirm-modal-head" class="modal-header" id="">
         <h4 class="modal-title"><i class="icon fa fa-warning"></i>提示</h4>
