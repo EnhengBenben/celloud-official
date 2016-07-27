@@ -177,9 +177,7 @@
         	<h2><i class="i-dna"></i>染色体</h2>
             <div class="m-boxCon">
             	<c:if test="${pgs.miniPng!=null && pgs.miniPng!='' }">
-					<a href="javascript:bigOrigin('${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }','miniPngImg');" >
-						<img src="${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }" style="width: 700px;" id="miniPngImg">
-					</a>
+					<img src="${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.miniPng }" style="width: 100%;" id="miniPngImg">
 				</c:if>
 				<c:if test="${pgs.miniPng==null || pgs.miniPng=='' }">
 					<span style="color: red;">运行异常，未产生图片！</span>
@@ -192,7 +190,7 @@
             <div class="m-boxCon">
             	<c:if test="${pgs.testPng!=null && pgs.testPng!='' }">
 					<a href="javascript:bigOrigin('${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.testPng }','testPngImg');" >
-						<img src="${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.testPng }" style="width: 700px;height: 220px" id="testPngImg">
+						<img src="${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.testPng }" style="width: 100%;" id="testPngImg">
 					</a>
 				</c:if>
 				<c:if test="${pgs.testPng==null || pgs.testPng=='' }">
@@ -200,7 +198,7 @@
 				</c:if>
             	<c:if test="${pgs.HRPng!=null && pgs.HRPng!='' }">
 					<a href="javascript:bigOrigin('${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.HRPng }','HRPngImg');" >
-						<img src="${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.HRPng }" style="width: 700px;height: 220px" id="HRPngImg">
+						<img src="${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.HRPng }" style="width: 100%;" id="HRPngImg">
 					</a>
 				</c:if>
             </div>
@@ -210,9 +208,7 @@
         	<h2><i class="i-dna"></i>染色体位置图</h2>
             <div class="m-boxCon">
 	            <c:if test="${pgs.finalPng!=null && pgs.finalPng!='' }">
-					<a href="javascript:bigOrigin('${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }','finalPngImg');" >
-						<img src="${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" style="height: 1000px;" id="finalPngImg">
-					</a>
+					<img src="${uploadPath }${pgs.userId }/${pgs.appId }/${pgs.dataKey }/${pgs.finalPng }" style="width: 100%;" id="finalPngImg">
 				</c:if>
 				<c:if test="${pgs.finalPng==null || pgs.finalPng=='' }">
 					<span style="color: red;">运行异常，未产生图片！</span>
