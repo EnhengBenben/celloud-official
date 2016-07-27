@@ -142,6 +142,7 @@ var experiment = (function(experiment) {
 	          var fileId = $("#expFileId").val();
 	          if(fileId==0){//是否已经绑定数据
 	            if($("#dataStep").val()==$("#stepSelect").val()){
+	              $("#exp-add-form").find("input").attr("readonly","readonly");
 	              self.showError("保存成功！正在检索与本实验相匹配的数据，请稍等！");
 	              $.get("experiment/getDataByAnotherName",{"anotherName":number},function(response){
 	                $("#showData").html(response);
