@@ -1,9 +1,9 @@
 <ul class="syFooter" style="display:block;padding-top:5px;margin-bottom: 0px;font-size:12px;/* margin-top: 450px; */">
-	<li id="reporterLi" class="left" style="float:left;font-size:12px;width:55%;"><font style="float:left;">报告者：</font><span><input id="reporterInput" type="text" style="width:285px;height:16px;font-size:10px;line-height:12px;"/></span></li>
-	<li id="audit" class="left" style="float:left;font-size:12px;width:20%;"><font style="float:left;">审核者：</font><span><input id="auditInput" type="text" style="width:65px;height:16px;font-size:10px;line-height:12px;"/></span></li>
-	<li id="dateLi" class="left" style="float:left;font-size:12px;width:15%;"><font style="float:left;">报告日期：</font><span><input id="yearInput" type="text" style="width:26px;height:16px;font-size:10px;line-height:12px;margin-left:5px;"/></span></li>
-	<li id="yearLi" class="left" style="float:left;font-size:12px;width:6%;margin-left:-21px;"><font style="float:left;">年&nbsp;&nbsp;</font><span><input id="monthInput" type="text" style="width:16px;height:16px;font-size:10px;line-height:12px;"/></span></li>
-	<li id="monthLi" class="left" style="float:left;font-size:12px;width:6%;margin-left:-8px;"><font style="float:left;">月&nbsp;&nbsp;</font><span><input id="dayInput" type="text" style="width:16px;height:16px;font-size:10px;line-height:12px;"/></span></li>
+	<li id="reporterLi" class="left" style="float:left;font-size:12px;width:55%;"><font style="float:left;">报告者：</font><span><input name="baseInfo['reporter']" value="$!pgs.baseInfo.reporter" id="reporterInput" type="text" style="width:285px;height:16px;font-size:10px;line-height:12px;"/></span></li>
+	<li id="audit" class="left" style="float:left;font-size:12px;width:20%;"><font style="float:left;">审核者：</font><span><input name="baseInfo['audit']" value="$!pgs.baseInfo.audit" id="auditInput" type="text" style="width:65px;height:16px;font-size:10px;line-height:12px;"/></span></li>
+	<li id="dateLi" class="left" style="float:left;font-size:12px;width:15%;"><font style="float:left;">报告日期：</font><span><input name="baseInfo['year']" value="$!pgs.baseInfo.year" id="yearInput" type="text" style="width:26px;height:16px;font-size:10px;line-height:12px;margin-left:5px;"/></span></li>
+	<li id="yearLi" class="left" style="float:left;font-size:12px;width:6%;margin-left:-21px;"><font style="float:left;">年&nbsp;&nbsp;</font><span><input name="baseInfo['month']" value="$!pgs.baseInfo.month" id="monthInput" type="text" style="width:16px;height:16px;font-size:10px;line-height:12px;"/></span></li>
+	<li id="monthLi" class="left" style="float:left;font-size:12px;width:6%;margin-left:-8px;"><font style="float:left;">月&nbsp;&nbsp;</font><span><input name="baseInfo['day']" value="$!pgs.baseInfo.day" id="dayInput" type="text" style="width:16px;height:16px;font-size:10px;line-height:12px;"/></span></li>
 	<li id="dayLi" class="left" style="float:left;font-size:12px;margin-left:-8px;"><font style="float:left;">日</font></li>
 </ul>
 <br/>
@@ -12,5 +12,5 @@
 </div>
 <font style="font-size:12px;">临床意见：</font>
 <div id="advice" style="min-height: 36px;">
-    <textarea rows="2" style="margin:0px;font-size:10px;line-height:10px"></textarea>
+    <textarea rows="2" style="margin:0px;font-size:10px;line-height:10px" name="baseInfo['advice']">$!pgs.baseInfo.advice</textarea>
 </div>

@@ -1,8 +1,8 @@
 <br/>
 <div id="des">
-	<textarea rows="3">${pgs.report}</textarea>
+	<textarea rows="3" name="baseInfo['des']">#if($pgs.baseInfo.des)$!pgs.baseInfo.des#else${pgs.report}#end</textarea>
 </div>
 <h4>结果解释：</h4>
 <div id="des2">
-	<textarea rows="3"></textarea>
+	<textarea rows="3" name="baseInfo['des2']">#if($pgs.baseInfo.des2)$!pgs.baseInfo.des2#else${pgs.report}#end</textarea>
 </div>

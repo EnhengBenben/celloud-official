@@ -1,14 +1,10 @@
 #parse("templates/report/layout.vm")
 #parse("templates/report/default/PGS/reference.vm")
-#if($printContext)
-	$printContext
-#else
-	#override("input")
-		#parse("templates/report/9/PGS/input.vm")
-	#end
-	#override("footer")
-		#parse("templates/report/9/PGS/footer.vm")
-	#end
-	#extends("templates/report/default/PGS/base.vm")
+#override("input")
+	#parse("templates/report/9/PGS/input.vm")
 #end
+#override("footer")
+	#parse("templates/report/9/PGS/footer.vm")
+#end
+#extends("templates/report/default/PGS/base.vm")
 #parse("templates/report/default/PGS/js.vm")

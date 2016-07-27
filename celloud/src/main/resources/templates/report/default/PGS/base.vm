@@ -2,6 +2,8 @@
 	<div style="display: none;" id="_appId">${pgs.appId}</div>
 	<div style="display: none;" id="_fileId">${pgs.fileId}</div>
 	<div style="display: none;" id="_projectId">${pgs.projectId}</div>
+	<form id="print-form">
+	<input type="hidden" id="pgsId" name="id" value="$!pgs.id">
 	#block("card")
 		#parse("templates/report/default/PGS/card.vm")
 	#end
@@ -75,4 +77,5 @@
 	#block("bottom")
 		#parse("templates/report/default/PGS/bottom.vm")
 	#end
+    </form>
 </div>

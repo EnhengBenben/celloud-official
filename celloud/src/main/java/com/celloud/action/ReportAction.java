@@ -20,6 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -68,6 +71,7 @@ import com.celloud.model.mysql.Experiment;
 import com.celloud.model.mysql.Project;
 import com.celloud.model.mysql.Report;
 import com.celloud.model.mysql.Task;
+import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.AppService;
@@ -78,6 +82,7 @@ import com.celloud.service.ExperimentService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
+import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.FileTools;
@@ -109,6 +114,8 @@ public class ReportAction {
 	private VelocityUtil velocityUtil;
 	@Resource
 	private TaskService taskService;
+    @Resource
+    private UserService userService;
 
 	@ActionLog(value = "下载", button = "下载")
 	@RequestMapping("down")
@@ -1167,9 +1174,9 @@ public class ReportAction {
 	 * @date 2016年1月17日下午4:47:37
 	 */
 	@ActionLog(value = "打印PGS数据报告", button = "打印数据报告")
-	@RequestMapping("printPGS")
+    @RequestMapping("printPGS_bak")
 	@ResponseBody
-	public void printPGS(Integer appId, Integer projectId, String dataKey, Integer flag) {
+    public void printPGS_bak(Integer appId, Integer projectId, String dataKey, Integer flag) {
 		Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
 		// 涉及共享，此处不能取登陆者的companyId
 		String path = pgs.getCompanyId() + "/PGS/print.vm";
@@ -1181,15 +1188,482 @@ public class ReportAction {
 		DataFile data = dataService.getDataByKey(dataKey);
 		Integer fileId = data.getFileId();
 		Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
-		if (StringUtils.isEmpty(report.getPrintContext())) {
-			context.put("pgs", pgs);
-			context.put("report", report);
-			context.put("flag", flag);
-		} else {
-			context.put("printContext", report.getPrintContext());
-		}
+        if (StringUtils.isEmpty(report.getPrintContext())) {
+            context.put("pgs", pgs);
+            context.put("report", report);
+            context.put("flag", flag);
+        } else {
+            context.put("printContext", report.getPrintContext());
+        }
 		returnToVelocity(path, context, projectId);
 	}
+
+    /**
+     * 打印PGS报告
+     * 
+     * @param appId
+     * @param dataKey
+     * @return
+     * @author lin
+     * @date 2016年1月17日下午4:47:37
+     */
+    @ActionLog(value = "打印PGS数据报告", button = "打印数据报告")
+    @RequestMapping("printPGS")
+    @ResponseBody
+    public void printPGS(Integer appId, Integer projectId, String dataKey, Integer flag) {
+        Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
+        // 涉及共享，此处不能取登陆者的companyId
+        String path = pgs.getCompanyId() + "/PGS/print.vm";
+        if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+            path = "default/PGS/print.vm";
+        }
+        Map<String, Object> context = new HashMap<String, Object>();
+        context.put("pgs", pgs);
+        context.put("flag", flag);
+        returnToVelocity(path, context, projectId);
+    }
+
+    @RequestMapping("pgsMysqlToMongo")
+    public void pgsMysqlToMongo() {
+        List<Report> pgsList = reportService.getAllPgsReport();
+        for (Report report : pgsList) {
+            if (report.getPrintContext() != null) {
+                User user = userService.selectUserById(report.getUserId());
+                if (user.getUserId() != 15) {
+                    Integer companyId = user.getCompanyId();
+                    String dataKey = reportService.getDataKey(report.getFileId());
+                    Pgs pgs = reportService.getPgsReport(dataKey, report.getProjectId(), report.getAppId());
+                    String printContext = report.getPrintContext();
+                    Document document = Jsoup.parse(printContext);
+                    Elements inputEles = document.select("input[type=text]");
+                    Map<String, String> baseInfo = new HashMap<String, String>();
+                    Elements textareaEles = document.select("textarea");
+                    if (companyId == 10 && pgs != null) {
+                        baseInfo.put("number", inputEles.get(0).val());
+                        baseInfo.put("name", inputEles.get(1).val());
+                        baseInfo.put("gender", inputEles.get(2).val());
+                        baseInfo.put("age", inputEles.get(3).val());
+                        baseInfo.put("type", inputEles.get(4).val());
+                        baseInfo.put("applyDate", inputEles.get(5).val());
+                        baseInfo.put("receiveDate", inputEles.get(6).val());
+                        baseInfo.put("state", inputEles.get(7).val());
+                        baseInfo.put("clinical", inputEles.get(8).val());
+                        baseInfo.put("doctor", inputEles.get(9).val());
+                        baseInfo.put("dept", inputEles.get(10).val());
+                        baseInfo.put("detection", inputEles.get(11).val());
+                        baseInfo.put("review", inputEles.get(12).val());
+                        if (inputEles.size() == 14) {
+                            baseInfo.put("date", inputEles.get(13).val());
+                        } else if (inputEles.size() == 16) {
+                            baseInfo.put("date", inputEles.get(13).val() + "-" + inputEles.get(14).val() + "-"
+                                    + inputEles.get(15).val());
+                        }
+                        if (textareaEles.size() == 1) {
+                            baseInfo.put("des2", textareaEles.get(0).text());
+                        } else {
+                            baseInfo.put("des", textareaEles.get(0).text());
+                            baseInfo.put("des2", textareaEles.get(1).text());
+                        }
+                        pgs.setBaseInfo(baseInfo);
+                        reportService.updatePgsFilling(pgs);
+                    } else if (companyId == 12) {
+                        if (inputEles.size() == 13) {
+                            baseInfo.put("cardId", inputEles.get(0).val());
+                            baseInfo.put("number", inputEles.get(1).val());
+                            baseInfo.put("name", inputEles.get(2).val());
+                            baseInfo.put("gender", inputEles.get(3).val());
+                            baseInfo.put("age", inputEles.get(4).val());
+                            baseInfo.put("type", inputEles.get(5).val());
+                            baseInfo.put("applyDate", inputEles.get(6).val());
+                            baseInfo.put("receiveDate", inputEles.get(7).val());
+                            baseInfo.put("state", inputEles.get(8).val());
+                            baseInfo.put("detection", inputEles.get(9).val());
+                            baseInfo.put("review", inputEles.get(10).val());
+                            baseInfo.put("audit", inputEles.get(11).val());
+                            baseInfo.put("date", inputEles.get(12).val());
+
+                            baseInfo.put("des", textareaEles.get(0).text());
+                        } else if (inputEles.size() == 14) {
+                            baseInfo.put("cardId", inputEles.get(0).val());
+                            baseInfo.put("number", inputEles.get(1).val());
+                            baseInfo.put("name", inputEles.get(2).val());
+                            baseInfo.put("gender", inputEles.get(3).val());
+                            baseInfo.put("age", inputEles.get(4).val());
+                            baseInfo.put("type", inputEles.get(5).val());
+                            baseInfo.put("applyDate", inputEles.get(6).val());
+                            baseInfo.put("receiveDate", inputEles.get(7).val());
+                            baseInfo.put("state", inputEles.get(8).val());
+                            baseInfo.put("detection", inputEles.get(9).val());
+                            baseInfo.put("review", inputEles.get(10).val());
+                            baseInfo.put("date",
+                                    inputEles.get(11).val() + inputEles.get(12).val() + inputEles.get(13).val());
+
+                            baseInfo.put("des", textareaEles.get(0).text());
+                        } else {
+                            System.out.println("bbbbbbbbbbbb");
+                        }
+                        pgs.setBaseInfo(baseInfo);
+                        reportService.updatePgsFilling(pgs);
+                    } else if (companyId == 14) {
+                        if (inputEles.size() == 18) {
+                            baseInfo.put("name", inputEles.get(0).val());
+                            baseInfo.put("gender", inputEles.get(1).val());
+                            baseInfo.put("age", inputEles.get(2).val());
+                            baseInfo.put("week", inputEles.get(3).val());
+                            baseInfo.put("outpatient", inputEles.get(4).val());
+                            baseInfo.put("number", inputEles.get(5).val());
+                            baseInfo.put("clinical", inputEles.get(6).val());
+                            baseInfo.put("samplingDate", inputEles.get(7).val());
+                            baseInfo.put("receiveDate", inputEles.get(8).val());
+                            baseInfo.put("dept", inputEles.get(9).val());
+                            baseInfo.put("doctor", inputEles.get(10).val());
+                            baseInfo.put("material", inputEles.get(11).val());
+                            baseInfo.put("state", inputEles.get(12).val());
+
+                            baseInfo.put("reporter", inputEles.get(13).val());
+                            baseInfo.put("audit", inputEles.get(14).val());
+                            baseInfo.put("year", inputEles.get(15).val());
+                            baseInfo.put("month", inputEles.get(16).val());
+                            baseInfo.put("day", inputEles.get(17).val());
+
+                            baseInfo.put("des1", textareaEles.get(0).text());
+                            baseInfo.put("des2", textareaEles.get(1).text());
+                            baseInfo.put("des3", textareaEles.get(2).text());
+                            baseInfo.put("advice", textareaEles.get(3).text());
+
+                        } else if (inputEles.size() == 14) {
+                            baseInfo.put("cardId", inputEles.get(0).val());
+                            baseInfo.put("number", inputEles.get(1).val());
+                            baseInfo.put("name", inputEles.get(2).val());
+                            baseInfo.put("gender", inputEles.get(3).val());
+                            baseInfo.put("age", inputEles.get(4).val());
+                            baseInfo.put("material", inputEles.get(5).val());
+                            baseInfo.put("samplingDate", inputEles.get(6).val());
+                            baseInfo.put("receiveDate", inputEles.get(7).val());
+                            baseInfo.put("state", inputEles.get(8).val());
+
+                            baseInfo.put("reporter", inputEles.get(9).val());
+                            baseInfo.put("audit", inputEles.get(10).val());
+                            baseInfo.put("year", inputEles.get(11).val());
+                            baseInfo.put("month", inputEles.get(12).val());
+                            baseInfo.put("day", inputEles.get(13).val());
+
+                            baseInfo.put("des1", textareaEles.get(0).text());
+
+                        } else if (inputEles.size() == 15) {
+                            baseInfo.put("name", inputEles.get(0).val());
+                            baseInfo.put("outpatient", inputEles.get(1).val());
+                            baseInfo.put("number", inputEles.get(2).val());
+                            baseInfo.put("gender", inputEles.get(3).val());
+                            baseInfo.put("doctor", inputEles.get(4).val());
+                            baseInfo.put("samplingDate", inputEles.get(5).val());
+                            baseInfo.put("age", inputEles.get(6).val());
+                            baseInfo.put("material", inputEles.get(7).val());
+                            baseInfo.put("receiveDate", inputEles.get(8).val());
+                            baseInfo.put("week", inputEles.get(9).val());
+                            baseInfo.put("clinical", inputEles.get(10).val());
+                            baseInfo.put("reporter", inputEles.get(11).val());
+                            baseInfo.put("audit", inputEles.get(12).val());
+
+                            if (!inputEles.get(13).val().equals("")) {
+                                if (inputEles.get(13).val().split("-").length == 3) {
+                                    baseInfo.put("year", inputEles.get(13).val().split("-")[0]);
+                                    baseInfo.put("month", inputEles.get(13).val().split("-")[1]);
+                                    baseInfo.put("day", inputEles.get(13).val().split("-")[2]);
+                                } else if (inputEles.get(13).val().length() == 8) {
+                                    baseInfo.put("year", inputEles.get(13).val().substring(0, 4));
+                                    baseInfo.put("month", inputEles.get(13).val().substring(4, 5));
+                                    baseInfo.put("day", inputEles.get(13).val().substring(6, 7));
+                                } else {
+                                    baseInfo.put("year", inputEles.get(13).val().split("年")[0]);
+                                    baseInfo.put("month", inputEles.get(13).val().split("年")[1].split("月")[0]);
+                                    baseInfo.put("day",
+                                            inputEles.get(13).val().split("年")[1].split("月")[1].split("日")[0]);
+                                }
+                            } else {
+                                baseInfo.put("year", "");
+                                baseInfo.put("month", "");
+                                baseInfo.put("day", "");
+                            }
+
+                            baseInfo.put("advice", inputEles.get(14).val());
+                            baseInfo.put("des1", textareaEles.get(1).text());
+                            baseInfo.put("des2", textareaEles.get(2).text());
+                            baseInfo.put("des3", textareaEles.get(3).text());
+                        } else {
+                            System.out.println("cccccccccccccc");
+                        }
+
+                        pgs.setBaseInfo(baseInfo);
+                        reportService.updatePgsFilling(pgs);
+                    } else if (companyId == 22) {
+                        if (inputEles.size() == 13) {
+                            baseInfo.put("cardId", inputEles.get(0).val());
+                            baseInfo.put("number", inputEles.get(1).val());
+                            baseInfo.put("name", inputEles.get(2).val());
+                            baseInfo.put("gender", inputEles.get(3).val());
+                            baseInfo.put("age", inputEles.get(4).val());
+                            baseInfo.put("type", inputEles.get(5).val());
+                            baseInfo.put("applyDate", inputEles.get(6).val());
+                            baseInfo.put("receiveDate", inputEles.get(7).val());
+                            baseInfo.put("state", inputEles.get(8).val());
+                            baseInfo.put("detection", inputEles.get(9).val());
+                            baseInfo.put("review", inputEles.get(10).val());
+                            baseInfo.put("audit", inputEles.get(11).val());
+                            baseInfo.put("date", inputEles.get(12).val());
+
+                            baseInfo.put("des", textareaEles.get(0).text());
+                        } else {
+                            System.out.println("ddddddddddddddd");
+                        }
+                        pgs.setBaseInfo(baseInfo);
+                        reportService.updatePgsFilling(pgs);
+                    } else if (companyId == 42) {
+                        if (inputEles.size() == 11) {
+                            baseInfo.put("name", inputEles.get(0).val());
+                            baseInfo.put("gender", inputEles.get(1).val());
+                            baseInfo.put("age", inputEles.get(2).val());
+                            baseInfo.put("dept", inputEles.get(3).val());
+                            baseInfo.put("number", inputEles.get(4).val());
+                            baseInfo.put("material", inputEles.get(5).val());
+                            baseInfo.put("samplingDate", inputEles.get(6).val());
+                            baseInfo.put("doctor", inputEles.get(7).val());
+                            baseInfo.put("reporter", inputEles.get(8).val());
+                            baseInfo.put("review", inputEles.get(9).val());
+                            baseInfo.put("date", inputEles.get(10).val());
+
+                            baseInfo.put("des1", textareaEles.get(0).text());
+                        } else if (inputEles.size() == 12) {
+                            baseInfo.put("name", inputEles.get(0).val());
+                            baseInfo.put("gender", inputEles.get(1).val());
+                            baseInfo.put("age", inputEles.get(2).val());
+                            baseInfo.put("dept", inputEles.get(3).val());
+                            baseInfo.put("number", inputEles.get(4).val());
+                            baseInfo.put("material", inputEles.get(5).val());
+                            baseInfo.put("samplingDate", inputEles.get(6).val());
+                            baseInfo.put("doctor", inputEles.get(7).val());
+                            baseInfo.put("reportName", inputEles.get(8).val());
+                            baseInfo.put("reporter", inputEles.get(9).val());
+                            baseInfo.put("review", inputEles.get(10).val());
+                            baseInfo.put("date", inputEles.get(11).val());
+
+                            baseInfo.put("des1", textareaEles.get(0).text());
+                        } else {
+                            System.out.println("eeeeeeeeeeeeeeeeeeee");
+                        }
+                        pgs.setBaseInfo(baseInfo);
+                        reportService.updatePgsFilling(pgs);
+                    } else if (companyId == 9) {
+                        if (inputEles.size() == 8) {
+                            baseInfo.put("cardId", inputEles.get(0).val());
+                            baseInfo.put("number", inputEles.get(1).val());
+                            baseInfo.put("womanName", inputEles.get(2).val());
+                            baseInfo.put("manName", inputEles.get(3).val());
+                            baseInfo.put("eggDate", inputEles.get(4).val());
+                            baseInfo.put("detection", inputEles.get(5).val());
+                            baseInfo.put("review", inputEles.get(6).val());
+                            baseInfo.put("date", inputEles.get(7).val());
+
+                            baseInfo.put("des", textareaEles.get(0).text());
+                        } else if (inputEles.size() == 14) {
+                            baseInfo.put("cardId", inputEles.get(0).val());
+                            baseInfo.put("number", inputEles.get(1).val());
+                            baseInfo.put("womanName", inputEles.get(2).val());
+                            baseInfo.put("manName", "");
+                            baseInfo.put("eggDate", "");
+
+                            baseInfo.put("detection", inputEles.get(9).val());
+                            baseInfo.put("review", inputEles.get(10).val());
+                            baseInfo.put("date",
+                                    inputEles.get(11).val() + inputEles.get(12).val() + inputEles.get(13).val());
+
+                            baseInfo.put("des", textareaEles.get(0).text());
+                        } else if (inputEles.size() == 15) {
+                            baseInfo.put("cardId", inputEles.get(0).val());
+                            baseInfo.put("number", inputEles.get(1).val());
+                            baseInfo.put("womanName", inputEles.get(2).val());
+                            baseInfo.put("manName", "");
+                            baseInfo.put("eggDate", "");
+
+                            baseInfo.put("detection", inputEles.get(9).val());
+                            baseInfo.put("review", inputEles.get(10).val());
+                            baseInfo.put("date",
+                                    inputEles.get(12).val() + inputEles.get(13).val() + inputEles.get(14).val());
+
+                            baseInfo.put("des", textareaEles.get(0).text());
+                        } else if (inputEles.size() == 7) {
+                            Elements spanEles = document.select("span[name=print]");
+                            baseInfo.put("cardId", inputEles.get(0).val());
+                            baseInfo.put("number", spanEles.get(0).val());
+                            baseInfo.put("womanName", spanEles.get(1).val());
+                            baseInfo.put("manName", "");
+                            baseInfo.put("eggDate", "");
+
+                            baseInfo.put("detection", inputEles.get(1).val());
+                            baseInfo.put("review", inputEles.get(2).val());
+                            baseInfo.put("date",
+                                    inputEles.get(4).val() + inputEles.get(5).val() + inputEles.get(6).val());
+
+                            Elements textEles = document.select("div[id=des]");
+                            baseInfo.put("des", textEles.get(0).text());
+                        } else {
+                            System.out.println("ffffffffffffffffffff");
+                        }
+                        pgs.setBaseInfo(baseInfo);
+                        reportService.updatePgsFilling(pgs);
+                    } else if (companyId == 6) {
+                        if (inputEles.size() == 12) {
+                            baseInfo.put("project", inputEles.get(0).val());
+                            baseInfo.put("sampleNumber", inputEles.get(1).val());
+                            baseInfo.put("experimentNumber", inputEles.get(2).val());
+                            baseInfo.put("testDate", inputEles.get(3).val());
+                            baseInfo.put("type", inputEles.get(4).val());
+                            baseInfo.put("content", inputEles.get(5).val());
+                            baseInfo.put("technology", inputEles.get(6).val());
+                            baseInfo.put("state", inputEles.get(7).val());
+                            baseInfo.put("quality", inputEles.get(8).val());
+                            baseInfo.put("detection", inputEles.get(9).val());
+                            baseInfo.put("review", inputEles.get(10).val());
+                            baseInfo.put("reportDate", inputEles.get(11).val());
+
+                            baseInfo.put("result", textareaEles.get(0).text());
+                        } else if (inputEles.size() == 14) {
+                            baseInfo.put("experimentNumber", inputEles.get(1).val());
+                            baseInfo.put("testDate", inputEles.get(7).val());
+                            baseInfo.put("type", inputEles.get(5).val());
+
+                            baseInfo.put("detection", inputEles.get(9).val());
+                            baseInfo.put("review", inputEles.get(10).val());
+                            baseInfo.put("reportDate",
+                                    inputEles.get(11).val() + inputEles.get(12).val() + inputEles.get(13).val());
+
+                            baseInfo.put("result", textareaEles.get(0).text());
+                        } else if (inputEles.size() == 15) {
+                            baseInfo.put("experimentNumber", inputEles.get(1).val());
+                            baseInfo.put("testDate", inputEles.get(7).val());
+                            baseInfo.put("type", inputEles.get(5).val());
+
+                            baseInfo.put("detection", inputEles.get(9).val());
+                            baseInfo.put("review", inputEles.get(10).val());
+                            baseInfo.put("reportDate",
+                                    inputEles.get(12).val() + inputEles.get(13).val() + inputEles.get(14).val());
+
+                            baseInfo.put("result", textareaEles.get(0).text());
+                        } else if (inputEles.size() == 13) {
+                            baseInfo.put("experimentNumber", inputEles.get(1).val());
+                            baseInfo.put("testDate", inputEles.get(7).val());
+                            baseInfo.put("type", inputEles.get(5).val());
+
+                            baseInfo.put("detection", inputEles.get(9).val());
+                            baseInfo.put("review", inputEles.get(10).val());
+                            baseInfo.put("reportDate", inputEles.get(12).val());
+
+                            baseInfo.put("result", textareaEles.get(0).text());
+                        } else {
+                            System.out.println("ggggggggggggggggggg");
+                        }
+                        pgs.setBaseInfo(baseInfo);
+                        reportService.updatePgsFilling(pgs);
+                    } else {
+                        if (inputEles.size() == 13) {
+                            baseInfo.put("cardId", inputEles.get(0).val());
+                            baseInfo.put("number", inputEles.get(1).val());
+                            baseInfo.put("name", inputEles.get(2).val());
+                            baseInfo.put("gender", inputEles.get(3).val());
+                            baseInfo.put("age", inputEles.get(4).val());
+                            baseInfo.put("type", inputEles.get(5).val());
+                            baseInfo.put("applyDate", inputEles.get(6).val());
+                            baseInfo.put("receiveDate", inputEles.get(7).val());
+                            baseInfo.put("state", inputEles.get(8).val());
+                            baseInfo.put("detection", inputEles.get(9).val());
+                            baseInfo.put("review", inputEles.get(10).val());
+                            baseInfo.put("audit", inputEles.get(11).val());
+                            baseInfo.put("date", inputEles.get(12).val());
+
+                            baseInfo.put("des", textareaEles.get(0).text());
+                        } else if (inputEles.size() == 14) {
+                            baseInfo.put("cardId", inputEles.get(0).val());
+                            baseInfo.put("number", inputEles.get(1).val());
+                            baseInfo.put("name", inputEles.get(2).val());
+                            baseInfo.put("gender", inputEles.get(3).val());
+                            baseInfo.put("age", inputEles.get(4).val());
+                            baseInfo.put("type", inputEles.get(5).val());
+                            baseInfo.put("applyDate", inputEles.get(6).val());
+                            baseInfo.put("receiveDate", inputEles.get(7).val());
+                            baseInfo.put("state", inputEles.get(8).val());
+                            baseInfo.put("detection", inputEles.get(9).val());
+                            baseInfo.put("review", inputEles.get(10).val());
+                            
+                            String date = inputEles.get(11).val() + inputEles.get(12).val() + inputEles.get(13).val();
+                            baseInfo.put("date", date);
+                        } else if (inputEles.size() == 15) {
+                            baseInfo.put("cardId", inputEles.get(0).val());
+                            baseInfo.put("number", inputEles.get(1).val());
+                            baseInfo.put("name", inputEles.get(2).val());
+                            baseInfo.put("gender", inputEles.get(3).val());
+                            baseInfo.put("age", inputEles.get(4).val());
+                            baseInfo.put("type", inputEles.get(5).val());
+                            baseInfo.put("applyDate", inputEles.get(6).val());
+                            baseInfo.put("receiveDate", inputEles.get(7).val());
+                            baseInfo.put("state", inputEles.get(8).val());
+                            baseInfo.put("detection", inputEles.get(9).val());
+                            baseInfo.put("review", inputEles.get(10).val());
+                            baseInfo.put("audit", inputEles.get(11).val());
+                            baseInfo.put("date",
+                                    inputEles.get(12).val() + inputEles.get(13).val() + inputEles.get(14).val());
+                            baseInfo.put("des", textareaEles.get(0).text());
+                        } else if (inputEles.size() == 6) {
+                            Elements spanEles = document.select("span[name=print]");
+
+                            baseInfo.put("detection", inputEles.get(0).val());
+                            baseInfo.put("review", inputEles.get(1).val());
+                            baseInfo.put("audit", inputEles.get(2).val());
+                            baseInfo.put("date",
+                                    inputEles.get(3).val() + inputEles.get(4).val() + inputEles.get(5).val());
+
+                            baseInfo.put("cardId", spanEles.get(0).val());
+                            baseInfo.put("number", spanEles.get(1).val());
+                            baseInfo.put("name", spanEles.get(2).val());
+                            baseInfo.put("gender", spanEles.get(3).val());
+                            baseInfo.put("age", spanEles.get(4).val());
+                            baseInfo.put("type", spanEles.get(5).val());
+                            baseInfo.put("applyDate", spanEles.get(6).val());
+                            baseInfo.put("receiveDate", spanEles.get(7).val());
+                            baseInfo.put("state", spanEles.get(8).val());
+
+                            Elements textEle = document.select("div[id=des]");
+                            baseInfo.put("des", textEle.get(0).text());
+                        } else if (inputEles.size() == 7) {
+                            Elements spanEles = document.select("span[name=print]");
+
+                            baseInfo.put("cardId", inputEles.get(0).val());
+                            baseInfo.put("detection", inputEles.get(1).val());
+                            baseInfo.put("review", inputEles.get(2).val());
+                            baseInfo.put("audit", inputEles.get(3).val());
+                            baseInfo.put("date",
+                                    inputEles.get(4).val() + inputEles.get(5).val() + inputEles.get(6).val());
+
+                            baseInfo.put("number", spanEles.get(0).val());
+                            baseInfo.put("name", spanEles.get(1).val());
+                            baseInfo.put("gender", spanEles.get(2).val());
+                            baseInfo.put("age", spanEles.get(3).val());
+                            baseInfo.put("type", spanEles.get(4).val());
+                            baseInfo.put("applyDate", spanEles.get(5).val());
+                            baseInfo.put("receiveDate", spanEles.get(6).val());
+                            baseInfo.put("state", spanEles.get(7).val());
+
+                            Elements textEle = document.select("div[id=des]");
+                            baseInfo.put("des", textEle.get(0).text());
+                        } else {
+                            System.out.println("hhhhhhhhhhhhhhhhhhhhhh");
+                        }
+                        pgs.setBaseInfo(baseInfo);
+                        reportService.updatePgsFilling(pgs);
+                    }
+                }
+            }
+        }
+    }
 
 	/**
 	 * 打印Pgs项目报告
@@ -1397,6 +1871,21 @@ public class ReportAction {
 	public Integer updateContext(Report report) {
 		return reportService.updateReport(report);
 	}
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月25日上午11:10:56
+     * @description 修改pgs打印报告填写内容
+     *
+     */
+    @ActionLog(value = "打印Pgs数据报告时修改用户填写的信息", button = "修改数据报告")
+    @RequestMapping("updatePgsFilling")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public Integer updatePgsFilling(Pgs pgs) {
+        return reportService.updatePgsFilling(pgs);
+    }
 
 	/**
 	 * 获取已保存的医院logo

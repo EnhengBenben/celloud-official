@@ -1,30 +1,30 @@
 <tr>
 	<th>实验室编号</th>
-	<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+	<td><span><input name="baseInfo['number']" value="$!pgs.baseInfo.number" type="text" class="input-mini onlybotton" /></span></td>
 	<th>姓名</th>
-	<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+	<td><span><input name="baseInfo['name']" value="$!pgs.baseInfo.name" type="text" class="input-mini onlybotton" /></span></td>
 	<th>性别</th>
-	<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+	<td><span><input name="baseInfo['gender']" value="$!pgs.baseInfo.gender" type="text" class="input-mini onlybotton" /></span></td>
 	<th>年龄</th>
-	<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+	<td><span><input name="baseInfo['age']" value="$!pgs.baseInfo.age" type="text" class="input-mini onlybotton" /></span></td>
 </tr>
 <tr>
 	<th>样本类型</th>
-	<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+	<td><span><input name="baseInfo['type']" value="$!pgs.baseInfo.type" type="text" class="input-mini onlybotton" /></span></td>
 	<th>申请日期</th>
-	<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+	<td><span><input name="baseInfo['applyDate']" value="$!pgs.baseInfo.applyDate" type="text" class="input-mini onlybotton" /></span></td>
 	<th>接收日期</th>
-	<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+	<td><span><input name="baseInfo['receiveDate']" value="$!pgs.baseInfo.receiveDate" type="text" class="input-mini onlybotton" /></span></td>
 	<th>样本状态</th>
-	<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+	<td><span><input name="baseInfo['state']" value="$!pgs.baseInfo.state" type="text" class="input-mini onlybotton" /></span></td>
 </tr>
 <tr>
 	<th>临床诊断</th>
-	<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+	<td><span><input name="baseInfo['clinical']" value="$!pgs.baseInfo.clinical" type="text" class="input-mini onlybotton" /></span></td>
 	<th>送检医生</th>
-	<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+	<td><span><input name="baseInfo['doctor']" value="$!pgs.baseInfo.doctor" type="text" class="input-mini onlybotton" /></span></td>
 	<th>送检科室</th>
-	<td><span><input type="text" class="input-mini onlybotton" /></span></td>
+	<td><span><input name="baseInfo['dept']" value="$!pgs.baseInfo.dept" type="text" class="input-mini onlybotton" /></span></td>
 	<th></th>
 	<td></td>
 </tr>

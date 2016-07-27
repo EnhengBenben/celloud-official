@@ -1,5 +1,5 @@
 <ul class="footer" style="margin-bottom: 0px;margin-top:150px;">
-	<li class="left">报告者：<span><input type="text" class="input-mini"/></span></li>
-	<li class="left">审核者：<span><input type="text" class="input-mini"/></span></li>
-	<li class="right pull-right">报告日期：<span><input type="text" class="input-mini"/></span></li>
+	<li class="left">报告者：<span><input name="baseInfo['reporter']" value="$!pgs.baseInfo.reporter" type="text" class="input-mini"/></span></li>
+	<li class="left">审核者：<span><input name="baseInfo['review']" value="$!pgs.baseInfo.review" type="text" class="input-mini"/></span></li>
+	<li class="right pull-right">报告日期：<span><input name="baseInfo['date']" value="$!pgs.baseInfo.date" type="text" class="input-mini"/></span></li>
 </ul>

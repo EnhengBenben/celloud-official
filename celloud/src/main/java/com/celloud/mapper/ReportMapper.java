@@ -175,4 +175,14 @@ public interface ReportMapper {
      */
     public Report getReportByProjectId(
             @Param("projectId") Integer projectId, @Param("flag") Integer flag);
+
+    /**
+     * 根据file_id获取datakey
+     */
+    public String getDataKey(@Param("fileId") Integer fileId);
+
+    /**
+     * 取出所有Pgs报告
+     */
+    public List<Report> getAllPgsReport();
 }

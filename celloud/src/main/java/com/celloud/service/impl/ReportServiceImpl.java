@@ -880,4 +880,25 @@ public class ReportServiceImpl implements ReportService {
 		return reportDao.getDataReport(Rocky.class, dataKey, projectId, appId);
 	}
 
+    @Override
+    public Integer updatePgsFilling(Pgs pgs) {
+        UpdateResults ur = null;
+        if (pgs.getBaseInfo() == null) {
+            ur = reportDao.editData(Pgs.class, pgs.getId(), "baseInfo", new HashMap<String, String>());
+        } else {
+            ur = reportDao.editData(Pgs.class, pgs.getId(), "baseInfo", pgs.getBaseInfo());
+        }
+        return ur != null ? 1 : 0;
+    }
+
+    @Override
+    public List<Report> getAllPgsReport() {
+        return reportMapper.getAllPgsReport();
+    }
+
+    @Override
+    public String getDataKey(Integer fileId) {
+        return reportMapper.getDataKey(fileId);
+    }
+
 }

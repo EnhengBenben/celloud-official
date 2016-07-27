@@ -1,38 +1,31 @@
 #parse("templates/report/layout.vm")
 #parse("templates/report/default/PGS/reference.vm")
-#if($printContext)
-	$printContext
-#else
-	#override("card")
-	#end
-	#override("head")
-		#parse("templates/report/default/PGS/head.vm")
-	#end
-	#override("subtitle")
-	#end
-	#override("baseinfo")
-		#parse("templates/report/42/PGS/input.vm")
-	#end
-	#override("explain")
-		#parse("templates/report/42/PGS/explain.vm")
-	#end
-	#override("footer")
-		#parse("templates/report/42/PGS/footer.vm")
-	#end
-	#override("dept")
-	#end
-	#override("method")
-		#parse("templates/report/default/PGS/method.vm")
-	#end
-	#override("notes")
-	#end
-	#override("footer")
-		#parse("templates/report/42/PGS/footer.vm")
-	#end
-	#override("bottom")
-	#end
-	#extends("templates/report/default/PGS/base.vm")
+#override("card")
 #end
+#override("head")
+	#parse("templates/report/default/PGS/head.vm")
+#end
+#override("subtitle")
+#end
+#override("baseinfo")
+	#parse("templates/report/42/PGS/input.vm")
+#end
+#override("explain")
+	#parse("templates/report/42/PGS/explain.vm")
+#end
+#override("dept")
+#end
+#override("method")
+	#parse("templates/report/default/PGS/method.vm")
+#end
+#override("notes")
+#end
+#override("footer")
+	#parse("templates/report/42/PGS/footer.vm")
+#end
+#override("bottom")
+#end
+#extends("templates/report/default/PGS/base.vm")
 #parse("templates/report/default/PGS/js.vm")
 <script type="text/javascript">
 $(function(){

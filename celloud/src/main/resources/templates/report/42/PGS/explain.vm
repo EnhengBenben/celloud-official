@@ -1,9 +1,9 @@
 <br/>
 <h4 class="smallh4">结果解释：</h4>
 <div>
-	报告名称：<span><input type="text" value="${pgs.fileName}(${pgs.anotherName})" class="onlybotton input-large"/></span><br>
+	报告名称：<span><input type="text" name="baseInfo['reportName']" value="#if($pgs.baseInfo.reportName)$!pgs.baseInfo.reportName#else${pgs.fileName}(${pgs.anotherName})#end" class="onlybotton input-large"/></span><br>
 	样本报告：
     <div id="des1" style="margin:0px">
-		<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px">${pgs.report}</textarea>
+		<textarea rows="3" style="margin:0px;font-size:10px;line-height:10px" name="baseInfo['des1']">#if($pgs.baseInfo.des1)$!pgs.baseInfo.des1#else${pgs.report}#end</textarea>
 	</div>
 </div>

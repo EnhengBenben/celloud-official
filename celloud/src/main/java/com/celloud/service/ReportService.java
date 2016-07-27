@@ -576,5 +576,23 @@ public interface ReportService {
 	 * @return
 	 */
 	public Rocky getRockyReport(String dataKey, Integer projectId, Integer appId);
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月25日上午11:12:02
+     * @description 修改Pgs报告用户填写部分
+     *
+     */
+    public Integer updatePgsFilling(Pgs pgs);
+
+    /**
+     * 根据file_id获取datakey
+     */
+    public String getDataKey(Integer fileId);
+
+    /**
+     * 取出所有的pgs报告
+     */
+    public List<Report> getAllPgsReport();
 
 }

@@ -134,16 +134,8 @@ $(function(){
         lookCss();
     });
     $("#save").on("click",function(){
-        $("body").find("input").each(function(){
-            $(this).attr("value",$(this).val());
-        });
-        $("#des").children().html($("#des").children().val());
-        $("#des1").children().html($("#des1").children().val());
-        $("#des2").children().html($("#des2").children().val());
-        $("#des3").children().html($("#des3").children().val());
-        $("#advice").children().html($("#advice").children().val());
         var url = window.location.href.split("printPGS")[0];
-        $.post(url+"updateContext",{"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"projectId":$("#_projectId").html(),"printContext":$("#pgsSave").prop("outerHTML")},function(result){
+        $.post(url+"updatePgsFilling",$("#print-form").serialize(),function(result){
             if(result==1){
                 $.lAlert("信息保存成功！");
             }else{
@@ -154,7 +146,7 @@ $(function(){
     $("#reset").on("click",function(){
       $.lConfirm('确定重置？', function() {
             var url = window.location.href.split("printPGS")[0];
-            $.post(url+"updateContext",{"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"projectId":$("#_projectId").html(),"printContext":""},function(result){
+            $.post(url+"updatePgsFilling",{id:$("#pgsId").val()},function(result){
                 if(result==1){
                     location=location ;
                 }else{
