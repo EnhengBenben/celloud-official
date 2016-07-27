@@ -32,7 +32,7 @@
 	                <td>${resource.type }</td>
 	                <td>${resource.permission }</td>
 	                <td>
-	                   <c:if test="${resource.disabled==0 }">正常</c:if>
+	                   <c:if test="${resource.disabled==0 }">上线</c:if>
 	                   <c:if test="${resource.disabled==1 }">下线</c:if>
 	                </td>
 	                <td><fmt:formatDate value="${resource.createDate }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
