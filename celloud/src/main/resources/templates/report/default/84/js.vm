@@ -23,10 +23,7 @@ $(function(){
     });
     
     $("#save").on("click",function(){
-        $("#printMain").find("input").each(function(){
-            $(this).attr("value",$(this).val());
-        });
-        $.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printContext":$("#printMain").html()},function(result){
+        $.post(url+"updateEgfrFilling",$("#print-form").serialize(),function(result){
             if(result==1){
                 $.lAlert("信息保存成功！");
             }else{
@@ -37,7 +34,7 @@ $(function(){
 
     $("#reset").on("click",function(){
        $.lConfirm("确认重置?",function(){
-           $.post(url+"updateContext",{"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"flag":0,"printContext":""},function(result){
+           $.post(url+"updateEgfrFilling",{id:$("#egfrId").val()},function(result){
                if(result==1){
                    location=location ;
                }else{

@@ -610,5 +610,19 @@ public interface ReportService {
      */
     public Integer updateHcvFilling(HCV hcv);
 
+    /**
+     * 取出所有的egfr报告, 上线后可删
+     */
+    public List<Report> getAllEgfrReport();
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月27日上午11:27:21
+     * @description 修改hcv报告用户填写部分
+     *
+     */
+    public Integer updateEgfrFilling(EGFR egfr);
+
 
 }

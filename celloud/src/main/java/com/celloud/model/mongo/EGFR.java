@@ -1,6 +1,7 @@
 package com.celloud.model.mongo;
 
 import java.util.List;
+import java.util.Map;
 
 public class EGFR extends Base {
     private static final long serialVersionUID = 1L;
@@ -16,6 +17,7 @@ public class EGFR extends Base {
     private List<String> knowMutation;//
     private List<String> original;// listAll
     private List<String> out;// unknow
+    private Map<String, String> baseInfo;
 
     public String getFileName() {
         return fileName;
@@ -111,6 +113,14 @@ public class EGFR extends Base {
 
     public void setOut(List<String> out) {
         this.out = out;
+    }
+
+    public Map<String, String> getBaseInfo() {
+        return baseInfo;
+    }
+
+    public void setBaseInfo(Map<String, String> baseInfo) {
+        this.baseInfo = baseInfo;
     }
 
 }

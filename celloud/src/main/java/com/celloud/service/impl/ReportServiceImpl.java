@@ -917,5 +917,20 @@ public class ReportServiceImpl implements ReportService {
         return ur != null ? 1 : 0;
     }
 
+    @Override
+    public List<Report> getAllEgfrReport() {
+        return reportMapper.getAllEgfrReport();
+    }
+
+    @Override
+    public Integer updateEgfrFilling(EGFR egfr) {
+        UpdateResults ur = null;
+        if (egfr.getBaseInfo() == null) {
+            ur = reportDao.editData(EGFR.class, egfr.getId(), "baseInfo", new HashMap<String, String>());
+        } else {
+            ur = reportDao.editData(EGFR.class, egfr.getId(), "baseInfo", egfr.getBaseInfo());
+        }
+        return ur != null ? 1 : 0;
+    }
 
 }

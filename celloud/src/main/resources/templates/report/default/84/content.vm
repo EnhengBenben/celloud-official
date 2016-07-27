@@ -1,21 +1,22 @@
 <form id="print-form">
+    <input type="hidden" name="id" value="${egfr.id}" id="egfrId" />
     <input type="hidden" value="${egfr.projectId}" id="_projectId">
     <div style="display: none;" id="_userId">${egfr.userId}</div>
     <div style="display: none;" id="_appId">${egfr.appId}</div>
     <div style="display: none;" id="_fileId">${report.fileId}</div>
     <div class="wrapper">
         <ul class="info mt5">
-            <li>姓名：<span><input type="text"></span></li>
-            <li>ID号：<span><input type="text"></span></li>
-            <li>样本编号：<span><input type="text"></span></li>
-            <li>样本种类：<span><input type="text"></span></li>
-            <li>性别：<span id="_sex"><input type="radio" name="sex" value="男" checked="checked" onclick="radioClick(0)" id="men">男<input type="radio" name="sex" value="女" onclick="radioClick(1)" id="women">女</span></li>
-            <li>科室：<span><input type="text"></span></li>
-            <li>送检日期：<span><input type="text"></span></li>
-            <li>送检医生：<span><input type="text"></span></li>
-            <li>年龄：<span><input type="text"></span>岁</li>
-            <li>床号：<span><input type="text"></span></li>
-            <li>住院号：<span><input type="text"></span></li>
+            <li>姓名：<span><input name="baseInfo['name']" value="$!{egfr.baseInfo.name}" type="text"></span></li>
+            <li>ID号：<span><input name="baseInfo['id']" value="$!{egfr.baseInfo.id}" type="text"></span></li>
+            <li>样本编号：<span><input name="baseInfo['sampleNumber']" value="$!{egfr.baseInfo.sampleNumber}" type="text"></span></li>
+            <li>样本种类：<span><input name="baseInfo['sampleType']" value="$!{egfr.baseInfo.sampleType}" type="text"></span></li>
+            <li>性别：<span id="_sex"><input type="radio" name="baseInfo['sex']" value="男" #if(${egfr.baseInfo.sex}!='女')checked="checked"#end onclick="radioClick(0)" id="men">男<input type="radio" name="baseInfo['sex']" #if(${egfr.baseInfo.sex}=='女')checked="checked"#end value="女" onclick="radioClick(1)" id="women">女</span></li>
+            <li>科室：<span><input name="baseInfo['dept']" value="$!{egfr.baseInfo.dept}" type="text"></span></li>
+            <li>送检日期：<span><input name="baseInfo['submissionDate']" value="$!{egfr.baseInfo.submissionDate}" type="text"></span></li>
+            <li>送检医生：<span><input name="baseInfo['doctor']" value="$!{egfr.baseInfo.doctor}" type="text"></span></li>
+            <li>年龄：<span><input name="baseInfo['age']" value="$!{egfr.baseInfo.age}" type="text"></span>岁</li>
+            <li>床号：<span><input name="baseInfo['bedNo']" value="$!{egfr.baseInfo.bedNo}" type="text"></span></li>
+            <li>住院号：<span><input name="baseInfo['inpatientNumber']" value="$!{egfr.baseInfo.inpatientNumber}" type="text"></span></li>
         </ul>
     </div>
     <hr class="hr-bold mt5" />

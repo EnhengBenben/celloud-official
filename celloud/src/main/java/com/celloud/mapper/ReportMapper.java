@@ -190,4 +190,9 @@ public interface ReportMapper {
      * 取出所有Hcv报告
      */
     public List<Report> getAllHcvReport();
+
+    /**
+     * 取出所有Egfr报告
+     */
+    public List<Report> getAllEgfrReport();
 }
