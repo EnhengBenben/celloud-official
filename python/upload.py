@@ -23,11 +23,12 @@ password = 'CelLoud@nova'
 resultPath = '/share/data/deploy/' + version
 
 #本地各项存储路径配置
-celloudPath = '/Users/lin/Documents/cleangit/celloud/celloud/target/celloud.war'
-backstagePath = '/Users/lin/Documents/cleangit/celloud/backstage/target/backstage.war'
-managerPath = '/Users/lin/Documents/cleangit/celloud/manager/target/manager.war'
-pythonPath = '/Users/lin/Documents/cleangit/celloud/python'
-dbPath = os.path.join('/Users/lin/Documents/cleangit/celloud/dbUpgrade',version)
+gitBasePath = '/Users/lin/Documents/git/celloud'
+celloudPath = os.path.join(gitBasePath,'celloud/target/celloud.war')
+backstagePath = os.path.join(gitBasePath,'backstage/target/backstage.war')
+managerPath = os.path.join(gitBasePath,'manager/target/manager.war')
+pythonPath = os.path.join(gitBasePath,'python')
+dbPath = os.path.join(gitBasePath,'dbUpgrade',version)
 parentPath = '/Users/lin'
 
 def upload(local_dir,remote_dir):
