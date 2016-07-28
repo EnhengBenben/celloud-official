@@ -1,0 +1,144 @@
+<script type="text/javascript">
+$(function(){
+
+    $("#patientName").on("change",function(){
+        unityPatientName($(this).val());
+    });
+    $("#patientName1").on("change",function(){
+        unityPatientName($(this).val());
+    });
+    $("#samplingDate").on("change",function(){
+        unitySamplingDate($(this).val());
+    });
+    $("#samplingDate1").on("change",function(){
+        unitySamplingDate($(this).val());
+    });
+    $("#reportDate").on("change",function(){
+        unityReportDate($(this).val());
+    });
+    $("#reportDate1").on("change",function(){
+        unityReportDate($(this).val());
+    });
+
+    var url = window.location.href.split("print")[0];
+    var sex = $("#men").prop("checked");
+    
+    $("#print").on("click",function(){
+        var inputVal;
+        var textareaVal;
+        var classname;
+        var name;
+        var id;
+        $("body").find("section").each(function(){
+            $(this).removeClass("border1");
+        });
+        $("body").find("input[type='text']").each(function(){
+            inputVal = $(this).val();
+            classname = $(this).attr("class");
+            name = $(this).attr("name");
+            id = $(this).attr("id");
+            $(this).parent().html("<input id='"+id+"' name='"+name+"' type='hidden' value='"+classname+"'><span name='print'>"+inputVal+"</span>");
+        });
+        $("#section2 textarea").each(function(){
+            textareaVal = $(this).val();
+            $(this).parent().html("<p name='section4p'><input type='hidden' value='"+$(this).attr("name")+"'>"+textareaVal+"</p>");
+        });
+        var sex = $("input[type='radio']:checked").val();
+        $("#_sex").html(sex);
+        $("#change").hide();
+        if($("#noMutation").prop("checked")){
+            $("#noDrug").css("display","");
+        }
+        $("a").css("display","none");
+        window.print();
+        $("#change").show();
+        $("body").find("section").each(function(){
+            $(this).addClass("border1");
+        });
+        $("body").find("span[name='print']").each(function(){
+            inputVal = $(this).html();
+            classname = $(this).prev().val();
+            name = $(this).prev().attr("name");
+            id = $(this).prev().attr("id");
+            $(this).parent().html("<input id='"+id+"' name='"+name+"' type='text' class='"+classname+"' value='"+inputVal+"'>");
+        });
+        $("body").find("p[name='section4p']").each(function(){
+            inputVal = $(this).html();
+            name = $(this).find("input").val();
+            $(this).parent().html("<textarea name='"+name+"' class='form-control' rows='15' cols='100'>"+inputVal+"</textarea>");
+        });
+        $("#_sex").html("<input type='radio' name='patientSex' value='男'>男<input type='radio' name='patientSex' value='女'>女");
+        $("input[type='radio'][value="+sex+"]").prop("checked",true); 
+        $("a").css("display","");
+        
+        $("#patientName").on("change",function(){
+            unityPatientName($(this).val());
+        });
+        $("#patientName1").on("change",function(){
+            unityPatientName($(this).val());
+        });
+        $("#samplingDate").on("change",function(){
+            unitySamplingDate($(this).val());
+        });
+        $("#samplingDate1").on("change",function(){
+            unitySamplingDate($(this).val());
+        });
+        $("#reportDate").on("change",function(){
+            unityReportDate($(this).val());
+        });
+        $("#reportDate1").on("change",function(){
+            unityReportDate($(this).val());
+        });
+        
+    });
+    
+    $("#save").on("click",function(){
+        var _id = $("#cmpId").val();
+        if(_id != "" && _id != undefined){
+            $.post(url + "updateYANDAFilling",$("#gdd-form").serialize(),function(){
+                $.lAlert("信息保存成功！");
+            });
+        }
+    });
+
+    $("#reset").on("click",function(){
+        $.lConfirm("确认重置?",function(){
+            $(':input','#gdd-form')  
+             .not(':button, :submit, :reset, :hidden')  
+             .val('')  
+             .removeAttr('checked')  
+             .removeAttr('selected');
+             var _id = $("#cmpId").val();
+             if(_id != "" && _id != undefined){
+                 $.post(url + "updateYANDAFilling",$("#gdd-form").serialize());
+             }
+        });
+    });
+    
+});
+
+function radioClick(num){
+    if(num==0){
+        $("#men").attr("checked","checked");
+        $("#women").removeAttr("checked");
+    }else{
+        $("#women").attr("checked","checked");
+        $("#men").removeAttr("checked");
+    }
+};
+
+function unityPatientName(name){
+    $("#patientName").val(name);
+    $("#patientName1").val(name);
+};
+
+function unitySamplingDate(name){
+    $("#samplingDate").val(name);
+    $("#samplingDate1").val(name);
+};
+
+function unityReportDate(name){
+    $("#reportDate").val(name);
+    $("#reportDate1").val(name);
+};
+</script>
