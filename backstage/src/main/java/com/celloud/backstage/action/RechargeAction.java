@@ -53,6 +53,8 @@ public class RechargeAction {
         HttpSession session = request.getSession();
         String kaptchaExpected = (String) session.getAttribute(
                 com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
+        System.out.println(
+                "kaptchaExpected:-----------------------" + kaptchaExpected);
         if (kaptchaExpected == null
                 || !kaptchaExpected.equalsIgnoreCase(kaptchaCode)) {
             return "kaptcha error";
