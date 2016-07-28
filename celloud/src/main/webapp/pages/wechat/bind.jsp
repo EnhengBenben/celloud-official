@@ -81,5 +81,16 @@
 		  utils.setDocSize();
 		});
 	</script>
+	<style type="text/css">
+		.unbind{
+			width: 320px;
+		    height: 30px;
+		    margin: 20px auto;
+		    display: inline-block;
+	        background-color: #26aa38;
+		    color: #FDFCFD;
+		    padding-top: 10px;
+		}
+	</style>
 </body>
 </html>
