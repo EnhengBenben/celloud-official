@@ -42,7 +42,7 @@
                     </div>          
                 </header>
                 <ul id="main-menu" class="main-menu">
-                    <li>
+                    <li id="app-manage">
                         <a id="to-app-manage" href="#">
                             <i class="fa fa-cubes" aria-hidden="true"></i>
                             <span class="title">应用管理</span>
@@ -60,143 +60,143 @@
                             </li>
                         </ul>
                     </li>
-                    <li id="company-menu">
+                    <li id="company-manage">
                         <a href="#">
                             <i class="fa fa-hospital-o" aria-hidden="true"></i>
                             <span class="title">公司管理</span>
                         </a>
                         <ul>
-                            <li id="file-clean-menu">
+                            <li id="company-list-menu">
                                 <a href="javascript:company.toCompanyMain();">
 		                            <span class="title">公司列表</span>
 		                        </a>
                             </li>
-                            <li id="file-upload-menu">
+                            <li id="company-pdfupload-menu">
                                 <a href="javascript:company.toUploadPdf();">
                                     <span class="title">PDF上传</span>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li id="user-menu">
+                    <li id="user-manage">
                         <a href="javascript:user.toUserMain();">
                             <i class="fa fa-users" aria-hidden="true"></i>
                             <span class="title">用户管理</span>
                         </a>
                     </li>
-                    <li>
+                    <li id="data-manage">
                         <a href="#">
                             <i class="fa fa-database" aria-hidden="true"></i>
                             <span class="title">数据管理</span>
                         </a>
                         <ul>
-                            <li id="file-clean-menu">
+                            <li id="data-clean-menu">
                                 <a href="javascript:dataFile.toDataClean();">
                                     <span class="title">数据清理</span>
                                 </a>
                             </li>
-                            <li id="file-upload-menu">
+                            <li id="data-upload-menu">
                                 <a href="javascript:dataFile.toDataFileUpload();">
                                     <span class="title">数据上传</span>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li id="task-menu">
+                    <li id="task-manage">
                         <a href="#">
                             <i class="fa fa-tasks" aria-hidden="true"></i>
                             <span class="title">任务统计</span>
                         </a>
                         <ul>
-                            <li id="queuing-time-menu">
+                            <li id="task-queuing-menu">
                                 <a href="javascript:task.toQueuingTime();">
                                     <span class="title">排队时间</span>
                                 </a>
                             </li>
-                            <li id="running-time-menu">
+                            <li id="task-running-menu">
                                 <a href="javascript:task.toRunningTime(1);">
                                     <span class="title">运行时间</span>
                                 </a>
                             </li>
-                            <li id="quantity-statistics-menu">
+                            <li id="task-quantity-menu">
                                 <a href="javascript:task.toQuantityStatistics();">
                                     <span class="title">数量统计</span>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li id="permission-menu">
+                    <li id="permission-manage">
                         <a href="#">
                             <i class="fa fa-user" aria-hidden="true"></i>
                             <span class="title">权限管理</span>
                         </a>
                         <ul>
-                            <li id="queuing-time-menu">
+                            <li id="permission-resource-menu">
                                 <a href="javascript:permission.resource.list();">
                                     <span class="title">资源管理</span>
                                 </a>
                             </li>
-                            <li id="running-time-menu">
+                            <li id="permission-role-menu">
                                 <a href="javascript:permission.role.pageQuery('1',10);">
                                     <span class="title">角色管理</span>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li id="task-menu">
+                    <li id="recharge-manage">
                         <a href="#">
                             <i class="fa fa-money" aria-hidden="true"></i>
                             <span class="title">充值</span>
                         </a>
                         <ul>
-                            <li>
+                            <li id="recharge-account-menu">
                                 <a href="javascript:expense.recharge.main();">
                                     <span class="title">账户充值</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="javascript:void(0);">
-                                    <span class="title">充值记录</span>
-                                </a>
-                            </li>
-                            <li>
+<!--                             <li> -->
+<!--                                 <a href="javascript:void(0);"> -->
+<!--                                     <span class="title">充值记录</span> -->
+<!--                                 </a> -->
+<!--                             </li> -->
+                            <li id="recharge-invoice-menu">
                                 <a href="javascript:expense.invoice.toInvoiceMain('1','');">
                                     <span class="title">发票管理</span>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li id="mailing-menu">
+                    <li id="mailing-manage">
                         <a href="#">
                            <i class="fa fa-send-o" aria-hidden="true"></i>
                             <span class="title">邮件管理</span>
                         </a>
                         <ul>
-                            <li>
+                            <li id="mailing-mass-menu">
                                 <a href="javascript:mailing.toMailingMain();">
 		                            <span class="title">邮件群发</span>
 		                        </a>
                             </li>
-                            <li>
+                            <li id="mailing-template-menu">
                                 <a href="javascript:mailing.mailTemplate.main();">
                                     <span class="title">邮件模板</span>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li id="notice-menu">
+                    <li id="notice-manage">
                         <a href="javascript:notice.toNoticeMain();">
                             <i class="fa fa-bullhorn" aria-hidden="true"></i>
                             <span class="title">公告管理</span>
                         </a>
                     </li>
-                    <li id="feedback-menu">
+                    <li id="feedback-manage">
                         <a href="javascript:feedback.tofeedbackMain();">
                             <i class="fa fa-comments-o" aria-hidden="true"></i>
                             <span class="title">意见反馈</span>
                         </a>
                     </li>
-                    <li id="client-menu">
+                    <li id="client-manage">
                         <a href="javascript:client.toClientMain();">
                             <i class="fa fa-cloud" aria-hidden="true"></i>
                             <span class="title">客户端</span>

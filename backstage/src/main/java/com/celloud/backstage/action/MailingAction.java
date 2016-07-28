@@ -19,7 +19,7 @@ import com.celloud.backstage.page.Page;
 import com.celloud.backstage.page.PageList;
 import com.celloud.backstage.service.EmailTemplateService;
 import com.celloud.backstage.service.UserService;
-import com.celloud.backstage.utils.EmailUtils;
+import com.celloud.message.alimail.AliEmailUtils;
 
 /**
  * 
@@ -34,6 +34,8 @@ public class MailingAction {
 	private UserService userService;
     @Resource
     private EmailTemplateService emailTemplateService;
+	@Resource
+	private AliEmailUtils aliEmail;
 
 	/**
 	 * 跳转到邮件邮件群发页面
@@ -63,7 +65,7 @@ public class MailingAction {
 	public int sendEmail(String[] emails, String emailContent,String emailTitle) {
 		logger.info("邮件群发");
 		try {
-			EmailUtils.sendWithTitle(emailTitle, emailContent, emails);
+			aliEmail.simpleSend(emailTitle, emailContent, emails);
 		} catch (Exception e) {
 			return 0;
 		}

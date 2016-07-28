@@ -1,5 +1,13 @@
 package com.celloud.message.alimail;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.dm.model.v20151123.SingleSendMailRequest;
@@ -9,12 +17,16 @@ import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.celloud.backstage.utils.CustomStringUtils;
+import com.celloud.backstage.utils.UserAgentUtil;
 
 public class AliEmailUtils {
+	private static Logger logger = LoggerFactory.getLogger(AliEmailUtils.class);
 	private String apiUser;
 	private String apiKey;
 	private String username;
 	private String emailName;
+	private String errorsMailTo;
+	private String errorTitle;
 
 	/**
 	 * 模板发送
@@ -62,6 +74,39 @@ public class AliEmailUtils {
 		return result;
 	}
 
+	/**
+	 * 将错误日志组织成邮件正文并发送
+	 * 
+	 * @param request
+	 * @param exception
+	 */
+	public void sendError(HttpServletRequest request, Exception exception) {
+		if (errorsMailTo == null) {
+			logger.warn("系统出现异常，正在发送异常信息邮件，但是没有找到邮件接收者！");
+			return;
+		}
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+		exception.printStackTrace(pw);
+		StringBuffer buffer = new StringBuffer("");
+		buffer.append("<h3>异常地址：</h3>");
+		buffer.append(request.getRequestURL());
+		if (request.getQueryString() != null) {
+			buffer.append("?" + request.getQueryString());
+		}
+		buffer.append("<h3>用户信息：</h3>");
+		buffer.append(UserAgentUtil.getActionLog(request).toResume());
+		buffer.append("<h3>异常信息：</h3>");
+		buffer.append(exception.toString());
+		buffer.append("<h3>异常描述：</h3>");
+		buffer.append("<pre>");
+		buffer.append(sw.toString());
+		buffer.append("</pre>");
+		String content = buffer.toString();
+		pw.close();
+		simpleSend(errorTitle, content, errorsMailTo);
+	}
+
 	public void setApiUser(String apiUser) {
 		this.apiUser = apiUser;
 	}
@@ -84,6 +129,22 @@ public class AliEmailUtils {
 
 	public void setEmailName(String emailName) {
 		this.emailName = emailName;
+	}
+
+	public String getErrorsMailTo() {
+		return errorsMailTo;
+	}
+
+	public void setErrorsMailTo(String errorsMailTo) {
+		this.errorsMailTo = errorsMailTo;
+	}
+
+	public String getErrorTitle() {
+		return errorTitle;
+	}
+
+	public void setErrorTitle(String errorTitle) {
+		this.errorTitle = errorTitle;
 	}
 
 }

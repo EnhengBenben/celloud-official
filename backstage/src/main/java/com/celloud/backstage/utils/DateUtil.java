@@ -10,6 +10,7 @@ import java.util.Date;
  * @date 2016年1月4日 上午10:30:32
  */
 public class DateUtil {
+	public static final String YMDHMS = "yyyy-MM-dd HH:mm:ss";
     /**
      * 将当前时间格式化为“yyyyMMdd”格式的字符串
      * 
@@ -31,6 +32,20 @@ public class DateUtil {
 	 */
 	public static String getDateToString(String format) {
 		Date date = new Date();
+		SimpleDateFormat simpleFormat = new SimpleDateFormat(format);
+		return simpleFormat.format(date);
+	}
+
+	/**
+	 * 自定义格式化给定时间
+	 * 
+	 * @param date
+	 * @param format
+	 * @return
+	 * @author lin
+	 * @date 2016年7月28日下午1:30:06
+	 */
+	public static String getDateToString(Date date, String format) {
 		SimpleDateFormat simpleFormat = new SimpleDateFormat(format);
 		return simpleFormat.format(date);
 	}
