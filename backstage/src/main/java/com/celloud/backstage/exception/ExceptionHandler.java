@@ -1,5 +1,6 @@
 package com.celloud.backstage.exception;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -8,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.celloud.backstage.utils.EmailUtils;
+import com.celloud.message.alimail.AliEmailUtils;
 
 /**
  * 全局异常处理器
@@ -18,11 +19,13 @@ import com.celloud.backstage.utils.EmailUtils;
  */
 public class ExceptionHandler implements HandlerExceptionResolver {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+	@Resource
+	private AliEmailUtils aliEmail;
 
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
             Exception exception) {
-        EmailUtils.sendError(request, exception);
+		aliEmail.sendError(request, exception);
         response.setHeader("exceptionstatus", "exception");
         if (exception instanceof BusinessException) {
             return new ModelAndView("errors/business").addObject("exception", exception);

@@ -122,4 +122,8 @@ public class EmailParams {
         username;
     }
 
+	public static enum FEADBACKREPLY {
+		feedbackTitle, feedbackCreateDate, feedbackUsername, feedbackEmail, feedbackContent, replyUserName, replyContent;
+	}
+
 }

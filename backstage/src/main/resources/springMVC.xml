@@ -95,6 +95,8 @@
 		<property name="apiKey" value="${mail.apiKey}" />
 		<property name="username" value="${mail.username}" />
 		<property name="emailName" value="${mail.emailName}" />
+		<property name="errorTitle" value="${mail.error.title}" />
+		<property name="errorsMailTo" value="${mail.error.mailTo}" />
 	</bean>
 	<bean id="wechatProperties" class="com.celloud.message.wechat.WechatUtils">
 		<property name="appId" value="${wechat.appId}" />
