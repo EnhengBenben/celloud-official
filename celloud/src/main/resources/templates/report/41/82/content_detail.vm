@@ -1,6 +1,6 @@
 <form id="print-form">
     <input type="hidden" name="id" value="${hbv.id}" id="hbvId" />
-    #if(!$hbv.detailBaseInfo or $hbv.detailBaseInfo.size()==0)
+    #if(!$hbv.detailBaseInfo.clinical)
     <input type="hidden" name="isSaved" value="1" id="isSaved"/>
     #else
     <input type="hidden" name="isSaved" value="0" id="isSaved"/>
