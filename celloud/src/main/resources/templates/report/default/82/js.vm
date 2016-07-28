@@ -159,13 +159,14 @@ $(function(){
             $(this).attr("value",$(this).val());
         });
     
+        $("#clinical").val($("table").html());
         var _flag = $("#_flag").html();
         if(_flag==0){
-            param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printContext":$("#printMain").html()}
+            url = url + "updateHbvDetailFilling";
         }else{
-            $("#clinical").val($("table").html());
+            url = url + "updateHbvBriefFilling";
         }
-        $.post(url+"updateHbvBriefFilling",$("#print-form").serialize(),function(result){
+        $.post(url,$("#print-form").serialize(),function(result){
             if(result==1){
                 $.lAlert("信息保存成功！");
             }else{
@@ -177,18 +178,18 @@ $(function(){
     $("#reset").on("click",function(){
         $.lConfirm('确认重置？', function() {
             var _flag = $("#_flag").html();
-            var param = null;
             if(_flag == 0){//详细报告
-                param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printContext":""}
+                url = url + "updateHbvDetailFilling";
             }else{//简要报告
-                $.post(url+"updateHbvBriefFilling",{id:$("#hbvId").val()},function(result){
-                    if(result==1){
-                        location=location ;
-                    }else{
-                        $.lAlert("信息重置失败！");
-                    }
-                });
+                url = url + "updateHbvBriefFilling";
             }
+            $.post(url,{id:$("#hbvId").val()},function(result){
+                if(result==1){
+                    location=location ;
+                }else{
+                    $.lAlert("信息重置失败！");
+                }
+            });
         });
     });
 });
