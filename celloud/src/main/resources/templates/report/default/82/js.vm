@@ -53,7 +53,6 @@ $(function(){
 		});
 	}
     var url = window.location.href.split("print")[0];
-    var sex = $("#men").prop("checked");
     $("#print").on("click",function(){
         if(companyId==57){
             imgRemove.hideRemove();
@@ -156,28 +155,21 @@ $(function(){
     });
     
     $("#save").on("click",function(){
-        imgRemove.hideRemove();
-        $("#printMain").find("input").each(function(){
+        $("table").find("input").each(function(){
             $(this).attr("value",$(this).val());
         });
-        inputVal = $("#des").children().val();
-        $("#des").children().html(inputVal);
-        inputVal = $("#des1").children().val();
-        $("#des1").children().html(inputVal);
+    
         var _flag = $("#_flag").html();
-        var param = null;
-        $("#isSaved").attr("value","0");
         if(_flag==0){
             param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printContext":$("#printMain").html()}
         }else{
-            param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printSimple":$("#printMain").html()}
+            $("#clinical").val($("table").html());
         }
-        $.post(url+"updateContext",param,function(result){
+        $.post(url+"updateHbvBriefFilling",$("#print-form").serialize(),function(result){
             if(result==1){
                 $.lAlert("信息保存成功！");
             }else{
                 $.lAlert("信息保存失败！");
-                $("#isSaved").attr("value","1");
             }
         });
     });
@@ -189,15 +181,14 @@ $(function(){
             if(_flag == 0){//详细报告
                 param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printContext":""}
             }else{//简要报告
-                param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printSimple":""}
+                $.post(url+"updateHbvBriefFilling",{id:$("#hbvId").val()},function(result){
+                    if(result==1){
+                        location=location ;
+                    }else{
+                        $.lAlert("信息重置失败！");
+                    }
+                });
             }
-            $.post(url+"updateContext",param,function(result){
-                if(result==1){
-                    location=location ;
-                }else{
-                    $.lAlert("信息重置失败！");
-                }
-            });
         });
     });
 });

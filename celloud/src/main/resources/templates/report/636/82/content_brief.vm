@@ -1,4 +1,5 @@
 <form id="print-form">
+    <input type="hidden" name="id" value="${hbv.id}" id="hbvId" />
     <input type="hidden" value="1" id="isSaved"/>
     <input type="hidden" value="${hbv.projectId}" id="_projectId">
     <div style="display: none;" id="_userId">${hbv.userId}</div>
@@ -10,23 +11,23 @@
         <table border='1' cellspacing="0" cellpadding="0">
             <tr>
                 <td class="label">姓名</td>
-                <td><input type="text" class="tdInput"></td>
+                <td><input name="briefBaseInfo['name']" value="$!{hbv.briefBaseInfo.name}" type="text" class="tdInput"></td>
                 <td class="label">性别</td>
-                <td><input type="text" class="tdInput"></td>
+                <td><input name="briefBaseInfo['sex']" value="$!{hbv.briefBaseInfo.sex}" type="text" class="tdInput"></td>
                 <td class="label">年龄</td>
-                <td><input type="text" class="tdInput"></td>
+                <td><input name="briefBaseInfo['gender']" value="$!{hbv.briefBaseInfo.gender}" type="text" class="tdInput"></td>
                 <td class="label">住院号/门诊号</td>
-                <td><input type="text" class="tdInput"></td>
+                <td><input name="briefBaseInfo['inpatientNumber']" value="$!{hbv.briefBaseInfo.inpatientNumber}" type="text" class="tdInput"></td>
             </tr>
             <tr>
                 <td class="label">科别</td>
-                <td><input type="text" class="tdInput"></td>
+                <td><input name="briefBaseInfo['dept']" value="$!{hbv.briefBaseInfo.dept}" type="text" class="tdInput"></td>
                 <td class="label">床号</td>
-                <td><input type="text" class="tdInput"></td>
+                <td><input name="briefBaseInfo['bedNo']" value="$!{hbv.briefBaseInfo.bedNo}" type="text" class="tdInput"></td>
                 <td class="label">送检医师</td>
-                <td><input type="text" class="tdInput"></td>
+                <td><input name="briefBaseInfo['doctor']" value="$!{hbv.briefBaseInfo.doctor}" type="text" class="tdInput"></td>
                 <td class="label">送检日期</td>
-                <td><input type="text" class="tdInput"></td>
+                <td><input name="briefBaseInfo['submissionDate']" value="$!{hbv.briefBaseInfo.submissionDate}" type="text" class="tdInput"></td>
             </tr>
             <tr>
                 <td rowspan="2" class="label">样品类型</td>
@@ -34,7 +35,7 @@
                 <td class="label">检测方法</td>
                 <td colspan="3">Sanger测序法</td>
                 <td rowspan="2" class="label">报告编号</td>
-                <td rowspan="2"><input type="text" class="tdInput"></td>
+                <td rowspan="2"><input name="briefBaseInfo['reportNumber']" value="$!{hbv.briefBaseInfo.reportNumber}" type="text" class="tdInput"></td>
             </tr>
             <tr>
                 <td class="label">检测仪器</td>
@@ -50,7 +51,7 @@
                     <td>1</td>
                     <td colspan="3">基因分型</td>
                     <td colspan="4" rowspan="7">
-                        <input type="text" class="tdCenterInput" value="测序失败,建议重测" />
+                        <input name="briefBaseInfo['geneType']" type="text" class="tdCenterInput" value="#if($hbv.briefBaseInfo.geneType)$!hbv.briefBaseInfo.geneType#else测序失败,建议重测#end" />
                     </td>
                 </tr>
                 <tr>
@@ -81,16 +82,16 @@
                 <tr>
                     <td>1</td>
                     <td colspan="3">基因分型</td>
-                    <td colspan="4"><input type="text" class="tdCenterInput" value="${hbv.type.replace('Type: ','')}型" /></td>
+                    <td colspan="4"><input name="briefBaseInfo['geneType']" type="text" class="tdCenterInput" value="#if($hbv.briefBaseInfo.geneType)$!hbv.briefBaseInfo.geneType#else${hbv.type.replace('Type: ','')}型#end" /></td>
                 </tr>
                 <tr>
                     <td>2</td>
                     <td colspan="3">恩替卡韦ETV突变耐药株检测</td>
                     <td colspan="4">
                         #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到恩替卡韦')}>-1)
-                            <input type="text" class="tdCenterInput" value="未检测到恩替卡韦ETV突变耐药株" />
+                            <input name="briefBaseInfo['result1']" type="text" class="tdCenterInput" value="#if($hbv.briefBaseInfo.result1)$!hbv.briefBaseInfo.result1#else未检测到恩替卡韦ETV突变耐药株#end" />
                         #else
-                            <input type="text" class="tdCenterInput" value="检测到恩替卡韦ETV突变耐药株" />
+                            <input name="briefBaseInfo['result1']" type="text" class="tdCenterInput" value="#if($hbv.briefBaseInfo.result1)$!hbv.briefBaseInfo.result1#else检测到恩替卡韦ETV突变耐药株#end" />
                         #end
                     </td>
                 </tr>
@@ -99,9 +100,9 @@
                     <td colspan="3">阿德福韦ADV突变耐药株检测</td>
                     <td colspan="4">
                         #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到阿德福韦')}>-1)
-                            <input type="text" class="tdCenterInput" value="未检测到阿德福韦ADV突变耐药株" />
+                            <input name="briefBaseInfo['result2']" type="text" class="tdCenterInput" value="#if($hbv.briefBaseInfo.result2)$!hbv.briefBaseInfo.result2#else未检测到阿德福韦ADV突变耐药株#end" />
                         #else
-                            <input type="text" class="tdCenterInput" value="检测到阿德福韦ADV突变耐药株" />
+                            <input name="briefBaseInfo['result2']" type="text" class="tdCenterInput" value="#if($hbv.briefBaseInfo.result2)$!hbv.briefBaseInfo.result2#else检测到阿德福韦ADV突变耐药株#end" />
                         #end
                     </td>
                 </tr>
@@ -110,9 +111,9 @@
                     <td colspan="3">恩曲他滨FTC突变耐药株检测</td>
                     <td colspan="4">
                         #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到恩曲他滨')}>-1)
-                            <input type="text" class="tdCenterInput" value="未检测到恩曲他滨FTC突变耐药株" />
+                            <input name="briefBaseInfo['result3']" type="text" class="tdCenterInput" value="#if($hbv.briefBaseInfo.result3)$!hbv.briefBaseInfo.result3#else未检测到恩曲他滨FTC突变耐药株#end" />
                         #else
-                            <input type="text" class="tdCenterInput" value="检测到恩曲他滨FTC突变耐药株" />
+                            <input name="briefBaseInfo['result3']" type="text" class="tdCenterInput" value="#if($hbv.briefBaseInfo.result3)$!hbv.briefBaseInfo.result3#else检测到恩曲他滨FTC突变耐药株#end" />
                         #end
                     </td>
                 </tr>
@@ -121,9 +122,9 @@
                     <td colspan="3">拉米夫定LAM突变耐药株检测</td>
                     <td colspan="4">
                         #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到拉米夫定')}>-1)
-                            <input type="text" class="tdCenterInput" value="未检测到拉米夫定LAM突变耐药株" />
+                            <input name="briefBaseInfo['result4']" type="text" class="tdCenterInput" value="#if($hbv.briefBaseInfo.result4)$!hbv.briefBaseInfo.result4#else未检测到拉米夫定LAM突变耐药株#end" />
                         #else
-                            <input type="text" class="tdCenterInput" value="检测到拉米夫定LAM突变耐药株" />
+                            <input name="briefBaseInfo['result4']" type="text" class="tdCenterInput" value="#if($hbv.briefBaseInfo.result4)$!hbv.briefBaseInfo.result4#else检测到拉米夫定LAM突变耐药株#end" />
                         #end
                     </td>
                 </tr>
@@ -132,9 +133,9 @@
                     <td colspan="3">替比夫定LDT突变耐药株检测</td>
                     <td colspan="4">
                         #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到替比夫定')}>-1)
-                            <input type="text" class="tdCenterInput" value="未检测到替比夫定LDT突变耐药株" />
+                            <input name="briefBaseInfo['result5']" type="text" class="tdCenterInput" value="#if($hbv.briefBaseInfo.result5)$!hbv.briefBaseInfo.result5#else未检测到替比夫定LDT突变耐药株#end" />
                         #else
-                            <input type="text" class="tdCenterInput" value="检测到替比夫定LDT突变耐药株" />
+                            <input name="briefBaseInfo['result5']" type="text" class="tdCenterInput" value="#if($hbv.briefBaseInfo.result5)$!hbv.briefBaseInfo.result5#else检测到替比夫定LDT突变耐药株#end" />
                         #end
                     </td>
                 </tr>
@@ -143,9 +144,9 @@
                     <td colspan="3">替诺福韦酯TDF突变耐药株检测</td>
                     <td colspan="4">
                         #if(${hbv.reporttxt.split('Other:')[0].indexOf('未检测到替诺福韦酯')}>-1)
-                            <input type="text" class="tdCenterInput" value="未检测到替诺福韦酯TDF突变耐药株" />
+                            <input name="briefBaseInfo['result6']" type="text" class="tdCenterInput" value="#if($hbv.briefBaseInfo.result6)$!hbv.briefBaseInfo.result6#else未检测到替诺福韦酯TDF突变耐药株#end" />
                         #else
-                            <input type="text" class="tdCenterInput" value="检测到替诺福韦酯TDF突变耐药株" />
+                            <input name="briefBaseInfo['result6']" type="text" class="tdCenterInput" value="#if($hbv.briefBaseInfo.result6)$!hbv.briefBaseInfo.result6#else检测到替诺福韦酯TDF突变耐药株#end" />
                         #end
                     </td>
                 </tr>
@@ -169,9 +170,9 @@
             <tr>
                 <td colspan="8">
                     <ul class="info mt5">
-                        <li>报告日期<span><input type="text" class="liInput"></span></li>
-                        <li>检验者<span><input type="text" class="liInput"></span></li>
-                        <li>审核者<span><input type="text" class="liInput"></span></li>
+                        <li>报告日期<span><input name="briefBaseInfo['reportDate']" value="$!{hbv.briefBaseInfo.reportDate}" type="text" class="liInput"></span></li>
+                        <li>检验者<span><input name="briefBaseInfo['inspectionPerson']" value="$!{hbv.briefBaseInfo.inspectionPerson}" type="text" class="liInput"></span></li>
+                        <li>审核者<span><input name="briefBaseInfo['review']" value="$!{hbv.briefBaseInfo.review}" type="text" class="liInput"></span></li>
                     </ul>
                 </td>
             </tr>

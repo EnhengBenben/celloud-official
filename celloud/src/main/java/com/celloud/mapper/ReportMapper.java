@@ -205,4 +205,14 @@ public interface ReportMapper {
      * 取出所有rbrifampicin报告
      */
     public List<Report> getAllTBRifampicinReport();
+
+    /**
+     * 取出所有hbv简要报告
+     */
+    public List<Report> getAllHbvBriefReport();
+
+    /**
+     * 取出所有hbv详细报告
+     */
+    public List<Report> getAllHbvDetailReport();
 }
