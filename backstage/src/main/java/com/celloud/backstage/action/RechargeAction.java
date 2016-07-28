@@ -57,6 +57,9 @@ public class RechargeAction {
                 .println("kaptchaCode--------------------------" + kaptchaCode);
         System.out.println(
                 "kaptchaExpected:-----------------------" + kaptchaExpected);
+        System.out.println(kaptchaExpected.equalsIgnoreCase(kaptchaCode));
+        System.out.println(kaptchaExpected == null
+                || !kaptchaExpected.equalsIgnoreCase(kaptchaCode));
         if (kaptchaExpected == null
                 || !kaptchaExpected.equalsIgnoreCase(kaptchaCode)) {
             return "kaptcha error";
