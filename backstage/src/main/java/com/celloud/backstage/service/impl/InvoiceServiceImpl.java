@@ -14,14 +14,16 @@ import com.celloud.backstage.model.Invoice;
 import com.celloud.backstage.page.Page;
 import com.celloud.backstage.page.PageList;
 import com.celloud.backstage.service.InvoiceService;
-import com.celloud.backstage.utils.EmailUtils;
 import com.celloud.backstage.utils.ResetPwdUtils;
+import com.celloud.message.alimail.AliEmailUtils;
 
 @Service("invoiceService")
 public class InvoiceServiceImpl implements InvoiceService {
 
     @Resource
     private InvoiceMapper invoiceMapper;
+	@Resource
+	private AliEmailUtils aliEmail;
 
     @Override
     public PageList<Map<String,String>> getInvoiceListByKeyword(Page page, Integer userId, String keyword) {
@@ -45,8 +47,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .replaceAll("createDate", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(invoice.getCreateDate()))
                 .replaceAll("money", invoice.getMoney().toString()).replace("postCompany", postCompany)
                 .replace("postNumber", postNumber);
-        EmailUtils.sendWithTitle(ResetPwdUtils.invoiceTitle, invoiceContent, email);
-        System.out.println("aaa");
+		aliEmail.simpleSend(ResetPwdUtils.invoiceTitle, invoiceContent, email);
         return num;
     }
 
