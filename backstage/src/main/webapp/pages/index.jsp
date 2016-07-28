@@ -154,11 +154,11 @@
                                     <span class="title">账户充值</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="javascript:void(0);">
-                                    <span class="title">充值记录</span>
-                                </a>
-                            </li>
+<!--                             <li> -->
+<!--                                 <a href="javascript:void(0);"> -->
+<!--                                     <span class="title">充值记录</span> -->
+<!--                                 </a> -->
+<!--                             </li> -->
                             <li id="recharge-invoice-menu">
                                 <a href="javascript:expense.invoice.toInvoiceMain('1','');">
                                     <span class="title">发票管理</span>
