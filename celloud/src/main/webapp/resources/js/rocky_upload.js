@@ -24,15 +24,8 @@ var rockyUpload = (function(rockyUpload) {
 				max_file_size : '3gb',
 				prevent_duplicates : true, // 不允许选取重复文件
 				mime_types : [
-					{title : "bam", extensions : "bam"},
-					{title : "ab1", extensions : "ab1"},
-					{title : "abi", extensions : "abi"},
-					{title : "fasta", extensions : "fasta"},
 					{title : "fastq", extensions : "fastq"},
-					{title : "tsv", extensions : "tsv"},
 					{title : "gz", extensions : "gz"},
-					{title : "lis", extensions : "lis"},
-					{title : "txt", extensions : "txt"}
 				]
 			},
 			max_retries : 5,

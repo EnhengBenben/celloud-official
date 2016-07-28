@@ -104,9 +104,8 @@ public class UploadAction {
 
 	public List<Integer> rockyCheckRun(DataFile data) {
 		String originalName = data.getFileName();
-		logger.info("判断是否数据{}上传完即刻运行", originalName);
 		String pubName = "";
-		if (data.getFileFormat() == FileFormat.FQ || data.getFileFormat() == FileFormat.GZ) {
+		if (data.getFileFormat() == FileFormat.FQ || data.getFileFormat() == FileFormat.YASUO) {
 			Map<String, Integer> dataIds = new HashMap<String, Integer>();
 			Boolean isR1 = false;
 			if (originalName.contains("R1")) {
@@ -145,9 +144,11 @@ public class UploadAction {
 			task.setAppId(AppConstants.APP_ID_ROCKY);
 			taskService.addOrUpdateUploadTaskByParam(task, isR1);
 			if (hasR1 && hasR2) {
+				logger.info("数据{}上传完可以运行", originalName);
 				return new ArrayList<>(dataIds.values());
 			}
 		}
+		logger.info("数据{}上传完不可以运行", originalName);
 		return new ArrayList<>();
 	}
 

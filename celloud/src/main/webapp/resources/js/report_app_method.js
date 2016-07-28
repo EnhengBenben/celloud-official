@@ -34,3 +34,6 @@ appMethod[121] = "getPgsReport";
 appMethod[122] = "getPgsReport";
 appMethod[124] = "getPgsReport";
 appMethod[125] = "getPgsReport";
+appMethod[126] = "getCMPReport";
+appMethod[127] = "getCMPReport";
+appMethod[128] = "getGDDReport";

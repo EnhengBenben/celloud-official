@@ -23,7 +23,7 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
 	}
 
 	@Override
-	public EmailTemplate getTemplate(String method) {
+    public EmailTemplate getTemplate(String method) {
 		return emailTemplateMapper.getTemplate(method, DataState.ACTIVE);
 	}
 

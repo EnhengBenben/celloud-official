@@ -379,12 +379,12 @@ $.ajaxSetup ({
 			                    }
 			                }
 			            }
-			            if(appId=="118"||appId=="117"||appId=="114"||appId=="113"||appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
+			            if(appId=="128"||appId=="127"||appId=="126"||appId=="118"||appId=="117"||appId=="114"||appId=="113"||appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
 			                param = {"fileName":$.trim($(this).html()),"dataKey":$.trim($(this).prev().html()),"softwareId":appId,"softwareName":appName,"userId":userId,"obj":$(this),"proId":proId,"proName":proName};
 			                if(j>0&&i==1){
 			                    $(this).addClass("sub");
 			                    var fileName = $(this).html();
-		                        if(fileName.length>30&&appId!="113"&&appId!="112"&&appId!="111"&&appId!="110"){
+		                        if(fileName.length>30&&appId!="113"&&appId!="112"&&appId!="111"&&appId!="110"&&appId!="126"&&appId!="127"&&appId!="128"){
 		                        	fileName = fileName.substring(0,30) + "...";
 		                        }
 		                        if(appId!="114"&&appId!="118"){
@@ -512,7 +512,7 @@ $.ajaxSetup ({
 			        });
 			    });
 			    var minTdNum = 5;
-			    if(appId=="113"||appId=="112"||appId=="111"||appId=="110"){
+			    if(appId=="128"||appId=="127"||appId=="126"||appId=="113"||appId=="112"||appId=="111"||appId=="110"){
 			    	minTdNum = 4;
 			    }
 			    var rdataNum = $("#rdataNum"+proId).html();
@@ -582,7 +582,7 @@ $.ajaxSetup ({
 				$("#fileListUl").append("<button type='button' id='prevA' class='btn btn-success'><span class='fa fa-sort-asc'></span></button>");
 				var fileNames = new Array();
 				var newList = "";
-				if(softwareId == 110||softwareId == 111||softwareId == 112||softwareId == 113){
+				if(softwareId == 110||softwareId == 111||softwareId == 112||softwareId == 113||softwareId == 126||softwareId == 127||softwareId == 128){
 					$.each(fileList,function(index,item){
 					  if(!utils.isConfigure(item.fileName)){
 					    fileNames.push(item.fileName);
