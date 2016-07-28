@@ -1918,6 +1918,157 @@ public class ReportAction {
         }
     }
 
+    @RequestMapping("hbvMysqlToMongo_brief")
+    public void hbvMysqlToMongo_brief() {
+        List<Report> hbvBriefList = reportService.getAllHbvBriefReport();
+        for (Report report : hbvBriefList) {
+            if (report.getPrintSimple() != null) {
+                User user = userService.selectUserById(report.getUserId());
+                if (user.getUserId() != 23) {
+                    Integer companyId = user.getCompanyId();
+                    String dataKey = reportService.getDataKey(report.getFileId());
+                    HBV hbv = reportService.getHBVReport(dataKey, report.getProjectId(),
+                            report.getAppId());
+                    String printSImple = report.getPrintSimple();
+                    Document document = Jsoup.parse(printSImple);
+                    Elements inputEles = document.select("input[type=text]");
+                    Map<String, String> baseInfo = new HashMap<String, String>();
+                    Elements textareaEles = document.select("textarea");
+                    if (companyId == 41 && hbv != null) {
+                        if (inputEles.size() == 30) {
+                            baseInfo.put("name", inputEles.get(0).val());
+                            baseInfo.put("id", inputEles.get(1).val());
+                            baseInfo.put("sampleNumber", inputEles.get(2).val());
+                            baseInfo.put("sampleType", inputEles.get(3).val());
+                            baseInfo.put("dept", inputEles.get(4).val());
+                            baseInfo.put("submissionDate", inputEles.get(5).val());
+                            baseInfo.put("doctor", inputEles.get(6).val());
+                            baseInfo.put("age", inputEles.get(7).val());
+                            baseInfo.put("bedNo", inputEles.get(8).val());
+                            baseInfo.put("inpatientNumber", inputEles.get(9).val());
+                            baseInfo.put("inspectionDate", inputEles.get(26).val());
+                            baseInfo.put("reportDate", inputEles.get(27).val());
+                            baseInfo.put("inspectionPerson", inputEles.get(28).val());
+                            baseInfo.put("review", inputEles.get(29).val());
+
+                            Elements textEles = document.select("textarea");
+                            baseInfo.put("des", textEles.get(0).text());
+
+                            Elements tableEles = document.select("table");
+                            baseInfo.put("clinical", tableEles.get(0).toString());
+
+                            Elements radioEles = document.select("input[type=radio]");
+                            if (radioEles.get(1).attr("checked").equals("checked")) {
+                                baseInfo.put("sex", "女");
+                            } else {
+                                baseInfo.put("sex", "男");
+                            }
+                        } else {
+                            System.out.println("aaaaaaaaaaaaa");
+                        }
+
+                    } else if (companyId == 636) {
+                        if (inputEles.size() == 13) {
+                            baseInfo.put("name", inputEles.get(0).val());
+                            baseInfo.put("sex", inputEles.get(1).val());
+                            baseInfo.put("gender", inputEles.get(2).val());
+                            baseInfo.put("inpatientNumber", inputEles.get(3).val());
+                            baseInfo.put("dept", inputEles.get(4).val());
+                            baseInfo.put("bedNo", inputEles.get(5).val());
+                            baseInfo.put("doctor", inputEles.get(6).val());
+                            baseInfo.put("submissionDate", inputEles.get(7).val());
+                            baseInfo.put("reportNumber", inputEles.get(8).val());
+                            baseInfo.put("geneType", inputEles.get(9).val());
+                            baseInfo.put("reportDate", inputEles.get(10).val());
+                            baseInfo.put("inspectionPerson", inputEles.get(11).val());
+                            baseInfo.put("review", inputEles.get(12).val());
+                        } else if (inputEles.size() == 19) {
+                            baseInfo.put("name", inputEles.get(0).val());
+                            baseInfo.put("sex", inputEles.get(1).val());
+                            baseInfo.put("gender", inputEles.get(2).val());
+                            baseInfo.put("inpatientNumber", inputEles.get(3).val());
+                            baseInfo.put("dept", inputEles.get(4).val());
+                            baseInfo.put("bedNo", inputEles.get(5).val());
+                            baseInfo.put("doctor", inputEles.get(6).val());
+                            baseInfo.put("submissionDate", inputEles.get(7).val());
+                            baseInfo.put("reportNumber", inputEles.get(8).val());
+                            baseInfo.put("geneType", inputEles.get(9).val());
+                            baseInfo.put("result1", inputEles.get(10).val());
+                            baseInfo.put("result2", inputEles.get(11).val());
+                            baseInfo.put("result3", inputEles.get(12).val());
+                            baseInfo.put("result4", inputEles.get(13).val());
+                            baseInfo.put("result5", inputEles.get(14).val());
+                            baseInfo.put("result6", inputEles.get(15).val());
+                            baseInfo.put("reportDate", inputEles.get(16).val());
+                            baseInfo.put("inspectionPerson", inputEles.get(17).val());
+                            baseInfo.put("review", inputEles.get(18).val());
+                        } else {
+                            System.out.println("bbbbbbbbbbbbbbb");
+                        }
+                    } else if (companyId == 57) {
+                        if (inputEles.size() == 15) {
+                            baseInfo.put("name", inputEles.get(0).val());
+                            baseInfo.put("id", inputEles.get(1).val());
+                            baseInfo.put("sampleNumber", inputEles.get(2).val());
+                            baseInfo.put("sampleType", inputEles.get(3).val());
+                            baseInfo.put("dept", inputEles.get(4).val());
+                            baseInfo.put("submissionDate", inputEles.get(5).val());
+                            baseInfo.put("doctor", inputEles.get(6).val());
+                            baseInfo.put("age", inputEles.get(7).val());
+                            baseInfo.put("bedNo", inputEles.get(8).val());
+                            baseInfo.put("inpatientNumber", inputEles.get(9).val());
+                            baseInfo.put("geneType", inputEles.get(10).val());
+                            baseInfo.put("inspectionDate", inputEles.get(11).val());
+                            baseInfo.put("reportDate", inputEles.get(12).val());
+                            baseInfo.put("inspectionPerson", inputEles.get(13).val());
+                            baseInfo.put("review", inputEles.get(14).val());
+
+                            Elements radioEles = document.select("input[type=radio]");
+                            if (radioEles.get(1).attr("checked").equals("checked")) {
+                                baseInfo.put("sex", "女");
+                            } else {
+                                baseInfo.put("sex", "男");
+                            }
+                        } else {
+                            System.out.println("ccccccccccc");
+                        }
+                    } else {
+                        if (inputEles.size() == 30) {
+                            baseInfo.put("name", inputEles.get(0).val());
+                            baseInfo.put("id", inputEles.get(1).val());
+                            baseInfo.put("sampleNumber", inputEles.get(2).val());
+                            baseInfo.put("sampleType", inputEles.get(3).val());
+                            baseInfo.put("dept", inputEles.get(4).val());
+                            baseInfo.put("submissionDate", inputEles.get(5).val());
+                            baseInfo.put("doctor", inputEles.get(6).val());
+                            baseInfo.put("age", inputEles.get(7).val());
+                            baseInfo.put("bedNo", inputEles.get(8).val());
+                            baseInfo.put("inpatientNumber", inputEles.get(9).val());
+                            baseInfo.put("inspectionDate", inputEles.get(26).val());
+                            baseInfo.put("reportDate", inputEles.get(27).val());
+                            baseInfo.put("inspectionPerson", inputEles.get(28).val());
+                            baseInfo.put("review", inputEles.get(29).val());
+
+                            Elements tableEles = document.select("table");
+                            baseInfo.put("clinical", tableEles.get(0).toString());
+
+                            Elements radioEles = document.select("input[type=radio]");
+                            if (radioEles.get(1).attr("checked").equals("checked")) {
+                                baseInfo.put("sex", "女");
+                            } else {
+                                baseInfo.put("sex", "男");
+                            }
+                        } else {
+                            System.out.println("aaaaaaaaaaaaa");
+                        }
+                    }
+                    hbv.setBriefBaseInfo(baseInfo);
+                    reportService.updateHbvBriefFilling(hbv);
+                }
+            }
+        }
+    }
+
 	/**
 	 * 打印Pgs项目报告
 	 * 
@@ -2016,9 +2167,9 @@ public class ReportAction {
 	 * @date 2016年3月21日下午2:51:25
 	 */
 	@ActionLog(value = "打印HBV数据报告", button = "打印数据报告")
-	@RequestMapping("printHBV")
+    @RequestMapping("printHBV_bak")
 	@ResponseBody
-	public void printHBV(Integer appId, String dataKey, Integer projectId, Integer flag) {
+    public void printHBV_bak(Integer appId, String dataKey, Integer projectId, Integer flag) {
 		// 获取结果视图路径
 		String path = null;
 		if (flag == 0) { // 详细报告
@@ -2048,6 +2199,47 @@ public class ReportAction {
 		context.put("report", report);
 		returnToVelocity(path, context, projectId);
 	}
+
+    /**
+     * 打印HBV
+     * 
+     * @param appId
+     * @param dataKey
+     * @param projectId
+     * @param flag
+     * @return
+     * @author lin
+     * @date 2016年3月21日下午2:51:25
+     */
+    @ActionLog(value = "打印HBV数据报告", button = "打印数据报告")
+    @RequestMapping("printHBV")
+    @ResponseBody
+    public void printHBV(Integer appId, String dataKey, Integer projectId, Integer flag) {
+        // 获取结果视图路径
+        String path = null;
+        if (flag == 0) { // 详细报告
+            path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print_detail.vm";
+            if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+                path = "default/" + appId + "/print_detail.vm";
+            }
+        } else { // 简要报告
+            path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print_brief.vm";
+            if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+                path = "default/" + appId + "/print_brief.vm";
+            }
+        }
+        Map<String, Object> context = new HashMap<String, Object>();
+        HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
+        if (hbv.getBriefBaseInfo() != null && hbv.getBriefBaseInfo().get("clinical") != null) {
+            hbv.getBriefBaseInfo().put("clinical", hbv.getBriefBaseInfo().get("clinical").replace("\"", "\'"));
+        }
+        Integer userId = ConstantsData.getLoginUserId();
+        Integer fileId = dataService.getDataByKey(dataKey).getFileId();
+        Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
+        context.put("hbv", hbv);
+        context.put("report", report);
+        returnToVelocity(path, context, projectId);
+    }
 
 	/**
 	 * 打印HCV
@@ -2313,6 +2505,36 @@ public class ReportAction {
     @ResponseBody
     public Integer updateTBRifampicinFilling(TBRifampicin tbRifampicin) {
         return reportService.updateTBRifampicinFilling(tbRifampicin);
+    }
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月27日下午14:07:56
+     * @description 修改hbv简要打印报告填写内容
+     *
+     */
+    @ActionLog(value = "打印hbv简要数据报告时修改用户填写的信息", button = "修改数据报告")
+    @RequestMapping("updateHbvBriefFilling")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public Integer updateHbvBriefFilling(HBV hbv) {
+        return reportService.updateHbvBriefFilling(hbv);
+    }
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月27日下午14:07:56
+     * @description 修改hbv详细打印报告填写内容
+     *
+     */
+    @ActionLog(value = "打印hbv详细数据报告时修改用户填写的信息", button = "修改数据报告")
+    @RequestMapping("updateHbvDetailFilling")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public Integer updateHbvDetailFilling(HBV hbv) {
+        return reportService.updateHbvDetailFilling(hbv);
     }
 
 	/**

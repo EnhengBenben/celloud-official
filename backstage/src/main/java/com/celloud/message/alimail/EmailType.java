@@ -55,5 +55,9 @@ public class EmailType {
 	 * 公告提醒
 	 */
 	public static final String NOTICE = "notice";
+	/**
+	 * 回复意见反馈
+	 */
+	public static final String FEADBACKREPLY = "feedbackReply";
 
 }

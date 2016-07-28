@@ -652,5 +652,33 @@ public interface ReportService {
      */
     public Integer updateTBRifampicinFilling(TBRifampicin tbRifampicin);
 
+    /**
+     * 取出所有的hbv简要报告, 上线后可删
+     */
+    public List<Report> getAllHbvBriefReport();
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月27日上午11:27:21
+     * @description 修改hbv简要报告用户填写部分
+     *
+     */
+    public Integer updateHbvBriefFilling(HBV hbv);
+
+    /**
+     * 取出所有的hbv详细报告, 上线后可删
+     */
+    public List<Report> getAllHbvDetailReport();
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月27日上午11:27:21
+     * @description 修改hbv详细报告用户填写部分
+     *
+     */
+    public Integer updateHbvDetailFilling(HBV hbv);
+
 
 }

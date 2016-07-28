@@ -421,4 +421,10 @@
   <select id="getAllTBRifampicinReport" resultMap="BaseResultMap">
     select r.* from tb_report r where r.app_id = 90 and r.print_context is not null and r.print_context != ''
   </select>
+  <select id="getAllHbvBriefReport" resultMap="BaseResultMap">
+    select r.* from tb_report r where r.app_id = 82 and r.print_simple is not null and r.print_simple != ''
+  </select>
+  <select id="getAllHbvDetailReport" resultMap="BaseResultMap">
+    select r.* from tb_report r where r.app_id = 82 and r.print_context is not null and r.print_context != ''
+  </select>
 </mapper>

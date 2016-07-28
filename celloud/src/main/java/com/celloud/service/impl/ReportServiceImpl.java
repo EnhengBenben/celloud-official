@@ -966,4 +966,36 @@ public class ReportServiceImpl implements ReportService {
         return ur != null ? 1 : 0;
     }
 
+    @Override
+    public List<Report> getAllHbvBriefReport() {
+        return reportMapper.getAllHbvBriefReport();
+    }
+
+    @Override
+    public Integer updateHbvBriefFilling(HBV hbv) {
+        UpdateResults ur = null;
+        if (hbv.getBriefBaseInfo() == null) {
+            ur = reportDao.editData(HBV.class, hbv.getId(), "briefBaseInfo", new HashMap<String, String>());
+        } else {
+            ur = reportDao.editData(HBV.class, hbv.getId(), "briefBaseInfo", hbv.getBriefBaseInfo());
+        }
+        return ur != null ? 1 : 0;
+    }
+
+    @Override
+    public List<Report> getAllHbvDetailReport() {
+        return reportMapper.getAllHbvDetailReport();
+    }
+
+    @Override
+    public Integer updateHbvDetailFilling(HBV hbv) {
+        UpdateResults ur = null;
+        if (hbv.getDetailBaseInfo() == null) {
+            ur = reportDao.editData(HBV.class, hbv.getId(), "detailBaseInfo", new HashMap<String, String>());
+        } else {
+            ur = reportDao.editData(HBV.class, hbv.getId(), "detailBaseInfo", hbv.getDetailBaseInfo());
+        }
+        return ur != null ? 1 : 0;
+    }
+
 }
