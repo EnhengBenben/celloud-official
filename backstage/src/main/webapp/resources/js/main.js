@@ -1028,7 +1028,7 @@ var expense = (function(expense){
             $(this).hide().attr('src','kaptcha.jpg?' + Math.floor(Math.random() * 100)).fadeIn();
           });
         });
-        $(document).on("click","#commit-recharge",function(){
+        $("#commit-recharge").on("click",function(){
           self.recharge.transfer();
         });
       },
