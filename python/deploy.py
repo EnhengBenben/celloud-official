@@ -84,31 +84,19 @@ if flag=='106':
 	print '－－数据库备份完毕－－'
 	shutil.copytree(celloudSource,celloudBak)
 	print '－－celloud备份完毕－－'
-	#for x in os.listdir(toolsSource):
-	#	if x != 'upload':
-	#		s = os.path.join(toolsSource,x)
-	#		if os.path.isdir(s):
-	#			shutil.copytree(s,os.path.join(toolsBak,x))
-	#		else:
-	#			shutil.copy(s,os.path.join(toolsBak,x))
-	#print '－－Tools备份完毕－－'
 	shutil.copytree(pythonSource,pythonBak)
 	print '－－python备份完毕－－'
 
 	print '－－－－－－－－备份结束－－－－－－－－'
 
 	dbPath = os.path.join(resultPath,'db')
-	for f in os.listdir(dbPath):
-		if f.endswith('.sql'):
-			#for sql in readAllByLines(os.path.join(dbPath,f)):
-			#	mysql = mysql.getInstance()
-			#	if mysql:
-			#		mysql.execute(sql)
-			#print '－－'+ f + '导入完毕－－'
-			#在sql文件中增加参数，解决了中文乱码问题
-			command = 'source ' + os.path.join(dbPath,f)
-			os.system('mysql -u'+MySQLPro.user+' -p'+MySQLPro.password+' -h'+MySQLPro.host+' '+MySQLPro.db+' -e "'+command+'"')
-			print '－－'+ command + '导入完毕－－'
+	if(os.path.exists(dbPath)):
+		for f in os.listdir(dbPath):
+			if f.endswith('.sql'):
+				#在sql文件中增加参数，解决了中文乱码问题
+				command = 'source ' + os.path.join(dbPath,f)
+				os.system('mysql -u'+MySQLPro.user+' -p'+MySQLPro.password+' -h'+MySQLPro.host+' '+MySQLPro.db+' -e "'+command+'"')
+				print '－－'+ command + '导入完毕－－'
 
 	print '－－－－－－－－数据库导入结束－－－－－－－－'
 
