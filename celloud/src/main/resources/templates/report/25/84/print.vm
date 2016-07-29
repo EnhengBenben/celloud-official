@@ -1,0 +1,10 @@
+#parse("templates/report/layout.vm")
+#parse("templates/report/25/${egfr.appId}/reference.vm")
+<div id="printMain">
+    <form id="print-form">
+    #parse("templates/report/25/${egfr.appId}/title.vm")
+    #parse("templates/report/25/${egfr.appId}/content.vm")
+    #parse("templates/report/25/${egfr.appId}/foot.vm")
+    </form>
+</div>  
+#parse("templates/report/25/${egfr.appId}/js.vm")

@@ -1,5 +1,6 @@
 package com.celloud.backstage.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -22,6 +23,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public void insertMessage(Notice notice, String... usernames) {
+		notice.setCreateDate(new Date());
 		noticeMapper.insertSelective(notice);
 		int result = 0;
 		if (usernames == null || usernames.length == 0) {
