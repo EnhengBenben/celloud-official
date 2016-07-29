@@ -67,17 +67,17 @@
 			<th>
 				上传时间
 				<c:if test="${sidx=='createDate'&&sord=='asc' }">
-					<a id="sortBtn-createDate-desc" href="javascript:void(0);">
+					<a id="dataSortBtn-createDate-desc" href="javascript:void(0);">
 						<i class="fa fa-sort-amount-asc"></i>
 					</a>
 				</c:if>
 				<c:if test="${sidx=='createDate'&&sord=='desc' }">
-					<a id="sortBtn-createDate-asc" href="javascript:void(0);">
+					<a id="dataSortBtn-createDate-asc" href="javascript:void(0);">
 						<i class="fa fa-sort-amount-desc"></i>
 					</a>
 				</c:if>
 				<c:if test="${sidx!='createDate' }">
-					<a id="sortBtn-createDate" href="javascript:void(0);">
+					<a id="dataSortBtn-createDate" href="javascript:void(0);">
 						<i class="fa fa-sort" aria-hidden="true"></i>
 					</a>
 				</c:if>
