@@ -133,6 +133,7 @@ public class PythonServiceImpl implements PythonService {
 
     @Override
     public String uploaded(String dataKey) {
+		String celloudPath = this.getClass().getResource("").getPath().split("WEB-INF")[0];
         String absPath = path + dataKey;// 文件的绝对路径
         File file = new File(absPath);
         if (!file.exists()) {
@@ -146,9 +147,8 @@ public class PythonServiceImpl implements PythonService {
         data.setFileFormat(fileFormat);
         if (fileFormat == FileFormat.BAM) {
             StringBuffer command = new StringBuffer();
-            String outPath = System.getProperty("user.dir").replace("bin", "webapps/celloud") + "/temp/" + dataKey;
-            String perlPath = System.getProperty("user.dir").replace("bin", "webapps/celloud")
-                    + "/resources/plugins/getAliases.pl";
+			String outPath = celloudPath + "temp/" + dataKey;
+			String perlPath = celloudPath + "resources/plugins/getAliases.pl";
             command.append("perl ").append(perlPath).append(" ").append(absPath).append(" ").append(outPath);
             PerlUtils.excutePerl(command.toString());
             data.setAnotherName(FileTools.getFirstLine(outPath));

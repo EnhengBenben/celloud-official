@@ -112,7 +112,7 @@
 								<div class="col-xs-4" style="padding-right: 0px;">
 									<div class="list-group">
 										<div class="list-group-item">
-											<button class="btn btn-success">
+											<button class="btn btn-success" onclick="notices.readAllNotice()">
 												<i class="fa fa-folder-open-o"></i> 全部置为已读
 											</button>
 											<div class="btn-group pull-right">

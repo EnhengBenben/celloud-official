@@ -177,7 +177,7 @@ public class PayServiceImpl implements PayService {
 				// 如果有做过处理，不执行商户的业务程序
 
 				PayOrder order = payOrderMapper.selectByTradeNo(out_trade_no);
-				if (order.getState() == PayOrderState.UNPAID) {
+				if (order != null && order.getState() == PayOrderState.UNPAID) {
 					order.setState(PayOrderState.PAID);
 					payOrderMapper.updateByPrimaryKey(order);
 					alipay = new RechargeAlipay();
