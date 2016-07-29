@@ -38,6 +38,7 @@ import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
+import com.celloud.service.ExpensesService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
@@ -68,6 +69,8 @@ public class DataAction {
 	private ReportService reportService;
 	@Resource
 	private TaskService taskService;
+    @Resource
+    ExpensesService expenseService;
 
 	private static Map<String, Map<String, String>> machines = ConstantsData.getMachines();
 	private static String sparkhost = machines.get("spark").get(Mod.HOST);
@@ -382,7 +385,7 @@ public class DataAction {
 	 * @return
 	 */
 	@ActionLog(value = "开始运行方法，调用perl，保存任务信息", button = "开始运行")
-	@RequestMapping("run")
+    @RequestMapping("run")
 	@ResponseBody
 	public String run(String dataIds, String appIds) {
 		Integer userId = ConstantsData.getLoginUserId();
@@ -390,6 +393,15 @@ public class DataAction {
 		String result = "";
 		logger.info("用户{}使用数据{}运行APP{}", userName, dataIds, appIds);
 		String[] dataIdArr = dataIds.split(",");
+        String[] appIdArrs = appIds.split(",");
+        List<Integer> appIdList = new ArrayList<>();
+        for (String s : appIdArrs) {
+            appIdList.add(Integer.parseInt(s));
+        }
+        if (!appService.checkPriceToRun(appIdList, userId)) {
+            logger.info("{}的余额不足，提醒充值后再运行", userName);
+            return "1";
+        }
 
 		// 公共项目信息
 		Project project = new Project();
@@ -409,11 +421,6 @@ public class DataAction {
 		Map<String, String> dataFilePathMap = new HashMap<>();// 针对按数据投递APP
 		String dataFilePath = "";// 针对按项目投递APP
 
-		String[] appIdArrs = appIds.split(",");
-		List<Integer> appIdList = new ArrayList<>();
-		for (String s : appIdArrs) {
-			appIdList.add(Integer.parseInt(s));
-		}
 		List<Integer> list_tmp = new ArrayList<>(appIdList);
 		list_tmp.retainAll(AppDataListType.FASTQ_PATH);
 		if (list_tmp.size() > 0) {
@@ -509,6 +516,8 @@ public class DataAction {
 						logger.info("数据{}排队运行{}", dataKey, app.getAppName());
 					}
 				}
+                // 保存消费记录
+                expenseService.saveRunExpenses(proId, appId, userId, dataList);
 			} else {
 				// SGE
 				logger.info("celloud 直接向 SGE 投递任务");
@@ -518,8 +527,11 @@ public class DataAction {
 				logger.info("运行命令:{}", command);
 				SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
 				ssh.sshSubmit(command, false);
+                // 保存消费记录
+                expenseService.saveProRunExpenses(proId, dataList);
 			}
 		}
+
 		return result;
 	}
 

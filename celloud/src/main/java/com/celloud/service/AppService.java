@@ -3,8 +3,6 @@ package com.celloud.service;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.celloud.model.mysql.App;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
@@ -141,7 +139,7 @@ public interface AppService {
      * @author leamo
      * @date 2016年1月14日 下午1:49:46
      */
-    public List<App> findAppsByIds(@Param("appIds") String appIds);
+    public List<App> findAppsByIds(String appIds);
 
     /**
      * 批量获取APP名称
@@ -151,7 +149,7 @@ public interface AppService {
      * @author leamo
      * @date 2016年1月14日 下午2:29:23
      */
-    public String findAppNamesByIds(@Param("appIds") String appIds);
+    public String findAppNamesByIds(String appIds);
     
     /**
      * 单查
@@ -171,5 +169,16 @@ public interface AppService {
      * @author leamo
      * @date 2016年4月22日 上午10:32:45
      */
-    public App findAppsByTag(@Param("tagId") Integer tagId);
+    public App findAppsByTag(Integer tagId);
+
+    /**
+     * 判断用户是否可运行此APP
+     * 
+     * @param appId
+     * @param userId
+     * @return
+     * @author leamo
+     * @date 2016年7月28日 下午4:27:24
+     */
+    public Boolean checkPriceToRun(List<Integer> appIds, Integer userId);
 }

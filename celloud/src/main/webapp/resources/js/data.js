@@ -264,7 +264,9 @@ function _init_data(){
       }
       appIds = appIds.substring(0, appIds.length-1);
       $.get("data/run",{"dataIds":dataIds.toString(),"appIds":appIds},function(result){
-        if(result != ""){
+        if(result == "1"){
+          $.dataManager.showTipModal("您的余额不足，请充值后再运行");
+        }else if(result.length >1){
           $.dataManager.showTipModal("以下APP运行失败：<br>"+result);
         }else{
           $.dataManager.find.condition();
