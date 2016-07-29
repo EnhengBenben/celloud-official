@@ -43,7 +43,7 @@ var rockyData = (function(rockyData) {
 	$(document).on("click", "#rocky_data_page [data-click='pagination-btn']",
 			function() {
 				var page = $(this).data("page");
-				var size = $("#rocky_data_page #page-size-sell").val();
+				var size = $("#rocky_data_page #page-size-sel").val();
 				var sample = self.filter.param.sample;
 				var condition = self.filter.param.condition;
 				var sidx = self.sort.sidx;
