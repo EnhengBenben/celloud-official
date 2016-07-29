@@ -5,6 +5,7 @@ var rockyData = (function(rockyData) {
 	$(document).off("keyup", "#data-sample-filter");
 	$(document).off("keyup", "#data-condition-input");
 	$(document).off("change", "#rocky_data_page #page-size-sel");
+	$(document).off("click", "#data-condition-find");
 	$(document).off("click", "a[id^='dataSortBtn-']");
 	$(document).on("click", "a[id^='dataSortBtn-']", function() {
 		var id = $(this).attr("id");
@@ -24,6 +25,12 @@ var rockyData = (function(rockyData) {
 	$(document).on("keyup", "#data-condition-input", function(event) {
 		if (event.keyCode == 13) {
 			self.filter.condition($(this).val());
+		}
+	});
+	$(document).on("click", "#data-condition-find", function(event) {
+		var condition = $("#data-condition-input").val();
+		if(condition){
+			self.filter.condition(condition);
 		}
 	});
 	$(document).on("change", "#rocky_data_page #page-size-sel", function() {
