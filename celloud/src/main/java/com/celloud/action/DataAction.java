@@ -229,6 +229,7 @@ public class DataAction {
 		mv.addObject("pageList", dataList);
 		mv.addObject("batchList", batchList);
 		mv.addObject("sampleFilter", sample);
+		mv.addObject("conditionFilter", condition);
 		mv.addObject("sidx", sidx);
 		mv.addObject("sord", sord);
 		logger.info("用户{}打开乳腺癌数据", ConstantsData.getLoginUserName());

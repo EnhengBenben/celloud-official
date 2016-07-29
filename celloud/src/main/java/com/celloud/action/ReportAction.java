@@ -2843,6 +2843,7 @@ public class ReportAction {
 		mv.addObject("periodMap", periodMap);
 		mv.addObject("batchList", batchList);
 		mv.addObject("sampleFilter", sample);
+		mv.addObject("conditionFilter", condition);
 		mv.addObject("sidx", sidx);
 		mv.addObject("sord", sord);
 		log.info("乳腺癌用户{}查看我的报告列表", ConstantsData.getLoginUserName());

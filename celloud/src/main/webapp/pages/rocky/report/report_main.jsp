@@ -110,7 +110,7 @@
 <c:if test="${pageList.datas.size()<=0 }">
 	<div style="display: table; width: 100%; margin-top: -10px;">
 		<div class="text-center" style="display: table-cell; height: 350px; font-size: 18px; vertical-align: middle; background-color: #fff;">
-			<i class="glyphicon glyphicon-exclamation-sign" style="color: #f39c12;"></i> 您好，还没有报告哦！
+			<i class="glyphicon glyphicon-exclamation-sign" style="color: #f39c12;"></i> ${conditionFilter!=null||sampleFilter!=null?'未检索到数据！':'您好，还没有数据哦！' }
 		</div>
 	</div>
 </c:if>
