@@ -86,7 +86,7 @@ var rockyData = (function(rockyData) {
 	};
 	self.filter = {
 		sample : function(sample) {
-			var size = $("#rocky_data_page #page-size-sell").val();
+			var size = $("#rocky_data_page #page-size-sel").val();
 			$("#data-condition-input").val('');
 			var sidx = self.sort.sidx;
 			var sord = self.sort.sord;
@@ -96,7 +96,7 @@ var rockyData = (function(rockyData) {
 			});
 		},
 		condition : function(condition) {
-			var size = $("#rocky_data_page #page-size-sell").val();
+			var size = $("#rocky_data_page #page-size-sel").val();
 			var sidx = self.sort.sidx;
 			var sord = self.sort.sord;
 			self.pageDatas(1, size, null, condition, sidx, sord);
