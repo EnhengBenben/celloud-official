@@ -11,7 +11,7 @@ var rockyData = (function(rockyData) {
 		var sort = id.split('-');
 		var sidx = sort[1];
 		var sord = sort[2] || 'desc';
-		var size = $("#rocky_data_page #page-size-sell").val();
+		var size = $("#rocky_data_page #page-size-sel").val();
 		var sample = self.filter.param.sample;
 		var condition = self.filter.param.condition;
 		self.pageDatas(1, size, sample, condition, sidx, sord);
