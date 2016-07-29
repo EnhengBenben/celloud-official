@@ -177,4 +177,11 @@
         and r.priority &gt; #{priority}
         order by r.priority asc limit 1
     </select>
+    <select id="getLastestPriorityByParentId" resultType="java.lang.Integer">
+        select r.priority
+        from tb_sec_resource r
+        where r.parent_id = #{parentId}
+        order by r.priority desc
+        limit 1
+    </select>
 </mapper>

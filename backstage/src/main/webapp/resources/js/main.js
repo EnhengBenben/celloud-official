@@ -1275,33 +1275,6 @@ var permission = (function(permission){
 						}
 					});
 				}
-				var priority = $("#priority").val().trim();
-				var parentId = $("#parentId").val();
-				if(priority == ''){
-					$("#priority").next().html("优先级不能为空!");
-					flag = false;
-				}else{
-					if(isNaN(priority) || priority!=parseInt(priority)){
-						$("#priority").next().html("请输入整数优先级!");
-						flag = false;
-					}else{
-						// 校验表达式是否重复
-						$.ajax({
-							url : "resource/checkPriority",
-							async : false,
-							type : "post",
-							data : {priority:priority,id:id,parentId:parentId},
-							success : function(data){
-								if(data > 0){
-									$("#priority").next().html("优先级重复!");
-									flag = false;
-								}else{
-									$("#priority").next().html("");
-								}
-							}
-						});
-					}
-				}
 				
 				var type = $("#select2-type-container").html();
 				if(type == "请选择"){

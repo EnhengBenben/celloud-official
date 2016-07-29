@@ -84,4 +84,13 @@ public interface SecResourceMapper {
      */
     SecResource getNextPriority(@Param("parentId") Integer parentId,
             @Param("priority") Integer priority);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月29日下午4:50:53
+     * @description
+     *
+     */
+    Integer getLastestPriorityByParentId(@Param("parentId") Integer parentId);
 }
