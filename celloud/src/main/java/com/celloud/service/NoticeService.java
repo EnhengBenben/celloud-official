@@ -24,4 +24,6 @@ public interface NoticeService {
 
     public Notice getNoticeById(Integer noticeId);
 
+	public void readAllNotice();
+
 }

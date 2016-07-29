@@ -176,7 +176,7 @@ public interface AppMapper {
      * @description 根据appId删除用户和app的关系
      *
      */
-    public int deleteUserAppRight(@Param("appId") Integer appId);
+    public int deleteUserAppRight(@Param("appId") Integer appId, @Param("testAccountIds") String testAccountIds);
 
     /**
      * 

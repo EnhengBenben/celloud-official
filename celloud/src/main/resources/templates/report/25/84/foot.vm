@@ -1,0 +1,39 @@
+<div id="foot">
+    <table class="footTable">
+        <tr>
+            <td style="width:6%;"></td>
+            <td style="width:31%;">
+                                检查者:<span><input name="baseInfo['inspector']" value="$!{egfr.baseInfo.inspector}" type="text" class="tdInput"></span>
+            </td>
+            <td style="width:31%;">
+                                报告审核者:<span><input name="baseInfo['audit']" value="$!{egfr.baseInfo.audit}" type="text" class="tdInput"></span>
+            </td>
+            <td style="width:31%;">
+                                第<input style="width:20px;text-align:center;" name="currentPage" value="$!{egfr.baseInfo.currentPage}" />页/共<input style="width:20px;text-align:center;" name="totalPage" value="$!{egfr.baseInfo.totalPage}" />页
+            </td>
+        </tr>
+        <tr>
+            <td style="width:6%;"></td>
+            <td style="width:31%;">
+                                样本采集时间：<span><input name="baseInfo['collectionDate']" value="$!{egfr.baseInfo.collectionDate}" type="text" class="tdInput"></span>
+            </td>
+            <td style="width:31%;">
+                                样本接收时间：<span><input name="baseInfo['receiveDate']" value="$!{egfr.baseInfo.receiveDate}" type="text" class="tdInput"></span>
+            </td>
+            <td style="width:31%;">
+                                样本报告时间：<span><input name="baseInfo['reportDate']" value="$!{egfr.baseInfo.reportDate}" type="text" class="tdInput"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:6%;"></td>
+            <td style="width:31%;">
+                               医院地址：<span><input name="baseInfo['address']" value="$!{egfr.baseInfo.address}" type="text" class="tdInput"></span>
+            </td>
+            <td style="width:31%;">
+            </td>
+            <td style="width:31%;">
+                               联系电话：<span><input name="baseInfo['tel']" value="$!{egfr.baseInfo.tel}" type="text" class="tdInput"></span>
+            </td>
+        </tr>
+    </table>
+</div>
