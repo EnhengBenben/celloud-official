@@ -160,4 +160,31 @@ public interface AppMapper {
 
     public void deleteAppRightByAppIdsAndUserId(@Param("apps") List<App> apps, @Param("userId") Integer userId);
 
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月21日下午3:46:52
+     * @description 根据appId从关系表中查找用户id
+     *
+     */
+    public List<Integer> findUserIdsByAppId(@Param("appId") Integer appId);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月21日下午4:08:56
+     * @description 根据appId删除用户和app的关系
+     *
+     */
+    public int deleteUserAppRight(@Param("appId") Integer appId);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月21日下午4:12:45
+     * @description 建立用户和app的关系
+     *
+     */
+    public int insertUserAppRight(@Param("appId") Integer appId, @Param("userIds") Integer[] userIds);
+
 }

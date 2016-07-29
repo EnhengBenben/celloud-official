@@ -165,7 +165,7 @@ public class LoginAction {
 		session.setAttribute(Constants.MESSAGE_CATEGORY, null);
 		// 发送登录消息
 		String first = "您好，您的帐号" + ConstantsData.getLoginUserName() + " 被登录";
-		String now = DateUtil.getDateToString("yyyy-MM-dd hh:mm:ss");
+		String now = DateUtil.getDateToString(DateUtil.YMDHMS);
 		String ip = UserAgentUtil.getIp(ConstantsData.getRequset());
 		String reason = "备注：如本次登录不是您本人授权，说明您的帐号存在安全隐患！为减少您的损失，请立即修改密码。";
 		Param params = ParamFormat.param().set(WechatParams.LOGIN.first.name(), first, "#222222")

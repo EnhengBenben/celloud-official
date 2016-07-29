@@ -26,6 +26,14 @@
     from tb_email_template
     where state = #{state,jdbcType=INTEGER}
   </select>
+  <select id="getEmailTemplates" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_email_template
+    where state = #{state,jdbcType=INTEGER}
+  </select>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -43,10 +51,21 @@
     where method = #{method }
     and id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from tb_email_template
+  <select id="getTemplateByMethod" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_email_template
+    where method = #{method }
+    and id != #{id,jdbcType=INTEGER}
+    and state = #{state,jdbcType=INTEGER}
+    and id = #{id,jdbcType=INTEGER}
+  </select>
+  <update id="deleteByPrimaryKey">
+    update tb_email_template set state= #{state,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
-  </delete>
+  </update>
   <insert id="insert" parameterType="com.celloud.backstage.model.EmailTemplate" >
     insert into tb_email_template (id, name, method, 
       title, create_date, state, 

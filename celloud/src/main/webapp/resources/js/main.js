@@ -451,12 +451,10 @@ function showHelp(){
 	$("#mainDIV").load("pages/help/help_question.jsp");
 }
 /**
- * 监听websocket的open事件，在已经建立好websocket之后，直接刷新页面右上角的提醒。
+ * 直接刷新页面右上角的提醒。
  */
-messageUtils.addOpenListener(function() {
-	$("#messages-menu").load(CONTEXT_PATH + "/notice/lastUnread/message");
-	$("#notices-menu").load(CONTEXT_PATH + "/notice/lastUnread/notice");
-});
+$("#messages-menu").load(CONTEXT_PATH + "/notice/lastUnread/message");
+$("#notices-menu").load(CONTEXT_PATH + "/notice/lastUnread/notice");
 /**
  * 监听userMessage频道，有新消息时，刷新右上角提醒
  */

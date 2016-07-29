@@ -24,15 +24,17 @@ import com.celloud.backstage.page.Page;
 import com.celloud.backstage.page.PageList;
 import com.celloud.backstage.service.UserService;
 import com.celloud.backstage.utils.Base64Util;
-import com.celloud.backstage.utils.EmailUtils;
 import com.celloud.backstage.utils.MD5Util;
 import com.celloud.backstage.utils.ResetPwdUtils;
+import com.celloud.message.alimail.AliEmailUtils;
 
 @Service("userServiceImpl")
 public class UserServiceImpl implements UserService {
     private Logger logger=LoggerFactory.getLogger(UserServiceImpl.class);
     @Resource
     private UserMapper userMapper;
+	@Resource
+	private AliEmailUtils aliEmail;
 
     @Resource
     private UserRegisterMapper userRegisterMapper;
@@ -172,7 +174,7 @@ public class UserServiceImpl implements UserService {
                     + deptId + "/" + companyId+"/"+appCompanyId+"/"+role);
             String context = ResetPwdUtils.userContent.replaceAll("url",
                     "<a href='"+ResetPwdUtils.userPath.replaceAll("path", param)+"'>"+ResetPwdUtils.userPath.replaceAll("path", param)+"</a>");
-            EmailUtils.sendWithTitle (ResetPwdUtils.userTitle,context,email );
+			aliEmail.simpleSend(ResetPwdUtils.userTitle, context, email);
         }
         
     }
@@ -192,6 +194,11 @@ public class UserServiceImpl implements UserService {
         List<User> list = userMapper.getUserPageList(DataState.ACTIVE, page,
                 condition);
         return new PageList<User>(page, list);
+    }
+
+    @Override
+    public List<User> getBigCustomers() {
+        return userMapper.findUserByRole(DataState.ACTIVE, 1);
     }
 
 }

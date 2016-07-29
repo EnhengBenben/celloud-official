@@ -8,7 +8,7 @@
 <!-- 优先使用最新版本的IE 和 Chrome 内核 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="baidu-site-verification" content="IsldTuHqik" />
-<title>CelLoud 用户登录</title>
+<title>CelLoud 用户绑定微信账号</title>
 <meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
 <meta name="description" content="一站式高通量基因检测数据分析系统">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,21 +40,21 @@
 		                </div>
 		            </c:when>
 		            <c:otherwise>
-		                <div class="error">&nbsp;test</div>
+		                <div class="error"></div>
 		                <input type="hidden" id="modulusHidden" name="modulus" value="${publicKey.modulus }" />
 	                    <input type="hidden" id="exponentHidden" name="exponent" value="${publicKey.exponent }" />
 	                    <input type="text" class="username input-top" placeholder="用户名或邮箱" id="username" name="username"/>
 	                    <input type="password" class="pwd" placeholder="密码" id="password" name="password"/>
 	                    <input type="hidden" id="tempPassword" />
                         <input type="hidden" name="newPassword" />
-	                    <a id="submit" class="btn-login sign-in" href="javascript:void(0);">登录</a>
+	                    <a id="submit" class="unbind" href="javascript:void(0);">绑定账号</a>
 		            </c:otherwise>
 		        </c:choose>
 			</div>
 		</form>
 	</div>
 	<jsp:useBean id="_now" class="java.util.Date" />
-	<div class="footer">
+	<div class="footer" style="position: absolute;">
 		©
 		<fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" />
 		CelLoud，Inc. All Rights reserved.
@@ -81,5 +81,16 @@
 		  utils.setDocSize();
 		});
 	</script>
+	<style type="text/css">
+		.unbind{
+			width: 320px;
+		    height: 30px;
+		    margin: 20px auto;
+		    display: inline-block;
+	        background-color: #26aa38;
+		    color: #FDFCFD;
+		    padding-top: 10px;
+		}
+	</style>
 </body>
 </html>

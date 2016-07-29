@@ -18,7 +18,12 @@ import com.celloud.backstage.model.FeedbackReply;
 import com.celloud.backstage.page.Page;
 import com.celloud.backstage.page.PageList;
 import com.celloud.backstage.service.FeedbackService;
-import com.celloud.mail.EmailUtils;
+import com.celloud.backstage.utils.DateUtil;
+import com.celloud.message.alimail.AliEmail;
+import com.celloud.message.alimail.AliEmailUtils;
+import com.celloud.message.alimail.AliSubstitution;
+import com.celloud.message.alimail.EmailParams;
+import com.celloud.message.alimail.EmailType;
 
 
 /**
@@ -35,6 +40,8 @@ public class FeedbackServiceImpl implements FeedbackService {
     private FeedbackAttachmentMapper attachmentMapper;
     @Resource
     private FeedbackReplyMapper replyMapper;
+	@Resource
+	private AliEmailUtils aliEmail;
 
 
     @Override
@@ -70,7 +77,16 @@ public class FeedbackServiceImpl implements FeedbackService {
         reply.setUserName(ConstantsData.getLoginUserName());
         int result=replyMapper.insertSelective(reply);
         if(result>0&&fb.getEmail()!=null){
-            EmailUtils.sendFeedbackReply(fb, reply);
+			String time = DateUtil.getDateToString(fb.getCreateDate(), DateUtil.YMDHMS);
+			AliEmail email = AliEmail.template(EmailType.FEADBACKREPLY).substitutionVars(
+					AliSubstitution.sub().set(EmailParams.FEADBACKREPLY.feedbackTitle.name(), fb.getTitle())
+							.set(EmailParams.FEADBACKREPLY.feedbackCreateDate.name(), time)
+							.set(EmailParams.FEADBACKREPLY.feedbackUsername.name(), fb.getUsername())
+							.set(EmailParams.FEADBACKREPLY.feedbackEmail.name(), fb.getEmail())
+							.set(EmailParams.FEADBACKREPLY.feedbackContent.name(), fb.getContent())
+							.set(EmailParams.FEADBACKREPLY.replyUserName.name(), reply.getUserName())
+							.set(EmailParams.FEADBACKREPLY.replyContent.name(), reply.getContent()));
+			aliEmail.simpleSend(email, fb.getEmail());
         }
         return  result> 0;
     }

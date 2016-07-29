@@ -1,5 +1,6 @@
 package com.celloud.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,6 +12,39 @@ import java.util.Date;
  * @date 2016年1月4日 上午10:30:32
  */
 public class DateUtil {
+	public static final String YMDHMS = "yyyy-MM-dd HH:mm:ss";
+
+	/**
+	 * 将字符串转成yyyy-MM-dd HH:mm:ss的时间
+	 * 
+	 * @param date
+	 * @return
+	 * @author lin
+	 * @date 2016年7月22日下午3:15:26
+	 */
+	public static Date stringToDate(String date) {
+		return stringToDate(date, YMDHMS);
+	}
+
+	/**
+	 * 字符串转date
+	 * 
+	 * @param date：需要转的字符串
+	 * @param format：格式化标准
+	 * @return
+	 * @author lin
+	 * @date 2016年7月22日下午3:14:17
+	 */
+	public static Date stringToDate(String date, String format) {
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		Date time = null;
+		try {
+			time = sdf.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return time;
+	}
     /**
      * 将当前时间格式化为“yyyyMMdd”格式的字符串
      * 

@@ -2,9 +2,6 @@ package com.celloud.wechat;
 
 import java.util.Map;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,21 +51,19 @@ public class WechatUtils {
 	 * @date 2016年6月27日上午10:37:03
 	 */
 	public String getToken() {
-        Subject subject = SecurityUtils.getSubject();
-        Session session = subject.getSession();
-        if (session.getAttribute("WebchatToken") == null) {
-            String url = tokenUrl + "appid=" + appId + "&secret=" + appSecret;
-            String result = HttpURLUtils.httpGetRequest(url);
-            JSONObject t = new JSONObject(result);
-            if (t.has("access_token")) {
-                session.setAttribute("WebchatToken",
-                        t.getString("access_token"));
-
-            } else {
-                logger.error(result);
-            }
-        }
-        return session.getAttribute("WebchatToken").toString();
+		String token = WechatToken.getToken();
+		if (token == null) {
+			String url = tokenUrl + "appid=" + appId + "&secret=" + appSecret;
+			String result = HttpURLUtils.httpGetRequest(url);
+			JSONObject t = new JSONObject(result);
+			if (t.has("access_token")) {
+				token = t.getString("access_token");
+				WechatToken.setToken(token);
+			} else {
+				logger.error(result);
+			}
+		}
+		return token;
 	}
 
 	/**

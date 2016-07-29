@@ -378,4 +378,7 @@ $(function(){
 	$("body").on("click","[data-click='to-app-price-list']",function(){
 	  $.appManager.price.list();
 	});
+	$("body").on("click","[data-click='to-app-grant-list']",function(){
+		$.appManager.grant.list();
+	});
 });
