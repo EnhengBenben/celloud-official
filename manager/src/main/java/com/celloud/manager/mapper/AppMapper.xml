@@ -519,7 +519,7 @@
   <delete id="deleteUserAppRight">
     delete
     from tb_user_app_right
-    where app_id = #{appId}
+    where app_id = #{appId} and user_id not in (${testAccountIds})
   </delete>
   <insert id="insertUserAppRight">
     insert into
