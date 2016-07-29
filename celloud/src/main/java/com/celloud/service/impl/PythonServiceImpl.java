@@ -133,7 +133,7 @@ public class PythonServiceImpl implements PythonService {
 
     @Override
     public String uploaded(String dataKey) {
-		String celloudPath = this.getClass().getResource("").toString().split("WEB-INF")[0];
+		String celloudPath = this.getClass().getResource("").getPath().split("WEB-INF")[0];
         String absPath = path + dataKey;// 文件的绝对路径
         File file = new File(absPath);
         if (!file.exists()) {
