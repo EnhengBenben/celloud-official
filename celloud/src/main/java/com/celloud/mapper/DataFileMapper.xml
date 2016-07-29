@@ -553,19 +553,17 @@
 		r.flag = #{reportType }
 		and r.state = #{state } and
 		r.file_id=f.file_id) isRunning
-		from tb_file
-		f
+		from tb_file f
 		<where>
 			user_id = #{userId } and state = #{state }
 			<choose>
 				<when test="condition != null">
-					and (file_name like '%${condition}%'
-					or sample like
-					'%${condition}%'
-					or batch like '%${condition}%')
+					and (file_name like concat('%',#{condition},'%')
+					or sample like concat('%',#{condition},'%')
+					or batch like concat('%',#{condition},'%'))
 				</when>
 				<when test="sample != null">
-					and sample like '%${sample}%'
+					and sample like concat('%',#{sample},'%')
 				</when>
 			</choose>
 		</where>

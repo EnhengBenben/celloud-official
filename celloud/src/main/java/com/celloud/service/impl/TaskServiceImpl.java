@@ -28,7 +28,6 @@ import com.celloud.model.mysql.Report;
 import com.celloud.model.mysql.Task;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
-import com.celloud.service.ExpensesService;
 import com.celloud.service.TaskService;
 
 /**
@@ -54,9 +53,6 @@ public class TaskServiceImpl implements TaskService {
 	PriceMapper priceMapper;
 	@Resource
 	ReportDao reportDao;
-	@Resource
-	ExpensesService expenseService;
-
 	@Override
 	public Integer create(Task task) {
 		task.setPeriod(TaskPeriod.WAITTING);
@@ -115,8 +111,6 @@ public class TaskServiceImpl implements TaskService {
 			report.setPeriod(ReportPeriod.RUNNING_HAVE_REPORT);
 		}
 		reportMapper.updateReportPeriod(report);
-		// 保存消费记录
-		expenseService.saveRunExpenses(projectId, appId, task.getUserId(), dataList);
 		return task;
 	}
 

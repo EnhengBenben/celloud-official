@@ -384,15 +384,15 @@
 		<where>
 			<choose>
 				<when test="condition != null">
-					(f.file_name like '%${condition}%'
+					(f.file_name like concat('%',#{condition},'%')
 					or s.sample_name
 					like
-					'%${condition}%'
+					concat('%',#{condition},'%')
 					or
-					f.batch like '%${condition}%')
+					f.batch like concat('%',#{condition},'%'))
 				</when>
 				<when test="sample != null">
-					s.sample_name like '%${sample}%'
+					s.sample_name like concat('%',#{sample},'%')
 				</when>
 			</choose>
 		</where>

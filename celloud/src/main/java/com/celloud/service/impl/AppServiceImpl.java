@@ -1,5 +1,6 @@
 package com.celloud.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,11 @@ import com.celloud.constants.PriceType;
 import com.celloud.constants.ReportPeriod;
 import com.celloud.constants.ReportType;
 import com.celloud.mapper.AppMapper;
+import com.celloud.mapper.PriceMapper;
+import com.celloud.mapper.UserMapper;
 import com.celloud.model.mysql.App;
+import com.celloud.model.mysql.Price;
+import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.AppService;
@@ -31,6 +36,10 @@ public class AppServiceImpl implements AppService {
 
     @Resource
     private AppMapper appMapper;
+    @Resource
+    private UserMapper userMapper;
+    @Resource
+    private PriceMapper priceMapper;
 
     @Override
     public Integer countMyApp(Integer userId) {
@@ -122,6 +131,18 @@ public class AppServiceImpl implements AppService {
     @Override
     public App findAppsByTag(Integer tagId) {
         return appMapper.findAppsByTag(tagId);
+    }
+
+    @Override
+    public Boolean checkPriceToRun(List<Integer> appIds, Integer userId) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        BigDecimal appPrice = new BigDecimal(0);
+        for (Integer id : appIds) {
+            Price price = priceMapper.selectByItemId(id, PriceType.isApp);
+            appPrice.add(price.getPrice());
+        }
+        BigDecimal balances = user.getBalances();
+        return balances.compareTo(appPrice) >= 0;
     }
 
 }
