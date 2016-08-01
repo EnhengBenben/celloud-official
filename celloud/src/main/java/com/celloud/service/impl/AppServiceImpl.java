@@ -136,10 +136,10 @@ public class AppServiceImpl implements AppService {
     @Override
     public Boolean checkPriceToRun(List<Integer> appIds, Integer userId) {
         User user = userMapper.selectByPrimaryKey(userId);
-        BigDecimal appPrice = new BigDecimal(0);
+        BigDecimal appPrice = BigDecimal.ZERO;
         for (Integer id : appIds) {
             Price price = priceMapper.selectByItemId(id, PriceType.isApp);
-            appPrice.add(price == null ? new BigDecimal(0) : price.getPrice());
+            appPrice.add(price == null ? BigDecimal.ZERO : price.getPrice());
         }
         BigDecimal balances = user.getBalances();
         return balances.compareTo(appPrice) >= 0;

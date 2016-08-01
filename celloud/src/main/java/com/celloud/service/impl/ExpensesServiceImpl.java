@@ -59,9 +59,9 @@ public class ExpensesServiceImpl implements ExpensesService {
             expense.setId(null);
             int fileExpenseNum = expensesMapper.getFileExpenseNum(d.getFileId(),
                     appId, PriceType.isApp);
-            BigDecimal amount = new BigDecimal(0);
+            BigDecimal amount = BigDecimal.ZERO;
             if (fileExpenseNum == 0) {
-                amount = price.getPrice();
+                amount = price == null ? BigDecimal.ZERO : price.getPrice();
             } else {
                 expense.setRemark(ExpensesRemark.RERUN_FREE);
             }
@@ -94,9 +94,10 @@ public class ExpensesServiceImpl implements ExpensesService {
                 if (i == 0) {
                     fileExpenseNum = expensesMapper.getFileExpenseNum(
                             d.getFileId(), appId, PriceType.isApp);
-                    BigDecimal amount = new BigDecimal(0);
+                    BigDecimal amount = BigDecimal.ZERO;
                     if (fileExpenseNum == 0) {
-                        amount = price.getPrice();
+                        amount = price == null ? BigDecimal.ZERO
+                                : price.getPrice();
                     } else {
                         expense.setRemark(ExpensesRemark.RERUN_FREE);
                     }
