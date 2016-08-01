@@ -88,7 +88,7 @@ public class NoticeAction {
 			//						.set(WechatParams.RUN_OVER.keyword1.name(), appName, null)
 			//						.set(WechatParams.RUN_OVER.keyword2.name(), startDate, null)
 			//						.set(WechatParams.RUN_OVER.keyword3.name(), endDate, "#222222");
-			mcu.sendMessage(MessageCategoryCode.NOTICE, aliEmail, null, mu);
+			mcu.sendMessage(usernames, MessageCategoryCode.NOTICE, aliEmail, null, mu);
 			return 1;
         }
         

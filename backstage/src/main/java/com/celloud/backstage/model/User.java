@@ -21,8 +21,6 @@ public class User implements Serializable {
 
     private Date createDate;
 
-    private String icon;
-
     private Integer role;
 
     private String remark;
@@ -94,15 +92,6 @@ public class User implements Serializable {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
-    }
-
-    public String getIcon() {
-        return this.icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon == null ? null : icon.trim();
-        this.avatar = AvatarUtil.getAvatar(icon);
     }
 
     public Integer getRole() {
