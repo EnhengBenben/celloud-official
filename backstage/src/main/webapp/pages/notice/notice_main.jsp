@@ -16,7 +16,7 @@
                 <tr>
                     <th>公告标题</th>
                     <th>发布时间</th>
-                    <th>操作</th>
+<!--                     <th>操作</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -26,11 +26,11 @@
                         <a href="javascript:void(0);" data-toggle="tooltip" data-placement="right">${notice.noticeTitle }<div class="hide">${notice.noticeContext }</div></a>
                     </td>
                     <td><fmt:formatDate value="${notice.createDate }" pattern="yyyy-MM-dd hh:mm:ss"/></td>
-                    <td>
-                        <a class="btn btn-secondary" href="javascript:notice.editNotice(${notice.noticeId })">
-                                                    编辑
-                        </a>
-                    </td>
+<!--                     <td> -->
+<%--                         <a class="btn btn-secondary" href="javascript:notice.editNotice(${notice.noticeId })"> --%>
+<!--                                                     编辑 -->
+<!--                         </a> -->
+<!--                     </td> -->
                 </tr>
                 </c:forEach>
             </tbody>

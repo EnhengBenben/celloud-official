@@ -386,7 +386,7 @@
         email as id, username as text 
         from tb_user 
         where state = #{state } 
-        order by username
+        order by user_id
     </select>
     <select id="getUserPageList" resultMap="otherResultMap">
         select

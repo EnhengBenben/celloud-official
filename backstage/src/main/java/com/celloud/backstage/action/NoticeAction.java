@@ -64,11 +64,15 @@ public class NoticeAction {
     
     @RequestMapping("notice/save" )
     @ResponseBody
-    public int saveNotice(Notice notice){
+	public int saveNotice(Notice notice, String usernames) {
         if(notice.getNoticeId()!=null){
            return noticeService.updateNotice(notice);
         }else{
-			noticeService.insertMessage(notice, null);
+			if (StringUtils.isBlank(usernames)) {
+				noticeService.insertMessage(notice, null);
+			} else {
+				noticeService.insertMessage(notice, usernames.split(","));
+			}
 			//构造桌面消息
 			MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL).send(
 					NoticeConstants.createMessage("notice", "系统公告", "您收到一份系统公告【" + notice.getNoticeTitle() + "】。"),
