@@ -139,7 +139,7 @@ public class AppServiceImpl implements AppService {
         BigDecimal appPrice = new BigDecimal(0);
         for (Integer id : appIds) {
             Price price = priceMapper.selectByItemId(id, PriceType.isApp);
-            appPrice.add(price.getPrice());
+            appPrice.add(price == null ? new BigDecimal(0) : price.getPrice());
         }
         BigDecimal balances = user.getBalances();
         return balances.compareTo(appPrice) >= 0;
