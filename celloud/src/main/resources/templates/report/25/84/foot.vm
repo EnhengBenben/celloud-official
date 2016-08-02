@@ -26,10 +26,10 @@
         </tr>
         <tr>
             <td style="width:6%;"></td>
-            <td style="width:31%;">
+            <td style="width:61%;" colspan="2">
                                医院地址：<span><input name="baseInfo['address']" value="$!{egfr.baseInfo.address}" type="text" class="tdInput"></span>
             </td>
-            <td style="width:31%;">
+            <td style="width:1%;">
             </td>
             <td style="width:31%;">
                                联系电话：<span><input name="baseInfo['tel']" value="$!{egfr.baseInfo.tel}" type="text" class="tdInput"></span>
