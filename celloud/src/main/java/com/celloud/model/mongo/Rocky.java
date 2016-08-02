@@ -2,9 +2,11 @@ package com.celloud.model.mongo;
 
 import java.util.List;
 
-public class Rocky  extends MIB {
+public class Rocky extends MIB {
 	private static final long serialVersionUID = -919145643142962977L;
+	private boolean pathogenic;
 	private List<RockyRecord> records;
+
 	public List<RockyRecord> getRecords() {
 		return records;
 	}
@@ -12,4 +14,17 @@ public class Rocky  extends MIB {
 	public void setRecords(List<RockyRecord> records) {
 		this.records = records;
 	}
+
+	public boolean isPathogenic() {
+		return pathogenic;
+	}
+
+	public void setPathogenic(boolean pathogenic) {
+		this.pathogenic = pathogenic;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 }
