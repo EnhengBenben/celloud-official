@@ -174,7 +174,7 @@
     <select id="findUserByBigCustomer" resultMap="BaseResultMap">
     select DISTINCT u.user_id,u.username from tb_user_company_relat ucr
 	INNER JOIN tb_user u on ucr.user_id=u.user_id
-	where u.state=#{state } 
+	where u.state=#{state } and role != 1
 	<if test="companyId != null">
     and ucr.company_id=#{companyId}
     </if>
