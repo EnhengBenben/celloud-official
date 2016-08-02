@@ -3,7 +3,7 @@ $(function() {
 		complete : function(request, textStatus) {
 			var sessionstatus = request.getResponseHeader("sessionstatus"); // 通过XMLHttpRequest取得响应头，sessionstatus，
 			if (sessionstatus == "timeout") {
-				jAlert("登录超时,请重新登录！", "登录超时", function() {
+				alert("登录超时,请重新登录！", "登录超时", function() {
 					window.location.href = "login";
 				});
 			}

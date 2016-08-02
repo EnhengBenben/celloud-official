@@ -2,6 +2,10 @@ package com.celloud.model.mongo;
 
 public class RockyRecord {
 	/**
+	 * 突变基因
+	 */
+	private String gene;
+	/**
 	 * 碱基
 	 */
 	private String bases;
@@ -10,13 +14,9 @@ public class RockyRecord {
 	 */
 	private String acids;
 	/**
-	 * 突变基因
+	 * 核苷酸变异
 	 */
-	private String gene;
-	/**
-	 * 说明
-	 */
-	private String description;
+	private String nucleotides;
 	/**
 	 * 染色体
 	 */
@@ -25,6 +25,22 @@ public class RockyRecord {
 	 * 位置
 	 */
 	private String position;
+	/**
+	 * 临床意义
+	 */
+	private String significance;
+	/**
+	 * 说明
+	 */
+	private String description;
+
+	public String getGene() {
+		return gene;
+	}
+
+	public void setGene(String gene) {
+		this.gene = gene;
+	}
 
 	public String getBases() {
 		return bases;
@@ -42,20 +58,12 @@ public class RockyRecord {
 		this.acids = acids;
 	}
 
-	public String getGene() {
-		return gene;
+	public String getNucleotides() {
+		return nucleotides;
 	}
 
-	public void setGene(String gene) {
-		this.gene = gene;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
+	public void setNucleotides(String nucleotides) {
+		this.nucleotides = nucleotides;
 	}
 
 	public String getChromosome() {
@@ -73,4 +81,21 @@ public class RockyRecord {
 	public void setPosition(String position) {
 		this.position = position;
 	}
+
+	public String getSignificance() {
+		return significance;
+	}
+
+	public void setSignificance(String significance) {
+		this.significance = significance;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 }
