@@ -63,8 +63,8 @@ public class MessageCategoryUtils {
 	 * @date 2016年7月18日上午10:10:06
 	 */
 	@Async
-	public void sendMessage(String code, AliEmail email, Param wechat, MessageUtils window) {
-		List<User> list = userService.getAllUserList();
+	public void sendMessage(String usernames, String code, AliEmail email, Param wechat, MessageUtils window) {
+		List<User> list = userService.getUserByNames(usernames.split(","));
 		for (User user : list) {
 			Map<String, MessageCategory> map = initSetting(user.getUserId());
 			if (map.get(code).getEmail().equals(MessageCategoryState.SEND) && email != null) {

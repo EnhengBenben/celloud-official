@@ -16,9 +16,9 @@
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/css/less/main.less" rel="stylesheet/less" type="text/css" />
-<link href="<%=request.getContextPath()%>/css/less/components.less" rel="stylesheet/less" type="text/css" />
-<link href="<%=request.getContextPath()%>/css/less/theme.less" rel="stylesheet/less" type="text/css" />
+<link href="<%=request.getContextPath()%>/css/less/main.less?v=3.2.4" rel="stylesheet/less" type="text/css" />
+<link href="<%=request.getContextPath()%>/css/less/components.less?v=3.2.4" rel="stylesheet/less" type="text/css" />
+<link href="<%=request.getContextPath()%>/css/less/theme.less?v=3.2.4" rel="stylesheet/less" type="text/css" />
 <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script>
 </head>
 <body class="container">
@@ -112,11 +112,11 @@
 	<script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
 	<script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
 	<script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js?version=1.1"></script>
-	<script src="<%=request.getContextPath()%>/js/utils.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/base.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/rocky_main.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/rocky_upload.js"></script>
-	<script src="<%=request.getContextPath()%>/js/rocky_report.js"></script>
+	<script src="<%=request.getContextPath()%>/js/utils.js?v=3.2.4" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/base.js?v=3.2.4" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/rocky_main.js?v=3.2.4" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/rocky_upload.js?v=3.2.4"></script>
+	<script src="<%=request.getContextPath()%>/js/rocky_report.js?v=3.2.4"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/rocky_data.js"></script>
 </body>
 </html>

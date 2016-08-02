@@ -2831,7 +2831,7 @@ public class ReportAction {
 	@RequestMapping("rocky/reportMain")
 	public ModelAndView rockyReportMain(@RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "20") int size, String sample, String condition,
-			@RequestParam(defaultValue = "createDate") String sidx, @RequestParam(defaultValue = "desc") String sord) {
+			@RequestParam(defaultValue = "updateDate") String sidx, @RequestParam(defaultValue = "desc") String sord) {
 		ModelAndView mv = new ModelAndView("rocky/report/report_main");
 		Integer userId = ConstantsData.getLoginUserId();
 		Map<String, Object> periodMap = taskService.findTaskPeriodNum(AppConstants.APP_ID_ROCKY, userId);

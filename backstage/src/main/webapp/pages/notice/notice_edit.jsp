@@ -12,6 +12,12 @@
         <form role="form" class="form-horizontal" id="noticeForm">
             <input type="hidden" name="noticeId" value="${notice.noticeId }">
             <div class="form-group">
+                <label class="col-sm-2 control-label"><font color="red">注意</font></label>
+                <div class="col-sm-10">
+                	<span class="alert alert-danger">如果是测试，请只选择测试账号!!!</span>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-2 control-label" for="noticeTitle">操作</label>
                 <div class="col-sm-10">
                 	<button type="button" class="btn btn-success" onclick="mailing.checkAll(1)">全选</button>

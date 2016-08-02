@@ -46,6 +46,23 @@
 				</c:if>
 			</th>
 			<th>状态</th>
+			<th>更新时间
+				<c:if test="${sidx=='updateDate'&&sord=='asc' }">
+					<a id="reportSortBtn-updateDate-desc" href="javascript:void(0);">
+						<i class="fa fa-sort-amount-asc"></i>
+					</a>
+				</c:if>
+				<c:if test="${sidx=='updateDate'&&sord=='desc' }">
+					<a id="reportSortBtn-updateDate-asc" href="javascript:void(0);">
+						<i class="fa fa-sort-amount-desc"></i>
+					</a>
+				</c:if>
+				<c:if test="${sidx!='updateDate' }">
+					<a id="reportSortBtn-updateDate" href="javascript:void(0);">
+						<i class="fa fa-sort" aria-hidden="true"></i>
+					</a>
+				</c:if>
+			</th>
 			<th>操作</th>
 		</tr>
 	</thead>
@@ -73,6 +90,7 @@
 						<a href="javascript:void(0)" onclick="$.report.period.error('${report.fileName }')" class="wrong">运行异常</a>
 					</c:if>
 				</td>
+				<td><fmt:formatDate value="${report.updateDate }" type="both" dateStyle="long" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 				<td>
 					<c:choose>
 						<c:when test="${report.period ==2 }">
