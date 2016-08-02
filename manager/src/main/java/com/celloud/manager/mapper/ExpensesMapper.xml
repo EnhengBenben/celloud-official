@@ -7,11 +7,16 @@
     <result column="item_id" property="itemId" jdbcType="INTEGER" />
     <result column="item_type" property="itemType" jdbcType="TINYINT" />
     <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="balances" property="balances" jdbcType="DECIMAL" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
+  <resultMap id="extraResultMap" type="com.celloud.manager.model.Expenses" extends="BaseResultMap" >
+    <result column="app_Name" property="appName" jdbcType="VARCHAR" />
+    <result column="file_infos" property="fileInfos" jdbcType="VARCHAR" />
+  </resultMap>
   <sql id="Base_Column_List" >
-    id, user_id, item_id, item_type, amount, create_date, remark
+    id, user_id, item_id, item_type, amount,balances, create_date, remark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -24,14 +29,14 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.celloud.manager.model.Expenses" >
-    insert into tb_expenses (id, user_id, item_id, 
-      item_type, amount, create_date, 
+    insert into tb_expenses (user_id, item_id, 
+      item_type, amount,balances, create_date, 
       remark)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, 
-      #{itemType,jdbcType=TINYINT}, #{amount,jdbcType=DECIMAL}, #{createDate,jdbcType=TIMESTAMP}, 
+    values (#{userId,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, 
+      #{itemType,jdbcType=TINYINT}, #{amount,jdbcType=DECIMAL}, #{balances,jdbcType=DECIMAL}, #{createDate,jdbcType=TIMESTAMP}, 
       #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.celloud.manager.model.Expenses" >
+  <insert id="insertSelective" parameterType="com.celloud.manager.model.Expenses" useGeneratedKeys="true" keyProperty="id" >
     insert into tb_expenses
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -48,6 +53,9 @@
       </if>
       <if test="amount != null" >
         amount,
+      </if>
+      <if test="balances != null" >
+        balances,
       </if>
       <if test="createDate != null" >
         create_date,
@@ -72,6 +80,9 @@
       <if test="amount != null" >
         #{amount,jdbcType=DECIMAL},
       </if>
+      <if test="balances != null" >
+        #{balances,jdbcType=DECIMAL},
+      </if>
       <if test="createDate != null" >
         #{createDate,jdbcType=TIMESTAMP},
       </if>
@@ -95,6 +106,9 @@
       <if test="amount != null" >
         amount = #{amount,jdbcType=DECIMAL},
       </if>
+      <if test="balances != null" >
+        balances = #{balances,jdbcType=DECIMAL},
+      </if>
       <if test="createDate != null" >
         create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
@@ -110,8 +124,29 @@
       item_id = #{itemId,jdbcType=INTEGER},
       item_type = #{itemType,jdbcType=TINYINT},
       amount = #{amount,jdbcType=DECIMAL},
+      balances = #{balances,jdbcType=DECIMAL},
       create_date = #{createDate,jdbcType=TIMESTAMP},
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <insert id="addFileExpenseRelat">
+    insert into tb_file_expenses_relat (expenses_id, project_id, file_id, 
+      data_key, file_name)
+    values (#{expensesId}, #{projectId}, #{fileId}, #{dataKey},#{fileName})
+  </insert>
+  <select id="getFileExpenseNum" resultType="java.lang.Integer">
+     select count(*) exp_num from tb_file_expenses_relat fe,tb_expenses e 
+     where fe.expenses_id=e.id and file_id=#{fileId}
+     and e.item_id=#{itemId} and e.item_type=#{itemType}
+  </select>
+  <select id="getAllRunExpensesByUser" resultMap="extraResultMap" >
+    select e.id, e.user_id, e.item_id, e.amount, e.balances, e.create_date, e.remark,a.app_Name,
+    GROUP_CONCAT(fe.file_name SEPARATOR ',') file_infos
+    from tb_expenses e,tb_file_expenses_relat fe,tb_app a
+    where e.item_id=a.app_id and e.id=fe.expenses_id and e.user_id = #{userId}
+    group by e.id order by e.create_date desc
+  </select>
+  <select id="getTotalExpensesByUser" resultType="java.math.BigDecimal">
+    select sum(amount) from tb_expenses where user_id=#{userId}
+  </select>
 </mapper>

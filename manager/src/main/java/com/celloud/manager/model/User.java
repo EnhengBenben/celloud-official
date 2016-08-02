@@ -1,6 +1,7 @@
 package com.celloud.manager.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class User implements Serializable {
@@ -37,6 +38,8 @@ public class User implements Serializable {
     private Integer companyId;
 
     private String sign;
+
+	private BigDecimal balances;
 
     public Integer getUserId() {
         return userId;
@@ -165,5 +168,13 @@ public class User implements Serializable {
     public void setIcon(String icon) {
         this.icon = icon;
     }
+
+	public BigDecimal getBalances() {
+		return balances;
+	}
+
+	public void setBalances(BigDecimal balances) {
+		this.balances = balances;
+	}
 
 }

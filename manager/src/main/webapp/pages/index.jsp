@@ -159,6 +159,30 @@
                             </li>
                         </ul>
                     </li>
+                    <!-- 费用中心 -->
+                    <li>
+                        <a href="#">
+                            <i class="linecons-mail"></i>
+                            <span class="title">费用中心 </span>
+                        </a>
+                        <ul>
+                            <li id="to-pay-detail">
+                                <a href="javascript:void(0);">
+                                    <span class="title">消费明细</span>
+                                </a>
+                            </li>
+                            <li id="app-grant-menu">
+                                <a data-click="to-app-grant-list" href="javascript:void(0);">
+                                    <span class="title">账户充值</span>
+                                </a>
+                            </li>
+                            <li id="to-recharge-record">
+                                <a href="javascript:void(0);">
+                                    <span class="title">充值记录</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -261,5 +285,9 @@
     <script type="text/javascript" src="${pageContext.request.contextPath }/resources/plugins/select2/js/zh-CN.js"></script>
     <script src="js/main.js"></script>
     <script src="js/app.js"></script>
+    <script type="text/javascript">
+       window.CONTEXT_PATH = '<%=request.getContextPath()%>';
+	</script>
+    <script src="js/expense.js"></script>
 </body>
 </html>
