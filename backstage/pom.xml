@@ -132,6 +132,11 @@
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcprov-jdk15on</artifactId>
 		</dependency>
+		<!-- java mail发送邮件 -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+        </dependency>
 		<!-- userAgent分析，获取用户浏览器操作系统等信息 -->
 		<dependency>
 			<groupId>com.github.ua-parser</groupId>
@@ -142,6 +147,16 @@
 			<groupId>com.github.jarod</groupId>
 			<artifactId>qqwry-java</artifactId>
 		</dependency>
+		<!-- spark链接 -->
+        <dependency>
+            <groupId>ch.ethz.ganymed</groupId>
+            <artifactId>ganymed-ssh2</artifactId>
+        </dependency>
+        <!-- poi -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>net.sf.json-lib</groupId>
 			<artifactId>json-lib</artifactId>
