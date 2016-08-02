@@ -1297,7 +1297,7 @@ var permission = (function(permission){
 	self.role = {
 			pageQuery : function(currentPage,pageSize){
 				currentPage = currentPage || 1;
-				pageSize = pageSize || $("#pageSize").val();
+				pageSize = pageSize || 20;
 				$.post("role/pageQuery",{"currentPage":currentPage,"pageSize":pageSize},function(responseText){
 					$("#main-content").html(responseText);
 					$("#main-menu li").removeClass("active").removeClass("opened").removeClass("expanded");
