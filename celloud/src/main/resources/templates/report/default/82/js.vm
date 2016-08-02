@@ -52,8 +52,8 @@ $(function(){
 			$(this).parent().append("<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>");
 		});
 	}
-    var url = window.location.href.split("print")[0];
     $("#print").on("click",function(){
+        var url = window.location.href.split("print")[0];
         if(companyId==57){
             imgRemove.hideRemove();
         }
@@ -155,6 +155,7 @@ $(function(){
     });
     
     $("#save").on("click",function(){
+        var url = window.location.href.split("print")[0];
         $("table").find("input").each(function(){
             $(this).attr("value",$(this).val());
         });
@@ -176,6 +177,7 @@ $(function(){
     });
 
     $("#reset").on("click",function(){
+        var url = window.location.href.split("print")[0];
         $.lConfirm('确认重置？', function() {
             var _flag = $("#_flag").html();
             if(_flag == 0){//详细报告

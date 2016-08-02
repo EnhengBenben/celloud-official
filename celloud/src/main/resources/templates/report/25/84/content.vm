@@ -1,4 +1,4 @@
-<div id="content">
+<div class="content">
     <input type="hidden" name="id" value="${egfr.id}" id="egfrId" />
     <table class="contentTable" style="border:1px solid">
         <tr>
