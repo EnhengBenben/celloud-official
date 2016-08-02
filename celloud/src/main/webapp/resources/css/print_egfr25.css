@@ -22,19 +22,19 @@ body {
     min-width: 900px;
 }
 
-#title{
+.title{
 	width: 100%;
 	min-width: 900px;
 }
 
-#title h1{
+.title h1{
 	text-align: center;
     font-family: "华文新魏";
     font-size: 28px;
     padding: 10px 0 5px 0;
 }
 
-#content{
+.content{
 	width: 100%;
 }
 
@@ -52,6 +52,10 @@ table td{
 
 .contentTable tr{
     height: 30px;
+}
+
+.contentTable .hr{
+	height: 20px;
 }
 
 .footTable tr{
@@ -91,6 +95,11 @@ input.tdCenterInput{
 p{
 	color: #535353;
     line-height: 1.5em;
+}
+
+hr {
+    border: solid 1px #000;
+    margin-top:5px;
 }
 
 @media print {
