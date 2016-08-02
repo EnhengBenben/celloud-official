@@ -50,7 +50,7 @@
             </td>
         </tr>
         <tr class="bt1">
-            <td colspan="4" style="text-align:left;">
+            <td colspan="4" style="text-align:left;" class="lh25">
 备注：<br/>
 1. 本方法可检测已知突变：EGFR基因18号外显子G719S/C/A突变；19号外显子序列缺失突变；20号外显子T790M及S768I突变；20号外显子序列插入突变；21号外显子L858R及L861Q。<br/>
 2. 检测方法：PCR-Sanger测序法。            检验仪器：ABI 3500 Dx xL基因分析仪。<br/>

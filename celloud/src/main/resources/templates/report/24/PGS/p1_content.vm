@@ -1,0 +1,74 @@
+<div class="content">
+    <input type="hidden" name="id" value="${pgs.id}" id="pgsId" />
+    <table class="contentTable">
+        <tr class="focus">
+            <td colspan="4"><br/>基本信息：</td>
+        </tr>
+        <tr class="focus hr">
+            <td colspan="4"><hr/></td>
+        </tr>
+        <tr>
+            <td>女方姓名:<span><input name="baseInfo['womanName']" value="$!{pgs.baseInfo.womanName}" type="text" class="tdInput"></span></td>
+            <td>年       龄:<span><input name="baseInfo['womanAge']" value="$!{pgs.baseInfo.womanAge}" type="text" class="tdInput"></span></td>
+            <td>男方姓名:<span><input name="baseInfo['manName']" value="$!{pgs.baseInfo.manName}" type="text" class="tdInput"></span></td>
+            <td>年       龄:<span><input name="baseInfo['manAge']" value="$!{pgs.baseInfo.manAge}" type="text" class="tdInput"></span></td>
+        </tr>
+        <tr>
+            <td>病历号:<span><input name="baseInfo['recordNumber']" value="$!{pgs.baseInfo.recordNumber}" type="text" class="tdInput"></span></td>
+            <td>实验编号:<span><input name="baseInfo['experimentNumber']" value="$!{pgs.baseInfo.experimentNumber}" type="text" class="tdInput"></span></td>
+            <td>样本类型:<span><input name="baseInfo['sampleType']" value="$!{pgs.baseInfo.sampleType}" type="text" class="tdInput"></span></td>
+            <td>胚胎数量:<span><input name="baseInfo['embryoCount']" value="$!{pgs.baseInfo.embryoCount}" type="text" class="tdInput"></span></td>
+        </tr>
+        <tr>
+            <td>活检时期:<span><input name="baseInfo['biopsyPeriod']" value="$!{pgs.baseInfo.biopsyPeriod}" type="text" class="tdInput"></span></td>
+            <td>样本状态:<span><input name="baseInfo['embryoState']" value="$!{pgs.baseInfo.embryoState}" type="text" class="tdInput"></span></td>
+            <td>接收时间:<span><input name="baseInfo['receiveDate']" value="$!{pgs.baseInfo.receiveDate}" type="text" class="tdInput"></span></td>
+            <td>检测时间:<span><input name="baseInfo['detectionDate']" value="$!{pgs.baseInfo.detectionDate}" type="text" class="tdInput"></span></td>
+        </tr>
+        <tr>
+            <td>送检单位:<span><input name="baseInfo['inspectionUnit']" value="$!{pgs.baseInfo.inspectionUnit}" type="text" class="tdInput"></span></td>
+            <td></td>
+            <td>送检人:<span><input name="baseInfo['forPeople']" value="$!{pgs.baseInfo.forPeople}" type="text" class="tdInput"></span></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>女方临床诊断:<span><input name="baseInfo['womanClinical']" value="$!{pgs.baseInfo.womanClinical}" type="text" class="tdInput"></span></td>
+            <td></td>
+            <td>男方临床诊断:<span><input name="baseInfo['manClinical']" value="$!{pgs.baseInfo.manClinical}" type="text" class="tdInput"></span></td>
+            <td></td>
+        </tr>
+        <tr class="focus">
+            <td colspan="4"><br/>检测内容：</td>
+        </tr>
+        <tr class="focus hr">
+            <td colspan="4"><hr/></td>
+        </tr>
+        <tr class="focus">
+            <td colspan="4">检测项目：胚胎染色体异常检测</td>
+        </tr>
+        <tr class="focus">
+            <td colspan="4">检测方法：高通量测序--Ion PGM™测序平台</td>
+        </tr>
+        <tr class="focus">
+            <td colspan="4">检测类型：胚胎染色体非整倍体及大于4Mb的染色体缺失和重复</td>
+        </tr>
+        <tr class="focus">
+            <td colspan="4">检测结果：参考基因组为GRCh37/hg19　　详细结果见“结果解读”</td>
+        </tr>
+        <tr class="focus hr">
+            <td colspan="4"><hr/></td>
+        </tr>
+        <tr>
+            <td class="tdCenter">胚胎编号</td>
+            <td class="tdCenter">检测结果</td>
+            <td class="tdCenter">胚胎评级</td>
+            <td class="tdCenter">临床建议</td>
+        </tr>
+        <tr>
+            <td class="tdCenter"><input name="baseInfo['embryoNumber']" value="$!{pgs.baseInfo.embryoNumber}" type="text" class="tdCenterInput"></td>
+            <td class="tdCenter"><input name="baseInfo['result']" value="$!{pgs.baseInfo.result}" type="text" class="tdCenterInput"></td>
+            <td class="tdCenter"><input name="baseInfo['embryoRating']" value="$!{pgs.baseInfo.embryoRating}" type="text" class="tdCenterInput"></td>
+            <td class="tdCenter"><input name="baseInfo['advice']" value="$!{pgs.baseInfo.advice}" type="text" class="tdCenterInput"></td>
+        </tr>
+    </table>
+</div>

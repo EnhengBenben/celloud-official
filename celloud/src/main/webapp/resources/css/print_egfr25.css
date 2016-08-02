@@ -42,7 +42,6 @@ table {
     min-width: 900px;
     background-color: transparent;
     font-size: 14px;
-    background-color: transparent;
     margin: 0 auto;
 }
 
@@ -101,6 +100,13 @@ hr {
     border: solid 1px #000;
     margin-top:5px;
 }
+
+.lh25{
+	line-height: 25px;
+}
+
+/* 强制分页 */
+.w3cbbs { page-break-after:always;}
 
 @media print {
     body {
