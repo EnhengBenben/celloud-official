@@ -15,7 +15,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="bookmark" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" />
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/login.css?version=3.1.14" media="all" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/login.css?version=3.2.4" media="all" />
 </head>
 <body onselectstart="return false;">
 	<!--#S bgContainer-->
