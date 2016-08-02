@@ -238,7 +238,7 @@
                          <g>
                            <rect x="0" y="0" width="50" height="20" fill="
                              #if(!$species_20.site1.equals("0,0"))
-                                #dcdcdc
+                                #8c8c8c
                              #else
                                 #fff
                              #end "
@@ -254,7 +254,7 @@
                            <text x="58" y="15">V3-V4</text>
                            <rect x="100" y="0" width="50" height="20" fill="
                              #if(!$species_20.site3.equals("0,0"))
-                                #dcdcdc
+                                #323232
                              #else
                                 #fff
                              #end "
@@ -262,7 +262,7 @@
                            <text x="108" y="15">V5-V6</text>
                            <rect x="150" y="0" width="50" height="20" fill="
                              #if(!$species_20.site4.equals("0,0"))
-                                #dcdcdc
+                                #c8c8c8
                              #else
                                 #fff
                              #end "

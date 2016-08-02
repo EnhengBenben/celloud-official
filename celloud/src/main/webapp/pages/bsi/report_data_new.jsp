@@ -368,7 +368,7 @@
 	                     <g>
 	                       <rect x="0" y="0" width="50" height="20" fill="
 	                         <c:choose>
-	                           <c:when test="${species20.site1!='0,0'}">#dcdcdc</c:when>
+	                           <c:when test="${species20.site1!='0,0'}">#8c8c8c</c:when>
 	                           <c:otherwise>#fff</c:otherwise>
 		                     </c:choose>"
 		                     style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
@@ -382,14 +382,14 @@
 	                       <text x="58" y="15">V3-V4</text>
 	                       <rect x="100" y="0" width="50" height="20" fill="
 	                         <c:choose>
-	                           <c:when test="${species20.site3!='0,0'}">#dcdcdc</c:when>
+	                           <c:when test="${species20.site3!='0,0'}">#323232</c:when>
 	                           <c:otherwise>#fff</c:otherwise>
 	                         </c:choose>"
 	                         style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
 		                   <text x="108" y="15">V5-V6</text>
 		                   <rect x="150" y="0" width="50" height="20" fill="
 	                         <c:choose>
-	                           <c:when test="${species20.site4!='0,0'}">#dcdcdc</c:when>
+	                           <c:when test="${species20.site4!='0,0'}">#c8c8c8</c:when>
 	                           <c:otherwise>#fff</c:otherwise>
 	                         </c:choose>"
 	                         style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
