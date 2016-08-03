@@ -1,5 +1,6 @@
 package com.celloud.manager.service.impl;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,7 @@ import com.celloud.manager.constants.AppIsAdd;
 import com.celloud.manager.constants.Constants;
 import com.celloud.manager.constants.ConstantsData;
 import com.celloud.manager.constants.DataState;
+import com.celloud.manager.constants.RechargeType;
 import com.celloud.manager.mapper.UserMapper;
 import com.celloud.manager.mapper.UserRegisterMapper;
 import com.celloud.manager.model.User;
@@ -23,6 +25,8 @@ import com.celloud.manager.model.UserRegister;
 import com.celloud.manager.model.UserSelect;
 import com.celloud.manager.page.Page;
 import com.celloud.manager.page.PageList;
+import com.celloud.manager.service.ExpensesService;
+import com.celloud.manager.service.RechargeService;
 import com.celloud.manager.service.UserService;
 import com.celloud.manager.utils.Base64Util;
 import com.celloud.manager.utils.EmailUtils;
@@ -35,6 +39,10 @@ public class UserServiceImpl implements UserService {
     private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Resource
     private UserMapper userMapper;
+	@Resource
+	private RechargeService rechargeService;
+	@Resource
+	private ExpensesService expensesService;
 
     @Override
     public User login(User user) {
@@ -218,4 +226,11 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUserByBigCustomer(Integer companyId) {
         return userMapper.findUserByBigCustomer(companyId, DataState.ACTIVE, PropertiesUtil.testAccountIds);
     }
+
+	@Override
+	public boolean moneyGiven(Integer from, Integer to, BigDecimal amount) {
+		Integer expenseId = expensesService.saveExpenses(from, to, amount);
+		Integer num = rechargeService.saveRecharge(amount, to, RechargeType.GRANT, expenseId);
+		return num == 1;
+	}
 }

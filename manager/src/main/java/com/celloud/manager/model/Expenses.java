@@ -13,6 +13,7 @@ public class Expenses {
     private Byte itemType;
 
     private BigDecimal amount;
+	private BigDecimal balances;
 
     private Date createDate;
 
@@ -93,4 +94,13 @@ public class Expenses {
     public void setAppName(String appName) {
         this.appName = appName;
     }
+
+	public BigDecimal getBalances() {
+		return balances;
+	}
+
+	public void setBalances(BigDecimal balances) {
+		this.balances = balances;
+	}
+
 }
