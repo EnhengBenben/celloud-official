@@ -76,7 +76,7 @@
 					</label>
 				</td>
 				<td>${report.sampleName }</td>
-				<td title="${report.fileName }" name="data-name-td" onclick="$report.showReport('${report.dataKey}','${report.projectId}','${report.appId}')">${report.fileName }</td>
+				<td title="${report.fileName }" name="data-name-td">${report.fileName }</td>
 				<td>${report.batch }</td>
 				<td>
 					<c:if test="${report.period==0 }">等待运行</c:if>
