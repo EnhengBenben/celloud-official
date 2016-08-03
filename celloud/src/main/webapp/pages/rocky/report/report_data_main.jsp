@@ -7,7 +7,7 @@
 		<section>
 			<div class="result-div">
 				<p class="main">
-					${rocky.records.size()<=0?'未':'' }发现<strong>致病相关</strong>突变！
+					${rocky.pathogenic?'':'未' }发现<strong>致病相关</strong>突变！
 				</p>
 				<p class="notice">注： 本报告中&nbsp;“致病相关”&nbsp;是指本系统采集到的已知研究结论中，受检人样本中存在的突变与疾病有相关性。</p>
 			</div>
@@ -51,7 +51,7 @@
 					<tbody>
 						<c:forEach items="${rocky.records }" var="record">
 							<tr>
-								<td style="width: 150px;">${record.gene }:&nbsp;${record.acids }</td>
+								<td style="width: 170px;">${record.gene }:&nbsp;${record.acids }</td>
 								<td>${record.description }</td>
 							</tr>
 						</c:forEach>
