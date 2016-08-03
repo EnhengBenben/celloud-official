@@ -182,6 +182,11 @@
                                     <span class="title">充值记录</span>
                                 </a>
                             </li>
+                            <li id="to-invoice">
+                                <a href="javascript:void(0);">
+                                    <span class="title">发票管理</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>

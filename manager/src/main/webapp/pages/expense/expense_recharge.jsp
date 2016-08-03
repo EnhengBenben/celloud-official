@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="com.celloud.manager.constants.Bank"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<div class="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-hospital"></i>
+            <a href="javascript:void(0)">费用中心</a>
+        </li>
+        <li class="active"><a href="javascript:void(0)">账户充值</a></li>
+    </ul>
+</div>
 <div class="row" style="margin: 5px;">
 	<div class="col-xs-12">
 		<h3>

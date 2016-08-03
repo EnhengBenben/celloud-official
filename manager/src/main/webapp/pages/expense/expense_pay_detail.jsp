@@ -3,6 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<div class="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-hospital"></i>
+            <a href="javascript:void(0)">费用中心</a>
+        </li>
+        <li class="active"><a href="javascript:void(0)">消费明细</a></li>
+    </ul>
+</div>
 <table class="table data-table">
     <thead>
         <tr>
