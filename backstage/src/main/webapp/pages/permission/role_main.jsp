@@ -106,14 +106,14 @@
                                 <li><a href="javascript:void(0)">&gt;</a></li>
                             </c:otherwise>
                         </c:choose>
-                        <li>
+                        <%-- <li>
 	                       <select onchange="permission.role.pageQuery('1',this.value)" id="pageSize" style="height: 33px;">
 	                           <option ${ pageList.page.pageSize==10?'selected':''}>10</option>
 	                           <option ${ pageList.page.pageSize==20?'selected':''}>20</option>
 	                           <option ${ pageList.page.pageSize==50?'selected':''}>50</option>
 	                           <option ${ pageList.page.pageSize==100?'selected':''}>100</option>
 	                       </select>
-	                    </li>
+	                    </li> --%>
                         <li>
                             <a>共${pageList.page.totalPage }页&nbsp;|&nbsp;合计${pageList.page.rowCount }条</a>
                         </li>

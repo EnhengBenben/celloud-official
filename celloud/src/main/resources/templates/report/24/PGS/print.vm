@@ -1,0 +1,16 @@
+#parse("templates/report/layout.vm")
+#parse("templates/report/24/PGS/reference.vm")
+<div id="printMain">
+    <form id="print-form">
+    #parse("templates/report/24/PGS/p1_title.vm")
+    #parse("templates/report/24/PGS/p1_content.vm")
+    #parse("templates/report/24/PGS/p1_foot.vm")
+    <div class="w3cbbs"></div>
+    #parse("templates/report/24/PGS/p2_title.vm")
+    #parse("templates/report/24/PGS/p2_content.vm")
+    <div class="w3cbbs"></div>
+    #parse("templates/report/24/PGS/p3_title.vm")
+    #parse("templates/report/24/PGS/p3_content.vm")
+    </form>
+</div>  
+#parse("templates/report/24/PGS/js.vm")

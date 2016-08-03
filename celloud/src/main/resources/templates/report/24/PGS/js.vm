@@ -1,5 +1,6 @@
 <script type="text/javascript">
 $(function(){
+    var url = window.location.href.split("print")[0];
     $("#print").on("click",function(){
         $(".buttons").hide();
         $("input").css("border-bottom", "0");
@@ -9,8 +10,7 @@ $(function(){
     });
     
     $("#save").on("click",function(){
-        var url = window.location.href.split("print")[0];
-        $.post(url+"updateEgfrFilling",$("#print-form").serialize(),function(result){
+        $.post(url+"updatePgsFilling",$("#print-form").serialize(),function(result){
             if(result==1){
                 $.lAlert("信息保存成功！");
             }else{
@@ -21,9 +21,8 @@ $(function(){
     });
 
     $("#reset").on("click",function(){
-        var url = window.location.href.split("print")[0];
         $.lConfirm('确认重置？', function() {
-            $.post(url+"updateEgfrFilling",{id:$("#egfrId").val()},function(result){
+            $.post(url+"updatePgsFilling",{id:$("#pgsId").val()},function(result){
                 if(result==1){
                     location=location ;
                 }else{

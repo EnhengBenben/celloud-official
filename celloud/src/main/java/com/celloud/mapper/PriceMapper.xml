@@ -118,6 +118,6 @@
     select 
     <include refid="Base_Column_List" />
     from tb_price
-    where item_id = #{itemId} and item_type = #{itemType}
+    where item_id = #{itemId} and item_type = #{itemType} and expire_date is null
   </select>
 </mapper>
