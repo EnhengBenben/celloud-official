@@ -30,40 +30,14 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${rocky.records }" var="record" varStatus="index">
+						<c:forEach items="${rocky.records }" var="record" varStatus="status">
 							<tr>
-								<td>${index }</td>
+								<td>${status.count }</td>
 								<td>${record.gene }</td>
-								<td>${record.chromosome}:&nbsp;${record.position }</td>
+								<td>${record.chromosome}</td>
 								<td>${record.acids }</td>
 								<td>${record.acids }</td>
 								<td>${record.significance }</td>
-							</tr>
-						</c:forEach>
-						<c:forEach begin="0" end="3" var="index">
-							<tr>
-								<td>${3*index+1 }</td>
-								<td>BRCA1</td>
-								<td>Chr17: 43045749</td>
-								<td>c.5521delA</td>
-								<td>p.Ser1841Valfs</td>
-								<td>Pathogenic</td>
-							</tr>
-							<tr>
-								<td>${3*index+2 }</td>
-								<td>BRCA2</td>
-								<td>Chr13: 32316497</td>
-								<td>c.37G>T</td>
-								<td>p.Glu13Ter</td>
-								<td>Pathogenic</td>
-							</tr>
-							<tr>
-								<td>${3*index+3 }</td>
-								<td>BRCA2</td>
-								<td>Chr13: 32319103</td>
-								<td>c.94T>C</td>
-								<td>p.Phe32Leu</td>
-								<td>Uncertain Significance</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -75,24 +49,10 @@
 				</p>
 				<table class="table table-main -report">
 					<tbody>
-						<tr>
-							<td style="width: 150px;">BRAC1:&nbsp;c.5521delA</td>
-							<td>This sequence change deletes 1 nucleotide in exon 23 of the BRCA1 mRNA (c.5521delA), causing a frameshift at codon 1841. This creates a premature translational stop signal in the last
-								exon of the BRCA1 mRNA (p.Ser1841Valfs*2). While this is not anticipated to result in nonsense mediated decay, it is expected to result in a truncated protein by eliminating 22 amino acid
-								residues from the full-length BRCA1 protein. This variant has been reported in individuals affected with breast and/or ovarian cancer (PMID: 9544766, 17851763, 21614564, 26848529). This
-								variant is also known as 5640delA in the literature. This truncation is expected to partially remove the C-terminal BRCT domain of BRCA1 protein, which is important for DNA repair activity
-								(PMID: 14576433, 15133503). A different deleterious variant p.Tyr1853* located downstream of this variant has been shown to disrupt BRCA1 protein function (PMID: 8942979, 20681793, 10811118,
-								11256609, 17308087), suggesting that although this particular variant may not result in nonsense mediated decay, it is expected to affect BRCA1 protein function. For these reasons, this
-								variant has been classified as Pathogenic.</td>
-						</tr>
-						<tr>
-							<td>BRAC1:&nbsp;c.37G>T</td>
-							<td>There is no description at this moment.</td>
-						</tr>
-						<tr>
-							<td>BRAC1:&nbsp;c.94T>C</td>
-							<td>here is no description at this moment.</td>
-						</tr>
+						<c:forEach items="${rocky.records }" var="record">
+							<td style="width: 150px;">${record.gene }:&nbsp;${record.acids }</td>
+							<td>${record.description }</td>
+						</c:forEach>
 					</tbody>
 				</table>
 			</section>
