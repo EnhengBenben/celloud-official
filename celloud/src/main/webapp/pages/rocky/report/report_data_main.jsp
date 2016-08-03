@@ -50,8 +50,10 @@
 				<table class="table table-main -report">
 					<tbody>
 						<c:forEach items="${rocky.records }" var="record">
-							<td style="width: 150px;">${record.gene }:&nbsp;${record.acids }</td>
-							<td>${record.description }</td>
+							<tr>
+								<td style="width: 150px;">${record.gene }:&nbsp;${record.acids }</td>
+								<td>${record.description }</td>
+							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
