@@ -105,7 +105,7 @@
 						</c:otherwise>
 					</c:choose>
 					<c:choose>
-						<c:when test="${report.period ==21 }">
+						<c:when test="${report.period ==2 }">
 							<a title="打印患者报告" target="_blank"
 								href="<%=request.getContextPath()%>/report/printRockyReport?projectId=197&dataKey=16080300018953&appId=123">
 								<i class="fa fa-print"></i>
