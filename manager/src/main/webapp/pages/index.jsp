@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/console.css">
+<link rel="stylesheet" href="css/pay.css">
 <link rel="stylesheet" href="plugins/jquery.alerts.css">
 <script src="plugins/bootstrap/js/jquery-1.11.1.min.js"></script>
 <script src="plugins/jquery.alerts.js"></script>
@@ -171,8 +172,8 @@
                                     <span class="title">消费明细</span>
                                 </a>
                             </li>
-                            <li id="app-grant-menu">
-                                <a data-click="to-app-grant-list" href="javascript:void(0);">
+                            <li id="to-recharge">
+                                <a href="javascript:void(0);">
                                     <span class="title">账户充值</span>
                                 </a>
                             </li>

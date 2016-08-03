@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="com.celloud.constants.Bank"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="com.celloud.manager.constants.Bank"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="row" style="margin: 5px;">
 	<div class="col-xs-12">
@@ -121,6 +121,27 @@
 					</tr>
 				</tbody>
 			</table>
+		</div>
+	</div>
+</div>
+<div id="tip-modal" class="modal fade modal-celloud-green">
+	<div class="modal-dialog">
+		<div id="tip-modal-content" class="modal-content tipModal">
+			<div id="tip-modal-head" class="modal-header" id="">
+				<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">
+					<i class="icon fa fa-warning"></i>等待充值
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p id="tip-text">请在新窗口中完成支付</p>
+			</div>
+			<div class="modal-footer">
+				<button id="check-true" type="button" class="btn btn-outline" onclick="$.expense.pay.recharge();">已支付</button>
+				<button id="check-flase" type="button" class="btn btn-outline" onclick="$.expense.pay.recharge();">取消</button>
+			</div>
 		</div>
 	</div>
 </div>
