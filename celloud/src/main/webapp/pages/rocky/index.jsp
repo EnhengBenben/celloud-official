@@ -21,7 +21,7 @@
 <link href="<%=request.getContextPath()%>/css/less/theme.less?v=3.2.4" rel="stylesheet/less" type="text/css" />
 <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script>
 </head>
-<body class="container">
+<body class="container-fluid">
 	<header class="main-header">
 		<a href="javascript:void(0)" class="logo">
 			<img src="<%=request.getContextPath()%>/images/icon/logo-gray.png">
