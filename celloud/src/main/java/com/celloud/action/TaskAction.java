@@ -127,21 +127,27 @@ public class TaskAction {
             logger.info("任务运行结束信息不全");
             return "run error";
         }
-        String[] dataArr = dataNames.split(",");
-        String dataKey = FileTools.getArray(dataArr, 0);
+		int proId = Integer.parseInt(projectId);
         // 1. 数据库检索
-        Map<String, Object> map = taskService
-                .findTaskInfoByProId(Integer.parseInt(projectId));
-        if (map == null) {
-            logger.info("获取项目信息错误" + map);
-            return "run error";
-        }
+		Map<String, Object> map = taskService.findTaskInfoByProId(proId);
+		if (map == null) {
+			logger.info("获取项目信息错误" + map);
+			return "run error";
+		}
+		Integer appId = (Integer) map.get("appId");
+		Project project = projectService.selectByPrimaryKey(proId);
+		if (project.getState() == 1) {
+			logger.info("用户删除的项目回调并尝试运行下一个，projectID：" + projectId);
+			runNext(appId);
+			return "run error";
+		}
         Integer userId = (Integer) map.get("userId");
-        Integer appId = (Integer) map.get("appId");
         String appName = (String) map.get("appName");
         String username = (String) map.get("username");
         String title = (String) map.get("title");
         String method = (String) map.get("method");
+		String[] dataArr = dataNames.split(",");
+		String dataKey = FileTools.getArray(dataArr, 0);
         List<DataFile> dataList = dataService.selectDataByKeys(dataNames);
         // 2. 利用 python将数据报告插入 mongodb
         StringBuffer command = new StringBuffer();
@@ -247,19 +253,7 @@ public class TaskAction {
                 dataKey, dataNames, xml);
         if (task != null) {
             logger.info("任务{}执行完毕", task.getTaskId());
-            Task t = taskService.findFirstTask(appId);
-            if (t != null) {
-                String toRunCommand = t.getCommand();
-                logger.info("运行命令：{}", toRunCommand);
-                SSHUtil ssh;
-                if (AppDataListType.SPARK.contains(appId)) {
-                    ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
-                } else {
-                    ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-                }
-                ssh.sshSubmit(toRunCommand.toString(), false);
-                taskService.updateToRunning(t.getTaskId());
-            }
+			runNext(appId);
         }
         String tipsName = pubName.equals("") ? fname : pubName;
 		//构造桌面消息
@@ -282,6 +276,29 @@ public class TaskAction {
 		mcu.sendMessage(userId, MessageCategoryCode.REPORT, aliEmail, params, mu);
         return "run over";
     }
+
+	/**
+	 * 运行下一个task
+	 * 
+	 * @param appId
+	 * @author lin
+	 * @date 2016年8月4日下午4:33:32
+	 */
+	public void runNext(Integer appId) {
+		Task t = taskService.findFirstTask(appId);
+		if (t != null) {
+			String toRunCommand = t.getCommand();
+			logger.info("运行命令：{}", toRunCommand);
+			SSHUtil ssh;
+			if (AppDataListType.SPARK.contains(appId)) {
+				ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
+			} else {
+				ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+			}
+			ssh.sshSubmit(toRunCommand.toString(), false);
+			taskService.updateToRunning(t.getTaskId());
+		}
+	}
 
     /**
      * 项目运行结束，由python进行全部的后续处理
@@ -315,11 +332,16 @@ public class TaskAction {
             logger.info("任务运行结束信息不全");
             return "run error";
         }
+		int proId = Integer.parseInt(projectId);
+		Project project = projectService.selectByPrimaryKey(proId);
+		if (project.getState() == 1) {
+			logger.info("用户删除的项目回调，projectID：" + projectId);
+			return "run error";
+		}
         // 1. 利用 python 生成数据 pdf，并将数据报告插入 mongodb
 		String command = "python " + SparkPro.PYTHONPATH + " " + SparkPro.TOOLSPATH + " " + projectId;
 		PerlUtils.excutePerl(command);
         // 2. 数据库检索
-        int proId = Integer.parseInt(projectId);
         Map<String, Object> map = projectService.findProjectInfoById(proId);
         Integer userId = (Integer) map.get("userId");
         Integer appId = (Integer) map.get("appId");
