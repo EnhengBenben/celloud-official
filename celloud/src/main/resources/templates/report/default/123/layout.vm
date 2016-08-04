@@ -20,7 +20,7 @@
  #end
 <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script>
 </head>
-<body class="container">
+<body class="container" style="width:100%;padding:0px;">
 		<div id="printBtns" class="btn-group-vertical" style="position: fixed;z-index:50;right:10px;top:10px;">
 			<button class="btn btn-success" id="printBtn">打印</button><br>
 			<button class="btn btn-success" id="saveBtn">保存</button><br>
