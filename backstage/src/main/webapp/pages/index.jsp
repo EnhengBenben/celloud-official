@@ -123,6 +123,11 @@
                                     <span class="title">数量统计</span>
                                 </a>
                             </li>
+                            <li id="task-week-menu">
+                                <a href="javascript:task.toWeekStatistics();">
+                                    <span class="title">周统计</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li id="permission-manage">
