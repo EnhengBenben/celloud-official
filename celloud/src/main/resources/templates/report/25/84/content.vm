@@ -11,13 +11,13 @@
             <td>科别:<span><input name="baseInfo['dept']" value="$!{egfr.baseInfo.dept}" type="text" class="tdInput"></span></td>
             <td>床号:<span><input name="baseInfo['bedNo']" value="$!{egfr.baseInfo.bedNo}" type="text" class="tdInput"></span></td>
             <td>送检医师:<span><input name="baseInfo['doctor']" value="$!{egfr.baseInfo.doctor}" type="text" class="tdInput"></span></td>
-            <td>样本编号:<span><input name="baseInfo['submissionDate']" value="$!{egfr.baseInfo.submissionDate}" type="text" class="tdInput"></span></td>
+            <td>样本编号:<span><input name="baseInfo['sampleNumber']" value="$!{egfr.baseInfo.sampleNumber}" type="text" class="tdInput"></span></td>
         </tr>
         <tr>
-            <td>病理号:<span><input name="baseInfo['dept']" value="$!{egfr.baseInfo.dept}" type="text" class="tdInput"></span></td>
-            <td>样品类型:<span><input name="baseInfo['bedNo']" value="$!{egfr.baseInfo.bedNo}" type="text" class="tdInput"></span></td>
+            <td>病理号:<span><input name="baseInfo['pathologyNumber']" value="$!{egfr.baseInfo.pathologyNumber}" type="text" class="tdInput"></span></td>
+            <td>样品类型:<span><input name="baseInfo['sampleType']" value="$!{egfr.baseInfo.sampleType}" type="text" class="tdInput"></span></td>
             <td></td>
-            <td>临床诊断:<span><input name="baseInfo['submissionDate']" value="$!{egfr.baseInfo.submissionDate}" type="text" class="tdInput"></span></td>
+            <td>临床诊断:<span><input name="baseInfo['clinicalDiagnosis']" value="$!{egfr.baseInfo.clinicalDiagnosis}" type="text" class="tdInput"></span></td>
         </tr>
         <tr class="focus bt1">
             <td colspan="4">送检目的：EGFR基因突变检测</td>
