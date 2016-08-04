@@ -54,7 +54,7 @@
 						<li class="dropdown notifications-menu" id="notices-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 								<i class="fa fa-envelope-o"></i>
-								<span class="label label-success"></span>
+								<span class="label label-info"></span>
 							</a>
 							<ul class="dropdown-menu">
 								<li class="header">站内消息提醒</li>
