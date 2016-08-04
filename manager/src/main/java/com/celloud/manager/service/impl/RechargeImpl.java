@@ -8,6 +8,11 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.celloud.manager.alimail.AliEmail;
+import com.celloud.manager.alimail.AliEmailUtils;
+import com.celloud.manager.alimail.AliSubstitution;
+import com.celloud.manager.alimail.EmailParams;
+import com.celloud.manager.alimail.EmailType;
 import com.celloud.manager.constants.ConstantsData;
 import com.celloud.manager.constants.InvoiceState;
 import com.celloud.manager.constants.RechargeType;
@@ -26,8 +31,8 @@ public class RechargeImpl implements RechargeService {
     private RechargeMapper rechargeMapper;
     @Resource
     private UserMapper userMapper;
-	//	@Resource
-	//	private MessageCategoryUtils mcu;
+	@Resource
+	private AliEmailUtils emailUtils;
 
     @Override
     public Integer saveRecharge(BigDecimal amount, Integer userId, RechargeType rechargeType, Integer rechargeId) {
@@ -46,20 +51,14 @@ public class RechargeImpl implements RechargeService {
         recharge.setRechargeType(rechargeType.type());
         recharge.setRechargeId(rechargeId);
         recharge.setInvoiceState(!rechargeType.invoice() ? InvoiceState.NO_INVOICE : InvoiceState.UN_INVOICE);
-
-		//		//构造邮件内容
-		//		AliEmail aliEmail = AliEmail.template(EmailType.RECHARGE)
-		//				.substitutionVars(AliSubstitution.sub().set(EmailParams.RECHARGE.date.name(), stringDate)
-		//						.set(EmailParams.RECHARGE.adCharge.name(), amount.toString())
-		//						.set(EmailParams.RECHARGE.cashBalance.name(), balances.toString()));
-		//		//构造微信发送消息
-		//		Param wechat = ParamFormat.param()
-		//				.set(WechatParams.BALANCE_CHANGE.first.name(), "您好，您的 CelLoud 账户有一笔现金充值到账。", "#222222")
-		//				.set(WechatParams.BALANCE_CHANGE.date.name(), stringDate, null)
-		//				.set(WechatParams.BALANCE_CHANGE.adCharge.name(), amount.toString(), null)
-		//				.set(WechatParams.BALANCE_CHANGE.cashBalance.name(), balances.toString(), "#222222");
-		//		mcu.sendMessage(userId, MessageCategoryCode.BALANCES, aliEmail, wechat, null);
-        return rechargeMapper.insertSelective(recharge);
+		int result = rechargeMapper.insertSelective(recharge);
+		//构造邮件内容
+		AliEmail aliEmail = AliEmail.template(EmailType.RECHARGE)
+				.substitutionVars(AliSubstitution.sub().set(EmailParams.RECHARGE.date.name(), stringDate)
+						.set(EmailParams.RECHARGE.adCharge.name(), amount.toString())
+						.set(EmailParams.RECHARGE.cashBalance.name(), balances.toString()));
+		emailUtils.simpleSend(aliEmail, user.getEmail());
+		return result;
     }
 
     @Override
