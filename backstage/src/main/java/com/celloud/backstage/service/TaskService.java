@@ -12,4 +12,6 @@ public interface TaskService {
     public Map<String, String> getQueuingTime();
 
     public Map<String, Integer> getQuantityStatistics();
+
+    public void sendWeekStatistics();
 }

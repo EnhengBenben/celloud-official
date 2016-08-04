@@ -70,7 +70,6 @@ public interface TaskMapper {
      */
     public Integer getActiveUserCount(@Param("testAccountIds") String testAccountIds);
 
-
     /**
      * 
      * @author MQ
