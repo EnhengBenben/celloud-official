@@ -11,8 +11,7 @@ var $report = {
 }
 var rockyReport = (function(rockyReport) {
 	var self = rockyReport || {};
-	$(document)
-			.off("click", "#rocky_report_page [data-click='pagination-btn']");
+	$(document).off("click", "#rocky_report_page [data-click='pagination-btn']");
 	$(document).off("change", "#rocky_report_page #page-size-sel");
 	$(document).off("click", "#report-condition-find");
 	$(document).off("keyup", "#report-sample-filter");

@@ -99,7 +99,7 @@
 							</a>
 						</c:when>
 						<c:otherwise>
-							<a title="查看报告" class="disabled bg-gray" href="javascript:;">
+							<a title="查看报告" class="disabled bg-gray" href="javascript:$report.showReport('16080300018953','197','123');">
 								<i class="fa fa-eye"></i>
 							</a>
 						</c:otherwise>
