@@ -1,7 +1,7 @@
 <div class="content">
     <table class="contentTable">
         <tr class="focus">
-            <td><br/>结果解读：</td>
+            <td style="font-size:20px;"><br/>结果解读：</td>
         </tr>
         <tr class="focus hr">
             <td><hr/></td>
