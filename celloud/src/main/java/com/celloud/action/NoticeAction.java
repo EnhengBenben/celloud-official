@@ -27,6 +27,7 @@ public class NoticeAction {
 	@ActionLog(value = "获取未读消息")
 	@RequestMapping("lastUnread/{type}")
 	public String lastUnread(@PathVariable String type, Model model) {
+		System.out.println(type);
 		if (NoticeConstants.TYPE_MESSAGE.equals(type)) {
 			PageList<Notice> pageList = noticeService.findLastUnreadMessage();
 			model.addAttribute("messageList", pageList);
