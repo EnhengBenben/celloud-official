@@ -1,6 +1,7 @@
 package com.celloud.manager.service.impl;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -13,6 +14,7 @@ import com.celloud.manager.mapper.PriceMapper;
 import com.celloud.manager.mapper.ReportMapper;
 import com.celloud.manager.mapper.UserMapper;
 import com.celloud.manager.model.Expenses;
+import com.celloud.manager.model.User;
 import com.celloud.manager.page.Page;
 import com.celloud.manager.page.PageList;
 import com.celloud.manager.service.ExpensesService;
@@ -49,4 +51,23 @@ public class ExpensesServiceImpl implements ExpensesService {
         return total == null || total.toString().equals("") ? new BigDecimal(0)
                 : total;
     }
+
+	@Override
+	public Integer saveExpenses(Integer from, Integer to, String toUserName, BigDecimal amount) {
+		Expenses expense = new Expenses();
+		expense.setItemId(0);
+		expense.setItemType(PriceType.isGrant);
+		expense.setUserId(from);
+		expense.setCreateDate(new Date());
+		expense.setRemark("【赠予用户：(" + to + "," + toUserName + ")】");
+		expense.setPrice(amount);
+		expensesMapper.insertSelective(expense);
+		Integer expenseId = expense.getId();
+		User user = userMapper.selectByPrimaryKey(from);
+		BigDecimal balances = user.getBalances();
+		balances = balances.subtract(amount);
+		user.setBalances(balances);
+		userMapper.updateByPrimaryKeySelective(user);
+		return expenseId;
+	}
 }

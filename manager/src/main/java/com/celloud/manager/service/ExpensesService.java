@@ -14,6 +14,18 @@ import com.celloud.manager.page.PageList;
  * @date 2016年2月23日 下午6:42:28
  */
 public interface ExpensesService {
+	/**
+	 * 新增赠予消费
+	 * 
+	 * @param from
+	 * @param to
+	 * @param toUserName
+	 * @param amount
+	 * @return
+	 * @author lin
+	 * @date 2016年8月3日下午6:38:15
+	 */
+	public Integer saveExpenses(Integer from, Integer to, String toUserName, BigDecimal amount);
 
     /**
      * 获取消费记录列表
@@ -25,7 +37,7 @@ public interface ExpensesService {
      * @author leamo
      * @date 2016年2月25日 下午3:11:02
      */
-    public PageList<Expenses> getRunExpensesList(Integer userId, Page page);
+	public PageList<Expenses> getRunExpensesList(Integer userId, Page page);
 
     /**
      * 查询用户总消费金额

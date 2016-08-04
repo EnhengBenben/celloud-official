@@ -77,7 +77,7 @@
                 sign = #{sign,jdbcType=VARCHAR},
             </if>
             <if test="balances != null">
-				#{balances,jdbcType=DECIMAL},
+				balances = #{balances,jdbcType=DECIMAL},
 			</if>
         </set>
         where user_id = #{userId,jdbcType=INTEGER}

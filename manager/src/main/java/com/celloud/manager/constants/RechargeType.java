@@ -11,7 +11,7 @@ public enum RechargeType {
 	/**
 	 * 网银
 	 */
-	OnlineBanking("网上银行", 3, true);
+	OnlineBanking("网上银行", 3, true), GRANT("大客户赠予", 4, false);
 
 	/**
 	 * 类型标识，在数据库中标识类型

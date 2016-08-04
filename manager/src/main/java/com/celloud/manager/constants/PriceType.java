@@ -11,4 +11,8 @@ public class PriceType {
      * item_id为APP编号
      */
     public static final Byte isApp = 0;
+	/**
+	 * 赠予，不开发票，item_id为0
+	 */
+	public static final Byte isGrant = 1;
 }

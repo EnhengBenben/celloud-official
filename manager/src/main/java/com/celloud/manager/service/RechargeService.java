@@ -18,7 +18,6 @@ public interface RechargeService {
     /**
      * 新增充值记录
      * 
-     * @param bill
      * @author leamo
      * @date 2016年6月27日 下午2:17:01
      */

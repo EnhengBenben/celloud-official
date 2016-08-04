@@ -297,7 +297,7 @@ $.ajaxSetup ({
 				}
 			}
 			//匹配中文 数字 字母 下划线       
-      var pattern=/[`~!@#\$%\^\&\*\(\)_\+<>\?:"\{\},\.\\\/;'\[\]]/im;
+      var pattern=/[`~!@#\$%\^\&\*\(\)\+<>\?:"\{\},\.\\\/;'\[\]]/im;
       if(pattern.test(FILENAME)){
         $("#_dataAlertSpan").css("display","");
         $("#_dataAlertSpan").html("输入框禁止输入特殊字符");

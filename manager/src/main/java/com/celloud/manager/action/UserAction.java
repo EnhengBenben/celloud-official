@@ -1,5 +1,6 @@
 package com.celloud.manager.action;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -100,6 +101,29 @@ public class UserAction {
         mv.addObject("userId", userId);
         return mv;
     }
+
+	@RequestMapping("user/toMoneyGiven")
+	public ModelAndView toMoneyGiven(Integer userId, String username) {
+		ModelAndView mv = new ModelAndView("user/user_money_given");
+		User user = userService.selectUserById(ConstantsData.getLoginUserId());
+		mv.addObject("userId", userId).addObject("username", username).addObject("balances",
+				user.getBalances().longValue());
+		return mv;
+	}
+
+	@RequestMapping(value = "user/moneyGiven", produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String moneyGiven(Integer userId, String username, String money) {
+		User user = userService.selectUserById(ConstantsData.getLoginUserId());
+		if (user.getBalances().longValue() < Long.parseLong(money)) {
+			return "您的余额少于赠予金额，请重新填写赠予金额";
+		}
+		boolean isSuccess = userService.moneyGiven(user.getUserId(), userId, username, new BigDecimal(money));
+		if (isSuccess) {
+			return "充值成功";
+		}
+		return "充值失败";
+	}
 
     @RequestMapping("user/toGrantRole")
     public ModelAndView toGrantRole(Integer userId) {

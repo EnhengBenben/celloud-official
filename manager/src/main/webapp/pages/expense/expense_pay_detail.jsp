@@ -28,8 +28,21 @@
 		    <c:forEach items="${expensePageList.datas }" var="expense" varStatus="status">
 		       <tr>
                   <td class="text-center"><fmt:formatDate value="${expense.createDate }" type="both"/></td>
-                  <td class="text-left">数据<span title="${expense.fileInfos }"><c:choose><c:when test="${fn:length(expense.fileInfos)>50 }"><c:out value="${fn:substring(expense.fileInfos, 0, 50) }"/>...</c:when><c:otherwise>${expense.fileInfos }</c:otherwise></c:choose></span>
-                                                      运行${expense.appName }
+                  <td class="text-left">
+                  	<c:if test="${expense.itemId==0 }">
+                  		金钱赠予
+                  	</c:if>
+                  	<c:if test="${expense.itemId>0 }">
+                  		数据
+                  		<span title="${expense.fileInfos }">
+	                  		<c:choose>
+	                  			<c:when test="${fn:length(expense.fileInfos)>50 }">
+	                  				<c:out value="${fn:substring(expense.fileInfos, 0, 50) }"/>...</c:when>
+	                  			<c:otherwise>${expense.fileInfos }</c:otherwise>
+	                  		</c:choose>
+                  		</span>
+                  		运行${expense.appName }
+                  	</c:if>
                   </td>
 <%--                   <td>${expense.price }C</td> --%>
                   <td class="text-center">${expense.price }</td>

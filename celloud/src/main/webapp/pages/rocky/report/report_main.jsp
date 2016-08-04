@@ -76,7 +76,7 @@
 					</label>
 				</td>
 				<td>${report.sampleName }</td>
-				<td title="${report.fileName }" name="data-name-td" onclick="$report.showReport('${report.dataKey}','${report.projectId}','${report.appId}')">${report.fileName }</td>
+				<td title="${report.fileName }" name="data-name-td">${report.fileName }</td>
 				<td>${report.batch }</td>
 				<td>
 					<c:if test="${report.period==0 }">等待运行</c:if>
@@ -105,9 +105,9 @@
 						</c:otherwise>
 					</c:choose>
 					<c:choose>
-						<c:when test="${report.period ==21 }">
+						<c:when test="${report.period ==2 }">
 							<a title="打印患者报告" target="_blank"
-								href="<%=request.getContextPath()%>/report/printRockyReport?projectId=${report.projectId }&dataKey=${report.dataKey }&appId=${report.appId }&templateType=print_patient">
+								href="<%=request.getContextPath()%>/report/printRockyReport?projectId=${report.projectId}&dataKey=${report.dataKey}&appId=${report.appId}">
 								<i class="fa fa-print"></i>
 							</a>
 						</c:when>

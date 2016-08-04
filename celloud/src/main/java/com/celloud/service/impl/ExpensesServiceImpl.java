@@ -91,10 +91,10 @@ public class ExpensesServiceImpl implements ExpensesService {
             BigDecimal balances = user.getBalances();
             for (int i = 0; i < dataList.size(); i++) {
                 DataFile d = dataList.get(i);
+                BigDecimal amount = BigDecimal.ZERO;
                 if (i == 0) {
                     fileExpenseNum = expensesMapper.getFileExpenseNum(
                             d.getFileId(), appId, PriceType.isApp);
-                    BigDecimal amount = BigDecimal.ZERO;
                     if (fileExpenseNum == 0) {
                         amount = price == null ? BigDecimal.ZERO
                                 : price.getPrice();
@@ -107,6 +107,7 @@ public class ExpensesServiceImpl implements ExpensesService {
                 }
                 expensesMapper.addFileExpenseRelat(expenseId, projectId,
                         d.getFileId(), d.getDataKey(), d.getFileName());
+                balances = balances.subtract(amount);
             }
             user.setBalances(balances);
             userMapper.updateByPrimaryKeySelective(user);
