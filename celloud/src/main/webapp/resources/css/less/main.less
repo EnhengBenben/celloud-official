@@ -17,7 +17,7 @@ a, a:link, a:hover, a:active, a:visited {
 ul,ol{
     list-style: none;
 }
-.container{
+.container-fluid{
     padding: 0;
     margin: 0;
     width: 100%;
@@ -60,6 +60,19 @@ ul,ol{
             > li{
                display: inline-block;
             }
+            > li.open > .dropdown-menu{
+    			right:0px;
+    			left:-40px;
+    			>li > a {
+    				padding: 3px 20px;
+    				color:#333;
+    				width:200px;
+    				text-align:left;
+    				font-size:12px;
+    				line-height: 20px;
+    				height:30px;
+    			}
+    		}
         }
     }
     > .navbar .menu a{
@@ -227,7 +240,6 @@ ul,ol{
 }
 .common-container{
     position: relative;
-    height: 100%;
     margin-left: 170px;
     padding: 20px 0px 0px 20px;
     .content{

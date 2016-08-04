@@ -300,7 +300,14 @@ public interface ReportService {
 	 * @date 2016年4月18日 下午4:33:55
 	 */
 	public Integer updateBSIFilling(BSI bsi);
-
+	/**
+	 * 修改BSI报告用户填写部分
+	 * 
+	 * @param bsi
+	 * @author leamo
+	 * @date 2016年4月18日 下午4:33:55
+	 */
+	public Integer updateRockyFilling(Rocky rocky);
 	/**
 	 * 获取 Split 报告
 	 * 

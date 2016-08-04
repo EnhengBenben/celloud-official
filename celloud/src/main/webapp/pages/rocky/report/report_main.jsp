@@ -46,7 +46,8 @@
 				</c:if>
 			</th>
 			<th>状态</th>
-			<th>更新时间
+			<th>
+				更新时间
 				<c:if test="${sidx=='updateDate'&&sord=='asc' }">
 					<a id="reportSortBtn-updateDate-desc" href="javascript:void(0);">
 						<i class="fa fa-sort-amount-asc"></i>
@@ -76,7 +77,7 @@
 					</label>
 				</td>
 				<td>${report.sampleName }</td>
-				<td title="${report.fileName }" name="data-name-td">${report.fileName }</td>
+				<td title="${report.fileName }" style="text-align: left;" name="data-name-td">${report.fileName }</td>
 				<td>${report.batch }</td>
 				<td>
 					<c:if test="${report.period==0 }">等待运行</c:if>
@@ -90,7 +91,9 @@
 						<a href="javascript:void(0)" onclick="$.report.period.error('${report.fileName }')" class="wrong">运行异常</a>
 					</c:if>
 				</td>
-				<td><fmt:formatDate value="${report.updateDate }" type="both" dateStyle="long" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+				<td>
+					<fmt:formatDate value="${report.updateDate }" type="both" dateStyle="long" pattern="yyyy-MM-dd HH:mm:ss" />
+				</td>
 				<td>
 					<c:choose>
 						<c:when test="${report.period ==2 }">
@@ -99,15 +102,14 @@
 							</a>
 						</c:when>
 						<c:otherwise>
-							<a title="查看报告" class="disabled bg-gray" href="javascript:;">
+							<a title="查看报告" class="disabled bg-gray" href="javascript:$report.showReport('16080300018953','197','123');">
 								<i class="fa fa-eye"></i>
 							</a>
 						</c:otherwise>
 					</c:choose>
 					<c:choose>
 						<c:when test="${report.period ==2 }">
-							<a title="打印患者报告" target="_blank"
-								href="<%=request.getContextPath()%>/report/printRockyReport?projectId=${report.projectId}&dataKey=${report.dataKey}&appId=${report.appId}">
+							<a title="打印患者报告" target="_blank" href="<%=request.getContextPath()%>/report/printRockyReport?projectId=${report.projectId}&dataKey=${report.dataKey}&appId=${report.appId}">
 								<i class="fa fa-print"></i>
 							</a>
 						</c:when>

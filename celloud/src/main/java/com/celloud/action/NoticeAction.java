@@ -81,13 +81,13 @@ public class NoticeAction {
 		return Response.UPDATE_SUCCESS;
 	}
 
-	@ActionLog(value = "获所有消息", button = "全部置为已读")
+	@ActionLog(value = "全部置为已读", button = "全部置为已读")
 	@RequestMapping(value = "readAll/{type}", method = RequestMethod.POST)
 	@ResponseBody
-	public Response readAll(@PathVariable @RequestParam(required = true) String type) {
+	public Response readAll(@PathVariable String type) {
 		if (NoticeConstants.TYPE_MESSAGE.equals(type)) {
 			noticeService.readAllMessage();
-		} else {
+		} else if (NoticeConstants.TYPE_NOTICE.equals(type)) {
 			noticeService.readAllNotice();
 		}
 		return Response.UPDATE_SUCCESS;

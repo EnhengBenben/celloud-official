@@ -9,7 +9,7 @@
                                 报告审核者:<span><input name="baseInfo['audit']" value="$!{egfr.baseInfo.audit}" type="text" class="tdInput"></span>
             </td>
             <td style="width:31%;">
-                                第<input style="width:20px;text-align:center;" name="currentPage" value="$!{egfr.baseInfo.currentPage}" />页/共<input style="width:20px;text-align:center;" name="totalPage" value="$!{egfr.baseInfo.totalPage}" />页
+                                第<input style="width:20px;text-align:center;" name="baseInfo['currentPage']" value="$!{egfr.baseInfo.currentPage}" />页/共<input style="width:20px;text-align:center;" name="baseInfo['totalPage']" value="$!{egfr.baseInfo.totalPage}" />页
             </td>
         </tr>
         <tr>

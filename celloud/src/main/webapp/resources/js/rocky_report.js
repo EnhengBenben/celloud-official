@@ -1,5 +1,6 @@
 var $report = {
 	showReport : function(dataKey,projectId, appId ) {
+		$("#common-menu-right").html("");
 		var url = contextPath + "/report/rocky/data/report";
 		$("#container").load(url, {
 			dataKey : dataKey,
@@ -10,8 +11,7 @@ var $report = {
 }
 var rockyReport = (function(rockyReport) {
 	var self = rockyReport || {};
-	$(document)
-			.off("click", "#rocky_report_page [data-click='pagination-btn']");
+	$(document).off("click", "#rocky_report_page [data-click='pagination-btn']");
 	$(document).off("change", "#rocky_report_page #page-size-sel");
 	$(document).off("click", "#report-condition-find");
 	$(document).off("keyup", "#report-sample-filter");
