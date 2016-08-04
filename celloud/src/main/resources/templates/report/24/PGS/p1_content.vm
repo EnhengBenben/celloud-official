@@ -2,7 +2,7 @@
     <input type="hidden" name="id" value="${pgs.id}" id="pgsId" />
     <table class="contentTable">
         <tr class="focus">
-            <td colspan="4"><br/>基本信息：</td>
+            <td colspan="4" style="font-size:20px;"><br/>基本信息：</td>
         </tr>
         <tr class="focus hr">
             <td colspan="4"><hr/></td>
@@ -38,7 +38,7 @@
             <td></td>
         </tr>
         <tr class="focus">
-            <td colspan="4"><br/>检测内容：</td>
+            <td colspan="4" style="font-size:20px;"><br/>检测内容：</td>
         </tr>
         <tr class="focus hr">
             <td colspan="4"><hr/></td>
@@ -58,17 +58,20 @@
         <tr class="focus hr">
             <td colspan="4"><hr/></td>
         </tr>
-        <tr>
+        <tr style="background-color:#e0e0e0;">
             <td class="tdCenter">胚胎编号</td>
             <td class="tdCenter">检测结果</td>
             <td class="tdCenter">胚胎评级</td>
             <td class="tdCenter">临床建议</td>
         </tr>
-        <tr>
+        <tr style="mar">
             <td class="tdCenter"><input name="baseInfo['embryoNumber']" value="$!{pgs.baseInfo.embryoNumber}" type="text" class="tdCenterInput"></td>
             <td class="tdCenter"><input name="baseInfo['result']" value="$!{pgs.baseInfo.result}" type="text" class="tdCenterInput"></td>
             <td class="tdCenter"><input name="baseInfo['embryoRating']" value="$!{pgs.baseInfo.embryoRating}" type="text" class="tdCenterInput"></td>
             <td class="tdCenter"><input name="baseInfo['advice']" value="$!{pgs.baseInfo.advice}" type="text" class="tdCenterInput"></td>
+        </tr>
+        <tr class="focus hr">
+            <td colspan="4"><br/><hr/></td>
         </tr>
     </table>
 </div>

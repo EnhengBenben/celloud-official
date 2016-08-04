@@ -1,19 +1,68 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+#override("content")
 <div class="content">
 	<div class="report-content">
-		<h4>检测结果：</h4>
 		<section>
+			<div>
+				<div class="col-xs-6" style="display:inline;"><img style="width:180px;height:42px;" src="http://121.201.7.200:8888/celloud/3.2.2.4/images/print/u4.jpg"></div>
+				<div class="col-xs-6 pull-right text-right">隐私报告 - 无受检人书面授权严禁公布或分享</div><br>
+			</div>
+			<div class="row">
+				<div class="col-xs-9"><h2>乳腺癌易感基因<small>(BRCA1/2)</small>检测报告</h2></div>
+				<div class="col-xs-3 pull-right text-center">
+					<div class="pull-right">
+					技术平台&nbsp;<br><img style="width:90px;height:41px;" src="http://121.201.7.200:8888/celloud/3.2.2.4/images/print/u10.jpg">
+					</div>
+				</div>
+			</div>
+		</section>
+		<hr style="height:2px;line-height:2px;border-top:2px dotted #3e3e3e;border-bottom:5px solid #3e3e3e;margin-top:0px;">
+		<section>
+			<table class="table table-main ">
+				<thead>
+					<tr>
+						<th style="text-align:left;width:33%;">样本信息</th>
+						<th style="text-align:left;width:33%;">报告信息</th>
+						<th style="text-align:left;width:34%;">受检者信息</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="text-align:left;">
+							<label style="width:50px;text-align:right;font-weight:normal;">样本类型</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">血液</label><br>
+	    					<label style="width:50px;text-align:right;font-weight:normal;">送检时间</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">2016-03-28 16:33</label><br>
+	    					<label style="width:50px;text-align:right;font-weight:normal;">送检状态</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">样本有效</label><br>
+	    					<label style="width:50px;text-align:right;font-weight:normal;">收样中心</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">北京大望路中心</label>
+						</td>
+						<td style="text-align:left;">
+							<label style="width:50px;text-align:right;font-weight:normal;">报告类型</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">BRAC1/BRAC2</label><br>
+	    					<label style="width:50px;text-align:right;font-weight:normal;">生成时间</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">2016-03-29 1:03</label><br>
+	    					<label style="width:50px;text-align:right;font-weight:normal;">报告中心</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">北京健康检验中心</label>
+						</td>
+						<td style="text-align:left;">
+							<label style="width:50px;text-align:right;font-weight:normal;">受检人名</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">艾健康</label><br>
+	          				<label style="width:50px;text-align:right;font-weight:normal;">性别</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">男</label><br>
+	    					<label style="width:50px;text-align:right;font-weight:normal;">受检人ID</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">BJM0382957</label><br>
+	    					<label style="width:50px;text-align:right;font-weight:normal;">订单编号</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">MNY0382957</label>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+		<h4>检测结果：</h4>
+		<section style="border:1px solid #e3e3e3;background-color: #fff;">
 			<div class="result-div">
 				<p class="main">
-					${rocky.pathogenic?'':'未' }发现<strong>致病相关</strong>突变！
+					#if($rocky.pathogenic)
+						发现<strong>致病相关</strong>突变！
+					#else
+						未发现<strong>致病相关</strong>突变！
+					#end
 				</p>
 				<p class="notice">注： 本报告中&nbsp;“致病相关”&nbsp;是指本系统采集到的已知研究结论中，受检人样本中存在的突变与疾病有相关性。</p>
 			</div>
 		</section>
-		<h4>结果说明：</h4>
-		<div class="report-result">
+		<h4 style="margin-top:10px;">结果说明：</h4>
+		<div class="report-result" style="border:1px solid #e3e3e3">
 			<section>
 				<p>
 					<strong>变异列表</strong>
@@ -30,16 +79,16 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${rocky.records }" var="record" varStatus="status">
-							<tr>
-								<td>${status.count }</td>
-								<td>${record.gene }</td>
-								<td>${record.chromosome}</td>
-								<td>${record.acids }</td>
-								<td>${record.nucleotides }</td>
-								<td>${record.significance }</td>
+					#foreach($record in $!rocky.records)
+						<tr>
+								<td>$!{velocityCount}</td>
+								<td>$record.gene </td>
+								<td>$record.chromosome</td>
+								<td>$record.acids</td>
+								<td>$record.nucleotides</td>
+								<td>$record.significance</td>
 							</tr>
-						</c:forEach>
+					#end
 					</tbody>
 				</table>
 			</section>
@@ -49,12 +98,12 @@
 				</p>
 				<table class="table table-main -report">
 					<tbody>
-						<c:forEach items="${rocky.records }" var="record">
-							<tr>
-								<td style="width: 170px;">${record.gene }:&nbsp;${record.acids }</td>
-								<td>${record.description }</td>
+					#foreach($record in $!rocky.records)
+						<tr>
+							<td style="width: 170px;">$record.gene:&nbsp;$record.acids</td>
+							<td>$record.description</td>
 							</tr>
-						</c:forEach>
+					#end
 					</tbody>
 				</table>
 			</section>
@@ -65,23 +114,23 @@
 				<p>参考国际癌症研究机构（International Agency for Research on Cancer，IARC）的五级分类标准，Celloud将基因变异的临床意义分为：</p>
 				<dl>
 					<dt>
-						<label style="width: 150px">5 -- Pathogenic</label>
+						<label style="width: 150px;right;font-weight:normal;">5 -- Pathogenic</label>
 						致病的
 					</dt>
 					<dt>
-						<label style="width: 150px">4 -- Likely pathogenic</label>
+						<label style="width: 150px;right;font-weight:normal;">4 -- Likely pathogenic</label>
 						可能致病的
 					</dt>
 					<dt>
-						<label style="width: 150px">3 -- Uncertain</label>
+						<label style="width: 150px;right;font-weight:normal;">3 -- Uncertain</label>
 						致病性不明确的
 					</dt>
 					<dt>
-						<label style="width: 150px">2 -- Likely benign</label>
+						<label style="width: 150px;right;font-weight:normal;">2 -- Likely benign</label>
 						可能良性的
 					</dt>
 					<dt>
-						<label style="width: 150px">1 -- Benign</label>
+						<label style="width: 150px;right;font-weight:normal;">1 -- Benign</label>
 						良性的
 					</dt>
 				</dl>
@@ -154,5 +203,11 @@
 				<p>在已有证据支持或计算机算法预测为良性影响时，即使缺乏独立人群数据，沉默突变及剪切连接位点外的内含子突变也被分类为良性突变。</p>
 			</section>
 		</div>
+		<hr style="height:2px;line-height:2px;border-top:2px solid #3e3e3e;">
+		<section class="text-center">
+		*** 本报告为隐私报告，请妥善保管，无受检人书面授权严禁公布或分享！***
+		</section>
 	</div>
 </div>
+#end
+#extends("templates/report/default/123/layout.vm")

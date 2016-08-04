@@ -55,6 +55,7 @@ table td{
 
 .contentTable .hr{
 	height: 20px;
+	font-size: 20px;
 }
 
 .footTable tr{
@@ -97,13 +98,24 @@ p{
     line-height: 1.5em;
 }
 
-hr {
-    border: solid 1px #000;
-    margin-top:5px;
+hr{
+	margin-top: 5px;
+}
+
+.title hr {
+    border: solid 2px #000;
+}
+
+.content hr{
+	border: solid 1px #888;
 }
 
 .lh25{
 	line-height: 25px;
+}
+
+.look_hide{
+	display: none;
 }
 
 /* 强制分页 */
