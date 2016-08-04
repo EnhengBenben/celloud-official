@@ -13,7 +13,7 @@ $(function() {
 	// 关闭AJAX相应的缓存
 	});
 	$("#logoutBtn").click(function(){
-		window.location.href = contextPath+"/login";
+		window.location.href = contextPath+"/logout";
 	});
 	$(".common-sidebar").on("click", "a", function() {
 		$base.itemBtnToggleActive($(this));
