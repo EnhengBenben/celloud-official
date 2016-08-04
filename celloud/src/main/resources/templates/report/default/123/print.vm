@@ -1,6 +1,6 @@
 #override("content")
 <div class="content">
-	<div class="report-content">
+	<div class="report-content" style="padding:10px;">
 		<section>
 			<div>
 				<div class="col-xs-6" style="display:inline;"><img style="width:180px;height:42px;" src="http://121.201.7.200:8888/celloud/3.2.2.4/images/print/u4.jpg"></div>
@@ -17,36 +17,50 @@
 		</section>
 		<hr style="height:2px;line-height:2px;border-top:2px dotted #3e3e3e;border-bottom:5px solid #3e3e3e;margin-top:0px;">
 		<section>
-			<table class="table table-main ">
-				<thead>
-					<tr>
-						<th style="text-align:left;width:33%;">样本信息</th>
-						<th style="text-align:left;width:33%;">报告信息</th>
-						<th style="text-align:left;width:34%;">受检者信息</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td style="text-align:left;">
-							<label style="width:50px;text-align:right;font-weight:normal;">样本类型</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">血液</label><br>
-	    					<label style="width:50px;text-align:right;font-weight:normal;">送检时间</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">2016-03-28 16:33</label><br>
-	    					<label style="width:50px;text-align:right;font-weight:normal;">送检状态</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">样本有效</label><br>
-	    					<label style="width:50px;text-align:right;font-weight:normal;">收样中心</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">北京大望路中心</label>
-						</td>
-						<td style="text-align:left;">
-							<label style="width:50px;text-align:right;font-weight:normal;">报告类型</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">BRAC1/BRAC2</label><br>
-	    					<label style="width:50px;text-align:right;font-weight:normal;">生成时间</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">2016-03-29 1:03</label><br>
-	    					<label style="width:50px;text-align:right;font-weight:normal;">报告中心</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">北京健康检验中心</label>
-						</td>
-						<td style="text-align:left;">
-							<label style="width:50px;text-align:right;font-weight:normal;">受检人名</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">艾健康</label><br>
-	          				<label style="width:50px;text-align:right;font-weight:normal;">性别</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">男</label><br>
-	    					<label style="width:50px;text-align:right;font-weight:normal;">受检人ID</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">BJM0382957</label><br>
-	    					<label style="width:50px;text-align:right;font-weight:normal;">订单编号</label>：<label style="text-align:left;font-weight:normal;white-space: normal;">MNY0382957</label>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+			<form id="rockyBaseInfoForm" action="$base/report/updateRockyFilling">
+				<table class="table table-main ">
+					<input type="hidden" name="id" value="$!rocky.id">
+					<thead>
+						<tr>
+							<th style="text-align:left;width:33%;">样本信息</th>
+							<th style="text-align:left;width:33%;">报告信息</th>
+							<th style="text-align:left;width:34%;">受检者信息</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="text-align:left;">
+								<label style="width:50px;text-align:right;font-weight:normal;">样本类型</label>：
+								<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[sampleType]" value="$!rocky.baseInfo.sampleType"></input><br>
+		    					<label style="width:50px;text-align:right;font-weight:normal;">送检时间</label>：
+		    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[sampleDeliveryTime]" value="$!rocky.baseInfo.sampleDeliveryTime"></input><br>
+		    					<label style="width:50px;text-align:right;font-weight:normal;">送检状态</label>：
+		    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[sampleStatus]" value="$!rocky.baseInfo.sampleStatus"></input><br>
+		    					<label style="width:50px;text-align:right;font-weight:normal;">收样中心</label>：
+		    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[sampleCollector]" value="$!rocky.baseInfo.sampleCollector"></input>
+							</td>
+							<td style="text-align:left;">
+								<label style="width:50px;text-align:right;font-weight:normal;">报告类型</label>：
+								<span style="text-align:left;font-weight:normal;white-space: normal;">BRAC1/BRAC2</span><br>
+		    					<span style="width:50px;text-align:right;font-weight:normal;">生成时间</span>：
+		    					<label style="text-align:left;font-weight:normal;white-space: normal;">$!rocky.baseInfo.createTime</label><br>
+		    					<label style="width:50px;text-align:right;font-weight:normal;">报告中心</label>：
+		    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[reportProvider]" value="$!rocky.baseInfo.reportProvider"></input>
+							</td>
+							<td style="text-align:left;">
+								<label style="width:50px;text-align:right;font-weight:normal;">受检人名</label>：
+								<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[examineeName]" value="$!rocky.baseInfo.examineeName"></input><br>
+		          				<label style="width:50px;text-align:right;font-weight:normal;">性别</label>：
+		          				<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[examineeGender]" value="$!rocky.baseInfo.examineeGender"></input><br>
+		    					<label style="width:50px;text-align:right;font-weight:normal;">受检人ID</label>：
+		    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[examineeNumber]" value="$!rocky.baseInfo.examineeNumber"></input><br>
+		    					<label style="width:50px;text-align:right;font-weight:normal;">订单编号</label>：
+		    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[examineeOrderNumber]" value="$!rocky.baseInfo.examineeOrderNumber"></input>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
 		</section>
 		<h4>检测结果：</h4>
 		<section style="border:1px solid #e3e3e3;background-color: #fff;">
