@@ -105,6 +105,7 @@ function init_expense(){
 	 $group.find(".text-danger").hide();
 	 var money = $self.find("input[name='money']").val();
 	 if($.isNumeric(money) && money*1 == 0.01){//测试用的
+		 $self.attr('action',$self.attr("action")+(payType?'alipay':'jdpay'));
 		 $("#tip-modal").modal("show");
 		 return true;
 	 }
