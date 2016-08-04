@@ -19,12 +19,13 @@ public interface ExpensesService {
 	 * 
 	 * @param from
 	 * @param to
+	 * @param toUserName
 	 * @param amount
 	 * @return
 	 * @author lin
 	 * @date 2016年8月3日下午6:38:15
 	 */
-	public Integer saveExpenses(Integer from, Integer to, BigDecimal amount);
+	public Integer saveExpenses(Integer from, Integer to, String toUserName, BigDecimal amount);
 
     /**
      * 获取消费记录列表

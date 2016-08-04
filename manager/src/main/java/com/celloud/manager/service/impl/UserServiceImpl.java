@@ -228,8 +228,8 @@ public class UserServiceImpl implements UserService {
     }
 
 	@Override
-	public boolean moneyGiven(Integer from, Integer to, BigDecimal amount) {
-		Integer expenseId = expensesService.saveExpenses(from, to, amount);
+	public boolean moneyGiven(Integer from, Integer to, String toUserName, BigDecimal amount) {
+		Integer expenseId = expensesService.saveExpenses(from, to, toUserName, amount);
 		Integer num = rechargeService.saveRecharge(amount, to, RechargeType.GRANT, expenseId);
 		return num == 1;
 	}

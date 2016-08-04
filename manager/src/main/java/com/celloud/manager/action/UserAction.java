@@ -113,12 +113,12 @@ public class UserAction {
 
 	@RequestMapping(value = "user/moneyGiven", produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String moneyGiven(Integer userId, String money) {
+	public String moneyGiven(Integer userId, String username, String money) {
 		User user = userService.selectUserById(ConstantsData.getLoginUserId());
 		if (user.getBalances().longValue() < Long.parseLong(money)) {
 			return "您的余额少于赠予金额，请重新填写赠予金额";
 		}
-		boolean isSuccess = userService.moneyGiven(user.getUserId(), userId, new BigDecimal(money));
+		boolean isSuccess = userService.moneyGiven(user.getUserId(), userId, username, new BigDecimal(money));
 		if (isSuccess) {
 			return "充值成功";
 		}

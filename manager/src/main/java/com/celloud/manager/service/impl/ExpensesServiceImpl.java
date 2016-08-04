@@ -53,13 +53,13 @@ public class ExpensesServiceImpl implements ExpensesService {
     }
 
 	@Override
-	public Integer saveExpenses(Integer from, Integer to, BigDecimal amount) {
+	public Integer saveExpenses(Integer from, Integer to, String toUserName, BigDecimal amount) {
 		Expenses expense = new Expenses();
 		expense.setItemId(0);
 		expense.setItemType(PriceType.isGrant);
 		expense.setUserId(from);
 		expense.setCreateDate(new Date());
-		expense.setRemark("【赠予用户：" + to + "】");
+		expense.setRemark("【赠予用户：(" + to + "," + toUserName + ")】");
 		expense.setPrice(amount);
 		expensesMapper.insertSelective(expense);
 		Integer expenseId = expense.getId();

@@ -9,6 +9,7 @@
       <form role="form" class="form-horizontal" id="moneyGivenForm">
            <div class="form-group">
                <input type="hidden" id="givenUserId" value="${userId }">
+               <input type="hidden" id="givenUserName" value="${username }">
            </div>
            <div class="form-group">
                <label class="col-sm-5 control-label">您拥有余额</label>

@@ -353,7 +353,8 @@ var user=(function(user){
 	  }
 	  $("#givenNumber").next().html("");
 	  var givenUserId = $("#givenUserId").val();
-	  $.post("user/moneyGiven",{userId:givenUserId,money:givenNumber},function(flag){
+	  var givenUserName = $("#givenUserName").val();
+	  $.post("user/moneyGiven",{userId:givenUserId,money:givenNumber,username:givenUserName},function(flag){
 	    alert(flag);
 	    $("#user-sendEmailModal").modal("hide");
 	  });

@@ -23,12 +23,13 @@ public interface UserService {
 	 * 
 	 * @param from
 	 * @param to
+	 * @param toUserName
 	 * @param amount
 	 * @return
 	 * @author lin
 	 * @date 2016年8月3日下午5:31:51
 	 */
-	public boolean moneyGiven(Integer from, Integer to, BigDecimal amount);
+	public boolean moneyGiven(Integer from, Integer to, String toUserName, BigDecimal amount);
 
     /**
      * 
