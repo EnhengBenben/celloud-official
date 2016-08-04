@@ -1,24 +1,24 @@
 <table class="table table-condensed miniTable_ noborder" style="margin:0px">
 	<tr>
-		<td style="width:33%;"><strong>姓名:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
-		<td style="width:16%;"><strong>性别:</strong><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
-		<td style="width:17%;"><strong>年龄:</strong><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
-		<td style="width:33%;"><strong>孕周:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:33%;"><strong>姓名:</strong><span><input name="baseInfo['name']" value="$!pgs.baseInfo.name" type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:16%;"><strong>性别:</strong><span><input name="baseInfo['gender']" value="$!pgs.baseInfo.gender" type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:17%;"><strong>年龄:</strong><span><input name="baseInfo['age']" value="$!pgs.baseInfo.age" type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:33%;"><strong>孕周:</strong><span><input name="baseInfo['week']" value="$!pgs.baseInfo.week" type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 	</tr>
 	<tr>
-		<td style="width:33%;"><strong>门诊号/住院号:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
-		<td style="width:66%;" colspan="2"><strong>检验编号:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
-		<td style="width:33%;"><strong>临床诊断:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:33%;"><strong>门诊号/住院号:</strong><span><input name="baseInfo['outpatient']" value="$!pgs.baseInfo.outpatient" type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:66%;" colspan="2"><strong>检验编号:</strong><span><input name="baseInfo['number']" value="$!pgs.baseInfo.number" type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:33%;"><strong>临床诊断:</strong><span><input name="baseInfo['clinical']" value="$!pgs.baseInfo.clinical" type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 	</tr>
 	<tr>
-		<td style="width:33%;"><strong>采样日期:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
-		<td style="width:33%;" colspan="2"><strong>接收日期:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
-		<td style="width:33%;"><strong>送检科室:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:33%;"><strong>采样日期:</strong><span><input name="baseInfo['samplingDate']" value="$!pgs.baseInfo.samplingDate" type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:33%;" colspan="2"><strong>接收日期:</strong><span><input name="baseInfo['receiveDate']" value="$!pgs.baseInfo.receiveDate" type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:33%;"><strong>送检科室:</strong><span><input name="baseInfo['dept']" value="$!pgs.baseInfo.dept" type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 	</tr>
 	<tr>
-		<td style="width:33%;"><strong>送检医师:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
-		<td style="width:33%;" colspan="2"><strong>送检材料:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span</td>
-		<td style="width:33%;"><strong>标本状态:</strong><span><input type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:33%;"><strong>送检医师:</strong><span><input type="text" name="baseInfo['doctor']" value="$!pgs.baseInfo.doctor" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td style="width:33%;" colspan="2"><strong>送检材料:</strong><span><input name="baseInfo['material']" value="$!pgs.baseInfo.material" type="text" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span</td>
+		<td style="width:33%;"><strong>标本状态:</strong><span><input type="text" name="baseInfo['state']" value="$!pgs.baseInfo.state" class="input-middle onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 	</tr>
 </table>
 <hr>

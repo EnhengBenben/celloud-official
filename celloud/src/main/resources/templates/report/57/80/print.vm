@@ -1,16 +1,11 @@
 #parse("templates/report/layout.vm")
 #parse("templates/report/default/${hcv.appId}/reference.vm")
 <div id="printMain">
-    #if(${printContext})
-        ${printContext}
-    #end
-    #if(!${printContext})
-        <div>
-            #parse("templates/report/57/${hcv.appId}/title.vm")
-            #parse("templates/report/default/${hcv.appId}/content.vm")
-            #parse("templates/report/default/${hcv.appId}/foot.vm")
-            </form>
-        </div>
-    #end
+    <div>
+        #parse("templates/report/57/${hcv.appId}/title.vm")
+        #parse("templates/report/default/${hcv.appId}/content.vm")
+        #parse("templates/report/default/${hcv.appId}/foot.vm")
+        </form>
+    </div>
 </div>  
 #parse("templates/report/default/${hcv.appId}/js.vm")

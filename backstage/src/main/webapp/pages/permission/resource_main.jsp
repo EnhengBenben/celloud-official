@@ -83,13 +83,6 @@
 	                        </div>
 	                    </div>
 	                    <div class="form-group">
-                            <label class="col-sm-2 control-label">顺序<font color="red">*</font></label>
-                            <div class="col-sm-10">
-                               <input type="text" id="priority" class="form-control" name="priority" required="required">
-                               <span class="help-inline text-danger"></span>
-                            </div>
-                        </div>
-	                    <div class="form-group">
 	                        <label class="col-sm-2 control-label">资源类型<font color="red">*</font></label>
 	                        <div class="col-sm-10">
 	                           <select id="type" name="type" class="form-control col-sm-5" data-rule-required="true" data-msg-required="该项为必选项，请选择。" >

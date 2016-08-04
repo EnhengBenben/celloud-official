@@ -64,7 +64,6 @@ var rockySamples = (function(samples) {
 		var url = contextPath + "/sample/rocky/sampleList";
 		url = url + " #rocky-sample-list tr";
 		$("#rocky-sample-list").load(url, function() {
-			$("#sampleInput").val('');
 			$("#sampleInput").select();
 			self.error.hide();
 		});

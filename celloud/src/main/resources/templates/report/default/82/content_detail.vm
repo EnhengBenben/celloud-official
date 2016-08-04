@@ -1,24 +1,28 @@
-<form id="print-form">
-    <input type="hidden" value="1" id="isSaved"/>
+    <input type="hidden" name="id" value="${hbv.id}" id="hbvId" />
+    #if(!$hbv.detailBaseInfo.clinical)
+    <input type="hidden" name="isSaved" value="1" id="isSaved"/>
+    #else
+    <input type="hidden" name="isSaved" value="0" id="isSaved"/>
+    #end
     <input type="hidden" value="${hbv.projectId}" id="_projectId">
     <div style="display: none;" id="_userId">${hbv.userId}</div>
     <div style="display: none;" id="_appId">${hbv.appId}</div>
     <div style="display: none;" id="_companyId">${hbv.companyId}</div>
     <div style="display: none;" id="_fileId">${report.fileId}</div>
-    <div style="display: none;" id="_flag">0</div>
+    <div style="display: none;" id="_flag">0</div
     <div class="wrapper">
         <ul class="info mt5">
-            <li>姓名：<span><input type="text"></span></li>
-            <li>ID号：<span><input type="text"></span></li>
-            <li>样本编号：<span><input type="text"></span></li>
-            <li>样本种类：<span><input type="text"></span></li>
-            <li>性别：<span id="_sex"><input type="radio" name="sex" value="男" checked="checked" onclick="radioClick(0)" id="men">男<input type="radio" name="sex" value="女" onclick="radioClick(1)" id="women">女</span></li>
-            <li>科室：<span><input type="text"></span></li>
-            <li>送检日期：<span><input type="text"></span></li>
-            <li>送检医生：<span><input type="text"></span></li>
-            <li>年龄：<span><input type="text"></span>岁</li>
-            <li>床号：<span><input type="text"></span></li>
-            <li>住院号：<span><input type="text"></span></li>
+            <li>姓名：<span><input name="detailBaseInfo['name']" value="$!{hbv.detailBaseInfo.name}" type="text"></span></li>
+            <li>ID号：<span><input name="detailBaseInfo['id']" value="$!{hbv.detailBaseInfo.id}" type="text"></span></li>
+            <li>样本编号：<span><input name="detailBaseInfo['sampleNumber']" value="$!{hbv.detailBaseInfo.sampleNumber}" type="text"></span></li>
+            <li>样本种类：<span><input name="detailBaseInfo['sampleType']" value="$!{hbv.detailBaseInfo.sampleType}" type="text"></span></li>
+            <li>性别：<span id="_sex"><input type="radio" name="detailBaseInfo['sex']" value="男" #if(${hbv.detailBaseInfo.sex}!='女')checked="checked"#end onclick="radioClick(0)" id="men">男<input type="radio" name="detailBaseInfo['sex']" #if(${hbv.detailBaseInfo.sex}=='女')checked="checked"#end value="女" onclick="radioClick(1)" id="women">女</span></li>
+            <li>科室：<span><input name="detailBaseInfo['dept']" value="$!{hbv.detailBaseInfo.dept}" type="text"></span></li>
+            <li>送检日期：<span><input name="detailBaseInfo['submissionDate']" value="$!{hbv.detailBaseInfo.submissionDate}" type="text"></span></li>
+            <li>送检医生：<span><input name="detailBaseInfo['doctor']" value="$!{hbv.detailBaseInfo.doctor}" type="text"></span></li>
+            <li>年龄：<span><input name="detailBaseInfo['age']" value="$!{hbv.detailBaseInfo.age}" type="text"></span>岁</li>
+            <li>床号：<span><input name="detailBaseInfo['bedNo']" value="$!{hbv.detailBaseInfo.bedNo}" type="text"></span></li>
+            <li>住院号：<span><input name="detailBaseInfo['inpatientNumber']" value="$!{hbv.detailBaseInfo.inpatientNumber}" type="text"></span></li>
         </ul>
         <div class="gray">送检目的：HBV基因分型，拉米夫定LAM，阿德福韦ADV，恩替卡韦ETV，替比夫定LDT，替诺福韦酯TDF，恩曲他滨FTC</div>
         <div class="gray">相关位点：rt169，rt173，rt180，rt181，rt184，rt194，rt202，rt204，rt215，rt233，rt236，rt250</div>
@@ -27,7 +31,14 @@
     <h2 class="mt10">一、基因分型结果：<span style="font-size:12px;font-weight: normal">${hbv.type.replace('Type','基因型')}</span></h2>
     <h2 class="mt10">二、耐药突变位点检测结果：</h2>
     <div class="m-box_1">
+        <input type="hidden" name="detailBaseInfo['clinical']" id="clinical" />
+        #if($hbv.detailBaseInfo.clinical)
+<table class="table table-bordered table-condensed">            
+${hbv.detailBaseInfo.clinical}
+</table>
+        #else
         ${hbv.clinical}
+        #end
         <p class="annotation">注：实心五星 <i class="fa fa-star" aria-hidden="true"></i> 表示发生了耐药突变<br>
             空心五星 <i class="fa fa-star-o" aria-hidden="true"></i> 表示发生了突变，但是暂无文献支持其和耐药相关<br>
              红色字体表示在样本中未找到该位点
@@ -212,7 +223,7 @@
     </p>
     <h2 class="mt10">四、参考结论（根据已发表文献得出以下参考结论）：</h2>
     <div class="m-box_1" id="des">
-        <textarea rows="6">${hbv.reporttxt.split('Other:')[0]}</textarea>
+        <textarea rows="6" name="detailBaseInfo['des']">#if($hbv.detailBaseInfo.des)$!hbv.detailBaseInfo.des#else${hbv.reporttxt.split('Other:')[0]}#end</textarea>
     </div>
     <h2 class="mt10">五、测序序列结果：</h2>
     <p class="m-box_1 force_break">$!{hbv.seq}</p>

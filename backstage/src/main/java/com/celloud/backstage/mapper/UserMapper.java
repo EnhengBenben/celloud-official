@@ -43,6 +43,8 @@ public interface UserMapper {
 
     public User getUserByName(@Param("username") String username);
 
+	public List<User> getUserByNames(@Param("usernames") String... usernames);
+
     // TODO 返回值将来也许需要改成List<Integer>
     /**
      * 获取用户所属的大客户

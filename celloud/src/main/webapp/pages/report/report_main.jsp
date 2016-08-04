@@ -1,6 +1,6 @@
 <%@page import="com.celloud.model.mysql.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<link href="<%=request.getContextPath() %>/css/report.css?version=3.1.12" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/css/report.css?version=3.2.3" rel="stylesheet">
 <section class="content-header">
   <h1>
     <small>&nbsp;</small>
@@ -33,7 +33,7 @@
       		  <a href="javascript:void(0)" onclick="changeDate(-30,this)" class="cdate">30天</a>&nbsp;&nbsp;&nbsp;&nbsp;
        		  <label>From：</label><input type="text" onchange="changeDate(0,obj)" id="_searchDate" class="Wdate input" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;width: 90px;"/>
        		  <label>To：</label><input type="text" onchange="changeDate(0,obj)" id="_endDate" class="input Wdate" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;width: 90px;"/>
-       		  <span id="_alertSpan" style="color:red;display:none;"></span>
+       		  <span id="_alertSpan" style="color:#ff5b5b;display:none;"></span>
           </div>
           <div class="form-inline">
               <label class="form-inline">应用：</label>
@@ -49,10 +49,13 @@
           </div>
 		  <div class="form-inline">
 			<label class="form-inline">数据：</label>
-			<div class="input-group" style="width:330px;height:20px;">
-				<input type="text" class="form-control" style="height:20px;padding: 0px 12px;" id="_fileName" onchange="changeFileName()" placeholder="检索文件名/别名/数据编号">
+			<div class="input-group" style="height:20px;">
+				<input type="text" class="form-control" style="height:20px;padding: 0px 12px;width: 200px" id="_fileName" onchange="changeFileName()" placeholder="检索文件名/别名/数据编号">
 				<span class="input-group-btn">
-					<button class="btn btn-info btn-flat" type="button" onclick="submitSearch()" style="height:20px;font-size:14px;padding-top:0px;background-color: #85c540;border-color: #85c540;">Go!</button>
+					<button class="btn btn-info btn-flat" type="button" onclick="submitSearch()" style="height:20px;font-size:14px;padding-top:0px;margin-bottom: 1px;background-color: #85c540;border-color: #85c540;">Go!</button>
+				</span>
+				<span class="input-group-btn">
+					<button disabled="disabled" id="_dataAlertSpan" class="btn btn-info btn-flat" type="button" style="height: 18px;font-size: 12px;padding-top: 0px;border-color: white;background-color: white;color: red;cursor: text;"></button>
 				</span>
 			</div>
 		  </div>
@@ -99,7 +102,7 @@
 <script src="<%=request.getContextPath() %>/plugins/backToTop/toTop.1.0.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/calendar/WdatePicker.js"></script>
 <script src="<%=request.getContextPath() %>/js/report_app_method.js"></script>
-<script src="<%=request.getContextPath() %>/js/report.js?version=20160512"></script>
+<script src="<%=request.getContextPath() %>/js/report.js?version=3.2.4.2"></script>
 <script src="<%=request.getContextPath() %>/js/report_codon.js"></script>
 <script src="<%=request.getContextPath() %>/js/bigImg.js?version=3.1.9.1"></script>
 <script type="text/javascript">

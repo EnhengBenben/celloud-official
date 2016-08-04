@@ -141,7 +141,7 @@ only screen and (min-device-pixel-ratio: 2) {
 .changeImg{background-image:url(../images/report/icon_edit.png); background-repeat:no-repeat; width: 20px; height: 20px; cursor: pointer;}
 .changeImg{ position:absolute; background-position: -35px -38px;}
 .okImg{ width: 20px; height:16px; position:absolute; cursor: pointer;margin:4px 0px 0px -1px}
-.changeInput{width:90px; height:20px; border-color:#9dcddd;}
+.changeInput{width:90px; border-color:#9dcddd;}
 .link{color: #009aca;cursor: pointer;}
 .link:hover{text-decoration: underline;}
 .link_visited{color: #990099;}

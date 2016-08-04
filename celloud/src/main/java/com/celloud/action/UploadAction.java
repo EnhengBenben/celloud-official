@@ -128,9 +128,9 @@ public class UploadAction {
 			boolean hasR2 = false;
 			for (DataFile d : dlist) {
 				String name_tmp = d.getFileName();
-				if (name_tmp.contains("R1") && data.getFileFormat() == d.getFileFormat()) {
+				if (name_tmp.contains("R1") && data.getFileFormat().intValue() == d.getFileFormat().intValue()) {
 					hasR1 = true;
-				} else if (name_tmp.contains("R2") && data.getFileFormat() == d.getFileFormat()) {
+				} else if (name_tmp.contains("R2") && data.getFileFormat().intValue() == d.getFileFormat().intValue()) {
 					hasR2 = true;
 				}
 				// 排除同一个文件多次上传的问题

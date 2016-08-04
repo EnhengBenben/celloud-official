@@ -1,9 +1,9 @@
 <hr/>
 <div class="wrapper">
     <ul class="footer">
-        <li>检验日期：<span><input type="text"></span></li>
-        <li>报告日期：<span><input type="text"></span></li>
-        <li class="right">检验者：<span><input type="text"></span></li>
-        <li class="right">审核者：<span><input type="text"></span></li>
+        <li>检验日期：<span><input name="baseInfo['inspectionDate']" value="$!{hcv.baseInfo.inspectionDate}" type="text"></span></li>
+        <li>报告日期：<span><input name="baseInfo['reportDate']" value="$!{hcv.baseInfo.reportDate}" type="text"></span></li>
+        <li class="right">检验者：<span><input name="baseInfo['inspectionPerson']" value="$!{hcv.baseInfo.inspectionPerson}" type="text"></span></li>
+        <li class="right">审核者：<span><input name="baseInfo['review']" value="$!{hcv.baseInfo.review}" type="text"></span></li>
     </ul>
 </div>

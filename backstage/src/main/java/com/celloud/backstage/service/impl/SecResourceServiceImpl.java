@@ -29,6 +29,12 @@ public class SecResourceServiceImpl implements SecResourceService {
     @Override
     public int addResource(SecResource resource) {
         resource.setCreateDate(new Date());
+        Integer priority = resourceMapper.getLastestPriorityByParentId(resource.getParentId());
+        if (priority == null) {
+            resource.setPriority(1);
+        } else {
+            resource.setPriority(priority + 1);
+        }
         return resourceMapper.insert(resource);
     }
 

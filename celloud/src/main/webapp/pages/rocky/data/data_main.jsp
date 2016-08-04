@@ -67,17 +67,17 @@
 			<th>
 				上传时间
 				<c:if test="${sidx=='createDate'&&sord=='asc' }">
-					<a id="sortBtn-createDate-desc" href="javascript:void(0);">
+					<a id="dataSortBtn-createDate-desc" href="javascript:void(0);">
 						<i class="fa fa-sort-amount-asc"></i>
 					</a>
 				</c:if>
 				<c:if test="${sidx=='createDate'&&sord=='desc' }">
-					<a id="sortBtn-createDate-asc" href="javascript:void(0);">
+					<a id="dataSortBtn-createDate-asc" href="javascript:void(0);">
 						<i class="fa fa-sort-amount-desc"></i>
 					</a>
 				</c:if>
 				<c:if test="${sidx!='createDate' }">
-					<a id="sortBtn-createDate" href="javascript:void(0);">
+					<a id="dataSortBtn-createDate" href="javascript:void(0);">
 						<i class="fa fa-sort" aria-hidden="true"></i>
 					</a>
 				</c:if>
@@ -89,7 +89,7 @@
 	</thead>
 	<tbody id="data-list-tbody">
 		<c:forEach items="${pageList.datas }" var="data">
-			<tr id="data_id_${data.fileId }">
+			<tr id="dataKey_${data.dataKey }">
 				<td>
 					<label class="checkbox-lable">
 						<input class="checkbox" type="checkbox" name="demo-checkbox1">
@@ -97,7 +97,7 @@
 					</label>
 				</td>
 				<td>${data.sample }</td>
-				<td title="${data.fileName }" name="data-name-td">${data.fileName }</td>
+				<td style="text-align: left;" title="${data.fileName }" name="data-name-td">${data.fileName }</td>
 				<td>${data.batch }</td>
 				<td>
 					<c:choose>
@@ -150,7 +150,7 @@
 <c:if test="${pageList.datas.size()<=0 }">
 	<div style="display: table; width: 100%; margin-top: -10px;">
 		<div class="text-center" style="display: table-cell; height: 350px; font-size: 18px; vertical-align: middle; background-color: #fff;">
-			<i class="glyphicon glyphicon-exclamation-sign" style="color: #f39c12;"></i> 您好，还没有数据哦！
+			<i class="glyphicon glyphicon-exclamation-sign" style="color: #f39c12;"></i> ${conditionFilter!=null||sampleFilter!=null?'未检索到数据！':'您好，还没有数据哦！' }
 		</div>
 	</div>
 </c:if>

@@ -1,0 +1,37 @@
+<script type="text/javascript">
+$(function(){
+    $("#print").on("click",function(){
+        $(".buttons").hide();
+        $("input").css("border-bottom", "0");
+        window.print();
+        $("input").css("border-bottom", "1px solid #D4D4D4");
+        $(".buttons").show();
+    });
+    
+    $("#save").on("click",function(){
+        var url = window.location.href.split("print")[0];
+        $.post(url+"updateEgfrFilling",$("#print-form").serialize(),function(result){
+            if(result==1){
+                $.lAlert("信息保存成功！");
+            }else{
+                $.lAlert("信息保存失败！");
+                $("#isSaved").attr("value","1");
+            }
+        });
+    });
+
+    $("#reset").on("click",function(){
+        var url = window.location.href.split("print")[0];
+        $.lConfirm('确认重置？', function() {
+            $.post(url+"updateEgfrFilling",{id:$("#egfrId").val()},function(result){
+                if(result==1){
+                    location=location ;
+                }else{
+                    $.lAlert("信息重置失败！");
+                }
+            });
+        });
+    });
+});
+
+</script>

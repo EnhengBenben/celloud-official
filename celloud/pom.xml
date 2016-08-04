@@ -12,6 +12,11 @@
 	<name>celloud Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
+	    <!-- jsoup -->
+	    <dependency>
+		  <groupId>org.jsoup</groupId>
+		  <artifactId>jsoup</artifactId>
+		</dependency>
 		<!-- 单元测试 -->
 		<dependency>
 			<groupId>junit</groupId>

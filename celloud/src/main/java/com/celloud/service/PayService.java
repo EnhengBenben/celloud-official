@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.celloud.model.mysql.RechargeAlipay;
+import com.celloud.model.mysql.RechargeJdpay;
 
 public interface PayService {
 	/**
@@ -24,6 +25,21 @@ public interface PayService {
 	 */
 	public RechargeAlipay verifyAlipay(HttpServletRequest request) throws Exception;
 
+	/**
+	 * 创建京东网关支付的订单
+	 * 
+	 * @param bank
+	 * @param money
+	 * @return
+	 */
 	public Map<String, String> createJdpayOrder(String bank, String money);
+
+	/**
+	 * 验证京东网关支付的回调
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public RechargeJdpay verifyJdpay(HttpServletRequest request);
 
 }

@@ -161,7 +161,7 @@ function _init_data(){
                   break;
                 }else{
                   if(dataNum <= dataLength){
-                    if((appId==109||appId==110||appId==111||appId==112||appId==113) && dataNum<dataLength){
+                    if((appId==109||appId==110||appId==111||appId==112||appId==113||appId==126||appId==127||appId==128) && dataNum<dataLength){
                     }else{
                       appLi += "<li class=\"types-options\" title=\"点击选中\" name=\"to-run-app\" data-appid=\""+appId+"\" >"+appName+"</li>";
                       noAPP++;
@@ -226,7 +226,7 @@ function _init_data(){
             return;
           }else{
             //判断为包含CMP/CMP_199/GDD则提示检查所选数据
-            if(appId==110 ||appId==111|| appId==112){
+            if(appId==110 ||appId==111|| appId==112||appId==126||appId==127||appId==128){
               $("#run-error-text").html("运行"+appName+"需确定所选数据为配对数据！<input type='hidden' id='appId-hide' value='"+appId+"'><br>(配对格式:aaa<span class='text-red'>1</span>.fastq&nbsp;&nbsp;&nbsp;aaa<span class='text-red'>2</span>.fastq)");
               $("#run-error-modal").modal("show");
             }else if(appId==113){
@@ -264,7 +264,9 @@ function _init_data(){
       }
       appIds = appIds.substring(0, appIds.length-1);
       $.get("data/run",{"dataIds":dataIds.toString(),"appIds":appIds},function(result){
-        if(result != ""){
+        if(result == "1"){
+          $.dataManager.showTipModal("您的余额不足，请充值后再运行");
+        }else if(result.length >1){
           $.dataManager.showTipModal("以下APP运行失败：<br>"+result);
         }else{
           $.dataManager.find.condition();

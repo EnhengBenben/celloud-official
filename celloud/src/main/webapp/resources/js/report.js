@@ -296,11 +296,21 @@ $.ajaxSetup ({
 					END = END+" 23:59:59";
 				}
 			}
+			//匹配中文 数字 字母 下划线       
+      var pattern=/[`~!@#\$%\^\&\*\(\)_\+<>\?:"\{\},\.\\\/;'\[\]]/im;
+      if(pattern.test(FILENAME)){
+        $("#_dataAlertSpan").css("display","");
+        $("#_dataAlertSpan").html("输入框禁止输入特殊字符");
+        return ;
+      }
+      $("#_dataAlertSpan").css("display","none");
+      $("#_dataAlertSpan").html("");
 			spinner = new Spinner(opts);
 			var target = document.getElementById('reportLoading');
 			spinner.spin(target);
 			$.get("report/getReportPageList",{"belongs":BELONGS,"appId":APP,"start":START,"end":END,"condition":FILENAME,"size":pageSize,"page":currentPage},function(responseText){
 				$("#selfReportDiv").html(responseText);
+				$("body").scrollTop(0);
 				loadReportList();
 				spinner.stop();
 			});
@@ -369,12 +379,12 @@ $.ajaxSetup ({
 			                    }
 			                }
 			            }
-			            if(appId=="118"||appId=="117"||appId=="114"||appId=="113"||appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
+			            if(appId=="128"||appId=="127"||appId=="126"||appId=="118"||appId=="117"||appId=="114"||appId=="113"||appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
 			                param = {"fileName":$.trim($(this).html()),"dataKey":$.trim($(this).prev().html()),"softwareId":appId,"softwareName":appName,"userId":userId,"obj":$(this),"proId":proId,"proName":proName};
 			                if(j>0&&i==1){
 			                    $(this).addClass("sub");
 			                    var fileName = $(this).html();
-		                        if(fileName.length>30&&appId!="113"&&appId!="112"&&appId!="111"&&appId!="110"){
+		                        if(fileName.length>30&&appId!="113"&&appId!="112"&&appId!="111"&&appId!="110"&&appId!="126"&&appId!="127"&&appId!="128"){
 		                        	fileName = fileName.substring(0,30) + "...";
 		                        }
 		                        if(appId!="114"&&appId!="118"){
@@ -397,7 +407,7 @@ $.ajaxSetup ({
 			                    }
 			                }
 			            }
-			            if(appId=="91"||appId=="95"||appId=="92"||appId=="93"||appId=="94"||appId=="86"||appId=="87"||appId=="88"||appId=="81"||appId=="83"||appId=="85"||appId=="96"||appId=="97"||appId=="98"||appId=="99"||appId=="100"||appId=="101"||appId=="102"||appId=="103"||appId=="104"||appId=="116"||appId=="119"||appId=="120"||appId=="121"||appId=="122"){
+			            if(appId=="91"||appId=="95"||appId=="92"||appId=="93"||appId=="94"||appId=="86"||appId=="87"||appId=="88"||appId=="81"||appId=="83"||appId=="85"||appId=="96"||appId=="97"||appId=="98"||appId=="99"||appId=="100"||appId=="101"||appId=="102"||appId=="103"||appId=="104"||appId=="116"||appId=="119"||appId=="120"||appId=="121"||appId=="122"||appId=="124"||appId=="125"){
 			                if(j>0&&i==0){
 			                    param = {"fileName":$.trim($(this).html()),"dataKey":$.trim($(this).next().html()),"softwareId":appId,"softwareName":appName,"userId":userId,"obj":$(this),"proId":proId,"proName":proName};
 			                    $(this).addClass("sub");
@@ -502,7 +512,7 @@ $.ajaxSetup ({
 			        });
 			    });
 			    var minTdNum = 5;
-			    if(appId=="113"||appId=="112"||appId=="111"||appId=="110"){
+			    if(appId=="128"||appId=="127"||appId=="126"||appId=="113"||appId=="112"||appId=="111"||appId=="110"){
 			    	minTdNum = 4;
 			    }
 			    var rdataNum = $("#rdataNum"+proId).html();
@@ -572,7 +582,7 @@ $.ajaxSetup ({
 				$("#fileListUl").append("<button type='button' id='prevA' class='btn btn-success'><span class='fa fa-sort-asc'></span></button>");
 				var fileNames = new Array();
 				var newList = "";
-				if(softwareId == 110||softwareId == 111||softwareId == 112||softwareId == 113){
+				if(softwareId == 110||softwareId == 111||softwareId == 112||softwareId == 113||softwareId == 126||softwareId == 127||softwareId == 128){
 					$.each(fileList,function(index,item){
 					  if(!utils.isConfigure(item.fileName)){
 					    fileNames.push(item.fileName);
@@ -683,7 +693,7 @@ $.ajaxSetup ({
 				var data = [{name:'Mutant strain',value:mutant},{name:'Wild type',value:wild},{name:'No Result',value:neither}];
 				$.reportChar.draw.echartsShowPie("_showPie","Samples Statistic",data);
 			}
-			if(appId==81||appId==83||appId==85||appId==86||appId==87||appId==88||appId==91||appId==92||appId==93||appId==94||appId==119||appId==120||appId==121||appId==122){
+			if(appId==81||appId==83||appId==85||appId==86||appId==87||appId==88||appId==91||appId==92||appId==93||appId==94||appId==119||appId==120||appId==121||appId==122||appId==124||appId==125){
 				var T = 0,M = 0;
 				$("#_table").find("th").each(function(i){
 					if($(this).html()=="Total_Reads"){

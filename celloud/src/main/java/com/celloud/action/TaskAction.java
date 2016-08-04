@@ -48,7 +48,6 @@ import com.celloud.sendcloud.EmailParams;
 import com.celloud.sendcloud.EmailType;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
-import com.celloud.service.ExpensesService;
 import com.celloud.service.ExperimentService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
@@ -90,8 +89,6 @@ public class TaskAction {
     private ReportService reportService;
     @Resource
     private AppService appService;
-    @Resource
-    private ExpensesService expencesService;
     @Resource
     private ExperimentService expService;
     @Resource

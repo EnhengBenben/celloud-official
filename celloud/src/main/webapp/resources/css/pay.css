@@ -8,13 +8,11 @@
 	border-image-outset: initial;
 	border-image-repeat: initial;
 	width: 150px;
-	height: 38px;
-	background: url("../images/pay/bank-icons.png") no-repeat
-		rgb(255, 255, 255);
+	height: 60px;
 	border-width: 1px;
 	border-style: solid;
 	border-color: rgb(203, 202, 216);
-	border-radius: 3px;
+	border-radius: 10px;
 }
 
 .pay-logo.disabled {
@@ -27,90 +25,17 @@
 
 .pay-banks .pay-item {
 	display: inline-block;
-	margin-right: 40px;
+	margin-right: 10px;
 	line-height: 50px;
+}
+.pay-banks .pay-item.alone{
+	display:block;
+}
+.pay-banks .pay-item img {
+	width: 150px;
+	height: 60px;
 }
 
 .disabled {
 	cursor: not-allowed
-}
-
-.pay-logo.alipay {
-	background-position: 30px -946px;
-}
-
-.pay-logo.BOCB2C {
-	background-position: 30px -108px;
-}
-
-.pay-logo.ICBCB2C {
-	background-position: 20px -504px;
-}
-
-.pay-logo.CMB {
-	background-position: 30px -288px;
-}
-
-.pay-logo.CCB {
-	background-position: 20px -144px;
-}
-
-.pay-logo.ABC {
-	background-position: 20px 0px;
-}
-
-.pay-logo.SPDB {
-	background-position: 30px -756px;
-}
-
-.pay-logo.CIB {
-	background-position: 20px -216px;
-}
-
-.pay-logo.GDB {
-	background-position: 15px -432px;
-}
-
-.pay-logo.SDB {
-	background-position: 20px -612px;
-}
-
-.pay-logo.CMBC {
-	background-position: 20px -324px;
-}
-
-.pay-logo.COMM {
-	background-position: 30px -360px;
-}
-
-.pay-logo.CITIC {
-	background-position: 25px -252px;
-}
-
-.pay-logo.HZCBB2C {
-	background-position: 30px -468px;
-}
-
-.pay-logo.CEB-DEBIT {
-	background-position: 20px -180px;
-}
-
-.pay-logo.SHBANK {
-	background-position: 30px -648px;
-}
-
-.pay-logo.NBBANK {
-	background-position: 30px -540px;
-}
-
-.pay-logo.SPABANK {
-	background-position: 25px -720px;
-}
-
-.pay-logo.BJRCB {
-	background-position: 15px -72px;
-}
-
-.pay-logo.FDB {
-	background-position: 35px -396px;
 }

@@ -1,0 +1,16 @@
+<div class="foot">
+    <br/><br/>
+    <table class="footTable">
+        <tr>
+            <td style="width:33%;">
+                                主检人:<span><input name="baseInfo['mainInspector']" value="$!{pgs.baseInfo.mainInspector}" type="text" class="tdInput"></span>
+            </td>
+            <td style="width:33%;">
+                                审核人:<span><input name="baseInfo['audit']" value="$!{pgs.baseInfo.audit}" type="text" class="tdInput"></span>
+            </td>
+            <td style="width:33%;">
+                                报告日期:<span><input name="baseInfo['reportDate']" value="$!{pgs.baseInfo.reportDate}" type="text" class="tdInput"></span>
+            </td>
+        </tr>
+    </table>
+</div>

@@ -1,9 +1,0 @@
-<hr/>
-<div class="wrapper">
-    <ul class="footer">
-        <li>检验日期：<span><input type="text"></span></li>
-        <li>报告日期：<span><input type="text"></span></li>
-        <li>检验者：<span><input type="text"></span></li>
-        <li>审核者：<span><input type="text"></span></li>
-    </ul>
-</div>

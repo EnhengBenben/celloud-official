@@ -3,6 +3,7 @@ package com.celloud.model.mongo;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -48,6 +49,9 @@ public class Pgs extends Base {
     private String mapReads;
     private String winSize;
 	private String mosaic;
+
+    // 用户填写的基本信息
+    private Map<String, String> baseInfo;
 
     public Integer getFileId() {
         return fileId;
@@ -280,5 +284,13 @@ public class Pgs extends Base {
 	public void setHRPng(String hRPng) {
 		HRPng = hRPng;
 	}
+
+    public Map<String, String> getBaseInfo() {
+        return baseInfo;
+    }
+
+    public void setBaseInfo(Map<String, String> baseInfo) {
+        this.baseInfo = baseInfo;
+    }
 
 }

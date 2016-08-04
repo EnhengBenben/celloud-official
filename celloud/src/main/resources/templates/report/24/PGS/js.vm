@@ -1,0 +1,39 @@
+<script type="text/javascript">
+$(function(){
+    var url = window.location.href.split("print")[0];
+    $("#print").on("click",function(){
+        var lookHide = $(".look_hide");
+        $(".buttons").hide();
+        lookHide.removeClass("look_hide");
+        $("input").css("border-bottom", "0");
+        window.print();
+        $("input").css("border-bottom", "1px solid #D4D4D4");
+        lookHide.addClass("look_hide");
+        $(".buttons").show();
+    });
+    
+    $("#save").on("click",function(){
+        $.post(url+"updatePgsFilling",$("#print-form").serialize(),function(result){
+            if(result==1){
+                $.lAlert("信息保存成功！");
+            }else{
+                $.lAlert("信息保存失败！");
+                $("#isSaved").attr("value","1");
+            }
+        });
+    });
+
+    $("#reset").on("click",function(){
+        $.lConfirm('确认重置？', function() {
+            $.post(url+"updatePgsFilling",{id:$("#pgsId").val()},function(result){
+                if(result==1){
+                    location=location ;
+                }else{
+                    $.lAlert("信息重置失败！");
+                }
+            });
+        });
+    });
+});
+
+</script>

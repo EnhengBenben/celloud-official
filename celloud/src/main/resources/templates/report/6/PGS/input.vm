@@ -1,46 +1,46 @@
 <table border='1' cellspacing="0" cellpadding="0" width="100%">
     <tr>
         <td style="height:30px">
-            <strong style="font-size:14px;">检测项目：</strong><span><input value="染色体拷贝数筛查" type="text" class="onlybotton" style="width:87%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+            <strong style="font-size:14px;">检测项目：</strong><span><input name="baseInfo['project']" value="#if($pgs.baseInfo.project)$!pgs.baseInfo.project#else染色体拷贝数筛查#end" type="text" class="onlybotton" style="width:87%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
         </td>
     </tr>
     <tr>
         <td style="height:30px">
-            <strong style="font-size:14px;">样本编号：</strong><span><input value="$pgs.anotherName" type="text" class="onlybotton" style="width:38%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
-            <strong style="font-size:14px;">实验编号：</strong><span><input type="text" class="onlybotton" style="width:38%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+            <strong style="font-size:14px;">样本编号：</strong><span><input name="baseInfo['sampleNumber']" value="#if($pgs.baseInfo.sampleNumber)$!pgs.baseInfo.sampleNumber#else$pgs.anotherName#end" type="text" class="onlybotton" style="width:38%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+            <strong style="font-size:14px;">实验编号：</strong><span><input name="baseInfo['experimentNumber']" value="$!pgs.baseInfo.experimentNumber" type="text" class="onlybotton" style="width:38%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
         </td>
     </tr>
     <tr>
         <td style="height:30px">
-            <strong style="font-size:14px;">送检时间：</strong><span><input type="text" class="onlybotton" style="width:38%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
-            <strong style="font-size:14px;">样本类型：</strong><span><input type="text" class="onlybotton" style="width:38%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+            <strong style="font-size:14px;">送检时间：</strong><span><input name="baseInfo['testDate']" value="$!pgs.baseInfo.testDate" type="text" class="onlybotton" style="width:38%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+            <strong style="font-size:14px;">样本类型：</strong><span><input name="baseInfo['type']" value="$!pgs.baseInfo.type" type="text" class="onlybotton" style="width:38%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
         </td>
     </tr>
     <tr>
         <td style="height:30px">
-            <strong style="font-size:14px;">检测内容：</strong><span><input value="23对染色体的非整倍体，及4Mb以上片段重复或缺失" type="text" class="onlybotton" style="width:87%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+            <strong style="font-size:14px;">检测内容：</strong><span><input name="baseInfo['content']" value="#if(!$pgs.baseInfo.content)23对染色体的非整倍体，及4Mb以上片段重复或缺失#else$!pgs.baseInfo.content#end" type="text" class="onlybotton" style="width:87%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
         </td>
     </tr>
     <tr>
         <td style="height:30px">
-            <strong style="font-size:14px;">检测技术：</strong><span><input value="半导体高通测序" type="text" class="onlybotton" style="width:87%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+            <strong style="font-size:14px;">检测技术：</strong><span><input name="baseInfo['technology']" value="#if($pgs.baseInfo.technology)$!pgs.baseInfo.technology#else半导体高通测序#end" type="text" class="onlybotton" style="width:87%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
         </td>
     </tr>
     <tr>
         <td style="height:30px">
-            <strong style="font-size:14px;">运输状态：</strong><span><input value="正常" type="text" class="onlybotton" style="width:87%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+            <strong style="font-size:14px;">运输状态：</strong><span><input name="baseInfo['state']" value="#if($pgs.baseInfo.state)$!pgs.baseInfo.state#else正常#end" type="text" class="onlybotton" style="width:87%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
         </td>
     </tr>
     <tr>
         <td style="height:30px">
-            <strong style="font-size:14px;">内部质量控制：</strong><span><input value="正常" type="text" class="onlybotton" style="width:83.5%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+            <strong style="font-size:14px;">内部质量控制：</strong><span><input name="baseInfo['quality']" value="#if($pgs.baseInfo.quality)$!pgs.baseInfo.quality#else正常#end" type="text" class="onlybotton" style="width:83.5%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
         </td>
     </tr>
     <tr>
         <td style="height:30px">
             <strong style="font-size:14px;">检测结果：</strong><img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.miniPng}" style="width:100%;"><img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.splitPng}" style="width:99%;"><strong>该样本检测结果显示:</strong><br/>
             <div id="result">
-                <textarea style="width:99%" id="resultArea">${pgs.report}</textarea>
+                <textarea style="width:99%" id="resultArea" name="baseInfo['result']">#if($pgs.baseInfo.result)$!pgs.baseInfo.result#else${pgs.report}#end</textarea>
             <div>
         </td>
     </tr>
@@ -53,9 +53,9 @@
     </tr>
     <tr>
         <td style="height:30px">
-            <strong style="font-size:14px;">检测者：</strong><span><input type="text" class="onlybotton" style="width:23%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
-            <strong style="font-size:14px;">审核者：</strong><span><input type="text" class="onlybotton" style="width:23%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
-            <strong style="font-size:14px;">报告日期：</strong><span><input type="text" class="onlybotton" style="width:23%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+            <strong style="font-size:14px;">检测者：</strong><span><input name="baseInfo['detection']" value="$!pgs.baseInfo.detection" type="text" class="onlybotton" style="width:23%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+            <strong style="font-size:14px;">审核者：</strong><span><input name="baseInfo['review']" value="$!pgs.baseInfo.review" type="text" class="onlybotton" style="width:23%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
+            <strong style="font-size:14px;">报告日期：</strong><span><input name="baseInfo['reportDate']" value="$!pgs.baseInfo.reportDate" type="text" class="onlybotton" style="width:23%;height:16px;padding:0px;margin:0px;font-size:12px;line-height:16px"/></span>
         </td>
     </tr>
 </table>

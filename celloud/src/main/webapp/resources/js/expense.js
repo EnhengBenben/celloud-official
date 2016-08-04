@@ -100,10 +100,12 @@ function init_expense(){
   $("#expense-content").on("submit","#rechargeForm",function(){
 	 var $self = $("#rechargeForm");
 	 var $group =  $self.find("#moneyGroup");
+	 var payType = $self.find('#pay_type_alipay').is(":checked");
 	 $group.removeClass("has-error");
 	 $group.find(".text-danger").hide();
 	 var money = $self.find("input[name='money']").val();
 	 if($.isNumeric(money) && money*1 == 0.01){//测试用的
+		 $self.attr('action',$self.attr("action")+(payType?'alipay':'jdpay'));
 		 $("#tip-modal").modal("show");
 		 return true;
 	 }
@@ -129,6 +131,7 @@ function init_expense(){
 	 }
 	 $("#tip-modal").modal('show');
 	 $self.find("input[name='money']").val(parseInt(money));
+	 $self.attr('action',$self.attr("action")+(payType?'alipay':'jdpay'));
 	 return true;
   });
 }

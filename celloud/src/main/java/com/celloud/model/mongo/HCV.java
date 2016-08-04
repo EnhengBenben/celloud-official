@@ -20,6 +20,7 @@ public class HCV extends Base {
 	private String score;
 	private String seq;
 	private Map<String, String> original;// 原始峰图
+    private Map<String, String> baseInfo;
 
 	public String getFileName() {
 		return fileName;
@@ -92,4 +93,13 @@ public class HCV extends Base {
 	public void setOriginal(Map<String, String> original) {
 		this.original = original;
 	}
+
+    public Map<String, String> getBaseInfo() {
+        return baseInfo;
+    }
+
+    public void setBaseInfo(Map<String, String> baseInfo) {
+        this.baseInfo = baseInfo;
+    }
+
 }

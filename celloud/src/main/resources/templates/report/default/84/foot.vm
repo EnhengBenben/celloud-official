@@ -1,9 +1,9 @@
 <hr/>
 <div class="wrapper">
     <ul class="footer">
-        <li>检验日期：<span><input type="text"></span></li>
-        <li>报告日期：<span><input type="text"></span></li>
-        <li class="right">检验者：<span><input type="text"></span></li>
-        <li class="right">审核者：<span><input type="text"></span></li>
+        <li>检验日期：<span><input name="baseInfo['inspectionDate']" value="$!{egfr.baseInfo.inspectionDate}" type="text"></span></li>
+        <li>报告日期：<span><input name="baseInfo['reportDate']" value="$!{egfr.baseInfo.reportDate}" type="text"></span></li>
+        <li class="right">检验者：<span><input name="baseInfo['inspectionPerson']" value="$!{egfr.baseInfo.inspectionPerson}" type="text"></span></li>
+        <li class="right">审核者：<span><input name="baseInfo['review']" value="$!{egfr.baseInfo.review}" type="text"></span></li>
     </ul>
 </div>

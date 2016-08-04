@@ -106,7 +106,7 @@ public class DateUtil {
         if (dayFormat.format(date).equals(dayFormat.format(calendar.getTime()))) {
             return "昨天";
         }
-        return new SimpleDateFormat("mm-dd").format(date);
+        return new SimpleDateFormat("MM-dd").format(date);
     }
 
     public static void main(String[] args) {

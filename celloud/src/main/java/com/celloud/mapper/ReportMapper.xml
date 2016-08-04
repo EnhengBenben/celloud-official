@@ -403,4 +403,28 @@
     from tb_report
 	where project_id=#{projectId} and flag=#{flag}
   </select>
+  <select id="getDataKey" resultType="java.lang.String">
+    select data_key from tb_file where file_id = #{fileId}
+  </select>
+  <select id="getAllPgsReport" resultMap="BaseResultMap">
+    select r.* from tb_report r left join tb_app a on a.app_id = r.app_id where r.app_id is not NULL and a.method = 'pgs' and r.print_context is not null and r.print_context != '' and r.flag = 0
+  </select>
+  <select id="getAllHcvReport" resultMap="BaseResultMap">
+    select r.* from tb_report r where r.app_id = 80 and r.print_context is not null and r.print_context != ''
+  </select>
+  <select id="getAllEgfrReport" resultMap="BaseResultMap">
+    select r.* from tb_report r where r.app_id = 84 and r.print_context is not null and r.print_context != ''
+  </select>
+  <select id="getAllKrasReport" resultMap="BaseResultMap">
+    select r.* from tb_report r where r.app_id = 89 and r.print_context is not null and r.print_context != ''
+  </select>
+  <select id="getAllTBRifampicinReport" resultMap="BaseResultMap">
+    select r.* from tb_report r where r.app_id = 90 and r.print_context is not null and r.print_context != ''
+  </select>
+  <select id="getAllHbvBriefReport" resultMap="BaseResultMap">
+    select r.* from tb_report r where r.app_id = 82 and r.print_simple is not null and r.print_simple != ''
+  </select>
+  <select id="getAllHbvDetailReport" resultMap="BaseResultMap">
+    select r.* from tb_report r where r.app_id = 82 and r.print_context is not null and r.print_context != ''
+  </select>
 </mapper>

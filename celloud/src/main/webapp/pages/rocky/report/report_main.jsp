@@ -46,6 +46,24 @@
 				</c:if>
 			</th>
 			<th>状态</th>
+			<th>
+				更新时间
+				<c:if test="${sidx=='updateDate'&&sord=='asc' }">
+					<a id="reportSortBtn-updateDate-desc" href="javascript:void(0);">
+						<i class="fa fa-sort-amount-asc"></i>
+					</a>
+				</c:if>
+				<c:if test="${sidx=='updateDate'&&sord=='desc' }">
+					<a id="reportSortBtn-updateDate-asc" href="javascript:void(0);">
+						<i class="fa fa-sort-amount-desc"></i>
+					</a>
+				</c:if>
+				<c:if test="${sidx!='updateDate' }">
+					<a id="reportSortBtn-updateDate" href="javascript:void(0);">
+						<i class="fa fa-sort" aria-hidden="true"></i>
+					</a>
+				</c:if>
+			</th>
 			<th>操作</th>
 		</tr>
 	</thead>
@@ -59,7 +77,7 @@
 					</label>
 				</td>
 				<td>${report.sampleName }</td>
-				<td title="${report.fileName }" name="data-name-td">${report.fileName }</td>
+				<td title="${report.fileName }" style="text-align: left;" name="data-name-td">${report.fileName }</td>
 				<td>${report.batch }</td>
 				<td>
 					<c:if test="${report.period==0 }">等待运行</c:if>
@@ -74,6 +92,9 @@
 					</c:if>
 				</td>
 				<td>
+					<fmt:formatDate value="${report.updateDate }" type="both" dateStyle="long" pattern="yyyy-MM-dd HH:mm:ss" />
+				</td>
+				<td>
 					<c:choose>
 						<c:when test="${report.period ==2 }">
 							<a title="查看报告" href="javascript:$report.showReport('${report.dataKey}','${report.projectId}','${report.appId}')">
@@ -81,15 +102,14 @@
 							</a>
 						</c:when>
 						<c:otherwise>
-							<a title="查看报告" class="disabled bg-gray" href="javascript:;">
+							<a title="查看报告" class="disabled bg-gray" href="javascript:$report.showReport('16080300018953','197','123');">
 								<i class="fa fa-eye"></i>
 							</a>
 						</c:otherwise>
 					</c:choose>
 					<c:choose>
-						<c:when test="${report.period ==21 }">
-							<a title="打印患者报告" target="_blank"
-								href="<%=request.getContextPath()%>/report/printRockyReport?projectId=${report.projectId }&dataKey=${report.dataKey }&appId=${report.appId }&templateType=print_patient">
+						<c:when test="${report.period ==2 }">
+							<a title="打印患者报告" target="_blank" href="<%=request.getContextPath()%>/report/printRockyReport?projectId=${report.projectId}&dataKey=${report.dataKey}&appId=${report.appId}">
 								<i class="fa fa-print"></i>
 							</a>
 						</c:when>
@@ -110,7 +130,7 @@
 <c:if test="${pageList.datas.size()<=0 }">
 	<div style="display: table; width: 100%; margin-top: -10px;">
 		<div class="text-center" style="display: table-cell; height: 350px; font-size: 18px; vertical-align: middle; background-color: #fff;">
-			<i class="glyphicon glyphicon-exclamation-sign" style="color: #f39c12;"></i> 您好，还没有报告哦！
+			<i class="glyphicon glyphicon-exclamation-sign" style="color: #f39c12;"></i> ${conditionFilter!=null||sampleFilter!=null?'未检索到数据！':'您好，还没有数据哦！' }
 		</div>
 	</div>
 </c:if>

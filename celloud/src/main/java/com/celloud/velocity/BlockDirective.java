@@ -1,6 +1,5 @@
 package com.celloud.velocity;
 
-
 import java.io.IOException;
 import java.io.Writer;
 
@@ -15,34 +14,34 @@ import com.celloud.velocity.OverrideDirective.OverrideNodeWrapper;
 /**
  * @author badqiu
  */
-public class BlockDirective extends org.apache.velocity.runtime.directive.Directive{
+public class BlockDirective extends org.apache.velocity.runtime.directive.Directive {
 
-    @Override
-    public String getName() {
-        return "block";
-    }
+	@Override
+	public String getName() {
+		return "block";
+	}
 
-    @Override
-    public int getType() {
-        return BLOCK;
-    }
+	@Override
+	public int getType() {
+		return BLOCK;
+	}
 
-    @Override
-    public boolean render(InternalContextAdapter context, Writer writer, Node node)
-            throws IOException, ResourceNotFoundException, ParseErrorException,MethodInvocationException {
-        String name = Utils.getRequiredArgument(context, node, 0,getName());
-        
-        OverrideNodeWrapper overrideNode = getOverrideNode(context,name);
-        Node topNode = node.jjtGetChild(1);
-        if(overrideNode == null) {
-            return topNode.render(context, writer);
-        }else {
-            Utils.setParentForTop(new OverrideNodeWrapper(topNode),overrideNode);
-            return overrideNode.render(context, writer);
-        }
-    }
+	@Override
+	public boolean render(InternalContextAdapter context, Writer writer, Node node)
+			throws IOException, ResourceNotFoundException, ParseErrorException, MethodInvocationException {
+		String name = Utils.getRequiredArgument(context, node, 0, getName());
 
-    private OverrideNodeWrapper getOverrideNode(InternalContextAdapter context,String name) {
-        return (OverrideNodeWrapper)context.get(Utils.getOverrideVariableName(name));
-    }
+		OverrideNodeWrapper overrideNode = getOverrideNode(context, name);
+		Node topNode = node.jjtGetChild(1);
+		if (overrideNode == null) {
+			return topNode.render(context, writer);
+		} else {
+			Utils.setParentForTop(new OverrideNodeWrapper(topNode), overrideNode);
+			return overrideNode.render(context, writer);
+		}
+	}
+
+	private OverrideNodeWrapper getOverrideNode(InternalContextAdapter context, String name) {
+		return (OverrideNodeWrapper) context.get(Utils.getOverrideVariableName(name));
+	}
 }

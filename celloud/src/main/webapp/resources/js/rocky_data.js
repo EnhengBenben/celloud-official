@@ -5,13 +5,14 @@ var rockyData = (function(rockyData) {
 	$(document).off("keyup", "#data-sample-filter");
 	$(document).off("keyup", "#data-condition-input");
 	$(document).off("change", "#rocky_data_page #page-size-sel");
+	$(document).off("click", "#data-condition-find");
 	$(document).off("click", "a[id^='dataSortBtn-']");
 	$(document).on("click", "a[id^='dataSortBtn-']", function() {
 		var id = $(this).attr("id");
 		var sort = id.split('-');
 		var sidx = sort[1];
 		var sord = sort[2] || 'desc';
-		var size = $("#rocky_data_page #page-size-sell").val();
+		var size = $("#rocky_data_page #page-size-sel").val();
 		var sample = self.filter.param.sample;
 		var condition = self.filter.param.condition;
 		self.pageDatas(1, size, sample, condition, sidx, sord);
@@ -26,6 +27,12 @@ var rockyData = (function(rockyData) {
 			self.filter.condition($(this).val());
 		}
 	});
+	$(document).on("click", "#data-condition-find", function(event) {
+		var condition = $("#data-condition-input").val();
+		if(condition){
+			self.filter.condition(condition);
+		}
+	});
 	$(document).on("change", "#rocky_data_page #page-size-sel", function() {
 		var sample = self.filter.param.sample;
 		var condition = self.filter.param.condition;
@@ -36,7 +43,7 @@ var rockyData = (function(rockyData) {
 	$(document).on("click", "#rocky_data_page [data-click='pagination-btn']",
 			function() {
 				var page = $(this).data("page");
-				var size = $("#rocky_data_page #page-size-sell").val();
+				var size = $("#rocky_data_page #page-size-sel").val();
 				var sample = self.filter.param.sample;
 				var condition = self.filter.param.condition;
 				var sidx = self.sort.sidx;
@@ -79,7 +86,7 @@ var rockyData = (function(rockyData) {
 	};
 	self.filter = {
 		sample : function(sample) {
-			var size = $("#rocky_data_page #page-size-sell").val();
+			var size = $("#rocky_data_page #page-size-sel").val();
 			$("#data-condition-input").val('');
 			var sidx = self.sort.sidx;
 			var sord = self.sort.sord;
@@ -89,7 +96,7 @@ var rockyData = (function(rockyData) {
 			});
 		},
 		condition : function(condition) {
-			var size = $("#rocky_data_page #page-size-sell").val();
+			var size = $("#rocky_data_page #page-size-sel").val();
 			var sidx = self.sort.sidx;
 			var sord = self.sort.sord;
 			self.pageDatas(1, size, null, condition, sidx, sord);

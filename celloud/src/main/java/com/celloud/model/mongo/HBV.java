@@ -33,6 +33,8 @@ public class HBV extends Base {
     private Map<String, String> out;//非上述三种图片的图片
     private Date uploadDate;// 提交时间
     private String fileName;// 文件名
+    private Map<String, String> briefBaseInfo;
+    private Map<String, String> detailBaseInfo;
 
     public String getClinical() {
         return clinical;
@@ -152,6 +154,22 @@ public class HBV extends Base {
 
     public void setImgString(String imgString) {
         this.imgString = imgString;
+    }
+
+    public Map<String, String> getBriefBaseInfo() {
+        return briefBaseInfo;
+    }
+
+    public void setBriefBaseInfo(Map<String, String> briefBaseInfo) {
+        this.briefBaseInfo = briefBaseInfo;
+    }
+
+    public Map<String, String> getDetailBaseInfo() {
+        return detailBaseInfo;
+    }
+
+    public void setDetailBaseInfo(Map<String, String> detailBaseInfo) {
+        this.detailBaseInfo = detailBaseInfo;
     }
 
 }

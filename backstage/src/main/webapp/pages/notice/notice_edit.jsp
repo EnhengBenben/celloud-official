@@ -12,6 +12,31 @@
         <form role="form" class="form-horizontal" id="noticeForm">
             <input type="hidden" name="noticeId" value="${notice.noticeId }">
             <div class="form-group">
+                <label class="col-sm-2 control-label"><font color="red">注意</font></label>
+                <div class="col-sm-10">
+                	<span class="alert alert-danger">如果是测试，请只选择测试账号!!!</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="noticeTitle">操作</label>
+                <div class="col-sm-10">
+                	<button type="button" class="btn btn-success" onclick="mailing.checkAll(1)">全选</button>
+                	<button type="button" class="btn btn-success" onclick="mailing.checkAll(0)">全不选</button>
+                	<button type="button" class="btn btn-success" onclick="mailing.checkAll(2)">反选</button>
+                	<span class="alert alert-danger hide" id="userInfo"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="noticeTitle">接收者<font color="red">*</font></label>
+                <div class="col-sm-10">
+                	<input type="hidden" name="usernames" id="hideUserNames">
+               		<select id="userList" style="width: 100%" multiple="multiple">
+					</select>
+                </div>
+            </div>
+           	<br>
+           	<br>
+            <div class="form-group">
                 <label class="col-sm-2 control-label" for="noticeTitle">公告标题<font color="red">*</font></label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" data-rule-required="true" data-rule-maxlength="50" id="noticeTitle" name="noticeTitle" value="${notice.noticeTitle }" placeholder="公告标题">
@@ -38,9 +63,42 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/plugins/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
 $(function(){
+  	$("#userInfo").addClass("hide");
+	//请求用户数据, 添加到select2标签中
+	var url = "${pageContext.request.contextPath}/mailing/getUser";
+	$.ajax({
+		url : url,
+		type : 'post',
+		dataType : 'text',
+		success : function(data) {
+			// 从后台获取json数据
+			var json = eval('(' + data + ')');
+			$("#userList").select2({
+				data : json,
+				placeholder : '请选择用户',
+				allowClear : false,
+				minimumResultsForSearch:-1
+			})
+		},
+		error : function(data) {
+
+		},
+	});
 	CKEDITOR.replace( 'noticeContext');
 	$("#noticeForm").validate({
 		submitHandler:function(form) {
+		  	var users = '';
+		  	$('#userList').find("option:selected").each(function(){
+		  	  users += $(this).text()+",";
+		  	});
+		  	if(users.length==0){
+		  	  $("#userInfo").removeClass("hide");
+		  	  $("#userInfo").html("请选择用户");
+		  	  return ;
+		  	}
+		  	$("#userInfo").addClass("hide");
+	  	  	$("#userInfo").html("");
+		  	$("#hideUserNames").val(users.substring(0,users.length-1));
 			$("#noticeContext").val(CKEDITOR.instances.noticeContext.getData());
             $(form).ajaxSubmit({
             	url:"notice/save",

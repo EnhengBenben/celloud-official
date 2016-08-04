@@ -52,9 +52,8 @@ $(function(){
 			$(this).parent().append("<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>");
 		});
 	}
-    var url = window.location.href.split("print")[0];
-    var sex = $("#men").prop("checked");
     $("#print").on("click",function(){
+        var url = window.location.href.split("print")[0];
         if(companyId==57){
             imgRemove.hideRemove();
         }
@@ -156,42 +155,37 @@ $(function(){
     });
     
     $("#save").on("click",function(){
-        imgRemove.hideRemove();
-        $("#printMain").find("input").each(function(){
+        var url = window.location.href.split("print")[0];
+        $("table").find("input").each(function(){
             $(this).attr("value",$(this).val());
         });
-        inputVal = $("#des").children().val();
-        $("#des").children().html(inputVal);
-        inputVal = $("#des1").children().val();
-        $("#des1").children().html(inputVal);
+    
+        $("#clinical").val($("table").html());
         var _flag = $("#_flag").html();
-        var param = null;
-        $("#isSaved").attr("value","0");
         if(_flag==0){
-            param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printContext":$("#printMain").html()}
+            url = url + "updateHbvDetailFilling";
         }else{
-            param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printSimple":$("#printMain").html()}
+            url = url + "updateHbvBriefFilling";
         }
-        $.post(url+"updateContext",param,function(result){
+        $.post(url,$("#print-form").serialize(),function(result){
             if(result==1){
                 $.lAlert("信息保存成功！");
             }else{
                 $.lAlert("信息保存失败！");
-                $("#isSaved").attr("value","1");
             }
         });
     });
 
     $("#reset").on("click",function(){
+        var url = window.location.href.split("print")[0];
         $.lConfirm('确认重置？', function() {
             var _flag = $("#_flag").html();
-            var param = null;
             if(_flag == 0){//详细报告
-                param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printContext":""}
+                url = url + "updateHbvDetailFilling";
             }else{//简要报告
-                param = {"projectId":$("#_projectId").val(),"userId":$("#_userId").html(),"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"printSimple":""}
+                url = url + "updateHbvBriefFilling";
             }
-            $.post(url+"updateContext",param,function(result){
+            $.post(url,{id:$("#hbvId").val()},function(result){
                 if(result==1){
                     location=location ;
                 }else{

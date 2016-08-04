@@ -51,6 +51,7 @@
 						<div class="box-body report-search-div">
 				          <div class="form-inline">
 				              <label class="form-inline">样本类型：</label>
+							  <a href="javascript:void(0)" class="samples" onclick="experiment.changeSample(0,this)" >全部</a>&nbsp;&nbsp;&nbsp;&nbsp;
 				              <c:forEach items="${list }" var="dict">
 								<c:if test="${dict.flag==1 }">
 					      		  <a href="javascript:void(0)" class="samples" onclick="experiment.changeSample(${dict.id },this)" >${dict.name }</a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -59,6 +60,7 @@
 				          </div>
 				          <div class="form-inline">
 				            <label class="form-inline">扩增方法：</label>
+							<a href="javascript:void(0)" class="methods" onclick="experiment.changeMethod(0,this)" >全部</a>&nbsp;&nbsp;&nbsp;&nbsp;
 				           	<c:forEach items="${list }" var="dict">
 								<c:if test="${dict.flag==2 }">
 									<a href="javascript:void(0)" class="methods" onclick="experiment.changeMethod(${dict.id },this)" >${dict.name }</a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -67,6 +69,7 @@
 				          </div>
 				          <div class="form-inline">
 				            <label class="form-inline">进行阶段：</label>
+							<a href="javascript:void(0)" class="steps" onclick="experiment.changeStep(0,this)" >全部</a>&nbsp;&nbsp;&nbsp;&nbsp;
 				           	<c:forEach items="${list }" var="dict">
 								<c:if test="${dict.flag==0 }">
 									<a href="javascript:void(0)" class="steps" onclick="experiment.changeStep(${dict.id },this)" >${dict.name }</a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -94,7 +97,7 @@
 		</div>
 	</div>
 </section>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/experiment.js?version=3.1.12"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/experiment.js?version=3.2.4"></script>
 <script language="javascript" src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
 <div id="addExp" class="modal modal-green-header">
 </div>

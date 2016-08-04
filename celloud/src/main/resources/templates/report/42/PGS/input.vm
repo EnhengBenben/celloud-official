@@ -1,25 +1,25 @@
 <table class="table table-bordered table-condensed miniTable_" style="margin:10px 0px">
   <tr>
 		<th>姓名</th>
-		<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td><span><input name="baseInfo['name']" value="$!pgs.baseInfo.name" type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 		<th>性别</th>
-		<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td><span><input name="baseInfo['gender']" value="$!pgs.baseInfo.gender" type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 		<th>年龄</th>
-		<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td><span><input name="baseInfo['age']" value="$!pgs.baseInfo.age" type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 	</tr>
 	<tr>
 		<th>科别</th>
-		<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td><span><input name="baseInfo['dept']" value="$!pgs.baseInfo.dept" type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 		<th>病历号</th>
-		<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td><span><input name="baseInfo['number']" value="$!pgs.baseInfo.number" type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 		<th>送检材料</th>
-		<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td><span><input name="baseInfo['material']" value="$!pgs.baseInfo.material" type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 	</tr>
 	<tr>
 		<th>采样日期</th>
-		<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td><span><input name="baseInfo['samplingDate']" value="$!pgs.baseInfo.samplingDate" type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 		<th>送检医师</th>
-		<td><span><input type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
+		<td><span><input name="baseInfo['doctor']" value="$!pgs.baseInfo.doctor" type="text" class="input-mini onlybotton" style="height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px"/></span></td>
 		<th></th>
 		<td></td>
 	</tr>

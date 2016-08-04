@@ -12,6 +12,8 @@ public class PayOrder {
 
 	private Integer type;
 
+	private String bankCode;
+
 	private String tradeNo;
 
 	private String subject;
@@ -102,5 +104,13 @@ public class PayOrder {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getBankCode() {
+		return bankCode;
+	}
+
+	public void setBankCode(String bankCode) {
+		this.bankCode = bankCode;
 	}
 }

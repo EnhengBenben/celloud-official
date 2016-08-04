@@ -76,7 +76,13 @@ var notices = (function(object) {
 			$("#notices-menu").load(CONTEXT_PATH + "/notice/lastUnread/notice");
 		});
 	};
+	/**
+	 * 删除一个站内消息
+	 */
 	self.deleteNotice = function(noticeId){
+		if(!window.confirm("确定要删除这条站内消息吗？")){
+			return;
+		}
 		$.post(CONTEXT_PATH+"/notice/delete",{"noticeIds":noticeId},function(response){
 			if(response.success){
 				self.pageNotice(page.notice.currentPage,page.notice.pageSize);
@@ -98,7 +104,7 @@ var notices = (function(object) {
 	 * 将全部消息置为已读
 	 */
 	self.readAllMessage = function(){
-		$.post(CONTEXT_PATH+"/notice/readAll",{},function(response){
+		$.post(CONTEXT_PATH+"/notice/readAll/message",{},function(response){
 			if(response.success){
 				self.pageMessage(page.message.currentPage,page.message.pageSize);
 				$("#messages-menu").load(CONTEXT_PATH + "/notice/lastUnread/message");
@@ -106,9 +112,23 @@ var notices = (function(object) {
 		});
 	};
 	/**
+	 * 将全部站内消息置为已读
+	 */
+	self.readAllNotice = function(){
+		$.post(CONTEXT_PATH+"/notice/readAll/notice",{},function(response){
+			if(response.success){
+				self.pageNotice(page.message.currentPage,page.message.pageSize);
+				$("#messages-menu").load(CONTEXT_PATH + "/notice/lastUnread/notice");
+			}
+		});
+	};
+	/**
 	 * 删除选中的消息，无论是否已读，都可以直接删除
 	 */
 	self.deleteMessage = function(){
+		if(!window.confirm("确定要删除选中的所有消息吗？")){
+			return;
+		}
 		$.post(CONTEXT_PATH+"/notice/delete",$("#messageListForm").serialize(),function(response){
 			if(response.success){
 				self.pageMessage(page.message.currentPage,page.message.pageSize);

@@ -1,0 +1,1 @@
+update tb_app set command='nohup perl /share/biosoft/perl/wangzhen/16s-meta-pipeline/moniter_spark.pl nohup perl /share/biosoft/perl/wangzhen/16s-meta-pipeline/spark_BSI.pl ${list} ${path} ProjectID${projectId} &>${path}${projectId}.log &' where app_id=118;

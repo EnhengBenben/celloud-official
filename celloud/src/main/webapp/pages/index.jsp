@@ -54,7 +54,7 @@
 						<li class="dropdown notifications-menu" id="notices-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 								<i class="fa fa-envelope-o"></i>
-								<span class="label label-success"></span>
+								<span class="label label-info"></span>
 							</a>
 							<ul class="dropdown-menu">
 								<li class="header">站内消息提醒</li>
@@ -250,9 +250,9 @@
 	<script src="<%=request.getContextPath()%>/js/utils.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/message.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/main_init.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/main.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/main.js?v=3.2.4" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/charts.js?version=3.1.10"></script>
-	<script src="<%=request.getContextPath()%>/plugins/highcharts/char.js?version=20160421"></script>
+	<script src="<%=request.getContextPath()%>/plugins/highcharts/char.js?version=3.2.4"></script>
 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
 	<script type="text/javascript">

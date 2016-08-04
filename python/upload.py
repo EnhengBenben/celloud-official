@@ -72,7 +72,8 @@ if(isManager=='1'):
     shutil.copy(managerPath,sourcePath)
 
 shutil.copytree(pythonPath,os.path.join(sourcePath,'python'))
-shutil.copytree(dbPath,os.path.join(sourcePath,'db'))
+if(os.path.exists(dbPath)):
+    shutil.copytree(dbPath,os.path.join(sourcePath,'db'))
 print '文件上传： %s ' % datetime.datetime.now()
 upload(sourcePath,resultPath)
 print '文件删除： %s ' % datetime.datetime.now()

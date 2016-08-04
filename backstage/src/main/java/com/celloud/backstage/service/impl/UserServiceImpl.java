@@ -96,7 +96,6 @@ public class UserServiceImpl implements UserService {
         temp.setCellphone(user.getCellphone());
         temp.setEmail(user.getEmail());
         temp.setUserId(ConstantsData.getLoginUserId());
-        temp.setIcon(user.getIcon());
         return userMapper.updateByPrimaryKeySelective(temp);
     }
 
@@ -109,6 +108,10 @@ public class UserServiceImpl implements UserService {
     public User getUserByName(String username) {
         return userMapper.getUserByName(username);
     }
+
+	public List<User> getUserByNames(String... usernames) {
+		return userMapper.getUserByNames(usernames);
+	}
 
     @Override
     public Integer getCompanyIdByUserId(Integer userId) {

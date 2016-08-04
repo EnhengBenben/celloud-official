@@ -300,7 +300,14 @@ public interface ReportService {
 	 * @date 2016年4月18日 下午4:33:55
 	 */
 	public Integer updateBSIFilling(BSI bsi);
-
+	/**
+	 * 修改BSI报告用户填写部分
+	 * 
+	 * @param bsi
+	 * @author leamo
+	 * @date 2016年4月18日 下午4:33:55
+	 */
+	public Integer updateRockyFilling(Rocky rocky);
 	/**
 	 * 获取 Split 报告
 	 * 
@@ -576,5 +583,109 @@ public interface ReportService {
 	 * @return
 	 */
 	public Rocky getRockyReport(String dataKey, Integer projectId, Integer appId);
+
+    /**
+     * 根据file_id获取datakey
+     */
+    public String getDataKey(Integer fileId);
+
+    /**
+     * 取出所有的pgs报告, 上线后可删
+     */
+    public List<Report> getAllPgsReport();
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月25日上午11:12:02
+     * @description 修改Pgs报告用户填写部分
+     *
+     */
+    public Integer updatePgsFilling(Pgs pgs);
+
+    /**
+     * 取出所有的hcv报告, 上线后可删
+     */
+    public List<Report> getAllHcvReport();
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月27日上午11:27:21
+     * @description 修改hcv报告用户填写部分
+     *
+     */
+    public Integer updateHcvFilling(HCV hcv);
+
+    /**
+     * 取出所有的egfr报告, 上线后可删
+     */
+    public List<Report> getAllEgfrReport();
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月27日上午11:27:21
+     * @description 修改hcv报告用户填写部分
+     *
+     */
+    public Integer updateEgfrFilling(EGFR egfr);
+
+    /**
+     * 取出所有的kras报告, 上线后可删
+     */
+    public List<Report> getAllKrasReport();
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月27日上午11:27:21
+     * @description 修改kras报告用户填写部分
+     *
+     */
+    public Integer updateKrasFilling(KRAS kras);
+
+    /**
+     * 取出所有的tbrifampicin报告, 上线后可删
+     */
+    public List<Report> getAllTBRifampicinReport();
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月27日上午11:27:21
+     * @description 修改TBRifampicin报告用户填写部分
+     *
+     */
+    public Integer updateTBRifampicinFilling(TBRifampicin tbRifampicin);
+
+    /**
+     * 取出所有的hbv简要报告, 上线后可删
+     */
+    public List<Report> getAllHbvBriefReport();
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月27日上午11:27:21
+     * @description 修改hbv简要报告用户填写部分
+     *
+     */
+    public Integer updateHbvBriefFilling(HBV hbv);
+
+    /**
+     * 取出所有的hbv详细报告, 上线后可删
+     */
+    public List<Report> getAllHbvDetailReport();
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月27日上午11:27:21
+     * @description 修改hbv详细报告用户填写部分
+     *
+     */
+    public Integer updateHbvDetailFilling(HBV hbv);
+
 
 }

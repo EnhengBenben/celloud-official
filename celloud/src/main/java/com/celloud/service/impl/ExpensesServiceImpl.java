@@ -14,9 +14,12 @@ import com.celloud.constants.ReportType;
 import com.celloud.mapper.ExpensesMapper;
 import com.celloud.mapper.PriceMapper;
 import com.celloud.mapper.ReportMapper;
+import com.celloud.mapper.UserMapper;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Expenses;
+import com.celloud.model.mysql.Price;
 import com.celloud.model.mysql.Report;
+import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.ExpensesService;
@@ -35,6 +38,8 @@ public class ExpensesServiceImpl implements ExpensesService {
     PriceMapper priceMapper;
     @Resource
     ReportMapper reportMapper;
+    @Resource
+    UserMapper userMapper;
 
     @Override
     public void saveProRunExpenses(Integer projectId, List<DataFile> dataList) {
@@ -42,34 +47,38 @@ public class ExpensesServiceImpl implements ExpensesService {
                 ReportType.PROJECT);
         Integer appId = report.getAppId();
         Integer userId = report.getUserId();
-        // Price price = priceMapper.selectByItemId(appId, PriceType.isApp);
+        Price price = priceMapper.selectByItemId(appId, PriceType.isApp);
         Expenses expense = new Expenses();
         expense.setItemId(appId);
         expense.setItemType(PriceType.isApp);
         expense.setUserId(userId);
         expense.setCreateDate(new Date());
+        User user = userMapper.selectByPrimaryKey(userId);
+        BigDecimal balances = user.getBalances();
         for (DataFile d : dataList) {
             expense.setId(null);
             int fileExpenseNum = expensesMapper.getFileExpenseNum(d.getFileId(),
                     appId, PriceType.isApp);
+            BigDecimal amount = BigDecimal.ZERO;
             if (fileExpenseNum == 0) {
-                // TODO 暂时免费，真正收费时需要修改成真实价格
-                // expense.setPrice(price.getPrice());
-                expense.setPrice(new BigDecimal(0));
+                amount = price == null ? BigDecimal.ZERO : price.getPrice();
             } else {
-                expense.setPrice(new BigDecimal(0));
                 expense.setRemark(ExpensesRemark.RERUN_FREE);
             }
+            expense.setPrice(amount);
             expensesMapper.insertSelective(expense);
             expensesMapper.addFileExpenseRelat(expense.getId(), projectId,
                     d.getFileId(), d.getDataKey(), d.getFileName());
+            balances = balances.subtract(amount);
         }
+        user.setBalances(balances);
+        userMapper.updateByPrimaryKeySelective(user);
     }
 
     @Override
     public void saveRunExpenses(Integer projectId, Integer appId,
             Integer userId, List<DataFile> dataList) {
-        // Price price = priceMapper.selectByItemId(appId, PriceType.isApp);
+        Price price = priceMapper.selectByItemId(appId, PriceType.isApp);
         Expenses expense = new Expenses();
         expense.setItemId(appId);
         expense.setItemType(PriceType.isApp);
@@ -78,25 +87,30 @@ public class ExpensesServiceImpl implements ExpensesService {
         int fileExpenseNum = 0;
         int expenseId = 0;
         if (dataList != null) {
+            User user = userMapper.selectByPrimaryKey(userId);
+            BigDecimal balances = user.getBalances();
             for (int i = 0; i < dataList.size(); i++) {
                 DataFile d = dataList.get(i);
+                BigDecimal amount = BigDecimal.ZERO;
                 if (i == 0) {
                     fileExpenseNum = expensesMapper.getFileExpenseNum(
                             d.getFileId(), appId, PriceType.isApp);
                     if (fileExpenseNum == 0) {
-                        // TODO 暂时免费，真正收费时需要修改成真实价格
-                        // expense.setPrice(price.getPrice());
-                        expense.setPrice(new BigDecimal(0));
+                        amount = price == null ? BigDecimal.ZERO
+                                : price.getPrice();
                     } else {
-                        expense.setPrice(new BigDecimal(0));
                         expense.setRemark(ExpensesRemark.RERUN_FREE);
                     }
+                    expense.setPrice(amount);
                     expensesMapper.insertSelective(expense);
                     expenseId = expense.getId();
                 }
                 expensesMapper.addFileExpenseRelat(expenseId, projectId,
                         d.getFileId(), d.getDataKey(), d.getFileName());
+                balances = balances.subtract(amount);
             }
+            user.setBalances(balances);
+            userMapper.updateByPrimaryKeySelective(user);
         }
     }
 

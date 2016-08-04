@@ -1,6 +1,7 @@
 package com.celloud.model.mongo;
 
 import java.util.List;
+import java.util.Map;
 
 public class KRAS extends Base {
 	private static final long serialVersionUID = 1L;
@@ -14,6 +15,7 @@ public class KRAS extends Base {
 	private String pdf;// pdf
 	private List<String> original;// listAll
 	private List<String> out;// unknow
+    private Map<String, String> baseInfo;
 
 	public String getFileName() {
 		return fileName;
@@ -94,5 +96,13 @@ public class KRAS extends Base {
 	public void setPos(String pos) {
 		this.pos = pos;
 	}
+
+    public Map<String, String> getBaseInfo() {
+        return baseInfo;
+    }
+
+    public void setBaseInfo(Map<String, String> baseInfo) {
+        this.baseInfo = baseInfo;
+    }
 
 }

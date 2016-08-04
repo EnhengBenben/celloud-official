@@ -1,25 +1,21 @@
 #parse("templates/report/layout.vm")
 #parse("templates/report/default/PGS/reference.vm")
-#if($printContext)
-	$printContext
-#else
-	#override("card")
-	#end
-	#override("dept")
-	#end
-	#override("input")
-		#parse("templates/report/10/PGS/input.vm")
-	#end
-	#override("explain")
-		#parse("templates/report/10/PGS/explain.vm")
-	#end
-	#override("footer")
-		#parse("templates/report/10/PGS/footer.vm")
-	#end
-	#override("bottom")
-	#end
-	#extends("templates/report/default/PGS/base.vm")
+#override("card")
 #end
+#override("dept")
+#end
+#override("input")
+	#parse("templates/report/10/PGS/input.vm")
+#end
+#override("explain")
+	#parse("templates/report/10/PGS/explain.vm")
+#end
+#override("footer")
+	#parse("templates/report/10/PGS/footer.vm")
+#end
+#override("bottom")
+#end
+#extends("templates/report/default/PGS/base.vm")
 #parse("templates/report/default/PGS/js.vm")
 <style type="text/css">
 td, th {

@@ -8,7 +8,6 @@
 		<result column="email" property="email" jdbcType="VARCHAR" />
 		<result column="cellphone" property="cellphone" jdbcType="VARCHAR" />
 		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
-		<result column="icon" property="icon" jdbcType="VARCHAR" />
 		<result column="role" property="role" jdbcType="INTEGER" />
 		<result column="remark" property="remark" jdbcType="VARCHAR" />
 		<result column="navigation" property="navigation" jdbcType="INTEGER" />
@@ -25,7 +24,6 @@
 	</resultMap>
 	<sql id="Base_Column_List">
 		user_id, username, email, cellphone, create_date,
-		icon,
 		role,
 		remark, navigation,
 		truename, state, dept_id, login_uuid,
@@ -51,7 +49,7 @@
 		insert into tb_user (user_id,
 		username, password,
 		email, cellphone, create_date,
-		icon, role, remark,
+		role, remark,
 		navigation, truename, state,
 		dept_id, login_uuid, company_id,
 		sign)
@@ -59,7 +57,7 @@
 		#{password,jdbcType=VARCHAR},
 		#{email,jdbcType=VARCHAR},
 		#{cellphone,jdbcType=VARCHAR},now(),
-		#{icon,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER},
+		#{role,jdbcType=INTEGER},
 		#{remark,jdbcType=VARCHAR},
 		#{navigation,jdbcType=INTEGER},
 		#{truename,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER},
@@ -87,9 +85,6 @@
 			</if>
 			<if test="createDate != null">
 				create_date,
-			</if>
-			<if test="icon != null">
-				icon,
 			</if>
 			<if test="role != null">
 				role,
@@ -138,9 +133,6 @@
 			<if test="createDate != null">
 				#{createDate,jdbcType=TIMESTAMP},
 			</if>
-			<if test="icon != null">
-				#{icon,jdbcType=VARCHAR},
-			</if>
 			<if test="role != null">
 				#{role,jdbcType=INTEGER},
 			</if>
@@ -188,9 +180,6 @@
 			<if test="createDate != null">
 				create_date = #{createDate,jdbcType=TIMESTAMP},
 			</if>
-			<if test="icon != null">
-				icon = #{icon,jdbcType=VARCHAR},
-			</if>
 			<if test="role != null">
 				role = #{role,jdbcType=INTEGER},
 			</if>
@@ -234,7 +223,6 @@
 		cellphone = #{cellphone,jdbcType=VARCHAR},
 		create_date =
 		#{createDate,jdbcType=TIMESTAMP},
-		icon = #{icon,jdbcType=VARCHAR},
 		role
 		= #{role,jdbcType=INTEGER},
 		remark = #{remark,jdbcType=VARCHAR},
@@ -316,6 +304,17 @@
 		from tb_user
 		where username = #{username}
 	</select>
+	<select id="getUserByNames" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tb_user
+		where username in 
+		(
+		<foreach collection="usernames" item="username" separator=",">
+			#{username}
+		</foreach>
+		)
+	</select>
 	<select id="isEmailInUse" resultType="int">
         select count(1) from tb_user where email=#{email} and user_id != #{userId}
     </select>
@@ -340,7 +339,7 @@
         insert into tb_user (
         username, password,
         email, cellphone, create_date,
-        icon, role, remark,
+        role, remark,
          truename, state,
         dept_id, login_uuid, company_id,
         sign)
@@ -348,7 +347,7 @@
         #{password,jdbcType=VARCHAR},
         #{email,jdbcType=VARCHAR},
         #{cellphone,jdbcType=VARCHAR},now(),
-        #{icon,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER},
+        #{role,jdbcType=INTEGER},
         #{remark,jdbcType=VARCHAR},
         #{truename,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER},
         #{deptId,jdbcType=INTEGER}, #{loginUuid,jdbcType=VARCHAR},
@@ -386,14 +385,14 @@
         email as id, username as text 
         from tb_user 
         where state = #{state } 
-        order by username
+        order by user_id
     </select>
     <select id="getUserPageList" resultMap="otherResultMap">
         select
         u.user_id,
         u.username,
         u.email, u.cellphone, u.create_date,
-        u.icon, u.role, u.remark,
+        u.role, u.remark,
         u.truename, u.state,
         u.dept_id, u.company_id,
         u.sign,u.balances,c.company_name

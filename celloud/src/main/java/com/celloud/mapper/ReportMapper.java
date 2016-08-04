@@ -175,4 +175,44 @@ public interface ReportMapper {
      */
     public Report getReportByProjectId(
             @Param("projectId") Integer projectId, @Param("flag") Integer flag);
+
+    /**
+     * 根据file_id获取datakey
+     */
+    public String getDataKey(@Param("fileId") Integer fileId);
+
+    /**
+     * 取出所有Pgs报告
+     */
+    public List<Report> getAllPgsReport();
+
+    /**
+     * 取出所有Hcv报告
+     */
+    public List<Report> getAllHcvReport();
+
+    /**
+     * 取出所有Egfr报告
+     */
+    public List<Report> getAllEgfrReport();
+
+    /**
+     * 取出所有kras报告
+     */
+    public List<Report> getAllKrasReport();
+
+    /**
+     * 取出所有rbrifampicin报告
+     */
+    public List<Report> getAllTBRifampicinReport();
+
+    /**
+     * 取出所有hbv简要报告
+     */
+    public List<Report> getAllHbvBriefReport();
+
+    /**
+     * 取出所有hbv详细报告
+     */
+    public List<Report> getAllHbvDetailReport();
 }

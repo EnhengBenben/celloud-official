@@ -1,0 +1,21 @@
+<div class="content">
+    <table class="contentTable">
+        <tr class="focus">
+            <td style="font-size:20px;"><br/>结果解读：</td>
+        </tr>
+        <tr class="focus hr">
+            <td><hr/></td>
+        </tr>
+        <tr>
+            <td>胚胎编号:<span><input name="baseInfo['explainEmbryoNumber']" value="$!{pgs.baseInfo.explainEmbryoNumber}" type="text" class="tdInput"></span></td>
+        </tr>
+        <tr>
+            <td>检测结果:<span><input name="baseInfo['explainResult']" value="$!{pgs.baseInfo.explainResult}" type="text" class="tdInput"></span></td>
+        </tr>
+        <tr>
+            <td>遗传咨询:<span><input name="baseInfo['explainGeneticCounseling']" value="$!{pgs.baseInfo.explainGeneticCounseling}" type="text" class="tdInput"></span></td>
+        </tr>
+    </table>
+    <img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.miniPng}" style="width:100%;">
+    <img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.splitPng}" style="width:100%;">
+</div>

@@ -29,6 +29,7 @@ import com.celloud.manager.model.Screen;
 import com.celloud.manager.page.Page;
 import com.celloud.manager.page.PageList;
 import com.celloud.manager.service.AppService;
+import com.celloud.manager.utils.PropertiesUtil;
 
 /**
  * APP操作实现类
@@ -278,7 +279,7 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public int grant(Integer appId, Integer[] userIds) {
-        appMapper.deleteUserAppRight(appId);
+        appMapper.deleteUserAppRight(appId, PropertiesUtil.testAccountIds);
         if (userIds != null) {
             return appMapper.insertUserAppRight(appId, userIds);
         } else {

@@ -1,16 +1,11 @@
 #parse("templates/report/layout.vm")
 #parse("templates/report/default/${egfr.appId}/reference.vm")
 <div id="printMain">
-    #if(${printContext})
-        ${printContext}
-    #end
-    #if(!${printContext})
-        <div>
-            #parse("templates/report/default/${egfr.appId}/title.vm")
-            #parse("templates/report/default/${egfr.appId}/content.vm")
-            #parse("templates/report/default/${egfr.appId}/foot.vm")
-            </form>
-        </div>
-    #end
+    <div>
+        #parse("templates/report/default/${egfr.appId}/title.vm")
+        #parse("templates/report/default/${egfr.appId}/content.vm")
+        #parse("templates/report/default/${egfr.appId}/foot.vm")
+        </form>
+    </div>
 </div>  
 #parse("templates/report/default/${egfr.appId}/js.vm")
