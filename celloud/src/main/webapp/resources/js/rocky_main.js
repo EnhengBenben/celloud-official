@@ -6,11 +6,14 @@ $(function() {
 			if (sessionstatus == "timeout" && !timeout) {
 				timeout = true;
 				alert("登录超时,请重新登录！");
-				window.location.href = "login";
+				window.location.href = contextPath+"/login";
 			}
 		},
 		cache : false
 	// 关闭AJAX相应的缓存
+	});
+	$("#logoutBtn").click(function(){
+		window.location.href = contextPath+"/login";
 	});
 	$(".common-sidebar").on("click", "a", function() {
 		$base.itemBtnToggleActive($(this));

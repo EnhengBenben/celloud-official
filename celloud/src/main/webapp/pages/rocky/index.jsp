@@ -16,7 +16,7 @@
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/css/less/main.less?v=3.2.4" rel="stylesheet/less" type="text/css" />
+<link href="<%=request.getContextPath()%>/css/less/main.less?v=3.2.5" rel="stylesheet/less" type="text/css" />
 <link href="<%=request.getContextPath()%>/css/less/components.less?v=3.2.4" rel="stylesheet/less" type="text/css" />
 <link href="<%=request.getContextPath()%>/css/less/theme.less?v=3.2.4" rel="stylesheet/less" type="text/css" />
 <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script>
@@ -34,10 +34,17 @@
 							<i class="fa fa-bell" aria-hidden="true"></i>
 						</a>
 					</li>
-					<li>
-						<a href="#">
+					<li class="dropdown">
+						<a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 							<i class="fa fa-user" aria-hidden="true"></i>
 						</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+							<li>
+								<a href="javascript:;" id="logoutBtn">
+									<i class="fa fa-sign-out"></i> 退出
+								</a>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</div>
@@ -74,22 +81,22 @@
 					<li class="treeview">产品功能</li>
 					<li class="treeview -active">
 						<a id="to-sample-a" href="javascript:void(0)" data-menu="收样">
-						  <i class="celicon -sample"></i>收样
+							<i class="celicon -sample"></i>收样
 						</a>
 					</li>
 					<li class="treeview">
 						<a id="to-upload-a" href="javascript:void(0)" data-menu="上传">
-                          <i class="celicon -upload"></i> 上传
-                        </a>
+							<i class="celicon -upload"></i> 上传
+						</a>
 					</li>
 					<li class="treeview">
 						<a id="to-data-a" href="javascript:void(0)" data-menu="数据">
-						  <i class="celicon -data"></i> 数据
+							<i class="celicon -data"></i> 数据
 						</a>
 					</li>
 					<li class="treeview">
 						<a id="to-report-a" href="javascript:void(0)" data-menu="报告">
-						  <i class="celicon -report"></i> 报告
+							<i class="celicon -report"></i> 报告
 						</a>
 					</li>
 				</ul>
