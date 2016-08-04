@@ -1102,15 +1102,25 @@ var expense = (function(expense){
         });
         $(document).on("click","[data-click='to-recharge']",function(){
           $("#userid-hide").val($(this).data("user"));
+          $("#recharge-info").html("");
+          $("#rechargeForm")[0].reset();
+          $("#rechargeForm").validate({
+            errorPlacement: function (error, element) {
+                  error.appendTo($(element).closest("div.col-sm-10"));
+            },
+            submitHandler:function(form) {
+              self.recharge.transfer();
+            }
+          });
           $("#recharge-modal").modal("show");
           //变换随机验证码
           $('#kaptchaImage').click(function() {
             $(this).hide().attr('src','kaptcha.jpg?' + Math.floor(Math.random() * 100)).fadeIn();
           });
         });
-        $("#commit-recharge").on("click",function(){
-          self.recharge.transfer();
-        });
+//        $("#commit-recharge").on("click",function(){
+//          self.recharge.transfer();
+//        });
       },
       transfer: function(){
         $.post("recharge/transfer",$("#rechargeForm").serialize(),function(result){

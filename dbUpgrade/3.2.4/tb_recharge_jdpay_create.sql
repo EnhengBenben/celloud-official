@@ -1,5 +1,4 @@
 /*!40101 SET NAMES utf8 */;
-DROP TABLE IF EXISTS `tb_message_category`;
 CREATE TABLE `tb_recharge_jdpay` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL COMMENT '用户id',

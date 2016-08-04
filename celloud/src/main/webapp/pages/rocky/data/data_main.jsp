@@ -89,7 +89,7 @@
 	</thead>
 	<tbody id="data-list-tbody">
 		<c:forEach items="${pageList.datas }" var="data">
-			<tr id="data_id_${data.fileId }">
+			<tr id="dataKey_${data.dataKey }">
 				<td>
 					<label class="checkbox-lable">
 						<input class="checkbox" type="checkbox" name="demo-checkbox1">
@@ -97,7 +97,7 @@
 					</label>
 				</td>
 				<td>${data.sample }</td>
-				<td title="${data.fileName }" name="data-name-td">${data.fileName }</td>
+				<td style="text-align: left;" title="${data.fileName }" name="data-name-td">${data.fileName }</td>
 				<td>${data.batch }</td>
 				<td>
 					<c:choose>

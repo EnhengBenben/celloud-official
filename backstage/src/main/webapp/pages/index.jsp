@@ -279,7 +279,7 @@
     <!-- JavaScripts initializations and stuff -->
     <script src="js/validate.extend.js"></script>
 	<script src="js/jquery.form.js"></script>
-	<script src="js/main.js?v=3.2.3"></script>
+	<script src="js/main.js?v=3.2.4"></script>
 	<!-- jquery.treegrid -->
 	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery.treegrid.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery.treegrid.bootstrap3.js"></script>
