@@ -1,11 +1,12 @@
 $(function() {
+	var timeout = false;
 	$.ajaxSetup({
 		complete : function(request, textStatus) {
 			var sessionstatus = request.getResponseHeader("sessionstatus"); // 通过XMLHttpRequest取得响应头，sessionstatus，
-			if (sessionstatus == "timeout") {
-				alert("登录超时,请重新登录！", "登录超时", function() {
-					window.location.href = "login";
-				});
+			if (sessionstatus == "timeout" && !timeout) {
+				timeout = true;
+				alert("登录超时,请重新登录！");
+				window.location.href = "login";
 			}
 		},
 		cache : false

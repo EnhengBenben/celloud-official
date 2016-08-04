@@ -1,5 +1,6 @@
 var $report = {
 	showReport : function(dataKey,projectId, appId ) {
+		$("#common-menu-right").html("");
 		var url = contextPath + "/report/rocky/data/report";
 		$("#container").load(url, {
 			dataKey : dataKey,
