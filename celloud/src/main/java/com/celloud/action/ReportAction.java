@@ -811,6 +811,22 @@ public class ReportAction {
 	}
 
 	/**
+	 * 修改乳腺癌数据报告
+	 * 
+	 * @param cmpFill
+	 * @param cmpId
+	 * @author leamo
+	 * @date 2016年2月18日 上午10:54:53
+	 */
+	@ActionLog(value = "修改Rocky数据报告用户填写的信息", button = "修改数据报告")
+	@RequestMapping("updateRockyFilling")
+	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
+	public Integer updateRockyFilling(Rocky rocky) {
+		return reportService.updateRockyFilling(rocky);
+	}
+
+	/**
 	 * 获取HBV的数据报告
 	 * 
 	 * @param dataKey

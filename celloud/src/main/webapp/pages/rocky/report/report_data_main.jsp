@@ -3,7 +3,17 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div class="content">
 	<div class="report-content">
-		<h4>检测结果：</h4>
+		<div class="row">
+			<div class="col-xs-6">
+				<h4>检测结果：</h4>
+			</div>
+			<div class="col-xs-6 text-right">
+				<a class="btn btn-success" style="line-height: 28px;" target="_blank"
+					href="<%=request.getContextPath()%>/report/printRockyReport?projectId=${rocky.projectId}&dataKey=${rocky.dataKey}&appId=${rocky.appId}">
+					<i class="fa fa-print"></i> 打印报告
+				</a>
+			</div>
+		</div>
 		<section>
 			<div class="result-div">
 				<p class="main">

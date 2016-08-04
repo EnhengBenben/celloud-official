@@ -1,6 +1,7 @@
 package com.celloud.service.impl;
 
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -733,6 +734,12 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
+	public Integer updateRockyFilling(Rocky rocky) {
+		UpdateResults ur = reportDao.editData(Rocky.class, rocky.getId(), "baseInfo", rocky.getBaseInfo());
+		return ur != null ? 1 : 0;
+	}
+
+	@Override
 	public Split getSplitReport(String dataKey, Integer projectId, Integer appId) {
 		return reportDao.getDataReport(Split.class, dataKey, projectId, appId);
 	}
@@ -871,125 +878,137 @@ public class ReportServiceImpl implements ReportService {
 
 	@Override
 	public Rocky getRockyReport(String dataKey, Integer projectId, Integer appId) {
-		return reportDao.getDataReport(Rocky.class, dataKey, projectId, appId);
+		Rocky rocky = reportDao.getDataReport(Rocky.class, dataKey, projectId, appId);
+		Map<String, String> baseInfo = rocky.getBaseInfo();
+		if (baseInfo == null) {
+			baseInfo = new HashMap<>();
+		}
+		Date date = rocky.getCreateDate();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.HOUR, -8);
+		String dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(calendar.getTime());
+		baseInfo.put("createTime", dateStr);
+		rocky.setBaseInfo(baseInfo);
+		return rocky;
 	}
 
-    @Override
-    public String getDataKey(Integer fileId) {
-        return reportMapper.getDataKey(fileId);
-    }
+	@Override
+	public String getDataKey(Integer fileId) {
+		return reportMapper.getDataKey(fileId);
+	}
 
-    @Override
-    public List<Report> getAllPgsReport() {
-        return reportMapper.getAllPgsReport();
-    }
+	@Override
+	public List<Report> getAllPgsReport() {
+		return reportMapper.getAllPgsReport();
+	}
 
-    @Override
-    public Integer updatePgsFilling(Pgs pgs) {
-        UpdateResults ur = null;
-        if (pgs.getBaseInfo() == null) {
-            ur = reportDao.editData(Pgs.class, pgs.getId(), "baseInfo", new HashMap<String, String>());
-        } else {
-            ur = reportDao.editData(Pgs.class, pgs.getId(), "baseInfo", pgs.getBaseInfo());
-        }
-        return ur != null ? 1 : 0;
-    }
+	@Override
+	public Integer updatePgsFilling(Pgs pgs) {
+		UpdateResults ur = null;
+		if (pgs.getBaseInfo() == null) {
+			ur = reportDao.editData(Pgs.class, pgs.getId(), "baseInfo", new HashMap<String, String>());
+		} else {
+			ur = reportDao.editData(Pgs.class, pgs.getId(), "baseInfo", pgs.getBaseInfo());
+		}
+		return ur != null ? 1 : 0;
+	}
 
-    @Override
-    public List<Report> getAllHcvReport() {
-        return reportMapper.getAllHcvReport();
-    }
+	@Override
+	public List<Report> getAllHcvReport() {
+		return reportMapper.getAllHcvReport();
+	}
 
-    @Override
-    public Integer updateHcvFilling(HCV hcv) {
-        UpdateResults ur = null;
-        if (hcv.getBaseInfo() == null) {
-            ur = reportDao.editData(HCV.class, hcv.getId(), "baseInfo", new HashMap<String, String>());
-        } else {
-            ur = reportDao.editData(HCV.class, hcv.getId(), "baseInfo", hcv.getBaseInfo());
-        }
-        return ur != null ? 1 : 0;
-    }
+	@Override
+	public Integer updateHcvFilling(HCV hcv) {
+		UpdateResults ur = null;
+		if (hcv.getBaseInfo() == null) {
+			ur = reportDao.editData(HCV.class, hcv.getId(), "baseInfo", new HashMap<String, String>());
+		} else {
+			ur = reportDao.editData(HCV.class, hcv.getId(), "baseInfo", hcv.getBaseInfo());
+		}
+		return ur != null ? 1 : 0;
+	}
 
-    @Override
-    public List<Report> getAllEgfrReport() {
-        return reportMapper.getAllEgfrReport();
-    }
+	@Override
+	public List<Report> getAllEgfrReport() {
+		return reportMapper.getAllEgfrReport();
+	}
 
-    @Override
-    public Integer updateEgfrFilling(EGFR egfr) {
-        UpdateResults ur = null;
-        if (egfr.getBaseInfo() == null) {
-            ur = reportDao.editData(EGFR.class, egfr.getId(), "baseInfo", new HashMap<String, String>());
-        } else {
-            ur = reportDao.editData(EGFR.class, egfr.getId(), "baseInfo", egfr.getBaseInfo());
-        }
-        return ur != null ? 1 : 0;
-    }
+	@Override
+	public Integer updateEgfrFilling(EGFR egfr) {
+		UpdateResults ur = null;
+		if (egfr.getBaseInfo() == null) {
+			ur = reportDao.editData(EGFR.class, egfr.getId(), "baseInfo", new HashMap<String, String>());
+		} else {
+			ur = reportDao.editData(EGFR.class, egfr.getId(), "baseInfo", egfr.getBaseInfo());
+		}
+		return ur != null ? 1 : 0;
+	}
 
-    @Override
-    public List<Report> getAllKrasReport() {
-        return reportMapper.getAllKrasReport();
-    }
+	@Override
+	public List<Report> getAllKrasReport() {
+		return reportMapper.getAllKrasReport();
+	}
 
-    @Override
-    public Integer updateKrasFilling(KRAS kras) {
-        UpdateResults ur = null;
-        if (kras.getBaseInfo() == null) {
-            ur = reportDao.editData(KRAS.class, kras.getId(), "baseInfo", new HashMap<String, String>());
-        } else {
-            ur = reportDao.editData(KRAS.class, kras.getId(), "baseInfo", kras.getBaseInfo());
-        }
-        return ur != null ? 1 : 0;
-    }
+	@Override
+	public Integer updateKrasFilling(KRAS kras) {
+		UpdateResults ur = null;
+		if (kras.getBaseInfo() == null) {
+			ur = reportDao.editData(KRAS.class, kras.getId(), "baseInfo", new HashMap<String, String>());
+		} else {
+			ur = reportDao.editData(KRAS.class, kras.getId(), "baseInfo", kras.getBaseInfo());
+		}
+		return ur != null ? 1 : 0;
+	}
 
-    @Override
-    public List<Report> getAllTBRifampicinReport() {
-        return reportMapper.getAllTBRifampicinReport();
-    }
+	@Override
+	public List<Report> getAllTBRifampicinReport() {
+		return reportMapper.getAllTBRifampicinReport();
+	}
 
-    @Override
-    public Integer updateTBRifampicinFilling(TBRifampicin tbRifampicin) {
-        UpdateResults ur = null;
-        if (tbRifampicin.getBaseInfo() == null) {
-            ur = reportDao.editData(TBRifampicin.class, tbRifampicin.getId(), "baseInfo",
-                    new HashMap<String, String>());
-        } else {
-            ur = reportDao.editData(TBRifampicin.class, tbRifampicin.getId(), "baseInfo", tbRifampicin.getBaseInfo());
-        }
-        return ur != null ? 1 : 0;
-    }
+	@Override
+	public Integer updateTBRifampicinFilling(TBRifampicin tbRifampicin) {
+		UpdateResults ur = null;
+		if (tbRifampicin.getBaseInfo() == null) {
+			ur = reportDao.editData(TBRifampicin.class, tbRifampicin.getId(), "baseInfo",
+					new HashMap<String, String>());
+		} else {
+			ur = reportDao.editData(TBRifampicin.class, tbRifampicin.getId(), "baseInfo", tbRifampicin.getBaseInfo());
+		}
+		return ur != null ? 1 : 0;
+	}
 
-    @Override
-    public List<Report> getAllHbvBriefReport() {
-        return reportMapper.getAllHbvBriefReport();
-    }
+	@Override
+	public List<Report> getAllHbvBriefReport() {
+		return reportMapper.getAllHbvBriefReport();
+	}
 
-    @Override
-    public Integer updateHbvBriefFilling(HBV hbv) {
-        UpdateResults ur = null;
-        if (hbv.getBriefBaseInfo() == null) {
-            ur = reportDao.editData(HBV.class, hbv.getId(), "briefBaseInfo", new HashMap<String, String>());
-        } else {
-            ur = reportDao.editData(HBV.class, hbv.getId(), "briefBaseInfo", hbv.getBriefBaseInfo());
-        }
-        return ur != null ? 1 : 0;
-    }
+	@Override
+	public Integer updateHbvBriefFilling(HBV hbv) {
+		UpdateResults ur = null;
+		if (hbv.getBriefBaseInfo() == null) {
+			ur = reportDao.editData(HBV.class, hbv.getId(), "briefBaseInfo", new HashMap<String, String>());
+		} else {
+			ur = reportDao.editData(HBV.class, hbv.getId(), "briefBaseInfo", hbv.getBriefBaseInfo());
+		}
+		return ur != null ? 1 : 0;
+	}
 
-    @Override
-    public List<Report> getAllHbvDetailReport() {
-        return reportMapper.getAllHbvDetailReport();
-    }
+	@Override
+	public List<Report> getAllHbvDetailReport() {
+		return reportMapper.getAllHbvDetailReport();
+	}
 
-    @Override
-    public Integer updateHbvDetailFilling(HBV hbv) {
-        UpdateResults ur = null;
-        if (hbv.getDetailBaseInfo() == null) {
-            ur = reportDao.editData(HBV.class, hbv.getId(), "detailBaseInfo", new HashMap<String, String>());
-        } else {
-            ur = reportDao.editData(HBV.class, hbv.getId(), "detailBaseInfo", hbv.getDetailBaseInfo());
-        }
-        return ur != null ? 1 : 0;
-    }
+	@Override
+	public Integer updateHbvDetailFilling(HBV hbv) {
+		UpdateResults ur = null;
+		if (hbv.getDetailBaseInfo() == null) {
+			ur = reportDao.editData(HBV.class, hbv.getId(), "detailBaseInfo", new HashMap<String, String>());
+		} else {
+			ur = reportDao.editData(HBV.class, hbv.getId(), "detailBaseInfo", hbv.getDetailBaseInfo());
+		}
+		return ur != null ? 1 : 0;
+	}
 
 }
