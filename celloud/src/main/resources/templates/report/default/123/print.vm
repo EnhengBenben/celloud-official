@@ -3,14 +3,14 @@
 	<div class="report-content" style="padding:10px;">
 		<section>
 			<div>
-				<div class="col-xs-6" style="display:inline;"><img style="width:180px;height:42px;" src="http://121.201.7.200:8888/celloud/3.2.2.4/images/print/u4.jpg"></div>
+				<div class="col-xs-6" style="display:inline;"><img style="width:180px;height:42px;" src="$base/images/icon/barcode.jpg"></div>
 				<div class="col-xs-6 pull-right text-right">隐私报告 - 无受检人书面授权严禁公布或分享</div><br>
 			</div>
 			<div class="row">
 				<div class="col-xs-9"><h2>乳腺癌易感基因<small>(BRCA1/2)</small>检测报告</h2></div>
 				<div class="col-xs-3 pull-right text-center">
 					<div class="pull-right">
-					技术平台&nbsp;<br><img style="width:90px;height:41px;" src="http://121.201.7.200:8888/celloud/3.2.2.4/images/print/u10.jpg">
+					技术平台&nbsp;<br><img style="width:90px;height:35px;" src="$base/images/icon/login_logo.png">
 					</div>
 				</div>
 			</div>
@@ -18,7 +18,7 @@
 		<hr style="height:2px;line-height:2px;border-top:2px dotted #3e3e3e;border-bottom:5px solid #3e3e3e;margin-top:0px;">
 		<section>
 			<form id="rockyBaseInfoForm" action="$base/report/updateRockyFilling">
-				<table class="table table-main ">
+				<table class="table table-main">
 					<input type="hidden" name="id" value="$!rocky.id">
 					<thead>
 						<tr>
