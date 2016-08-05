@@ -293,8 +293,10 @@ public class FileTools {
 	public static String getExtName(String fileName) {
 		String extName = "";
 		if (fileName.lastIndexOf(".") > 0) {
-			if (fileName.toLowerCase().indexOf(".fastq.") > 0 || fileName.toLowerCase().indexOf(".fq.") > 0) {
+			if (fileName.toLowerCase().indexOf(".fastq.") > 0) {
 				extName = fileName.substring(fileName.lastIndexOf(".fastq."));
+			} else if (fileName.toLowerCase().indexOf(".fq.") > 0) {
+				extName = fileName.substring(fileName.lastIndexOf(".fq."));
 			} else if (fileName.toLowerCase().endsWith(".tar.gz")) {
 				extName = fileName.substring(fileName.lastIndexOf(".tar.gz"));
 			} else {
@@ -743,41 +745,41 @@ public class FileTools {
 		return context;
 	}
 
-    public static boolean nioTransferCopy(File source, File target) {
-        FileChannel in = null;
-        FileChannel out = null;
-        FileInputStream inStream = null;
-        FileOutputStream outStream = null;
-        boolean result = true;
-        try {
-            inStream = new FileInputStream(source);
-            outStream = new FileOutputStream(target);
-            in = inStream.getChannel();
-            out = outStream.getChannel();
-            in.transferTo(0, in.size(), out);
-        } catch (IOException e) {
-            e.printStackTrace();
-            result = false;
-        } finally {
-            try {
-                if (inStream != null) {
-                    inStream.close();
-                }
-                if (in != null) {
-                    in.close();
-                }
-                if (outStream != null) {
-                    outStream.close();
-                }
-                if (out != null) {
-                    out.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
-    }
+	public static boolean nioTransferCopy(File source, File target) {
+		FileChannel in = null;
+		FileChannel out = null;
+		FileInputStream inStream = null;
+		FileOutputStream outStream = null;
+		boolean result = true;
+		try {
+			inStream = new FileInputStream(source);
+			outStream = new FileOutputStream(target);
+			in = inStream.getChannel();
+			out = outStream.getChannel();
+			in.transferTo(0, in.size(), out);
+		} catch (IOException e) {
+			e.printStackTrace();
+			result = false;
+		} finally {
+			try {
+				if (inStream != null) {
+					inStream.close();
+				}
+				if (in != null) {
+					in.close();
+				}
+				if (outStream != null) {
+					outStream.close();
+				}
+				if (out != null) {
+					out.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 
 	public static void main(String[] args) {
 		mvFile("/Users/lin/xxx", "t.sql", "/Users/lin", "sql.txt");
