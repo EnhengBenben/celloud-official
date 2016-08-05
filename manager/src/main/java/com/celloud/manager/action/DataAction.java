@@ -279,6 +279,7 @@ public class DataAction {
             temp.put("appCount", weekAppRun.size() > i ? weekAppRun.get(i).get("app_count") : 0);
             temp.put("sizeUsername", weekDataSize.size() > i ? weekDataSize.get(i).get("username") : "无");
             temp.put("sizeSum", weekDataSize.size() > i ? weekDataSize.get(i).get("size_sum") : 0);
+            temp.put("fileCount", weekDataSize.size() > i ? weekDataSize.get(i).get("file_count") : 0);
             weekData.add(i, temp);
         }
         // 获取历史周统计
@@ -358,20 +359,26 @@ public class DataAction {
             if (historyWeekDataSize.size() > i) {
                 if (historyWeekDataSize.get(i).get("start_date").equals(key)) {
                     listMap.put("historyWeekDataSize", historyWeekDataSize.get(i).get("size_sum"));
+                    listMap.put("historyWeekFileCount", historyWeekDataSize.get(i).get("file_count"));
                 } else {
                     if (appendMap.get(historyWeekDataSize.get(i).get("start_date")) == null) {
                         Map<String, Object> newMap = new HashMap<String, Object>();
                         newMap.put("historyDate", (String) historyWeekDataSize.get(i).get("start_date"));
                         newMap.put("historyWeekDataSize", historyWeekDataSize.get(i).get("size_sum"));
+                        newMap.put("historyWeekFileCount", historyWeekDataSize.get(i).get("file_count"));
                         appendMap.put((String) historyWeekDataSize.get(i).get("start_date"), newMap);
                     } else {
                         appendMap.get(historyWeekDataSize.get(i).get("start_date")).put("historyWeekDataSize",
                                 historyWeekDataSize.get(i).get("size_sum"));
+                        appendMap.get(historyWeekDataSize.get(i).get("start_date")).put("historyWeekFileCount",
+                                historyWeekDataSize.get(i).get("file_count"));
                     }
                     listMap.put("historyWeekDataSize", 0);
+                    listMap.put("historyWeekFileCount", 0);
                 }
             } else {
                 listMap.put("historyWeekDataSize", 0);
+                listMap.put("historyWeekFileCount", 0);
             }
             appendMap.put(key, listMap);
         }
