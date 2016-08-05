@@ -41,6 +41,7 @@
                                     <th>运行次数</th>
                                     <th>用户名</th>
                                     <th>数据大小</th>
+                                    <th>数据个数</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -65,6 +66,7 @@
 	                                                <fmt:formatNumber pattern="0.00" value="${(data.sizeSum-data.sizeSum%1024)/1024 + data.sizeSum%1024/1024 }" />KB</c:otherwise>
 	                                        </c:choose>
 										</td>
+										<td>${data.fileCount }</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -96,6 +98,7 @@
                                     <th>App运行次数</th>
                                     <th>活跃App</th>
                                     <th>数据大小</th>
+                                    <th>数据个数</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -120,6 +123,7 @@
                                                     <fmt:formatNumber pattern="0.00" value="${(data.historyWeekDataSize-data.historyWeekDataSize%1024)/1024 + data.historyWeekDataSize%1024/1024 }" />KB</c:otherwise>
                                             </c:choose>
                                         </td>
+                                        <td>${data.historyWeekFileCount }</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
