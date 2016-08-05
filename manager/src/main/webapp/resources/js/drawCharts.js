@@ -194,7 +194,8 @@ var drawCharts=(function(drawCharts){
 			        }
 			    },
 			    legend: {
-			        data:[title]
+			        data:[title],
+			        y:15
 			    },
 			    grid: {
 			        left: '3%',
@@ -219,7 +220,8 @@ var drawCharts=(function(drawCharts){
 			        {
 			            name:title,
 			            type:'bar',
-			            data:yAxis
+			            data:yAxis,
+			            barMaxWidth:140
 			        }
 			    ]
 			};
@@ -314,13 +316,16 @@ var drawCharts=(function(drawCharts){
 			yAxisCount[i] = yAxisCount[i - 1] + yAxis[i];
 		}
 		var option = makeOptionScrollUnit(xAxis, yAxis, incrementSeriesName, 'line', 100, xAxis.length,null,null,incrementSeriesShowItem);
-		var newoption = makeOptionScrollUnit(xAxis, yAxisCount, cumulantSeriesName, 'line', 100, xAxis.length,null,null,cumulantShowItem);
+		var newoption = makeOptionScrollUnitNoMarkLine(xAxis, yAxisCount, cumulantSeriesName, 'line', 100, xAxis.length,null,null,cumulantShowItem);
 		
 		newoption.series[0].itemStyle.normal.color=themes.macarons.color[1];
 		   
-		var demo = makeOptionScrollUnit(xAxis, [], cumulantSeriesName, 'line', 100, xAxis.length, null, null, "hide");
-		option.legend.data[option.legend.data.length] = cumulantSeriesName;
-		option.series[1] = demo.series[0]; //图一显示图二的legend
+		var demo = makeOptionScrollUnitNoMarkLine(xAxis, [], cumulantSeriesName, 'line', 100, xAxis.length, null, null, "hide");
+		option.legend.data[option.legend.data.length] = cumulantSeriesName; // 图一显示图二的legend
+		for(var i=0;i<option.series[0].data.length;i++){
+			demo.series[0].data[i] = "null";
+		}
+		option.series[1] = demo.series[0]; // 图一显示图二的数据, 但数据全部置为"null", 即不显示
 		newoption.grid = {
 			x : 80,
 			y : 20,
@@ -354,6 +359,17 @@ var drawCharts=(function(drawCharts){
  */
 function makeOptionScroll(title, xAxis, yAxis, seriesName, typex, startZoom, endZoom) {
 	var opt = makeOption(title, xAxis, yAxis, seriesName, typex);
+	opt.dataZoom = {
+		show : true,
+		realtime : true,
+		start : startZoom,
+		end : endZoom
+	};
+	return opt;
+}
+
+function makeOptionScrollNoMarkLine(title, xAxis, yAxis, seriesName, typex, startZoom, endZoom) {
+	var opt = makeOptionNoMarkLine(title, xAxis, yAxis, seriesName, typex);
 	opt.dataZoom = {
 		show : true,
 		realtime : true,
@@ -405,6 +421,30 @@ function makeOptionScrollUnit(xAxis, yAxis, seriesName, typex, position, showNum
 	}
 	return option;
 }
+
+function makeOptionScrollUnitNoMarkLine(xAxis, yAxis, seriesName, typex, position, showNum, isArea, showPoint,showItem) {
+	var length =xAxis!=null? xAxis.length:0;
+	var option = null;
+	if (showNum < length) {
+		if (position < 100) {
+			var len = position + (showNum / length) * 100;
+			option = makeOptionScrollNoMarkLine('', xAxis, yAxis, seriesName, typex, position, len);
+		} else {
+			var len = (showNum / length) * 100;
+			option = makeOptionScrollNoMarkLine('', xAxis, yAxis, seriesName, typex, 100 - len, 100);
+		}
+	} else {
+		option = makeOptionNoMarkLine('', xAxis, yAxis, seriesName, typex);
+	}
+	option = addArea(option, isArea);
+	option = addMakePoint(option,showPoint);
+	if(showItem!=null){
+		if(option.series[0].itemStyle.normal)
+		option.series[0].itemStyle.normal.label.show=false;
+	}
+	return option;
+}
+
 function addMakePoint(option, showPoint) {
 	if (showPoint != null) {
 		option.series[0].data = [ {
@@ -628,6 +668,116 @@ function makeOption(title, xAxis, yAxis, seriesName, typex) {
 					name : '平均值'
 				} ]
 			}
+		} ]
+	};
+	if (max >= 8 && xAxis.length > 10) {
+		opt.xAxis[0].axisLabel.rotate = 0;
+		opt.xAxis[0].axisLabel.show= false;
+	} else {
+		opt.xAxis[0].axisLabel.rotate = 0;
+	}
+	if (seriesName.indexOf("大小") > 0) {
+		var len = seriesName.length;
+		var ustr = seriesName.substring(len - 3, len - 1)
+		opt.yAxis[0].axisLabel.formatter = '{value}' + ustr;
+	}
+	return opt;
+}
+
+function makeOptionNoMarkLine(title, xAxis, yAxis, seriesName, typex) {
+	var max = 0;
+	for (var i = 0; i < xAxis.length; i++) {
+		max = max > xAxis[i].length ? max : xAxis[i].length;
+		if (max > 8)
+			break;
+	}
+	
+	if (title == null || title.length < 1)
+		title = '';
+	var opt = {
+		title : {
+			text : title,
+			subtext : ''
+		},
+		tooltip : {
+			trigger : 'axis',
+			axisPointer : { // 坐标轴指示器，坐标轴触发有效
+				type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+			},
+			formatter: function (params,ticket,callback) {
+	            return params[0].name + '<br/>' + params[0].seriesName + ':' + params[0].data;
+	        }
+		},
+		legend : {
+			data : [ seriesName ],// [ '文件个数', '数据大小(GB)' ]
+		},
+		toolbox : {
+			show : true,
+			feature : {
+				saveAsImage : {
+					show : true
+				}
+			}
+		},
+		calculable : true,
+		xAxis : [ {
+			type : 'category',
+			position : 'bottom',
+			data : xAxis,
+			scale : true,
+			barMaxWidth : 100,
+			lenght : 15,
+			axisLabel : {
+				show : true,
+				interval : 'auto', // {number}
+				rotate : 0,
+				margin : 8,
+				formatter : '{value}',
+				textStyle : {
+					align:'center',
+					fontFamily : 'sans-serif',
+					fontSize : 12,
+					fontStyle : 'italic',
+					fontWeight : 'bold'
+				}
+			},
+		} ],
+		yAxis : [ {
+			type : 'value',
+			axisLabel : {
+				show : true,
+				interval : 'auto', // {number}
+				rotate : 0,
+				margin : 18,
+				formatter : '{value}', // Template formatter!
+				textStyle : {
+					fontSize : 12,
+					fontStyle : 'normal',
+					fontWeight : 'bold'
+				}
+			},
+		} ],
+		dataZoom : {
+			show : false,
+		},
+		series : [ {
+			name : seriesName,
+			type : typex,
+			data : yAxis,
+			smooth : "false",
+			barMaxWidth : 100,
+			itemStyle : {
+				normal : {
+					label : {
+						show : true,
+						textStyle : {
+							fontSize : 14,
+							fontWeight : 'bolder',
+						}
+					}
+				},
+			},
+			markPoint : ''
 		} ]
 	};
 	if (max >= 8 && xAxis.length > 10) {

@@ -21,8 +21,8 @@
 		         <h3 class="header smaller lighter green">本周Top10</h3>
 			</div>
 			<div class="col-xs-12" style="height: 350px;" id="topUserLogin"></div>
-			<div class="col-xs-12" style="height: 350px;margin-top: 10px;" id="topAppRun"></div>
-			<div class="col-xs-12" style="height: 350px;margin-top: 10px;" id="topDataSize"></div>
+			<div class="col-xs-12" style="height: 350px;margin-top: 50px;" id="topAppRun"></div>
+			<div class="col-xs-12" style="height: 350px;margin-top: 50px;" id="topDataSize"></div>
 			<div class="col-xs-11 table-div">
 				<div class="table-header hide" id="_companyName"></div>
 				<c:if test="${weekData!=null && fn:length(weekData) > 0 }">
@@ -82,10 +82,10 @@
                  <h3 class="header smaller lighter green">历史比较</h3>
             </div>
             <div class="col-xs-12" style="height: 350px;" id="historyUserLogin"></div>
-            <div class="col-xs-12" style="height: 350px;margin-top: 10px;" id="historyUserActive"></div>
-            <div class="col-xs-12" style="height: 350px;margin-top: 10px;" id="historyAppRun"></div>
-            <div class="col-xs-12" style="height: 350px;margin-top: 10px;" id="historyAppActive"></div>
-            <div class="col-xs-12" style="height: 350px;margin-top: 10px;" id="historyDataSize"></div>
+            <div class="col-xs-12" style="height: 350px;margin-top: 50px;" id="historyUserActive"></div>
+            <div class="col-xs-12" style="height: 350px;margin-top: 50px;" id="historyAppRun"></div>
+            <div class="col-xs-12" style="height: 350px;margin-top: 50px;" id="historyAppActive"></div>
+            <div class="col-xs-12" style="height: 350px;margin-top: 50px;" id="historyDataSize"></div>
             <div class="col-xs-11 table-div">
             <c:if test="${historyWeekData!=null && fn:length(historyWeekData) > 0 }">
                     <div class="table-responsive " id="dataDiv">
