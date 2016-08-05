@@ -133,28 +133,28 @@
 		<h4 style="margin-top:10px;">四、技术及参考说明：</h4>
 		<div class="report-result">
 			<section class="chapter">
-				<p class="paragraph">华木兰BRCA Mutat ScanTM检测乳腺癌易感基因BRCA1/BRCA2的外显子区及其两侧的内含子连接区。按标准操作流程从受检者的血液、口腔组织中提取基因组DNA，经定量和质检合格后用于目标区域的扩增。目标区域外显子及两侧内含子连接区的由多对特异引物扩增富集。目标区域的测序利用二代测序技术（next-generation sequencing-based , NGS）的主流平台完成。</p>
-				<p class="paragraph">华木兰BRCA Mutat ScanTM分析测序数据采用自主研发流程，遗传信息解读参考美国医学遗传学与基因组学学会（ACMG）联合分子病理学学会（AMP）发布的基因变异的解读指导原则，参考数据库包括人类基因组突变数据库（HGMD），国际生物技术信息中心（NCBI）数据库，美国国立卫生研究院(National Institutes of Health，NIH)乳腺癌研究中心数据库，公司自建中国人群乳腺癌突变信息数据库及其他公共数据库如PubMed、dbSNP、1000Genomes。</p>
+				<p class="paragraph">华木兰BRCA Mutat Scan&#8482;检测乳腺癌易感基因BRCA1/BRCA2的外显子区及其两侧的内含子连接区。按标准操作流程从受检者的血液、口腔组织中提取基因组DNA，经定量和质检合格后用于目标区域的扩增。目标区域外显子及两侧内含子连接区的由多对特异引物扩增富集。目标区域的测序利用二代测序技术（next-generation sequencing-based , NGS）的主流平台完成。</p>
+				<p class="paragraph">华木兰BRCA Mutat Scan&#8482;分析测序数据采用自主研发流程，遗传信息解读参考美国医学遗传学与基因组学学会（ACMG）联合分子病理学学会（AMP）发布的基因变异的解读指导原则，参考数据库包括人类基因组突变数据库（HGMD），国际生物技术信息中心（NCBI）数据库，美国国立卫生研究院(National Institutes of Health，NIH)乳腺癌研究中心数据库，公司自建中国人群乳腺癌突变信息数据库及其他公共数据库如PubMed、dbSNP、1000Genomes。</p>
 				<p class="paragraph">参考国际癌症研究机构（International Agency for Research on Cancer，IARC）的五级分类标准，Celloud将基因变异的临床意义分为：</p>
 				<dl>
 					<dt>
-						<label style="width: 150px;right;font-weight:normal;">5 -- Pathogenic</label>
+						<label style="width: 180px;right;font-weight:normal;">5 -- Pathogenic</label>
 						致病的
 					</dt>
 					<dt>
-						<label style="width: 150px;right;font-weight:normal;">4 -- Likely pathogenic</label>
+						<label style="width: 180px;right;font-weight:normal;">4 -- Likely pathogenic</label>
 						可能致病的
 					</dt>
 					<dt>
-						<label style="width: 150px;right;font-weight:normal;">3 -- Uncertain</label>
+						<label style="width: 180px;right;font-weight:normal;">3 -- Uncertain significance</label>
 						致病性不明确的
 					</dt>
 					<dt>
-						<label style="width: 150px;right;font-weight:normal;">2 -- Likely benign</label>
+						<label style="width: 180px;right;font-weight:normal;">2 -- Likely benign</label>
 						可能良性的
 					</dt>
 					<dt>
-						<label style="width: 150px;right;font-weight:normal;">1 -- Benign</label>
+						<label style="width: 180px;right;font-weight:normal;">1 -- Benign</label>
 						良性的
 					</dt>
 				</dl>
