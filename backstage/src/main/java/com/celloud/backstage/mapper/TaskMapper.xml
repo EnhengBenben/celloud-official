@@ -288,10 +288,24 @@
       limit 10
   </select>
   <select id="getActiveUserCount" resultType="java.lang.Integer">
-  	select count(user_id),date_format(date_sub(now(),interval WEEKDAY(date_sub(now(),interval 7 day)) day),"%Y-%m-%d 00:00:00") end_date
+  	select count(user_id)
   	from tb_user where user_id not in(${testAccountIds}) 
   	and state = 0
-  	and create_date &lt; end_date
+  	and create_date &lt; (select date_format(date_sub(now(),interval WEEKDAY(now()) day),"%Y-%m-%d 00:00:00") from dual)
+  </select>
+  <select id="getLastActiveUserCount" resultType="java.lang.Integer">
+  	select count(user_id)
+  	from tb_user where user_id not in(${testAccountIds}) 
+  	and state = 0
+  	and create_date &lt; (date_format(date_sub(date_sub(now(),interval 7 day),interval WEEKDAY(date_sub(now(),interval 7 day)) day),"%Y-%m-%d 00:00:00"))
+  </select>
+  <select id="getAppCount" resultType="java.lang.Integer">
+  	select count(app_id) from tb_app where off_line = 0
+  	and create_date &lt; (select date_format(date_sub(now(),interval WEEKDAY(now()) day),"%Y-%m-%d 00:00:00") from dual)
+  </select>
+  <select id="getLastAppCount" resultType="java.lang.Integer">
+  	select count(app_id) from tb_app where off_line = 0
+  	and create_date &lt; (date_format(date_sub(date_sub(now(),interval 7 day),interval WEEKDAY(date_sub(now(),interval 7 day)) day),"%Y-%m-%d 00:00:00"))
   </select>
 	
 

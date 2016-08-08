@@ -66,7 +66,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void sendWeekStatistics() {
-        String filePath = "G:\\mydata.docx";
+        String filePath = "G:\\weekstatistics\\mydata.docx";
         createWord(filePath);
 
     }
@@ -127,7 +127,7 @@ public class TaskServiceImpl implements TaskService {
         }
         
         POIWordUtil.insertText(doc, "周统计", ParagraphAlignment.CENTER, 22);
-        POIWordUtil.insertText(doc, "1. 本周Top10统计", ParagraphAlignment.LEFT);
+        POIWordUtil.insertTextLeftBold(doc, "1. 本周Top10统计");
         XWPFTable table = POIWordUtil.createTable(doc, 12, 7, "2200");
         POIWordUtil.mergeCellsHorizontal(table, 0, 0, 1);
         POIWordUtil.mergeCellsHorizontal(table, 0, 2, 3);
@@ -144,12 +144,25 @@ public class TaskServiceImpl implements TaskService {
         POIWordUtil.setCellTextBoldCenter(table, 1, 6, "文件数量");
         POIWordUtil.fillTableByMap(table, 2, lastWeekData);
 
-        Integer activeUserCount = taskMapper.getActiveUserCount(PropertiesUtil.testAccountIds);
+        Integer currentActiveUserCount = taskMapper.getActiveUserCount(PropertiesUtil.testAccountIds);
+        Integer lastActiveUserCount = taskMapper.getLastActiveUserCount(PropertiesUtil.testAccountIds);
         String currentMonday = DateUtil.getCurrentMonday();
         String[] ymd = currentMonday.split("-");
-        POIWordUtil.insertText(doc, "2. 用户数量统计：", ParagraphAlignment.LEFT);
-        POIWordUtil.insertText(doc, "截止" + ymd[0] + "年" + ymd[1] + "月" + ymd[2] + "日,平台用户总人数为" + activeUserCount + "人",
-                ParagraphAlignment.LEFT);
+        POIWordUtil.insertTextLeftBold(doc, "2. 用户数量统计：");
+        POIWordUtil.insertTextLeft(doc,
+                "截止" + ymd[0] + "年" + ymd[1] + "月" + ymd[2] + "日,平台用户总人数为" + currentActiveUserCount + "人。");
+        POIWordUtil.insertTextLeft(doc, "新增用户:" + (currentActiveUserCount - lastActiveUserCount) + "。");
+        POIWordUtil.insertTextLeftBold(doc, "3. 用户登录次数统计：");
+        // 欠一张图
+        POIWordUtil.insertTextLeftBold(doc, "4. APP总量统计：");
+        POIWordUtil.insertTextLeft(doc, "目前平台可用APP数量为：" + taskMapper.getAppCount() + "个");
+        POIWordUtil.insertTextLeft(doc, "本周新上线APP数量为：" + (taskMapper.getAppCount() - taskMapper.getLastAppCount()));
+        POIWordUtil.insertTextLeftBold(doc, "5. App使用统计：");
+        // 欠一张图
+        POIWordUtil.insertTextLeftBold(doc, "6. 用户浏览器统计");
+        // 欠一张图
+        POIWordUtil.insertTextLeftBold(doc, "7. 数据量统计：");
+        POIWordUtil.insertTextLeft(doc, "数据上传数量为：56849.57MB，共629个数据。");
     }
 
 

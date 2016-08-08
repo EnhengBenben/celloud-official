@@ -100,6 +100,39 @@ public class POIWordUtil {
     /**
      * 
      * @author MQ
+     * @date 2016年8月4日下午1:42:02
+     * @description 默认大小居左插入一段文字(12号)
+     *
+     */
+    public static void insertTextLeft(XWPFDocument doc, String text) {
+        XWPFParagraph p2 = doc.createParagraph();
+        p2.setAlignment(ParagraphAlignment.LEFT);
+
+        XWPFRun r2 = p2.createRun();
+        r2.setText(text);
+        r2.setFontSize(12);
+    }
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月4日下午1:42:02
+     * @description 默认大小居左插入一段文字(12号)
+     *
+     */
+    public static void insertTextLeftBold(XWPFDocument doc, String text) {
+        XWPFParagraph p2 = doc.createParagraph();
+        p2.setAlignment(ParagraphAlignment.LEFT);
+
+        XWPFRun r2 = p2.createRun();
+        r2.setText(text);
+        r2.setFontSize(12);
+        r2.setBold(true);
+    }
+
+    /**
+     * 
+     * @author MQ
      * @date 2016年8月4日下午1:41:22
      * @description 指定大小插入一段文字
      *

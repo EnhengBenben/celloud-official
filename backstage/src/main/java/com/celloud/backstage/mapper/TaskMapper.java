@@ -65,10 +65,37 @@ public interface TaskMapper {
      * 
      * @author MQ
      * @date 2016年8月4日下午5:55:35
-     * @description 获取活跃用户数量
+     * @description 获取截止到本周周一的活跃用户数量
      *
      */
     public Integer getActiveUserCount(@Param("testAccountIds") String testAccountIds);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月5日下午2:04:05
+     * @description 获取截止到上一周周一的活跃用户数量
+     *
+     */
+    public Integer getLastActiveUserCount(@Param("testAccountIds") String testAccountIds);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月8日上午9:51:46
+     * @description 获取截止到本周周一的App总量
+     *
+     */
+    public Integer getAppCount();
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月8日上午9:56:15
+     * @description 获取截止到上一周周一的App总量
+     *
+     */
+    public Integer getLastAppCount();
 
     /**
      * 
