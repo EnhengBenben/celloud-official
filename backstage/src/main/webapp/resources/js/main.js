@@ -974,7 +974,9 @@ var task = (function(task){
 		});
 	}
 	self.sendWeekStatistics = function(){
-		$.post("task/sendWeekStatistics",{},function(data){
+		alert($("#colonyUsed").val());
+		console.log($("#colonyUsed").val());
+		$.post("task/sendWeekStatistics",{"colonyUsed":$("#colonyUsed").val()},function(data){
 			
 		});
 	}

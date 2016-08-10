@@ -132,8 +132,8 @@ public class EmailUtils {
             }
             pro.setProperty(key, newValue);
         }
-        username = pro.getProperty("mail.username");
-        password = pro.getProperty("mail.password");
+        username = pro.getProperty("mail.smtp.username");
+        password = pro.getProperty("mail.smtp.password");
         smtp = pro.getProperty("mail.smtp");
         defaultTitle = pro.getProperty("mail.defaultTitle");
         errorTitle = pro.getProperty("mail.errorTitle");

@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 public class TaskConstants {
     private static Logger logger = LoggerFactory.getLogger(TaskConstants.class);
     private static Properties properties = null;
-    private static String weekStatisticsResourcesPath;
     /**
      * 配置文件的地址
      */
@@ -38,14 +37,6 @@ public class TaskConstants {
             loadProperties();
         }
         return properties.getProperty(name);
-    }
-
-
-    public static String getWeekStatisticsResourcesPath() {
-        if (weekStatisticsResourcesPath == null) {
-            weekStatisticsResourcesPath = getProperty("weekStatisticsResourcesPath");
-        }
-        return weekStatisticsResourcesPath;
     }
 
 }

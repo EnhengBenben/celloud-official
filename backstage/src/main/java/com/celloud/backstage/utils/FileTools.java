@@ -721,6 +721,53 @@ public class FileTools {
 		return context;
 	}
 
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月8日上午10:58:13
+     * @description 格式化文件大小,输入Byte转换对应的KB,MB,GB,TB
+     *
+     */
+    public static String formatFullFileSize(Float number) {
+        String result = null;
+        if (number > 1099511627776f) {
+            number = (number - number % 1099511627776f) / 1099511627776f + number % 1099511627776f / 1099511627776f;
+            result = String.format("%.2f", number) + "TB";
+        } else if (number > 1073741824) {
+            number = (number - number % 1073741824) / 1073741824 + number % 1073741824 / 1073741824;
+            result = String.format("%.2f", number) + "GB";
+        } else if (number > 1048576) {
+            number = (number - number % 1048576) / 1048576 + number % 1048576 / 1048576;
+            result = String.format("%.2f", number) + "MB";
+        } else {
+            number = (number - number % 1024) / 1024 + number % 1024 / 1024;
+            result = String.format("%.2f", number) + "KB";
+        }
+        return result;
+    }
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月10日上午10:19:20
+     * @description 格式化文件大小,输入Byte转换对应的MB
+     * @param number
+     *            大小单位B
+     * @return 对应的MB大小
+     *
+     */
+    public static String formatMBFileSize(Float number) {
+        String result = null;
+        if (number > 1048576) {
+            number = (number - number % 1048576) / 1048576 + number % 1048576 / 1048576;
+            result = String.format("%.2f", number) + "MB";
+        } else {
+            number = (number - number % 1024) / 1024 + number % 1024 / 1024;
+            result = String.format("%.2f", number) + "KB";
+        }
+        return result;
+    }
+
 	public static void main(String[] args) {
 		int i = countLines("/Users/lin/1.txt");
 		System.out.println(i);

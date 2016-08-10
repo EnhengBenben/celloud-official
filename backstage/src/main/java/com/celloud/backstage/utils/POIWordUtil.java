@@ -60,9 +60,9 @@ public class POIWordUtil {
     public static void insertPicture(XWPFDocument doc, String picPath, int width, int height) {
         try {
             // 获取文件扩展名
-            String extension = picPath.substring(picPath.indexOf("\\."));
+            String extension = picPath.substring(picPath.lastIndexOf(".") + 1);
             // 获取文件名称
-            String imgFile = picPath.substring(picPath.lastIndexOf(File.separatorChar));
+            String imgFile = picPath.substring(picPath.lastIndexOf(File.separatorChar) + 1);
             // 获取文件格式
             int format = 0;
             if("bmp".equalsIgnoreCase(extension)){
@@ -73,12 +73,27 @@ public class POIWordUtil {
                 format = XWPFDocument.PICTURE_TYPE_PNG;
             }
             XWPFParagraph p = doc.createParagraph();
+            p.setAlignment(ParagraphAlignment.CENTER);
             XWPFRun r = p.createRun();
             r.addBreak();
             r.addPicture(new FileInputStream(picPath), format, imgFile, Units.toEMU(width), Units.toEMU(height));// 200x200
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月8日下午3:38:41
+     * @description 强制分页
+     * @param doc
+     *            文档对象
+     *
+     */
+    public static void pageBreak(XWPFDocument doc) {
+        XWPFParagraph p = doc.createParagraph();
+        p.setPageBreak(true);
     }
 
     /**
@@ -116,8 +131,30 @@ public class POIWordUtil {
     /**
      * 
      * @author MQ
+     * @date 2016年8月8日下午3:06:56
+     * @description 指定大小居左插入一段内本
+     * @param doc
+     *            文档对象
+     * @param text
+     *            文本内容
+     * @param size
+     *            文本大小
+     *
+     */
+    public static void insertTextLeft(XWPFDocument doc, String text, int size) {
+        XWPFParagraph p2 = doc.createParagraph();
+        p2.setAlignment(ParagraphAlignment.LEFT);
+
+        XWPFRun r2 = p2.createRun();
+        r2.setText(text);
+        r2.setFontSize(size);
+    }
+
+    /**
+     * 
+     * @author MQ
      * @date 2016年8月4日下午1:42:02
-     * @description 默认大小居左插入一段文字(12号)
+     * @description 默认大小居左插入一段加粗文字(12号)
      *
      */
     public static void insertTextLeftBold(XWPFDocument doc, String text) {
@@ -127,6 +164,29 @@ public class POIWordUtil {
         XWPFRun r2 = p2.createRun();
         r2.setText(text);
         r2.setFontSize(12);
+        r2.setBold(true);
+    }
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月8日下午2:46:57
+     * @description 默认大小居左插入一段加粗文字(指定大小)
+     * @param doc
+     *            文档对象
+     * @param text
+     *            插入文本
+     * @param size
+     *            文本大小
+     *
+     */
+    public static void insertTextLeftBold(XWPFDocument doc, String text, int size) {
+        XWPFParagraph p2 = doc.createParagraph();
+        p2.setAlignment(ParagraphAlignment.LEFT);
+
+        XWPFRun r2 = p2.createRun();
+        r2.setText(text);
+        r2.setFontSize(size);
         r2.setBold(true);
     }
 
@@ -192,8 +252,6 @@ public class POIWordUtil {
         CTTbl ttbl = table.getCTTbl();
         CTTblPr tblPr = ttbl.getTblPr() == null ? ttbl.addNewTblPr() : ttbl.getTblPr();
         CTTblWidth tblWidth = tblPr.isSetTblW() ? tblPr.getTblW() : tblPr.addNewTblW();
-        // CTJc cTJc = tblPr.addNewJc();
-//        cTJc.setVal(STJc.Enum.forString("center"));
         tblWidth.setW(new BigInteger(width));
 
         return table;
