@@ -52,30 +52,30 @@
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		    </div>
 		    <div class="panel-body">
-		        <form class="form-horizontal" id="rechargeForm" >
+		        <form role="form" class="form-horizontal" id="rechargeForm" >
 		            <input type="hidden" name="userId" id="userid-hide">
 		            <div class="form-group">
 		                <label class="col-sm-2 control-label">充值金额<font color="red">*</font></label>
 		                <div class="col-sm-10">
-		                   <input type="text" class="form-control" name="amount" placeholder="请正确输入金额" required="required">
+		                   <input type="number" class="form-control" name="amount" placeholder="请输入大于1的正整数金额" data-rule-required="true">
 		                </div>
 		            </div>
 		            <div class="form-group">
                         <label class="col-sm-2 control-label">户名<font color="red">*</font></label>
                         <div class="col-sm-10">
-                           <input type="text" class="form-control" name="accountName" required="required">
+                           <input type="text" class="form-control" name="accountName" data-rule-required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">账户<font color="red">*</font></label>
                         <div class="col-sm-10">
-                           <input type="text" class="form-control" name="accountNo" required="required">
+                           <input type="text" class="form-control" name="accountNo" data-rule-required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">开户银行<font color="red">*</font></label>
                         <div class="col-sm-10">
-                           <input type="text" class="form-control" name="bank" required="required">
+                           <input type="text" class="form-control" name="bank" data-rule-required="true">
                         </div>
                     </div>
                     <div class="form-group">
@@ -101,7 +101,7 @@
                         <div class="col-sm-10">
                            <div class="yzm">
 	                            <input type="text" class="yzm input-bottom" placeholder="验证码" id="captcha"
-	                                name="kaptchaCode" value="${requestScope.kapcode }" required="required"/>
+	                                name="kaptchaCode" value="${requestScope.kapcode }" data-rule-required="true"/>
 	                            <img title="看不清，换一张"
 	                                src="<%=request.getContextPath()%>/kaptcha.jpg" id="kaptchaImage"
 	                                alt="验证码" class="validateCode" style="cursor: pointer;" />
@@ -111,7 +111,7 @@
 		            <div class="form-group-separator"></div>
 		            <div class="form-group">
 		                <div class="col-sm-10 text-center">
-		                    <a id="commit-recharge" class="btn btn-success">充值</a>
+		                    <button type="submit" id="commit-recharge" class="btn btn-success">充值</button>
 		                    <button type="reset" class="btn btn-white">重置</button>
 		                </div>
 		            </div>

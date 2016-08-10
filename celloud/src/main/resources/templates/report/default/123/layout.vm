@@ -20,8 +20,13 @@
  #end
 <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script>
 </head>
-<body class="container">
-	<div class="main-container" style="padding:20px;background-color: #f8f8f8;">
+<body class="container" style="width:100%;padding:0px;">
+		<div id="printBtns" class="btn-group-vertical" style="position: fixed;z-index:50;right:10px;top:10px;">
+			<button class="btn btn-success" id="printBtn">打印</button><br>
+			<button class="btn btn-success" id="saveBtn">保存</button><br>
+			<button class="btn btn-success" id="resetBtn">重置</button>
+		</div>
+	<div class="main-container" style="padding:0px 70px;background-color: #f8f8f8;">
 		<section class="content rocky">
 			<div id="container" class="common-container" style="margin-left: 0px;padding:0px;">
 				   #block("content") 
@@ -30,6 +35,7 @@
 		</section>
 	</div>
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+	<script src="$base/js/rocky_print.js"></script>
 	 #block("scripts") 
  	 #end
 </body>

@@ -29,7 +29,7 @@
                             <input type="hidden" name="appCompanyId" value="${appCompanyId }" />
 					        <input type="hidden" name="deptId" value="${user.deptId }" />
 					        <input type="hidden" name="companyId" value="${user.companyId }" />
-					        <input type="hidden" name="role" value="${user.role }">
+					        <input type="hidden" name="role" value="${user.role }" id="role">
 					        <input type="text" name="email" readonly="readonly" value="${user.email }" id="email"/>
 					        <input type="text" id="add_username" name="username" class="addUser" placeholder="用户名">
 					        <input type="password" name="password" class="addUser pwd" placeholder="密码（6-16位数字字母组合）" id="add_password"/>
@@ -185,7 +185,13 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
 		if(--time>0){
 		   setTimeout("countDown("+time+")",1000);//设定超时时间
 		}else{
-			window.location.href="http://www.celloud.cn/login";//跳转页面
+		  var role = $("#role").val();
+		  var result = window.location.href.split("manager")[0];
+		  if(role==1){
+		    window.location.href = result + "manager/";//跳转页面
+		  }else{
+			window.location.href = result;//跳转页面
+		  }
 		}
 	}
 	

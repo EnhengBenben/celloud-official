@@ -256,5 +256,57 @@
 	    where start_date is null 
 	    or end_date is null
 	</select>
+	
+	<select id="getLastWeekUserLogin" resultType="java.util.HashMap">
+    select u.username,count(u.username) log_count from
+    (select date_format(date_sub(date_sub(now(),interval 7 day),interval WEEKDAY(date_sub(now(),interval 7 day)) day),"%Y-%m-%d 00:00:00") start_date,date_format(date_add(date_sub(date_sub(now(),interval 7 day),interval WEEKDAY(date_sub(now(),interval 7 day)) day),interval 6 day),"%Y-%m-%d 23:59:59") end_date) temp, tb_user u, tb_log l
+    where u.user_id = l.user_id and l.log_date &gt;= start_date and l.log_date &lt;= end_date and u.user_id not in (${testAccountIds})
+    group by u.username 
+    order by log_count desc 
+    limit 10
+  </select>
+  <select id="getLastWeekAppRun" resultType="java.util.HashMap">
+    select a.app_name,count(a.app_name) app_count from
+      tb_report r,tb_user u,tb_app a,(select date_format(date_sub(date_sub(now(),interval 7 day),interval WEEKDAY(date_sub(now(),interval 7 day)) day),"%Y-%m-%d 00:00:00") start_date,date_format(date_add(date_sub(date_sub(now(),interval 7 day),interval WEEKDAY(date_sub(now(),interval 7 day)) day),interval 6 day),"%Y-%m-%d 23:59:59") end_date) temp 
+      where r.create_date&gt;=temp.start_date and
+      r.create_date&lt;=temp.end_date and 
+      r.user_id=u.user_id and
+      r.app_id = a.app_id and 
+      r.flag = 0 and u.user_id not in(${testAccountIds})
+      group by a.app_name
+      order by app_count desc
+      limit 10
+  </select>
+  <select id="getLastWeekDataSize" resultType="java.util.HashMap">
+    select u.username,sum(f.size) size_sum,count(f.file_id) file_count
+      from tb_file f,tb_user u,(select date_format(date_sub(date_sub(now(),interval 7 day),interval WEEKDAY(date_sub(now(),interval 7 day)) day),"%Y-%m-%d 00:00:00") start_date,date_format(date_add(date_sub(date_sub(now(),interval 7 day),interval WEEKDAY(date_sub(now(),interval 7 day)) day),interval 6 day),"%Y-%m-%d 23:59:59") end_date) temp
+      where f.create_date&gt;=temp.start_date and 
+      f.create_date&lt;=temp.end_date and 
+      f.user_id = u.user_id  and u.user_id not in(${testAccountIds})
+      group by u.user_id
+      order by size_sum desc
+      limit 10
+  </select>
+  <select id="getActiveUserCount" resultType="java.lang.Integer">
+  	select count(user_id)
+  	from tb_user where user_id not in(${testAccountIds}) 
+  	and state = 0
+  	and create_date &lt; (select date_format(date_sub(now(),interval WEEKDAY(now()) day),"%Y-%m-%d 00:00:00") from dual)
+  </select>
+  <select id="getLastActiveUserCount" resultType="java.lang.Integer">
+  	select count(user_id)
+  	from tb_user where user_id not in(${testAccountIds}) 
+  	and state = 0
+  	and create_date &lt; (date_format(date_sub(date_sub(now(),interval 7 day),interval WEEKDAY(date_sub(now(),interval 7 day)) day),"%Y-%m-%d 00:00:00"))
+  </select>
+  <select id="getAppCount" resultType="java.lang.Integer">
+  	select count(app_id) from tb_app where off_line = 0
+  	and create_date &lt; (select date_format(date_sub(now(),interval WEEKDAY(now()) day),"%Y-%m-%d 00:00:00") from dual)
+  </select>
+  <select id="getLastAppCount" resultType="java.lang.Integer">
+  	select count(app_id) from tb_app where off_line = 0
+  	and create_date &lt; (date_format(date_sub(date_sub(now(),interval 7 day),interval WEEKDAY(date_sub(now(),interval 7 day)) day),"%Y-%m-%d 00:00:00"))
+  </select>
+	
 
 </mapper>

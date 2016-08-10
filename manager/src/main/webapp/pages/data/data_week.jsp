@@ -21,8 +21,8 @@
 		         <h3 class="header smaller lighter green">本周Top10</h3>
 			</div>
 			<div class="col-xs-12" style="height: 350px;" id="topUserLogin"></div>
-			<div class="col-xs-12" style="height: 350px;margin-top: 10px;" id="topAppRun"></div>
-			<div class="col-xs-12" style="height: 350px;margin-top: 10px;" id="topDataSize"></div>
+			<div class="col-xs-12" style="height: 350px;margin-top: 50px;" id="topAppRun"></div>
+			<div class="col-xs-12" style="height: 350px;margin-top: 50px;" id="topDataSize"></div>
 			<div class="col-xs-11 table-div">
 				<div class="table-header hide" id="_companyName"></div>
 				<c:if test="${weekData!=null && fn:length(weekData) > 0 }">
@@ -41,6 +41,7 @@
                                     <th>运行次数</th>
                                     <th>用户名</th>
                                     <th>数据大小</th>
+                                    <th>数据个数</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -65,6 +66,7 @@
 	                                                <fmt:formatNumber pattern="0.00" value="${(data.sizeSum-data.sizeSum%1024)/1024 + data.sizeSum%1024/1024 }" />KB</c:otherwise>
 	                                        </c:choose>
 										</td>
+										<td>${data.fileCount }</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -80,10 +82,10 @@
                  <h3 class="header smaller lighter green">历史比较</h3>
             </div>
             <div class="col-xs-12" style="height: 350px;" id="historyUserLogin"></div>
-            <div class="col-xs-12" style="height: 350px;margin-top: 10px;" id="historyUserActive"></div>
-            <div class="col-xs-12" style="height: 350px;margin-top: 10px;" id="historyAppRun"></div>
-            <div class="col-xs-12" style="height: 350px;margin-top: 10px;" id="historyAppActive"></div>
-            <div class="col-xs-12" style="height: 350px;margin-top: 10px;" id="historyDataSize"></div>
+            <div class="col-xs-12" style="height: 350px;margin-top: 50px;" id="historyUserActive"></div>
+            <div class="col-xs-12" style="height: 350px;margin-top: 50px;" id="historyAppRun"></div>
+            <div class="col-xs-12" style="height: 350px;margin-top: 50px;" id="historyAppActive"></div>
+            <div class="col-xs-12" style="height: 350px;margin-top: 50px;" id="historyDataSize"></div>
             <div class="col-xs-11 table-div">
             <c:if test="${historyWeekData!=null && fn:length(historyWeekData) > 0 }">
                     <div class="table-responsive " id="dataDiv">
@@ -96,6 +98,7 @@
                                     <th>App运行次数</th>
                                     <th>活跃App</th>
                                     <th>数据大小</th>
+                                    <th>数据个数</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -120,6 +123,7 @@
                                                     <fmt:formatNumber pattern="0.00" value="${(data.historyWeekDataSize-data.historyWeekDataSize%1024)/1024 + data.historyWeekDataSize%1024/1024 }" />KB</c:otherwise>
                                             </c:choose>
                                         </td>
+                                        <td>${data.historyWeekFileCount }</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

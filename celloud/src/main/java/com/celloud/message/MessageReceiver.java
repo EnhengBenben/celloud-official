@@ -39,6 +39,10 @@ public class MessageReceiver implements Runnable {
 		return receiver;
 	}
 
+	public static List<MessageReceiver> getInstances() {
+		return new ArrayList<>(maps.values());
+	}
+
 	public MessageReceiver subscribe(String... topics) {
 		return subscribe(defaultHandler, topics);
 	}
@@ -91,6 +95,13 @@ public class MessageReceiver implements Runnable {
 
 	public void addTopic(String topic) {
 		consumer.subscribe(Arrays.asList(topic));
+	}
+
+	public static void shutdownAll() {
+		for (MessageReceiver receiver : maps.values()) {
+			receiver.shutdown();
+			receiver.consumer.close();
+		}
 	}
 
 	public void shutdown() {

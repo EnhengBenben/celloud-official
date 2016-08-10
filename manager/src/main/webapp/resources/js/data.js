@@ -25,7 +25,7 @@ $(function(){
 			drawCharts.manyLineChart("bigUserFileNumView",data.adminData,'seriesName','dataMon','time','dataNum');
 		}
 		if(data.dataMon.length>0){
-			drawCharts.incrementCumulantLineChart('fileNumView','fileTotalNum',data.dataMon,'time','dataNum','数据增量曲线图','数据个数累计图','hide','hide',themes.green);
+			drawCharts.incrementCumulantLineChart('fileNumView','fileTotalNum',data.dataMon,'time','dataNum','数据增量曲线图','数据个数累计图','hide','阴影',themes.macarons);
 		}else{
 			$("#fileNumView").parent().parent().hide();
 		}

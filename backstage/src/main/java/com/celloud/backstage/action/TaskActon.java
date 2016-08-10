@@ -1,16 +1,22 @@
 package com.celloud.backstage.action;
 
+import java.io.File;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.backstage.constants.TaskConstants;
 import com.celloud.backstage.page.Page;
 import com.celloud.backstage.page.PageList;
 import com.celloud.backstage.service.TaskService;
@@ -54,5 +60,33 @@ public class TaskActon {
         Map<String, Integer> map = taskService.getQuantityStatistics();
         mv.addObject("map", map);
         return mv;
+    }
+
+    @RequestMapping("/toWeekStatistics")
+    public ModelAndView toWeekStatistics() {
+        ModelAndView mv = new ModelAndView("task/task_week_upload");
+        return mv;
+    }
+
+    @RequestMapping("/sendWeekStatistics")
+    public void sendWeekStatistics() {
+        taskService.sendWeekStatistics();
+    }
+
+    @RequestMapping(value = "uploadWeekResources", method = RequestMethod.POST)
+    @ResponseBody
+    public String upload(@RequestParam("file") CommonsMultipartFile file, HttpSession session) {
+        String fileName = file.getOriginalFilename();
+        // String type = fileName.substring(fileName.lastIndexOf("."));
+        File targetFile = new File(TaskConstants.getWeekStatisticsResourcesPath() + fileName);
+        // if (!targetFile.exists()) {
+        // targetFile.mkdirs();
+        // }
+        try {
+            file.transferTo(targetFile);
+        } catch (Exception e) {
+            logger.error("医院logo上传失败：{}", fileName, e);
+        }
+        return targetFile.getName();
     }
 }

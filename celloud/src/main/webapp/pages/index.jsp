@@ -23,6 +23,7 @@
   <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
   <![endif]  -->
 </head>
+<<<<<<< HEAD
 <body class="container" ng-app="celloudApp">
   <header class="header">
     <nav class="navbar navbar-default navbar-fixed-top">
