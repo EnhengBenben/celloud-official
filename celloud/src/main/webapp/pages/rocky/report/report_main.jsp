@@ -133,6 +133,6 @@
 	</div>
 </c:if>
 <div id="rocky_report_page">
-	<jsp:include page="../pagination.jsp"></jsp:include>
+	<jsp:include page="../_partial_pagination.jsp"></jsp:include>
 </div>
 <jsp:include page="../statistic.jsp"></jsp:include>

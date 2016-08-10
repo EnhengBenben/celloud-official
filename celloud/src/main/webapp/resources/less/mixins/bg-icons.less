@@ -1,0 +1,92 @@
+.bg-icons(@width,@height,@position-x,@position-y,@url:@celloud-bg-img){
+    width: @width;
+    height: @height;
+    display: inline-block;
+    background: url(@url) no-repeat center center;
+    background-position: @position-x @position-y;
+    vertical-align: text-bottom;
+}
+.logo{
+    .bg-icons(108px,50px,0,0);
+    .center-block();
+}
+.cubes-icon{
+    .bg-icons(17px,17px,0px,-50px);
+}
+.upload-icon{
+    .bg-icons(25px,17px,-60px,-50px);
+}
+.bell-icon{
+    .bg-icons(13px,16px,-120px,-50px);
+}
+.money-icon{
+    .bg-icons(16px,18px,-180px,-50px);
+}
+.code-icon{
+    .bg-icons(17px,17px,-240px,-50px);
+}
+.user-icon{
+    .bg-icons(18px,17px,-300px,-50px);
+}
+.left-indent-icon{
+    .bg-icons(16px,14px,-120px,-100px);
+}
+.right-indent-icon{
+    .bg-icons(16px,14px,-120px,-125px);
+}
+.overview-icon{
+    .bg-icons(20px,16px,0px,-100px);
+}
+.sample-icon{
+    .bg-icons(19px,19px,-60px,-100px);
+}
+.experiment-icon{
+    .bg-icons(19px,18px,-180px,-100px);
+}
+.data-icon{
+    .bg-icons(20px,17px,-240px,-100px);
+}
+.report-icon{
+    .bg-icons(18px,18px,-300px,-100px);
+}
+.app-icon{
+    .bg-icons(18px,17px,-360px,-100px);
+}
+.account-icon{
+    .bg-icons(18px,17px,-420px,-100px);
+}
+.qa-icon{
+    .bg-icons(18px,17px,-480px,-100px);
+}
+.cost-icon{
+    .bg-icons(18px,13px,-540px,-100px);
+}
+.active, a:hover{
+    .overview-icon{
+        .bg-icons(20px,16px,0px,-125px);
+    }
+     .sample-icon{
+        .bg-icons(19px,19px,-60px,-125px);
+    }
+    .experiment-icon{
+        .bg-icons(19px,18px,-180px,-125px);
+    }  
+    .data-icon{
+        .bg-icons(20px,17px,-240px,-125px);
+    }
+    .report-icon{
+        .bg-icons(18px,18px,-300px,-125px);
+    }
+    .app-icon{
+        .bg-icons(18px,17px,-360px,-125px);
+    }
+    .account-icon{
+        .bg-icons(18px,17px,-420px,-125px);
+    }
+    .qa-icon{
+        .bg-icons(18px,17px,-480px,-125px);
+    }
+    .cost-icon{
+        .bg-icons(18px,13px,-540px,-125px);
+    }
+}

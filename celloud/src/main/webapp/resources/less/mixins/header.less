@@ -1,0 +1,44 @@
+.header{
+    width: 100%;
+    height: 50px;
+    z-index: 1030;
+    .navbar-default{
+        background: #fff;
+    }
+    ul{
+        margin: 0;   
+    }
+    ul > li{
+        float: left;
+        text-align: center;
+        a{
+            display: inline-block;
+            height: 50px;
+            line-height: 50px;
+            padding: 0px 20px;
+        }
+    }
+    li+li::before{
+        margin-left: -10px;
+        content: "";
+    }
+    .navbar-toggle{
+        color: @light-gray;
+    }
+}
+.navbar-logo{
+    width: 170px;
+    height: 50px;
+    float: left;
+    display: block;
+    line-height: 50px;
+    text-align: center;
+    overflow: hidden;
+    .transition(width .3s ease-in-out);
+    &.mini{
+        width: 50px;
+        .logo{
+            width: 30px;
+        }
+    }
+}

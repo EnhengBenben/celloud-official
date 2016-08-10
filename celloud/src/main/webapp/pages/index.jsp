@@ -4,261 +4,111 @@
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- 优先使用最新版本的IE 和 Chrome 内核 -->
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="baidu-site-verification" content="IsldTuHqik" />
-<title>CelLoud 控制台</title>
-<meta name="keywords"
-	content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据,上海华点云生物科技有限公司网站首页,上海华点云生物科技有限公司官网,上海华点云生物科技有限公司北京分公司" />
-<meta name="description" content="一站式高通量基因检测数据分析系统" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<!-- <meta name="baidu-site-verification" content="1fI6fRe9op" /> -->
-<meta name="baidu-site-verification" content="ZvlzkAOdsB" />
-<link rel="bookmark" href="<%=request.getContextPath()%>/images/favicon.ico" />
-<link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" />
-<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<link href="//cdn.bootcss.com/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet">
-<link href="//cdn.bootcss.com/Buttons/2.0.0/css/buttons.min.css" rel="stylesheet">
-<link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/plugins/select/select2.css" rel="stylesheet" />
-<link href="<%=request.getContextPath()%>/plugins/intro/introjs.css" rel="stylesheet" type="text/css" />
-<link href="<%=request.getContextPath()%>/css/font.css" rel="stylesheet" type="text/css">
-<link href="<%=request.getContextPath()%>/css/main.css?version=3.1.9" rel="stylesheet" type="text/css" />
-<link href="<%=request.getContextPath()%>/css/pay.css?version=3.1.9" rel="stylesheet" type="text/css" />
-<link href="<%=request.getContextPath()%>/css/app.css?version=3.1.14" rel="stylesheet" type="text/css" />
-<link href="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.css" rel="stylesheet"
-	type="text/css" media="screen" />
-<link href="<%=request.getContextPath()%>/plugins/backToTop/toTop.1.0.css" rel="stylesheet">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>CelLoud 控制台</title>
+  <meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据,上海华点云生物科技有限公司网站首页,上海华点云生物科技有限公司官网,上海华点云生物科技有限公司北京分公司" />
+  <meta name="description" content="一站式高通量基因检测数据分析系统" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="<%=request.getContextPath()%>/images/favicon.ico" rel="bookmark">
+  <link href="<%=request.getContextPath()%>/images/favicon.ico" rel="shortcut icon">
+  <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/select2/4.0.3/css/select2.min.css" rel="stylesheet">
+  <link href="<%=request.getContextPath()%>/less/celloud.less" rel="stylesheet/less" type="text/css" />
+  <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script>
+  <script src="//cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
+  <!-- [if It IE 9]>
+  <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]  -->
 </head>
-<body class="skin-green sidebar-mini">
-	<div class="fixed wrapper">
-		<header class="main-header">
-			<a href="javascript:void(0)" class="logo">
-				<span class="logo-mini">
-					<img src="<%=request.getContextPath()%>/images/icon/mini-logo.png">
-				</span>
-				<span class="logo-lg">
-					<img src="<%=request.getContextPath()%>/images/icon/logo.png">
-				</span>
-			</a>
-			<!-- Header Navbar: style can be found in header.less -->
-			<nav class="navbar navbar-static-top">
-				<!-- Sidebar toggle button-->
-				<a href="#" class="sidebar-toggle" data-toggle="offcanvas">
-					<span class="sr-only">Toggle navigation</span>
-				</a>
-				<div class="navbar-custom-menu">
-					<ul class="nav navbar-nav">
-						<!-- Messages: style can be found in dropdown.less-->
-						<li class="dropdown notifications-menu" id="notices-menu">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-								<i class="fa fa-envelope-o"></i>
-								<span class="label label-success"></span>
-							</a>
-							<ul class="dropdown-menu">
-								<li class="header">站内消息提醒</li>
-								<li class="footer">
-									<a href="javascript:showNotice()">查看所有</a>
-								</li>
-							</ul>
-						</li>
-						<li class="dropdown messages-menu" id="messages-menu">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-								<i class="fa fa-bell-o"></i>
-								<span class="label label-warning"></span>
-							</a>
-							<ul class="dropdown-menu">
-								<li class="header">您有0条新消息</li>
-								<li>
-									<!-- inner menu: contains the actual data -->
-									<ul class="menu">
-									</ul>
-								</li>
-								<li class="footer">
-									<a href="javascript:showMessage()">查看所有</a>
-								</li>
-							</ul>
-						</li>
-						<li class="dropdown messages-menu expense-menu">
-							<a id="to-expense-model" href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-								<i class="fa fa-rmb"></i>
-							</a>
-							<div class="dropdown-menu">
-								<div class="dropdown-menu-inner">
-									<p>
-										账户余额:&nbsp;&nbsp;&nbsp; 
-										<span id="total-consumption" class="text-danger" style="font-size: 20px;"></span>
-										&nbsp;&nbsp;元
-									</p>
-									<p class="text-center">&nbsp;</p>
-									<div class="text-center">
-										<a id="to-recharge-main" class="btn btn-celloud-success btn-flat" href="javascript:void(0)">
-											<span class="fa fa-money"></span> 立即充值
-										</a>
-									</div>
-									<p class="text-center">&nbsp;</p>
-									<p class="text-center">
-										<a id="to-expense-main" class="btn btn-sm btn-link" href="javascript:void(0)">查看消费记录</a>
-									</p>
-								</div>
-							</div>
-						</li>
-						<li class="dropdown messages-menu expense-menu">
-							<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" id="toShowQRCode">
-								<i class="glyphicon glyphicon-qrcode"></i>
-							</a>
-							<div class="dropdown-menu">
-								<div class="dropdown-menu-inner">
-									<p id="showQRCode">
-										
-									</p>
-								</div>
-							</div>
-						</li>
-						<li class="dropdown user user-menu">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								<img src="${sessionScope.loginUserInSession.avatar}" class="user-image" alt="User Image" id="userImageSmall" />
-								<span class="hidden-xs">${sessionScope.loginUserInSession.username }</span>
-							</a>
-							<ul class="dropdown-menu">
-								<li class="user-header">
-									<img src="${sessionScope.loginUserInSession.avatar}" class="img-circle" alt="User Image" id="userImageLarge">
-									<p>
-										CelLoud <small>您身边的基因数据分析云平台</small>
-									</p>
-								</li>
-								<li class="user-footer">
-									<div class="pull-left">
-										<a href="javascript:void(0)" onclick="showUser()" class="btn btn-default btn-flat">个人信息</a>
-									</div>
-									<div class="pull-right">
-										<a href="logout" class="btn btn-default btn-flat">退出</a>
-									</div>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-			</nav>
-		</header>
-		<!-- Left side column. contains the logo and sidebar -->
-		<aside class="main-sidebar">
-			<!-- sidebar: style can be found in sidebar.less -->
-			<section class="sidebar">
-				<!-- sidebar menu: : style can be found in sidebar.less -->
-				<ul class="sidebar-menu">
-					<li class="header">
-						<span>产品和服务</span>
-					</li>
-					<li class="active treeview">
-						<a href="javascript:void(0)" onclick="userCount.showUserCount();">
-							<i class="fa fa-dashboard"></i>
-							<span>总览</span>
-						</a>
-					</li>
-					<shiro:hasPermission name="experiment:menu">
-						<li class="treeview">
-							<a href="javascript:void(0)" onclick="showExperiment();">
-								<i class="fa fa-stack-overflow"></i>
-								<span>实验管理</span>
-							</a>
-						</li>
-					</shiro:hasPermission>
-					<li class="treeview" id="toUploadMenu" data-step="4" data-position="right" data-intro="" data-img="toupload.png">
-						<a href="javascript:void(0)" onclick="showUpload();">
-							<i class="fa fa-sellsy"></i>
-							<span>数据上传</span>
-						</a>
-					</li>
-					<li class="treeview" id="toDataMenu" data-step="7" data-position="right" data-intro="" data-img="todata.png">
-						<a id="to-data-main" href="javascript:void(0)">
-							<i class="fa fa-tasks"></i>
-							<span>数据管理</span>
-						</a>
-					</li>
-					<li class="treeview" id="toReportMenu" data-step="8" data-position="right" data-intro="" data-img="toreport.png">
-						<a href="javascript:void(0)" onclick="showReport()">
-							<i class="fa fa-files-o"></i>
-							<span>报告</span>
-						</a>
-					</li>
-					<li class="treeview" id="toAppStoreMenu" data-step="1" data-position="right" data-intro="" data-img="yysc.png">
-						<a href="javascript:void(0)" onclick="showAppStore()">
-							<i class="fa fa-cubes"></i>
-							<span>应用市场</span>
-						</a>
-					</li>
-					<shiro:hasPermission name="count:menu">
-						<li class="treeview">
-							<a href="javascript:void(0)" onclick="showCount()">
-								<i class="fa fa-heartbeat"></i>
-								<span>统计</span>
-							</a>
-						</li>
-					</shiro:hasPermission>
-					<li class="header">
-						<span>用户中心</span>
-					</li>
-					<li class="treeview" id="accountManage">
-						<a href="javascript:void(0)" onclick="showUser()">
-							<i class="fa fa-user"></i>
-							<span>账号管理</span>
-						</a>
-					</li>
-					<li class="treeview" id="feedbackManage">
-						<a href="javascript:void(0)" onclick="showFeedback()">
-							<i class="fa fa-comments text-yellow"></i>
-							<span>问题反馈</span>
-						</a>
-					</li>
-					<li class="treeview" id="toHelpMenu">
-						<a href="javascript:void(0);" onclick="showHelp()">
-							<i class="fa fa-question-circle text-aqua"></i>
-							<span>帮助</span>
-						</a>
-					</li>
-				</ul>
-			</section>
-			<!-- /.sidebar -->
-		</aside>
-		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper" id="uploadDIV"></div>
-		<div class="content-wrapper" id="mainDIV"></div>
-		<div class="content-wrapper" id="dataReportDIV"></div>
-	</div>
-	<input type="hidden" id="user-navigation-hide" value="${sessionScope.loginUserInSession.navigation }">
-	<script type="text/javascript">
-       window.CONTEXT_PATH = '<%=request.getContextPath()%>';
-	</script>
-	<script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
-	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-	<script src="//cdn.bootcss.com/jqueryui/1.11.4/jquery-ui.min.js"></script>
-	<script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	<script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-	<script src="<%=request.getContextPath()%>/plugins/intro/intro.js?version=1.1"></script>
-	<script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
-	<!-- switch -->
-	<script src="//cdn.bootcss.com/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
-	<!-- TODO 数据参数同比有用，待统一为echarts -->
-	<script src="//cdn.bootcss.com/highcharts/4.2.1/highcharts.js"></script>
-	<script src="//cdn.bootcss.com/highcharts/4.2.1/modules/exporting.js"></script>
-	<script src="<%=request.getContextPath()%>/plugins/select/select2.min.js"></script>
-	<script src="<%=request.getContextPath()%>/plugins/select/select2_locale_zh-CN.js"></script>
-	<script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
-	<!--   <script src="//cdn.bootcss.com/select2/4.0.1/js/i18n/zh-CN.js"></script> -->
-	<script src="<%=request.getContextPath()%>/js/utils.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/message.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/main_init.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/main.js?v=3.2.4" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/charts.js?version=3.1.10"></script>
-	<script src="<%=request.getContextPath()%>/plugins/highcharts/char.js?version=3.2.4"></script>
-	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.ui.draggable.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/plugins/jquery_alert_dialogs/jquery.alerts.js" type="text/javascript"></script>
-	<script type="text/javascript">
-		$("#toShowQRCode").click(function(){
-		  $("#showQRCode").load("<%=request.getContextPath()%>/pages/wechat/qrcode.jsp");
-		});
-	</script>
+<body class="container" ng-app="celloudApp">
+  <header class="header">
+    <nav class="navbar navbar-default navbar-fixed-top">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <div class="navbar-logo">
+	        <a class="logo" href="#"></a>
+	      </div>
+	    </div>
+	    <ul class="nav navbar-nav pull-left">
+	      <li><a class="" href="#"><i class="cubes-icon">&nbsp;</i></a></li>
+	      <li><a class="" href="#"><i class="upload-icon">&nbsp;</i></a></li>
+	    </ul>
+	    <ul class="nav navbar-nav pull-right">
+	      <li><a href="#"><i class="code-icon">&nbsp;</i></a></li>
+	      <li><a href="#"><i class="bell-icon">&nbsp;</i></a></li>
+	      <li><a href="#"><i class="money-icon">&nbsp;</i></a></li>
+	      <li class="dropdown">
+	        <a href="#" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+	          <i class="user-icon">&nbsp;</i>
+	        </a>
+	        <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+	      </li>
+	    </ul>
+	  </div>
+	</nav>
+  </header>
+  <aside class="sidebar">
+    <section class="s-bar">
+      <div class="sidebar-collapse">
+        <a href="#"><i class="left-indent-icon"></i></a>
+      </div>
+      <ul class="sidebar-menu">
+        <li class="header">产品与服务</li>
+        <li class="treeview">
+          <a href="javascript:void(0)"><i class="overview-icon"></i><span>我的工作台</span></a>
+        </li>
+        <li class="treeview">
+          <a href="javascript:void(0)"><i class="sample-icon"></i><span>样本采集</span></a>
+        </li>
+        <li class="treeview">
+          <a href="javascript:void(0)"><i class="experiment-icon"></i><span>实验管理</span></a>
+        </li>
+        <li class="treeview">
+          <a href="javascript:void(0)"><i class="data-icon"></i><span>数据管理</span></a>
+        </li>
+        <li class="treeview">
+          <a href="javascript:void(0)"><i class="report-icon"></i><span>报告管理</span></a>
+        </li>
+        <li class="treeview">
+          <a href="javascript:void(0)"><i class="app-icon"></i><span>应用市场</span></a>
+        </li>
+      </ul>
+      <ul class="sidebar-menu">
+        <li class="header">用户中心</li>
+        <li class="treeview">
+          <a href="javascript:void(0)"><i class="account-icon"></i><span>账号管理</span></a>
+        </li>
+        <li class="treeview">
+          <a href="javascript:void(0)"><i class="qa-icon"></i><span>问题反馈</span></a>
+        </li>
+        <li class="treeview">
+          <a href="javascript:void(0)"><i class="cost-icon"></i><span>费用中心</span></a>
+        </li>
+      </ul>
+    </section>
+  </aside>
+  <div class="content" ng-view="">
+        
+  </div>
+  <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
+  <script src="//cdn.bootcss.com/echarts/3.2.2/echarts.min.js"></script>
+  <script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
+  <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
+  <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
+  
+<%--   <script src="<%=request.getContextPath()%>/js/config/route.js"></script> --%>
+  <script src="<%=request.getContextPath()%>/js/config/routeProvider.js"></script>
+  <script src="<%=request.getContextPath()%>/js/application.js"></script>
 </body>
 </html>

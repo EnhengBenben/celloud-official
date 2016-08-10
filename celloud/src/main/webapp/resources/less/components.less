@@ -99,7 +99,6 @@
 /*主列表表格*/
 .table-main{
     width: 100%;
-    *border-collapse: separate; /* IE7 and lower */
     border-collapse: separate;
     border-spacing: 0;
     border: 1px solid @bg-gray;
@@ -229,8 +228,6 @@
     }
     ul{
         display: inline-block;
-        *display: inline;
-        *zoom: 1;
     }
     ul > li {
         display: inline;
@@ -387,8 +384,8 @@
         line-height: 1;
     }
     .checkbox:checked + .info:after{
-        width:12px;
-        height:12px;
+        width: 12px;
+        height: 12px;
         color: @font-gray;
         content: "✔";
         display: inline-block;
@@ -399,12 +396,9 @@
     width: 18px;
     height: 18px;
     text-indent: -9999em;
-    text-indent: 0;
     font-size: 0;
     line-height: 18px;
     display: inline-block;
-    *display: inline;
-    *zoom: 1;
     background-image: url(../../images/icon/global_icon.png);
     background-repeat: no-repeat;
     overflow: hidden;
