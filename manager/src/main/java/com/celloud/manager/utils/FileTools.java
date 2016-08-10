@@ -758,4 +758,31 @@ public class FileTools {
         }
         return context;
     }
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月8日下午6:44:23
+     * @description 格式化文件大小,输入Byte转换对应的KB,MB,GB,TB
+     * @param number
+     * @return 文件大小字符串
+     *
+     */
+    public static String formatFileSize(Float number) {
+        String result = null;
+        if (number > 1099511627776f) {
+            number = (number - number % 1099511627776f) / 1099511627776f + number % 1099511627776f / 1099511627776f;
+            result = String.format("%.2f", number) + "TB";
+        } else if (number > 1073741824) {
+            number = (number - number % 1073741824) / 1073741824 + number % 1073741824 / 1073741824;
+            result = String.format("%.2f", number) + "GB";
+        } else if (number > 1048576) {
+            number = (number - number % 1048576) / 1048576 + number % 1048576 / 1048576;
+            result = String.format("%.2f", number) + "MB";
+        } else {
+            number = (number - number % 1024) / 1024 + number % 1024 / 1024;
+            result = String.format("%.2f", number) + "KB";
+        }
+        return result;
+    }
 }
