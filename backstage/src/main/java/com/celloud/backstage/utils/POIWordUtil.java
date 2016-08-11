@@ -352,4 +352,30 @@ public class POIWordUtil {
         }
     }
 
+    public static int getWidth(int dataLength) {
+        if (dataLength == 1) {
+            return 200;
+        } else if (dataLength < 3) {
+            return 300;
+        } else if (dataLength < 5) {
+            return 400;
+        } else {
+            return 450;
+        }
+    }
+
+    public static int getHeight(int dataLength) {
+        if (dataLength == 1) {
+            return 200;
+        } else if (dataLength < 3) {
+            return 300;
+        } else if (dataLength < 5) {
+            return 400;
+        } else if (dataLength < 25) {
+            return 450;
+        } else {
+            return 600;
+        }
+    }
+
 }

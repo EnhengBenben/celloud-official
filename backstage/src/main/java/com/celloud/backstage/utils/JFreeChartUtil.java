@@ -95,6 +95,7 @@ public class JFreeChartUtil {
             barRenderer.setBaseItemLabelsVisible(true);
             barRenderer.setBasePaint(Color.BLACK);
             barRenderer.setBaseItemLabelFont(new Font("宋体", Font.BOLD, 12));
+            barRenderer.setMaximumBarWidth(0.1);
             plot.setRenderer(barRenderer);
             
             out = new FileOutputStream(picPath);// 图片是文件格式的，故要用到FileOutputStream用来输出。
@@ -158,15 +159,15 @@ public class JFreeChartUtil {
                     RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
             /*----------设置标题字体--------------------------*/
             TextTitle textTitle = chart.getTitle();
-            textTitle.setFont(new Font("宋体", Font.PLAIN, 20));
+            textTitle.setFont(new Font("宋体", Font.PLAIN, 24));
             /*------设置X轴坐标上的文字-----------*/
-            domainAxis.setTickLabelFont(new Font("sans-serif", Font.PLAIN, 12));
+            domainAxis.setTickLabelFont(new Font("sans-serif", Font.PLAIN, 14));
             /*------设置X轴的标题文字------------*/
-            domainAxis.setLabelFont(new Font("宋体", Font.BOLD, 12));
+            domainAxis.setLabelFont(new Font("宋体", Font.BOLD, 14));
             /*------设置Y轴坐标上的文字-----------*/
-            rAxis.setTickLabelFont(new Font("sans-serif", Font.PLAIN, 10));
+            rAxis.setTickLabelFont(new Font("sans-serif", Font.PLAIN, 16));
             /*------设置Y轴的标题文字------------*/
-            rAxis.setLabelFont(new Font("宋体", Font.BOLD, 10));
+            rAxis.setLabelFont(new Font("宋体", Font.BOLD, 16));
             // 设置柱状图宽度和颜色
             BarRenderer barRenderer = new BarRenderer();
             float[] hsbColor = new float[3];
@@ -179,6 +180,7 @@ public class JFreeChartUtil {
             barRenderer.setBaseItemLabelsVisible(true);
             barRenderer.setBasePaint(Color.BLACK);
             barRenderer.setBaseItemLabelFont(new Font("宋体", Font.BOLD, 12));
+            barRenderer.setMaximumBarWidth(0.1);
             // barRenderer.setBaseNegativeItemLabelPosition(
             // new ItemLabelPosition(ItemLabelAnchor.CENTER,
             // TextAnchor.BASELINE_RIGHT));
@@ -200,4 +202,30 @@ public class JFreeChartUtil {
             }
         }
     }
+
+    public static int getWidth(int dataLength) {
+        if(dataLength==1){
+            return 400;
+        }else if(dataLength<3){
+            return 600;
+        }else if(dataLength<5){
+            return 800;
+        }else{
+            return 1024;
+        }
+    }
+
+    public static int getHeight(int dataLength) {
+        if(dataLength==1){
+            return 400;
+        }else if(dataLength<3){
+            return 600;
+        }else if(dataLength<5){
+            return 800;
+        }else{
+            return 1024;
+        }
+    }
+
+
 }

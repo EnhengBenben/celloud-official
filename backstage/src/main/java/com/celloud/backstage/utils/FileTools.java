@@ -757,6 +757,9 @@ public class FileTools {
      *
      */
     public static String formatMBFileSize(Float number) {
+        if (number == null) {
+            return "0MB";
+        }
         String result = null;
         if (number > 1048576) {
             number = (number - number % 1048576) / 1048576 + number % 1048576 / 1048576;

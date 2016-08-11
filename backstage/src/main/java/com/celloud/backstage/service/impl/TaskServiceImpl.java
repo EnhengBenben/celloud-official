@@ -223,8 +223,8 @@ public class TaskServiceImpl implements TaskService {
 
         Integer currentActiveUserCount = taskMapper.getActiveUserCount(PropertiesUtil.testAccountIds);
         Integer lastActiveUserCount = taskMapper.getLastActiveUserCount(PropertiesUtil.testAccountIds);
-        String currentMonday = DateUtil.getCurrentMonday();
-        String[] ymd = currentMonday.split("-");
+        String currentMonday = DateUtil.getDay(0, Calendar.MONDAY);
+        String[] ymd = currentMonday.split("\\-");
         POIWordUtil.insertTextLeftBold(doc, "2. 用户数量统计：");
         POIWordUtil.insertTextLeft(doc,
                 "截止" + ymd[0] + "年" + ymd[1] + "月" + ymd[2] + "日,平台用户总人数为" + currentActiveUserCount + "人。");
@@ -235,42 +235,46 @@ public class TaskServiceImpl implements TaskService {
         // 获取每天的登录次数
         List<Map<String, Integer>> loginDay = taskMapper.findLoginCountByDay(PropertiesUtil.testAccountIds);
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        for (Map<String, Integer> map : loginDay) {
-            dataset.setValue(map.get("login_count"), map.get("login_date"), map.get("login_date"));
+        if (loginDay != null && loginDay.size() > 0) {
+            for (Map<String, Integer> map : loginDay) {
+                dataset.setValue(map.get("login_count"), map.get("login_date"), map.get("login_date"));
+            }
+            String title = "登录次数";
+            String categoryAxisLabel = "";
+            String valueAxisLabel = "";
+            String picPath = basePath + "1.jpeg";
+            File file = new File(picPath);
+            if (file.exists()) {
+                file.delete();
+            }
+            int width = JFreeChartUtil.getWidth(loginDay.size());
+            int height = 768;
+            JFreeChartUtil.drawVerticalBarChart(title, categoryAxisLabel, valueAxisLabel, dataset, picPath, width,
+                    height);
+            POIWordUtil.insertPicture(doc, picPath, POIWordUtil.getWidth(loginDay.size()), 300);
         }
-        String title = "登录次数";
-        String categoryAxisLabel = "";
-        String valueAxisLabel = "";
-        String picPath = basePath + "1.jpeg";
-        File file = new File(picPath);
-        if (file.exists()) {
-            file.delete();
-        }
-        int width = 1024;
-        int height = 768;
-        JFreeChartUtil.drawVerticalBarChart(title, categoryAxisLabel, valueAxisLabel, dataset, picPath, width,
-                height);
-        POIWordUtil.insertPicture(doc, picPath, 450, 300);
         /*-------------------------图2-------------------------*/
         // 获取每个用户的登录次数
         List<Map<String, Integer>> loginUsername = taskMapper.findLoginCountByUsername(PropertiesUtil.testAccountIds);
-        dataset = new DefaultCategoryDataset();
-        for (Map<String, Integer> map : loginUsername) {
-            dataset.setValue(map.get("login_count"), map.get("username"), map.get("username"));
+        if (loginUsername != null && loginUsername.size() > 0) {
+            dataset = new DefaultCategoryDataset();
+            for (Map<String, Integer> map : loginUsername) {
+                dataset.setValue(map.get("login_count"), map.get("username"), map.get("username"));
+            }
+            String title = "登录次数";
+            String categoryAxisLabel = "";
+            String valueAxisLabel = "";
+            String picPath = basePath + "2.jpeg";
+            File file = new File(picPath);
+            if (file.exists()) {
+                file.delete();
+            }
+            int width = 768;
+            int height = JFreeChartUtil.getHeight(loginUsername.size());
+            JFreeChartUtil.drawHorizontalBarChart(title, categoryAxisLabel, valueAxisLabel, dataset, picPath, width,
+                    height);
+            POIWordUtil.insertPicture(doc, picPath, 450, POIWordUtil.getHeight(loginUsername.size()));
         }
-        title = "登录次数";
-        categoryAxisLabel = "";
-        valueAxisLabel = "";
-        picPath = basePath + "2.jpeg";
-        file = new File(picPath);
-        if (file.exists()) {
-            file.delete();
-        }
-        width = 768;
-        height = 1024;
-        JFreeChartUtil.drawHorizontalBarChart(title, categoryAxisLabel, valueAxisLabel, dataset, picPath, width,
-                height);
-        POIWordUtil.insertPicture(doc, picPath, 450, 600);
         /*----------------------------------------------------*/
         POIWordUtil.insertTextLeftBold(doc, "4. APP总量统计：");
         POIWordUtil.insertTextLeft(doc, "目前平台可用APP数量为：" + taskMapper.getAppCount() + "个");
@@ -280,173 +284,192 @@ public class TaskServiceImpl implements TaskService {
         /*-------------------------图3-------------------------*/
         // 获取每天的登录次数
         List<Map<String, Integer>> runDay = taskMapper.findAppRunCountByDay(PropertiesUtil.testAccountIds);
-        dataset = new DefaultCategoryDataset();
-        for (Map<String, Integer> map : runDay) {
-            dataset.setValue(map.get("run_count"), map.get("run_date"), map.get("run_date"));
+        if (runDay != null && runDay.size() > 0) {
+            dataset = new DefaultCategoryDataset();
+            for (Map<String, Integer> map : runDay) {
+                dataset.setValue(map.get("run_count"), map.get("run_date"), map.get("run_date"));
+            }
+            String title = "运行次数";
+            String categoryAxisLabel = "";
+            String valueAxisLabel = "";
+            String picPath = basePath + "3.jpeg";
+            File file = new File(picPath);
+            if (file.exists()) {
+                file.delete();
+            }
+            int width = JFreeChartUtil.getWidth(runDay.size());
+            int height = 768;
+            JFreeChartUtil.drawVerticalBarChart(title, categoryAxisLabel, valueAxisLabel, dataset, picPath, width,
+                    height);
+            POIWordUtil.insertPicture(doc, picPath, POIWordUtil.getWidth(runDay.size()), 300);
+            POIWordUtil.pageBreak(doc);
         }
-        title = "运行次数";
-        categoryAxisLabel = "";
-        valueAxisLabel = "";
-        picPath = basePath + "3.jpeg";
-        file = new File(picPath);
-        if (file.exists()) {
-            file.delete();
-        }
-        width = 1024;
-        height = 768;
-        JFreeChartUtil.drawVerticalBarChart(title, categoryAxisLabel, valueAxisLabel, dataset, picPath, width, height);
-        POIWordUtil.insertPicture(doc, picPath, 450, 300);
         /*-------------------------图4-------------------------*/
-        POIWordUtil.pageBreak(doc);
         // 获取每天的登录次数
         List<Map<String, Object>> appRunByUsername = taskMapper
                 .findAppRunCountByUsername(PropertiesUtil.testAccountIds);
-        dataset = new DefaultCategoryDataset();
-        for (Map<String, Object> map : appRunByUsername) {
-            dataset.setValue(Integer.parseInt(map.get("run_count").toString()),
-                    map.get("user_app").toString().split("\\^")[0] + "    "
-                            + map.get("user_app").toString().split("\\^")[1],
-                    map.get("user_app").toString().split("\\^")[0] + "    "
-                            + map.get("user_app").toString().split("\\^")[1]);
+        if (appRunByUsername != null && appRunByUsername.size() > 0) {
+            dataset = new DefaultCategoryDataset();
+            for (Map<String, Object> map : appRunByUsername) {
+                dataset.setValue(Integer.parseInt(map.get("run_count").toString()),
+                        map.get("user_app").toString().split("\\^")[0] + "    "
+                                + map.get("user_app").toString().split("\\^")[1],
+                        map.get("user_app").toString().split("\\^")[0] + "    "
+                                + map.get("user_app").toString().split("\\^")[1]);
+            }
+            String title = "运行次数, 按Username";
+            String categoryAxisLabel = "";
+            String valueAxisLabel = "";
+            String picPath = basePath + "4.jpeg";
+            File file = new File(picPath);
+            if (file.exists()) {
+                file.delete();
+            }
+            int width = 768;
+            int height = JFreeChartUtil.getHeight(appRunByUsername.size());
+            JFreeChartUtil.drawHorizontalBarChart(title, categoryAxisLabel, valueAxisLabel, dataset, picPath, width,
+                    height);
+            POIWordUtil.insertPicture(doc, picPath, 450, POIWordUtil.getHeight(appRunByUsername.size()));
         }
-        title = "运行次数, 按Username";
-        categoryAxisLabel = "";
-        valueAxisLabel = "";
-        picPath = basePath + "4.jpeg";
-        file = new File(picPath);
-        if (file.exists()) {
-            file.delete();
-        }
-        width = 768;
-        height = 1024;
-        JFreeChartUtil.drawHorizontalBarChart(title, categoryAxisLabel, valueAxisLabel, dataset, picPath, width,
-                height);
-        POIWordUtil.insertPicture(doc, picPath, 450, 600);
         /*-------------------------图5-------------------------*/
         // 获取每个用户的登录次数
         List<Map<String, Integer>> appRunCount = taskMapper.findAppRunCount(PropertiesUtil.testAccountIds);
-        dataset = new DefaultCategoryDataset();
-        for (Map<String, Integer> map : appRunCount) {
-            dataset.setValue(map.get("run_count"), map.get("app_name"), map.get("app_name"));
+        if (appRunCount != null && appRunCount.size() > 0) {
+            dataset = new DefaultCategoryDataset();
+            for (Map<String, Integer> map : appRunCount) {
+                dataset.setValue(map.get("run_count"), map.get("app_name"), map.get("app_name"));
+            }
+            String title = "运行次数";
+            String categoryAxisLabel = "";
+            String valueAxisLabel = "";
+            String picPath = basePath + "5.jpeg";
+            File file = new File(picPath);
+            if (file.exists()) {
+                file.delete();
+            }
+            int width = 768;
+            int height = JFreeChartUtil.getHeight(appRunCount.size());
+            JFreeChartUtil.drawHorizontalBarChart(title, categoryAxisLabel, valueAxisLabel, dataset, picPath, width,
+                    height);
+            POIWordUtil.insertPicture(doc, picPath, 450, POIWordUtil.getHeight(appRunCount.size()));
+            POIWordUtil.pageBreak(doc);
         }
-        title = "运行次数";
-        categoryAxisLabel = "";
-        valueAxisLabel = "";
-        picPath = basePath + "5.jpeg";
-        file = new File(picPath);
-        if (file.exists()) {
-            file.delete();
-        }
-        width = 768;
-        height = 1024;
-        JFreeChartUtil.drawHorizontalBarChart(title, categoryAxisLabel, valueAxisLabel, dataset, picPath, width,
-                height);
-        POIWordUtil.insertPicture(doc, picPath, 450, 600);
-        POIWordUtil.insertTextLeftBold(doc, "6. 用户浏览器统计");
         // 欠1张图
         /*-------------------------图6-------------------------*/
-        POIWordUtil.pageBreak(doc);
         // 获取每天的登录次数
         List<Map<String, Object>> osBrowser = taskMapper.findOsBrowser(PropertiesUtil.testAccountIds);
-        dataset = new DefaultCategoryDataset();
-        for (Map<String, Object> map : osBrowser) {
-            dataset.setValue(Integer.parseInt(map.get("os_browser_count").toString()),
-                    map.get("os_browser").toString().split("\\^")[0] + "    "
-                            + map.get("os_browser").toString().split("\\^")[1],
-                    map.get("os_browser").toString().split("\\^")[0] + "    "
-                            + map.get("os_browser").toString().split("\\^")[1]);
+        if (osBrowser != null && osBrowser.size() > 0) {
+            POIWordUtil.insertTextLeftBold(doc, "6. 用户浏览器统计");
+            dataset = new DefaultCategoryDataset();
+            for (Map<String, Object> map : osBrowser) {
+                dataset.setValue(Integer.parseInt(map.get("os_browser_count").toString()),
+                        map.get("os_browser").toString().split("\\^")[0] + "    "
+                                + map.get("os_browser").toString().split("\\^")[1],
+                        map.get("os_browser").toString().split("\\^")[0] + "    "
+                                + map.get("os_browser").toString().split("\\^")[1]);
+            }
+            String title = "浏览器";
+            String categoryAxisLabel = "";
+            String valueAxisLabel = "";
+            String picPath = basePath + "6.jpeg";
+            File file = new File(picPath);
+            if (file.exists()) {
+                file.delete();
+            }
+            int width = 768;
+            int height = JFreeChartUtil.getHeight(osBrowser.size());
+            JFreeChartUtil.drawHorizontalBarChart(title, categoryAxisLabel, valueAxisLabel, dataset, picPath, width,
+                    height);
+            POIWordUtil.insertPicture(doc, picPath, 450, POIWordUtil.getHeight(osBrowser.size()));
         }
-        title = "浏览器";
-        categoryAxisLabel = "";
-        valueAxisLabel = "";
-        picPath = basePath + "6.jpeg";
-        file = new File(picPath);
-        if (file.exists()) {
-            file.delete();
-        }
-        width = 768;
-        height = 1024;
-        JFreeChartUtil.drawHorizontalBarChart(title, categoryAxisLabel, valueAxisLabel, dataset, picPath, width,
-                height);
-        POIWordUtil.insertPicture(doc, picPath, 450, 600);
-
         POIWordUtil.insertTextLeftBold(doc, "7. 数据量统计：");
         // 获取文件大小和文件数量
         Map<String, Object> map = taskMapper.getFileSizeAndCount(PropertiesUtil.testAccountIds);
-        POIWordUtil.insertTextLeft(doc,
-                "数据上传数量为：" + FileTools.formatMBFileSize(Float.parseFloat(map.get("fileSize").toString())) + "，共"
-                        + map.get("fileCount") + "个数据。");
+        if (map == null) {
+            POIWordUtil.insertTextLeft(doc,
+                    "数据上传数量为：0B，共0个数据。");
+        } else {
+            POIWordUtil.insertTextLeft(doc,
+                    "数据上传数量为："
+                            + FileTools.formatMBFileSize(map.get("fileSize") != null
+                                    ? Float.parseFloat(map.get("fileSize").toString()) : null)
+                            + "，共"
+                            + map.get("fileCount") + "个数据。");
+        }
         // 欠3张图
         /*-------------------------图7-------------------------*/
-        // 获取每个用户的登录次数
+        // 获取每个用户的文件大小
         List<Map<String, Object>> fileSize = taskMapper.findFileSizeByUsername(PropertiesUtil.testAccountIds);
-        dataset = new DefaultCategoryDataset();
-        for (Map<String, Object> fileSizeMap : fileSize) {
-            dataset.setValue(
-                    Float.parseFloat(
-                            String.format("%.2f",
-                                    Float.parseFloat(fileSizeMap.get("file_size").toString()) / (1024 * 1024))),
-                    fileSizeMap.get("username").toString(),
-                    fileSizeMap.get("username").toString());
+        if (fileSize != null && fileSize.size() > 0) {
+            dataset = new DefaultCategoryDataset();
+            for (Map<String, Object> fileSizeMap : fileSize) {
+                dataset.setValue(
+                        Float.parseFloat(String.format("%.2f",
+                                Float.parseFloat(fileSizeMap.get("file_size").toString()) / (1024 * 1024))),
+                        fileSizeMap.get("username").toString(), fileSizeMap.get("username").toString());
+            }
+            String title = "数据大小MB";
+            String categoryAxisLabel = "";
+            String valueAxisLabel = "";
+            String picPath = basePath + "7.jpeg";
+            File file = new File(picPath);
+            if (file.exists()) {
+                file.delete();
+            }
+            int width = 768;
+            int height = JFreeChartUtil.getHeight(fileSize.size());
+            JFreeChartUtil.drawHorizontalBarChart(title, categoryAxisLabel, valueAxisLabel, dataset, picPath, width,
+                    height);
+            POIWordUtil.insertPicture(doc, picPath, 450, POIWordUtil.getHeight(fileSize.size()));
         }
-        title = "数据大小MB";
-        categoryAxisLabel = "";
-        valueAxisLabel = "";
-        picPath = basePath + "7.jpeg";
-        file = new File(picPath);
-        if (file.exists()) {
-            file.delete();
-        }
-        width = 768;
-        height = 1024;
-        JFreeChartUtil.drawHorizontalBarChart(title, categoryAxisLabel, valueAxisLabel, dataset, picPath, width,
-                height);
-        POIWordUtil.insertPicture(doc, picPath, 450, 600);
         /*-------------------------图8-------------------------*/
-        // 获取每个用户的登录次数
+        // 获取每个用户的文件数量
         List<Map<String, Object>> fileCount = taskMapper.findFileCountByUsername(PropertiesUtil.testAccountIds);
-        dataset = new DefaultCategoryDataset();
-        for (Map<String, Object> fileCountMap : fileCount) {
-            dataset.setValue(Integer.parseInt(fileCountMap.get("file_count").toString()),
-                    fileCountMap.get("username").toString(), fileCountMap.get("username").toString());
+        if (fileCount != null && fileCount.size() > 0) {
+            dataset = new DefaultCategoryDataset();
+            for (Map<String, Object> fileCountMap : fileCount) {
+                dataset.setValue(Integer.parseInt(fileCountMap.get("file_count").toString()),
+                        fileCountMap.get("username").toString(), fileCountMap.get("username").toString());
+            }
+            String title = "数据个数";
+            String categoryAxisLabel = "";
+            String valueAxisLabel = "";
+            String picPath = basePath + "8.jpeg";
+            File file = new File(picPath);
+            if (file.exists()) {
+                file.delete();
+            }
+            int width = 768;
+            int height = JFreeChartUtil.getHeight(fileCount.size());
+            JFreeChartUtil.drawHorizontalBarChart(title, categoryAxisLabel, valueAxisLabel, dataset, picPath, width,
+                    height);
+            POIWordUtil.insertPicture(doc, picPath, 450, POIWordUtil.getHeight(fileCount.size()));
         }
-        title = "数据个数";
-        categoryAxisLabel = "";
-        valueAxisLabel = "";
-        picPath = basePath + "8.jpeg";
-        file = new File(picPath);
-        if (file.exists()) {
-            file.delete();
-        }
-        width = 768;
-        height = 1024;
-        JFreeChartUtil.drawHorizontalBarChart(title, categoryAxisLabel, valueAxisLabel, dataset, picPath, width,
-                height);
-        POIWordUtil.insertPicture(doc, picPath, 450, 600);
         /*-------------------------图9-------------------------*/
         // 获取每个用户的登录次数
         List<Map<String, Object>> fileSizeDay = taskMapper.findFileSizeByDay(PropertiesUtil.testAccountIds);
-        dataset = new DefaultCategoryDataset();
-        for (Map<String, Object> fileSizeDayMap : fileSizeDay) {
-            dataset.setValue(
-                    Float.parseFloat(String.format("%.2f",
-                            Float.parseFloat(fileSizeDayMap.get("file_size").toString()) / (1024 * 1024 * 1024))),
-                    fileSizeDayMap.get("file_date").toString(), fileSizeDayMap.get("file_date").toString());
+        if (fileSizeDay != null && fileSizeDay.size() > 0) {
+            dataset = new DefaultCategoryDataset();
+            for (Map<String, Object> fileSizeDayMap : fileSizeDay) {
+                dataset.setValue(
+                        Float.parseFloat(String.format("%.2f",
+                                Float.parseFloat(fileSizeDayMap.get("file_size").toString()) / (1024 * 1024 * 1024))),
+                        fileSizeDayMap.get("file_date").toString(), fileSizeDayMap.get("file_date").toString());
+            }
+            String title = "数据大小GB";
+            String categoryAxisLabel = "";
+            String valueAxisLabel = "";
+            String picPath = basePath + "9.jpeg";
+            File file = new File(picPath);
+            if (file.exists()) {
+                file.delete();
+            }
+            int width = JFreeChartUtil.getWidth(fileSizeDay.size());
+            int height = 768;
+            JFreeChartUtil.drawVerticalBarChart(title, categoryAxisLabel, valueAxisLabel, dataset, picPath, width,
+                    height);
+            POIWordUtil.insertPicture(doc, picPath, POIWordUtil.getWidth(fileSizeDay.size()), 300);
         }
-        title = "数据大小GB";
-        categoryAxisLabel = "";
-        valueAxisLabel = "";
-        picPath = basePath + "9.jpeg";
-        file = new File(picPath);
-        if (file.exists()) {
-            file.delete();
-        }
-        width = 1024;
-        height = 768;
-        JFreeChartUtil.drawVerticalBarChart(title, categoryAxisLabel, valueAxisLabel, dataset, picPath, width,
-                height);
-        POIWordUtil.insertPicture(doc, picPath, 450, 300);
-
         POIWordUtil.insertTextLeftBold(doc, "8. 磁盘实际使用情况统计：");
         SSHUtil sshUtil = new SSHUtil("121.201.7.200", 6101, "celloud", "CelLoud1010");
         InputStream in = sshUtil.getResult("df -h");
@@ -484,25 +507,26 @@ public class TaskServiceImpl implements TaskService {
         /*-------------------------图10-------------------------*/
         // 获取每个用户的登录次数
         List<Map<String, Object>> fileCountClient = taskMapper.findFileCountByClient(PropertiesUtil.testAccountIds);
-        dataset = new DefaultCategoryDataset();
-        for (Map<String, Object> fileCountClientMap : fileCountClient) {
-            dataset.setValue(
-                    Integer.parseInt(fileCountClientMap.get("file_count").toString()),
-                    fileCountClientMap.get("username").toString(), fileCountClientMap.get("username").toString());
+        if (fileCountClient != null && fileCountClient.size() > 0) {
+            dataset = new DefaultCategoryDataset();
+            for (Map<String, Object> fileCountClientMap : fileCountClient) {
+                dataset.setValue(Integer.parseInt(fileCountClientMap.get("file_count").toString()),
+                        fileCountClientMap.get("username").toString(), fileCountClientMap.get("username").toString());
+            }
+            String title = "数据个数";
+            String categoryAxisLabel = "";
+            String valueAxisLabel = "";
+            String picPath = basePath + "10.jpeg";
+            File file = new File(picPath);
+            if (file.exists()) {
+                file.delete();
+            }
+            int width = 768;
+            int height = JFreeChartUtil.getHeight(fileCountClient.size());
+            JFreeChartUtil.drawHorizontalBarChart(title, categoryAxisLabel, valueAxisLabel, dataset, picPath, width,
+                    height);
+            POIWordUtil.insertPicture(doc, picPath, 450, POIWordUtil.getHeight(fileCountClient.size()));
         }
-        title = "数据个数";
-        categoryAxisLabel = "";
-        valueAxisLabel = "";
-        picPath = basePath + "10.jpeg";
-        file = new File(picPath);
-        if (file.exists()) {
-            file.delete();
-        }
-        width = 768;
-        height = 1024;
-        JFreeChartUtil.drawHorizontalBarChart(title, categoryAxisLabel, valueAxisLabel, dataset, picPath, width,
-                height);
-        POIWordUtil.insertPicture(doc, picPath, 450, 600);
 
         POIWordUtil.insertTextLeftBold(doc, "11. 集群使用统计");
         // 欠2张上传图
