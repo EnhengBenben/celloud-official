@@ -257,7 +257,7 @@ $(function(){
 			$.post("invoice/apply",$("#applyInvoice-form").serialize(),function(data){
 				if(data > 0){
 					$("#applyInvoice-modal").modal("hide");
-					$.expense.pay.tab['to-recharge-record']();
+					$.expense.pay.pageRechargeList();
 				}else{
 					$("#applyInvoice-error").removeClass("hide");
 				}
