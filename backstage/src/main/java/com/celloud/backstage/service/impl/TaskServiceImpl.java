@@ -32,6 +32,7 @@ import com.celloud.backstage.utils.DateUtil;
 import com.celloud.backstage.utils.EmailUtils;
 import com.celloud.backstage.utils.FileTools;
 import com.celloud.backstage.utils.JFreeChartUtil;
+import com.celloud.backstage.utils.MachineUtil;
 import com.celloud.backstage.utils.POIWordUtil;
 import com.celloud.backstage.utils.PropertiesUtil;
 import com.celloud.backstage.utils.SSHUtil;
@@ -470,7 +471,8 @@ public class TaskServiceImpl implements TaskService {
             POIWordUtil.insertPicture(doc, picPath, POIWordUtil.getWidth(fileSizeDay.size()), 300);
         }
         POIWordUtil.insertTextLeftBold(doc, "8. 磁盘实际使用情况统计：");
-        SSHUtil sshUtil = new SSHUtil("121.201.7.200", 6101, "celloud", "CelLoud1010");
+        SSHUtil sshUtil = new SSHUtil(MachineUtil.host, Integer.parseInt(MachineUtil.port), MachineUtil.username,
+                MachineUtil.password);
         InputStream in = sshUtil.getResult("df -h");
         BufferedReader br = null;
         try {
