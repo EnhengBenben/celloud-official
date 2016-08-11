@@ -82,9 +82,29 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void sendWeekStatistics(String colonyUsed) {
+    public int sendWeekStatistics(String colonyUsed) {
+        // word保存路径
+        String basePath = PropertiesUtil.weeklyReportPath + DateUtil.getDay(-1, Calendar.MONDAY).split("\\-")[0]
+                + DateUtil.getDay(-1, Calendar.MONDAY).split("\\-")[1]
+                + DateUtil.getDay(-1, Calendar.MONDAY).split("\\-")[2] + File.separator;
+        // 首先检查上传图片资源是否够4个
+        File file = new File(basePath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        File[] files = file.listFiles();
+        int i = 0;
+        for (File f : files) {
+            if (f.getName().startsWith("u")) {
+                i++;
+            }
+        }
+        if (i < 4) {
+            return -1;
+        }
+
         try {
-            // 更新周数据
+            // 插入上一周数据, 并发送word
             String day = DateUtil.getDay(-1, Calendar.MONDAY);
             Week week = weekMapper.findByDay(day);
             if (week == null) {
@@ -124,27 +144,19 @@ public class TaskServiceImpl implements TaskService {
                         fileCount != null ? fileCount.toString() : "0"));
                 week.setColonyUsed(colonyUsed != null ? colonyUsed : "0%");
                 weekMapper.insertSelective(week);
+                // 创建word
+                String filePath = basePath + "CelLoud数据统计" + DateUtil.getDay(-1, Calendar.MONDAY) + ".docx";
+                createWord(basePath, filePath, colonyUsed);
+                // 发送word
+                sendWord(filePath);
+                return 1;
             } else {
-                // 更新week
+                return 0;
             }
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        // word保存路径
-        String basePath = PropertiesUtil.weeklyReportPath 
-                + DateUtil.getDay(-1, Calendar.MONDAY).split("\\-")[0]
-                + DateUtil.getDay(-1, Calendar.MONDAY).split("\\-")[1]
-                + DateUtil.getDay(-1, Calendar.MONDAY).split("\\-")[2] + File.separator;
-        File f = new File(basePath);
-        if (!f.exists()) {
-            f.mkdirs();
-        }
-        // 创建word
-        String filePath = basePath + "CelLoud数据统计" + DateUtil.getDay(-1, Calendar.MONDAY) + ".docx";
-        createWord(basePath, filePath, colonyUsed);
-        // 发送word
-        sendWord(filePath);
+        return 2;
     }
 
     private void sendWord(String filePath) {
@@ -154,8 +166,9 @@ public class TaskServiceImpl implements TaskService {
                 + DateUtil.getDay(0, Calendar.SUNDAY)
                 + ",CelLoud平台统计，请查收。<br/>" + "&nbsp;&nbsp;<font style='color:red;'>目前平台共有" + companyCount
                 + "家医院在线</font>";
+        // .addCc("lihuihuan@celloud.cn", "qiangyubiao@celloud.cn")
         EmailUtils.getInstance()
-                .addTo(new String[] { "miaoqi@celloud.cn", "lihuihuan@celloud.cn", "qiangyubiao@celloud.cn" })
+                .addTo(new String[] { "miaoqi@celloud.cn" })
                 .setTitle(title).setContent(content).attach(filePath)
                 .send();
     }

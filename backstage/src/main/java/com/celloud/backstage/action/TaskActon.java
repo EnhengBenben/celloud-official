@@ -74,8 +74,9 @@ public class TaskActon {
     }
 
     @RequestMapping("/sendWeekStatistics")
-    public void sendWeekStatistics(String colonyUsed) {
-        taskService.sendWeekStatistics(colonyUsed);
+    @ResponseBody
+    public int sendWeekStatistics(String colonyUsed) {
+        return taskService.sendWeekStatistics(colonyUsed);
     }
 
     @RequestMapping(value = "uploadWeekResources", method = RequestMethod.POST)

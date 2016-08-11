@@ -974,11 +974,23 @@ var task = (function(task){
 		});
 	}
 	self.sendWeekStatistics = function(){
-		alert($("#colonyUsed").val());
-		console.log($("#colonyUsed").val());
-		$.post("task/sendWeekStatistics",{"colonyUsed":$("#colonyUsed").val()},function(data){
-			
-		});
+		var colonyUsed = $("#colonyUsed").val().trim();
+		if(colonyUsed == ''){
+			jAlert("集群使用率不能为空!");
+			return false;
+		}else{
+			$.post("task/sendWeekStatistics",{"colonyUsed":colonyUsed},function(data){
+				if(data == 1){
+					jAlert("发送成功!");
+				}else if(data == 0){
+					jAlert("本周已发送过周统计,请不要重复发送!");
+				}else if(data == -1){
+					jAlert("图片资源不足,请先上传图片!");
+				}else if(data == 2){
+					jAlert("程序发生未知错误!");
+				}
+			});
+		}
 	}
 	self.toWeekStatistics = function(){
 		$.post("task/toWeekStatistics",{},function(responseText){
