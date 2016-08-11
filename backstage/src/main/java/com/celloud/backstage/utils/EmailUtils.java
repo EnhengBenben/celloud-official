@@ -86,6 +86,8 @@ public class EmailUtils {
     private static String feedbackTitle;
     private static String[] errorsMailTo;
     private static String[] feedbackMailTo;
+    public static String weekMailTo;
+    public static String weekMailCcTo;
 
     private static Session session = null;
     private MimeMessage message = null;
@@ -122,6 +124,8 @@ public class EmailUtils {
         errorTitle = pro.getProperty("mail.errorTitle");
         feedbackTitle = pro.getProperty("mail.feedbackTitle");
         emailName = pro.getProperty("mail.emailName");
+        weekMailTo = pro.getProperty("mail.week.mailTo");
+        weekMailCcTo = pro.getProperty("mail.week.ccTo");
         String errorMails = pro.getProperty("mail.errorsMailTo");
         if (errorMails != null && !errorMails.trim().equals("")) {
             errorsMailTo = errorMails.split(",");

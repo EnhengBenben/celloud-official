@@ -200,7 +200,7 @@ public class JFreeChartUtil {
             barRenderer.setMinimumBarLength(0.1);
             barRenderer.setBasePositiveItemLabelPosition(
                     new ItemLabelPosition(ItemLabelAnchor.OUTSIDE4, TextAnchor.BASELINE_RIGHT));
-            barRenderer.setItemLabelAnchorOffset(20D);
+            barRenderer.setItemLabelAnchorOffset(25D);
             plot.setRenderer(barRenderer);
 
             out = new FileOutputStream(picPath);// 图片是文件格式的，故要用到FileOutputStream用来输出。

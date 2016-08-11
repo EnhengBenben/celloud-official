@@ -161,10 +161,8 @@ public class TaskServiceImpl implements TaskService {
                 + DateUtil.getDay(0, Calendar.SUNDAY)
                 + ",CelLoud平台统计，请查收。<br/>" + "&nbsp;&nbsp;<font style='color:red;'>目前平台共有" + companyCount
                 + "家医院在线</font>";
-        // .addCc("lihuihuan@celloud.cn", "qiangyubiao@celloud.cn")
         EmailUtils.getInstance()
-                .addTo(new String[] { "miaoqi@celloud.cn" })
-                .addCc("qiangyubiao@celloud.cn")
+                .addTo(EmailUtils.weekMailTo).addCc(EmailUtils.weekMailCcTo.split("\\,"))
                 .setTitle(title).setContent(content).attach(filePath)
                 .send();
     }
