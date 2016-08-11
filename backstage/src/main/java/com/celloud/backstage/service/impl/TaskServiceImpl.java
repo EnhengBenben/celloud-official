@@ -119,29 +119,24 @@ public class TaskServiceImpl implements TaskService {
                 Map<String, Object> lastWeekAppActive = taskMapper.getLastWeekAppActive(0,
                         PropertiesUtil.testAccountIds);
                 Map<String, Object> lastWeekDataSize = taskMapper.getLastWeekDataSize(0, PropertiesUtil.testAccountIds);
-                String startDate = (String) lastWeekUserLogin.get("start_date");
-                String endDate = (String) lastWeekUserLogin.get("end_date");
-                Object logCount = lastWeekUserLogin.get("log_count");
-                Object activeUser = lastWeekActiveUser.get("active_user");
-                Object runApp = lastWeekAppRun.get("run_app");
-                Object activeApp = lastWeekAppActive.get("active_app");
-                Object sizeSum = lastWeekDataSize.get("size_sum");
-                Object fileCount = lastWeekDataSize.get("file_count");
 
-                week.setStartDate(startDate != null ? new SimpleDateFormat("yyyy-MM-dd").parse(startDate) : null);
-                week.setEndDate(endDate != null ? new SimpleDateFormat("yyyy-MM-dd").parse(endDate.toString()) : null);
+                week.setStartDate(lastWeekUserLogin != null
+                        ? new SimpleDateFormat("yyyy-MM-dd").parse((String) lastWeekUserLogin.get("start_date"))
+                        : null);
+                week.setEndDate(lastWeekUserLogin != null ? new SimpleDateFormat("yyyy-MM-dd")
+                        .parse((String) lastWeekUserLogin.get("end_date").toString()) : null);
                 week.setLoginCount(Integer.parseInt(
-                        logCount != null ? logCount.toString() : "0"));
+                        lastWeekUserLogin != null ? lastWeekUserLogin.get("log_count").toString() : "0"));
                 week.setActiveUser(Integer.parseInt(
-                        activeUser != null ? activeUser.toString() : "0"));
+                        lastWeekActiveUser != null ? lastWeekActiveUser.get("active_user").toString() : "0"));
                 week.setAppRun(Integer.parseInt(
-                        runApp != null ? runApp.toString() : "0"));
+                        lastWeekAppRun != null ? lastWeekAppRun.get("run_app").toString() : "0"));
                 week.setActiveApp(Integer.parseInt(
-                        activeApp != null ? activeApp.toString() : "0"));
+                        lastWeekAppActive != null ? lastWeekAppActive.get("active_app").toString() : "0"));
                 week.setDataSize(FileTools.formatFullFileSize(Float.parseFloat(
-                        sizeSum != null ? sizeSum.toString() : "0")));
+                        lastWeekDataSize != null ? lastWeekDataSize.get("size_sum").toString() : "0")));
                 week.setFileCount(Integer.parseInt(
-                        fileCount != null ? fileCount.toString() : "0"));
+                        lastWeekDataSize != null ? lastWeekDataSize.get("file_count").toString() : "0"));
                 week.setColonyUsed(colonyUsed != null ? colonyUsed : "0%");
                 weekMapper.insertSelective(week);
                 // 创建word
