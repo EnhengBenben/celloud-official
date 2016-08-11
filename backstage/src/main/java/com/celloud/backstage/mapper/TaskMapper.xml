@@ -396,7 +396,7 @@
   	and r.create_date &lt;= temp.end_date
   	and u.user_id not in(${testAccountIds})
   	group by user_app
-  	order by username
+  	order by run_count desc
   </select>
   <select id="findAppRunCount" resultType="java.util.HashMap">
   	select a.app_name,count(r.report_id) run_count

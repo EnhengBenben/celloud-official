@@ -10,14 +10,18 @@ import java.io.OutputStream;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.labels.ItemLabelAnchor;
+import org.jfree.chart.labels.ItemLabelPosition;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.CategoryDataset;
+import org.jfree.ui.TextAnchor;
 
 /** 
  * @author MQ: 
@@ -62,8 +66,13 @@ public class JFreeChartUtil {
             plot.setBackgroundPaint(Color.WHITE);
             // 中间区域纵轴网格线颜色
             plot.setRangeGridlinePaint(Color.GRAY);
+            // 设置纵横坐标的显示位置
+            plot.setDomainAxisLocation(AxisLocation.BOTTOM_OR_LEFT);// 学校显示在下端(柱子竖直)或左侧(柱子水平)
+            plot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT); // 人数显示在下端(柱子水平)或左侧(柱子竖直)
             // 横轴
             CategoryAxis domainAxis = plot.getDomainAxis();
+            domainAxis.setUpperMargin(0.1);
+            domainAxis.setLowerMargin(0.1);
             // 纵轴
             ValueAxis rAxis = plot.getRangeAxis();
             /*----------设置消除字体的锯齿渲染（解决中文问题）--------------*/
@@ -76,6 +85,7 @@ public class JFreeChartUtil {
             domainAxis.setTickLabelFont(new Font("sans-serif", Font.PLAIN, 14));
             /*------设置X轴的标题文字------------*/
             domainAxis.setLabelFont(new Font("宋体", Font.BOLD, 14));
+            domainAxis.setCategoryLabelPositionOffset(20);
             /*------设置Y轴坐标上的文字-----------*/
             rAxis.setTickLabelFont(new Font("sans-serif", Font.PLAIN, 16));
             /*------设置Y轴的标题文字------------*/
@@ -94,8 +104,11 @@ public class JFreeChartUtil {
             barRenderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
             barRenderer.setBaseItemLabelsVisible(true);
             barRenderer.setBasePaint(Color.BLACK);
-            barRenderer.setBaseItemLabelFont(new Font("宋体", Font.BOLD, 12));
-            barRenderer.setMaximumBarWidth(0.1);
+            barRenderer.setBaseItemLabelFont(new Font("宋体", Font.BOLD, 14));
+            barRenderer.setMaximumBarWidth(0.2);
+            barRenderer.setMinimumBarLength(0.1);
+            barRenderer.setBasePositiveItemLabelPosition(
+                    new ItemLabelPosition(ItemLabelAnchor.OUTSIDE12, TextAnchor.BASELINE_CENTER));
             plot.setRenderer(barRenderer);
             
             out = new FileOutputStream(picPath);// 图片是文件格式的，故要用到FileOutputStream用来输出。
@@ -150,6 +163,9 @@ public class JFreeChartUtil {
             plot.setBackgroundPaint(Color.WHITE);
             // 中间区域纵轴网格线颜色
             plot.setRangeGridlinePaint(Color.GRAY);
+            // 设置纵横坐标的显示位置
+            plot.setDomainAxisLocation(AxisLocation.BOTTOM_OR_LEFT);// 学校显示在下端(柱子竖直)或左侧(柱子水平)
+            plot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT); // 人数显示在下端(柱子水平)或左侧(柱子竖直)
             // 横轴
             CategoryAxis domainAxis = plot.getDomainAxis();
             // 纵轴
@@ -179,12 +195,12 @@ public class JFreeChartUtil {
             barRenderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
             barRenderer.setBaseItemLabelsVisible(true);
             barRenderer.setBasePaint(Color.BLACK);
-            barRenderer.setBaseItemLabelFont(new Font("宋体", Font.BOLD, 12));
-            barRenderer.setMaximumBarWidth(0.1);
-            // barRenderer.setBaseNegativeItemLabelPosition(
-            // new ItemLabelPosition(ItemLabelAnchor.CENTER,
-            // TextAnchor.BASELINE_RIGHT));
-            // barRenderer.setItemLabelAnchorOffset(10);
+            barRenderer.setBaseItemLabelFont(new Font("宋体", Font.BOLD, 14));
+            barRenderer.setMaximumBarWidth(0.2);
+            barRenderer.setMinimumBarLength(0.1);
+            barRenderer.setBasePositiveItemLabelPosition(
+                    new ItemLabelPosition(ItemLabelAnchor.OUTSIDE4, TextAnchor.BASELINE_RIGHT));
+            barRenderer.setItemLabelAnchorOffset(20D);
             plot.setRenderer(barRenderer);
 
             out = new FileOutputStream(picPath);// 图片是文件格式的，故要用到FileOutputStream用来输出。

@@ -974,9 +974,11 @@ var task = (function(task){
 		});
 	}
 	self.sendWeekStatistics = function(){
+		$("#sendWeekStatistics").prop("disabled",true);
 		var colonyUsed = $("#colonyUsed").val().trim();
 		if(colonyUsed == ''){
 			jAlert("集群使用率不能为空!");
+			$("#sendWeekStatistics").prop("disabled",false);
 			return false;
 		}else{
 			$.post("task/sendWeekStatistics",{"colonyUsed":colonyUsed},function(data){
@@ -989,6 +991,7 @@ var task = (function(task){
 				}else if(data == 2){
 					jAlert("程序发生未知错误!");
 				}
+				$("#sendWeekStatistics").prop("disabled",false);
 			});
 		}
 	}

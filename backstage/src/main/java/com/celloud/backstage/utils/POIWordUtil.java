@@ -343,8 +343,12 @@ public class POIWordUtil {
             e.printStackTrace();
         } finally {
             try {
-                doc.close();
-                out.close();
+                if (doc != null) {
+                    doc.close();
+                }
+                if (out != null) {
+                    out.close();
+                }
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

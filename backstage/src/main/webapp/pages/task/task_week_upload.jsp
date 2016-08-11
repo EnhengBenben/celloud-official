@@ -12,7 +12,7 @@
 		</div>
 		<div class="panel-options">
 	        <form class="form-inline">
-	         <button class="btn btn-danger" type="button" onclick="task.sendWeekStatistics();" style="margin-bottom:0;">发送邮件</button>
+	         <button id="sendWeekStatistics" class="btn btn-danger" type="button" onclick="task.sendWeekStatistics();" style="margin-bottom:0;">发送邮件</button>
 	       </form>
         </div>
     </div>
