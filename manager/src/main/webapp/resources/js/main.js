@@ -343,14 +343,22 @@ var user=(function(user){
 	self.moneyGiven = function(){
 	  var givenNumber = $("#givenNumber").val();
 	  var balances = $("#balances").val();
-	  if($.isNumeric(givenNumber) && $.isNumeric(balances) && givenNumber*1>balances*1){
-	    $("#givenNumber").next().html("赠予金额不能大于您的余额");
-	    return;
-	  }
-	  if( (givenNumber*1)%1 != 0){
-	    $("#givenNumber").next().html("赠予金额只能是整数");
-	     return false;
-	  }
+	  if(!$.isNumeric(givenNumber) || !$.isNumeric(balances)){
+      $("#givenNumber").next().html("赠予金额必须为数字");
+      return false;
+    }
+    if(givenNumber*1>balances*1){
+      $("#givenNumber").next().html("赠予金额不能大于您的余额");
+      return false;
+    }
+    if( (givenNumber*1)%1 != 0){
+      $("#givenNumber").next().html("赠予金额只能是整数");
+       return false;
+    }
+    if(givenNumber*1 < 10){
+      $("#givenNumber").next().html("赠予金额不能小于10元");
+       return false;
+    }
 	  $("#givenNumber").next().html("");
 	  var givenUserId = $("#givenUserId").val();
 	  var givenUserName = $("#givenUserName").val();
