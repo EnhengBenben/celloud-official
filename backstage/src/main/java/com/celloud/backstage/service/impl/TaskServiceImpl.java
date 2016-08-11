@@ -138,12 +138,12 @@ public class TaskServiceImpl implements TaskService {
                 week.setFileCount(Integer.parseInt(
                         lastWeekDataSize != null ? lastWeekDataSize.get("file_count").toString() : "0"));
                 week.setColonyUsed(colonyUsed != null ? colonyUsed : "0%");
-                // weekMapper.insertSelective(week);
+                weekMapper.insertSelective(week);
                 // 创建word
                 String filePath = basePath + "CelLoud数据统计" + DateUtil.getDay(-1, Calendar.MONDAY) + ".docx";
                 createWord(basePath, filePath, colonyUsed);
                 // 发送word
-                // sendWord(filePath);
+                sendWord(filePath);
                 return 1;
             } else {
                 return 0;
