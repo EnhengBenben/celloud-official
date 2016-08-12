@@ -63,7 +63,6 @@
 					</a>
 				</c:if>
 			</th>
-			<th>状态</th>
 			<th>
 				上传时间
 				<c:if test="${sidx=='createDate'&&sord=='asc' }">
@@ -107,7 +106,6 @@
 							<fmt:formatNumber pattern="0.00" value="${data.size/1024 }" />KB</c:otherwise>
 					</c:choose>
 				</td>
-				<td>${data.isRunning==0?'完成':'分析中' }</td>
 				<td>
 					<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${data.createDate }" />
 				</td>

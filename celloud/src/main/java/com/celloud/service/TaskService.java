@@ -1,5 +1,7 @@
 package com.celloud.service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -205,5 +207,6 @@ public interface TaskService {
 	 * 
 	 * @param pager
 	 */
-	public PageList<Task> findRockyTasks(Page pager, String sample, String condition, String sidx, String sord);
+	public PageList<Task> findRockyTasks(Page pager, String sample, String condition, String sidx, String sord,
+			ArrayList<String> batches, ArrayList<Integer> state, Date beginDate, Date endDate);
 }

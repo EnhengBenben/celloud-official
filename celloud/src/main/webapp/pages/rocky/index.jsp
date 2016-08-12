@@ -117,6 +117,7 @@
 	<script src="//cdn.bootcss.com/plupload/2.1.8/i18n/zh_CN.js"></script>
 	<script src="//cdn.bootcss.com/swfobject/2.2/swfobject.min.js"></script>
 	<script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
+	<script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
 	<script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
 	<script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js?version=1.1"></script>
 	<script src="<%=request.getContextPath()%>/js/utils.js?v=3.2.4" type="text/javascript"></script>

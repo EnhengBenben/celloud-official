@@ -53,6 +53,7 @@ public class TaskServiceImpl implements TaskService {
 	PriceMapper priceMapper;
 	@Resource
 	ReportDao reportDao;
+
 	@Override
 	public Integer create(Task task) {
 		task.setPeriod(TaskPeriod.WAITTING);
@@ -254,9 +255,10 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
-	public PageList<Task> findRockyTasks(Page pager, String sample, String condition, String sidx, String sord) {
+	public PageList<Task> findRockyTasks(Page pager, String sample, String condition, String sidx, String sord,
+			ArrayList<String> batches, ArrayList<Integer> periods, Date beginDate, Date endDate) {
 		List<Task> list = taskMapper.findRockyTasks(pager, ConstantsData.getLoginUserId(), DataState.ACTIVE,
-				AppConstants.APP_ID_ROCKY, sample, condition, sidx, sord);
+				AppConstants.APP_ID_ROCKY, sample, condition, sidx, sord, batches, periods,beginDate, endDate);
 		return new PageList<>(pager, list);
 	}
 }
