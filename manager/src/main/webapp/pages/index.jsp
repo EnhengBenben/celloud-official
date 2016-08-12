@@ -294,6 +294,6 @@
     <script type="text/javascript">
        window.CONTEXT_PATH = '<%=request.getContextPath()%>';
 	</script>
-    <script src="js/expense.js"></script>
+    <script src="js/expense.js?version=3.2.5"></script>
 </body>
 </html>

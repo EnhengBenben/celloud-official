@@ -2,6 +2,7 @@ package com.celloud.backstage.service.impl;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -14,6 +15,7 @@ import com.celloud.backstage.mapper.ProjectMapper;
 import com.celloud.backstage.mapper.ReportMapper;
 import com.celloud.backstage.model.DataFile;
 import com.celloud.backstage.service.DataService;
+import com.celloud.backstage.utils.PropertiesUtil;
 
 
 /**
@@ -67,5 +69,30 @@ public class DataServiceImpl implements DataService {
             logger.error(e.getMessage());
         }
         return flag;
+    }
+
+    @Override
+    public List<Map<String, Object>> getHistoryWeekUserLogin(Integer companyId) {
+        return dataFileMapper.getHistoryWeekUserLogin(companyId, PropertiesUtil.testAccountIds);
+    }
+
+    @Override
+    public List<Map<String, Object>> getHistoryWeekActiveUser(Integer companyId) {
+        return dataFileMapper.getHistoryWeekActiveUser(companyId, PropertiesUtil.testAccountIds);
+    }
+
+    @Override
+    public List<Map<String, Object>> getHistoryWeekAppRun(Integer companyId) {
+        return dataFileMapper.getHistoryWeekAppRun(companyId, PropertiesUtil.testAccountIds);
+    }
+
+    @Override
+    public List<Map<String, Object>> getHistoryWeekAppActive(Integer companyId) {
+        return dataFileMapper.getHistoryWeekAppActive(companyId, PropertiesUtil.testAccountIds);
+    }
+
+    @Override
+    public List<Map<String, Object>> getHistoryWeekDataSize(Integer companyId) {
+        return dataFileMapper.getHistoryWeekDataSize(companyId, PropertiesUtil.testAccountIds);
     }
 }

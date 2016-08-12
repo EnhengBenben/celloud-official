@@ -92,7 +92,8 @@
                         <table id="historyWeekData" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>历史日期</th>
+                                    <th>开始日期</th>
+                                    <th>结束日期</th>
                                     <th>登陆次数</th>
                                     <th>活跃用户数</th>
                                     <th>App运行次数</th>
@@ -104,26 +105,49 @@
                             <tbody>
                                 <c:forEach items="${historyWeekData }" var="data">
                                     <tr>
-                                        <td>${data.historyDate.substring(0,10) }</td>
                                         <td>
-                                            ${data.historyWeekUserLogin }
-                                        </td>
-                                        <td>${data.historyWeekActiveUser }</td>
-                                        <td>${data.historyWeekAppRun }</td>
-                                        <td>${data.historyWeekAppActive }</td>
+                                        	<c:if test="${empty data.historyDate }">无</c:if>
+                                        	<c:if test="${not empty data.historyDate }">${data.historyDate.substring(0,10) }</c:if>
+                                       	</td>
+                                       	<td>
+                                        	<c:if test="${empty data.endDate }">无</c:if>
+                                        	<c:if test="${not empty data.endDate }">${data.endDate.substring(0,10) }</c:if>
+                                       	</td>
                                         <td>
-                                            <c:choose>
-                                                <c:when test="${data.historyWeekDataSize>1099511627776 }">
-                                                    <fmt:formatNumber pattern="0.00" value="${(data.historyWeekDataSize-data.historyWeekDataSize%1099511627776)/1099511627776 + data.historyWeekDataSize%1099511627776/1099511627776 }" />TB</c:when>
-                                                <c:when test="${data.historyWeekDataSize>1073741824 }">
-                                                    <fmt:formatNumber pattern="0.00" value="${(data.historyWeekDataSize-data.historyWeekDataSize%1073741824)/1073741824 + data.historyWeekDataSize%1073741824/1073741824 }" />GB</c:when>
-                                                <c:when test="${data.historyWeekDataSize>1048576 }">
-                                                    <fmt:formatNumber pattern="0.00" value="${(data.historyWeekDataSize-data.historyWeekDataSize%1048576)/1048576 + data.historyWeekDataSize%1048576/1048576 }" />MB</c:when>
-                                                <c:otherwise>
-                                                    <fmt:formatNumber pattern="0.00" value="${(data.historyWeekDataSize-data.historyWeekDataSize%1024)/1024 + data.historyWeekDataSize%1024/1024 }" />KB</c:otherwise>
-                                            </c:choose>
+                                        	<c:if test="${empty data.historyWeekUserLogin }">0</c:if>
+                                        	<c:if test="${not empty data.historyWeekUserLogin }">${data.historyWeekUserLogin }</c:if>
                                         </td>
-                                        <td>${data.historyWeekFileCount }</td>
+                                        <td>
+                                        	<c:if test="${empty data.historyWeekActiveUser }">0</c:if>
+                                        	<c:if test="${not empty data.historyWeekActiveUser }">${data.historyWeekActiveUser }</c:if>
+                                        </td>
+                                        <td>
+                                        	<c:if test="${empty data.historyWeekAppRun }">0</c:if>
+                                        	<c:if test="${not empty data.historyWeekAppRun }">${data.historyWeekAppRun }</c:if>
+                                        </td>
+                                        <td>
+                                        	<c:if test="${empty data.historyWeekAppActive }">0</c:if>
+                                        	<c:if test="${not empty data.historyWeekAppActive }">${data.historyWeekAppActive }</c:if>
+                                        </td>
+                                        <td>
+                                        	<c:if test="${empty data.historyWeekDataSize }">0B</c:if>
+                                        	<c:if test="${not empty data.historyWeekDataSize }">
+                                        		<c:choose>
+	                                                <c:when test="${data.historyWeekDataSize>1099511627776 }">
+	                                                    <fmt:formatNumber pattern="0.00" value="${(data.historyWeekDataSize-data.historyWeekDataSize%1099511627776)/1099511627776 + data.historyWeekDataSize%1099511627776/1099511627776 }" />TB</c:when>
+	                                                <c:when test="${data.historyWeekDataSize>1073741824 }">
+	                                                    <fmt:formatNumber pattern="0.00" value="${(data.historyWeekDataSize-data.historyWeekDataSize%1073741824)/1073741824 + data.historyWeekDataSize%1073741824/1073741824 }" />GB</c:when>
+	                                                <c:when test="${data.historyWeekDataSize>1048576 }">
+	                                                    <fmt:formatNumber pattern="0.00" value="${(data.historyWeekDataSize-data.historyWeekDataSize%1048576)/1048576 + data.historyWeekDataSize%1048576/1048576 }" />MB</c:when>
+	                                                <c:otherwise>
+	                                                    <fmt:formatNumber pattern="0.00" value="${(data.historyWeekDataSize-data.historyWeekDataSize%1024)/1024 + data.historyWeekDataSize%1024/1024 }" />KB</c:otherwise>
+	                                            </c:choose>
+                                        	</c:if>
+                                        </td>
+                                        <td>
+                                        	<c:if test="${empty data.historyWeekFileCount }">0</c:if>
+                                        	<c:if test="${not empty data.historyWeekFileCount }">${data.historyWeekFileCount }</c:if>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

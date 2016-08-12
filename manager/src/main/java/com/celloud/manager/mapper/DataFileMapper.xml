@@ -367,7 +367,7 @@
     (select date_format(date_sub(now(),interval WEEKDAY(now()) day),"%Y-%m-%d 00:00:00") start_date,date_format(date_add(date_sub(now(),interval WEEKDAY(now()) day),interval 6 day),"%Y-%m-%d 23:59:59") end_date) temp, tb_user u, tb_log l<if test="companyId!=0">, tb_user_company_relat ucr</if>
     where u.user_id = l.user_id and l.log_date &gt;= start_date and l.log_date &lt;= end_date and u.user_id not in (${testAccountIds}) <if test="companyId!=0">and u.user_id = ucr.user_id and ucr.company_id = #{companyId}</if>
     group by u.username 
-    order by log_count desc 
+    order by log_count desc
     limit 10
   </select>
   <select id="getWeekAppRun" resultType="java.util.HashMap">

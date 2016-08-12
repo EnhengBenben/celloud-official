@@ -26,10 +26,12 @@
             <td colspan="2" class="tdCenter">项目</td>
             <td colspan="2" class="tdCenter">结果</td>
         </tr>
-        <tr class="bt1">
+        <tr class="bt1" style="height:72px;">
             <td colspan="2" class="tdCenter">表皮生长因子受体（EGFR）基因突变检测</td>
-            <td colspan="2" class="tdCenter">
-                <input name="baseInfo['conclusion']" type="text" class="tdCenterInput" value="#if($egfr.baseInfo.conclusion)$!egfr.baseInfo.conclusion#else$!{egfr.conclusion}#end" />
+            <td colspan="2">
+            	<div id="conclusion">
+                	<textarea name="baseInfo['conclusion']" style="width:99.7%;height:72px;">#if($egfr.baseInfo.conclusion)$!egfr.baseInfo.conclusion#else$!{egfr.conclusion}#end</textarea>
+				</div>
             </td>
         </tr>
         <tr class="bt1">

@@ -221,7 +221,7 @@ var drawCharts=(function(drawCharts){
 			            name:title,
 			            type:'bar',
 			            data:yAxis,
-			            barMaxWidth:140
+			            barMaxWidth:100
 			        }
 			    ]
 			};

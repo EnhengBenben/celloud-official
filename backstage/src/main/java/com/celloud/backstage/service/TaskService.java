@@ -13,5 +13,5 @@ public interface TaskService {
 
     public Map<String, Integer> getQuantityStatistics();
 
-    public void sendWeekStatistics();
+    public int sendWeekStatistics(String colonyUsed);
 }

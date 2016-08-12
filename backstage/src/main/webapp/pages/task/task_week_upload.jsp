@@ -12,14 +12,20 @@
 		</div>
 		<div class="panel-options">
 	        <form class="form-inline">
-	         <button class="btn btn-danger" type="button" onclick="task.sendWeekStatistics();" style="margin-bottom:0;">发送邮件</button>
+	         <button id="sendWeekStatistics" class="btn btn-danger" type="button" onclick="task.sendWeekStatistics();" style="margin-bottom:0;">发送邮件</button>
 	       </form>
         </div>
     </div>
     <div class="panel-body">
         <form role="form" class="form-horizontal" id="weekForm">
+        	<div class="form-group">
+                <label class="col-sm-2 control-label" for="colonyUsed">集群使用率<font color="red">*</font></label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="colonyUsed" name="colonyUsed" >
+                </div>
+            </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="englishName">文件<font color="red">*</font></label>
+                <label class="col-sm-2 control-label" for="">文件<font color="red">*</font></label>
                 <div class="col-sm-10">
                     <div id="plupload-content" class="box-body plupload-content">
 		                <div class="upload-text">
