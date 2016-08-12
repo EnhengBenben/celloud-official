@@ -108,7 +108,7 @@ public class MessageCategoryUtils {
 	@Async
 	public void sendMessage(Integer userId, String code, AliEmail email, Param wechat, MessageUtils window) {
 		Map<String, MessageCategory> map = initSetting(userId);
-		User user = userService.selectUserById(userId);
+		User user = userService.selectUserByIdNotIcon(userId);
 		if (map.get(code).getEmail().equals(MessageCategoryState.SEND) && email != null) {
 			String to = user.getEmail();
 			emailUtils.simpleSend(email, to);

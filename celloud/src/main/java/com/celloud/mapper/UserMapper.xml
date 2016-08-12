@@ -31,18 +31,18 @@
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
+		<include refid="Base_Column_List" />
+		from tb_user
+		where user_id = #{userId,jdbcType=INTEGER}
+	</select>
+	<select id="selectUserByIdNotIcon" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
 		user_id, username, email, cellphone, create_date,
 		role,
 		remark, navigation,
 		truename, state, dept_id,
 		login_uuid,
 		company_id, sign,balances
-		from tb_user
-		where user_id = #{userId,jdbcType=INTEGER}
-	</select>
-	<select id="selectUserByIdNotIcon" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-		select
-		<include refid="Base_Column_List" />
 		from tb_user
 		where user_id = #{userId,jdbcType=INTEGER}
 	</select>

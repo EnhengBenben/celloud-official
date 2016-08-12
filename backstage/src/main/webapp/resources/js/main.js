@@ -974,9 +974,26 @@ var task = (function(task){
 		});
 	}
 	self.sendWeekStatistics = function(){
-		$.post("task/sendWeekStatistics",{},function(data){
-			
-		});
+		$("#sendWeekStatistics").prop("disabled",true);
+		var colonyUsed = $("#colonyUsed").val().trim();
+		if(colonyUsed == ''){
+			jAlert("集群使用率不能为空!");
+			$("#sendWeekStatistics").prop("disabled",false);
+			return false;
+		}else{
+			$.post("task/sendWeekStatistics",{"colonyUsed":colonyUsed},function(data){
+				if(data == 1){
+					jAlert("发送成功!");
+				}else if(data == 0){
+					jAlert("本周已发送过周统计,请不要重复发送!");
+				}else if(data == -1){
+					jAlert("图片资源不足,请先上传图片!");
+				}else if(data == 2){
+					jAlert("程序发生未知错误!");
+				}
+				$("#sendWeekStatistics").prop("disabled",false);
+			});
+		}
 	}
 	self.toWeekStatistics = function(){
 		$.post("task/toWeekStatistics",{},function(responseText){
