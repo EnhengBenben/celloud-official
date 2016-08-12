@@ -1,7 +1,10 @@
 package com.celloud.backstage.utils;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * @ClassName: DateUtil
@@ -99,6 +102,79 @@ public class DateUtil {
             sb.append(s);
         }
         return sb.toString();
+    }
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月10日下午4:12:58
+     * @description 获取指定周的周几,第一天为周日
+     * @param week
+     *            0:本周 -1:向前推迟一周 1:下周
+     * @param day
+     *            周几(Calendar.MONDAY)
+     * @return 日期的yyyy-MM-dd格式
+     *
+     */
+    public static String getDay(int week, int day) {
+        Calendar cal = Calendar.getInstance();
+        // n为推迟的周数，0本周，-1向前推迟一周，1下周，依次类推
+        cal.add(Calendar.DATE, week * 7);
+        // 想周几，这里就传几Calendar.MONDAY（TUESDAY...）
+        cal.set(Calendar.DAY_OF_WEEK, day);
+        return new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+    }
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月4日下午6:07:23
+     * @description 获得当前日期与本周一相差的天数
+     *
+     */
+    private static int getMondayPlus() {
+        Calendar cd = Calendar.getInstance();
+        // 获得今天是一周的第几天，星期日是第一天，星期二是第二天......
+        int dayOfWeek = cd.get(Calendar.DAY_OF_WEEK);
+        if (dayOfWeek == 1) {
+            return -6;
+        } else {
+            return 2 - dayOfWeek;
+        }
+    }
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月4日下午6:08:34
+     * @description 获得当前周- 周一的日期
+     *
+     */
+    public static String getCurrentMonday() {
+        int mondayPlus = getMondayPlus();
+        GregorianCalendar currentDate = new GregorianCalendar();
+        currentDate.add(GregorianCalendar.DATE, mondayPlus);
+        Date monday = currentDate.getTime();
+        DateFormat df = DateFormat.getDateInstance();
+        String preMonday = df.format(monday);
+        return preMonday;
+    }
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月4日下午6:08:45
+     * @description 获得当前周- 周日 的日期
+     *
+     */
+    public static String getCurrentSunday() {
+        int mondayPlus = getMondayPlus();
+        GregorianCalendar currentDate = new GregorianCalendar();
+        currentDate.add(GregorianCalendar.DATE, mondayPlus + 6);
+        Date monday = currentDate.getTime();
+        DateFormat df = DateFormat.getDateInstance();
+        String preMonday = df.format(monday);
+        return preMonday;
     }
 
 }

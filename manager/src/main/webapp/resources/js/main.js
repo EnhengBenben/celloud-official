@@ -334,6 +334,39 @@ var user=(function(user){
 			$("#user-sendEmailModal").modal("show");
 		});
 	};
+	self.toMoneyGiven = function(userId,username){
+	  $.post("user/toMoneyGiven",{userId:userId,username:username},function(responseText){
+	    $("#user-sendEmailModal .modal-content").html(responseText);
+	    $("#user-sendEmailModal").modal("show");
+	  });
+	};
+	self.moneyGiven = function(){
+	  var givenNumber = $("#givenNumber").val();
+	  var balances = $("#balances").val();
+	  if(!$.isNumeric(givenNumber) || !$.isNumeric(balances)){
+      $("#givenNumber").next().html("赠予金额必须为数字");
+      return false;
+    }
+    if(givenNumber*1>balances*1){
+      $("#givenNumber").next().html("赠予金额不能大于您的余额");
+      return false;
+    }
+    if( (givenNumber*1)%1 != 0){
+      $("#givenNumber").next().html("赠予金额只能是整数");
+       return false;
+    }
+    if(givenNumber*1 < 10){
+      $("#givenNumber").next().html("赠予金额不能小于10元");
+       return false;
+    }
+	  $("#givenNumber").next().html("");
+	  var givenUserId = $("#givenUserId").val();
+	  var givenUserName = $("#givenUserName").val();
+	  $.post("user/moneyGiven",{userId:givenUserId,money:givenNumber,username:givenUserName},function(flag){
+	    alert(flag);
+	    $("#user-sendEmailModal").modal("hide");
+	  });
+	};
 	self.grantApp = function(){
 		var flag = true;
 		var checkbox = $("#grantForm").find("input[name=appIdArray]:checked");

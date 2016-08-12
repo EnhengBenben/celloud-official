@@ -367,7 +367,7 @@
     (select date_format(date_sub(now(),interval WEEKDAY(now()) day),"%Y-%m-%d 00:00:00") start_date,date_format(date_add(date_sub(now(),interval WEEKDAY(now()) day),interval 6 day),"%Y-%m-%d 23:59:59") end_date) temp, tb_user u, tb_log l<if test="companyId!=0">, tb_user_company_relat ucr</if>
     where u.user_id = l.user_id and l.log_date &gt;= start_date and l.log_date &lt;= end_date and u.user_id not in (${testAccountIds}) <if test="companyId!=0">and u.user_id = ucr.user_id and ucr.company_id = #{companyId}</if>
     group by u.username 
-    order by log_count desc 
+    order by log_count desc
     limit 10
   </select>
   <select id="getWeekAppRun" resultType="java.util.HashMap">
@@ -383,7 +383,7 @@
       limit 10
   </select>
   <select id="getWeekDataSize" resultType="java.util.HashMap">
-    select u.username,sum(f.size) size_sum 
+    select u.username,sum(f.size) size_sum,count(f.file_id) file_count
       from tb_file f,tb_user u,(select date_format(date_sub(now(),interval WEEKDAY(now()) day),"%Y-%m-%d 00:00:00") start_date,date_format(date_add(date_sub(now(),interval WEEKDAY(now()) day),interval 6 day),"%Y-%m-%d 23:59:59") end_date) temp<if test="companyId!=0">, tb_user_company_relat ucr</if> where
       f.create_date&gt;=temp.start_date and 
       f.create_date&lt;=temp.end_date and 
@@ -423,7 +423,7 @@
     order by start_date desc
   </select>
   <select id="getHistoryWeekDataSize" resultType="java.util.HashMap">
-    select sum(f.size) size_sum,date_format(date_sub(f.create_date,interval WEEKDAY(f.create_date) day),"%Y-%m-%d 00:00:00") start_date,date_format(date_add(date_sub(f.create_date,interval WEEKDAY(f.create_date) day),interval 6 day),"%Y-%m-%d 23:59:59") end_date 
+    select count(f.file_id) file_count, sum(f.size) size_sum,date_format(date_sub(f.create_date,interval WEEKDAY(f.create_date) day),"%Y-%m-%d 00:00:00") start_date,date_format(date_add(date_sub(f.create_date,interval WEEKDAY(f.create_date) day),interval 6 day),"%Y-%m-%d 23:59:59") end_date
     from tb_file f<if test="companyId!=0">, tb_user_company_relat ucr</if>
     where 1 = 1 <if test="companyId!=0">and f.user_id = ucr.user_id and ucr.company_id = #{companyId}</if> and f.user_id not in(${testAccountIds}) 
     group by start_date

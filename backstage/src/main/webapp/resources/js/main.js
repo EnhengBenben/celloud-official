@@ -973,6 +973,103 @@ var task = (function(task){
 			$("#task-running-menu").addClass("active");
 		});
 	}
+	self.sendWeekStatistics = function(){
+		$("#sendWeekStatistics").prop("disabled",true);
+		var colonyUsed = $("#colonyUsed").val().trim();
+		if(colonyUsed == ''){
+			jAlert("集群使用率不能为空!");
+			$("#sendWeekStatistics").prop("disabled",false);
+			return false;
+		}else{
+			$.post("task/sendWeekStatistics",{"colonyUsed":colonyUsed},function(data){
+				if(data == 1){
+					jAlert("发送成功!");
+				}else if(data == 0){
+					jAlert("本周已发送过周统计,请不要重复发送!");
+				}else if(data == -1){
+					jAlert("图片资源不足,请先上传图片!");
+				}else if(data == 2){
+					jAlert("程序发生未知错误!");
+				}
+				$("#sendWeekStatistics").prop("disabled",false);
+			});
+		}
+	}
+	self.toWeekStatistics = function(){
+		$.post("task/toWeekStatistics",{},function(responseText){
+			$("#main-content").html(responseText);
+			$("#main-menu li").removeClass("active").removeClass("opened").removeClass("expanded");
+			$("#task-manage").addClass("active").addClass("opened").addClass("expanded");
+			$("#task-week-menu").addClass("active");
+			
+			var uploader = new plupload.Uploader({
+			      runtimes : 'html5,flash,silverlight,html4',
+			      browse_button : 'plupload-content',
+			      url : "../task/uploadWeekResources",
+			      chunk_size : '1mb',
+			      drop_element : 'plupload-content',
+			      filters : {
+			        max_file_size : '3gb',
+			        prevent_duplicates : true, // 不允许选取重复文件
+			        mime_types : [
+                      {title : "Image files", extensions : "jpg,jpeg,png" }
+			        ]
+			      },
+			      max_retries : 5,
+			      multiple_queues : true,
+			      flash_swf_url : '//cdn.bootcss.com/plupload/2.1.8/Moxie.swf'
+			    });
+			    uploader.init();
+			    $(document).on("click", "[data-click='del-upload-file']", function() {
+			      var id = $(this).data("id");
+			      $("#"+id).remove();
+			      var file = uploader.getFile(id);
+			      uploader.removeFile(file);
+			    });
+			    uploader.bind("StateChanged", function() {
+			      if (uploader.state === plupload.STARTED) {
+			        window.parent.isUploading = true;
+			        refresh = setInterval("self.refreshSession()",600000);
+			      }else if(uploader.state === plupload.STOPPED){
+			        window.parent.isUploading = false;
+			        clearInterval(refresh);
+			      }
+			    });
+			    uploader.bind("UploadProgress", function(uploader, file) {
+			      $("#" + file.id +" .percent").html(file.percent+"%");
+			    });
+			    uploader.bind("FilesAdded", function(uploader, files) {
+			      $("#alert-tips").addClass("hide");
+			      $("#upload-list-table").removeClass("hide");
+			      $.each(files, function(index, item) {
+			        var $fileDom = $('<tr id="' + item.id + '"></tr>');
+			        $fileDom.append($('<td class="filename">' + item.name + '</td>'));
+			        $fileDom.append($('<td class="percent">0</td>'));
+			        $fileDom.append($('<td><a data-click="del-upload-file" data-id="'+item.id+'"  href="javascript:void(0)"><i class="fa fa-times-circle" aria-hidden="true"></i></a></td>'));
+			        $("#upload-list-tbody").append($fileDom);
+			      });
+			    });
+			    uploader.bind("BeforeUpload", function(uploader, file) {
+			      $("#" + file.id +" .percent").html("正在上传");
+			    });
+			    uploader.bind("FileUploaded", function(uploader, file, response) {
+			      var res = JSON.parse(response.response);
+			      if(res == "1"){
+			        $("#alert-info").html("<strong>OK!</strong>上传完成");
+			      }else{
+			        $("#alert-info").html("<strong>warning!</strong>上传失败");
+			      }
+			      $("#alert-tips").removeClass("hide");
+			    });
+			    uploader.bind("UploadComplete",function(uploader,files,response){
+			      uploader.splice(0,uploader.files.length);
+			    });
+			    $("#upload-a").on("click",function(){
+			      uploader.start();
+			    });
+			
+		});
+	}
 	return self;
 })(task);
 

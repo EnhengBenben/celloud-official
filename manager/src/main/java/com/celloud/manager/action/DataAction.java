@@ -28,6 +28,7 @@ import com.celloud.manager.constants.ConstantsData;
 import com.celloud.manager.constants.UserRole;
 import com.celloud.manager.model.User;
 import com.celloud.manager.service.DataService;
+import com.celloud.manager.service.WeekService;
 import com.celloud.manager.utils.PropertiesUtil;
 
 /**
@@ -40,6 +41,8 @@ import com.celloud.manager.utils.PropertiesUtil;
 public class DataAction {
     @Resource
     private DataService dataService;
+    @Resource
+    private WeekService weekService;
 
     @RequestMapping("dataCount")
     public ModelAndView dataCount(){
@@ -279,6 +282,7 @@ public class DataAction {
             temp.put("appCount", weekAppRun.size() > i ? weekAppRun.get(i).get("app_count") : 0);
             temp.put("sizeUsername", weekDataSize.size() > i ? weekDataSize.get(i).get("username") : "无");
             temp.put("sizeSum", weekDataSize.size() > i ? weekDataSize.get(i).get("size_sum") : 0);
+            temp.put("fileCount", weekDataSize.size() > i ? weekDataSize.get(i).get("file_count") : 0);
             weekData.add(i, temp);
         }
         // 获取历史周统计
@@ -291,20 +295,23 @@ public class DataAction {
         // 构造临时map追加数据key为日期,value为list中的map
         Map<String, Map<String, Object>> appendMap = new HashMap<String, Map<String, Object>>();
         for (int i = historyWeekUserLogin.size() - 1; i >= 0; i--) {
-            String key = (String) historyWeekUserLogin.get(i).get("start_date");
+            String startDate = (String) historyWeekUserLogin.get(i).get("start_date");
+            String endDate = (String) historyWeekUserLogin.get(i).get("end_date");
             Map<String, Object> listMap = new HashMap<String, Object>();
-            listMap.put("historyDate", key);
+            listMap.put("historyDate", startDate);
+            listMap.put("endDate", endDate);
             listMap.put("historyWeekUserLogin",
-                    historyWeekUserLogin.get(i).get("start_date").equals(key)
+                    historyWeekUserLogin.get(i).get("start_date").equals(startDate)
                             ? historyWeekUserLogin.get(i).get("log_count")
                             : 0);
             if (historyWeekActiveUser.size() > i) {
-                if (historyWeekActiveUser.get(i).get("start_date").equals(key)) {
+                if (historyWeekActiveUser.get(i).get("start_date").equals(startDate)) {
                     listMap.put("historyWeekActiveUser", historyWeekActiveUser.get(i).get("active_user"));
                 } else {
                     if (appendMap.get(historyWeekActiveUser.get(i).get("start_date")) == null) {
                         Map<String, Object> newMap = new HashMap<String, Object>();
                         newMap.put("historyDate", (String) historyWeekActiveUser.get(i).get("start_date"));
+                        newMap.put("endDate", (String) historyWeekActiveUser.get(i).get("end_date"));
                         newMap.put("historyWeekActiveUser", historyWeekActiveUser.get(i).get("active_user"));
                         appendMap.put((String) historyWeekActiveUser.get(i).get("start_date"), newMap);
                     } else {
@@ -318,12 +325,13 @@ public class DataAction {
             }
             
             if (historyWeekAppRun.size() > i) {
-                if (historyWeekAppRun.get(i).get("start_date").equals(key)) {
+                if (historyWeekAppRun.get(i).get("start_date").equals(startDate)) {
                     listMap.put("historyWeekAppRun", historyWeekAppRun.get(i).get("run_app"));
                 } else {
                     if (appendMap.get(historyWeekAppRun.get(i).get("start_date")) == null) {
                         Map<String, Object> newMap = new HashMap<String, Object>();
                         newMap.put("historyDate", (String) historyWeekAppRun.get(i).get("start_date"));
+                        newMap.put("endDate", (String) historyWeekAppRun.get(i).get("end_date"));
                         newMap.put("historyWeekAppActive", historyWeekAppRun.get(i).get("run_app"));
                         appendMap.put((String) historyWeekAppRun.get(i).get("start_date"), newMap);
                     } else {
@@ -337,12 +345,13 @@ public class DataAction {
             }
 
             if (historyWeekAppActive.size() > i) {
-                if (historyWeekAppActive.get(i).get("start_date").equals(key)) {
+                if (historyWeekAppActive.get(i).get("start_date").equals(startDate)) {
                     listMap.put("historyWeekAppActive", historyWeekAppActive.get(i).get("active_app"));
                 } else {
                     if (appendMap.get(historyWeekAppActive.get(i).get("start_date")) == null) {
                         Map<String, Object> newMap = new HashMap<String, Object>();
                         newMap.put("historyDate", (String) historyWeekAppActive.get(i).get("start_date"));
+                        newMap.put("endDate", (String) historyWeekAppActive.get(i).get("end_date"));
                         newMap.put("historyWeekAppActive", historyWeekAppActive.get(i).get("active_app"));
                         appendMap.put((String) historyWeekAppActive.get(i).get("start_date"), newMap);
                     } else {
@@ -356,24 +365,31 @@ public class DataAction {
             }
 
             if (historyWeekDataSize.size() > i) {
-                if (historyWeekDataSize.get(i).get("start_date").equals(key)) {
+                if (historyWeekDataSize.get(i).get("start_date").equals(startDate)) {
                     listMap.put("historyWeekDataSize", historyWeekDataSize.get(i).get("size_sum"));
+                    listMap.put("historyWeekFileCount", historyWeekDataSize.get(i).get("file_count"));
                 } else {
                     if (appendMap.get(historyWeekDataSize.get(i).get("start_date")) == null) {
                         Map<String, Object> newMap = new HashMap<String, Object>();
                         newMap.put("historyDate", (String) historyWeekDataSize.get(i).get("start_date"));
+                        newMap.put("endDate", (String) historyWeekDataSize.get(i).get("end_date"));
                         newMap.put("historyWeekDataSize", historyWeekDataSize.get(i).get("size_sum"));
+                        newMap.put("historyWeekFileCount", historyWeekDataSize.get(i).get("file_count"));
                         appendMap.put((String) historyWeekDataSize.get(i).get("start_date"), newMap);
                     } else {
                         appendMap.get(historyWeekDataSize.get(i).get("start_date")).put("historyWeekDataSize",
                                 historyWeekDataSize.get(i).get("size_sum"));
+                        appendMap.get(historyWeekDataSize.get(i).get("start_date")).put("historyWeekFileCount",
+                                historyWeekDataSize.get(i).get("file_count"));
                     }
                     listMap.put("historyWeekDataSize", 0);
+                    listMap.put("historyWeekFileCount", 0);
                 }
             } else {
                 listMap.put("historyWeekDataSize", 0);
+                listMap.put("historyWeekFileCount", 0);
             }
-            appendMap.put(key, listMap);
+            appendMap.put(startDate, listMap);
         }
 
         int i = 0;
@@ -386,6 +402,8 @@ public class DataAction {
         return mv;
     }
     
+
+
     @ResponseBody
     @RequestMapping("data/topUserLogin")
     public List<Map<String, Object>> topUserLogin() {

@@ -1,5 +1,6 @@
 package com.celloud.manager.service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,19 @@ import com.celloud.manager.page.PageList;
  * @date 2015年12月23日 下午12:53:35
  */
 public interface UserService {
+
+	/**
+	 * 大客户赠予普通客户钱
+	 * 
+	 * @param from
+	 * @param to
+	 * @param toUserName
+	 * @param amount
+	 * @return
+	 * @author lin
+	 * @date 2016年8月3日下午5:31:51
+	 */
+	public boolean moneyGiven(Integer from, Integer to, String toUserName, BigDecimal amount);
 
     /**
      * 

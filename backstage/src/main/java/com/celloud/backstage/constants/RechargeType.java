@@ -7,7 +7,8 @@ package com.celloud.backstage.constants;
  * @date 2016年6月27日 下午2:56:10
  */
 public enum RechargeType {
-	ALIPAY("支付宝", 0, true), TRANSFER("银行转账", 1, true), PRESENT("系统赠送", 2, false), OnlineBanking("网上银行", 3, true);
+	ALIPAY("支付宝", 0, true), TRANSFER("银行转账", 1, true), PRESENT("系统赠送", 2, false), OnlineBanking("网上银行", 3,
+			true), GRANT("大客户赠予", 4, false);
 	/**
 	 * 类型标识，在数据库中标识类型
 	 */

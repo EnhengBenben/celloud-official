@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/console.css">
+<link rel="stylesheet" href="css/pay.css">
 <link rel="stylesheet" href="plugins/jquery.alerts.css">
 <script src="plugins/bootstrap/js/jquery-1.11.1.min.js"></script>
 <script src="plugins/jquery.alerts.js"></script>
@@ -159,6 +160,35 @@
                             </li>
                         </ul>
                     </li>
+                    <!-- 费用中心 -->
+                    <li>
+                        <a href="#">
+                            <i class="linecons-mail"></i>
+                            <span class="title">费用中心 </span>
+                        </a>
+                        <ul>
+                            <li id="to-pay-detail">
+                                <a href="javascript:void(0);">
+                                    <span class="title">消费明细</span>
+                                </a>
+                            </li>
+                            <li id="to-recharge">
+                                <a href="javascript:void(0);">
+                                    <span class="title">账户充值</span>
+                                </a>
+                            </li>
+                            <li id="to-recharge-record">
+                                <a href="javascript:void(0);">
+                                    <span class="title">充值记录</span>
+                                </a>
+                            </li>
+                            <li id="to-invoice">
+                                <a href="javascript:void(0);">
+                                    <span class="title">发票管理</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -261,5 +291,9 @@
     <script type="text/javascript" src="${pageContext.request.contextPath }/resources/plugins/select2/js/zh-CN.js"></script>
     <script src="js/main.js"></script>
     <script src="js/app.js"></script>
+    <script type="text/javascript">
+       window.CONTEXT_PATH = '<%=request.getContextPath()%>';
+	</script>
+    <script src="js/expense.js?version=3.2.5"></script>
 </body>
 </html>

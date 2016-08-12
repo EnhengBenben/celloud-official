@@ -45,10 +45,7 @@ var rockyReport = (function(rockyReport) {
 		}
 	});
 	$(document).on("click", "#report-condition-find", function(event) {
-		var condition = $("#report-condition-input").val();
-		if(condition){
-			self.filter.condition(condition);
-		}
+		self.filter.condition( $("#report-condition-input").val());
 	});
 	$(document).on("click", "#rocky_report_page [data-click='pagination-btn']",
 			function() {

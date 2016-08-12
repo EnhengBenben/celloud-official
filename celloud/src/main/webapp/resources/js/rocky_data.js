@@ -28,10 +28,7 @@ var rockyData = (function(rockyData) {
 		}
 	});
 	$(document).on("click", "#data-condition-find", function(event) {
-		var condition = $("#data-condition-input").val();
-		if(condition){
-			self.filter.condition(condition);
-		}
+		self.filter.condition($("#data-condition-input").val());
 	});
 	$(document).on("change", "#rocky_data_page #page-size-sel", function() {
 		var sample = self.filter.param.sample;

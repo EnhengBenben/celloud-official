@@ -18,6 +18,7 @@
 		<result column="login_uuid" property="loginUuid" jdbcType="VARCHAR" />
 		<result column="company_id" property="companyId" jdbcType="INTEGER" />
 		<result column="sign" property="sign" jdbcType="VARCHAR" />
+		<result column="balances" property="balances" jdbcType="DECIMAL" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		user_id, username, email, cellphone, create_date,
@@ -25,7 +26,7 @@
 		role,
 		remark, navigation,
 		truename, state, dept_id, login_uuid,
-		company_id, sign
+		company_id, sign,balances
 	</sql>
 	<update id="updateByPrimaryKeySelective" parameterType="com.celloud.manager.model.User">
         update tb_user
@@ -75,6 +76,9 @@
             <if test="sign != null">
                 sign = #{sign,jdbcType=VARCHAR},
             </if>
+            <if test="balances != null">
+				balances = #{balances,jdbcType=DECIMAL},
+			</if>
         </set>
         where user_id = #{userId,jdbcType=INTEGER}
     </update>
@@ -244,7 +248,17 @@
     <select id="getCompanyIdByUserId" resultType="java.lang.Integer">
         select company_id from tb_user_company_relat where user_id = #{userId}
     </select>
-    
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		user_id, username, email, cellphone, create_date,
+		role,
+		remark, navigation,
+		truename, state, dept_id,
+		login_uuid,
+		company_id, sign,balances
+		from tb_user
+		where user_id = #{userId,jdbcType=INTEGER}
+	</select>
     <select id="getUserByPage" resultType="java.util.HashMap">
         select
         u.user_id as userId, username, email, cellphone, u.create_date as createDate,
