@@ -3,7 +3,19 @@ $(function(){
     $("#print").on("click",function(){
         $(".buttons").hide();
         $("input").css("border-bottom", "0");
+        var conclusion = $("#conclusion").children().val();
+        if (conclusion){
+            inputVal = conclusion.replace(/\n/g,"<br>");
+        }else{
+            inputVal = "";
+        }
+        $("#conclusion").html(inputVal);
         window.print();
+        inputVal = $("#conclusion").html();
+        if(inputVal){
+            inputVal = inputVal.replace(/<br>/g,"\n");
+            $("#conclusion").html("<textarea  name=\"baseInfo['conclusion']\" style=\"width:99.7%;height:72px;\">"+inputVal+"</textarea>");
+        }
         $("input").css("border-bottom", "1px solid #D4D4D4");
         $(".buttons").show();
     });
