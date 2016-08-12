@@ -1,0 +1,107 @@
+/*主列表表格*/
+.table-main{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid @light-gray;
+    margin-bottom: 10px;
+    >thead {
+        >tr>th {
+            height: 40px;
+            padding: 0px;
+            padding-left: 20px;
+            line-height: 40px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: @font-black;
+            background: @light-gray;
+            >a {
+                color: @font-black;
+                padding-left: 5px;
+            }
+            >input[type="text"]{
+                width: 140px;
+                height: 28px;
+                margin: 0;
+                font-size: 14px;
+                font-weight: normal;
+                line-height: normal;
+                color: @font-gray;
+                padding: 0px 10px;
+                border: none;
+                .border-radius(6px);
+            }
+        }
+    }
+    >tbody {
+        >tr:nth-of-type(even) {
+            background: @content-gray;
+        }
+        >tr:nth-of-type(odd) {
+            background: #fff;
+        }
+        >tr>td {
+            height: 30px;
+            max-width: 240px;
+            text-align: center;
+            border: none;
+            padding: 0px;
+            padding-left: 20px;
+            line-height:30px;
+            color: @font-black;
+            .text-overflow();
+            > .wrong {
+                color:#ff0000;
+            }
+            >a {
+                margin: 0px 5px;
+                font-size: 16px;
+                color: @font-gray;
+            }
+            >a.disabled {
+                color: @light-gray;
+            }
+        }
+    }
+    > .checkbox{
+        margin: 6px 0px;
+    }
+    &.-report >thead {
+        >tr>th{
+            height: 30px;
+            line-height: 30px;
+            padding: 0;
+            text-align: center;
+            font-size: 14px;
+            font-weight: normal;
+            color: @font-black;
+            background: @light-gray;
+        }
+    }
+    &.-report >tbody{
+        >tr {
+            background: #fff;
+        }
+        >tr>td {
+            height: 30px;
+            padding: 4px 10px;
+            line-height: 20px;
+            white-space: normal;
+            word-break: break-word;
+            text-align: left;
+            vertical-align: middle;
+            border-right: 1px solid @light-gray;
+            border-bottom: 1px solid @light-gray;
+            &:last-child{
+                border-right: none;
+            }
+            &:first-child{
+                text-align: center;
+            }   
+        }
+        >tr:last-child>td{
+            border-bottom: none;
+        }
+    }
+}

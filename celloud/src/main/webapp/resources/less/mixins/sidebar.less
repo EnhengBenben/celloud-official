@@ -15,7 +15,7 @@
         line-height: 40px;
         color: @silver-gray;
         span{
-            padding-left:16px;
+            padding-left: 18px;
         }
     }
     .sidebar-collapse{
@@ -52,6 +52,22 @@
             .border-t-b-1(@gray-black);
         }
     }
+    &.collapsed{
+        width: 50px;
+        .sidebar-menu{
+            > li{
+                a{
+                    padding-left: 16px;
+                }
+                &:hover>a, &.active>a {
+                    padding-left: 13px; 
+                }                
+            }
+            >.header{
+                color: @dark-black;
+            }
+        }
+    }
 }
 @media (max-width: 767px){
     .sidebar{
@@ -66,7 +82,7 @@
                     padding-left: 13px; 
                 }                
             }
-            .header{
+            >.header{
                 color: @dark-black;
             }
         }

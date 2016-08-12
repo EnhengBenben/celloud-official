@@ -1,0 +1,35 @@
+.info-form{
+    margin: 0;
+    padding: 0;
+    
+    input{
+        .input-size(30px, 8px, 10px, 14px, 14px, none);
+        width: 200px;
+        .border-1(@border-gray);
+    }
+    .info-form-group{
+        padding-bottom: 10px;
+        >label{
+            display: inline-block;
+            font-size: 14px;
+            width: 70px;
+            font-weight: 500;
+            color: @font-black;
+        }
+        >div{
+            display: inline-block;
+        }
+        .btn{
+            margin-right: 18px;
+        }
+        &.avatar{
+            div{
+                width: 160px;
+                height: 160px;
+                display: block;
+                margin-bottom: 10px;
+                background-color: #f6f6f6;
+            }
+        }
+    }
+}

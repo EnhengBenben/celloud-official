@@ -1,0 +1,42 @@
+.pro-sidebar{
+    position: fixed;
+    top: 0;
+    left: 50px;
+    width: 120px;
+    min-height: 100%;
+    color: @silver-gray;
+    background: @gray-black;
+    padding-top: 50px;
+    z-index: 890;
+    .transition(width .3s ease-in-out);
+    a{
+        width: 100%;
+        display: block;
+        line-height: 40px;
+        color: @silver-gray;
+    }
+    .pro-sidebar-menu{
+        width: 100%;
+        white-space: nowrap!important;
+        overflow: hidden;
+        > li{
+            width: 100%;
+            a{
+                text-align: center;
+            }
+            &:hover>a, &.active>a {
+                color: @content-green;
+                background: @container-gray;
+                border-left: 2px solid @content-green;
+            }
+        }
+        >.header{
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            font-size: 14px;
+            color: @light-gray;
+            .border-bottom-1(@dark-black);
+        }
+    }
+}

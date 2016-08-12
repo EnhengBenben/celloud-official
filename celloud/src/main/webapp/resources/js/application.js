@@ -1,3 +1,3 @@
 (function(){
-  var celloudApp = angular.module("celloudApp",["celloudRounts"]);
+  var celloudApp = angular.module("celloudApp",["celloudRounts","celloudControoler"]);
 }());

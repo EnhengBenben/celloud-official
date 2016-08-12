@@ -5,7 +5,82 @@
         width: 100%;
         min-height: 250px;
         padding: 20px;
+        padding-top: 0px;
+        &.overview{
+            padding-top: 20px;
+            background-color: @content-gray;
+        }
+        .hospital-logo-content{
+            div{
+                padding: 0;
+            }
+            h5{
+                margin: 0px;
+            }
+            p{
+                margin-bottom: 30px;
+            }
+            a{
+                color: @content-green;
+                span{
+                   padding-left: 6px; 
+                }
+            }
+            .preview{
+                position: relative;
+                margin-top: 20px;
+                &.logo-140>img{
+                    width: 140px;
+                    height: 140px;
+                }
+                &.logo-120>img{
+                    width: 120px;
+                    height: 120px;
+                }
+                &.logo-100>img{
+                    width: 100px;
+                    height: 100px;
+                }
+                span{
+                    position: absolute;
+                    margin-left: 20px;
+                    bottom: 0px;
+                }
+            }
+        }
+        .hospital-logo{
+            position: relative;
+            width: 100%;
+            max-width: 370px;
+            height: 370px;
+            margin: 20px 0px;
+            overflow: hidden;
+            background-color: #000;
+            img{
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                .translate-center();
+            }
+        }
+    }
+    .content-header{
+        min-height: 40px;
+        margin-bottom: 10px;
+        padding: 20px 40px;
+        font-size: 14px;
+        color: @font-black;
         background-color: @content-gray;
+        >p{
+            margin: 0;
+        }
+    }
+    .content-body{
+        min-height: 640px;
+        padding: 40px;
+        font-size: 14px;
+        color: @font-black;
+        background-color: #fff;
     }
 }
 .overview-s{

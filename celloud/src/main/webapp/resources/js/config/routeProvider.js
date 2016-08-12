@@ -5,6 +5,18 @@
     .when('/',{
       templateUrl: "pages/overview/overview.jsp"
     })
+    .when('/user/base',{
+      templateUrl: "pages/user/user_base.jsp"
+    })
+    .when('/user/pwd',{
+      templateUrl: "pages/user/user_pwdreset.jsp"
+    })
+    .when('/user/log',{
+      templateUrl: "pages/user/user_log.jsp"
+    })
+    .when('/user/report',{
+      templateUrl: "pages/user/user_reportset.jsp"
+    })
     .otherwise({redirectTo:'/'});
   });
 })()
