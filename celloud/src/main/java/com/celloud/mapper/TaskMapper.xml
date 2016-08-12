@@ -17,12 +17,10 @@
 		<result column="state" property="state" jdbcType="INTEGER" />
 		<result column="sample_id" property="sampleId" jdbcType="INTEGER" />
 	</resultMap>
-	<resultMap id="ResultMapWithBLOBs" type="com.celloud.model.mysql.Task"
-		extends="BaseResultMap">
+	<resultMap id="ResultMapWithBLOBs" type="com.celloud.model.mysql.Task" extends="BaseResultMap">
 		<result column="params" property="params" jdbcType="LONGVARCHAR" />
 	</resultMap>
-	<resultMap id="ResultMapWithFileName" type="com.celloud.model.mysql.Task"
-		extends="ResultMapWithBLOBs">
+	<resultMap id="ResultMapWithFileName" type="com.celloud.model.mysql.Task" extends="ResultMapWithBLOBs">
 		<result column="file_id" property="fileId" jdbcType="INTEGER" />
 		<result column="file_name" property="fileName" jdbcType="VARCHAR" />
 		<result column="batch" property="batch" jdbcType="VARCHAR" />
@@ -39,8 +37,7 @@
 	<sql id="Blob_Column_List">
 		params
 	</sql>
-	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
-		parameterType="java.lang.Integer">
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
 		select
 		<include refid="Base_Column_List" />
 		,
@@ -76,8 +73,7 @@
 		#{state,jdbcType=INTEGER},
 		#{params,jdbcType=LONGVARCHAR}, #{sampleId,jdbcType=INTEGER})
 	</insert>
-	<insert id="insertSelective" parameterType="com.celloud.model.mysql.Task"
-		useGeneratedKeys="true" keyProperty="taskId">
+	<insert id="insertSelective" parameterType="com.celloud.model.mysql.Task" useGeneratedKeys="true" keyProperty="taskId">
 		insert into tb_task
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="taskId != null">
@@ -229,7 +225,8 @@
 		app_id =
 		#{appId,jdbcType=INTEGER},
 		data_key = #{dataKey,jdbcType=VARCHAR},
-		command = #{command,jdbcType=VARCHAR},
+		command =
+		#{command,jdbcType=VARCHAR},
 		period =
 		#{period,jdbcType=INTEGER},
 		create_date =
@@ -245,7 +242,8 @@
 		update_date =
 		#{updateDate,jdbcType=TIMESTAMP},
 		state = #{state,jdbcType=INTEGER},
-		params = #{params,jdbcType=LONGVARCHAR},
+		params =
+		#{params,jdbcType=LONGVARCHAR},
 		sample_id =
 		#{sampleId,jdbcType=INTEGER}
 		where task_id = #{taskId,jdbcType=INTEGER}
@@ -266,7 +264,8 @@
 		app_id =
 		#{appId,jdbcType=INTEGER},
 		data_key = #{dataKey,jdbcType=VARCHAR},
-		command = #{command,jdbcType=VARCHAR},
+		command =
+		#{command,jdbcType=VARCHAR},
 		period =
 		#{period,jdbcType=INTEGER},
 		create_date =
@@ -282,7 +281,8 @@
 		delete_date =
 		#{deleteDate,jdbcType=TIMESTAMP},
 		state = #{state,jdbcType=INTEGER},
-		params = #{params,jdbcType=LONGVARCHAR},
+		params =
+		#{params,jdbcType=LONGVARCHAR},
 		sample_id =
 		#{sampleId,jdbcType=INTEGER}
 		where task_id = #{taskId,jdbcType=INTEGER}
@@ -348,7 +348,8 @@
 		f.file_name,f.file_id,f.batch,f.another_name,s.sample_name,t.* from
 		(select * from tb_task where
 		(task_id in (select max(task_id) from
-		tb_task where state=#{state} and
+		tb_task where
+		state=#{state} and
 		user_id=#{userId} and (app_id=#{appId}
 		or period!=2) group by
 		data_key))
@@ -358,7 +359,8 @@
 		)t
 		left join
 		tb_file f
-		on f.data_key=t.data_key
+		on
+		f.data_key=t.data_key
 		left join tb_sample s
 		on
 		s.sample_id=t.sample_id
@@ -368,33 +370,46 @@
 		select f.file_name,f.file_id,f.batch,f.another_name,s.sample_name,t.*
 		from
 		(select * from tb_task where
-		(task_id in (select max(task_id) from
-		tb_task where state=#{state} and
-		user_id=#{userId} and app_id=#{appId}
-		group by data_key))
-		or (data_key is null and state=#{state} and
-		user_id=#{userId} and
-		app_id=#{appId})
+			(task_id in (select max(task_id) from
+			tb_task where state=#{state} and
+			user_id=#{userId} and
+			app_id=#{appId}
+			group by data_key))
+			or (data_key is null and state=#{state} and
+			user_id=#{userId} and
+			app_id=#{appId})
 		)t
-		left join tb_file f
-		on
-		f.data_key=t.data_key
-		left join tb_sample s
-		on s.sample_id=t.sample_id
+		left join tb_file f on f.data_key=t.data_key
+		left join tb_sample s on s.sample_id=t.sample_id
 		<where>
 			<choose>
 				<when test="condition != null">
 					(f.file_name like concat('%',#{condition},'%')
-					or s.sample_name
-					like
-					concat('%',#{condition},'%')
-					or
-					f.batch like concat('%',#{condition},'%'))
+					or s.sample_name like concat('%',#{condition},'%')
+					or f.batch like concat('%',#{condition},'%'))
 				</when>
 				<when test="sample != null">
 					s.sample_name like concat('%',#{sample},'%')
 				</when>
 			</choose>
+			<if test="periods != null and periods.size() > 0">
+				and t.period in
+				<foreach collection="periods" open="(" close=")" separator="," item="period">
+					#{period}
+				</foreach>
+			</if>
+			<if test="batches != null and batches.size() > 0">
+				and f.batch in
+				<foreach collection="batches" open="(" close=")" separator="," item="batch">
+					#{batch}
+				</foreach>
+			</if>
+			<if test="beginDate != null">
+				and t.update_date &gt;= #{beginDate}
+			</if>
+			<if test="endDate != null">
+				and t.update_date &lt;= #{endDate}
+			</if>
 		</where>
 		<choose>
 			<when test="sidx == 'updateDate'">
@@ -420,7 +435,8 @@
 		(select * from
 		tb_task where task_id in (select max(task_id) from tb_task
 		where
-		state=#{state} and user_id=#{userId} and app_id=#{appId} group
+		state=#{state}
+		and user_id=#{userId} and app_id=#{appId} group
 		by
 		data_key))t
 		left join tb_file f
@@ -429,19 +445,20 @@
 		tb_sample s
 		on s.sample_id=t.sample_id
 		where f.user_id=#{userId} and
-		f.state=#{state} and f.batch=#{batch} and
+		f.state=#{state} and
+		f.batch=#{batch} and
 		t.period=#{period}
 		order by
 		t.update_date desc
 	</select>
-	<select id="findTasksByUserCondition" resultMap="ResultMapWithFileName"
-		flushCache="true">
+	<select id="findTasksByUserCondition" resultMap="ResultMapWithFileName" flushCache="true">
 		select f.file_name,f.file_id,f.batch,f.another_name,s.sample_name,t.*
 		from
 		(select * from tb_task where
 		(task_id in (select max(task_id) from
 		tb_task where state=#{state} and
-		user_id=#{userId} and (app_id=#{appId}
+		user_id=#{userId} and
+		(app_id=#{appId}
 		or period!=2) group by
 		data_key))
 		or (data_key is null and
@@ -521,7 +538,8 @@
 		periodNum,t.period from
 		(select * from tb_task where task_id in (select
 		max(task_id) from tb_task
-		where state=#{state} and user_id=#{userId}
+		where state=#{state} and
+		user_id=#{userId}
 		and (app_id=#{appId} or
 		period!=2) group by data_key))t
 		left join

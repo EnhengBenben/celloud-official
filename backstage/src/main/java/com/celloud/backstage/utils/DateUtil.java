@@ -107,6 +107,27 @@ public class DateUtil {
     /**
      * 
      * @author MQ
+     * @date 2016年8月10日下午4:12:58
+     * @description 获取指定周的周几,第一天为周日
+     * @param week
+     *            0:本周 -1:向前推迟一周 1:下周
+     * @param day
+     *            周几(Calendar.MONDAY)
+     * @return 日期的yyyy-MM-dd格式
+     *
+     */
+    public static String getDay(int week, int day) {
+        Calendar cal = Calendar.getInstance();
+        // n为推迟的周数，0本周，-1向前推迟一周，1下周，依次类推
+        cal.add(Calendar.DATE, week * 7);
+        // 想周几，这里就传几Calendar.MONDAY（TUESDAY...）
+        cal.set(Calendar.DAY_OF_WEEK, day);
+        return new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+    }
+
+    /**
+     * 
+     * @author MQ
      * @date 2016年8月4日下午6:07:23
      * @description 获得当前日期与本周一相差的天数
      *

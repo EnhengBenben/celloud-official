@@ -51,7 +51,7 @@ $(function() {
 	$("#to-report-a").on("click",function() {
 		var url = contextPath + "/report/rocky/reportMain";
 		$("#container").load(url,function() {
-			rockyReport.filter.param={};
+			rockyReport.params={};
 			$("#container").removeClass('hide');
 			$("#upload-container").addClass('hide');
 		});

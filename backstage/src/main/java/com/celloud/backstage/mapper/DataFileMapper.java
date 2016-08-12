@@ -1,6 +1,7 @@
 package com.celloud.backstage.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -66,4 +67,69 @@ public interface DataFileMapper {
      */
     public int deleteDataFileByUserId(@Param("userId")Integer userId);
     
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月13日上午9:36:56
+     * @description 获取历史周登录统计
+     * @param companyId
+     * @param testAccountIds
+     * @return
+     *
+     */
+    public List<Map<String, Object>> getHistoryWeekUserLogin(@Param("companyId") Integer companyId,
+            @Param("testAccountIds") String testAccountIds);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月13日上午9:36:56
+     * @description 获取历史周活跃用户
+     * @param companyId
+     * @param testAccountIds
+     * @return
+     *
+     */
+    public List<Map<String, Object>> getHistoryWeekActiveUser(@Param("companyId") Integer companyId,
+            @Param("testAccountIds") String testAccountIds);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月13日上午10:09:30
+     * @description 获取历史周App运行次数
+     * @param companyId
+     * @param testAccountIds
+     * @return
+     *
+     */
+    public List<Map<String, Object>> getHistoryWeekAppRun(@Param("companyId") Integer companyId,
+            @Param("testAccountIds") String testAccountIds);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月13日上午11:16:05
+     * @description 获取历史周App活跃数
+     * @param companyId
+     * @param testAccountIds
+     * @return
+     *
+     */
+    public List<Map<String, Object>> getHistoryWeekAppActive(@Param("companyId") Integer companyId,
+            @Param("testAccountIds") String testAccountIds);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年7月13日下午1:00:50
+     * @description 获取历史周数据大小
+     * @param companyId
+     * @param testAccountIds
+     * @return
+     *
+     */
+    public List<Map<String, Object>> getHistoryWeekDataSize(@Param("companyId") Integer companyId,
+            @Param("testAccountIds") String testAccountIds);
+
 }

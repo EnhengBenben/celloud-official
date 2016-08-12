@@ -11,10 +11,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -88,6 +86,8 @@ public class EmailUtils {
     private static String feedbackTitle;
     private static String[] errorsMailTo;
     private static String[] feedbackMailTo;
+    public static String weekMailTo;
+    public static String weekMailCcTo;
 
     private static Session session = null;
     private MimeMessage message = null;
@@ -117,28 +117,15 @@ public class EmailUtils {
             logger.error("获取email.properties文件信息失败", e);
             return false;
         }
-        // 增加转码处理，当properties中有中文时也可以正常处理
-        Set<Object> keyset = pro.keySet();
-        Iterator<Object> iter = keyset.iterator();
-        while (iter.hasNext()) {
-            String key = (String) iter.next();
-            String newValue = null;
-            try {
-                // 属性配置文件自身的编码
-                String propertiesFileEncode = "utf-8";
-                newValue = new String(pro.getProperty(key).getBytes("ISO-8859-1"), propertiesFileEncode);
-            } catch (UnsupportedEncodingException e) {
-                newValue = pro.getProperty(key);
-            }
-            pro.setProperty(key, newValue);
-        }
-        username = pro.getProperty("mail.username");
-        password = pro.getProperty("mail.password");
+        username = pro.getProperty("mail.smtp.username");
+        password = pro.getProperty("mail.smtp.password");
         smtp = pro.getProperty("mail.smtp");
         defaultTitle = pro.getProperty("mail.defaultTitle");
         errorTitle = pro.getProperty("mail.errorTitle");
         feedbackTitle = pro.getProperty("mail.feedbackTitle");
         emailName = pro.getProperty("mail.emailName");
+        weekMailTo = pro.getProperty("mail.week.mailTo");
+        weekMailCcTo = pro.getProperty("mail.week.ccTo");
         String errorMails = pro.getProperty("mail.errorsMailTo");
         if (errorMails != null && !errorMails.trim().equals("")) {
             errorsMailTo = errorMails.split(",");

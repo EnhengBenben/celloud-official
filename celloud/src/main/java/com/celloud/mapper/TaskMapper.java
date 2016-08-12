@@ -1,5 +1,6 @@
 package com.celloud.mapper;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -217,5 +218,7 @@ public interface TaskMapper {
 	 */
 	List<Task> findRockyTasks(Page pager, @Param("userId") Integer userId, @Param("state") Integer state,
 			@Param("appId") Integer appId, @Param("sample") String sample, @Param("condition") String condition,
-			@Param("sidx") String sidx, @Param("sord") String sord);
+			@Param("sidx") String sidx, @Param("sord") String sord, @Param("batches") ArrayList<String> batches,
+			@Param("periods") ArrayList<Integer> periods, @Param("beginDate") Date beginDate,
+			@Param("endDate") Date endDate);
 }
