@@ -23,7 +23,6 @@
   <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
   <![endif]  -->
 </head>
-<<<<<<< HEAD
 <body class="container" ng-app="celloudApp">
   <header class="header">
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -97,9 +96,7 @@
       </ul>
     </section>
   </aside>
-  <div class="content" ng-view="">
-        
-  </div>
+  <div ng-view class="view-container"></div>
   <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>

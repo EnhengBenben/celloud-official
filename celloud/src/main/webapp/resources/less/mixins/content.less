@@ -1,6 +1,186 @@
-.content{
-    padding: 0px 20px;
-    .content-header{
-        padding: 10px 0px;
+.view-container{
+    margin-left: 170px;
+    padding: 0;
+    .content{
+        width: 100%;
+        min-height: 250px;
+        padding: 20px;
+        background-color: @content-gray;
+    }
+}
+.overview-s{
+    padding-bottom: 20px;
+    .overview-header{
+        margin: 0;
+        padding-bottom: 10px;
+        .border-bottom-1(@light-gray);
+        span{
+            padding-left: 10px;
+        }
+    }
+    .o-app-list{
+        position: relative;
+        min-height: 110px;
+        margin: 20px 60px 20px 0px;
+        ul{
+            overflow: hidden;
+            white-space: nowrap!important;
+        }
+        li{
+            width: 20%;
+            min-width: 180px;
+            padding-right: 20px;
+            display: inline-block;
+        }
+        .inner{
+            position: relative;
+            width: 100%;
+            height: 110px;
+            display: inline-block;
+            background-color: #fff;
+            .border-radius(10px);
+            img{
+                position: absolute;
+                max-width: 130px;
+                left: 50%;
+                top: 50%;
+                .translate-center();
+            }
+            .footer{
+                position: absolute;
+                right: 10px;
+                bottom: 10px;
+            }
+        }  
+        .more-app{
+            position: absolute;
+            top: 0px;
+            right: -60px;
+            width: 40px;
+            height: 110px;
+            display: inline-block;
+            float: right;
+            background-color: #fff;
+            .border-radius(10px);
+            a{
+                width: 40px;
+                height: 110px;
+                display: table-cell;
+                vertical-align: middle;
+                text-align: center;
+                font-size: 12px;
+                color: @gray-black;
+                
+            }
+        }
+    }
+    .o-count-list{
+        position: relative;
+        min-height: 130px;
+        margin: 20px 0px 20px -28px;
+        ul{
+            .make-lg-column(10);
+            margin: 0;
+            padding: 0;
+        }
+        ul > li{
+            .make-xs-column(10);
+            .make-sm-column(5);
+            .make-md-column(2);
+            padding: 0;
+            padding-left: 28px;
+            float: left;
+        }
+        .inner{
+            position: relative;
+            width: 100%;
+            height: 130px;
+            padding: 10px;
+            display: inline-block;
+            .border-radius(10px);
+            >i{
+                position: absolute;
+                float: left;
+            }
+            h1{
+                float: right;
+                font-size: 57px;
+                font-weight: lighter;
+                color: #fff;
+                span{
+                    font-size: 14px;
+                }
+            }
+            .footer{
+                position: absolute;
+                width: 100%;
+                left: 0px;
+                bottom: 10px;
+                padding: 0px 10px;
+                color: #fff;
+                font-size: 14px;
+                a{
+                    float: right;
+                    font-size: 12px;
+                    color: @light-gray;
+                }
+                a>span{
+                    padding-right: 4px;
+                }
+            }
+            &.datanum{
+                background-color: @overview-red;
+            }
+            &.datasize{
+                background-color: @overview-orange;
+            }
+            &.appnum{
+                background-color: @overview-green;
+            }
+            &.reportnum{
+                background-color: @overview-blue;
+            }
+            &.expense{
+                background-color: @overview-purple;
+            }
+        }  
+    }
+    .o-count-detail{
+        position: relative;
+        padding-top: 10px;
+        .count-box{
+            width: 100%;
+            height: 267px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #fff;
+            .border-radius(10px);
+        }
+        .count-box-head{
+            margin: 0;
+            padding-bottom: 10px;
+            >h5{
+                margin: 0;
+                display: inline-block;
+                >i{
+                    margin-bottom: 3px;
+                }
+                >span{
+                    padding-left: 4px;
+                }
+            }
+            >span{
+                padding-left: 10px;
+            }
+        }
+        .count-box-body{
+            width: 100%;
+            height: 219px;
+        }
+    }
+}
+@media (max-width: 767px){
+    .view-container{
+        margin-left: 50px;
     }
 }
