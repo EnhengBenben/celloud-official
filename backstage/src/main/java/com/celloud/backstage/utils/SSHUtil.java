@@ -24,6 +24,9 @@ public class SSHUtil {
     private String userName;
     private String pwd;
 
+    private Connection conn;
+    private Session sess;
+
     /**
      * @param host
      *            :主机
@@ -56,11 +59,14 @@ public class SSHUtil {
     }
 
     /**
+     * 
+     * @author MQ
+     * @date 2016年8月8日下午1:32:32
+     * @description
      * @param command
-     *            ：要执行的命令
      * @param isWait
-     *            ：是否等待执行完毕
      * @return
+     *
      */
     public boolean sshSubmit(String command, boolean isWait) {
         boolean state = true;
@@ -105,5 +111,50 @@ public class SSHUtil {
                 conn.close();
         }
         return state;
+    }
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月8日下午1:37:03
+     * @description 获取命令的返回结果的输入流
+     * @param command
+     *            要执行的命令
+     * @return 结果的输入流
+     *
+     */
+    public InputStream getResult(String command) {
+        try {
+            conn = new Connection(host, port);
+            conn.connect();
+            boolean isLogin = conn.authenticateWithPassword(userName, pwd);
+            if (!isLogin) {
+                log.error("SSH 连接失败", new IOException("SSH 连接失败"));
+                return null;
+            }
+            // 开启 session ，执行命令
+            sess = conn.openSession();
+            sess.execCommand(command);
+            log.info("开始执行：" + command);
+            // 循环结果
+            InputStream in = new StreamGobbler(sess.getStdout());
+            return in;
+        } catch (IOException e) {
+            log.error("命令执行失败", new IOException(e));
+            return null;
+        }
+    }
+
+    public void release(){
+        try{
+            if (sess != null) {
+                sess.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

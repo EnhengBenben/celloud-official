@@ -1,6 +1,7 @@
 package com.celloud.backstage.action;
 
 import java.io.File;
+import java.util.Calendar;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.celloud.backstage.constants.TaskConstants;
 import com.celloud.backstage.page.Page;
 import com.celloud.backstage.page.PageList;
 import com.celloud.backstage.service.TaskService;
+import com.celloud.backstage.service.WeekService;
+import com.celloud.backstage.utils.DateUtil;
+import com.celloud.backstage.utils.PropertiesUtil;
 
 /**
  * 
@@ -33,6 +36,8 @@ public class TaskActon {
     Logger logger = LoggerFactory.getLogger(TaskActon.class);
     @Resource
     private TaskService taskService;
+    @Resource
+    private WeekService weekService;
 
     @RequestMapping("/getQueuingTime")
     public ModelAndView getQueuingTime() {
@@ -69,19 +74,24 @@ public class TaskActon {
     }
 
     @RequestMapping("/sendWeekStatistics")
-    public void sendWeekStatistics() {
-        taskService.sendWeekStatistics();
+    @ResponseBody
+    public int sendWeekStatistics(String colonyUsed) {
+        return taskService.sendWeekStatistics(colonyUsed);
     }
 
     @RequestMapping(value = "uploadWeekResources", method = RequestMethod.POST)
     @ResponseBody
     public String upload(@RequestParam("file") CommonsMultipartFile file, HttpSession session) {
         String fileName = file.getOriginalFilename();
-        // String type = fileName.substring(fileName.lastIndexOf("."));
-        File targetFile = new File(TaskConstants.getWeekStatisticsResourcesPath() + fileName);
-        // if (!targetFile.exists()) {
-        // targetFile.mkdirs();
-        // }
+        String basePath = PropertiesUtil.weeklyReportPath
+                + DateUtil.getDay(-1, Calendar.MONDAY).split("\\-")[0]
+                + DateUtil.getDay(-1, Calendar.MONDAY).split("\\-")[1]
+                + DateUtil.getDay(-1, Calendar.MONDAY).split("\\-")[2] + File.separator;
+        File f = new File(basePath);
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+        File targetFile = new File(basePath + fileName);
         try {
             file.transferTo(targetFile);
         } catch (Exception e) {
