@@ -2592,7 +2592,7 @@ public class ReportAction {
                 } else if (conclusion.startsWith("野生型")) {
                     result = "野生型";
                     feature = null;
-                } else if (conclusion.startsWith("检测到EGFR")) {
+                } else if (conclusion.startsWith("检测到EGFR") && !conclusion.contains("测序质量差")) {
                     result = conclusion.substring("检测到EGFR基因".length(), conclusion.lastIndexOf("突变"));
                     feature = egfr.getPos();
                 }
