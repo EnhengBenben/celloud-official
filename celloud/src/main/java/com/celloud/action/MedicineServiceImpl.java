@@ -19,8 +19,8 @@ public class MedicineServiceImpl implements MedicineService {
     private MedicineMapper medicineMapper;
 
     @Override
-    public Medicine getByFeatureAndResult(String feature, String result, int appId) {
-        return medicineMapper.findByFeatureAndResult(feature, result, appId);
+    public Medicine getByFeatureAndResultDetail(String feature, String resultDetail, int appId) {
+        return medicineMapper.findByFeatureAndResult(feature, resultDetail, appId);
     }
 
 }
