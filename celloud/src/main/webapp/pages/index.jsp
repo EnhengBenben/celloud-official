@@ -59,7 +59,7 @@
   <aside class="sidebar collapsed" id="common-sidebar">
     <section class="s-bar" ng-controller="sidebarController">
       <div class="sidebar-collapse">
-        <a href="#" ng-model="sidebar-collapse"><i class="left-indent-icon"></i></a>
+        <a href="#"><i class="left-indent-icon"></i></a>
       </div>
       <ul class="sidebar-menu">
         <li class="header">产品与服务</li>
@@ -87,8 +87,8 @@
         <li ng-class="{active: isActive('/user')}">
           <a href="#/user/base"><i class="account-icon"></i><span>账号管理</span></a>
         </li>
-        <li>
-          <a href="javascript:void(0)"><i class="qa-icon"></i><span>问题反馈</span></a>
+        <li ng-class="{active: isActive('/expense')}">
+          <a href="#/expense/consume"><i class="qa-icon"></i><span>问题反馈</span></a>
         </li>
         <li>
           <a href="javascript:void(0)"><i class="cost-icon"></i><span>费用中心</span></a>

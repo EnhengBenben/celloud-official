@@ -70,12 +70,16 @@
     .content-header{
         min-height: 40px;
         margin-bottom: 10px;
-        padding: 20px 40px;
+        padding: 20px;
         font-size: 14px;
         color: @font-black;
         background-color: @content-gray;
         >p{
             margin: 0;
+        }
+        .description{
+            font-size: 12px;
+            color: @dark-gray;
         }
     }
     .content-body{
@@ -84,6 +88,27 @@
         font-size: 14px;
         color: @font-black;
         background-color: #fff;
+    }
+    .table-opera{
+        position: relative;
+        padding: 5px 20px;
+        background-color: @content-gray;
+        .table-opera-content{
+            padding: 15px 0px;
+        }
+        .opera-info{
+            display: inline-block;
+            line-height: 40px;
+            font-size: 14px;
+            color: @font-black;
+        }
+        >.btn{
+            margin-top: 14px;
+            margin-bottom: 4px;
+        }
+    }
+    .tips{
+        color: @content-green;
     }
 }
 .overview-s{
@@ -254,6 +279,59 @@
         .count-box-body{
             width: 100%;
             height: 219px;
+        }
+    }
+}
+.pay-content{
+    >h2{
+        margin: 0;
+        margin-bottom: 20px;
+        font-size: 18px;
+        color: @font-black;
+    }
+    .pay-types,.pay-money{
+        margin: 0;
+        padding: 20px 0px;
+    }
+    .pay-types-header{
+        width: 80px;
+        display: inline-block;
+        float: left;
+        padding-right: 20px;
+        text-align: justify;
+    }
+    .pay-money .pay-types-header{
+        line-height: 30px;
+    }
+    .pay-types-detail{
+        display: inline-block;
+        width: 150px;
+    }
+    .checkbox-lable{
+        margin-right: 10px;
+    }
+    .pay-money-detail{
+        display: inline-block;
+        >input{
+            float: left;
+            margin-right: 10px;
+        }
+        .btn{
+            float: left;
+        }
+    }
+    .bank-list{
+        padding-top: 0px;
+        padding-left: 80px;
+    }
+    .bank-item{
+        margin-right: 30px;
+        height: 80px;
+        line-height: 80px;
+        display: inline-block;
+        float: left;
+        .checkbox-inline{
+            padding-left: 0;
         }
     }
 }

@@ -1,0 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<aside class="pro-sidebar">
+  <section class="s-bar">
+    <ul class="pro-sidebar-menu">
+      <li class="header">账户管理</li>
+      <li ng-class="{active: isActive('user/base')}">
+        <a href="#/user/base"><span>基本信息</span></a>
+      </li>
+      <li ng-class="{active: isActive('/user/pwd')}">
+        <a href="#/user/pwd"><span>修改密码</span></a>
+      </li>
+      <li ng-class="{active: isActive('/user/log')}">
+        <a href="#/user/log"><span>操作日志</span></a>
+      </li>
+      <li ng-class="{active: isActive('/user/report')}">
+        <a href="#/user/report"><span>报告设置</span></a>
+      </li>
+    </ul>
+  </section>
+</aside>
