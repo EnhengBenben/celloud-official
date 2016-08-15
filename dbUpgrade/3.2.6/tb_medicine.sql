@@ -48,13 +48,11 @@ INSERT INTO `tb_medicine` VALUES ('11', '84', 'E746-T751del', 'E746-T751delELREA
 INSERT INTO `tb_medicine` VALUES ('12', '84', 'E746-S752>V  ', 'E746-S752>V', '对易瑞沙和特罗凯敏感，请结合临床情况进行诊断', '19', '说明书');
 INSERT INTO `tb_medicine` VALUES ('13', '84', 'E746-T751>A', 'E746-T751>A', '对易瑞沙和特罗凯敏感，请结合临床情况进行诊断', '19', '说明书');
 INSERT INTO `tb_medicine` VALUES ('14', '84', 'E746-S752>A  ', 'E746-S752>A', '对易瑞沙和特罗凯敏感，请结合临床情况进行诊断', '19', '说明书');
-INSERT INTO `tb_medicine` VALUES ('15', '84', 'L747-A750>P', 'L747-A750>P', '对易瑞沙和特罗凯敏感，请结合临床情况进行诊断', '19', '说明书');
 INSERT INTO `tb_medicine` VALUES ('16', '84', 'L747-T751>Q', 'L747-T751>Q', '对易瑞沙和特罗凯敏感，请结合临床情况进行诊断', '19', '说明书');
 INSERT INTO `tb_medicine` VALUES ('17', '84', 'E746-S752>D', 'E746-S752>D', '对易瑞沙和特罗凯敏感，请结合临床情况进行诊断', '19', '说明书');
 INSERT INTO `tb_medicine` VALUES ('18', '84', 'L747-E749del', 'L747-E749delLRE', '对易瑞沙和特罗凯敏感，请结合临床情况进行诊断', '19', '说明书');
 INSERT INTO `tb_medicine` VALUES ('19', '84', 'L747-A750>P', 'L747-A750>P', '对易瑞沙和特罗凯敏感，请结合临床情况进行诊断', '19', '说明书');
 INSERT INTO `tb_medicine` VALUES ('20', '84', 'L747-T751>P', 'L747-T751>P', '对易瑞沙和特罗凯敏感，请结合临床情况进行诊断', '19', '说明书');
-INSERT INTO `tb_medicine` VALUES ('21', '84', 'L747-T751del', 'L747-T751delLREAT', '对易瑞沙和特罗凯敏感，请结合临床情况进行诊断', '19', '说明书');
 INSERT INTO `tb_medicine` VALUES ('22', '84', 'L747-S752del', 'L747-S752delLREATS', '对易瑞沙和特罗凯敏感，请结合临床情况进行诊断', '19', '说明书');
 INSERT INTO `tb_medicine` VALUES ('23', '84', 'L747-P753>Q', 'L747-P753>Q', '对易瑞沙和特罗凯敏感，请结合临床情况进行诊断', '19', '说明书');
 INSERT INTO `tb_medicine` VALUES ('24', '84', 'L747-T751>S', 'L747-T751>S', '对易瑞沙和特罗凯敏感，请结合临床情况进行诊断', '19', '说明书');
@@ -80,3 +78,5 @@ INSERT INTO `tb_medicine` VALUES ('43', '84', 'G863D', 'G863D', '对易瑞沙和
 INSERT INTO `tb_medicine` VALUES ('44', '84', '野生型', '野生型', '检测结果野生型，不建议使用易瑞沙和特罗凯，请结合临床情况进行诊断', '', '');
 INSERT INTO `tb_medicine` VALUES ('45', '84', '未检测到', '未检测到', '不建议使用易瑞沙和特罗凯，请结合临床情况进行诊断', '', '');
 INSERT INTO `tb_medicine` VALUES ('46', '84', '其他突变', '其他突变', '1）18,19,21对易瑞沙和特罗凯敏感，请结合临床情况进行诊断\r\n2）前端插入（ E762-Y764 ）与EGFR-TKI疾病控制有关，20外显子后端的插入（A767-C775）与EGFR-TKI耐药相关', '', '');
+
+update tb_medicine set advice = '不建议使用易瑞沙和特罗凯，请结合临床情况进行诊断' where id = 44;
