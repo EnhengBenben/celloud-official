@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div class="pagination text-center">
-<%--   <c:if test="${pageList.datas.size()>0}"> --%>
 	<ul class="pages pull-left">
       <li class="first-page">
         <a id="prev-page" data-click="pagination-btn" data-page="1" href="javascript:void(0);">首页</a>
@@ -123,5 +122,4 @@
 		</select>条
 	  </li>
 	</ul>
-<%--   </c:if> --%>
 </div>

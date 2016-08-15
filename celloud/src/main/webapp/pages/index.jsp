@@ -56,10 +56,10 @@
 	  </div>
 	</nav>
   </header>
-  <aside class="sidebar">
+  <aside class="sidebar collapsed" id="common-sidebar">
     <section class="s-bar" ng-controller="sidebarController">
       <div class="sidebar-collapse">
-        <a href="#"><i class="left-indent-icon"></i></a>
+        <a href="#" ng-model="sidebar-collapse"><i class="left-indent-icon"></i></a>
       </div>
       <ul class="sidebar-menu">
         <li class="header">产品与服务</li>
@@ -73,7 +73,7 @@
           <a href="javascript:void(0)"><i class="experiment-icon"></i><span>实验管理</span></a>
         </li>
         <li ng-class="{active: isActive('/data')}">
-          <a href="javascript:void(0)"><i class="data-icon"></i><span>数据管理</span></a>
+          <a href="#/data"><i class="data-icon"></i><span>数据管理</span></a>
         </li>
         <li ng-class="{active: isActive('/report')}">
           <a href="javascript:void(0)"><i class="report-icon"></i><span>报告管理</span></a>

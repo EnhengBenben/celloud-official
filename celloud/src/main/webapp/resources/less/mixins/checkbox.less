@@ -1,0 +1,33 @@
+/*复选框*/
+.checkbox-lable{
+    position: relative;
+    min-height: 16px;
+    width: 16px;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    .checkbox{
+        display: none;
+    }
+    .info{
+        position: absolute;
+        top: 20%;
+        left: 0;
+        height: 16px;
+        width: 16px;
+        background-color: #fff;
+        display: inline-block;
+        color:#fff;
+        border: 1px solid rgba(0,0,0,0.15);
+        .border-radius(4px);
+        vertical-align: middle;
+        line-height: 1;
+    }
+    .checkbox:checked + .info:after{
+        width: 12px;
+        height: 12px;
+        color: @content-green;
+        content: "✔";
+        display: inline-block;
+    }
+}

@@ -13,7 +13,10 @@
         <thead>
           <tr>
             <th>
-              
+              <label class="checkbox-lable">
+                <input class="checkbox" type="checkbox" name="demo-checkbox1">
+                <span class="info"></span>
+              </label>
             </th>
             <th>文件名称</th>
             <th>产品标签</th>
@@ -25,7 +28,12 @@
         </thead>
         <tbody>
           <tr ng-repeat="file in dataList.datas">
-            <td></td>
+            <td>
+              <label class="checkbox-lable">
+                <input class="checkbox" type="checkbox" name="demo-checkbox1">
+                <span class="info"></span>
+              </label>
+            </td>
             <td>{{file.fileName}}</td>
             <td></td>
             <td></td>

@@ -1,6 +1,6 @@
 (function(){
-  angular.module('appName')
-    .directive('bsActiveLink', ['$location', function ($location) {
+  angular.module('celloudApp')
+    .directive('collapse-sidebar', ['$location', function ($location) {
       return {
           restrict: 'A', //use as attribute 
           replace: false,

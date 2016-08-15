@@ -8,4 +8,7 @@
       return  viewLocation===$location.path();
     };
   });
+  
+  commonControllers.controller("collapseSidebarController", function($scope){
+  });
 })();
