@@ -115,6 +115,15 @@ public class DataAction {
 		return mv;
 	}
 
+    @RequestMapping("dataPageList")
+    @ResponseBody
+    public PageList<DataFile> dataPageList(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        Page pager = new Page(page, size);
+        return dataService.dataAllList(pager, ConstantsData.getLoginUserId());
+    }
+
 	/**
 	 * 根据条件获取数据列表
 	 * 

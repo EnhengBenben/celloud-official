@@ -56,15 +56,15 @@
 	  </div>
 	</nav>
   </header>
-  <aside class="sidebar collapsed">
-    <section class="s-bar" ng-controller="commonSidebarController">
+  <aside class="sidebar">
+    <section class="s-bar" ng-controller="sidebarController">
       <div class="sidebar-collapse">
         <a href="#"><i class="left-indent-icon"></i></a>
       </div>
       <ul class="sidebar-menu">
         <li class="header">产品与服务</li>
-        <li>
-          <a href="javascript:void(0)"><i class="overview-icon"></i><span>我的工作台</span></a>
+        <li ng-class="{active: isActive('/')}">
+          <a href="#/"><i class="overview-icon"></i><span>我的工作台</span></a>
         </li>
         <li>
           <a href="javascript:void(0)"><i class="sample-icon"></i><span>样本采集</span></a>
@@ -72,10 +72,10 @@
         <li>
           <a href="javascript:void(0)"><i class="experiment-icon"></i><span>实验管理</span></a>
         </li>
-        <li>
+        <li ng-class="{active: isActive('/data')}">
           <a href="javascript:void(0)"><i class="data-icon"></i><span>数据管理</span></a>
         </li>
-        <li>
+        <li ng-class="{active: isActive('/report')}">
           <a href="javascript:void(0)"><i class="report-icon"></i><span>报告管理</span></a>
         </li>
         <li>
@@ -84,8 +84,8 @@
       </ul>
       <ul class="sidebar-menu">
         <li class="header">用户中心</li>
-        <li>
-          <a href="javascript:void(0)"><i class="account-icon"></i><span>账号管理</span></a>
+        <li ng-class="{active: isActive('/user')}">
+          <a href="#/user/base"><i class="account-icon"></i><span>账号管理</span></a>
         </li>
         <li>
           <a href="javascript:void(0)"><i class="qa-icon"></i><span>问题反馈</span></a>
@@ -105,9 +105,10 @@
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
   
-<%--   <script src="<%=request.getContextPath()%>/js/config/route.js"></script> --%>
-  <script src="<%=request.getContextPath()%>/js/common/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/data/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/data/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/config/routeProvider.js"></script>
+  <script src="<%=request.getContextPath()%>/js/common/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/application.js"></script>
 </body>
 </html>

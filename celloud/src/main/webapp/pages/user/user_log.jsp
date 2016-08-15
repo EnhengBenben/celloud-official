@@ -65,7 +65,6 @@
           </tr>
 	    </tbody>
 	  </table>
-<!-- 	   <div ng-include="../partial/_partial_pagination_common.jsp"></div> -->
-    <jsp:include page="../partial/_partial_pagination_common.jsp"></jsp:include>
+	  <ng-include src="'pages/partial/_partial_pagination_common.jsp'"></ng-include>
     </div>
 </div>

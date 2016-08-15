@@ -1,4 +1,4 @@
-(function(){
+ (function(){
   var celloudRounts = angular.module("celloudRounts",["ngRoute"]);
   celloudRounts.config(function($routeProvider){
     $routeProvider
@@ -16,6 +16,10 @@
     })
     .when('/user/report',{
       templateUrl: "pages/user/user_reportset.jsp"
+    })
+    .when('/data',{
+      templateUrl: "pages/data/data_list.jsp",
+      controller: "dataListController"
     })
     .otherwise({redirectTo:'/'});
   });

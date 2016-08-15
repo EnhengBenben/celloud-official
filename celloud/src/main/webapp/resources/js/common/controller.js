@@ -1,9 +1,11 @@
 (function(){
-  var celloudControoler = angular.module("celloudControoler",["ngRoute"]);
-  celloudControoler.controller("commonSidebarController", function($scope, $location){
-    $scope.isActive = function (viewLocation) {
-      var active = (viewLocation === $location.path());
-      return active;
+  var commonControllers = angular.module("commonControllers",["ngRoute"]);
+  commonControllers.controller("sidebarController", function($scope, $location){
+    $scope.isActive = function (viewLocation) { 
+      if(viewLocation != "/"){
+        return $location.path().indexOf(viewLocation) >=0;
+      }
+      return  viewLocation===$location.path();
     };
   });
-})()
+})();
