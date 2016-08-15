@@ -21,6 +21,10 @@
       templateUrl: "pages/data/data_list.jsp",
       controller: "dataListController"
     })
+    .when('/data/2',{
+      templateUrl: "pages/data/data_list.jsp",
+      controller: "dataPageController"
+    })
     .otherwise({redirectTo:'/'});
   });
 })()
