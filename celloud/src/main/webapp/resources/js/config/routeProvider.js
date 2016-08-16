@@ -6,7 +6,8 @@
       templateUrl: "pages/overview/overview.jsp"
     })
     .when('/user/base',{
-      templateUrl: "pages/user/user_base.jsp"
+      templateUrl: "pages/user/user_base.jsp",
+      controller: "userController"
     })
     .when('/user/pwd',{
       templateUrl: "pages/user/user_pwdreset.jsp"

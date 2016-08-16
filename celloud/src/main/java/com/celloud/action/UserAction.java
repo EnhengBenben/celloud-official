@@ -68,10 +68,10 @@ public class UserAction {
 	 * @return
 	 */
 	@RequestMapping("info")
-	public ModelAndView info() {
+    @ResponseBody
+    public User info() {
 		int userId = ConstantsData.getLoginUserId();
-		User user = userService.selectUserById(userId);
-		return new ModelAndView("user/user_main").addObject("user", user);
+        return userService.selectUserById(userId);
 	}
 
 	/**

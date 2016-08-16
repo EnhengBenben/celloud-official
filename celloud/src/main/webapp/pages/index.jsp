@@ -102,10 +102,15 @@
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
   
+  <script type="text/javascript" src="${pageContext.request.contextPath }/js/user/app.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath }/js/user/service.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath }/js/user/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/data/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/data/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/config/routeProvider.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/overview/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/overview/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/application.js"></script>
 </body>
 </html>
