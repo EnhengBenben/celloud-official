@@ -128,12 +128,12 @@ public class UserAction {
 	 * @return
 	 */
 	@RequestMapping("logInfo")
-	public ModelAndView logInfo(Page page) {
+    @ResponseBody
+    public PageList<ActionLog> logInfo(Page page) {
 		if (page == null) {
 			page = new Page();
 		}
-		PageList<ActionLog> pageList = logService.findLogs(ConstantsData.getLoginUserId(), page);
-		return new ModelAndView("user/user_log_list").addObject("pageList", pageList);
+        return logService.findLogs(ConstantsData.getLoginUserId(), page);
 	}
 
 	/**

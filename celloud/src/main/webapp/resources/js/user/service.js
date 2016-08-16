@@ -24,5 +24,9 @@
 		this.updateEmail = function(email){
 			return $http({method:"POST",url:'user/sendOldEmail',params:{"email":email}});
 		}
+		this.pageQueryLog = function(currentPage,pageSize){
+			pageSize = pageSize||10;
+			return $http({method:"POST",url:'user/logInfo',params:{"currentPage":currentPage,"pageSize":pageSize}});
+		}
 	});
 })();

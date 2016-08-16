@@ -14,7 +14,8 @@
       controller: "updatePassword"
     })
     .when('/user/log',{
-      templateUrl: "pages/user/user_log.jsp"
+      templateUrl: "pages/user/user_log.jsp",
+      controller: "pageQueryLog"
     })
     .when('/user/report',{
       templateUrl: "pages/user/user_reportset.jsp"

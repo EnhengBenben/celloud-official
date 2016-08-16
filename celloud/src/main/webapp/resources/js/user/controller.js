@@ -33,6 +33,15 @@
 			});
 		}
 	});
+	userApp.controller("pageQueryLog",function($scope,userService){
+		$scope.pageQueryLog = function(currentPage,pageSize){
+			userService.pageQueryLog(currentPage,pageSize).
+			success(function(dataList){
+				$scope.dataList = dataList;
+			});
+		}
+		$scope.pageQueryLog(1,10);
+	});
 	userApp.controller("updateEmail",function($scope,userService){
 		$scope.user = userService.getUserInfo();
 		$scope.isSend = false;
