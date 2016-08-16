@@ -6,7 +6,8 @@
 			return user;
 		}
 		this.updateUserInfo = function(user){
-			var deferred = $q.defer();// 假同步
+			// 假同步一
+			var deferred = $q.defer();
 			$http({method:"POST",url:'user/updateInfo',params:{"cellphone":user.cellphone}}).
 			success(function(data){
 				deferred.resolve(data);
@@ -15,6 +16,10 @@
 				deferred.reject(data);
 			});
 			return deferred.promise;
+		}
+		this.updatePassword = function(oldPassword,newPassword){
+			// 假同步二
+			return $http({method:"POST",url:'user/updatePassword',params:{"oldPassword":oldPassword,"newPassword":newPassword}});
 		}
 	});
 })();

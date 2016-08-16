@@ -18,6 +18,19 @@
 		};
 	});
 	userApp.controller("updatePassword",function($scope,userService){
-		
+		$scope.reset = function() {
+	        $scope.oldPwd = "";
+	        $scope.newPwd = "";
+	        $scope.confirmPwd = "";
+	    };
+	    $scope.updatePassword = function(){
+	    	userService.updatePassword($scope.oldPwd,$scope.newPwd).
+	    	success(function(data){
+	    		$scope.code = data.code;
+	    		$scope.message = data.message;
+	    	}).error(function(data) {
+
+			});
+		}
 	});
 })();

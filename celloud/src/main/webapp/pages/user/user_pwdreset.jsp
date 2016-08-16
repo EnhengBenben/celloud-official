@@ -12,36 +12,34 @@
         <p>完善基本信息，统计邮箱及手机绑定。</p>
       </div>
       <div class="content-body">
-        <form class="info-form" name="pwdForm" novalidate="novalidate">
+        <form class="info-form" name="pwdForm" novalidate="novalidate" ng-submit="updatePassword()">
           <div class="info-form-group">
             <label>原密码:</label>
             <div>
-                <input name="oldPwd" type="text" ng-model="oldPwd" ng-pattern="/^\d{3}$/" required />
-                <span class="input-alert" ng-show="pwdForm.oldPwd.$dirty && pwdForm.oldPwd.$invalid">用户名不能为空</span>
+                <input name="oldPwd" type="password" ng-model="oldPwd" required />
+               	<span class="input-alert" ng-show="pwdForm.oldPwd.$invalid">原始密码不能为空!</span>
+               	<span class="input-alert" ng-show="code==203">{{message}}</span>
             </div>
           </div>
           <div class="info-form-group">
             <label>新密码:</label>
             <div>
-                <input name="newPwd" type="text" ng-model="newPwd" />
-				<span class="input-alert" ng-show="userForm.cellphone.$dirty && userForm.cellphone.$invalid">用户名不能为空</span>
+                <input name="newPwd" type="password" ng-model="newPwd" ng-pattern="/^[\d\w_]{6,16}$/" required />
+               	<span class="input-alert" ng-show="pwdForm.newPwd.$invalid">密码为6-16位的字母、数字及下划线组合!</span>
             </div>
           </div>
           <div class="info-form-group">
             <label>确认密码:</label>
             <div>
-                <input name="confirmPwd" type="text" ng-model="confirmPwd" />
-                <span style="color:red">
-					请输入正确的手机号
-				</span>
-				<span class="input-alert" ng-show="userForm.cellphone.$dirty && userForm.cellphone.$invalid">用户名不能为空</span>
+                <input name="confirmPwd" type="password" ng-model="confirmPwd" />
+               	<span class="input-alert" ng-show="newPwd!=confirmPwd">确认密码与新密码不一致!</span>
             </div>
           </div>
           <div class="info-form-group">
             <label></label>
             <div>
-                <button type="reset" class="btn btn-cancel">重置</button>
-                <button type="submit" class="btn">提交</button>
+                <button class="btn btn-cancel" ng-click="reset()">重置</button>
+                <button type="submit" class="btn" ng-disabled="newPwd!=confirmPwd||pwdForm.$invalid">提交</button>
             </div>
           </div>
         </form>
