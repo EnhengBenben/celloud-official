@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <aside class="pro-sidebar">
   <section class="s-bar">
-    <ul class="pro-sidebar-menu">
+    <ul class="pro-sidebar-menu" ng-controller="sidebarController">
       <li class="header">账户管理</li>
       <li ng-class="{active: isActive('user/base')}">
         <a href="#/user/base"><span>基本信息</span></a>

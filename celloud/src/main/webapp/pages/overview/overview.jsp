@@ -116,7 +116,8 @@
 	        </div>
 	      </div>
 	      <div class="col-xs-12 col-md-6">
-	        <div class="count-box-head">
+	        <div class="count-box">
+	          <div class="count-box-head">
 	            <h5><i class="pie-icon"></i><span>数据大小</span></h5>
 	            <div class="switch-btn-group pull-right">
 	              <a><span class="s-btn">每天</span></a>
@@ -125,6 +126,7 @@
 	          </div>
 	          <div class="count-box-body">
 	          </div>
+	        </div>
 	      </div>
 	    </div>
 	  </section>

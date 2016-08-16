@@ -1,12 +1,14 @@
 /*按钮*/
 .btn{
     .button-size(0px, 18px, 14px, 18px, 6px);
-    min-width: 90px;
-    height: 30px;
+    height: 40px;
     display: inline-block;
     font-weight: bold;
     text-align: center;
     .button-variant(#fff,@content-green,@content-green);
+    >i {
+        margin-right: 4px;
+    }
     &.btn-cancel {
         .button-variant(@font-gray,@container-gray,@container-gray);
     }
@@ -56,7 +58,7 @@
 }
 
 /*信息框*/
-.info-form-group {
+.info-btn-group {
     position: relative;
     width: 270px;
     display: block;

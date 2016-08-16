@@ -15,7 +15,7 @@
       <div class="table-opera">
         <div class="table-opera-content">
           <div class="opera-info">您一共运行了<span class="tips">235</span>次流程，详细的运行记录请见下表</div>
-          <div class="info-form-group pull-right">
+          <div class="info-btn-group pull-right">
 		    <input class="field" type="text" placeholder="搜索" />
 		    <a class="action">搜索</a>
 		  </div>
