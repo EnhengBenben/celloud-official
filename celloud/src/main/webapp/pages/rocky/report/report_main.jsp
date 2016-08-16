@@ -203,7 +203,17 @@
 						</label>
 					</td>
 					<td>${report.sampleName }</td>
-					<td title="${report.fileName }" style="text-align: left;" name="data-name-td">${report.fileName }</td>
+					<td title="${report.fileName }" style="text-align: left;" name="data-name-td">
+						<c:choose>
+							<c:when test="${report.period ==2 }">
+								<a title="查看报告" style="color: #323232; font-size: 12px;" href="javascript:$report.showReport('${report.dataKey}','${report.projectId}','${report.appId}')"> ${report.fileName }</a>
+							</c:when>
+							<c:otherwise>
+								${report.fileName }
+							</c:otherwise>
+						</c:choose>
+
+					</td>
 					<td>${report.batch }</td>
 					<td>
 						<c:if test="${report.period==0 }">等待运行</c:if>
