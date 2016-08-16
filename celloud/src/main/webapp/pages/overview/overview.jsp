@@ -48,7 +48,7 @@
 	            <h1>{{map.countData}}<span>个</span></h1>
 	            <div class="footer">
 		          <span>数据总量</span>
-	              <a href="#"><span>详情</span><i class="next-icon"></i></a>
+	              <a href="#/data"><span>详情</span><i class="next-icon"></i></a>
 	            </div>
 	          </div>
 	        </li>
@@ -58,7 +58,7 @@
 	            <h1>{{map.sumData}}<span>{{map.format}}</span></h1>
 	            <div class="footer">
 	              <span>数据大小</span>
-	              <a href="#"><span>详情</span><i class="next-icon"></i></a>
+	              <a href="#/data"><span>详情</span><i class="next-icon"></i></a>
 	            </div>
 	          </div>
 	        </li>

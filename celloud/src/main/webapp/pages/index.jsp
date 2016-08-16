@@ -33,7 +33,12 @@
 	      </div>
 	    </div>
 	    <ul class="nav navbar-nav pull-left">
-	      <li><a class="" href="#"><i class="cubes-icon">&nbsp;</i></a></li>
+	    	<shiro:hasPermission name="rocky:product">
+		      <li><a class="" href="#"><i class="cubes-icon">&nbsp;</i></a></li>
+	    	</shiro:hasPermission>
+	    	<shiro:hasPermission name="bsi:product">
+		      <li><a class="" href="#"><i class="cubes-icon">&nbsp;</i></a></li>
+	    	</shiro:hasPermission>
 	      <li><a class="" href="#"><i class="upload-icon">&nbsp;</i></a></li>
 	    </ul>
 	    <ul class="nav navbar-nav pull-right">
