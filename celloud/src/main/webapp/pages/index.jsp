@@ -97,6 +97,9 @@
     </section>
   </aside>
   <div ng-view class="view-container"></div>
+  <script type="text/javascript">
+       window.CONTEXT_PATH = '<%=request.getContextPath()%>';
+  </script>
   <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
@@ -104,6 +107,7 @@
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
+  <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
   
   <script src="<%=request.getContextPath()%>/js/data/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/data/controller.js"></script>
@@ -111,6 +115,7 @@
   <script src="<%=request.getContextPath()%>/js/common/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/overview/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/overview/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/overview/userCount.js"></script>
   <script src="<%=request.getContextPath()%>/js/application.js"></script>
 </body>
 </html>
