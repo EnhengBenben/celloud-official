@@ -40,19 +40,19 @@
           <div class="info-form-group">
             <label>用户名称:</label>
             <div>
-                <input type="text" class="readonly" value="" />
+                <input type="text" class="readonly" ng-model="user.username" />
             </div>
           </div>
-          <div class="info-form-group">
+          <!-- <div class="info-form-group">
             <label>邮箱地址:</label>
             <div>
                 <input type="text" class="readonly" value="" />
             </div>
-          </div>
+          </div> -->
           <div class="info-form-group">
             <label>手机号码:</label>
             <div>
-                <input name="cellphone" type="text" id="input-phone" value="" />
+                <input name="cellphone" type="text" id="input-phone" ng-model="user.cellphone"sh />
             </div>
           </div>
           <div class="info-form-group">
