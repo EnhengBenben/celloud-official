@@ -21,5 +21,8 @@
 			// 假同步二
 			return $http({method:"POST",url:'user/updatePassword',params:{"oldPassword":oldPassword,"newPassword":newPassword}});
 		}
+		this.updateEmail = function(email){
+			return $http({method:"POST",url:'user/sendOldEmail',params:{"email":email}});
+		}
 	});
 })();

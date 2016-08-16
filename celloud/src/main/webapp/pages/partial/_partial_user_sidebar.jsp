@@ -12,8 +12,8 @@
       <li ng-class="{active: isActive('/user/log')}">
         <a href="#/user/log"><span>操作日志</span></a>
       </li>
-      <li ng-class="{active: isActive('/user/report')}">
-        <a href="#/user/report"><span>报告设置</span></a>
+      <li ng-class="{active: isActive('/user/email')}">
+        <a href="#/user/email"><span>修改邮箱</span></a>
       </li>
     </ul>
   </section>

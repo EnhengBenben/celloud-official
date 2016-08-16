@@ -22,7 +22,7 @@
           <div class="info-form-group">
             <label>用户名称:</label>
             <div>
-                <input name="username" type="text" id="input-username" class="readonly" ng-model="user.username" />
+                <input name="username" type="text" id="input-username" class="readonly" readonly="readonly" ng-model="user.username" />
             </div>
           </div>
           <div class="info-form-group">

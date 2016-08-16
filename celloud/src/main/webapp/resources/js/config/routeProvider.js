@@ -19,6 +19,10 @@
     .when('/user/report',{
       templateUrl: "pages/user/user_reportset.jsp"
     })
+    .when('/user/email',{
+      templateUrl: "pages/user/user_emailreset.jsp",
+      controller: "updateEmail"
+    })
     .when('/data',{
       templateUrl: "pages/data/data_list.jsp",
       controller: "dataListController"

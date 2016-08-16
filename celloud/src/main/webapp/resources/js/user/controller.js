@@ -33,4 +33,18 @@
 			});
 		}
 	});
+	userApp.controller("updateEmail",function($scope,userService){
+		$scope.user = userService.getUserInfo();
+		$scope.isSend = false;
+		$scope.updateEmail = function(){
+			userService.updateEmail($scope.user.email).
+			success(function(data){
+				if(data==1){
+					$scope.sendFail = true;
+				}else if(data==0){
+					$scope.sendSuccess = true;
+				}
+			})
+		}
+	});
 })();
