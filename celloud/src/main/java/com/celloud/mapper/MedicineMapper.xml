@@ -4,13 +4,14 @@
   <resultMap id="BaseResultMap" type="com.celloud.model.mysql.Medicine" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="app_id" property="appId" jdbcType="INTEGER" />
-    <result column="result" property="result" jdbcType="VARCHAR" />
+    <result column="result_simple" property="resultSimple" jdbcType="VARCHAR" />
+    <result column="result_detail" property="resultDetail" jdbcType="VARCHAR" />
     <result column="advice" property="advice" jdbcType="VARCHAR" />
     <result column="feature" property="feature" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, app_id, result, advice, feature, remark
+    id, app_id, result_simple, result_detail, advice, feature, remark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -23,11 +24,11 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.celloud.model.mysql.Medicine" >
-    insert into tb_medicine (id, app_id, result, 
+    insert into tb_medicine (id, app_id, result_simple, result_detail, 
       advice, feature, remark
       )
-    values (#{id,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{result,jdbcType=VARCHAR}, 
-      #{advice,jdbcType=VARCHAR}, #{feature,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{resultSimple,jdbcType=VARCHAR}, 
+      #{resultDetail,jdbcType=VARCHAR}, #{advice,jdbcType=VARCHAR}, #{feature,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.celloud.model.mysql.Medicine" >
@@ -39,8 +40,11 @@
       <if test="appId != null" >
         app_id,
       </if>
-      <if test="result != null" >
-        result,
+      <if test="resultSimple != null" >
+        result_simple,
+      </if>
+      <if test="resultDetail != null" >
+        result_detail,
       </if>
       <if test="advice != null" >
         advice,
@@ -59,8 +63,11 @@
       <if test="appId != null" >
         #{appId,jdbcType=INTEGER},
       </if>
-      <if test="result != null" >
-        #{result,jdbcType=VARCHAR},
+      <if test="resultSimple != null" >
+        #{result_simple,jdbcType=VARCHAR},
+      </if>
+      <if test="resultDetail != null" >
+        #{result_detail,jdbcType=VARCHAR},
       </if>
       <if test="advice != null" >
         #{advice,jdbcType=VARCHAR},
@@ -79,8 +86,11 @@
       <if test="appId != null" >
         app_id = #{appId,jdbcType=INTEGER},
       </if>
-      <if test="result != null" >
-        result = #{result,jdbcType=VARCHAR},
+      <if test="resultSimple != null" >
+        result_simple = #{resultSimple,jdbcType=VARCHAR},
+      </if>
+      <if test="resultDetail != null" >
+        result_detail = #{resultDetail,jdbcType=VARCHAR},
       </if>
       <if test="advice != null" >
         advice = #{advice,jdbcType=VARCHAR},
@@ -97,7 +107,8 @@
   <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.Medicine" >
     update tb_medicine
     set app_id = #{appId,jdbcType=INTEGER},
-      result = #{result,jdbcType=VARCHAR},
+      result_simple = #{resultSimple,jdbcType=VARCHAR},
+      result_detail = #{resultDetail,jdbcType=VARCHAR},
       advice = #{advice,jdbcType=VARCHAR},
       feature = #{feature,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR}
@@ -111,8 +122,8 @@
   		<if test="feature != null">
 		  	and m.feature = #{feature}
   		</if>
-  		<if test="result != null">
-		  	and m.result = #{result}
+  		<if test="resultDetail != null">
+		  	and m.result_detail = #{resultDetail}
   		</if>
   		<if test="appId != null">
 		  	and m.app_id = #{appId}
