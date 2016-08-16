@@ -7,7 +7,7 @@
     })
     .when('/user/base',{
       templateUrl: "pages/user/user_base.jsp",
-      controller: "userController"
+      controller: "updateBaseInfo"
     })
     .when('/user/pwd',{
       templateUrl: "pages/user/user_pwdreset.jsp"
