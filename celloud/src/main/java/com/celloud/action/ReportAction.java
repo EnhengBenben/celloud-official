@@ -2,6 +2,8 @@ package com.celloud.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -68,6 +70,7 @@ import com.celloud.model.mongo.Translate;
 import com.celloud.model.mongo.UGT;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Experiment;
+import com.celloud.model.mysql.Medicine;
 import com.celloud.model.mysql.Project;
 import com.celloud.model.mysql.Report;
 import com.celloud.model.mysql.Task;
@@ -116,6 +119,8 @@ public class ReportAction {
 	private TaskService taskService;
 	@Resource
 	private UserService userService;
+    @Resource
+    private MedicineService medicineService;
 
 	@ActionLog(value = "下载", button = "下载")
 	@RequestMapping("down")
@@ -2573,6 +2578,36 @@ public class ReportAction {
 		}
 		Map<String, Object> context = new HashMap<String, Object>();
 		EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
+
+        // 如果是普陀区中心医院则对结果进行处理
+        if (ConstantsData.getLoginCompanyId() == 25) {
+            // 获取长度特征值
+            String conclusion = egfr.getConclusion();
+            String feature = null;
+            String result = null;
+            if (StringUtils.isNotBlank(conclusion)) {
+                if (conclusion.startsWith("未检测到EGFR基因")) {
+                    result = "未检测到";
+                    feature = null;
+                } else if (conclusion.startsWith("野生型")) {
+                    result = "野生型";
+                    feature = null;
+                } else if (conclusion.startsWith("检测到EGFR") && !conclusion.contains("测序质量差")) {
+                    result = conclusion.substring("检测到EGFR基因".length(), conclusion.lastIndexOf("突变"));
+                    feature = egfr.getPos();
+                }
+                if (result != null) {
+                    Medicine medicine = medicineService.getByFeatureAndResultDetail(feature, result, appId);
+                    if (medicine == null) {
+                        medicine = medicineService.getByFeatureAndResultDetail(null, "其他突变", appId);
+                    }
+                    if (medicine != null) {
+                        egfr.setConclusion(egfr.getConclusion() + "\n" + medicine.getAdvice());
+                    }
+                }
+            }
+        }
+
 		Integer userId = ConstantsData.getLoginUserId();
 		Integer fileId = dataService.getDataByKey(dataKey).getFileId();
 		Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
@@ -2842,13 +2877,18 @@ public class ReportAction {
 	@RequestMapping("rocky/reportMain")
 	public ModelAndView rockyReportMain(@RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "20") int size, String sample, String condition,
-			@RequestParam(defaultValue = "updateDate") String sidx, @RequestParam(defaultValue = "desc") String sord) {
+			@RequestParam(defaultValue = "updateDate") String sidx, @RequestParam(defaultValue = "desc") String sord,
+			@RequestParam(name = "batches", required = false) ArrayList<String> batches,
+			@RequestParam(name = "periods", required = false) ArrayList<Integer> periods, String beginDate,
+			String endDate) throws ParseException {
 		ModelAndView mv = new ModelAndView("rocky/report/report_main");
 		Integer userId = ConstantsData.getLoginUserId();
 		Map<String, Object> periodMap = taskService.findTaskPeriodNum(AppConstants.APP_ID_ROCKY, userId);
 		List<String> batchList = dataService.getBatchList(userId);
 		Page pager = new Page(page, size);
-		PageList<Task> pageList = taskService.findRockyTasks(pager, sample, condition, sidx, sord);
+		PageList<Task> pageList = taskService.findRockyTasks(pager, sample, condition, sidx, sord, batches, periods,
+				beginDate == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(beginDate+" 00:00:00"),
+				endDate == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(endDate+" 23:59:59"));
 		mv.addObject("pageList", pageList);
 		periodMap.put("uploaded", batchList.size());
 		mv.addObject("periodMap", periodMap);

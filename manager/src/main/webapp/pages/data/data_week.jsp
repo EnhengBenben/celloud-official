@@ -32,7 +32,7 @@
 							    <tr>
 							        <th colspan="2" style="text-align: center;">前10活跃用户及登录次数</th>
 							        <th colspan="2" style="text-align: center;">前10活跃APP及运行次数</th>
-							        <th colspan="2" style="text-align: center;">数据量前10用户及数据大小</th>
+							        <th colspan="3" style="text-align: center;">数据量前10用户及数据大小</th>
 							    </tr>
 								<tr>
 									<th>用户名</th>
