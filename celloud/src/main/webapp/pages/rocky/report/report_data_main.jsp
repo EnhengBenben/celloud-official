@@ -69,5 +69,12 @@
 				</table>
 			</section>
 		</div>
+		<section>
+			<h4 style="text-align: center; margin-top: 20px;">
+				<a target="_blank" href="<%=request.getContextPath()%>/report/printRockyReport?projectId=${rocky.projectId}&dataKey=${rocky.dataKey}&appId=${rocky.appId}">
+					<i class="fa fa-search"></i> 点击查看详细报告
+				</a>
+			</h4>
+		</section>
 	</div>
 </div>

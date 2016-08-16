@@ -3,19 +3,19 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="step-navigation">
-	<div class="step">
+	<div class="step" id="upload-nav-step-one">
 		<div class="item">1</div>
 	</div>
-	<div class="step-line not-reached">
+	<div class="step-line not-reached" id="upload-nav-line-one">
 		<hr>
 	</div>
-	<div class="step not-reached">
+	<div class="step not-reached" id="upload-nav-step-two">
 		<div class="item">2</div>
 	</div>
-	<div class="step-line not-reached">
+	<div class="step-line not-reached" id="upload-nav-line-two">
 		<hr>
 	</div>
-	<div class="step not-reached">
+	<div class="step not-reached" id="upload-nav-line-three">
 		<div class="item">3</div>
 	</div>
 </div>

@@ -1,11 +1,15 @@
 var $upload = {
 	next : function() {
 		$("#upload-step-one").addClass("hide");
+		$("#upload-nav-line-one").removeClass("not-reached");
+		$("#upload-nav-step-two").removeClass("not-reached");
 		$("#upload-step-two").removeClass("hide");
 	},
 	back : function(){
 		$("#upload-step-two").addClass("hide");
 		$("#upload-step-one").removeClass("hide");
+		$("#upload-nav-line-one").addClass("not-reached");
+		$("#upload-nav-step-two").addClass("not-reached");
 	}
 }
 var rockyUpload = (function(rockyUpload) {
