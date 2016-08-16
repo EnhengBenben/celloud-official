@@ -6,8 +6,16 @@
       <li>数据管理</li>
     </ol>
     <div class="content">
-      <div class="content-header">
-        <p>完善基本信息，统计邮箱及手机绑定。</p>
+      <div class="table-opera">
+        <div class="table-opera-content">
+          <div class="opera-info">
+            <button class="btn"><i class="fa fa-play" aria-hidden="true"></i>运行</button>
+          </div>
+          <div class="info-btn-group pull-right">
+            <input class="field" type="text" placeholder="搜索" />
+            <a class="action">搜索</a>
+          </div>
+        </div>
       </div>
       <table class="table table-main">
         <thead>

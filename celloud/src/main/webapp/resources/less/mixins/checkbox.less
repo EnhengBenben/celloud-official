@@ -23,9 +23,13 @@
         vertical-align: middle;
         line-height: 1;
     }
+    .checkbox:checked + .info{
+        border: 1px solid @content-green;
+    }
     .checkbox:checked + .info:after{
         width: 12px;
         height: 12px;
+        padding-left: 2px;
         color: @content-green;
         content: "✔";
         display: inline-block;

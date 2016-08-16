@@ -33,7 +33,12 @@
 	      </div>
 	    </div>
 	    <ul class="nav navbar-nav pull-left">
-	      <li><a class="" href="#"><i class="cubes-icon">&nbsp;</i></a></li>
+	    	<shiro:hasPermission name="rocky:product">
+		      <li><a class="" href="#"><i class="cubes-icon">&nbsp;</i></a></li>
+	    	</shiro:hasPermission>
+	    	<shiro:hasPermission name="bsi:product">
+		      <li><a class="" href="#"><i class="cubes-icon">&nbsp;</i></a></li>
+	    	</shiro:hasPermission>
 	      <li><a class="" href="#"><i class="upload-icon">&nbsp;</i></a></li>
 	    </ul>
 	    <ul class="nav navbar-nav pull-right">
@@ -41,15 +46,12 @@
 	      <li><a href="#"><i class="bell-icon">&nbsp;</i></a></li>
 	      <li><a href="#"><i class="money-icon">&nbsp;</i></a></li>
 	      <li class="dropdown">
-	        <a href="#" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+	        <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
 	          <i class="user-icon">&nbsp;</i>
 	        </a>
 	        <ul class="dropdown-menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#">Separated link</a></li>
+              <li><a class="btn" href="#">个人信息</a></li>
+              <li><a class="btn btn-cancel" href="#">退出</a></li>
             </ul>
 	      </li>
 	    </ul>
@@ -59,7 +61,7 @@
   <aside class="sidebar collapsed" id="common-sidebar">
     <section class="s-bar" ng-controller="sidebarController">
       <div class="sidebar-collapse">
-        <a href="#" ng-model="sidebar-collapse"><i class="left-indent-icon"></i></a>
+        <a href="#"><i class="left-indent-icon"></i></a>
       </div>
       <ul class="sidebar-menu">
         <li class="header">产品与服务</li>
@@ -87,16 +89,19 @@
         <li ng-class="{active: isActive('/user')}">
           <a href="#/user/base"><i class="account-icon"></i><span>账号管理</span></a>
         </li>
-        <li>
-          <a href="javascript:void(0)"><i class="qa-icon"></i><span>问题反馈</span></a>
+        <li ng-class="{active: isActive('/qa')}">
+          <a href="#/qa/consume"><i class="qa-icon"></i><span>问题反馈</span></a>
         </li>
-        <li>
-          <a href="javascript:void(0)"><i class="cost-icon"></i><span>费用中心</span></a>
+        <li ng-class="{active: isActive('/expense')}">
+          <a href="#/expense/consume"><i class="cost-icon"></i><span>费用中心</span></a>
         </li>
       </ul>
     </section>
   </aside>
   <div ng-view class="view-container"></div>
+  <script type="text/javascript">
+       window.CONTEXT_PATH = '<%=request.getContextPath()%>';
+  </script>
   <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
@@ -104,6 +109,7 @@
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
+  <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
   
   <script type="text/javascript" src="${pageContext.request.contextPath }/js/user/app.js"></script>
   <script type="text/javascript" src="${pageContext.request.contextPath }/js/user/service.js"></script>
@@ -114,6 +120,7 @@
   <script src="<%=request.getContextPath()%>/js/common/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/overview/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/overview/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/overview/userCount.js"></script>
   <script src="<%=request.getContextPath()%>/js/application.js"></script>
 </body>
 </html>

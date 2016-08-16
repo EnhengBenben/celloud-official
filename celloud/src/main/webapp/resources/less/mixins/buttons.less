@@ -1,12 +1,14 @@
 /*按钮*/
 .btn{
     .button-size(0px, 18px, 14px, 18px, 6px);
-    min-width: 90px;
-    height: 30px;
+    height: 40px;
     display: inline-block;
     font-weight: bold;
     text-align: center;
     .button-variant(#fff,@content-green,@content-green);
+    >i {
+        margin-right: 4px;
+    }
     &.btn-cancel {
         .button-variant(@font-gray,@container-gray,@container-gray);
     }
@@ -16,5 +18,74 @@
     &.-lg{
         height: 30px;
         line-height: 28px;
+    }
+    &.btn-money-confirm{
+         .button-size(0px, 10px, 14px, 10px, 6px);
+        min-width: 60px;
+        .button-variant(@font-gray,#e6e6e6,@light-gray);
+        width: 60px;
+        font-weight: 500;
+    }
+}
+
+
+/*搜索框 */
+.search-form { 
+    position: relative;
+    > .field {
+        width: 200px;
+        height: 40px;
+        padding-left: 45px;
+        border: 1px solid @light-gray;
+        .border-radius(4px);
+        font-size:14px;
+    }
+    > .action {
+        position: absolute;
+        left: 1px;
+        top: 1px;
+        display: block;
+        width: 38px;
+        height: 38px;
+        padding-top: 3px;
+        .border-radius(20px);
+        float: left;
+        font-size: 20px;
+        text-align: center;
+        background: @content-green;
+        color: #fff;
+    }
+}
+
+/*信息框*/
+.info-btn-group {
+    position: relative;
+    width: 270px;
+    display: block;
+    > .field {
+        width: 270px;
+        height: 40px;
+        font-size:14px;
+        padding-left: 10px;
+        padding-right: 65px;
+        border: 1px solid @light-gray;
+        .border-radius(4px);
+        color: @font-gray;
+    }
+    > .action {
+        position: absolute;
+        left: 210px;
+        top: 1px;
+        width: 60px;
+        height: 38px;
+        display: block;
+        float: left;
+        line-height: 38px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        color: #fff;
+        .border-radius(4px);
+        background: @content-green;
     }
 }
