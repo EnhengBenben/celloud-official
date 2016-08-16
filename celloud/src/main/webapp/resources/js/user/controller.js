@@ -17,4 +17,7 @@
 			return flag;
 		};
 	});
+	userApp.controller("updatePassword",function($scope,userService){
+		
+	});
 })();

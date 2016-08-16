@@ -12,23 +12,32 @@
         <p>完善基本信息，统计邮箱及手机绑定。</p>
       </div>
       <div class="content-body">
-        <form class="info-form">
+        <form class="info-form" name="pwdForm" novalidate="novalidate">
           <div class="info-form-group">
             <label>原密码:</label>
             <div>
-                <input type="text" class="readonly" value="" />
+                <input name="oldPwd" type="text" ng-model="oldPwd" ng-pattern="/^\d{3}$/" required />
+                <span style="color:red" ng-show="pwdForm.oldPwd.$dirty && pwdForm.oldPwd.$invalid">
+					请输入原始密码!
+				</span>
             </div>
           </div>
           <div class="info-form-group">
             <label>新密码:</label>
             <div>
-                <input type="text" class="readonly" value="" />
+                <input name="newPwd" type="text" ng-model="newPwd" />
+                <span style="color:red" ng-show="userForm.cellphone.$dirty && userForm.cellphone.$invalid">
+					请输入正确的手机号
+				</span>
             </div>
           </div>
           <div class="info-form-group">
             <label>确认密码:</label>
             <div>
-                <input name="cellphone" type="text" id="input-phone" value="" />
+                <input name="confirmPwd" type="text" ng-model="confirmPwd" />
+                <span style="color:red" ng-show="userForm.cellphone.$dirty && userForm.cellphone.$invalid">
+					请输入正确的手机号
+				</span>
             </div>
           </div>
           <div class="info-form-group">
