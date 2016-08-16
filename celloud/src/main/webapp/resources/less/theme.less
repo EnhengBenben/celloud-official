@@ -1,5 +1,4 @@
-@import "param.less";
-.theme(@bg-color,@font-color,@text-color,@border-color){
+.theme(@bg-color,@font-color,@border-color){
     .common-sidebar{
         > .menu .treeview{
             &.-active>a {
@@ -15,7 +14,7 @@
         color: @font-color;
     }
     .table-main>tbody>tr:hover>td>a.disabled>i {
-        color: @bg-gray;
+        color: @light-gray;
     }
     .table-main>tbody>tr{
         &:hover, &.checked{
@@ -63,9 +62,8 @@
         border-color: @border-color;
     }
 }
-
 .rocky{
-    .theme(@rocky-bg-color,@rocky-font-color,@rocky-text-color,@rocky-border-color);
+    .theme(@rocky-bg-color,@rocky-font-color,@rocky-border-color);
     .common-sidebar{
         > .menu .treeview{
             &.-active>a {

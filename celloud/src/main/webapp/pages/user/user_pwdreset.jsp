@@ -17,27 +17,24 @@
             <label>原密码:</label>
             <div>
                 <input name="oldPwd" type="text" ng-model="oldPwd" ng-pattern="/^\d{3}$/" required />
-                <span style="color:red" ng-show="pwdForm.oldPwd.$dirty && pwdForm.oldPwd.$invalid">
-					请输入原始密码!
-				</span>
+                <span class="input-alert" ng-show="pwdForm.oldPwd.$dirty && pwdForm.oldPwd.$invalid">用户名不能为空</span>
             </div>
           </div>
           <div class="info-form-group">
             <label>新密码:</label>
             <div>
                 <input name="newPwd" type="text" ng-model="newPwd" />
-                <span style="color:red" ng-show="userForm.cellphone.$dirty && userForm.cellphone.$invalid">
-					请输入正确的手机号
-				</span>
+				<span class="input-alert" ng-show="userForm.cellphone.$dirty && userForm.cellphone.$invalid">用户名不能为空</span>
             </div>
           </div>
           <div class="info-form-group">
             <label>确认密码:</label>
             <div>
                 <input name="confirmPwd" type="text" ng-model="confirmPwd" />
-                <span style="color:red" ng-show="userForm.cellphone.$dirty && userForm.cellphone.$invalid">
+                <span style="color:red">
 					请输入正确的手机号
 				</span>
+				<span class="input-alert" ng-show="userForm.cellphone.$dirty && userForm.cellphone.$invalid">用户名不能为空</span>
             </div>
           </div>
           <div class="info-form-group">

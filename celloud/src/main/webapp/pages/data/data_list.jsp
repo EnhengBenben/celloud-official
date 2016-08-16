@@ -47,7 +47,7 @@
             <td></td>
             <td></td>
             <td>{{file.createDate}}</td>
-            <td></td>
+            <td><a href="javascript:void(0)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
           </tr>
         </tbody>
       </table>
