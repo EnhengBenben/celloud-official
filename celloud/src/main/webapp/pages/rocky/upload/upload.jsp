@@ -80,10 +80,10 @@
 	<p>温馨提示：</p>
 	<p>1、拖拽或者选择文件都可以实现文件上传</p>
 	<p>
-		2、选择的文件格式应该是类似于test.<font color="red">R1</font>.fq.gz、test.<font color="red">R2</font>.fq.gz
+		2、选择的文件格式应该是类似于test.<font color="#de4c95">R1</font>.fq.gz、test.<font color="#de4c95">R2</font>.fq.gz
 	</p>
 	<p>
-		3、程序自动识别含<font color="red">R1</font>、<font color="red">R2</font>的成对文件并自动运行
+		3、程序自动识别含<font color="#de4c95">R1</font>、<font color="#de4c95">R2</font>的成对文件并自动运行
 	</p>
 </div>
 <div class="tips hide" id="upload-tip-three" style="margin-top: 20px;">
