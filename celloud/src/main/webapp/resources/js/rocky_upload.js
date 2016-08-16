@@ -1,15 +1,31 @@
 var $upload = {
-	next : function() {
-		$("#upload-step-one").addClass("hide");
+	stepOne : function(){
+		$(".steps").addClass("hide");
+		$("#upload-nav-step-three").addClass("not-reached");
+		$("#upload-nav-step-two").addClass("not-reached");
+		$("#upload-step-one").removeClass("hide");
+		$(".step-line").addClass("not-reached")
+		$(".tips").addClass('hide');
+		$("#batch-info-input").val('');
+		$("#upload-tip-one").removeClass("hide");
+	},
+	stepTwo : function() {
+		$(".steps").addClass("hide");
+		$(".step-line").addClass("not-reached")
 		$("#upload-nav-line-one").removeClass("not-reached");
 		$("#upload-nav-step-two").removeClass("not-reached");
 		$("#upload-step-two").removeClass("hide");
+		$(".tips").addClass('hide');
+		$("#upload-tip-two").removeClass("hide");
 	},
-	back : function(){
-		$("#upload-step-two").addClass("hide");
-		$("#upload-step-one").removeClass("hide");
-		$("#upload-nav-line-one").addClass("not-reached");
-		$("#upload-nav-step-two").addClass("not-reached");
+	stepThree : function(){
+		$(".steps").addClass("hide");
+		$("#upload-step-three").removeClass("hide");
+		$("#upload-nav-line-one").removeClass("not-reached");
+		$("#upload-nav-line-two").removeClass("not-reached");
+		$("#upload-nav-step-three").removeClass("not-reached");
+		$(".tips").addClass('hide');
+		$("#upload-tip-three").removeClass("hide");
 	}
 }
 var rockyUpload = (function(rockyUpload) {
@@ -85,10 +101,10 @@ var rockyUpload = (function(rockyUpload) {
 			}
 		});
 		uploader.bind("UploadComplete",function(uploader,files){
-			uploader.splice(0,uploader.files.length);
+			uploader.splice(0, uploader.files.length);
 			$("#upload-list-tbody").html('');
 			$("#upload-list-table").addClass("hide");
-			$upload.back();
+			$upload.stepThree();
 		});
 	};
 	rockyUpload.init();

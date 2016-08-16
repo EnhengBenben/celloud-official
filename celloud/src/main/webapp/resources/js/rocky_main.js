@@ -19,7 +19,7 @@ $(function() {
 		$base.itemBtnToggleActive($(this));
 	});
 	$("#upload-next").on("click", function() {
-		$upload.next();
+		$upload.stepTwo();
 	})
 	$("#to-sample-a").on("click",function() {
 		var url=contextPath + "/sample/rocky/sampleList";
