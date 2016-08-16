@@ -150,6 +150,7 @@
 		          <div class="count-box-body hide" id="count-app-month-chart">
 		          </div>
 		      </div>
+	        </div>
 	      </div>
 	    </div>
 	  </section>
