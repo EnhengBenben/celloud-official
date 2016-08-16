@@ -71,7 +71,31 @@
         background: @bg-black;
     }
 }
-
+.step-navigation{
+	height: 50px;
+	text-align: center;
+	> .step{
+		 display:inline-block;
+	}
+	> .step.not-reached{
+		> .item{
+			color: @font-gray;
+			border: 6px solid @bg-gray;
+		}
+	}
+	> .step-line{
+		width:30%;
+		display:inline-block;
+		> hr{
+			border:2px solid #f7c8da;
+		}
+	}
+	> .step-line.not-reached{
+		> hr{
+			border:2px solid #e3e3e3;
+		}
+	}
+}
 /*上传页面步骤*/
 .step{
     position: relative;

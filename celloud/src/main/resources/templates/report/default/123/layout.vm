@@ -26,7 +26,7 @@
 			<button class="btn btn-success" id="saveBtn">保存</button><br>
 			<button class="btn btn-success" id="resetBtn">重置</button>
 		</div>
-	<div class="main-container" style="padding:0px 70px;background-color: #f8f8f8;">
+	<div class="main-container" style="padding:0px 70px 0px 0px;background-color: #f8f8f8;">
 		<section class="content rocky">
 			<div id="container" class="common-container" style="margin-left: 0px;padding:0px;">
 				   #block("content") 
