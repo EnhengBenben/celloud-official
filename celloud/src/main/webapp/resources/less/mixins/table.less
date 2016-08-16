@@ -62,6 +62,10 @@
             >a.disabled {
                 color: @light-gray;
             }
+            >a.btn-link{
+                font-size: 12px;
+                text-decoration: underline;
+            }
         }
     }
     > .checkbox{
@@ -104,4 +108,30 @@
             border-bottom: none;
         }
     }
+    
+    &.info-table >tbody{
+        >tr>td {
+            height: 30px;
+            padding: 4px 10px;
+            line-height: 20px;
+            white-space: normal;
+            word-break: break-word;
+            text-align: left;
+            vertical-align: middle;
+            border-right: 1px solid @light-gray;
+            border-bottom: 1px solid @light-gray;
+            &:first-child{
+                text-align: center;
+            }   
+        }
+        >tr:last-child>td{
+            border-bottom: none;
+        }
+    }
+}
+.table-main>tbody>tr:hover>td,
+.table-main>tbody>tr:hover>td>a,
+.table-main>tbody>tr:hover>td>a>i{
+    background-color: @content-green;
+    color: #fff;
 }

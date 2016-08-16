@@ -17,18 +17,21 @@
             <label>原密码:</label>
             <div>
                 <input type="text" class="readonly" value="" />
+                <span class="input-alert">用户名不能为空</span>
             </div>
           </div>
           <div class="info-form-group">
             <label>新密码:</label>
             <div>
                 <input type="text" class="readonly" value="" />
+                <span class="input-alert">用户名不能为空</span>
             </div>
           </div>
           <div class="info-form-group">
             <label>确认密码:</label>
             <div>
                 <input name="cellphone" type="text" id="input-phone" value="" />
+                <span class="input-alert">用户名不能为空</span>
             </div>
           </div>
           <div class="info-form-group">
