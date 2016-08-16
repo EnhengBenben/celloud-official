@@ -1,4 +1,4 @@
-package com.celloud.action;
+package com.celloud.service;
 
 import com.celloud.model.mysql.Medicine;
 

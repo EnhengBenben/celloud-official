@@ -1,4 +1,4 @@
-package com.celloud.action;
+package com.celloud.service.impl;
 
 import javax.annotation.Resource;
 
@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 
 import com.celloud.mapper.MedicineMapper;
 import com.celloud.model.mysql.Medicine;
+import com.celloud.service.MedicineService;
 
 /** 
  * @author MQ: 

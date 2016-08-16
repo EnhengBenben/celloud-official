@@ -82,6 +82,7 @@ import com.celloud.service.CompanyService;
 import com.celloud.service.DataService;
 import com.celloud.service.DeptService;
 import com.celloud.service.ExperimentService;
+import com.celloud.service.MedicineService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
