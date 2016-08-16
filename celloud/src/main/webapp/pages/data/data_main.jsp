@@ -27,7 +27,7 @@
         <div class="box-header">
           <div id="manage-data-btns" class="box-title manage-btn" data-step="2" data-position="bottom" data-intro="" data-img="managerdata.png">
           	<a id="run-app-btn" class="btn btn-success btn-flat" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-play"></i> 运行</a>
-            <a id="del-data-btn" class="btn btn-warning btn-flat disabled" disabled><i class="fa fa-university"></i> 删除</a>
+            <a id="del-data-btn" class="btn btn-warning btn-flat disabled" disabled><i class="fa fa-university"></i> 归档</a>
             <a id="manage-data-btn" class="btn btn-info btn-flat disabled" disabled><i class="fa fa-pencil-square-o"></i> 编辑</a>
           </div>
           <div id="data-spin-div" class="box-tools col-xs-7"></div>
