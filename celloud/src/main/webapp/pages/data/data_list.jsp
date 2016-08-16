@@ -37,15 +37,18 @@
         <tbody>
           <tr ng-repeat="file in dataList.datas">
             <td>
+            	<!-- TODO icon -->
+		      <i class="fa fa-truck" aria-hidden="true" ng-show="file.isRunning==1"></i>
               <label class="checkbox-lable">
-                <input class="checkbox" type="checkbox" name="demo-checkbox1">
+                <input class="checkbox" type="checkbox" name="demo-checkbox1" ng-disabled="file.isRunning==1">
                 <span class="info"></span>
               </label>
             </td>
             <td>{{file.fileName}}</td>
-            <td></td>
-            <td></td>
-            <td></td>
+            	<!-- TODO show more -->
+            <td>{{file.appId}}--{{file.tagName}}--{{file.isRunning}}--{{file.fileId}}</td>
+            <td>{{file.batch}}</td>
+            <td>{{file.size}}</td>
             <td>{{file.createDate}}</td>
             <td></td>
           </tr>
