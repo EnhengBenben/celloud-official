@@ -1,18 +1,6 @@
 #override("content")
 <div class="content">
 	<div class="row">
-		<div class="col-xs-1">
-			<div class="affix" style="text-align:left;margin-top:10px;">
-				<ul class="nav">
-					<li><a href="#nav-baseinfo">患者信息</a> <li>
-					<li><a href="#nav-result">一、检测结果</a> <li>
-					<li><a href="#nav-description">二、结果说明</a> <li>
-					<li><a href="#nav-risk">三、风险管理</a> <li>
-					<li><a href="#nav-technology">四、技术参考说明</a> <li>
-					<li><a href="#nav-note">五、报告说明</a> <li>
-				</ul>
-			</div>
-		</div>
 		<div class="col-xs-11">
 			<div class="report-content" style="padding:10px;">
 				<section>
@@ -255,6 +243,23 @@
 				<section class="text-center">
 				*** 本报告为隐私报告，请妥善保管，无受检人书面授权严禁公布或分享！***
 				</section>
+			</div>
+		</div>
+		<div class="col-xs-1">
+			<div class="btn-group-vertical" style="margin:20px 0px;position: fixed;">
+				<button class="btn btn-success" id="printBtn">打印</button><br>
+				<button class="btn btn-success" id="saveBtn">保存</button><br>
+				<button class="btn btn-success" id="resetBtn">重置</button>
+			</div>
+			<div class="affix" style="text-align:left;bottom:100px;">
+				<ul class="nav">
+					<li><a href="#nav-baseinfo">患者信息</a> </li>
+					<li><a href="#nav-result">一、检测结果</a> </li>
+					<li><a href="#nav-description">二、结果说明</a> </li>
+					<li><a href="#nav-risk">三、风险管理</a> </li>
+					<li><a href="#nav-technology">四、技术参考说明</a> </li>
+					<li><a href="#nav-note">五、报告说明</a> </li>
+				</ul>
 			</div>
 		</div>
 	</div>
