@@ -12,7 +12,7 @@
         <p>完善基本信息，统计邮箱及手机绑定。</p>
       </div>
       <div class="content-body">
-        <form class="info-form" name="userForm" novalidate="novalidate">
+        <form class="info-form" name="userForm" novalidate="novalidate" ng-submit="updateUserInfo()">
           <div class="info-form-group avatar">
             <label for="photo">头像:</label>
             <div>
@@ -22,16 +22,9 @@
           <div class="info-form-group">
             <label>用户名称:</label>
             <div>
-                <input name="username" type="text" id="input-username" class="readonly" ng-model="user.username" />
-                <span class="input-alert">用户名不能为空</span>
+                <input name="username" type="text" id="input-username" class="readonly" readonly="readonly" ng-model="user.username" />
             </div>
           </div>
-          <!-- <div class="info-form-group">
-            <label>邮箱地址:</label>
-            <div>
-                <input type="text" class="readonly" value="" />
-            </div>
-          </div> -->
           <div class="info-form-group">
             <label>手机号码:</label>
             <div>
@@ -44,9 +37,9 @@
           <div class="info-form-group">
             <label></label>
             <div>
-                <button type="reset" class="btn btn-cancel">重置</button>
-                <button type="submit" class="btn" ng-click="updateUserInfo()"
-                	ng-disabled="userForm.cellphone.$dirty && userForm.cellphone.$invalid">提交</button>
+                <button ng-click="reset()" class="btn btn-cancel">重置</button>
+                <button type="submit" class="btn"
+                	ng-disabled="userForm.$invalid">提交</button>
             </div>
             <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="state" ng-cotroller="alertController">
 		      <button type="button" class="close" ng-click="state=false"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>

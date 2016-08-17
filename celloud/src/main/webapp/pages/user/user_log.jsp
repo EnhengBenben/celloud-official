@@ -20,29 +20,13 @@
 	      </tr>
 	    </thead>
 	    <tbody>
-	      <tr>
-	        <td>&nbsp;</td>
-	        <td></td>
-	        <td></td>
-	        <td></td>
-	        <td></td>
-	        <td></td>
-	      </tr>
-	      <tr>
-            <td>&nbsp;</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+	      <tr ng-repeat="log in dataList.datas">
+            <td>{{log.operate}}</td>
+            <td>{{log.logDate}}</td>
+            <td>{{log.ip}}</td>
+            <td>{{log.address}}</td>
+            <td>{{log.browser}}</td>
+            <td>{{log.os}}</td>
           </tr>
 	    </tbody>
 	  </table>

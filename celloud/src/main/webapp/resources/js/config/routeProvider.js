@@ -10,13 +10,19 @@
       controller: "updateBaseInfo"
     })
     .when('/user/pwd',{
-      templateUrl: "pages/user/user_pwdreset.jsp"
+      templateUrl: "pages/user/user_pwdreset.jsp",
+      controller: "updatePassword"
     })
     .when('/user/log',{
-      templateUrl: "pages/user/user_log.jsp"
+      templateUrl: "pages/user/user_log.jsp",
+      controller: "pageQueryLog"
     })
     .when('/user/report',{
       templateUrl: "pages/user/user_reportset.jsp"
+    })
+    .when('/user/email',{
+      templateUrl: "pages/user/user_emailreset.jsp",
+      controller: "updateEmail"
     })
     .when('/data',{
       templateUrl: "pages/data/data_list.jsp",
