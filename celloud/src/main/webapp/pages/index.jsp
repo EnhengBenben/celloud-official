@@ -89,7 +89,7 @@
           <a href="#/user/base"><i class="account-icon"></i><span>账号管理</span></a>
         </li>
         <li ng-class="{active: isActive('/qa')}">
-          <a href="#/qa/consume"><i class="qa-icon"></i><span>问题反馈</span></a>
+          <a href="#/qa"><i class="qa-icon"></i><span>问题反馈</span></a>
         </li>
         <li ng-class="{active: isActive('/expense')}">
           <a href="#/expense/consume"><i class="cost-icon"></i><span>费用中心</span></a>
@@ -98,6 +98,20 @@
     </section>
   </aside>
   <div ng-view class="view-container"></div>
+  <div id="tips-modal" class="modal tips-modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+          <h4 class="modal-title">提示</h4>
+        </div>
+        <div class="modal-body">
+          <h5><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{{errorInfo}}</h5>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  
   <script type="text/javascript">
        window.CONTEXT_PATH = '<%=request.getContextPath()%>';
   </script>

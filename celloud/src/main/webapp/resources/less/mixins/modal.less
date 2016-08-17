@@ -1,9 +1,10 @@
 .modal{
     .modal-dialog{
         margin: 80px auto;
+        width: 500px;
     }
     .modal-content{
-        width: 500px;
+        width: 100%;
         border: none;
         background-color: @content-gray;
         .modal-header{
@@ -60,6 +61,21 @@
         .checkbox-group{
             min-width: 120px;
             display: inline-block;
+        }
+    }
+    &.tips-modal{
+        .modal-dialog{
+            width: 300px;
+        }
+        .modal-content h5{
+            
+            text-align: center;
+            line-height: 30px;
+            >i{
+                margin-right: 20px;
+                font-size: 30px;
+                color: @alert-error-bg
+            }
         }
     }
 }

@@ -32,22 +32,21 @@
       templateUrl: "pages/data/data_list.jsp",
       controller: "dataPageController"
     })
-    
     .when('/expense/consume',{
       templateUrl: "pages/expense/expense_consume.jsp",
       controller: "dataListController"
     })
     .when('/expense/paydetail',{
-      templateUrl: "pages/expense/expense_pay.jsp",
-      controller: "dataPageController"
+      templateUrl: "pages/expense/expense_pay.jsp"
     })
     .when('/expense/paylist',{
-      templateUrl: "pages/expense/expense_paylist.jsp",
-      controller: "dataPageController"
+      templateUrl: "pages/expense/expense_paylist.jsp"
     })
     .when('/expense/invoice',{
-      templateUrl: "pages/expense/expense_invoicelist.jsp",
-      controller: "dataPageController"
+      templateUrl: "pages/expense/expense_invoicelist.jsp"
+    })
+    .when('/qa',{
+      templateUrl: "pages/qa/qa_list.jsp"
     })
     .otherwise({redirectTo:'/'});
   });

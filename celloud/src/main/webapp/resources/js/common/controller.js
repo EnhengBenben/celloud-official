@@ -15,9 +15,12 @@
         $scope.collapsed = true;
       }
     };
+    $rootScope.errorInfo = "";
+    
+    $rootScope.tipsModal = function(info){
+      $rootScope.errorInfo = info;
+      $("#tips-modal").modal("show");
+    }
   });
   
-  commonControllers.controller("collapseSidebarController", function($scope){
-    
-  });
 })();

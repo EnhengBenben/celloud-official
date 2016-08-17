@@ -1,7 +1,7 @@
 (function(){
-    var dependency = [
-         'data.$service',
-    ];
-    
-    angular.module("celloud.services",dependency);
+  var commonServices = angular.module("commonServices",["ngRoute"]);
+  
+  commonServices.factory("tipsModalService", function(){
+    $("#tips-modal").modal("show");
+  });
 }());
