@@ -1,11 +1,11 @@
 (function(){
 	expenseApp.controller("pageQueryConsume",function($scope,expenseService){
-		$scope.pageQueryLog = function(currentPage,pageSize){
-			userService.pageQueryLog(currentPage,pageSize).
+		$scope.pageQueryConsume = function(currentPage,pageSize){
+			expenseService.pageQueryConsume(currentPage,pageSize).
 			success(function(dataList){
 				$scope.dataList = dataList;
 			});
 		}
-		$scope.pageQueryLog(1,10);
+		$scope.pageQueryConsume(1,10);
 	});
 })();

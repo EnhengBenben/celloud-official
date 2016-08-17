@@ -41,6 +41,7 @@ public class ExpensesAction {
      */
     @ActionLog(value = "打开消费记录页面", button = "消费记录查看详情")
     @RequestMapping("toRunExpenseList")
+    @ResponseBody
     public PageList<Expenses> toRunExpenseList(Page page) {
         Integer userId = ConstantsData.getLoginUserId();
         logger.info("用户{}查看消费记录", userId);

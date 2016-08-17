@@ -34,7 +34,7 @@
     })
     .when('/expense/consume',{
       templateUrl: "pages/expense/expense_consume.jsp",
-      controller: "dataListController"
+      controller: "pageQueryConsume"
     })
     .when('/expense/paydetail',{
       templateUrl: "pages/expense/expense_pay.jsp"
