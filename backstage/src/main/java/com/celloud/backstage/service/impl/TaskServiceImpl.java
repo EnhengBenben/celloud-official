@@ -162,10 +162,8 @@ public class TaskServiceImpl implements TaskService {
                 + DateUtil.getDay(0, Calendar.SUNDAY)
                 + ",CelLoud平台统计，请查收。<br/>" + "&nbsp;&nbsp;<font style='color:red;'>目前平台共有" + companyCount
                 + "家医院在线</font>";
-        EmailUtils.getInstance()
-                .addTo(EmailUtils.weekMailTo).addCc(EmailUtils.weekMailCcTo.split("\\,"))
-                .setTitle(title).setContent(content).attach(filePath)
-                .send();
+        EmailUtils.getInstance().addTo(EmailUtils.weekMailTo).addCc(EmailUtils.weekMailCcTo.split("\\,"))
+                .setTitle(title).setContent(content).attach(filePath).send();
     }
 
     private void createWord(String basePath, String filePath, String colonyUsed) {
