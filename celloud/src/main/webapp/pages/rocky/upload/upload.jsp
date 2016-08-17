@@ -2,11 +2,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<div class="step-navigation">
+	<div class="step" id="upload-nav-step-one">
+		<div class="item">1</div>
+	</div>
+	<div class="step-line not-reached" id="upload-nav-line-one">
+		<hr>
+	</div>
+	<div class="step not-reached" id="upload-nav-step-two">
+		<div class="item">2</div>
+	</div>
+	<div class="step-line not-reached" id="upload-nav-line-two">
+		<hr>
+	</div>
+	<div class="step not-reached" id="upload-nav-step-three">
+		<div class="item">3</div>
+	</div>
+</div>
 <div class="content">
 	<div class="upload-content">
-		<div id="upload-step-one">
+		<div id="upload-step-one" class="steps">
 			<div class="step">
-				<div class="item">1</div>
 				<div class="info">第一步：请输入文件标签，输入标签可以方便后续的数据检索及体验更加便捷的服务</div>
 			</div>
 			<div class="form-inline">
@@ -18,14 +34,13 @@
 				<button id="upload-next" class="btn -confirm">下一步</button>
 			</div>
 		</div>
-		<div id="upload-step-two" class="hide">
+		<div id="upload-step-two" class="steps hide">
 			<div class="step">
-				<div class="item">2</div>
 				<div class="info">第二步：拖拽文件到下面指定区域或者点击指定位置的选择文件进行选择，后即可自动上传文件</div>
 			</div>
 			<div id="plupload-content" class="box-body plupload-content">
 				<div class="upload-text">
-					<i class="celicon -uploadgray"></i>拖拽文件到此或者点击选择文件上传
+					<i class="celicon -uploadgray"></i> 拖拽文件到此或者点击选择文件上传
 				</div>
 			</div>
 			<table class="table table-main hide" id="upload-list-table">
@@ -33,8 +48,8 @@
 					<tr>
 						<th>文件名</th>
 						<th>上传进度</th>
+						<th>剩余时间</th>
 						<th>上传速度</th>
-						<th>状态</th>
 						<th>操作</th>
 					</tr>
 				</thead>
@@ -42,5 +57,37 @@
 				</tbody>
 			</table>
 		</div>
+		<div id="upload-step-three" class="steps hide">
+			<div class="step">
+				<div class="info">第三步，上传完成</div>
+			</div>
+			<div class="box-body plupload-content">
+				<div class="upload-text">
+					<i class="celicon -uploadgray"></i>文件上传成功，继续上传，请点击
+					<a href="javascript:$upload.stepTwo();">继续添加</a>
+					或
+					<a href="javascript:$upload.stepOne();">新上传</a>
+				</div>
+			</div>
+		</div>
 	</div>
+</div>
+<div class="tips" id="upload-tip-one" style="margin-top: 20px;">
+	<p>温馨提示：</p>
+	<p>1、输入数据标签可以更方便的检索数据哦</p>
+</div>
+<div class="tips hide" id="upload-tip-two" style="margin-top: 20px;">
+	<p>温馨提示：</p>
+	<p>1、拖拽或者选择文件都可以实现文件上传</p>
+	<p>
+		2、选择的文件格式应该是类似于test.<font color="#de4c95">R1</font>.fq.gz、test.<font color="#de4c95">R2</font>.fq.gz
+	</p>
+	<p>
+		3、程序自动识别含<font color="#de4c95">R1</font>、<font color="#de4c95">R2</font>的成对文件并自动运行
+	</p>
+</div>
+<div class="tips hide" id="upload-tip-three" style="margin-top: 20px;">
+	<p>温馨提示：</p>
+	<p>1、上传完成，如需继续添加，请点击继续添加按钮，继续添加的文件和已完成上传的文件数据标签一样</p>
+	<p>2、上传完成，如需新上传文件，请点击新上传按钮，此处需要重新输入新的数据标签</p>
 </div>

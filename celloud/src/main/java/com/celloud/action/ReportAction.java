@@ -82,6 +82,7 @@ import com.celloud.service.CompanyService;
 import com.celloud.service.DataService;
 import com.celloud.service.DeptService;
 import com.celloud.service.ExperimentService;
+import com.celloud.service.MedicineService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
@@ -2579,24 +2580,32 @@ public class ReportAction {
 		Map<String, Object> context = new HashMap<String, Object>();
 		EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
 
-        // 获取长度特征值
-        String conclusion = egfr.getConclusion();
-        String feature = null;
-        String result = null;
-        if (conclusion.startsWith("未检测到EGFR基因")) {
-            result = "野生型";
-            feature = null;
-        } else if (conclusion.startsWith("检测到EGFR")) {
-            result = conclusion.substring("检测到EGFR基因".length(), conclusion.lastIndexOf("突变"));
-            feature = egfr.getPos();
-        }
-        if (result != null) {
-            Medicine medicine = medicineService.getByFeatureAndResult(feature, result, appId);
-            if (medicine == null) {
-                medicine = medicineService.getByFeatureAndResult(null, "其他突变", appId);
-            }
-            if (medicine != null) {
-                egfr.setConclusion(egfr.getConclusion() + "\n" + medicine.getAdvice());
+        // 如果是普陀区中心医院则对结果进行处理
+        if (ConstantsData.getLoginCompanyId() == 25) {
+            // 获取长度特征值
+            String conclusion = egfr.getConclusion();
+            String feature = null;
+            String result = null;
+            if (StringUtils.isNotBlank(conclusion)) {
+                if (conclusion.startsWith("未检测到EGFR基因")) {
+                    result = "未检测到";
+                    feature = null;
+                } else if (conclusion.startsWith("野生型")) {
+                    result = "野生型";
+                    feature = null;
+                } else if (conclusion.startsWith("检测到EGFR") && !conclusion.contains("测序质量差")) {
+                    result = conclusion.substring("检测到EGFR基因".length(), conclusion.lastIndexOf("突变"));
+                    feature = egfr.getPos();
+                }
+                if (result != null) {
+                    Medicine medicine = medicineService.getByFeatureAndResultDetail(feature, result, appId);
+                    if (medicine == null) {
+                        medicine = medicineService.getByFeatureAndResultDetail(null, "其他突变", appId);
+                    }
+                    if (medicine != null) {
+                        egfr.setConclusion(egfr.getConclusion() + "\n" + medicine.getAdvice());
+                    }
+                }
             }
         }
 

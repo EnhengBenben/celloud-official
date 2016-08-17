@@ -1,246 +1,267 @@
 #override("content")
 <div class="content">
-	<div class="report-content" style="padding:10px;">
-		<section>
-			<div>
-				<div class="col-xs-6" style="display:inline;"><img style="width:180px;height:42px;" src="$base/images/icon/barcode.jpg"></div>
-				<div class="col-xs-6 pull-right text-right">隐私报告 - 无受检人书面授权严禁公布或分享</div><br>
-			</div>
-			<div class="row">
-				<div class="col-xs-9"><h2>乳腺癌易感基因<small>(BRCA1/2)</small>检测报告</h2></div>
-				<div class="col-xs-3 pull-right text-center">
-					<div class="pull-right">
-					技术平台&nbsp;<br><img style="width:90px;height:35px;" src="$base/images/icon/login_logo.png">
+	<div class="row">
+		<div class="col-xs-11">
+			<div class="report-content" style="padding:10px;">
+				<section>
+					<div>
+						<div class="col-xs-6" style="display:inline;"><img style="width:180px;height:42px;" src="$base/images/icon/barcode.jpg"></div>
+						<div class="col-xs-6 pull-right text-right">隐私报告 - 无受检人书面授权严禁公布或分享</div><br>
 					</div>
+					<div class="row">
+						<div class="col-xs-9"><h2>乳腺癌易感基因<small>(BRCA1/2)</small>检测报告</h2></div>
+						<div class="col-xs-3 pull-right text-center">
+							<div class="pull-right">
+							技术平台&nbsp;<br><img style="width:90px;height:35px;" src="$base/images/icon/login_logo.png">
+							</div>
+						</div>
+					</div>
+				</section>
+				<hr style="height:2px;line-height:2px;border-top:2px dotted #3e3e3e;border-bottom:5px solid #3e3e3e;margin-top:0px;">
+				<section id="nav-baseinfo">
+					<form id="rockyBaseInfoForm" action="$base/report/updateRockyFilling">
+						<table class="table table-main">
+							<input type="hidden" name="id" value="$!rocky.id">
+							<thead>
+								<tr>
+									<th style="text-align:left;width:33%;">样本信息</th>
+									<th style="text-align:left;width:33%;">报告信息</th>
+									<th style="text-align:left;width:34%;">受检者信息</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td style="text-align:left;">
+										<label style="width:50px;text-align:right;font-weight:normal;">样本类型</label>：
+										<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[sampleType]" value="$!rocky.baseInfo.sampleType"></input><br>
+				    					<label style="width:50px;text-align:right;font-weight:normal;">送检时间</label>：
+				    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[sampleDeliveryTime]" value="$!rocky.baseInfo.sampleDeliveryTime"></input><br>
+				    					<label style="width:50px;text-align:right;font-weight:normal;">送检状态</label>：
+				    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[sampleStatus]" value="$!rocky.baseInfo.sampleStatus"></input><br>
+				    					<label style="width:50px;text-align:right;font-weight:normal;">收样中心</label>：
+				    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[sampleCollector]" value="$!rocky.baseInfo.sampleCollector"></input>
+									</td>
+									<td style="text-align:left;">
+										<label style="width:50px;text-align:right;font-weight:normal;">报告类型</label>：
+										<span style="text-align:left;font-weight:normal;white-space: normal;">BRAC1/BRAC2</span><br>
+				    					<span style="width:50px;text-align:right;font-weight:normal;">生成时间</span>：
+				    					<label style="text-align:left;font-weight:normal;white-space: normal;">$!rocky.baseInfo.createTime</label><br>
+				    					<label style="width:50px;text-align:right;font-weight:normal;">报告中心</label>：
+				    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[reportProvider]" value="$!rocky.baseInfo.reportProvider"></input>
+									</td>
+									<td style="text-align:left;">
+										<label style="width:50px;text-align:right;font-weight:normal;">受检人名</label>：
+										<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[examineeName]" value="$!rocky.baseInfo.examineeName"></input><br>
+				          				<label style="width:50px;text-align:right;font-weight:normal;">性别</label>：
+				          				<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[examineeGender]" value="$!rocky.baseInfo.examineeGender"></input><br>
+				    					<label style="width:50px;text-align:right;font-weight:normal;">受检人ID</label>：
+				    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[examineeNumber]" value="$!rocky.baseInfo.examineeNumber"></input><br>
+				    					<label style="width:50px;text-align:right;font-weight:normal;">订单编号</label>：
+				    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[examineeOrderNumber]" value="$!rocky.baseInfo.examineeOrderNumber"></input>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+				</section>
+				<h4 id="nav-result">一、检测结果：</h4>
+				<section style="border:1px solid #e3e3e3;background-color: #fff;">
+					<div class="result-div">
+						<p class="main">
+							#if($rocky.pathogenic)
+								发现<strong>致病相关</strong>突变！
+							#else
+								未发现<strong>致病相关</strong>突变！
+							#end
+						</p>
+						<p class="notice">注： 本报告中&nbsp;“致病相关”&nbsp;是指本系统采集到的已知研究结论中，受检人样本中存在的突变与疾病有相关性。</p>
+					</div>
+				</section>
+				<h4 style="margin-top:10px;" id="nav-description">二、结果说明：</h4>
+				<div class="report-result">
+					<section>
+						<p>
+							<strong>变异列表</strong>
+						</p>
+						<table class="table table-main -report">
+							<thead>
+								<tr>
+									<th>编号</th>
+									<th>基因</th>
+									<th>染色体位置</th>
+									<th>核苷酸变异</th>
+									<th>氨基酸变异</th>
+									<th>临床意义</th>
+								</tr>
+							</thead>
+							<tbody>
+							#foreach($record in $!rocky.records)
+								<tr>
+										<td>$!{velocityCount}</td>
+										<td>$!record.gene </td>
+										<td>$!record.chromosome</td>
+										<td>$!record.acids</td>
+										<td>$!record.nucleotides</td>
+										<td>$!record.significance</td>
+									</tr>
+							#end
+							</tbody>
+						</table>
+					</section>
+					<section>
+						<p>
+							<strong>变异描述</strong>
+						</p>
+						<table class="table table-main -report">
+							<tbody>
+							#foreach($record in $!rocky.records)
+								<tr>
+									<td style="width: 170px;">$record.gene:&nbsp;$record.acids</td>
+									<td>$record.description</td>
+									</tr>
+							#end
+							</tbody>
+						</table>
+					</section>
 				</div>
+				<h4 style="margin-top:10px;" id="nav-risk">三、风险管理：</h4>
+				<div class="report-result">
+					<section class="chapter">
+						<p>1、癌症风险评估</p><br>
+						<p>2、风险管理措施</p><br>
+						<p>3、家族其他成员风险管理</p><br>
+					</section>
+				</div>
+				<h4 style="margin-top:10px;" id="nav-technology">四、技术及参考说明：</h4>
+				<div class="report-result">
+					<section class="chapter">
+						<p class="paragraph">华木兰BRCA Mutat Scan&#8482;检测乳腺癌易感基因BRCA1/BRCA2的外显子区及其两侧的内含子连接区。按标准操作流程从受检者的血液、口腔组织中提取基因组DNA，经定量和质检合格后用于目标区域的扩增。目标区域外显子及两侧内含子连接区的由多对特异引物扩增富集。目标区域的测序利用二代测序技术（next-generation sequencing-based , NGS）的主流平台完成。</p>
+						<p class="paragraph">华木兰BRCA Mutat Scan&#8482;分析测序数据采用自主研发流程，遗传信息解读参考美国医学遗传学与基因组学学会（ACMG）联合分子病理学学会（AMP）发布的基因变异的解读指导原则，参考数据库包括人类基因组突变数据库（HGMD），国际生物技术信息中心（NCBI）数据库，美国国立卫生研究院(National Institutes of Health，NIH)乳腺癌研究中心数据库，公司自建中国人群乳腺癌突变信息数据库及其他公共数据库如PubMed、dbSNP、1000Genomes。</p>
+						<p class="paragraph">参考国际癌症研究机构（International Agency for Research on Cancer，IARC）的五级分类标准，Celloud将基因变异的临床意义分为：</p>
+						<dl>
+							<dt>
+								<label style="width: 180px;right;font-weight:normal;">5 -- Pathogenic</label>
+								致病的
+							</dt>
+							<dt>
+								<label style="width: 180px;right;font-weight:normal;">4 -- Likely pathogenic</label>
+								可能致病的
+							</dt>
+							<dt>
+								<label style="width: 180px;right;font-weight:normal;">3 -- Uncertain significance</label>
+								致病性不明确的
+							</dt>
+							<dt>
+								<label style="width: 180px;right;font-weight:normal;">2 -- Likely benign</label>
+								可能良性的
+							</dt>
+							<dt>
+								<label style="width: 180px;right;font-weight:normal;">1 -- Benign</label>
+								良性的
+							</dt>
+						</dl>
+					</section>
+					<section class="chapter">
+						<p>
+							<strong>5、Pathogenic Variants 致病突变</strong>
+						</p>
+						<p class="paragraph">根据已有报道知道该突变导致基因功能障碍，或者根据该突变导致蛋白功能缺失、影响蛋白相互作用而推测为致病突变。</p>
+						<p class="paragraph">已知致病</p>
+						<p class="paragraph">突变“已知”致病必须有充足的证据，包括：</p>
+						<dl>
+							<dt>a、文献中报道在某一特定种群的致病突变（如奠基者致病突变founder pathogenic variants）</dt>
+							<dt>b、在不同临床报道中不同患者的共同突变</dt>
+							<dt>c、不同家族中的基因分离</dt>
+							<dt>d、文献中的功能研究阐明：</dt>
+							<dd>a、蛋白功能缺失</dd>
+							<dd>b、蛋白功能加强</dd>
+							<dd>c、功能芯片中显示剪切异常</dd>
+							<dt>e、报道功能缺失突变明确与临床相关（包括移码突变、无义突变、剪切连接区突变）</dt>
+						</dl>
+						<p class="paragraph">预测致病</p>
+						<p class="paragraph">预测功能缺失包括移码突变、无义突变、剪切连接区突变，以及其实密码子中的改变，但是目前没有明确“知道”致病。突变氨基酸可能造成的短缺或畸形蛋白产物的影响是经过对比相似的已知、报道致病突变来预测。这种情况中，功能缺失造成疾病的机制一定是已知的。在没有其他相冲突的证据时，已知致病突变的氨基酸残基对应的碱基发生新的错意突变，该突变也被认为是预测致病突变。</p>
+					</section>
+					<section class="chapter">
+						<p>
+							<strong>4、Likely Pathogenic Variants 可能致病突变</strong>
+						</p>
+						<p class="paragraph">可能致病突变是根据其他已知致病突变预测可能致病。可能致病突变有多种证据可支持其致病性，包括：</p>
+						<dl>
+							<dt>a、突变发生在功能结构域中，或者是文献及已知致病突变证实的热点突变位置</dt>
+							<dt>b、突变发生在已知致病突变的氨基酸残基中</dt>
+							<dt>c、基于家族基因型分离研究或者认为/已知新突变与疾病相关</dt>
+							<dt>d、预测为高度保守的碱基或氨基酸并被软件预测为致病</dt>
+							<dt>e、无或者极低的等位基于频率与良性表型相关</dt>
+							<dt>f、在特异常染色体隐性遗传疾病患者中发现与已知致病突变发生反应的突变，或其他支持测试（如生化检测）</dt>
+						</dl>
+					</section>
+					<section class="chapter">
+						<p>
+							<strong>3、Variants of Unknown(Uncertain) Significance 未知突变</strong>
+						</p>
+						<p class="paragraph">未知突变或意义不明突变是没有充分证据，或者证据发生明显冲突，而不能确定是可能致病还是良性突变。证据不充分或者有冲突，包括以下几个方面：</p>
+						<dl>
+							<dt>a、不同功能分析显示相反的结果</dt>
+							<dt>b、与普遍表型相冲突的分离结果</dt>
+							<dt>c、在单独分析的疾病中较低的基因频率（如偏低的外显率，非孟德尔遗传等）</dt>
+							<dt>d、位于功能尚不明确的区域</dt>
+							<dt>e、缺乏充足的临床案例</dt>
+							<dt>f、缺乏足够的突变与临床表型相关的数据/证据</dt>
+						</dl>
+					</section>
+					<section class="chapter">
+						<p>
+							<strong>2、Likely Benign Variants 可能良性突变</strong>
+						</p>
+						<p class="paragraph">可能良性突变是根据其他已知良性突变推测为可能产生良性影响的突变。可能良性突变有多种证据可支持其良性影响，包括：</p>
+						<dl>
+							<dt>a、突变发生的位置不处于蛋白已知突变致病区域，或者文献中指出该突变是机体可接受的</dt>
+							<dt>b、在基于家族间基因型分离的研究中未发现与疾病有明显相关性</dt>
+							<dt>c、不处于进化保守区域或软件预测为良性</dt>
+							<dt>d、在特定种族人群中基因频率低，在人群数据库中没有较大意义</dt>
+							<dt>e、该突变与其他已知造成疾病分子同时发现</dt>
+							<dt>f、与疾病信息相关的突变在正常个体中被观察到</dt>
+							<dt>g、发生在无已知功能的重复区域中的插入或缺失</dt>
+						</dl>
+					</section>
+					<section class="chapter">
+						<p>
+							<strong>1、Benign Variants 良性突变</strong>
+						</p>
+						<p class="paragraph">良性突变没有已知临床报道该突变引起特定遗传疾病。</p>
+						<p class="paragraph">评估与病例相关的人群数据来进行良性分类。在400及以上个体中，常染色体显性或X-连锁隐性疾病等位基因频率>1%，或者常染色体隐性疾病等位该基因频率>3%，没有其他相反证据证明该基因致病的话，则认为该突变为良性突变。有相冲突的证据，则根据基因和疾病的信息重新评估。在稀有疾病中，等位基因频率可适当降低。</p>
+						<p class="paragraph">在已有证据支持或计算机算法预测为良性影响时，即使缺乏独立人群数据，沉默突变及剪切连接位点外的内含子突变也被分类为良性突变。</p>
+					</section>
+				</div>
+				<h4 style="margin-top:10px;" id="nav-note">五、报告说明：</h4>
+				<div class="report-result">
+					<section class="chapter">
+						<p class="paragraph">本报告只对本次送检样品负责。检测报告报出的是与遗传性乳腺癌易感基因 BRCA1／BRCA2相关的变异筛查结果，为实验室检测数据，不用于其他特殊风险因素的决定性分析。 报告结果不替代临床诊断结果，仅供临床参考。</p>
+					</section>
+				</div>
+				<hr style="height:2px;line-height:2px;border-top:2px solid #3e3e3e;">
+				<section class="text-center">
+				*** 本报告为隐私报告，请妥善保管，无受检人书面授权严禁公布或分享！***
+				</section>
 			</div>
-		</section>
-		<hr style="height:2px;line-height:2px;border-top:2px dotted #3e3e3e;border-bottom:5px solid #3e3e3e;margin-top:0px;">
-		<section>
-			<form id="rockyBaseInfoForm" action="$base/report/updateRockyFilling">
-				<table class="table table-main">
-					<input type="hidden" name="id" value="$!rocky.id">
-					<thead>
-						<tr>
-							<th style="text-align:left;width:33%;">样本信息</th>
-							<th style="text-align:left;width:33%;">报告信息</th>
-							<th style="text-align:left;width:34%;">受检者信息</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td style="text-align:left;">
-								<label style="width:50px;text-align:right;font-weight:normal;">样本类型</label>：
-								<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[sampleType]" value="$!rocky.baseInfo.sampleType"></input><br>
-		    					<label style="width:50px;text-align:right;font-weight:normal;">送检时间</label>：
-		    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[sampleDeliveryTime]" value="$!rocky.baseInfo.sampleDeliveryTime"></input><br>
-		    					<label style="width:50px;text-align:right;font-weight:normal;">送检状态</label>：
-		    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[sampleStatus]" value="$!rocky.baseInfo.sampleStatus"></input><br>
-		    					<label style="width:50px;text-align:right;font-weight:normal;">收样中心</label>：
-		    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[sampleCollector]" value="$!rocky.baseInfo.sampleCollector"></input>
-							</td>
-							<td style="text-align:left;">
-								<label style="width:50px;text-align:right;font-weight:normal;">报告类型</label>：
-								<span style="text-align:left;font-weight:normal;white-space: normal;">BRAC1/BRAC2</span><br>
-		    					<span style="width:50px;text-align:right;font-weight:normal;">生成时间</span>：
-		    					<label style="text-align:left;font-weight:normal;white-space: normal;">$!rocky.baseInfo.createTime</label><br>
-		    					<label style="width:50px;text-align:right;font-weight:normal;">报告中心</label>：
-		    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[reportProvider]" value="$!rocky.baseInfo.reportProvider"></input>
-							</td>
-							<td style="text-align:left;">
-								<label style="width:50px;text-align:right;font-weight:normal;">受检人名</label>：
-								<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[examineeName]" value="$!rocky.baseInfo.examineeName"></input><br>
-		          				<label style="width:50px;text-align:right;font-weight:normal;">性别</label>：
-		          				<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[examineeGender]" value="$!rocky.baseInfo.examineeGender"></input><br>
-		    					<label style="width:50px;text-align:right;font-weight:normal;">受检人ID</label>：
-		    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[examineeNumber]" value="$!rocky.baseInfo.examineeNumber"></input><br>
-		    					<label style="width:50px;text-align:right;font-weight:normal;">订单编号</label>：
-		    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[examineeOrderNumber]" value="$!rocky.baseInfo.examineeOrderNumber"></input>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</form>
-		</section>
-		<h4>一、检测结果：</h4>
-		<section style="border:1px solid #e3e3e3;background-color: #fff;">
-			<div class="result-div">
-				<p class="main">
-					#if($rocky.pathogenic)
-						发现<strong>致病相关</strong>突变！
-					#else
-						未发现<strong>致病相关</strong>突变！
-					#end
-				</p>
-				<p class="notice">注： 本报告中&nbsp;“致病相关”&nbsp;是指本系统采集到的已知研究结论中，受检人样本中存在的突变与疾病有相关性。</p>
+		</div>
+		<div class="col-xs-1">
+			<div class="btn-group-vertical" style="margin:20px 0px;position: fixed;">
+				<button class="btn btn-success" id="printBtn">打印</button><br>
+				<button class="btn btn-success" id="saveBtn">保存</button><br>
+				<button class="btn btn-success" id="resetBtn">重置</button>
 			</div>
-		</section>
-		<h4 style="margin-top:10px;">二、结果说明：</h4>
-		<div class="report-result">
-			<section>
-				<p>
-					<strong>变异列表</strong>
-				</p>
-				<table class="table table-main -report">
-					<thead>
-						<tr>
-							<th>编号</th>
-							<th>基因</th>
-							<th>染色体位置</th>
-							<th>核苷酸变异</th>
-							<th>氨基酸变异</th>
-							<th>临床意义</th>
-						</tr>
-					</thead>
-					<tbody>
-					#foreach($record in $!rocky.records)
-						<tr>
-								<td>$!{velocityCount}</td>
-								<td>$!record.gene </td>
-								<td>$!record.chromosome</td>
-								<td>$!record.acids</td>
-								<td>$!record.nucleotides</td>
-								<td>$!record.significance</td>
-							</tr>
-					#end
-					</tbody>
-				</table>
-			</section>
-			<section>
-				<p>
-					<strong>变异描述</strong>
-				</p>
-				<table class="table table-main -report">
-					<tbody>
-					#foreach($record in $!rocky.records)
-						<tr>
-							<td style="width: 170px;">$record.gene:&nbsp;$record.acids</td>
-							<td>$record.description</td>
-							</tr>
-					#end
-					</tbody>
-				</table>
-			</section>
+			<div class="affix" style="text-align:left;bottom:100px;">
+				<ul class="nav">
+					<li><a href="#nav-baseinfo">患者信息</a> </li>
+					<li><a href="#nav-result">一、检测结果</a> </li>
+					<li><a href="#nav-description">二、结果说明</a> </li>
+					<li><a href="#nav-risk">三、风险管理</a> </li>
+					<li><a href="#nav-technology">四、技术参考说明</a> </li>
+					<li><a href="#nav-note">五、报告说明</a> </li>
+				</ul>
+			</div>
 		</div>
-		<h4 style="margin-top:10px;">三、风险管理：</h4>
-		<div class="report-result">
-			<section class="chapter">
-				<p>1、癌症风险评估</p><br>
-				<p>2、风险管理措施</p><br>
-				<p>3、家族其他成员风险管理</p><br>
-			</section>
-		</div>
-		<h4 style="margin-top:10px;">四、技术及参考说明：</h4>
-		<div class="report-result">
-			<section class="chapter">
-				<p class="paragraph">华木兰BRCA Mutat Scan&#8482;检测乳腺癌易感基因BRCA1/BRCA2的外显子区及其两侧的内含子连接区。按标准操作流程从受检者的血液、口腔组织中提取基因组DNA，经定量和质检合格后用于目标区域的扩增。目标区域外显子及两侧内含子连接区的由多对特异引物扩增富集。目标区域的测序利用二代测序技术（next-generation sequencing-based , NGS）的主流平台完成。</p>
-				<p class="paragraph">华木兰BRCA Mutat Scan&#8482;分析测序数据采用自主研发流程，遗传信息解读参考美国医学遗传学与基因组学学会（ACMG）联合分子病理学学会（AMP）发布的基因变异的解读指导原则，参考数据库包括人类基因组突变数据库（HGMD），国际生物技术信息中心（NCBI）数据库，美国国立卫生研究院(National Institutes of Health，NIH)乳腺癌研究中心数据库，公司自建中国人群乳腺癌突变信息数据库及其他公共数据库如PubMed、dbSNP、1000Genomes。</p>
-				<p class="paragraph">参考国际癌症研究机构（International Agency for Research on Cancer，IARC）的五级分类标准，Celloud将基因变异的临床意义分为：</p>
-				<dl>
-					<dt>
-						<label style="width: 180px;right;font-weight:normal;">5 -- Pathogenic</label>
-						致病的
-					</dt>
-					<dt>
-						<label style="width: 180px;right;font-weight:normal;">4 -- Likely pathogenic</label>
-						可能致病的
-					</dt>
-					<dt>
-						<label style="width: 180px;right;font-weight:normal;">3 -- Uncertain significance</label>
-						致病性不明确的
-					</dt>
-					<dt>
-						<label style="width: 180px;right;font-weight:normal;">2 -- Likely benign</label>
-						可能良性的
-					</dt>
-					<dt>
-						<label style="width: 180px;right;font-weight:normal;">1 -- Benign</label>
-						良性的
-					</dt>
-				</dl>
-			</section>
-			<section class="chapter">
-				<p>
-					<strong>5、Pathogenic Variants 致病突变</strong>
-				</p>
-				<p class="paragraph">根据已有报道知道该突变导致基因功能障碍，或者根据该突变导致蛋白功能缺失、影响蛋白相互作用而推测为致病突变。</p>
-				<p class="paragraph">已知致病</p>
-				<p class="paragraph">突变“已知”致病必须有充足的证据，包括：</p>
-				<dl>
-					<dt>a、文献中报道在某一特定种群的致病突变（如奠基者致病突变founder pathogenic variants）</dt>
-					<dt>b、在不同临床报道中不同患者的共同突变</dt>
-					<dt>c、不同家族中的基因分离</dt>
-					<dt>d、文献中的功能研究阐明：</dt>
-					<dd>a、蛋白功能缺失</dd>
-					<dd>b、蛋白功能加强</dd>
-					<dd>c、功能芯片中显示剪切异常</dd>
-					<dt>e、报道功能缺失突变明确与临床相关（包括移码突变、无义突变、剪切连接区突变）</dt>
-				</dl>
-				<p class="paragraph">预测致病</p>
-				<p class="paragraph">预测功能缺失包括移码突变、无义突变、剪切连接区突变，以及其实密码子中的改变，但是目前没有明确“知道”致病。突变氨基酸可能造成的短缺或畸形蛋白产物的影响是经过对比相似的已知、报道致病突变来预测。这种情况中，功能缺失造成疾病的机制一定是已知的。在没有其他相冲突的证据时，已知致病突变的氨基酸残基对应的碱基发生新的错意突变，该突变也被认为是预测致病突变。</p>
-			</section>
-			<section class="chapter">
-				<p>
-					<strong>4、Likely Pathogenic Variants 可能致病突变</strong>
-				</p>
-				<p class="paragraph">可能致病突变是根据其他已知致病突变预测可能致病。可能致病突变有多种证据可支持其致病性，包括：</p>
-				<dl>
-					<dt>a、突变发生在功能结构域中，或者是文献及已知致病突变证实的热点突变位置</dt>
-					<dt>b、突变发生在已知致病突变的氨基酸残基中</dt>
-					<dt>c、基于家族基因型分离研究或者认为/已知新突变与疾病相关</dt>
-					<dt>d、预测为高度保守的碱基或氨基酸并被软件预测为致病</dt>
-					<dt>e、无或者极低的等位基于频率与良性表型相关</dt>
-					<dt>f、在特异常染色体隐性遗传疾病患者中发现与已知致病突变发生反应的突变，或其他支持测试（如生化检测）</dt>
-				</dl>
-			</section>
-			<section class="chapter">
-				<p>
-					<strong>3、Variants of Unknown(Uncertain) Significance 未知突变</strong>
-				</p>
-				<p class="paragraph">未知突变或意义不明突变是没有充分证据，或者证据发生明显冲突，而不能确定是可能致病还是良性突变。证据不充分或者有冲突，包括以下几个方面：</p>
-				<dl>
-					<dt>a、不同功能分析显示相反的结果</dt>
-					<dt>b、与普遍表型相冲突的分离结果</dt>
-					<dt>c、在单独分析的疾病中较低的基因频率（如偏低的外显率，非孟德尔遗传等）</dt>
-					<dt>d、位于功能尚不明确的区域</dt>
-					<dt>e、缺乏充足的临床案例</dt>
-					<dt>f、缺乏足够的突变与临床表型相关的数据/证据</dt>
-				</dl>
-			</section>
-			<section class="chapter">
-				<p>
-					<strong>2、Likely Benign Variants 可能良性突变</strong>
-				</p>
-				<p class="paragraph">可能良性突变是根据其他已知良性突变推测为可能产生良性影响的突变。可能良性突变有多种证据可支持其良性影响，包括：</p>
-				<dl>
-					<dt>a、突变发生的位置不处于蛋白已知突变致病区域，或者文献中指出该突变是机体可接受的</dt>
-					<dt>b、在基于家族间基因型分离的研究中未发现与疾病有明显相关性</dt>
-					<dt>c、不处于进化保守区域或软件预测为良性</dt>
-					<dt>d、在特定种族人群中基因频率低，在人群数据库中没有较大意义</dt>
-					<dt>e、该突变与其他已知造成疾病分子同时发现</dt>
-					<dt>f、与疾病信息相关的突变在正常个体中被观察到</dt>
-					<dt>g、发生在无已知功能的重复区域中的插入或缺失</dt>
-				</dl>
-			</section>
-			<section class="chapter">
-				<p>
-					<strong>1、Benign Variants 良性突变</strong>
-				</p>
-				<p class="paragraph">良性突变没有已知临床报道该突变引起特定遗传疾病。</p>
-				<p class="paragraph">评估与病例相关的人群数据来进行良性分类。在400及以上个体中，常染色体显性或X-连锁隐性疾病等位基因频率>1%，或者常染色体隐性疾病等位该基因频率>3%，没有其他相反证据证明该基因致病的话，则认为该突变为良性突变。有相冲突的证据，则根据基因和疾病的信息重新评估。在稀有疾病中，等位基因频率可适当降低。</p>
-				<p class="paragraph">在已有证据支持或计算机算法预测为良性影响时，即使缺乏独立人群数据，沉默突变及剪切连接位点外的内含子突变也被分类为良性突变。</p>
-			</section>
-		</div>
-		<h4 style="margin-top:10px;">五、报告说明：</h4>
-		<div class="report-result">
-			<section class="chapter">
-				<p class="paragraph">本报告只对本次送检样品负责。检测报告报出的是与遗传性乳腺癌易感基因 BRCA1／BRCA2相关的变异筛查结果，为实验室检测数据，不用于其他特殊风险因素的决定性分析。 报告结果不替代临床诊断结果，仅供临床参考。</p>
-			</section>
-		</div>
-		<hr style="height:2px;line-height:2px;border-top:2px solid #3e3e3e;">
-		<section class="text-center">
-		*** 本报告为隐私报告，请妥善保管，无受检人书面授权严禁公布或分享！***
-		</section>
 	</div>
 </div>
 #end

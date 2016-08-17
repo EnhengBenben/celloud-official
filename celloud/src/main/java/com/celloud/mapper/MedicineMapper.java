@@ -32,6 +32,6 @@ public interface MedicineMapper {
      * @return medicine对象
      *
      */
-    Medicine findByFeatureAndResult(@Param("feature") String feature, @Param("result") String result,
+    Medicine findByFeatureAndResult(@Param("feature") String feature, @Param("resultDetail") String resultDetail,
             @Param("appId") int appId);
 }

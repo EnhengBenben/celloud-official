@@ -2,6 +2,8 @@ $(function() {
 	$("#printBtn").click(function() {
 		$("#printBtns").hide();
 		$(".main-container").css("padding", "0px");
+		$(".affix").parent().removeClass("col-xs-1").hide();
+		$(".affix").parent().siblings().removeClass("col-xs-11").addClass("col-xs-12");
 		$("#rockyBaseInfoForm input[type='text']").each(function(index,item){
 			var $this = $(this);
 			var $label = $("<span>"+$this.val()+"</span>");
@@ -14,7 +16,9 @@ $(function() {
 		});
 		window.print();
 		$("#printBtns").show();
-		$(".main-container").css("padding", "0px 70px");
+		$(".affix").parent().addClass("col-xs-1").show();
+		$(".affix").parent().siblings().removeClass("col-xs-12").addClass("col-xs-11");
+		$(".main-container").css("padding", "0px 45px 0px 70px");
 		$("#rockyBaseInfoForm input[type='text']").show();
 		$("#rockyBaseInfoForm span[name]").remove();
 	});
