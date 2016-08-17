@@ -1,4 +1,13 @@
 (function(){
-  var celloudApp = angular.module("celloudApp",["celloudRounts","commonControllers", "dataControllers","dataService",
-                                                "overviewApp","overviewService","userApp"]);
+  var celloudApp = angular.module("celloudApp",
+      ["celloudRounts",
+       "commonControllers", 
+       "commonFilters",
+       "dataControllers",
+       "dataService",
+       "overviewApp",
+       "overviewService",
+       "userApp"
+       ]
+  );
 }());

@@ -8,7 +8,7 @@
     background: @dark-black;
     padding-top: 50px;
     z-index: 810;
-    .transition(width .3s ease-in-out);
+    .transition-2(transform 0.3s ease-in-out, width 0.3s ease-in-out);
     a{
         width: 100%;
         display: block;
@@ -34,6 +34,7 @@
         > li{
             width: 100%;
             a{
+                .transition-2(transform 0.3s ease-in-out, padding-left 0.3s ease-in-out);
                 padding-left: 35px;
                 text-align: left;
             }
