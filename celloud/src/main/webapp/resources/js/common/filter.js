@@ -15,4 +15,9 @@
       return collapsed ? "right-indent-icon":"left-indent-icon";
     }
   });
+  commonFilters.filter("proSidebarLeftFilter",function(){
+    return function(collapsed){
+      return collapsed ? "":"large-left";
+    }
+  });
 })();

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<aside class="pro-sidebar">
+<aside class="pro-sidebar {{collapsed|proSidebarLeftFilter}}">
   <section class="s-bar">
     <ul class="pro-sidebar-menu" ng-controller="sidebarController">
       <li class="header">费用设置</li>
