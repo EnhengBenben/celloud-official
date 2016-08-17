@@ -3,6 +3,7 @@ package com.celloud.service;
 import java.util.List;
 import java.util.Map;
 
+import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Project;
 
 /**
@@ -89,6 +90,17 @@ public interface ProjectService {
      */
     public Map<Integer, Integer> insertMultipleProject(Project project,
             List<Integer> appIds, String[] dataIdArr);
+
+	/**
+	 * 创建项目
+	 * 
+	 * @param project：项目基本信息
+	 * @param datalist：项目下数据列表
+	 * @return
+	 * @author lin
+	 * @date 2016年8月17日下午3:54:51
+	 */
+	Integer insertProject(Project project, List<DataFile> datalist);
 
     public Map<String, Object> findProjectInfoById(Integer projectId);
     
