@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
@@ -23,12 +22,12 @@
   <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
   <![endif]  -->
 </head>
-<body class="container" ng-app="celloudApp">
+<body class="container" ng-app="celloudApp" ng-controller="sidebarController">
   <header class="header">
     <nav class="navbar navbar-default navbar-fixed-top">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
-	      <div class="navbar-logo">
+	      <div class="navbar-logo {{collapsed|logoMiniFilter}}">
 	        <a class="logo" href="#"></a>
 	      </div>
 	    </div>
@@ -58,10 +57,10 @@
 	  </div>
 	</nav>
   </header>
-  <aside class="sidebar collapsed" id="common-sidebar">
-    <section class="s-bar" ng-controller="sidebarController">
+  <aside class="sidebar {{collapsed|collapsedFilter}}" id="common-sidebar">
+    <section class="s-bar">
       <div class="sidebar-collapse">
-        <a href="#"><i class="left-indent-icon"></i></a>
+        <a href="javascript:void(0)" ng-click="toggleCollapse()"><i class="{{collapsed|collapsedIconFilter}}"></i></a>
       </div>
       <ul class="sidebar-menu">
         <li class="header">产品与服务</li>
@@ -111,13 +110,14 @@
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
   
-  <script type="text/javascript" src="${pageContext.request.contextPath }/js/user/app.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath }/js/user/service.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath }/js/user/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/user/app.js"></script>
+  <script src="<%=request.getContextPath()%>/js/user/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/user/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/data/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/data/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/config/routeProvider.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/common/filter.js"></script>
   <script src="<%=request.getContextPath()%>/js/overview/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/overview/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/overview/userCount.js"></script>

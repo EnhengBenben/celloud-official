@@ -34,11 +34,13 @@
     line-height: 50px;
     text-align: center;
     overflow: hidden;
-    .transition(width .3s ease-in-out);
+    .transition-2(transform 0.3s ease-in-out, width 0.3s ease-in-out);
     &.mini{
         width: 50px;
+        .transition-2(transform 0.3s ease-in-out, width 0.3s ease-in-out);
         .logo{
             width: 30px;
+            .transition-2(transform 0.3s ease-in-out, width 0.3s ease-in-out);
         }
     }
 }
