@@ -50,10 +50,91 @@
             <td>{{file.batch}}</td>
             <td>{{file.size}}</td>
             <td>{{file.createDate}}</td>
-            <td><a href="javascript:void(0)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+            <td><a href="javascript:void(0)" data-toggle="modal" data-target="#data-detail-modal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
           </tr>
         </tbody>
       </table>
       <ng-include src="'pages/partial/_partial_pagination_common.jsp'" ></ng-include>
     </div>
+  <div id="data-detail-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+          <h4 class="modal-title">申请发票</h4>
+        </div>
+        <div class="modal-body form-modal">
+          <form class="form-horizontal info-form">
+              <div class="form-group">
+                <div class="control-label form-label col-xs-3">文件名称：</div>
+                <div class="col-xs-9">
+                    <input type="text" name="money" id="money" readonly>
+                    <span class="input-alert break-line">文件名不能为空</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="control-label form-label col-xs-3">产品标签：</div>
+                <div class="col-xs-9 form-group-content">
+                  <div class="checkbox-group">
+                    <label class="checkbox-lable">
+                      <input class="checkbox" type="checkbox" name="demo-checkbox1" checked>
+                      <span class="info"></span>
+                    </label>
+	                 HBV
+                  </div>
+                  <div class="checkbox-group">
+                    <label class="checkbox-lable">
+                      <input class="checkbox" type="checkbox" name="demo-checkbox1" checked>
+                      <span class="info"></span>
+                    </label>
+                    HCV
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="control-label form-label col-xs-3">数据标签：</div>
+                <div class="col-xs-9">
+                    <input type="text" id="address" name="address" maxlength="45"/><span class="invoice-modal-error"></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="control-label form-label col-xs-3">数据状态：</div>
+                <div class="col-xs-9 form-group-content">
+                  <div class="checkbox-group">
+                    <label class="checkbox-lable">
+                      <input class="checkbox" type="checkbox" name="demo-checkbox1" checked>
+                      <span class="info"></span>
+                    </label>
+                     未归档
+                  </div>
+                  <div class="checkbox-group">
+                    <label class="checkbox-lable">
+                      <input class="checkbox" type="checkbox" name="demo-checkbox1" checked>
+                      <span class="info"></span>
+                    </label>
+                    归档
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="control-label form-label col-xs-3">上传时间：</div>
+                <div class="col-xs-9 form-group-content">
+                  2016-05-21 13:49:00
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="text-center">
+                    <button type="reset" class="btn btn-cancel">取消</button>
+                    <button type="submit" class="btn" >提交</button>
+                </div>
+                <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="state">
+                  <button type="button" class="close" ng-click="state=false"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+                  <span>{{message}}</span>
+                </div>
+              </div>
+          </form>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
 </div>
