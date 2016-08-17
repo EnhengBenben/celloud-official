@@ -1,4 +1,4 @@
-package com.celloud.action;
+package com.celloud.service;
 
 import com.celloud.model.mysql.Medicine;
 
@@ -23,6 +23,6 @@ public interface MedicineService {
      * @return medicine对象
      *
      */
-    public Medicine getByFeatureAndResult(String feature, String result, int appId);
+    public Medicine getByFeatureAndResultDetail(String feature, String resultDetail, int appId);
 
 }

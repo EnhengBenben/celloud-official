@@ -203,7 +203,17 @@
 						</label>
 					</td>
 					<td>${report.sampleName }</td>
-					<td title="${report.fileName }" style="text-align: left;" name="data-name-td">${report.fileName }</td>
+					<td title="${report.fileName }" style="text-align: left;" name="data-name-td">
+						<c:choose>
+							<c:when test="${report.period ==2 }">
+								<a title="查看报告" style="color: #323232; font-size: 12px;" href="javascript:$report.showReport('${report.dataKey}','${report.projectId}','${report.appId}')"> ${report.fileName }</a>
+							</c:when>
+							<c:otherwise>
+								${report.fileName }
+							</c:otherwise>
+						</c:choose>
+
+					</td>
 					<td>${report.batch }</td>
 					<td>
 						<c:if test="${report.period==0 }">等待运行</c:if>
@@ -226,28 +236,26 @@
 								<a title="查看报告" href="javascript:$report.showReport('${report.dataKey}','${report.projectId}','${report.appId}')">
 									<i class="fa fa-eye"></i>
 								</a>
-							</c:when>
-							<c:otherwise>
-								<a title="查看报告" class="disabled bg-gray" href="javascript:$report.showReport('16080300018953','197','123');">
-									<i class="fa fa-eye"></i>
-								</a>
-							</c:otherwise>
-						</c:choose>
-						<c:choose>
-							<c:when test="${report.period ==2 }">
 								<a title="打印患者报告" target="_blank" href="<%=request.getContextPath()%>/report/printRockyReport?projectId=${report.projectId}&dataKey=${report.dataKey}&appId=${report.appId}">
 									<i class="fa fa-print"></i>
 								</a>
+								<a title="共享报告" href="javascript:void(0)">
+									<i class="fa fa-share-square-o"></i>
+								</a>
 							</c:when>
 							<c:otherwise>
+								<a title="查看报告" class="disabled bg-gray" href="javascript:;">
+									<i class="fa fa-eye"></i>
+								</a>
 								<a title="打印患者报告" class="disabled bg-gray" disabled="disabled">
 									<i class="fa fa-print"></i>
 								</a>
+								<a title="共享报告" href="javascript:void(0)">
+									<i class="fa fa-share-square-o"></i>
+								</a>
 							</c:otherwise>
 						</c:choose>
-						<a title="共享报告" href="javascript:void(0)">
-							<i class="fa fa-share-square-o"></i>
-						</a>
+
 					</td>
 				</tr>
 			</c:forEach>

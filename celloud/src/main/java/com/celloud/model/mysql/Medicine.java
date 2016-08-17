@@ -5,7 +5,9 @@ public class Medicine {
 
     private Integer appId;
 
-    private String result;
+    private String resultSimple;
+
+    private String resultDetail;
 
     private String advice;
 
@@ -29,12 +31,20 @@ public class Medicine {
         this.appId = appId;
     }
 
-    public String getResult() {
-        return result;
+    public String getResultSimple() {
+        return resultSimple;
     }
 
-    public void setResult(String result) {
-        this.result = result == null ? null : result.trim();
+    public void setResultSimple(String resultSimple) {
+        this.resultSimple = resultSimple;
+    }
+
+    public String getResultDetail() {
+        return resultDetail;
+    }
+
+    public void setResultDetail(String resultDetail) {
+        this.resultDetail = resultDetail;
     }
 
     public String getAdvice() {

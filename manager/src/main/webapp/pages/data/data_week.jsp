@@ -20,8 +20,11 @@
 		    <div class="widget-header widget-header-flat">
 		         <h3 class="header smaller lighter green">本周Top10</h3>
 			</div>
+            <h3 class="header smaller lighter green">前10活跃用户及登录次数</h3>
 			<div class="col-xs-12" style="height: 350px;" id="topUserLogin"></div>
+            <h3 class="header smaller lighter green">前10活跃APP及运行次数</h3>
 			<div class="col-xs-12" style="height: 350px;margin-top: 50px;" id="topAppRun"></div>
+            <h3 class="header smaller lighter green">数据量前10用户及数据大小</h3>
 			<div class="col-xs-12" style="height: 350px;margin-top: 50px;" id="topDataSize"></div>
 			<div class="col-xs-11 table-div">
 				<div class="table-header hide" id="_companyName"></div>
@@ -32,7 +35,7 @@
 							    <tr>
 							        <th colspan="2" style="text-align: center;">前10活跃用户及登录次数</th>
 							        <th colspan="2" style="text-align: center;">前10活跃APP及运行次数</th>
-							        <th colspan="2" style="text-align: center;">数据量前10用户及数据大小</th>
+							        <th colspan="3" style="text-align: center;">数据量前10用户及数据大小</th>
 							    </tr>
 								<tr>
 									<th>用户名</th>
