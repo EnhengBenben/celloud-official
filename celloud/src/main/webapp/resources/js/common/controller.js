@@ -9,6 +9,7 @@
     };
   });
   
-  commonControllers.controller("collapseSidebarController", function($scope){
+  commonControllers.controller("alertController", function($scope, $timeout){
+    
   });
 })();

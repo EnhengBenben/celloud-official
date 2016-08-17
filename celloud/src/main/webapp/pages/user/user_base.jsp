@@ -48,7 +48,10 @@
                 <button type="submit" class="btn" ng-click="updateUserInfo()"
                 	ng-disabled="userForm.cellphone.$dirty && userForm.cellphone.$invalid">提交</button>
             </div>
-            <span ng-show="state">{{message}}</span>
+            <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="state" ng-cotroller="alertController">
+		      <button type="button" class="close" ng-click="state=false"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+		      <span>{{message}}</span>
+		    </div>
           </div>
         </form>
       </div>
