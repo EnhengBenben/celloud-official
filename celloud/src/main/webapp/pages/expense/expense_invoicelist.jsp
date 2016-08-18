@@ -37,7 +37,7 @@
             <td>{{invoice.invoiceHeader}}</td>
             <td>{{invoice.address}}</td>
             <td>{{invoice.invoiceState==0?'已申请':'已发出'}}</td>
-            <td>{{invoice.remark}}</td>
+            <td>{{invoice.remark==null?"暂无物流信息":invoice.remark}}</td>
             <td>{{invoice.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td><a class="btn-link" href="javascript:void(0)" data-toggle="modal" data-target="#invoice-detail-modal" ng-click="showInvoiceDetail(invoice.id)">详情</a></td>
           </tr>

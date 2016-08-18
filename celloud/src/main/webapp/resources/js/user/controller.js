@@ -1,14 +1,15 @@
 (function(){
-	userApp.controller("updateBaseInfo",function($scope,userService){
+	celloudApp.controller("updateBaseInfo",function($scope,userService){
 		$scope.user = userService.getUserInfo();
 		$scope.updateUserInfo = function(){
 			if(checkForm){
-				var promise = userService.updateUserInfo($scope.user);
-				promise.then(function(data) {  // 调用承诺API获取数据 .resolve
+				var promise = userService.updateUserInfo($scope.user).
+				success(function(data){
 					$scope.message = data.message;
-			    }, function(data) {  // 处理错误 .reject  
-			    	$scope.message = data.message;
-			    }); 
+				}).
+				error(function(data){
+					$scope.message = data.message;
+				});
 				$scope.state = true;
 			}
 		};
@@ -17,7 +18,7 @@
 			return flag;
 		};
 	});
-	userApp.controller("updatePassword",function($scope,userService){
+	celloudApp.controller("updatePassword",function($scope,userService){
 		$scope.reset = function() {
 	        $scope.oldPwd = "";
 	        $scope.newPwd = "";
@@ -33,7 +34,7 @@
 			});
 		}
 	});
-	userApp.controller("pageQueryLog",function($scope,userService){
+	celloudApp.controller("pageQueryLog",function($scope,userService){
 		$scope.pageQueryLog = function(currentPage,pageSize){
 			userService.pageQueryLog(currentPage,pageSize).
 			success(function(dataList){
@@ -42,7 +43,7 @@
 		}
 		$scope.pageQueryLog(1,10);
 	});
-	userApp.controller("updateEmail",function($scope,userService){
+	celloudApp.controller("updateEmail",function($scope,userService){
 		$scope.user = userService.getUserInfo();
 		$scope.isSend = false;
 		$scope.updateEmail = function(){

@@ -155,11 +155,9 @@
   <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
   
   <script src="<%=request.getContextPath()%>/js/application.js"></script>
-  <script src="<%=request.getContextPath()%>/js/expense/app.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/filter.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/controller.js"></script>
-  <script src="<%=request.getContextPath()%>/js/user/app.js"></script>
   <script src="<%=request.getContextPath()%>/js/user/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/user/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/data/service.js"></script>
