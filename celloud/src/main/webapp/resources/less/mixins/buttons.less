@@ -1,6 +1,7 @@
 /*按钮*/
 .btn{
-    .button-size(0px, 18px, 14px, 18px, 6px);
+    .button-size(0px, 0px, 14px, 18px, 6px);
+    min-width: 90px;
     height: 40px;
     display: inline-block;
     font-weight: bold;
@@ -15,7 +16,7 @@
     &.-confirm {
         background-color: @gray-black;
     }
-    &.-lg{
+    &.-low{
         height: 30px;
         line-height: 28px;
     }
@@ -27,7 +28,10 @@
         font-weight: 500;
     }
 }
-
+.btn-link{
+    font-size: 12px;
+    text-decoration: underline;
+}
 /*搜索框 */
 .search-form { 
     position: relative;

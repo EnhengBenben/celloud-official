@@ -9,7 +9,21 @@
 .border-bottom-1(@color){
     border-bottom: 1px solid @color;
 }
+.border-left-1(@color){
+    border-left: 1px solid @color;
+}
+.border-right-1(@color){
+    border-right: 1px solid @color;
+}
 .border-t-b-1(@color){
     .border-top-1(@color);
     .border-bottom-1(@color);
+}
+.border-l-r-1(@color){
+    .border-left-1(@color);
+    .border-right-1(@color);
+}
+
+.border-dashed(@color){
+    border: 1px dashed @color;
 }

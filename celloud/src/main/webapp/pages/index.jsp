@@ -33,25 +33,50 @@
 	    </div>
 	    <ul class="nav navbar-nav pull-left">
 	    	<shiro:hasPermission name="rocky:product">
-		      <li><a class="" href="#"><i class="cubes-icon">&nbsp;</i></a></li>
+		      <li><a class="" href="#"><i class="cubes-icon"></i></a></li>
 	    	</shiro:hasPermission>
 	    	<shiro:hasPermission name="bsi:product">
-		      <li><a class="" href="#"><i class="cubes-icon">&nbsp;</i></a></li>
+		      <li><a class="" href="#"><i class="cubes-icon"></i></a></li>
 	    	</shiro:hasPermission>
-	      <li><a class="" href="#"><i class="upload-icon">&nbsp;</i></a></li>
+	      <li><a class="" href="#"><i class="upload-icon"></i></a></li>
 	    </ul>
 	    <ul class="nav navbar-nav pull-right">
-	      <li><a href="#"><i class="code-icon">&nbsp;</i></a></li>
-	      <li><a href="#"><i class="bell-icon">&nbsp;</i></a></li>
-	      <li><a href="#"><i class="money-icon">&nbsp;</i></a></li>
+	      <li class="dropdown">
+            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+              <i class="code-icon"></i>
+            </a>
+            <div class="dropdown-menu code-dropdown">
+              <img alt="扫码关注" src="<%=request.getContextPath()%>/images/icon/qrcode.jpg">
+            </div>
+          </li>
+          <li class="dropdown">
+            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+              <i class="money-icon">&nbsp;</i>
+            </a>
+            <div class="dropdown-menu money-dropdown">
+              <p>账户余额：<span class="tips">0.04</span>元</p>
+              <a class="btn" href="#/expense/paydetail">立即充值</a><br>
+              <a class="btn-link" href="#/expense/consume">查看消费记录</a>
+            </div>
+          </li>
+          <li class="dropdown">
+            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+              <i class="bell-icon">&nbsp;</i>
+              <span class="label label-danger">24</span>
+            </a>
+            <div class="dropdown-menu message-dropdown">
+              <p> 您有<span class="tips">1</span>条新消息</p>
+              <a class="btn-link" href="#/notice/list">查看所有</a>
+            </div>
+          </li>
 	      <li class="dropdown">
 	        <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
 	          <i class="user-icon">&nbsp;</i>
 	        </a>
-	        <ul class="dropdown-menu">
-              <li><a class="btn" href="#">个人信息</a></li>
-              <li><a class="btn btn-cancel" href="#">退出</a></li>
-            </ul>
+	        <div class="dropdown-menu user-dropdown">
+	          <a class="btn" href="#/user/base">个人信息</a>
+	          <a class="btn btn-cancel" href="logout">退出</a>
+            </div>
 	      </li>
 	    </ul>
 	  </div>
@@ -77,7 +102,12 @@
           <a href="#/data"><i class="data-icon"></i><span>数据管理</span></a>
         </li>
         <li ng-class="{active: isActive('/report')}">
-          <a href="javascript:void(0)"><i class="report-icon"></i><span>报告管理</span></a>
+<%--           <shiro:lacksPermission name="bsi:product"> --%>
+<!--             <a href="#/reportpro"><i class="report-icon"></i><span>报告管理</span></a> -->
+<%--           </shiro:lacksPermission> --%>
+<%--           <shiro:hasPermission name="bsi:product"> --%>
+            <a href="#/reportdata"><i class="report-icon"></i><span>报告管理</span></a>
+<%--           </shiro:hasPermission> --%>
         </li>
         <li>
           <a href="javascript:void(0)"><i class="app-icon"></i><span>应用市场</span></a>
@@ -89,7 +119,7 @@
           <a href="#/user/base"><i class="account-icon"></i><span>账号管理</span></a>
         </li>
         <li ng-class="{active: isActive('/qa')}">
-          <a href="#/qa/consume"><i class="qa-icon"></i><span>问题反馈</span></a>
+          <a href="#/qa"><i class="qa-icon"></i><span>问题反馈</span></a>
         </li>
         <li ng-class="{active: isActive('/expense')}">
           <a href="#/expense/consume"><i class="cost-icon"></i><span>费用中心</span></a>
@@ -98,6 +128,20 @@
     </section>
   </aside>
   <div ng-view class="view-container"></div>
+  <div id="tips-modal" class="modal tips-modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+          <h4 class="modal-title">提示</h4>
+        </div>
+        <div class="modal-body">
+          <h5><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{{errorInfo}}</h5>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  
   <script type="text/javascript">
        window.CONTEXT_PATH = '<%=request.getContextPath()%>';
   </script>
@@ -110,7 +154,9 @@
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
   
+  <script src="<%=request.getContextPath()%>/js/application.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/app.js"></script>
+  <script src="<%=request.getContextPath()%>/js/expense/filter.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/user/app.js"></script>
@@ -125,6 +171,5 @@
   <script src="<%=request.getContextPath()%>/js/overview/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/overview/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/overview/userCount.js"></script>
-  <script src="<%=request.getContextPath()%>/js/application.js"></script>
 </body>
 </html>

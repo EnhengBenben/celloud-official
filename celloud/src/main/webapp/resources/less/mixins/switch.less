@@ -14,9 +14,13 @@
         line-height: 22px;
         display: inline-block;
         .border-radius(6px);
+        color: @gray-black;
         &.active{
             color: #fff;
             background-color: @gray-black; 
+        }
+        &.no.active{
+            background-color: @switch-no; 
         }
     }
 }

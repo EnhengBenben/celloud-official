@@ -28,7 +28,7 @@
           <div class="info-form-group">
             <label>手机号码:</label>
             <div>
-                <input name="cellphone" type="text" id="input-phone" ng-model="user.cellphone" ng-pattern="/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/" />
+                <input name="cellphone" type="text" id="input-phone" ng-model="user.cellphone" ng-pattern="/^((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))\d{8}$/" />
                 <span class="input-alert" ng-show="userForm.cellphone.$dirty && userForm.cellphone.$invalid">
 					请输入正确的手机号
 				</span>

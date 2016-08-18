@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.model.mysql.Recharge;
@@ -48,10 +49,9 @@ public class PayAction {
 	}
 
 	@RequestMapping("recharge/list")
-	public String rechargeList(Page page, Model model) {
-		PageList<Recharge> recharges = rechargeService.listRecharges(page);
-		model.addAttribute("recharges", recharges);
-		return "expense/expense_recharge_list";
+    @ResponseBody
+    public PageList<Recharge> rechargeList(Page page) {
+        return rechargeService.listRecharges(page);
 	}
 
 	@RequestMapping("recharge/alipay")
