@@ -13,7 +13,7 @@
         <p class="description">C币是CelLoud币，是CelLoud平台中的虚拟货币。</p>
       </div>
       <div class="table-opera">
-        <button type="button" class="btn" data-toggle="modal" data-target="#apply-invoice-modal">申请发票</button>
+        <button type="button" class="btn" data-toggle="modal" data-target="#{{length|filter}}">申请发票</button>
       </div>
       <table class="table table-main">
         <thead>
@@ -59,7 +59,7 @@
 	          <div class="form-group">
 	            <div class="control-label form-label col-xs-3">申请金额：</div>
 	            <div class="col-xs-9">
-	                <input type="text" name="money" id="money" readonly="readonly"/>
+	                <input type="text" ng-model="money" name="money" id="money" readonly="readonly"/>
 	            </div>
 	          </div>
 	          <div class="form-group">

@@ -1,10 +1,12 @@
+textarea,input,select {
+    .border-1(@border-gray);
+}
 .info-form{
     margin: 0;
     padding: 0;
     input{
         .input-size(30px, 8px, 10px, 14px, 14px, none);
         width: 200px;
-        .border-1(@border-gray);
     }
     .info-form-group{
         padding-bottom: 10px;
@@ -32,6 +34,18 @@
                 background-color: #f6f6f6;
             }
         }
+    }
+    .form-group{
+        padding-right: 20px;
+    }
+    .form-label{
+        font-size: 14px;
+        &.no-input{
+            padding-top: 0;
+        }
+    }
+    .form-btns{
+        margin-top: 15px;
     }
 }
 .money-input{

@@ -1,6 +1,10 @@
 .collapsed~.view-container{
    margin-left: 50px; 
 }
+.tips{
+    padding: 0px 2px;
+    color: @content-green;
+}
 .view-container{
     .transition-2(transform 0.3s ease-in-out, margin 0.3s ease-in-out);
     margin-left: 170px;
@@ -107,9 +111,6 @@
             margin-top: 14px;
             margin-bottom: 4px;
         }
-    }
-    .tips{
-        color: @content-green;
     }
     .pro-body{
         position: relative;
@@ -339,9 +340,185 @@
         }
     }
 }
+.qa-container{
+    h5{
+        margin: 0;
+        width: 100%;
+        display: block;
+        padding: 0;
+        padding-bottom: 10px;
+        font-size: 14px;
+        line-height: 14px;
+        color: @font-black;
+    }
+    .feedback-date{
+        margin: 0;
+        width: 100%;
+        padding: 0;
+        padding-bottom: 20px;
+        display: block;
+        font-size: 12px;
+        color: @dark-gray;
+    }
+    .feedback-content{
+        margin: 0;
+        width: 100%;
+        padding: 0;
+        display: block;
+        font-size: 12px;
+        color: @font-black;
+    }
+    .attachment-list{
+        >li{
+            width: 134px;
+            height: 67px;
+            float: left;
+            padding-right: 20px;
+            display: inline-block;
+            cursor: pointer;
+            >img{
+                width: 100%;
+                height: 100%;
+            }
+            >a{
+                width: 114px;
+                height: 67px;
+                display: inline-block;
+                line-height: 67px;
+                text-align: center;
+                color: @font-black;
+                font-size: 16px;
+                .border-dashed(@dark-gray);
+            }
+        }
+    }
+}
 .qa-list{
+    position: absolute;
     width: 240px;
     background-color: @light-gray;
+    ul{
+        li{
+            width: 100%;
+            height: 120px;
+            padding: 20px;
+            &:hover,&.active{
+                background-color: @content-gray;
+            }
+             h5,.feedback-date,.feedback-content{
+               .text-overflow();
+            }
+        }
+        li+li:before{
+            position: absolute;
+            margin: -20px;
+            width: 240px;
+            display: block;
+            content: "";
+            .border-1(@content-gray);
+        }
+        .qa-header{
+            height: 60px;
+            padding: 10px 0px;
+            text-align: center;
+        }
+    }
+}
+.qa-content{
+    width: 100%;
+    padding: 20px 30px 20px 270px;
+    background-color: @content-gray;
+    >header{
+        padding: 0;
+        padding-bottom: 20px;
+        text-align: right;
+    }
+    .qa-detail{
+        padding: 30px;
+        .border-t-b-1(@dark-gray);
+    }
+    .qa-attachment{
+        padding: 20px 30px;
+        h5>span{
+            padding-left: 20px;
+            font-size: 12px;
+            color: @dark-gray;
+        }
+    }
+    .qa-chatbox{
+        padding-bottom: 60px;
+        .border-bottom-1(@dark-gray);
+        .chat-content{
+            padding-bottom: 10px;
+        }
+        .answer-text{
+            padding: 20px;
+        }
+        .qa-avatar{
+            width: 56px;
+            height: 56px;
+            >img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .feedback-date{
+            padding-bottom: 0;
+        }
+        .answer-chat .answer-text{
+            float: right;
+            background-color: @chat-answer-bg;
+        }
+        .answer-chat .qa-avatar{
+            float: right;
+        }
+        .answer-chat .feedback-date{
+            text-align: right;
+        }
+        .questioner-chat .answer-text{
+            float: left;
+            background-color: @chat-question-bg;
+        }
+        .questioner-chat .qa-avatar{
+            float: left;
+        }
+        .answer-chat .feedback-date{
+            text-align: left;
+        }
+        
+    }
+    .qa-insert{
+        position: relative;
+        width: 100%;
+        padding-top: 20px;
+        padding-right: 100px;
+        textarea{
+            width: 100%;
+        }
+        .btn{
+            position: absolute;
+            right: 0;
+            bottom: 5px;
+        }
+    }
+}
+.qa-modal{
+    .attachment-list>li{
+        width: 96px;
+        >a{
+            width: 76px;
+        }
+    }
+    .form-label{
+        text-align: left;
+        padding-left: 20px;
+        p{
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+            color: @dark-gray;
+        }
+    }
 }
 @media (max-width: 767px){
     .view-container{
