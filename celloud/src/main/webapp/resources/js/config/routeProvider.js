@@ -57,6 +57,12 @@
     .when('/notice/set',{
       templateUrl: "pages/notice/notice_set.jsp"
     })
+    .when('/reportdata',{
+      templateUrl: "pages/report/report_data.jsp"
+    })
+    .when('/reportpro',{
+      templateUrl: "pages/report/report_project.jsp"
+    })
     .otherwise({redirectTo:'/'});
   });
 })()
