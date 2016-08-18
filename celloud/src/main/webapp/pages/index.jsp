@@ -54,7 +54,7 @@
               <i class="money-icon">&nbsp;</i>
             </a>
             <div class="dropdown-menu money-dropdown">
-              <p>账户余额：<span class="tips">0.04</span>元</p>
+              <p>账户余额：<span class="tips">{{userInfo.balances}}</span>元</p>
               <a class="btn" href="#/expense/paydetail">立即充值</a><br>
               <a class="btn-link" href="#/expense/consume">查看消费记录</a>
             </div>
@@ -62,10 +62,20 @@
           <li class="dropdown">
             <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
               <i class="bell-icon">&nbsp;</i>
-              <span class="label label-danger">24</span>
+              <span class="label label-danger">{{notices.num==0?'':(notices.num+'')}}</span>
             </a>
             <div class="dropdown-menu message-dropdown">
-              <p> 您有<span class="tips">1</span>条新消息</p>
+              <p> 您有<span class="tips">{{notices.num}}</span>条新消息</p>
+              <a class="btn-link" href="#/notice/list">查看所有</a>
+            </div>
+          </li>
+           <li class="dropdown">
+            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+              <i class="bell-icon">&nbsp;</i>
+              <span class="label label-danger">{{messages.num==0?'':(''+messages.num)}}</span>
+            </a>
+            <div class="dropdown-menu message-dropdown">
+              <p> 您有<span class="tips">{{messages.num}}</span>条新消息</p>
               <a class="btn-link" href="#/notice/list">查看所有</a>
             </div>
           </li>
@@ -154,6 +164,7 @@
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
   
+  <script src="<%=request.getContextPath()%>/js/message.js"></script>
   <script src="<%=request.getContextPath()%>/js/application.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/app.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/filter.js"></script>
@@ -165,6 +176,7 @@
   <script src="<%=request.getContextPath()%>/js/data/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/data/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/config/routeProvider.js"></script>
+  <script src="<%=request.getContextPath()%>/js/common/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/filter.js"></script>
   <script src="<%=request.getContextPath()%>/js/overview/service.js"></script>

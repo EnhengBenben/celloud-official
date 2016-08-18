@@ -1,5 +1,8 @@
 package com.celloud.action;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -25,18 +28,20 @@ public class NoticeAction {
 	private NoticeService noticeService;
 
 	@ActionLog(value = "获取未读消息")
+	@ResponseBody
 	@RequestMapping("lastUnread/{type}")
-	public String lastUnread(@PathVariable String type, Model model) {
+	public Map<String,Object> lastUnread(@PathVariable String type) {
+		// TODO 修改service和mapper，改为只查询数量
+		PageList<Notice> pageList = null;
 		if (NoticeConstants.TYPE_MESSAGE.equals(type)) {
-			PageList<Notice> pageList = noticeService.findLastUnreadMessage();
-			model.addAttribute("messageList", pageList);
+			pageList = noticeService.findLastUnreadMessage();
 		} else {
-			PageList<Notice> pageList = noticeService.findLastUnreadNotice();
-			model.addAttribute("noticeList", pageList);
+			pageList = noticeService.findLastUnreadNotice();
 			type = NoticeConstants.TYPE_NOTICE;
 		}
-		model.addAttribute("type", type);
-		return "notice/lastUnread";
+		Map<String,Object> map = new HashMap<>();
+		map.put("num", pageList.getPage().getRowCount());
+		return map;
 	}
 
 	@ActionLog(value = "获取消息", button = "查看所有")

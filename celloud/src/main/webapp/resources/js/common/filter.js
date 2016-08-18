@@ -1,21 +1,20 @@
 (function(){
-  var commonFilters = angular.module("commonFilters",[]);
-  commonFilters.filter("collapsedFilter",function(){
+  celloudApp.filter("collapsedFilter",function(){
     return function(collapsed){
       return collapsed ? "collapsed":"";
     }
   });
-  commonFilters.filter("logoMiniFilter",function(){
+  celloudApp.filter("logoMiniFilter",function(){
     return function(collapsed){
       return collapsed ? "mini":"";
     }
   });
-  commonFilters.filter("collapsedIconFilter",function(){
+  celloudApp.filter("collapsedIconFilter",function(){
     return function(collapsed){
       return collapsed ? "right-indent-icon":"left-indent-icon";
     }
   });
-  commonFilters.filter("proSidebarLeftFilter",function(){
+  celloudApp.filter("proSidebarLeftFilter",function(){
     return function(collapsed){
       return collapsed ? "":"large-left";
     }
