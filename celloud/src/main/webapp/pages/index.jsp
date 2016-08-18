@@ -33,25 +33,50 @@
 	    </div>
 	    <ul class="nav navbar-nav pull-left">
 	    	<shiro:hasPermission name="rocky:product">
-		      <li><a class="" href="#"><i class="cubes-icon">&nbsp;</i></a></li>
+		      <li><a class="" href="#"><i class="cubes-icon"></i></a></li>
 	    	</shiro:hasPermission>
 	    	<shiro:hasPermission name="bsi:product">
-		      <li><a class="" href="#"><i class="cubes-icon">&nbsp;</i></a></li>
+		      <li><a class="" href="#"><i class="cubes-icon"></i></a></li>
 	    	</shiro:hasPermission>
-	      <li><a class="" href="#"><i class="upload-icon">&nbsp;</i></a></li>
+	      <li><a class="" href="#"><i class="upload-icon"></i></a></li>
 	    </ul>
 	    <ul class="nav navbar-nav pull-right">
-	      <li><a href="#"><i class="code-icon">&nbsp;</i></a></li>
-	      <li><a href="#"><i class="bell-icon">&nbsp;</i></a></li>
-	      <li><a href="#"><i class="money-icon">&nbsp;</i></a></li>
+	      <li class="dropdown">
+            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+              <i class="code-icon"></i>
+            </a>
+            <div class="dropdown-menu code-dropdown">
+              <img alt="扫码关注" src="<%=request.getContextPath()%>/images/icon/qrcode.jpg">
+            </div>
+          </li>
+          <li class="dropdown">
+            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+              <i class="money-icon">&nbsp;</i>
+            </a>
+            <div class="dropdown-menu money-dropdown">
+              <p>账户余额：<span class="tips">0.04</span>元</p>
+              <a class="btn" href="#/expense/paydetail">立即充值</a><br>
+              <a class="btn-link" href="#/expense/consume">查看消费记录</a>
+            </div>
+          </li>
+          <li class="dropdown">
+            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+              <i class="bell-icon">&nbsp;</i>
+              <span class="label label-danger">24</span>
+            </a>
+            <div class="dropdown-menu message-dropdown">
+              <p> 您有<span class="tips">1</span>条新消息</p>
+              <a class="btn-link">查看所有</a>
+            </div>
+          </li>
 	      <li class="dropdown">
 	        <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
 	          <i class="user-icon">&nbsp;</i>
 	        </a>
-	        <ul class="dropdown-menu">
-              <li><a class="btn" href="#">个人信息</a></li>
-              <li><a class="btn btn-cancel" href="#">退出</a></li>
-            </ul>
+	        <div class="dropdown-menu user-dropdown">
+	          <a class="btn" href="#/user/base">个人信息</a>
+	          <a class="btn btn-cancel" href="logout">退出</a>
+            </div>
 	      </li>
 	    </ul>
 	  </div>

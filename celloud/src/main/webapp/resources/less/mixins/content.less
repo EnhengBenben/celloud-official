@@ -1,6 +1,10 @@
 .collapsed~.view-container{
    margin-left: 50px; 
 }
+.tips{
+    padding: 0px 2px;
+    color: @content-green;
+}
 .view-container{
     .transition-2(transform 0.3s ease-in-out, margin 0.3s ease-in-out);
     margin-left: 170px;
@@ -107,9 +111,6 @@
             margin-top: 14px;
             margin-bottom: 4px;
         }
-    }
-    .tips{
-        color: @content-green;
     }
     .pro-body{
         position: relative;
@@ -367,6 +368,30 @@
         font-size: 12px;
         color: @font-black;
     }
+    .attachment-list{
+        >li{
+            width: 134px;
+            height: 67px;
+            float: left;
+            padding-right: 20px;
+            display: inline-block;
+            cursor: pointer;
+            >img{
+                width: 100%;
+                height: 100%;
+            }
+            >a{
+                width: 114px;
+                height: 67px;
+                display: inline-block;
+                line-height: 67px;
+                text-align: center;
+                color: @font-black;
+                font-size: 16px;
+                .border-dashed(@dark-gray);
+            }
+        }
+    }
 }
 .qa-list{
     position: absolute;
@@ -419,29 +444,6 @@
             font-size: 12px;
             color: @dark-gray;
         }
-        .attachment-list{
-            >li{
-                width: 134px;
-                height: 67px;
-                float: left;
-                padding-right: 20px;
-                display: inline-block;
-                >img{
-                    width: 100%;
-                    height: 100%;
-                }
-                >a{
-                    width: 114px;
-                    height: 67px;
-                    display: inline-block;
-                    line-height: 67px;
-                    text-align: center;
-                    color: @font-black;
-                    font-size: 16px;
-                    .border-dashed(@dark-gray);
-                }
-            }
-        }
     }
     .qa-chatbox{
         padding-bottom: 60px;
@@ -484,6 +486,38 @@
             text-align: left;
         }
         
+    }
+    .qa-insert{
+        position: relative;
+        width: 100%;
+        padding-top: 20px;
+        padding-right: 100px;
+        textarea{
+            width: 100%;
+        }
+        .btn{
+            position: absolute;
+            right: 0;
+            bottom: 5px;
+        }
+    }
+}
+.qa-modal{
+    .attachment-list>li{
+        width: 96px;
+        >a{
+            width: 76px;
+        }
+    }
+    .form-label{
+        text-align: left;
+        padding-left: 20px;
+        p{
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+            color: @dark-gray;
+        }
     }
 }
 @media (max-width: 767px){
