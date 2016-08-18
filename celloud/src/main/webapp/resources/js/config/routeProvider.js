@@ -1,6 +1,5 @@
  (function(){
-  var celloudRounts = angular.module("celloudRounts",["ngRoute"]);
-  celloudRounts.config(function($routeProvider){
+  celloudApp.config(function($routeProvider){
     $routeProvider
     .when('/',{
       templateUrl: "pages/overview/overview.jsp"
