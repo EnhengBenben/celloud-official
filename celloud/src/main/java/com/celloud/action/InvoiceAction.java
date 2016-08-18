@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.model.mysql.Invoice;
@@ -56,13 +55,11 @@ public class InvoiceAction {
      */
     @ActionLog(value = "用户查看发票列表", button = "发票管理")
     @RequestMapping("list")
-    public ModelAndView list(Page page) {
+    @ResponseBody
+    public PageList<Invoice> list(Page page) {
         logger.info("用户{}查看发票列表", ConstantsData.getLoginUserName());
-        ModelAndView mv = new ModelAndView("expense/expense_invoice");
         Integer userId = ConstantsData.getLoginUserId();
-        PageList<Invoice> invoicePageList = invoiceService.getInvoiceList(page, userId);
-        mv.addObject("invoicePageList", invoicePageList);
-        return mv;
+        return invoiceService.getInvoiceList(page, userId);
     }
     
     @ActionLog(value = "用户查看发票详情", button = "发票详情")

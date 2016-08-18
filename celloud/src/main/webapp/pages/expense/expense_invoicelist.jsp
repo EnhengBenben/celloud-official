@@ -31,15 +31,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>sss</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><a class="btn-link" href="javascript:void(0)" data-toggle="modal" data-target="#invoice-detail-modal">详情</a></td>
+          <tr ng-repeat="invoice in dataList.datas">
+            <td>{{invoice.money}}</td>
+            <td>{{invoice.invoiceType==0?'普票':'专票'}}</td>
+            <td>{{invoice.invoiceHeader}}</td>
+            <td>{{invoice.address}}</td>
+            <td>{{invoice.invoiceState==0?'已申请':'已发出'}}</td>
+            <td>{{invoice.remark}}</td>
+            <td>{{invoice.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td><a class="btn-link" href="javascript:void(0)" data-toggle="modal" data-target="#invoice-detail-modal" ng-click="showInvoiceDetail(invoice.id)">详情</a></td>
           </tr>
         </tbody>
       </table>
@@ -54,42 +54,42 @@
           <h4 class="modal-title">查看发票信息</h4>
         </div>
         <div class="modal-body">
-          <h5>快递单号：申通:227547879908</h5>
+          <h5>快递单号：{{invoiceDetail.remark == null?'暂无物流信息':invoiceDetail.remark}}</h5>
           <h5>基本信息</h5>
           <table class="table table-main info-table">
             <tbody>
 	          <tr>
 	            <td>发票类型</td>
-	            <td>普通发票</td>
+	            <td>{{invoiceDetail.invoiceType==0?'公司普票':'公司专票'}}</td>
 	          </tr>
 	          <tr>
                 <td>金&emsp;&emsp;额</td>
-                <td>￥1000.00</td>
+                <td>￥{{invoiceDetail.money}}</td>
               </tr>
               <tr>
                 <td>抬&emsp;&emsp;头</td>
-                <td>上海华点云生物科技有限公司</td>
+                <td>{{invoiceDetail.invoiceHeader}}</td>
               </tr>
 	        </tbody>
           </table>
-          <h5>基本信息</h5>
+          <h5>邮寄信息</h5>
           <table class="table table-main info-table">
             <tbody>
               <tr>
                 <td>地&emsp;&emsp;&emsp;址</td>
-                <td>上海市长宁金钟路999号C栋易贸大楼</td>
+                <td>{{invoiceDetail.address}}</td>
               </tr>
               <tr>
                 <td>收&emsp;件&emsp;人</td>
-                <td>夏天</td>
+                <td>{{invoiceDetail.contacts}}</td>
               </tr>
               <tr>
                 <td>收件人电话</td>
-                <td>13813838388</td>
+                <td>{{invoiceDetail.cellphone}}</td>
               </tr>
               <tr>
                 <td>创建&emsp;时间</td>
-                <td>2016-05-04 17:44:00</td>
+                <td>{{invoiceDetail.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
               </tr>
             </tbody>
           </table>
