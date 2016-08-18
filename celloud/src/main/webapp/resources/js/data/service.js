@@ -1,12 +1,24 @@
 (function(){
     var dataService = angular.module("dataService",["ngResource"]);
-    
-    dataService.factory("dataPageListService",function($resource){
-      return $resource("data/dataPageList");
-    });
-    
-    dataService.factory("dataByPageService",function($resource){
-      return $resource("data/dataPageList?page=:page");
+
+    dataService.service("runService",function($resource,$http){
+      var self = this;
+      self.list = function(){
+        return $resource("data/dataPageList").get();
+      }
+      self.run = function(){
+        var checkedIds = $.dataManager.options.checkedIds;
+        alert(checkedIds);
+        var dataIds = [];
+        $.each(checkedIds, function(i, el){
+            if($.inArray(el, dataIds) === -1) dataIds.push(el);
+        });
+        if(dataIds.length==0){
+          alert("请选择数据");
+          return;
+        }
+        return $http.get("data/runWithProject",{params: {dataIds: dataIds.toString()}});
+      }
     });
     
 }());

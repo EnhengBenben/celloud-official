@@ -121,6 +121,7 @@ public class DataAction {
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size) {
         Page pager = new Page(page, size);
+		System.out.println("data list");
         return dataService.dataAllList(pager, ConstantsData.getLoginUserId());
     }
 
@@ -549,6 +550,7 @@ public class DataAction {
 	@RequestMapping("runWithProject")
 	@ResponseBody
 	public String runWithProject(String dataIds) {
+		System.out.println(dataIds);
 		//1. 检索数据详情
 		List<DataFile> dataList = dataService.findDatasById(dataIds);
 		//2. 数据分组
@@ -636,7 +638,7 @@ public class DataAction {
 		//5. 创建报告
 		report.setProjectId(projectId);
 		boolean reportState = reportService.insertProReport(report, dataList);
-		if (reportState) {
+		if (!reportState) {
 			result = appId + "报告创建失败";
 			logger.info("{}{}", userName, result);
 			return result;
@@ -700,8 +702,8 @@ public class DataAction {
 			StrSubstitutor sub = new StrSubstitutor(map);
 			String command = sub.replace(app.getCommand());
 			logger.info("运行命令:{}", command);
-			SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-			ssh.sshSubmit(command, false);
+			//			SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+			//			ssh.sshSubmit(command, false);
 			// 保存消费记录
 			expenseService.saveProRunExpenses(projectId, dataList);
 		}
