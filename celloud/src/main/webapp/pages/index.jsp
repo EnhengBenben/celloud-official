@@ -118,6 +118,7 @@
   <script src="<%=request.getContextPath()%>/js/user/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/data/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/data/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/data/data.js"></script>
   <script src="<%=request.getContextPath()%>/js/config/routeProvider.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/filter.js"></script>

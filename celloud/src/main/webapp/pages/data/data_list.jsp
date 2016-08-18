@@ -11,11 +11,12 @@
         <div class="table-opera-content">
           <div class="opera-info">
           	<shiro:hasPermission name="runWithProject:button">
-	            <button class="btn"><i class="fa fa-play" aria-hidden="true"></i>runWithProject:button运行</button>
+	            <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="runWithProject()"><i class="fa fa-play" aria-hidden="true"></i> 运行</button>
 			</shiro:hasPermission>
           	<shiro:hasPermission name="runWithData:button">
-	            <button class="btn"><i class="fa fa-play" aria-hidden="true"></i>runWithData:button运行</button>
+	            <button class="btn data-operate btn-cancel" disabled="disabled"><i class="fa fa-play" aria-hidden="true"></i>runWithData:button运行</button>
 			</shiro:hasPermission>
+            <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="runWithProject()"><i class="fa fa-play" aria-hidden="true"></i> 归档</button>
           </div>
           <div class="info-btn-group pull-right">
             <input class="field" type="text" placeholder="搜索" />
@@ -23,12 +24,17 @@
           </div>
         </div>
       </div>
+      <div class="table-opera">
+        <span class="tips">
+             提醒：没有产品标签的数据和正在运行的数据无法勾选及运行。
+        </span>
+      </div>
       <table class="table table-main">
         <thead>
           <tr>
             <th>
               <label class="checkbox-lable">
-                <input class="checkbox" type="checkbox" name="demo-checkbox1">
+                <input class="checkbox" type="checkbox" name="demo-checkbox1" onclick="$.dataManager.checkAll($(this), 'data-checkone')">
                 <span class="info"></span>
               </label>
             </th>
@@ -44,7 +50,7 @@
           <tr ng-repeat="file in dataList.datas">
             <td>
               <label class="checkbox-lable">
-                <input class="checkbox" type="checkbox" name="demo-checkbox1" ng-disabled="file.isRunning==1||file.tagName==null">
+                <input class="checkbox" type="checkbox" name="data-checkone" value="{{file.fileId}}" onclick="$.dataManager.checkOneData($(this))" ng-disabled="file.isRunning==1||file.tagName==null">
                 <span class="info"></span>
               </label>
             </td>
