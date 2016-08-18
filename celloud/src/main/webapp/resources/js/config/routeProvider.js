@@ -40,10 +40,12 @@
       templateUrl: "pages/expense/expense_pay.jsp"
     })
     .when('/expense/paylist',{
-      templateUrl: "pages/expense/expense_paylist.jsp"
+      templateUrl: "pages/expense/expense_paylist.jsp",
+      controller: "pageQueryRecharge"
     })
     .when('/expense/invoice',{
-      templateUrl: "pages/expense/expense_invoicelist.jsp"
+      templateUrl: "pages/expense/expense_invoicelist.jsp",
+      controller: "pageQueryInvoice"
     })
     .otherwise({redirectTo:'/'});
   });
