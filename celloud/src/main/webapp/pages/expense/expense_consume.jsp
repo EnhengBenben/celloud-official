@@ -14,7 +14,7 @@
       </div>
       <div class="table-opera">
         <div class="table-opera-content">
-          <div class="opera-info">您一共运行了<span class="tips">235</span>次流程，详细的运行记录请见下表</div>
+          <div class="opera-info">您一共运行了<span class="tips">{{dataList.page.rowCount}}</span>次流程，详细的运行记录请见下表</div>
           <div class="info-btn-group pull-right">
 		    <input class="field" type="text" placeholder="搜索" />
 		    <a class="action">搜索</a>
@@ -31,11 +31,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>sss</td>
+          <tr ng-repeat="expense in dataList.datas">
+            <td>{{expense.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>数据{{expense.fileInfos | substring}}运行{{expense.appName}}</td>
+            <td>{{expense.price}}</td>
+            <td>{{expense.remark | emptyText:"无"}}</td>
           </tr>
         </tbody>
       </table>

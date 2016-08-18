@@ -545,6 +545,169 @@ public class DataAction {
 		return result;
 	}
 
+	@ActionLog(value = "runWithProject", button = "运行")
+	@RequestMapping("runWithProject")
+	@ResponseBody
+	public String runWithProject(String dataIds) {
+		//1. 检索数据详情
+		List<DataFile> dataList = dataService.findDatasById(dataIds);
+		//2. 数据分组
+		Map<Integer, List<DataFile>> map = new HashMap<>();
+		for (DataFile dataFile : dataList) {
+			Integer appId = dataFile.getAppId();
+			List<DataFile> list = null;
+			if (map.containsKey(appId)) {
+				list = map.get(appId);
+			} else {
+				list = new ArrayList<>();
+			}
+			list.add(dataFile);
+			map.put(appId, list);
+		}
+		//3. 校验余额
+		Integer userId = ConstantsData.getLoginUserId();
+		String userName = ConstantsData.getLoginUserName();
+		List<Integer> appIdList = new ArrayList<>();
+		for (Integer appId : map.keySet()) {
+			appIdList.add(appId);
+		}
+		if (!appService.checkPriceToRun(appIdList, userId)) {
+			String result = "余额不足，请充值后再运行";
+			logger.info(userName + result);
+			return result;
+		}
+		//4. 运行
+		StringBuffer result = new StringBuffer();
+		for (Entry<Integer, List<DataFile>> entry : map.entrySet()) {
+			String back = runSingleProject(entry.getKey(), entry.getValue());
+			if (back != null) {
+				result.append(back).append(";");
+			}
+		}
+		return result.toString();
+	}
+
+	private String runSingleProject(Integer appId, List<DataFile> dataList) {
+		Integer userId = ConstantsData.getLoginUserId();
+		String userName = ConstantsData.getLoginUserName();
+
+		//1. 创建项目信息
+		Project project = new Project();
+		String proName = new Date().getTime() + "";
+		project.setUserId(userId);
+		project.setProjectName(proName);
+		project.setDataNum(dataList.size());
+		Long size = 0l;
+		for (DataFile dataFile : dataList) {
+			size += dataFile.getSize();
+		}
+		project.setDataSize(String.valueOf(size));
+
+		//2. 创建报告信息
+		Report report = new Report();
+		report.setUserId(userId);
+		report.setAppId(appId);
+
+		//3. 创建dataListFile
+		Map<String, String> dataFilePathMap = new HashMap<>();// 针对按数据投递APP
+		String dataFilePath = "";// 针对按项目投递APP
+		if (AppDataListType.FASTQ_PATH.contains(appId)) {
+			dataFilePathMap = DataKeyListToFile.onlyFastqPath(dataList);
+			project.setDataNum(Integer.parseInt(dataFilePathMap.get("dataReportNum")));
+			dataFilePathMap.remove("dataReportNum");
+		} else if (AppDataListType.ONLY_PATH.contains(appId)) {
+			dataFilePath = DataKeyListToFile.onlyPath(dataList);
+		} else if (AppDataListType.PATH_AND_NAME.contains(appId)) {
+			dataFilePath = DataKeyListToFile.containName(dataList);
+		} else if (AppDataListType.SPLIT.contains(appId)) {
+			dataFilePathMap = DataKeyListToFile.toSplit(dataList);
+			project.setDataNum(1);
+		}
+
+		//4. 创建项目
+		String result = null;
+		Integer projectId = projectService.insertProject(project, dataList);
+		if (projectId == null) {
+			result = "项目创建失败";
+			logger.info("{}{}", userName, result);
+			return result;
+		}
+
+		//5. 创建报告
+		report.setProjectId(projectId);
+		boolean reportState = reportService.insertProReport(report, dataList);
+		if (reportState) {
+			result = appId + "报告创建失败";
+			logger.info("{}{}", userName, result);
+			return result;
+		}
+
+		//6. 投递
+		App app = appService.selectByPrimaryKey(appId);
+		String appPath = SparkPro.TOOLSPATH + userId + "/" + appId + "/";
+		if (!FileTools.checkPath(appPath)) {
+			new File(appPath).mkdirs();
+		}
+		if (AppDataListType.FASTQ_PATH.contains(appId) || AppDataListType.SPLIT.contains(appId)) {
+			int runningNum;
+			SSHUtil ssh = null;
+			Boolean iswait;
+			if (AppDataListType.SPARK.contains(appId)) {
+				runningNum = taskService.findRunningNumByAppId(AppDataListType.SPARK);
+				ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
+				iswait = runningNum < SparkPro.MAXTASK;
+				logger.info("APP{}任务投递到spark", appId);
+			} else {
+				runningNum = taskService.findRunningNumByAppId(appId);
+				ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+				iswait = runningNum < app.getMaxTask() || app.getMaxTask() == 0;
+			}
+			for (Entry<String, String> entry : dataFilePathMap.entrySet()) {
+				String dataKey = entry.getKey();
+				String dataListFile = entry.getValue();
+				Map<String, String> map = CommandKey.getMap(dataListFile, appPath, projectId);
+				StrSubstitutor sub = new StrSubstitutor(map);
+				String command = sub.replace(app.getCommand());
+				Task task = taskService.findTaskByDataKeyAndApp(dataKey, appId);
+				if (task == null) {
+					task = new Task();
+					task.setProjectId(projectId);
+					task.setUserId(userId);
+					task.setAppId(appId);
+					task.setDataKey(dataKey);
+					task.setCommand(command);
+					taskService.create(task);
+				} else {
+					task.setProjectId(projectId);
+					task.setCommand(command);
+					taskService.updateTask(task);
+				}
+				Integer taskId = task.getTaskId();
+				if (iswait) {
+					logger.info("任务{}运行命令：{}", taskId, command);
+					ssh.sshSubmit(command, false);
+					taskService.updateToRunning(taskId);
+				} else {
+					logger.info("数据{}排队运行{}", dataKey, app.getAppName());
+				}
+			}
+			// 保存消费记录
+			expenseService.saveRunExpenses(projectId, appId, userId, dataList);
+		} else {
+			// SGE
+			logger.info("celloud 直接向 SGE 投递任务");
+			Map<String, String> map = CommandKey.getMap(dataFilePath, appPath, projectId);
+			StrSubstitutor sub = new StrSubstitutor(map);
+			String command = sub.replace(app.getCommand());
+			logger.info("运行命令:{}", command);
+			SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+			ssh.sshSubmit(command, false);
+			// 保存消费记录
+			expenseService.saveProRunExpenses(projectId, dataList);
+		}
+		return result;
+	}
+
 	/**
 	 * 重新运行
 	 * 

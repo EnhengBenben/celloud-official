@@ -8,9 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.model.mysql.Expenses;
@@ -43,19 +41,11 @@ public class ExpensesAction {
      */
     @ActionLog(value = "打开消费记录页面", button = "消费记录查看详情")
     @RequestMapping("toRunExpenseList")
-    public ModelAndView toRunExpenseList(
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "20") int size) {
-        ModelAndView mv = new ModelAndView("expense/expense_pay_detail");
-        Page pager = new Page(page, size);
+    @ResponseBody
+    public PageList<Expenses> toRunExpenseList(Page page) {
         Integer userId = ConstantsData.getLoginUserId();
-        PageList<Expenses> expensePageList = expensesService
-                .getRunExpensesList(userId, pager);
-        mv.addObject("expensePageList", expensePageList);
-        mv.addObject("expenseTotal",
-                expensesService.getUserTotalExpenses(userId));
         logger.info("用户{}查看消费记录", userId);
-        return mv;
+        return expensesService.getRunExpensesList(userId, page);
     }
 
     /**

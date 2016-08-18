@@ -519,12 +519,18 @@
 		select sum(size) size from
 		tb_file where file_id in (${dataIds})
 	</select>
-	<select id="findDatasById" resultMap="ResultMapWithBLOBs">
+	<select id="findDatasById" resultMap="ResultMapWithTag">
 		select
 		<include refid="Base_Column_List" />
 		,
 		<include refid="Blob_Column_List" />
-		from tb_file where file_id in (${dataIds})
+		,
+		<include refid="Tag_Column_List" />
+		from tb_file f
+		left join tb_file_tag_relat filetag on f.file_id = filetag.file_id
+		left join tb_tag tag on tag.tag_id = filetag.tag_id
+		left join tb_app_tag_relat apptag on tag.tag_id = apptag.tag_id
+		where file_id in (${dataIds})
 	</select>
 	<select id="queryDataRunning" resultType="java.lang.Integer">
 		select count(*) number
