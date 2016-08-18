@@ -107,6 +107,13 @@
             font-size: 14px;
             color: @font-black;
         }
+        .only-btn{
+            >.btn, >.btn-cancel{
+                margin: 0;
+                margin-right: 20px;
+                color: #fff;
+            }
+        }
         >.btn{
             margin-top: 14px;
             margin-bottom: 4px;
@@ -518,6 +525,19 @@
             font-size: 12px;
             color: @dark-gray;
         }
+    }
+}
+.notice-content{
+    min-height: 647px;
+    background-color: @content-gray;
+    padding: 20px;
+    .notice-body{
+        max-width: 820px;
+    }
+    h5{
+        margin: 0;
+        padding-bottom: 20px;
+        font-size: 14px;
     }
 }
 @media (max-width: 767px){

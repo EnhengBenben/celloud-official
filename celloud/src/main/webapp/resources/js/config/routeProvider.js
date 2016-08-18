@@ -48,6 +48,15 @@
     .when('/qa',{
       templateUrl: "pages/qa/qa_list.jsp"
     })
+    .when('/notice/list',{
+      templateUrl: "pages/notice/notice_list.jsp"
+    })
+    .when('/notice/system',{
+      templateUrl: "pages/notice/notice_system.jsp"
+    })
+    .when('/notice/set',{
+      templateUrl: "pages/notice/notice_set.jsp"
+    })
     .otherwise({redirectTo:'/'});
   });
 })()

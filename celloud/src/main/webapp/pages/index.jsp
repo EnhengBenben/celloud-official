@@ -66,7 +66,7 @@
             </a>
             <div class="dropdown-menu message-dropdown">
               <p> 您有<span class="tips">1</span>条新消息</p>
-              <a class="btn-link">查看所有</a>
+              <a class="btn-link" href="#/notice/list">查看所有</a>
             </div>
           </li>
 	      <li class="dropdown">
