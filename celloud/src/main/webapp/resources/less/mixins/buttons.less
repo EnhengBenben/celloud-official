@@ -13,9 +13,6 @@
     &.btn-cancel {
         .button-variant(@font-gray,@container-gray,@container-gray);
     }
-    &.-confirm {
-        background-color: @gray-black;
-    }
     &.-low{
         height: 30px;
         line-height: 28px;
@@ -26,6 +23,15 @@
         .button-variant(@font-gray,#e6e6e6,@light-gray);
         width: 60px;
         font-weight: 500;
+    }
+    &.chevron-btn{
+        .button-variant(@dark-gray,#fff,@light-gray);
+        font-size: 12px;
+        >i{
+            margin: 0;
+            margin-left: 2px;
+            color: @font-gray;
+        }
     }
 }
 .btn-link{
