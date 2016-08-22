@@ -16,11 +16,11 @@
           	<shiro:hasPermission name="runWithData:button">
 	            <button class="btn data-operate btn-cancel" disabled="disabled"><i class="fa fa-play" aria-hidden="true"></i>runWithData:button运行</button>
 			</shiro:hasPermission>
-            <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="runWithProject()"><i class="fa fa-play" aria-hidden="true"></i> 归档</button>
+            <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="deleteData()"><i class="fa fa-play" aria-hidden="true"></i> 归档</button>
           </div>
           <div class="info-btn-group pull-right">
-            <input class="field" type="text" placeholder="搜索" />
-            <a class="action">搜索</a>
+            <input class="field" type="text" placeholder="搜索文件名/数据标签/文件别名" ng-model="dataCondition"/>
+            <a class="action" ng-click="conditionList()">搜索</a>
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@
                 <span class="info"></span>
               </label>
             </td>
-            <td>{{file.fileName}}<i class="fa fa-truck" aria-hidden="true" ng-show="file.isRunning==1"></i></td>
+            <td title="{{file.fileName}}">{{file.fileName}}<i class="fa fa-truck" aria-hidden="true" ng-show="file.isRunning==1"></i></td>
             	<!-- TODO show more -->
             <td>{{file.appId}}--{{file.tagName}}--{{file.isRunning}}--{{file.fileId}}</td>
             <td>{{file.batch}}</td>

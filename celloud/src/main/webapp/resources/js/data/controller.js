@@ -1,22 +1,36 @@
 (function(){
-  var dataControllers = angular.module("dataControllers",["ngRoute"]);
-  
-  dataControllers.controller("dataListController", function($scope, runService){
+  celloudApp.controller("dataListController", function($scope, runService){
     $scope.dataList = runService.list();
+    $scope.conditionList = function(){
+      $.dataManager.options.condition = $scope.dataCondition;
+      runService.conditionList().success(function(response){
+        $scope.dataList = response;
+      });
+    }
     $scope.runWithProject = function() {
       runService.run().success(function(response) {
         if(response.length==0){
-          alert("$http.get success");
+          alert("run success");
           $scope.dataList = runService.list();
-          $.dataManager.options.checkedIds = new Array();
-          $.dataManager.editBtn.update();
+          $.dataManager.refreshDataList();
         }else{
-          alert("$http.get error");
+          alert("run error");
         }
       });
     };
+    $scope.deleteData = function(){
+      runService.delete().success(function(response){
+        if(response.code == "104"){
+          alert("success");
+          $scope.dataList = runService.list();
+          $.dataManager.refreshDataList();
+        }else{
+          alert("失败");
+        }
+      });
+    }
   });
-  dataControllers.controller("dataPageController", function($scope, dataByPageService){
+  celloudApp.controller("dataPageController", function($scope, dataByPageService){
     $scope.dataList = dataByPageService.get({page:2});
   });
 })();
