@@ -65,7 +65,8 @@
       templateUrl: "pages/report/report_project.jsp"
     })
     .when('/app',{
-      templateUrl: "pages/app/app_main.jsp"
+      templateUrl: "pages/app/app_main.jsp",
+      controller: "toAppStore"
     })
     .otherwise({redirectTo:'/'});
   });

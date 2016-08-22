@@ -120,7 +120,7 @@
 <%--           </shiro:hasPermission> --%>
         </li>
         <li>
-          <a href="javascript:void(0)"><i class="app-icon"></i><span>应用市场</span></a>
+          <a href="#/app"><i class="app-icon"></i><span>应用市场</span></a>
         </li>
       </ul>
       <ul class="sidebar-menu">
@@ -166,6 +166,8 @@
   
   <script src="<%=request.getContextPath()%>/js/message.js"></script>
   <script src="<%=request.getContextPath()%>/js/application.js"></script>
+  <script src="<%=request.getContextPath()%>/js/app/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/app/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/filter.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/controller.js"></script>
