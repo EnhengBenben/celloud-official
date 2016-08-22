@@ -3,11 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="pro-body">
-    <ol class="breadcrumb">
-      <li>CelLoud</li>
-      <li>应用市场</li>
-      <li>应用详情</li>
-    </ol>
 	<input type="hidden" id="app-detail-appId" value="${app.appId }">
 	<div class="item-list">
 	  <div class="item-left">
@@ -21,18 +16,18 @@
 	            <span id="manageAppBtns" style="display:inline-block;position:relative;margin-left:20px;" data-step="2" data-intro="" data-position="bottom" data-img="changedApp.png">
 	              <c:choose>
 	                <c:when test="${app.runType==0 }">
-	                  <a class="btn btn-celloud-success btn-flat" href="${app.address }" target="_blank"><i class="fa fa-plus"></i>&nbsp;点击使用</a>
+	                  <a class="btn btn-celloud-success btn-flat" style="padding-top: 10px;" href="${app.address }" target="_blank"><i class="fa fa-plus"></i>&nbsp;点击使用</a>
 	                </c:when>
 	                <c:otherwise>
 	                  <c:if test="${app.runType==2 }">
-		                  <a class="btn btn-celloud-success btn-flat" href="${app.address }" target="_blank"><i class="fa fa-plus"></i>&nbsp;点击使用</a>
+		                  <a class="btn btn-celloud-success btn-flat" style="padding-top: 10px;" href="${app.address }" target="_blank"><i class="fa fa-plus"></i>&nbsp;点击使用</a>
 	                  </c:if>
 	                  <c:choose>
 	                    <c:when test="${app.isAdded==0 }">
-	                      <a class="btn btn-celloud-success btn-flat" href="javascript:void(0);" onclick="appStore.addApp(${app.appId });" id="toAddApp"><i class="fa fa-plus"></i>&nbsp;添加</a>
+	                      <a class="btn btn-celloud-success btn-flat" style="padding-top: 10px;" href="javascript:void(0);" onclick="appStore.addApp(${app.appId });" id="toAddApp"><i class="fa fa-plus"></i>&nbsp;添加</a>
 	                    </c:when>
 	                    <c:otherwise>
-	                      <a class="btn btn-celloud-close btn-flat" href="javascript:void(0);" onclick="appStore.removeApp(${app.appId });" id="toAddApp"><i class="fa fa-minus"></i>&nbsp;取消添加</a>
+	                      <a class="btn btn-celloud-close btn-flat" style="padding-top: 10px;" href="javascript:void(0);" onclick="appStore.removeApp(${app.appId });" id="toAddApp"><i class="fa fa-minus"></i>&nbsp;取消添加</a>
 	                    </c:otherwise>
 	                  </c:choose>
 	                </c:otherwise>
@@ -70,8 +65,8 @@
 	  <div class="link">
 	    <div class="inner-link">
 	      <ul id="toAppMoreDetailUl">
-	        <li class="select" style="border-left:0;" id="toAppIntro" onclick="appStore.toAppMoreDetail('toAppIntro')"><a href="#1">产品介绍</a></li>
-	        <li style="border-right: 0;" class="" id="toAppScreeen" onclick="appStore.toAppMoreDetail('toAppScreeen')"><a href="#2">报告截图</a></li>
+	        <li class="select" style="border-left:0;" id="toAppIntro" onclick="appStore.toAppMoreDetail('toAppIntro')"><a href="javascript:void(0);">产品介绍</a></li>
+	        <li style="border-right: 0;" class="" id="toAppScreeen" onclick="appStore.toAppMoreDetail('toAppScreeen')"><a href="javascript:void(0);">报告截图</a></li>
 	      </ul>
 	    </div>
 	  </div>

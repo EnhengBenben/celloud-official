@@ -61,13 +61,11 @@ public class AppAction {
 
     @ActionLog(value = "打开应用市场首页", button = "应用市场")
     @RequestMapping("toAppStore")
-    public ModelAndView toAppStore() {
+    @ResponseBody
+    public List<Classify> toAppStore() {
         log.info("用户{}查看应用市场", ConstantsData.getLoginUserName());
-        ModelAndView mv = new ModelAndView("app/app_main");
         /** 一级分类列表 */
-        List<Classify> pclassifys = classifyService.getClassify(ClassifyFloor.root);
-        mv.addObject("pclassifys", pclassifys);
-        return mv;
+        return classifyService.getClassify(ClassifyFloor.root);
     }
 
     @ActionLog(value = "APP首页查看指定一级分类的子分类", button = "APP一级分类按钮")

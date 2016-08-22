@@ -3,11 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link href="<%=request.getContextPath()%>/css/app.css" rel="stylesheet" type="text/css" />
 <div class="pro-body">
-    <ol class="breadcrumb">
-      <li>CelLoud</li>
-      <li>应用市场</li>
-      <li>应用列表</li>
-    </ol>
 	<div class="y-row clearfix">
 	  <div class="J_single kind box box-success" style="top: 0px;">
 	    <div class="list-left">分类方式：</div>

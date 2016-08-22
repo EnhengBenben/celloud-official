@@ -22,11 +22,11 @@
 	    <tbody>
 	      <tr ng-repeat="log in dataList.datas">
             <td>{{log.operate}}</td>
-            <td>{{log.logDate}}</td>
+            <td>{{log.logDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td>{{log.ip}}</td>
             <td>{{log.address}}</td>
-            <td>{{log.browser}}</td>
-            <td>{{log.os}}</td>
+            <td>{{log.browser + log.browserVersion}}</td>
+            <td>{{log.os + log.osVersion}}</td>
           </tr>
 	    </tbody>
 	  </table>
