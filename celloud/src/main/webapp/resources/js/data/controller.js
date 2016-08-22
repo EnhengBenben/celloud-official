@@ -6,14 +6,23 @@
         if(response.length==0){
           alert("run success");
           $scope.dataList = runService.list();
-          $.dataManager.options.checkedIds = new Array();
-          $.dataManager.editBtn.update();
-          $.dataManager.cleanCheckbox("demo-checkbox1");
+          $.dataManager.refreshDataList();
         }else{
           alert("run error");
         }
       });
     };
+    $scope.deleteData = function(){
+      runService.delete().success(function(response){
+        if(response.code == "104"){
+          alert("success");
+          $scope.dataList = runService.list();
+          $.dataManager.refreshDataList();
+        }else{
+          alert("失败");
+        }
+      });
+    }
   });
   celloudApp.controller("dataPageController", function($scope, dataByPageService){
     $scope.dataList = dataByPageService.get({page:2});

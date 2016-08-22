@@ -79,6 +79,15 @@ function _init_data(){
   $.dataManager.cleanCheckbox = function(name){
     $("input[type='checkbox'][name='"+name+"']").prop("checked",false);
   }
+
+  /**
+   * 刷新数据列表的后续操作（清空数据选择列表、按钮重置、全选复选框重置）
+   */
+  $.dataManager.refreshDataList = function(name){
+    $.dataManager.options.checkedIds = new Array();
+    $.dataManager.editBtn.update();
+    $.dataManager.cleanCheckbox("demo-checkbox1");
+  }
   
   /**
    * 复选框事件
@@ -115,6 +124,7 @@ function _init_data(){
       $(".data-operate").addClass("btn-cancel");
     }
   };
+  
   /**
    * ======================= new end ======================
    */
@@ -192,37 +202,6 @@ function _init_data(){
       });
     }
   };
-  
-  /**
-   * 数据删除
-   */
-  $.dataManager.deleteData = function(){
-    $.dataManager.showTipModal("确定要删除选中数据吗？");
-    $("#check-true").one("click",function(){
-      var checkedIds = $.dataManager.options.checkedIds;
-      var dataIds = "";
-      for (var i=0;i<checkedIds.length;i++){
-        dataIds += checkedIds[i] + ",";
-      }
-      dataIds = dataIds.substring(0, dataIds.length-1);
-      $.get("data/delete.action",{"dataIds":dataIds},function(data){
-        if(data.code == "104"){
-          $.dataManager.find.condition();
-        }else{
-          $.dataManager.showTipModal(data.message);
-        }
-      });
-    });
-    $("#check-flase").one("click",function(){
-      $("#check-true").unbind("click");
-    })
-  }; 
-  /**
-   * 主方法  ---end
-   * ==========================
-   */
-  
-  
   
   /**
    * ============================

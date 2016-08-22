@@ -16,7 +16,7 @@
           	<shiro:hasPermission name="runWithData:button">
 	            <button class="btn data-operate btn-cancel" disabled="disabled"><i class="fa fa-play" aria-hidden="true"></i>runWithData:button运行</button>
 			</shiro:hasPermission>
-            <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="runWithProject()"><i class="fa fa-play" aria-hidden="true"></i> 归档</button>
+            <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="deleteData()"><i class="fa fa-play" aria-hidden="true"></i> 归档</button>
           </div>
           <div class="info-btn-group pull-right">
             <input class="field" type="text" placeholder="搜索" />
