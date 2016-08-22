@@ -33,12 +33,12 @@
 	    </div>
 	    <ul class="nav navbar-nav pull-left">
 	    	<shiro:hasPermission name="rocky:product">
-		      <li><a class="" href="#"><i class="cubes-icon"></i></a></li>
+		      <li><a href="#"><i class="cubes-icon"></i></a></li>
 	    	</shiro:hasPermission>
 	    	<shiro:hasPermission name="bsi:product">
-		      <li><a class="" href="#"><i class="cubes-icon"></i></a></li>
+		      <li><a href="#"><i class="cubes-icon"></i></a></li>
 	    	</shiro:hasPermission>
-	      <li><a class="" href="#"><i class="upload-icon"></i></a></li>
+	      <li><a data-toggle="modal" data-target="#upload-modal"><i class="upload-icon"></i></a></li>
 	    </ul>
 	    <ul class="nav navbar-nav pull-right">
 	      <li class="dropdown">
@@ -151,7 +151,7 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
-  
+  <ng-include src="'pages/partial/_partial_upload_modal.jsp'" ></ng-include>
   <script type="text/javascript">
        window.CONTEXT_PATH = '<%=request.getContextPath()%>';
   </script>
