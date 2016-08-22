@@ -1,7 +1,5 @@
 (function(){
-    var dataService = angular.module("dataService",["ngResource"]);
-
-    dataService.service("runService",function($resource,$http){
+  celloudApp.service("runService",function($resource,$http){
       var self = this;
       self.list = function(){
         return $resource("data/dataPageList").get();

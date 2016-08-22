@@ -74,6 +74,13 @@ function _init_data(){
   }
   
   /**
+   * 将checkbox设置为取消选择状态
+   */
+  $.dataManager.cleanCheckbox = function(name){
+    $("input[type='checkbox'][name='"+name+"']").prop("checked",false);
+  }
+  
+  /**
    * 复选框事件
    */
   $.dataManager.checkData = {
@@ -88,7 +95,7 @@ function _init_data(){
   };
   
   /**
-   * 编辑按钮显示状态
+   * 数据操作按钮显示状态（运行和归档）
    */ 
   $.dataManager.editBtn = {
     update: function(){

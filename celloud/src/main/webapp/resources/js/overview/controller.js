@@ -1,39 +1,37 @@
 (function(){
-  var overview = angular.module("overviewApp",["ngRoute"]);
-  
-  overview.controller("overviewCount", function($scope, loginCount){
+  celloudApp.controller("overviewCount", function($scope, loginCount){
     $scope.map = loginCount.get();
   });
   
-  overview.controller("fileDayCount", function(){
+  celloudApp.controller("fileDayCount", function(){
     userCount.fileDayCount();
   });
   
-  overview.controller("fileMonthCount", function(){
+  celloudApp.controller("fileMonthCount", function(){
     userCount.fileMonthCount();
   });
   
-  overview.controller("fileSizeDayCount", function(){
+  celloudApp.controller("fileSizeDayCount", function(){
     userCount.fileSizeDayCount();
   });
   
-  overview.controller("fileSizeMonthCount", function(){
+  celloudApp.controller("fileSizeMonthCount", function(){
     userCount.fileSizeMonthCount();
   });
   
-  overview.controller("reportDayCount", function(){
+  celloudApp.controller("reportDayCount", function(){
     userCount.reportDayCount();
   });
   
-  overview.controller("reportMonthCount", function(){
+  celloudApp.controller("reportMonthCount", function(){
     userCount.reportMonthCount();
   });
   
-  overview.controller("appDayCount", function(){
+  celloudApp.controller("appDayCount", function(){
     userCount.appDayCount();
   });
   
-  overview.controller("appMonthCount", function(){
+  celloudApp.controller("appMonthCount", function(){
     userCount.appMonthCount();
   });
 })();
