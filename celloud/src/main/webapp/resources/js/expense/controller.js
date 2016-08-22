@@ -15,6 +15,9 @@
 				$scope.dataList = dataList;
 			});
 		};
+		$scope.reset = function(){
+			$scope.invoiceForm = {};
+		};
 		$("input[name=checkAll]").click(function(){
 	        if($(this).prop("checked")){
 	            $("input[name='rechargeIds'][disabled!=disabled][type=checkbox]").prop('checked',true);
@@ -29,11 +32,10 @@
 				$("#checkAll").prop("checked",false);
 			}
 		}
-		$("#applyInvoice").click(function(){
+		$scope.applyInvoice = function(){
 			var rechargeIds = $("input[name='rechargeIds']:checked");
 			var money = 0;
 			if(rechargeIds.length < 1){
-				alert("dddddddddddd");
 				$rootScope.errorInfo = "请选择至少一条记录";
 				$("#tips-modal").modal("show");
 				return;
@@ -50,34 +52,34 @@
 			$("#money").attr("value",money);
 			var ids = new Array();
 			rechargeIds.each(function(){
-				alert($(this).val());
 	            ids.push($(this).val());
 	        });
 			$("#rechargeIds").val(ids.join(","));
-		});
+		};
 		$("[name=invoiceType]").click(function(){
 			$("[name=invoiceType]").prop("checked",false);
 			$(this).prop("checked",true);
 		});
 		$scope.apply = function(){
 			$("#invoiceSubmit").prop("disabled",true);
-			var params = $("#invoiceForm").serialize();
-			alert(params);
-			expenseService.apply(params).
+			$scope.invoiceForm.invoiceType = $("input[name=invoiceType]:checked").val();
+			$scope.invoiceForm.rechargeIds = $("#rechargeIds").val();
+			expenseService.apply($scope.invoiceForm).
 			success(function(data){
 				$("#apply-invoice-modal").modal("hide");
 				$scope.state = true;
 				if(data > 0){
 					$scope.message = "申请成功!";
+					$scope.pageQueryRecharge(1,10);
 				}else{
 					$scope.message = "发生未知错误,请联系管理员!";
 				}
 			});
 			$("#invoiceSubmit").prop("disabled",false);
-		}
+		};
 		$scope.length = 0;
 		$scope.pageQueryRecharge(1,10);
-		$scope.invoice = {};
+		$scope.invoiceForm = {};
 	});
 	celloudApp.controller("pageQueryInvoice",function($scope,expenseService){
 		$scope.pageQueryInvoice = function(currentPage,pageSize){

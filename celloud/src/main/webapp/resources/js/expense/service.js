@@ -16,7 +16,7 @@
 			return $http({method:"POST",url:"invoice/detail",params:{"id":invoiceId}});
 		}
 		this.apply = function(params){
-			return $http({method:"POST",url:"invoice/apply?"+params});
+			return $http({method:"POST",url:"invoice/apply",data:$.param(params),headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
 		}
 	});
 })();
