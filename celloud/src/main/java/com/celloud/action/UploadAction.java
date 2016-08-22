@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,7 +81,6 @@ public class UploadAction {
 	 */
 	CheckFileTypeUtil checkFileType = new CheckFileTypeUtil();
 
-	@RequiresRoles("rocky")
 	@RequestMapping("rocky")
 	@ResponseBody
 	public Map<String, String> uploadRockyFile(@RequestParam("file") CommonsMultipartFile file, Integer chunk,

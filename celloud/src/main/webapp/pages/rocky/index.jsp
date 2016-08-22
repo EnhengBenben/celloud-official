@@ -90,11 +90,6 @@
 						</a>
 					</li>
 					<li class="treeview">
-						<a id="to-data-a" href="javascript:void(0)" data-menu="数据">
-							<i class="celicon -data"></i> 数据
-						</a>
-					</li>
-					<li class="treeview">
 						<a id="to-report-a" href="javascript:void(0)" data-menu="报告">
 							<i class="celicon -report"></i> 报告
 						</a>
