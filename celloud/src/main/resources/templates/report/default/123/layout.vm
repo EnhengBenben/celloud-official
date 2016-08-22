@@ -15,7 +15,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="$base/css/less/main.less?v=3.2.4" rel="stylesheet/less" type="text/css" />
 <link href="$base/css/less/components.less?v=3.2.4" rel="stylesheet/less" type="text/css" />
-<link href="$base/css/less/theme.less?v=3.2.4" rel="stylesheet/less" type="text/css" />
+<link href="$base/css/less/rocky_print.less?v=3.2.4" rel="stylesheet/less" type="text/css" />
  #block("links") 
  #end
 <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script>

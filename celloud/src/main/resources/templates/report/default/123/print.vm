@@ -5,59 +5,59 @@
 			<div class="report-content" style="padding:10px;">
 				<section>
 					<div>
-						<div class="col-xs-6" style="display:inline;"><img style="width:180px;height:42px;" src="$base/images/icon/barcode.jpg"></div>
+						<div class="col-xs-6" style="display:inline;"><img class="barcode" src="$base/images/icon/barcode.jpg"></div>
 						<div class="col-xs-6 pull-right text-right">隐私报告 - 无受检人书面授权严禁公布或分享</div><br>
 					</div>
 					<div class="row">
 						<div class="col-xs-9"><h2>乳腺癌易感基因<small>(BRCA1/2)</small>检测报告</h2></div>
 						<div class="col-xs-3 pull-right text-center">
 							<div class="pull-right">
-							技术平台&nbsp;<br><img style="width:90px;height:35px;" src="$base/images/icon/login_logo.png">
+							技术平台&nbsp;<br><img class="logo" src="$base/images/icon/login_logo.png">
 							</div>
 						</div>
 					</div>
 				</section>
-				<hr style="height:2px;line-height:2px;border-top:2px dotted #3e3e3e;border-bottom:5px solid #3e3e3e;margin-top:0px;">
+				<hr class="title_line">
 				<section id="nav-baseinfo">
 					<form id="rockyBaseInfoForm" action="$base/report/updateRockyFilling">
-						<table class="table table-main">
+						<table class="table table-main baseinfo">
 							<input type="hidden" name="id" value="$!rocky.id">
 							<thead>
 								<tr>
-									<th style="text-align:left;width:33%;">样本信息</th>
-									<th style="text-align:left;width:33%;">报告信息</th>
-									<th style="text-align:left;width:34%;">受检者信息</th>
+									<th>样本信息</th>
+									<th>报告信息</th>
+									<th>受检者信息</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td style="text-align:left;">
-										<label style="width:50px;text-align:right;font-weight:normal;">样本类型</label>：
-										<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[sampleType]" value="$!rocky.baseInfo.sampleType"></input><br>
-				    					<label style="width:50px;text-align:right;font-weight:normal;">送检时间</label>：
-				    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[sampleDeliveryTime]" value="$!rocky.baseInfo.sampleDeliveryTime"></input><br>
-				    					<label style="width:50px;text-align:right;font-weight:normal;">送检状态</label>：
-				    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[sampleStatus]" value="$!rocky.baseInfo.sampleStatus"></input><br>
-				    					<label style="width:50px;text-align:right;font-weight:normal;">收样中心</label>：
-				    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[sampleCollector]" value="$!rocky.baseInfo.sampleCollector"></input>
+									<td>
+										<label>样本类型</label>：
+										<input type="text" name="baseInfo[sampleType]" value="$!rocky.baseInfo.sampleType"></input><br>
+				    					<label>送检时间</label>：
+				    					<input type="text" name="baseInfo[sampleDeliveryTime]" value="$!rocky.baseInfo.sampleDeliveryTime"></input><br>
+				    					<label>送检状态</label>：
+				    					<input type="text" name="baseInfo[sampleStatus]" value="$!rocky.baseInfo.sampleStatus"></input><br>
+				    					<label>收样中心</label>：
+				    					<input type="text" name="baseInfo[sampleCollector]" value="$!rocky.baseInfo.sampleCollector"></input>
+									</td>
+									<td>
+										<label>报告类型</label>：
+										<span>BRAC1/BRAC2</span><br>
+				    					<label>生成时间</label>：
+				    					<span style="text-align:left;font-weight:normal;white-space: normal;">$!rocky.baseInfo.createTime</span><br>
+				    					<label>报告中心</label>：
+				    					<input type="text" name="baseInfo[reportProvider]" value="$!rocky.baseInfo.reportProvider"></input>
 									</td>
 									<td style="text-align:left;">
-										<label style="width:50px;text-align:right;font-weight:normal;">报告类型</label>：
-										<span style="text-align:left;font-weight:normal;white-space: normal;">BRAC1/BRAC2</span><br>
-				    					<span style="width:50px;text-align:right;font-weight:normal;">生成时间</span>：
-				    					<label style="text-align:left;font-weight:normal;white-space: normal;">$!rocky.baseInfo.createTime</label><br>
-				    					<label style="width:50px;text-align:right;font-weight:normal;">报告中心</label>：
-				    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[reportProvider]" value="$!rocky.baseInfo.reportProvider"></input>
-									</td>
-									<td style="text-align:left;">
-										<label style="width:50px;text-align:right;font-weight:normal;">受检人名</label>：
-										<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[examineeName]" value="$!rocky.baseInfo.examineeName"></input><br>
-				          				<label style="width:50px;text-align:right;font-weight:normal;">性别</label>：
-				          				<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[examineeGender]" value="$!rocky.baseInfo.examineeGender"></input><br>
-				    					<label style="width:50px;text-align:right;font-weight:normal;">受检人ID</label>：
-				    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[examineeNumber]" value="$!rocky.baseInfo.examineeNumber"></input><br>
-				    					<label style="width:50px;text-align:right;font-weight:normal;">订单编号</label>：
-				    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[examineeOrderNumber]" value="$!rocky.baseInfo.examineeOrderNumber"></input>
+										<label>受检人名</label>：
+										<input type="text" name="baseInfo[examineeName]" value="$!rocky.baseInfo.examineeName"></input><br>
+				          				<label>性别</label>：
+				          				<input type="text" name="baseInfo[examineeGender]" value="$!rocky.baseInfo.examineeGender"></input><br>
+				    					<label>受检人ID</label>：
+				    					<input type="text" name="baseInfo[examineeNumber]" value="$!rocky.baseInfo.examineeNumber"></input><br>
+				    					<label>订单编号</label>：
+				    					<input type="text" name="baseInfo[examineeOrderNumber]" value="$!rocky.baseInfo.examineeOrderNumber"></input>
 									</td>
 								</tr>
 							</tbody>
