@@ -64,6 +64,9 @@
     .when('/reportpro',{
       templateUrl: "pages/report/report_project.jsp"
     })
+    .when('/app',{
+      templateUrl: "pages/app/app_main.jsp"
+    })
     .otherwise({redirectTo:'/'});
   });
 })()
