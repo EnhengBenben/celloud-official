@@ -4,6 +4,10 @@
       self.list = function(){
         return $resource("data/dataPageList").get();
       }
+      self.conditionList = function(){
+        var options = $.dataManager.options;
+        return $http.get("data/dataPageListCondition",{params: {condition:options.condition,size:options.pageSize,sort:options.sort,sortDateType:options.sortDateType,sortNameType:options.sortNameType}});
+      }
       self.run = function(){
         var checkedIds = $.dataManager.options.checkedIds;
         if(checkedIds.length==0){

@@ -1,6 +1,12 @@
 (function(){
   celloudApp.controller("dataListController", function($scope, runService){
     $scope.dataList = runService.list();
+    $scope.conditionList = function(){
+      $.dataManager.options.condition = $scope.dataCondition;
+      runService.conditionList().success(function(response){
+        $scope.dataList = response;
+      });
+    }
     $scope.runWithProject = function() {
       runService.run().success(function(response) {
         if(response.length==0){
