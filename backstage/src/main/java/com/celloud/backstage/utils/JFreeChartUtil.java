@@ -71,8 +71,6 @@ public class JFreeChartUtil {
             plot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT); // 人数显示在下端(柱子水平)或左侧(柱子竖直)
             // 横轴
             CategoryAxis domainAxis = plot.getDomainAxis();
-            domainAxis.setUpperMargin(0.1);
-            domainAxis.setLowerMargin(0.1);
             // 纵轴
             ValueAxis rAxis = plot.getRangeAxis();
             /*----------设置消除字体的锯齿渲染（解决中文问题）--------------*/
@@ -86,6 +84,8 @@ public class JFreeChartUtil {
             /*------设置X轴的标题文字------------*/
             domainAxis.setLabelFont(new Font("宋体", Font.BOLD, 14));
             domainAxis.setCategoryLabelPositionOffset(20);
+            domainAxis.setCategoryMargin(1 / 6.0);
+
             /*------设置Y轴坐标上的文字-----------*/
             rAxis.setTickLabelFont(new Font("sans-serif", Font.PLAIN, 16));
             /*------设置Y轴的标题文字------------*/
@@ -105,8 +105,8 @@ public class JFreeChartUtil {
             barRenderer.setBaseItemLabelsVisible(true);
             barRenderer.setBasePaint(Color.BLACK);
             barRenderer.setBaseItemLabelFont(new Font("宋体", Font.BOLD, 14));
-            barRenderer.setMaximumBarWidth(0.2);
-            barRenderer.setMinimumBarLength(0.1);
+            barRenderer.setMaximumBarWidth(0.3);
+            barRenderer.setMinimumBarLength(0.3);
             barRenderer.setBasePositiveItemLabelPosition(
                     new ItemLabelPosition(ItemLabelAnchor.OUTSIDE12, TextAnchor.BASELINE_CENTER));
             plot.setRenderer(barRenderer);
@@ -184,6 +184,7 @@ public class JFreeChartUtil {
             rAxis.setTickLabelFont(new Font("sans-serif", Font.PLAIN, 16));
             /*------设置Y轴的标题文字------------*/
             rAxis.setLabelFont(new Font("宋体", Font.BOLD, 16));
+            rAxis.setRange(0, dataset.getValue(0, 0).floatValue() + dataset.getValue(0, 0).floatValue() / 4);
             // 设置柱状图宽度和颜色
             BarRenderer barRenderer = new BarRenderer();
             float[] hsbColor = new float[3];
@@ -196,11 +197,10 @@ public class JFreeChartUtil {
             barRenderer.setBaseItemLabelsVisible(true);
             barRenderer.setBasePaint(Color.BLACK);
             barRenderer.setBaseItemLabelFont(new Font("宋体", Font.BOLD, 14));
-            barRenderer.setMaximumBarWidth(0.2);
-            barRenderer.setMinimumBarLength(0.1);
+            barRenderer.setMaximumBarWidth(0.3);
+            barRenderer.setMinimumBarLength(0.3);
             barRenderer.setBasePositiveItemLabelPosition(
-                    new ItemLabelPosition(ItemLabelAnchor.OUTSIDE4, TextAnchor.BASELINE_RIGHT));
-            barRenderer.setItemLabelAnchorOffset(25D);
+                    new ItemLabelPosition(ItemLabelAnchor.OUTSIDE4, TextAnchor.BASELINE_LEFT));
             plot.setRenderer(barRenderer);
 
             out = new FileOutputStream(picPath);// 图片是文件格式的，故要用到FileOutputStream用来输出。
