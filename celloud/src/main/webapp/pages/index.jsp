@@ -119,8 +119,8 @@
             <a href="#/reportdata"><i class="report-icon"></i><span>报告管理</span></a>
 <%--           </shiro:hasPermission> --%>
         </li>
-        <li>
-          <a href="javascript:void(0)"><i class="app-icon"></i><span>应用市场</span></a>
+        <li ng-class="{active: isActive('/app')}">
+          <a href="#/app"><i class="app-icon"></i><span>应用市场</span></a>
         </li>
       </ul>
       <ul class="sidebar-menu">

@@ -19,4 +19,19 @@
       return collapsed ? "":"large-left";
     }
   });
+  celloudApp.filter("chevronTypeFaFilter",function(){
+    return function(chevronType){
+      return chevronType ? "fa fa-chevron-down":"fa fa-chevron-up";
+    }
+  });
+  celloudApp.filter("chevronTypeTextFilter",function(){
+    return function(chevronType){
+      return chevronType ? "更多":"收起";
+    }
+  });
+  celloudApp.filter("chevronTypeDivFilter",function(){
+    return function(chevronType){
+      return chevronType ? "":"more";
+    }
+  });
 })();

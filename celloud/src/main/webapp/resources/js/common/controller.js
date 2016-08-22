@@ -47,5 +47,17 @@
 				}
 			});
 		});
+		
+		/**
+		 * 修改更多按钮
+		 */
+		$rootScope.changeChevronType = function(chevronType){
+		  if(chevronType){
+		    chevronType = false;
+		  }else{
+		    chevronType = true;
+		  }
+		  return chevronType;
+		}
 	});
 })();

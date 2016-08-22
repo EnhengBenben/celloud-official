@@ -374,7 +374,7 @@ $(function(){
 	$("#save-applyInvoice").click(function(){
 		$(this).prop("disabled",true);
 		if(validateApplyForm()){
-			// 提交表单
+			// 提交表单{}
 			$.post("invoice/apply",$("#applyInvoice-form").serialize(),function(data){
 				if(data > 0){
 					$("#applyInvoice-modal").modal("hide");
