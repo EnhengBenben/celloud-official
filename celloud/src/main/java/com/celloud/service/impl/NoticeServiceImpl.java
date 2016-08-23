@@ -76,9 +76,6 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public PageList<Notice> findLastNotice(Page page) {
-		if (page == null) {
-			page = new Page(1, 5);
-		}
 		List<Notice> list = noticeMapper.pageUserNotices(ConstantsData.getLoginUserId(), NoticeConstants.TYPE_NOTICE,
 				page);
 		return new PageList<>(page, list);

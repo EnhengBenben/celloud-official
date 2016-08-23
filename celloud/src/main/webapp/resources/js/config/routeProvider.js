@@ -53,13 +53,15 @@
     .when('/qa',{
       templateUrl: "pages/qa/qa_list.jsp"
     })
-    .when('/notice/list',{
-      templateUrl: "pages/notice/notice_list.jsp"
+    .when('/notices',{
+      templateUrl: "pages/notice/notices.jsp",
+      controller:"noticeController"
     })
-    .when('/notice/system',{
-      templateUrl: "pages/notice/notice_system.jsp"
+    .when('/messages',{
+      templateUrl: "pages/notice/messages.jsp",
+      controller:"noticeController"
     })
-    .when('/notice/set',{
+    .when('/message/setting',{
       templateUrl: "pages/notice/notice_set.jsp"
     })
     .when('/reportdata',{
