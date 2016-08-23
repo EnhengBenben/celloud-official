@@ -35,6 +35,12 @@
           return $http.get("data/delete.action",{params: {dataIds: dataIds}});
         }
       }
+      self.toEditData = function(fileId){
+        return $http.get("data/toEditData",{params: {dataId: fileId}});
+      }
+      self.submitEditData = function(dataFile){
+        return $http.get("data/updateDataAndTag",{params: {fileId: dataFile.fileId,anotherName: dataFile.anotherName,batch: dataFile.batch,tagName: dataFile.tagName}});
+      }
     });
     
 }());

@@ -44,6 +44,10 @@ public interface DataFileMapper {
 
 	int updateByPrimaryKey(DataFile record);
 
+	int deleteDataTag(Integer fileId);
+
+	int insertDataTag(DataFile dataFile);
+
 	/**
 	 * 检索某个项目下的所有数据
 	 * 
