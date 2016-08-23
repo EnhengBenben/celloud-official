@@ -56,10 +56,6 @@
 	        });
 			$("#rechargeIds").val(ids.join(","));
 		};
-		$("[name=invoiceType]").click(function(){
-			$("[name=invoiceType]").prop("checked",false);
-			$(this).prop("checked",true);
-		});
 		$scope.apply = function(){
 			$("#invoiceSubmit").prop("disabled",true);
 			$scope.invoiceForm.invoiceType = $("input[name=invoiceType]:checked").val();
