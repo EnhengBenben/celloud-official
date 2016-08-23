@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<section class="content-header">
-  <h1>
-    <small>&nbsp;</small>
-  </h1>
+<%-- <section class="content-header">
   <ol class="breadcrumb">
     <li><a href="javascript:void(0)"><i class="fa fa-heartbeat"></i> 统计</a></li>
     <li class="active">全部</li>
@@ -51,12 +48,48 @@
 <!-- 		</div> -->
 <!-- 		<div class="y-row" style="padding: 20px 10px; background-color: #fff;" data-spm="17"> -->
 <!-- 			<div class="common-normal common-slide common-normals" id="sys_count_div"> -->
-<%-- 				<jsp:include page="count_system.jsp"></jsp:include> --%>
+				<jsp:include page="count_system.jsp"></jsp:include>
 <!-- 			</div> -->
 <!-- 		</div> -->
     </div>
   </div><!--/.row-->
-</section><!-- /.content -->
+</section><!-- /.content --> --%>
+
+<div class="pro-body">
+	<input type="hidden" id="sessionCompanyId" value="${companyId }">
+    <ol class="breadcrumb">
+      <li>CelLoud</li>
+      <li>统计</li>
+    </ol>
+    <div class="content">
+      <div class="content-header">
+        <c:if test="${companyId==6 }">
+		    <div class="info">
+	    	  <p>本页提供所有数据报告总览。</p>
+	  		</div>
+     	  </c:if>
+     	  <c:if test="${companyId==3 }">
+     	    <div class="info">
+	    	  <p>目前只提供 HBV_SNP流程的报告统计；查看页面中不提供序列详细信息的直接展示，用户可以通过“下载Excel”获得全部序列信息。</p>
+	  		</div>
+	  		<ul>
+		      <li><a href="javascript:void(0)" id="_down" class="hide">下载 Excel</a></li>
+	  		</ul>
+     	  </c:if>
+    	  <c:if test="${companyId==33 }">
+    	    <div class="info">
+	    	  <p>查看页面中不提供序列详细信息的直接展示，用户可以通过“下载Excel”获得全部序列信息。</p>
+	  		</div>
+	  		<ul>
+		      <li><a href="javascript:void(0)" id="_down">下载 Excel</a></li>
+	  		</ul>
+	       </c:if>
+      </div>
+      <div id="countDiv">
+      
+      </div>
+	</div>
+</div>
   
 <div class="modal modal-green-header" id="seqModal">
  <div class="modal-dialog">

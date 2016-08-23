@@ -105,6 +105,11 @@
         <li>
           <a href="javascript:void(0)"><i class="sample-icon"></i><span>样本采集</span></a>
         </li>
+        <shiro:hasPermission name="count:menu">
+        	<li ng-class="{active: isActive('/count')}">
+	          <a href="#/count"><i class="count-icon"></i><span>统计</span></a>
+	        </li>
+        </shiro:hasPermission>
         <li>
           <a href="javascript:void(0)"><i class="experiment-icon"></i><span>实验管理</span></a>
         </li>
