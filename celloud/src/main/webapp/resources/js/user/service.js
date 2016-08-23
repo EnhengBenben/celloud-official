@@ -1,9 +1,7 @@
 (function(){
-	
 	celloudApp.service("userService",function($q,$http,$resource){
 		this.getUserInfo = function(){
-			var user = $resource("user/info").get();
-			return user;
+			return $http({method:"POST",url:'user/info',params:{}});
 		}
 		this.updateUserInfo = function(user){
 			// 假同步一

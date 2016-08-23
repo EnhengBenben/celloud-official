@@ -56,10 +56,6 @@
 	        });
 			$("#rechargeIds").val(ids.join(","));
 		};
-		$("[name=invoiceType]").click(function(){
-			$("[name=invoiceType]").prop("checked",false);
-			$(this).prop("checked",true);
-		});
 		$scope.apply = function(){
 			$("#invoiceSubmit").prop("disabled",true);
 			$scope.invoiceForm.invoiceType = $("input[name=invoiceType]:checked").val();
@@ -95,5 +91,49 @@
 			});
 		};
 		$scope.pageQueryInvoice(1,10);
+	});
+	celloudApp.controller("toRecharge",function($scope,$rootScope,expenseService){
+		expenseService.toRecharge().
+		success(function(data){
+			$scope.balance = data;
+		});
+		$scope.tab = 'pay_tab_alipay';
+		$scope.pay_type = 'online';
+		$scope.rechargeForm = {
+			money : 10
+		};
+		$scope.checkMoney = function(){
+			var money = $scope.rechargeForm.money;
+			if(!$.isNumeric(money)){
+				$scope.moneyError = "请正确输入充值金额！";
+				$scope.checkFlag = true;
+				$scope.checkSubmit = true;
+				return false;
+			}
+			if(money*1 < 10 && money*1 != 0.01){
+				$scope.moneyError = "充值金额要大于10元哦！";
+				$scope.checkFlag = true;
+				$scope.checkSubmit = true;
+				return false;
+			}
+			if(money*1 >10000){
+				$scope.moneyError = "大于10000元的充值金额，请使用公司转账方式充值！";
+				$scope.checkFlag = true;
+				$scope.checkSubmit = true;
+				return false;
+			}
+			if($.isNumeric(money)){//测试用的
+				$scope.checkFlag = false;
+				$scope.checkSubmit = false;
+				return true;
+			}
+		}
+		$scope.sumbitRecharge = function(){
+			var payWay = $("input[name=pay-way]:checked").val();
+			var action = CONTEXT_PATH + "/pay/recharge/" + payWay;
+			$("#rechargeForm").attr("action",action);
+			$rootScope.errorInfo = "请在新打开的页面完成支付操作！";
+			$("#tips-modal").modal("show");
+		}
 	});
 })();

@@ -17,6 +17,9 @@
 		}
 		this.apply = function(params){
 			return $http({method:"POST",url:"invoice/apply",data:$.param(params),headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
-		}
+		};
+		this.toRecharge = function(){
+			return $http({method:"POST",url:"pay/recharge",data:{},headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
+		};
 	});
 })();

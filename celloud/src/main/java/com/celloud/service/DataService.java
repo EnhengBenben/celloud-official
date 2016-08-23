@@ -264,6 +264,16 @@ public interface DataService {
 	public int updateByPrimaryKeySelective(DataFile record);
 
 	/**
+	 * 修改数据信息及其产品标签
+	 * 
+	 * @param record
+	 * @return
+	 * @author lin
+	 * @date 2016年8月23日下午2:30:17
+	 */
+	public int updateDataAndTag(DataFile record);
+
+	/**
 	 * 获取同一批次的成对数据
 	 * 
 	 * @param batch

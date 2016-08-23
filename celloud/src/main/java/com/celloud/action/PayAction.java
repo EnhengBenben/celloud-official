@@ -39,13 +39,13 @@ public class PayAction {
 	private RechargeService rechargeService;
 
 	@RequestMapping("recharge")
+    @ResponseBody
 	public String recharge(Model model) {
 		BigDecimal balance = userService.selectUserById(ConstantsData.getLoginUser().getUserId()).getBalances();
 		if (balance == null) {
 			balance = new BigDecimal(0.00);
 		}
-		model.addAttribute("balance", balance);
-		return "expense/expense_recharge";
+        return balance.toString();
 	}
 
 	@RequestMapping("recharge/list")

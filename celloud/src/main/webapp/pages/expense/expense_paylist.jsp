@@ -64,13 +64,13 @@
 	          <div class="form-group">
 	            <div class="control-label form-label col-xs-3">发票类型：</div>
 	            <div class="col-xs-9 form-group-content">
-	               <label class="checkbox-lable">
-                     <input class="checkbox" type="checkbox" value="0" id="generalTicket" name="invoiceType" checked>
+	               <label class="radio-lable">
+                     <input class="radio" type="radio" value="0" id="generalTicket" name="invoiceType" checked>
                      <span class="info"></span>
                    </label>
                    公司普票
-                   <label class="checkbox-lable">
-                     <input class="checkbox" type="checkbox" value="1" id="specialTicket" name="invoiceType">
+                   <label class="radio-lable">
+                     <input class="radio" type="radio" value="1" id="specialTicket" name="invoiceType">
                      <span class="info"></span>
                    </label>
                    公司专票

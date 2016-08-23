@@ -19,6 +19,7 @@
         $scope.dataList = response;
       });
     }
+    //项目运行
     $scope.runWithProject = function() {
       runService.run().success(function(response) {
         if(response.length==0){
@@ -30,12 +31,34 @@
         }
       });
     };
+    //数据删除
     $scope.deleteData = function(){
       runService.delete().success(function(response){
         if(response.code == "104"){
           alert("success");
           $scope.dataList = runService.list();
           $.dataManager.refreshDataList();
+        }else{
+          alert("失败");
+        }
+      });
+    };
+    //跳转数据编辑
+    $scope.toEditData = function(fileId){
+      runService.toEditData(fileId).success(function(response){
+        $scope.dataFile = response['file'];
+        $scope.appList = response['appList'];
+      });
+    }
+    //修改数据信息
+    $scope.submitEditData = function(){
+      $scope.dataFile.tagName = $("input[type='radio'][name='dataTagName']:checked").val();
+      runService.submitEditData($scope.dataFile).success(function(response){
+        if(response==1){
+          alert("success");
+          $scope.dataList = runService.list();
+          $.dataManager.refreshDataList();
+          $("#data-detail-modal").modal("hide");
         }else{
           alert("失败");
         }

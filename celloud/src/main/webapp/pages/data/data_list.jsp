@@ -39,6 +39,7 @@
               </label>
             </th>
             <th>文件名称</th>
+            <th>文件别名</th>
             <th>产品标签</th>
             <th>数据标签</th>
             <th>数据大小</th>
@@ -55,96 +56,71 @@
               </label>
             </td>
             <td title="{{file.fileName}}">{{file.fileName}}<i class="fa fa-truck" aria-hidden="true" ng-show="file.isRunning==1"></i></td>
-            	<!-- TODO show more -->
-            <td>{{file.appId}}--{{file.tagName}}--{{file.isRunning}}--{{file.fileId}}</td>
+            <td>{{file.anotherName}}</td>
+            <td>{{file.tagName}}</td>
             <td>{{file.batch}}</td>
             <td>{{file.size}}</td>
             <td>{{file.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <td><a href="javascript:void(0)" data-toggle="modal" data-target="#data-detail-modal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+            <td><a href="javascript:void(0)" data-toggle="modal" data-target="#data-detail-modal" ng-click="toEditData(file.fileId)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
           </tr>
         </tbody>
       </table>
       <ng-include src="'pages/partial/_partial_pagination_common.jsp'" ></ng-include>
     </div>
   <div id="data-detail-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-          <h4 class="modal-title">申请发票</h4>
-        </div>
-        <div class="modal-body form-modal">
-          <form class="form-horizontal info-form">
-              <div class="form-group">
-                <div class="control-label form-label col-xs-3">文件名称：</div>
-                <div class="col-xs-9">
-                    <input type="text" name="money" id="money" readonly>
-                    <span class="input-alert break-line">文件名不能为空</span>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="control-label form-label col-xs-3">产品标签：</div>
-                <div class="col-xs-9 form-group-content">
-                  <div class="checkbox-group">
-                    <label class="checkbox-lable">
-                      <input class="checkbox" type="checkbox" name="demo-checkbox1" checked>
-                      <span class="info"></span>
-                    </label>
-	                 HBV
-                  </div>
-                  <div class="checkbox-group">
-                    <label class="checkbox-lable">
-                      <input class="checkbox" type="checkbox" name="demo-checkbox1" checked>
-                      <span class="info"></span>
-                    </label>
-                    HCV
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="control-label form-label col-xs-3">数据标签：</div>
-                <div class="col-xs-9">
-                    <input type="text" id="address" name="address" maxlength="45"/><span class="invoice-modal-error"></span>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="control-label form-label col-xs-3">数据状态：</div>
-                <div class="col-xs-9 form-group-content">
-                  <div class="checkbox-group">
-                    <label class="checkbox-lable">
-                      <input class="checkbox" type="checkbox" name="demo-checkbox1" checked>
-                      <span class="info"></span>
-                    </label>
-                     未归档
-                  </div>
-                  <div class="checkbox-group">
-                    <label class="checkbox-lable">
-                      <input class="checkbox" type="checkbox" name="demo-checkbox1" checked>
-                      <span class="info"></span>
-                    </label>
-                    归档
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="control-label form-label col-xs-3">上传时间：</div>
-                <div class="col-xs-9 form-group-content">
-                  2016-05-21 13:49:00
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="text-center">
-                    <button type="reset" class="btn btn-cancel">取消</button>
-                    <button type="submit" class="btn" >提交</button>
-                </div>
-                <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="state">
-                  <button type="button" class="close" ng-click="state=false"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-                  <span>{{message}}</span>
-                </div>
-              </div>
-          </form>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+	<div class="modal-dialog">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+	      <h4 class="modal-title">数据修改</h4>
+	    </div>
+	    <div class="modal-body form-modal">
+	      <form class="form-horizontal info-form" id="editDataForm">
+	          <div class="form-group">
+	            <div class="control-label form-label col-xs-3">文件名称：</div>
+	            <div class="col-xs-9">
+	                <input type="text" ng-model="dataFile.fileName" ng-readonly="true">
+	                <input type="hidden" ng-model="dataFile.fileId" ng-readonly="true">
+<!-- 	                <span class="input-alert break-line">文件名不能为空</span> -->
+	            </div>
+	          </div>
+	          <div class="form-group">
+	            <div class="control-label form-label col-xs-3">文件别名：</div>
+	            <div class="col-xs-9">
+	                <input type="text" ng-model="dataFile.anotherName">
+	            </div>
+	          </div>
+	          <div class="form-group">
+	            <div class="control-label form-label col-xs-3">产品标签：</div>
+	            <div class="col-xs-9 form-group-content">
+	              <div class="checkbox-group" ng-repeat="app in appList">
+	                <label class="radio-lable">
+	                  <input class="radio" type="radio" name="dataTagName" value="{{app.appName}}" ng-checked="app.appName==dataFile.tagName">
+	                  <span class="info"></span>
+	                </label>
+	              	{{app.appName}}
+	              </div>
+	            </div>
+	          </div>
+	          <div class="form-group">
+	            <div class="control-label form-label col-xs-3">数据标签：</div>
+	            <div class="col-xs-9">
+	                <input type="text" name="batch" maxlength="45" ng-model="dataFile.batch"/><span class="invoice-modal-error"></span>
+	            </div>
+	          </div>
+	          <div class="form-group">
+	            <div class="text-center">
+	                <button type="reset" class="btn btn-cancel" data-dismiss="modal">取消</button>
+	                <button type="submit" class="btn" ng-click="submitEditData()">提交</button>
+	            </div>
+	            <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="state">
+	              <button type="button" class="close" ng-click="state=false"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+	              <span>{{message}}</span>
+	            </div>
+	          </div>
+	      </form>
+	    </div>
+	  </div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 </div>
