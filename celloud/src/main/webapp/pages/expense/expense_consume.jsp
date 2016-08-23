@@ -10,7 +10,6 @@
     <div class="content">
       <div class="content-header">
         <p>您可以在账户钱包中进行充值、开发票、激活优惠券等操作，也可以查询充值记录和管理发票。</p>
-        <p class="description">C币是CelLoud币，是CelLoud平台中的虚拟货币。</p>
       </div>
       <!-- <div class="table-opera">
         <div class="table-opera-content">

@@ -10,14 +10,12 @@
     <div class="content">
       <div class="content-header">
         <p>您可以在账户钱包中进行充值、开发票、激活优惠券等操作，也可以查询充值记录和管理发票。</p>
-        <p class="description">C币是CelLoud币，是CelLoud平台中的虚拟货币。</p>
-        <br>
       </div>
-      <div class="table-opera">
+      <!-- <div class="table-opera">
         <span class="tips">
              充值优惠：凡单笔充值达到&nbsp;5000&nbsp;返现&nbsp;5%，达到&nbsp;1万&nbsp;返现&nbsp;10%，达到&nbsp;10万&nbsp;返现&nbsp;15%，达到&nbsp;100万&nbsp;返现&nbsp;20%。  
         </span>
-      </div>
+      </div> -->
       <div class="content-body pay-content">
         <h2>账户余额： <span class="tips">￥2900</span></h2>
         <div class="pay-types">
