@@ -38,7 +38,7 @@
           <div class="info-form-group">
             <label></label>
             <div>
-                <button class="btn btn-cancel" ng-click="reset()">重置</button>
+                <button type="button" class="btn btn-cancel" ng-click="reset()">重置</button>
                 <button type="submit" class="btn" ng-disabled="newPwd!=confirmPwd||pwdForm.$invalid">提交</button>
             </div>
           </div>

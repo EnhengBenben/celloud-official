@@ -1,22 +1,23 @@
 (function(){
 	celloudApp.controller("updateBaseInfo",function($scope,userService){
-		$scope.user = userService.getUserInfo();
+		userService.getUserInfo().
+		success(function(data){
+			$scope.user = data;
+			$scope.user_bak = angular.copy(data);
+		});
 		$scope.updateUserInfo = function(){
-			if(checkForm){
-				var promise = userService.updateUserInfo($scope.user).
-				success(function(data){
-					$scope.message = data.message;
-				}).
-				error(function(data){
-					$scope.message = data.message;
-				});
-				$scope.state = true;
-			}
+			userService.updateUserInfo($scope.user).
+			success(function(data){
+				$scope.message = data.message;
+			}).
+			error(function(data){
+				$scope.message = data.message;
+			});
+			$scope.state = true;
 		};
-		var checkForm = function(){
-			var flag = $scope.userForm.cellphone.$dirty && $scope.userForm.cellphone.$valid;
-			return flag;
-		};
+		$scope.reset = function(){
+			$scope.user = angular.copy($scope.user_bak);
+		}
 	});
 	celloudApp.controller("updatePassword",function($scope,userService){
 		$scope.reset = function() {
@@ -44,7 +45,10 @@
 		$scope.pageQueryLog(1,10);
 	});
 	celloudApp.controller("updateEmail",function($scope,userService){
-		$scope.user = userService.getUserInfo();
+		userService.getUserInfo().
+		success(function(data){
+			$scope.user = data;
+		});
 		$scope.isSend = false;
 		$scope.updateEmail = function(){
 			userService.updateEmail($scope.user.email).
