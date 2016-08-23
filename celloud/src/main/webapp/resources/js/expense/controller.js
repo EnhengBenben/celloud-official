@@ -96,7 +96,7 @@
 		};
 		$scope.pageQueryInvoice(1,10);
 	});
-	celloudApp.controller("toRecharge",function($scope,expenseService){
+	celloudApp.controller("toRecharge",function($scope,$rootScope,expenseService){
 		expenseService.toRecharge().
 		success(function(data){
 			$scope.balance = data;
@@ -108,14 +108,6 @@
 		};
 		$scope.checkMoney = function(){
 			var money = $scope.rechargeForm.money;
-//			if($.isNumeric(money)){//测试用的
-//				$scope.moneyError = "";
-//				$self.attr('action',$self.attr("action")+(payType?'alipay':'jdpay'));
-//				$("#tip-modal").modal("show");
-//				$scope.checkFlag = false;
-//				$scope.checkSubmit = true;
-//				return true;
-//			}
 			if(!$.isNumeric(money)){
 				$scope.moneyError = "请正确输入充值金额！";
 				$scope.checkFlag = true;
@@ -135,26 +127,17 @@
 				return false;
 			}
 			if($.isNumeric(money)){//测试用的
-//				$self.attr('action',$self.attr("action")+(payType?'alipay':'jdpay'));
-//				$("#tip-modal").modal("show");
-				var payWay = $("input[name=pay-way]:checked").val();
-				$("#rechargeForm").attr("action",$("#rechargeForm").attr("action") + payWay);
 				$scope.checkFlag = false;
 				$scope.checkSubmit = false;
 				return true;
 			}
 		}
-		
-//		$("#expense-content").on("submit","#rechargeForm",function(){
-//			 var $self = $("#rechargeForm");
-//			 var $group =  $self.find("#moneyGroup");
-//			 var payType = $self.find('#pay_type_alipay').is(":checked");
-//			 $group.removeClass("has-error");
-//			 $group.find(".text-danger").hide();
-//			 $("#tip-modal").modal('show');
-//			 $self.find("input[name='money']").val(parseInt(money));
-//			 $self.attr('action',$self.attr("action")+(payType?'alipay':'jdpay'));
-//			 return true;
-//		  });
+		$scope.sumbitRecharge = function(){
+			var payWay = $("input[name=pay-way]:checked").val();
+			var action = CONTEXT_PATH + "/pay/recharge/" + payWay;
+			$("#rechargeForm").attr("action",action);
+			$rootScope.errorInfo = "请在新打开的页面完成支付操作！";
+			$("#tips-modal").modal("show");
+		}
 	});
 })();

@@ -38,7 +38,7 @@
            </div>
         </div>
         <div class="pay-online" ng-if="pay_type == 'online'">
-	        <form action="${pageContext.request.contextPath }/pay/recharge/" class="form-horizontal" target="_blank" id="rechargeForm" method="post">
+	        <form action="" class="form-horizontal" target="_blank" id="rechargeForm" method="post">
 	        	<div class="pay-money">
 		           <lable class="pay-types-header">金<span class="pull-right">额：</span></lable>
 		           <div class="pay-money-detail">
@@ -75,7 +75,7 @@
 		            <li class="bank-item">
 		              <label class="checkbox-inline">
 		                <label class="radio-lable">
-		                  <input class="radio" type="radio" name="pay-bank" checked="checked" value="alipay" checked>
+		                  <input class="radio" type="radio" name="pay-bank" ng-checked="tab == 'pay_tab_alipay'" value="alipay" checked>
 		                  <span class="info"></span>
 		                </label>
 						<img alt="支付宝" src="<%=request.getContextPath()%>/images/bank/alipay.gif" />
@@ -86,11 +86,11 @@
 		        <div class="bank-list" ng-if="tab == 'pay_tab_b2b'" >
 		          <ul class="pay-banks clearfix">
 		          	<c:set var="b2bBanks" value="<%=Bank.listB2B()%>"></c:set>
-					<c:forEach items="${b2bBanks}" var="bank">
+					<c:forEach items="${b2bBanks}" var="bank" varStatus="st">
 						<li class="bank-item">
 			              <label class="checkbox-inline">
 			                <label class="radio-lable">
-			                  <input class="radio" type="radio" name="pay-bank" value="${bank.bankCode }">
+			                  <input class="radio" type="radio" name="pay-bank" <c:if test="${st.first }">ng-checked="tab == 'pay_tab_b2b'"</c:if> value="${bank.bankCode }">
 			                  <span class="info"></span>
 			                </label>
 			                <img alt="${bank.bankName }" title="${bank.bankName }" src="<%=request.getContextPath()%>/images/bank/${bank.bankLogo }.gif">
@@ -102,11 +102,11 @@
 		      	<div class="bank-list" ng-if="tab == 'pay_tab_b2c'" >
 		          <ul class="pay-banks clearfix">
 		          	<c:set var="b2cBanks" value="<%=Bank.listB2C()%>"></c:set>
-					<c:forEach items="${b2cBanks}" var="bank">
+					<c:forEach items="${b2cBanks}" var="bank" varStatus="st">
 						<li class="bank-item">
 			              <label class="checkbox-inline">
 			                <label class="radio-lable">
-			                  <input class="radio" type="radio" name="pay-bank" value="${bank.bankCode }">
+			                  <input class="radio" type="radio" name="pay-bank" <c:if test="${st.first }">ng-checked="tab == 'pay_tab_b2c'"</c:if> value="${bank.bankCode }">
 			                  <span class="info"></span>
 			                </label>
 			                <img alt="${bank.bankName }" title="${bank.bankName }" src="<%=request.getContextPath()%>/images/bank/${bank.bankLogo }.gif">
@@ -116,7 +116,7 @@
 		          </ul>
 		      </div>
 		      <div class="pay-btns">
-		         <button type="submit" class="btn -low" ng-disabled="checkSubmit">现在充值</button>
+		         <button type="submit" class="btn -low" ng-click="sumbitRecharge()" ng-disabled="checkSubmit">现在充值</button>
 		      </div>
 	        </form>
         </div>
