@@ -102,5 +102,57 @@
 			$scope.balance = data;
 		});
 		$scope.tab = 'pay_tab_alipay';
+		$scope.pay_type = 'online';
+		$scope.rechargeForm = {
+			money : 10
+		};
+		$scope.checkMoney = function(){
+			var money = $scope.rechargeForm.money;
+//			if($.isNumeric(money)){//测试用的
+//				$scope.moneyError = "";
+//				$self.attr('action',$self.attr("action")+(payType?'alipay':'jdpay'));
+//				$("#tip-modal").modal("show");
+//				$scope.checkFlag = false;
+//				$scope.checkSubmit = true;
+//				return true;
+//			}
+			if(!$.isNumeric(money)){
+				$scope.moneyError = "请正确输入充值金额！";
+				$scope.checkFlag = true;
+				$scope.checkSubmit = true;
+				return false;
+			}
+			if(money*1 < 10 && money*1 != 0.01){
+				$scope.moneyError = "充值金额要大于10元哦！";
+				$scope.checkFlag = true;
+				$scope.checkSubmit = true;
+				return false;
+			}
+			if(money*1 >10000){
+				$scope.moneyError = "大于10000元的充值金额，请使用公司转账方式充值！";
+				$scope.checkFlag = true;
+				$scope.checkSubmit = true;
+				return false;
+			}
+			if($.isNumeric(money)){//测试用的
+//				$self.attr('action',$self.attr("action")+(payType?'alipay':'jdpay'));
+//				$("#tip-modal").modal("show");
+				$scope.checkFlag = false;
+				$scope.checkSubmit = false;
+				return true;
+			}
+		}
+		
+//		$("#expense-content").on("submit","#rechargeForm",function(){
+//			 var $self = $("#rechargeForm");
+//			 var $group =  $self.find("#moneyGroup");
+//			 var payType = $self.find('#pay_type_alipay').is(":checked");
+//			 $group.removeClass("has-error");
+//			 $group.find(".text-danger").hide();
+//			 $("#tip-modal").modal('show');
+//			 $self.find("input[name='money']").val(parseInt(money));
+//			 $self.attr('action',$self.attr("action")+(payType?'alipay':'jdpay'));
+//			 return true;
+//		  });
 	});
 })();
