@@ -32,7 +32,11 @@
     })
     .when('/data/:page',{
       templateUrl: "pages/data/data_list.jsp",
-      controller: "dataPageController"
+      controller: "dataListController"
+    })
+    .when('/data/:page/:size',{
+      templateUrl: "pages/data/data_list.jsp",
+      controller: "dataListController"
     })
     .when('/expense/consume',{
       templateUrl: "pages/expense/expense_consume.jsp",

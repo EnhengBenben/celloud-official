@@ -145,7 +145,9 @@ public class DataAction {
 	@RequestMapping("dataPageListCondition")
 	@ResponseBody
 	public PageList<DataFile> dataPageListCondition(@RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "20") int size, String condition, @RequestParam(defaultValue = "0") int sort,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "") String condition,
+            @RequestParam(defaultValue = "0") int sort,
 			@RequestParam(defaultValue = "desc") String sortDateType,
 			@RequestParam(defaultValue = "asc") String sortNameType) {
 		Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
@@ -159,6 +161,7 @@ public class DataAction {
 		Page pager = new Page(page, size);
 		PageList<DataFile> dataList = dataService.dataLists(pager, ConstantsData.getLoginUserId(), con_sb.toString(),
 				sort, sortDateType, sortNameType);
+
 		logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
 		return dataList;
 	}
